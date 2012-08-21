@@ -30,6 +30,7 @@ import com.codebutler.farebot.Utils;
 import com.codebutler.farebot.cepas.CEPASCard;
 import com.codebutler.farebot.felica.FelicaCard;
 import com.codebutler.farebot.mifareclassic.ClassicCard;
+import com.codebutler.farebot.ovchip.OVChipCard;
 import com.codebutler.farebot.transit.TransitData;
 import com.codebutler.farebot.transit.TransitIdentity;
 import org.apache.commons.lang.ArrayUtils;
@@ -86,7 +87,13 @@ public abstract class Card implements Parcelable
             case FeliCa:
                 return FelicaCard.fromXml(id, scannedAt, rootElement);
             case MifareClassic:
-                return ClassicCard.fromXml(id, scannedAt, rootElement);
+            	CardSubType subtype = CardSubType.class.getEnumConstants()[Integer.parseInt(rootElement.getAttribute("subtype"))];
+            	switch (subtype) {
+	                case OVChipkaart:
+	            		return OVChipCard.fromXml(id, scannedAt, rootElement);
+	            	default:
+	            		return ClassicCard.fromXml(id, scannedAt, rootElement);
+            	}
             default:
                 throw new UnsupportedOperationException("Unsupported card type: " + type);
         }
@@ -168,6 +175,33 @@ public abstract class Card implements Parcelable
                 	return "CEPAS";
                 case 4:
                     return "FeliCa";
+                default:
+                    return "Unknown";
+            }
+        }
+    }
+
+    public enum CardSubType
+    {
+        OVChipkaart(0);
+
+        private int mValue;
+
+        CardSubType (int value)
+        {
+            mValue = value;
+        }
+
+        public int toInteger ()
+        {
+            return mValue;
+        }
+
+        public String toString ()
+        {
+            switch (mValue) {
+                case 0:
+                    return "OV-chipkaart";
                 default:
                     return "Unknown";
             }

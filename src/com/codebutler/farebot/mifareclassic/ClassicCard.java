@@ -22,19 +22,22 @@
 
 package com.codebutler.farebot.mifareclassic;
 
+import java.util.Date;
+
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+
 import android.nfc.Tag;
 import android.nfc.tech.MifareClassic;
 import android.os.Parcel;
+
 import com.codebutler.farebot.UnsupportedTagException;
 import com.codebutler.farebot.Utils;
 import com.codebutler.farebot.keys.Keys;
 import com.codebutler.farebot.mifare.Card;
+import com.codebutler.farebot.ovchip.OVChipCard;
 import com.codebutler.farebot.transit.TransitData;
 import com.codebutler.farebot.transit.TransitIdentity;
-import org.w3c.dom.Document;
-import org.w3c.dom.Element;
-
-import java.util.Date;
 
 public class ClassicCard extends Card
 {
@@ -78,7 +81,10 @@ public class ClassicCard extends Card
         mKeys = keys;
         mComplete = complete;
 
-        throw new UnsupportedTagException(techs, Utils.getHexString(tag.getId()));
+        if (OVChipCard.check(data))
+        	return OVChipCard.dumpTag(tagId, tag, keys);
+        else
+            throw new UnsupportedTagException(techs, Utils.getHexString(tag.getId()));
 	}
 
 	public Element toXML () throws Exception
