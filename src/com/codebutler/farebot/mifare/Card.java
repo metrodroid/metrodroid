@@ -29,6 +29,7 @@ import com.codebutler.farebot.UnsupportedTagException;
 import com.codebutler.farebot.Utils;
 import com.codebutler.farebot.cepas.CEPASCard;
 import com.codebutler.farebot.felica.FelicaCard;
+import com.codebutler.farebot.mifareclassic.ClassicCard;
 import com.codebutler.farebot.transit.TransitData;
 import com.codebutler.farebot.transit.TransitIdentity;
 import org.apache.commons.lang.ArrayUtils;
@@ -61,6 +62,8 @@ public abstract class Card implements Parcelable
             return DesfireCard.dumpTag(tag);
         else if (ArrayUtils.contains(techs, "android.nfc.tech.NfcF"))
             return FelicaCard.dumpTag(tagId, tag);
+        else if (ArrayUtils.contains(techs, "android.nfc.tech.MifareClassic"))
+            return ClassicCard.dumpTag(tagId, tag);
         else
             throw new UnsupportedTagException(techs, Utils.getHexString(tag.getId()));
     }
@@ -82,6 +85,8 @@ public abstract class Card implements Parcelable
             	return CEPASCard.fromXML(id, scannedAt, rootElement);
             case FeliCa:
                 return FelicaCard.fromXml(id, scannedAt, rootElement);
+            case MifareClassic:
+                return ClassicCard.fromXml(id, scannedAt, rootElement);
             default:
                 throw new UnsupportedOperationException("Unsupported card type: " + type);
         }

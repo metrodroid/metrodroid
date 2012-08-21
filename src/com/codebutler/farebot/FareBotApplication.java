@@ -24,20 +24,27 @@ package com.codebutler.farebot;
 
 import android.app.Application;
 import com.codebutler.farebot.felica.DBUtil;
+import com.codebutler.farebot.keys.KeysUtils;
 
 public class FareBotApplication extends Application {
     private static FareBotApplication sInstance;
 
+    private KeysUtils mKeysUtil;
     private DBUtil mSuicaDBUtil;
 
     public FareBotApplication() {
         sInstance = this;
 
+        mKeysUtil = new KeysUtils(this);
         mSuicaDBUtil = new DBUtil(this);
     }
 
     public static FareBotApplication getInstance() {
         return sInstance;
+    }
+
+    public KeysUtils getKeysUtil() {
+        return mKeysUtil;
     }
 
     public DBUtil getSuicaDBUtil() {

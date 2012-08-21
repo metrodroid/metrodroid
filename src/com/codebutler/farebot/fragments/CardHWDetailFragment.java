@@ -118,6 +118,8 @@ public class CardHWDetailFragment extends SherlockListFragment
             FelicaCard card = (FelicaCard) mCard;
             items.add(new ListItem("IDm", Utils.getHexString(card.getIDm().getBytes(), "err")));
             items.add(new ListItem("PMm", Utils.getHexString(card.getPMm().getBytes(), "err")));
+        } else if (mCard.getCardType() == CardType.MifareClassic) {
+            throw new UnsupportedOperationException();
         }
 
         setListAdapter(new HWDetailListAdapter(getActivity(), items));
