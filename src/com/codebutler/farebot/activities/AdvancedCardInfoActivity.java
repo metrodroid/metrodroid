@@ -40,12 +40,12 @@ import com.codebutler.farebot.R;
 import com.codebutler.farebot.TabPagerAdapter;
 import com.codebutler.farebot.UnsupportedCardException;
 import com.codebutler.farebot.Utils;
-import com.codebutler.farebot.felica.FelicaCard;
+import com.codebutler.farebot.card.felica.FelicaCard;
 import com.codebutler.farebot.fragments.CardHWDetailFragment;
 import com.codebutler.farebot.fragments.DesfireCardRawDataFragment;
 import com.codebutler.farebot.fragments.FelicaCardRawDataFragment;
-import com.codebutler.farebot.mifare.Card;
-import com.codebutler.farebot.mifare.DesfireCard;
+import com.codebutler.farebot.card.Card;
+import com.codebutler.farebot.card.desfire.DesfireCard;
 
 import java.text.SimpleDateFormat;
 import java.util.Locale;

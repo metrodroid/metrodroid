@@ -35,11 +35,11 @@ import com.codebutler.farebot.ExpandableListFragment;
 import com.codebutler.farebot.R;
 import com.codebutler.farebot.Utils;
 import com.codebutler.farebot.activities.AdvancedCardInfoActivity;
-import com.codebutler.farebot.mifare.DesfireApplication;
-import com.codebutler.farebot.mifare.DesfireCard;
-import com.codebutler.farebot.mifare.DesfireFile;
-import com.codebutler.farebot.mifare.DesfireFileSettings.RecordDesfireFileSettings;
-import com.codebutler.farebot.mifare.DesfireFileSettings.StandardDesfireFileSettings;
+import com.codebutler.farebot.card.desfire.DesfireApplication;
+import com.codebutler.farebot.card.desfire.DesfireCard;
+import com.codebutler.farebot.card.desfire.DesfireFile;
+import com.codebutler.farebot.card.desfire.DesfireFileSettings.RecordDesfireFileSettings;
+import com.codebutler.farebot.card.desfire.DesfireFileSettings.StandardDesfireFileSettings;
 
 public class DesfireCardRawDataFragment extends ExpandableListFragment
 {

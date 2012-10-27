@@ -103,5 +103,8 @@
         <provider
             android:name="com.codebutler.farebot.provider.CardProvider"
             android:authorities="com.codebutler.farebot.cardprovider" />
+        <provider
+            android:name="com.codebutler.farebot.provider.CardKeyProvider"
+            android:authorities="com.codebutler.farebot.keyprovider" />
     </application>
 </manifest>

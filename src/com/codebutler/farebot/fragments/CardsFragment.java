@@ -49,7 +49,7 @@ import com.actionbarsherlock.view.MenuItem;
 import com.codebutler.farebot.ExportHelper;
 import com.codebutler.farebot.R;
 import com.codebutler.farebot.Utils;
-import com.codebutler.farebot.mifare.Card;
+import com.codebutler.farebot.card.Card;
 import com.codebutler.farebot.provider.CardDBHelper;
 import com.codebutler.farebot.provider.CardProvider;
 import com.codebutler.farebot.provider.CardsTableColumns;

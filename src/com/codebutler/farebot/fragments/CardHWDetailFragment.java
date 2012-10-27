@@ -33,15 +33,13 @@ import com.actionbarsherlock.app.SherlockListFragment;
 import com.codebutler.farebot.R;
 import com.codebutler.farebot.Utils;
 import com.codebutler.farebot.activities.AdvancedCardInfoActivity;
-import com.codebutler.farebot.cepas.CEPASCard;
-import com.codebutler.farebot.cepas.CEPASPurse;
-import com.codebutler.farebot.felica.FelicaCard;
-import com.codebutler.farebot.mifare.Card;
-import com.codebutler.farebot.mifare.Card.CardType;
-import com.codebutler.farebot.mifare.DesfireCard;
-import com.codebutler.farebot.mifare.DesfireManufacturingData;
-import com.codebutler.farebot.ovchip.OVChipCard;
-import com.codebutler.farebot.transit.OVChipTransitData;
+import com.codebutler.farebot.card.Card;
+import com.codebutler.farebot.card.Card.CardType;
+import com.codebutler.farebot.card.cepas.CEPASCard;
+import com.codebutler.farebot.card.cepas.CEPASPurse;
+import com.codebutler.farebot.card.desfire.DesfireCard;
+import com.codebutler.farebot.card.desfire.DesfireManufacturingData;
+import com.codebutler.farebot.card.felica.FelicaCard;
 
 import java.text.DateFormat;
 import java.text.NumberFormat;
@@ -121,15 +119,14 @@ public class CardHWDetailFragment extends SherlockListFragment
             items.add(new ListItem("IDm", Utils.getHexString(card.getIDm().getBytes(), "err")));
             items.add(new ListItem("PMm", Utils.getHexString(card.getPMm().getBytes(), "err")));
         } else if (mCard.getCardType() == CardType.MifareClassic) {
+            /*
         	OVChipCard card = (OVChipCard)mCard;
 
-        	/*
         	 * TODO: Get the following somewhere (they don't need access to the actual tag):
-        	 * Log.d("INFO", "Blocks: " + tech.getBlockCount());
-        	 * Log.d("INFO", "Sectors: " + tech.getSectorCount());
-        	 * Log.d("INFO", "Size: " + tech.getSize());
-        	 * Log.d("INFO", "Type: " + tech.getType());
-        	 */
+//        	 * Log.d("INFO", "Blocks: " + tech.getBlockCount());
+//        	 * Log.d("INFO", "Sectors: " + tech.getSectorCount());
+//        	 * Log.d("INFO", "Size: " + tech.getSize());
+//        	 * Log.d("INFO", "Type: " + tech.getType());
 
         	items.add(new HeaderListItem("Hardware Information"));
         	items.add(new ListItem("Manufacturer ID",	card.getOVChipPreamble().getManufacturer()));
@@ -168,6 +165,7 @@ public class CardHWDetailFragment extends SherlockListFragment
 	        	items.add(new ListItem("Autocharge Limit",	OVChipTransitData.convertAmount(card.getOVChipInfo().getLimit())));
 	        	items.add(new ListItem("Autocharge Charge",	OVChipTransitData.convertAmount(card.getOVChipInfo().getCharge())));
         	}
+        	*/
         }
 
         setListAdapter(new HWDetailListAdapter(getActivity(), items));

@@ -39,9 +39,9 @@ import android.os.Parcel;
 import android.util.Log;
 import com.codebutler.farebot.FareBotApplication;
 import com.codebutler.farebot.R;
-import com.codebutler.farebot.felica.FelicaBlock;
-import com.codebutler.farebot.felica.FelicaCard;
-import com.codebutler.farebot.felica.FelicaService;
+import com.codebutler.farebot.card.felica.FelicaBlock;
+import com.codebutler.farebot.card.felica.FelicaCard;
+import com.codebutler.farebot.card.felica.FelicaService;
 import net.kazzz.felica.lib.FeliCaLib;
 import net.kazzz.felica.lib.Util;
 import org.apache.commons.lang.ArrayUtils;
@@ -49,7 +49,7 @@ import org.apache.commons.lang.ArrayUtils;
 import java.text.NumberFormat;
 import java.util.*;
 
-import static com.codebutler.farebot.felica.DBUtil.*;
+import static com.codebutler.farebot.card.felica.DBUtil.*;
 
 public class SuicaTransitData extends TransitData {
     private SuicaTrip[] mTrips;

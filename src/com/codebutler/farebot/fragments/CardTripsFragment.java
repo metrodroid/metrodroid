@@ -39,8 +39,7 @@ import com.codebutler.farebot.R;
 import com.codebutler.farebot.activities.AdvancedCardInfoActivity;
 import com.codebutler.farebot.activities.CardInfoActivity;
 import com.codebutler.farebot.activities.TripMapActivity;
-import com.codebutler.farebot.mifare.Card;
-import com.codebutler.farebot.transit.OVChipTransitData;
+import com.codebutler.farebot.card.Card;
 import com.codebutler.farebot.transit.OrcaTransitData;
 import com.codebutler.farebot.transit.SuicaTransitData;
 import com.codebutler.farebot.transit.TransitData;
@@ -104,8 +103,6 @@ public class CardTripsFragment extends SherlockListFragment {
 
             Trip trip = getItem(position);
 
-            boolean hasTime = (!(trip instanceof SuicaTransitData.SuicaTrip) || ((SuicaTransitData.SuicaTrip)trip).hasTime() || ((OVChipTransitData.OVChipTrip)trip).hasTime());
-
             Date date = new Date(trip.getTimestamp() * 1000);
 
             View listHeader = convertView.findViewById(R.id.list_header);
@@ -144,7 +141,7 @@ public class CardTripsFragment extends SherlockListFragment {
                 iconImageView.setImageResource(R.drawable.unknown);
             }
 
-            if (hasTime) {
+            if (trip.hasTime()) {
                 timeTextView.setText(DateFormat.getTimeInstance(DateFormat.SHORT).format(date));
                 timeTextView.setVisibility(View.VISIBLE);
             } else {
@@ -165,8 +162,6 @@ public class CardTripsFragment extends SherlockListFragment {
             }
 
             if (trip.getFare() != 0) {
-                fareTextView.setText(trip.getFareString());
-            } else if (trip instanceof OVChipTransitData.OVChipTrip) {	// Trips can be free; but should we display anything if it's free?
                 fareTextView.setText(trip.getFareString());
             } else if (trip instanceof OrcaTransitData.OrcaTrip) {
                 fareTextView.setText(R.string.pass_or_transfer);

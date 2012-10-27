@@ -45,7 +45,7 @@ import com.codebutler.farebot.Utils;
 import com.codebutler.farebot.fragments.CardBalanceFragment;
 import com.codebutler.farebot.fragments.CardRefillsFragment;
 import com.codebutler.farebot.fragments.CardTripsFragment;
-import com.codebutler.farebot.mifare.Card;
+import com.codebutler.farebot.card.Card;
 import com.codebutler.farebot.provider.CardsTableColumns;
 import com.codebutler.farebot.transit.SuicaTransitData;
 import com.codebutler.farebot.transit.TransitData;

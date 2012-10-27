@@ -27,11 +27,11 @@ package com.codebutler.farebot.transit;
 
 import android.os.Parcel;
 import com.codebutler.farebot.Utils;
-import com.codebutler.farebot.mifare.Card;
-import com.codebutler.farebot.mifare.DesfireCard;
-import com.codebutler.farebot.mifare.DesfireFile;
-import com.codebutler.farebot.mifare.DesfireFile.RecordDesfireFile;
-import com.codebutler.farebot.mifare.DesfireRecord;
+import com.codebutler.farebot.card.Card;
+import com.codebutler.farebot.card.desfire.DesfireCard;
+import com.codebutler.farebot.card.desfire.DesfireFile;
+import com.codebutler.farebot.card.desfire.DesfireFile.RecordDesfireFile;
+import com.codebutler.farebot.card.desfire.DesfireRecord;
 
 import java.text.NumberFormat;
 import java.util.ArrayList;
@@ -350,6 +350,11 @@ public class OrcaTransitData extends TransitData
         @Override
         public Mode getMode() {
             return (isLink()) ? Mode.METRO : Mode.BUS;
+        }
+
+        @Override
+        public boolean hasTime() {
+            return true;
         }
 
         public long getCoachNumber() {

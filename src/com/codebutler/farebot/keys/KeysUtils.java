@@ -22,16 +22,12 @@
 
 package com.codebutler.farebot.keys;
 
+import android.content.Context;
+import android.os.Environment;
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
-
-import android.content.Context;
-import android.os.Environment;
-import android.util.Log;
-
-import com.codebutler.farebot.Utils;
-import com.codebutler.farebot.mifareclassic.ClassicProtocol;
 
 public class KeysUtils {
 	private static String SDCARD_PATH = Environment.getExternalStorageDirectory().getAbsolutePath();
@@ -43,6 +39,7 @@ public class KeysUtils {
         this.mContext = context;
     }
 
+    /*
     public String[] getKeysForCard(ClassicProtocol protocol, String id, String type) {
     	String[] sKeys = null;
     	byte[][] bKeys = null;
@@ -75,41 +72,42 @@ public class KeysUtils {
 
     	return sKeys;
     }
+    */
 
-    private static void insertKeysIntoDatabase(String id, String type, String[] keys) throws Exception {
-    	KeysDBHelper keysDBHelper = new KeysDBHelper(mContext);
-    	keysDBHelper.open();
-    	keysDBHelper.openDatabase();
-
-    	for (int sector = 0; sector < keys.length; sector++) {
-    		keysDBHelper.insertKey(id, sector, type, keys[sector]);
-    	}
-
-    	keysDBHelper.close();
-    }
-
-    private static String[] getKeysFromDatabase(String id, String type) throws Exception {
-    	String[] keys = new String[40];
-
-    	KeysDBHelper keysDBHelper = new KeysDBHelper(mContext);
-    	keysDBHelper.open();
-    	keysDBHelper.openDatabase();
-
-    	for (int sector = 0; sector < 40; sector++) {
-    		String key = keysDBHelper.getKey(id, sector, type);
-
-    		if (key != null) {
-    			keys[sector] = key;
-    		} else {
-    			keysDBHelper.close();
-    			return null;
-    		}
-    	}
-
-    	keysDBHelper.close();
-
-    	return keys;
-    }
+//    private static void insertKeysIntoDatabase(String id, String type, String[] keys) throws Exception {
+//    	KeysDBHelper keysDBHelper = new KeysDBHelper(mContext);
+//    	keysDBHelper.open();
+//    	keysDBHelper.openDatabase();
+//
+//    	for (int sector = 0; sector < keys.length; sector++) {
+//    		keysDBHelper.insertKey(id, sector, type, keys[sector]);
+//    	}
+//
+//    	keysDBHelper.close();
+//    }
+//
+//    public static String[] getKeysFromDatabase(String id, String type) throws Exception {
+//    	String[] keys = new String[40];
+//
+//    	KeysDBHelper keysDBHelper = new KeysDBHelper(mContext);
+//    	keysDBHelper.open();
+//    	keysDBHelper.openDatabase();
+//
+//    	for (int sector = 0; sector < 40; sector++) {
+//    		String key = keysDBHelper.getKey(id, sector, type);
+//
+//    		if (key != null) {
+//    			keys[sector] = key;
+//    		} else {
+//    			keysDBHelper.close();
+//    			return null;
+//    		}
+//    	}
+//
+//    	keysDBHelper.close();
+//
+//    	return keys;
+//    }
 
     private static byte[][] getKeysFromDump(String id, String type) throws Exception {
 		byte[][] allkeys = new byte[40][6];		

@@ -35,10 +35,10 @@ import com.codebutler.farebot.ExpandableListFragment;
 import com.codebutler.farebot.R;
 import com.codebutler.farebot.Utils;
 import com.codebutler.farebot.activities.AdvancedCardInfoActivity;
-import com.codebutler.farebot.felica.FelicaBlock;
-import com.codebutler.farebot.felica.FelicaCard;
-import com.codebutler.farebot.felica.FelicaService;
-import com.codebutler.farebot.felica.FelicaSystem;
+import com.codebutler.farebot.card.felica.FelicaBlock;
+import com.codebutler.farebot.card.felica.FelicaCard;
+import com.codebutler.farebot.card.felica.FelicaService;
+import com.codebutler.farebot.card.felica.FelicaSystem;
 
 import java.util.ArrayList;
 import java.util.List;

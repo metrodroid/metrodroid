@@ -43,6 +43,7 @@ public abstract class Trip implements Parcelable
     public abstract Station getEndStation ();
     public abstract double getFare ();
     public abstract Mode getMode();
+    public abstract boolean hasTime();
 
     public static boolean hasLocation(Station station) {
         return ((station != null) && ((station.getLatitude() != null) || station.getLongitude() != null));
