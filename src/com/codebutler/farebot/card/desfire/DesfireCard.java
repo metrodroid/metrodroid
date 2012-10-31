@@ -28,9 +28,11 @@ import android.nfc.tech.IsoDep;
 import android.os.Parcel;
 import android.os.Parcelable;
 import android.util.Base64;
+import com.codebutler.farebot.CardRawDataFragmentClass;
 import com.codebutler.farebot.Utils;
 import com.codebutler.farebot.card.Card;
 import com.codebutler.farebot.card.desfire.DesfireFile.InvalidDesfireFile;
+import com.codebutler.farebot.fragments.DesfireCardRawDataFragment;
 import com.codebutler.farebot.transit.ClipperTransitData;
 import com.codebutler.farebot.transit.OrcaTransitData;
 import com.codebutler.farebot.transit.TransitData;
@@ -43,6 +45,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+@CardRawDataFragmentClass(DesfireCardRawDataFragment.class)
 public class DesfireCard extends Card
 {
     private DesfireManufacturingData mManfData;

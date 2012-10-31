@@ -23,30 +23,33 @@
 package com.codebutler.farebot.card.classic;
 
 public class ClassicUtils {
-	public static int convertBytePointerToBlock(int index) {
-		int block = 0;
+    public static int convertBytePointerToBlock(int index) {
+        int block = 0;
 
-		if (index >= 2048) { // Sector 32 (0x800)
-			block = 128;
-			index -= 2048;
-			block += index / 16;
-		} else {
-			block = index / 16;
-		}
+        if (index >= 2048) { // Sector 32 (0x800)
+            block = 128;
+            index -= 2048;
+            block += index / 16;
+        } else {
+            block = index / 16;
+        }
 
-		return block;
-	}
+        return block;
+    }
 
-	public static int convertBytePointerToSector(int index) {
-		int sector = 0;
+    public static int sectorToBlock(int sectorIndex) {
+        if (sectorIndex < 32) {
+            return sectorIndex * 4;
+        } else {
+            return 32 * 4 + (sectorIndex - 32) * 16;
+        }
+    }
 
-		if (index >= 2048) { // Sector 32 (0x800)
-			index = index - 2048;
-			sector = 32 + (index / 256);
-		} else {
-			sector = index / 64;
-		}
-
-		return sector;
-	}
+    public static int blockToSector(int blockIndex) {
+        if (blockIndex < 32 * 4) {
+            return blockIndex / 4;
+        } else {
+            return 32 + (blockIndex - 32 * 4) / 16;
+        }
+    }
 }

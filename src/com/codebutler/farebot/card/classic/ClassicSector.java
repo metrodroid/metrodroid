@@ -42,6 +42,10 @@ public class ClassicSector {
         return mBlocks;
     }
 
+    public ClassicBlock getBlock(int index) {
+        return mBlocks[index];
+    }
+
     public ClassicTrailerBlock getTrailerBlock() {
         return (ClassicTrailerBlock) mBlocks[mBlocks.length -1];
     }
@@ -64,5 +68,16 @@ public class ClassicSector {
         sectorElement.appendChild(blocksElement);
 
         return sectorElement;
+    }
+
+    public byte[] readBlocks(int startBlock, int blockCount) {
+        int readBlocks = 0;
+        byte[] data = new byte[blockCount * 16];
+        for (int index = startBlock; index < (startBlock + blockCount); index++) {
+            byte[] blockData = getBlock(index).getData();
+            System.arraycopy(blockData, 0, data, readBlocks * 16, blockData.length);
+            readBlocks++;
+        }
+        return data;
     }
 }

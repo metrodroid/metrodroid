@@ -1,0 +1,266 @@
+/*
+ * OVChipTransitData.java
+ *
+ * Copyright (C) 2012 Eric Butler
+ *
+ * Authors:
+ * Eric Butler <eric@codebutler.com>
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
+package com.codebutler.farebot.transit;
+
+import android.os.Parcel;
+import com.codebutler.farebot.card.Card;
+import com.codebutler.farebot.card.classic.ClassicCard;
+
+import java.text.NumberFormat;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Calendar;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.Currency;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+public class OVChipTransitData extends TransitData {
+    public static final int  PROCESS_PURCHASE  =  0x00;
+    public static final int  PROCESS_CHECKIN   =  0x01;
+    public static final int  PROCESS_CHECKOUT  =  0x02;
+    public static final int  PROCESS_TRANSFER  =  0x06;
+    public static final int  PROCESS_BANNED    =  0x07;
+    public static final int  PROCESS_CREDIT    = -0x02;
+    public static final int  PROCESS_NODATA    = -0x03;
+
+    public static final int  AGENCY_TLS        = 0x00;
+    public static final int  AGENCY_CONNEXXION = 0x01;
+    public static final int  AGENCY_GVB        = 0x02;
+    public static final int  AGENCY_HTM        = 0x03;
+    public static final int  AGENCY_NS         = 0x04;
+    public static final int  AGENCY_RET        = 0x05;
+    public static final int  AGENCY_VEOLIA     = 0x07;
+    public static final int  AGENCY_ARRIVA     = 0x08;
+    public static final int  AGENCY_SYNTUS     = 0x09;
+    public static final int  AGENCY_QBUZZ      = 0x0A;
+    public static final int  AGENCY_DUO        = 0x0C;	// Could also be 2C though... ( http://www.ov-chipkaart.me/forum/viewtopic.php?f=10&t=299 )
+    public static final int  AGENCY_STORE      = 0x19;
+
+    private static Map<Integer, String> sAgencies = new HashMap<Integer, String>() {
+        {
+            put(AGENCY_TLS, "Trans Link Systems");
+            put(AGENCY_CONNEXXION, "Connexxion");
+            put(AGENCY_GVB, "Gemeentelijk Vervoersbedrijf");
+            put(AGENCY_HTM, "Haagsche Tramweg-Maatschappij");
+            put(AGENCY_NS, "Nederlandse Spoorwegen");
+            put(AGENCY_RET, "Rotterdamse Elektrische Tram");
+            put(AGENCY_VEOLIA, "Veolia");
+            put(AGENCY_ARRIVA, "Arriva");
+            put(AGENCY_SYNTUS, "Syntus");
+            put(AGENCY_QBUZZ, "Qbuzz");
+            put(AGENCY_DUO, "Dienst Uitvoering Onderwijs");
+            put(AGENCY_STORE, "Reseller");
+        }
+    };
+
+    private static Map<Integer, String> sShortAgencies = new HashMap<Integer, String>() {
+        {
+            put(AGENCY_TLS, "TLS");
+            put(AGENCY_CONNEXXION, "Connexxion");	/* or Breng, Hermes, GVU */
+            put(AGENCY_GVB, "GVB");
+            put(AGENCY_HTM, "HTM");
+            put(AGENCY_NS, "NS");
+            put(AGENCY_RET, "RET");
+            put(AGENCY_VEOLIA, "Veolia");
+            put(AGENCY_ARRIVA, "Arriva");			/* or Aquabus */
+            put(AGENCY_SYNTUS, "Syntus");
+            put(AGENCY_QBUZZ, "Qbuzz");
+            put(AGENCY_DUO, "DUO");
+            put(AGENCY_STORE, "Reseller");			/* used by Albert Heijn, Primera and Hermes busses and maybe even more */
+        }
+    };
+
+    private int                  mBalance;
+    private OVChipTrip[]         mTrips;
+    private OVChipSubscription[] mSubscriptions;
+
+    public Creator<OVChipTransitData> CREATOR = new Creator<OVChipTransitData>() {
+        public OVChipTransitData createFromParcel(Parcel parcel) {
+            return new OVChipTransitData(parcel);
+        }
+
+        public OVChipTransitData[] newArray(int size) {
+            return new OVChipTransitData[size];
+        }
+    };
+
+    public static boolean check(Card card) { // FIXME: This is not enough!
+        return (card instanceof ClassicCard);
+    }
+
+    public static TransitIdentity parseTransitIdentity (Card card) { // FIXME: Implement this!
+        return new TransitIdentity("OV-chipkaart", null);
+    }
+
+    public OVChipTransitData(Parcel parcel) {
+        mTrips = new OVChipTrip[parcel.readInt()];
+        parcel.readTypedArray(mTrips, OVChipTrip.CREATOR);
+        mSubscriptions = new OVChipSubscription[parcel.readInt()];
+        parcel.readTypedArray(mSubscriptions, OVChipSubscription.CREATOR);
+        mBalance = parcel.readInt();
+    }
+
+    public OVChipTransitData(ClassicCard card) {
+        OVChipParser parser = new OVChipParser(card);
+
+        mBalance = parser.getCredit().getCredit();
+
+        List<OVChipTransaction> alltransactions = new ArrayList<OVChipTransaction>(Arrays.asList(parser.getTransactions()));
+        Collections.sort(alltransactions, ID_ORDER);
+
+        List<OVChipTransaction> transactions = new ArrayList<OVChipTransaction>();
+        List<OVChipTrip> trips = new ArrayList<OVChipTrip>();
+        List<OVChipSubscription> subs = new ArrayList<OVChipSubscription>();
+
+        // Sort the transactions and discard the duplicates (could use a much needed rewrite...)
+        for (int i = 0; i < alltransactions.size(); i++) {
+            OVChipTransaction transaction = alltransactions.get(i);
+            OVChipTransaction prevTransaction;
+
+            if (transaction.getValid() != 1 || transaction.getTransfer() == PROCESS_NODATA)
+                continue;
+
+            if (i != 0) {
+                prevTransaction = alltransactions.get(i - 1);
+
+                if (transaction.getId() == prevTransaction.getId())
+                    continue;
+            }
+
+            transactions.add(transaction);
+        }
+
+        for (int i = 0; i < transactions.size(); i++) {
+            OVChipTransaction transaction = transactions.get(i);
+            OVChipTransaction prevTransaction = null;
+            OVChipTransaction nextTransaction = null;
+
+            if (i != 0) {
+                prevTransaction = transactions.get(i - 1);
+            }
+
+            if (i < transactions.size() - 1) {
+                nextTransaction = transactions.get(i + 1);
+            }
+
+            OVChipTrip trip = new OVChipTrip(transaction, prevTransaction, nextTransaction);
+            if (!trip.isSame()) {
+               trips.add(trip);
+            }
+        }
+
+        subs.addAll(Arrays.asList(parser.getSubscriptions()));
+
+        mTrips = trips.toArray(new OVChipTrip[trips.size()]);
+        mSubscriptions = subs.toArray(new OVChipSubscription[subs.size()]);
+    }
+
+    private static final Comparator<OVChipTransaction> ID_ORDER = new Comparator<OVChipTransaction>() {
+        public int compare(OVChipTransaction t1, OVChipTransaction t2) {
+            return (t1.getId() < t2.getId() ? -1 : (t1.getId() == t2.getId() ? 0 : 1));
+        }
+    };
+
+    public static Date convertDate(int date) {
+        return convertDate(date, 0);
+    }
+
+    public static Date convertDate(int date, int time) {
+        if (date == 0)
+            return null;
+
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(Calendar.YEAR, 1997);
+        calendar.set(Calendar.MONTH, Calendar.JANUARY);
+        calendar.set(Calendar.DAY_OF_MONTH, 1);
+        calendar.set(Calendar.HOUR_OF_DAY, time / 60);
+        calendar.set(Calendar.MINUTE, time % 60);
+
+        calendar.add(Calendar.DATE, date);
+
+        return calendar.getTime();
+    }
+
+    public static String convertAmount(int amount) {
+        NumberFormat formatter = NumberFormat.getCurrencyInstance();
+        formatter.setCurrency(Currency.getInstance("EUR"));
+
+        return formatter.format((double)amount / 100.0);
+    }
+
+    @Override
+    public String getCardName () {
+        return "OV-Chipkaart";
+    }
+
+    public static String getAgencyName(int agency) {
+        if (sAgencies.containsKey(agency)) {
+            return sAgencies.get(agency);
+        }
+        return "Unknown Agency (0x" + Long.toString(agency, 16) + ")";
+    }
+
+    public static String getShortAgencyName (int agency) {
+        if (sShortAgencies.containsKey(agency)) {
+            return sShortAgencies.get(agency);
+        }
+        return "UNK(0x" + Long.toString(agency, 16) + ")";
+    }
+
+    @Override
+    public void writeToParcel(Parcel parcel, int flags) {
+        parcel.writeInt(mTrips.length);
+        parcel.writeTypedArray(mTrips, flags);
+        parcel.writeInt(mSubscriptions.length);
+        parcel.writeTypedArray(mSubscriptions, flags);
+        parcel.writeInt(mBalance);
+    }
+
+    @Override
+    public String getBalanceString() {
+        return OVChipTransitData.convertAmount(mBalance);
+    }
+
+    @Override
+    public String getSerialNumber() {
+        return null;
+    }
+
+    @Override
+    public Trip[] getTrips() {
+        return mTrips;
+    }
+
+    @Override
+    public Refill[] getRefills() {
+        return null;
+    }
+
+    public Subscription[] getSubscriptions() {
+        return mSubscriptions;
+    }
+}

@@ -118,4 +118,6 @@
     <string name="location_tokyo">Tokyo, Japan</string>
     <string name="location_kansai">Kansai, Japan</string>
     <string name="location_the_netherlands">The Netherlands</string>
+    <string name="block_title_format">Block: %s</string>
+    <string name="sector_title_format">Sector: 0x%s</string>
 </resources>

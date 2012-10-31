@@ -36,16 +36,14 @@ import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.app.SherlockFragmentActivity;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuItem;
+import com.codebutler.farebot.CardHasManufacturingInfo;
+import com.codebutler.farebot.CardRawDataFragmentClass;
 import com.codebutler.farebot.R;
 import com.codebutler.farebot.TabPagerAdapter;
 import com.codebutler.farebot.UnsupportedCardException;
 import com.codebutler.farebot.Utils;
-import com.codebutler.farebot.card.felica.FelicaCard;
-import com.codebutler.farebot.fragments.CardHWDetailFragment;
-import com.codebutler.farebot.fragments.DesfireCardRawDataFragment;
-import com.codebutler.farebot.fragments.FelicaCardRawDataFragment;
 import com.codebutler.farebot.card.Card;
-import com.codebutler.farebot.card.desfire.DesfireCard;
+import com.codebutler.farebot.fragments.CardHWDetailFragment;
 
 import java.text.SimpleDateFormat;
 import java.util.Locale;
@@ -90,8 +88,6 @@ public class AdvancedCardInfoActivity extends SherlockFragmentActivity
             actionBar.setSubtitle(String.format("Scanned on %s at %s.", date, time));
         }
 
-        mTabsAdapter.addTab(actionBar.newTab().setText(R.string.hw_detail), CardHWDetailFragment.class, args);
-
         if (getIntent().hasExtra(EXTRA_ERROR)) {
             mError = (Exception) getIntent().getSerializableExtra(EXTRA_ERROR);
             if (mError instanceof UnsupportedCardException) {
@@ -102,13 +98,13 @@ public class AdvancedCardInfoActivity extends SherlockFragmentActivity
             }
         }
 
-        Class rawDataFragmentClass = null;
-        if (mCard instanceof DesfireCard) {
-            rawDataFragmentClass = DesfireCardRawDataFragment.class;
-        } else if (mCard instanceof FelicaCard) {
-            rawDataFragmentClass = FelicaCardRawDataFragment.class;
+        CardHasManufacturingInfo infoAnnotation = mCard.getClass().getAnnotation(CardHasManufacturingInfo.class);
+        if (infoAnnotation == null || infoAnnotation.value()) {
+            mTabsAdapter.addTab(actionBar.newTab().setText(R.string.hw_detail), CardHWDetailFragment.class, args);
         }
 
+        CardRawDataFragmentClass annotation = mCard.getClass().getAnnotation(CardRawDataFragmentClass.class);
+        Class rawDataFragmentClass = annotation.value();
         if (rawDataFragmentClass != null) {
             mTabsAdapter.addTab(actionBar.newTab().setText(R.string.data), rawDataFragmentClass, args);
             actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
@@ -128,6 +124,7 @@ public class AdvancedCardInfoActivity extends SherlockFragmentActivity
         try {
             String xml = Utils.xmlNodeToString(mCard.toXML().getOwnerDocument());
             if (item.getItemId() == R.id.copy_xml) {
+                @SuppressWarnings("deprecation")
                 ClipboardManager clipboard = (ClipboardManager) getSystemService(CLIPBOARD_SERVICE);
                 clipboard.setText(xml);
                 Toast.makeText(this, "Copied to clipboard.", 5).show();
