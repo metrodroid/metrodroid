@@ -124,4 +124,6 @@
     <string name="subscriptions">Subscriptions</string>
     <string name="info">Info</string>
     <string name="valid_format">Valid %1$s to %2$s</string>
+    <string name="card_note_ezlink">Not compatible with all devices.</string>
+    <string name="card_note_ovchip">Requires encryption keys.</string>
 </resources>
