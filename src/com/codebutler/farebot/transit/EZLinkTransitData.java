@@ -23,6 +23,7 @@
 package com.codebutler.farebot.transit;
 
 import android.os.Parcel;
+import com.codebutler.farebot.ListItem;
 import com.codebutler.farebot.Utils;
 import com.codebutler.farebot.card.cepas.CEPASCard;
 import com.codebutler.farebot.card.cepas.CEPASTransaction;
@@ -505,6 +506,16 @@ public class EZLinkTransitData extends TransitData
 
     @Override
     public Refill[] getRefills () {
+        return null;
+    }
+
+    @Override
+    public Subscription[] getSubscriptions() {
+        return null;
+    }
+
+    @Override
+    public List<ListItem> getInfo() {
         return null;
     }
 

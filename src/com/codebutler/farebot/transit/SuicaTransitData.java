@@ -38,6 +38,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.os.Parcel;
 import android.util.Log;
 import com.codebutler.farebot.FareBotApplication;
+import com.codebutler.farebot.ListItem;
 import com.codebutler.farebot.R;
 import com.codebutler.farebot.card.felica.FelicaBlock;
 import com.codebutler.farebot.card.felica.FelicaCard;
@@ -125,6 +126,16 @@ public class SuicaTransitData extends TransitData {
 
     @Override
     public Refill[] getRefills() {
+        return null;
+    }
+
+    @Override
+    public Subscription[] getSubscriptions() {
+        return null;
+    }
+
+    @Override
+    public List<ListItem> getInfo() {
         return null;
     }
 

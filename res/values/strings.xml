@@ -120,4 +120,8 @@
     <string name="location_the_netherlands">The Netherlands</string>
     <string name="block_title_format">Block: %s</string>
     <string name="sector_title_format">Sector: 0x%s</string>
+
+    <string name="subscriptions">Subscriptions</string>
+    <string name="info">Info</string>
+    <string name="valid_format">Valid %1$s to %2$s</string>
 </resources>

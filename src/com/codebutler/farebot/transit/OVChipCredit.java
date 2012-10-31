@@ -32,16 +32,11 @@ public class OVChipCredit implements Parcelable {
     private final int mCredit;
     private final int mBanbits;
 
-    public OVChipCredit (
-            int id,
-            int creditId,
-            int credit,
-            int banbits
-    ) {
-        mId = id;
+    public OVChipCredit (int id, int creditId, int credit, int banbits) {
+        mId       = id;
         mCreditId = creditId;
-        mCredit = credit;
-        mBanbits = banbits;
+        mCredit   = credit;
+        mBanbits  = banbits;
     }
 
     public OVChipCredit (byte[] data) {
@@ -92,18 +87,11 @@ public class OVChipCredit implements Parcelable {
 
     public static final Parcelable.Creator<OVChipCredit> CREATOR = new Parcelable.Creator<OVChipCredit>() {
         public OVChipCredit createFromParcel(Parcel source) {
-            int id = 0;
-            int creditId = 0;
-            int credit = 0;
-            int banbits = 0;
-
-            id = source.readInt();
-            creditId = source.readInt();
-            credit = source.readInt();
-            banbits = source.readInt();
-
-            return new OVChipCredit(id, creditId,
-                    credit, banbits);
+            int id       = source.readInt();
+            int creditId = source.readInt();
+            int credit   = source.readInt();
+            int banbits  = source.readInt();
+            return new OVChipCredit(id, creditId, credit, banbits);
         }
 
         public OVChipCredit[] newArray (int size) {

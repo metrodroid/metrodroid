@@ -30,9 +30,30 @@ public class OVChipParser {
     private final ClassicCard mCard;
     private final OVChipIndex mIndex;
 
-    public OVChipParser(ClassicCard card) {
+    public OVChipParser(ClassicCard card, OVChipIndex index) {
         mCard  = card;
-        mIndex = new OVChipIndex(mCard.getSector(39).readBlocks(11, 4));
+        mIndex = index;
+    }
+
+    public OVChipPreamble getPreamble () {
+        byte[] data = mCard.getSector(0).readBlocks(0, 3);
+        return new OVChipPreamble(data);
+    }
+
+    public OVChipInfo getInfo () {
+        int blockIndex = mIndex.getRecentInfoSlot();
+
+        int sector = (char)blockIndex == (char)0x580 ? 22 : 23;
+
+        int startBlock = ClassicUtils.convertBytePointerToBlock(blockIndex);
+
+        // FIXME: Clean this up
+        int blockSector = ClassicUtils.blockToSector(startBlock);
+        int firstBlock  = ClassicUtils.sectorToBlock(blockSector);
+        startBlock = startBlock - firstBlock;
+
+        byte[] data = mCard.getSector(sector).readBlocks(startBlock, 3);
+        return new OVChipInfo(data);
     }
 
     public OVChipCredit getCredit () {

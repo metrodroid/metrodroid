@@ -27,7 +27,6 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AbsListView;
 import android.widget.BaseExpandableListAdapter;
 import android.widget.ExpandableListView;
 import android.widget.TextView;
@@ -88,10 +87,7 @@ public class DesfireCardRawDataFragment extends ExpandableListFragment
 
             public View getGroupView (int groupPosition, boolean isExpanded, View convertView, ViewGroup parent) {
                 if (convertView == null) {
-                    convertView = getActivity().getLayoutInflater().inflate(android.R.layout.simple_expandable_list_item_1, null);
-
-                    // FIXME: WTF!!
-                    convertView.setLayoutParams(new AbsListView.LayoutParams(AbsListView.LayoutParams.FILL_PARENT, 80));
+                    convertView = getActivity().getLayoutInflater().inflate(android.R.layout.simple_expandable_list_item_1, parent, false);
                 }
 
                 TextView textView = (TextView) convertView.findViewById(android.R.id.text1);
@@ -105,8 +101,7 @@ public class DesfireCardRawDataFragment extends ExpandableListFragment
 
             public View getChildView (int groupPosition, int childPosition, boolean isLastChild, View convertView, ViewGroup parent) {
                 if (convertView == null) {
-                    convertView = getActivity().getLayoutInflater().inflate(android.R.layout.simple_expandable_list_item_2, null);
-                    convertView.setLayoutParams(new AbsListView.LayoutParams(AbsListView.LayoutParams.FILL_PARENT, AbsListView.LayoutParams.WRAP_CONTENT));
+                    convertView = getActivity().getLayoutInflater().inflate(android.R.layout.simple_expandable_list_item_2, parent, false);
                 }
 
                 TextView textView1 = (TextView) convertView.findViewById(android.R.id.text1);

@@ -1,7 +1,7 @@
 /*
- * TransitData.java
+ * ListItem.java
  *
- * Copyright (C) 2011 Eric Butler
+ * Copyright (C) 2012 Eric Butler
  *
  * Authors:
  * Eric Butler <eric@codebutler.com>
@@ -20,24 +20,22 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.codebutler.farebot.transit;
+package com.codebutler.farebot;
 
-import android.os.Parcelable;
-import com.codebutler.farebot.ListItem;
+public class ListItem {
+    protected final String mText1;
+    protected final String mText2;
 
-import java.util.List;
-
-public abstract class TransitData implements Parcelable {
-    public abstract String getBalanceString();
-    public abstract String getSerialNumber();
-    public abstract Trip[] getTrips();
-    public abstract Refill[] getRefills();
-    public abstract Subscription[] getSubscriptions();
-    public abstract List<ListItem> getInfo();
-    public abstract String getCardName();
-
-    public final int describeContents() {
-        return 0;
+    public ListItem(String name, String value) {
+        mText1 = name;
+        mText2 = value;
     }
 
+    public String getText1 () {
+        return mText1;
+    }
+
+    public String getText2 () {
+        return mText2;
+    }
 }

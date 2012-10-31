@@ -23,9 +23,12 @@
 package com.codebutler.farebot.transit;
 
 import android.os.Parcel;
+import com.codebutler.farebot.HeaderListItem;
+import com.codebutler.farebot.ListItem;
 import com.codebutler.farebot.card.Card;
 import com.codebutler.farebot.card.classic.ClassicCard;
 
+import java.text.DateFormat;
 import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -62,41 +65,44 @@ public class OVChipTransitData extends TransitData {
 
     private static Map<Integer, String> sAgencies = new HashMap<Integer, String>() {
         {
-            put(AGENCY_TLS, "Trans Link Systems");
+            put(AGENCY_TLS,        "Trans Link Systems");
             put(AGENCY_CONNEXXION, "Connexxion");
-            put(AGENCY_GVB, "Gemeentelijk Vervoersbedrijf");
-            put(AGENCY_HTM, "Haagsche Tramweg-Maatschappij");
-            put(AGENCY_NS, "Nederlandse Spoorwegen");
-            put(AGENCY_RET, "Rotterdamse Elektrische Tram");
-            put(AGENCY_VEOLIA, "Veolia");
-            put(AGENCY_ARRIVA, "Arriva");
-            put(AGENCY_SYNTUS, "Syntus");
-            put(AGENCY_QBUZZ, "Qbuzz");
-            put(AGENCY_DUO, "Dienst Uitvoering Onderwijs");
-            put(AGENCY_STORE, "Reseller");
+            put(AGENCY_GVB,        "Gemeentelijk Vervoersbedrijf");
+            put(AGENCY_HTM,        "Haagsche Tramweg-Maatschappij");
+            put(AGENCY_NS,         "Nederlandse Spoorwegen");
+            put(AGENCY_RET,        "Rotterdamse Elektrische Tram");
+            put(AGENCY_VEOLIA,     "Veolia");
+            put(AGENCY_ARRIVA,     "Arriva");
+            put(AGENCY_SYNTUS,     "Syntus");
+            put(AGENCY_QBUZZ,      "Qbuzz");
+            put(AGENCY_DUO,        "Dienst Uitvoering Onderwijs");
+            put(AGENCY_STORE,      "Reseller");
         }
     };
 
     private static Map<Integer, String> sShortAgencies = new HashMap<Integer, String>() {
         {
-            put(AGENCY_TLS, "TLS");
-            put(AGENCY_CONNEXXION, "Connexxion");	/* or Breng, Hermes, GVU */
-            put(AGENCY_GVB, "GVB");
-            put(AGENCY_HTM, "HTM");
-            put(AGENCY_NS, "NS");
-            put(AGENCY_RET, "RET");
-            put(AGENCY_VEOLIA, "Veolia");
-            put(AGENCY_ARRIVA, "Arriva");			/* or Aquabus */
-            put(AGENCY_SYNTUS, "Syntus");
-            put(AGENCY_QBUZZ, "Qbuzz");
-            put(AGENCY_DUO, "DUO");
-            put(AGENCY_STORE, "Reseller");			/* used by Albert Heijn, Primera and Hermes busses and maybe even more */
+            put(AGENCY_TLS,        "TLS");
+            put(AGENCY_CONNEXXION, "Connexxion"); /* or Breng, Hermes, GVU */
+            put(AGENCY_GVB,        "GVB");
+            put(AGENCY_HTM,        "HTM");
+            put(AGENCY_NS,         "NS");
+            put(AGENCY_RET,        "RET");
+            put(AGENCY_VEOLIA,     "Veolia");
+            put(AGENCY_ARRIVA,     "Arriva");     /* or Aquabus */
+            put(AGENCY_SYNTUS,     "Syntus");
+            put(AGENCY_QBUZZ,      "Qbuzz");
+            put(AGENCY_DUO,        "DUO");
+            put(AGENCY_STORE,      "Reseller");   /* used by Albert Heijn, Primera and Hermes busses and maybe even more */
         }
     };
 
-    private int                  mBalance;
-    private OVChipTrip[]         mTrips;
-    private OVChipSubscription[] mSubscriptions;
+    private final OVChipIndex          mIndex;
+    private final OVChipPreamble       mPreamble;
+    private final OVChipInfo           mInfo;
+    private final OVChipCredit         mCredit;
+    private final OVChipTrip[]         mTrips;
+    private final OVChipSubscription[] mSubscriptions;
 
     public Creator<OVChipTransitData> CREATOR = new Creator<OVChipTransitData>() {
         public OVChipTransitData createFromParcel(Parcel parcel) {
@@ -119,15 +125,23 @@ public class OVChipTransitData extends TransitData {
     public OVChipTransitData(Parcel parcel) {
         mTrips = new OVChipTrip[parcel.readInt()];
         parcel.readTypedArray(mTrips, OVChipTrip.CREATOR);
+
         mSubscriptions = new OVChipSubscription[parcel.readInt()];
         parcel.readTypedArray(mSubscriptions, OVChipSubscription.CREATOR);
-        mBalance = parcel.readInt();
+
+        mIndex    = parcel.readParcelable(OVChipIndex.class.getClassLoader());
+        mPreamble = parcel.readParcelable(OVChipPreamble.class.getClassLoader());
+        mInfo     = parcel.readParcelable(OVChipInfo.class.getClassLoader());
+        mCredit   = parcel.readParcelable(OVChipCredit.class.getClassLoader());
     }
 
     public OVChipTransitData(ClassicCard card) {
-        OVChipParser parser = new OVChipParser(card);
+        mIndex = new OVChipIndex(card.getSector(39).readBlocks(11, 4));
 
-        mBalance = parser.getCredit().getCredit();
+        OVChipParser parser = new OVChipParser(card, mIndex);
+        mCredit   = parser.getCredit();
+        mPreamble = parser.getPreamble();
+        mInfo     = parser.getInfo();
 
         List<OVChipTransaction> alltransactions = new ArrayList<OVChipTransaction>(Arrays.asList(parser.getTransactions()));
         Collections.sort(alltransactions, ID_ORDER);
@@ -174,6 +188,12 @@ public class OVChipTransitData extends TransitData {
         }
 
         subs.addAll(Arrays.asList(parser.getSubscriptions()));
+        Collections.sort(subs, new Comparator<OVChipSubscription>() {
+            @Override
+            public int compare(OVChipSubscription s1, OVChipSubscription s2) {
+                return Integer.valueOf(s1.getId()).compareTo(s2.getId());
+            }
+        });
 
         mTrips = trips.toArray(new OVChipTrip[trips.size()]);
         mSubscriptions = subs.toArray(new OVChipSubscription[subs.size()]);
@@ -237,12 +257,15 @@ public class OVChipTransitData extends TransitData {
         parcel.writeTypedArray(mTrips, flags);
         parcel.writeInt(mSubscriptions.length);
         parcel.writeTypedArray(mSubscriptions, flags);
-        parcel.writeInt(mBalance);
+        parcel.writeParcelable(mIndex, flags);
+        parcel.writeParcelable(mPreamble, flags);
+        parcel.writeParcelable(mInfo, flags);
+        parcel.writeParcelable(mCredit, flags);
     }
 
     @Override
     public String getBalanceString() {
-        return OVChipTransitData.convertAmount(mBalance);
+        return OVChipTransitData.convertAmount(mCredit.getCredit());
     }
 
     @Override
@@ -262,5 +285,44 @@ public class OVChipTransitData extends TransitData {
 
     public Subscription[] getSubscriptions() {
         return mSubscriptions;
+    }
+
+    @Override
+    public List<ListItem> getInfo() {
+        ArrayList<ListItem> items = new ArrayList<ListItem>();
+
+    	items.add(new HeaderListItem("Hardware Information"));
+        items.add(new ListItem("Manufacturer ID", mPreamble.getManufacturer()));
+        items.add(new ListItem("Publisher ID",    mPreamble.getPublisher()));
+
+    	items.add(new HeaderListItem("General Information"));
+        items.add(new ListItem("Serial Number",   mPreamble.getId()));
+        items.add(new ListItem("Expiration Date", DateFormat.getDateInstance(DateFormat.LONG).format(OVChipTransitData.convertDate(mPreamble.getExpdate()))));
+        items.add(new ListItem("Card Type",       (mPreamble.getType() == 2 ? "Personal" : "Anonymous")));
+
+        items.add(new ListItem("Banned", ((mCredit.getBanbits() & (byte)0xC0) == (byte)0xC0) ? "Yes" : "No"));
+
+        // FIXME: Care about this?
+     	items.add(new HeaderListItem("Recent Slots"));
+     	items.add(new ListItem("Transaction Slot",		"0x" + Integer.toHexString((char)mIndex.getRecentTransactionSlot())));
+     	items.add(new ListItem("Info Slot",				"0x" + Integer.toHexString((char)mIndex.getRecentInfoSlot())));
+     	items.add(new ListItem("Subscription Slot",		"0x" + Integer.toHexString((char)mIndex.getRecentSubscriptionSlot())));
+     	items.add(new ListItem("Travelhistory Slot",	"0x" + Integer.toHexString((char)mIndex.getRecentTravelhistorySlot())));
+     	items.add(new ListItem("Credit Slot",			"0x" + Integer.toHexString((char)mIndex.getRecentCreditSlot())));
+
+     	if (mPreamble.getType() == 2) {
+      	    items.add(new HeaderListItem("Personal Information"));
+      	    items.add(new ListItem("Birthdate",     DateFormat.getDateInstance(DateFormat.LONG).format(mInfo.getBirthdate())));
+        }
+
+     	items.add(new HeaderListItem("Credit Information"));
+     	items.add(new ListItem("Credit Slot ID",	Integer.toString(mCredit.getId())));
+     	items.add(new ListItem("Last Credit ID",	Integer.toString(mCredit.getCreditId())));
+     	items.add(new ListItem("Credit",			OVChipTransitData.convertAmount(mCredit.getCredit())));
+     	items.add(new ListItem("Autocharge",		(mInfo.getActive() == (byte)0x05 ? "Yes" : "No")));
+     	items.add(new ListItem("Autocharge Limit",	OVChipTransitData.convertAmount(mInfo.getLimit())));
+     	items.add(new ListItem("Autocharge Charge",	OVChipTransitData.convertAmount(mInfo.getCharge())));
+
+        return items;
     }
 }

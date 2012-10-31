@@ -22,15 +22,10 @@
 
 package com.codebutler.farebot.fragments;
 
-import android.content.Context;
 import android.os.Bundle;
-import android.util.Log;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
-import android.widget.TextView;
 import com.actionbarsherlock.app.SherlockListFragment;
-import com.codebutler.farebot.R;
+import com.codebutler.farebot.HeaderListItem;
+import com.codebutler.farebot.ListItem;
 import com.codebutler.farebot.Utils;
 import com.codebutler.farebot.activities.AdvancedCardInfoActivity;
 import com.codebutler.farebot.card.Card;
@@ -118,111 +113,8 @@ public class CardHWDetailFragment extends SherlockListFragment
             FelicaCard card = (FelicaCard) mCard;
             items.add(new ListItem("IDm", Utils.getHexString(card.getIDm().getBytes(), "err")));
             items.add(new ListItem("PMm", Utils.getHexString(card.getPMm().getBytes(), "err")));
-        } else if (mCard.getCardType() == CardType.MifareClassic) {
-            /*
-        	OVChipCard card = (OVChipCard)mCard;
-
-        	 * TODO: Get the following somewhere (they don't need access to the actual tag):
-//        	 * Log.d("INFO", "Blocks: " + tech.getBlockCount());
-//        	 * Log.d("INFO", "Sectors: " + tech.getSectorCount());
-//        	 * Log.d("INFO", "Size: " + tech.getSize());
-//        	 * Log.d("INFO", "Type: " + tech.getType());
-
-        	items.add(new HeaderListItem("Hardware Information"));
-        	items.add(new ListItem("Manufacturer ID",	card.getOVChipPreamble().getManufacturer()));
-        	items.add(new ListItem("Publisher ID",      card.getOVChipPreamble().getPublisher()));
-        	//items.add(new ListItem("Type",      .....));
-        	//items.add(new ListItem("Blocks",      .....));
-        	//items.add(new ListItem("Sectors",      .....));
-        	//items.add(new ListItem("Size",      .....));
-
-        	items.add(new HeaderListItem("General Information"));
-	        items.add(new ListItem("Serial Number",		card.getOVChipPreamble().getId()));
-	        items.add(new ListItem("Expiration Date",	DateFormat.getDateInstance(DateFormat.LONG).format(OVChipTransitData.convertDate(card.getOVChipPreamble().getExpdate()))));
-	        items.add(new ListItem("Card Type",			(card.getOVChipPreamble().getType() == 2 ? "Personal" : "Anonymous")));
-
-	        if (card.getComplete()) {
-		        items.add(new ListItem("Banned", ((card.getOVChipCredit().getBanbits() & (byte)0xC0) == (byte)0xC0) ? "Yes" : "No"));
-
-	        	items.add(new HeaderListItem("Recent Slots"));
-	        	items.add(new ListItem("Transaction Slot",		"0x" + Integer.toHexString((char)card.getOVChipIndex().getRecentTransactionSlot())));
-	        	items.add(new ListItem("Info Slot",				"0x" + Integer.toHexString((char)card.getOVChipIndex().getRecentInfoSlot())));
-	        	items.add(new ListItem("Subscription Slot",		"0x" + Integer.toHexString((char)card.getOVChipIndex().getRecentSubscriptionSlot())));
-	        	items.add(new ListItem("Travelhistory Slot",	"0x" + Integer.toHexString((char)card.getOVChipIndex().getRecentTravelhistorySlot())));
-	        	items.add(new ListItem("Credit Slot",			"0x" + Integer.toHexString((char)card.getOVChipIndex().getRecentCreditSlot())));
-
-	        	if (card.getOVChipPreamble().getType() == 2)
-	        	{
-		        	items.add(new HeaderListItem("Personal Information"));
-		        	items.add(new ListItem("Birthdate",     DateFormat.getDateInstance(DateFormat.LONG).format(card.getOVChipInfo().getBirthdate())));
-		        }
-
-	        	items.add(new HeaderListItem("Credit Information"));
-	        	items.add(new ListItem("Credit Slot ID",	Integer.toString(card.getOVChipCredit().getId())));
-	        	items.add(new ListItem("Last Credit ID",	Integer.toString(card.getOVChipCredit().getCreditId())));
-	        	items.add(new ListItem("Credit",			OVChipTransitData.convertAmount(card.getOVChipCredit().getCredit())));
-	        	items.add(new ListItem("Autocharge",		(card.getOVChipInfo().getActive() == (byte)0x05 ? "Yes" : "No")));
-	        	items.add(new ListItem("Autocharge Limit",	OVChipTransitData.convertAmount(card.getOVChipInfo().getLimit())));
-	        	items.add(new ListItem("Autocharge Charge",	OVChipTransitData.convertAmount(card.getOVChipInfo().getCharge())));
-        	}
-        	*/
         }
 
-        setListAdapter(new HWDetailListAdapter(getActivity(), items));
-    }
-
-    private class HWDetailListAdapter extends ArrayAdapter<ListItem> {
-        private HWDetailListAdapter (Context context, List<ListItem> items)
-        {
-            super(context, 0, items);
-        }
-
-        @Override
-        public View getView (int position, View convertView, ViewGroup parent)
-        {
-            ListItem item = (ListItem) getListAdapter().getItem(position);
-            if (convertView != null) {
-                Log.i("CardHWDetailFragment", "ID: " + convertView.getId());
-            }
-            if (item instanceof HeaderListItem) {
-                if (convertView == null || convertView.getId() != android.R.id.text1)
-                    convertView = getActivity().getLayoutInflater().inflate(R.layout.list_header, null);
-                ((TextView) convertView.findViewById(android.R.id.text1)).setText(item.getText1());
-            } else {
-                if (convertView == null || convertView.getId() == android.R.id.text1)
-                    convertView = getActivity().getLayoutInflater().inflate(android.R.layout.simple_list_item_2, null);
-                ((TextView) convertView.findViewById(android.R.id.text1)).setText(item.getText1());
-                ((TextView) convertView.findViewById(android.R.id.text2)).setText(item.getText2());
-            }
-            return convertView;
-        }
-    }
-
-    private class ListItem
-    {
-        protected final String mText1;
-        protected final String mText2;
-
-        public ListItem (String name, String value)
-        {
-            mText1 = name;
-            mText2 = value;
-        }
-
-        public String getText1 () {
-            return mText1;
-        }
-
-        public String getText2 () {
-            return mText2;
-        }
-    }
-
-    private class HeaderListItem extends ListItem
-    {
-        public HeaderListItem (String title)
-        {
-            super(title, null);
-        }
+        setListAdapter(new ListItemAdapter(getActivity(), items));
     }
 }

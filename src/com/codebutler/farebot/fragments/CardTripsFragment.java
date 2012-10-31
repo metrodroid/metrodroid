@@ -41,7 +41,6 @@ import com.codebutler.farebot.activities.CardInfoActivity;
 import com.codebutler.farebot.activities.TripMapActivity;
 import com.codebutler.farebot.card.Card;
 import com.codebutler.farebot.transit.OrcaTransitData;
-import com.codebutler.farebot.transit.SuicaTransitData;
 import com.codebutler.farebot.transit.TransitData;
 import com.codebutler.farebot.transit.Trip;
 import org.apache.commons.lang.StringUtils;
@@ -98,7 +97,7 @@ public class CardTripsFragment extends SherlockListFragment {
             LayoutInflater inflater = activity.getLayoutInflater();
 
             if (convertView == null) {
-                convertView = inflater.inflate(R.layout.trip_item, null);
+                convertView = inflater.inflate(R.layout.trip_item, parent, false);
             }
 
             Trip trip = getItem(position);
@@ -176,6 +175,12 @@ public class CardTripsFragment extends SherlockListFragment {
             }
 
             return convertView;
+        }
+
+        @Override
+        public boolean isEnabled(int position) {
+            Trip trip = getItem(position);
+            return Trip.hasLocation(trip.getStartStation()) || Trip.hasLocation(trip.getEndStation());
         }
 
         private boolean isFirstInSection(int position) {

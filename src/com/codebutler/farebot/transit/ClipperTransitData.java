@@ -27,6 +27,7 @@
 package com.codebutler.farebot.transit;
 
 import android.os.Parcel;
+import com.codebutler.farebot.ListItem;
 import com.codebutler.farebot.Utils;
 import com.codebutler.farebot.card.Card;
 import com.codebutler.farebot.card.desfire.DesfireCard;
@@ -225,6 +226,16 @@ public class ClipperTransitData extends TransitData
 
     public ClipperRefill[] getRefills () {
         return mRefills;
+    }
+
+    @Override
+    public Subscription[] getSubscriptions() {
+        return null;
+    }
+
+    @Override
+    public List<ListItem> getInfo() {
+        return null;
     }
 
     private ClipperTrip[] parseTrips (DesfireCard card)
