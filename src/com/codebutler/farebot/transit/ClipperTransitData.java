@@ -27,7 +27,9 @@
 package com.codebutler.farebot.transit;
 
 import android.os.Parcel;
+import com.codebutler.farebot.FareBotApplication;
 import com.codebutler.farebot.ListItem;
+import com.codebutler.farebot.R;
 import com.codebutler.farebot.Utils;
 import com.codebutler.farebot.card.Card;
 import com.codebutler.farebot.card.desfire.DesfireCard;
@@ -366,19 +368,18 @@ public class ClipperTransitData extends TransitData
         }
     }
 
-    public static String getAgencyName(int agency)
-    {
+    public static String getAgencyName(int agency) {
         if (sAgencies.containsKey(agency)) {
             return sAgencies.get(agency);
         }
-        return "Unknown Agency (0x" + Long.toString(agency, 16) + ")";
+        return FareBotApplication.getInstance().getString(R.string.unknown_format, "0x" + Long.toString(agency, 16));
     }
 
     public static String getShortAgencyName (int agency) {
         if (sShortAgencies.containsKey(agency)) {
             return sShortAgencies.get(agency);
         }
-        return "UNK(0x" + Long.toString(agency, 16) + ")";
+        return FareBotApplication.getInstance().getString(R.string.unknown_format, "0x" + Long.toString(agency, 16));
     }
 
     public void writeToParcel(Parcel parcel, int flags) {

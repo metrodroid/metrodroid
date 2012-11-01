@@ -26,7 +26,15 @@ import android.os.Parcel;
 import android.os.Parcelable;
 import com.codebutler.farebot.Utils;
 
+import java.util.Comparator;
+
 public class OVChipTransaction implements Parcelable {
+    public static final Comparator<OVChipTransaction> ID_ORDER = new Comparator<OVChipTransaction>() {
+        public int compare(OVChipTransaction t1, OVChipTransaction t2) {
+            return (t1.getId() < t2.getId() ? -1 : (t1.getId() == t2.getId() ? 0 : 1));
+        }
+    };
+
     private final int mTransactionSlot;
     private final int mDate;
     private final int mTime;
@@ -356,5 +364,34 @@ public class OVChipTransaction implements Parcelable {
             parcel.writeInt(mUnknownConstant);
             parcel.writeInt(mUnknownConstant2);
         }
+    }
+
+    public boolean isSameTrip(OVChipTransaction nextTransaction) {
+        /*
+         * Information about checking in and out:
+         * http://www.chipinfo.nl/inchecken/
+         */
+
+        if (mCompany == nextTransaction.getCompany() && mTransfer == OVChipTransitData.PROCESS_CHECKIN && nextTransaction.getTransfer() == OVChipTransitData.PROCESS_CHECKOUT) {
+            if (mDate == nextTransaction.getDate()) {
+                return true;
+            } else if (mDate == nextTransaction.getDate() - 1) {
+                // All NS trips get reset at 4 AM (except if it's a night train, but that's out of our scope).
+                if (mCompany == OVChipTransitData.AGENCY_NS && nextTransaction.getTime() < 240) {
+                    return true;
+                }
+
+                /*
+                 * Some companies expect a checkout at the maximum of 15 minutes after the estimated arrival at the endstation of the line.
+                 * But it's hard to determine the length of every single trip there is, so for now let's just assume a checkout at the next
+                 * day is still from the same trip. Better solutions are always welcome ;)
+                 */
+                if (mCompany != OVChipTransitData.AGENCY_NS) {
+                    return true;
+                }
+            }
+        }
+
+        return false;
     }
 }

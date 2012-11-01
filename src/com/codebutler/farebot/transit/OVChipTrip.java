@@ -25,15 +25,23 @@ package com.codebutler.farebot.transit;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Parcel;
+import android.text.TextUtils;
 import android.util.Log;
 import com.codebutler.farebot.FareBotApplication;
 
 import java.util.Date;
 
 public class OVChipTrip extends Trip {
-    private boolean mSame;
-    private final int mProcessType;
-    private final int mAgency;
+    public static final java.util.Comparator<? super OVChipTrip> ID_ORDER =  new java.util.Comparator<OVChipTrip>() {
+        @Override
+        public int compare(OVChipTrip t1, OVChipTrip t2) {
+            return Integer.valueOf(t1.getId()).compareTo(t2.getId());
+        }
+    };
+
+    private final int     mId;
+    private final int     mProcessType;
+    private final int     mAgency;
     private final boolean mIsBus;
     private final boolean mIsTrain;
     private final boolean mIsMetro;
@@ -42,105 +50,58 @@ public class OVChipTrip extends Trip {
     private final boolean mIsCharge;
     private final boolean mIsPurchase;
     private final boolean mIsBanned;
-    private final Date mTimestamp;
-    private long mFare;
-    private Date mExitTimestamp;
-    private Station mStartStation;
-    private Station mEndStation;
-    private String mStartStationName;
-    private String mEndStationName;
-    private int mStationId;
+    private final Date    mTimestamp;
+    private final long    mFare;
+    private final Date    mExitTimestamp;
+    private final Station mStartStation;
+    private final Station mEndStation;
+    private final int     mStartStationId;
+    private final int     mEndStationId;
 
-    public OVChipTrip(OVChipTransaction ovchipTransaction, OVChipTransaction prevTransaction, OVChipTransaction nextTransaction) {
-        boolean hasStation = false;
-        mSame = false;
-        mExitTimestamp = null;
-        mProcessType = ovchipTransaction.getTransfer();
-        mAgency = ovchipTransaction.getCompany();
+    public OVChipTrip(OVChipTransaction transaction) {
+        this(transaction, null);
+    }
 
-        mStationId = ovchipTransaction.getStation();
+    public OVChipTrip(OVChipTransaction inTransaction, OVChipTransaction outTransaction) {
+        mId = inTransaction.getId();
 
-        mIsTrain = mAgency == OVChipTransitData.AGENCY_NS || (mAgency == OVChipTransitData.AGENCY_ARRIVA && mStationId < 800);
-        mIsMetro = (mAgency == OVChipTransitData.AGENCY_GVB && mStationId < 3000) || (mAgency == OVChipTransitData.AGENCY_RET && mStationId < 3000);	// TODO: Needs verification!
+        mProcessType = inTransaction.getTransfer();
+        mAgency = inTransaction.getCompany();
+
+        mTimestamp = OVChipTransitData.convertDate(inTransaction.getDate(), inTransaction.getTime());
+
+        mStartStationId = inTransaction.getStation();
+        mStartStation = getStation(mAgency, mStartStationId);
+
+        if (outTransaction != null) {
+            mEndStation    = getStation(mAgency, outTransaction.getStation());
+            mEndStationId  = outTransaction.getStation();
+            mExitTimestamp = OVChipTransitData.convertDate(outTransaction.getDate(), outTransaction.getTime());
+            mFare          = outTransaction.getAmount();
+        } else {
+            mEndStation    = null;
+            mEndStationId  = 0;
+            mExitTimestamp = null;
+            mFare          = inTransaction.getAmount();
+        }
+
+        mIsTrain = mAgency == OVChipTransitData.AGENCY_NS || (mAgency == OVChipTransitData.AGENCY_ARRIVA && mStartStationId < 800);
+        mIsMetro = (mAgency == OVChipTransitData.AGENCY_GVB && mStartStationId < 3000) || (mAgency == OVChipTransitData.AGENCY_RET && mStartStationId < 3000);	// TODO: Needs verification!
         mIsOther = mAgency == OVChipTransitData.AGENCY_TLS || mAgency == OVChipTransitData.AGENCY_DUO || mAgency == OVChipTransitData.AGENCY_STORE;
-        mIsFerry = mAgency == OVChipTransitData.AGENCY_ARRIVA && (mStationId > 4600 && mStationId < 4700);	// TODO: Needs verification!
+        mIsFerry = mAgency == OVChipTransitData.AGENCY_ARRIVA && (mStartStationId > 4600 && mStartStationId < 4700);	// TODO: Needs verification!
 
+        // FIXME: Clean this up
         //mIsBusOrTram = (mAgency == AGENCY_GVB || mAgency == AGENCY_HTM || mAgency == AGENCY_RET && (!mIsMetro));
         //mIsBusOrTrain = mAgency == AGENCY_VEOLIA || mAgency == AGENCY_SYNTUS;
 
-        /*
-         * Everything else will be a bus, although this is not correct.
-         * The only way to determine them would be to collect every single 'ovcid' out there :(
-         */
+        // Everything else will be a bus, although this is not correct.
+        // The only way to determine them would be to collect every single 'ovcid' out there :(
         mIsBus = (!mIsTrain && !mIsMetro && !mIsOther && !mIsFerry);
 
         mIsCharge = mProcessType == OVChipTransitData.PROCESS_CREDIT || mProcessType == OVChipTransitData.PROCESS_TRANSFER;
         mIsPurchase = mProcessType == OVChipTransitData.PROCESS_PURCHASE;
 
         mIsBanned = mProcessType == OVChipTransitData.PROCESS_BANNED; // TODO: Needs icon, could use: http://thenounproject.com/noun/no-entry/#icon-No42
-
-        mTimestamp = OVChipTransitData.convertDate(ovchipTransaction.getDate(), ovchipTransaction.getTime());
-        mFare = ovchipTransaction.getAmount();
-
-        if (nextTransaction != null) {
-            if (mAgency == nextTransaction.getCompany() && mProcessType == OVChipTransitData.PROCESS_CHECKIN && nextTransaction.getTransfer() == OVChipTransitData.PROCESS_CHECKOUT ) {
-                if (isSameTrip(ovchipTransaction.getDate(), nextTransaction.getDate(), ovchipTransaction.getTime(), nextTransaction.getTime(), mAgency)) {
-                    mStartStation = getStation(mAgency, mStationId);
-                    mEndStation = getStation(mAgency, nextTransaction.getStation());
-                    mExitTimestamp = OVChipTransitData.convertDate(nextTransaction.getDate(), nextTransaction.getTime());
-
-                    mFare = nextTransaction.getAmount();
-
-                    hasStation = true;
-                }
-            }
-        }
-
-        if (prevTransaction != null && hasStation != true) {
-            if (mAgency == prevTransaction.getCompany() && mProcessType == OVChipTransitData.PROCESS_CHECKOUT && prevTransaction.getTransfer() == OVChipTransitData.PROCESS_CHECKIN ) {
-                if (isSameTrip(prevTransaction.getDate(), ovchipTransaction.getDate(), prevTransaction.getTime(), ovchipTransaction.getTime(), mAgency)) {
-                    mSame = true;
-
-                    return;
-                }
-            }
-        }
-
-        if (hasStation != true)
-            mStartStation = getStation(mAgency, mStationId);
-
-        if (mStartStation != null)
-            mStartStationName = mStartStation.getStationName();
-
-        if (mEndStation != null)
-            mEndStationName = mEndStation.getStationName();
-    }
-
-    private boolean isSameTrip(int date, int nextDate, int time, int nextTime, int company) {
-        /*
-         * Information about checking in and out:
-         * http://www.chipinfo.nl/inchecken/
-         */
-
-        if (date == nextDate)
-            return true;
-
-        if (date == nextDate + 1)
-        {
-            // All NS trips get reset at 4 AM (except if it's a night train, but that's out of our scope).
-            if (company == OVChipTransitData.AGENCY_NS && nextTime < 240)
-                return true;
-
-            /*
-             * Some companies expect a checkout at the maximum of 15 minutes after the estimated arrival at the endstation of the line.
-             * But it's hard to determine the length of every single trip there is, so for now let's just assume a checkout at the next
-             * day is still from the same trip. Better solutions are always welcome ;)
-             */
-            if (company != OVChipTransitData.AGENCY_NS)
-                return true;
-        }
-
-        return false;
     }
 
     public static Creator<OVChipTrip> CREATOR = new Creator<OVChipTrip>() {
@@ -154,7 +115,9 @@ public class OVChipTrip extends Trip {
     };
 
     public OVChipTrip(Parcel parcel) {
-        mSame = (parcel.readInt() == 1);
+        mId = parcel.readInt();
+
+//        mSame = (parcel.readInt() == 1);
 
         mProcessType = parcel.readInt();
         mAgency = parcel.readInt();
@@ -171,17 +134,25 @@ public class OVChipTrip extends Trip {
         mFare = parcel.readLong();
         mTimestamp = new Date(parcel.readLong());
 
-        if (parcel.readInt() == 1)
+        if (parcel.readInt() == 1) {
             mExitTimestamp = new Date(parcel.readLong());
+        } else {
+            mExitTimestamp = null;
+        }
 
-        if (parcel.readInt() == 1)
+        mStartStationId = parcel.readInt();
+        if (parcel.readInt() == 1) {
             mStartStation = parcel.readParcelable(Station.class.getClassLoader());
+        } else {
+            mStartStation = null;
+        }
 
-        if (parcel.readInt() == 1)
+        mEndStationId = parcel.readInt();
+        if (parcel.readInt() == 1) {
             mEndStation = parcel.readParcelable(Station.class.getClassLoader());
-
-        mStartStationName = parcel.readString();
-        mEndStationName = parcel.readString();
+        } else {
+            mEndStation = null;
+        }
     }
 
     @Override
@@ -191,7 +162,9 @@ public class OVChipTrip extends Trip {
 
     @Override
     public void writeToParcel(Parcel parcel, int flags) {
-        parcel.writeInt(mSame ? 1 : 0);
+        parcel.writeInt(mId);
+
+//        parcel.writeInt(mSame ? 1 : 0);
 
         parcel.writeInt(mProcessType);
         parcel.writeInt(mAgency);
@@ -215,6 +188,7 @@ public class OVChipTrip extends Trip {
             parcel.writeInt(0);
         }
 
+        parcel.writeInt(mStartStationId);
         if (mStartStation != null) {
             parcel.writeInt(1);
             parcel.writeParcelable(mStartStation, flags);
@@ -222,15 +196,17 @@ public class OVChipTrip extends Trip {
             parcel.writeInt(0);
         }
 
+        parcel.writeInt(mEndStationId);
         if (mEndStation != null) {
             parcel.writeInt(1);
             parcel.writeParcelable(mEndStation, flags);
         } else {
             parcel.writeInt(0);
         }
+    }
 
-        parcel.writeString(mStartStationName);
-        parcel.writeString(mEndStationName);
+    public int getId() {
+        return mId;
     }
 
     @Override
@@ -255,10 +231,10 @@ public class OVChipTrip extends Trip {
 
     @Override
     public String getStartStationName() {
-        if (mStartStationName != null) {
-            return mStartStationName;
+        if (mStartStation != null && !TextUtils.isEmpty(mStartStation.getStationName())) {
+            return mStartStation.getStationName();
         } else {
-            return String.format("Unknown (%s)", mStationId);
+            return String.format("Unknown (%s)", mStartStationId);
         }
     }
 
@@ -269,12 +245,10 @@ public class OVChipTrip extends Trip {
 
     @Override
     public String getEndStationName() {
-        if (mEndStationName != null)
-            return mEndStationName;
-        else if (mEndStation != null)
-            return "Unknown";
-        else
-            return null;
+        if (mEndStation != null && !TextUtils.isEmpty(mEndStation.getStationName())) {
+            return mEndStation.getStationName();
+        }
+        return null;
     }
 
     @Override
@@ -328,11 +302,6 @@ public class OVChipTrip extends Trip {
     @Override
     public String getFareString() {
         return OVChipTransitData.convertAmount((int)mFare);
-    }
-
-    // FIXME: Remove this.
-    public boolean isSame() {
-        return mSame;
     }
 
     private static Station getStation(int companyCode, int stationCode) {

@@ -23,8 +23,10 @@
 package com.codebutler.farebot.transit;
 
 import android.os.Parcel;
+import com.codebutler.farebot.FareBotApplication;
 import com.codebutler.farebot.HeaderListItem;
 import com.codebutler.farebot.ListItem;
+import com.codebutler.farebot.R;
 import com.codebutler.farebot.card.Card;
 import com.codebutler.farebot.card.classic.ClassicCard;
 
@@ -143,50 +145,34 @@ public class OVChipTransitData extends TransitData {
         mPreamble = parser.getPreamble();
         mInfo     = parser.getInfo();
 
-        List<OVChipTransaction> alltransactions = new ArrayList<OVChipTransaction>(Arrays.asList(parser.getTransactions()));
-        Collections.sort(alltransactions, ID_ORDER);
+        List<OVChipTransaction> transactions = new ArrayList<OVChipTransaction>(Arrays.asList(parser.getTransactions()));
+        Collections.sort(transactions, OVChipTransaction.ID_ORDER);
 
-        List<OVChipTransaction> transactions = new ArrayList<OVChipTransaction>();
         List<OVChipTrip> trips = new ArrayList<OVChipTrip>();
-        List<OVChipSubscription> subs = new ArrayList<OVChipSubscription>();
-
-        // Sort the transactions and discard the duplicates (could use a much needed rewrite...)
-        for (int i = 0; i < alltransactions.size(); i++) {
-            OVChipTransaction transaction = alltransactions.get(i);
-            OVChipTransaction prevTransaction;
-
-            if (transaction.getValid() != 1 || transaction.getTransfer() == PROCESS_NODATA)
-                continue;
-
-            if (i != 0) {
-                prevTransaction = alltransactions.get(i - 1);
-
-                if (transaction.getId() == prevTransaction.getId())
-                    continue;
-            }
-
-            transactions.add(transaction);
-        }
 
         for (int i = 0; i < transactions.size(); i++) {
             OVChipTransaction transaction = transactions.get(i);
-            OVChipTransaction prevTransaction = null;
-            OVChipTransaction nextTransaction = null;
 
-            if (i != 0) {
-                prevTransaction = transactions.get(i - 1);
+            if (transaction.getValid() != 1) {
+                continue;
             }
 
-            if (i < transactions.size() - 1) {
-                nextTransaction = transactions.get(i + 1);
+            if (i < (transactions.size() - 1)) {
+                OVChipTransaction nextTransaction = transactions.get(i + 1);
+                if (transaction.isSameTrip(nextTransaction)) {
+                    trips.add(new OVChipTrip(transaction, nextTransaction));
+                    i++;
+                    continue;
+                }
             }
 
-            OVChipTrip trip = new OVChipTrip(transaction, prevTransaction, nextTransaction);
-            if (!trip.isSame()) {
-               trips.add(trip);
-            }
+            trips.add(new OVChipTrip(transaction));
         }
 
+        Collections.sort(trips, OVChipTrip.ID_ORDER);
+        mTrips = trips.toArray(new OVChipTrip[trips.size()]);
+
+        List<OVChipSubscription> subs = new ArrayList<OVChipSubscription>();
         subs.addAll(Arrays.asList(parser.getSubscriptions()));
         Collections.sort(subs, new Comparator<OVChipSubscription>() {
             @Override
@@ -195,24 +181,14 @@ public class OVChipTransitData extends TransitData {
             }
         });
 
-        mTrips = trips.toArray(new OVChipTrip[trips.size()]);
         mSubscriptions = subs.toArray(new OVChipSubscription[subs.size()]);
     }
-
-    private static final Comparator<OVChipTransaction> ID_ORDER = new Comparator<OVChipTransaction>() {
-        public int compare(OVChipTransaction t1, OVChipTransaction t2) {
-            return (t1.getId() < t2.getId() ? -1 : (t1.getId() == t2.getId() ? 0 : 1));
-        }
-    };
 
     public static Date convertDate(int date) {
         return convertDate(date, 0);
     }
 
     public static Date convertDate(int date, int time) {
-        if (date == 0)
-            return null;
-
         Calendar calendar = Calendar.getInstance();
         calendar.set(Calendar.YEAR, 1997);
         calendar.set(Calendar.MONTH, Calendar.JANUARY);
@@ -241,14 +217,14 @@ public class OVChipTransitData extends TransitData {
         if (sAgencies.containsKey(agency)) {
             return sAgencies.get(agency);
         }
-        return "Unknown Agency (0x" + Long.toString(agency, 16) + ")";
+        return FareBotApplication.getInstance().getString(R.string.unknown_format, "0x" + Long.toString(agency, 16));
     }
 
     public static String getShortAgencyName (int agency) {
         if (sShortAgencies.containsKey(agency)) {
             return sShortAgencies.get(agency);
         }
-        return "UNK(0x" + Long.toString(agency, 16) + ")";
+        return FareBotApplication.getInstance().getString(R.string.unknown_format, "0x" + Long.toString(agency, 16));
     }
 
     @Override

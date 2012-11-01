@@ -76,14 +76,15 @@ public class OVChipParser {
     }
 
     private byte[] readTransaction (int transactionId) {
+        int blockIndex = (transactionId % 7) * 2;
         if (transactionId <= 6){
-            return mCard.getSector(35).readBlocks((transactionId * 2), 2);
+            return mCard.getSector(35).readBlocks(blockIndex, 2);
         } else if (transactionId >= 7 && transactionId <= 13) {
-            return mCard.getSector(36).readBlocks((transactionId - 7) * 2, 2);
+            return mCard.getSector(36).readBlocks(blockIndex, 2);
         } else if (transactionId >= 14 && transactionId <= 20) {
-            return mCard.getSector(37).readBlocks((transactionId - 14) * 2, 2);
+            return mCard.getSector(37).readBlocks(blockIndex, 2);
         } else if (transactionId >= 21 && transactionId <= 27) {
-            return mCard.getSector(38).readBlocks((transactionId - 21) * 2, 2);
+            return mCard.getSector(38).readBlocks(blockIndex, 2);
         } else {
             throw new IllegalArgumentException("Invalid transactionId: " + transactionId);
         }
