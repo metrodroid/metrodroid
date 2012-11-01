@@ -40,6 +40,7 @@ import com.codebutler.farebot.CardHasManufacturingInfo;
 import com.codebutler.farebot.CardRawDataFragmentClass;
 import com.codebutler.farebot.R;
 import com.codebutler.farebot.TabPagerAdapter;
+import com.codebutler.farebot.UnauthorizedException;
 import com.codebutler.farebot.UnsupportedCardException;
 import com.codebutler.farebot.Utils;
 import com.codebutler.farebot.card.Card;
@@ -92,6 +93,8 @@ public class AdvancedCardInfoActivity extends SherlockFragmentActivity
             mError = (Exception) getIntent().getSerializableExtra(EXTRA_ERROR);
             if (mError instanceof UnsupportedCardException) {
                 findViewById(R.id.unknown_card).setVisibility(View.VISIBLE);
+            } else if (mError instanceof UnauthorizedException) {
+                findViewById(R.id.unauthorized_card).setVisibility(View.VISIBLE);
             } else {
                 findViewById(R.id.error).setVisibility(View.VISIBLE);
                 ((TextView) findViewById(R.id.error_text)).setText(Utils.getErrorMessage(mError));

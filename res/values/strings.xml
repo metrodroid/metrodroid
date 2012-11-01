@@ -120,6 +120,7 @@
     <string name="location_the_netherlands">The Netherlands</string>
     <string name="block_title_format">Block: %s</string>
     <string name="sector_title_format">Sector: 0x%s</string>
+    <string name="unauthorized_sector_title_format">Sector: 0x%s (Unauthorized)</string>
 
     <string name="subscriptions">Subscriptions</string>
     <string name="info">Info</string>
@@ -127,4 +128,6 @@
     <string name="card_note_ezlink">Not compatible with all devices.</string>
     <string name="card_note_ovchip">Requires encryption keys.</string>
     <string name="unknown_format">Unknown (%s)</string>
+    <string name="keys_required">Encryption keys are required to read this card.</string>
+    <string name="load_keys">Load Keys</string>
 </resources>

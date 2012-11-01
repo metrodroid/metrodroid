@@ -37,6 +37,7 @@ import com.codebutler.farebot.activities.AdvancedCardInfoActivity;
 import com.codebutler.farebot.card.classic.ClassicBlock;
 import com.codebutler.farebot.card.classic.ClassicCard;
 import com.codebutler.farebot.card.classic.ClassicSector;
+import com.codebutler.farebot.card.classic.UnauthorizedClassicSector;
 
 public class ClassicCardRawDataFragment extends ExpandableListFragment {
     private ClassicCard mCard;
@@ -79,7 +80,8 @@ public class ClassicCardRawDataFragment extends ExpandableListFragment {
 
         @Override
         public int getChildrenCount(int groupPosition) {
-            return mCard.getSector(groupPosition).getBlocks().length;
+            ClassicBlock[] blocks = mCard.getSector(groupPosition).getBlocks();
+            return (blocks == null) ? 0 : blocks.length;
         }
 
         @Override
@@ -117,7 +119,11 @@ public class ClassicCardRawDataFragment extends ExpandableListFragment {
             ClassicSector sector = (ClassicSector) getGroup(groupPosition);
 
             TextView textView = (TextView) view.findViewById(android.R.id.text1);
-            textView.setText(mActivity.getString(R.string.sector_title_format, Integer.toHexString(sector.getIndex())));
+            if (sector instanceof UnauthorizedClassicSector) {
+                textView.setText(mActivity.getString(R.string.unauthorized_sector_title_format, Integer.toHexString(sector.getIndex())));
+            } else {
+                textView.setText(mActivity.getString(R.string.sector_title_format, Integer.toHexString(sector.getIndex())));
+            }
 
             return view;
         }
