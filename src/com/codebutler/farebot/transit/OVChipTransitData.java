@@ -23,13 +23,17 @@
 package com.codebutler.farebot.transit;
 
 import android.os.Parcel;
+import android.util.Log;
 import com.codebutler.farebot.FareBotApplication;
 import com.codebutler.farebot.HeaderListItem;
 import com.codebutler.farebot.ListItem;
 import com.codebutler.farebot.R;
+import com.codebutler.farebot.Utils;
 import com.codebutler.farebot.card.Card;
 import com.codebutler.farebot.card.classic.ClassicCard;
+import com.codebutler.farebot.card.classic.ClassicSector;
 
+import java.lang.reflect.Array;
 import java.text.DateFormat;
 import java.text.NumberFormat;
 import java.util.ArrayList;
@@ -64,6 +68,8 @@ public class OVChipTransitData extends TransitData {
     public static final int  AGENCY_QBUZZ      = 0x0A;
     public static final int  AGENCY_DUO        = 0x0C;	// Could also be 2C though... ( http://www.ov-chipkaart.me/forum/viewtopic.php?f=10&t=299 )
     public static final int  AGENCY_STORE      = 0x19;
+
+    private static final byte[] OVC_MANUFACTURER = { (byte) 0x98, (byte) 0x02, (byte) 0x00 /*, (byte) 0x64, (byte) 0x8E */ };
 
     private static Map<Integer, String> sAgencies = new HashMap<Integer, String>() {
         {
@@ -116,12 +122,28 @@ public class OVChipTransitData extends TransitData {
         }
     };
 
-    public static boolean check(Card card) { // FIXME: This is not enough!
-        return (card instanceof ClassicCard);
+    public static boolean check(Card card) {
+        if (!(card instanceof ClassicCard))
+            return false;
+
+        ClassicSector preamble = ((ClassicCard) card).getSector(0);
+        if (preamble == null) {
+            return false;
+        }
+
+        byte[] data = preamble.readBlocks(0, 1);
+        if (data == null) {
+            return false;
+        }
+
+        byte[] manufacturer = Arrays.copyOfRange(data, 5, 5 + OVC_MANUFACTURER.length);
+        return Arrays.equals(manufacturer, OVC_MANUFACTURER);
     }
 
-    public static TransitIdentity parseTransitIdentity (Card card) { // FIXME: Implement this!
-        return new TransitIdentity("OV-chipkaart", null);
+    public static TransitIdentity parseTransitIdentity (Card card) {
+        String hex = Utils.getHexString(((ClassicCard) card).getSector(0).getBlock(0).getData(), null);
+        String id = hex.substring(0, 8);
+        return new TransitIdentity("OV-chipkaart", id);
     }
 
     public OVChipTransitData(Parcel parcel) {
