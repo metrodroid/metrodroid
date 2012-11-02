@@ -46,13 +46,12 @@ public abstract class CardKeys {
     }
 
     public static CardKeys fromCursor(Cursor cursor) throws JSONException {
-        String cardId   = cursor.getString(cursor.getColumnIndex(KeysTableColumns.CARD_ID));
         String cardType = cursor.getString(cursor.getColumnIndex(KeysTableColumns.CARD_TYPE));
         String keyData  = cursor.getString(cursor.getColumnIndex(KeysTableColumns.KEY_DATA));
 
         JSONObject keyJSON = new JSONObject(keyData);
 
-        if (cardType.equals("Classic")) { // FIXME
+        if (cardType.equals("MifareClassic")) {
             return ClassicCardKeys.fromJSON(keyJSON);
         }
 

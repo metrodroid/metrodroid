@@ -44,7 +44,7 @@ public class KeysDBHelper extends SQLiteOpenHelper {
             + KeysTableColumns.CARD_ID    + " TEXT NOT NULL, "
             + KeysTableColumns.CARD_TYPE  + " TEXT NOT NULL, "
             + KeysTableColumns.KEY_DATA   + " BLOB NOT NULL, "
-            + KeysTableColumns.CREATED_AT + " LONG NOT NULL");
+            + KeysTableColumns.CREATED_AT + " LONG NOT NULL)");
     }
 
     @Override

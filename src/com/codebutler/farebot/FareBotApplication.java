@@ -24,30 +24,23 @@ package com.codebutler.farebot;
 
 import android.app.Application;
 import com.codebutler.farebot.card.felica.DBUtil;
-import com.codebutler.farebot.keys.KeysUtils;
 import com.codebutler.farebot.transit.OVChipDBUtil;
 
 public class FareBotApplication extends Application {
     private static FareBotApplication sInstance;
 
-    private KeysUtils mKeysUtil;
     private DBUtil mSuicaDBUtil;
     private OVChipDBUtil mOVChipDBUtil;
 
     public FareBotApplication() {
         sInstance = this;
 
-        mKeysUtil     = new KeysUtils(this);
         mSuicaDBUtil  = new DBUtil(this);
         mOVChipDBUtil = new OVChipDBUtil(this);
     }
 
     public static FareBotApplication getInstance() {
         return sInstance;
-    }
-
-    public KeysUtils getKeysUtil() {
-        return mKeysUtil;
     }
 
     public DBUtil getSuicaDBUtil() {

@@ -25,9 +25,12 @@ package com.codebutler.farebot;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
+import android.nfc.NfcAdapter;
 import android.os.Build;
+import android.provider.Settings;
 import android.util.Log;
 import android.view.WindowManager;
 import org.w3c.dom.Node;
@@ -42,8 +45,28 @@ import javax.xml.transform.stream.StreamResult;
 import java.io.StringWriter;
 import java.util.List;
 
-public class Utils
-{
+public class Utils {
+    public static void checkNfcEnabled(final Activity activity, NfcAdapter adapter) {
+        if (adapter.isEnabled()) {
+            return;
+        }
+        new AlertDialog.Builder(activity)
+            .setTitle(R.string.nfc_off_error)
+            .setMessage(R.string.turn_on_nfc)
+            .setCancelable(true)
+            .setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface dialog, int id) {
+                    dialog.dismiss();
+                }
+            })
+            .setNeutralButton(R.string.wireless_settings, new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface dialog, int id) {
+                    activity.startActivity(new Intent(Settings.ACTION_WIRELESS_SETTINGS));
+                }
+            })
+            .show();
+    }
+
     public static void showError (final Activity activity, Exception ex)
     {
         Log.e(activity.getClass().getName(), ex.getMessage(), ex);

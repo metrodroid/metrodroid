@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <!--
-  main_menu.xml
+  keys_contextual.xml
 
-  Copyright (C) 2011 Eric Butler
+  Copyright (C) 2012 Eric Butler
 
   Authors:
   Eric Butler <eric@codebutler.com>
@@ -24,14 +24,8 @@
 
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
-        android:id="@+id/prefs"
-        android:title="@string/preferences"
-        android:icon="@android:drawable/ic_menu_preferences" />
-    <item
-        android:id="@+id/keys"
-        android:title="@string/keys" />
-    <item
-        android:id="@+id/about"
-        android:title="@string/about"
-        android:icon="@android:drawable/ic_menu_info_details" />
+        android:id="@+id/delete_key"
+        android:title="@string/delete"
+        android:icon="@android:drawable/ic_menu_delete"
+        android:showAsAction="ifRoom" />
 </menu>

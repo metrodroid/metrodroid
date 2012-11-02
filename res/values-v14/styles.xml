@@ -1,9 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-
 <!--
-  main_menu.xml
+  styles.xml
 
-  Copyright (C) 2011 Eric Butler
+  Copyright (C) 2012 Eric Butler
 
   Authors:
   Eric Butler <eric@codebutler.com>
@@ -22,16 +21,7 @@
   along with this program.  If not, see <http://www.gnu.org/licenses/>.
   -->
 
-<menu xmlns:android="http://schemas.android.com/apk/res/android">
-    <item
-        android:id="@+id/prefs"
-        android:title="@string/preferences"
-        android:icon="@android:drawable/ic_menu_preferences" />
-    <item
-        android:id="@+id/keys"
-        android:title="@string/keys" />
-    <item
-        android:id="@+id/about"
-        android:title="@string/about"
-        android:icon="@android:drawable/ic_menu_info_details" />
-</menu>
+<resources>
+    <style name="BorderlessButton" parent="@android:style/Widget.Holo.Button.Borderless.Small"></style>
+    <style name="ButtonBar" parent="@android:style/Holo.ButtonBar.AlertDialog"></style>
+</resources>

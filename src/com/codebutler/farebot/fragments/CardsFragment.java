@@ -104,7 +104,7 @@ public class CardsFragment extends SherlockListFragment {
 
         registerForContextMenu(getListView());
 
-        getListView().setAdapter(new CardsAdapter());
+        setListAdapter(new CardsAdapter());
         getLoaderManager().initLoader(0, null, mLoaderCallbacks);
     }
 

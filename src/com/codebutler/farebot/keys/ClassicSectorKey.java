@@ -54,10 +54,14 @@ public class ClassicSectorKey {
       return mKey;
     }
 
-    public JSONObject toJSON() throws JSONException {
-        JSONObject json = new JSONObject();
-        json.put(TYPE, mType);
-        json.put(KEY,  mKey);
-        return json;
+    public JSONObject toJSON() {
+        try {
+            JSONObject json = new JSONObject();
+            json.put(TYPE, mType);
+            json.put(KEY,  Utils.getHexString(mKey));
+            return json;
+        } catch (Exception ex) {
+            throw new RuntimeException(ex);
+        }
     }
 }

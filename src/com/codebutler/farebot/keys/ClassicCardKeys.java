@@ -26,14 +26,31 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 public class ClassicCardKeys extends CardKeys {
     private static final String KEYS = "keys";
+    private static final int KEY_LEN = 6;
 
     private ClassicSectorKey[] mSectorKeys;
 
+    public static ClassicCardKeys fromDump(String keyType, byte[] keyData) {
+        List<ClassicSectorKey> keys = new ArrayList<ClassicSectorKey>();
+
+        int numSectors = keyData.length / KEY_LEN;
+        for (int i = 0; i < numSectors; i++) {
+            int start = i * KEY_LEN;
+            keys.add(new ClassicSectorKey(keyType, Arrays.copyOfRange(keyData, start, start + KEY_LEN)));
+        }
+
+        return new ClassicCardKeys(keys.toArray(new ClassicSectorKey[keys.size()]));
+    }
+
     public static ClassicCardKeys fromJSON(JSONObject json) throws JSONException {
-        ClassicSectorKey[] sectorKeys = new ClassicSectorKey[json.length()];
         JSONArray keysJson = json.getJSONArray(KEYS);
+        ClassicSectorKey[] sectorKeys = new ClassicSectorKey[keysJson.length()];
         for (int i = 0; i < keysJson.length(); i++) {
             sectorKeys[i] = ClassicSectorKey.fromJSON(keysJson.getJSONObject(i));
         }
@@ -48,14 +65,18 @@ public class ClassicCardKeys extends CardKeys {
         return mSectorKeys[sectorNumber];
     }
 
-    public JSONObject toJSON() throws JSONException {
-        JSONArray keysJson = new JSONArray();
-        for (ClassicSectorKey key : mSectorKeys) {
-            keysJson.put(key.toJSON());
-        }
+    public JSONObject toJSON() {
+        try {
+            JSONArray keysJson = new JSONArray();
+            for (ClassicSectorKey key : mSectorKeys) {
+                keysJson.put(key.toJSON());
+            }
 
-        JSONObject json = new JSONObject();
-        json.put(KEYS, keysJson);
-        return json;
+            JSONObject json = new JSONObject();
+            json.put(KEYS, keysJson);
+            return json;
+        } catch (JSONException ex) {
+            throw new RuntimeException(ex);
+        }
     }
 }

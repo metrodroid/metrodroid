@@ -22,17 +22,76 @@
 
 package com.codebutler.farebot.fragments;
 
+import android.content.ContentUris;
+import android.content.Context;
 import android.database.Cursor;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
 import android.support.v4.widget.CursorAdapter;
+import android.support.v4.widget.ResourceCursorAdapter;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.TextView;
+import com.actionbarsherlock.app.SherlockFragmentActivity;
 import com.actionbarsherlock.app.SherlockListFragment;
+import com.actionbarsherlock.view.ActionMode;
+import com.actionbarsherlock.view.Menu;
+import com.actionbarsherlock.view.MenuInflater;
+import com.actionbarsherlock.view.MenuItem;
+import com.codebutler.farebot.BetterAsyncTask;
+import com.codebutler.farebot.R;
 import com.codebutler.farebot.provider.CardKeyProvider;
 import com.codebutler.farebot.provider.KeysTableColumns;
 
-public class CardKeysFragment extends SherlockListFragment {
+public class CardKeysFragment extends SherlockListFragment implements AdapterView.OnItemLongClickListener {
+    private ActionMode mActionMode;
+    private int mActionKeyId;
+
+    private com.actionbarsherlock.view.ActionMode.Callback mActionModeCallback = new ActionMode.Callback() {
+        @Override
+        public boolean onCreateActionMode(ActionMode mode, Menu menu) {
+            MenuInflater inflater = mode.getMenuInflater();
+            inflater.inflate(R.menu.keys_contextual, menu);
+            return true;
+        }
+
+        @Override
+        public boolean onPrepareActionMode(ActionMode mode, Menu menu) {
+            return false;
+        }
+
+        @Override
+        public boolean onActionItemClicked(ActionMode mode, MenuItem item) {
+            if (item.getItemId() == R.id.delete_key) {
+                new BetterAsyncTask<Void>(getActivity(), false, false) {
+                    @Override
+                    protected Void doInBackground() throws Exception {
+                        Uri uri = ContentUris.withAppendedId(CardKeyProvider.CONTENT_URI, mActionKeyId);
+                        getActivity().getContentResolver().delete(uri, null, null);
+                        return null;
+                    }
+
+                    @Override
+                    protected void onResult(Void unused) {
+                        mActionMode.finish();
+                        ((KeysAdapter) getListAdapter()).notifyDataSetChanged();
+                    }
+                }.execute();
+                return true;
+            }
+            return false;
+        }
+
+        @Override
+        public void onDestroyActionMode(ActionMode mode) {
+            mActionKeyId = 0;
+            mActionMode  = null;
+        }
+    };
+
     private LoaderManager.LoaderCallbacks<Cursor> mLoaderCallbacks = new LoaderManager.LoaderCallbacks<android.database.Cursor>() {
         @Override
         public Loader<Cursor> onCreateLoader(int i, Bundle bundle) {
@@ -53,4 +112,41 @@ public class CardKeysFragment extends SherlockListFragment {
         public void onLoaderReset(Loader<Cursor> cursorLoader) {
         }
     };
+
+    @Override
+    public void onViewCreated(View view, Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        getListView().setOnItemLongClickListener(this);
+        setListAdapter(new KeysAdapter());
+        getLoaderManager().initLoader(0, null, mLoaderCallbacks);
+    }
+
+    @Override
+    public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+        Cursor cursor = (Cursor) ((KeysAdapter) getListAdapter()).getItem(position);
+
+        mActionKeyId = cursor.getInt(cursor.getColumnIndex(KeysTableColumns._ID));
+        mActionMode  = ((SherlockFragmentActivity)getActivity()).startActionMode(mActionModeCallback);
+
+        return true;
+    }
+
+
+    private class KeysAdapter extends ResourceCursorAdapter {
+        public KeysAdapter() {
+            super(getActivity(), android.R.layout.simple_list_item_2, null, false);
+        }
+
+        @Override
+        public void bindView(View view, Context context, Cursor cursor) {
+            String id   = cursor.getString(cursor.getColumnIndex(KeysTableColumns.CARD_ID));
+            String type = cursor.getString(cursor.getColumnIndex(KeysTableColumns.CARD_TYPE));
+
+            TextView textView1 = (TextView) view.findViewById(android.R.id.text1);
+            TextView textView2 = (TextView) view.findViewById(android.R.id.text2);
+
+            textView1.setText(id);
+            textView2.setText(type);
+        }
+    }
 }

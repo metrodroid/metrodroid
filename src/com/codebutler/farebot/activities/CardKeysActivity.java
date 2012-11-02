@@ -1,5 +1,5 @@
 /*
- * CardsActivity.java
+ * KeysActivity.java
  *
  * Copyright (C) 2012 Eric Butler
  *
@@ -23,11 +23,11 @@
 package com.codebutler.farebot.activities;
 
 import android.support.v4.app.Fragment;
-import com.codebutler.farebot.fragments.CardsFragment;
+import com.codebutler.farebot.fragments.CardKeysFragment;
 
-public class CardsActivity extends FragmentWrapperActivity {
+public class CardKeysActivity extends FragmentWrapperActivity {
     @Override
     protected Fragment createFragment() {
-        return new CardsFragment();
+        return new CardKeysFragment();
     }
 }

@@ -74,6 +74,9 @@ public class ClassicCard extends Card {
                 ClassicSectorKey sectorKey;
                 if (sectorIndex == 0) {
                     authSuccess = tech.authenticateSectorWithKeyA(sectorIndex, PREAMBLE_KEY);
+                    if (!authSuccess) {
+                        authSuccess = tech.authenticateSectorWithKeyA(sectorIndex, MifareClassic.KEY_DEFAULT);
+                    }
                 } else {
                     if (keys != null && (sectorKey = keys.keyForSector(sectorIndex)) != null) {
                         if (sectorKey.getType().equals(ClassicSectorKey.TYPE_KEYA)) {
