@@ -101,7 +101,7 @@ public class MainActivity extends SherlockFragmentActivity {
         } else if (item.getItemId() == R.id.prefs) {
             startActivity(new Intent(this, FareBotPreferenceActivity.class));
         } else if (item.getItemId() == R.id.keys) {
-            startActivity(new Intent(this, CardKeysActivity.class));
+            startActivity(new Intent(this, KeysActivity.class));
         }
 
         return false;

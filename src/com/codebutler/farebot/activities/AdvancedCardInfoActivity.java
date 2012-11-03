@@ -95,6 +95,15 @@ public class AdvancedCardInfoActivity extends SherlockFragmentActivity
                 findViewById(R.id.unknown_card).setVisibility(View.VISIBLE);
             } else if (mError instanceof UnauthorizedException) {
                 findViewById(R.id.unauthorized_card).setVisibility(View.VISIBLE);
+                findViewById(R.id.load_keys).setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        new AlertDialog.Builder(AdvancedCardInfoActivity.this)
+                            .setMessage(R.string.add_key_directions)
+                            .setPositiveButton(android.R.string.ok, null)
+                            .show();
+                    }
+                });
             } else {
                 findViewById(R.id.error).setVisibility(View.VISIBLE);
                 ((TextView) findViewById(R.id.error_text)).setText(Utils.getErrorMessage(mError));

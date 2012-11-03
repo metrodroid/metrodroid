@@ -78,7 +78,7 @@
             android:textColor="#FFFFFF"
             android:textSize="18sp" />
         <Button
-            android:id="@+id/error_button"
+            android:id="@+id/load_keys"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"

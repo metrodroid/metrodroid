@@ -23,11 +23,11 @@
 package com.codebutler.farebot.activities;
 
 import android.support.v4.app.Fragment;
-import com.codebutler.farebot.fragments.CardKeysFragment;
+import com.codebutler.farebot.fragments.KeysFragment;
 
-public class CardKeysActivity extends FragmentWrapperActivity {
+public class KeysActivity extends FragmentWrapperActivity {
     @Override
     protected Fragment createFragment() {
-        return new CardKeysFragment();
+        return new KeysFragment();
     }
 }

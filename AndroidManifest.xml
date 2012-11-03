@@ -101,7 +101,7 @@
             android:label="@string/scanned_cards"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".activities.CardKeysActivity"
+            android:name=".activities.KeysActivity"
             android:label="@string/keys" />
         <activity
             android:name=".activities.AddKeyActivity"

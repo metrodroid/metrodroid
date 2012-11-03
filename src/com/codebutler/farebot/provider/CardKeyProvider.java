@@ -22,15 +22,10 @@
 
 package com.codebutler.farebot.provider;
 
-import android.content.ContentResolver;
 import android.content.ContentValues;
 import android.content.UriMatcher;
-import android.database.Cursor;
 import android.database.sqlite.SQLiteQueryBuilder;
 import android.net.Uri;
-import com.codebutler.farebot.card.Card;
-import com.codebutler.farebot.keys.CardKeys;
-import org.json.JSONException;
 
 import java.util.Date;
 
@@ -55,22 +50,6 @@ public class CardKeyProvider extends BetterContentProvider {
         return super.insert(uri, values);
     }
 
-    public Uri insertCardKeys(Card card, CardKeys cardKeys) throws JSONException {
-        ContentValues values = new ContentValues();
-        values.put(KeysTableColumns.CARD_ID,   card.getTagId());
-        values.put(KeysTableColumns.CARD_TYPE, card.getCardType().toString()); // FIXME
-        values.put(KeysTableColumns.KEY_DATA,  cardKeys.toJSON().toString());
-
-        ContentResolver resolver = getContext().getContentResolver();
-        return resolver.insert(CONTENT_URI, values);
-    }
-
-    public CardKeys getCardKeys(String cardId, String cardType) throws JSONException {
-        Cursor cursor = super.query(Uri.withAppendedPath(CONTENT_URI, cardId), null, null, null, null); // FIXME: Wrong ID ...
-        cursor.moveToFirst();
-        return CardKeys.fromCursor(cursor);
-    }
-
     @Override
     protected UriMatcher createUriMatcher(Uri contentUri, String basePath) {
         UriMatcher matcher = new UriMatcher(UriMatcher.NO_MATCH);
@@ -93,29 +72,4 @@ public class CardKeyProvider extends BetterContentProvider {
                 throw new IllegalArgumentException("Unknown URI: " + uri);
         }
     }
-
-//    public String getKey(String card_id, int sector, String type) {
-//    	Cursor cursor = mDatabase.query(
-//        		TABLE_NAME,
-//        		COLUMNS_KEYS,
-//             String.format("%s = ? AND %s = ? AND %s = ?", COLUMN_CARDID, COLUMN_SECTOR, COLUMN_TYPE),
-//             new String[] {
-//        			card_id,
-//        			String.valueOf(sector),
-//        			type
-//             },
-//             null,
-//             null,
-//             COLUMN_CARDID);
-//
-//        if (!cursor.moveToFirst()) {
-//            Log.w("KeysDBHelper", "FAILED get key: c: " + card_id + " s: " + sector + " t: " + type);
-//
-//            return null;
-//        }
-//
-//        String key = cursor.getString(cursor.getColumnIndex(COLUMN_KEY));
-//
-//        return key;
-//	}
 }

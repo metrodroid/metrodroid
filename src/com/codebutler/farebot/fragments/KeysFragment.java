@@ -22,6 +22,7 @@
 
 package com.codebutler.farebot.fragments;
 
+import android.app.AlertDialog;
 import android.content.ContentUris;
 import android.content.Context;
 import android.database.Cursor;
@@ -46,7 +47,7 @@ import com.codebutler.farebot.R;
 import com.codebutler.farebot.provider.CardKeyProvider;
 import com.codebutler.farebot.provider.KeysTableColumns;
 
-public class CardKeysFragment extends SherlockListFragment implements AdapterView.OnItemLongClickListener {
+public class KeysFragment extends SherlockListFragment implements AdapterView.OnItemLongClickListener {
     private ActionMode mActionMode;
     private int mActionKeyId;
 
@@ -114,8 +115,15 @@ public class CardKeysFragment extends SherlockListFragment implements AdapterVie
     };
 
     @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setHasOptionsMenu(true);
+    }
+
+    @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        setEmptyText(getString(R.string.no_keys));
         getListView().setOnItemLongClickListener(this);
         setListAdapter(new KeysAdapter());
         getLoaderManager().initLoader(0, null, mLoaderCallbacks);
@@ -123,7 +131,7 @@ public class CardKeysFragment extends SherlockListFragment implements AdapterVie
 
     @Override
     public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
-        Cursor cursor = (Cursor) ((KeysAdapter) getListAdapter()).getItem(position);
+        Cursor cursor = (Cursor) getListAdapter().getItem(position);
 
         mActionKeyId = cursor.getInt(cursor.getColumnIndex(KeysTableColumns._ID));
         mActionMode  = ((SherlockFragmentActivity)getActivity()).startActionMode(mActionModeCallback);
@@ -131,6 +139,22 @@ public class CardKeysFragment extends SherlockListFragment implements AdapterVie
         return true;
     }
 
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        inflater.inflate(R.menu.fragment_keys_menu, menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == R.id.add_key) {
+            new AlertDialog.Builder(getActivity())
+                .setMessage(R.string.add_key_directions)
+                .setPositiveButton(android.R.string.ok, null)
+                .show();
+            return true;
+        }
+        return false;
+    }
 
     private class KeysAdapter extends ResourceCursorAdapter {
         public KeysAdapter() {

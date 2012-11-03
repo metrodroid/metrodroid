@@ -131,7 +131,6 @@ public class ClassicCard extends Card {
                     Element blockElement = (Element) blockElements.item(j);
                     String type  = blockElement.getAttribute("type");
                     int blockIndex = Integer.parseInt(blockElement.getAttribute("index"));
-                    // FIXME: Data or error?
                     Node dataElement = blockElement.getElementsByTagName("data").item(0);
                     byte[] data = Base64.decode(dataElement.getTextContent().trim(), Base64.DEFAULT);
                     blocks[j] = ClassicBlock.create(type, blockIndex, data);

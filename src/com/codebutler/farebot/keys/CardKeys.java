@@ -45,7 +45,7 @@ public abstract class CardKeys {
         }
     }
 
-    public static CardKeys fromCursor(Cursor cursor) throws JSONException {
+    private static CardKeys fromCursor(Cursor cursor) throws JSONException {
         String cardType = cursor.getString(cursor.getColumnIndex(KeysTableColumns.CARD_TYPE));
         String keyData  = cursor.getString(cursor.getColumnIndex(KeysTableColumns.KEY_DATA));
 

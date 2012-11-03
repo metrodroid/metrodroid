@@ -46,17 +46,6 @@ public class ClassicSector {
         return mBlocks[index];
     }
 
-    public ClassicTrailerBlock getTrailerBlock() {
-        return (ClassicTrailerBlock) mBlocks[mBlocks.length -1];
-    }
-
-    public ClassicManufacturerBlock getManufacturerBlock() {
-        if (mIndex != 0) {
-            throw new IllegalArgumentException("not the first sector");
-        }
-        return (ClassicManufacturerBlock) mBlocks[0];
-    }
-
     public Element toXML(Document doc) {
         Element sectorElement = doc.createElement("sector");
         sectorElement.setAttribute("index", String.valueOf(getIndex()));

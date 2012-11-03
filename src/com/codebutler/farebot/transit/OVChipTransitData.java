@@ -23,7 +23,6 @@
 package com.codebutler.farebot.transit;
 
 import android.os.Parcel;
-import android.util.Log;
 import com.codebutler.farebot.FareBotApplication;
 import com.codebutler.farebot.HeaderListItem;
 import com.codebutler.farebot.ListItem;
@@ -33,7 +32,6 @@ import com.codebutler.farebot.card.Card;
 import com.codebutler.farebot.card.classic.ClassicCard;
 import com.codebutler.farebot.card.classic.ClassicSector;
 
-import java.lang.reflect.Array;
 import java.text.DateFormat;
 import java.text.NumberFormat;
 import java.util.ArrayList;
@@ -300,14 +298,6 @@ public class OVChipTransitData extends TransitData {
 
         items.add(new ListItem("Banned", ((mCredit.getBanbits() & (byte)0xC0) == (byte)0xC0) ? "Yes" : "No"));
 
-        // FIXME: Care about this?
-     	items.add(new HeaderListItem("Recent Slots"));
-     	items.add(new ListItem("Transaction Slot",		"0x" + Integer.toHexString((char)mIndex.getRecentTransactionSlot())));
-     	items.add(new ListItem("Info Slot",				"0x" + Integer.toHexString((char)mIndex.getRecentInfoSlot())));
-     	items.add(new ListItem("Subscription Slot",		"0x" + Integer.toHexString((char)mIndex.getRecentSubscriptionSlot())));
-     	items.add(new ListItem("Travelhistory Slot",	"0x" + Integer.toHexString((char)mIndex.getRecentTravelhistorySlot())));
-     	items.add(new ListItem("Credit Slot",			"0x" + Integer.toHexString((char)mIndex.getRecentCreditSlot())));
-
      	if (mPreamble.getType() == 2) {
       	    items.add(new HeaderListItem("Personal Information"));
       	    items.add(new ListItem("Birthdate",     DateFormat.getDateInstance(DateFormat.LONG).format(mInfo.getBirthdate())));
@@ -320,6 +310,13 @@ public class OVChipTransitData extends TransitData {
      	items.add(new ListItem("Autocharge",		(mInfo.getActive() == (byte)0x05 ? "Yes" : "No")));
      	items.add(new ListItem("Autocharge Limit",	OVChipTransitData.convertAmount(mInfo.getLimit())));
      	items.add(new ListItem("Autocharge Charge",	OVChipTransitData.convertAmount(mInfo.getCharge())));
+
+        items.add(new HeaderListItem("Recent Slots"));
+        items.add(new ListItem("Transaction Slot",		"0x" + Integer.toHexString((char)mIndex.getRecentTransactionSlot())));
+        items.add(new ListItem("Info Slot",				"0x" + Integer.toHexString((char)mIndex.getRecentInfoSlot())));
+        items.add(new ListItem("Subscription Slot",		"0x" + Integer.toHexString((char)mIndex.getRecentSubscriptionSlot())));
+        items.add(new ListItem("Travelhistory Slot",	"0x" + Integer.toHexString((char)mIndex.getRecentTravelhistorySlot())));
+        items.add(new ListItem("Credit Slot",			"0x" + Integer.toHexString((char)mIndex.getRecentCreditSlot())));
 
         return items;
     }

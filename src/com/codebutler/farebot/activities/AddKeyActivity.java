@@ -101,7 +101,7 @@ public class AddKeyActivity extends SherlockActivity {
 
                     @Override
                     protected void onResult(Void unused) {
-                        Intent intent = new Intent(AddKeyActivity.this, CardKeysActivity.class);
+                        Intent intent = new Intent(AddKeyActivity.this, KeysActivity.class);
                         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                         startActivity(intent);
                         finish();
@@ -126,7 +126,7 @@ public class AddKeyActivity extends SherlockActivity {
                 Utils.showErrorAndFinish(this, e);
             }
         } else {
-            // FIXME: Text entry for key data...
+            finish();
         }
     }
 

@@ -36,20 +36,9 @@ public class ClassicBlock {
     private final String mType;
     private final byte[] mData;
 
-    public enum Access {
-        NEVER,
-        KEYA,
-        KEYB,
-        KEYAB
-    }
-
     public static ClassicBlock create(String type, int index, byte[] data) {
         if (type.equals(TYPE_DATA) || type.equals(TYPE_VALUE)) {
             return new ClassicBlock(index, type, data);
-        } else if (type.equals(TYPE_TRAILER)) {
-            return new ClassicTrailerBlock(index, data);
-        } else if (type.equals(TYPE_MANUFACTURER)) {
-            return new ClassicManufacturerBlock(index, data);
         }
         return null;
     }
@@ -73,10 +62,6 @@ public class ClassicBlock {
     }
 
     public Element toXML(Document doc) {
-        // FIXME:
-        // if (this instanceof UnreadableClassicBlock) {
-        //
-        // }
         Element blockElement = doc.createElement("block");
         blockElement.setAttribute("index", String.valueOf(getIndex()));
         blockElement.setAttribute("type", getType());
