@@ -6,35 +6,38 @@ import java.util.HashMap;
 import java.util.Map;
 
 final class ClipperData {
-    static final int AGENCY_ACTRAN   = 0x01;
-    static final int AGENCY_BART     = 0x04;
-    static final int AGENCY_CALTRAIN = 0x06;
-    static final int AGENCY_GGT      = 0x0b;
-    static final int AGENCY_SAMTRANS = 0x0f;
-    static final int AGENCY_VTA      = 0x11;
-    static final int AGENCY_MUNI     = 0x12;
-    static final int AGENCY_FERRY    = 0x19;
+    static final int AGENCY_ACTRAN         = 0x01;
+    static final int AGENCY_BART           = 0x04;
+    static final int AGENCY_CALTRAIN       = 0x06;
+    static final int AGENCY_GGT            = 0x0b;
+    static final int AGENCY_SAMTRANS       = 0x0f;
+    static final int AGENCY_VTA            = 0x11;
+    static final int AGENCY_MUNI           = 0x12;
+    static final int AGENCY_GG_FERRY       = 0x19;
+    static final int AGENCY_SF_BAY_FERRY   = 0x1b;
 
     static final Map<Integer, String> AGENCIES = new HashMap<Integer, String>() {{
-        put(AGENCY_ACTRAN,   "Alameda-Contra Costa Transit District");
-        put(AGENCY_BART,     "Bay Area Rapid Transit");
-        put(AGENCY_CALTRAIN, "Caltrain");
-        put(AGENCY_GGT,      "Golden Gate Transit");
-        put(AGENCY_SAMTRANS, "San Mateo County Transit District");
-        put(AGENCY_VTA,      "Santa Clara Valley Transportation Authority");
-        put(AGENCY_MUNI,     "San Francisco Municipal");
-        put(AGENCY_FERRY,    "Golden Gate Ferry");
+        put(AGENCY_ACTRAN,       "Alameda-Contra Costa Transit District");
+        put(AGENCY_BART,         "Bay Area Rapid Transit");
+        put(AGENCY_CALTRAIN,     "Caltrain");
+        put(AGENCY_GGT,          "Golden Gate Transit");
+        put(AGENCY_SAMTRANS,     "San Mateo County Transit District");
+        put(AGENCY_VTA,          "Santa Clara Valley Transportation Authority");
+        put(AGENCY_MUNI,         "San Francisco Municipal");
+        put(AGENCY_GG_FERRY,     "Golden Gate Ferry");
+        put(AGENCY_SF_BAY_FERRY, "San Francisco Bay Ferry");
     }};
 
     static final Map<Integer, String> SHORT_AGENCIES = new HashMap<Integer, String>() {{
-        put(AGENCY_ACTRAN,   "ACTransit");
-        put(AGENCY_BART,     "BART");
-        put(AGENCY_CALTRAIN, "Caltrain");
-        put(AGENCY_GGT,      "GGT");
-        put(AGENCY_SAMTRANS, "SAMTRANS");
-        put(AGENCY_VTA,      "VTA");
-        put(AGENCY_MUNI,     "Muni");
-        put(AGENCY_FERRY,    "Ferry");
+        put(AGENCY_ACTRAN,       "ACTransit");
+        put(AGENCY_BART,         "BART");
+        put(AGENCY_CALTRAIN,     "Caltrain");
+        put(AGENCY_GGT,          "GGT");
+        put(AGENCY_SAMTRANS,     "SAMTRANS");
+        put(AGENCY_VTA,          "VTA");
+        put(AGENCY_MUNI,         "Muni");
+        put(AGENCY_GG_FERRY,     "GG Ferry");
+        put(AGENCY_SF_BAY_FERRY, "SF Bay Ferry");
     }};
 
     static final Map<Long, Station> BART_STATIONS = new HashMap<Long, Station>() {{
@@ -48,8 +51,10 @@ final class ClipperData {
         put((long)0x08, new Station("Powell Street Station",                     "Powell St.",           "37.784970", "-122.40701"));
         put((long)0x09, new Station("Montgomery St. Station",                    "Montgomery",           "37.789336", "-122.401486"));
         put((long)0x0a, new Station("Embarcadero Station",                       "Embarcadero",          "37.793086", "-122.396276"));
+        put((long)0x0b, new Station("West Oakland Station",                      "West Oakland",         "37.805296", "-122.294938"));
         put((long)0x0c, new Station("12th Street Oakland City Center",           "12th St.",             "37.802956", "-122.2720367"));
         put((long)0x0d, new Station("19th Street Oakland Station",               "19th St.",             "37.80762",  "-122.26886"));
+        put((long)0x0e, new Station("MacArthur Station",                         "MacArthur",            "37.82928",  "-122.26661"));
         put((long)0x0f, new Station("Rockridge Station",                         "Rockridge",            "37.84463",  "-122.251825"));
         put((long)0x13, new Station("Walnut Creek Station",                      "Walnut Creek",         "37.90563",  "-122.06744"));
         put((long)0x14, new Station("Concord Station",                           "Concord",              "37.97376",  "-122.02903"));
@@ -74,14 +79,19 @@ final class ClipperData {
         put((long)0x2b, new Station("Millbrae Station",                          "Millbrae",             "37.599935", "-122.386478"));
     }};
 
-    static Map<Long, String> FERRY_ROUTES = new HashMap<Long, String>() {{
+    static Map<Long, String> GG_FERRY_ROUTES = new HashMap<Long, String>() {{
         put((long)0x03, "Larkspur");
         put((long)0x04, "San Francisco");
     }};
 
-    static Map<Long, Station> FERRY_TERMINALS = new HashMap<Long, Station>() {{
+    static Map<Long, Station> GG_FERRY_TERIMINALS = new HashMap<Long, Station>() {{
         put((long)0x01, new Station("San Francisco Ferry Building", "San Francisco", "37.795873", "-122.391987"));
         put((long)0x03, new Station("Larkspur Ferry Terminal", "Larkspur", "37.945509", "-122.50916"));
+    }};
+
+    static Map<Long, Station> SF_BAY_FERRY_TERMINALS = new HashMap<Long, Station>() {{
+        put((long)0x01, new Station("Alameda Main Street Terminal", "Alameda Main St.", "37.790668", "-122.294036"));
+        put((long)0x08, new Station("San Francisco Ferry Building", "Ferry Building", "37.795873", "-122.391987"));
     }};
 
     private ClipperData() { }
