@@ -40,6 +40,7 @@ import com.codebutler.farebot.R;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Formatter;
 import java.util.List;
 
 public class Utils {
@@ -71,6 +72,28 @@ public class Utils {
             .show();
     }
 
+    /**
+     * Divide an array of bytes into equal sized chunks
+     *
+     * Taken from: http://stackoverflow.com/a/3405233/3408
+     *
+     * @param source The array to divide
+     * @param chunksize Number of bytes to put in each chunk
+     * @return
+     */
+    public static byte[][] divideArray(byte[] source, int chunksize) {
+        byte[][] ret = new byte[(int) Math.ceil(source.length
+                / (double) chunksize)][chunksize];
+
+        int start = 0;
+
+        for (int i = 0; i < ret.length; i++) {
+            ret[i] = Arrays.copyOfRange(source, start, start + chunksize);
+            start += chunksize;
+        }
+
+        return ret;
+    }
     public static void showError (final Activity activity, Exception ex) {
         Log.e(activity.getClass().getName(), ex.getMessage(), ex);
         new AlertDialog.Builder(activity)
@@ -111,6 +134,25 @@ public class Utils {
         } catch (Exception ex) {
             return defaultResult;
         }
+    }
+
+    /**
+     * Turn bytes into hex string representation. Also useful for decoding BCD.
+     */
+    public static String getHexString(byte[] b, int offset, int length) {
+        if (b.length < length + offset)
+            throw new IllegalArgumentException(
+                    "length must be less than or equal to b.length");
+
+        StringBuilder sb = new StringBuilder(length * 2);
+
+        Formatter formatter = new Formatter(sb);
+        for (int i = 0; i < length; i++) {
+            formatter.format("%02x", b[offset + i]);
+        }
+
+        formatter.close();
+        return sb.toString();
     }
 
     public static byte[] hexStringToByteArray (String s) {

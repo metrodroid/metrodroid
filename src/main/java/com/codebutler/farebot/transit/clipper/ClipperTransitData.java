@@ -48,14 +48,13 @@ import java.util.List;
 import java.util.Locale;
 
 public class ClipperTransitData extends TransitData {
-    static final int RECORD_LENGTH   = 32;
+    private static final int RECORD_LENGTH = 32;
+    private static final long EPOCH_OFFSET = 0x83aa7f18;
 
-    private long            mSerialNumber;
-    private short           mBalance;
-    private ClipperTrip[]   mTrips;
+    private long mSerialNumber;
+    private short mBalance;
+    private ClipperTrip[] mTrips;
     private ClipperRefill[] mRefills;
-
-    private static final long EPOCH_OFFSET    = 0x83aa7f18;
 
     public static boolean check (Card card) {
         return (card instanceof DesfireCard) && (((DesfireCard) card).getApplication(0x9011f2) != null);
