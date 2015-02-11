@@ -49,16 +49,17 @@ import java.util.List;
 import java.util.Locale;
 
 public class OrcaTransitData extends TransitData {
+    static final int AGENCY_CT  = 0x02;
+    static final int AGENCY_ET  = 0x03;
     static final int AGENCY_KCM = 0x04;
     static final int AGENCY_PT  = 0x06;
     static final int AGENCY_ST  = 0x07;
-    static final int AGENCY_CT  = 0x02;
     static final int AGENCY_WSF = 0x08;
 
-    static final int TRANS_TYPE_PURSE_USE   = 0x0c;
     static final int TRANS_TYPE_CANCEL_TRIP = 0x01;
     static final int TRANS_TYPE_TAP_IN      = 0x03;
     static final int TRANS_TYPE_TAP_OUT     = 0x07;
+    static final int TRANS_TYPE_PURSE_USE   = 0x0c;
     static final int TRANS_TYPE_PASS_USE    = 0x60;
 
     private int    mSerialNumber;
