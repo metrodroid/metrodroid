@@ -22,7 +22,7 @@
   -->
 
 <resources>
-    <string name="app_name">FareBot</string>
+    <string name="app_name">FareBot M</string>
     <string name="directions">Tap a card.</string>
     <string name="reading_card">Reading Card</string>
     <string name="dont_move">Do not move card</string>

@@ -23,7 +23,7 @@
 
 <manifest
     xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.codebutler.farebot"
+    package="au.id.micolous.farebot"
     android:versionCode="20"
     android:versionName="2.5.0">
 
@@ -36,9 +36,9 @@
 
     <!-- Google Maps V2 -->
     <permission
-        android:name="com.codebutler.farebot.permission.MAPS_RECEIVE"
+        android:name="au.id.micolous.farebot.permission.MAPS_RECEIVE"
         android:protectionLevel="signature"/>
-    <uses-permission android:name="com.codebutler.farebot.permission.MAPS_RECEIVE"/>
+    <uses-permission android:name="au.id.micolous.farebot.permission.MAPS_RECEIVE"/>
     <uses-permission android:name="com.google.android.providers.gsf.permission.READ_GSERVICES"/>
     <uses-feature
         android:glEsVersion="0x00020000"
@@ -63,7 +63,7 @@
                 <action android:name="android.intent.action.EDIT" />
                 <action android:name="android.intent.action.PICK" />
                 <category android:name="android.intent.category.DEFAULT" />
-                <data android:mimeType="vnd.android.cursor.dir/com.codebutler.farebot.card" />
+                <data android:mimeType="vnd.android.cursor.dir/au.id.micolous.farebot.card" />
             </intent-filter>
         </activity>
 
@@ -99,7 +99,7 @@
                 <action android:name="android.intent.action.VIEW" />
                 <action android:name="android.intent.action.EDIT" />
                 <category android:name="android.intent.category.DEFAULT" />
-                <data android:mimeType="vnd.android.cursor.item/com.codebutler.farebot.card" />
+                <data android:mimeType="vnd.android.cursor.item/au.id.micolous.farebot.card" />
             </intent-filter>
         </activity>
 
@@ -143,13 +143,13 @@
         </activity>
 
         <provider
-            android:name="com.codebutler.farebot.provider.CardProvider"
-            android:authorities="com.codebutler.farebot.cardprovider"
+            android:name="au.id.micolous.farebot.provider.CardProvider"
+            android:authorities="au.id.micolous.farebot.cardprovider"
             android:exported="false"/>
 
         <provider
-            android:name="com.codebutler.farebot.provider.CardKeyProvider"
-            android:authorities="com.codebutler.farebot.keyprovider"
+            android:name="au.id.micolous.farebot.provider.CardKeyProvider"
+            android:authorities="au.id.micolous.farebot.keyprovider"
             android:exported="false"/>
 
         <meta-data
@@ -157,11 +157,10 @@
             android:value="AIzaSyBUUm1_1cyaCLkIvcE60gF4xO3pyb6SyP4"/>
 
         <meta-data
-            android:name="com.crashlytics.ApiKey"
-            android:value="77d8c3509e581fb753f705c476fe3b022dda0287" />
-
-        <meta-data
             android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" />
+        <meta-data
+            android:name="io.fabric.ApiKey"
+            android:value="f4580b524c880c2a6dc6110e8ebfebd817385ae0" />
     </application>
 </manifest>
