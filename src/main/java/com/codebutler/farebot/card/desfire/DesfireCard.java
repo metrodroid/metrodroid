@@ -33,6 +33,7 @@ import com.codebutler.farebot.transit.TransitData;
 import com.codebutler.farebot.transit.TransitIdentity;
 import com.codebutler.farebot.transit.clipper.ClipperTransitData;
 import com.codebutler.farebot.transit.hsl.HSLTransitData;
+import com.codebutler.farebot.transit.myki.MykiTransitData;
 import com.codebutler.farebot.transit.opal.OpalTransitData;
 import com.codebutler.farebot.transit.orca.OrcaTransitData;
 import com.codebutler.farebot.transit.stub.AdelaideMetrocardStubTransitData;
@@ -124,14 +125,14 @@ public class DesfireCard extends Card {
             return HSLTransitData.parseTransitIdentity(this);
         if (OpalTransitData.check(this))
             return OpalTransitData.parseTransitIdentity(this);
+        if (MykiTransitData.check(this))
+            return MykiTransitData.parseTransitIdentity(this);
 
         // Stub card types go last
         if (AdelaideMetrocardStubTransitData.check(this))
             return AdelaideMetrocardStubTransitData.parseTransitIdentity(this);
         if (AtHopStubTransitData.check(this))
             return AtHopStubTransitData.parseTransitIdentity(this);
-        if (MykiStubTransitData.check(this))
-            return MykiStubTransitData.parseTransitIdentity(this);
         return null;
     }
 
@@ -144,14 +145,14 @@ public class DesfireCard extends Card {
             return new HSLTransitData(this);
         if (OpalTransitData.check(this))
             return new OpalTransitData(this);
+        if (MykiTransitData.check(this))
+            return new MykiTransitData(this);
 
         // Stub card types go last
         if (AdelaideMetrocardStubTransitData.check(this))
             return new AdelaideMetrocardStubTransitData(this);
         if (AtHopStubTransitData.check(this))
             return new AtHopStubTransitData(this);
-        if (MykiStubTransitData.check(this))
-            return new MykiStubTransitData(this);
         return null;
     }
 
