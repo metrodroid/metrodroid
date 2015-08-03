@@ -46,7 +46,7 @@ See [the Project Status page on the wiki][19].
 
 ## Supported Phones
 
-FareBot requires an NFC Android phone running 2.3 or later.
+FareBot requires an NFC Android phone running 4.0.3 or later.
 
 Some newer devices do not support MIFARE Classic.  MIFARE Classic is not an NFC-compliant card format, so can only be read with older phones with non-Broadcom chipsets.
 
