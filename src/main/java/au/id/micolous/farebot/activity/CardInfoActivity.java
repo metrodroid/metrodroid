@@ -48,10 +48,12 @@ import au.id.micolous.farebot.fragment.CardInfoFragment;
 import au.id.micolous.farebot.fragment.CardRefillsFragment;
 import au.id.micolous.farebot.fragment.CardSubscriptionsFragment;
 import au.id.micolous.farebot.fragment.CardTripsFragment;
+import au.id.micolous.farebot.fragment.UnauthorizedCardFragment;
 import au.id.micolous.farebot.provider.CardsTableColumns;
 import au.id.micolous.farebot.transit.TransitData;
 import au.id.micolous.farebot.transit.edy.EdyTransitData;
 import au.id.micolous.farebot.transit.suica.SuicaTransitData;
+import au.id.micolous.farebot.transit.unknown.UnauthorizedClassicTransitData;
 import au.id.micolous.farebot.ui.TabPagerAdapter;
 import au.id.micolous.farebot.util.Utils;
 
@@ -130,13 +132,19 @@ public class CardInfoActivity extends Activity {
                     return;
                 }
 
+
                 String titleSerial = (mTransitData.getSerialNumber() != null) ? mTransitData.getSerialNumber() : Utils.getHexString(mCard.getTagId(), "");
                 actionBar.setTitle(mTransitData.getCardName() + " " + titleSerial);
 
                 Bundle args = new Bundle();
                 args.putString(AdvancedCardInfoActivity.EXTRA_CARD, mCard.toXml(FareBotApplication.getInstance().getSerializer()));
                 args.putParcelable(EXTRA_TRANSIT_DATA, mTransitData);
-                
+
+                if (mTransitData instanceof UnauthorizedClassicTransitData) {
+                    mTabsAdapter.addTab(actionBar.newTab(), UnauthorizedCardFragment.class, args);
+                    return;
+                }
+
                 mTabsAdapter.addTab(actionBar.newTab().setText(R.string.balance), CardBalanceFragment.class, args);
 
                 if (mTransitData.getTrips() != null) {
