@@ -35,20 +35,6 @@ dependencies {
     }
 }
 
-def password = null
-
-def askPassword() {
-    return 'security -q find-generic-password -g -l farebot-release'.execute().err.text.split('"')[1]
-}
-
-afterEvaluate {
-    validateReleaseSigning.doFirst {
-        password = askPassword()
-        signingConfig.storePassword = password
-        signingConfig.keyPassword = password
-    }
-}
-
 android {
     compileSdkVersion 19
     buildToolsVersion "20.0.0"
@@ -58,25 +44,10 @@ android {
         targetSdkVersion 19
     }
 
-    signingConfigs {
-        debug {
-            storeFile file('debug.keystore')
-        }
-        release {
-            storeFile file('release.keystore')
-            keyAlias 'ericbutler'
-            storePassword ''
-            keyPassword ''
-        }
-    }
-
     buildTypes {
         dev.initWith(buildTypes.debug)
         dev {
             applicationIdSuffix '.dev'
-        }
-        release {
-            signingConfig signingConfigs.release
         }
     }
 

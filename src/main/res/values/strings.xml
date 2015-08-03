@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <!--
   strings.xml
 
@@ -19,10 +19,12 @@
 
   You should have received a copy of the GNU General Public License
   along with this program.  If not, see <http://www.gnu.org/licenses/>.
-  -->
-
+-->
 <resources>
+
     <string name="app_name">FareBot M</string>
+    <string name="license">Licenses</string>
+    <string name="title_activity_license">Open Source Licenses</string>
     <string name="directions">Tap a card.</string>
     <string name="reading_card">Reading Card</string>
     <string name="dont_move">Do not move card</string>
@@ -58,7 +60,6 @@
     <string name="supported_cards">Supported Cards</string>
     <string name="pass_or_transfer">Pass/Xfer</string>
     <string name="transaction_sequence">#</string>
-
     <string name="felica_terminal_fare_adjustment">Fare Adjustment Machine</string>
     <string name="felica_terminal_portable">Portable Terminal</string>
     <string name="felica_terminal_vehicle">Vehicle Terminal (on bus)</string>
@@ -77,7 +78,6 @@
     <string name="felica_terminal_simple_deposit">Simple Deposit Machine</string>
     <string name="felica_terminal_pos">Point of Sale Terminal</string>
     <string name="felica_terminal_vending">Vending Machine</string>
-
     <string name="felica_process_fare_exit_gate">Fare Gate</string>
     <string name="felica_process_charge">Charge</string>
     <string name="felica_process_purchase_magnetic">Magnetic Ticket</string>
@@ -112,7 +112,6 @@
     <string name="report_error_privacy_message">All data contained within this card will be included in your error report.</string>
     <string name="scanned_cards">Scanned Cards</string>
     <string name="no_scanned_cards">You have not scanned any cards.</string>
-
     <string name="location_seattle">Seattle, WA</string>
     <string name="location_san_francisco">San Francisco, CA</string>
     <string name="location_singapore">Singapore</string>
@@ -126,7 +125,6 @@
     <string name="sector_title_format">Sector: 0x%s</string>
     <string name="unauthorized_sector_title_format">Sector: 0x%s (Unauthorized)</string>
     <string name="invalid_sector_title_format">Sector: 0x%1$s (Invalid: %2$s)</string>
-
     <string name="subscriptions">Subscriptions</string>
     <string name="info">Info</string>
     <string name="valid_format">Valid %1$s to %2$s</string>
@@ -176,7 +174,6 @@
     <string name="general">General</string>
     <string name="launch_from_background">Launch from background</string>
     <string name="error_report_sent">Error report sent!</string>
-
     <string name="checksum">Checksum</string>
     <string name="last_transaction">Last transaction</string>
     <string name="date">Date</string>
@@ -205,4 +202,5 @@
     <string name="opal_action_journey_completed_auto_off">Journey completed (failure to tap off)</string>
     <string name="opal_action_journey_completed_auto_on">Journey completed (failure to tap on)</string>
     <string name="opal_action_tap_on_reversal">Tap on reversal</string>
+
 </resources>

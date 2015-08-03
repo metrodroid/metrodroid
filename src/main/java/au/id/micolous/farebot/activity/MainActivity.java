@@ -98,13 +98,19 @@ public class MainActivity extends Activity {
     }
 
     @Override public boolean onOptionsItemSelected (MenuItem item) {
-        if (item.getItemId() == R.id.about) {
-            startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("http://codebutler.github.com/farebot")));
-            return true;
-        } else if (item.getItemId() == R.id.prefs) {
-            startActivity(new Intent(this, FareBotPreferenceActivity.class));
-        } else if (item.getItemId() == R.id.keys) {
-            startActivity(new Intent(this, KeysActivity.class));
+        switch (item.getItemId()) {
+            case R.id.about:
+                startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("http://codebutler.github.com/farebot")));
+                return true;
+            case R.id.prefs:
+                startActivity(new Intent(this, FareBotPreferenceActivity.class));
+                break;
+            case R.id.keys:
+                startActivity(new Intent(this, KeysActivity.class));
+                break;
+            case R.id.license:
+                startActivity(new Intent(this, LicenseActivity.class));
+                break;
         }
 
         return false;
