@@ -4,33 +4,23 @@
     <title>FareBot</title>
     <meta http-equiv="content-type" content="text/html; charset=utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-    <link href="http://fonts.googleapis.com/css?family=Droid+Sans+Mono" rel="stylesheet" type="text/css">
+    <link href="https://fonts.googleapis.com/css?family=Droid+Sans+Mono" rel="stylesheet" type="text/css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
     <link href="css/farebot.css" rel="stylesheet">
-    <script type="text/javascript">
-      var _gaq = _gaq || [];
-      _gaq.push(['_setAccount', 'UA-21232426-1']);
-      _gaq.push(['_trackPageview']);
-
-      (function() {
-        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
-        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
-        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
-      })();
-    </script>
   </head>
   <body>
-    <a href="https://github.com/codebutler/farebot"><img style="position: absolute; top: 0; right: 0; border: 0; opacity: 0.2" src="https://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png" alt="Fork me on GitHub"></a>
+    <a href="https://github.com/micolous/farebot"><img style="position: absolute; top: 0; right: 0; border: 0; opacity: 0.2" src="https://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png" alt="Fork me on GitHub"></a>
 
     <div class="container">
       <div class="row">
         <div class="col-sm-5">
           <div class="header">
-            <img src="img/farebot_card.png" alt="FareBot">
+            <img src="img/farebot_card.png" alt="FareBot M">
           </div>
           <p class="tagline">View your remaining balance, recent trips, and other information from contactless public transit cards using your NFC Android phone!</p>
+          <p>This application is a fork of <a href="https://github.com/codebutler/farebot">Eric Butler's Farebot</a>.  This version supports additional cards.</p>
           <p class="download">
-            <a href="https://play.google.com/store/apps/details?id=com.codebutler.farebot"><img alt="Get it on Google Play" style="width: 172px; height: 60px" src="https://developer.android.com/images/brand/en_generic_rgb_wo_60.png" /></a>
+            <a href="https://play.google.com/store/apps/details?id=au.id.micolous.farebot"><img alt="Get it on Google Play" style="width: 172px; height: 60px" src="https://developer.android.com/images/brand/en_generic_rgb_wo_60.png" /></a>
           </p>
         </div>
         <div class="col-sm-7">
@@ -38,16 +28,18 @@
             <div class="supported-cards">
               <h2>Supported Cards</h2>
               <ul>
-                <li><a href="http://www.orcacard.com/">ORCA</a> - Seattle, WA, USA</li>
+                <li><a href="http://www.sptrans.com.br/bilhete_unico/">Bilhete Único</a> - São Paulo, Brazil<sup>2</sup></li>
                 <li><a href="https://www.clippercard.com/">Clipper</a> - San Francisco, CA, USA</li>
                 <li><a href="http://www.ezlink.com.sg/index.php">EZ-Link</a> - Singapore<sup>1</sup></li>
                 <li><a href="http://www.netsflashpay.com.sg/">NETS FlashPay</a> - Singapore</li>
-                <li><a href="http://en.wikipedia.org/wiki/Suica">Suica</a>, <a href="http://en.wikipedia.org/wiki/ICOCA">ICOCA</a>, <a href="http://en.wikipedia.org/wiki/PASMO">PASMO</a> - Japan</li>
+                <li><a href="http://www.opal.com.au/">Opal</a> - Sydney, Australia<sup>3</sup></li>
+                <li><a href="http://www.orcacard.com/">ORCA</a> - Seattle, WA, USA</li>
                 <li><a href="http://www.ov-chipkaart.nl/">OV-chipkaart</a> - Netherlands<sup>2</sup></li>
-                <li><a href="http://www.sptrans.com.br/bilhete_unico/">Bilhete Único</a> - São Paulo, Brazil<sup>2</sup></li>
+                <li><a href="http://en.wikipedia.org/wiki/Suica">Suica</a>, <a href="http://en.wikipedia.org/wiki/ICOCA">ICOCA</a>, <a href="http://en.wikipedia.org/wiki/PASMO">PASMO</a> - Japan</li>
               </ul>
               <p class="footnote"><sup>1</sup> Not compatible with all devices.</p>
               <p class="footnote"><sup>2</sup> Requires encryption keys.</p>
+              <p class="footnote"><sup>3</sup> New in Farebot M.</p>              
             </div>
             <h2>Screenshots</h2>
             <div class="screenshots">
@@ -59,23 +51,19 @@
             </div>
             <h2>Support</h2>
             <ul class="support">
-              <li>Join <code>#farebot</code> on <code>irc.freenode.net</code>.</li>
-              <li><a href="https://github.com/codebutler/farebot/issues">Issue Tracker</a></li>
-              <li><a href="https://plus.google.com/107450974842126761402/posts">Google+ Community</a></li>
+              <li>Join <code>#farebot-m</code> on <code>irc.freenode.net</code>.</li>
+              <li><a href="https://github.com/micolous/farebot/issues">Issue Tracker</a></li>
+              <li><a href="https://plus.google.com/communities/111814127125477915195">Google+ Community</a></li>
             </ul>
             <h2>Contribute</h2>
-            <p>You can find FareBot's source code on <a href="https://github.com/codebutler/farebot">GitHub</a>.</p>
-            <p>FareBot is set up with BitHub, so you can make money for contributing code! The current BitHub price for an accepted pull request is:</p>
-            <p><a href="https://codebutler-bithub.herokuapp.com/"><img src="https://codebutler-bithub.herokuapp.com/v1/status/payment/commit" style="width: 189px"></a></p>
-            <p>If you've enjoyed using FareBot, please consider contributing to the development fund:</p>
-            <p><a class="coinbase-button" data-code="0d31ab1497aadba3abc15a4944fe57b8" data-button-style="donation_large" href="https://coinbase.com/checkouts/0d31ab1497aadba3abc15a4944fe57b8">Donate Bitcoins</a><script src="https://coinbase.com/assets/button.js" type="text/javascript"></script></p>
+            <p>You can find FareBot M's source code on <a href="https://github.com/micolous/farebot">GitHub</a>.</p>
           </div>
         </div>
       </div>
       <div class="row">
         <div class="col-sm-12">
           <footer>
-            <p>by <a href="https://twitter.com/codebutler">@codebutler</a></p>
+            <p>by <a href="https://twitter.com/codebutler">@codebutler</a> and <a href="https://twitter.com/micolous">@micolous</a></p>
           </footer>
         </div>
       </div>
