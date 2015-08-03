@@ -8,6 +8,10 @@ This fork is maintained by Michael, which contains some support for additional c
 
 * [Eric Butler][5] <eric@codebutler.com>
 
+## About this fork
+
+See [the Project Status page on the wiki][19].
+
 ## Thanks To
 
 * [Karl Koscher][3] (ORCA)
@@ -65,3 +69,4 @@ Some newer devices do not support MIFARE Classic.  MIFARE Classic is not an NFC-
 [16]: http://www.hsl.fi/EN/passengersguide/travelcard/Pages/default.aspx
 [17]: http://www.hsl.fi/EN/
 [18]: http://www.opal.com.au/
+[19]: https://github.com/micolous/farebot/wiki/Project-Status
