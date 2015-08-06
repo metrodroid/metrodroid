@@ -53,7 +53,7 @@ def zipify(input_xml, output_zipf):
 					output_zip.writestr(join(card_dir, sector_id, '.unauthorized'), '')
 					continue
 
-				for block in sector.find('blocks').findall('blocks'):
+				for block in sector.find('blocks').findall('block'):
 					# Lets pull some blocks!
 					assert block.get('type') == 'data'
 					output_zip.writestr(join(card_dir, sector_id, block.get('index')), str(block.find('data')).decode('base64'))
