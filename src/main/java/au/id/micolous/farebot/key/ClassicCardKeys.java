@@ -65,6 +65,10 @@ public class ClassicCardKeys extends CardKeys {
         return mSectorKeys[sectorNumber];
     }
 
+    public ClassicSectorKey[] keys() {
+        return mSectorKeys.clone();
+    }
+
     public JSONObject toJSON() {
         try {
             JSONArray keysJson = new JSONArray();
