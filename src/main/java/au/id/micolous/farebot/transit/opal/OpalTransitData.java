@@ -44,11 +44,14 @@ public class OpalTransitData extends TransitData {
 
     private static GregorianCalendar OPAL_EPOCH = new GregorianCalendar(1980, Calendar.JANUARY, 1);
     private static OpalSubscription OPAL_AUTOMATIC_TOP_UP = new OpalSubscription();
+    private static final String NAME = "Opal";
+
 
     public static boolean check (Card card) {
         return (card instanceof DesfireCard) && (((DesfireCard) card).getApplication(0x314553) != null);
     }
 
+    @SuppressWarnings("UnusedDeclaration")
     public OpalTransitData (Parcel parcel) {
         mSerialNumber = parcel.readInt();
         mBalance      = parcel.readInt();
@@ -90,9 +93,7 @@ public class OpalTransitData extends TransitData {
         mBalance = Utils.unsignedToTwoComplement(iRawBalance, 20);
     }
 
-    @Override public String getCardName () {
-        return "Opal";
-    }
+    @Override public String getCardName () { return NAME; }
 
 
     @Override public String getBalanceString () {
@@ -140,7 +141,7 @@ public class OpalTransitData extends TransitData {
 
         int lastDigit = Utils.getBitsFromBuffer(data, 4, 4);
         int serialNumber = Utils.getBitsFromBuffer(data, 8, 32);
-        return new TransitIdentity("Opal", formatSerialNumber(serialNumber, lastDigit));
+        return new TransitIdentity(NAME, formatSerialNumber(serialNumber, lastDigit));
     }
 
     public void writeToParcel(Parcel parcel, int flags) {
