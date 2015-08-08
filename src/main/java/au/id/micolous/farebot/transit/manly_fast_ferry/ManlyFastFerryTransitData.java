@@ -28,6 +28,9 @@ public class ManlyFastFerryTransitData extends TransitData {
     private String    mSerialNumber;
 
     private static final String NAME = "Manly Fast Ferry";
+    private static final byte[] SIGNATURE = {
+            0x32,0x32,0x00,0x00
+    };
 
     public static boolean check(ClassicCard card) {
         // TODO: Improve this check
@@ -45,12 +48,17 @@ public class ManlyFastFerryTransitData extends TransitData {
         }
 
         // Serial number is from byte 10 in file 1 and byte 7 of file 2, for 4 bytes.
-        return Arrays.equals(Arrays.copyOfRange(file1, 10, 4), Arrays.copyOfRange(file2, 7, 4));
+        if (!Arrays.equals(Arrays.copyOfRange(file1, 10, 14), Arrays.copyOfRange(file2, 7, 11))) {
+            return false;
+        }
+
+        // Check a signature (not verified)
+        return Arrays.equals(Arrays.copyOfRange(file1, 0, 4), SIGNATURE);
     }
 
     public static TransitIdentity parseTransitIdentity(ClassicCard card) {
         byte[] file1 = card.getSector(0).getBlock(1).getData();
-        return new TransitIdentity(NAME, Utils.getHexString(Arrays.copyOfRange(file1, 10, 4)));
+        return new TransitIdentity(NAME, Utils.getHexString(Arrays.copyOfRange(file1, 10, 14)));
     }
 
     // Parcel
@@ -72,7 +80,7 @@ public class ManlyFastFerryTransitData extends TransitData {
         file3 = card.getSector(0).getBlock(3).getData();
 
         // Now dump the serial
-        mSerialNumber = Utils.getHexString(Arrays.copyOfRange(file1, 10, 4));
+        mSerialNumber = Utils.getHexString(Arrays.copyOfRange(file1, 10, 14));
     }
 
     @Override
@@ -97,7 +105,7 @@ public class ManlyFastFerryTransitData extends TransitData {
 
     @Override
     public Subscription[] getSubscriptions() {
-        return new Subscription[0];
+    return null;
     }
 
     @Override
