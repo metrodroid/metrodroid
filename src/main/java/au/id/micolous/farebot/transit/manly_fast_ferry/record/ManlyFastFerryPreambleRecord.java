@@ -1,7 +1,5 @@
 package au.id.micolous.farebot.transit.manly_fast_ferry.record;
 
-import android.os.Parcel;
-
 import java.util.Arrays;
 
 import au.id.micolous.farebot.transit.manly_fast_ferry.ManlyFastFerryTransitData;

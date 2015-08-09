@@ -1,21 +1,11 @@
 package au.id.micolous.farebot.transit.manly_fast_ferry.record;
 
-import android.os.Parcel;
-import android.os.Parcelable;
-
 /**
  * Represents a record inside of a Manly Fast Ferry
  */
 public class ManlyFastFerryRecord {
-    public enum ManlyFastFerryTransactionType {
-
-    }
 
     protected ManlyFastFerryRecord() {}
-
-    public ManlyFastFerryRecord(Parcel parcel) {
-
-    }
 
     public static ManlyFastFerryRecord recordFromBytes(byte[] input) {
         ManlyFastFerryRecord record = null;

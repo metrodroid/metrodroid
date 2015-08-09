@@ -1,12 +1,9 @@
 package au.id.micolous.farebot.transit.manly_fast_ferry.record;
 
-import android.os.Parcel;
-
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 
-import au.id.micolous.farebot.transit.manly_fast_ferry.record.ManlyFastFerryRegularRecord;
 import au.id.micolous.farebot.util.Utils;
 
 /**
