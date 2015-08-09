@@ -92,10 +92,12 @@ public class ClassicCard extends Card {
                         // Try with a 1:1 sector mapping on our key list first
                         if (!authSuccess) {
                             ClassicSectorKey sectorKey = keys.keyForSector(sectorIndex);
-                            if (sectorKey.getType().equals(ClassicSectorKey.TYPE_KEYA)) {
-                                authSuccess = tech.authenticateSectorWithKeyA(sectorIndex, sectorKey.getKey());
-                            } else {
-                                authSuccess = tech.authenticateSectorWithKeyB(sectorIndex, sectorKey.getKey());
+                            if (sectorKey != null) {
+                                if (sectorKey.getType().equals(ClassicSectorKey.TYPE_KEYA)) {
+                                    authSuccess = tech.authenticateSectorWithKeyA(sectorIndex, sectorKey.getKey());
+                                } else {
+                                    authSuccess = tech.authenticateSectorWithKeyB(sectorIndex, sectorKey.getKey());
+                                }
                             }
                         }
 
