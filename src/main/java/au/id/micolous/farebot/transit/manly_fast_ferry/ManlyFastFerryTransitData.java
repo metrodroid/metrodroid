@@ -1,34 +1,56 @@
 package au.id.micolous.farebot.transit.manly_fast_ferry;
 
 import android.os.Parcel;
+import android.text.format.DateFormat;
 
+import java.text.NumberFormat;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.List;
+import java.util.Locale;
 
-import au.id.micolous.farebot.card.Card;
+import au.id.micolous.farebot.FareBotApplication;
+import au.id.micolous.farebot.R;
 import au.id.micolous.farebot.card.UnauthorizedException;
+import au.id.micolous.farebot.card.classic.ClassicBlock;
 import au.id.micolous.farebot.card.classic.ClassicCard;
+import au.id.micolous.farebot.card.classic.ClassicSector;
 import au.id.micolous.farebot.transit.Refill;
 import au.id.micolous.farebot.transit.Subscription;
 import au.id.micolous.farebot.transit.TransitData;
 import au.id.micolous.farebot.transit.TransitIdentity;
 import au.id.micolous.farebot.transit.Trip;
+import au.id.micolous.farebot.transit.manly_fast_ferry.record.ManlyFastFerryBalanceRecord;
+import au.id.micolous.farebot.transit.manly_fast_ferry.record.ManlyFastFerryMetadataRecord;
+import au.id.micolous.farebot.transit.manly_fast_ferry.record.ManlyFastFerryPurseRecord;
+import au.id.micolous.farebot.transit.manly_fast_ferry.record.ManlyFastFerryRecord;
+import au.id.micolous.farebot.ui.HeaderListItem;
 import au.id.micolous.farebot.ui.ListItem;
 import au.id.micolous.farebot.util.Utils;
 
 /**
  * Transit data type for Manly Fast Ferry Smartcard (Sydney, AU).
  *
+ * This transit card is a system made by ERG Group (now Videlli Limited / Vix Technology).
+ *
  * Note: This is a distinct private company who run their own ferry service to Manly, separate to
  * Transport for NSW's Manly Ferry service.
  *
- * Documentation of format: https://github.com/codebutler/farebot/wiki/Manly-Fast-Ferry
+ * Documentation of format: https://github.com/micolous/farebot/wiki/Manly-Fast-Ferry
  */
 public class ManlyFastFerryTransitData extends TransitData {
-    private String    mSerialNumber;
+    private String                 mSerialNumber;
+    private GregorianCalendar      mEpochDate;
+    private int                    mBalance;
+    private ManlyFastFerryTrip[]   mTrips;
+    private ManlyFastFerryRefill[] mRefills;
 
-    private static final String NAME = "Manly Fast Ferry";
-    private static final byte[] SIGNATURE = {
+
+    public static final String NAME = "Manly Fast Ferry";
+
+    public static final byte[] SIGNATURE = {
             0x32,0x32,0x00,0x00
     };
 
@@ -65,27 +87,81 @@ public class ManlyFastFerryTransitData extends TransitData {
     @SuppressWarnings("UnusedDeclaration")
     public ManlyFastFerryTransitData (Parcel parcel) {
         mSerialNumber = parcel.readString();
+        mEpochDate = new GregorianCalendar();
+        mEpochDate.setTimeInMillis(parcel.readLong());
+        mTrips = parcel.createTypedArray(ManlyFastFerryTrip.CREATOR);
+        mRefills = parcel.createTypedArray(ManlyFastFerryRefill.CREATOR);
     }
 
     public void writeToParcel(Parcel parcel, int flags) {
         parcel.writeString(mSerialNumber);
+        parcel.writeLong(mEpochDate.getTimeInMillis());
+        parcel.writeTypedArray(mTrips, flags);
+        parcel.writeTypedArray(mRefills, flags);
     }
 
     // Decoder
     public ManlyFastFerryTransitData(ClassicCard card) {
-        byte[] file0, file1, file2, file3;
-        file0 = card.getSector(0).getBlock(0).getData();
-        file1 = card.getSector(0).getBlock(1).getData();
-        file2 = card.getSector(0).getBlock(2).getData();
-        file3 = card.getSector(0).getBlock(3).getData();
+        ArrayList<ManlyFastFerryRecord> records = new ArrayList<>();
 
-        // Now dump the serial
-        mSerialNumber = Utils.getHexString(Arrays.copyOfRange(file1, 10, 14));
+        // Iterate through blocks on the card and deserialize all the binary data.
+        for (ClassicSector sector : card.getSectors()) {
+            for (ClassicBlock block : sector.getBlocks()) {
+                if (sector.getIndex() == 0 && block.getIndex() == 0) {
+                    continue;
+                }
+
+                if (block.getIndex() == 3) {
+                    continue;
+                }
+
+                ManlyFastFerryRecord record = ManlyFastFerryRecord.recordFromBytes(block.getData());
+
+                if (record != null) {
+                    records.add(record);
+                }
+            }
+
+        }
+
+        // Now do a first pass for metadata and balance information.
+        for (ManlyFastFerryRecord record : records) {
+            if (record instanceof ManlyFastFerryMetadataRecord) {
+                mSerialNumber = ((ManlyFastFerryMetadataRecord)record).getCardSerial();
+                mEpochDate = ((ManlyFastFerryMetadataRecord)record).getEpochDate();
+            } else if (record instanceof ManlyFastFerryBalanceRecord && !((ManlyFastFerryBalanceRecord) record).getIsPreviousBalance()) {
+                // Current balance
+                mBalance = ((ManlyFastFerryBalanceRecord)record).getBalance();
+            }
+        }
+
+        // Now generate a transaction list.
+        // These need the Epoch to be known first.
+        ArrayList<ManlyFastFerryTrip> trips = new ArrayList<>();
+        ArrayList<ManlyFastFerryRefill> refills = new ArrayList<>();
+
+        for (ManlyFastFerryRecord record: records) {
+            if (record instanceof ManlyFastFerryPurseRecord) {
+                ManlyFastFerryPurseRecord purseRecord = (ManlyFastFerryPurseRecord)record;
+
+                // Now convert this.
+                if (purseRecord.getIsCredit()) {
+                    // Credit
+                    refills.add(new ManlyFastFerryRefill(purseRecord, mEpochDate));
+                } else {
+                    // Debit
+                    trips.add(new ManlyFastFerryTrip(purseRecord, mEpochDate));
+                }
+            }
+        }
+
+        mTrips = trips.toArray(new ManlyFastFerryTrip[] {});
+        mRefills = refills.toArray(new ManlyFastFerryRefill[] {});
     }
 
     @Override
     public String getBalanceString() {
-        return null;
+        return NumberFormat.getCurrencyInstance(Locale.US).format((double)mBalance / 100.);
     }
 
     // Structures
@@ -95,22 +171,28 @@ public class ManlyFastFerryTransitData extends TransitData {
 
     @Override
     public Trip[] getTrips() {
-        return new Trip[0];
+        return mTrips;
     }
 
     @Override
     public Refill[] getRefills() {
-        return new Refill[0];
+        return mRefills;
     }
 
     @Override
     public Subscription[] getSubscriptions() {
-    return null;
+        // There is no concept of "subscriptions".
+        return null;
     }
 
     @Override
     public List<ListItem> getInfo() {
-        return null;
+        ArrayList<ListItem> items = new ArrayList<>();
+        items.add(new HeaderListItem(R.string.general));
+        Date cLastTransactionTime = mEpochDate.getTime();
+        items.add(new ListItem(R.string.card_epoch, DateFormat.getLongDateFormat(FareBotApplication.getInstance()).format(cLastTransactionTime)));
+
+        return items;
     }
 
     @Override
