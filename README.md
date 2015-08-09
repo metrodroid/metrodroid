@@ -23,6 +23,7 @@ See [the Project Status page on the wiki][19].
 * [Marcelo Liberato](https://github.com/mliberato) (Bilhete Único)
 * [Lauri Andler](https://github.com/landler/) (HSL)
 * [Michael](https://github.com/micolous/) (Opal, Manly Fast Ferry)
+* [Rob O'Regan](http://www.robx1.net/nswtkt/private/manlyff/manlyff.htm) (Manly Fast Ferry card image)
 * [The Noun Project][15] (Various icons)
 
 ## Supported Protocols
