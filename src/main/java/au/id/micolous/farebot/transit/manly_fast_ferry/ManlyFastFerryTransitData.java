@@ -132,14 +132,20 @@ public class ManlyFastFerryTransitData extends TransitData {
         }
 
         // Now do a first pass for metadata and balance information.
+        ArrayList<ManlyFastFerryBalanceRecord> balances = new ArrayList<>();
+
         for (ManlyFastFerryRecord record : records) {
             if (record instanceof ManlyFastFerryMetadataRecord) {
                 mSerialNumber = ((ManlyFastFerryMetadataRecord)record).getCardSerial();
                 mEpochDate = ((ManlyFastFerryMetadataRecord)record).getEpochDate();
-            } else if (record instanceof ManlyFastFerryBalanceRecord && !((ManlyFastFerryBalanceRecord) record).getIsPreviousBalance()) {
-                // Current balance
-                mBalance = ((ManlyFastFerryBalanceRecord)record).getBalance();
+            } else if (record instanceof ManlyFastFerryBalanceRecord) {
+                balances.add((ManlyFastFerryBalanceRecord)record);
             }
+        }
+
+        if (balances.size() >= 1) {
+            Collections.sort(balances);
+            mBalance = balances.get(0).getBalance();
         }
 
         // Now generate a transaction list.

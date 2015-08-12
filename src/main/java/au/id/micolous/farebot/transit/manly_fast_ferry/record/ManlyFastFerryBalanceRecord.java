@@ -5,25 +5,16 @@ import au.id.micolous.farebot.util.Utils;
 /**
  * Represents a "preamble" type record.
  */
-public class ManlyFastFerryBalanceRecord extends ManlyFastFerryRegularRecord {
+public class ManlyFastFerryBalanceRecord extends ManlyFastFerryRecord implements Comparable<ManlyFastFerryBalanceRecord> {
     private int mBalance;
-    private boolean mIsPreviousBalance;
+    private int mVersion;
 
     public static ManlyFastFerryBalanceRecord recordFromBytes(byte[] input) {
-        assert input[0] == 0x01;
-        assert input[1] == 0x00;
+        if (input[0] != 0x01) throw new AssertionError();
 
 
         ManlyFastFerryBalanceRecord record = new ManlyFastFerryBalanceRecord();
-        if (input[2] == 0x0B) {
-            record.mIsPreviousBalance = false;
-        } else if (input[2] == 0x0A) {
-            record.mIsPreviousBalance = true;
-        } else {
-            // bad record?
-            return null;
-        }
-
+        record.mVersion = Utils.byteArrayToInt(input, 2, 1);
         record.mBalance = Utils.byteArrayToInt(input, 11, 4);
 
         return record;
@@ -32,20 +23,17 @@ public class ManlyFastFerryBalanceRecord extends ManlyFastFerryRegularRecord {
     protected ManlyFastFerryBalanceRecord() {}
 
     /**
-     * If this is the previous balance of the card, return true.  If this is the current balance,
-     * return false.
-     * @return boolean
-     */
-    public boolean getIsPreviousBalance() {
-        return mIsPreviousBalance;
-    }
-
-    /**
      * The balance of the card, in cents.
      * @return int number of cents.
      */
     public int getBalance() {
         return mBalance;
     }
+    public int getVersion() { return mVersion; }
 
+    @Override
+    public int compareTo(ManlyFastFerryBalanceRecord rhs) {
+        // So sorting works, we reverse the order so highest number is first.
+        return Integer.valueOf(rhs.mVersion).compareTo(this.mVersion);
+    }
 }

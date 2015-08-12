@@ -12,12 +12,9 @@ public class ManlyFastFerryRecord {
         switch (input[0]) {
             case 0x01:
                 // Check if the next bytes are null
-                if (input[1] == 0x00) {
+                if (input[1] == 0x00 || input[1] == 0x01) {
                     if (input[2] != 0x00) {
-                        // Fork off to handle
-                        // 00 0A -- previous balance state
-                        // 00 0B -- current balance state
-
+                        // Fork off to handle balance
                         record = ManlyFastFerryBalanceRecord.recordFromBytes(input);
                     }
                 }
