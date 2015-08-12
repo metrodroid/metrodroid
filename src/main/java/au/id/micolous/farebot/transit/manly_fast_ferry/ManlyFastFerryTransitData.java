@@ -51,18 +51,18 @@ public class ManlyFastFerryTransitData extends TransitData {
     public static final String NAME = "Manly Fast Ferry";
 
     public static final byte[] SIGNATURE = {
-            0x32,0x32,0x00,0x00
+            0x32, 0x32, 0x00, 0x00, 0x00, 0x01, 0x01
     };
 
     public static boolean check(ClassicCard card) {
         // TODO: Improve this check
         // The card contains two copies of the card's serial number on the card.
         // Lets use this for now to check that this is a Manly Fast Ferry card.
-        byte[] file1, file2;
+        byte[] file1; //, file2;
 
         try {
             file1 = card.getSector(0).getBlock(1).getData();
-            file2 = card.getSector(0).getBlock(2).getData();
+            //file2 = card.getSector(0).getBlock(2).getData();
         } catch (UnauthorizedException ex) {
             // These blocks of the card are not protected.
             // This must not be a Manly Fast Ferry smartcard.
@@ -70,17 +70,22 @@ public class ManlyFastFerryTransitData extends TransitData {
         }
 
         // Serial number is from byte 10 in file 1 and byte 7 of file 2, for 4 bytes.
-        if (!Arrays.equals(Arrays.copyOfRange(file1, 10, 14), Arrays.copyOfRange(file2, 7, 11))) {
-            return false;
-        }
+        // DISABLED: This check fails on 2012-era cards.
+        //if (!Arrays.equals(Arrays.copyOfRange(file1, 10, 14), Arrays.copyOfRange(file2, 7, 11))) {
+        //    return false;
+        //}
 
-        // Check a signature (not verified)
-        return Arrays.equals(Arrays.copyOfRange(file1, 0, 4), SIGNATURE);
+        // Check a signature
+        return Arrays.equals(Arrays.copyOfRange(file1, 0, SIGNATURE.length), SIGNATURE);
     }
 
     public static TransitIdentity parseTransitIdentity(ClassicCard card) {
-        byte[] file1 = card.getSector(0).getBlock(1).getData();
-        return new TransitIdentity(NAME, Utils.getHexString(Arrays.copyOfRange(file1, 10, 14)));
+        byte[] file2 = card.getSector(0).getBlock(2).getData();
+        ManlyFastFerryRecord metadata = ManlyFastFerryRecord.recordFromBytes(file2);
+        if (!(metadata instanceof ManlyFastFerryMetadataRecord)) {
+            throw new AssertionError("Unexpected Manly record type: " + metadata.getClass().toString());
+        }
+        return new TransitIdentity(NAME, ((ManlyFastFerryMetadataRecord)metadata).getCardSerial());
     }
 
     // Parcel
