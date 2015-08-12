@@ -6,6 +6,8 @@ import android.text.format.DateFormat;
 import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.List;
@@ -41,11 +43,11 @@ import au.id.micolous.farebot.util.Utils;
  * Documentation of format: https://github.com/micolous/farebot/wiki/Manly-Fast-Ferry
  */
 public class ManlyFastFerryTransitData extends TransitData {
-    private String                 mSerialNumber;
-    private GregorianCalendar      mEpochDate;
-    private int                    mBalance;
-    private ManlyFastFerryTrip[]   mTrips;
-    private ManlyFastFerryRefill[] mRefills;
+    private String            mSerialNumber;
+    private GregorianCalendar mEpochDate;
+    private int               mBalance;
+    private Trip[]            mTrips;
+    private Refill[]          mRefills;
 
 
     public static final String NAME = "Manly Fast Ferry";
@@ -142,8 +144,8 @@ public class ManlyFastFerryTransitData extends TransitData {
 
         // Now generate a transaction list.
         // These need the Epoch to be known first.
-        ArrayList<ManlyFastFerryTrip> trips = new ArrayList<>();
-        ArrayList<ManlyFastFerryRefill> refills = new ArrayList<>();
+        ArrayList<Trip> trips = new ArrayList<>();
+        ArrayList<Refill> refills = new ArrayList<>();
 
         for (ManlyFastFerryRecord record: records) {
             if (record instanceof ManlyFastFerryPurseRecord) {
@@ -160,8 +162,11 @@ public class ManlyFastFerryTransitData extends TransitData {
             }
         }
 
-        mTrips = trips.toArray(new ManlyFastFerryTrip[] {});
-        mRefills = refills.toArray(new ManlyFastFerryRefill[] {});
+        Collections.sort(trips, new Trip.Comparator());
+        Collections.sort(refills, new Refill.Comparator());
+
+        mTrips = trips.toArray(new Trip[trips.size()]);
+        mRefills = refills.toArray(new Refill[refills.size()]);
     }
 
     @Override
