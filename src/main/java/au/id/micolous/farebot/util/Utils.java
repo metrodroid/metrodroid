@@ -183,12 +183,31 @@ public class Utils {
     }
 
     public static String getDeviceInfoString() {
-        return String.format("Version: %s\nModel: %s (%s %s)\nOS: %s\n\n",
-            getVersionString(),
-            Build.MODEL,
-            Build.MANUFACTURER,
-            Build.BRAND,
-            Build.VERSION.RELEASE);
+        FareBotApplication app = FareBotApplication.getInstance();
+        NfcAdapter nfcAdapter = NfcAdapter.getDefaultAdapter(app);
+        boolean nfcAvailable = nfcAdapter != null;
+        boolean nfcEnabled = false;
+        if (nfcAvailable) {
+            nfcEnabled = nfcAdapter.isEnabled();
+        }
+
+        return String.format("Version: %s\nModel: %s (%s)\nManufacturer: %s (%s)\nAndroid OS: %s (%s)\n\nNFC available: %s\nNFC enabled: %s\nMifare Classic support: %s\n\n",
+                // Version:
+                getVersionString(),
+                // Model
+                Build.MODEL,
+                Build.DEVICE,
+                // Manufacturer / brand:
+                Build.MANUFACTURER,
+                Build.BRAND,
+                // OS:
+                Build.VERSION.RELEASE,
+                Build.ID,
+                // NFC:
+                nfcAvailable,
+                nfcEnabled,
+                app.getMifareClassicSupport()
+        );
     }
 
     private static String getVersionString() {

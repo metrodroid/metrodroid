@@ -52,7 +52,7 @@
         <activity
             android:name=".activity.MainActivity"
             android:configChanges="keyboardHidden|orientation"
-            android:screenOrientation="portrait" >
+            android:screenOrientation="sensorPortrait" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -73,7 +73,7 @@
             android:configChanges="keyboardHidden|orientation"
             android:launchMode="singleTop"
             android:noHistory="true"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="sensorPortrait" />
         <activity
             android:name=".activity.BackgroundTagActivity"
             android:configChanges="keyboardHidden|orientation"
@@ -117,11 +117,11 @@
         <activity
             android:name=".activity.SupportedCardsActivity"
             android:label="@string/supported_cards"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="sensorPortrait" />
         <activity
             android:name=".activity.CardsActivity"
             android:label="@string/scanned_cards"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="sensorPortrait" />
         <activity
             android:name=".activity.KeysActivity"
             android:label="@string/keys" />
@@ -168,6 +168,11 @@
         <activity
             android:name=".activity.LicenseActivity"
             android:label="@string/title_activity_license" >
+        </activity>
+        <activity
+            android:name=".activity.AboutActivity"
+            android:label="@string/title_activity_about"
+            android:screenOrientation="sensorPortrait">
         </activity>
     </application>
 
