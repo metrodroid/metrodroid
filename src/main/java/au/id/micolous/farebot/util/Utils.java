@@ -33,6 +33,7 @@ import android.nfc.NfcAdapter;
 import android.os.Build;
 import android.provider.Settings;
 import android.text.TextUtils;
+import android.text.format.DateFormat;
 import android.util.Log;
 import android.view.WindowManager;
 
@@ -41,6 +42,7 @@ import au.id.micolous.farebot.R;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
 
 public class Utils {
@@ -315,4 +317,31 @@ public class Utils {
         return res.getString(stringResource, formatArgs);
     }
 
+    public static String longDateFormat(Date date) {
+        return DateFormat.getLongDateFormat(FareBotApplication.getInstance()).format(date);
+    }
+
+    public static String longDateFormat(long milliseconds) {
+        return longDateFormat(new Date(milliseconds));
+    }
+
+    public static String dateFormat(Date date) {
+        return DateFormat.getDateFormat(FareBotApplication.getInstance()).format(date);
+    }
+
+    public static String dateFormat(long milliseconds) {
+        return dateFormat(new Date(milliseconds));
+    }
+
+    public static String timeFormat(Date date) {
+        return DateFormat.getTimeFormat(FareBotApplication.getInstance()).format(date);
+    }
+
+    public static String timeFormat(long milliseconds) {
+        return timeFormat(new Date(milliseconds));
+    }
+
+    public static String dateTimeFormat(Date date) {
+        return dateFormat(date) + " " + timeFormat(date);
+    }
 }

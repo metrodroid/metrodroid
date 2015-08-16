@@ -32,13 +32,13 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
+import java.util.Date;
+
 import au.id.micolous.farebot.R;
 import au.id.micolous.farebot.activity.CardInfoActivity;
 import au.id.micolous.farebot.transit.Refill;
 import au.id.micolous.farebot.transit.TransitData;
-
-import java.text.DateFormat;
-import java.util.Date;
+import au.id.micolous.farebot.util.Utils;
 
 public class CardRefillsFragment extends ListFragment {
     public void onCreate (Bundle savedInstanceState) {
@@ -68,7 +68,7 @@ public class CardRefillsFragment extends ListFragment {
             TextView agencyTextView   = (TextView) convertView.findViewById(R.id.agency_text_view);
             TextView amountTextView   = (TextView) convertView.findViewById(R.id.amount_text_view);
 
-            dateTimeTextView.setText(DateFormat.getDateTimeInstance(DateFormat.SHORT, DateFormat.SHORT).format(date));
+            dateTimeTextView.setText(Utils.dateTimeFormat(date));
             agencyTextView.setText(refill.getShortAgencyName());
             amountTextView.setText(refill.getAmountString());
 

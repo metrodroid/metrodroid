@@ -25,6 +25,13 @@ package au.id.micolous.farebot.fragment;
 import android.app.ListFragment;
 import android.os.Bundle;
 
+import org.simpleframework.xml.Serializer;
+
+import java.text.NumberFormat;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Locale;
+
 import au.id.micolous.farebot.FareBotApplication;
 import au.id.micolous.farebot.activity.AdvancedCardInfoActivity;
 import au.id.micolous.farebot.card.Card;
@@ -37,14 +44,6 @@ import au.id.micolous.farebot.card.felica.FelicaCard;
 import au.id.micolous.farebot.ui.HeaderListItem;
 import au.id.micolous.farebot.ui.ListItem;
 import au.id.micolous.farebot.util.Utils;
-
-import org.simpleframework.xml.Serializer;
-
-import java.text.DateFormat;
-import java.text.NumberFormat;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Locale;
 
 public class CardHWDetailFragment extends ListFragment {
     private Card mCard;
@@ -94,8 +93,8 @@ public class CardHWDetailFragment extends ListFragment {
             items.add(new ListItem("Purse Status", Byte.toString(purse.getPurseStatus())));
             items.add(new ListItem("Purse Balance", NumberFormat.getCurrencyInstance(Locale.US).format(purse.getPurseBalance()/100.0)));
 
-            items.add(new ListItem("Purse Creation Date", DateFormat.getDateInstance(DateFormat.LONG).format(purse.getPurseCreationDate()*1000L)));
-            items.add(new ListItem("Purse Expiry Date", DateFormat.getDateInstance(DateFormat.LONG).format(purse.getPurseExpiryDate()*1000L)));
+            items.add(new ListItem("Purse Creation Date", Utils.longDateFormat(purse.getPurseCreationDate()*1000L)));
+            items.add(new ListItem("Purse Expiry Date", Utils.longDateFormat(purse.getPurseExpiryDate()*1000L)));
             items.add(new ListItem("Autoload Amount", Integer.toString(purse.getAutoLoadAmount())));
             items.add(new ListItem("CAN", Utils.getHexString(purse.getCAN(), "<Error>")));
             items.add(new ListItem("CSN", Utils.getHexString(purse.getCSN(), "<Error>")));

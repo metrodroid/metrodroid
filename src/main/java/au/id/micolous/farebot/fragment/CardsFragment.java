@@ -47,6 +47,14 @@ import android.widget.ResourceCursorAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import org.apache.commons.io.FileUtils;
+import org.simpleframework.xml.Serializer;
+
+import java.io.File;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
+
 import au.id.micolous.farebot.FareBotApplication;
 import au.id.micolous.farebot.R;
 import au.id.micolous.farebot.activity.CardInfoActivity;
@@ -58,16 +66,6 @@ import au.id.micolous.farebot.provider.CardsTableColumns;
 import au.id.micolous.farebot.transit.TransitIdentity;
 import au.id.micolous.farebot.util.ExportHelper;
 import au.id.micolous.farebot.util.Utils;
-
-import org.apache.commons.io.FileUtils;
-import org.simpleframework.xml.Serializer;
-
-import java.io.File;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
 
 public class CardsFragment extends ListFragment {
     private static final int REQUEST_SELECT_FILE = 1;
@@ -243,7 +241,7 @@ public class CardsFragment extends ListFragment {
                    // textView1.setText(identity.getName());
                    textView1.setText(String.format("%s: %s", identity.getName(), serial));
                }
-               textView2.setText(getString(R.string.scanned_at_format, SimpleDateFormat.getTimeInstance(DateFormat.SHORT).format(scannedAt), SimpleDateFormat.getDateInstance(DateFormat.SHORT).format(scannedAt)));
+               textView2.setText(getString(R.string.scanned_at_format, Utils.timeFormat(scannedAt), Utils.dateFormat(scannedAt)));
            } else {
                textView1.setText(getString(R.string.unknown_card));
                textView2.setText(String.format("%s - %s", CardType.values()[type].toString(), serial));

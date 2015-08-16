@@ -36,6 +36,13 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import org.apache.commons.lang3.StringUtils;
+import org.simpleframework.xml.Serializer;
+
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+
 import au.id.micolous.farebot.FareBotApplication;
 import au.id.micolous.farebot.R;
 import au.id.micolous.farebot.activity.AdvancedCardInfoActivity;
@@ -46,14 +53,7 @@ import au.id.micolous.farebot.transit.TransitData;
 import au.id.micolous.farebot.transit.Trip;
 import au.id.micolous.farebot.transit.orca.OrcaTrip;
 import au.id.micolous.farebot.transit.ovc.OVChipTrip;
-
-import org.apache.commons.lang3.StringUtils;
-import org.simpleframework.xml.Serializer;
-
-import java.text.DateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+import au.id.micolous.farebot.util.Utils;
 
 public class CardTripsFragment extends ListFragment {
     private Card        mCard;
@@ -110,7 +110,7 @@ public class CardTripsFragment extends ListFragment {
             View listHeader = convertView.findViewById(R.id.list_header);
             if (isFirstInSection(position)) {
                 listHeader.setVisibility(View.VISIBLE);
-                ((TextView) listHeader.findViewById(android.R.id.text1)).setText(DateFormat.getDateInstance(DateFormat.LONG).format(date));
+                ((TextView) listHeader.findViewById(android.R.id.text1)).setText(Utils.longDateFormat(date));
             } else {
                 listHeader.setVisibility(View.GONE);
             }
@@ -146,7 +146,7 @@ public class CardTripsFragment extends ListFragment {
             }
 
             if (trip.hasTime()) {
-                timeTextView.setText(DateFormat.getTimeInstance(DateFormat.SHORT).format(date));
+                timeTextView.setText(Utils.timeFormat(date));
                 timeTextView.setVisibility(View.VISIBLE);
             } else {
                 timeTextView.setVisibility(View.INVISIBLE);

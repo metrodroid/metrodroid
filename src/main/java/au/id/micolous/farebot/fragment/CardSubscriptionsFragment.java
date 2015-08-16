@@ -30,6 +30,8 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
+import org.simpleframework.xml.Serializer;
+
 import au.id.micolous.farebot.FareBotApplication;
 import au.id.micolous.farebot.R;
 import au.id.micolous.farebot.activity.AdvancedCardInfoActivity;
@@ -37,11 +39,7 @@ import au.id.micolous.farebot.activity.CardInfoActivity;
 import au.id.micolous.farebot.card.Card;
 import au.id.micolous.farebot.transit.Subscription;
 import au.id.micolous.farebot.transit.TransitData;
-
-import org.simpleframework.xml.Serializer;
-
-import java.text.SimpleDateFormat;
-import java.util.Locale;
+import au.id.micolous.farebot.util.Utils;
 
 public class CardSubscriptionsFragment extends ListFragment {
     private Card mCard;
@@ -72,9 +70,8 @@ public class CardSubscriptionsFragment extends ListFragment {
 
             Subscription subscription = getItem(position);
 
-            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.US);
-            String validFrom = dateFormat.format(subscription.getValidFrom());
-            String validTo   = dateFormat.format(subscription.getValidTo());
+            String validFrom = Utils.dateFormat(subscription.getValidFrom());
+            String validTo   = Utils.dateFormat(subscription.getValidTo());
 
             ((TextView) view.findViewById(R.id.company)).setText(subscription.getShortAgencyName());
             ((TextView) view.findViewById(R.id.name)).setText(subscription.getSubscriptionName());
