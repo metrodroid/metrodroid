@@ -33,6 +33,7 @@ import com.codebutler.farebot.transit.TransitData;
 import com.codebutler.farebot.transit.TransitIdentity;
 import com.codebutler.farebot.transit.clipper.ClipperTransitData;
 import com.codebutler.farebot.transit.hsl.HSLTransitData;
+import com.codebutler.farebot.transit.metrocard_adl.MetrocardAdlTransitData;
 import com.codebutler.farebot.transit.opal.OpalTransitData;
 import com.codebutler.farebot.transit.orca.OrcaTransitData;
 import com.codebutler.farebot.util.Utils;
@@ -121,6 +122,8 @@ public class DesfireCard extends Card {
             return HSLTransitData.parseTransitIdentity(this);
         if (OpalTransitData.check(this))
             return OpalTransitData.parseTransitIdentity(this);
+        if (MetrocardAdlTransitData.check(this))
+            return MetrocardAdlTransitData.parseTransitIdentity(this);
         return null;
     }
 
@@ -133,6 +136,8 @@ public class DesfireCard extends Card {
             return new HSLTransitData(this);
         if (OpalTransitData.check(this))
             return new OpalTransitData(this);
+        if (MetrocardAdlTransitData.check(this))
+            return new MetrocardAdlTransitData(this);
         return null;
     }
 
