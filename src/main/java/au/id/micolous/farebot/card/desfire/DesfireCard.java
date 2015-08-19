@@ -33,6 +33,7 @@ import au.id.micolous.farebot.transit.TransitData;
 import au.id.micolous.farebot.transit.TransitIdentity;
 import au.id.micolous.farebot.transit.clipper.ClipperTransitData;
 import au.id.micolous.farebot.transit.hsl.HSLTransitData;
+import au.id.micolous.farebot.transit.metrocard_adl.MetrocardAdlTransitData;
 import au.id.micolous.farebot.transit.opal.OpalTransitData;
 import au.id.micolous.farebot.transit.orca.OrcaTransitData;
 import au.id.micolous.farebot.util.Utils;
@@ -121,6 +122,8 @@ public class DesfireCard extends Card {
             return HSLTransitData.parseTransitIdentity(this);
         if (OpalTransitData.check(this))
             return OpalTransitData.parseTransitIdentity(this);
+        if (MetrocardAdlTransitData.check(this))
+            return MetrocardAdlTransitData.parseTransitIdentity(this);
         return null;
     }
     
@@ -133,6 +136,8 @@ public class DesfireCard extends Card {
             return new HSLTransitData(this);
         if (OpalTransitData.check(this))
             return new OpalTransitData(this);
+        if (MetrocardAdlTransitData.check(this))
+            return new MetrocardAdlTransitData(this);
         return null;
     }
 
