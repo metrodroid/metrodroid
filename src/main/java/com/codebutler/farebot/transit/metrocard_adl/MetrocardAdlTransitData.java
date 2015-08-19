@@ -2,13 +2,16 @@ package au.id.micolous.farebot.transit.metrocard_adl;
 
 import android.os.Parcel;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Calendar;
+import java.util.Collections;
+import java.util.GregorianCalendar;
 import java.util.List;
 
 import au.id.micolous.farebot.card.UnauthorizedException;
 import au.id.micolous.farebot.card.desfire.DesfireApplication;
 import au.id.micolous.farebot.card.desfire.DesfireCard;
-import au.id.micolous.farebot.card.desfire.DesfireFile;
 import au.id.micolous.farebot.transit.Refill;
 import au.id.micolous.farebot.transit.Subscription;
 import au.id.micolous.farebot.transit.TransitData;
@@ -23,17 +26,22 @@ import au.id.micolous.farebot.ui.ListItem;
  */
 public class MetrocardAdlTransitData extends TransitData {
     public static String NAME = "Metrocard (Adelaide)";
+    public static GregorianCalendar METROCARD_EPOCH = new GregorianCalendar(1997, Calendar.JANUARY, 1);
+
     // "HID   " (three spaces follow "HID")
     private static byte[] SIGNATURE_8_12 = new byte[] {0x48, 0x49, 0x44, 0x20, 0x20, 0x20};
     // "ADELAIDE " (one space follows "ADELAIDE")
     private static byte[] SIGNATURE_8_20 = new byte[] {0x41, 0x44, 0x45, 0x4c, 0x41, 0x49, 0x44, 0x45, 0x20};
 
-    
+    private static int METROCARD_APP = 0xb006f2;
 
+
+
+    private MetrocardAdlTrip[] mTrips;
     private int mCurrentTrip;
 
     public static boolean check(DesfireCard card) {
-        DesfireApplication adelaide = card.getApplication(0xb006f2);
+        DesfireApplication adelaide = card.getApplication(METROCARD_APP);
         byte[] signature_data;
 
         if (adelaide == null)
@@ -63,6 +71,16 @@ public class MetrocardAdlTransitData extends TransitData {
     }
 
     public MetrocardAdlTransitData(DesfireCard card) {
+        DesfireApplication adelaide = card.getApplication(METROCARD_APP);
+
+        // Lets try to decode the trips (files 3 - 6 inclusive)
+        ArrayList<MetrocardAdlTrip> trips = new ArrayList<>();
+        for (int x=3; x<=6; x++) {
+            trips.add(new MetrocardAdlTrip(adelaide.getFile(x).getData()));
+        }
+
+        Collections.sort(trips, new Trip.Comparator());
+        mTrips = trips.toArray(new MetrocardAdlTrip[trips.size()]);
 
     }
 
@@ -79,8 +97,8 @@ public class MetrocardAdlTransitData extends TransitData {
 
     @Override
     public Trip[] getTrips() {
+        return (Trip[])mTrips;
 
-        return new Trip[0];
     }
 
     @Override
