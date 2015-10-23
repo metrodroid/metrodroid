@@ -50,7 +50,7 @@ public class MainActivity extends Activity {
         new String[] { NfcF.class.getName() }
     };
 
-    @Override protected void onCreate (Bundle bundle) {
+    @Override protected void onCreate(Bundle bundle) {
         super.onCreate(bundle);
         setContentView(R.layout.activity_main);
 
@@ -91,7 +91,7 @@ public class MainActivity extends Activity {
         startActivity(new Intent(this, CardsActivity.class));
     }
 
-    @Override public boolean onCreateOptionsMenu (Menu menu) {
+    @Override public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.main_menu, menu);
         return true;
     }

@@ -1,18 +1,12 @@
-# Farebot M
+# Farebot
 
 View your remaining balance, recent trips, and other information from contactless public transit cards using your NFC Android phone!
-
-This fork is maintained by Michael, which contains some support for additional cards.
 
 **Version**: 2.9.22
 
 ## Principally Written By
 
 * [Eric Butler][5] <eric@codebutler.com>
-
-## About this fork
-
-See [the Project Status page on the wiki][19].
 
 ## Thanks To
 
@@ -40,10 +34,10 @@ See [the Project Status page on the wiki][19].
 * [Bilhete Único](http://www.sptrans.com.br/bilhete_unico/) - São Paulo, Brazil (Requires encryption keys, not compatible with all devices)
 * [Clipper][1] - San Francisco, CA, USA
 * [EZ-Link][7] - Singapore (Not compatible with all devices)
-* [Manly Fast Ferry][20] - Sydney, Australia (new in M, requires encryption keys, not compatible with all devices)
+* [Manly Fast Ferry][20] - Sydney, Australia (requires encryption keys, not compatible with all devices)
 * [Matkakortti][16], [HSL][17] - Finland
 * [NETS FlashPay](http://www.netsflashpay.com.sg/) - Singapore
-* [Opal][18] - Sydney, Australia (new in M)
+* [Opal][18] - Sydney, Australia
 * [ORCA][0] - Seattle, WA, USA
 * [OV-chipkaart](http://www.ov-chipkaart.nl/) - Netherlands (Requires encryption keys, not compatible with all devices)
 * [Suica][9], [ICOCA][10], [PASMO][11], [Edy][12] - Japan

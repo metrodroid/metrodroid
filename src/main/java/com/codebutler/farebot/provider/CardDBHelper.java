@@ -27,6 +27,8 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
+import com.codebutler.farebot.BuildConfig;
+
 public class CardDBHelper extends SQLiteOpenHelper {
     public static final String DATABASE_NAME = "cards.db";
     public static final int DATABASE_VERSION = 2;
@@ -34,8 +36,8 @@ public class CardDBHelper extends SQLiteOpenHelper {
     public static final int CARD_COLLECTION_URI_INDICATOR = 1;
     public static final int SINGLE_CARD_URI_INDICATOR = 2;
 
-    public static final String CARD_DIR_TYPE  = "vnd.android.cursor.dir/com.codebutler.farebot.card";
-    public static final String CARD_ITEM_TYPE = "vnd.android.cursor.item/com.codebutler.farebot.card";
+    public static final String CARD_DIR_TYPE  = "vnd.android.cursor.dir/" + BuildConfig.APPLICATION_ID + ".card";
+    public static final String CARD_ITEM_TYPE = "vnd.android.cursor.item/" + BuildConfig.APPLICATION_ID + ".card";
 
     public static final String[] PROJECTION = new String[] {
         CardsTableColumns._ID,
@@ -45,7 +47,7 @@ public class CardDBHelper extends SQLiteOpenHelper {
         CardsTableColumns.SCANNED_AT
     };
 
-    public static Cursor createCursor (Context context) {
+    public static Cursor createCursor(Context context) {
         return context.getContentResolver().query(CardProvider.CONTENT_URI_CARD,
             PROJECTION,
             null,
@@ -53,11 +55,11 @@ public class CardDBHelper extends SQLiteOpenHelper {
             CardsTableColumns.SCANNED_AT + " DESC, " + CardsTableColumns._ID + " DESC");
     }
 
-    public CardDBHelper (Context context) {
+    public CardDBHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
     }
 
-    @Override public void onCreate (SQLiteDatabase db) {
+    @Override public void onCreate(SQLiteDatabase db) {
         db.execSQL("CREATE TABLE cards ("
         + "_id        INTEGER PRIMARY KEY, "
         + "type       TEXT NOT NULL, "
@@ -67,7 +69,7 @@ public class CardDBHelper extends SQLiteOpenHelper {
         + ");");
     }
 
-    @Override public void onUpgrade (SQLiteDatabase db, int oldVersion, int newVersion) {
+    @Override public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         if (oldVersion == 1 && newVersion == 2) {
             db.beginTransaction();
             try {

@@ -51,7 +51,7 @@ public class SupportedCardsActivity extends Activity {
         setContentView(R.layout.activity_supported_cards);
 
         getActionBar().setDisplayHomeAsUpEnabled(true);
-        
+
         ((Gallery) findViewById(R.id.gallery)).setAdapter(new CardsAdapter(this));
     }
 
@@ -64,7 +64,7 @@ public class SupportedCardsActivity extends Activity {
         }
         return false;
     }
-    
+
     private class CardsAdapter extends ArrayAdapter<CardInfo> {
         public CardsAdapter(Context context) {
             super(context, 0, new ArrayList<CardInfo>());
@@ -138,14 +138,15 @@ public class SupportedCardsActivity extends Activity {
             ));
 
         }
-        
+
         @Override public View getView(int position, View convertView, ViewGroup group) {
             if (convertView == null) {
                 convertView = getLayoutInflater().inflate(R.layout.supported_card, null);
             }
 
             CardInfo info = getItem(position);
-            Spanned text = Html.fromHtml(String.format("<b>%s</b><br>%s", info.getName(), getString(info.getLocationId())));
+            Spanned text = Html.fromHtml(String.format("<b>%s</b><br>%s", info.getName(),
+                    getString(info.getLocationId())));
 
             ((ImageView) convertView.findViewById(R.id.image)).setImageResource(info.getImageId());
             ((TextView)  convertView.findViewById(R.id.text)).setText(text);

@@ -57,7 +57,7 @@ public class BilheteUnicoSPTransitData extends TransitData {
 
     private final BilheteUnicoSPCredit mCredit;
 
-    public Creator<BilheteUnicoSPTransitData> CREATOR = new Creator<BilheteUnicoSPTransitData>() {
+    public static final Creator<BilheteUnicoSPTransitData> CREATOR = new Creator<BilheteUnicoSPTransitData>() {
         public BilheteUnicoSPTransitData createFromParcel(Parcel parcel) {
             return new BilheteUnicoSPTransitData(parcel);
         }
@@ -96,7 +96,7 @@ public class BilheteUnicoSPTransitData extends TransitData {
         return formatter.format((double)amount / 100.0);
     }
 
-    @Override public String getCardName () {
+    @Override public String getCardName() {
         return NAME;
     }
 

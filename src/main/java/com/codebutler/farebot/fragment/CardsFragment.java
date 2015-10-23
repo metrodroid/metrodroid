@@ -73,7 +73,7 @@ public class CardsFragment extends ListFragment {
 
     private Map<String, TransitIdentity> mDataCache;
 
-    private LoaderManager.LoaderCallbacks<Cursor> mLoaderCallbacks = new LoaderManager.LoaderCallbacks<android.database.Cursor>() {
+    private LoaderManager.LoaderCallbacks<Cursor> mLoaderCallbacks = new LoaderManager.LoaderCallbacks<Cursor>() {
         @Override public Loader<Cursor> onCreateLoader(int id, Bundle bundle) {
             return new CursorLoader(getActivity(), CardProvider.CONTENT_URI_CARD,
                 CardDBHelper.PROJECTION,
@@ -122,7 +122,7 @@ public class CardsFragment extends ListFragment {
         inflater.inflate(R.menu.cards_menu, menu);
     }
 
-    @Override public void onCreateContextMenu (ContextMenu menu, View view, ContextMenu.ContextMenuInfo menuInfo) {
+    @Override public void onCreateContextMenu(ContextMenu menu, View view, ContextMenu.ContextMenuInfo menuInfo) {
         getActivity().getMenuInflater().inflate(R.menu.card_context_menu, menu);
     }
 
@@ -184,7 +184,7 @@ public class CardsFragment extends ListFragment {
        return false;
     }
 
-    @Override public void onActivityResult (int requestCode, int resultCode, Intent data) {
+    @Override public void onActivityResult(int requestCode, int resultCode, Intent data) {
         try {
             if (resultCode == Activity.RESULT_OK && requestCode == REQUEST_SELECT_FILE) {
                 Uri uri = data.getData();
@@ -196,7 +196,7 @@ public class CardsFragment extends ListFragment {
         }
     }
 
-    private void onCardsImported (Uri[] uris) {
+    private void onCardsImported(Uri[] uris) {
         ((CursorAdapter) ((ListView) getView().findViewById(android.R.id.list)).getAdapter()).notifyDataSetChanged();
         if (uris.length == 1) {
             Toast.makeText(getActivity(), "Card imported!", Toast.LENGTH_SHORT).show();
