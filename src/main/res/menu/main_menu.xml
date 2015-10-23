@@ -31,9 +31,6 @@
         android:id="@+id/keys"
         android:title="@string/keys" />
     <item
-        android:id="@+id/license"
-        android:title="@string/license"/>
-    <item
         android:id="@+id/about"
         android:title="@string/about"
         android:icon="@android:drawable/ic_menu_info_details" />

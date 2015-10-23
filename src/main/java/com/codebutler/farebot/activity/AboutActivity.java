@@ -43,6 +43,10 @@ public class AboutActivity extends Activity {
         startActivity(new Intent(Intent.ACTION_VIEW, b.build()));
     }
 
+    public void onLicenseClick(View view) {
+        startActivity(new Intent(this, LicenseActivity.class));
+    }
+
     @Override
     public boolean onOptionsItemSelected (MenuItem item) {
         if (item.getItemId() == android.R.id.home) {

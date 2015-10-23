@@ -107,9 +107,6 @@ public class MainActivity extends Activity {
             case R.id.keys:
                 startActivity(new Intent(this, KeysActivity.class));
                 break;
-            case R.id.license:
-                startActivity(new Intent(this, LicenseActivity.class));
-                break;
         }
 
         return false;

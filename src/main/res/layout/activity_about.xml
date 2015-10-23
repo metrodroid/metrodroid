@@ -28,7 +28,18 @@
         android:layout_height="wrap_content"
         android:text="@string/visit_website"
         android:id="@+id/btnWebsite"
+        android:onClick="onWebsiteClick"
         android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:onClick="onWebsiteClick" />
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/license"
+        android:id="@+id/btnLicense"
+        android:layout_alignTop="@+id/btnWebsite"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:onClick="onLicenseClick" />
 </RelativeLayout>
