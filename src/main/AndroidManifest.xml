@@ -21,7 +21,7 @@
   along with this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="au.id.micolous.farebot">
+    package="com.codebutler.farebot">
 
     <uses-permission android:name="android.permission.NFC" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
@@ -32,10 +32,10 @@
 
     <!-- Google Maps V2 -->
     <permission
-        android:name="au.id.micolous.farebot.permission.MAPS_RECEIVE"
+        android:name="com.codebutler.farebot.permission.MAPS_RECEIVE"
         android:protectionLevel="signature" />
 
-    <uses-permission android:name="au.id.micolous.farebot.permission.MAPS_RECEIVE" />
+    <uses-permission android:name="com.codebutler.farebot.permission.MAPS_RECEIVE" />
     <uses-permission android:name="com.google.android.providers.gsf.permission.READ_GSERVICES" />
 
     <uses-feature
@@ -43,12 +43,12 @@
         android:required="true" />
 
     <application
-        android:name=".FareBotApplication"
+        android:name="com.codebutler.farebot.FareBotApplication"
         android:allowBackup="true"
         android:icon="@drawable/launcher_icon"
         android:label="@string/app_name" >
         <activity
-            android:name=".activity.MainActivity"
+            android:name="com.codebutler.farebot.activity.MainActivity"
             android:configChanges="keyboardHidden|orientation"
             android:screenOrientation="sensorPortrait" >
             <intent-filter>
@@ -63,17 +63,17 @@
 
                 <category android:name="android.intent.category.DEFAULT" />
 
-                <data android:mimeType="vnd.android.cursor.dir/au.id.micolous.farebot.card" />
+                <data android:mimeType="vnd.android.cursor.dir/com.codebutler.farebot.card" />
             </intent-filter>
         </activity>
         <activity
-            android:name=".activity.ReadingTagActivity"
+            android:name="com.codebutler.farebot.activity.ReadingTagActivity"
             android:configChanges="keyboardHidden|orientation"
             android:launchMode="singleTop"
             android:noHistory="true"
             android:screenOrientation="sensorPortrait" />
         <activity
-            android:name=".activity.BackgroundTagActivity"
+            android:name="com.codebutler.farebot.activity.BackgroundTagActivity"
             android:configChanges="keyboardHidden|orientation"
             android:enabled="false"
             android:launchMode="singleTop"
@@ -92,7 +92,7 @@
                 android:resource="@xml/filter_nfc" />
         </activity>
         <activity
-            android:name=".activity.CardInfoActivity"
+            android:name="com.codebutler.farebot.activity.CardInfoActivity"
             android:configChanges="keyboardHidden|orientation" >
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
@@ -100,31 +100,31 @@
 
                 <category android:name="android.intent.category.DEFAULT" />
 
-                <data android:mimeType="vnd.android.cursor.item/au.id.micolous.farebot.card" />
+                <data android:mimeType="vnd.android.cursor.item/com.codebutler.farebot.card" />
             </intent-filter>
         </activity>
         <activity
-            android:name=".activity.AdvancedCardInfoActivity"
+            android:name="com.codebutler.farebot.activity.AdvancedCardInfoActivity"
             android:configChanges="keyboardHidden|orientation" />
         <activity
-            android:name=".activity.FareBotPreferenceActivity"
+            android:name="com.codebutler.farebot.activity.FareBotPreferenceActivity"
             android:label="@string/preferences" />
         <activity
-            android:name=".activity.TripMapActivity"
+            android:name="com.codebutler.farebot.activity.TripMapActivity"
             android:configChanges="keyboardHidden|orientation" />
         <activity
-            android:name=".activity.SupportedCardsActivity"
+            android:name="com.codebutler.farebot.activity.SupportedCardsActivity"
             android:label="@string/supported_cards"
             android:screenOrientation="sensorPortrait" />
         <activity
-            android:name=".activity.CardsActivity"
+            android:name="com.codebutler.farebot.activity.CardsActivity"
             android:label="@string/scanned_cards"
             android:screenOrientation="sensorPortrait" />
         <activity
-            android:name=".activity.KeysActivity"
+            android:name="com.codebutler.farebot.activity.KeysActivity"
             android:label="@string/keys" />
         <activity
-            android:name=".activity.AddKeyActivity"
+            android:name="com.codebutler.farebot.activity.AddKeyActivity"
             android:label="@string/add_key"
             android:theme="@style/FareBotDialog" >
             <intent-filter android:priority="1" >
@@ -145,12 +145,12 @@
         </activity>
 
         <provider
-            android:name=".provider.CardProvider"
-            android:authorities="au.id.micolous.farebot.cardprovider"
+            android:name="com.codebutler.farebot.provider.CardProvider"
+            android:authorities="com.codebutler.farebot.cardprovider"
             android:exported="false" />
         <provider
-            android:name=".provider.CardKeyProvider"
-            android:authorities="au.id.micolous.farebot.keyprovider"
+            android:name="com.codebutler.farebot.provider.CardKeyProvider"
+            android:authorities="com.codebutler.farebot.keyprovider"
             android:exported="false" />
 
         <meta-data
@@ -164,11 +164,11 @@
             android:value="f4580b524c880c2a6dc6110e8ebfebd817385ae0" />
 
         <activity
-            android:name=".activity.LicenseActivity"
+            android:name="com.codebutler.farebot.activity.LicenseActivity"
             android:label="@string/title_activity_license" >
         </activity>
         <activity
-            android:name=".activity.AboutActivity"
+            android:name="com.codebutler.farebot.activity.AboutActivity"
             android:label="@string/title_activity_about"
             android:screenOrientation="sensorPortrait">
         </activity>
