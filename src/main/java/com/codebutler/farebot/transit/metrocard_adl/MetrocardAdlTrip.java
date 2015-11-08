@@ -1,4 +1,4 @@
-package au.id.micolous.farebot.transit.metrocard_adl;
+package com.codebutler.farebot.transit.metrocard_adl;
 
 import android.os.Parcel;
 import android.util.Log;
@@ -6,9 +6,9 @@ import android.util.Log;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 
-import au.id.micolous.farebot.transit.Station;
-import au.id.micolous.farebot.transit.Trip;
-import au.id.micolous.farebot.util.Utils;
+import com.codebutler.farebot.transit.Station;
+import com.codebutler.farebot.transit.Trip;
+import com.codebutler.farebot.util.Utils;
 
 /**
  * Represents a trip on the Metrocard

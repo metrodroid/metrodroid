@@ -1,4 +1,4 @@
-package au.id.micolous.farebot.transit.metrocard_adl;
+package com.codebutler.farebot.transit.metrocard_adl;
 
 import android.os.Parcel;
 
@@ -9,15 +9,15 @@ import java.util.Collections;
 import java.util.GregorianCalendar;
 import java.util.List;
 
-import au.id.micolous.farebot.card.UnauthorizedException;
-import au.id.micolous.farebot.card.desfire.DesfireApplication;
-import au.id.micolous.farebot.card.desfire.DesfireCard;
-import au.id.micolous.farebot.transit.Refill;
-import au.id.micolous.farebot.transit.Subscription;
-import au.id.micolous.farebot.transit.TransitData;
-import au.id.micolous.farebot.transit.TransitIdentity;
-import au.id.micolous.farebot.transit.Trip;
-import au.id.micolous.farebot.ui.ListItem;
+import com.codebutler.farebot.card.UnauthorizedException;
+import com.codebutler.farebot.card.desfire.DesfireApplication;
+import com.codebutler.farebot.card.desfire.DesfireCard;
+import com.codebutler.farebot.transit.Refill;
+import com.codebutler.farebot.transit.Subscription;
+import com.codebutler.farebot.transit.TransitData;
+import com.codebutler.farebot.transit.TransitIdentity;
+import com.codebutler.farebot.transit.Trip;
+import com.codebutler.farebot.ui.ListItem;
 
 /**
  * Transit data type for Metrocard (Adelaide, AU).
