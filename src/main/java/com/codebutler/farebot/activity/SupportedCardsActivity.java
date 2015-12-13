@@ -38,7 +38,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.codebutler.farebot.FareBotApplication;
-import com.codebutler.farebot.R;
+import au.id.micolous.farebot.R;
 import com.codebutler.farebot.card.CardType;
 import com.codebutler.farebot.transit.manly_fast_ferry.ManlyFastFerryTransitData;
 import com.codebutler.farebot.transit.opal.OpalTransitData;

@@ -26,7 +26,7 @@ import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
-import com.codebutler.farebot.BuildConfig;
+import au.id.micolous.farebot.BuildConfig;
 
 public class KeysDBHelper extends SQLiteOpenHelper {
     private static final String DATABASE_NAME = "keys.db";

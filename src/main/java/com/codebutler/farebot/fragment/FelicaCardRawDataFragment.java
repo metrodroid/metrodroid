@@ -38,7 +38,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.codebutler.farebot.FareBotApplication;
-import com.codebutler.farebot.R;
+import au.id.micolous.farebot.R;
 import com.codebutler.farebot.activity.AdvancedCardInfoActivity;
 import com.codebutler.farebot.card.Card;
 import com.codebutler.farebot.card.CardRawDataFragmentClass;

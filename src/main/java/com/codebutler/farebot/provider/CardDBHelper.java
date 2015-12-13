@@ -27,7 +27,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
-import com.codebutler.farebot.BuildConfig;
+import au.id.micolous.farebot.BuildConfig;
 
 public class CardDBHelper extends SQLiteOpenHelper {
     public static final String DATABASE_NAME = "cards.db";

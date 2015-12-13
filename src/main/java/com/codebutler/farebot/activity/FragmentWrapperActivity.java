@@ -31,7 +31,7 @@ import android.view.MenuItem;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 
-import com.codebutler.farebot.R;
+import au.id.micolous.farebot.R;
 
 import static android.view.ViewGroup.LayoutParams.MATCH_PARENT;
 

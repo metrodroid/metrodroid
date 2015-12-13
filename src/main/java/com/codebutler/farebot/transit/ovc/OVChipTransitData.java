@@ -26,7 +26,7 @@ package com.codebutler.farebot.transit.ovc;
 import android.os.Parcel;
 
 import com.codebutler.farebot.FareBotApplication;
-import com.codebutler.farebot.R;
+import au.id.micolous.farebot.R;
 import com.codebutler.farebot.card.Card;
 import com.codebutler.farebot.card.classic.ClassicCard;
 import com.codebutler.farebot.transit.Refill;

@@ -2,7 +2,7 @@ package com.codebutler.farebot.transit.manly_fast_ferry;
 
 import android.os.Parcel;
 
-import com.codebutler.farebot.R;
+import au.id.micolous.farebot.R;
 import com.codebutler.farebot.card.UnauthorizedException;
 import com.codebutler.farebot.card.classic.ClassicBlock;
 import com.codebutler.farebot.card.classic.ClassicCard;

@@ -10,7 +10,7 @@ import android.view.ViewGroup;
 import org.simpleframework.xml.Serializer;
 
 import com.codebutler.farebot.FareBotApplication;
-import com.codebutler.farebot.R;
+import au.id.micolous.farebot.R;
 import com.codebutler.farebot.activity.AdvancedCardInfoActivity;
 import com.codebutler.farebot.activity.CardInfoActivity;
 import com.codebutler.farebot.card.Card;

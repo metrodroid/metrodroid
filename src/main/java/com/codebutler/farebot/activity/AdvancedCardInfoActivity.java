@@ -37,7 +37,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.codebutler.farebot.FareBotApplication;
-import com.codebutler.farebot.R;
+import au.id.micolous.farebot.R;
 import com.codebutler.farebot.card.Card;
 import com.codebutler.farebot.card.CardHasManufacturingInfo;
 import com.codebutler.farebot.card.CardRawDataFragmentClass;
@@ -46,8 +46,6 @@ import com.codebutler.farebot.card.UnsupportedCardException;
 import com.codebutler.farebot.fragment.CardHWDetailFragment;
 import com.codebutler.farebot.ui.TabPagerAdapter;
 import com.codebutler.farebot.util.Utils;
-
-import com.crashlytics.android.Crashlytics;
 
 import org.simpleframework.xml.Serializer;
 
@@ -63,11 +61,14 @@ public class AdvancedCardInfoActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_advanced_card_info);
 
+        /*
         findViewById(R.id.error_button).setOnClickListener(new View.OnClickListener() {
             @Override public void onClick(View v) {
                 reportError();
             }
         });
+
+*/
 
         Serializer serializer = FareBotApplication.getInstance().getSerializer();
         mCard = Card.fromXml(serializer, getIntent().getStringExtra(AdvancedCardInfoActivity.EXTRA_CARD));
@@ -158,6 +159,7 @@ public class AdvancedCardInfoActivity extends Activity {
     }
 
     private void reportError() {
+        /*
         DialogInterface.OnClickListener listener = new DialogInterface.OnClickListener() {
             @Override public void onClick(DialogInterface dialog, int which) {
                 try {
@@ -175,5 +177,6 @@ public class AdvancedCardInfoActivity extends Activity {
             .setPositiveButton(android.R.string.ok, listener)
             .setNegativeButton(android.R.string.cancel, null)
             .show();
+            */
     }
 }

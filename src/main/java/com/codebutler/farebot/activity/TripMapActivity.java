@@ -27,7 +27,7 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.view.MenuItem;
 
-import com.codebutler.farebot.R;
+import au.id.micolous.farebot.R;
 import com.codebutler.farebot.transit.Station;
 import com.codebutler.farebot.transit.Trip;
 import com.google.android.gms.maps.CameraUpdateFactory;

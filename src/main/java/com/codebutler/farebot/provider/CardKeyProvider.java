@@ -27,7 +27,7 @@ import android.content.UriMatcher;
 import android.database.sqlite.SQLiteQueryBuilder;
 import android.net.Uri;
 
-import com.codebutler.farebot.BuildConfig;
+import au.id.micolous.farebot.BuildConfig;
 
 import java.util.Date;
 

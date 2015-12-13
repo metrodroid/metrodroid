@@ -3,7 +3,7 @@ package com.codebutler.farebot.transit.orca;
 import android.os.Parcel;
 
 import com.codebutler.farebot.FareBotApplication;
-import com.codebutler.farebot.R;
+import au.id.micolous.farebot.R;
 import com.codebutler.farebot.transit.Station;
 import com.codebutler.farebot.transit.Trip;
 

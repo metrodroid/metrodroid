@@ -32,7 +32,7 @@ import android.database.sqlite.SQLiteQueryBuilder;
 import android.net.Uri;
 import android.text.TextUtils;
 
-import com.codebutler.farebot.BuildConfig;
+import au.id.micolous.farebot.BuildConfig;
 
 public class CardProvider extends ContentProvider {
     public static final String AUTHORITY = BuildConfig.APPLICATION_ID + ".cardprovider";

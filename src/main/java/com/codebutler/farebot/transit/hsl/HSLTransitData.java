@@ -25,7 +25,7 @@ package com.codebutler.farebot.transit.hsl;
 import android.os.Parcel;
 
 import com.codebutler.farebot.FareBotApplication;
-import com.codebutler.farebot.R;
+import au.id.micolous.farebot.R;
 import com.codebutler.farebot.card.Card;
 import com.codebutler.farebot.card.desfire.DesfireCard;
 import com.codebutler.farebot.card.desfire.DesfireFile;

@@ -36,9 +36,9 @@ import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.util.Log;
 
-import com.codebutler.farebot.BuildConfig;
+import au.id.micolous.farebot.BuildConfig;
 import com.codebutler.farebot.FareBotApplication;
-import com.codebutler.farebot.R;
+import au.id.micolous.farebot.R;
 import com.codebutler.farebot.card.Card;
 import com.codebutler.farebot.card.UnsupportedTagException;
 import com.codebutler.farebot.provider.CardProvider;

@@ -4,7 +4,7 @@ import android.os.Parcel;
 import android.text.format.DateFormat;
 
 import com.codebutler.farebot.FareBotApplication;
-import com.codebutler.farebot.R;
+import au.id.micolous.farebot.R;
 import com.codebutler.farebot.card.Card;
 import com.codebutler.farebot.card.desfire.DesfireCard;
 import com.codebutler.farebot.transit.Refill;

@@ -29,7 +29,7 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
-import com.codebutler.farebot.R;
+import au.id.micolous.farebot.R;
 import com.codebutler.farebot.ui.HeaderListItem;
 import com.codebutler.farebot.ui.ListItem;
 

@@ -32,7 +32,7 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
-import com.codebutler.farebot.R;
+import au.id.micolous.farebot.R;
 import com.codebutler.farebot.activity.CardInfoActivity;
 import com.codebutler.farebot.transit.Refill;
 import com.codebutler.farebot.transit.TransitData;

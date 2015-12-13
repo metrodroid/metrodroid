@@ -31,7 +31,7 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.widget.ProgressBar;
 
-import com.codebutler.farebot.R;
+import au.id.micolous.farebot.R;
 
 public abstract class BetterAsyncTask<Result> extends AsyncTask<Void, ProgressBar, BetterAsyncTask.TaskResult<Result>> {
     private static final String TAG = "BetterAsyncTask";

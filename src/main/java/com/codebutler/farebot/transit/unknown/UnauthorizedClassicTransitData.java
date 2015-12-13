@@ -2,7 +2,7 @@ package com.codebutler.farebot.transit.unknown;
 
 import android.os.Parcel;
 
-import com.codebutler.farebot.R;
+import au.id.micolous.farebot.R;
 import com.codebutler.farebot.card.Card;
 import com.codebutler.farebot.card.classic.ClassicCard;
 import com.codebutler.farebot.card.classic.ClassicSector;

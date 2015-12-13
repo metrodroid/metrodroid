@@ -3,7 +3,7 @@ package com.codebutler.farebot.transit.opal;
 
 import android.os.Parcel;
 
-import com.codebutler.farebot.R;
+import au.id.micolous.farebot.R;
 import com.codebutler.farebot.transit.Subscription;
 import com.codebutler.farebot.util.Utils;
 

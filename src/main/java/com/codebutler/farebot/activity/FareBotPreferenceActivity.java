@@ -32,7 +32,7 @@ import android.preference.Preference;
 import android.preference.PreferenceActivity;
 import android.view.MenuItem;
 
-import com.codebutler.farebot.R;
+import au.id.micolous.farebot.R;
 
 import static android.content.pm.PackageManager.COMPONENT_ENABLED_STATE_DISABLED;
 import static android.content.pm.PackageManager.COMPONENT_ENABLED_STATE_ENABLED;

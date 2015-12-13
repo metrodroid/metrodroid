@@ -42,7 +42,7 @@ import android.widget.CursorAdapter;
 import android.widget.ResourceCursorAdapter;
 import android.widget.TextView;
 
-import com.codebutler.farebot.R;
+import au.id.micolous.farebot.R;
 import com.codebutler.farebot.provider.CardKeyProvider;
 import com.codebutler.farebot.provider.KeysTableColumns;
 import com.codebutler.farebot.util.BetterAsyncTask;

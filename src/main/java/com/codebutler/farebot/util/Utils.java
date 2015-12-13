@@ -38,7 +38,7 @@ import android.util.Log;
 import android.view.WindowManager;
 
 import com.codebutler.farebot.FareBotApplication;
-import com.codebutler.farebot.R;
+import au.id.micolous.farebot.R;
 
 import java.util.ArrayList;
 import java.util.Arrays;

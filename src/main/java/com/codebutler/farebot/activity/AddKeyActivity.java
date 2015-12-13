@@ -38,7 +38,7 @@ import android.view.View;
 import android.widget.RadioButton;
 import android.widget.TextView;
 
-import com.codebutler.farebot.R;
+import au.id.micolous.farebot.R;
 import com.codebutler.farebot.key.ClassicCardKeys;
 import com.codebutler.farebot.key.ClassicSectorKey;
 import com.codebutler.farebot.provider.CardKeyProvider;

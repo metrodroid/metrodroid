@@ -2,7 +2,7 @@ package com.codebutler.farebot.transit.opal;
 
 import android.annotation.SuppressLint;
 
-import com.codebutler.farebot.R;
+import au.id.micolous.farebot.R;
 
 import java.util.HashMap;
 import java.util.Map;

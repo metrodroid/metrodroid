@@ -10,7 +10,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 
-import com.codebutler.farebot.R;
+import au.id.micolous.farebot.R;
 import com.codebutler.farebot.util.Utils;
 
 public class AboutActivity extends Activity {
@@ -28,7 +28,7 @@ public class AboutActivity extends Activity {
     }
 
     public void onWebsiteClick(View view) {
-        Uri.Builder b = Uri.parse("https://codebutler.github.io/farebot/").buildUpon();
+        Uri.Builder b = Uri.parse("https://micolous.github.io/farebot/").buildUpon();
         int version = -1;
         try {
             version = getPackageManager().getPackageInfo(getPackageName(), 0).versionCode;

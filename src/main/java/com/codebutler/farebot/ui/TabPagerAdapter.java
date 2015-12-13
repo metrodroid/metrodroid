@@ -32,7 +32,7 @@ import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.view.View;
 
-import com.codebutler.farebot.R;
+import au.id.micolous.farebot.R;
 
 import java.util.ArrayList;
 
