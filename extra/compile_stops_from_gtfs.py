@@ -41,12 +41,12 @@ def compile_stops_from_gtfs(input_gtfs_f, output_f, matching_f=None):
 	if matching_f is None:
 		# No matching data, dump all stops.
 		for stop in stops:
-			output_c.writerow(
+			output_c.writerow([
 				stop[stop_id],
 				stop[stop_name],
 				stop[stop_y],
 				stop[stop_x]
-			)
+			])
 	else:
 		# Matching data is available.  Lets use that.
 		matching = csv.reader(matching_f)
