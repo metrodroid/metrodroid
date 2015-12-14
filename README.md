@@ -1,5 +1,7 @@
 # Farebot M
 
+Version: 2.9.23
+
 View your remaining balance, recent trips, and other information from contactless public transit cards using your NFC Android phone!
 
 ## Fork Maintained By
