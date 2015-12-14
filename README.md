@@ -1,8 +1,12 @@
-# FareBot
+# Farebot M
 
 View your remaining balance, recent trips, and other information from contactless public transit cards using your NFC Android phone!
 
-## Written By
+## Fork Maintained By
+
+* [Michael Farrell](https://github.com/micolous)
+
+## Originally Written By
 
 * [Eric Butler][5] <eric@codebutler.com>
 

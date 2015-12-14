@@ -156,13 +156,10 @@
 
         <meta-data
             android:name="com.google.android.maps.v2.API_KEY"
-            android:value="AIzaSyBUUm1_1cyaCLkIvcE60gF4xO3pyb6SyP4" />
+            android:value="AIzaSyDiNYKV_k9Xf7kUdfdOURsOm2-ZNT-L8Hg" />
         <meta-data
             android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" />
-        <meta-data
-            android:name="io.fabric.ApiKey"
-            android:value="77d8c3509e581fb753f705c476fe3b022dda0287" />
     </application>
 
 </manifest>
