@@ -21,11 +21,35 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 """
 
 from argparse import ArgumentParser, FileType
+from datetime import datetime, timedelta
 from gtfstools import Gtfs, GtfsDialect
-import csv
+import csv, sqlite3
 
-def compile_stops_from_gtfs(input_gtfs_f, output_f, matching_f=None):
+DB_SCHEMA = """
+CREATE TABLE stops (
+	id unique,
+	name,
+	y,
+	x
+);
+"""
+
+INSERT_QUERY = 'INSERT INTO stops VALUES (?, ?, ?, ?)'
+VERSION_EPOCH = datetime(2008, 1, 1)
+
+
+def compile_stops_from_gtfs(input_gtfs_f, output_f, matching_f=None, version=None):
 	gtfs = Gtfs(input_gtfs_f)
+
+	if version is None:
+		feed_info = gtfs.open('feed_info.txt')
+		feed_header = feed_info.next()
+		feed_start_date = feed_info.next()[feed_header.index('feed_start_date')]
+		assert len(feed_start_date) == 8
+		feed_start_date = datetime.strptime(feed_start_date, '%Y%m%d')
+		version = (feed_start_date - VERSION_EPOCH).days
+		print 'Data version: %s (%s)' % (version, feed_start_date.date().isoformat())
+
 	stops = gtfs.open('stops.txt')
 	stops_header = stops.next()
 	stop_id = stops_header.index('stop_id')
@@ -34,19 +58,17 @@ def compile_stops_from_gtfs(input_gtfs_f, output_f, matching_f=None):
 	stop_y = stops_header.index('stop_lat')
 	stop_x = stops_header.index('stop_lon')
 
-	output_c = csv.writer(output_f, dialect=GtfsDialect)
-	output_c.writerow(['id', 'name', 'y', 'x'])
+	db = sqlite3.connect(output_f)
+	cur = db.cursor()
+	cur.execute(DB_SCHEMA)
 
 	# See if there is a matching file
 	if matching_f is None:
 		# No matching data, dump all stops.
-		for stop in stops:
-			output_c.writerow([
-				stop[stop_id],
-				stop[stop_name],
-				stop[stop_y],
-				stop[stop_x]
-			])
+		stop_map = map(lambda stop: (stop[stop_id], stop[stop_name].strip(), stop[stop_y].strip(), stop[stop_x].strip()),
+			stops)
+
+		cur.executemany(INSERT_QUERY, stop_map)
 	else:
 		# Matching data is available.  Lets use that.
 		matching = csv.reader(matching_f)
@@ -71,24 +93,20 @@ def compile_stops_from_gtfs(input_gtfs_f, output_f, matching_f=None):
 		
 		# Now run through the stops
 		for stop in stops:
+			# preprocess stop data
+			name = stop[stop_name].strip()
+			y = stop[stop_y].strip()
+			x = stop[stop_x].strip()
+
 			if stop[stop_id] in stop_ids:
-				for r in stop_ids[stop[stop_id]]:
-					output_c.writerow([
-						r,
-						stop[stop_name].strip(),
-						stop[stop_y].strip(),
-						stop[stop_x].strip()
-					])
+				cur.executemany(INSERT_QUERY, map(lambda r: (r, name, y, x), stop_ids[stop[stop_id]]))
 			if stop[stop_code] in stop_codes:
-				for r in stop_codes[stop[stop_code]]:
-					output_c.writerow([
-						r,
-						stop[stop_name].strip(),
-						stop[stop_y].strip(),
-						stop[stop_x].strip()
-					])
+				cur.executemany(INSERT_QUERY, map(lambda r: (r, name, y, x), stop_codes[stop[stop_code]]))
 		matching_f.close()
-	output_f.close()
+
+	cur.execute('PRAGMA user_version = %d' % version)
+	db.commit()
+	db.close()
 	
 		
 
@@ -97,8 +115,7 @@ def main():
 	
 	parser.add_argument('-o', '--output',
 		required=True,
-		type=FileType('wb'),
-		help='Output data file'
+		help='Output data file (sqlite3)'
 	)
 
 	parser.add_argument('input_gtfs',
@@ -111,9 +128,14 @@ def main():
 		type=FileType('rb'),
 		help='If supplied, this is a matching file of reader_id to stop_code or stop_id. Missing stops will be dropped. If a matching file is not supplied, this will produce a list of all stops with stop_code instead.')
 
+	parser.add_argument('-V', '--override-version',
+		required=False,
+		type=int,
+		help='Enter a custom version to write to the file. If not specified, this tool will read it from feed_info.txt, reading the feed_start_date and converting it to a number of days since %s.' % (VERSION_EPOCH.date().isoformat(),))
+
 	options = parser.parse_args()
 
-	compile_stops_from_gtfs(options.input_gtfs[0], options.output, options.matching)
+	compile_stops_from_gtfs(options.input_gtfs[0], options.output, options.matching, options.override_version)
 
 if __name__ == '__main__':
 	main()
