@@ -31,10 +31,16 @@ def zipify(input_xml, output_zipf):
 	output_zip = ZipFile(output_zipf, 'w')
 	xml = objectify.parse(input_xml)
 	root = xml.getroot()
-	assert root.tag == 'cards'
+	if root.tag == 'cards':
+		cards = root.iterchildren()
+	elif root.tag == 'card':
+		cards = [root]
+	else:
+		print 'unexpected root node: %r' % (root.tag,)
+		return
 
 	# iterate through cards
-	for card in root.iterchildren():
+	for card in cards:
 		assert card.tag == 'card'
 		scanned_at = card.get('scanned_at')
 		card_id = card.get('id')
