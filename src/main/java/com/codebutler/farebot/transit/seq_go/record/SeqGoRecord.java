@@ -22,8 +22,11 @@ public class SeqGoRecord {
                 break;
 
             case 0x31:
-                // Regular record
-                record = SeqGoTapRecord.recordFromBytes(input);
+                if (input[1] == 0x01) {
+                    record = SeqGoTopupRecord.recordFromBytes(input);
+                } else {
+                    record = SeqGoTapRecord.recordFromBytes(input);
+                }
                 break;
 
             default:

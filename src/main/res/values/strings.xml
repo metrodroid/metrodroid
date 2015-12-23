@@ -220,6 +220,6 @@
         Go Card (South East Queensland/Brisbane, AU)
         These are deliberately separated strings in order to match the terminology of the agency.
     -->
-    <string name="seqgo_vehicle_bus">Bus</string>
-    <string name="seqgo_vehicle_ticket_machine">Ticket Machine</string>
+    <string name="seqgo_refill_manual">Manual top-up</string>
+    <string name="seqgo_refill_automatic">Automatic top-up</string>
 </resources>

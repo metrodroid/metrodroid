@@ -17,9 +17,10 @@ public class SeqGoTopupRecord extends SeqGoRecord implements Parcelable {
     private int mCredit;
     private int mStation;
     private int mChecksum;
+    private boolean mAutomatic;
 
     public static SeqGoTopupRecord recordFromBytes(byte[] input) {
-        if (input[0] != 0x01 || input[1] != 0x01) throw new AssertionError("Not a topup record");
+        if ((input[0] != 0x01 && input[0] != 0x31) || input[1] != 0x01) throw new AssertionError("Not a topup record");
 
         SeqGoTopupRecord record = new SeqGoTopupRecord();
 
@@ -35,6 +36,7 @@ public class SeqGoTopupRecord extends SeqGoRecord implements Parcelable {
         byte[] checksum = Utils.reverseBuffer(input, 14, 2);
         record.mChecksum = Utils.byteArrayToInt(checksum);
 
+        record.mAutomatic = input[0] == 0x31;
         return record;
     }
 
@@ -51,6 +53,7 @@ public class SeqGoTopupRecord extends SeqGoRecord implements Parcelable {
         parcel.writeInt(mCredit);
         parcel.writeInt(mStation);
         parcel.writeInt(mChecksum);
+        parcel.writeInt(mAutomatic ? 1 : 0);
     }
 
     public SeqGoTopupRecord(Parcel parcel) {
@@ -59,6 +62,7 @@ public class SeqGoTopupRecord extends SeqGoRecord implements Parcelable {
         mCredit = parcel.readInt();
         mStation = parcel.readInt();
         mChecksum = parcel.readInt();
+        mAutomatic = parcel.readInt() == 1;
     }
 
     public GregorianCalendar getTimestamp() {
@@ -75,5 +79,9 @@ public class SeqGoTopupRecord extends SeqGoRecord implements Parcelable {
 
     public int getChecksum() {
         return mChecksum;
+    }
+
+    public boolean getAutomatic() {
+        return mAutomatic;
     }
 }

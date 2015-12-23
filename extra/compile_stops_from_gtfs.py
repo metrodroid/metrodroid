@@ -35,10 +35,21 @@ CREATE TABLE stops (
 """
 
 INSERT_QUERY = 'INSERT INTO stops VALUES (?, ?, ?, ?)'
-VERSION_EPOCH = datetime(2008, 1, 1)
+VERSION_EPOCH = datetime(2006, 1, 1)
+
+def massage_name(name, suffixes):
+	name = name.strip()
+	for suffix in suffixes:
+		if name.endswith(suffix):
+			name = name[:-len(suffix)].strip()
+	
+	return name
 
 
-def compile_stops_from_gtfs(input_gtfs_f, output_f, matching_f=None, version=None):
+def compile_stops_from_gtfs(input_gtfs_f, output_f, matching_f=None, version=None, strip_suffixes=''):
+	# trim whitespace
+	strip_suffixes = [x.strip() for x in strip_suffixes.split(',')]
+	
 	gtfs = Gtfs(input_gtfs_f)
 
 	if version is None:
@@ -65,7 +76,7 @@ def compile_stops_from_gtfs(input_gtfs_f, output_f, matching_f=None, version=Non
 	# See if there is a matching file
 	if matching_f is None:
 		# No matching data, dump all stops.
-		stop_map = map(lambda stop: (stop[stop_id], stop[stop_name].strip(), stop[stop_y].strip(), stop[stop_x].strip()),
+		stop_map = map(lambda stop: (stop[stop_id], massage_name(stop[stop_name], strip_suffixes), stop[stop_y].strip(), stop[stop_x].strip()),
 			stops)
 
 		cur.executemany(INSERT_QUERY, stop_map)
@@ -94,7 +105,7 @@ def compile_stops_from_gtfs(input_gtfs_f, output_f, matching_f=None, version=Non
 		# Now run through the stops
 		for stop in stops:
 			# preprocess stop data
-			name = stop[stop_name].strip()
+			name = massage_name(stop[stop_name], strip_suffixes)
 			y = stop[stop_y].strip()
 			x = stop[stop_x].strip()
 
@@ -133,9 +144,13 @@ def main():
 		type=int,
 		help='Enter a custom version to write to the file. If not specified, this tool will read it from feed_info.txt, reading the feed_start_date and converting it to a number of days since %s.' % (VERSION_EPOCH.date().isoformat(),))
 
+	parser.add_argument('--strip-suffixes',
+		default='railway station,train station,station',
+		help='Comma separated, case-insensitive list of suffixes to remove from station names when populating the database. [default: %(default)s]')
+
 	options = parser.parse_args()
 
-	compile_stops_from_gtfs(options.input_gtfs[0], options.output, options.matching, options.override_version)
+	compile_stops_from_gtfs(options.input_gtfs[0], options.output, options.matching, options.override_version, options.strip_suffixes)
 
 if __name__ == '__main__':
 	main()

@@ -65,12 +65,21 @@ public class SeqGoTrip extends Trip {
 
     @Override
     public String getStartStationName() {
-        return Integer.toString(mStartStation);
+        if (mStartStation == 0) {
+            return null;
+        } else {
+            Station s = getStartStation();
+            if (s == null) {
+                return Integer.toString(mStartStation);
+            } else {
+                return s.getStationName();
+            }
+        }
     }
 
     @Override
     public Station getStartStation() {
-        return null;
+        return SeqGoUtil.getStation(mStartStation);
     }
 
     @Override
@@ -78,13 +87,18 @@ public class SeqGoTrip extends Trip {
         if (mEndStation == 0) {
             return null;
         } else {
-            return Integer.toString(mEndStation);
+            Station s = getEndStation();
+            if (s == null) {
+                return Integer.toString(mEndStation);
+            } else {
+                return s.getStationName();
+            }
         }
     }
 
     @Override
     public Station getEndStation() {
-        return null;
+        return SeqGoUtil.getStation(mEndStation);
     }
 
     @Override
@@ -133,6 +147,8 @@ public class SeqGoTrip extends Trip {
         }
 
         mMode = Mode.valueOf(parcel.readString());
+        mStartStation = parcel.readInt();
+        mEndStation = parcel.readInt();
     }
 
     public SeqGoTrip() {}

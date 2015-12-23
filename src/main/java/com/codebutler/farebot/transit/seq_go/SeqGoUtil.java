@@ -1,9 +1,14 @@
 package com.codebutler.farebot.transit.seq_go;
 
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
+import com.codebutler.farebot.FareBotApplication;
+import com.codebutler.farebot.transit.Station;
 import com.codebutler.farebot.util.Utils;
 
+import java.io.IOException;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 
@@ -34,7 +39,7 @@ public final class SeqGoUtil {
         int month = Utils.getBitsFromBuffer(timestamp, 23, 4);
         int day = Utils.getBitsFromBuffer(timestamp, 27, 5);
 
-        Log.i(TAG, "unpackDate: " + minute + " minutes, " + year + '-' + month + '-' + day);
+        //Log.i(TAG, "unpackDate: " + minute + " minutes, " + year + '-' + month + '-' + day);
 
         if (minute > 1440) throw new AssertionError("Minute > 1440");
         if (minute < 0) throw new AssertionError("Minute < 0");
@@ -46,5 +51,54 @@ public final class SeqGoUtil {
         d.add(Calendar.MINUTE, minute);
 
         return d;
+    }
+
+    private static SeqGoDBUtil getDB() {
+        return FareBotApplication.getInstance().getSeqGoDBUtil();
+    }
+
+    public static Station getStation(int stationId) {
+        if (stationId == 0) {
+            return null;
+        }
+
+        SQLiteDatabase db = null;
+        Cursor cursor = null;
+        try {
+            try {
+                db = getDB().openDatabase();
+            } catch (IOException ex) {
+                Log.e(TAG, "Error connecting database", ex);
+                return null;
+            }
+
+            cursor = db.query(
+                    SeqGoDBUtil.TABLE_NAME,
+                    SeqGoDBUtil.COLUMNS_STATIONDATA,
+                    String.format("%s = ?", SeqGoDBUtil.COLUMN_ROW_ID),
+                    new String[]{
+                            String.valueOf(stationId),
+                    },
+                    null,
+                    null,
+                    SeqGoDBUtil.COLUMN_ROW_ID);
+
+            if (!cursor.moveToFirst()) {
+                Log.w(TAG, String.format("FAILED get station %s",
+                        stationId));
+
+                return null;
+            }
+
+            String stationName = cursor.getString(cursor.getColumnIndex(SeqGoDBUtil.COLUMN_ROW_NAME));
+            String latitude = cursor.getString(cursor.getColumnIndex(SeqGoDBUtil.COLUMN_ROW_LAT));
+            String longitude = cursor.getString(cursor.getColumnIndex(SeqGoDBUtil.COLUMN_ROW_LON));
+
+            return new Station(stationName, latitude, longitude);
+        } finally {
+            if (cursor != null) {
+                cursor.close();
+            }
+        }
     }
 }

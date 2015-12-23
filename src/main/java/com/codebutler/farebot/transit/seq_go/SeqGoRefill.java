@@ -5,9 +5,12 @@ import android.os.Parcelable;
 
 import com.codebutler.farebot.transit.Refill;
 import com.codebutler.farebot.transit.seq_go.record.SeqGoTopupRecord;
+import com.codebutler.farebot.util.Utils;
 
 import java.text.NumberFormat;
 import java.util.Locale;
+
+import au.id.micolous.farebot.R;
 
 /**
  * Created by michael on 23/12/15.
@@ -26,14 +29,14 @@ public class SeqGoRefill extends Refill {
 
     @Override
     public String getAgencyName() {
-        // There is only one agency, so return null for these.
         return null;
     }
 
     @Override
     public String getShortAgencyName() {
-        // There is only one agency, so return null for these.
-        return null;
+        return Utils.localizeString(mTopup.getAutomatic() ?
+                R.string.seqgo_refill_automatic :
+                R.string.seqgo_refill_manual);
     }
 
     @Override
