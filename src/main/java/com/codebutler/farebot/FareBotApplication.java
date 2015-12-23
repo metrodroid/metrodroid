@@ -32,7 +32,7 @@ import com.codebutler.farebot.card.desfire.DesfireFile;
 import com.codebutler.farebot.card.desfire.DesfireFileSettings;
 import com.codebutler.farebot.card.desfire.InvalidDesfireFile;
 import com.codebutler.farebot.card.desfire.RecordDesfireFile;
-import com.codebutler.farebot.card.felica.DBUtil;
+import com.codebutler.farebot.card.felica.FelicaDBUtil;
 import com.codebutler.farebot.transit.ovc.OVChipDBUtil;
 import com.codebutler.farebot.xml.Base64String;
 import com.codebutler.farebot.xml.CardConverter;
@@ -67,7 +67,7 @@ public class FareBotApplication extends Application {
 
     private static FareBotApplication sInstance;
 
-    private DBUtil mSuicaDBUtil;
+    private FelicaDBUtil mFelicaDBUtil;
     private OVChipDBUtil mOVChipDBUtil;
     private final Serializer mSerializer;
     private boolean mMifareClassicSupport;
@@ -75,7 +75,7 @@ public class FareBotApplication extends Application {
     public FareBotApplication() {
         sInstance = this;
 
-        mSuicaDBUtil = new DBUtil(this);
+        mFelicaDBUtil = new FelicaDBUtil(this);
         mOVChipDBUtil = new OVChipDBUtil(this);
 
         try {
@@ -114,8 +114,8 @@ public class FareBotApplication extends Application {
         return sInstance;
     }
 
-    public DBUtil getSuicaDBUtil() {
-        return mSuicaDBUtil;
+    public FelicaDBUtil getFelicaDBUtil() {
+        return mFelicaDBUtil;
     }
 
     public OVChipDBUtil getOVChipDBUtil() {

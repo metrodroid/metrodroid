@@ -23,6 +23,8 @@
 
 package com.codebutler.farebot.transit.ovc;
 
+import android.content.Context;
+
 import com.codebutler.farebot.util.DBUtil;
 
 public class OVChipDBUtil extends DBUtil {
@@ -49,12 +51,13 @@ public class OVChipDBUtil extends DBUtil {
             COLUMN_ROW_LAT,
     };
 
-    private static final String TAG = "OVChipDBUtil";
-
-    private static final String DB_NAME = "ovc_stations.sqlite";
+    private static final String DB_NAME = "ovc_stations.db3";
 
     private static final int VERSION = 2;
 
+    public OVChipDBUtil(Context context) {
+        super(context);
+    }
 
     @Override
     protected String getDBName() {

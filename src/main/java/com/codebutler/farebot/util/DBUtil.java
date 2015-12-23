@@ -18,7 +18,6 @@ import java.io.OutputStream;
  * Created by michael on 21/12/15.
  */
 public abstract class DBUtil {
-    protected static final String DB_PATH = "/data/data/au.id.micolous.farebot/databases/";
 
     /**
      * Implementing clases should specify the filename of their database.
@@ -64,7 +63,7 @@ public abstract class DBUtil {
             this.copyDatabase();
         }
 
-        mDatabase = SQLiteDatabase.openDatabase(new File(DB_PATH, getDBName()).getPath(), null,
+        mDatabase = SQLiteDatabase.openDatabase(getDBFile().getPath(), null,
                 SQLiteDatabase.OPEN_READONLY);
         return mDatabase;
     }
@@ -77,7 +76,7 @@ public abstract class DBUtil {
     private boolean hasDatabase() {
         SQLiteDatabase tempDatabase = null;
 
-        File file = new File(DB_PATH, getDBName());
+        File file = getDBFile();
         if (!file.exists()) {
             return false;
         }
@@ -104,7 +103,7 @@ public abstract class DBUtil {
         OutputStream out = null;
         try {
             in  = this.mContext.getAssets().open(getDBName());
-            out = new FileOutputStream(new File(DB_PATH, getDBName()));
+            out = new FileOutputStream(getDBFile());
             IOUtils.copy(in, out);
         } catch (IOException e) {
             throw new RuntimeException("Error copying database", e);
@@ -112,5 +111,9 @@ public abstract class DBUtil {
             IOUtils.closeQuietly(out);
             IOUtils.closeQuietly(in);
         }
+    }
+
+    public File getDBFile() {
+        return mContext.getDatabasePath(getDBName());
     }
 }

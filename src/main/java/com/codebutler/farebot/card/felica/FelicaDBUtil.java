@@ -28,6 +28,8 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteException;
 import android.util.Log;
 
+import com.codebutler.farebot.util.DBUtil;
+
 import org.apache.commons.io.IOUtils;
 
 import java.io.File;
@@ -36,7 +38,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 
-public class DBUtil {
+public class FelicaDBUtil extends DBUtil {
     public static final String COLUMN_ID             = "_id";
     public static final String COLUMN_AREACODE       = "AreaCode";
     public static final String COLUMN_LINECODE       = "LineCode";
@@ -77,80 +79,23 @@ public class DBUtil {
         COLUMN_STATIONNAME_EN
     };
 
-    private static final String TAG = "SuicaDBUtil";
-
-    private static final String DB_NAME = "StationCode.db";
+    private static final String DB_NAME = "felica_stations.db3";
 
     private static final int VERSION = 2;
 
-    private SQLiteDatabase mDatabase;
-    private final Context mContext;
-
-    public DBUtil(Context context) {
-        this.mContext = context;
+    public FelicaDBUtil(Context context) {
+        super(context);
     }
 
-    public SQLiteDatabase openDatabase() throws SQLException, IOException {
-        if (mDatabase != null) {
-            return mDatabase;
-        }
 
-        if (!this.hasDatabase()) {
-            this.copyDatabase();
-        }
-        mDatabase = SQLiteDatabase.openDatabase(getDBFile().getPath(), null, SQLiteDatabase.OPEN_READONLY);
-        return mDatabase;
-
+    @Override
+    protected String getDBName() {
+        return DB_NAME;
     }
 
-    public synchronized void close() {
-        if (mDatabase != null)
-            this.mDatabase.close();
-    }
-
-    private boolean hasDatabase() {
-        SQLiteDatabase tempDatabase = null;
-
-        File file = getDBFile();
-        if (!file.exists()) {
-            return false;
-        }
-
-        try {
-            tempDatabase = SQLiteDatabase.openDatabase(file.getPath(), null, SQLiteDatabase.OPEN_READONLY);
-            int currentVersion = tempDatabase.getVersion();
-            if (currentVersion != VERSION) {
-                Log.d(TAG, String.format("Updating Suica database. Old: %s, new: %s", currentVersion, VERSION));
-                tempDatabase.close();
-                tempDatabase = null;
-            }
-        } catch (SQLiteException ignored) {
-        }
-
-        if (tempDatabase != null){
-            tempDatabase.close();
-        }
-
-        return (tempDatabase != null);
-    }
-
-    private void copyDatabase() {
-        InputStream in   = null;
-        OutputStream out = null;
-        try {
-            in  = this.mContext.getAssets().open(DB_NAME);
-            out = new FileOutputStream(getDBFile());
-            IOUtils.copy(in, out);
-        } catch (IOException e) {
-            throw new RuntimeException("Error copying database", e);
-        } finally {
-            IOUtils.closeQuietly(out);
-            IOUtils.closeQuietly(in);
-        }
-    }
-
-    private File getDBFile() {
-        return mContext.getDatabasePath(DB_NAME);
+    @Override
+    protected int getDesiredVersion() {
+        return VERSION;
     }
 }
 
