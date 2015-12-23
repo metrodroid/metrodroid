@@ -1,8 +1,8 @@
 .PHONY: clean
 
-all: seq_gocard_stops.db3
+all: seq_go_stations.db3
 
-seq_gocard_stops.db3: mapping.csv SEQ.zip
+seq_go_stations.db3: mapping.csv SEQ.zip
 	python ../../extra/compile_stops_from_gtfs.py SEQ.zip -m mapping.csv -o $@
 	
 SEQ.zip:
