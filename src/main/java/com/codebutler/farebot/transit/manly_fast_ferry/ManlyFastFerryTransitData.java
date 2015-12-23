@@ -125,7 +125,6 @@ public class ManlyFastFerryTransitData extends TransitData {
                     records.add(record);
                 }
             }
-
         }
 
         // Now do a first pass for metadata and balance information.
