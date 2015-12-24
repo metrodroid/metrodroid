@@ -10,7 +10,8 @@ import com.codebutler.farebot.util.Utils;
 import java.util.GregorianCalendar;
 
 /**
- * Created by michael on 23/12/15.
+ * Top-up record type
+ * https://github.com/micolous/farebot/wiki/Go-(SEQ)#top-up-record-type
  */
 public class SeqGoTopupRecord extends SeqGoRecord implements Parcelable {
     private GregorianCalendar mTimestamp;

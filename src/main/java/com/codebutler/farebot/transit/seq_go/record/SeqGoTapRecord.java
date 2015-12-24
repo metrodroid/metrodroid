@@ -5,14 +5,14 @@ import android.os.Parcelable;
 
 import com.codebutler.farebot.transit.Trip;
 import com.codebutler.farebot.transit.seq_go.SeqGoData;
-import com.codebutler.farebot.transit.seq_go.SeqGoTransitData;
 import com.codebutler.farebot.transit.seq_go.SeqGoUtil;
 import com.codebutler.farebot.util.Utils;
 
 import java.util.GregorianCalendar;
 
 /**
- * Created by michael on 23/12/15.
+ * Tap record type
+ * https://github.com/micolous/farebot/wiki/Go-(SEQ)#tap-record-type
  */
 public class SeqGoTapRecord extends SeqGoRecord implements Parcelable, Comparable<SeqGoTapRecord> {
     private GregorianCalendar mTimestamp;
@@ -23,7 +23,7 @@ public class SeqGoTapRecord extends SeqGoRecord implements Parcelable, Comparabl
 
 
     public static SeqGoTapRecord recordFromBytes(byte[] input) {
-        if (input[0] != 0x31) throw new AssertionError("not a triprecord");
+        if (input[0] != 0x31) throw new AssertionError("not a tap record");
 
         SeqGoTapRecord record = new SeqGoTapRecord();
 
@@ -33,7 +33,7 @@ public class SeqGoTapRecord extends SeqGoRecord implements Parcelable, Comparabl
         record.mTimestamp = SeqGoUtil.unpackDate(ts);
 
         byte[] journey = Utils.reverseBuffer(input, 5, 2);
-        record.mJourney = Utils.byteArrayToInt(journey);
+        record.mJourney = Utils.byteArrayToInt(journey) >> 3;
 
         byte[] station = Utils.reverseBuffer(input, 12, 2);
         record.mStation = Utils.byteArrayToInt(station);

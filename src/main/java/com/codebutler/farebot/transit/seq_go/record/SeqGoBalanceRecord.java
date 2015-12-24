@@ -3,7 +3,8 @@ package com.codebutler.farebot.transit.seq_go.record;
 import com.codebutler.farebot.util.Utils;
 
 /**
- * Created by michael on 23/12/15.
+ * Represents balance records on Go card
+ * https://github.com/micolous/farebot/wiki/Go-(SEQ)#balance-record-type
  */
 public class SeqGoBalanceRecord extends SeqGoRecord implements Comparable<SeqGoBalanceRecord> {
 

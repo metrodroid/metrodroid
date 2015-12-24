@@ -45,12 +45,25 @@ public class SeqGoTrip extends Trip {
 
     @Override
     public String getAgencyName() {
-        return null;
+        switch (mMode) {
+            case FERRY:
+                return "Transdev Brisbane Ferries";
+            case TRAIN:
+                // Domestic Airport == 9
+                if (mStartStation == 9 || mEndStation == 9) {
+                    // TODO: Detect International Airport station.
+                    return "AirTrain";
+                } else {
+                    return "Queensland Rail";
+                }
+            default:
+                return "TransLink";
+        }
     }
 
     @Override
     public String getShortAgencyName() {
-        return null;
+        return getAgencyName();
     }
 
     @Override
