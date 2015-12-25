@@ -83,7 +83,7 @@ public class SeqGoTrip extends Trip {
         } else {
             Station s = getStartStation();
             if (s == null) {
-                return Integer.toString(mStartStation);
+                return "Unknown (" + Integer.toString(mStartStation) + ")";
             } else {
                 return s.getStationName();
             }
@@ -102,7 +102,7 @@ public class SeqGoTrip extends Trip {
         } else {
             Station s = getEndStation();
             if (s == null) {
-                return Integer.toString(mEndStation);
+                return "Unknown (" + Integer.toString(mEndStation) + ")";
             } else {
                 return s.getStationName();
             }
