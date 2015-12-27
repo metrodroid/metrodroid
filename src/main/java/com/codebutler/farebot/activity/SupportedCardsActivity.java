@@ -42,6 +42,7 @@ import au.id.micolous.farebot.R;
 import com.codebutler.farebot.card.CardType;
 import com.codebutler.farebot.transit.manly_fast_ferry.ManlyFastFerryTransitData;
 import com.codebutler.farebot.transit.opal.OpalTransitData;
+import com.codebutler.farebot.transit.seq_go.SeqGoTransitData;
 import com.codebutler.farebot.util.Utils;
 
 import java.util.ArrayList;
@@ -90,6 +91,12 @@ public class SupportedCardsActivity extends Activity {
             add(new CardInfo(R.drawable.ezlink_card, "EZ-Link",
                     R.string.location_singapore,
                     CardType.CEPAS
+            ));
+
+            add(new CardInfo(R.drawable.seqgo_card, SeqGoTransitData.NAME,
+                    R.string.location_brisbane_seq_australia,
+                    CardType.MifareClassic,
+                    true
             ));
 
             add(new CardInfo(R.drawable.hsl_card, "HSL",

@@ -104,6 +104,8 @@
     <string name="card_epoch">Card Epoch</string>
     <string name="card_not_supported_on_device">This card is not supported by your device.</string>
     <string name="card_note_cepas">Not compatible with all devices.</string>
+    <string name="need_stations">Not all station names are known.</string>
+    <string name="need_stations_submit">Report</string>
     <string name="visit_website">Visit Website</string>
     <string name="title_activity_about">About Farebot M</string>
 
@@ -118,6 +120,7 @@
     <string name="location_sao_paulo">São Paulo, Brazil</string>
     <string name="location_helsinki_finland">Helsinki, Finland</string>
     <string name="location_sydney_australia">Sydney, Australia</string>
+    <string name="location_brisbane_seq_australia">Brisbane and South East Queensland, Australia</string>
 
     <!-- Felica -->
     <string name="felica_terminal_fare_adjustment">Fare Adjustment Machine</string>

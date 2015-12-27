@@ -31,9 +31,42 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true" />
-    <android.support.v4.view.ViewPager
-        android:id="@+id/pager"
-        android:visibility="gone"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+        <LinearLayout
+            android:id="@+id/need_stations"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="8dip"
+            android:background="#FF4444"
+            android:visibility="gone">
+            <TextView
+                android:id="@+id/need_stations_text"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:text="@string/need_stations"
+                android:gravity="center_vertical"
+                android:textColor="#FFFFFF"
+                android:textSize="18sp" />
+            <Button
+                android:id="@+id/need_stations_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginLeft="8dp"
+                android:text="@string/need_stations_submit" />
+        </LinearLayout>
+
+        <android.support.v4.view.ViewPager
+            android:id="@+id/pager"
+            android:visibility="gone"
+            android:layout_width="match_parent"
+            android:layout_height="fill_parent" />
+
+    </LinearLayout>
+
 </RelativeLayout>

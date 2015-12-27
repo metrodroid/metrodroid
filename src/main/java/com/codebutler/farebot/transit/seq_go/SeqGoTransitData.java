@@ -35,7 +35,7 @@ import com.codebutler.farebot.util.Utils;
  */
 public class SeqGoTransitData extends TransitData {
 
-    static final String NAME = "Go card";
+    public static final String NAME = "Go card";
     static final byte[] MANUFACTURER = {
         0x16, 0x18, 0x1A, 0x1B,
         0x1C, 0x1D, 0x1E, 0x1F
@@ -45,6 +45,7 @@ public class SeqGoTransitData extends TransitData {
     int mBalance;
     SeqGoRefill[] mRefills;
     SeqGoTrip[] mTrips;
+    boolean mHasUnknownStations = false;
 
     /*
     public static final Creator<SeqGoTransitData> CREATOR = new Creator<SeqGoTransitData>() {
@@ -158,6 +159,10 @@ public class SeqGoTransitData extends TransitData {
                 trip.mStartStation = tapOn.getStation();
                 trip.mMode = tapOn.getMode();
 
+                if (!mHasUnknownStations && trip.mStartStation != 0 && trip.getStartStation() == null) {
+                    mHasUnknownStations = true;
+                }
+
                 // Peek at the next record and see if it is part of
                 // this journey
                 if (taps.size() > i+1 && taps.get(i+1).getJourney() == tapOn.getJourney() && taps.get(i+1).getMode() == tapOn.getMode()) {
@@ -166,6 +171,10 @@ public class SeqGoTransitData extends TransitData {
 
                     trip.mEndTime = tapOff.getTimestamp();
                     trip.mEndStation = tapOff.getStation();
+
+                    if (!mHasUnknownStations && trip.mEndStation != 0 && trip.getEndStation() == null) {
+                        mHasUnknownStations = true;
+                    }
 
                     // Increment to skip the next record
                     i++;
@@ -225,6 +234,11 @@ public class SeqGoTransitData extends TransitData {
     @Override
     public String getCardName() {
         return NAME;
+    }
+
+    @Override
+    public boolean hasUnknownStations() {
+        return mHasUnknownStations;
     }
 
     @Override
