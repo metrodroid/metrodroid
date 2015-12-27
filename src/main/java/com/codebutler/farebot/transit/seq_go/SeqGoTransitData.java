@@ -43,8 +43,8 @@ public class SeqGoTransitData extends TransitData {
 
     BigInteger mSerialNumber;
     int mBalance;
-    Refill[] mRefills;
-    Trip[] mTrips;
+    SeqGoRefill[] mRefills;
+    SeqGoTrip[] mTrips;
 
     /*
     public static final Creator<SeqGoTransitData> CREATOR = new Creator<SeqGoTransitData>() {
@@ -87,6 +87,10 @@ public class SeqGoTransitData extends TransitData {
     @SuppressWarnings("UnusedDeclaration")
     public SeqGoTransitData(Parcel parcel) {
         mSerialNumber = new BigInteger(parcel.readString());
+        mBalance = parcel.readInt();
+        parcel.readTypedArray(mTrips, SeqGoTrip.CREATOR);
+        parcel.readTypedArray(mRefills, SeqGoRefill.CREATOR);
+
     }
 
     public SeqGoTransitData(ClassicCard card) {
@@ -184,8 +188,8 @@ public class SeqGoTransitData extends TransitData {
             Collections.sort(refills, new Refill.Comparator());
         }
 
-        mTrips = trips.toArray(new Trip[trips.size()]);
-        mRefills = refills.toArray(new Refill[refills.size()]);
+        mTrips = trips.toArray(new SeqGoTrip[trips.size()]);
+        mRefills = refills.toArray(new SeqGoRefill[refills.size()]);
     }
 
     @Override
@@ -226,5 +230,8 @@ public class SeqGoTransitData extends TransitData {
     @Override
     public void writeToParcel(Parcel parcel, int i) {
         parcel.writeString(mSerialNumber.toString());
+        parcel.writeInt(mBalance);
+        parcel.writeTypedArray(mTrips, i);
+        parcel.writeTypedArray(mRefills, i);
     }
 }
