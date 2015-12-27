@@ -25,6 +25,7 @@ package com.codebutler.farebot.fragment;
 import android.app.Activity;
 import android.app.ListFragment;
 import android.app.LoaderManager;
+import android.content.ContentResolver;
 import android.content.ContentUris;
 import android.content.Context;
 import android.content.CursorLoader;
@@ -63,6 +64,7 @@ import org.apache.commons.io.FileUtils;
 import org.simpleframework.xml.Serializer;
 
 import java.io.File;
+import java.io.InputStream;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -188,7 +190,8 @@ public class CardsFragment extends ListFragment {
         try {
             if (resultCode == Activity.RESULT_OK && requestCode == REQUEST_SELECT_FILE) {
                 Uri uri = data.getData();
-                String xml = org.apache.commons.io.FileUtils.readFileToString(new File(uri.getPath()));
+                InputStream stream = getActivity().getContentResolver().openInputStream(uri);
+                String xml = org.apache.commons.io.IOUtils.toString(stream);
                 onCardsImported(ExportHelper.importCardsXml(getActivity(), xml));
             }
         } catch (Exception ex) {
