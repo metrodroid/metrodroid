@@ -40,6 +40,7 @@ import android.view.WindowManager;
 import com.codebutler.farebot.FareBotApplication;
 import au.id.micolous.farebot.R;
 
+import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
@@ -156,13 +157,25 @@ public class Utils {
     }
 
     public static long byteArrayToLong(byte[] b, int offset, int length) {
-        if (b.length < length)
-            throw new IllegalArgumentException("length must be less than or equal to b.length");
+        if (b.length < offset + length)
+            throw new IllegalArgumentException("offset + length must be less than or equal to b.length");
 
         long value = 0;
         for (int i = 0; i < length; i++) {
             int shift = (length - 1 - i) * 8;
             value += (b[i + offset] & 0x000000FF) << shift;
+        }
+        return value;
+    }
+
+    public static BigInteger byteArrayToBigInteger(byte[] b, int offset, int length) {
+        if (b.length < offset + length)
+            throw new IllegalArgumentException("offset + length must be less than or equal to b.length");
+
+        BigInteger value = BigInteger.valueOf(0);
+        for (int i = 0; i < length; i++) {
+            value = value.shiftLeft(8);
+            value = value.add(BigInteger.valueOf(b[i+offset] & 0x000000ff));
         }
         return value;
     }

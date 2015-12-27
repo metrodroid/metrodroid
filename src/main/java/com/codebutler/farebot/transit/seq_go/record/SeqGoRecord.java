@@ -15,6 +15,10 @@ public class SeqGoRecord {
                     // Metadata record, which we don't understand yet
                     break;
                 } else if (input[1] == 0x01) {
+                    if (input[13] == 0x00) {
+                        // Some other metadata type
+                        return null;
+                    }
                     record = SeqGoTopupRecord.recordFromBytes(input);
                 } else {
                     record = SeqGoBalanceRecord.recordFromBytes(input);
@@ -23,6 +27,10 @@ public class SeqGoRecord {
 
             case 0x31:
                 if (input[1] == 0x01) {
+                    if (input[13] == 0x00) {
+                        // Some other metadata type
+                        return null;
+                    }
                     record = SeqGoTopupRecord.recordFromBytes(input);
                 } else {
                     record = SeqGoTapRecord.recordFromBytes(input);

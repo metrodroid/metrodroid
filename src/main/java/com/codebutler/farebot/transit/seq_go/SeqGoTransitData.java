@@ -2,6 +2,7 @@ package com.codebutler.farebot.transit.seq_go;
 
 import android.os.Parcel;
 
+import java.math.BigInteger;
 import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -40,7 +41,7 @@ public class SeqGoTransitData extends TransitData {
         0x1C, 0x1D, 0x1E, 0x1F
     };
 
-    long mSerialNumber;
+    BigInteger mSerialNumber;
     int mBalance;
     Refill[] mRefills;
     Trip[] mTrips;
@@ -70,24 +71,28 @@ public class SeqGoTransitData extends TransitData {
     public static TransitIdentity parseTransitIdentity(ClassicCard card) {
         byte[] serialData = card.getSector(0).getBlock(0).getData();
         serialData = Utils.reverseBuffer(serialData, 0, 4);
-        long serialNumber = Utils.byteArrayToLong(serialData, 0, 4);
+        BigInteger serialNumber = Utils.byteArrayToBigInteger(serialData, 0, 4);
         return new TransitIdentity(NAME, formatSerialNumber(serialNumber));
     }
 
-    private static String formatSerialNumber(long serialNumber) {
-        return String.format("016%012dx", serialNumber);
+    private static String formatSerialNumber(BigInteger serialNumber) {
+        String serial = serialNumber.toString();
+        while (serial.length() < 12) {
+            serial = "0" + serial;
+        }
+        return String.format("016%sx", serial);
 
     }
 
     @SuppressWarnings("UnusedDeclaration")
     public SeqGoTransitData(Parcel parcel) {
-        mSerialNumber = parcel.readLong();
+        mSerialNumber = new BigInteger(parcel.readString());
     }
 
     public SeqGoTransitData(ClassicCard card) {
         byte[] serialData = card.getSector(0).getBlock(0).getData();
-        serialData = Utils.reverseBuffer(serialData, 0, 16);
-        mSerialNumber = Utils.byteArrayToLong(serialData, 12, 4);
+        serialData = Utils.reverseBuffer(serialData, 0, 4);
+        mSerialNumber = Utils.byteArrayToBigInteger(serialData, 0, 4);
 
         ArrayList<SeqGoRecord> records = new ArrayList<>();
 
@@ -220,6 +225,6 @@ public class SeqGoTransitData extends TransitData {
 
     @Override
     public void writeToParcel(Parcel parcel, int i) {
-        parcel.writeLong(mSerialNumber);
+        parcel.writeString(mSerialNumber.toString());
     }
 }
