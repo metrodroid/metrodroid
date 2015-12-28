@@ -109,6 +109,7 @@
     <string name="card_preview_reader">Beta version of card reader.</string>
     <string name="visit_website">Visit Website</string>
     <string name="title_activity_about">About Farebot M</string>
+    <string name="card_type">Card type</string>
 
 
     <!-- Locations -->

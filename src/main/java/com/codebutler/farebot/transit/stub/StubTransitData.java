@@ -12,6 +12,8 @@ import com.codebutler.farebot.ui.ListItem;
 import java.util.ArrayList;
 import java.util.List;
 
+import au.id.micolous.farebot.R;
+
 /**
  * Abstract class used to identify cards that we don't yet know the format of.
  *
@@ -31,9 +33,9 @@ public abstract class StubTransitData extends TransitData {
     @Override public List<ListItem> getInfo() {
         ArrayList<ListItem> items = new ArrayList<>();
 
-        items.add(new HeaderListItem("Card Information"));
-        items.add(new ListItem("Type", getCardName()));
-        items.add(new ListItem("Data format is unknown", ""));
+        items.add(new HeaderListItem(R.string.general));
+        items.add(new ListItem(R.string.card_type, getCardName()));
+        items.add(new ListItem("", R.string.unknown_card_description));
         return items;
     }
 

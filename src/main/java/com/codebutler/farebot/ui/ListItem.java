@@ -32,6 +32,10 @@ public class ListItem {
         this(nameResource, Utils.localizeString(valueResource));
     }
 
+    public ListItem(String name, int valueResource) {
+        this(name, Utils.localizeString(valueResource));
+    }
+
     public ListItem(int nameResource, String value) {
         this(Utils.localizeString(nameResource), value);
     }
