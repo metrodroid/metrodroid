@@ -70,7 +70,8 @@ public class CardInfoActivity extends Activity {
 
     private OnInitListener mTTSInitListener = new OnInitListener() {
         public void onInit(int status) {
-            if (status == TextToSpeech.SUCCESS) {
+            String balance = mTransitData.getBalanceString();
+            if (status == TextToSpeech.SUCCESS && balance != null) {
                 mTTS.speak(getString(R.string.balance_speech, mTransitData.getBalanceString()), TextToSpeech.QUEUE_FLUSH, null);
             }
         }
@@ -146,7 +147,9 @@ public class CardInfoActivity extends Activity {
                     return;
                 }
 
-                mTabsAdapter.addTab(actionBar.newTab().setText(R.string.balance), CardBalanceFragment.class, args);
+                if (mTransitData.getBalanceString() != null) {
+                    mTabsAdapter.addTab(actionBar.newTab().setText(R.string.balance), CardBalanceFragment.class, args);
+                }
 
                 if (mTransitData.getTrips() != null) {
                     int textId = (mTransitData instanceof SuicaTransitData) || (mTransitData instanceof EdyTransitData)

@@ -51,7 +51,11 @@ public class CardBalanceFragment extends Fragment {
 
     @Override public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_card_balance, container, false);
-        ((TextView) view.findViewById(R.id.balance)).setText(mTransitData.getBalanceString());
+        String balance = mTransitData.getBalanceString();
+
+        if (balance != null) {
+            ((TextView) view.findViewById(R.id.balance)).setText(balance);
+        }
         return view;
     }
 }
