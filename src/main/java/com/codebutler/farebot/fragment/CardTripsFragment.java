@@ -167,6 +167,7 @@ public class CardTripsFragment extends ListFragment {
                 routeTextView.setVisibility(View.INVISIBLE);
             }
 
+            fareTextView.setVisibility(View.VISIBLE);
             if (trip.getFare() != 0) {
                 fareTextView.setText(trip.getFareString());
             } else if (trip instanceof OrcaTrip) {
