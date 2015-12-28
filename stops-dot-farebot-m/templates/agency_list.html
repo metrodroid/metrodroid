@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+{% block content %}
+<h1>Agency List</h1>
+<p>Hi {{ user_name }}!
+  {% if report_count >= 100 %}
+    You've made a lot of reports!
+  {% elif report_count == 0 %}
+    Welcome!  You haven't made any reports yet.
+  {% else %}
+    You have made at least {{ report_count }} report(s).  Thank you for your contributions!
+  {% endif %}</p>
+
+{% if object_list %}
+<p>To begin, please select the public transit agency or card you wish to contribute data for.</p>
+
+<ul>
+{% for object in object_list %}
+	<li><a href="/app/{{ object.url }}">{{ object.name }}</a> ({{ object.location }})</li>
+{% endfor %}
+</ul>
+{% else %}
+<p>Sorry, there are currently no agencies which we are collecting data for right now.</p>
+{% endif %}
+{% endblock %}
+

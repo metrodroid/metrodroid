@@ -1,0 +1,44 @@
+application: farebot-m
+module: stops
+runtime: python27
+threadsafe: true
+api_version: 1
+
+handlers:
+- url: /
+  secure: always
+  static_files: templates/splash.html
+  upload: templates/splash\.html
+
+- url: /robots.txt
+  static_files: static/robots.txt
+  upload: static/robots\.txt
+
+- url: /static
+  static_dir: static
+  secure: always
+
+- url: /app/.*
+  secure: always
+  login: required
+  script: stops.app
+
+skip_files:
+- ^(.*/)?#.*#$
+- ^(.*/)?.*~$
+- ^(.*/)?.*\.py[co]$
+- ^(.*/)?.*/RCS/.*$
+- ^(.*/)?\..*$
+- ^(.*/)?.*\.md$
+- ^(.*/)?.*\.sh$
+
+libraries:
+- name: webapp2
+  version: latest
+
+- name: jinja2
+  version: latest
+
+includes:
+- secrets.yaml
+

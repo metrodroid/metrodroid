@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+{% block content %}
+<h1>{{ agency_name }} unknown stop report</h1>
+
+<p>Thanks! Your report has been sent.</p>
+
+<p>It may take several weeks before this data is incorporated into Farebot M.</p>
+
+<p><a href="/app/agency/{{ agency_id }}/" class="btn btn-primary">Submit another report</a></p>
+
+{% endblock %}
+
