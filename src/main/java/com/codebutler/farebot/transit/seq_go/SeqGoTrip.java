@@ -52,7 +52,7 @@ public class SeqGoTrip extends Trip {
                 // Domestic Airport == 9
                 if (mStartStation == 9 || mEndStation == 9) {
                     // TODO: Detect International Airport station.
-                    return "AirTrain";
+                    return "Airtrain";
                 } else {
                     return "Queensland Rail";
                 }

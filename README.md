@@ -1,6 +1,6 @@
 # Farebot M
 
-Version: 2.9.23
+Version: 2.9.24
 
 View your remaining balance, recent trips, and other information from contactless public transit cards using your NFC Android phone!
 
@@ -22,7 +22,7 @@ View your remaining balance, recent trips, and other information from contactles
 * [tbonang](https://github.com/tbonang) (NETS FlashPay)
 * [Marcelo Liberato](https://github.com/mliberato) (Bilhete Único)
 * [Lauri Andler](https://github.com/landler/) (HSL)
-* [Michael](https://github.com/micolous/) (Opal, Manly Fast Ferry)
+* [Michael](https://github.com/micolous/) (Opal, Manly Fast Ferry, Go card)
 * [Rob O'Regan](http://www.robx1.net/nswtkt/private/manlyff/manlyff.htm) (Manly Fast Ferry card image)
 * [The Noun Project][15] (Various icons)
 
@@ -38,6 +38,7 @@ View your remaining balance, recent trips, and other information from contactles
 * [Bilhete Único](http://www.sptrans.com.br/bilhete_unico/) - São Paulo, Brazil (Requires encryption keys, not compatible with all devices)
 * [Clipper][1] - San Francisco, CA, USA
 * [EZ-Link][7] - Singapore (Not compatible with all devices)
+* [Go card][20] (Translink) - Brisbane and South East Queensland, Australia (requires encryption keys, not compatible with all devices, not all stations known)
 * [Manly Fast Ferry][19] - Sydney, Australia (requires encryption keys, not compatible with all devices)
 * [Matkakortti][16], [HSL][17] - Finland
 * [NETS FlashPay](http://www.netsflashpay.com.sg/) - Singapore
@@ -72,3 +73,4 @@ Some newer devices do not support MIFARE Classic.  MIFARE Classic is not an NFC-
 [17]: http://www.hsl.fi/EN/
 [18]: http://www.opal.com.au/
 [19]: http://www.manlyfastferry.com.au/
+[20]: http://translink.com.au/tickets-and-fares/go-card
