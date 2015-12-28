@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 """
-mfcdump_to_farebotxml.py - Converts a mfoc/mfcuk .mfc dump file for Mifare
-Classic to Farebot XML export format.
+mfcdump_to_keys.py - Gets the keys from a mfoc/mfcuk .mfc dump file into
+Farebot's key format
 
 Copyright 2015 Michael Farrell <micolous+git@gmail.com>
 
@@ -24,45 +24,33 @@ from base64 import b16encode, b64encode
 from os.path import getmtime
 from xml.etree import ElementTree as etree
 
+KEY_LENGTH = 6
+KEYA_OFFSET = 48
+KEYB_OFFSET = 58
+SECTOR_LENGTH = 64
+LONG_SECTOR_LENGTH = 256
+LONG_SECTOR_OFFSET = 192
 
-def mfc_to_farebot(input_f, output_f):
+def mfc_to_farebot(input_f, output_f, keyb=False):
 	# Read the Mifare card entirely first
 	card_data = input_f.read()
+	key_offset = KEYB_OFFSET if keyb else KEYA_OFFSET
 
 	# Card data should be 1K or 4K
 	assert len(card_data) in (1024, 4096)
-
-	# Lets make some XML.
-	root = etree.Element('card', type='0', id=b16encode(card_data[0:4]).lower(), scanned_at=str(int(getmtime(input_f.name)*1000)))
-	sectors = etree.SubElement(root, 'sectors')
-
+	
 	if len(card_data) == 1024:
 		sector_count = 16
 	elif len(card_data) == 4096:
 		sector_count = 40
-		
+	
 	for sector_no in range(sector_count):
-		sector = etree.SubElement(sectors, 'sector', index=str(sector_no))
-		blocks = etree.SubElement(sector, 'blocks')
-		if sector_no < 32:
-			block_count = 4
+		if sector_no < 31:
+			offset = (sector_no * SECTOR_LENGTH) + key_offset
 		else:
-			block_count = 16
+			offset = (32 * SECTOR_LENGTH) + ((sector_no - 32) * LONG_SECTOR_LENGTH) + LONG_SECTOR_OFFSET + key_offset
+		output_f.write(card_data[offset:offset+KEY_LENGTH])
 
-		for block_no in range(block_count):
-			block = etree.SubElement(blocks, 'block', index=str(block_no), type='data')
-			data = etree.SubElement(block, 'data')
-			
-			if sector_no < 32:
-				offset = (sector_no * 64) + (block_no * 16)
-			else:
-				offset = 2048 + ((sector_no - 32) * 256) + (block_no * 16)
-			
-			data.text = b64encode(card_data[offset:offset+16])
-
-	# We have made a structure, dump it to disk
-	tree = etree.ElementTree(root)
-	tree.write(output_f, encoding="utf-8", xml_declaration=True)
 	output_f.flush()
 	output_f.close()
 	input_f.close()
@@ -74,10 +62,13 @@ def main():
 		help='Card MFC dump to read')
 
 	parser.add_argument('-o', '--output', type=FileType('wb'),
-		help='Output Farebot XML to write')
+		help='Output farebotkeys file to write')
+
+	parser.add_argument('-b', '--key-b', action='store_true',
+		help='Output Key B instead of Key A')
 
 	options = parser.parse_args()
-	mfc_to_farebot(options.input_mfc[0], options.output)
+	mfc_to_farebot(options.input_mfc[0], options.output, options.key_b)
 
 
 if __name__ == '__main__':
