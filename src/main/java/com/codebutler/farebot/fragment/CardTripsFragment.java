@@ -173,6 +173,9 @@ public class CardTripsFragment extends ListFragment {
                 fareTextView.setText(R.string.pass_or_transfer);
             } else if (trip instanceof OVChipTrip) {
                 fareTextView.setText(trip.getFareString());
+            } else {
+                // Hide the text "Fare" for getFare == 0
+                fareTextView.setVisibility(View.INVISIBLE);
             }
 
             String stationText = Trip.formatStationNames(trip);
