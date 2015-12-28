@@ -20,9 +20,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 """
 from argparse import ArgumentParser, FileType
-from base64 import b16encode, b64encode
-from os.path import getmtime
-from xml.etree import ElementTree as etree
 
 KEY_LENGTH = 6
 KEYA_OFFSET = 48
