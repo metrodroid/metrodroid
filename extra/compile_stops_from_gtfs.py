@@ -41,7 +41,7 @@ VERSION_EPOCH = datetime(2006, 1, 1)
 def massage_name(name, suffixes):
 	name = name.strip()
 	for suffix in suffixes:
-		if name.endswith(suffix):
+		if name.lower().endswith(suffix):
 			name = name[:-len(suffix)].strip()
 	
 	return name
@@ -52,7 +52,7 @@ def empty(s):
 
 def compile_stops_from_gtfs(input_gtfs_f, output_f, matching_f=None, version=None, strip_suffixes='', extra_fields='', extra_fields_from_child=False):
 	# trim whitespace
-	strip_suffixes = [x.strip() for x in strip_suffixes.split(',')]
+	strip_suffixes = [x.strip().lower() for x in strip_suffixes.split(',')]
 	extra_fields = [x.strip() for x in extra_fields.split(',')]
 	
 	if extra_fields:
