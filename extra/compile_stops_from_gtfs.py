@@ -31,10 +31,11 @@ CREATE TABLE stops (
 	name,
 	y,
 	x
+	%(extra_fields)s
 );
 """
 
-INSERT_QUERY = 'INSERT INTO stops VALUES (?, ?, ?, ?)'
+INSERT_QUERY = 'INSERT INTO stops VALUES (?, ?, ?, ? %(extra_fields)s)'
 VERSION_EPOCH = datetime(2006, 1, 1)
 
 def massage_name(name, suffixes):
@@ -46,40 +47,49 @@ def massage_name(name, suffixes):
 	return name
 
 
-def compile_stops_from_gtfs(input_gtfs_f, output_f, matching_f=None, version=None, strip_suffixes=''):
+def empty(s):
+	return s is None or s.strip() == ''
+
+def compile_stops_from_gtfs(input_gtfs_f, output_f, matching_f=None, version=None, strip_suffixes='', extra_fields='', extra_fields_from_child=False):
 	# trim whitespace
 	strip_suffixes = [x.strip() for x in strip_suffixes.split(',')]
+	extra_fields = [x.strip() for x in extra_fields.split(',')]
+	
+	if extra_fields:
+		db_schema = DB_SCHEMA % dict(extra_fields=',' + (','.join(extra_fields)))
+		insert_query = INSERT_QUERY % dict(extra_fields=', ?' * len(extra_fields))
+	else:
+		db_schema = DB_SCHEMA % dict(extra_fields='')
+		insert_query = INSERT_QUERY % dict(extra_fields='')
 	
 	gtfs = Gtfs(input_gtfs_f)
 
 	if version is None:
 		feed_info = gtfs.open('feed_info.txt')
-		feed_header = feed_info.next()
-		feed_start_date = feed_info.next()[feed_header.index('feed_start_date')]
+		row = feed_info.next()
+		feed_start_date = row['feed_start_date']
 		assert len(feed_start_date) == 8
 		feed_start_date = datetime.strptime(feed_start_date, '%Y%m%d')
 		version = (feed_start_date - VERSION_EPOCH).days
 		print 'Data version: %s (%s)' % (version, feed_start_date.date().isoformat())
 
 	stops = gtfs.open('stops.txt')
-	stops_header = stops.next()
-	stop_id = stops_header.index('stop_id')
-	stop_code = stops_header.index('stop_code')
-	stop_name = stops_header.index('stop_name')
-	stop_y = stops_header.index('stop_lat')
-	stop_x = stops_header.index('stop_lon')
+	if extra_fields_from_child:
+		child_data = {}
+
+	parent_station_extras = {}
 
 	db = sqlite3.connect(output_f)
 	cur = db.cursor()
-	cur.execute(DB_SCHEMA)
+	cur.execute(db_schema)
 
 	# See if there is a matching file
 	if matching_f is None:
 		# No matching data, dump all stops.
-		stop_map = map(lambda stop: (stop[stop_id], massage_name(stop[stop_name], strip_suffixes), stop[stop_y].strip(), stop[stop_x].strip()),
+		stop_map = map(lambda stop: [stop['stop_id'], massage_name(stop['stop_name'], strip_suffixes), stop['stop_lat'].strip(), stop['stop_lon'].strip()] + [stop[x] for x in extra_fields],
 			stops)
 
-		cur.executemany(INSERT_QUERY, stop_map)
+		cur.executemany(insert_query, stop_map)
 	else:
 		# Matching data is available.  Lets use that.
 		matching = csv.reader(matching_f)
@@ -105,14 +115,24 @@ def compile_stops_from_gtfs(input_gtfs_f, output_f, matching_f=None, version=Non
 		# Now run through the stops
 		for stop in stops:
 			# preprocess stop data
-			name = massage_name(stop[stop_name], strip_suffixes)
-			y = stop[stop_y].strip()
-			x = stop[stop_x].strip()
+			name = massage_name(stop['stop_name'], strip_suffixes)
+			y = stop['stop_lat'].strip()
+			x = stop['stop_lon'].strip()
+			if extra_fields_from_child and not empty(stop['parent_station']):
+				parent = stop['parent_station'].strip()
+				if parent in stop_ids and parent not in child_data:
+					# This is child has a parent we are interested in, and don't
+					# already have.
+					child_data[parent] = {}
+					for k in extra_fields:
+						child_data[parent][k] = stop[k]
 
-			if stop[stop_id] in stop_ids:
-				cur.executemany(INSERT_QUERY, map(lambda r: (r, name, y, x), stop_ids[stop[stop_id]]))
-			if stop[stop_code] in stop_codes:
-				cur.executemany(INSERT_QUERY, map(lambda r: (r, name, y, x), stop_codes[stop[stop_code]]))
+			e = [child_data[stop['stop_id']][i] if empty(stop[i]) and stop['stop_id'] in child_data else stop[i]  for i in extra_fields]
+
+			if stop['stop_id'] in stop_ids:
+				cur.executemany(insert_query, map(lambda r: [r, name, y, x] + e, stop_ids[stop['stop_id']]))
+			if stop['stop_code'] in stop_codes:
+				cur.executemany(insert_query, map(lambda r: [r, name, y, x] + e, stop_codes[stop['stop_code']]))
 		matching_f.close()
 
 	cur.execute('PRAGMA user_version = %d' % version)
@@ -148,9 +168,17 @@ def main():
 		default='railway station,train station,station',
 		help='Comma separated, case-insensitive list of suffixes to remove from station names when populating the database. [default: %(default)s]')
 
+	parser.add_argument('-e', '--extra-fields',
+		required=False,
+		help='Comma separated list of additional fields to be included in the database output.')
+	
+	parser.add_argument('--extra-fields-from-child',
+		action='store_true',
+		help='If set, this will attempt to collect extra fields from child stations, and use it on the parent stations if the station is unset or empty. This only works when matching the parent by their stop_id, and if the parent stops are listed after the child stops.')
+
 	options = parser.parse_args()
 
-	compile_stops_from_gtfs(options.input_gtfs[0], options.output, options.matching, options.override_version, options.strip_suffixes)
+	compile_stops_from_gtfs(options.input_gtfs[0], options.output, options.matching, options.override_version, options.strip_suffixes, options.extra_fields, options.extra_fields_from_child)
 
 if __name__ == '__main__':
 	main()

@@ -69,5 +69,5 @@ class Gtfs(object):
 		self.gtfs_zip = zipfile.ZipFile(gtfs_f, 'r')
 	
 	def open(self, filename):
-		return csv.reader(swallow_windows_unicode(self.gtfs_zip.open(filename, 'r')))
+		return csv.DictReader(swallow_windows_unicode(self.gtfs_zip.open(filename, 'r')), restval=None)
 
