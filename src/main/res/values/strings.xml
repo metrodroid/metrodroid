@@ -104,13 +104,16 @@
     <string name="card_epoch">Card Epoch</string>
     <string name="card_not_supported_on_device">This card is not supported by your device.</string>
     <string name="card_note_cepas">Not compatible with all devices.</string>
+    <string name="need_stations">Not all station names are known.</string>
+    <string name="need_stations_submit">Report</string>
+    <string name="card_preview_reader">Beta version of card reader.</string>
     <string name="visit_website">Visit Website</string>
     <string name="title_activity_about">About Farebot M</string>
 
 
     <!-- Locations -->
-    <string name="location_seattle">Seattle, WA</string>
-    <string name="location_san_francisco">San Francisco, CA</string>
+    <string name="location_seattle">Seattle, WA, USA</string>
+    <string name="location_san_francisco">San Francisco, CA, USA</string>
     <string name="location_singapore">Singapore</string>
     <string name="location_tokyo">Tokyo, Japan</string>
     <string name="location_kansai">Kansai, Japan</string>
@@ -118,6 +121,8 @@
     <string name="location_sao_paulo">São Paulo, Brazil</string>
     <string name="location_helsinki_finland">Helsinki, Finland</string>
     <string name="location_sydney_australia">Sydney, Australia</string>
+    <!-- i18n: "SE QLD" is an abbreviation for "South East Queensland".  "Queensland" is a state of Australia. -->
+    <string name="location_brisbane_seq_australia">Brisbane &amp; SE QLD, Australia</string>
 
     <!-- Felica -->
     <string name="felica_terminal_fare_adjustment">Fare Adjustment Machine</string>
@@ -216,4 +221,11 @@
     <string name="opal_action_journey_completed_auto_on">Journey completed (failure to tap on)</string>
     <string name="opal_action_tap_on_reversal">Tap on reversal</string>
 
+    <!--
+        Go Card (South East Queensland/Brisbane, AU)
+        These are deliberately separated strings in order to match the terminology of the agency.
+    -->
+    <string name="seqgo_refill_manual">Manual top-up</string>
+    <string name="seqgo_refill_automatic">Automatic top-up</string>
+    <string name="card_note_seqgo">Does not support Go Access, Explore or SEEQ cards.</string>
 </resources>

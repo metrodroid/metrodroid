@@ -42,6 +42,7 @@ import au.id.micolous.farebot.R;
 import com.codebutler.farebot.card.CardType;
 import com.codebutler.farebot.transit.manly_fast_ferry.ManlyFastFerryTransitData;
 import com.codebutler.farebot.transit.opal.OpalTransitData;
+import com.codebutler.farebot.transit.seq_go.SeqGoTransitData;
 import com.codebutler.farebot.util.Utils;
 
 import java.util.ArrayList;
@@ -90,6 +91,13 @@ public class SupportedCardsActivity extends Activity {
             add(new CardInfo(R.drawable.ezlink_card, "EZ-Link",
                     R.string.location_singapore,
                     CardType.CEPAS
+            ));
+
+            add(new CardInfo(R.drawable.seqgo_card, SeqGoTransitData.NAME,
+                    R.string.location_brisbane_seq_australia,
+                    CardType.MifareClassic,
+                    true,
+                    true
             ));
 
             add(new CardInfo(R.drawable.hsl_card, "HSL",
@@ -180,6 +188,15 @@ public class SupportedCardsActivity extends Activity {
                 notes += Utils.localizeString(R.string.keys_required) + " ";
             }
 
+            if (info.getPreview()) {
+                notes += Utils.localizeString(R.string.card_preview_reader) + " ";
+            }
+
+            if (info.getImageId() == R.drawable.seqgo_card) {
+                // We don't support Go Explore or seeQ yet. They might work, who knows? It is untested.
+                notes += Utils.localizeString(R.string.card_note_seqgo) + " ";
+            }
+
             if (!notes.equals("")) {
                 ((TextView) convertView.findViewById(R.id.note)).setText(notes);
             }
@@ -194,6 +211,7 @@ public class SupportedCardsActivity extends Activity {
         private final int mLocationId;
         private final CardType mCardType;
         private final boolean mKeysRequired;
+        private final boolean mPreview;
 
         private CardInfo(int imageId, String name, int locationId) {
             this(imageId, name, locationId, CardType.Unknown);
@@ -202,13 +220,17 @@ public class SupportedCardsActivity extends Activity {
         private CardInfo(int imageId, String name, int locationId, CardType cardType) {
             this(imageId, name, locationId, cardType, false);
         }
-
         private CardInfo(int imageId, String name, int locationId, CardType cardType, boolean keysRequired) {
+            this(imageId, name, locationId, cardType, keysRequired, false);
+        }
+
+        private CardInfo(int imageId, String name, int locationId, CardType cardType, boolean keysRequired, boolean preview) {
             mImageId      = imageId;
             mName         = name;
             mLocationId   = locationId;
             mCardType     = cardType;
             mKeysRequired = keysRequired;
+            mPreview      = preview;
         }
 
         public int getImageId() {
@@ -230,5 +252,12 @@ public class SupportedCardsActivity extends Activity {
         public boolean getKeysRequired() {
             return mKeysRequired;
         }
+
+        /**
+         * Indicates if the card is a "preview" / beta decoder, with possibly
+         * incomplete / incorrect data.
+         * @return true if this is a beta version of the card decoder.
+         */
+        public boolean getPreview() { return mPreview; }
     }
 }

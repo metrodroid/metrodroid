@@ -34,6 +34,13 @@ def ord2(x):
 	elif sys.version_info[0] == 3:
 		# On Python3, passthrough
 		return x
+
+def bitoff_to_record(offset, length, little_endian=False):
+	if little_endian:
+		offset = ((length * 8) - offset)
+	boff = offset / 8.0
+
+	return int(boff // 16), (boff % 16)
 	
 
 def bitfinder(input_data, integer, pad=0, byte_aligned_only=False):
@@ -79,11 +86,15 @@ def main():
 	options = parser.parse_args()
 
 	for fh in options.input_file:
+		data = fh.read()
+		length = len(data)
 		results_be, results_le, results_be_revbits, results_le_revbits = \
-			bitfinder(fh.read(), options.integer, options.pad,
+			bitfinder(data, options.integer, options.pad,
 				options.byte_aligned)
 
 		print ('Filename: %s' % fh.name)
+		fh.close()
+
 		print ('Integer: %d padded to %d bits' % (options.integer, options.pad))
 
 		if options.byte_aligned:
@@ -91,11 +102,13 @@ def main():
 
 		if results_be:
 			print ('Big-endian offsets: %r' % (results_be,))
+			print (', '.join('0x%02x_/%.3f' % bitoff_to_record(x, length) for x in results_be))
 		else:
 			print ('No big-endian offsets found.')
 	
 		if results_le:
 			print ('Little-endian offsets: %r' % (results_le,))
+			print (', '.join('0x%02x_/%.3f' % bitoff_to_record(x, length, True) for x in results_le))
 		else:
 			print ('No little-endian offsets found.')
 

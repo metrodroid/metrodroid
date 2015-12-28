@@ -39,6 +39,7 @@ import com.codebutler.farebot.transit.TransitIdentity;
 import com.codebutler.farebot.transit.bilhete_unico.BilheteUnicoSPTransitData;
 import com.codebutler.farebot.transit.manly_fast_ferry.ManlyFastFerryTransitData;
 import com.codebutler.farebot.transit.ovc.OVChipTransitData;
+import com.codebutler.farebot.transit.seq_go.SeqGoTransitData;
 import com.codebutler.farebot.transit.unknown.UnauthorizedClassicTransitData;
 import com.codebutler.farebot.util.Utils;
 
@@ -166,6 +167,8 @@ public class ClassicCard extends Card {
             return BilheteUnicoSPTransitData.parseTransitIdentity(this);
         } else if (ManlyFastFerryTransitData.check(this)) {
             return ManlyFastFerryTransitData.parseTransitIdentity(this);
+        } else if (SeqGoTransitData.check(this)) {
+            return SeqGoTransitData.parseTransitIdentity(this);
         } else if (UnauthorizedClassicTransitData.check(this)) {
             // This check must be LAST.
             //
@@ -184,6 +187,8 @@ public class ClassicCard extends Card {
             return new BilheteUnicoSPTransitData(this);
         } else if (ManlyFastFerryTransitData.check(this)) {
             return new ManlyFastFerryTransitData(this);
+        } else if (SeqGoTransitData.check(this)) {
+            return new SeqGoTransitData(this);
         } else if (UnauthorizedClassicTransitData.check(this)) {
             // This check must be LAST.
             //
