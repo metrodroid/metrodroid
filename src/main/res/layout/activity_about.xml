@@ -18,8 +18,19 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceMedium"
-        android:id="@+id/lblDebugText"
+        android:id="@+id/lblCopyright"
+        android:text="@string/copyright"
         android:layout_below="@+id/imageView"
+        android:layout_centerHorizontal="true"
+        android:paddingBottom="12dp"
+        android:gravity="center" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:id="@+id/lblDebugText"
+        android:layout_below="@+id/lblCopyright"
         android:layout_centerHorizontal="true"
         android:gravity="center" />
 

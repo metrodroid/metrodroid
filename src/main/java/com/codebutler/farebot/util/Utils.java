@@ -209,7 +209,7 @@ public class Utils {
             nfcEnabled = nfcAdapter.isEnabled();
         }
 
-        return String.format("Version: %s\nModel: %s (%s)\nManufacturer: %s (%s)\nAndroid OS: %s (%s)\n\nNFC available: %s\nNFC enabled: %s\nMifare Classic support: %s\n\n",
+        return String.format("Version: %s\nModel: %s (%s)\nManufacturer: %s (%s)\nAndroid OS: %s (%s)\n\nNFC: %s, Mifare Classic: %s\n\n",
                 // Version:
                 getVersionString(),
                 // Model
@@ -222,15 +222,14 @@ public class Utils {
                 Build.VERSION.RELEASE,
                 Build.ID,
                 // NFC:
-                nfcAvailable,
-                nfcEnabled,
-                app.getMifareClassicSupport()
+                nfcAvailable ? (nfcEnabled ? "enabled" : "disabled") : "not available",
+                app.getMifareClassicSupport() ? "supported" : "not supported"
         );
     }
 
     private static String getVersionString() {
         PackageInfo info = getPackageInfo();
-        return String.format("%s (Build %s)", info.versionName, info.versionCode);
+        return String.format("%s (%s)", info.versionName, info.versionCode);
     }
 
     private static PackageInfo getPackageInfo() {
