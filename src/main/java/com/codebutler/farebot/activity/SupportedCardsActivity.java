@@ -33,8 +33,8 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.Gallery;
 import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import com.codebutler.farebot.FareBotApplication;
@@ -46,7 +46,6 @@ import com.codebutler.farebot.transit.seq_go.SeqGoTransitData;
 import com.codebutler.farebot.util.Utils;
 
 import java.util.ArrayList;
-import java.util.Comparator;
 
 public class SupportedCardsActivity extends Activity {
     public void onCreate(Bundle savedInstanceState) {
@@ -55,7 +54,7 @@ public class SupportedCardsActivity extends Activity {
 
         getActionBar().setDisplayHomeAsUpEnabled(true);
 
-        ((Gallery) findViewById(R.id.gallery)).setAdapter(new CardsAdapter(this));
+        ((ListView) findViewById(R.id.gallery)).setAdapter(new CardsAdapter(this));
     }
 
     @Override public boolean onOptionsItemSelected(MenuItem item) {
