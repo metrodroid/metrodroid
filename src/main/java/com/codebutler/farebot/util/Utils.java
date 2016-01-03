@@ -333,6 +333,19 @@ public class Utils {
         return res.getString(stringResource, formatArgs);
     }
 
+    /**
+     * Given a plural resource (R.plurals), localize the string according to the language preferences
+     * on the device.
+     * @param pluralResource R.plurals to localize.
+     * @param quantity Quantity to use for pluaralisation rules
+     * @param formatArgs Formatting arguments to pass
+     * @return Localized string
+     */
+    public static String localizePlural(int pluralResource, int quantity, Object... formatArgs) {
+        Resources res = FareBotApplication.getInstance().getResources();
+        return res.getQuantityString(pluralResource, quantity, formatArgs);
+    }
+
     public static String longDateFormat(Date date) {
         return DateFormat.getLongDateFormat(FareBotApplication.getInstance()).format(date);
     }

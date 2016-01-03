@@ -110,7 +110,13 @@
     <string name="visit_website">Visit Website</string>
     <string name="title_activity_about">About Farebot M</string>
     <string name="card_type">Card type</string>
-
+    <string name="select_file">Select file</string>
+    <string name="copied_to_clipboard">Copied to clipboard</string>
+    <string name="saved_xml">Wrote FareBot-Export.xml to USB Storage.</string>
+    <plurals name="cards_imported">
+        <item quantity="one">%d card imported!</item>
+        <item quantity="other">%d cards imported!</item>
+    </plurals>
 
     <!-- Locations -->
     <string name="location_seattle">Seattle, WA, USA</string>
