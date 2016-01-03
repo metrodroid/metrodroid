@@ -158,7 +158,7 @@ public class SupportedCardsActivity extends Activity {
                     getString(info.getLocationId())));
 
             ((ImageView) convertView.findViewById(R.id.image)).setImageResource(info.getImageId());
-            ((TextView)  convertView.findViewById(R.id.text)).setText(text);
+            ((TextView) convertView.findViewById(R.id.text)).setText(text);
 
             String notes = "";
 
@@ -196,9 +196,8 @@ public class SupportedCardsActivity extends Activity {
                 notes += Utils.localizeString(R.string.card_note_seqgo) + " ";
             }
 
-            if (!notes.equals("")) {
-                ((TextView) convertView.findViewById(R.id.note)).setText(notes);
-            }
+            ((TextView) convertView.findViewById(R.id.note)).setText(notes);
+
 
             return convertView;
         }
