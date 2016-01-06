@@ -16,7 +16,7 @@ If I did, I might not be able to send them back.
 
 ## "I found a bug!"
 
-Make sure you're testing on the current version of Farebot M (2.9.23) please check the [open issues first](https://github.com/micolous/farebot/issues) to see if it has already been reported.
+Make sure you're testing on the current version of Farebot M (2.9.25) please check the [open issues first](https://github.com/micolous/farebot/issues) to see if it has already been reported.
 
 Please note that some phones will not support Mifare Classic cards.  This is because Mifare Classic is not standard NFC.  You need a phone with a NXP chipset in order to read them.  No Nexus series phone from the Nexus 4 onwards will read Mifare classic.
 
