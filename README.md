@@ -40,12 +40,15 @@ View your remaining balance, recent trips, and other information from contactles
 * [EZ-Link][7] - Singapore (Not compatible with all devices)
 * [Go card][20] (Translink) - Brisbane and South East Queensland, Australia (requires encryption keys, not compatible with all devices, not all stations known)
 * [Manly Fast Ferry][19] - Sydney, Australia (requires encryption keys, not compatible with all devices)
+* [Myki][21] - Victoria, Australia (Only the card number can be read)
 * [Matkakortti][16], [HSL][17] - Finland
 * [NETS FlashPay](http://www.netsflashpay.com.sg/) - Singapore
 * [Opal][18] - Sydney, Australia
 * [ORCA][0] - Seattle, WA, USA
 * [OV-chipkaart](http://www.ov-chipkaart.nl/) - Netherlands (Requires encryption keys, not compatible with all devices)
 * [Suica][9], [ICOCA][10], [PASMO][11], [Edy][12] - Japan
+
+This project will only read data from the card itself, without having to connect to the agency's back-office systems. In some cases, limited data is available, so balance information and trip history might not be available.
 
 ## Supported Phones
 
@@ -74,3 +77,4 @@ Some newer devices do not support MIFARE Classic.  MIFARE Classic is not an NFC-
 [18]: http://www.opal.com.au/
 [19]: http://www.manlyfastferry.com.au/
 [20]: http://translink.com.au/tickets-and-fares/go-card
+[21]: http://ptv.vic.gov.au/
