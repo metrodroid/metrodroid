@@ -41,6 +41,7 @@ import com.codebutler.farebot.FareBotApplication;
 import au.id.micolous.farebot.R;
 import com.codebutler.farebot.card.CardType;
 import com.codebutler.farebot.transit.manly_fast_ferry.ManlyFastFerryTransitData;
+import com.codebutler.farebot.transit.myki.MykiTransitData;
 import com.codebutler.farebot.transit.opal.OpalTransitData;
 import com.codebutler.farebot.transit.seq_go.SeqGoTransitData;
 import com.codebutler.farebot.util.Utils;
@@ -96,7 +97,8 @@ public class SupportedCardsActivity extends Activity {
                     R.string.location_brisbane_seq_australia,
                     CardType.MifareClassic,
                     true,
-                    true
+                    true,
+                    R.string.card_note_seqgo
             ));
 
             add(new CardInfo(R.drawable.hsl_card, "HSL",
@@ -114,6 +116,15 @@ public class SupportedCardsActivity extends Activity {
                     CardType.MifareClassic,
                     true
             ));
+
+            add(new CardInfo(R.drawable.myki_card, MykiTransitData.NAME,
+                    R.string.location_victoria_australia,
+                    CardType.MifareDesfire,
+                    false,
+                    false,
+                    R.string.card_note_myki
+            ));
+
 
             add(new CardInfo(R.drawable.nets_card, "NETS FlashPay",
                     R.string.location_singapore,
@@ -191,9 +202,8 @@ public class SupportedCardsActivity extends Activity {
                 notes += Utils.localizeString(R.string.card_preview_reader) + " ";
             }
 
-            if (info.getImageId() == R.drawable.seqgo_card) {
-                // We don't support Go Explore or seeQ yet. They might work, who knows? It is untested.
-                notes += Utils.localizeString(R.string.card_note_seqgo) + " ";
+            if (info.getResourceExtraNote() != 0) {
+                notes += Utils.localizeString(info.getResourceExtraNote()) + " ";
             }
 
             ((TextView) convertView.findViewById(R.id.note)).setText(notes);
@@ -210,6 +220,7 @@ public class SupportedCardsActivity extends Activity {
         private final CardType mCardType;
         private final boolean mKeysRequired;
         private final boolean mPreview;
+        private final int mResourceExtraNote;
 
         private CardInfo(int imageId, String name, int locationId) {
             this(imageId, name, locationId, CardType.Unknown);
@@ -223,12 +234,17 @@ public class SupportedCardsActivity extends Activity {
         }
 
         private CardInfo(int imageId, String name, int locationId, CardType cardType, boolean keysRequired, boolean preview) {
+            this(imageId, name, locationId, cardType, keysRequired, false, 0);
+        }
+
+        private CardInfo(int imageId, String name, int locationId, CardType cardType, boolean keysRequired, boolean preview, int resourceExtraNote) {
             mImageId      = imageId;
             mName         = name;
             mLocationId   = locationId;
             mCardType     = cardType;
             mKeysRequired = keysRequired;
             mPreview      = preview;
+            mResourceExtraNote = resourceExtraNote;
         }
 
         public int getImageId() {
@@ -257,5 +273,7 @@ public class SupportedCardsActivity extends Activity {
          * @return true if this is a beta version of the card decoder.
          */
         public boolean getPreview() { return mPreview; }
+
+        public int getResourceExtraNote() { return mResourceExtraNote; }
     }
 }

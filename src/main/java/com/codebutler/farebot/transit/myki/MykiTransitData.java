@@ -14,6 +14,7 @@ import com.codebutler.farebot.util.Utils;
  * Documentation of format: https://github.com/micolous/farebot/wiki/Myki
  */
 public class MykiTransitData extends StubTransitData {
+    public static final String NAME = "Myki";
     private long   mSerialNumber1;
     private long   mSerialNumber2;
 
@@ -43,7 +44,7 @@ public class MykiTransitData extends StubTransitData {
     }
 
     @Override public String getCardName () {
-        return "Myki";
+        return NAME;
     }
 
     @Override public String getSerialNumber () {
@@ -62,7 +63,7 @@ public class MykiTransitData extends StubTransitData {
 
         long serialNumber1 = Utils.getBitsFromBuffer(data, 96, 32);
         long serialNumber2 = Utils.getBitsFromBuffer(data, 64, 32);
-        return new TransitIdentity("Myki", formatSerialNumber(serialNumber1, serialNumber2));
+        return new TransitIdentity(NAME, formatSerialNumber(serialNumber1, serialNumber2));
     }
 
     public void writeToParcel(Parcel parcel, int flags) {

@@ -408,7 +408,7 @@ public class Utils {
         int[] evenDigits = new int[(int)Math.floor(cardNumber.length() / 2.0)];
         int checksum = 0;
         int p = 0;
-        
+
         for (int i=digits.length-1; i >= 0; i--) {
             if (i % 2 == 1) {
                 // we treat it as a 1-indexed array
