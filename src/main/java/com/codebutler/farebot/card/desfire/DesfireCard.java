@@ -38,7 +38,6 @@ import com.codebutler.farebot.transit.opal.OpalTransitData;
 import com.codebutler.farebot.transit.orca.OrcaTransitData;
 import com.codebutler.farebot.transit.stub.AdelaideMetrocardStubTransitData;
 import com.codebutler.farebot.transit.stub.AtHopStubTransitData;
-import com.codebutler.farebot.transit.stub.MykiStubTransitData;
 import com.codebutler.farebot.util.Utils;
 
 import org.simpleframework.xml.Element;

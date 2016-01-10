@@ -372,4 +372,76 @@ public class Utils {
     public static String dateTimeFormat(Date date) {
         return dateFormat(date) + " " + timeFormat(date);
     }
+
+    public static int[] digitsOf(int integer) {
+        return digitsOf((long) integer);
+    }
+
+    public static int[] digitsOf(long integer) {
+        return digitsOf(String.valueOf(integer));
+    }
+
+    public static int[] digitsOf(String integer) {
+        int[] out = new int[integer.length()];
+        for (int index = 0; index < integer.length(); index++) {
+            out[index] = Integer.valueOf(integer.substring(index, index+1));
+        }
+
+        return out;
+    }
+
+    /**
+     * Sum an array of integers.
+     * @param ints Input array of integers.
+     * @return All the values added together.
+     */
+    public static int sum(int[] ints) {
+        int sum = 0;
+        for (int i : ints) {
+            sum += i;
+        }
+        return sum;
+    }
+
+    public static int luhnChecksum(String cardNumber) {
+        int[] digits = digitsOf(cardNumber);
+        int[] evenDigits = new int[(int)Math.floor(cardNumber.length() / 2.0)];
+        int checksum = 0;
+        int p = 0;
+        
+        for (int i=digits.length-1; i >= 0; i--) {
+            if (i % 2 == 1) {
+                // we treat it as a 1-indexed array
+                // so the first digit is odd
+                evenDigits[p++] = digits[i];
+            } else {
+                checksum += digits[i];
+            }
+        }
+        
+        for (int d : evenDigits) {
+            checksum += sum(digitsOf(d*2));
+        }
+
+        return checksum % 10;
+    }
+
+    /**
+     * Given a partial card number, calculate the Luhn check digit.
+     * @param partialCardNumber Partial card number.
+     * @return Final digit for card number.
+     */
+    public static int calculateLuhn(String partialCardNumber) {
+        int checkDigit = luhnChecksum(partialCardNumber + "0");
+        return checkDigit == 0 ? 0 : 10 - checkDigit;
+    }
+
+    /**
+     * Given a complete card number, validate the Luhn check digit.
+     * @param cardNumber Complete card number.
+     * @return true if valid, false if invalid.
+     */
+    public static boolean validateLuhn(String cardNumber) {
+        return luhnChecksum(cardNumber) == 0;
+    }
 }
