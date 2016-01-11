@@ -137,6 +137,7 @@
     <string name="location_sydney_australia">Sydney, Australia</string>
     <!-- i18n: "SE QLD" is an abbreviation for "South East Queensland".  "Queensland" is a state of Australia. -->
     <string name="location_brisbane_seq_australia">Brisbane &amp; SE QLD, Australia</string>
+    <string name="location_victoria_australia">Victoria, Australia</string>
 
     <!-- Felica -->
     <string name="felica_terminal_fare_adjustment">Fare Adjustment Machine</string>
@@ -242,4 +243,10 @@
     <string name="seqgo_refill_manual">Manual top-up</string>
     <string name="seqgo_refill_automatic">Automatic top-up</string>
     <string name="card_note_seqgo">Does not support Go Access, Explore or SEEQ cards.</string>
+
+    <!--
+        Myki (Victoria, AU)
+        These are deliberately separated strings in order to match the terminology of the agency.
+    -->
+    <string name="card_note_myki">Only the card number can be read.</string>
 </resources>
