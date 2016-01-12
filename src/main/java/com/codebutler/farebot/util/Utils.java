@@ -47,7 +47,7 @@ import java.util.Date;
 import java.util.List;
 
 public class Utils {
-
+    private static final String TAG = "Utils";
     private Utils() { }
 
     public static <T> List<T> arrayAsList(T... array) {
@@ -405,17 +405,18 @@ public class Utils {
 
     public static int luhnChecksum(String cardNumber) {
         int[] digits = digitsOf(cardNumber);
-        int[] evenDigits = new int[(int)Math.floor(cardNumber.length() / 2.0)];
-        int checksum = 0;
-        int p = 0;
+        // even digits, counting from the last digit on the card
+        int[] evenDigits = new int[(int)Math.ceil(cardNumber.length() / 2.0)];
+        int checksum = 0, p = 0;
+        int q = cardNumber.length() - 1;
 
-        for (int i=digits.length-1; i >= 0; i--) {
+        for (int i=0; i<cardNumber.length(); i++) {
             if (i % 2 == 1) {
                 // we treat it as a 1-indexed array
                 // so the first digit is odd
-                evenDigits[p++] = digits[i];
+                evenDigits[p++] = digits[q - i];
             } else {
-                checksum += digits[i];
+                checksum += digits[q - i];
             }
         }
         
@@ -423,6 +424,7 @@ public class Utils {
             checksum += sum(digitsOf(d*2));
         }
 
+        Log.d(TAG, String.format("luhnChecksum(%s) = %d", cardNumber, checksum));
         return checksum % 10;
     }
 

@@ -81,8 +81,9 @@ public class SeqGoTransitData extends TransitData {
         while (serial.length() < 12) {
             serial = "0" + serial;
         }
-        return String.format("016%sx", serial);
 
+        serial = "016" + serial;
+        return serial + Utils.calculateLuhn(serial);
     }
 
     @SuppressWarnings("UnusedDeclaration")
