@@ -78,6 +78,7 @@ public abstract class DBUtil {
 
         File file = getDBFile();
         if (!file.exists()) {
+            Log.d(TAG, String.format("Database for %s does not exist, will install version %s", getDBName(), getDesiredVersion()));
             return false;
         }
 
@@ -88,6 +89,8 @@ public abstract class DBUtil {
                 Log.d(TAG, String.format("Updating %s database. Old: %s, new: %s", getDBName(), currentVersion, getDesiredVersion()));
                 tempDatabase.close();
                 tempDatabase = null;
+            } else {
+                Log.d(TAG, String.format("Not updating %s database. Current: %s, app has: %s" , getDBName(), currentVersion, getDesiredVersion()));
             }
         } catch (SQLiteException ignored) { }
 
@@ -114,6 +117,6 @@ public abstract class DBUtil {
     }
 
     public File getDBFile() {
-        return mContext.getDatabasePath(getDBName());
+        return new File(mContext.getCacheDir().getAbsolutePath() + "/" + getDBName());
     }
 }
