@@ -158,8 +158,8 @@
     <string name="hsl_1zone_ticket">内部チケット</string>
     <string name="hsl_2zone_ticket">地域チケット</string>
     <string name="hsl_balance_refill">残高チャージ</string>
-    <string name="hsl_balance_ticket">チケットの価値</string>
-    <string name="hsl_value_ticket_is_valid">有効なチケットの価値</string>
+    <string name="hsl_balance_ticket">バリュー チケット</string>
+    <string name="hsl_value_ticket_is_valid">有効なバリュー チケット</string>
     <string name="hsl_pass_ticket">シーズン チケット</string>
     <string name="hsl_season_ticket_starts">シーズン チケット開始</string>
     <string name="hsl_season_ticket_ends">シーズン チケット終了</string>
@@ -169,7 +169,7 @@
     <string name="hsl_you_last_used_this_ticket">最後にこのチケットを使用したのは</string>
     <string name="hsl_person_format">%s 人</string>
     <string name="hsl_mins_format">%s 分</string>
-    <string name="hsl_value_ticket">チケットの価値</string>
+    <string name="hsl_value_ticket">バリュー チケット</string>
     <string name="hsl_value_ticket_bought_on">チケット購入</string>
     <string name="hsl_value_ticket_expires_on">チケットの有効期限</string>
     <string name="hsl_value_ticket_last_transfer">最後の乗換</string>
