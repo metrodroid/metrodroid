@@ -24,6 +24,7 @@ package com.codebutler.farebot.card.desfire;
 
 import android.nfc.tech.IsoDep;
 
+import com.codebutler.farebot.card.desfire.settings.DesfireFileSettings;
 import com.codebutler.farebot.util.Utils;
 
 import java.io.ByteArrayOutputStream;

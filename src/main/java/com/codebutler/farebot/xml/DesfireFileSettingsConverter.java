@@ -1,9 +1,9 @@
 package com.codebutler.farebot.xml;
 
-import com.codebutler.farebot.card.desfire.DesfireFileSettings;
-import com.codebutler.farebot.card.desfire.RecordDesfireFileSettings;
-import com.codebutler.farebot.card.desfire.StandardDesfireFileSettings;
-import com.codebutler.farebot.card.desfire.UnsupportedDesfireFileSettings;
+import com.codebutler.farebot.card.desfire.settings.DesfireFileSettings;
+import com.codebutler.farebot.card.desfire.settings.RecordDesfireFileSettings;
+import com.codebutler.farebot.card.desfire.settings.StandardDesfireFileSettings;
+import com.codebutler.farebot.card.desfire.settings.UnsupportedDesfireFileSettings;
 import com.codebutler.farebot.util.Utils;
 
 import org.simpleframework.xml.convert.Converter;

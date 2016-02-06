@@ -2,10 +2,10 @@ package com.codebutler.farebot.xml;
 
 import android.util.Base64;
 
-import com.codebutler.farebot.card.desfire.DesfireFile;
-import com.codebutler.farebot.card.desfire.DesfireFileSettings;
-import com.codebutler.farebot.card.desfire.InvalidDesfireFile;
-import com.codebutler.farebot.card.desfire.UnauthorizedDesfireFile;
+import com.codebutler.farebot.card.desfire.files.DesfireFile;
+import com.codebutler.farebot.card.desfire.settings.DesfireFileSettings;
+import com.codebutler.farebot.card.desfire.files.InvalidDesfireFile;
+import com.codebutler.farebot.card.desfire.files.UnauthorizedDesfireFile;
 
 import org.simpleframework.xml.Serializer;
 import org.simpleframework.xml.convert.Converter;

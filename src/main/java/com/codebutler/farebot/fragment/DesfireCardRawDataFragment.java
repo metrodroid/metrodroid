@@ -37,11 +37,11 @@ import com.codebutler.farebot.activity.AdvancedCardInfoActivity;
 import com.codebutler.farebot.card.Card;
 import com.codebutler.farebot.card.desfire.DesfireApplication;
 import com.codebutler.farebot.card.desfire.DesfireCard;
-import com.codebutler.farebot.card.desfire.DesfireFile;
-import com.codebutler.farebot.card.desfire.InvalidDesfireFile;
-import com.codebutler.farebot.card.desfire.RecordDesfireFileSettings;
-import com.codebutler.farebot.card.desfire.StandardDesfireFileSettings;
-import com.codebutler.farebot.card.desfire.UnauthorizedDesfireFile;
+import com.codebutler.farebot.card.desfire.files.DesfireFile;
+import com.codebutler.farebot.card.desfire.files.InvalidDesfireFile;
+import com.codebutler.farebot.card.desfire.settings.RecordDesfireFileSettings;
+import com.codebutler.farebot.card.desfire.settings.StandardDesfireFileSettings;
+import com.codebutler.farebot.card.desfire.files.UnauthorizedDesfireFile;
 import com.codebutler.farebot.util.Utils;
 
 import org.simpleframework.xml.Serializer;

@@ -1,4 +1,4 @@
-package com.codebutler.farebot.card.desfire;
+package com.codebutler.farebot.card.desfire.files;
 
 import org.simpleframework.xml.Attribute;
 import org.simpleframework.xml.Root;

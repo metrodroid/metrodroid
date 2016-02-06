@@ -22,6 +22,7 @@
 
 package com.codebutler.farebot.card.desfire;
 
+import com.codebutler.farebot.card.desfire.files.DesfireFile;
 import com.codebutler.farebot.util.Utils;
 
 import org.simpleframework.xml.Attribute;

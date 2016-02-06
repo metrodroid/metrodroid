@@ -32,7 +32,7 @@ import com.codebutler.farebot.FareBotApplication;
 import au.id.micolous.farebot.R;
 import com.codebutler.farebot.card.Card;
 import com.codebutler.farebot.card.desfire.DesfireCard;
-import com.codebutler.farebot.card.desfire.DesfireFile;
+import com.codebutler.farebot.card.desfire.files.DesfireFile;
 import com.codebutler.farebot.transit.Subscription;
 import com.codebutler.farebot.transit.TransitData;
 import com.codebutler.farebot.transit.TransitIdentity;

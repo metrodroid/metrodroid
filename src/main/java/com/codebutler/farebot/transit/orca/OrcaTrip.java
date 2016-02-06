@@ -2,7 +2,7 @@ package com.codebutler.farebot.transit.orca;
 
 import android.os.Parcel;
 
-import com.codebutler.farebot.card.desfire.DesfireRecord;
+import com.codebutler.farebot.card.desfire.files.DesfireRecord;
 import com.codebutler.farebot.transit.Station;
 import com.codebutler.farebot.transit.Trip;
 import com.codebutler.farebot.util.ImmutableMapBuilder;

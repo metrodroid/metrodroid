@@ -1,4 +1,6 @@
-package com.codebutler.farebot.card.desfire;
+package com.codebutler.farebot.card.desfire.settings;
+
+import com.codebutler.farebot.card.desfire.settings.DesfireFileSettings;
 
 import org.simpleframework.xml.Root;
 

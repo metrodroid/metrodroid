@@ -4,7 +4,7 @@ import android.os.Parcel;
 
 import com.codebutler.farebot.FareBotApplication;
 import au.id.micolous.farebot.R;
-import com.codebutler.farebot.card.desfire.DesfireRecord;
+import com.codebutler.farebot.card.desfire.files.DesfireRecord;
 import com.codebutler.farebot.transit.Station;
 import com.codebutler.farebot.transit.Trip;
 

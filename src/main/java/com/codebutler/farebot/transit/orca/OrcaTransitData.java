@@ -29,8 +29,8 @@ import android.os.Parcel;
 
 import com.codebutler.farebot.card.Card;
 import com.codebutler.farebot.card.desfire.DesfireCard;
-import com.codebutler.farebot.card.desfire.DesfireFile;
-import com.codebutler.farebot.card.desfire.RecordDesfireFile;
+import com.codebutler.farebot.card.desfire.files.DesfireFile;
+import com.codebutler.farebot.card.desfire.files.RecordDesfireFile;
 import com.codebutler.farebot.transit.Refill;
 import com.codebutler.farebot.transit.Subscription;
 import com.codebutler.farebot.transit.TransitData;

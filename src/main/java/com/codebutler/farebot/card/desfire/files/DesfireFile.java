@@ -20,8 +20,10 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.codebutler.farebot.card.desfire;
+package com.codebutler.farebot.card.desfire.files;
 
+import com.codebutler.farebot.card.desfire.settings.DesfireFileSettings;
+import com.codebutler.farebot.card.desfire.settings.RecordDesfireFileSettings;
 import com.codebutler.farebot.xml.Base64String;
 
 import org.simpleframework.xml.Attribute;

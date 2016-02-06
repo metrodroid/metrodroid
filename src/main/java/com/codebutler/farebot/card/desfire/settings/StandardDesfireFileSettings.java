@@ -1,5 +1,6 @@
-package com.codebutler.farebot.card.desfire;
+package com.codebutler.farebot.card.desfire.settings;
 
+import com.codebutler.farebot.card.desfire.settings.DesfireFileSettings;
 import com.codebutler.farebot.util.Utils;
 
 import org.apache.commons.lang3.ArrayUtils;
