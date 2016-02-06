@@ -75,7 +75,15 @@
     <string name="turn_on_nfc">Please enable NFC to read card information.</string>
     <string name="wireless_settings">Wireless Settings</string>
     <string name="report_error">Report Error</string>
+
+    <string name="unknown_card_header">Unknown card format</string>
     <string name="unknown_card_description">This card is not yet supported by Farebot. Only raw data can be displayed.</string>
+
+    <string name="unknown_more_info">More information</string>
+    <!-- TRANSLATORS: This is used on a list item, which will direct users to Farebot M's website when touched. -->
+    <string name="unknown_more_info_desc">Touch here for more information about Farebot M\'s support of this card.</string>
+
+
     <string name="report_error_privacy_title">Privacy Notice</string>
     <string name="report_error_privacy_message">All data contained within this card will be included in your error report.</string>
     <string name="scanned_cards">Scanned Cards</string>

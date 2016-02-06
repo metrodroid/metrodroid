@@ -32,6 +32,7 @@ import android.widget.TextView;
 import au.id.micolous.farebot.R;
 import com.codebutler.farebot.ui.HeaderListItem;
 import com.codebutler.farebot.ui.ListItem;
+import com.codebutler.farebot.ui.UriListItem;
 
 import java.util.List;
 
@@ -66,9 +67,7 @@ public class ListItemAdapter extends ArrayAdapter<ListItem> {
         return convertView;
     }
 
-
-
     @Override public boolean isEnabled(int position) {
-        return false;
+        return getItem(position) instanceof UriListItem;
     }
 }

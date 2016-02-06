@@ -1,5 +1,6 @@
 package com.codebutler.farebot.transit.myki;
 
+import android.net.Uri;
 import android.os.Parcel;
 
 import com.codebutler.farebot.card.Card;
@@ -71,4 +72,8 @@ public class MykiTransitData extends StubTransitData {
         parcel.writeLong(mSerialNumber2);
     }
 
+    @Override
+    public Uri getMoreInfoPage() {
+        return Uri.parse("https://micolous.github.io/farebot/myki");
+    }
 }

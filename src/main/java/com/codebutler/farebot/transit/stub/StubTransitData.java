@@ -9,6 +9,7 @@ import com.codebutler.farebot.transit.TransitData;
 import com.codebutler.farebot.transit.Trip;
 import com.codebutler.farebot.ui.HeaderListItem;
 import com.codebutler.farebot.ui.ListItem;
+import com.codebutler.farebot.ui.UriListItem;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -40,13 +41,10 @@ public abstract class StubTransitData extends TransitData {
 
         items.add(new HeaderListItem(R.string.general));
         items.add(new ListItem(R.string.card_type, getCardName()));
-        items.add(new ListItem("", R.string.unknown_card_description));
+        items.add(new ListItem(R.string.unknown_card_header, R.string.unknown_card_description));
 
         if (getMoreInfoPage() != null) {
-            ListItem moreInfo = new ListItem("", "More information...");
-
-            items.add(moreInfo);
-
+            items.add(new UriListItem(R.string.unknown_more_info, R.string.unknown_more_info_desc, getMoreInfoPage()));
         }
         return items;
     }
