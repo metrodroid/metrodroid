@@ -1,6 +1,8 @@
 # Farebot M
 
-Version: 2.9.26
+[![Translation status](https://hosted.weblate.org/widgets/farebot-m/-/svg-badge.svg)][22]
+
+Version: 2.9.27
 
 View your remaining balance, recent trips, and other information from contactless public transit cards using your NFC Android phone!
 
@@ -56,6 +58,26 @@ FareBot requires an NFC Android phone running 4.0.3 or later.
 
 Some newer devices do not support MIFARE Classic.  MIFARE Classic is not an NFC-compliant card format, so can only be read with phones with NXP chipsets.
 
+## License and copyright
+
+Copyright 2015 – 2016 Michael Farrell
+
+Copyright 2011 – 2013 Eric Butler
+
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
+
 [0]: http://www.orcacard.com/
 [1]: https://www.clippercard.com/
 [2]: http://en.wikipedia.org/wiki/CEPAS
@@ -78,3 +100,4 @@ Some newer devices do not support MIFARE Classic.  MIFARE Classic is not an NFC-
 [19]: http://www.manlyfastferry.com.au/
 [20]: http://translink.com.au/tickets-and-fares/go-card
 [21]: http://ptv.vic.gov.au/
+[22]: https://hosted.weblate.org/engage/farebot-m/
