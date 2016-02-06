@@ -45,6 +45,7 @@ import org.simpleframework.xml.ElementList;
 import org.simpleframework.xml.Root;
 
 import java.io.IOException;
+import java.security.AccessControlException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -84,6 +85,8 @@ public class DesfireCard extends Card {
                         else
                             data = desfireTag.readRecord(fileId);
                         files.add(DesfireFile.create(fileId, settings, data));
+                    } catch (AccessControlException ex) {
+                        files.add(new UnauthorizedDesfireFile(fileId, ex.getMessage()));
                     } catch (IOException ex) {
                         throw ex;
                     } catch (Exception ex) {

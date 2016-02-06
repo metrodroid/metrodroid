@@ -41,6 +41,7 @@ import com.codebutler.farebot.card.desfire.DesfireFile;
 import com.codebutler.farebot.card.desfire.InvalidDesfireFile;
 import com.codebutler.farebot.card.desfire.RecordDesfireFileSettings;
 import com.codebutler.farebot.card.desfire.StandardDesfireFileSettings;
+import com.codebutler.farebot.card.desfire.UnauthorizedDesfireFile;
 import com.codebutler.farebot.util.Utils;
 
 import org.simpleframework.xml.Serializer;
@@ -121,6 +122,8 @@ public class DesfireCardRawDataFragment extends ExpandableListFragment {
 
                 if (file instanceof InvalidDesfireFile) {
                     textView2.setText(((InvalidDesfireFile) file).getErrorMessage());
+                } else if (file instanceof UnauthorizedDesfireFile) {
+                    textView2.setText(((UnauthorizedDesfireFile) file).getErrorMessage());
                 } else {
                     if (file.getFileSettings() instanceof StandardDesfireFileSettings) {
                         StandardDesfireFileSettings fileSettings = (StandardDesfireFileSettings) file.getFileSettings();

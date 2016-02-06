@@ -5,6 +5,7 @@ import android.util.Base64;
 import com.codebutler.farebot.card.desfire.DesfireFile;
 import com.codebutler.farebot.card.desfire.DesfireFileSettings;
 import com.codebutler.farebot.card.desfire.InvalidDesfireFile;
+import com.codebutler.farebot.card.desfire.UnauthorizedDesfireFile;
 
 import org.simpleframework.xml.Serializer;
 import org.simpleframework.xml.convert.Converter;
@@ -20,6 +21,11 @@ public class DesfireFileConverter implements Converter<DesfireFile> {
 
     @Override public DesfireFile read(InputNode source) throws Exception {
         int id = Integer.parseInt(source.getAttribute("id").getValue());
+        InputNode nUnauthorized = source.getAttribute("unauthorized");
+        boolean unauthorized = false;
+        if (nUnauthorized != null) {
+            unauthorized = Boolean.parseBoolean(nUnauthorized.getValue());
+        }
         DesfireFileSettings settings = null;
         byte[] data = null;
         String error = null;
@@ -43,7 +49,11 @@ public class DesfireFileConverter implements Converter<DesfireFile> {
                     break;
             }
         }
-        if (data == null || settings == null) {
+        if (unauthorized) {
+            return new UnauthorizedDesfireFile(id, error);
+        }
+
+        if (error != null) {
             return new InvalidDesfireFile(id, error);
         }
         return DesfireFile.create(id, settings, data);

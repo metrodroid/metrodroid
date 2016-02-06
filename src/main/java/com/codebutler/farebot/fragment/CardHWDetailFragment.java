@@ -118,4 +118,6 @@ public class CardHWDetailFragment extends ListFragment {
 
         setListAdapter(new ListItemAdapter(getActivity(), items));
     }
+
+
 }

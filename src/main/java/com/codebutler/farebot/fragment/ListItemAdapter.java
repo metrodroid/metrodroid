@@ -62,8 +62,11 @@ public class ListItemAdapter extends ArrayAdapter<ListItem> {
             ((TextView) convertView.findViewById(android.R.id.text1)).setText(item.getText1());
             ((TextView) convertView.findViewById(android.R.id.text2)).setText(item.getText2());
         }
+
         return convertView;
     }
+
+
 
     @Override public boolean isEnabled(int position) {
         return false;

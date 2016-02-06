@@ -1,5 +1,6 @@
 package com.codebutler.farebot.transit.stub;
 
+import android.net.Uri;
 import android.os.Parcel;
 
 import com.codebutler.farebot.transit.Refill;
@@ -30,12 +31,23 @@ public abstract class StubTransitData extends TransitData {
     public void writeToParcel(Parcel parcel, int i) {
     }
 
+    public Uri getMoreInfoPage() {
+        return null;
+    }
+
     @Override public List<ListItem> getInfo() {
         ArrayList<ListItem> items = new ArrayList<>();
 
         items.add(new HeaderListItem(R.string.general));
         items.add(new ListItem(R.string.card_type, getCardName()));
         items.add(new ListItem("", R.string.unknown_card_description));
+
+        if (getMoreInfoPage() != null) {
+            ListItem moreInfo = new ListItem("", "More information...");
+
+            items.add(moreInfo);
+
+        }
         return items;
     }
 

@@ -7,7 +7,7 @@ import org.simpleframework.xml.Root;
 public class InvalidDesfireFile extends DesfireFile {
     @Element(name="error") private String mErrorMessage;
 
-    private InvalidDesfireFile() { /* For XML Serializer */ }
+    protected InvalidDesfireFile() { /* For XML Serializer */ }
 
     public InvalidDesfireFile(int fileId, String errorMessage) {
         super(fileId, null, new byte[0]);
