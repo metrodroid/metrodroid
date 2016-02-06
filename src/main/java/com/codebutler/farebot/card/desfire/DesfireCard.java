@@ -33,6 +33,7 @@ import com.codebutler.farebot.card.desfire.files.InvalidDesfireFile;
 import com.codebutler.farebot.card.desfire.files.UnauthorizedDesfireFile;
 import com.codebutler.farebot.card.desfire.settings.DesfireFileSettings;
 import com.codebutler.farebot.card.desfire.settings.StandardDesfireFileSettings;
+import com.codebutler.farebot.card.desfire.settings.ValueDesfireFileSettings;
 import com.codebutler.farebot.fragment.DesfireCardRawDataFragment;
 import com.codebutler.farebot.transit.TransitData;
 import com.codebutler.farebot.transit.TransitIdentity;
@@ -82,20 +83,24 @@ public class DesfireCard extends Card {
                 List<DesfireFile> files = new ArrayList<>();
 
                 for (int fileId : desfireTag.getFileList()) {
+                    DesfireFileSettings settings = null;
                     try {
-                        DesfireFileSettings settings = desfireTag.getFileSettings(fileId);
+                        settings = desfireTag.getFileSettings(fileId);
                         byte[] data;
-                        if (settings instanceof StandardDesfireFileSettings)
+                        if (settings instanceof StandardDesfireFileSettings) {
                             data = desfireTag.readFile(fileId);
-                        else
+                        } else if (settings instanceof ValueDesfireFileSettings) {
+                            data = desfireTag.getValue(fileId);
+                        } else {
                             data = desfireTag.readRecord(fileId);
+                        }
                         files.add(DesfireFile.create(fileId, settings, data));
                     } catch (AccessControlException ex) {
-                        files.add(new UnauthorizedDesfireFile(fileId, ex.getMessage()));
+                        files.add(new UnauthorizedDesfireFile(fileId, ex.getMessage(), settings));
                     } catch (IOException ex) {
                         throw ex;
                     } catch (Exception ex) {
-                        files.add(new InvalidDesfireFile(fileId, ex.toString()));
+                        files.add(new InvalidDesfireFile(fileId, ex.toString(), settings));
                     }
                 }
 

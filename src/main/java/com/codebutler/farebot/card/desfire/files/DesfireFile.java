@@ -24,6 +24,7 @@ package com.codebutler.farebot.card.desfire.files;
 
 import com.codebutler.farebot.card.desfire.settings.DesfireFileSettings;
 import com.codebutler.farebot.card.desfire.settings.RecordDesfireFileSettings;
+import com.codebutler.farebot.card.desfire.settings.ValueDesfireFileSettings;
 import com.codebutler.farebot.xml.Base64String;
 
 import org.simpleframework.xml.Attribute;
@@ -39,6 +40,8 @@ public class DesfireFile {
     public static DesfireFile create(int fileId, DesfireFileSettings fileSettings, byte[] fileData) {
         if (fileSettings instanceof RecordDesfireFileSettings) {
             return new RecordDesfireFile(fileId, fileSettings, fileData);
+        } else if (fileSettings instanceof ValueDesfireFileSettings) {
+            return new ValueDesfireFile(fileId, fileSettings, fileData);
         } else {
             return new DesfireFile(fileId, fileSettings, fileData);
         }

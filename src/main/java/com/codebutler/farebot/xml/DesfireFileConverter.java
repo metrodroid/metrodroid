@@ -50,11 +50,11 @@ public class DesfireFileConverter implements Converter<DesfireFile> {
             }
         }
         if (unauthorized) {
-            return new UnauthorizedDesfireFile(id, error);
+            return new UnauthorizedDesfireFile(id, error, settings);
         }
 
         if (error != null) {
-            return new InvalidDesfireFile(id, error);
+            return new InvalidDesfireFile(id, error, settings);
         }
         return DesfireFile.create(id, settings, data);
     }

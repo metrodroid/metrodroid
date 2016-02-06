@@ -1,5 +1,7 @@
 package com.codebutler.farebot.card.desfire.files;
 
+import com.codebutler.farebot.card.desfire.settings.DesfireFileSettings;
+
 import org.simpleframework.xml.Attribute;
 import org.simpleframework.xml.Root;
 
@@ -13,8 +15,8 @@ public class UnauthorizedDesfireFile extends InvalidDesfireFile {
 
     private UnauthorizedDesfireFile() { /* For XML Serializer */ }
 
-    public UnauthorizedDesfireFile(int fileId, String errorMessage) {
-        super(fileId, errorMessage);
+    public UnauthorizedDesfireFile(int fileId, String errorMessage, DesfireFileSettings settings) {
+        super(fileId, errorMessage, settings);
     }
 
     @Override public byte[] getData() {

@@ -1,5 +1,7 @@
 package com.codebutler.farebot.card.desfire.files;
 
+import com.codebutler.farebot.card.desfire.settings.DesfireFileSettings;
+
 import org.simpleframework.xml.Element;
 import org.simpleframework.xml.Root;
 
@@ -9,8 +11,8 @@ public class InvalidDesfireFile extends DesfireFile {
 
     protected InvalidDesfireFile() { /* For XML Serializer */ }
 
-    public InvalidDesfireFile(int fileId, String errorMessage) {
-        super(fileId, null, new byte[0]);
+    public InvalidDesfireFile(int fileId, String errorMessage, DesfireFileSettings settings) {
+        super(fileId, settings, new byte[0]);
         mErrorMessage = errorMessage;
     }
 

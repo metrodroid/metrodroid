@@ -42,6 +42,7 @@ import com.codebutler.farebot.card.desfire.files.InvalidDesfireFile;
 import com.codebutler.farebot.card.desfire.settings.RecordDesfireFileSettings;
 import com.codebutler.farebot.card.desfire.settings.StandardDesfireFileSettings;
 import com.codebutler.farebot.card.desfire.files.UnauthorizedDesfireFile;
+import com.codebutler.farebot.card.desfire.settings.ValueDesfireFileSettings;
 import com.codebutler.farebot.util.Utils;
 
 import org.simpleframework.xml.Serializer;
@@ -136,6 +137,16 @@ public class DesfireCardRawDataFragment extends ExpandableListFragment {
                                 String.valueOf(fileSettings.getCurRecords()),
                                 String.valueOf(fileSettings.getMaxRecords()),
                                 String.valueOf(fileSettings.getRecordSize())));
+                    } else if (file.getFileSettings() instanceof ValueDesfireFileSettings) {
+                        ValueDesfireFileSettings fileSettings = (ValueDesfireFileSettings) file.getFileSettings();
+
+                        textView2.setText(String.format("Type: %s, Range: %s - %s, Limited Credit: %s (%s)",
+                                fileSettings.getFileTypeName(),
+                                fileSettings.getLowerLimit(),
+                                fileSettings.getUpperLimit(),
+                                fileSettings.getLimitedCreditValue(),
+                                fileSettings.getLimitedCreditEnabled() ? "enabled" : "disabled"
+                        ));
                     } else {
                         textView2.setText("Unknown file type");
                     }

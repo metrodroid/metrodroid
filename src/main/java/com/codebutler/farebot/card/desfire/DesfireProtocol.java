@@ -39,6 +39,7 @@ public class DesfireProtocol {
     static final byte SELECT_APPLICATION        = (byte) 0x5A;
     static final byte READ_DATA                 = (byte) 0xBD;
     static final byte READ_RECORD               = (byte) 0xBB;
+    static final byte GET_VALUE                 = (byte) 0x6C;
     static final byte GET_FILES                 = (byte) 0x6F;
     static final byte GET_FILE_SETTINGS         = (byte) 0xF5;
 
@@ -102,10 +103,10 @@ public class DesfireProtocol {
     }
 
     public byte[] readFile(int fileNo) throws Exception {
-        return sendRequest(READ_DATA, new byte[] {
-            (byte) fileNo,
-            (byte) 0x0, (byte) 0x0, (byte) 0x0,
-            (byte) 0x0, (byte) 0x0, (byte) 0x0
+        return sendRequest(READ_DATA, new byte[]{
+                (byte) fileNo,
+                (byte) 0x0, (byte) 0x0, (byte) 0x0,
+                (byte) 0x0, (byte) 0x0, (byte) 0x0
         });
     }
 
@@ -114,6 +115,12 @@ public class DesfireProtocol {
                 (byte) fileNum,
                 (byte) 0x0, (byte) 0x0, (byte) 0x0,
                 (byte) 0x0, (byte) 0x0, (byte) 0x0
+        });
+    }
+
+    public byte[] getValue(int fileNum) throws Exception {
+        return sendRequest(GET_VALUE, new byte[] {
+                (byte) fileNum
         });
     }
 
