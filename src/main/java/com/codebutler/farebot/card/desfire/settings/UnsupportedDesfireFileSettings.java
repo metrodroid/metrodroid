@@ -1,7 +1,5 @@
 package com.codebutler.farebot.card.desfire.settings;
 
-import com.codebutler.farebot.card.desfire.settings.DesfireFileSettings;
-
 import org.simpleframework.xml.Root;
 
 @Root(name="settings")

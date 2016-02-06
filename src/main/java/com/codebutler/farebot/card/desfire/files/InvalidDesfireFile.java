@@ -1,7 +1,5 @@
 package com.codebutler.farebot.card.desfire.files;
 
-import com.codebutler.farebot.card.desfire.files.DesfireFile;
-
 import org.simpleframework.xml.Element;
 import org.simpleframework.xml.Root;
 
