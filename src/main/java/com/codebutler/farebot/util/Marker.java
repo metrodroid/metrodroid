@@ -11,11 +11,11 @@ import com.codebutler.farebot.transit.Station;
 public class Marker {
     private final static String TAG = "Marker";
     Station mStation;
-    int mIconResource;
+    String mIcon;
 
-    public Marker(Station station, int iconResource) {
+    public Marker(Station station, String icon) {
         this.mStation = station;
-        this.mIconResource = iconResource;
+        this.mIcon = icon;
     }
 
     @JavascriptInterface
@@ -45,6 +45,11 @@ public class Marker {
         company = TextUtils.htmlEncode(company);
 
         return "<b>" + station + "</b><br>" + company;
+    }
+
+    @JavascriptInterface
+    public String getIcon() {
+        return mIcon;
     }
 
 }

@@ -107,11 +107,11 @@ public class TripMapActivity extends Activity {
         //LatLngBounds.Builder builder = LatLngBounds.builder();
 
         if (trip.getStartStation() != null) {
-            points.add(new Marker(trip.getStartStation(), startMarkerId));
+            points.add(new Marker(trip.getStartStation(), "start-marker"));
         }
 
         if (trip.getEndStation() != null) {
-            points.add(new Marker(trip.getEndStation(), endMarkerId));
+            points.add(new Marker(trip.getEndStation(), "end-marker"));
         }
 
         mWebView.addJavascriptInterface(new TripMapShim(points.toArray(new Marker[points.size()])), "TripMapShim");
