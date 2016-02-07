@@ -27,6 +27,12 @@
 
     <string name="app_name">Farebot M</string>
     <string name="copyright">Copyright 2015 – 2016 Michael Farrell\nCopyright 2011 – 2013 Eric Butler</string>
+
+    <!-- Play Store specific strings -->
+
+
+
+    <!-- General application strings -->
     <string name="license">Licenses</string>
     <string name="title_activity_license">Open Source Licenses</string>
     <string name="directions">Tap a card.</string>

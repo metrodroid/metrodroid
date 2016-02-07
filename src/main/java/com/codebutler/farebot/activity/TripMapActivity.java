@@ -25,18 +25,21 @@ package com.codebutler.farebot.activity;
 import android.app.ActionBar;
 import android.app.Activity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
+import android.webkit.JavascriptInterface;
+import android.webkit.WebChromeClient;
+import android.webkit.WebSettings;
+import android.webkit.WebView;
+import android.webkit.WebViewFragment;
 
 import au.id.micolous.farebot.R;
 import com.codebutler.farebot.transit.Station;
 import com.codebutler.farebot.transit.Trip;
-import com.google.android.gms.maps.CameraUpdateFactory;
-import com.google.android.gms.maps.GoogleMap;
-import com.google.android.gms.maps.MapFragment;
-import com.google.android.gms.maps.model.BitmapDescriptorFactory;
-import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.LatLngBounds;
-import com.google.android.gms.maps.model.MarkerOptions;
+import com.codebutler.farebot.util.Marker;
+
+import org.json.JSONArray;
+import org.json.JSONException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -44,7 +47,7 @@ import java.util.List;
 public class TripMapActivity extends Activity {
     public static final String TRIP_EXTRA = "trip";
 
-    private GoogleMap mMap;
+    private WebView mWebView;
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -57,8 +60,14 @@ public class TripMapActivity extends Activity {
 
         setContentView(R.layout.activity_trip_map);
 
-        mMap = ((MapFragment) getFragmentManager().findFragmentById(R.id.map)).getMap();
-        mMap.getUiSettings().setZoomControlsEnabled(false);
+        mWebView = ((WebViewFragment) getFragmentManager().findFragmentById(R.id.map)).getWebView();
+        mWebView.setWebChromeClient(new WebChromeClient());
+
+        WebSettings settings = mWebView.getSettings();
+        settings.setJavaScriptEnabled(true);
+        settings.setAllowUniversalAccessFromFileURLs(true);
+
+        //mWebView.addJavascriptInterface();
 
         ActionBar actionBar = getActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
@@ -93,32 +102,22 @@ public class TripMapActivity extends Activity {
         }
         */
 
-        final List<LatLng> points = new ArrayList<>();
-        LatLngBounds.Builder builder = LatLngBounds.builder();
+
+        final List<Marker> points = new ArrayList<>();
+        //LatLngBounds.Builder builder = LatLngBounds.builder();
 
         if (trip.getStartStation() != null) {
-            LatLng startStationLatLng = addStationMarker(trip.getStartStation(), startMarkerId);
-            builder.include(startStationLatLng);
-            points.add(startStationLatLng);
+            points.add(new Marker(trip.getStartStation(), startMarkerId));
         }
 
         if (trip.getEndStation() != null) {
-            LatLng endStationLatLng = addStationMarker(trip.getEndStation(), endMarkerId);
-            builder.include(endStationLatLng);
-            points.add(endStationLatLng);
+            points.add(new Marker(trip.getEndStation(), endMarkerId));
         }
 
-        final LatLngBounds bounds = builder.build();
-        findViewById(R.id.map).post(new Runnable() {
-            @Override public void run() {
-                if (points.size() == 1) {
-                    mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(points.get(0), 17));
-                } else {
-                    int padding = getResources().getDimensionPixelSize(R.dimen.map_padding);
-                    mMap.moveCamera(CameraUpdateFactory.newLatLngBounds(bounds, padding));
-                }
-            }
-        });
+        mWebView.addJavascriptInterface(new TripMapShim(points.toArray(new Marker[points.size()])), "TripMapShim");
+
+        mWebView.loadUrl("file:///android_asset/map.html");
+
     }
 
     @Override public boolean onOptionsItemSelected(MenuItem item) {
@@ -128,7 +127,7 @@ public class TripMapActivity extends Activity {
         }
         return false;
     }
-
+/*
     private LatLng addStationMarker(Station station, int iconId) {
         LatLng pos = new LatLng(Double.valueOf(station.getLatitude()), Double.valueOf(station.getLongitude()));
         mMap.addMarker(new MarkerOptions()
@@ -139,4 +138,24 @@ public class TripMapActivity extends Activity {
         );
         return pos;
     }
+*/
+    public class TripMapShim {
+        private static final String TAG = "TripMapShim";
+        private Marker[] mMarkers;
+        TripMapShim(Marker[] markers) {
+            this.mMarkers = markers;
+        }
+
+        // Lets build an interface where you can't pass arrays!
+        @JavascriptInterface
+        public int getMarkerCount() {
+            return this.mMarkers.length;
+        }
+
+        @JavascriptInterface
+        public Object getMarker(int index) {
+            return this.mMarkers[index];
+        }
+    }
+
 }
