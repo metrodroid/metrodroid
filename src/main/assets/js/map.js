@@ -1,8 +1,11 @@
 var map = L.map('map');
 
-L.tileLayer("http://otile{s}.mqcdn.com/tiles/1.0.0/osm/{z}/{x}/{y}.png", {
-    subdomains: "1234",
-    attribution: "&copy; <a href='http://www.openstreetmap.org/'>OpenStreetMap</a>. Tiles: <a href='http://www.mapquest.com/'>MapQuest</a>"
+// This tile server gives "retina" tiles which are much nicer on modern
+// smartphones. Permission to use the tile server has been granted by
+// the tile server operator.
+L.tileLayer('https://tile{s}.stackcdn.com/' + (L.Browser.retina ? 'osm_tiles_2x' : 'osm_tiles') + '/{z}/{x}/{y}.png', {
+    subdomains: '123456',
+    attribution: "&copy; <a href='http://www.openstreetmap.org/'>OpenStreetMap</a>. Tiles: <a href='https://stackptr.com/'>StackPtr</a>"
  }).addTo(map);
 
 // We acknowledge this in the license screen.
