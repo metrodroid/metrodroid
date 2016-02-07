@@ -1,4 +1,4 @@
-<?xml version='1.0' encoding='utf-8'?>
+<?xml version='1.0' encoding='UTF-8'?>
 <resources>
     <string name="directions">カードをタップしてください</string>
     <string name="reading_card">カードを読み出しています</string>
@@ -206,4 +206,9 @@
     <string name="card_note_seqgo">Go Access, Explore または SEEQ カードはサポートしません。</string>
 
     <string name="card_note_myki">カード番号のみ読み取ることができます。</string>
-</resources>
+<string name="unknown_card_header">不明なカード フォーマット</string>
+    <string name="unknown_more_info">詳細情報</string>
+    <string name="unknown_more_info_desc">このカードの Farebot M のサポートの詳細については、ここをタップしてください。</string>
+
+
+    </resources>
