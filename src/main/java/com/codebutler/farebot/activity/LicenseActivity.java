@@ -6,8 +6,6 @@ import android.os.Bundle;
 import android.view.MenuItem;
 import android.widget.TextView;
 
-//import com.google.android.gms.common.GooglePlayServicesUtil;
-
 import au.id.micolous.farebot.R;
 
 public class LicenseActivity extends Activity {
@@ -66,10 +64,8 @@ public class LicenseActivity extends Activity {
         TextView lblLicenseText = (TextView)findViewById(R.id.lblLicenseText);
         lblLicenseText.setText(mLicenseIntro);
 
+        // TODO: Read this from third_party/leaflet/LICENSE.txt
         lblLicenseText.append(mLeaflet);
-
-
-        //lblLicenseText.append(GooglePlayServicesUtil.getOpenSourceSoftwareLicenseInfo(this.getApplicationContext()));
     }
 
 
