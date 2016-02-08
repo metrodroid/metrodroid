@@ -77,6 +77,11 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+This program contains Leaflet, a JavaScript mapping library, licensed under the BSD license.
+
+This program contains nfc-felica-lib, a library for communicating with Sony FeliCa cards, licensed under the Apache 2.0 license.
+
+This software and it's authors are not associated with any public transit agency.  Pictures of supported cards, including their logos, are included with this software package for the purposes of identifying cards.  These are believed to be a "fair use" under copyright laws.
 
 [0]: http://www.orcacard.com/
 [1]: https://www.clippercard.com/
