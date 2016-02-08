@@ -3,6 +3,9 @@ var map = L.map('map');
 // This tile server gives "retina" tiles which are much nicer on modern
 // smartphones. Permission to use the tile server has been granted by
 // the tile server operator.
+//
+// The tile stylesheets are available under an open source license at:
+// https://github.com/stackunderflow-stackptr/stackptr_tools/tree/master/osm-bright
 L.tileLayer('https://tile{s}.stackcdn.com/' + (L.Browser.retina ? 'osm_tiles_2x' : 'osm_tiles') + '/{z}/{x}/{y}.png', {
     subdomains: '123456',
     attribution: "&copy; <a href='http://www.openstreetmap.org/'>OpenStreetMap</a>. Tiles: <a href='https://stackptr.com/'>StackPtr</a>"
