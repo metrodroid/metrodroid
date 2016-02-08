@@ -53,4 +53,14 @@
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
         android:onClick="onLicenseClick" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="@string/lawyercats"
+        android:id="@+id/lblLawyers"
+        android:layout_above="@+id/btnWebsite"
+        android:layout_centerHorizontal="true"
+        android:gravity="center" />
 </RelativeLayout>
