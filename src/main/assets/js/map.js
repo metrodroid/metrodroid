@@ -6,15 +6,13 @@ var map = L.map('map');
 //
 // The tile stylesheets are available under an open source license at:
 // https://github.com/stackunderflow-stackptr/stackptr_tools/tree/master/osm-bright
-L.tileLayer('https://tile{s}.stackcdn.com/' + (L.Browser.retina ? 'osm_tiles_2x' : 'osm_tiles') + '/{z}/{x}/{y}.png', {
+L.tileLayer('https://tile{s}.stackcdn.com/osm_tiles' + (L.Browser.retina ? '_2x' : '') + '/{z}/{x}/{y}.png', {
     subdomains: '123456',
     attribution: "&copy; <a href='http://www.openstreetmap.org/'>OpenStreetMap</a>. Tiles: <a href='https://stackptr.com/'>StackPtr</a>"
  }).addTo(map);
 
 // We acknowledge this in the license screen.
 map.attributionControl.setPrefix('');
-
-//map.setView([-33.865, 151.209444], 13);
 
 var bounds = L.latLngBounds([]);
 
