@@ -1,4 +1,4 @@
-package com.codebutler.farebot;
+package com.codebutler.farebot.transit;
 
 import android.os.Parcel;
 

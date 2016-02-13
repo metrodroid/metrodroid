@@ -39,7 +39,7 @@ import android.widget.TextView;
 import au.id.micolous.metrodroid.MetrodroidApplication;
 import au.id.micolous.farebot.R;
 
-import com.codebutler.farebot.RefillTrip;
+import com.codebutler.farebot.transit.RefillTrip;
 import com.codebutler.farebot.activity.AdvancedCardInfoActivity;
 import com.codebutler.farebot.activity.CardInfoActivity;
 import com.codebutler.farebot.activity.TripMapActivity;
@@ -48,7 +48,6 @@ import com.codebutler.farebot.transit.Refill;
 import com.codebutler.farebot.transit.TransitData;
 import com.codebutler.farebot.transit.Trip;
 import com.codebutler.farebot.transit.orca.OrcaTrip;
-import com.codebutler.farebot.transit.ovc.OVChipTrip;
 import com.codebutler.farebot.util.Utils;
 
 import org.apache.commons.lang3.StringUtils;
