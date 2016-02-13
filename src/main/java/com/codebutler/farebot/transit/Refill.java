@@ -25,6 +25,12 @@ package com.codebutler.farebot.transit;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+/**
+ * Implements a Refill event on the card.
+ *
+ * This event is deprecated, and you should use Trips instead.
+ */
+@Deprecated
 public abstract class Refill implements Parcelable {
     public abstract long getTimestamp();
 
