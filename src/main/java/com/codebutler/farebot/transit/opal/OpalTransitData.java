@@ -183,7 +183,6 @@ public class OpalTransitData extends TransitData {
     }
 
     // Unsupported elements
-    @Override public Refill[] getRefills () { return null; }
     @Override public Trip[] getTrips () {
         return null;
     }

@@ -119,10 +119,6 @@ public class SuicaTransitData extends TransitData {
         return mTrips;
     }
 
-    @Override public Refill[] getRefills() {
-        return null;
-    }
-
     @Override public Subscription[] getSubscriptions() {
         return null;
     }

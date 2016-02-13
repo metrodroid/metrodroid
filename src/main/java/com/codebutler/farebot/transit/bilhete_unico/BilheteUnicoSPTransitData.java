@@ -116,10 +116,6 @@ public class BilheteUnicoSPTransitData extends TransitData {
         return null;
     }
 
-    @Override public Refill[] getRefills() {
-        return null;
-    }
-
     @Override public List<ListItem> getInfo() {
         return null;
     }

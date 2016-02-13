@@ -292,10 +292,6 @@ public class OVChipTransitData extends TransitData {
         return mTrips;
     }
 
-    @Override public Refill[] getRefills() {
-        return null;
-    }
-
     public Subscription[] getSubscriptions() {
         return mSubscriptions;
     }

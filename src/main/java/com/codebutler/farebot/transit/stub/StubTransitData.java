@@ -25,7 +25,6 @@ public abstract class StubTransitData extends TransitData {
     // Stub out elements that we can't support
     @Override public String getSerialNumber() { return null; }
     @Override public String getBalanceString () { return null; }
-    @Override public Refill[] getRefills () { return null; }
     @Override public Trip[] getTrips () { return null; }
     @Override public Subscription[] getSubscriptions() { return null; }
     @Override

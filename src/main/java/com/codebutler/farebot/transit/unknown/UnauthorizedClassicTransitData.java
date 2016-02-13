@@ -53,11 +53,6 @@ public class UnauthorizedClassicTransitData  extends TransitData {
     }
 
     @Override
-    public Refill[] getRefills() {
-        return null;
-    }
-
-    @Override
     public Subscription[] getSubscriptions() {
         return null;
     }
