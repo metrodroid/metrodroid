@@ -103,9 +103,11 @@ public class CardTripsFragment extends ListFragment {
 
     @Override public void onListItemClick(ListView l, View v, int position, long id) {
         Trip trip = (Trip) getListAdapter().getItem(position);
-
-        if (!(Trip.hasLocation(trip.getStartStation())) && (!Trip.hasLocation(trip.getEndStation())))
+        if (trip == null || !(
+                (trip.getStartStation() != null && trip.getStartStation().hasLocation()) ||
+                (trip.getEndStation() != null && trip.getEndStation().hasLocation()))) {
             return;
+        }
 
         Intent intent = new Intent(getActivity(), TripMapActivity.class);
         intent.putExtra(TripMapActivity.TRIP_EXTRA, trip);
@@ -193,10 +195,8 @@ public class CardTripsFragment extends ListFragment {
                 fareTextView.setText(trip.getFareString());
             } else if (trip instanceof OrcaTrip) {
                 fareTextView.setText(R.string.pass_or_transfer);
-            } else if (trip instanceof OVChipTrip) {
-                fareTextView.setText(trip.getFareString());
             } else {
-                // Hide the text "Fare" for getFare == 0
+                // Hide the text "Fare" for hasFare == false
                 fareTextView.setVisibility(View.INVISIBLE);
             }
 
@@ -213,7 +213,12 @@ public class CardTripsFragment extends ListFragment {
 
         @Override public boolean isEnabled(int position) {
             Trip trip = getItem(position);
-            return Trip.hasLocation(trip.getStartStation()) || Trip.hasLocation(trip.getEndStation());
+            if (trip == null) {
+                return false;
+            }
+
+            return (trip.getStartStation() != null && trip.getStartStation().hasLocation()) ||
+                    (trip.getEndStation() != null && trip.getEndStation().hasLocation());
         }
 
         private boolean isFirstInSection(int position) {

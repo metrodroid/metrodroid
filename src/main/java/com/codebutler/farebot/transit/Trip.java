@@ -82,10 +82,6 @@ public abstract class Trip implements Parcelable {
     public abstract Mode getMode();
     public abstract boolean hasTime();
 
-    public static boolean hasLocation(Station station) {
-        return ((station != null) && ((station.getLatitude() != null) || station.getLongitude() != null));
-    }
-
     public static String formatStationNames(Trip trip) {
         List<String> stationText = new ArrayList<>();
         if (trip.getStartStationName() != null)
