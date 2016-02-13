@@ -15,13 +15,13 @@ import java.io.InputStream;
 import java.io.OutputStream;
 
 /**
- * Created by michael on 21/12/15.
+ * Abstract common stop database class.
  */
 public abstract class DBUtil {
 
     /**
      * Implementing clases should specify the filename of their database.
-     * @return Path, relative to Farebot's data folder, where to store the database file.
+     * @return Path, relative to Metrodroid's data folder, where to store the database file.
      */
     protected abstract String getDBName();
 
