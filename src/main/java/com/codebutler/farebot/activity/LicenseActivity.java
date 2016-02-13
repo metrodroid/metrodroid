@@ -11,8 +11,10 @@ import au.id.micolous.farebot.R;
 public class LicenseActivity extends Activity {
 
     final static String mLicenseIntro = "Metrodroid\n" +
+            "Copyright 2015-2016 Michael Farrell <micolous@gmail.com> and contributors\n" +
+            "\n" +
+            "Based on FareBot\n" +
             "Copyright 2011-2013 Eric Butler <eric@codebutler.com> and contributors\n" +
-            "Copyright 2015-2016 Michael Farrell <micolous@gmail.com>\n" +
             "\n" +
             "This program is free software: you can redistribute it and/or modify " +
             "it under the terms of the GNU General Public License as published by " +
@@ -53,6 +55,21 @@ public class LicenseActivity extends Activity {
             "TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS " +
             "SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.\n\n\n";
 
+    final static String mNfcFelicaLib = "This software contains nfc-felica-lib, an Android library for interfacing with FeliCa smartcards.  The following terms apply to nfc-felica-lib:\n" +
+            "Copyright 2011 Kazzz.\n" +
+            "\n" +
+            "Licensed under the Apache License, Version 2.0 (the \"License\"); " +
+            "you may not use this file except in compliance with the License. " +
+            "You may obtain a copy of the License at\n" +
+            "\n" +
+            "   http://www.apache.org/licenses/LICENSE-2.0\n" +
+            "\n" +
+            "Unless required by applicable law or agreed to in writing, software " +
+            "distributed under the License is distributed on an \"AS IS\" BASIS, " +
+            "WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. " +
+            "See the License for the specific language governing permissions and " +
+            "limitations under the License.\n\n\n";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -66,6 +83,9 @@ public class LicenseActivity extends Activity {
 
         // TODO: Read this from third_party/leaflet/LICENSE.txt
         lblLicenseText.append(mLeaflet);
+
+        // TODO: Read this from third_party/nfc-felica-lib/COPYING
+        lblLicenseText.append(mNfcFelicaLib);
     }
 
 

@@ -38,10 +38,13 @@ import android.widget.TextView;
 
 import au.id.micolous.metrodroid.MetrodroidApplication;
 import au.id.micolous.farebot.R;
+
+import com.codebutler.farebot.RefillTrip;
 import com.codebutler.farebot.activity.AdvancedCardInfoActivity;
 import com.codebutler.farebot.activity.CardInfoActivity;
 import com.codebutler.farebot.activity.TripMapActivity;
 import com.codebutler.farebot.card.Card;
+import com.codebutler.farebot.transit.Refill;
 import com.codebutler.farebot.transit.TransitData;
 import com.codebutler.farebot.transit.Trip;
 import com.codebutler.farebot.transit.orca.OrcaTrip;
@@ -52,6 +55,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.simpleframework.xml.Serializer;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
@@ -70,9 +74,26 @@ public class CardTripsFragment extends ListFragment {
     @Override public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_card_trips, null);
 
-        if (mTransitData.getTrips() != null && mTransitData.getTrips().length > 0)
-            setListAdapter(new UseLogListAdapter(getActivity(), mTransitData.getTrips()));
-        else {
+        List<Trip> trips = new ArrayList<>();
+        if (mTransitData.getTrips() != null && mTransitData.getTrips().length > 0) {
+            for (Trip t : mTransitData.getTrips()) {
+                trips.add(t);
+            }
+        }
+
+        // This is for "legacy" implementations which have a separate list of refills.
+        if (mTransitData.getRefills() != null && mTransitData.getRefills().length > 0) {
+            for (Refill r : mTransitData.getRefills()) {
+                trips.add(new RefillTrip(r));
+            }
+        }
+
+        // Explicitly sort these events
+        Collections.sort(trips, new Trip.Comparator());
+
+        if (trips.size() > 0) {
+            setListAdapter(new UseLogListAdapter(getActivity(), trips.toArray(new Trip[trips.size()])));
+        } else {
             view.findViewById(android.R.id.list).setVisibility(View.GONE);
             view.findViewById(R.id.error_text).setVisibility(View.VISIBLE);
         }
@@ -168,7 +189,7 @@ public class CardTripsFragment extends ListFragment {
             }
 
             fareTextView.setVisibility(View.VISIBLE);
-            if (trip.getFare() != 0) {
+            if (trip.hasFare()) {
                 fareTextView.setText(trip.getFareString());
             } else if (trip instanceof OrcaTrip) {
                 fareTextView.setText(R.string.pass_or_transfer);

@@ -113,8 +113,8 @@ public class HSLTrip extends Trip {
         return NumberFormat.getCurrencyInstance(Locale.GERMANY).format(mFare / 100.0);
     }
 
-    @Override public double getFare() {
-        return mFare;
+    @Override public boolean hasFare() {
+        return true;
     }
 
     @Override public String getBalanceString() {

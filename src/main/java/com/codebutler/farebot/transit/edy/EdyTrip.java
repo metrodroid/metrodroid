@@ -85,8 +85,8 @@ public class EdyTrip extends Trip {
             return 0;
     }
 
-    public double getFare() {
-        return mTransactionAmount;
+    public boolean hasFare() {
+        return true;
     }
 
     public String getFareString() {

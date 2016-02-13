@@ -67,7 +67,7 @@ public class ManlyFastFerryTrip extends Trip {
 
     @Override
     public String getFareString() {
-        return NumberFormat.getCurrencyInstance(Locale.US).format(getFare());
+        return NumberFormat.getCurrencyInstance(Locale.US).format((double)mPurse.getTransactionValue() / 100.);
     }
 
     @Override
@@ -96,8 +96,8 @@ public class ManlyFastFerryTrip extends Trip {
     }
 
     @Override
-    public double getFare() {
-        return (double)mPurse.getTransactionValue() / 100.;
+    public boolean hasFare() {
+        return true;
     }
 
     @Override

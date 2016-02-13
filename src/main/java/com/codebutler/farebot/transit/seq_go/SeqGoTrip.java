@@ -115,9 +115,9 @@ public class SeqGoTrip extends Trip {
     }
 
     @Override
-    public double getFare() {
+    public boolean hasFare() {
         // We can't calculate fares yet.
-        return 0;
+        return false;
     }
 
     @Override

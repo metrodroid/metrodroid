@@ -151,14 +151,8 @@ public class CardInfoActivity extends Activity {
                     mTabsAdapter.addTab(actionBar.newTab().setText(R.string.balance), CardBalanceFragment.class, args);
                 }
 
-                if (mTransitData.getTrips() != null) {
-                    int textId = (mTransitData instanceof SuicaTransitData) || (mTransitData instanceof EdyTransitData)
-                            ? R.string.history : R.string.trips;
-                    mTabsAdapter.addTab(actionBar.newTab().setText(textId), CardTripsFragment.class, args);
-                }
-
-                if (mTransitData.getRefills() != null) {
-                    mTabsAdapter.addTab(actionBar.newTab().setText(R.string.refills), CardRefillsFragment.class, args);
+                if (mTransitData.getTrips() != null || mTransitData.getRefills() != null) {
+                    mTabsAdapter.addTab(actionBar.newTab().setText(R.string.history), CardTripsFragment.class, args);
                 }
 
                 if (mTransitData.getSubscriptions() != null) {

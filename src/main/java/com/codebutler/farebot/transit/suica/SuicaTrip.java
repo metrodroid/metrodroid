@@ -169,8 +169,8 @@ public class SuicaTrip extends Trip {
         return getAgencyName();
     }
 
-    @Override public double getFare() {
-        return mFare;
+    @Override public boolean hasFare() {
+        return true;
     }
 
     @Override public String getFareString() {
