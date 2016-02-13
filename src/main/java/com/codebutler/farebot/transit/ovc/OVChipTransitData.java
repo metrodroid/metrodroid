@@ -25,7 +25,7 @@ package com.codebutler.farebot.transit.ovc;
 
 import android.os.Parcel;
 
-import com.codebutler.farebot.FareBotApplication;
+import au.id.micolous.metrodroid.MetrodroidApplication;
 import au.id.micolous.farebot.R;
 import com.codebutler.farebot.card.Card;
 import com.codebutler.farebot.card.classic.ClassicCard;
@@ -259,14 +259,14 @@ public class OVChipTransitData extends TransitData {
         if (sAgencies.containsKey(agency)) {
             return sAgencies.get(agency);
         }
-        return FareBotApplication.getInstance().getString(R.string.unknown_format, "0x" + Long.toString(agency, 16));
+        return MetrodroidApplication.getInstance().getString(R.string.unknown_format, "0x" + Long.toString(agency, 16));
     }
 
     public static String getShortAgencyName(int agency) {
         if (sShortAgencies.containsKey(agency)) {
             return sShortAgencies.get(agency);
         }
-        return FareBotApplication.getInstance().getString(R.string.unknown_format, "0x" + Long.toString(agency, 16));
+        return MetrodroidApplication.getInstance().getString(R.string.unknown_format, "0x" + Long.toString(agency, 16));
     }
 
     @Override public void writeToParcel(Parcel parcel, int flags) {

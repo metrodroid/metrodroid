@@ -2,8 +2,9 @@ package com.codebutler.farebot.transit.hsl;
 
 import android.os.Parcel;
 
-import com.codebutler.farebot.FareBotApplication;
+import au.id.micolous.metrodroid.MetrodroidApplication;
 import au.id.micolous.farebot.R;
+
 import com.codebutler.farebot.card.desfire.files.DesfireRecord;
 import com.codebutler.farebot.transit.Station;
 import com.codebutler.farebot.transit.Trip;
@@ -84,7 +85,7 @@ public class HSLTrip extends Trip {
     }
 
     @Override public String getAgencyName() {
-        FareBotApplication app = FareBotApplication.getInstance();
+        MetrodroidApplication app = MetrodroidApplication.getInstance();
         String pax = app.getString(R.string.hsl_person_format, mPax);
         if (mArvo == 1) {
             String mins = app.getString(R.string.hsl_mins_format, ((this.mExpireTimestamp - this.mTimestamp) / 60));

@@ -37,7 +37,7 @@ import android.preference.PreferenceManager;
 import android.util.Log;
 
 import au.id.micolous.farebot.BuildConfig;
-import com.codebutler.farebot.FareBotApplication;
+import au.id.micolous.metrodroid.MetrodroidApplication;
 import au.id.micolous.farebot.R;
 import com.codebutler.farebot.card.Card;
 import com.codebutler.farebot.card.UnsupportedTagException;
@@ -65,8 +65,8 @@ public class ReadingTagActivity extends Activity {
             final byte[] tagId = intent.getByteArrayExtra(NfcAdapter.EXTRA_ID);
 
             SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
-            String lastReadId = prefs.getString(FareBotApplication.PREF_LAST_READ_ID, "");
-            long lastReadAt = prefs.getLong(FareBotApplication.PREF_LAST_READ_AT, 0);
+            String lastReadId = prefs.getString(MetrodroidApplication.PREF_LAST_READ_ID, "");
+            long lastReadAt = prefs.getLong(MetrodroidApplication.PREF_LAST_READ_AT, 0);
 
             // Prevent FareBot from reading the same card again right away.
             // This was especially a problem with FeliCa cards.
@@ -82,7 +82,7 @@ public class ReadingTagActivity extends Activity {
                     try {
                         Card card = Card.dumpTag(tagId, tag);
 
-                        String cardXml = card.toXml(FareBotApplication.getInstance().getSerializer());
+                        String cardXml = card.toXml(MetrodroidApplication.getInstance().getSerializer());
 
                         if (BuildConfig.DEBUG) {
                             Log.d("ReadingTagActivity", "Got Card XML");
@@ -102,8 +102,8 @@ public class ReadingTagActivity extends Activity {
                         Uri uri = getContentResolver().insert(CardProvider.CONTENT_URI_CARD, values);
 
                         SharedPreferences.Editor prefs = PreferenceManager.getDefaultSharedPreferences(ReadingTagActivity.this).edit();
-                        prefs.putString(FareBotApplication.PREF_LAST_READ_ID, tagIdString);
-                        prefs.putLong(FareBotApplication.PREF_LAST_READ_AT, new Date().getTime());
+                        prefs.putString(MetrodroidApplication.PREF_LAST_READ_ID, tagIdString);
+                        prefs.putLong(MetrodroidApplication.PREF_LAST_READ_AT, new Date().getTime());
                         prefs.apply();
 
                         return uri;

@@ -20,7 +20,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.codebutler.farebot;
+package au.id.micolous.metrodroid;
 
 import android.app.Application;
 import android.os.StrictMode;
@@ -62,11 +62,11 @@ import org.simpleframework.xml.transform.RegistryMatcher;
 
 import java.util.Date;
 
-public class FareBotApplication extends Application {
+public class MetrodroidApplication extends Application {
     public static final String PREF_LAST_READ_ID = "last_read_id";
     public static final String PREF_LAST_READ_AT = "last_read_at";
 
-    private static FareBotApplication sInstance;
+    private static MetrodroidApplication sInstance;
 
     private FelicaDBUtil mFelicaDBUtil;
     private OVChipDBUtil mOVChipDBUtil;
@@ -74,7 +74,7 @@ public class FareBotApplication extends Application {
     private final Serializer mSerializer;
     private boolean mMifareClassicSupport;
 
-    public FareBotApplication() {
+    public MetrodroidApplication() {
         sInstance = this;
 
         mFelicaDBUtil = new FelicaDBUtil(this);
@@ -113,7 +113,7 @@ public class FareBotApplication extends Application {
         }
     }
 
-    public static FareBotApplication getInstance() {
+    public static MetrodroidApplication getInstance() {
         return sInstance;
     }
 

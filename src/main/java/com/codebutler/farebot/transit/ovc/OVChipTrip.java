@@ -29,7 +29,7 @@ import android.os.Parcel;
 import android.text.TextUtils;
 import android.util.Log;
 
-import com.codebutler.farebot.FareBotApplication;
+import au.id.micolous.metrodroid.MetrodroidApplication;
 import com.codebutler.farebot.transit.Station;
 import com.codebutler.farebot.transit.Trip;
 
@@ -315,7 +315,7 @@ public class OVChipTrip extends Trip {
 
     private static Station getStation(int companyCode, int stationCode) {
         try {
-            SQLiteDatabase db = FareBotApplication.getInstance().getOVChipDBUtil().openDatabase();
+            SQLiteDatabase db = MetrodroidApplication.getInstance().getOVChipDBUtil().openDatabase();
             Cursor cursor = db.query(
                     OVChipDBUtil.TABLE_NAME,
                     OVChipDBUtil.COLUMNS_STATIONDATA,

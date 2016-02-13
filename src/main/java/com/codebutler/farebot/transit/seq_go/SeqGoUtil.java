@@ -4,7 +4,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
-import com.codebutler.farebot.FareBotApplication;
+import au.id.micolous.metrodroid.MetrodroidApplication;
 import com.codebutler.farebot.transit.Station;
 import com.codebutler.farebot.util.Utils;
 
@@ -54,7 +54,7 @@ public final class SeqGoUtil {
     }
 
     private static SeqGoDBUtil getDB() {
-        return FareBotApplication.getInstance().getSeqGoDBUtil();
+        return MetrodroidApplication.getInstance().getSeqGoDBUtil();
     }
 
     public static Station getStation(int stationId) {

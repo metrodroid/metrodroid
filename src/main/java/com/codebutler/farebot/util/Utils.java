@@ -37,7 +37,8 @@ import android.text.format.DateFormat;
 import android.util.Log;
 import android.view.WindowManager;
 
-import com.codebutler.farebot.FareBotApplication;
+import au.id.micolous.metrodroid.MetrodroidApplication;
+
 import au.id.micolous.farebot.R;
 
 import java.math.BigInteger;
@@ -201,7 +202,7 @@ public class Utils {
     }
 
     public static String getDeviceInfoString() {
-        FareBotApplication app = FareBotApplication.getInstance();
+        MetrodroidApplication app = MetrodroidApplication.getInstance();
         NfcAdapter nfcAdapter = NfcAdapter.getDefaultAdapter(app);
         boolean nfcAvailable = nfcAdapter != null;
         boolean nfcEnabled = false;
@@ -234,7 +235,7 @@ public class Utils {
 
     private static PackageInfo getPackageInfo() {
         try {
-            FareBotApplication app = FareBotApplication.getInstance();
+            MetrodroidApplication app = MetrodroidApplication.getInstance();
             return app.getPackageManager().getPackageInfo(app.getPackageName(), 0);
         } catch (PackageManager.NameNotFoundException e) {
             throw new RuntimeException(e);
@@ -328,7 +329,7 @@ public class Utils {
      * @return Localized string
      */
     public static String localizeString(int stringResource, Object... formatArgs) {
-        Resources res = FareBotApplication.getInstance().getResources();
+        Resources res = MetrodroidApplication.getInstance().getResources();
         return res.getString(stringResource, formatArgs);
     }
 
@@ -341,12 +342,12 @@ public class Utils {
      * @return Localized string
      */
     public static String localizePlural(int pluralResource, int quantity, Object... formatArgs) {
-        Resources res = FareBotApplication.getInstance().getResources();
+        Resources res = MetrodroidApplication.getInstance().getResources();
         return res.getQuantityString(pluralResource, quantity, formatArgs);
     }
 
     public static String longDateFormat(Date date) {
-        return DateFormat.getLongDateFormat(FareBotApplication.getInstance()).format(date);
+        return DateFormat.getLongDateFormat(MetrodroidApplication.getInstance()).format(date);
     }
 
     public static String longDateFormat(long milliseconds) {
@@ -354,7 +355,7 @@ public class Utils {
     }
 
     public static String dateFormat(Date date) {
-        return DateFormat.getDateFormat(FareBotApplication.getInstance()).format(date);
+        return DateFormat.getDateFormat(MetrodroidApplication.getInstance()).format(date);
     }
 
     public static String dateFormat(long milliseconds) {
@@ -362,7 +363,7 @@ public class Utils {
     }
 
     public static String timeFormat(Date date) {
-        return DateFormat.getTimeFormat(FareBotApplication.getInstance()).format(date);
+        return DateFormat.getTimeFormat(MetrodroidApplication.getInstance()).format(date);
     }
 
     public static String timeFormat(long milliseconds) {

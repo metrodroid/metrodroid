@@ -28,8 +28,9 @@ package com.codebutler.farebot.transit.clipper;
 
 import android.os.Parcel;
 
-import com.codebutler.farebot.FareBotApplication;
+import au.id.micolous.metrodroid.MetrodroidApplication;
 import au.id.micolous.farebot.R;
+
 import com.codebutler.farebot.card.Card;
 import com.codebutler.farebot.card.desfire.DesfireCard;
 import com.codebutler.farebot.card.desfire.files.DesfireFile;
@@ -278,14 +279,14 @@ public class ClipperTransitData extends TransitData {
         if (ClipperData.AGENCIES.containsKey(agency)) {
             return ClipperData.AGENCIES.get(agency);
         }
-        return FareBotApplication.getInstance().getString(R.string.unknown_format, "0x" + Long.toString(agency, 16));
+        return MetrodroidApplication.getInstance().getString(R.string.unknown_format, "0x" + Long.toString(agency, 16));
     }
 
     public static String getShortAgencyName(int agency) {
         if (ClipperData.SHORT_AGENCIES.containsKey(agency)) {
             return ClipperData.SHORT_AGENCIES.get(agency);
         }
-        return FareBotApplication.getInstance().getString(R.string.unknown_format, "0x" + Long.toString(agency, 16));
+        return MetrodroidApplication.getInstance().getString(R.string.unknown_format, "0x" + Long.toString(agency, 16));
     }
 
     public void writeToParcel(Parcel parcel, int flags) {

@@ -31,7 +31,7 @@ import android.widget.BaseExpandableListAdapter;
 import android.widget.ExpandableListView;
 import android.widget.TextView;
 
-import com.codebutler.farebot.FareBotApplication;
+import au.id.micolous.metrodroid.MetrodroidApplication;
 import au.id.micolous.farebot.R;
 import com.codebutler.farebot.activity.AdvancedCardInfoActivity;
 import com.codebutler.farebot.card.Card;
@@ -56,7 +56,7 @@ public class DesfireCardRawDataFragment extends ExpandableListFragment {
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Serializer serializer = FareBotApplication.getInstance().getSerializer();
+        Serializer serializer = MetrodroidApplication.getInstance().getSerializer();
         mCard = (DesfireCard) Card.fromXml(serializer, getArguments().getString(AdvancedCardInfoActivity.EXTRA_CARD));
         setListAdapter(new BaseExpandableListAdapter() {
             public int getGroupCount() {

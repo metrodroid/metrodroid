@@ -2,8 +2,9 @@ package com.codebutler.farebot.transit.hsl;
 
 import android.os.Parcel;
 
-import com.codebutler.farebot.FareBotApplication;
+import au.id.micolous.metrodroid.MetrodroidApplication;
 import au.id.micolous.farebot.R;
+
 import com.codebutler.farebot.transit.Refill;
 
 import java.text.NumberFormat;
@@ -33,11 +34,11 @@ public class HSLRefill extends Refill {
     }
 
     @Override public String getAgencyName() {
-        return FareBotApplication.getInstance().getString(R.string.hsl_balance_refill);
+        return MetrodroidApplication.getInstance().getString(R.string.hsl_balance_refill);
     }
 
     @Override public String getShortAgencyName() {
-        return FareBotApplication.getInstance().getString(R.string.hsl_balance_refill);
+        return MetrodroidApplication.getInstance().getString(R.string.hsl_balance_refill);
     }
 
     @Override public long getAmount() {

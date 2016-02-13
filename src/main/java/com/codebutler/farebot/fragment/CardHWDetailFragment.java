@@ -25,7 +25,7 @@ package com.codebutler.farebot.fragment;
 import android.app.ListFragment;
 import android.os.Bundle;
 
-import com.codebutler.farebot.FareBotApplication;
+import au.id.micolous.metrodroid.MetrodroidApplication;
 import com.codebutler.farebot.activity.AdvancedCardInfoActivity;
 import com.codebutler.farebot.card.Card;
 import com.codebutler.farebot.card.CardType;
@@ -51,7 +51,7 @@ public class CardHWDetailFragment extends ListFragment {
     @Override public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        Serializer serializer = FareBotApplication.getInstance().getSerializer();
+        Serializer serializer = MetrodroidApplication.getInstance().getSerializer();
         mCard = Card.fromXml(serializer, getArguments().getString(AdvancedCardInfoActivity.EXTRA_CARD));
 
         List<ListItem> items = new ArrayList<>();

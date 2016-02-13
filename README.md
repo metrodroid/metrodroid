@@ -1,21 +1,19 @@
-# Farebot M
+# Metrodroid
 
 [![Translation status](https://hosted.weblate.org/widgets/farebot-m/-/svg-badge.svg)][22]
+
+_Formerly known as Farebot M._
 
 Version: 2.9.27
 
 View your remaining balance, recent trips, and other information from contactless public transit cards using your NFC Android phone!
 
-## Fork Maintained By
 
 * [Michael Farrell](https://github.com/micolous)
 
-## Originally Written By
-
-* [Eric Butler][5] <eric@codebutler.com>
-
 ## Thanks To
 
+* [Eric Butler][5] (Farebot)
 * [Karl Koscher][3] (ORCA)
 * [Sean Cross][4] (CEPES/EZ-Link)
 * Anonymous Contributor (Clipper)
@@ -54,7 +52,7 @@ This project will only read data from the card itself, without having to connect
 
 ## Supported Phones
 
-FareBot requires an NFC Android phone running 4.0.3 or later.
+Metrodroid requires an NFC Android phone running 4.0.3 or later.
 
 Some newer devices do not support MIFARE Classic.  MIFARE Classic is not an NFC-compliant card format, so can only be read with phones with NXP chipsets.
 

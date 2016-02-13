@@ -5,8 +5,9 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
-import com.codebutler.farebot.FareBotApplication;
+import au.id.micolous.metrodroid.MetrodroidApplication;
 import au.id.micolous.farebot.R;
+
 import com.codebutler.farebot.transit.Station;
 
 import net.kazzz.felica.lib.Util;
@@ -69,7 +70,7 @@ final class SuicaUtil {
      * @return String 機器タイプが文字列で戻ります
      */
     static String getConsoleTypeName(int cType) {
-        Application app = FareBotApplication.getInstance();
+        Application app = MetrodroidApplication.getInstance();
         switch (cType & 0xff) {
             case 0x03: return app.getString(R.string.felica_terminal_fare_adjustment);
             case 0x04: return app.getString(R.string.felica_terminal_portable);
@@ -106,7 +107,7 @@ final class SuicaUtil {
      * @return String 処理タイプが文字列で戻ります
      */
     static String getProcessTypeName(int proc) {
-        Application app = FareBotApplication.getInstance();
+        Application app = MetrodroidApplication.getInstance();
         switch (proc & 0xff) {
             case 0x01: return app.getString(R.string.felica_process_fare_exit_gate);
             case 0x02: return app.getString(R.string.felica_process_charge);
@@ -149,7 +150,7 @@ final class SuicaUtil {
         int areaCode = (regionCode >> 6);
 
         try {
-            SQLiteDatabase db = FareBotApplication.getInstance().getFelicaDBUtil().openDatabase();
+            SQLiteDatabase db = MetrodroidApplication.getInstance().getFelicaDBUtil().openDatabase();
             Cursor cursor = db.query(TABLE_IRUCA_STATIONCODE,
                     COLUMNS_IRUCA_STATIONCODE,
                     String.format("%s = ? AND %s = ?", COLUMN_LINECODE, COLUMN_STATIONCODE),
@@ -187,7 +188,7 @@ final class SuicaUtil {
         int areaCode = (regionCode >> 6);
 
         try {
-            SQLiteDatabase db = FareBotApplication.getInstance().getFelicaDBUtil().openDatabase();
+            SQLiteDatabase db = MetrodroidApplication.getInstance().getFelicaDBUtil().openDatabase();
             Cursor cursor = db.query(
                     TABLE_STATIONCODE,
                     COLUMNS_STATIONCODE,

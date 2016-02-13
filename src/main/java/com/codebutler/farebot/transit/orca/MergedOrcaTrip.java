@@ -2,7 +2,7 @@ package com.codebutler.farebot.transit.orca;
 
 import android.os.Parcel;
 
-import com.codebutler.farebot.FareBotApplication;
+import au.id.micolous.metrodroid.MetrodroidApplication;
 import au.id.micolous.farebot.R;
 import com.codebutler.farebot.transit.Station;
 import com.codebutler.farebot.transit.Trip;
@@ -51,7 +51,7 @@ public class MergedOrcaTrip extends Trip {
 
     @Override public String getFareString() {
         if (mEndTrip.mTransType == OrcaTransitData.TRANS_TYPE_CANCEL_TRIP) {
-            return FareBotApplication.getInstance().getString(R.string.fare_cancelled_format, mStartTrip.getFareString());
+            return MetrodroidApplication.getInstance().getString(R.string.fare_cancelled_format, mStartTrip.getFareString());
         }
         return mStartTrip.getFareString();
     }

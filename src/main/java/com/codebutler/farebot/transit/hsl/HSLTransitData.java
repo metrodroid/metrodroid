@@ -24,8 +24,9 @@ package com.codebutler.farebot.transit.hsl;
 
 import android.os.Parcel;
 
-import com.codebutler.farebot.FareBotApplication;
+import au.id.micolous.metrodroid.MetrodroidApplication;
 import au.id.micolous.farebot.R;
+
 import com.codebutler.farebot.card.Card;
 import com.codebutler.farebot.card.desfire.DesfireCard;
 import com.codebutler.farebot.card.desfire.files.DesfireFile;
@@ -300,7 +301,7 @@ public class HSLTransitData extends TransitData {
     }
 
     @Override public String getBalanceString() {
-        FareBotApplication app = FareBotApplication.getInstance();
+        MetrodroidApplication app = MetrodroidApplication.getInstance();
         String ret = NumberFormat.getCurrencyInstance(Locale.GERMANY).format(mBalance / 100);
         if (mHasKausi)
             ret += "\n" + app.getString(R.string.hsl_pass_is_valid);

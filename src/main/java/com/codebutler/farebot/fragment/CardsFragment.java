@@ -25,7 +25,6 @@ package com.codebutler.farebot.fragment;
 import android.app.Activity;
 import android.app.ListFragment;
 import android.app.LoaderManager;
-import android.content.ContentResolver;
 import android.content.ContentUris;
 import android.content.Context;
 import android.content.CursorLoader;
@@ -50,7 +49,7 @@ import android.widget.ResourceCursorAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.codebutler.farebot.FareBotApplication;
+import au.id.micolous.metrodroid.MetrodroidApplication;
 import au.id.micolous.farebot.R;
 import com.codebutler.farebot.activity.CardInfoActivity;
 import com.codebutler.farebot.card.Card;
@@ -236,7 +235,7 @@ public class CardsFragment extends ListFragment {
            if (!mDataCache.containsKey(cacheKey)) {
                String data = cursor.getString(cursor.getColumnIndex(CardsTableColumns.DATA));
                try {
-                   Serializer serializer = FareBotApplication.getInstance().getSerializer();
+                   Serializer serializer = MetrodroidApplication.getInstance().getSerializer();
                    mDataCache.put(cacheKey, Card.fromXml(serializer, data).parseTransitIdentity());
                } catch (Exception ex) {
                    String error = String.format("Error: %s", Utils.getErrorMessage(ex));

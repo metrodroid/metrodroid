@@ -25,7 +25,7 @@
 <resources
     xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
 
-    <string name="app_name">Farebot M</string>
+    <string name="app_name">Metrodroid</string>
     <string name="copyright">Copyright 2015 – 2016 Michael Farrell\nCopyright 2011 – 2013 Eric Butler</string>
 
     <!-- Play Store specific strings -->
@@ -72,8 +72,8 @@
     <string name="transaction_sequence">#</string>
     <string name="fully_locked_desc">
         This card does not have any part of it which is freely readable without a key. You have no keys installed which are valid for this card.\n\n
-        If the card is currently supported by Farebot, you will be able to make this card work once you have installed keys for it. Please consult the online documentation for more information about acquiring keys.\n\n
-        If your card is not currently supported by Farebot, it is unlikely it will ever be supported by this software, unless this key is broken.\n\n
+        If the card is currently supported by Metrodroid, you will be able to make this card work once you have installed keys for it. Please consult the online documentation for more information about acquiring keys.\n\n
+        If your card is not currently supported by Metrodroid, it is unlikely it will ever be supported by this software, unless this key is broken.\n\n
         Please contact your municipal transport authority in order to allow some level of open data access on issued cards. It is possible to safely allow limited read access to data on public transport smartcards.
     </string>
     <string name="fully_locked_title">Card is fully locked!</string>
@@ -83,11 +83,13 @@
     <string name="report_error">Report Error</string>
 
     <string name="unknown_card_header">Unknown card format</string>
-    <string name="unknown_card_description">This card is not yet supported by Farebot. Only raw data can be displayed.</string>
+    <string name="unknown_card_description">This card is not yet supported by Metrodroid. Only raw data can be displayed.</string>
 
     <string name="unknown_more_info">More information</string>
-    <!-- TRANSLATORS: This is used on a list item, which will direct users to Farebot M's website when touched. -->
-    <string name="unknown_more_info_desc">Touch here for more information about Farebot M\'s support of this card.</string>
+    <!-- TRANSLATORS: This is used on a list item, which will direct users to Metrodroid's website when touched. -->
+    <string name="unknown_more_info_desc">Touch here for more information about Metrodroid\'s support of this card.</string>
+
+    <string name="lawyercats">Metrodroid and its authors are not associated with any public transit agency.</string>
 
 
     <string name="report_error_privacy_title">Privacy Notice</string>
@@ -104,7 +106,7 @@
     <string name="unknown_format">Unknown (%s)</string>
     <string name="keys_required">Encryption keys are required to read this card.</string>
     <string name="load_keys">Load Keys</string>
-    <string name="card_keys_not_supported">Farebot does not support keys for this type of card.</string>
+    <string name="card_keys_not_supported">Metrodroid does not support keys for this type of card.</string>
     <string name="add_key">Add Key</string>
     <string name="error">Error</string>
     <string name="keys">Keys</string>
@@ -129,7 +131,7 @@
     <string name="need_stations_submit">Report</string>
     <string name="card_preview_reader">Beta version of card reader.</string>
     <string name="visit_website">Visit Website</string>
-    <string name="title_activity_about">About Farebot M</string>
+    <string name="title_activity_about">About Metrodroid</string>
     <string name="card_type">Card type</string>
     <string name="select_file">Select file</string>
     <string name="copied_to_clipboard">Copied to clipboard</string>
@@ -263,5 +265,4 @@
         These are deliberately separated strings in order to match the terminology of the agency.
     -->
     <string name="card_note_myki">Only the card number can be read.</string>
-    <string name="lawyercats">Farebot M and its authors are not associated with any public transit agency.</string>
 </resources>

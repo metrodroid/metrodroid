@@ -3,7 +3,7 @@ package com.codebutler.farebot.transit.edy;
 import android.app.Application;
 import android.os.Parcel;
 
-import com.codebutler.farebot.FareBotApplication;
+import au.id.micolous.metrodroid.MetrodroidApplication;
 import au.id.micolous.farebot.R;
 import com.codebutler.farebot.card.felica.FelicaBlock;
 import com.codebutler.farebot.transit.Station;
@@ -111,7 +111,7 @@ public class EdyTrip extends Trip {
         NumberFormat format = NumberFormat.getIntegerInstance();
         format.setMinimumIntegerDigits(8);
         format.setGroupingUsed(false);
-        Application app = FareBotApplication.getInstance();
+        Application app = MetrodroidApplication.getInstance();
         String str;
         if (mProcessType != EdyTransitData.FELICA_MODE_EDY_DEBIT)
             str = app.getString(R.string.felica_process_charge);

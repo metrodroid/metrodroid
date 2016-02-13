@@ -39,7 +39,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
-import com.codebutler.farebot.FareBotApplication;
+import au.id.micolous.metrodroid.MetrodroidApplication;
 import au.id.micolous.farebot.R;
 import com.codebutler.farebot.card.Card;
 import com.codebutler.farebot.card.UnsupportedCardException;
@@ -101,7 +101,7 @@ public class CardInfoActivity extends Activity {
 
                     String data = cursor.getString(cursor.getColumnIndex(CardsTableColumns.DATA));
 
-                    mCard = Card.fromXml(FareBotApplication.getInstance().getSerializer(), data);
+                    mCard = Card.fromXml(MetrodroidApplication.getInstance().getSerializer(), data);
                     mTransitData = mCard.parseTransitData();
 
                     SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(CardInfoActivity.this);
@@ -139,7 +139,7 @@ public class CardInfoActivity extends Activity {
 
                 Bundle args = new Bundle();
                 args.putString(AdvancedCardInfoActivity.EXTRA_CARD,
-                        mCard.toXml(FareBotApplication.getInstance().getSerializer()));
+                        mCard.toXml(MetrodroidApplication.getInstance().getSerializer()));
                 args.putParcelable(EXTRA_TRANSIT_DATA, mTransitData);
 
                 if (mTransitData instanceof UnauthorizedClassicTransitData) {
@@ -221,7 +221,7 @@ public class CardInfoActivity extends Activity {
     private void showAdvancedInfo(Exception ex) {
         Intent intent = new Intent(this, AdvancedCardInfoActivity.class);
         intent.putExtra(AdvancedCardInfoActivity.EXTRA_CARD,
-                mCard.toXml(FareBotApplication.getInstance().getSerializer()));
+                mCard.toXml(MetrodroidApplication.getInstance().getSerializer()));
         if (ex != null) {
             intent.putExtra(AdvancedCardInfoActivity.EXTRA_ERROR, ex);
         }

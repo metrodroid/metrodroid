@@ -37,8 +37,9 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import com.codebutler.farebot.FareBotApplication;
+import au.id.micolous.metrodroid.MetrodroidApplication;
 import au.id.micolous.farebot.R;
+
 import com.codebutler.farebot.card.CardType;
 import com.codebutler.farebot.transit.manly_fast_ferry.ManlyFastFerryTransitData;
 import com.codebutler.farebot.transit.myki.MykiTransitData;
@@ -173,7 +174,7 @@ public class SupportedCardsActivity extends Activity {
 
             String notes = "";
 
-            FareBotApplication app = FareBotApplication.getInstance();
+            MetrodroidApplication app = MetrodroidApplication.getInstance();
             NfcAdapter nfcAdapter = NfcAdapter.getDefaultAdapter(app);
             boolean nfcAvailable = nfcAdapter != null;
 

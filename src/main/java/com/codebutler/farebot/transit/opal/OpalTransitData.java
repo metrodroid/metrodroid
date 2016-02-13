@@ -3,8 +3,9 @@ package com.codebutler.farebot.transit.opal;
 import android.os.Parcel;
 import android.text.format.DateFormat;
 
-import com.codebutler.farebot.FareBotApplication;
+import au.id.micolous.metrodroid.MetrodroidApplication;
 import au.id.micolous.farebot.R;
+
 import com.codebutler.farebot.card.Card;
 import com.codebutler.farebot.card.desfire.DesfireCard;
 import com.codebutler.farebot.transit.Refill;
@@ -126,8 +127,8 @@ public class OpalTransitData extends TransitData {
         items.add(new HeaderListItem(R.string.last_transaction));
         items.add(new ListItem(R.string.transaction_sequence, Integer.toString(mTransactionNumber)));
         Date cLastTransactionTime = getLastTransactionTime().getTime();
-        items.add(new ListItem(R.string.date, DateFormat.getLongDateFormat(FareBotApplication.getInstance()).format(cLastTransactionTime)));
-        items.add(new ListItem(R.string.time, DateFormat.getTimeFormat(FareBotApplication.getInstance()).format(cLastTransactionTime)));
+        items.add(new ListItem(R.string.date, DateFormat.getLongDateFormat(MetrodroidApplication.getInstance()).format(cLastTransactionTime)));
+        items.add(new ListItem(R.string.time, DateFormat.getTimeFormat(MetrodroidApplication.getInstance()).format(cLastTransactionTime)));
         items.add(new ListItem(R.string.vehicle_type, getVehicleType(mVehicleType)));
         items.add(new ListItem(R.string.transaction_type, getActionType(mActionType)));
 

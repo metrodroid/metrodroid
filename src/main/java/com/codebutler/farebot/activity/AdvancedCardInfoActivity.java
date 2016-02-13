@@ -25,7 +25,6 @@ package com.codebutler.farebot.activity;
 import android.app.ActionBar;
 import android.app.Activity;
 import android.app.AlertDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
@@ -36,7 +35,7 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.codebutler.farebot.FareBotApplication;
+import au.id.micolous.metrodroid.MetrodroidApplication;
 import au.id.micolous.farebot.R;
 import com.codebutler.farebot.card.Card;
 import com.codebutler.farebot.card.CardHasManufacturingInfo;
@@ -70,7 +69,7 @@ public class AdvancedCardInfoActivity extends Activity {
 
 */
 
-        Serializer serializer = FareBotApplication.getInstance().getSerializer();
+        Serializer serializer = MetrodroidApplication.getInstance().getSerializer();
         mCard = Card.fromXml(serializer, getIntent().getStringExtra(AdvancedCardInfoActivity.EXTRA_CARD));
 
         ViewPager viewPager = (ViewPager) findViewById(R.id.pager);
@@ -131,7 +130,7 @@ public class AdvancedCardInfoActivity extends Activity {
     @Override public boolean onOptionsItemSelected(MenuItem item) {
         try {
             if (item.getItemId() == R.id.copy_xml) {
-                String xml = mCard.toXml(FareBotApplication.getInstance().getSerializer());
+                String xml = mCard.toXml(MetrodroidApplication.getInstance().getSerializer());
                 @SuppressWarnings("deprecation")
                 ClipboardManager clipboard = (ClipboardManager) getSystemService(CLIPBOARD_SERVICE);
                 clipboard.setText(xml);
@@ -139,7 +138,7 @@ public class AdvancedCardInfoActivity extends Activity {
                 return true;
 
             } else if (item.getItemId() == R.id.share_xml) {
-                String xml = mCard.toXml(FareBotApplication.getInstance().getSerializer());
+                String xml = mCard.toXml(MetrodroidApplication.getInstance().getSerializer());
                 Intent intent = new Intent(Intent.ACTION_SEND);
                 intent.setType("text/plain");
                 intent.putExtra(Intent.EXTRA_TEXT, xml);
@@ -163,7 +162,7 @@ public class AdvancedCardInfoActivity extends Activity {
         DialogInterface.OnClickListener listener = new DialogInterface.OnClickListener() {
             @Override public void onClick(DialogInterface dialog, int which) {
                 try {
-                    Crashlytics.log(mCard.toXml(FareBotApplication.getInstance().getSerializer()));
+                    Crashlytics.log(mCard.toXml(MetrodroidApplication.getInstance().getSerializer()));
                 } catch (Exception ex) {
                     Crashlytics.logException(ex);
                 }

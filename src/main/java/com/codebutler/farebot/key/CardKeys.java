@@ -25,7 +25,7 @@ package com.codebutler.farebot.key;
 import android.database.Cursor;
 import android.net.Uri;
 
-import com.codebutler.farebot.FareBotApplication;
+import au.id.micolous.metrodroid.MetrodroidApplication;
 import com.codebutler.farebot.provider.CardKeyProvider;
 import com.codebutler.farebot.provider.KeysTableColumns;
 import com.codebutler.farebot.util.Utils;
@@ -38,7 +38,7 @@ public abstract class CardKeys {
 
     public static CardKeys forTagId(byte[] tagId) throws Exception {
         String tagIdString = Utils.getHexString(tagId);
-        FareBotApplication app = FareBotApplication.getInstance();
+        MetrodroidApplication app = MetrodroidApplication.getInstance();
         Cursor cursor = app.getContentResolver().query(Uri.withAppendedPath(CardKeyProvider.CONTENT_URI, tagIdString), null, null, null, null);
         if (cursor.moveToFirst()) {
             return CardKeys.fromCursor(cursor);

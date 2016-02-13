@@ -10,7 +10,7 @@ import au.id.micolous.farebot.R;
 
 public class LicenseActivity extends Activity {
 
-    final static String mLicenseIntro = "Farebot M\n" +
+    final static String mLicenseIntro = "Metrodroid\n" +
             "Copyright 2011-2013 Eric Butler <eric@codebutler.com> and contributors\n" +
             "Copyright 2015-2016 Michael Farrell <micolous@gmail.com>\n" +
             "\n" +
