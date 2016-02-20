@@ -4,9 +4,9 @@
     <string name="market_short_desc">Metrodroid can read information from some public transport NFC smartcards.</string>
 
     <string name="market_long_desc"><![CDATA[
-Farebot M can read information from some public transport NFC smartcards.
+Metrodroid can read information from some public transport NFC smartcards. It was formerly known as Farebot M.
 
-This is a fork of Eric Butler's Farebot project, with support for additional cards and bug fixes.
+This is a fork of Eric Butler\'s Farebot project, with support for additional cards and bug fixes.
 
 Supported cards:
 - Bilhete Único - São Paulo, Brazil [1] [2]
@@ -32,9 +32,11 @@ You require a NFC-compatible phone in order to read cards.
 
 You need a NXP NFC chipset in your phone in order to read MIFARE Classic cards.  Some phones have NFC chips from other manufacturers, which do not read Mifare Classic cards (eg: Nexus 4, Nexus 5, Samsung Galaxy S4). Check the About screen in the app in order to determine if your phone supports MIFARE Classic.
 
-Some agencies have encrypted cards. You will need to acquire encryption keys in order to read them. These are generally unique to each card. Sorry, I can't help you with this.
+Some agencies have encrypted cards. You will need to acquire encryption keys in order to read them. These are generally unique to each card. Sorry, I can\'t help you with this.
 
 For more details about permissions required, please see the privacy policy.
+
+This software is licensed under the GNU GPLv3+, source code is available at https://github.com/micolous/metrodroid/
     ]]></string>
 
     <string name="market_changelog_27"><![CDATA[

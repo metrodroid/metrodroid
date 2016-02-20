@@ -91,8 +91,8 @@
 
     <string name="location_tokyo">東京</string>
     <string name="location_kansai">関西</string>
-<string name="app_name">Farebot M</string>
-    <string name="copyright">Copyright 2015 – 2016 Michael Farrell\nCopyright 2011 – 2013 Eric Butler</string>
+    <string name="app_name">Metrodroid</string>
+    <string name="copyright">Copyright 2015 – 2016 Michael Farrell</string>
     <string name="license">ライセンス</string>
     <string name="title_activity_license">オープンソース ライセンス</string>
     <string name="locked_card">ロックされたカード</string>
@@ -133,7 +133,7 @@
     <string name="need_stations_submit">報告</string>
     <string name="card_preview_reader">ベータ版のカードリーダーです。</string>
     <string name="visit_website">ウェブサイトを訪問</string>
-    <string name="title_activity_about">Farebot M について</string>
+    <string name="title_activity_about">Metrodroid について</string>
     <string name="card_type">カードの種類</string>
     <string name="select_file">ファイルを選択</string>
     <string name="copied_to_clipboard">クリップボードにコピーしました</string>
@@ -208,8 +208,8 @@
     <string name="card_note_myki">カード番号のみ読み取ることができます。</string>
 <string name="unknown_card_header">不明なカード フォーマット</string>
     <string name="unknown_more_info">詳細情報</string>
-    <string name="unknown_more_info_desc">このカードの Farebot M のサポートの詳細については、ここをタップしてください。</string>
+    <string name="unknown_more_info_desc">このカードの Metrodroid のサポートの詳細については、ここをタップしてください。</string>
 
 
-    <string name="lawyercats">Farebot M と作者は、公共交通機関と何の関連もありません。</string>
+    <string name="lawyercats">Metrodroid と作者は、公共交通機関と何の関連もありません。</string>
 </resources>
