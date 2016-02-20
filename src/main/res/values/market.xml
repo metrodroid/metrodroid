@@ -37,7 +37,7 @@ Some agencies have encrypted cards. You will need to acquire encryption keys in 
 For more details about permissions required, please see the privacy policy.
     ]]></string>
 
-    <string name="market_changelog_2927"><![CDATA[
+    <string name="market_changelog_27"><![CDATA[
 Farebot M is now Metrodroid.
 
 * Implemented support for reading the card number from Myki (Melbourne, AU).
@@ -49,7 +49,7 @@ Farebot M is now Metrodroid.
 More details: https://github.com/micolous/metrodroid/wiki/Changelog
     ]]></string>
 
-    <string name="market_changelog_2926"><![CDATA[
+    <string name="market_changelog_26"><![CDATA[
 Happy new year!
 
 * Added basic support for Go card (Brisbane and South East Queensland, AU). Requires encryption keys (which are unique to each card) and device with Mifare Classic support. Limited stop support.
