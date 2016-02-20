@@ -1,6 +1,6 @@
 # Metrodroid
 
-[![Translation status](https://hosted.weblate.org/widgets/farebot-m/-/svg-badge.svg)][22]
+[![Translation status](https://hosted.weblate.org/projects/metrodroid/)][22]
 
 _Formerly known as Farebot M._
 
@@ -104,4 +104,4 @@ This software and it's authors are not associated with any public transit agency
 [19]: http://www.manlyfastferry.com.au/
 [20]: http://translink.com.au/tickets-and-fares/go-card
 [21]: http://ptv.vic.gov.au/
-[22]: https://hosted.weblate.org/engage/farebot-m/
+[22]: https://hosted.weblate.org/engage/metrodroid/
