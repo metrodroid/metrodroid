@@ -75,7 +75,7 @@ ul li:last-child {
   margin-bottom: 0.5em;
 }
 .modal-screenshot .modal-dialog {
-  width: 300px;
+  width: 400px;
 }
 .modal-screenshot .modal-body {
   text-align: center;
@@ -84,6 +84,9 @@ ul li:last-child {
 .modal-screenshot .modal-content {
   border-radius: 0;
   border: 0;
+}
+.modal-screenshot .modal-body img {
+  max-width: 400px;
 }
 code {
   color: #3069ac;
