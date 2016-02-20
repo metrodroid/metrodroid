@@ -1,8 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <!-- Play Store specific strings -->
+
+    <!-- Translators: 30 character limit -->
+    <string name="market_title">Metrodroid (was Farebot M)</string>
+
+    <!-- Translators: 80 character limit -->
     <string name="market_short_desc">Metrodroid can read information from some public transport NFC smartcards.</string>
 
+    <!-- Translators: 4000 character limit -->
     <string name="market_long_desc"><![CDATA[
 Metrodroid can read information from some public transport NFC smartcards. It was formerly known as Farebot M.
 
@@ -39,6 +45,7 @@ For more details about permissions required, please see the privacy policy.
 This software is licensed under the GNU GPLv3+, source code is available at https://github.com/micolous/metrodroid/
     ]]></string>
 
+    <!-- Translators: 500 character limit -->
     <string name="market_changelog_27"><![CDATA[
 Farebot M is now Metrodroid.
 
@@ -51,6 +58,7 @@ Farebot M is now Metrodroid.
 More details: https://github.com/micolous/metrodroid/wiki/Changelog
     ]]></string>
 
+    <!-- Translators: 500 character limit -->
     <string name="market_changelog_26"><![CDATA[
 Happy new year!
 
