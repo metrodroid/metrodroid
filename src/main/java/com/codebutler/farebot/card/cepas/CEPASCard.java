@@ -1,10 +1,8 @@
 /*
  * CEPASCard.java
  *
- * Copyright (C) 2011 Eric Butler
- *
- * Authors:
- * Sean Cross <sean@chumby.com>
+ * Copyright 2011 Sean Cross <sean@chumby.com>
+ * Copyright 2013-2014 Eric Butler <eric@codebutler.com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by

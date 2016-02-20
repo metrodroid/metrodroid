@@ -4,7 +4,7 @@
  * Authors:
  * Eric Butler <eric@codebutler.com>
  *
- * Based on code from http://code.google.com/p/nfc-felica/
+ * Based on code from https://github.com/Kazzz/nfc-felica
  * nfc-felica by Kazzz. See project URL for complete author information.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");

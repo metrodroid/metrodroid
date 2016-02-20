@@ -1,11 +1,8 @@
 /*
  * OVChipIndex.java
  *
- * Copyright (C) 2012 Eric Butler
- *
- * Authors:
- * Wilbert Duijvenvoorde <w.a.n.duijvenvoorde@gmail.com>
- * Eric Butler <eric@codebutler.com>
+ * Copyright 2012 Wilbert Duijvenvoorde <w.a.n.duijvenvoorde@gmail.com>
+ * Copyright 2012 Eric Butler <eric@codebutler.com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by

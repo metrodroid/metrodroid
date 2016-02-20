@@ -1,10 +1,7 @@
 /*
  * HSLTransitData.java
  *
- * Copyright (C) 2013 Eric Butler
- *
- * Authors:
- * Lauri Andler <lauri.andler@gmail.com>
+ * Copyright 2013 Lauri Andler <lauri.andler@gmail.com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by

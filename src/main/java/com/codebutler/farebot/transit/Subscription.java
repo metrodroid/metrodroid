@@ -1,10 +1,7 @@
 /*
  * Subscription.java
  *
- * Copyright (C) 2011 Eric Butler
- *
- * Authors:
- * Wilbert Duijvenvoorde <w.a.n.duijvenvoorde@gmail.com>
+ * Copyright (C) 2011 Wilbert Duijvenvoorde <w.a.n.duijvenvoorde@gmail.com>
  *
  * Based on code from http://http://www.huuf.info/OV/
  * by Huuf. See project URL for complete author information.

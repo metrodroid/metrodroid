@@ -1,10 +1,7 @@
 /*
  * MRTStation.java
  *
- * Copyright (C) 2011 Eric Butler
- *
- * Authors:
- * Sean Cross <sean@chumby.com>
+ * Copyright (C) 2011 Sean Cross <sean@chumby.com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by

@@ -1,8 +1,9 @@
 /*
- * DesfireFile.java
+ * CEPASPurse.java
  *
- * Copyright (C) 2011 Eric Butler
- *
+ * Copyright 2011 Sean Cross <sean@chumby.com>
+ * Copyright 2011-2014 Eric Butler <eric@codebutler.com>
+ * *
  * Authors:
  * Sean Cross <sean@chumby.com>
  *

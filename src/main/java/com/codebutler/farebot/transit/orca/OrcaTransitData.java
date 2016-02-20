@@ -1,10 +1,8 @@
 /*
  * OrcaTransitData.java
  *
- * Copyright (C) 2011 Eric Butler
- *
- * Authors:
- * Eric Butler <eric@codebutler.com>
+ * Copyright 2011-2013 Eric Butler <eric@codebutler.com>
+ * Copyright 2015 Sean CyberKitsune McClenaghan
  *
  * Thanks to:
  * Karl Koscher <supersat@cs.washington.edu>

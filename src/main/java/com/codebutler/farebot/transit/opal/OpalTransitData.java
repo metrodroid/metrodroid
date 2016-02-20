@@ -1,3 +1,21 @@
+/*
+ * OpalTransitData.java
+ *
+ * Copyright 2015 Michael Farrell <micolous+git@gmail.com>
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
 package com.codebutler.farebot.transit.opal;
 
 import android.os.Parcel;
@@ -28,7 +46,9 @@ import java.util.Locale;
 /**
  * Transit data type for Opal (Sydney, AU).
  *
- * Documentation of format: https://github.com/codebutler/farebot/wiki/Opal
+ * This uses the publicly-readable file on the card (7) in order to get the data.
+ *
+ * Documentation of format: https://github.com/micolous/farebot/wiki/Opal
  */
 public class OpalTransitData extends TransitData {
     private int    mSerialNumber;
@@ -186,6 +206,4 @@ public class OpalTransitData extends TransitData {
     @Override public Trip[] getTrips () {
         return null;
     }
-
-
 }

@@ -1,10 +1,8 @@
 /*
  * SupportedCardsActivity.java
  *
- * Copyright (C) 2011 Eric Butler
- *
- * Authors:
- * Eric Butler <eric@codebutler.com>
+ * Copyright 2011 Eric Butler
+ * Copyright 2015-2016 Michael Farrell
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -49,6 +47,9 @@ import com.codebutler.farebot.util.Utils;
 
 import java.util.ArrayList;
 
+/**
+ * @author Eric Butler, Michael Farrell
+ */
 public class SupportedCardsActivity extends Activity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

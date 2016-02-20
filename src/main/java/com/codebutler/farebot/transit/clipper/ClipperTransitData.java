@@ -1,10 +1,8 @@
 /*
  * ClipperTransitData.java
  *
- * Copyright (C) 2011 Eric Butler
- *
- * Authors:
- * Eric Butler <eric@codebutler.com>
+ * Copyright 2011 "an anonymous contributor"
+ * Copyright 2011-2014 Eric Butler <eric@codebutler.com>
  *
  * Thanks to:
  * An anonymous contributor for reverse engineering Clipper data and providing

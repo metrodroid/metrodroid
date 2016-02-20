@@ -1,10 +1,8 @@
 /*
  * CardBalanceFragment.java
  *
- * Copyright (C) 2012 Eric Butler
- *
- * Authors:
- * Eric Butler <eric@codebutler.com>
+ * Copyright 2012-2014 Eric Butler <eric@codebutler.com>
+ * Copyright 2015 Michael Farrell <micolous+git@gmail.com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by

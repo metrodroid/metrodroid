@@ -26,7 +26,9 @@
     xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
 
     <string name="app_name">Metrodroid</string>
-    <string name="copyright">Copyright 2015 – 2016 Michael Farrell\nCopyright 2011 – 2013 Eric Butler</string>
+
+    <!-- Additional names now noted in the license screen -->
+    <string name="copyright">Copyright 2015 – 2016 Michael Farrell/string>
 
     <!-- Play Store specific strings -->
 

@@ -1,28 +1,42 @@
 /*
  * ExpandableListFragment.java
+ * From: http://stackoverflow.com/a/6193434
+ * Also from: https://gist.github.com/mosabua/1316903
  *
- * Copyright (C) 2012 Eric Butler
+ * This class is a whole barrel of fun from a licensing perspective.
  *
- * Authors:
- * Eric Butler <eric@codebutler.com>
+ * StackOverflow code posted prior to 2016-02-01 is licensed under
+ * CC-By-SA. Source: http://meta.stackexchange.com/q/271080
  *
- * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
+ * This code was posted 2011-05-31.
  *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
+ * However, this is based on ListFragment and ExpandableListActivity, which is are core Android
+ * components licensed under the Apache Software License v2:
+ * https://android.googlesource.com/platform/frameworks/base/+/master/core/java/android/app/ExpandableListActivity.java
  *
- * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * There are additional versions of this code with modifications floating around which are generally
+ * also licensed under the Apache Software License v2.
+ *
+ * As a result, I believe the work *should* be licensed under the Apache Software License v2, which
+ * permits it to be included in GPLv3 projects.
+ *
+ * Copyright 2011 The Android Open Source Project
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *
  */
 
 package com.codebutler.farebot.fragment;
-
-// From http://stackoverflow.com/questions/6051050/expandablelistfragment-with-loadermanager-for-compatibility-package
 
 import android.app.Fragment;
 import android.os.Bundle;
