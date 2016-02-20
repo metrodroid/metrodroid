@@ -25,6 +25,7 @@ View your remaining balance, recent trips, and other information from contactles
 * [Michael](https://github.com/micolous/) (Opal, Manly Fast Ferry, Go card, Myki)
 * [Rob O'Regan](http://www.robx1.net/nswtkt/private/manlyff/manlyff.htm) (Manly Fast Ferry card image)
 * [The Noun Project][15] (Various icons)
+* [naofum](https://github.com/naofum) (Japanese translations)
 
 ## Supported Protocols
 
