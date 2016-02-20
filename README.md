@@ -1,6 +1,6 @@
 # Metrodroid
 
-[![Translation status](https://hosted.weblate.org/projects/metrodroid/)][22]
+[![Translation status](https://hosted.weblate.org/widgets/metrodroid/-/svg-badge.svg)][22]
 
 _Formerly known as Farebot M._
 
