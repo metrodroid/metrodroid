@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Play Store specific strings -->
+    <string name="market_short_desc">Metrodroid can read information from some public transport NFC smartcards.</string>
+
+    <string name="market_long_desc"><![CDATA[
+Farebot M can read information from some public transport NFC smartcards.
+
+This is a fork of Eric Butler's Farebot project, with support for additional cards and bug fixes.
+
+Supported cards:
+- Bilhete Único - São Paulo, Brazil [1] [2]
+- Clipper - San Francisco, CA, USA
+- EZ-Link - Singapore [3]
+- Go card - Brisbane and South East Queensland, Australia [0] [1] [2]
+- Manly Fast Ferry - Sydney, Australia [0] [1] [2]
+- Matkakortti, HSL - Finland
+- Myki - Victoria, Australia [0] [4]
+- NETS Flashpay - Singapore
+- Opal - Sydney, Australia [0]
+- ORCA - Seattle, WA, USA
+- OV-chipkaart - Netherlands [1] [2]
+- Suica, IOCOA, PASMO, Edy - Japan
+
+[0]: New in Metrodroid.
+[1]: Not compatible with all devices (Mifare Classic).
+[2]: Encryption keys are required to read this card.
+[3]: Not compatible with all devices (CEPAS).
+[4]: Only the card number can be read.
+
+You require a NFC-compatible phone in order to read cards.
+
+You need a NXP NFC chipset in your phone in order to read MIFARE Classic cards.  Some phones have NFC chips from other manufacturers, which do not read Mifare Classic cards (eg: Nexus 4, Nexus 5, Samsung Galaxy S4). Check the About screen in the app in order to determine if your phone supports MIFARE Classic.
+
+Some agencies have encrypted cards. You will need to acquire encryption keys in order to read them. These are generally unique to each card. Sorry, I can't help you with this.
+
+For more details about permissions required, please see the privacy policy.
+    ]]></string>
+
+    <string name="market_changelog_2927"><![CDATA[
+Farebot M is now Metrodroid.
+
+* Implemented support for reading the card number from Myki (Melbourne, AU).
+* Last digit of Go Card (Brisbane, AU) is now read.
+* Improved handling of Mifare DESFire cards, including adding support for value files.
+* Fixed support for NETS Flashpay (Singapore) cards which are also credit cards (patch by @chrisplus).
+* Japanese translation improved greatly (thanks to @naofum).
+
+More details: https://github.com/micolous/metrodroid/wiki/Changelog
+    ]]></string>
+
+    <string name="market_changelog_2926"><![CDATA[
+Happy new year!
+
+* Added basic support for Go card (Brisbane and South East Queensland, AU). Requires encryption keys (which are unique to each card) and device with Mifare Classic support. Limited stop support.
+* Added card identification support for Adelaide Metrocard, AT HOP and Myki.
+* Fixed importing individual cards from XML files.
+* Various UI improvements.
+* Minor bug fixes.
+
+More details: https://github.com/micolous/metrodroid/wiki/Changelog
+    ]]></string>
+
+
+</resources>

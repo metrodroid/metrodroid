@@ -28,11 +28,7 @@
     <string name="app_name">Metrodroid</string>
 
     <!-- Additional names now noted in the license screen -->
-    <string name="copyright">Copyright 2015 – 2016 Michael Farrell/string>
-
-    <!-- Play Store specific strings -->
-
-
+    <string name="copyright">Copyright 2015 – 2016 Michael Farrell</string>
 
     <!-- General application strings -->
     <string name="license">Licenses</string>
