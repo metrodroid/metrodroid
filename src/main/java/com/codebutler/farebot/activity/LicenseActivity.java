@@ -33,6 +33,11 @@ public class LicenseActivity extends Activity {
             "\n" +
             "Based on FareBot\n" +
             "Copyright 2011-2014 Eric Butler <eric@codebutler.com> and contributors\n" +
+            "Copyright 2011 \"an anonymous contributor\", Chris Hundt, David Hoover, Devin Carraway, Sean Cross\n" +
+            "Copyright 2012 Jason Hsu, Sebastian Oliva, Shayan Guha, Toby Bonang, Victor Heng\n" +
+            "Copyright 2012-2013 Wilbert Duijvenvoorde\n" +
+            "Copyright 2013 Lauri Andler, Marcelo Liberato, Mike Castleman\n" +
+            "Copyright 2014 Bao-Long Nguyen-Trong, Kramer Campbell\n" +
             "\n" +
             "This program is free software: you can redistribute it and/or modify " +
             "it under the terms of the GNU General Public License as published by " +
@@ -88,6 +93,21 @@ public class LicenseActivity extends Activity {
             "See the License for the specific language governing permissions and " +
             "limitations under the License.\n\n\n";
 
+    final static String mAOSP = "This software contains portions of the Android Open Source Project\n" +
+            "Copyright 2006, 2011 The Android Open Source Project\n" +
+            "\n" +
+            "Licensed under the Apache License, Version 2.0 (the \"License\"); " +
+            "you may not use this file except in compliance with the License. " +
+            "You may obtain a copy of the License at\n" +
+            "\n" +
+            "   http://www.apache.org/licenses/LICENSE-2.0\n" +
+            "\n" +
+            "Unless required by applicable law or agreed to in writing, software " +
+            "distributed under the License is distributed on an \"AS IS\" BASIS, " +
+            "WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. " +
+            "See the License for the specific language governing permissions and " +
+            "limitations under the License.\n\n\n";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -104,6 +124,8 @@ public class LicenseActivity extends Activity {
 
         // TODO: Read this from third_party/nfc-felica-lib/COPYING
         lblLicenseText.append(mNfcFelicaLib);
+
+        lblLicenseText.append(mAOSP);
     }
 
 
