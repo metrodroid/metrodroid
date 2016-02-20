@@ -212,4 +212,9 @@
 
 
     <string name="lawyercats">Metrodroid と作者は、公共交通機関と何の関連もありません。</string>
-</resources>
+<plurals name="block_count">
+	<item quantity="one">%d ブロック</item>
+	<item quantity="other"></item>
+</plurals>
+
+    </resources>
