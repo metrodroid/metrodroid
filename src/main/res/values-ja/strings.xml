@@ -83,10 +83,10 @@
     <string name="turn_on_nfc">カードのデータを読み込むためにはNFCを有効してください</string>
     <string name="wireless_settings">無線設定</string>
     <string name="report_error">エラー情報を送信する</string>
-    <string name="unknown_card_description">読み込んだカードが対応していません。データだけが表示されます</string>
+    <string name="unknown_card_description">読み込んだカードは Metrodroid で対応していません。データだけが表示されます。</string>
     <string name="report_error_privacy_title">個人情報の取扱いについて</string>
     <string name="report_error_privacy_message">カードに含まれるの全てのデータ（履歴を含む）が送信されます</string>
-    <string name="scanned_cards">スキャンしたカード</string>
+    <string name="scanned_cards">履歴</string>
     <string name="no_scanned_cards">カードがまだスキャンされていません。</string>
 
     <string name="location_tokyo">東京</string>
@@ -96,7 +96,7 @@
     <string name="license">ライセンス</string>
     <string name="title_activity_license">オープンソース ライセンス</string>
     <string name="locked_card">ロックされたカード</string>
-    <string name="fully_locked_desc">" このカードは鍵なしに自由に読み取りできる部分はありません。このカードに有効な鍵がインストールされていません。\n\n カードが現在 Farebot によってサポートされている場合、その鍵をインストールすると、このカードを動作させることができます。鍵の取得の詳細についてはオンライン ドキュメントを参照してください。\n\n お使いのカードが現在 Farebot によってサポートされていない場合、この鍵が壊れている場合を除き、いつか、このソフトウェアでサポートされる可能性はあります。\n\n 発行されたカードで、一部のレベルのオープン データ   アクセスを許可するために、市営交通機関に問い合わせてください。公共交通スマートカードのデータに、安全に限定された読み取りアクセスをすることは可能です。 "</string>
+    <string name="fully_locked_desc">" このカードは鍵なしに自由に読み取りできる部分はありません。このカードに有効な鍵がインストールされていません。\n\n カードが現在 Metrodroid によってサポートされている場合、その鍵をインストールすると、このカードを動作させることができます。鍵の取得の詳細についてはオンライン ドキュメントを参照してください。\n\n お使いのカードが現在 Metrodroid によってサポートされていない場合、この鍵が壊れている場合を除き、いつか、このソフトウェアでサポートされる可能性はあります。\n\n 発行されたカードで、一部のレベルのオープン データ   アクセスを許可するために、市営交通機関に問い合わせてください。公共交通スマートカードのデータに、安全に限定された読み取りアクセスをすることは可能です。 "</string>
     <string name="fully_locked_title">カードが完全にロックされています!</string>
     <string name="block_title_format">ブロック: %s</string>
     <string name="sector_title_format">セクター: 0x%s</string>
@@ -108,7 +108,7 @@
     <string name="unknown_format">不明 (%s)</string>
     <string name="keys_required">このカードを読み取るために、暗号化鍵が必要です。</string>
     <string name="load_keys">鍵をロード</string>
-    <string name="card_keys_not_supported">Farebot は、この種類のカードの鍵をサポートしません。</string>
+    <string name="card_keys_not_supported">Metrodroid は、この種類のカードの鍵をサポートしません。</string>
     <string name="add_key">鍵を追加</string>
     <string name="error">エラー</string>
     <string name="keys">鍵</string>
