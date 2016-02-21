@@ -41,10 +41,10 @@ View your remaining balance, recent trips, and other information from contactles
 * [EZ-Link][7] - Singapore (Not compatible with all devices)
 * [Go card][20] (Translink) - Brisbane and South East Queensland, Australia (requires encryption keys, not compatible with all devices, not all stations known)
 * [Manly Fast Ferry][19] - Sydney, Australia (requires encryption keys, not compatible with all devices)
-* [Myki][21] - Victoria, Australia (Only the card number can be read)
+* [Myki][21] - Melbourne (and surrounds), VIC, Australia (Only the card number can be read)
 * [Matkakortti][16], [HSL][17] - Finland
 * [NETS FlashPay](http://www.netsflashpay.com.sg/) - Singapore
-* [Opal][18] - Sydney, Australia
+* [Opal][18] - Sydney (and surrounds), NSW, Australia
 * [ORCA][0] - Seattle, WA, USA
 * [OV-chipkaart](http://www.ov-chipkaart.nl/) - Netherlands (Requires encryption keys, not compatible with all devices)
 * [Suica][9], [ICOCA][10], [PASMO][11], [Edy][12] - Japan

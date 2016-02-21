@@ -19,9 +19,9 @@ Supported cards:
 - Clipper - San Francisco, CA, USA
 - EZ-Link - Singapore [3]
 - Go card - Brisbane and South East Queensland, Australia [0] [1] [2]
-- Manly Fast Ferry - Sydney, Australia [0] [1] [2]
+- Manly Fast Ferry - Sydney (and surrounds), NSW, Australia [0] [1] [2]
 - Matkakortti, HSL - Finland
-- Myki - Victoria, Australia [0] [4]
+- Myki - Melbourne (and surrounds), VIC, Australia [0] [4]
 - NETS Flashpay - Singapore
 - Opal - Sydney, Australia [0]
 - ORCA - Seattle, WA, USA
@@ -49,11 +49,12 @@ This software is licensed under the GNU GPLv3+, source code is available at http
     <string name="market_changelog_27"><![CDATA[
 Farebot M is now Metrodroid.
 
-* Implemented support for reading the card number from Myki (Melbourne, AU).
+* Implemented support for reading the card number from Myki (VIC, AU).
 * Last digit of Go Card (Brisbane, AU) is now read.
 * Improved handling of Mifare DESFire cards, including adding support for value files.
 * Fixed support for NETS Flashpay (Singapore) cards which are also credit cards (patch by @chrisplus).
 * Japanese translation improved greatly (thanks to @naofum).
+* Trips and Refills are now combined into "History" for all cards.
 
 More details: https://github.com/micolous/metrodroid/wiki/Changelog
     ]]></string>
