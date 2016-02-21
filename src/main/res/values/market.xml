@@ -51,7 +51,7 @@ Farebot M is now Metrodroid.
 
 * Implemented support for reading the card number from Myki (VIC, AU).
 * Last digit of Go Card (Brisbane, AU) is now read.
-* Improved handling of Mifare DESFire cards, including adding support for value files.
+* Improved handling of Mifare DESFire cards.
 * Fixed support for NETS Flashpay (Singapore) cards which are also credit cards (patch by @chrisplus).
 * Japanese translation improved greatly (thanks to @naofum).
 * Trips and Refills are now combined into "History" for all cards.
