@@ -173,7 +173,7 @@ public class CardInfoActivity extends Activity {
                     findViewById(R.id.need_stations_button).setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
-                            startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://micolous.github.io/farebot/unknown_stops")));
+                            startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://micolous.github.io/metrodroid/unknown_stops")));
                         }
                     });
                 }

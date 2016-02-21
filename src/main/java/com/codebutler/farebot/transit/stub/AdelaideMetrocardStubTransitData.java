@@ -25,7 +25,7 @@ import com.codebutler.farebot.transit.TransitIdentity;
 /**
  * Stub implementation for Adelaide Metrocard (AU).
  *
- * https://github.com/micolous/farebot/wiki/Metrocard-%28Adelaide%29
+ * https://github.com/micolous/metrodroid/wiki/Metrocard-%28Adelaide%29
  */
 public class AdelaideMetrocardStubTransitData extends StubTransitData {
     public AdelaideMetrocardStubTransitData(Card card) {}

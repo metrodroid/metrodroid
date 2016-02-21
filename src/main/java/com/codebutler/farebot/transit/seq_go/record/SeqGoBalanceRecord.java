@@ -22,7 +22,7 @@ import com.codebutler.farebot.util.Utils;
 
 /**
  * Represents balance records on Go card
- * https://github.com/micolous/farebot/wiki/Go-(SEQ)#balance-record-type
+ * https://github.com/micolous/metrodroid/wiki/Go-(SEQ)#balance-record-type
  */
 public class SeqGoBalanceRecord extends SeqGoRecord implements Comparable<SeqGoBalanceRecord> {
 

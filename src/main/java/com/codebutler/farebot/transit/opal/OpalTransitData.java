@@ -48,7 +48,7 @@ import java.util.Locale;
  *
  * This uses the publicly-readable file on the card (7) in order to get the data.
  *
- * Documentation of format: https://github.com/micolous/farebot/wiki/Opal
+ * Documentation of format: https://github.com/micolous/metrodroid/wiki/Opal
  */
 public class OpalTransitData extends TransitData {
     private int    mSerialNumber;

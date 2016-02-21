@@ -27,7 +27,7 @@
  * http://sourceforge.jp/projects/felicalib/wiki/suica
  *
  * Some of these resources have been translated into English at:
- * https://github.com/codebutler/farebot/wiki/Suica
+ * https://github.com/micolous/metrodroid/wiki/Suica
  */
 
 package com.codebutler.farebot.transit.suica;

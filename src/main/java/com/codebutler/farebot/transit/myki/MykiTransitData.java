@@ -34,7 +34,7 @@ import com.codebutler.farebot.util.Utils;
  * This is a very limited implementation of reading Myki, because most of the data is stored in
  * locked files.
  *
- * Documentation of format: https://github.com/micolous/farebot/wiki/Myki
+ * Documentation of format: https://github.com/micolous/metrodroid/wiki/Myki
  */
 public class MykiTransitData extends StubTransitData {
     public static final String NAME = "Myki";
@@ -96,6 +96,6 @@ public class MykiTransitData extends StubTransitData {
 
     @Override
     public Uri getMoreInfoPage() {
-        return Uri.parse("https://micolous.github.io/farebot/myki");
+        return Uri.parse("https://micolous.github.io/metrodroid/myki");
     }
 }

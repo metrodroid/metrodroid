@@ -25,7 +25,7 @@ import com.codebutler.farebot.transit.TransitIdentity;
 /**
  * Stub implementation for AT HOP (Auckland, NZ).
  *
- * https://github.com/micolous/farebot/wiki/AT-HOP
+ * https://github.com/micolous/metrodroid/wiki/AT-HOP
  */
 public class AtHopStubTransitData extends StubTransitData {
     public AtHopStubTransitData(Card card) {}

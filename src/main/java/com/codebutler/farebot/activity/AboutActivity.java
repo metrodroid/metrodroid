@@ -49,7 +49,7 @@ public class AboutActivity extends Activity {
     }
 
     public void onWebsiteClick(View view) {
-        Uri.Builder b = Uri.parse("https://micolous.github.io/farebot/").buildUpon();
+        Uri.Builder b = Uri.parse("https://micolous.github.io/metrodroid/").buildUpon();
         int version = -1;
         try {
             version = getPackageManager().getPackageInfo(getPackageName(), 0).versionCode;

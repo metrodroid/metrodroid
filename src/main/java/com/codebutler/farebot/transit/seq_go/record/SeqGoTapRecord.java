@@ -31,7 +31,7 @@ import java.util.GregorianCalendar;
 
 /**
  * Tap record type
- * https://github.com/micolous/farebot/wiki/Go-(SEQ)#tap-record-type
+ * https://github.com/micolous/metrodroid/wiki/Go-(SEQ)#tap-record-type
  */
 public class SeqGoTapRecord extends SeqGoRecord implements Parcelable, Comparable<SeqGoTapRecord> {
     private GregorianCalendar mTimestamp;

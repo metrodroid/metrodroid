@@ -56,7 +56,7 @@ import java.util.Locale;
  * Note: This is a distinct private company who run their own ferry service to Manly, separate to
  * Transport for NSW's Manly Ferry service.
  *
- * Documentation of format: https://github.com/micolous/farebot/wiki/Manly-Fast-Ferry
+ * Documentation of format: https://github.com/micolous/metrodroid/wiki/Manly-Fast-Ferry
  */
 public class ManlyFastFerryTransitData extends TransitData {
     private String            mSerialNumber;

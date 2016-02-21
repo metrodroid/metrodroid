@@ -30,7 +30,7 @@ import java.util.GregorianCalendar;
 
 /**
  * Top-up record type
- * https://github.com/micolous/farebot/wiki/Go-(SEQ)#top-up-record-type
+ * https://github.com/micolous/metrodroid/wiki/Go-(SEQ)#top-up-record-type
  */
 public class SeqGoTopupRecord extends SeqGoRecord implements Parcelable {
     private GregorianCalendar mTimestamp;

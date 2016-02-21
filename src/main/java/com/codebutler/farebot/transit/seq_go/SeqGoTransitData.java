@@ -47,7 +47,7 @@ import com.codebutler.farebot.util.Utils;
 /**
  * Transit data type for Go card (Brisbane / South-East Queensland, AU), used by Translink.
  *
- * Documentation of format: https://github.com/micolous/farebot/wiki/Go-%28SEQ%29
+ * Documentation of format: https://github.com/micolous/metrodroid/wiki/Go-%28SEQ%29
  *
  * @author Michael Farrell
  */
