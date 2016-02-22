@@ -1,4 +1,8 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version='1.0' encoding='UTF-8'?>
 <resources>
 
-</resources>
+<string name="market_title">Metrodroid (旧 Farebot M)</string>
+
+    <string name="market_short_desc">Metrodroid は公共交通機関の NFC スマートカードから情報を読み取ることができます。</string>
+
+    </resources>
