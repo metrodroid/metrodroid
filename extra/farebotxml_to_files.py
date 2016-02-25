@@ -76,6 +76,24 @@ def zipify(input_xml, output_zipf):
 						continue
 					
 					output_zip.writestr(join(card_dir, application_id, file_id), str(f.find('data')).decode('base64'))
+					
+		systems = card.find('systems')
+		if systems is not None:
+			# FeliCa
+			for system in systems.findall('system'):
+				system_id = system.get('code')
+				for service in system.find('services').findall('service'):
+					service_id = service.get('code')
+					last_addr = -1
+					data = ''
+					for block in service.find('blocks').findall('block'):
+						addr = int(block.get('address'))
+						assert last_addr < addr, 'blocks not in order'
+						last_addr = addr
+
+						data += str(block).decode('base64')
+
+					output_zip.writestr(join(card_dir, system_id, service_id), data)
 
 	output_zip.close()
 	output_zipf.close()
