@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version='1.0' encoding='UTF-8'?>
 <resources>
     <!-- Play Store specific strings -->
 
@@ -9,68 +9,13 @@
     <string name="market_short_desc">Metrodroid can read information from some public transport NFC smartcards.</string>
 
     <!-- Translators: 4000 character limit -->
-    <string name="market_long_desc"><![CDATA[
-Metrodroid can read information from some public transport NFC smartcards. It was formerly known as Farebot M.
-
-This is a fork of Eric Butler\'s Farebot project, with support for additional cards and bug fixes.
-
-Supported cards:
-- Bilhete Único - São Paulo, Brazil [1] [2]
-- Clipper - San Francisco, CA, USA
-- EZ-Link - Singapore [3]
-- Go card - Brisbane and South East Queensland, Australia [0] [1] [2]
-- Manly Fast Ferry - Sydney (and surrounds), NSW, Australia [0] [1] [2]
-- Matkakortti, HSL - Finland
-- Myki - Melbourne (and surrounds), VIC, Australia [0] [4]
-- NETS Flashpay - Singapore
-- Opal - Sydney, Australia [0]
-- ORCA - Seattle, WA, USA
-- OV-chipkaart - Netherlands [1] [2]
-- Suica, IOCOA, PASMO, Edy - Japan
-
-[0]: New in Metrodroid.
-[1]: Not compatible with all devices (Mifare Classic).
-[2]: Encryption keys are required to read this card.
-[3]: Not compatible with all devices (CEPAS).
-[4]: Only the card number can be read.
-
-You require a NFC-compatible phone in order to read cards.
-
-You need a NXP NFC chipset in your phone in order to read MIFARE Classic cards.  Some phones have NFC chips from other manufacturers, which do not read Mifare Classic cards (eg: Nexus 4, Nexus 5, Samsung Galaxy S4). Check the About screen in the app in order to determine if your phone supports MIFARE Classic.
-
-Some agencies have encrypted cards. You will need to acquire encryption keys in order to read them. These are generally unique to each card. Sorry, I can\'t help you with this.
-
-For more details about permissions required, please see the privacy policy.
-
-This software is licensed under the GNU GPLv3+, source code is available at https://github.com/micolous/metrodroid/
-    ]]></string>
+    <string name="market_long_desc">"Metrodroid can read information from some public transport NFC smartcards. It was formerly known as Farebot M.\n\nThis is a fork of Eric Butler\\\'s Farebot project, with support for additional cards and bug fixes.\n\nSupported cards:\n- Bilhete Único - São Paulo, Brazil [1] [2]\n- Clipper - San Francisco, CA, USA\n- EZ-Link - Singapore [3]\n- Go card - Brisbane and South East Queensland, Australia [0] [1] [2]\n- Manly Fast Ferry - Sydney (and surrounds), NSW, Australia [0] [1] [2]\n- Matkakortti, HSL - Finland\n- Myki - Melbourne (and surrounds), VIC, Australia [0] [4]\n- NETS Flashpay - Singapore\n- Opal - Sydney, Australia [0]\n- ORCA - Seattle, WA, USA\n- OV-chipkaart - Netherlands [1] [2]\n- Suica, IOCOA, PASMO, Edy - Japan\n\n[0]: New in Metrodroid.\n[1]: Not compatible with all devices (Mifare Classic).\n[2]: Encryption keys are required to read this card.\n[3]: Not compatible with all devices (CEPAS).\n[4]: Only the card number can be read.\n\nYou require a NFC-compatible phone in order to read cards.\n\nYou need a NXP NFC chipset in your phone in order to read MIFARE Classic cards.  Some phones have NFC chips from other manufacturers, which do not read Mifare Classic cards (eg: Nexus 4, Nexus 5, Samsung Galaxy S4). Check the About screen in the app in order to determine if your phone supports MIFARE Classic.\n\nSome agencies have encrypted cards. You will need to acquire encryption keys in order to read them. These are generally unique to each card. Sorry, I can\\\'t help you with this.\n\nFor more details about permissions required, please see the privacy policy.\n\nThis software is licensed under the GNU GPLv3+, source code is available at https://github.com/micolous/metrodroid/"</string>
 
     <!-- Translators: 500 character limit -->
-    <string name="market_changelog_27"><![CDATA[
-Farebot M is now Metrodroid.
-
-* Implemented support for reading the card number from Myki (VIC, AU).
-* Last digit of Go Card (Brisbane, AU) is now read.
-* Improved handling of Mifare DESFire cards.
-* Fixed support for NETS Flashpay (Singapore) cards which are also credit cards (patch by @chrisplus).
-* Japanese translation improved greatly (thanks to @naofum).
-* Trips and Refills are now combined into "History" for all cards.
-
-More details: https://github.com/micolous/metrodroid/wiki/Changelog
-    ]]></string>
+    <string name="market_changelog_27">Farebot M is now Metrodroid.\n\n* Implemented support for reading the card number from Myki (VIC, AU).\n* Last digit of Go Card (Brisbane, AU) is now read.\n* Improved handling of Mifare DESFire cards.\n* Fixed support for NETS Flashpay (Singapore) cards which are also credit cards (patch by @chrisplus).\n* Japanese translation improved greatly (thanks to @naofum).\n* Trips and Refills are now combined into \"History\" for all cards.\n\nMore details: https://github.com/micolous/metrodroid/wiki/Changelog</string>
 
     <!-- Translators: 500 character limit -->
-    <string name="market_changelog_26"><![CDATA[
-Happy new year!
-
-* Added basic support for Go card (Brisbane and South East Queensland, AU). Requires encryption keys (which are unique to each card) and device with Mifare Classic support. Limited stop support.
-* Added card identification support for Adelaide Metrocard, AT HOP and Myki.
-* Fixed importing individual cards from XML files.
-* Various UI improvements.
-* Minor bug fixes.
-
-More details: https://github.com/micolous/metrodroid/wiki/Changelog
-    ]]></string>
+    <string name="market_changelog_26">Happy new year!\n\n* Added basic support for Go card (Brisbane and South East Queensland, AU). Requires encryption keys (which are unique to each card) and device with Mifare Classic support. Limited stop support.\n* Added card identification support for Adelaide Metrocard, AT HOP and Myki.\n* Fixed importing individual cards from XML files.\n* Various UI improvements.\n* Minor bug fixes.\n\nMore details: https://github.com/micolous/metrodroid/wiki/Changelog</string>
 
 
 </resources>
