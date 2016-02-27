@@ -217,4 +217,5 @@
 	<item quantity="other"/>
 </plurals>
 
+    <string name="page_title_format">ページ: 0x%s</string>
     </resources>
