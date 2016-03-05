@@ -14,7 +14,7 @@ View your remaining balance, recent trips, and other information from contactles
 
 * [Eric Butler][5] (Farebot)
 * [Karl Koscher][3] (ORCA)
-* [Sean Cross][4] (CEPES/EZ-Link)
+* [Sean Cross][4] (CEPAS/EZ-Link)
 * Anonymous Contributor (Clipper)
 * [nfc-felica][13] and [IC SFCard Fan][14] projects (Suica)
 * [Wilbert Duijvenvoorde](https://github.com/wandcode) (MIFARE Classic/OV-chipkaart)
@@ -28,10 +28,11 @@ View your remaining balance, recent trips, and other information from contactles
 
 ## Supported Protocols
 
-* [MIFARE DESFire][6]
 * [CEPAS][2] (Not compatible with all devices)
 * [FeliCa][8]
-* [MIFARE Classic](http://en.wikipedia.org/wiki/MIFARE#MIFARE_Classic) (Not compatible with all devices)
+* [MIFARE Classic][23] (Not compatible with all devices)
+* [MIFARE DESFire][6]
+* [MIFARE Ultralight][24] (Not compatible with all devices)
 
 ## Supported Cards
 
@@ -83,17 +84,17 @@ This software and it's authors are not associated with any public transit agency
 
 [0]: http://www.orcacard.com/
 [1]: https://www.clippercard.com/
-[2]: http://en.wikipedia.org/wiki/CEPAS
+[2]: https://en.wikipedia.org/wiki/CEPAS
 [3]: https://twitter.com/#!/supersat
 [4]: https://twitter.com/#!/xobs
 [5]: https://twitter.com/#!/codebutler
-[6]: http://en.wikipedia.org/wiki/MIFARE#MIFARE_DESFire
-[7]: http://www.ezlink.com.sg/index.php
-[8]: http://en.wikipedia.org/wiki/FeliCa
-[9]: http://en.wikipedia.org/wiki/Suica
-[10]: http://en.wikipedia.org/wiki/ICOCA
-[11]: http://en.wikipedia.org/wiki/PASMO
-[12]: http://en.wikipedia.org/wiki/Edy
+[6]: https://en.wikipedia.org/wiki/MIFARE#MIFARE_DESFire
+[7]: http://www.ezlink.com.sg/
+[8]: https://en.wikipedia.org/wiki/FeliCa
+[9]: https://en.wikipedia.org/wiki/Suica
+[10]: https://en.wikipedia.org/wiki/ICOCA
+[11]: https://en.wikipedia.org/wiki/PASMO
+[12]: https://en.wikipedia.org/wiki/Edy
 [13]: http://code.google.com/p/nfc-felica/
 [14]: http://www014.upp.so-net.ne.jp/SFCardFan/
 [15]: http://www.thenounproject.com/
@@ -104,3 +105,5 @@ This software and it's authors are not associated with any public transit agency
 [20]: http://translink.com.au/tickets-and-fares/go-card
 [21]: http://ptv.vic.gov.au/
 [22]: https://hosted.weblate.org/engage/metrodroid/
+[23]: https://en.wikipedia.org/wiki/MIFARE#MIFARE_Classic
+[24]: https://en.wikipedia.org/wiki/MIFARE#MIFARE_Ultralight_and_MIFARE_Ultralight_EV1
