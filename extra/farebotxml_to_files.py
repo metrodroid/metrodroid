@@ -63,6 +63,7 @@ def zipify(input_xml, output_zipf):
 					# Lets pull some blocks!
 					assert block.get('type') == 'data'
 					output_zip.writestr(join(card_dir, sector_id, block.get('index')), str(block.find('data')).decode('base64'))
+			continue
 
 		applications = card.find('applications')
 		if applications is not None:
@@ -76,6 +77,7 @@ def zipify(input_xml, output_zipf):
 						continue
 					
 					output_zip.writestr(join(card_dir, application_id, file_id), str(f.find('data')).decode('base64'))
+			continue
 					
 		systems = card.find('systems')
 		if systems is not None:
@@ -94,6 +96,17 @@ def zipify(input_xml, output_zipf):
 						data += str(block).decode('base64')
 
 					output_zip.writestr(join(card_dir, system_id, service_id), data)
+			continue
+
+		pages = card.find('pages')
+		if pages is not None:
+			# Mifare Ultralight
+			for page in pages.findall('page'):
+				page_id = page.get('index')
+				data = str(page.find('data')).decode('base64')
+				output_zip.writestr(join(card_dir, page_id), data)
+			
+			continue
 
 	output_zip.close()
 	output_zipf.close()
