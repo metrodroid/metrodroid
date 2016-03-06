@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <resources>
-    <string name="directions">カードをタップしてください</string>
+    <string name="directions">カードをタップしてください。</string>
     <string name="reading_card">カードを読み出しています</string>
     <string name="dont_move">カードを移動しないでください</string>
     <string name="advanced_info">高度情報</string>
@@ -15,8 +15,8 @@
     <string name="history">ヒストリー</string>
     <string name="balance">残高</string>
     <string name="refills">リフィル</string>
-    <string name="no_trip_data">旅行の情報は見つかりませんでした。このカードが使用しましたか</string>
-    <string name="no_refill_data">リフィルの情報がありません</string>
+    <string name="no_trip_data">履歴は見つかりませんでした。このカードを使用しましたか?</string>
+    <string name="no_refill_data">チャージ情報がありません。このカードは切符として使用しただけですか?</string>
     <string name="import_xml">インポート</string>
     <string name="import_clipboard">クリップボードからインポート</string>
     <string name="import_file">ファイルからインポート</string>
@@ -28,8 +28,8 @@
     <string name="accessibility">アクセシビリティ</string>
     <string name="speak_balance">残高を話す</string>
     <string name="speak_balance_summary">概念実証</string>
-    <string name="balance_speech">残高は%sです</string>
-    <string name="loading">ローディング</string>
+    <string name="balance_speech">残高 <xliff:g xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2" id="balance" example="$13.37">%s</xliff:g></string>
+    <string name="loading">ロード中…</string>
     <string name="scanned_at_format">%2$sに%1$sにスキャンされました</string>
     <string name="supported_cards">利用できるカード</string>
     <string name="pass_or_transfer">パス／乗り換え</string>
@@ -41,7 +41,7 @@
     <string name="felica_terminal_ticket">券売機</string>
     <string name="felica_terminal_deposit_quick_charge">入金機(クイックチャージ機)</string>
     <string name="felica_terminal_tvm_tokyo_monorail">券売機(東京モノレール)</string>
-    <string name="felica_terminal_tvm_etc">券売機等</string>
+    <string name="felica_terminal_tvm_etc">券売機、など。</string>
     <string name="felica_terminal_ticket_gate">改札機</string>
     <string name="felica_terminal_simple_ticket_gate">簡易改札機</string>
     <string name="felica_terminal_booth">窓口端末</string>
@@ -80,12 +80,12 @@
     <string name="felica_process_payment_thirdparty">精算 (他社精算)</string>
     <string name="felica_process_admission_thirdparty">精算 (他社入場精算)</string>
     <string name="nfc_off_error">NFCは無効です</string>
-    <string name="turn_on_nfc">カードのデータを読み込むためにはNFCを有効してください</string>
+    <string name="turn_on_nfc">カードのデータを読み込むためにNFCを有効してください。</string>
     <string name="wireless_settings">無線設定</string>
     <string name="report_error">エラー情報を送信する</string>
     <string name="unknown_card_description">読み込んだカードは Metrodroid で対応していません。データだけが表示されます。</string>
     <string name="report_error_privacy_title">個人情報の取扱いについて</string>
-    <string name="report_error_privacy_message">カードに含まれるの全てのデータ（履歴を含む）が送信されます</string>
+    <string name="report_error_privacy_message">カードに含まれるの全てのデータがエラーレポートに含まれます。</string>
     <string name="scanned_cards">履歴</string>
     <string name="no_scanned_cards">カードがまだスキャンされていません。</string>
 
@@ -214,7 +214,8 @@
     <string name="lawyercats">Metrodroid と作者は、公共交通機関と何の関連もありません。</string>
 <plurals name="block_count">
 	<item quantity="one">%d ブロック</item>
-	<item quantity="other"></item>
+	<item quantity="other"/>
 </plurals>
 
+    <string name="page_title_format">ページ: 0x%s</string>
     </resources>
