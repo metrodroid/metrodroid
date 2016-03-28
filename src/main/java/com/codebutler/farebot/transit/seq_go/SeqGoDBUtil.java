@@ -44,7 +44,7 @@ public class SeqGoDBUtil extends DBUtil {
 
     private static final String DB_NAME = "seq_go_stations.db3";
 
-    private static final int VERSION = 3634;
+    private static final int VERSION = 3720;
 
     public SeqGoDBUtil(Context context) {
         super(context);
