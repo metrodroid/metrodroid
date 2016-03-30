@@ -9,5 +9,5 @@ SEQ.zip:
 	wget -N http://translink.com.au/sites/default/files/assets/resources/about-translink/reporting-and-publications/open-data/gtfs/$@
 
 clean:
-	rm -f SEQ.zip seq_gocard_stops.db3
+	rm -f SEQ.zip seq_gocard_stations.db3
 
