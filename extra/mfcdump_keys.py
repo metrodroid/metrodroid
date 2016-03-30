@@ -20,6 +20,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 """
 from argparse import ArgumentParser, FileType
+import csv
 
 KEY_LENGTH = 6
 KEYA_OFFSET = 48
@@ -28,34 +29,48 @@ SECTOR_LENGTH = 64
 LONG_SECTOR_LENGTH = 256
 LONG_SECTOR_OFFSET = 192
 
-def mfc_to_farebot(input_f, output_f, keyb=False):
-	# Read the Mifare card entirely first
-	card_data = input_f.read()
-	key_offset = KEYB_OFFSET if keyb else KEYA_OFFSET
+def mfc_to_farebot(input_fs, output_f, keyb=False, csv_format=False):
+	if csv_format:
+		output_c = csv.DictWriter(output_f, ['uid', 'sector', 'key'])
+		output_c.writeheader()
 
-	# Card data should be 1K or 4K
-	assert len(card_data) in (1024, 4096)
+	for input_f in input_fs:
+		# Read the Mifare card entirely first
+		card_data = input_f.read()
+		key_offset = KEYB_OFFSET if keyb else KEYA_OFFSET
+
+		# Card data should be 1K or 4K
+		assert len(card_data) in (1024, 4096)
 	
-	if len(card_data) == 1024:
-		sector_count = 16
-	elif len(card_data) == 4096:
-		sector_count = 40
+		if len(card_data) == 1024:
+			sector_count = 16
+		elif len(card_data) == 4096:
+			sector_count = 40
+
+		uid = card_data[:4]
 	
-	for sector_no in range(sector_count):
-		if sector_no < 31:
-			offset = (sector_no * SECTOR_LENGTH) + key_offset
-		else:
-			offset = (32 * SECTOR_LENGTH) + ((sector_no - 32) * LONG_SECTOR_LENGTH) + LONG_SECTOR_OFFSET + key_offset
-		output_f.write(card_data[offset:offset+KEY_LENGTH])
+		for sector_no in range(sector_count):
+			if sector_no < 31:
+				offset = (sector_no * SECTOR_LENGTH) + key_offset
+			else:
+				offset = (32 * SECTOR_LENGTH) + ((sector_no - 32) * LONG_SECTOR_LENGTH) + LONG_SECTOR_OFFSET + key_offset
+
+			key = card_data[offset:offset+KEY_LENGTH]
+
+			if csv_format:
+				output_c.writerow(dict(uid=uid.encode('hex'), sector=str(sector_no), key=key.encode('hex')))
+			else:
+				output_f.write(key)
+
+		input_f.close()
 
 	output_f.flush()
 	output_f.close()
-	input_f.close()
 	
 
 def main():
 	parser = ArgumentParser()
-	parser.add_argument('input_mfc', nargs=1, type=FileType('rb'),
+	parser.add_argument('input_mfc', nargs='+', type=FileType('rb'),
 		help='Card MFC dump to read')
 
 	parser.add_argument('-o', '--output', type=FileType('wb'),
@@ -64,8 +79,11 @@ def main():
 	parser.add_argument('-b', '--key-b', action='store_true',
 		help='Output Key B instead of Key A')
 
+	parser.add_argument('-c', '--csv', action='store_true',
+		help='Create a CSV file of keys instead of farebotkeys')
+
 	options = parser.parse_args()
-	mfc_to_farebot(options.input_mfc[0], options.output, options.key_b)
+	mfc_to_farebot(options.input_mfc, options.output, options.key_b, options.csv)
 
 
 if __name__ == '__main__':
