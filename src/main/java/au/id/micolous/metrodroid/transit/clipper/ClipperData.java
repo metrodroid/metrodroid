@@ -97,8 +97,8 @@ final class ClipperData {
             .put(0x1c, new Station("Richmond Station", "Richmond", "37.93730", "-122.35338"))
             .put(0x1d, new Station("Lake Merritt Station", "Lake Merritt", "37.79761", "-122.26564"))
             .put(0x1e, new Station("Fruitvale Station", "Fruitvale", "37.77495", "-122.22425"))
-            .put(0x1f, new Station("Coliseum/Oakland Airport Station", "Coliseum/OAK", "37.75256", "-122.19806"))
-            .put(0x20, new Station("Coliseum/Oakland Airport BART", "Coliseum/OAK", "37.754270", "-122.197757"))
+            .put(0x1f, new Station("Coliseum", "Coliseum", "37.75256", "-122.19806"))
+            .put(0x20, new Station("Coliseum", "Coliseum", "37.754270", "-122.197757"))
             .put(0x22, new Station("Hayward Station", "Hayward", "37.670387", "-122.088002"))
             .put(0x23, new Station("South Hayward Station", "South Hayward", "37.634800", "-122.057551"))
             .put(0x24, new Station("Union City Station", "Union City", "37.591203", "-122.017854"))
@@ -110,6 +110,7 @@ final class ClipperData {
             .put(0x2a, new Station("San Francisco Int'l Airport Station", "SFO", "37.61590", "-122.39263"))
             .put(0x2b, new Station("Millbrae Station", "Millbrae", "37.599935", "-122.386478"))
             .put(0x2c, new Station("West Dublin/Pleasanton Station", "W. Dublin/Pleasanton", "37.699764", "-121.928118"))
+            .put(0x2d, new Station("Oakland Airport Station", "OAK Airport", "37.75256", "-122.19806"))
             .build();
 
     static final Map<Integer, String> GG_FERRY_ROUTES = new ImmutableMapBuilder<Integer, String>()
