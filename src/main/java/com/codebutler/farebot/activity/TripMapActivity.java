@@ -24,7 +24,9 @@ package com.codebutler.farebot.activity;
 
 import android.app.ActionBar;
 import android.app.Activity;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.MenuItem;
 import android.webkit.JavascriptInterface;
@@ -37,6 +39,7 @@ import au.id.micolous.farebot.R;
 import com.codebutler.farebot.transit.Station;
 import com.codebutler.farebot.transit.Trip;
 import com.codebutler.farebot.util.Marker;
+import com.codebutler.farebot.util.Utils;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -46,8 +49,11 @@ import java.util.List;
 
 public class TripMapActivity extends Activity {
     public static final String TRIP_EXTRA = "trip";
+    private static final String TAG = "TripMapActivity";
 
     private WebView mWebView;
+    private String mTileURL;
+    private String mSubdomains;
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -59,6 +65,28 @@ public class TripMapActivity extends Activity {
         }
 
         setContentView(R.layout.activity_trip_map);
+
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(TripMapActivity.this);
+
+        mTileURL = prefs.getString("pref_map_tile_url", null);
+        mSubdomains = prefs.getString("pref_map_tile_subdomains", null);
+
+        if (mTileURL == null || mTileURL.isEmpty()) {
+            mTileURL = Utils.localizeString(R.string.default_map_tile_url);
+        }
+
+        if (mSubdomains == null || mSubdomains.isEmpty()) {
+            mSubdomains = Utils.localizeString(R.string.default_map_tile_subdomains);
+        }
+
+        // Overwrite map preferences again with defaults if it was missing
+        prefs.edit()
+                .putString("pref_map_tile_url", mTileURL)
+                .putString("pref_map_tile_subdomains", mSubdomains)
+                .apply();
+
+        Log.d(TAG, "TilesURL: " + mTileURL);
+        Log.d(TAG, "Subdomains: " + mSubdomains);
 
         mWebView = ((WebViewFragment) getFragmentManager().findFragmentById(R.id.map)).getWebView();
         mWebView.setWebChromeClient(new WebChromeClient());
@@ -114,7 +142,9 @@ public class TripMapActivity extends Activity {
             points.add(new Marker(trip.getEndStation(), "end-marker"));
         }
 
-        mWebView.addJavascriptInterface(new TripMapShim(points.toArray(new Marker[points.size()])), "TripMapShim");
+        TripMapShim shim = new TripMapShim(points.toArray(new Marker[points.size()]), mTileURL, mSubdomains);
+
+        mWebView.addJavascriptInterface(shim, "TripMapShim");
 
         mWebView.loadUrl("file:///android_asset/map.html");
 
@@ -142,8 +172,13 @@ public class TripMapActivity extends Activity {
     public class TripMapShim {
         private static final String TAG = "TripMapShim";
         private Marker[] mMarkers;
-        TripMapShim(Marker[] markers) {
+        private String mTileUrl;
+        private String mSubdomains;
+
+        TripMapShim(Marker[] markers, String tileUrl, String subdomains) {
             this.mMarkers = markers;
+            this.mTileUrl = tileUrl;
+            this.mSubdomains = subdomains;
         }
 
         // Lets build an interface where you can't pass arrays!
@@ -156,6 +191,17 @@ public class TripMapActivity extends Activity {
         public Object getMarker(int index) {
             return this.mMarkers[index];
         }
+
+        @JavascriptInterface
+        public String getTileUrl() {
+            return this.mTileUrl;
+        }
+
+        @JavascriptInterface
+        public String getSubdomains() {
+            return this.mSubdomains;
+        }
+
     }
 
 }
