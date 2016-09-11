@@ -23,20 +23,8 @@
 package com.codebutler.farebot.card.felica;
 
 import android.content.Context;
-import android.database.SQLException;
-import android.database.sqlite.SQLiteDatabase;
-import android.database.sqlite.SQLiteException;
-import android.util.Log;
 
 import com.codebutler.farebot.util.DBUtil;
-
-import org.apache.commons.io.IOUtils;
-
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
 
 public class FelicaDBUtil extends DBUtil {
     public static final String COLUMN_ID             = "_id";

@@ -39,8 +39,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
-import au.id.micolous.metrodroid.MetrodroidApplication;
-import au.id.micolous.farebot.R;
 import com.codebutler.farebot.card.Card;
 import com.codebutler.farebot.card.UnsupportedCardException;
 import com.codebutler.farebot.fragment.CardBalanceFragment;
@@ -53,6 +51,9 @@ import com.codebutler.farebot.transit.TransitData;
 import com.codebutler.farebot.transit.unknown.UnauthorizedClassicTransitData;
 import com.codebutler.farebot.ui.TabPagerAdapter;
 import com.codebutler.farebot.util.Utils;
+
+import au.id.micolous.farebot.R;
+import au.id.micolous.metrodroid.MetrodroidApplication;
 
 /**
  * @author Eric Butler
