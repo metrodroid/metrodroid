@@ -3,7 +3,7 @@
 compile_stops_from_gtfs.py
 Compiles stop database from GTFS data and reader ID.
 
-Copyright 2015 Michael Farrell <micolous+git@gmail.com>
+Copyright 2015-2016 Michael Farrell <micolous+git@gmail.com>
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -92,23 +92,19 @@ def compile_stops_from_gtfs(input_gtfs_f, output_f, matching_f=None, version=Non
 		cur.executemany(insert_query, stop_map)
 	else:
 		# Matching data is available.  Lets use that.
-		matching = csv.reader(matching_f)
-		matching_header = matching.next()
-		matching_reader = matching_header.index('reader_id')
-		matching_code = matching_header.index('stop_code')
-		matching_id = matching_header.index('stop_id')
+		matching = csv.DictReader(matching_f)
 		
 		stop_codes = {}
 		stop_ids = {}
 		for match in matching:
-			if match[matching_code]:
-				if match[matching_code] not in stop_codes:
-					stop_codes[match[matching_code]] = []
-				stop_codes[match[matching_code]].append(match[matching_reader])
-			elif match[matching_id]:
-				if match[matching_id] not in stop_ids:
-					stop_ids[match[matching_id]] = []
-				stop_ids[match[matching_id]].append(match[matching_reader])
+			if match['stop_code']:
+				if match['stop_code'] not in stop_codes:
+					stop_codes[match['stop_code']] = []
+				stop_codes[match['stop_code']].append(match['reader_id'])
+			elif match['stop_id']:
+				if match['stop_id'] not in stop_ids:
+					stop_ids[match['stop_id']] = []
+				stop_ids[match['stop_id']].append(match['reader_id'])
 			else:
 				raise Exception, 'neither stop_id or stop_code specified in row'
 		
