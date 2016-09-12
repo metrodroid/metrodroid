@@ -1,0 +1,72 @@
+<!DOCTYPE html5>
+<html lang="en">
+  <head>
+    <title>Metrodroid: Go Card (South East Queensland, AU)</title>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <link href="https://fonts.googleapis.com/css?family=Droid+Sans+Mono" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+    <link href="css/farebot.css" rel="stylesheet">
+  </head>
+  <body>
+
+    <div class="container">
+      <div class="row">
+        <div class="col-sm-12">
+          <div class="main-column">
+            <h1>Metrodroid: Go Card (South East Queensland, AU)</h1>
+            
+            <p>Go Card is the public transport smartcard used in South East Queensland, Australia.  This includes Brisbane, Gold Coast and Sunshine Coast.</p>
+            
+            <p>These cards use a Mifare Classic 1K card, and have unique encryption keys.  You need a phone which supports Mifare Classic (see Metrodroid's about screen), and the encryption keys for your card.  This means <a href="https://github.com/micolous/metrodroid/wiki/Cracking-keys">you need to crack your card's keys</a>, which is possible for some (but not all) cards.</p>
+            
+            <p>Metrodroid <em>only reads data on your card</em>, and does not require that you register your Go card or use online services.  It implements enough of the card format to be able to read your balance and recent trips.</p>
+            
+            <p>Metrodroid cannot write to your Go card, and does not allow your phone to emulate a Go card.</p>
+            
+            <h2>Known issues</h2>
+            
+            <p>There are a number of caveats with Go card support:</p>
+            
+            <h3>Special cards not supported (Go Access, Explore, SEEQ)</h3>
+            
+            <p>These special cards are untested and may not work with Metrodroid.</p>
+            
+            <h3>Card type not detected</h3>
+
+            <p>The flag which indicates card type (adult, concession, student, senior) is not known.  This impacts fare calculation.</p>
+
+            <h3>Not all stops known</h3>
+            
+            <p>Metrodroid has a small stop database.  Once you have cracked your card's keys, you can contribute additional stop IDs from the app.</p>
+            
+            <p>This stop database is required for fare calculation.</p>
+            
+            <h3>Fare calculations are indicative</h3>
+            
+            <p>From Metrodroid 2.9.28, Metrodroid attempts to calculate fares.</p>
+            
+            <p>There are a number of known limitations, which generally results in it reporting higher fares:</p>
+            
+            <ul>
+              <li>Uses the 2016 fare table only.  Other fare tables are not supported, including the upcoming 2017 fare table, as the 2017 zone reorganisation is not known.</li>
+              <li>Concessional fares are not supported.  Only the full fare is shown.</li>
+              <li>10th trip in a week free (and 3rd trip free for seniors) is not supported, and the full fare is shown.</li>
+              <li>Public holidays are not handled for years before 2012 or after 2017, and the peak fares will be applied on those days.</li>
+              <li>Transfers from/to Airtrain services at Eagle Junction are not handled correctly, resulting in a fare 1 zone higher being shown for stations on lines which don't require a transit through Zone 1 (Caboolture, Doomben, Nambour, Shorncliffe and Sunshine Coast lines from and including Clayfield and Toombul stations).</li>
+              <li>Exhibition line is not handled, and no fare is shown.</li>
+              <li>Cairns services are not handled, and no fare is shown.</li>
+              <li>Stop ID mapping is required for any fare to be displayed, resulting in many stations not showing fares.</li>
+            </ul>
+            
+            <p>Despite the above, the fare calculation code is fairly exhaustive and includes <a href="https://github.com/micolous/metrodroid/tree/master/src/androidTest/java/au/id/micolous/farebot/test">many unit tests</a>.</p>
+
+            <p><a href="index.html">Back to the Metrodroid website...</a></p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+  </body>
+</html>
