@@ -96,6 +96,7 @@ def compile_stops_from_gtfs(input_gtfs_f, output_f, matching_f=None, version=Non
 		
 		stop_codes = {}
 		stop_ids = {}
+		stop_extra_fields = {}
 		for match in matching:
 			if match['stop_code']:
 				if match['stop_code'] not in stop_codes:
@@ -107,7 +108,15 @@ def compile_stops_from_gtfs(input_gtfs_f, output_f, matching_f=None, version=Non
 				stop_ids[match['stop_id']].append(match['reader_id'])
 			else:
 				raise Exception, 'neither stop_id or stop_code specified in row'
-		
+				
+			# At least one of stop_id or stop_code was specified
+			# Lets allow an override of any custom fields
+			stop_extra_fields[match['reader_id']] = {}
+			for extra_field in extra_fields:
+				if not empty(match[extra_field]):
+					# There is an override available
+					stop_extra_fields[match['reader_id']][extra_field] = match[extra_field]
+
 		# Now run through the stops
 		for stop in stops:
 			# preprocess stop data
@@ -123,12 +132,29 @@ def compile_stops_from_gtfs(input_gtfs_f, output_f, matching_f=None, version=Non
 					for k in extra_fields:
 						child_data[parent][k] = stop[k]
 
-			e = [child_data[stop['stop_id']][i] if empty(stop[i]) and stop['stop_id'] in child_data else stop[i]  for i in extra_fields]
+			e = [child_data[stop['stop_id']][i] if empty(stop[i]) and stop['stop_id'] in child_data else stop[i] for i in extra_fields]
 
-			if stop['stop_id'] in stop_ids:
-				cur.executemany(insert_query, map(lambda r: [r, name, y, x] + e, stop_ids[stop['stop_id']]))
-			if stop['stop_code'] in stop_codes:
-				cur.executemany(insert_query, map(lambda r: [r, name, y, x] + e, stop_codes[stop['stop_code']]))
+			# Insert rows where a stop_id is specified for the reader_id
+			stop_rows = []
+			for reader_id in stop_ids.get(stop['stop_id'], []):
+				r = [reader_id, name, y, x] + e
+				# Check for any overrides
+				for k, v in stop_extra_fields[reader_id].iteritems():
+					r[extra_fields.index(k) + 4] = v
+				stop_rows.append(r)
+
+			cur.executemany(insert_query, stop_rows)
+
+			# Insert rows where a stop_code is specified for the reader_id
+			stop_rows = []
+			for reader_id in stop_codes.get(stop['stop_code'], []):
+				stop_rows.append([reader_id, name, y, x] + e)
+				# Check for any overrides
+				for k, v in stop_extra_fields[reader_id].iteritems():
+					r[extra_fields.index(k) + 4] = v
+
+			cur.executemany(insert_query, stop_rows)
+
 		matching_f.close()
 
 	cur.execute('PRAGMA user_version = %d' % version)

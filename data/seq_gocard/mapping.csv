@@ -1,8 +1,8 @@
-reader_id,stop_code,stop_id
+reader_id,stop_code,stop_id,zone_id
 4,,place_forsta
 5,,place_censta
 6,,place_sousta
-9,,place_domsta
+9,,place_domsta,airtrain
 20,,place_romsta
 60,,place_wolsta
 63,,place_nunsta
