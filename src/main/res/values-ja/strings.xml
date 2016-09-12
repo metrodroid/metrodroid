@@ -28,7 +28,7 @@
     <string name="accessibility">アクセシビリティ</string>
     <string name="speak_balance">残高を話す</string>
     <string name="speak_balance_summary">概念実証</string>
-    <string name="balance_speech">残高 <xliff:g  id="balance" example="$13.37">%s</xliff:g></string>
+    <string name="balance_speech">残高 <xliff:g id="balance" example="$13.37">%s</xliff:g></string>
     <string name="loading">ロード中…</string>
     <string name="scanned_at_format">%2$sに%1$sにスキャンされました</string>
     <string name="supported_cards">利用できるカード</string>
@@ -96,7 +96,18 @@
     <string name="license">ライセンス</string>
     <string name="title_activity_license">オープンソース ライセンス</string>
     <string name="locked_card">ロックされたカード</string>
-    <string name="fully_locked_desc">" このカードは鍵なしに自由に読み取りできる部分はありません。このカードに有効な鍵がインストールされていません。\n\n カードが現在 Metrodroid によってサポートされている場合、その鍵をインストールすると、このカードを動作させることができます。鍵の取得の詳細についてはオンライン ドキュメントを参照してください。\n\n お使いのカードが現在 Metrodroid によってサポートされていない場合、この鍵が壊れている場合を除き、いつか、このソフトウェアでサポートされる可能性はあります。\n\n 発行されたカードで、一部のレベルのオープン データ   アクセスを許可するために、市営交通機関に問い合わせてください。公共交通スマートカードのデータに、安全に限定された読み取りアクセスをすることは可能です。 "</string>
+    <string name="fully_locked_desc">"
+ このカードは鍵なしに自由に読み取りできる部分はありません。このカードに有効な鍵がインストールされていません。
+
+
+ カードが現在 Metrodroid によってサポートされている場合、その鍵をインストールすると、このカードを動作させることができます。鍵の取得の詳細についてはオンライン ドキュメントを参照してください。
+
+
+ お使いのカードが現在 Metrodroid によってサポートされていない場合、この鍵が壊れている場合を除き、いつか、このソフトウェアでサポートされる可能性はあります。
+
+
+ 発行されたカードで、一部のレベルのオープン データ   アクセスを許可するために、市営交通機関に問い合わせてください。公共交通スマートカードのデータに、安全に限定された読み取りアクセスをすることは可能です。
+ "</string>
     <string name="fully_locked_title">カードが完全にロックされています!</string>
     <string name="block_title_format">ブロック: %s</string>
     <string name="sector_title_format">セクター: 0x%s</string>
@@ -218,4 +229,12 @@
 </plurals>
 
     <string name="page_title_format">ページ: 0x%s</string>
+    <string name="map_tiles_url">地図タイル URL</string>
+    <string name="map_tiles_url_summary">Leaflet TileLayer 構文を使用して、埋め込み地図のカスタム タイル サーバーを使用します。</string>
+    <string name="map_tiles_subdomains">地図タイルのサブドメイン</string>
+    <string name="map_tiles_subdomains_summary">地図 URL に {s} を使用する場合は、カンマで区切られたサブドメインのリストか、サブドメインの 1 文字のリスト。</string>
+
+    <string name="default_map_tile_url">https://tile{s}.stackcdn.com/osm_tiles_2x/{z}/{x}/{y}.png</string>
+    <string name="default_map_tile_subdomains">123456</string>
+
     </resources>
