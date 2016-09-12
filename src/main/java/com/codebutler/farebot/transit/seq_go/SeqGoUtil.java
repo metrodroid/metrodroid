@@ -75,7 +75,7 @@ public final class SeqGoUtil {
         return MetrodroidApplication.getInstance().getSeqGoDBUtil();
     }
 
-    public static Station getStation(int stationId) {
+    public static SeqGoStation getStation(int stationId) {
         if (stationId == 0) {
             return null;
         }
@@ -111,8 +111,11 @@ public final class SeqGoUtil {
             String stationName = cursor.getString(cursor.getColumnIndex(SeqGoDBUtil.COLUMN_ROW_NAME));
             String latitude = cursor.getString(cursor.getColumnIndex(SeqGoDBUtil.COLUMN_ROW_LAT));
             String longitude = cursor.getString(cursor.getColumnIndex(SeqGoDBUtil.COLUMN_ROW_LON));
+            String zone = cursor.getString(cursor.getColumnIndex(SeqGoDBUtil.COLUMN_ROW_ZONE));
+            String airtrain_zone_exempt = cursor.getString(cursor.getColumnIndex(SeqGoDBUtil.COLUMN_ROW_AIRTRAIN_ZONE_EXEMPT));
 
-            return new Station(stationName, latitude, longitude);
+            return new SeqGoStation(stationName, latitude, longitude, zone,
+                    airtrain_zone_exempt != null && airtrain_zone_exempt.equals("1"));
         } finally {
             if (cursor != null) {
                 cursor.close();

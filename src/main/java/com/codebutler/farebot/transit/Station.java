@@ -23,7 +23,7 @@ import android.os.Parcel;
 import android.os.Parcelable;
 
 public class Station implements Parcelable {
-    private final String mCompanyName, mLineName, mStationName, mShortStationName, mLatitude, mLongitude;
+    protected final String mCompanyName, mLineName, mStationName, mShortStationName, mLatitude, mLongitude;
 
     public Station(String stationName, String latitude, String longitude) {
         this(stationName, null, latitude, longitude);
@@ -51,7 +51,7 @@ public class Station implements Parcelable {
         }
     };
 
-    private Station(Parcel parcel) {
+    protected Station(Parcel parcel) {
         mCompanyName      = parcel.readString();
         mLineName         = parcel.readString();
         mStationName      = parcel.readString();

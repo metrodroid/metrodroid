@@ -39,6 +39,7 @@ public class SeqGoTapRecord extends SeqGoRecord implements Parcelable, Comparabl
     private int mJourney;
     private int mStation;
     private int mChecksum;
+    private boolean mContinuation;
 
 
     public static SeqGoTapRecord recordFromBytes(byte[] input) {
@@ -52,7 +53,8 @@ public class SeqGoTapRecord extends SeqGoRecord implements Parcelable, Comparabl
         record.mTimestamp = SeqGoUtil.unpackDate(ts);
 
         byte[] journey = Utils.reverseBuffer(input, 5, 2);
-        record.mJourney = Utils.byteArrayToInt(journey) >> 3;
+        record.mJourney = Utils.byteArrayToInt(journey) >> 5;
+        record.mContinuation = (Utils.byteArrayToInt(journey) & 0x10) > 1;
 
         byte[] station = Utils.reverseBuffer(input, 12, 2);
         record.mStation = Utils.byteArrayToInt(station);
@@ -77,6 +79,7 @@ public class SeqGoTapRecord extends SeqGoRecord implements Parcelable, Comparabl
         parcel.writeInt(mJourney);
         parcel.writeInt(mStation);
         parcel.writeInt(mChecksum);
+        parcel.writeInt(mContinuation ? 1 : 0);
     }
 
     public SeqGoTapRecord(Parcel parcel) {
@@ -86,6 +89,7 @@ public class SeqGoTapRecord extends SeqGoRecord implements Parcelable, Comparabl
         mJourney = parcel.readInt();
         mStation = parcel.readInt();
         mChecksum = parcel.readInt();
+        mContinuation = parcel.readInt() == 1;
     }
 
     public Trip.Mode getMode() {
@@ -112,6 +116,9 @@ public class SeqGoTapRecord extends SeqGoRecord implements Parcelable, Comparabl
         return mChecksum;
     }
 
+    public boolean isContinuation() {
+        return mContinuation;
+    }
 
     @Override
     public int compareTo(SeqGoTapRecord rhs) {
@@ -120,7 +127,7 @@ public class SeqGoTapRecord extends SeqGoRecord implements Parcelable, Comparabl
         if (rhs.mJourney == this.mJourney) {
             return this.mTimestamp.compareTo(rhs.mTimestamp);
         } else {
-            return Integer.compare(this.mJourney, rhs.mJourney);
+            return (new Integer(this.mJourney)).compareTo(rhs.mJourney);
         }
     }
 }

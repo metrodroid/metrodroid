@@ -30,8 +30,7 @@ CREATE TABLE stops (
 	id unique,
 	name,
 	y,
-	x
-	%(extra_fields)s
+	x%(extra_fields)s
 );
 """
 
@@ -56,7 +55,7 @@ def compile_stops_from_gtfs(input_gtfs_f, output_f, matching_f=None, version=Non
 	extra_fields = [x.strip() for x in extra_fields.split(',')]
 	
 	if extra_fields:
-		db_schema = DB_SCHEMA % dict(extra_fields=',' + (','.join(extra_fields)))
+		db_schema = DB_SCHEMA % dict(extra_fields=',\n\t' + (',\n\t'.join(extra_fields)))
 		insert_query = INSERT_QUERY % dict(extra_fields=', ?' * len(extra_fields))
 	else:
 		db_schema = DB_SCHEMA % dict(extra_fields='')
@@ -130,9 +129,15 @@ def compile_stops_from_gtfs(input_gtfs_f, output_f, matching_f=None, version=Non
 					# already have.
 					child_data[parent] = {}
 					for k in extra_fields:
-						child_data[parent][k] = stop[k]
+						if k in stop:
+							child_data[parent][k] = stop[k]
 
-			e = [child_data[stop['stop_id']][i] if empty(stop[i]) and stop['stop_id'] in child_data else stop[i] for i in extra_fields]
+			e = [None
+				if i not in stop else (
+					child_data[stop['stop_id']][i]
+					if (empty(stop[i]) and stop['stop_id'] in child_data and i in child_data[stop['stop_id']])
+					else (stop[i])
+				) for i in extra_fields]
 
 			# Insert rows where a stop_id is specified for the reader_id
 			stop_rows = []

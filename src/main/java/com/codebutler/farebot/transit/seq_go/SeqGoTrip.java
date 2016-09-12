@@ -24,19 +24,23 @@ import android.os.Parcelable;
 import com.codebutler.farebot.transit.Station;
 import com.codebutler.farebot.transit.Trip;
 
+import java.text.NumberFormat;
 import java.util.GregorianCalendar;
+import java.util.Locale;
 
 /**
  * Represents trip events on Go Card.
  */
-public class SeqGoTrip extends Trip {
+public class SeqGoTrip extends Trip implements Comparable<SeqGoTrip> {
     int mJourneyId;
     Mode mMode;
     GregorianCalendar mStartTime;
     GregorianCalendar mEndTime;
     int mStartStation;
     int mEndStation;
-
+    boolean mContinuation;
+    int mTripCost = 0;
+    boolean mKnownCost = false;
 
     @Override
     public long getTimestamp() {
@@ -86,7 +90,54 @@ public class SeqGoTrip extends Trip {
 
     @Override
     public String getFareString() {
-        return null;
+        // We can't use the public accessors here, because we want access to the extra zone info
+        SeqGoStation startStation = SeqGoUtil.getStation(mStartStation);
+        SeqGoStation endStation = SeqGoUtil.getStation(mEndStation);
+
+        if (startStation != null && endStation != null) {
+            return NumberFormat.getCurrencyInstance(Locale.US).format((double)mTripCost / 100.);
+        } else {
+            return null;
+        }
+    }
+
+    public String getStartZone() {
+        SeqGoStation startStation = SeqGoUtil.getStation(mStartStation);
+
+        if (startStation != null) {
+            return startStation.getZone();
+        } else {
+            return null;
+        }
+    }
+
+    public String getEndZone() {
+        SeqGoStation endStation = SeqGoUtil.getStation(mEndStation);
+        if (endStation != null) {
+            return endStation.getZone();
+        } else {
+            return null;
+        }
+    }
+
+    public boolean isAirtrainZoneExempt() {
+        SeqGoStation startStation = SeqGoUtil.getStation(mStartStation);
+        SeqGoStation endStation = SeqGoUtil.getStation(mEndStation);
+
+        if (startStation == null || endStation == null) {
+            // We don't know. :(
+            return false;
+        }
+
+        if (startStation.getZone().equals("airtrain") && endStation.isAirtrainZoneExempt()) {
+            return true;
+        }
+
+        if (endStation.getZone().equals("airtrain") && startStation.isAirtrainZoneExempt()) {
+            return true;
+        }
+
+        return false;
     }
 
     @Override
@@ -134,8 +185,7 @@ public class SeqGoTrip extends Trip {
 
     @Override
     public boolean hasFare() {
-        // We can't calculate fares yet.
-        return false;
+        return mKnownCost;
     }
 
     @Override
@@ -180,6 +230,34 @@ public class SeqGoTrip extends Trip {
         mMode = Mode.valueOf(parcel.readString());
         mStartStation = parcel.readInt();
         mEndStation = parcel.readInt();
+
+
+    }
+
+    /**
+     * This constructor is used for unit tests outside of the package
+     * @param startStation Starting station ID.
+     * @param endStation Ending station ID.
+     * @param startTime Start time of the journey.
+     * @param endTime End time of the journey.
+     * @param journeyId Journey ID.
+     * @param continuation True if this is a continuation of a previous journey (transfer).
+     */
+    public SeqGoTrip(int startStation, int endStation, GregorianCalendar startTime, GregorianCalendar endTime, int journeyId, boolean continuation) {
+        mStartStation = startStation;
+        mEndStation = endStation;
+        mStartTime = startTime;
+        mEndTime = endTime;
+        mJourneyId = journeyId;
+        mContinuation = continuation;
+    }
+
+    public int getJourneyId() {
+        return mJourneyId;
+    }
+
+    public boolean isContinuation() {
+        return mContinuation;
     }
 
     public SeqGoTrip() {}
@@ -194,4 +272,9 @@ public class SeqGoTrip extends Trip {
             return new SeqGoTrip[size];
         }
     };
+
+    @Override
+    public int compareTo(SeqGoTrip other) {
+        return Long.valueOf(this.getTimestamp()).compareTo(Long.valueOf(other.getTimestamp()));
+    }
 }

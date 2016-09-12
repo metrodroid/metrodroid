@@ -19,6 +19,7 @@
 package com.codebutler.farebot.transit.seq_go;
 
 import android.os.Parcel;
+import android.util.Log;
 
 import java.math.BigInteger;
 import java.text.NumberFormat;
@@ -53,6 +54,7 @@ import com.codebutler.farebot.util.Utils;
  */
 public class SeqGoTransitData extends TransitData {
 
+    private static final String TAG = "SeqGoTransitData";
     public static final String NAME = "Go card";
     static final byte[] MANUFACTURER = {
         0x16, 0x18, 0x1A, 0x1B,
@@ -64,6 +66,7 @@ public class SeqGoTransitData extends TransitData {
     SeqGoRefill[] mRefills;
     SeqGoTrip[] mTrips;
     boolean mHasUnknownStations = false;
+    private SeqGoFareCalculator fareCalculator = new SeqGoFareCalculator();
 
     /*
     public static final Creator<SeqGoTransitData> CREATOR = new Creator<SeqGoTransitData>() {
@@ -140,7 +143,7 @@ public class SeqGoTransitData extends TransitData {
 
         // Now do a first pass for metadata and balance information.
         ArrayList<SeqGoBalanceRecord> balances = new ArrayList<>();
-        ArrayList<Trip> trips = new ArrayList<>();
+        ArrayList<SeqGoTrip> trips = new ArrayList<>();
         ArrayList<Refill> refills = new ArrayList<>();
         ArrayList<SeqGoTapRecord> taps = new ArrayList<>();
 
@@ -177,6 +180,7 @@ public class SeqGoTransitData extends TransitData {
                 trip.mStartTime = tapOn.getTimestamp();
                 trip.mStartStation = tapOn.getStation();
                 trip.mMode = tapOn.getMode();
+                trip.mContinuation = tapOn.isContinuation();
 
                 if (!mHasUnknownStations && trip.mStartStation != 0 && trip.getStartStation() == null) {
                     mHasUnknownStations = true;
@@ -209,6 +213,30 @@ public class SeqGoTransitData extends TransitData {
 
             // Now sort the trips array
             Collections.sort(trips, new Trip.Comparator());
+
+            // Trips are normally in reverse order, put them in forward order
+            Collections.reverse(trips);
+
+            // Now add fare information
+            int currentJourney = -1;
+            ArrayList<SeqGoTrip> tripsInJourney = new ArrayList<>();
+            for (SeqGoTrip trip : trips) {
+                if (currentJourney != trip.getJourneyId()) {
+                    currentJourney = trip.getJourneyId();
+                    tripsInJourney = new ArrayList<>();
+                }
+
+                // Calculate the fare
+                try {
+                    trip.mTripCost = fareCalculator.calculateFareForTrip(trip, tripsInJourney);
+                    trip.mKnownCost = true;
+                    tripsInJourney.add(trip);
+                } catch (SeqGoFareCalculator.InvalidArgumentException ex) {
+                    Log.d(TAG, ex.getMessage());
+                } catch (SeqGoFareCalculator.UnknownCostException ex) {
+                    Log.d(TAG, ex.getMessage());
+                }
+            }
         }
 
 
