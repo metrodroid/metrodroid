@@ -59,7 +59,7 @@
     <string name="felica_process_purchase_magnetic">券購(磁気券購入)</string>
     <string name="felica_process_fare_adjustment">精算</string>
     <string name="felica_process_admission_payment">精算(入場精算)</string>
-    <string name="felica_process_both_exit">窓出(改札窓口処理)</string>
+    <!-- <string name="felica_process_both_exit">窓出(改札窓口処理)</string> -->
     <string name="felica_process_issue_new">新規(新規発行)</string>
     <string name="felica_process_booth_deduction">控除(窓口控除)</string>
     <string name="felica_process_bus_pitapa">バス(PiTaPa系)</string>
