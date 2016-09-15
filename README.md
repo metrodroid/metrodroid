@@ -53,7 +53,7 @@ This project will only read data from the card itself, without having to connect
 
 ## Supported Phones
 
-Metrodroid requires an NFC Android phone running 4.0.3 or later.
+Metrodroid requires an NFC Android phone running 4.1 or later.
 
 Some newer devices do not support MIFARE Classic.  MIFARE Classic is not an NFC-compliant card format, so can only be read with phones with NXP chipsets.
 
