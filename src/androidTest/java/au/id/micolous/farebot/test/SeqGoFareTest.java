@@ -368,4 +368,78 @@ public class SeqGoFareTest extends TestCase {
         assertEquals(335, fareCalculator.calculateFareForTrip(trip, null));
 
     }
+
+    public void testAirtrain() throws Exception {
+        SeqGoTrip trip;
+
+        trip = new SeqGoTrip(
+                5, // Central
+                9, // Domestic Airport
+                new GregorianCalendar(2016, 2, 15, 18, 0), // 2016-03-15 18:00
+                new GregorianCalendar(2016, 2, 15, 18, 30), // 2016-03-15 18:30
+                1,
+                false
+        );
+
+        assertEquals(1750, fareCalculator.calculateFareForTrip(trip, null));
+
+        trip = new SeqGoTrip(
+                9, // Domestic Airport
+                5, // Central
+                new GregorianCalendar(2016, 2, 15, 18, 0), // 2016-03-15 18:00
+                new GregorianCalendar(2016, 2, 15, 18, 30), // 2016-03-15 18:30
+                1,
+                false
+        );
+
+        assertEquals(1750, fareCalculator.calculateFareForTrip(trip, null));
+
+        // Zone 2, on airport line
+        trip = new SeqGoTrip(
+                60, // Wooloowin
+                9, // Domestic Airport
+                new GregorianCalendar(2016, 2, 15, 18, 10), // 2016-03-15 18:10
+                new GregorianCalendar(2016, 2, 15, 18, 30), // 2016-03-15 18:30
+                1,
+                false
+        );
+
+        assertEquals(1750, fareCalculator.calculateFareForTrip(trip, null));
+
+        trip = new SeqGoTrip(
+                9, // Domestic Airport
+                60, // Wooloowin
+                new GregorianCalendar(2016, 2, 15, 18, 10), // 2016-03-15 18:10
+                new GregorianCalendar(2016, 2, 15, 18, 30), // 2016-03-15 18:30
+                1,
+                false
+        );
+
+        assertEquals(1750, fareCalculator.calculateFareForTrip(trip, null));
+
+        // Transfer from Zone 2
+        trip = new SeqGoTrip(
+                88, // Fairfield
+                9, // Domestic Airport
+                new GregorianCalendar(2016, 2, 15, 18, 10), // 2016-03-15 18:10
+                new GregorianCalendar(2016, 2, 15, 18, 30), // 2016-03-15 18:30
+                1,
+                false
+        );
+
+        assertEquals(2143, fareCalculator.calculateFareForTrip(trip, null));
+
+        trip = new SeqGoTrip(
+                9, // Domestic Airport
+                88, // Fairfield
+                new GregorianCalendar(2016, 2, 15, 18, 10), // 2016-03-15 18:10
+                new GregorianCalendar(2016, 2, 15, 18, 30), // 2016-03-15 18:30
+                1,
+                false
+        );
+
+        assertEquals(2143, fareCalculator.calculateFareForTrip(trip, null));
+
+
+    }
 }
