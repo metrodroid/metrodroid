@@ -18,6 +18,7 @@
  */
 package com.codebutler.farebot.transit.opal;
 
+import android.net.Uri;
 import android.os.Parcel;
 import android.text.format.DateFormat;
 
@@ -205,5 +206,10 @@ public class OpalTransitData extends TransitData {
     // Unsupported elements
     @Override public Trip[] getTrips () {
         return null;
+    }
+
+    @Override
+    public Uri getOnlineServicesPage() {
+        return Uri.parse("https://m.opal.com.au/");
     }
 }

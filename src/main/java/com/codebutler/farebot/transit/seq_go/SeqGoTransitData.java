@@ -18,6 +18,7 @@
  */
 package com.codebutler.farebot.transit.seq_go;
 
+import android.net.Uri;
 import android.os.Parcel;
 import android.util.Log;
 
@@ -294,5 +295,14 @@ public class SeqGoTransitData extends TransitData {
         parcel.writeInt(mBalance);
         parcel.writeTypedArray(mTrips, i);
         parcel.writeTypedArray(mRefills, i);
+    }
+    @Override
+    public Uri getMoreInfoPage() {
+        return Uri.parse("https://micolous.github.io/metrodroid/seqgo");
+    }
+
+    @Override
+    public Uri getOnlineServicesPage() {
+        return Uri.parse("https://gocard.translink.com.au/");
     }
 }

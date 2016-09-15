@@ -49,10 +49,6 @@ public abstract class StubTransitData extends TransitData {
     public void writeToParcel(Parcel parcel, int i) {
     }
 
-    public Uri getMoreInfoPage() {
-        return null;
-    }
-
     @Override public List<ListItem> getInfo() {
         ArrayList<ListItem> items = new ArrayList<>();
 

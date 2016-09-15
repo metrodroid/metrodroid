@@ -22,6 +22,11 @@
   -->
 
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
-    <item android:id="@+id/advanced_info"
-          android:title="@string/advanced_info" />
+  <item android:id="@+id/advanced_info"
+      android:title="@string/advanced_info" />
+
+  <item android:id="@+id/more_info"
+      android:title="@string/about_card_format" />
+  <item android:id="@+id/online_services"
+      android:title="@string/online_services" />
 </menu>

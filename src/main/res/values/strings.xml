@@ -139,7 +139,8 @@
     <string name="map_tiles_url_summary">Use a custom tile server for embedded maps, using Leaflet TileLayer syntax.</string>
     <string name="map_tiles_subdomains">Map tile subdomains</string>
     <string name="map_tiles_subdomains_summary">If using {s} in map URLs, a comma separated list of subdomains, or single-character list of subdomains.</string>
-
+    <string name="about_card_format">About this card format</string>
+    <string name="online_services">Online services</string>
     <!--
     This tile server gives "retina" tiles which are much nicer on modern
     smartphones. Permission to use the tile server has been granted by
@@ -288,4 +289,5 @@
         These are deliberately separated strings in order to match the terminology of the agency.
     -->
     <string name="card_note_myki">Only the card number can be read.</string>
+
 </resources>

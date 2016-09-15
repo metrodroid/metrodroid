@@ -19,6 +19,7 @@
 
 package com.codebutler.farebot.transit;
 
+import android.net.Uri;
 import android.os.Parcelable;
 
 import com.codebutler.farebot.ui.ListItem;
@@ -50,4 +51,19 @@ public abstract class TransitData implements Parcelable {
         return 0;
     }
 
+    /**
+     * You can optionally add a link to an FAQ page for the card.  This will be shown in the ...
+     * drop down menu for cards that are supported, and on the main page for subclasses of
+     * StubTransitData.
+     * @return Uri pointing to an FAQ page, or null if no page is to be supplied.
+     */
+    public Uri getMoreInfoPage() { return null; }
+
+    /**
+     * You may optionally link to a page which allows you to view the online services for the card.
+     * @return Uri pointing to online services page, or null if no page is to be supplied.
+     */
+    public Uri getOnlineServicesPage() {
+        return null;
+    }
 }

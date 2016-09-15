@@ -69,6 +69,10 @@ public class CardInfoActivity extends Activity {
     private TabPagerAdapter mTabsAdapter;
     private TextToSpeech    mTTS;
 
+    private boolean         mShowOnlineServices = false;
+    private boolean         mShowMoreInfo = false;
+    private Menu            mMenu = null;
+
     private OnInitListener mTTSInitListener = new OnInitListener() {
         public void onInit(int status) {
             String balance = mTransitData.getBalanceString();
@@ -179,6 +183,14 @@ public class CardInfoActivity extends Activity {
                     });
                 }
 
+                mShowMoreInfo = mTransitData.getMoreInfoPage() != null;
+                mShowOnlineServices = mTransitData.getOnlineServicesPage() != null;
+
+                if (mMenu != null) {
+                    mMenu.findItem(R.id.online_services).setVisible(mShowOnlineServices);
+                    mMenu.findItem(R.id.more_info).setVisible(mShowMoreInfo);
+                }
+
                 boolean speakBalanceRequested = getIntent().getBooleanExtra(SPEAK_BALANCE_EXTRA, false);
                 if (mSpeakBalanceEnabled && speakBalanceRequested) {
                     mTTS = new TextToSpeech(CardInfoActivity.this, mTTSInitListener);
@@ -197,19 +209,39 @@ public class CardInfoActivity extends Activity {
 
     @Override public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.card_info_menu, menu);
+        menu.findItem(R.id.online_services).setVisible(mShowOnlineServices);
+        menu.findItem(R.id.more_info).setVisible(mShowMoreInfo);
+        mMenu = menu;
         return true;
     }
 
     @Override public boolean onOptionsItemSelected(MenuItem item) {
-        if (item.getItemId() == android.R.id.home) {
-            Intent intent = new Intent(this, CardsActivity.class);
-            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-            startActivity(intent);
-            return true;
-        } else if (item.getItemId() == R.id.advanced_info) {
-            showAdvancedInfo(null);
-            return true;
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                Intent intent = new Intent(this, CardsActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(intent);
+                return true;
+
+            case R.id.advanced_info:
+                showAdvancedInfo(null);
+                return true;
+
+            case R.id.more_info:
+                if (mTransitData.getMoreInfoPage() != null) {
+                    startActivity(new Intent(Intent.ACTION_VIEW, mTransitData.getMoreInfoPage()));
+                    return true;
+                }
+                break;
+
+            case R.id.online_services:
+                if (mTransitData.getOnlineServicesPage() != null) {
+                    startActivity(new Intent(Intent.ACTION_VIEW, mTransitData.getOnlineServicesPage()));
+                    return true;
+                }
+
         }
+
         return false;
     }
 
