@@ -237,4 +237,6 @@
     <string name="default_map_tile_url">https://tile{s}.stackcdn.com/osm_tiles_2x/{z}/{x}/{y}.png</string>
     <string name="default_map_tile_subdomains">123456</string>
 
+    <string name="about_card_format">このカードフォーマットについて</string>
+    <string name="online_services">オンライン サービス</string>
     </resources>
