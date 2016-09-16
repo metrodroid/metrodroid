@@ -12,4 +12,12 @@
     <string name="market_changelog_26">明けましておめでとうございます!\n\n* Go カード (ブリスベーンおよび南東クイーンズランド、AU) の基本的なサポートを追加しました。(各カードに固有の) 暗号化鍵と、Mifare クラシックをサポートするデバイスが必要です。制限された停止をサポートします。\n* アデレード メトロカード、AT HOP、Myki のカード識別サポートを追加しました。\n* XML ファイルからの個々のカードのインポートを修正しました。\n* さまざまな UI の改善。\n* マイナーなバグ修正。\n\n詳細は: https://github.com/micolous/metrodroid/wiki/Changelog</string>
 
 
-</resources>
+<string name="market_changelog_28">* 地図の問題を修正するため Android 4.1 が必要です。
+* FeliCa の raw データの表示に対応しました。
+* raw データを含め Mifare Ultralight に対応しました。
+* 別の日に 2 度の移動時に先の移動で日付ヘッダー表示されない問題を修正しました (問題 #15)。
+* Go カード: データの寄付のおかげで、11 の追加の停留所を追加。運賃の計算の実装は一部制限があります。
+
+詳細: https://github.com/micolous/metrodroid/wiki/Changelog</string>
+
+    </resources>
