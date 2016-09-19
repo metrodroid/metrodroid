@@ -1,7 +1,7 @@
 /*
- * SeqGoRecord.java
+ * NextfareRecord.java
  *
- * Copyright 2015 Michael Farrell <micolous+git@gmail.com>
+ * Copyright 2015-2016 Michael Farrell <micolous+git@gmail.com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -17,16 +17,16 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.codebutler.farebot.transit.seq_go.record;
+package com.codebutler.farebot.transit.nextfare.record;
 
 /**
  * Represents a record on a SEQ Go Card (Translink).
  */
-public class SeqGoRecord {
-    protected SeqGoRecord() {}
+public class NextfareRecord {
+    protected NextfareRecord() {}
 
-    public static SeqGoRecord recordFromBytes(byte[] input) {
-        SeqGoRecord record = null;
+    public static NextfareRecord recordFromBytes(byte[] input) {
+        NextfareRecord record = null;
         switch (input[0]) {
             case 0x01:
                 // Check if the next byte is not null
@@ -38,9 +38,9 @@ public class SeqGoRecord {
                         // Some other metadata type
                         return null;
                     }
-                    record = SeqGoTopupRecord.recordFromBytes(input);
+                    record = NextfareTopupRecord.recordFromBytes(input);
                 } else {
-                    record = SeqGoBalanceRecord.recordFromBytes(input);
+                    record = NextfareBalanceRecord.recordFromBytes(input);
                 }
                 break;
 
@@ -50,9 +50,9 @@ public class SeqGoRecord {
                         // Some other metadata type
                         return null;
                     }
-                    record = SeqGoTopupRecord.recordFromBytes(input);
+                    record = NextfareTopupRecord.recordFromBytes(input);
                 } else {
-                    record = SeqGoTapRecord.recordFromBytes(input);
+                    record = NextfareTapRecord.recordFromBytes(input);
                 }
                 break;
 

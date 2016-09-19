@@ -23,6 +23,7 @@ import android.os.Parcelable;
 
 import com.codebutler.farebot.transit.Station;
 import com.codebutler.farebot.transit.Trip;
+import com.codebutler.farebot.transit.nextfare.NextfareTrip;
 
 import java.text.NumberFormat;
 import java.util.GregorianCalendar;
@@ -31,39 +32,9 @@ import java.util.Locale;
 /**
  * Represents trip events on Go Card.
  */
-public class SeqGoTrip extends Trip implements Comparable<SeqGoTrip> {
-    int mJourneyId;
-    Mode mMode;
-    GregorianCalendar mStartTime;
-    GregorianCalendar mEndTime;
-    int mStartStation;
-    int mEndStation;
-    boolean mContinuation;
+public class SeqGoTrip extends NextfareTrip {
     int mTripCost = 0;
     boolean mKnownCost = false;
-
-    @Override
-    public long getTimestamp() {
-        if (mStartTime != null) {
-            return mStartTime.getTimeInMillis() / 1000;
-        } else {
-            return 0;
-        }
-    }
-
-    @Override
-    public long getExitTimestamp() {
-        if (mEndTime != null) {
-            return mEndTime.getTimeInMillis() / 1000;
-        } else {
-            return 0;
-        }
-    }
-
-    @Override
-    public String getRouteName() {
-        return null;
-    }
 
     @Override
     public String getAgencyName() {
@@ -81,11 +52,6 @@ public class SeqGoTrip extends Trip implements Comparable<SeqGoTrip> {
             default:
                 return "TransLink";
         }
-    }
-
-    @Override
-    public String getShortAgencyName() {
-        return getAgencyName();
     }
 
     @Override
@@ -193,47 +159,6 @@ public class SeqGoTrip extends Trip implements Comparable<SeqGoTrip> {
         return mMode;
     }
 
-    @Override
-    public boolean hasTime() {
-        return mStartTime != null;
-    }
-
-    @Override
-    public int describeContents() {
-        return 0;
-    }
-
-    @Override
-    public void writeToParcel(Parcel parcel, int i) {
-        parcel.writeInt(mJourneyId);
-        parcel.writeLong(mStartTime == null ? 0 : mStartTime.getTimeInMillis());
-        parcel.writeLong(mEndTime == null ? 0 : mEndTime.getTimeInMillis());
-        parcel.writeString(mMode.toString());
-        parcel.writeInt(mStartStation);
-        parcel.writeInt(mEndStation);
-    }
-
-    public SeqGoTrip(Parcel parcel) {
-        mJourneyId = parcel.readInt();
-        long startTime = parcel.readLong();
-        if (startTime != 0) {
-            mStartTime = new GregorianCalendar();
-            mStartTime.setTimeInMillis(startTime);
-        }
-
-        long endTime = parcel.readLong();
-        if (endTime != 0) {
-            mEndTime = new GregorianCalendar();
-            mEndTime.setTimeInMillis(endTime);
-        }
-
-        mMode = Mode.valueOf(parcel.readString());
-        mStartStation = parcel.readInt();
-        mEndStation = parcel.readInt();
-
-
-    }
-
     /**
      * This constructor is used for unit tests outside of the package
      * @param startStation Starting station ID.
@@ -256,11 +181,11 @@ public class SeqGoTrip extends Trip implements Comparable<SeqGoTrip> {
         return mJourneyId;
     }
 
-    public boolean isContinuation() {
-        return mContinuation;
-    }
-
     public SeqGoTrip() {}
+
+    public SeqGoTrip(Parcel in) {
+        super(in);
+    }
 
     public static final Parcelable.Creator<SeqGoTrip> CREATOR = new Parcelable.Creator<SeqGoTrip>() {
 
@@ -272,9 +197,4 @@ public class SeqGoTrip extends Trip implements Comparable<SeqGoTrip> {
             return new SeqGoTrip[size];
         }
     };
-
-    @Override
-    public int compareTo(SeqGoTrip other) {
-        return Long.valueOf(this.getTimestamp()).compareTo(Long.valueOf(other.getTimestamp()));
-    }
 }

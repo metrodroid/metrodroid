@@ -1,7 +1,7 @@
 /*
- * SeqGoTopupRecord.java
+ * NextfareTopupRecord.java
  *
- * Copyright 2015 Michael Farrell <micolous+git@gmail.com>
+ * Copyright 2015-2016 Michael Farrell <micolous+git@gmail.com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -17,13 +17,12 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.codebutler.farebot.transit.seq_go.record;
+package com.codebutler.farebot.transit.nextfare.record;
 
 import android.os.Parcel;
 import android.os.Parcelable;
 
-import com.codebutler.farebot.transit.Trip;
-import com.codebutler.farebot.transit.seq_go.SeqGoUtil;
+import com.codebutler.farebot.transit.nextfare.NextfareUtil;
 import com.codebutler.farebot.util.Utils;
 
 import java.util.GregorianCalendar;
@@ -32,20 +31,32 @@ import java.util.GregorianCalendar;
  * Top-up record type
  * https://github.com/micolous/metrodroid/wiki/Go-(SEQ)#top-up-record-type
  */
-public class SeqGoTopupRecord extends SeqGoRecord implements Parcelable {
+public class NextfareTopupRecord extends NextfareRecord implements Parcelable {
     private GregorianCalendar mTimestamp;
     private int mCredit;
     private int mStation;
     private int mChecksum;
     private boolean mAutomatic;
 
-    public static SeqGoTopupRecord recordFromBytes(byte[] input) {
+    public static final Creator<NextfareTopupRecord> CREATOR = new Creator<NextfareTopupRecord>() {
+        @Override
+        public NextfareTopupRecord createFromParcel(Parcel in) {
+            return new NextfareTopupRecord(in);
+        }
+
+        @Override
+        public NextfareTopupRecord[] newArray(int size) {
+            return new NextfareTopupRecord[size];
+        }
+    };
+
+    public static NextfareTopupRecord recordFromBytes(byte[] input) {
         if ((input[0] != 0x01 && input[0] != 0x31) || input[1] != 0x01) throw new AssertionError("Not a topup record");
 
-        SeqGoTopupRecord record = new SeqGoTopupRecord();
+        NextfareTopupRecord record = new NextfareTopupRecord();
 
         byte[] ts = Utils.reverseBuffer(input, 2, 4);
-        record.mTimestamp = SeqGoUtil.unpackDate(ts);
+        record.mTimestamp = NextfareUtil.unpackDate(ts);
 
         byte[] credit = Utils.reverseBuffer(input, 6, 2);
         record.mCredit = Utils.byteArrayToInt(credit);
@@ -60,7 +71,7 @@ public class SeqGoTopupRecord extends SeqGoRecord implements Parcelable {
         return record;
     }
 
-    protected SeqGoTopupRecord() {}
+    protected NextfareTopupRecord() {}
 
     @Override
     public int describeContents() {
@@ -76,7 +87,7 @@ public class SeqGoTopupRecord extends SeqGoRecord implements Parcelable {
         parcel.writeInt(mAutomatic ? 1 : 0);
     }
 
-    public SeqGoTopupRecord(Parcel parcel) {
+    public NextfareTopupRecord(Parcel parcel) {
         mTimestamp = new GregorianCalendar();
         mTimestamp.setTimeInMillis(parcel.readLong());
         mCredit = parcel.readInt();

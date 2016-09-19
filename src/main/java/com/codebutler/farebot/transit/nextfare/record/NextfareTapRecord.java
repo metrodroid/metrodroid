@@ -1,7 +1,7 @@
 /*
- * SeqGoTapRecord.java
+ * NextfareTapRecord.java
  *
- * Copyright 2015 Michael Farrell <micolous+git@gmail.com>
+ * Copyright 2015-2016 Michael Farrell <micolous+git@gmail.com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -17,14 +17,13 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.codebutler.farebot.transit.seq_go.record;
+package com.codebutler.farebot.transit.nextfare.record;
 
 import android.os.Parcel;
 import android.os.Parcelable;
 
 import com.codebutler.farebot.transit.Trip;
-import com.codebutler.farebot.transit.seq_go.SeqGoData;
-import com.codebutler.farebot.transit.seq_go.SeqGoUtil;
+import com.codebutler.farebot.transit.nextfare.NextfareUtil;
 import com.codebutler.farebot.util.Utils;
 
 import java.util.GregorianCalendar;
@@ -33,7 +32,7 @@ import java.util.GregorianCalendar;
  * Tap record type
  * https://github.com/micolous/metrodroid/wiki/Go-(SEQ)#tap-record-type
  */
-public class SeqGoTapRecord extends SeqGoRecord implements Parcelable, Comparable<SeqGoTapRecord> {
+public class NextfareTapRecord extends NextfareRecord implements Parcelable, Comparable<NextfareTapRecord> {
     private GregorianCalendar mTimestamp;
     private int mMode;
     private int mJourney;
@@ -42,15 +41,27 @@ public class SeqGoTapRecord extends SeqGoRecord implements Parcelable, Comparabl
     private boolean mContinuation;
 
 
-    public static SeqGoTapRecord recordFromBytes(byte[] input) {
+    public static final Creator<NextfareTapRecord> CREATOR = new Creator<NextfareTapRecord>() {
+        @Override
+        public NextfareTapRecord createFromParcel(Parcel in) {
+            return new NextfareTapRecord(in);
+        }
+
+        @Override
+        public NextfareTapRecord[] newArray(int size) {
+            return new NextfareTapRecord[size];
+        }
+    };
+
+    public static NextfareTapRecord recordFromBytes(byte[] input) {
         if (input[0] != 0x31) throw new AssertionError("not a tap record");
 
-        SeqGoTapRecord record = new SeqGoTapRecord();
+        NextfareTapRecord record = new NextfareTapRecord();
 
         record.mMode = Utils.byteArrayToInt(input, 1, 1);
 
         byte[] ts = Utils.reverseBuffer(input, 2, 4);
-        record.mTimestamp = SeqGoUtil.unpackDate(ts);
+        record.mTimestamp = NextfareUtil.unpackDate(ts);
 
         byte[] journey = Utils.reverseBuffer(input, 5, 2);
         record.mJourney = Utils.byteArrayToInt(journey) >> 5;
@@ -65,7 +76,7 @@ public class SeqGoTapRecord extends SeqGoRecord implements Parcelable, Comparabl
         return record;
     }
 
-    protected SeqGoTapRecord() {}
+    protected NextfareTapRecord() {}
 
     @Override
     public int describeContents() {
@@ -82,7 +93,7 @@ public class SeqGoTapRecord extends SeqGoRecord implements Parcelable, Comparabl
         parcel.writeInt(mContinuation ? 1 : 0);
     }
 
-    public SeqGoTapRecord(Parcel parcel) {
+    public NextfareTapRecord(Parcel parcel) {
         mTimestamp = new GregorianCalendar();
         mTimestamp.setTimeInMillis(parcel.readLong());
         mMode = parcel.readInt();
@@ -92,12 +103,8 @@ public class SeqGoTapRecord extends SeqGoRecord implements Parcelable, Comparabl
         mContinuation = parcel.readInt() == 1;
     }
 
-    public Trip.Mode getMode() {
-        if (SeqGoData.VEHICLES.containsKey(mMode)) {
-            return SeqGoData.VEHICLES.get(mMode);
-        } else {
-            return Trip.Mode.OTHER;
-        }
+    public int getMode() {
+        return mMode;
     }
 
     public GregorianCalendar getTimestamp() {
@@ -121,7 +128,7 @@ public class SeqGoTapRecord extends SeqGoRecord implements Parcelable, Comparabl
     }
 
     @Override
-    public int compareTo(SeqGoTapRecord rhs) {
+    public int compareTo(NextfareTapRecord rhs) {
         // Group by journey, then by timestamp.
         // First trip in a journey goes first, and should (generally) be in pairs.
         if (rhs.mJourney == this.mJourney) {

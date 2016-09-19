@@ -1,7 +1,7 @@
 /*
  * SeqGoTransitData.java
  *
- * Copyright 2015 Michael Farrell <micolous+git@gmail.com>
+ * Copyright 2015-2016 Michael Farrell <micolous+git@gmail.com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -39,10 +39,13 @@ import com.codebutler.farebot.transit.Subscription;
 import com.codebutler.farebot.transit.TransitData;
 import com.codebutler.farebot.transit.TransitIdentity;
 import com.codebutler.farebot.transit.Trip;
-import com.codebutler.farebot.transit.seq_go.record.SeqGoBalanceRecord;
-import com.codebutler.farebot.transit.seq_go.record.SeqGoRecord;
-import com.codebutler.farebot.transit.seq_go.record.SeqGoTopupRecord;
-import com.codebutler.farebot.transit.seq_go.record.SeqGoTapRecord;
+import com.codebutler.farebot.transit.nextfare.NextfareRefill;
+import com.codebutler.farebot.transit.nextfare.NextfareTransitData;
+import com.codebutler.farebot.transit.nextfare.NextfareTrip;
+import com.codebutler.farebot.transit.nextfare.record.NextfareBalanceRecord;
+import com.codebutler.farebot.transit.nextfare.record.NextfareRecord;
+import com.codebutler.farebot.transit.nextfare.record.NextfareTopupRecord;
+import com.codebutler.farebot.transit.nextfare.record.NextfareTapRecord;
 import com.codebutler.farebot.ui.ListItem;
 import com.codebutler.farebot.util.Utils;
 
@@ -53,7 +56,7 @@ import com.codebutler.farebot.util.Utils;
  *
  * @author Michael Farrell
  */
-public class SeqGoTransitData extends TransitData {
+public class SeqGoTransitData extends NextfareTransitData {
 
     private static final String TAG = "SeqGoTransitData";
     public static final String NAME = "Go card";
@@ -62,14 +65,16 @@ public class SeqGoTransitData extends TransitData {
         0x1C, 0x1D, 0x1E, 0x1F
     };
 
-    BigInteger mSerialNumber;
-    int mBalance;
-    SeqGoRefill[] mRefills;
-    SeqGoTrip[] mTrips;
-    boolean mHasUnknownStations = false;
-    private SeqGoFareCalculator fareCalculator = new SeqGoFareCalculator();
+    static final byte[] SYSTEM_CODE1 = {
+        0x5A, 0x5B, 0x20, 0x21, 0x22, 0x23
+    };
 
-    /*
+    static final byte[] SYSTEM_CODE2 = {
+            0x20, 0x21, 0x22, 0x23, 0x01, 0x01
+    };
+
+    private SeqGoFareCalculator fareCalculator;
+
     public static final Creator<SeqGoTransitData> CREATOR = new Creator<SeqGoTransitData>() {
         public SeqGoTransitData createFromParcel(Parcel parcel) {
             return new SeqGoTransitData(parcel);
@@ -79,204 +84,78 @@ public class SeqGoTransitData extends TransitData {
             return new SeqGoTransitData[size];
         }
     };
-*/
+
+    public static TransitIdentity parseTransitIdentity(ClassicCard card) {
+        return NextfareTransitData.parseTransitIdentity(card, NAME);
+    }
+
     public static boolean check(ClassicCard card) {
         try {
             byte[] blockData = card.getSector(0).getBlock(1).getData();
-            return Arrays.equals(Arrays.copyOfRange(blockData, 1, 9), MANUFACTURER);
+            if (!Arrays.equals(Arrays.copyOfRange(blockData, 1, 9), MANUFACTURER)) {
+                return false;
+            }
+
+            byte[] systemCode = Arrays.copyOfRange(blockData, 9, 15);
+            Log.d(TAG, "SystemCode = " + Utils.getHexString(systemCode));
+            return Arrays.equals(systemCode, SYSTEM_CODE1) || Arrays.equals(systemCode, SYSTEM_CODE2);
         } catch (UnauthorizedException ex) {
             // It is not possible to identify the card without a key
             return false;
         }
     }
 
-
-    public static TransitIdentity parseTransitIdentity(ClassicCard card) {
-        byte[] serialData = card.getSector(0).getBlock(0).getData();
-        serialData = Utils.reverseBuffer(serialData, 0, 4);
-        BigInteger serialNumber = Utils.byteArrayToBigInteger(serialData, 0, 4);
-        return new TransitIdentity(NAME, formatSerialNumber(serialNumber));
-    }
-
-    private static String formatSerialNumber(BigInteger serialNumber) {
-        String serial = serialNumber.toString();
-        while (serial.length() < 12) {
-            serial = "0" + serial;
-        }
-
-        serial = "016" + serial;
-        return serial + Utils.calculateLuhn(serial);
-    }
-
-    @SuppressWarnings("UnusedDeclaration")
     public SeqGoTransitData(Parcel parcel) {
-        mSerialNumber = new BigInteger(parcel.readString());
-        mBalance = parcel.readInt();
-        parcel.readTypedArray(mTrips, SeqGoTrip.CREATOR);
-        parcel.readTypedArray(mRefills, SeqGoRefill.CREATOR);
-
+        super(parcel);
     }
 
     public SeqGoTransitData(ClassicCard card) {
-        byte[] serialData = card.getSector(0).getBlock(0).getData();
-        serialData = Utils.reverseBuffer(serialData, 0, 4);
-        mSerialNumber = Utils.byteArrayToBigInteger(serialData, 0, 4);
+        super(card);
+    }
 
-        ArrayList<SeqGoRecord> records = new ArrayList<>();
+    @Override
+    protected void calculateFares(ArrayList<NextfareTrip> trips) {
+        // Now add fare information
+        int currentJourney = -1;
+        ArrayList<SeqGoTrip> tripsInJourney = new ArrayList<>();
+        fareCalculator = new SeqGoFareCalculator();
+        for (NextfareTrip ntrip : trips) {
+            // All of our trips are of this class, so just blindly cast
+            SeqGoTrip trip = (SeqGoTrip)ntrip;
 
-        for (ClassicSector sector : card.getSectors()) {
-            for (ClassicBlock block : sector.getBlocks()) {
-                if (sector.getIndex() == 0 && block.getIndex() == 0) {
-                    continue;
-                }
-
-                if (block.getIndex() == 3) {
-                    continue;
-                }
-
-                SeqGoRecord record = SeqGoRecord.recordFromBytes(block.getData());
-
-                if (record != null) {
-                    records.add(record);
-                }
-            }
-        }
-
-        // Now do a first pass for metadata and balance information.
-        ArrayList<SeqGoBalanceRecord> balances = new ArrayList<>();
-        ArrayList<SeqGoTrip> trips = new ArrayList<>();
-        ArrayList<Refill> refills = new ArrayList<>();
-        ArrayList<SeqGoTapRecord> taps = new ArrayList<>();
-
-        for (SeqGoRecord record : records) {
-            if (record instanceof SeqGoBalanceRecord) {
-                balances.add((SeqGoBalanceRecord)record);
-            } else if (record instanceof SeqGoTopupRecord) {
-                SeqGoTopupRecord topupRecord = (SeqGoTopupRecord)record;
-
-                refills.add(new SeqGoRefill(topupRecord));
-            } else if (record instanceof SeqGoTapRecord) {
-                taps.add((SeqGoTapRecord)record);
-            }
-        }
-
-        if (balances.size() >= 1) {
-            Collections.sort(balances);
-            mBalance = balances.get(0).getBalance();
-        }
-
-        if (taps.size() >= 1) {
-            Collections.sort(taps);
-
-            // Lets figure out the trips.
-            int i = 0;
-
-            while (taps.size() > i) {
-                SeqGoTapRecord tapOn = taps.get(i);
-                // Start by creating an empty trip
-                SeqGoTrip trip = new SeqGoTrip();
-
-                // Put in the metadatas
-                trip.mJourneyId = tapOn.getJourney();
-                trip.mStartTime = tapOn.getTimestamp();
-                trip.mStartStation = tapOn.getStation();
-                trip.mMode = tapOn.getMode();
-                trip.mContinuation = tapOn.isContinuation();
-
-                if (!mHasUnknownStations && trip.mStartStation != 0 && trip.getStartStation() == null) {
-                    mHasUnknownStations = true;
-                }
-
-                // Peek at the next record and see if it is part of
-                // this journey
-                if (taps.size() > i+1 && taps.get(i+1).getJourney() == tapOn.getJourney() && taps.get(i+1).getMode() == tapOn.getMode()) {
-                    // There is a tap off.  Lets put that data in
-                    SeqGoTapRecord tapOff = taps.get(i+1);
-
-                    trip.mEndTime = tapOff.getTimestamp();
-                    trip.mEndStation = tapOff.getStation();
-
-                    if (!mHasUnknownStations && trip.mEndStation != 0 && trip.getEndStation() == null) {
-                        mHasUnknownStations = true;
-                    }
-
-                    // Increment to skip the next record
-                    i++;
-                } else {
-                    // There is no tap off. Journey is probably in progress.
-                }
-
-                trips.add(trip);
-
-                // Increment to go to the next record
-                i++;
+            if (currentJourney != trip.getJourneyId()) {
+                currentJourney = trip.getJourneyId();
+                tripsInJourney = new ArrayList<>();
             }
 
-            // Now sort the trips array
-            Collections.sort(trips, new Trip.Comparator());
-
-            // Trips are normally in reverse order, put them in forward order
-            Collections.reverse(trips);
-
-            // Now add fare information
-            int currentJourney = -1;
-            ArrayList<SeqGoTrip> tripsInJourney = new ArrayList<>();
-            for (SeqGoTrip trip : trips) {
-                if (currentJourney != trip.getJourneyId()) {
-                    currentJourney = trip.getJourneyId();
-                    tripsInJourney = new ArrayList<>();
-                }
-
-                // Calculate the fare
-                try {
-                    trip.mTripCost = fareCalculator.calculateFareForTrip(trip, tripsInJourney);
-                    trip.mKnownCost = true;
-                    tripsInJourney.add(trip);
-                } catch (SeqGoFareCalculator.InvalidArgumentException ex) {
-                    Log.d(TAG, ex.getMessage());
-                } catch (SeqGoFareCalculator.UnknownCostException ex) {
-                    Log.d(TAG, ex.getMessage());
-                }
+            // Calculate the fare
+            try {
+                trip.mTripCost = fareCalculator.calculateFareForTrip(trip, tripsInJourney);
+                trip.mKnownCost = true;
+                tripsInJourney.add(trip);
+            } catch (SeqGoFareCalculator.InvalidArgumentException | SeqGoFareCalculator.UnknownCostException ex) {
+                Log.d(TAG, ex.getMessage());
             }
         }
+    }
 
+    @Override
+    protected NextfareTrip newTrip() {
+        return new SeqGoTrip();
+    }
 
-        if (refills.size() > 1) {
-            Collections.sort(refills, new Refill.Comparator());
+    @Override
+    protected NextfareRefill newRefill(NextfareTopupRecord record) {
+        return new SeqGoRefill(record);
+    }
+
+    @Override
+    protected Trip.Mode lookupMode(int mode) {
+        if (SeqGoData.VEHICLES.containsKey(mode)) {
+            return SeqGoData.VEHICLES.get(mode);
+        } else {
+            return Trip.Mode.OTHER;
         }
-
-        mTrips = trips.toArray(new SeqGoTrip[trips.size()]);
-        mRefills = refills.toArray(new SeqGoRefill[refills.size()]);
-    }
-
-    @Override
-    public String getBalanceString() {
-        return NumberFormat.getCurrencyInstance(Locale.US).format((double)mBalance / 100.);
-    }
-
-    @Override
-    public String getSerialNumber() {
-        return formatSerialNumber(mSerialNumber);
-    }
-
-    @Override
-    public Trip[] getTrips() {
-        return mTrips;
-    }
-
-    @Override
-    public Refill[] getRefills() {
-        return mRefills;
-    }
-
-    @Override
-    public Subscription[] getSubscriptions() {
-        return null;
-    }
-
-    @Override
-    public List<ListItem> getInfo() {
-        return null;
     }
 
     @Override
@@ -284,18 +163,6 @@ public class SeqGoTransitData extends TransitData {
         return NAME;
     }
 
-    @Override
-    public boolean hasUnknownStations() {
-        return mHasUnknownStations;
-    }
-
-    @Override
-    public void writeToParcel(Parcel parcel, int i) {
-        parcel.writeString(mSerialNumber.toString());
-        parcel.writeInt(mBalance);
-        parcel.writeTypedArray(mTrips, i);
-        parcel.writeTypedArray(mRefills, i);
-    }
     @Override
     public Uri getMoreInfoPage() {
         return Uri.parse("https://micolous.github.io/metrodroid/seqgo");
