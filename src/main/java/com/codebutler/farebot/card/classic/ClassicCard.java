@@ -79,18 +79,13 @@ public class ClassicCard extends Card {
                 try {
                     boolean authSuccess = false;
 
-                    // Try the default keys first
-                    if (!authSuccess && sectorIndex == 0) {
-                        authSuccess = tech.authenticateSectorWithKeyA(sectorIndex, PREAMBLE_KEY);
-                    }
+                    // Try to authenticate with the sector 3 times, in case we have impaired
+                    // communications with the card.
+                    int retryLimit = 3;
 
-                    if (!authSuccess) {
-                        authSuccess = tech.authenticateSectorWithKeyA(sectorIndex, MifareClassic.KEY_DEFAULT);
-                    }
-
-                    if (keys != null) {
-                        // Try with a 1:1 sector mapping on our key list first
-                        if (!authSuccess) {
+                    while (!authSuccess && (retryLimit-- > 0)) {
+                        // If there's a key we we know for the card use, try it first
+                        if (keys != null) {
                             ClassicSectorKey sectorKey = keys.keyForSector(sectorIndex);
                             if (sectorKey != null) {
                                 if (sectorKey.getType().equals(ClassicSectorKey.TYPE_KEYA)) {
@@ -101,7 +96,24 @@ public class ClassicCard extends Card {
                             }
                         }
 
+                        // Try the default keys first
                         if (!authSuccess) {
+                            authSuccess = tech.authenticateSectorWithKeyA(sectorIndex, PREAMBLE_KEY);
+                        }
+
+                        if (!authSuccess) {
+                            authSuccess = tech.authenticateSectorWithKeyB(sectorIndex, PREAMBLE_KEY);
+                        }
+
+                        if (!authSuccess) {
+                            authSuccess = tech.authenticateSectorWithKeyA(sectorIndex, MifareClassic.KEY_DEFAULT);
+                        }
+
+                        if (!authSuccess) {
+                            authSuccess = tech.authenticateSectorWithKeyB(sectorIndex, MifareClassic.KEY_DEFAULT);
+                        }
+
+                        if (!authSuccess && keys != null) {
                             // Be a little more forgiving on the key list.  Lets try all the keys!
                             //
                             // This takes longer, of course, but means that users aren't scratching
@@ -126,6 +138,7 @@ public class ClassicCard extends Card {
                                 }
                             }
                         }
+
                     }
 
                     if (authSuccess) {
