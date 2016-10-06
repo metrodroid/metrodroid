@@ -1,6 +1,6 @@
 # Cubic Nextfare
 
-This implements some base fare reader capability for Cubic Nextfare.
+This implements some base fare reader capability for Cubic Nextfare on Mifare Classic.
 
 This is used by Go card (South East Queensland) and Transit Access Pass (Los Angeles).
 

@@ -21,10 +21,12 @@ package com.codebutler.farebot.transit.nextfare.record;
 
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.util.Log;
 
 import com.codebutler.farebot.transit.nextfare.NextfareUtil;
 import com.codebutler.farebot.util.Utils;
 
+import java.text.SimpleDateFormat;
 import java.util.GregorianCalendar;
 
 /**
@@ -32,6 +34,7 @@ import java.util.GregorianCalendar;
  * https://github.com/micolous/metrodroid/wiki/Go-(SEQ)#top-up-record-type
  */
 public class NextfareTopupRecord extends NextfareRecord implements Parcelable {
+    private static final String TAG = "NextfareTopupRecord";
     private GregorianCalendar mTimestamp;
     private int mCredit;
     private int mStation;
@@ -51,7 +54,7 @@ public class NextfareTopupRecord extends NextfareRecord implements Parcelable {
     };
 
     public static NextfareTopupRecord recordFromBytes(byte[] input) {
-        if ((input[0] != 0x01 && input[0] != 0x31) || input[1] != 0x01) throw new AssertionError("Not a topup record");
+        //if ((input[0] != 0x01 && input[0] != 0x31) || input[1] != 0x01) throw new AssertionError("Not a topup record");
 
         NextfareTopupRecord record = new NextfareTopupRecord();
 
@@ -68,6 +71,8 @@ public class NextfareTopupRecord extends NextfareRecord implements Parcelable {
         record.mChecksum = Utils.byteArrayToInt(checksum);
 
         record.mAutomatic = input[0] == 0x31;
+
+        Log.d(TAG, "@" + Utils.isoDateTimeFormat(record.mTimestamp) + ": " + record.mCredit + " cents, station " + record.mStation + ", " + (record.mAutomatic ? "auto" : "manual"));
         return record;
     }
 

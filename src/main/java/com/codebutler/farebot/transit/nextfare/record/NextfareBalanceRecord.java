@@ -18,20 +18,21 @@
  */
 package com.codebutler.farebot.transit.nextfare.record;
 
+import android.util.Log;
+
 import com.codebutler.farebot.util.Utils;
 
 /**
- * Represents balance records on Go card
+ * Represents balance records on Nextfare
  * https://github.com/micolous/metrodroid/wiki/Go-(SEQ)#balance-record-type
  */
 public class NextfareBalanceRecord extends NextfareRecord implements Comparable<NextfareBalanceRecord> {
-
+    private static final String TAG = "NextfareBalanceRecord";
     private int mVersion;
     private int mBalance;
 
     public static NextfareBalanceRecord recordFromBytes(byte[] input) {
-        if (input[0] != 0x01) throw new AssertionError();
-
+        //if (input[0] != 0x01) throw new AssertionError();
 
         NextfareBalanceRecord record = new NextfareBalanceRecord();
         record.mVersion = Utils.byteArrayToInt(input, 13, 1);
@@ -40,6 +41,7 @@ public class NextfareBalanceRecord extends NextfareRecord implements Comparable<
         byte[] balance = Utils.reverseBuffer(input, 2, 2);
         record.mBalance = Utils.byteArrayToInt(balance, 0, 2);
 
+        Log.d(TAG, "Balance " + record.mBalance + " version " + record.mVersion);
         return record;
     }
 

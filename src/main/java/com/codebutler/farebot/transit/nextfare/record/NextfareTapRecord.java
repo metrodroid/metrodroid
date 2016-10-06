@@ -21,6 +21,7 @@ package com.codebutler.farebot.transit.nextfare.record;
 
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.util.Log;
 
 import com.codebutler.farebot.transit.Trip;
 import com.codebutler.farebot.transit.nextfare.NextfareUtil;
@@ -33,6 +34,7 @@ import java.util.GregorianCalendar;
  * https://github.com/micolous/metrodroid/wiki/Go-(SEQ)#tap-record-type
  */
 public class NextfareTapRecord extends NextfareRecord implements Parcelable, Comparable<NextfareTapRecord> {
+    private static final String TAG = "NextfareTapRecord";
     private GregorianCalendar mTimestamp;
     private int mMode;
     private int mJourney;
@@ -54,7 +56,7 @@ public class NextfareTapRecord extends NextfareRecord implements Parcelable, Com
     };
 
     public static NextfareTapRecord recordFromBytes(byte[] input) {
-        if (input[0] != 0x31) throw new AssertionError("not a tap record");
+        //if (input[0] != 0x31) throw new AssertionError("not a tap record");
 
         NextfareTapRecord record = new NextfareTapRecord();
 
@@ -73,6 +75,7 @@ public class NextfareTapRecord extends NextfareRecord implements Parcelable, Com
         byte[] checksum = Utils.reverseBuffer(input, 14, 2);
         record.mChecksum = Utils.byteArrayToInt(checksum);
 
+        Log.d(TAG, "@" + Utils.isoDateTimeFormat(record.mTimestamp) + ": mode " + record.mMode + ", station " + record.mStation + ", journey " + record.mJourney + ", " + (record.mContinuation ? "continuation" : "new trip"));
         return record;
     }
 

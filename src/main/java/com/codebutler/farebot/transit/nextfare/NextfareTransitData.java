@@ -19,6 +19,7 @@
 package com.codebutler.farebot.transit.nextfare;
 
 import android.os.Parcel;
+import android.util.Log;
 
 import com.codebutler.farebot.card.UnauthorizedException;
 import com.codebutler.farebot.card.classic.ClassicBlock;
@@ -33,6 +34,7 @@ import com.codebutler.farebot.transit.nextfare.record.NextfareBalanceRecord;
 import com.codebutler.farebot.transit.nextfare.record.NextfareRecord;
 import com.codebutler.farebot.transit.nextfare.record.NextfareTapRecord;
 import com.codebutler.farebot.transit.nextfare.record.NextfareTopupRecord;
+import com.codebutler.farebot.transit.nextfare.record.NextfareTravelPassRecord;
 import com.codebutler.farebot.ui.ListItem;
 import com.codebutler.farebot.util.Utils;
 
@@ -62,6 +64,7 @@ public class NextfareTransitData extends TransitData {
     int mBalance;
     NextfareRefill[] mRefills;
     NextfareTrip[] mTrips;
+    NextfareSubscription[] mSubscriptions;
     boolean mHasUnknownStations = false;
 
 
@@ -131,7 +134,8 @@ public class NextfareTransitData extends TransitData {
                     continue;
                 }
 
-                NextfareRecord record = NextfareRecord.recordFromBytes(block.getData());
+                Log.d(TAG, "Sector " + sector.getIndex() + " / Block " + block.getIndex());
+                NextfareRecord record = NextfareRecord.recordFromBytes(block.getData(), sector.getIndex(), block.getIndex());
 
                 if (record != null) {
                     records.add(record);
@@ -144,6 +148,7 @@ public class NextfareTransitData extends TransitData {
         ArrayList<NextfareTrip> trips = new ArrayList<>();
         ArrayList<Refill> refills = new ArrayList<>();
         ArrayList<NextfareTapRecord> taps = new ArrayList<>();
+        ArrayList<NextfareTravelPassRecord> passes = new ArrayList<>();
 
         for (NextfareRecord record : records) {
             if (record instanceof NextfareBalanceRecord) {
@@ -154,6 +159,8 @@ public class NextfareTransitData extends TransitData {
                 refills.add(newRefill(topupRecord));
             } else if (record instanceof NextfareTapRecord) {
                 taps.add((NextfareTapRecord)record);
+            } else if (record instanceof NextfareTravelPassRecord) {
+                passes.add((NextfareTravelPassRecord)record);
             }
         }
 
@@ -200,7 +207,8 @@ public class NextfareTransitData extends TransitData {
                     // Increment to skip the next record
                     i++;
                 } else {
-                    // There is no tap off. Journey is probably in progress.
+                    // There is no tap off. Journey is probably in progress, or the agency doesn't
+                    // do tap offs.
                 }
 
                 trips.add(trip);
@@ -218,9 +226,13 @@ public class NextfareTransitData extends TransitData {
             calculateFares(trips);
         }
 
-
         if (refills.size() > 1) {
             Collections.sort(refills, new Refill.Comparator());
+        }
+
+        if (passes.size() >= 1) {
+            Collections.sort(passes);
+            mSubscriptions = new NextfareSubscription[] { newSubscription(passes.get(0)) };
         }
 
         mTrips = trips.toArray(new NextfareTrip[trips.size()]);
@@ -239,12 +251,21 @@ public class NextfareTransitData extends TransitData {
     }
 
     /**
-     * Allows you to override the constructor for new refills, to hook in your own codes.
+     * Allows you to override the constructor for new refills, to hook in your own code.
      * @param record Record to parse
      * @return Subclass of NextfareRefill
      */
     protected NextfareRefill newRefill(NextfareTopupRecord record) {
         return new NextfareRefill(record);
+    }
+
+    /**
+     * Allows you to override the constructor for new subscriptions, to hook in your own code.
+     * @param record Record to parse
+     * @return Subclass of NextfareSubscription
+     */
+    protected NextfareSubscription newSubscription(NextfareTravelPassRecord record) {
+        return new NextfareSubscription(record);
     }
 
     /**
@@ -279,7 +300,7 @@ public class NextfareTransitData extends TransitData {
 
     @Override
     public Subscription[] getSubscriptions() {
-        return null;
+        return mSubscriptions;
     }
 
     @Override

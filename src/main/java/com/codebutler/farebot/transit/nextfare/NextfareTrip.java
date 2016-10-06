@@ -109,7 +109,11 @@ public class NextfareTrip extends Trip implements Comparable<NextfareTrip> {
 
     @Override
     public String getEndStationName() {
-        return "Unknown (" + Integer.toString(mEndStation) + ")";
+        if (mEndTime != null) {
+            return "Unknown (" + Integer.toString(mEndStation) + ")";
+        } else {
+            return null;
+        }
     }
 
     @Override

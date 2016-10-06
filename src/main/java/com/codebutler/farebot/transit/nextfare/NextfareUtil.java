@@ -37,7 +37,7 @@ public final class NextfareUtil {
      * yyyyyyy mmmm ddddd
      *
      * Bottom 11 bits = minutes since 00:00
-     * Time is represented in localtime, Australia/Brisbane.
+     * Time is represented in localtime
      *
      * Assumes that data has already been byte-reversed for big endian parsing.
      *
