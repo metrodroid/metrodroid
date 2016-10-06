@@ -3,10 +3,8 @@
 <!--
   prefs.xml
 
-  Copyright (C) 2011 Eric Butler
-
-  Authors:
-  Eric Butler <eric@codebutler.com>
+  Copyright 2011 Eric Butler <eric@codebutler.com>
+  Copyright 2016 Michael Farrell <mioolous+git@gmail.com>
 
   This program is free software: you can redistribute it and/or modify
   it under the terms of the GNU General Public License as published by
@@ -22,14 +20,18 @@
   along with this program.  If not, see <http://www.gnu.org/licenses/>.
   -->
 
-<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+<PreferenceScreen
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:npp="http://micolous.github.io/metrodroid/schemas/number-picker-preference">
     <PreferenceCategory
         android:title="@string/general">
         <CheckBoxPreference
             android:title="@string/launch_from_background"
             android:persistent="false"
             android:key="pref_launch_from_background"/>
+    </PreferenceCategory>
 
+    <PreferenceCategory android:title="Maps">
         <EditTextPreference
             android:title="@string/map_tiles_url"
             android:summary="@string/map_tiles_url_summary"
@@ -41,6 +43,17 @@
             android:key="pref_map_tile_subdomains"
             android:defaultValue="@string/default_map_tile_subdomains"/>
     </PreferenceCategory>
+
+    <PreferenceCategory android:title="@string/mifare_classic">
+        <com.codebutler.farebot.ui.NumberPickerPreference
+            android:title="@string/auth_retries"
+            android:summary="@string/auth_retries_summary"
+            android:defaultValue="3"
+            android:key="pref_mfc_authretry"
+            npp:minValue="1"
+            npp:maxValue="10" />
+    </PreferenceCategory>
+
     <PreferenceCategory android:title="@string/accessibility">
         <CheckBoxPreference
             android:title="@string/speak_balance"
