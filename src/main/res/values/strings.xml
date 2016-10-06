@@ -289,5 +289,8 @@
         These are deliberately separated strings in order to match the terminology of the agency.
     -->
     <string name="card_note_myki">Only the card number can be read.</string>
+    <string name="mifare_classic">Mifare Classic</string>
+    <string name="auth_retries">Authentication retries</string>
+    <string name="auth_retries_summary">Number of times to attempt authentication for each sector</string>
 
 </resources>

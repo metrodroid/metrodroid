@@ -20,9 +20,13 @@
 
 package com.codebutler.farebot.card.classic;
 
+import android.content.SharedPreferences;
 import android.nfc.Tag;
 import android.nfc.tech.MifareClassic;
+import android.preference.PreferenceManager;
+import android.util.Log;
 
+import com.codebutler.farebot.activity.ReadingTagActivity;
 import com.codebutler.farebot.card.Card;
 import com.codebutler.farebot.card.CardHasManufacturingInfo;
 import com.codebutler.farebot.card.CardRawDataFragmentClass;
@@ -48,10 +52,13 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import au.id.micolous.metrodroid.MetrodroidApplication;
+
 @Root(name="card")
 @CardRawDataFragmentClass(ClassicCardRawDataFragment.class)
 @CardHasManufacturingInfo(false)
 public class ClassicCard extends Card {
+    private static final String TAG = "ClassicCard";
     public static final byte[] PREAMBLE_KEY = { (byte) 0x00, (byte) 0x00, (byte) 0x00, (byte) 0x00, (byte) 0x00,
             (byte) 0x00 };
 
@@ -66,6 +73,7 @@ public class ClassicCard extends Card {
 
     public static ClassicCard dumpTag(byte[] tagId, Tag tag) throws Exception {
         MifareClassic tech = null;
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(MetrodroidApplication.getInstance());
 
         try {
             tech = MifareClassic.get(tag);
@@ -79,11 +87,12 @@ public class ClassicCard extends Card {
                 try {
                     boolean authSuccess = false;
 
-                    // Try to authenticate with the sector 3 times, in case we have impaired
+                    // Try to authenticate with the sector multiple times, in case we have impaired
                     // communications with the card.
-                    int retryLimit = 3;
+                    int retryLimit = prefs.getInt(MetrodroidApplication.PREF_MFC_AUTHRETRY, 3);
 
                     while (!authSuccess && (retryLimit-- > 0)) {
+                        Log.d(TAG, "Attempting authentication on sector " + sectorIndex + ", " + retryLimit + " tries remain...");
                         // If there's a key we we know for the card use, try it first
                         if (keys != null) {
                             ClassicSectorKey sectorKey = keys.keyForSector(sectorIndex);
@@ -142,6 +151,7 @@ public class ClassicCard extends Card {
                     }
 
                     if (authSuccess) {
+                        Log.d(TAG, "Authenticated successfully for sector " + sectorIndex);
                         List<ClassicBlock> blocks = new ArrayList<>();
                         // FIXME: First read trailer block to get type of other blocks.
                         int firstBlockIndex = tech.sectorToBlock(sectorIndex);
@@ -152,6 +162,7 @@ public class ClassicCard extends Card {
                         }
                         sectors.add(new ClassicSector(sectorIndex, blocks.toArray(new ClassicBlock[blocks.size()])));
                     } else {
+                        Log.d(TAG, "Authentication unsuccessful for sector " + sectorIndex + ", giving up");
                         sectors.add(new UnauthorizedClassicSector(sectorIndex));
                     }
                 } catch (IOException ex) {

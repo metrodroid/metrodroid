@@ -65,6 +65,7 @@ import java.util.Date;
 public class MetrodroidApplication extends Application {
     public static final String PREF_LAST_READ_ID = "last_read_id";
     public static final String PREF_LAST_READ_AT = "last_read_at";
+    public static final String PREF_MFC_AUTHRETRY = "pref_mfc_authretry";
 
     private static MetrodroidApplication sInstance;
 
