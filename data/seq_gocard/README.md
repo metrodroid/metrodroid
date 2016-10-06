@@ -24,3 +24,6 @@ While Airtrain does stop at South Bank and Park Road, these are charged an addit
 
 This shouldn't be set on Airport stations.
 
+# About the data source
+
+The [upstream GTFS data](https://data.qld.gov.au/dataset/general-transit-feed-specification-gtfs-seq) is licensed under the [CC BY 3.0 AU license](https://creativecommons.org/licenses/by/3.0/au/), provided by the [Queensland Department of Transport and Main Roads](http://www.tmr.qld.gov.au).

@@ -108,6 +108,17 @@ public class LicenseActivity extends Activity {
             "See the License for the specific language governing permissions and " +
             "limitations under the License.\n\n\n";
 
+    final static String mSEQGoGtfs = "The SEQ Go Card stop database used in this software " +
+            "contains information derived from Translink's GTFS feed, made available under the " +
+            "Creative Commons Attribution 3.0 Australia license by the Queensland Department " +
+            "of Transport and Main Roads.\n" +
+            "\n" +
+            "You may obtain a copy of the raw data and it's license at:\n" +
+            "\n" +
+            "   https://data.qld.gov.au/dataset/general-transit-feed-specification-gtfs-seq\n" +
+            "\n" +
+            "Stop mapping information is available in Metrodroid's source repository.\n\n\n";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -126,6 +137,9 @@ public class LicenseActivity extends Activity {
         lblLicenseText.append(mNfcFelicaLib);
 
         lblLicenseText.append(mAOSP);
+
+        // TODO: Read this programatically
+        lblLicenseText.append(mSEQGoGtfs);
     }
 
 
