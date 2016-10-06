@@ -243,4 +243,5 @@
     <string name="auth_retries">認証の再試行</string>
     <string name="auth_retries_summary">セクターごとに認証を試行する回数</string>
 
-</resources>
+<string name="valid_to_format">%1$s まで有効</string>
+    </resources>
