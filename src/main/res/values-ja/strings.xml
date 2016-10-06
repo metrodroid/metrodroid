@@ -239,4 +239,8 @@
 
     <string name="about_card_format">このカードフォーマットについて</string>
     <string name="online_services">オンライン サービス</string>
-    </resources>
+    <string name="mifare_classic">Mifare クラシック</string>
+    <string name="auth_retries">認証の再試行</string>
+    <string name="auth_retries_summary">セクターごとに認証を試行する回数</string>
+
+</resources>
