@@ -48,10 +48,10 @@
         <com.codebutler.farebot.ui.NumberPickerPreference
             android:title="@string/auth_retries"
             android:summary="@string/auth_retries_summary"
-            android:defaultValue="3"
+            android:defaultValue="5"
             android:key="pref_mfc_authretry"
             npp:minValue="1"
-            npp:maxValue="10" />
+            npp:maxValue="20" />
     </PreferenceCategory>
 
     <PreferenceCategory android:title="@string/accessibility">

@@ -75,6 +75,8 @@ public class ClassicCard extends Card {
     public static ClassicCard dumpTag(byte[] tagId, Tag tag) throws Exception {
         MifareClassic tech = null;
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(MetrodroidApplication.getInstance());
+        final int retryLimit = prefs.getInt(MetrodroidApplication.PREF_MFC_AUTHRETRY, 5);
+        int retriesLeft;
 
         try {
             tech = MifareClassic.get(tag);
@@ -90,39 +92,28 @@ public class ClassicCard extends Card {
 
                     // Try to authenticate with the sector multiple times, in case we have impaired
                     // communications with the card.
-                    int retryLimit = prefs.getInt(MetrodroidApplication.PREF_MFC_AUTHRETRY, 3);
+                    retriesLeft = retryLimit;
 
-                    while (!authSuccess && (retryLimit-- > 0)) {
-                        Log.d(TAG, "Attempting authentication on sector " + sectorIndex + ", " + retryLimit + " tries remain...");
-                        // If there's a key we we know for the card use, try it first
-                        if (keys != null) {
-                            ClassicSectorKey sectorKey = keys.keyForSector(sectorIndex);
-                            if (sectorKey != null) {
-                                if (sectorKey.getType().equals(ClassicSectorKey.TYPE_KEYA)) {
-                                    authSuccess = tech.authenticateSectorWithKeyA(sectorIndex, sectorKey.getKey());
-                                } else {
-                                    authSuccess = tech.authenticateSectorWithKeyB(sectorIndex, sectorKey.getKey());
-                                }
+                    while (!authSuccess && keys != null && retriesLeft-- > 0) {
+                        // If we have a known key for the sector on the card, try this first.
+                        Log.d(TAG, "Attempting authentication on sector " + sectorIndex + ", " + retriesLeft + " tries remain...");
+                        ClassicSectorKey sectorKey = keys.keyForSector(sectorIndex);
+                        if (sectorKey != null) {
+                            if (sectorKey.getType().equals(ClassicSectorKey.TYPE_KEYA)) {
+                                authSuccess = tech.authenticateSectorWithKeyA(sectorIndex, sectorKey.getKey());
+                            } else {
+                                authSuccess = tech.authenticateSectorWithKeyB(sectorIndex, sectorKey.getKey());
                             }
                         }
+                    }
 
-                        // Try the default keys first
-                        if (!authSuccess) {
-                            authSuccess = tech.authenticateSectorWithKeyA(sectorIndex, PREAMBLE_KEY);
-                        }
+                    // Try with the other keys
+                    retriesLeft = retryLimit;
 
-                        if (!authSuccess) {
-                            authSuccess = tech.authenticateSectorWithKeyB(sectorIndex, PREAMBLE_KEY);
-                        }
+                    while (!authSuccess && (retriesLeft-- > 0)) {
+                        Log.d(TAG, "Attempting authentication with other keys on sector " + sectorIndex + ", " + retriesLeft + " tries remain...");
 
-                        if (!authSuccess) {
-                            authSuccess = tech.authenticateSectorWithKeyA(sectorIndex, MifareClassic.KEY_DEFAULT);
-                        }
-
-                        if (!authSuccess) {
-                            authSuccess = tech.authenticateSectorWithKeyB(sectorIndex, MifareClassic.KEY_DEFAULT);
-                        }
-
+                        // Attempt authentication with alternate keys
                         if (!authSuccess && keys != null) {
                             // Be a little more forgiving on the key list.  Lets try all the keys!
                             //
@@ -144,9 +135,27 @@ public class ClassicCard extends Card {
 
                                 if (authSuccess) {
                                     // Jump out if we have the key
+                                    Log.d(TAG, "Authenticated successfully to sector " + sectorIndex + " with key for sector " + keyIndex + ". Fix the farebotkeys file to speed up authentication.");
                                     break;
                                 }
                             }
+                        }
+
+                        // Try the default keys last.  If these are the only keys we have, the other steps will be skipped.
+                        if (!authSuccess) {
+                            authSuccess = tech.authenticateSectorWithKeyA(sectorIndex, PREAMBLE_KEY);
+                        }
+
+                        if (!authSuccess) {
+                            authSuccess = tech.authenticateSectorWithKeyB(sectorIndex, PREAMBLE_KEY);
+                        }
+
+                        if (!authSuccess) {
+                            authSuccess = tech.authenticateSectorWithKeyA(sectorIndex, MifareClassic.KEY_DEFAULT);
+                        }
+
+                        if (!authSuccess) {
+                            authSuccess = tech.authenticateSectorWithKeyB(sectorIndex, MifareClassic.KEY_DEFAULT);
                         }
 
                     }
