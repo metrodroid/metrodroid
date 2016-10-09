@@ -172,4 +172,14 @@ public class SeqGoTransitData extends NextfareTransitData {
     public Uri getOnlineServicesPage() {
         return Uri.parse("https://gocard.translink.com.au/");
     }
+
+    /**
+     * The base implementation of hasUnknownStations from Nextfare always returns false, but we can
+     * return the correct value for Go card.
+     * @return true if there are unknown station IDs on the card.
+     */
+    @Override
+    public boolean hasUnknownStations() {
+        return mHasUnknownStations;
+    }
 }

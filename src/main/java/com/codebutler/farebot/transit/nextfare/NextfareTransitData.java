@@ -65,7 +65,7 @@ public class NextfareTransitData extends TransitData {
     NextfareRefill[] mRefills;
     NextfareTrip[] mTrips;
     NextfareSubscription[] mSubscriptions;
-    boolean mHasUnknownStations = false;
+    protected boolean mHasUnknownStations = false;
 
 
     public static final Creator<NextfareTransitData> CREATOR = new Creator<NextfareTransitData>() {
@@ -313,9 +313,16 @@ public class NextfareTransitData extends TransitData {
         return NAME;
     }
 
+    /**
+     * If true, then the unknown stations banner should be shown.
+     *
+     * In the base Nextfare implementation, this is meaningless (all stations are unknown), so this
+     * always returns false. But in subclasses, this should return mHasUnknownStations.
+     * @return always false - do not show unknown stations UI
+     */
     @Override
     public boolean hasUnknownStations() {
-        return mHasUnknownStations;
+        return false;
     }
 
     @Override
