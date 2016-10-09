@@ -102,6 +102,7 @@
     <string name="subscriptions">Subscriptions</string>
     <string name="info">Info</string>
     <string name="valid_format">Valid %1$s to %2$s</string>
+    <string name="valid_to_format">Valid until %1$s</string>
     <string name="unknown_format">Unknown (%s)</string>
     <string name="keys_required">Encryption keys are required to read this card.</string>
     <string name="load_keys">Load Keys</string>

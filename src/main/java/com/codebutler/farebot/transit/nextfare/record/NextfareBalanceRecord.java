@@ -1,7 +1,7 @@
 /*
- * SeqGoBalanceRecord.java
+ * NextfareBalanceRecord.java
  *
- * Copyright 2015 Michael Farrell <micolous+git@gmail.com>
+ * Copyright 2015-2016 Michael Farrell <micolous+git@gmail.com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -16,34 +16,36 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.codebutler.farebot.transit.seq_go.record;
+package com.codebutler.farebot.transit.nextfare.record;
+
+import android.util.Log;
 
 import com.codebutler.farebot.util.Utils;
 
 /**
- * Represents balance records on Go card
+ * Represents balance records on Nextfare
  * https://github.com/micolous/metrodroid/wiki/Go-(SEQ)#balance-record-type
  */
-public class SeqGoBalanceRecord extends SeqGoRecord implements Comparable<SeqGoBalanceRecord> {
-
+public class NextfareBalanceRecord extends NextfareRecord implements Comparable<NextfareBalanceRecord> {
+    private static final String TAG = "NextfareBalanceRecord";
     private int mVersion;
     private int mBalance;
 
-    public static SeqGoBalanceRecord recordFromBytes(byte[] input) {
-        if (input[0] != 0x01) throw new AssertionError();
+    public static NextfareBalanceRecord recordFromBytes(byte[] input) {
+        //if (input[0] != 0x01) throw new AssertionError();
 
-
-        SeqGoBalanceRecord record = new SeqGoBalanceRecord();
+        NextfareBalanceRecord record = new NextfareBalanceRecord();
         record.mVersion = Utils.byteArrayToInt(input, 13, 1);
 
         // Do some flipping for the balance
         byte[] balance = Utils.reverseBuffer(input, 2, 2);
         record.mBalance = Utils.byteArrayToInt(balance, 0, 2);
 
+        Log.d(TAG, "Balance " + record.mBalance + " version " + record.mVersion);
         return record;
     }
 
-    protected SeqGoBalanceRecord() {}
+    protected NextfareBalanceRecord() {}
 
     /**
      * The balance of the card, in cents.
@@ -55,7 +57,7 @@ public class SeqGoBalanceRecord extends SeqGoRecord implements Comparable<SeqGoB
     public int getVersion() { return mVersion; }
 
     @Override
-    public int compareTo(SeqGoBalanceRecord rhs) {
+    public int compareTo(NextfareBalanceRecord rhs) {
         // So sorting works, we reverse the order so highest number is first.
         return Integer.valueOf(rhs.mVersion).compareTo(this.mVersion);
     }

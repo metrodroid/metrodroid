@@ -39,6 +39,7 @@ import com.codebutler.farebot.transit.TransitData;
 import com.codebutler.farebot.transit.TransitIdentity;
 import com.codebutler.farebot.transit.bilhete_unico.BilheteUnicoSPTransitData;
 import com.codebutler.farebot.transit.manly_fast_ferry.ManlyFastFerryTransitData;
+import com.codebutler.farebot.transit.nextfare.NextfareTransitData;
 import com.codebutler.farebot.transit.ovc.OVChipTransitData;
 import com.codebutler.farebot.transit.seq_go.SeqGoTransitData;
 import com.codebutler.farebot.transit.unknown.UnauthorizedClassicTransitData;
@@ -74,6 +75,8 @@ public class ClassicCard extends Card {
     public static ClassicCard dumpTag(byte[] tagId, Tag tag) throws Exception {
         MifareClassic tech = null;
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(MetrodroidApplication.getInstance());
+        final int retryLimit = prefs.getInt(MetrodroidApplication.PREF_MFC_AUTHRETRY, 5);
+        int retriesLeft;
 
         try {
             tech = MifareClassic.get(tag);
@@ -89,39 +92,28 @@ public class ClassicCard extends Card {
 
                     // Try to authenticate with the sector multiple times, in case we have impaired
                     // communications with the card.
-                    int retryLimit = prefs.getInt(MetrodroidApplication.PREF_MFC_AUTHRETRY, 3);
+                    retriesLeft = retryLimit;
 
-                    while (!authSuccess && (retryLimit-- > 0)) {
-                        Log.d(TAG, "Attempting authentication on sector " + sectorIndex + ", " + retryLimit + " tries remain...");
-                        // If there's a key we we know for the card use, try it first
-                        if (keys != null) {
-                            ClassicSectorKey sectorKey = keys.keyForSector(sectorIndex);
-                            if (sectorKey != null) {
-                                if (sectorKey.getType().equals(ClassicSectorKey.TYPE_KEYA)) {
-                                    authSuccess = tech.authenticateSectorWithKeyA(sectorIndex, sectorKey.getKey());
-                                } else {
-                                    authSuccess = tech.authenticateSectorWithKeyB(sectorIndex, sectorKey.getKey());
-                                }
+                    while (!authSuccess && keys != null && retriesLeft-- > 0) {
+                        // If we have a known key for the sector on the card, try this first.
+                        Log.d(TAG, "Attempting authentication on sector " + sectorIndex + ", " + retriesLeft + " tries remain...");
+                        ClassicSectorKey sectorKey = keys.keyForSector(sectorIndex);
+                        if (sectorKey != null) {
+                            if (sectorKey.getType().equals(ClassicSectorKey.TYPE_KEYA)) {
+                                authSuccess = tech.authenticateSectorWithKeyA(sectorIndex, sectorKey.getKey());
+                            } else {
+                                authSuccess = tech.authenticateSectorWithKeyB(sectorIndex, sectorKey.getKey());
                             }
                         }
+                    }
 
-                        // Try the default keys first
-                        if (!authSuccess) {
-                            authSuccess = tech.authenticateSectorWithKeyA(sectorIndex, PREAMBLE_KEY);
-                        }
+                    // Try with the other keys
+                    retriesLeft = retryLimit;
 
-                        if (!authSuccess) {
-                            authSuccess = tech.authenticateSectorWithKeyB(sectorIndex, PREAMBLE_KEY);
-                        }
+                    while (!authSuccess && (retriesLeft-- > 0)) {
+                        Log.d(TAG, "Attempting authentication with other keys on sector " + sectorIndex + ", " + retriesLeft + " tries remain...");
 
-                        if (!authSuccess) {
-                            authSuccess = tech.authenticateSectorWithKeyA(sectorIndex, MifareClassic.KEY_DEFAULT);
-                        }
-
-                        if (!authSuccess) {
-                            authSuccess = tech.authenticateSectorWithKeyB(sectorIndex, MifareClassic.KEY_DEFAULT);
-                        }
-
+                        // Attempt authentication with alternate keys
                         if (!authSuccess && keys != null) {
                             // Be a little more forgiving on the key list.  Lets try all the keys!
                             //
@@ -143,9 +135,27 @@ public class ClassicCard extends Card {
 
                                 if (authSuccess) {
                                     // Jump out if we have the key
+                                    Log.d(TAG, "Authenticated successfully to sector " + sectorIndex + " with key for sector " + keyIndex + ". Fix the farebotkeys file to speed up authentication.");
                                     break;
                                 }
                             }
+                        }
+
+                        // Try the default keys last.  If these are the only keys we have, the other steps will be skipped.
+                        if (!authSuccess) {
+                            authSuccess = tech.authenticateSectorWithKeyA(sectorIndex, PREAMBLE_KEY);
+                        }
+
+                        if (!authSuccess) {
+                            authSuccess = tech.authenticateSectorWithKeyB(sectorIndex, PREAMBLE_KEY);
+                        }
+
+                        if (!authSuccess) {
+                            authSuccess = tech.authenticateSectorWithKeyA(sectorIndex, MifareClassic.KEY_DEFAULT);
+                        }
+
+                        if (!authSuccess) {
+                            authSuccess = tech.authenticateSectorWithKeyB(sectorIndex, MifareClassic.KEY_DEFAULT);
                         }
 
                     }
@@ -188,8 +198,14 @@ public class ClassicCard extends Card {
             return BilheteUnicoSPTransitData.parseTransitIdentity(this);
         } else if (ManlyFastFerryTransitData.check(this)) {
             return ManlyFastFerryTransitData.parseTransitIdentity(this);
-        } else if (SeqGoTransitData.check(this)) {
-            return SeqGoTransitData.parseTransitIdentity(this);
+        } else if (NextfareTransitData.check(this)) {
+            // Search through Nextfare on Mifare Classic compatibles.
+            if (SeqGoTransitData.check(this)) {
+                return SeqGoTransitData.parseTransitIdentity(this);
+            } else {
+                // Fallback
+                return NextfareTransitData.parseTransitIdentity(this);
+            }
         } else if (UnauthorizedClassicTransitData.check(this)) {
             // This check must be LAST.
             //
@@ -208,8 +224,14 @@ public class ClassicCard extends Card {
             return new BilheteUnicoSPTransitData(this);
         } else if (ManlyFastFerryTransitData.check(this)) {
             return new ManlyFastFerryTransitData(this);
-        } else if (SeqGoTransitData.check(this)) {
-            return new SeqGoTransitData(this);
+        } else if (NextfareTransitData.check(this)) {
+            // Search through Nextfare on Mifare Classic compatibles.
+            if (SeqGoTransitData.check(this)) {
+                return new SeqGoTransitData(this);
+            } else {
+                // Fallback
+                return new NextfareTransitData(this);
+            }
         } else if (UnauthorizedClassicTransitData.check(this)) {
             // This check must be LAST.
             //

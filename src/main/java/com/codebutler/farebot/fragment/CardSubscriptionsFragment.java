@@ -67,12 +67,18 @@ public class CardSubscriptionsFragment extends ListFragment {
 
             Subscription subscription = getItem(position);
 
-            String validFrom = Utils.dateFormat(subscription.getValidFrom());
-            String validTo   = Utils.dateFormat(subscription.getValidTo());
+            String validTo = Utils.dateFormat(subscription.getValidTo());
+
+            if (subscription.getValidFrom() != null) {
+                String validFrom = Utils.dateFormat(subscription.getValidFrom());
+                ((TextView) view.findViewById(R.id.valid)).setText(getString(R.string.valid_format, validFrom, validTo));
+            } else {
+                ((TextView) view.findViewById(R.id.valid)).setText(getString(R.string.valid_to_format, validTo));
+
+            }
 
             ((TextView) view.findViewById(R.id.company)).setText(subscription.getShortAgencyName());
             ((TextView) view.findViewById(R.id.name)).setText(subscription.getSubscriptionName());
-            ((TextView) view.findViewById(R.id.valid)).setText(getString(R.string.valid_format, validFrom, validTo));
             ((TextView) view.findViewById(R.id.used)).setText(subscription.getActivation());
 
             return view;

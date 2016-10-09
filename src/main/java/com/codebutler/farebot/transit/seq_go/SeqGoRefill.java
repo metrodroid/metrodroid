@@ -1,7 +1,7 @@
 /*
  * SeqGoRefill.java
  *
- * Copyright 2015 Michael Farrell <micolous+git@gmail.com>
+ * Copyright 2015-2016 Michael Farrell <micolous+git@gmail.com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -22,7 +22,8 @@ import android.os.Parcel;
 import android.os.Parcelable;
 
 import com.codebutler.farebot.transit.Refill;
-import com.codebutler.farebot.transit.seq_go.record.SeqGoTopupRecord;
+import com.codebutler.farebot.transit.nextfare.NextfareRefill;
+import com.codebutler.farebot.transit.nextfare.record.NextfareTopupRecord;
 import com.codebutler.farebot.util.Utils;
 
 import java.text.NumberFormat;
@@ -33,21 +34,14 @@ import au.id.micolous.farebot.R;
 /**
  * Represents a top-up event on the Go card.
  */
-public class SeqGoRefill extends Refill {
-    private SeqGoTopupRecord mTopup;
+public class SeqGoRefill extends NextfareRefill {
 
-    public SeqGoRefill(SeqGoTopupRecord topup) {
-        mTopup = topup;
+    public SeqGoRefill(NextfareTopupRecord topup) {
+        super(topup);
     }
 
-    @Override
-    public long getTimestamp() {
-        return mTopup.getTimestamp().getTimeInMillis() / 1000;
-    }
-
-    @Override
-    public String getAgencyName() {
-        return null;
+    public SeqGoRefill(Parcel parcel) {
+        super(parcel);
     }
 
     @Override
@@ -55,25 +49,6 @@ public class SeqGoRefill extends Refill {
         return Utils.localizeString(mTopup.getAutomatic() ?
                 R.string.seqgo_refill_automatic :
                 R.string.seqgo_refill_manual);
-    }
-
-    @Override
-    public long getAmount() {
-        return mTopup.getCredit();
-    }
-
-    @Override
-    public String getAmountString() {
-        return NumberFormat.getCurrencyInstance(Locale.US).format((double)getAmount() / 100);
-    }
-
-    @Override
-    public void writeToParcel(Parcel parcel, int i) {
-        mTopup.writeToParcel(parcel, i);
-    }
-
-    public SeqGoRefill(Parcel parcel) {
-        mTopup = new SeqGoTopupRecord(parcel);
     }
 
     public static final Parcelable.Creator<SeqGoRefill> CREATOR = new Parcelable.Creator<SeqGoRefill>() {

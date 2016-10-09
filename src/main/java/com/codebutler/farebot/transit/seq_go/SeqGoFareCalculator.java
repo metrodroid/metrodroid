@@ -217,7 +217,7 @@ public class SeqGoFareCalculator {
     public int calculateFareForTrip(SeqGoTrip trip, Collection<SeqGoTrip> priorTripsInJourney)
             throws UnknownCostException, InvalidArgumentException {
         // Bail out if the trip started in 2017 or later
-        if (trip.mStartTime.get(GregorianCalendar.YEAR) >= 2017) {
+        if (trip.getStartTime().get(GregorianCalendar.YEAR) >= 2017) {
             Log.d(TAG, "2017 fare rules are not implemented");
             throw new UnknownCostException("2017 fare rules not implemented");
         }
@@ -332,9 +332,9 @@ public class SeqGoFareCalculator {
 
         // Check for off-peak fare
         // We want to see if the earliest trip in the journey is
-        GregorianCalendar firstTripTime = trip.mStartTime;
+        GregorianCalendar firstTripTime = trip.getStartTime();
         if (priorTripsSorted != null && !priorTripsSorted.isEmpty()) {
-            firstTripTime = priorTripsSorted.first().mStartTime;
+            firstTripTime = priorTripsSorted.first().getStartTime();
         }
 
         int lastFare = addOldAirtrain ? AIRTRAIN_FULL_FARE : 0;

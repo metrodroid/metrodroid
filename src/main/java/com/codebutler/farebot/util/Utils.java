@@ -40,16 +40,20 @@ import au.id.micolous.metrodroid.MetrodroidApplication;
 import au.id.micolous.farebot.R;
 
 import java.math.BigInteger;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class Utils {
     private static final String TAG = "Utils";
+    private static final SimpleDateFormat ISO_DATE_FORMAT = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+
     private Utils() { }
 
     public static <T> List<T> arrayAsList(T... array) {
@@ -373,6 +377,17 @@ public class Utils {
 
     public static String dateTimeFormat(Date date) {
         return dateFormat(date) + " " + timeFormat(date);
+    }
+
+    /**
+     * Formats a GregorianCalendar into ISO8601 format. This should only be used for debugging
+     * logs, in order to ensure consistent information.
+     * @param calendar Date/time to format
+     * @return String representing the date and time in ISO8601 format.
+     */
+    public static String isoDateTimeFormat(GregorianCalendar calendar) {
+        return ISO_DATE_FORMAT.format(calendar.getTime());
+
     }
 
     public static int[] digitsOf(int integer) {
