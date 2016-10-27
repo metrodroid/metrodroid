@@ -62,7 +62,7 @@ public class NextfareTopupRecord extends NextfareRecord implements Parcelable {
         record.mTimestamp = NextfareUtil.unpackDate(ts);
 
         byte[] credit = Utils.reverseBuffer(input, 6, 2);
-        record.mCredit = Utils.byteArrayToInt(credit);
+        record.mCredit = Utils.byteArrayToInt(credit) & 0x7FFF;
 
         byte[] station = Utils.reverseBuffer(input, 12, 2);
         record.mStation = Utils.byteArrayToInt(station);

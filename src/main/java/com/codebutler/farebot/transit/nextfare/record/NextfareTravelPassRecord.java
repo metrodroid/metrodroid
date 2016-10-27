@@ -10,13 +10,12 @@ import com.codebutler.farebot.util.Utils;
 import java.util.GregorianCalendar;
 
 /**
- * Created by michael on 6/10/16.
+ * Travel pass record type
  */
 
 public class NextfareTravelPassRecord extends NextfareRecord implements Parcelable, Comparable<NextfareTravelPassRecord> {
     private static final String TAG = "NextfareTravelPassRec";
     private GregorianCalendar mExpiry;
-    private int mCredit;
     private int mStation;
     private int mChecksum;
     private boolean mAutomatic;
@@ -68,7 +67,6 @@ public class NextfareTravelPassRecord extends NextfareRecord implements Parcelab
     @Override
     public void writeToParcel(Parcel parcel, int i) {
         parcel.writeLong(mExpiry.getTimeInMillis());
-        parcel.writeInt(mCredit);
         parcel.writeInt(mStation);
         parcel.writeInt(mChecksum);
         parcel.writeInt(mAutomatic ? 1 : 0);
@@ -77,7 +75,6 @@ public class NextfareTravelPassRecord extends NextfareRecord implements Parcelab
     public NextfareTravelPassRecord(Parcel parcel) {
         mExpiry = new GregorianCalendar();
         mExpiry.setTimeInMillis(parcel.readLong());
-        mCredit = parcel.readInt();
         mStation = parcel.readInt();
         mChecksum = parcel.readInt();
         mAutomatic = parcel.readInt() == 1;
@@ -87,9 +84,6 @@ public class NextfareTravelPassRecord extends NextfareRecord implements Parcelab
         return mExpiry;
     }
 
-    public int getCredit() {
-        return mCredit;
-    }
 
     public int getStation() {
         return mStation;
