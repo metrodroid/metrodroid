@@ -24,7 +24,7 @@ import com.codebutler.farebot.util.Utils;
 
 /**
  * Represents balance records on Nextfare
- * https://github.com/micolous/metrodroid/wiki/Go-(SEQ)#balance-record-type
+ * https://github.com/micolous/metrodroid/wiki/Cubic-Nextfare-MFC#balance
  */
 public class NextfareBalanceRecord extends NextfareRecord implements Comparable<NextfareBalanceRecord> {
     private static final String TAG = "NextfareBalanceRecord";

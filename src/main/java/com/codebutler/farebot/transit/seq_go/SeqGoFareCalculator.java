@@ -96,6 +96,20 @@ public class SeqGoFareCalculator {
             1708
     };
 
+    // Concessional fares are floor(regular_fare / 2), except AirTrain (with regular fares)
+    // We'll populate these arrays a little later.
+    private static final int[] CONCESSION_PEAK_2016 = new int[PEAK_2016.length];
+    private static final int[] CONCESSION_OFFPEAK_2016 = new int[PEAK_2016.length];
+
+    static {
+        for (int x=0; x<PEAK_2016.length; x++) {
+            CONCESSION_PEAK_2016[x] = PEAK_2016[x] / 2;
+            CONCESSION_OFFPEAK_2016[x] = OFFPEAK_2016[x] / 2;
+        }
+    }
+
+
+
     // Note: only lists holidays which aren't also weekends
     // Java stores months as 0-indexed, so 0 = Jan
     private static final GregorianCalendar[] PUBLIC_HOLIDAYS = new GregorianCalendar[] {
@@ -205,6 +219,12 @@ public class SeqGoFareCalculator {
         public InvalidArgumentException(String message) {
             super(message);
         }
+    }
+
+    private final SeqGoTicketType mTicketType;
+
+    public SeqGoFareCalculator(SeqGoTicketType ticketType) {
+        mTicketType = ticketType;
     }
 
     /**
@@ -343,12 +363,37 @@ public class SeqGoFareCalculator {
         // zoneCount == 0 if airtrainFareExempt
         if (isOffpeakPeriod(firstTripTime)) {
             // Calculate fare with off-peak rules
-            lastFare += OFFPEAK_2016[oldZoneCount];
-            newFare += OFFPEAK_2016[zoneCount];
+            switch (mTicketType) {
+                case CHILD:
+                case CONCESSION:
+                case SENIOR:
+                    lastFare += CONCESSION_OFFPEAK_2016[oldZoneCount];
+                    newFare += CONCESSION_OFFPEAK_2016[zoneCount];
+                    break;
+
+                case REGULAR:
+                default:
+                    lastFare += OFFPEAK_2016[oldZoneCount];
+                    newFare += OFFPEAK_2016[zoneCount];
+                    break;
+            }
         } else {
             // Calculate fare with on-peak rules
-            lastFare += PEAK_2016[oldZoneCount];
-            newFare += PEAK_2016[zoneCount];
+            switch (mTicketType) {
+                case CHILD:
+                case CONCESSION:
+                case SENIOR:
+                    lastFare += CONCESSION_PEAK_2016[oldZoneCount];
+                    newFare += CONCESSION_PEAK_2016[zoneCount];
+                    break;
+
+                case REGULAR:
+                default:
+                    lastFare += PEAK_2016[oldZoneCount];
+                    newFare += PEAK_2016[zoneCount];
+                    break;
+
+            }
         }
         newFare -= lastFare;
 

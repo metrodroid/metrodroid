@@ -19,6 +19,7 @@
 package com.codebutler.farebot.transit.nextfare;
 
 import android.os.Parcel;
+import android.text.format.DateFormat;
 import android.util.Log;
 
 import com.codebutler.farebot.card.UnauthorizedException;
@@ -31,10 +32,12 @@ import com.codebutler.farebot.transit.TransitData;
 import com.codebutler.farebot.transit.TransitIdentity;
 import com.codebutler.farebot.transit.Trip;
 import com.codebutler.farebot.transit.nextfare.record.NextfareBalanceRecord;
+import com.codebutler.farebot.transit.nextfare.record.NextfareConfigRecord;
 import com.codebutler.farebot.transit.nextfare.record.NextfareRecord;
 import com.codebutler.farebot.transit.nextfare.record.NextfareTapRecord;
 import com.codebutler.farebot.transit.nextfare.record.NextfareTopupRecord;
 import com.codebutler.farebot.transit.nextfare.record.NextfareTravelPassRecord;
+import com.codebutler.farebot.ui.HeaderListItem;
 import com.codebutler.farebot.ui.ListItem;
 import com.codebutler.farebot.util.Utils;
 
@@ -43,8 +46,12 @@ import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.Date;
 import java.util.List;
 import java.util.Locale;
+
+import au.id.micolous.farebot.R;
+import au.id.micolous.metrodroid.MetrodroidApplication;
 
 /**
  * Generic transit data type for Nextfare
@@ -61,10 +68,12 @@ public class NextfareTransitData extends TransitData {
     };
 
     BigInteger mSerialNumber;
+    byte[] mSystemCode;
     int mBalance;
     NextfareRefill[] mRefills;
     NextfareTrip[] mTrips;
     NextfareSubscription[] mSubscriptions;
+    protected NextfareConfigRecord mConfig = null;
     protected boolean mHasUnknownStations = false;
 
 
@@ -114,13 +123,29 @@ public class NextfareTransitData extends TransitData {
         mBalance = parcel.readInt();
         parcel.readTypedArray(mTrips, NextfareTrip.CREATOR);
         parcel.readTypedArray(mRefills, NextfareRefill.CREATOR);
+        parcel.readByteArray(mSystemCode);
 
+        mConfig = new NextfareConfigRecord(parcel);
+    }
+
+    @Override
+    public void writeToParcel(Parcel parcel, int i) {
+        parcel.writeString(mSerialNumber.toString());
+        parcel.writeInt(mBalance);
+        parcel.writeTypedArray(mTrips, i);
+        parcel.writeTypedArray(mRefills, i);
+        parcel.writeByteArray(mSystemCode);
+        mConfig.writeToParcel(parcel, i);
     }
 
     public NextfareTransitData(ClassicCard card) {
         byte[] serialData = card.getSector(0).getBlock(0).getData();
         serialData = Utils.reverseBuffer(serialData, 0, 4);
         mSerialNumber = Utils.byteArrayToBigInteger(serialData, 0, 4);
+
+        byte[] magicData = card.getSector(0).getBlock(1).getData();
+        mSystemCode = Arrays.copyOfRange(magicData, 9, 15);
+        Log.d(TAG, "SystemCode = " + Utils.getHexString(mSystemCode));
 
         ArrayList<NextfareRecord> records = new ArrayList<>();
 
@@ -161,6 +186,8 @@ public class NextfareTransitData extends TransitData {
                 taps.add((NextfareTapRecord)record);
             } else if (record instanceof NextfareTravelPassRecord) {
                 passes.add((NextfareTravelPassRecord)record);
+            } else if (record instanceof NextfareConfigRecord) {
+                mConfig = (NextfareConfigRecord)record;
             }
         }
 
@@ -304,11 +331,6 @@ public class NextfareTransitData extends TransitData {
     }
 
     @Override
-    public List<ListItem> getInfo() {
-        return null;
-    }
-
-    @Override
     public String getCardName() {
         return NAME;
     }
@@ -325,11 +347,16 @@ public class NextfareTransitData extends TransitData {
         return false;
     }
 
-    @Override
-    public void writeToParcel(Parcel parcel, int i) {
-        parcel.writeString(mSerialNumber.toString());
-        parcel.writeInt(mBalance);
-        parcel.writeTypedArray(mTrips, i);
-        parcel.writeTypedArray(mRefills, i);
+    @Override public List<ListItem> getInfo() {
+        ArrayList<ListItem> items = new ArrayList<>();
+
+        items.add(new HeaderListItem(R.string.nextfare));
+        items.add(new ListItem(R.string.nextfare_system_code, Utils.getHexString(mSystemCode)));
+        if (mConfig != null) {
+            items.add(new ListItem(R.string.nextfare_ticket_class, Integer.valueOf(mConfig.getTicketType()).toString()));
+        }
+
+        return items;
     }
+
 }

@@ -20,15 +20,20 @@ package com.codebutler.farebot.transit.seq_go;
 
 import android.net.Uri;
 import android.os.Parcel;
+import android.support.annotation.StringRes;
 import android.util.Log;
+import android.util.SparseArray;
+import android.util.SparseIntArray;
 
 import java.math.BigInteger;
 import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 
 import com.codebutler.farebot.card.UnauthorizedException;
 import com.codebutler.farebot.card.classic.ClassicBlock;
@@ -46,8 +51,11 @@ import com.codebutler.farebot.transit.nextfare.record.NextfareBalanceRecord;
 import com.codebutler.farebot.transit.nextfare.record.NextfareRecord;
 import com.codebutler.farebot.transit.nextfare.record.NextfareTopupRecord;
 import com.codebutler.farebot.transit.nextfare.record.NextfareTapRecord;
+import com.codebutler.farebot.ui.HeaderListItem;
 import com.codebutler.farebot.ui.ListItem;
 import com.codebutler.farebot.util.Utils;
+
+import au.id.micolous.farebot.R;
 
 /**
  * Transit data type for Go card (Brisbane / South-East Queensland, AU), used by Translink.
@@ -73,7 +81,23 @@ public class SeqGoTransitData extends NextfareTransitData {
             0x20, 0x21, 0x22, 0x23, 0x01, 0x01
     };
 
-    private SeqGoFareCalculator fareCalculator;
+    // TICKET TYPES
+    // https://github.com/micolous/metrodroid/wiki/Go-(SEQ)#ticket-types
+    // TODO: Discover child and seniors card type.
+    static final int TICKET_TYPE_REGULAR_2016 = 0x0c01;
+    static final int TICKET_TYPE_REGULAR_2011 = 0x0801;
+
+    static final int TICKET_TYPE_CONCESSION_2016 = 0x08a5;
+
+    static final SparseArray<SeqGoTicketType> TICKET_TYPE_MAP = new SparseArray<>();
+
+    static {
+        TICKET_TYPE_MAP.put(TICKET_TYPE_REGULAR_2011, SeqGoTicketType.REGULAR);
+        TICKET_TYPE_MAP.put(TICKET_TYPE_REGULAR_2016, SeqGoTicketType.REGULAR);
+        TICKET_TYPE_MAP.put(TICKET_TYPE_CONCESSION_2016, SeqGoTicketType.CONCESSION);
+    }
+
+    private SeqGoTicketType mTicketType = SeqGoTicketType.REGULAR;
 
     public static final Creator<SeqGoTransitData> CREATOR = new Creator<SeqGoTransitData>() {
         public SeqGoTransitData createFromParcel(Parcel parcel) {
@@ -107,6 +131,9 @@ public class SeqGoTransitData extends NextfareTransitData {
 
     public SeqGoTransitData(Parcel parcel) {
         super(parcel);
+        if (mConfig != null) {
+            TICKET_TYPE_MAP.get(mConfig.getTicketType(), SeqGoTicketType.REGULAR);
+        }
     }
 
     public SeqGoTransitData(ClassicCard card) {
@@ -115,10 +142,16 @@ public class SeqGoTransitData extends NextfareTransitData {
 
     @Override
     protected void calculateFares(ArrayList<NextfareTrip> trips) {
+        // By this point, we should know what ticket type we have.
+        mTicketType = SeqGoTicketType.UNKNOWN;
+        if (mConfig != null) {
+            TICKET_TYPE_MAP.get(mConfig.getTicketType(), SeqGoTicketType.UNKNOWN);
+        }
+
         // Now add fare information
         int currentJourney = -1;
         ArrayList<SeqGoTrip> tripsInJourney = new ArrayList<>();
-        fareCalculator = new SeqGoFareCalculator();
+        SeqGoFareCalculator fareCalculator = new SeqGoFareCalculator(mTicketType);
         for (NextfareTrip ntrip : trips) {
             // All of our trips are of this class, so just blindly cast
             SeqGoTrip trip = (SeqGoTrip)ntrip;
@@ -181,5 +214,16 @@ public class SeqGoTransitData extends NextfareTransitData {
     @Override
     public boolean hasUnknownStations() {
         return mHasUnknownStations;
+    }
+
+    @Override public List<ListItem> getInfo() {
+        ArrayList<ListItem> items = new ArrayList<>();
+
+        items.add(new HeaderListItem(R.string.general));
+        items.add(new ListItem(R.string.seqgo_ticket_type, mTicketType.getDescription()));
+
+
+        items.addAll(super.getInfo());
+        return items;
     }
 }

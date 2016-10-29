@@ -31,7 +31,7 @@ import java.util.GregorianCalendar;
 
 /**
  * Top-up record type
- * https://github.com/micolous/metrodroid/wiki/Go-(SEQ)#top-up-record-type
+ * https://github.com/micolous/metrodroid/wiki/Cubic-Nextfare-MFC#top-up
  */
 public class NextfareTopupRecord extends NextfareRecord implements Parcelable {
     private static final String TAG = "NextfareTopupRecord";

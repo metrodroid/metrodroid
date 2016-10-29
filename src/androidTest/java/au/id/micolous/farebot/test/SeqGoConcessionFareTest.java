@@ -11,8 +11,8 @@ import java.util.GregorianCalendar;
 /**
  * Implements tests for Go card fares.
  */
-public class SeqGoFareTest extends TestCase {
-    private SeqGoFareCalculator fareCalculator = new SeqGoFareCalculator(SeqGoTicketType.REGULAR);
+public class SeqGoConcessionFareTest extends TestCase {
+    private SeqGoFareCalculator fareCalculator = new SeqGoFareCalculator(SeqGoTicketType.CONCESSION);
 
     /**
      * Tests which handle trips exclusively in zone 1.
@@ -31,7 +31,7 @@ public class SeqGoFareTest extends TestCase {
                 false
         );
 
-        assertEquals(268, fareCalculator.calculateFareForTrip(trip, null));
+        assertEquals(134, fareCalculator.calculateFareForTrip(trip, null));
 
         // Off-peak time (03:00)
         trip = new SeqGoTrip(
@@ -43,7 +43,7 @@ public class SeqGoFareTest extends TestCase {
                 false
         );
 
-        assertEquals(268, fareCalculator.calculateFareForTrip(trip, null));
+        assertEquals(134, fareCalculator.calculateFareForTrip(trip, null));
 
         // Peak time (07:00)
         trip = new SeqGoTrip(
@@ -55,7 +55,7 @@ public class SeqGoFareTest extends TestCase {
                 false
         );
 
-        assertEquals(335, fareCalculator.calculateFareForTrip(trip, null));
+        assertEquals(167, fareCalculator.calculateFareForTrip(trip, null));
 
         // Peak time (08:15)
         trip = new SeqGoTrip(
@@ -67,7 +67,7 @@ public class SeqGoFareTest extends TestCase {
                 false
         );
 
-        assertEquals(335, fareCalculator.calculateFareForTrip(trip, null));
+        assertEquals(167, fareCalculator.calculateFareForTrip(trip, null));
 
         // Off-peak time (08:45)
         trip = new SeqGoTrip(
@@ -79,7 +79,7 @@ public class SeqGoFareTest extends TestCase {
                 false
         );
 
-        assertEquals(268, fareCalculator.calculateFareForTrip(trip, null));
+        assertEquals(134, fareCalculator.calculateFareForTrip(trip, null));
 
         // Off-peak time (10:00)
         trip = new SeqGoTrip(
@@ -91,7 +91,7 @@ public class SeqGoFareTest extends TestCase {
                 false
         );
 
-        assertEquals(268, fareCalculator.calculateFareForTrip(trip, null));
+        assertEquals(134, fareCalculator.calculateFareForTrip(trip, null));
 
         // Off-peak time (15:00)
         trip = new SeqGoTrip(
@@ -103,7 +103,7 @@ public class SeqGoFareTest extends TestCase {
                 false
         );
 
-        assertEquals(268, fareCalculator.calculateFareForTrip(trip, null));
+        assertEquals(134, fareCalculator.calculateFareForTrip(trip, null));
 
         // Peak time (15:45)
         trip = new SeqGoTrip(
@@ -115,7 +115,7 @@ public class SeqGoFareTest extends TestCase {
                 false
         );
 
-        assertEquals(335, fareCalculator.calculateFareForTrip(trip, null));
+        assertEquals(167, fareCalculator.calculateFareForTrip(trip, null));
 
         // Peak time (18:00)
         trip = new SeqGoTrip(
@@ -127,7 +127,7 @@ public class SeqGoFareTest extends TestCase {
                 false
         );
 
-        assertEquals(335, fareCalculator.calculateFareForTrip(trip, null));
+        assertEquals(167, fareCalculator.calculateFareForTrip(trip, null));
 
         // Off-peak time (22:00)
         trip = new SeqGoTrip(
@@ -139,7 +139,7 @@ public class SeqGoFareTest extends TestCase {
                 false
         );
 
-        assertEquals(268, fareCalculator.calculateFareForTrip(trip, null));
+        assertEquals(134, fareCalculator.calculateFareForTrip(trip, null));
     }
 
     /**
@@ -159,7 +159,7 @@ public class SeqGoFareTest extends TestCase {
                 false
         );
 
-        assertEquals(314, fareCalculator.calculateFareForTrip(trip, null));
+        assertEquals(157, fareCalculator.calculateFareForTrip(trip, null));
 
         // Off-peak time (03:00)
         trip = new SeqGoTrip(
@@ -171,7 +171,7 @@ public class SeqGoFareTest extends TestCase {
                 false
         );
 
-        assertEquals(314, fareCalculator.calculateFareForTrip(trip, null));
+        assertEquals(157, fareCalculator.calculateFareForTrip(trip, null));
 
         // Peak time (07:00)
         trip = new SeqGoTrip(
@@ -183,7 +183,7 @@ public class SeqGoFareTest extends TestCase {
                 false
         );
 
-        assertEquals(393, fareCalculator.calculateFareForTrip(trip, null));
+        assertEquals(196, fareCalculator.calculateFareForTrip(trip, null));
 
         // Peak time (08:15)
         trip = new SeqGoTrip(
@@ -195,7 +195,7 @@ public class SeqGoFareTest extends TestCase {
                 false
         );
 
-        assertEquals(393, fareCalculator.calculateFareForTrip(trip, null));
+        assertEquals(196, fareCalculator.calculateFareForTrip(trip, null));
 
         // Off-peak time (08:45)
         trip = new SeqGoTrip(
@@ -207,7 +207,7 @@ public class SeqGoFareTest extends TestCase {
                 false
         );
 
-        assertEquals(314, fareCalculator.calculateFareForTrip(trip, null));
+        assertEquals(157, fareCalculator.calculateFareForTrip(trip, null));
 
         // Off-peak time (10:00)
         trip = new SeqGoTrip(
@@ -219,7 +219,7 @@ public class SeqGoFareTest extends TestCase {
                 false
         );
 
-        assertEquals(314, fareCalculator.calculateFareForTrip(trip, null));
+        assertEquals(157, fareCalculator.calculateFareForTrip(trip, null));
 
         // Off-peak time (15:00)
         trip = new SeqGoTrip(
@@ -231,7 +231,7 @@ public class SeqGoFareTest extends TestCase {
                 false
         );
 
-        assertEquals(314, fareCalculator.calculateFareForTrip(trip, null));
+        assertEquals(157, fareCalculator.calculateFareForTrip(trip, null));
 
         // Peak time (15:45)
         trip = new SeqGoTrip(
@@ -243,7 +243,7 @@ public class SeqGoFareTest extends TestCase {
                 false
         );
 
-        assertEquals(393, fareCalculator.calculateFareForTrip(trip, null));
+        assertEquals(196, fareCalculator.calculateFareForTrip(trip, null));
 
         // Peak time (18:00)
         trip = new SeqGoTrip(
@@ -255,7 +255,7 @@ public class SeqGoFareTest extends TestCase {
                 false
         );
 
-        assertEquals(393, fareCalculator.calculateFareForTrip(trip, null));
+        assertEquals(196, fareCalculator.calculateFareForTrip(trip, null));
 
         // Off-peak time (22:00)
         trip = new SeqGoTrip(
@@ -267,7 +267,7 @@ public class SeqGoFareTest extends TestCase {
                 false
         );
 
-        assertEquals(314, fareCalculator.calculateFareForTrip(trip, null));
+        assertEquals(157, fareCalculator.calculateFareForTrip(trip, null));
 
     }
 
@@ -288,7 +288,7 @@ public class SeqGoFareTest extends TestCase {
                 false
         );
 
-        assertEquals(268, fareCalculator.calculateFareForTrip(trip, null));
+        assertEquals(134, fareCalculator.calculateFareForTrip(trip, null));
 
         // Off-peak (Sunday)
         trip = new SeqGoTrip(
@@ -300,7 +300,7 @@ public class SeqGoFareTest extends TestCase {
                 false
         );
 
-        assertEquals(268, fareCalculator.calculateFareForTrip(trip, null));
+        assertEquals(134, fareCalculator.calculateFareForTrip(trip, null));
 
         // Off-peak (public holiday, ANZAC day)
         trip = new SeqGoTrip(
@@ -312,7 +312,7 @@ public class SeqGoFareTest extends TestCase {
                 false
         );
 
-        assertEquals(268, fareCalculator.calculateFareForTrip(trip, null));
+        assertEquals(134, fareCalculator.calculateFareForTrip(trip, null));
     }
 
     /**
@@ -332,7 +332,7 @@ public class SeqGoFareTest extends TestCase {
                 false
         );
 
-        assertEquals(335, fareCalculator.calculateFareForTrip(trip, null));
+        assertEquals(167, fareCalculator.calculateFareForTrip(trip, null));
 
         trip = new SeqGoTrip(
                 999, // Vulture St at State High, stop 8 (zone 1/2)
@@ -344,7 +344,7 @@ public class SeqGoFareTest extends TestCase {
         );
 
         // Zone 2
-        assertEquals(335, fareCalculator.calculateFareForTrip(trip, null));
+        assertEquals(167, fareCalculator.calculateFareForTrip(trip, null));
 
         trip = new SeqGoTrip(
                 2423, // Racecourse Rd at Beatrice Street, stop 22 (zone 2)
@@ -355,7 +355,7 @@ public class SeqGoFareTest extends TestCase {
                 false
         );
 
-        assertEquals(335, fareCalculator.calculateFareForTrip(trip, null));
+        assertEquals(167, fareCalculator.calculateFareForTrip(trip, null));
 
         trip = new SeqGoTrip(
                 999, // Vulture St at State High, stop 8 (zone 1/2)
@@ -366,7 +366,7 @@ public class SeqGoFareTest extends TestCase {
                 false
         );
 
-        assertEquals(335, fareCalculator.calculateFareForTrip(trip, null));
+        assertEquals(167, fareCalculator.calculateFareForTrip(trip, null));
 
     }
 
@@ -428,7 +428,7 @@ public class SeqGoFareTest extends TestCase {
                 false
         );
 
-        assertEquals(2143, fareCalculator.calculateFareForTrip(trip, null));
+        assertEquals(1946, fareCalculator.calculateFareForTrip(trip, null));
 
         trip = new SeqGoTrip(
                 9, // Domestic Airport
@@ -439,6 +439,6 @@ public class SeqGoFareTest extends TestCase {
                 false
         );
 
-        assertEquals(2143, fareCalculator.calculateFareForTrip(trip, null));
+        assertEquals(1946, fareCalculator.calculateFareForTrip(trip, null));
     }
 }

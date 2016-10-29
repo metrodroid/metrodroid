@@ -104,6 +104,7 @@
     <string name="valid_format">Valid %1$s to %2$s</string>
     <string name="valid_to_format">Valid until %1$s</string>
     <string name="unknown_format">Unknown (%s)</string>
+    <string name="unknown">Unknown</string>
     <string name="keys_required">Encryption keys are required to read this card.</string>
     <string name="load_keys">Load Keys</string>
     <string name="card_keys_not_supported">Metrodroid does not support keys for this type of card.</string>
@@ -281,8 +282,15 @@
         Go Card (South East Queensland/Brisbane, AU)
         These are deliberately separated strings in order to match the terminology of the agency.
     -->
+    <string name="seqgo_ticket_type">Ticket type</string>
+    <string name="seqgo_ticket_type_regular">Regular</string>
+    <string name="seqgo_ticket_type_concession">Concession</string>
+    <string name="seqgo_ticket_type_child">Child</string>
+    <string name="seqgo_ticket_type_senior">Senior</string>
+
     <string name="seqgo_refill_manual">Manual top-up</string>
     <string name="seqgo_refill_automatic">Automatic top-up</string>
+
     <string name="card_note_seqgo">Does not support Go Access, Explore or SEEQ cards.</string>
 
     <!--
@@ -293,5 +301,13 @@
     <string name="mifare_classic">Mifare Classic</string>
     <string name="auth_retries">Authentication retries</string>
     <string name="auth_retries_summary">Number of times to attempt authentication for each sector</string>
+
+    <!--
+        Cubic Nextfare
+        These are deliberately seperated, but are used for generic fields across many systems.
+    -->
+    <string name="nextfare">Cubic Nextfare</string>
+    <string name="nextfare_system_code">System code</string>
+    <string name="nextfare_ticket_class">Ticket class code</string>
 
 </resources>

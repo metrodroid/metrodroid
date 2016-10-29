@@ -31,7 +31,7 @@ import java.util.GregorianCalendar;
 
 /**
  * Tap record type
- * https://github.com/micolous/metrodroid/wiki/Go-(SEQ)#tap-record-type
+ * https://github.com/micolous/metrodroid/wiki/Cubic-Nextfare-MFC#tap-record
  */
 public class NextfareTapRecord extends NextfareRecord implements Parcelable, Comparable<NextfareTapRecord> {
     private static final String TAG = "NextfareTapRecord";

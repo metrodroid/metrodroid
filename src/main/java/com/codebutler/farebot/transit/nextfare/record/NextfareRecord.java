@@ -25,6 +25,8 @@ import com.codebutler.farebot.util.Utils;
 
 /**
  * Represents a record on a Nextfare card
+ * This fans out parsing to subclasses.
+ * https://github.com/micolous/metrodroid/wiki/Cubic-Nextfare-MFC
  */
 public class NextfareRecord {
     private static final String TAG = "NextfareRecord";
@@ -38,6 +40,9 @@ public class NextfareRecord {
         if (sectorIndex == 1 && blockIndex <= 1) {
             Log.d(TAG, "Balance record");
             record = NextfareBalanceRecord.recordFromBytes(input);
+        } else if (sectorIndex == 1 && blockIndex == 2) {
+            Log.d(TAG, "Configuration record");
+            record = NextfareConfigRecord.recordFromBytes(input);
         } else if (sectorIndex == 2) {
             Log.d(TAG, "Top-up record");
             record = NextfareTopupRecord.recordFromBytes(input);
@@ -49,7 +54,7 @@ public class NextfareRecord {
             record = NextfareTapRecord.recordFromBytes(input);
         } else {
             // attempt autodetection
-
+            // This tends to produce some bad results, so we do this only as a last resort.
 
             switch (input[0]) {
                 case 0x01:
