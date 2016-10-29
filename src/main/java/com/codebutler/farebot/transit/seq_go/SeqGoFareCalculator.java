@@ -1,6 +1,5 @@
 package com.codebutler.farebot.transit.seq_go;
 
-import android.icu.util.Calendar;
 import android.util.Log;
 
 import com.codebutler.farebot.util.NumericalStringComparator;

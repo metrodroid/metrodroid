@@ -22,13 +22,9 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
-import au.id.micolous.metrodroid.MetrodroidApplication;
-import com.codebutler.farebot.transit.Station;
-import com.codebutler.farebot.util.Utils;
-
 import java.io.IOException;
-import java.util.Calendar;
-import java.util.GregorianCalendar;
+
+import au.id.micolous.metrodroid.MetrodroidApplication;
 
 /**
  * Misc utilities for parsing Go Cards

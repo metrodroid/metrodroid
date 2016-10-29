@@ -4,17 +4,10 @@ import android.util.Log;
 
 import com.codebutler.farebot.util.NumericalStringComparator;
 
-import org.apache.commons.lang3.ArrayUtils;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.LinkedList;
-import java.util.List;
-import java.util.Objects;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 /**
  * Calculates the number of zones travelled on SEQ Translink services.

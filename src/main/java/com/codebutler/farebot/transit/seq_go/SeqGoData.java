@@ -19,29 +19,40 @@
 
 package com.codebutler.farebot.transit.seq_go;
 
-import android.annotation.SuppressLint;
+import android.util.SparseArray;
 
 import com.codebutler.farebot.transit.Trip;
 
-import java.util.HashMap;
-import java.util.Map;
 
 /**
  * Constants used in Go card
  */
-public final class SeqGoData {
-    public static final int VEHICLE_FARE_MACHINE = 1;
-    public static final int VEHICLE_BUS = 4;
-    public static final int VEHICLE_RAIL = 5;
-    public static final int VEHICLE_FERRY = 18;
+final class SeqGoData {
+    private static final int VEHICLE_FARE_MACHINE = 1;
+    private static final int VEHICLE_BUS = 4;
+    private static final int VEHICLE_RAIL = 5;
+    private static final int VEHICLE_FERRY = 18;
 
-    @SuppressLint("UseSparseArrays")
-    public static final Map<Integer, Trip.Mode> VEHICLES = new HashMap<Integer, Trip.Mode>() {{
+    static final SparseArray<Trip.Mode> VEHICLES = new SparseArray<Trip.Mode>() {{
         put(VEHICLE_FARE_MACHINE, Trip.Mode.TICKET_MACHINE);
         put(VEHICLE_RAIL, Trip.Mode.TRAIN);
         put(VEHICLE_FERRY, Trip.Mode.FERRY);
         put(VEHICLE_BUS, Trip.Mode.BUS);
         // TODO: Gold Coast Light Rail
+    }};
+
+    // TICKET TYPES
+    // https://github.com/micolous/metrodroid/wiki/Go-(SEQ)#ticket-types
+    // TODO: Discover child and seniors card type.
+    private static final int TICKET_TYPE_REGULAR_2016 = 0x0c01;
+    private static final int TICKET_TYPE_REGULAR_2011 = 0x0801;
+
+    private static final int TICKET_TYPE_CONCESSION_2016 = 0x08a5;
+
+    static final SparseArray<SeqGoTicketType> TICKET_TYPE_MAP = new SparseArray<SeqGoTicketType>() {{
+        put(TICKET_TYPE_REGULAR_2011, SeqGoTicketType.REGULAR);
+        put(TICKET_TYPE_REGULAR_2016, SeqGoTicketType.REGULAR);
+        put(TICKET_TYPE_CONCESSION_2016, SeqGoTicketType.CONCESSION);
     }};
 
 }

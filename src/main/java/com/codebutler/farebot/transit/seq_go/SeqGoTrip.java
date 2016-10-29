@@ -22,7 +22,6 @@ import android.os.Parcel;
 import android.os.Parcelable;
 
 import com.codebutler.farebot.transit.Station;
-import com.codebutler.farebot.transit.Trip;
 import com.codebutler.farebot.transit.nextfare.NextfareTrip;
 
 import java.text.NumberFormat;

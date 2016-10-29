@@ -21,13 +21,9 @@ package com.codebutler.farebot.transit.seq_go;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-import com.codebutler.farebot.transit.Refill;
 import com.codebutler.farebot.transit.nextfare.NextfareRefill;
 import com.codebutler.farebot.transit.nextfare.record.NextfareTopupRecord;
 import com.codebutler.farebot.util.Utils;
-
-import java.text.NumberFormat;
-import java.util.Locale;
 
 import au.id.micolous.farebot.R;
 

@@ -20,40 +20,23 @@ package com.codebutler.farebot.transit.seq_go;
 
 import android.net.Uri;
 import android.os.Parcel;
-import android.support.annotation.StringRes;
 import android.util.Log;
-import android.util.SparseArray;
-import android.util.SparseIntArray;
-
-import java.math.BigInteger;
-import java.text.NumberFormat;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Locale;
-import java.util.Map;
 
 import com.codebutler.farebot.card.UnauthorizedException;
-import com.codebutler.farebot.card.classic.ClassicBlock;
 import com.codebutler.farebot.card.classic.ClassicCard;
-import com.codebutler.farebot.card.classic.ClassicSector;
-import com.codebutler.farebot.transit.Refill;
-import com.codebutler.farebot.transit.Subscription;
-import com.codebutler.farebot.transit.TransitData;
 import com.codebutler.farebot.transit.TransitIdentity;
 import com.codebutler.farebot.transit.Trip;
 import com.codebutler.farebot.transit.nextfare.NextfareRefill;
 import com.codebutler.farebot.transit.nextfare.NextfareTransitData;
 import com.codebutler.farebot.transit.nextfare.NextfareTrip;
-import com.codebutler.farebot.transit.nextfare.record.NextfareBalanceRecord;
-import com.codebutler.farebot.transit.nextfare.record.NextfareRecord;
 import com.codebutler.farebot.transit.nextfare.record.NextfareTopupRecord;
-import com.codebutler.farebot.transit.nextfare.record.NextfareTapRecord;
 import com.codebutler.farebot.ui.HeaderListItem;
 import com.codebutler.farebot.ui.ListItem;
 import com.codebutler.farebot.util.Utils;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 import au.id.micolous.farebot.R;
 
@@ -80,22 +63,6 @@ public class SeqGoTransitData extends NextfareTransitData {
     static final byte[] SYSTEM_CODE2 = {
             0x20, 0x21, 0x22, 0x23, 0x01, 0x01
     };
-
-    // TICKET TYPES
-    // https://github.com/micolous/metrodroid/wiki/Go-(SEQ)#ticket-types
-    // TODO: Discover child and seniors card type.
-    private static final int TICKET_TYPE_REGULAR_2016 = 0x0c01;
-    private static final int TICKET_TYPE_REGULAR_2011 = 0x0801;
-
-    private static final int TICKET_TYPE_CONCESSION_2016 = 0x08a5;
-
-    static final SparseArray<SeqGoTicketType> TICKET_TYPE_MAP = new SparseArray<>();
-
-    static {
-        TICKET_TYPE_MAP.put(TICKET_TYPE_REGULAR_2011, SeqGoTicketType.REGULAR);
-        TICKET_TYPE_MAP.put(TICKET_TYPE_REGULAR_2016, SeqGoTicketType.REGULAR);
-        TICKET_TYPE_MAP.put(TICKET_TYPE_CONCESSION_2016, SeqGoTicketType.CONCESSION);
-    }
 
     private SeqGoTicketType mTicketType;
 
@@ -140,7 +107,6 @@ public class SeqGoTransitData extends NextfareTransitData {
         parcel.writeSerializable(mTicketType);
     }
 
-
     public SeqGoTransitData(ClassicCard card) {
         super(card);
     }
@@ -149,7 +115,7 @@ public class SeqGoTransitData extends NextfareTransitData {
     protected void calculateFares(ArrayList<NextfareTrip> trips) {
         // By this point, we should know what ticket type we have.
         if (mConfig != null) {
-            mTicketType = TICKET_TYPE_MAP.get(mConfig.getTicketType(), SeqGoTicketType.UNKNOWN);
+            mTicketType = SeqGoData.TICKET_TYPE_MAP.get(mConfig.getTicketType(), SeqGoTicketType.UNKNOWN);
         }
 
         // Now add fare information
@@ -188,11 +154,7 @@ public class SeqGoTransitData extends NextfareTransitData {
 
     @Override
     protected Trip.Mode lookupMode(int mode) {
-        if (SeqGoData.VEHICLES.containsKey(mode)) {
-            return SeqGoData.VEHICLES.get(mode);
-        } else {
-            return Trip.Mode.OTHER;
-        }
+        return SeqGoData.VEHICLES.get(mode, Trip.Mode.OTHER);
     }
 
     @Override
