@@ -26,7 +26,6 @@ import android.util.Log;
 import com.codebutler.farebot.transit.nextfare.NextfareUtil;
 import com.codebutler.farebot.util.Utils;
 
-import java.text.SimpleDateFormat;
 import java.util.GregorianCalendar;
 
 /**

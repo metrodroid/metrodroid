@@ -19,7 +19,6 @@
 package com.codebutler.farebot.transit.nextfare;
 
 import android.os.Parcel;
-import android.text.format.DateFormat;
 import android.util.Log;
 
 import com.codebutler.farebot.card.UnauthorizedException;
@@ -46,15 +45,14 @@ import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
-import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
 import au.id.micolous.farebot.R;
-import au.id.micolous.metrodroid.MetrodroidApplication;
 
 /**
- * Generic transit data type for Nextfare
+ * Generic transit data type for Cubic Nextfare.
+ * https://github.com/micolous/metrodroid/wiki/Cubic-Nextfare-MFC
  *
  * @author Michael Farrell
  */

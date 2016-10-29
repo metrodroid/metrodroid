@@ -1,3 +1,22 @@
+/*
+ * SeqGoFareCalculator.java
+ * A fare calculation algorithm for SEQ's Go card.
+ *
+ * Copyright 2016 Michael Farrell <micolous+git@gmail.com>
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
 package com.codebutler.farebot.transit.seq_go;
 
 import android.util.Log;
@@ -22,8 +41,6 @@ import java.util.TreeSet;
  *
  * This calculator does not support the 2016 and earlier "10th trip free" rules or 2017+ "10th trip
  * half price" rules.
- *
- * This calculator only calculates full fares, and not those of concessional or seniors travel.
  *
  * Public holidays are not calculated for years before 2012.
  */
