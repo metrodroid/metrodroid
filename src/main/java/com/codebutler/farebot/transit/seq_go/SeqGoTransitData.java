@@ -84,10 +84,10 @@ public class SeqGoTransitData extends NextfareTransitData {
     // TICKET TYPES
     // https://github.com/micolous/metrodroid/wiki/Go-(SEQ)#ticket-types
     // TODO: Discover child and seniors card type.
-    static final int TICKET_TYPE_REGULAR_2016 = 0x0c01;
-    static final int TICKET_TYPE_REGULAR_2011 = 0x0801;
+    private static final int TICKET_TYPE_REGULAR_2016 = 0x0c01;
+    private static final int TICKET_TYPE_REGULAR_2011 = 0x0801;
 
-    static final int TICKET_TYPE_CONCESSION_2016 = 0x08a5;
+    private static final int TICKET_TYPE_CONCESSION_2016 = 0x08a5;
 
     static final SparseArray<SeqGoTicketType> TICKET_TYPE_MAP = new SparseArray<>();
 
@@ -97,7 +97,7 @@ public class SeqGoTransitData extends NextfareTransitData {
         TICKET_TYPE_MAP.put(TICKET_TYPE_CONCESSION_2016, SeqGoTicketType.CONCESSION);
     }
 
-    private SeqGoTicketType mTicketType = SeqGoTicketType.REGULAR;
+    private SeqGoTicketType mTicketType;
 
     public static final Creator<SeqGoTransitData> CREATOR = new Creator<SeqGoTransitData>() {
         public SeqGoTransitData createFromParcel(Parcel parcel) {
@@ -131,10 +131,15 @@ public class SeqGoTransitData extends NextfareTransitData {
 
     public SeqGoTransitData(Parcel parcel) {
         super(parcel);
-        if (mConfig != null) {
-            TICKET_TYPE_MAP.get(mConfig.getTicketType(), SeqGoTicketType.REGULAR);
-        }
+        mTicketType = (SeqGoTicketType)parcel.readSerializable();
     }
+
+    @Override
+    public void writeToParcel(Parcel parcel, int i) {
+        super.writeToParcel(parcel, i);
+        parcel.writeSerializable(mTicketType);
+    }
+
 
     public SeqGoTransitData(ClassicCard card) {
         super(card);
@@ -143,9 +148,8 @@ public class SeqGoTransitData extends NextfareTransitData {
     @Override
     protected void calculateFares(ArrayList<NextfareTrip> trips) {
         // By this point, we should know what ticket type we have.
-        mTicketType = SeqGoTicketType.UNKNOWN;
         if (mConfig != null) {
-            TICKET_TYPE_MAP.get(mConfig.getTicketType(), SeqGoTicketType.UNKNOWN);
+            mTicketType = TICKET_TYPE_MAP.get(mConfig.getTicketType(), SeqGoTicketType.UNKNOWN);
         }
 
         // Now add fare information
@@ -221,7 +225,6 @@ public class SeqGoTransitData extends NextfareTransitData {
 
         items.add(new HeaderListItem(R.string.general));
         items.add(new ListItem(R.string.seqgo_ticket_type, mTicketType.getDescription()));
-
 
         items.addAll(super.getInfo());
         return items;

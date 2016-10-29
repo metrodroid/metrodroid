@@ -224,7 +224,11 @@ public class SeqGoFareCalculator {
     private final SeqGoTicketType mTicketType;
 
     public SeqGoFareCalculator(SeqGoTicketType ticketType) {
-        mTicketType = ticketType;
+        if (ticketType != null) {
+            mTicketType = ticketType;
+        } else {
+            mTicketType = SeqGoTicketType.UNKNOWN;
+        }
     }
 
     /**
