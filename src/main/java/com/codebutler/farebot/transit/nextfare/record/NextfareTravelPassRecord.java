@@ -20,6 +20,7 @@ package com.codebutler.farebot.transit.nextfare.record;
 
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.support.annotation.NonNull;
 import android.util.Log;
 
 import com.codebutler.farebot.transit.nextfare.NextfareUtil;
@@ -117,7 +118,7 @@ public class NextfareTravelPassRecord extends NextfareRecord implements Parcelab
     }
 
     @Override
-    public int compareTo(NextfareTravelPassRecord rhs) {
+    public int compareTo(@NonNull NextfareTravelPassRecord rhs) {
         // So sorting works, we reverse the order so highest number is first.
         return Integer.valueOf(rhs.mVersion).compareTo(this.mVersion);    }
 }

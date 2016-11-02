@@ -32,12 +32,14 @@ final class SeqGoData {
     private static final int VEHICLE_BUS = 4;
     private static final int VEHICLE_RAIL = 5;
     private static final int VEHICLE_FERRY = 18;
+    private static final int VEHICLE_FARE_MACHINE_TRIP = 23;
 
     static final SparseArray<Trip.Mode> VEHICLES = new SparseArray<Trip.Mode>() {{
         put(VEHICLE_FARE_MACHINE, Trip.Mode.TICKET_MACHINE);
         put(VEHICLE_RAIL, Trip.Mode.TRAIN);
         put(VEHICLE_FERRY, Trip.Mode.FERRY);
         put(VEHICLE_BUS, Trip.Mode.BUS);
+        put (VEHICLE_FARE_MACHINE_TRIP, Trip.Mode.TICKET_MACHINE);
         // TODO: Gold Coast Light Rail
     }};
 

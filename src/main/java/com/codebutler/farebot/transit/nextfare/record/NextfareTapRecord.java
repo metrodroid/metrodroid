@@ -21,6 +21,7 @@ package com.codebutler.farebot.transit.nextfare.record;
 
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.support.annotation.NonNull;
 import android.util.Log;
 
 import com.codebutler.farebot.transit.nextfare.NextfareUtil;
@@ -38,6 +39,7 @@ public class NextfareTapRecord extends NextfareRecord implements Parcelable, Com
     private int mMode;
     private int mJourney;
     private int mStation;
+    private int mValue;
     private int mChecksum;
     private boolean mContinuation;
 
@@ -57,6 +59,16 @@ public class NextfareTapRecord extends NextfareRecord implements Parcelable, Com
     public static NextfareTapRecord recordFromBytes(byte[] input) {
         //if (input[0] != 0x31) throw new AssertionError("not a tap record");
 
+        // LAX:      input[0] == 0x05 for "Travel Pass" trips.
+        // SEQ, LAX: input[0] == 0x31 for "Stored Value" trips / transfers
+        // LAX:      input[0] == 0x41 for "Travel Pass" sale.
+        // LAX:      input[0] == 0x71 for "Stored Value" sale -- effectively recorded twice
+        // SEQ, LAX: input[0] == 0x79 for "Stored Value" sale
+
+        if (input[0] > 0x70) {
+            return null;
+        }
+
         NextfareTapRecord record = new NextfareTapRecord();
 
         record.mMode = Utils.byteArrayToInt(input, 1, 1);
@@ -68,13 +80,19 @@ public class NextfareTapRecord extends NextfareRecord implements Parcelable, Com
         record.mJourney = Utils.byteArrayToInt(journey) >> 5;
         record.mContinuation = (Utils.byteArrayToInt(journey) & 0x10) > 1;
 
+        byte[] value = Utils.reverseBuffer(input, 7, 2);
+        record.mValue = Utils.byteArrayToInt(value);
+        if (record.mValue > 0x8000) {
+            record.mValue = -(record.mValue & 0x7fff);
+        }
+
         byte[] station = Utils.reverseBuffer(input, 12, 2);
         record.mStation = Utils.byteArrayToInt(station);
 
         byte[] checksum = Utils.reverseBuffer(input, 14, 2);
         record.mChecksum = Utils.byteArrayToInt(checksum);
 
-        Log.d(TAG, "@" + Utils.isoDateTimeFormat(record.mTimestamp) + ": mode " + record.mMode + ", station " + record.mStation + ", journey " + record.mJourney + ", " + (record.mContinuation ? "continuation" : "new trip"));
+        Log.d(TAG, "@" + Utils.isoDateTimeFormat(record.mTimestamp) + ": mode " + record.mMode + ", station " + record.mStation + ", value " + record.mValue + ", journey " + record.mJourney + ", " + (record.mContinuation ? "continuation" : "new trip"));
         return record;
     }
 
@@ -93,6 +111,7 @@ public class NextfareTapRecord extends NextfareRecord implements Parcelable, Com
         parcel.writeInt(mStation);
         parcel.writeInt(mChecksum);
         parcel.writeInt(mContinuation ? 1 : 0);
+        parcel.writeInt(mValue);
     }
 
     public NextfareTapRecord(Parcel parcel) {
@@ -103,6 +122,7 @@ public class NextfareTapRecord extends NextfareRecord implements Parcelable, Com
         mStation = parcel.readInt();
         mChecksum = parcel.readInt();
         mContinuation = parcel.readInt() == 1;
+        mValue = parcel.readInt();
     }
 
     public int getMode() {
@@ -129,14 +149,20 @@ public class NextfareTapRecord extends NextfareRecord implements Parcelable, Com
         return mContinuation;
     }
 
+    public int getValue() {
+        return mValue;
+    }
+
     @Override
-    public int compareTo(NextfareTapRecord rhs) {
+    public int compareTo(@NonNull NextfareTapRecord rhs) {
         // Group by journey, then by timestamp.
         // First trip in a journey goes first, and should (generally) be in pairs.
+
         if (rhs.mJourney == this.mJourney) {
-            return this.mTimestamp.compareTo(rhs.mTimestamp);
+            return Long.valueOf(this.mTimestamp.getTimeInMillis()).compareTo(rhs.mTimestamp.getTimeInMillis());
         } else {
-            return (new Integer(this.mJourney)).compareTo(rhs.mJourney);
+            return (Integer.valueOf(this.mJourney)).compareTo(rhs.mJourney);
         }
+
     }
 }

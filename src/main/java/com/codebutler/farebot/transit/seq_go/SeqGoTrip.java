@@ -24,16 +24,12 @@ import android.os.Parcelable;
 import com.codebutler.farebot.transit.Station;
 import com.codebutler.farebot.transit.nextfare.NextfareTrip;
 
-import java.text.NumberFormat;
 import java.util.GregorianCalendar;
-import java.util.Locale;
 
 /**
  * Represents trip events on Go Card.
  */
 public class SeqGoTrip extends NextfareTrip {
-    int mTripCost = 0;
-    boolean mKnownCost = false;
 
     @Override
     public String getAgencyName() {
@@ -53,18 +49,6 @@ public class SeqGoTrip extends NextfareTrip {
         }
     }
 
-    @Override
-    public String getFareString() {
-        // We can't use the public accessors here, because we want access to the extra zone info
-        SeqGoStation startStation = SeqGoUtil.getStation(mStartStation);
-        SeqGoStation endStation = SeqGoUtil.getStation(mEndStation);
-
-        if (startStation != null && endStation != null) {
-            return NumberFormat.getCurrencyInstance(Locale.US).format((double)mTripCost / 100.);
-        } else {
-            return null;
-        }
-    }
 
     public String getStartZone() {
         SeqGoStation startStation = SeqGoUtil.getStation(mStartStation);
@@ -106,11 +90,6 @@ public class SeqGoTrip extends NextfareTrip {
     }
 
     @Override
-    public String getBalanceString() {
-        return null;
-    }
-
-    @Override
     public String getStartStationName() {
         if (mStartStation == 0) {
             return null;
@@ -146,11 +125,6 @@ public class SeqGoTrip extends NextfareTrip {
     @Override
     public Station getEndStation() {
         return SeqGoUtil.getStation(mEndStation);
-    }
-
-    @Override
-    public boolean hasFare() {
-        return mKnownCost;
     }
 
     @Override

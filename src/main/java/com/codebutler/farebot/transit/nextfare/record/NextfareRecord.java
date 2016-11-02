@@ -52,59 +52,6 @@ public class NextfareRecord {
         } else if (sectorIndex >= 5 && sectorIndex <= 8) {
             Log.d(TAG, "Tap on/off record");
             record = NextfareTapRecord.recordFromBytes(input);
-        } else {
-            // attempt autodetection
-            // This tends to produce some bad results, so we do this only as a last resort.
-
-            switch (input[0]) {
-                case 0x01:
-                    // Check if the next byte is not null
-                    if (input[1] == 0x00) {
-                        // Metadata record, which we don't understand yet
-                        Log.d(TAG, "Metadata record 01 / 00 unknown");
-                        break;
-                    } else if (input[1] == 0x01) {
-                        if (input[13] == 0x00) {
-                            // Some other metadata type
-                            Log.d(TAG, "Metadata record 01 / 01 / 00@13 unknown");
-                            return null;
-                        }
-
-                        Log.d(TAG, "Top-up record 01 / 01");
-                        record = NextfareTopupRecord.recordFromBytes(input);
-                    } else if (input[1] > 0x03) {
-                        // 0x03 = TAP card "value = 256" probably not a balance, doesn't appear in any history
-                        // 0x23 = go card
-                        // 0x30 = regular balance on TAP, Go
-                        // 0x3[1-f] = possibly for student go card?
-
-                        Log.d(TAG, "Balance record 01 / " + Utils.getHexString(new byte[]{input[1]}));
-                        record = NextfareBalanceRecord.recordFromBytes(input);
-                    } else {
-                        Log.d(TAG, "Unknown 01");
-                    }
-                    break;
-
-                case 0x31:
-                    if (input[1] == 0x01) {
-                        if (input[12] == 0x00) {
-                            // Some other metadata type
-                            Log.d(TAG, "Metadata record 31 / 01 / 00@12 unknown");
-                            return null;
-                        }
-                        Log.d(TAG, "Top-up record 31 / 01");
-                        record = NextfareTopupRecord.recordFromBytes(input);
-                    } else {
-                        Log.d(TAG, "Tap record 31");
-                        record = NextfareTapRecord.recordFromBytes(input);
-                    }
-                    break;
-
-                default:
-                    // Unknown record type
-                    Log.d(TAG, "totally unknown record type");
-                    break;
-            }
         }
         return record;
     }

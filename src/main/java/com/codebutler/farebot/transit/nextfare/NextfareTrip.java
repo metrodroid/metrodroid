@@ -19,11 +19,14 @@
 package com.codebutler.farebot.transit.nextfare;
 
 import android.os.Parcel;
+import android.support.annotation.NonNull;
 
 import com.codebutler.farebot.transit.Station;
 import com.codebutler.farebot.transit.Trip;
 
+import java.text.NumberFormat;
 import java.util.GregorianCalendar;
+import java.util.Locale;
 
 /**
  * Represents trips on Nextfare
@@ -36,6 +39,7 @@ public class NextfareTrip extends Trip implements Comparable<NextfareTrip> {
     protected int mStartStation;
     protected int mEndStation;
     protected boolean mContinuation;
+    protected int mCost;
 
     @Override
     public long getTimestamp() {
@@ -89,7 +93,7 @@ public class NextfareTrip extends Trip implements Comparable<NextfareTrip> {
 
     @Override
     public String getFareString() {
-        return null;
+        return NumberFormat.getCurrencyInstance(Locale.US).format((double)mCost / 100.);
     }
 
     @Override
@@ -99,7 +103,7 @@ public class NextfareTrip extends Trip implements Comparable<NextfareTrip> {
 
     @Override
     public String getStartStationName() {
-        return "Unknown (" + Integer.toString(mStartStation) + ")";
+        return Integer.toString(mStartStation);
     }
 
     @Override
@@ -110,7 +114,7 @@ public class NextfareTrip extends Trip implements Comparable<NextfareTrip> {
     @Override
     public String getEndStationName() {
         if (mEndTime != null) {
-            return "Unknown (" + Integer.toString(mEndStation) + ")";
+            return Integer.toString(mEndStation);
         } else {
             return null;
         }
@@ -123,7 +127,7 @@ public class NextfareTrip extends Trip implements Comparable<NextfareTrip> {
 
     @Override
     public boolean hasFare() {
-        return false;
+        return true;
     }
 
     @Override
@@ -185,7 +189,7 @@ public class NextfareTrip extends Trip implements Comparable<NextfareTrip> {
     };
 
     @Override
-    public int compareTo(NextfareTrip other) {
-        return Long.valueOf(this.getTimestamp()).compareTo(Long.valueOf(other.getTimestamp()));
+    public int compareTo(@NonNull NextfareTrip other) {
+        return this.mStartTime.compareTo(other.mStartTime);
     }
 }

@@ -109,36 +109,8 @@ public class SeqGoTransitData extends NextfareTransitData {
 
     public SeqGoTransitData(ClassicCard card) {
         super(card);
-    }
-
-    @Override
-    protected void calculateFares(ArrayList<NextfareTrip> trips) {
-        // By this point, we should know what ticket type we have.
         if (mConfig != null) {
             mTicketType = SeqGoData.TICKET_TYPE_MAP.get(mConfig.getTicketType(), SeqGoTicketType.UNKNOWN);
-        }
-
-        // Now add fare information
-        int currentJourney = -1;
-        ArrayList<SeqGoTrip> tripsInJourney = new ArrayList<>();
-        SeqGoFareCalculator fareCalculator = new SeqGoFareCalculator(mTicketType);
-        for (NextfareTrip ntrip : trips) {
-            // All of our trips are of this class, so just blindly cast
-            SeqGoTrip trip = (SeqGoTrip)ntrip;
-
-            if (currentJourney != trip.getJourneyId()) {
-                currentJourney = trip.getJourneyId();
-                tripsInJourney = new ArrayList<>();
-            }
-
-            // Calculate the fare
-            try {
-                trip.mTripCost = fareCalculator.calculateFareForTrip(trip, tripsInJourney);
-                trip.mKnownCost = true;
-                tripsInJourney.add(trip);
-            } catch (SeqGoFareCalculator.InvalidArgumentException | SeqGoFareCalculator.UnknownCostException ex) {
-                Log.d(TAG, ex.getMessage());
-            }
         }
     }
 

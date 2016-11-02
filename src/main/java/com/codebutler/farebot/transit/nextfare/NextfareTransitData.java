@@ -149,11 +149,8 @@ public class NextfareTransitData extends TransitData {
 
         for (ClassicSector sector : card.getSectors()) {
             for (ClassicBlock block : sector.getBlocks()) {
-                if (sector.getIndex() == 0 && block.getIndex() == 0) {
-                    continue;
-                }
-
-                if (block.getIndex() == 3) {
+                if (sector.getIndex() == 0 || block.getIndex() == 3) {
+                    // Ignore sector 0 (preamble) and block 3 (mifare keys/ACL)
                     continue;
                 }
 
@@ -202,6 +199,8 @@ public class NextfareTransitData extends TransitData {
 
             while (taps.size() > i) {
                 NextfareTapRecord tapOn = taps.get(i);
+
+                Log.d(TAG, "TapOn @" + Utils.isoDateTimeFormat(tapOn.getTimestamp()));
                 // Start by creating an empty trip
                 NextfareTrip trip = newTrip();
 
@@ -211,6 +210,7 @@ public class NextfareTransitData extends TransitData {
                 trip.mStartStation = tapOn.getStation();
                 trip.mMode = lookupMode(tapOn.getMode());
                 trip.mContinuation = tapOn.isContinuation();
+                trip.mCost = -tapOn.getValue();
 
                 if (!mHasUnknownStations && trip.mStartStation != 0 && trip.getStartStation() == null) {
                     mHasUnknownStations = true;
@@ -221,9 +221,11 @@ public class NextfareTransitData extends TransitData {
                 if (taps.size() > i+1 && taps.get(i+1).getJourney() == tapOn.getJourney() && taps.get(i+1).getMode() == tapOn.getMode()) {
                     // There is a tap off.  Lets put that data in
                     NextfareTapRecord tapOff = taps.get(i+1);
+                    Log.d(TAG, "TapOff @" + Utils.isoDateTimeFormat(tapOff.getTimestamp()));
 
                     trip.mEndTime = tapOff.getTimestamp();
                     trip.mEndStation = tapOff.getStation();
+                    trip.mCost -= tapOff.getValue();
 
                     if (!mHasUnknownStations && trip.mEndStation != 0 && trip.getEndStation() == null) {
                         mHasUnknownStations = true;
@@ -248,7 +250,22 @@ public class NextfareTransitData extends TransitData {
             // Trips are normally in reverse order, put them in forward order
             Collections.reverse(trips);
 
-            calculateFares(trips);
+            /*
+            // Check if the oldest trip was negative. That indicates that we probably got a tap-off
+            // without a matching tap-on, and we should handle differently.
+            //
+            // Normally we silently drop the extra top-up record contained in the "tap" array, so
+            // negative things shouldn't pop up here at all.
+            NextfareTrip lastTrip = trips.get(trips.size() - 1);
+            if (lastTrip.mCost < 0) {
+                // We have a negative cost.  We should clean up...
+                lastTrip.mEndTime = lastTrip.mStartTime;
+                lastTrip.mEndStation = lastTrip.mStartStation;
+                lastTrip.mStartTime = null;
+                lastTrip.mStartStation = 0;
+            }
+            */
+
         }
 
         if (refills.size() > 1) {
