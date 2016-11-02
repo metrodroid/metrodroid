@@ -244,4 +244,15 @@
     <string name="auth_retries_summary">セクターごとに認証を試行する回数</string>
 
 <string name="valid_to_format">%1$s まで有効</string>
-    </resources>
+    <string name="unknown">不明</string>
+    <string name="seqgo_ticket_type">チケットの種類</string>
+    <string name="seqgo_ticket_type_regular">正規</string>
+    <string name="seqgo_ticket_type_concession">割引</string>
+    <string name="seqgo_ticket_type_child">子供</string>
+    <string name="seqgo_ticket_type_senior">シニア</string>
+
+    <string name="nextfare">Cubic Nextfare</string>
+    <string name="nextfare_system_code">システム コード</string>
+    <string name="nextfare_ticket_class">チケット クラス コード</string>
+
+</resources>
