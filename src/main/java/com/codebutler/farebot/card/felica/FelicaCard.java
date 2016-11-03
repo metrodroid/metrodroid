@@ -20,6 +20,7 @@
 package com.codebutler.farebot.card.felica;
 
 import android.nfc.Tag;
+import android.nfc.tech.NfcF;
 import android.util.Log;
 
 import com.codebutler.farebot.card.Card;
@@ -59,6 +60,9 @@ public class FelicaCard extends Card {
     // https://github.com/tmurakam/felicalib/blob/master/src/dump/dump.c
     // https://github.com/tmurakam/felica2money/blob/master/src/card/Suica.cs
     public static FelicaCard dumpTag(byte[] tagId, Tag tag) throws Exception {
+        NfcF nfcF = NfcF.get(tag);
+        Log.d(TAG, "Default system code: " + Utils.getHexString(nfcF.getSystemCode()));
+
         boolean octopusMagic = false;
         FeliCaTag ft = new FeliCaTag(tag);
 
@@ -81,7 +85,6 @@ public class FelicaCard extends Card {
                 Log.d(TAG, "Detected octopus card");
                 // Octopus has a special knocking sequence to allow unprotected reads, and does not
                 // respond to the normal system code listing.
-
                 codes = new FeliCaLib.SystemCode[]{new FeliCaLib.SystemCode(FeliCaLib.SYSTEMCODE_OCTOPUS)};
                 octopusMagic = true;
             }
