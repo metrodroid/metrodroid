@@ -116,6 +116,12 @@ public class FelicaCard extends Card {
                 serviceCodes = ft.getServiceCodeList();
             }
 
+            // Brute Forcer (DEBUG ONLY)
+            //if (octopusMagic)
+            //for (int serviceCodeInt=0; serviceCodeInt<0xffff; serviceCodeInt++) {
+            //    Log.d(TAG, "Trying to read from service code " + serviceCodeInt);
+            //    FeliCaLib.ServiceCode serviceCode = new FeliCaLib.ServiceCode(serviceCodeInt);
+
             for (FeliCaLib.ServiceCode serviceCode : serviceCodes) {
                 byte[] bytes = serviceCode.getBytes();
                 ArrayUtils.reverse(bytes);
@@ -137,6 +143,7 @@ public class FelicaCard extends Card {
                 if (blocks.size() > 0) { // Most service codes appear to be empty...
                     FelicaBlock[] blocksArray = blocks.toArray(new FelicaBlock[blocks.size()]);
                     services.add(new FelicaService(serviceCodeInt, blocksArray));
+                    Log.d(TAG, "- Service code " + serviceCodeInt + " had " + blocks.size() + " blocks");
                 }
             }
 
