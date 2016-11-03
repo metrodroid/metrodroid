@@ -29,14 +29,13 @@ import au.id.micolous.farebot.R;
 public class LicenseActivity extends Activity {
 
     final static String mLicenseIntro = "Metrodroid\n" +
+            "Based on FareBot\n\n" +
             "Copyright 2015-2016 Michael Farrell <micolous@gmail.com> and contributors\n" +
-            "\n" +
-            "Based on FareBot\n" +
             "Copyright 2011-2014 Eric Butler <eric@codebutler.com> and contributors\n" +
             "Copyright 2011 \"an anonymous contributor\", Chris Hundt, David Hoover, Devin Carraway, Sean Cross\n" +
             "Copyright 2012 Jason Hsu, Sebastian Oliva, Shayan Guha, Toby Bonang, Victor Heng\n" +
             "Copyright 2012-2013 Wilbert Duijvenvoorde\n" +
-            "Copyright 2013 Lauri Andler, Marcelo Liberato, Mike Castleman\n" +
+            "Copyright 2013 Lauri Andler, Marcelo Liberato, Mike Castleman, Sinpo Wei\n" +
             "Copyright 2014 Bao-Long Nguyen-Trong, Kramer Campbell\n" +
             "\n" +
             "This program is free software: you can redistribute it and/or modify " +
