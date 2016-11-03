@@ -30,6 +30,7 @@ import com.codebutler.farebot.fragment.FelicaCardRawDataFragment;
 import com.codebutler.farebot.transit.TransitData;
 import com.codebutler.farebot.transit.TransitIdentity;
 import com.codebutler.farebot.transit.edy.EdyTransitData;
+import com.codebutler.farebot.transit.octopus.OctopusTransitData;
 import com.codebutler.farebot.transit.suica.SuicaTransitData;
 import com.codebutler.farebot.util.Utils;
 
@@ -151,7 +152,7 @@ public class FelicaCard extends Card {
             }
 
             FelicaService[] servicesArray = services.toArray(new FelicaService[services.size()]);
-            systems.add(new FelicaSystem(Utils.byteArrayToInt(code.getBytes()), servicesArray));
+            systems.add(new FelicaSystem(code.getCode(), servicesArray));
         }
 
         FelicaSystem[] systemsArray = systems.toArray(new FelicaSystem[systems.size()]);
@@ -216,15 +217,18 @@ public class FelicaCard extends Card {
             return SuicaTransitData.parseTransitIdentity(this);
         else if (EdyTransitData.check(this))
             return EdyTransitData.parseTransitIdentity(this);
+        else if (OctopusTransitData.check(this))
+            return OctopusTransitData.parseTransitIdentity(this);
         return null;
     }
 
     @Override public TransitData parseTransitData() {
-        Log.d(TAG, "parseTransitData() called!!");
         if (SuicaTransitData.check(this))
             return new SuicaTransitData(this);
         else if (EdyTransitData.check(this))
             return new EdyTransitData(this);
+        else if (OctopusTransitData.check(this))
+            return new OctopusTransitData(this);
         return null;
     }
 }

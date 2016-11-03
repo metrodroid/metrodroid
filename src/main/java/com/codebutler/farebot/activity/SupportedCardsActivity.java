@@ -41,6 +41,7 @@ import au.id.micolous.farebot.R;
 import com.codebutler.farebot.card.CardType;
 import com.codebutler.farebot.transit.manly_fast_ferry.ManlyFastFerryTransitData;
 import com.codebutler.farebot.transit.myki.MykiTransitData;
+import com.codebutler.farebot.transit.octopus.OctopusTransitData;
 import com.codebutler.farebot.transit.opal.OpalTransitData;
 import com.codebutler.farebot.transit.seq_go.SeqGoTransitData;
 import com.codebutler.farebot.util.Utils;
@@ -131,6 +132,11 @@ public class SupportedCardsActivity extends Activity {
             add(new CardInfo(R.drawable.nets_card, "NETS FlashPay",
                     R.string.location_singapore,
                     CardType.CEPAS
+            ));
+
+            add(new CardInfo(R.drawable.octopus_card, OctopusTransitData.NAME,
+                    R.string.location_hong_kong,
+                    CardType.FeliCa
             ));
 
             add(new CardInfo(R.drawable.opal_card, OpalTransitData.NAME,
