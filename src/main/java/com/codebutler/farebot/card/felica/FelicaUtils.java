@@ -25,6 +25,8 @@ public final class FelicaUtils {
                 return "Common / Edy";
             case FeliCaLib.SYSTEMCODE_FELICA_LITE:
                 return "FeliCa Lite";
+            case FeliCaLib.SYSTEMCODE_OCTOPUS:
+                return "Octopus";
             default:
                 return "Unknown";
         }
@@ -47,6 +49,13 @@ public final class FelicaUtils {
                         return "FeliCa Lite Read-only";
                     case FeliCaLib.SERVICE_FELICA_LITE_READWRITE:
                         return "Felica Lite Read-write";
+                }
+                break;
+
+            case FeliCaLib.SYSTEMCODE_OCTOPUS:
+                switch (serviceCode) {
+                    case FeliCaLib.SERVICE_OCTOPUS:
+                        return "Octopus Metadata";
                 }
         }
 

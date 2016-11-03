@@ -48,6 +48,8 @@ import java.util.List;
 @Root(name="card")
 @CardRawDataFragmentClass(FelicaCardRawDataFragment.class)
 public class FelicaCard extends Card {
+    private static final String TAG = "FelicaCard";
+
     @Element(name="idm") private FeliCaLib.IDm mIDm;
     @Element(name="pmm") private FeliCaLib.PMm mPMm;
     @ElementList(name="systems") private List<FelicaSystem> mSystems;
@@ -57,6 +59,7 @@ public class FelicaCard extends Card {
     // https://github.com/tmurakam/felicalib/blob/master/src/dump/dump.c
     // https://github.com/tmurakam/felica2money/blob/master/src/card/Suica.cs
     public static FelicaCard dumpTag(byte[] tagId, Tag tag) throws Exception {
+        boolean octopusMagic = false;
         FeliCaTag ft = new FeliCaTag(tag);
 
         FeliCaLib.IDm idm = ft.pollingAndGetIDm(FeliCaLib.SYSTEMCODE_ANY);
@@ -68,34 +71,56 @@ public class FelicaCard extends Card {
         List<FelicaSystem> systems = new ArrayList<>();
 
         // FIXME: Enumerate "areas" inside of systems ???
+        FeliCaLib.SystemCode[] codes = ft.getSystemCodeList();
 
-        for (FeliCaLib.SystemCode code : ft.getSystemCodeList()) {
-            Log.d("FelicaCard", "Got system code: " + Utils.getHexString(code.getBytes()));
+        // Check if we failed to get a System Code
+        if (codes.length == 0) {
+            // Lets try to ping for an Octopus anyway
+            FeliCaLib.IDm octopusSystem = ft.pollingAndGetIDm(FeliCaLib.SYSTEMCODE_OCTOPUS);
+            if (octopusSystem != null) {
+                Log.d(TAG, "Detected octopus card");
+                // Octopus has a special knocking sequence to allow unprotected reads, and does not
+                // respond to the normal system code listing.
 
-            int systemCode = Utils.byteArrayToInt(code.getBytes());
+                codes = new FeliCaLib.SystemCode[]{new FeliCaLib.SystemCode(FeliCaLib.SYSTEMCODE_OCTOPUS)};
+                octopusMagic = true;
+            }
+        }
+
+        for (FeliCaLib.SystemCode code : codes) {
+            Log.d(TAG, "Got system code: " + Utils.getHexString(code.getBytes()));
+
+            int systemCode = code.getCode();
             //ft.polling(systemCode);
 
             FeliCaLib.IDm thisIdm = ft.pollingAndGetIDm(systemCode);
 
-            Log.d("FelicaCard", " - Got IDm: " + Utils.getHexString(thisIdm.getBytes()) + "  compare: "
+            Log.d(TAG, " - Got IDm: " + Utils.getHexString(thisIdm.getBytes()) + "  compare: "
                     + Utils.getHexString(idm.getBytes()));
 
             byte[] foo = idm.getBytes();
             ArrayUtils.reverse(foo);
-            Log.d("FelicaCard", " - Got Card ID? " + Utils.byteArrayToInt(idm.getBytes(), 2, 6) + "  "
+            Log.d(TAG, " - Got Card ID? " + Utils.byteArrayToInt(idm.getBytes(), 2, 6) + "  "
                     + Utils.byteArrayToInt(foo, 2, 6));
 
-            Log.d("FelicaCard", " - Got PMm: " + Utils.getHexString(ft.getPMm().getBytes()) + "  compare: "
+            Log.d(TAG, " - Got PMm: " + Utils.getHexString(ft.getPMm().getBytes()) + "  compare: "
                     + Utils.getHexString(pmm.getBytes()));
 
             List<FelicaService> services = new ArrayList<>();
+            FeliCaLib.ServiceCode[] serviceCodes;
 
-            for (FeliCaLib.ServiceCode serviceCode : ft.getServiceCodeList()) {
-                // There appears to be some disagreement over byte order.
+            if (octopusMagic && code.getCode() == FeliCaLib.SYSTEMCODE_OCTOPUS) {
+                Log.d(TAG, "Stuffing in octopus magic service code");
+                serviceCodes = new FeliCaLib.ServiceCode[]{new FeliCaLib.ServiceCode(FeliCaLib.SERVICE_OCTOPUS)};
+            } else {
+                serviceCodes = ft.getServiceCodeList();
+            }
+
+            for (FeliCaLib.ServiceCode serviceCode : serviceCodes) {
                 byte[] bytes = serviceCode.getBytes();
                 ArrayUtils.reverse(bytes);
                 int serviceCodeInt = Utils.byteArrayToInt(bytes);
-                serviceCode = new FeliCaLib.ServiceCode(serviceCodeInt);
+                serviceCode = new FeliCaLib.ServiceCode(serviceCode.getBytes());
 
                 List<FelicaBlock> blocks = new ArrayList<>();
 
@@ -185,7 +210,7 @@ public class FelicaCard extends Card {
     }
 
     @Override public TransitData parseTransitData() {
-        Log.d("FelicaCard", "parseTransitData() called!!");
+        Log.d(TAG, "parseTransitData() called!!");
         if (SuicaTransitData.check(this))
             return new SuicaTransitData(this);
         else if (EdyTransitData.check(this))
