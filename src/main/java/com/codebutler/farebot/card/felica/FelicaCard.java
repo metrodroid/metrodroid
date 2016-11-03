@@ -2,6 +2,10 @@
  * FelicaCard.java
  *
  * Copyright 2011 Eric Butler <eric@codebutler.com>
+ * Copyright 2016 Michael Farrell <micolous+git@gmail.com>
+ *
+ * Octopus reading code based on FelicaCard.java from nfcard project
+ * Copyright 2013 Sinpo Wei <sinpowei@gmail.com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
