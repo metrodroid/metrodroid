@@ -21,7 +21,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 """
 from argparse import ArgumentParser, FileType
 from base64 import b16encode, b64encode
-from os.path import getmtime
+from os.path import basename, getmtime
 from xml.etree import ElementTree as etree
 
 
@@ -36,7 +36,12 @@ def mfc_to_farebot(input_fs, output_f):
 		assert len(card_data) in (1024, 4096)
 
 		# Lets make some XML.
-		card = etree.Element('card', type='0', id=b16encode(card_data[0:4]).lower(), scanned_at=str(int(getmtime(input_f.name)*1000)))
+		card = etree.Element('card',
+			type='0',
+			id=b16encode(card_data[0:4]).lower(),
+			scanned_at=str(int(getmtime(input_f.name)*1000)),
+			label=basename(input_f.name)
+		)
 		sectors = etree.SubElement(card, 'sectors')
 
 		if len(card_data) == 1024:

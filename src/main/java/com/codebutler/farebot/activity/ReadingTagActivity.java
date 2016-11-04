@@ -98,6 +98,7 @@ public class ReadingTagActivity extends Activity {
                         values.put(CardsTableColumns.TAG_SERIAL, tagIdString);
                         values.put(CardsTableColumns.DATA, cardXml);
                         values.put(CardsTableColumns.SCANNED_AT, card.getScannedAt().getTime());
+                        values.put(CardsTableColumns.LABEL, card.getLabel());
 
                         Uri uri = getContentResolver().insert(CardProvider.CONTENT_URI_CARD, values);
 

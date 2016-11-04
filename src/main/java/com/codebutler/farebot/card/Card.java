@@ -2,6 +2,7 @@
  * Card.java
  *
  * Copyright 2011-2014 Eric Butler <eric@codebutler.com>
+ * Copyright 2016 Michael Farrell <micolous+git@gmail.com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -41,16 +42,31 @@ import java.io.StringWriter;
 import java.util.Date;
 
 public abstract class Card {
-    @Attribute(name="type") private CardType mType;
-    @Attribute(name="id") private HexString mTagId;
-    @Attribute(name="scanned_at") private Date mScannedAt;
+    @Attribute(name = "type")
+    private CardType mType;
+    @Attribute(name = "id")
+    private HexString mTagId;
+    @Attribute(name = "scanned_at")
+    private Date mScannedAt;
 
-    protected Card() { }
+    // This must be protected, not private, as otherwise the XML deserialiser fails to read the
+    // card.
+    @SuppressWarnings("WeakerAccess")
+    @Attribute(name = "label", required = false)
+    protected String mLabel;
+
+    protected Card() {
+    }
 
     protected Card(CardType type, byte[] tagId, Date scannedAt) {
+        this(type, tagId, scannedAt, null);
+    }
+
+    protected Card(CardType type, byte[] tagId, Date scannedAt, String label) {
         mType = type;
         mTagId = new HexString(tagId);
         mScannedAt = scannedAt;
+        mLabel = label;
     }
 
     public static Card dumpTag(byte[] tagId, Tag tag) throws Exception {
@@ -101,6 +117,11 @@ public abstract class Card {
         return mScannedAt;
     }
 
+    public String getLabel() {
+        return mLabel;
+    }
+
     public abstract TransitIdentity parseTransitIdentity();
+
     public abstract TransitData parseTransitData();
 }

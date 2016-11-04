@@ -104,6 +104,9 @@ public class ExportHelper {
         values.put(CardsTableColumns.TAG_SERIAL, cardElement.getAttribute("id"));
         values.put(CardsTableColumns.DATA, xml);
         values.put(CardsTableColumns.SCANNED_AT, cardElement.getAttribute("scanned_at"));
+        if (cardElement.hasAttribute("label")) {
+            values.put(CardsTableColumns.LABEL, cardElement.getAttribute("label"));
+        }
 
         return context.getContentResolver().insert(CardProvider.CONTENT_URI_CARD, values);
     }
