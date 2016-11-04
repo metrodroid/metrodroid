@@ -20,7 +20,6 @@ package com.codebutler.farebot.transit.seq_go;
 
 import android.net.Uri;
 import android.os.Parcel;
-import android.util.Log;
 
 import com.codebutler.farebot.card.UnauthorizedException;
 import com.codebutler.farebot.card.classic.ClassicCard;
@@ -32,7 +31,6 @@ import com.codebutler.farebot.transit.nextfare.NextfareTrip;
 import com.codebutler.farebot.transit.nextfare.record.NextfareTopupRecord;
 import com.codebutler.farebot.ui.HeaderListItem;
 import com.codebutler.farebot.ui.ListItem;
-import com.codebutler.farebot.util.Utils;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -88,7 +86,7 @@ public class SeqGoTransitData extends NextfareTransitData {
             }
 
             byte[] systemCode = Arrays.copyOfRange(blockData, 9, 15);
-            Log.d(TAG, "SystemCode = " + Utils.getHexString(systemCode));
+            //Log.d(TAG, "SystemCode = " + Utils.getHexString(systemCode));
             return Arrays.equals(systemCode, SYSTEM_CODE1) || Arrays.equals(systemCode, SYSTEM_CODE2);
         } catch (UnauthorizedException ex) {
             // It is not possible to identify the card without a key

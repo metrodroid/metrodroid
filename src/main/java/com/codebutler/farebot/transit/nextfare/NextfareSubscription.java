@@ -21,6 +21,7 @@ package com.codebutler.farebot.transit.nextfare;
 import android.os.Parcel;
 
 import com.codebutler.farebot.transit.Subscription;
+import com.codebutler.farebot.transit.nextfare.record.NextfareBalanceRecord;
 import com.codebutler.farebot.transit.nextfare.record.NextfareTravelPassRecord;
 
 import java.util.Date;
@@ -35,7 +36,11 @@ public class NextfareSubscription extends Subscription {
 
     public NextfareSubscription(NextfareTravelPassRecord record) {
         mValidTo = record.getTimestamp().getTime();
+    }
 
+    public NextfareSubscription(NextfareBalanceRecord record) {
+        // Used when there is a subscription on the card that is not yet active.
+        // TODO: Figure out subscription types
     }
 
     @Override

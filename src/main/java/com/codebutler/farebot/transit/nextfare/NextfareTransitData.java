@@ -166,6 +166,7 @@ public class NextfareTransitData extends TransitData {
         // Now do a first pass for metadata and balance information.
         ArrayList<NextfareBalanceRecord> balances = new ArrayList<>();
         ArrayList<NextfareTrip> trips = new ArrayList<>();
+        ArrayList<NextfareSubscription> subscriptions = new ArrayList<>();
         ArrayList<Refill> refills = new ArrayList<>();
         ArrayList<NextfareTapRecord> taps = new ArrayList<>();
         ArrayList<NextfareTravelPassRecord> passes = new ArrayList<>();
@@ -188,7 +189,11 @@ public class NextfareTransitData extends TransitData {
 
         if (balances.size() >= 1) {
             Collections.sort(balances);
-            mBalance = balances.get(0).getBalance();
+            NextfareBalanceRecord balance = balances.get(0);
+            mBalance = balance.getBalance();
+            if (balance.hasTravelPassAvailable()) {
+                subscriptions.add(new NextfareSubscription(balance));
+            }
         }
 
         if (taps.size() >= 1) {
@@ -200,7 +205,7 @@ public class NextfareTransitData extends TransitData {
             while (taps.size() > i) {
                 NextfareTapRecord tapOn = taps.get(i);
 
-                Log.d(TAG, "TapOn @" + Utils.isoDateTimeFormat(tapOn.getTimestamp()));
+                //Log.d(TAG, "TapOn @" + Utils.isoDateTimeFormat(tapOn.getTimestamp()));
                 // Start by creating an empty trip
                 NextfareTrip trip = newTrip();
 
@@ -221,7 +226,7 @@ public class NextfareTransitData extends TransitData {
                 if (taps.size() > i+1 && taps.get(i+1).getJourney() == tapOn.getJourney() && taps.get(i+1).getMode() == tapOn.getMode()) {
                     // There is a tap off.  Lets put that data in
                     NextfareTapRecord tapOff = taps.get(i+1);
-                    Log.d(TAG, "TapOff @" + Utils.isoDateTimeFormat(tapOff.getTimestamp()));
+                    //Log.d(TAG, "TapOff @" + Utils.isoDateTimeFormat(tapOff.getTimestamp()));
 
                     trip.mEndTime = tapOff.getTimestamp();
                     trip.mEndStation = tapOff.getStation();
@@ -274,9 +279,10 @@ public class NextfareTransitData extends TransitData {
 
         if (passes.size() >= 1) {
             Collections.sort(passes);
-            mSubscriptions = new NextfareSubscription[] { newSubscription(passes.get(0)) };
+            subscriptions.add(newSubscription(passes.get(0)));
         }
 
+        mSubscriptions = subscriptions.toArray(new NextfareSubscription[passes.size()]);
         mTrips = trips.toArray(new NextfareTrip[trips.size()]);
         mRefills = refills.toArray(new NextfareRefill[refills.size()]);
     }

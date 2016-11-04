@@ -30,6 +30,7 @@ public class NextfareBalanceRecord extends NextfareRecord implements Comparable<
     private static final String TAG = "NextfareBalanceRecord";
     private int mVersion;
     private int mBalance;
+    private boolean mHasTravelPassAvailable = false;
 
     public static NextfareBalanceRecord recordFromBytes(byte[] input) {
         //if (input[0] != 0x01) throw new AssertionError();
@@ -41,7 +42,11 @@ public class NextfareBalanceRecord extends NextfareRecord implements Comparable<
         byte[] balance = Utils.reverseBuffer(input, 2, 2);
         record.mBalance = Utils.byteArrayToInt(balance, 0, 2);
 
-        Log.d(TAG, "Balance " + record.mBalance + " version " + record.mVersion);
+        if (input[7] != 0x00) {
+            record.mHasTravelPassAvailable = true;
+        }
+
+        Log.d(TAG, "Balance " + record.mBalance + ", version " + record.mVersion + ", travel pass " + Boolean.toString(record.mHasTravelPassAvailable));
         return record;
     }
 
@@ -55,6 +60,10 @@ public class NextfareBalanceRecord extends NextfareRecord implements Comparable<
         return mBalance;
     }
     public int getVersion() { return mVersion; }
+
+    public boolean hasTravelPassAvailable() {
+        return mHasTravelPassAvailable;
+    }
 
     @Override
     public int compareTo(NextfareBalanceRecord rhs) {

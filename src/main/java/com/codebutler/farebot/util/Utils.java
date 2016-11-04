@@ -439,7 +439,7 @@ public class Utils {
             checksum += sum(digitsOf(d*2));
         }
 
-        Log.d(TAG, String.format("luhnChecksum(%s) = %d", cardNumber, checksum));
+        //Log.d(TAG, String.format("luhnChecksum(%s) = %d", cardNumber, checksum));
         return checksum % 10;
     }
 

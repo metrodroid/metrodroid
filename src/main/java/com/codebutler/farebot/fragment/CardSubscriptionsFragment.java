@@ -1,7 +1,8 @@
 /*
  * CardSubscriptionsFragment.java
  *
- * Copyright (C) 2012 Eric Butler <eric@codebutler.com>
+ * Copyright 2012 Eric Butler <eric@codebutler.com>
+ * Copyright 2016 Michael Farrell <micolous+git@gmail.com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -27,8 +28,6 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
-import au.id.micolous.metrodroid.MetrodroidApplication;
-import au.id.micolous.farebot.R;
 import com.codebutler.farebot.activity.AdvancedCardInfoActivity;
 import com.codebutler.farebot.activity.CardInfoActivity;
 import com.codebutler.farebot.card.Card;
@@ -37,6 +36,9 @@ import com.codebutler.farebot.transit.TransitData;
 import com.codebutler.farebot.util.Utils;
 
 import org.simpleframework.xml.Serializer;
+
+import au.id.micolous.farebot.R;
+import au.id.micolous.metrodroid.MetrodroidApplication;
 
 public class CardSubscriptionsFragment extends ListFragment {
     private Card mCard;
@@ -67,14 +69,16 @@ public class CardSubscriptionsFragment extends ListFragment {
 
             Subscription subscription = getItem(position);
 
-            String validTo = Utils.dateFormat(subscription.getValidTo());
 
-            if (subscription.getValidFrom() != null) {
+            if (subscription.getValidFrom() != null && subscription.getValidTo() != null) {
                 String validFrom = Utils.dateFormat(subscription.getValidFrom());
+                String validTo = Utils.dateFormat(subscription.getValidTo());
                 ((TextView) view.findViewById(R.id.valid)).setText(getString(R.string.valid_format, validFrom, validTo));
-            } else {
+            } else if (subscription.getValidTo() != null) {
+                String validTo = Utils.dateFormat(subscription.getValidTo());
                 ((TextView) view.findViewById(R.id.valid)).setText(getString(R.string.valid_to_format, validTo));
-
+            } else {
+                ((TextView) view.findViewById(R.id.valid)).setText(R.string.valid_not_used);
             }
 
             ((TextView) view.findViewById(R.id.company)).setText(subscription.getShortAgencyName());
