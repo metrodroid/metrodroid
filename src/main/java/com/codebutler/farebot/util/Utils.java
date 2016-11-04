@@ -30,6 +30,8 @@ import android.content.res.Resources;
 import android.nfc.NfcAdapter;
 import android.os.Build;
 import android.provider.Settings;
+import android.support.annotation.PluralsRes;
+import android.support.annotation.StringRes;
 import android.text.TextUtils;
 import android.text.format.DateFormat;
 import android.util.Log;
@@ -329,7 +331,7 @@ public class Utils {
      * @param formatArgs Formatting arguments to pass
      * @return Localized string
      */
-    public static String localizeString(int stringResource, Object... formatArgs) {
+    public static String localizeString(@StringRes int stringResource, Object... formatArgs) {
         Resources res = MetrodroidApplication.getInstance().getResources();
         return res.getString(stringResource, formatArgs);
     }
@@ -342,7 +344,7 @@ public class Utils {
      * @param formatArgs Formatting arguments to pass
      * @return Localized string
      */
-    public static String localizePlural(int pluralResource, int quantity, Object... formatArgs) {
+    public static String localizePlural(@PluralsRes int pluralResource, int quantity, Object... formatArgs) {
         Resources res = MetrodroidApplication.getInstance().getResources();
         return res.getQuantityString(pluralResource, quantity, formatArgs);
     }
