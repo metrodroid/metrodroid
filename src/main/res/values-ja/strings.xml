@@ -148,7 +148,7 @@
     <string name="card_type">カードの種類</string>
     <string name="select_file">ファイルを選択</string>
     <string name="copied_to_clipboard">クリップボードにコピーしました</string>
-    <string name="saved_xml">USB ストレージに FareBot-Export.xml を書き込みました。</string>
+    <string name="saved_xml">USB ストレージに Metrodroid Export.xml を書き込みました。</string>
     <plurals name="cards_imported">
 	<item quantity="one"><xliff:g id="count" example="1">%d</xliff:g>カードをインポートしました!</item>
 	<item quantity="other"/>
@@ -255,4 +255,9 @@
     <string name="nextfare_system_code">システム コード</string>
     <string name="nextfare_ticket_class">チケット クラス コード</string>
 
-</resources>
+<string name="export_filename">エクスポート ファイル名</string>
+    <string name="valid_not_used">まだ使用していません</string>
+    <string name="saved_xml_custom">USB ストレージに XML を書き込みました。</string>
+    <string name="location_hong_kong">香港</string>
+
+    </resources>
