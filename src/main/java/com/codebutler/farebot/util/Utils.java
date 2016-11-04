@@ -35,20 +35,16 @@ import android.text.format.DateFormat;
 import android.util.Log;
 import android.view.WindowManager;
 
-import au.id.micolous.metrodroid.MetrodroidApplication;
-
-import au.id.micolous.farebot.R;
-
 import java.math.BigInteger;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Comparator;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.List;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
+
+import au.id.micolous.farebot.R;
+import au.id.micolous.metrodroid.MetrodroidApplication;
 
 public class Utils {
     private static final String TAG = "Utils";
@@ -203,7 +199,7 @@ public class Utils {
         if (TextUtils.isEmpty(errorMessage)) {
             errorMessage = ex.toString();
         }
-        return errorMessage;
+        return ex.getClass().getSimpleName() + ": " + errorMessage;
     }
 
     public static String getDeviceInfoString() {
@@ -391,7 +387,7 @@ public class Utils {
     }
 
     public static int[] digitsOf(int integer) {
-        return digitsOf((long) integer);
+        return digitsOf(String.valueOf(integer));
     }
 
     public static int[] digitsOf(long integer) {
