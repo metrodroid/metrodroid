@@ -260,4 +260,6 @@
     <string name="saved_xml_custom">USB ストレージに XML を書き込みました。</string>
     <string name="location_hong_kong">香港</string>
 
+    <string name="location_los_angeles">米国 カリフォルニア州 ロサンゼルス</string>
+
     </resources>
