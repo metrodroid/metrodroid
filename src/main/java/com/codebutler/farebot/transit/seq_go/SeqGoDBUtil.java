@@ -1,7 +1,7 @@
 /*
  * SeqGoDBUtil.java
  *
- * Copyright 2015 Michael Farrell <micolous+git@gmail.com>
+ * Copyright 2015-2016 Michael Farrell <micolous+git@gmail.com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -19,13 +19,22 @@
 package com.codebutler.farebot.transit.seq_go;
 
 import android.content.Context;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
+import android.util.Log;
 
 import com.codebutler.farebot.util.DBUtil;
+
+import java.io.IOException;
+
+import au.id.micolous.metrodroid.MetrodroidApplication;
 
 /**
  * Database functionality for SEQ Go Cards
  */
 public class SeqGoDBUtil extends DBUtil {
+    private static final String TAG = "SeqGoDBUtil";
+
     public static final String TABLE_NAME = "stops";
     public static final String COLUMN_ROW_ID = "id";
     public static final String COLUMN_ROW_NAME = "name";
@@ -61,4 +70,48 @@ public class SeqGoDBUtil extends DBUtil {
         return VERSION;
     }
 
+    private static SeqGoDBUtil getDB() {
+        return MetrodroidApplication.getInstance().getSeqGoDBUtil();
+    }
+
+    public static SeqGoStation getStation(int stationId) {
+        if (stationId == 0) {
+            return null;
+        }
+
+        SQLiteDatabase db = null;
+        Cursor cursor = null;
+        try {
+            try {
+                db = getDB().openDatabase();
+            } catch (IOException ex) {
+                Log.e(TAG, "Error connecting database", ex);
+                return null;
+            }
+
+            cursor = db.query(
+                    SeqGoDBUtil.TABLE_NAME,
+                    SeqGoDBUtil.COLUMNS_STATIONDATA,
+                    String.format("%s = ?", SeqGoDBUtil.COLUMN_ROW_ID),
+                    new String[]{
+                            String.valueOf(stationId),
+                    },
+                    null,
+                    null,
+                    SeqGoDBUtil.COLUMN_ROW_ID);
+
+            if (!cursor.moveToFirst()) {
+                Log.w(TAG, String.format("FAILED get station %s",
+                        stationId));
+
+                return null;
+            }
+
+            return new SeqGoStation(cursor);
+        } finally {
+            if (cursor != null) {
+                cursor.close();
+            }
+        }
+    }
 }

@@ -49,46 +49,6 @@ public class SeqGoTrip extends NextfareTrip {
         }
     }
 
-
-    public String getStartZone() {
-        SeqGoStation startStation = SeqGoUtil.getStation(mStartStation);
-
-        if (startStation != null) {
-            return startStation.getZone();
-        } else {
-            return null;
-        }
-    }
-
-    public String getEndZone() {
-        SeqGoStation endStation = SeqGoUtil.getStation(mEndStation);
-        if (endStation != null) {
-            return endStation.getZone();
-        } else {
-            return null;
-        }
-    }
-
-    public boolean isAirtrainZoneExempt() {
-        SeqGoStation startStation = SeqGoUtil.getStation(mStartStation);
-        SeqGoStation endStation = SeqGoUtil.getStation(mEndStation);
-
-        if (startStation == null || endStation == null) {
-            // We don't know. :(
-            return false;
-        }
-
-        if (startStation.getZone().equals("airtrain") && endStation.isAirtrainZoneExempt()) {
-            return true;
-        }
-
-        if (endStation.getZone().equals("airtrain") && startStation.isAirtrainZoneExempt()) {
-            return true;
-        }
-
-        return false;
-    }
-
     @Override
     public String getStartStationName() {
         if (mStartStation == 0) {
@@ -105,7 +65,7 @@ public class SeqGoTrip extends NextfareTrip {
 
     @Override
     public Station getStartStation() {
-        return SeqGoUtil.getStation(mStartStation);
+        return SeqGoDBUtil.getStation(mStartStation);
     }
 
     @Override
@@ -124,7 +84,7 @@ public class SeqGoTrip extends NextfareTrip {
 
     @Override
     public Station getEndStation() {
-        return SeqGoUtil.getStation(mEndStation);
+        return SeqGoDBUtil.getStation(mEndStation);
     }
 
     @Override

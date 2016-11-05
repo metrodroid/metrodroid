@@ -192,7 +192,7 @@ public class NextfareTransitData extends TransitData {
             NextfareBalanceRecord balance = balances.get(0);
             mBalance = balance.getBalance();
             if (balance.hasTravelPassAvailable()) {
-                subscriptions.add(new NextfareSubscription(balance));
+                subscriptions.add(newSubscription(balance));
             }
         }
 
@@ -213,7 +213,8 @@ public class NextfareTransitData extends TransitData {
                 trip.mJourneyId = tapOn.getJourney();
                 trip.mStartTime = tapOn.getTimestamp();
                 trip.mStartStation = tapOn.getStation();
-                trip.mMode = lookupMode(tapOn.getMode());
+                trip.mMode = lookupMode(tapOn.getMode(), tapOn.getStation());
+                trip.mModeInt = tapOn.getMode();
                 trip.mContinuation = tapOn.isContinuation();
                 trip.mCost = -tapOn.getValue();
 
@@ -223,7 +224,7 @@ public class NextfareTransitData extends TransitData {
 
                 // Peek at the next record and see if it is part of
                 // this journey
-                if (taps.size() > i+1 && taps.get(i+1).getJourney() == tapOn.getJourney() && taps.get(i+1).getMode() == tapOn.getMode()) {
+                if (taps.size() > i+1 && shouldMergeJourneys(tapOn, taps.get(i+1))) {
                     // There is a tap off.  Lets put that data in
                     NextfareTapRecord tapOff = taps.get(i+1);
                     //Log.d(TAG, "TapOff @" + Utils.isoDateTimeFormat(tapOff.getTimestamp()));
@@ -287,7 +288,19 @@ public class NextfareTransitData extends TransitData {
         mRefills = refills.toArray(new NextfareRefill[refills.size()]);
     }
 
-    protected void calculateFares(ArrayList<NextfareTrip> trips) {
+    /**
+     * Called when it needs to be determined if two TapRecords are part of the same journey.
+     *
+     * Normally this should never need to be overwritten, except in the case that the Journey ID and
+     * travel mode is not enough to break up the two journeys.
+     *
+     * If the agency NEVER records tap-off events, this should always return false.
+     * @param tap1 The first tap to compare.
+     * @param tap2 The second tap to compare.
+     * @return true if the journeys should be merged.
+     */
+    protected boolean shouldMergeJourneys(NextfareTapRecord tap1, NextfareTapRecord tap2) {
+        return tap1.getJourney() == tap2.getJourney() && tap1.getMode() == tap2.getMode();
     }
 
     /**
@@ -309,6 +322,8 @@ public class NextfareTransitData extends TransitData {
 
     /**
      * Allows you to override the constructor for new subscriptions, to hook in your own code.
+     *
+     * This method is used for existing / past travel passes.
      * @param record Record to parse
      * @return Subclass of NextfareSubscription
      */
@@ -317,11 +332,23 @@ public class NextfareTransitData extends TransitData {
     }
 
     /**
+     * Allows you to override the constructor for new subscriptions, to hook in your own code.
+     *
+     * This method is used for new, unused travel passes.
+     * @param record Record to parse
+     * @return Subclass of NextfareSubscription
+     */
+    protected NextfareSubscription newSubscription(NextfareBalanceRecord record) {
+        return new NextfareSubscription(record);
+    }
+
+    /**
      * Allows you to override the mode of transport used on a trip.
      * @param mode Mode number read from card.
+     * @param stationId Station ID read from card.
      * @return Generic mode class
      */
-    protected Trip.Mode lookupMode(int mode) {
+    protected Trip.Mode lookupMode(int mode, int stationId) {
         return Trip.Mode.OTHER;
     }
 

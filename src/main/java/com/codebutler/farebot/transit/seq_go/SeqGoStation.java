@@ -18,6 +18,7 @@
  */
 package com.codebutler.farebot.transit.seq_go;
 
+import android.database.Cursor;
 import android.os.Parcel;
 
 import com.codebutler.farebot.transit.Station;
@@ -29,6 +30,15 @@ import com.codebutler.farebot.transit.Station;
 public class SeqGoStation extends Station {
     protected final String mZone;
     protected final boolean mAirtrainZoneExempt;
+
+    public SeqGoStation(Cursor cursor) {
+        this(cursor.getString(cursor.getColumnIndex(SeqGoDBUtil.COLUMN_ROW_NAME)),
+                cursor.getString(cursor.getColumnIndex(SeqGoDBUtil.COLUMN_ROW_LAT)),
+                cursor.getString(cursor.getColumnIndex(SeqGoDBUtil.COLUMN_ROW_LON)),
+                cursor.getString(cursor.getColumnIndex(SeqGoDBUtil.COLUMN_ROW_ZONE)),
+                cursor.getString(cursor.getColumnIndex(SeqGoDBUtil.COLUMN_ROW_AIRTRAIN_ZONE_EXEMPT)) != null &&
+                        cursor.getString(cursor.getColumnIndex(SeqGoDBUtil.COLUMN_ROW_AIRTRAIN_ZONE_EXEMPT)).equals("1"));
+    }
 
     public SeqGoStation(String stationName, String latitude, String longitude, String zone, boolean airtrain_zone_exempt) {
         super(stationName, null, latitude, longitude);

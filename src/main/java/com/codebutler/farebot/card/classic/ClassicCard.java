@@ -38,6 +38,8 @@ import com.codebutler.farebot.key.ClassicSectorKey;
 import com.codebutler.farebot.transit.TransitData;
 import com.codebutler.farebot.transit.TransitIdentity;
 import com.codebutler.farebot.transit.bilhete_unico.BilheteUnicoSPTransitData;
+import com.codebutler.farebot.transit.lax_tap.LaxTapData;
+import com.codebutler.farebot.transit.lax_tap.LaxTapTransitData;
 import com.codebutler.farebot.transit.manly_fast_ferry.ManlyFastFerryTransitData;
 import com.codebutler.farebot.transit.nextfare.NextfareTransitData;
 import com.codebutler.farebot.transit.ovc.OVChipTransitData;
@@ -158,6 +160,22 @@ public class ClassicCard extends Card {
                             authSuccess = tech.authenticateSectorWithKeyB(sectorIndex, MifareClassic.KEY_DEFAULT);
                         }
 
+                        if (!authSuccess) {
+                            authSuccess = tech.authenticateSectorWithKeyB(sectorIndex, MifareClassic.KEY_MIFARE_APPLICATION_DIRECTORY);
+                        }
+
+                        if (!authSuccess) {
+                            authSuccess = tech.authenticateSectorWithKeyB(sectorIndex, MifareClassic.KEY_MIFARE_APPLICATION_DIRECTORY);
+                        }
+
+                        if (!authSuccess) {
+                            authSuccess = tech.authenticateSectorWithKeyB(sectorIndex, MifareClassic.KEY_NFC_FORUM);
+                        }
+
+                        if (!authSuccess) {
+                            authSuccess = tech.authenticateSectorWithKeyB(sectorIndex, MifareClassic.KEY_NFC_FORUM);
+                        }
+
                     }
 
                     if (authSuccess) {
@@ -202,6 +220,8 @@ public class ClassicCard extends Card {
             // Search through Nextfare on Mifare Classic compatibles.
             if (SeqGoTransitData.check(this)) {
                 return SeqGoTransitData.parseTransitIdentity(this);
+            } else if (LaxTapTransitData.check(this)) {
+                return LaxTapTransitData.parseTransitIdentity(this);
             } else {
                 // Fallback
                 return NextfareTransitData.parseTransitIdentity(this);
@@ -228,6 +248,8 @@ public class ClassicCard extends Card {
             // Search through Nextfare on Mifare Classic compatibles.
             if (SeqGoTransitData.check(this)) {
                 return new SeqGoTransitData(this);
+            } else if (LaxTapTransitData.check(this)) {
+                return new LaxTapTransitData(this);
             } else {
                 // Fallback
                 return new NextfareTransitData(this);

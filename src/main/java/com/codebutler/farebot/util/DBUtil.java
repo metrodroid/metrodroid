@@ -19,10 +19,13 @@
 package com.codebutler.farebot.util;
 
 import android.content.Context;
+import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteException;
 import android.util.Log;
+
+import com.codebutler.farebot.transit.Station;
 
 import org.apache.commons.io.IOUtils;
 
@@ -31,6 +34,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.lang.reflect.InvocationTargetException;
 
 /**
  * Abstract common stop database class.
@@ -137,4 +141,5 @@ public abstract class DBUtil {
     public File getDBFile() {
         return new File(mContext.getCacheDir().getAbsolutePath() + "/" + getDBName());
     }
+
 }

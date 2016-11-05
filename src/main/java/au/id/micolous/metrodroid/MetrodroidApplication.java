@@ -33,6 +33,7 @@ import com.codebutler.farebot.card.desfire.settings.DesfireFileSettings;
 import com.codebutler.farebot.card.desfire.files.InvalidDesfireFile;
 import com.codebutler.farebot.card.desfire.files.RecordDesfireFile;
 import com.codebutler.farebot.card.felica.FelicaDBUtil;
+import com.codebutler.farebot.transit.lax_tap.LaxTapDBUtil;
 import com.codebutler.farebot.transit.ovc.OVChipDBUtil;
 import com.codebutler.farebot.transit.seq_go.SeqGoDBUtil;
 import com.codebutler.farebot.xml.Base64String;
@@ -72,6 +73,7 @@ public class MetrodroidApplication extends Application {
     private FelicaDBUtil mFelicaDBUtil;
     private OVChipDBUtil mOVChipDBUtil;
     private SeqGoDBUtil mSeqGoDBUtil;
+    private LaxTapDBUtil mLaxTapDBUtil;
     private final Serializer mSerializer;
     private boolean mMifareClassicSupport;
 
@@ -81,6 +83,7 @@ public class MetrodroidApplication extends Application {
         mFelicaDBUtil = new FelicaDBUtil(this);
         mOVChipDBUtil = new OVChipDBUtil(this);
         mSeqGoDBUtil = new SeqGoDBUtil(this);
+        mLaxTapDBUtil = new LaxTapDBUtil(this);
 
         try {
             Visitor visitor = new Visitor() {
@@ -128,6 +131,10 @@ public class MetrodroidApplication extends Application {
 
     public SeqGoDBUtil getSeqGoDBUtil() {
         return mSeqGoDBUtil;
+    }
+
+    public LaxTapDBUtil getLaxTapDBUtil() {
+        return mLaxTapDBUtil;
     }
 
     public Serializer getSerializer() {

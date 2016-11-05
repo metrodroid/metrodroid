@@ -34,6 +34,7 @@ import java.util.Locale;
 public class NextfareTrip extends Trip implements Comparable<NextfareTrip> {
     protected int mJourneyId;
     protected Mode mMode;
+    protected int mModeInt;
     protected GregorianCalendar mStartTime;
     protected GregorianCalendar mEndTime;
     protected int mStartStation;
@@ -153,6 +154,7 @@ public class NextfareTrip extends Trip implements Comparable<NextfareTrip> {
         parcel.writeString(mMode.toString());
         parcel.writeInt(mStartStation);
         parcel.writeInt(mEndStation);
+        parcel.writeInt(mModeInt);
     }
 
     public NextfareTrip(Parcel parcel) {
@@ -172,6 +174,7 @@ public class NextfareTrip extends Trip implements Comparable<NextfareTrip> {
         mMode = Mode.valueOf(parcel.readString());
         mStartStation = parcel.readInt();
         mEndStation = parcel.readInt();
+        mModeInt = parcel.readInt();
     }
 
 

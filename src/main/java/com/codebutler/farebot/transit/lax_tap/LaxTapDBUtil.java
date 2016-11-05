@@ -1,5 +1,5 @@
 /*
- * SeqGoUtil.java
+ * SeqGoDBUtil.java
  *
  * Copyright 2015-2016 Michael Farrell <micolous+git@gmail.com>
  *
@@ -16,29 +16,58 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.codebutler.farebot.transit.seq_go;
+package com.codebutler.farebot.transit.lax_tap;
 
+import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
+
+import com.codebutler.farebot.util.DBUtil;
 
 import java.io.IOException;
 
 import au.id.micolous.metrodroid.MetrodroidApplication;
 
 /**
- * Misc utilities for parsing Go Cards
- * @author Michael Farrell
+ * Database functionality for Los Angeles TAP cards
  */
-public final class SeqGoUtil {
-    private static final String TAG = "SeqGoUtil";
+public class LaxTapDBUtil extends DBUtil {
+    private static final String TAG = "LaxTapDBUtil";
 
+    public static final String TABLE_NAME = "stops";
+    public static final String COLUMN_ROW_ID = "id";
+    public static final String COLUMN_ROW_NAME = "name";
+    public static final String COLUMN_ROW_LON = "x";
+    public static final String COLUMN_ROW_LAT = "y";
+    public static final String COLUMN_ROW_AGENCY = "agency_id";
 
-    private static SeqGoDBUtil getDB() {
-        return MetrodroidApplication.getInstance().getSeqGoDBUtil();
+    public static final String[] COLUMNS_STATIONDATA = {
+            COLUMN_ROW_ID,
+            COLUMN_ROW_NAME,
+            COLUMN_ROW_LON,
+            COLUMN_ROW_LAT,
+    };
+
+    private static final String DB_NAME = "lax_tap_stations.db3";
+
+    private static final int VERSION = 3960;
+
+    public LaxTapDBUtil(Context context) {
+        super(context);
     }
 
-    public static SeqGoStation getStation(int stationId) {
+    @Override
+    protected String getDBName() {
+        return DB_NAME;
+    }
+
+    @Override
+    protected int getDesiredVersion() {
+        return VERSION;
+    }
+
+    public static LaxTapStation getStation(int stationId, int agencyId) {
         if (stationId == 0) {
             return null;
         }
@@ -53,16 +82,17 @@ public final class SeqGoUtil {
                 return null;
             }
 
+            // TODO: Add agency_id column to query
             cursor = db.query(
-                    SeqGoDBUtil.TABLE_NAME,
-                    SeqGoDBUtil.COLUMNS_STATIONDATA,
-                    String.format("%s = ?", SeqGoDBUtil.COLUMN_ROW_ID),
+                    LaxTapDBUtil.TABLE_NAME,
+                    LaxTapDBUtil.COLUMNS_STATIONDATA,
+                    String.format("%s = ?", LaxTapDBUtil.COLUMN_ROW_ID),
                     new String[]{
                             String.valueOf(stationId),
                     },
                     null,
                     null,
-                    SeqGoDBUtil.COLUMN_ROW_ID);
+                    LaxTapDBUtil.COLUMN_ROW_ID);
 
             if (!cursor.moveToFirst()) {
                 Log.w(TAG, String.format("FAILED get station %s",
@@ -71,18 +101,15 @@ public final class SeqGoUtil {
                 return null;
             }
 
-            String stationName = cursor.getString(cursor.getColumnIndex(SeqGoDBUtil.COLUMN_ROW_NAME));
-            String latitude = cursor.getString(cursor.getColumnIndex(SeqGoDBUtil.COLUMN_ROW_LAT));
-            String longitude = cursor.getString(cursor.getColumnIndex(SeqGoDBUtil.COLUMN_ROW_LON));
-            String zone = cursor.getString(cursor.getColumnIndex(SeqGoDBUtil.COLUMN_ROW_ZONE));
-            String airtrain_zone_exempt = cursor.getString(cursor.getColumnIndex(SeqGoDBUtil.COLUMN_ROW_AIRTRAIN_ZONE_EXEMPT));
-
-            return new SeqGoStation(stationName, latitude, longitude, zone,
-                    airtrain_zone_exempt != null && airtrain_zone_exempt.equals("1"));
+            return new LaxTapStation(cursor, agencyId);
         } finally {
             if (cursor != null) {
                 cursor.close();
             }
         }
+    }
+
+    private static LaxTapDBUtil getDB() {
+        return MetrodroidApplication.getInstance().getLaxTapDBUtil();
     }
 }
