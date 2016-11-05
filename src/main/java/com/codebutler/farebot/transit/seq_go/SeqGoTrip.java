@@ -23,8 +23,11 @@ import android.os.Parcelable;
 
 import com.codebutler.farebot.transit.Station;
 import com.codebutler.farebot.transit.nextfare.NextfareTrip;
+import com.codebutler.farebot.util.Utils;
 
 import java.util.GregorianCalendar;
+
+import au.id.micolous.farebot.R;
 
 /**
  * Represents trip events on Go Card.
@@ -56,7 +59,7 @@ public class SeqGoTrip extends NextfareTrip {
         } else {
             Station s = getStartStation();
             if (s == null) {
-                return "Unknown (" + Integer.toString(mStartStation) + ")";
+                return Utils.localizeString(R.string.unknown_format, mStartStation);
             } else {
                 return s.getStationName();
             }
@@ -75,7 +78,7 @@ public class SeqGoTrip extends NextfareTrip {
         } else {
             Station s = getEndStation();
             if (s == null) {
-                return "Unknown (" + Integer.toString(mEndStation) + ")";
+                return Utils.localizeString(R.string.unknown_format, mEndStation);
             } else {
                 return s.getStationName();
             }

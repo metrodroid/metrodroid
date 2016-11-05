@@ -130,5 +130,5 @@ public class LaxTapTransitData extends NextfareTransitData {
     public Uri getOnlineServicesPage() {
         return Uri.parse("https://www.taptogo.net/");
     }
-    
+
 }

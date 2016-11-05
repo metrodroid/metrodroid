@@ -22,6 +22,9 @@ import android.os.Parcel;
 
 import com.codebutler.farebot.transit.Station;
 import com.codebutler.farebot.transit.nextfare.NextfareTrip;
+import com.codebutler.farebot.util.Utils;
+
+import au.id.micolous.farebot.R;
 
 /**
  * Represents trip events on LAX TAP card.
@@ -30,7 +33,12 @@ public class LaxTapTrip extends NextfareTrip {
 
     @Override
     public String getAgencyName() {
-        return LaxTapData.AGENCIES.get(mModeInt, null);
+        String agency = LaxTapData.AGENCIES.get(mModeInt, null);
+        if (agency == null) {
+            return Utils.localizeString(R.string.unknown_format, mModeInt);
+        }
+
+        return agency;
     }
 
     @Override
@@ -40,7 +48,7 @@ public class LaxTapTrip extends NextfareTrip {
         } else {
             Station s = getStartStation();
             if (s == null) {
-                return "Unknown (" + Integer.toString(mStartStation) + ")";
+                return Utils.localizeString(R.string.unknown_format, mStartStation);
             } else {
                 return s.getStationName();
             }
@@ -59,7 +67,7 @@ public class LaxTapTrip extends NextfareTrip {
         } else {
             Station s = getEndStation();
             if (s == null) {
-                return "Unknown (" + Integer.toString(mEndStation) + ")";
+                return Utils.localizeString(R.string.unknown_format, mEndStation);
             } else {
                 return s.getStationName();
             }
