@@ -21,7 +21,8 @@ View your remaining balance, recent trips, and other information from contactles
 * [tbonang](https://github.com/tbonang) (NETS FlashPay)
 * [Marcelo Liberato](https://github.com/mliberato) (Bilhete Único)
 * [Lauri Andler](https://github.com/landler/) (HSL)
-* [Michael](https://github.com/micolous/) (Opal, Manly Fast Ferry, Go card, Myki, Octopus, Cubic Nextfare, LAX Transit Access Pass)
+* [Michael](https://github.com/micolous/) (Opal, Manly Fast Ferry, Go card, Myki, Octopus, Cubic Nextfare, LAX TAP)
+* [Steven](https://github.com/steets250) (LAX TAP)
 * [Rob O'Regan](http://www.robx1.net/nswtkt/private/manlyff/manlyff.htm) (Manly Fast Ferry card image)
 * [The Noun Project][15] (Various icons)
 * [naofum](https://github.com/naofum) (Japanese translations)
@@ -49,6 +50,7 @@ View your remaining balance, recent trips, and other information from contactles
 * [ORCA][0] - Seattle, WA, USA
 * [OV-chipkaart](http://www.ov-chipkaart.nl/) - Netherlands (Requires encryption keys, not compatible with all devices)
 * [Suica][9], [ICOCA][10], [PASMO][11], [Edy][12] - Japan
+* [Transit Access Pass][26] - Los Angeles, CA, USA
 
 This project will only read data from the card itself, without having to connect to the agency's back-office systems. In some cases, limited data is available, so balance information and trip history might not be available.
 
@@ -109,3 +111,5 @@ This software and it's authors are not associated with any public transit agency
 [23]: https://en.wikipedia.org/wiki/MIFARE#MIFARE_Classic
 [24]: https://en.wikipedia.org/wiki/MIFARE#MIFARE_Ultralight_and_MIFARE_Ultralight_EV1
 [25]: http://www.octopus.com.hk/home/en/index.html
+[26]: https://www.taptogo.net/
+
