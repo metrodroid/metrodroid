@@ -88,7 +88,7 @@ public class NextfareTrip extends Trip implements Comparable<NextfareTrip> {
 
     @Override
     public String getAgencyName() {
-        return "Nextfare";
+        return null;
     }
 
     @Override

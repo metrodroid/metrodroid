@@ -58,7 +58,13 @@ public class NextfareRefill extends Refill {
 
     @Override
     public String getAmountString() {
-        return NumberFormat.getCurrencyInstance(Locale.US).format((double)getAmount() / 100);
+        double amount = (double)getAmount() / 100;
+
+        if (amount >= 0) {
+            return "+ " + NumberFormat.getCurrencyInstance(Locale.US).format(amount);
+        } else {
+            return NumberFormat.getCurrencyInstance(Locale.US).format(amount);
+        }
     }
 
     @Override
