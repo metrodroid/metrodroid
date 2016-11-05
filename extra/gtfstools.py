@@ -71,3 +71,6 @@ class Gtfs(object):
 	def open(self, filename):
 		return csv.DictReader(swallow_windows_unicode(self.gtfs_zip.open(filename, 'r')), restval=None)
 
+	def infolist(self):
+		return self.gtfs_zip.infolist()
+

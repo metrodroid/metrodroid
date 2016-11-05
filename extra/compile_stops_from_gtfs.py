@@ -52,7 +52,10 @@ def empty(s):
 def compile_stops_from_gtfs(input_gtfs_f, output_f, matching_f=None, version=None, strip_suffixes='', extra_fields='', extra_fields_from_child=False):
 	# trim whitespace
 	strip_suffixes = [x.strip().lower() for x in strip_suffixes.split(',')]
-	extra_fields = [x.strip() for x in extra_fields.split(',')]
+	if extra_fields is None or extra_fields == '':
+		extra_fields = []
+	else:
+		extra_fields = [x.strip() for x in extra_fields.split(',')]
 	
 	if extra_fields:
 		db_schema = DB_SCHEMA % dict(extra_fields=',\n\t' + (',\n\t'.join(extra_fields)))
@@ -64,13 +67,24 @@ def compile_stops_from_gtfs(input_gtfs_f, output_f, matching_f=None, version=Non
 	gtfs = Gtfs(input_gtfs_f)
 
 	if version is None:
-		feed_info = gtfs.open('feed_info.txt')
-		row = feed_info.next()
-		feed_start_date = row['feed_start_date']
-		assert len(feed_start_date) == 8
-		feed_start_date = datetime.strptime(feed_start_date, '%Y%m%d')
+		try:
+			feed_info = gtfs.open('feed_info.txt')
+		except KeyError:
+			# feed_info.txt is not in the file. Find the newest file in the archive
+			feed_start_date = None
+			for f in gtfs.infolist():
+				ts = datetime(*f.date_time)
+				if feed_start_date is None or feed_start_date < ts:
+					feed_start_date = ts
+		else:
+			row = feed_info.next()
+			feed_start_date = row['feed_start_date']
+			assert len(feed_start_date) == 8
+			feed_start_date = datetime.strptime(feed_start_date, '%Y%m%d')
+
 		version = (feed_start_date - VERSION_EPOCH).days
 		print 'Data version: %s (%s)' % (version, feed_start_date.date().isoformat())
+			
 
 	stops = gtfs.open('stops.txt')
 	if extra_fields_from_child:
