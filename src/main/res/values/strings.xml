@@ -180,7 +180,13 @@
     <string name="location_sao_paulo">São Paulo, Brazil</string>
     <string name="location_helsinki_finland">Helsinki, Finland</string>
     <string name="location_sydney_australia">Sydney, Australia</string>
-    <!-- i18n: "SE QLD" is an abbreviation for "South East Queensland".  "Queensland" is a state of Australia. -->
+    <!-- i18n: "SE QLD" is an abbreviation for "South East Queensland".
+
+         "Queensland" is a state of Australia: https://en.wikipedia.org/wiki/Queensland
+
+         "South East Queensland" is used to describe the most populated area of Queensland, which
+         includes Brisbane, Gold Coast and Sunshine Coast:
+         https://en.wikipedia.org/wiki/South_East_Queensland -->
     <string name="location_brisbane_seq_australia">Brisbane &amp; SE QLD, Australia</string>
     <string name="location_victoria_australia">Victoria, Australia</string>
     <string name="location_hong_kong">Hong Kong</string>
