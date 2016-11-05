@@ -18,7 +18,8 @@ import java.util.Arrays;
 import static com.codebutler.farebot.transit.lax_tap.LaxTapData.AGENCY_METRO;
 
 /**
- * Created by michael on 5/11/16.
+ * Los Angeles Transit Access Pass (LAX TAP) card.
+ * https://github.com/micolous/metrodroid/wiki/Transit-Access-Pass
  */
 
 public class LaxTapTransitData extends NextfareTransitData {
@@ -108,7 +109,7 @@ public class LaxTapTransitData extends NextfareTransitData {
         if (mode == AGENCY_METRO) {
             if (stationId >= 0x8000) {
                 return Trip.Mode.BUS;
-            } else if (stationId < 0x100) {
+            } else if (stationId < 0x100 && stationId != 61) {
                 return Trip.Mode.METRO;
             } else {
                 return Trip.Mode.TRAM;

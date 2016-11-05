@@ -21,7 +21,7 @@ View your remaining balance, recent trips, and other information from contactles
 * [tbonang](https://github.com/tbonang) (NETS FlashPay)
 * [Marcelo Liberato](https://github.com/mliberato) (Bilhete Único)
 * [Lauri Andler](https://github.com/landler/) (HSL)
-* [Michael](https://github.com/micolous/) (Opal, Manly Fast Ferry, Go card, Myki, Octopus)
+* [Michael](https://github.com/micolous/) (Opal, Manly Fast Ferry, Go card, Myki, Octopus, Cubic Nextfare, LAX Transit Access Pass)
 * [Rob O'Regan](http://www.robx1.net/nswtkt/private/manlyff/manlyff.htm) (Manly Fast Ferry card image)
 * [The Noun Project][15] (Various icons)
 * [naofum](https://github.com/naofum) (Japanese translations)
