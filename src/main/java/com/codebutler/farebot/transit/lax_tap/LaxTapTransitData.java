@@ -106,10 +106,12 @@ public class LaxTapTransitData extends NextfareTransitData {
     @Override
     protected Trip.Mode lookupMode(int mode, int stationId) {
         if (mode == AGENCY_METRO) {
-            if (stationId < 0x8000) {
+            if (stationId >= 0x8000) {
+                return Trip.Mode.BUS;
+            } else if (stationId < 0x100) {
                 return Trip.Mode.METRO;
             } else {
-                return Trip.Mode.BUS;
+                return Trip.Mode.TRAM;
             }
         } else {
             return LaxTapData.AGENCY_MODES.get(mode, Trip.Mode.OTHER);
