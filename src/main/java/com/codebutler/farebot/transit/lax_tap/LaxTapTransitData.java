@@ -7,15 +7,15 @@ import com.codebutler.farebot.card.UnauthorizedException;
 import com.codebutler.farebot.card.classic.ClassicCard;
 import com.codebutler.farebot.transit.TransitIdentity;
 import com.codebutler.farebot.transit.Trip;
-import com.codebutler.farebot.transit.nextfare.NextfareRefill;
 import com.codebutler.farebot.transit.nextfare.NextfareTransitData;
 import com.codebutler.farebot.transit.nextfare.NextfareTrip;
 import com.codebutler.farebot.transit.nextfare.record.NextfareTapRecord;
-import com.codebutler.farebot.transit.nextfare.record.NextfareTopupRecord;
 
 import java.util.Arrays;
 
 import static com.codebutler.farebot.transit.lax_tap.LaxTapData.AGENCY_METRO;
+import static com.codebutler.farebot.transit.lax_tap.LaxTapData.METRO_BUS_START;
+import static com.codebutler.farebot.transit.lax_tap.LaxTapData.METRO_LR_START;
 
 /**
  * Los Angeles Transit Access Pass (LAX TAP) card.
@@ -107,9 +107,9 @@ public class LaxTapTransitData extends NextfareTransitData {
     @Override
     protected Trip.Mode lookupMode(int mode, int stationId) {
         if (mode == AGENCY_METRO) {
-            if (stationId >= 0x8000) {
+            if (stationId >= METRO_BUS_START) {
                 return Trip.Mode.BUS;
-            } else if (stationId < 0x100 && stationId != 61) {
+            } else if (stationId < METRO_LR_START && stationId != 61) {
                 return Trip.Mode.METRO;
             } else {
                 return Trip.Mode.TRAM;

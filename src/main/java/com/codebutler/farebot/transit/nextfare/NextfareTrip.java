@@ -23,10 +23,13 @@ import android.support.annotation.NonNull;
 
 import com.codebutler.farebot.transit.Station;
 import com.codebutler.farebot.transit.Trip;
+import com.codebutler.farebot.util.Utils;
 
 import java.text.NumberFormat;
 import java.util.GregorianCalendar;
 import java.util.Locale;
+
+import au.id.micolous.farebot.R;
 
 /**
  * Represents trips on Nextfare
@@ -94,6 +97,9 @@ public class NextfareTrip extends Trip implements Comparable<NextfareTrip> {
 
     @Override
     public String getFareString() {
+        if (mCost == 0) {
+            return Utils.localizeString(R.string.pass_or_transfer);
+        }
         return NumberFormat.getCurrencyInstance(Locale.US).format((double)mCost / 100.);
     }
 

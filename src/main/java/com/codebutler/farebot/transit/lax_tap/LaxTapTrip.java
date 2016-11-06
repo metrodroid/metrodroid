@@ -26,6 +26,10 @@ import com.codebutler.farebot.util.Utils;
 
 import au.id.micolous.farebot.R;
 
+import static com.codebutler.farebot.transit.lax_tap.LaxTapData.AGENCY_METRO;
+import static com.codebutler.farebot.transit.lax_tap.LaxTapData.METRO_BUS_ROUTES;
+import static com.codebutler.farebot.transit.lax_tap.LaxTapData.METRO_BUS_START;
+
 /**
  * Represents trip events on LAX TAP card.
  */
@@ -42,41 +46,65 @@ public class LaxTapTrip extends NextfareTrip {
     }
 
     @Override
-    public String getStartStationName() {
-        if (mStartStation == 0 || mModeInt == LaxTapData.AGENCY_SANTA_MONICA) {
-            return null;
-        } else {
-            Station s = getStartStation();
-            if (s == null) {
-                return Utils.localizeString(R.string.unknown_format, mStartStation);
-            } else {
-                return s.getStationName();
-            }
+    public String getRouteName() {
+        if (mModeInt == AGENCY_METRO && mStartStation >= METRO_BUS_START) {
+            // Metro Bus uses the station_id for route numbers.
+            return METRO_BUS_ROUTES.get(mStartStation, null);
         }
+
+        // Normally not possible to guess what the route is.
+        return null;
+    }
+
+    private String getStationName(int stationId) {
+        if (stationId == 0 || mModeInt == LaxTapData.AGENCY_SANTA_MONICA) {
+            return null;
+        } else if (mModeInt == AGENCY_METRO && stationId >= METRO_BUS_START) {
+            // We don't know the station.
+            return null;
+        }
+
+        // Fall back to database
+        Station s = getStation(stationId);
+        if (s == null) {
+            return Utils.localizeString(R.string.unknown_format, stationId);
+        } else {
+            return s.getStationName();
+        }
+    }
+
+    private Station getStation(int stationId) {
+        if (stationId == 0 || mModeInt == LaxTapData.AGENCY_SANTA_MONICA) {
+            // Santa Monica Bus doesn't use this.
+            return null;
+        }
+
+        if (mModeInt == AGENCY_METRO && stationId >= METRO_BUS_START) {
+            // Metro uses this for route names.
+            return null;
+        }
+
+        return LaxTapDBUtil.getStation(stationId, mModeInt);
+    }
+
+    @Override
+    public String getStartStationName() {
+        return getStationName(mStartStation);
     }
 
     @Override
     public Station getStartStation() {
-        return LaxTapDBUtil.getStation(mStartStation, mModeInt);
+        return getStation(mStartStation);
     }
 
     @Override
     public String getEndStationName() {
-        if (mEndStation == 0 || mModeInt == LaxTapData.AGENCY_SANTA_MONICA) {
-            return null;
-        } else {
-            Station s = getEndStation();
-            if (s == null) {
-                return Utils.localizeString(R.string.unknown_format, mEndStation);
-            } else {
-                return s.getStationName();
-            }
-        }
+        return getStationName(mEndStation);
     }
 
     @Override
     public Station getEndStation() {
-        return LaxTapDBUtil.getStation(mEndStation, mModeInt);
+        return getStation(mEndStation);
     }
 
     @Override
