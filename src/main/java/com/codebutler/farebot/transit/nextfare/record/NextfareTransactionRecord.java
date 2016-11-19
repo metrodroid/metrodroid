@@ -31,10 +31,10 @@ import java.util.GregorianCalendar;
 
 /**
  * Tap record type
- * https://github.com/micolous/metrodroid/wiki/Cubic-Nextfare-MFC#tap-record
+ * https://github.com/micolous/metrodroid/wiki/Cubic-Nextfare-MFC
  */
-public class NextfareTapRecord extends NextfareRecord implements Parcelable, Comparable<NextfareTapRecord> {
-    private static final String TAG = "NextfareTapRecord";
+public class NextfareTransactionRecord extends NextfareRecord implements Parcelable, Comparable<NextfareTransactionRecord> {
+    private static final String TAG = "NextfareTxnRecord";
     private GregorianCalendar mTimestamp;
     private int mMode;
     private int mJourney;
@@ -44,19 +44,19 @@ public class NextfareTapRecord extends NextfareRecord implements Parcelable, Com
     private boolean mContinuation;
 
 
-    public static final Creator<NextfareTapRecord> CREATOR = new Creator<NextfareTapRecord>() {
+    public static final Creator<NextfareTransactionRecord> CREATOR = new Creator<NextfareTransactionRecord>() {
         @Override
-        public NextfareTapRecord createFromParcel(Parcel in) {
-            return new NextfareTapRecord(in);
+        public NextfareTransactionRecord createFromParcel(Parcel in) {
+            return new NextfareTransactionRecord(in);
         }
 
         @Override
-        public NextfareTapRecord[] newArray(int size) {
-            return new NextfareTapRecord[size];
+        public NextfareTransactionRecord[] newArray(int size) {
+            return new NextfareTransactionRecord[size];
         }
     };
 
-    public static NextfareTapRecord recordFromBytes(byte[] input) {
+    public static NextfareTransactionRecord recordFromBytes(byte[] input) {
         //if (input[0] != 0x31) throw new AssertionError("not a tap record");
 
         // LAX:      input[0] == 0x05 for "Travel Pass" trips.
@@ -69,7 +69,7 @@ public class NextfareTapRecord extends NextfareRecord implements Parcelable, Com
             return null;
         }
 
-        NextfareTapRecord record = new NextfareTapRecord();
+        NextfareTransactionRecord record = new NextfareTransactionRecord();
 
         record.mMode = Utils.byteArrayToInt(input, 1, 1);
 
@@ -96,7 +96,7 @@ public class NextfareTapRecord extends NextfareRecord implements Parcelable, Com
         return record;
     }
 
-    protected NextfareTapRecord() {}
+    protected NextfareTransactionRecord() {}
 
     @Override
     public int describeContents() {
@@ -114,7 +114,7 @@ public class NextfareTapRecord extends NextfareRecord implements Parcelable, Com
         parcel.writeInt(mValue);
     }
 
-    public NextfareTapRecord(Parcel parcel) {
+    public NextfareTransactionRecord(Parcel parcel) {
         mTimestamp = new GregorianCalendar();
         mTimestamp.setTimeInMillis(parcel.readLong());
         mMode = parcel.readInt();
@@ -154,7 +154,7 @@ public class NextfareTapRecord extends NextfareRecord implements Parcelable, Com
     }
 
     @Override
-    public int compareTo(@NonNull NextfareTapRecord rhs) {
+    public int compareTo(@NonNull NextfareTransactionRecord rhs) {
         // Group by journey, then by timestamp.
         // First trip in a journey goes first, and should (generally) be in pairs.
 

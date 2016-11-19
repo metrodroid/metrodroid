@@ -33,7 +33,7 @@ import com.codebutler.farebot.transit.Trip;
 import com.codebutler.farebot.transit.nextfare.record.NextfareBalanceRecord;
 import com.codebutler.farebot.transit.nextfare.record.NextfareConfigRecord;
 import com.codebutler.farebot.transit.nextfare.record.NextfareRecord;
-import com.codebutler.farebot.transit.nextfare.record.NextfareTapRecord;
+import com.codebutler.farebot.transit.nextfare.record.NextfareTransactionRecord;
 import com.codebutler.farebot.transit.nextfare.record.NextfareTopupRecord;
 import com.codebutler.farebot.transit.nextfare.record.NextfareTravelPassRecord;
 import com.codebutler.farebot.ui.HeaderListItem;
@@ -168,7 +168,7 @@ public class NextfareTransitData extends TransitData {
         ArrayList<NextfareTrip> trips = new ArrayList<>();
         ArrayList<NextfareSubscription> subscriptions = new ArrayList<>();
         ArrayList<Refill> refills = new ArrayList<>();
-        ArrayList<NextfareTapRecord> taps = new ArrayList<>();
+        ArrayList<NextfareTransactionRecord> taps = new ArrayList<>();
         ArrayList<NextfareTravelPassRecord> passes = new ArrayList<>();
 
         for (NextfareRecord record : records) {
@@ -178,8 +178,8 @@ public class NextfareTransitData extends TransitData {
                 NextfareTopupRecord topupRecord = (NextfareTopupRecord)record;
 
                 refills.add(newRefill(topupRecord));
-            } else if (record instanceof NextfareTapRecord) {
-                taps.add((NextfareTapRecord)record);
+            } else if (record instanceof NextfareTransactionRecord) {
+                taps.add((NextfareTransactionRecord)record);
             } else if (record instanceof NextfareTravelPassRecord) {
                 passes.add((NextfareTravelPassRecord)record);
             } else if (record instanceof NextfareConfigRecord) {
@@ -203,7 +203,7 @@ public class NextfareTransitData extends TransitData {
             int i = 0;
 
             while (taps.size() > i) {
-                NextfareTapRecord tapOn = taps.get(i);
+                NextfareTransactionRecord tapOn = taps.get(i);
 
                 //Log.d(TAG, "TapOn @" + Utils.isoDateTimeFormat(tapOn.getTimestamp()));
                 // Start by creating an empty trip
@@ -226,7 +226,7 @@ public class NextfareTransitData extends TransitData {
                 // this journey
                 if (taps.size() > i+1 && shouldMergeJourneys(tapOn, taps.get(i+1))) {
                     // There is a tap off.  Lets put that data in
-                    NextfareTapRecord tapOff = taps.get(i+1);
+                    NextfareTransactionRecord tapOff = taps.get(i+1);
                     //Log.d(TAG, "TapOff @" + Utils.isoDateTimeFormat(tapOff.getTimestamp()));
 
                     trip.mEndTime = tapOff.getTimestamp();
@@ -299,7 +299,7 @@ public class NextfareTransitData extends TransitData {
      * @param tap2 The second tap to compare.
      * @return true if the journeys should be merged.
      */
-    protected boolean shouldMergeJourneys(NextfareTapRecord tap1, NextfareTapRecord tap2) {
+    protected boolean shouldMergeJourneys(NextfareTransactionRecord tap1, NextfareTransactionRecord tap2) {
         return tap1.getJourney() == tap2.getJourney() && tap1.getMode() == tap2.getMode();
     }
 

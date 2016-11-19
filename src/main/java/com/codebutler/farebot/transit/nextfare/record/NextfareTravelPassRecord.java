@@ -30,7 +30,7 @@ import java.util.GregorianCalendar;
 
 /**
  * Travel pass record type
- * https://github.com/micolous/metrodroid/wiki/Cubic-Nextfare-MFC#travel-pass
+ * https://github.com/micolous/metrodroid/wiki/Cubic-Nextfare-MFC
  */
 
 public class NextfareTravelPassRecord extends NextfareRecord implements Parcelable, Comparable<NextfareTravelPassRecord> {

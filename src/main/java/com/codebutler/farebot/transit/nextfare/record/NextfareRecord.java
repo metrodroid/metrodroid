@@ -50,8 +50,8 @@ public class NextfareRecord {
             Log.d(TAG, "Travel pass record");
             record = NextfareTravelPassRecord.recordFromBytes(input);
         } else if (sectorIndex >= 5 && sectorIndex <= 8) {
-            Log.d(TAG, "Tap on/off record");
-            record = NextfareTapRecord.recordFromBytes(input);
+            Log.d(TAG, "Transaction record");
+            record = NextfareTransactionRecord.recordFromBytes(input);
         }
         return record;
     }

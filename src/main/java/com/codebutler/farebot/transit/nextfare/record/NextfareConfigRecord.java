@@ -26,7 +26,7 @@ import com.codebutler.farebot.util.Utils;
 
 /**
  * Represents a configuration record on Nextfare MFC.
- * https://github.com/micolous/metrodroid/wiki/Cubic-Nextfare-MFC#configuration
+ * https://github.com/micolous/metrodroid/wiki/Cubic-Nextfare-MFC
  */
 
 public class NextfareConfigRecord extends NextfareRecord implements Parcelable {

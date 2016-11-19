@@ -9,7 +9,7 @@ import com.codebutler.farebot.transit.TransitIdentity;
 import com.codebutler.farebot.transit.Trip;
 import com.codebutler.farebot.transit.nextfare.NextfareTransitData;
 import com.codebutler.farebot.transit.nextfare.NextfareTrip;
-import com.codebutler.farebot.transit.nextfare.record.NextfareTapRecord;
+import com.codebutler.farebot.transit.nextfare.record.NextfareTransactionRecord;
 
 import java.util.Arrays;
 
@@ -92,7 +92,7 @@ public class LaxTapTransitData extends NextfareTransitData {
     }
 
     @Override
-    protected boolean shouldMergeJourneys(NextfareTapRecord tap1, NextfareTapRecord tap2) {
+    protected boolean shouldMergeJourneys(NextfareTransactionRecord tap1, NextfareTransactionRecord tap2) {
         // LAX TAP does not record tap-offs. Sometimes this merges trips that are bus -> rail
         // otherwise, but we don't need to do the complex logic in order to figure it out correctly.
         return false;
