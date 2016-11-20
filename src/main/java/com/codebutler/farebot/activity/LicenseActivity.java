@@ -49,7 +49,9 @@ public class LicenseActivity extends Activity {
             "GNU General Public License for more details.\n" +
             "\n" +
             "You should have received a copy of the GNU General Public License " +
-            "along with this program.  If not, see <http://www.gnu.org/licenses/>.\n\n\n";
+            "along with this program.  If not, see <http://www.gnu.org/licenses/>.\n" +
+            "\n" +
+            "The source code is available at https://github.com/micolous/metrodroid/\n\n\n";
 
 
     final static String mLeaflet = "This software contains Leaflet, a Javascript mapping library.  The following terms apply to Leaflet:\n" +
@@ -118,6 +120,19 @@ public class LicenseActivity extends Activity {
             "\n" +
             "Stop mapping information is available in Metrodroid's source repository.\n\n\n";
 
+    final static String mLaxTapGtfs = "The LAX TAP stop database used in this software " +
+            "contains information derived from GTFS feeds by Los Angeles County transit " +
+            "operators, including:\n" +
+            "\n" +
+            "   - Los Angeles County Metropolitan Transportation Authority (Metro)\n" +
+            "\n" +
+            "You may obtain a copy of the raw data and it's license at:\n" +
+            "\n" +
+            "   https://gitlab.com/LACMTA/gtfs_rail\n" +
+            "\n" +
+            "Stop mapping information is available in Metrodroid's source repository.\n\n\n";
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -139,6 +154,7 @@ public class LicenseActivity extends Activity {
 
         // TODO: Read this programatically
         lblLicenseText.append(mSEQGoGtfs);
+        lblLicenseText.append(mLaxTapGtfs);
     }
 
 

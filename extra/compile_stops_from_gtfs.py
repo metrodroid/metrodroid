@@ -28,13 +28,14 @@ import csv, sqlite3
 DB_SCHEMA = """
 CREATE TABLE stops (
 	id unique,
+	agency_id int,
 	name,
 	y,
 	x%(extra_fields)s
 );
 """
 
-INSERT_QUERY = 'INSERT INTO stops VALUES (?, ?, ?, ? %(extra_fields)s)'
+INSERT_QUERY = 'INSERT INTO stops VALUES (?, ?, ?, ?, ? %(extra_fields)s)'
 VERSION_EPOCH = datetime(2006, 1, 1)
 
 def massage_name(name, suffixes):
@@ -49,7 +50,7 @@ def massage_name(name, suffixes):
 def empty(s):
 	return s is None or s.strip() == ''
 
-def compile_stops_from_gtfs(input_gtfs_f, output_f, matching_f=None, version=None, strip_suffixes='', extra_fields='', extra_fields_from_child=False):
+def compile_stops_from_gtfs(input_gtfs_f, output_f, matching_f=None, version=None, strip_suffixes='', extra_fields='', extra_fields_from_child=False, agency_id=-1, skip_create_table=False):
 	# trim whitespace
 	strip_suffixes = [x.strip().lower() for x in strip_suffixes.split(',')]
 	if extra_fields is None or extra_fields == '':
@@ -94,7 +95,8 @@ def compile_stops_from_gtfs(input_gtfs_f, output_f, matching_f=None, version=Non
 
 	db = sqlite3.connect(output_f)
 	cur = db.cursor()
-	cur.execute(db_schema)
+	if not skip_create_table:
+		cur.execute(db_schema)
 
 	# See if there is a matching file
 	if matching_f is None:
@@ -156,10 +158,10 @@ def compile_stops_from_gtfs(input_gtfs_f, output_f, matching_f=None, version=Non
 			# Insert rows where a stop_id is specified for the reader_id
 			stop_rows = []
 			for reader_id in stop_ids.get(stop['stop_id'], []):
-				r = [reader_id, name, y, x] + e
+				r = [reader_id, agency_id, name, y, x] + e
 				# Check for any overrides
 				for k, v in stop_extra_fields[reader_id].iteritems():
-					r[extra_fields.index(k) + 4] = v
+					r[extra_fields.index(k) + 5] = v
 				stop_rows.append(r)
 
 			cur.executemany(insert_query, stop_rows)
@@ -167,16 +169,20 @@ def compile_stops_from_gtfs(input_gtfs_f, output_f, matching_f=None, version=Non
 			# Insert rows where a stop_code is specified for the reader_id
 			stop_rows = []
 			for reader_id in stop_codes.get(stop['stop_code'], []):
-				stop_rows.append([reader_id, name, y, x] + e)
+				stop_rows.append([reader_id, agency_id, name, y, x] + e)
 				# Check for any overrides
 				for k, v in stop_extra_fields[reader_id].iteritems():
-					r[extra_fields.index(k) + 4] = v
+					r[extra_fields.index(k) + 5] = v
 
 			cur.executemany(insert_query, stop_rows)
 
 		matching_f.close()
 
-	cur.execute('PRAGMA user_version = %d' % version)
+	# Increate the user_version only if it makes it newer.
+	cur.execute('PRAGMA user_version')
+	current_version = cur.fetchall()[0][0]
+	if current_version < version:
+		cur.execute('PRAGMA user_version = %d' % version)
 	db.commit()
 	db.close()
 	
@@ -217,9 +223,19 @@ def main():
 		action='store_true',
 		help='If set, this will attempt to collect extra fields from child stations, and use it on the parent stations if the station is unset or empty. This only works when matching the parent by their stop_id, and if the parent stops are listed after the child stops.')
 
+	parser.add_argument('-a', '--agency-id',
+		default=-1,
+		type=int,
+		required=False,
+		help='If specified, annotates the stops from this GTFS data with an agency ID (integer). This is not the agency data included in the GTFS feed. [default: %(default)s]')
+
+	parser.add_argument('--skip-create-table',
+		action='store_true',
+		help='If set, this will always skip creating the stops table.')
+
 	options = parser.parse_args()
 
-	compile_stops_from_gtfs(options.input_gtfs[0], options.output, options.matching, options.override_version, options.strip_suffixes, options.extra_fields, options.extra_fields_from_child)
+	compile_stops_from_gtfs(options.input_gtfs[0], options.output, options.matching, options.override_version, options.strip_suffixes, options.extra_fields, options.extra_fields_from_child, options.agency_id, options.skip_create_table)
 
 if __name__ == '__main__':
 	main()

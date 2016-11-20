@@ -1,5 +1,5 @@
 /*
- * SeqGoDBUtil.java
+ * LaxTapDBUtil.java
  *
  * Copyright 2015-2016 Michael Farrell <micolous+git@gmail.com>
  *
@@ -44,6 +44,7 @@ public class LaxTapDBUtil extends DBUtil {
 
     public static final String[] COLUMNS_STATIONDATA = {
             COLUMN_ROW_ID,
+            COLUMN_ROW_AGENCY,
             COLUMN_ROW_NAME,
             COLUMN_ROW_LON,
             COLUMN_ROW_LAT,
@@ -51,7 +52,7 @@ public class LaxTapDBUtil extends DBUtil {
 
     private static final String DB_NAME = "lax_tap_stations.db3";
 
-    private static final int VERSION = 3960;
+    private static final int VERSION = 3975;
 
     public LaxTapDBUtil(Context context) {
         super(context);
@@ -82,13 +83,13 @@ public class LaxTapDBUtil extends DBUtil {
                 return null;
             }
 
-            // TODO: Add agency_id column to query
             cursor = db.query(
                     LaxTapDBUtil.TABLE_NAME,
                     LaxTapDBUtil.COLUMNS_STATIONDATA,
-                    String.format("%s = ?", LaxTapDBUtil.COLUMN_ROW_ID),
+                    String.format("%s = ? AND %s = ?", LaxTapDBUtil.COLUMN_ROW_ID, LaxTapDBUtil.COLUMN_ROW_AGENCY),
                     new String[]{
                             String.valueOf(stationId),
+                            String.valueOf(agencyId),
                     },
                     null,
                     null,

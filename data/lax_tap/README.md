@@ -17,8 +17,11 @@ long.
 
 # About the data source
 
+## LACMTA / Metro
+
 The [upstream GTFS data](https://gitlab.com/LACMTA/gtfs_rail) is made available under [the following
 terms](http://developer.metro.net/the-basics/policies/terms-and-conditions/), and provided by the
 [Los Angeles County Metropolitan Transportation Authority (Metro)](http://www.metro.net).
 
 No software from LACMTA is used.
+

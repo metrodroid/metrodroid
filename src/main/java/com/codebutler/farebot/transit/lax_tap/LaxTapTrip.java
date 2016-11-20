@@ -1,5 +1,5 @@
 /*
- * SeqGoTrip.java
+ * LaxTapTrip.java
  *
  * Copyright 2015-2016 Michael Farrell <micolous+git@gmail.com>
  *
