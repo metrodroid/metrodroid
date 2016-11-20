@@ -262,4 +262,8 @@
 
     <string name="location_los_angeles">米国 カリフォルニア州 ロサンゼルス</string>
 
-    </resources>
+    <string name="alternate_purse_balances">代替財布残高</string>
+
+
+    <string name="octopus_szt">深圳通</string>
+</resources>
