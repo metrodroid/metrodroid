@@ -43,7 +43,8 @@ import static com.codebutler.farebot.transit.lax_tap.LaxTapData.METRO_LR_START;
 public class LaxTapTransitData extends NextfareTransitData {
 
     private static final String TAG = "LaxTapTransitData";
-    public static final String NAME = "LAX TAP";
+    public static final String NAME = "TAP";
+    public static final String LONG_NAME = "Transit Access Pass";
     static final byte[] MANUFACTURER = {
             0x16, 0x18, 0x1A, 0x1B,
             0x1C, 0x1D, 0x1E, 0x1F
@@ -142,10 +143,12 @@ public class LaxTapTransitData extends NextfareTransitData {
         return NAME;
     }
 
+    /*
     @Override
     public Uri getMoreInfoPage() {
         return Uri.parse("https://micolous.github.io/metrodroid/laxtap");
     }
+    */
 
     @Override
     public Uri getOnlineServicesPage() {

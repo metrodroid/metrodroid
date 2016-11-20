@@ -116,12 +116,6 @@ public class SupportedCardsActivity extends Activity {
                     CardType.FeliCa
             ));
 
-            add(new CardInfo(R.drawable.laxtap_card, LaxTapTransitData.NAME,
-                    R.string.location_los_angeles,
-                    CardType.MifareClassic,
-                    true
-            ));
-
             add(new CardInfo(R.drawable.manly_fast_ferry_card, ManlyFastFerryTransitData.NAME,
                     R.string.location_sydney_australia,
                     CardType.MifareClassic,
@@ -173,6 +167,12 @@ public class SupportedCardsActivity extends Activity {
                     CardType.FeliCa
             ));
 
+            add(new CardInfo(R.drawable.laxtap_card, LaxTapTransitData.LONG_NAME, // TAP
+                    R.string.location_los_angeles,
+                    CardType.MifareClassic,
+                    true,
+                    true
+            ));
         }
 
         @Override public View getView(int position, View convertView, ViewGroup group) {
@@ -250,7 +250,7 @@ public class SupportedCardsActivity extends Activity {
         }
 
         private CardInfo(int imageId, String name, int locationId, CardType cardType, boolean keysRequired, boolean preview) {
-            this(imageId, name, locationId, cardType, keysRequired, false, 0);
+            this(imageId, name, locationId, cardType, keysRequired, preview, 0);
         }
 
         private CardInfo(int imageId, String name, int locationId, CardType cardType, boolean keysRequired, boolean preview, int resourceExtraNote) {
