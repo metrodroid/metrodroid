@@ -39,7 +39,6 @@ import au.id.micolous.metrodroid.MetrodroidApplication;
 import au.id.micolous.farebot.R;
 
 import com.codebutler.farebot.card.CardType;
-import com.codebutler.farebot.transit.lax_tap.LaxTapData;
 import com.codebutler.farebot.transit.lax_tap.LaxTapTransitData;
 import com.codebutler.farebot.transit.manly_fast_ferry.ManlyFastFerryTransitData;
 import com.codebutler.farebot.transit.myki.MykiTransitData;
@@ -136,7 +135,7 @@ public class SupportedCardsActivity extends Activity {
                     CardType.CEPAS
             ));
 
-            add(new CardInfo(R.drawable.octopus_card, OctopusTransitData.NAME,
+            add(new CardInfo(R.drawable.octopus_card, OctopusTransitData.OCTOPUS_NAME,
                     R.string.location_hong_kong,
                     CardType.FeliCa
             ));

@@ -22,6 +22,7 @@
 package com.codebutler.farebot.transit.octopus;
 
 import android.os.Parcel;
+import android.util.Log;
 
 import com.codebutler.farebot.card.felica.FelicaCard;
 import com.codebutler.farebot.card.felica.FelicaService;
@@ -29,21 +30,30 @@ import com.codebutler.farebot.transit.Subscription;
 import com.codebutler.farebot.transit.TransitData;
 import com.codebutler.farebot.transit.TransitIdentity;
 import com.codebutler.farebot.transit.Trip;
+import com.codebutler.farebot.ui.HeaderListItem;
 import com.codebutler.farebot.ui.ListItem;
 import com.codebutler.farebot.util.Utils;
 
 import net.kazzz.felica.lib.FeliCaLib;
 
 import java.text.NumberFormat;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
+
+import au.id.micolous.farebot.R;
 
 /**
  * Reader for Octopus (Hong Kong)
  * https://github.com/micolous/metrodroid/wiki/Octopus
  */
 public class OctopusTransitData extends TransitData {
-    public static final String NAME = "Octopus";
+    private static final String TAG = "OctopusTransitData";
+    public static final String OCTOPUS_NAME = "Octopus";
+    public static final String SZT_NAME = "Shenzhen Tong";
+    public static final String DUAL_NAME = "Hu Tong Xing";
+
+
     public static final Creator<OctopusTransitData> CREATOR = new Creator<OctopusTransitData>() {
         @Override
         public OctopusTransitData createFromParcel(Parcel in) {
@@ -55,30 +65,80 @@ public class OctopusTransitData extends TransitData {
             return new OctopusTransitData[size];
         }
     };
-    private int mBalance;
+    private int mOctopusBalance = 0;
+    private int mShenzhenBalance = 0;
+    private boolean mHasOctopus = false;
+    private boolean mHasShenzhen = false;
 
     public OctopusTransitData(FelicaCard card) {
-        FelicaService service = card.getSystem(FeliCaLib.SYSTEMCODE_OCTOPUS).getService(FeliCaLib.SERVICE_OCTOPUS);
+        FelicaService service = null;
+        try {
+            service = card.getSystem(FeliCaLib.SYSTEMCODE_OCTOPUS).getService(FeliCaLib.SERVICE_OCTOPUS);
+        } catch (NullPointerException ignored) {
+        }
 
-        byte[] metadata = service.getBlocks().get(0).getData();
-        mBalance = Utils.byteArrayToInt(metadata, 0, 4) - 350;
+        if (service != null) {
+            byte[] metadata = service.getBlocks().get(0).getData();
+            mOctopusBalance = Utils.byteArrayToInt(metadata, 0, 4) - 350;
+            mHasOctopus = true;
+        }
+
+        service = null;
+        try {
+            service = card.getSystem(FeliCaLib.SYSTEMCODE_SZT).getService(FeliCaLib.SERVICE_SZT);
+        } catch (NullPointerException ignored) {
+        }
+
+        if (service != null) {
+            byte[] metadata = service.getBlocks().get(0).getData();
+            mShenzhenBalance = Utils.byteArrayToInt(metadata, 0, 4) - 350;
+            mHasShenzhen = true;
+        }
     }
 
     public OctopusTransitData(Parcel parcel) {
-        mBalance = parcel.readInt();
+        mOctopusBalance = parcel.readInt();
+        mShenzhenBalance = parcel.readInt();
+        mHasOctopus = parcel.readInt() == 1;
+        mHasShenzhen = parcel.readInt() == 1;
     }
 
     public static boolean check(FelicaCard card) {
-        return (card.getSystem(FeliCaLib.SYSTEMCODE_OCTOPUS) != null);
+        return (card.getSystem(FeliCaLib.SYSTEMCODE_OCTOPUS) != null) || (card.getSystem(FeliCaLib.SYSTEMCODE_SZT) != null);
     }
 
     public static TransitIdentity parseTransitIdentity(FelicaCard card) {
-        return new TransitIdentity(NAME, null);
+        if (card.getSystem(FeliCaLib.SYSTEMCODE_SZT) != null) {
+            if (card.getSystem(FeliCaLib.SYSTEMCODE_OCTOPUS) != null) {
+                // Dual-mode card.
+                return new TransitIdentity(DUAL_NAME, null);
+            } else {
+                // SZT-only card.
+                return new TransitIdentity(SZT_NAME, null);
+            }
+        } else {
+            // Octopus-only card.
+            return new TransitIdentity(OCTOPUS_NAME, null);
+        }
     }
 
     @Override
     public String getBalanceString() {
-        return NumberFormat.getCurrencyInstance(Locale.US).format((double) mBalance / 10.);
+        if (mHasOctopus) {
+            // Octopus balance takes priority 1
+            return NumberFormat.getCurrencyInstance(Locale.US).format((double) mOctopusBalance / 10.);
+        } else if (mHasShenzhen) {
+            // Shenzhen Tong balance takes priority 2
+            return getSztBalanceString();
+        } else {
+            // Unhandled.
+            Log.d(TAG, "Unhandled balance, could not find Octopus or SZT");
+            return null;
+        }
+    }
+
+    private String getSztBalanceString() {
+        return NumberFormat.getCurrencyInstance(Locale.CHINA).format((double) mShenzhenBalance / 10.);
     }
 
     @Override
@@ -89,12 +149,23 @@ public class OctopusTransitData extends TransitData {
 
     @Override
     public void writeToParcel(Parcel parcel, int i) {
-        parcel.writeInt(mBalance);
+        parcel.writeInt(mOctopusBalance);
+        parcel.writeInt(mShenzhenBalance);
+        parcel.writeInt(mHasOctopus ? 1 : 0);
+        parcel.writeInt(mHasShenzhen ? 1 : 0);
     }
 
     @Override
     public String getCardName() {
-        return NAME;
+        if (mHasShenzhen) {
+            if (mHasOctopus) {
+                return DUAL_NAME;
+            } else {
+                return SZT_NAME;
+            }
+        } else {
+            return OCTOPUS_NAME;
+        }
     }
 
 
@@ -112,6 +183,15 @@ public class OctopusTransitData extends TransitData {
 
     @Override
     public List<ListItem> getInfo() {
+        ArrayList<ListItem> items = new ArrayList<>();
+
+        if (mHasOctopus && mHasShenzhen) {
+            // Dual-mode card, show the CNY balance here.
+            items.add(new HeaderListItem(R.string.alternate_purse_balances));
+            items.add(new ListItem(R.string.octopus_szt, getSztBalanceString()));
+
+            return items;
+        }
         return null;
     }
 

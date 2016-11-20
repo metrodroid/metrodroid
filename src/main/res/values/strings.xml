@@ -149,6 +149,8 @@
     <string name="mifare_classic">Mifare Classic</string>
     <string name="auth_retries">Authentication retries</string>
     <string name="auth_retries_summary">Number of times to attempt authentication for each sector</string>
+    <string name="alternate_purse_balances">Alternate purse balances</string>
+
 
     <!--
     This tile server gives "retina" tiles which are much nicer on modern
@@ -322,4 +324,8 @@
     <string name="nextfare_system_code">System code</string>
     <string name="nextfare_ticket_class">Ticket class code</string>
 
+    <!--
+        Octopus / Shenzhen Tong
+    -->
+    <string name="octopus_szt">Shenzhen Tong</string>
 </resources>
