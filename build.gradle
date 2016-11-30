@@ -30,6 +30,7 @@ def getVersionName = { ->
 buildscript {
     repositories {
         mavenCentral()
+        jcenter()
     }
     dependencies {
         classpath 'com.android.tools.build:gradle:2.2.2'
@@ -50,6 +51,7 @@ task checkstyle(type: Checkstyle) {
 
 repositories {
     mavenCentral()
+    jcenter()
 }
 
 apply plugin: 'com.android.application'
@@ -68,12 +70,12 @@ dependencies {
 }
 
 android {
-    compileSdkVersion 24
-    buildToolsVersion '24.0.2'
+    compileSdkVersion 25
+    buildToolsVersion '25.0.1'
 
     defaultConfig {
         minSdkVersion 16
-        targetSdkVersion 24
+        targetSdkVersion 25
         versionCode getVersionCode()
         versionName getVersionName()
     }
