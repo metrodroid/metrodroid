@@ -41,7 +41,7 @@ View your remaining balance, recent trips, and other information from contactles
 * [Clipper][1] - San Francisco, CA, USA
 * [EZ-Link][7] - Singapore (Not compatible with all devices)
 * [Go card][20] (Translink) - Brisbane and South East Queensland, Australia (requires encryption keys, not compatible with all devices, not all stations known)
-* [Manly Fast Ferry][19] - Sydney, Australia (requires encryption keys, not compatible with all devices)
+* [Manly Fast Ferry][19] - Sydney, NSW, Australia (requires encryption keys, not compatible with all devices)
 * [Myki][21] - Melbourne (and surrounds), VIC, Australia (Only the card number can be read)
 * [Matkakortti][16], [HSL][17] - Finland
 * [NETS FlashPay](http://www.netsflashpay.com.sg/) - Singapore
@@ -49,6 +49,7 @@ View your remaining balance, recent trips, and other information from contactles
 * [Opal][18] - Sydney (and surrounds), NSW, Australia
 * [ORCA][0] - Seattle, WA, USA
 * [OV-chipkaart](http://www.ov-chipkaart.nl/) - Netherlands (Requires encryption keys, not compatible with all devices)
+* [Shenzhen Tong][27] - Shenzhen, Guangdong Province, China
 * [Suica][9], [ICOCA][10], [PASMO][11], [Edy][12] - Japan
 * [Transit Access Pass][26] - Los Angeles, CA, USA
 
@@ -112,4 +113,4 @@ This software and it's authors are not associated with any public transit agency
 [24]: https://en.wikipedia.org/wiki/MIFARE#MIFARE_Ultralight_and_MIFARE_Ultralight_EV1
 [25]: http://www.octopus.com.hk/home/en/index.html
 [26]: https://www.taptogo.net/
-
+[27]: http://www.shenzhentong.com/

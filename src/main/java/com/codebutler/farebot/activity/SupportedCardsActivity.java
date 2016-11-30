@@ -161,6 +161,14 @@ public class SupportedCardsActivity extends Activity {
                     CardType.FeliCa
             ));
 
+            add(new CardInfo(R.drawable.szt_card, OctopusTransitData.SZT_NAME, // Shenzhen Tong
+                    R.string.location_shenzhen,
+                    CardType.FeliCa,
+                    false,
+                    true // preview version
+            ));
+
+
             add(new CardInfo(R.drawable.suica_card, "Suica",
                     R.string.location_tokyo,
                     CardType.FeliCa
