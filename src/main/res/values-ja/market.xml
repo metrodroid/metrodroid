@@ -53,9 +53,9 @@ MIFARE クラシック カードを読み取るために、お使いの携帯電
 詳細: https://github.com/micolous/metrodroid/wiki/Changelog</string>
 
     <string name="market_changelog_29">* Mifare クラシックカードを使用した認証の信頼性を向上。
-* Octopus (香港) と Transit Access Pass (ロサンゼルス、カリフォルニア、米国) のサポートを追加。
+* Octopus (香港)、深圳通、および Transit Access Pass (ロサンゼルス、カリフォルニア、米国) のサポートを追加。
 * キュービック Nextfare MFC の汎用リーダーを追加 (Go カード リーダーに基づいて)。
 * Android 4.4 (KitKat) 以降で、USB ストレージへのエクスポートの場所を選択することができます。
-* Go カード: 運賃は、計算ではなく、カードから取得するようになったので、すべての駅で動作するはずです。7 つの駅を追加しました。大人と割引カードを検出するようになりました。</string>
+* Go カード: 運賃は、カードから取得するようになったので、すべての駅で動作するはずです。7 つの駅を追加しました。大人と割引カードを検出するようになりました。</string>
 
     </resources>
