@@ -84,6 +84,16 @@ android {
         dev.initWith(buildTypes.debug)
         dev {
             applicationIdSuffix '.dev'
+            minifyEnabled true
+            useProguard false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'),
+                    'proguard.cfg'
+        }
+        release {
+            minifyEnabled true
+            useProguard false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'),
+                    'proguard.cfg'
         }
     }
 
