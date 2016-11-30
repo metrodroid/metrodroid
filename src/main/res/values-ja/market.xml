@@ -61,4 +61,8 @@ MIFARE クラシック カードを読み取るために、お使いの携帯電
 * Android 4.4 (KitKat) 以降で、USB ストレージへのエクスポートの場所を選択することができます。
 * Go カード: 運賃は、カードから取得するようになったので、すべての駅で動作するはずです。7 つの駅を追加しました。大人と割引カードを検出するようになりました。</string>
 
+    <string name="market_changelog_30">* Cubic Nextfare カードのカード有効期限を実装。
+* Android 5.x 以降の HTC One M7、M8、Sony Xperia Z、CyanogenMod 13 の Galaxy Nexus で、Mifare クラシックカードの読み取りの問題を回避。
+* Android 6 以降の新しいインストールに影響を与えるアクセス許可のバグを修正。</string>
+
     </resources>
