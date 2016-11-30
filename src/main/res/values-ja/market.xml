@@ -18,10 +18,13 @@
 - Matkakortti、HSL - フィンランド
 - Myki - オーストラリア、VIC、メルボルン (とその周辺) [0] [4]
 - NETS Flashpay - シンガポール
-- Opal - オーストラリア、シドニー [0]
+- Octopus - 香港 [0]
+- Opal - オーストラリア、ニューサウス ウェールズ州、シドニー [0]
 - ORCA - アメリカ合衆国、ワシントン州、シアトル
-- OV chipkaart - オランダ [1] [2]
+- OV-chipkaart - オランダ [1] [2]
+- 深圳通 - 中国、広東省、深圳 [0]
 - Suica、IOCOA、PASMO、Edy - 日本
+- Transit Access Pass - アメリカ合衆国、カリフォルニア州、ロサンゼルス [0] [1] [2]
 
 [0]: Metrodroid の新機能。
 [1]: すべてのデバイス (Mifare クラシック) と互換性はありません。
