@@ -35,15 +35,20 @@ def ord2(x):
 		# On Python3, passthrough
 		return x
 
-def bitoff_to_record(offset, length, little_endian=False):
-	if little_endian:
-		offset = ((length * 8) - offset)
+def bitoff_to_record(offset, length):
 	boff = offset / 8.0
 
 	return int(boff // 16), (boff % 16)
-	
 
-def bitfinder(input_data, integer, pad=0, byte_aligned_only=False):
+def keyfilter(x, l=0):
+	if x < 16384:
+		# sector 0-31
+		return ((x+l)%512 < 384)
+	else:
+		# sector 32-40
+		return ((x+l-16384)%2048 < 1920)
+
+def bitfinder(input_data, integer, pad=0, byte_aligned_only=False, skip_keys=False):
 	"""
 	returns tuple of bit-indexes (0 indexed) of (big endian, little endian) bit
 	offsets where the number appears.
@@ -56,6 +61,7 @@ def bitfinder(input_data, integer, pad=0, byte_aligned_only=False):
 	
 	if pad > 0:
 		integer_binary = integer_binary.rjust(pad, '0')
+	bit_length = len(integer_binary)
 	
 	# Convert input data to binary
 	input_data = [ord2(x) for x in input_data]
@@ -66,10 +72,20 @@ def bitfinder(input_data, integer, pad=0, byte_aligned_only=False):
 	#print input_binary_be, input_binary_le, integer_binary
 
 	# now start searching.
-	results = [[m.start() for m in re.finditer(r'(?=%s)' % integer_binary, y)] for y in (input_binary_be, input_binary_le, input_binary_be_revbits, input_binary_le_revbits)]
+	file_length = len(input_data) * 8
+	results = []
+	results.append([m.start() for m in re.finditer(r'(?=%s)' % integer_binary, input_binary_be)])
+	results.append([file_length - m.start() - bit_length for m in re.finditer(r'(?=%s)' % integer_binary, input_binary_le)])
+	results.append([m.start() for m in re.finditer(r'(?=%s)' % integer_binary, input_binary_be_revbits)])
+	results.append([file_length - m.start() - bit_length for m in re.finditer(r'(?=%s)' % integer_binary, input_binary_le_revbits)])
 	
+	for result in results:
+		result.sort()
+
 	if byte_aligned_only:
 		results = [filter(lambda x: x%8==0, y) for y in results]
+	if skip_keys:
+		results = [filter(keyfilter, y) for y in results]
 	return results
 
 def main():
@@ -82,6 +98,8 @@ def main():
 		help='Zero-pad the input integer such that the total number of bits is at least this')
 	parser.add_argument('-b', '--byte-aligned', action='store_true',
 		help='Only return values that are aligned to bytes (divisible by 8)')
+	parser.add_argument('-k', '--skip-keys', action='store_true',
+		help='Ignore values that appear in blocks for Mifare Classic keys')
 	
 	options = parser.parse_args()
 
@@ -90,7 +108,7 @@ def main():
 		length = len(data)
 		results_be, results_le, results_be_revbits, results_le_revbits = \
 			bitfinder(data, options.integer, options.pad,
-				options.byte_aligned)
+				options.byte_aligned, options.skip_keys)
 
 		print ('Filename: %s' % fh.name)
 		fh.close()
@@ -108,7 +126,7 @@ def main():
 	
 		if results_le:
 			print ('Little-endian offsets: %r' % (results_le,))
-			print (', '.join('0x%02x_/%.3f' % bitoff_to_record(x, length, True) for x in results_le))
+			print (', '.join('0x%02x_/%.3f' % bitoff_to_record(x, length) for x in results_le))
 		else:
 			print ('No little-endian offsets found.')
 
