@@ -23,7 +23,9 @@
 package au.id.micolous.metrodroid;
 
 import android.app.Application;
+import android.nfc.NfcAdapter;
 import android.os.StrictMode;
+import android.util.Log;
 
 import com.codebutler.farebot.card.Card;
 import com.codebutler.farebot.card.CardType;
@@ -61,9 +63,11 @@ import org.simpleframework.xml.stream.NodeMap;
 import org.simpleframework.xml.stream.OutputNode;
 import org.simpleframework.xml.transform.RegistryMatcher;
 
+import java.io.File;
 import java.util.Date;
 
 public class MetrodroidApplication extends Application {
+    private static final String TAG = "MetrodroidApplication";
     public static final String PREF_LAST_READ_ID = "last_read_id";
     public static final String PREF_LAST_READ_AT = "last_read_at";
     public static final String PREF_MFC_AUTHRETRY = "pref_mfc_authretry";
@@ -75,7 +79,8 @@ public class MetrodroidApplication extends Application {
     private SeqGoDBUtil mSeqGoDBUtil;
     private LaxTapDBUtil mLaxTapDBUtil;
     private final Serializer mSerializer;
-    private boolean mMifareClassicSupport;
+    private boolean mHasNfcHardware = false;
+    private boolean mMifareClassicSupport = false;
 
     public MetrodroidApplication() {
         sInstance = this;
@@ -146,8 +151,11 @@ public class MetrodroidApplication extends Application {
     @Override public void onCreate() {
         super.onCreate();
 
-        // Check for Mifare Classic support
-        mMifareClassicSupport = this.getPackageManager().hasSystemFeature("com.nxp.mifare");
+        try {
+            detectNfcSupport();
+        } catch (Exception e) {
+            Log.w(TAG, "Detecting nfc support failed", e);
+        }
 
         StrictMode.setThreadPolicy(new StrictMode.ThreadPolicy.Builder()
             .detectAll()
@@ -155,4 +163,54 @@ public class MetrodroidApplication extends Application {
             .build());
 
     }
+
+    private void detectNfcSupport() {
+        // Some devices like the LG F60 misreport they support Mifare Classic when they don't.
+        // Others report they don't support Mifare Classic when they do.
+
+        // TODO: determine behaviour of Microread hardware. It may support MFC.
+        File device;
+        NfcAdapter nfcAdapter = NfcAdapter.getDefaultAdapter(this);
+        mHasNfcHardware = nfcAdapter != null;
+
+        if (!mHasNfcHardware) {
+            return;
+        }
+
+        // Check for Broadcom NFC controller
+        // == no MFC support
+        device = new File("/dev/bcm2079-i2c");
+        if (device.exists()) {
+            Log.d(TAG, "Detected Broadcom bcm2079");
+            mMifareClassicSupport = false;
+            return;
+        }
+
+        // Check for NXP pn544 NFC controller
+        // == has MFC support
+        device = new File("/dev/pn544");
+        if (device.exists()) {
+            Log.d(TAG, "Detected NXP pn544");
+            mMifareClassicSupport = true;
+            return;
+        }
+
+        // Check for shared libraries corresponding to non-NXP chips.
+        File libFolder = new File("/system/lib");
+        File[] libs = libFolder.listFiles();
+        for (File lib : libs) {
+            String name = lib.getName();
+            if (lib.isFile() && name.startsWith("libnfc") && name.contains("brcm")) {
+                Log.d(TAG, "Detected Broadcom NFC library");
+                mMifareClassicSupport = false;
+                return;
+            }
+        }
+
+        // Fallback: Look for com.nxp.mifare feature.
+        mMifareClassicSupport = this.getPackageManager().hasSystemFeature("com.nxp.mifare");
+        Log.d(TAG, "Falling back to com.nxp.mifare feature detection " +
+                (mMifareClassicSupport ? "(found)" : "(missing)"));
+    }
+
 }
