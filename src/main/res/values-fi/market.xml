@@ -1,4 +1,12 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version='1.0' encoding='UTF-8'?>
 <resources>
 
-</resources>
+<string name="market_title">Metrodroid (oli Farebot M)</string>
+
+    <string name="market_short_desc">Metrodroidilla voi lukea tietoa joistain julkisen liikenteen NFC-älykorteista.</string>
+
+    <string name="market_long_desc"/>
+
+    <string name="market_changelog_29"></string>
+
+    </resources>
