@@ -108,6 +108,23 @@ public class Utils {
         }
     }
 
+    public static void showErrorAndFinish(final Activity activity, @StringRes int errorResource) {
+        try {
+            Log.e(activity.getClass().getName(), Utils.localizeString(errorResource));
+            new AlertDialog.Builder(activity)
+                    .setMessage(errorResource)
+                    .setCancelable(false)
+                    .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface arg0, int arg1) {
+                            activity.finish();
+                        }
+                    })
+                    .show();
+        } catch (WindowManager.BadTokenException unused) {
+            /* Ignore... happens if the activity was destroyed */
+        }
+    }
+
     public static String getHexString(byte[] b) {
         String result = "";
         for (int i=0; i < b.length; i++) {

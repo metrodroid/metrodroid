@@ -150,6 +150,7 @@
     <string name="auth_retries">Authentication retries</string>
     <string name="auth_retries_summary">Number of times to attempt authentication for each sector</string>
     <string name="alternate_purse_balances">Alternate purse balances</string>
+    <string name="storage_required">Permission is required to read and write card dumps and keys from/to files.</string>
 
 
     <!--

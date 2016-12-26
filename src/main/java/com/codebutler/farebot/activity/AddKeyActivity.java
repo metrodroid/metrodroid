@@ -22,11 +22,13 @@
 
 package com.codebutler.farebot.activity;
 
+import android.Manifest;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.PendingIntent;
 import android.content.ContentValues;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.nfc.NfcAdapter;
 import android.nfc.Tag;
 import android.nfc.tech.IsoDep;
@@ -34,9 +36,12 @@ import android.nfc.tech.MifareClassic;
 import android.nfc.tech.MifareUltralight;
 import android.nfc.tech.NfcF;
 import android.os.Bundle;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.view.View;
 import android.widget.RadioButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import au.id.micolous.farebot.R;
 import com.codebutler.farebot.key.ClassicCardKeys;
@@ -71,6 +76,8 @@ public class AddKeyActivity extends Activity {
     private byte[] mKeyData;
     private String mTagId;
     private String mCardType;
+
+    private static final int STORAGE_PERMISSION_CALLBACK = 1000;
 
     @Override protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -121,14 +128,42 @@ public class AddKeyActivity extends Activity {
         mPendingIntent = PendingIntent.getActivity(this, 0, intent, 0);
 
         if (getIntent().getAction() != null && getIntent().getAction().equals(Intent.ACTION_VIEW) && getIntent().getData() != null) {
-            try {
-                InputStream stream = getContentResolver().openInputStream(getIntent().getData());
-                mKeyData = IOUtils.toByteArray(stream);
-            } catch (IOException e) {
-                Utils.showErrorAndFinish(this, e);
+            // Request permission for storage first
+            if (ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+                ActivityCompat.requestPermissions(this, new String[] {Manifest.permission.WRITE_EXTERNAL_STORAGE}, STORAGE_PERMISSION_CALLBACK);
+            } else {
+                // Just read the key file
+                readKeyFile();
             }
+
+
         } else {
             finish();
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+        switch (requestCode) {
+            case STORAGE_PERMISSION_CALLBACK:
+                if (grantResults.length > 0  && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    // Permission granted.
+                    readKeyFile();
+                } else {
+                    // Permission denied.
+                    Utils.showErrorAndFinish(this, R.string.storage_required);
+                }
+
+                break;
+        }
+    }
+
+    private void readKeyFile() {
+        try {
+            InputStream stream = getContentResolver().openInputStream(getIntent().getData());
+            mKeyData = IOUtils.toByteArray(stream);
+        } catch (IOException e) {
+            Utils.showErrorAndFinish(this, e);
         }
     }
 
