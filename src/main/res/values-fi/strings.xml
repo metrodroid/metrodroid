@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version='1.0' encoding='UTF-8'?>
 <!--
   strings.xml
 
@@ -20,7 +20,6 @@
   You should have received a copy of the GNU General Public License
   along with this program.  If not, see <http://www.gnu.org/licenses/>.
   -->
-
 <resources>
     <string name="directions">Napauta korttia.</string>
     <string name="reading_card">Luetaan korttia</string>
@@ -49,19 +48,19 @@
     <string name="preferences">Asetukset</string>
     <string name="accessibility">Helppokäyttöisyys</string>
     <string name="speak_balance">Sano saldo</string>
-    <string name="speak_balance_summary">Proof of concept</string>
-    <string name="balance_speech">Saldo %s</string>
+    <string name="speak_balance_summary"/>
+    <string name="balance_speech">Saldo <xliff:g xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2" id="balance" example="$13.37">%s</xliff:g></string>
     <string name="loading">Lataa…</string>
     <string name="scanned_at_format">Scannattu %1$s klo %2$s</string>
     <string name="supported_cards">Tuetut kortit</string>
-    <string name="pass_or_transfer">Pass/Xfer</string>
+    <string name="pass_or_transfer"/>
 
 
     <string name="nfc_off_error">NFC on pois päältä</string>
     <string name="turn_on_nfc">Salli NFC:n käyttö jotta voin lukea kortin tiedot.</string>
     <string name="wireless_settings">Tiedonsiirtoasetukset</string>
     <string name="report_error">Raportoi virheestä</string>
-    <string name="unknown_card_description">Farebot ei vielä tue tätä korttia. Vain raakadata voidaan näyttää.</string>
+    <string name="unknown_card_description">Metrodroid ei vielä tue tätä korttia. Vain raakadata voidaan näyttää.</string>
     <string name="report_error_privacy_title">Yksityisyydensuoja</string>
     <string name="report_error_privacy_message">Kaikki tällä kortilla löytyvä tieto liitetään lähettämääsi virheraporttiin.</string>
 
