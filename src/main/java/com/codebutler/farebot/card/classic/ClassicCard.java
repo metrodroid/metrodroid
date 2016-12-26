@@ -23,6 +23,10 @@ package com.codebutler.farebot.card.classic;
 import android.content.SharedPreferences;
 import android.nfc.Tag;
 import android.nfc.tech.MifareClassic;
+import android.nfc.tech.NfcA;
+import android.os.Bundle;
+import android.os.IBinder;
+import android.os.Parcel;
 import android.preference.PreferenceManager;
 import android.util.Log;
 
@@ -81,7 +85,12 @@ public class ClassicCard extends Card {
         int retriesLeft;
 
         try {
-            tech = MifareClassic.get(tag);
+            try {
+                tech = MifareClassic.get(tag);
+            } catch (NullPointerException e) {
+                Log.d(TAG, "Working around broken Android NFC on HTC devices (and others)", e);
+                tech = MifareClassic.get(patchTag(tag));
+            }
             tech.connect();
 
             ClassicCardKeys keys = (ClassicCardKeys) CardKeys.forTagId(tagId);
@@ -206,6 +215,90 @@ public class ClassicCard extends Card {
             }
         }
     }
+
+    /**
+     * Patch the broken Tag object of HTC One (m7/m8) devices with Android 5.x.
+     *
+     * Also observed on Galaxy Nexus running Cyanogenmod 13.
+     *
+     * "It seems, the reason of this bug is TechExtras of NfcA is null.
+     * However, TechList contains MifareClassic." -- bildin.
+     *
+     * This patch will fix this. For more information please refer to
+     * https://github.com/ikarus23/MifareClassicTool/issues/52
+     *
+     * This patch was provided by bildin (https://github.com/bildin).
+     *
+     * @param tag The broken tag.
+     * @return The fixed tag.
+     */
+    private static Tag patchTag(Tag tag)
+    {
+        if (tag == null) {
+            return null;
+        }
+
+        String[] sTechList = tag.getTechList();
+        Parcel oldParcel;
+        Parcel newParcel;
+        oldParcel = Parcel.obtain();
+        tag.writeToParcel(oldParcel, 0);
+        oldParcel.setDataPosition(0);
+
+        int len = oldParcel.readInt();
+        byte[] id = new byte[0];
+        if (len >= 0) {
+            id = new byte[len];
+            oldParcel.readByteArray(id);
+        }
+        int[] oldTechList = new int[oldParcel.readInt()];
+        oldParcel.readIntArray(oldTechList);
+        Bundle[] oldTechExtras = oldParcel.createTypedArray(Bundle.CREATOR);
+        int serviceHandle = oldParcel.readInt();
+        int isMock = oldParcel.readInt();
+        IBinder tagService;
+        if (isMock == 0) {
+            tagService = oldParcel.readStrongBinder();
+        } else {
+            tagService = null;
+        }
+        oldParcel.recycle();
+
+        int nfcaIdx=-1;
+        int mcIdx=-1;
+        for(int idx = 0; idx < sTechList.length; idx++) {
+            if(sTechList[idx].equals(NfcA.class.getName())) {
+                nfcaIdx = idx;
+            } else if(sTechList[idx].equals(MifareClassic.class.getName())) {
+                mcIdx = idx;
+            }
+        }
+
+        if(nfcaIdx>=0&&mcIdx>=0&&oldTechExtras[mcIdx]==null) {
+            oldTechExtras[mcIdx] = oldTechExtras[nfcaIdx];
+        } else {
+            return tag;
+        }
+
+        newParcel = Parcel.obtain();
+        newParcel.writeInt(id.length);
+        newParcel.writeByteArray(id);
+        newParcel.writeInt(oldTechList.length);
+        newParcel.writeIntArray(oldTechList);
+        newParcel.writeTypedArray(oldTechExtras, 0);
+        newParcel.writeInt(serviceHandle);
+        newParcel.writeInt(isMock);
+        if(isMock == 0) {
+            newParcel.writeStrongBinder(tagService);
+        }
+        newParcel.setDataPosition(0);
+        Tag newTag = Tag.CREATOR.createFromParcel(newParcel);
+        newParcel.recycle();
+
+        return newTag;
+    }
+
+
 
     @Override public TransitIdentity parseTransitIdentity() {
         // All .check() methods should work without a key, and throw an UnauthorizedException
