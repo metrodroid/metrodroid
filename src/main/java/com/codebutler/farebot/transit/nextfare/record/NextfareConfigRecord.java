@@ -22,7 +22,10 @@ import android.os.Parcel;
 import android.os.Parcelable;
 import android.util.Log;
 
+import com.codebutler.farebot.transit.nextfare.NextfareUtil;
 import com.codebutler.farebot.util.Utils;
+
+import java.util.GregorianCalendar;
 
 /**
  * Represents a configuration record on Nextfare MFC.
@@ -33,6 +36,7 @@ public class NextfareConfigRecord extends NextfareRecord implements Parcelable {
     private static final String TAG = "NextfareConfigRecord";
 
     private int mTicketType;
+    private GregorianCalendar mExpiry;
 
 
     public static final Creator<NextfareConfigRecord> CREATOR = new Creator<NextfareConfigRecord>() {
@@ -52,6 +56,10 @@ public class NextfareConfigRecord extends NextfareRecord implements Parcelable {
 
         NextfareConfigRecord record = new NextfareConfigRecord();
 
+        // Expiry date
+        byte[] expiry = Utils.reverseBuffer(input, 4, 4);
+        record.mExpiry = NextfareUtil.unpackDate(expiry);
+
         // Treat ticket type as little-endian
         byte[] ticketType = Utils.reverseBuffer(input, 8, 2);
         record.mTicketType = Utils.byteArrayToInt(ticketType, 0, 2);
@@ -64,6 +72,10 @@ public class NextfareConfigRecord extends NextfareRecord implements Parcelable {
 
     public int getTicketType() {
         return mTicketType;
+    }
+
+    public GregorianCalendar getExpiry() {
+        return mExpiry;
     }
 
     @Override

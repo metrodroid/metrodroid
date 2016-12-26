@@ -324,6 +324,7 @@
     <string name="nextfare">Cubic Nextfare</string>
     <string name="nextfare_system_code">System code</string>
     <string name="nextfare_ticket_class">Ticket class code</string>
+    <string name="nextfare_card_expiry">Card expiry date</string>
 
     <!--
         Octopus / Shenzhen Tong

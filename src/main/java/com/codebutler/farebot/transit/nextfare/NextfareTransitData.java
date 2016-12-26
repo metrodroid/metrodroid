@@ -45,6 +45,7 @@ import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
@@ -402,6 +403,9 @@ public class NextfareTransitData extends TransitData {
         items.add(new ListItem(R.string.nextfare_system_code, Utils.getHexString(mSystemCode)));
         if (mConfig != null) {
             items.add(new ListItem(R.string.nextfare_ticket_class, Integer.valueOf(mConfig.getTicketType()).toString()));
+            Date expiry = mConfig.getExpiry().getTime();
+
+            items.add(new ListItem(R.string.nextfare_card_expiry, Utils.longDateFormat(expiry)));
         }
 
         return items;
