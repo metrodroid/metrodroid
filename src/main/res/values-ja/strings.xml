@@ -267,4 +267,9 @@
 
     <string name="octopus_szt">深圳通</string>
 <string name="location_shenzhen">中国、広東省、深圳</string>
+    <string name="storage_required">カードのダンプと鍵ファイルへの読み書きのためにアクセス許可が必要です。</string>
+
+
+    <string name="nextfare_card_expiry">カード有効期限</string>
+
     </resources>
