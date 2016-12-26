@@ -51,9 +51,11 @@ View your remaining balance, recent trips, and other information from contactles
 * [OV-chipkaart](http://www.ov-chipkaart.nl/) - Netherlands (Requires encryption keys, not compatible with all devices)
 * [Shenzhen Tong][27] - Shenzhen, Guangdong Province, China
 * [Suica][9], [ICOCA][10], [PASMO][11], [Edy][12] - Japan
-* [Transit Access Pass][26] - Los Angeles, CA, USA
+* [Transit Access Pass][26] - Los Angeles, CA, USA (Requires encryption keys, not compatible with all devices)
 
 This project will only read data from the card itself, without having to connect to the agency's back-office systems. In some cases, limited data is available, so balance information and trip history might not be available.
+
+Additionally, some generic support for Cubic NextFare based systems (on Mifare Classic) is available (which requires encryption keys).
 
 ## Supported Phones
 
