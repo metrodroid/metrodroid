@@ -170,7 +170,7 @@ public class ClassicCard extends Card {
                         }
 
                         if (!authSuccess) {
-                            authSuccess = tech.authenticateSectorWithKeyB(sectorIndex, MifareClassic.KEY_MIFARE_APPLICATION_DIRECTORY);
+                            authSuccess = tech.authenticateSectorWithKeyA(sectorIndex, MifareClassic.KEY_MIFARE_APPLICATION_DIRECTORY);
                         }
 
                         if (!authSuccess) {
@@ -178,7 +178,7 @@ public class ClassicCard extends Card {
                         }
 
                         if (!authSuccess) {
-                            authSuccess = tech.authenticateSectorWithKeyB(sectorIndex, MifareClassic.KEY_NFC_FORUM);
+                            authSuccess = tech.authenticateSectorWithKeyA(sectorIndex, MifareClassic.KEY_NFC_FORUM);
                         }
 
                         if (!authSuccess) {
