@@ -214,6 +214,7 @@
     <string name="location_hong_kong">Hong Kong</string>
     <string name="location_shenzhen">Shenzhen, Guangdong Province, China</string>
     <string name="location_los_angeles">Los Angeles, CA, USA</string>
+    <string name="location_act_australia">Australian Capital Territory, Australia</string>
 
     <!-- Felica -->
     <string name="felica_terminal_fare_adjustment">Fare Adjustment Machine</string>
@@ -346,4 +347,14 @@
         Octopus / Shenzhen Tong
     -->
     <string name="octopus_szt">Shenzhen Tong</string>
+
+    <!--
+        Bilhete Único
+    -->
+    <string name="card_note_bilhete_unico">Must be selected as fallback reader in preferences.</string>
+
+    <!--
+        MyWay (ACT)
+    -->
+    <string name="card_note_myway">Must be selected as fallback reader in preferences.</string>
 </resources>

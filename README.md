@@ -37,13 +37,14 @@ View your remaining balance, recent trips, and other information from contactles
 
 ## Supported Cards
 
-* [Bilhete Único](http://www.sptrans.com.br/bilhete_unico/) - São Paulo, Brazil (Requires encryption keys, not compatible with all devices)
+* [Bilhete Único](http://www.sptrans.com.br/bilhete_unico/) - São Paulo, Brazil (requires encryption keys, not compatible with all devices, must be selected as fallback reader)
 * [Clipper][1] - San Francisco, CA, USA
 * [EZ-Link][7] - Singapore (Not compatible with all devices)
 * [Go card][20] (Translink) - Brisbane and South East Queensland, Australia (requires encryption keys, not compatible with all devices, not all stations known)
 * [Manly Fast Ferry][19] - Sydney, NSW, Australia (requires encryption keys, not compatible with all devices)
-* [Myki][21] - Melbourne (and surrounds), VIC, Australia (Only the card number can be read)
 * [Matkakortti][16], [HSL][17] - Finland
+* [Myki][21] - Melbourne (and surrounds), VIC, Australia (Only the card number can be read)
+* [MyWay][28] - Australian Capital Territory, Australia (preview, requires encryption keys, not compatible with all devices, must be selected as fallback reader)
 * [NETS FlashPay](http://www.netsflashpay.com.sg/) - Singapore
 * [Octopus][25] - Hong Kong
 * [Opal][18] - Sydney (and surrounds), NSW, Australia

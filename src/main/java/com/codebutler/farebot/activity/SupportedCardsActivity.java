@@ -42,6 +42,7 @@ import com.codebutler.farebot.card.CardType;
 import com.codebutler.farebot.transit.lax_tap.LaxTapTransitData;
 import com.codebutler.farebot.transit.manly_fast_ferry.ManlyFastFerryTransitData;
 import com.codebutler.farebot.transit.myki.MykiTransitData;
+import com.codebutler.farebot.transit.myway.MyWayTransitData;
 import com.codebutler.farebot.transit.octopus.OctopusTransitData;
 import com.codebutler.farebot.transit.opal.OpalTransitData;
 import com.codebutler.farebot.transit.seq_go.SeqGoTransitData;
@@ -79,7 +80,9 @@ public class SupportedCardsActivity extends Activity {
             add(new CardInfo(R.drawable.bilheteunicosp_card, "Bilhete Único",
                     R.string.location_sao_paulo,
                     CardType.MifareClassic,
-                    true
+                    true,
+                    false,
+                    R.string.card_note_bilhete_unico
             ));
 
             add(new CardInfo(R.drawable.clipper_card, "Clipper",
@@ -101,7 +104,7 @@ public class SupportedCardsActivity extends Activity {
                     R.string.location_brisbane_seq_australia,
                     CardType.MifareClassic,
                     true,
-                    true,
+                    false,
                     R.string.card_note_seqgo
             ));
 
@@ -127,6 +130,14 @@ public class SupportedCardsActivity extends Activity {
                     false,
                     false,
                     R.string.card_note_myki
+            ));
+
+            add(new CardInfo(R.drawable.myway_card, MyWayTransitData.NAME,
+                    R.string.location_act_australia,
+                    CardType.MifareClassic,
+                    true,
+                    true,
+                    R.string.card_note_myway
             ));
 
 
