@@ -59,7 +59,7 @@ apply plugin: 'com.android.application'
 dependencies {
     compile 'com.android.support:support-v4:24.2.0'
     compile 'commons-io:commons-io:2.5'
-    compile 'org.apache.commons:commons-lang3:3.4'
+    compile 'org.apache.commons:commons-lang3:3.5'
     compile('org.simpleframework:simple-xml:2.7.1') {
         exclude module: 'stax'
         exclude module: 'stax-api'

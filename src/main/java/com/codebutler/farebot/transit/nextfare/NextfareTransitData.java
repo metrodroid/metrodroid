@@ -120,7 +120,9 @@ public class NextfareTransitData extends TransitData {
     public NextfareTransitData(Parcel parcel) {
         mSerialNumber = new BigInteger(parcel.readString());
         mBalance = parcel.readInt();
+        mTrips = new NextfareTrip[parcel.readInt()];
         parcel.readTypedArray(mTrips, NextfareTrip.CREATOR);
+        mRefills = new NextfareRefill[parcel.readInt()];
         parcel.readTypedArray(mRefills, NextfareRefill.CREATOR);
         parcel.readByteArray(mSystemCode);
 
@@ -131,7 +133,9 @@ public class NextfareTransitData extends TransitData {
     public void writeToParcel(Parcel parcel, int i) {
         parcel.writeString(mSerialNumber.toString());
         parcel.writeInt(mBalance);
+        parcel.writeInt(mTrips.length);
         parcel.writeTypedArray(mTrips, i);
+        parcel.writeInt(mRefills.length);
         parcel.writeTypedArray(mRefills, i);
         parcel.writeByteArray(mSystemCode);
         mConfig.writeToParcel(parcel, i);

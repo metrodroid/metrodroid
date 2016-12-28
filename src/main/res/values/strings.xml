@@ -158,12 +158,14 @@
     <string-array name="mfc_fallbacks">
         <item>None (disabled)</item>
         <item>Bilhete Único (São Paulo, Brazil)</item>
+        <item>MyWay (ACT, Australia)</item>
     </string-array>
 
     <!-- Translators: do not translate -->
     <string-array name="mfc_fallback_values">
         <item>null</item>
         <item>bilhete_unico</item>
+        <item>myway</item>
     </string-array>
 
     <!--

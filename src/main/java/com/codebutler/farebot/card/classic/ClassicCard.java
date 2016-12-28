@@ -45,6 +45,7 @@ import com.codebutler.farebot.transit.bilhete_unico.BilheteUnicoSPTransitData;
 import com.codebutler.farebot.transit.lax_tap.LaxTapData;
 import com.codebutler.farebot.transit.lax_tap.LaxTapTransitData;
 import com.codebutler.farebot.transit.manly_fast_ferry.ManlyFastFerryTransitData;
+import com.codebutler.farebot.transit.myway.MyWayTransitData;
 import com.codebutler.farebot.transit.nextfare.NextfareTransitData;
 import com.codebutler.farebot.transit.ovc.OVChipTransitData;
 import com.codebutler.farebot.transit.seq_go.SeqGoTransitData;
@@ -329,6 +330,9 @@ public class ClassicCard extends Card {
             String fallback = getFallbackReader();
             if (fallback.equals("bilhete_unico")) {
                 return BilheteUnicoSPTransitData.parseTransitIdentity(this);
+            } else if (fallback.equals("myway")) {
+                // TODO: Replace this with a proper check, and take out of fallback mode.
+                return MyWayTransitData.parseTransitIdentity(this);
             }
 
         }
@@ -364,6 +368,9 @@ public class ClassicCard extends Card {
             String fallback = getFallbackReader();
             if (fallback.equals("bilhete_unico")) {
                 return new BilheteUnicoSPTransitData(this);
+            } else if (fallback.equals("myway")) {
+                // TODO: Replace this with a proper check, and take out of fallback mode.
+                return new MyWayTransitData(this);
             }
         }
 

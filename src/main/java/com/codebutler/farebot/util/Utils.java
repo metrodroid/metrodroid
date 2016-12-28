@@ -126,8 +126,12 @@ public class Utils {
     }
 
     public static String getHexString(byte[] b) {
+        return getHexString(b, 0, b.length);
+    }
+
+    public static String getHexString(byte[] b, int offset, int length) {
         String result = "";
-        for (int i=0; i < b.length; i++) {
+        for (int i=offset; i < offset+length; i++) {
             result += Integer.toString((b[i] & 0xff) + 0x100, 16).substring(1);
         }
         return result;
