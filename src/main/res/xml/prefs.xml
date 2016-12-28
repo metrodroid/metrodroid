@@ -55,8 +55,8 @@
 
         <ListPreference
             android:key="pref_mfc_fallback"
-            android:title="Fallback reader"
-            android:summary="Some agencies have no identifying magic on their card. To read them, you must explicitly choose one agency."
+            android:title="@string/mfc_fallback"
+            android:summary="@string/mfc_fallback_desc"
             android:defaultValue="null"
             android:entries="@array/mfc_fallbacks"
             android:entryValues="@array/mfc_fallback_values"

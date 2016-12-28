@@ -152,6 +152,9 @@
     <string name="alternate_purse_balances">Alternate purse balances</string>
     <string name="storage_required">Permission is required to read and write card dumps and keys from/to files.</string>
 
+    <string name="mfc_fallback_desc">Some agencies have no identifying magic on their card. To read them, you must explicitly choose one agency.</string>
+    <string name="mfc_fallback">Fallback reader</string>
+
     <string-array name="mfc_fallbacks">
         <item>None (disabled)</item>
         <item>Bilhete Único (São Paulo, Brazil)</item>
