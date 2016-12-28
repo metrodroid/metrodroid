@@ -43,6 +43,8 @@ public class BilheteUnicoSPTransitData extends TransitData {
 
     private static final String NAME = "Bilhete Único";
 
+    // This is a generic Fudan Microelectronics FM11RF08 manufacturer signature.  Not all cards use
+    // this, but there's no standard header.
     private static final byte[] MANUFACTURER = {
         (byte) 0x62,
         (byte) 0x63,
@@ -68,8 +70,9 @@ public class BilheteUnicoSPTransitData extends TransitData {
 
     public static boolean check(ClassicCard card) {
         try {
-            byte[] blockData = card.getSector(0).getBlock(0).getData();
-            return Arrays.equals(Arrays.copyOfRange(blockData, 8, 16), MANUFACTURER);
+            // Try to get the block where the balance is.
+            byte[] blockData = card.getSector(8).getBlock(1).getData();
+            return true;
         } catch (UnauthorizedException ex) {
             // TODO: implement a better way to handle identifying this card without a key
             return false;

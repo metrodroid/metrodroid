@@ -25,6 +25,7 @@ package au.id.micolous.metrodroid;
 import android.app.Application;
 import android.nfc.NfcAdapter;
 import android.os.StrictMode;
+import android.preference.PreferenceManager;
 import android.util.Log;
 
 import com.codebutler.farebot.card.Card;
@@ -66,11 +67,14 @@ import org.simpleframework.xml.transform.RegistryMatcher;
 import java.io.File;
 import java.util.Date;
 
+import au.id.micolous.farebot.R;
+
 public class MetrodroidApplication extends Application {
     private static final String TAG = "MetrodroidApplication";
     public static final String PREF_LAST_READ_ID = "last_read_id";
     public static final String PREF_LAST_READ_AT = "last_read_at";
     public static final String PREF_MFC_AUTHRETRY = "pref_mfc_authretry";
+    public static final String PREF_MFC_FALLBACK = "pref_mfc_fallback";
 
     private static MetrodroidApplication sInstance;
 
@@ -156,6 +160,8 @@ public class MetrodroidApplication extends Application {
         } catch (Exception e) {
             Log.w(TAG, "Detecting nfc support failed", e);
         }
+
+        PreferenceManager.setDefaultValues(this, R.xml.prefs, false);
 
         StrictMode.setThreadPolicy(new StrictMode.ThreadPolicy.Builder()
             .detectAll()

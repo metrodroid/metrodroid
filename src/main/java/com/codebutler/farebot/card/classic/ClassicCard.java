@@ -305,8 +305,6 @@ public class ClassicCard extends Card {
         // Otherwise UnauthorizedClassicTransitData will not trigger
         if (OVChipTransitData.check(this)) {
             return OVChipTransitData.parseTransitIdentity(this);
-        } else if (BilheteUnicoSPTransitData.check(this)) {
-            return BilheteUnicoSPTransitData.parseTransitIdentity(this);
         } else if (ManlyFastFerryTransitData.check(this)) {
             return ManlyFastFerryTransitData.parseTransitIdentity(this);
         } else if (NextfareTransitData.check(this)) {
@@ -320,10 +318,19 @@ public class ClassicCard extends Card {
                 return NextfareTransitData.parseTransitIdentity(this);
             }
         } else if (UnauthorizedClassicTransitData.check(this)) {
-            // This check must be LAST.
+            // This check must be SECOND TO LAST.
             //
             // This is to throw up a warning whenever there is a card with all locked sectors
             return UnauthorizedClassicTransitData.parseTransitIdentity(this);
+        } else {
+            // This check must be LAST.
+            //
+            // This is for agencies who don't have identifying "magic" in their card.
+            String fallback = getFallbackReader();
+            if (fallback.equals("bilhete_unico")) {
+                return BilheteUnicoSPTransitData.parseTransitIdentity(this);
+            }
+
         }
 
         // The card could not be identified, but has some open sectors.
@@ -333,8 +340,6 @@ public class ClassicCard extends Card {
     @Override public TransitData parseTransitData() {
         if (OVChipTransitData.check(this)) {
             return new OVChipTransitData(this);
-        } else if (BilheteUnicoSPTransitData.check(this)) {
-            return new BilheteUnicoSPTransitData(this);
         } else if (ManlyFastFerryTransitData.check(this)) {
             return new ManlyFastFerryTransitData(this);
         } else if (NextfareTransitData.check(this)) {
@@ -348,10 +353,18 @@ public class ClassicCard extends Card {
                 return new NextfareTransitData(this);
             }
         } else if (UnauthorizedClassicTransitData.check(this)) {
-            // This check must be LAST.
+            // This check must be SECOND TO LAST.
             //
             // This is to throw up a warning whenever there is a card with all locked sectors
             return new UnauthorizedClassicTransitData();
+        } else {
+            // This check must be LAST.
+            //
+            // This is for agencies who don't have identifying "magic" in their card.
+            String fallback = getFallbackReader();
+            if (fallback.equals("bilhete_unico")) {
+                return new BilheteUnicoSPTransitData(this);
+            }
         }
 
         // The card could not be identified, but has some open sectors.
@@ -364,5 +377,10 @@ public class ClassicCard extends Card {
 
     public ClassicSector getSector(int index) {
         return mSectors.get(index);
+    }
+
+    public static String getFallbackReader() {
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(MetrodroidApplication.getInstance());
+        return prefs.getString(MetrodroidApplication.PREF_MFC_FALLBACK, "null").toLowerCase();
     }
 }
