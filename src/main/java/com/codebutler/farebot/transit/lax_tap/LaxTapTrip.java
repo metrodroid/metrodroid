@@ -49,7 +49,8 @@ public class LaxTapTrip extends NextfareTrip {
     public String getRouteName() {
         if (mModeInt == AGENCY_METRO && mStartStation >= METRO_BUS_START) {
             // Metro Bus uses the station_id for route numbers.
-            return METRO_BUS_ROUTES.get(mStartStation, null);
+            return METRO_BUS_ROUTES.get(mStartStation, Utils.localizeString(R.string.unknown_format, mStartStation));
+
         }
 
         // Normally not possible to guess what the route is.
