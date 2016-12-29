@@ -19,6 +19,7 @@
 package com.codebutler.farebot.transit.nextfare;
 
 import android.os.Parcel;
+import android.os.Parcelable;
 
 import com.codebutler.farebot.transit.Subscription;
 import com.codebutler.farebot.transit.nextfare.record.NextfareBalanceRecord;
@@ -30,7 +31,7 @@ import java.util.Date;
  * Represents a Nextfare travel pass.
  */
 
-public class NextfareSubscription extends Subscription {
+public class NextfareSubscription extends Subscription implements Parcelable {
 
     private Date mValidTo;
 
@@ -42,6 +43,22 @@ public class NextfareSubscription extends Subscription {
         // Used when there is a subscription on the card that is not yet active.
         // TODO: Figure out subscription types
     }
+
+    protected NextfareSubscription(Parcel in) {
+        mValidTo = new Date(in.readLong());
+    }
+
+    public static final Creator<NextfareSubscription> CREATOR = new Creator<NextfareSubscription>() {
+        @Override
+        public NextfareSubscription createFromParcel(Parcel in) {
+            return new NextfareSubscription(in);
+        }
+
+        @Override
+        public NextfareSubscription[] newArray(int size) {
+            return new NextfareSubscription[size];
+        }
+    };
 
     @Override
     public int getId() {
@@ -85,6 +102,6 @@ public class NextfareSubscription extends Subscription {
 
     @Override
     public void writeToParcel(Parcel parcel, int i) {
-
+        parcel.writeLong(mValidTo.getTime());
     }
 }

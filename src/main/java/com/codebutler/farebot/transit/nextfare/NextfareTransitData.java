@@ -124,6 +124,8 @@ public class NextfareTransitData extends TransitData {
         parcel.readTypedArray(mTrips, NextfareTrip.CREATOR);
         mRefills = new NextfareRefill[parcel.readInt()];
         parcel.readTypedArray(mRefills, NextfareRefill.CREATOR);
+        mSubscriptions = new NextfareSubscription[parcel.readInt()];
+        parcel.readTypedArray(mSubscriptions, NextfareSubscription.CREATOR);
         parcel.readByteArray(mSystemCode);
 
         mConfig = new NextfareConfigRecord(parcel);
@@ -137,6 +139,8 @@ public class NextfareTransitData extends TransitData {
         parcel.writeTypedArray(mTrips, i);
         parcel.writeInt(mRefills.length);
         parcel.writeTypedArray(mRefills, i);
+        parcel.writeInt(mSubscriptions.length);
+        parcel.writeTypedArray(mSubscriptions, i);
         parcel.writeByteArray(mSystemCode);
         mConfig.writeToParcel(parcel, i);
     }
@@ -288,7 +292,7 @@ public class NextfareTransitData extends TransitData {
             subscriptions.add(newSubscription(passes.get(0)));
         }
 
-        mSubscriptions = subscriptions.toArray(new NextfareSubscription[passes.size()]);
+        mSubscriptions = subscriptions.toArray(new NextfareSubscription[subscriptions.size()]);
         mTrips = trips.toArray(new NextfareTrip[trips.size()]);
         mRefills = refills.toArray(new NextfareRefill[refills.size()]);
     }
