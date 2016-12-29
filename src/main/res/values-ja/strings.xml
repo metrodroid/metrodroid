@@ -272,4 +272,12 @@
 
     <string name="nextfare_card_expiry">カード有効期限</string>
 
-    </resources>
+    <string name="mfc_fallback_desc">一部の機関は、カードに識別のマジックがありません。それらを読み取るためには機関を明示的に選択する必要があります。</string>
+    <string name="mfc_fallback">フォールバック リーダー</string>
+
+    <string name="location_act_australia">オーストラリア首都特別地域, オーストラリア</string>
+
+    <string name="card_note_bilhete_unico">設定でフォールバック リーダーとして選択する必要があります。</string>
+
+    <string name="card_note_myway">設定でフォールバック リーダーとして選択する必要があります。</string>
+</resources>
