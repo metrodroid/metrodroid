@@ -23,6 +23,7 @@ package com.codebutler.farebot.fragment;
 import android.app.ListFragment;
 import android.content.Context;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
@@ -41,6 +42,7 @@ import au.id.micolous.farebot.R;
 import au.id.micolous.metrodroid.MetrodroidApplication;
 
 public class CardSubscriptionsFragment extends ListFragment {
+    private static final String TAG = "CardSubscript'Fragment";
     private Card mCard;
     private TransitData mTransitData;
 
@@ -69,21 +71,27 @@ public class CardSubscriptionsFragment extends ListFragment {
 
             Subscription subscription = getItem(position);
 
+            if (subscription == null) {
+                // https://github.com/micolous/metrodroid/issues/28
+                Log.w(TAG, "null subscription received -- this is an error");
+                ((TextView) view.findViewById(R.id.company)).setText("null");
 
-            if (subscription.getValidFrom() != null && subscription.getValidTo() != null) {
-                String validFrom = Utils.dateFormat(subscription.getValidFrom());
-                String validTo = Utils.dateFormat(subscription.getValidTo());
-                ((TextView) view.findViewById(R.id.valid)).setText(getString(R.string.valid_format, validFrom, validTo));
-            } else if (subscription.getValidTo() != null) {
-                String validTo = Utils.dateFormat(subscription.getValidTo());
-                ((TextView) view.findViewById(R.id.valid)).setText(getString(R.string.valid_to_format, validTo));
             } else {
-                ((TextView) view.findViewById(R.id.valid)).setText(R.string.valid_not_used);
-            }
+                if (subscription.getValidFrom() != null && subscription.getValidTo() != null) {
+                    String validFrom = Utils.dateFormat(subscription.getValidFrom());
+                    String validTo = Utils.dateFormat(subscription.getValidTo());
+                    ((TextView) view.findViewById(R.id.valid)).setText(getString(R.string.valid_format, validFrom, validTo));
+                } else if (subscription.getValidTo() != null) {
+                    String validTo = Utils.dateFormat(subscription.getValidTo());
+                    ((TextView) view.findViewById(R.id.valid)).setText(getString(R.string.valid_to_format, validTo));
+                } else {
+                    ((TextView) view.findViewById(R.id.valid)).setText(R.string.valid_not_used);
+                }
 
-            ((TextView) view.findViewById(R.id.company)).setText(subscription.getShortAgencyName());
-            ((TextView) view.findViewById(R.id.name)).setText(subscription.getSubscriptionName());
-            ((TextView) view.findViewById(R.id.used)).setText(subscription.getActivation());
+                ((TextView) view.findViewById(R.id.company)).setText(subscription.getShortAgencyName());
+                ((TextView) view.findViewById(R.id.name)).setText(subscription.getSubscriptionName());
+                ((TextView) view.findViewById(R.id.used)).setText(subscription.getActivation());
+            }
 
             return view;
         }
