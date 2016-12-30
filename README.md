@@ -4,7 +4,7 @@
 
 _Formerly known as Farebot M._
 
-Version: 2.9.30
+Version: 2.9.31
 
 View your remaining balance, recent trips, and other information from contactless public transit cards using your NFC Android phone!
 
