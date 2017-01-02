@@ -92,7 +92,7 @@
     <string name="location_tokyo">東京</string>
     <string name="location_kansai">関西</string>
     <string name="app_name">Metrodroid</string>
-    <string name="copyright">Copyright 2015 – 2016 Michael Farrell</string>
+    <string name="copyright">Copyright 2015 – 2017 Michael Farrell</string>
     <string name="license">ライセンス</string>
     <string name="title_activity_license">オープンソース ライセンス</string>
     <string name="locked_card">ロックされたカード</string>
