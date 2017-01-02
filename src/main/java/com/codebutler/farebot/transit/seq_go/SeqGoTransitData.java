@@ -40,30 +40,14 @@ import au.id.micolous.farebot.R;
 
 /**
  * Transit data type for Go card (Brisbane / South-East Queensland, AU), used by Translink.
- *
+ * <p>
  * Documentation of format: https://github.com/micolous/metrodroid/wiki/Go-%28SEQ%29
  *
  * @author Michael Farrell
  */
 public class SeqGoTransitData extends NextfareTransitData {
 
-    private static final String TAG = "SeqGoTransitData";
     public static final String NAME = "Go card";
-    static final byte[] MANUFACTURER = {
-        0x16, 0x18, 0x1A, 0x1B,
-        0x1C, 0x1D, 0x1E, 0x1F
-    };
-
-    static final byte[] SYSTEM_CODE1 = {
-        0x5A, 0x5B, 0x20, 0x21, 0x22, 0x23
-    };
-
-    static final byte[] SYSTEM_CODE2 = {
-            0x20, 0x21, 0x22, 0x23, 0x01, 0x01
-    };
-
-    private SeqGoTicketType mTicketType;
-
     public static final Creator<SeqGoTransitData> CREATOR = new Creator<SeqGoTransitData>() {
         public SeqGoTransitData createFromParcel(Parcel parcel) {
             return new SeqGoTransitData(parcel);
@@ -73,6 +57,32 @@ public class SeqGoTransitData extends NextfareTransitData {
             return new SeqGoTransitData[size];
         }
     };
+    static final byte[] MANUFACTURER = {
+            0x16, 0x18, 0x1A, 0x1B,
+            0x1C, 0x1D, 0x1E, 0x1F
+    };
+
+    static final byte[] SYSTEM_CODE1 = {
+            0x5A, 0x5B, 0x20, 0x21, 0x22, 0x23
+    };
+
+    static final byte[] SYSTEM_CODE2 = {
+            0x20, 0x21, 0x22, 0x23, 0x01, 0x01
+    };
+    private static final String TAG = "SeqGoTransitData";
+    private SeqGoTicketType mTicketType;
+
+    public SeqGoTransitData(Parcel parcel) {
+        super(parcel);
+        mTicketType = (SeqGoTicketType) parcel.readSerializable();
+    }
+
+    public SeqGoTransitData(ClassicCard card) {
+        super(card);
+        if (mConfig != null) {
+            mTicketType = SeqGoData.TICKET_TYPE_MAP.get(mConfig.getTicketType(), SeqGoTicketType.UNKNOWN);
+        }
+    }
 
     public static TransitIdentity parseTransitIdentity(ClassicCard card) {
         return NextfareTransitData.parseTransitIdentity(card, NAME);
@@ -94,22 +104,10 @@ public class SeqGoTransitData extends NextfareTransitData {
         }
     }
 
-    public SeqGoTransitData(Parcel parcel) {
-        super(parcel);
-        mTicketType = (SeqGoTicketType)parcel.readSerializable();
-    }
-
     @Override
     public void writeToParcel(Parcel parcel, int i) {
         super.writeToParcel(parcel, i);
         parcel.writeSerializable(mTicketType);
-    }
-
-    public SeqGoTransitData(ClassicCard card) {
-        super(card);
-        if (mConfig != null) {
-            mTicketType = SeqGoData.TICKET_TYPE_MAP.get(mConfig.getTicketType(), SeqGoTicketType.UNKNOWN);
-        }
     }
 
     @Override
@@ -145,6 +143,7 @@ public class SeqGoTransitData extends NextfareTransitData {
     /**
      * The base implementation of hasUnknownStations from Nextfare always returns false, but we can
      * return the correct value for Go card.
+     *
      * @return true if there are unknown station IDs on the card.
      */
     @Override
@@ -152,7 +151,8 @@ public class SeqGoTransitData extends NextfareTransitData {
         return mHasUnknownStations;
     }
 
-    @Override public List<ListItem> getInfo() {
+    @Override
+    public List<ListItem> getInfo() {
         ArrayList<ListItem> items = new ArrayList<>();
 
         items.add(new HeaderListItem(R.string.general));

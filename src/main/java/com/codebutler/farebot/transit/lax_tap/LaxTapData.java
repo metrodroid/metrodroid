@@ -24,7 +24,6 @@ import com.codebutler.farebot.transit.Trip;
 
 /**
  * Static data structures for LAX TAP
- *
  */
 
 public final class LaxTapData {
@@ -61,4 +60,6 @@ public final class LaxTapData {
         put(33055, "733 West");
     }};
 
+    private LaxTapData() {
+    }
 }

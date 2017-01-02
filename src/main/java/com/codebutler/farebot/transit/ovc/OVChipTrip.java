@@ -26,22 +26,32 @@ import android.os.Parcel;
 import android.text.TextUtils;
 import android.util.Log;
 
-import au.id.micolous.metrodroid.MetrodroidApplication;
 import com.codebutler.farebot.transit.Station;
 import com.codebutler.farebot.transit.Trip;
 
 import java.util.Date;
 
+import au.id.micolous.metrodroid.MetrodroidApplication;
+
 public class OVChipTrip extends Trip {
-    public static final java.util.Comparator<? super OVChipTrip> ID_ORDER =  new java.util.Comparator<OVChipTrip>() {
-        @Override public int compare(OVChipTrip t1, OVChipTrip t2) {
+    public static final java.util.Comparator<? super OVChipTrip> ID_ORDER = new java.util.Comparator<OVChipTrip>() {
+        @Override
+        public int compare(OVChipTrip t1, OVChipTrip t2) {
             return Integer.valueOf(t1.getId()).compareTo(t2.getId());
         }
     };
+    public static final Creator<OVChipTrip> CREATOR = new Creator<OVChipTrip>() {
+        public OVChipTrip createFromParcel(Parcel parcel) {
+            return new OVChipTrip(parcel);
+        }
 
-    private final int     mId;
-    private final int     mProcessType;
-    private final int     mAgency;
+        public OVChipTrip[] newArray(int size) {
+            return new OVChipTrip[size];
+        }
+    };
+    private final int mId;
+    private final int mProcessType;
+    private final int mAgency;
     private final boolean mIsBus;
     private final boolean mIsTrain;
     private final boolean mIsMetro;
@@ -50,13 +60,13 @@ public class OVChipTrip extends Trip {
     private final boolean mIsCharge;
     private final boolean mIsPurchase;
     private final boolean mIsBanned;
-    private final Date    mTimestamp;
-    private final long    mFare;
-    private final Date    mExitTimestamp;
+    private final Date mTimestamp;
+    private final long mFare;
+    private final Date mExitTimestamp;
     private final Station mStartStation;
     private final Station mEndStation;
-    private final int     mStartStationId;
-    private final int     mEndStationId;
+    private final int mStartStationId;
+    private final int mEndStationId;
 
     public OVChipTrip(OVChipTransaction transaction) {
         this(transaction, null);
@@ -74,19 +84,19 @@ public class OVChipTrip extends Trip {
         mStartStation = getStation(mAgency, mStartStationId);
 
         if (outTransaction != null) {
-            mEndStationId  = outTransaction.getStation();
+            mEndStationId = outTransaction.getStation();
             if (getStation(mAgency, outTransaction.getStation()) != null) {
                 mEndStation = getStation(mAgency, outTransaction.getStation());
             } else {
                 mEndStation = new Station(String.format("Unknown (%s)", mEndStationId), null, null);
             }
             mExitTimestamp = OVChipTransitData.convertDate(outTransaction.getDate(), outTransaction.getTime());
-            mFare          = outTransaction.getAmount();
+            mFare = outTransaction.getAmount();
         } else {
-            mEndStation    = null;
-            mEndStationId  = 0;
+            mEndStation = null;
+            mEndStationId = 0;
             mExitTimestamp = null;
-            mFare          = inTransaction.getAmount();
+            mFare = inTransaction.getAmount();
         }
 
         mIsTrain = (mAgency == OVChipTransitData.AGENCY_NS)
@@ -119,16 +129,6 @@ public class OVChipTrip extends Trip {
 
         mIsBanned = mProcessType == OVChipTransitData.PROCESS_BANNED;
     }
-
-    public static final Creator<OVChipTrip> CREATOR = new Creator<OVChipTrip>() {
-        public OVChipTrip createFromParcel(Parcel parcel) {
-            return new OVChipTrip(parcel);
-        }
-
-        public OVChipTrip[] newArray(int size) {
-            return new OVChipTrip[size];
-        }
-    };
 
     public OVChipTrip(Parcel parcel) {
         mId = parcel.readInt();
@@ -171,11 +171,51 @@ public class OVChipTrip extends Trip {
         }
     }
 
-    @Override public int describeContents() {
+    private static Station getStation(int companyCode, int stationCode) {
+        try {
+            SQLiteDatabase db = MetrodroidApplication.getInstance().getOVChipDBUtil().openDatabase();
+            Cursor cursor = db.query(
+                    OVChipDBUtil.TABLE_NAME,
+                    OVChipDBUtil.COLUMNS_STATIONDATA,
+                    String.format("%s = ? AND %s = ?", OVChipDBUtil.COLUMN_ROW_COMPANY, OVChipDBUtil.COLUMN_ROW_OVCID),
+                    new String[]{
+                            String.valueOf(companyCode),
+                            String.valueOf(stationCode)
+                    },
+                    null,
+                    null,
+                    OVChipDBUtil.COLUMN_ROW_OVCID);
+
+            if (!cursor.moveToFirst()) {
+                Log.w("OVChipTransitData", String.format("FAILED get rail company: c: 0x%s s: 0x%s",
+                        Integer.toHexString(companyCode),
+                        Integer.toHexString(stationCode)));
+
+                return null;
+            }
+
+            String cityName = cursor.getString(cursor.getColumnIndex(OVChipDBUtil.COLUMN_ROW_CITY));
+            String stationName = cursor.getString(cursor.getColumnIndex(OVChipDBUtil.COLUMN_ROW_NAME));
+            String latitude = cursor.getString(cursor.getColumnIndex(OVChipDBUtil.COLUMN_ROW_LAT));
+            String longitude = cursor.getString(cursor.getColumnIndex(OVChipDBUtil.COLUMN_ROW_LON));
+
+            if (cityName != null)
+                stationName = cityName.concat(", " + stationName);
+
+            return new Station(stationName, latitude, longitude);
+        } catch (Exception e) {
+            Log.e("OVChipStationProvider", "Error in getStation", e);
+            return null;
+        }
+    }
+
+    @Override
+    public int describeContents() {
         return 0;
     }
 
-    @Override public void writeToParcel(Parcel parcel, int flags) {
+    @Override
+    public void writeToParcel(Parcel parcel, int flags) {
         parcel.writeInt(mId);
 
 //        parcel.writeInt(mSame ? 1 : 0);
@@ -223,23 +263,28 @@ public class OVChipTrip extends Trip {
         return mId;
     }
 
-    @Override public String getRouteName() {
+    @Override
+    public String getRouteName() {
         return null;
     }
 
-    @Override public String getAgencyName() {
+    @Override
+    public String getAgencyName() {
         return OVChipTransitData.getShortAgencyName(mAgency);    // Nobody uses most of the long names
     }
 
-    @Override public String getShortAgencyName() {
+    @Override
+    public String getShortAgencyName() {
         return OVChipTransitData.getShortAgencyName(mAgency);
     }
 
-    @Override public String getBalanceString() {
+    @Override
+    public String getBalanceString() {
         return null;
     }
 
-    @Override public String getStartStationName() {
+    @Override
+    public String getStartStationName() {
         if (mStartStation != null && !TextUtils.isEmpty(mStartStation.getStationName())) {
             return mStartStation.getStationName();
         } else {
@@ -247,22 +292,26 @@ public class OVChipTrip extends Trip {
         }
     }
 
-    @Override public Station getStartStation() {
+    @Override
+    public Station getStartStation() {
         return mStartStation;
     }
 
-    @Override public String getEndStationName() {
+    @Override
+    public String getEndStationName() {
         if (mEndStation != null && !TextUtils.isEmpty(mEndStation.getStationName())) {
             return mEndStation.getStationName();
         }
         return null;
     }
 
-    @Override public Station getEndStation() {
+    @Override
+    public Station getEndStation() {
         return mEndStation;
     }
 
-    @Override public Mode getMode() {
+    @Override
+    public Mode getMode() {
         if (mIsBanned) {
             return Mode.BANNED;
         } else if (mIsCharge) {
@@ -284,7 +333,8 @@ public class OVChipTrip extends Trip {
         }
     }
 
-    @Override public long getTimestamp() {
+    @Override
+    public long getTimestamp() {
         if (mTimestamp != null)
             return mTimestamp.getTime() / 1000;
         else
@@ -302,49 +352,13 @@ public class OVChipTrip extends Trip {
         return (mTimestamp != null);
     }
 
-    @Override public boolean hasFare() {
+    @Override
+    public boolean hasFare() {
         return true;
     }
 
-    @Override public String getFareString() {
-        return OVChipTransitData.convertAmount((int)mFare);
-    }
-
-    private static Station getStation(int companyCode, int stationCode) {
-        try {
-            SQLiteDatabase db = MetrodroidApplication.getInstance().getOVChipDBUtil().openDatabase();
-            Cursor cursor = db.query(
-                    OVChipDBUtil.TABLE_NAME,
-                    OVChipDBUtil.COLUMNS_STATIONDATA,
-                    String.format("%s = ? AND %s = ?", OVChipDBUtil.COLUMN_ROW_COMPANY, OVChipDBUtil.COLUMN_ROW_OVCID),
-                    new String[] {
-                            String.valueOf(companyCode),
-                            String.valueOf(stationCode)
-                    },
-                    null,
-                    null,
-                    OVChipDBUtil.COLUMN_ROW_OVCID);
-
-            if (!cursor.moveToFirst()) {
-                Log.w("OVChipTransitData", String.format("FAILED get rail company: c: 0x%s s: 0x%s",
-                        Integer.toHexString(companyCode),
-                        Integer.toHexString(stationCode)));
-
-                return null;
-            }
-
-            String cityName    = cursor.getString(cursor.getColumnIndex(OVChipDBUtil.COLUMN_ROW_CITY));
-            String stationName = cursor.getString(cursor.getColumnIndex(OVChipDBUtil.COLUMN_ROW_NAME));
-            String latitude    = cursor.getString(cursor.getColumnIndex(OVChipDBUtil.COLUMN_ROW_LAT));
-            String longitude   = cursor.getString(cursor.getColumnIndex(OVChipDBUtil.COLUMN_ROW_LON));
-
-            if (cityName != null)
-                stationName = cityName.concat(", " + stationName);
-
-            return new Station(stationName, latitude, longitude);
-        } catch (Exception e) {
-            Log.e("OVChipStationProvider", "Error in getStation", e);
-            return null;
-        }
+    @Override
+    public String getFareString() {
+        return OVChipTransitData.convertAmount((int) mFare);
     }
 }

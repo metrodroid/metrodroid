@@ -25,6 +25,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.nfc.NfcAdapter;
 import android.os.Bundle;
+import android.support.annotation.StringRes;
 import android.text.Html;
 import android.text.Spanned;
 import android.view.MenuItem;
@@ -34,9 +35,6 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
-
-import au.id.micolous.metrodroid.MetrodroidApplication;
-import au.id.micolous.farebot.R;
 
 import com.codebutler.farebot.card.CardType;
 import com.codebutler.farebot.transit.lax_tap.LaxTapTransitData;
@@ -49,6 +47,9 @@ import com.codebutler.farebot.transit.seq_go.SeqGoTransitData;
 import com.codebutler.farebot.util.Utils;
 
 import java.util.ArrayList;
+
+import au.id.micolous.farebot.R;
+import au.id.micolous.metrodroid.MetrodroidApplication;
 
 /**
  * @author Eric Butler, Michael Farrell
@@ -63,7 +64,8 @@ public class SupportedCardsActivity extends Activity {
         ((ListView) findViewById(R.id.gallery)).setAdapter(new CardsAdapter(this));
     }
 
-    @Override public boolean onOptionsItemSelected(MenuItem item) {
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == android.R.id.home) {
             Intent intent = new Intent(this, MainActivity.class);
             intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
@@ -71,6 +73,77 @@ public class SupportedCardsActivity extends Activity {
             return true;
         }
         return false;
+    }
+
+    private static class CardInfo {
+        private final int mImageId;
+        private final String mName;
+        private final int mLocationId;
+        private final CardType mCardType;
+        private final boolean mKeysRequired;
+        private final boolean mPreview;
+        private final int mResourceExtraNote;
+
+        private CardInfo(int imageId, String name, int locationId) {
+            this(imageId, name, locationId, CardType.Unknown);
+        }
+
+        private CardInfo(int imageId, String name, int locationId, CardType cardType) {
+            this(imageId, name, locationId, cardType, false);
+        }
+
+        private CardInfo(int imageId, String name, int locationId, CardType cardType, boolean keysRequired) {
+            this(imageId, name, locationId, cardType, keysRequired, false);
+        }
+
+        private CardInfo(int imageId, String name, int locationId, CardType cardType, boolean keysRequired, boolean preview) {
+            this(imageId, name, locationId, cardType, keysRequired, preview, 0);
+        }
+
+        private CardInfo(int imageId, String name, int locationId, CardType cardType, boolean keysRequired, boolean preview, int resourceExtraNote) {
+            mImageId = imageId;
+            mName = name;
+            mLocationId = locationId;
+            mCardType = cardType;
+            mKeysRequired = keysRequired;
+            mPreview = preview;
+            mResourceExtraNote = resourceExtraNote;
+        }
+
+        public int getImageId() {
+            return mImageId;
+        }
+
+        public String getName() {
+            return mName;
+        }
+
+        public int getLocationId() {
+            return mLocationId;
+        }
+
+        public CardType getCardType() {
+            return mCardType;
+        }
+
+        public boolean getKeysRequired() {
+            return mKeysRequired;
+        }
+
+        /**
+         * Indicates if the card is a "preview" / beta decoder, with possibly
+         * incomplete / incorrect data.
+         *
+         * @return true if this is a beta version of the card decoder.
+         */
+        public boolean getPreview() {
+            return mPreview;
+        }
+
+        @StringRes
+        public int getResourceExtraNote() {
+            return mResourceExtraNote;
+        }
     }
 
     private class CardsAdapter extends ArrayAdapter<CardInfo> {
@@ -193,7 +266,8 @@ public class SupportedCardsActivity extends Activity {
             ));
         }
 
-        @Override public View getView(int position, View convertView, ViewGroup group) {
+        @Override
+        public View getView(int position, View convertView, ViewGroup group) {
             if (convertView == null) {
                 convertView = getLayoutInflater().inflate(R.layout.supported_card, null);
             }
@@ -245,69 +319,5 @@ public class SupportedCardsActivity extends Activity {
 
             return convertView;
         }
-    }
-
-    private static class CardInfo {
-        private final int mImageId;
-        private final String mName;
-        private final int mLocationId;
-        private final CardType mCardType;
-        private final boolean mKeysRequired;
-        private final boolean mPreview;
-        private final int mResourceExtraNote;
-
-        private CardInfo(int imageId, String name, int locationId) {
-            this(imageId, name, locationId, CardType.Unknown);
-        }
-
-        private CardInfo(int imageId, String name, int locationId, CardType cardType) {
-            this(imageId, name, locationId, cardType, false);
-        }
-        private CardInfo(int imageId, String name, int locationId, CardType cardType, boolean keysRequired) {
-            this(imageId, name, locationId, cardType, keysRequired, false);
-        }
-
-        private CardInfo(int imageId, String name, int locationId, CardType cardType, boolean keysRequired, boolean preview) {
-            this(imageId, name, locationId, cardType, keysRequired, preview, 0);
-        }
-
-        private CardInfo(int imageId, String name, int locationId, CardType cardType, boolean keysRequired, boolean preview, int resourceExtraNote) {
-            mImageId      = imageId;
-            mName         = name;
-            mLocationId   = locationId;
-            mCardType     = cardType;
-            mKeysRequired = keysRequired;
-            mPreview      = preview;
-            mResourceExtraNote = resourceExtraNote;
-        }
-
-        public int getImageId() {
-            return mImageId;
-        }
-
-        public String getName() {
-            return mName;
-        }
-
-        public int getLocationId() {
-            return mLocationId;
-        }
-
-        public CardType getCardType() {
-            return mCardType;
-        }
-
-        public boolean getKeysRequired() {
-            return mKeysRequired;
-        }
-
-        /**
-         * Indicates if the card is a "preview" / beta decoder, with possibly
-         * incomplete / incorrect data.
-         * @return true if this is a beta version of the card decoder.
-         */
-        public boolean getPreview() { return mPreview; }
-
-        public int getResourceExtraNote() { return mResourceExtraNote; }
     }
 }

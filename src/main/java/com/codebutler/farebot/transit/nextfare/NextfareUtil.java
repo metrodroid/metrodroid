@@ -26,19 +26,20 @@ import java.util.GregorianCalendar;
 
 /**
  * Misc utilities for parsing Nextfare Cards
+ *
  * @author Michael Farrell
  */
 public final class NextfareUtil {
 
     /**
      * Date format:
-     *
+     * <p>
      * 0001111 1100 00100 = 2015-12-04
      * yyyyyyy mmmm ddddd
-     *
+     * <p>
      * Bottom 11 bits = minutes since 00:00
      * Time is represented in localtime
-     *
+     * <p>
      * Assumes that data has already been byte-reversed for big endian parsing.
      *
      * @param timestamp Four bytes of input representing the timestamp to parse
@@ -58,9 +59,12 @@ public final class NextfareUtil {
         if (day > 31) throw new AssertionError("Day > 31");
         if (month > 12) throw new AssertionError("Month > 12");
 
-        GregorianCalendar d = new GregorianCalendar(year, month-1, day);
+        GregorianCalendar d = new GregorianCalendar(year, month - 1, day);
         d.add(Calendar.MINUTE, minute);
 
         return d;
+    }
+
+    private NextfareUtil() {
     }
 }

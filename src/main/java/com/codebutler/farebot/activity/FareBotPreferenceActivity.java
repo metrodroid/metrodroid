@@ -54,7 +54,8 @@ public class FareBotPreferenceActivity extends PreferenceActivity implements Pre
         mPreferenceLaunchFromBackground.setOnPreferenceChangeListener(this);
     }
 
-    @Override public boolean onOptionsItemSelected(MenuItem item) {
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == android.R.id.home) {
             Intent intent = new Intent(this, MainActivity.class);
             intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
@@ -65,7 +66,8 @@ public class FareBotPreferenceActivity extends PreferenceActivity implements Pre
         return false;
     }
 
-    @Override public boolean onPreferenceChange(Preference preference, Object newValue) {
+    @Override
+    public boolean onPreferenceChange(Preference preference, Object newValue) {
         if (preference == mPreferenceLaunchFromBackground) {
             setLaunchFromBgEnabled((Boolean) newValue);
             return true;

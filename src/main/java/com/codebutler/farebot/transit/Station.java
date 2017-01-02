@@ -23,6 +23,15 @@ import android.os.Parcel;
 import android.os.Parcelable;
 
 public class Station implements Parcelable {
+    public static final Creator<Station> CREATOR = new Creator<Station>() {
+        public Station createFromParcel(Parcel parcel) {
+            return new Station(parcel);
+        }
+
+        public Station[] newArray(int size) {
+            return new Station[size];
+        }
+    };
     protected final String mCompanyName, mLineName, mStationName, mShortStationName, mLatitude, mLongitude;
 
     public Station(String stationName, String latitude, String longitude) {
@@ -34,30 +43,21 @@ public class Station implements Parcelable {
     }
 
     public Station(String companyName, String lineName, String stationName, String shortStationName, String latitude, String longitude) {
-        mCompanyName      = companyName;
-        mLineName         = lineName;
-        mStationName      = stationName;
+        mCompanyName = companyName;
+        mLineName = lineName;
+        mStationName = stationName;
         mShortStationName = shortStationName;
-        mLatitude         = latitude;
-        mLongitude        = longitude;
+        mLatitude = latitude;
+        mLongitude = longitude;
     }
 
-    public static final Creator<Station> CREATOR = new Creator<Station>() {
-        public Station createFromParcel(Parcel parcel) {
-            return new Station(parcel);
-        }
-        public Station[] newArray(int size) {
-            return new Station[size];
-        }
-    };
-
     protected Station(Parcel parcel) {
-        mCompanyName      = parcel.readString();
-        mLineName         = parcel.readString();
-        mStationName      = parcel.readString();
+        mCompanyName = parcel.readString();
+        mLineName = parcel.readString();
+        mStationName = parcel.readString();
         mShortStationName = parcel.readString();
-        mLatitude         = parcel.readString();
-        mLongitude        = parcel.readString();
+        mLatitude = parcel.readString();
+        mLongitude = parcel.readString();
     }
 
     public String getStationName() {
@@ -85,8 +85,8 @@ public class Station implements Parcelable {
     }
 
     public boolean hasLocation() {
-        return getLatitude() != null && !getLatitude().isEmpty() &&
-                getLongitude() != null && !getLongitude().isEmpty();
+        return getLatitude() != null && !getLatitude().isEmpty()
+               && getLongitude() != null && !getLongitude().isEmpty();
     }
 
     public int describeContents() {

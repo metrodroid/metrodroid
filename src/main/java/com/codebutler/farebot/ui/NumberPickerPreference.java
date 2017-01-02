@@ -37,10 +37,10 @@ import android.widget.NumberPicker;
  */
 
 public class NumberPickerPreference extends DialogPreference {
+    private static final String NPP_SCHEMA = "http://micolous.github.io/metrodroid/schemas/number-picker-preference";
     private NumberPicker mNumberPicker;
     private int mValue = 0;
     private boolean mValueSet;
-    private static final String NPP_SCHEMA = "http://micolous.github.io/metrodroid/schemas/number-picker-preference";
 
     public NumberPickerPreference(Context context, AttributeSet attributes, int defStyleAttr) {
         super(context, attributes, defStyleAttr);
@@ -61,7 +61,14 @@ public class NumberPickerPreference extends DialogPreference {
         this(context, null);
     }
 
-
+    /**
+     * Gets the text from the {@link SharedPreferences}.
+     *
+     * @return The current preference value.
+     */
+    public int getValue() {
+        return mValue;
+    }
 
     /**
      * Saves the text to the {@link SharedPreferences}.
@@ -75,29 +82,19 @@ public class NumberPickerPreference extends DialogPreference {
             mValue = value;
             mValueSet = true;
             persistInt(value);
-            if(changed) {
+            if (changed) {
                 notifyDependencyChange(shouldDisableDependents());
                 notifyChanged();
             }
         }
     }
 
-    /**
-     * Gets the text from the {@link SharedPreferences}.
-     *
-     * @return The current preference value.
-     */
-    public int getValue() {
-        return mValue;
-    }
-
-
     @Override
     protected View onCreateDialogView() {
         mNumberPicker.setValue(getValue());
         ViewParent parent = mNumberPicker.getParent();
         if (parent != null) {
-            ((ViewGroup)parent).removeView(mNumberPicker);
+            ((ViewGroup) parent).removeView(mNumberPicker);
         }
         return mNumberPicker;
     }
@@ -160,28 +157,31 @@ public class NumberPickerPreference extends DialogPreference {
     }
 
     private static class SavedState extends BaseSavedState {
+        public static final Parcelable.Creator<SavedState> CREATOR =
+                new Parcelable.Creator<SavedState>() {
+                    public SavedState createFromParcel(Parcel in) {
+                        return new SavedState(in);
+                    }
+
+                    public SavedState[] newArray(int size) {
+                        return new SavedState[size];
+                    }
+                };
         int value;
 
         public SavedState(Parcel source) {
             super(source);
             value = source.readInt();
         }
+
+        public SavedState(Parcelable superState) {
+            super(superState);
+        }
+
         @Override
         public void writeToParcel(Parcel dest, int flags) {
             super.writeToParcel(dest, flags);
             dest.writeInt(value);
         }
-        public SavedState(Parcelable superState) {
-            super(superState);
-        }
-        public static final Parcelable.Creator<SavedState> CREATOR =
-                new Parcelable.Creator<SavedState>() {
-                    public SavedState createFromParcel(Parcel in) {
-                        return new SavedState(in);
-                    }
-                    public SavedState[] newArray(int size) {
-                        return new SavedState[size];
-                    }
-                };
     }
 }

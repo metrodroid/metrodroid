@@ -21,7 +21,6 @@ package com.codebutler.farebot.transit.manly_fast_ferry;
 
 import android.os.Parcel;
 
-import au.id.micolous.farebot.R;
 import com.codebutler.farebot.card.UnauthorizedException;
 import com.codebutler.farebot.card.classic.ClassicBlock;
 import com.codebutler.farebot.card.classic.ClassicCard;
@@ -48,29 +47,105 @@ import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.Locale;
 
+import au.id.micolous.farebot.R;
+
 /**
  * Transit data type for Manly Fast Ferry Smartcard (Sydney, AU).
- *
+ * <p>
  * This transit card is a system made by ERG Group (now Videlli Limited / Vix Technology).
- *
+ * <p>
  * Note: This is a distinct private company who run their own ferry service to Manly, separate to
  * Transport for NSW's Manly Ferry service.
- *
+ * <p>
  * Documentation of format: https://github.com/micolous/metrodroid/wiki/Manly-Fast-Ferry
  */
 public class ManlyFastFerryTransitData extends TransitData {
-    private String            mSerialNumber;
-    private GregorianCalendar mEpochDate;
-    private int               mBalance;
-    private Trip[]            mTrips;
-    private Refill[]          mRefills;
-
-
     public static final String NAME = "Manly Fast Ferry";
-
     public static final byte[] SIGNATURE = {
             0x32, 0x32, 0x00, 0x00, 0x00, 0x01, 0x01
     };
+    private String mSerialNumber;
+    private GregorianCalendar mEpochDate;
+    private int mBalance;
+    private Trip[] mTrips;
+    private Refill[] mRefills;
+
+    // Parcel
+    @SuppressWarnings("UnusedDeclaration")
+    public ManlyFastFerryTransitData(Parcel parcel) {
+        mSerialNumber = parcel.readString();
+        mEpochDate = new GregorianCalendar();
+        mEpochDate.setTimeInMillis(parcel.readLong());
+        mTrips = parcel.createTypedArray(ManlyFastFerryTrip.CREATOR);
+        mRefills = parcel.createTypedArray(ManlyFastFerryRefill.CREATOR);
+    }
+
+    // Decoder
+    public ManlyFastFerryTransitData(ClassicCard card) {
+        ArrayList<ManlyFastFerryRecord> records = new ArrayList<>();
+
+        // Iterate through blocks on the card and deserialize all the binary data.
+        for (ClassicSector sector : card.getSectors()) {
+            for (ClassicBlock block : sector.getBlocks()) {
+                if (sector.getIndex() == 0 && block.getIndex() == 0) {
+                    continue;
+                }
+
+                if (block.getIndex() == 3) {
+                    continue;
+                }
+
+                ManlyFastFerryRecord record = ManlyFastFerryRecord.recordFromBytes(block.getData());
+
+                if (record != null) {
+                    records.add(record);
+                }
+            }
+        }
+
+        // Now do a first pass for metadata and balance information.
+        ArrayList<ManlyFastFerryBalanceRecord> balances = new ArrayList<>();
+
+        for (ManlyFastFerryRecord record : records) {
+            if (record instanceof ManlyFastFerryMetadataRecord) {
+                mSerialNumber = ((ManlyFastFerryMetadataRecord) record).getCardSerial();
+                mEpochDate = ((ManlyFastFerryMetadataRecord) record).getEpochDate();
+            } else if (record instanceof ManlyFastFerryBalanceRecord) {
+                balances.add((ManlyFastFerryBalanceRecord) record);
+            }
+        }
+
+        if (balances.size() >= 1) {
+            Collections.sort(balances);
+            mBalance = balances.get(0).getBalance();
+        }
+
+        // Now generate a transaction list.
+        // These need the Epoch to be known first.
+        ArrayList<Trip> trips = new ArrayList<>();
+        ArrayList<Refill> refills = new ArrayList<>();
+
+        for (ManlyFastFerryRecord record : records) {
+            if (record instanceof ManlyFastFerryPurseRecord) {
+                ManlyFastFerryPurseRecord purseRecord = (ManlyFastFerryPurseRecord) record;
+
+                // Now convert this.
+                if (purseRecord.getIsCredit()) {
+                    // Credit
+                    refills.add(new ManlyFastFerryRefill(purseRecord, mEpochDate));
+                } else {
+                    // Debit
+                    trips.add(new ManlyFastFerryTrip(purseRecord, mEpochDate));
+                }
+            }
+        }
+
+        Collections.sort(trips, new Trip.Comparator());
+        Collections.sort(refills, new Refill.Comparator());
+
+        mTrips = trips.toArray(new Trip[trips.size()]);
+        mRefills = refills.toArray(new Refill[refills.size()]);
+    }
 
     public static boolean check(ClassicCard card) {
         // TODO: Improve this check
@@ -103,17 +178,7 @@ public class ManlyFastFerryTransitData extends TransitData {
         if (!(metadata instanceof ManlyFastFerryMetadataRecord)) {
             throw new AssertionError("Unexpected Manly record type: " + metadata.getClass().toString());
         }
-        return new TransitIdentity(NAME, ((ManlyFastFerryMetadataRecord)metadata).getCardSerial());
-    }
-
-    // Parcel
-    @SuppressWarnings("UnusedDeclaration")
-    public ManlyFastFerryTransitData (Parcel parcel) {
-        mSerialNumber = parcel.readString();
-        mEpochDate = new GregorianCalendar();
-        mEpochDate.setTimeInMillis(parcel.readLong());
-        mTrips = parcel.createTypedArray(ManlyFastFerryTrip.CREATOR);
-        mRefills = parcel.createTypedArray(ManlyFastFerryRefill.CREATOR);
+        return new TransitIdentity(NAME, ((ManlyFastFerryMetadataRecord) metadata).getCardSerial());
     }
 
     public void writeToParcel(Parcel parcel, int flags) {
@@ -123,80 +188,14 @@ public class ManlyFastFerryTransitData extends TransitData {
         parcel.writeTypedArray(mRefills, flags);
     }
 
-    // Decoder
-    public ManlyFastFerryTransitData(ClassicCard card) {
-        ArrayList<ManlyFastFerryRecord> records = new ArrayList<>();
-
-        // Iterate through blocks on the card and deserialize all the binary data.
-        for (ClassicSector sector : card.getSectors()) {
-            for (ClassicBlock block : sector.getBlocks()) {
-                if (sector.getIndex() == 0 && block.getIndex() == 0) {
-                    continue;
-                }
-
-                if (block.getIndex() == 3) {
-                    continue;
-                }
-
-                ManlyFastFerryRecord record = ManlyFastFerryRecord.recordFromBytes(block.getData());
-
-                if (record != null) {
-                    records.add(record);
-                }
-            }
-        }
-
-        // Now do a first pass for metadata and balance information.
-        ArrayList<ManlyFastFerryBalanceRecord> balances = new ArrayList<>();
-
-        for (ManlyFastFerryRecord record : records) {
-            if (record instanceof ManlyFastFerryMetadataRecord) {
-                mSerialNumber = ((ManlyFastFerryMetadataRecord)record).getCardSerial();
-                mEpochDate = ((ManlyFastFerryMetadataRecord)record).getEpochDate();
-            } else if (record instanceof ManlyFastFerryBalanceRecord) {
-                balances.add((ManlyFastFerryBalanceRecord)record);
-            }
-        }
-
-        if (balances.size() >= 1) {
-            Collections.sort(balances);
-            mBalance = balances.get(0).getBalance();
-        }
-
-        // Now generate a transaction list.
-        // These need the Epoch to be known first.
-        ArrayList<Trip> trips = new ArrayList<>();
-        ArrayList<Refill> refills = new ArrayList<>();
-
-        for (ManlyFastFerryRecord record: records) {
-            if (record instanceof ManlyFastFerryPurseRecord) {
-                ManlyFastFerryPurseRecord purseRecord = (ManlyFastFerryPurseRecord)record;
-
-                // Now convert this.
-                if (purseRecord.getIsCredit()) {
-                    // Credit
-                    refills.add(new ManlyFastFerryRefill(purseRecord, mEpochDate));
-                } else {
-                    // Debit
-                    trips.add(new ManlyFastFerryTrip(purseRecord, mEpochDate));
-                }
-            }
-        }
-
-        Collections.sort(trips, new Trip.Comparator());
-        Collections.sort(refills, new Refill.Comparator());
-
-        mTrips = trips.toArray(new Trip[trips.size()]);
-        mRefills = refills.toArray(new Refill[refills.size()]);
-    }
-
     @Override
     public String getBalanceString() {
-        return NumberFormat.getCurrencyInstance(Locale.US).format((double)mBalance / 100.);
+        return NumberFormat.getCurrencyInstance(Locale.US).format((double) mBalance / 100.);
     }
 
     // Structures
-    @Override public String getSerialNumber () {
+    @Override
+    public String getSerialNumber() {
         return mSerialNumber;
     }
 

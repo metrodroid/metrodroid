@@ -26,6 +26,36 @@ import android.os.Parcelable;
 import com.codebutler.farebot.util.Utils;
 
 public class OVChipPreamble implements Parcelable {
+    public static final Parcelable.Creator<OVChipPreamble> CREATOR = new Parcelable.Creator<OVChipPreamble>() {
+        public OVChipPreamble createFromParcel(Parcel source) {
+            String id;
+            int checkbit;
+            String manufacturer;
+            String publisher;
+            String unknownConstant1;
+            int expdate;
+            String unknownConstant2;
+            int type;
+
+            id = source.readString();
+            checkbit = source.readInt();
+            manufacturer = source.readString();
+            publisher = source.readString();
+            unknownConstant1 = source.readString();
+            expdate = source.readInt();
+            unknownConstant2 = source.readString();
+            type = source.readInt();
+
+            return new OVChipPreamble(id, checkbit,
+                    manufacturer, publisher,
+                    unknownConstant1, expdate,
+                    unknownConstant2, type);
+        }
+
+        public OVChipPreamble[] newArray(int size) {
+            return new OVChipPreamble[size];
+        }
+    };
     private final String mId;
     private final int mCheckbit;
     private final String mManufacturer;
@@ -125,37 +155,6 @@ public class OVChipPreamble implements Parcelable {
     public int describeContents() {
         return 0;
     }
-
-    public static final Parcelable.Creator<OVChipPreamble> CREATOR = new Parcelable.Creator<OVChipPreamble>() {
-        public OVChipPreamble createFromParcel(Parcel source) {
-            String id;
-            int checkbit;
-            String manufacturer;
-            String publisher;
-            String unknownConstant1;
-            int expdate;
-            String unknownConstant2;
-            int type;
-
-            id = source.readString();
-            checkbit = source.readInt();
-            manufacturer = source.readString();
-            publisher = source.readString();
-            unknownConstant1 = source.readString();
-            expdate = source.readInt();
-            unknownConstant2 = source.readString();
-            type = source.readInt();
-
-            return new OVChipPreamble(id, checkbit,
-                    manufacturer, publisher,
-                    unknownConstant1, expdate,
-                    unknownConstant2, type);
-        }
-
-        public OVChipPreamble[] newArray(int size) {
-            return new OVChipPreamble[size];
-        }
-    };
 
     public void writeToParcel(Parcel parcel, int flags) {
         parcel.writeString(mId);

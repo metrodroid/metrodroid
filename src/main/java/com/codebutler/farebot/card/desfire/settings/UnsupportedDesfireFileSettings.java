@@ -20,7 +20,7 @@ package com.codebutler.farebot.card.desfire.settings;
 
 import org.simpleframework.xml.Root;
 
-@Root(name="settings")
+@Root(name = "settings")
 public class UnsupportedDesfireFileSettings extends DesfireFileSettings {
     private UnsupportedDesfireFileSettings() { /* For XML Serializer */ }
 

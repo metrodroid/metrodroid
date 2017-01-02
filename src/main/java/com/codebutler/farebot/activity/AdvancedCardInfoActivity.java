@@ -35,8 +35,6 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import au.id.micolous.metrodroid.MetrodroidApplication;
-import au.id.micolous.farebot.R;
 import com.codebutler.farebot.card.Card;
 import com.codebutler.farebot.card.CardHasManufacturingInfo;
 import com.codebutler.farebot.card.CardRawDataFragmentClass;
@@ -48,15 +46,19 @@ import com.codebutler.farebot.util.Utils;
 
 import org.simpleframework.xml.Serializer;
 
+import au.id.micolous.farebot.R;
+import au.id.micolous.metrodroid.MetrodroidApplication;
+
 public class AdvancedCardInfoActivity extends Activity {
-    public static final String EXTRA_CARD  = "com.codebutler.farebot.EXTRA_CARD";
+    public static final String EXTRA_CARD = "com.codebutler.farebot.EXTRA_CARD";
     public static final String EXTRA_ERROR = "com.codebutler.farebot.EXTRA_ERROR";
 
     private TabPagerAdapter mTabsAdapter;
     private Card mCard;
     private Exception mError;
 
-    @Override protected void onCreate(Bundle savedInstanceState) {
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_advanced_card_info);
 
@@ -92,11 +94,12 @@ public class AdvancedCardInfoActivity extends Activity {
             } else if (mError instanceof UnauthorizedException) {
                 findViewById(R.id.unauthorized_card).setVisibility(View.VISIBLE);
                 findViewById(R.id.load_keys).setOnClickListener(new View.OnClickListener() {
-                    @Override public void onClick(View view) {
+                    @Override
+                    public void onClick(View view) {
                         new AlertDialog.Builder(AdvancedCardInfoActivity.this)
-                            .setMessage(R.string.add_key_directions)
-                            .setPositiveButton(android.R.string.ok, null)
-                            .show();
+                                .setMessage(R.string.add_key_directions)
+                                .setPositiveButton(android.R.string.ok, null)
+                                .show();
                     }
                 });
             } else {
@@ -122,12 +125,14 @@ public class AdvancedCardInfoActivity extends Activity {
         }
     }
 
-    @Override public boolean onCreateOptionsMenu(Menu menu) {
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.card_advanced_menu, menu);
         return true;
     }
 
-    @Override public boolean onOptionsItemSelected(MenuItem item) {
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
         try {
             if (item.getItemId() == R.id.copy_xml) {
                 String xml = mCard.toXml(MetrodroidApplication.getInstance().getSerializer());
@@ -151,8 +156,8 @@ public class AdvancedCardInfoActivity extends Activity {
             }
         } catch (Exception ex) {
             new AlertDialog.Builder(this)
-                .setMessage(ex.toString())
-                .show();
+                    .setMessage(ex.toString())
+                    .show();
         }
         return false;
     }

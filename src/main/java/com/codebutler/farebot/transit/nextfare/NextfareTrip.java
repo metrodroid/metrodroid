@@ -35,6 +35,16 @@ import au.id.micolous.farebot.R;
  * Represents trips on Nextfare
  */
 public class NextfareTrip extends Trip implements Comparable<NextfareTrip> {
+    public static final Creator<NextfareTrip> CREATOR = new Creator<NextfareTrip>() {
+
+        public NextfareTrip createFromParcel(Parcel in) {
+            return new NextfareTrip(in);
+        }
+
+        public NextfareTrip[] newArray(int size) {
+            return new NextfareTrip[size];
+        }
+    };
     protected int mJourneyId;
     protected Mode mMode;
     protected int mModeInt;
@@ -44,6 +54,29 @@ public class NextfareTrip extends Trip implements Comparable<NextfareTrip> {
     protected int mEndStation;
     protected boolean mContinuation;
     protected int mCost;
+
+    public NextfareTrip(Parcel parcel) {
+        mJourneyId = parcel.readInt();
+        long startTime = parcel.readLong();
+        if (startTime != 0) {
+            mStartTime = new GregorianCalendar();
+            mStartTime.setTimeInMillis(startTime);
+        }
+
+        long endTime = parcel.readLong();
+        if (endTime != 0) {
+            mEndTime = new GregorianCalendar();
+            mEndTime.setTimeInMillis(endTime);
+        }
+
+        mMode = Mode.valueOf(parcel.readString());
+        mStartStation = parcel.readInt();
+        mEndStation = parcel.readInt();
+        mModeInt = parcel.readInt();
+    }
+
+    public NextfareTrip() {
+    }
 
     @Override
     public long getTimestamp() {
@@ -68,7 +101,7 @@ public class NextfareTrip extends Trip implements Comparable<NextfareTrip> {
             return null;
         }
 
-        return (GregorianCalendar)mStartTime.clone();
+        return (GregorianCalendar) mStartTime.clone();
     }
 
     public GregorianCalendar getEndTime() {
@@ -76,14 +109,13 @@ public class NextfareTrip extends Trip implements Comparable<NextfareTrip> {
             return null;
         }
 
-        return (GregorianCalendar)mEndTime.clone();
+        return (GregorianCalendar) mEndTime.clone();
     }
 
     @Override
     public String getRouteName() {
         return null;
     }
-
 
     @Override
     public String getShortAgencyName() {
@@ -100,7 +132,7 @@ public class NextfareTrip extends Trip implements Comparable<NextfareTrip> {
         if (mCost == 0) {
             return Utils.localizeString(R.string.pass_or_transfer);
         }
-        return NumberFormat.getCurrencyInstance(Locale.US).format((double)mCost / 100.);
+        return NumberFormat.getCurrencyInstance(Locale.US).format((double) mCost / 100.);
     }
 
     @Override
@@ -162,40 +194,6 @@ public class NextfareTrip extends Trip implements Comparable<NextfareTrip> {
         parcel.writeInt(mEndStation);
         parcel.writeInt(mModeInt);
     }
-
-    public NextfareTrip(Parcel parcel) {
-        mJourneyId = parcel.readInt();
-        long startTime = parcel.readLong();
-        if (startTime != 0) {
-            mStartTime = new GregorianCalendar();
-            mStartTime.setTimeInMillis(startTime);
-        }
-
-        long endTime = parcel.readLong();
-        if (endTime != 0) {
-            mEndTime = new GregorianCalendar();
-            mEndTime.setTimeInMillis(endTime);
-        }
-
-        mMode = Mode.valueOf(parcel.readString());
-        mStartStation = parcel.readInt();
-        mEndStation = parcel.readInt();
-        mModeInt = parcel.readInt();
-    }
-
-
-    public NextfareTrip() {}
-
-    public static final Creator<NextfareTrip> CREATOR = new Creator<NextfareTrip>() {
-
-        public NextfareTrip createFromParcel(Parcel in) {
-            return new NextfareTrip(in);
-        }
-
-        public NextfareTrip[] newArray(int size) {
-            return new NextfareTrip[size];
-        }
-    };
 
     @Override
     public int compareTo(@NonNull NextfareTrip other) {

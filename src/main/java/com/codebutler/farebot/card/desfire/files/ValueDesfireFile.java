@@ -28,7 +28,7 @@ import org.simpleframework.xml.Root;
 /**
  * Represents a value file in Desfire
  */
-@Root(name="file")
+@Root(name = "file")
 public class ValueDesfireFile extends DesfireFile {
     private int mValue;
 
@@ -43,7 +43,9 @@ public class ValueDesfireFile extends DesfireFile {
 
     }
 
-    public int getValue() { return mValue; }
+    public int getValue() {
+        return mValue;
+    }
 
 }
 

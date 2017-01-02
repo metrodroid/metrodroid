@@ -26,9 +26,6 @@ package com.codebutler.farebot.transit.clipper;
 
 import android.os.Parcel;
 
-import au.id.micolous.metrodroid.MetrodroidApplication;
-import au.id.micolous.farebot.R;
-
 import com.codebutler.farebot.card.Card;
 import com.codebutler.farebot.card.desfire.DesfireCard;
 import com.codebutler.farebot.card.desfire.files.DesfireFile;
@@ -46,20 +43,10 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.Locale;
 
+import au.id.micolous.farebot.R;
+import au.id.micolous.metrodroid.MetrodroidApplication;
+
 public class ClipperTransitData extends TransitData {
-    static final int RECORD_LENGTH   = 32;
-
-    private long            mSerialNumber;
-    private short           mBalance;
-    private ClipperTrip[]   mTrips;
-    private ClipperRefill[] mRefills;
-
-    private static final long EPOCH_OFFSET = 0x83aa7f18;
-
-    public static boolean check(Card card) {
-        return (card instanceof DesfireCard) && (((DesfireCard) card).getApplication(0x9011f2) != null);
-    }
-
     public static final Creator<ClipperTransitData> CREATOR = new Creator<ClipperTransitData>() {
         public ClipperTransitData createFromParcel(Parcel parcel) {
             return new ClipperTransitData(parcel);
@@ -69,19 +56,16 @@ public class ClipperTransitData extends TransitData {
             return new ClipperTransitData[size];
         }
     };
-
-    public static TransitIdentity parseTransitIdentity(Card card) {
-        try {
-           byte[] data = ((DesfireCard) card).getApplication(0x9011f2).getFile(0x08).getData();
-           return new TransitIdentity("Clipper", String.valueOf(Utils.byteArrayToLong(data, 1, 4)));
-       } catch (Exception ex) {
-           throw new RuntimeException("Error parsing Clipper serial", ex);
-       }
-    }
+    static final int RECORD_LENGTH = 32;
+    private static final long EPOCH_OFFSET = 0x83aa7f18;
+    private long mSerialNumber;
+    private short mBalance;
+    private ClipperTrip[] mTrips;
+    private ClipperRefill[] mRefills;
 
     public ClipperTransitData(Parcel parcel) {
         mSerialNumber = parcel.readLong();
-        mBalance      = (short) parcel.readLong();
+        mBalance = (short) parcel.readLong();
 
         mTrips = new ClipperTrip[parcel.readInt()];
         parcel.readTypedArray(mTrips, ClipperTrip.CREATOR);
@@ -124,19 +108,50 @@ public class ClipperTransitData extends TransitData {
         setBalances();
     }
 
-    @Override public String getCardName() {
+    public static boolean check(Card card) {
+        return (card instanceof DesfireCard) && (((DesfireCard) card).getApplication(0x9011f2) != null);
+    }
+
+    public static TransitIdentity parseTransitIdentity(Card card) {
+        try {
+            byte[] data = ((DesfireCard) card).getApplication(0x9011f2).getFile(0x08).getData();
+            return new TransitIdentity("Clipper", String.valueOf(Utils.byteArrayToLong(data, 1, 4)));
+        } catch (Exception ex) {
+            throw new RuntimeException("Error parsing Clipper serial", ex);
+        }
+    }
+
+    public static String getAgencyName(int agency) {
+        if (ClipperData.AGENCIES.containsKey(agency)) {
+            return ClipperData.AGENCIES.get(agency);
+        }
+        return MetrodroidApplication.getInstance().getString(R.string.unknown_format, "0x" + Long.toString(agency, 16));
+    }
+
+    public static String getShortAgencyName(int agency) {
+        if (ClipperData.SHORT_AGENCIES.containsKey(agency)) {
+            return ClipperData.SHORT_AGENCIES.get(agency);
+        }
+        return MetrodroidApplication.getInstance().getString(R.string.unknown_format, "0x" + Long.toString(agency, 16));
+    }
+
+    @Override
+    public String getCardName() {
         return "Clipper";
     }
 
-    @Override public String getBalanceString() {
+    @Override
+    public String getBalanceString() {
         return NumberFormat.getCurrencyInstance(Locale.US).format(mBalance / 100.0);
     }
 
-    @Override public String getSerialNumber() {
+    @Override
+    public String getSerialNumber() {
         return Long.toString(mSerialNumber);
     }
 
-    @Override public Trip[] getTrips() {
+    @Override
+    public Trip[] getTrips() {
         return mTrips;
     }
 
@@ -144,11 +159,13 @@ public class ClipperTransitData extends TransitData {
         return mRefills;
     }
 
-    @Override public Subscription[] getSubscriptions() {
+    @Override
+    public Subscription[] getSubscriptions() {
         return null;
     }
 
-    @Override public List<ListItem> getInfo() {
+    @Override
+    public List<ListItem> getInfo() {
         return null;
     }
 
@@ -160,7 +177,7 @@ public class ClipperTransitData extends TransitData {
          *  be only a regular file.  As such, we'll need to extract the records
          *  manually.
          */
-        byte [] data = file.getData();
+        byte[] data = file.getData();
         int pos = data.length - RECORD_LENGTH;
         List<ClipperTrip> result = new ArrayList<>();
         while (pos > 0) {
@@ -169,7 +186,8 @@ public class ClipperTransitData extends TransitData {
             if (trip != null) {
                 // Some transaction types are temporary -- remove previous trip with the same timestamp.
                 ClipperTrip existingTrip = Utils.findInList(result, new Utils.Matcher<ClipperTrip>() {
-                    @Override public boolean matches(ClipperTrip otherTrip) {
+                    @Override
+                    public boolean matches(ClipperTrip otherTrip) {
                         return trip.getTimestamp() == otherTrip.getTimestamp();
                     }
                 });
@@ -197,13 +215,13 @@ public class ClipperTransitData extends TransitData {
     private ClipperTrip createTrip(byte[] useData) {
         long timestamp, exitTimestamp, fare, agency, from, to, route;
 
-        timestamp     = Utils.byteArrayToLong(useData,  0xc, 4);
+        timestamp = Utils.byteArrayToLong(useData, 0xc, 4);
         exitTimestamp = Utils.byteArrayToLong(useData, 0x10, 4);
-        fare          = Utils.byteArrayToLong(useData,  0x6, 2);
-        agency        = Utils.byteArrayToLong(useData,  0x2, 2);
-        from          = Utils.byteArrayToLong(useData, 0x14, 2);
-        to            = Utils.byteArrayToLong(useData, 0x16, 2);
-        route         = Utils.byteArrayToLong(useData, 0x1c, 2);
+        fare = Utils.byteArrayToLong(useData, 0x6, 2);
+        agency = Utils.byteArrayToLong(useData, 0x2, 2);
+        from = Utils.byteArrayToLong(useData, 0x14, 2);
+        to = Utils.byteArrayToLong(useData, 0x16, 2);
+        route = Utils.byteArrayToLong(useData, 0x1c, 2);
 
         if (agency == 0)
             return null;
@@ -246,9 +264,9 @@ public class ClipperTransitData extends TransitData {
         long timestamp, amount, agency, machineid;
 
         timestamp = Utils.byteArrayToLong(useData, 0x4, 4);
-        agency    = Utils.byteArrayToLong(useData, 0x2, 2);
+        agency = Utils.byteArrayToLong(useData, 0x2, 2);
         machineid = Utils.byteArrayToLong(useData, 0x8, 4);
-        amount    = Utils.byteArrayToLong(useData, 0xe, 2);
+        amount = Utils.byteArrayToLong(useData, 0xe, 2);
 
         if (timestamp == 0)
             return null;
@@ -273,26 +291,12 @@ public class ClipperTransitData extends TransitData {
         }
     }
 
-    public static String getAgencyName(int agency) {
-        if (ClipperData.AGENCIES.containsKey(agency)) {
-            return ClipperData.AGENCIES.get(agency);
-        }
-        return MetrodroidApplication.getInstance().getString(R.string.unknown_format, "0x" + Long.toString(agency, 16));
-    }
-
-    public static String getShortAgencyName(int agency) {
-        if (ClipperData.SHORT_AGENCIES.containsKey(agency)) {
-            return ClipperData.SHORT_AGENCIES.get(agency);
-        }
-        return MetrodroidApplication.getInstance().getString(R.string.unknown_format, "0x" + Long.toString(agency, 16));
-    }
-
     public void writeToParcel(Parcel parcel, int flags) {
         parcel.writeLong(mSerialNumber);
         parcel.writeLong(mBalance);
 
         parcel.writeInt(mTrips.length);
-        parcel.writeTypedArray(mTrips,  flags);
+        parcel.writeTypedArray(mTrips, flags);
 
         parcel.writeInt(mRefills.length);
         parcel.writeTypedArray(mRefills, flags);

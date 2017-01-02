@@ -27,14 +27,14 @@ public enum CardType {
     FeliCa(4),
     Unknown(65535);
 
-    public static CardType parseValue(String value) {
-        return CardType.class.getEnumConstants()[Integer.parseInt(value)];
-    }
-
     private int mValue;
 
     CardType(int value) {
         mValue = value;
+    }
+
+    public static CardType parseValue(String value) {
+        return CardType.class.getEnumConstants()[Integer.parseInt(value)];
     }
 
     public int toInteger() {

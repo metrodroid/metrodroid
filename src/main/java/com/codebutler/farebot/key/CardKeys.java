@@ -25,7 +25,6 @@ package com.codebutler.farebot.key;
 import android.database.Cursor;
 import android.net.Uri;
 
-import au.id.micolous.metrodroid.MetrodroidApplication;
 import com.codebutler.farebot.provider.CardKeyProvider;
 import com.codebutler.farebot.provider.KeysTableColumns;
 import com.codebutler.farebot.util.Utils;
@@ -33,9 +32,9 @@ import com.codebutler.farebot.util.Utils;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-public abstract class CardKeys {
-    public abstract JSONObject toJSON() throws JSONException;
+import au.id.micolous.metrodroid.MetrodroidApplication;
 
+public abstract class CardKeys {
     public static CardKeys forTagId(byte[] tagId) throws Exception {
         String tagIdString = Utils.getHexString(tagId);
         MetrodroidApplication app = MetrodroidApplication.getInstance();
@@ -49,7 +48,7 @@ public abstract class CardKeys {
 
     private static CardKeys fromCursor(Cursor cursor) throws JSONException {
         String cardType = cursor.getString(cursor.getColumnIndex(KeysTableColumns.CARD_TYPE));
-        String keyData  = cursor.getString(cursor.getColumnIndex(KeysTableColumns.KEY_DATA));
+        String keyData = cursor.getString(cursor.getColumnIndex(KeysTableColumns.KEY_DATA));
 
         JSONObject keyJSON = new JSONObject(keyData);
 
@@ -59,4 +58,6 @@ public abstract class CardKeys {
 
         throw new IllegalArgumentException("Unknown card type for key: " + cardType);
     }
+
+    public abstract JSONObject toJSON() throws JSONException;
 }

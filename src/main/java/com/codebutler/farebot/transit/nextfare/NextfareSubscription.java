@@ -33,6 +33,17 @@ import java.util.Date;
 
 public class NextfareSubscription extends Subscription implements Parcelable {
 
+    public static final Creator<NextfareSubscription> CREATOR = new Creator<NextfareSubscription>() {
+        @Override
+        public NextfareSubscription createFromParcel(Parcel in) {
+            return new NextfareSubscription(in);
+        }
+
+        @Override
+        public NextfareSubscription[] newArray(int size) {
+            return new NextfareSubscription[size];
+        }
+    };
     private Date mValidTo;
 
     public NextfareSubscription(NextfareTravelPassRecord record) {
@@ -47,18 +58,6 @@ public class NextfareSubscription extends Subscription implements Parcelable {
     protected NextfareSubscription(Parcel in) {
         mValidTo = new Date(in.readLong());
     }
-
-    public static final Creator<NextfareSubscription> CREATOR = new Creator<NextfareSubscription>() {
-        @Override
-        public NextfareSubscription createFromParcel(Parcel in) {
-            return new NextfareSubscription(in);
-        }
-
-        @Override
-        public NextfareSubscription[] newArray(int size) {
-            return new NextfareSubscription[size];
-        }
-    };
 
     @Override
     public int getId() {

@@ -27,11 +27,14 @@ import org.simpleframework.xml.Root;
 
 import java.io.ByteArrayInputStream;
 
-@Root(name="settings")
+@Root(name = "settings")
 public class RecordDesfireFileSettings extends DesfireFileSettings {
-    @Element(name="recordsize") private int mRecordSize;
-    @Element(name="maxrecords") private int mMaxRecords;
-    @Element(name="currecords") private int mCurRecords;
+    @Element(name = "recordsize")
+    private int mRecordSize;
+    @Element(name = "maxrecords")
+    private int mMaxRecords;
+    @Element(name = "currecords")
+    private int mCurRecords;
 
     private RecordDesfireFileSettings() { /* For XML Serializer */ }
 

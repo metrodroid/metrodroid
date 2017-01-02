@@ -19,13 +19,10 @@
 package com.codebutler.farebot.util;
 
 import android.content.Context;
-import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteException;
 import android.util.Log;
-
-import com.codebutler.farebot.transit.Station;
 
 import org.apache.commons.io.IOUtils;
 
@@ -34,15 +31,23 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.lang.reflect.InvocationTargetException;
 
 /**
  * Abstract common stop database class.
  */
 public abstract class DBUtil {
 
+    private static final String TAG = "DBUtil";
+    private final Context mContext;
+    private SQLiteDatabase mDatabase;
+
+    public DBUtil(Context context) {
+        this.mContext = context;
+    }
+
     /**
      * Implementing clases should specify the filename of their database.
+     *
      * @return Path, relative to Metrodroid's data folder, where to store the database file.
      */
     protected abstract String getDBName();
@@ -57,7 +62,7 @@ public abstract class DBUtil {
     /**
      * If set to true, this will allow a database which has a greater PRAGMA user_version to
      * satisfy the database requirements.
-     *
+     * <p>
      * If set to false, the database version (PRAGMA user_version) must be exactly the same as the
      * return value of getDesiredVersion().
      *
@@ -65,15 +70,6 @@ public abstract class DBUtil {
      */
     protected boolean allowGreaterDatabaseVersions() {
         return false;
-    }
-
-    private static final String TAG = "DBUtil";
-
-    private SQLiteDatabase mDatabase;
-    private final Context mContext;
-
-    public DBUtil(Context context) {
-        this.mContext = context;
     }
 
     public SQLiteDatabase openDatabase() throws SQLException, IOException {
@@ -112,11 +108,12 @@ public abstract class DBUtil {
                 tempDatabase.close();
                 tempDatabase = null;
             } else {
-                Log.d(TAG, String.format("Not updating %s database. Current: %s, app has: %s" , getDBName(), currentVersion, getDesiredVersion()));
+                Log.d(TAG, String.format("Not updating %s database. Current: %s, app has: %s", getDBName(), currentVersion, getDesiredVersion()));
             }
-        } catch (SQLiteException ignored) { }
+        } catch (SQLiteException ignored) {
+        }
 
-        if (tempDatabase != null){
+        if (tempDatabase != null) {
             tempDatabase.close();
         }
 
@@ -124,10 +121,10 @@ public abstract class DBUtil {
     }
 
     private void copyDatabase() {
-        InputStream in   = null;
+        InputStream in = null;
         OutputStream out = null;
         try {
-            in  = this.mContext.getAssets().open(getDBName());
+            in = this.mContext.getAssets().open(getDBName());
             out = new FileOutputStream(getDBFile());
             IOUtils.copy(in, out);
         } catch (IOException e) {

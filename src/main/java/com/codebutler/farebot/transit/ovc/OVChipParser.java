@@ -29,7 +29,7 @@ public class OVChipParser {
     private final OVChipIndex mIndex;
 
     public OVChipParser(ClassicCard card, OVChipIndex index) {
-        mCard  = card;
+        mCard = card;
         mIndex = index;
     }
 
@@ -41,13 +41,13 @@ public class OVChipParser {
     public OVChipInfo getInfo() {
         int blockIndex = mIndex.getRecentInfoSlot();
 
-        int sector = (char)blockIndex == (char)0x580 ? 22 : 23;
+        int sector = (char) blockIndex == (char) 0x580 ? 22 : 23;
 
         int startBlock = ClassicUtils.convertBytePointerToBlock(blockIndex);
 
         // FIXME: Clean this up
         int blockSector = ClassicUtils.blockToSector(startBlock);
-        int firstBlock  = ClassicUtils.sectorToBlock(blockSector);
+        int firstBlock = ClassicUtils.sectorToBlock(blockSector);
         startBlock = startBlock - firstBlock;
 
         byte[] data = mCard.getSector(sector).readBlocks(startBlock, 3);
@@ -58,7 +58,7 @@ public class OVChipParser {
         int blockIndex = ClassicUtils.convertBytePointerToBlock(mIndex.getRecentCreditSlot());
 
         // FIXME: Clean this up
-        int sector     = ClassicUtils.blockToSector(blockIndex);
+        int sector = ClassicUtils.blockToSector(blockIndex);
         int firstBlock = ClassicUtils.sectorToBlock(sector);
         blockIndex = blockIndex - firstBlock;
 
@@ -75,7 +75,7 @@ public class OVChipParser {
 
     private byte[] readTransaction(int transactionId) {
         int blockIndex = (transactionId % 7) * 2;
-        if (transactionId <= 6){
+        if (transactionId <= 6) {
             return mCard.getSector(35).readBlocks(blockIndex, 2);
         } else if (transactionId >= 7 && transactionId <= 13) {
             return mCard.getSector(36).readBlocks(blockIndex, 2);
@@ -136,7 +136,7 @@ public class OVChipParser {
         int blockIndex = ClassicUtils.convertBytePointerToBlock(subscriptionSlot);
 
         // FIXME: Clean this up
-        int sector     = ClassicUtils.blockToSector(blockIndex);
+        int sector = ClassicUtils.blockToSector(blockIndex);
         int firstBlock = ClassicUtils.sectorToBlock(sector);
         blockIndex = blockIndex - firstBlock;
 
@@ -152,7 +152,7 @@ public class OVChipParser {
         int blockIndex = ClassicUtils.convertBytePointerToBlock(subscriptionAddress);
 
         // FIXME: Clean this up
-        int sector     = ClassicUtils.blockToSector(blockIndex);
+        int sector = ClassicUtils.blockToSector(blockIndex);
         int firstBlock = ClassicUtils.sectorToBlock(sector);
         blockIndex = blockIndex - firstBlock;
 

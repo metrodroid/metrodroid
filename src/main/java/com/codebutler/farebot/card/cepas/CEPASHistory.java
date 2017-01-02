@@ -29,16 +29,16 @@ import org.simpleframework.xml.Root;
 import java.util.ArrayList;
 import java.util.List;
 
-@Root(name="history")
+@Root(name = "history")
 public class CEPASHistory {
-    @Attribute(name="id") private int mId;
-    @ElementList(name="transaction", inline=true, required=false) private List<CEPASTransaction> mTransactions;
-    @Attribute(name="valid") private boolean mIsValid;
-    @Attribute(name="error", required=false) private String mErrorMessage;
-
-    public static CEPASHistory create(int purseId, byte[] purseData) {
-        return new CEPASHistory(purseId, purseData);
-    }
+    @Attribute(name = "id")
+    private int mId;
+    @ElementList(name = "transaction", inline = true, required = false)
+    private List<CEPASTransaction> mTransactions;
+    @Attribute(name = "valid")
+    private boolean mIsValid;
+    @Attribute(name = "error", required = false)
+    private String mErrorMessage;
 
     public CEPASHistory(int purseId, byte[] purseData) {
         mId = purseId;
@@ -52,31 +52,35 @@ public class CEPASHistory {
             for (int i = 0; i < purseData.length; i += recordSize) {
                 byte[] tempData = new byte[recordSize];
                 for (int j = 0; j < tempData.length; j++)
-                    tempData[j] = purseData[i+j];
-                transactions[i/tempData.length] = new CEPASTransaction(tempData);
+                    tempData[j] = purseData[i + j];
+                transactions[i / tempData.length] = new CEPASTransaction(tempData);
             }
             mTransactions = Utils.arrayAsList(transactions);
         } else {
-            mIsValid      = false;
+            mIsValid = false;
             mErrorMessage = "";
             mTransactions = new ArrayList<>();
         }
     }
 
     public CEPASHistory(int purseId, String errorMessage) {
-        mId           = purseId;
+        mId = purseId;
         mErrorMessage = errorMessage;
-        mIsValid      = false;
+        mIsValid = false;
     }
 
     public CEPASHistory(int purseId, CEPASTransaction[] transactions) {
         mTransactions = Utils.arrayAsList(transactions);
-        mId           = purseId;
-        mIsValid      = true;
+        mId = purseId;
+        mIsValid = true;
         mErrorMessage = "";
     }
 
     private CEPASHistory() { /* For XML Serializer */ }
+
+    public static CEPASHistory create(int purseId, byte[] purseData) {
+        return new CEPASHistory(purseId, purseData);
+    }
 
     public int getId() {
         return mId;

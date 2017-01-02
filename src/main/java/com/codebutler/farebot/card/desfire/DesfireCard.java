@@ -54,11 +54,21 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-@Root(name="card")
+@Root(name = "card")
 @CardRawDataFragmentClass(DesfireCardRawDataFragment.class)
 public class DesfireCard extends Card {
-    @Element(name="manufacturing-data") private DesfireManufacturingData mManfData;
-    @ElementList(name="applications") private List<DesfireApplication> mApplications;
+    @Element(name = "manufacturing-data")
+    private DesfireManufacturingData mManfData;
+    @ElementList(name = "applications")
+    private List<DesfireApplication> mApplications;
+
+    private DesfireCard() { /* For XML Serializer */ }
+
+    DesfireCard(byte[] tagId, Date scannedAt, DesfireManufacturingData manfData, DesfireApplication[] apps) {
+        super(CardType.MifareDesfire, tagId, scannedAt);
+        mManfData = manfData;
+        mApplications = Utils.arrayAsList(apps);
+    }
 
     public static DesfireCard dumpTag(Tag tag) throws Exception {
         List<DesfireApplication> apps = new ArrayList<>();
@@ -68,7 +78,7 @@ public class DesfireCard extends Card {
         tech.connect();
 
         DesfireManufacturingData manufData;
-        DesfireApplication[]     appsArray;
+        DesfireApplication[] appsArray;
 
         try {
             DesfireProtocol desfireTag = new DesfireProtocol(tech);
@@ -118,15 +128,8 @@ public class DesfireCard extends Card {
         return new DesfireCard(tag.getId(), new Date(), manufData, appsArray);
     }
 
-    private DesfireCard() { /* For XML Serializer */ }
-
-    DesfireCard(byte[] tagId, Date scannedAt, DesfireManufacturingData manfData, DesfireApplication[] apps) {
-        super(CardType.MifareDesfire, tagId, scannedAt);
-        mManfData = manfData;
-        mApplications = Utils.arrayAsList(apps);
-    }
-
-    @Override public TransitIdentity parseTransitIdentity() {
+    @Override
+    public TransitIdentity parseTransitIdentity() {
         if (OrcaTransitData.check(this))
             return OrcaTransitData.parseTransitIdentity(this);
         if (ClipperTransitData.check(this))
@@ -146,7 +149,8 @@ public class DesfireCard extends Card {
         return null;
     }
 
-    @Override public TransitData parseTransitData() {
+    @Override
+    public TransitData parseTransitData() {
         if (OrcaTransitData.check(this))
             return new OrcaTransitData(this);
         if (ClipperTransitData.check(this))

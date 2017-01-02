@@ -26,16 +26,29 @@ import android.os.Parcelable;
 import com.codebutler.farebot.util.Utils;
 
 public class OVChipCredit implements Parcelable {
+    public static final Parcelable.Creator<OVChipCredit> CREATOR = new Parcelable.Creator<OVChipCredit>() {
+        public OVChipCredit createFromParcel(Parcel source) {
+            int id = source.readInt();
+            int creditId = source.readInt();
+            int credit = source.readInt();
+            int banbits = source.readInt();
+            return new OVChipCredit(id, creditId, credit, banbits);
+        }
+
+        public OVChipCredit[] newArray(int size) {
+            return new OVChipCredit[size];
+        }
+    };
     private final int mId;
     private final int mCreditId;
     private final int mCredit;
     private final int mBanbits;
 
     public OVChipCredit(int id, int creditId, int credit, int banbits) {
-        mId       = id;
+        mId = id;
         mCreditId = creditId;
-        mCredit   = credit;
-        mBanbits  = banbits;
+        mCredit = credit;
+        mBanbits = banbits;
     }
 
     public OVChipCredit(byte[] data) {
@@ -53,8 +66,8 @@ public class OVChipCredit implements Parcelable {
         creditId = Utils.getBitsFromBuffer(data, 56, 12);
         credit = Utils.getBitsFromBuffer(data, 78, 15);    // Skipping the first bit (77)...
 
-        if ((data[9] & (byte)0x04) != 4) {    // ...as the first bit is used to see if the credit is negative or not
-            credit ^= (char)0x7FFF;
+        if ((data[9] & (byte) 0x04) != 4) {    // ...as the first bit is used to see if the credit is negative or not
+            credit ^= (char) 0x7FFF;
             credit = credit * -1;
         }
 
@@ -83,20 +96,6 @@ public class OVChipCredit implements Parcelable {
     public int describeContents() {
         return 0;
     }
-
-    public static final Parcelable.Creator<OVChipCredit> CREATOR = new Parcelable.Creator<OVChipCredit>() {
-        public OVChipCredit createFromParcel(Parcel source) {
-            int id       = source.readInt();
-            int creditId = source.readInt();
-            int credit   = source.readInt();
-            int banbits  = source.readInt();
-            return new OVChipCredit(id, creditId, credit, banbits);
-        }
-
-        public OVChipCredit[] newArray(int size) {
-            return new OVChipCredit[size];
-        }
-    };
 
     public void writeToParcel(Parcel parcel, int flags) {
         parcel.writeInt(mId);

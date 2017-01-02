@@ -24,21 +24,23 @@ import com.codebutler.farebot.transit.TransitIdentity;
 
 /**
  * Stub implementation for Adelaide Metrocard (AU).
- *
+ * <p>
  * https://github.com/micolous/metrodroid/wiki/Metrocard-%28Adelaide%29
  */
 public class AdelaideMetrocardStubTransitData extends StubTransitData {
-    public AdelaideMetrocardStubTransitData(Card card) {}
-
-    @Override
-    public String getCardName() {
-        return "Metrocard (Adelaide)";
+    public AdelaideMetrocardStubTransitData(Card card) {
     }
 
     public static boolean check(Card card) {
         return (card instanceof DesfireCard) && (((DesfireCard) card).getApplication(0xb006f2) != null);
     }
-    public static TransitIdentity parseTransitIdentity (Card card) {
+
+    public static TransitIdentity parseTransitIdentity(Card card) {
         return new TransitIdentity("Metrocard (Adelaide)", null);
+    }
+
+    @Override
+    public String getCardName() {
+        return "Metrocard (Adelaide)";
     }
 }

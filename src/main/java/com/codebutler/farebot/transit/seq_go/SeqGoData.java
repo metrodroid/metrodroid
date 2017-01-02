@@ -39,7 +39,7 @@ final class SeqGoData {
         put(VEHICLE_RAIL, Trip.Mode.TRAIN);
         put(VEHICLE_FERRY, Trip.Mode.FERRY);
         put(VEHICLE_BUS, Trip.Mode.BUS);
-        put (VEHICLE_FARE_MACHINE_TRIP, Trip.Mode.TICKET_MACHINE);
+        put(VEHICLE_FARE_MACHINE_TRIP, Trip.Mode.TICKET_MACHINE);
         // TODO: Gold Coast Light Rail
     }};
 
@@ -57,4 +57,6 @@ final class SeqGoData {
         put(TICKET_TYPE_CONCESSION_2016, SeqGoTicketType.CONCESSION);
     }};
 
+    private SeqGoData() {
+    }
 }

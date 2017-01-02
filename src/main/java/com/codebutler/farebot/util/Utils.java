@@ -52,7 +52,8 @@ public class Utils {
     private static final String TAG = "Utils";
     private static final SimpleDateFormat ISO_DATE_FORMAT = new SimpleDateFormat("yyyy-MM-dd HH:mm");
 
-    private Utils() { }
+    private Utils() {
+    }
 
     public static <T> List<T> arrayAsList(T... array) {
         if (array == null) {
@@ -66,27 +67,27 @@ public class Utils {
             return;
         }
         new AlertDialog.Builder(activity)
-            .setTitle(R.string.nfc_off_error)
-            .setMessage(R.string.turn_on_nfc)
-            .setCancelable(true)
-            .setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {
-                public void onClick(DialogInterface dialog, int id) {
-                    dialog.dismiss();
-                }
-            })
-            .setNeutralButton(R.string.wireless_settings, new DialogInterface.OnClickListener() {
-                public void onClick(DialogInterface dialog, int id) {
-                    activity.startActivity(new Intent(Settings.ACTION_WIRELESS_SETTINGS));
-                }
-            })
-            .show();
+                .setTitle(R.string.nfc_off_error)
+                .setMessage(R.string.turn_on_nfc)
+                .setCancelable(true)
+                .setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        dialog.dismiss();
+                    }
+                })
+                .setNeutralButton(R.string.wireless_settings, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        activity.startActivity(new Intent(Settings.ACTION_WIRELESS_SETTINGS));
+                    }
+                })
+                .show();
     }
 
     public static void showError(final Activity activity, Exception ex) {
         Log.e(activity.getClass().getName(), ex.getMessage(), ex);
         new AlertDialog.Builder(activity)
-            .setMessage(Utils.getErrorMessage(ex))
-            .show();
+                .setMessage(Utils.getErrorMessage(ex))
+                .show();
     }
 
     public static void showErrorAndFinish(final Activity activity, Exception ex) {
@@ -95,14 +96,14 @@ public class Utils {
             ex.printStackTrace();
 
             new AlertDialog.Builder(activity)
-                .setMessage(Utils.getErrorMessage(ex))
-                .setCancelable(false)
-                .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface arg0, int arg1) {
-                        activity.finish();
-                    }
-                })
-                .show();
+                    .setMessage(Utils.getErrorMessage(ex))
+                    .setCancelable(false)
+                    .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface arg0, int arg1) {
+                            activity.finish();
+                        }
+                    })
+                    .show();
         } catch (WindowManager.BadTokenException unused) {
             /* Ignore... happens if the activity was destroyed */
         }
@@ -131,7 +132,7 @@ public class Utils {
 
     public static String getHexString(byte[] b, int offset, int length) {
         String result = "";
-        for (int i=offset; i < offset+length; i++) {
+        for (int i = offset; i < offset + length; i++) {
             result += Integer.toString((b[i] & 0xff) + 0x100, 16).substring(1);
         }
         return result;
@@ -154,7 +155,7 @@ public class Utils {
         byte[] data = new byte[len / 2];
         for (int i = 0; i < len; i += 2) {
             data[i / 2] = (byte) ((Character.digit(s.charAt(i), 16) << 4)
-                                 + Character.digit(s.charAt(i+1), 16));
+                    + Character.digit(s.charAt(i + 1), 16));
         }
         return data;
     }
@@ -200,7 +201,7 @@ public class Utils {
         BigInteger value = BigInteger.valueOf(0);
         for (int i = 0; i < length; i++) {
             value = value.shiftLeft(8);
-            value = value.add(BigInteger.valueOf(b[i+offset] & 0x000000ff));
+            value = value.add(BigInteger.valueOf(b[i + offset] & 0x000000ff));
         }
         return value;
     }
@@ -275,30 +276,26 @@ public class Utils {
         return null;
     }
 
-    public interface Matcher<T> {
-        boolean matches(T t);
-    }
-
     public static int convertBCDtoInteger(byte data) {
-        return (((data & (char)0xF0) >> 4) * 10) + ((data & (char)0x0F));
+        return (((data & (char) 0xF0) >> 4) * 10) + ((data & (char) 0x0F));
     }
 
     public static int getBitsFromInteger(int buffer, int iStartBit, int iLength) {
-        return (buffer >> (iStartBit)) & ((char)0xFF >> (8 - iLength));
+        return (buffer >> (iStartBit)) & ((char) 0xFF >> (8 - iLength));
     }
 
     /**
      * Reverses a byte array, such that the last byte is first, and the first byte is last.
      *
-     * @param buffer Source buffer to reverse
+     * @param buffer     Source buffer to reverse
      * @param iStartByte Start position in the buffer to read from
-     * @param iLength Number of bytes to read
+     * @param iLength    Number of bytes to read
      * @return A new byte array, of length iLength, with the bytes reversed
      */
     public static byte[] reverseBuffer(byte[] buffer, int iStartByte, int iLength) {
         byte[] reversed = new byte[iLength];
         int iEndByte = iStartByte + iLength;
-        for (int x=0; x<iLength; x++) {
+        for (int x = 0; x < iLength; x++) {
             reversed[x] = buffer[iEndByte - x - 1];
         }
         return reversed;
@@ -307,7 +304,8 @@ public class Utils {
     /**
      * Given an unsigned integer value, calculate the two's complement of the value if it is
      * actually a negative value
-     * @param input Input value to convert
+     *
+     * @param input      Input value to convert
      * @param highestBit The position of the highest bit in the number, 0-indexed.
      * @return A signed integer containing it's converted value.
      */
@@ -331,15 +329,15 @@ public class Utils {
         int iEBit = iEndBit % 8;
 
         if (iSByte == iEByte) {
-            return ((char)buffer[iEByte] >> (7 - iEBit)) & ((char)0xFF >> (8 - iLength));
+            return ((char) buffer[iEByte] >> (7 - iEBit)) & ((char) 0xFF >> (8 - iLength));
         } else {
-            int uRet = (((char)buffer[iSByte] & (char)((char)0xFF >> iSBit)) << (((iEByte - iSByte - 1) * 8) + (iEBit + 1)));
+            int uRet = (((char) buffer[iSByte] & (char) ((char) 0xFF >> iSBit)) << (((iEByte - iSByte - 1) * 8) + (iEBit + 1)));
 
             for (int i = iSByte + 1; i < iEByte; i++) {
-                uRet |= (((char)buffer[i] & (char)0xFF) << (((iEByte - i - 1) * 8) + (iEBit + 1)));
+                uRet |= (((char) buffer[i] & (char) 0xFF) << (((iEByte - i - 1) * 8) + (iEBit + 1)));
             }
 
-            uRet |= (((char)buffer[iEByte] & (char)0xFF)) >> (7 - iEBit);
+            uRet |= (((char) buffer[iEByte] & (char) 0xFF)) >> (7 - iEBit);
 
             return uRet;
         }
@@ -348,8 +346,9 @@ public class Utils {
     /**
      * Given a string resource (R.string), localize the string according to the language preferences
      * on the device.
+     *
      * @param stringResource R.string to localize.
-     * @param formatArgs Formatting arguments to pass
+     * @param formatArgs     Formatting arguments to pass
      * @return Localized string
      */
     public static String localizeString(@StringRes int stringResource, Object... formatArgs) {
@@ -360,9 +359,10 @@ public class Utils {
     /**
      * Given a plural resource (R.plurals), localize the string according to the language preferences
      * on the device.
+     *
      * @param pluralResource R.plurals to localize.
-     * @param quantity Quantity to use for pluaralisation rules
-     * @param formatArgs Formatting arguments to pass
+     * @param quantity       Quantity to use for pluaralisation rules
+     * @param formatArgs     Formatting arguments to pass
      * @return Localized string
      */
     public static String localizePlural(@PluralsRes int pluralResource, int quantity, Object... formatArgs) {
@@ -401,6 +401,7 @@ public class Utils {
     /**
      * Formats a GregorianCalendar into ISO8601 format. This should only be used for debugging
      * logs, in order to ensure consistent information.
+     *
      * @param calendar Date/time to format
      * @return String representing the date and time in ISO8601 format.
      */
@@ -420,7 +421,7 @@ public class Utils {
     public static int[] digitsOf(String integer) {
         int[] out = new int[integer.length()];
         for (int index = 0; index < integer.length(); index++) {
-            out[index] = Integer.valueOf(integer.substring(index, index+1));
+            out[index] = Integer.valueOf(integer.substring(index, index + 1));
         }
 
         return out;
@@ -428,6 +429,7 @@ public class Utils {
 
     /**
      * Sum an array of integers.
+     *
      * @param ints Input array of integers.
      * @return All the values added together.
      */
@@ -442,11 +444,11 @@ public class Utils {
     public static int luhnChecksum(String cardNumber) {
         int[] digits = digitsOf(cardNumber);
         // even digits, counting from the last digit on the card
-        int[] evenDigits = new int[(int)Math.ceil(cardNumber.length() / 2.0)];
+        int[] evenDigits = new int[(int) Math.ceil(cardNumber.length() / 2.0)];
         int checksum = 0, p = 0;
         int q = cardNumber.length() - 1;
 
-        for (int i=0; i<cardNumber.length(); i++) {
+        for (int i = 0; i < cardNumber.length(); i++) {
             if (i % 2 == 1) {
                 // we treat it as a 1-indexed array
                 // so the first digit is odd
@@ -455,9 +457,9 @@ public class Utils {
                 checksum += digits[q - i];
             }
         }
-        
+
         for (int d : evenDigits) {
-            checksum += sum(digitsOf(d*2));
+            checksum += sum(digitsOf(d * 2));
         }
 
         //Log.d(TAG, String.format("luhnChecksum(%s) = %d", cardNumber, checksum));
@@ -466,6 +468,7 @@ public class Utils {
 
     /**
      * Given a partial card number, calculate the Luhn check digit.
+     *
      * @param partialCardNumber Partial card number.
      * @return Final digit for card number.
      */
@@ -476,10 +479,15 @@ public class Utils {
 
     /**
      * Given a complete card number, validate the Luhn check digit.
+     *
      * @param cardNumber Complete card number.
      * @return true if valid, false if invalid.
      */
     public static boolean validateLuhn(String cardNumber) {
         return luhnChecksum(cardNumber) == 0;
+    }
+
+    public interface Matcher<T> {
+        boolean matches(T t);
     }
 }

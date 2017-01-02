@@ -48,12 +48,9 @@ import au.id.micolous.farebot.R;
  * https://github.com/micolous/metrodroid/wiki/Octopus
  */
 public class OctopusTransitData extends TransitData {
-    private static final String TAG = "OctopusTransitData";
     public static final String OCTOPUS_NAME = "Octopus";
     public static final String SZT_NAME = "Shenzhen Tong";
     public static final String DUAL_NAME = "Hu Tong Xing";
-
-
     public static final Creator<OctopusTransitData> CREATOR = new Creator<OctopusTransitData>() {
         @Override
         public OctopusTransitData createFromParcel(Parcel in) {
@@ -65,6 +62,7 @@ public class OctopusTransitData extends TransitData {
             return new OctopusTransitData[size];
         }
     };
+    private static final String TAG = "OctopusTransitData";
     private int mOctopusBalance = 0;
     private int mShenzhenBalance = 0;
     private boolean mHasOctopus = false;

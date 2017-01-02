@@ -28,13 +28,20 @@ import java.util.List;
 
 public abstract class TransitData implements Parcelable {
     public abstract String getBalanceString();
+
     public abstract String getSerialNumber();
+
     public abstract Trip[] getTrips();
 
     @Deprecated
-    public Refill[] getRefills() { return null; }
+    public Refill[] getRefills() {
+        return null;
+    }
+
     public abstract Subscription[] getSubscriptions();
+
     public abstract List<ListItem> getInfo();
+
     public abstract String getCardName();
 
     /**
@@ -55,12 +62,16 @@ public abstract class TransitData implements Parcelable {
      * You can optionally add a link to an FAQ page for the card.  This will be shown in the ...
      * drop down menu for cards that are supported, and on the main page for subclasses of
      * StubTransitData.
+     *
      * @return Uri pointing to an FAQ page, or null if no page is to be supplied.
      */
-    public Uri getMoreInfoPage() { return null; }
+    public Uri getMoreInfoPage() {
+        return null;
+    }
 
     /**
      * You may optionally link to a page which allows you to view the online services for the card.
+     *
      * @return Uri pointing to online services page, or null if no page is to be supplied.
      */
     public Uri getOnlineServicesPage() {

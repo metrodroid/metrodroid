@@ -26,7 +26,6 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.ListView;
 
-import au.id.micolous.metrodroid.MetrodroidApplication;
 import com.codebutler.farebot.activity.AdvancedCardInfoActivity;
 import com.codebutler.farebot.activity.CardInfoActivity;
 import com.codebutler.farebot.card.Card;
@@ -35,6 +34,8 @@ import com.codebutler.farebot.ui.ListItem;
 import com.codebutler.farebot.ui.UriListItem;
 
 import org.simpleframework.xml.Serializer;
+
+import au.id.micolous.metrodroid.MetrodroidApplication;
 
 public class CardInfoFragment extends ListFragment {
     private Card mCard;
@@ -47,14 +48,16 @@ public class CardInfoFragment extends ListFragment {
         mTransitData = getArguments().getParcelable(CardInfoActivity.EXTRA_TRANSIT_DATA);
     }
 
-    @Override public void onViewCreated(View view, Bundle savedInstanceState) {
+    @Override
+    public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
         setListAdapter(new ListItemAdapter(getActivity(), mTransitData.getInfo()));
     }
 
 
-    @Override public void onListItemClick(ListView parent, View v, int position, long id) {
+    @Override
+    public void onListItemClick(ListView parent, View v, int position, long id) {
         ListItem listItem = (ListItem) getListAdapter().getItem(position);
 
         if (listItem instanceof UriListItem) {

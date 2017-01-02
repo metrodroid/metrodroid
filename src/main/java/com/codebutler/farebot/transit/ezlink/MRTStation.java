@@ -28,7 +28,7 @@ public class MRTStation extends Station {
     public MRTStation(String name, String code, String abbreviation, String latitude, String longitude) {
         super(name, latitude, longitude);
 
-        mCode         = code;
+        mCode = code;
         mAbbreviation = abbreviation;
     }
 

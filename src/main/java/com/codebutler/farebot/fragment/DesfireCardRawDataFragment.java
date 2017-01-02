@@ -28,26 +28,28 @@ import android.widget.BaseExpandableListAdapter;
 import android.widget.ExpandableListView;
 import android.widget.TextView;
 
-import au.id.micolous.metrodroid.MetrodroidApplication;
-import au.id.micolous.farebot.R;
 import com.codebutler.farebot.activity.AdvancedCardInfoActivity;
 import com.codebutler.farebot.card.Card;
 import com.codebutler.farebot.card.desfire.DesfireApplication;
 import com.codebutler.farebot.card.desfire.DesfireCard;
 import com.codebutler.farebot.card.desfire.files.DesfireFile;
 import com.codebutler.farebot.card.desfire.files.InvalidDesfireFile;
+import com.codebutler.farebot.card.desfire.files.UnauthorizedDesfireFile;
 import com.codebutler.farebot.card.desfire.settings.RecordDesfireFileSettings;
 import com.codebutler.farebot.card.desfire.settings.StandardDesfireFileSettings;
-import com.codebutler.farebot.card.desfire.files.UnauthorizedDesfireFile;
 import com.codebutler.farebot.card.desfire.settings.ValueDesfireFileSettings;
 import com.codebutler.farebot.util.Utils;
 
 import org.simpleframework.xml.Serializer;
 
+import au.id.micolous.farebot.R;
+import au.id.micolous.metrodroid.MetrodroidApplication;
+
 public class DesfireCardRawDataFragment extends ExpandableListFragment {
     private DesfireCard mCard;
 
-    @Override public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         return inflater.inflate(R.layout.fragment_card_raw_data, null);
     }
 
@@ -154,8 +156,9 @@ public class DesfireCardRawDataFragment extends ExpandableListFragment {
         });
     }
 
-    @Override public boolean onListChildClick(ExpandableListView parent, View v, int groupPosition, int childPosition,
-                                              long id) {
+    @Override
+    public boolean onListChildClick(ExpandableListView parent, View v, int groupPosition, int childPosition,
+                                    long id) {
         DesfireFile file = (DesfireFile) getExpandableListAdapter().getChild(groupPosition, childPosition);
 
         if (file instanceof InvalidDesfireFile) {
@@ -165,10 +168,10 @@ public class DesfireCardRawDataFragment extends ExpandableListFragment {
         String data = Utils.getHexString(file.getData(), "");
 
         new AlertDialog.Builder(getActivity())
-            .setTitle("File Content")
-            .setPositiveButton(android.R.string.ok, null)
-            .setMessage(data)
-            .show();
+                .setTitle("File Content")
+                .setPositiveButton(android.R.string.ok, null)
+                .setMessage(data)
+                .show();
 
         return true;
     }

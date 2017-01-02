@@ -53,7 +53,8 @@ public class CardSubscriptionsFragment extends ListFragment {
         mTransitData = getArguments().getParcelable(CardInfoActivity.EXTRA_TRANSIT_DATA);
     }
 
-    @Override public void onViewCreated(View view, Bundle savedInstanceState) {
+    @Override
+    public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         setListAdapter(new SubscriptionsAdapter(getActivity(), mTransitData.getSubscriptions()));
     }
@@ -63,7 +64,8 @@ public class CardSubscriptionsFragment extends ListFragment {
             super(context, 0, subscriptions);
         }
 
-        @Override public View getView(int position, View convertView, ViewGroup parent) {
+        @Override
+        public View getView(int position, View convertView, ViewGroup parent) {
             View view = convertView;
             if (view == null) {
                 view = getActivity().getLayoutInflater().inflate(R.layout.subscription_item, parent, false);
@@ -96,7 +98,8 @@ public class CardSubscriptionsFragment extends ListFragment {
             return view;
         }
 
-        @Override public boolean isEnabled(int position) {
+        @Override
+        public boolean isEnabled(int position) {
             return false;
         }
     }

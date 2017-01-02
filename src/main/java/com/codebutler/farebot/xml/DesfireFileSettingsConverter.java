@@ -30,7 +30,8 @@ import org.simpleframework.xml.stream.InputNode;
 import org.simpleframework.xml.stream.OutputNode;
 
 public class DesfireFileSettingsConverter implements Converter<DesfireFileSettings> {
-    @Override public DesfireFileSettings read(InputNode source) throws Exception {
+    @Override
+    public DesfireFileSettings read(InputNode source) throws Exception {
         byte fileType = -1;
         int fileSize = -1;
         byte commSetting = -1;
@@ -48,7 +49,7 @@ public class DesfireFileSettingsConverter implements Converter<DesfireFileSettin
             if (node == null) {
                 break;
             }
-            
+
             String value = node.getValue();
 
             if (value != null) {
@@ -108,7 +109,8 @@ public class DesfireFileSettingsConverter implements Converter<DesfireFileSettin
         }
     }
 
-    @Override public void write(OutputNode node, DesfireFileSettings value) throws Exception {
+    @Override
+    public void write(OutputNode node, DesfireFileSettings value) throws Exception {
         throw new SkippableRegistryStrategy.SkipException();
     }
 }

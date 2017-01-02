@@ -36,10 +36,20 @@ import org.simpleframework.xml.Root;
 import java.util.Date;
 import java.util.List;
 
-@Root(name="card")
+@Root(name = "card")
 public class CEPASCard extends Card {
-    @ElementList(name="purses") private List<CEPASPurse> mPurses;
-    @ElementList(name="histories") private List<CEPASHistory> mHistories;
+    @ElementList(name = "purses")
+    private List<CEPASPurse> mPurses;
+    @ElementList(name = "histories")
+    private List<CEPASHistory> mHistories;
+
+    private CEPASCard(byte[] tagId, Date scannedAt, CEPASPurse[] purses, CEPASHistory[] histories) {
+        super(CardType.CEPAS, tagId, scannedAt);
+        mPurses = Utils.arrayAsList(purses);
+        mHistories = Utils.arrayAsList(histories);
+    }
+
+    private CEPASCard() { /* For XML Serializer */ }
 
     public static CEPASCard dumpTag(Tag tag) throws Exception {
         IsoDep tech = IsoDep.get(tag);
@@ -72,23 +82,17 @@ public class CEPASCard extends Card {
         return new CEPASCard(tag.getId(), new Date(), cepasPurses, cepasHistories);
     }
 
-    private CEPASCard(byte[] tagId, Date scannedAt, CEPASPurse[] purses, CEPASHistory[] histories) {
-        super(CardType.CEPAS, tagId, scannedAt);
-        mPurses = Utils.arrayAsList(purses);
-        mHistories = Utils.arrayAsList(histories);
-    }
-
-    private CEPASCard() { /* For XML Serializer */ }
-
-    @Override public TransitIdentity parseTransitIdentity() {
+    @Override
+    public TransitIdentity parseTransitIdentity() {
         if (EZLinkTransitData.check(this))
             return EZLinkTransitData.parseTransitIdentity(this);
         return null;
     }
 
-    @Override public TransitData parseTransitData() {
+    @Override
+    public TransitData parseTransitData() {
         if (EZLinkTransitData.check(this))
-           return new EZLinkTransitData(this);
+            return new EZLinkTransitData(this);
         return null;
     }
 

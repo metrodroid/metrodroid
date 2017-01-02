@@ -23,18 +23,19 @@ package com.codebutler.farebot.card.cepas;
 
 import android.nfc.tech.IsoDep;
 import android.util.Log;
+
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 
 public class CEPASProtocol {
     private static final String TAG = "CEPASProtocol";
-    private static final byte[] CEPAS_SELECT_FILE_COMMAND = new byte[] {
+    private static final byte[] CEPAS_SELECT_FILE_COMMAND = new byte[]{
             (byte) 0x00, (byte) 0xA4, (byte) 0x00, (byte) 0x00,
-            (byte) 0x02, (byte) 0x40, (byte) 0x00 };
+            (byte) 0x02, (byte) 0x40, (byte) 0x00};
 
 
     /* Status codes */
-    private static final byte OPERATION_OK      = (byte) 0x00;
+    private static final byte OPERATION_OK = (byte) 0x00;
     private static final byte PERMISSION_DENIED = (byte) 0x9D;
 
     private IsoDep mTagTech;
@@ -46,7 +47,7 @@ public class CEPASProtocol {
     public CEPASPurse getPurse(int purseId) throws IOException {
         try {
             sendSelectFile();
-            byte[] purseBuff = sendRequest((byte) 0x32, (byte) (purseId), (byte) 0, (byte) 0, new byte[] { (byte) 0 });
+            byte[] purseBuff = sendRequest((byte) 0x32, (byte) (purseId), (byte) 0, (byte) 0, new byte[]{(byte) 0});
             if (purseBuff != null) {
                 return new CEPASPurse(purseId, purseBuff);
             } else {
@@ -62,14 +63,14 @@ public class CEPASProtocol {
         try {
             byte[] fullHistoryBuff = null;
             byte[] historyBuff = sendRequest((byte) 0x32, (byte) (purseId), (byte) 0, (byte) 1,
-                    new byte[] { (byte) 0, (byte) (recordCount <= 15 ? recordCount * 16 : 15 * 16) });
+                    new byte[]{(byte) 0, (byte) (recordCount <= 15 ? recordCount * 16 : 15 * 16)});
 
             if (historyBuff != null) {
                 if (recordCount > 15) {
                     byte[] historyBuff2 = null;
                     try {
                         historyBuff2 = sendRequest((byte) 0x32, (byte) (purseId), (byte) 0, (byte) 1,
-                                new byte[] { (byte) 0x0F, (byte) ((recordCount - 15) * 16) });
+                                new byte[]{(byte) 0x0F, (byte) ((recordCount - 15) * 16)});
                     } catch (CEPASException ex) {
                         Log.w(TAG, "Error reading 2nd purse history " + purseId, ex);
                     }
@@ -94,7 +95,7 @@ public class CEPASProtocol {
         }
     }
 
-    private byte[] sendSelectFile() throws IOException{
+    private byte[] sendSelectFile() throws IOException {
         return mTagTech.transceive(CEPAS_SELECT_FILE_COMMAND);
     }
 
@@ -105,15 +106,15 @@ public class CEPASProtocol {
         byte[] recvBuffer = mTagTech.transceive(wrapMessage(command, p1, p2, lc, parameters));
 
         if (recvBuffer[recvBuffer.length - 2] != (byte) 0x90) {
-            if (recvBuffer[recvBuffer.length-2] == 0x6b) {
+            if (recvBuffer[recvBuffer.length - 2] == 0x6b) {
                 throw new CEPASException("File " + p1 + " was an invalid file.");
 
-            } else if (recvBuffer[recvBuffer.length-2] == 0x67) {
+            } else if (recvBuffer[recvBuffer.length - 2] == 0x67) {
                 throw new CEPASException("Got invalid file size response.");
             }
 
             throw new CEPASException("Got generic invalid response: "
-                    + Integer.toHexString(((int)recvBuffer[recvBuffer.length-2]) & 0xff));
+                    + Integer.toHexString(((int) recvBuffer[recvBuffer.length - 2]) & 0xff));
         }
 
         output.write(recvBuffer, 0, recvBuffer.length - 2);

@@ -64,14 +64,14 @@ public class CardInfoActivity extends Activity {
 
     private static final String KEY_SELECTED_TAB = "selected_tab";
 
-    private Card            mCard;
-    private TransitData     mTransitData;
+    private Card mCard;
+    private TransitData mTransitData;
     private TabPagerAdapter mTabsAdapter;
-    private TextToSpeech    mTTS;
+    private TextToSpeech mTTS;
 
-    private boolean         mShowOnlineServices = false;
-    private boolean         mShowMoreInfo = false;
-    private Menu            mMenu = null;
+    private boolean mShowOnlineServices = false;
+    private boolean mShowMoreInfo = false;
+    private Menu mMenu = null;
 
     private OnInitListener mTTSInitListener = new OnInitListener() {
         public void onInit(int status) {
@@ -82,7 +82,8 @@ public class CardInfoActivity extends Activity {
         }
     };
 
-    @Override protected void onCreate(final Bundle savedInstanceState) {
+    @Override
+    protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_card_info);
@@ -94,10 +95,11 @@ public class CardInfoActivity extends Activity {
         actionBar.setTitle(R.string.loading);
 
         new AsyncTask<Void, Void, Void>() {
-            private Exception mException;
             public boolean mSpeakBalanceEnabled;
+            private Exception mException;
 
-            @Override protected Void doInBackground(Void... voids) {
+            @Override
+            protected Void doInBackground(Void... voids) {
                 try {
                     Uri uri = getIntent().getData();
                     Cursor cursor = getContentResolver().query(uri, null, null, null, null);
@@ -117,7 +119,8 @@ public class CardInfoActivity extends Activity {
                 return null;
             }
 
-            @Override protected void onPostExecute(Void aVoid) {
+            @Override
+            protected void onPostExecute(Void aVoid) {
                 findViewById(R.id.loading).setVisibility(View.GONE);
                 findViewById(R.id.pager).setVisibility(View.VISIBLE);
 
@@ -203,11 +206,13 @@ public class CardInfoActivity extends Activity {
         }.execute();
     }
 
-    @Override protected void onSaveInstanceState(Bundle bundle) {
+    @Override
+    protected void onSaveInstanceState(Bundle bundle) {
         bundle.putInt(KEY_SELECTED_TAB, ((ViewPager) findViewById(R.id.pager)).getCurrentItem());
     }
 
-    @Override public boolean onCreateOptionsMenu(Menu menu) {
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.card_info_menu, menu);
         menu.findItem(R.id.online_services).setVisible(mShowOnlineServices);
         menu.findItem(R.id.more_info).setVisible(mShowMoreInfo);
@@ -215,7 +220,8 @@ public class CardInfoActivity extends Activity {
         return true;
     }
 
-    @Override public boolean onOptionsItemSelected(MenuItem item) {
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case android.R.id.home:
                 Intent intent = new Intent(this, CardsActivity.class);

@@ -52,16 +52,26 @@ import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
-@Root(name="card")
+@Root(name = "card")
 @CardRawDataFragmentClass(FelicaCardRawDataFragment.class)
 public class FelicaCard extends Card {
     private static final String TAG = "FelicaCard";
 
-    @Element(name="idm") private FeliCaLib.IDm mIDm;
-    @Element(name="pmm") private FeliCaLib.PMm mPMm;
-    @ElementList(name="systems") private List<FelicaSystem> mSystems;
+    @Element(name = "idm")
+    private FeliCaLib.IDm mIDm;
+    @Element(name = "pmm")
+    private FeliCaLib.PMm mPMm;
+    @ElementList(name = "systems")
+    private List<FelicaSystem> mSystems;
 
     private FelicaCard() { /* For XML Serializer */ }
+
+    public FelicaCard(byte[] tagId, Date scannedAt, FeliCaLib.IDm idm, FeliCaLib.PMm pmm, FelicaSystem[] systems) {
+        super(CardType.FeliCa, tagId, scannedAt);
+        mIDm = idm;
+        mPMm = pmm;
+        mSystems = Utils.arrayAsList(systems);
+    }
 
     // https://github.com/tmurakam/felicalib/blob/master/src/dump/dump.c
     // https://github.com/tmurakam/felica2money/blob/master/src/card/Suica.cs
@@ -178,13 +188,6 @@ public class FelicaCard extends Card {
         return new FelicaCard(tagId, new Date(), idm, pmm, systemsArray);
     }
 
-    public FelicaCard(byte[] tagId, Date scannedAt, FeliCaLib.IDm idm, FeliCaLib.PMm pmm, FelicaSystem[] systems) {
-        super(CardType.FeliCa, tagId, scannedAt);
-        mIDm     = idm;
-        mPMm     = pmm;
-        mSystems = Utils.arrayAsList(systems);
-    }
-
     public FeliCaLib.IDm getIDm() {
         return mIDm;
     }
@@ -231,7 +234,8 @@ public class FelicaCard extends Card {
         return null;
     }
 
-    @Override public TransitIdentity parseTransitIdentity() {
+    @Override
+    public TransitIdentity parseTransitIdentity() {
         if (SuicaTransitData.check(this))
             return SuicaTransitData.parseTransitIdentity(this);
         else if (EdyTransitData.check(this))
@@ -241,7 +245,8 @@ public class FelicaCard extends Card {
         return null;
     }
 
-    @Override public TransitData parseTransitData() {
+    @Override
+    public TransitData parseTransitData() {
         if (SuicaTransitData.check(this))
             return new SuicaTransitData(this);
         else if (EdyTransitData.check(this))

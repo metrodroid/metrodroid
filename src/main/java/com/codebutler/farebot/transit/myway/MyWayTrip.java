@@ -8,7 +8,6 @@ import com.codebutler.farebot.transit.Trip;
 import com.codebutler.farebot.util.Utils;
 
 import java.text.NumberFormat;
-import java.util.GregorianCalendar;
 import java.util.Locale;
 
 import au.id.micolous.farebot.R;
@@ -18,10 +17,30 @@ import au.id.micolous.farebot.R;
  */
 
 public class MyWayTrip extends Trip implements Comparable<MyWayTrip> {
+    public static final Creator<MyWayTrip> CREATOR = new Creator<MyWayTrip>() {
+
+        public MyWayTrip createFromParcel(Parcel in) {
+            return new MyWayTrip(in);
+        }
+
+        public MyWayTrip[] newArray(int size) {
+            return new MyWayTrip[size];
+        }
+    };
     protected long mStartTime;
     protected long mEndTime;
     protected String mRouteNumber;
     protected int mCost;
+
+    public MyWayTrip(Parcel parcel) {
+        mStartTime = parcel.readLong();
+        mEndTime = parcel.readLong();
+        mCost = parcel.readInt();
+        mRouteNumber = parcel.readString();
+    }
+
+    public MyWayTrip() {
+    }
 
     @Override
     public int compareTo(@NonNull MyWayTrip other) {
@@ -43,7 +62,6 @@ public class MyWayTrip extends Trip implements Comparable<MyWayTrip> {
         return mRouteNumber;
     }
 
-
     @Override
     public String getShortAgencyName() {
         return getAgencyName();
@@ -59,7 +77,7 @@ public class MyWayTrip extends Trip implements Comparable<MyWayTrip> {
         if (mCost == 0) {
             return Utils.localizeString(R.string.pass_or_transfer);
         }
-        return NumberFormat.getCurrencyInstance(Locale.US).format((double)mCost / 100.);
+        return NumberFormat.getCurrencyInstance(Locale.US).format((double) mCost / 100.);
     }
 
     @Override
@@ -115,26 +133,5 @@ public class MyWayTrip extends Trip implements Comparable<MyWayTrip> {
         parcel.writeInt(mCost);
         parcel.writeString(mRouteNumber);
     }
-
-    public MyWayTrip(Parcel parcel) {
-        mStartTime = parcel.readLong();
-        mEndTime = parcel.readLong();
-        mCost = parcel.readInt();
-        mRouteNumber = parcel.readString();
-    }
-
-
-    public MyWayTrip() {}
-
-    public static final Creator<MyWayTrip> CREATOR = new Creator<MyWayTrip>() {
-
-        public MyWayTrip createFromParcel(Parcel in) {
-            return new MyWayTrip(in);
-        }
-
-        public MyWayTrip[] newArray(int size) {
-            return new MyWayTrip[size];
-        }
-    };
 
 }

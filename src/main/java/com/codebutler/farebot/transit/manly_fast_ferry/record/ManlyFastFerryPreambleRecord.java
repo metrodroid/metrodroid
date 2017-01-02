@@ -19,17 +19,20 @@
 
 package com.codebutler.farebot.transit.manly_fast_ferry.record;
 
-import java.util.Arrays;
-
 import com.codebutler.farebot.transit.manly_fast_ferry.ManlyFastFerryTransitData;
 import com.codebutler.farebot.util.Utils;
+
+import java.util.Arrays;
 
 /**
  * Represents a "preamble" type record.
  */
 public class ManlyFastFerryPreambleRecord extends ManlyFastFerryRecord {
+    static final byte[] OLD_CARD_ID = {0x00, 0x00, 0x00};
     private String mCardSerial;
-    static byte[] OLD_CARD_ID = {0x00, 0x00, 0x00};
+
+    protected ManlyFastFerryPreambleRecord() {
+    }
 
     public static ManlyFastFerryPreambleRecord recordFromBytes(byte[] input) {
         ManlyFastFerryPreambleRecord record = new ManlyFastFerryPreambleRecord();
@@ -48,12 +51,11 @@ public class ManlyFastFerryPreambleRecord extends ManlyFastFerryRecord {
         return record;
     }
 
-    protected ManlyFastFerryPreambleRecord() {}
-
     /**
      * Returns the card serial number. Returns null on old cards.
-     *
      */
-    public String getCardSerial() { return mCardSerial; }
+    public String getCardSerial() {
+        return mCardSerial;
+    }
 
 }

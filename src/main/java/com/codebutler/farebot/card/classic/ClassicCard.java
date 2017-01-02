@@ -30,7 +30,6 @@ import android.os.Parcel;
 import android.preference.PreferenceManager;
 import android.util.Log;
 
-import com.codebutler.farebot.activity.ReadingTagActivity;
 import com.codebutler.farebot.card.Card;
 import com.codebutler.farebot.card.CardHasManufacturingInfo;
 import com.codebutler.farebot.card.CardRawDataFragmentClass;
@@ -42,7 +41,6 @@ import com.codebutler.farebot.key.ClassicSectorKey;
 import com.codebutler.farebot.transit.TransitData;
 import com.codebutler.farebot.transit.TransitIdentity;
 import com.codebutler.farebot.transit.bilhete_unico.BilheteUnicoSPTransitData;
-import com.codebutler.farebot.transit.lax_tap.LaxTapData;
 import com.codebutler.farebot.transit.lax_tap.LaxTapTransitData;
 import com.codebutler.farebot.transit.manly_fast_ferry.ManlyFastFerryTransitData;
 import com.codebutler.farebot.transit.myway.MyWayTransitData;
@@ -62,15 +60,15 @@ import java.util.List;
 
 import au.id.micolous.metrodroid.MetrodroidApplication;
 
-@Root(name="card")
+@Root(name = "card")
 @CardRawDataFragmentClass(ClassicCardRawDataFragment.class)
 @CardHasManufacturingInfo(false)
 public class ClassicCard extends Card {
+    public static final byte[] PREAMBLE_KEY = {(byte) 0x00, (byte) 0x00, (byte) 0x00, (byte) 0x00, (byte) 0x00,
+            (byte) 0x00};
     private static final String TAG = "ClassicCard";
-    public static final byte[] PREAMBLE_KEY = { (byte) 0x00, (byte) 0x00, (byte) 0x00, (byte) 0x00, (byte) 0x00,
-            (byte) 0x00 };
-
-    @ElementList(name="sectors") private List<ClassicSector> mSectors;
+    @ElementList(name = "sectors")
+    private List<ClassicSector> mSectors;
 
     private ClassicCard() { /* For XML Serializer */ }
 
@@ -147,7 +145,8 @@ public class ClassicCard extends Card {
 
                                 if (authSuccess) {
                                     // Jump out if we have the key
-                                    Log.d(TAG, "Authenticated successfully to sector " + sectorIndex + " with key for sector " + keyIndex + ". Fix the farebotkeys file to speed up authentication.");
+                                    Log.d(TAG, String.format("Authenticated successfully to sector %d with key for sector %d. "
+                                            + "Fix the key file to speed up authentication", sectorIndex, keyIndex));
                                     break;
                                 }
                             }
@@ -219,22 +218,21 @@ public class ClassicCard extends Card {
 
     /**
      * Patch the broken Tag object of HTC One (m7/m8) devices with Android 5.x.
-     *
+     * <p>
      * Also observed on Galaxy Nexus running Cyanogenmod 13.
-     *
+     * <p>
      * "It seems, the reason of this bug is TechExtras of NfcA is null.
      * However, TechList contains MifareClassic." -- bildin.
-     *
+     * <p>
      * This patch will fix this. For more information please refer to
      * https://github.com/ikarus23/MifareClassicTool/issues/52
-     *
+     * <p>
      * This patch was provided by bildin (https://github.com/bildin).
      *
      * @param tag The broken tag.
      * @return The fixed tag.
      */
-    private static Tag patchTag(Tag tag)
-    {
+    private static Tag patchTag(Tag tag) {
         if (tag == null) {
             return null;
         }
@@ -265,17 +263,17 @@ public class ClassicCard extends Card {
         }
         oldParcel.recycle();
 
-        int nfcaIdx=-1;
-        int mcIdx=-1;
-        for(int idx = 0; idx < sTechList.length; idx++) {
-            if(sTechList[idx].equals(NfcA.class.getName())) {
+        int nfcaIdx = -1;
+        int mcIdx = -1;
+        for (int idx = 0; idx < sTechList.length; idx++) {
+            if (sTechList[idx].equals(NfcA.class.getName())) {
                 nfcaIdx = idx;
-            } else if(sTechList[idx].equals(MifareClassic.class.getName())) {
+            } else if (sTechList[idx].equals(MifareClassic.class.getName())) {
                 mcIdx = idx;
             }
         }
 
-        if(nfcaIdx>=0&&mcIdx>=0&&oldTechExtras[mcIdx]==null) {
+        if (nfcaIdx >= 0 && mcIdx >= 0 && oldTechExtras[mcIdx] == null) {
             oldTechExtras[mcIdx] = oldTechExtras[nfcaIdx];
         } else {
             return tag;
@@ -289,7 +287,7 @@ public class ClassicCard extends Card {
         newParcel.writeTypedArray(oldTechExtras, 0);
         newParcel.writeInt(serviceHandle);
         newParcel.writeInt(isMock);
-        if(isMock == 0) {
+        if (isMock == 0) {
             newParcel.writeStrongBinder(tagService);
         }
         newParcel.setDataPosition(0);
@@ -299,9 +297,13 @@ public class ClassicCard extends Card {
         return newTag;
     }
 
+    public static String getFallbackReader() {
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(MetrodroidApplication.getInstance());
+        return prefs.getString(MetrodroidApplication.PREF_MFC_FALLBACK, "null").toLowerCase();
+    }
 
-
-    @Override public TransitIdentity parseTransitIdentity() {
+    @Override
+    public TransitIdentity parseTransitIdentity() {
         // All .check() methods should work without a key, and throw an UnauthorizedException
         // Otherwise UnauthorizedClassicTransitData will not trigger
         if (OVChipTransitData.check(this)) {
@@ -341,7 +343,8 @@ public class ClassicCard extends Card {
         return null;
     }
 
-    @Override public TransitData parseTransitData() {
+    @Override
+    public TransitData parseTransitData() {
         if (OVChipTransitData.check(this)) {
             return new OVChipTransitData(this);
         } else if (ManlyFastFerryTransitData.check(this)) {
@@ -384,10 +387,5 @@ public class ClassicCard extends Card {
 
     public ClassicSector getSector(int index) {
         return mSectors.get(index);
-    }
-
-    public static String getFallbackReader() {
-        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(MetrodroidApplication.getInstance());
-        return prefs.getString(MetrodroidApplication.PREF_MFC_FALLBACK, "null").toLowerCase();
     }
 }

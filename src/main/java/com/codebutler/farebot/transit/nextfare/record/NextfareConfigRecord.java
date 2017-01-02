@@ -33,12 +33,6 @@ import java.util.GregorianCalendar;
  */
 
 public class NextfareConfigRecord extends NextfareRecord implements Parcelable {
-    private static final String TAG = "NextfareConfigRecord";
-
-    private int mTicketType;
-    private GregorianCalendar mExpiry;
-
-
     public static final Creator<NextfareConfigRecord> CREATOR = new Creator<NextfareConfigRecord>() {
         @Override
         public NextfareConfigRecord createFromParcel(Parcel in) {
@@ -50,6 +44,16 @@ public class NextfareConfigRecord extends NextfareRecord implements Parcelable {
             return new NextfareConfigRecord[size];
         }
     };
+    private static final String TAG = "NextfareConfigRecord";
+    private int mTicketType;
+    private GregorianCalendar mExpiry;
+
+    protected NextfareConfigRecord() {
+    }
+
+    public NextfareConfigRecord(Parcel p) {
+        mTicketType = p.readInt();
+    }
 
     public static NextfareConfigRecord recordFromBytes(byte[] input) {
         //if (input[0] != 0x01) throw new AssertionError();
@@ -68,8 +72,6 @@ public class NextfareConfigRecord extends NextfareRecord implements Parcelable {
         return record;
     }
 
-    protected NextfareConfigRecord() {}
-
     public int getTicketType() {
         return mTicketType;
     }
@@ -86,10 +88,6 @@ public class NextfareConfigRecord extends NextfareRecord implements Parcelable {
     @Override
     public void writeToParcel(Parcel parcel, int i) {
         parcel.writeInt(mTicketType);
-    }
-
-    public NextfareConfigRecord(Parcel p) {
-        mTicketType = p.readInt();
     }
 }
 

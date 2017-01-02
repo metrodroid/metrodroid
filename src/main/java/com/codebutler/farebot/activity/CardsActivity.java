@@ -37,7 +37,8 @@ import au.id.micolous.farebot.R;
 public class CardsActivity extends FragmentWrapperActivity {
     private static final int STORAGE_PERMISSION_CALLBACK = 1001;
 
-    @Override protected Fragment createFragment() {
+    @Override
+    protected Fragment createFragment() {
         return new CardsFragment();
     }
 
@@ -48,7 +49,7 @@ public class CardsActivity extends FragmentWrapperActivity {
         // Request permission for storage right away, as requesting this when a file is explicitly
         // opened is tedious.
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(this, new String[] {Manifest.permission.WRITE_EXTERNAL_STORAGE}, STORAGE_PERMISSION_CALLBACK);
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, STORAGE_PERMISSION_CALLBACK);
         }
     }
 

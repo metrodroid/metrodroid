@@ -21,7 +21,7 @@ package com.codebutler.farebot.card;
 
 public class UnsupportedTagException extends Exception {
     private String[] mTechList;
-    private String   mTagId;
+    private String mTagId;
 
     public UnsupportedTagException(String[] techList, String tagId) {
         mTechList = techList;
@@ -36,7 +36,8 @@ public class UnsupportedTagException extends Exception {
         return mTagId;
     }
 
-    @Override public String getMessage() {
+    @Override
+    public String getMessage() {
         StringBuilder builder = new StringBuilder();
         for (String tech : mTechList) {
             builder.append("\n  ");

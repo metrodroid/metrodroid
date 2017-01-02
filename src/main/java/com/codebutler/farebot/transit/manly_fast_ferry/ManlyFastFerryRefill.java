@@ -22,18 +22,28 @@ package com.codebutler.farebot.transit.manly_fast_ferry;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import com.codebutler.farebot.transit.Refill;
+import com.codebutler.farebot.transit.manly_fast_ferry.record.ManlyFastFerryPurseRecord;
+
 import java.text.NumberFormat;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.Locale;
 
-import com.codebutler.farebot.transit.Refill;
-import com.codebutler.farebot.transit.manly_fast_ferry.record.ManlyFastFerryPurseRecord;
-
 /**
  * Describes top-up amounts "purse credits".
  */
 public class ManlyFastFerryRefill extends Refill {
+    public static final Parcelable.Creator<ManlyFastFerryRefill> CREATOR = new Parcelable.Creator<ManlyFastFerryRefill>() {
+
+        public ManlyFastFerryRefill createFromParcel(Parcel in) {
+            return new ManlyFastFerryRefill(in);
+        }
+
+        public ManlyFastFerryRefill[] newArray(int size) {
+            return new ManlyFastFerryRefill[size];
+        }
+    };
     private GregorianCalendar mEpoch;
     private ManlyFastFerryPurseRecord mPurse;
 
@@ -77,7 +87,7 @@ public class ManlyFastFerryRefill extends Refill {
 
     @Override
     public String getAmountString() {
-        return NumberFormat.getCurrencyInstance(Locale.US).format((double)getAmount() / 100);
+        return NumberFormat.getCurrencyInstance(Locale.US).format((double) getAmount() / 100);
     }
 
     @Override
@@ -85,15 +95,4 @@ public class ManlyFastFerryRefill extends Refill {
         mPurse.writeToParcel(parcel, i);
         parcel.writeLong(mEpoch.getTimeInMillis());
     }
-
-    public static final Parcelable.Creator<ManlyFastFerryRefill> CREATOR = new Parcelable.Creator<ManlyFastFerryRefill>() {
-
-        public ManlyFastFerryRefill createFromParcel(Parcel in) {
-            return new ManlyFastFerryRefill(in);
-        }
-
-        public ManlyFastFerryRefill[] newArray(int size) {
-            return new ManlyFastFerryRefill[size];
-        }
-    };
 }

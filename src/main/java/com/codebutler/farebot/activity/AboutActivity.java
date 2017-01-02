@@ -28,8 +28,9 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 
-import au.id.micolous.farebot.R;
 import com.codebutler.farebot.util.Utils;
+
+import au.id.micolous.farebot.R;
 
 /**
  * @author Michael Farrell
@@ -69,7 +70,7 @@ public class AboutActivity extends Activity {
     }
 
     @Override
-    public boolean onOptionsItemSelected (MenuItem item) {
+    public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == android.R.id.home) {
             finish();
             return true;

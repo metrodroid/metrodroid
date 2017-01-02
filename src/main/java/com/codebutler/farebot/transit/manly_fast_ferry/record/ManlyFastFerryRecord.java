@@ -24,7 +24,8 @@ package com.codebutler.farebot.transit.manly_fast_ferry.record;
  */
 public class ManlyFastFerryRecord {
 
-    protected ManlyFastFerryRecord() {}
+    protected ManlyFastFerryRecord() {
+    }
 
     public static ManlyFastFerryRecord recordFromBytes(byte[] input) {
         ManlyFastFerryRecord record = null;

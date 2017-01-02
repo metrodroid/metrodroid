@@ -21,20 +21,18 @@ package com.codebutler.farebot.transit.orca;
 
 import android.os.Parcel;
 
-import au.id.micolous.metrodroid.MetrodroidApplication;
-import au.id.micolous.farebot.R;
 import com.codebutler.farebot.transit.Station;
 import com.codebutler.farebot.transit.Trip;
 
-public class MergedOrcaTrip extends Trip {
-    private final OrcaTrip mStartTrip;
-    private final OrcaTrip mEndTrip;
+import au.id.micolous.farebot.R;
+import au.id.micolous.metrodroid.MetrodroidApplication;
 
+public class MergedOrcaTrip extends Trip {
     public static final Creator<MergedOrcaTrip> CREATOR = new Creator<MergedOrcaTrip>() {
         public MergedOrcaTrip createFromParcel(Parcel parcel) {
             return new MergedOrcaTrip(
-                (OrcaTrip) parcel.readParcelable(OrcaTrip.class.getClassLoader()),
-                (OrcaTrip) parcel.readParcelable(OrcaTrip.class.getClassLoader())
+                    (OrcaTrip) parcel.readParcelable(OrcaTrip.class.getClassLoader()),
+                    (OrcaTrip) parcel.readParcelable(OrcaTrip.class.getClassLoader())
             );
         }
 
@@ -42,77 +40,95 @@ public class MergedOrcaTrip extends Trip {
             return new MergedOrcaTrip[size];
         }
     };
+    private final OrcaTrip mStartTrip;
+    private final OrcaTrip mEndTrip;
 
     public MergedOrcaTrip(OrcaTrip startTrip, OrcaTrip endTrip) {
         mStartTrip = startTrip;
         mEndTrip = endTrip;
     }
 
-    @Override public long getTimestamp() {
+    @Override
+    public long getTimestamp() {
         return mStartTrip.getTimestamp();
     }
 
-    @Override public long getExitTimestamp() {
+    @Override
+    public long getExitTimestamp() {
         return mEndTrip.getTimestamp();
     }
 
-    @Override public String getRouteName() {
+    @Override
+    public String getRouteName() {
         return mStartTrip.getRouteName();
     }
 
-    @Override public String getAgencyName() {
+    @Override
+    public String getAgencyName() {
         return mStartTrip.getAgencyName();
     }
 
-    @Override public String getShortAgencyName() {
+    @Override
+    public String getShortAgencyName() {
         return mStartTrip.getShortAgencyName();
     }
 
-    @Override public String getFareString() {
+    @Override
+    public String getFareString() {
         if (mEndTrip.mTransType == OrcaTransitData.TRANS_TYPE_CANCEL_TRIP) {
             return MetrodroidApplication.getInstance().getString(R.string.fare_cancelled_format, mStartTrip.getFareString());
         }
         return mStartTrip.getFareString();
     }
 
-    @Override public String getBalanceString() {
+    @Override
+    public String getBalanceString() {
         return mEndTrip.getBalanceString();
     }
 
-    @Override public String getStartStationName() {
+    @Override
+    public String getStartStationName() {
         return mStartTrip.getStartStationName();
     }
 
-    @Override public Station getStartStation() {
+    @Override
+    public Station getStartStation() {
         return mStartTrip.getStartStation();
     }
 
-    @Override public String getEndStationName() {
+    @Override
+    public String getEndStationName() {
         return mEndTrip.getStartStationName();
     }
 
-    @Override public Station getEndStation() {
+    @Override
+    public Station getEndStation() {
         return mEndTrip.getStartStation();
     }
 
-    @Override public boolean hasFare() {
+    @Override
+    public boolean hasFare() {
         return mStartTrip.hasFare();
     }
 
-    @Override public Mode getMode() {
+    @Override
+    public Mode getMode() {
         return mStartTrip.getMode();
     }
 
-    @Override public boolean hasTime() {
+    @Override
+    public boolean hasTime() {
         return mStartTrip.hasTime();
     }
 
-    @Override public void writeToParcel(Parcel parcel, int flags) {
+    @Override
+    public void writeToParcel(Parcel parcel, int flags) {
         mStartTrip.writeToParcel(parcel, flags);
         mEndTrip.writeToParcel(parcel, flags);
     }
 
-    @Override public int describeContents() {
+    @Override
+    public int describeContents() {
         return 0;
     }
 }

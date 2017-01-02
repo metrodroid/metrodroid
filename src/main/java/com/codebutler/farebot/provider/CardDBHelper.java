@@ -46,16 +46,16 @@ public class CardDBHelper extends SQLiteOpenHelper {
             CardsTableColumns.LABEL
     };
 
+    public CardDBHelper(Context context) {
+        super(context, DATABASE_NAME, null, DATABASE_VERSION);
+    }
+
     public static Cursor createCursor(Context context) {
         return context.getContentResolver().query(CardProvider.CONTENT_URI_CARD,
                 PROJECTION,
                 null,
                 null,
                 CardsTableColumns.SCANNED_AT + " DESC, " + CardsTableColumns._ID + " DESC");
-    }
-
-    public CardDBHelper(Context context) {
-        super(context, DATABASE_NAME, null, DATABASE_VERSION);
     }
 
     @Override

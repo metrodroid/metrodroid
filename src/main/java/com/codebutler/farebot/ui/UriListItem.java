@@ -36,5 +36,7 @@ public class UriListItem extends ListItem {
         this.mUri = uri;
     }
 
-    public Uri getUri() { return mUri; }
+    public Uri getUri() {
+        return mUri;
+    }
 }

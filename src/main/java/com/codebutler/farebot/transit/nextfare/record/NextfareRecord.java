@@ -31,7 +31,8 @@ import com.codebutler.farebot.util.Utils;
 public class NextfareRecord {
     private static final String TAG = "NextfareRecord";
 
-    protected NextfareRecord() {}
+    protected NextfareRecord() {
+    }
 
     public static NextfareRecord recordFromBytes(byte[] input, int sectorIndex, int blockIndex) {
         NextfareRecord record = null;

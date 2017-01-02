@@ -34,16 +34,6 @@ import java.util.GregorianCalendar;
  * https://github.com/micolous/metrodroid/wiki/Cubic-Nextfare-MFC
  */
 public class NextfareTransactionRecord extends NextfareRecord implements Parcelable, Comparable<NextfareTransactionRecord> {
-    private static final String TAG = "NextfareTxnRecord";
-    private GregorianCalendar mTimestamp;
-    private int mMode;
-    private int mJourney;
-    private int mStation;
-    private int mValue;
-    private int mChecksum;
-    private boolean mContinuation;
-
-
     public static final Creator<NextfareTransactionRecord> CREATOR = new Creator<NextfareTransactionRecord>() {
         @Override
         public NextfareTransactionRecord createFromParcel(Parcel in) {
@@ -55,6 +45,28 @@ public class NextfareTransactionRecord extends NextfareRecord implements Parcela
             return new NextfareTransactionRecord[size];
         }
     };
+    private static final String TAG = "NextfareTxnRecord";
+    private GregorianCalendar mTimestamp;
+    private int mMode;
+    private int mJourney;
+    private int mStation;
+    private int mValue;
+    private int mChecksum;
+    private boolean mContinuation;
+
+    protected NextfareTransactionRecord() {
+    }
+
+    public NextfareTransactionRecord(Parcel parcel) {
+        mTimestamp = new GregorianCalendar();
+        mTimestamp.setTimeInMillis(parcel.readLong());
+        mMode = parcel.readInt();
+        mJourney = parcel.readInt();
+        mStation = parcel.readInt();
+        mChecksum = parcel.readInt();
+        mContinuation = parcel.readInt() == 1;
+        mValue = parcel.readInt();
+    }
 
     public static NextfareTransactionRecord recordFromBytes(byte[] input) {
         //if (input[0] != 0x31) throw new AssertionError("not a tap record");
@@ -92,11 +104,12 @@ public class NextfareTransactionRecord extends NextfareRecord implements Parcela
         byte[] checksum = Utils.reverseBuffer(input, 14, 2);
         record.mChecksum = Utils.byteArrayToInt(checksum);
 
-        Log.d(TAG, "@" + Utils.isoDateTimeFormat(record.mTimestamp) + ": mode " + record.mMode + ", station " + record.mStation + ", value " + record.mValue + ", journey " + record.mJourney + ", " + (record.mContinuation ? "continuation" : "new trip"));
+        Log.d(TAG, String.format("@%s: mode %d, station %d, value %d, journey %d, %s",
+                Utils.isoDateTimeFormat(record.mTimestamp), record.mMode, record.mStation, record.mValue,
+                record.mJourney, (record.mContinuation ? "continuation" : "new trip")));
+
         return record;
     }
-
-    protected NextfareTransactionRecord() {}
 
     @Override
     public int describeContents() {
@@ -112,17 +125,6 @@ public class NextfareTransactionRecord extends NextfareRecord implements Parcela
         parcel.writeInt(mChecksum);
         parcel.writeInt(mContinuation ? 1 : 0);
         parcel.writeInt(mValue);
-    }
-
-    public NextfareTransactionRecord(Parcel parcel) {
-        mTimestamp = new GregorianCalendar();
-        mTimestamp.setTimeInMillis(parcel.readLong());
-        mMode = parcel.readInt();
-        mJourney = parcel.readInt();
-        mStation = parcel.readInt();
-        mChecksum = parcel.readInt();
-        mContinuation = parcel.readInt() == 1;
-        mValue = parcel.readInt();
     }
 
     public int getMode() {

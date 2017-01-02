@@ -34,6 +34,43 @@ import au.id.micolous.farebot.R;
  */
 public class SeqGoTrip extends NextfareTrip {
 
+    public static final Parcelable.Creator<SeqGoTrip> CREATOR = new Parcelable.Creator<SeqGoTrip>() {
+
+        public SeqGoTrip createFromParcel(Parcel in) {
+            return new SeqGoTrip(in);
+        }
+
+        public SeqGoTrip[] newArray(int size) {
+            return new SeqGoTrip[size];
+        }
+    };
+
+    /**
+     * This constructor is used for unit tests outside of the package
+     *
+     * @param startStation Starting station ID.
+     * @param endStation   Ending station ID.
+     * @param startTime    Start time of the journey.
+     * @param endTime      End time of the journey.
+     * @param journeyId    Journey ID.
+     * @param continuation True if this is a continuation of a previous journey (transfer).
+     */
+    public SeqGoTrip(int startStation, int endStation, GregorianCalendar startTime, GregorianCalendar endTime, int journeyId, boolean continuation) {
+        mStartStation = startStation;
+        mEndStation = endStation;
+        mStartTime = startTime;
+        mEndTime = endTime;
+        mJourneyId = journeyId;
+        mContinuation = continuation;
+    }
+
+    public SeqGoTrip() {
+    }
+
+    public SeqGoTrip(Parcel in) {
+        super(in);
+    }
+
     @Override
     public String getAgencyName() {
         switch (mMode) {
@@ -95,42 +132,7 @@ public class SeqGoTrip extends NextfareTrip {
         return mMode;
     }
 
-    /**
-     * This constructor is used for unit tests outside of the package
-     * @param startStation Starting station ID.
-     * @param endStation Ending station ID.
-     * @param startTime Start time of the journey.
-     * @param endTime End time of the journey.
-     * @param journeyId Journey ID.
-     * @param continuation True if this is a continuation of a previous journey (transfer).
-     */
-    public SeqGoTrip(int startStation, int endStation, GregorianCalendar startTime, GregorianCalendar endTime, int journeyId, boolean continuation) {
-        mStartStation = startStation;
-        mEndStation = endStation;
-        mStartTime = startTime;
-        mEndTime = endTime;
-        mJourneyId = journeyId;
-        mContinuation = continuation;
-    }
-
     public int getJourneyId() {
         return mJourneyId;
     }
-
-    public SeqGoTrip() {}
-
-    public SeqGoTrip(Parcel in) {
-        super(in);
-    }
-
-    public static final Parcelable.Creator<SeqGoTrip> CREATOR = new Parcelable.Creator<SeqGoTrip>() {
-
-        public SeqGoTrip createFromParcel(Parcel in) {
-            return new SeqGoTrip(in);
-        }
-
-        public SeqGoTrip[] newArray(int size) {
-            return new SeqGoTrip[size];
-        }
-    };
 }

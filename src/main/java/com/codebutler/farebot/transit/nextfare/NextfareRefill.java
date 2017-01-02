@@ -30,10 +30,24 @@ import java.util.Locale;
  * Represents a top-up event on Nextfare.
  */
 public class NextfareRefill extends Refill {
+    public static final Creator<NextfareRefill> CREATOR = new Creator<NextfareRefill>() {
+
+        public NextfareRefill createFromParcel(Parcel in) {
+            return new NextfareRefill(in);
+        }
+
+        public NextfareRefill[] newArray(int size) {
+            return new NextfareRefill[size];
+        }
+    };
     protected NextfareTopupRecord mTopup;
 
     public NextfareRefill(NextfareTopupRecord topup) {
         mTopup = topup;
+    }
+
+    public NextfareRefill(Parcel parcel) {
+        mTopup = new NextfareTopupRecord(parcel);
     }
 
     @Override
@@ -58,7 +72,7 @@ public class NextfareRefill extends Refill {
 
     @Override
     public String getAmountString() {
-        double amount = (double)getAmount() / 100;
+        double amount = (double) getAmount() / 100;
 
         if (amount >= 0) {
             return "+ " + NumberFormat.getCurrencyInstance(Locale.US).format(amount);
@@ -71,19 +85,4 @@ public class NextfareRefill extends Refill {
     public void writeToParcel(Parcel parcel, int i) {
         mTopup.writeToParcel(parcel, i);
     }
-
-    public NextfareRefill(Parcel parcel) {
-        mTopup = new NextfareTopupRecord(parcel);
-    }
-
-    public static final Creator<NextfareRefill> CREATOR = new Creator<NextfareRefill>() {
-
-        public NextfareRefill createFromParcel(Parcel in) {
-            return new NextfareRefill(in);
-        }
-
-        public NextfareRefill[] newArray(int size) {
-            return new NextfareRefill[size];
-        }
-    };
 }

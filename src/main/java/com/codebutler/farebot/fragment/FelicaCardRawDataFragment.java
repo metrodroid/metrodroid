@@ -34,8 +34,6 @@ import android.widget.ExpandableListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import au.id.micolous.metrodroid.MetrodroidApplication;
-import au.id.micolous.farebot.R;
 import com.codebutler.farebot.activity.AdvancedCardInfoActivity;
 import com.codebutler.farebot.card.Card;
 import com.codebutler.farebot.card.CardRawDataFragmentClass;
@@ -51,6 +49,9 @@ import org.simpleframework.xml.Serializer;
 import java.util.ArrayList;
 import java.util.List;
 
+import au.id.micolous.farebot.R;
+import au.id.micolous.metrodroid.MetrodroidApplication;
+
 import static android.view.ViewGroup.LayoutParams.MATCH_PARENT;
 import static android.view.ViewGroup.LayoutParams.WRAP_CONTENT;
 
@@ -65,11 +66,13 @@ public class FelicaCardRawDataFragment extends ExpandableListFragment {
         setListAdapter(new FelicaRawDataAdapter(getActivity(), mCard));
     }
 
-    @Override public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         return inflater.inflate(R.layout.fragment_card_raw_data, null);
     }
 
-    @Override public boolean onListChildClick(ExpandableListView parent, View v, int groupPosition, int childPosition, long id) {
+    @Override
+    public boolean onListChildClick(ExpandableListView parent, View v, int groupPosition, int childPosition, long id) {
         FelicaService service = (FelicaService) getExpandableListAdapter().getChild(groupPosition, childPosition);
 
         List<String> items = new ArrayList<>();
@@ -79,28 +82,28 @@ public class FelicaCardRawDataFragment extends ExpandableListFragment {
 
         final ArrayAdapter<String> adapter = new ArrayAdapter(getActivity(), R.layout.monospace_list_item, items);
         new AlertDialog.Builder(getActivity())
-            .setTitle(String.format("Service 0x%s", Integer.toHexString(service.getServiceCode())))
-            .setPositiveButton(android.R.string.ok, null)
-            .setAdapter(adapter, new DialogInterface.OnClickListener() {
-                public void onClick(DialogInterface dialogInterface, int position) {
-                    @SuppressWarnings("deprecation")
-                    ClipboardManager clipboard = (ClipboardManager) getActivity().getSystemService(Activity.CLIPBOARD_SERVICE);
-                    clipboard.setText(adapter.getItem(position));
-                    Toast.makeText(getActivity(), "Copied!", Toast.LENGTH_SHORT).show();
-                }
-            })
-            .show();
+                .setTitle(String.format("Service 0x%s", Integer.toHexString(service.getServiceCode())))
+                .setPositiveButton(android.R.string.ok, null)
+                .setAdapter(adapter, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialogInterface, int position) {
+                        @SuppressWarnings("deprecation")
+                        ClipboardManager clipboard = (ClipboardManager) getActivity().getSystemService(Activity.CLIPBOARD_SERVICE);
+                        clipboard.setText(adapter.getItem(position));
+                        Toast.makeText(getActivity(), "Copied!", Toast.LENGTH_SHORT).show();
+                    }
+                })
+                .show();
 
         return true;
     }
 
     private static class FelicaRawDataAdapter extends BaseExpandableListAdapter {
-        private Activity   mActivity;
+        private Activity mActivity;
         private FelicaCard mCard;
 
         private FelicaRawDataAdapter(Activity activity, FelicaCard card) {
             mActivity = activity;
-            mCard     = card;
+            mCard = card;
         }
 
         public int getGroupCount() {
@@ -145,7 +148,8 @@ public class FelicaCardRawDataFragment extends ExpandableListFragment {
             FelicaSystem system = mCard.getSystems().get(groupPosition);
 
             TextView textView = (TextView) view.findViewById(android.R.id.text1);
-            textView.setText(String.format("System: 0x%s (%s)", Integer.toHexString(system.getCode()), FelicaUtils.getFriendlySystemName(system.getCode())));
+            textView.setText(String.format("System: 0x%s (%s)",
+                    Integer.toHexString(system.getCode()), FelicaUtils.getFriendlySystemName(system.getCode())));
 
             return view;
         }
@@ -163,7 +167,8 @@ public class FelicaCardRawDataFragment extends ExpandableListFragment {
             FelicaSystem system = mCard.getSystems().get(groupPosition);
             FelicaService service = system.getServices().get(childPosition);
 
-            textView1.setText(String.format("Service: 0x%s (%s)", Integer.toHexString(service.getServiceCode()), FelicaUtils.getFriendlyServiceName(system.getCode(), service.getServiceCode())));
+            textView1.setText(String.format("Service: 0x%s (%s)",
+                    Integer.toHexString(service.getServiceCode()), FelicaUtils.getFriendlyServiceName(system.getCode(), service.getServiceCode())));
             textView2.setText(Utils.localizePlural(R.plurals.block_count, service.getBlocks().size(), service.getBlocks().size()));
 
             return view;

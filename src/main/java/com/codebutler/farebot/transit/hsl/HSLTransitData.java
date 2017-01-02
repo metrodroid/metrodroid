@@ -21,9 +21,6 @@ package com.codebutler.farebot.transit.hsl;
 
 import android.os.Parcel;
 
-import au.id.micolous.metrodroid.MetrodroidApplication;
-import au.id.micolous.farebot.R;
-
 import com.codebutler.farebot.card.Card;
 import com.codebutler.farebot.card.desfire.DesfireCard;
 import com.codebutler.farebot.card.desfire.files.DesfireFile;
@@ -42,42 +39,44 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
 
-public class HSLTransitData extends TransitData {
-    private String        mSerialNumber;
-    private double        mBalance;
-    private List<HSLTrip> mTrips;
-    private boolean       mHasKausi;
-    private long          mKausiStart;
-    private long          mKausiEnd;
-    private long          mKausiPrevStart;
-    private long          mKausiPrevEnd;
-    private long          mKausiPurchasePrice;
-    private long          mKausiLastUse;
-    private long          mKausiPurchase;
-    private HSLRefill     mLastRefill;
-    private boolean       mKausiNoData;
-    private long          mArvoExit;
-    private long          mArvoPurchase;
-    private long          mArvoExpire;
-    private long          mArvoPax;
-    private long          mArvoPurchasePrice;
-    private long          mArvoXfer;
-    private long          mArvoDiscoGroup;
-    private long          mArvoMystery1;
-    private long          mArvoDuration;
-    private long          mArvoRegional;
-    private long          mArvoJOREExt;
-    private long          mArvoVehicleNumber;
-    private long          mArvoUnknown;
-    private long          mArvoLineJORE;
-    private long          mKausiVehicleNumber;
-    private long          mKausiUnknown;
-    private long          mKausiLineJORE;
-    private long          mKausiJOREExt;
-    private long          mArvoDirection;
-    private long          mKausiDirection;
+import au.id.micolous.farebot.R;
+import au.id.micolous.metrodroid.MetrodroidApplication;
 
+public class HSLTransitData extends TransitData {
     private static final long EPOCH = 0x32C97ED0;
+    private String mSerialNumber;
+    private double mBalance;
+    private List<HSLTrip> mTrips;
+    private boolean mHasKausi;
+    private long mKausiStart;
+    private long mKausiEnd;
+    private long mKausiPrevStart;
+    private long mKausiPrevEnd;
+    private long mKausiPurchasePrice;
+    private long mKausiLastUse;
+    private long mKausiPurchase;
+    private HSLRefill mLastRefill;
+    private boolean mKausiNoData;
+    private long mArvoExit;
+    private long mArvoPurchase;
+    private long mArvoExpire;
+    private long mArvoPax;
+    private long mArvoPurchasePrice;
+    private long mArvoXfer;
+    private long mArvoDiscoGroup;
+    private long mArvoMystery1;
+    private long mArvoDuration;
+    private long mArvoRegional;
+    private long mArvoJOREExt;
+    private long mArvoVehicleNumber;
+    private long mArvoUnknown;
+    private long mArvoLineJORE;
+    private long mKausiVehicleNumber;
+    private long mKausiUnknown;
+    private long mKausiLineJORE;
+    private long mKausiJOREExt;
+    private long mArvoDirection;
+    private long mKausiDirection;
     /*
     private static final String[] regionNames = {
         "N/A", "Helsinki", "Espoo", "Vantaa", "Koko alue", "Seutu", "", "", "", "",  // 0-9
@@ -91,63 +90,32 @@ public class HSLTransitData extends TransitData {
         put(16L, "Tram");
     }});*/
 
-    public static boolean check(Card card) {
-        return (card instanceof DesfireCard) && (((DesfireCard) card).getApplication(0x1120ef) != null);
-    }
-
-    public static TransitIdentity parseTransitIdentity(Card card) {
-        try {
-            byte[] data = ((DesfireCard) card).getApplication(0x1120ef).getFile(0x08).getData();
-            return new TransitIdentity("HSL", Utils.getHexString(data).substring(2, 20));
-        } catch (Exception ex) {
-            throw new RuntimeException("Error parsing HSL serial", ex);
-        }
-    }
-
     public HSLTransitData(Parcel parcel) {
-        mSerialNumber       = parcel.readString();
-        mBalance            = parcel.readDouble();
-        mArvoMystery1       = parcel.readLong();
-        mArvoDuration       = parcel.readLong();
-        mArvoRegional       = parcel.readLong();
-        mArvoExit           = parcel.readLong();
-        mArvoPurchasePrice  = parcel.readLong();
-        mArvoDiscoGroup     = parcel.readLong();
-        mArvoPurchase       = parcel.readLong();
-        mArvoExpire         = parcel.readLong();
-        mArvoPax            = parcel.readLong();
-        mArvoXfer           = parcel.readLong();
-        mArvoVehicleNumber  = parcel.readLong();
-        mArvoUnknown        = parcel.readLong();
-        mArvoLineJORE       = parcel.readLong();
-        mArvoJOREExt        = parcel.readLong();
-        mArvoDirection      = parcel.readLong();
+        mSerialNumber = parcel.readString();
+        mBalance = parcel.readDouble();
+        mArvoMystery1 = parcel.readLong();
+        mArvoDuration = parcel.readLong();
+        mArvoRegional = parcel.readLong();
+        mArvoExit = parcel.readLong();
+        mArvoPurchasePrice = parcel.readLong();
+        mArvoDiscoGroup = parcel.readLong();
+        mArvoPurchase = parcel.readLong();
+        mArvoExpire = parcel.readLong();
+        mArvoPax = parcel.readLong();
+        mArvoXfer = parcel.readLong();
+        mArvoVehicleNumber = parcel.readLong();
+        mArvoUnknown = parcel.readLong();
+        mArvoLineJORE = parcel.readLong();
+        mArvoJOREExt = parcel.readLong();
+        mArvoDirection = parcel.readLong();
         mKausiVehicleNumber = parcel.readLong();
-        mKausiUnknown       = parcel.readLong();
-        mKausiLineJORE      = parcel.readLong();
-        mKausiJOREExt       = parcel.readLong();
-        mKausiDirection     = parcel.readLong();
+        mKausiUnknown = parcel.readLong();
+        mKausiLineJORE = parcel.readLong();
+        mKausiJOREExt = parcel.readLong();
+        mKausiDirection = parcel.readLong();
 
         mTrips = new ArrayList<>();
         parcel.readTypedList(mTrips, HSLTrip.CREATOR);
-    }
-
-    public static long bitsToLong(int start, int len, byte[] data) {
-        long ret = 0;
-        for (int i = start; i < start + len; ++i) {
-            long bit = ((data[i / 8] >> (7 - i % 8)) & 1);
-            ret = ret | (bit << ((start + len - 1) - i));
-        }
-        return ret;
-    }
-
-    public static long bitsToLong(int start, int len, long[] data) {
-        long ret = 0;
-        for (int i = start; i < start + len; ++i) {
-            long bit = ((data[i / 8] >> (7 - i % 8)) & 1);
-            ret = ret | (bit << ((start + len - 1) - i));
-        }
-        return ret;
     }
 
     public HSLTransitData(Card card) {
@@ -289,15 +257,48 @@ public class HSLTransitData extends TransitData {
         }
     }
 
+    public static boolean check(Card card) {
+        return (card instanceof DesfireCard) && (((DesfireCard) card).getApplication(0x1120ef) != null);
+    }
+
+    public static TransitIdentity parseTransitIdentity(Card card) {
+        try {
+            byte[] data = ((DesfireCard) card).getApplication(0x1120ef).getFile(0x08).getData();
+            return new TransitIdentity("HSL", Utils.getHexString(data).substring(2, 20));
+        } catch (Exception ex) {
+            throw new RuntimeException("Error parsing HSL serial", ex);
+        }
+    }
+
+    public static long bitsToLong(int start, int len, byte[] data) {
+        long ret = 0;
+        for (int i = start; i < start + len; ++i) {
+            long bit = ((data[i / 8] >> (7 - i % 8)) & 1);
+            ret = ret | (bit << ((start + len - 1) - i));
+        }
+        return ret;
+    }
+
+    public static long bitsToLong(int start, int len, long[] data) {
+        long ret = 0;
+        for (int i = start; i < start + len; ++i) {
+            long bit = ((data[i / 8] >> (7 - i % 8)) & 1);
+            ret = ret | (bit << ((start + len - 1) - i));
+        }
+        return ret;
+    }
+
     public static long cardDateToTimestamp(long day, long minute) {
         return (EPOCH) + day * (60 * 60 * 24) + minute * 60;
     }
 
-    @Override public String getCardName() {
+    @Override
+    public String getCardName() {
         return "HSL";
     }
 
-    @Override public String getBalanceString() {
+    @Override
+    public String getBalanceString() {
         MetrodroidApplication app = MetrodroidApplication.getInstance();
         String ret = NumberFormat.getCurrencyInstance(Locale.GERMANY).format(mBalance / 100);
         if (mHasKausi)
@@ -369,24 +370,29 @@ public class HSLTransitData extends TransitData {
     }
     */
 
-    @Override public String getSerialNumber() {
+    @Override
+    public String getSerialNumber() {
         return mSerialNumber;
     }
 
-    @Override public Trip[] getTrips() {
+    @Override
+    public Trip[] getTrips() {
         return mTrips.toArray(new HSLTrip[mTrips.size()]);
     }
 
-    @Override public Refill[] getRefills() {
+    @Override
+    public Refill[] getRefills() {
         Refill[] ret = {mLastRefill};
         return ret;
     }
 
-    @Override public Subscription[] getSubscriptions() {
+    @Override
+    public Subscription[] getSubscriptions() {
         return null;
     }
 
-    @Override public List<ListItem> getInfo() {
+    @Override
+    public List<ListItem> getInfo() {
         return null;
     }
 

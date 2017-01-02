@@ -29,55 +29,16 @@ import java.util.List;
 
 public abstract class Trip implements Parcelable {
     public static final Creator<Trip> CREATOR = new Creator<Trip>() {
-        @Override public Trip createFromParcel(Parcel parcel) {
+        @Override
+        public Trip createFromParcel(Parcel parcel) {
             return null;
         }
 
-        @Override public Trip[] newArray(int size) {
+        @Override
+        public Trip[] newArray(int size) {
             return new Trip[size];
         }
     };
-
-    public abstract long getTimestamp();
-    public abstract long getExitTimestamp();
-    public abstract String getRouteName();
-    public abstract String getAgencyName();
-    public abstract String getShortAgencyName();
-    public abstract String getBalanceString();
-    public abstract String getStartStationName();
-    public abstract Station getStartStation();
-    public abstract String getEndStationName();
-    public abstract Station getEndStation();
-
-    /**
-     * If true, it means that this activity has a known fare associated with it.  This should be
-     * true for most transaction types.
-     *
-     * Reasons for this being false, including not actually having the trip cost available, and for
-     * events like card activation and card banning which have no cost associated with the action.
-     *
-     * If a trip is free of charge, this should still be set to true.  However, if the trip is
-     * associated with a monthly travel pass, then this should be set to false.
-     *
-     * @return true if there is a financial transaction associated with the Trip.
-     */
-    public abstract boolean hasFare();
-
-    /**
-     * Formats the cost of the trip in the appropriate local currency.  Be aware that your
-     * implementation should use language-specific formatting and not rely on the system language
-     * for that information.
-     *
-     * For example, if a phone is set to English and travels to Japan, it does not make sense to
-     * format their travel costs in dollars.  Instead, it should be shown in Yen, which the Japanese
-     * currency formatter does.
-     *
-     * @return The cost of the fare formatted in the local currency of the card.
-     */
-    public abstract String getFareString();
-
-    public abstract Mode getMode();
-    public abstract boolean hasTime();
 
     public static String formatStationNames(Trip trip) {
         List<String> stationText = new ArrayList<>();
@@ -93,6 +54,57 @@ public abstract class Trip implements Parcelable {
         }
     }
 
+    public abstract long getTimestamp();
+
+    public abstract long getExitTimestamp();
+
+    public abstract String getRouteName();
+
+    public abstract String getAgencyName();
+
+    public abstract String getShortAgencyName();
+
+    public abstract String getBalanceString();
+
+    public abstract String getStartStationName();
+
+    public abstract Station getStartStation();
+
+    public abstract String getEndStationName();
+
+    public abstract Station getEndStation();
+
+    /**
+     * If true, it means that this activity has a known fare associated with it.  This should be
+     * true for most transaction types.
+     * <p>
+     * Reasons for this being false, including not actually having the trip cost available, and for
+     * events like card activation and card banning which have no cost associated with the action.
+     * <p>
+     * If a trip is free of charge, this should still be set to true.  However, if the trip is
+     * associated with a monthly travel pass, then this should be set to false.
+     *
+     * @return true if there is a financial transaction associated with the Trip.
+     */
+    public abstract boolean hasFare();
+
+    /**
+     * Formats the cost of the trip in the appropriate local currency.  Be aware that your
+     * implementation should use language-specific formatting and not rely on the system language
+     * for that information.
+     * <p>
+     * For example, if a phone is set to English and travels to Japan, it does not make sense to
+     * format their travel costs in dollars.  Instead, it should be shown in Yen, which the Japanese
+     * currency formatter does.
+     *
+     * @return The cost of the fare formatted in the local currency of the card.
+     */
+    public abstract String getFareString();
+
+    public abstract Mode getMode();
+
+    public abstract boolean hasTime();
+
     public enum Mode {
         BUS,
         TRAIN,
@@ -107,7 +119,8 @@ public abstract class Trip implements Parcelable {
     }
 
     public static class Comparator implements java.util.Comparator<Trip> {
-        @Override public int compare(Trip trip, Trip trip1) {
+        @Override
+        public int compare(Trip trip, Trip trip1) {
             return Long.valueOf(trip1.getTimestamp()).compareTo(trip.getTimestamp());
         }
     }

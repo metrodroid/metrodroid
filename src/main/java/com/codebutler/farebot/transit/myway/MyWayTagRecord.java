@@ -42,8 +42,8 @@ public class MyWayTagRecord implements Comparable<MyWayTagRecord> {
 
         mTagOn = record[7] == 0x10;
 
-        byte[] route = Arrays.copyOfRange(record, 8, 4+8);
-        route = ArrayUtils.removeAllOccurences(route, (byte)0x00);
+        byte[] route = Arrays.copyOfRange(record, 8, 4 + 8);
+        route = ArrayUtils.removeAllOccurences(route, (byte) 0x00);
         mRoute = new String(route);
 
         byte[] cost = Utils.reverseBuffer(record, 13, 2);

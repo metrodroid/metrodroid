@@ -27,9 +27,9 @@ import android.content.UriMatcher;
 import android.database.sqlite.SQLiteQueryBuilder;
 import android.net.Uri;
 
-import au.id.micolous.farebot.BuildConfig;
-
 import java.util.Date;
+
+import au.id.micolous.farebot.BuildConfig;
 
 public class CardKeyProvider extends BetterContentProvider {
     public static final String AUTHORITY = BuildConfig.APPLICATION_ID + ".keyprovider";
@@ -37,28 +37,31 @@ public class CardKeyProvider extends BetterContentProvider {
 
     public CardKeyProvider() {
         super(
-            KeysDBHelper.class,
-            KeysDBHelper.KEY_DIR_TYPE,
-            KeysDBHelper.KEY_ITEM_TYPE,
-            KeysTableColumns.TABLE_NAME,
-            CONTENT_URI
+                KeysDBHelper.class,
+                KeysDBHelper.KEY_DIR_TYPE,
+                KeysDBHelper.KEY_ITEM_TYPE,
+                KeysTableColumns.TABLE_NAME,
+                CONTENT_URI
         );
     }
 
-    @Override public Uri insert(Uri uri, ContentValues values) {
+    @Override
+    public Uri insert(Uri uri, ContentValues values) {
         long now = new Date().getTime();
         values.put(KeysTableColumns.CREATED_AT, now);
         return super.insert(uri, values);
     }
 
-    @Override protected UriMatcher createUriMatcher(Uri contentUri, String basePath) {
+    @Override
+    protected UriMatcher createUriMatcher(Uri contentUri, String basePath) {
         UriMatcher matcher = new UriMatcher(UriMatcher.NO_MATCH);
-        matcher.addURI(contentUri.getAuthority(), basePath,        CODE_COLLECTION);
+        matcher.addURI(contentUri.getAuthority(), basePath, CODE_COLLECTION);
         matcher.addURI(contentUri.getAuthority(), basePath + "/*", CODE_SINGLE);
         return matcher;
     }
 
-    @Override protected void appendWheres(SQLiteQueryBuilder builder, UriMatcher matcher, Uri uri) {
+    @Override
+    protected void appendWheres(SQLiteQueryBuilder builder, UriMatcher matcher, Uri uri) {
         switch (matcher.match(uri)) {
             case CODE_COLLECTION:
                 // Nothing needed here

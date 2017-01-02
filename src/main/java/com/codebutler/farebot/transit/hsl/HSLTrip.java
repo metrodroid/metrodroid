@@ -20,9 +20,6 @@ package com.codebutler.farebot.transit.hsl;
 
 import android.os.Parcel;
 
-import au.id.micolous.metrodroid.MetrodroidApplication;
-import au.id.micolous.farebot.R;
-
 import com.codebutler.farebot.card.desfire.files.DesfireRecord;
 import com.codebutler.farebot.transit.Station;
 import com.codebutler.farebot.transit.Trip;
@@ -30,12 +27,24 @@ import com.codebutler.farebot.transit.Trip;
 import java.text.NumberFormat;
 import java.util.Locale;
 
+import au.id.micolous.farebot.R;
+import au.id.micolous.metrodroid.MetrodroidApplication;
+
 public class HSLTrip extends Trip {
+    public static final Creator<HSLTrip> CREATOR = new Creator<HSLTrip>() {
+        public HSLTrip createFromParcel(Parcel parcel) {
+            return new HSLTrip(parcel);
+        }
+
+        public HSLTrip[] newArray(int size) {
+            return new HSLTrip[size];
+        }
+    };
+    final long mNewBalance;
     String mLine;
     long mVehicleNumber;
     long mTimestamp;
     long mFare;
-    final long mNewBalance;
     long mArvo;
     long mExpireTimestamp;
     long mPax;
@@ -63,20 +72,6 @@ public class HSLTrip extends Trip {
 
     }
 
-    public double getExpireTimestamp() {
-        return this.mExpireTimestamp;
-    }
-
-    public static final Creator<HSLTrip> CREATOR = new Creator<HSLTrip>() {
-        public HSLTrip createFromParcel(Parcel parcel) {
-            return new HSLTrip(parcel);
-        }
-
-        public HSLTrip[] newArray(int size) {
-            return new HSLTrip[size];
-        }
-    };
-
     HSLTrip(Parcel parcel) {
         // mArvo, mTimestamp, mExpireTimestamp, mFare, mPax, mNewBalance
         mArvo = parcel.readLong();
@@ -94,15 +89,22 @@ public class HSLTrip extends Trip {
         mLine = null;
     }
 
-    @Override public long getTimestamp() {
+    public double getExpireTimestamp() {
+        return this.mExpireTimestamp;
+    }
+
+    @Override
+    public long getTimestamp() {
         return mTimestamp;
     }
 
-    @Override public long getExitTimestamp() {
+    @Override
+    public long getExitTimestamp() {
         return 0;
     }
 
-    @Override public String getAgencyName() {
+    @Override
+    public String getAgencyName() {
         MetrodroidApplication app = MetrodroidApplication.getInstance();
         String pax = app.getString(R.string.hsl_person_format, mPax);
         if (mArvo == 1) {
@@ -115,39 +117,47 @@ public class HSLTrip extends Trip {
         }
     }
 
-    @Override public String getShortAgencyName() {
+    @Override
+    public String getShortAgencyName() {
         return getAgencyName();
     }
 
-    @Override public String getRouteName() {
+    @Override
+    public String getRouteName() {
         if (mLine != null) {
-             // FIXME: i18n
+            // FIXME: i18n
             return String.format("Line %s, Vehicle %s", mLine.substring(1), mVehicleNumber);
         }
         return null;
     }
 
-    @Override public String getFareString() {
+    @Override
+    public String getFareString() {
         return NumberFormat.getCurrencyInstance(Locale.GERMANY).format(mFare / 100.0);
     }
 
-    @Override public boolean hasFare() {
+    @Override
+    public boolean hasFare() {
         return true;
     }
 
-    @Override public String getBalanceString() {
+    @Override
+    public String getBalanceString() {
         return NumberFormat.getCurrencyInstance(Locale.GERMANY).format(mNewBalance / 100);
     }
 
-    @Override public String getEndStationName() {
+    @Override
+    public String getEndStationName() {
         return null;
     }
 
-    @Override public Station getEndStation() {
+    @Override
+    public Station getEndStation() {
         return null;
     }
 
-    @Override public Mode getMode() {
+    @Override
+    public Mode getMode() {
         if (mLine != null) {
             if (mLine.equals("1300"))
                 return Mode.METRO;
@@ -163,7 +173,8 @@ public class HSLTrip extends Trip {
         }
     }
 
-    @Override public boolean hasTime() {
+    @Override
+    public boolean hasTime() {
         return false;
     }
 
@@ -173,11 +184,13 @@ public class HSLTrip extends Trip {
         return mPax;
     }
 
-    @Override public String getStartStationName() {
+    @Override
+    public String getStartStationName() {
         return null;
     }
 
-    @Override public Station getStartStation() {
+    @Override
+    public Station getStartStation() {
         return null;
     }
 

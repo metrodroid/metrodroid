@@ -20,10 +20,6 @@ package com.codebutler.farebot.transit;
 
 import android.os.Parcel;
 
-import com.codebutler.farebot.transit.Refill;
-import com.codebutler.farebot.transit.Station;
-import com.codebutler.farebot.transit.Trip;
-
 /**
  * Wrapper around Refills to make them like Trips, so Trips become like history.  This is similar
  * to what the Japanese cards (Edy, Suica) already had implemented for themselves.

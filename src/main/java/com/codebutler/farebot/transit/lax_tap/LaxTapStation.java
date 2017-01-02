@@ -28,6 +28,19 @@ import com.codebutler.farebot.transit.Station;
  */
 public class LaxTapStation extends Station {
 
+    public static final Creator<LaxTapStation> CREATOR = new Creator<LaxTapStation>() {
+        @Override
+        public LaxTapStation createFromParcel(Parcel in) {
+            return new LaxTapStation(in);
+        }
+
+        @Override
+        public LaxTapStation[] newArray(int size) {
+            return new LaxTapStation[size];
+        }
+    };
+
+
     public LaxTapStation(Cursor cursor, int agencyId) {
         super(
                 LaxTapData.AGENCIES.get(agencyId, null),
@@ -40,20 +53,7 @@ public class LaxTapStation extends Station {
 
     }
 
-
     protected LaxTapStation(Parcel parcel) {
         super(parcel);
     }
-
-    public static final Creator<LaxTapStation> CREATOR = new Creator<LaxTapStation>() {
-        @Override
-        public LaxTapStation createFromParcel(Parcel in) {
-            return new LaxTapStation(in);
-        }
-
-        @Override
-        public LaxTapStation[] newArray(int size) {
-            return new LaxTapStation[size];
-        }
-    };
 }

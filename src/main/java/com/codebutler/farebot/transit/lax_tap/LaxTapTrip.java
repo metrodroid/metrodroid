@@ -35,6 +35,24 @@ import static com.codebutler.farebot.transit.lax_tap.LaxTapData.METRO_BUS_START;
  */
 public class LaxTapTrip extends NextfareTrip {
 
+    public static final Creator<LaxTapTrip> CREATOR = new Creator<LaxTapTrip>() {
+
+        public LaxTapTrip createFromParcel(Parcel in) {
+            return new LaxTapTrip(in);
+        }
+
+        public LaxTapTrip[] newArray(int size) {
+            return new LaxTapTrip[size];
+        }
+    };
+
+    public LaxTapTrip() {
+    }
+
+    public LaxTapTrip(Parcel in) {
+        super(in);
+    }
+
     @Override
     public String getAgencyName() {
         String agency = LaxTapData.AGENCIES.get(mModeInt, null);
@@ -112,21 +130,4 @@ public class LaxTapTrip extends NextfareTrip {
     public Mode getMode() {
         return mMode;
     }
-
-    public LaxTapTrip() {}
-
-    public LaxTapTrip(Parcel in) {
-        super(in);
-    }
-
-    public static final Creator<LaxTapTrip> CREATOR = new Creator<LaxTapTrip>() {
-
-        public LaxTapTrip createFromParcel(Parcel in) {
-            return new LaxTapTrip(in);
-        }
-
-        public LaxTapTrip[] newArray(int size) {
-            return new LaxTapTrip[size];
-        }
-    };
 }

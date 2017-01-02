@@ -28,8 +28,6 @@ import android.widget.BaseExpandableListAdapter;
 import android.widget.ExpandableListView;
 import android.widget.TextView;
 
-import au.id.micolous.metrodroid.MetrodroidApplication;
-import au.id.micolous.farebot.R;
 import com.codebutler.farebot.activity.AdvancedCardInfoActivity;
 import com.codebutler.farebot.card.Card;
 import com.codebutler.farebot.card.classic.ClassicBlock;
@@ -43,6 +41,9 @@ import org.simpleframework.xml.Serializer;
 
 import java.util.List;
 
+import au.id.micolous.farebot.R;
+import au.id.micolous.metrodroid.MetrodroidApplication;
+
 public class ClassicCardRawDataFragment extends ExpandableListFragment {
     private ClassicCard mCard;
 
@@ -53,16 +54,17 @@ public class ClassicCardRawDataFragment extends ExpandableListFragment {
         setListAdapter(new ClassicRawDataAdapter(getActivity(), mCard));
     }
 
-    @Override public boolean onListChildClick(ExpandableListView parent, View v, int groupPosition, int childPosition, long id) {
+    @Override
+    public boolean onListChildClick(ExpandableListView parent, View v, int groupPosition, int childPosition, long id) {
         ClassicSector sector = mCard.getSector(groupPosition);
-        ClassicBlock  block  = sector.getBlock(childPosition);
+        ClassicBlock block = sector.getBlock(childPosition);
 
         String data = Utils.getHexString(block.getData(), "");
 
         String sectorTitle = getString(R.string.sector_title_format, sector.getIndex());
         String blockTitle = getString(R.string.block_title_format, block.getIndex());
         new AlertDialog.Builder(getActivity())
-            .setTitle(String.format("%s, %s", sectorTitle, blockTitle))
+                .setTitle(String.format("%s, %s", sectorTitle, blockTitle))
                 .setPositiveButton(android.R.string.ok, null)
                 .setMessage(data)
                 .show();
@@ -79,11 +81,13 @@ public class ClassicCardRawDataFragment extends ExpandableListFragment {
             this.mCard = mCard;
         }
 
-        @Override public int getGroupCount() {
+        @Override
+        public int getGroupCount() {
             return mCard.getSectors().size();
         }
 
-        @Override public int getChildrenCount(int groupPosition) {
+        @Override
+        public int getChildrenCount(int groupPosition) {
             ClassicSector sector = mCard.getSector(groupPosition);
             if (!(sector instanceof UnauthorizedClassicSector)) {
                 List<ClassicBlock> blocks = sector.getBlocks();
@@ -93,27 +97,33 @@ public class ClassicCardRawDataFragment extends ExpandableListFragment {
             }
         }
 
-        @Override public Object getGroup(int groupPosition) {
+        @Override
+        public Object getGroup(int groupPosition) {
             return mCard.getSector(groupPosition);
         }
 
-        @Override public Object getChild(int groupPosition, int childPosition) {
+        @Override
+        public Object getChild(int groupPosition, int childPosition) {
             return mCard.getSector(groupPosition).getBlocks().get(childPosition);
         }
 
-        @Override public long getGroupId(int groupPosition) {
+        @Override
+        public long getGroupId(int groupPosition) {
             return groupPosition;
         }
 
-        @Override public long getChildId(int groupPosition, int childPosition) {
+        @Override
+        public long getChildId(int groupPosition, int childPosition) {
             return groupPosition + childPosition + 100000;
         }
 
-        @Override public boolean hasStableIds() {
+        @Override
+        public boolean hasStableIds() {
             return true;
         }
 
-        @Override public View getGroupView(int groupPosition, boolean isExpanded, View convertView, ViewGroup parent) {
+        @Override
+        public View getGroupView(int groupPosition, boolean isExpanded, View convertView, ViewGroup parent) {
             View view = convertView;
             if (view == null) {
                 view = mActivity.getLayoutInflater().inflate(android.R.layout.simple_expandable_list_item_1, parent, false);
@@ -134,7 +144,8 @@ public class ClassicCardRawDataFragment extends ExpandableListFragment {
             return view;
         }
 
-        @Override public View getChildView(int groupPosition, int childPosition, boolean isLastChild, View convertView, ViewGroup parent) {
+        @Override
+        public View getChildView(int groupPosition, int childPosition, boolean isLastChild, View convertView, ViewGroup parent) {
             View view = convertView;
             if (view == null) {
                 view = mActivity.getLayoutInflater().inflate(android.R.layout.simple_expandable_list_item_2, parent, false);
@@ -148,7 +159,8 @@ public class ClassicCardRawDataFragment extends ExpandableListFragment {
             return view;
         }
 
-        @Override public boolean isChildSelectable(int groupPosition, int childPosition) {
+        @Override
+        public boolean isChildSelectable(int groupPosition, int childPosition) {
             return true;
         }
     }

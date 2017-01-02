@@ -31,11 +31,22 @@ import org.simpleframework.xml.Attribute;
 import org.simpleframework.xml.Element;
 import org.simpleframework.xml.Root;
 
-@Root(name="file")
+@Root(name = "file")
 public class DesfireFile {
-    @Attribute(name="id") private int mId;
-    @Element(name="settings", required=false) private DesfireFileSettings mSettings;
-    @Element(name="data", required=false) private Base64String mData;
+    @Attribute(name = "id")
+    private int mId;
+    @Element(name = "settings", required = false)
+    private DesfireFileSettings mSettings;
+    @Element(name = "data", required = false)
+    private Base64String mData;
+
+    DesfireFile() { /* For XML Serializer */ }
+
+    DesfireFile(int fileId, DesfireFileSettings fileSettings, byte[] fileData) {
+        mId = fileId;
+        mSettings = fileSettings;
+        mData = new Base64String(fileData);
+    }
 
     public static DesfireFile create(int fileId, DesfireFileSettings fileSettings, byte[] fileData) {
         if (fileSettings instanceof RecordDesfireFileSettings) {
@@ -45,14 +56,6 @@ public class DesfireFile {
         } else {
             return new DesfireFile(fileId, fileSettings, fileData);
         }
-    }
-
-    DesfireFile() { /* For XML Serializer */ }
-
-    DesfireFile(int fileId, DesfireFileSettings fileSettings, byte[] fileData) {
-        mId = fileId;
-        mSettings = fileSettings;
-        mData = new Base64String(fileData);
     }
 
     public DesfireFileSettings getFileSettings() {

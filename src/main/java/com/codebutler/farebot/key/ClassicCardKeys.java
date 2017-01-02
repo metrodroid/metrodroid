@@ -36,6 +36,10 @@ public class ClassicCardKeys extends CardKeys {
 
     private ClassicSectorKey[] mSectorKeys;
 
+    private ClassicCardKeys(ClassicSectorKey[] sectorKeys) {
+        mSectorKeys = sectorKeys;
+    }
+
     public static ClassicCardKeys fromDump(String keyType, byte[] keyData) {
         List<ClassicSectorKey> keys = new ArrayList<>();
 
@@ -57,12 +61,9 @@ public class ClassicCardKeys extends CardKeys {
         return new ClassicCardKeys(sectorKeys);
     }
 
-    private ClassicCardKeys(ClassicSectorKey[] sectorKeys) {
-        mSectorKeys = sectorKeys;
-    }
-
     /**
      * Gets the key for a particular sector on the card.
+     *
      * @param sectorNumber The sector number to retrieve the key for
      * @return A ClassicSectorKey for that sector, or null if there is no known key or the value is
      * out of range.

@@ -33,8 +33,6 @@ import au.id.micolous.metrodroid.MetrodroidApplication;
  * Database functionality for SEQ Go Cards
  */
 public class SeqGoDBUtil extends DBUtil {
-    private static final String TAG = "SeqGoDBUtil";
-
     public static final String TABLE_NAME = "stops";
     public static final String COLUMN_ROW_ID = "id";
     public static final String COLUMN_ROW_NAME = "name";
@@ -42,7 +40,6 @@ public class SeqGoDBUtil extends DBUtil {
     public static final String COLUMN_ROW_AIRTRAIN_ZONE_EXEMPT = "airtrain_zone_exempt";
     public static final String COLUMN_ROW_LON = "x";
     public static final String COLUMN_ROW_LAT = "y";
-
     public static final String[] COLUMNS_STATIONDATA = {
             COLUMN_ROW_ID,
             COLUMN_ROW_NAME,
@@ -51,23 +48,13 @@ public class SeqGoDBUtil extends DBUtil {
             COLUMN_ROW_LON,
             COLUMN_ROW_LAT,
     };
-
+    private static final String TAG = "SeqGoDBUtil";
     private static final String DB_NAME = "seq_go_stations.db3";
 
     private static final int VERSION = 4010;
 
     public SeqGoDBUtil(Context context) {
         super(context);
-    }
-
-    @Override
-    protected String getDBName() {
-        return DB_NAME;
-    }
-
-    @Override
-    protected int getDesiredVersion() {
-        return VERSION;
     }
 
     private static SeqGoDBUtil getDB() {
@@ -113,5 +100,15 @@ public class SeqGoDBUtil extends DBUtil {
                 cursor.close();
             }
         }
+    }
+
+    @Override
+    protected String getDBName() {
+        return DB_NAME;
+    }
+
+    @Override
+    protected int getDesiredVersion() {
+        return VERSION;
     }
 }

@@ -29,7 +29,6 @@ import android.os.Parcel;
 import com.codebutler.farebot.card.felica.FelicaBlock;
 import com.codebutler.farebot.card.felica.FelicaCard;
 import com.codebutler.farebot.card.felica.FelicaService;
-import com.codebutler.farebot.transit.Refill;
 import com.codebutler.farebot.transit.Subscription;
 import com.codebutler.farebot.transit.TransitData;
 import com.codebutler.farebot.transit.TransitIdentity;
@@ -45,21 +44,13 @@ import java.util.List;
 import java.util.Locale;
 
 public class EdyTransitData extends TransitData {
-    private EdyTrip[] mTrips;
-
     // defines
-    public static final int FELICA_SERVICE_EDY_ID       = 0x110B;
-    public static final int FELICA_SERVICE_EDY_BALANCE  = 0x1317;
-    public static final int FELICA_SERVICE_EDY_HISTORY  = 0x170F;
-
-    public static final int FELICA_MODE_EDY_DEBIT       = 0x20;
-    public static final int FELICA_MODE_EDY_CHARGE      = 0x02;
-    public static final int FELICA_MODE_EDY_GIFT        = 0x04;
-
-    // private data
-    private byte[] mSerialNumber = new byte[8];
-    private int    mCurrentBalance;
-
+    public static final int FELICA_SERVICE_EDY_ID = 0x110B;
+    public static final int FELICA_SERVICE_EDY_BALANCE = 0x1317;
+    public static final int FELICA_SERVICE_EDY_HISTORY = 0x170F;
+    public static final int FELICA_MODE_EDY_DEBIT = 0x20;
+    public static final int FELICA_MODE_EDY_CHARGE = 0x02;
+    public static final int FELICA_MODE_EDY_GIFT = 0x04;
     public static final Creator<EdyTransitData> CREATOR = new Creator<EdyTransitData>() {
         public EdyTransitData createFromParcel(Parcel parcel) {
             return new EdyTransitData(parcel);
@@ -69,14 +60,10 @@ public class EdyTransitData extends TransitData {
             return new EdyTransitData[size];
         }
     };
-
-    public static boolean check(FelicaCard card) {
-        return (card.getSystem(FeliCaLib.SYSTEMCODE_EDY) != null);
-    }
-
-    public static TransitIdentity parseTransitIdentity(FelicaCard card) {
-        return new TransitIdentity("Edy", null);
-    }
+    private EdyTrip[] mTrips;
+    // private data
+    private byte[] mSerialNumber = new byte[8];
+    private int mCurrentBalance;
 
     public EdyTransitData(Parcel parcel) {
         mTrips = new EdyTrip[parcel.readInt()];
@@ -89,8 +76,8 @@ public class EdyTransitData extends TransitData {
         List<FelicaBlock> blocksID = serviceID.getBlocks();
         FelicaBlock blockID = blocksID.get(0);
         byte[] dataID = blockID.getData();
-        for (int i=2; i<10; i++) {
-            mSerialNumber[i-2] = dataID[i];
+        for (int i = 2; i < 10; i++) {
+            mSerialNumber[i - 2] = dataID[i];
         }
 
         // current balance info in block 0, bytes 0-3, little-endian ordering
@@ -115,36 +102,50 @@ public class EdyTransitData extends TransitData {
         mTrips = trips.toArray(new EdyTrip[trips.size()]);
     }
 
-    @Override public String getBalanceString() {
+    public static boolean check(FelicaCard card) {
+        return (card.getSystem(FeliCaLib.SYSTEMCODE_EDY) != null);
+    }
+
+    public static TransitIdentity parseTransitIdentity(FelicaCard card) {
+        return new TransitIdentity("Edy", null);
+    }
+
+    @Override
+    public String getBalanceString() {
         NumberFormat format = NumberFormat.getCurrencyInstance(Locale.JAPAN);
         format.setMaximumFractionDigits(0);
         return format.format(mCurrentBalance);
     }
 
-    @Override public String getSerialNumber() {
+    @Override
+    public String getSerialNumber() {
         StringBuilder str = new StringBuilder(20);
-        for (int i=0; i<8; i+=2) {
+        for (int i = 0; i < 8; i += 2) {
             str.append(String.format("%02X", mSerialNumber[i]));
-            str.append(String.format("%02X", mSerialNumber[i+1]));
+            str.append(String.format("%02X", mSerialNumber[i + 1]));
             if (i < 6)
                 str.append(" ");
         }
         return str.toString();
     }
 
-    @Override public Trip[] getTrips() {
+    @Override
+    public Trip[] getTrips() {
         return mTrips;
     }
 
-    @Override public Subscription[] getSubscriptions() {
+    @Override
+    public Subscription[] getSubscriptions() {
         return null;
     }
 
-    @Override public List<ListItem> getInfo() {
+    @Override
+    public List<ListItem> getInfo() {
         return null;
     }
 
-    @Override public String getCardName() {
+    @Override
+    public String getCardName() {
         return "Edy";
     }
 

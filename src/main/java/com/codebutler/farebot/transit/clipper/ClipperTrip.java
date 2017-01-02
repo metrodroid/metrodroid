@@ -32,6 +32,15 @@ import java.text.NumberFormat;
 import java.util.Locale;
 
 public class ClipperTrip extends Trip {
+    public static final Creator<ClipperTrip> CREATOR = new Creator<ClipperTrip>() {
+        public ClipperTrip createFromParcel(Parcel parcel) {
+            return new ClipperTrip(parcel);
+        }
+
+        public ClipperTrip[] newArray(int size) {
+            return new ClipperTrip[size];
+        }
+    };
     final long mTimestamp;
     final long mExitTimestamp;
     final long mFare;
@@ -42,54 +51,49 @@ public class ClipperTrip extends Trip {
     long mBalance;
 
     public ClipperTrip(long timestamp, long exitTimestamp, long fare, long agency, long from, long to, long route) {
-        mTimestamp      = timestamp;
-        mExitTimestamp  = exitTimestamp;
-        mFare           = fare;
-        mAgency         = agency;
-        mFrom           = from;
-        mTo             = to;
-        mRoute          = route;
-        mBalance        = 0;
+        mTimestamp = timestamp;
+        mExitTimestamp = exitTimestamp;
+        mFare = fare;
+        mAgency = agency;
+        mFrom = from;
+        mTo = to;
+        mRoute = route;
+        mBalance = 0;
     }
-
-    public static final Creator<ClipperTrip> CREATOR = new Creator<ClipperTrip>() {
-        public ClipperTrip createFromParcel(Parcel parcel) {
-            return new ClipperTrip(parcel);
-        }
-
-        public ClipperTrip[] newArray(int size) {
-            return new ClipperTrip[size];
-        }
-    };
 
     ClipperTrip(Parcel parcel) {
-        mTimestamp     = parcel.readLong();
+        mTimestamp = parcel.readLong();
         mExitTimestamp = parcel.readLong();
-        mFare          = parcel.readLong();
-        mAgency        = parcel.readLong();
-        mFrom          = parcel.readLong();
-        mTo            = parcel.readLong();
-        mRoute         = parcel.readLong();
-        mBalance       = parcel.readLong();
+        mFare = parcel.readLong();
+        mAgency = parcel.readLong();
+        mFrom = parcel.readLong();
+        mTo = parcel.readLong();
+        mRoute = parcel.readLong();
+        mBalance = parcel.readLong();
     }
 
-    @Override public long getTimestamp() {
+    @Override
+    public long getTimestamp() {
         return mTimestamp;
     }
 
-    @Override public long getExitTimestamp() {
+    @Override
+    public long getExitTimestamp() {
         return mExitTimestamp;
     }
 
-    @Override public String getAgencyName() {
-        return ClipperTransitData.getAgencyName((int)mAgency);
+    @Override
+    public String getAgencyName() {
+        return ClipperTransitData.getAgencyName((int) mAgency);
     }
 
-    @Override public String getShortAgencyName() {
-        return ClipperTransitData.getShortAgencyName((int)mAgency);
+    @Override
+    public String getShortAgencyName() {
+        return ClipperTransitData.getShortAgencyName((int) mAgency);
     }
 
-    @Override public String getRouteName() {
+    @Override
+    public String getRouteName() {
         if (mAgency == ClipperData.AGENCY_GG_FERRY) {
             return ClipperData.GG_FERRY_ROUTES.get(mRoute);
         } else {
@@ -99,19 +103,23 @@ public class ClipperTrip extends Trip {
         }
     }
 
-    @Override public String getFareString() {
-        return NumberFormat.getCurrencyInstance(Locale.US).format((double)mFare / 100.0);
+    @Override
+    public String getFareString() {
+        return NumberFormat.getCurrencyInstance(Locale.US).format((double) mFare / 100.0);
     }
 
-    @Override public boolean hasFare() {
+    @Override
+    public boolean hasFare() {
         return true;
     }
 
-    @Override public String getBalanceString() {
-        return NumberFormat.getCurrencyInstance(Locale.US).format((double)mBalance / 100.0);
+    @Override
+    public String getBalanceString() {
+        return NumberFormat.getCurrencyInstance(Locale.US).format((double) mBalance / 100.0);
     }
 
-    @Override public Station getStartStation() {
+    @Override
+    public Station getStartStation() {
         if (mAgency == ClipperData.AGENCY_BART) {
             if (ClipperData.BART_STATIONS.containsKey(mFrom)) {
                 return ClipperData.BART_STATIONS.get(mFrom);
@@ -128,7 +136,8 @@ public class ClipperTrip extends Trip {
         return null;
     }
 
-    @Override public Station getEndStation() {
+    @Override
+    public Station getEndStation() {
         if (mAgency == ClipperData.AGENCY_BART) {
             if (ClipperData.BART_STATIONS.containsKey(mTo)) {
                 return ClipperData.BART_STATIONS.get(mTo);
@@ -144,7 +153,9 @@ public class ClipperTrip extends Trip {
         }
         return null;
     }
-    @Override public String getStartStationName() {
+
+    @Override
+    public String getStartStationName() {
         if (mAgency == ClipperData.AGENCY_BART || mAgency == ClipperData.AGENCY_GG_FERRY || mAgency == ClipperData.AGENCY_SF_BAY_FERRY) {
             Station station = getStartStation();
             if (station != null)
@@ -160,7 +171,8 @@ public class ClipperTrip extends Trip {
         }
     }
 
-    @Override public String getEndStationName() {
+    @Override
+    public String getEndStationName() {
         if (mAgency == ClipperData.AGENCY_BART || mAgency == ClipperData.AGENCY_GG_FERRY || mAgency == ClipperData.AGENCY_SF_BAY_FERRY) {
             Station station = getEndStation();
             if (station != null) {
@@ -179,7 +191,8 @@ public class ClipperTrip extends Trip {
         }
     }
 
-    @Override public Mode getMode() {
+    @Override
+    public Mode getMode() {
         if (mAgency == ClipperData.AGENCY_ACTRAN)
             return Mode.BUS;
         if (mAgency == ClipperData.AGENCY_BART)
@@ -201,7 +214,8 @@ public class ClipperTrip extends Trip {
         return Mode.OTHER;
     }
 
-    @Override public boolean hasTime() {
+    @Override
+    public boolean hasTime() {
         return true;
     }
 

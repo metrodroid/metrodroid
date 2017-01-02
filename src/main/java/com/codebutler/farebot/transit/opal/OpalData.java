@@ -21,10 +21,10 @@ package com.codebutler.farebot.transit.opal;
 
 import android.annotation.SuppressLint;
 
-import au.id.micolous.farebot.R;
-
 import java.util.HashMap;
 import java.util.Map;
+
+import au.id.micolous.farebot.R;
 
 final class OpalData {
     static final int VEHICLE_RAIL = 0x00;
@@ -67,4 +67,7 @@ final class OpalData {
         put(ACTION_JOURNEY_COMPLETED_AUTO_ON, R.string.opal_action_journey_completed_auto_on);
         put(ACTION_TAP_ON_REVERSAL, R.string.opal_action_tap_on_reversal);
     }};
+
+    private OpalData() {
+    }
 }

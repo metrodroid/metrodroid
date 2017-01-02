@@ -20,7 +20,8 @@
 package com.codebutler.farebot.card;
 
 public class UnauthorizedException extends IllegalStateException {
-    @Override public String getMessage() {
+    @Override
+    public String getMessage() {
         return "Unauthorized";
     }
 }

@@ -28,6 +28,9 @@ public class ManlyFastFerryBalanceRecord extends ManlyFastFerryRecord implements
     private int mBalance;
     private int mVersion;
 
+    protected ManlyFastFerryBalanceRecord() {
+    }
+
     public static ManlyFastFerryBalanceRecord recordFromBytes(byte[] input) {
         if (input[0] != 0x01) throw new AssertionError();
 
@@ -39,16 +42,18 @@ public class ManlyFastFerryBalanceRecord extends ManlyFastFerryRecord implements
         return record;
     }
 
-    protected ManlyFastFerryBalanceRecord() {}
-
     /**
      * The balance of the card, in cents.
+     *
      * @return int number of cents.
      */
     public int getBalance() {
         return mBalance;
     }
-    public int getVersion() { return mVersion; }
+
+    public int getVersion() {
+        return mVersion;
+    }
 
     @Override
     public int compareTo(ManlyFastFerryBalanceRecord rhs) {

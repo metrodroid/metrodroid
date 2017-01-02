@@ -33,8 +33,8 @@ import com.codebutler.farebot.transit.Trip;
 import com.codebutler.farebot.transit.nextfare.record.NextfareBalanceRecord;
 import com.codebutler.farebot.transit.nextfare.record.NextfareConfigRecord;
 import com.codebutler.farebot.transit.nextfare.record.NextfareRecord;
-import com.codebutler.farebot.transit.nextfare.record.NextfareTransactionRecord;
 import com.codebutler.farebot.transit.nextfare.record.NextfareTopupRecord;
+import com.codebutler.farebot.transit.nextfare.record.NextfareTransactionRecord;
 import com.codebutler.farebot.transit.nextfare.record.NextfareTravelPassRecord;
 import com.codebutler.farebot.ui.HeaderListItem;
 import com.codebutler.farebot.ui.ListItem;
@@ -59,23 +59,7 @@ import au.id.micolous.farebot.R;
  */
 public class NextfareTransitData extends TransitData {
 
-    private static final String TAG = "NextfareTransitData";
     public static final String NAME = "Nextfare";
-    static final byte[] MANUFACTURER = {
-        0x16, 0x18, 0x1A, 0x1B,
-        0x1C, 0x1D, 0x1E, 0x1F
-    };
-
-    BigInteger mSerialNumber;
-    byte[] mSystemCode;
-    int mBalance;
-    NextfareRefill[] mRefills;
-    NextfareTrip[] mTrips;
-    NextfareSubscription[] mSubscriptions;
-    protected NextfareConfigRecord mConfig = null;
-    protected boolean mHasUnknownStations = false;
-
-
     public static final Creator<NextfareTransitData> CREATOR = new Creator<NextfareTransitData>() {
         public NextfareTransitData createFromParcel(Parcel parcel) {
             return new NextfareTransitData(parcel);
@@ -85,37 +69,19 @@ public class NextfareTransitData extends TransitData {
             return new NextfareTransitData[size];
         }
     };
-
-    public static boolean check(ClassicCard card) {
-        try {
-            byte[] blockData = card.getSector(0).getBlock(1).getData();
-            return Arrays.equals(Arrays.copyOfRange(blockData, 1, 9), MANUFACTURER);
-        } catch (UnauthorizedException ex) {
-            // It is not possible to identify the card without a key
-            return false;
-        }
-    }
-
-    public static TransitIdentity parseTransitIdentity(ClassicCard card) {
-        return NextfareTransitData.parseTransitIdentity(card, NAME);
-    }
-
-    protected static TransitIdentity parseTransitIdentity(ClassicCard card, String name) {
-        byte[] serialData = card.getSector(0).getBlock(0).getData();
-        serialData = Utils.reverseBuffer(serialData, 0, 4);
-        BigInteger serialNumber = Utils.byteArrayToBigInteger(serialData, 0, 4);
-        return new TransitIdentity(name, formatSerialNumber(serialNumber));
-    }
-
-    protected static String formatSerialNumber(BigInteger serialNumber) {
-        String serial = serialNumber.toString();
-        while (serial.length() < 12) {
-            serial = "0" + serial;
-        }
-
-        serial = "016" + serial;
-        return serial + Utils.calculateLuhn(serial);
-    }
+    static final byte[] MANUFACTURER = {
+            0x16, 0x18, 0x1A, 0x1B,
+            0x1C, 0x1D, 0x1E, 0x1F
+    };
+    private static final String TAG = "NextfareTransitData";
+    protected NextfareConfigRecord mConfig = null;
+    protected boolean mHasUnknownStations = false;
+    BigInteger mSerialNumber;
+    byte[] mSystemCode;
+    int mBalance;
+    NextfareRefill[] mRefills;
+    NextfareTrip[] mTrips;
+    NextfareSubscription[] mSubscriptions;
 
     public NextfareTransitData(Parcel parcel) {
         mSerialNumber = new BigInteger(parcel.readString());
@@ -129,20 +95,6 @@ public class NextfareTransitData extends TransitData {
         parcel.readByteArray(mSystemCode);
 
         mConfig = new NextfareConfigRecord(parcel);
-    }
-
-    @Override
-    public void writeToParcel(Parcel parcel, int i) {
-        parcel.writeString(mSerialNumber.toString());
-        parcel.writeInt(mBalance);
-        parcel.writeInt(mTrips.length);
-        parcel.writeTypedArray(mTrips, i);
-        parcel.writeInt(mRefills.length);
-        parcel.writeTypedArray(mRefills, i);
-        parcel.writeInt(mSubscriptions.length);
-        parcel.writeTypedArray(mSubscriptions, i);
-        parcel.writeByteArray(mSystemCode);
-        mConfig.writeToParcel(parcel, i);
     }
 
     public NextfareTransitData(ClassicCard card) {
@@ -182,17 +134,17 @@ public class NextfareTransitData extends TransitData {
 
         for (NextfareRecord record : records) {
             if (record instanceof NextfareBalanceRecord) {
-                balances.add((NextfareBalanceRecord)record);
+                balances.add((NextfareBalanceRecord) record);
             } else if (record instanceof NextfareTopupRecord) {
-                NextfareTopupRecord topupRecord = (NextfareTopupRecord)record;
+                NextfareTopupRecord topupRecord = (NextfareTopupRecord) record;
 
                 refills.add(newRefill(topupRecord));
             } else if (record instanceof NextfareTransactionRecord) {
-                taps.add((NextfareTransactionRecord)record);
+                taps.add((NextfareTransactionRecord) record);
             } else if (record instanceof NextfareTravelPassRecord) {
-                passes.add((NextfareTravelPassRecord)record);
+                passes.add((NextfareTravelPassRecord) record);
             } else if (record instanceof NextfareConfigRecord) {
-                mConfig = (NextfareConfigRecord)record;
+                mConfig = (NextfareConfigRecord) record;
             }
         }
 
@@ -233,9 +185,9 @@ public class NextfareTransitData extends TransitData {
 
                 // Peek at the next record and see if it is part of
                 // this journey
-                if (taps.size() > i+1 && shouldMergeJourneys(tapOn, taps.get(i+1))) {
+                if (taps.size() > i + 1 && shouldMergeJourneys(tapOn, taps.get(i + 1))) {
                     // There is a tap off.  Lets put that data in
-                    NextfareTransactionRecord tapOff = taps.get(i+1);
+                    NextfareTransactionRecord tapOff = taps.get(i + 1);
                     //Log.d(TAG, "TapOff @" + Utils.isoDateTimeFormat(tapOff.getTimestamp()));
 
                     trip.mEndTime = tapOff.getTimestamp();
@@ -297,13 +249,59 @@ public class NextfareTransitData extends TransitData {
         mRefills = refills.toArray(new NextfareRefill[refills.size()]);
     }
 
+    public static boolean check(ClassicCard card) {
+        try {
+            byte[] blockData = card.getSector(0).getBlock(1).getData();
+            return Arrays.equals(Arrays.copyOfRange(blockData, 1, 9), MANUFACTURER);
+        } catch (UnauthorizedException ex) {
+            // It is not possible to identify the card without a key
+            return false;
+        }
+    }
+
+    public static TransitIdentity parseTransitIdentity(ClassicCard card) {
+        return NextfareTransitData.parseTransitIdentity(card, NAME);
+    }
+
+    protected static TransitIdentity parseTransitIdentity(ClassicCard card, String name) {
+        byte[] serialData = card.getSector(0).getBlock(0).getData();
+        serialData = Utils.reverseBuffer(serialData, 0, 4);
+        BigInteger serialNumber = Utils.byteArrayToBigInteger(serialData, 0, 4);
+        return new TransitIdentity(name, formatSerialNumber(serialNumber));
+    }
+
+    protected static String formatSerialNumber(BigInteger serialNumber) {
+        String serial = serialNumber.toString();
+        while (serial.length() < 12) {
+            serial = "0" + serial;
+        }
+
+        serial = "016" + serial;
+        return serial + Utils.calculateLuhn(serial);
+    }
+
+    @Override
+    public void writeToParcel(Parcel parcel, int i) {
+        parcel.writeString(mSerialNumber.toString());
+        parcel.writeInt(mBalance);
+        parcel.writeInt(mTrips.length);
+        parcel.writeTypedArray(mTrips, i);
+        parcel.writeInt(mRefills.length);
+        parcel.writeTypedArray(mRefills, i);
+        parcel.writeInt(mSubscriptions.length);
+        parcel.writeTypedArray(mSubscriptions, i);
+        parcel.writeByteArray(mSystemCode);
+        mConfig.writeToParcel(parcel, i);
+    }
+
     /**
      * Called when it needs to be determined if two TapRecords are part of the same journey.
-     *
+     * <p>
      * Normally this should never need to be overwritten, except in the case that the Journey ID and
      * travel mode is not enough to break up the two journeys.
-     *
+     * <p>
      * If the agency NEVER records tap-off events, this should always return false.
+     *
      * @param tap1 The first tap to compare.
      * @param tap2 The second tap to compare.
      * @return true if the journeys should be merged.
@@ -314,6 +312,7 @@ public class NextfareTransitData extends TransitData {
 
     /**
      * Allows you to override the constructor for new trips, to hook in your own station ID code.
+     *
      * @return Subclass of NextfareTrip.
      */
     protected NextfareTrip newTrip() {
@@ -322,6 +321,7 @@ public class NextfareTransitData extends TransitData {
 
     /**
      * Allows you to override the constructor for new refills, to hook in your own code.
+     *
      * @param record Record to parse
      * @return Subclass of NextfareRefill
      */
@@ -331,8 +331,9 @@ public class NextfareTransitData extends TransitData {
 
     /**
      * Allows you to override the constructor for new subscriptions, to hook in your own code.
-     *
+     * <p>
      * This method is used for existing / past travel passes.
+     *
      * @param record Record to parse
      * @return Subclass of NextfareSubscription
      */
@@ -342,8 +343,9 @@ public class NextfareTransitData extends TransitData {
 
     /**
      * Allows you to override the constructor for new subscriptions, to hook in your own code.
-     *
+     * <p>
      * This method is used for new, unused travel passes.
+     *
      * @param record Record to parse
      * @return Subclass of NextfareSubscription
      */
@@ -353,7 +355,8 @@ public class NextfareTransitData extends TransitData {
 
     /**
      * Allows you to override the mode of transport used on a trip.
-     * @param mode Mode number read from card.
+     *
+     * @param mode      Mode number read from card.
      * @param stationId Station ID read from card.
      * @return Generic mode class
      */
@@ -364,7 +367,7 @@ public class NextfareTransitData extends TransitData {
 
     @Override
     public String getBalanceString() {
-        return NumberFormat.getCurrencyInstance(Locale.US).format((double)mBalance / 100.);
+        return NumberFormat.getCurrencyInstance(Locale.US).format((double) mBalance / 100.);
     }
 
     @Override
@@ -394,9 +397,10 @@ public class NextfareTransitData extends TransitData {
 
     /**
      * If true, then the unknown stations banner should be shown.
-     *
+     * <p>
      * In the base Nextfare implementation, this is meaningless (all stations are unknown), so this
      * always returns false. But in subclasses, this should return mHasUnknownStations.
+     *
      * @return always false - do not show unknown stations UI
      */
     @Override
@@ -404,7 +408,8 @@ public class NextfareTransitData extends TransitData {
         return false;
     }
 
-    @Override public List<ListItem> getInfo() {
+    @Override
+    public List<ListItem> getInfo() {
         ArrayList<ListItem> items = new ArrayList<>();
 
         items.add(new HeaderListItem(R.string.nextfare));

@@ -31,10 +31,12 @@ import org.simpleframework.xml.Root;
 
 import java.util.List;
 
-@Root(name="application")
+@Root(name = "application")
 public class DesfireApplication {
-    @Attribute(name="id") private String mId;
-    @ElementList(name="files") private List<DesfireFile> mFiles;
+    @Attribute(name = "id")
+    private String mId;
+    @ElementList(name = "files")
+    private List<DesfireFile> mFiles;
 
     private DesfireApplication() { /* For XML Serializer */ }
 

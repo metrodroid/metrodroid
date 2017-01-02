@@ -23,9 +23,10 @@ import com.codebutler.farebot.card.desfire.settings.DesfireFileSettings;
 import org.simpleframework.xml.Element;
 import org.simpleframework.xml.Root;
 
-@Root(name="file")
+@Root(name = "file")
 public class InvalidDesfireFile extends DesfireFile {
-    @Element(name="error") private String mErrorMessage;
+    @Element(name = "error")
+    private String mErrorMessage;
 
     protected InvalidDesfireFile() { /* For XML Serializer */ }
 
@@ -38,7 +39,8 @@ public class InvalidDesfireFile extends DesfireFile {
         return mErrorMessage;
     }
 
-    @Override public byte[] getData() {
+    @Override
+    public byte[] getData() {
         throw new IllegalStateException(String.format("Invalid file: %s", mErrorMessage));
     }
 }

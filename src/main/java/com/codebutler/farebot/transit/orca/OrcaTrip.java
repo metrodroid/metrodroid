@@ -36,6 +36,38 @@ import java.util.Locale;
 import java.util.Map;
 
 public class OrcaTrip extends Trip {
+    public static final Creator<OrcaTrip> CREATOR = new Creator<OrcaTrip>() {
+        public OrcaTrip createFromParcel(Parcel parcel) {
+            return new OrcaTrip(parcel);
+        }
+
+        public OrcaTrip[] newArray(int size) {
+            return new OrcaTrip[size];
+        }
+    };
+    private static Station[] sLinkStations = new Station[]{
+            new Station("Westlake Station", "Westlake", "47.6113968", "-122.337502"),
+            new Station("University Station", "University", "47.6072502", "-122.335754"),
+            new Station("Pioneer Square Station", "Pioneer Sq", "47.6021461", "-122.33107"),
+            new Station("International District Station", "ID", "47.5976601", "-122.328217"),
+            new Station("Stadium Station", "Stadium", "47.5918121", "-122.327354"),
+            new Station("SODO Station", "SODO", "47.5799484", "-122.327515"),
+            new Station("Beacon Hill Station", "Beacon Hill", "47.5791245", "-122.311287"),
+            new Station("Mount Baker Station", "Mount Baker", "47.5764389", "-122.297737"),
+            new Station("Columbia City Station", "Columbia City", "47.5589523", "-122.292343"),
+            new Station("Othello Station", "Othello", "47.5375366", "-122.281471"),
+            new Station("Rainier Beach Station", "Rainier Beach", "47.5222626", "-122.279579"),
+            new Station("Tukwila International Blvd Station", "Tukwila", "47.4642754", "-122.288391"),
+            new Station("Seatac Airport Station", "Sea-Tac", "47.4445305", "-122.297012")
+    };
+    private static Map<Integer, Station> sSounderStations = new ImmutableMapBuilder<Integer, Station>()
+            .put(3, new Station("King Street Station", "King Street", "47.598445", "-122.330161"))
+            .put(5, new Station("Kent Station", "Kent", "47.384257", "-122.233151"))
+            .build();
+    private static Map<Integer, Station> sWSFTerminals = new ImmutableMapBuilder<Integer, Station>()
+            .put(10101, new Station("Seattle Terminal", "Seattle", "47.602722", "-122.338512"))
+            .put(10103, new Station("Bainbridge Island Terminal", "Bainbridge", "47.62362", "-122.51082"))
+            .build();
     final long mTimestamp;
     final long mCoachNum;
     final long mFare;
@@ -43,38 +75,12 @@ public class OrcaTrip extends Trip {
     final long mAgency;
     final long mTransType;
 
-    private static Station[] sLinkStations = new Station[] {
-        new Station("Westlake Station",                   "Westlake",      "47.6113968", "-122.337502"),
-        new Station("University Station",                 "University",    "47.6072502", "-122.335754"),
-        new Station("Pioneer Square Station",             "Pioneer Sq",    "47.6021461", "-122.33107"),
-        new Station("International District Station",     "ID",            "47.5976601", "-122.328217"),
-        new Station("Stadium Station",                    "Stadium",       "47.5918121", "-122.327354"),
-        new Station("SODO Station",                       "SODO",          "47.5799484", "-122.327515"),
-        new Station("Beacon Hill Station",                "Beacon Hill",   "47.5791245", "-122.311287"),
-        new Station("Mount Baker Station",                "Mount Baker",   "47.5764389", "-122.297737"),
-        new Station("Columbia City Station",              "Columbia City", "47.5589523", "-122.292343"),
-        new Station("Othello Station",                    "Othello",       "47.5375366", "-122.281471"),
-        new Station("Rainier Beach Station",              "Rainier Beach", "47.5222626", "-122.279579"),
-        new Station("Tukwila International Blvd Station", "Tukwila",       "47.4642754", "-122.288391"),
-        new Station("Seatac Airport Station",             "Sea-Tac",       "47.4445305", "-122.297012")
-    };
-
-    private static Map<Integer, Station> sSounderStations = new ImmutableMapBuilder<Integer, Station>()
-            .put(3, new Station("King Street Station", "King Street", "47.598445", "-122.330161"))
-            .put(5, new Station("Kent Station", "Kent", "47.384257", "-122.233151"))
-            .build();
-
-    private static Map<Integer, Station> sWSFTerminals = new ImmutableMapBuilder<Integer, Station>()
-            .put(10101, new Station("Seattle Terminal",           "Seattle",    "47.602722", "-122.338512"))
-            .put(10103, new Station("Bainbridge Island Terminal", "Bainbridge", "47.62362",  "-122.51082"))
-            .build();
-
     public OrcaTrip(DesfireRecord record) {
         byte[] useData = record.getData();
         long[] usefulData = new long[useData.length];
 
         for (int i = 0; i < useData.length; i++) {
-            usefulData[i] = ((long)useData[i]) & 0xFF;
+            usefulData[i] = ((long) useData[i]) & 0xFF;
         }
 
         mTimestamp = ((0x0F & usefulData[3]) << 28)
@@ -93,38 +99,31 @@ public class OrcaTrip extends Trip {
         }
 
         mNewBalance = (usefulData[34] << 8) | usefulData[35];
-        mAgency     = usefulData[3] >> 4;
-        mTransType  = (usefulData[17]);
+        mAgency = usefulData[3] >> 4;
+        mTransType = (usefulData[17]);
     }
-
-    public static final Creator<OrcaTrip> CREATOR = new Creator<OrcaTrip>() {
-        public OrcaTrip createFromParcel(Parcel parcel) {
-            return new OrcaTrip(parcel);
-        }
-
-        public OrcaTrip[] newArray(int size) {
-            return new OrcaTrip[size];
-        }
-    };
 
     OrcaTrip(Parcel parcel) {
-        mTimestamp  = parcel.readLong();
-        mCoachNum   = parcel.readLong();
-        mFare       = parcel.readLong();
+        mTimestamp = parcel.readLong();
+        mCoachNum = parcel.readLong();
+        mFare = parcel.readLong();
         mNewBalance = parcel.readLong();
-        mAgency     = parcel.readLong();
-        mTransType  = parcel.readLong();
+        mAgency = parcel.readLong();
+        mTransType = parcel.readLong();
     }
 
-    @Override public long getTimestamp() {
+    @Override
+    public long getTimestamp() {
         return mTimestamp;
     }
 
-    @Override public long getExitTimestamp() {
+    @Override
+    public long getExitTimestamp() {
         return 0;
     }
 
-    @Override public String getAgencyName() {
+    @Override
+    public String getAgencyName() {
         switch ((int) mAgency) {
             case OrcaTransitData.AGENCY_CT:
                 return "Community Transit";
@@ -142,7 +141,8 @@ public class OrcaTrip extends Trip {
         return String.format("Unknown Agency: %s", mAgency);
     }
 
-    @Override public String getShortAgencyName() {
+    @Override
+    public String getShortAgencyName() {
         switch ((int) mAgency) {
             case OrcaTransitData.AGENCY_CT:
                 return "CT";
@@ -160,7 +160,8 @@ public class OrcaTrip extends Trip {
         return String.format("Unknown Agency: %s", mAgency);
     }
 
-    @Override public String getRouteName() {
+    @Override
+    public String getRouteName() {
         if (isLink()) {
             return "Link Light Rail";
         } else if (isSounder()) {
@@ -169,26 +170,30 @@ public class OrcaTrip extends Trip {
             // FIXME: Need to find bus route #s
             if (mAgency == OrcaTransitData.AGENCY_ST) {
                 return "Express Bus";
-            } else if(mAgency == OrcaTransitData.AGENCY_KCM) {
+            } else if (mAgency == OrcaTransitData.AGENCY_KCM) {
                 return "Bus";
             }
             return null;
         }
     }
 
-    @Override public String getFareString() {
+    @Override
+    public String getFareString() {
         return NumberFormat.getCurrencyInstance(Locale.US).format(mFare / 100.0);
     }
 
-    @Override public boolean hasFare() {
+    @Override
+    public boolean hasFare() {
         return true;
     }
 
-    @Override public String getBalanceString() {
+    @Override
+    public String getBalanceString() {
         return NumberFormat.getCurrencyInstance(Locale.US).format(mNewBalance / 100);
     }
 
-    @Override public Station getStartStation() {
+    @Override
+    public Station getStartStation() {
         if (isLink()) {
             int stationNumber = (((int) mCoachNum) % 1000) - 193;
             if (stationNumber < sLinkStations.length) {
@@ -197,12 +202,13 @@ public class OrcaTrip extends Trip {
         } else if (isSounder()) {
             return sSounderStations.get((int) mCoachNum);
         } else if (mAgency == OrcaTransitData.AGENCY_WSF) {
-            return sWSFTerminals.get((int)mCoachNum);
+            return sWSFTerminals.get((int) mCoachNum);
         }
         return null;
     }
 
-    @Override public String getStartStationName() {
+    @Override
+    public String getStartStationName() {
         if (isLink()) {
             int stationNumber = (((int) mCoachNum) % 1000) - 193;
             if (stationNumber < sLinkStations.length) {
@@ -229,17 +235,20 @@ public class OrcaTrip extends Trip {
         }
     }
 
-    @Override public String getEndStationName() {
+    @Override
+    public String getEndStationName() {
         // ORCA tracks destination in a separate record
         return null;
     }
 
-    @Override public Station getEndStation() {
+    @Override
+    public Station getEndStation() {
         // ORCA tracks destination in a separate record
         return null;
     }
 
-    @Override public Mode getMode() {
+    @Override
+    public Mode getMode() {
         if (isLink()) {
             return Mode.METRO;
         } else if (isSounder()) {
@@ -251,7 +260,8 @@ public class OrcaTrip extends Trip {
         }
     }
 
-    @Override public boolean hasTime() {
+    @Override
+    public boolean hasTime() {
         return true;
     }
 

@@ -20,13 +20,13 @@ package com.codebutler.farebot.transit.hsl;
 
 import android.os.Parcel;
 
-import au.id.micolous.metrodroid.MetrodroidApplication;
-import au.id.micolous.farebot.R;
-
 import com.codebutler.farebot.transit.Refill;
 
 import java.text.NumberFormat;
 import java.util.Locale;
+
+import au.id.micolous.farebot.R;
+import au.id.micolous.metrodroid.MetrodroidApplication;
 
 public class HSLRefill extends Refill {
     private final long mRefillTime;
@@ -47,23 +47,28 @@ public class HSLRefill extends Refill {
         dest.writeLong(mRefillAmount);
     }
 
-    @Override public long getTimestamp() {
+    @Override
+    public long getTimestamp() {
         return mRefillTime;
     }
 
-    @Override public String getAgencyName() {
+    @Override
+    public String getAgencyName() {
         return MetrodroidApplication.getInstance().getString(R.string.hsl_balance_refill);
     }
 
-    @Override public String getShortAgencyName() {
+    @Override
+    public String getShortAgencyName() {
         return MetrodroidApplication.getInstance().getString(R.string.hsl_balance_refill);
     }
 
-    @Override public long getAmount() {
+    @Override
+    public long getAmount() {
         return mRefillAmount;
     }
 
-    @Override public String getAmountString() {
+    @Override
+    public String getAmountString() {
         return NumberFormat.getCurrencyInstance(Locale.GERMANY).format(mRefillAmount / 100.0);
     }
 }

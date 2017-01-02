@@ -20,12 +20,10 @@ package com.codebutler.farebot.transit.unknown;
 
 import android.os.Parcel;
 
-import au.id.micolous.farebot.R;
 import com.codebutler.farebot.card.Card;
 import com.codebutler.farebot.card.classic.ClassicCard;
 import com.codebutler.farebot.card.classic.ClassicSector;
 import com.codebutler.farebot.card.classic.UnauthorizedClassicSector;
-import com.codebutler.farebot.transit.Refill;
 import com.codebutler.farebot.transit.Subscription;
 import com.codebutler.farebot.transit.TransitData;
 import com.codebutler.farebot.transit.TransitIdentity;
@@ -35,18 +33,21 @@ import com.codebutler.farebot.util.Utils;
 
 import java.util.List;
 
+import au.id.micolous.farebot.R;
+
 /**
  * Handle MiFare Classic with no open sectors
  */
-public class UnauthorizedClassicTransitData  extends TransitData {
+public class UnauthorizedClassicTransitData extends TransitData {
     /**
      * This should be the last executed Mifare Classic check, after all the other checks are done.
-     *
+     * <p>
      * This is because it will catch others' cards.
+     *
      * @param card Card to read.
      * @return true if all sectors on the card are locked.
      */
-    public static boolean check (ClassicCard card) {
+    public static boolean check(ClassicCard card) {
         // check to see if all sectors are blocked
         for (ClassicSector s : card.getSectors()) {
             if (!(s instanceof UnauthorizedClassicSector)) {
@@ -57,7 +58,7 @@ public class UnauthorizedClassicTransitData  extends TransitData {
         return true;
     }
 
-    public static TransitIdentity parseTransitIdentity (Card card) {
+    public static TransitIdentity parseTransitIdentity(Card card) {
         return new TransitIdentity(Utils.localizeString(R.string.locked_card), null);
     }
 

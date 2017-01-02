@@ -150,7 +150,9 @@ public class MetrodroidApplication extends Application {
         return mSerializer;
     }
 
-    public boolean getMifareClassicSupport() { return mMifareClassicSupport; }
+    public boolean getMifareClassicSupport() {
+        return mMifareClassicSupport;
+    }
 
     @Override public void onCreate() {
         super.onCreate();
@@ -215,8 +217,8 @@ public class MetrodroidApplication extends Application {
 
         // Fallback: Look for com.nxp.mifare feature.
         mMifareClassicSupport = this.getPackageManager().hasSystemFeature("com.nxp.mifare");
-        Log.d(TAG, "Falling back to com.nxp.mifare feature detection " +
-                (mMifareClassicSupport ? "(found)" : "(missing)"));
+        Log.d(TAG, "Falling back to com.nxp.mifare feature detection "
+                + (mMifareClassicSupport ? "(found)" : "(missing)"));
     }
 
 }

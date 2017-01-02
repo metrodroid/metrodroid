@@ -28,10 +28,20 @@ import com.codebutler.farebot.util.Utils;
  * Represents a "purse" type record.
  */
 public class ManlyFastFerryPurseRecord extends ManlyFastFerryRegularRecord implements Parcelable {
-    private int    mDay;
-    private int    mMinute;
+    private int mDay;
+    private int mMinute;
     private boolean mIsCredit;
-    private int     mTransactionValue;
+    private int mTransactionValue;
+
+    protected ManlyFastFerryPurseRecord() {
+    }
+
+    public ManlyFastFerryPurseRecord(Parcel parcel) {
+        mDay = parcel.readInt();
+        mMinute = parcel.readInt();
+        mIsCredit = parcel.readInt() == 1;
+        mTransactionValue = parcel.readInt();
+    }
 
     public static ManlyFastFerryPurseRecord recordFromBytes(byte[] input) {
         if (input[0] != 0x02) throw new AssertionError("PurseRecord input[0] != 0x02");
@@ -59,15 +69,6 @@ public class ManlyFastFerryPurseRecord extends ManlyFastFerryRegularRecord imple
         return record;
     }
 
-    protected ManlyFastFerryPurseRecord() {}
-
-    public ManlyFastFerryPurseRecord(Parcel parcel) {
-        mDay = parcel.readInt();
-        mMinute = parcel.readInt();
-        mIsCredit = parcel.readInt() == 1;
-        mTransactionValue = parcel.readInt();
-    }
-
     @Override
     public int describeContents() {
         return 0;
@@ -81,9 +82,20 @@ public class ManlyFastFerryPurseRecord extends ManlyFastFerryRegularRecord imple
         parcel.writeInt(mTransactionValue);
     }
 
-    public int getDay() { return mDay; }
-    public int getMinute() { return mMinute; }
-    public int getTransactionValue() { return mTransactionValue; }
-    public boolean getIsCredit() { return mIsCredit; }
+    public int getDay() {
+        return mDay;
+    }
+
+    public int getMinute() {
+        return mMinute;
+    }
+
+    public int getTransactionValue() {
+        return mTransactionValue;
+    }
+
+    public boolean getIsCredit() {
+        return mIsCredit;
+    }
 
 }

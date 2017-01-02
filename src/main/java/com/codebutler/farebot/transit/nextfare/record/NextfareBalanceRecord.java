@@ -32,6 +32,9 @@ public class NextfareBalanceRecord extends NextfareRecord implements Comparable<
     private int mBalance;
     private boolean mHasTravelPassAvailable = false;
 
+    protected NextfareBalanceRecord() {
+    }
+
     public static NextfareBalanceRecord recordFromBytes(byte[] input) {
         //if (input[0] != 0x01) throw new AssertionError();
 
@@ -50,16 +53,18 @@ public class NextfareBalanceRecord extends NextfareRecord implements Comparable<
         return record;
     }
 
-    protected NextfareBalanceRecord() {}
-
     /**
      * The balance of the card, in cents.
+     *
      * @return int number of cents.
      */
     public int getBalance() {
         return mBalance;
     }
-    public int getVersion() { return mVersion; }
+
+    public int getVersion() {
+        return mVersion;
+    }
 
     public boolean hasTravelPassAvailable() {
         return mHasTravelPassAvailable;

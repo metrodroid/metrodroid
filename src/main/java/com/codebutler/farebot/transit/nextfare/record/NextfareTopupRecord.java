@@ -33,13 +33,6 @@ import java.util.GregorianCalendar;
  * https://github.com/micolous/metrodroid/wiki/Cubic-Nextfare-MFC
  */
 public class NextfareTopupRecord extends NextfareRecord implements Parcelable {
-    private static final String TAG = "NextfareTopupRecord";
-    private GregorianCalendar mTimestamp;
-    private int mCredit;
-    private int mStation;
-    private int mChecksum;
-    private boolean mAutomatic;
-
     public static final Creator<NextfareTopupRecord> CREATOR = new Creator<NextfareTopupRecord>() {
         @Override
         public NextfareTopupRecord createFromParcel(Parcel in) {
@@ -51,6 +44,24 @@ public class NextfareTopupRecord extends NextfareRecord implements Parcelable {
             return new NextfareTopupRecord[size];
         }
     };
+    private static final String TAG = "NextfareTopupRecord";
+    private GregorianCalendar mTimestamp;
+    private int mCredit;
+    private int mStation;
+    private int mChecksum;
+    private boolean mAutomatic;
+
+    protected NextfareTopupRecord() {
+    }
+
+    public NextfareTopupRecord(Parcel parcel) {
+        mTimestamp = new GregorianCalendar();
+        mTimestamp.setTimeInMillis(parcel.readLong());
+        mCredit = parcel.readInt();
+        mStation = parcel.readInt();
+        mChecksum = parcel.readInt();
+        mAutomatic = parcel.readInt() == 1;
+    }
 
     public static NextfareTopupRecord recordFromBytes(byte[] input) {
         //if ((input[0] != 0x01 && input[0] != 0x31) || input[1] != 0x01) throw new AssertionError("Not a topup record");
@@ -71,11 +82,10 @@ public class NextfareTopupRecord extends NextfareRecord implements Parcelable {
 
         record.mAutomatic = input[0] == 0x31;
 
-        Log.d(TAG, "@" + Utils.isoDateTimeFormat(record.mTimestamp) + ": " + record.mCredit + " cents, station " + record.mStation + ", " + (record.mAutomatic ? "auto" : "manual"));
+        Log.d(TAG, String.format("@%s: %d cents, station %d, %s",
+                Utils.isoDateTimeFormat(record.mTimestamp), record.mCredit, record.mStation, (record.mAutomatic ? "auto" : "manual")));
         return record;
     }
-
-    protected NextfareTopupRecord() {}
 
     @Override
     public int describeContents() {
@@ -89,15 +99,6 @@ public class NextfareTopupRecord extends NextfareRecord implements Parcelable {
         parcel.writeInt(mStation);
         parcel.writeInt(mChecksum);
         parcel.writeInt(mAutomatic ? 1 : 0);
-    }
-
-    public NextfareTopupRecord(Parcel parcel) {
-        mTimestamp = new GregorianCalendar();
-        mTimestamp.setTimeInMillis(parcel.readLong());
-        mCredit = parcel.readInt();
-        mStation = parcel.readInt();
-        mChecksum = parcel.readInt();
-        mAutomatic = parcel.readInt() == 1;
     }
 
     public GregorianCalendar getTimestamp() {

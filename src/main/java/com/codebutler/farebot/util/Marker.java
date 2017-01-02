@@ -27,7 +27,6 @@ import com.codebutler.farebot.transit.Station;
  * Markers for Leaflet to consume.
  */
 public class Marker {
-    private final static String TAG = "Marker";
     Station mStation;
     String mIcon;
 
@@ -38,6 +37,7 @@ public class Marker {
 
     /**
      * Gets the WGS84 Latitude (Y) of the point represented by this marker, in decimal degrees.
+     *
      * @return String representing the latitude of the point.
      */
     @JavascriptInterface
@@ -47,6 +47,7 @@ public class Marker {
 
     /**
      * Gets the WGS84 Longitude (X) of the point represented by this marker, in decimal degrees.
+     *
      * @return String representing the longitude of the point.
      */
     @JavascriptInterface
@@ -57,6 +58,7 @@ public class Marker {
     /**
      * Gets the HTML used to represent the contents of the pop-up info bubble, containing the
      * station name and the name of the company who runs the station.
+     *
      * @return HTML
      */
     @JavascriptInterface
@@ -80,6 +82,7 @@ public class Marker {
 
     /**
      * Icon name to use for this marker.
+     *
      * @return Icon name
      */
     @JavascriptInterface

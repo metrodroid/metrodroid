@@ -32,21 +32,6 @@ import au.id.micolous.farebot.R;
  */
 public class SeqGoRefill extends NextfareRefill {
 
-    public SeqGoRefill(NextfareTopupRecord topup) {
-        super(topup);
-    }
-
-    public SeqGoRefill(Parcel parcel) {
-        super(parcel);
-    }
-
-    @Override
-    public String getShortAgencyName() {
-        return Utils.localizeString(mTopup.getAutomatic() ?
-                R.string.seqgo_refill_automatic :
-                R.string.seqgo_refill_manual);
-    }
-
     public static final Parcelable.Creator<SeqGoRefill> CREATOR = new Parcelable.Creator<SeqGoRefill>() {
 
         public SeqGoRefill createFromParcel(Parcel in) {
@@ -57,4 +42,19 @@ public class SeqGoRefill extends NextfareRefill {
             return new SeqGoRefill[size];
         }
     };
+
+    public SeqGoRefill(NextfareTopupRecord topup) {
+        super(topup);
+    }
+
+    public SeqGoRefill(Parcel parcel) {
+        super(parcel);
+    }
+
+    @Override
+    public String getShortAgencyName() {
+        return Utils.localizeString(mTopup.getAutomatic()
+                ? R.string.seqgo_refill_automatic
+                : R.string.seqgo_refill_manual);
+    }
 }

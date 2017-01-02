@@ -25,9 +25,17 @@ import com.codebutler.farebot.transit.Station;
 
 /**
  * Implements additional fields used for Go Card stations (zone_id).
- *
  */
 public class SeqGoStation extends Station {
+    public static final Creator<SeqGoStation> CREATOR = new Creator<SeqGoStation>() {
+        public SeqGoStation createFromParcel(Parcel parcel) {
+            return new SeqGoStation(parcel);
+        }
+
+        public SeqGoStation[] newArray(int size) {
+            return new SeqGoStation[size];
+        }
+    };
     protected final String mZone;
     protected final boolean mAirtrainZoneExempt;
 
@@ -36,14 +44,20 @@ public class SeqGoStation extends Station {
                 cursor.getString(cursor.getColumnIndex(SeqGoDBUtil.COLUMN_ROW_LAT)),
                 cursor.getString(cursor.getColumnIndex(SeqGoDBUtil.COLUMN_ROW_LON)),
                 cursor.getString(cursor.getColumnIndex(SeqGoDBUtil.COLUMN_ROW_ZONE)),
-                cursor.getString(cursor.getColumnIndex(SeqGoDBUtil.COLUMN_ROW_AIRTRAIN_ZONE_EXEMPT)) != null &&
-                        cursor.getString(cursor.getColumnIndex(SeqGoDBUtil.COLUMN_ROW_AIRTRAIN_ZONE_EXEMPT)).equals("1"));
+                cursor.getString(cursor.getColumnIndex(SeqGoDBUtil.COLUMN_ROW_AIRTRAIN_ZONE_EXEMPT)) != null
+                        && cursor.getString(cursor.getColumnIndex(SeqGoDBUtil.COLUMN_ROW_AIRTRAIN_ZONE_EXEMPT)).equals("1"));
     }
 
-    public SeqGoStation(String stationName, String latitude, String longitude, String zone, boolean airtrain_zone_exempt) {
+    public SeqGoStation(String stationName, String latitude, String longitude, String zone, boolean airtrainZoneExempt) {
         super(stationName, null, latitude, longitude);
         this.mZone = zone;
-        this.mAirtrainZoneExempt = airtrain_zone_exempt;
+        this.mAirtrainZoneExempt = airtrainZoneExempt;
+    }
+
+    protected SeqGoStation(Parcel parcel) {
+        super(parcel);
+        this.mZone = parcel.readString();
+        this.mAirtrainZoneExempt = parcel.readInt() == 1;
     }
 
     public String getZone() {
@@ -59,19 +73,4 @@ public class SeqGoStation extends Station {
         parcel.writeString(mZone);
         parcel.writeInt(mAirtrainZoneExempt ? 1 : 0);
     }
-
-    protected SeqGoStation(Parcel parcel) {
-        super(parcel);
-        this.mZone = parcel.readString();
-        this.mAirtrainZoneExempt = parcel.readInt() == 1;
-    }
-
-    public static final Creator<SeqGoStation> CREATOR = new Creator<SeqGoStation>() {
-        public SeqGoStation createFromParcel(Parcel parcel) {
-            return new SeqGoStation(parcel);
-        }
-        public SeqGoStation[] newArray(int size) {
-            return new SeqGoStation[size];
-        }
-    };
 }

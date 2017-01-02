@@ -34,8 +34,8 @@ public abstract class BetterAsyncTask<Result> extends AsyncTask<Void, ProgressBa
     private static final String TAG = "BetterAsyncTask";
 
     private ProgressDialog mProgressDialog;
-    private Activity       mActivity;
-    private boolean        mFinishOnError;
+    private Activity mActivity;
+    private boolean mFinishOnError;
 
     public BetterAsyncTask(Activity activity) {
         this(activity, true);
@@ -87,7 +87,8 @@ public abstract class BetterAsyncTask<Result> extends AsyncTask<Void, ProgressBa
         mProgressDialog.setMessage(TextUtils.isEmpty(text) ? mActivity.getString(R.string.loading) : text);
     }
 
-    @Override protected final TaskResult<Result> doInBackground(Void... unused) {
+    @Override
+    protected final TaskResult<Result> doInBackground(Void... unused) {
         try {
             return new TaskResult<>(doInBackground());
         } catch (Exception e) {
@@ -96,13 +97,15 @@ public abstract class BetterAsyncTask<Result> extends AsyncTask<Void, ProgressBa
         }
     }
 
-    @Override protected void onPreExecute() {
+    @Override
+    protected void onPreExecute() {
         super.onPreExecute();
         if (mProgressDialog != null)
             mProgressDialog.show();
     }
 
-    @Override protected final void onPostExecute(TaskResult<Result> result) {
+    @Override
+    protected final void onPostExecute(TaskResult<Result> result) {
         if (mProgressDialog != null)
             mProgressDialog.dismiss();
         if (!result.success()) {
@@ -115,13 +118,14 @@ public abstract class BetterAsyncTask<Result> extends AsyncTask<Void, ProgressBa
 
     protected void onError(Exception ex) {
         AlertDialog dialog = new AlertDialog.Builder(mActivity)
-            .setTitle(R.string.error)
-            .setMessage(ex.toString())
-            .setPositiveButton(android.R.string.ok, null)
-            .create();
+                .setTitle(R.string.error)
+                .setMessage(ex.toString())
+                .setPositiveButton(android.R.string.ok, null)
+                .create();
         if (mFinishOnError) {
             dialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
-                @Override public void onDismiss(DialogInterface dialogInterface) {
+                @Override
+                public void onDismiss(DialogInterface dialogInterface) {
                     mActivity.finish();
                 }
             });
@@ -130,6 +134,7 @@ public abstract class BetterAsyncTask<Result> extends AsyncTask<Void, ProgressBa
     }
 
     protected abstract Result doInBackground() throws Exception;
+
     protected abstract void onResult(Result result);
 
     public static class TaskResult<T> {
@@ -137,7 +142,7 @@ public abstract class BetterAsyncTask<Result> extends AsyncTask<Void, ProgressBa
         private final Exception mException;
 
         public TaskResult(T object) {
-            mObject    = object;
+            mObject = object;
             mException = null;
         }
 
@@ -147,7 +152,7 @@ public abstract class BetterAsyncTask<Result> extends AsyncTask<Void, ProgressBa
             }
 
             mException = exception;
-            mObject    = null;
+            mObject = null;
         }
 
         public T getObject() {

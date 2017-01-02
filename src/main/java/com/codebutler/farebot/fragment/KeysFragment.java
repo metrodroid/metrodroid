@@ -39,36 +39,42 @@ import android.widget.CursorAdapter;
 import android.widget.ResourceCursorAdapter;
 import android.widget.TextView;
 
-import au.id.micolous.farebot.R;
 import com.codebutler.farebot.provider.CardKeyProvider;
 import com.codebutler.farebot.provider.KeysTableColumns;
 import com.codebutler.farebot.util.BetterAsyncTask;
+
+import au.id.micolous.farebot.R;
 
 public class KeysFragment extends ListFragment implements AdapterView.OnItemLongClickListener {
     private ActionMode mActionMode;
     private int mActionKeyId;
 
     private android.view.ActionMode.Callback mActionModeCallback = new ActionMode.Callback() {
-        @Override public boolean onCreateActionMode(ActionMode mode, Menu menu) {
+        @Override
+        public boolean onCreateActionMode(ActionMode mode, Menu menu) {
             MenuInflater inflater = mode.getMenuInflater();
             inflater.inflate(R.menu.keys_contextual, menu);
             return true;
         }
 
-        @Override public boolean onPrepareActionMode(ActionMode mode, Menu menu) {
+        @Override
+        public boolean onPrepareActionMode(ActionMode mode, Menu menu) {
             return false;
         }
 
-        @Override public boolean onActionItemClicked(ActionMode mode, MenuItem item) {
+        @Override
+        public boolean onActionItemClicked(ActionMode mode, MenuItem item) {
             if (item.getItemId() == R.id.delete_key) {
                 new BetterAsyncTask<Void>(getActivity(), false, false) {
-                    @Override protected Void doInBackground() throws Exception {
+                    @Override
+                    protected Void doInBackground() throws Exception {
                         Uri uri = ContentUris.withAppendedId(CardKeyProvider.CONTENT_URI, mActionKeyId);
                         getActivity().getContentResolver().delete(uri, null, null);
                         return null;
                     }
 
-                    @Override protected void onResult(Void unused) {
+                    @Override
+                    protected void onResult(Void unused) {
                         mActionMode.finish();
                         ((KeysAdapter) getListAdapter()).notifyDataSetChanged();
                     }
@@ -78,36 +84,42 @@ public class KeysFragment extends ListFragment implements AdapterView.OnItemLong
             return false;
         }
 
-        @Override public void onDestroyActionMode(ActionMode mode) {
+        @Override
+        public void onDestroyActionMode(ActionMode mode) {
             mActionKeyId = 0;
-            mActionMode  = null;
+            mActionMode = null;
         }
     };
 
     private LoaderManager.LoaderCallbacks<Cursor> mLoaderCallbacks = new LoaderManager.LoaderCallbacks<android.database.Cursor>() {
-        @Override public Loader<Cursor> onCreateLoader(int i, Bundle bundle) {
+        @Override
+        public Loader<Cursor> onCreateLoader(int i, Bundle bundle) {
             return new CursorLoader(getActivity(), CardKeyProvider.CONTENT_URI,
-                null,
-                null,
-                null,
-                KeysTableColumns.CREATED_AT + " DESC");
+                    null,
+                    null,
+                    null,
+                    KeysTableColumns.CREATED_AT + " DESC");
         }
 
-        @Override public void onLoadFinished(Loader<Cursor> cursorLoader, Cursor cursor) {
+        @Override
+        public void onLoadFinished(Loader<Cursor> cursorLoader, Cursor cursor) {
             ((CursorAdapter) getListView().getAdapter()).swapCursor(cursor);
             setListShown(true);
         }
 
-        @Override public void onLoaderReset(Loader<Cursor> cursorLoader) {
+        @Override
+        public void onLoaderReset(Loader<Cursor> cursorLoader) {
         }
     };
 
-    @Override public void onCreate(Bundle savedInstanceState) {
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
     }
 
-    @Override public void onViewCreated(View view, Bundle savedInstanceState) {
+    @Override
+    public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         setEmptyText(getString(R.string.no_keys));
         getListView().setOnItemLongClickListener(this);
@@ -115,25 +127,28 @@ public class KeysFragment extends ListFragment implements AdapterView.OnItemLong
         getLoaderManager().initLoader(0, null, mLoaderCallbacks);
     }
 
-    @Override public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+    @Override
+    public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
         Cursor cursor = (Cursor) getListAdapter().getItem(position);
 
         mActionKeyId = cursor.getInt(cursor.getColumnIndex(KeysTableColumns._ID));
-        mActionMode  = getActivity().startActionMode(mActionModeCallback);
+        mActionMode = getActivity().startActionMode(mActionModeCallback);
 
         return true;
     }
 
-    @Override public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         inflater.inflate(R.menu.fragment_keys_menu, menu);
     }
 
-    @Override public boolean onOptionsItemSelected(MenuItem item) {
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == R.id.add_key) {
             new AlertDialog.Builder(getActivity())
-                .setMessage(R.string.add_key_directions)
-                .setPositiveButton(android.R.string.ok, null)
-                .show();
+                    .setMessage(R.string.add_key_directions)
+                    .setPositiveButton(android.R.string.ok, null)
+                    .show();
             return true;
         }
         return false;
@@ -144,8 +159,9 @@ public class KeysFragment extends ListFragment implements AdapterView.OnItemLong
             super(getActivity(), android.R.layout.simple_list_item_2, null, false);
         }
 
-        @Override public void bindView(View view, Context context, Cursor cursor) {
-            String id   = cursor.getString(cursor.getColumnIndex(KeysTableColumns.CARD_ID));
+        @Override
+        public void bindView(View view, Context context, Cursor cursor) {
+            String id = cursor.getString(cursor.getColumnIndex(KeysTableColumns.CARD_ID));
             String type = cursor.getString(cursor.getColumnIndex(KeysTableColumns.CARD_TYPE));
 
             TextView textView1 = (TextView) view.findViewById(android.R.id.text1);

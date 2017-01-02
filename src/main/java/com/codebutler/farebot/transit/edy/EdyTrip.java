@@ -3,8 +3,6 @@ package com.codebutler.farebot.transit.edy;
 import android.app.Application;
 import android.os.Parcel;
 
-import au.id.micolous.metrodroid.MetrodroidApplication;
-import au.id.micolous.farebot.R;
 import com.codebutler.farebot.card.felica.FelicaBlock;
 import com.codebutler.farebot.transit.Station;
 import com.codebutler.farebot.transit.Trip;
@@ -15,7 +13,19 @@ import java.text.NumberFormat;
 import java.util.Date;
 import java.util.Locale;
 
+import au.id.micolous.farebot.R;
+import au.id.micolous.metrodroid.MetrodroidApplication;
+
 public class EdyTrip extends Trip {
+    public static final Creator<EdyTrip> CREATOR = new Creator<EdyTrip>() {
+        public EdyTrip createFromParcel(Parcel parcel) {
+            return new EdyTrip(parcel);
+        }
+
+        public EdyTrip[] newArray(int size) {
+            return new EdyTrip[size];
+        }
+    };
     private final int mProcessType;
     private final int mSequenceNumber;
     private final Date mTimestamp;
@@ -40,20 +50,10 @@ public class EdyTrip extends Trip {
         mBalance = Util.toInt(data[12], data[13], data[14], data[15]);
     }
 
-    public static final Creator<EdyTrip> CREATOR = new Creator<EdyTrip>() {
-        public EdyTrip createFromParcel(Parcel parcel) {
-            return new EdyTrip(parcel);
-        }
-
-        public EdyTrip[] newArray(int size) {
-            return new EdyTrip[size];
-        }
-    };
-
     public EdyTrip(Parcel parcel) {
         mProcessType = parcel.readInt();
         mSequenceNumber = parcel.readInt();
-        mTimestamp  = new Date(parcel.readLong());
+        mTimestamp = new Date(parcel.readLong());
         mTransactionAmount = parcel.readInt();
         mBalance = parcel.readInt();
     }
@@ -107,6 +107,7 @@ public class EdyTrip extends Trip {
     public String getShortAgencyName() {
         return getAgencyName();
     }
+
     public String getAgencyName() {
         NumberFormat format = NumberFormat.getIntegerInstance();
         format.setMinimumIntegerDigits(8);
@@ -129,21 +130,27 @@ public class EdyTrip extends Trip {
     public String getRouteName() {
         return null;
     }
+
     public String getStartStationName() {
         return null;
     }
+
     public Station getStartStation() {
         return null;
     }
+
     public String getEndStationName() {
         return null;
     }
+
     public Station getEndStation() {
         return null;
     }
+
     public int describeContents() {
         return 0;
     }
+
     public long getExitTimestamp() {
         return 0;
     }

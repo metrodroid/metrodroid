@@ -25,10 +25,21 @@ import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
 
 public class BilheteUnicoSPCredit implements Parcelable {
+    public static final Parcelable.Creator<BilheteUnicoSPCredit> CREATOR
+            = new Parcelable.Creator<BilheteUnicoSPCredit>() {
+        public BilheteUnicoSPCredit createFromParcel(Parcel source) {
+            int credit = source.readInt();
+            return new BilheteUnicoSPCredit(credit);
+        }
+
+        public BilheteUnicoSPCredit[] newArray(int size) {
+            return new BilheteUnicoSPCredit[size];
+        }
+    };
     private final int mCredit;
 
     public BilheteUnicoSPCredit(int credit) {
-        mCredit   = credit;
+        mCredit = credit;
     }
 
     public BilheteUnicoSPCredit(byte[] data) {
@@ -46,18 +57,6 @@ public class BilheteUnicoSPCredit implements Parcelable {
     public int describeContents() {
         return 0;
     }
-
-    public static final Parcelable.Creator<BilheteUnicoSPCredit> CREATOR
-            = new Parcelable.Creator<BilheteUnicoSPCredit>() {
-        public BilheteUnicoSPCredit createFromParcel(Parcel source) {
-            int credit   = source.readInt();
-            return new BilheteUnicoSPCredit(credit);
-        }
-
-        public BilheteUnicoSPCredit[] newArray(int size) {
-            return new BilheteUnicoSPCredit[size];
-        }
-    };
 
     public void writeToParcel(Parcel parcel, int flags) {
         parcel.writeInt(mCredit);

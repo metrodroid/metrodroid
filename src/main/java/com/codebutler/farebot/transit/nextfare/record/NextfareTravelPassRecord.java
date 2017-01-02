@@ -34,12 +34,6 @@ import java.util.GregorianCalendar;
  */
 
 public class NextfareTravelPassRecord extends NextfareRecord implements Parcelable, Comparable<NextfareTravelPassRecord> {
-    private static final String TAG = "NextfareTravelPassRec";
-    private GregorianCalendar mExpiry;
-    private int mChecksum;
-    private boolean mAutomatic;
-    private int mVersion;
-
     public static final Creator<NextfareTravelPassRecord> CREATOR = new Creator<NextfareTravelPassRecord>() {
         @Override
         public NextfareTravelPassRecord createFromParcel(Parcel in) {
@@ -51,6 +45,21 @@ public class NextfareTravelPassRecord extends NextfareRecord implements Parcelab
             return new NextfareTravelPassRecord[size];
         }
     };
+    private static final String TAG = "NextfareTravelPassRec";
+    private GregorianCalendar mExpiry;
+    private int mChecksum;
+    private boolean mAutomatic;
+    private int mVersion;
+
+    protected NextfareTravelPassRecord() {
+    }
+
+    public NextfareTravelPassRecord(Parcel parcel) {
+        mExpiry = new GregorianCalendar();
+        mExpiry.setTimeInMillis(parcel.readLong());
+        mChecksum = parcel.readInt();
+        mAutomatic = parcel.readInt() == 1;
+    }
 
     public static NextfareTravelPassRecord recordFromBytes(byte[] input) {
         //if ((input[0] != 0x01 && input[0] != 0x31) || input[1] != 0x01) throw new AssertionError("Not a topup record");
@@ -79,8 +88,6 @@ public class NextfareTravelPassRecord extends NextfareRecord implements Parcelab
         return record;
     }
 
-    protected NextfareTravelPassRecord() {}
-
     @Override
     public int describeContents() {
         return 0;
@@ -91,13 +98,6 @@ public class NextfareTravelPassRecord extends NextfareRecord implements Parcelab
         parcel.writeLong(mExpiry.getTimeInMillis());
         parcel.writeInt(mChecksum);
         parcel.writeInt(mAutomatic ? 1 : 0);
-    }
-
-    public NextfareTravelPassRecord(Parcel parcel) {
-        mExpiry = new GregorianCalendar();
-        mExpiry.setTimeInMillis(parcel.readLong());
-        mChecksum = parcel.readInt();
-        mAutomatic = parcel.readInt() == 1;
     }
 
     public GregorianCalendar getTimestamp() {

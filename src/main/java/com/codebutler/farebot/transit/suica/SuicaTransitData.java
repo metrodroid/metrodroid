@@ -37,7 +37,6 @@ import android.os.Parcel;
 import com.codebutler.farebot.card.felica.FelicaBlock;
 import com.codebutler.farebot.card.felica.FelicaCard;
 import com.codebutler.farebot.card.felica.FelicaService;
-import com.codebutler.farebot.transit.Refill;
 import com.codebutler.farebot.transit.Subscription;
 import com.codebutler.farebot.transit.TransitData;
 import com.codebutler.farebot.transit.TransitIdentity;
@@ -51,8 +50,6 @@ import java.util.Collections;
 import java.util.List;
 
 public class SuicaTransitData extends TransitData {
-    private SuicaTrip[] mTrips;
-
     public static final Creator<SuicaTransitData> CREATOR = new Creator<SuicaTransitData>() {
         public SuicaTransitData createFromParcel(Parcel parcel) {
             return new SuicaTransitData(parcel);
@@ -62,14 +59,7 @@ public class SuicaTransitData extends TransitData {
             return new SuicaTransitData[size];
         }
     };
-
-    public static boolean check(FelicaCard card) {
-        return (card.getSystem(FeliCaLib.SYSTEMCODE_SUICA) != null);
-    }
-
-    public static TransitIdentity parseTransitIdentity(FelicaCard card) {
-        return new TransitIdentity("Suica", null); // FIXME: Could be ICOCA, etc.
-    }
+    private SuicaTrip[] mTrips;
 
     public SuicaTransitData(Parcel parcel) {
         mTrips = new SuicaTrip[parcel.readInt()];
@@ -104,30 +94,44 @@ public class SuicaTransitData extends TransitData {
         mTrips = trips.toArray(new SuicaTrip[trips.size()]);
     }
 
-    @Override public String getBalanceString() {
+    public static boolean check(FelicaCard card) {
+        return (card.getSystem(FeliCaLib.SYSTEMCODE_SUICA) != null);
+    }
+
+    public static TransitIdentity parseTransitIdentity(FelicaCard card) {
+        return new TransitIdentity("Suica", null); // FIXME: Could be ICOCA, etc.
+    }
+
+    @Override
+    public String getBalanceString() {
         if (mTrips.length > 0)
             return mTrips[0].getBalanceString();
         return null;
     }
 
-    @Override public String getSerialNumber() {
+    @Override
+    public String getSerialNumber() {
         // FIXME: Find where this is on the card.
         return null;
     }
 
-    @Override public Trip[] getTrips() {
+    @Override
+    public Trip[] getTrips() {
         return mTrips;
     }
 
-    @Override public Subscription[] getSubscriptions() {
+    @Override
+    public Subscription[] getSubscriptions() {
         return null;
     }
 
-    @Override public List<ListItem> getInfo() {
+    @Override
+    public List<ListItem> getInfo() {
         return null;
     }
 
-    @Override public String getCardName() {
+    @Override
+    public String getCardName() {
         return "Suica"; // FIXME: Could be ICOCA, etc.
     }
 

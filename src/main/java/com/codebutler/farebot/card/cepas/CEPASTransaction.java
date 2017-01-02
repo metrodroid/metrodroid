@@ -25,23 +25,29 @@ import android.os.Parcelable;
 import org.simpleframework.xml.Attribute;
 import org.simpleframework.xml.Root;
 
-@Root(name="transaction")
+@Root(name = "transaction")
 public class CEPASTransaction implements Parcelable {
-    @Attribute(name = "type") private byte mType;
-    @Attribute(name = "amount") private int mAmount;
-    @Attribute(name = "date") private int mDate;
-    @Attribute(name = "user-data") private String mUserData;
+    public static final Parcelable.Creator<CEPASTransaction> CREATOR = new Parcelable.Creator<CEPASTransaction>() {
+        public CEPASTransaction createFromParcel(Parcel source) {
+            byte type = source.readByte();
+            int amount = source.readInt();
+            int date = source.readInt();
+            String userData = source.readString();
+            return new CEPASTransaction(type, amount, date, userData);
+        }
 
-    public enum TransactionType {
-        MRT,
-        TOP_UP, /* Old MRT transit info is unhyphenated - renamed from OLD_MRT to TOP_UP, as it seems like the code has been repurposed. */
-        BUS,
-        BUS_REFUND,
-        CREATION,
-        RETAIL,
-        SERVICE,
-        UNKNOWN,
-    }
+        public CEPASTransaction[] newArray(int size) {
+            return new CEPASTransaction[size];
+        }
+    };
+    @Attribute(name = "type")
+    private byte mType;
+    @Attribute(name = "amount")
+    private int mAmount;
+    @Attribute(name = "date")
+    private int mDate;
+    @Attribute(name = "user-data")
+    private String mUserData;
 
     public CEPASTransaction(byte[] rawData) {
         int tmp;
@@ -107,26 +113,25 @@ public class CEPASTransaction implements Parcelable {
         return mUserData;
     }
 
-    public static final Parcelable.Creator<CEPASTransaction> CREATOR = new Parcelable.Creator<CEPASTransaction>() {
-        public CEPASTransaction createFromParcel(Parcel source) {
-            byte type = source.readByte();
-            int amount = source.readInt();
-            int date = source.readInt();
-            String userData = source.readString();
-            return new CEPASTransaction(type, amount, date, userData);
-        }
-        public CEPASTransaction[] newArray(int size) {
-            return new CEPASTransaction[size];
-        }
-    };
-
     public void writeToParcel(Parcel parcel, int flags) {
         parcel.writeByte(mType);
         parcel.writeInt(mAmount);
         parcel.writeInt(mDate);
         parcel.writeString(mUserData);
     }
+
     public int describeContents() {
         return 0;
+    }
+
+    public enum TransactionType {
+        MRT,
+        TOP_UP, /* Old MRT transit info is unhyphenated - renamed from OLD_MRT to TOP_UP, as it seems like the code has been repurposed. */
+        BUS,
+        BUS_REFUND,
+        CREATION,
+        RETAIL,
+        SERVICE,
+        UNKNOWN,
     }
 }

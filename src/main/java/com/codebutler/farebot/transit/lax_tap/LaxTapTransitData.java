@@ -42,9 +42,17 @@ import static com.codebutler.farebot.transit.lax_tap.LaxTapData.METRO_LR_START;
 
 public class LaxTapTransitData extends NextfareTransitData {
 
-    private static final String TAG = "LaxTapTransitData";
     public static final String NAME = "TAP";
     public static final String LONG_NAME = "Transit Access Pass";
+    public static final Creator<LaxTapTransitData> CREATOR = new Creator<LaxTapTransitData>() {
+        public LaxTapTransitData createFromParcel(Parcel parcel) {
+            return new LaxTapTransitData(parcel);
+        }
+
+        public LaxTapTransitData[] newArray(int size) {
+            return new LaxTapTransitData[size];
+        }
+    };
     static final byte[] MANUFACTURER = {
             0x16, 0x18, 0x1A, 0x1B,
             0x1C, 0x1D, 0x1E, 0x1F
@@ -55,16 +63,19 @@ public class LaxTapTransitData extends NextfareTransitData {
     };
 
     //private SeqGoTicketType mTicketType;
+    private static final String TAG = "LaxTapTransitData";
 
-    public static final Creator<LaxTapTransitData> CREATOR = new Creator<LaxTapTransitData>() {
-        public LaxTapTransitData createFromParcel(Parcel parcel) {
-            return new LaxTapTransitData(parcel);
-        }
+    public LaxTapTransitData(Parcel parcel) {
+        super(parcel);
+        //mTicketType = (SeqGoTicketType)parcel.readSerializable();
+    }
 
-        public LaxTapTransitData[] newArray(int size) {
-            return new LaxTapTransitData[size];
+    public LaxTapTransitData(ClassicCard card) {
+        super(card);
+        if (mConfig != null) {
+            //mTicketType = SeqGoData.TICKET_TYPE_MAP.get(mConfig.getTicketType(), SeqGoTicketType.UNKNOWN);
         }
-    };
+    }
 
     public static TransitIdentity parseTransitIdentity(ClassicCard card) {
         return NextfareTransitData.parseTransitIdentity(card, NAME);
@@ -86,24 +97,11 @@ public class LaxTapTransitData extends NextfareTransitData {
         }
     }
 
-    public LaxTapTransitData(Parcel parcel) {
-        super(parcel);
-        //mTicketType = (SeqGoTicketType)parcel.readSerializable();
-    }
-
     @Override
     public void writeToParcel(Parcel parcel, int i) {
         super.writeToParcel(parcel, i);
         //parcel.writeSerializable(mTicketType);
     }
-
-    public LaxTapTransitData(ClassicCard card) {
-        super(card);
-        if (mConfig != null) {
-            //mTicketType = SeqGoData.TICKET_TYPE_MAP.get(mConfig.getTicketType(), SeqGoTicketType.UNKNOWN);
-        }
-    }
-
 
     @Override
     protected NextfareTrip newTrip() {

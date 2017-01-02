@@ -21,7 +21,6 @@ package com.codebutler.farebot.transit.myway;
 import android.os.Parcel;
 import android.util.Log;
 
-import com.codebutler.farebot.card.Card;
 import com.codebutler.farebot.card.UnauthorizedException;
 import com.codebutler.farebot.card.classic.ClassicCard;
 import com.codebutler.farebot.transit.Subscription;
@@ -30,8 +29,6 @@ import com.codebutler.farebot.transit.TransitIdentity;
 import com.codebutler.farebot.transit.Trip;
 import com.codebutler.farebot.ui.ListItem;
 import com.codebutler.farebot.util.Utils;
-
-import net.kazzz.felica.lib.Util;
 
 import java.text.NumberFormat;
 import java.util.ArrayList;
@@ -44,19 +41,12 @@ import java.util.Locale;
 /**
  * Experimental reader for MyWay (Australian Capital Territory / Canberra)
  * https://github.com/micolous/metrodroid/wiki/MyWay
- *
+ * <p>
  * Currently only available in "Fallback" mode.
  */
 
 public class MyWayTransitData extends TransitData {
     public static final String NAME = "MyWay";
-    private static final String TAG = "MyWayTransitData";
-    private static final GregorianCalendar MYWAY_EPOCH = new GregorianCalendar(2000, Calendar.JANUARY, 1);
-
-    private String mSerialNumber;
-    private int mBalance;
-    private MyWayTrip[] mTrips;
-
     public static final Creator<MyWayTransitData> CREATOR = new Creator<MyWayTransitData>() {
         @Override
         public MyWayTransitData createFromParcel(Parcel in) {
@@ -68,30 +58,11 @@ public class MyWayTransitData extends TransitData {
             return new MyWayTransitData[size];
         }
     };
-
-    private static String getSerialData(ClassicCard card) {
-        byte[] serialData = card.getSector(0).getBlock(1).getData();
-        String serial = Utils.getHexString(serialData, 6, 5);
-        if (serial.startsWith("0")) {
-            serial = serial.substring(1);
-        }
-        return serial;
-    }
-
-    public static TransitIdentity parseTransitIdentity(ClassicCard card) {
-        return new TransitIdentity(NAME, getSerialData(card));
-    }
-
-    public static boolean check(ClassicCard card) {
-        // TODO: Implement card identification correctly.
-        try {
-            // Try to get the block where the balance is.
-            card.getSector(2).getBlock(2).getData();
-            return true;
-        } catch (UnauthorizedException ex) {
-            return false;
-        }
-    }
+    private static final String TAG = "MyWayTransitData";
+    private static final GregorianCalendar MYWAY_EPOCH = new GregorianCalendar(2000, Calendar.JANUARY, 1);
+    private String mSerialNumber;
+    private int mBalance;
+    private MyWayTrip[] mTrips;
 
     public MyWayTransitData(Parcel p) {
         mSerialNumber = p.readString();
@@ -106,8 +77,8 @@ public class MyWayTransitData extends TransitData {
         ArrayList<MyWayTagRecord> tagRecords = new ArrayList<>();
         ArrayList<MyWayTrip> trips = new ArrayList<>();
 
-        for (int s=10; s<=12; s++) {
-            for (int b=0; b<=2; b++) {
+        for (int s = 10; s <= 12; s++) {
+            for (int b = 0; b <= 2; b++) {
                 MyWayTagRecord r = new MyWayTagRecord(card.getSector(s).getBlock(b).getData());
 
                 if (r.getTimestamp() != 0) {
@@ -131,7 +102,6 @@ public class MyWayTransitData extends TransitData {
                 MyWayTrip trip = new MyWayTrip();
 
 
-
                 // Put in the metadatas
                 trip.mStartTime = addMyWayEpoch(tapOn.getTimestamp());
                 trip.mRouteNumber = tapOn.getRoute();
@@ -139,9 +109,9 @@ public class MyWayTransitData extends TransitData {
 
                 // Peek at the next record and see if it is part of
                 // this journey
-                if (tagRecords.size() > i+1 && shouldMergeJourneys(tapOn, tagRecords.get(i+1))) {
+                if (tagRecords.size() > i + 1 && shouldMergeJourneys(tapOn, tagRecords.get(i + 1))) {
                     // There is a tap off.  Lets put that data in
-                    MyWayTagRecord tapOff = tagRecords.get(i+1);
+                    MyWayTagRecord tapOff = tagRecords.get(i + 1);
                     //Log.d(TAG, "TapOff @" + Utils.isoDateTimeFormat(tapOff.getTimestamp()));
 
                     trip.mEndTime = addMyWayEpoch(tapOff.getTimestamp());
@@ -199,6 +169,30 @@ public class MyWayTransitData extends TransitData {
         mBalance = Utils.byteArrayToInt(balance);
     }
 
+    private static String getSerialData(ClassicCard card) {
+        byte[] serialData = card.getSector(0).getBlock(1).getData();
+        String serial = Utils.getHexString(serialData, 6, 5);
+        if (serial.startsWith("0")) {
+            serial = serial.substring(1);
+        }
+        return serial;
+    }
+
+    public static TransitIdentity parseTransitIdentity(ClassicCard card) {
+        return new TransitIdentity(NAME, getSerialData(card));
+    }
+
+    public static boolean check(ClassicCard card) {
+        // TODO: Implement card identification correctly.
+        try {
+            // Try to get the block where the balance is.
+            card.getSector(2).getBlock(2).getData();
+            return true;
+        } catch (UnauthorizedException ex) {
+            return false;
+        }
+    }
+
     private static long addMyWayEpoch(long epochTime) {
         return (MYWAY_EPOCH.getTimeInMillis() / 1000) + epochTime;
     }
@@ -225,7 +219,7 @@ public class MyWayTransitData extends TransitData {
 
     @Override
     public String getBalanceString() {
-        return NumberFormat.getCurrencyInstance(Locale.US).format((double)mBalance / 100.);
+        return NumberFormat.getCurrencyInstance(Locale.US).format((double) mBalance / 100.);
     }
 
     @Override

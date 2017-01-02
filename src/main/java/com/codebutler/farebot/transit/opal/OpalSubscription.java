@@ -21,18 +21,19 @@ package com.codebutler.farebot.transit.opal;
 
 import android.os.Parcel;
 
-import au.id.micolous.farebot.R;
 import com.codebutler.farebot.transit.Subscription;
 import com.codebutler.farebot.util.Utils;
 
 import java.util.Date;
 
+import au.id.micolous.farebot.R;
+
 /**
  * Class describing auto-topup on Opal.
- *
+ * <p>
  * Opal has no concept of subscriptions, but when auto-topup is enabled, you no longer need to
  * manually refill the card with credit.
- *
+ * <p>
  * Dates given are not valid.
  */
 public class OpalSubscription extends Subscription {

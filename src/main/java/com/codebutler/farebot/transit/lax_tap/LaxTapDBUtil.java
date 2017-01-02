@@ -33,15 +33,12 @@ import au.id.micolous.metrodroid.MetrodroidApplication;
  * Database functionality for Los Angeles TAP cards
  */
 public class LaxTapDBUtil extends DBUtil {
-    private static final String TAG = "LaxTapDBUtil";
-
     public static final String TABLE_NAME = "stops";
     public static final String COLUMN_ROW_ID = "id";
     public static final String COLUMN_ROW_NAME = "name";
     public static final String COLUMN_ROW_LON = "x";
     public static final String COLUMN_ROW_LAT = "y";
     public static final String COLUMN_ROW_AGENCY = "agency_id";
-
     public static final String[] COLUMNS_STATIONDATA = {
             COLUMN_ROW_ID,
             COLUMN_ROW_AGENCY,
@@ -49,23 +46,13 @@ public class LaxTapDBUtil extends DBUtil {
             COLUMN_ROW_LON,
             COLUMN_ROW_LAT,
     };
-
+    private static final String TAG = "LaxTapDBUtil";
     private static final String DB_NAME = "lax_tap_stations.db3";
 
     private static final int VERSION = 3975;
 
     public LaxTapDBUtil(Context context) {
         super(context);
-    }
-
-    @Override
-    protected String getDBName() {
-        return DB_NAME;
-    }
-
-    @Override
-    protected int getDesiredVersion() {
-        return VERSION;
     }
 
     public static LaxTapStation getStation(int stationId, int agencyId) {
@@ -112,5 +99,15 @@ public class LaxTapDBUtil extends DBUtil {
 
     private static LaxTapDBUtil getDB() {
         return MetrodroidApplication.getInstance().getLaxTapDBUtil();
+    }
+
+    @Override
+    protected String getDBName() {
+        return DB_NAME;
+    }
+
+    @Override
+    protected int getDesiredVersion() {
+        return VERSION;
     }
 }

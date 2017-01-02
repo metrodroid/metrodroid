@@ -35,18 +35,15 @@ import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewFragment;
 
-import au.id.micolous.farebot.BuildConfig;
-import au.id.micolous.farebot.R;
-import com.codebutler.farebot.transit.Station;
 import com.codebutler.farebot.transit.Trip;
 import com.codebutler.farebot.util.Marker;
 import com.codebutler.farebot.util.Utils;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-
 import java.util.ArrayList;
 import java.util.List;
+
+import au.id.micolous.farebot.BuildConfig;
+import au.id.micolous.farebot.R;
 
 public class TripMapActivity extends Activity {
     public static final String TRIP_EXTRA = "trip";
@@ -104,7 +101,7 @@ public class TripMapActivity extends Activity {
                 : String.format("%s %s", trip.getAgencyName(), trip.getRouteName()));
 
         int startMarkerId = R.drawable.marker_start;
-        int endMarkerId   = R.drawable.marker_end;
+        int endMarkerId = R.drawable.marker_end;
 
         /* FIXME: Need icons...
 
@@ -150,25 +147,27 @@ public class TripMapActivity extends Activity {
 
     }
 
-    @Override public boolean onOptionsItemSelected(MenuItem item) {
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == android.R.id.home) {
             finish();
             return true;
         }
         return false;
     }
-/*
-    private LatLng addStationMarker(Station station, int iconId) {
-        LatLng pos = new LatLng(Double.valueOf(station.getLatitude()), Double.valueOf(station.getLongitude()));
-        mMap.addMarker(new MarkerOptions()
-            .position(pos)
-            .title(station.getStationName())
-            .snippet(station.getCompanyName())
-            .icon(BitmapDescriptorFactory.fromResource(iconId))
-        );
-        return pos;
-    }
-*/
+
+    /*
+        private LatLng addStationMarker(Station station, int iconId) {
+            LatLng pos = new LatLng(Double.valueOf(station.getLatitude()), Double.valueOf(station.getLongitude()));
+            mMap.addMarker(new MarkerOptions()
+                .position(pos)
+                .title(station.getStationName())
+                .snippet(station.getCompanyName())
+                .icon(BitmapDescriptorFactory.fromResource(iconId))
+            );
+            return pos;
+        }
+    */
     public class TripMapShim {
         private static final String TAG = "TripMapShim";
         private Marker[] mMarkers;

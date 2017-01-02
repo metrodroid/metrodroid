@@ -42,18 +42,17 @@ import java.io.StringWriter;
 import java.util.Date;
 
 public abstract class Card {
+    // This must be protected, not private, as otherwise the XML deserialiser fails to read the
+    // card.
+    @SuppressWarnings("WeakerAccess")
+    @Attribute(name = "label", required = false)
+    protected String mLabel;
     @Attribute(name = "type")
     private CardType mType;
     @Attribute(name = "id")
     private HexString mTagId;
     @Attribute(name = "scanned_at")
     private Date mScannedAt;
-
-    // This must be protected, not private, as otherwise the XML deserialiser fails to read the
-    // card.
-    @SuppressWarnings("WeakerAccess")
-    @Attribute(name = "label", required = false)
-    protected String mLabel;
 
     protected Card() {
     }

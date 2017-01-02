@@ -31,21 +31,21 @@ import java.security.AccessControlException;
 public class DesfireProtocol {
     // Reference: http://neteril.org/files/M075031_desfire.pdf
     // Commands
-    static final byte GET_MANUFACTURING_DATA    = (byte) 0x60;
+    static final byte GET_MANUFACTURING_DATA = (byte) 0x60;
     static final byte GET_APPLICATION_DIRECTORY = (byte) 0x6A;
-    static final byte GET_ADDITIONAL_FRAME      = (byte) 0xAF;
-    static final byte SELECT_APPLICATION        = (byte) 0x5A;
-    static final byte READ_DATA                 = (byte) 0xBD;
-    static final byte READ_RECORD               = (byte) 0xBB;
-    static final byte GET_VALUE                 = (byte) 0x6C;
-    static final byte GET_FILES                 = (byte) 0x6F;
-    static final byte GET_FILE_SETTINGS         = (byte) 0xF5;
+    static final byte GET_ADDITIONAL_FRAME = (byte) 0xAF;
+    static final byte SELECT_APPLICATION = (byte) 0x5A;
+    static final byte READ_DATA = (byte) 0xBD;
+    static final byte READ_RECORD = (byte) 0xBB;
+    static final byte GET_VALUE = (byte) 0x6C;
+    static final byte GET_FILES = (byte) 0x6F;
+    static final byte GET_FILE_SETTINGS = (byte) 0xF5;
 
     // Status codes (Section 3.4)
-    static final byte OPERATION_OK         = (byte) 0x00;
-    static final byte PERMISSION_DENIED    = (byte) 0x9D;
+    static final byte OPERATION_OK = (byte) 0x00;
+    static final byte PERMISSION_DENIED = (byte) 0x9D;
     static final byte AUTHENTICATION_ERROR = (byte) 0xAE;
-    static final byte ADDITIONAL_FRAME     = (byte) 0xAF;
+    static final byte ADDITIONAL_FRAME = (byte) 0xAF;
 
     private IsoDep mTagTech;
 
@@ -90,13 +90,13 @@ public class DesfireProtocol {
         byte[] buf = sendRequest(GET_FILES);
         int[] fileIds = new int[buf.length];
         for (int x = 0; x < buf.length; x++) {
-            fileIds[x] = (int)buf[x];
+            fileIds[x] = (int) buf[x];
         }
         return fileIds;
     }
 
     public DesfireFileSettings getFileSettings(int fileNo) throws Exception {
-        byte[] data = sendRequest(GET_FILE_SETTINGS, new byte[] { (byte) fileNo });
+        byte[] data = sendRequest(GET_FILE_SETTINGS, new byte[]{(byte) fileNo});
         return DesfireFileSettings.create(data);
     }
 
@@ -117,7 +117,7 @@ public class DesfireProtocol {
     }
 
     public byte[] getValue(int fileNum) throws Exception {
-        return sendRequest(GET_VALUE, new byte[] {
+        return sendRequest(GET_VALUE, new byte[]{
                 (byte) fileNum
         });
     }
