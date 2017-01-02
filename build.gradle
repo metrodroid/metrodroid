@@ -8,19 +8,26 @@ def getVersionCode = { ->
         // There is only 1 tag in the repository before b21
         return code.toString().split("\n").size() + 19
     }
-    catch (ignored) {
+    catch (ignored2) {
         return -1;
     }
 }
 
 def getVersionName = { ->
+    def versionSuffix = System.getenv('METRODROID_VERSION_SUFFIX')
+    if (versionSuffix == null) {
+        versionSuffix = "";
+    }
+    if (versionSuffix.length() > 0 && !versionSuffix.startsWith('-')) {
+        versionSuffix = "-" + versionSuffix
+    }
     try {
         def stdout = new ByteArrayOutputStream()
         exec {
             commandLine 'git', 'describe', '--tags', '--dirty'
             standardOutput = stdout
         }
-        return stdout.toString().trim()
+        return stdout.toString().trim() + versionSuffix.trim()
     }
     catch (ignored) {
         return null;
