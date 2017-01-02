@@ -280,4 +280,6 @@
     <string name="card_note_bilhete_unico">設定でフォールバック リーダーとして選択する必要があります。</string>
 
     <string name="card_note_myway">設定でフォールバック リーダーとして選択する必要があります。</string>
-</resources>
+<string name="location_wa_australia">西オーストラリア州, オーストラリア</string>
+
+    </resources>
