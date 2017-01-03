@@ -27,7 +27,7 @@ import base64, struct
 
 def encode_keys(input_file, output_file):
   # first read all the keys and sort them out
-  keys = set()
+  keys = list()
   for line_no, line in enumerate(input_file.readlines()):
     line = line.upper().strip()
 
@@ -45,7 +45,7 @@ def encode_keys(input_file, output_file):
       return
 
     # push to keyset
-    keys.add(base64.b16decode(line))
+    keys.append(base64.b16decode(line))
 
   # We have all the keys, dump it to the file.
   for key in keys:
