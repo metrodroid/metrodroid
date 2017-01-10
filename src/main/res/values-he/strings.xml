@@ -1,2 +1,57 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources></resources>
+<?xml version='1.0' encoding='UTF-8'?>
+<resources><string name="app_name">מטרו-דרואיד</string>
+
+    <string name="copyright">כל הזכויות שמורות 2015 - 2017 מייקל פארל</string>
+
+    <string name="license">רישיונות</string>
+    <string name="title_activity_license">רישיונות קוד פתוח</string>
+    <string name="directions">שים כרטיס.</string>
+    <string name="reading_card">קריאת כרטיס</string>
+    <string name="dont_move">אל תזיז את הכרטיס</string>
+    <string name="advanced_info">מידע מתקדם</string>
+    <string name="delete_card">מחק כרטיס</string>
+    <string name="unknown_card">לא יודע כרטיס</string>
+    <string name="locked_card">כרטיס נעול</string>
+    <string name="hw_detail">מידע ייצור</string>
+    <string name="data">קבצי נתונים</string>
+    <string name="copy_xml">עותק</string>
+    <string name="share_xml">לחלוק</string>
+    <string name="save_xml">לחסוך כדי אחסון USB</string>
+    <string name="trips">טיולים</string>
+    <string name="history">היסטוריה</string>
+    <string name="balance">כמות</string>
+    <string name="refills">מילוי</string>
+    <string name="no_trip_data">לא נמצאו נסיעות. כרטיס זה נוצל בעבר?</string>
+    <string name="no_refill_data">אין מילוי מצא. האם כרטיס זה רק נעשה שימוש עם הגבהה?</string>
+    <string name="import_xml">יבוא</string>
+    <string name="import_clipboard">יבוא מלוח</string>
+    <string name="import_file">יבוא מקובץ</string>
+    <string name="import_sd">ייבא מאחסון USB</string>
+    <string name="export">יצוא</string>
+    <string name="export_filename">שם קובץ ייצוא</string>
+    <string name="export_all">ייצוא כל</string>
+    <string name="about">על אודות</string>
+    <string name="preferences">העדפות</string>
+    <string name="accessibility">נגישות</string>
+    <string name="speak_balance">דבר מאזן</string>
+    <string name="speak_balance_summary">הוכחה של רעיון או תאוריה</string>
+    <string name="loading">טוען…</string>
+    <string name="scanned_at_format">סריקה ב%1$s ב %2$s</string>
+    <string name="supported_cards">כרטיסים נתמכים</string>
+    <string name="transaction_sequence">#</string>
+    <string name="fully_locked_desc">"
+ כרטיס זה אין כל חלק ממנו אשר ניתן לקריאה בחופשיות ללא מפתח. אין לך מפתחות המותקנים אשר תקפים עבור כרטיס זה.
+
+
+אם הכרטיס נתמך כרגע על ידי Metrodroid, אתה תהיה מסוגל לעשות את עבודת כרטיס זה פעם שהתקנת מפתחות על זה. עיין בתיעוד המקוון לקבלת מידע נוסף על רכישת מפתחות.
+
+
+  אם הכרטיס אינו נתמך כרגע על ידי Metrodroid, אין זה סביר שהוא אי פעם יהיה נתמך על ידי תוכנה זו, אלא אם כן מפתח זה נשבר.
+
+
+  צור קשר עם רשויות התחבורה העירוניות שלך כדי לאפשר רמה מסוימת של גישה לנתונים פתוחה על כרטיסים שהונפקו. אפשר לאפשר בבטחה גישת קריאה מוגבלת למידע על כרטיסים חכמים לתחבורה ציבורית.
+ "</string>
+    <string name="fully_locked_title">כרטיס נעול לחלוטין!</string>
+    <string name="nfc_off_error">NFC כבוי</string>
+    <string name="turn_on_nfc">אנא אפשר NFC לקרוא את פרטי כרטיס.</string>
+    </resources>
