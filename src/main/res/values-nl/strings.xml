@@ -1,2 +1,278 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources></resources>
+<?xml version='1.0' encoding='UTF-8'?>
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2"><string name="app_name">Metrodroid</string>
+
+    <string name="copyright">Copyright 2015 – 2017 Michael Farrell</string>
+
+    <string name="license">Licenties</string>
+    <string name="title_activity_license">Open bron-licenties</string>
+    <string name="directions">Druk op een kaart.</string>
+    <string name="reading_card">Bezig met uitlezen van kaart</string>
+    <string name="dont_move">Verplaats de kaart niet</string>
+    <string name="advanced_info">Geavanceerde informatie</string>
+    <string name="delete_card">Kaart verwijderen</string>
+    <string name="unknown_card">Onbekende kaart</string>
+    <string name="locked_card">Vergrendelde kaart</string>
+    <string name="hw_detail">Productie-informatie</string>
+    <string name="data">Onbewerkte gegevens</string>
+    <string name="copy_xml">Kopiëren</string>
+    <string name="share_xml">Delen</string>
+    <string name="save_xml">Opslaan naar USB-opslag</string>
+    <string name="trips">Reizen</string>
+    <string name="history">Geschiedenis</string>
+    <string name="balance">Saldo</string>
+    <string name="refills">Opgeladen</string>
+    <string name="no_trip_data">Geen reizen gevonden. Is er wel gereisd met deze kaart?</string>
+    <string name="no_refill_data">Geen oplaadgegevens gebonden. Is deze kaart alleen gebruikt i.c.m. een pas?</string>
+    <string name="import_xml">Importeren</string>
+    <string name="import_clipboard">Importeren van klembord</string>
+    <string name="import_file">Importeren uit bestand</string>
+    <string name="import_sd">Importeren uit USB-opslag</string>
+    <string name="export">Exporteren</string>
+    <string name="export_filename">Bestandsnaam</string>
+    <string name="export_all">Alles exporteren</string>
+    <string name="about">Over</string>
+    <string name="preferences">Voorkeuren</string>
+    <string name="accessibility">Toegankelijkheid</string>
+    <string name="speak_balance">Saldo voorlezen</string>
+    <string name="speak_balance_summary">Betalingsbewijs</string>
+    <string name="balance_speech">Saldo <xliff:g id="balance" example="$13.37">%s</xliff:g></string>
+    <string name="loading">Bezig met laden…</string>
+    <string name="scanned_at_format">Gescand op %1$s op %2$s</string>
+    <string name="supported_cards">Ondersteunde kaarten</string>
+    <string name="pass_or_transfer">Pas/Overstap</string>
+    <string name="transaction_sequence">#</string>
+    <string name="fully_locked_desc">"
+ Deze kaart bevat geen onderdeel dat het mogelijk maakt om hem uit te lezen. U heeft geen geldige geïnstalleerde sleutels voor deze kaart
+
+
+ Als de kaart momenteel ondersteund wordt door Metrodroid, dan zal hij gaan werken zodra u de benodigde geïnstalleerde sleutels heeft. Lees de online documentatie voor meer informatie over het verkrijgen van sleutels.
+
+
+ Als uw kaart momenteel niet wordt ondersteund door Metrodroid, dan zal dat waarschijnlijk ook nooit mogelijk zijn, tenzij de sleutel gekraakt wordt.
+
+
+ Neem contact op met uw vervoerder om te kijken of u toegang kunt krijgen tot de gegevens van de verschafte kaarten. Het is mogelijk om veilige, gelimiteerde toegang te geven.
+ "</string>
+    <string name="fully_locked_title">Kaart is volledig vergrendeld!</string>
+    <string name="nfc_off_error">NFC is uitgeschakeld</string>
+    <string name="turn_on_nfc">Schakel NFC in om de kaartinformatie uit te kunnen lezen.</string>
+    <string name="wireless_settings">Draadloze instellingen</string>
+    <string name="report_error">Fout rapporteren</string>
+
+    <string name="unknown_card_header">Onbekend kaartformaat</string>
+    <string name="unknown_card_description">Deze kaart wordt nog niet ondersteund door Metrodroid. Alleen onbewerkte gegevens kunnen worden weergegeven.</string>
+
+    <string name="unknown_more_info">Meer informatie</string>
+    <string name="unknown_more_info_desc">Tik hier om meer informatie te krijgen over Metrodroid\'s ondersteuning voor deze kaart.</string>
+
+    <string name="lawyercats">(De auteurs van) Metrodroid zijn niet verbonden aan een openbaar vervoerder.</string>
+
+
+    <string name="report_error_privacy_title">Privacy-overeenkomst</string>
+    <string name="report_error_privacy_message">Alle gegevens die op deze kaart staan zullen worden bijgevoegd aan uw foutrapport.</string>
+    <string name="scanned_cards">Geschiedenis</string>
+    <string name="no_scanned_cards">U heeft geen gescande kaarten.</string>
+    <string name="block_title_format">Blok: %s</string>
+    <string name="page_title_format">Pagina: 0x%s</string>
+    <string name="sector_title_format">Sector: 0x%s</string>
+    <string name="unauthorized_sector_title_format">Sector: 0x%s (ongeautoriseerd)</string>
+    <string name="invalid_sector_title_format">Sector: 0x%1$s (Ongeldig: %2$s)</string>
+    <string name="subscriptions">Abonnementen</string>
+    <string name="info">Informatie</string>
+    <string name="valid_format">Geldig van %1$s tot %2$s</string>
+    <string name="valid_to_format">Geldig tot %1$s</string>
+    <string name="valid_not_used">Nog niet gebruikt</string>
+    <string name="unknown_format">Onbekend (%s)</string>
+    <string name="unknown">Onbekend</string>
+    <string name="keys_required">Er zijn ontsleutelingssleutels benodigd om deze kaart uit te kunnen lezen.</string>
+    <string name="load_keys">Sleutels laden</string>
+    <string name="card_keys_not_supported">Metrodroid ondersteund geen sleutels voor dit type kaart.</string>
+    <string name="add_key">Sleutel toevoegen</string>
+    <string name="error">Fout</string>
+    <string name="keys">Sleutels</string>
+    <string name="delete">Verwijderen</string>
+    <string name="add_key_directions">Sla uw binaire dumpbestand van sleutels op met de extensie .farebotkeys, e-mail het dumpbestand als bijlage naar uzelf en open het op dit apparaat.</string>
+    <string name="no_keys">Geen sleutels.</string>
+    <string name="nfc_unavailable">NFC is niet beschikbaar</string>
+    <string name="fare_cancelled_format">%s (geannuleerd)</string>
+    <string name="general">Algemeen</string>
+    <string name="launch_from_background">Starten vanaf achtergrond</string>
+    <string name="error_report_sent">Foutrapport is verstuurd!</string>
+    <string name="checksum">Controlesom</string>
+    <string name="last_transaction">Laatste transactie</string>
+    <string name="date">Datum</string>
+    <string name="time">Tijd</string>
+    <string name="vehicle_type">Voertuigtype</string>
+    <string name="transaction_type">Transactietype</string>
+    <string name="card_epoch">Kaartgeneratie</string>
+    <string name="card_not_supported_on_device">Deze kaart wordt niet ondersteund door uw apparaat.</string>
+    <string name="card_note_cepas">Niet compatibel met alle apparaten.</string>
+    <string name="need_stations">Niet alle stationsnamen zijn bekend.</string>
+    <string name="need_stations_submit">Rapporteren</string>
+    <string name="card_preview_reader">Bètaversie van de kaartlezer.</string>
+    <string name="visit_website">Website bezoeken</string>
+    <string name="title_activity_about">Over Metrodroid</string>
+    <string name="card_type">Kaarttype</string>
+    <string name="select_file">Bestand selecteren</string>
+    <string name="copied_to_clipboard">Gekopieerd naar klembord</string>
+    <string name="saved_xml">Metrodroid-Export.xml weggeschreven naar USB-opslag.</string>
+    <string name="saved_xml_custom">XML weggeschreven naar USB-opslag.</string>
+    <string name="map_tiles_url">Kaarttegels-URL</string>
+    <string name="map_tiles_url_summary">Gebruik een aangepaste tegelserver voor ingesloten kaarten m.b.v. Leaflet TileLayer-syntax.</string>
+    <string name="map_tiles_subdomains">Kaarttegel-subdomeinen</string>
+    <string name="map_tiles_subdomains_summary">Als u {s} gebruikt in kaartURL\'s, een kommagescheiden lijst van subdomeinen of een losse tekenlijst van subdomeinen.</string>
+    <string name="about_card_format">Over dit kaartformaat</string>
+    <string name="online_services">Online diensten</string>
+    <string name="mifare_classic">Mifare Classic</string>
+    <string name="auth_retries">Authentiecatiepogingen</string>
+    <string name="auth_retries_summary">Aantal keren om te proberen elke sector te authenticeren</string>
+    <string name="alternate_purse_balances">Alternatieve portemonnee-saldi</string>
+    <string name="storage_required">Toegangsrechten zijn vereist om kaartdumps en -sleutels te lezen/schrijven van/naar bestanden.</string>
+
+    <string name="mfc_fallback_desc">Sommige vervoerders hebben magische identificatie op hun kaart. Om ze te lezen moet u er expliciet één kiezen.</string>
+    <string name="mfc_fallback">Terugvallezer</string>
+
+    <string name="default_map_tile_url">https://tile{s}.stackcdn.com/osm_tiles_2x/{z}/{x}/{y}.png</string>
+    <string name="default_map_tile_subdomains">123456</string>
+
+    <plurals name="cards_imported">
+	<item quantity="one"><xliff:g id="count" example="1">%d</xliff:g> kaart geïmporteerd!</item>
+	<item quantity="other"><xliff:g id="count" example="3">%d</xliff:g> kaarten geïmporteerd!</item>
+</plurals>
+
+    <plurals name="block_count">
+	<item quantity="one">%d blok</item>
+	<item quantity="other">%d blokken</item>
+</plurals>
+
+    <string name="location_seattle">Seattle, WA, VS</string>
+    <string name="location_san_francisco">San Francisco, CA, VS</string>
+    <string name="location_singapore">Singapore</string>
+    <string name="location_tokyo">Tokio, Japan</string>
+    <string name="location_kansai">Kansai, Japan</string>
+    <string name="location_the_netherlands">Nederland</string>
+    <string name="location_sao_paulo">São Paulo, Brazilië</string>
+    <string name="location_helsinki_finland">Helsinki, Finland</string>
+    <string name="location_sydney_australia">Sydney, Australië</string>
+    <string name="location_brisbane_seq_australia">Brisbane &amp; ZO QLD, Australië</string>
+    <string name="location_victoria_australia">Victoria, Australië</string>
+    <string name="location_hong_kong">Hongkong</string>
+    <string name="location_shenzhen">Shenzhen, Guangdong-provincie, China</string>
+    <string name="location_los_angeles">Los Angeles, CA, VS</string>
+    <string name="location_act_australia">Australian Capital Territory, Australië</string>
+
+    <string name="felica_terminal_fare_adjustment">Tariefaanpassingsautomaat</string>
+    <string name="felica_terminal_portable">Draagbare terminal</string>
+    <string name="felica_terminal_vehicle">Voertuigterminal (in de bus)</string>
+    <string name="felica_terminal_ticket">Kaartautomaat</string>
+    <string name="felica_terminal_deposit_quick_charge">Snelle oplaadautomaat</string>
+    <string name="felica_terminal_tvm_tokyo_monorail">Tokio Monorail-kaartautomaat</string>
+    <string name="felica_terminal_tvm_etc">Kaartautomaat, etc.</string>
+    <string name="felica_terminal_ticket_gate">Tourniquet</string>
+    <string name="felica_terminal_simple_ticket_gate">Eenvoudige tourniquet</string>
+    <string name="felica_terminal_booth">Balie</string>
+    <string name="felica_terminal_booth_green">Balie (groen)</string>
+    <string name="felica_terminal_ticket_gate_terminal">Tourniquet-terminal</string>
+    <string name="felica_terminal_mobile_phone">Mobiele telefoon</string>
+    <string name="felica_terminal_connection_adjustment">Verbindingaanpassingsautomaat</string>
+    <string name="felica_terminal_transfer_adjustment">Overstapaanpassingsautomaat</string>
+    <string name="felica_terminal_simple_deposit">Eenvoudige stortingsautomaat</string>
+    <string name="felica_terminal_pos">Verkoopbalie</string>
+    <string name="felica_terminal_vending">Automaat</string>
+    <string name="felica_process_fare_exit_gate">Draaihek</string>
+    <string name="felica_process_charge">Kosten</string>
+    <string name="felica_process_purchase_magnetic">Magnetische kaart</string>
+    <string name="felica_process_fare_adjustment">Tariefaanpassing</string>
+    <string name="felica_process_admission_payment">Toelatingsbetaling</string>
+    <string name="felica_process_booth_exit">Stationschefbalie-uitgang</string>
+    <string name="felica_process_issue_new">Nieuwe uitgifte</string>
+    <string name="felica_process_booth_deduction">Balie-aftrek</string>
+    <string name="felica_process_bus_pitapa">Bus (PiTaPa)</string>
+    <string name="felica_process_bus_iruca">Bus (IruCa)</string>
+    <string name="felica_process_reissue">Heruitgave</string>
+    <string name="felica_process_payment_shinkansen">Shinkansen-betaling</string>
+    <string name="felica_process_entry_a_autocharge">Ingang A (automatisch opladen)</string>
+    <string name="felica_process_exit_a_autocharge">Uitgang A (automatisch opladen)</string>
+    <string name="felica_process_deposit_bus">Busstorting</string>
+    <string name="felica_process_purchase_special_ticket">Kaart (speciale bus/tram)</string>
+    <string name="felica_process_merchandise_purchase">Handelswaar</string>
+    <string name="felica_process_bonus_charge">Bonus bij opladen</string>
+    <string name="felica_process_register_deposit">Storting registreren</string>
+    <string name="felica_process_merchandise_cancel">Handelswaar annuleren</string>
+    <string name="felica_process_merchandise_admission">Handelswaar/Toelating</string>
+    <string name="felica_process_merchandise_purchase_cash">Handelswaar (deels met contant geld)</string>
+    <string name="felica_process_merchandise_admission_cash">Handelswaar/Toelating (deels met contant geld)</string>
+    <string name="felica_process_payment_thirdparty">Betaling (derde partij)</string>
+    <string name="felica_process_admission_thirdparty">Toelatingsbetaling (derde partij)</string>
+
+    <string name="hsl_pass_is_valid">Geldige seizoenskaart</string>
+    <string name="hsl_1zone_ticket">Interne kaart</string>
+    <string name="hsl_2zone_ticket">Regionale kaart</string>
+    <string name="hsl_balance_refill">Saldo-oplading</string>
+    <string name="hsl_balance_ticket">Voordeelkaart</string>
+    <string name="hsl_value_ticket_is_valid">Geldige voordeelkaart</string>
+    <string name="hsl_pass_ticket">Seizoenskaart</string>
+    <string name="hsl_season_ticket_starts">Seizoenskaart gaat in op</string>
+    <string name="hsl_season_ticket_ends">Seizoenskaart eindigt op</string>
+    <string name="hsl_season_ticket_bought_on">Seizoenskaart is gekocht op</string>
+    <string name="hsl_previous_season_ticket">Vorige seizoenskaart was</string>
+    <string name="hsl_season_ticket_price_was">De seizoenskaartprijs was</string>
+    <string name="hsl_you_last_used_this_ticket">U heeft deze kaart voor het laatst gebruikt op</string>
+    <string name="hsl_person_format">%s persoon</string>
+    <string name="hsl_mins_format">%s minuten</string>
+    <string name="hsl_value_ticket">Voordeelkaart</string>
+    <string name="hsl_value_ticket_bought_on">Kaart gekocht</string>
+    <string name="hsl_value_ticket_expires_on">Kaart verloopt op</string>
+    <string name="hsl_value_ticket_last_transfer">Laatste overstap</string>
+    <string name="hsl_value_ticket_last_sign">Laatste teken</string>
+    <string name="hsl_value_ticket_price">Voordeelkaartprijs</string>
+    <string name="hsl_value_ticket_disco_group">Groepskorting</string>
+    <string name="hsl_value_ticket_pax">Groepsgrootte</string>
+    <string name="hsl_value_ticket_duration">Kaartgeldigheid</string>
+    <string name="hsl_value_ticket_vehicle_number">Voertuignummer</string>
+    <string name="hsl_value_ticket_vehicle_type">Voertuigtype</string>
+    <string name="hsl_value_ticket_line_number">Rijnummer</string>
+    <string name="hsl_season_ticket">Seizoenskaart</string>
+
+    <string name="opal_automatic_top_up">Automatisch opladen</string>
+    <string name="opal_weekly_trips">Wekelijkse reizen</string>
+    <string name="opal_vehicle_bus">Bus</string>
+    <string name="opal_vehicle_ferry_lr">Veerboot of lightrail</string>
+    <string name="opal_vehicle_rail">Trein</string>
+    <string name="opal_action_none">Geen (nieuwe, ongebruikte kaart)</string>
+    <string name="opal_action_new_journey">Nieuwe reis</string>
+    <string name="opal_action_transfer_same_mode">Overstap (binnen dezelfde vervoerssoort)</string>
+    <string name="opal_action_transfer_diff_mode">Overstap (uit andere vervoerssoort)</string>
+    <string name="opal_action_manly_new_journey">Nieuwe reis (Manly-veerboot)</string>
+    <string name="opal_action_manly_transfer_same_mode">Overstap (van andere veerboot naar Manly-veerboot)</string>
+    <string name="opal_action_manly_transfer_diff_mode">Overstap (van andere vervoerssoort naar Manly-veerboot)</string>
+    <string name="opal_action_journey_completed_distance">Reis voltooid (afstandstarief)</string>
+    <string name="opal_action_journey_completed_flat_rate">Reis voltooid (tariefeenheden)</string>
+    <string name="opal_action_journey_completed_auto_off">Reis voltooid (niet uitgecheckt)</string>
+    <string name="opal_action_journey_completed_auto_on">Reis voltooid (niet ingecheckt)</string>
+    <string name="opal_action_tap_on_reversal">Omgekeerd inchecken</string>
+
+    <string name="seqgo_ticket_type">Kaartsoort</string>
+    <string name="seqgo_ticket_type_regular">Regulier</string>
+    <string name="seqgo_ticket_type_concession">Concessie</string>
+    <string name="seqgo_ticket_type_child">Kind</string>
+    <string name="seqgo_ticket_type_senior">Oudere</string>
+
+    <string name="seqgo_refill_manual">Handmatig opladen</string>
+    <string name="seqgo_refill_automatic">Automatisch opladen</string>
+
+    <string name="card_note_seqgo">Ondersteund geen kaarten met Go Acces, Explore of SEEQ.</string>
+
+    <string name="card_note_myki">Alleen het kaartnummer kan worden uitgelezen.</string>
+
+    <string name="nextfare">Cubic Next-tarief</string>
+    <string name="nextfare_system_code">Systeemcode</string>
+    <string name="nextfare_ticket_class">Klassecode</string>
+    <string name="nextfare_card_expiry">Vervaldatum kaart</string>
+
+    <string name="octopus_szt">Shenzhen Tong</string>
+
+    <string name="card_note_bilhete_unico">Moet worden geselecteerd in de voorkeuren als terugvallezer.</string>
+
+    <string name="card_note_myway">Moet worden geselecteerd in de voorkeuren als terugvallezer.</string>
+</resources>
