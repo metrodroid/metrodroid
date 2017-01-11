@@ -275,4 +275,6 @@
     <string name="card_note_bilhete_unico">Moet worden geselecteerd in de voorkeuren als terugvallezer.</string>
 
     <string name="card_note_myway">Moet worden geselecteerd in de voorkeuren als terugvallezer.</string>
-</resources>
+<string name="location_wa_australia">West-Australië, Australië</string>
+
+    </resources>
