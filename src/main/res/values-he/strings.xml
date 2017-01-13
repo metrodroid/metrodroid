@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='UTF-8'?>
-<resources><string name="app_name">מטרו-דרואיד</string>
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2"><string name="app_name">מטרו-דרואיד</string>
 
     <string name="copyright">כל הזכויות שמורות 2015 - 2017 מייקל פארל</string>
 
@@ -54,4 +54,24 @@
     <string name="fully_locked_title">כרטיס נעול לחלוטין!</string>
     <string name="nfc_off_error">NFC כבוי</string>
     <string name="turn_on_nfc">אנא אפשר NFC לקרוא את פרטי כרטיס.</string>
+    <string name="balance_speech">כמות
+<xliff:g id="balance" example="$13.37">%s</xliff:g></string>
+    <string name="pass_or_transfer">מעבר</string>
+    <string name="wireless_settings">הגדרות אלחוטיות</string>
+    <string name="report_error">דוח שגיאות</string>
+
+    <string name="unknown_card_header">פורמט כרטיס לא ידוע</string>
+    <string name="unknown_card_description">כרטיס זה עדיין אינו נתמך על ידי מטרו-דרואיד. ניתן להציג נתונים גולמיים בלבד.</string>
+
+    <string name="unknown_more_info">מידע נוסף</string>
+    <string name="unknown_more_info_desc">גע כאן לקבלת מידע נוסף על התמיכה של מטרו-דרואיד של הכרטיס הזה.</string>
+
+    <string name="lawyercats">מטרו-דרואיד ומחבריו אינם קשורים עם כל סוכנות תחבורה ציבורית.</string>
+
+
+    <string name="report_error_privacy_title">הצהרת פרטיות</string>
+    <string name="report_error_privacy_message">כל הנתונים כלולים כרטיס זו ייכללו בדוח השגיאה שלך.</string>
+    <string name="scanned_cards">היסטוריה</string>
+    <string name="no_scanned_cards">לא סרקת כל קלפים.</string>
+    <string name="block_title_format">בלוק: %s</string>
     </resources>
