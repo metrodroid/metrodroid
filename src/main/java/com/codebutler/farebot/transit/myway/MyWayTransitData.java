@@ -30,6 +30,8 @@ import com.codebutler.farebot.transit.Trip;
 import com.codebutler.farebot.ui.ListItem;
 import com.codebutler.farebot.util.Utils;
 
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -64,11 +66,43 @@ public class MyWayTransitData extends TransitData {
     private int mBalance;
     private MyWayTrip[] mTrips;
 
+    private static final String MYWAY_KEY_SALT = "myway"; //
+    private static final String MYWAY_KEY_DIGEST = "29a61b3a4d5c818415350804c82cd834";
+
     public MyWayTransitData(Parcel p) {
         mSerialNumber = p.readString();
         mBalance = p.readInt();
         mTrips = new MyWayTrip[p.readInt()];
         p.readTypedArray(mTrips, MyWayTrip.CREATOR);
+    }
+
+    public static boolean check(ClassicCard card) {
+        // We don't know how reliable card value data is just yet. But there are some standard
+        // keys on the card that we can detect.
+        byte[] key7 = card.getSector(7).getKey();
+        if (key7 == null) {
+            // We don't have key data, bail out.
+            return false;
+        }
+
+        // We have some key data, so lets see if this is Standard Key B.
+        MessageDigest md5;
+        try {
+            md5 = MessageDigest.getInstance("MD5");
+        } catch (NoSuchAlgorithmException e) {
+            Log.w(TAG, "Couldn't find implementation of MD5", e);
+            return false;
+        }
+
+        md5.update(MYWAY_KEY_SALT.getBytes());
+        md5.update(key7);
+        md5.update(MYWAY_KEY_SALT.getBytes());
+
+        String digest = Utils.getHexString(md5.digest());
+
+        Log.d(TAG, "Myway key digest: " + digest);
+        return digest.equals(MYWAY_KEY_DIGEST);
+
     }
 
     public MyWayTransitData(ClassicCard card) {
@@ -180,17 +214,6 @@ public class MyWayTransitData extends TransitData {
 
     public static TransitIdentity parseTransitIdentity(ClassicCard card) {
         return new TransitIdentity(NAME, getSerialData(card));
-    }
-
-    public static boolean check(ClassicCard card) {
-        // TODO: Implement card identification correctly.
-        try {
-            // Try to get the block where the balance is.
-            card.getSector(2).getBlock(2).getData();
-            return true;
-        } catch (UnauthorizedException ex) {
-            return false;
-        }
     }
 
     private static long addMyWayEpoch(long epochTime) {
