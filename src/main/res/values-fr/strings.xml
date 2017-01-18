@@ -1,0 +1,278 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2"><string name="app_name">Metrodroid</string>
+
+    <string name="copyright">Copyright 2015 – 2017 Michael Farrell</string>
+
+    <string name="license">Licenses</string>
+    <string name="title_activity_license">Licenses Open Source</string>
+    <string name="directions">Touchez une carte.</string>
+    <string name="reading_card">Lecture de la carte</string>
+    <string name="dont_move">Ne bougez pas la carte</string>
+    <string name="advanced_info">Infos avancées</string>
+    <string name="delete_card">Supprimer carte</string>
+    <string name="unknown_card">Carte inconnue</string>
+    <string name="locked_card">Carte bloquée</string>
+    <string name="hw_detail">Infos constructeur</string>
+    <string name="data">Données brutes</string>
+    <string name="copy_xml">Copier</string>
+    <string name="share_xml">Partager</string>
+    <string name="save_xml">Enregistrer sur le stockage USB</string>
+    <string name="trips">Déplacements</string>
+    <string name="history">Historique</string>
+    <string name="balance">Solde</string>
+    <string name="refills">Recharges</string>
+    <string name="no_trip_data">Aucun déplacement trouvé. Cette carte a-t-elle été utilisée?</string>
+    <string name="no_refill_data">Aucun rechargement trouvé. Cette carte n\'a-t-elle été utilisée qu\'avec un passe?</string>
+    <string name="import_xml">Importer</string>
+    <string name="import_clipboard">Importer depuis le presse-papier</string>
+    <string name="import_file">Importer depuis un fichier</string>
+    <string name="import_sd">Importer depuis le stockage USB</string>
+    <string name="export">Exporter</string>
+    <string name="export_filename">Nom du fichier exporté</string>
+    <string name="export_all">Tout exporter</string>
+    <string name="about">A propos</string>
+    <string name="preferences">Préférences</string>
+    <string name="accessibility">Accessibilité</string>
+    <string name="speak_balance">Solde vocal</string>
+    <string name="speak_balance_summary">Expérimental</string>
+    <string name="balance_speech">Solde <xliff:g id="balance" example="$13.37">%s</xliff:g></string>
+    <string name="loading">Chargement…</string>
+    <string name="scanned_at_format">Scanné à %1$s le %2$s</string>
+    <string name="supported_cards">Cartes supportées</string>
+    <string name="pass_or_transfer">Pass/Xfer</string>
+    <string name="transaction_sequence">#</string>
+    <string name="fully_locked_desc">"
+ Cette carte ne possède aucune paire lisible librement sans une clé. Vous n\'avez aucune clé installée qui soit valide pour cette carte.
+
+
+ Si cette carte est actuellement supportée par Metrodroid, vous devriez être capable de faire fonctionner cette carte une fois les clés appropriées installées. Veuillez consulter la documentation en ligne pour plus d\'informations sur la façon d\'acquérir ces clés.
+
+
+ Si votre carte n\'est actuellement pas supportée par Metrodroid, il est improbable quelle soit un jour supportée par ce programme, à moins que cette clé soit corrompue.
+
+
+ Veuillez contacter les autorités de votre transport municipal afin d\'autoriser un certain niveau d\'accès sur les cartes publiées.Il est possible d\'autoriser sans risque un accès en lecture seule des données des cartes des transports publics.
+ "</string>
+    <string name="fully_locked_title">Cette carte est entièrement bloquée!</string>
+    <string name="nfc_off_error">Le NFC est désactivé</string>
+    <string name="turn_on_nfc">Veuillez activer le NFC afin de lire les informations de la carte.</string>
+    <string name="wireless_settings">Paramètres sans fil</string>
+    <string name="report_error">Rapporter une erreur</string>
+
+    <string name="unknown_card_header">Format de carte inconnu</string>
+    <string name="unknown_card_description">Cette carte n\'est pas encore supportée par Metrodroid. Seule les données brutes peuvent être affichées.</string>
+
+    <string name="unknown_more_info">Plus d\'informations</string>
+    <string name="unknown_more_info_desc">Touchez ici pour ponts d\'informations sur le support Metrodroid de cette carte.</string>
+
+    <string name="lawyercats">Metrodroid et ses auteurs ne sont associés avec aucune agence de transport public.</string>
+
+
+    <string name="report_error_privacy_title">Informations sur la confidentialité</string>
+    <string name="report_error_privacy_message">Toutes les données contenues dans cette carte seront inclues dans votre rapport d\'erreur.</string>
+    <string name="scanned_cards">Historique</string>
+    <string name="no_scanned_cards">Vous n\'avez scanné aucune carte.</string>
+    <string name="block_title_format">Bloc: %s</string>
+    <string name="page_title_format">Page: 0x%s</string>
+    <string name="sector_title_format">Secteur: 0x%s</string>
+    <string name="unauthorized_sector_title_format">Secteur: 0x%s (Non autorisé)</string>
+    <string name="invalid_sector_title_format">Secteur: 0x%1$s (Invalide: %2$s)</string>
+    <string name="subscriptions">Souscriptions</string>
+    <string name="info">Info</string>
+    <string name="valid_format">Valide %1$s à %2$s</string>
+    <string name="valid_to_format">Valide jusqu\'au %1$s</string>
+    <string name="valid_not_used">Pas encore utilisée</string>
+    <string name="unknown_format">Inconnu (%s)</string>
+    <string name="unknown">Inconnu</string>
+    <string name="keys_required">Des clés de chiffrement sont requises pour lire cette carte.</string>
+    <string name="load_keys">Chargement des clés</string>
+    <string name="card_keys_not_supported">Metrodroid ne supporte pas les clés pour ce type de carte.</string>
+    <string name="add_key">Ajouter clé</string>
+    <string name="error">Erreur</string>
+    <string name="keys">Clés</string>
+    <string name="delete">Supprimer</string>
+    <string name="add_key_directions">Sauvegardez vos clés dans un fichier de vidange binaire avec l\'extension .farebotkeys, envoyez le fichier de vidange en pièce jointe à vous-même, et ouvrez-le sur cet appareil.</string>
+    <string name="no_keys">Pas de clé.</string>
+    <string name="nfc_unavailable">NFC non disponible</string>
+    <string name="fare_cancelled_format">%s (Annulé)</string>
+    <string name="general">Général</string>
+    <string name="launch_from_background">Démarrer depuis l\'arrière plan</string>
+    <string name="error_report_sent">Rapport d\'erreur envoyé!</string>
+    <string name="checksum">Somme de contrôle</string>
+    <string name="last_transaction">Dernière transaction</string>
+    <string name="date">Date</string>
+    <string name="time">Heure</string>
+    <string name="vehicle_type">Type de véhicule</string>
+    <string name="transaction_type">Type de transaction</string>
+    <string name="card_epoch">Époque de la carte</string>
+    <string name="card_not_supported_on_device">Cette carte n\'est pas supportée par votre appareil.</string>
+    <string name="card_note_cepas">Pas compatible avec tout les appareils.</string>
+    <string name="need_stations">Les noms des stations ne sont pas tous connus.</string>
+    <string name="need_stations_submit">Rapporter</string>
+    <string name="card_preview_reader">Version bêta du lecteur de cartes.</string>
+    <string name="visit_website">Visitez le site web</string>
+    <string name="title_activity_about">A propos de Metrodroid</string>
+    <string name="card_type">Type de carte</string>
+    <string name="select_file">Sélectionner un fichier</string>
+    <string name="copied_to_clipboard">Copié dans le presse-papier</string>
+    <string name="saved_xml">Metrodroid-Export.xml écrit dans le stockage USB.</string>
+    <string name="saved_xml_custom">XML écrit dans le stockage USB.</string>
+    <string name="map_tiles_url">URL de la tuile de la carte</string>
+    <string name="map_tiles_url_summary">Utiliser un serveur de tuile personnalisé pour les cartes incorporées, utilisant le syntaxe Leaflet TileLayer.</string>
+    <string name="map_tiles_subdomains">Sous-domaine des tuiles de carte</string>
+    <string name="map_tiles_subdomains_summary">Si vous utilisez {s} dans les URL des cartes, une liste de sous-domaine séparés par une virgule, une liste de sous-domaines à caractère unique.</string>
+    <string name="about_card_format">A propos du format de cette carte</string>
+    <string name="online_services">Services en ligne</string>
+    <string name="mifare_classic">Mifare Classic</string>
+    <string name="auth_retries">Tentatives d\'authentification</string>
+    <string name="auth_retries_summary">Nombre de tentatives d\'authentification pour chaque secteur</string>
+    <string name="alternate_purse_balances">Solde alternatif du porte-monnaie</string>
+    <string name="storage_required">Une permission est requise afin de lire et écrire les fichiers de vidanges et les clés depuis/vers des fichiers.</string>
+
+    <string name="mfc_fallback_desc">Certaines agences n\'ont pas de magie d\'identification sur leur carte. Pour les lire, vous devez explicitement choisir une agence.</string>
+    <string name="mfc_fallback">Lecteur de secours</string>
+
+    <string name="default_map_tile_url">https://tile{s}.stackcdn.com/osm_tiles_2x/{z}/{x}/{y}.png</string>
+    <string name="default_map_tile_subdomains">123456</string>
+
+    <plurals name="cards_imported">
+	<item quantity="one"><xliff:g id="count" example="1">%d</xliff:g> carte importée!</item>
+	<item quantity="other"><xliff:g id="count" example="3">%d</xliff:g> cartes importées!</item>
+</plurals>
+
+    <plurals name="block_count">
+	<item quantity="one">%d bloc</item>
+	<item quantity="other">%d blocs</item>
+</plurals>
+
+    <string name="location_seattle">Seattle, WA, USA</string>
+    <string name="location_san_francisco">San Francisco, CA, USA</string>
+    <string name="location_singapore">Singapour</string>
+    <string name="location_tokyo">Tokyo, Japon</string>
+    <string name="location_kansai">Kansai, Japon</string>
+    <string name="location_the_netherlands">Pays-bas</string>
+    <string name="location_sao_paulo">São Paulo, Brésil</string>
+    <string name="location_helsinki_finland">Helsinki, Finlande</string>
+    <string name="location_sydney_australia">Sydney, Australie</string>
+    <string name="location_brisbane_seq_australia">Brisbane &amp; SE QLD, Australie</string>
+    <string name="location_victoria_australia">Victoria, Australie</string>
+    <string name="location_hong_kong">Hong Kong</string>
+    <string name="location_shenzhen">Shenzhen, Province de Guangdong, Chine</string>
+    <string name="location_los_angeles">Los Angeles, CA, USA</string>
+    <string name="location_act_australia">Territoire de la Capitale Australienne, Australie</string>
+
+    <string name="felica_terminal_fare_adjustment">Machine d\'ajustement de tarif</string>
+    <string name="felica_terminal_portable">Terminal portable</string>
+    <string name="felica_terminal_vehicle">Terminal de véhicule (en bus)</string>
+    <string name="felica_terminal_ticket">Horodateur</string>
+    <string name="felica_terminal_deposit_quick_charge">Machine de recharge rapide</string>
+    <string name="felica_terminal_tvm_tokyo_monorail">Horodateur du Tokyo Monorail</string>
+    <string name="felica_terminal_tvm_etc">Horodateur, etc..</string>
+    <string name="felica_terminal_ticket_gate">Portail</string>
+    <string name="felica_terminal_simple_ticket_gate">Portail de tiquet simple</string>
+    <string name="felica_terminal_booth">Stand</string>
+    <string name="felica_terminal_booth_green">Stand (Green)</string>
+    <string name="felica_terminal_ticket_gate_terminal">Terminal du portail</string>
+    <string name="felica_terminal_mobile_phone">Téléphone mobile</string>
+    <string name="felica_terminal_connection_adjustment">Machine d\'ajustement de commutation</string>
+    <string name="felica_terminal_transfer_adjustment">Machine d\'ajustement de transfert</string>
+    <string name="felica_terminal_simple_deposit">Machine de dépôt simple</string>
+    <string name="felica_terminal_pos">Terminal point de vente</string>
+    <string name="felica_terminal_vending">Distributeur automatique</string>
+    <string name="felica_process_fare_exit_gate">Grille de tarifs</string>
+    <string name="felica_process_charge">Frais</string>
+    <string name="felica_process_purchase_magnetic">Billet magnétique</string>
+    <string name="felica_process_fare_adjustment">Ajustement des tarifs</string>
+    <string name="felica_process_admission_payment">Paiement de l’admission</string>
+    <string name="felica_process_booth_exit">Sortie du stand principal de la station</string>
+    <string name="felica_process_issue_new">Nouvelle parution</string>
+    <string name="felica_process_booth_deduction">Déduction de stand</string>
+    <string name="felica_process_bus_pitapa">Bus (PiTaPa)</string>
+    <string name="felica_process_bus_iruca">Bus (IruCa)</string>
+    <string name="felica_process_reissue">Ré-édition</string>
+    <string name="felica_process_payment_shinkansen">Paiement Shinkansen</string>
+    <string name="felica_process_entry_a_autocharge">Entrée A (Paiement auto)</string>
+    <string name="felica_process_exit_a_autocharge">Sortie A (Paiement auto)</string>
+    <string name="felica_process_deposit_bus">Dépôt de bus</string>
+    <string name="felica_process_purchase_special_ticket">Billet (spécial Bus/tramway)</string>
+    <string name="felica_process_merchandise_purchase">Marchandise</string>
+    <string name="felica_process_bonus_charge">Bonus de tarif</string>
+    <string name="felica_process_register_deposit">Registre des dépôts</string>
+    <string name="felica_process_merchandise_cancel">Annuler la marchandise</string>
+    <string name="felica_process_merchandise_admission">Marchandises/Admission</string>
+    <string name="felica_process_merchandise_purchase_cash">Marchandises (partiellement en cash)</string>
+    <string name="felica_process_merchandise_admission_cash">Marchandises/Admission (partiellement en cash)</string>
+    <string name="felica_process_payment_thirdparty">Paiement (tier)</string>
+    <string name="felica_process_admission_thirdparty">Paiement admission (tier)</string>
+
+    <string name="hsl_pass_is_valid">Billet de saison valide</string>
+    <string name="hsl_1zone_ticket">Billet interne</string>
+    <string name="hsl_2zone_ticket">Billet régional</string>
+    <string name="hsl_balance_refill">Recharge du solde</string>
+    <string name="hsl_balance_ticket">Ticket solde</string>
+    <string name="hsl_value_ticket_is_valid">Ticket de solde valide</string>
+    <string name="hsl_pass_ticket">Billets de saison</string>
+    <string name="hsl_season_ticket_starts">Le billet de saison démarre</string>
+    <string name="hsl_season_ticket_ends">Billet de saison terminé</string>
+    <string name="hsl_season_ticket_bought_on">Ticket de saison acheté en</string>
+    <string name="hsl_previous_season_ticket">L\'ancien ticket de saison était</string>
+    <string name="hsl_season_ticket_price_was">Le prix du ticket saisonnier était de</string>
+    <string name="hsl_you_last_used_this_ticket">Dernière utilisation de ce billet sur</string>
+    <string name="hsl_person_format">%s personnes</string>
+    <string name="hsl_mins_format">%s mins</string>
+    <string name="hsl_value_ticket">Valeur du billet</string>
+    <string name="hsl_value_ticket_bought_on">Ticket acheté</string>
+    <string name="hsl_value_ticket_expires_on">Ticket expire</string>
+    <string name="hsl_value_ticket_last_transfer">Dernier transfert</string>
+    <string name="hsl_value_ticket_last_sign">Dernier signe</string>
+    <string name="hsl_value_ticket_price">Prix du value ticket</string>
+    <string name="hsl_value_ticket_disco_group">Prix de groupe</string>
+    <string name="hsl_value_ticket_pax">Taille de groupe</string>
+    <string name="hsl_value_ticket_duration">Validité du billet</string>
+    <string name="hsl_value_ticket_vehicle_number">Numéro du véhicule</string>
+    <string name="hsl_value_ticket_vehicle_type">Type de véhicule</string>
+    <string name="hsl_value_ticket_line_number">Numéro de ligne</string>
+    <string name="hsl_season_ticket">Billets de saison</string>
+
+    <string name="opal_automatic_top_up">Top up automatique</string>
+    <string name="opal_weekly_trips">Déplacements hebdomadaires</string>
+    <string name="opal_vehicle_bus">Bus</string>
+    <string name="opal_vehicle_ferry_lr">Ferry ou train léger sur Rail</string>
+    <string name="opal_vehicle_rail">Chemin de fer</string>
+    <string name="opal_action_none">Aucun (carte neuve, non utilisée)</string>
+    <string name="opal_action_new_journey">Nouveau voyage</string>
+    <string name="opal_action_transfer_same_mode">Transfert (depuis le même mode)</string>
+    <string name="opal_action_transfer_diff_mode">Transfert (d\'un mode différent)</string>
+    <string name="opal_action_manly_new_journey">Nouveau voyage (Manly Ferry)</string>
+    <string name="opal_action_manly_transfer_same_mode">Transférer (d’un autre ferry vers Manly Ferry)</string>
+    <string name="opal_action_manly_transfer_diff_mode">Transfert (d’un autre mode vers Manly Ferry)</string>
+    <string name="opal_action_journey_completed_distance">Voyage terminé (tarif de distance)</string>
+    <string name="opal_action_journey_completed_flat_rate">Voyage terminé (tarif forfaitaire)</string>
+    <string name="opal_action_journey_completed_auto_off">Voyage terminé (défaut de tap off)</string>
+    <string name="opal_action_journey_completed_auto_on">Voyage terminé (défaut de tap on)</string>
+    <string name="seqgo_ticket_type">Type de billet</string>
+    <string name="seqgo_ticket_type_regular">Normal</string>
+    <string name="seqgo_ticket_type_concession">Concession</string>
+    <string name="seqgo_ticket_type_child">Enfant</string>
+    <string name="seqgo_ticket_type_senior">Senior</string>
+
+    <string name="seqgo_refill_manual">Recharge manuelle</string>
+    <string name="seqgo_refill_automatic">Recharge automatique</string>
+
+    <string name="card_note_seqgo">Ne gère pas les cartes Go Access, Explore ou SEEQ.</string>
+
+    <string name="card_note_myki">Seulement le numéro de la carte peut être lu.</string>
+
+    <string name="nextfare">Cubic Nextfare</string>
+    <string name="nextfare_system_code">Code système</string>
+    <string name="nextfare_ticket_class">Code de classe du ticket</string>
+    <string name="nextfare_card_expiry">Date d’expiration de la carte</string>
+
+    <string name="octopus_szt">Shenzhen Tong</string>
+
+    <string name="card_note_bilhete_unico">Doit être sélectionné en tant que lecteur de secours dans les préférences.</string>
+
+    <string name="card_note_myway">Doit être sélectionné en tant que lecteur de secours dans les préférences.</string>
+<string name="opal_action_tap_on_reversal">Tap sur inversion</string>
+
+    </resources>
