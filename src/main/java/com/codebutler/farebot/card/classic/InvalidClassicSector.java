@@ -30,7 +30,7 @@ public class InvalidClassicSector extends ClassicSector {
     private String mError;
 
     public InvalidClassicSector(int index, String error) {
-        super(index, null);
+        super(index, null, null);
         mError = error;
     }
 

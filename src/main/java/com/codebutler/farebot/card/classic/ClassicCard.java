@@ -43,7 +43,7 @@ import com.codebutler.farebot.transit.TransitIdentity;
 import com.codebutler.farebot.transit.bilhete_unico.BilheteUnicoSPTransitData;
 import com.codebutler.farebot.transit.lax_tap.LaxTapTransitData;
 import com.codebutler.farebot.transit.manly_fast_ferry.ManlyFastFerryTransitData;
-import com.codebutler.farebot.transit.myway.MyWayTransitData;
+import com.codebutler.farebot.transit.smartrider.SmartRiderTransitData;
 import com.codebutler.farebot.transit.nextfare.NextfareTransitData;
 import com.codebutler.farebot.transit.ovc.OVChipTransitData;
 import com.codebutler.farebot.transit.seq_go.SeqGoTransitData;
@@ -98,21 +98,25 @@ public class ClassicCard extends Card {
 
             for (int sectorIndex = 0; sectorIndex < tech.getSectorCount(); sectorIndex++) {
                 try {
-                    boolean authSuccess = false;
+                    byte[] correctKey = null;
 
                     // Try to authenticate with the sector multiple times, in case we have impaired
                     // communications with the card.
                     retriesLeft = retryLimit;
 
-                    while (!authSuccess && keys != null && retriesLeft-- > 0) {
+                    while (correctKey == null && keys != null && retriesLeft-- > 0) {
                         // If we have a known key for the sector on the card, try this first.
                         Log.d(TAG, "Attempting authentication on sector " + sectorIndex + ", " + retriesLeft + " tries remain...");
                         ClassicSectorKey sectorKey = keys.keyForSector(sectorIndex);
                         if (sectorKey != null) {
                             if (sectorKey.getType().equals(ClassicSectorKey.TYPE_KEYA)) {
-                                authSuccess = tech.authenticateSectorWithKeyA(sectorIndex, sectorKey.getKey());
+                                if (tech.authenticateSectorWithKeyA(sectorIndex, sectorKey.getKey())) {
+                                    correctKey = sectorKey.getKey();
+                                }
                             } else {
-                                authSuccess = tech.authenticateSectorWithKeyB(sectorIndex, sectorKey.getKey());
+                                if (tech.authenticateSectorWithKeyB(sectorIndex, sectorKey.getKey())) {
+                                    correctKey = sectorKey.getKey();
+                                }
                             }
                         }
                     }
@@ -120,11 +124,11 @@ public class ClassicCard extends Card {
                     // Try with the other keys
                     retriesLeft = retryLimit;
 
-                    while (!authSuccess && (retriesLeft-- > 0)) {
+                    while (correctKey == null && (retriesLeft-- > 0)) {
                         Log.d(TAG, "Attempting authentication with other keys on sector " + sectorIndex + ", " + retriesLeft + " tries remain...");
 
                         // Attempt authentication with alternate keys
-                        if (!authSuccess && keys != null) {
+                        if (correctKey == null && keys != null) {
                             // Be a little more forgiving on the key list.  Lets try all the keys!
                             //
                             // This takes longer, of course, but means that users aren't scratching
@@ -138,12 +142,16 @@ public class ClassicCard extends Card {
                                 }
 
                                 if (cardKeys[keyIndex].getType().equals(ClassicSectorKey.TYPE_KEYA)) {
-                                    authSuccess = tech.authenticateSectorWithKeyA(sectorIndex, cardKeys[keyIndex].getKey());
+                                    if (tech.authenticateSectorWithKeyA(sectorIndex, cardKeys[keyIndex].getKey())) {
+                                        correctKey = cardKeys[keyIndex].getKey();
+                                    }
                                 } else {
-                                    authSuccess = tech.authenticateSectorWithKeyB(sectorIndex, cardKeys[keyIndex].getKey());
+                                    if (tech.authenticateSectorWithKeyB(sectorIndex, cardKeys[keyIndex].getKey())) {
+                                        correctKey = cardKeys[keyIndex].getKey();
+                                    }
                                 }
 
-                                if (authSuccess) {
+                                if (correctKey != null) {
                                     // Jump out if we have the key
                                     Log.d(TAG, String.format("Authenticated successfully to sector %d with key for sector %d. "
                                             + "Fix the key file to speed up authentication", sectorIndex, keyIndex));
@@ -153,41 +161,42 @@ public class ClassicCard extends Card {
                         }
 
                         // Try the default keys last.  If these are the only keys we have, the other steps will be skipped.
-                        if (!authSuccess) {
-                            authSuccess = tech.authenticateSectorWithKeyA(sectorIndex, PREAMBLE_KEY);
+                        if (correctKey == null && tech.authenticateSectorWithKeyA(sectorIndex, PREAMBLE_KEY)) {
+                            correctKey = PREAMBLE_KEY;
+
                         }
 
-                        if (!authSuccess) {
-                            authSuccess = tech.authenticateSectorWithKeyB(sectorIndex, PREAMBLE_KEY);
+                        if (correctKey == null && tech.authenticateSectorWithKeyB(sectorIndex, PREAMBLE_KEY)) {
+                            correctKey = PREAMBLE_KEY;
                         }
 
-                        if (!authSuccess) {
-                            authSuccess = tech.authenticateSectorWithKeyA(sectorIndex, MifareClassic.KEY_DEFAULT);
+                        if (correctKey == null && tech.authenticateSectorWithKeyA(sectorIndex, MifareClassic.KEY_DEFAULT)) {
+                            correctKey = MifareClassic.KEY_DEFAULT;
                         }
 
-                        if (!authSuccess) {
-                            authSuccess = tech.authenticateSectorWithKeyB(sectorIndex, MifareClassic.KEY_DEFAULT);
+                        if (correctKey == null && tech.authenticateSectorWithKeyB(sectorIndex, MifareClassic.KEY_DEFAULT)) {
+                            correctKey = MifareClassic.KEY_DEFAULT;
                         }
 
-                        if (!authSuccess) {
-                            authSuccess = tech.authenticateSectorWithKeyA(sectorIndex, MifareClassic.KEY_MIFARE_APPLICATION_DIRECTORY);
+                        if (correctKey == null && tech.authenticateSectorWithKeyA(sectorIndex, MifareClassic.KEY_MIFARE_APPLICATION_DIRECTORY)) {
+                            correctKey = MifareClassic.KEY_MIFARE_APPLICATION_DIRECTORY;
                         }
 
-                        if (!authSuccess) {
-                            authSuccess = tech.authenticateSectorWithKeyB(sectorIndex, MifareClassic.KEY_MIFARE_APPLICATION_DIRECTORY);
+                        if (correctKey == null && tech.authenticateSectorWithKeyB(sectorIndex, MifareClassic.KEY_MIFARE_APPLICATION_DIRECTORY)) {
+                            correctKey = MifareClassic.KEY_MIFARE_APPLICATION_DIRECTORY;
                         }
 
-                        if (!authSuccess) {
-                            authSuccess = tech.authenticateSectorWithKeyA(sectorIndex, MifareClassic.KEY_NFC_FORUM);
+                        if (correctKey == null && tech.authenticateSectorWithKeyA(sectorIndex, MifareClassic.KEY_NFC_FORUM)) {
+                            correctKey = MifareClassic.KEY_NFC_FORUM;
                         }
 
-                        if (!authSuccess) {
-                            authSuccess = tech.authenticateSectorWithKeyB(sectorIndex, MifareClassic.KEY_NFC_FORUM);
+                        if (correctKey == null && tech.authenticateSectorWithKeyB(sectorIndex, MifareClassic.KEY_NFC_FORUM)) {
+                            correctKey = MifareClassic.KEY_NFC_FORUM;
                         }
 
                     }
 
-                    if (authSuccess) {
+                    if (correctKey != null) {
                         Log.d(TAG, "Authenticated successfully for sector " + sectorIndex);
                         List<ClassicBlock> blocks = new ArrayList<>();
                         // FIXME: First read trailer block to get type of other blocks.
@@ -197,7 +206,7 @@ public class ClassicCard extends Card {
                             String type = ClassicBlock.TYPE_DATA; // FIXME
                             blocks.add(ClassicBlock.create(type, blockIndex, data));
                         }
-                        sectors.add(new ClassicSector(sectorIndex, blocks.toArray(new ClassicBlock[blocks.size()])));
+                        sectors.add(new ClassicSector(sectorIndex, blocks.toArray(new ClassicBlock[blocks.size()]), correctKey));
                     } else {
                         Log.d(TAG, "Authentication unsuccessful for sector " + sectorIndex + ", giving up");
                         sectors.add(new UnauthorizedClassicSector(sectorIndex));
@@ -320,6 +329,8 @@ public class ClassicCard extends Card {
                 // Fallback
                 return NextfareTransitData.parseTransitIdentity(this);
             }
+        } else if (SmartRiderTransitData.check(this)) {
+            return SmartRiderTransitData.parseTransitIdentity(this);
         } else if (UnauthorizedClassicTransitData.check(this)) {
             // This check must be SECOND TO LAST.
             //
@@ -332,9 +343,9 @@ public class ClassicCard extends Card {
             String fallback = getFallbackReader();
             if (fallback.equals("bilhete_unico")) {
                 return BilheteUnicoSPTransitData.parseTransitIdentity(this);
-            } else if (fallback.equals("myway")) {
+            } else if (fallback.equals("myway") || fallback.equals("smartrider")) {
                 // TODO: Replace this with a proper check, and take out of fallback mode.
-                return MyWayTransitData.parseTransitIdentity(this);
+                return SmartRiderTransitData.parseTransitIdentity(this);
             }
 
         }
@@ -359,6 +370,8 @@ public class ClassicCard extends Card {
                 // Fallback
                 return new NextfareTransitData(this);
             }
+        } else if (SmartRiderTransitData.check(this)) {
+            return new SmartRiderTransitData(this);
         } else if (UnauthorizedClassicTransitData.check(this)) {
             // This check must be SECOND TO LAST.
             //
@@ -373,7 +386,7 @@ public class ClassicCard extends Card {
                 return new BilheteUnicoSPTransitData(this);
             } else if (fallback.equals("myway")) {
                 // TODO: Replace this with a proper check, and take out of fallback mode.
-                return new MyWayTransitData(this);
+                return new SmartRiderTransitData(this);
             }
         }
 

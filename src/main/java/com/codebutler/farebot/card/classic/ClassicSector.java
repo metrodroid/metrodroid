@@ -21,6 +21,7 @@
 package com.codebutler.farebot.card.classic;
 
 import com.codebutler.farebot.util.Utils;
+import com.codebutler.farebot.xml.Base64String;
 
 import org.simpleframework.xml.Attribute;
 import org.simpleframework.xml.ElementList;
@@ -34,17 +35,21 @@ public class ClassicSector {
     private int mIndex;
     @ElementList(name = "blocks", required = false, empty = false)
     private List<ClassicBlock> mBlocks;
+    @Attribute(name = "key", required = false)
+    private Base64String mKey;
 
     protected ClassicSector() {
     }
 
-    public ClassicSector(int index, ClassicBlock[] blocks) {
+    public ClassicSector(int index, ClassicBlock[] blocks, byte[] key) {
         mIndex = index;
         if (blocks == null) {
             // invalid / unauthorised sectors should be null
             mBlocks = null;
+            mKey = null;
         } else {
             mBlocks = Utils.arrayAsList(blocks);
+            mKey = new Base64String(key);
         }
     }
 
@@ -58,6 +63,13 @@ public class ClassicSector {
 
     public ClassicBlock getBlock(int index) {
         return mBlocks.get(index);
+    }
+
+    public byte[] getKey() {
+        if (mKey == null) {
+            return null;
+        }
+        return mKey.getData();
     }
 
     public byte[] readBlocks(int startBlock, int blockCount) {
