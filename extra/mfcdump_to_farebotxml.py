@@ -58,6 +58,7 @@ def mfc_to_farebot(input_fs, output_f):
       else:
         block_count = 16
 
+      block_data = None
       for block_no in range(block_count):
         block = etree.SubElement(blocks, 'block', index=str(block_no), type='data')
         data = etree.SubElement(block, 'data')
@@ -67,7 +68,11 @@ def mfc_to_farebot(input_fs, output_f):
         else:
           offset = 2048 + ((sector_no - 32) * 256) + (block_no * 16)
 
-        data.text = b64encode(card_data[offset:offset+16])
+        block_data = card_data[offset:offset+16]
+        data.text = b64encode(block_data)
+      
+      # Put key A into the key attribute
+      sector.attrib['key'] = b64encode(block_data[:6])
 
     cards.append(card)
 
