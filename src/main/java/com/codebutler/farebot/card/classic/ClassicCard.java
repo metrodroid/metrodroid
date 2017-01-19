@@ -43,7 +43,7 @@ import com.codebutler.farebot.transit.TransitIdentity;
 import com.codebutler.farebot.transit.bilhete_unico.BilheteUnicoSPTransitData;
 import com.codebutler.farebot.transit.lax_tap.LaxTapTransitData;
 import com.codebutler.farebot.transit.manly_fast_ferry.ManlyFastFerryTransitData;
-import com.codebutler.farebot.transit.myway.MyWayTransitData;
+import com.codebutler.farebot.transit.smartrider.SmartRiderTransitData;
 import com.codebutler.farebot.transit.nextfare.NextfareTransitData;
 import com.codebutler.farebot.transit.ovc.OVChipTransitData;
 import com.codebutler.farebot.transit.seq_go.SeqGoTransitData;
@@ -329,8 +329,8 @@ public class ClassicCard extends Card {
                 // Fallback
                 return NextfareTransitData.parseTransitIdentity(this);
             }
-        } else if (MyWayTransitData.check(this)) {
-            return MyWayTransitData.parseTransitIdentity(this);
+        } else if (SmartRiderTransitData.check(this)) {
+            return SmartRiderTransitData.parseTransitIdentity(this);
         } else if (UnauthorizedClassicTransitData.check(this)) {
             // This check must be SECOND TO LAST.
             //
@@ -343,9 +343,9 @@ public class ClassicCard extends Card {
             String fallback = getFallbackReader();
             if (fallback.equals("bilhete_unico")) {
                 return BilheteUnicoSPTransitData.parseTransitIdentity(this);
-            } else if (fallback.equals("myway")) {
+            } else if (fallback.equals("myway") || fallback.equals("smartrider")) {
                 // TODO: Replace this with a proper check, and take out of fallback mode.
-                return MyWayTransitData.parseTransitIdentity(this);
+                return SmartRiderTransitData.parseTransitIdentity(this);
             }
 
         }
@@ -370,8 +370,8 @@ public class ClassicCard extends Card {
                 // Fallback
                 return new NextfareTransitData(this);
             }
-        } else if (MyWayTransitData.check(this)) {
-            return new MyWayTransitData(this);
+        } else if (SmartRiderTransitData.check(this)) {
+            return new SmartRiderTransitData(this);
         } else if (UnauthorizedClassicTransitData.check(this)) {
             // This check must be SECOND TO LAST.
             //
@@ -386,7 +386,7 @@ public class ClassicCard extends Card {
                 return new BilheteUnicoSPTransitData(this);
             } else if (fallback.equals("myway")) {
                 // TODO: Replace this with a proper check, and take out of fallback mode.
-                return new MyWayTransitData(this);
+                return new SmartRiderTransitData(this);
             }
         }
 

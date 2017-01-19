@@ -16,12 +16,11 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.codebutler.farebot.transit.myway;
+package com.codebutler.farebot.transit.smartrider;
 
 import android.os.Parcel;
 import android.util.Log;
 
-import com.codebutler.farebot.card.UnauthorizedException;
 import com.codebutler.farebot.card.classic.ClassicCard;
 import com.codebutler.farebot.transit.Subscription;
 import com.codebutler.farebot.transit.TransitData;
@@ -41,79 +40,112 @@ import java.util.List;
 import java.util.Locale;
 
 /**
- * Experimental reader for MyWay (Australian Capital Territory / Canberra)
+ * Reader for SmartRider (Western Australia) and MyWay (Australian Capital Territory / Canberra)
+ * https://github.com/micolous/metrodroid/wiki/SmartRider
  * https://github.com/micolous/metrodroid/wiki/MyWay
- * <p>
- * Currently only available in "Fallback" mode.
  */
 
-public class MyWayTransitData extends TransitData {
+public class SmartRiderTransitData extends TransitData {
     public static final String NAME = "MyWay";
-    public static final Creator<MyWayTransitData> CREATOR = new Creator<MyWayTransitData>() {
+    public static final Creator<SmartRiderTransitData> CREATOR = new Creator<SmartRiderTransitData>() {
         @Override
-        public MyWayTransitData createFromParcel(Parcel in) {
-            return new MyWayTransitData(in);
+        public SmartRiderTransitData createFromParcel(Parcel in) {
+            return new SmartRiderTransitData(in);
         }
 
         @Override
-        public MyWayTransitData[] newArray(int size) {
-            return new MyWayTransitData[size];
+        public SmartRiderTransitData[] newArray(int size) {
+            return new SmartRiderTransitData[size];
         }
     };
-    private static final String TAG = "MyWayTransitData";
-    private static final GregorianCalendar MYWAY_EPOCH = new GregorianCalendar(2000, Calendar.JANUARY, 1);
+    private static final String TAG = "SmartRiderTransitData";
+    private static final GregorianCalendar SMARTRIDER_EPOCH = new GregorianCalendar(2000, Calendar.JANUARY, 1);
     private String mSerialNumber;
     private int mBalance;
-    private MyWayTrip[] mTrips;
+    private SmartRiderTrip[] mTrips;
+    private CardType mCardType;
 
-    private static final String MYWAY_KEY_SALT = "myway"; //
+    private static final String MYWAY_KEY_SALT = "myway";
+    // md5sum of Salt + Common Key 2 + Salt, used on sector 7 key A and B.
     private static final String MYWAY_KEY_DIGEST = "29a61b3a4d5c818415350804c82cd834";
 
-    public MyWayTransitData(Parcel p) {
-        mSerialNumber = p.readString();
-        mBalance = p.readInt();
-        mTrips = new MyWayTrip[p.readInt()];
-        p.readTypedArray(mTrips, MyWayTrip.CREATOR);
-    }
+    private static final String SMARTRIDER_KEY_SALT = "smartrider";
+    // md5sum of Salt + Common Key 2 + Salt, used on Sector 7 key A.
+    // md5sum of Salt + Common Key 3 + Salt, used on Sector 7 key B.
 
-    public static boolean check(ClassicCard card) {
-        // We don't know how reliable card value data is just yet. But there are some standard
-        // keys on the card that we can detect.
-        byte[] key7 = card.getSector(7).getKey();
-        if (key7 == null) {
-            // We don't have key data, bail out.
-            return false;
+
+    public enum CardType {
+        UNKNOWN("Unknown SmartRider"),
+        SMARTRIDER("SmartRider"),
+        MYWAY("MyWay");
+
+        String mFriendlyName;
+
+        CardType(String friendlyString) {
+            mFriendlyName = friendlyString;
         }
 
-        // We have some key data, so lets see if this is Standard Key B.
+        public String getFriendlyName() {
+            return mFriendlyName;
+        }
+    }
+
+    private static CardType detectKeyType(ClassicCard card) {
         MessageDigest md5;
+        String digest;
+
+        byte[] key = card.getSector(7).getKey();
+        if (key == null || key.length != 6) {
+            // We don't have key data, bail out.
+            return CardType.UNKNOWN;
+        }
+
         try {
             md5 = MessageDigest.getInstance("MD5");
         } catch (NoSuchAlgorithmException e) {
             Log.w(TAG, "Couldn't find implementation of MD5", e);
-            return false;
+            return CardType.UNKNOWN;
         }
 
         md5.update(MYWAY_KEY_SALT.getBytes());
-        md5.update(key7);
+        md5.update(key);
         md5.update(MYWAY_KEY_SALT.getBytes());
 
-        String digest = Utils.getHexString(md5.digest());
-
+        digest = Utils.getHexString(md5.digest());
         Log.d(TAG, "Myway key digest: " + digest);
-        return digest.equals(MYWAY_KEY_DIGEST);
 
+        if (MYWAY_KEY_DIGEST.equals(digest)) {
+            return CardType.MYWAY;
+        }
+
+        // TODO: Detect SmartRider
+
+        return CardType.UNKNOWN;
     }
 
-    public MyWayTransitData(ClassicCard card) {
-        mSerialNumber = getSerialData(card);
-        // Read trips.
-        ArrayList<MyWayTagRecord> tagRecords = new ArrayList<>();
-        ArrayList<MyWayTrip> trips = new ArrayList<>();
+    public SmartRiderTransitData(Parcel p) {
+        mCardType = CardType.valueOf(p.readString());
+        mSerialNumber = p.readString();
+        mBalance = p.readInt();
+        mTrips = new SmartRiderTrip[p.readInt()];
+        p.readTypedArray(mTrips, SmartRiderTrip.CREATOR);
+    }
 
-        for (int s = 10; s <= 12; s++) {
+    public static boolean check(ClassicCard card) {
+        return detectKeyType(card) != CardType.UNKNOWN;
+    }
+
+    public SmartRiderTransitData(ClassicCard card) {
+        mCardType = detectKeyType(card);
+        mSerialNumber = getSerialData(card);
+
+        // Read trips.
+        ArrayList<SmartRiderTagRecord> tagRecords = new ArrayList<>();
+        ArrayList<SmartRiderTrip> trips = new ArrayList<>();
+
+        for (int s = 10; s <= 13; s++) {
             for (int b = 0; b <= 2; b++) {
-                MyWayTagRecord r = new MyWayTagRecord(card.getSector(s).getBlock(b).getData());
+                SmartRiderTagRecord r = new SmartRiderTagRecord(card.getSector(s).getBlock(b).getData());
 
                 if (r.getTimestamp() != 0) {
                     tagRecords.add(r);
@@ -128,16 +160,15 @@ public class MyWayTransitData extends TransitData {
             int i = 0;
 
             while (tagRecords.size() > i) {
-                MyWayTagRecord tapOn = tagRecords.get(i);
+                SmartRiderTagRecord tapOn = tagRecords.get(i);
 
                 //Log.d(TAG, "TapOn @" + Utils.isoDateTimeFormat(tapOn.getTimestamp()));
                 // Start by creating an empty trip
 
-                MyWayTrip trip = new MyWayTrip();
-
+                SmartRiderTrip trip = new SmartRiderTrip(mCardType);
 
                 // Put in the metadatas
-                trip.mStartTime = addMyWayEpoch(tapOn.getTimestamp());
+                trip.mStartTime = addSmartRiderEpoch(tapOn.getTimestamp());
                 trip.mRouteNumber = tapOn.getRoute();
                 trip.mCost = tapOn.getCost();
 
@@ -145,10 +176,10 @@ public class MyWayTransitData extends TransitData {
                 // this journey
                 if (tagRecords.size() > i + 1 && shouldMergeJourneys(tapOn, tagRecords.get(i + 1))) {
                     // There is a tap off.  Lets put that data in
-                    MyWayTagRecord tapOff = tagRecords.get(i + 1);
+                    SmartRiderTagRecord tapOff = tagRecords.get(i + 1);
                     //Log.d(TAG, "TapOff @" + Utils.isoDateTimeFormat(tapOff.getTimestamp()));
 
-                    trip.mEndTime = addMyWayEpoch(tapOff.getTimestamp());
+                    trip.mEndTime = addSmartRiderEpoch(tapOff.getTimestamp());
                     trip.mCost += tapOff.getCost();
 
                     // Increment to skip the next record
@@ -169,13 +200,13 @@ public class MyWayTransitData extends TransitData {
 
         }
 
-        mTrips = trips.toArray(new MyWayTrip[trips.size()]);
+        mTrips = trips.toArray(new SmartRiderTrip[trips.size()]);
 
         // TODO: Figure out balance priorities properly.
 
         // Try to pick the balance data that is correct.
         // Take the last transaction, and see what its cost was.
-        MyWayTagRecord lastTagEvent = tagRecords.get(tagRecords.size() - 1);
+        SmartRiderTagRecord lastTagEvent = tagRecords.get(tagRecords.size() - 1);
         int lastTripCost = lastTagEvent.getCost();
 
         byte[] balanceRecord;
@@ -188,6 +219,7 @@ public class MyWayTransitData extends TransitData {
         int costA = Utils.byteArrayToInt(lastTripA);
         int costB = Utils.byteArrayToInt(lastTripB);
 
+        // TODO: improve this logic
         if (costB == lastTripCost) {
             Log.d(TAG, "Selecting balance in sector 3");
             balanceRecord = recordB;
@@ -213,14 +245,14 @@ public class MyWayTransitData extends TransitData {
     }
 
     public static TransitIdentity parseTransitIdentity(ClassicCard card) {
-        return new TransitIdentity(NAME, getSerialData(card));
+        return new TransitIdentity(detectKeyType(card).getFriendlyName(), getSerialData(card));
     }
 
-    private static long addMyWayEpoch(long epochTime) {
-        return (MYWAY_EPOCH.getTimeInMillis() / 1000) + epochTime;
+    private static long addSmartRiderEpoch(long epochTime) {
+        return (SMARTRIDER_EPOCH.getTimeInMillis() / 1000) + epochTime;
     }
 
-    private static boolean shouldMergeJourneys(MyWayTagRecord first, MyWayTagRecord second) {
+    private static boolean shouldMergeJourneys(SmartRiderTagRecord first, SmartRiderTagRecord second) {
         // Are the two trips on different routes?
         if (!first.getRoute().equals(second.getRoute())) {
             return false;
@@ -267,11 +299,12 @@ public class MyWayTransitData extends TransitData {
 
     @Override
     public String getCardName() {
-        return NAME;
+        return mCardType.getFriendlyName();
     }
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(mCardType.toString());
         dest.writeString(mSerialNumber);
         dest.writeInt(mBalance);
         dest.writeInt(mTrips.length);

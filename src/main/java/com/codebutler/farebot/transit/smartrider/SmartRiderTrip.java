@@ -1,4 +1,4 @@
-package com.codebutler.farebot.transit.myway;
+package com.codebutler.farebot.transit.smartrider;
 
 import android.os.Parcel;
 import android.support.annotation.NonNull;
@@ -13,37 +13,41 @@ import java.util.Locale;
 import au.id.micolous.farebot.R;
 
 /**
- * Trip on MyWay
+ * Trip on SmartRider / MyWay
  */
 
-public class MyWayTrip extends Trip implements Comparable<MyWayTrip> {
-    public static final Creator<MyWayTrip> CREATOR = new Creator<MyWayTrip>() {
+public class SmartRiderTrip extends Trip implements Comparable<SmartRiderTrip> {
+    public static final Creator<SmartRiderTrip> CREATOR = new Creator<SmartRiderTrip>() {
 
-        public MyWayTrip createFromParcel(Parcel in) {
-            return new MyWayTrip(in);
+        public SmartRiderTrip createFromParcel(Parcel in) {
+            return new SmartRiderTrip(in);
         }
 
-        public MyWayTrip[] newArray(int size) {
-            return new MyWayTrip[size];
+        public SmartRiderTrip[] newArray(int size) {
+            return new SmartRiderTrip[size];
         }
     };
+
+    protected SmartRiderTransitData.CardType mCardType;
     protected long mStartTime;
     protected long mEndTime;
     protected String mRouteNumber;
     protected int mCost;
 
-    public MyWayTrip(Parcel parcel) {
+    public SmartRiderTrip(Parcel parcel) {
+        mCardType = SmartRiderTransitData.CardType.valueOf(parcel.readString());
         mStartTime = parcel.readLong();
         mEndTime = parcel.readLong();
         mCost = parcel.readInt();
         mRouteNumber = parcel.readString();
     }
 
-    public MyWayTrip() {
+    public SmartRiderTrip(SmartRiderTransitData.CardType cardType) {
+        mCardType = cardType;
     }
 
     @Override
-    public int compareTo(@NonNull MyWayTrip other) {
+    public int compareTo(@NonNull SmartRiderTrip other) {
         return (new Long(this.mStartTime)).compareTo(other.mStartTime);
     }
 
@@ -69,7 +73,16 @@ public class MyWayTrip extends Trip implements Comparable<MyWayTrip> {
 
     @Override
     public String getAgencyName() {
-        return "ACTION";
+        switch (mCardType) {
+            case MYWAY:
+                return "ACTION";
+
+            case SMARTRIDER:
+                return "TransPerth";
+
+            default:
+                return "";
+        }
     }
 
     @Override
@@ -112,8 +125,24 @@ public class MyWayTrip extends Trip implements Comparable<MyWayTrip> {
 
     @Override
     public Mode getMode() {
-        // TODO: Fix this when/if Canberra gets trams.
-        return Mode.BUS;
+        switch (mCardType) {
+            case MYWAY:
+                return Mode.BUS;
+
+            case SMARTRIDER:
+                if ("RAIL".equalsIgnoreCase(mRouteNumber)) {
+                    return Mode.TRAIN;
+                } else if ("300".equals(mRouteNumber)) {
+                    // TODO: verify this
+                    // There is also a bus with route number 300, but it is a free service.
+                    return Mode.FERRY;
+                } else {
+                    return Mode.BUS;
+                }
+
+            default:
+                return Mode.OTHER;
+        }
     }
 
     @Override
@@ -128,6 +157,7 @@ public class MyWayTrip extends Trip implements Comparable<MyWayTrip> {
 
     @Override
     public void writeToParcel(Parcel parcel, int i) {
+        parcel.writeString(mCardType.toString());
         parcel.writeLong(mStartTime);
         parcel.writeLong(mEndTime);
         parcel.writeInt(mCost);
