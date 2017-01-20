@@ -65,13 +65,21 @@ public class SmartRiderTransitData extends TransitData {
     private SmartRiderTrip[] mTrips;
     private CardType mCardType;
 
+    // Unfortunately, there's no way to reliably identify these cards except for the "standard" keys
+    // which are used for some empty sectors.  It is not enough to read the whole card (most data is
+    // protected by a unique key).
+    //
+    // We don't want to actually include these keys in the program, so include a hashed version of
+    // this key.
     private static final String MYWAY_KEY_SALT = "myway";
     // md5sum of Salt + Common Key 2 + Salt, used on sector 7 key A and B.
     private static final String MYWAY_KEY_DIGEST = "29a61b3a4d5c818415350804c82cd834";
 
     private static final String SMARTRIDER_KEY_SALT = "smartrider";
     // md5sum of Salt + Common Key 2 + Salt, used on Sector 7 key A.
+    private static final String SMARTRIDER_KEY2_DIGEST = "e0913518a5008c03e1b3f2bb3a43ff78";
     // md5sum of Salt + Common Key 3 + Salt, used on Sector 7 key B.
+    private static final String SMARTRIDER_KEY3_DIGEST = "bc510c0183d2c0316533436038679620";
 
 
     public enum CardType {
@@ -118,7 +126,16 @@ public class SmartRiderTransitData extends TransitData {
             return CardType.MYWAY;
         }
 
-        // TODO: Detect SmartRider
+        md5.update(SMARTRIDER_KEY_SALT.getBytes());
+        md5.update(key);
+        md5.update(SMARTRIDER_KEY_SALT.getBytes());
+
+        digest = Utils.getHexString(md5.digest());
+        Log.d(TAG, "Smartrider key digest: " + digest);
+
+        if (SMARTRIDER_KEY2_DIGEST.equals(digest) || SMARTRIDER_KEY3_DIGEST.equals(digest)) {
+            return CardType.SMARTRIDER;
+        }
 
         return CardType.UNKNOWN;
     }
