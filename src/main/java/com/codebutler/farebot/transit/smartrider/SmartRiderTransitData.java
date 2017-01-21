@@ -221,35 +221,21 @@ public class SmartRiderTransitData extends TransitData {
 
         // TODO: Figure out balance priorities properly.
 
-        // Try to pick the balance data that is correct.
-        // Take the last transaction, and see what its cost was.
-        SmartRiderTagRecord lastTagEvent = tagRecords.get(tagRecords.size() - 1);
-        int lastTripCost = lastTagEvent.getCost();
-
-        byte[] balanceRecord;
+        // This presently only picks whatever balance is lowest. Recharge events aren't understood,
+        // and parking fees (SmartRider only) are also not understood.  So just pick whatever is
+        // the lowest balance, and we're probably right, unless the user has just topped up their
+        // card.
         byte[] recordA = card.getSector(2).getBlock(2).getData();
         byte[] recordB = card.getSector(3).getBlock(2).getData();
 
-        byte[] lastTripA = Utils.reverseBuffer(recordA, 5, 2);
-        byte[] lastTripB = Utils.reverseBuffer(recordB, 5, 2);
+        byte[] balanceDataA = Utils.reverseBuffer(recordA, 7, 2);
+        byte[] balanceDataB = Utils.reverseBuffer(recordB, 7, 2);
 
-        int costA = Utils.byteArrayToInt(lastTripA);
-        int costB = Utils.byteArrayToInt(lastTripB);
+        int balanceA = Utils.byteArrayToInt(balanceDataA);
+        int balanceB = Utils.byteArrayToInt(balanceDataB);
 
-        // TODO: improve this logic
-        if (costB == lastTripCost) {
-            Log.d(TAG, "Selecting balance in sector 3");
-            balanceRecord = recordB;
-        } else if (costA == lastTripCost) {
-            Log.d(TAG, "Selecting balance in sector 2");
-            balanceRecord = recordA;
-        } else {
-            Log.w(TAG, String.format("Neither costA (%d) nor costB (%d) match last trip (%d), picking A as fallback.", costA, costB, lastTripCost));
-            balanceRecord = recordA;
-        }
-
-        byte[] balance = Utils.reverseBuffer(balanceRecord, 7, 2);
-        mBalance = Utils.byteArrayToInt(balance);
+        Log.d(TAG, String.format("balanceA = %d, balanceB = %d", balanceA, balanceB));
+        mBalance = balanceA < balanceB ? balanceA : balanceB;
     }
 
     private static String getSerialData(ClassicCard card) {
