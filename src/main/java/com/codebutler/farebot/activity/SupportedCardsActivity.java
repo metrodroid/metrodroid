@@ -205,12 +205,10 @@ public class SupportedCardsActivity extends Activity {
                     R.string.card_note_myki
             ));
 
-            add(new CardInfo(R.drawable.myway_card, SmartRiderTransitData.NAME,
+            add(new CardInfo(R.drawable.myway_card, SmartRiderTransitData.MYWAY_NAME,
                     R.string.location_act_australia,
                     CardType.MifareClassic,
-                    true,
-                    true,
-                    R.string.card_note_myway
+                    true
             ));
 
 
@@ -252,6 +250,12 @@ public class SupportedCardsActivity extends Activity {
                     true // preview version
             ));
 
+            add(new CardInfo(R.drawable.smartrider_card, SmartRiderTransitData.SMARTRIDER_NAME,
+                    R.string.location_wa_australia,
+                    CardType.MifareClassic,
+                    true,
+                    true // preview version (we don't know about ferries)
+            ));
 
             add(new CardInfo(R.drawable.suica_card, "Suica",
                     R.string.location_tokyo,

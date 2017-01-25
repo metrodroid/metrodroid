@@ -46,7 +46,8 @@ import java.util.Locale;
  */
 
 public class SmartRiderTransitData extends TransitData {
-    public static final String NAME = "MyWay";
+    public static final String SMARTRIDER_NAME = "SmartRider";
+    public static final String MYWAY_NAME = "MyWay";
     public static final Creator<SmartRiderTransitData> CREATOR = new Creator<SmartRiderTransitData>() {
         @Override
         public SmartRiderTransitData createFromParcel(Parcel in) {
@@ -84,8 +85,8 @@ public class SmartRiderTransitData extends TransitData {
 
     public enum CardType {
         UNKNOWN("Unknown SmartRider"),
-        SMARTRIDER("SmartRider"),
-        MYWAY("MyWay");
+        SMARTRIDER(SMARTRIDER_NAME),
+        MYWAY(MYWAY_NAME);
 
         String mFriendlyName;
 
