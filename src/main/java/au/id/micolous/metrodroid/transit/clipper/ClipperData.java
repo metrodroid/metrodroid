@@ -36,6 +36,7 @@ final class ClipperData {
     static final int AGENCY_ACTRAN = 0x01;
     static final int AGENCY_BART = 0x04;
     static final int AGENCY_CALTRAIN = 0x06;
+    static final int AGENCY_CCTA = 0x08;
     static final int AGENCY_GGT = 0x0b;
     static final int AGENCY_SAMTRANS = 0x0f;
     static final int AGENCY_VTA = 0x11;
@@ -50,6 +51,7 @@ final class ClipperData {
             .put(AGENCY_ACTRAN, "Alameda-Contra Costa Transit District")
             .put(AGENCY_BART, "Bay Area Rapid Transit")
             .put(AGENCY_CALTRAIN, "Caltrain")
+            .put(AGENCY_CCTA, "Contra Costa Transportation Authority")
             .put(AGENCY_GGT, "Golden Gate Transit")
             .put(AGENCY_SAMTRANS, "San Mateo County Transit District")
             .put(AGENCY_VTA, "Santa Clara Valley Transportation Authority")
@@ -64,6 +66,7 @@ final class ClipperData {
             .put(AGENCY_ACTRAN, "ACTransit")
             .put(AGENCY_BART, "BART")
             .put(AGENCY_CALTRAIN, "Caltrain")
+            .put(AGENCY_CCTA, "CCTA")
             .put(AGENCY_GGT, "GGT")
             .put(AGENCY_SAMTRANS, "SAMTRANS")
             .put(AGENCY_VTA, "VTA")

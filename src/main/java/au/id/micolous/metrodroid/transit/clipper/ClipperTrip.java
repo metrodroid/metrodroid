@@ -211,6 +211,8 @@ public class ClipperTrip extends Trip {
             return Mode.FERRY;
         if (mAgency == ClipperData.AGENCY_SF_BAY_FERRY)
             return Mode.FERRY;
+        if (mAgency == ClipperData.AGENCY_CCTA)
+            return Mode.BUS;
         return Mode.OTHER;
     }
 
