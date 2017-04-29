@@ -6,7 +6,7 @@ As a result, it is infeasible for me to travel haphazardly in order to add new c
 
 ## "Support my transit network"
 
-Please see [supporting new cards](https://github.com/micolous/farebot/wiki/New-cards) on the wiki before filing.  This is a very difficult, time consuming process, involving travel to the city in question.
+Please see [supporting new cards](https://github.com/micolous/metrodroid/wiki/New-cards) on the wiki before filing.  This is a very difficult, time consuming process, involving travel to the city in question.
 
 **If you are not interested in writing code or understanding the format yourself,** please find someone else who lives in your city who is interested, instead of reporting the issue here.
 
@@ -21,7 +21,7 @@ Please see [supporting new cards](https://github.com/micolous/farebot/wiki/New-c
   - This includes information like balance, travel history (when and where you used the card)
   - Each of the dumps should have 1 change -- eg: before tapping on at the start station, after tapping on at the start station, after tapping off at the destination station.
 
-If you have notes and annotated card dumps which reliably explain the data format, but don't understand how to turn that into code, I'm happy to help write the code to make the last part happen.  For an example on this, please see [the Nextfare](https://github.com/micolous/metrodroid/wiki/Cubic-Nextfare-MFC) and [Opal](https://github.com/micolous/metrodroid/wiki/Opal) documentation in the wiki.
+If you have notes and annotated card dumps which reliably explain the data format, but don't understand how to turn that into code, I'm happy to help write the code to make the last part happen.  For an example of this, please see [the Nextfare](https://github.com/micolous/metrodroid/wiki/Cubic-Nextfare-MFC) and [Opal](https://github.com/micolous/metrodroid/wiki/Opal) documentation in the wiki.
 
 @micolous is working on Australian public transit cards first, as these are easiest for him to travel for.
 
