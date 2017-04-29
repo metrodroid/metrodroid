@@ -89,12 +89,12 @@ public class ClassicCardRawDataFragment extends ExpandableListFragment {
         @Override
         public int getChildrenCount(int groupPosition) {
             ClassicSector sector = mCard.getSector(groupPosition);
-            if (!(sector instanceof UnauthorizedClassicSector)) {
-                List<ClassicBlock> blocks = sector.getBlocks();
-                return (blocks == null) ? 0 : blocks.size();
-            } else {
+            if (sector instanceof UnauthorizedClassicSector || sector instanceof InvalidClassicSector) {
                 return 0;
             }
+
+            List<ClassicBlock> blocks = sector.getBlocks();
+            return (blocks == null) ? 0 : blocks.size();
         }
 
         @Override
