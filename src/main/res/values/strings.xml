@@ -339,6 +339,7 @@
         Cubic Nextfare
         These are deliberately seperated, but are used for generic fields across many systems.
     -->
+    <!-- TRANSLATORS: "Cubic Nextfare" is the name of a ticketing system product, and should not be literally translated. -->
     <string name="nextfare">Cubic Nextfare</string>
     <string name="nextfare_system_code">System code</string>
     <string name="nextfare_ticket_class">Ticket class code</string>
