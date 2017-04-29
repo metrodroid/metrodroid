@@ -1,10 +1,27 @@
 # Contributing and bug reports
 
+Please note: I work on Metrodroid as a hobby, primarily when I travel (for other reasons), and I'm not being paid for this.
+
+As a result, it is infeasible for me to travel haphazardly in order to add new cities to the list.
+
 ## "Support my transit network"
 
 Please see [supporting new cards](https://github.com/micolous/farebot/wiki/New-cards) on the wiki before filing.  This is a very difficult, time consuming process, involving travel to the city in question.
 
-Your best bet is to find someone who is interested in working on this who lives in your city.
+**If you are not interested in writing code or understanding the format yourself,** please find someone else who lives in your city who is interested, instead of reporting the issue here.
+
+**If you are interested in working on this,** please also:
+
+- Attempt to understand the card format on your own first.
+  - Sometimes it may be similar to an existing format that is already supported.  This makes it significantly easier to read!
+  - There are some tools in the `extras` folder of this repository that help decode unknown formats.
+  - `vbindiff` is your friend.
+- Share notes about what you have found out.
+- Share annotated card dumps, from multiple cards, at multiple points in time:
+  - This includes information like balance, travel history (when and where you used the card)
+  - Each of the dumps should have 1 change -- eg: before tapping on at the start station, after tapping on at the start station, after tapping off at the destination station.
+
+If you have notes and annotated card dumps which reliably explain the data format, but don't understand how to turn that into code, I'm happy to help write the code to make the last part happen.  For an example on this, please see [the Nextfare](https://github.com/micolous/metrodroid/wiki/Cubic-Nextfare-MFC) and [Opal](https://github.com/micolous/metrodroid/wiki/Opal) documentation in the wiki.
 
 @micolous is working on Australian public transit cards first, as these are easiest for him to travel for.
 
@@ -16,9 +33,9 @@ If I did, I might not be able to send them back.
 
 ## "I found a bug!"
 
-Make sure you're testing on the current version of Metrodroid (2.9.27) please check the [open issues first](https://github.com/micolous/farebot/issues) to see if it has already been reported.
+Make sure you're testing on the current version of Metrodroid please check the [open issues first](https://github.com/micolous/farebot/issues) to see if it has already been reported.
 
-Please note that some phones will not support Mifare Classic cards.  This is because Mifare Classic is not standard NFC.  You need a phone with a NXP chipset in order to read them.  The Nexus 4, 5, 6, 7 (all versions) and 10 cannot read them.  The Galaxy Neuxs, Nexus 5X and 6P can read them.
+Please note that some phones will not support Mifare Classic cards.  This is because Mifare Classic is not standard NFC.  You need a phone with a NXP chipset in order to read them.  The Nexus 4, 5, 6, 7 (all versions) and 10 cannot read them.  The Galaxy Nexus, Nexus 5X and 6P can read them.
 
 Whether your phone supports Mifare Classic is shown in the About screen.
 
@@ -30,9 +47,9 @@ You're my new best friend.  Make sure you clearly describe what the issue is and
 
 If your patch is incomplete, that's fine, just don't expect me to fix it if it requires access to a particular network's cards.
 
-## "It says my card is encrypted!"
+## "It says my card is encrypted / fully locked!"
 
-You'll need special hardware, and you might be able to break it.
+See: [Cracking keys](https://github.com/micolous/metrodroid/wiki/Cracking-keys).
 
-This process isn't documented right now.  I'm currently putting together a kit for this.
+
 

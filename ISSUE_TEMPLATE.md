@@ -1,12 +1,6 @@
-Make sure that these boxes are checked before submitting a new issue.  Thanks!
+Please read the guidelines for contributions (CONTRIBUTING.md) before submitting new issues to this tracker. Failure to adhere to these guidelines may cause offense.
 
-- [ ] I'm using the current release version of Metrodroid, or current `master`.
-
-If the card uses **Mifare Classic**:
-
-- [ ] I have a phone with an NXP NFC chipset (About screen says: `Mifare Classic: Supported`).
-- [ ] I have acquired valid encryption keys for the card I'm trying to scan, and I've verified this with another app/phone/device, or it uses one of the default encryption keys.
-- [ ] [I'm not asking for the encryption keys for my card, or help cracking them.](https://github.com/micolous/metrodroid/wiki/Cracking-keys)
+## Unsupported card requests
 
 If the card is **not** presently supported by Metrodroid:
 
@@ -15,11 +9,47 @@ If the card is **not** presently supported by Metrodroid:
 - [ ] I have attempted to understand the card format on my own.
 - [ ] I have provided notes on what I've found so far.
 
-Please provide:
+## Description of the issue
 
-- All device and version info from the application's about screen.
 
-- The name of the card and transit operator, and a link to their web site.
+## For card-specific issues
 
-- If reporting card decoding issues (eg: balance is reported incorrectly for a supported card), provide dumps of the affected card by email.
+- Name of the card type: 
+- Name of the transit operator: 
+- Location: 
+
+For all issues reading a _currently supported card format_ (eg: balance shown is incorrect), please export a card dump from Metrodroid and email it to me privately.
+
+## Steps to reproduce
+
+1. 
+2. 
+3. 
+
+## Expected behaviour
+
+
+
+## Actual behaviour
+
+
+
+## Workarounds (if any)
+
+
+
+## Logs
+
+Generate a bug report ZIP using the instructions here: https://developer.android.com/studio/debug/bug-report.html
+
+Please do not attach it to this issue. You may be asked for a copy later via private email.
+
+## Details from About screen:
+
+- Version:
+- Model:
+- Manufacturer:
+- Android OS version:
+- NFC:
+- Mifare Classic:
 
