@@ -3,46 +3,7 @@
 
     <string name="market_short_desc">Metrodroid kan informatie uitlezen van sommige openbaar vervoerskaarten (\'NFC smart cards\').</string>
 
-    <string name="market_long_desc">Metrodroid kan informatie uitlezen van sommige openbaar vervoerskaarten (\'NFC smart cards\'). Voorheen heette de app Farebot M.
-
-Dit is een fork van Eric Butler\\\'s Farebot-project, met ondersteuning voor meer kaarten en opgeloste fouten.
-
-Ondersteunde kaarten:
-- Bilhete Único - São Paulo, Brazilië [1] [2] [5]
-- Clipper - San Francisco, CA, VS
-- EZ-Link - Singapore [3]
-- Go card - Brisbane en South East Queensland, Australië [0] [1] [2]
-- Manly Fast Ferry - Sydney, NSW, Australië [0] [1] [2]
-- Matkakortti, HSL - Finland
-- Myki - Melbourne (en omgeving), VIC, Australië [0] [4]
-- MyWay - Australian Capital Territory, Australië [0] [1] [2] [5]
-- NETS Flashpay - Singapore
-- Octopus - Hong Kong [0]
-- Opal - Sydney (en omgeving), NSW, Australië [0]
-- ORCA - Seattle, WA, VS
-- OV-chipkaart - Nederland [1] [2]
-- Shenzhen Tong - Shenzong, Guangdong-provincie, China [0]
-- Suica, IOCOA, PASMO, Edy - Japan
-- Transit Access Pass - Los Angeles, CA, VS [0] [1] [2]
-
-[0]: Nieuw in Metrodroid.
-[1]: Niet compatibel met alle apparaten (Mifare Classic).
-[2]: Ontsleutelignssleutels zijn vereist.
-[3]: Niet compatibel met alle apparaten (CEPAS).
-[4]: Alleen het kaartnummer kan worden uitgelezen.
-[5]: Terugval -- moet worden ingeschakeld de app-voorkeuren.
-
-U heeft een NFC-compatibele telefoon nodig.
-
-U heeft een NXP NFC-chipset nodig in uw telefoon om MIFARE Classic cards uit te kunnen lezen. Sommige telefoons hebben NFC-chips van andere makers, welke Mifare Classic cards niet kunnen uitlezen (bijv.: Nexus 4, Nexus 5, Samsung Galaxy S4). Zie het Over-scherm in de app om te zien of uw telefoon MIFARE Classic ondersteunt.
-
-Sommige vervoerders hebben versleutelde kaarten. U heeft unieke sleutels nodig om ze uit te kunnen lezen. Sorry, ik kan u hierbij niet helpen.
-
-Sommige vervoerders met Cubic Nextfare kunnen werken op Mifare Classic.
-
-Zie de privacy-overeenkomst voor de toegangsrechten.
-
-Deze software heeft als licentie GNU GPLv3+; broncode is beschikbaar op https://github.com/micolous/metrodroid/</string>
+    <string name="market_long_desc">Metrodroid kan informatie uitlezen van sommige openbaar vervoerskaarten (\'NFC smart cards\'). Voorheen heette de app Farebot M. Dit is een fork van Eric Butler\\\'s Farebot-project, met ondersteuning voor meer kaarten en opgeloste fouten. Ondersteunde kaarten: - Bilhete Único - São Paulo, Brazilië [1] [2] [5] - Clipper - San Francisco, CA, VS - EZ-Link - Singapore [3] - Go card - Brisbane en South East Queensland, Australië [0] [1] [2] - Manly Fast Ferry - Sydney, NSW, Australië [0] [1] [2] - Matkakortti, HSL - Finland - Myki - Melbourne (en omgeving), VIC, Australië [0] [4] - MyWay - Australian Capital Territory, Australië [0] [1] [2] - NETS Flashpay - Singapore - Octopus - Hong Kong [0] - Opal - Sydney (en omgeving), NSW, Australië [0] - ORCA - Seattle, WA, VS - OV-chipkaart - Nederland [1] [2] - Shenzhen Tong - Shenzong, Guangdong-provincie, China [0] - SmartRider - West-Australië, Australië [0] [1] [2] - Suica, IOCOA, PASMO, Edy - Japan - Transit Access Pass - Los Angeles, CA, VS [0] [1] [2] [0]: Nieuw in Metrodroid. [1]: Niet compatibel met alle apparaten (Mifare Classic). [2]: Ontsleutelignssleutels zijn vereist. [3]: Niet compatibel met alle apparaten (CEPAS). [4]: Alleen het kaartnummer kan worden uitgelezen. [5]: Terugval -- moet worden ingeschakeld de app-voorkeuren. U heeft een NFC-compatibele telefoon nodig. U heeft een NXP NFC-chipset nodig in uw telefoon om MIFARE Classic cards uit te kunnen lezen. Sommige telefoons hebben NFC-chips van andere makers, welke Mifare Classic cards niet kunnen uitlezen (bijv.: Nexus 4, Nexus 5, Samsung Galaxy S4). Zie het Over-scherm in de app om te zien of uw telefoon MIFARE Classic ondersteunt. Sommige vervoerders hebben versleutelde kaarten. U heeft unieke sleutels nodig om ze uit te kunnen lezen. Sorry, ik kan u hierbij niet helpen. Sommige vervoerders met Cubic Nextfare kunnen werken op Mifare Classic. Zie de privacy-overeenkomst voor de toegangsrechten. Deze software heeft als licentie GNU GPLv3+; broncode is beschikbaar op https://github.com/micolous/metrodroid/</string>
 
     <string name="market_changelog_30">* Meerdere fouten opgelost i.c.m. Cubix Nextfare-kaarten.
 * Fudan FM11RF08-kaarten worden niet langer herkend als Bilhete Único.
@@ -87,4 +48,10 @@ Meer details: https://github.com/micolous/metrodroid/wiki/Changelog</string>
 
 Meer details: https://github.com/micolous/metrodroid/wiki/Changelog</string>
 
-</resources>
+<string name="market_changelog_31">* Ondersteuning toegevoegd voor SmartRider (WA, Australië).
+\n* Vertalingen toegevoegd: Nederlands, met dank aan @Vistaus - Frans, met dank aan @Albirew - Hebreeuws, met dank aan @steets250
+\n* MyWay: automatische kaartherkenning d.m.v. algemene sleutel voor nieuw gescande kaarten.
+\n
+\nMeer details: https://github.com/micolous/metrodroid/wiki/Changelog</string>
+
+    </resources>

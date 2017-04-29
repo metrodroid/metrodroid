@@ -41,18 +41,13 @@
     <string name="supported_cards">Ondersteunde kaarten</string>
     <string name="pass_or_transfer">Pas/Overstap</string>
     <string name="transaction_sequence">#</string>
-    <string name="fully_locked_desc">"
- Deze kaart bevat geen onderdeel dat het mogelijk maakt om hem uit te lezen. U heeft geen geldige geïnstalleerde sleutels voor deze kaart
-
-
- Als de kaart momenteel ondersteund wordt door Metrodroid, dan zal hij gaan werken zodra u de benodigde geïnstalleerde sleutels heeft. Lees de online documentatie voor meer informatie over het verkrijgen van sleutels.
-
-
- Als uw kaart momenteel niet wordt ondersteund door Metrodroid, dan zal dat waarschijnlijk ook nooit mogelijk zijn, tenzij de sleutel gekraakt wordt.
-
-
- Neem contact op met uw vervoerder om te kijken of u toegang kunt krijgen tot de gegevens van de verschafte kaarten. Het is mogelijk om veilige, gelimiteerde toegang te geven.
- "</string>
+    <string name="fully_locked_desc">" Deze kaart bevat geen onderdeel dat het mogelijk maakt om hem uit te lezen. U heeft geen geldige geïnstalleerde sleutels voor deze kaart
+\n
+\nAls de kaart momenteel ondersteund wordt door Metrodroid, dan zal hij gaan werken zodra u de benodigde geïnstalleerde sleutels heeft. Lees de online documentatie voor meer informatie over het verkrijgen van sleutels.
+\n
+\nAls uw kaart momenteel niet wordt ondersteund door Metrodroid, dan zal dat waarschijnlijk ook nooit mogelijk zijn, tenzij de sleutel gekraakt wordt.
+\n
+\nNeem contact op met uw vervoerder om te kijken of u toegang kunt krijgen tot de gegevens van de verschafte kaarten. Het is mogelijk om veilige, gelimiteerde toegang te geven. "</string>
     <string name="fully_locked_title">Kaart is volledig vergrendeld!</string>
     <string name="nfc_off_error">NFC is uitgeschakeld</string>
     <string name="turn_on_nfc">Schakel NFC in om de kaartinformatie uit te kunnen lezen.</string>
