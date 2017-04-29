@@ -54,4 +54,9 @@ Meer details: https://github.com/micolous/metrodroid/wiki/Changelog</string>
 \n
 \nMeer details: https://github.com/micolous/metrodroid/wiki/Changelog</string>
 
+    <string name="market_changelog_32">* Crash met onbekende CEPAS-kaartindeling opgelost.
+\n* Crash met Midfare Classic-kaarten, tijdens het weergeven van pure kaartdetails buiten het veld, opgelost.
+\n
+\nMeer details: https://github.com/micolous/metrodroid/wiki/Changelog</string>
+
     </resources>
