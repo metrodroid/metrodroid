@@ -26,7 +26,7 @@ View your remaining balance, recent trips, and other information from contactles
 * [tbonang](https://github.com/tbonang) (NETS FlashPay)
 * [Marcelo Liberato](https://github.com/mliberato) (Bilhete Único)
 * [Lauri Andler](https://github.com/landler/) (HSL)
-* [Michael](https://github.com/micolous/) (Opal, Manly Fast Ferry, Go card, Myki, Octopus, Cubic Nextfare, LAX TAP)
+* [Michael](https://github.com/micolous/) (Opal, Manly Fast Ferry, Go card, Myki, Octopus, Cubic Nextfare, LAX TAP, SmartRider, MyWay)
 * [Steven](https://github.com/steets250) (LAX TAP)
 * [Rob O'Regan](http://www.robx1.net/nswtkt/private/manlyff/manlyff.htm) (Manly Fast Ferry card image)
 * [The Noun Project][15] (Various icons)
@@ -46,16 +46,17 @@ View your remaining balance, recent trips, and other information from contactles
 * [Clipper][1] - San Francisco, CA, USA
 * [EZ-Link][7] - Singapore (Not compatible with all devices)
 * [Go card][20] (Translink) - Brisbane and South East Queensland, Australia (requires encryption keys, not compatible with all devices, not all stations known)
-* [Manly Fast Ferry][19] - Sydney, NSW, Australia (requires encryption keys, not compatible with all devices)
+* [Manly Fast Ferry][19] - Sydney, NSW, Australia (Requires encryption keys, not compatible with all devices)
 * [Matkakortti][16], [HSL][17] - Finland
 * [Myki][21] - Melbourne (and surrounds), VIC, Australia (Only the card number can be read)
-* [MyWay][28] - Australian Capital Territory, Australia (preview, requires encryption keys, not compatible with all devices, must be selected as fallback reader)
+* [MyWay][28] - Australian Capital Territory, Australia (Requires encryption keys, not compatible with all devices)
 * [NETS FlashPay](http://www.netsflashpay.com.sg/) - Singapore
 * [Octopus][25] - Hong Kong
 * [Opal][18] - Sydney (and surrounds), NSW, Australia
 * [ORCA][0] - Seattle, WA, USA
 * [OV-chipkaart](http://www.ov-chipkaart.nl/) - Netherlands (Requires encryption keys, not compatible with all devices)
 * [Shenzhen Tong][27] - Shenzhen, Guangdong Province, China
+* [SmartRider][29] - Western Australia, Australia (Requires encryption keys, not compatible with all devices)
 * [Suica][9], [ICOCA][10], [PASMO][11], [Edy][12] - Japan
 * [Transit Access Pass][26] - Los Angeles, CA, USA (Requires encryption keys, not compatible with all devices)
 
@@ -67,11 +68,11 @@ Additionally, some generic support for Cubic NextFare based systems (on Mifare C
 
 Metrodroid requires an NFC Android phone running 4.1 or later.
 
-Some newer devices do not support MIFARE Classic.  MIFARE Classic is not an NFC-compliant card format, so can only be read with phones with NXP chipsets.
+Some devices do not support MIFARE Classic.  MIFARE Classic is not an NFC-compliant card format, so can only be read with phones with NXP chipsets.
 
 ## License and copyright
 
-Copyright 2015 – 2016 Michael Farrell
+Copyright 2015 – 2017 Michael Farrell
 
 Copyright 2011 – 2013 Eric Butler
 
@@ -92,14 +93,14 @@ This program contains Leaflet, a JavaScript mapping library, licensed under the 
 
 This program contains nfc-felica-lib, a library for communicating with Sony FeliCa cards, licensed under the Apache 2.0 license.
 
-This software and it's authors are not associated with any public transit agency.  Pictures of supported cards, including their logos, are included with this software package for the purposes of identifying cards.  These are believed to be a "fair use" under copyright laws.
+This software and it's authors are not associated with any public transit agency.  Pictures of supported cards, including their logos, are included with this software package for the purposes of identifying cards.
 
 [0]: http://www.orcacard.com/
 [1]: https://www.clippercard.com/
 [2]: https://en.wikipedia.org/wiki/CEPAS
-[3]: https://twitter.com/#!/supersat
-[4]: https://twitter.com/#!/xobs
-[5]: https://twitter.com/#!/codebutler
+[3]: https://twitter.com/supersat
+[4]: https://twitter.com/xobs
+[5]: https://twitter.com/codebutler
 [6]: https://en.wikipedia.org/wiki/MIFARE#MIFARE_DESFire
 [7]: http://www.ezlink.com.sg/
 [8]: https://en.wikipedia.org/wiki/FeliCa
@@ -123,3 +124,4 @@ This software and it's authors are not associated with any public transit agency
 [26]: https://www.taptogo.net/
 [27]: http://www.shenzhentong.com/
 [28]: https://www.transport.act.gov.au/myway-and-fares
+[29]: http://www.transperth.wa.gov.au/SmartRider/
