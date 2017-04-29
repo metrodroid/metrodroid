@@ -241,10 +241,16 @@ public class CEPASPurse {
     }
 
     public byte[] getCAN() {
+        if (mCAN == null) {
+            return null;
+        }
         return mCAN.getData();
     }
 
     public byte[] getCSN() {
+        if (mCAN == null) {
+            return null;
+        }
         return mCSN.getData();
     }
 
