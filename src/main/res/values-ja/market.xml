@@ -78,4 +78,9 @@
 \n
 \n詳細: https://github.com/micolous/metrodroid/wiki/Changelog</string>
 
+    <string name="market_changelog_32">* 不明な CEPAS カード形式でクラッシュを修正。
+\n* Mifare クラシックカードで、生のカードの詳細を表示しているときに、カードを外したときのクラッシュを修正。
+\n
+\n詳細: https://github.com/micolous/metrodroid/wiki/Changelog</string>
+
     </resources>
