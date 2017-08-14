@@ -40,6 +40,7 @@ import com.codebutler.farebot.card.CardType;
 import com.codebutler.farebot.transit.lax_tap.LaxTapTransitData;
 import com.codebutler.farebot.transit.manly_fast_ferry.ManlyFastFerryTransitData;
 import com.codebutler.farebot.transit.myki.MykiTransitData;
+import com.codebutler.farebot.transit.ovc.OVChipTransitData;
 import com.codebutler.farebot.transit.smartrider.SmartRiderTransitData;
 import com.codebutler.farebot.transit.octopus.OctopusTransitData;
 import com.codebutler.farebot.transit.opal.OpalTransitData;
@@ -232,7 +233,7 @@ public class SupportedCardsActivity extends Activity {
                     CardType.MifareDesfire
             ));
 
-            add(new CardInfo(R.drawable.ovchip_card, "OV-chipkaart",
+            add(new CardInfo(R.drawable.ovchip_card, OVChipTransitData.NAME,
                     R.string.location_the_netherlands,
                     CardType.MifareClassic,
                     true

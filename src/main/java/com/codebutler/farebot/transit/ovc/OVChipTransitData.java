@@ -82,6 +82,7 @@ public class OVChipTransitData extends TransitData {
     };
     private static final byte[] OVC_MANUFACTURER = {(byte) 0x98, (byte) 0x02, (byte) 0x00 /*, (byte) 0x64, (byte) 0x8E */};
     private static final byte[] OVC_HEADER = new byte[11];
+    public static final String NAME = "OV-chipkaart";
     private static Map<Integer, String> sAgencies = new ImmutableMapBuilder<Integer, String>()
             .put(AGENCY_TLS, "Trans Link Systems")
             .put(AGENCY_CONNEXXION, "Connexxion")

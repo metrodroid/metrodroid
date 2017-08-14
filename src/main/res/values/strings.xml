@@ -159,6 +159,7 @@
         <item>None (disabled)</item>
         <item>Bilhete Único (São Paulo, Brazil)</item>
         <item>SmartRider (WA, Australia), MyWay (ACT, Australia)</item>
+        <item>OV-chipkaart (The Netherlands)</item>
     </string-array>
 
     <!-- Translators: do not translate -->
@@ -166,6 +167,7 @@
         <item>null</item>
         <item>bilhete_unico</item>
         <item>smartrider</item>
+        <item>ovc</item>
     </string-array>
 
     <!--
