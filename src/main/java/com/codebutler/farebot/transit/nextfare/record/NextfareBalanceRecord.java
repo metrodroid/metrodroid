@@ -45,6 +45,11 @@ public class NextfareBalanceRecord extends NextfareRecord implements Comparable<
         byte[] balance = Utils.reverseBuffer(input, 2, 2);
         record.mBalance = Utils.byteArrayToInt(balance, 0, 2);
 
+        // Negative balance
+        if ((input[1] & 0x80) == 0x80) {
+            record.mBalance *= -1;
+        }
+
         if (input[7] != 0x00) {
             record.mHasTravelPassAvailable = true;
         }

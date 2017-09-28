@@ -36,41 +36,15 @@ public class SeqGoStation extends Station {
             return new SeqGoStation[size];
         }
     };
-    protected final String mZone;
-    protected final boolean mAirtrainZoneExempt;
 
     public SeqGoStation(Cursor cursor) {
-        this(cursor.getString(cursor.getColumnIndex(SeqGoDBUtil.COLUMN_ROW_NAME)),
+        super(cursor.getString(cursor.getColumnIndex(SeqGoDBUtil.COLUMN_ROW_NAME)),
+                null,
                 cursor.getString(cursor.getColumnIndex(SeqGoDBUtil.COLUMN_ROW_LAT)),
-                cursor.getString(cursor.getColumnIndex(SeqGoDBUtil.COLUMN_ROW_LON)),
-                cursor.getString(cursor.getColumnIndex(SeqGoDBUtil.COLUMN_ROW_ZONE)),
-                cursor.getString(cursor.getColumnIndex(SeqGoDBUtil.COLUMN_ROW_AIRTRAIN_ZONE_EXEMPT)) != null
-                        && cursor.getString(cursor.getColumnIndex(SeqGoDBUtil.COLUMN_ROW_AIRTRAIN_ZONE_EXEMPT)).equals("1"));
-    }
-
-    public SeqGoStation(String stationName, String latitude, String longitude, String zone, boolean airtrainZoneExempt) {
-        super(stationName, null, latitude, longitude);
-        this.mZone = zone;
-        this.mAirtrainZoneExempt = airtrainZoneExempt;
+                cursor.getString(cursor.getColumnIndex(SeqGoDBUtil.COLUMN_ROW_LON)));
     }
 
     protected SeqGoStation(Parcel parcel) {
         super(parcel);
-        this.mZone = parcel.readString();
-        this.mAirtrainZoneExempt = parcel.readInt() == 1;
-    }
-
-    public String getZone() {
-        return this.mZone;
-    }
-
-    public boolean isAirtrainZoneExempt() {
-        return mAirtrainZoneExempt;
-    }
-
-    public void writeToParcel(Parcel parcel, int flags) {
-        super.writeToParcel(parcel, flags);
-        parcel.writeString(mZone);
-        parcel.writeInt(mAirtrainZoneExempt ? 1 : 0);
     }
 }
