@@ -25,6 +25,8 @@ If you have notes and annotated card dumps which reliably explain the data forma
 
 @micolous is working on Australian public transit cards first, as these are easiest for him to travel for.
 
+Some networks are unsupportable, there'll be [details in the Wiki](https://github.com/micolous/metrodroid/wiki/) if it is known bad.
+
 ## "I want to send you cards!"
 
 I don't have the facility to accept cards right now, sorry.
@@ -35,11 +37,19 @@ If I did, I might not be able to send them back.
 
 Make sure you're testing on the current version of Metrodroid please check the [open issues first](https://github.com/micolous/farebot/issues) to see if it has already been reported.
 
-Please note that some phones will not support Mifare Classic cards.  This is because Mifare Classic is not standard NFC.  You need a phone with a NXP chipset in order to read them.  The Nexus 4, 5, 6, 7 (all versions) and 10 cannot read them.  The Galaxy Nexus, Nexus 5X and 6P can read them.
+Please note that some phones will not support Mifare Classic cards.  This is because Mifare Classic is not standard NFC.  You need a phone with a NXP chipset in order to read them.  The Nexus 4, 5, 6, 7 (all versions) and 10 cannot read them.  The Galaxy Nexus, Nexus 5X, 6P, Pixel (2016) can read them.
 
 Whether your phone supports Mifare Classic is shown in the About screen.
 
-Make sure to include all the information in the about screen when reporting.
+Make sure to include all the information in the about screen when reporting, and [verify card reads with NXP TagInfo](https://play.google.com/store/apps/details?id=com.nxp.taginfolite).
+
+## Known buggy phones
+
+Some phones have generally buggy NFC stacks, and I can't work around the bug.  Please contact the manufacturer if you have these issues:
+
+* The [OnePlus 5 has broken Mifare Classic support](https://github.com/micolous/metrodroid/issues/31) where they can't read cards that have a key of `00 00 00 00 00 00`.  This looks like a bug in the OnePlus NFC stack.
+
+* The [LG G3 and G Stylo have totally broken Mifare Classic support](https://github.com/micolous/metrodroid/issues/26) and can't authenticate with the card properly.  This looks like a bug in several LG phones' NFC stack.
 
 ## "I have a patch!"
 
@@ -50,6 +60,5 @@ If your patch is incomplete, that's fine, just don't expect me to fix it if it r
 ## "It says my card is encrypted / fully locked!"
 
 See: [Cracking keys](https://github.com/micolous/metrodroid/wiki/Cracking-keys).
-
 
 
