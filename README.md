@@ -95,6 +95,20 @@ This program contains nfc-felica-lib, a library for communicating with Sony Feli
 
 This software and it's authors are not associated with any public transit agency.  Pictures of supported cards, including their logos, are included with this software package for the purposes of identifying cards.
 
+## Building / hacking on this software
+
+1. Clone the repository including submodules:
+
+   ```
+   $ git clone--recursive https://github.com/micolous/metrodroid.git
+   ```
+   
+   [If you get an error from Gradle about `:nfc-felica-lib` not being available, then your clone doesn't have the submodules.](https://github.com/micolous/metrodroid/issues/32)
+
+2. Import the directory into Android Studio.
+
+   Android Studio will prompt you to install the appropriate SDK version, build tools, and Gradle.
+
 [0]: http://www.orcacard.com/
 [1]: https://www.clippercard.com/
 [2]: https://en.wikipedia.org/wiki/CEPAS
