@@ -100,7 +100,7 @@ This software and it's authors are not associated with any public transit agency
 1. Clone the repository including submodules:
 
    ```
-   $ git clone--recursive https://github.com/micolous/metrodroid.git
+   $ git clone --recursive https://github.com/micolous/metrodroid.git
    ```
    
    [If you get an error from Gradle about `:nfc-felica-lib` not being available, then your clone doesn't have the submodules.](https://github.com/micolous/metrodroid/issues/32)
