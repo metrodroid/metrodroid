@@ -38,6 +38,20 @@
             
             <p>Newer versions of Metrodroid have more stops.  All fare information can be read from v2.9.29 and later.</p>
 
+            <h3>Single trip shown as two distinct trips</h3>
+
+            <p>This is normally because of data on the card -- there is a "journey ID", there is a continuation flag, and these aren't always stored in a useful way.</p>
+
+            <p>In cases where your fare exceeds the <a href="https://translink.com.au/tickets-and-fares/fares-and-zones/fixed-fare">default fare for that mode</a> (eg: train trips of 5 or more zones, or trips <em>to</em> an Airtrain station from a non-Airtrain station), you may see a charge listed for the default fare, and then a second charge for the difference between your final fare and your default fare.</p>
+
+            <h3>Last trip shown with one station and a negative amount</h3>
+
+            <p>Only the last 12 touch events are stored. If a trip is in progress, or a default fare was applied to your card, then you might see a negative amount with a single station or stop (where you tapped off) in the last slot.  This will be for the difference between the <a href="https://translink.com.au/tickets-and-fares/fares-and-zones/fixed-fare">default fare for that mode</a> and your final fare.</p>
+
+				<h3>Negative balances not shown</h3>
+				
+				<p>This will be fixed in Metrodroid 2.9.32.</p>
+
             <p><a href="index.html">Back to the Metrodroid website...</a></p>
           </div>
         </div>
