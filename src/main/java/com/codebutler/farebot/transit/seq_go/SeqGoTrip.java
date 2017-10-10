@@ -45,6 +45,10 @@ public class SeqGoTrip extends NextfareTrip {
         }
     };
 
+    /* Hard coded station IDs for Airtrain */
+    private final int DOMESTIC_AIRPORT = 9;
+    private final int INTERNATIONAL_AIRPORT = 10;
+
     /**
      * This constructor is used for unit tests outside of the package
      *
@@ -77,9 +81,10 @@ public class SeqGoTrip extends NextfareTrip {
             case FERRY:
                 return "Transdev Brisbane Ferries";
             case TRAIN:
-                // Domestic Airport == 9
-                if (mStartStation == 9 || mEndStation == 9) {
-                    // TODO: Detect International Airport station.
+                if (mStartStation == DOMESTIC_AIRPORT ||
+                        mEndStation == DOMESTIC_AIRPORT ||
+                        mStartStation == INTERNATIONAL_AIRPORT ||
+                        mEndStation == INTERNATIONAL_AIRPORT) {
                     return "Airtrain";
                 } else {
                     return "Queensland Rail";
