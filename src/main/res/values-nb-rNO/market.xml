@@ -44,10 +44,14 @@
 \n
 \nDenne programvaren er lisensiert GNU GPLv3+, kildekoden er å finne på https://github.com/micolous/metrodroid/</string>
 
-    <string name="market_changelog_32">* Fiks for kræsj med ukjent CEPAS-kortformat.
-\n* Fiks for kræsj med MIFARE Classic-kort ved visning av råkortdetaljer når kortet har blitt flyttet ut av feltet.
-\n
-\nFlere detaljer: https://github.com/micolous/metrodroid/wiki/Changelog</string>
+    <string name="market_changelog_32">"* Legger til obfuskerings-tilstand.
+\n* Fiks for kræsj med ukjente CEPAS-kort. 
+\n* Fiks for kræsj med delvis avleste MIFARE Classic-kort ved visning av råkortdetaljer.
+\n* Støtter negativ balanse på Cibic Nextfare-kort.
+\n* Nye stop-ID-er for Go-kort (Brisbane, Australia).
+\n* Legger til delvis oversettelse til Kabyle takket være  @belkacem77 og norsk bokmål takket være @comradekingu.
+\n 
+\nFlere detaljer: https://github.com/micolous/metrodroid/wiki/Changelog"</string>
 
     <string name="market_changelog_31">* Støtte for SmartRider (VA, Australia).
 \n* Oversetteler til hollandsk, takket være @Vistaus, Fransk av @Albirew, Hebraisk av @streets250
