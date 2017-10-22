@@ -21,6 +21,7 @@
 package com.codebutler.farebot.transit.ovc;
 
 import android.os.Parcel;
+import android.support.annotation.Nullable;
 
 import com.codebutler.farebot.card.Card;
 import com.codebutler.farebot.card.classic.ClassicCard;
@@ -238,14 +239,8 @@ public class OVChipTransitData extends TransitData {
         return calendar.getTime();
     }
 
-    public static String convertAmount(int amount) {
-        DecimalFormat formatter = (DecimalFormat) NumberFormat.getCurrencyInstance();
-        formatter.setCurrency(Currency.getInstance("EUR"));
-        String symbol = formatter.getCurrency().getSymbol();
-        formatter.setNegativePrefix(symbol + "-");
-        formatter.setNegativeSuffix("");
-
-        return formatter.format((double) amount / 100.0);
+    public String formatCurrencyString(int amount, boolean isBalance) {
+        return Utils.formatCurrencyString(amount, isBalance, "EUR");
     }
 
     public static String getAgencyName(int agency) {
@@ -279,9 +274,10 @@ public class OVChipTransitData extends TransitData {
         parcel.writeParcelable(mCredit, flags);
     }
 
+    @Nullable
     @Override
-    public String getBalanceString() {
-        return OVChipTransitData.convertAmount(mCredit.getCredit());
+    public Integer getBalance() {
+        return mCredit.getCredit();
     }
 
     @Override
@@ -322,10 +318,9 @@ public class OVChipTransitData extends TransitData {
         items.add(new HeaderListItem("Credit Information"));
         items.add(new ListItem("Credit Slot ID", Integer.toString(mCredit.getId())));
         items.add(new ListItem("Last Credit ID", Integer.toString(mCredit.getCreditId())));
-        items.add(new ListItem("Credit", OVChipTransitData.convertAmount(mCredit.getCredit())));
         items.add(new ListItem("Autocharge", (mInfo.getActive() == (byte) 0x05 ? "Yes" : "No")));
-        items.add(new ListItem("Autocharge Limit", OVChipTransitData.convertAmount(mInfo.getLimit())));
-        items.add(new ListItem("Autocharge Charge", OVChipTransitData.convertAmount(mInfo.getCharge())));
+        items.add(new ListItem("Autocharge Limit", formatCurrencyString(mInfo.getLimit(), true)));
+        items.add(new ListItem("Autocharge Charge", formatCurrencyString(mInfo.getCharge(), true)));
 
         items.add(new HeaderListItem("Recent Slots"));
         items.add(new ListItem("Transaction Slot", "0x" + Integer.toHexString((char) mIndex.getRecentTransactionSlot())));

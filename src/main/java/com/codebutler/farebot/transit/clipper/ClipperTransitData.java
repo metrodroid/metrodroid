@@ -25,6 +25,7 @@
 package com.codebutler.farebot.transit.clipper;
 
 import android.os.Parcel;
+import android.support.annotation.Nullable;
 
 import com.codebutler.farebot.card.Card;
 import com.codebutler.farebot.card.desfire.DesfireCard;
@@ -104,8 +105,6 @@ public class ClipperTransitData extends TransitData {
         } catch (Exception ex) {
             throw new RuntimeException("Error parsing Clipper refills", ex);
         }
-
-        setBalances();
     }
 
     public static boolean check(Card card) {
@@ -140,9 +139,15 @@ public class ClipperTransitData extends TransitData {
         return "Clipper";
     }
 
+    @Nullable
     @Override
-    public String getBalanceString() {
-        return NumberFormat.getCurrencyInstance(Locale.US).format(mBalance / 100.0);
+    public Integer getBalance() {
+        return (int)mBalance;
+    }
+
+    @Override
+    public String formatCurrencyString(int currency, boolean isBalance) {
+        return Utils.formatCurrencyString(currency, isBalance, "USD");
     }
 
     @Override
@@ -213,15 +218,16 @@ public class ClipperTransitData extends TransitData {
     }
 
     private ClipperTrip createTrip(byte[] useData) {
-        long timestamp, exitTimestamp, fare, agency, from, to, route;
+        long timestamp, exitTimestamp;
+        int fare, agency, from, to, route;
 
         timestamp = Utils.byteArrayToLong(useData, 0xc, 4);
         exitTimestamp = Utils.byteArrayToLong(useData, 0x10, 4);
-        fare = Utils.byteArrayToLong(useData, 0x6, 2);
-        agency = Utils.byteArrayToLong(useData, 0x2, 2);
-        from = Utils.byteArrayToLong(useData, 0x14, 2);
-        to = Utils.byteArrayToLong(useData, 0x16, 2);
-        route = Utils.byteArrayToLong(useData, 0x1c, 2);
+        fare = Utils.byteArrayToInt(useData, 0x6, 2);
+        agency = Utils.byteArrayToInt(useData, 0x2, 2);
+        from = Utils.byteArrayToInt(useData, 0x14, 2);
+        to = Utils.byteArrayToInt(useData, 0x16, 2);
+        route = Utils.byteArrayToInt(useData, 0x1c, 2);
 
         if (agency == 0)
             return null;
@@ -261,34 +267,19 @@ public class ClipperTransitData extends TransitData {
     }
 
     private ClipperRefill createRefill(byte[] useData) {
-        long timestamp, amount, agency, machineid;
+        long timestamp, agency, machineid;
+        int amount;
 
-        timestamp = Utils.byteArrayToLong(useData, 0x4, 4);
         agency = Utils.byteArrayToLong(useData, 0x2, 2);
+        timestamp = Utils.byteArrayToLong(useData, 0x4, 4);
         machineid = Utils.byteArrayToLong(useData, 0x8, 4);
-        amount = Utils.byteArrayToLong(useData, 0xe, 2);
+        amount = Utils.byteArrayToInt(useData, 0xe, 2);
 
         if (timestamp == 0)
             return null;
 
         timestamp -= EPOCH_OFFSET;
         return new ClipperRefill(timestamp, amount, agency, machineid);
-    }
-
-    private void setBalances() {
-        int tripIdx = 0;
-        int refillIdx = 0;
-        long balance = (long) mBalance;
-
-        while (tripIdx < mTrips.length) {
-            while (refillIdx < mRefills.length && mRefills[refillIdx].getTimestamp() > mTrips[tripIdx].getTimestamp()) {
-                balance -= mRefills[refillIdx].mAmount;
-                refillIdx++;
-            }
-            mTrips[tripIdx].mBalance = balance;
-            balance += mTrips[tripIdx].mFare;
-            tripIdx++;
-        }
     }
 
     public void writeToParcel(Parcel parcel, int flags) {

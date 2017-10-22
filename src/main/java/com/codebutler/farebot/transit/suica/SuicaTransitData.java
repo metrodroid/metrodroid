@@ -33,6 +33,7 @@
 package com.codebutler.farebot.transit.suica;
 
 import android.os.Parcel;
+import android.support.annotation.Nullable;
 
 import com.codebutler.farebot.card.felica.FelicaBlock;
 import com.codebutler.farebot.card.felica.FelicaCard;
@@ -42,6 +43,7 @@ import com.codebutler.farebot.transit.TransitData;
 import com.codebutler.farebot.transit.TransitIdentity;
 import com.codebutler.farebot.transit.Trip;
 import com.codebutler.farebot.ui.ListItem;
+import com.codebutler.farebot.util.Utils;
 
 import net.kazzz.felica.lib.FeliCaLib;
 
@@ -69,7 +71,7 @@ public class SuicaTransitData extends TransitData {
     public SuicaTransitData(FelicaCard card) {
         FelicaService service = card.getSystem(FeliCaLib.SYSTEMCODE_SUICA).getService(FeliCaLib.SERVICE_SUICA_HISTORY);
 
-        long previousBalance = -1;
+        int previousBalance = -1;
 
         List<SuicaTrip> trips = new ArrayList<>();
 
@@ -102,11 +104,17 @@ public class SuicaTransitData extends TransitData {
         return new TransitIdentity("Suica", null); // FIXME: Could be ICOCA, etc.
     }
 
+    @Nullable
     @Override
-    public String getBalanceString() {
+    public Integer getBalance() {
         if (mTrips.length > 0)
-            return mTrips[0].getBalanceString();
+            return mTrips[0].getBalance();
         return null;
+    }
+
+    @Override
+    public String formatCurrencyString(int currency, boolean isBalance) {
+        return Utils.formatCurrencyString(currency, isBalance, "JPY", 1);
     }
 
     @Override

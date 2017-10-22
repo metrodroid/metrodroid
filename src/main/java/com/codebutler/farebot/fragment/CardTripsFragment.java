@@ -96,7 +96,7 @@ public class CardTripsFragment extends ListFragment {
                 trips = TripDateObfuscator.obfuscateTrips(trips);
                 Collections.sort(trips, new Trip.Comparator());
             }
-            setListAdapter(new UseLogListAdapter(getActivity(), trips.toArray(new Trip[trips.size()])));
+            setListAdapter(new UseLogListAdapter(getActivity(), trips.toArray(new Trip[trips.size()]), mTransitData));
         } else {
             view.findViewById(android.R.id.list).setVisibility(View.GONE);
             view.findViewById(R.id.error_text).setVisibility(View.VISIBLE);
@@ -120,8 +120,10 @@ public class CardTripsFragment extends ListFragment {
     }
 
     private static class UseLogListAdapter extends ArrayAdapter<Trip> {
-        public UseLogListAdapter(Context context, Trip[] items) {
+        private TransitData mTransitData;
+        public UseLogListAdapter(Context context, Trip[] items, TransitData transitData) {
             super(context, 0, items);
+            mTransitData = transitData;
         }
 
         @Override
@@ -198,7 +200,7 @@ public class CardTripsFragment extends ListFragment {
 
             fareTextView.setVisibility(View.VISIBLE);
             if (trip.hasFare()) {
-                fareTextView.setText(trip.getFareString());
+                fareTextView.setText(mTransitData.formatCurrencyString(trip.getFare(), false));
             } else if (trip instanceof OrcaTrip) {
                 fareTextView.setText(R.string.pass_or_transfer);
             } else {

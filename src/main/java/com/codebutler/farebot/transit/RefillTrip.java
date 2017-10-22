@@ -19,6 +19,7 @@
 package com.codebutler.farebot.transit;
 
 import android.os.Parcel;
+import android.support.annotation.Nullable;
 
 /**
  * Wrapper around Refills to make them like Trips, so Trips become like history.  This is similar
@@ -56,14 +57,10 @@ public class RefillTrip extends Trip {
         return mRefill.getShortAgencyName();
     }
 
+    @Nullable
     @Override
-    public String getFareString() {
-        return mRefill.getAmountString();
-    }
-
-    @Override
-    public String getBalanceString() {
-        return null;
+    public Integer getFare() {
+        return -mRefill.getAmount();
     }
 
     @Override

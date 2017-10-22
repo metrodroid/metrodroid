@@ -38,9 +38,11 @@ import android.util.Log;
 import android.view.WindowManager;
 
 import java.math.BigInteger;
+import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Currency;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.List;
@@ -489,5 +491,30 @@ public class Utils {
 
     public interface Matcher<T> {
         boolean matches(T t);
+    }
+
+    public static String formatCurrencyString(int currency, boolean isBalance, String currencyCode) {
+        return formatCurrencyString(currency, isBalance, currencyCode, 100.);
+    }
+
+    /**
+     * Simple currency formatter, used for TransitData.formatCurrencyString.
+     * @param currency Input currency value to use
+     * @param isBalance True if the value being passed is a balance (ie: don't format credits in a
+     *                  special way)
+     * @param currencyCode 3 character currency code (eg: AUD)
+     * @param divisor value to divide by to get that currency. eg: if the value passed is in cents,
+     *                then divide by 100 to get dollars. Currencies like yen should divide by 1.
+     * @return Formatted currency string
+     */
+    public static String formatCurrencyString(int currency, boolean isBalance, String currencyCode, double divisor) {
+        NumberFormat numberFormat = NumberFormat.getCurrencyInstance();
+        numberFormat.setCurrency(Currency.getInstance(currencyCode));
+
+        if (!isBalance && currency < 0) {
+            return "+ " + numberFormat.format(((double)currency) / divisor);
+        } else {
+            return numberFormat.format(((double)currency) / divisor);
+        }
     }
 }

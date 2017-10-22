@@ -21,13 +21,44 @@ package com.codebutler.farebot.transit;
 
 import android.net.Uri;
 import android.os.Parcelable;
+import android.support.annotation.Nullable;
 
 import com.codebutler.farebot.ui.ListItem;
 
 import java.util.List;
 
 public abstract class TransitData implements Parcelable {
-    public abstract String getBalanceString();
+
+    /**
+     * Balance of the card. The value is passed to getBalanceString for formatting purposes.
+     *
+     * @return The balance of the card, or null if it is not known.
+     */
+    @Nullable
+    public abstract Integer getBalance();
+
+    /**
+     * Formats costs and balances in the appropriate local currency.  Be aware that your
+     * implementation should use language-specific formatting and not rely on the system language
+     * for that information.
+     * <p>
+     * For example, if a phone is set to English and travels to Japan, it does not make sense to
+     * format their travel costs in dollars.  Instead, it should be shown in Yen, which the Japanese
+     * currency formatter does.
+     * <p>
+     * This is used for formatting both card balances and fares. When a balance is formatted,
+     * isBalance=true. When a trip or refill is being displayed, isBalance=false. You may wish to
+     * implement your classes such that all credits or refills are shown as negative values.
+     * <p>
+     * This is an instance method to allow for cards that have multiple currencies (eg: Octopus),
+     * or systems deployed in multiple countries with different currencies (eg: Nextfare).
+     *
+     * @param currency Currency value
+     * @param isBalance If true, a balance value is being formatted. Don't show negative amounts as
+     *                  a credit.
+     * @return The currency value formatted in the local currency of the card.
+     */
+    public abstract String formatCurrencyString(int currency, boolean isBalance);
 
     public abstract String getSerialNumber();
 

@@ -19,6 +19,7 @@
 package com.codebutler.farebot.transit.smartrider;
 
 import android.os.Parcel;
+import android.support.annotation.Nullable;
 import android.util.Log;
 
 import com.codebutler.farebot.card.classic.ClassicCard;
@@ -275,10 +276,15 @@ public class SmartRiderTransitData extends TransitData {
         return true;
     }
 
+    @Nullable
+    @Override
+    public Integer getBalance() {
+        return mBalance;
+    }
 
     @Override
-    public String getBalanceString() {
-        return NumberFormat.getCurrencyInstance(Locale.US).format((double) mBalance / 100.);
+    public String formatCurrencyString(int currency, boolean isBalance) {
+        return Utils.formatCurrencyString(currency, isBalance, "AUD");
     }
 
     @Override

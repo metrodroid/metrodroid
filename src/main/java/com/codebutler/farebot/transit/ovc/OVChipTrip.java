@@ -23,6 +23,7 @@ package com.codebutler.farebot.transit.ovc;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Parcel;
+import android.support.annotation.Nullable;
 import android.text.TextUtils;
 import android.util.Log;
 
@@ -61,7 +62,7 @@ public class OVChipTrip extends Trip {
     private final boolean mIsPurchase;
     private final boolean mIsBanned;
     private final Date mTimestamp;
-    private final long mFare;
+    private final int mFare;
     private final Date mExitTimestamp;
     private final Station mStartStation;
     private final Station mEndStation;
@@ -147,7 +148,7 @@ public class OVChipTrip extends Trip {
         mIsPurchase = (parcel.readInt() == 1);
         mIsBanned = (parcel.readInt() == 1);
 
-        mFare = parcel.readLong();
+        mFare = parcel.readInt();
         mTimestamp = new Date(parcel.readLong());
 
         if (parcel.readInt() == 1) {
@@ -232,7 +233,7 @@ public class OVChipTrip extends Trip {
         parcel.writeInt(mIsPurchase ? 1 : 0);
         parcel.writeInt(mIsBanned ? 1 : 0);
 
-        parcel.writeLong(mFare);
+        parcel.writeInt(mFare);
         parcel.writeLong(mTimestamp.getTime());
 
         if (mExitTimestamp != null) {
@@ -276,11 +277,6 @@ public class OVChipTrip extends Trip {
     @Override
     public String getShortAgencyName() {
         return OVChipTransitData.getShortAgencyName(mAgency);
-    }
-
-    @Override
-    public String getBalanceString() {
-        return null;
     }
 
     @Override
@@ -357,8 +353,9 @@ public class OVChipTrip extends Trip {
         return true;
     }
 
+    @Nullable
     @Override
-    public String getFareString() {
-        return OVChipTransitData.convertAmount((int) mFare);
+    public Integer getFare() {
+        return mFare;
     }
 }

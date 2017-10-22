@@ -32,6 +32,7 @@
 package com.codebutler.farebot.transit.suica;
 
 import android.os.Parcel;
+import android.support.annotation.Nullable;
 
 import com.codebutler.farebot.card.felica.FelicaBlock;
 import com.codebutler.farebot.transit.Station;
@@ -55,13 +56,13 @@ public class SuicaTrip extends Trip {
             return new SuicaTrip[size];
         }
     };
-    private final long mBalance;
+    private final int mBalance;
     private final int mConsoleType;
     private final int mProcessType;
     private final boolean mIsProductSale;
     private final boolean mIsBus;
     private final boolean mIsCharge;
-    private final long mFare;
+    private final int mFare;
     private final Date mTimestamp;
     private final int mRegionCode;
     private int mRailEntranceLineCode;
@@ -73,7 +74,7 @@ public class SuicaTrip extends Trip {
     private Station mStartStation;
     private Station mEndStation;
 
-    public SuicaTrip(FelicaBlock block, long previousBalance) {
+    public SuicaTrip(FelicaBlock block, int previousBalance) {
         byte[] data = block.getData();
 
         // 00000080000000000000000000000000
@@ -103,7 +104,7 @@ public class SuicaTrip extends Trip {
         mIsCharge = (mProcessType == (byte) 0x02);
 
         mTimestamp = SuicaUtil.extractDate(mIsProductSale, data);
-        mBalance = (long) Util.toInt(data[11], data[10]);
+        mBalance = Util.toInt(data[11], data[10]);
 
         mRegionCode = data[15] & 0xFF;
 
@@ -137,7 +138,7 @@ public class SuicaTrip extends Trip {
     }
 
     public SuicaTrip(Parcel parcel) {
-        mBalance = parcel.readLong();
+        mBalance = parcel.readInt();
 
         mConsoleType = parcel.readInt();
         mProcessType = parcel.readInt();
@@ -147,7 +148,7 @@ public class SuicaTrip extends Trip {
 
         mIsCharge = (parcel.readInt() == 1);
 
-        mFare = parcel.readLong();
+        mFare = parcel.readInt();
         mTimestamp = new Date(parcel.readLong());
         mRegionCode = parcel.readInt();
 
@@ -202,23 +203,14 @@ public class SuicaTrip extends Trip {
         return true;
     }
 
+    @Nullable
     @Override
-    public String getFareString() {
-        NumberFormat format = NumberFormat.getCurrencyInstance(Locale.JAPAN);
-        format.setMaximumFractionDigits(0);
-        if (mFare < 0) return "+" + format.format(-mFare);
-        else return format.format(mFare);
+    public Integer getFare() {
+        return mFare;
     }
 
-    public long getBalance() {
+    public int getBalance() {
         return mBalance;
-    }
-
-    @Override
-    public String getBalanceString() {
-        NumberFormat format = NumberFormat.getCurrencyInstance(Locale.JAPAN);
-        format.setMaximumFractionDigits(0);
-        return format.format(mBalance);
     }
 
     @Override
@@ -332,7 +324,7 @@ public class SuicaTrip extends Trip {
     */
 
     public void writeToParcel(Parcel parcel, int flags) {
-        parcel.writeLong(mBalance);
+        parcel.writeInt(mBalance);
 
         parcel.writeInt(mConsoleType);
         parcel.writeInt(mProcessType);
@@ -342,7 +334,7 @@ public class SuicaTrip extends Trip {
 
         parcel.writeInt(mIsCharge ? 1 : 0);
 
-        parcel.writeLong(mFare);
+        parcel.writeInt(mFare);
         parcel.writeLong(mTimestamp.getTime());
         parcel.writeInt(mRegionCode);
 

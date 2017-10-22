@@ -2,6 +2,7 @@ package com.codebutler.farebot.transit.edy;
 
 import android.app.Application;
 import android.os.Parcel;
+import android.support.annotation.Nullable;
 
 import com.codebutler.farebot.card.felica.FelicaBlock;
 import com.codebutler.farebot.transit.Station;
@@ -89,18 +90,15 @@ public class EdyTrip extends Trip {
         return true;
     }
 
-    public String getFareString() {
-        NumberFormat format = NumberFormat.getCurrencyInstance(Locale.JAPAN);
-        format.setMaximumFractionDigits(0);
-        if (mProcessType != EdyTransitData.FELICA_MODE_EDY_DEBIT)
-            return "+" + format.format(mTransactionAmount);
-        return format.format(mTransactionAmount);
-    }
+    @Nullable
+    @Override
+    public Integer getFare() {
+        if (mProcessType != EdyTransitData.FELICA_MODE_EDY_DEBIT) {
+            // Credits are "negative"
+            return -mTransactionAmount;
+        }
 
-    public String getBalanceString() {
-        NumberFormat format = NumberFormat.getCurrencyInstance(Locale.JAPAN);
-        format.setMaximumFractionDigits(0);
-        return format.format(mBalance);
+        return mTransactionAmount;
     }
 
     // use agency name for the tranaction number

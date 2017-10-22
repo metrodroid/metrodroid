@@ -75,9 +75,9 @@ public class CardInfoActivity extends Activity {
 
     private OnInitListener mTTSInitListener = new OnInitListener() {
         public void onInit(int status) {
-            String balance = mTransitData.getBalanceString();
-            if (status == TextToSpeech.SUCCESS && balance != null) {
-                mTTS.speak(getString(R.string.balance_speech, mTransitData.getBalanceString()), TextToSpeech.QUEUE_FLUSH, null);
+            if (status == TextToSpeech.SUCCESS && mTransitData.getBalance() != null) {
+                String balance = mTransitData.formatCurrencyString(mTransitData.getBalance(), true);
+                mTTS.speak(getString(R.string.balance_speech, balance), TextToSpeech.QUEUE_FLUSH, null);
             }
         }
     };
@@ -159,7 +159,7 @@ public class CardInfoActivity extends Activity {
                     return;
                 }
 
-                if (mTransitData.getBalanceString() != null) {
+                if (mTransitData.getBalance() != null) {
                     mTabsAdapter.addTab(actionBar.newTab().setText(R.string.balance), CardBalanceFragment.class, args);
                 }
 

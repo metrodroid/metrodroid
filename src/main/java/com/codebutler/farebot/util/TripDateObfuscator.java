@@ -1,6 +1,7 @@
 package com.codebutler.farebot.util;
 
 import android.os.Parcel;
+import android.support.annotation.Nullable;
 import android.util.Log;
 
 import com.codebutler.farebot.transit.Station;
@@ -76,11 +77,6 @@ public final class TripDateObfuscator {
         }
 
         @Override
-        public String getBalanceString() {
-            return mRealTrip.getBalanceString();
-        }
-
-        @Override
         public String getStartStationName() {
             return mRealTrip.getStartStationName();
         }
@@ -106,8 +102,9 @@ public final class TripDateObfuscator {
         }
 
         @Override
-        public String getFareString() {
-            return mRealTrip.getFareString();
+        @Nullable
+        public Integer getFare() {
+            return mRealTrip.getFare();
         }
 
         @Override

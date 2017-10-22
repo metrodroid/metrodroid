@@ -23,6 +23,7 @@
 package com.codebutler.farebot.transit.ezlink;
 
 import android.os.Parcel;
+import android.support.annotation.Nullable;
 
 import com.codebutler.farebot.card.Card;
 import com.codebutler.farebot.card.cepas.CEPASCard;
@@ -504,10 +505,15 @@ public class EZLinkTransitData extends TransitData {
     }
 
     @Override
-    public String getBalanceString() {
-        NumberFormat numberFormat = NumberFormat.getCurrencyInstance();
-        numberFormat.setCurrency(Currency.getInstance("SGD"));
-        return numberFormat.format(mBalance / 100);
+    @Nullable
+    public Integer getBalance() {
+        // This is stoned in cents of SGD
+        return (int)mBalance;
+    }
+
+    @Override
+    public String formatCurrencyString(int currency, boolean isBalance) {
+        return Utils.formatCurrencyString(currency, isBalance, "SGD");
     }
 
     @Override

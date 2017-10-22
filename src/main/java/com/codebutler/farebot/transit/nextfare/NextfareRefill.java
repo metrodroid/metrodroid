@@ -66,19 +66,8 @@ public class NextfareRefill extends Refill {
     }
 
     @Override
-    public long getAmount() {
+    public int getAmount() {
         return mTopup.getCredit();
-    }
-
-    @Override
-    public String getAmountString() {
-        double amount = (double) getAmount() / 100;
-
-        if (amount >= 0) {
-            return "+ " + NumberFormat.getCurrencyInstance(Locale.US).format(amount);
-        } else {
-            return NumberFormat.getCurrencyInstance(Locale.US).format(amount);
-        }
     }
 
     @Override

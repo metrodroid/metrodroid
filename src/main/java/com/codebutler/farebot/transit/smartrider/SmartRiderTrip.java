@@ -2,6 +2,7 @@ package com.codebutler.farebot.transit.smartrider;
 
 import android.os.Parcel;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 
 import com.codebutler.farebot.transit.Station;
 import com.codebutler.farebot.transit.Trip;
@@ -86,19 +87,6 @@ public class SmartRiderTrip extends Trip implements Comparable<SmartRiderTrip> {
     }
 
     @Override
-    public String getFareString() {
-        if (mCost == 0) {
-            return Utils.localizeString(R.string.pass_or_transfer);
-        }
-        return NumberFormat.getCurrencyInstance(Locale.US).format((double) mCost / 100.);
-    }
-
-    @Override
-    public String getBalanceString() {
-        return null;
-    }
-
-    @Override
     public String getStartStationName() {
         return null;
     }
@@ -121,6 +109,12 @@ public class SmartRiderTrip extends Trip implements Comparable<SmartRiderTrip> {
     @Override
     public boolean hasFare() {
         return true;
+    }
+
+    @Nullable
+    @Override
+    public Integer getFare() {
+        return mCost;
     }
 
     @Override

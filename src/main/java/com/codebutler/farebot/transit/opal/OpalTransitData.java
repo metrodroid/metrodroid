@@ -20,6 +20,7 @@ package com.codebutler.farebot.transit.opal;
 
 import android.net.Uri;
 import android.os.Parcel;
+import android.support.annotation.Nullable;
 import android.text.format.DateFormat;
 
 import com.codebutler.farebot.card.Card;
@@ -35,6 +36,7 @@ import com.codebutler.farebot.util.Utils;
 import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Currency;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.List;
@@ -148,9 +150,15 @@ public class OpalTransitData extends TransitData {
         return NAME;
     }
 
+    @Nullable
     @Override
-    public String getBalanceString() {
-        return NumberFormat.getCurrencyInstance(Locale.US).format((double) mBalance / 100.);
+    public Integer getBalance() {
+        return mBalance;
+    }
+
+    @Override
+    public String formatCurrencyString(int currency, boolean isBalance) {
+        return Utils.formatCurrencyString(currency, isBalance, "AUD");
     }
 
     @Override

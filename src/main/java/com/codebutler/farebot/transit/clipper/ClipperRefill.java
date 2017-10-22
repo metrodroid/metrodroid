@@ -37,11 +37,11 @@ public class ClipperRefill extends Refill {
         }
     };
     final long mTimestamp;
-    final long mAmount;
+    final int mAmount;
     final long mMachineID;
     final long mAgency;
 
-    public ClipperRefill(long timestamp, long amount, long agency, long machineid) {
+    public ClipperRefill(long timestamp, int amount, long agency, long machineid) {
         mTimestamp = timestamp;
         mAmount = amount;
         mMachineID = machineid;
@@ -50,7 +50,7 @@ public class ClipperRefill extends Refill {
 
     public ClipperRefill(Parcel parcel) {
         mTimestamp = parcel.readLong();
-        mAmount = parcel.readLong();
+        mAmount = parcel.readInt();
         mMachineID = parcel.readLong();
         mAgency = parcel.readLong();
     }
@@ -61,13 +61,8 @@ public class ClipperRefill extends Refill {
     }
 
     @Override
-    public long getAmount() {
+    public int getAmount() {
         return mAmount;
-    }
-
-    @Override
-    public String getAmountString() {
-        return NumberFormat.getCurrencyInstance(Locale.US).format((double) mAmount / 100.0);
     }
 
     public long getMachineID() {
@@ -86,7 +81,7 @@ public class ClipperRefill extends Refill {
 
     public void writeToParcel(Parcel parcel, int flags) {
         parcel.writeLong(mTimestamp);
-        parcel.writeLong(mAmount);
+        parcel.writeInt(mAmount);
         parcel.writeLong(mMachineID);
         parcel.writeLong(mAgency);
     }

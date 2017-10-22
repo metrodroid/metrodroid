@@ -21,6 +21,7 @@ package com.codebutler.farebot.transit;
 
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.support.annotation.Nullable;
 
 import org.apache.commons.lang3.StringUtils;
 
@@ -64,8 +65,6 @@ public abstract class Trip implements Parcelable {
 
     public abstract String getShortAgencyName();
 
-    public abstract String getBalanceString();
-
     public abstract String getStartStationName();
 
     public abstract Station getStartStation();
@@ -99,7 +98,8 @@ public abstract class Trip implements Parcelable {
      *
      * @return The cost of the fare formatted in the local currency of the card.
      */
-    public abstract String getFareString();
+    @Nullable
+    public abstract Integer getFare();
 
     public abstract Mode getMode();
 

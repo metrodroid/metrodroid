@@ -20,6 +20,7 @@
 package com.codebutler.farebot.transit.manly_fast_ferry;
 
 import android.os.Parcel;
+import android.support.annotation.Nullable;
 
 import com.codebutler.farebot.card.UnauthorizedException;
 import com.codebutler.farebot.card.classic.ClassicBlock;
@@ -42,6 +43,7 @@ import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.Currency;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.List;
@@ -189,9 +191,16 @@ public class ManlyFastFerryTransitData extends TransitData {
     }
 
     @Override
-    public String getBalanceString() {
-        return NumberFormat.getCurrencyInstance(Locale.US).format((double) mBalance / 100.);
+    @Nullable
+    public Integer getBalance() {
+        return mBalance;
     }
+
+    @Override
+    public String formatCurrencyString(int currency, boolean isBalance) {
+        return Utils.formatCurrencyString(currency, isBalance, "AUD");
+    }
+
 
     // Structures
     @Override

@@ -23,6 +23,7 @@
 package com.codebutler.farebot.transit.ezlink;
 
 import android.os.Parcel;
+import android.support.annotation.Nullable;
 
 import com.codebutler.farebot.card.cepas.CEPASTransaction;
 import com.codebutler.farebot.transit.Station;
@@ -127,25 +128,14 @@ public class EZLinkTrip extends Trip {
     }
 
     @Override
-    public String getFareString() {
-        NumberFormat numberFormat = NumberFormat.getCurrencyInstance();
-        numberFormat.setCurrency(Currency.getInstance("SGD"));
-
-        int balance = -mTransaction.getAmount();
-        if (balance < 0)
-            return "Credit " + numberFormat.format(-balance / 100.0);
-        else
-            return numberFormat.format(balance / 100.0);
-    }
-
-    @Override
     public boolean hasFare() {
         return (mTransaction.getType() != CEPASTransaction.TransactionType.CREATION);
     }
 
+    @Nullable
     @Override
-    public String getBalanceString() {
-        return "(???)";
+    public Integer getFare() {
+        return mTransaction.getAmount();
     }
 
     @Override
