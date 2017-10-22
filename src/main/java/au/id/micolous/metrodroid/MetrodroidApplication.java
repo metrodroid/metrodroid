@@ -78,6 +78,8 @@ public class MetrodroidApplication extends Application {
     public static final String PREF_MFC_FALLBACK = "pref_mfc_fallback";
 
     public static final String PREF_HIDE_CARD_NUMBERS = "pref_hide_card_numbers";
+    public static final String PREF_OBFUSCATE_TRIP_DATES = "pref_obfuscate_trip_dates";
+    public static final String PREF_OBFUSCATE_TRIP_TIMES = "pref_obfuscate_trip_times";
 
 
     private static MetrodroidApplication sInstance;
@@ -141,6 +143,16 @@ public class MetrodroidApplication extends Application {
     public static boolean hideCardNumbers() {
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getInstance());
         return prefs.getBoolean(PREF_HIDE_CARD_NUMBERS, false);
+    }
+
+    public static boolean obfuscateTripDates() {
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getInstance());
+        return prefs.getBoolean(PREF_OBFUSCATE_TRIP_DATES, false);
+    }
+
+    public static boolean obfuscateTripTimes() {
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getInstance());
+        return prefs.getBoolean(PREF_OBFUSCATE_TRIP_TIMES, false);
     }
 
     public FelicaDBUtil getFelicaDBUtil() {

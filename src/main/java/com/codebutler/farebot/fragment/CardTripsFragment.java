@@ -44,6 +44,7 @@ import com.codebutler.farebot.transit.RefillTrip;
 import com.codebutler.farebot.transit.TransitData;
 import com.codebutler.farebot.transit.Trip;
 import com.codebutler.farebot.transit.orca.OrcaTrip;
+import com.codebutler.farebot.util.TripDateObfuscator;
 import com.codebutler.farebot.util.Utils;
 
 import org.apache.commons.lang3.StringUtils;
@@ -91,6 +92,10 @@ public class CardTripsFragment extends ListFragment {
         Collections.sort(trips, new Trip.Comparator());
 
         if (trips.size() > 0) {
+            if (MetrodroidApplication.obfuscateTripDates()) {
+                trips = TripDateObfuscator.obfuscateTrips(trips);
+                Collections.sort(trips, new Trip.Comparator());
+            }
             setListAdapter(new UseLogListAdapter(getActivity(), trips.toArray(new Trip[trips.size()])));
         } else {
             view.findViewById(android.R.id.list).setVisibility(View.GONE);
