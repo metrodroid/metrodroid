@@ -295,19 +295,31 @@ public class CardsFragment extends ListFragment {
 
             if (identity != null) {
                 if (label != null && !label.equals("")) {
+                    // This is used for imported cards from mfcdump_to_farebotxml.py
+                    // Used for development and testing. We should always show this.
                     textView1.setText(String.format("%s: %s", identity.getName(), label));
-                } else if (identity.getSerialNumber() != null) {
-                    textView1.setText(String.format("%s: %s", identity.getName(), identity.getSerialNumber()));
+                } else if (MetrodroidApplication.hideCardNumbers()) {
+                    // User doesn't want to show any card numbers.
+                    textView1.setText(String.format("%s", identity.getName()));
                 } else {
-                    // textView1.setText(identity.getName());
-                    textView1.setText(String.format("%s: %s", identity.getName(), serial));
+                    // User wants to show card numbers (default).
+                    if (identity.getSerialNumber() != null) {
+                        textView1.setText(String.format("%s: %s", identity.getName(), identity.getSerialNumber()));
+                    } else {
+                        // Fall back to showing the serial number of the NFC chip.
+                        textView1.setText(String.format("%s: %s", identity.getName(), serial));
+                    }
                 }
                 textView2.setText(getString(R.string.scanned_at_format, Utils.timeFormat(scannedAt),
                         Utils.dateFormat(scannedAt)));
 
             } else {
                 textView1.setText(getString(R.string.unknown_card));
-                textView2.setText(String.format("%s - %s", CardType.values()[type].toString(), serial));
+                if (MetrodroidApplication.hideCardNumbers()) {
+                    textView2.setText(String.format("%s", CardType.values()[type].toString()));
+                } else {
+                    textView2.setText(String.format("%s - %s", CardType.values()[type].toString(), serial));
+                }
             }
         }
 

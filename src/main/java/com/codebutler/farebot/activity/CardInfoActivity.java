@@ -82,6 +82,7 @@ public class CardInfoActivity extends Activity {
         }
     };
 
+
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -141,8 +142,11 @@ public class CardInfoActivity extends Activity {
                     return;
                 }
 
-                String titleSerial = (mTransitData.getSerialNumber() != null) ? mTransitData.getSerialNumber()
-                        : Utils.getHexString(mCard.getTagId(), "");
+                String titleSerial = "";
+                if (!MetrodroidApplication.hideCardNumbers()) {
+                    titleSerial = (mTransitData.getSerialNumber() != null) ? mTransitData.getSerialNumber()
+                            : Utils.getHexString(mCard.getTagId(), "");
+                }
                 actionBar.setTitle(mTransitData.getCardName() + " " + titleSerial);
 
                 Bundle args = new Bundle();

@@ -23,6 +23,7 @@
 package au.id.micolous.metrodroid;
 
 import android.app.Application;
+import android.content.SharedPreferences;
 import android.nfc.NfcAdapter;
 import android.os.StrictMode;
 import android.preference.PreferenceManager;
@@ -76,6 +77,9 @@ public class MetrodroidApplication extends Application {
     public static final String PREF_MFC_AUTHRETRY = "pref_mfc_authretry";
     public static final String PREF_MFC_FALLBACK = "pref_mfc_fallback";
 
+    public static final String PREF_HIDE_CARD_NUMBERS = "pref_hide_card_numbers";
+
+
     private static MetrodroidApplication sInstance;
 
     private FelicaDBUtil mFelicaDBUtil;
@@ -128,6 +132,15 @@ public class MetrodroidApplication extends Application {
 
     public static MetrodroidApplication getInstance() {
         return sInstance;
+    }
+
+    /**
+     * Returns true if the user has opted to hide card numbers in the UI.
+     * @return true if we should not show any card numbers
+     */
+    public static boolean hideCardNumbers() {
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getInstance());
+        return prefs.getBoolean(PREF_HIDE_CARD_NUMBERS, false);
     }
 
     public FelicaDBUtil getFelicaDBUtil() {
