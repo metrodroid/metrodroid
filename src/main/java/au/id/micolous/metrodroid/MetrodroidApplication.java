@@ -80,7 +80,8 @@ public class MetrodroidApplication extends Application {
     public static final String PREF_HIDE_CARD_NUMBERS = "pref_hide_card_numbers";
     public static final String PREF_OBFUSCATE_TRIP_DATES = "pref_obfuscate_trip_dates";
     public static final String PREF_OBFUSCATE_TRIP_TIMES = "pref_obfuscate_trip_times";
-
+    public static final String PREF_OBFUSCATE_TRIP_FARES = "pref_obfuscate_trip_fares";
+    public static final String PREF_OBFUSCATE_BALANCE = "pref_obfuscate_balance";
 
     private static MetrodroidApplication sInstance;
 
@@ -136,23 +137,33 @@ public class MetrodroidApplication extends Application {
         return sInstance;
     }
 
+    private static boolean getBooleanPref(String preference, boolean default_setting) {
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getInstance());
+        return prefs.getBoolean(preference, false);
+    }
+
     /**
      * Returns true if the user has opted to hide card numbers in the UI.
      * @return true if we should not show any card numbers
      */
     public static boolean hideCardNumbers() {
-        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getInstance());
-        return prefs.getBoolean(PREF_HIDE_CARD_NUMBERS, false);
+        return getBooleanPref(PREF_HIDE_CARD_NUMBERS, false);
     }
 
     public static boolean obfuscateTripDates() {
-        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getInstance());
-        return prefs.getBoolean(PREF_OBFUSCATE_TRIP_DATES, false);
+        return getBooleanPref(PREF_OBFUSCATE_TRIP_DATES, false);
     }
 
     public static boolean obfuscateTripTimes() {
-        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getInstance());
-        return prefs.getBoolean(PREF_OBFUSCATE_TRIP_TIMES, false);
+        return getBooleanPref(PREF_OBFUSCATE_TRIP_TIMES, false);
+    }
+
+    public static boolean obfuscateTripFares() {
+        return getBooleanPref(PREF_OBFUSCATE_TRIP_FARES, false);
+    }
+
+    public static boolean obfuscateBalance() {
+        return getBooleanPref(PREF_OBFUSCATE_BALANCE, false);
     }
 
     public FelicaDBUtil getFelicaDBUtil() {

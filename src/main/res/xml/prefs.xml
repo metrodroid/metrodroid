@@ -51,14 +51,24 @@
             android:key="pref_hide_card_numbers"
             android:defaultValue="false" />
         <CheckBoxPreference
+            android:title="Obfuscate balance"
+            android:summary="Change the balance shown by a random amount"
+            android:key="pref_obfuscate_balance"
+            android:defaultValue="false" />
+        <CheckBoxPreference
             android:title="Obfuscate trip dates"
-            android:summary="Randomly change the dates of trips by a few days"
+            android:summary="Show trip dates at different, random days"
             android:key="pref_obfuscate_trip_dates"
             android:defaultValue="false" />
         <CheckBoxPreference
             android:title="Obfuscate trip times"
-            android:summary="Randomly change the times of trips within a day"
+            android:summary="Show trip times at different, random times of the day"
             android:key="pref_obfuscate_trip_times"
+            android:defaultValue="false" />
+        <CheckBoxPreference
+            android:title="Obfuscate trip fare"
+            android:summary="Change fares shown by a random amount"
+            android:key="pref_obfuscate_trip_fares"
             android:defaultValue="false" />
     </PreferenceCategory>
 

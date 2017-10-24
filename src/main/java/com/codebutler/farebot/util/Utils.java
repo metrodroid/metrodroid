@@ -512,7 +512,7 @@ public class Utils {
         numberFormat.setCurrency(Currency.getInstance(currencyCode));
 
         if (!isBalance && currency < 0) {
-            return "+ " + numberFormat.format(((double)currency) / divisor);
+            return "+ " + numberFormat.format(Math.abs(((double)currency) / divisor));
         } else {
             return numberFormat.format(((double)currency) / divisor);
         }

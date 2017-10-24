@@ -39,6 +39,8 @@ public class OVChipSubscription extends Subscription {
             return new OVChipSubscription[size];
         }
     };
+
+    // FIXME: i18n
     private static final Map<Integer, String> SUBSCRIPTIONS = new ImmutableMapBuilder<Integer, String>()
             /* It seems that all the IDs are unique, so why bother with the companies? */
             /* NS */
@@ -210,6 +212,7 @@ public class OVChipSubscription extends Subscription {
         if (SUBSCRIPTIONS.containsKey(subscription)) {
             return SUBSCRIPTIONS.get(subscription);
         }
+        // FIXME: i18n
         return "Unknown Subscription (0x" + Long.toString(subscription, 16) + ")";
     }
 
@@ -241,6 +244,7 @@ public class OVChipSubscription extends Subscription {
 
     @Override
     public String getActivation() {
+        // FIXME: i18n
         if (mType1 != 0) {
             return mUsed != 0 ? "Activated and used" : "Activated but not used";
         }
