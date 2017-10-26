@@ -42,7 +42,7 @@ public final class TripObfuscator {
         return singleton;
     }
 
-    public static List<Trip> obfuscateTrips(List<Trip> trips, boolean obfuscateDates, boolean obfuscateTimes, boolean obfuscateFares, boolean obfuscateBalance) {
+    public static List<Trip> obfuscateTrips(List<Trip> trips, boolean obfuscateDates, boolean obfuscateTimes, boolean obfuscateFares) {
         List<Trip> newTrips = new ArrayList<>();
         int today = GregorianCalendar.getInstance().get(Calendar.DAY_OF_YEAR);
         for (Trip trip : trips) {
@@ -76,10 +76,10 @@ public final class TripObfuscator {
             }
 
             if (obfuscateFares) {
-                // This is unique for each fare, but hopefully we'll only generate this once.
+                // These are unique for each fare
                 fareOffset = mRNG.nextInt(100) - 50;
 
-                // Multiplier may be 0.8 ~ 1.2, but applied consistently
+                // Multiplier may be 0.8 ~ 1.2
                 fareMultiplier = (mRNG.nextDouble() * 0.4) + 0.8;
             }
 

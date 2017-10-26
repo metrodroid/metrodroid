@@ -96,13 +96,11 @@ public class CardTripsFragment extends ListFragment {
         if (trips.size() > 0) {
             if (MetrodroidApplication.obfuscateTripDates() ||
                     MetrodroidApplication.obfuscateTripTimes() ||
-                    MetrodroidApplication.obfuscateTripFares() ||
-                    MetrodroidApplication.obfuscateBalance()) {
+                    MetrodroidApplication.obfuscateTripFares()) {
                 trips = TripObfuscator.obfuscateTrips(trips,
                         MetrodroidApplication.obfuscateTripDates(),
                         MetrodroidApplication.obfuscateTripTimes(),
-                        MetrodroidApplication.obfuscateTripFares(),
-                        MetrodroidApplication.obfuscateBalance());
+                        MetrodroidApplication.obfuscateTripFares());
                 Collections.sort(trips, new Trip.Comparator());
             }
             setListAdapter(new UseLogListAdapter(getActivity(), trips.toArray(new Trip[trips.size()]), mTransitData));
