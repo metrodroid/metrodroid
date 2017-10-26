@@ -75,6 +75,14 @@ public final class TripObfuscator {
                 timeDelta = ((startCalendar.getTimeInMillis() - UNIX_EPOCH.getTimeInMillis()) / 1000) - start;
             }
 
+            if (obfuscateTimes) {
+                // Reduce resolution of timestamps to 5 minutes.
+                timeDelta %= 300;
+
+                // Add a deviation of up to 20,000 seconds (5.5 hours) earlier or later.
+                timeDelta += mRNG.nextInt(40000) - 20000;
+            }
+
             if (obfuscateFares) {
                 // These are unique for each fare
                 fareOffset = mRNG.nextInt(100) - 50;

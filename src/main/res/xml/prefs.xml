@@ -62,7 +62,7 @@
             android:defaultValue="false" />
         <CheckBoxPreference
             android:title="Obfuscate trip times"
-            android:summary="Show trip times at different, random times of the day"
+            android:summary="Fuzz and reduce resolution of timestamps on trips."
             android:key="pref_obfuscate_trip_times"
             android:defaultValue="false" />
         <CheckBoxPreference
