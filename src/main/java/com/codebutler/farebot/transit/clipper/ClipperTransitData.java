@@ -164,16 +164,6 @@ public class ClipperTransitData extends TransitData {
         return mRefills;
     }
 
-    @Override
-    public Subscription[] getSubscriptions() {
-        return null;
-    }
-
-    @Override
-    public List<ListItem> getInfo() {
-        return null;
-    }
-
     private ClipperTrip[] parseTrips(DesfireCard card) {
         DesfireFile file = card.getApplication(0x9011f2).getFile(0x0e);
 

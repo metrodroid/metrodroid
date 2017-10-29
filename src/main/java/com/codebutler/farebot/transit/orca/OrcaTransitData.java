@@ -142,11 +142,6 @@ public class OrcaTransitData extends TransitData {
         return null;
     }
 
-    @Override
-    public List<ListItem> getInfo() {
-        return null;
-    }
-
     private Trip[] parseTrips(DesfireCard card) {
         List<Trip> trips = new ArrayList<>();
 

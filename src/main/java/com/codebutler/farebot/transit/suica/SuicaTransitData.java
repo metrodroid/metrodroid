@@ -129,16 +129,6 @@ public class SuicaTransitData extends TransitData {
     }
 
     @Override
-    public Subscription[] getSubscriptions() {
-        return null;
-    }
-
-    @Override
-    public List<ListItem> getInfo() {
-        return null;
-    }
-
-    @Override
     public String getCardName() {
         return "Suica"; // FIXME: Could be ICOCA, etc.
     }

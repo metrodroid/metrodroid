@@ -122,13 +122,4 @@ public class BilheteUnicoSPTransitData extends TransitData {
         return null;
     }
 
-    @Override
-    public List<ListItem> getInfo() {
-        return null;
-    }
-
-    @Override
-    public Subscription[] getSubscriptions() {
-        return null;
-    }
 }

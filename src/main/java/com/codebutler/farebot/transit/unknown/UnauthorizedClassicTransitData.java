@@ -80,11 +80,6 @@ public class UnauthorizedClassicTransitData extends TransitData {
     }
 
     @Override
-    public List<ListItem> getInfo() {
-        return null;
-    }
-
-    @Override
     public String getCardName() {
         return Utils.localizeString(R.string.locked_card);
     }

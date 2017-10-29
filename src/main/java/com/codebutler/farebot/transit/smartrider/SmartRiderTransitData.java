@@ -298,16 +298,6 @@ public class SmartRiderTransitData extends TransitData {
     }
 
     @Override
-    public Subscription[] getSubscriptions() {
-        return null;
-    }
-
-    @Override
-    public List<ListItem> getInfo() {
-        return null;
-    }
-
-    @Override
     public String getCardName() {
         return mCardType.getFriendlyName();
     }

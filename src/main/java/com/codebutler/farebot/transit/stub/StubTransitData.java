@@ -46,16 +46,6 @@ public abstract class StubTransitData extends TransitData {
     }
 
     @Override
-    public Trip[] getTrips() {
-        return null;
-    }
-
-    @Override
-    public Subscription[] getSubscriptions() {
-        return null;
-    }
-
-    @Override
     public void writeToParcel(Parcel parcel, int i) {
     }
 

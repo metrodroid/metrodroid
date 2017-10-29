@@ -395,16 +395,6 @@ public class HSLTransitData extends TransitData {
         return ret;
     }
 
-    @Override
-    public Subscription[] getSubscriptions() {
-        return null;
-    }
-
-    @Override
-    public List<ListItem> getInfo() {
-        return null;
-    }
-
     private List<HSLTrip> parseTrips(DesfireCard card) {
         DesfireFile file = card.getApplication(0x1120ef).getFile(0x04);
 

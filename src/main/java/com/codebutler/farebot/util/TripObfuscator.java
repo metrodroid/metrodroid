@@ -118,6 +118,28 @@ public final class TripObfuscator {
         return singleton;
     }
 
+    /**
+     * Obfuscates a fare-like number, if "obfuscate fares" is enabled. This is useful for if your
+     * TransitData implementation shows additional transactional information in getInfo(). This
+     * isn't required for either balances, trips or refills to use this, as they are wrapped
+     * automatically.
+     * @param fare input fare
+     * @return adjusted fare
+     */
+    public static int maybeObfuscateFare(int fare) {
+        if (!MetrodroidApplication.obfuscateTripFares()) {
+            return fare;
+        }
+
+        int newFare = (int)((fare + mRNG.nextInt(100) - 50) * ((mRNG.nextDouble() * 0.4) + 0.8));
+
+        if ((fare >= 0 && newFare < 0) || (fare < 0 && newFare > 0)) {
+            newFare *= -1;
+        }
+
+        return newFare;
+    }
+
     public static List<Trip> obfuscateTrips(List<Trip> trips, boolean obfuscateDates, boolean obfuscateTimes, boolean obfuscateFares) {
         List<Trip> newTrips = new ArrayList<>();
         for (Trip trip : trips) {

@@ -177,10 +177,14 @@ public class OpalTransitData extends TransitData {
 
         items.add(new HeaderListItem(R.string.general));
         items.add(new ListItem(R.string.opal_weekly_trips, Integer.toString(mWeeklyTrips)));
-        items.add(new ListItem(R.string.checksum, Integer.toString(mChecksum)));
+        if (!MetrodroidApplication.hideCardNumbers()) {
+            items.add(new ListItem(R.string.checksum, Integer.toString(mChecksum)));
+        }
 
         items.add(new HeaderListItem(R.string.last_transaction));
-        items.add(new ListItem(R.string.transaction_sequence, Integer.toString(mTransactionNumber)));
+        if (!MetrodroidApplication.hideCardNumbers()) {
+            items.add(new ListItem(R.string.transaction_sequence, Integer.toString(mTransactionNumber)));
+        }
         Calendar cLastTransactionTime = TripObfuscator.maybeObfuscateTS(getLastTransactionTime());
         items.add(new ListItem(R.string.date, DateFormat.getLongDateFormat(MetrodroidApplication.getInstance()).format(cLastTransactionTime)));
         items.add(new ListItem(R.string.time, DateFormat.getTimeFormat(MetrodroidApplication.getInstance()).format(cLastTransactionTime)));
@@ -211,12 +215,6 @@ public class OpalTransitData extends TransitData {
             return new Subscription[]{OPAL_AUTOMATIC_TOP_UP};
         }
         return new Subscription[]{};
-    }
-
-    // Unsupported elements
-    @Override
-    public Trip[] getTrips() {
-        return null;
     }
 
     @Override

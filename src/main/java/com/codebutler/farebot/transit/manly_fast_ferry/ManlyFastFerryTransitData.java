@@ -227,12 +227,6 @@ public class ManlyFastFerryTransitData extends TransitData {
     }
 
     @Override
-    public Subscription[] getSubscriptions() {
-        // Subscriptions are no longer used on Manly Fast Ferry.
-        return null;
-    }
-
-    @Override
     public List<ListItem> getInfo() {
         ArrayList<ListItem> items = new ArrayList<>();
         items.add(new HeaderListItem(R.string.general));
@@ -246,6 +240,4 @@ public class ManlyFastFerryTransitData extends TransitData {
     public String getCardName() {
         return NAME;
     }
-
-
 }

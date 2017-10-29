@@ -33,6 +33,7 @@ import com.codebutler.farebot.transit.TransitIdentity;
 import com.codebutler.farebot.transit.Trip;
 import com.codebutler.farebot.ui.HeaderListItem;
 import com.codebutler.farebot.ui.ListItem;
+import com.codebutler.farebot.util.TripObfuscator;
 import com.codebutler.farebot.util.Utils;
 
 import net.kazzz.felica.lib.FeliCaLib;
@@ -174,19 +175,6 @@ public class OctopusTransitData extends TransitData {
         }
     }
 
-
-    // Stub out things we don't support
-    @Override
-    public Trip[] getTrips() {
-        return null;
-    }
-
-    @Override
-    public Subscription[] getSubscriptions() {
-        return null;
-    }
-
-
     @Override
     public List<ListItem> getInfo() {
         ArrayList<ListItem> items = new ArrayList<>();
@@ -195,11 +183,12 @@ public class OctopusTransitData extends TransitData {
             // Dual-mode card, show the CNY balance here.
             items.add(new HeaderListItem(R.string.alternate_purse_balances));
             items.add(new ListItem(R.string.octopus_szt,
-                    formatCurrencyString(mShenzhenBalance, true, true)));
+                    formatCurrencyString(
+                            Math.abs(TripObfuscator.maybeObfuscateFare(mShenzhenBalance)),
+                            true, true)));
 
             return items;
         }
         return null;
     }
-
 }

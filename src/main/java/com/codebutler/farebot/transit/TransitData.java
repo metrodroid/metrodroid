@@ -62,16 +62,46 @@ public abstract class TransitData implements Parcelable {
 
     public abstract String getSerialNumber();
 
-    public abstract Trip[] getTrips();
+    /**
+     * Lists all trips on the card.  May return null if the trip information cannot be read.
+     *
+     * @return Array of Trip[], or null if not supported.
+     */
+    public Trip[] getTrips() {
+        return null;
+    }
 
     @Deprecated
     public Refill[] getRefills() {
         return null;
     }
 
-    public abstract Subscription[] getSubscriptions();
+    public Subscription[] getSubscriptions() {
+        return null;
+    }
 
-    public abstract List<ListItem> getInfo();
+    /**
+     * Allows TransitData implementors to show extra information that doesn't fit within the
+     * standard bounds of the interface.  By default, this returns null, so the "Info" tab will not
+     * be displayed.
+     *
+     * Note: in order to support obfuscation / hiding behaviour, if you implement this method, you
+     * also need to use some other functionality:
+     *
+     * - Check for MetrodroidApplication.hideCardNumbers whenever you show a card number, or other
+     *   mark (such as a name) that could be used to identify this card or its holder.
+     *
+     * - Pass Calendar/Date objects (timestamps) through TripObfuscator.maybeObfuscateTS.  This also
+     *   works on epoch timestamps (expressed as seconds since UTC).
+     *
+     * - Pass all currency amounts through formatCurrencyString. This is overridden by
+     *   ObfuscatedTrip, and will allow you to handle
+     *
+     * @return
+     */
+    public List<ListItem> getInfo() {
+        return null;
+    };
 
     public abstract String getCardName();
 

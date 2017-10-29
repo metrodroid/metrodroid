@@ -32,6 +32,7 @@ import com.codebutler.farebot.transit.Trip;
 import com.codebutler.farebot.ui.HeaderListItem;
 import com.codebutler.farebot.ui.ListItem;
 import com.codebutler.farebot.util.ImmutableMapBuilder;
+import com.codebutler.farebot.util.TripObfuscator;
 import com.codebutler.farebot.util.Utils;
 
 import java.util.ArrayList;
@@ -295,12 +296,20 @@ public class OVChipTransitData extends TransitData {
         ArrayList<ListItem> items = new ArrayList<>();
 
         items.add(new HeaderListItem("Hardware Information"));
-        items.add(new ListItem("Manufacturer ID", mPreamble.getManufacturer()));
-        items.add(new ListItem("Publisher ID", mPreamble.getPublisher()));
+        if (!MetrodroidApplication.hideCardNumbers()) {
+            items.add(new ListItem("Manufacturer ID", mPreamble.getManufacturer()));
+            items.add(new ListItem("Publisher ID", mPreamble.getPublisher()));
+        }
 
         items.add(new HeaderListItem("General Information"));
-        items.add(new ListItem("Serial Number", mPreamble.getId()));
-        items.add(new ListItem("Expiration Date", Utils.longDateFormat(OVChipTransitData.convertDate(mPreamble.getExpdate()))));
+        if (!MetrodroidApplication.hideCardNumbers()) {
+            items.add(new ListItem("Serial Number", mPreamble.getId()));
+        }
+
+        items.add(new ListItem("Expiration Date",
+                Utils.longDateFormat(
+                        TripObfuscator.maybeObfuscateTS(
+                                OVChipTransitData.convertDate(mPreamble.getExpdate())))));
         items.add(new ListItem("Card Type", (mPreamble.getType() == 2 ? "Personal" : "Anonymous")));
         items.add(new ListItem("Issuer", OVChipTransitData.getShortAgencyName(mInfo.getCompany())));
 
@@ -308,15 +317,18 @@ public class OVChipTransitData extends TransitData {
 
         if (mPreamble.getType() == 2) {
             items.add(new HeaderListItem("Personal Information"));
-            items.add(new ListItem("Birthdate", Utils.longDateFormat(mInfo.getBirthdate())));
+            items.add(new ListItem("Birthdate", Utils.longDateFormat(
+                    TripObfuscator.maybeObfuscateTS(mInfo.getBirthdate()))));
         }
 
         items.add(new HeaderListItem("Credit Information"));
         items.add(new ListItem("Credit Slot ID", Integer.toString(mCredit.getId())));
         items.add(new ListItem("Last Credit ID", Integer.toString(mCredit.getCreditId())));
         items.add(new ListItem("Autocharge", (mInfo.getActive() == (byte) 0x05 ? "Yes" : "No")));
-        items.add(new ListItem("Autocharge Limit", formatCurrencyString(mInfo.getLimit(), true)));
-        items.add(new ListItem("Autocharge Charge", formatCurrencyString(mInfo.getCharge(), true)));
+        items.add(new ListItem("Autocharge Limit",
+                formatCurrencyString(TripObfuscator.maybeObfuscateFare(mInfo.getLimit()), true)));
+        items.add(new ListItem("Autocharge Charge",
+                formatCurrencyString(TripObfuscator.maybeObfuscateFare(mInfo.getCharge()), true)));
 
         items.add(new HeaderListItem("Recent Slots"));
         items.add(new ListItem("Transaction Slot", "0x" + Integer.toHexString((char) mIndex.getRecentTransactionSlot())));

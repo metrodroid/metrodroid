@@ -526,16 +526,6 @@ public class EZLinkTransitData extends TransitData {
         return mTrips;
     }
 
-    @Override
-    public Subscription[] getSubscriptions() {
-        return null;
-    }
-
-    @Override
-    public List<ListItem> getInfo() {
-        return null;
-    }
-
     private EZLinkTrip[] parseTrips(CEPASCard card) {
         List<CEPASTransaction> transactions = card.getHistory(3).getTransactions();
         if (transactions != null) {
