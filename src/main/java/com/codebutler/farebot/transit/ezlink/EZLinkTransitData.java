@@ -507,7 +507,7 @@ public class EZLinkTransitData extends TransitData {
     @Override
     @Nullable
     public Integer getBalance() {
-        // This is stoned in cents of SGD
+        // This is stored in cents of SGD
         return (int)mBalance;
     }
 
