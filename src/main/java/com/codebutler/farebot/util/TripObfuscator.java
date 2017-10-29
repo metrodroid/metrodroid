@@ -76,7 +76,7 @@ public final class TripObfuscator {
 
         if (obfuscateTimes) {
             // Reduce resolution of timestamps to 5 minutes.
-            newDate.setTimeInMillis(newDate.getTimeInMillis() % 300000);
+            newDate.setTimeInMillis((newDate.getTimeInMillis() / 300000) * 300000);
 
             // Add a deviation of up to 20,000 seconds (5.5 hours) earlier or later.
             newDate.add(Calendar.SECOND, mRNG.nextInt(40000) - 20000);

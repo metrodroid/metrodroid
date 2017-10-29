@@ -55,6 +55,7 @@ import com.codebutler.farebot.provider.CardProvider;
 import com.codebutler.farebot.provider.CardsTableColumns;
 import com.codebutler.farebot.transit.TransitIdentity;
 import com.codebutler.farebot.util.ExportHelper;
+import com.codebutler.farebot.util.TripObfuscator;
 import com.codebutler.farebot.util.Utils;
 
 import org.apache.commons.io.FileUtils;
@@ -278,6 +279,8 @@ public class CardsFragment extends ListFragment {
             String label = cursor.getString(cursor.getColumnIndex(CardsTableColumns.LABEL));
 
             String cacheKey = serial + scannedAt.getTimeInMillis();
+
+            scannedAt = TripObfuscator.maybeObfuscateTS(scannedAt);
 
             if (!mDataCache.containsKey(cacheKey)) {
                 String data = cursor.getString(cursor.getColumnIndex(CardsTableColumns.DATA));

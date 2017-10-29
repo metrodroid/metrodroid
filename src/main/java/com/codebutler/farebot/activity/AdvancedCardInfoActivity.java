@@ -82,7 +82,12 @@ public class AdvancedCardInfoActivity extends Activity {
 
         ActionBar actionBar = getActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
-        actionBar.setTitle(mCard.getCardType().toString() + " " + Utils.getHexString(mCard.getTagId(), "<error>"));
+
+        if (MetrodroidApplication.hideCardNumbers()) {
+            actionBar.setTitle(mCard.getCardType().toString());
+        } else {
+            actionBar.setTitle(mCard.getCardType().toString() + " " + Utils.getHexString(mCard.getTagId(), "<error>"));
+        }
 
         Calendar scannedAt = mCard.getScannedAt();
         if (mCard.getScannedAt().getTimeInMillis() > 0) {

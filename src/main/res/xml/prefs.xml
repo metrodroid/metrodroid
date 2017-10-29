@@ -56,13 +56,13 @@
             android:key="pref_obfuscate_balance"
             android:defaultValue="false" />
         <CheckBoxPreference
-            android:title="Obfuscate trip dates"
-            android:summary="Show trip dates at different, random days"
+            android:title="Obfuscate dates"
+            android:summary="Show trip, subscription, expiry and scan dates as different, random days"
             android:key="pref_obfuscate_trip_dates"
             android:defaultValue="false" />
         <CheckBoxPreference
-            android:title="Obfuscate trip times"
-            android:summary="Fuzz and reduce resolution of timestamps on trips."
+            android:title="Obfuscate times"
+            android:summary="Fuzz and reduce resolution of timestamps on trips, subscriptions, and scans"
             android:key="pref_obfuscate_trip_times"
             android:defaultValue="false" />
         <CheckBoxPreference
