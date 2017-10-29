@@ -271,4 +271,25 @@
 
 <string name="location_wa_australia">West-Australië, Australië</string>
 
+    <string name="obfuscation_title">Privacy-opties</string>
+    <string name="obfuscation_card_numbers">Kaartnummers verbergen</string>
+    <string name="obfuscation_card_numbers_desc">Kaartnummers nergens weergeven</string>
+
+    <string name="obfuscation_balance">Saldo vermommen</string>
+    <string name="obfuscation_balance_desc">Wijzig het weergegeven saldo in een willekeurig bedrag</string>
+
+    <string name="obfuscation_dates">Datums vermommen</string>
+    <string name="obfuscation_dates_desc">Reis-, abonnement-, verval- en scandatums als willekeurige datums weergeven</string>
+
+    <string name="obfuscation_times">Tijden vermommen</string>
+    <string name="obfuscation_times_desc">Resolutie van tijdstempels verlagen en blurren op reizen, abonnementen en scans</string>
+
+    <string name="obfuscation_fares">Tarieven vermommen</string>
+    <string name="obfuscation_fares_desc">Tarieven wijzigen in een willekeurig bedrag</string>
+
+    <plurals name="obfuscation_mode_notice">
+	<item quantity="one"><xliff:g id="count" example="1">%d</xliff:g> privacyvlag ingeschakeld</item>
+	<item quantity="other"><xliff:g id="count" example="3">%d</xliff:g> privacyvlaggen ingeschakeld</item>
+</plurals>
+
     </resources>
