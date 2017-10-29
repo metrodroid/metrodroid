@@ -21,10 +21,13 @@ package com.codebutler.farebot.transit;
 
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.support.annotation.Nullable;
 
 import org.apache.commons.lang3.StringUtils;
 
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.GregorianCalendar;
 import java.util.List;
 
 public abstract class Trip implements Parcelable {
@@ -54,8 +57,47 @@ public abstract class Trip implements Parcelable {
         }
     }
 
+    public Calendar getStartTimestamp() {
+        // Compatibility layer, can be overridden if working with Calendar objects directly.
+        @SuppressWarnings("deprecation") long t = getTimestamp();
+        if (t == 0) {
+            return null;
+        }
+
+        Calendar c = GregorianCalendar.getInstance();
+        c.setTimeInMillis(t * 1000);
+
+        return c;
+    }
+
+    public Calendar getEndTimestamp() {
+        // Compatibility layer, can be overridden if working with Calendar objects directly.
+        @SuppressWarnings("deprecation") long t = getExitTimestamp();
+        if (t == 0) {
+            return null;
+        }
+
+        Calendar c = GregorianCalendar.getInstance();
+        c.setTimeInMillis(t * 1000);
+
+        return c;
+    }
+
+
+    /**
+     * Start timestamp of the trip, in seconds since the UNIX epoch, or 0 if there is no timestamp
+     * for the trip.
+     * @return seconds since UNIX epoch
+     */
+    @Deprecated
     public abstract long getTimestamp();
 
+    /**
+     * End timestamp of the trip, in seconds since the UNIX epoch, or 0 if there is no exit
+     * timestamp for the trip.
+     * @return seconds since UNIX epoch.
+     */
+    @Deprecated
     public abstract long getExitTimestamp();
 
     public abstract String getRouteName();
@@ -63,8 +105,6 @@ public abstract class Trip implements Parcelable {
     public abstract String getAgencyName();
 
     public abstract String getShortAgencyName();
-
-    public abstract String getBalanceString();
 
     public abstract String getStartStationName();
 
@@ -99,7 +139,8 @@ public abstract class Trip implements Parcelable {
      *
      * @return The cost of the fare formatted in the local currency of the card.
      */
-    public abstract String getFareString();
+    @Nullable
+    public abstract Integer getFare();
 
     public abstract Mode getMode();
 

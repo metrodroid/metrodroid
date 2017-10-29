@@ -20,6 +20,7 @@
 package com.codebutler.farebot.transit.hsl;
 
 import android.os.Parcel;
+import android.support.annotation.Nullable;
 
 import com.codebutler.farebot.card.Card;
 import com.codebutler.farebot.card.desfire.DesfireCard;
@@ -45,14 +46,14 @@ import au.id.micolous.metrodroid.MetrodroidApplication;
 public class HSLTransitData extends TransitData {
     private static final long EPOCH = 0x32C97ED0;
     private String mSerialNumber;
-    private double mBalance;
+    private int mBalance;
     private List<HSLTrip> mTrips;
     private boolean mHasKausi;
     private long mKausiStart;
     private long mKausiEnd;
     private long mKausiPrevStart;
     private long mKausiPrevEnd;
-    private long mKausiPurchasePrice;
+    private int mKausiPurchasePrice;
     private long mKausiLastUse;
     private long mKausiPurchase;
     private HSLRefill mLastRefill;
@@ -61,7 +62,7 @@ public class HSLTransitData extends TransitData {
     private long mArvoPurchase;
     private long mArvoExpire;
     private long mArvoPax;
-    private long mArvoPurchasePrice;
+    private int mArvoPurchasePrice;
     private long mArvoXfer;
     private long mArvoDiscoGroup;
     private long mArvoMystery1;
@@ -92,12 +93,12 @@ public class HSLTransitData extends TransitData {
 
     public HSLTransitData(Parcel parcel) {
         mSerialNumber = parcel.readString();
-        mBalance = parcel.readDouble();
+        mBalance = parcel.readInt();
         mArvoMystery1 = parcel.readLong();
         mArvoDuration = parcel.readLong();
         mArvoRegional = parcel.readLong();
         mArvoExit = parcel.readLong();
-        mArvoPurchasePrice = parcel.readLong();
+        mArvoPurchasePrice = parcel.readInt();
         mArvoDiscoGroup = parcel.readLong();
         mArvoPurchase = parcel.readLong();
         mArvoExpire = parcel.readLong();
@@ -132,7 +133,7 @@ public class HSLTransitData extends TransitData {
 
         try {
             data = desfireCard.getApplication(0x1120ef).getFile(0x02).getData();
-            mBalance = bitsToLong(0, 20, data);
+            mBalance = (int)bitsToLong(0, 20, data);
             mLastRefill = new HSLRefill(data);
         } catch (Exception ex) {
             throw new RuntimeException("Error parsing HSL refills", ex);
@@ -161,7 +162,7 @@ public class HSLTransitData extends TransitData {
             mArvoRegional = bitsToLong(27, 5, data);
 
             mArvoExit = cardDateToTimestamp(bitsToLong(32, 14, data), bitsToLong(46, 11, data));
-            mArvoPurchasePrice = bitsToLong(68, 14, data);
+            mArvoPurchasePrice = (int)bitsToLong(68, 14, data);
             //mArvoDiscoGroup = bitsToLong(82, 6,data);
             mArvoPurchase = cardDateToTimestamp(bitsToLong(88, 14, data), bitsToLong(102, 11, data)); //68 price, 82 zone?
             mArvoExpire = cardDateToTimestamp(bitsToLong(113, 14, data), bitsToLong(127, 11, data)); //68 price, 82 zone?
@@ -225,7 +226,7 @@ public class HSLTransitData extends TransitData {
             }
             mHasKausi = mKausiEnd > (System.currentTimeMillis() / 1000.0);
             mKausiPurchase = cardDateToTimestamp(bitsToLong(110, 14, data), bitsToLong(124, 11, data));
-            mKausiPurchasePrice = bitsToLong(149, 15, data);
+            mKausiPurchasePrice = (int)bitsToLong(149, 15, data);
             mKausiLastUse = cardDateToTimestamp(bitsToLong(192, 14, data), bitsToLong(206, 11, data));
             mKausiVehicleNumber = bitsToLong(217, 14, data);
             //mTrips[0].mVehicleNumber = mArvoVehicleNumber;
@@ -297,17 +298,6 @@ public class HSLTransitData extends TransitData {
         return "HSL";
     }
 
-    @Override
-    public String getBalanceString() {
-        MetrodroidApplication app = MetrodroidApplication.getInstance();
-        String ret = NumberFormat.getCurrencyInstance(Locale.GERMANY).format(mBalance / 100);
-        if (mHasKausi)
-            ret += "\n" + app.getString(R.string.hsl_pass_is_valid);
-        if (mArvoExpire * 1000.0 > System.currentTimeMillis())
-            ret += "\n" + app.getString(R.string.hsl_value_ticket_is_valid) + "!";
-        return ret;
-    }
-
     /*
     public String getCustomString() {
         DateFormat shortDateTimeFormat = SimpleDateFormat.getDateTimeInstance(DateFormat.SHORT, DateFormat.SHORT);
@@ -370,6 +360,25 @@ public class HSLTransitData extends TransitData {
     }
     */
 
+    @Nullable
+    @Override
+    public Integer getBalance() {
+        return mBalance;
+    }
+
+    @Override
+    public String formatCurrencyString(int currency, boolean isBalance) {
+        // Balance in Euro cents
+        return Utils.formatCurrencyString(currency, isBalance, "EUR");
+        // TODO: push these into Subscriptions
+        /*
+        if (mHasKausi)
+            ret += "\n" + app.getString(R.string.hsl_pass_is_valid);
+        if (mArvoExpire * 1000.0 > System.currentTimeMillis())
+            ret += "\n" + app.getString(R.string.hsl_value_ticket_is_valid) + "!";
+        */
+    }
+
     @Override
     public String getSerialNumber() {
         return mSerialNumber;
@@ -384,16 +393,6 @@ public class HSLTransitData extends TransitData {
     public Refill[] getRefills() {
         Refill[] ret = {mLastRefill};
         return ret;
-    }
-
-    @Override
-    public Subscription[] getSubscriptions() {
-        return null;
-    }
-
-    @Override
-    public List<ListItem> getInfo() {
-        return null;
     }
 
     private List<HSLTrip> parseTrips(DesfireCard card) {
@@ -415,14 +414,14 @@ public class HSLTransitData extends TransitData {
 
     public void writeToParcel(Parcel parcel, int flags) {
         parcel.writeString(mSerialNumber);
-        parcel.writeDouble(mBalance);
+        parcel.writeInt(mBalance);
 
         parcel.writeLong(mArvoMystery1);
         parcel.writeLong(mArvoDuration);
         parcel.writeLong(mArvoRegional);
 
         parcel.writeLong(mArvoExit);
-        parcel.writeLong(mArvoPurchasePrice);
+        parcel.writeInt(mArvoPurchasePrice);
         parcel.writeLong(mArvoDiscoGroup);
         parcel.writeLong(mArvoPurchase);
         parcel.writeLong(mArvoExpire);

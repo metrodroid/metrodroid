@@ -18,13 +18,13 @@
  */
 package com.codebutler.farebot.transit.opal;
 
-
 import android.os.Parcel;
 
 import com.codebutler.farebot.transit.Subscription;
 import com.codebutler.farebot.util.Utils;
 
-import java.util.Date;
+import java.util.Calendar;
+import java.util.GregorianCalendar;
 
 import au.id.micolous.farebot.R;
 
@@ -36,7 +36,7 @@ import au.id.micolous.farebot.R;
  * <p>
  * Dates given are not valid.
  */
-public class OpalSubscription extends Subscription {
+class OpalSubscription extends Subscription {
 
     @Override
     public int getId() {
@@ -44,15 +44,15 @@ public class OpalSubscription extends Subscription {
     }
 
     @Override
-    public Date getValidFrom() {
+    public Calendar getValidFrom() {
         // Start of Opal trial
-        return new Date(2012 - 1900, 12 - 1, 7);
+        return new GregorianCalendar(2012, 12, 7);
     }
 
     @Override
-    public Date getValidTo() {
+    public Calendar getValidTo() {
         // Maximum possible date representable on the card
-        return new Date(2159 - 1900, 6 - 1, 6);
+        return new GregorianCalendar(2159, 6, 6);
     }
 
     @Override

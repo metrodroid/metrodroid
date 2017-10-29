@@ -20,7 +20,8 @@ import org.simpleframework.xml.Root;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Date;
+import java.util.Calendar;
+import java.util.GregorianCalendar;
 import java.util.List;
 
 /**
@@ -39,7 +40,7 @@ public class UltralightCard extends Card {
 
     private UltralightCard() { /* For XML Serializer */ }
 
-    private UltralightCard(byte[] tagId, Date scannedAt, int ultralightType, UltralightPage[] pages) {
+    private UltralightCard(byte[] tagId, Calendar scannedAt, int ultralightType, UltralightPage[] pages) {
         super(CardType.MifareUltralight, tagId, scannedAt);
         mUltralightType = ultralightType;
         mPages = Utils.arrayAsList(pages);
@@ -87,7 +88,7 @@ public class UltralightCard extends Card {
             }
 
             // Now we have pages to stuff in the card.
-            return new UltralightCard(tagId, new Date(), tech.getType(),
+            return new UltralightCard(tagId, GregorianCalendar.getInstance(), tech.getType(),
                     pages.toArray(new UltralightPage[pages.size()]));
 
         } finally {

@@ -22,6 +22,7 @@
 package com.codebutler.farebot.transit.octopus;
 
 import android.os.Parcel;
+import android.support.annotation.Nullable;
 import android.util.Log;
 
 import com.codebutler.farebot.card.felica.FelicaCard;
@@ -32,12 +33,14 @@ import com.codebutler.farebot.transit.TransitIdentity;
 import com.codebutler.farebot.transit.Trip;
 import com.codebutler.farebot.ui.HeaderListItem;
 import com.codebutler.farebot.ui.ListItem;
+import com.codebutler.farebot.util.TripObfuscator;
 import com.codebutler.farebot.util.Utils;
 
 import net.kazzz.felica.lib.FeliCaLib;
 
 import java.text.NumberFormat;
 import java.util.ArrayList;
+import java.util.Currency;
 import java.util.List;
 import java.util.Locale;
 
@@ -121,13 +124,14 @@ public class OctopusTransitData extends TransitData {
     }
 
     @Override
-    public String getBalanceString() {
+    @Nullable
+    public Integer getBalance() {
         if (mHasOctopus) {
             // Octopus balance takes priority 1
-            return NumberFormat.getCurrencyInstance(Locale.US).format((double) mOctopusBalance / 10.);
+            return mOctopusBalance;
         } else if (mHasShenzhen) {
             // Shenzhen Tong balance takes priority 2
-            return getSztBalanceString();
+            return mShenzhenBalance;
         } else {
             // Unhandled.
             Log.d(TAG, "Unhandled balance, could not find Octopus or SZT");
@@ -135,8 +139,13 @@ public class OctopusTransitData extends TransitData {
         }
     }
 
-    private String getSztBalanceString() {
-        return NumberFormat.getCurrencyInstance(Locale.CHINA).format((double) mShenzhenBalance / 10.);
+    @Override
+    public String formatCurrencyString(int currency, boolean isBalance) {
+        return formatCurrencyString(currency, isBalance, !mHasOctopus);
+    }
+
+    public String formatCurrencyString(int currency, boolean isBalance, boolean shenzhen) {
+        return Utils.formatCurrencyString(currency, isBalance, shenzhen ? "CNY" : "HKD", 10.);
     }
 
     @Override
@@ -166,19 +175,6 @@ public class OctopusTransitData extends TransitData {
         }
     }
 
-
-    // Stub out things we don't support
-    @Override
-    public Trip[] getTrips() {
-        return null;
-    }
-
-    @Override
-    public Subscription[] getSubscriptions() {
-        return null;
-    }
-
-
     @Override
     public List<ListItem> getInfo() {
         ArrayList<ListItem> items = new ArrayList<>();
@@ -186,11 +182,13 @@ public class OctopusTransitData extends TransitData {
         if (mHasOctopus && mHasShenzhen) {
             // Dual-mode card, show the CNY balance here.
             items.add(new HeaderListItem(R.string.alternate_purse_balances));
-            items.add(new ListItem(R.string.octopus_szt, getSztBalanceString()));
+            items.add(new ListItem(R.string.octopus_szt,
+                    formatCurrencyString(
+                            Math.abs(TripObfuscator.maybeObfuscateFare(mShenzhenBalance)),
+                            true, true)));
 
             return items;
         }
         return null;
     }
-
 }

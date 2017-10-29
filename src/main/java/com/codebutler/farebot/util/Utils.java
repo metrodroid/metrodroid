@@ -2,7 +2,7 @@
  * Utils.java
  *
  * Copyright 2011 Eric Butler <eric@codebutler.com>
- * Copyright 2015-2016 Michael Farrell <micolous+git@gmail.com>
+ * Copyright 2015-2017 Michael Farrell <micolous+git@gmail.com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -38,19 +38,22 @@ import android.util.Log;
 import android.view.WindowManager;
 
 import java.math.BigInteger;
+import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Date;
+import java.util.Calendar;
+import java.util.Currency;
 import java.util.GregorianCalendar;
 import java.util.List;
+import java.util.Locale;
 
 import au.id.micolous.farebot.R;
 import au.id.micolous.metrodroid.MetrodroidApplication;
 
 public class Utils {
     private static final String TAG = "Utils";
-    private static final SimpleDateFormat ISO_DATE_FORMAT = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+    private static final SimpleDateFormat ISO_DATE_FORMAT = new SimpleDateFormat("yyyy-MM-dd HH:mm", Locale.US);
 
     private Utils() {
     }
@@ -370,32 +373,30 @@ public class Utils {
         return res.getQuantityString(pluralResource, quantity, formatArgs);
     }
 
-    public static String longDateFormat(Date date) {
-        return DateFormat.getLongDateFormat(MetrodroidApplication.getInstance()).format(date);
+    // TODO: All these convert a Calendar back into a Date in order to handle
+    //       android.text.format.DateFormat#get{Long,Medium,}{Date,Time}Format passing us back a
+    //       java.util.DateFormat, rather than a CharSequence with the actual format to use.
+    // TODO: Investigate using Joda Time or something else that sucks less than Java at handling dates.
+    public static String longDateFormat(Calendar date) {
+        return DateFormat.getLongDateFormat(MetrodroidApplication.getInstance()).format(date.getTime());
     }
 
-    public static String longDateFormat(long milliseconds) {
-        return longDateFormat(new Date(milliseconds));
+    public static String dateFormat(Calendar date) {
+        return DateFormat.getDateFormat(MetrodroidApplication.getInstance()).format(date.getTime());
     }
 
-    public static String dateFormat(Date date) {
-        return DateFormat.getDateFormat(MetrodroidApplication.getInstance()).format(date);
+    public static String timeFormat(Calendar date) {
+        return DateFormat.getTimeFormat(MetrodroidApplication.getInstance()).format(date.getTime());
     }
 
-    public static String dateFormat(long milliseconds) {
-        return dateFormat(new Date(milliseconds));
-    }
-
-    public static String timeFormat(Date date) {
-        return DateFormat.getTimeFormat(MetrodroidApplication.getInstance()).format(date);
-    }
-
-    public static String timeFormat(long milliseconds) {
-        return timeFormat(new Date(milliseconds));
-    }
-
-    public static String dateTimeFormat(Date date) {
+    public static String dateTimeFormat(Calendar date) {
         return dateFormat(date) + " " + timeFormat(date);
+    }
+
+    public static Calendar millisToCalendar(long milliseconds) {
+        Calendar c = GregorianCalendar.getInstance();
+        c.setTimeInMillis(milliseconds);
+        return c;
     }
 
     /**
@@ -489,5 +490,30 @@ public class Utils {
 
     public interface Matcher<T> {
         boolean matches(T t);
+    }
+
+    public static String formatCurrencyString(int currency, boolean isBalance, String currencyCode) {
+        return formatCurrencyString(currency, isBalance, currencyCode, 100.);
+    }
+
+    /**
+     * Simple currency formatter, used for TransitData.formatCurrencyString.
+     * @param currency Input currency value to use
+     * @param isBalance True if the value being passed is a balance (ie: don't format credits in a
+     *                  special way)
+     * @param currencyCode 3 character currency code (eg: AUD)
+     * @param divisor value to divide by to get that currency. eg: if the value passed is in cents,
+     *                then divide by 100 to get dollars. Currencies like yen should divide by 1.
+     * @return Formatted currency string
+     */
+    public static String formatCurrencyString(int currency, boolean isBalance, String currencyCode, double divisor) {
+        NumberFormat numberFormat = NumberFormat.getCurrencyInstance();
+        numberFormat.setCurrency(Currency.getInstance(currencyCode));
+
+        if (!isBalance && currency < 0) {
+            return "+ " + numberFormat.format(Math.abs(((double)currency) / divisor));
+        } else {
+            return numberFormat.format(((double)currency) / divisor);
+        }
     }
 }

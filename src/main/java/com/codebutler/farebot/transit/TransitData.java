@@ -21,26 +21,87 @@ package com.codebutler.farebot.transit;
 
 import android.net.Uri;
 import android.os.Parcelable;
+import android.support.annotation.Nullable;
 
 import com.codebutler.farebot.ui.ListItem;
 
 import java.util.List;
 
 public abstract class TransitData implements Parcelable {
-    public abstract String getBalanceString();
+
+    /**
+     * Balance of the card. The value is passed to getBalanceString for formatting purposes.
+     *
+     * @return The balance of the card, or null if it is not known.
+     */
+    @Nullable
+    public abstract Integer getBalance();
+
+    /**
+     * Formats costs and balances in the appropriate local currency.  Be aware that your
+     * implementation should use language-specific formatting and not rely on the system language
+     * for that information.
+     * <p>
+     * For example, if a phone is set to English and travels to Japan, it does not make sense to
+     * format their travel costs in dollars.  Instead, it should be shown in Yen, which the Japanese
+     * currency formatter does.
+     * <p>
+     * This is used for formatting both card balances and fares. When a balance is formatted,
+     * isBalance=true. When a trip or refill is being displayed, isBalance=false. You may wish to
+     * implement your classes such that all credits or refills are shown as negative values.
+     * <p>
+     * This is an instance method to allow for cards that have multiple currencies (eg: Octopus),
+     * or systems deployed in multiple countries with different currencies (eg: Nextfare).
+     *
+     * @param currency Currency value
+     * @param isBalance If true, a balance value is being formatted. Don't show negative amounts as
+     *                  a credit.
+     * @return The currency value formatted in the local currency of the card.
+     */
+    public abstract String formatCurrencyString(int currency, boolean isBalance);
 
     public abstract String getSerialNumber();
 
-    public abstract Trip[] getTrips();
+    /**
+     * Lists all trips on the card.  May return null if the trip information cannot be read.
+     *
+     * @return Array of Trip[], or null if not supported.
+     */
+    public Trip[] getTrips() {
+        return null;
+    }
 
     @Deprecated
     public Refill[] getRefills() {
         return null;
     }
 
-    public abstract Subscription[] getSubscriptions();
+    public Subscription[] getSubscriptions() {
+        return null;
+    }
 
-    public abstract List<ListItem> getInfo();
+    /**
+     * Allows TransitData implementors to show extra information that doesn't fit within the
+     * standard bounds of the interface.  By default, this returns null, so the "Info" tab will not
+     * be displayed.
+     *
+     * Note: in order to support obfuscation / hiding behaviour, if you implement this method, you
+     * also need to use some other functionality:
+     *
+     * - Check for MetrodroidApplication.hideCardNumbers whenever you show a card number, or other
+     *   mark (such as a name) that could be used to identify this card or its holder.
+     *
+     * - Pass Calendar/Date objects (timestamps) through TripObfuscator.maybeObfuscateTS.  This also
+     *   works on epoch timestamps (expressed as seconds since UTC).
+     *
+     * - Pass all currency amounts through formatCurrencyString. This is overridden by
+     *   ObfuscatedTrip, and will allow you to handle
+     *
+     * @return
+     */
+    public List<ListItem> getInfo() {
+        return null;
+    };
 
     public abstract String getCardName();
 

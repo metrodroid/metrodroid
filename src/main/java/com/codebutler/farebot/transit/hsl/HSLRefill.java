@@ -30,21 +30,21 @@ import au.id.micolous.metrodroid.MetrodroidApplication;
 
 public class HSLRefill extends Refill {
     private final long mRefillTime;
-    private final long mRefillAmount;
+    private final int mRefillAmount;
 
     public HSLRefill(byte[] data) {
         mRefillTime = HSLTransitData.cardDateToTimestamp(HSLTransitData.bitsToLong(20, 14, data), HSLTransitData.bitsToLong(34, 11, data));
-        mRefillAmount = HSLTransitData.bitsToLong(45, 20, data);
+        mRefillAmount = (int)HSLTransitData.bitsToLong(45, 20, data);
     }
 
     public HSLRefill(Parcel parcel) {
         mRefillTime = parcel.readLong();
-        mRefillAmount = parcel.readLong();
+        mRefillAmount = parcel.readInt();
     }
 
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeLong(mRefillTime);
-        dest.writeLong(mRefillAmount);
+        dest.writeInt(mRefillAmount);
     }
 
     @Override
@@ -63,12 +63,7 @@ public class HSLRefill extends Refill {
     }
 
     @Override
-    public long getAmount() {
+    public int getAmount() {
         return mRefillAmount;
-    }
-
-    @Override
-    public String getAmountString() {
-        return NumberFormat.getCurrencyInstance(Locale.GERMANY).format(mRefillAmount / 100.0);
     }
 }

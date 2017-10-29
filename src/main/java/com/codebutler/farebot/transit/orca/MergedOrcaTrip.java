@@ -20,6 +20,7 @@
 package com.codebutler.farebot.transit.orca;
 
 import android.os.Parcel;
+import android.support.annotation.Nullable;
 
 import com.codebutler.farebot.transit.Station;
 import com.codebutler.farebot.transit.Trip;
@@ -74,16 +75,14 @@ public class MergedOrcaTrip extends Trip {
     }
 
     @Override
-    public String getFareString() {
+    @Nullable
+    public Integer getFare() {
         if (mEndTrip.mTransType == OrcaTransitData.TRANS_TYPE_CANCEL_TRIP) {
-            return MetrodroidApplication.getInstance().getString(R.string.fare_cancelled_format, mStartTrip.getFareString());
+            // No fare applies to the trip, as the tap-on was reversed.
+            return null;
         }
-        return mStartTrip.getFareString();
-    }
 
-    @Override
-    public String getBalanceString() {
-        return mEndTrip.getBalanceString();
+        return mStartTrip.getFare();
     }
 
     @Override

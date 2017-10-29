@@ -1,7 +1,7 @@
 /*
  * NextfareSubscription.java
  *
- * Copyright 2016 Michael Farrell <micolous+git@gmail.com>
+ * Copyright 2016-2017 Michael Farrell <micolous+git@gmail.com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -25,7 +25,8 @@ import com.codebutler.farebot.transit.Subscription;
 import com.codebutler.farebot.transit.nextfare.record.NextfareBalanceRecord;
 import com.codebutler.farebot.transit.nextfare.record.NextfareTravelPassRecord;
 
-import java.util.Date;
+import java.util.Calendar;
+import java.util.GregorianCalendar;
 
 /**
  * Represents a Nextfare travel pass.
@@ -44,10 +45,10 @@ public class NextfareSubscription extends Subscription implements Parcelable {
             return new NextfareSubscription[size];
         }
     };
-    private Date mValidTo;
+    private Calendar mValidTo;
 
     public NextfareSubscription(NextfareTravelPassRecord record) {
-        mValidTo = record.getTimestamp().getTime();
+        mValidTo = record.getTimestamp();
     }
 
     public NextfareSubscription(NextfareBalanceRecord record) {
@@ -56,7 +57,8 @@ public class NextfareSubscription extends Subscription implements Parcelable {
     }
 
     protected NextfareSubscription(Parcel in) {
-        mValidTo = new Date(in.readLong());
+        mValidTo = GregorianCalendar.getInstance();
+        mValidTo.setTimeInMillis(in.readLong());
     }
 
     @Override
@@ -65,12 +67,12 @@ public class NextfareSubscription extends Subscription implements Parcelable {
     }
 
     @Override
-    public Date getValidFrom() {
+    public Calendar getValidFrom() {
         return null;
     }
 
     @Override
-    public Date getValidTo() {
+    public Calendar getValidTo() {
         return mValidTo;
     }
 
@@ -101,6 +103,6 @@ public class NextfareSubscription extends Subscription implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel parcel, int i) {
-        parcel.writeLong(mValidTo.getTime());
+        parcel.writeLong(mValidTo.getTimeInMillis());
     }
 }

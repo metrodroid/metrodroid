@@ -51,7 +51,8 @@ import org.simpleframework.xml.Root;
 import java.io.IOException;
 import java.security.AccessControlException;
 import java.util.ArrayList;
-import java.util.Date;
+import java.util.Calendar;
+import java.util.GregorianCalendar;
 import java.util.List;
 
 @Root(name = "card")
@@ -64,7 +65,7 @@ public class DesfireCard extends Card {
 
     private DesfireCard() { /* For XML Serializer */ }
 
-    DesfireCard(byte[] tagId, Date scannedAt, DesfireManufacturingData manfData, DesfireApplication[] apps) {
+    DesfireCard(byte[] tagId, Calendar scannedAt, DesfireManufacturingData manfData, DesfireApplication[] apps) {
         super(CardType.MifareDesfire, tagId, scannedAt);
         mManfData = manfData;
         mApplications = Utils.arrayAsList(apps);
@@ -125,7 +126,7 @@ public class DesfireCard extends Card {
                 tech.close();
         }
 
-        return new DesfireCard(tag.getId(), new Date(), manufData, appsArray);
+        return new DesfireCard(tag.getId(), GregorianCalendar.getInstance(), manufData, appsArray);
     }
 
     @Override

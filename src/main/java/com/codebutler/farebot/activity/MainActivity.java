@@ -40,6 +40,7 @@ import android.widget.TextView;
 import com.codebutler.farebot.util.Utils;
 
 import au.id.micolous.farebot.R;
+import au.id.micolous.metrodroid.MetrodroidApplication;
 
 public class MainActivity extends Activity {
     private NfcAdapter mNfcAdapter;
@@ -60,13 +61,27 @@ public class MainActivity extends Activity {
         actionBar.setHomeButtonEnabled(false);
 
         mNfcAdapter = NfcAdapter.getDefaultAdapter(this);
+
+        int obfuscationFlagsOn =
+                (MetrodroidApplication.hideCardNumbers() ? 1 : 0) +
+                (MetrodroidApplication.obfuscateBalance() ? 1 : 0) +
+                (MetrodroidApplication.obfuscateTripDates() ? 1 : 0) +
+                (MetrodroidApplication.obfuscateTripFares() ? 1 : 0) +
+                (MetrodroidApplication.obfuscateTripTimes() ? 1 : 0);
+
+        if (obfuscationFlagsOn > 0) {
+            ((TextView) findViewById(R.id.directions)).setText(
+                    Utils.localizePlural(R.plurals.obfuscation_mode_notice,
+                            obfuscationFlagsOn, obfuscationFlagsOn));
+        }
+
         if (mNfcAdapter != null) {
             Utils.checkNfcEnabled(this, mNfcAdapter);
 
             Intent intent = new Intent(this, ReadingTagActivity.class);
             intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP | Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_NO_HISTORY);
             mPendingIntent = PendingIntent.getActivity(this, 0, intent, 0);
-        } else {
+        } else if (obfuscationFlagsOn == 0) {
             ((TextView) findViewById(R.id.directions)).setText(R.string.nfc_unavailable);
         }
     }

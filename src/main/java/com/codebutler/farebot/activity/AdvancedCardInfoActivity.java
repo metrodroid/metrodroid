@@ -42,9 +42,12 @@ import com.codebutler.farebot.card.UnauthorizedException;
 import com.codebutler.farebot.card.UnsupportedCardException;
 import com.codebutler.farebot.fragment.CardHWDetailFragment;
 import com.codebutler.farebot.ui.TabPagerAdapter;
+import com.codebutler.farebot.util.TripObfuscator;
 import com.codebutler.farebot.util.Utils;
 
 import org.simpleframework.xml.Serializer;
+
+import java.util.Calendar;
 
 import au.id.micolous.farebot.R;
 import au.id.micolous.metrodroid.MetrodroidApplication;
@@ -79,11 +82,18 @@ public class AdvancedCardInfoActivity extends Activity {
 
         ActionBar actionBar = getActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
-        actionBar.setTitle(mCard.getCardType().toString() + " " + Utils.getHexString(mCard.getTagId(), "<error>"));
 
-        if (mCard.getScannedAt().getTime() > 0) {
-            String date = Utils.dateFormat(mCard.getScannedAt());
-            String time = Utils.timeFormat(mCard.getScannedAt());
+        if (MetrodroidApplication.hideCardNumbers()) {
+            actionBar.setTitle(mCard.getCardType().toString());
+        } else {
+            actionBar.setTitle(mCard.getCardType().toString() + " " + Utils.getHexString(mCard.getTagId(), "<error>"));
+        }
+
+        Calendar scannedAt = mCard.getScannedAt();
+        if (mCard.getScannedAt().getTimeInMillis() > 0) {
+            scannedAt = TripObfuscator.maybeObfuscateTS(scannedAt);
+            String date = Utils.dateFormat(scannedAt);
+            String time = Utils.timeFormat(scannedAt);
             actionBar.setSubtitle(Utils.localizeString(R.string.scanned_at_format, time, date));
         }
 

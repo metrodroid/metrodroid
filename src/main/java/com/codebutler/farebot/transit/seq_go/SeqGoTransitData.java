@@ -31,9 +31,12 @@ import com.codebutler.farebot.transit.nextfare.NextfareTrip;
 import com.codebutler.farebot.transit.nextfare.record.NextfareTopupRecord;
 import com.codebutler.farebot.ui.HeaderListItem;
 import com.codebutler.farebot.ui.ListItem;
+import com.codebutler.farebot.util.Utils;
 
+import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Currency;
 import java.util.List;
 
 import au.id.micolous.farebot.R;
@@ -160,5 +163,10 @@ public class SeqGoTransitData extends NextfareTransitData {
 
         items.addAll(super.getInfo());
         return items;
+    }
+
+    @Override
+    public String formatCurrencyString(int currency, boolean isBalance) {
+        return Utils.formatCurrencyString(currency, isBalance, "AUD");
     }
 }

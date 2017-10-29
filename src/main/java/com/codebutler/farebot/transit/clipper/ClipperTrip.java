@@ -24,6 +24,7 @@
 package com.codebutler.farebot.transit.clipper;
 
 import android.os.Parcel;
+import android.support.annotation.Nullable;
 
 import com.codebutler.farebot.transit.Station;
 import com.codebutler.farebot.transit.Trip;
@@ -41,16 +42,15 @@ public class ClipperTrip extends Trip {
             return new ClipperTrip[size];
         }
     };
-    final long mTimestamp;
-    final long mExitTimestamp;
-    final long mFare;
-    final long mAgency;
-    final long mFrom;
-    final long mTo;
-    final long mRoute;
-    long mBalance;
+    private final long mTimestamp;
+    private final long mExitTimestamp;
+    private final int mFare;
+    private final int mAgency;
+    private final int mFrom;
+    private final int mTo;
+    private final int mRoute;
 
-    public ClipperTrip(long timestamp, long exitTimestamp, long fare, long agency, long from, long to, long route) {
+    public ClipperTrip(long timestamp, long exitTimestamp, int fare, int agency, int from, int to, int route) {
         mTimestamp = timestamp;
         mExitTimestamp = exitTimestamp;
         mFare = fare;
@@ -58,18 +58,16 @@ public class ClipperTrip extends Trip {
         mFrom = from;
         mTo = to;
         mRoute = route;
-        mBalance = 0;
     }
 
     ClipperTrip(Parcel parcel) {
         mTimestamp = parcel.readLong();
         mExitTimestamp = parcel.readLong();
-        mFare = parcel.readLong();
-        mAgency = parcel.readLong();
-        mFrom = parcel.readLong();
-        mTo = parcel.readLong();
-        mRoute = parcel.readLong();
-        mBalance = parcel.readLong();
+        mFare = parcel.readInt();
+        mAgency = parcel.readInt();
+        mFrom = parcel.readInt();
+        mTo = parcel.readInt();
+        mRoute = parcel.readInt();
     }
 
     @Override
@@ -104,18 +102,14 @@ public class ClipperTrip extends Trip {
     }
 
     @Override
-    public String getFareString() {
-        return NumberFormat.getCurrencyInstance(Locale.US).format((double) mFare / 100.0);
+    @Nullable
+    public Integer getFare() {
+        return mFare;
     }
 
     @Override
     public boolean hasFare() {
         return true;
-    }
-
-    @Override
-    public String getBalanceString() {
-        return NumberFormat.getCurrencyInstance(Locale.US).format((double) mBalance / 100.0);
     }
 
     @Override
@@ -222,12 +216,11 @@ public class ClipperTrip extends Trip {
     public void writeToParcel(Parcel parcel, int flags) {
         parcel.writeLong(mTimestamp);
         parcel.writeLong(mExitTimestamp);
-        parcel.writeLong(mFare);
-        parcel.writeLong(mAgency);
-        parcel.writeLong(mFrom);
-        parcel.writeLong(mTo);
-        parcel.writeLong(mRoute);
-        parcel.writeLong(mBalance);
+        parcel.writeInt(mFare);
+        parcel.writeInt(mAgency);
+        parcel.writeInt(mFrom);
+        parcel.writeInt(mTo);
+        parcel.writeInt(mRoute);
     }
 
     public int describeContents() {

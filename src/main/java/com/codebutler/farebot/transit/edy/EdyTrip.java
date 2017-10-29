@@ -2,6 +2,7 @@ package com.codebutler.farebot.transit.edy;
 
 import android.app.Application;
 import android.os.Parcel;
+import android.support.annotation.Nullable;
 
 import com.codebutler.farebot.card.felica.FelicaBlock;
 import com.codebutler.farebot.transit.Station;
@@ -10,8 +11,8 @@ import com.codebutler.farebot.transit.Trip;
 import net.kazzz.felica.lib.Util;
 
 import java.text.NumberFormat;
-import java.util.Date;
-import java.util.Locale;
+import java.util.Calendar;
+import java.util.GregorianCalendar;
 
 import au.id.micolous.farebot.R;
 import au.id.micolous.metrodroid.MetrodroidApplication;
@@ -28,7 +29,7 @@ public class EdyTrip extends Trip {
     };
     private final int mProcessType;
     private final int mSequenceNumber;
-    private final Date mTimestamp;
+    private final Calendar mTimestamp;
     private final int mTransactionAmount;
     private final int mBalance;
 
@@ -53,7 +54,13 @@ public class EdyTrip extends Trip {
     public EdyTrip(Parcel parcel) {
         mProcessType = parcel.readInt();
         mSequenceNumber = parcel.readInt();
-        mTimestamp = new Date(parcel.readLong());
+        long t = parcel.readLong();
+        if (t != 0) {
+            mTimestamp = GregorianCalendar.getInstance();
+            mTimestamp.setTimeInMillis(t);
+        } else {
+            mTimestamp = null;
+        }
         mTransactionAmount = parcel.readInt();
         mBalance = parcel.readInt();
     }
@@ -61,7 +68,7 @@ public class EdyTrip extends Trip {
     public void writeToParcel(Parcel parcel, int flags) {
         parcel.writeInt(mProcessType);
         parcel.writeInt(mSequenceNumber);
-        parcel.writeLong(mTimestamp.getTime());
+        parcel.writeLong(mTimestamp == null ? 0 : mTimestamp.getTimeInMillis());
         parcel.writeInt(mTransactionAmount);
         parcel.writeInt(mBalance);
     }
@@ -80,7 +87,7 @@ public class EdyTrip extends Trip {
 
     public long getTimestamp() {
         if (mTimestamp != null)
-            return mTimestamp.getTime() / 1000;
+            return mTimestamp.getTimeInMillis() / 1000;
         else
             return 0;
     }
@@ -89,18 +96,15 @@ public class EdyTrip extends Trip {
         return true;
     }
 
-    public String getFareString() {
-        NumberFormat format = NumberFormat.getCurrencyInstance(Locale.JAPAN);
-        format.setMaximumFractionDigits(0);
-        if (mProcessType != EdyTransitData.FELICA_MODE_EDY_DEBIT)
-            return "+" + format.format(mTransactionAmount);
-        return format.format(mTransactionAmount);
-    }
+    @Nullable
+    @Override
+    public Integer getFare() {
+        if (mProcessType != EdyTransitData.FELICA_MODE_EDY_DEBIT) {
+            // Credits are "negative"
+            return -mTransactionAmount;
+        }
 
-    public String getBalanceString() {
-        NumberFormat format = NumberFormat.getCurrencyInstance(Locale.JAPAN);
-        format.setMaximumFractionDigits(0);
-        return format.format(mBalance);
+        return mTransactionAmount;
     }
 
     // use agency name for the tranaction number

@@ -21,6 +21,7 @@ package com.codebutler.farebot.transit.manly_fast_ferry;
 
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.support.annotation.Nullable;
 
 import com.codebutler.farebot.transit.Station;
 import com.codebutler.farebot.transit.Trip;
@@ -95,16 +96,6 @@ public class ManlyFastFerryTrip extends Trip {
     }
 
     @Override
-    public String getFareString() {
-        return NumberFormat.getCurrencyInstance(Locale.US).format((double) mPurse.getTransactionValue() / 100.);
-    }
-
-    @Override
-    public String getBalanceString() {
-        return null;
-    }
-
-    @Override
     public String getStartStationName() {
         return null;
     }
@@ -127,6 +118,12 @@ public class ManlyFastFerryTrip extends Trip {
     @Override
     public boolean hasFare() {
         return true;
+    }
+
+    @Nullable
+    @Override
+    public Integer getFare() {
+        return mPurse.getTransactionValue();
     }
 
     @Override

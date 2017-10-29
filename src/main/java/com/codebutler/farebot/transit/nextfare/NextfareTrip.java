@@ -20,6 +20,7 @@ package com.codebutler.farebot.transit.nextfare;
 
 import android.os.Parcel;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 
 import com.codebutler.farebot.transit.Station;
 import com.codebutler.farebot.transit.Trip;
@@ -128,19 +129,6 @@ public class NextfareTrip extends Trip implements Comparable<NextfareTrip> {
     }
 
     @Override
-    public String getFareString() {
-        if (mCost == 0) {
-            return Utils.localizeString(R.string.pass_or_transfer);
-        }
-        return NumberFormat.getCurrencyInstance(Locale.US).format((double) mCost / 100.);
-    }
-
-    @Override
-    public String getBalanceString() {
-        return null;
-    }
-
-    @Override
     public String getStartStationName() {
         return Integer.toString(mStartStation);
     }
@@ -167,6 +155,12 @@ public class NextfareTrip extends Trip implements Comparable<NextfareTrip> {
     @Override
     public boolean hasFare() {
         return true;
+    }
+
+    @Nullable
+    @Override
+    public Integer getFare() {
+        return mCost;
     }
 
     @Override

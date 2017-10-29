@@ -38,7 +38,7 @@ import com.codebutler.farebot.transit.Station;
 import net.kazzz.felica.lib.Util;
 
 import java.util.Calendar;
-import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.Locale;
 
 import au.id.micolous.farebot.R;
@@ -65,14 +65,14 @@ final class SuicaUtil {
     private SuicaUtil() {
     }
 
-    static Date extractDate(boolean isProductSale, byte[] data) {
+    static Calendar extractDate(boolean isProductSale, byte[] data) {
         int date = Util.toInt(data[4], data[5]);
         if (date == 0)
             return null;
         int yy = date >> 9;
         int mm = (date >> 5) & 0xf;
         int dd = date & 0x1f;
-        Calendar c = Calendar.getInstance();
+        Calendar c = GregorianCalendar.getInstance();
         c.set(Calendar.YEAR, 2000 + yy);
         c.set(Calendar.MONTH, mm - 1);
         c.set(Calendar.DAY_OF_MONTH, dd);
@@ -89,12 +89,12 @@ final class SuicaUtil {
             c.set(Calendar.HOUR_OF_DAY, 0);
             c.set(Calendar.MINUTE, 0);
         }
-        return c.getTime();
+        return c;
     }
 
     /**
      * 機器種別を取得します
-     * <pre>http:// sourceforge.jp/projects/felicalib/wiki/suicaを参考にしています</pre>
+     * <pre>http://sourceforge.jp/projects/felicalib/wiki/suicaを参考にしています</pre>
      *
      * @param cType コンソールタイプをセット
      * @return String 機器タイプが文字列で戻ります

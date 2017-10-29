@@ -26,7 +26,7 @@ import com.codebutler.farebot.transit.Subscription;
 import com.codebutler.farebot.util.ImmutableMapBuilder;
 import com.codebutler.farebot.util.Utils;
 
-import java.util.Date;
+import java.util.Calendar;
 import java.util.Map;
 
 public class OVChipSubscription extends Subscription {
@@ -39,6 +39,8 @@ public class OVChipSubscription extends Subscription {
             return new OVChipSubscription[size];
         }
     };
+
+    // FIXME: i18n
     private static final Map<Integer, String> SUBSCRIPTIONS = new ImmutableMapBuilder<Integer, String>()
             /* It seems that all the IDs are unique, so why bother with the companies? */
             /* NS */
@@ -210,6 +212,7 @@ public class OVChipSubscription extends Subscription {
         if (SUBSCRIPTIONS.containsKey(subscription)) {
             return SUBSCRIPTIONS.get(subscription);
         }
+        // FIXME: i18n
         return "Unknown Subscription (0x" + Long.toString(subscription, 16) + ")";
     }
 
@@ -219,7 +222,7 @@ public class OVChipSubscription extends Subscription {
     }
 
     @Override
-    public Date getValidFrom() {
+    public Calendar getValidFrom() {
         if (mValidFromTime != 0)
             return OVChipTransitData.convertDate((int) mValidFromDate, (int) mValidFromTime);
         else
@@ -227,7 +230,7 @@ public class OVChipSubscription extends Subscription {
     }
 
     @Override
-    public Date getValidTo() {
+    public Calendar getValidTo() {
         if (mValidToTime != 0)
             return OVChipTransitData.convertDate((int) mValidToDate, (int) mValidToTime);
         else
@@ -241,6 +244,7 @@ public class OVChipSubscription extends Subscription {
 
     @Override
     public String getActivation() {
+        // FIXME: i18n
         if (mType1 != 0) {
             return mUsed != 0 ? "Activated and used" : "Activated but not used";
         }

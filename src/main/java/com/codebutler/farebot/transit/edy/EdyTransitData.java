@@ -25,6 +25,7 @@
 package com.codebutler.farebot.transit.edy;
 
 import android.os.Parcel;
+import android.support.annotation.Nullable;
 
 import com.codebutler.farebot.card.felica.FelicaBlock;
 import com.codebutler.farebot.card.felica.FelicaCard;
@@ -34,6 +35,7 @@ import com.codebutler.farebot.transit.TransitData;
 import com.codebutler.farebot.transit.TransitIdentity;
 import com.codebutler.farebot.transit.Trip;
 import com.codebutler.farebot.ui.ListItem;
+import com.codebutler.farebot.util.Utils;
 
 import net.kazzz.felica.lib.FeliCaLib;
 import net.kazzz.felica.lib.Util;
@@ -111,10 +113,14 @@ public class EdyTransitData extends TransitData {
     }
 
     @Override
-    public String getBalanceString() {
-        NumberFormat format = NumberFormat.getCurrencyInstance(Locale.JAPAN);
-        format.setMaximumFractionDigits(0);
-        return format.format(mCurrentBalance);
+    public String formatCurrencyString(int currency, boolean isBalance) {
+        return Utils.formatCurrencyString(currency, isBalance, "JPY", 1);
+    }
+
+    @Override
+    @Nullable
+    public Integer getBalance() {
+        return mCurrentBalance;
     }
 
     @Override
@@ -132,16 +138,6 @@ public class EdyTransitData extends TransitData {
     @Override
     public Trip[] getTrips() {
         return mTrips;
-    }
-
-    @Override
-    public Subscription[] getSubscriptions() {
-        return null;
-    }
-
-    @Override
-    public List<ListItem> getInfo() {
-        return null;
     }
 
     @Override

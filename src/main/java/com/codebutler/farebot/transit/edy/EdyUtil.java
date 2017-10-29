@@ -3,13 +3,12 @@ package com.codebutler.farebot.transit.edy;
 import net.kazzz.felica.lib.Util;
 
 import java.util.Calendar;
-import java.util.Date;
 
 final class EdyUtil {
     private EdyUtil() {
     }
 
-    static Date extractDate(byte[] data) {
+    static Calendar extractDate(byte[] data) {
         int fulloffset = Util.toInt(data[4], data[5], data[6], data[7]);
         if (fulloffset == 0)
             return null;
@@ -22,6 +21,6 @@ final class EdyUtil {
         c.add(Calendar.DATE, dateoffset);
         c.add(Calendar.SECOND, timeoffset);
 
-        return c.getTime();
+        return c;
     }
 }

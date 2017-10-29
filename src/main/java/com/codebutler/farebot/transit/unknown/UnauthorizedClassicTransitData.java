@@ -19,6 +19,7 @@
 package com.codebutler.farebot.transit.unknown;
 
 import android.os.Parcel;
+import android.support.annotation.Nullable;
 
 import com.codebutler.farebot.card.Card;
 import com.codebutler.farebot.card.classic.ClassicCard;
@@ -64,11 +65,6 @@ public class UnauthorizedClassicTransitData extends TransitData {
 
 
     @Override
-    public String getBalanceString() {
-        return null;
-    }
-
-    @Override
     public String getSerialNumber() {
         return null;
     }
@@ -84,16 +80,22 @@ public class UnauthorizedClassicTransitData extends TransitData {
     }
 
     @Override
-    public List<ListItem> getInfo() {
-        return null;
-    }
-
-    @Override
     public String getCardName() {
         return Utils.localizeString(R.string.locked_card);
     }
 
     @Override
     public void writeToParcel(Parcel parcel, int i) {
+    }
+
+    @Override
+    public String formatCurrencyString(int currency, boolean isBalance) {
+        return null;
+    }
+
+    @Nullable
+    @Override
+    public Integer getBalance() {
+        return null;
     }
 }

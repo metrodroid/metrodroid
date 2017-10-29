@@ -23,13 +23,15 @@ package com.codebutler.farebot.transit.ovc;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Parcel;
+import android.support.annotation.Nullable;
 import android.text.TextUtils;
 import android.util.Log;
 
 import com.codebutler.farebot.transit.Station;
 import com.codebutler.farebot.transit.Trip;
 
-import java.util.Date;
+import java.util.Calendar;
+import java.util.GregorianCalendar;
 
 import au.id.micolous.metrodroid.MetrodroidApplication;
 
@@ -60,9 +62,9 @@ public class OVChipTrip extends Trip {
     private final boolean mIsCharge;
     private final boolean mIsPurchase;
     private final boolean mIsBanned;
-    private final Date mTimestamp;
-    private final long mFare;
-    private final Date mExitTimestamp;
+    private final Calendar mTimestamp;
+    private final int mFare;
+    private final Calendar mExitTimestamp;
     private final Station mStartStation;
     private final Station mEndStation;
     private final int mStartStationId;
@@ -147,11 +149,13 @@ public class OVChipTrip extends Trip {
         mIsPurchase = (parcel.readInt() == 1);
         mIsBanned = (parcel.readInt() == 1);
 
-        mFare = parcel.readLong();
-        mTimestamp = new Date(parcel.readLong());
+        mFare = parcel.readInt();
+        mTimestamp = GregorianCalendar.getInstance();
+        mTimestamp.setTimeInMillis(parcel.readLong());
 
         if (parcel.readInt() == 1) {
-            mExitTimestamp = new Date(parcel.readLong());
+            mExitTimestamp = GregorianCalendar.getInstance();
+            mExitTimestamp.setTimeInMillis(parcel.readLong());
         } else {
             mExitTimestamp = null;
         }
@@ -232,12 +236,12 @@ public class OVChipTrip extends Trip {
         parcel.writeInt(mIsPurchase ? 1 : 0);
         parcel.writeInt(mIsBanned ? 1 : 0);
 
-        parcel.writeLong(mFare);
-        parcel.writeLong(mTimestamp.getTime());
+        parcel.writeInt(mFare);
+        parcel.writeLong(mTimestamp.getTimeInMillis());
 
         if (mExitTimestamp != null) {
             parcel.writeInt(1);
-            parcel.writeLong(mExitTimestamp.getTime());
+            parcel.writeLong(mExitTimestamp.getTimeInMillis());
         } else {
             parcel.writeInt(0);
         }
@@ -276,11 +280,6 @@ public class OVChipTrip extends Trip {
     @Override
     public String getShortAgencyName() {
         return OVChipTransitData.getShortAgencyName(mAgency);
-    }
-
-    @Override
-    public String getBalanceString() {
-        return null;
     }
 
     @Override
@@ -336,14 +335,14 @@ public class OVChipTrip extends Trip {
     @Override
     public long getTimestamp() {
         if (mTimestamp != null)
-            return mTimestamp.getTime() / 1000;
+            return mTimestamp.getTimeInMillis() / 1000;
         else
             return 0;
     }
 
     public long getExitTimestamp() {
         if (mExitTimestamp != null)
-            return mExitTimestamp.getTime() / 1000;
+            return mExitTimestamp.getTimeInMillis() / 1000;
         else
             return 0;
     }
@@ -357,8 +356,9 @@ public class OVChipTrip extends Trip {
         return true;
     }
 
+    @Nullable
     @Override
-    public String getFareString() {
-        return OVChipTransitData.convertAmount((int) mFare);
+    public Integer getFare() {
+        return mFare;
     }
 }

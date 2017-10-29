@@ -34,12 +34,16 @@ import com.codebutler.farebot.transit.TransitData;
 
 import org.simpleframework.xml.Serializer;
 
+import java.security.SecureRandom;
+import java.util.Random;
+
 import au.id.micolous.farebot.R;
 import au.id.micolous.metrodroid.MetrodroidApplication;
 
 public class CardBalanceFragment extends Fragment {
     private Card mCard;
     private TransitData mTransitData;
+    private static Random mRNG = new SecureRandom();
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -51,10 +55,19 @@ public class CardBalanceFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_card_balance, container, false);
-        String balance = mTransitData.getBalanceString();
 
+        Integer balance = mTransitData.getBalance();
         if (balance != null) {
-            ((TextView) view.findViewById(R.id.balance)).setText(balance);
+            if (MetrodroidApplication.obfuscateBalance()) {
+                int offset = mRNG.nextInt(100) - 50;
+                double multiplier = (mRNG.nextDouble() * 0.4) + 0.8;
+
+                // Apply offset and multiplier, but always return a positive
+                // balance.
+                balance = Math.abs((int)((balance + offset) * multiplier));
+            }
+            String balanceStr = mTransitData.formatCurrencyString(balance, true);
+            ((TextView) view.findViewById(R.id.balance)).setText(balanceStr);
         }
         return view;
     }

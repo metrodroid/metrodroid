@@ -55,6 +55,7 @@ import com.codebutler.farebot.provider.CardProvider;
 import com.codebutler.farebot.provider.CardsTableColumns;
 import com.codebutler.farebot.transit.TransitIdentity;
 import com.codebutler.farebot.util.ExportHelper;
+import com.codebutler.farebot.util.TripObfuscator;
 import com.codebutler.farebot.util.Utils;
 
 import org.apache.commons.io.FileUtils;
@@ -65,7 +66,8 @@ import java.io.File;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.nio.charset.Charset;
-import java.util.Date;
+import java.util.Calendar;
+import java.util.GregorianCalendar;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -272,10 +274,13 @@ public class CardsFragment extends ListFragment {
         public void bindView(View view, Context context, Cursor cursor) {
             int type = cursor.getInt(cursor.getColumnIndex(CardsTableColumns.TYPE));
             String serial = cursor.getString(cursor.getColumnIndex(CardsTableColumns.TAG_SERIAL));
-            Date scannedAt = new Date(cursor.getLong(cursor.getColumnIndex(CardsTableColumns.SCANNED_AT)));
+            Calendar scannedAt = GregorianCalendar.getInstance();
+            scannedAt.setTimeInMillis(cursor.getLong(cursor.getColumnIndex(CardsTableColumns.SCANNED_AT)));
             String label = cursor.getString(cursor.getColumnIndex(CardsTableColumns.LABEL));
 
-            String cacheKey = serial + scannedAt.getTime();
+            String cacheKey = serial + scannedAt.getTimeInMillis();
+
+            scannedAt = TripObfuscator.maybeObfuscateTS(scannedAt);
 
             if (!mDataCache.containsKey(cacheKey)) {
                 String data = cursor.getString(cursor.getColumnIndex(CardsTableColumns.DATA));
@@ -295,19 +300,31 @@ public class CardsFragment extends ListFragment {
 
             if (identity != null) {
                 if (label != null && !label.equals("")) {
+                    // This is used for imported cards from mfcdump_to_farebotxml.py
+                    // Used for development and testing. We should always show this.
                     textView1.setText(String.format("%s: %s", identity.getName(), label));
-                } else if (identity.getSerialNumber() != null) {
-                    textView1.setText(String.format("%s: %s", identity.getName(), identity.getSerialNumber()));
+                } else if (MetrodroidApplication.hideCardNumbers()) {
+                    // User doesn't want to show any card numbers.
+                    textView1.setText(String.format("%s", identity.getName()));
                 } else {
-                    // textView1.setText(identity.getName());
-                    textView1.setText(String.format("%s: %s", identity.getName(), serial));
+                    // User wants to show card numbers (default).
+                    if (identity.getSerialNumber() != null) {
+                        textView1.setText(String.format("%s: %s", identity.getName(), identity.getSerialNumber()));
+                    } else {
+                        // Fall back to showing the serial number of the NFC chip.
+                        textView1.setText(String.format("%s: %s", identity.getName(), serial));
+                    }
                 }
                 textView2.setText(getString(R.string.scanned_at_format, Utils.timeFormat(scannedAt),
                         Utils.dateFormat(scannedAt)));
 
             } else {
                 textView1.setText(getString(R.string.unknown_card));
-                textView2.setText(String.format("%s - %s", CardType.values()[type].toString(), serial));
+                if (MetrodroidApplication.hideCardNumbers()) {
+                    textView2.setText(String.format("%s", CardType.values()[type].toString()));
+                } else {
+                    textView2.setText(String.format("%s - %s", CardType.values()[type].toString(), serial));
+                }
             }
         }
 

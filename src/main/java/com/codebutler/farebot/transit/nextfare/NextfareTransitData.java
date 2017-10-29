@@ -1,7 +1,7 @@
 /*
  * NextfareTransitData.java
  *
- * Copyright 2015-2016 Michael Farrell <micolous+git@gmail.com>
+ * Copyright 2015-2017 Michael Farrell <micolous+git@gmail.com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -19,6 +19,7 @@
 package com.codebutler.farebot.transit.nextfare;
 
 import android.os.Parcel;
+import android.support.annotation.Nullable;
 import android.util.Log;
 
 import com.codebutler.farebot.card.UnauthorizedException;
@@ -38,16 +39,15 @@ import com.codebutler.farebot.transit.nextfare.record.NextfareTransactionRecord;
 import com.codebutler.farebot.transit.nextfare.record.NextfareTravelPassRecord;
 import com.codebutler.farebot.ui.HeaderListItem;
 import com.codebutler.farebot.ui.ListItem;
+import com.codebutler.farebot.util.TripObfuscator;
 import com.codebutler.farebot.util.Utils;
 
 import java.math.BigInteger;
-import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Calendar;
 import java.util.Collections;
-import java.util.Date;
 import java.util.List;
-import java.util.Locale;
 
 import au.id.micolous.farebot.R;
 
@@ -364,10 +364,14 @@ public class NextfareTransitData extends TransitData {
         return Trip.Mode.OTHER;
     }
 
-
+    @Nullable
     @Override
-    public String getBalanceString() {
-        return NumberFormat.getCurrencyInstance(Locale.US).format((double) mBalance / 100.);
+    public Integer getBalance() {
+        return mBalance;
+    }
+
+    public String formatCurrencyString(int currency, boolean isBalance) {
+        return Utils.formatCurrencyString(currency, isBalance, "USD");
     }
 
     @Override
@@ -416,8 +420,8 @@ public class NextfareTransitData extends TransitData {
         items.add(new ListItem(R.string.nextfare_system_code, Utils.getHexString(mSystemCode)));
         if (mConfig != null) {
             items.add(new ListItem(R.string.nextfare_ticket_class, Integer.valueOf(mConfig.getTicketType()).toString()));
-            Date expiry = mConfig.getExpiry().getTime();
 
+            Calendar expiry = TripObfuscator.maybeObfuscateTS(mConfig.getExpiry());
             items.add(new ListItem(R.string.nextfare_card_expiry, Utils.longDateFormat(expiry)));
         }
 

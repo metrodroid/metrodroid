@@ -24,6 +24,7 @@
 package com.codebutler.farebot.transit.orca;
 
 import android.os.Parcel;
+import android.support.annotation.Nullable;
 
 import com.codebutler.farebot.card.Card;
 import com.codebutler.farebot.card.desfire.DesfireCard;
@@ -60,12 +61,12 @@ public class OrcaTransitData extends TransitData {
     static final int TRANS_TYPE_PASS_USE = 0x60;
 
     private int mSerialNumber;
-    private double mBalance;
+    private int mBalance;
     private Trip[] mTrips;
 
     public OrcaTransitData(Parcel parcel) {
         mSerialNumber = parcel.readInt();
-        mBalance = parcel.readDouble();
+        mBalance = parcel.readInt();
 
         parcel.readInt();
         mTrips = (Trip[]) parcel.readParcelableArray(null);
@@ -116,8 +117,14 @@ public class OrcaTransitData extends TransitData {
     }
 
     @Override
-    public String getBalanceString() {
-        return NumberFormat.getCurrencyInstance(Locale.US).format(mBalance / 100);
+    public String formatCurrencyString(int currency, boolean isBalance) {
+        return Utils.formatCurrencyString(currency, isBalance, "USD");
+    }
+
+    @Override
+    @Nullable
+    public Integer getBalance() {
+        return mBalance;
     }
 
     @Override
@@ -132,11 +139,6 @@ public class OrcaTransitData extends TransitData {
 
     @Override
     public Subscription[] getSubscriptions() {
-        return null;
-    }
-
-    @Override
-    public List<ListItem> getInfo() {
         return null;
     }
 
@@ -181,7 +183,7 @@ public class OrcaTransitData extends TransitData {
 
     public void writeToParcel(Parcel parcel, int flags) {
         parcel.writeInt(mSerialNumber);
-        parcel.writeDouble(mBalance);
+        parcel.writeInt(mBalance);
 
         if (mTrips != null) {
             parcel.writeInt(mTrips.length);

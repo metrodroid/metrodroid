@@ -33,7 +33,8 @@ import com.codebutler.farebot.util.Utils;
 import org.simpleframework.xml.ElementList;
 import org.simpleframework.xml.Root;
 
-import java.util.Date;
+import java.util.Calendar;
+import java.util.GregorianCalendar;
 import java.util.List;
 
 @Root(name = "card")
@@ -43,7 +44,7 @@ public class CEPASCard extends Card {
     @ElementList(name = "histories")
     private List<CEPASHistory> mHistories;
 
-    private CEPASCard(byte[] tagId, Date scannedAt, CEPASPurse[] purses, CEPASHistory[] histories) {
+    private CEPASCard(byte[] tagId, Calendar scannedAt, CEPASPurse[] purses, CEPASHistory[] histories) {
         super(CardType.CEPAS, tagId, scannedAt);
         mPurses = Utils.arrayAsList(purses);
         mHistories = Utils.arrayAsList(histories);
@@ -79,7 +80,7 @@ public class CEPASCard extends Card {
                 tech.close();
         }
 
-        return new CEPASCard(tag.getId(), new Date(), cepasPurses, cepasHistories);
+        return new CEPASCard(tag.getId(), GregorianCalendar.getInstance(), cepasPurses, cepasHistories);
     }
 
     @Override

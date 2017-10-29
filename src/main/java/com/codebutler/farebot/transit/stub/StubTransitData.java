@@ -19,6 +19,7 @@
 package com.codebutler.farebot.transit.stub;
 
 import android.os.Parcel;
+import android.support.annotation.Nullable;
 
 import com.codebutler.farebot.transit.Subscription;
 import com.codebutler.farebot.transit.TransitData;
@@ -45,21 +46,6 @@ public abstract class StubTransitData extends TransitData {
     }
 
     @Override
-    public String getBalanceString() {
-        return null;
-    }
-
-    @Override
-    public Trip[] getTrips() {
-        return null;
-    }
-
-    @Override
-    public Subscription[] getSubscriptions() {
-        return null;
-    }
-
-    @Override
     public void writeToParcel(Parcel parcel, int i) {
     }
 
@@ -75,5 +61,16 @@ public abstract class StubTransitData extends TransitData {
             items.add(new UriListItem(R.string.unknown_more_info, R.string.unknown_more_info_desc, getMoreInfoPage()));
         }
         return items;
+    }
+
+    @Override
+    public String formatCurrencyString(int currency, boolean isBalance) {
+        return null;
+    }
+
+    @Nullable
+    @Override
+    public Integer getBalance() {
+        return null;
     }
 }

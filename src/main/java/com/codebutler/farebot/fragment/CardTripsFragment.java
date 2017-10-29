@@ -27,6 +27,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.Html;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -44,14 +45,15 @@ import com.codebutler.farebot.transit.RefillTrip;
 import com.codebutler.farebot.transit.TransitData;
 import com.codebutler.farebot.transit.Trip;
 import com.codebutler.farebot.transit.orca.OrcaTrip;
+import com.codebutler.farebot.util.TripObfuscator;
 import com.codebutler.farebot.util.Utils;
 
 import org.apache.commons.lang3.StringUtils;
 import org.simpleframework.xml.Serializer;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Collections;
-import java.util.Date;
 import java.util.List;
 
 import au.id.micolous.farebot.R;
@@ -59,6 +61,7 @@ import au.id.micolous.metrodroid.MetrodroidApplication;
 
 
 public class CardTripsFragment extends ListFragment {
+    private static final String TAG = "CardTripsFragment";
     private Card mCard;
     private TransitData mTransitData;
 
@@ -91,7 +94,16 @@ public class CardTripsFragment extends ListFragment {
         Collections.sort(trips, new Trip.Comparator());
 
         if (trips.size() > 0) {
-            setListAdapter(new UseLogListAdapter(getActivity(), trips.toArray(new Trip[trips.size()])));
+            if (MetrodroidApplication.obfuscateTripDates() ||
+                    MetrodroidApplication.obfuscateTripTimes() ||
+                    MetrodroidApplication.obfuscateTripFares()) {
+                trips = TripObfuscator.obfuscateTrips(trips,
+                        MetrodroidApplication.obfuscateTripDates(),
+                        MetrodroidApplication.obfuscateTripTimes(),
+                        MetrodroidApplication.obfuscateTripFares());
+                Collections.sort(trips, new Trip.Comparator());
+            }
+            setListAdapter(new UseLogListAdapter(getActivity(), trips.toArray(new Trip[trips.size()]), mTransitData));
         } else {
             view.findViewById(android.R.id.list).setVisibility(View.GONE);
             view.findViewById(R.id.error_text).setVisibility(View.VISIBLE);
@@ -106,6 +118,7 @@ public class CardTripsFragment extends ListFragment {
         if (trip == null || !(
                 (trip.getStartStation() != null && trip.getStartStation().hasLocation())
                         || (trip.getEndStation() != null && trip.getEndStation().hasLocation()))) {
+            Log.d(TAG, "Oops, couldn't display the trip, despite advertising we could");
             return;
         }
 
@@ -115,8 +128,10 @@ public class CardTripsFragment extends ListFragment {
     }
 
     private static class UseLogListAdapter extends ArrayAdapter<Trip> {
-        public UseLogListAdapter(Context context, Trip[] items) {
+        private TransitData mTransitData;
+        public UseLogListAdapter(Context context, Trip[] items, TransitData transitData) {
             super(context, 0, items);
+            mTransitData = transitData;
         }
 
         @Override
@@ -130,7 +145,7 @@ public class CardTripsFragment extends ListFragment {
 
             Trip trip = getItem(position);
 
-            Date date = new Date(trip.getTimestamp() * 1000);
+            Calendar date = trip.getStartTimestamp();
 
             View listHeader = convertView.findViewById(R.id.list_header);
             if (isFirstInSection(position)) {
@@ -193,7 +208,7 @@ public class CardTripsFragment extends ListFragment {
 
             fareTextView.setVisibility(View.VISIBLE);
             if (trip.hasFare()) {
-                fareTextView.setText(trip.getFareString());
+                fareTextView.setText(mTransitData.formatCurrencyString(trip.getFare(), false));
             } else if (trip instanceof OrcaTrip) {
                 fareTextView.setText(R.string.pass_or_transfer);
             } else {
@@ -226,21 +241,29 @@ public class CardTripsFragment extends ListFragment {
         private boolean isFirstInSection(int position) {
             if (position == 0) return true;
 
-            Date date1 = new Date(getItem(position).getTimestamp() * 1000);
-            Date date2 = new Date(getItem(position - 1).getTimestamp() * 1000);
+            Calendar date1 = getItem(position).getStartTimestamp();
+            Calendar date2 = getItem(position - 1).getStartTimestamp();
 
-            return ((date1.getYear() != date2.getYear()) || (date1.getMonth() != date2.getMonth())
-                    || (date1.getDate() != date2.getDate()));
+            if (date1 == null && date2 != null) return true;
+            if (date1 == null || date2 == null) return false;
+
+            return ((date1.get(Calendar.YEAR) != date2.get(Calendar.YEAR)) ||
+                    (date1.get(Calendar.MONTH) != date2.get(Calendar.MONTH)) ||
+                    (date1.get(Calendar.DAY_OF_MONTH) != date2.get(Calendar.DAY_OF_MONTH)));
         }
 
         public boolean isLastInSection(int position) {
             if (position == getCount() - 1) return true;
 
-            Date date1 = new Date(getItem(position).getTimestamp() * 1000);
-            Date date2 = new Date(getItem(position + 1).getTimestamp() * 1000);
+            Calendar date1 = getItem(position).getStartTimestamp();
+            Calendar date2 = getItem(position + 1).getStartTimestamp();
 
-            return ((date1.getYear() != date2.getYear()) || (date1.getMonth() != date2.getMonth())
-                    || (date1.getDate() != date2.getDate()));
+            if (date1 == null && date2 != null) return true;
+            if (date1 == null || date2 == null) return false;
+
+            return ((date1.get(Calendar.YEAR) != date2.get(Calendar.YEAR)) ||
+                    (date1.get(Calendar.MONTH) != date2.get(Calendar.MONTH)) ||
+                    (date1.get(Calendar.DAY_OF_MONTH) != date2.get(Calendar.DAY_OF_MONTH)));
         }
     }
 }

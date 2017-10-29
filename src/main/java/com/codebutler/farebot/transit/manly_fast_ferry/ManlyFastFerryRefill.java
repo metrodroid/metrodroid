@@ -81,13 +81,8 @@ public class ManlyFastFerryRefill extends Refill {
     }
 
     @Override
-    public long getAmount() {
+    public int getAmount() {
         return mPurse.getTransactionValue();
-    }
-
-    @Override
-    public String getAmountString() {
-        return NumberFormat.getCurrencyInstance(Locale.US).format((double) getAmount() / 100);
     }
 
     @Override

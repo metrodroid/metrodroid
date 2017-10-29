@@ -20,6 +20,7 @@ package com.codebutler.farebot.transit.opal;
 
 import android.net.Uri;
 import android.os.Parcel;
+import android.support.annotation.Nullable;
 import android.text.format.DateFormat;
 
 import com.codebutler.farebot.card.Card;
@@ -30,15 +31,13 @@ import com.codebutler.farebot.transit.TransitIdentity;
 import com.codebutler.farebot.transit.Trip;
 import com.codebutler.farebot.ui.HeaderListItem;
 import com.codebutler.farebot.ui.ListItem;
+import com.codebutler.farebot.util.TripObfuscator;
 import com.codebutler.farebot.util.Utils;
 
-import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.List;
-import java.util.Locale;
 
 import au.id.micolous.farebot.R;
 import au.id.micolous.metrodroid.MetrodroidApplication;
@@ -148,9 +147,15 @@ public class OpalTransitData extends TransitData {
         return NAME;
     }
 
+    @Nullable
     @Override
-    public String getBalanceString() {
-        return NumberFormat.getCurrencyInstance(Locale.US).format((double) mBalance / 100.);
+    public Integer getBalance() {
+        return mBalance;
+    }
+
+    @Override
+    public String formatCurrencyString(int currency, boolean isBalance) {
+        return Utils.formatCurrencyString(currency, isBalance, "AUD");
     }
 
     @Override
@@ -158,7 +163,7 @@ public class OpalTransitData extends TransitData {
         return formatSerialNumber(mSerialNumber, mLastDigit);
     }
 
-    public Calendar getLastTransactionTime() {
+    private Calendar getLastTransactionTime() {
         Calendar cLastTransaction = GregorianCalendar.getInstance();
         cLastTransaction.setTimeInMillis(OPAL_EPOCH.getTimeInMillis());
         cLastTransaction.add(Calendar.DATE, mDay);
@@ -172,11 +177,15 @@ public class OpalTransitData extends TransitData {
 
         items.add(new HeaderListItem(R.string.general));
         items.add(new ListItem(R.string.opal_weekly_trips, Integer.toString(mWeeklyTrips)));
-        items.add(new ListItem(R.string.checksum, Integer.toString(mChecksum)));
+        if (!MetrodroidApplication.hideCardNumbers()) {
+            items.add(new ListItem(R.string.checksum, Integer.toString(mChecksum)));
+        }
 
         items.add(new HeaderListItem(R.string.last_transaction));
-        items.add(new ListItem(R.string.transaction_sequence, Integer.toString(mTransactionNumber)));
-        Date cLastTransactionTime = getLastTransactionTime().getTime();
+        if (!MetrodroidApplication.hideCardNumbers()) {
+            items.add(new ListItem(R.string.transaction_sequence, Integer.toString(mTransactionNumber)));
+        }
+        Calendar cLastTransactionTime = TripObfuscator.maybeObfuscateTS(getLastTransactionTime());
         items.add(new ListItem(R.string.date, DateFormat.getLongDateFormat(MetrodroidApplication.getInstance()).format(cLastTransactionTime)));
         items.add(new ListItem(R.string.time, DateFormat.getTimeFormat(MetrodroidApplication.getInstance()).format(cLastTransactionTime)));
         items.add(new ListItem(R.string.vehicle_type, getVehicleType(mVehicleType)));
@@ -206,12 +215,6 @@ public class OpalTransitData extends TransitData {
             return new Subscription[]{OPAL_AUTOMATIC_TOP_UP};
         }
         return new Subscription[]{};
-    }
-
-    // Unsupported elements
-    @Override
-    public Trip[] getTrips() {
-        return null;
     }
 
     @Override

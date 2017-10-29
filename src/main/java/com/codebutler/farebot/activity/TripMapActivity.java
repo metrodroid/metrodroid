@@ -58,6 +58,8 @@ public class TripMapActivity extends Activity {
 
         Trip trip = getIntent().getParcelableExtra(TRIP_EXTRA);
         if (trip == null) {
+            // Probably passing around an unparcelable trip
+            Log.d(TAG, "Oops, couldn't display map, as we got a null trip!");
             finish();
             return;
         }

@@ -34,6 +34,7 @@ import com.codebutler.farebot.activity.CardInfoActivity;
 import com.codebutler.farebot.card.Card;
 import com.codebutler.farebot.transit.Subscription;
 import com.codebutler.farebot.transit.TransitData;
+import com.codebutler.farebot.util.TripObfuscator;
 import com.codebutler.farebot.util.Utils;
 
 import org.simpleframework.xml.Serializer;
@@ -80,11 +81,11 @@ public class CardSubscriptionsFragment extends ListFragment {
 
             } else {
                 if (subscription.getValidFrom() != null && subscription.getValidTo() != null) {
-                    String validFrom = Utils.dateFormat(subscription.getValidFrom());
-                    String validTo = Utils.dateFormat(subscription.getValidTo());
+                    String validFrom = Utils.dateFormat(TripObfuscator.maybeObfuscateTS(subscription.getValidFrom()));
+                    String validTo = Utils.dateFormat(TripObfuscator.maybeObfuscateTS(subscription.getValidTo()));
                     ((TextView) view.findViewById(R.id.valid)).setText(getString(R.string.valid_format, validFrom, validTo));
                 } else if (subscription.getValidTo() != null) {
-                    String validTo = Utils.dateFormat(subscription.getValidTo());
+                    String validTo = Utils.dateFormat(TripObfuscator.maybeObfuscateTS(subscription.getValidTo()));
                     ((TextView) view.findViewById(R.id.valid)).setText(getString(R.string.valid_to_format, validTo));
                 } else {
                     ((TextView) view.findViewById(R.id.valid)).setText(R.string.valid_not_used);

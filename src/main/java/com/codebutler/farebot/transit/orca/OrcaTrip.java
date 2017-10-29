@@ -25,6 +25,7 @@
 package com.codebutler.farebot.transit.orca;
 
 import android.os.Parcel;
+import android.support.annotation.Nullable;
 
 import com.codebutler.farebot.card.desfire.files.DesfireRecord;
 import com.codebutler.farebot.transit.Station;
@@ -68,9 +69,10 @@ public class OrcaTrip extends Trip {
             .put(10101, new Station("Seattle Terminal", "Seattle", "47.602722", "-122.338512"))
             .put(10103, new Station("Bainbridge Island Terminal", "Bainbridge", "47.62362", "-122.51082"))
             .build();
+
     final long mTimestamp;
     final long mCoachNum;
-    final long mFare;
+    final int mFare;
     final long mNewBalance;
     final long mAgency;
     final long mTransType;
@@ -83,6 +85,7 @@ public class OrcaTrip extends Trip {
             usefulData[i] = ((long) useData[i]) & 0xFF;
         }
 
+        // FIXME: replace with bitslicing code
         mTimestamp = ((0x0F & usefulData[3]) << 28)
                 | (usefulData[4] << 20)
                 | (usefulData[5] << 12)
@@ -95,7 +98,7 @@ public class OrcaTrip extends Trip {
             // FIXME: This appears to be some sort of special case for transfers and passes.
             mFare = 0;
         } else {
-            mFare = (usefulData[15] << 7) | (usefulData[16] >> 1);
+            mFare = (int)((usefulData[15] << 7) | (usefulData[16] >> 1));
         }
 
         mNewBalance = (usefulData[34] << 8) | usefulData[35];
@@ -106,7 +109,7 @@ public class OrcaTrip extends Trip {
     OrcaTrip(Parcel parcel) {
         mTimestamp = parcel.readLong();
         mCoachNum = parcel.readLong();
-        mFare = parcel.readLong();
+        mFare = parcel.readInt();
         mNewBalance = parcel.readLong();
         mAgency = parcel.readLong();
         mTransType = parcel.readLong();
@@ -178,18 +181,14 @@ public class OrcaTrip extends Trip {
     }
 
     @Override
-    public String getFareString() {
-        return NumberFormat.getCurrencyInstance(Locale.US).format(mFare / 100.0);
-    }
-
-    @Override
     public boolean hasFare() {
         return true;
     }
 
     @Override
-    public String getBalanceString() {
-        return NumberFormat.getCurrencyInstance(Locale.US).format(mNewBalance / 100);
+    @Nullable
+    public Integer getFare() {
+        return mFare;
     }
 
     @Override
@@ -276,7 +275,7 @@ public class OrcaTrip extends Trip {
     public void writeToParcel(Parcel parcel, int flags) {
         parcel.writeLong(mTimestamp);
         parcel.writeLong(mCoachNum);
-        parcel.writeLong(mFare);
+        parcel.writeInt(mFare);
         parcel.writeLong(mNewBalance);
         parcel.writeLong(mAgency);
         parcel.writeLong(mTransType);

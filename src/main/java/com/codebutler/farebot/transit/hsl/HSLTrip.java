@@ -19,6 +19,7 @@
 package com.codebutler.farebot.transit.hsl;
 
 import android.os.Parcel;
+import android.support.annotation.Nullable;
 
 import com.codebutler.farebot.card.desfire.files.DesfireRecord;
 import com.codebutler.farebot.transit.Station;
@@ -44,7 +45,7 @@ public class HSLTrip extends Trip {
     String mLine;
     long mVehicleNumber;
     long mTimestamp;
-    long mFare;
+    int mFare;
     long mArvo;
     long mExpireTimestamp;
     long mPax;
@@ -62,7 +63,7 @@ public class HSLTrip extends Trip {
         mTimestamp = HSLTransitData.cardDateToTimestamp(HSLTransitData.bitsToLong(1, 14, usefulData), HSLTransitData.bitsToLong(15, 11, usefulData));
         mExpireTimestamp = HSLTransitData.cardDateToTimestamp(HSLTransitData.bitsToLong(26, 14, usefulData), HSLTransitData.bitsToLong(40, 11, usefulData));
 
-        mFare = HSLTransitData.bitsToLong(51, 14, usefulData);
+        mFare = (int)HSLTransitData.bitsToLong(51, 14, usefulData);
 
         mPax = HSLTransitData.bitsToLong(65, 5, usefulData);
         mLine = null;
@@ -77,7 +78,7 @@ public class HSLTrip extends Trip {
         mArvo = parcel.readLong();
         mTimestamp = parcel.readLong();
         mExpireTimestamp = parcel.readLong();
-        mFare = parcel.readLong();
+        mFare = parcel.readInt();
         mPax = parcel.readLong();
         mNewBalance = parcel.readLong();
         mLine = null;
@@ -85,7 +86,8 @@ public class HSLTrip extends Trip {
     }
 
     public HSLTrip() {
-        mArvo = mTimestamp = mExpireTimestamp = mFare = mPax = mNewBalance = mVehicleNumber = -1;
+        mArvo = mTimestamp = mExpireTimestamp = mPax = mNewBalance = mVehicleNumber = -1;
+        mFare = -1;
         mLine = null;
     }
 
@@ -132,18 +134,14 @@ public class HSLTrip extends Trip {
     }
 
     @Override
-    public String getFareString() {
-        return NumberFormat.getCurrencyInstance(Locale.GERMANY).format(mFare / 100.0);
-    }
-
-    @Override
     public boolean hasFare() {
         return true;
     }
 
+    @Nullable
     @Override
-    public String getBalanceString() {
-        return NumberFormat.getCurrencyInstance(Locale.GERMANY).format(mNewBalance / 100);
+    public Integer getFare() {
+        return mFare;
     }
 
     @Override
@@ -199,7 +197,7 @@ public class HSLTrip extends Trip {
         parcel.writeLong(mArvo);
         parcel.writeLong(mTimestamp);
         parcel.writeLong(mExpireTimestamp);
-        parcel.writeLong(mFare);
+        parcel.writeInt(mFare);
         parcel.writeLong(mPax);
         parcel.writeLong(mNewBalance);
     }

@@ -21,12 +21,15 @@ package com.codebutler.farebot.transit.myki;
 
 import android.net.Uri;
 import android.os.Parcel;
+import android.support.annotation.Nullable;
 
 import com.codebutler.farebot.card.Card;
 import com.codebutler.farebot.card.desfire.DesfireCard;
 import com.codebutler.farebot.transit.TransitIdentity;
 import com.codebutler.farebot.transit.stub.StubTransitData;
 import com.codebutler.farebot.util.Utils;
+
+import java.util.Locale;
 
 /**
  * Transit data type for Myki (Melbourne, AU).
@@ -67,7 +70,7 @@ public class MykiTransitData extends StubTransitData {
     }
 
     private static String formatSerialNumber(long serialNumber1, long serialNumber2) {
-        String formattedSerial = String.format("%06d%08d", serialNumber1, serialNumber2);
+        String formattedSerial = String.format(Locale.ENGLISH, "%06d%08d", serialNumber1, serialNumber2);
         return formattedSerial + Utils.calculateLuhn(formattedSerial);
     }
 

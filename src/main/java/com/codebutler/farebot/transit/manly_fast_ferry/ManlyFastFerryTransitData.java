@@ -20,6 +20,7 @@
 package com.codebutler.farebot.transit.manly_fast_ferry;
 
 import android.os.Parcel;
+import android.support.annotation.Nullable;
 
 import com.codebutler.farebot.card.UnauthorizedException;
 import com.codebutler.farebot.card.classic.ClassicBlock;
@@ -36,16 +37,14 @@ import com.codebutler.farebot.transit.manly_fast_ferry.record.ManlyFastFerryPurs
 import com.codebutler.farebot.transit.manly_fast_ferry.record.ManlyFastFerryRecord;
 import com.codebutler.farebot.ui.HeaderListItem;
 import com.codebutler.farebot.ui.ListItem;
+import com.codebutler.farebot.util.TripObfuscator;
 import com.codebutler.farebot.util.Utils;
 
-import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
-import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.List;
-import java.util.Locale;
 
 import au.id.micolous.farebot.R;
 
@@ -71,6 +70,18 @@ public class ManlyFastFerryTransitData extends TransitData {
     private Refill[] mRefills;
 
     // Parcel
+    public static final Creator<ManlyFastFerryTransitData> CREATOR = new Creator<ManlyFastFerryTransitData>() {
+        @Override
+        public ManlyFastFerryTransitData createFromParcel(Parcel in) {
+            return new ManlyFastFerryTransitData(in);
+        }
+
+        @Override
+        public ManlyFastFerryTransitData[] newArray(int size) {
+            return new ManlyFastFerryTransitData[size];
+        }
+    };
+
     @SuppressWarnings("UnusedDeclaration")
     public ManlyFastFerryTransitData(Parcel parcel) {
         mSerialNumber = parcel.readString();
@@ -189,8 +200,14 @@ public class ManlyFastFerryTransitData extends TransitData {
     }
 
     @Override
-    public String getBalanceString() {
-        return NumberFormat.getCurrencyInstance(Locale.US).format((double) mBalance / 100.);
+    @Nullable
+    public Integer getBalance() {
+        return mBalance;
+    }
+
+    @Override
+    public String formatCurrencyString(int currency, boolean isBalance) {
+        return Utils.formatCurrencyString(currency, isBalance, "AUD");
     }
 
     // Structures
@@ -210,17 +227,11 @@ public class ManlyFastFerryTransitData extends TransitData {
     }
 
     @Override
-    public Subscription[] getSubscriptions() {
-        // There is no concept of "subscriptions".
-        return null;
-    }
-
-    @Override
     public List<ListItem> getInfo() {
         ArrayList<ListItem> items = new ArrayList<>();
         items.add(new HeaderListItem(R.string.general));
-        Date cLastTransactionTime = mEpochDate.getTime();
-        items.add(new ListItem(R.string.card_epoch, Utils.longDateFormat(cLastTransactionTime)));
+        items.add(new ListItem(R.string.card_epoch,
+                Utils.longDateFormat(TripObfuscator.maybeObfuscateTS(mEpochDate))));
 
         return items;
     }
@@ -229,6 +240,4 @@ public class ManlyFastFerryTransitData extends TransitData {
     public String getCardName() {
         return NAME;
     }
-
-
 }

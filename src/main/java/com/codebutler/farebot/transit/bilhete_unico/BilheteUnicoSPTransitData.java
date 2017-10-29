@@ -22,6 +22,7 @@
 package com.codebutler.farebot.transit.bilhete_unico;
 
 import android.os.Parcel;
+import android.support.annotation.Nullable;
 
 import com.codebutler.farebot.card.Card;
 import com.codebutler.farebot.card.UnauthorizedException;
@@ -32,6 +33,7 @@ import com.codebutler.farebot.transit.TransitIdentity;
 import com.codebutler.farebot.transit.Trip;
 import com.codebutler.farebot.transit.ovc.OVChipCredit;
 import com.codebutler.farebot.ui.ListItem;
+import com.codebutler.farebot.util.Utils;
 
 import java.text.NumberFormat;
 import java.util.Currency;
@@ -86,13 +88,6 @@ public class BilheteUnicoSPTransitData extends TransitData {
         return new TransitIdentity(NAME, null);
     }
 
-    public static String convertAmount(int amount) {
-        NumberFormat formatter = NumberFormat.getCurrencyInstance();
-        formatter.setCurrency(Currency.getInstance("BRL"));
-
-        return formatter.format((double) amount / 100.0);
-    }
-
     @Override
     public String getCardName() {
         return NAME;
@@ -104,8 +99,17 @@ public class BilheteUnicoSPTransitData extends TransitData {
     }
 
     @Override
-    public String getBalanceString() {
-        return BilheteUnicoSPTransitData.convertAmount(mCredit.getCredit());
+    @Nullable
+    public Integer getBalance() {
+        if (mCredit == null) {
+            return null;
+        }
+        return mCredit.getCredit();
+    }
+
+    @Override
+    public String formatCurrencyString(int currency, boolean isBalance) {
+        return Utils.formatCurrencyString(currency, isBalance, "BRL");
     }
 
     @Override
@@ -118,13 +122,4 @@ public class BilheteUnicoSPTransitData extends TransitData {
         return null;
     }
 
-    @Override
-    public List<ListItem> getInfo() {
-        return null;
-    }
-
-    @Override
-    public Subscription[] getSubscriptions() {
-        return null;
-    }
 }
