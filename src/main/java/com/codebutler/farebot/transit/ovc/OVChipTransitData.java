@@ -34,15 +34,11 @@ import com.codebutler.farebot.ui.ListItem;
 import com.codebutler.farebot.util.ImmutableMapBuilder;
 import com.codebutler.farebot.util.Utils;
 
-import java.text.DecimalFormat;
-import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Collections;
 import java.util.Comparator;
-import java.util.Currency;
-import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -222,11 +218,11 @@ public class OVChipTransitData extends TransitData {
         return new TransitIdentity("OV-chipkaart", id);
     }
 
-    public static Date convertDate(int date) {
+    public static Calendar convertDate(int date) {
         return convertDate(date, 0);
     }
 
-    public static Date convertDate(int date, int time) {
+    public static Calendar convertDate(int date, int time) {
         Calendar calendar = Calendar.getInstance();
         calendar.set(Calendar.YEAR, 1997);
         calendar.set(Calendar.MONTH, Calendar.JANUARY);
@@ -236,7 +232,7 @@ public class OVChipTransitData extends TransitData {
 
         calendar.add(Calendar.DATE, date);
 
-        return calendar.getTime();
+        return calendar;
     }
 
     public String formatCurrencyString(int amount, boolean isBalance) {

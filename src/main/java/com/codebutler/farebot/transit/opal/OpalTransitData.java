@@ -31,16 +31,13 @@ import com.codebutler.farebot.transit.TransitIdentity;
 import com.codebutler.farebot.transit.Trip;
 import com.codebutler.farebot.ui.HeaderListItem;
 import com.codebutler.farebot.ui.ListItem;
+import com.codebutler.farebot.util.TripObfuscator;
 import com.codebutler.farebot.util.Utils;
 
-import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Currency;
-import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.List;
-import java.util.Locale;
 
 import au.id.micolous.farebot.R;
 import au.id.micolous.metrodroid.MetrodroidApplication;
@@ -166,7 +163,7 @@ public class OpalTransitData extends TransitData {
         return formatSerialNumber(mSerialNumber, mLastDigit);
     }
 
-    public Calendar getLastTransactionTime() {
+    private Calendar getLastTransactionTime() {
         Calendar cLastTransaction = GregorianCalendar.getInstance();
         cLastTransaction.setTimeInMillis(OPAL_EPOCH.getTimeInMillis());
         cLastTransaction.add(Calendar.DATE, mDay);
@@ -184,7 +181,7 @@ public class OpalTransitData extends TransitData {
 
         items.add(new HeaderListItem(R.string.last_transaction));
         items.add(new ListItem(R.string.transaction_sequence, Integer.toString(mTransactionNumber)));
-        Date cLastTransactionTime = getLastTransactionTime().getTime();
+        Calendar cLastTransactionTime = TripObfuscator.maybeObfuscateTS(getLastTransactionTime());
         items.add(new ListItem(R.string.date, DateFormat.getLongDateFormat(MetrodroidApplication.getInstance()).format(cLastTransactionTime)));
         items.add(new ListItem(R.string.time, DateFormat.getTimeFormat(MetrodroidApplication.getInstance()).format(cLastTransactionTime)));
         items.add(new ListItem(R.string.vehicle_type, getVehicleType(mVehicleType)));

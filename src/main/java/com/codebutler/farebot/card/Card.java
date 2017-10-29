@@ -18,7 +18,6 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-
 package com.codebutler.farebot.card;
 
 import android.nfc.Tag;
@@ -39,7 +38,7 @@ import org.simpleframework.xml.Attribute;
 import org.simpleframework.xml.Serializer;
 
 import java.io.StringWriter;
-import java.util.Date;
+import java.util.Calendar;
 
 public abstract class Card {
     // This must be protected, not private, as otherwise the XML deserialiser fails to read the
@@ -52,16 +51,16 @@ public abstract class Card {
     @Attribute(name = "id")
     private HexString mTagId;
     @Attribute(name = "scanned_at")
-    private Date mScannedAt;
+    private Calendar mScannedAt;
 
     protected Card() {
     }
 
-    protected Card(CardType type, byte[] tagId, Date scannedAt) {
+    protected Card(CardType type, byte[] tagId, Calendar scannedAt) {
         this(type, tagId, scannedAt, null);
     }
 
-    protected Card(CardType type, byte[] tagId, Date scannedAt, String label) {
+    protected Card(CardType type, byte[] tagId, Calendar scannedAt, String label) {
         mType = type;
         mTagId = new HexString(tagId);
         mScannedAt = scannedAt;
@@ -112,7 +111,7 @@ public abstract class Card {
         return mTagId.getData();
     }
 
-    public Date getScannedAt() {
+    public Calendar getScannedAt() {
         return mScannedAt;
     }
 

@@ -27,22 +27,22 @@ import java.util.Map;
 import au.id.micolous.farebot.R;
 
 final class OpalData {
-    static final int VEHICLE_RAIL = 0x00;
-    static final int VEHICLE_FERRY_LR = 0x01; // also Light Rail
-    static final int VEHICLE_BUS = 0x02;
+    private static final int VEHICLE_RAIL = 0x00;
+    private static final int VEHICLE_FERRY_LR = 0x01; // also Light Rail
+    private static final int VEHICLE_BUS = 0x02;
 
-    static final int ACTION_NONE = 0x00;
-    static final int ACTION_NEW_JOURNEY = 0x01;
-    static final int ACTION_TRANSFER_SAME_MODE = 0x02;
-    static final int ACTION_TRANSFER_DIFF_MODE = 0x03;
-    static final int ACTION_MANLY_NEW_JOURNEY = 0x04;
-    static final int ACTION_MANLY_TRANSFER_SAME_MODE = 0x05;
-    static final int ACTION_MANLY_TRANSFER_DIFF_MODE = 0x06;
-    static final int ACTION_JOURNEY_COMPLETED_DISTANCE = 0x07;
-    static final int ACTION_JOURNEY_COMPLETED_FLAT_RATE = 0x08;
-    static final int ACTION_JOURNEY_COMPLETED_AUTO_ON = 0x09;
-    static final int ACTION_JOURNEY_COMPLETED_AUTO_OFF = 0x0a;
-    static final int ACTION_TAP_ON_REVERSAL = 0x0b;
+    private static final int ACTION_NONE = 0x00;
+    private static final int ACTION_NEW_JOURNEY = 0x01;
+    private static final int ACTION_TRANSFER_SAME_MODE = 0x02;
+    private static final int ACTION_TRANSFER_DIFF_MODE = 0x03;
+    private static final int ACTION_MANLY_NEW_JOURNEY = 0x04;
+    private static final int ACTION_MANLY_TRANSFER_SAME_MODE = 0x05;
+    private static final int ACTION_MANLY_TRANSFER_DIFF_MODE = 0x06;
+    private static final int ACTION_JOURNEY_COMPLETED_DISTANCE = 0x07;
+    private static final int ACTION_JOURNEY_COMPLETED_FLAT_RATE = 0x08;
+    private static final int ACTION_JOURNEY_COMPLETED_AUTO_ON = 0x09;
+    private static final int ACTION_JOURNEY_COMPLETED_AUTO_OFF = 0x0a;
+    private static final int ACTION_TAP_ON_REVERSAL = 0x0b;
 
 
     @SuppressLint("UseSparseArrays")

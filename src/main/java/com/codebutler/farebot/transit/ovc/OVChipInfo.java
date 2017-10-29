@@ -26,14 +26,14 @@ import android.os.Parcelable;
 import com.codebutler.farebot.util.Utils;
 
 import java.util.Calendar;
-import java.util.Date;
+import java.util.GregorianCalendar;
 
 public class OVChipInfo implements Parcelable {
     public static final Parcelable.Creator<OVChipInfo> CREATOR = new Parcelable.Creator<OVChipInfo>() {
         public OVChipInfo createFromParcel(Parcel source) {
             int company;
             int expdate;
-            Date birthdate;
+            Calendar birthdate = null;
             int active;
             int limit;
             int charge;
@@ -41,7 +41,11 @@ public class OVChipInfo implements Parcelable {
 
             company = source.readInt();
             expdate = source.readInt();
-            birthdate = new Date(source.readLong());
+            long b = source.readLong();
+            if (b != 0) {
+                birthdate = GregorianCalendar.getInstance();
+                birthdate.setTimeInMillis(b);
+            }
             active = source.readInt();
             limit = source.readInt();
             charge = source.readInt();
@@ -57,7 +61,7 @@ public class OVChipInfo implements Parcelable {
     };
     private final int mCompany;
     private final int mExpdate;
-    private final Date mBirthdate;
+    private final Calendar mBirthdate;
     private final int mActive;
     private final int mLimit;
     private final int mCharge;
@@ -66,7 +70,7 @@ public class OVChipInfo implements Parcelable {
     public OVChipInfo(
             int company,
             int expdate,
-            Date birthdate,
+            Calendar birthdate,
             int active,
             int limit,
             int charge,
@@ -88,7 +92,6 @@ public class OVChipInfo implements Parcelable {
 
         int company;
         int expdate;
-        Date birthdate = new Date();
         int active = 0;
         int limit = 0;
         int charge = 0;
@@ -102,21 +105,21 @@ public class OVChipInfo implements Parcelable {
             int month = Utils.convertBCDtoInteger(data[16]);
             int day = Utils.convertBCDtoInteger(data[17]);
 
-            Calendar calendar = Calendar.getInstance();
-            calendar.set(Calendar.YEAR, year);
-            calendar.set(Calendar.MONTH, month - 1);
-            calendar.set(Calendar.DAY_OF_MONTH, day);
-            birthdate = calendar.getTime();
+            mBirthdate = Calendar.getInstance();
+            mBirthdate.set(Calendar.YEAR, year);
+            mBirthdate.set(Calendar.MONTH, month - 1);
+            mBirthdate.set(Calendar.DAY_OF_MONTH, day);
 
             active = (data[22] >> 5) & (byte) 0x07;
             limit = (((char) data[22] & (char) 0x1F) << 11) | (((char) data[23] & (char) 0xFF) << 3) | (((char) data[24] >> 5) & (char) 0x07);
             charge = (((char) data[24] & (char) 0x1F) << 11) | (((char) data[25] & (char) 0xFF) << 3) | (((char) data[26] >> 5) & (char) 0x07);
             unknown = (((char) data[26] & (char) 0x1F) << 11) | (((char) data[27] & (char) 0xFF) << 3) | (((char) data[28] >> 5) & (char) 0x07);
+        } else {
+            mBirthdate = null;
         }
 
         mCompany = company;
         mExpdate = expdate;
-        mBirthdate = birthdate;
         mActive = active;
         mLimit = limit;
         mCharge = charge;
@@ -131,7 +134,7 @@ public class OVChipInfo implements Parcelable {
         return mExpdate;
     }
 
-    public Date getBirthdate() {
+    public Calendar getBirthdate() {
         return mBirthdate;
     }
 
@@ -158,7 +161,7 @@ public class OVChipInfo implements Parcelable {
     public void writeToParcel(Parcel parcel, int flags) {
         parcel.writeInt(mCompany);
         parcel.writeInt(mExpdate);
-        parcel.writeLong(mBirthdate.getTime());
+        parcel.writeLong(mBirthdate == null ? 0 : mBirthdate.getTimeInMillis());
         parcel.writeInt(mActive);
         parcel.writeInt(mLimit);
         parcel.writeInt(mCharge);

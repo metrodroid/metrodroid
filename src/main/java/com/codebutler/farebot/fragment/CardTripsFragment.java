@@ -52,8 +52,8 @@ import org.apache.commons.lang3.StringUtils;
 import org.simpleframework.xml.Serializer;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Collections;
-import java.util.Date;
 import java.util.List;
 
 import au.id.micolous.farebot.R;
@@ -145,7 +145,7 @@ public class CardTripsFragment extends ListFragment {
 
             Trip trip = getItem(position);
 
-            Date date = new Date(trip.getTimestamp() * 1000);
+            Calendar date = trip.getStartTimestamp();
 
             View listHeader = convertView.findViewById(R.id.list_header);
             if (isFirstInSection(position)) {
@@ -241,21 +241,29 @@ public class CardTripsFragment extends ListFragment {
         private boolean isFirstInSection(int position) {
             if (position == 0) return true;
 
-            Date date1 = new Date(getItem(position).getTimestamp() * 1000);
-            Date date2 = new Date(getItem(position - 1).getTimestamp() * 1000);
+            Calendar date1 = getItem(position).getStartTimestamp();
+            Calendar date2 = getItem(position - 1).getStartTimestamp();
 
-            return ((date1.getYear() != date2.getYear()) || (date1.getMonth() != date2.getMonth())
-                    || (date1.getDate() != date2.getDate()));
+            if (date1 == null && date2 != null) return true;
+            if (date1 == null || date2 == null) return false;
+
+            return ((date1.get(Calendar.YEAR) != date2.get(Calendar.YEAR)) ||
+                    (date1.get(Calendar.MONTH) != date2.get(Calendar.MONTH)) ||
+                    (date1.get(Calendar.DAY_OF_MONTH) != date2.get(Calendar.DAY_OF_MONTH)));
         }
 
         public boolean isLastInSection(int position) {
             if (position == getCount() - 1) return true;
 
-            Date date1 = new Date(getItem(position).getTimestamp() * 1000);
-            Date date2 = new Date(getItem(position + 1).getTimestamp() * 1000);
+            Calendar date1 = getItem(position).getStartTimestamp();
+            Calendar date2 = getItem(position + 1).getStartTimestamp();
 
-            return ((date1.getYear() != date2.getYear()) || (date1.getMonth() != date2.getMonth())
-                    || (date1.getDate() != date2.getDate()));
+            if (date1 == null && date2 != null) return true;
+            if (date1 == null || date2 == null) return false;
+
+            return ((date1.get(Calendar.YEAR) != date2.get(Calendar.YEAR)) ||
+                    (date1.get(Calendar.MONTH) != date2.get(Calendar.MONTH)) ||
+                    (date1.get(Calendar.DAY_OF_MONTH) != date2.get(Calendar.DAY_OF_MONTH)));
         }
     }
 }

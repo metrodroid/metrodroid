@@ -42,9 +42,9 @@ import net.kazzz.felica.lib.Util;
 
 import org.apache.commons.lang3.ArrayUtils;
 
-import java.text.NumberFormat;
-import java.util.Date;
-import java.util.Locale;
+import java.util.Calendar;
+import java.util.GregorianCalendar;
+
 
 public class SuicaTrip extends Trip {
     public static final Creator<SuicaTrip> CREATOR = new Creator<SuicaTrip>() {
@@ -63,7 +63,7 @@ public class SuicaTrip extends Trip {
     private final boolean mIsBus;
     private final boolean mIsCharge;
     private final int mFare;
-    private final Date mTimestamp;
+    private final Calendar mTimestamp;
     private final int mRegionCode;
     private int mRailEntranceLineCode;
     private int mRailEntranceStationCode;
@@ -149,7 +149,8 @@ public class SuicaTrip extends Trip {
         mIsCharge = (parcel.readInt() == 1);
 
         mFare = parcel.readInt();
-        mTimestamp = new Date(parcel.readLong());
+        mTimestamp = GregorianCalendar.getInstance();
+        mTimestamp.setTimeInMillis(parcel.readLong());
         mRegionCode = parcel.readInt();
 
         mRailEntranceLineCode = parcel.readInt();
@@ -169,7 +170,7 @@ public class SuicaTrip extends Trip {
     @Override
     public long getTimestamp() {
         if (mTimestamp != null)
-            return mTimestamp.getTime() / 1000;
+            return mTimestamp.getTimeInMillis() / 1000;
         else
             return 0;
     }
@@ -335,7 +336,7 @@ public class SuicaTrip extends Trip {
         parcel.writeInt(mIsCharge ? 1 : 0);
 
         parcel.writeInt(mFare);
-        parcel.writeLong(mTimestamp.getTime());
+        parcel.writeLong(mTimestamp.getTimeInMillis());
         parcel.writeInt(mRegionCode);
 
         parcel.writeInt(mRailEntranceLineCode);

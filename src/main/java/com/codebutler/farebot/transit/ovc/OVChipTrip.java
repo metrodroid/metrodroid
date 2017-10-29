@@ -30,7 +30,8 @@ import android.util.Log;
 import com.codebutler.farebot.transit.Station;
 import com.codebutler.farebot.transit.Trip;
 
-import java.util.Date;
+import java.util.Calendar;
+import java.util.GregorianCalendar;
 
 import au.id.micolous.metrodroid.MetrodroidApplication;
 
@@ -61,9 +62,9 @@ public class OVChipTrip extends Trip {
     private final boolean mIsCharge;
     private final boolean mIsPurchase;
     private final boolean mIsBanned;
-    private final Date mTimestamp;
+    private final Calendar mTimestamp;
     private final int mFare;
-    private final Date mExitTimestamp;
+    private final Calendar mExitTimestamp;
     private final Station mStartStation;
     private final Station mEndStation;
     private final int mStartStationId;
@@ -149,10 +150,12 @@ public class OVChipTrip extends Trip {
         mIsBanned = (parcel.readInt() == 1);
 
         mFare = parcel.readInt();
-        mTimestamp = new Date(parcel.readLong());
+        mTimestamp = GregorianCalendar.getInstance();
+        mTimestamp.setTimeInMillis(parcel.readLong());
 
         if (parcel.readInt() == 1) {
-            mExitTimestamp = new Date(parcel.readLong());
+            mExitTimestamp = GregorianCalendar.getInstance();
+            mExitTimestamp.setTimeInMillis(parcel.readLong());
         } else {
             mExitTimestamp = null;
         }
@@ -234,11 +237,11 @@ public class OVChipTrip extends Trip {
         parcel.writeInt(mIsBanned ? 1 : 0);
 
         parcel.writeInt(mFare);
-        parcel.writeLong(mTimestamp.getTime());
+        parcel.writeLong(mTimestamp.getTimeInMillis());
 
         if (mExitTimestamp != null) {
             parcel.writeInt(1);
-            parcel.writeLong(mExitTimestamp.getTime());
+            parcel.writeLong(mExitTimestamp.getTimeInMillis());
         } else {
             parcel.writeInt(0);
         }
@@ -332,14 +335,14 @@ public class OVChipTrip extends Trip {
     @Override
     public long getTimestamp() {
         if (mTimestamp != null)
-            return mTimestamp.getTime() / 1000;
+            return mTimestamp.getTimeInMillis() / 1000;
         else
             return 0;
     }
 
     public long getExitTimestamp() {
         if (mExitTimestamp != null)
-            return mExitTimestamp.getTime() / 1000;
+            return mExitTimestamp.getTimeInMillis() / 1000;
         else
             return 0;
     }

@@ -49,7 +49,8 @@ import org.simpleframework.xml.Root;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Date;
+import java.util.Calendar;
+import java.util.GregorianCalendar;
 import java.util.List;
 
 @Root(name = "card")
@@ -66,7 +67,7 @@ public class FelicaCard extends Card {
 
     private FelicaCard() { /* For XML Serializer */ }
 
-    public FelicaCard(byte[] tagId, Date scannedAt, FeliCaLib.IDm idm, FeliCaLib.PMm pmm, FelicaSystem[] systems) {
+    public FelicaCard(byte[] tagId, Calendar scannedAt, FeliCaLib.IDm idm, FeliCaLib.PMm pmm, FelicaSystem[] systems) {
         super(CardType.FeliCa, tagId, scannedAt);
         mIDm = idm;
         mPMm = pmm;
@@ -185,7 +186,7 @@ public class FelicaCard extends Card {
         }
 
         FelicaSystem[] systemsArray = systems.toArray(new FelicaSystem[systems.size()]);
-        return new FelicaCard(tagId, new Date(), idm, pmm, systemsArray);
+        return new FelicaCard(tagId, GregorianCalendar.getInstance(), idm, pmm, systemsArray);
     }
 
     public FeliCaLib.IDm getIDm() {

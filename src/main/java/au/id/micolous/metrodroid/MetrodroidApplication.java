@@ -46,7 +46,7 @@ import com.codebutler.farebot.xml.CardTypeTransform;
 import com.codebutler.farebot.xml.ClassicSectorConverter;
 import com.codebutler.farebot.xml.DesfireFileConverter;
 import com.codebutler.farebot.xml.DesfireFileSettingsConverter;
-import com.codebutler.farebot.xml.EpochDateTransform;
+import com.codebutler.farebot.xml.EpochCalendarTransform;
 import com.codebutler.farebot.xml.FelicaIDmTransform;
 import com.codebutler.farebot.xml.FelicaPMmTransform;
 import com.codebutler.farebot.xml.HexString;
@@ -66,7 +66,8 @@ import org.simpleframework.xml.stream.OutputNode;
 import org.simpleframework.xml.transform.RegistryMatcher;
 
 import java.io.File;
-import java.util.Date;
+import java.util.Calendar;
+import java.util.GregorianCalendar;
 
 import au.id.micolous.farebot.R;
 
@@ -123,7 +124,8 @@ public class MetrodroidApplication extends Application {
 
             matcher.bind(HexString.class, HexString.Transform.class);
             matcher.bind(Base64String.class, Base64String.Transform.class);
-            matcher.bind(Date.class, EpochDateTransform.class);
+            matcher.bind(Calendar.class, EpochCalendarTransform.class);
+            matcher.bind(GregorianCalendar.class, EpochCalendarTransform.class);
             matcher.bind(FeliCaLib.IDm.class, FelicaIDmTransform.class);
             matcher.bind(FeliCaLib.PMm.class, FelicaPMmTransform.class);
             matcher.bind(CardType.class, CardTypeTransform.class);

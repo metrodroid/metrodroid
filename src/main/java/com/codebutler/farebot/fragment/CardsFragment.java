@@ -65,7 +65,8 @@ import java.io.File;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.nio.charset.Charset;
-import java.util.Date;
+import java.util.Calendar;
+import java.util.GregorianCalendar;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -272,10 +273,11 @@ public class CardsFragment extends ListFragment {
         public void bindView(View view, Context context, Cursor cursor) {
             int type = cursor.getInt(cursor.getColumnIndex(CardsTableColumns.TYPE));
             String serial = cursor.getString(cursor.getColumnIndex(CardsTableColumns.TAG_SERIAL));
-            Date scannedAt = new Date(cursor.getLong(cursor.getColumnIndex(CardsTableColumns.SCANNED_AT)));
+            Calendar scannedAt = GregorianCalendar.getInstance();
+            scannedAt.setTimeInMillis(cursor.getLong(cursor.getColumnIndex(CardsTableColumns.SCANNED_AT)));
             String label = cursor.getString(cursor.getColumnIndex(CardsTableColumns.LABEL));
 
-            String cacheKey = serial + scannedAt.getTime();
+            String cacheKey = serial + scannedAt.getTimeInMillis();
 
             if (!mDataCache.containsKey(cacheKey)) {
                 String data = cursor.getString(cursor.getColumnIndex(CardsTableColumns.DATA));

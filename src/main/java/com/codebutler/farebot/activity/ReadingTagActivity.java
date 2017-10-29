@@ -42,7 +42,7 @@ import com.codebutler.farebot.provider.CardProvider;
 import com.codebutler.farebot.provider.CardsTableColumns;
 import com.codebutler.farebot.util.Utils;
 
-import java.util.Date;
+import java.util.GregorianCalendar;
 
 import au.id.micolous.farebot.BuildConfig;
 import au.id.micolous.farebot.R;
@@ -71,9 +71,10 @@ public class ReadingTagActivity extends Activity {
             String lastReadId = prefs.getString(MetrodroidApplication.PREF_LAST_READ_ID, "");
             long lastReadAt = prefs.getLong(MetrodroidApplication.PREF_LAST_READ_AT, 0);
 
-            // Prevent FareBot from reading the same card again right away.
+            // Prevent reading the same card again right away.
             // This was especially a problem with FeliCa cards.
-            if (Utils.getHexString(tagId).equals(lastReadId) && (new Date().getTime() - lastReadAt) < 5000) {
+
+            if (Utils.getHexString(tagId).equals(lastReadId) && (GregorianCalendar.getInstance().getTimeInMillis() - lastReadAt) < 5000) {
                 finish();
                 return;
             }
@@ -101,14 +102,14 @@ public class ReadingTagActivity extends Activity {
                         values.put(CardsTableColumns.TYPE, card.getCardType().toInteger());
                         values.put(CardsTableColumns.TAG_SERIAL, tagIdString);
                         values.put(CardsTableColumns.DATA, cardXml);
-                        values.put(CardsTableColumns.SCANNED_AT, card.getScannedAt().getTime());
+                        values.put(CardsTableColumns.SCANNED_AT, card.getScannedAt().getTimeInMillis());
                         values.put(CardsTableColumns.LABEL, card.getLabel());
 
                         Uri uri = getContentResolver().insert(CardProvider.CONTENT_URI_CARD, values);
 
                         SharedPreferences.Editor prefs = PreferenceManager.getDefaultSharedPreferences(ReadingTagActivity.this).edit();
                         prefs.putString(MetrodroidApplication.PREF_LAST_READ_ID, tagIdString);
-                        prefs.putLong(MetrodroidApplication.PREF_LAST_READ_AT, new Date().getTime());
+                        prefs.putLong(MetrodroidApplication.PREF_LAST_READ_AT, GregorianCalendar.getInstance().getTimeInMillis());
                         prefs.apply();
 
                         return uri;

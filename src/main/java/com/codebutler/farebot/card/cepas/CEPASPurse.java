@@ -23,14 +23,21 @@
 
 package com.codebutler.farebot.card.cepas;
 
+import com.codebutler.farebot.util.Utils;
 import com.codebutler.farebot.xml.HexString;
 
 import org.simpleframework.xml.Attribute;
 import org.simpleframework.xml.Element;
 import org.simpleframework.xml.Root;
 
+import java.util.Calendar;
+import java.util.GregorianCalendar;
+
 @Root(name = "purse")
 public class CEPASPurse {
+    /* January 1, 1995 */
+    private static final Calendar CEPAS_EPOCH = new GregorianCalendar(1995, 1, 1);
+
     @Attribute(name = "auto-load-amount", required = false)
     private int mAutoLoadAmount;
     @Attribute(name = "can", required = false)
@@ -60,11 +67,11 @@ public class CEPASPurse {
     @Attribute(name = "purse-balance", required = false)
     private int mPurseBalance;
     @Attribute(name = "purse-expiry-date", required = false)
-    private int mPurseExpiryDate;
+    private Calendar mPurseExpiryDate;
     @Attribute(name = "purse-status", required = false)
     private byte mPurseStatus;
     @Attribute(name = "purse-creation-date", required = false)
-    private int mPurseCreationDate;
+    private Calendar mPurseCreationDate;
     @Attribute(name = "valid", required = false)
     private boolean mIsValid;
     @Element(name = "transaction", required = false)
@@ -78,8 +85,8 @@ public class CEPASPurse {
             int autoLoadAmount,
             byte[] can,
             byte[] csn,
-            int purseExpiryDate,
-            int purseCreationDate,
+            Calendar purseExpiryDate,
+            Calendar purseCreationDate,
             int lastCreditTransactionTRP,
             byte[] lastCreditTransactionHeader,
             byte logfileRecordCount,
@@ -118,8 +125,8 @@ public class CEPASPurse {
         mAutoLoadAmount = 0;
         mCAN = null;
         mCSN = null;
-        mPurseExpiryDate = 0;
-        mPurseCreationDate = 0;
+        mPurseExpiryDate = null;
+        mPurseCreationDate = null;
         mLastCreditTransactionTRP = 0;
         mLastCreditTransactionHeader = null;
         mLogfileRecordCount = 0;
@@ -173,14 +180,15 @@ public class CEPASPurse {
 
         mCSN = new HexString(csn);
 
-        /* Epoch begins January 1, 1995 */
-        mPurseExpiryDate = 788947200 + (86400 * ((0xff00 & (purseData[24] << 8)) | (0x00ff & (purseData[25] << 0))));
-        mPurseCreationDate = 788947200 + (86400 * ((0xff00 & (purseData[26] << 8)) | (0x00ff & (purseData[27] << 0))));
+        mPurseExpiryDate = GregorianCalendar.getInstance();
+        mPurseExpiryDate.setTimeInMillis(CEPAS_EPOCH.getTimeInMillis());
+        mPurseExpiryDate.add(Calendar.DATE, Utils.byteArrayToInt(purseData, 24, 2));
 
-        mLastCreditTransactionTRP = ((0xff000000 & (purseData[28] << 24))
-                | (0x00ff0000 & (purseData[29] << 16))
-                | (0x0000ff00 & (purseData[30] << 8))
-                | (0x000000ff & (purseData[31] << 0)));
+        mPurseCreationDate = GregorianCalendar.getInstance();
+        mPurseCreationDate.setTimeInMillis(CEPAS_EPOCH.getTimeInMillis());
+        mPurseCreationDate.add(Calendar.DATE, Utils.byteArrayToInt(purseData, 26, 2));
+
+        mLastCreditTransactionTRP = Utils.byteArrayToInt(purseData, 28, 4);
 
         byte[] lastCreditTransactionHeader = new byte[8];
 
@@ -194,10 +202,8 @@ public class CEPASPurse {
 
         mIssuerDataLength = 0x00ff & purseData[41];
 
-        mLastTransactionTRP = ((0xff000000 & (purseData[42] << 24))
-                | (0x00ff0000 & (purseData[43] << 16))
-                | (0x0000ff00 & (purseData[44] << 8))
-                | (0x000000ff & (purseData[45] << 0)));
+        mLastTransactionTRP = Utils.byteArrayToInt(purseData, 42, 4);
+
         {
             byte[] tmpTransaction = new byte[16];
             for (int i = 0; i < tmpTransaction.length; i++)
@@ -254,11 +260,11 @@ public class CEPASPurse {
         return mCSN.getData();
     }
 
-    public int getPurseExpiryDate() {
+    public Calendar getPurseExpiryDate() {
         return mPurseExpiryDate;
     }
 
-    public int getPurseCreationDate() {
+    public Calendar getPurseCreationDate() {
         return mPurseCreationDate;
     }
 

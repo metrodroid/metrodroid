@@ -26,7 +26,7 @@ import com.codebutler.farebot.transit.Subscription;
 import com.codebutler.farebot.util.ImmutableMapBuilder;
 import com.codebutler.farebot.util.Utils;
 
-import java.util.Date;
+import java.util.Calendar;
 import java.util.Map;
 
 public class OVChipSubscription extends Subscription {
@@ -222,7 +222,7 @@ public class OVChipSubscription extends Subscription {
     }
 
     @Override
-    public Date getValidFrom() {
+    public Calendar getValidFrom() {
         if (mValidFromTime != 0)
             return OVChipTransitData.convertDate((int) mValidFromDate, (int) mValidFromTime);
         else
@@ -230,7 +230,7 @@ public class OVChipSubscription extends Subscription {
     }
 
     @Override
-    public Date getValidTo() {
+    public Calendar getValidTo() {
         if (mValidToTime != 0)
             return OVChipTransitData.convertDate((int) mValidToDate, (int) mValidToTime);
         else

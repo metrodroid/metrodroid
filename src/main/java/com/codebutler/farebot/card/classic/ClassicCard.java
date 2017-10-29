@@ -43,10 +43,10 @@ import com.codebutler.farebot.transit.TransitIdentity;
 import com.codebutler.farebot.transit.bilhete_unico.BilheteUnicoSPTransitData;
 import com.codebutler.farebot.transit.lax_tap.LaxTapTransitData;
 import com.codebutler.farebot.transit.manly_fast_ferry.ManlyFastFerryTransitData;
-import com.codebutler.farebot.transit.smartrider.SmartRiderTransitData;
 import com.codebutler.farebot.transit.nextfare.NextfareTransitData;
 import com.codebutler.farebot.transit.ovc.OVChipTransitData;
 import com.codebutler.farebot.transit.seq_go.SeqGoTransitData;
+import com.codebutler.farebot.transit.smartrider.SmartRiderTransitData;
 import com.codebutler.farebot.transit.unknown.UnauthorizedClassicTransitData;
 import com.codebutler.farebot.util.Utils;
 
@@ -55,7 +55,8 @@ import org.simpleframework.xml.Root;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Date;
+import java.util.Calendar;
+import java.util.GregorianCalendar;
 import java.util.List;
 
 import au.id.micolous.metrodroid.MetrodroidApplication;
@@ -72,7 +73,7 @@ public class ClassicCard extends Card {
 
     private ClassicCard() { /* For XML Serializer */ }
 
-    protected ClassicCard(byte[] tagId, Date scannedAt, ClassicSector[] sectors) {
+    public ClassicCard(byte[] tagId, Calendar scannedAt, ClassicSector[] sectors) {
         super(CardType.MifareClassic, tagId, scannedAt);
         mSectors = Utils.arrayAsList(sectors);
     }
@@ -216,7 +217,7 @@ public class ClassicCard extends Card {
                 }
             }
 
-            return new ClassicCard(tagId, new Date(), sectors.toArray(new ClassicSector[sectors.size()]));
+            return new ClassicCard(tagId, GregorianCalendar.getInstance(), sectors.toArray(new ClassicSector[sectors.size()]));
 
         } finally {
             if (tech != null && tech.isConnected()) {
