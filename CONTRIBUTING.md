@@ -1,14 +1,18 @@
 # Contributing and bug reports
 
-Please note: I work on Metrodroid as a hobby, primarily when I travel (for other reasons), and I'm not being paid for this.
+**Please note:** I work on Metrodroid as a hobby, primarily when I travel (for other reasons), and I'm not being paid for this.  As a result, it is infeasible for me to travel haphazardly in order to add new cities to the list.
 
-As a result, it is infeasible for me to travel haphazardly in order to add new cities to the list.
+In order to make sure this project is "fun" for as long as possible, I want to deal with as little nonsense as possible, and will strictly guard against it. All "+1" and other useless comments will be deleted, and you may also be blocked from this project indefinitely. Use [GitHub reaction emojis](https://github.com/blog/2119-add-reactions-to-pull-requests-issues-and-comments) instead.
+
+This document attempts to answer the common cases of issues filed here, what information is useful, and what things are known or I don't care about.
 
 ## "Support my transit network"
 
 Please see [supporting new cards](https://github.com/micolous/metrodroid/wiki/New-cards) on the wiki before filing.  This is a very difficult, time consuming process, involving travel to the city in question.
 
 **If you are not interested in writing code or understanding the format yourself,** please find someone else who lives in your city who is interested, instead of reporting the issue here.
+
+**If you have useful docs to share,** feel free to add them in an issue, though the issue may be later closed if it appears nobody is actively working on it.
 
 **If you are interested in working on this,** please also:
 
