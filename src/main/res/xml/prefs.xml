@@ -44,30 +44,30 @@
             android:defaultValue="@string/default_map_tile_subdomains"/>
     </PreferenceCategory>
 
-    <PreferenceCategory android:title="Obfuscation">
+    <PreferenceCategory android:title="@string/obfuscation_title">
         <CheckBoxPreference
-            android:title="Hide card numbers"
-            android:summary="Don't show card numbers anywhere"
+            android:title="@string/obfuscation_card_numbers"
+            android:summary="@string/obfuscation_card_numbers_desc"
             android:key="pref_hide_card_numbers"
             android:defaultValue="false" />
         <CheckBoxPreference
-            android:title="Obfuscate balance"
-            android:summary="Change the balance shown by a random amount"
+            android:title="@string/obfuscation_balance"
+            android:summary="@string/obfuscation_balance_desc"
             android:key="pref_obfuscate_balance"
             android:defaultValue="false" />
         <CheckBoxPreference
-            android:title="Obfuscate dates"
-            android:summary="Show trip, subscription, expiry and scan dates as different, random days"
+            android:title="@string/obfuscation_dates"
+            android:summary="@string/obfuscation_dates_desc"
             android:key="pref_obfuscate_trip_dates"
             android:defaultValue="false" />
         <CheckBoxPreference
-            android:title="Obfuscate times"
-            android:summary="Fuzz and reduce resolution of timestamps on trips, subscriptions, and scans"
+            android:title="@string/obfuscation_times"
+            android:summary="@string/obfuscation_times_desc"
             android:key="pref_obfuscate_trip_times"
             android:defaultValue="false" />
         <CheckBoxPreference
-            android:title="Obfuscate trip fare"
-            android:summary="Change fares shown by a random amount"
+            android:title="@string/obfuscation_fares"
+            android:summary="@string/obfuscation_fares_desc"
             android:key="pref_obfuscate_trip_fares"
             android:defaultValue="false" />
     </PreferenceCategory>

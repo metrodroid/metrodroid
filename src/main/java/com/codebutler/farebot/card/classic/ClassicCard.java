@@ -347,13 +347,7 @@ public class ClassicCard extends Card {
             } else if (fallback.equals("myway") || fallback.equals("smartrider")) {
                 // TODO: Replace this with a proper check, and take out of fallback mode.
                 return SmartRiderTransitData.parseTransitIdentity(this);
-            } else if (fallback.equals("ovc")) {
-                // This isn't really needed, however OnePlus 5 has bugs where it can't read sectors
-                // with a key of 00 00 00 00 00 00. OVC cards have this for sectors containing their
-                // preamble.
-                return OVChipTransitData.parseTransitIdentity(this);
             }
-
         }
 
         // The card could not be identified, but has some open sectors.

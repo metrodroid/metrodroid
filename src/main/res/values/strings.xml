@@ -155,11 +155,38 @@
     <string name="mfc_fallback_desc">Some agencies have no identifying magic on their card. To read them, you must explicitly choose one agency.</string>
     <string name="mfc_fallback">Fallback reader</string>
 
+    <!-- Obfuscation options -->
+    <string name="obfuscation_title">Obfuscation</string>
+    <string name="obfuscation_card_numbers">Hide card numbers</string>
+    <string name="obfuscation_card_numbers_desc">Don\'t show card numbers anywhere</string>
+
+    <string name="obfuscation_balance">Obfuscate balance</string>
+    <string name="obfuscation_balance_desc">Change the balance shown by a random amount</string>
+
+    <string name="obfuscation_dates">Obfuscate dates</string>
+    <string name="obfuscation_dates_desc">Show trip, subscription, expiry and scan dates as different, random days</string>
+
+    <string name="obfuscation_times">Obfuscate times</string>
+    <string name="obfuscation_times_desc">Fuzz and reduce resolution of timestamps on trips, subscriptions, and scans</string>
+
+    <string name="obfuscation_fares">Obfuscate fares</string>
+    <string name="obfuscation_fares_desc">Change fares shown by a random amount</string>
+
+    <!--
+    Translators: There is an obfuscation mode, with many flags (options) available. The value
+    "count" passed is the number of flags (options) that are turned on.
+
+    This is shown on the main window, instead of the "directions" string.
+    -->
+    <plurals name="obfuscation_mode_notice">
+        <item quantity="one"><xliff:g id="count" example="1">%d</xliff:g> obfuscation flag on</item>
+        <item quantity="other"><xliff:g id="count" example="3">%d</xliff:g> obfuscation flags on</item>
+    </plurals>
+
     <string-array name="mfc_fallbacks">
         <item>None (disabled)</item>
         <item>Bilhete Único (São Paulo, Brazil)</item>
         <item>SmartRider (WA, Australia), MyWay (ACT, Australia)</item>
-        <item>OV-chipkaart (The Netherlands)</item>
     </string-array>
 
     <!-- Translators: do not translate -->
@@ -167,7 +194,6 @@
         <item>null</item>
         <item>bilhete_unico</item>
         <item>smartrider</item>
-        <item>ovc</item>
     </string-array>
 
     <!--
@@ -356,5 +382,6 @@
         Bilhete Único
     -->
     <string name="card_note_bilhete_unico">Must be selected as fallback reader in preferences.</string>
+
 
 </resources>
