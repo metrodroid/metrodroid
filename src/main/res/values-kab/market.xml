@@ -1,2 +1,6 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources></resources>
+<?xml version='1.0' encoding='UTF-8'?>
+<resources><string name="market_title">Metrodroid (zik Farebot M)</string>
+
+    <string name="market_short_desc">Metrodroid yezmer ad iɣer talɣut seg umesni NFC smartcards.</string>
+
+    </resources>
