@@ -1,2 +1,51 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources></resources>
+<?xml version='1.0' encoding='UTF-8'?>
+<resources><string name="license">Iselkinen</string>
+    <string name="advanced_info">Talqayt</string>
+    <string name="delete_card">Kkes</string>
+    <string name="unknown_card">Arussin</string>
+    <string name="copy_xml">Nɣel</string>
+    <string name="share_xml">Bḍu</string>
+    <string name="history">Amazray</string>
+    <string name="balance">Awurman</string>
+    <string name="import_xml">Kter</string>
+    <string name="export">Sifeḍ</string>
+    <string name="export_filename">Fren isem n ufaylu n usifeḍ</string>
+    <string name="export_all">Ssufeɣ akkw isebtar</string>
+    <string name="about">Γef</string>
+    <string name="preferences">Tiwelhiwin</string>
+    <string name="accessibility">Ittuseblel i tuffart</string>
+    <string name="loading">Asali…</string>
+    <string name="transaction_sequence">#</string>
+    <string name="unknown_more_info">Ugar n telɣut</string>
+    <string name="report_error_privacy_title">Tasertit n tbaḍnit</string>
+    <string name="scanned_cards">Amazray</string>
+    <string name="subscriptions">Ijerriden</string>
+    <string name="info">Talɣut</string>
+    <string name="unknown_format">Arussin</string>
+    <string name="unknown">Arussin</string>
+    <string name="add_key">Rnu tasarutt n usenneftaɣ</string>
+    <string name="error">Tuccḍa</string>
+    <string name="keys">Tisura n usenneftaɣ yettwasnen</string>
+    <string name="delete">KKES</string>
+    <string name="no_keys">Tisura SSH</string>
+    <string name="nfc_unavailable">ulac</string>
+    <string name="general">Amatu</string>
+    <string name="date">Azemz</string>
+    <string name="time">Akud</string>
+    <string name="need_stations_submit">Aneqqis</string>
+    <string name="visit_website">Rzu ar usmel-nneɣ Web</string>
+    <string name="card_type">Anaw</string>
+    <string name="select_file">Fren afaylu</string>
+    <string name="copied_to_clipboard">Aḍris yettwanɣel ɣef afus.</string>
+    <string name="felica_terminal_vending">Asedgar awurman</string>
+    <string name="felica_process_issue_new">ugur</string>
+    <string name="felica_process_reissue">ugur</string>
+    <string name="hsl_mins_format">s</string>
+    <string name="hsl_value_ticket_last_sign">Aneggaru</string>
+    <string name="hsl_value_ticket_pax">agraw</string>
+    <string name="hsl_value_ticket_line_number">Uṭṭun n iz&amp;irig</string>
+    <string name="opal_vehicle_bus">Taɣsert n yisakacen</string>
+    <string name="seqgo_ticket_type_regular">Rnu asebter amagnu</string>
+    <string name="seqgo_ticket_type_child">aqrur</string>
+    <string name="nextfare_system_code">Anagraw</string>
+    </resources>
