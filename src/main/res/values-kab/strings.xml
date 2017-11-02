@@ -48,4 +48,23 @@
     <string name="seqgo_ticket_type_regular">Rnu asebter amagnu</string>
     <string name="seqgo_ticket_type_child">aqrur</string>
     <string name="nextfare_system_code">Anagraw</string>
+    <string name="app_name">Amitṛudroid</string>
+
+    <string name="copyright">Copyright 2015 - 2017 Mikayel Farrell</string>
+
+    <string name="title_activity_license">Turagin yeldin</string>
+    <string name="directions">Ssit ɣef takarḍa</string>
+    <string name="reading_card">Takarḍa n tɣuri</string>
+    <string name="dont_move">Ur sembiwil ara takarḍa</string>
+    <string name="locked_card">Takarḍa tsekkweṛ</string>
+    <string name="hw_detail">Talɣut n usmagi</string>
+    <string name="data">Isefku arewway</string>
+    <string name="save_xml">Sekles deg aḥraz n USB</string>
+    <string name="trips">Isikilen</string>
+    <string name="refills">Tacaṛin</string>
+    <string name="no_trip_data">Ulac asikil yellan.wis takarḍa yagi ma tettwaseqdec?</string>
+    <string name="no_refill_data">Ulac tacaṛin yellan.wis takarḍa yagi ma tettwaseqdec s turagt?</string>
+    <string name="import_clipboard">Kter seg ɣef afus</string>
+    <string name="import_file">Kter seg afaylu</string>
+    <string name="import_sd">Kter seg aḥraz n USB</string>
     </resources>
