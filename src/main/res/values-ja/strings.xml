@@ -279,4 +279,24 @@
 
 <string name="location_wa_australia">西オーストラリア州, オーストラリア</string>
 
+    <string name="obfuscation_title">難読化</string>
+    <string name="obfuscation_card_numbers">カード番号を非表示</string>
+    <string name="obfuscation_card_numbers_desc">どこにもカード番号を表示しません</string>
+
+    <string name="obfuscation_balance">残高の難読化</string>
+    <string name="obfuscation_balance_desc">ランダムな金額に残高を変更します</string>
+
+    <string name="obfuscation_dates">日付の難読化</string>
+    <string name="obfuscation_dates_desc">旅行日、購入日、有効期限、スキャンした日付を異なる、ランダムな日として表示します</string>
+
+    <string name="obfuscation_times">時間の難読化</string>
+    <string name="obfuscation_times_desc">旅行、購入、およびスキャンしたタイムスタンプをあいまいにし、精度を下げます</string>
+
+    <string name="obfuscation_fares">運賃の難読化</string>
+    <string name="obfuscation_fares_desc">ランダムな金額で表示されるように運賃を変更します</string>
+
+    <plurals name="obfuscation_mode_notice">
+	<item quantity="other"><xliff:g id="count" example="1">%d</xliff:g> 難読化フラグオン</item>
+</plurals>
+
     </resources>
