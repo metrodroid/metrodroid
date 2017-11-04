@@ -54,8 +54,8 @@ public class LicenseActivity extends Activity {
             + "The source code is available at https://github.com/micolous/metrodroid/\n\n\n";
 
 
-    static final String LEAFLET = "This software contains Leaflet, a Javascript mapping library.  The following terms apply to Leaflet:\n"
-            + "Copyright (c) 2010-2016, Vladimir Agafonkin\n"
+    static final String LEAFLET = "This software contains Leaflet 1.2.0, a Javascript mapping library.  The following terms apply to Leaflet:\n"
+            + "Copyright (c) 2010-2017, Vladimir Agafonkin\n"
             + "Copyright (c) 2010-2011, CloudMade\n"
             + "All rights reserved.\n"
             + "\n"
