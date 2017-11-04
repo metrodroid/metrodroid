@@ -294,4 +294,6 @@
 
     <string name="map_tiles_help">Leaflet TileLayer-documentatie bekijken</string>
     <string name="map_tiles_help_summary">Als u hulp nodig heeft bij het gebruiken van kaarttegel URL\'s, bekijk dan Leaflet\'s online documentatie (alleen beschikbaar in het Engels).</string>
+    <string name="hidden_card_number">Verborgen kaartnummer</string>
+
     </resources>
