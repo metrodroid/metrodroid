@@ -42,6 +42,12 @@
             android:summary="@string/map_tiles_subdomains_summary"
             android:key="pref_map_tile_subdomains"
             android:defaultValue="@string/default_map_tile_subdomains"/>
+        <PreferenceScreen
+            android:title="@string/map_tiles_help"
+            android:summary="@string/map_tiles_help_summary">
+            <intent android:action="android.intent.action.VIEW"
+                android:data="http://leafletjs.com/reference-1.2.0.html#tilelayer" />
+        </PreferenceScreen>
     </PreferenceCategory>
 
     <PreferenceCategory android:title="@string/obfuscation_title">

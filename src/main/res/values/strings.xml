@@ -144,6 +144,13 @@
     <string name="map_tiles_url_summary">Use a custom tile server for embedded maps, using Leaflet TileLayer syntax.</string>
     <string name="map_tiles_subdomains">Map tile subdomains</string>
     <string name="map_tiles_subdomains_summary">If using {s} in map URLs, a comma separated list of subdomains, or single-character list of subdomains.</string>
+    <string name="map_tiles_help">View Leaflet TileLayer documentation</string>
+    <!--
+    TRANSLATORS: Leaflet's documentation is only available in English. However, this link will be
+    available regardless of what language Metrodroid is run in. You should indicate to the reader
+    this documentation has not been translated from English.
+    -->
+    <string name="map_tiles_help_summary">For help on using Map tile URLs, see Leaflet\'s online documentation (only available in English).</string>
     <string name="about_card_format">About this card format</string>
     <string name="online_services">Online services</string>
     <string name="mifare_classic">Mifare Classic</string>
@@ -382,6 +389,5 @@
         Bilhete Único
     -->
     <string name="card_note_bilhete_unico">Must be selected as fallback reader in preferences.</string>
-
 
 </resources>
