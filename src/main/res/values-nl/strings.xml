@@ -296,4 +296,9 @@
     <string name="map_tiles_help_summary">Als u hulp nodig heeft bij het gebruiken van kaarttegel URL\'s, bekijk dan Leaflet\'s online documentatie (alleen beschikbaar in het Engels).</string>
     <string name="hidden_card_number">Verborgen kaartnummer</string>
 
+    <plurals name="hidden_key_data">
+	<item quantity="one">Verborgen sleutelgegevens (<xliff:g id="count" example="3"> %d</xliff:g> byte)</item>
+	<item quantity="other">Verborgen sleutelgegevens (<xliff:g id="count" example="3"> %d</xliff:g> bytes)</item>
+</plurals>
+
     </resources>
