@@ -19,16 +19,21 @@
 
 package com.codebutler.farebot.fragment;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.ListFragment;
 import android.app.LoaderManager;
 import android.content.ContentUris;
 import android.content.Context;
 import android.content.CursorLoader;
+import android.content.Intent;
 import android.content.Loader;
 import android.database.Cursor;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
+import android.os.Environment;
+import android.util.Log;
 import android.view.ActionMode;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -39,6 +44,7 @@ import android.widget.CursorAdapter;
 import android.widget.ResourceCursorAdapter;
 import android.widget.TextView;
 
+import com.codebutler.farebot.activity.AddKeyActivity;
 import com.codebutler.farebot.provider.CardKeyProvider;
 import com.codebutler.farebot.provider.KeysTableColumns;
 import com.codebutler.farebot.util.BetterAsyncTask;
@@ -50,6 +56,8 @@ import au.id.micolous.metrodroid.MetrodroidApplication;
 public class KeysFragment extends ListFragment implements AdapterView.OnItemLongClickListener {
     private ActionMode mActionMode;
     private int mActionKeyId;
+    private static final int REQUEST_SELECT_FILE = 1;
+    private static final String TAG = "KeysFragment";
 
     private android.view.ActionMode.Callback mActionModeCallback = new ActionMode.Callback() {
         @Override
@@ -147,13 +155,42 @@ public class KeysFragment extends ListFragment implements AdapterView.OnItemLong
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == R.id.add_key) {
-            new AlertDialog.Builder(getActivity())
-                    .setMessage(R.string.add_key_directions)
-                    .setPositiveButton(android.R.string.ok, null)
-                    .show();
+            Uri uri = Uri.fromFile(Environment.getExternalStorageDirectory());
+            Intent i = new Intent(Intent.ACTION_GET_CONTENT);
+            i.putExtra(Intent.EXTRA_STREAM, uri);
+            // Some files are text/xml, some are application/xml.
+            // In Android 4.4 and later, we can say the right thing!
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+                i.setType("*/*");
+                String[] mimetypes = {"application/xml", "text/xml", "application/octet-stream"};
+                i.putExtra(Intent.EXTRA_MIME_TYPES, mimetypes);
+            } else {
+                // Failsafe, used in the emulator for local files
+                i.setType("text/xml");
+            }
+            startActivityForResult(Intent.createChooser(i, Utils.localizeString(R.string.select_file)), REQUEST_SELECT_FILE);
             return true;
         }
         return false;
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        Uri uri;
+        try {
+            if (resultCode == Activity.RESULT_OK) {
+                switch (requestCode) {
+                    case REQUEST_SELECT_FILE:
+                        uri = data.getData();
+                        Log.d(TAG, "REQUEST_SELECT_FILE content_type = " + getActivity().getContentResolver().getType(uri));
+
+                        startActivity(new Intent(Intent.ACTION_VIEW, uri, getActivity(), AddKeyActivity.class));
+                        break;
+                }
+            }
+        } catch (Exception ex) {
+            Utils.showError(getActivity(), ex);
+        }
     }
 
     private class KeysAdapter extends ResourceCursorAdapter {

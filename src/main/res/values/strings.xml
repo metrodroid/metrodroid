@@ -184,6 +184,10 @@
     Translators: shown in place of a real card number in some lists when obfuscation is enabled.
     -->
     <string name="hidden_card_number">Hidden card number</string>
+    <plurals name="hidden_key_data">
+        <item quantity="one">Hidden key data (<xliff:g id="count" example="1">%d</xliff:g> byte)</item>
+        <item quantity="other">Hidden key data (<xliff:g id="count" example="3">%d</xliff:g> bytes)</item>
+    </plurals>
 
     <!--
     Translators: There is an obfuscation mode, with many flags (options) available. The value

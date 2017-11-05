@@ -197,10 +197,11 @@ public class AddKeyActivity extends Activity {
             ((TextView) findViewById(R.id.card_type)).setText(R.string.mifare_classic);
             if (MetrodroidApplication.hideCardNumbers()) {
                 ((TextView) findViewById(R.id.card_id)).setText(R.string.hidden_card_number);
+                ((TextView) findViewById(R.id.key_data)).setText(Utils.localizePlural(R.plurals.hidden_key_data, mKeyData.length, mKeyData.length));
             } else {
                 ((TextView) findViewById(R.id.card_id)).setText(mTagId);
+                ((TextView) findViewById(R.id.key_data)).setText(Utils.getHexString(mKeyData, "").toUpperCase());
             }
-            ((TextView) findViewById(R.id.key_data)).setText(Utils.getHexString(mKeyData, "").toUpperCase());
 
             findViewById(R.id.directions).setVisibility(View.GONE);
             findViewById(R.id.info).setVisibility(View.VISIBLE);

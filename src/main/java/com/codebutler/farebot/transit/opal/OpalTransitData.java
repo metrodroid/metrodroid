@@ -21,14 +21,12 @@ package com.codebutler.farebot.transit.opal;
 import android.net.Uri;
 import android.os.Parcel;
 import android.support.annotation.Nullable;
-import android.text.format.DateFormat;
 
 import com.codebutler.farebot.card.Card;
 import com.codebutler.farebot.card.desfire.DesfireCard;
 import com.codebutler.farebot.transit.Subscription;
 import com.codebutler.farebot.transit.TransitData;
 import com.codebutler.farebot.transit.TransitIdentity;
-import com.codebutler.farebot.transit.Trip;
 import com.codebutler.farebot.ui.HeaderListItem;
 import com.codebutler.farebot.ui.ListItem;
 import com.codebutler.farebot.util.TripObfuscator;
@@ -186,8 +184,8 @@ public class OpalTransitData extends TransitData {
             items.add(new ListItem(R.string.transaction_sequence, Integer.toString(mTransactionNumber)));
         }
         Calendar cLastTransactionTime = TripObfuscator.maybeObfuscateTS(getLastTransactionTime());
-        items.add(new ListItem(R.string.date, DateFormat.getLongDateFormat(MetrodroidApplication.getInstance()).format(cLastTransactionTime)));
-        items.add(new ListItem(R.string.time, DateFormat.getTimeFormat(MetrodroidApplication.getInstance()).format(cLastTransactionTime)));
+        items.add(new ListItem(R.string.date, Utils.longDateFormat(cLastTransactionTime)));
+        items.add(new ListItem(R.string.time, Utils.timeFormat(cLastTransactionTime)));
         items.add(new ListItem(R.string.vehicle_type, getVehicleType(mVehicleType)));
         items.add(new ListItem(R.string.transaction_type, getActionType(mActionType)));
 
