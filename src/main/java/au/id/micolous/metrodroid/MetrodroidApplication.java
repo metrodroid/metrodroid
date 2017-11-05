@@ -218,6 +218,7 @@ public class MetrodroidApplication extends Application {
         mHasNfcHardware = nfcAdapter != null;
 
         if (!mHasNfcHardware) {
+            Log.d(TAG, "Android reports no NFC adapter is available");
             return;
         }
 
