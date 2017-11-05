@@ -9,7 +9,7 @@ def getVersionCode = { ->
         return code.toString().split("\n").size() + 19
     }
     catch (ignored2) {
-        return -1;
+        return -1
     }
 }
 
@@ -30,7 +30,7 @@ def getVersionName = { ->
         return stdout.toString().trim() + versionSuffix.trim()
     }
     catch (ignored) {
-        return null;
+        return null
     }
 }
 
@@ -38,9 +38,10 @@ buildscript {
     repositories {
         mavenCentral()
         jcenter()
+        google()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:2.3.3'
+        classpath 'com.android.tools.build:gradle:3.0.0'
     }
 }
 
@@ -59,6 +60,7 @@ task checkstyle(type: Checkstyle) {
 repositories {
     mavenCentral()
     jcenter()
+    google()
 }
 
 apply plugin: 'com.android.application'
@@ -72,13 +74,12 @@ dependencies {
         exclude module: 'stax-api'
         exclude module: 'xpp3'
     }
-    compile project(':nfc-felica-lib')
-    compile fileTree(dir: 'libs', include: '*.jar')
+    implementation project(':nfc-felica-lib')
 }
 
 android {
     compileSdkVersion 25
-    buildToolsVersion '25.0.1'
+    buildToolsVersion '26.0.2'
 
     defaultConfig {
         minSdkVersion 16
@@ -95,6 +96,7 @@ android {
             useProguard false
             proguardFiles getDefaultProguardFile('proguard-android.txt'),
                     'proguard.cfg'
+            matchingFallbacks = ['debug']
         }
         release {
             minifyEnabled true
