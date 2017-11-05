@@ -56,6 +56,7 @@ import java.io.IOException;
 import java.io.InputStream;
 
 import au.id.micolous.farebot.R;
+import au.id.micolous.metrodroid.MetrodroidApplication;
 
 import static android.view.ViewGroup.LayoutParams.MATCH_PARENT;
 import static android.view.ViewGroup.LayoutParams.WRAP_CONTENT;
@@ -173,13 +174,17 @@ public class AddKeyActivity extends Activity {
     @Override
     protected void onResume() {
         super.onResume();
-        mNfcAdapter.enableForegroundDispatch(this, mPendingIntent, null, mTechLists);
+        if (mNfcAdapter != null) {
+            mNfcAdapter.enableForegroundDispatch(this, mPendingIntent, null, mTechLists);
+        }
     }
 
     @Override
     protected void onPause() {
         super.onPause();
-        mNfcAdapter.disableForegroundDispatch(this);
+        if (mNfcAdapter != null) {
+            mNfcAdapter.disableForegroundDispatch(this);
+        }
     }
 
     @Override
@@ -189,8 +194,12 @@ public class AddKeyActivity extends Activity {
 
         if (ArrayUtils.contains(tag.getTechList(), "android.nfc.tech.MifareClassic")) {
             mCardType = "MifareClassic";
-            ((TextView) findViewById(R.id.card_type)).setText("MIFARE Classic");
-            ((TextView) findViewById(R.id.card_id)).setText(mTagId);
+            ((TextView) findViewById(R.id.card_type)).setText(R.string.mifare_classic);
+            if (MetrodroidApplication.hideCardNumbers()) {
+                ((TextView) findViewById(R.id.card_id)).setText(R.string.hidden_card_number);
+            } else {
+                ((TextView) findViewById(R.id.card_id)).setText(mTagId);
+            }
             ((TextView) findViewById(R.id.key_data)).setText(Utils.getHexString(mKeyData, "").toUpperCase());
 
             findViewById(R.id.directions).setVisibility(View.GONE);

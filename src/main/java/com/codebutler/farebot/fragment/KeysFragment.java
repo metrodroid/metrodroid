@@ -42,8 +42,10 @@ import android.widget.TextView;
 import com.codebutler.farebot.provider.CardKeyProvider;
 import com.codebutler.farebot.provider.KeysTableColumns;
 import com.codebutler.farebot.util.BetterAsyncTask;
+import com.codebutler.farebot.util.Utils;
 
 import au.id.micolous.farebot.R;
+import au.id.micolous.metrodroid.MetrodroidApplication;
 
 public class KeysFragment extends ListFragment implements AdapterView.OnItemLongClickListener {
     private ActionMode mActionMode;
@@ -167,7 +169,11 @@ public class KeysFragment extends ListFragment implements AdapterView.OnItemLong
             TextView textView1 = (TextView) view.findViewById(android.R.id.text1);
             TextView textView2 = (TextView) view.findViewById(android.R.id.text2);
 
-            textView1.setText(id);
+            if (MetrodroidApplication.hideCardNumbers()) {
+                textView1.setText(R.string.hidden_card_number);
+            } else {
+                textView1.setText(id);
+            }
             textView2.setText(type);
         }
     }

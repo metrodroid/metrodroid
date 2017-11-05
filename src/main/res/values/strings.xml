@@ -181,6 +181,11 @@
     <string name="obfuscation_fares_desc">Change fares shown by a random amount</string>
 
     <!--
+    Translators: shown in place of a real card number in some lists when obfuscation is enabled.
+    -->
+    <string name="hidden_card_number">Hidden card number</string>
+
+    <!--
     Translators: There is an obfuscation mode, with many flags (options) available. The value
     "count" passed is the number of flags (options) that are turned on.
 
