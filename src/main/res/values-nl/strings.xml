@@ -292,4 +292,6 @@
 	<item quantity="other"><xliff:g id="count" example="3">%d</xliff:g> privacyvlaggen ingeschakeld</item>
 </plurals>
 
+    <string name="map_tiles_help">Leaflet TileLayer-documentatie bekijken</string>
+    <string name="map_tiles_help_summary">Als u hulp nodig heeft bij het gebruiken van kaarttegel URL\'s, bekijk dan Leaflet\'s online documentatie (alleen beschikbaar in het Engels).</string>
     </resources>
