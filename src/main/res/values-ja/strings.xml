@@ -299,4 +299,11 @@
 	<item quantity="other"><xliff:g id="count" example="1">%d</xliff:g> 難読化フラグオン</item>
 </plurals>
 
+    <string name="map_tiles_help">リーフレット TileLayer ドキュメントを表示</string>
+    <string name="map_tiles_help_summary">マップタイル URL を使用するためのヘルプ。リーフレットのオンラインドキュメントを参照してください (英語でのみ利用可能)。</string>
+    <string name="hidden_card_number">非表示カード番号</string>
+    <plurals name="hidden_key_data">
+	<item quantity="other">非表示キーデータ (<xliff:g id="count" example="1">%d</xliff:g> バイト)</item>
+</plurals>
+
     </resources>
