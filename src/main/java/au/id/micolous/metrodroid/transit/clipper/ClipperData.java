@@ -107,6 +107,7 @@ final class ClipperData {
             .put(0x1e, new Station("Fruitvale Station", "Fruitvale", "37.77495", "-122.22425"))
             .put(0x1f, new Station("Coliseum", "Coliseum", "37.75256", "-122.19806"))
             .put(0x20, new Station("Coliseum", "Coliseum", "37.754270", "-122.197757"))
+            .put(0x21, new Station("San Leandro Station", "San Leandro", "37.7219502", "-122.1608553"))
             .put(0x22, new Station("Hayward Station", "Hayward", "37.670387", "-122.088002"))
             .put(0x23, new Station("South Hayward Station", "South Hayward", "37.634800", "-122.057551"))
             .put(0x24, new Station("Union City Station", "Union City", "37.591203", "-122.017854"))
