@@ -270,7 +270,7 @@ public class Utils {
         }
     }
 
-    public static <T> T findInList(List<T> list, Matcher matcher) {
+    public static <T> T findInList(List<T> list, Matcher<T> matcher) {
         for (T item : list) {
             if (matcher.matches(item)) {
                 return item;
@@ -507,8 +507,16 @@ public class Utils {
      * @return Formatted currency string
      */
     public static String formatCurrencyString(int currency, boolean isBalance, String currencyCode, double divisor) {
+        Currency c = Currency.getInstance(currencyCode);
         NumberFormat numberFormat = NumberFormat.getCurrencyInstance();
         numberFormat.setCurrency(Currency.getInstance(currencyCode));
+
+        // https://github.com/micolous/metrodroid/issues/34
+        // Java's NumberFormat returns too many, or too few fractional amounts
+        // in currencies, depending on the system locale.
+        // In Japanese, AUD is formatted as "A$1" instead of "A$1.23".
+        // In English, JPY is formatted as "¥123.00" instead of "¥123"
+        numberFormat.setMinimumFractionDigits(c.getDefaultFractionDigits());
 
         if (!isBalance && currency < 0) {
             return "+ " + numberFormat.format(Math.abs(((double)currency) / divisor));
