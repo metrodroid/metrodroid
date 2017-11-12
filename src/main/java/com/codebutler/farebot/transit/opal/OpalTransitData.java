@@ -49,6 +49,9 @@ import au.id.micolous.metrodroid.MetrodroidApplication;
  */
 public class OpalTransitData extends TransitData {
     public static final String NAME = "Opal";
+    public static final int APP_ID = 0x314553;
+    public static final int FILE_ID = 0x7;
+
     private static final GregorianCalendar OPAL_EPOCH = new GregorianCalendar(1980, Calendar.JANUARY, 1);
     private static final OpalSubscription OPAL_AUTOMATIC_TOP_UP = new OpalSubscription();
     private int mSerialNumber;
@@ -81,7 +84,7 @@ public class OpalTransitData extends TransitData {
 
     public OpalTransitData(Card card) {
         DesfireCard desfireCard = (DesfireCard) card;
-        byte[] data = desfireCard.getApplication(0x314553).getFile(0x07).getData();
+        byte[] data = desfireCard.getApplication(APP_ID).getFile(FILE_ID).getData();
         int iRawBalance;
 
         data = Utils.reverseBuffer(data, 0, 16);
@@ -117,7 +120,7 @@ public class OpalTransitData extends TransitData {
 
     public static TransitIdentity parseTransitIdentity(Card card) {
         DesfireCard desfireCard = (DesfireCard) card;
-        byte[] data = desfireCard.getApplication(0x314553).getFile(0x07).getData();
+        byte[] data = desfireCard.getApplication(APP_ID).getFile(FILE_ID).getData();
         data = Utils.reverseBuffer(data, 0, 5);
 
         int lastDigit = Utils.getBitsFromBuffer(data, 4, 4);

@@ -65,7 +65,7 @@ public class DesfireCard extends Card {
 
     private DesfireCard() { /* For XML Serializer */ }
 
-    DesfireCard(byte[] tagId, Calendar scannedAt, DesfireManufacturingData manfData, DesfireApplication[] apps) {
+    public DesfireCard(byte[] tagId, Calendar scannedAt, DesfireManufacturingData manfData, DesfireApplication[] apps) {
         super(CardType.MifareDesfire, tagId, scannedAt);
         mManfData = manfData;
         mApplications = Utils.arrayAsList(apps);
