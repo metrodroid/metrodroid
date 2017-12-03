@@ -32,7 +32,7 @@ View your remaining balance, recent trips, and other information from contactles
 * [The Noun Project][15] (Various icons)
 * [naofum](https://github.com/naofum) (Japanese translations)
 
-## Supported Protocols
+## Supported card protocols
 
 * [CEPAS][2] (Not compatible with all devices)
 * [FeliCa][8]
@@ -40,29 +40,39 @@ View your remaining balance, recent trips, and other information from contactles
 * [MIFARE DESFire][6]
 * [MIFARE Ultralight][24] (Not compatible with all devices)
 
-## Supported Cards
+## Supported cards / agencies
 
-* [Bilhete Único](http://www.sptrans.com.br/bilhete_unico/) - São Paulo, Brazil (requires encryption keys, not compatible with all devices, must be selected as fallback reader)
-* [Clipper][1] - San Francisco, CA, USA
-* [EZ-Link][7] - Singapore (Not compatible with all devices)
-* [Go card][20] (Translink) - Brisbane and South East Queensland, Australia (requires encryption keys, not compatible with all devices, not all stations known)
-* [Manly Fast Ferry][19] - Sydney, NSW, Australia (Requires encryption keys, not compatible with all devices)
-* [Matkakortti][16], [HSL][17] - Finland
-* [Myki][21] - Melbourne (and surrounds), VIC, Australia (Only the card number can be read)
-* [MyWay][28] - Australian Capital Territory, Australia (Requires encryption keys, not compatible with all devices)
-* [NETS FlashPay](http://www.netsflashpay.com.sg/) - Singapore
-* [Octopus][25] - Hong Kong
-* [Opal][18] - Sydney (and surrounds), NSW, Australia
-* [ORCA][0] - Seattle, WA, USA
-* [OV-chipkaart](http://www.ov-chipkaart.nl/) - Netherlands (Requires encryption keys, not compatible with all devices)
-* [Shenzhen Tong][27] - Shenzhen, Guangdong Province, China
-* [SmartRider][29] - Western Australia, Australia (Requires encryption keys, not compatible with all devices)
-* [Suica][9], [ICOCA][10], [PASMO][11], [Edy][12] - Japan
-* [Transit Access Pass][26] - Los Angeles, CA, USA (Requires encryption keys, not compatible with all devices)
+Card / Agency | Location | Notes
+------------- | -------- | -----
+[Bilhete Único][30] | :brazil: São Paulo, Brazil | :closed_lock_with_key: `MFC` `FALLBACK`
+[Clipper][1] | :us: San Francisco, CA, USA | 
+[Cubic Nextfare][33] | :earth_americas: _many locations_ | :new: :closed_lock_with_key: `MFC`
+[EZ-Link][7] | :singapore: Singapore | `CEPAS`
+[Go card][20] (Translink) | :australia: Brisbane and South East Queensland, Australia | :new: :closed_lock_with_key: `MFC`
+[Manly Fast Ferry][19] | :australia: Sydney, NSW, Australia | :new: :closed_lock_with_key: `MFC`
+[Matkakortti][16], [HSL][17] | :finland: Finland |
+[Myki][21] | :australia: Melbourne (and surrounds), VIC, Australia | :new: :lock: `123`
+[MyWay][28] | :australia: Australian Capital Territory, Australia | :new: :closed_lock_with_key: `MFC`
+[NETS FlashPay][31] | :singapore: Singapore | 
+[Octopus][25] | :hong_kong: Hong Kong | :new:
+[Opal][18] | :australia: Sydney (and surrounds), NSW, Australia | :new:
+[ORCA][0] | :us: Seattle, WA, USA |
+[OV-chipkaart][32] | :netherlands: Netherlands | :closed_lock_with_key: `MFC`
+[Shenzhen Tong][27] | :cn: Shenzhen, Guangdong Province, China | :new:
+[SmartRider][29] | :australia: Western Australia, Australia | :new: :closed_lock_with_key: `MFC`
+[Suica][9], [ICOCA][10], [PASMO][11], [Edy][12] | :jp: Japan 
+[Transit Access Pass][26] | :us: Los Angeles, CA, USA | :new: :closed_lock_with_key: `MFC`
 
-This project will only read data from the card itself, without having to connect to the agency's back-office systems. In some cases, limited data is available, so balance information and trip history might not be available.
+Note | Meaning
+---- | -------
+:new: | New in Metrodroid.
+:closed_lock_with_key: | Encryption keys required to read this card.
+`MFC` | MIFARE Classic card; requires NXP NFC chipset in your phone.
+`CEPAS` | CEPAS card; not compatible with all devices.
+`123` | Only the card number can be read.
+`FALLBACK` | Fallback reader -- must be explicitly enabled in the application's settings.
 
-Additionally, some generic support for Cubic NextFare based systems (on Mifare Classic) is available (which requires encryption keys).
+This project **will only read data from the card itself**, without having to connect to the agency's back-office systems. In some cases, limited data is available, so balance information and trip history might not be available.
 
 ## Supported Phones
 
@@ -139,3 +149,8 @@ This software and it's authors are not associated with any public transit agency
 [27]: http://www.shenzhentong.com/
 [28]: https://www.transport.act.gov.au/myway-and-fares
 [29]: http://www.transperth.wa.gov.au/SmartRider/
+[30]: http://bilheteunico.sptrans.com.br/
+[31]: http://www.netsflashpay.com.sg/
+[32]: http://www.ov-chipkaart.nl/
+[33]: https://github.com/micolous/metrodroid/wiki/Cubic-Nextfare-MFC
+
