@@ -72,7 +72,7 @@
     <string name="fully_locked_desc">
         No part of this card is freely readable without a key. You have no valid keys installed for it.\n\n
         If supported by Metrodroid, the card will work once keys are installed for it. More information about acquiring those to be found in the documentation.\n\n
-        If your card is not supported by Metrodroid, it is unlikely it will ever be, unless the key for it is dechipered.\n\n
+        If your card is not supported by Metrodroid, it is unlikely it will ever be, unless the key for it is deciphered.\n\n
         Please contact your municipal transport authority in order to allow some level of open data access on issued cards. It is possible to safely allow limited read access to data on public transport smartcards.
     </string>
     <string name="fully_locked_title">Fully locked card.</string>
@@ -350,9 +350,9 @@
     <string name="opal_action_new_journey">New journey</string>
     <string name="opal_action_transfer_same_mode">Transfer (from same mode)</string>
     <string name="opal_action_transfer_diff_mode">Transfer (from different mode)</string>
-    <string name="opal_action_manly_new_journey">New journey (Manly ferry)</string>
-    <string name="opal_action_manly_transfer_same_mode">Transfer (from other ferry to Manly ferry)</string>
-    <string name="opal_action_manly_transfer_diff_mode">Transfer (from other mode to Manly ferry)</string>
+    <string name="opal_action_manly_new_journey">New journey (Manly Ferry)</string>
+    <string name="opal_action_manly_transfer_same_mode">Transfer (from other ferry to Manly Ferry)</string>
+    <string name="opal_action_manly_transfer_diff_mode">Transfer (from other mode to Manly Ferry)</string>
     <string name="opal_action_journey_completed_distance">Journey completed (distance fare)</string>
     <string name="opal_action_journey_completed_flat_rate">Journey completed (flat-rate fare)</string>
     <string name="opal_action_journey_completed_auto_off">Journey completed (failure to tap off)</string>
