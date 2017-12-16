@@ -110,4 +110,94 @@
     <string name="opal_vehicle_bus">Buss</string>
     <string name="opal_vehicle_rail">Tog</string>
     <string name="opal_action_none">Ingen (nytt, ubrukt kort)</string>
+    <string name="speak_balance">Les opp saldo</string>
+    <string name="scanned_at_format">Skanet den %1$s på %2$s</string>
+    <string name="unknown_more_info_desc">Trykk her for mer informasjon om Metrodroids støtte for dette kortet.</string>
+
+    <string name="lawyercats">Metrodroid og dets utviklere er ikke tilknyttet noe offentlig transportselskap.</string>
+
+
+    <string name="launch_from_background">Start opp i bakgrunnen</string>
+    <string name="card_epoch">Kortepoke</string>
+    <string name="need_stations_submit">Rapport</string>
+    <string name="map_tiles_url">Nettadresse for kartflis</string>
+    <string name="map_tiles_url_summary">Bruk en egendefinert kartflistjener for innebygde kart, ved bruk av Leaflet TileLayer-syntaks.</string>
+    <string name="map_tiles_subdomains">Kartflis-underdomener</string>
+    <string name="map_tiles_help">Vis Leaflet TileLayer-dokumentasjon</string>
+    <string name="about_card_format">Om dette kortformatet</string>
+    <string name="mifare_classic">MIFARE Classic</string>
+    <string name="auth_retries_summary">Antall ganger autentisering skal forsøkes for hver sektor</string>
+    <string name="storage_required">Tilgang kreves for å lese og skrive kortdumper og nøkler fra/til filer.</string>
+
+    <string name="mfc_fallback_desc">Noen byrå har ingen identifiserende magi på kortene sine. For å lese dem, må du eksplisitt velge byrå.</string>
+    <string name="mfc_fallback">Tilbakefallsleser</string>
+
+    <string name="obfuscation_title">Tilsløring</string>
+    <string name="obfuscation_card_numbers">Skjul kortnummer</string>
+    <string name="obfuscation_card_numbers_desc">Ikke vis kortnummer noensteds hen</string>
+
+    <string name="obfuscation_balance">Tilslør saldo</string>
+    <string name="obfuscation_balance_desc">Endre vist saldo med tilfeldig beløp</string>
+
+    <string name="obfuscation_fares">Tilslør reisepriser</string>
+    <string name="obfuscation_fares_desc">Tilsør viste reisepriser med tilfeldig beløp</string>
+
+    <string name="hidden_card_number">Skjult kortnummer</string>
+    <plurals name="hidden_key_data">
+	<item quantity="one">Skjult nøkkeldata (<xliff:g id="count" example="1">%d</xliff:g> byte)</item>
+	<item quantity="other"></item>
+</plurals>
+
+    <plurals name="obfuscation_mode_notice">
+	<item quantity="one"><xliff:g id="count" example="1">%d</xliff:g> tilsløringsflagg på</item>
+	<item quantity="other"><xliff:g id="count" example="3">%d</xliff:g> obfuscation flags on</item>
+</plurals>
+
+    <string name="location_singapore">Singapore</string>
+    <string name="location_tokyo">Tokyo, Japan</string>
+    <string name="location_kansai">Kansairegionen, Japan</string>
+    <string name="location_the_netherlands">Nederland</string>
+    <string name="location_victoria_australia">Victoria, Australia</string>
+    <string name="location_hong_kong">Hongkong</string>
+    <string name="felica_terminal_portable">Portabel terminal</string>
+    <string name="felica_terminal_vehicle">Kjøretøysterminal (på bussen)</string>
+    <string name="felica_terminal_ticket">Billettmaskin</string>
+    <string name="felica_process_purchase_magnetic">Magnetisk billett</string>
+    <string name="felica_process_fare_adjustment">Reiseprisjustering</string>
+    <string name="felica_process_admission_payment">Påstigningsbetaling</string>
+    <string name="hsl_1zone_ticket">Internbillett</string>
+    <string name="hsl_2zone_ticket">Regionbillett</string>
+    <string name="hsl_balance_refill">Saldopåfylling</string>
+    <string name="hsl_balance_ticket">Verdibillett</string>
+    <string name="hsl_value_ticket_is_valid">Gyldig verdibillett</string>
+    <string name="hsl_pass_ticket">Sesongbillett</string>
+    <string name="hsl_season_ticket_starts">Sesongbillett starter</string>
+    <string name="hsl_season_ticket_ends">Sesongbillett slutter</string>
+    <string name="hsl_season_ticket_bought_on">Sesongbillett kjøpt den</string>
+    <string name="hsl_previous_season_ticket">Forrige sesongbillett var</string>
+    <string name="hsl_you_last_used_this_ticket">Du brukte denne billetten sist den</string>
+    <string name="hsl_value_ticket">Verdibillett</string>
+    <string name="hsl_value_ticket_bought_on">Billett kjøpt</string>
+    <string name="hsl_value_ticket_expires_on">Billetten utløper</string>
+    <string name="hsl_value_ticket_last_transfer">Siste overføring</string>
+    <string name="hsl_value_ticket_last_sign">Siste signering</string>
+    <string name="hsl_value_ticket_price">Pris på verdibillett</string>
+    <string name="hsl_value_ticket_disco_group">Rabattgruppe</string>
+    <string name="hsl_value_ticket_pax">Gruppestørrelse</string>
+    <string name="hsl_value_ticket_duration">Billettgyldighet</string>
+    <string name="hsl_value_ticket_vehicle_number">Kjøretøysnummer</string>
+    <string name="hsl_value_ticket_line_number">Linjenummer</string>
+    <string name="hsl_season_ticket">Sesongbillett</string>
+
+    <string name="opal_automatic_top_up">Automatisk oppfylling</string>
+    <string name="opal_weekly_trips">Ukentlige turer</string>
+    <string name="opal_action_new_journey">Ny tur</string>
+    <string name="opal_action_transfer_same_mode">Overgang (fra samme modus)</string>
+    <string name="opal_action_transfer_diff_mode">Overgang (fra forskjellig modus)</string>
+    <string name="opal_action_manly_new_journey">Ny tur (Manly Ferry)</string>
+    <string name="opal_action_manly_transfer_same_mode">Overgang (fra annen ferge til Manly Ferry)</string>
+    <string name="opal_action_manly_transfer_diff_mode">Overgang (fra annet modus til Manly Ferry)</string>
+    <string name="nextfare_system_code">Systemkode</string>
+    <string name="nextfare_card_expiry">Utløpsdato for kort</string>
+
     </resources>
