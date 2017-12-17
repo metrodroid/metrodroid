@@ -145,7 +145,7 @@
     <string name="hidden_card_number">Skjult kortnummer</string>
     <plurals name="hidden_key_data">
 	<item quantity="one">Skjult nøkkeldata (<xliff:g id="count" example="1">%d</xliff:g> byte)</item>
-	<item quantity="other"></item>
+	<item quantity="other">Skjult nøkkeldata (<xliff:g id="count" example="1">%d</xliff:g> byte)</item>
 </plurals>
 
     <plurals name="obfuscation_mode_notice">
