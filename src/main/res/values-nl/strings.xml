@@ -16,7 +16,7 @@
     <string name="data">Onbewerkte gegevens</string>
     <string name="copy_xml">Kopiëren</string>
     <string name="share_xml">Delen</string>
-    <string name="save_xml">Opslaan naar USB-opslag</string>
+    <string name="save_xml">Opslaan naar bestand</string>
     <string name="trips">Reizen</string>
     <string name="history">Geschiedenis</string>
     <string name="balance">Saldo</string>
