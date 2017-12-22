@@ -1,6 +1,7 @@
 package au.id.micolous.farebot.test;
 
 import com.codebutler.farebot.transit.nextfare.record.NextfareConfigRecord;
+import com.codebutler.farebot.transit.nextfare.record.NextfareTransactionRecord;
 import com.codebutler.farebot.util.Utils;
 
 import junit.framework.TestCase;
@@ -25,6 +26,13 @@ public class NextfareTest extends TestCase {
 
         r = NextfareConfigRecord.recordFromBytes(r20180815);
         assertEquals("2018-08-15 00:00", Utils.isoDateTimeFormat(r.getExpiry()));
+    }
 
+    public void testTransactionRecord() {
+        byte[] rnull = Utils.hexStringToByteArray("01000000000000000000000000007f28");
+
+        NextfareTransactionRecord r;
+        r = NextfareTransactionRecord.recordFromBytes(rnull);
+        assertNull(r);
     }
 }
