@@ -4,7 +4,7 @@
 farebotxml_to_files.py - converts Farebot XML files to binary files for easier
 analysis
 
-Copyright 2015 Michael Farrell <micolous+git@gmail.com>
+Copyright 2015-2017 Michael Farrell <micolous+git@gmail.com>
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -28,8 +28,10 @@ from os.path import join
 from zipfile import ZipFile
 
 
-def zipify(input_xml, output_zipf):
-  output_zip = ZipFile(output_zipf, 'w')
+def zipify(input_xml, output_zipf, mfcdump):
+  output_zip = None
+  if not mfcdump:
+    output_zip = ZipFile(output_zipf, 'w')
   xml = objectify.parse(input_xml)
   root = xml.getroot()
   if root.tag == 'cards':
@@ -40,12 +42,20 @@ def zipify(input_xml, output_zipf):
     print 'unexpected root node: %r' % (root.tag,)
     return
 
+  if mfcdump and len(cards) != 1:
+    print 'expected 1 card dump in mfcdump mode, there were %d' % (len(cards),)
+    return
+
   # iterate through cards
   for card in cards:
     assert card.tag == 'card'
     scanned_at = card.get('scanned_at')
     card_id = card.get('id')
     card_type = card.get('type')
+
+    if mfcdump and card_type != '0':
+      print 'Only MIFARE Classic cards can be dumped this way'
+      return
     
     card_dir = 'scan_%s_%s' % (scanned_at, card_id)
 
@@ -53,17 +63,26 @@ def zipify(input_xml, output_zipf):
     if sectors is not None:
       # Mifare classic card
       # Iterate sectors
-      for sector in sectors.findall('sector'):
+      sectors_i = sorted(sectors.findall('sector'), key=lambda e: int(e.get('index')))
+      for sector in sectors_i:
         sector_id = sector.get('index')
         if sector.get('unauthorized') == 'true':
+          if mfcdump:
+            print 'locked sector found, cannot recreate dump'
+            return
+
           # Locked sector, skip and leave marker
           output_zip.writestr(join(card_dir, sector_id, '.unauthorized'), '')
           continue
 
-        for block in sector.find('blocks').findall('block'):
+        blocks = sorted(sector.find('blocks').findall('block'), key=lambda e: int(e.get('index')))
+        for block in blocks:
           # Lets pull some blocks!
           assert block.get('type') == 'data'
-          output_zip.writestr(join(card_dir, sector_id, block.get('index')), str(block.find('data')).decode('base64'))
+          if mfcdump:
+            output_zipf.write(str(block.find('data')).decode('base64'))
+          else:
+            output_zip.writestr(join(card_dir, sector_id, block.get('index')), str(block.find('data')).decode('base64'))
       continue
 
     applications = card.find('applications')
@@ -109,7 +128,8 @@ def zipify(input_xml, output_zipf):
       
       continue
 
-  output_zip.close()
+  if output_zip:
+    output_zip.close()
   output_zipf.close()
 
 def main():
@@ -120,8 +140,11 @@ def main():
   parser.add_argument('-o', '--output', type=FileType('wb'),
     help='Output ZIP file to write')
 
+  parser.add_argument('-m', '--mfcdump', action='store_true',
+    help='Instead of writing a ZIP file, store an MFC/MFD raw binary backup of the card. Only for single MIFARE Classic exports.')
+
   options = parser.parse_args()
-  zipify(options.input_xml[0], options.output)
+  zipify(options.input_xml[0], options.output, options.mfcdump)
 
 
 if __name__ == '__main__':
