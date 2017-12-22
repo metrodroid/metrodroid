@@ -27,10 +27,8 @@ import android.util.Log;
 
 import com.codebutler.farebot.card.felica.FelicaCard;
 import com.codebutler.farebot.card.felica.FelicaService;
-import com.codebutler.farebot.transit.Subscription;
 import com.codebutler.farebot.transit.TransitData;
 import com.codebutler.farebot.transit.TransitIdentity;
-import com.codebutler.farebot.transit.Trip;
 import com.codebutler.farebot.ui.HeaderListItem;
 import com.codebutler.farebot.ui.ListItem;
 import com.codebutler.farebot.util.TripObfuscator;
@@ -38,11 +36,8 @@ import com.codebutler.farebot.util.Utils;
 
 import net.kazzz.felica.lib.FeliCaLib;
 
-import java.text.NumberFormat;
 import java.util.ArrayList;
-import java.util.Currency;
 import java.util.List;
-import java.util.Locale;
 
 import au.id.micolous.farebot.R;
 

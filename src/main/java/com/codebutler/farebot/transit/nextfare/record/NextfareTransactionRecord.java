@@ -81,6 +81,12 @@ public class NextfareTransactionRecord extends NextfareRecord implements Parcela
             return null;
         }
 
+        // Check if all the other data is null
+        if (Utils.byteArrayToLong(input, 1, 8) == 0L) {
+            Log.d(TAG, "Null transaction record, skipping");
+            return null;
+        }
+
         NextfareTransactionRecord record = new NextfareTransactionRecord();
 
         record.mMode = Utils.byteArrayToInt(input, 1, 1);

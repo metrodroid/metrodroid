@@ -179,7 +179,13 @@ public class CardsFragment extends ListFragment {
                     // In Android 4.4 and later, we can say the right thing!
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
                         i.setType("*/*");
-                        String[] mimetypes = {"application/xml", "text/xml"};
+                        String[] mimetypes = {
+                                "application/xml",
+                                "text/xml",
+                                // Fallback for cases where we didn't get a good mime type from the
+                                // OS, this allows most "other" files to be selected.
+                                "application/octet-stream",
+                        };
                         i.putExtra(Intent.EXTRA_MIME_TYPES, mimetypes);
                     } else {
                         // Failsafe, used in the emulator for local files
