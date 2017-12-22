@@ -66,6 +66,12 @@ public class NextfareTopupRecord extends NextfareRecord implements Parcelable {
     public static NextfareTopupRecord recordFromBytes(byte[] input) {
         //if ((input[0] != 0x01 && input[0] != 0x31) || input[1] != 0x01) throw new AssertionError("Not a topup record");
 
+        // Check if all the other data is null
+        if (Utils.byteArrayToLong(input, 2, 6) == 0L) {
+            Log.d(TAG, "Null top-up record, skipping");
+            return null;
+        }
+
         NextfareTopupRecord record = new NextfareTopupRecord();
 
         byte[] ts = Utils.reverseBuffer(input, 2, 4);
