@@ -52,7 +52,7 @@
     <string name="no_trip_data">No trips found. Has this card been used?</string>
     <string name="no_refill_data">No refills found. Has this card only been used with a pass?</string>
     <string name="import_xml">Import</string>
-    <string name="import_clipboard">Import from Clipboard</string>
+    <string name="import_clipboard">Paste from Clipboard</string>
     <string name="import_file">Import from File</string>
     <string name="import_sd">Import from USB Storage</string>
     <string name="export">Export</string>
@@ -70,13 +70,13 @@
     <string name="pass_or_transfer">Pass/Xfer</string>
     <string name="transaction_sequence">#</string>
     <string name="fully_locked_desc">
-        This card does not have any part of it which is freely readable without a key. You have no keys installed which are valid for this card.\n\n
-        If the card is currently supported by Metrodroid, you will be able to make this card work once you have installed keys for it. Please consult the online documentation for more information about acquiring keys.\n\n
-        If your card is not currently supported by Metrodroid, it is unlikely it will ever be supported by this software, unless this key is broken.\n\n
+        No part of this card is freely readable without a key. You have no valid keys installed for it.\n\n
+        If supported by Metrodroid, the card will work once keys are installed for it. More information about acquiring those to be found in the documentation.\n\n
+        If your card is not supported by Metrodroid, it is unlikely it will ever be, unless the key for it is deciphered.\n\n
         Please contact your municipal transport authority in order to allow some level of open data access on issued cards. It is possible to safely allow limited read access to data on public transport smartcards.
     </string>
-    <string name="fully_locked_title">Card is fully locked!</string>
-    <string name="nfc_off_error">NFC is turned off</string>
+    <string name="fully_locked_title">Fully locked card.</string>
+    <string name="nfc_off_error">NFC off</string>
     <string name="turn_on_nfc">Please enable NFC to read card information.</string>
     <string name="wireless_settings">Wireless Settings</string>
     <string name="report_error">Report Error</string>
@@ -86,13 +86,13 @@
 
     <string name="unknown_more_info">More information</string>
     <!-- TRANSLATORS: This is used on a list item, which will direct users to Metrodroid's website when touched. -->
-    <string name="unknown_more_info_desc">Touch here for more information about Metrodroid\'s support of this card.</string>
+    <string name="unknown_more_info_desc">Tap for more information about Metrodroid support for this card.</string>
 
     <string name="lawyercats">Metrodroid and its authors are not associated with any public transit agency.</string>
 
 
     <string name="report_error_privacy_title">Privacy Notice</string>
-    <string name="report_error_privacy_message">All data contained within this card will be included in your error report.</string>
+    <string name="report_error_privacy_message">All data on this card will be included in your error report.</string>
     <string name="scanned_cards">History</string>
     <string name="no_scanned_cards">You have not scanned any cards.</string>
     <string name="block_title_format">Block: %s</string>
@@ -114,13 +114,13 @@
     <string name="error">Error</string>
     <string name="keys">Keys</string>
     <string name="delete">Delete</string>
-    <string name="add_key_directions">Save your keys binary dump file with a .farebotkeys extension, email the dump file as an attachment to yourself, and open it on this device.</string>
+    <string name="add_key_directions">Save a binary dump of your keys as a file with a .farebotkeys extension, e-mail it as an attachment to yourself, and then open it on this device.</string>
     <string name="no_keys">No keys.</string>
     <string name="nfc_unavailable">NFC Unavailable</string>
     <string name="fare_cancelled_format">%s (Cancelled)</string>
     <string name="general">General</string>
     <string name="launch_from_background">Launch from background</string>
-    <string name="error_report_sent">Error report sent!</string>
+    <string name="error_report_sent">Error report sent.</string>
     <string name="checksum">Checksum</string>
     <string name="last_transaction">Last transaction</string>
     <string name="date">Date</string>
@@ -130,7 +130,7 @@
     <string name="card_epoch">Card Epoch</string>
     <string name="card_not_supported_on_device">This card is not supported by your device.</string>
     <string name="card_note_cepas">Not compatible with all devices.</string>
-    <string name="need_stations">Not all station names are known.</string>
+    <string name="need_stations">Some station names are unknown.</string>
     <string name="need_stations_submit">Report</string>
     <string name="card_preview_reader">Beta version of card reader.</string>
     <string name="visit_website">Visit Website</string>
@@ -153,13 +153,13 @@
     <string name="map_tiles_help_summary">For help on using Map tile URLs, see Leaflet\'s online documentation (only available in English).</string>
     <string name="about_card_format">About this card format</string>
     <string name="online_services">Online services</string>
-    <string name="mifare_classic">Mifare Classic</string>
+    <string name="mifare_classic">MIFARE Classic</string>
     <string name="auth_retries">Authentication retries</string>
     <string name="auth_retries_summary">Number of times to attempt authentication for each sector</string>
     <string name="alternate_purse_balances">Alternate purse balances</string>
     <string name="storage_required">Permission is required to read and write card dumps and keys from/to files.</string>
 
-    <string name="mfc_fallback_desc">Some agencies have no identifying magic on their card. To read them, you must explicitly choose one agency.</string>
+    <string name="mfc_fallback_desc">Some agencies have no identifying magic on their card. To read them, you must an agency explicitly.</string>
     <string name="mfc_fallback">Fallback reader</string>
 
     <!-- Obfuscation options -->
@@ -398,6 +398,6 @@
     <!--
         Bilhete Único
     -->
-    <string name="card_note_bilhete_unico">Must be selected as fallback reader in preferences.</string>
+    <string name="card_note_bilhete_unico">Must be selected as fallback reader in the preferences.</string>
 
 </resources>
