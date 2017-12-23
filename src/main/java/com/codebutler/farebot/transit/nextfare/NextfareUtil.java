@@ -22,6 +22,7 @@ import com.codebutler.farebot.util.Utils;
 
 import java.util.Calendar;
 import java.util.GregorianCalendar;
+import java.util.Locale;
 
 
 /**
@@ -34,6 +35,7 @@ public final class NextfareUtil {
     /**
      * Date format:
      * <p>
+     * Top two bytes:
      * 0001111 1100 00100 = 2015-12-04
      * yyyyyyy mmmm ddddd
      * <p>
@@ -51,13 +53,13 @@ public final class NextfareUtil {
         int month = Utils.getBitsFromBuffer(timestamp, 23, 4);
         int day = Utils.getBitsFromBuffer(timestamp, 27, 5);
 
-        //Log.i(TAG, "unpackDate: " + minute + " minutes, " + year + '-' + month + '-' + day);
+        //Log.i("nextfareutil", "unpackDate: " + minute + " minutes, " + year + '-' + month + '-' + day);
 
-        if (minute > 1440) throw new AssertionError("Minute > 1440");
-        if (minute < 0) throw new AssertionError("Minute < 0");
+        if (minute > 1440) throw new AssertionError(String.format(Locale.ENGLISH,"Minute > 1440 (%d)", minute));
+        if (minute < 0) throw new AssertionError(String.format(Locale.ENGLISH,"Minute < 0 (%d)", minute));
 
-        if (day > 31) throw new AssertionError("Day > 31");
-        if (month > 12) throw new AssertionError("Month > 12");
+        if (day > 31) throw new AssertionError(String.format(Locale.ENGLISH,"Day > 31 (%d)", day));
+        if (month > 12) throw new AssertionError(String.format(Locale.ENGLISH,"Month > 12 (%d)", month));
 
         GregorianCalendar d = new GregorianCalendar(year, month - 1, day);
         d.add(Calendar.MINUTE, minute);
