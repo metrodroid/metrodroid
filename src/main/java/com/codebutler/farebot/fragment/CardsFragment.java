@@ -78,7 +78,7 @@ public class CardsFragment extends ListFragment {
     private static final String TAG = "CardsFragment";
     private static final int REQUEST_SELECT_FILE = 1;
     private static final int REQUEST_SAVE_FILE = 2;
-    private static final String STD_EXPORT_FILENAME = "Metrdroid-Export.xml";
+    private static final String STD_EXPORT_FILENAME = "Metrodroid-Export.xml";
     private static final String SD_EXPORT_PATH = Environment.getExternalStorageDirectory() + "/" + STD_EXPORT_FILENAME;
 
     private Map<String, TransitIdentity> mDataCache;
@@ -192,11 +192,6 @@ public class CardsFragment extends ListFragment {
                         i.setType("text/xml");
                     }
                     startActivityForResult(Intent.createChooser(i, Utils.localizeString(R.string.select_file)), REQUEST_SELECT_FILE);
-                    return true;
-
-                case R.id.import_sd:
-                    xml = FileUtils.readFileToString(new File(SD_EXPORT_PATH));
-                    onCardsImported(ExportHelper.importCardsXml(getActivity(), xml));
                     return true;
 
                 case R.id.copy_xml:

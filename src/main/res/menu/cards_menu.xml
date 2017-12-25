@@ -32,8 +32,6 @@
                   android:title="@string/import_clipboard" />
             <item android:id="@+id/import_file"
                   android:title="@string/import_file" />
-            <item android:id="@+id/import_sd"
-                  android:title="@string/import_sd" />
         </menu>
     </item>
     <item
