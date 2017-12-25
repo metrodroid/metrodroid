@@ -64,10 +64,10 @@ public class MainActivity extends Activity {
 
         int obfuscationFlagsOn =
                 (MetrodroidApplication.hideCardNumbers() ? 1 : 0) +
-                (MetrodroidApplication.obfuscateBalance() ? 1 : 0) +
-                (MetrodroidApplication.obfuscateTripDates() ? 1 : 0) +
-                (MetrodroidApplication.obfuscateTripFares() ? 1 : 0) +
-                (MetrodroidApplication.obfuscateTripTimes() ? 1 : 0);
+                        (MetrodroidApplication.obfuscateBalance() ? 1 : 0) +
+                        (MetrodroidApplication.obfuscateTripDates() ? 1 : 0) +
+                        (MetrodroidApplication.obfuscateTripFares() ? 1 : 0) +
+                        (MetrodroidApplication.obfuscateTripTimes() ? 1 : 0);
 
         if (obfuscationFlagsOn > 0) {
             ((TextView) findViewById(R.id.directions)).setText(

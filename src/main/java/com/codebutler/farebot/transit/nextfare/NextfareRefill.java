@@ -23,9 +23,6 @@ import android.os.Parcel;
 import com.codebutler.farebot.transit.Refill;
 import com.codebutler.farebot.transit.nextfare.record.NextfareTopupRecord;
 
-import java.text.NumberFormat;
-import java.util.Locale;
-
 /**
  * Represents a top-up event on Nextfare.
  */

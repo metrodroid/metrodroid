@@ -25,10 +25,8 @@ import android.os.Parcelable;
 import com.codebutler.farebot.transit.Refill;
 import com.codebutler.farebot.transit.manly_fast_ferry.record.ManlyFastFerryPurseRecord;
 
-import java.text.NumberFormat;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
-import java.util.Locale;
 
 /**
  * Describes top-up amounts "purse credits".

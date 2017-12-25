@@ -29,11 +29,11 @@ import java.util.Calendar;
 /**
  * Represents subscriptions on a card.  Subscriptions can be used to represent a number of different
  * things "loaded" on to the card.
- *
+ * <p>
  * Travel Pass or Season Pass: a card may, for example, allow travel passes that allow unlimited
  * travel (on certain modes of transport, or with certain operating companies) for a period of time
  * (eg: 7 days, 30 days, 1 year...)
- *
+ * <p>
  * Automatic top-up: a card may be linked to a credit card or other payment instrument, which will
  * be used to "top-up" or "refill" a card in the event a trip takes the balance below $0.
  */
@@ -42,18 +42,20 @@ public abstract class Subscription implements Parcelable {
 
     /**
      * When the subscription starts.
-     *
+     * <p>
      * If null is returned, then the subscription has no start date.
+     *
      * @return Calendar representing subscription start date, or null.
      */
     public abstract Calendar getValidFrom();
 
     /**
      * When the subscription ends.
-     *
+     * <p>
      * If null is returned, then the subscription has never been used.  For example, a 7 day travel
      * pass may be loaded on the card as "available", but the travel pass has never been used, so
      * it will begin on the date that it is first used.
+     *
      * @return Calendar representing the subcription date, or null if the subscription is unused.
      */
     public abstract Calendar getValidTo();

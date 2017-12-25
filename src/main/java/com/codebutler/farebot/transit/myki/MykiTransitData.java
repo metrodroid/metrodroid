@@ -21,7 +21,6 @@ package com.codebutler.farebot.transit.myki;
 
 import android.net.Uri;
 import android.os.Parcel;
-import android.support.annotation.Nullable;
 
 import com.codebutler.farebot.card.Card;
 import com.codebutler.farebot.card.desfire.DesfireCard;

@@ -87,6 +87,7 @@ public abstract class Trip implements Parcelable {
     /**
      * Start timestamp of the trip, in seconds since the UNIX epoch, or 0 if there is no timestamp
      * for the trip.
+     *
      * @return seconds since UNIX epoch
      */
     @Deprecated
@@ -95,6 +96,7 @@ public abstract class Trip implements Parcelable {
     /**
      * End timestamp of the trip, in seconds since the UNIX epoch, or 0 if there is no exit
      * timestamp for the trip.
+     *
      * @return seconds since UNIX epoch.
      */
     @Deprecated

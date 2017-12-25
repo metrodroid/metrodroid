@@ -29,9 +29,6 @@ import com.codebutler.farebot.card.cepas.CEPASTransaction;
 import com.codebutler.farebot.transit.Station;
 import com.codebutler.farebot.transit.Trip;
 
-import java.text.NumberFormat;
-import java.util.Currency;
-
 public class EZLinkTrip extends Trip {
     public static final Creator<EZLinkTrip> CREATOR = new Creator<EZLinkTrip>() {
         public EZLinkTrip createFromParcel(Parcel parcel) {

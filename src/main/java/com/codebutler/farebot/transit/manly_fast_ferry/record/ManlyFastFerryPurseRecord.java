@@ -62,8 +62,10 @@ public class ManlyFastFerryPurseRecord extends ManlyFastFerryRegularRecord imple
         if (record.mDay < 0) throw new AssertionError("Day < 0");
 
         record.mMinute = Utils.getBitsFromBuffer(input, 52, 12);
-        if (record.mMinute > 1440) throw new AssertionError(String.format(Locale.ENGLISH,"Minute > 1440 (%d)", record.mMinute));
-        if (record.mMinute < 0) throw new AssertionError(String.format(Locale.ENGLISH,"Minute < 0 (%d)", record.mMinute));
+        if (record.mMinute > 1440)
+            throw new AssertionError(String.format(Locale.ENGLISH, "Minute > 1440 (%d)", record.mMinute));
+        if (record.mMinute < 0)
+            throw new AssertionError(String.format(Locale.ENGLISH, "Minute < 0 (%d)", record.mMinute));
 
         record.mTransactionValue = Utils.byteArrayToInt(input, 8, 4);
         if (record.mTransactionValue < 0) throw new AssertionError("Value < 0");

@@ -29,9 +29,6 @@ import android.support.annotation.Nullable;
 import com.codebutler.farebot.transit.Station;
 import com.codebutler.farebot.transit.Trip;
 
-import java.text.NumberFormat;
-import java.util.Locale;
-
 public class ClipperTrip extends Trip {
     public static final Creator<ClipperTrip> CREATOR = new Creator<ClipperTrip>() {
         public ClipperTrip createFromParcel(Parcel parcel) {

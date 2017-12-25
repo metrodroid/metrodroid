@@ -23,9 +23,6 @@ import android.os.Parcel;
 
 import com.codebutler.farebot.transit.Refill;
 
-import java.text.NumberFormat;
-import java.util.Locale;
-
 public class ClipperRefill extends Refill {
     public static final Creator<ClipperRefill> CREATOR = new Creator<ClipperRefill>() {
         public ClipperRefill createFromParcel(Parcel parcel) {

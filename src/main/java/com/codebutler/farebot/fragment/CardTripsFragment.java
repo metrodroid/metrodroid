@@ -129,6 +129,7 @@ public class CardTripsFragment extends ListFragment {
 
     private static class UseLogListAdapter extends ArrayAdapter<Trip> {
         private TransitData mTransitData;
+
         public UseLogListAdapter(Context context, Trip[] items, TransitData transitData) {
             super(context, 0, items);
             mTransitData = transitData;

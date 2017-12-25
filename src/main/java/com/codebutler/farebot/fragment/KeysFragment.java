@@ -20,7 +20,6 @@
 package com.codebutler.farebot.fragment;
 
 import android.app.Activity;
-import android.app.AlertDialog;
 import android.app.ListFragment;
 import android.app.LoaderManager;
 import android.content.ContentUris;

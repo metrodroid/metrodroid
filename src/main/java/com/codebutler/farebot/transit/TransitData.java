@@ -53,7 +53,7 @@ public abstract class TransitData implements Parcelable {
      * This is an instance method to allow for cards that have multiple currencies (eg: Octopus),
      * or systems deployed in multiple countries with different currencies (eg: Nextfare).
      *
-     * @param currency Currency value
+     * @param currency  Currency value
      * @param isBalance If true, a balance value is being formatted. Don't show negative amounts as
      *                  a credit.
      * @return The currency value formatted in the local currency of the card.
@@ -84,24 +84,26 @@ public abstract class TransitData implements Parcelable {
      * Allows TransitData implementors to show extra information that doesn't fit within the
      * standard bounds of the interface.  By default, this returns null, so the "Info" tab will not
      * be displayed.
-     *
+     * <p>
      * Note: in order to support obfuscation / hiding behaviour, if you implement this method, you
      * also need to use some other functionality:
-     *
+     * <p>
      * - Check for MetrodroidApplication.hideCardNumbers whenever you show a card number, or other
-     *   mark (such as a name) that could be used to identify this card or its holder.
-     *
+     * mark (such as a name) that could be used to identify this card or its holder.
+     * <p>
      * - Pass Calendar/Date objects (timestamps) through TripObfuscator.maybeObfuscateTS.  This also
-     *   works on epoch timestamps (expressed as seconds since UTC).
-     *
+     * works on epoch timestamps (expressed as seconds since UTC).
+     * <p>
      * - Pass all currency amounts through formatCurrencyString. This is overridden by
-     *   ObfuscatedTrip, and will allow you to handle
+     * ObfuscatedTrip, and will allow you to handle
      *
      * @return
      */
     public List<ListItem> getInfo() {
         return null;
-    };
+    }
+
+    ;
 
     public abstract String getCardName();
 

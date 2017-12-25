@@ -32,8 +32,6 @@ import com.codebutler.farebot.transit.Station;
 import com.codebutler.farebot.transit.Trip;
 import com.codebutler.farebot.util.ImmutableMapBuilder;
 
-import java.text.NumberFormat;
-import java.util.Locale;
 import java.util.Map;
 
 public class OrcaTrip extends Trip {
@@ -98,7 +96,7 @@ public class OrcaTrip extends Trip {
             // FIXME: This appears to be some sort of special case for transfers and passes.
             mFare = 0;
         } else {
-            mFare = (int)((usefulData[15] << 7) | (usefulData[16] >> 1));
+            mFare = (int) ((usefulData[15] << 7) | (usefulData[16] >> 1));
         }
 
         mNewBalance = (usefulData[34] << 8) | usefulData[35];

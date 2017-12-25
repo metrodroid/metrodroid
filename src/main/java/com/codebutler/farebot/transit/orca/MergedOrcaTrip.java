@@ -25,9 +25,6 @@ import android.support.annotation.Nullable;
 import com.codebutler.farebot.transit.Station;
 import com.codebutler.farebot.transit.Trip;
 
-import au.id.micolous.farebot.R;
-import au.id.micolous.metrodroid.MetrodroidApplication;
-
 public class MergedOrcaTrip extends Trip {
     public static final Creator<MergedOrcaTrip> CREATOR = new Creator<MergedOrcaTrip>() {
         public MergedOrcaTrip createFromParcel(Parcel parcel) {

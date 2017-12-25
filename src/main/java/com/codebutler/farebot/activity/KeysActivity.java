@@ -30,7 +30,6 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.widget.Toast;
 
-import com.codebutler.farebot.fragment.CardsFragment;
 import com.codebutler.farebot.fragment.KeysFragment;
 
 import au.id.micolous.farebot.R;

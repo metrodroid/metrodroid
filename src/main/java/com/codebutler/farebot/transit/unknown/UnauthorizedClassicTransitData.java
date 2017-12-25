@@ -29,10 +29,7 @@ import com.codebutler.farebot.transit.Subscription;
 import com.codebutler.farebot.transit.TransitData;
 import com.codebutler.farebot.transit.TransitIdentity;
 import com.codebutler.farebot.transit.Trip;
-import com.codebutler.farebot.ui.ListItem;
 import com.codebutler.farebot.util.Utils;
-
-import java.util.List;
 
 import au.id.micolous.farebot.R;
 

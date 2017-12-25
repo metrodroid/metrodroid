@@ -24,13 +24,8 @@ import android.support.annotation.Nullable;
 
 import com.codebutler.farebot.transit.Station;
 import com.codebutler.farebot.transit.Trip;
-import com.codebutler.farebot.util.Utils;
 
-import java.text.NumberFormat;
 import java.util.GregorianCalendar;
-import java.util.Locale;
-
-import au.id.micolous.farebot.R;
 
 /**
  * Represents trips on Nextfare

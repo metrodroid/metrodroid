@@ -28,15 +28,11 @@ import android.support.annotation.Nullable;
 import com.codebutler.farebot.card.Card;
 import com.codebutler.farebot.card.cepas.CEPASCard;
 import com.codebutler.farebot.card.cepas.CEPASTransaction;
-import com.codebutler.farebot.transit.Subscription;
 import com.codebutler.farebot.transit.TransitData;
 import com.codebutler.farebot.transit.TransitIdentity;
 import com.codebutler.farebot.transit.Trip;
-import com.codebutler.farebot.ui.ListItem;
 import com.codebutler.farebot.util.Utils;
 
-import java.text.NumberFormat;
-import java.util.Currency;
 import java.util.HashSet;
 import java.util.List;
 import java.util.TreeMap;
@@ -508,7 +504,7 @@ public class EZLinkTransitData extends TransitData {
     @Nullable
     public Integer getBalance() {
         // This is stored in cents of SGD
-        return (int)mBalance;
+        return (int) mBalance;
     }
 
     @Override

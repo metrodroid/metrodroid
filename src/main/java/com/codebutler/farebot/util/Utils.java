@@ -498,12 +498,13 @@ public class Utils {
 
     /**
      * Simple currency formatter, used for TransitData.formatCurrencyString.
-     * @param currency Input currency value to use
-     * @param isBalance True if the value being passed is a balance (ie: don't format credits in a
-     *                  special way)
+     *
+     * @param currency     Input currency value to use
+     * @param isBalance    True if the value being passed is a balance (ie: don't format credits in a
+     *                     special way)
      * @param currencyCode 3 character currency code (eg: AUD)
-     * @param divisor value to divide by to get that currency. eg: if the value passed is in cents,
-     *                then divide by 100 to get dollars. Currencies like yen should divide by 1.
+     * @param divisor      value to divide by to get that currency. eg: if the value passed is in cents,
+     *                     then divide by 100 to get dollars. Currencies like yen should divide by 1.
      * @return Formatted currency string
      */
     public static String formatCurrencyString(int currency, boolean isBalance, String currencyCode, double divisor) {
@@ -519,9 +520,9 @@ public class Utils {
         numberFormat.setMinimumFractionDigits(c.getDefaultFractionDigits());
 
         if (!isBalance && currency < 0) {
-            return "+ " + numberFormat.format(Math.abs(((double)currency) / divisor));
+            return "+ " + numberFormat.format(Math.abs(((double) currency) / divisor));
         } else {
-            return numberFormat.format(((double)currency) / divisor);
+            return numberFormat.format(((double) currency) / divisor);
         }
     }
 }

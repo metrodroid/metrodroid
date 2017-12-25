@@ -23,22 +23,17 @@ import android.support.annotation.Nullable;
 import android.util.Log;
 
 import com.codebutler.farebot.card.classic.ClassicCard;
-import com.codebutler.farebot.transit.Subscription;
 import com.codebutler.farebot.transit.TransitData;
 import com.codebutler.farebot.transit.TransitIdentity;
 import com.codebutler.farebot.transit.Trip;
-import com.codebutler.farebot.ui.ListItem;
 import com.codebutler.farebot.util.Utils;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
-import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
 import java.util.GregorianCalendar;
-import java.util.List;
-import java.util.Locale;
 
 /**
  * Reader for SmartRider (Western Australia) and MyWay (Australian Capital Territory / Canberra)

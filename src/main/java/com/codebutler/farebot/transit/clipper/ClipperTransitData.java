@@ -30,19 +30,15 @@ import android.support.annotation.Nullable;
 import com.codebutler.farebot.card.Card;
 import com.codebutler.farebot.card.desfire.DesfireCard;
 import com.codebutler.farebot.card.desfire.files.DesfireFile;
-import com.codebutler.farebot.transit.Subscription;
 import com.codebutler.farebot.transit.TransitData;
 import com.codebutler.farebot.transit.TransitIdentity;
 import com.codebutler.farebot.transit.Trip;
-import com.codebutler.farebot.ui.ListItem;
 import com.codebutler.farebot.util.Utils;
 
-import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
-import java.util.Locale;
 
 import au.id.micolous.farebot.R;
 import au.id.micolous.metrodroid.MetrodroidApplication;
@@ -142,7 +138,7 @@ public class ClipperTransitData extends TransitData {
     @Nullable
     @Override
     public Integer getBalance() {
-        return (int)mBalance;
+        return (int) mBalance;
     }
 
     @Override

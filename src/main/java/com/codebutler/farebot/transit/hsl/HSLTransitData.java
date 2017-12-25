@@ -27,21 +27,14 @@ import com.codebutler.farebot.card.desfire.DesfireCard;
 import com.codebutler.farebot.card.desfire.files.DesfireFile;
 import com.codebutler.farebot.card.desfire.files.RecordDesfireFile;
 import com.codebutler.farebot.transit.Refill;
-import com.codebutler.farebot.transit.Subscription;
 import com.codebutler.farebot.transit.TransitData;
 import com.codebutler.farebot.transit.TransitIdentity;
 import com.codebutler.farebot.transit.Trip;
-import com.codebutler.farebot.ui.ListItem;
 import com.codebutler.farebot.util.Utils;
 
-import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.Locale;
-
-import au.id.micolous.farebot.R;
-import au.id.micolous.metrodroid.MetrodroidApplication;
 
 public class HSLTransitData extends TransitData {
     private static final long EPOCH = 0x32C97ED0;
@@ -133,7 +126,7 @@ public class HSLTransitData extends TransitData {
 
         try {
             data = desfireCard.getApplication(0x1120ef).getFile(0x02).getData();
-            mBalance = (int)bitsToLong(0, 20, data);
+            mBalance = (int) bitsToLong(0, 20, data);
             mLastRefill = new HSLRefill(data);
         } catch (Exception ex) {
             throw new RuntimeException("Error parsing HSL refills", ex);
@@ -162,7 +155,7 @@ public class HSLTransitData extends TransitData {
             mArvoRegional = bitsToLong(27, 5, data);
 
             mArvoExit = cardDateToTimestamp(bitsToLong(32, 14, data), bitsToLong(46, 11, data));
-            mArvoPurchasePrice = (int)bitsToLong(68, 14, data);
+            mArvoPurchasePrice = (int) bitsToLong(68, 14, data);
             //mArvoDiscoGroup = bitsToLong(82, 6,data);
             mArvoPurchase = cardDateToTimestamp(bitsToLong(88, 14, data), bitsToLong(102, 11, data)); //68 price, 82 zone?
             mArvoExpire = cardDateToTimestamp(bitsToLong(113, 14, data), bitsToLong(127, 11, data)); //68 price, 82 zone?
@@ -226,7 +219,7 @@ public class HSLTransitData extends TransitData {
             }
             mHasKausi = mKausiEnd > (System.currentTimeMillis() / 1000.0);
             mKausiPurchase = cardDateToTimestamp(bitsToLong(110, 14, data), bitsToLong(124, 11, data));
-            mKausiPurchasePrice = (int)bitsToLong(149, 15, data);
+            mKausiPurchasePrice = (int) bitsToLong(149, 15, data);
             mKausiLastUse = cardDateToTimestamp(bitsToLong(192, 14, data), bitsToLong(206, 11, data));
             mKausiVehicleNumber = bitsToLong(217, 14, data);
             //mTrips[0].mVehicleNumber = mArvoVehicleNumber;

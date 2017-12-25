@@ -27,10 +27,8 @@ import com.codebutler.farebot.transit.Station;
 import com.codebutler.farebot.transit.Trip;
 import com.codebutler.farebot.transit.manly_fast_ferry.record.ManlyFastFerryPurseRecord;
 
-import java.text.NumberFormat;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
-import java.util.Locale;
 
 /**
  * Trips on the card are "purse debits", and it is not possible to tell it apart from non-ticket

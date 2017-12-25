@@ -55,11 +55,14 @@ public final class NextfareUtil {
 
         //Log.i("nextfareutil", "unpackDate: " + minute + " minutes, " + year + '-' + month + '-' + day);
 
-        if (minute > 1440) throw new AssertionError(String.format(Locale.ENGLISH,"Minute > 1440 (%d)", minute));
-        if (minute < 0) throw new AssertionError(String.format(Locale.ENGLISH,"Minute < 0 (%d)", minute));
+        if (minute > 1440)
+            throw new AssertionError(String.format(Locale.ENGLISH, "Minute > 1440 (%d)", minute));
+        if (minute < 0)
+            throw new AssertionError(String.format(Locale.ENGLISH, "Minute < 0 (%d)", minute));
 
-        if (day > 31) throw new AssertionError(String.format(Locale.ENGLISH,"Day > 31 (%d)", day));
-        if (month > 12) throw new AssertionError(String.format(Locale.ENGLISH,"Month > 12 (%d)", month));
+        if (day > 31) throw new AssertionError(String.format(Locale.ENGLISH, "Day > 31 (%d)", day));
+        if (month > 12)
+            throw new AssertionError(String.format(Locale.ENGLISH, "Month > 12 (%d)", month));
 
         GregorianCalendar d = new GregorianCalendar(year, month - 1, day);
         d.add(Calendar.MINUTE, minute);

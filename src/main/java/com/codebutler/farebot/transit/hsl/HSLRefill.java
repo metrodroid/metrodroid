@@ -22,9 +22,6 @@ import android.os.Parcel;
 
 import com.codebutler.farebot.transit.Refill;
 
-import java.text.NumberFormat;
-import java.util.Locale;
-
 import au.id.micolous.farebot.R;
 import au.id.micolous.metrodroid.MetrodroidApplication;
 
@@ -34,7 +31,7 @@ public class HSLRefill extends Refill {
 
     public HSLRefill(byte[] data) {
         mRefillTime = HSLTransitData.cardDateToTimestamp(HSLTransitData.bitsToLong(20, 14, data), HSLTransitData.bitsToLong(34, 11, data));
-        mRefillAmount = (int)HSLTransitData.bitsToLong(45, 20, data);
+        mRefillAmount = (int) HSLTransitData.bitsToLong(45, 20, data);
     }
 
     public HSLRefill(Parcel parcel) {

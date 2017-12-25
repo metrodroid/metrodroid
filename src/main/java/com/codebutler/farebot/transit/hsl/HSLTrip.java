@@ -25,9 +25,6 @@ import com.codebutler.farebot.card.desfire.files.DesfireRecord;
 import com.codebutler.farebot.transit.Station;
 import com.codebutler.farebot.transit.Trip;
 
-import java.text.NumberFormat;
-import java.util.Locale;
-
 import au.id.micolous.farebot.R;
 import au.id.micolous.metrodroid.MetrodroidApplication;
 
@@ -63,7 +60,7 @@ public class HSLTrip extends Trip {
         mTimestamp = HSLTransitData.cardDateToTimestamp(HSLTransitData.bitsToLong(1, 14, usefulData), HSLTransitData.bitsToLong(15, 11, usefulData));
         mExpireTimestamp = HSLTransitData.cardDateToTimestamp(HSLTransitData.bitsToLong(26, 14, usefulData), HSLTransitData.bitsToLong(40, 11, usefulData));
 
-        mFare = (int)HSLTransitData.bitsToLong(51, 14, usefulData);
+        mFare = (int) HSLTransitData.bitsToLong(51, 14, usefulData);
 
         mPax = HSLTransitData.bitsToLong(65, 5, usefulData);
         mLine = null;

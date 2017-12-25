@@ -159,7 +159,7 @@ public class NextfareTransitData extends TransitData {
                 }
 
             }
-            
+
             mBalance = balance.getBalance();
             if (balance.hasTravelPassAvailable()) {
                 subscriptions.add(newSubscription(balance));

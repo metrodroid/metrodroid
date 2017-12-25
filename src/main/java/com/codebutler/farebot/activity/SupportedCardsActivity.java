@@ -40,11 +40,11 @@ import com.codebutler.farebot.card.CardType;
 import com.codebutler.farebot.transit.lax_tap.LaxTapTransitData;
 import com.codebutler.farebot.transit.manly_fast_ferry.ManlyFastFerryTransitData;
 import com.codebutler.farebot.transit.myki.MykiTransitData;
-import com.codebutler.farebot.transit.ovc.OVChipTransitData;
-import com.codebutler.farebot.transit.smartrider.SmartRiderTransitData;
 import com.codebutler.farebot.transit.octopus.OctopusTransitData;
 import com.codebutler.farebot.transit.opal.OpalTransitData;
+import com.codebutler.farebot.transit.ovc.OVChipTransitData;
 import com.codebutler.farebot.transit.seq_go.SeqGoTransitData;
+import com.codebutler.farebot.transit.smartrider.SmartRiderTransitData;
 import com.codebutler.farebot.util.Utils;
 
 import java.util.ArrayList;

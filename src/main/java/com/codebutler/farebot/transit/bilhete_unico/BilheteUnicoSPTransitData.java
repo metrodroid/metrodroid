@@ -27,17 +27,11 @@ import android.support.annotation.Nullable;
 import com.codebutler.farebot.card.Card;
 import com.codebutler.farebot.card.UnauthorizedException;
 import com.codebutler.farebot.card.classic.ClassicCard;
-import com.codebutler.farebot.transit.Subscription;
 import com.codebutler.farebot.transit.TransitData;
 import com.codebutler.farebot.transit.TransitIdentity;
 import com.codebutler.farebot.transit.Trip;
 import com.codebutler.farebot.transit.ovc.OVChipCredit;
-import com.codebutler.farebot.ui.ListItem;
 import com.codebutler.farebot.util.Utils;
-
-import java.text.NumberFormat;
-import java.util.Currency;
-import java.util.List;
 
 public class BilheteUnicoSPTransitData extends TransitData {
 

@@ -64,7 +64,7 @@ public class CardBalanceFragment extends Fragment {
 
                 // Apply offset and multiplier, but always return a positive
                 // balance.
-                balance = Math.abs((int)((balance + offset) * multiplier));
+                balance = Math.abs((int) ((balance + offset) * multiplier));
             }
             String balanceStr = mTransitData.formatCurrencyString(balance, true);
             ((TextView) view.findViewById(R.id.balance)).setText(balanceStr);

@@ -32,7 +32,7 @@ public final class TripObfuscator {
 
     static {
         // Generate list of ints from 0-366 (each day in year).
-        for (int x=0; x<366; x++) {
+        for (int x = 0; x < 366; x++) {
             mCalendarMapping.add(x);
         }
 
@@ -41,7 +41,8 @@ public final class TripObfuscator {
 
     /**
      * Maybe obfuscates a timestamp
-     * @param input Calendar representing the time to obfuscate
+     *
+     * @param input          Calendar representing the time to obfuscate
      * @param obfuscateDates true if dates should be obfuscated
      * @param obfuscateTimes true if times should be obfuscated
      * @return maybe obfuscated value
@@ -87,7 +88,8 @@ public final class TripObfuscator {
 
     /**
      * Maybe obfuscates a timestamp
-     * @param input seconds since UNIX epoch (1970-01-01)
+     *
+     * @param input          seconds since UNIX epoch (1970-01-01)
      * @param obfuscateDates true if dates should be obfuscated
      * @param obfuscateTimes true if times should be obfuscated
      * @return maybe obfuscated value
@@ -123,6 +125,7 @@ public final class TripObfuscator {
      * TransitData implementation shows additional transactional information in getInfo(). This
      * isn't required for either balances, trips or refills to use this, as they are wrapped
      * automatically.
+     *
      * @param fare input fare
      * @return adjusted fare
      */
@@ -131,7 +134,7 @@ public final class TripObfuscator {
             return fare;
         }
 
-        int newFare = (int)((fare + mRNG.nextInt(100) - 50) * ((mRNG.nextDouble() * 0.4) + 0.8));
+        int newFare = (int) ((fare + mRNG.nextInt(100) - 50) * ((mRNG.nextDouble() * 0.4) + 0.8));
 
         if ((fare >= 0 && newFare < 0) || (fare < 0 && newFare > 0)) {
             newFare *= -1;

@@ -27,7 +27,6 @@ import com.codebutler.farebot.card.classic.ClassicBlock;
 import com.codebutler.farebot.card.classic.ClassicCard;
 import com.codebutler.farebot.card.classic.ClassicSector;
 import com.codebutler.farebot.transit.Refill;
-import com.codebutler.farebot.transit.Subscription;
 import com.codebutler.farebot.transit.TransitData;
 import com.codebutler.farebot.transit.TransitIdentity;
 import com.codebutler.farebot.transit.Trip;

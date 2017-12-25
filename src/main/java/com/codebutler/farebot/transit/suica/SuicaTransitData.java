@@ -38,11 +38,9 @@ import android.support.annotation.Nullable;
 import com.codebutler.farebot.card.felica.FelicaBlock;
 import com.codebutler.farebot.card.felica.FelicaCard;
 import com.codebutler.farebot.card.felica.FelicaService;
-import com.codebutler.farebot.transit.Subscription;
 import com.codebutler.farebot.transit.TransitData;
 import com.codebutler.farebot.transit.TransitIdentity;
 import com.codebutler.farebot.transit.Trip;
-import com.codebutler.farebot.ui.ListItem;
 import com.codebutler.farebot.util.Utils;
 
 import net.kazzz.felica.lib.FeliCaLib;

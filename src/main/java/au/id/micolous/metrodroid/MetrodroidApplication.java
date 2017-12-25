@@ -31,9 +31,9 @@ import com.codebutler.farebot.card.Card;
 import com.codebutler.farebot.card.CardType;
 import com.codebutler.farebot.card.classic.ClassicSector;
 import com.codebutler.farebot.card.desfire.files.DesfireFile;
-import com.codebutler.farebot.card.desfire.settings.DesfireFileSettings;
 import com.codebutler.farebot.card.desfire.files.InvalidDesfireFile;
 import com.codebutler.farebot.card.desfire.files.RecordDesfireFile;
+import com.codebutler.farebot.card.desfire.settings.DesfireFileSettings;
 import com.codebutler.farebot.card.felica.FelicaDBUtil;
 import com.codebutler.farebot.transit.lax_tap.LaxTapDBUtil;
 import com.codebutler.farebot.transit.ovc.OVChipDBUtil;
@@ -102,8 +102,12 @@ public class MetrodroidApplication extends Application {
 
         try {
             Visitor visitor = new Visitor() {
-                @Override public void read(Type type, NodeMap<InputNode> node) throws Exception { }
-                @Override public void write(Type type, NodeMap<OutputNode> node) throws Exception {
+                @Override
+                public void read(Type type, NodeMap<InputNode> node) throws Exception {
+                }
+
+                @Override
+                public void write(Type type, NodeMap<OutputNode> node) throws Exception {
                     node.remove("class");
                 }
             };
@@ -144,6 +148,7 @@ public class MetrodroidApplication extends Application {
 
     /**
      * Returns true if the user has opted to hide card numbers in the UI.
+     *
      * @return true if we should not show any card numbers
      */
     public static boolean hideCardNumbers() {
@@ -190,7 +195,8 @@ public class MetrodroidApplication extends Application {
         return mMifareClassicSupport;
     }
 
-    @Override public void onCreate() {
+    @Override
+    public void onCreate() {
         super.onCreate();
 
         try {
@@ -202,9 +208,9 @@ public class MetrodroidApplication extends Application {
         PreferenceManager.setDefaultValues(this, R.xml.prefs, false);
 
         StrictMode.setThreadPolicy(new StrictMode.ThreadPolicy.Builder()
-            .detectAll()
-            .penaltyLog()
-            .build());
+                .detectAll()
+                .penaltyLog()
+                .build());
 
     }
 

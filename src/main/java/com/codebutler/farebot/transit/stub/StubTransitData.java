@@ -21,9 +21,7 @@ package com.codebutler.farebot.transit.stub;
 import android.os.Parcel;
 import android.support.annotation.Nullable;
 
-import com.codebutler.farebot.transit.Subscription;
 import com.codebutler.farebot.transit.TransitData;
-import com.codebutler.farebot.transit.Trip;
 import com.codebutler.farebot.ui.HeaderListItem;
 import com.codebutler.farebot.ui.ListItem;
 import com.codebutler.farebot.ui.UriListItem;
