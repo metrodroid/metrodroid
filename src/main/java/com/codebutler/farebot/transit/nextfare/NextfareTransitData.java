@@ -151,6 +151,15 @@ public class NextfareTransitData extends TransitData {
         if (balances.size() >= 1) {
             Collections.sort(balances);
             NextfareBalanceRecord balance = balances.get(0);
+
+            if (balances.size() == 2) {
+                // If the version number overflowed, we need to swap these around.
+                if (balances.get(0).getVersion() >= 240 && balances.get(1).getVersion() <= 10) {
+                    balance = balances.get(1);
+                }
+
+            }
+            
             mBalance = balance.getBalance();
             if (balance.hasTravelPassAvailable()) {
                 subscriptions.add(newSubscription(balance));
