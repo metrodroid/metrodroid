@@ -299,4 +299,6 @@
 	<item quantity="other">Verborgen sleutelgegevens (<xliff:g id="count" example="3"> %d</xliff:g> bytes)</item>
 </plurals>
 
+    <string name="opal_action_tap_on_rejected">Omgekeerd afgewezen</string>
+
     </resources>
