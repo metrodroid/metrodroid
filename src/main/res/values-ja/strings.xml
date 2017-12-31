@@ -10,7 +10,7 @@
     <string name="data">生データ</string>
     <string name="copy_xml">コピー</string>
     <string name="share_xml">共有</string>
-    <string name="save_xml">USBストレージに保存する</string>
+    <string name="save_xml">ファイルに保存</string>
     <string name="trips">旅行</string>
     <string name="history">ヒストリー</string>
     <string name="balance">残高</string>
@@ -18,7 +18,7 @@
     <string name="no_trip_data">履歴は見つかりませんでした。このカードを使用しましたか?</string>
     <string name="no_refill_data">チャージ情報がありません。このカードは切符として使用しただけですか?</string>
     <string name="import_xml">インポート</string>
-    <string name="import_clipboard">クリップボードからインポート</string>
+    <string name="import_clipboard">クリップボードから貼り付け</string>
     <string name="import_file">ファイルからインポート</string>
     <string name="import_sd">USBストレージからインポート</string>
     <string name="export">エクスポート</string>
