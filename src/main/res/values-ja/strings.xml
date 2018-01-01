@@ -16,11 +16,9 @@
     <string name="balance">残高</string>
     <string name="refills">リフィル</string>
     <string name="no_trip_data">履歴は見つかりませんでした。このカードを使用しましたか?</string>
-    <string name="no_refill_data">チャージ情報がありません。このカードは切符として使用しただけですか?</string>
     <string name="import_xml">インポート</string>
     <string name="import_clipboard">クリップボードから貼り付け</string>
     <string name="import_file">ファイルからインポート</string>
-    <string name="import_sd">USBストレージからインポート</string>
     <string name="export">エクスポート</string>
     <string name="export_all">すべてエクスポートする</string>
     <string name="about">について</string>

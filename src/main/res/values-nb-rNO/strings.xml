@@ -25,7 +25,6 @@
     <string name="import_xml">Importer</string>
     <string name="import_clipboard">Importer fra utklippstavle</string>
     <string name="import_file">Importer fra fil</string>
-    <string name="import_sd">Importer fra USB-lagring</string>
     <string name="export">Eksporter</string>
     <string name="export_filename">Eksporter filnavn</string>
     <string name="export_all">Eksporter alt</string>

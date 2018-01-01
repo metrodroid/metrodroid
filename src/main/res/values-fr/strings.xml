@@ -22,11 +22,9 @@
     <string name="balance">Solde</string>
     <string name="refills">Recharges</string>
     <string name="no_trip_data">Aucun déplacement trouvé. Cette carte a-t-elle été utilisée?</string>
-    <string name="no_refill_data">Aucun rechargement trouvé. Cette carte n\'a-t-elle été utilisée qu\'avec un passe ?</string>
     <string name="import_xml">Importer</string>
     <string name="import_clipboard">Importer depuis le presse-papier</string>
     <string name="import_file">Importer depuis un fichier</string>
-    <string name="import_sd">Importer depuis le stockage USB</string>
     <string name="export">Exporter</string>
     <string name="export_filename">Nom du fichier exporté</string>
     <string name="export_all">Tout exporter</string>

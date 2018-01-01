@@ -22,11 +22,9 @@
     <string name="balance">כמות</string>
     <string name="refills">מילוי</string>
     <string name="no_trip_data">לא נמצאו נסיעות. כרטיס זה נוצל בעבר?</string>
-    <string name="no_refill_data">אין מילוי מצא. האם כרטיס זה רק נעשה שימוש עם הגבהה?</string>
     <string name="import_xml">יבוא</string>
     <string name="import_clipboard">יבוא מלוח</string>
     <string name="import_file">יבוא מקובץ</string>
-    <string name="import_sd">ייבא מאחסון USB</string>
     <string name="export">יצוא</string>
     <string name="export_filename">שם קובץ ייצוא</string>
     <string name="export_all">ייצוא כל</string>
