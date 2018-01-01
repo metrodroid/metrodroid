@@ -22,11 +22,9 @@
     <string name="balance">Saldo</string>
     <string name="refills">Opgeladen</string>
     <string name="no_trip_data">Geen reizen gevonden. Is er wel gereisd met deze kaart?</string>
-    <string name="no_refill_data">Geen oplaadgegevens gebonden. Is deze kaart alleen gebruikt i.c.m. een pas?</string>
     <string name="import_xml">Importeren</string>
     <string name="import_clipboard">Plakken uit klembord</string>
     <string name="import_file">Importeren uit bestand</string>
-    <string name="import_sd">Importeren uit USB-opslag</string>
     <string name="export">Exporteren</string>
     <string name="export_filename">Bestandsnaam</string>
     <string name="export_all">Alles exporteren</string>

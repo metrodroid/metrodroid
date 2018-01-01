@@ -63,8 +63,6 @@
     <string name="trips">Isikilen</string>
     <string name="refills">Tacaṛin</string>
     <string name="no_trip_data">Ulac asikil yellan.wis takarḍa yagi ma tettwaseqdec?</string>
-    <string name="no_refill_data">Ulac tacaṛin yellan.wis takarḍa yagi ma tettwaseqdec s turagt?</string>
     <string name="import_clipboard">Kter seg ɣef afus</string>
     <string name="import_file">Kter seg afaylu</string>
-    <string name="import_sd">Kter seg aḥraz n USB</string>
     </resources>

@@ -37,11 +37,9 @@
     <string name="balance">Saldo</string>
     <string name="refills">Lataukset</string>
     <string name="no_trip_data">Ei löytynyt matkoja. Onko korttia käytetty?</string>
-    <string name="no_refill_data">Ei löytynyt latauksia. Onko kortille ladattu arvoa?</string>
     <string name="import_xml">Import</string>
     <string name="import_clipboard">Importtaa leikepöydältä</string>
     <string name="import_file">Importtaa tiedostosta</string>
-    <string name="import_sd">Importtaa USB-muistilta</string>
     <string name="export">Export</string>
     <string name="export_all">Exporttaa kaikki</string>
     <string name="about">Tietoja</string>
