@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='UTF-8'?>
-<resources><string name="market_title">Metrodroid (tidligere Farebot M)</string>
+<resources><string name="market_title">Metrodroid (før Farebot M)</string>
 
-    <string name="market_short_desc">Metrodroid kan lese informasjon fra noen NFC-smartkort til bruk for offentlig transport.</string>
+    <string name="market_short_desc">Metrodroid kan lese informasjon fra noen NFC-smartkort for kollektivtransport.</string>
 
     <string name="market_long_desc">Metrodroid kan lese informasjon fra noen NFC-smartkort til bruk for offentlig transport. Det var tidligere kjent som Farebot M.
 \n
