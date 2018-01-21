@@ -356,6 +356,7 @@
     <string name="opal_action_journey_completed_auto_off">Journey completed (failure to tap off)</string>
     <string name="opal_action_journey_completed_auto_on">Journey completed (failure to tap on)</string>
     <string name="opal_action_tap_on_reversal">Tap on reversal</string>
+    <string name="opal_action_tap_on_rejected">Tap on rejected</string>
 
     <!--
         Go Card (South East Queensland/Brisbane, AU)

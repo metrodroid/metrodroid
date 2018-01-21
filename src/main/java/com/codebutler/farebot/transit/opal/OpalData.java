@@ -43,6 +43,7 @@ final class OpalData {
     private static final int ACTION_JOURNEY_COMPLETED_AUTO_ON = 0x09;
     private static final int ACTION_JOURNEY_COMPLETED_AUTO_OFF = 0x0a;
     private static final int ACTION_TAP_ON_REVERSAL = 0x0b;
+    private static final int ACTION_TAP_ON_REJECTED = 0x0c;
 
 
     @SuppressLint("UseSparseArrays")
@@ -66,6 +67,7 @@ final class OpalData {
         put(ACTION_JOURNEY_COMPLETED_AUTO_OFF, R.string.opal_action_journey_completed_auto_off);
         put(ACTION_JOURNEY_COMPLETED_AUTO_ON, R.string.opal_action_journey_completed_auto_on);
         put(ACTION_TAP_ON_REVERSAL, R.string.opal_action_tap_on_reversal);
+        put(ACTION_TAP_ON_REJECTED, R.string.opal_action_tap_on_rejected);
     }};
 
     private OpalData() {
