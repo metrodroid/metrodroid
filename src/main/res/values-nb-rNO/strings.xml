@@ -16,14 +16,14 @@
     <string name="data">Rådata</string>
     <string name="copy_xml">Kopier</string>
     <string name="share_xml">Del</string>
-    <string name="save_xml">Lagre til USB-lagring</string>
+    <string name="save_xml">Lagre til fil</string>
     <string name="trips">Turer</string>
     <string name="history">Historikk</string>
     <string name="balance">Balanse</string>
     <string name="refills">Påfyllinger</string>
     <string name="no_trip_data">Fant ingen turer. Har dette kortet vært i bruk?</string>
     <string name="import_xml">Importer</string>
-    <string name="import_clipboard">Importer fra utklippstavle</string>
+    <string name="import_clipboard">Lim inn fra utklippstavle</string>
     <string name="import_file">Importer fra fil</string>
     <string name="export">Eksporter</string>
     <string name="export_filename">Eksporter filnavn</string>
@@ -35,8 +35,8 @@
     <string name="loading">Laster…</string>
     <string name="supported_cards">Støttede kort</string>
     <string name="transaction_sequence">#</string>
-    <string name="fully_locked_title">Kortet er helt låst!</string>
-    <string name="nfc_off_error">NFC er skrudd av</string>
+    <string name="fully_locked_title">Helt låst kort.</string>
+    <string name="nfc_off_error">NFC avskrudd</string>
     <string name="turn_on_nfc">Skru på NFC for å lese kortinformasjon.</string>
     <string name="wireless_settings">Trådløsinnstillinger</string>
     <string name="report_error">Innrapporter feil</string>
@@ -46,7 +46,7 @@
 
     <string name="unknown_more_info">Mer informasjon</string>
     <string name="report_error_privacy_title">Personvernsmerknad</string>
-    <string name="report_error_privacy_message">All data som finnes på dette kortet vil bli inkludert i din feilrapport.</string>
+    <string name="report_error_privacy_message">All data på dette kortet vil bli inkludert i din feilrapport.</string>
     <string name="scanned_cards">Historikk</string>
     <string name="no_scanned_cards">Du har ikke skannet noen kort.</string>
     <string name="block_title_format">Blokk: %s</string>
@@ -199,4 +199,5 @@
     <string name="nextfare_system_code">Systemkode</string>
     <string name="nextfare_card_expiry">Utløpsdato for kort</string>
 
+    <string name="pass_or_transfer">Send/Overfør</string>
     </resources>
