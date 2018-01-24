@@ -8,7 +8,7 @@ _Formerly known as Farebot M._
 <img src="https://f-droid.org/badge/get-it-on.png" height="80"/></a>
 <a href="https://play.google.com/store/apps/details?id=au.id.micolous.farebot" target="_blank">
 <img src="https://play.google.com/intl/en_us/badges/images/generic/en-play-badge.png" height="80"/></a>
-[Direct APK download](https://github.com/micolous/metrodroid/releases)
+<a href="https://github.com/micolous/metrodroid/releases">Direct APK download</a>
 
 Version: 2.9.33
 
