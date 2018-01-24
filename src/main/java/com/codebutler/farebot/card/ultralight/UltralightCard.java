@@ -52,8 +52,6 @@ public class UltralightCard extends Card {
     }
 
     public static UltralightCard dumpTag(byte[] tagId, Tag tag) throws Exception {
-        List<DesfireApplication> apps = new ArrayList<>();
-
         MifareUltralight tech = null;
 
         try {
