@@ -35,6 +35,7 @@ import com.codebutler.farebot.card.desfire.files.InvalidDesfireFile;
 import com.codebutler.farebot.card.desfire.files.RecordDesfireFile;
 import com.codebutler.farebot.card.desfire.settings.DesfireFileSettings;
 import com.codebutler.farebot.card.felica.FelicaDBUtil;
+import com.codebutler.farebot.card.ultralight.UltralightPage;
 import com.codebutler.farebot.transit.lax_tap.LaxTapDBUtil;
 import com.codebutler.farebot.transit.ovc.OVChipDBUtil;
 import com.codebutler.farebot.transit.seq_go.SeqGoDBUtil;
@@ -49,6 +50,7 @@ import com.codebutler.farebot.xml.FelicaIDmTransform;
 import com.codebutler.farebot.xml.FelicaPMmTransform;
 import com.codebutler.farebot.xml.HexString;
 import com.codebutler.farebot.xml.SkippableRegistryStrategy;
+import com.codebutler.farebot.xml.UltralightPageConverter;
 
 import net.kazzz.felica.lib.FeliCaLib;
 
@@ -122,6 +124,7 @@ public class MetrodroidApplication extends Application {
 
             registry.bind(DesfireFileSettings.class, new DesfireFileSettingsConverter());
             registry.bind(ClassicSector.class, new ClassicSectorConverter());
+            registry.bind(UltralightPage.class, new UltralightPageConverter());
             registry.bind(Card.class, new CardConverter(mSerializer));
 
             matcher.bind(HexString.class, HexString.Transform.class);

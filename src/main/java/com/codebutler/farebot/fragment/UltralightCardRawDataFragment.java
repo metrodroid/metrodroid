@@ -29,6 +29,7 @@ import com.codebutler.farebot.activity.AdvancedCardInfoActivity;
 import com.codebutler.farebot.card.Card;
 import com.codebutler.farebot.card.ultralight.UltralightCard;
 import com.codebutler.farebot.card.ultralight.UltralightPage;
+import com.codebutler.farebot.card.ultralight.UnauthorizedUltralightPage;
 import com.codebutler.farebot.util.Utils;
 
 import org.simpleframework.xml.Serializer;
@@ -66,7 +67,8 @@ public class UltralightCardRawDataFragment extends ExpandableListFragment {
 
         @Override
         public int getChildrenCount(int groupPosition) {
-            return 1;
+            UltralightPage p = mCard.getPage(groupPosition);
+            return (p instanceof UnauthorizedUltralightPage ? 0 : 1);
         }
 
         @Override
@@ -105,7 +107,12 @@ public class UltralightCardRawDataFragment extends ExpandableListFragment {
             String sectorIndexString = Integer.toHexString(sector.getIndex());
 
             TextView textView = (TextView) view.findViewById(android.R.id.text1);
-            textView.setText(mActivity.getString(R.string.page_title_format, sectorIndexString));
+
+            if (sector instanceof UnauthorizedUltralightPage) {
+                textView.setText(mActivity.getString(R.string.unauthorized_page_title_format, sectorIndexString));
+            } else {
+                textView.setText(mActivity.getString(R.string.page_title_format, sectorIndexString));
+            }
 
             return view;
         }
