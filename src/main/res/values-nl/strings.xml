@@ -301,4 +301,5 @@
 
     <string name="opal_action_tap_on_rejected">Omgekeerd afgewezen</string>
 
+    <string name="unauthorized_page_title_format">Pagina: 0x%s (niet-geautoriseerd)</string>
     </resources>
