@@ -13,7 +13,7 @@ import org.simpleframework.xml.Root;
 public class UltralightPage {
     @Attribute(name = "index")
     private int mIndex;
-    @Element(name = "data")
+    @Element(name = "data", required = false)
     private Base64String mData;
 
     public UltralightPage() {
@@ -21,7 +21,11 @@ public class UltralightPage {
 
     public UltralightPage(int index, byte[] data) {
         mIndex = index;
-        mData = new Base64String(data);
+        if (data == null) {
+            mData = null;
+        } else {
+            mData = new Base64String(data);
+        }
     }
 
     public static UltralightPage create(int index, byte[] data) {
