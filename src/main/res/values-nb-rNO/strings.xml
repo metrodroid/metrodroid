@@ -81,8 +81,8 @@
     <string name="transaction_type">Overføringstype</string>
     <string name="card_not_supported_on_device">Dette kortet støttes ikke av enheten din.</string>
     <string name="card_note_cepas">Ikke kompatibel med alle enheter.</string>
-    <string name="need_stations">Ikke alle stasjonsnavn er kjente.</string>
-    <string name="card_preview_reader">Betaversjon av kortleseren</string>
+    <string name="need_stations">Noen stasjonsnavn er ukjente.</string>
+    <string name="card_preview_reader">Betaversjon av kortleseren.</string>
     <string name="visit_website">Besøk nettsiden</string>
     <string name="title_activity_about">Om Metrodroid</string>
     <string name="card_type">Korttype</string>
@@ -94,8 +94,8 @@
     <string name="default_map_tile_subdomains">123456</string>
 
     <plurals name="cards_imported">
-	<item quantity="one"><xliff:g id="count" example="1">%d</xliff:g> kort importert.</item>
-	<item quantity="other"><xliff:g id="count" example="3">%d</xliff:g> kort importert.</item>
+	<item quantity="one"><xliff:g id="count" example="1">%d</xliff:g> kort importert!</item>
+	<item quantity="other"><xliff:g id="count" example="3">%d</xliff:g> kort importert!</item>
 </plurals>
 
     <plurals name="block_count">
@@ -108,7 +108,7 @@
     <string name="hsl_value_ticket_vehicle_type">Kjøretøysnummer</string>
     <string name="opal_vehicle_bus">Buss</string>
     <string name="opal_vehicle_rail">Tog</string>
-    <string name="opal_action_none">Ingen (nytt, ubrukt kort)</string>
+    <string name="opal_action_none">Intet (nytt, ubrukt kort)</string>
     <string name="speak_balance">Les opp saldo</string>
     <string name="scanned_at_format">Skanet den %1$s på %2$s</string>
     <string name="unknown_more_info_desc">Trykk her for mer informasjon om Metrodroids støtte for dette kortet.</string>
@@ -149,7 +149,7 @@
 
     <plurals name="obfuscation_mode_notice">
 	<item quantity="one"><xliff:g id="count" example="1">%d</xliff:g> tilsløringsflagg på</item>
-	<item quantity="other"><xliff:g id="count" example="3">%d</xliff:g> obfuscation flags on</item>
+	<item quantity="other"><xliff:g id="count" example="3">%d</xliff:g> tilsløringsflagg på</item>
 </plurals>
 
     <string name="location_singapore">Singapore</string>
@@ -200,4 +200,13 @@
     <string name="nextfare_card_expiry">Utløpsdato for kort</string>
 
     <string name="pass_or_transfer">Send/Overfør</string>
+    <string name="speak_balance_summary">Konseptutprøving</string>
+    <string name="fully_locked_desc">"Ingen del av dette kortet kan leses fritt uten en nøkkel.  Du har ingen gyldig nøkkel installert for det.
+\n
+\nHvis kortet er støttet av Metrodroid, så vil kortet fungere etter at nøkler for det er installert.  Mer informasjon om hvordan du får tak i disse finnes i dokumentasjonen.
+\n
+\nHvis kortet ditt ikke er støttet av Metrodroid, så er det usannsynlig at det noen gang vil bli det, med mindre nøkkelen for det er desifrert.
+\n
+\nVær så snill å ta kontakt med ditt kommunale kollektivtransportetat for å få et visst nivå av åpen data-tilgang for de utstedte kortene.  Det er mulig å tilby begrenset lesetilgang på en trygg måte til kollektivtransport-smartkort."</string>
+    <string name="add_key_directions">Lagre en binærdump av nøklene dine som en fil med endelsen .farebotkeys, send den som et epostvedlegg til deg selv og åpne filen på denne enheten.</string>
     </resources>
