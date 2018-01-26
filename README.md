@@ -16,6 +16,8 @@ View your remaining balance, recent trips, and other information from contactles
 
 * [Michael Farrell](https://github.com/micolous)
 
+I presented Metrodroid at [linux.conf.au 2018: Tap on to reverse engineering](https://youtu.be/qVvNdfKRw7M).
+
 ## Thanks To
 
 * [Eric Butler][5] (Farebot)
