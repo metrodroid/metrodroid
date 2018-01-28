@@ -27,30 +27,31 @@ import android.os.StrictMode;
 import android.preference.PreferenceManager;
 import android.util.Log;
 
-import au.id.micolous.farebot.card.Card;
-import au.id.micolous.farebot.card.CardType;
-import au.id.micolous.farebot.card.classic.ClassicSector;
-import au.id.micolous.farebot.card.desfire.files.DesfireFile;
-import au.id.micolous.farebot.card.desfire.files.InvalidDesfireFile;
-import au.id.micolous.farebot.card.desfire.files.RecordDesfireFile;
-import au.id.micolous.farebot.card.desfire.settings.DesfireFileSettings;
-import au.id.micolous.farebot.card.felica.FelicaDBUtil;
-import au.id.micolous.farebot.card.ultralight.UltralightPage;
-import au.id.micolous.farebot.transit.lax_tap.LaxTapDBUtil;
-import au.id.micolous.farebot.transit.ovc.OVChipDBUtil;
-import au.id.micolous.farebot.transit.seq_go.SeqGoDBUtil;
-import au.id.micolous.farebot.xml.Base64String;
-import au.id.micolous.farebot.xml.CardConverter;
-import au.id.micolous.farebot.xml.CardTypeTransform;
-import au.id.micolous.farebot.xml.ClassicSectorConverter;
-import au.id.micolous.farebot.xml.DesfireFileConverter;
-import au.id.micolous.farebot.xml.DesfireFileSettingsConverter;
-import au.id.micolous.farebot.xml.EpochCalendarTransform;
-import au.id.micolous.farebot.xml.FelicaIDmTransform;
-import au.id.micolous.farebot.xml.FelicaPMmTransform;
-import au.id.micolous.farebot.xml.HexString;
-import au.id.micolous.farebot.xml.SkippableRegistryStrategy;
-import au.id.micolous.farebot.xml.UltralightPageConverter;
+import au.id.micolous.farebot.R;
+import au.id.micolous.metrodroid.card.Card;
+import au.id.micolous.metrodroid.card.CardType;
+import au.id.micolous.metrodroid.card.classic.ClassicSector;
+import au.id.micolous.metrodroid.card.desfire.files.DesfireFile;
+import au.id.micolous.metrodroid.card.desfire.files.InvalidDesfireFile;
+import au.id.micolous.metrodroid.card.desfire.files.RecordDesfireFile;
+import au.id.micolous.metrodroid.card.desfire.settings.DesfireFileSettings;
+import au.id.micolous.metrodroid.card.felica.FelicaDBUtil;
+import au.id.micolous.metrodroid.card.ultralight.UltralightPage;
+import au.id.micolous.metrodroid.transit.lax_tap.LaxTapDBUtil;
+import au.id.micolous.metrodroid.transit.ovc.OVChipDBUtil;
+import au.id.micolous.metrodroid.transit.seq_go.SeqGoDBUtil;
+import au.id.micolous.metrodroid.xml.Base64String;
+import au.id.micolous.metrodroid.xml.CardConverter;
+import au.id.micolous.metrodroid.xml.CardTypeTransform;
+import au.id.micolous.metrodroid.xml.ClassicSectorConverter;
+import au.id.micolous.metrodroid.xml.DesfireFileConverter;
+import au.id.micolous.metrodroid.xml.DesfireFileSettingsConverter;
+import au.id.micolous.metrodroid.xml.EpochCalendarTransform;
+import au.id.micolous.metrodroid.xml.FelicaIDmTransform;
+import au.id.micolous.metrodroid.xml.FelicaPMmTransform;
+import au.id.micolous.metrodroid.xml.HexString;
+import au.id.micolous.metrodroid.xml.SkippableRegistryStrategy;
+import au.id.micolous.metrodroid.xml.UltralightPageConverter;
 
 import net.kazzz.felica.lib.FeliCaLib;
 
@@ -68,8 +69,6 @@ import org.simpleframework.xml.transform.RegistryMatcher;
 import java.io.File;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
-
-import au.id.micolous.farebot.R;
 
 public class MetrodroidApplication extends Application {
     private static final String TAG = "MetrodroidApplication";

@@ -18,16 +18,16 @@
  */
 package au.id.micolous.metrodroid.test;
 
-import au.id.micolous.farebot.card.Card;
-import au.id.micolous.farebot.card.classic.ClassicCard;
-import au.id.micolous.farebot.card.classic.ClassicSector;
-import au.id.micolous.farebot.card.classic.UnauthorizedClassicSector;
-import au.id.micolous.farebot.card.ultralight.UltralightCard;
-import au.id.micolous.farebot.card.ultralight.UltralightPage;
-import au.id.micolous.farebot.card.ultralight.UnauthorizedUltralightPage;
-import au.id.micolous.farebot.transit.unknown.UnauthorizedClassicTransitData;
-import au.id.micolous.farebot.transit.unknown.UnauthorizedUltralightTransitData;
-import au.id.micolous.farebot.util.Utils;
+import au.id.micolous.metrodroid.card.Card;
+import au.id.micolous.metrodroid.card.classic.ClassicCard;
+import au.id.micolous.metrodroid.card.classic.ClassicSector;
+import au.id.micolous.metrodroid.card.classic.UnauthorizedClassicSector;
+import au.id.micolous.metrodroid.card.ultralight.UltralightCard;
+import au.id.micolous.metrodroid.card.ultralight.UltralightPage;
+import au.id.micolous.metrodroid.card.ultralight.UnauthorizedUltralightPage;
+import au.id.micolous.metrodroid.transit.unknown.UnauthorizedClassicTransitData;
+import au.id.micolous.metrodroid.transit.unknown.UnauthorizedUltralightTransitData;
+import au.id.micolous.metrodroid.util.Utils;
 
 import junit.framework.TestCase;
 

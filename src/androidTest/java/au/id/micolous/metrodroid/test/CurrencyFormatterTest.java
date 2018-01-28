@@ -22,7 +22,7 @@ import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.test.AndroidTestCase;
 
-import au.id.micolous.farebot.util.Utils;
+import au.id.micolous.metrodroid.util.Utils;
 
 import java.util.Locale;
 

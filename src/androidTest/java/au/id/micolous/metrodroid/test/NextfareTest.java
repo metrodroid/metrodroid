@@ -18,9 +18,9 @@
  */
 package au.id.micolous.metrodroid.test;
 
-import au.id.micolous.farebot.transit.nextfare.record.NextfareConfigRecord;
-import au.id.micolous.farebot.transit.nextfare.record.NextfareTransactionRecord;
-import au.id.micolous.farebot.util.Utils;
+import au.id.micolous.metrodroid.transit.nextfare.record.NextfareConfigRecord;
+import au.id.micolous.metrodroid.transit.nextfare.record.NextfareTransactionRecord;
+import au.id.micolous.metrodroid.util.Utils;
 
 import junit.framework.TestCase;
 

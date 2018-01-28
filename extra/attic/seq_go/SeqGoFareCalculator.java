@@ -17,11 +17,11 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package au.id.micolous.farebot.transit.seq_go;
+package au.id.micolous.metrodroid.transit.seq_go;
 
 import android.util.Log;
 
-import au.id.micolous.farebot.util.NumericalStringComparator;
+import au.id.micolous.metrodroid.util.NumericalStringComparator;
 
 import java.util.Arrays;
 import java.util.Collection;

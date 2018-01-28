@@ -18,8 +18,8 @@
  */
 package au.id.micolous.metrodroid.test;
 
-import au.id.micolous.farebot.card.cepas.CEPASPurse;
-import au.id.micolous.farebot.util.Utils;
+import au.id.micolous.metrodroid.card.cepas.CEPASPurse;
+import au.id.micolous.metrodroid.util.Utils;
 
 import junit.framework.TestCase;
 
