@@ -1,4 +1,4 @@
-package au.id.micolous.farebot.test;
+package au.id.micolous.metrodroid.test;
 
 import com.codebutler.farebot.transit.seq_go.SeqGoZoneCalculator;
 

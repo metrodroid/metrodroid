@@ -1,7 +1,26 @@
+/*
+ * UltralightCard.java
+ *
+ * Copyright 2016-2018 Michael Farrell <micolous+git@gmail.com>
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
 package com.codebutler.farebot.card.ultralight;
 
 import android.nfc.Tag;
 import android.nfc.tech.MifareUltralight;
+import android.support.annotation.Keep;
 import android.util.Log;
 
 import com.codebutler.farebot.card.Card;
@@ -9,10 +28,10 @@ import com.codebutler.farebot.card.CardHasManufacturingInfo;
 import com.codebutler.farebot.card.CardRawDataFragmentClass;
 import com.codebutler.farebot.card.CardType;
 import com.codebutler.farebot.card.UnsupportedTagException;
-import com.codebutler.farebot.card.desfire.DesfireApplication;
 import com.codebutler.farebot.fragment.UltralightCardRawDataFragment;
 import com.codebutler.farebot.transit.TransitData;
 import com.codebutler.farebot.transit.TransitIdentity;
+import com.codebutler.farebot.transit.unknown.UnauthorizedUltralightTransitData;
 import com.codebutler.farebot.util.Utils;
 
 import org.simpleframework.xml.Attribute;
@@ -36,18 +55,28 @@ import java.util.Locale;
 public class UltralightCard extends Card {
     private static final String TAG = "UltralightCard";
 
-    private static final int ULTRALIGHT_SIZE = 0x0F;
-    private static final int ULTRALIGHT_C_SIZE = 0x2B;
     @ElementList(name = "pages")
     private List<UltralightPage> mPages;
-    @Attribute(name = "ultralightType")
-    private int mUltralightType;
+
+    /**
+     * This was previously used for Ultralight type checks in Metrodroid. However, this is based on
+     * Android's type checks, which aren't great (see UltralightProtocol.getCardType. This should
+     * not be used. This is included so that users with scans in the old XML format won't see an
+     * error.
+     */
+    @Deprecated
+    @Keep
+    @Attribute(name = "ultralightType", required = false)
+    private int mDeprecatedUltralightType;
+
+    @Attribute(name = "cardModel", required = false)
+    private String mCardModel;
 
     private UltralightCard() { /* For XML Serializer */ }
 
-    private UltralightCard(byte[] tagId, Calendar scannedAt, int ultralightType, UltralightPage[] pages) {
+    public UltralightCard(byte[] tagId, Calendar scannedAt, String cardModel, UltralightPage[] pages) {
         super(CardType.MifareUltralight, tagId, scannedAt);
-        mUltralightType = ultralightType;
+        mCardModel = cardModel;
         mPages = Utils.arrayAsList(pages);
     }
 
@@ -58,18 +87,11 @@ public class UltralightCard extends Card {
             tech = MifareUltralight.get(tag);
             tech.connect();
 
-            int size;
-            switch (tech.getType()) {
-                case MifareUltralight.TYPE_ULTRALIGHT:
-                    size = ULTRALIGHT_SIZE;
-                    break;
-                case MifareUltralight.TYPE_ULTRALIGHT_C:
-                    size = ULTRALIGHT_C_SIZE;
-                    break;
+            UltralightProtocol p = new UltralightProtocol(tech);
+            UltralightProtocol.UltralightType t = p.getCardType();
 
-                // unknown
-                default:
-                    throw new UnsupportedTagException(new String[]{"Ultralight"}, "Unknown Ultralight type " + tech.getType());
+            if (t.pageCount <= 0) {
+                throw new UnsupportedTagException(new String[]{"Ultralight"}, "Unknown Ultralight type");
             }
 
             // Now iterate through the pages and grab all the datas
@@ -77,14 +99,14 @@ public class UltralightCard extends Card {
             byte[] pageBuffer = new byte[0];
             List<UltralightPage> pages = new ArrayList<>();
             boolean unauthorized = false;
-            while (pageNumber <= size) {
+            while (pageNumber <= t.pageCount) {
                 if (pageNumber % 4 == 0) {
                     // Lets make a new buffer of data. (16 bytes = 4 pages * 4 bytes)
                     try {
                         pageBuffer = tech.readPages(pageNumber);
                         unauthorized = false;
                     } catch (IOException e) {
-                        // Transcieve failure, probably authentication problem
+                        // Transceive failure, maybe authentication problem
                         unauthorized = true;
                         Log.d(TAG, String.format(Locale.ENGLISH, "Unable to read page %d", pageNumber), e);
                     }
@@ -103,7 +125,7 @@ public class UltralightCard extends Card {
             }
 
             // Now we have pages to stuff in the card.
-            return new UltralightCard(tagId, GregorianCalendar.getInstance(), tech.getType(),
+            return new UltralightCard(tagId, GregorianCalendar.getInstance(), t.toString(),
                     pages.toArray(new UltralightPage[pages.size()]));
 
         } finally {
@@ -116,6 +138,12 @@ public class UltralightCard extends Card {
 
     @Override
     public TransitIdentity parseTransitIdentity() {
+        if (UnauthorizedUltralightTransitData.check(this)) {
+            // This check must be LAST.
+            //
+            // This is to throw up a warning whenever there is a card with all locked sectors
+            return UnauthorizedUltralightTransitData.parseTransitIdentity(this);
+        }
 
         // The card could not be identified.
         return null;
@@ -123,6 +151,12 @@ public class UltralightCard extends Card {
 
     @Override
     public TransitData parseTransitData() {
+        if (UnauthorizedUltralightTransitData.check(this)) {
+            // This check must be LAST.
+            //
+            // This is to throw up a warning whenever there is a card with all locked sectors
+            return new UnauthorizedUltralightTransitData();
+        }
 
         // The card could not be identified.
         return null;
@@ -137,12 +171,11 @@ public class UltralightCard extends Card {
     }
 
     /**
-     * Get the type of Ultralight card this is.  This is either MifareUltralight.TYPE_ULTRALIGHT,
-     * or MifareUltralight.TYPE_ULTRALIGHT_C.
+     * Get the model of Ultralight card this is.
      *
-     * @return Type of Ultralight card this is.
+     * @return Model of Ultralight card this is.
      */
-    public int getUltralightType() {
-        return mUltralightType;
+    public String getCardModel() {
+        return mCardModel;
     }
 }

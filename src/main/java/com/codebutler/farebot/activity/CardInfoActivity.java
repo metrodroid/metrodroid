@@ -2,9 +2,7 @@
  * CardInfoActivity.java
  *
  * Copyright (C) 2011 Eric Butler
- *
- * Authors:
- * Eric Butler <eric@codebutler.com>
+ * Copyright 2015-2018 Michael Farrell <micolous+git@gmail.com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -49,6 +47,7 @@ import com.codebutler.farebot.fragment.UnauthorizedCardFragment;
 import com.codebutler.farebot.provider.CardsTableColumns;
 import com.codebutler.farebot.transit.TransitData;
 import com.codebutler.farebot.transit.unknown.UnauthorizedClassicTransitData;
+import com.codebutler.farebot.transit.unknown.UnauthorizedUltralightTransitData;
 import com.codebutler.farebot.ui.TabPagerAdapter;
 import com.codebutler.farebot.util.Utils;
 
@@ -154,7 +153,8 @@ public class CardInfoActivity extends Activity {
                         mCard.toXml(MetrodroidApplication.getInstance().getSerializer()));
                 args.putParcelable(EXTRA_TRANSIT_DATA, mTransitData);
 
-                if (mTransitData instanceof UnauthorizedClassicTransitData) {
+                if (mTransitData instanceof UnauthorizedClassicTransitData ||
+                        mTransitData instanceof UnauthorizedUltralightTransitData) {
                     mTabsAdapter.addTab(actionBar.newTab(), UnauthorizedCardFragment.class, args);
                     return;
                 }
