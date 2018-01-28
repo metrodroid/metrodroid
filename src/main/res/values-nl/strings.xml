@@ -302,4 +302,6 @@
     <string name="opal_action_tap_on_rejected">Omgekeerd afgewezen</string>
 
     <string name="unauthorized_page_title_format">Pagina: 0x%s (niet-geautoriseerd)</string>
+    <string name="card_note_opal">Vrij reizen en enkele reis-kaarten worden niet ondersteund.</string>
+
     </resources>
