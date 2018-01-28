@@ -20,8 +20,8 @@ package au.id.micolous.metrodroid.test;
 
 import junit.framework.TestCase;
 
-import static com.codebutler.farebot.util.Utils.calculateLuhn;
-import static com.codebutler.farebot.util.Utils.validateLuhn;
+import static au.id.micolous.farebot.util.Utils.calculateLuhn;
+import static au.id.micolous.farebot.util.Utils.validateLuhn;
 
 /**
  * Testing the Luhn checksum calculator

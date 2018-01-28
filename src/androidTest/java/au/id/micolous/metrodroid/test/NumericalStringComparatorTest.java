@@ -18,7 +18,7 @@
  */
 package au.id.micolous.metrodroid.test;
 
-import com.codebutler.farebot.util.NumericalStringComparator;
+import au.id.micolous.farebot.util.NumericalStringComparator;
 
 import junit.framework.TestCase;
 

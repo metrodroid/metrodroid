@@ -18,13 +18,13 @@
  */
 package au.id.micolous.metrodroid.test;
 
-import com.codebutler.farebot.card.desfire.DesfireApplication;
-import com.codebutler.farebot.card.desfire.DesfireCard;
-import com.codebutler.farebot.card.desfire.files.DesfireFile;
-import com.codebutler.farebot.transit.TransitData;
-import com.codebutler.farebot.transit.TransitIdentity;
-import com.codebutler.farebot.transit.opal.OpalTransitData;
-import com.codebutler.farebot.util.Utils;
+import au.id.micolous.farebot.card.desfire.DesfireApplication;
+import au.id.micolous.farebot.card.desfire.DesfireCard;
+import au.id.micolous.farebot.card.desfire.files.DesfireFile;
+import au.id.micolous.farebot.transit.TransitData;
+import au.id.micolous.farebot.transit.TransitIdentity;
+import au.id.micolous.farebot.transit.opal.OpalTransitData;
+import au.id.micolous.farebot.util.Utils;
 
 import junit.framework.TestCase;
 

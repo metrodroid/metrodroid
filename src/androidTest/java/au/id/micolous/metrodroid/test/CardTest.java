@@ -18,19 +18,17 @@
  */
 package au.id.micolous.metrodroid.test;
 
-import com.codebutler.farebot.card.Card;
-import com.codebutler.farebot.card.classic.ClassicCard;
-import com.codebutler.farebot.card.classic.ClassicSector;
-import com.codebutler.farebot.card.classic.UnauthorizedClassicSector;
-import com.codebutler.farebot.card.ultralight.UltralightCard;
-import com.codebutler.farebot.card.ultralight.UltralightPage;
-import com.codebutler.farebot.card.ultralight.UnauthorizedUltralightPage;
-import com.codebutler.farebot.transit.unknown.UnauthorizedClassicTransitData;
-import com.codebutler.farebot.transit.unknown.UnauthorizedUltralightTransitData;
-import com.codebutler.farebot.util.Utils;
-import com.codebutler.farebot.xml.Base64String;
+import au.id.micolous.farebot.card.Card;
+import au.id.micolous.farebot.card.classic.ClassicCard;
+import au.id.micolous.farebot.card.classic.ClassicSector;
+import au.id.micolous.farebot.card.classic.UnauthorizedClassicSector;
+import au.id.micolous.farebot.card.ultralight.UltralightCard;
+import au.id.micolous.farebot.card.ultralight.UltralightPage;
+import au.id.micolous.farebot.card.ultralight.UnauthorizedUltralightPage;
+import au.id.micolous.farebot.transit.unknown.UnauthorizedClassicTransitData;
+import au.id.micolous.farebot.transit.unknown.UnauthorizedUltralightTransitData;
+import au.id.micolous.farebot.util.Utils;
 
-import junit.framework.Assert;
 import junit.framework.TestCase;
 
 import org.simpleframework.xml.Serializer;

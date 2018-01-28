@@ -18,9 +18,9 @@
  */
 package au.id.micolous.metrodroid.test;
 
-import com.codebutler.farebot.transit.nextfare.record.NextfareConfigRecord;
-import com.codebutler.farebot.transit.nextfare.record.NextfareTransactionRecord;
-import com.codebutler.farebot.util.Utils;
+import au.id.micolous.farebot.transit.nextfare.record.NextfareConfigRecord;
+import au.id.micolous.farebot.transit.nextfare.record.NextfareTransactionRecord;
+import au.id.micolous.farebot.util.Utils;
 
 import junit.framework.TestCase;
 

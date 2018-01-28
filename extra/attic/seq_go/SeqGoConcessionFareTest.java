@@ -1,8 +1,8 @@
 package au.id.micolous.metrodroid.test;
 
-import com.codebutler.farebot.transit.seq_go.SeqGoFareCalculator;
-import com.codebutler.farebot.transit.seq_go.SeqGoTicketType;
-import com.codebutler.farebot.transit.seq_go.SeqGoTrip;
+import au.id.micolous.farebot.transit.seq_go.SeqGoFareCalculator;
+import au.id.micolous.farebot.transit.seq_go.SeqGoTicketType;
+import au.id.micolous.farebot.transit.seq_go.SeqGoTrip;
 
 import junit.framework.TestCase;
 
