@@ -64,6 +64,7 @@ public class UltralightCard extends Card {
      * not be used. This is included so that users with scans in the old XML format won't see an
      * error.
      */
+    @SuppressWarnings("unused")
     @Deprecated
     @Keep
     @Attribute(name = "ultralightType", required = false)

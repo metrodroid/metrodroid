@@ -214,8 +214,11 @@
 
     <!--
     This tile server gives "retina" tiles which are much nicer on modern
-    smartphones. Permission to use the tile server has been granted by
-    the tile server operator.
+    smartphones.
+
+    Metrodroid has been granted permission to use the tile server by
+    the tile server operator. Other projects will need to explicitly seek
+    permission from the tile server operator.
 
     The tile stylesheets are available under an open source license at:
     https://github.com/stackunderflow-stackptr/stackptr_tools/tree/master/osm-bright
@@ -358,6 +361,7 @@
     <string name="opal_action_journey_completed_auto_on">Journey completed (failure to tap on)</string>
     <string name="opal_action_tap_on_reversal">Tap on reversal</string>
     <string name="opal_action_tap_on_rejected">Tap on rejected</string>
+    <string name="card_note_opal">Free travel passes and single trip tickets are not supported.</string>
 
     <!--
         Go Card (South East Queensland/Brisbane, AU)

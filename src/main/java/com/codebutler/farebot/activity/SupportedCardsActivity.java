@@ -225,7 +225,10 @@ public class SupportedCardsActivity extends Activity {
 
             add(new CardInfo(R.drawable.opal_card, OpalTransitData.NAME,
                     R.string.location_sydney_australia,
-                    CardType.MifareDesfire
+                    CardType.MifareDesfire,
+                    false,
+                    false,
+                    R.string.card_note_opal
             ));
 
             add(new CardInfo(R.drawable.orca_card, "ORCA",
