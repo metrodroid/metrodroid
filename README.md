@@ -1,4 +1,4 @@
-# Metrodroid
+# [Metrodroid](https://github.com/micolous/metrodroid)
 
 [![Translation status](https://hosted.weblate.org/widgets/metrodroid/-/svg-badge.svg)][22]
 
@@ -12,11 +12,13 @@ _Formerly known as Farebot M._
 
 Version: 2.9.33
 
-View your remaining balance, recent trips, and other information from contactless public transit cards using your NFC Android phone!
+View your remaining balance, recent trips, and other information from contactless public transit
+cards using your NFC-enabled Android device!
 
 * [Michael Farrell](https://github.com/micolous)
 
-I presented Metrodroid at [linux.conf.au 2018: Tap on to reverse engineering](https://youtu.be/qVvNdfKRw7M).
+I presented Metrodroid and the work I did on supporting a number of Australian agencies' cards at
+linux.conf.au 2018, in my talk, [Tap on to reverse engineering](https://youtu.be/qVvNdfKRw7M).
 
 ## Thanks To
 
@@ -79,7 +81,7 @@ This project **will only read data from the card itself**, without having to con
 
 ## Supported Phones
 
-Metrodroid requires an NFC Android phone running 4.1 or later.
+Metrodroid requires an Android phone running 4.1 or later, with NFC support.
 
 Some devices do not support MIFARE Classic.  MIFARE Classic is not an NFC-compliant card format, so can only be read with phones with NXP chipsets.
 

@@ -2,9 +2,7 @@
  * AdvancedCardInfoActivity.java
  *
  * Copyright (C) 2011 Eric Butler
- *
- * Authors:
- * Eric Butler <eric@codebutler.com>
+ * Copyright 2015-2017 Michael Farrell <micolous+git@gmail.com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -64,15 +62,6 @@ public class AdvancedCardInfoActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_advanced_card_info);
-
-        /*
-        findViewById(R.id.error_button).setOnClickListener(new View.OnClickListener() {
-            @Override public void onClick(View v) {
-                reportError();
-            }
-        });
-
-*/
 
         Serializer serializer = MetrodroidApplication.getInstance().getSerializer();
         mCard = Card.fromXml(serializer, getIntent().getStringExtra(AdvancedCardInfoActivity.EXTRA_CARD));
@@ -170,27 +159,5 @@ public class AdvancedCardInfoActivity extends Activity {
                     .show();
         }
         return false;
-    }
-
-    private void reportError() {
-        /*
-        DialogInterface.OnClickListener listener = new DialogInterface.OnClickListener() {
-            @Override public void onClick(DialogInterface dialog, int which) {
-                try {
-                    Crashlytics.log(mCard.toXml(MetrodroidApplication.getInstance().getSerializer()));
-                } catch (Exception ex) {
-                    Crashlytics.logException(ex);
-                }
-                Crashlytics.logException(mError);
-                Toast.makeText(AdvancedCardInfoActivity.this, R.string.error_report_sent, Toast.LENGTH_SHORT).show();
-            }
-        };
-        new AlertDialog.Builder(this)
-            .setTitle(R.string.report_error_privacy_title)
-            .setMessage(R.string.report_error_privacy_message)
-            .setPositiveButton(android.R.string.ok, listener)
-            .setNegativeButton(android.R.string.cancel, null)
-            .show();
-            */
     }
 }

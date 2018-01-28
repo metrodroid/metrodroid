@@ -30,7 +30,7 @@ public class LicenseActivity extends Activity {
 
     static final String LICENSE_INTRO = "Metrodroid\n"
             + "Based on FareBot\n\n"
-            + "Copyright 2015-2017 Michael Farrell <micolous@gmail.com> and contributors\n"
+            + "Copyright 2015-2018 Michael Farrell <micolous@gmail.com> and contributors\n"
             + "Copyright 2011-2014 Eric Butler <eric@codebutler.com> and contributors\n"
             + "Copyright 2011 \"an anonymous contributor\", Chris Hundt, David Hoover, Devin Carraway, Sean Cross\n"
             + "Copyright 2012 Jason Hsu, Sebastian Oliva, Shayan Guha, Toby Bonang, Victor Heng\n"
