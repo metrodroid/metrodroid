@@ -209,4 +209,36 @@
 \n
 \nVær så snill å ta kontakt med ditt kommunale kollektivtransportetat for å få et visst nivå av åpen data-tilgang for de utstedte kortene.  Det er mulig å tilby begrenset lesetilgang på en trygg måte til kollektivtransport-smartkort."</string>
     <string name="add_key_directions">Lagre en binærdump av nøklene dine som en fil med endelsen .farebotkeys, send den som et epostvedlegg til deg selv og åpne filen på denne enheten.</string>
+    <string name="location_helsinki_finland">Helsingfors, Finland</string>
+    <string name="location_sydney_australia">Sydney, Australia</string>
+    <string name="felica_terminal_mobile_phone">Mobiltelefon</string>
+    <string name="felica_process_merchandise_purchase">Handelsvarer</string>
+    <string name="felica_process_bonus_charge">Bonuspåfylling</string>
+    <string name="felica_process_register_deposit">Registrer innskudd</string>
+    <string name="felica_process_merchandise_cancel">Avbryt handelsvare</string>
+    <string name="felica_process_merchandise_admission">Handelsvare/inngang</string>
+    <string name="felica_process_merchandise_purchase_cash">Handelsvare (delvis kontant)</string>
+    <string name="felica_process_merchandise_admission_cash">Handelsvare/inngang (delvis kontakt)</string>
+    <string name="felica_process_payment_thirdparty">Betaling (tredjepart)</string>
+    <string name="felica_process_admission_thirdparty">Inngangsbetaling (tredjepart)</string>
+
+    <string name="hsl_pass_is_valid">Gyldig sesongbillett</string>
+    <string name="hsl_season_ticket_price_was">Pris for inneværende sesongbillett var</string>
+    <string name="opal_vehicle_ferry_lr">Ferge eller nærbane</string>
+    <string name="opal_action_journey_completed_distance">Tur fullført (strekningstakst)</string>
+    <string name="opal_action_journey_completed_flat_rate">Tur fullført (fast takst)</string>
+    <string name="seqgo_ticket_type_regular">Vanlig</string>
+    <string name="seqgo_ticket_type_concession">Honnør</string>
+    <string name="seqgo_ticket_type_child">Barn</string>
+    <string name="seqgo_ticket_type_senior">Senior</string>
+
+    <string name="seqgo_refill_manual">Manuelt påfyll</string>
+    <string name="seqgo_refill_automatic">Automatisk påfyll</string>
+
+    <string name="card_note_seqgo">Støtter ikke Go Access, Explore eller SEEQ -kort.</string>
+
+    <string name="card_note_myki">Kun kortnummeret kan leses.</string>
+
+    <string name="nextfare">Cubic Nextfare</string>
+    <string name="nextfare_ticket_class">Billettypekode</string>
     </resources>
