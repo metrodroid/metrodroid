@@ -2,6 +2,7 @@
  * CardRawDataActivity.java
  *
  * Copyright 2011 Eric Butler <eric@codebutler.com>
+ * Copyright 2018 Michael Farrell <micolous+git@gmail.com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -100,7 +101,7 @@ public class DesfireCardRawDataFragment extends ExpandableListFragment {
 
                 DesfireApplication app = mCard.getApplications().get(groupPosition);
 
-                textView.setText("Application: 0x" + Integer.toHexString(app.getId()));
+                textView.setText(Utils.localizeString(R.string.application_title_format, Integer.toHexString(app.getId())));
 
                 return convertView;
             }
@@ -118,37 +119,49 @@ public class DesfireCardRawDataFragment extends ExpandableListFragment {
                 DesfireApplication app = mCard.getApplications().get(groupPosition);
                 DesfireFile file = app.getFiles().get(childPosition);
 
-                textView1.setText("File: 0x" + Integer.toHexString(file.getId()));
+                textView1.setText(Utils.localizeString(R.string.file_title_format, Integer.toHexString(file.getId())));
 
-                if (file instanceof InvalidDesfireFile) {
-                    textView2.setText(((InvalidDesfireFile) file).getErrorMessage());
-                } else if (file instanceof UnauthorizedDesfireFile) {
-                    textView2.setText(((UnauthorizedDesfireFile) file).getErrorMessage());
+                if (file instanceof UnauthorizedDesfireFile) {
+                    textView1.setText(Utils.localizeString(R.string.unauthorized_file_title_format,
+                            Integer.toHexString(file.getId())));
+                } else if (file instanceof InvalidDesfireFile) {
+                    textView1.setText(Utils.localizeString(R.string.invalid_file_title_format,
+                            Integer.toHexString(file.getId()),
+                            ((InvalidDesfireFile)file).getErrorMessage()));
                 } else {
+                    textView1.setText(Utils.localizeString(R.string.file_title_format,
+                            Integer.toHexString(file.getId())));
+                }
+
+                if (!(file instanceof InvalidDesfireFile) || (file instanceof UnauthorizedDesfireFile)) {
                     if (file.getFileSettings() instanceof StandardDesfireFileSettings) {
                         StandardDesfireFileSettings fileSettings = (StandardDesfireFileSettings) file.getFileSettings();
-                        textView2.setText(String.format("Type: %s, Size: %s", fileSettings.getFileTypeName(),
-                                String.valueOf(fileSettings.getFileSize())));
+                        textView2.setText(Utils.localizePlural(R.plurals.desfire_standard_format,
+                                fileSettings.getFileSize(),
+                                Utils.localizeString(fileSettings.getFileTypeString()),
+                                fileSettings.getFileSize()));
                     } else if (file.getFileSettings() instanceof RecordDesfireFileSettings) {
                         RecordDesfireFileSettings fileSettings = (RecordDesfireFileSettings) file.getFileSettings();
-                        textView2.setText(String.format("Type: %s, Cur Records: %s, Max Records: %s, Record Size: %s",
-                                fileSettings.getFileTypeName(),
-                                String.valueOf(fileSettings.getCurRecords()),
-                                String.valueOf(fileSettings.getMaxRecords()),
-                                String.valueOf(fileSettings.getRecordSize())));
+                        textView2.setText(Utils.localizePlural(R.plurals.desfire_record_format,
+                                fileSettings.getCurRecords(),
+                                Utils.localizeString(fileSettings.getFileTypeString()),
+                                fileSettings.getCurRecords(),
+                                fileSettings.getMaxRecords(),
+                                fileSettings.getRecordSize()));
                     } else if (file.getFileSettings() instanceof ValueDesfireFileSettings) {
                         ValueDesfireFileSettings fileSettings = (ValueDesfireFileSettings) file.getFileSettings();
 
-                        textView2.setText(String.format("Type: %s, Range: %s - %s, Limited Credit: %s (%s)",
-                                fileSettings.getFileTypeName(),
+                        textView2.setText(Utils.localizeString(R.string.desfire_value_format,
+                                Utils.localizeString(fileSettings.getFileTypeString()),
                                 fileSettings.getLowerLimit(),
                                 fileSettings.getUpperLimit(),
                                 fileSettings.getLimitedCreditValue(),
-                                fileSettings.getLimitedCreditEnabled() ? "enabled" : "disabled"
-                        ));
+                                Utils.localizeString(fileSettings.getLimitedCreditEnabled() ? R.string.enabled : R.string.disabled)));
                     } else {
-                        textView2.setText("Unknown file type");
+                        textView2.setText(R.string.desfire_unknown_file);
                     }
+                } else {
+                    textView2.setText("");
                 }
 
                 return convertView;

@@ -20,6 +20,9 @@
 
 package au.id.micolous.metrodroid.card.desfire.settings;
 
+import android.support.annotation.StringRes;
+
+import au.id.micolous.farebot.R;
 import au.id.micolous.metrodroid.xml.HexString;
 
 import org.simpleframework.xml.Element;
@@ -84,20 +87,20 @@ public abstract class DesfireFileSettings {
         return mAccessRights;
     }
 
-    public String getFileTypeName() {
+    public @StringRes int getFileTypeString() {
         switch (mFileType) {
             case STANDARD_DATA_FILE:
-                return "Standard";
+                return R.string.desfire_standard_file;
             case BACKUP_DATA_FILE:
-                return "Backup";
+                return R.string.desfire_backup_file;
             case VALUE_FILE:
-                return "Value";
+                return R.string.desfire_value_file;
             case LINEAR_RECORD_FILE:
-                return "Linear Record";
+                return R.string.desfire_linear_record;
             case CYCLIC_RECORD_FILE:
-                return "Cyclic Record";
+                return R.string.desfire_cyclic_record;
             default:
-                return "Unknown";
+                return R.string.desfire_unknown_file;
         }
     }
 }

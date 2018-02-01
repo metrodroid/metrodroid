@@ -2,7 +2,7 @@
  * DesfireProtocol.java
  *
  * Copyright 2011 Eric Butler <eric@codebutler.com>
- * Copyright 2016 Michael Farrell <micolous+git@gmail.com>
+ * Copyright 2016-2018 Michael Farrell <micolous+git@gmail.com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -28,8 +28,15 @@ import au.id.micolous.metrodroid.util.Utils;
 import java.io.ByteArrayOutputStream;
 import java.security.AccessControlException;
 
+/**
+ * Implements communication with MIFARE DESFire cards.
+ *
+ * Useful references:
+ * - https://github.com/nfc-tools/libfreefare/blob/master/libfreefare/mifare_desfire.c
+ * - https://github.com/jekkos/android-hce-desfire/blob/master/hceappletdesfire/src/main/java/net/jpeelaer/hce/desfire/DesfireApplet.java
+ * - https://github.com/jekkos/android-hce-desfire/blob/master/hceappletdesfire/src/main/java/net/jpeelaer/hce/desfire/DesFireInstruction.java
+ */
 public class DesfireProtocol {
-    // Reference: http://neteril.org/files/M075031_desfire.pdf
     // Commands
     static final byte GET_MANUFACTURING_DATA = (byte) 0x60;
     static final byte GET_APPLICATION_DIRECTORY = (byte) 0x6A;
@@ -41,7 +48,7 @@ public class DesfireProtocol {
     static final byte GET_FILES = (byte) 0x6F;
     static final byte GET_FILE_SETTINGS = (byte) 0xF5;
 
-    // Status codes (Section 3.4)
+    // Status codes
     static final byte OPERATION_OK = (byte) 0x00;
     static final byte PERMISSION_DENIED = (byte) 0x9D;
     static final byte AUTHENTICATION_ERROR = (byte) 0xAE;
@@ -68,21 +75,20 @@ public class DesfireProtocol {
         int[] appIds = new int[appDirBuf.length / 3];
 
         for (int app = 0; app < appDirBuf.length; app += 3) {
-            byte[] appId = new byte[3];
-            System.arraycopy(appDirBuf, app, appId, 0, 3);
-
-            appIds[app / 3] = Utils.byteArrayToInt(appId);
+            appIds[app / 3] = Utils.byteArrayToInt(appDirBuf, app, 3);
         }
 
         return appIds;
     }
 
+    /**
+     * Selects an Application ID on the card. Note that this method treats the card IDs as
+     * big-endian, though the DESFire protocol defines them as little-endian.
+     * @param appId
+     * @throws Exception
+     */
     public void selectApp(int appId) throws Exception {
-        byte[] appIdBuff = new byte[3];
-        appIdBuff[0] = (byte) ((appId & 0xFF0000) >> 16);
-        appIdBuff[1] = (byte) ((appId & 0xFF00) >> 8);
-        appIdBuff[2] = (byte) (appId & 0xFF);
-
+        byte[] appIdBuff = Utils.integerToByteArray(appId, 3);
         sendRequest(SELECT_APPLICATION, appIdBuff);
     }
 

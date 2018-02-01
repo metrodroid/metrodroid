@@ -215,6 +215,25 @@ public class Utils {
         return ret;
     }
 
+    public static byte[] integerToByteArray(int input, int length) {
+        return integerToByteArray(Math.abs((long)input), length);
+    }
+
+    /**
+     * Converts an unsigned integer to its big-endian byte-wise representation.
+     * @param input Integer to convert.
+     * @param length Length, in bytes, of the byte array that the value should be stored in.
+     * @return Byte array of size `length`.
+     */
+    public static byte[] integerToByteArray(long input, int length) {
+        byte[] b = new byte[length];
+        for (int i=length-1; i >= 0; i--) {
+            b[i] = (byte)(input & 0xff);
+            input >>= 8;
+        }
+        return b;
+    }
+
     public static String getErrorMessage(Throwable ex) {
         if (ex.getCause() != null) {
             ex = ex.getCause();
@@ -285,6 +304,10 @@ public class Utils {
 
     public static int getBitsFromInteger(int buffer, int iStartBit, int iLength) {
         return (buffer >> (iStartBit)) & ((char) 0xFF >> (8 - iLength));
+    }
+
+    public static byte[] reverseBuffer(byte[] buffer) {
+        return reverseBuffer(buffer, 0, buffer.length);
     }
 
     /**

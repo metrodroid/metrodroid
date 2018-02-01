@@ -98,10 +98,14 @@
     <string name="no_scanned_cards">You have not scanned any cards.</string>
     <string name="block_title_format">Block: %s</string>
     <string name="page_title_format">Page: 0x%s</string>
-    <string name="unauthorized_page_title_format">Page: 0x%s (Unauthorized)</string>
+    <string name="application_title_format">Application: 0x%s</string>
+    <string name="file_title_format">File: 0x%s</string>
+    <string name="unauthorized_file_title_format">File: 0x%s (unauthorized)</string>
+    <string name="invalid_file_title_format">File: 0x%1%s (invalid: %2$s)</string>
+    <string name="unauthorized_page_title_format">Page: 0x%s (unauthorized)</string>
     <string name="sector_title_format">Sector: 0x%s</string>
-    <string name="unauthorized_sector_title_format">Sector: 0x%s (Unauthorized)</string>
-    <string name="invalid_sector_title_format">Sector: 0x%1$s (Invalid: %2$s)</string>
+    <string name="unauthorized_sector_title_format">Sector: 0x%s (unauthorized)</string>
+    <string name="invalid_sector_title_format">Sector: 0x%1$s (invalid: %2$s)</string>
     <string name="subscriptions">Subscriptions</string>
     <string name="info">Info</string>
     <string name="valid_format">Valid %1$s to %2$s</string>
@@ -241,6 +245,31 @@
         <item quantity="one">%d block</item>
         <item quantity="other">%d blocks</item>
     </plurals>
+
+    <!-- DESFire -->
+    <string name="desfire_standard_file">Standard file</string>
+    <string name="desfire_backup_file">Backup file</string>
+    <string name="desfire_value_file">Value file</string>
+    <string name="desfire_linear_record">Linear record</string>
+    <string name="desfire_cyclic_record">Cyclic record</string>
+    <string name="desfire_unknown_file">Unknown file type</string>
+    <!-- Type: Standard file, Length: 16 bytes -->
+    <plurals name="desfire_standard_format">
+        <item quantity="one">Type: %1$s, Length: %2$s byte</item>
+        <item quantity="other">Type: %1$s, Length: %2$s bytes</item>
+    </plurals>
+
+    <!-- Type: Linear record, Records: 4 (6 maximum), Record size: 40 -->
+    <plurals name="desfire_record_format">
+        <item quantity="one">Type: %1$s, Record: %2$s (%3$s maximum), Record Size: %4$s</item>
+        <item quantity="other">Type: %1$s, Records: %2$s (%3$s maximum), Record Size: %4$s</item>
+    </plurals>
+
+    <!-- Type: Value file, Range: 0 - 2300, Limited credit: 400 (Enabled) -->
+    <string name="desfire_value_format">Type: %1$s, Range: %2$s - %3$s, Limited credit: %4$s (%5$s)</string>
+    <string name="enabled">Enabled</string>
+    <string name="disabled">Disabled</string>
+
 
     <!-- Locations -->
     <string name="location_seattle">Seattle, WA, USA</string>
