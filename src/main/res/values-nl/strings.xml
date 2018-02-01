@@ -304,4 +304,6 @@
     <string name="unauthorized_page_title_format">Pagina: 0x%s (niet-geautoriseerd)</string>
     <string name="card_note_opal">Vrij reizen en enkele reis-kaarten worden niet ondersteund.</string>
 
+    <string name="locked_mfc_card">Vergrendelde MIFARE Classic-kaart</string>
+    <string name="locked_mfu_card">Vergrendelde MIFARE Ultralight-kaart</string>
     </resources>
