@@ -27,7 +27,11 @@ import java.io.IOException;
 import java.util.Locale;
 
 /**
- * Low level command sets for Mifare Ultralight.
+ * Low level commands for Mifare Ultralight.
+ *
+ * Android has Mifare Ultralight support, but it is quite limited. It doesn't support detection of
+ * EV1 cards, and also doesn't reliably detect Ultralight C cards. This class uses some
+ * functionality adapted from the Proxmark3, as well as sniffed communication from NXP TagInfo.
  *
  * Reference:
  * MF0ICU1 (Ultralight): https://www.nxp.com/docs/en/data-sheet/MF0ICU1.pdf

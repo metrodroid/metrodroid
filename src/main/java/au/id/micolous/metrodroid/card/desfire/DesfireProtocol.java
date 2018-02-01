@@ -21,6 +21,7 @@
 package au.id.micolous.metrodroid.card.desfire;
 
 import android.nfc.tech.IsoDep;
+import android.util.Log;
 
 import au.id.micolous.metrodroid.card.desfire.settings.DesfireFileSettings;
 import au.id.micolous.metrodroid.util.Utils;
@@ -31,12 +32,21 @@ import java.security.AccessControlException;
 /**
  * Implements communication with MIFARE DESFire cards.
  *
+ * Android doesn't contain useful classes for interfacing with DESFire, so this is class implements
+ * some very basic functionality to interface. In particular, this only supports open communication
+ * with the card, and doesn't support writing data.
+ *
+ * This class implements the
+ *
  * Useful references:
- * - https://github.com/nfc-tools/libfreefare/blob/master/libfreefare/mifare_desfire.c
- * - https://github.com/jekkos/android-hce-desfire/blob/master/hceappletdesfire/src/main/java/net/jpeelaer/hce/desfire/DesfireApplet.java
- * - https://github.com/jekkos/android-hce-desfire/blob/master/hceappletdesfire/src/main/java/net/jpeelaer/hce/desfire/DesFireInstruction.java
+ * https://github.com/nfc-tools/libfreefare/blob/master/libfreefare/mifare_desfire.c
+ * https://github.com/jekkos/android-hce-desfire/blob/master/hceappletdesfire/src/main/java/net/jpeelaer/hce/desfire/DesfireApplet.java
+ * https://github.com/jekkos/android-hce-desfire/blob/master/hceappletdesfire/src/main/java/net/jpeelaer/hce/desfire/DesFireInstruction.java
+ * https://ridrix.wordpress.com/2009/09/19/mifare-desfire-communication-example/
  */
 public class DesfireProtocol {
+    static final String TAG = "DesfireProtocol";
+
     // Commands
     static final byte GET_MANUFACTURING_DATA = (byte) 0x60;
     static final byte GET_APPLICATION_DIRECTORY = (byte) 0x6A;
@@ -69,6 +79,16 @@ public class DesfireProtocol {
         return new DesfireManufacturingData(respBuffer);
     }
 
+    /**
+     * Gets an Application List from the card.
+     *
+     * Note that this method treats the card IDs as big-endian, though the DESFire protocol defines
+     * them as little-endian. However, this means Integer.toHexString() on the numbers in Java makes
+     * the bytes come out as the same order that is on the card / ISO14a frames.
+     *
+     * @return Array of integers representing DESFire application IDs, in big-endian.
+     * @throws Exception on communication failures.
+     */
     public int[] getAppList() throws Exception {
         byte[] appDirBuf = sendRequest(GET_APPLICATION_DIRECTORY);
 
@@ -82,10 +102,15 @@ public class DesfireProtocol {
     }
 
     /**
-     * Selects an Application ID on the card. Note that this method treats the card IDs as
-     * big-endian, though the DESFire protocol defines them as little-endian.
-     * @param appId
-     * @throws Exception
+     * Selects an Application ID on the card.
+     *
+     * Note that this method treats the card IDs as big-endian, though the DESFire protocol defines
+     * them as little-endian. However, this means Integer.toHexString() on the numbers in Java makes
+     * the bytes come out as the same order that is on the card / ISO14a frames.
+     *
+     * Note that NXP TagInfo shows the application ID with endian reversed.
+     * @param appId App ID, in big-endian.
+     * @throws Exception on communication failures.
      */
     public void selectApp(int appId) throws Exception {
         byte[] appIdBuff = Utils.integerToByteArray(appId, 3);
@@ -102,40 +127,33 @@ public class DesfireProtocol {
     }
 
     public DesfireFileSettings getFileSettings(int fileNo) throws Exception {
-        byte[] data = sendRequest(GET_FILE_SETTINGS, new byte[]{(byte) fileNo});
+        byte[] data = sendRequest(GET_FILE_SETTINGS, (byte) fileNo);
         return DesfireFileSettings.create(data);
     }
 
     public byte[] readFile(int fileNo) throws Exception {
-        return sendRequest(READ_DATA, new byte[]{
-                (byte) fileNo,
+        return sendRequest(READ_DATA, (byte) fileNo,
                 (byte) 0x0, (byte) 0x0, (byte) 0x0,
-                (byte) 0x0, (byte) 0x0, (byte) 0x0
-        });
+                (byte) 0x0, (byte) 0x0, (byte) 0x0);
     }
 
     public byte[] readRecord(int fileNum) throws Exception {
-        return sendRequest(READ_RECORD, new byte[]{
-                (byte) fileNum,
+        return sendRequest(READ_RECORD, (byte) fileNum,
                 (byte) 0x0, (byte) 0x0, (byte) 0x0,
-                (byte) 0x0, (byte) 0x0, (byte) 0x0
-        });
+                (byte) 0x0, (byte) 0x0, (byte) 0x0);
     }
 
     public byte[] getValue(int fileNum) throws Exception {
-        return sendRequest(GET_VALUE, new byte[]{
-                (byte) fileNum
-        });
+        return sendRequest(GET_VALUE, (byte) fileNum);
     }
 
-    private byte[] sendRequest(byte command) throws Exception {
-        return sendRequest(command, null);
-    }
-
-    private byte[] sendRequest(byte command, byte[] parameters) throws Exception {
+    private byte[] sendRequest(byte command, byte... parameters) throws Exception {
         ByteArrayOutputStream output = new ByteArrayOutputStream();
 
-        byte[] recvBuffer = mTagTech.transceive(wrapMessage(command, parameters));
+        byte[] sendBuffer = wrapMessage(command, parameters);
+        //Log.d(TAG, "Send: " + Utils.getHexString(sendBuffer));
+        byte[] recvBuffer = mTagTech.transceive(sendBuffer);
+        //Log.d(TAG, "Recv: " + Utils.getHexString(recvBuffer));
 
         while (true) {
             if (recvBuffer[recvBuffer.length - 2] != (byte) 0x91)
@@ -147,7 +165,8 @@ public class DesfireProtocol {
             if (status == OPERATION_OK) {
                 break;
             } else if (status == ADDITIONAL_FRAME) {
-                recvBuffer = mTagTech.transceive(wrapMessage(GET_ADDITIONAL_FRAME, null));
+                recvBuffer = mTagTech.transceive(wrapMessage(GET_ADDITIONAL_FRAME));
+                //Log.d(TAG, "Recv: (additional) " + Utils.getHexString(recvBuffer));
             } else if (status == PERMISSION_DENIED) {
                 throw new AccessControlException("Permission denied");
             } else if (status == AUTHENTICATION_ERROR) {
@@ -160,19 +179,26 @@ public class DesfireProtocol {
         return output.toByteArray();
     }
 
-    private byte[] wrapMessage(byte command, byte[] parameters) throws Exception {
-        ByteArrayOutputStream stream = new ByteArrayOutputStream();
 
-        stream.write((byte) 0x90);
-        stream.write(command);
-        stream.write((byte) 0x00);
-        stream.write((byte) 0x00);
-        if (parameters != null) {
-            stream.write((byte) parameters.length);
-            stream.write(parameters);
+    /**
+     * Wraps a DESFire command in a ISO 7816-style APDU.
+     * @param command DESFire command to send
+     * @param parameters Additional parameters to a command.
+     * @return A wrapped command.
+     */
+    private byte[] wrapMessage(byte command, byte... parameters) {
+        byte[] output = new byte[5 + (parameters.length == 0 ? 0 : 1 + parameters.length)];
+        output[0] = (byte) 0x90;
+        output[1] = command;
+        output[2] = 0;
+        output[3] = 0;
+
+        if (parameters.length > 0) {
+            output[4] = (byte)parameters.length;
+            System.arraycopy(parameters, 0, output, 5, parameters.length);
         }
-        stream.write((byte) 0x00);
 
-        return stream.toByteArray();
+        output[output.length - 1] = 0;
+        return output;
     }
 }
