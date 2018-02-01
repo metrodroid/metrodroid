@@ -68,8 +68,8 @@
     <string name="block_title_format">Blok: %s</string>
     <string name="page_title_format">Pagina: 0x%s</string>
     <string name="sector_title_format">Sector: 0x%s</string>
-    <string name="unauthorized_sector_title_format">Sector: 0x%s (ongeautoriseerd)</string>
-    <string name="invalid_sector_title_format">Sector: 0x%1$s (Ongeldig: %2$s)</string>
+    <string name="unauthorized_sector_title_format">Sector: 0x%s (niet-geauthoriseerd)</string>
+    <string name="invalid_sector_title_format">Sector: 0x%1$s (onjuist: %2$s)</string>
     <string name="subscriptions">Abonnementen</string>
     <string name="info">Informatie</string>
     <string name="valid_format">Geldig van %1$s tot %2$s</string>
@@ -307,4 +307,29 @@
     <string name="locked_mfc_card">Vergrendelde MIFARE Classic-kaart</string>
     <string name="locked_mfu_card">Vergrendelde MIFARE Ultralight-kaart</string>
     <string name="locked_mfd_card">Vergrendelde MIFARE DESFire-kaart</string>
+    <string name="application_title_format">Applicatie: 0x%s</string>
+    <string name="file_title_format">Bestand: 0x%s</string>
+    <string name="unauthorized_file_title_format">Bestand: 0x%s (niet-geauthoriseerd)</string>
+    <string name="invalid_file_title_format">Bestand: 0x%1%s (onjuist: %2$s)</string>
+    <string name="desfire_standard_file">Standaard bestand</string>
+    <string name="desfire_backup_file">Back-upbestand</string>
+    <string name="desfire_value_file">Waardebestand</string>
+    <string name="desfire_linear_record">Lineair verslag</string>
+    <string name="desfire_cyclic_record">Cycli-verslag</string>
+    <string name="desfire_unknown_file">Onbekende bestandssoort</string>
+    <plurals name="desfire_standard_format">
+	<item quantity="one">Soort: %1$s, Lengte: %2$s byte</item>
+	<item quantity="other">Soort: %1$s, Lengte: %2$s bytes</item>
+</plurals>
+
+    <plurals name="desfire_record_format">
+	<item quantity="one">Soort: %1$s, Vermelding: %2$s (maximaal %3$s), Vermeldingsgrootte: %4$s byte</item>
+	<item quantity="other">Soort: %1$s, Vermeldingen: %2$s (maximaal %3$s), Vermeldingsgrootte: %4$s bytes</item>
+</plurals>
+
+    <string name="desfire_value_format">Soort: %1$s, Bereik: %2$s - %3$s, Laag saldo: %4$s (%5$s)</string>
+    <string name="enabled">Ingeschakeld</string>
+    <string name="disabled">Uitgeschakeld</string>
+
+
     </resources>
