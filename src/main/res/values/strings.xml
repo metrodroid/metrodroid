@@ -42,6 +42,7 @@
     <string name="locked_card">Locked Card</string>
     <string name="locked_mfc_card">Locked MIFARE Classic card</string>
     <string name="locked_mfu_card">Locked MIFARE Ultralight card</string>
+    <string name="locked_mfd_card">Locked MIFARE DESFire card</string>
     <string name="hw_detail">Manufacturing Info</string>
     <string name="data">Raw Data</string>
     <string name="copy_xml">Copy</string>

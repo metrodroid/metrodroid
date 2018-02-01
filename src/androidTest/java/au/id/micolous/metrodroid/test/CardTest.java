@@ -19,13 +19,19 @@
 package au.id.micolous.metrodroid.test;
 
 import au.id.micolous.metrodroid.card.Card;
+import au.id.micolous.metrodroid.card.classic.ClassicBlock;
 import au.id.micolous.metrodroid.card.classic.ClassicCard;
 import au.id.micolous.metrodroid.card.classic.ClassicSector;
 import au.id.micolous.metrodroid.card.classic.UnauthorizedClassicSector;
+import au.id.micolous.metrodroid.card.desfire.DesfireApplication;
+import au.id.micolous.metrodroid.card.desfire.DesfireCard;
+import au.id.micolous.metrodroid.card.desfire.files.DesfireFile;
+import au.id.micolous.metrodroid.card.desfire.files.UnauthorizedDesfireFile;
 import au.id.micolous.metrodroid.card.ultralight.UltralightCard;
 import au.id.micolous.metrodroid.card.ultralight.UltralightPage;
 import au.id.micolous.metrodroid.card.ultralight.UnauthorizedUltralightPage;
 import au.id.micolous.metrodroid.transit.unknown.UnauthorizedClassicTransitData;
+import au.id.micolous.metrodroid.transit.unknown.UnauthorizedDesfireTransitData;
 import au.id.micolous.metrodroid.transit.unknown.UnauthorizedUltralightTransitData;
 import au.id.micolous.metrodroid.util.Utils;
 
@@ -124,18 +130,76 @@ public class CardTest extends TestCase {
     }
 
     public void testUnauthorizedClassic() {
+        byte[] e = new byte[] { (byte) 0x6d, (byte) 0x65, (byte) 0x74, (byte) 0x72, (byte) 0x6f,
+                                (byte) 0x64, (byte) 0x72, (byte) 0x6f, (byte) 0x69, (byte) 0x64,
+                                (byte) 0x43, (byte) 0x6c, (byte) 0x61, (byte) 0x73, (byte) 0x73,
+                                (byte) 0x69 };
+        byte[] k = new byte[] { 0, 0, 0, 0, 0, 0 };
         Calendar d = new GregorianCalendar(2010, 1, 1, 0, 0, 0);
         d.setTimeZone(TimeZone.getTimeZone("GMT"));
 
-        ArrayList<ClassicSector> l = new ArrayList<>();
+        ClassicSector[] l = new ClassicSector[16];
         for (int x=0; x < 16; x++) {
-            l.add(new UnauthorizedClassicSector(x));
+            l[x] = new UnauthorizedClassicSector(x);
         }
 
-        Card c1 = new ClassicCard(Utils.hexStringToByteArray("12345678"),
-                d,
-                l.toArray(new ClassicSector[l.size()]));
+        Card c1 = new ClassicCard(Utils.hexStringToByteArray("12345678"), d, l);
 
         assertTrue(c1.parseTransitData() instanceof UnauthorizedClassicTransitData);
+
+        // Build a card with partly readable data.
+        ClassicBlock[] b = new ClassicBlock[4];
+        for (int y=0; y < 4; y++) {
+            b[y] = ClassicBlock.create(ClassicBlock.TYPE_DATA, y, e);
+        }
+
+        l[2] = new ClassicSector(2, b, k);
+        Card c2 = new ClassicCard(Utils.hexStringToByteArray("12345678"), d, l);
+
+        assertFalse(c2.parseTransitData() instanceof UnauthorizedClassicTransitData);
+
+        // Build a card with all readable data.
+        l = new ClassicSector[16];
+        for (int x=0; x < 16; x++) {
+            l[x] = new ClassicSector(x, b, k);
+        }
+
+        Card c3 = new ClassicCard(Utils.hexStringToByteArray("12345678"), d, l);
+
+        assertFalse(c3.parseTransitData() instanceof UnauthorizedClassicTransitData);
+
+    }
+
+    public void testUnauthorizedDesfire() {
+        Calendar d = new GregorianCalendar(2010, 1, 1, 0, 0, 0);
+        d.setTimeZone(TimeZone.getTimeZone("GMT"));
+
+        // Card with no files at all.
+        Card c1 = new DesfireCard(Utils.hexStringToByteArray("47504C7633"),
+                d, null, new DesfireApplication[] {});
+
+        assertTrue(c1.parseTransitData() instanceof UnauthorizedDesfireTransitData);
+
+        // Card with only locked files.
+        Card c2 = new DesfireCard(Utils.hexStringToByteArray("6D6574726F"),
+                d, null, new DesfireApplication[] {
+                new DesfireApplication(0x6472, new DesfireFile[] {
+                  new UnauthorizedDesfireFile(0x6f69, "Authentication error: 64", null)
+                })
+        });
+
+        assertTrue(c2.parseTransitData() instanceof UnauthorizedDesfireTransitData);
+
+        // Card with unlocked file.
+        Card c3 = new DesfireCard(Utils.hexStringToByteArray("6D6574726F"),
+                d, null, new DesfireApplication[] {
+                new DesfireApplication(0x6472, new DesfireFile[] {
+                        DesfireFile.create(0x6f69, null,
+                                new byte[] { (byte) 0x6d, (byte) 0x69, (byte) 0x63, (byte) 0x6f,
+                                             (byte) 0x6c, (byte) 0x6f, (byte) 0x75, (byte) 0x73 })
+                })
+        });
+
+        assertFalse(c3.parseTransitData() instanceof UnauthorizedDesfireTransitData);
     }
 }

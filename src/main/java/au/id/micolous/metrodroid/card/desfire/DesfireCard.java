@@ -42,6 +42,8 @@ import au.id.micolous.metrodroid.transit.opal.OpalTransitData;
 import au.id.micolous.metrodroid.transit.orca.OrcaTransitData;
 import au.id.micolous.metrodroid.transit.stub.AdelaideMetrocardStubTransitData;
 import au.id.micolous.metrodroid.transit.stub.AtHopStubTransitData;
+import au.id.micolous.metrodroid.transit.unknown.UnauthorizedDesfireTransitData;
+import au.id.micolous.metrodroid.transit.unknown.UnauthorizedTransitData;
 import au.id.micolous.metrodroid.util.Utils;
 
 import org.simpleframework.xml.Element;
@@ -53,6 +55,7 @@ import java.security.AccessControlException;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
+import java.util.Iterator;
 import java.util.List;
 
 @Root(name = "card")
@@ -147,6 +150,9 @@ public class DesfireCard extends Card {
             return AdelaideMetrocardStubTransitData.parseTransitIdentity(this);
         if (AtHopStubTransitData.check(this))
             return AtHopStubTransitData.parseTransitIdentity(this);
+
+        if (UnauthorizedDesfireTransitData.check(this))
+            return UnauthorizedDesfireTransitData.parseTransitIdentity(this);
         return null;
     }
 
@@ -168,6 +174,9 @@ public class DesfireCard extends Card {
             return new AdelaideMetrocardStubTransitData(this);
         if (AtHopStubTransitData.check(this))
             return new AtHopStubTransitData(this);
+
+        if (UnauthorizedDesfireTransitData.check(this))
+            return new UnauthorizedDesfireTransitData();
         return null;
     }
 
