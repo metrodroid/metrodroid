@@ -35,7 +35,7 @@ import au.id.micolous.metrodroid.card.desfire.files.DesfireFile;
 import au.id.micolous.metrodroid.card.desfire.files.InvalidDesfireFile;
 import au.id.micolous.metrodroid.card.desfire.files.RecordDesfireFile;
 import au.id.micolous.metrodroid.card.desfire.settings.DesfireFileSettings;
-import au.id.micolous.metrodroid.card.felica.FelicaDBUtil;
+import au.id.micolous.metrodroid.transit.suica.SuicaDBUtil;
 import au.id.micolous.metrodroid.card.ultralight.UltralightPage;
 import au.id.micolous.metrodroid.transit.lax_tap.LaxTapDBUtil;
 import au.id.micolous.metrodroid.transit.ovc.OVChipDBUtil;
@@ -85,7 +85,7 @@ public class MetrodroidApplication extends Application {
 
     private static MetrodroidApplication sInstance;
 
-    private FelicaDBUtil mFelicaDBUtil;
+    private SuicaDBUtil mSuicaDBUtil;
     private OVChipDBUtil mOVChipDBUtil;
     private SeqGoDBUtil mSeqGoDBUtil;
     private LaxTapDBUtil mLaxTapDBUtil;
@@ -96,7 +96,7 @@ public class MetrodroidApplication extends Application {
     public MetrodroidApplication() {
         sInstance = this;
 
-        mFelicaDBUtil = new FelicaDBUtil(this);
+        mSuicaDBUtil = new SuicaDBUtil(this);
         mOVChipDBUtil = new OVChipDBUtil(this);
         mSeqGoDBUtil = new SeqGoDBUtil(this);
         mLaxTapDBUtil = new LaxTapDBUtil(this);
@@ -173,8 +173,8 @@ public class MetrodroidApplication extends Application {
         return getBooleanPref(PREF_OBFUSCATE_BALANCE, false);
     }
 
-    public FelicaDBUtil getFelicaDBUtil() {
-        return mFelicaDBUtil;
+    public SuicaDBUtil getSuicaDBUtil() {
+        return mSuicaDBUtil;
     }
 
     public OVChipDBUtil getOVChipDBUtil() {

@@ -20,13 +20,13 @@
  * limitations under the License.
  */
 
-package au.id.micolous.metrodroid.card.felica;
+package au.id.micolous.metrodroid.transit.suica;
 
 import android.content.Context;
 
 import au.id.micolous.metrodroid.util.DBUtil;
 
-public class FelicaDBUtil extends DBUtil {
+public class SuicaDBUtil extends DBUtil {
     public static final String COLUMN_ID = "_id";
     public static final String COLUMN_AREACODE = "AreaCode";
     public static final String COLUMN_LINECODE = "LineCode";
@@ -71,10 +71,9 @@ public class FelicaDBUtil extends DBUtil {
 
     private static final int VERSION = 2;
 
-    public FelicaDBUtil(Context context) {
+    public SuicaDBUtil(Context context) {
         super(context);
     }
-
 
     @Override
     protected String getDBName() {

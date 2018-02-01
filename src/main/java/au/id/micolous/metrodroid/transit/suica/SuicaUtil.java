@@ -44,23 +44,6 @@ import java.util.Locale;
 import au.id.micolous.farebot.R;
 import au.id.micolous.metrodroid.MetrodroidApplication;
 
-import static au.id.micolous.metrodroid.card.felica.FelicaDBUtil.COLUMNS_IRUCA_STATIONCODE;
-import static au.id.micolous.metrodroid.card.felica.FelicaDBUtil.COLUMNS_STATIONCODE;
-import static au.id.micolous.metrodroid.card.felica.FelicaDBUtil.COLUMN_AREACODE;
-import static au.id.micolous.metrodroid.card.felica.FelicaDBUtil.COLUMN_COMPANYNAME;
-import static au.id.micolous.metrodroid.card.felica.FelicaDBUtil.COLUMN_COMPANYNAME_EN;
-import static au.id.micolous.metrodroid.card.felica.FelicaDBUtil.COLUMN_ID;
-import static au.id.micolous.metrodroid.card.felica.FelicaDBUtil.COLUMN_LATITUDE;
-import static au.id.micolous.metrodroid.card.felica.FelicaDBUtil.COLUMN_LINECODE;
-import static au.id.micolous.metrodroid.card.felica.FelicaDBUtil.COLUMN_LINENAME;
-import static au.id.micolous.metrodroid.card.felica.FelicaDBUtil.COLUMN_LINENAME_EN;
-import static au.id.micolous.metrodroid.card.felica.FelicaDBUtil.COLUMN_LONGITUDE;
-import static au.id.micolous.metrodroid.card.felica.FelicaDBUtil.COLUMN_STATIONCODE;
-import static au.id.micolous.metrodroid.card.felica.FelicaDBUtil.COLUMN_STATIONNAME;
-import static au.id.micolous.metrodroid.card.felica.FelicaDBUtil.COLUMN_STATIONNAME_EN;
-import static au.id.micolous.metrodroid.card.felica.FelicaDBUtil.TABLE_IRUCA_STATIONCODE;
-import static au.id.micolous.metrodroid.card.felica.FelicaDBUtil.TABLE_STATIONCODE;
-
 final class SuicaUtil {
     private SuicaUtil() {
     }
@@ -230,14 +213,14 @@ final class SuicaUtil {
         int areaCode = (regionCode >> 6);
 
         try {
-            SQLiteDatabase db = MetrodroidApplication.getInstance().getFelicaDBUtil().openDatabase();
-            Cursor cursor = db.query(TABLE_IRUCA_STATIONCODE,
-                    COLUMNS_IRUCA_STATIONCODE,
-                    String.format("%s = ? AND %s = ?", COLUMN_LINECODE, COLUMN_STATIONCODE),
+            SQLiteDatabase db = MetrodroidApplication.getInstance().getSuicaDBUtil().openDatabase();
+            Cursor cursor = db.query(SuicaDBUtil.TABLE_IRUCA_STATIONCODE,
+                    SuicaDBUtil.COLUMNS_IRUCA_STATIONCODE,
+                    String.format("%s = ? AND %s = ?", SuicaDBUtil.COLUMN_LINECODE, SuicaDBUtil.COLUMN_STATIONCODE),
                     new String[]{Integer.toHexString(lineCode), Integer.toHexString(stationCode)},
                     null,
                     null,
-                    COLUMN_ID);
+                    SuicaDBUtil.COLUMN_ID);
 
             if (!cursor.moveToFirst()) {
                 return null;
@@ -245,8 +228,8 @@ final class SuicaUtil {
 
             // FIXME: Figure out a better way to deal with i18n.
             boolean isJa = Locale.getDefault().getLanguage().equals("ja");
-            String companyName = cursor.getString(cursor.getColumnIndex(isJa ? COLUMN_COMPANYNAME : COLUMN_COMPANYNAME_EN));
-            String stationName = cursor.getString(cursor.getColumnIndex(isJa ? COLUMN_STATIONNAME : COLUMN_STATIONNAME_EN));
+            String companyName = cursor.getString(cursor.getColumnIndex(isJa ? SuicaDBUtil.COLUMN_COMPANYNAME : SuicaDBUtil.COLUMN_COMPANYNAME_EN));
+            String stationName = cursor.getString(cursor.getColumnIndex(isJa ? SuicaDBUtil.COLUMN_STATIONNAME : SuicaDBUtil.COLUMN_STATIONNAME_EN));
             return new Station(companyName, null, stationName, null, null, null);
 
         } catch (Exception e) {
@@ -268,11 +251,11 @@ final class SuicaUtil {
         int areaCode = (regionCode >> 6);
 
         try {
-            SQLiteDatabase db = MetrodroidApplication.getInstance().getFelicaDBUtil().openDatabase();
+            SQLiteDatabase db = MetrodroidApplication.getInstance().getSuicaDBUtil().openDatabase();
             Cursor cursor = db.query(
-                    TABLE_STATIONCODE,
-                    COLUMNS_STATIONCODE,
-                    String.format("%s = ? AND %s = ? AND %s = ?", COLUMN_AREACODE, COLUMN_LINECODE, COLUMN_STATIONCODE),
+                    SuicaDBUtil.TABLE_STATIONCODE,
+                    SuicaDBUtil.COLUMNS_STATIONCODE,
+                    String.format("%s = ? AND %s = ? AND %s = ?", SuicaDBUtil.COLUMN_AREACODE, SuicaDBUtil.COLUMN_LINECODE, SuicaDBUtil.COLUMN_STATIONCODE),
                     new String[]{
                             String.valueOf(areaCode & 0xFF),
                             String.valueOf(lineCode & 0xFF),
@@ -280,7 +263,7 @@ final class SuicaUtil {
                     },
                     null,
                     null,
-                    COLUMN_ID);
+                    SuicaDBUtil.COLUMN_ID);
 
             if (!cursor.moveToFirst()) {
                 Log.w("SuicaTransitData", String.format("FAILED get rail company: r: 0x%s a: 0x%s l: 0x%s s: 0x%s",
@@ -294,11 +277,11 @@ final class SuicaUtil {
 
             // FIXME: Figure out a better way to deal with i18n.
             boolean isJa = Locale.getDefault().getLanguage().equals("ja");
-            String companyName = cursor.getString(cursor.getColumnIndex(isJa ? COLUMN_COMPANYNAME : COLUMN_COMPANYNAME_EN));
-            String lineName = cursor.getString(cursor.getColumnIndex(isJa ? COLUMN_LINENAME : COLUMN_LINENAME_EN));
-            String stationName = cursor.getString(cursor.getColumnIndex(isJa ? COLUMN_STATIONNAME : COLUMN_STATIONNAME_EN));
-            String latitude = cursor.getString(cursor.getColumnIndex(COLUMN_LATITUDE));
-            String longitude = cursor.getString(cursor.getColumnIndex(COLUMN_LONGITUDE));
+            String companyName = cursor.getString(cursor.getColumnIndex(isJa ? SuicaDBUtil.COLUMN_COMPANYNAME : SuicaDBUtil.COLUMN_COMPANYNAME_EN));
+            String lineName = cursor.getString(cursor.getColumnIndex(isJa ? SuicaDBUtil.COLUMN_LINENAME : SuicaDBUtil.COLUMN_LINENAME_EN));
+            String stationName = cursor.getString(cursor.getColumnIndex(isJa ? SuicaDBUtil.COLUMN_STATIONNAME : SuicaDBUtil.COLUMN_STATIONNAME_EN));
+            String latitude = cursor.getString(cursor.getColumnIndex(SuicaDBUtil.COLUMN_LATITUDE));
+            String longitude = cursor.getString(cursor.getColumnIndex(SuicaDBUtil.COLUMN_LONGITUDE));
             return new Station(companyName, lineName, stationName, null, latitude, longitude);
 
         } catch (Exception e) {
