@@ -27,7 +27,7 @@ import au.id.micolous.metrodroid.transit.TransitIdentity;
 import au.id.micolous.metrodroid.util.Utils;
 
 /**
- * Handle MiFare Classic with no open sectors
+ * Handle MiFare Ultralight with no open sectors
  */
 public class UnauthorizedUltralightTransitData extends UnauthorizedTransitData {
     /**
