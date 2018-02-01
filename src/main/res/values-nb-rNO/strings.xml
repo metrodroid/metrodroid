@@ -241,4 +241,50 @@
 
     <string name="nextfare">Cubic Nextfare</string>
     <string name="nextfare_ticket_class">Billettypekode</string>
+    <string name="locked_mfc_card">Låst MIFARE Classic-kort</string>
+    <string name="locked_mfu_card">Låst MIFARE Ultralight-kort</string>
+    <string name="locked_mfd_card">Låst MIFARE DESFire-kort</string>
+    <string name="application_title_format">Program: 0x%s</string>
+    <string name="file_title_format">Fil: 0x%s</string>
+    <string name="unauthorized_file_title_format">Fil: 0x%s (uautorisert)</string>
+    <string name="invalid_file_title_format">Fil: 0x%1%s (ugyldig: %2$s)</string>
+    <string name="unauthorized_page_title_format">Side: 0x%s (uautorisert)</string>
+    <string name="map_tiles_subdomains_summary">Hvis {s} brukes i kartnettadresse, en kommainndelt liste over underdomene, eller enkelttegnsliste over underdomener.</string>
+    <string name="map_tiles_help_summary">For hjelp med bruk av kartflisnettadresser, se Leaflets nettbaserte dokumentasjon (kun tilgjengelig på Engelsk).</string>
+    <string name="auth_retries">Gjentatte forsøk på autentisering</string>
+    <string name="obfuscation_dates">Tilslør datoer</string>
+    <string name="obfuscation_dates_desc">Vis tur, abonnement, utløp- og skanningsdatoer som forskjellige, tilfeldige dager</string>
+
+    <string name="obfuscation_times">Tilslør tider</string>
+    <string name="obfuscation_times_desc">Tilfeldiggjør og senk punktligheten for turer, abonnementer og skanninger</string>
+
+    <string name="default_map_tile_url">https://tile{s}.stackcdn.com/osm_tiles_2x/{z}/{x}/{y}.png</string>
+    <string name="desfire_standard_file">Forvalgt fil</string>
+    <string name="desfire_backup_file">Sikkerhetskopifil</string>
+    <string name="desfire_value_file">Verdifil</string>
+    <string name="desfire_linear_record">Lineært tidslinjeopptak</string>
+    <string name="desfire_cyclic_record">Syklisk tidslinjeopptak</string>
+    <string name="desfire_unknown_file">Ukjent filtype</string>
+    <plurals name="desfire_standard_format">
+	<item quantity="one">Type: %1$s, Lengde: %2$s byte</item>
+	<item quantity="other">Type: %1$s, Lengde: %2$s byte</item>
+</plurals>
+
+    <plurals name="desfire_record_format">
+	<item quantity="one">Type: %1$s, Opptak: %2$s (%3$s maksimalt), Opptaksstørrelse: %4$s</item>
+	<item quantity="other">Type: %1$s, Opptak: %2$s (%3$s maksimalt), Opptaksstørrelse: %4$s</item>
+</plurals>
+
+    <string name="enabled">Påskrudd</string>
+    <string name="disabled">Avskrudd</string>
+
+
+    <string name="location_seattle">Seattle, WA, USA</string>
+    <string name="location_san_francisco">San Francisco, CA, USA</string>
+    <string name="location_sao_paulo">São Paulo, Brazil</string>
+    <string name="location_shenzhen">Shenzhen, Guangdong-provinsen, Kina</string>
+    <string name="location_los_angeles">Los Angeles, CA, USA</string>
+    <string name="location_act_australia">Australian Capital Territory, Australia</string>
+    <string name="location_wa_australia">Vest-Australia, Australia</string>
+
     </resources>
