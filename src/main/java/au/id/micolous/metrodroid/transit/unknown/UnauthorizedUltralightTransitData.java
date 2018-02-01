@@ -18,25 +18,18 @@
  */
 package au.id.micolous.metrodroid.transit.unknown;
 
-import android.os.Parcel;
-import android.support.annotation.Nullable;
-
+import au.id.micolous.farebot.R;
 import au.id.micolous.metrodroid.card.Card;
 import au.id.micolous.metrodroid.card.ultralight.UltralightCard;
 import au.id.micolous.metrodroid.card.ultralight.UltralightPage;
 import au.id.micolous.metrodroid.card.ultralight.UnauthorizedUltralightPage;
-import au.id.micolous.metrodroid.transit.Subscription;
-import au.id.micolous.metrodroid.transit.TransitData;
 import au.id.micolous.metrodroid.transit.TransitIdentity;
-import au.id.micolous.metrodroid.transit.Trip;
 import au.id.micolous.metrodroid.util.Utils;
-
-import au.id.micolous.farebot.R;
 
 /**
  * Handle MiFare Classic with no open sectors
  */
-public class UnauthorizedUltralightTransitData extends TransitData {
+public class UnauthorizedUltralightTransitData extends UnauthorizedTransitData {
     /**
      * This should be the last executed Mifare Classic check, after all the other checks are done.
      * <p>
@@ -60,42 +53,11 @@ public class UnauthorizedUltralightTransitData extends TransitData {
     }
 
     public static TransitIdentity parseTransitIdentity(Card card) {
-        return new TransitIdentity(Utils.localizeString(R.string.locked_card), null);
-    }
-
-
-    @Override
-    public String getSerialNumber() {
-        return null;
-    }
-
-    @Override
-    public Trip[] getTrips() {
-        return null;
-    }
-
-    @Override
-    public Subscription[] getSubscriptions() {
-        return null;
+        return new TransitIdentity(Utils.localizeString(R.string.locked_mfu_card), null);
     }
 
     @Override
     public String getCardName() {
-        return Utils.localizeString(R.string.locked_card);
-    }
-
-    @Override
-    public void writeToParcel(Parcel parcel, int i) {
-    }
-
-    @Override
-    public String formatCurrencyString(int currency, boolean isBalance) {
-        return null;
-    }
-
-    @Nullable
-    @Override
-    public Integer getBalance() {
-        return null;
+        return Utils.localizeString(R.string.locked_mfc_card);
     }
 }
