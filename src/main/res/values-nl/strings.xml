@@ -306,4 +306,5 @@
 
     <string name="locked_mfc_card">Vergrendelde MIFARE Classic-kaart</string>
     <string name="locked_mfu_card">Vergrendelde MIFARE Ultralight-kaart</string>
+    <string name="locked_mfd_card">Vergrendelde MIFARE DESFire-kaart</string>
     </resources>
