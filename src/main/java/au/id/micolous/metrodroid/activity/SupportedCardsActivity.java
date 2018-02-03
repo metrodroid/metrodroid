@@ -295,12 +295,12 @@ public class SupportedCardsActivity extends Activity {
 
             if (nfcAvailable) {
                 if (info.getCardType() == CardType.MifareClassic && !app.getMifareClassicSupport()) {
-                    // Mifare Classic is not supported by this device.
+                    // MIFARE Classic is not supported by this device.
                     notes += Utils.localizeString(R.string.card_not_supported_on_device) + " ";
                 }
 
                 if (info.getCardType() == CardType.CEPAS) {
-                    // TODO: Implement feature detection for CEPAS like Mifare Classic.
+                    // TODO: Implement feature detection for CEPAS like MIFARE Classic.
                     // TODO: It is probably exposed in hasSystemFeature().
                     notes += Utils.localizeString(R.string.card_note_cepas) + " ";
                 }

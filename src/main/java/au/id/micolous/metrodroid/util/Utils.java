@@ -257,7 +257,7 @@ public class Utils {
             nfcEnabled = nfcAdapter.isEnabled();
         }
 
-        return String.format("Version: %s\nModel: %s (%s)\nManufacturer: %s (%s)\nAndroid OS: %s (%s)\n\nNFC: %s, Mifare Classic: %s\n\n",
+        return String.format("Version: %s\nModel: %s (%s)\nManufacturer: %s (%s)\nAndroid OS: %s (%s)\n\nNFC: %s, MIFARE Classic: %s\n\n",
                 // Version:
                 getVersionString(),
                 // Model

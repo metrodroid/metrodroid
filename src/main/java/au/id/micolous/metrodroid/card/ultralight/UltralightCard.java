@@ -47,7 +47,7 @@ import java.util.List;
 import java.util.Locale;
 
 /**
- * Utility class for reading Mifare Ultralight / Ultralight C
+ * Utility class for reading MIFARE Ultralight / Ultralight C
  */
 @Root(name = "card")
 @CardRawDataFragmentClass(UltralightCardRawDataFragment.class)

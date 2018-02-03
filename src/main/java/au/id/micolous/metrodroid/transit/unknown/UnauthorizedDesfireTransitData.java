@@ -10,12 +10,12 @@ import au.id.micolous.metrodroid.transit.TransitIdentity;
 import au.id.micolous.metrodroid.util.Utils;
 
 /**
- * Handle Mifare DESFire with no open sectors
+ * Handle MIFARE DESFire with no open sectors
  */
 
 public class UnauthorizedDesfireTransitData extends UnauthorizedTransitData {
     /**
-     * This should be the last executed Mifare DESFire check, after all the other checks are done.
+     * This should be the last executed MIFARE DESFire check, after all the other checks are done.
      * <p>
      * This is because it will catch others' cards.
      *

@@ -232,10 +232,10 @@ public class ClassicCard extends Card {
      * Also observed on Galaxy Nexus running Cyanogenmod 13.
      * <p>
      * "It seems, the reason of this bug is TechExtras of NfcA is null.
-     * However, TechList contains MifareClassic." -- bildin.
+     * However, TechList contains MIFAREClassic." -- bildin.
      * <p>
      * This patch will fix this. For more information please refer to
-     * https://github.com/ikarus23/MifareClassicTool/issues/52
+     * https://github.com/ikarus23/MIFAREClassicTool/issues/52
      * <p>
      * This patch was provided by bildin (https://github.com/bildin).
      *
@@ -321,7 +321,7 @@ public class ClassicCard extends Card {
         } else if (ManlyFastFerryTransitData.check(this)) {
             return ManlyFastFerryTransitData.parseTransitIdentity(this);
         } else if (NextfareTransitData.check(this)) {
-            // Search through Nextfare on Mifare Classic compatibles.
+            // Search through Nextfare on MIFARE Classic compatibles.
             if (SeqGoTransitData.check(this)) {
                 return SeqGoTransitData.parseTransitIdentity(this);
             } else if (LaxTapTransitData.check(this)) {
@@ -361,7 +361,7 @@ public class ClassicCard extends Card {
         } else if (ManlyFastFerryTransitData.check(this)) {
             return new ManlyFastFerryTransitData(this);
         } else if (NextfareTransitData.check(this)) {
-            // Search through Nextfare on Mifare Classic compatibles.
+            // Search through Nextfare on MIFARE Classic compatibles.
             if (SeqGoTransitData.check(this)) {
                 return new SeqGoTransitData(this);
             } else if (LaxTapTransitData.check(this)) {

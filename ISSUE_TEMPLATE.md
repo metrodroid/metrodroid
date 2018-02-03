@@ -51,5 +51,5 @@ Please do not attach it to this issue. You may be asked for a copy later via pri
 - Manufacturer:
 - Android OS version:
 - NFC:
-- Mifare Classic:
+- MIFARE Classic:
 

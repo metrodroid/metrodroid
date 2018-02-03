@@ -217,8 +217,8 @@ public class MetrodroidApplication extends Application {
     }
 
     private void detectNfcSupport() {
-        // Some devices like the LG F60 misreport they support Mifare Classic when they don't.
-        // Others report they don't support Mifare Classic when they do.
+        // Some devices like the LG F60 misreport they support MIFARE Classic when they don't.
+        // Others report they don't support MIFARE Classic when they do.
 
         // TODO: determine behaviour of Microread hardware. It may support MFC.
         File device;

@@ -38,7 +38,7 @@ import au.id.micolous.farebot.R;
 import au.id.micolous.metrodroid.MetrodroidApplication;
 
 /**
- * Shows raw data of the Mifare Ultralight / Ultralight C
+ * Shows raw data of the MIFARE Ultralight / Ultralight C
  */
 public class UltralightCardRawDataFragment extends ExpandableListFragment {
 

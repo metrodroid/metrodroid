@@ -25,7 +25,7 @@ import org.simpleframework.xml.Element;
 import org.simpleframework.xml.Root;
 
 /**
- * Represents a page of data on a Mifare Ultralight (4 bytes)
+ * Represents a page of data on a MIFARE Ultralight (4 bytes)
  */
 @Root(name = "page")
 public class UltralightPage {

@@ -27,11 +27,11 @@ import au.id.micolous.metrodroid.transit.TransitIdentity;
 import au.id.micolous.metrodroid.util.Utils;
 
 /**
- * Handle Mifare Classic with no open sectors
+ * Handle MIFARE Classic with no open sectors
  */
 public class UnauthorizedClassicTransitData extends UnauthorizedTransitData {
     /**
-     * This should be the last executed Mifare Classic check, after all the other checks are done.
+     * This should be the last executed MIFARE Classic check, after all the other checks are done.
      * <p>
      * This is because it will catch others' cards.
      *

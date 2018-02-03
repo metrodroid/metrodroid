@@ -27,9 +27,9 @@ import java.io.IOException;
 import java.util.Locale;
 
 /**
- * Low level commands for Mifare Ultralight.
+ * Low level commands for MIFARE Ultralight.
  *
- * Android has Mifare Ultralight support, but it is quite limited. It doesn't support detection of
+ * Android has MIFARE Ultralight support, but it is quite limited. It doesn't support detection of
  * EV1 cards, and also doesn't reliably detect Ultralight C cards. This class uses some
  * functionality adapted from the Proxmark3, as well as sniffed communication from NXP TagInfo.
  *
@@ -37,7 +37,7 @@ import java.util.Locale;
  * MF0ICU1 (Ultralight): https://www.nxp.com/docs/en/data-sheet/MF0ICU1.pdf
  * MF0ICU2 (Ultralight C): https://www.nxp.com/docs/en/data-sheet/MF0ICU2_SDS.pdf
  * MF0UCx1 (Ultralight EV1): https://www.nxp.com/docs/en/data-sheet/MF0ULX1.pdf
- * Mifare Commands: https://www.nxp.com/docs/en/application-note/AN10833.pdf
+ * MIFARE Commands: https://www.nxp.com/docs/en/application-note/AN10833.pdf
  */
 
 class UltralightProtocol {
@@ -46,13 +46,13 @@ class UltralightProtocol {
     enum UltralightType {
         /** Unknown type */
         UNKNOWN(-1),
-        /** Mifare Ultralight (MF0ICU1), 7 pages */
+        /** MIFARE Ultralight (MF0ICU1), 7 pages */
         MF0ICU1(7),
-        /** Mifare Ultralight C (MF0ICU2), 47 pages (but pages 44-47 are masked), 3DES */
+        /** MIFARE Ultralight C (MF0ICU2), 47 pages (but pages 44-47 are masked), 3DES */
         MF0ICU2(43),
-        /** Mifare Ultralight EV1 (MF0UL11), 19 pages */
+        /** MIFARE Ultralight EV1 (MF0UL11), 19 pages */
         EV1_MF0UL11(19),
-        /** Mifare Ultralight EV1 (MF0UL21), 40 pages */
+        /** MIFARE Ultralight EV1 (MF0UL21), 40 pages */
         EV1_MF0UL21(40);
 
         /** Number of pages of memory that the card supports. */
@@ -78,9 +78,9 @@ class UltralightProtocol {
     }
 
     /**
-     * Gets the Mifare Ultralight card type.
+     * Gets the MIFARE Ultralight card type.
      *
-     * Android has MifareUltralight.getType(), but this is lacking:
+     * Android has MIFAREUltralight.getType(), but this is lacking:
      *
      * 1. It cannot detect Ultralight EV1 cards correctly, which have different memory sizes.
      *
@@ -90,7 +90,7 @@ class UltralightProtocol {
      * GetHF14AMfU_Type function. Android can't do bad checksums (eg: PM3 Fudan/clone check) and
      * Metrodroid never writes to cards (eg: PM3 Magic check), so we don't do all of the checks.
      *
-     * @return Mifare Ultralight card type.
+     * @return MIFARE Ultralight card type.
      * @throws IOException On card communication error (eg: reconnects)
      */
     UltralightType getCardType() throws IOException {
@@ -167,7 +167,7 @@ class UltralightProtocol {
     }
 
     /**
-     * Gets the version data from the card. This only works with Mifare Ultralight EV1 cards.
+     * Gets the version data from the card. This only works with MIFARE Ultralight EV1 cards.
      * @return byte[] containing data according to Table 15 in MFU-EV1 datasheet.
      * @throws IOException on card communication failure, or if the card does not support the
      *                     command.
@@ -177,7 +177,7 @@ class UltralightProtocol {
     }
 
     /**
-     * Gets a nonce for 3DES authentication from the card. This only works on Mifare Ultralight C
+     * Gets a nonce for 3DES authentication from the card. This only works on MIFARE Ultralight C
      * cards. Authentication is not implemented in Metrodroid or Android.
      * @return AUTH_ANSWER message from card.
      * @throws IOException on card communication failure, or if the card does not support the

@@ -27,11 +27,11 @@ import au.id.micolous.metrodroid.transit.TransitIdentity;
 import au.id.micolous.metrodroid.util.Utils;
 
 /**
- * Handle Mifare Ultralight with no open pages
+ * Handle MIFARE Ultralight with no open pages
  */
 public class UnauthorizedUltralightTransitData extends UnauthorizedTransitData {
     /**
-     * This should be the last executed Mifare Ultralight check, after all the other checks are done.
+     * This should be the last executed MIFARE Ultralight check, after all the other checks are done.
      * <p>
      * This is because it will catch others' cards.
      *

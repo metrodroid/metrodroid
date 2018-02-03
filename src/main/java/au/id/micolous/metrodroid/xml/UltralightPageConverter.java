@@ -8,7 +8,7 @@ import org.simpleframework.xml.stream.InputNode;
 import org.simpleframework.xml.stream.OutputNode;
 
 /**
- * Converts Mifare Ultralight page types for the XML serialiser.
+ * Converts MIFARE Ultralight page types for the XML serialiser.
  */
 
 public class UltralightPageConverter implements Converter<UltralightPage> {
