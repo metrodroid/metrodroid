@@ -45,6 +45,8 @@ import au.id.micolous.farebot.R;
 import au.id.micolous.metrodroid.MetrodroidApplication;
 
 final class SuicaUtil {
+    private static final String TAG = "SuicaUtil";
+
     private SuicaUtil() {
     }
 
@@ -202,12 +204,12 @@ final class SuicaUtil {
     }
 
     /**
-     * パス停留所を取得します
-     * <pre>http:// sourceforge.jp/projects/felicalib/wiki/suicaを参考にしています</pre>
+     * Gets bus stop information from the IruCa (イルカ) table.
      *
-     * @param lineCode    線区コードをセット
-     * @param stationCode 駅順コードをセット
-     * @return 取得できた場合、序数0に会社名、1停留所名が戻ります
+     * @param lineCode    Bus line ID (line code)
+     * @param stationCode Bus stop ID (station code)
+     * @return If the stop is known, a Station is returned describing it. If the stop is unknown,
+     *         or there was some other database error, null is returned.
      */
     static Station getBusStop(int regionCode, int lineCode, int stationCode) {
         int areaCode = (regionCode >> 6);
@@ -233,19 +235,19 @@ final class SuicaUtil {
             return new Station(companyName, null, stationName, null, null, null);
 
         } catch (Exception e) {
-            Log.e("SuicaStationProvider", "getBusStop() error", e);
+            Log.e(TAG, "getBusStop() error", e);
             return null;
         }
     }
 
     /**
-     * 地区コード、線区コード、駅順コードから駅名を取得します
-     * <pre>http://sourceforge.jp/projects/felicalib/wiki/suicaを参考にしています</pre>
+     * Gets train station information from the Japan Rail (JR) table.
      *
-     * @param regionCode  地区コードをセット
-     * @param lineCode    線区コードをセット
-     * @param stationCode 駅順コードをセット
-     * @return 取得できた場合、序数0に会社名、1に路線名、2に駅名が戻ります
+     * @param regionCode  Train area/region ID (region code)
+     * @param lineCode    Train line ID (line code)
+     * @param stationCode Train station ID (station code)
+     * @return If the stop is known, a Station is returned describing it. If the stop is unknown,
+     *         or there was some other database error, null is returned.
      */
     static Station getRailStation(int regionCode, int lineCode, int stationCode) {
         int areaCode = (regionCode >> 6);
@@ -266,7 +268,7 @@ final class SuicaUtil {
                     SuicaDBUtil.COLUMN_ID);
 
             if (!cursor.moveToFirst()) {
-                Log.w("SuicaTransitData", String.format("FAILED get rail company: r: 0x%s a: 0x%s l: 0x%s s: 0x%s",
+                Log.w(TAG, String.format("FAILED get rail company: r: 0x%s a: 0x%s l: 0x%s s: 0x%s",
                         Integer.toHexString(regionCode),
                         Integer.toHexString(areaCode),
                         Integer.toHexString(lineCode),
@@ -285,7 +287,7 @@ final class SuicaUtil {
             return new Station(companyName, lineName, stationName, null, latitude, longitude);
 
         } catch (Exception e) {
-            Log.e("SuicaStationProvider", "Error in getRailStation", e);
+            Log.e(TAG, "Error in getRailStation", e);
             return null;
         }
     }
