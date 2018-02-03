@@ -6,10 +6,12 @@ buildscript {
     }
     dependencies {
         classpath 'com.android.tools.build:gradle:3.0.1'
+        classpath 'com.google.protobuf:protobuf-gradle-plugin:0.8.4'
     }
 }
 
 apply plugin: 'com.android.application'
+apply plugin: 'com.google.protobuf'
 apply plugin: 'checkstyle'
 
 check.dependsOn 'checkstyle'
@@ -33,12 +35,38 @@ dependencies {
     compile 'com.android.support:support-v4:27.1.0'
     compile 'commons-io:commons-io:2.5'
     compile 'org.apache.commons:commons-lang3:3.5'
+    compile 'com.google.protobuf:protobuf-lite:3.0.0'
     compile('org.simpleframework:simple-xml:2.7.1') {
         exclude module: 'stax'
         exclude module: 'stax-api'
         exclude module: 'xpp3'
     }
     implementation project(':nfc-felica-lib')
+}
+
+protobuf {
+    protoc {
+        // You still need protoc like in the non-Android case
+        artifact = 'com.google.protobuf:protoc:3.0.0'
+    }
+    plugins {
+        javalite {
+            // The codegen for lite comes as a separate artifact
+            artifact = 'com.google.protobuf:protoc-gen-javalite:3.0.0'
+        }
+    }
+    generateProtoTasks {
+        all().each { task ->
+            task.builtins {
+                // In most cases you don't need the full Java output
+                // if you use the lite output.
+                remove java
+            }
+            task.plugins {
+                javalite { }
+            }
+        }
+    }
 }
 
 android {

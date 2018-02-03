@@ -29,3 +29,6 @@ manifest-merger-release-report.txt
 *.zip
 *scan_*/
 *.py[co]
+*_pb2.py
+.~lock*
+

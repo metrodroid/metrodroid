@@ -1,88 +1,87 @@
 /*
- * DBUtil.java
+ * SuicaDBUtil.java
  *
- * Authors:
- * Eric Butler <eric@codebutler.com>
+ * Copyright 2018 Michael Farrell <micolous+git@gmail.com>
  *
- * Based on code from https://github.com/Kazzz/nfc-felica
- * nfc-felica by Kazzz. See project URL for complete author information.
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
  *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-
 package au.id.micolous.metrodroid.transit.suica;
 
-import android.content.Context;
+import android.util.Log;
 
-import au.id.micolous.metrodroid.util.DBUtil;
+import au.id.micolous.metrodroid.MetrodroidApplication;
+import au.id.micolous.metrodroid.transit.Station;
+import au.id.micolous.metrodroid.util.StationTableReader;
 
-public class SuicaDBUtil extends DBUtil {
-    public static final String COLUMN_ID = "_id";
-    public static final String COLUMN_AREACODE = "AreaCode";
-    public static final String COLUMN_LINECODE = "LineCode";
-    public static final String COLUMN_STATIONCODE = "StationCode";
-    public static final String COLUMN_COMPANYNAME = "CompanyName";
-    public static final String COLUMN_LINENAME = "LineName";
-    public static final String COLUMN_STATIONNAME = "StationName";
-    public static final String COLUMN_COMPANYNAME_EN = "CompanyName_en";
-    public static final String COLUMN_LINENAME_EN = "LineName_en";
-    public static final String COLUMN_STATIONNAME_EN = "StationName_en";
-    public static final String COLUMN_LATITUDE = "Latitude";
-    public static final String COLUMN_LONGITUDE = "Longitude";
+/**
+ * Helpers for accessing Suica-related stop databases.
+ */
 
-    public static final String TABLE_STATIONCODE = "StationCode";
-    public static final String[] COLUMNS_STATIONCODE = {
-            COLUMN_AREACODE,
-            COLUMN_LINECODE,
-            COLUMN_STATIONCODE,
-            COLUMN_COMPANYNAME,
-            COLUMN_LINENAME,
-            COLUMN_STATIONNAME,
-            COLUMN_COMPANYNAME_EN,
-            COLUMN_LINENAME_EN,
-            COLUMN_STATIONNAME_EN,
-            COLUMN_LATITUDE,
-            COLUMN_LONGITUDE
-    };
+final class SuicaDBUtil {
+    private static final String TAG = "SuicaUtil";
 
-    public static final String TABLE_IRUCA_STATIONCODE = "IruCaStationCode";
-    public static final String[] COLUMNS_IRUCA_STATIONCODE = {
-            COLUMN_LINECODE,
-            COLUMN_STATIONCODE,
-            COLUMN_COMPANYNAME,
-            COLUMN_LINENAME,
-            COLUMN_STATIONNAME,
-            COLUMN_COMPANYNAME_EN,
-            COLUMN_LINENAME_EN,
-            COLUMN_STATIONNAME_EN
-    };
+    /**
+     * Gets bus stop information from the IruCa (イルカ) table.
+     *
+     * @param lineCode    Bus line ID (line code)
+     * @param stationCode Bus stop ID (station code)
+     * @return If the stop is known, a Station is returned describing it. If the stop is unknown,
+     *         or there was some other database error, null is returned.
+     */
+    static Station getBusStop(int regionCode, int lineCode, int stationCode) {
+        lineCode &= 0xFF;
+        stationCode &= 0xFF;
 
-    private static final String DB_NAME = "felica_stations.db3";
+        int stationId = (lineCode << 8) + stationCode;
+        if (stationId == 0) return null;
 
-    private static final int VERSION = 2;
+        StationTableReader str = MetrodroidApplication.getInstance().getSuicaBusSTR();
+        if (str == null) return null;
 
-    public SuicaDBUtil(Context context) {
-        super(context);
+        try {
+            return str.getStationById(stationId);
+        } catch (Exception e) {
+            Log.d(TAG, "error in getBusStop", e);
+            return null;
+        }
     }
 
-    @Override
-    protected String getDBName() {
-        return DB_NAME;
-    }
+    /**
+     * Gets train station information from the Japan Rail (JR) table.
+     *
+     * @param regionCode  Train area/region ID (region code)
+     * @param lineCode    Train line ID (line code)
+     * @param stationCode Train station ID (station code)
+     * @return If the stop is known, a Station is returned describing it. If the stop is unknown,
+     *         or there was some other database error, null is returned.
+     */
+    static Station getRailStation(int regionCode, int lineCode, int stationCode) {
+        int areaCode = (regionCode >> 6) & 0xFF;
+        lineCode &= 0xFF;
+        stationCode &= 0xFF;
 
-    @Override
-    protected int getDesiredVersion() {
-        return VERSION;
+        int stationId = (areaCode << 16) + (lineCode << 8) + stationCode;
+        if (stationId == 0) return null;
+
+        StationTableReader str = MetrodroidApplication.getInstance().getSuicaRailSTR();
+        if (str == null) return null;
+
+        try {
+            return str.getStationById(stationId);
+        } catch (Exception e) {
+            Log.d(TAG, "error in getRailStation", e);
+            return null;
+        }
     }
 }
-

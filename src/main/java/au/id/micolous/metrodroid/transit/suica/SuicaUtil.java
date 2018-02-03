@@ -29,23 +29,19 @@
 package au.id.micolous.metrodroid.transit.suica;
 
 import android.app.Application;
-import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
-
-import au.id.micolous.metrodroid.transit.Station;
 
 import net.kazzz.felica.lib.Util;
 
 import java.util.Calendar;
 import java.util.GregorianCalendar;
-import java.util.Locale;
 
 import au.id.micolous.farebot.R;
 import au.id.micolous.metrodroid.MetrodroidApplication;
+import au.id.micolous.metrodroid.transit.Station;
+import au.id.micolous.metrodroid.util.StationTableReader;
 
 final class SuicaUtil {
-    private static final String TAG = "SuicaUtil";
 
     private SuicaUtil() {
     }
@@ -200,112 +196,6 @@ final class SuicaUtil {
                 return app.getString(R.string.felica_process_admission_thirdparty);
             default:
                 return String.format("Process0x%s", Integer.toHexString(proc));
-        }
-    }
-
-    /**
-     * Gets bus stop information from the IruCa (イルカ) table.
-     *
-     * @param lineCode    Bus line ID (line code)
-     * @param stationCode Bus stop ID (station code)
-     * @return If the stop is known, a Station is returned describing it. If the stop is unknown,
-     *         or there was some other database error, null is returned.
-     */
-    static Station getBusStop(int regionCode, int lineCode, int stationCode) {
-        int areaCode = (regionCode >> 6);
-
-        try {
-            SQLiteDatabase db = MetrodroidApplication.getInstance().getSuicaDBUtil().openDatabase();
-            Cursor cursor = db.query(SuicaDBUtil.TABLE_IRUCA_STATIONCODE,
-                    SuicaDBUtil.COLUMNS_IRUCA_STATIONCODE,
-                    String.format("%s = ? AND %s = ?", SuicaDBUtil.COLUMN_LINECODE, SuicaDBUtil.COLUMN_STATIONCODE),
-                    new String[]{Integer.toHexString(lineCode), Integer.toHexString(stationCode)},
-                    null,
-                    null,
-                    SuicaDBUtil.COLUMN_ID);
-
-            if (!cursor.moveToFirst()) {
-                return null;
-            }
-
-            // FIXME: Figure out a better way to deal with i18n.
-            boolean isJa = Locale.getDefault().getLanguage().equals("ja");
-
-            String companyName = cursor.getString(cursor.getColumnIndex(isJa ? SuicaDBUtil.COLUMN_COMPANYNAME : SuicaDBUtil.COLUMN_COMPANYNAME_EN));
-            String stationName = cursor.getString(cursor.getColumnIndex(isJa ? SuicaDBUtil.COLUMN_STATIONNAME : SuicaDBUtil.COLUMN_STATIONNAME_EN));
-
-            // All station names are returned marked up as Japanese.
-            //
-            // The "English" versions of station names are transliterated into Romaji (latin
-            // alphabet), but text-to-speech synthesisers have difficulty with the Japanese place
-            // names.
-            //
-            // The "Japanese" versions of station names use Kanji.
-            return new Station(companyName, null, stationName, null, null, null, "ja-JP");
-
-        } catch (Exception e) {
-            Log.e(TAG, "getBusStop() error", e);
-            return null;
-        }
-    }
-
-    /**
-     * Gets train station information from the Japan Rail (JR) table.
-     *
-     * @param regionCode  Train area/region ID (region code)
-     * @param lineCode    Train line ID (line code)
-     * @param stationCode Train station ID (station code)
-     * @return If the stop is known, a Station is returned describing it. If the stop is unknown,
-     *         or there was some other database error, null is returned.
-     */
-    static Station getRailStation(int regionCode, int lineCode, int stationCode) {
-        int areaCode = (regionCode >> 6);
-
-        try {
-            SQLiteDatabase db = MetrodroidApplication.getInstance().getSuicaDBUtil().openDatabase();
-            Cursor cursor = db.query(
-                    SuicaDBUtil.TABLE_STATIONCODE,
-                    SuicaDBUtil.COLUMNS_STATIONCODE,
-                    String.format("%s = ? AND %s = ? AND %s = ?", SuicaDBUtil.COLUMN_AREACODE, SuicaDBUtil.COLUMN_LINECODE, SuicaDBUtil.COLUMN_STATIONCODE),
-                    new String[]{
-                            String.valueOf(areaCode & 0xFF),
-                            String.valueOf(lineCode & 0xFF),
-                            String.valueOf(stationCode & 0xFF)
-                    },
-                    null,
-                    null,
-                    SuicaDBUtil.COLUMN_ID);
-
-            if (!cursor.moveToFirst()) {
-                Log.w(TAG, String.format("FAILED get rail company: r: 0x%s a: 0x%s l: 0x%s s: 0x%s",
-                        Integer.toHexString(regionCode),
-                        Integer.toHexString(areaCode),
-                        Integer.toHexString(lineCode),
-                        Integer.toHexString(stationCode)));
-
-                return null;
-            }
-
-            // FIXME: Figure out a better way to deal with i18n.
-            boolean isJa = Locale.getDefault().getLanguage().equals("ja");
-            String companyName = cursor.getString(cursor.getColumnIndex(isJa ? SuicaDBUtil.COLUMN_COMPANYNAME : SuicaDBUtil.COLUMN_COMPANYNAME_EN));
-            String lineName = cursor.getString(cursor.getColumnIndex(isJa ? SuicaDBUtil.COLUMN_LINENAME : SuicaDBUtil.COLUMN_LINENAME_EN));
-            String stationName = cursor.getString(cursor.getColumnIndex(isJa ? SuicaDBUtil.COLUMN_STATIONNAME : SuicaDBUtil.COLUMN_STATIONNAME_EN));
-            String latitude = cursor.getString(cursor.getColumnIndex(SuicaDBUtil.COLUMN_LATITUDE));
-            String longitude = cursor.getString(cursor.getColumnIndex(SuicaDBUtil.COLUMN_LONGITUDE));
-
-            // All station names are returned marked up as Japanese.
-            //
-            // The "English" versions of station names are transliterated into Romaji (latin
-            // alphabet), but text-to-speech synthesisers have difficulty with the Japanese place
-            // names.
-            //
-            // The "Japanese" versions of station names use Kanji.
-            return new Station(companyName, lineName, stationName, null, latitude, longitude, "ja-JP");
-
-        } catch (Exception e) {
-            Log.e(TAG, "Error in getRailStation", e);
-            return null;
         }
     }
 }

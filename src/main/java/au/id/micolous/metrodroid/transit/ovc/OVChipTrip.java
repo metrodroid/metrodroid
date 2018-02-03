@@ -3,6 +3,7 @@
  *
  * Copyright 2012 Wilbert Duijvenvoorde <w.a.n.duijvenvoorde@gmail.com>
  * Copyright 2012 Eric Butler <eric@codebutler.com>
+ * Copyright 2018 Michael Farrell <micolous+git@gmail.com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -20,23 +21,22 @@
 
 package au.id.micolous.metrodroid.transit.ovc;
 
-import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
 import android.os.Parcel;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
 import android.util.Log;
 
-import au.id.micolous.metrodroid.transit.CompatTrip;
-import au.id.micolous.metrodroid.transit.Station;
-import au.id.micolous.metrodroid.transit.Trip;
-
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 
 import au.id.micolous.metrodroid.MetrodroidApplication;
+import au.id.micolous.metrodroid.transit.Station;
+import au.id.micolous.metrodroid.transit.Trip;
+import au.id.micolous.metrodroid.util.StationTableReader;
 
 public class OVChipTrip extends Trip {
+    private static final String TAG = "OVChipTrip";
+
     public static final java.util.Comparator<? super OVChipTrip> ID_ORDER = new java.util.Comparator<OVChipTrip>() {
         @Override
         public int compare(OVChipTrip t1, OVChipTrip t2) {
@@ -177,39 +177,22 @@ public class OVChipTrip extends Trip {
     }
 
     private static Station getStation(int companyCode, int stationCode) {
+        companyCode = companyCode & 0xFFFF;
+        stationCode &= 0xFFFF;
+
+        // TLS is the OVChip operator, and doesn't have any stations.
+        if (companyCode == 0) return null;
+
+        int stationId = ((companyCode - 1) << 16) + stationCode;
+        if (stationId <= 0) return null;
+
+        StationTableReader str = MetrodroidApplication.getInstance().getOVChipSTR();
+        if (str == null) return null;
+
         try {
-            SQLiteDatabase db = MetrodroidApplication.getInstance().getOVChipDBUtil().openDatabase();
-            Cursor cursor = db.query(
-                    OVChipDBUtil.TABLE_NAME,
-                    OVChipDBUtil.COLUMNS_STATIONDATA,
-                    String.format("%s = ? AND %s = ?", OVChipDBUtil.COLUMN_ROW_COMPANY, OVChipDBUtil.COLUMN_ROW_OVCID),
-                    new String[]{
-                            String.valueOf(companyCode),
-                            String.valueOf(stationCode)
-                    },
-                    null,
-                    null,
-                    OVChipDBUtil.COLUMN_ROW_OVCID);
-
-            if (!cursor.moveToFirst()) {
-                Log.w("OVChipTransitData", String.format("FAILED get rail company: c: 0x%s s: 0x%s",
-                        Integer.toHexString(companyCode),
-                        Integer.toHexString(stationCode)));
-
-                return null;
-            }
-
-            String cityName = cursor.getString(cursor.getColumnIndex(OVChipDBUtil.COLUMN_ROW_CITY));
-            String stationName = cursor.getString(cursor.getColumnIndex(OVChipDBUtil.COLUMN_ROW_NAME));
-            String latitude = cursor.getString(cursor.getColumnIndex(OVChipDBUtil.COLUMN_ROW_LAT));
-            String longitude = cursor.getString(cursor.getColumnIndex(OVChipDBUtil.COLUMN_ROW_LON));
-
-            if (cityName != null)
-                stationName = cityName.concat(", " + stationName);
-
-            return new Station(stationName, latitude, longitude);
+            return str.getStationById(stationId);
         } catch (Exception e) {
-            Log.e("OVChipStationProvider", "Error in getStation", e);
+            Log.d(TAG, "error in getRailStation", e);
             return null;
         }
     }

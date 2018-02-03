@@ -1,0 +1,89 @@
+// -*- mode: proto; indent-tabs-mode: nil; tab-width: 4 -*-
+
+syntax = "proto3";
+option optimize_for = LITE_RUNTIME;
+option java_package = "au.id.micolous.metrodroid.proto";
+
+/*
+ * This is the header, which appears prefixed with a varint, 12 bytes after the start of the file.
+ */
+message StationDb {
+    // Version number for the data in this file (not the schema).
+    uint64 version = 1;
+
+    // Language codes (two-letter ISO code) where we should show the "local_name"
+    // instead of the english_name.
+    repeated string local_languages = 2;
+
+    // All operators / companies in the network.
+    map<uint32, Operator> operators = 3;
+
+    // All rail lines in the network.
+    map<uint32, Line> lines = 4;
+}
+
+message Operator {
+    // The operator's name, written in English.
+    string english_name = 1;
+
+    // The operator's name, written in the local language.
+    string local_name = 2;
+}
+
+message Line {
+    // The line's name, written in English.
+    string english_name = 1;
+
+    // The line's name, written in the local language.
+    string local_name = 2;
+}
+
+message City {
+
+}
+
+/*
+ * The second part of the file is a series of Station messages, prefixed with a varint describing
+ * each records' length.
+ *
+ * In Suica's case, this is 242493 bytes (41 bytes per record).
+ */
+message Station {
+    // The ID of the station (as appears in the index).
+    //
+    // Note: The only way to key a station is by ID. If you require multiple integers to identify a
+    // station (eg: agency + line + station), then these need to be packed together. In order to
+    // minimise file size, the integers should be lower.
+    uint32 id = 1;
+
+    // The station's name, written in English.
+    string english_name = 2;
+
+    // The station's name, written in the local language.
+    string local_name = 3;
+
+    // The location of the station, in WGS84 datum.
+    // If latitude and longitude are both set to 0, it is presumed that it is
+    // unset.
+    float latitude = 4;
+    float longitude = 5;
+
+    // The ID of the operator (from StationDb.operators).
+    uint32 operator_id = 6;
+    // The ID of the line (from StationDb.lines).
+    uint32 line_id = 7;
+}
+
+/*
+ * Map of all the stations that appear in this file.
+ *
+ * With 5911 stations (for Suica), this message comes out to 56283 bytes long
+ * (average map entry size is ~9.5 bytes)
+ */
+message StationIndex {
+    // This map goes from station_id -> station_offset.  This is a byte offset,
+    // relative to the end of the StationDb message.  ie: if StationDb finishes
+    // at byte 1234, and the station is at byte 4567, the offset here will be
+    // 3333.
+    map<uint32, uint32> station_map = 1;
+}

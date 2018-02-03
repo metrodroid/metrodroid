@@ -124,15 +124,15 @@ public class SuicaTrip extends Trip {
             if (mIsBus) {
                 mBusLineCode = Util.toInt(data[6], data[7]);
                 mBusStopCode = Util.toInt(data[8], data[9]);
-                mStartStation = SuicaUtil.getBusStop(mRegionCode, mBusLineCode, mBusStopCode);
+                mStartStation = SuicaDBUtil.getBusStop(mRegionCode, mBusLineCode, mBusStopCode);
 
             } else {
                 mRailEntranceLineCode = data[6] & 0xFF;
                 mRailEntranceStationCode = data[7] & 0xFF;
                 mRailExitLineCode = data[8] & 0xFF;
                 mRailExitStationCode = data[9] & 0xFF;
-                mStartStation = SuicaUtil.getRailStation(mRegionCode, mRailEntranceLineCode, mRailEntranceStationCode);
-                mEndStation = SuicaUtil.getRailStation(mRegionCode, mRailExitLineCode, mRailExitStationCode);
+                mStartStation = SuicaDBUtil.getRailStation(mRegionCode, mRailEntranceLineCode, mRailEntranceStationCode);
+                mEndStation = SuicaDBUtil.getRailStation(mRegionCode, mRailExitLineCode, mRailExitStationCode);
             }
         }
     }
