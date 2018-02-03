@@ -401,18 +401,22 @@ public class Utils {
     //       java.util.DateFormat, rather than a CharSequence with the actual format to use.
     // TODO: Investigate using Joda Time or something else that sucks less than Java at handling dates.
     public static String longDateFormat(Calendar date) {
+        if (date == null) return "";
         return DateFormat.getLongDateFormat(MetrodroidApplication.getInstance()).format(date.getTime());
     }
 
     public static String dateFormat(Calendar date) {
+        if (date == null) return "";
         return DateFormat.getDateFormat(MetrodroidApplication.getInstance()).format(date.getTime());
     }
 
     public static String timeFormat(Calendar date) {
+        if (date == null) return "";
         return DateFormat.getTimeFormat(MetrodroidApplication.getInstance()).format(date.getTime());
     }
 
     public static String dateTimeFormat(Calendar date) {
+        if (date == null) return "";
         return dateFormat(date) + " " + timeFormat(date);
     }
 

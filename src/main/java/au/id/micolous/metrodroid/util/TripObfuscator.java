@@ -52,6 +52,10 @@ public final class TripObfuscator {
             return input;
         }
 
+        if (input == null) {
+            return null;
+        }
+
         int today = GregorianCalendar.getInstance().get(Calendar.DAY_OF_YEAR);
 
         // Clone the input before we start messing with it.
