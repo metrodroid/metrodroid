@@ -88,31 +88,40 @@ public class CardHWDetailFragment extends ListFragment {
 
             // FIXME: What about other purses?
             CEPASPurse purse = card.getPurse(3);
-            items.add(new HeaderListItem("Purse Information"));
-            items.add(new ListItem("CEPAS Version", Byte.toString(purse.getCepasVersion())));
-            items.add(new ListItem("Purse ID", Integer.toString(purse.getId())));
-            items.add(new ListItem("Purse Status", Byte.toString(purse.getPurseStatus())));
-            items.add(new ListItem("Purse Balance", NumberFormat.getCurrencyInstance(Locale.US).format(purse.getPurseBalance() / 100.0)));
 
-            items.add(new ListItem("Purse Creation Date",
-                    Utils.longDateFormat(TripObfuscator.maybeObfuscateTS(purse.getPurseCreationDate()))));
-            items.add(new ListItem("Purse Expiry Date",
-                    Utils.longDateFormat(TripObfuscator.maybeObfuscateTS(purse.getPurseExpiryDate()))));
-            items.add(new ListItem("Autoload Amount", Integer.toString(purse.getAutoLoadAmount())));
-            items.add(new ListItem("CAN", Utils.getHexString(purse.getCAN(), "<Error>")));
-            items.add(new ListItem("CSN", Utils.getHexString(purse.getCSN(), "<Error>")));
+            items.add(new HeaderListItem("Purse information"));
 
-            items.add(new HeaderListItem("Last Transaction Information"));
-            items.add(new ListItem("TRP", Integer.toString(purse.getLastTransactionTRP())));
-            items.add(new ListItem("Credit TRP", Integer.toString(purse.getLastCreditTransactionTRP())));
-            items.add(new ListItem("Credit Header", Utils.getHexString(purse.getLastCreditTransactionHeader(), "<Error>")));
-            items.add(new ListItem("Debit Options", Byte.toString(purse.getLastTransactionDebitOptionsByte())));
+            if (!purse.isValid()) {
+                if (purse.getErrorMessage() != null && !purse.getErrorMessage().equals("")) {
+                    items.add(new ListItem("Error", purse.getErrorMessage()));
+                } else {
+                    items.add(new ListItem("Error", "unknown error"));
+                }
+            } else {
+                items.add(new ListItem("CEPAS Version", Byte.toString(purse.getCepasVersion())));
+                items.add(new ListItem("Purse ID", Integer.toString(purse.getId())));
+                items.add(new ListItem("Purse Status", Byte.toString(purse.getPurseStatus())));
+                items.add(new ListItem("Purse Balance", NumberFormat.getCurrencyInstance(Locale.US).format(purse.getPurseBalance() / 100.0)));
 
-            items.add(new HeaderListItem("Other Purse Information"));
-            items.add(new ListItem("Logfile Record Count", Byte.toString(purse.getLogfileRecordCount())));
-            items.add(new ListItem("Issuer Data Length", Integer.toString(purse.getIssuerDataLength())));
-            items.add(new ListItem("Issuer-specific Data", Utils.getHexString(purse.getIssuerSpecificData(), "<Error>")));
+                items.add(new ListItem("Purse Creation Date",
+                        Utils.longDateFormat(TripObfuscator.maybeObfuscateTS(purse.getPurseCreationDate()))));
+                items.add(new ListItem("Purse Expiry Date",
+                        Utils.longDateFormat(TripObfuscator.maybeObfuscateTS(purse.getPurseExpiryDate()))));
+                items.add(new ListItem("Autoload Amount", Integer.toString(purse.getAutoLoadAmount())));
+                items.add(new ListItem("CAN", Utils.getHexString(purse.getCAN(), "<Error>")));
+                items.add(new ListItem("CSN", Utils.getHexString(purse.getCSN(), "<Error>")));
 
+                items.add(new HeaderListItem("Last Transaction Information"));
+                items.add(new ListItem("TRP", Integer.toString(purse.getLastTransactionTRP())));
+                items.add(new ListItem("Credit TRP", Integer.toString(purse.getLastCreditTransactionTRP())));
+                items.add(new ListItem("Credit Header", Utils.getHexString(purse.getLastCreditTransactionHeader(), "<Error>")));
+                items.add(new ListItem("Debit Options", Byte.toString(purse.getLastTransactionDebitOptionsByte())));
+
+                items.add(new HeaderListItem("Other Purse Information"));
+                items.add(new ListItem("Logfile Record Count", Byte.toString(purse.getLogfileRecordCount())));
+                items.add(new ListItem("Issuer Data Length", Integer.toString(purse.getIssuerDataLength())));
+                items.add(new ListItem("Issuer-specific Data", Utils.getHexString(purse.getIssuerSpecificData(), "<Error>")));
+            }
         } else if (mCard.getCardType() == CardType.FeliCa) {
             FelicaCard card = (FelicaCard) mCard;
             items.add(new ListItem("IDm", Utils.getHexString(card.getIDm().getBytes(), "err")));
