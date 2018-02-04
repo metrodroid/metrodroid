@@ -22,6 +22,7 @@ package au.id.micolous.metrodroid.card.desfire;
 
 import android.nfc.Tag;
 import android.nfc.tech.IsoDep;
+import android.util.Log;
 
 import au.id.micolous.metrodroid.card.Card;
 import au.id.micolous.metrodroid.card.CardRawDataFragmentClass;
@@ -61,6 +62,8 @@ import java.util.List;
 @Root(name = "card")
 @CardRawDataFragmentClass(DesfireCardRawDataFragment.class)
 public class DesfireCard extends Card {
+    private static final String TAG = "DesfireCard";
+
     @Element(name = "manufacturing-data")
     private DesfireManufacturingData mManfData;
     @ElementList(name = "applications")
@@ -74,6 +77,13 @@ public class DesfireCard extends Card {
         mApplications = Utils.arrayAsList(apps);
     }
 
+    /**
+     * Dumps a DESFire tag in the field.
+     * @param tag Tag to dump.
+     * @return DesfireCard of the card contents. Returns null if an unsupported card is in the
+     *         field.
+     * @throws Exception On communication errors.
+     */
     public static DesfireCard dumpTag(Tag tag) throws Exception {
         List<DesfireApplication> apps = new ArrayList<>();
 
@@ -87,7 +97,13 @@ public class DesfireCard extends Card {
         try {
             DesfireProtocol desfireTag = new DesfireProtocol(tech);
 
-            manufData = desfireTag.getManufacturingData();
+            try {
+                manufData = desfireTag.getManufacturingData();
+            } catch (IllegalArgumentException e) {
+                // Credit cards tend to fail at this point.
+                Log.w(TAG, "Card responded with invalid response, may not be DESFire?", e);
+                return null;
+            }
 
             for (int appId : desfireTag.getAppList()) {
                 desfireTag.selectApp(appId);

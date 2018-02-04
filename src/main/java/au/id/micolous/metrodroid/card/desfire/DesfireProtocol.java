@@ -27,6 +27,7 @@ import au.id.micolous.metrodroid.card.desfire.settings.DesfireFileSettings;
 import au.id.micolous.metrodroid.util.Utils;
 
 import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.security.AccessControlException;
 
 /**
@@ -74,7 +75,7 @@ public class DesfireProtocol {
         byte[] respBuffer = sendRequest(GET_MANUFACTURING_DATA);
 
         if (respBuffer.length != 28)
-            throw new Exception("Invalid response");
+            throw new IllegalArgumentException("Invalid response");
 
         return new DesfireManufacturingData(respBuffer);
     }
@@ -147,7 +148,7 @@ public class DesfireProtocol {
         return sendRequest(GET_VALUE, (byte) fileNum);
     }
 
-    private byte[] sendRequest(byte command, byte... parameters) throws Exception {
+    private byte[] sendRequest(byte command, byte... parameters) throws IllegalArgumentException, IllegalStateException, AccessControlException, IOException {
         ByteArrayOutputStream output = new ByteArrayOutputStream();
 
         byte[] sendBuffer = wrapMessage(command, parameters);
@@ -156,8 +157,9 @@ public class DesfireProtocol {
         //Log.d(TAG, "Recv: " + Utils.getHexString(recvBuffer));
 
         while (true) {
-            if (recvBuffer[recvBuffer.length - 2] != (byte) 0x91)
-                throw new Exception("Invalid response");
+            if (recvBuffer[recvBuffer.length - 2] != (byte) 0x91) {
+                throw new IllegalArgumentException("Invalid response: " + Utils.getHexString(recvBuffer));
+            }
 
             output.write(recvBuffer, 0, recvBuffer.length - 2);
 
@@ -172,7 +174,7 @@ public class DesfireProtocol {
             } else if (status == AUTHENTICATION_ERROR) {
                 throw new AccessControlException("Authentication error");
             } else {
-                throw new Exception("Unknown status code: " + Integer.toHexString(status & 0xFF));
+                throw new IllegalStateException("Unknown status code: " + Integer.toHexString(status & 0xFF));
             }
         }
 

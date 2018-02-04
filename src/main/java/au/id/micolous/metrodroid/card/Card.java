@@ -69,18 +69,32 @@ public abstract class Card {
 
     public static Card dumpTag(byte[] tagId, Tag tag) throws Exception {
         final String[] techs = tag.getTechList();
-        if (ArrayUtils.contains(techs, "android.nfc.tech.NfcB"))
+        if (ArrayUtils.contains(techs, "android.nfc.tech.NfcB")) {
+            // TODO: Fix Calypso cards
             return CEPASCard.dumpTag(tag);
-        else if (ArrayUtils.contains(techs, "android.nfc.tech.IsoDep"))
-            return DesfireCard.dumpTag(tag);
-        else if (ArrayUtils.contains(techs, "android.nfc.tech.NfcF"))
+        }
+
+        if (ArrayUtils.contains(techs, "android.nfc.tech.IsoDep")) {
+            // ISO 14443-4 card types
+            // This also encompasses NfcA (ISO 14443-3A) and NfcB (ISO 14443-3B)
+            DesfireCard d = DesfireCard.dumpTag(tag);
+            if (d != null) {
+                return d;
+            }
+
+            // Credit cards fall through here...
+        }
+
+        if (ArrayUtils.contains(techs, "android.nfc.tech.NfcF"))
             return FelicaCard.dumpTag(tagId, tag);
-        else if (ArrayUtils.contains(techs, "android.nfc.tech.MifareClassic"))
+
+        if (ArrayUtils.contains(techs, "android.nfc.tech.MifareClassic"))
             return ClassicCard.dumpTag(tagId, tag);
-        else if (ArrayUtils.contains(techs, "android.nfc.tech.MifareUltralight"))
+
+        if (ArrayUtils.contains(techs, "android.nfc.tech.MifareUltralight"))
             return UltralightCard.dumpTag(tagId, tag);
-        else
-            throw new UnsupportedTagException(techs, Utils.getHexString(tag.getId()));
+
+        throw new UnsupportedTagException(techs, Utils.getHexString(tag.getId()));
     }
 
     public static Card fromXml(Serializer serializer, String xml) {
