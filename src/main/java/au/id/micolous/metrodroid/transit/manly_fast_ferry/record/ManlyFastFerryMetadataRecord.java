@@ -1,7 +1,7 @@
 /*
  * ManlyFastFerryMetadataRecord.java
  *
- * Copyright 2015 Michael Farrell <micolous+git@gmail.com>
+ * Copyright 2015-2018 Michael Farrell <micolous+git@gmail.com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -37,8 +37,8 @@ public class ManlyFastFerryMetadataRecord extends ManlyFastFerryRegularRecord {
     }
 
     public static ManlyFastFerryMetadataRecord recordFromBytes(byte[] input) {
-        assert input[0] == 0x02;
-        assert input[1] == 0x03;
+        //assert input[0] == 0x02;
+        //assert input[1] == 0x03;
 
         ManlyFastFerryMetadataRecord record = new ManlyFastFerryMetadataRecord();
 

@@ -1,7 +1,7 @@
 /*
  * ManlyFastFerryPurseRecord.java
  *
- * Copyright 2015 Michael Farrell <micolous+git@gmail.com>
+ * Copyright 2015-2018 Michael Farrell <micolous+git@gmail.com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -46,7 +46,7 @@ public class ManlyFastFerryPurseRecord extends ManlyFastFerryRegularRecord imple
     }
 
     public static ManlyFastFerryPurseRecord recordFromBytes(byte[] input) {
-        if (input[0] != 0x02) throw new AssertionError("PurseRecord input[0] != 0x02");
+        //if (input[0] != 0x02) throw new AssertionError("PurseRecord input[0] != 0x02");
 
         ManlyFastFerryPurseRecord record = new ManlyFastFerryPurseRecord();
         if (input[3] == 0x09) {
@@ -68,7 +68,7 @@ public class ManlyFastFerryPurseRecord extends ManlyFastFerryRegularRecord imple
             throw new AssertionError(String.format(Locale.ENGLISH, "Minute < 0 (%d)", record.mMinute));
 
         record.mTransactionValue = Utils.byteArrayToInt(input, 8, 4);
-        if (record.mTransactionValue < 0) throw new AssertionError("Value < 0");
+        //if (record.mTransactionValue < 0) throw new AssertionError("Value < 0");
 
         return record;
     }

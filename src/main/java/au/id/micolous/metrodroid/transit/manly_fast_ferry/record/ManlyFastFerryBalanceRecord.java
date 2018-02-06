@@ -32,8 +32,7 @@ public class ManlyFastFerryBalanceRecord extends ManlyFastFerryRecord implements
     }
 
     public static ManlyFastFerryBalanceRecord recordFromBytes(byte[] input) {
-        if (input[0] != 0x01) throw new AssertionError();
-
+        //if (input[0] != 0x01) throw new AssertionError();
 
         ManlyFastFerryBalanceRecord record = new ManlyFastFerryBalanceRecord();
         record.mVersion = Utils.byteArrayToInt(input, 2, 1);
