@@ -203,9 +203,7 @@ public class ReadingTagActivity extends Activity implements TagReaderFeedbackInt
                 prefs.putString(MetrodroidApplication.PREF_LAST_READ_ID, tagIdString);
                 prefs.putLong(MetrodroidApplication.PREF_LAST_READ_AT, GregorianCalendar.getInstance().getTimeInMillis());
                 prefs.apply();
-
-                ReadingTagActivity.this.updateStatusText("Dispatching reader");
-
+                
                 return uri;
             } catch (Exception ex) {
                 mException = ex;
