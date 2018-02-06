@@ -22,7 +22,6 @@ package au.id.micolous.metrodroid.activity;
 
 import android.app.Activity;
 import android.app.AlertDialog;
-import android.app.ProgressDialog;
 import android.content.ContentValues;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -48,7 +47,6 @@ import au.id.micolous.metrodroid.transit.CardInfo;
 import au.id.micolous.metrodroid.util.Utils;
 
 import java.util.GregorianCalendar;
-import java.util.Locale;
 
 import au.id.micolous.farebot.BuildConfig;
 import au.id.micolous.farebot.R;
@@ -56,6 +54,8 @@ import au.id.micolous.metrodroid.MetrodroidApplication;
 
 public class ReadingTagActivity extends Activity implements TagReaderFeedbackInterface {
     //private static final String TAG = "ReadingTagActivity";
+    boolean mIndeterminite = true;
+    int mMaximum = 0;
 
     @Override
     public void updateStatusText(final String msg) {
@@ -63,7 +63,9 @@ public class ReadingTagActivity extends Activity implements TagReaderFeedbackInt
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                ((TextView)findViewById(R.id.status_text)).setText(msg);
+                TextView t = (TextView)findViewById(R.id.status_text);
+                t.setText(msg);
+                t.invalidate();
             }
         });
     }
@@ -77,11 +79,26 @@ public class ReadingTagActivity extends Activity implements TagReaderFeedbackInt
                 ProgressBar b = (ProgressBar) findViewById(R.id.progress);
                 if (progress == 0 && max == 0) {
                     b.setIndeterminate(true);
+                    mIndeterminite = true;
                 } else {
-                    b.setIndeterminate(false);
-                    b.setMax(max);
-                    b.setProgress(progress);
+                    if (mIndeterminite) {
+                        b.setIndeterminate(false);
+                        mIndeterminite = false;
+                    }
+
+                    // Improves animation quality on N+
+                    if (mMaximum != max) {
+                        b.setMax(max);
+                        mMaximum = max;
+                    }
+
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                        b.setProgress(progress, true);
+                    } else {
+                        b.setProgress(progress);
+                    }
                 }
+                b.invalidate();
             }
         });
     }
@@ -91,7 +108,9 @@ public class ReadingTagActivity extends Activity implements TagReaderFeedbackInt
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                ((ImageView)findViewById(R.id.card_image)).setImageResource(cardInfo.getImageId());
+                ImageView i = (ImageView) findViewById(R.id.card_image);
+                i.setImageResource(cardInfo.getImageId());
+                i.invalidate();
             }
         });
     }

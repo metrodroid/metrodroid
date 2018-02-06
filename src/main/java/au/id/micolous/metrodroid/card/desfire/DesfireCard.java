@@ -121,6 +121,9 @@ public class DesfireCard extends Card {
                 feedbackInterface.updateStatusText(Utils.localizeString(R.string.card_reading_type, i.getName()));
             }
 
+            // Uncomment this to test the card type display.
+            //Thread.sleep(5000);
+
             for (int appId : appIds) {
                 feedbackInterface.updateProgressBar(progress, maxProgress);
                 desfireTag.selectApp(appId);
