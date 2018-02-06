@@ -332,4 +332,21 @@
     <string name="disabled">Uitgeschakeld</string>
 
 
+    <string name="unsupported_tag">Niet-ondersteunde NFC-kaartmedia</string>
+
+    <string name="saving_card">Bezig met opslaan van kaart…</string>
+
+    <string name="mfc_reading">Bezig met lezen van MIFARE Classic-kaart…</string>
+    <string name="mfc_have_key">Bezig met proberen van gebruikerssleutel voor sector %d…</string>
+    <string name="mfc_other_key">Bezig met proberen van alternative sleutels voor sector %d…</string>
+    <string name="mfc_default_key">Bezig met proberen van bekende sleutels voor sector %d…</string>
+    <string name="mfc_reading_blocks">Bezig met lezen van sector %d…</string>
+
+    <string name="iso14a_detect">Bezig met detecteren van ISO 14443-kaartsoort…</string>
+    <string name="mfd_reading">Bezig met lezen van MIFARE DESFire-kaart…</string>
+    <string name="card_reading_type">Bezig met lezen van <xliff:g id="card_name" example="Opal"> 1%s</xliff:g> 2…</string>
+
+    <string name="mfu_detect">Bezig met detecteren van MIFARE Ultralight-kaartsoort…</string>
+    <string name="mfu_reading">Bezig met lezen van MIFARE Ultralight-kaart…</string>
+
     </resources>
