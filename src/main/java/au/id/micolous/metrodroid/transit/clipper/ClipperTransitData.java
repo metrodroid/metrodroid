@@ -3,6 +3,7 @@
  *
  * Copyright 2011 "an anonymous contributor"
  * Copyright 2011-2014 Eric Butler <eric@codebutler.com>
+ * Copyright 2018 Michael Farrell <micolous+git@gmail.com>
  *
  * Thanks to:
  * An anonymous contributor for reverse engineering Clipper data and providing
@@ -26,6 +27,8 @@ package au.id.micolous.metrodroid.transit.clipper;
 
 import android.os.Parcel;
 import android.support.annotation.Nullable;
+
+import org.apache.commons.lang3.ArrayUtils;
 
 import au.id.micolous.metrodroid.card.Card;
 import au.id.micolous.metrodroid.card.desfire.DesfireCard;
@@ -55,6 +58,7 @@ public class ClipperTransitData extends TransitData {
     };
     static final int RECORD_LENGTH = 32;
     private static final long EPOCH_OFFSET = 0x83aa7f18;
+    public static final int APP_ID = 0x9011f2;
     private long mSerialNumber;
     private short mBalance;
     private ClipperTrip[] mTrips;
@@ -77,14 +81,14 @@ public class ClipperTransitData extends TransitData {
         byte[] data;
 
         try {
-            data = desfireCard.getApplication(0x9011f2).getFile(0x08).getData();
+            data = desfireCard.getApplication(APP_ID).getFile(0x08).getData();
             mSerialNumber = Utils.byteArrayToLong(data, 1, 4);
         } catch (Exception ex) {
             throw new RuntimeException("Error parsing Clipper serial", ex);
         }
 
         try {
-            data = desfireCard.getApplication(0x9011f2).getFile(0x02).getData();
+            data = desfireCard.getApplication(APP_ID).getFile(0x02).getData();
             mBalance = (short) (((0xFF & data[18]) << 8) | (0xFF & data[19]));
         } catch (Exception ex) {
             throw new RuntimeException("Error parsing Clipper balance", ex);
@@ -104,12 +108,16 @@ public class ClipperTransitData extends TransitData {
     }
 
     public static boolean check(Card card) {
-        return (card instanceof DesfireCard) && (((DesfireCard) card).getApplication(0x9011f2) != null);
+        return (card instanceof DesfireCard) && (((DesfireCard) card).getApplication(APP_ID) != null);
+    }
+
+    public static boolean earlyCheck(int[] appIds) {
+        return ArrayUtils.contains(appIds, APP_ID);
     }
 
     public static TransitIdentity parseTransitIdentity(Card card) {
         try {
-            byte[] data = ((DesfireCard) card).getApplication(0x9011f2).getFile(0x08).getData();
+            byte[] data = ((DesfireCard) card).getApplication(APP_ID).getFile(0x08).getData();
             return new TransitIdentity("Clipper", String.valueOf(Utils.byteArrayToLong(data, 1, 4)));
         } catch (Exception ex) {
             throw new RuntimeException("Error parsing Clipper serial", ex);
@@ -161,7 +169,7 @@ public class ClipperTransitData extends TransitData {
     }
 
     private ClipperTrip[] parseTrips(DesfireCard card) {
-        DesfireFile file = card.getApplication(0x9011f2).getFile(0x0e);
+        DesfireFile file = card.getApplication(APP_ID).getFile(0x0e);
 
         /*
          *  This file reads very much like a record file but it professes to
@@ -225,7 +233,7 @@ public class ClipperTransitData extends TransitData {
     }
 
     private ClipperRefill[] parseRefills(DesfireCard card) {
-        DesfireFile file = card.getApplication(0x9011f2).getFile(0x04);
+        DesfireFile file = card.getApplication(APP_ID).getFile(0x04);
 
         /*
          *  This file reads very much like a record file but it professes to

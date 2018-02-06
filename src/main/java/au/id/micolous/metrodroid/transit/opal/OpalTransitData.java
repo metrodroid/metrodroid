@@ -1,7 +1,7 @@
 /*
  * OpalTransitData.java
  *
- * Copyright 2015 Michael Farrell <micolous+git@gmail.com>
+ * Copyright 2015-2018 Michael Farrell <micolous+git@gmail.com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -22,6 +22,8 @@ import android.net.Uri;
 import android.os.Parcel;
 import android.support.annotation.Nullable;
 
+import org.apache.commons.lang3.ArrayUtils;
+
 import au.id.micolous.metrodroid.card.Card;
 import au.id.micolous.metrodroid.card.desfire.DesfireCard;
 import au.id.micolous.metrodroid.transit.Subscription;
@@ -36,6 +38,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.List;
+import java.util.Locale;
 
 import au.id.micolous.farebot.R;
 import au.id.micolous.metrodroid.MetrodroidApplication;
@@ -113,9 +116,12 @@ public class OpalTransitData extends TransitData {
         return (card instanceof DesfireCard) && (((DesfireCard) card).getApplication(0x314553) != null);
     }
 
-    private static String formatSerialNumber(int serialNumber, int lastDigit) {
-        return String.format("308522%09d%01d", serialNumber, lastDigit);
+    public static boolean earlyCheck(int[] appIds) {
+        return ArrayUtils.contains(appIds, APP_ID);
+    }
 
+    private static String formatSerialNumber(int serialNumber, int lastDigit) {
+        return String.format(Locale.ENGLISH, "308522%09d%01d", serialNumber, lastDigit);
     }
 
     public static TransitIdentity parseTransitIdentity(Card card) {

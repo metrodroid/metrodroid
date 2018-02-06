@@ -22,6 +22,8 @@ package au.id.micolous.metrodroid.transit.myki;
 import android.net.Uri;
 import android.os.Parcel;
 
+import org.apache.commons.lang3.ArrayUtils;
+
 import au.id.micolous.metrodroid.card.Card;
 import au.id.micolous.metrodroid.card.desfire.DesfireCard;
 import au.id.micolous.metrodroid.transit.TransitIdentity;
@@ -40,6 +42,8 @@ import java.util.Locale;
  */
 public class MykiTransitData extends StubTransitData {
     public static final String NAME = "Myki";
+    public static final int APP_ID_1 = 0x11f2;
+    public static final int APP_ID_2 = 0xf010f2;
     private long mSerialNumber1;
     private long mSerialNumber2;
 
@@ -51,7 +55,7 @@ public class MykiTransitData extends StubTransitData {
 
     public MykiTransitData(Card card) {
         DesfireCard desfireCard = (DesfireCard) card;
-        byte[] metadata = desfireCard.getApplication(4594).getFile(15).getData();
+        byte[] metadata = desfireCard.getApplication(APP_ID_1).getFile(15).getData();
         metadata = Utils.reverseBuffer(metadata, 0, 16);
 
         try {
@@ -64,8 +68,12 @@ public class MykiTransitData extends StubTransitData {
 
     public static boolean check(Card card) {
         return (card instanceof DesfireCard)
-                && (((DesfireCard) card).getApplication(4594) != null)
-                && (((DesfireCard) card).getApplication(15732978) != null);
+                && (((DesfireCard) card).getApplication(APP_ID_1) != null)
+                && (((DesfireCard) card).getApplication(APP_ID_2) != null);
+    }
+
+    public static boolean earlyCheck(int[] appIds) {
+        return ArrayUtils.contains(appIds, APP_ID_1) && ArrayUtils.contains(appIds, APP_ID_2);
     }
 
     private static String formatSerialNumber(long serialNumber1, long serialNumber2) {
@@ -75,7 +83,7 @@ public class MykiTransitData extends StubTransitData {
 
     public static TransitIdentity parseTransitIdentity(Card card) {
         DesfireCard desfireCard = (DesfireCard) card;
-        byte[] data = desfireCard.getApplication(4594).getFile(15).getData();
+        byte[] data = desfireCard.getApplication(APP_ID_1).getFile(15).getData();
         data = Utils.reverseBuffer(data, 0, 16);
 
         long serialNumber1 = Utils.getBitsFromBuffer(data, 96, 32);

@@ -1,8 +1,8 @@
 /*
  * DesfireCard.java
  *
- * Copyright 2011 Eric Butler <eric@codebutler.com>
- * Copyright 2016 Michael Farrell <micolous+git@gmail.com>
+ * Copyright 2011-2015 Eric Butler <eric@codebutler.com>
+ * Copyright 2015-2018 Michael Farrell <micolous+git@gmail.com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -24,9 +24,11 @@ import android.nfc.Tag;
 import android.nfc.tech.IsoDep;
 import android.util.Log;
 
+import au.id.micolous.farebot.R;
 import au.id.micolous.metrodroid.card.Card;
 import au.id.micolous.metrodroid.card.CardRawDataFragmentClass;
 import au.id.micolous.metrodroid.card.CardType;
+import au.id.micolous.metrodroid.card.TagReaderFeedbackInterface;
 import au.id.micolous.metrodroid.card.desfire.files.DesfireFile;
 import au.id.micolous.metrodroid.card.desfire.files.InvalidDesfireFile;
 import au.id.micolous.metrodroid.card.desfire.files.UnauthorizedDesfireFile;
@@ -34,6 +36,7 @@ import au.id.micolous.metrodroid.card.desfire.settings.DesfireFileSettings;
 import au.id.micolous.metrodroid.card.desfire.settings.StandardDesfireFileSettings;
 import au.id.micolous.metrodroid.card.desfire.settings.ValueDesfireFileSettings;
 import au.id.micolous.metrodroid.fragment.DesfireCardRawDataFragment;
+import au.id.micolous.metrodroid.transit.CardInfo;
 import au.id.micolous.metrodroid.transit.TransitData;
 import au.id.micolous.metrodroid.transit.TransitIdentity;
 import au.id.micolous.metrodroid.transit.clipper.ClipperTransitData;
@@ -44,7 +47,6 @@ import au.id.micolous.metrodroid.transit.orca.OrcaTransitData;
 import au.id.micolous.metrodroid.transit.stub.AdelaideMetrocardStubTransitData;
 import au.id.micolous.metrodroid.transit.stub.AtHopStubTransitData;
 import au.id.micolous.metrodroid.transit.unknown.UnauthorizedDesfireTransitData;
-import au.id.micolous.metrodroid.transit.unknown.UnauthorizedTransitData;
 import au.id.micolous.metrodroid.util.Utils;
 
 import org.simpleframework.xml.Element;
@@ -56,8 +58,8 @@ import java.security.AccessControlException;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
-import java.util.Iterator;
 import java.util.List;
+import java.util.Locale;
 
 @Root(name = "card")
 @CardRawDataFragmentClass(DesfireCardRawDataFragment.class)
@@ -84,7 +86,7 @@ public class DesfireCard extends Card {
      *         field.
      * @throws Exception On communication errors.
      */
-    public static DesfireCard dumpTag(Tag tag) throws Exception {
+    public static DesfireCard dumpTag(Tag tag, TagReaderFeedbackInterface feedbackInterface) throws Exception {
         List<DesfireApplication> apps = new ArrayList<>();
 
         IsoDep tech = IsoDep.get(tag);
@@ -105,12 +107,31 @@ public class DesfireCard extends Card {
                 return null;
             }
 
-            for (int appId : desfireTag.getAppList()) {
+            feedbackInterface.updateStatusText(Utils.localizeString(R.string.mfd_reading));
+            feedbackInterface.updateProgressBar(0, 1);
+
+            int[] appIds = desfireTag.getAppList();
+            int maxProgress = appIds.length;
+            int progress = 0;
+
+            CardInfo i = parseEarlyCardInfo(appIds);
+            if (i != null) {
+                Log.d(TAG, String.format(Locale.ENGLISH, "Early Card Info: %s", i.getName()));
+                feedbackInterface.showCardType(i);
+                feedbackInterface.updateStatusText(Utils.localizeString(R.string.card_reading_type, i.getName()));
+            }
+
+            for (int appId : appIds) {
+                feedbackInterface.updateProgressBar(progress, maxProgress);
                 desfireTag.selectApp(appId);
+                progress++;
 
                 List<DesfireFile> files = new ArrayList<>();
 
-                for (int fileId : desfireTag.getFileList()) {
+                int[] fileIds = desfireTag.getFileList();
+                maxProgress += fileIds.length;
+                for (int fileId : fileIds) {
+                    feedbackInterface.updateProgressBar(progress, maxProgress);
                     DesfireFileSettings settings = null;
                     try {
                         settings = desfireTag.getFileSettings(fileId);
@@ -130,6 +151,7 @@ public class DesfireCard extends Card {
                     } catch (Exception ex) {
                         files.add(new InvalidDesfireFile(fileId, ex.toString(), settings));
                     }
+                    progress++;
                 }
 
                 DesfireFile[] filesArray = new DesfireFile[files.size()];
@@ -146,6 +168,33 @@ public class DesfireCard extends Card {
         }
 
         return new DesfireCard(tag.getId(), GregorianCalendar.getInstance(), manufData, appsArray);
+    }
+
+    /**
+     * DESFire has well-known application IDs.  If those application IDs are sufficient to detect
+     * a particular type of card (or at least have a really good guess at it), then we should send
+     * back a CardInfo.
+     *
+     * If we have no idea, then send back "null".
+     *
+     * Each of these checks should be really cheap to run, because this blocks further card
+     * reads.
+     * @param appIds An array of DESFire application IDs that are present on the card.
+     * @return A CardInfo about the card, or null if we have no idea.
+     */
+    static CardInfo parseEarlyCardInfo(int[] appIds) {
+        if (OrcaTransitData.earlyCheck(appIds))
+            return CardInfo.ORCA;
+        if (ClipperTransitData.earlyCheck(appIds))
+            return CardInfo.CLIPPER;
+        if (HSLTransitData.earlyCheck(appIds))
+            return CardInfo.HSL;
+        if (OpalTransitData.earlyCheck(appIds))
+            return CardInfo.OPAL;
+        if (MykiTransitData.earlyCheck(appIds))
+            return CardInfo.MYKI;
+
+        return null;
     }
 
     @Override

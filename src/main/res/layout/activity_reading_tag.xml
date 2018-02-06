@@ -2,10 +2,8 @@
 <!--
   activity_reading_tag.xml
 
-  Copyright (C) 2011 Eric Butler
-
-  Authors:
-  Eric Butler <eric@codebutler.com>
+  Copyright 2011 Eric Butler <eric@codebutler.com>
+  Copyright 2018 Michael Farrell <micolous+git@gmail.com>
 
   This program is free software: you can redistribute it and/or modify
   it under the terms of the GNU General Public License as published by
@@ -27,24 +25,47 @@
     android:layout_height="fill_parent"
     android:layout_marginLeft="16dp"
     android:layout_marginRight="16dp"
-    android:gravity="center_vertical|center_horizontal"> 
-    <ProgressBar
-        android:id="@+id/progress"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+    android:gravity="center_vertical|center_horizontal"
+    android:weightSum="1">
+
+    <ImageView
+        android:id="@+id/card_image"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="0.7"
+        android:layout_marginTop="16dp"
         android:layout_marginBottom="16dp"
-        android:indeterminate="true"
-        style="?android:attr/progressBarStyleLarge" />
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textSize="40sp"
-        android:gravity="center"
-        android:text="@string/reading_card"/>
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:textSize="20sp"
-        android:text="@string/dont_move" />
+        android:src="@drawable/logo" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:gravity="center_vertical|center_horizontal"
+        android:layout_weight="0.3"
+        >
+
+        <ProgressBar
+            android:id="@+id/progress"
+            style="?android:attr/progressBarStyleLarge"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp" />
+
+        <TextView
+            android:id="@+id/status_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="@string/reading_card"
+            android:textSize="40sp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="@string/dont_move"
+            android:textSize="20sp" />
+    </LinearLayout>
+
 </LinearLayout>

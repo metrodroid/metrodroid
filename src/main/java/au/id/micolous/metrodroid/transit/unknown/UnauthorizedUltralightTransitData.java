@@ -58,6 +58,6 @@ public class UnauthorizedUltralightTransitData extends UnauthorizedTransitData {
 
     @Override
     public String getCardName() {
-        return Utils.localizeString(R.string.locked_mfc_card);
+        return Utils.localizeString(R.string.locked_mfu_card);
     }
 }

@@ -2,7 +2,7 @@
  * FelicaCard.java
  *
  * Copyright 2011 Eric Butler <eric@codebutler.com>
- * Copyright 2016 Michael Farrell <micolous+git@gmail.com>
+ * Copyright 2016-2018 Michael Farrell <micolous+git@gmail.com>
  *
  * Octopus reading code based on FelicaCard.java from nfcard project
  * Copyright 2013 Sinpo Wei <sinpowei@gmail.com>
@@ -27,10 +27,13 @@ import android.nfc.Tag;
 import android.nfc.tech.NfcF;
 import android.util.Log;
 
+import au.id.micolous.farebot.R;
 import au.id.micolous.metrodroid.card.Card;
 import au.id.micolous.metrodroid.card.CardRawDataFragmentClass;
 import au.id.micolous.metrodroid.card.CardType;
+import au.id.micolous.metrodroid.card.TagReaderFeedbackInterface;
 import au.id.micolous.metrodroid.fragment.FelicaCardRawDataFragment;
+import au.id.micolous.metrodroid.transit.CardInfo;
 import au.id.micolous.metrodroid.transit.TransitData;
 import au.id.micolous.metrodroid.transit.TransitIdentity;
 import au.id.micolous.metrodroid.transit.edy.EdyTransitData;
@@ -52,6 +55,7 @@ import java.util.Arrays;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.List;
+import java.util.Locale;
 
 @Root(name = "card")
 @CardRawDataFragmentClass(FelicaCardRawDataFragment.class)
@@ -76,7 +80,7 @@ public class FelicaCard extends Card {
 
     // https://github.com/tmurakam/felicalib/blob/master/src/dump/dump.c
     // https://github.com/tmurakam/felica2money/blob/master/src/card/Suica.cs
-    public static FelicaCard dumpTag(byte[] tagId, Tag tag) throws Exception {
+    public static FelicaCard dumpTag(byte[] tagId, Tag tag, TagReaderFeedbackInterface feedbackInterface) throws Exception {
         NfcF nfcF = NfcF.get(tag);
         Log.d(TAG, "Default system code: " + Utils.getHexString(nfcF.getSystemCode()));
 
@@ -106,6 +110,7 @@ public class FelicaCard extends Card {
                 // respond to the normal system code listing.
                 codes.add(new FeliCaLib.SystemCode(FeliCaLib.SYSTEMCODE_OCTOPUS));
                 octopusMagic = true;
+                feedbackInterface.showCardType(CardInfo.OCTOPUS);
             }
 
             FeliCaLib.IDm sztSystem = ft.pollingAndGetIDm(FeliCaLib.SYSTEMCODE_SZT);
@@ -115,7 +120,22 @@ public class FelicaCard extends Card {
                 // case they have the same bugs with system code listing.
                 codes.add(new FeliCaLib.SystemCode(FeliCaLib.SYSTEMCODE_SZT));
                 sztMagic = true;
+                feedbackInterface.showCardType(CardInfo.SZT);
             }
+        }
+
+        // Convert the system codes to a flat list
+        // TODO: Push this into FeliCaTag instead
+        int[] systemCodes = new int[codes.size()];
+        for (int i=0; i<codes.size(); i++) {
+            systemCodes[i] = codes.get(i).getCode();
+        }
+
+        CardInfo i = parseEarlyCardInfo(systemCodes);
+        if (i != null) {
+            Log.d(TAG, String.format(Locale.ENGLISH, "Early Card Info: %s", i.getName()));
+            feedbackInterface.showCardType(i);
+            feedbackInterface.updateStatusText(Utils.localizeString(R.string.card_reading_type, i.getName()));
         }
 
         for (FeliCaLib.SystemCode code : codes) {
@@ -233,6 +253,28 @@ public class FelicaCard extends Card {
             }
         }
         return null;
+    }
+
+    /**
+     * Felica has well-known system IDs.  If those system IDs are sufficient to detect
+     * a particular type of card (or at least have a really good guess at it), then we should send
+     * back a CardInfo.
+     *
+     * If we have no idea, then send back "null".
+     *
+     * Each of these checks should be really cheap to run, because this blocks further card
+     * reads.
+     * @param systemCodes The system codes that exist on the card.
+     * @return A CardInfo about the card, or null if we have no idea.
+     */
+    static CardInfo parseEarlyCardInfo(int[] systemCodes) {
+        if (SuicaTransitData.earlyCheck(systemCodes))
+            return CardInfo.SUICA;
+        if (EdyTransitData.earlyCheck(systemCodes))
+            return CardInfo.EDY;
+
+        // Do Octopus last -- it returns null if it's not a supported Octopus derivative.
+        return OctopusTransitData.earlyCheck(systemCodes);
     }
 
     @Override

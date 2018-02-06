@@ -1,10 +1,8 @@
 /*
  * ReadingTagActivity.java
  *
- * Copyright (C) 2011 Eric Butler
- *
- * Authors:
- * Eric Butler <eric@codebutler.com>
+ * Copyright 2011 Eric Butler <eric@codebutler.com>
+ * Copyright 2018 Michael Farrell <micolous+git@gmail.com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -24,6 +22,7 @@ package au.id.micolous.metrodroid.activity;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.ProgressDialog;
 import android.content.ContentValues;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -32,23 +31,71 @@ import android.net.Uri;
 import android.nfc.NfcAdapter;
 import android.nfc.Tag;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.util.Log;
+import android.widget.ImageView;
+import android.widget.ProgressBar;
+import android.widget.TextView;
 
 import au.id.micolous.metrodroid.card.Card;
+import au.id.micolous.metrodroid.card.TagReaderFeedbackInterface;
 import au.id.micolous.metrodroid.card.UnsupportedTagException;
 import au.id.micolous.metrodroid.provider.CardProvider;
 import au.id.micolous.metrodroid.provider.CardsTableColumns;
+import au.id.micolous.metrodroid.transit.CardInfo;
 import au.id.micolous.metrodroid.util.Utils;
 
 import java.util.GregorianCalendar;
+import java.util.Locale;
 
 import au.id.micolous.farebot.BuildConfig;
 import au.id.micolous.farebot.R;
 import au.id.micolous.metrodroid.MetrodroidApplication;
 
-public class ReadingTagActivity extends Activity {
+public class ReadingTagActivity extends Activity implements TagReaderFeedbackInterface {
+    //private static final String TAG = "ReadingTagActivity";
+
+    @Override
+    public void updateStatusText(final String msg) {
+        //Log.d(TAG, "Status: " + msg);
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                ((TextView)findViewById(R.id.status_text)).setText(msg);
+            }
+        });
+    }
+
+    @Override
+    public void updateProgressBar(final int progress, final int max) {
+        //Log.d(TAG, String.format(Locale.ENGLISH, "Progress: %d / %d", progress, max));
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                ProgressBar b = (ProgressBar) findViewById(R.id.progress);
+                if (progress == 0 && max == 0) {
+                    b.setIndeterminate(true);
+                } else {
+                    b.setIndeterminate(false);
+                    b.setMax(max);
+                    b.setProgress(progress);
+                }
+            }
+        });
+    }
+
+    @Override
+    public void showCardType(final CardInfo cardInfo) {
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                ((ImageView)findViewById(R.id.card_image)).setImageResource(cardInfo.getImageId());
+            }
+        });
+    }
+
     @Override
     public void onCreate(Bundle icicle) {
         super.onCreate(icicle);
@@ -79,76 +126,100 @@ public class ReadingTagActivity extends Activity {
                 return;
             }
 
-            new AsyncTask<Void, String, Uri>() {
-                private Exception mException;
+            ReadingTagTask t = new ReadingTagTask();
+            ReadingTagTaskEventArgs a = new ReadingTagTaskEventArgs(tagId, tag);
+            t.execute(a);
 
-                @Override
-                protected Uri doInBackground(Void... params) {
-                    try {
-                        Card card = Card.dumpTag(tagId, tag);
-
-                        String cardXml = card.toXml(MetrodroidApplication.getInstance().getSerializer());
-
-                        if (BuildConfig.DEBUG) {
-                            Log.d("ReadingTagActivity", "Got Card XML");
-                            for (String line : cardXml.split("\n")) {
-                                Log.d("ReadingTagActivity", "Got Card XML: " + line);
-                            }
-                        }
-
-                        String tagIdString = Utils.getHexString(card.getTagId());
-
-                        ContentValues values = new ContentValues();
-                        values.put(CardsTableColumns.TYPE, card.getCardType().toInteger());
-                        values.put(CardsTableColumns.TAG_SERIAL, tagIdString);
-                        values.put(CardsTableColumns.DATA, cardXml);
-                        values.put(CardsTableColumns.SCANNED_AT, card.getScannedAt().getTimeInMillis());
-                        values.put(CardsTableColumns.LABEL, card.getLabel());
-
-                        Uri uri = getContentResolver().insert(CardProvider.CONTENT_URI_CARD, values);
-
-                        SharedPreferences.Editor prefs = PreferenceManager.getDefaultSharedPreferences(ReadingTagActivity.this).edit();
-                        prefs.putString(MetrodroidApplication.PREF_LAST_READ_ID, tagIdString);
-                        prefs.putLong(MetrodroidApplication.PREF_LAST_READ_AT, GregorianCalendar.getInstance().getTimeInMillis());
-                        prefs.apply();
-
-                        return uri;
-
-                    } catch (Exception ex) {
-                        mException = ex;
-                        return null;
-                    }
-                }
-
-                @Override
-                protected void onPostExecute(Uri cardUri) {
-                    if (mException == null) {
-                        Intent intent = new Intent(Intent.ACTION_VIEW, cardUri);
-                        intent.putExtra(CardInfoActivity.SPEAK_BALANCE_EXTRA, true);
-                        startActivity(intent);
-                        finish();
-                        return;
-                    }
-                    if (mException instanceof UnsupportedTagException) {
-                        UnsupportedTagException ex = (UnsupportedTagException) mException;
-                        new AlertDialog.Builder(ReadingTagActivity.this)
-                                .setTitle("Unsupported Tag")
-                                .setMessage(ex.getMessage())
-                                .setCancelable(false)
-                                .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
-                                    public void onClick(DialogInterface arg0, int arg1) {
-                                        finish();
-                                    }
-                                })
-                                .show();
-                    } else {
-                        Utils.showErrorAndFinish(ReadingTagActivity.this, mException);
-                    }
-                }
-            }.execute();
 
         } catch (Exception ex) {
             Utils.showErrorAndFinish(this, ex);
+        }
+    }
+
+    class ReadingTagTaskEventArgs {
+        byte[] tagId;
+        Tag tag;
+
+        public ReadingTagTaskEventArgs(byte[] tagId, Tag tag) {
+            this.tagId = tagId;
+            this.tag = tag;
+        }
+    }
+
+
+    class ReadingTagTask extends AsyncTask<ReadingTagTaskEventArgs, String, Uri> {
+
+        private Exception mException;
+
+        @Override
+        protected Uri doInBackground(ReadingTagTaskEventArgs... params) {
+            ReadingTagTaskEventArgs a = params[0];
+            try {
+                Card card = Card.dumpTag(a.tagId, a.tag, ReadingTagActivity.this);
+
+                ReadingTagActivity.this.updateStatusText(Utils.localizeString(R.string.saving_card));
+
+                String cardXml = card.toXml(MetrodroidApplication.getInstance().getSerializer());
+
+
+                if (BuildConfig.DEBUG) {
+                    Log.d("ReadingTagActivity", "Dumped card successfully!");
+                    for (String line : cardXml.split("\n")) {
+                        Log.d("ReadingTagActivity", "XML: " + line);
+                    }
+                }
+
+                String tagIdString = Utils.getHexString(card.getTagId());
+
+                ContentValues values = new ContentValues();
+                values.put(CardsTableColumns.TYPE, card.getCardType().toInteger());
+                values.put(CardsTableColumns.TAG_SERIAL, tagIdString);
+                values.put(CardsTableColumns.DATA, cardXml);
+                values.put(CardsTableColumns.SCANNED_AT, card.getScannedAt().getTimeInMillis());
+                values.put(CardsTableColumns.LABEL, card.getLabel());
+
+                Uri uri = getContentResolver().insert(CardProvider.CONTENT_URI_CARD, values);
+
+                SharedPreferences.Editor prefs = PreferenceManager.getDefaultSharedPreferences(ReadingTagActivity.this).edit();
+                prefs.putString(MetrodroidApplication.PREF_LAST_READ_ID, tagIdString);
+                prefs.putLong(MetrodroidApplication.PREF_LAST_READ_AT, GregorianCalendar.getInstance().getTimeInMillis());
+                prefs.apply();
+
+                ReadingTagActivity.this.updateStatusText("Dispatching reader");
+
+                return uri;
+            } catch (Exception ex) {
+                mException = ex;
+                return null;
+            }
+        }
+
+        @Override
+        protected void onPostExecute(Uri cardUri) {
+            if (mException == null) {
+                Intent intent = new Intent(Intent.ACTION_VIEW, cardUri);
+                intent.putExtra(CardInfoActivity.SPEAK_BALANCE_EXTRA, true);
+                startActivity(intent);
+                finish();
+                return;
+            }
+            if (mException instanceof UnsupportedTagException) {
+                UnsupportedTagException ex = (UnsupportedTagException) mException;
+                new AlertDialog.Builder(ReadingTagActivity.this)
+                        .setTitle(R.string.unsupported_tag)
+                        .setMessage(ex.getMessage())
+                        .setCancelable(false)
+                        .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface arg0, int arg1) {
+                                finish();
+                            }
+                        })
+                        .show();
+            } else {
+                Utils.showErrorAndFinish(ReadingTagActivity.this, mException);
+            }
+
+            mException = null;
         }
     }
 }

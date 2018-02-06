@@ -1,8 +1,9 @@
 /*
  * ClassicCard.java
  *
- * Copyright 2012 Eric Butler <eric@codebutler.com>
+ * Copyright 2012-2015 Eric Butler <eric@codebutler.com>
  * Copyright 2012 Wilbert Duijvenvoorde <w.a.n.duijvenvoorde@gmail.com>
+ * Copyright 2015-2018 Michael Farrell <micolous+git@gmail.com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -30,10 +31,12 @@ import android.os.Parcel;
 import android.preference.PreferenceManager;
 import android.util.Log;
 
+import au.id.micolous.farebot.R;
 import au.id.micolous.metrodroid.card.Card;
 import au.id.micolous.metrodroid.card.CardHasManufacturingInfo;
 import au.id.micolous.metrodroid.card.CardRawDataFragmentClass;
 import au.id.micolous.metrodroid.card.CardType;
+import au.id.micolous.metrodroid.card.TagReaderFeedbackInterface;
 import au.id.micolous.metrodroid.fragment.ClassicCardRawDataFragment;
 import au.id.micolous.metrodroid.key.CardKeys;
 import au.id.micolous.metrodroid.key.ClassicCardKeys;
@@ -67,6 +70,14 @@ import au.id.micolous.metrodroid.MetrodroidApplication;
 public class ClassicCard extends Card {
     public static final byte[] PREAMBLE_KEY = {(byte) 0x00, (byte) 0x00, (byte) 0x00, (byte) 0x00, (byte) 0x00,
             (byte) 0x00};
+
+    static final byte[][] WELL_KNOWN_KEYS = {
+            PREAMBLE_KEY,
+            MifareClassic.KEY_DEFAULT,
+            MifareClassic.KEY_MIFARE_APPLICATION_DIRECTORY,
+            MifareClassic.KEY_NFC_FORUM
+    };
+
     private static final String TAG = "ClassicCard";
     @ElementList(name = "sectors")
     private List<ClassicSector> mSectors;
@@ -78,7 +89,9 @@ public class ClassicCard extends Card {
         mSectors = Utils.arrayAsList(sectors);
     }
 
-    public static ClassicCard dumpTag(byte[] tagId, Tag tag) throws Exception {
+    public static ClassicCard dumpTag(byte[] tagId, Tag tag, TagReaderFeedbackInterface feedbackInterface) throws Exception {
+        feedbackInterface.updateStatusText(Utils.localizeString(R.string.mfc_reading));
+
         MifareClassic tech = null;
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(MetrodroidApplication.getInstance());
         final int retryLimit = prefs.getInt(MetrodroidApplication.PREF_MFC_AUTHRETRY, 5);
@@ -96,27 +109,36 @@ public class ClassicCard extends Card {
             ClassicCardKeys keys = (ClassicCardKeys) CardKeys.forTagId(tagId);
 
             List<ClassicSector> sectors = new ArrayList<>();
+            final int maxProgress = tech.getSectorCount() * 5;
 
             for (int sectorIndex = 0; sectorIndex < tech.getSectorCount(); sectorIndex++) {
                 try {
                     byte[] correctKey = null;
+                    feedbackInterface.updateProgressBar(sectorIndex * 5, maxProgress);
 
-                    // Try to authenticate with the sector multiple times, in case we have impaired
-                    // communications with the card.
-                    retriesLeft = retryLimit;
+                    if (keys != null) {
+                        feedbackInterface.updateStatusText(Utils.localizeString(R.string.mfc_have_key, sectorIndex));
+                        // Try to authenticate with the sector multiple times, in case we have
+                        // impaired communications with the card.
+                        retriesLeft = retryLimit;
 
-                    while (correctKey == null && keys != null && retriesLeft-- > 0) {
-                        // If we have a known key for the sector on the card, try this first.
-                        Log.d(TAG, "Attempting authentication on sector " + sectorIndex + ", " + retriesLeft + " tries remain...");
-                        ClassicSectorKey sectorKey = keys.keyForSector(sectorIndex);
-                        if (sectorKey != null) {
-                            if (sectorKey.getType().equals(ClassicSectorKey.TYPE_KEYA)) {
-                                if (tech.authenticateSectorWithKeyA(sectorIndex, sectorKey.getKey())) {
-                                    correctKey = sectorKey.getKey();
-                                }
-                            } else {
-                                if (tech.authenticateSectorWithKeyB(sectorIndex, sectorKey.getKey())) {
-                                    correctKey = sectorKey.getKey();
+                        while (correctKey == null && retriesLeft-- > 0) {
+                            // If we have a known key for the sector on the card, try this first.
+                            Log.d(TAG, "Attempting authentication on sector " + sectorIndex + ", " + retriesLeft + " tries remain...");
+                            ClassicSectorKey sectorKey = keys.keyForSector(sectorIndex);
+                            if (sectorKey != null) {
+                                if (sectorKey.getType().equals(ClassicSectorKey.TYPE_KEYA)) {
+                                    if (tech.authenticateSectorWithKeyA(sectorIndex, sectorKey.getKey())) {
+                                        correctKey = sectorKey.getKey();
+                                    } else if (tech.authenticateSectorWithKeyB(sectorIndex, sectorKey.getKey())) {
+                                        correctKey = sectorKey.getKey();
+                                    }
+                                } else {
+                                    if (tech.authenticateSectorWithKeyB(sectorIndex, sectorKey.getKey())) {
+                                        correctKey = sectorKey.getKey();
+                                    } else if (tech.authenticateSectorWithKeyA(sectorIndex, sectorKey.getKey())) {
+                                        correctKey = sectorKey.getKey();
+                                    }
                                 }
                             }
                         }
@@ -125,80 +147,72 @@ public class ClassicCard extends Card {
                     // Try with the other keys
                     retriesLeft = retryLimit;
 
-                    while (correctKey == null && (retriesLeft-- > 0)) {
-                        Log.d(TAG, "Attempting authentication with other keys on sector " + sectorIndex + ", " + retriesLeft + " tries remain...");
+                    if (correctKey == null) {
+                        feedbackInterface.updateProgressBar((sectorIndex * 5) + 1, maxProgress);
 
-                        // Attempt authentication with alternate keys
-                        if (correctKey == null && keys != null) {
-                            // Be a little more forgiving on the key list.  Lets try all the keys!
-                            //
-                            // This takes longer, of course, but means that users aren't scratching
-                            // their heads when we don't get the right key straight away.
-                            ClassicSectorKey[] cardKeys = keys.keys();
+                        while (correctKey == null && (retriesLeft-- > 0)) {
+                            Log.d(TAG, "Attempting authentication with other keys on sector " + sectorIndex + ", " + retriesLeft + " tries remain...");
 
-                            for (int keyIndex = 0; keyIndex < cardKeys.length; keyIndex++) {
-                                if (keyIndex == sectorIndex) {
-                                    // We tried this before
-                                    continue;
-                                }
+                            // Attempt authentication with alternate keys
+                            if (keys != null) {
+                                feedbackInterface.updateStatusText(Utils.localizeString(R.string.mfc_other_key, sectorIndex));
 
-                                if (cardKeys[keyIndex].getType().equals(ClassicSectorKey.TYPE_KEYA)) {
-                                    if (tech.authenticateSectorWithKeyA(sectorIndex, cardKeys[keyIndex].getKey())) {
-                                        correctKey = cardKeys[keyIndex].getKey();
+                                // Be a little more forgiving on the key list.  Lets try all the keys!
+                                //
+                                // This takes longer, of course, but means that users aren't scratching
+                                // their heads when we don't get the right key straight away.
+                                ClassicSectorKey[] cardKeys = keys.keys();
+
+                                for (int keyIndex = 0; keyIndex < cardKeys.length; keyIndex++) {
+                                    if (keyIndex == sectorIndex) {
+                                        // We tried this before
+                                        continue;
                                     }
-                                } else {
-                                    if (tech.authenticateSectorWithKeyB(sectorIndex, cardKeys[keyIndex].getKey())) {
-                                        correctKey = cardKeys[keyIndex].getKey();
-                                    }
-                                }
 
-                                if (correctKey != null) {
-                                    // Jump out if we have the key
-                                    Log.d(TAG, String.format("Authenticated successfully to sector %d with key for sector %d. "
-                                            + "Fix the key file to speed up authentication", sectorIndex, keyIndex));
-                                    break;
+                                    if (cardKeys[keyIndex].getType().equals(ClassicSectorKey.TYPE_KEYA)) {
+                                        if (tech.authenticateSectorWithKeyA(sectorIndex, cardKeys[keyIndex].getKey())) {
+                                            correctKey = cardKeys[keyIndex].getKey();
+                                        }
+                                    } else {
+                                        if (tech.authenticateSectorWithKeyB(sectorIndex, cardKeys[keyIndex].getKey())) {
+                                            correctKey = cardKeys[keyIndex].getKey();
+                                        }
+                                    }
+
+                                    if (correctKey != null) {
+                                        // Jump out if we have the key
+                                        Log.d(TAG, String.format("Authenticated successfully to sector %d with key for sector %d. "
+                                                + "Fix the key file to speed up authentication", sectorIndex, keyIndex));
+                                        break;
+                                    }
                                 }
                             }
+
+                            // Try the default keys last.  If these are the only keys we have, the other steps will be skipped.
+                            if (correctKey == null) {
+                                feedbackInterface.updateProgressBar((sectorIndex * 5) + 2, maxProgress);
+
+                                feedbackInterface.updateStatusText(Utils.localizeString(R.string.mfc_default_key, sectorIndex));
+                                for (byte[] wkKey : WELL_KNOWN_KEYS) {
+                                    if (tech.authenticateSectorWithKeyA(sectorIndex, wkKey)) {
+                                        correctKey = wkKey;
+                                        break;
+                                    } else if (tech.authenticateSectorWithKeyB(sectorIndex, wkKey)) {
+                                        correctKey = wkKey;
+                                        break;
+                                    }
+                                }
+                            }
+
                         }
-
-                        // Try the default keys last.  If these are the only keys we have, the other steps will be skipped.
-                        if (correctKey == null && tech.authenticateSectorWithKeyA(sectorIndex, PREAMBLE_KEY)) {
-                            correctKey = PREAMBLE_KEY;
-
-                        }
-
-                        if (correctKey == null && tech.authenticateSectorWithKeyB(sectorIndex, PREAMBLE_KEY)) {
-                            correctKey = PREAMBLE_KEY;
-                        }
-
-                        if (correctKey == null && tech.authenticateSectorWithKeyA(sectorIndex, MifareClassic.KEY_DEFAULT)) {
-                            correctKey = MifareClassic.KEY_DEFAULT;
-                        }
-
-                        if (correctKey == null && tech.authenticateSectorWithKeyB(sectorIndex, MifareClassic.KEY_DEFAULT)) {
-                            correctKey = MifareClassic.KEY_DEFAULT;
-                        }
-
-                        if (correctKey == null && tech.authenticateSectorWithKeyA(sectorIndex, MifareClassic.KEY_MIFARE_APPLICATION_DIRECTORY)) {
-                            correctKey = MifareClassic.KEY_MIFARE_APPLICATION_DIRECTORY;
-                        }
-
-                        if (correctKey == null && tech.authenticateSectorWithKeyB(sectorIndex, MifareClassic.KEY_MIFARE_APPLICATION_DIRECTORY)) {
-                            correctKey = MifareClassic.KEY_MIFARE_APPLICATION_DIRECTORY;
-                        }
-
-                        if (correctKey == null && tech.authenticateSectorWithKeyA(sectorIndex, MifareClassic.KEY_NFC_FORUM)) {
-                            correctKey = MifareClassic.KEY_NFC_FORUM;
-                        }
-
-                        if (correctKey == null && tech.authenticateSectorWithKeyB(sectorIndex, MifareClassic.KEY_NFC_FORUM)) {
-                            correctKey = MifareClassic.KEY_NFC_FORUM;
-                        }
-
                     }
 
+                    feedbackInterface.updateProgressBar((sectorIndex * 5) + 3, maxProgress);
+
+                    // Hopefully we have a key by now...
                     if (correctKey != null) {
                         Log.d(TAG, "Authenticated successfully for sector " + sectorIndex);
+                        feedbackInterface.updateStatusText(Utils.localizeString(R.string.mfc_reading_blocks, sectorIndex));
                         List<ClassicBlock> blocks = new ArrayList<>();
                         // FIXME: First read trailer block to get type of other blocks.
                         int firstBlockIndex = tech.sectorToBlock(sectorIndex);
@@ -208,6 +222,8 @@ public class ClassicCard extends Card {
                             blocks.add(ClassicBlock.create(type, blockIndex, data));
                         }
                         sectors.add(new ClassicSector(sectorIndex, blocks.toArray(new ClassicBlock[blocks.size()]), correctKey));
+
+                        feedbackInterface.updateProgressBar((sectorIndex * 5) + 4, maxProgress);
                     } else {
                         Log.d(TAG, "Authentication unsuccessful for sector " + sectorIndex + ", giving up");
                         sectors.add(new UnauthorizedClassicSector(sectorIndex));
@@ -345,7 +361,10 @@ public class ClassicCard extends Card {
             if (fallback.equals("bilhete_unico")) {
                 return BilheteUnicoSPTransitData.parseTransitIdentity(this);
             } else if (fallback.equals("myway") || fallback.equals("smartrider")) {
-                // TODO: Replace this with a proper check, and take out of fallback mode.
+                // This has a proper check now, but is included for legacy reasons.
+                //
+                // Before the introduction of key-based detection for these cards, Metrodroid did
+                // not record the key inside the ClassicCard XML structure.
                 return SmartRiderTransitData.parseTransitIdentity(this);
             }
         }

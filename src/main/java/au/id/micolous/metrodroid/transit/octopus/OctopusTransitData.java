@@ -27,6 +27,7 @@ import android.util.Log;
 
 import au.id.micolous.metrodroid.card.felica.FelicaCard;
 import au.id.micolous.metrodroid.card.felica.FelicaService;
+import au.id.micolous.metrodroid.transit.CardInfo;
 import au.id.micolous.metrodroid.transit.TransitData;
 import au.id.micolous.metrodroid.transit.TransitIdentity;
 import au.id.micolous.metrodroid.ui.HeaderListItem;
@@ -35,6 +36,8 @@ import au.id.micolous.metrodroid.util.TripObfuscator;
 import au.id.micolous.metrodroid.util.Utils;
 
 import net.kazzz.felica.lib.FeliCaLib;
+
+import org.apache.commons.lang3.ArrayUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -101,6 +104,18 @@ public class OctopusTransitData extends TransitData {
 
     public static boolean check(FelicaCard card) {
         return (card.getSystem(FeliCaLib.SYSTEMCODE_OCTOPUS) != null) || (card.getSystem(FeliCaLib.SYSTEMCODE_SZT) != null);
+    }
+
+    public static CardInfo earlyCheck(int[] systemCodes) {
+        // OctopusTransitData is special, because it handles two types of cards.  So we can just
+        // directly say which cardInfo matches.
+        if (ArrayUtils.contains(systemCodes, FeliCaLib.SYSTEMCODE_OCTOPUS))
+            return CardInfo.OCTOPUS; // also dual-mode cards.
+
+        if (ArrayUtils.contains(systemCodes, FeliCaLib.SYSTEMCODE_SZT))
+            return CardInfo.SZT;
+
+        return null;
     }
 
     public static TransitIdentity parseTransitIdentity(FelicaCard card) {

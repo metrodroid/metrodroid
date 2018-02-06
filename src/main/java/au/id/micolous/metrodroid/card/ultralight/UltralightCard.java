@@ -23,10 +23,12 @@ import android.nfc.tech.MifareUltralight;
 import android.support.annotation.Keep;
 import android.util.Log;
 
+import au.id.micolous.farebot.R;
 import au.id.micolous.metrodroid.card.Card;
 import au.id.micolous.metrodroid.card.CardHasManufacturingInfo;
 import au.id.micolous.metrodroid.card.CardRawDataFragmentClass;
 import au.id.micolous.metrodroid.card.CardType;
+import au.id.micolous.metrodroid.card.TagReaderFeedbackInterface;
 import au.id.micolous.metrodroid.card.UnsupportedTagException;
 import au.id.micolous.metrodroid.fragment.UltralightCardRawDataFragment;
 import au.id.micolous.metrodroid.transit.TransitData;
@@ -81,12 +83,14 @@ public class UltralightCard extends Card {
         mPages = Utils.arrayAsList(pages);
     }
 
-    public static UltralightCard dumpTag(byte[] tagId, Tag tag) throws Exception {
+    public static UltralightCard dumpTag(byte[] tagId, Tag tag, TagReaderFeedbackInterface feedbackInterface) throws Exception {
         MifareUltralight tech = null;
 
         try {
             tech = MifareUltralight.get(tag);
             tech.connect();
+            feedbackInterface.updateProgressBar(0, 1);
+            feedbackInterface.updateStatusText(Utils.localizeString(R.string.mfu_detect));
 
             UltralightProtocol p = new UltralightProtocol(tech);
             UltralightProtocol.UltralightType t = p.getCardType();
@@ -95,6 +99,8 @@ public class UltralightCard extends Card {
                 throw new UnsupportedTagException(new String[]{"Ultralight"}, "Unknown Ultralight type");
             }
 
+            feedbackInterface.updateStatusText(Utils.localizeString(R.string.mfu_reading));
+
             // Now iterate through the pages and grab all the datas
             int pageNumber = 0;
             byte[] pageBuffer = new byte[0];
@@ -102,6 +108,7 @@ public class UltralightCard extends Card {
             boolean unauthorized = false;
             while (pageNumber <= t.pageCount) {
                 if (pageNumber % 4 == 0) {
+                    feedbackInterface.updateProgressBar(pageNumber, t.pageCount);
                     // Lets make a new buffer of data. (16 bytes = 4 pages * 4 bytes)
                     try {
                         pageBuffer = tech.readPages(pageNumber);

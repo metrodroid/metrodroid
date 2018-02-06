@@ -45,6 +45,8 @@ import au.id.micolous.metrodroid.util.Utils;
 
 import net.kazzz.felica.lib.FeliCaLib;
 
+import org.apache.commons.lang3.ArrayUtils;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -96,6 +98,10 @@ public class SuicaTransitData extends TransitData {
 
     public static boolean check(FelicaCard card) {
         return (card.getSystem(FeliCaLib.SYSTEMCODE_SUICA) != null);
+    }
+
+    public static boolean earlyCheck(int[] systemCodes) {
+        return ArrayUtils.contains(systemCodes, FeliCaLib.SYSTEMCODE_SUICA);
     }
 
     public static TransitIdentity parseTransitIdentity(FelicaCard card) {

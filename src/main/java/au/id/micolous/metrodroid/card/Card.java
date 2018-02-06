@@ -23,6 +23,7 @@ package au.id.micolous.metrodroid.card;
 import android.nfc.Tag;
 import android.util.Log;
 
+import au.id.micolous.farebot.R;
 import au.id.micolous.metrodroid.card.cepas.CEPASCard;
 import au.id.micolous.metrodroid.card.classic.ClassicCard;
 import au.id.micolous.metrodroid.card.desfire.DesfireCard;
@@ -67,7 +68,7 @@ public abstract class Card {
         mLabel = label;
     }
 
-    public static Card dumpTag(byte[] tagId, Tag tag) throws Exception {
+    public static Card dumpTag(byte[] tagId, Tag tag, TagReaderFeedbackInterface feedbackInterface) throws Exception {
         final String[] techs = tag.getTechList();
         if (ArrayUtils.contains(techs, "android.nfc.tech.NfcB")) {
             // TODO: Fix Calypso cards
@@ -75,9 +76,11 @@ public abstract class Card {
         }
 
         if (ArrayUtils.contains(techs, "android.nfc.tech.IsoDep")) {
+            feedbackInterface.updateStatusText(Utils.localizeString(R.string.iso14a_detect));
+
             // ISO 14443-4 card types
             // This also encompasses NfcA (ISO 14443-3A) and NfcB (ISO 14443-3B)
-            DesfireCard d = DesfireCard.dumpTag(tag);
+            DesfireCard d = DesfireCard.dumpTag(tag, feedbackInterface);
             if (d != null) {
                 return d;
             }
@@ -85,14 +88,18 @@ public abstract class Card {
             // Credit cards fall through here...
         }
 
-        if (ArrayUtils.contains(techs, "android.nfc.tech.NfcF"))
-            return FelicaCard.dumpTag(tagId, tag);
+        if (ArrayUtils.contains(techs, "android.nfc.tech.NfcF")) {
+            return FelicaCard.dumpTag(tagId, tag, feedbackInterface);
+        }
 
-        if (ArrayUtils.contains(techs, "android.nfc.tech.MifareClassic"))
-            return ClassicCard.dumpTag(tagId, tag);
+        if (ArrayUtils.contains(techs, "android.nfc.tech.MifareClassic")) {
+            return ClassicCard.dumpTag(tagId, tag, feedbackInterface);
+        }
 
-        if (ArrayUtils.contains(techs, "android.nfc.tech.MifareUltralight"))
-            return UltralightCard.dumpTag(tagId, tag);
+
+        if (ArrayUtils.contains(techs, "android.nfc.tech.MifareUltralight")) {
+            return UltralightCard.dumpTag(tagId, tag, feedbackInterface);
+        }
 
         throw new UnsupportedTagException(techs, Utils.getHexString(tag.getId()));
     }
@@ -133,7 +140,16 @@ public abstract class Card {
         return mLabel;
     }
 
+    /**
+     * This is where the "transit identity" is parsed, that is, a combination of the card type,
+     * and the card's serial number (according to the operator).
+     * @return
+     */
     public abstract TransitIdentity parseTransitIdentity();
 
+    /**
+     * This is where a card is actually parsed into TransitData compatible data.
+     * @return
+     */
     public abstract TransitData parseTransitData();
 }

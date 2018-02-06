@@ -3,6 +3,7 @@
  *
  * Copyright 2011-2013 Eric Butler <eric@codebutler.com>
  * Copyright 2015 Sean CyberKitsune McClenaghan
+ * Copyright 2018 Michael Farrell <micolous+git@gmail.com>
  *
  * Thanks to:
  * Karl Koscher <supersat@cs.washington.edu>
@@ -57,6 +58,8 @@ public class OrcaTransitData extends TransitData {
     static final int TRANS_TYPE_TAP_OUT = 0x07;
     static final int TRANS_TYPE_PASS_USE = 0x60;
 
+    public static final int APP_ID = 0x3010f2;
+
     private int mSerialNumber;
     private int mBalance;
     private Trip[] mTrips;
@@ -82,7 +85,7 @@ public class OrcaTransitData extends TransitData {
         }
 
         try {
-            data = desfireCard.getApplication(0x3010f2).getFile(0x04).getData();
+            data = desfireCard.getApplication(APP_ID).getFile(0x04).getData();
             mBalance = Utils.byteArrayToInt(data, 41, 2);
         } catch (Exception ex) {
             throw new RuntimeException("Error parsing ORCA balance", ex);
@@ -96,7 +99,11 @@ public class OrcaTransitData extends TransitData {
     }
 
     public static boolean check(Card card) {
-        return (card instanceof DesfireCard) && (((DesfireCard) card).getApplication(0x3010f2) != null);
+        return (card instanceof DesfireCard) && (((DesfireCard) card).getApplication(APP_ID) != null);
+    }
+
+    public static boolean earlyCheck(int[] appIds) {
+        return ArrayUtils.contains(appIds, APP_ID);
     }
 
     public static TransitIdentity parseTransitIdentity(Card card) {
@@ -142,9 +149,9 @@ public class OrcaTransitData extends TransitData {
     private Trip[] parseTrips(DesfireCard card) {
         List<Trip> trips = new ArrayList<>();
 
-        DesfireFile file = card.getApplication(0x3010f2).getFile(0x02);
+        DesfireFile file = card.getApplication(APP_ID).getFile(0x02);
         if (file instanceof RecordDesfireFile) {
-            RecordDesfireFile recordFile = (RecordDesfireFile) card.getApplication(0x3010f2).getFile(0x02);
+            RecordDesfireFile recordFile = (RecordDesfireFile) card.getApplication(APP_ID).getFile(0x02);
 
             OrcaTrip[] useLog = new OrcaTrip[recordFile.getRecords().size()];
             for (int i = 0; i < useLog.length; i++) {

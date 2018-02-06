@@ -2,6 +2,7 @@
  * HSLTransitData.java
  *
  * Copyright 2013 Lauri Andler <lauri.andler@gmail.com>
+ * Copyright 2018 Michael Farrell <micolous+git@gmail.com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -22,6 +23,8 @@ package au.id.micolous.metrodroid.transit.hsl;
 import android.os.Parcel;
 import android.support.annotation.Nullable;
 
+import org.apache.commons.lang3.ArrayUtils;
+
 import au.id.micolous.metrodroid.card.Card;
 import au.id.micolous.metrodroid.card.desfire.DesfireCard;
 import au.id.micolous.metrodroid.card.desfire.files.DesfireFile;
@@ -38,6 +41,7 @@ import java.util.List;
 
 public class HSLTransitData extends TransitData {
     private static final long EPOCH = 0x32C97ED0;
+    public static final int APP_ID = 0x1120ef;
     private String mSerialNumber;
     private int mBalance;
     private List<HSLTrip> mTrips;
@@ -118,14 +122,14 @@ public class HSLTransitData extends TransitData {
         byte[] data;
 
         try {
-            data = desfireCard.getApplication(0x1120ef).getFile(0x08).getData();
+            data = desfireCard.getApplication(APP_ID).getFile(0x08).getData();
             mSerialNumber = Utils.getHexString(data).substring(2, 20);  //Utils.byteArrayToInt(data, 1, 9);
         } catch (Exception ex) {
             throw new RuntimeException("Error parsing HSL serial", ex);
         }
 
         try {
-            data = desfireCard.getApplication(0x1120ef).getFile(0x02).getData();
+            data = desfireCard.getApplication(APP_ID).getFile(0x02).getData();
             mBalance = (int) bitsToLong(0, 20, data);
             mLastRefill = new HSLRefill(data);
         } catch (Exception ex) {
@@ -148,7 +152,7 @@ public class HSLTransitData extends TransitData {
         }
 
         try {
-            data = desfireCard.getApplication(0x1120ef).getFile(0x03).getData();
+            data = desfireCard.getApplication(APP_ID).getFile(0x03).getData();
             mArvoMystery1 = bitsToLong(0, 9, data);
             mArvoDiscoGroup = bitsToLong(9, 5, data);
             mArvoDuration = bitsToLong(14, 13, data);
@@ -199,7 +203,7 @@ public class HSLTransitData extends TransitData {
         }
 
         try {
-            data = desfireCard.getApplication(0x1120ef).getFile(0x01).getData();
+            data = desfireCard.getApplication(APP_ID).getFile(0x01).getData();
 
             if (bitsToLong(19, 14, data) == 0 && bitsToLong(67, 14, data) == 0) {
                 mKausiNoData = true;
@@ -252,12 +256,16 @@ public class HSLTransitData extends TransitData {
     }
 
     public static boolean check(Card card) {
-        return (card instanceof DesfireCard) && (((DesfireCard) card).getApplication(0x1120ef) != null);
+        return (card instanceof DesfireCard) && (((DesfireCard) card).getApplication(APP_ID) != null);
+    }
+
+    public static boolean earlyCheck(int[] appIds) {
+        return ArrayUtils.contains(appIds, APP_ID);
     }
 
     public static TransitIdentity parseTransitIdentity(Card card) {
         try {
-            byte[] data = ((DesfireCard) card).getApplication(0x1120ef).getFile(0x08).getData();
+            byte[] data = ((DesfireCard) card).getApplication(APP_ID).getFile(0x08).getData();
             return new TransitIdentity("HSL", Utils.getHexString(data).substring(2, 20));
         } catch (Exception ex) {
             throw new RuntimeException("Error parsing HSL serial", ex);
@@ -389,10 +397,10 @@ public class HSLTransitData extends TransitData {
     }
 
     private List<HSLTrip> parseTrips(DesfireCard card) {
-        DesfireFile file = card.getApplication(0x1120ef).getFile(0x04);
+        DesfireFile file = card.getApplication(APP_ID).getFile(0x04);
 
         if (file instanceof RecordDesfireFile) {
-            RecordDesfireFile recordFile = (RecordDesfireFile) card.getApplication(0x1120ef).getFile(0x04);
+            RecordDesfireFile recordFile = (RecordDesfireFile) card.getApplication(APP_ID).getFile(0x04);
 
 
             List<HSLTrip> useLog = new ArrayList<>();
