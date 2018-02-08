@@ -3,45 +3,45 @@
 
     <string name="market_short_desc">Metrodroid leser informasjon fra noen NFC-smartkort for kollektivtransport.</string>
 
-    <string name="market_long_desc">Metrodroid kan lese informasjon fra noen NFC-smartkort til bruk for offentlig transport. Det var tidligere kjent som Farebot M.
-\n
-\nDette er en avgrening av Eric Butler\\\'s Farebot-prosjekt, med støtte for ytterligere kort og feilrettinger.
-\nStøttede kort:
-\n- Bilhete Único - São Paulo, Brasil [1] [2] [5]
-\n- Clipper - San Francisco, CA, USA
-\n- EZ-Link - Singapore [3]
-\n- Go card - Brisbane og Sørøst-Queensland, Australia [0] [1] [2]
-\n- Manly hurtigferge - Sydney, NSW, Australia [0] [1] [2]
-\n- Matkakortti, HSL - Finland
-\n- Myki - Melbourne (og omegn), VIC, Australia [0] [4]
-\n- MyWay - Australian Capital Territory, Australia [0] [1] [2]
-\n- NETS Flashpay - Singapore
-\n- Octopus - Hongkong [0]
-\n- Opal - Sydney (og omegn), NSW, Australia [0]
-\n- ORCA - Seattle, WA, USA
-\n- OV-chipkaart - Nederland [1] [2]
-\n- Shenzhen Tong - Shenzong, Guangdong-provinsen, China [0]
-\n- SmartRider - Vest-Australia, Australia [0] [1] [2]
-\n- Suica, IOCOA, PASMO, Edy - Japan
-\n- Transit Access Pass - Los Angeles, CA, USA [0] [1] [2]
-\n
-\n[0]: Nytt i Metrodroid.
-\n[1]: Ikke kompatibel med alle enheter (MIFARE Classic).
-\n[2]: Krypteringsnøkler kreves for å lese dette kortet.
-\n[3]: Ikke kompatibelt med alle enheter (CEPAS).
-\n[4]: Kun kortnummeret kan leses.
-\n[5]: Tilbakefallsleser -- må skrus på manuelt i programmets innstillinger.
-\n
-\nEn NFC-kompatibel telefon kreves for å kunne lese kort.
-\n
-\nDu trenger et NXP NFC-brikkesett i enheten din for å kunne lese MIFARE Classic-kort. Noen telefoner har NFC-briker fra andre fabrikanter, som ikke kan lese MIFARE Classic-kort (f.eks. Nexus 4, Nexus 5, Samsung Galaxy S4). Sjekk Om-skjermen i programmet for å bestemme hvorvidt din enhet støtter MIFARE Classic.
-\n
-\nNoen agenturer har krypterte kort. Du må hente krypteringsnøkler for å kunne lese dem. Disse er generelt unike for hvert kort. Beklager, jeg kan ikke hjelpe deg med dette.
-\n
-\nFor noen agenturers kort kan det å bruke Cubic Nextfare på MIFARE Classic også fungere.
-\n
-\nFor mer informasjon om hvilke tilganger som behøves, les personvernspraksisen.
-\n
+    <string name="market_long_desc">Metrodroid, tidligere Farebot M, leser informasjon fra noen NFC-smartkort til bruk for offentlig transport.
+\n 
+\nDette er en avgrening av Eric Butler\\\'s Farebot-prosjekt, med støtte for ytterligere kort og feilrettinger. 
+\nStøttede kort: 
+\n- Bilhete Único - São Paulo, Brasil [1] [2] [5] 
+\n- Clipper - San Francisco, CA, USA 
+\n- EZ-Link - Singapore [3] 
+\n- Go card - Brisbane og Sørøst-Queensland, Australia [0] [1] [2] 
+\n- Manly hurtigferge - Sydney, NSW, Australia [0] [1] [2] 
+\n- Matkakortti, HSL - Finland 
+\n- Myki - Melbourne (og omegn), VIC, Australia [0] [4] 
+\n- MyWay - Australian Capital Territory, Australia [0] [1] [2] 
+\n- NETS Flashpay - Singapore 
+\n- Octopus - Hongkong [0] 
+\n- Opal - Sydney (og omegn), NSW, Australia [0] 
+\n- ORCA - Seattle, WA, USA 
+\n- OV-chipkaart - Nederland [1] [2] 
+\n- Shenzhen Tong - Shenzong, Guangdong-provinsen, China [0] 
+\n- SmartRider - Vest-Australia, Australia [0] [1] [2] 
+\n- Suica, IOCOA, PASMO, Edy - Japan 
+\n- Transit Access Pass - Los Angeles, CA, USA [0] [1] [2] 
+\n 
+\n[0]: Nytt i Metrodroid. 
+\n[1]: Ikke kompatibel med alle enheter (MIFARE Classic). 
+\n[2]: Krypteringsnøkler kreves for å lese dette kortet. 
+\n[3]: Ikke kompatibelt med alle enheter (CEPAS). 
+\n[4]: Kun kortnummeret kan leses. 
+\n[5]: Tilbakefallsleser -- må skrus på manuelt i programmets innstillinger. 
+\n 
+\nEn NFC-kompatibel telefon kreves for å kunne lese kort. 
+\n 
+\nDu trenger et NXP NFC-brikkesett i enheten din for å kunne lese MIFARE Classic-kort. Noen telefoner har NFC-briker fra andre fabrikanter, som ikke kan lese MIFARE Classic-kort (f.eks. Nexus 4, Nexus 5, Samsung Galaxy S4). Sjekk Om-skjermen i programmet for å bestemme hvorvidt din enhet støtter MIFARE Classic. 
+\n 
+\nNoen agenturer har krypterte kort. Du må hente krypteringsnøkler for å kunne lese dem. Disse er generelt unike for hvert kort. Beklager, jeg kan ikke hjelpe deg med dette. 
+\n 
+\nFor noen agenturers kort kan det å bruke Cubic Nextfare på MIFARE Classic også fungere. 
+\n 
+\nFor mer informasjon om hvilke tilganger som behøves, les personvernspraksisen. 
+\n 
 \nDenne programvaren er lisensiert GNU GPLv3+, kildekoden er å finne på https://github.com/micolous/metrodroid/</string>
 
     <string name="market_changelog_32">"* Legger til obfuskerings-tilstand.
