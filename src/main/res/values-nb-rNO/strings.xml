@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2"><string name="app_name">Metrodroid</string>
 
-    <string name="copyright">Kopirett 2015 - 2017 Michael Farrell</string>
+    <string name="copyright">Kopirett 2015 - 2018 Michael Farrell</string>
 
     <string name="license">Lisenser</string>
     <string name="title_activity_license">Friprog-lisenser</string>
@@ -52,7 +52,7 @@
     <string name="block_title_format">Blokk: %s</string>
     <string name="page_title_format">Side: 0x%s</string>
     <string name="sector_title_format">Sektor: 0x%s</string>
-    <string name="unauthorized_sector_title_format">Sektor: 0x%s (Ikke autorisert)</string>
+    <string name="unauthorized_sector_title_format">Sektor: 0x%s (ikke autorisert)</string>
     <string name="invalid_sector_title_format">Sektor: 0x%1$s (ugyldig: %2$s)</string>
     <string name="subscriptions">Abonnementer</string>
     <string name="info">Info</string>
@@ -128,7 +128,7 @@
     <string name="auth_retries_summary">Antall ganger autentisering skal forsøkes for hver sektor</string>
     <string name="storage_required">Tilgang kreves for å lese og skrive kortdumper og nøkler fra/til filer.</string>
 
-    <string name="mfc_fallback_desc">Noen byrå har ingen identifiserende magi på kortene sine. For å lese dem, må du eksplisitt velge byrå.</string>
+    <string name="mfc_fallback_desc">Noen byrå har ingen identifiserende magi på kortene sine. For å lese dem, må du eksplisitt velge et byrå.</string>
     <string name="mfc_fallback">Tilbakefallsleser</string>
 
     <string name="obfuscation_title">Tilsløring</string>
@@ -250,7 +250,7 @@
     <string name="invalid_file_title_format">Fil: 0x%1%s (ugyldig: %2$s)</string>
     <string name="unauthorized_page_title_format">Side: 0x%s (uautorisert)</string>
     <string name="map_tiles_subdomains_summary">Hvis {s} brukes i kartnettadresse, en kommainndelt liste over underdomene, eller enkelttegnsliste over underdomener.</string>
-    <string name="map_tiles_help_summary">For hjelp med bruk av kartflisnettadresser, se Leaflets nettbaserte dokumentasjon (kun tilgjengelig på Engelsk).</string>
+    <string name="map_tiles_help_summary">For hjelp med bruk av kartflisnettadresser, se Leaflets nettbaserte dokumentasjon (, kun tilgjengelig på Engelsk).</string>
     <string name="auth_retries">Gjentatte forsøk på autentisering</string>
     <string name="obfuscation_dates">Tilslør datoer</string>
     <string name="obfuscation_dates_desc">Vis tur, abonnement, utløp- og skanningsdatoer som forskjellige, tilfeldige dager</string>
@@ -281,7 +281,7 @@
 
     <string name="location_seattle">Seattle, WA, USA</string>
     <string name="location_san_francisco">San Francisco, CA, USA</string>
-    <string name="location_sao_paulo">São Paulo, Brazil</string>
+    <string name="location_sao_paulo">São Paulo, Brasil</string>
     <string name="location_shenzhen">Shenzhen, Guangdong-provinsen, Kina</string>
     <string name="location_los_angeles">Los Angeles, CA, USA</string>
     <string name="location_act_australia">Australian Capital Territory, Australia</string>
