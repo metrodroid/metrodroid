@@ -217,11 +217,6 @@ public class MetrodroidApplication extends Application {
     }
 
     private void detectNfcSupport() {
-        // Some devices like the LG F60 misreport they support MIFARE Classic when they don't.
-        // Others report they don't support MIFARE Classic when they do.
-
-        // TODO: determine behaviour of Microread hardware. It may support MFC.
-        File device;
         NfcAdapter nfcAdapter = NfcAdapter.getDefaultAdapter(this);
         mHasNfcHardware = nfcAdapter != null;
 
@@ -230,35 +225,10 @@ public class MetrodroidApplication extends Application {
             return;
         }
 
-        // Check for Broadcom NFC controller
-        // == no MFC support
-        device = new File("/dev/bcm2079-i2c");
-        if (device.exists()) {
-            Log.d(TAG, "Detected Broadcom bcm2079");
-            mMifareClassicSupport = false;
-            return;
-        }
-
-        // Check for NXP pn544 NFC controller
-        // == has MFC support
-        device = new File("/dev/pn544");
-        if (device.exists()) {
-            Log.d(TAG, "Detected NXP pn544");
-            mMifareClassicSupport = true;
-            return;
-        }
-
-        // Check for shared libraries corresponding to non-NXP chips.
-        File libFolder = new File("/system/lib");
-        File[] libs = libFolder.listFiles();
-        for (File lib : libs) {
-            String name = lib.getName();
-            if (lib.isFile() && name.startsWith("libnfc") && name.contains("brcm")) {
-                Log.d(TAG, "Detected Broadcom NFC library");
-                mMifareClassicSupport = false;
-                return;
-            }
-        }
+        // TODO: Some devices report MIFARE Classic support, when they actually don't have it.
+        //
+        // Detecting based on libraries and device nodes doesn't work great either. There's edge
+        // cases, and it's still vulnerable to vendors doing silly things.
 
         // Fallback: Look for com.nxp.mifare feature.
         mMifareClassicSupport = this.getPackageManager().hasSystemFeature("com.nxp.mifare");
