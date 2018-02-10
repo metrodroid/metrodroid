@@ -1,7 +1,7 @@
 /*
- * ManlyFastFerryTransitData.java
+ * ChcMetrocardTransitData.java
  *
- * Copyright 2015-2018 Michael Farrell <micolous+git@gmail.com>
+ * Copyright 2018 Michael Farrell <micolous+git@gmail.com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -16,7 +16,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package au.id.micolous.metrodroid.transit.manly_fast_ferry;
+package au.id.micolous.metrodroid.transit.chc_metrocard;
 
 import android.os.Parcel;
 
@@ -28,40 +28,38 @@ import au.id.micolous.metrodroid.transit.erg.ErgTransitData;
 import au.id.micolous.metrodroid.transit.erg.ErgTrip;
 import au.id.micolous.metrodroid.transit.erg.record.ErgMetadataRecord;
 import au.id.micolous.metrodroid.transit.erg.record.ErgPurseRecord;
+import au.id.micolous.metrodroid.util.Utils;
 
 /**
- * Transit data type for Manly Fast Ferry Smartcard (Sydney, AU).
+ * Transit data type for Metrocard (Christchurch, NZ).
  * <p>
  * This transit card is a system made by ERG Group (now Videlli Limited / Vix Technology).
  * <p>
- * Note: This is a distinct private company who run their own ferry service to Manly, separate to
- * Transport for NSW's Manly Ferry service.
- * <p>
- * Documentation of format: https://github.com/micolous/metrodroid/wiki/Manly-Fast-Ferry
+ * Documentation of format: https://github.com/micolous/metrodroid/wiki/ERG-MFC
  */
 
-public class ManlyFastFerryTransitData extends ErgTransitData {
-    public static final String NAME = "Manly Fast Ferry";
-    private static final int AGENCY_ID = 0x0227;
+public class ChcMetrocardTransitData extends ErgTransitData {
+    public static final String NAME = "Metrocard";
+    private static final int AGENCY_ID = 0x0136;
 
     // Parcel
-    public static final Creator<ManlyFastFerryTransitData> CREATOR = new Creator<ManlyFastFerryTransitData>() {
+    public static final Creator<ChcMetrocardTransitData> CREATOR = new Creator<ChcMetrocardTransitData>() {
         @Override
-        public ManlyFastFerryTransitData createFromParcel(Parcel in) {
-            return new ManlyFastFerryTransitData(in);
+        public ChcMetrocardTransitData createFromParcel(Parcel in) {
+            return new ChcMetrocardTransitData(in);
         }
 
         @Override
-        public ManlyFastFerryTransitData[] newArray(int size) {
-            return new ManlyFastFerryTransitData[size];
+        public ChcMetrocardTransitData[] newArray(int size) {
+            return new ChcMetrocardTransitData[size];
         }
     };
 
-    public ManlyFastFerryTransitData(Parcel parcel) {
+    public ChcMetrocardTransitData(Parcel parcel) {
         super(parcel);
     }
 
-    public ManlyFastFerryTransitData(ClassicCard card) {
+    public ChcMetrocardTransitData(ClassicCard card) {
         super(card);
     }
 
@@ -77,12 +75,12 @@ public class ManlyFastFerryTransitData extends ErgTransitData {
     public static TransitIdentity parseTransitIdentity(ClassicCard card) {
         byte[] file2 = card.getSector(0).getBlock(2).getData();
         ErgMetadataRecord metadata = ErgMetadataRecord.recordFromBytes(file2);
-        return new TransitIdentity(NAME, metadata.getCardSerialHex());
+        return new TransitIdentity(NAME, Integer.toString(metadata.getCardSerialDec()));
     }
 
     @Override
     protected ErgTrip newTrip(ErgPurseRecord purse, GregorianCalendar epoch) {
-        return new ManlyFastFerryTrip(purse, epoch);
+        return new ChcMetrocardTrip(purse, epoch);
     }
 
     @Override
@@ -90,4 +88,13 @@ public class ManlyFastFerryTransitData extends ErgTransitData {
         return NAME;
     }
 
+    @Override
+    public String formatCurrencyString(int currency, boolean isBalance) {
+        return Utils.formatCurrencyString(currency, isBalance, "NZD");
+    }
+
+    @Override
+    protected String formatSerialNumber(ErgMetadataRecord metadataRecord) {
+        return Integer.toString(metadataRecord.getCardSerialDec());
+    }
 }

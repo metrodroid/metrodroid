@@ -25,7 +25,6 @@ import au.id.micolous.metrodroid.card.UnauthorizedException;
 import au.id.micolous.metrodroid.card.classic.ClassicCard;
 import au.id.micolous.metrodroid.transit.TransitIdentity;
 import au.id.micolous.metrodroid.transit.Trip;
-import au.id.micolous.metrodroid.transit.nextfare.NextfareRefill;
 import au.id.micolous.metrodroid.transit.nextfare.NextfareTransitData;
 import au.id.micolous.metrodroid.transit.nextfare.NextfareTrip;
 import au.id.micolous.metrodroid.transit.nextfare.record.NextfareTopupRecord;
@@ -117,7 +116,7 @@ public class SeqGoTransitData extends NextfareTransitData {
     }
 
     @Override
-    protected NextfareRefill newRefill(NextfareTopupRecord record) {
+    protected NextfareTrip newRefill(NextfareTopupRecord record) {
         return new SeqGoRefill(record);
     }
 

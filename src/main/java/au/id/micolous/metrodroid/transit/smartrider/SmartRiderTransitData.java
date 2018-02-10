@@ -248,8 +248,11 @@ public class SmartRiderTransitData extends TransitData {
         return new TransitIdentity(detectKeyType(card).getFriendlyName(), getSerialData(card));
     }
 
-    private static long addSmartRiderEpoch(long epochTime) {
-        return (SMARTRIDER_EPOCH.getTimeInMillis() / 1000) + epochTime;
+    private static Calendar addSmartRiderEpoch(long epochTime) {
+        GregorianCalendar c = new GregorianCalendar();
+        c.setTimeInMillis(SMARTRIDER_EPOCH.getTimeInMillis());
+        c.add(Calendar.SECOND, (int) epochTime);
+        return c;
     }
 
     private static boolean shouldMergeJourneys(SmartRiderTagRecord first, SmartRiderTagRecord second) {

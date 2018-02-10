@@ -19,7 +19,6 @@
 
 package au.id.micolous.metrodroid.transit;
 
-import android.os.Parcel;
 import android.os.Parcelable;
 import android.support.annotation.Nullable;
 
@@ -27,22 +26,9 @@ import org.apache.commons.lang3.StringUtils;
 
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.GregorianCalendar;
 import java.util.List;
 
 public abstract class Trip implements Parcelable {
-    public static final Creator<Trip> CREATOR = new Creator<Trip>() {
-        @Override
-        public Trip createFromParcel(Parcel parcel) {
-            return null;
-        }
-
-        @Override
-        public Trip[] newArray(int size) {
-            return new Trip[size];
-        }
-    };
-
     public static String formatStationNames(Trip trip) {
         List<String> stationText = new ArrayList<>();
         if (trip.getStartStationName() != null)
@@ -56,65 +42,75 @@ public abstract class Trip implements Parcelable {
             return null;
         }
     }
-
-    public Calendar getStartTimestamp() {
-        // Compatibility layer, can be overridden if working with Calendar objects directly.
-        @SuppressWarnings("deprecation") long t = getTimestamp();
-        if (t == 0) {
-            return null;
-        }
-
-        Calendar c = GregorianCalendar.getInstance();
-        c.setTimeInMillis(t * 1000);
-
-        return c;
-    }
+    public abstract Calendar getStartTimestamp();
 
     public Calendar getEndTimestamp() {
-        // Compatibility layer, can be overridden if working with Calendar objects directly.
-        @SuppressWarnings("deprecation") long t = getExitTimestamp();
-        if (t == 0) {
-            return null;
-        }
-
-        Calendar c = GregorianCalendar.getInstance();
-        c.setTimeInMillis(t * 1000);
-
-        return c;
+        return null;
     }
 
+    /**
+     * Route name for the trip. This could be a bus line, a tram line, a rail line, etc.
+     * If this is not known, then return null.
+     */
+    public String getRouteName() {
+        return null;
+    }
 
     /**
-     * Start timestamp of the trip, in seconds since the UNIX epoch, or 0 if there is no timestamp
-     * for the trip.
+     * Full name of the agency for the trip. This is used on the map of the trip, where there is
+     * space for longer agency names.
      *
-     * @return seconds since UNIX epoch
+     * If this is not known (or there is only one agency for the card), then return null.
+     *
+     * By default, this returns null.
      */
-    @Deprecated
-    public abstract long getTimestamp();
+    public String getAgencyName() {
+        return null;
+    }
 
     /**
-     * End timestamp of the trip, in seconds since the UNIX epoch, or 0 if there is no exit
-     * timestamp for the trip.
-     *
-     * @return seconds since UNIX epoch.
+     * Short name of the agency for the trip. This is used in the travel history, where there is
+     * limited space for agency names. By default, this will be the same as getAgencyName.
      */
-    @Deprecated
-    public abstract long getExitTimestamp();
+    public String getShortAgencyName() {
+        return getAgencyName();
+    }
 
-    public abstract String getRouteName();
+    /**
+     * Starting station name for the trip, or null if unknown.
+     *
+     * If supplied, this will be shown in the travel history.
+     */
+    public String getStartStationName() {
+        return null;
+    }
 
-    public abstract String getAgencyName();
+    /**
+     * Starting station info for the trip, or null if unknown.
+     *
+     * If supplied, this will be used to render a map of the trip.
+     */
+    public Station getStartStation() {
+        return null;
+    }
 
-    public abstract String getShortAgencyName();
+    /**
+     * Ending station name for the trip, or null if unknown.
+     *
+     * If supplied, this will be shown in the travel history.
+     */
+    public String getEndStationName() {
+        return null;
+    }
 
-    public abstract String getStartStationName();
-
-    public abstract Station getStartStation();
-
-    public abstract String getEndStationName();
-
-    public abstract Station getEndStation();
+    /**
+     * Ending station info for the trip, or null if unknown.
+     *
+     * If supplied, this will be used to render a map of the trip.
+     */
+    public Station getEndStation() {
+        return null;
+    }
 
     /**
      * If true, it means that this activity has a known fare associated with it.  This should be
@@ -164,7 +160,13 @@ public abstract class Trip implements Parcelable {
     public static class Comparator implements java.util.Comparator<Trip> {
         @Override
         public int compare(Trip trip, Trip trip1) {
-            return Long.valueOf(trip1.getTimestamp()).compareTo(trip.getTimestamp());
+            if (trip1.getStartTimestamp() != null && trip.getStartTimestamp() != null) {
+                return trip1.getStartTimestamp().compareTo(trip.getStartTimestamp());
+            } else if (trip1.getStartTimestamp() != null) {
+                return 1;
+            } else {
+                return 0;
+            }
         }
     }
 }

@@ -83,7 +83,7 @@ public class SuicaTransitData extends TransitData {
             SuicaTrip trip = new SuicaTrip(block, previousBalance);
             previousBalance = trip.getBalance();
 
-            if (trip.getTimestamp() == 0) {
+            if (trip.getStartTimestamp() == null) {
                 continue;
             }
 

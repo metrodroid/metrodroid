@@ -114,12 +114,6 @@ public class LaxTapTransitData extends NextfareTransitData {
         // otherwise, but we don't need to do the complex logic in order to figure it out correctly.
         return false;
     }
-    /*
-    @Override
-    protected NextfareRefill newRefill(NextfareTopupRecord record) {
-        return new LaxTapRefill(record);
-    }
-    */
 
     @Override
     protected Trip.Mode lookupMode(int mode, int stationId) {

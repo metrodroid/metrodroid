@@ -314,6 +314,7 @@
     <string name="location_los_angeles">Los Angeles, CA, USA</string>
     <string name="location_act_australia">Australian Capital Territory, Australia</string>
     <string name="location_wa_australia">Western Australia, Australia</string>
+    <string name="location_christchurch_nz">Christchurch, New Zealand</string>
 
     <!-- Felica -->
     <string name="felica_terminal_fare_adjustment">Fare Adjustment Machine</string>

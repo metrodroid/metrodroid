@@ -21,7 +21,7 @@ package au.id.micolous.metrodroid.transit.seq_go;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-import au.id.micolous.metrodroid.transit.nextfare.NextfareRefill;
+import au.id.micolous.metrodroid.transit.nextfare.NextfareTrip;
 import au.id.micolous.metrodroid.transit.nextfare.record.NextfareTopupRecord;
 import au.id.micolous.metrodroid.util.Utils;
 
@@ -30,7 +30,7 @@ import au.id.micolous.farebot.R;
 /**
  * Represents a top-up event on the Go card.
  */
-public class SeqGoRefill extends NextfareRefill {
+public class SeqGoRefill extends NextfareTrip {
 
     public static final Parcelable.Creator<SeqGoRefill> CREATOR = new Parcelable.Creator<SeqGoRefill>() {
 
@@ -43,17 +43,27 @@ public class SeqGoRefill extends NextfareRefill {
         }
     };
 
+    private boolean mAutomatic;
+
     public SeqGoRefill(NextfareTopupRecord topup) {
         super(topup);
+        mAutomatic = topup.getAutomatic();
     }
 
     public SeqGoRefill(Parcel parcel) {
         super(parcel);
+        mAutomatic = parcel.readInt() == 1;
     }
 
     @Override
-    public String getShortAgencyName() {
-        return Utils.localizeString(mTopup.getAutomatic()
+    public void writeToParcel(Parcel parcel, int i) {
+        super.writeToParcel(parcel, i);
+        parcel.writeInt(mAutomatic ? 1 : 0);
+    }
+
+    @Override
+    public String getAgencyName() {
+        return Utils.localizeString(mAutomatic
                 ? R.string.seqgo_refill_automatic
                 : R.string.seqgo_refill_manual);
     }

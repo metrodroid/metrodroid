@@ -24,7 +24,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.nfc.NfcAdapter;
 import android.os.Bundle;
-import android.support.annotation.StringRes;
 import android.text.Html;
 import android.text.Spanned;
 import android.view.MenuItem;
@@ -37,14 +36,6 @@ import android.widget.TextView;
 
 import au.id.micolous.metrodroid.card.CardType;
 import au.id.micolous.metrodroid.transit.CardInfo;
-import au.id.micolous.metrodroid.transit.lax_tap.LaxTapTransitData;
-import au.id.micolous.metrodroid.transit.manly_fast_ferry.ManlyFastFerryTransitData;
-import au.id.micolous.metrodroid.transit.myki.MykiTransitData;
-import au.id.micolous.metrodroid.transit.octopus.OctopusTransitData;
-import au.id.micolous.metrodroid.transit.opal.OpalTransitData;
-import au.id.micolous.metrodroid.transit.ovc.OVChipTransitData;
-import au.id.micolous.metrodroid.transit.seq_go.SeqGoTransitData;
-import au.id.micolous.metrodroid.transit.smartrider.SmartRiderTransitData;
 import au.id.micolous.metrodroid.util.Utils;
 
 import java.util.ArrayList;

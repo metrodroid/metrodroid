@@ -168,16 +168,8 @@ public class SuicaTrip extends Trip {
     }
 
     @Override
-    public long getTimestamp() {
-        if (mTimestamp != null)
-            return mTimestamp.getTimeInMillis() / 1000;
-        else
-            return 0;
-    }
-
-    @Override
-    public long getExitTimestamp() {
-        return 0;
+    public Calendar getStartTimestamp() {
+        return mTimestamp;
     }
 
     public boolean hasTime() {
@@ -192,11 +184,6 @@ public class SuicaTrip extends Trip {
     @Override
     public String getAgencyName() {
         return (mStartStation != null) ? mStartStation.getCompanyName() : null;
-    }
-
-    @Override
-    public String getShortAgencyName() {
-        return getAgencyName();
     }
 
     @Override

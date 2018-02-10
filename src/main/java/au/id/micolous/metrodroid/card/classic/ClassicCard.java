@@ -44,7 +44,9 @@ import au.id.micolous.metrodroid.key.ClassicSectorKey;
 import au.id.micolous.metrodroid.transit.TransitData;
 import au.id.micolous.metrodroid.transit.TransitIdentity;
 import au.id.micolous.metrodroid.transit.bilhete_unico.BilheteUnicoSPTransitData;
+import au.id.micolous.metrodroid.transit.chc_metrocard.ChcMetrocardTransitData;
 import au.id.micolous.metrodroid.transit.lax_tap.LaxTapTransitData;
+import au.id.micolous.metrodroid.transit.erg.ErgTransitData;
 import au.id.micolous.metrodroid.transit.manly_fast_ferry.ManlyFastFerryTransitData;
 import au.id.micolous.metrodroid.transit.nextfare.NextfareTransitData;
 import au.id.micolous.metrodroid.transit.ovc.OVChipTransitData;
@@ -334,8 +336,16 @@ public class ClassicCard extends Card {
         // Otherwise UnauthorizedClassicTransitData will not trigger
         if (OVChipTransitData.check(this)) {
             return OVChipTransitData.parseTransitIdentity(this);
-        } else if (ManlyFastFerryTransitData.check(this)) {
-            return ManlyFastFerryTransitData.parseTransitIdentity(this);
+        } else if (ErgTransitData.check(this)) {
+            // Search through ERG on MIFARE Classic compatibles.
+            if (ManlyFastFerryTransitData.check(this)) {
+                return ManlyFastFerryTransitData.parseTransitIdentity(this);
+            } else if (ChcMetrocardTransitData.check(this)) {
+                return ChcMetrocardTransitData.parseTransitIdentity(this);
+            } else {
+                // Fallback
+                return ErgTransitData.parseTransitIdentity(this);
+            }
         } else if (NextfareTransitData.check(this)) {
             // Search through Nextfare on MIFARE Classic compatibles.
             if (SeqGoTransitData.check(this)) {
@@ -377,8 +387,16 @@ public class ClassicCard extends Card {
     public TransitData parseTransitData() {
         if (OVChipTransitData.check(this)) {
             return new OVChipTransitData(this);
-        } else if (ManlyFastFerryTransitData.check(this)) {
-            return new ManlyFastFerryTransitData(this);
+        } else if (ErgTransitData.check(this)) {
+            // Search through ERG on MIFARE Classic compatibles.
+            if (ManlyFastFerryTransitData.check(this)) {
+                return new ManlyFastFerryTransitData(this);
+            } else if (ChcMetrocardTransitData.check(this)) {
+                return new ChcMetrocardTransitData(this);
+            } else {
+                // Fallback
+                return new ErgTransitData(this);
+            }
         } else if (NextfareTransitData.check(this)) {
             // Search through Nextfare on MIFARE Classic compatibles.
             if (SeqGoTransitData.check(this)) {

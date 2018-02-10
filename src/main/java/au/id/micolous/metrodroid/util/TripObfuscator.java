@@ -98,6 +98,7 @@ public final class TripObfuscator {
      * @param obfuscateTimes true if times should be obfuscated
      * @return maybe obfuscated value
      */
+    @Deprecated
     public static long maybeObfuscateTS(long input, boolean obfuscateDates, boolean obfuscateTimes) {
         if (!obfuscateDates && !obfuscateTimes) {
             return input;
@@ -109,6 +110,7 @@ public final class TripObfuscator {
         return maybeObfuscateTS(s, obfuscateDates, obfuscateTimes).getTimeInMillis() / 1000;
     }
 
+    @Deprecated
     public static long maybeObfuscateTS(long input) {
         return maybeObfuscateTS(input, MetrodroidApplication.obfuscateTripDates(),
                 MetrodroidApplication.obfuscateTripTimes());
@@ -150,12 +152,16 @@ public final class TripObfuscator {
     public static List<Trip> obfuscateTrips(List<Trip> trips, boolean obfuscateDates, boolean obfuscateTimes, boolean obfuscateFares) {
         List<Trip> newTrips = new ArrayList<>();
         for (Trip trip : trips) {
-            long start = trip.getTimestamp();
+            Calendar start = trip.getStartTimestamp();
             long timeDelta = 0;
             int fareOffset = 0;
             double fareMultiplier = 1.0;
 
-            timeDelta = maybeObfuscateTS(start, obfuscateDates, obfuscateTimes) - start;
+            if (start != null) {
+                timeDelta = maybeObfuscateTS(start, obfuscateDates, obfuscateTimes).getTimeInMillis() - start.getTimeInMillis();
+            } else {
+                timeDelta = 0;
+            }
 
             if (obfuscateFares) {
                 // These are unique for each fare

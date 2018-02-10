@@ -22,10 +22,11 @@ package au.id.micolous.metrodroid.transit.orca;
 import android.os.Parcel;
 import android.support.annotation.Nullable;
 
+import au.id.micolous.metrodroid.transit.CompatTrip;
 import au.id.micolous.metrodroid.transit.Station;
 import au.id.micolous.metrodroid.transit.Trip;
 
-public class MergedOrcaTrip extends Trip {
+public class MergedOrcaTrip extends CompatTrip {
     public static final Creator<MergedOrcaTrip> CREATOR = new Creator<MergedOrcaTrip>() {
         public MergedOrcaTrip createFromParcel(Parcel parcel) {
             return new MergedOrcaTrip(

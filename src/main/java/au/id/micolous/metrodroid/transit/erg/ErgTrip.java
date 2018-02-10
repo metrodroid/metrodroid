@@ -1,7 +1,7 @@
 /*
- * ManlyFastFerryRefill.java
+ * ErgTrip.java
  *
- * Copyright 2015 Michael Farrell <micolous+git@gmail.com>
+ * Copyright 2015-2018 Michael Farrell <micolous+git@gmail.com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -16,71 +16,88 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-
-package au.id.micolous.metrodroid.transit.manly_fast_ferry;
+package au.id.micolous.metrodroid.transit.erg;
 
 import android.os.Parcel;
 import android.os.Parcelable;
-
-import au.id.micolous.metrodroid.transit.Refill;
-import au.id.micolous.metrodroid.transit.manly_fast_ferry.record.ManlyFastFerryPurseRecord;
+import android.support.annotation.Nullable;
 
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 
-/**
- * Describes top-up amounts "purse credits".
- */
-public class ManlyFastFerryRefill extends Refill {
-    public static final Parcelable.Creator<ManlyFastFerryRefill> CREATOR = new Parcelable.Creator<ManlyFastFerryRefill>() {
+import au.id.micolous.metrodroid.transit.Trip;
+import au.id.micolous.metrodroid.transit.erg.record.ErgPurseRecord;
 
-        public ManlyFastFerryRefill createFromParcel(Parcel in) {
-            return new ManlyFastFerryRefill(in);
+/**
+ * Represents a trip on an ERG MIFARE Classic card.
+ */
+
+public class ErgTrip extends Trip {
+    public static final Parcelable.Creator<ErgTrip> CREATOR = new Parcelable.Creator<ErgTrip>() {
+
+        public ErgTrip createFromParcel(Parcel in) {
+            return new ErgTrip(in);
         }
 
-        public ManlyFastFerryRefill[] newArray(int size) {
-            return new ManlyFastFerryRefill[size];
+        public ErgTrip[] newArray(int size) {
+            return new ErgTrip[size];
         }
     };
-    private GregorianCalendar mEpoch;
-    private ManlyFastFerryPurseRecord mPurse;
 
-    public ManlyFastFerryRefill(ManlyFastFerryPurseRecord purse, GregorianCalendar epoch) {
+    protected GregorianCalendar mEpoch;
+    protected ErgPurseRecord mPurse;
+
+    public ErgTrip(ErgPurseRecord purse, GregorianCalendar epoch) {
         mPurse = purse;
         mEpoch = epoch;
     }
 
-    public ManlyFastFerryRefill(Parcel parcel) {
-        mPurse = new ManlyFastFerryPurseRecord(parcel);
+    public ErgTrip(Parcel parcel) {
+        mPurse = new ErgPurseRecord(parcel);
         mEpoch = new GregorianCalendar();
         mEpoch.setTimeInMillis(parcel.readLong());
     }
 
+    // Implemented functionality.
     @Override
-    public long getTimestamp() {
+    public Calendar getStartTimestamp() {
         GregorianCalendar ts = new GregorianCalendar();
         ts.setTimeInMillis(mEpoch.getTimeInMillis());
         ts.add(Calendar.DATE, mPurse.getDay());
         ts.add(Calendar.MINUTE, mPurse.getMinute());
 
-        return ts.getTimeInMillis() / 1000;
+        return ts;
     }
 
     @Override
-    public String getAgencyName() {
-        // There is only one agency on the card, don't show anything.
-        return null;
+    public boolean hasFare() {
+        return true;
+    }
+
+    @Nullable
+    @Override
+    public Integer getFare() {
+        int o = mPurse.getTransactionValue();
+        if (mPurse.getIsCredit()) {
+            o *= -1;
+        }
+
+        return o;
     }
 
     @Override
-    public String getShortAgencyName() {
-        // There is only one agency on the card, don't show anything.
-        return null;
+    public Mode getMode() {
+        return Mode.OTHER;
     }
 
     @Override
-    public int getAmount() {
-        return mPurse.getTransactionValue();
+    public boolean hasTime() {
+        return true;
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
     }
 
     @Override
@@ -88,4 +105,6 @@ public class ManlyFastFerryRefill extends Refill {
         mPurse.writeToParcel(parcel, i);
         parcel.writeLong(mEpoch.getTimeInMillis());
     }
+
+
 }

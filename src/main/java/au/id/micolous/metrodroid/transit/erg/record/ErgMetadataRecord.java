@@ -1,5 +1,5 @@
 /*
- * ManlyFastFerryMetadataRecord.java
+ * ErgMetadataRecord.java
  *
  * Copyright 2015-2018 Michael Farrell <micolous+git@gmail.com>
  *
@@ -17,7 +17,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package au.id.micolous.metrodroid.transit.manly_fast_ferry.record;
+package au.id.micolous.metrodroid.transit.erg.record;
 
 import au.id.micolous.metrodroid.util.Utils;
 
@@ -28,23 +28,26 @@ import java.util.GregorianCalendar;
 /**
  * Represents a "preamble" type record.
  */
-public class ManlyFastFerryMetadataRecord extends ManlyFastFerryRegularRecord {
+public class ErgMetadataRecord extends ErgRecord {
     private static final GregorianCalendar MANLY_BASE_EPOCH = new GregorianCalendar(2000, Calendar.JANUARY, 1);
-    private String mCardSerial;
+    private int mAgency;
+    private byte[] mCardSerial;
     private GregorianCalendar mEpochDate;
 
-    protected ManlyFastFerryMetadataRecord() {
+    protected ErgMetadataRecord() {
     }
 
-    public static ManlyFastFerryMetadataRecord recordFromBytes(byte[] input) {
+    public static ErgMetadataRecord recordFromBytes(byte[] input) {
         //assert input[0] == 0x02;
         //assert input[1] == 0x03;
 
-        ManlyFastFerryMetadataRecord record = new ManlyFastFerryMetadataRecord();
+        ErgMetadataRecord record = new ErgMetadataRecord();
+
+        record.mAgency = Utils.byteArrayToInt(input, 2, 2);
 
         int epochDays = Utils.byteArrayToInt(input, 5, 2);
 
-        record.mCardSerial = Utils.getHexString(Arrays.copyOfRange(input, 7, 11));
+        record.mCardSerial = Arrays.copyOfRange(input, 7, 11);
 
         record.mEpochDate = new GregorianCalendar();
         record.mEpochDate.setTimeInMillis(MANLY_BASE_EPOCH.getTimeInMillis());
@@ -53,8 +56,26 @@ public class ManlyFastFerryMetadataRecord extends ManlyFastFerryRegularRecord {
         return record;
     }
 
-    public String getCardSerial() {
-        return mCardSerial;
+    public int getAgency() {
+        return mAgency;
+    }
+
+    /**
+     * Some ERG cards (like Christchurch Metrocard) store the card number as a 32-bit, big-endian
+     * integer, expressed in decimal.
+     * @return Card number in decimal.
+     */
+    public int getCardSerialDec() {
+        return Utils.byteArrayToInt(mCardSerial);
+    }
+
+    /**
+     * Some ERG cards (like Manly Fast Ferry) store the card number as a 32-bit, big endian integer,
+     * expressed in hexadecimal.
+     * @return Card number in hexadecimal.
+     */
+    public String getCardSerialHex() {
+        return Utils.getHexString(mCardSerial);
     }
 
     public GregorianCalendar getEpochDate() {

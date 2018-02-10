@@ -22,11 +22,18 @@ import android.os.Parcel;
 import android.support.annotation.Nullable;
 import android.util.Log;
 
+import java.math.BigInteger;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Calendar;
+import java.util.Collections;
+import java.util.List;
+
+import au.id.micolous.farebot.R;
 import au.id.micolous.metrodroid.card.UnauthorizedException;
 import au.id.micolous.metrodroid.card.classic.ClassicBlock;
 import au.id.micolous.metrodroid.card.classic.ClassicCard;
 import au.id.micolous.metrodroid.card.classic.ClassicSector;
-import au.id.micolous.metrodroid.transit.Refill;
 import au.id.micolous.metrodroid.transit.Subscription;
 import au.id.micolous.metrodroid.transit.TransitData;
 import au.id.micolous.metrodroid.transit.TransitIdentity;
@@ -41,15 +48,6 @@ import au.id.micolous.metrodroid.ui.HeaderListItem;
 import au.id.micolous.metrodroid.ui.ListItem;
 import au.id.micolous.metrodroid.util.TripObfuscator;
 import au.id.micolous.metrodroid.util.Utils;
-
-import java.math.BigInteger;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Calendar;
-import java.util.Collections;
-import java.util.List;
-
-import au.id.micolous.farebot.R;
 
 /**
  * Generic transit data type for Cubic Nextfare.
@@ -79,7 +77,6 @@ public class NextfareTransitData extends TransitData {
     BigInteger mSerialNumber;
     byte[] mSystemCode;
     int mBalance;
-    NextfareRefill[] mRefills;
     NextfareTrip[] mTrips;
     NextfareSubscription[] mSubscriptions;
 
@@ -88,8 +85,6 @@ public class NextfareTransitData extends TransitData {
         mBalance = parcel.readInt();
         mTrips = new NextfareTrip[parcel.readInt()];
         parcel.readTypedArray(mTrips, NextfareTrip.CREATOR);
-        mRefills = new NextfareRefill[parcel.readInt()];
-        parcel.readTypedArray(mRefills, NextfareRefill.CREATOR);
         mSubscriptions = new NextfareSubscription[parcel.readInt()];
         parcel.readTypedArray(mSubscriptions, NextfareSubscription.CREATOR);
         parcel.readByteArray(mSystemCode);
@@ -128,7 +123,6 @@ public class NextfareTransitData extends TransitData {
         ArrayList<NextfareBalanceRecord> balances = new ArrayList<>();
         ArrayList<NextfareTrip> trips = new ArrayList<>();
         ArrayList<NextfareSubscription> subscriptions = new ArrayList<>();
-        ArrayList<Refill> refills = new ArrayList<>();
         ArrayList<NextfareTransactionRecord> taps = new ArrayList<>();
         ArrayList<NextfareTravelPassRecord> passes = new ArrayList<>();
 
@@ -138,7 +132,7 @@ public class NextfareTransitData extends TransitData {
             } else if (record instanceof NextfareTopupRecord) {
                 NextfareTopupRecord topupRecord = (NextfareTopupRecord) record;
 
-                refills.add(newRefill(topupRecord));
+                trips.add(newRefill(topupRecord));
             } else if (record instanceof NextfareTransactionRecord) {
                 taps.add((NextfareTransactionRecord) record);
             } else if (record instanceof NextfareTravelPassRecord) {
@@ -244,10 +238,6 @@ public class NextfareTransitData extends TransitData {
 
         }
 
-        if (refills.size() > 1) {
-            Collections.sort(refills, new Refill.Comparator());
-        }
-
         if (passes.size() >= 1) {
             Collections.sort(passes);
             subscriptions.add(newSubscription(passes.get(0)));
@@ -255,7 +245,6 @@ public class NextfareTransitData extends TransitData {
 
         mSubscriptions = subscriptions.toArray(new NextfareSubscription[subscriptions.size()]);
         mTrips = trips.toArray(new NextfareTrip[trips.size()]);
-        mRefills = refills.toArray(new NextfareRefill[refills.size()]);
     }
 
     public static boolean check(ClassicCard card) {
@@ -295,8 +284,6 @@ public class NextfareTransitData extends TransitData {
         parcel.writeInt(mBalance);
         parcel.writeInt(mTrips.length);
         parcel.writeTypedArray(mTrips, i);
-        parcel.writeInt(mRefills.length);
-        parcel.writeTypedArray(mRefills, i);
         parcel.writeInt(mSubscriptions.length);
         parcel.writeTypedArray(mSubscriptions, i);
         parcel.writeByteArray(mSystemCode);
@@ -332,10 +319,10 @@ public class NextfareTransitData extends TransitData {
      * Allows you to override the constructor for new refills, to hook in your own code.
      *
      * @param record Record to parse
-     * @return Subclass of NextfareRefill
+     * @return Subclass of NextfareTrip
      */
-    protected NextfareRefill newRefill(NextfareTopupRecord record) {
-        return new NextfareRefill(record);
+    protected NextfareTrip newRefill(NextfareTopupRecord record) {
+        return new NextfareTrip(record);
     }
 
     /**
@@ -391,11 +378,6 @@ public class NextfareTransitData extends TransitData {
     @Override
     public Trip[] getTrips() {
         return mTrips;
-    }
-
-    @Override
-    public Refill[] getRefills() {
-        return mRefills;
     }
 
     @Override

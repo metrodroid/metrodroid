@@ -85,6 +85,11 @@ public class EdyTrip extends Trip {
         }
     }
 
+    @Override
+    public Calendar getStartTimestamp() {
+        return mTimestamp;
+    }
+
     public long getTimestamp() {
         if (mTimestamp != null)
             return mTimestamp.getTimeInMillis() / 1000;
@@ -107,11 +112,7 @@ public class EdyTrip extends Trip {
         return mTransactionAmount;
     }
 
-    // use agency name for the tranaction number
-    public String getShortAgencyName() {
-        return getAgencyName();
-    }
-
+    // use agency name for the transaction number
     public String getAgencyName() {
         NumberFormat format = NumberFormat.getIntegerInstance();
         format.setMinimumIntegerDigits(8);
@@ -132,22 +133,6 @@ public class EdyTrip extends Trip {
 
     // unused
     public String getRouteName() {
-        return null;
-    }
-
-    public String getStartStationName() {
-        return null;
-    }
-
-    public Station getStartStation() {
-        return null;
-    }
-
-    public String getEndStationName() {
-        return null;
-    }
-
-    public Station getEndStation() {
         return null;
     }
 

@@ -25,11 +25,14 @@ package au.id.micolous.metrodroid.transit.ezlink;
 import android.os.Parcel;
 import android.support.annotation.Nullable;
 
+import java.util.Calendar;
+
 import au.id.micolous.metrodroid.card.cepas.CEPASTransaction;
+import au.id.micolous.metrodroid.transit.CompatTrip;
 import au.id.micolous.metrodroid.transit.Station;
 import au.id.micolous.metrodroid.transit.Trip;
 
-public class EZLinkTrip extends Trip {
+public class EZLinkTrip extends CompatTrip {
     public static final Creator<EZLinkTrip> CREATOR = new Creator<EZLinkTrip>() {
         public EZLinkTrip createFromParcel(Parcel parcel) {
             return new EZLinkTrip(parcel);
@@ -55,11 +58,6 @@ public class EZLinkTrip extends Trip {
     @Override
     public long getTimestamp() {
         return mTransaction.getTimestamp();
-    }
-
-    @Override
-    public long getExitTimestamp() {
-        return 0;
     }
 
     @Override
@@ -105,6 +103,7 @@ public class EZLinkTrip extends Trip {
 
     @Override
     public String getRouteName() {
+        // TODO: i18n
         if (mTransaction.getType() == CEPASTransaction.TransactionType.BUS) {
             if (mTransaction.getUserData().startsWith("SVC"))
                 return "Bus #" + mTransaction.getUserData().substring(3, 7).replace(" ", "");

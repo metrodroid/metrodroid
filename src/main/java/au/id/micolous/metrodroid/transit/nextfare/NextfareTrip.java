@@ -24,7 +24,9 @@ import android.support.annotation.Nullable;
 
 import au.id.micolous.metrodroid.transit.Station;
 import au.id.micolous.metrodroid.transit.Trip;
+import au.id.micolous.metrodroid.transit.nextfare.record.NextfareTopupRecord;
 
+import java.util.Calendar;
 import java.util.GregorianCalendar;
 
 /**
@@ -72,79 +74,45 @@ public class NextfareTrip extends Trip implements Comparable<NextfareTrip> {
     }
 
     public NextfareTrip() {
+        mStartStation = -1;
+        mEndStation = -1;
+    }
+
+    public NextfareTrip(NextfareTopupRecord rec) {
+        mStartTime = rec.getTimestamp();
+        mEndTime = null;
+        mMode = Mode.TICKET_MACHINE;
+        mStartStation = -1;
+        mEndStation = -1;
+        mModeInt = 0;
+        mCost = rec.getCredit() * -1;
     }
 
     @Override
-    public long getTimestamp() {
-        if (mStartTime != null) {
-            return mStartTime.getTimeInMillis() / 1000;
-        } else {
-            return 0;
-        }
+    public Calendar getStartTimestamp() {
+        return mStartTime;
     }
 
     @Override
-    public long getExitTimestamp() {
-        if (mEndTime != null) {
-            return mEndTime.getTimeInMillis() / 1000;
-        } else {
-            return 0;
-        }
-    }
-
-    public GregorianCalendar getStartTime() {
-        if (mStartTime == null) {
-            return null;
-        }
-
-        return (GregorianCalendar) mStartTime.clone();
-    }
-
-    public GregorianCalendar getEndTime() {
-        if (mEndTime == null) {
-            return null;
-        }
-
-        return (GregorianCalendar) mEndTime.clone();
-    }
-
-    @Override
-    public String getRouteName() {
-        return null;
-    }
-
-    @Override
-    public String getShortAgencyName() {
-        return getAgencyName();
-    }
-
-    @Override
-    public String getAgencyName() {
-        return null;
+    public Calendar getEndTimestamp() {
+        return mEndTime;
     }
 
     @Override
     public String getStartStationName() {
+        if (mStartStation < 0) {
+            return null;
+        }
         return Integer.toString(mStartStation);
     }
 
     @Override
-    public Station getStartStation() {
-        return null;
-    }
-
-    @Override
     public String getEndStationName() {
-        if (mEndTime != null) {
+        if (mEndTime != null && mEndStation > -1) {
             return Integer.toString(mEndStation);
         } else {
             return null;
         }
-    }
-
-    @Override
-    public Station getEndStation() {
-        return null;
     }
 
     @Override
