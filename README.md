@@ -56,6 +56,7 @@ Card / Agency | Location | Notes
 [Go card][20] (Translink) | :australia: Brisbane and South East Queensland, Australia | :new: :closed_lock_with_key: `MFC`
 [Manly Fast Ferry][19] | :australia: Sydney, NSW, Australia | :new: :closed_lock_with_key: `MFC`
 [Matkakortti][16], [HSL][17] | :finland: Finland |
+[Metrocard][34] | :new_zealand: Christchurch, New Zealand | :new: :closed_lock_with_key:
 [Myki][21] | :australia: Melbourne (and surrounds), VIC, Australia | :new: `123`
 [MyWay][28] | :australia: Australian Capital Territory, Australia | :new: :closed_lock_with_key: `MFC`
 [NETS FlashPay][31] | :singapore: Singapore | 

@@ -24,6 +24,7 @@ import android.support.annotation.StringRes;
 
 import au.id.micolous.farebot.R;
 import au.id.micolous.metrodroid.card.CardType;
+import au.id.micolous.metrodroid.transit.chc_metrocard.ChcMetrocardTransitData;
 import au.id.micolous.metrodroid.transit.lax_tap.LaxTapTransitData;
 import au.id.micolous.metrodroid.transit.erg.ErgTransitData;
 import au.id.micolous.metrodroid.transit.manly_fast_ferry.ManlyFastFerryTransitData;
@@ -83,6 +84,13 @@ public class CardInfo {
     public static final CardInfo MANLY_FAST_FERRY = new CardInfo(R.drawable.manly_fast_ferry_card, ManlyFastFerryTransitData.NAME,
             R.string.location_sydney_australia,
             CardType.MifareClassic,
+            true
+    );
+
+    public static final CardInfo CHC_METROCARD = new CardInfo(R.drawable.chc_metrocard, ChcMetrocardTransitData.NAME,
+            R.string.location_christchurch_nz,
+            CardType.MifareClassic,
+            true,
             true
     );
 
@@ -173,6 +181,7 @@ public class CardInfo {
             HSL,
             ICOCA,
             MANLY_FAST_FERRY,
+            CHC_METROCARD, /* Metrocard */
             MYKI,
             MYWAY,
             NETS_FLASHPAY,
