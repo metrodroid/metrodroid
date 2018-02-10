@@ -27,6 +27,7 @@ import au.id.micolous.metrodroid.util.Utils;
 public class ErgBalanceRecord extends ErgRecord implements Comparable<ErgBalanceRecord> {
     private int mBalance;
     private int mVersion;
+    private int mAgency;
 
     protected ErgBalanceRecord() {
     }
@@ -34,8 +35,17 @@ public class ErgBalanceRecord extends ErgRecord implements Comparable<ErgBalance
     public static ErgBalanceRecord recordFromBytes(byte[] input) {
         //if (input[0] != 0x01) throw new AssertionError();
 
+        if (input[7] != 0x00 || input[8] != 0x00) {
+            // There is another record type that gets mixed in here, which has these
+            // bytes set to non-zero values. In that case, it is not the balance record.
+            return null;
+        }
+
         ErgBalanceRecord record = new ErgBalanceRecord();
-        record.mVersion = Utils.byteArrayToInt(input, 2, 1);
+        record.mVersion = Utils.byteArrayToInt(input, 1, 2);
+        // Present on MFF, not CHC Metrocard
+        record.mAgency = Utils.byteArrayToInt(input, 5, 2);
+
         record.mBalance = Utils.byteArrayToInt(input, 11, 4);
 
         return record;

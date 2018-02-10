@@ -44,6 +44,7 @@ import au.id.micolous.metrodroid.key.ClassicSectorKey;
 import au.id.micolous.metrodroid.transit.TransitData;
 import au.id.micolous.metrodroid.transit.TransitIdentity;
 import au.id.micolous.metrodroid.transit.bilhete_unico.BilheteUnicoSPTransitData;
+import au.id.micolous.metrodroid.transit.chc_metrocard.ChcMetrocardTransitData;
 import au.id.micolous.metrodroid.transit.lax_tap.LaxTapTransitData;
 import au.id.micolous.metrodroid.transit.erg.ErgTransitData;
 import au.id.micolous.metrodroid.transit.manly_fast_ferry.ManlyFastFerryTransitData;
@@ -339,6 +340,8 @@ public class ClassicCard extends Card {
             // Search through ERG on MIFARE Classic compatibles.
             if (ManlyFastFerryTransitData.check(this)) {
                 return ManlyFastFerryTransitData.parseTransitIdentity(this);
+            } else if (ChcMetrocardTransitData.check(this)) {
+                return ChcMetrocardTransitData.parseTransitIdentity(this);
             } else {
                 // Fallback
                 return ErgTransitData.parseTransitIdentity(this);
@@ -388,6 +391,8 @@ public class ClassicCard extends Card {
             // Search through ERG on MIFARE Classic compatibles.
             if (ManlyFastFerryTransitData.check(this)) {
                 return new ManlyFastFerryTransitData(this);
+            } else if (ChcMetrocardTransitData.check(this)) {
+                return new ChcMetrocardTransitData(this);
             } else {
                 // Fallback
                 return new ErgTransitData(this);

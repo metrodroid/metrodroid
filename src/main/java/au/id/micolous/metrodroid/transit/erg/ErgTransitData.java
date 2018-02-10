@@ -49,8 +49,7 @@ import au.id.micolous.farebot.R;
 /**
  * Transit data type for ERG/Videlli/Vix MIFARE Classic cards.
  *
- *
-
+ * Wiki: https://github.com/micolous/metrodroid/wiki/ERG-MFC
  */
 public class ErgTransitData extends TransitData {
     public static final String NAME = "ERG";
@@ -200,7 +199,6 @@ public class ErgTransitData extends TransitData {
     public Integer getBalance() {
         return mBalance;
     }
-
 
     @Override
     public String formatCurrencyString(int currency, boolean isBalance) {

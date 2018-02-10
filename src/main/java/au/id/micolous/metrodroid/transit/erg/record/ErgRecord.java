@@ -42,10 +42,11 @@ public class ErgRecord {
                 record = ErgMetadataRecord.recordFromBytes(input);
             }
         } else if (sectorIndex == 3) {
-            if (blockIndex == 0 || blockIndex == 2) {
-                record = ErgBalanceRecord.recordFromBytes(input);
-            }
-        } else if (sectorIndex >= 5 && sectorIndex <= 9) {
+            // Sometimes block 0 + 1, sometimes 1 + 2, sometimes 0 + 2...
+            record = ErgBalanceRecord.recordFromBytes(input);
+        } else if ((sectorIndex == 4 && blockIndex == 2)
+                || (sectorIndex >= 5 && sectorIndex <= 7)
+                || sectorIndex == 9) {
             record = ErgPurseRecord.recordFromBytes(input);
         }
 
