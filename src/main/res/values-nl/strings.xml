@@ -349,4 +349,6 @@
     <string name="mfu_detect">Bezig met detecteren van MIFARE Ultralight-kaartsoort…</string>
     <string name="mfu_reading">Bezig met lezen van MIFARE Ultralight-kaart…</string>
 
+    <string name="location_christchurch_nz">Christchurch, Nieuw-Zeeland</string>
+
     </resources>
