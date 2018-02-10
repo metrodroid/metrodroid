@@ -28,13 +28,14 @@ import android.os.Parcel;
 import android.support.annotation.Nullable;
 
 import au.id.micolous.metrodroid.card.desfire.files.DesfireRecord;
+import au.id.micolous.metrodroid.transit.CompatTrip;
 import au.id.micolous.metrodroid.transit.Station;
 import au.id.micolous.metrodroid.transit.Trip;
 import au.id.micolous.metrodroid.util.ImmutableMapBuilder;
 
 import java.util.Map;
 
-public class OrcaTrip extends Trip {
+public class OrcaTrip extends CompatTrip {
     public static final Creator<OrcaTrip> CREATOR = new Creator<OrcaTrip>() {
         public OrcaTrip createFromParcel(Parcel parcel) {
             return new OrcaTrip(parcel);
@@ -116,11 +117,6 @@ public class OrcaTrip extends Trip {
     @Override
     public long getTimestamp() {
         return mTimestamp;
-    }
-
-    @Override
-    public long getExitTimestamp() {
-        return 0;
     }
 
     @Override

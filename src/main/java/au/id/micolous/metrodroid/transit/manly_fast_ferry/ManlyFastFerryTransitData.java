@@ -16,36 +16,18 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-
 package au.id.micolous.metrodroid.transit.manly_fast_ferry;
 
 import android.os.Parcel;
-import android.support.annotation.Nullable;
 
-import au.id.micolous.metrodroid.card.UnauthorizedException;
-import au.id.micolous.metrodroid.card.classic.ClassicBlock;
-import au.id.micolous.metrodroid.card.classic.ClassicCard;
-import au.id.micolous.metrodroid.card.classic.ClassicSector;
-import au.id.micolous.metrodroid.transit.Refill;
-import au.id.micolous.metrodroid.transit.TransitData;
-import au.id.micolous.metrodroid.transit.TransitIdentity;
-import au.id.micolous.metrodroid.transit.Trip;
-import au.id.micolous.metrodroid.transit.manly_fast_ferry.record.ManlyFastFerryBalanceRecord;
-import au.id.micolous.metrodroid.transit.manly_fast_ferry.record.ManlyFastFerryMetadataRecord;
-import au.id.micolous.metrodroid.transit.manly_fast_ferry.record.ManlyFastFerryPurseRecord;
-import au.id.micolous.metrodroid.transit.manly_fast_ferry.record.ManlyFastFerryRecord;
-import au.id.micolous.metrodroid.ui.HeaderListItem;
-import au.id.micolous.metrodroid.ui.ListItem;
-import au.id.micolous.metrodroid.util.TripObfuscator;
-import au.id.micolous.metrodroid.util.Utils;
-
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
 import java.util.GregorianCalendar;
-import java.util.List;
 
-import au.id.micolous.farebot.R;
+import au.id.micolous.metrodroid.card.classic.ClassicCard;
+import au.id.micolous.metrodroid.transit.TransitIdentity;
+import au.id.micolous.metrodroid.transit.erg.ErgTransitData;
+import au.id.micolous.metrodroid.transit.erg.ErgTrip;
+import au.id.micolous.metrodroid.transit.erg.record.ErgMetadataRecord;
+import au.id.micolous.metrodroid.transit.erg.record.ErgPurseRecord;
 
 /**
  * Transit data type for Manly Fast Ferry Smartcard (Sydney, AU).
@@ -57,16 +39,10 @@ import au.id.micolous.farebot.R;
  * <p>
  * Documentation of format: https://github.com/micolous/metrodroid/wiki/Manly-Fast-Ferry
  */
-public class ManlyFastFerryTransitData extends TransitData {
+
+public class ManlyFastFerryTransitData extends ErgTransitData {
     public static final String NAME = "Manly Fast Ferry";
-    public static final byte[] SIGNATURE = {
-            0x32, 0x32, 0x00, 0x00, 0x00, 0x01, 0x01
-    };
-    private String mSerialNumber;
-    private GregorianCalendar mEpochDate;
-    private int mBalance;
-    private Trip[] mTrips;
-    private Refill[] mRefills;
+    private static final int AGENCY_ID = 0x0227;
 
     // Parcel
     public static final Creator<ManlyFastFerryTransitData> CREATOR = new Creator<ManlyFastFerryTransitData>() {
@@ -81,162 +57,37 @@ public class ManlyFastFerryTransitData extends TransitData {
         }
     };
 
-    @SuppressWarnings("UnusedDeclaration")
     public ManlyFastFerryTransitData(Parcel parcel) {
-        mSerialNumber = parcel.readString();
-        mEpochDate = new GregorianCalendar();
-        mEpochDate.setTimeInMillis(parcel.readLong());
-        mTrips = parcel.createTypedArray(ManlyFastFerryTrip.CREATOR);
-        mRefills = parcel.createTypedArray(ManlyFastFerryRefill.CREATOR);
+        super(parcel);
     }
 
-    // Decoder
     public ManlyFastFerryTransitData(ClassicCard card) {
-        ArrayList<ManlyFastFerryRecord> records = new ArrayList<>();
-
-        // Iterate through blocks on the card and deserialize all the binary data.
-        for (ClassicSector sector : card.getSectors()) {
-            for (ClassicBlock block : sector.getBlocks()) {
-                if (sector.getIndex() == 0 && block.getIndex() == 0) {
-                    continue;
-                }
-
-                if (block.getIndex() == 3) {
-                    continue;
-                }
-
-                ManlyFastFerryRecord record = ManlyFastFerryRecord.recordFromBytes(block.getData(), sector.getIndex(), block.getIndex());
-
-                if (record != null) {
-                    records.add(record);
-                }
-            }
-        }
-
-        // Now do a first pass for metadata and balance information.
-        ArrayList<ManlyFastFerryBalanceRecord> balances = new ArrayList<>();
-
-        for (ManlyFastFerryRecord record : records) {
-            if (record instanceof ManlyFastFerryMetadataRecord) {
-                mSerialNumber = ((ManlyFastFerryMetadataRecord) record).getCardSerial();
-                mEpochDate = ((ManlyFastFerryMetadataRecord) record).getEpochDate();
-            } else if (record instanceof ManlyFastFerryBalanceRecord) {
-                balances.add((ManlyFastFerryBalanceRecord) record);
-            }
-        }
-
-        if (balances.size() >= 1) {
-            Collections.sort(balances);
-            mBalance = balances.get(0).getBalance();
-        }
-
-        // Now generate a transaction list.
-        // These need the Epoch to be known first.
-        ArrayList<Trip> trips = new ArrayList<>();
-        ArrayList<Refill> refills = new ArrayList<>();
-
-        for (ManlyFastFerryRecord record : records) {
-            if (record instanceof ManlyFastFerryPurseRecord) {
-                ManlyFastFerryPurseRecord purseRecord = (ManlyFastFerryPurseRecord) record;
-
-                // Now convert this.
-                if (purseRecord.getIsCredit()) {
-                    // Credit
-                    refills.add(new ManlyFastFerryRefill(purseRecord, mEpochDate));
-                } else {
-                    // Debit
-                    trips.add(new ManlyFastFerryTrip(purseRecord, mEpochDate));
-                }
-            }
-        }
-
-        Collections.sort(trips, new Trip.Comparator());
-        Collections.sort(refills, new Refill.Comparator());
-
-        mTrips = trips.toArray(new Trip[trips.size()]);
-        mRefills = refills.toArray(new Refill[refills.size()]);
+        super(card);
     }
 
     public static boolean check(ClassicCard card) {
-        // TODO: Improve this check
-        // The card contains two copies of the card's serial number on the card.
-        // Lets use this for now to check that this is a Manly Fast Ferry card.
-        byte[] file1; //, file2;
-
-        try {
-            file1 = card.getSector(0).getBlock(1).getData();
-            //file2 = card.getSector(0).getBlock(2).getData();
-        } catch (UnauthorizedException ex) {
-            // These blocks of the card are not protected.
-            // This must not be a Manly Fast Ferry smartcard.
+        if (!ErgTransitData.check(card)) {
             return false;
         }
 
-        // Serial number is from byte 10 in file 1 and byte 7 of file 2, for 4 bytes.
-        // DISABLED: This check fails on 2012-era cards.
-        //if (!Arrays.equals(Arrays.copyOfRange(file1, 10, 14), Arrays.copyOfRange(file2, 7, 11))) {
-        //    return false;
-        //}
-
-        // Check a signature
-        return Arrays.equals(Arrays.copyOfRange(file1, 0, SIGNATURE.length), SIGNATURE);
+        ErgMetadataRecord metadataRecord = ErgTransitData.getMetadataRecord(card);
+        return metadataRecord != null && metadataRecord.getAgency() == AGENCY_ID;
     }
 
     public static TransitIdentity parseTransitIdentity(ClassicCard card) {
         byte[] file2 = card.getSector(0).getBlock(2).getData();
-        ManlyFastFerryRecord metadata = ManlyFastFerryRecord.recordFromBytes(file2, 0, 2);
-        if (!(metadata instanceof ManlyFastFerryMetadataRecord)) {
-            throw new AssertionError("Unexpected Manly record type: " + metadata.getClass().toString());
-        }
-        return new TransitIdentity(NAME, ((ManlyFastFerryMetadataRecord) metadata).getCardSerial());
-    }
-
-    public void writeToParcel(Parcel parcel, int flags) {
-        parcel.writeString(mSerialNumber);
-        parcel.writeLong(mEpochDate.getTimeInMillis());
-        parcel.writeTypedArray(mTrips, flags);
-        parcel.writeTypedArray(mRefills, flags);
+        ErgMetadataRecord metadata = ErgMetadataRecord.recordFromBytes(file2);
+        return new TransitIdentity(NAME, metadata.getCardSerialHex());
     }
 
     @Override
-    @Nullable
-    public Integer getBalance() {
-        return mBalance;
-    }
-
-    @Override
-    public String formatCurrencyString(int currency, boolean isBalance) {
-        return Utils.formatCurrencyString(currency, isBalance, "AUD");
-    }
-
-    // Structures
-    @Override
-    public String getSerialNumber() {
-        return mSerialNumber;
-    }
-
-    @Override
-    public Trip[] getTrips() {
-        return mTrips;
-    }
-
-    @Override
-    public Refill[] getRefills() {
-        return mRefills;
-    }
-
-    @Override
-    public List<ListItem> getInfo() {
-        ArrayList<ListItem> items = new ArrayList<>();
-        items.add(new HeaderListItem(R.string.general));
-        items.add(new ListItem(R.string.card_epoch,
-                Utils.longDateFormat(TripObfuscator.maybeObfuscateTS(mEpochDate))));
-
-        return items;
+    protected ErgTrip newTrip(ErgPurseRecord purse, GregorianCalendar epoch) {
+        return new ManlyFastFerryTrip(purse, epoch);
     }
 
     @Override
     public String getCardName() {
         return NAME;
     }
+
 }

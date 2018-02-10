@@ -27,6 +27,7 @@ import android.support.annotation.Nullable;
 import android.text.TextUtils;
 import android.util.Log;
 
+import au.id.micolous.metrodroid.transit.CompatTrip;
 import au.id.micolous.metrodroid.transit.Station;
 import au.id.micolous.metrodroid.transit.Trip;
 
@@ -278,11 +279,6 @@ public class OVChipTrip extends Trip {
     }
 
     @Override
-    public String getShortAgencyName() {
-        return OVChipTransitData.getShortAgencyName(mAgency);
-    }
-
-    @Override
     public String getStartStationName() {
         if (mStartStation != null && !TextUtils.isEmpty(mStartStation.getStationName())) {
             return mStartStation.getStationName();
@@ -333,18 +329,13 @@ public class OVChipTrip extends Trip {
     }
 
     @Override
-    public long getTimestamp() {
-        if (mTimestamp != null)
-            return mTimestamp.getTimeInMillis() / 1000;
-        else
-            return 0;
+    public Calendar getStartTimestamp() {
+        return mTimestamp;
     }
 
-    public long getExitTimestamp() {
-        if (mExitTimestamp != null)
-            return mExitTimestamp.getTimeInMillis() / 1000;
-        else
-            return 0;
+    @Override
+    public Calendar getEndTimestamp() {
+        return mExitTimestamp;
     }
 
     public boolean hasTime() {

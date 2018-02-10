@@ -1,7 +1,7 @@
 /*
  * ManlyFastFerryTrip.java
  *
- * Copyright 2015 Michael Farrell <micolous+git@gmail.com>
+ * Copyright 2015-2018 Michael Farrell <micolous+git@gmail.com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -23,9 +23,9 @@ import android.os.Parcel;
 import android.os.Parcelable;
 import android.support.annotation.Nullable;
 
-import au.id.micolous.metrodroid.transit.Station;
 import au.id.micolous.metrodroid.transit.Trip;
-import au.id.micolous.metrodroid.transit.manly_fast_ferry.record.ManlyFastFerryPurseRecord;
+import au.id.micolous.metrodroid.transit.erg.ErgTrip;
+import au.id.micolous.metrodroid.transit.erg.record.ErgPurseRecord;
 
 import java.util.Calendar;
 import java.util.GregorianCalendar;
@@ -34,7 +34,7 @@ import java.util.GregorianCalendar;
  * Trips on the card are "purse debits", and it is not possible to tell it apart from non-ticket
  * usage (like cafe purchases).
  */
-public class ManlyFastFerryTrip extends Trip {
+public class ManlyFastFerryTrip extends ErgTrip {
     public static final Parcelable.Creator<ManlyFastFerryTrip> CREATOR = new Parcelable.Creator<ManlyFastFerryTrip>() {
 
         public ManlyFastFerryTrip createFromParcel(Parcel in) {
@@ -45,83 +45,13 @@ public class ManlyFastFerryTrip extends Trip {
             return new ManlyFastFerryTrip[size];
         }
     };
-    private GregorianCalendar mEpoch;
-    private ManlyFastFerryPurseRecord mPurse;
-
-    public ManlyFastFerryTrip(ManlyFastFerryPurseRecord purse, GregorianCalendar epoch) {
-        mPurse = purse;
-        mEpoch = epoch;
-    }
 
     public ManlyFastFerryTrip(Parcel parcel) {
-        mPurse = new ManlyFastFerryPurseRecord(parcel);
-        mEpoch = new GregorianCalendar();
-        mEpoch.setTimeInMillis(parcel.readLong());
+        super(parcel);
     }
 
-    // Implemented functionality.
-    @Override
-    public long getTimestamp() {
-        GregorianCalendar ts = new GregorianCalendar();
-        ts.setTimeInMillis(mEpoch.getTimeInMillis());
-        ts.add(Calendar.DATE, mPurse.getDay());
-        ts.add(Calendar.MINUTE, mPurse.getMinute());
-
-        return ts.getTimeInMillis() / 1000;
-    }
-
-    @Override
-    public long getExitTimestamp() {
-        // This never gets used, except by Clipper, so stub.
-        return 0;
-    }
-
-    @Override
-    public String getRouteName() {
-        return null;
-    }
-
-    @Override
-    public String getAgencyName() {
-        // There is only one agency on the card, don't show anything.
-        return null;
-    }
-
-    @Override
-    public String getShortAgencyName() {
-        // There is only one agency on the card, don't show anything.
-        return null;
-    }
-
-    @Override
-    public String getStartStationName() {
-        return null;
-    }
-
-    @Override
-    public Station getStartStation() {
-        return null;
-    }
-
-    @Override
-    public String getEndStationName() {
-        return null;
-    }
-
-    @Override
-    public Station getEndStation() {
-        return null;
-    }
-
-    @Override
-    public boolean hasFare() {
-        return true;
-    }
-
-    @Nullable
-    @Override
-    public Integer getFare() {
-        return mPurse.getTransactionValue();
+    public ManlyFastFerryTrip(ErgPurseRecord purse, GregorianCalendar epoch) {
+        super(purse, epoch);
     }
 
     @Override
@@ -130,22 +60,4 @@ public class ManlyFastFerryTrip extends Trip {
         // Even when you buy things at the cafe.
         return Mode.FERRY;
     }
-
-    @Override
-    public boolean hasTime() {
-        return true;
-    }
-
-    @Override
-    public int describeContents() {
-        return 0;
-    }
-
-    @Override
-    public void writeToParcel(Parcel parcel, int i) {
-        mPurse.writeToParcel(parcel, i);
-        parcel.writeLong(mEpoch.getTimeInMillis());
-    }
-
-
 }

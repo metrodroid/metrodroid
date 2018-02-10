@@ -17,7 +17,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package au.id.micolous.metrodroid.transit.manly_fast_ferry.record;
+package au.id.micolous.metrodroid.transit.erg.record;
 
 import android.os.Parcel;
 import android.os.Parcelable;
@@ -28,27 +28,41 @@ import java.util.Locale;
 
 /**
  * Represents a "purse" type record.
+ *
+ * These are simple transactions where there is either a credit or debit from the purse value.
  */
-public class ManlyFastFerryPurseRecord extends ManlyFastFerryRegularRecord implements Parcelable {
+public class ErgPurseRecord extends ErgRecord implements Parcelable {
     private int mDay;
     private int mMinute;
     private boolean mIsCredit;
     private int mTransactionValue;
 
-    protected ManlyFastFerryPurseRecord() {
+    protected ErgPurseRecord() {
     }
 
-    public ManlyFastFerryPurseRecord(Parcel parcel) {
+    public ErgPurseRecord(Parcel parcel) {
         mDay = parcel.readInt();
         mMinute = parcel.readInt();
         mIsCredit = parcel.readInt() == 1;
         mTransactionValue = parcel.readInt();
     }
 
-    public static ManlyFastFerryPurseRecord recordFromBytes(byte[] input) {
+    public static final Creator<ErgPurseRecord> CREATOR = new Creator<ErgPurseRecord>() {
+        @Override
+        public ErgPurseRecord createFromParcel(Parcel in) {
+            return new ErgPurseRecord(in);
+        }
+
+        @Override
+        public ErgPurseRecord[] newArray(int size) {
+            return new ErgPurseRecord[size];
+        }
+    };
+
+    public static ErgPurseRecord recordFromBytes(byte[] input) {
         //if (input[0] != 0x02) throw new AssertionError("PurseRecord input[0] != 0x02");
 
-        ManlyFastFerryPurseRecord record = new ManlyFastFerryPurseRecord();
+        ErgPurseRecord record = new ErgPurseRecord();
         if (input[3] == 0x09) {
             record.mIsCredit = false;
         } else if (input[3] == 0x08) {

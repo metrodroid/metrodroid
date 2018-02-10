@@ -4,6 +4,9 @@ import android.os.Parcel;
 import android.os.Parcelable;
 import android.support.annotation.Nullable;
 
+import java.util.Calendar;
+import java.util.GregorianCalendar;
+
 import au.id.micolous.metrodroid.transit.Station;
 import au.id.micolous.metrodroid.transit.Trip;
 
@@ -11,8 +14,8 @@ import au.id.micolous.metrodroid.transit.Trip;
  * Special wrapper for Trip that handles obfuscation of Trip data.
  */
 class ObfuscatedTrip extends Trip implements Parcelable {
-    private long mTimestamp = 0;
-    private long mExitTimestamp = 0;
+    private Calendar mStartTimestamp;
+    private Calendar mEndTimestamp;
 
     private String mRouteName;
     private String mAgencyName;
@@ -37,8 +40,22 @@ class ObfuscatedTrip extends Trip implements Parcelable {
     };
 
     private ObfuscatedTrip(Parcel parcel) {
-        mTimestamp = parcel.readLong();
-        mExitTimestamp = parcel.readLong();
+        long startTimestamp = parcel.readLong();
+        if (startTimestamp != 0) {
+            mStartTimestamp = new GregorianCalendar();
+            mStartTimestamp.setTimeInMillis(startTimestamp);
+        } else {
+            mStartTimestamp = null;
+        }
+
+        long endTimestamp = parcel.readLong();
+        if (endTimestamp != 0) {
+            mEndTimestamp = new GregorianCalendar();
+            mEndTimestamp.setTimeInMillis(endTimestamp);
+        } else {
+            mEndTimestamp = null;
+        }
+
         mRouteName = parcel.readString();
         mAgencyName = parcel.readString();
         mShortAgencyName = parcel.readString();
@@ -60,8 +77,8 @@ class ObfuscatedTrip extends Trip implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel parcel, int i) {
-        parcel.writeLong(mTimestamp);
-        parcel.writeLong(mExitTimestamp);
+        parcel.writeLong(mStartTimestamp != null ? mStartTimestamp.getTimeInMillis() : 0);
+        parcel.writeLong(mEndTimestamp != null ? mEndTimestamp.getTimeInMillis() : 0);
         parcel.writeString(mRouteName);
         parcel.writeString(mAgencyName);
         parcel.writeString(mShortAgencyName);
@@ -81,12 +98,14 @@ class ObfuscatedTrip extends Trip implements Parcelable {
     }
 
     ObfuscatedTrip(Trip realTrip, long timeDelta, int fareOffset, double fareMultiplier) {
-        if (realTrip.getTimestamp() != 0) {
-            mTimestamp = realTrip.getTimestamp() + timeDelta;
+        if (realTrip.getStartTimestamp() != null) {
+            mStartTimestamp = new GregorianCalendar();
+            mStartTimestamp.setTimeInMillis(realTrip.getStartTimestamp().getTimeInMillis() + timeDelta);
         }
 
-        if (realTrip.getExitTimestamp() != 0) {
-            mExitTimestamp = realTrip.getExitTimestamp() + timeDelta;
+        if (realTrip.getEndTimestamp() != null) {
+            mEndTimestamp = new GregorianCalendar();
+            mEndTimestamp.setTimeInMillis(realTrip.getEndTimestamp().getTimeInMillis() + timeDelta);
         }
 
         mRouteName = realTrip.getRouteName();
@@ -114,13 +133,13 @@ class ObfuscatedTrip extends Trip implements Parcelable {
     }
 
     @Override
-    public long getTimestamp() {
-        return mTimestamp;
+    public Calendar getStartTimestamp() {
+        return mStartTimestamp;
     }
 
     @Override
-    public long getExitTimestamp() {
-        return mExitTimestamp;
+    public Calendar getEndTimestamp() {
+        return mEndTimestamp;
     }
 
     @Override

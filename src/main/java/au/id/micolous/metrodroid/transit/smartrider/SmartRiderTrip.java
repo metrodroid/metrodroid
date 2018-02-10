@@ -4,6 +4,7 @@ import android.os.Parcel;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
+import au.id.micolous.metrodroid.transit.CompatTrip;
 import au.id.micolous.metrodroid.transit.Station;
 import au.id.micolous.metrodroid.transit.Trip;
 
@@ -11,7 +12,7 @@ import au.id.micolous.metrodroid.transit.Trip;
  * Trip on SmartRider / MyWay
  */
 
-public class SmartRiderTrip extends Trip implements Comparable<SmartRiderTrip> {
+public class SmartRiderTrip extends CompatTrip implements Comparable<SmartRiderTrip> {
     public static final Creator<SmartRiderTrip> CREATOR = new Creator<SmartRiderTrip>() {
 
         public SmartRiderTrip createFromParcel(Parcel in) {
@@ -62,11 +63,6 @@ public class SmartRiderTrip extends Trip implements Comparable<SmartRiderTrip> {
     }
 
     @Override
-    public String getShortAgencyName() {
-        return getAgencyName();
-    }
-
-    @Override
     public String getAgencyName() {
         switch (mCardType) {
             case MYWAY:
@@ -78,26 +74,6 @@ public class SmartRiderTrip extends Trip implements Comparable<SmartRiderTrip> {
             default:
                 return "";
         }
-    }
-
-    @Override
-    public String getStartStationName() {
-        return null;
-    }
-
-    @Override
-    public Station getStartStation() {
-        return null;
-    }
-
-    @Override
-    public String getEndStationName() {
-        return null;
-    }
-
-    @Override
-    public Station getEndStation() {
-        return null;
     }
 
     @Override

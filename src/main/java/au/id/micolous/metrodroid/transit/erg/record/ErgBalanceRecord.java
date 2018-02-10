@@ -17,24 +17,24 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package au.id.micolous.metrodroid.transit.manly_fast_ferry.record;
+package au.id.micolous.metrodroid.transit.erg.record;
 
 import au.id.micolous.metrodroid.util.Utils;
 
 /**
  * Represents a "preamble" type record.
  */
-public class ManlyFastFerryBalanceRecord extends ManlyFastFerryRecord implements Comparable<ManlyFastFerryBalanceRecord> {
+public class ErgBalanceRecord extends ErgRecord implements Comparable<ErgBalanceRecord> {
     private int mBalance;
     private int mVersion;
 
-    protected ManlyFastFerryBalanceRecord() {
+    protected ErgBalanceRecord() {
     }
 
-    public static ManlyFastFerryBalanceRecord recordFromBytes(byte[] input) {
+    public static ErgBalanceRecord recordFromBytes(byte[] input) {
         //if (input[0] != 0x01) throw new AssertionError();
 
-        ManlyFastFerryBalanceRecord record = new ManlyFastFerryBalanceRecord();
+        ErgBalanceRecord record = new ErgBalanceRecord();
         record.mVersion = Utils.byteArrayToInt(input, 2, 1);
         record.mBalance = Utils.byteArrayToInt(input, 11, 4);
 
@@ -55,7 +55,7 @@ public class ManlyFastFerryBalanceRecord extends ManlyFastFerryRecord implements
     }
 
     @Override
-    public int compareTo(ManlyFastFerryBalanceRecord rhs) {
+    public int compareTo(ErgBalanceRecord rhs) {
         // So sorting works, we reverse the order so highest number is first.
         return Integer.valueOf(rhs.mVersion).compareTo(this.mVersion);
     }

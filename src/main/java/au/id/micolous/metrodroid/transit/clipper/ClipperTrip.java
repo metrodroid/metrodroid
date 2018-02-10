@@ -26,10 +26,11 @@ package au.id.micolous.metrodroid.transit.clipper;
 import android.os.Parcel;
 import android.support.annotation.Nullable;
 
+import au.id.micolous.metrodroid.transit.CompatTrip;
 import au.id.micolous.metrodroid.transit.Station;
 import au.id.micolous.metrodroid.transit.Trip;
 
-public class ClipperTrip extends Trip {
+public class ClipperTrip extends CompatTrip {
     public static final Creator<ClipperTrip> CREATOR = new Creator<ClipperTrip>() {
         public ClipperTrip createFromParcel(Parcel parcel) {
             return new ClipperTrip(parcel);

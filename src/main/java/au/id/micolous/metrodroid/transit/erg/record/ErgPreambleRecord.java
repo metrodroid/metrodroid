@@ -1,5 +1,5 @@
 /*
- * ManlyFastFerryPreambleRecord.java
+ * ErgPreambleRecord.java
  *
  * Copyright 2015 Michael Farrell <micolous+git@gmail.com>
  *
@@ -17,9 +17,9 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package au.id.micolous.metrodroid.transit.manly_fast_ferry.record;
+package au.id.micolous.metrodroid.transit.erg.record;
 
-import au.id.micolous.metrodroid.transit.manly_fast_ferry.ManlyFastFerryTransitData;
+import au.id.micolous.metrodroid.transit.erg.ErgTransitData;
 import au.id.micolous.metrodroid.util.Utils;
 
 import java.util.Arrays;
@@ -27,18 +27,18 @@ import java.util.Arrays;
 /**
  * Represents a "preamble" type record.
  */
-public class ManlyFastFerryPreambleRecord extends ManlyFastFerryRecord {
+public class ErgPreambleRecord extends ErgRecord {
     static final byte[] OLD_CARD_ID = {0x00, 0x00, 0x00};
     private String mCardSerial;
 
-    protected ManlyFastFerryPreambleRecord() {
+    protected ErgPreambleRecord() {
     }
 
-    public static ManlyFastFerryPreambleRecord recordFromBytes(byte[] input) {
-        ManlyFastFerryPreambleRecord record = new ManlyFastFerryPreambleRecord();
+    public static ErgPreambleRecord recordFromBytes(byte[] input) {
+        ErgPreambleRecord record = new ErgPreambleRecord();
 
         // Check that the record is valid for a preamble
-        if (!Arrays.equals(Arrays.copyOfRange(input, 0, ManlyFastFerryTransitData.SIGNATURE.length), ManlyFastFerryTransitData.SIGNATURE)) {
+        if (!Arrays.equals(Arrays.copyOfRange(input, 0, ErgTransitData.SIGNATURE.length), ErgTransitData.SIGNATURE)) {
             throw new IllegalArgumentException("Preamble signature does not match");
         }
 

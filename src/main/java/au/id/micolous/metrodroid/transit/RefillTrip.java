@@ -1,7 +1,7 @@
 /*
  * RefillTrip.java
  *
- * Copyright 2016 Michael Farrell <micolous+git@gmail.com>
+ * Copyright 2016-2018 Michael Farrell <micolous+git@gmail.com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -19,14 +19,17 @@
 package au.id.micolous.metrodroid.transit;
 
 import android.os.Parcel;
+import android.os.Parcelable;
 import android.support.annotation.Nullable;
 
 /**
  * Wrapper around Refills to make them like Trips, so Trips become like history.  This is similar
  * to what the Japanese cards (Edy, Suica) already had implemented for themselves.
+ *
+ * Future card implementations should avoid using the Refill type, and just use Trips.
  */
-public class RefillTrip extends Trip {
-    protected Refill mRefill;
+public class RefillTrip extends CompatTrip {
+    private Refill mRefill;
 
     public RefillTrip(Refill refill) {
         this.mRefill = refill;
@@ -43,11 +46,6 @@ public class RefillTrip extends Trip {
     }
 
     @Override
-    public String getRouteName() {
-        return null;
-    }
-
-    @Override
     public String getAgencyName() {
         return mRefill.getAgencyName();
     }
@@ -61,26 +59,6 @@ public class RefillTrip extends Trip {
     @Override
     public Integer getFare() {
         return -mRefill.getAmount();
-    }
-
-    @Override
-    public String getStartStationName() {
-        return null;
-    }
-
-    @Override
-    public Station getStartStation() {
-        return null;
-    }
-
-    @Override
-    public String getEndStationName() {
-        return null;
-    }
-
-    @Override
-    public Station getEndStation() {
-        return null;
     }
 
     @Override

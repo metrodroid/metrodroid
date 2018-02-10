@@ -25,6 +25,7 @@ import android.support.annotation.Nullable;
 import au.id.micolous.metrodroid.transit.Station;
 import au.id.micolous.metrodroid.transit.Trip;
 
+import java.util.Calendar;
 import java.util.GregorianCalendar;
 
 /**
@@ -75,62 +76,18 @@ public class NextfareTrip extends Trip implements Comparable<NextfareTrip> {
     }
 
     @Override
-    public long getTimestamp() {
-        if (mStartTime != null) {
-            return mStartTime.getTimeInMillis() / 1000;
-        } else {
-            return 0;
-        }
+    public Calendar getStartTimestamp() {
+        return mStartTime;
     }
 
     @Override
-    public long getExitTimestamp() {
-        if (mEndTime != null) {
-            return mEndTime.getTimeInMillis() / 1000;
-        } else {
-            return 0;
-        }
-    }
-
-    public GregorianCalendar getStartTime() {
-        if (mStartTime == null) {
-            return null;
-        }
-
-        return (GregorianCalendar) mStartTime.clone();
-    }
-
-    public GregorianCalendar getEndTime() {
-        if (mEndTime == null) {
-            return null;
-        }
-
-        return (GregorianCalendar) mEndTime.clone();
-    }
-
-    @Override
-    public String getRouteName() {
-        return null;
-    }
-
-    @Override
-    public String getShortAgencyName() {
-        return getAgencyName();
-    }
-
-    @Override
-    public String getAgencyName() {
-        return null;
+    public Calendar getEndTimestamp() {
+        return mEndTime;
     }
 
     @Override
     public String getStartStationName() {
         return Integer.toString(mStartStation);
-    }
-
-    @Override
-    public Station getStartStation() {
-        return null;
     }
 
     @Override
@@ -140,11 +97,6 @@ public class NextfareTrip extends Trip implements Comparable<NextfareTrip> {
         } else {
             return null;
         }
-    }
-
-    @Override
-    public Station getEndStation() {
-        return null;
     }
 
     @Override

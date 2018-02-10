@@ -22,13 +22,14 @@ import android.os.Parcel;
 import android.support.annotation.Nullable;
 
 import au.id.micolous.metrodroid.card.desfire.files.DesfireRecord;
+import au.id.micolous.metrodroid.transit.CompatTrip;
 import au.id.micolous.metrodroid.transit.Station;
 import au.id.micolous.metrodroid.transit.Trip;
 
 import au.id.micolous.farebot.R;
 import au.id.micolous.metrodroid.MetrodroidApplication;
 
-public class HSLTrip extends Trip {
+public class HSLTrip extends CompatTrip {
     public static final Creator<HSLTrip> CREATOR = new Creator<HSLTrip>() {
         public HSLTrip createFromParcel(Parcel parcel) {
             return new HSLTrip(parcel);
@@ -98,11 +99,6 @@ public class HSLTrip extends Trip {
     }
 
     @Override
-    public long getExitTimestamp() {
-        return 0;
-    }
-
-    @Override
     public String getAgencyName() {
         MetrodroidApplication app = MetrodroidApplication.getInstance();
         String pax = app.getString(R.string.hsl_person_format, mPax);
@@ -114,11 +110,6 @@ public class HSLTrip extends Trip {
             String type = app.getString(R.string.hsl_pass_ticket);
             return String.format("%s, %s", type, pax);
         }
-    }
-
-    @Override
-    public String getShortAgencyName() {
-        return getAgencyName();
     }
 
     @Override
@@ -139,16 +130,6 @@ public class HSLTrip extends Trip {
     @Override
     public Integer getFare() {
         return mFare;
-    }
-
-    @Override
-    public String getEndStationName() {
-        return null;
-    }
-
-    @Override
-    public Station getEndStation() {
-        return null;
     }
 
     @Override
@@ -177,16 +158,6 @@ public class HSLTrip extends Trip {
         if (mVehicleNumber > -1)
             return mVehicleNumber;
         return mPax;
-    }
-
-    @Override
-    public String getStartStationName() {
-        return null;
-    }
-
-    @Override
-    public Station getStartStation() {
-        return null;
     }
 
     public void writeToParcel(Parcel parcel, int flags) {
