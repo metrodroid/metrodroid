@@ -64,9 +64,9 @@ Meer details: https://github.com/micolous/metrodroid/wiki/Changelog</string>
 \nMeer details: https://github.com/micolous/metrodroid/wiki/Changelog</string>
 
     <string name="market_changelog_33">* Lost meerdere problemen op met MIFARE Ultralight-kaarten. 
-\n* Er wordt meer informatie weergegeven tijdens het lezen van een kaart.
-\n* Opal: omgaan met onbekende status 0xc.
-\n
+\n* Er wordt meer informatie weergegeven tijdens het lezen van een kaart. 
+\n* Opal: omgaan met onbekende status 0xc. 
+\n 
 \nMeer details: https://github.com/micolous/metrodroid/wiki/Changelog</string>
 
     </resources>
