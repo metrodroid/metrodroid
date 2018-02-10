@@ -28,6 +28,7 @@ import java.util.GregorianCalendar;
  * New card implementations should avoid using this class, and implement get{Start,End}Timestamp for
  * themselves.
  */
+@Deprecated
 public abstract class CompatTrip extends Trip {
     public Calendar getStartTimestamp() {
         // Compatibility layer, can be overridden if working with Calendar objects directly.

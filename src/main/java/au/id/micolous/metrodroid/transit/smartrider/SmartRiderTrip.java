@@ -4,6 +4,9 @@ import android.os.Parcel;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
+import java.util.Calendar;
+import java.util.GregorianCalendar;
+
 import au.id.micolous.metrodroid.transit.CompatTrip;
 import au.id.micolous.metrodroid.transit.Station;
 import au.id.micolous.metrodroid.transit.Trip;
@@ -12,7 +15,7 @@ import au.id.micolous.metrodroid.transit.Trip;
  * Trip on SmartRider / MyWay
  */
 
-public class SmartRiderTrip extends CompatTrip implements Comparable<SmartRiderTrip> {
+public class SmartRiderTrip extends Trip {
     public static final Creator<SmartRiderTrip> CREATOR = new Creator<SmartRiderTrip>() {
 
         public SmartRiderTrip createFromParcel(Parcel in) {
@@ -25,36 +28,31 @@ public class SmartRiderTrip extends CompatTrip implements Comparable<SmartRiderT
     };
 
     protected SmartRiderTransitData.CardType mCardType;
-    protected long mStartTime;
-    protected long mEndTime;
+    protected Calendar mStartTime;
+    protected Calendar mEndTime;
     protected String mRouteNumber;
     protected int mCost;
 
     public SmartRiderTrip(Parcel parcel) {
         mCardType = SmartRiderTransitData.CardType.valueOf(parcel.readString());
-        mStartTime = parcel.readLong();
-        mEndTime = parcel.readLong();
+        long startTime = parcel.readLong();
+        if (startTime != 0) {
+            mStartTime = new GregorianCalendar();
+            mStartTime.setTimeInMillis(startTime);
+        }
+
+        long endTime = parcel.readLong();
+        if (endTime != 0) {
+            mEndTime = new GregorianCalendar();
+            mEndTime.setTimeInMillis(endTime);
+        }
+
         mCost = parcel.readInt();
         mRouteNumber = parcel.readString();
     }
 
     public SmartRiderTrip(SmartRiderTransitData.CardType cardType) {
         mCardType = cardType;
-    }
-
-    @Override
-    public int compareTo(@NonNull SmartRiderTrip other) {
-        return (new Long(this.mStartTime)).compareTo(other.mStartTime);
-    }
-
-    @Override
-    public long getTimestamp() {
-        return mStartTime;
-    }
-
-    @Override
-    public long getExitTimestamp() {
-        return mEndTime;
     }
 
     @Override
@@ -111,7 +109,17 @@ public class SmartRiderTrip extends CompatTrip implements Comparable<SmartRiderT
 
     @Override
     public boolean hasTime() {
-        return mStartTime != 0;
+        return mStartTime != null;
+    }
+
+    @Override
+    public Calendar getStartTimestamp() {
+        return mStartTime;
+    }
+
+    @Override
+    public Calendar getEndTimestamp() {
+        return mEndTime;
     }
 
     @Override
@@ -122,8 +130,8 @@ public class SmartRiderTrip extends CompatTrip implements Comparable<SmartRiderT
     @Override
     public void writeToParcel(Parcel parcel, int i) {
         parcel.writeString(mCardType.toString());
-        parcel.writeLong(mStartTime);
-        parcel.writeLong(mEndTime);
+        parcel.writeLong(mStartTime == null ? 0 : mStartTime.getTimeInMillis());
+        parcel.writeLong(mEndTime == null ? 0 : mEndTime.getTimeInMillis());
         parcel.writeInt(mCost);
         parcel.writeString(mRouteNumber);
     }

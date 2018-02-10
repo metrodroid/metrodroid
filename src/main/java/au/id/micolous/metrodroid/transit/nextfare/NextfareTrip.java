@@ -24,6 +24,7 @@ import android.support.annotation.Nullable;
 
 import au.id.micolous.metrodroid.transit.Station;
 import au.id.micolous.metrodroid.transit.Trip;
+import au.id.micolous.metrodroid.transit.nextfare.record.NextfareTopupRecord;
 
 import java.util.Calendar;
 import java.util.GregorianCalendar;
@@ -73,6 +74,18 @@ public class NextfareTrip extends Trip implements Comparable<NextfareTrip> {
     }
 
     public NextfareTrip() {
+        mStartStation = -1;
+        mEndStation = -1;
+    }
+
+    public NextfareTrip(NextfareTopupRecord rec) {
+        mStartTime = rec.getTimestamp();
+        mEndTime = null;
+        mMode = Mode.TICKET_MACHINE;
+        mStartStation = -1;
+        mEndStation = -1;
+        mModeInt = 0;
+        mCost = rec.getCredit() * -1;
     }
 
     @Override
@@ -87,12 +100,15 @@ public class NextfareTrip extends Trip implements Comparable<NextfareTrip> {
 
     @Override
     public String getStartStationName() {
+        if (mStartStation < 0) {
+            return null;
+        }
         return Integer.toString(mStartStation);
     }
 
     @Override
     public String getEndStationName() {
-        if (mEndTime != null) {
+        if (mEndTime != null && mEndStation > -1) {
             return Integer.toString(mEndStation);
         } else {
             return null;
