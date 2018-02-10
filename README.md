@@ -52,11 +52,12 @@ Card / Agency | Location | Notes
 [Bilhete Único][30] | :brazil: São Paulo, Brazil | :closed_lock_with_key: `MFC` `FALLBACK`
 [Clipper][1] | :us: San Francisco, CA, USA | 
 [Cubic Nextfare][33] | :earth_americas: _many locations_ | :new: :closed_lock_with_key: `MFC`
+[Edy][12] | :jp: Japan
 [EZ-Link][7] | :singapore: Singapore | `CEPAS`
-[Go card][20] (Translink) | :australia: Brisbane and South East Queensland, Australia | :new: :closed_lock_with_key: `MFC`
+[Go card][20] | :australia: Brisbane and South East Queensland, Australia | :new: :closed_lock_with_key: `MFC`
 [Manly Fast Ferry][19] | :australia: Sydney, NSW, Australia | :new: :closed_lock_with_key: `MFC`
 [Matkakortti][16], [HSL][17] | :finland: Finland |
-[Metrocard][34] | :new_zealand: Christchurch, New Zealand | :new: :closed_lock_with_key:
+[Metrocard][34] | :new_zealand: Christchurch, New Zealand | :new: :closed_lock_with_key: `MFC`
 [Myki][21] | :australia: Melbourne (and surrounds), VIC, Australia | :new: `123`
 [MyWay][28] | :australia: Australian Capital Territory, Australia | :new: :closed_lock_with_key: `MFC`
 [NETS FlashPay][31] | :singapore: Singapore | 
@@ -66,7 +67,7 @@ Card / Agency | Location | Notes
 [OV-chipkaart][32] | :netherlands: Netherlands | :closed_lock_with_key: `MFC`
 [Shenzhen Tong][27] | :cn: Shenzhen, Guangdong Province, China | :new:
 [SmartRider][29] | :australia: Western Australia, Australia | :new: :closed_lock_with_key: `MFC`
-[Suica][9], [ICOCA][10], [PASMO][11], [Edy][12] | :jp: Japan 
+[Suica][9], [ICOCA][10], [PASMO][11] | :jp: Japan
 [Transit Access Pass][26] | :us: Los Angeles, CA, USA | :new: :closed_lock_with_key: `MFC`
 
 Note | Meaning
