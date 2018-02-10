@@ -159,4 +159,4 @@ This software and it's authors are not associated with any public transit agency
 [31]: http://www.netsflashpay.com.sg/
 [32]: http://www.ov-chipkaart.nl/
 [33]: https://github.com/micolous/metrodroid/wiki/Cubic-Nextfare-MFC
-
+[34]: http://www.metroinfo.co.nz/
