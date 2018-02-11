@@ -26,7 +26,9 @@ import java.util.Calendar;
 import java.util.GregorianCalendar;
 
 /**
- * Represents a "preamble" type record.
+ * Represents a metadata record.
+ *
+ * https://github.com/micolous/metrodroid/wiki/ERG-MFC#metadata-record
  */
 public class ErgMetadataRecord extends ErgRecord {
     private static final GregorianCalendar MANLY_BASE_EPOCH = new GregorianCalendar(2000, Calendar.JANUARY, 1);

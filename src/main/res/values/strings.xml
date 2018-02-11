@@ -438,7 +438,7 @@
 
     <!--
         Cubic Nextfare
-        These are deliberately seperated, but are used for generic fields across many systems.
+        These are deliberately separated, but are used for generic fields across many systems.
     -->
     <!-- TRANSLATORS: "Cubic Nextfare" is the name of a ticketing system product, and should not be literally translated. -->
     <string name="nextfare">Cubic Nextfare</string>
@@ -455,5 +455,10 @@
         Bilhete Único
     -->
     <string name="card_note_bilhete_unico">Must be selected as fallback reader in the preferences.</string>
+
+    <!--
+        ERG
+    -->
+    <string name="erg_agency_id">Agency ID</string>
 
 </resources>
