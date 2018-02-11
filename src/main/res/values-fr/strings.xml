@@ -166,10 +166,10 @@
     <string name="felica_terminal_deposit_quick_charge">Machine de recharge rapide</string>
     <string name="felica_terminal_tvm_tokyo_monorail">Horodateur du Tokyo Monorail</string>
     <string name="felica_terminal_tvm_etc">Horodateur, etc..</string>
-    <string name="felica_terminal_ticket_gate">Portique</string>
-    <string name="felica_terminal_simple_ticket_gate">Portail de tiquet simple</string>
-    <string name="felica_terminal_booth">Stand</string>
-    <string name="felica_terminal_booth_green">Stand (Green)</string>
+    <string name="felica_terminal_turnstile">Portique</string>
+    <string name="felica_terminal_ticket_validator">Portail de tiquet simple</string>
+    <string name="felica_terminal_ticket_booth">Stand</string>
+    <string name="felica_terminal_ticket_office_green">Stand (Green)</string>
     <string name="felica_terminal_ticket_gate_terminal">Portique terminal</string>
     <string name="felica_terminal_mobile_phone">Téléphone mobile</string>
     <string name="felica_terminal_connection_adjustment">Machine d\'ajustement de commutation</string>

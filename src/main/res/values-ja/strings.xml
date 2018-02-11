@@ -40,10 +40,10 @@
     <string name="felica_terminal_deposit_quick_charge">入金機(クイックチャージ機)</string>
     <string name="felica_terminal_tvm_tokyo_monorail">券売機(東京モノレール)</string>
     <string name="felica_terminal_tvm_etc">券売機、など。</string>
-    <string name="felica_terminal_ticket_gate">改札機</string>
-    <string name="felica_terminal_simple_ticket_gate">簡易改札機</string>
-    <string name="felica_terminal_booth">窓口端末</string>
-    <string name="felica_terminal_booth_green">窓口端末(みどりの窓口)</string>
+    <string name="felica_terminal_turnstile">改札機</string>
+    <string name="felica_terminal_ticket_validator">簡易改札機</string>
+    <string name="felica_terminal_ticket_booth">窓口端末</string>
+    <string name="felica_terminal_ticket_office_green">窓口端末(みどりの窓口)</string>
     <string name="felica_terminal_ticket_gate_terminal">改札端末</string>
     <string name="felica_terminal_mobile_phone">携帯電話</string>
     <string name="felica_terminal_connection_adjustment">乗継清算機</string>

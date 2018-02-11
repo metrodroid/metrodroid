@@ -323,7 +323,15 @@
     <string name="location_wa_australia">Western Australia, Australia</string>
     <string name="location_christchurch_nz">Christchurch, New Zealand</string>
 
-    <!-- Felica -->
+    <!-- Felica / Suica: These strings must only be used for Felica. -->
+
+    <!--
+        Translators:
+        Japanese: 精算機
+        https://matcha-jp.com/en/833
+        These are ticket machines, inside the "ticketed area" of a station, where you can top-up
+        your IC card, if you do not have enough credit remaining on it to exit the station.
+    -->
     <string name="felica_terminal_fare_adjustment">Fare Adjustment Machine</string>
     <string name="felica_terminal_portable">Portable Terminal</string>
     <string name="felica_terminal_vehicle">Vehicle Terminal (on bus)</string>
@@ -331,10 +339,49 @@
     <string name="felica_terminal_deposit_quick_charge">Quick Charge Machine</string>
     <string name="felica_terminal_tvm_tokyo_monorail">Tokyo Monorail Ticket Machine</string>
     <string name="felica_terminal_tvm_etc">Ticket Machine, etc.</string>
-    <string name="felica_terminal_ticket_gate">Ticket Gate</string>
-    <string name="felica_terminal_simple_ticket_gate">Simple Ticket Gate</string>
-    <string name="felica_terminal_booth">Booth</string>
-    <string name="felica_terminal_booth_green">Booth (Green)</string>
+    <!--
+        Translators:
+        Japanese: 改札機
+        https://ot-lab.org/wp/wp-content/uploads/2013_0724_01.jpg
+        This is a type of turnstile, with two small doors that open outwards. They are placed at the
+        entrances to station platforms at busy train stations.
+    -->
+    <string name="felica_terminal_turnstile">Turnstile</string>
+    <!--
+        Translators:
+        Japanese: 簡易改札機
+        http://livedoor.blogimg.jp/yosi44125/imgs/b/1/b1d7a865.jpg
+        This is a type of ticket machine placed at the entrance and exit to train stations, where
+        there is no barrier between the passenger and the platform or exit. The traveller is trusted
+        to scan or validate their ticket at the station at the beginning or end of their journey.
+    -->
+    <string name="felica_terminal_ticket_validator">Ticket Validator</string>
+    <!--
+        Translators:
+        Japanese: 窓口端末
+        This is a place where common ticket types are sold. It is commonly a window at a train
+        stations.
+    -->
+    <string name="felica_terminal_ticket_booth">Ticket Booth</string>
+    <!--
+        Translators:
+        Japanese: 窓口端末(みどりの窓口)
+        https://commons.wikimedia.org/wiki/File:Midori_no_Madoguchi.JPG
+        https://ja.wikipedia.org/wiki/%E3%83%95%E3%82%A1%E3%82%A4%E3%83%AB:Iwamizawast_01.jpg
+
+        This is a "full service" office, counter or window where you can buy any type of train
+        ticket. This includes long distance services. They are literally coloured green.
+
+        みどりの窓口 (Midori no Madoguchi / The Green Window) is a trademark of JR East.
+    -->
+    <string name="felica_terminal_ticket_office_green">Ticket Office (Green Window)</string>
+    <!--
+        Translators:
+        Japanese: 改札端末
+        I'm not sure what this is.
+        Maybe this is for long distance services, where you need to pay for a paper ticket in
+        advance with your Suica card at a computer terminal in the train station.
+    -->
     <string name="felica_terminal_ticket_gate_terminal">Ticket Gate Terminal</string>
     <string name="felica_terminal_mobile_phone">Mobile Phone</string>
     <string name="felica_terminal_connection_adjustment">Connection Adjustment Machine</string>
@@ -342,7 +389,8 @@
     <string name="felica_terminal_simple_deposit">Simple Deposit Machine</string>
     <string name="felica_terminal_pos">Point of Sale Terminal</string>
     <string name="felica_terminal_vending">Vending Machine</string>
-    <string name="felica_process_fare_exit_gate">Fare Gate</string>
+
+    <string name="felica_process_fare_exit_gate">Exit Turnstile</string>
     <string name="felica_process_charge">Charge</string>
     <string name="felica_process_purchase_magnetic">Magnetic Ticket</string>
     <string name="felica_process_fare_adjustment">Fare Adjustment</string>
