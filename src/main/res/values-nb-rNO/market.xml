@@ -4,57 +4,59 @@
     <string name="market_short_desc">Metrodroid leser informasjon fra noen NFC-smartkort for kollektivtransport.</string>
 
     <string name="market_long_desc">Metrodroid, tidligere Farebot M, leser informasjon fra noen NFC-smartkort til bruk for offentlig transport.
-\n 
-\nDette er en avgrening av Eric Butler\\\'s Farebot-prosjekt, med støtte for ytterligere kort og feilrettinger. 
-\nStøttede kort: 
-\n- Bilhete Único - São Paulo, Brasil [1] [2] [5] 
-\n- Clipper - San Francisco, CA, USA 
-\n- EZ-Link - Singapore [3] 
-\n- Go card - Brisbane og Sørøst-Queensland, Australia [0] [1] [2] 
-\n- Manly hurtigferge - Sydney, NSW, Australia [0] [1] [2] 
-\n- Matkakortti, HSL - Finland 
-\n- Myki - Melbourne (og omegn), VIC, Australia [0] [4] 
-\n- MyWay - Australian Capital Territory, Australia [0] [1] [2] 
-\n- NETS Flashpay - Singapore 
-\n- Octopus - Hongkong [0] 
-\n- Opal - Sydney (og omegn), NSW, Australia [0] 
-\n- ORCA - Seattle, WA, USA 
-\n- OV-chipkaart - Nederland [1] [2] 
-\n- Shenzhen Tong - Shenzong, Guangdong-provinsen, China [0] 
-\n- SmartRider - Vest-Australia, Australia [0] [1] [2] 
-\n- Suica, IOCOA, PASMO, Edy - Japan 
-\n- Transit Access Pass - Los Angeles, CA, USA [0] [1] [2] 
-\n 
-\n[0]: Nytt i Metrodroid. 
-\n[1]: Ikke kompatibel med alle enheter (MIFARE Classic). 
-\n[2]: Krypteringsnøkler kreves for å lese dette kortet. 
-\n[3]: Ikke kompatibelt med alle enheter (CEPAS). 
-\n[4]: Kun kortnummeret kan leses. 
-\n[5]: Tilbakefallsleser -- må skrus på manuelt i programmets innstillinger. 
-\n 
-\nEn NFC-kompatibel telefon kreves for å kunne lese kort. 
-\n 
-\nDu trenger et NXP NFC-brikkesett i enheten din for å kunne lese MIFARE Classic-kort. Noen telefoner har NFC-briker fra andre fabrikanter, som ikke kan lese MIFARE Classic-kort (f.eks. Nexus 4, Nexus 5, Samsung Galaxy S4). Sjekk Om-skjermen i programmet for å bestemme hvorvidt din enhet støtter MIFARE Classic. 
-\n 
-\nNoen agenturer har krypterte kort. Du må hente krypteringsnøkler for å kunne lese dem. Disse er generelt unike for hvert kort. Beklager, jeg kan ikke hjelpe deg med dette. 
-\n 
-\nFor noen agenturers kort kan det å bruke Cubic Nextfare på MIFARE Classic også fungere. 
-\n 
-\nFor mer informasjon om hvilke tilganger som behøves, les personvernspraksisen. 
-\n 
+\n
+\nDette er en avgrening av Eric Butler\\\'s Farebot-prosjekt, med støtte for ytterligere kort og feilrettinger.
+\nStøttede kort:
+\n- Bilhete Único - São Paulo, Brasil [1] [2] [5]
+\n- Clipper - San Francisco, CA, USA
+\n- EZ-Link - Singapore [3]
+\n- Go card - Brisbane og Sørøst-Queensland, Australia [0] [1] [2]
+\n- Manly hurtigferge - Sydney, NSW, Australia [0] [1] [2]
+\n- Matkakortti, HSL - Finland
+\n- Myki - Melbourne (og omegn), VIC, Australia [0] [4]
+\n- MyWay - Australian Capital Territory, Australia [0] [1] [2]
+\n- NETS Flashpay - Singapore
+\n- Octopus - Hongkong [0]
+\n- Opal - Sydney (og omegn), NSW, Australia [0]
+\n- ORCA - Seattle, WA, USA
+\n- OV-chipkaart - Nederland [1] [2]
+\n- Shenzhen Tong - Shenzong, Guangdong-provinsen, China [0]
+\n- SmartRider - Vest-Australia, Australia [0] [1] [2]
+\n- Suica, IOCOA, PASMO, Edy - Japan
+\n- Transit Access Pass - Los Angeles, CA, USA [0] [1] [2]
+\n
+\n[0]: Nytt i Metrodroid.
+\n[1]: Ikke kompatibel med alle enheter (MIFARE Classic).
+\n[2]: Krypteringsnøkler kreves for å lese dette kortet.
+\n[3]: Ikke kompatibelt med alle enheter (CEPAS).
+\n[4]: Kun kortnummeret kan leses.
+\n[5]: Tilbakefallsleser -- må skrus på manuelt i programmets innstillinger.
+\n
+\nEn NFC-kompatibel telefon kreves for å kunne lese kort.
+\n
+\nDu trenger et NXP NFC-brikkesett i enheten din for å kunne lese MIFARE Classic-kort. Noen telefoner har NFC-briker fra andre fabrikanter, som ikke kan lese MIFARE Classic-kort (f.eks. Nexus 4, Nexus 5, Samsung Galaxy S4). Sjekk Om-skjermen i programmet for å bestemme hvorvidt din enhet støtter MIFARE Classic.
+\n
+\nNoen agenturer har krypterte kort. Du må hente krypteringsnøkler for å kunne lese dem. Disse er generelt unike for hvert kort. Beklager, jeg kan ikke hjelpe deg med dette.
+\n
+\nFor noen agenturers kort kan det å bruke Cubic Nextfare på MIFARE Classic også fungere.
+\n
+\nFor mer informasjon om hvilke tilganger som behøves, les personvernspraksisen.
+\n
 \nDenne programvaren er lisensiert GNU GPLv3+, kildekoden er å finne på https://github.com/micolous/metrodroid/</string>
 
-    <string name="market_changelog_32">"* Legger til obfuskerings-tilstand.
-\n* Fiks for kræsj med ukjente CEPAS-kort. 
-\n* Fiks for kræsj med delvis avleste MIFARE Classic-kort ved visning av råkortdetaljer.
+    <string name="market_changelog_32">* Legger til obfuskerings-tilstand.
+\n* Kræsjfiks for ukjente CEPAS-kort.
+\n* Kræsjfiks for delvis leste MIFARE Classic-kort under visning av råkortdetaljer.
 \n* Støtter negativ balanse på Cibic Nextfare-kort.
-\n* Nye stop-ID-er for Go-kort (Brisbane, Australia).
-\n* Legger til delvis oversettelse til Kabyle takket være  @belkacem77 og norsk bokmål takket være @comradekingu.
-\n 
-\nFlere detaljer: https://github.com/micolous/metrodroid/wiki/Changelog"</string>
+\n* Nye stopp-ID-er for Go-kort (Brisbane, Australia).
+\n* Delvis oversettelse til Kabyle ved @belkacem77 og Norsk bokmål ved Allan Nordhøy.
+\n
+\n
+\nFlere detaljer: https://github.com/micolous/metrodroid/wiki/Changelog</string>
 
     <string name="market_changelog_31">* Støtte for SmartRider (VA, Australia).
 \n* Oversetteler til hollandsk, takket være @Vistaus, Fransk av @Albirew, Hebraisk av @streets250
+\n* MyWay: Automatisk oppdaging av kort ved fellesnøkkel for nylig skannede kort.
 \n
 \nFlere detaljer: https://github.com/micolous/metrodroid/wiki/Changelog</string>
 
@@ -69,7 +71,7 @@
     <string name="market_changelog_29">* Forbedret pålitelighet for identitetsbekreftelse med MIFARE Classic-kort.
 \n* Støtte for Octopus (Hongkong), Shenzhen Tong og Transit Access Pass (Los Angeles, CA, US).
 \n* Eksport til USB-lagring lar deg nå velge plassering på Android 4.4 (KitKat) og senere.
-\n* Go-kort: Reiser hentes nå inn fra kortet, så det bør virke med alle stasjoner. 7 ekstra stasjoner lagt til. Oppdager nå voksen- og honør-kort.</string>
+\n* Go-kort: Reiser hentes nå inn fra kortet, så det bør virke med alle stasjoner. 7 ekstra stasjoner lagt til. Oppdager nå voksen- og honnør-kort.</string>
 
     <string name="market_changelog_28">* Krever nå Android 4.1 for å fikse et kartproblem.
 \n* Støtte for visning av rådata fra FeilCa.
@@ -94,7 +96,7 @@
 \n
 \n* Grunnleggende støtte for Go-kort (Brisbane og Sørøst-Queensland, AU). Krever krypteringsnøkler, (som er unike for hvert kort,) og enhet med MIFARE Classic-støtte. Begrenset stoppstøtte.
 \n* Kortidentifiseringsstøtte for Adelaide Metrocard, AT HOP og Myki.
-\n* Fiks for import av individuelle kort fra XML files.
+\n* Fiks for import av individuelle kort fra XML-filer.
 \n* Forskjellige grensesnittsforbedringer.
 \n* Små feilrettinger.
 \n
@@ -102,9 +104,9 @@
 
 <string name="market_changelog_33">* Eksperimentell støtte for Metrocard (Christenchurch, Ny-Zealand).
 \n* Fikser flere utfordringer med MIFARE Classic- og Ultralight-kort. 
-\n* Viser mer informasjon under lesing av kort. 
-\n* Opal: Håndterer ukjent status 0xc. 
-\n 
+\n* Viser mer informasjon under lesing av kort.
+\n* Opal: Håndterer ukjent status 0xc.
+\n
 \nFlere detaljer: https://github.com/micolous/metrodroid/wiki/Changelog</string>
 
     </resources>
