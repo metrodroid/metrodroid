@@ -100,7 +100,8 @@
 \n
 \nFlere detaljer: https://github.com/micolous/metrodroid/wiki/Changelog</string>
 
-<string name="market_changelog_33">* Fikser flere utfordringer med MIFARE Ultralight-kort. 
+<string name="market_changelog_33">* Eksperimentell støtte for Metrocard (Christenchurch, Ny-Zealand).
+\n* Fikser flere utfordringer med MIFARE Classic- og Ultralight-kort. 
 \n* Viser mer informasjon under lesing av kort. 
 \n* Opal: Håndterer ukjent status 0xc. 
 \n 
