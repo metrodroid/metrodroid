@@ -100,10 +100,10 @@
 \n
 \nFlere detaljer: https://github.com/micolous/metrodroid/wiki/Changelog</string>
 
-<string name="market_changelog_33">* Fikser flere utfordringer med MIFARE Ultralight-kort.
-\n* Viser mer informasjon under lesing av kort.
-\n* Opal: Håndterer ukjent status 0xc.
-\n
+<string name="market_changelog_33">* Fikser flere utfordringer med MIFARE Ultralight-kort. 
+\n* Viser mer informasjon under lesing av kort. 
+\n* Opal: Håndterer ukjent status 0xc. 
+\n 
 \nFlere detaljer: https://github.com/micolous/metrodroid/wiki/Changelog</string>
 
     </resources>
