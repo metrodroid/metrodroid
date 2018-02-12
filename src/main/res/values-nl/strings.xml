@@ -172,7 +172,7 @@
     <string name="felica_terminal_simple_deposit">Eenvoudige stortingsautomaat</string>
     <string name="felica_terminal_pos">Verkoopbalie</string>
     <string name="felica_terminal_vending">Automaat</string>
-    <string name="felica_process_fare_exit_gate">Draaihek</string>
+    <string name="felica_process_fare_exit_gate">Draaihek bij uitgang</string>
     <string name="felica_process_charge">Kosten</string>
     <string name="felica_process_purchase_magnetic">Magnetische kaart</string>
     <string name="felica_process_fare_adjustment">Tariefaanpassing</string>
@@ -351,4 +351,6 @@
 
     <string name="location_christchurch_nz">Christchurch, Nieuw-Zeeland</string>
 
-    </resources>
+    <string name="erg_agency_id">Vervoerder-ID</string>
+
+</resources>
