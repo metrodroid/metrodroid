@@ -25,7 +25,9 @@ import au.id.micolous.metrodroid.util.Utils;
 import java.util.Arrays;
 
 /**
- * Represents a "preamble" type record.
+ * Represents a preamble record.
+ *
+ * https://github.com/micolous/metrodroid/wiki/ERG-MFC#preamble-record
  */
 public class ErgPreambleRecord extends ErgRecord {
     static final byte[] OLD_CARD_ID = {0x00, 0x00, 0x00};

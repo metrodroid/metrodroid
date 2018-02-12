@@ -161,10 +161,10 @@
     <string name="felica_terminal_deposit_quick_charge">Snelle oplaadautomaat</string>
     <string name="felica_terminal_tvm_tokyo_monorail">Tokio Monorail-kaartautomaat</string>
     <string name="felica_terminal_tvm_etc">Kaartautomaat, etc.</string>
-    <string name="felica_terminal_ticket_gate">Tourniquet</string>
-    <string name="felica_terminal_simple_ticket_gate">Eenvoudige tourniquet</string>
-    <string name="felica_terminal_booth">Balie</string>
-    <string name="felica_terminal_booth_green">Balie (groen)</string>
+    <string name="felica_terminal_turnstile">Tourniquet</string>
+    <string name="felica_terminal_ticket_validator">Eenvoudige tourniquet</string>
+    <string name="felica_terminal_ticket_booth">Balie</string>
+    <string name="felica_terminal_ticket_office_green">Balie (groen)</string>
     <string name="felica_terminal_ticket_gate_terminal">Tourniquet-terminal</string>
     <string name="felica_terminal_mobile_phone">Mobiele telefoon</string>
     <string name="felica_terminal_connection_adjustment">Verbindingaanpassingsautomaat</string>

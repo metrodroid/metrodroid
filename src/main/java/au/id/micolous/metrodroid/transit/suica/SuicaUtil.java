@@ -108,13 +108,13 @@ final class SuicaUtil {
             case 0x15:
                 return app.getString(R.string.felica_terminal_tvm_etc);
             case 0x16:
-                return app.getString(R.string.felica_terminal_ticket_gate);
+                return app.getString(R.string.felica_terminal_turnstile);
             case 0x17:
-                return app.getString(R.string.felica_terminal_simple_ticket_gate);
+                return app.getString(R.string.felica_terminal_ticket_validator);
             case 0x18:
-                return app.getString(R.string.felica_terminal_booth);
+                return app.getString(R.string.felica_terminal_ticket_booth);
             case 0x19:
-                return app.getString(R.string.felica_terminal_booth_green);
+                return app.getString(R.string.felica_terminal_ticket_office_green);
             case 0x1a:
                 return app.getString(R.string.felica_terminal_ticket_gate_terminal);
             case 0x1b:

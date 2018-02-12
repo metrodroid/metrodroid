@@ -30,6 +30,8 @@ import java.util.Locale;
  * Represents a "purse" type record.
  *
  * These are simple transactions where there is either a credit or debit from the purse value.
+ *
+ * https://github.com/micolous/metrodroid/wiki/ERG-MFC#purse-records
  */
 public class ErgPurseRecord extends ErgRecord implements Parcelable {
     private int mDay;

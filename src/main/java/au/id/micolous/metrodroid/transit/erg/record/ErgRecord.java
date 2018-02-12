@@ -25,6 +25,8 @@ import java.util.Locale;
 
 /**
  * Represents a record inside of an ERG MIFARE Classic based card.
+ *
+ * https://github.com/micolous/metrodroid/wiki/ERG-MFC
  */
 public class ErgRecord {
     private static final String TAG = "ErgRecord";
@@ -32,6 +34,14 @@ public class ErgRecord {
     protected ErgRecord() {
     }
 
+    /**
+     * Deserialises a given record from a card.  This will select the appropriate record type based
+     * on the block number on the card.
+     * @param input A single block of input from a MIFARE Classic card (16 bytes)
+     * @param sectorIndex The 0-indexed sector number.
+     * @param blockIndex The 0-indexed block number within a sector.
+     * @return An ErgRecord containing a deserialisation of the data, or null if not known.
+     */
     public static ErgRecord recordFromBytes(byte[] input, int sectorIndex, int blockIndex) {
         ErgRecord record = null;
 

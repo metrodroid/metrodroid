@@ -22,7 +22,9 @@ package au.id.micolous.metrodroid.transit.erg.record;
 import au.id.micolous.metrodroid.util.Utils;
 
 /**
- * Represents a "preamble" type record.
+ * Represents a balance record.
+ *
+ * https://github.com/micolous/metrodroid/wiki/ERG-MFC#balance-records
  */
 public class ErgBalanceRecord extends ErgRecord implements Comparable<ErgBalanceRecord> {
     private int mBalance;
