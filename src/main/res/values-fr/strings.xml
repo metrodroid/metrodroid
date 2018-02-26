@@ -121,7 +121,7 @@
     <string name="map_tiles_subdomains_summary">Si vous utilisez {s} dans les URL des cartes, une liste de sous-domaine séparés par une virgule, une liste de sous-domaines à caractère unique.</string>
     <string name="about_card_format">A propos du format de cette carte</string>
     <string name="online_services">Services en ligne</string>
-    <string name="mifare_classic">Mifare Classic</string>
+    <string name="mifare_classic">MIFARE Classic</string>
     <string name="auth_retries">Tentatives d\'authentification</string>
     <string name="auth_retries_summary">Nombre de tentatives d\'authentification pour chaque secteur</string>
     <string name="alternate_purse_balances">Solde alternatif du porte-monnaie</string>
@@ -166,10 +166,10 @@
     <string name="felica_terminal_deposit_quick_charge">Machine de recharge rapide</string>
     <string name="felica_terminal_tvm_tokyo_monorail">Horodateur du Tokyo Monorail</string>
     <string name="felica_terminal_tvm_etc">Horodateur, etc..</string>
-    <string name="felica_terminal_ticket_gate">Portique</string>
-    <string name="felica_terminal_simple_ticket_gate">Portail de tiquet simple</string>
-    <string name="felica_terminal_booth">Stand</string>
-    <string name="felica_terminal_booth_green">Stand (Green)</string>
+    <string name="felica_terminal_turnstile">Portique</string>
+    <string name="felica_terminal_ticket_validator">Portail de tiquet simple</string>
+    <string name="felica_terminal_ticket_booth">Stand</string>
+    <string name="felica_terminal_ticket_office_green">Stand (Green)</string>
     <string name="felica_terminal_ticket_gate_terminal">Portique terminal</string>
     <string name="felica_terminal_mobile_phone">Téléphone mobile</string>
     <string name="felica_terminal_connection_adjustment">Machine d\'ajustement de commutation</string>

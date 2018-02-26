@@ -1,6 +1,6 @@
-package au.id.micolous.farebot.test;
+package au.id.micolous.metrodroid.test;
 
-import com.codebutler.farebot.transit.seq_go.SeqGoZoneCalculator;
+import au.id.micolous.metrodroid.transit.seq_go.SeqGoZoneCalculator;
 
 import junit.framework.TestCase;
 

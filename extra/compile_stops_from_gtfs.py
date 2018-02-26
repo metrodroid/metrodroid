@@ -4,7 +4,7 @@
 compile_stops_from_gtfs.py
 Compiles stop database from GTFS data and reader ID.
 
-Copyright 2015-2016 Michael Farrell <micolous+git@gmail.com>
+Copyright 2015-2018 Michael Farrell <micolous+git@gmail.com>
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -21,10 +21,11 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 """
 
+from __future__ import print_function
 from argparse import ArgumentParser, FileType
 from datetime import datetime, timedelta
 from gtfstools import Gtfs, GtfsDialect
-import csv, sqlite3
+import codecs, csv, sqlite3
 
 DB_SCHEMA = """
 CREATE TABLE stops (
@@ -52,6 +53,8 @@ def empty(s):
   return s is None or s.strip() == ''
 
 def compile_stops_from_gtfs(input_gtfs_f, output_f, matching_f=None, version=None, strip_suffixes='', extra_fields='', extra_fields_from_child=False, agency_id=-1, skip_create_table=False):
+  if matching_f is not None:
+    matching_f = codecs.getreader('utf-8-sig')(matching_f)
   # trim whitespace
   strip_suffixes = [x.strip().lower() for x in strip_suffixes.split(',')]
   if extra_fields is None or extra_fields == '':
@@ -79,13 +82,13 @@ def compile_stops_from_gtfs(input_gtfs_f, output_f, matching_f=None, version=Non
         if feed_start_date is None or feed_start_date < ts:
           feed_start_date = ts
     else:
-      row = feed_info.next()
+      row = next(feed_info)
       feed_start_date = row['feed_start_date']
       assert len(feed_start_date) == 8
       feed_start_date = datetime.strptime(feed_start_date, '%Y%m%d')
 
     version = (feed_start_date - VERSION_EPOCH).days
-    print 'Data version: %s (%s)' % (version, feed_start_date.date().isoformat())
+    print('Data version: %s (%s)' % (version, feed_start_date.date().isoformat()))
       
 
   stops = gtfs.open('stops.txt')
@@ -123,7 +126,7 @@ def compile_stops_from_gtfs(input_gtfs_f, output_f, matching_f=None, version=Non
           stop_ids[match['stop_id']] = []
         stop_ids[match['stop_id']].append(match['reader_id'])
       else:
-        raise Exception, 'neither stop_id or stop_code specified in row'
+        raise Exception('neither stop_id or stop_code specified in row')
         
       # At least one of stop_id or stop_code was specified
       # Lets allow an override of any custom fields
@@ -161,7 +164,7 @@ def compile_stops_from_gtfs(input_gtfs_f, output_f, matching_f=None, version=Non
       for reader_id in stop_ids.get(stop['stop_id'], []):
         r = [reader_id, agency_id, name, y, x] + e
         # Check for any overrides
-        for k, v in stop_extra_fields[reader_id].iteritems():
+        for k, v in stop_extra_fields[reader_id].items():
           r[extra_fields.index(k) + 5] = v
         stop_rows.append(r)
 
@@ -172,7 +175,7 @@ def compile_stops_from_gtfs(input_gtfs_f, output_f, matching_f=None, version=Non
       for reader_id in stop_codes.get(stop['stop_code'], []):
         stop_rows.append([reader_id, agency_id, name, y, x] + e)
         # Check for any overrides
-        for k, v in stop_extra_fields[reader_id].iteritems():
+        for k, v in stop_extra_fields[reader_id].items():
           r[extra_fields.index(k) + 5] = v
 
       cur.executemany(insert_query, stop_rows)

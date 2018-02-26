@@ -3,13 +3,13 @@
     xmlns:tools="http://schemas.android.com/tools">
     <application>
         <provider
-            android:name="com.codebutler.farebot.provider.CardProvider"
-            android:authorities="com.codebutler.farebot.dev.cardprovider"
+            android:name="au.id.micolous.metrodroid.provider.CardProvider"
+            android:authorities="au.id.micolous.metrodroid.dev.cardprovider"
             android:exported="false"
             tools:replace="android:authorities"/>
         <provider
-            android:name="com.codebutler.farebot.provider.CardKeyProvider"
-            android:authorities="com.codebutler.farebot.dev.keyprovider"
+            android:name="au.id.micolous.metrodroid.provider.CardKeyProvider"
+            android:authorities="au.id.micolous.metrodroid.dev.keyprovider"
             android:exported="false"
             tools:replace="android:authorities"/>
     </application>

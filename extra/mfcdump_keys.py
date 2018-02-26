@@ -36,7 +36,7 @@ def mfc_to_farebot(input_fs, output_f, keyb=False, csv_format=False):
     output_c.writeheader()
 
   for input_f in input_fs:
-    # Read the Mifare card entirely first
+    # Read the MIFARE card entirely first
     card_data = input_f.read()
     key_offset = KEYB_OFFSET if keyb else KEYA_OFFSET
 

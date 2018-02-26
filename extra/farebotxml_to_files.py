@@ -61,7 +61,7 @@ def zipify(input_xml, output_zipf, mfcdump):
 
     sectors = card.find('sectors')
     if sectors is not None:
-      # Mifare classic card
+      # MIFARE classic card
       # Iterate sectors
       sectors_i = sorted(sectors.findall('sector'), key=lambda e: int(e.get('index')))
       for sector in sectors_i:
@@ -87,7 +87,7 @@ def zipify(input_xml, output_zipf, mfcdump):
 
     applications = card.find('applications')
     if applications is not None:
-      # Mifare DESfire or like
+      # MIFARE DESfire or like
       for application in applications.findall('application'):
         application_id = application.get('id')
         for f in application.find('files').findall('file'):
@@ -120,7 +120,7 @@ def zipify(input_xml, output_zipf, mfcdump):
 
     pages = card.find('pages')
     if pages is not None:
-      # Mifare Ultralight
+      # MIFARE Ultralight
       for page in pages.findall('page'):
         page_id = page.get('index')
         data = str(page.find('data')).decode('base64')

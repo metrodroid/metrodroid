@@ -27,30 +27,31 @@ import android.os.StrictMode;
 import android.preference.PreferenceManager;
 import android.util.Log;
 
-import com.codebutler.farebot.card.Card;
-import com.codebutler.farebot.card.CardType;
-import com.codebutler.farebot.card.classic.ClassicSector;
-import com.codebutler.farebot.card.desfire.files.DesfireFile;
-import com.codebutler.farebot.card.desfire.files.InvalidDesfireFile;
-import com.codebutler.farebot.card.desfire.files.RecordDesfireFile;
-import com.codebutler.farebot.card.desfire.settings.DesfireFileSettings;
-import com.codebutler.farebot.card.felica.FelicaDBUtil;
-import com.codebutler.farebot.card.ultralight.UltralightPage;
-import com.codebutler.farebot.transit.lax_tap.LaxTapDBUtil;
-import com.codebutler.farebot.transit.ovc.OVChipDBUtil;
-import com.codebutler.farebot.transit.seq_go.SeqGoDBUtil;
-import com.codebutler.farebot.xml.Base64String;
-import com.codebutler.farebot.xml.CardConverter;
-import com.codebutler.farebot.xml.CardTypeTransform;
-import com.codebutler.farebot.xml.ClassicSectorConverter;
-import com.codebutler.farebot.xml.DesfireFileConverter;
-import com.codebutler.farebot.xml.DesfireFileSettingsConverter;
-import com.codebutler.farebot.xml.EpochCalendarTransform;
-import com.codebutler.farebot.xml.FelicaIDmTransform;
-import com.codebutler.farebot.xml.FelicaPMmTransform;
-import com.codebutler.farebot.xml.HexString;
-import com.codebutler.farebot.xml.SkippableRegistryStrategy;
-import com.codebutler.farebot.xml.UltralightPageConverter;
+import au.id.micolous.farebot.R;
+import au.id.micolous.metrodroid.card.Card;
+import au.id.micolous.metrodroid.card.CardType;
+import au.id.micolous.metrodroid.card.classic.ClassicSector;
+import au.id.micolous.metrodroid.card.desfire.files.DesfireFile;
+import au.id.micolous.metrodroid.card.desfire.files.InvalidDesfireFile;
+import au.id.micolous.metrodroid.card.desfire.files.RecordDesfireFile;
+import au.id.micolous.metrodroid.card.desfire.settings.DesfireFileSettings;
+import au.id.micolous.metrodroid.transit.suica.SuicaDBUtil;
+import au.id.micolous.metrodroid.card.ultralight.UltralightPage;
+import au.id.micolous.metrodroid.transit.lax_tap.LaxTapDBUtil;
+import au.id.micolous.metrodroid.transit.ovc.OVChipDBUtil;
+import au.id.micolous.metrodroid.transit.seq_go.SeqGoDBUtil;
+import au.id.micolous.metrodroid.xml.Base64String;
+import au.id.micolous.metrodroid.xml.CardConverter;
+import au.id.micolous.metrodroid.xml.CardTypeTransform;
+import au.id.micolous.metrodroid.xml.ClassicSectorConverter;
+import au.id.micolous.metrodroid.xml.DesfireFileConverter;
+import au.id.micolous.metrodroid.xml.DesfireFileSettingsConverter;
+import au.id.micolous.metrodroid.xml.EpochCalendarTransform;
+import au.id.micolous.metrodroid.xml.FelicaIDmTransform;
+import au.id.micolous.metrodroid.xml.FelicaPMmTransform;
+import au.id.micolous.metrodroid.xml.HexString;
+import au.id.micolous.metrodroid.xml.SkippableRegistryStrategy;
+import au.id.micolous.metrodroid.xml.UltralightPageConverter;
 
 import net.kazzz.felica.lib.FeliCaLib;
 
@@ -69,8 +70,6 @@ import java.io.File;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 
-import au.id.micolous.farebot.R;
-
 public class MetrodroidApplication extends Application {
     private static final String TAG = "MetrodroidApplication";
     public static final String PREF_LAST_READ_ID = "last_read_id";
@@ -86,7 +85,7 @@ public class MetrodroidApplication extends Application {
 
     private static MetrodroidApplication sInstance;
 
-    private FelicaDBUtil mFelicaDBUtil;
+    private SuicaDBUtil mSuicaDBUtil;
     private OVChipDBUtil mOVChipDBUtil;
     private SeqGoDBUtil mSeqGoDBUtil;
     private LaxTapDBUtil mLaxTapDBUtil;
@@ -97,7 +96,7 @@ public class MetrodroidApplication extends Application {
     public MetrodroidApplication() {
         sInstance = this;
 
-        mFelicaDBUtil = new FelicaDBUtil(this);
+        mSuicaDBUtil = new SuicaDBUtil(this);
         mOVChipDBUtil = new OVChipDBUtil(this);
         mSeqGoDBUtil = new SeqGoDBUtil(this);
         mLaxTapDBUtil = new LaxTapDBUtil(this);
@@ -174,8 +173,8 @@ public class MetrodroidApplication extends Application {
         return getBooleanPref(PREF_OBFUSCATE_BALANCE, false);
     }
 
-    public FelicaDBUtil getFelicaDBUtil() {
-        return mFelicaDBUtil;
+    public SuicaDBUtil getSuicaDBUtil() {
+        return mSuicaDBUtil;
     }
 
     public OVChipDBUtil getOVChipDBUtil() {
@@ -218,11 +217,6 @@ public class MetrodroidApplication extends Application {
     }
 
     private void detectNfcSupport() {
-        // Some devices like the LG F60 misreport they support Mifare Classic when they don't.
-        // Others report they don't support Mifare Classic when they do.
-
-        // TODO: determine behaviour of Microread hardware. It may support MFC.
-        File device;
         NfcAdapter nfcAdapter = NfcAdapter.getDefaultAdapter(this);
         mHasNfcHardware = nfcAdapter != null;
 
@@ -231,35 +225,10 @@ public class MetrodroidApplication extends Application {
             return;
         }
 
-        // Check for Broadcom NFC controller
-        // == no MFC support
-        device = new File("/dev/bcm2079-i2c");
-        if (device.exists()) {
-            Log.d(TAG, "Detected Broadcom bcm2079");
-            mMifareClassicSupport = false;
-            return;
-        }
-
-        // Check for NXP pn544 NFC controller
-        // == has MFC support
-        device = new File("/dev/pn544");
-        if (device.exists()) {
-            Log.d(TAG, "Detected NXP pn544");
-            mMifareClassicSupport = true;
-            return;
-        }
-
-        // Check for shared libraries corresponding to non-NXP chips.
-        File libFolder = new File("/system/lib");
-        File[] libs = libFolder.listFiles();
-        for (File lib : libs) {
-            String name = lib.getName();
-            if (lib.isFile() && name.startsWith("libnfc") && name.contains("brcm")) {
-                Log.d(TAG, "Detected Broadcom NFC library");
-                mMifareClassicSupport = false;
-                return;
-            }
-        }
+        // TODO: Some devices report MIFARE Classic support, when they actually don't have it.
+        //
+        // Detecting based on libraries and device nodes doesn't work great either. There's edge
+        // cases, and it's still vulnerable to vendors doing silly things.
 
         // Fallback: Look for com.nxp.mifare feature.
         mMifareClassicSupport = this.getPackageManager().hasSystemFeature("com.nxp.mifare");

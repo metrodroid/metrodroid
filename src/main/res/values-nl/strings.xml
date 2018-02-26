@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2"><string name="app_name">Metrodroid</string>
 
-    <string name="copyright">Copyright 2015 – 2017 Michael Farrell</string>
+    <string name="copyright">Copyright 2015 – 2018 Michael Farrell</string>
 
     <string name="license">Licenties</string>
     <string name="title_activity_license">Open bron-licenties</string>
@@ -68,8 +68,8 @@
     <string name="block_title_format">Blok: %s</string>
     <string name="page_title_format">Pagina: 0x%s</string>
     <string name="sector_title_format">Sector: 0x%s</string>
-    <string name="unauthorized_sector_title_format">Sector: 0x%s (ongeautoriseerd)</string>
-    <string name="invalid_sector_title_format">Sector: 0x%1$s (Ongeldig: %2$s)</string>
+    <string name="unauthorized_sector_title_format">Sector: 0x%s (niet-geauthoriseerd)</string>
+    <string name="invalid_sector_title_format">Sector: 0x%1$s (onjuist: %2$s)</string>
     <string name="subscriptions">Abonnementen</string>
     <string name="info">Informatie</string>
     <string name="valid_format">Geldig van %1$s tot %2$s</string>
@@ -161,10 +161,10 @@
     <string name="felica_terminal_deposit_quick_charge">Snelle oplaadautomaat</string>
     <string name="felica_terminal_tvm_tokyo_monorail">Tokio Monorail-kaartautomaat</string>
     <string name="felica_terminal_tvm_etc">Kaartautomaat, etc.</string>
-    <string name="felica_terminal_ticket_gate">Tourniquet</string>
-    <string name="felica_terminal_simple_ticket_gate">Eenvoudige tourniquet</string>
-    <string name="felica_terminal_booth">Balie</string>
-    <string name="felica_terminal_booth_green">Balie (groen)</string>
+    <string name="felica_terminal_turnstile">Tourniquet</string>
+    <string name="felica_terminal_ticket_validator">Eenvoudige tourniquet</string>
+    <string name="felica_terminal_ticket_booth">Balie</string>
+    <string name="felica_terminal_ticket_office_green">Balie (groen)</string>
     <string name="felica_terminal_ticket_gate_terminal">Tourniquet-terminal</string>
     <string name="felica_terminal_mobile_phone">Mobiele telefoon</string>
     <string name="felica_terminal_connection_adjustment">Verbindingaanpassingsautomaat</string>
@@ -172,7 +172,7 @@
     <string name="felica_terminal_simple_deposit">Eenvoudige stortingsautomaat</string>
     <string name="felica_terminal_pos">Verkoopbalie</string>
     <string name="felica_terminal_vending">Automaat</string>
-    <string name="felica_process_fare_exit_gate">Draaihek</string>
+    <string name="felica_process_fare_exit_gate">Draaihek bij uitgang</string>
     <string name="felica_process_charge">Kosten</string>
     <string name="felica_process_purchase_magnetic">Magnetische kaart</string>
     <string name="felica_process_fare_adjustment">Tariefaanpassing</string>
@@ -302,4 +302,55 @@
     <string name="opal_action_tap_on_rejected">Omgekeerd afgewezen</string>
 
     <string name="unauthorized_page_title_format">Pagina: 0x%s (niet-geautoriseerd)</string>
-    </resources>
+    <string name="card_note_opal">Vrij reizen en enkele reis-kaarten worden niet ondersteund.</string>
+
+    <string name="locked_mfc_card">Vergrendelde MIFARE Classic-kaart</string>
+    <string name="locked_mfu_card">Vergrendelde MIFARE Ultralight-kaart</string>
+    <string name="locked_mfd_card">Vergrendelde MIFARE DESFire-kaart</string>
+    <string name="application_title_format">Applicatie: 0x%s</string>
+    <string name="file_title_format">Bestand: 0x%s</string>
+    <string name="unauthorized_file_title_format">Bestand: 0x%s (niet-geauthoriseerd)</string>
+    <string name="invalid_file_title_format">Bestand: 0x%1%s (onjuist: %2$s)</string>
+    <string name="desfire_standard_file">Standaard bestand</string>
+    <string name="desfire_backup_file">Back-upbestand</string>
+    <string name="desfire_value_file">Waardebestand</string>
+    <string name="desfire_linear_record">Lineair verslag</string>
+    <string name="desfire_cyclic_record">Cycli-verslag</string>
+    <string name="desfire_unknown_file">Onbekende bestandssoort</string>
+    <plurals name="desfire_standard_format">
+	<item quantity="one">Soort: %1$s, Lengte: %2$s byte</item>
+	<item quantity="other">Soort: %1$s, Lengte: %2$s bytes</item>
+</plurals>
+
+    <plurals name="desfire_record_format">
+	<item quantity="one">Soort: %1$s, Vermelding: %2$s (maximaal %3$s), Vermeldingsgrootte: %4$s byte</item>
+	<item quantity="other">Soort: %1$s, Vermeldingen: %2$s (maximaal %3$s), Vermeldingsgrootte: %4$s bytes</item>
+</plurals>
+
+    <string name="desfire_value_format">Soort: %1$s, Bereik: %2$s - %3$s, Laag saldo: %4$s (%5$s)</string>
+    <string name="enabled">Ingeschakeld</string>
+    <string name="disabled">Uitgeschakeld</string>
+
+
+    <string name="unsupported_tag">Niet-ondersteunde NFC-kaartmedia</string>
+
+    <string name="saving_card">Bezig met opslaan van kaart…</string>
+
+    <string name="mfc_reading">Bezig met lezen van MIFARE Classic-kaart…</string>
+    <string name="mfc_have_key">Bezig met proberen van gebruikerssleutel voor sector %d…</string>
+    <string name="mfc_other_key">Bezig met proberen van alternative sleutels voor sector %d…</string>
+    <string name="mfc_default_key">Bezig met proberen van bekende sleutels voor sector %d…</string>
+    <string name="mfc_reading_blocks">Bezig met lezen van sector %d…</string>
+
+    <string name="iso14a_detect">Bezig met detecteren van ISO 14443-kaartsoort…</string>
+    <string name="mfd_reading">Bezig met lezen van MIFARE DESFire-kaart…</string>
+    <string name="card_reading_type">Bezig met lezen van <xliff:g id="card_name" example="Opal"> 1%s</xliff:g> 2…</string>
+
+    <string name="mfu_detect">Bezig met detecteren van MIFARE Ultralight-kaartsoort…</string>
+    <string name="mfu_reading">Bezig met lezen van MIFARE Ultralight-kaart…</string>
+
+    <string name="location_christchurch_nz">Christchurch, Nieuw-Zeeland</string>
+
+    <string name="erg_agency_id">Vervoerder-ID</string>
+
+</resources>

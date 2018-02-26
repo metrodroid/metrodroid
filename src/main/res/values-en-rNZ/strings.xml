@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  The English (New Zealand) translation is intended to simplify names of New Zealand places.
+-->
+<resources>
+    <string name="location_christchurch_nz">Christchurch</string>
+</resources>

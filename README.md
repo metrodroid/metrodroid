@@ -1,4 +1,4 @@
-# Metrodroid
+# [Metrodroid](https://github.com/micolous/metrodroid)
 
 [![Translation status](https://hosted.weblate.org/widgets/metrodroid/-/svg-badge.svg)][22]
 
@@ -12,11 +12,13 @@ _Formerly known as Farebot M._
 
 Version: 2.9.33
 
-View your remaining balance, recent trips, and other information from contactless public transit cards using your NFC Android phone!
+View your remaining balance, recent trips, and other information from contactless public transit
+cards using your NFC-enabled Android device!
 
 * [Michael Farrell](https://github.com/micolous)
 
-I presented Metrodroid at [linux.conf.au 2018: Tap on to reverse engineering](https://youtu.be/qVvNdfKRw7M).
+I presented Metrodroid and the work I did on supporting a number of Australian agencies' cards at
+linux.conf.au 2018, in my talk, [Tap on to reverse engineering](https://youtu.be/qVvNdfKRw7M).
 
 ## Thanks To
 
@@ -29,7 +31,7 @@ I presented Metrodroid at [linux.conf.au 2018: Tap on to reverse engineering](ht
 * [tbonang](https://github.com/tbonang) (NETS FlashPay)
 * [Marcelo Liberato](https://github.com/mliberato) (Bilhete Único)
 * [Lauri Andler](https://github.com/landler/) (HSL)
-* [Michael](https://github.com/micolous/) (Opal, Manly Fast Ferry, Go card, Myki, Octopus, Cubic Nextfare, LAX TAP, SmartRider, MyWay)
+* [Michael](https://github.com/micolous/) (Opal, Manly Fast Ferry, Go card, Myki, Octopus, Cubic Nextfare, LAX TAP, SmartRider, MyWay, MIFARE Ultralight, ERG, Christchurch Metrocard)
 * [Steven](https://github.com/steets250) (LAX TAP)
 * [Rob O'Regan](http://www.robx1.net/nswtkt/private/manlyff/manlyff.htm) (Manly Fast Ferry card image)
 * [The Noun Project][15] (Various icons)
@@ -50,10 +52,13 @@ Card / Agency | Location | Notes
 [Bilhete Único][30] | :brazil: São Paulo, Brazil | :closed_lock_with_key: `MFC` `FALLBACK`
 [Clipper][1] | :us: San Francisco, CA, USA | 
 [Cubic Nextfare][33] | :earth_americas: _many locations_ | :new: :closed_lock_with_key: `MFC`
+[Edy][12] | :jp: Japan
+[ERG][35] | :earth_asia: _many locations_ | :new: :closed_lock_with_key: `MFC`
 [EZ-Link][7] | :singapore: Singapore | `CEPAS`
-[Go card][20] (Translink) | :australia: Brisbane and South East Queensland, Australia | :new: :closed_lock_with_key: `MFC`
+[Go card][20] | :australia: Brisbane and South East Queensland, Australia | :new: :closed_lock_with_key: `MFC`
 [Manly Fast Ferry][19] | :australia: Sydney, NSW, Australia | :new: :closed_lock_with_key: `MFC`
 [Matkakortti][16], [HSL][17] | :finland: Finland |
+[Metrocard][34] | :new_zealand: Christchurch, New Zealand | :new: :closed_lock_with_key: `MFC`
 [Myki][21] | :australia: Melbourne (and surrounds), VIC, Australia | :new: `123`
 [MyWay][28] | :australia: Australian Capital Territory, Australia | :new: :closed_lock_with_key: `MFC`
 [NETS FlashPay][31] | :singapore: Singapore | 
@@ -63,7 +68,7 @@ Card / Agency | Location | Notes
 [OV-chipkaart][32] | :netherlands: Netherlands | :closed_lock_with_key: `MFC`
 [Shenzhen Tong][27] | :cn: Shenzhen, Guangdong Province, China | :new:
 [SmartRider][29] | :australia: Western Australia, Australia | :new: :closed_lock_with_key: `MFC`
-[Suica][9], [ICOCA][10], [PASMO][11], [Edy][12] | :jp: Japan 
+[Suica][9], [ICOCA][10], [PASMO][11] | :jp: Japan
 [Transit Access Pass][26] | :us: Los Angeles, CA, USA | :new: :closed_lock_with_key: `MFC`
 
 Note | Meaning
@@ -79,7 +84,7 @@ This project **will only read data from the card itself**, without having to con
 
 ## Supported Phones
 
-Metrodroid requires an NFC Android phone running 4.1 or later.
+Metrodroid requires an Android phone running 4.1 or later, with NFC support.
 
 Some devices do not support MIFARE Classic.  MIFARE Classic is not an NFC-compliant card format, so can only be read with phones with NXP chipsets.
 
@@ -156,4 +161,5 @@ This software and it's authors are not associated with any public transit agency
 [31]: http://www.netsflashpay.com.sg/
 [32]: http://www.ov-chipkaart.nl/
 [33]: https://github.com/micolous/metrodroid/wiki/Cubic-Nextfare-MFC
-
+[34]: http://www.metroinfo.co.nz/
+[35]: https://github.com/micolous/metrodroid/wiki/ERG-MFC

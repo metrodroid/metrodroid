@@ -3,62 +3,63 @@
 
 <string name="market_title">Metrodroid (旧 Farebot M)</string>
 
-    <string name="market_short_desc">Metrodroid は公共交通機関の NFC スマートカードから情報を読み取ることができます。</string>
+    <string name="market_short_desc">Metrodroid は公共交通機関の NFC スマートカードから情報を読み取ります。</string>
 
-    <string name="market_long_desc">Metrodroid は、いくつかの公共交通機関の NFC スマートカードから情報を読み取ることができます。以前は、Farebot M として知られていました。
+    <string name="market_long_desc">Metrodroid は、公共交通機関の NFC スマートカードから情報を読み取ります。以前は、Farebot M という名称でした。 
+\n 
+\nこれは Eric Butler の Farebot プロジェクトのフォークです。追加のカードとバグ修正をサポートしています。 
+\n 
+\nサポートしているカード: 
+\n- Bilhete Único - ブラジル、サンパウロ [1] [2] [5] 
+\n- Clipper - アメリカ合衆国、カリフォルニア州、サンフランシスコ - EZ-Link - シンガポール [3] 
+\n- Go カード - オーストラリア、ブリスベンと南東クイーンズランド [0] [1] [2] 
+\n- Manly Fast フェリー - オーストラリア、ニューサウス ウェールズ州、シドニー [0] [1] [2] 
+\n- Matkakortti、HSL - フィンランド - Myki - オーストラリア、VIC、メルボルン (とその周辺) [0] [4] 
+\n- Metrocard - ニュージーランド、クライストチャーチ [0] [1] [2] 
+\n- MyWay - オーストラリア、オーストラリア首都特別地域 [0] [1] [2] 
+\n- NETS Flashpay - シンガポール 
+\n- Octopus - 香港 [0] 
+\n- Opal - オーストラリア、ニューサウス ウェールズ州、シドニー (とその周辺) [0] 
+\n- ORCA - アメリカ合衆国、ワシントン州、シアトル 
+\n- OV-chipkaart - オランダ [1] [2] 
+\n- 深圳通 - 中国、広東省、深圳 [0] 
+\n- SmartRider - オーストラリア、西オーストラリア [0] [1] [2] 
+\n- Suica、IOCOA、PASMO、Edy - 日本 
+\n- Transit Access Pass - アメリカ合衆国、カリフォルニア州、ロサンゼルス [0] [1] [2] 
+\n 
+\n[0]: Metrodroid の新機能。 
+\n[1]: すべてのデバイス (MIFARE クラシック) と互換性はありません。 
+\n[2]: このカードを読み取るために暗号化鍵が必要。 
+\n[3]: すべてのデバイス (CEPAS) と互換性はありません。 
+\n[4]: カード番号のみを読むことができます。 
+\n[5]: フォールバックリーダー — アプリケーションの設定で明示的に有効にする必要があります。 
+\n 
+\nカードを読むためには、NFC 対応携帯電話が必要です。 
+\n 
+\nMIFARE クラシック カードを読み取るために、お使いの携帯電話に NXP NFC チップセットが必要です。他のメーカーの NFC チップを使用している一部の携帯電話は、MIFARE のクラシックカードを読み取れません (例えば: Nexus 4, Nexus 5、Samsung Galaxy S4)。お使いの携帯電話が MIFARE クラシックをサポートしているかどうかを判断するため、アプリのバージョン情報画面を確認してください。 
+\n 
+\n一部の機関は、カードが暗号化されています。それらを読み取るためには暗号化鍵を取得する必要があります。一般的にこれらは各カードに固有です。申し訳ありませんが、これに関して支援することはできません。 
+\n 
+\nMIFARE Classic で Cubic Nextfare または ERG を使用している一部の他の機関のカードも使えます。 
 \n
-\nこれは Eric Butler の Farebot プロジェクトのフォークで、追加のカードとバグ修正をサポートします。
-\n
-\nサポートしているカード:
-\n- Bilhete Único - ブラジル、サンパウロ [1] [2] [5]
-\n- Clipper - アメリカ合衆国、カリフォルニア州、サンフランシスコ - EZ-Link - シンガポール [3]
-\n- Go カード - オーストラリア、ブリスベンと南東クイーンズランド [0] [1] [2]
-\n- Manly Fast フェリー - オーストラリア、ニューサウス ウェールズ州、シドニー [0] [1] [2]
-\n- Matkakortti、HSL - フィンランド - Myki - オーストラリア、VIC、メルボルン (とその周辺) [0] [4]
-\n- MyWay - オーストラリア、オーストラリア首都特別地域 [0] [1] [2]
-\n- NETS Flashpay - シンガポール
-\n- Octopus - 香港 [0]
-\n- Opal - オーストラリア、ニューサウス ウェールズ州、シドニー (とその周辺) [0]
-\n- ORCA - アメリカ合衆国、ワシントン州、シアトル
-\n- OV-chipkaart - オランダ [1] [2]
-\n- 深圳通 - 中国、広東省、深圳 [0]
-\n- SmartRider - オーストラリア、西オーストラリア [0] [1] [2]
-\n- Suica、IOCOA、PASMO、Edy - 日本
-\n- Transit Access Pass - アメリカ合衆国、カリフォルニア州、ロサンゼルス [0] [1] [2]
-\n
-\n[0]: Metrodroid の新機能。
-\n[1]: すべてのデバイス (Mifare クラシック) と互換性はありません。
-\n[2]: このカードを読み取るために暗号化鍵が必要。
-\n[3]: すべてのデバイス (CEPAS) と互換性はありません。
-\n[4]: カード番号のみを読むことができます。
-\n[5]: フォールバックリーダー -- アプリケーションの設定で明示的に有効にする必要があります。
-\n
-\nカードを読むためには、NFC 対応携帯電話が必要です。
-\n
-\nMIFARE クラシック カードを読み取るために、お使いの携帯電話に NXP NFC チップセットが必要です。他のメーカーの NFC チップを使用している一部の携帯電話は、Mifare のクラシックカードを読み取れません (例えば: Nexus 4, Nexus 5、Samsung Galaxy S4)。お使いの携帯電話が MIFARE クラシックをサポートしているかどうかを判断するため、アプリのバージョン情報画面を確認してください。
-\n
-\n一部の機関は、カードが暗号化されています。それらを読み取るためには暗号化鍵を取得する必要があります。一般的にこれらは各カードに固有です。申し訳ありませんが、これに関して支援することはできません。
-\n
-\nMifare Classic で Cubic Nextfare を使用している一部の他の機関のカードも使えます。
-\n
-\n必要なアクセス許可の詳細については、プライバシー ポリシーを参照してください。
-\n
+\n必要なアクセス許可の詳細については、プライバシー ポリシーを参照してください。 
+\n 
 \nこのソフトウェアは GNU GPLv3+ の下でライセンスされます。ソースコードは https://github.com/micolous/metrodroid/ で利用可能です</string>
 
-    <string name="market_changelog_27">Farebot M は Metrodroid になりました。\n\n* Myki (VIC, AU) からカード番号を読み取るためのサポートを実装しました。\n* Go Card (ブリスベン, AU) の最後の数字を読み取るようになりました。\n* Mifare DESFire カードの処理を改善しました。\n* クレジットカード機能付き NETS Flashpay (シンガポール) のサポートを修正しました (@chrisplus によるパッチ)。\n* 日本語訳を大幅に改善しました (@naofum)。\n* 移動とチャージが、すべてのカードの \"履歴\" に結合されるようになりました。\n\n詳細は: https://github.com/micolous/metrodroid/wiki/Changelog</string>
+    <string name="market_changelog_27">Farebot M は Metrodroid になりました。\n\n* Myki (VIC, AU) からカード番号を読み取るためのサポートを実装しました。\n* Go Card (ブリスベン, AU) の最後の数字を読み取るようになりました。\n* MIFARE DESFire カードの処理を改善しました。\n* クレジットカード機能付き NETS Flashpay (シンガポール) のサポートを修正しました (@chrisplus によるパッチ)。\n* 日本語訳を大幅に改善しました (@naofum)。\n* 移動とチャージが、すべてのカードの \"履歴\" に結合されるようになりました。\n\n詳細は: https://github.com/micolous/metrodroid/wiki/Changelog</string>
 
-    <string name="market_changelog_26">明けましておめでとうございます!\n\n* Go カード (ブリスベーンおよび南東クイーンズランド、AU) の基本的なサポートを追加しました。(各カードに固有の) 暗号化鍵と、Mifare クラシックをサポートするデバイスが必要です。制限された停止をサポートします。\n* アデレード メトロカード、AT HOP、Myki のカード識別サポートを追加しました。\n* XML ファイルからの個々のカードのインポートを修正しました。\n* さまざまな UI の改善。\n* マイナーなバグ修正。\n\n詳細は: https://github.com/micolous/metrodroid/wiki/Changelog</string>
+    <string name="market_changelog_26">明けましておめでとうございます!\n\n* Go カード (ブリスベーンおよび南東クイーンズランド、AU) の基本的なサポートを追加しました。(各カードに固有の) 暗号化鍵と、MIFARE クラシックをサポートするデバイスが必要です。制限された停止をサポートします。\n* アデレード メトロカード、AT HOP、Myki のカード識別サポートを追加しました。\n* XML ファイルからの個々のカードのインポートを修正しました。\n* さまざまな UI の改善。\n* マイナーなバグ修正。\n\n詳細は: https://github.com/micolous/metrodroid/wiki/Changelog</string>
 
 
 <string name="market_changelog_28">* 地図の問題を修正するため Android 4.1 が必要です。
 * FeliCa の raw データの表示に対応しました。
-* raw データを含め Mifare Ultralight に対応しました。
+* raw データを含め MIFARE Ultralight に対応しました。
 * 別の日に 2 度の移動時に先の移動で日付ヘッダー表示されない問題を修正しました (問題 #15)。
 * Go カード: データの寄付のおかげで、11 の追加の停留所を追加。運賃の計算の実装は一部制限があります。
 
 詳細: https://github.com/micolous/metrodroid/wiki/Changelog</string>
 
-    <string name="market_changelog_29">* Mifare クラシックカードを使用した認証の信頼性を向上。
+    <string name="market_changelog_29">* MIFARE クラシックカードを使用した認証の信頼性を向上。
 * Octopus (香港)、深圳通、および Transit Access Pass (ロサンゼルス、カリフォルニア、米国) のサポートを追加。
 * キュービック Nextfare MFC の汎用リーダーを追加 (Go カード リーダーに基づいて)。
 * Android 4.4 (KitKat) 以降で、USB ストレージへのエクスポートの場所を選択することができます。
@@ -67,7 +68,7 @@
     <string name="market_changelog_30">* Cubic Nextfare カードの複数の修正。
 * Fudan FM11RF08 カードがもう BilheteÚnico として誤って検出されなくなります。
 * MyWay (ACT、オーストラリア) の実験的サポートを追加しました。
-* 一部の HTC や Sony デバイスで Mifare Classic のバグを回避できます。
+* 一部の HTC や Sony デバイスで MIFARE Classic のバグを回避できます。
 * Android 6 以降のアクセス許可のバグを修正。
 
 詳細は: https://github.com/micolous/metrodroid/wiki/Changelog</string>
@@ -79,7 +80,14 @@
 \n詳細: https://github.com/micolous/metrodroid/wiki/Changelog</string>
 
     <string name="market_changelog_32">* 不明な CEPAS カード形式でクラッシュを修正。
-\n* Mifare クラシックカードで、生のカードの詳細を表示しているときに、カードを外したときのクラッシュを修正。
+\n* MIFARE クラシックカードで、生のカードの詳細を表示しているときに、カードを外したときのクラッシュを修正。
+\n
+\n詳細: https://github.com/micolous/metrodroid/wiki/Changelog</string>
+
+    <string name="market_changelog_33">* Metrocard (ニュージーランド、クライストチャーチ) の実験的なサポートを追加。
+\n* MIFARE クラシックおよびウルトラライトカードでの複数の問題を修正。
+\n* カードの読み込み時にさらに多くの情報が表示されます。
+\n* Opal: 不明なステータス 0xc の処理。
 \n
 \n詳細: https://github.com/micolous/metrodroid/wiki/Changelog</string>
 

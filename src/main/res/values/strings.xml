@@ -3,7 +3,7 @@
   strings.xml
 
   Copyright 2011-2013 Eric Butler
-  Copyright 2015-2017 Michael Farrell
+  Copyright 2015-2018 Michael Farrell
 
   Authors:
   Eric Butler <eric@codebutler.com>
@@ -28,7 +28,7 @@
     <string name="app_name">Metrodroid</string>
 
     <!-- Additional names now noted in the license screen -->
-    <string name="copyright">Copyright 2015 – 2017 Michael Farrell</string>
+    <string name="copyright">Copyright 2015 – 2018 Michael Farrell</string>
 
     <!-- General application strings -->
     <string name="license">Licenses</string>
@@ -40,6 +40,9 @@
     <string name="delete_card">Delete Card</string>
     <string name="unknown_card">Unknown Card</string>
     <string name="locked_card">Locked Card</string>
+    <string name="locked_mfc_card">Locked MIFARE Classic card</string>
+    <string name="locked_mfu_card">Locked MIFARE Ultralight card</string>
+    <string name="locked_mfd_card">Locked MIFARE DESFire card</string>
     <string name="hw_detail">Manufacturing Info</string>
     <string name="data">Raw Data</string>
     <string name="copy_xml">Copy</string>
@@ -95,10 +98,14 @@
     <string name="no_scanned_cards">You have not scanned any cards.</string>
     <string name="block_title_format">Block: %s</string>
     <string name="page_title_format">Page: 0x%s</string>
-    <string name="unauthorized_page_title_format">Page: 0x%s (Unauthorized)</string>
+    <string name="application_title_format">Application: 0x%s</string>
+    <string name="file_title_format">File: 0x%s</string>
+    <string name="unauthorized_file_title_format">File: 0x%s (unauthorized)</string>
+    <string name="invalid_file_title_format">File: 0x%1%s (invalid: %2$s)</string>
+    <string name="unauthorized_page_title_format">Page: 0x%s (unauthorized)</string>
     <string name="sector_title_format">Sector: 0x%s</string>
-    <string name="unauthorized_sector_title_format">Sector: 0x%s (Unauthorized)</string>
-    <string name="invalid_sector_title_format">Sector: 0x%1$s (Invalid: %2$s)</string>
+    <string name="unauthorized_sector_title_format">Sector: 0x%s (unauthorized)</string>
+    <string name="invalid_sector_title_format">Sector: 0x%1$s (invalid: %2$s)</string>
     <string name="subscriptions">Subscriptions</string>
     <string name="info">Info</string>
     <string name="valid_format">Valid %1$s to %2$s</string>
@@ -179,6 +186,25 @@
     <string name="obfuscation_fares">Obfuscate fares</string>
     <string name="obfuscation_fares_desc">Change fares shown by a random amount</string>
 
+    <!-- Translators: This is shown when an unsupported type of card is scanned, and that we were unable to read it at all, let alone parse its content. -->
+    <string name="unsupported_tag">Unsupported NFC card media</string>
+
+    <string name="saving_card">Saving card…</string>
+
+    <string name="mfc_reading">Reading MIFARE Classic card…</string>
+    <string name="mfc_have_key">Trying user-supplied key for sector %d…</string>
+    <string name="mfc_other_key">Trying alternate user-supplied keys for sector %d…</string>
+    <string name="mfc_default_key">Trying well-known keys for sector %d…</string>
+    <string name="mfc_reading_blocks">Reading sector %d…</string>
+
+    <string name="iso14a_detect">Detecting ISO 14443 card type…</string>
+    <string name="mfd_reading">Reading MIFARE DESFire card…</string>
+    <!-- Translators: This is substituted with the name of a card, like "Reading Opal..." or "Reading Suica..." -->
+    <string name="card_reading_type">Reading <xliff:g id="card_name" example="Opal">%s</xliff:g>…</string>
+
+    <string name="mfu_detect">Detecting MIFARE Ultralight card type…</string>
+    <string name="mfu_reading">Reading MIFARE Ultralight card…</string>
+
     <!--
     Translators: shown in place of a real card number in some lists when obfuscation is enabled.
     -->
@@ -214,8 +240,11 @@
 
     <!--
     This tile server gives "retina" tiles which are much nicer on modern
-    smartphones. Permission to use the tile server has been granted by
-    the tile server operator.
+    smartphones.
+
+    Metrodroid has been granted permission to use the tile server by
+    the tile server operator. Other projects will need to explicitly seek
+    permission from the tile server operator.
 
     The tile stylesheets are available under an open source license at:
     https://github.com/stackunderflow-stackptr/stackptr_tools/tree/master/osm-bright
@@ -236,6 +265,31 @@
         <item quantity="other">%d blocks</item>
     </plurals>
 
+    <!-- DESFire -->
+    <string name="desfire_standard_file">Standard file</string>
+    <string name="desfire_backup_file">Backup file</string>
+    <string name="desfire_value_file">Value file</string>
+    <string name="desfire_linear_record">Linear record</string>
+    <string name="desfire_cyclic_record">Cyclic record</string>
+    <string name="desfire_unknown_file">Unknown file type</string>
+    <!-- Type: Standard file, Length: 16 bytes -->
+    <plurals name="desfire_standard_format">
+        <item quantity="one">Type: %1$s, Length: %2$s byte</item>
+        <item quantity="other">Type: %1$s, Length: %2$s bytes</item>
+    </plurals>
+
+    <!-- Type: Linear record, Records: 4 (6 maximum), Record size: 40 -->
+    <plurals name="desfire_record_format">
+        <item quantity="one">Type: %1$s, Record: %2$s (%3$s maximum), Record Size: %4$s</item>
+        <item quantity="other">Type: %1$s, Records: %2$s (%3$s maximum), Record Size: %4$s</item>
+    </plurals>
+
+    <!-- Type: Value file, Range: 0 - 2300, Limited credit: 400 (Enabled) -->
+    <string name="desfire_value_format">Type: %1$s, Range: %2$s - %3$s, Limited credit: %4$s (%5$s)</string>
+    <string name="enabled">Enabled</string>
+    <string name="disabled">Disabled</string>
+
+
     <!-- Locations -->
     <string name="location_seattle">Seattle, WA, USA</string>
     <string name="location_san_francisco">San Francisco, CA, USA</string>
@@ -246,13 +300,20 @@
     <string name="location_sao_paulo">São Paulo, Brazil</string>
     <string name="location_helsinki_finland">Helsinki, Finland</string>
     <string name="location_sydney_australia">Sydney, Australia</string>
-    <!-- i18n: "SE QLD" is an abbreviation for "South East Queensland".
+    <!--
+      Translators:
 
-         "Queensland" is a state of Australia: https://en.wikipedia.org/wiki/Queensland
+      "SE QLD" is an abbreviation for "South East Queensland".
 
-         "South East Queensland" is used to describe the most populated area of Queensland, which
-         includes Brisbane, Gold Coast and Sunshine Coast:
-         https://en.wikipedia.org/wiki/South_East_Queensland -->
+      "Queensland" is a state of Australia: https://en.wikipedia.org/wiki/Queensland
+
+      "South East Queensland" is used to describe the most populated area of Queensland, which
+      includes Brisbane, Gold Coast and Sunshine Coast:
+      https://en.wikipedia.org/wiki/South_East_Queensland
+
+      If there isn't a good way to abbreviate it in your language, please translate this as
+      "Brisbane, Australia" instead.
+    -->
     <string name="location_brisbane_seq_australia">Brisbane &amp; SE QLD, Australia</string>
     <string name="location_victoria_australia">Victoria, Australia</string>
     <string name="location_hong_kong">Hong Kong</string>
@@ -260,8 +321,17 @@
     <string name="location_los_angeles">Los Angeles, CA, USA</string>
     <string name="location_act_australia">Australian Capital Territory, Australia</string>
     <string name="location_wa_australia">Western Australia, Australia</string>
+    <string name="location_christchurch_nz">Christchurch, New Zealand</string>
 
-    <!-- Felica -->
+    <!-- Felica / Suica: These strings must only be used for Felica. -->
+
+    <!--
+        Translators:
+        Japanese: 精算機
+        https://matcha-jp.com/en/833
+        These are ticket machines, inside the "ticketed area" of a station, where you can top-up
+        your IC card, if you do not have enough credit remaining on it to exit the station.
+    -->
     <string name="felica_terminal_fare_adjustment">Fare Adjustment Machine</string>
     <string name="felica_terminal_portable">Portable Terminal</string>
     <string name="felica_terminal_vehicle">Vehicle Terminal (on bus)</string>
@@ -269,10 +339,49 @@
     <string name="felica_terminal_deposit_quick_charge">Quick Charge Machine</string>
     <string name="felica_terminal_tvm_tokyo_monorail">Tokyo Monorail Ticket Machine</string>
     <string name="felica_terminal_tvm_etc">Ticket Machine, etc.</string>
-    <string name="felica_terminal_ticket_gate">Ticket Gate</string>
-    <string name="felica_terminal_simple_ticket_gate">Simple Ticket Gate</string>
-    <string name="felica_terminal_booth">Booth</string>
-    <string name="felica_terminal_booth_green">Booth (Green)</string>
+    <!--
+        Translators:
+        Japanese: 改札機
+        https://ot-lab.org/wp/wp-content/uploads/2013_0724_01.jpg
+        This is a type of turnstile, with two small doors that open outwards. They are placed at the
+        entrances to station platforms at busy train stations.
+    -->
+    <string name="felica_terminal_turnstile">Turnstile</string>
+    <!--
+        Translators:
+        Japanese: 簡易改札機
+        http://livedoor.blogimg.jp/yosi44125/imgs/b/1/b1d7a865.jpg
+        This is a type of ticket machine placed at the entrance and exit to train stations, where
+        there is no barrier between the passenger and the platform or exit. The traveller is trusted
+        to scan or validate their ticket at the station at the beginning or end of their journey.
+    -->
+    <string name="felica_terminal_ticket_validator">Ticket Validator</string>
+    <!--
+        Translators:
+        Japanese: 窓口端末
+        This is a place where common ticket types are sold. It is commonly a window at a train
+        stations.
+    -->
+    <string name="felica_terminal_ticket_booth">Ticket Booth</string>
+    <!--
+        Translators:
+        Japanese: 窓口端末(みどりの窓口)
+        https://commons.wikimedia.org/wiki/File:Midori_no_Madoguchi.JPG
+        https://ja.wikipedia.org/wiki/%E3%83%95%E3%82%A1%E3%82%A4%E3%83%AB:Iwamizawast_01.jpg
+
+        This is a "full service" office, counter or window where you can buy any type of train
+        ticket. This includes long distance services. They are literally coloured green.
+
+        みどりの窓口 (Midori no Madoguchi / The Green Window) is a trademark of JR East.
+    -->
+    <string name="felica_terminal_ticket_office_green">Ticket Office (Green Window)</string>
+    <!--
+        Translators:
+        Japanese: 改札端末
+        I'm not sure what this is.
+        Maybe this is for long distance services, where you need to pay for a paper ticket in
+        advance with your Suica card at a computer terminal in the train station.
+    -->
     <string name="felica_terminal_ticket_gate_terminal">Ticket Gate Terminal</string>
     <string name="felica_terminal_mobile_phone">Mobile Phone</string>
     <string name="felica_terminal_connection_adjustment">Connection Adjustment Machine</string>
@@ -280,7 +389,8 @@
     <string name="felica_terminal_simple_deposit">Simple Deposit Machine</string>
     <string name="felica_terminal_pos">Point of Sale Terminal</string>
     <string name="felica_terminal_vending">Vending Machine</string>
-    <string name="felica_process_fare_exit_gate">Fare Gate</string>
+
+    <string name="felica_process_fare_exit_gate">Exit Turnstile</string>
     <string name="felica_process_charge">Charge</string>
     <string name="felica_process_purchase_magnetic">Magnetic Ticket</string>
     <string name="felica_process_fare_adjustment">Fare Adjustment</string>
@@ -358,6 +468,7 @@
     <string name="opal_action_journey_completed_auto_on">Journey completed (failure to tap on)</string>
     <string name="opal_action_tap_on_reversal">Tap on reversal</string>
     <string name="opal_action_tap_on_rejected">Tap on rejected</string>
+    <string name="card_note_opal">Free travel passes and single trip tickets are not supported.</string>
 
     <!--
         Go Card (South East Queensland/Brisbane, AU)
@@ -382,7 +493,7 @@
 
     <!--
         Cubic Nextfare
-        These are deliberately seperated, but are used for generic fields across many systems.
+        These are deliberately separated, but are used for generic fields across many systems.
     -->
     <!-- TRANSLATORS: "Cubic Nextfare" is the name of a ticketing system product, and should not be literally translated. -->
     <string name="nextfare">Cubic Nextfare</string>
@@ -399,5 +510,10 @@
         Bilhete Único
     -->
     <string name="card_note_bilhete_unico">Must be selected as fallback reader in the preferences.</string>
+
+    <!--
+        ERG
+    -->
+    <string name="erg_agency_id">Agency ID</string>
 
 </resources>

@@ -79,7 +79,7 @@
     </PreferenceCategory>
 
     <PreferenceCategory android:title="@string/mifare_classic">
-        <com.codebutler.farebot.ui.NumberPickerPreference
+        <au.id.micolous.metrodroid.ui.NumberPickerPreference
             android:title="@string/auth_retries"
             android:summary="@string/auth_retries_summary"
             android:defaultValue="5"

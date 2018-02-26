@@ -1,0 +1,11 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!--
+  The English (Australia) translation is intended to simplify names of Australian places.
+-->
+<resources>
+    <string name="location_sydney_australia">Sydney</string>
+    <string name="location_brisbane_seq_australia">Brisbane &amp; South East Queensland</string>
+    <string name="location_victoria_australia">Victoria</string>
+    <string name="location_act_australia">Australian Capital Territory</string>
+    <string name="location_wa_australia">Western Australia</string>
+</resources>

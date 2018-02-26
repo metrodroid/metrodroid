@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- mode: python; indent-tabs-mode: nil; tab-width: 2 -*-
 """
-mfcdump_to_farebotxml.py - Converts a mfoc/mfcuk .mfc dump file for Mifare
+mfcdump_to_farebotxml.py - Converts a mfoc/mfcuk .mfc dump file for MIFARE
 Classic to Farebot XML export format.
 
 Copyright 2015-2016 Michael Farrell <micolous+git@gmail.com>
@@ -30,7 +30,7 @@ def mfc_to_farebot(input_fs, output_f):
   cards = []
 
   for input_f in input_fs:
-    # Read the Mifare card entirely first
+    # Read the MIFARE card entirely first
     card_data = input_f.read()
 
     # Card data should be 1K or 4K

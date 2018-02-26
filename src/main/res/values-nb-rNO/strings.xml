@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2"><string name="app_name">Metrodroid</string>
 
-    <string name="copyright">Kopirett 2015 - 2017 Michael Farrell</string>
+    <string name="copyright">Kopirett 2015 - 2018 Michael Farrell</string>
 
     <string name="license">Lisenser</string>
     <string name="title_activity_license">Friprog-lisenser</string>
@@ -52,7 +52,7 @@
     <string name="block_title_format">Blokk: %s</string>
     <string name="page_title_format">Side: 0x%s</string>
     <string name="sector_title_format">Sektor: 0x%s</string>
-    <string name="unauthorized_sector_title_format">Sektor: 0x%s (Ikke autorisert)</string>
+    <string name="unauthorized_sector_title_format">Sektor: 0x%s (ikke autorisert)</string>
     <string name="invalid_sector_title_format">Sektor: 0x%1$s (ugyldig: %2$s)</string>
     <string name="subscriptions">Abonnementer</string>
     <string name="info">Info</string>
@@ -128,7 +128,7 @@
     <string name="auth_retries_summary">Antall ganger autentisering skal forsøkes for hver sektor</string>
     <string name="storage_required">Tilgang kreves for å lese og skrive kortdumper og nøkler fra/til filer.</string>
 
-    <string name="mfc_fallback_desc">Noen byrå har ingen identifiserende magi på kortene sine. For å lese dem, må du eksplisitt velge byrå.</string>
+    <string name="mfc_fallback_desc">Noen byrå har ingen identifiserende magi på kortene sine. For å lese dem, må du eksplisitt velge et byrå.</string>
     <string name="mfc_fallback">Tilbakefallsleser</string>
 
     <string name="obfuscation_title">Tilsløring</string>
@@ -209,4 +209,82 @@
 \n
 \nVær så snill å ta kontakt med ditt kommunale kollektivtransportetat for å få et visst nivå av åpen data-tilgang for de utstedte kortene.  Det er mulig å tilby begrenset lesetilgang på en trygg måte til kollektivtransport-smartkort."</string>
     <string name="add_key_directions">Lagre en binærdump av nøklene dine som en fil med endelsen .farebotkeys, send den som et epostvedlegg til deg selv og åpne filen på denne enheten.</string>
+    <string name="location_helsinki_finland">Helsingfors, Finland</string>
+    <string name="location_sydney_australia">Sydney, Australia</string>
+    <string name="felica_terminal_mobile_phone">Mobiltelefon</string>
+    <string name="felica_process_merchandise_purchase">Handelsvarer</string>
+    <string name="felica_process_bonus_charge">Bonuspåfylling</string>
+    <string name="felica_process_register_deposit">Registrer innskudd</string>
+    <string name="felica_process_merchandise_cancel">Avbryt handelsvare</string>
+    <string name="felica_process_merchandise_admission">Handelsvare/inngang</string>
+    <string name="felica_process_merchandise_purchase_cash">Handelsvare (delvis kontant)</string>
+    <string name="felica_process_merchandise_admission_cash">Handelsvare/inngang (delvis kontakt)</string>
+    <string name="felica_process_payment_thirdparty">Betaling (tredjepart)</string>
+    <string name="felica_process_admission_thirdparty">Inngangsbetaling (tredjepart)</string>
+
+    <string name="hsl_pass_is_valid">Gyldig sesongbillett</string>
+    <string name="hsl_season_ticket_price_was">Pris for inneværende sesongbillett var</string>
+    <string name="opal_vehicle_ferry_lr">Ferge eller nærbane</string>
+    <string name="opal_action_journey_completed_distance">Tur fullført (strekningstakst)</string>
+    <string name="opal_action_journey_completed_flat_rate">Tur fullført (fast takst)</string>
+    <string name="seqgo_ticket_type_regular">Vanlig</string>
+    <string name="seqgo_ticket_type_concession">Honnør</string>
+    <string name="seqgo_ticket_type_child">Barn</string>
+    <string name="seqgo_ticket_type_senior">Senior</string>
+
+    <string name="seqgo_refill_manual">Manuelt påfyll</string>
+    <string name="seqgo_refill_automatic">Automatisk påfyll</string>
+
+    <string name="card_note_seqgo">Støtter ikke Go Access, Explore eller SEEQ -kort.</string>
+
+    <string name="card_note_myki">Kun kortnummeret kan leses.</string>
+
+    <string name="nextfare">Cubic Nextfare</string>
+    <string name="nextfare_ticket_class">Billettypekode</string>
+    <string name="locked_mfc_card">Låst MIFARE Classic-kort</string>
+    <string name="locked_mfu_card">Låst MIFARE Ultralight-kort</string>
+    <string name="locked_mfd_card">Låst MIFARE DESFire-kort</string>
+    <string name="application_title_format">Program: 0x%s</string>
+    <string name="file_title_format">Fil: 0x%s</string>
+    <string name="unauthorized_file_title_format">Fil: 0x%s (uautorisert)</string>
+    <string name="invalid_file_title_format">Fil: 0x%1%s (ugyldig: %2$s)</string>
+    <string name="unauthorized_page_title_format">Side: 0x%s (uautorisert)</string>
+    <string name="map_tiles_subdomains_summary">Hvis {s} brukes i kartnettadresse, en kommainndelt liste over underdomene, eller enkelttegnsliste over underdomener.</string>
+    <string name="map_tiles_help_summary">For hjelp med bruk av kartflisnettadresser, se Leaflets nettbaserte dokumentasjon (, kun tilgjengelig på Engelsk).</string>
+    <string name="auth_retries">Gjentatte forsøk på autentisering</string>
+    <string name="obfuscation_dates">Tilslør datoer</string>
+    <string name="obfuscation_dates_desc">Vis tur, abonnement, utløp- og skanningsdatoer som forskjellige, tilfeldige dager</string>
+
+    <string name="obfuscation_times">Tilslør tider</string>
+    <string name="obfuscation_times_desc">Tilfeldiggjør og senk punktligheten for turer, abonnementer og skanninger</string>
+
+    <string name="default_map_tile_url">https://tile{s}.stackcdn.com/osm_tiles_2x/{z}/{x}/{y}.png</string>
+    <string name="desfire_standard_file">Forvalgt fil</string>
+    <string name="desfire_backup_file">Sikkerhetskopifil</string>
+    <string name="desfire_value_file">Verdifil</string>
+    <string name="desfire_linear_record">Lineært tidslinjeopptak</string>
+    <string name="desfire_cyclic_record">Syklisk tidslinjeopptak</string>
+    <string name="desfire_unknown_file">Ukjent filtype</string>
+    <plurals name="desfire_standard_format">
+	<item quantity="one">Type: %1$s, Lengde: %2$s byte</item>
+	<item quantity="other">Type: %1$s, Lengde: %2$s byte</item>
+</plurals>
+
+    <plurals name="desfire_record_format">
+	<item quantity="one">Type: %1$s, Opptak: %2$s (%3$s maksimalt), Opptaksstørrelse: %4$s</item>
+	<item quantity="other">Type: %1$s, Opptak: %2$s (%3$s maksimalt), Opptaksstørrelse: %4$s</item>
+</plurals>
+
+    <string name="enabled">Påskrudd</string>
+    <string name="disabled">Avskrudd</string>
+
+
+    <string name="location_seattle">Seattle, WA, USA</string>
+    <string name="location_san_francisco">San Francisco, CA, USA</string>
+    <string name="location_sao_paulo">São Paulo, Brasil</string>
+    <string name="location_shenzhen">Shenzhen, Guangdong-provinsen, Kina</string>
+    <string name="location_los_angeles">Los Angeles, CA, USA</string>
+    <string name="location_act_australia">Australian Capital Territory, Australia</string>
+    <string name="location_wa_australia">Vest-Australia, Australia</string>
+
     </resources>

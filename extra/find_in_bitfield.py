@@ -100,7 +100,7 @@ def main():
   parser.add_argument('-b', '--byte-aligned', action='store_true',
     help='Only return values that are aligned to bytes (divisible by 8)')
   parser.add_argument('-k', '--skip-keys', action='store_true',
-    help='Ignore values that appear in blocks for Mifare Classic keys')
+    help='Ignore values that appear in blocks for MIFARE Classic keys')
   
   options = parser.parse_args()
 
