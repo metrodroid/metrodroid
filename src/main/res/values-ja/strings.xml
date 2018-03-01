@@ -52,7 +52,7 @@
     <string name="felica_terminal_pos">物販端末</string>
     <string name="felica_terminal_vending">自販機</string>
 
-    <string name="felica_process_fare_exit_gate">運賃支払(改札出場)</string>
+    <string name="felica_process_fare_exit_gate">出口改札</string>
     <string name="felica_process_charge">チャージ</string>
     <string name="felica_process_purchase_magnetic">券購(磁気券購入)</string>
     <string name="felica_process_fare_adjustment">精算</string>
@@ -77,20 +77,20 @@
     <string name="felica_process_merchandise_admission_cash">入物 (入場現金併用物販)</string>
     <string name="felica_process_payment_thirdparty">精算 (他社精算)</string>
     <string name="felica_process_admission_thirdparty">精算 (他社入場精算)</string>
-    <string name="nfc_off_error">NFCは無効です</string>
+    <string name="nfc_off_error">NFCオフ</string>
     <string name="turn_on_nfc">カードのデータを読み込むためにNFCを有効してください。</string>
     <string name="wireless_settings">無線設定</string>
     <string name="report_error">エラー情報を送信する</string>
     <string name="unknown_card_description">読み込んだカードは Metrodroid で対応していません。データだけが表示されます。</string>
     <string name="report_error_privacy_title">個人情報の取扱いについて</string>
-    <string name="report_error_privacy_message">カードに含まれるの全てのデータがエラーレポートに含まれます。</string>
+    <string name="report_error_privacy_message">このカードの全てのデータがエラーレポートに含まれます。</string>
     <string name="scanned_cards">履歴</string>
     <string name="no_scanned_cards">カードがまだスキャンされていません。</string>
 
     <string name="location_tokyo">東京</string>
     <string name="location_kansai">関西</string>
     <string name="app_name">Metrodroid</string>
-    <string name="copyright">Copyright 2015 – 2017 Michael Farrell</string>
+    <string name="copyright">Copyright 2015 – 2018 Michael Farrell</string>
     <string name="license">ライセンス</string>
     <string name="title_activity_license">オープンソース ライセンス</string>
     <string name="locked_card">ロックされたカード</string>
@@ -104,7 +104,7 @@
 \n
 \n
 \n 発行されたカードで、一部のレベルのオープン データ   アクセスを許可するために、市営交通機関に問い合わせてください。公共交通スマートカードのデータに、安全に限定された読み取りアクセスをすることは可能です。 "</string>
-    <string name="fully_locked_title">カードが完全にロックされています!</string>
+    <string name="fully_locked_title">完全にロックされたカードです。</string>
     <string name="block_title_format">ブロック: %s</string>
     <string name="sector_title_format">セクター: 0x%s</string>
     <string name="unauthorized_sector_title_format">セクター: 0x%s (未承認)</string>
@@ -120,13 +120,13 @@
     <string name="error">エラー</string>
     <string name="keys">鍵</string>
     <string name="delete">削除</string>
-    <string name="add_key_directions">鍵のバイナリ ダンプ ファイルを .farebotkeys 拡張子で保存し、ダンプ ファイルを添付ファイルとしてメールで送信し、このデバイスで開きます。</string>
+    <string name="add_key_directions">鍵のバイナリダンプを .farebotkeys 拡張子のファイルで保存して、添付ファイルとしてメールで送信し、その後このデバイスで開きます。</string>
     <string name="no_keys">鍵がありません。</string>
     <string name="nfc_unavailable">NFC が利用不可</string>
     <string name="fare_cancelled_format">%s (キャンセル)</string>
     <string name="general">全般</string>
     <string name="launch_from_background">バックグラウンドで起動</string>
-    <string name="error_report_sent">エラー報告を送信しました!</string>
+    <string name="error_report_sent">エラー報告を送信しました。</string>
     <string name="checksum">チェックサム</string>
     <string name="last_transaction">最後のトランザクション</string>
     <string name="date">日付</string>
@@ -136,7 +136,7 @@
     <string name="card_epoch">カード エポック</string>
     <string name="card_not_supported_on_device">このカードは、お使いのデバイスでサポートされていません。</string>
     <string name="card_note_cepas">すべてのデバイスと互換性がありません。</string>
-    <string name="need_stations">すべての駅の名前が分かっているわけではありません。</string>
+    <string name="need_stations">一部の駅の名前が不明です。</string>
     <string name="need_stations_submit">報告</string>
     <string name="card_preview_reader">ベータ版のカードリーダーです。</string>
     <string name="visit_website">ウェブサイトを訪問</string>
@@ -215,7 +215,7 @@
     <string name="card_note_myki">カード番号のみ読み取ることができます。</string>
 <string name="unknown_card_header">不明なカード フォーマット</string>
     <string name="unknown_more_info">詳細情報</string>
-    <string name="unknown_more_info_desc">このカードの Metrodroid のサポートの詳細については、ここをタップしてください。</string>
+    <string name="unknown_more_info_desc">このカードの Metrodroid のサポートの詳細については、タップしてください。</string>
 
 
     <string name="lawyercats">Metrodroid と作者は、公共交通機関と何の関連もありません。</string>
@@ -268,7 +268,7 @@
 
     <string name="nextfare_card_expiry">カード有効期限</string>
 
-    <string name="mfc_fallback_desc">一部の機関は、カードに識別のマジックがありません。それらを読み取るためには機関を明示的に選択する必要があります。</string>
+    <string name="mfc_fallback_desc">一部の機関は、カードに識別のマジックがありません。それらを読み取るためには機関を明示的に必要です。</string>
     <string name="mfc_fallback">フォールバック リーダー</string>
 
     <string name="location_act_australia">オーストラリア首都特別地域, オーストラリア</string>
@@ -304,4 +304,55 @@
 	<item quantity="other">非表示キーデータ (<xliff:g id="count" example="1">%d</xliff:g> バイト)</item>
 </plurals>
 
-    </resources>
+    <string name="locked_mfc_card">ロックされた MIFARE クラシック カード</string>
+    <string name="locked_mfu_card">ロックされた MIFARE Ultralight カード</string>
+    <string name="locked_mfd_card">ロックされた MIFARE DESFire カード</string>
+    <string name="application_title_format">アプリケーション: 0x%s</string>
+    <string name="file_title_format">ファイル: 0x%s</string>
+    <string name="unauthorized_file_title_format">ファイル: 0x%s (未承認)</string>
+    <string name="invalid_file_title_format">ファイル: 0x%1%s (無効: %2$s)</string>
+    <string name="unauthorized_page_title_format">ページ: 0x%s (未承認)</string>
+    <string name="unsupported_tag">サポートされていない NFC カードメディア</string>
+
+    <string name="saving_card">カードを保存しています…</string>
+
+    <string name="mfc_reading">MIFARE クラシックカードを読み込んでいます…</string>
+    <string name="mfc_have_key">セクター %d のユーザーが指定したキーを試行しています…</string>
+    <string name="mfc_other_key">セクター %d のユーザーが指定した代替キーを試行しています…</string>
+    <string name="mfc_default_key">セクター %d の既知のキーを試行しています…</string>
+    <string name="mfc_reading_blocks">セクター %d を読み込んでいます…</string>
+
+    <string name="iso14a_detect">ISO 14443 カードタイプを検出しています…</string>
+    <string name="mfd_reading">MIFARE DESFire カードを読み込んでいます…</string>
+    <string name="card_reading_type"><xliff:g id="card_name" example="Opal">%s</xliff:g> を読み込んでいます…</string>
+
+    <string name="mfu_detect">MIFARE Ultralight カードタイプを検出しています…</string>
+    <string name="mfu_reading">MIFARE Ultralight カードを読み込んでいます…</string>
+
+    <string name="desfire_standard_file">標準ファイル</string>
+    <string name="desfire_backup_file">バックアップファイル</string>
+    <string name="desfire_value_file">値ファイル</string>
+    <string name="desfire_linear_record">リニアレコード</string>
+    <string name="desfire_cyclic_record">繰り返しレコード</string>
+    <string name="desfire_unknown_file">不明なファイルタイプ</string>
+    <plurals name="desfire_standard_format">
+	<item quantity="other">タイプ: %1$s, 長さ: %2$s バイト</item>
+</plurals>
+
+    <plurals name="desfire_record_format">
+	<item quantity="other">タイプ: %1$s, レコード: %2$s (%3$s 最大), レコードサイズ: %4$s</item>
+</plurals>
+
+    <string name="desfire_value_format">タイプ: %1$s, 範囲: %2$s - %3$s, クレジット限度: %4$s (%5$s)</string>
+    <string name="enabled">有効</string>
+    <string name="disabled">無効</string>
+
+
+    <string name="location_christchurch_nz">ニュージーランド, クライストチャーチ</string>
+
+    <string name="opal_action_tap_on_rejected">タップを拒否</string>
+    <string name="card_note_opal">無料旅券、片道チケットはサポートされていません。</string>
+
+    <string name="erg_agency_id">交通機関 ID</string>
+
+</resources>
