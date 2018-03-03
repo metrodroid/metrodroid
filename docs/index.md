@@ -1,20 +1,9 @@
 ---
 title: Metrodroid
 permalink: /
+layout: home
 ---
 
-# Metrodroid
-
-View your remaining balance, recent trips, and other information from
-contactless public transit cards using your NFC-enabled Android device!
-
-<a href="https://f-droid.org/repository/browse/?fdid=au.id.micolous.farebot" target="_blank">
-<img src="https://f-droid.org/badge/get-it-on.png" height="80"/></a>
-<a href="https://play.google.com/store/apps/details?id=au.id.micolous.farebot" target="_blank">
-<img src="https://play.google.com/intl/en_us/badges/images/generic/en-play-badge.png" height="80"/></a>
-
-* [Direct APK downloads][1]
-* [Source code][0]
 * [Issue tracker][3]
 * [Privacy and permissions statement][2]
 
