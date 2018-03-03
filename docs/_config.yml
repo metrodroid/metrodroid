@@ -5,3 +5,6 @@ exclude:
 - CNAME
 - README.md
 
+plugins:
+- jemoji
+
