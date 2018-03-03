@@ -23,6 +23,7 @@ import au.id.micolous.metrodroid.transit.erg.ErgTransitData;
 import au.id.micolous.metrodroid.util.Utils;
 
 import java.util.Arrays;
+import java.util.Locale;
 
 /**
  * Represents a preamble record.
@@ -60,4 +61,10 @@ public class ErgPreambleRecord extends ErgRecord {
         return mCardSerial;
     }
 
+    @Override
+    public String toString() {
+        return String.format(Locale.ENGLISH, "[%s: serial=%s]",
+                getClass().getSimpleName(),
+                getCardSerial() == null ? "null" : getCardSerial());
+    }
 }

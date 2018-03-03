@@ -19,6 +19,8 @@
 
 package au.id.micolous.metrodroid.transit.erg.record;
 
+import java.util.Locale;
+
 import au.id.micolous.metrodroid.util.Utils;
 
 /**
@@ -70,5 +72,14 @@ public class ErgBalanceRecord extends ErgRecord implements Comparable<ErgBalance
     public int compareTo(ErgBalanceRecord rhs) {
         // So sorting works, we reverse the order so highest number is first.
         return Integer.valueOf(rhs.mVersion).compareTo(this.mVersion);
+    }
+
+    @Override
+    public String toString() {
+        return String.format(Locale.ENGLISH, "[%s: agency=%x, balance=%d, version=%d]",
+                getClass().getSimpleName(),
+                mAgency,
+                mBalance,
+                mVersion);
     }
 }

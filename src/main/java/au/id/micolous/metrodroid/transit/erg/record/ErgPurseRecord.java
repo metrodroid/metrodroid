@@ -34,6 +34,7 @@ import java.util.Locale;
  * https://github.com/micolous/metrodroid/wiki/ERG-MFC#purse-records
  */
 public class ErgPurseRecord extends ErgRecord implements Parcelable {
+    private int mAgency;
     private int mDay;
     private int mMinute;
     private boolean mIsCredit;
@@ -43,6 +44,7 @@ public class ErgPurseRecord extends ErgRecord implements Parcelable {
     }
 
     public ErgPurseRecord(Parcel parcel) {
+        mAgency = parcel.readInt();
         mDay = parcel.readInt();
         mMinute = parcel.readInt();
         mIsCredit = parcel.readInt() == 1;
@@ -65,14 +67,21 @@ public class ErgPurseRecord extends ErgRecord implements Parcelable {
         //if (input[0] != 0x02) throw new AssertionError("PurseRecord input[0] != 0x02");
 
         ErgPurseRecord record = new ErgPurseRecord();
-        if (input[3] == 0x09) {
+        if (input[3] == 0x09 || /* manly */
+                input[3] == 0x0D /* chc */) {
             record.mIsCredit = false;
-        } else if (input[3] == 0x08) {
+        } else if (input[3] == 0x08 /* chc, manly */) {
             record.mIsCredit = true;
         } else {
-            // bad record?
+            // chc: 0x02 seen here, but only on $0 trips. Suspect this is for 2-hour free transfers.
+            // Not really important for MD, nor does it fit neatly into the data model.
+
+            // May also be null or empty record...
             return null;
         }
+
+        // Multiple agency IDs seen on chc cards -- might represent different operating companies.
+        record.mAgency = Utils.byteArrayToInt(input, 1, 2);
 
         record.mDay = Utils.getBitsFromBuffer(input, 32, 20);
         if (record.mDay < 0) throw new AssertionError("Day < 0");
@@ -85,7 +94,6 @@ public class ErgPurseRecord extends ErgRecord implements Parcelable {
 
         record.mTransactionValue = Utils.byteArrayToInt(input, 8, 4);
         //if (record.mTransactionValue < 0) throw new AssertionError("Value < 0");
-
         return record;
     }
 
@@ -96,6 +104,7 @@ public class ErgPurseRecord extends ErgRecord implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel parcel, int i) {
+        parcel.writeInt(mAgency);
         parcel.writeInt(mDay);
         parcel.writeInt(mMinute);
         parcel.writeInt(mIsCredit ? 1 : 0);
@@ -118,4 +127,14 @@ public class ErgPurseRecord extends ErgRecord implements Parcelable {
         return mIsCredit;
     }
 
+    @Override
+    public String toString() {
+        return String.format(Locale.ENGLISH, "[%s: agency=%x, day=%d, minute=%d, isCredit=%s, txnValue=%d]",
+                getClass().getSimpleName(),
+                mAgency,
+                mDay,
+                mMinute,
+                mIsCredit ? "true" : "false",
+                mTransactionValue);
+    }
 }

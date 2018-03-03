@@ -31,6 +31,9 @@ import java.util.Locale;
 public class ErgRecord {
     private static final String TAG = "ErgRecord";
 
+    // Flipping this to true shows more data from the records in Logcat.
+    private static final boolean DEBUG = false;
+
     protected ErgRecord() {
     }
 
@@ -55,13 +58,17 @@ public class ErgRecord {
             // Sometimes block 0 + 1, sometimes 1 + 2, sometimes 0 + 2...
             record = ErgBalanceRecord.recordFromBytes(input);
         } else if ((sectorIndex == 4 && blockIndex == 2)
-                || (sectorIndex >= 5 && sectorIndex <= 7)
-                || sectorIndex == 9) {
+                || (sectorIndex >= 5 && sectorIndex <= 11)) {
+            // NB: Sector 8 is generally empty, but grab that record anyway.
             record = ErgPurseRecord.recordFromBytes(input);
         }
 
-        Log.d(TAG, String.format(Locale.ENGLISH, "Sector %d, Block %d: %s", sectorIndex, blockIndex,
-                record == null ? "null" : record.getClass().getSimpleName()));
+        if (record != null) {
+            Log.d(TAG, String.format(Locale.ENGLISH, "Sector %d, Block %d: %s",
+                    sectorIndex, blockIndex,
+                    DEBUG ? record.toString() : record.getClass().getSimpleName()));
+        }
+
         return record;
     }
 

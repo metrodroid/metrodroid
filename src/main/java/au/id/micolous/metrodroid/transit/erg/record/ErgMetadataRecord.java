@@ -24,6 +24,7 @@ import au.id.micolous.metrodroid.util.Utils;
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
+import java.util.Locale;
 
 /**
  * Represents a metadata record.
@@ -31,7 +32,7 @@ import java.util.GregorianCalendar;
  * https://github.com/micolous/metrodroid/wiki/ERG-MFC#metadata-record
  */
 public class ErgMetadataRecord extends ErgRecord {
-    private static final GregorianCalendar MANLY_BASE_EPOCH = new GregorianCalendar(2000, Calendar.JANUARY, 1);
+    private static final GregorianCalendar ERG_BASE_EPOCH = new GregorianCalendar(2000, Calendar.JANUARY, 1);
     private int mAgency;
     private byte[] mCardSerial;
     private GregorianCalendar mEpochDate;
@@ -52,7 +53,7 @@ public class ErgMetadataRecord extends ErgRecord {
         record.mCardSerial = Arrays.copyOfRange(input, 7, 11);
 
         record.mEpochDate = new GregorianCalendar();
-        record.mEpochDate.setTimeInMillis(MANLY_BASE_EPOCH.getTimeInMillis());
+        record.mEpochDate.setTimeInMillis(ERG_BASE_EPOCH.getTimeInMillis());
         record.mEpochDate.add(Calendar.DATE, epochDays);
 
         return record;
@@ -82,5 +83,14 @@ public class ErgMetadataRecord extends ErgRecord {
 
     public GregorianCalendar getEpochDate() {
         return mEpochDate;
+    }
+
+    @Override
+    public String toString() {
+        return String.format(Locale.ENGLISH, "[%s: agency=%x, serial=%s, epoch=%s]",
+                getClass().getSimpleName(),
+                mAgency,
+                Utils.getHexString(mCardSerial),
+                Utils.isoDateFormat(mEpochDate));
     }
 }

@@ -53,7 +53,8 @@ import au.id.micolous.metrodroid.MetrodroidApplication;
 
 public class Utils {
     private static final String TAG = "Utils";
-    private static final SimpleDateFormat ISO_DATE_FORMAT = new SimpleDateFormat("yyyy-MM-dd HH:mm", Locale.US);
+    private static final SimpleDateFormat ISO_DATETIME_FORMAT = new SimpleDateFormat("yyyy-MM-dd HH:mm", Locale.US);
+    private static final SimpleDateFormat ISO_DATE_FORMAT = new SimpleDateFormat("yyyy-MM-dd", Locale.US);
 
     private Utils() {
     }
@@ -427,16 +428,27 @@ public class Utils {
     }
 
     /**
-     * Formats a GregorianCalendar into ISO8601 format. This should only be used for debugging
+     * Formats a GregorianCalendar into ISO8601 date and time format. This should only be used for debugging
      * logs, in order to ensure consistent information.
      *
      * @param calendar Date/time to format
      * @return String representing the date and time in ISO8601 format.
      */
     public static String isoDateTimeFormat(GregorianCalendar calendar) {
-        return ISO_DATE_FORMAT.format(calendar.getTime());
-
+        return ISO_DATETIME_FORMAT.format(calendar.getTime());
     }
+
+    /**
+     * Formats a GregorianCalendar into ISO8601 date format. This should only be used for debugging
+     * logs, in order to ensure consistent information.
+     *
+     * @param calendar Date to format
+     * @return String representing the date in ISO8601 format.
+     */
+    public static String isoDateFormat(GregorianCalendar calendar) {
+        return ISO_DATE_FORMAT.format(calendar.getTime());
+    }
+
 
     public static int[] digitsOf(int integer) {
         return digitsOf(String.valueOf(integer));
