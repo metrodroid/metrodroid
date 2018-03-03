@@ -4,6 +4,12 @@ permalink: /
 layout: home
 ---
 
+## Screenshots
+
+{% include screenshots.html screenshots=site.data.index %}
+
+[More screenshots...]((https://micolous.github.io/metrodroid/screenshots)
+
 ## Supported cards / agencies
 
 Card / Agency | Location | Notes
