@@ -53,20 +53,22 @@
                 android:layout_marginTop="32dp"
                 android:layout_gravity="center"
                 android:gravity="center">
+
                 <Button
                     android:layout_width="0dp"
-                    android:layout_weight="1"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     android:layout_gravity="center"
-                    android:text="@string/supported_cards"
-                    android:onClick="onSupportedCardsClick" />
+                    android:layout_weight="1"
+                    android:onClick="onSupportedCardsClick"
+                    android:text="@string/supported_cards" />
+
                 <Button
                     android:layout_width="0dp"
-                    android:layout_weight="1"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     android:layout_gravity="center"
-                    android:text="@string/scanned_cards"
-                    android:onClick="onHistoryClick" />
+                    android:layout_weight="1"
+                    android:onClick="onHistoryClick"
+                    android:text="@string/scanned_cards" />
             </LinearLayout>
         </LinearLayout>
     </RelativeLayout>
