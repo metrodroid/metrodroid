@@ -3,10 +3,10 @@ title: All screenshots
 permalink: /screenshots
 ---
 
-* [#english](English)
-* [#日本語](日本語) (Japanese)
-* [#bokmål](Norwegian Bokmål)
-* [#nederlands](Nederlands) (Dutch)
+* [English](#english)
+* [日本語](#日本語) (Japanese)
+* [Norwegian Bokmål](#norwegian-bokmål)
+* [Nederlands](#nederlands) (Dutch)
 
 ## English
 
@@ -24,7 +24,7 @@ permalink: /screenshots
 
 {% include screenshots.html screenshots=site.data.ja %}
 
-## Bokmål
+## Norwegian Bokmål
 
 {% include screenshots.html screenshots=site.data.nb_no %}
 
