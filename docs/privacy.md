@@ -1,5 +1,5 @@
 ---
-title: Metrodroid Privacy and Permissions Statement
+title: "Metrodroid Privacy and Permissions Statement"
 permalink: /privacy
 ---
 

@@ -1,5 +1,5 @@
 ---
-title: Metrodroid: Myki
+title: "Metrodroid: Myki"
 permalink: /myki
 ---
 
