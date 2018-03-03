@@ -1,4 +1,4 @@
-# [Metrodroid](https://github.com/micolous/metrodroid)
+# ![logo](https://github.com/micolous/metrodroid/raw/master/app/src/main/res/mipmap-hdpi/ic_launcher.png) [Metrodroid](https://github.com/micolous/metrodroid)
 
 [![Translation status](https://hosted.weblate.org/widgets/metrodroid/-/svg-badge.svg)][22]
 
