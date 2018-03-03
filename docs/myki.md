@@ -1,9 +1,7 @@
 ---
-title: Metrodroid
+title: Metrodroid: Myki
 permalink: /myki
 ---
-
-# Myki
 
 Myki is the public transit ticket used in Victoria, Australia. Metrodroid
 implements support only for reading the card number from the card.

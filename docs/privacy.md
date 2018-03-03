@@ -3,17 +3,15 @@ title: Metrodroid Privacy and Permissions Statement
 permalink: /privacy
 ---
 
-# Metrodroid: Privacy and Permissions Statement
-
 Metrodroid uses some permissions in order to allow the application to function:
 
-* Internet access: Used by the map viewer (Leaflet) to show the location of
+* **Internet access:** Used by the map viewer (Leaflet) to show the location of
   trips.
 
-* NFC: Required to read NFC cards.
+* **NFC:** Required to read NFC cards.
 
-* Photos / Media / Files: Metrodroid has the ability to save scanned cards to a
-  file, and retrieve a scanned card from a file.
+* **Photos / Media / Files:** Used to load and save scanned cards from/to a
+  user-specified file.
 
 Metrodroid does not share card data with third parties without consent.
 
