@@ -62,6 +62,36 @@ public class MainActivity extends Activity {
 
         mNfcAdapter = NfcAdapter.getDefaultAdapter(this);
 
+        if (mNfcAdapter != null) {
+            Utils.checkNfcEnabled(this, mNfcAdapter);
+
+            Intent intent = new Intent(this, ReadingTagActivity.class);
+            intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP | Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_NO_HISTORY);
+            mPendingIntent = PendingIntent.getActivity(this, 0, intent, 0);
+        }
+
+        updateObfuscationNotice(mNfcAdapter != null);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        updateObfuscationNotice(mNfcAdapter != null);
+        if (mNfcAdapter != null) {
+            mNfcAdapter.enableForegroundDispatch(this, mPendingIntent, null, mTechLists);
+        }
+    }
+
+    @Override
+    public void onWindowFocusChanged(boolean hasFocus) {
+        super.onWindowFocusChanged(hasFocus);
+        if (hasFocus) {
+            updateObfuscationNotice(mNfcAdapter != null);
+        }
+    }
+
+    private void updateObfuscationNotice(boolean hasNfc) {
         int obfuscationFlagsOn =
                 (MetrodroidApplication.hideCardNumbers() ? 1 : 0) +
                         (MetrodroidApplication.obfuscateBalance() ? 1 : 0) +
@@ -69,28 +99,15 @@ public class MainActivity extends Activity {
                         (MetrodroidApplication.obfuscateTripFares() ? 1 : 0) +
                         (MetrodroidApplication.obfuscateTripTimes() ? 1 : 0);
 
+        TextView directions = (TextView)findViewById(R.id.directions);
+
         if (obfuscationFlagsOn > 0) {
-            ((TextView) findViewById(R.id.directions)).setText(
-                    Utils.localizePlural(R.plurals.obfuscation_mode_notice,
-                            obfuscationFlagsOn, obfuscationFlagsOn));
-        }
-
-        if (mNfcAdapter != null) {
-            Utils.checkNfcEnabled(this, mNfcAdapter);
-
-            Intent intent = new Intent(this, ReadingTagActivity.class);
-            intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP | Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_NO_HISTORY);
-            mPendingIntent = PendingIntent.getActivity(this, 0, intent, 0);
-        } else if (obfuscationFlagsOn == 0) {
-            ((TextView) findViewById(R.id.directions)).setText(R.string.nfc_unavailable);
-        }
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-        if (mNfcAdapter != null) {
-            mNfcAdapter.enableForegroundDispatch(this, mPendingIntent, null, mTechLists);
+            directions.setText(Utils.localizePlural(R.plurals.obfuscation_mode_notice,
+                    obfuscationFlagsOn, obfuscationFlagsOn));
+        } else if (!hasNfc) {
+            directions.setText(R.string.nfc_unavailable);
+        } else {
+            directions.setText(R.string.directions);
         }
     }
 
