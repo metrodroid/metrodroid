@@ -1,0 +1,5 @@
+{% for screenshot in include.screenshots %}
+<a href="{{ screenshot | relative_url }}">
+<img src="{{ screenshot | relative_url }}" width="270"></a>
+{% endfor %}
+
