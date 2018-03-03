@@ -8,7 +8,7 @@ layout: home
 
 {% include screenshots.html screenshots=site.data.index %}
 
-[More screenshots...]((https://micolous.github.io/metrodroid/screenshots)
+[More screenshots...](https://micolous.github.io/metrodroid/screenshots)
 
 ## Supported cards / agencies
 
