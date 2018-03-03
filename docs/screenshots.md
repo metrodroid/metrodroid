@@ -8,6 +8,8 @@ permalink: /screenshots
 * [Norwegian Bokmål](#norwegian-bokmål)
 * [Nederlands](#nederlands) (Dutch)
 
+[Return to the Metrodroid home page.](https://micolous.github.io/metrodroid/)
+
 ## English
 
 {% include screenshots.html screenshots=site.data.en %}
