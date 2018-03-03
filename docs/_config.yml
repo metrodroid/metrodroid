@@ -7,4 +7,5 @@ exclude:
 
 plugins:
 - jemoji
+- jekyll-redirect-from
 

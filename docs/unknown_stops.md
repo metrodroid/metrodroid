@@ -1,7 +1,6 @@
 ---
 title: Unknown Stops
 permalink: /unknown_stops
-destination: https://stops-dot-farebot-m.appspot.com/
-canonical: false
+redirect_to: https://stops-dot-farebot-m.appspot.com/
 ---
 
