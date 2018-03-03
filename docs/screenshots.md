@@ -18,7 +18,7 @@ permalink: /screenshots
 
 ### New Zealand
 
-{% include screenshots.html screenshots=site.data.nz %}
+{% include screenshots.html screenshots=site.data.en_nz %}
 
 ## 日本語
 
