@@ -20,7 +20,7 @@ Card / Agency | Location | Notes
 [Edy][12] | :jp: Japan
 [ERG][35] | :earth_asia: _many locations_ | :new: :closed_lock_with_key: `MFC`
 [EZ-Link][7] | :singapore: Singapore | `CEPAS`
-[Go card][20] | :australia: Brisbane and South East Queensland, Australia | :new: :closed_lock_with_key: `MFC`
+[Go card][20] | :australia: Brisbane and South East Queensland, Australia | :new: :closed_lock_with_key: `MFC` [Note][5]
 [Manly Fast Ferry][19] | :australia: Sydney, NSW, Australia | :new: :closed_lock_with_key: `MFC`
 [Matkakortti][16], [HSL][17] | :finland: Finland |
 [Metrocard][34] | :new_zealand: Christchurch, New Zealand | :new: :closed_lock_with_key: `MFC`
@@ -50,6 +50,7 @@ connect to the agency's back-office systems. In some cases, limited data is
 available, so balance information and trip history might not be available.
 
 [4]: https://micolous.github.io/metrodroid/myki
+[5]: https://micolous.github.io/metrodroid/seqgo
 [7]: http://www.ezlink.com.sg/
 [8]: https://en.wikipedia.org/wiki/FeliCa
 [9]: https://en.wikipedia.org/wiki/Suica
