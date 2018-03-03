@@ -36,7 +36,7 @@
 
     <application
         android:allowBackup="true"
-        android:icon="@drawable/launcher_icon"
+        android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:name="au.id.micolous.metrodroid.MetrodroidApplication"
         android:theme="@android:style/Theme.DeviceDefault">
@@ -115,7 +115,7 @@
         <activity
             android:name="au.id.micolous.metrodroid.activity.AddKeyActivity"
             android:label="@string/add_key"
-            android:theme="@style/FareBotDialog" >
+            android:theme="@android:style/Theme.DeviceDefault.Dialog" >
             <intent-filter android:priority="1">
                 <category android:name="android.intent.category.BROWSABLE" />
                 <category android:name="android.intent.category.DEFAULT" />
