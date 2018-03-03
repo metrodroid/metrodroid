@@ -1,0 +1,7 @@
+theme: jekyll-theme-tactile
+
+exclude:
+- ".gitignore"
+- CNAME
+- README.md
+
