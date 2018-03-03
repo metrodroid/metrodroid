@@ -4,9 +4,6 @@ permalink: /
 layout: home
 ---
 
-* [Issue tracker][3]
-* [Privacy and permissions statement][2]
-
 ## Supported cards / agencies
 
 Card / Agency | Location | Notes
@@ -46,10 +43,6 @@ This project **will only read data from the card itself**, without having to
 connect to the agency's back-office systems. In some cases, limited data is
 available, so balance information and trip history might not be available.
 
-[0]: https://github.com/micolous/metrodroid/
-[1]: https://github.com/micolous/metrodroid/releases/latest
-[2]: https://micolous.github.io/metrodroid/privacy
-[3]: https://github.com/micolous/metrodroid/issues
 [4]: https://micolous.github.io/metrodroid/myki
 [7]: http://www.ezlink.com.sg/
 [8]: https://en.wikipedia.org/wiki/FeliCa
