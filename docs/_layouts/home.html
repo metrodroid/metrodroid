@@ -21,7 +21,6 @@
           <h1>{{ page.title | default: site.title | default: site.github.repository_name }}</h1>
           <h2>{{ page.description | default: site.description | default: site.github.project_tagline }}</h2>
         </header>
-        {% if site.show_downloads %}
         <section id="downloads" class="clearfix">
         	 <a href="{{ site.github.repository_url }}" id="view-on-github" class="button"><span>GitHub</span></a>
         	 
@@ -34,7 +33,6 @@
            <a href="{{ site.github.repository_url }}/releases/latest" id="download-apk" class="button"><span>Download .apk</span></a>
         </section>
         <hr>
-        {% endif %}
         <section id="main_content">
           {{ content }}
         </section>
