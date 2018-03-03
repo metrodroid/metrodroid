@@ -15,7 +15,10 @@
 
   <body>
     <section class="page-header">
-      <h1 class="project-name">{{ site.title | default: site.github.repository_name }}</h1>
+      <h1 class="project-name">
+        <img src="{{ '/assets/screenshots/hr-icon.png' | relative_url }}" height="64" width="64" alt="" />
+        {{ page.title | default: site.title | default: site.github.repository_name }}
+      </h1>
       <h2 class="project-tagline">{{ site.description | default: site.github.project_tagline }}</h2>
       <a href="https://f-droid.org/repository/browse/?fdid=au.id.micolous.farebot" target="_blank">
       <img src="https://f-droid.org/badge/get-it-on.png" width="207" height="80" alt="Get it on F-Droid" /></a>
