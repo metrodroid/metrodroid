@@ -10,5 +10,5 @@ permalink: /screenshots
 
 ### Australia
 
-{% include screenshots.html screenshots=site.data.en-au %}
+{% include screenshots.html screenshots=site.data.en_au %}
 
