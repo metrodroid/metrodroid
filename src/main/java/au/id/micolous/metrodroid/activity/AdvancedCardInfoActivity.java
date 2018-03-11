@@ -23,10 +23,11 @@ package au.id.micolous.metrodroid.activity;
 import android.app.ActionBar;
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.content.ClipData;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
-import android.text.ClipboardManager;
+import android.content.ClipboardManager;
 import android.text.Spanned;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -47,6 +48,7 @@ import au.id.micolous.metrodroid.card.UnauthorizedException;
 import au.id.micolous.metrodroid.card.UnsupportedCardException;
 import au.id.micolous.metrodroid.fragment.CardHWDetailFragment;
 import au.id.micolous.metrodroid.ui.TabPagerAdapter;
+import au.id.micolous.metrodroid.util.ExportHelper;
 import au.id.micolous.metrodroid.util.TripObfuscator;
 import au.id.micolous.metrodroid.util.Utils;
 
@@ -92,15 +94,10 @@ public class AdvancedCardInfoActivity extends Activity {
                 findViewById(R.id.unknown_card).setVisibility(View.VISIBLE);
             } else if (mError instanceof UnauthorizedException) {
                 findViewById(R.id.unauthorized_card).setVisibility(View.VISIBLE);
-                findViewById(R.id.load_keys).setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        new AlertDialog.Builder(AdvancedCardInfoActivity.this)
-                                .setMessage(R.string.add_key_directions)
-                                .setPositiveButton(android.R.string.ok, null)
-                                .show();
-                    }
-                });
+                findViewById(R.id.load_keys).setOnClickListener(view -> new AlertDialog.Builder(AdvancedCardInfoActivity.this)
+                        .setMessage(R.string.add_key_directions)
+                        .setPositiveButton(android.R.string.ok, null)
+                        .show());
             } else {
                 findViewById(R.id.error).setVisibility(View.VISIBLE);
                 ((TextView) findViewById(R.id.error_text)).setText(Utils.getErrorMessage(mError));
@@ -135,10 +132,7 @@ public class AdvancedCardInfoActivity extends Activity {
         try {
             if (item.getItemId() == R.id.copy_xml) {
                 String xml = mCard.toXml(MetrodroidApplication.getInstance().getSerializer());
-                @SuppressWarnings("deprecation")
-                ClipboardManager clipboard = (ClipboardManager) getSystemService(CLIPBOARD_SERVICE);
-                clipboard.setText(xml);
-                Toast.makeText(this, "Copied to clipboard.", Toast.LENGTH_SHORT).show();
+                ExportHelper.copyXmlToClipboard(this, xml);
                 return true;
 
             } else if (item.getItemId() == R.id.share_xml) {

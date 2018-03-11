@@ -597,4 +597,5 @@
     <string name="date_of_birth">Date of birth</string>
     <string name="credit_information">Credit Information</string>
     <string name="software_information">Software Information</string>
+    <string name="clipboard_error">Unable to access the clipboard</string>
 </resources>

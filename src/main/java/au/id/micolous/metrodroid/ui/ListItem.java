@@ -47,7 +47,7 @@ public class ListItem {
     }
 
     protected ListItem(String name) {
-        this(name, null);
+        this(new SpannableString(name), null);
     }
 
     public ListItem(String name, String value) {

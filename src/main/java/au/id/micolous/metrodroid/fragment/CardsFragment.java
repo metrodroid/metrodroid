@@ -23,6 +23,7 @@ package au.id.micolous.metrodroid.fragment;
 import android.app.Activity;
 import android.app.ListFragment;
 import android.app.LoaderManager;
+import android.content.ClipData;
 import android.content.ContentUris;
 import android.content.Context;
 import android.content.CursorLoader;
@@ -33,7 +34,7 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
-import android.text.ClipboardManager;
+import android.content.ClipboardManager;
 import android.util.Log;
 import android.view.ContextMenu;
 import android.view.Menu;
@@ -159,17 +160,28 @@ public class CardsFragment extends ListFragment {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         try {
-            @SuppressWarnings("deprecation")
             ClipboardManager clipboard;
             String xml;
             Intent i;
             Uri uri;
 
             switch (item.getItemId()) {
-                case R.id.import_clipboard:
+                case R.id.import_clipboard: {
                     clipboard = (ClipboardManager) getActivity().getSystemService(Activity.CLIPBOARD_SERVICE);
-                    onCardsImported(ExportHelper.importCardsXml(getActivity(), clipboard.getText().toString()));
-                    return true;
+                    if (clipboard == null) {
+                        Toast.makeText(getActivity(), R.string.clipboard_error, Toast.LENGTH_SHORT).show();
+                        return true;
+                    }
+
+                    ClipData d = clipboard.getPrimaryClip();
+                    if (d == null) {
+                        Toast.makeText(getActivity(), "No data in clipboard.", Toast.LENGTH_SHORT).show();
+                    } else {
+                        ClipData.Item ci = d.getItemAt(0);
+                        xml = ci.coerceToText(getActivity()).toString();
+                        onCardsImported(ExportHelper.importCardsXml(getActivity(), xml));
+                    }
+                } return true;
 
                 case R.id.import_file:
                     uri = Uri.fromFile(Environment.getExternalStorageDirectory());
@@ -195,9 +207,7 @@ public class CardsFragment extends ListFragment {
                     return true;
 
                 case R.id.copy_xml:
-                    clipboard = (ClipboardManager) getActivity().getSystemService(Activity.CLIPBOARD_SERVICE);
-                    clipboard.setText(ExportHelper.exportCardsXml(getActivity()));
-                    Toast.makeText(getActivity(), R.string.copied_to_clipboard, Toast.LENGTH_SHORT).show();
+                    ExportHelper.copyXmlToClipboard(getActivity(), ExportHelper.exportCardsXml(getActivity()));
                     return true;
 
                 case R.id.share_xml:
