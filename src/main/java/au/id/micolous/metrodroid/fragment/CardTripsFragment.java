@@ -25,12 +25,16 @@ import android.app.Activity;
 import android.app.ListFragment;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.DrawableRes;
 import android.support.annotation.StringRes;
 import android.text.Html;
 import android.text.Spannable;
+import android.text.SpannableStringBuilder;
+import android.text.style.LocaleSpan;
+import android.text.style.StyleSpan;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -62,6 +66,8 @@ import java.util.Calendar;
 import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import au.id.micolous.farebot.R;
 import au.id.micolous.metrodroid.MetrodroidApplication;
@@ -136,6 +142,7 @@ public class CardTripsFragment extends ListFragment {
 
     private static class UseLogListAdapter extends ArrayAdapter<Trip> {
         private TransitData mTransitData;
+        private static final Pattern LINE_NUMBER = Pattern.compile("(#?\\d+)?(\\D.+)");
 
         public UseLogListAdapter(Context context, Trip[] items, TransitData transitData) {
             super(context, 0, items);
@@ -238,14 +245,44 @@ public class CardTripsFragment extends ListFragment {
                 timeTextView.setVisibility(View.INVISIBLE);
             }
 
-            List<String> routeText = new ArrayList<>();
-            if (trip.getShortAgencyName() != null)
-                routeText.add("<b>" + trip.getShortAgencyName() + "</b>");
-            if (trip.getRouteName() != null)
-                routeText.add(trip.getRouteName());
+            SpannableStringBuilder routeText = new SpannableStringBuilder();
 
-            if (routeText.size() > 0) {
-                routeTextView.setText(Html.fromHtml(StringUtils.join(routeText, " ")));
+            if (trip.getShortAgencyName() != null) {
+                routeText.append(trip.getShortAgencyName())
+                        .append(" ")
+                        .setSpan(new StyleSpan(Typeface.BOLD), 0, trip.getShortAgencyName().length(), 0);
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
+                    routeText.setSpan(new LocaleSpan(Locale.getDefault()), 0, routeText.length(), 0);
+                }
+            }
+
+            if (trip.getRouteName() != null) {
+                int oldLength = routeText.length();
+                routeText.append(trip.getRouteName());
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                    if (trip.getRouteLanguage() != null) {
+                        // SUICA HACK:
+                        // If there's something that looks like "#2" at the start, then mark
+                        // that as the default language.
+                        Matcher m = LINE_NUMBER.matcher(trip.getRouteName());
+                        if (!m.find() || m.group(1) == null) {
+                            // No line number
+                            Log.d(TAG, "no line number");
+                            routeText.setSpan(new LocaleSpan(Locale.forLanguageTag(trip.getRouteLanguage())), oldLength, routeText.length(), 0);
+                        } else {
+                            // There is a line number
+                            Log.d(TAG, String.format("num = %s, line = %s", m.group(1), m.group(2)));
+                            routeText.setSpan(new LocaleSpan(Locale.getDefault()), oldLength, oldLength + m.end(1), 0);
+                            routeText.setSpan(new LocaleSpan(Locale.forLanguageTag(trip.getRouteLanguage())), oldLength + m.start(2), routeText.length(), 0);
+                        }
+                    } else {
+                        routeText.setSpan(new LocaleSpan(Locale.getDefault()), 0, routeText.length(), 0);
+                    }
+                }
+            }
+
+            if (routeText.length() > 0) {
+                routeTextView.setText(routeText);
                 routeTextView.setVisibility(View.VISIBLE);
             } else {
                 routeTextView.setVisibility(View.INVISIBLE);

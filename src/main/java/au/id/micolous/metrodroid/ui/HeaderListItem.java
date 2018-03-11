@@ -1,7 +1,8 @@
 /*
  * HeaderListItem.java
  *
- * Copyright (C) 2012 Eric Butler <eric@codebutler.com>
+ * Copyright 2012 Eric Butler <eric@codebutler.com>
+ * Copyright 2018 Michael Farrell <micolous+git@gmail.com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -19,12 +20,19 @@
 
 package au.id.micolous.metrodroid.ui;
 
+import android.support.annotation.StringRes;
+import android.text.Spanned;
+
 public class HeaderListItem extends ListItem {
-    public HeaderListItem(int titleResource) {
-        super(titleResource, null);
+    public HeaderListItem(@StringRes int titleResource) {
+        super(titleResource);
     }
 
     public HeaderListItem(String title) {
-        super(title, null);
+        super(title);
+    }
+
+    public HeaderListItem(Spanned title) {
+        super(title);
     }
 }

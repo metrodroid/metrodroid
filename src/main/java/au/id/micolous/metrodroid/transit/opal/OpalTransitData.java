@@ -21,6 +21,7 @@ package au.id.micolous.metrodroid.transit.opal;
 import android.net.Uri;
 import android.os.Parcel;
 import android.support.annotation.Nullable;
+import android.text.Spanned;
 
 import org.apache.commons.lang3.ArrayUtils;
 
@@ -161,7 +162,7 @@ public class OpalTransitData extends TransitData {
     }
 
     @Override
-    public String formatCurrencyString(int currency, boolean isBalance) {
+    public Spanned formatCurrencyString(int currency, boolean isBalance) {
         return Utils.formatCurrencyString(currency, isBalance, "AUD");
     }
 

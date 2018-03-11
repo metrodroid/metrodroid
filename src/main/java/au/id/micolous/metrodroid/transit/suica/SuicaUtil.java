@@ -230,9 +230,18 @@ final class SuicaUtil {
 
             // FIXME: Figure out a better way to deal with i18n.
             boolean isJa = Locale.getDefault().getLanguage().equals("ja");
+
             String companyName = cursor.getString(cursor.getColumnIndex(isJa ? SuicaDBUtil.COLUMN_COMPANYNAME : SuicaDBUtil.COLUMN_COMPANYNAME_EN));
             String stationName = cursor.getString(cursor.getColumnIndex(isJa ? SuicaDBUtil.COLUMN_STATIONNAME : SuicaDBUtil.COLUMN_STATIONNAME_EN));
-            return new Station(companyName, null, stationName, null, null, null);
+
+            // All station names are returned marked up as Japanese.
+            //
+            // The "English" versions of station names are transliterated into Romaji (latin
+            // alphabet), but text-to-speech synthesisers have difficulty with the Japanese place
+            // names.
+            //
+            // The "Japanese" versions of station names use Kanji.
+            return new Station(companyName, null, stationName, null, null, null, "ja-JP");
 
         } catch (Exception e) {
             Log.e(TAG, "getBusStop() error", e);
@@ -284,7 +293,15 @@ final class SuicaUtil {
             String stationName = cursor.getString(cursor.getColumnIndex(isJa ? SuicaDBUtil.COLUMN_STATIONNAME : SuicaDBUtil.COLUMN_STATIONNAME_EN));
             String latitude = cursor.getString(cursor.getColumnIndex(SuicaDBUtil.COLUMN_LATITUDE));
             String longitude = cursor.getString(cursor.getColumnIndex(SuicaDBUtil.COLUMN_LONGITUDE));
-            return new Station(companyName, lineName, stationName, null, latitude, longitude);
+
+            // All station names are returned marked up as Japanese.
+            //
+            // The "English" versions of station names are transliterated into Romaji (latin
+            // alphabet), but text-to-speech synthesisers have difficulty with the Japanese place
+            // names.
+            //
+            // The "Japanese" versions of station names use Kanji.
+            return new Station(companyName, lineName, stationName, null, latitude, longitude, "ja-JP");
 
         } catch (Exception e) {
             Log.e(TAG, "Error in getRailStation", e);

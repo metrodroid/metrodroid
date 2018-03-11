@@ -264,7 +264,7 @@
     <string name="nextfare">Cubic Nextfare</string>
     <string name="nextfare_system_code">Code système</string>
     <string name="nextfare_ticket_class">Code de classe du ticket</string>
-    <string name="nextfare_card_expiry">Date d’expiration de la carte</string>
+    <string name="card_expiry_date">Date d’expiration de la carte</string>
 
     <string name="octopus_szt">Shenzhen Tong</string>
 

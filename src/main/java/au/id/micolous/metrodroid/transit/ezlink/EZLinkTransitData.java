@@ -24,6 +24,7 @@ package au.id.micolous.metrodroid.transit.ezlink;
 
 import android.os.Parcel;
 import android.support.annotation.Nullable;
+import android.text.Spanned;
 
 import au.id.micolous.metrodroid.card.Card;
 import au.id.micolous.metrodroid.card.cepas.CEPASCard;
@@ -508,7 +509,7 @@ public class EZLinkTransitData extends TransitData {
     }
 
     @Override
-    public String formatCurrencyString(int currency, boolean isBalance) {
+    public Spanned formatCurrencyString(int currency, boolean isBalance) {
         return Utils.formatCurrencyString(currency, isBalance, "SGD");
     }
 

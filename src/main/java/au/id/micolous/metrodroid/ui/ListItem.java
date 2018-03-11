@@ -1,7 +1,8 @@
 /*
  * ListItem.java
  *
- * Copyright (C) 2012 Eric Butler <eric@codebutler.com>
+ * Copyright 2012 Eric Butler <eric@codebutler.com>
+ * Copyright 2018 Michael Farrell <micolous+git@gmail.com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -19,34 +20,54 @@
 
 package au.id.micolous.metrodroid.ui;
 
+import android.support.annotation.StringRes;
+import android.text.SpannableString;
+import android.text.Spanned;
+
 import au.id.micolous.metrodroid.util.Utils;
 
 public class ListItem {
-    protected final String mText1;
-    protected final String mText2;
+    protected final Spanned mText1;
+    protected final Spanned mText2;
 
-    public ListItem(int nameResource, int valueResource) {
+    protected ListItem(@StringRes int nameResource) {
+        this(nameResource, (Spanned) null);
+    }
+
+    public ListItem(@StringRes int nameResource, @StringRes int valueResource) {
         this(nameResource, Utils.localizeString(valueResource));
     }
 
-    public ListItem(String name, int valueResource) {
-        this(name, Utils.localizeString(valueResource));
-    }
-
-    public ListItem(int nameResource, String value) {
+    public ListItem(@StringRes int nameResource, String value) {
         this(Utils.localizeString(nameResource), value);
     }
 
+    public ListItem(@StringRes int nameResource, Spanned value) {
+        this(new SpannableString(Utils.localizeString(nameResource)), value);
+    }
+
+    protected ListItem(String name) {
+        this(name, null);
+    }
+
     public ListItem(String name, String value) {
+        this(new SpannableString(name), new SpannableString(value));
+    }
+
+    protected ListItem(Spanned name) {
+        this(name, null);
+    }
+
+    public ListItem(Spanned name, Spanned value) {
         mText1 = name;
         mText2 = value;
     }
 
-    public String getText1() {
+    public Spanned getText1() {
         return mText1;
     }
 
-    public String getText2() {
+    public Spanned getText2() {
         return mText2;
     }
 }

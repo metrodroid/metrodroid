@@ -20,6 +20,7 @@ package au.id.micolous.metrodroid.transit.erg;
 
 import android.os.Parcel;
 import android.support.annotation.Nullable;
+import android.text.Spanned;
 
 import au.id.micolous.metrodroid.card.UnauthorizedException;
 import au.id.micolous.metrodroid.card.classic.ClassicBlock;
@@ -201,7 +202,7 @@ public class ErgTransitData extends TransitData {
     }
 
     @Override
-    public String formatCurrencyString(int currency, boolean isBalance) {
+    public Spanned formatCurrencyString(int currency, boolean isBalance) {
         // This defaults to AUD (because ERG was an Australian company). Cards with other currencies
         // should override this appropriately.
         return Utils.formatCurrencyString(currency, isBalance, "AUD");

@@ -34,6 +34,7 @@ package au.id.micolous.metrodroid.transit.suica;
 
 import android.os.Parcel;
 import android.support.annotation.Nullable;
+import android.text.Spanned;
 
 import au.id.micolous.metrodroid.card.felica.FelicaBlock;
 import au.id.micolous.metrodroid.card.felica.FelicaCard;
@@ -117,7 +118,7 @@ public class SuicaTransitData extends TransitData {
     }
 
     @Override
-    public String formatCurrencyString(int currency, boolean isBalance) {
+    public Spanned formatCurrencyString(int currency, boolean isBalance) {
         return Utils.formatCurrencyString(currency, isBalance, "JPY", 1);
     }
 

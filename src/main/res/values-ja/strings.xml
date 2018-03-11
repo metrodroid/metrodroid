@@ -265,7 +265,7 @@
     <string name="storage_required">カードのダンプと鍵ファイルへの読み書きのためにアクセス許可が必要です。</string>
 
 
-    <string name="nextfare_card_expiry">カード有効期限</string>
+    <string name="card_expiry_date">カード有効期限</string>
 
     <string name="mfc_fallback_desc">一部の機関は、カードに識別のマジックがありません。それらを読み取るためには機関を明示的に必要です。</string>
     <string name="mfc_fallback">フォールバック リーダー</string>

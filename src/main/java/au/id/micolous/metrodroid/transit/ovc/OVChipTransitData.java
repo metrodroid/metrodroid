@@ -22,6 +22,7 @@ package au.id.micolous.metrodroid.transit.ovc;
 
 import android.os.Parcel;
 import android.support.annotation.Nullable;
+import android.text.Spanned;
 
 import au.id.micolous.metrodroid.card.Card;
 import au.id.micolous.metrodroid.card.classic.ClassicCard;
@@ -236,7 +237,7 @@ public class OVChipTransitData extends TransitData {
         return calendar;
     }
 
-    public String formatCurrencyString(int amount, boolean isBalance) {
+    public Spanned formatCurrencyString(int amount, boolean isBalance) {
         return Utils.formatCurrencyString(amount, isBalance, "EUR");
     }
 
@@ -295,18 +296,18 @@ public class OVChipTransitData extends TransitData {
     public List<ListItem> getInfo() {
         ArrayList<ListItem> items = new ArrayList<>();
 
-        items.add(new HeaderListItem("Hardware Information"));
+        items.add(new HeaderListItem(R.string.hardware_information));
         if (!MetrodroidApplication.hideCardNumbers()) {
             items.add(new ListItem("Manufacturer ID", mPreamble.getManufacturer()));
             items.add(new ListItem("Publisher ID", mPreamble.getPublisher()));
         }
 
-        items.add(new HeaderListItem("General Information"));
+        items.add(new HeaderListItem(R.string.general_information));
         if (!MetrodroidApplication.hideCardNumbers()) {
             items.add(new ListItem("Serial Number", mPreamble.getId()));
         }
 
-        items.add(new ListItem("Expiration Date",
+        items.add(new ListItem(R.string.card_expiry_date,
                 Utils.longDateFormat(
                         TripObfuscator.maybeObfuscateTS(
                                 OVChipTransitData.convertDate(mPreamble.getExpdate())))));
@@ -316,18 +317,18 @@ public class OVChipTransitData extends TransitData {
         items.add(new ListItem("Banned", ((mCredit.getBanbits() & (char) 0xC0) == (char) 0xC0) ? "Yes" : "No"));
 
         if (mPreamble.getType() == 2) {
-            items.add(new HeaderListItem("Personal Information"));
-            items.add(new ListItem("Birthdate", Utils.longDateFormat(
+            items.add(new HeaderListItem(R.string.personal_information));
+            items.add(new ListItem(R.string.date_of_birth, Utils.longDateFormat(
                     TripObfuscator.maybeObfuscateTS(mInfo.getBirthdate()))));
         }
 
-        items.add(new HeaderListItem("Credit Information"));
+        items.add(new HeaderListItem(R.string.credit_information));
         items.add(new ListItem("Credit Slot ID", Integer.toString(mCredit.getId())));
         items.add(new ListItem("Last Credit ID", Integer.toString(mCredit.getCreditId())));
-        items.add(new ListItem("Autocharge", (mInfo.getActive() == (byte) 0x05 ? "Yes" : "No")));
-        items.add(new ListItem("Autocharge Limit",
+        items.add(new ListItem(R.string.ovc_autocharge, (mInfo.getActive() == (byte) 0x05 ? "Yes" : "No")));
+        items.add(new ListItem(R.string.ovc_autocharge_limit,
                 formatCurrencyString(TripObfuscator.maybeObfuscateFare(mInfo.getLimit()), true)));
-        items.add(new ListItem("Autocharge Charge",
+        items.add(new ListItem(R.string.ovc_autocharge_amount,
                 formatCurrencyString(TripObfuscator.maybeObfuscateFare(mInfo.getCharge()), true)));
 
         items.add(new HeaderListItem("Recent Slots"));

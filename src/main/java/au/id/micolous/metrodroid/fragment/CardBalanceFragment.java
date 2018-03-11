@@ -22,6 +22,7 @@ package au.id.micolous.metrodroid.fragment;
 
 import android.app.Fragment;
 import android.os.Bundle;
+import android.text.Spanned;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -66,7 +67,7 @@ public class CardBalanceFragment extends Fragment {
                 // balance.
                 balance = Math.abs((int) ((balance + offset) * multiplier));
             }
-            String balanceStr = mTransitData.formatCurrencyString(balance, true);
+            Spanned balanceStr = mTransitData.formatCurrencyString(balance, true);
             ((TextView) view.findViewById(R.id.balance)).setText(balanceStr);
         }
         return view;

@@ -32,8 +32,14 @@ import android.os.Build;
 import android.provider.Settings;
 import android.support.annotation.PluralsRes;
 import android.support.annotation.StringRes;
+import android.text.Spannable;
+import android.text.SpannableString;
+import android.text.SpannableStringBuilder;
+import android.text.Spanned;
+import android.text.SpannedString;
 import android.text.TextUtils;
 import android.text.format.DateFormat;
+import android.text.style.TtsSpan;
 import android.util.Log;
 import android.view.WindowManager;
 
@@ -401,24 +407,69 @@ public class Utils {
     //       android.text.format.DateFormat#get{Long,Medium,}{Date,Time}Format passing us back a
     //       java.util.DateFormat, rather than a CharSequence with the actual format to use.
     // TODO: Investigate using Joda Time or something else that sucks less than Java at handling dates.
-    public static String longDateFormat(Calendar date) {
-        if (date == null) return "";
-        return DateFormat.getLongDateFormat(MetrodroidApplication.getInstance()).format(date.getTime());
+    public static Spanned longDateFormat(Calendar date) {
+        if (date == null) return new SpannableString("");
+        String s = DateFormat.getLongDateFormat(MetrodroidApplication.getInstance()).format(date.getTime());
+
+        SpannableString b = new SpannableString(s);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            b.setSpan(new TtsSpan.DateBuilder()
+                    .setYear(date.get(Calendar.YEAR))
+                    .setMonth(date.get(Calendar.MONTH))
+                    .setDay(date.get(Calendar.DATE))
+                    .setWeekday(date.get(Calendar.DAY_OF_WEEK)), 0, b.length(), 0);
+        }
+
+        return b;
     }
 
-    public static String dateFormat(Calendar date) {
-        if (date == null) return "";
-        return DateFormat.getDateFormat(MetrodroidApplication.getInstance()).format(date.getTime());
+    public static Spanned dateFormat(Calendar date) {
+        if (date == null) return new SpannableString("");
+        String s = DateFormat.getDateFormat(MetrodroidApplication.getInstance()).format(date.getTime());
+
+        SpannableString b = new SpannableString(s);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            b.setSpan(new TtsSpan.DateBuilder()
+                    .setYear(date.get(Calendar.YEAR))
+                    .setMonth(date.get(Calendar.MONTH))
+                    .setDay(date.get(Calendar.DAY_OF_MONTH)), 0, b.length(), 0);
+        }
+
+        return b;
     }
 
-    public static String timeFormat(Calendar date) {
-        if (date == null) return "";
-        return DateFormat.getTimeFormat(MetrodroidApplication.getInstance()).format(date.getTime());
+    public static Spanned timeFormat(Calendar date) {
+        if (date == null) return new SpannableString("");
+        String s = DateFormat.getTimeFormat(MetrodroidApplication.getInstance()).format(date.getTime());
+
+        SpannableString b = new SpannableString(s);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            b.setSpan(new TtsSpan.TimeBuilder(
+                    date.get(Calendar.HOUR), date.get(Calendar.MINUTE)), 0, b.length(), 0);
+        }
+        return b;
     }
 
-    public static String dateTimeFormat(Calendar date) {
-        if (date == null) return "";
-        return dateFormat(date) + " " + timeFormat(date);
+    public static Spanned dateTimeFormat(Calendar date) {
+        if (date == null) return new SpannableString("");
+        String d = DateFormat.getDateFormat(MetrodroidApplication.getInstance()).format(date.getTime());
+        String t = DateFormat.getTimeFormat(MetrodroidApplication.getInstance()).format(date.getTime());
+
+        SpannableStringBuilder b = new SpannableStringBuilder(d);
+        b.append(" ");
+        b.append(t);
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            b.setSpan(new TtsSpan.DateBuilder()
+                    .setYear(date.get(Calendar.YEAR))
+                    .setMonth(date.get(Calendar.MONTH))
+                    .setDay(date.get(Calendar.DAY_OF_MONTH)), 0, d.length(), 0);
+
+            b.setSpan(new TtsSpan.TimeBuilder(
+                    date.get(Calendar.HOUR), date.get(Calendar.MINUTE)), d.length() + 1, b.length(), 0);
+        }
+
+        return b;
     }
 
     public static Calendar millisToCalendar(long milliseconds) {
@@ -531,7 +582,7 @@ public class Utils {
         boolean matches(T t);
     }
 
-    public static String formatCurrencyString(int currency, boolean isBalance, String currencyCode) {
+    public static Spanned formatCurrencyString(int currency, boolean isBalance, String currencyCode) {
         return formatCurrencyString(currency, isBalance, currencyCode, 100.);
     }
 
@@ -546,7 +597,7 @@ public class Utils {
      *                     then divide by 100 to get dollars. Currencies like yen should divide by 1.
      * @return Formatted currency string
      */
-    public static String formatCurrencyString(int currency, boolean isBalance, String currencyCode, double divisor) {
+    public static Spanned formatCurrencyString(int currency, boolean isBalance, String currencyCode, double divisor) {
         Currency c = Currency.getInstance(currencyCode);
         NumberFormat numberFormat = NumberFormat.getCurrencyInstance();
         numberFormat.setCurrency(Currency.getInstance(currencyCode));
@@ -558,10 +609,21 @@ public class Utils {
         // In English, JPY is formatted as "¥123.00" instead of "¥123"
         numberFormat.setMinimumFractionDigits(c.getDefaultFractionDigits());
 
+        SpannableString s;
+
         if (!isBalance && currency < 0) {
-            return "+ " + numberFormat.format(Math.abs(((double) currency) / divisor));
+            s = new SpannableString("+ " + numberFormat.format(Math.abs(((double) currency) / divisor)));
+
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                s.setSpan(new TtsSpan.MoneyBuilder().setQuantity(Integer.toString(Math.abs(currency))).setCurrency(currencyCode).build(), 2, s.length(), 0);
+            }
         } else {
-            return numberFormat.format(((double) currency) / divisor);
+            s = new SpannableString(numberFormat.format(((double) currency) / divisor));
+
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                s.setSpan(new TtsSpan.MoneyBuilder().setQuantity(Integer.toString(currency)).setCurrency(currencyCode).build(), 0, s.length(), 0);
+            }
         }
+        return s;
     }
 }

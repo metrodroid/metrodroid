@@ -32,6 +32,7 @@ import android.preference.PreferenceManager;
 import android.speech.tts.TextToSpeech;
 import android.speech.tts.TextToSpeech.OnInitListener;
 import android.support.v4.view.ViewPager;
+import android.text.Spanned;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -75,7 +76,7 @@ public class CardInfoActivity extends Activity {
     private OnInitListener mTTSInitListener = new OnInitListener() {
         public void onInit(int status) {
             if (status == TextToSpeech.SUCCESS && mTransitData.getBalance() != null) {
-                String balance = mTransitData.formatCurrencyString(mTransitData.getBalance(), true);
+                Spanned balance = mTransitData.formatCurrencyString(mTransitData.getBalance(), true);
                 mTTS.speak(getString(R.string.balance_speech, balance), TextToSpeech.QUEUE_FLUSH, null);
             }
         }

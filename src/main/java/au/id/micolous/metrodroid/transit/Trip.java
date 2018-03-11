@@ -20,22 +20,18 @@
 
 package au.id.micolous.metrodroid.transit;
 
-import android.graphics.Typeface;
 import android.os.Build;
 import android.os.Parcelable;
 import android.support.annotation.Nullable;
 import android.text.Spannable;
 import android.text.SpannableString;
 import android.text.SpannableStringBuilder;
-import android.text.style.StyleSpan;
+import android.text.style.LocaleSpan;
 import android.text.style.TtsSpan;
 import android.util.Log;
 
-import org.apache.commons.lang3.StringUtils;
-
-import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.List;
+import java.util.Locale;
 
 import au.id.micolous.farebot.R;
 import au.id.micolous.metrodroid.ui.HiddenSpan;
@@ -45,23 +41,29 @@ public abstract class Trip implements Parcelable {
     private static final String TAG = Trip.class.getName();
 
     /**
-     * Formats a trip description into a localised label.
+     * Formats a trip description into a localised label, with appropriate language annotations.
      *
      * @param trip The trip to describe.
      * @return null if both the start and end stations are unknown.
      */
     public static Spannable formatStationNames(Trip trip) {
         String startStationName = null, endStationName = null;
+        String startLanguage = null, endLanguage = null;
 
         if (trip.getStartStationName() != null) {
             startStationName = trip.getStartStationName();
+            if (trip.getStartStation() != null) {
+                startLanguage = trip.getStartStation().getLanguage();
+            }
         }
 
         if (trip.getEndStationName() != null &&
                 (!trip.getEndStationName().equals(trip.getStartStationName()))) {
             endStationName = trip.getEndStationName();
+            if (trip.getEndStation() != null) {
+                endLanguage = trip.getEndStation().getLanguage();
+            }
         }
-
 
         // No information is available.
         if (startStationName == null && endStationName == null) {
@@ -71,12 +73,19 @@ public abstract class Trip implements Parcelable {
         // If the start station was not available, make the end station the start station.
         if (startStationName == null && endStationName != null) {
             startStationName = endStationName;
+            startLanguage = endLanguage;
             endStationName = null;
         }
 
         // If only the start or only the end station is available, just return that.
         if (startStationName != null && endStationName == null) {
-            return new SpannableString(startStationName);
+            SpannableStringBuilder b = new SpannableStringBuilder(startStationName);
+
+            if (startLanguage != null && Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                b.setSpan(new LocaleSpan(Locale.forLanguageTag(startLanguage)), 0, b.length(), 0);
+            }
+
+            return b;
         }
 
         // Both the start and end station are known.
@@ -140,12 +149,51 @@ public abstract class Trip implements Parcelable {
         }
         b.replace(x, x + startPlaceholder.length(), startStationName);
 
-        x = b.toString().indexOf(endPlaceholder);
-        if (x == -1) {
+        boolean localeSpanUsed = false;
+        // Annotate the start station name with the appropriate Locale data.
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            Station startStation = trip.getStartStation();
+            if (startStation != null && startStation.getLanguage() != null) {
+                b.setSpan(new LocaleSpan(Locale.forLanguageTag(startStation.getLanguage())), x, x + startStationName.length(), 0);
+
+                // Set the start of the string to the default language, so that the localised
+                // TTS for the station name doesn't take over everything.
+                b.setSpan(new LocaleSpan(Locale.getDefault()), 0, x, 0);
+
+                localeSpanUsed = true;
+            }
+        }
+
+        int y = b.toString().indexOf(endPlaceholder);
+        if (y == -1) {
             Log.w(TAG, "couldn't find end station placeholder to put back");
             return null;
         }
-        b.replace(x, x + endPlaceholder.length(), endStationName);
+        b.replace(y, y + endPlaceholder.length(), endStationName);
+
+        // Annotate the end station name with the appropriate Locale data.
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            Station endStation = trip.getEndStation();
+            if (endStation != null && endStation.getLanguage() != null) {
+                b.setSpan(new LocaleSpan(Locale.forLanguageTag(endStation.getLanguage())), y, y + endStationName.length(), 0);
+
+                if (localeSpanUsed) {
+                    // Set the locale of the string between the start and end station names.
+                    b.setSpan(new LocaleSpan(Locale.getDefault()), x + startStationName.length(), y, 0);
+                } else {
+                    // Set the locale of the string from the start of the string to the end station
+                    // name.
+                    b.setSpan(new LocaleSpan(Locale.getDefault()), 0, y, 0);
+                }
+
+                // Set the segment from the end of the end station name to the end of the string
+                b.setSpan(new LocaleSpan(Locale.getDefault()), y + endStationName.length(), b.length(), 0);
+            } else {
+                // No custom language information for end station
+                // Set default locale from the end of the start station to the end of the string.
+                b.setSpan(new LocaleSpan(Locale.getDefault()), x + startStationName.length(), b.length(), 0);
+            }
+        }
 
         return b;
     }
@@ -169,6 +217,14 @@ public abstract class Trip implements Parcelable {
      * If this is not known, then return null.
      */
     public String getRouteName() {
+        return null;
+    }
+
+    /**
+     * Language that the route name is written in. This is used to aid text to speech software
+     * with pronunciation. If null, then uses the system language instead.
+     */
+    public String getRouteLanguage() {
         return null;
     }
 

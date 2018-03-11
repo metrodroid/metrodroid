@@ -27,6 +27,7 @@ package au.id.micolous.metrodroid.transit.clipper;
 
 import android.os.Parcel;
 import android.support.annotation.Nullable;
+import android.text.Spanned;
 
 import org.apache.commons.lang3.ArrayUtils;
 
@@ -150,7 +151,7 @@ public class ClipperTransitData extends TransitData {
     }
 
     @Override
-    public String formatCurrencyString(int currency, boolean isBalance) {
+    public Spanned formatCurrencyString(int currency, boolean isBalance) {
         return Utils.formatCurrencyString(currency, isBalance, "USD");
     }
 

@@ -20,6 +20,7 @@ package au.id.micolous.metrodroid.transit.smartrider;
 
 import android.os.Parcel;
 import android.support.annotation.Nullable;
+import android.text.Spanned;
 import android.util.Log;
 
 import au.id.micolous.metrodroid.card.classic.ClassicCard;
@@ -281,7 +282,7 @@ public class SmartRiderTransitData extends TransitData {
     }
 
     @Override
-    public String formatCurrencyString(int currency, boolean isBalance) {
+    public Spanned formatCurrencyString(int currency, boolean isBalance) {
         return Utils.formatCurrencyString(currency, isBalance, "AUD");
     }
 

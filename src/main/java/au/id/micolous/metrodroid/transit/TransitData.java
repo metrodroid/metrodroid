@@ -22,6 +22,7 @@ package au.id.micolous.metrodroid.transit;
 import android.net.Uri;
 import android.os.Parcelable;
 import android.support.annotation.Nullable;
+import android.text.Spanned;
 
 import au.id.micolous.metrodroid.ui.ListItem;
 
@@ -58,7 +59,7 @@ public abstract class TransitData implements Parcelable {
      *                  a credit.
      * @return The currency value formatted in the local currency of the card.
      */
-    public abstract String formatCurrencyString(int currency, boolean isBalance);
+    public abstract Spanned formatCurrencyString(int currency, boolean isBalance);
 
     public abstract String getSerialNumber();
 

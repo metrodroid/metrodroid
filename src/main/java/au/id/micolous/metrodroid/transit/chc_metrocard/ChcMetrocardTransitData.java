@@ -19,6 +19,7 @@
 package au.id.micolous.metrodroid.transit.chc_metrocard;
 
 import android.os.Parcel;
+import android.text.Spanned;
 
 import java.util.GregorianCalendar;
 
@@ -89,7 +90,7 @@ public class ChcMetrocardTransitData extends ErgTransitData {
     }
 
     @Override
-    public String formatCurrencyString(int currency, boolean isBalance) {
+    public Spanned formatCurrencyString(int currency, boolean isBalance) {
         return Utils.formatCurrencyString(currency, isBalance, "NZD");
     }
 

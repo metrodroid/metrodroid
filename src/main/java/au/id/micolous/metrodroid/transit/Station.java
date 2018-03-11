@@ -32,7 +32,7 @@ public class Station implements Parcelable {
             return new Station[size];
         }
     };
-    protected final String mCompanyName, mLineName, mStationName, mShortStationName, mLatitude, mLongitude;
+    protected final String mCompanyName, mLineName, mStationName, mShortStationName, mLatitude, mLongitude, mLanguage;
 
     public Station(String stationName, String latitude, String longitude) {
         this(stationName, null, latitude, longitude);
@@ -43,12 +43,17 @@ public class Station implements Parcelable {
     }
 
     public Station(String companyName, String lineName, String stationName, String shortStationName, String latitude, String longitude) {
+        this(companyName, lineName, stationName, shortStationName, latitude, longitude, null);
+    }
+
+    public Station(String companyName, String lineName, String stationName, String shortStationName, String latitude, String longitude, String language) {
         mCompanyName = companyName;
         mLineName = lineName;
         mStationName = stationName;
         mShortStationName = shortStationName;
         mLatitude = latitude;
         mLongitude = longitude;
+        mLanguage = language;
     }
 
     protected Station(Parcel parcel) {
@@ -58,6 +63,7 @@ public class Station implements Parcelable {
         mShortStationName = parcel.readString();
         mLatitude = parcel.readString();
         mLongitude = parcel.readString();
+        mLanguage = parcel.readString();
     }
 
     public String getStationName() {
@@ -84,6 +90,16 @@ public class Station implements Parcelable {
         return mLongitude;
     }
 
+    /**
+     * Language that the station line name and station name are written in. If null, then use
+     * the system locale instead.
+     *
+     * https://developer.android.com/reference/java/util/Locale.html#forLanguageTag(java.lang.String)
+     */
+    public String getLanguage() {
+        return mLanguage;
+    }
+
     public boolean hasLocation() {
         return getLatitude() != null && !getLatitude().isEmpty()
                 && getLongitude() != null && !getLongitude().isEmpty();
@@ -100,5 +116,6 @@ public class Station implements Parcelable {
         parcel.writeString(mShortStationName);
         parcel.writeString(mLatitude);
         parcel.writeString(mLongitude);
+        parcel.writeString(mLanguage);
     }
 }

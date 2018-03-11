@@ -20,6 +20,7 @@ package au.id.micolous.metrodroid.transit.nextfare;
 
 import android.os.Parcel;
 import android.support.annotation.Nullable;
+import android.text.Spanned;
 import android.util.Log;
 
 import java.math.BigInteger;
@@ -366,7 +367,7 @@ public class NextfareTransitData extends TransitData {
         return mBalance;
     }
 
-    public String formatCurrencyString(int currency, boolean isBalance) {
+    public Spanned formatCurrencyString(int currency, boolean isBalance) {
         return Utils.formatCurrencyString(currency, isBalance, "USD");
     }
 
@@ -413,7 +414,7 @@ public class NextfareTransitData extends TransitData {
             items.add(new ListItem(R.string.nextfare_ticket_class, Integer.valueOf(mConfig.getTicketType()).toString()));
 
             Calendar expiry = TripObfuscator.maybeObfuscateTS(mConfig.getExpiry());
-            items.add(new ListItem(R.string.nextfare_card_expiry, Utils.longDateFormat(expiry)));
+            items.add(new ListItem(R.string.card_expiry_date, Utils.longDateFormat(expiry)));
         }
 
         return items;

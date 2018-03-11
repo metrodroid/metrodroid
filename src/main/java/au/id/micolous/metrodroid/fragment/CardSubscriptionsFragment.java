@@ -23,6 +23,7 @@ package au.id.micolous.metrodroid.fragment;
 import android.app.ListFragment;
 import android.content.Context;
 import android.os.Bundle;
+import android.text.Spanned;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
@@ -81,11 +82,11 @@ public class CardSubscriptionsFragment extends ListFragment {
 
             } else {
                 if (subscription.getValidFrom() != null && subscription.getValidTo() != null) {
-                    String validFrom = Utils.dateFormat(TripObfuscator.maybeObfuscateTS(subscription.getValidFrom()));
-                    String validTo = Utils.dateFormat(TripObfuscator.maybeObfuscateTS(subscription.getValidTo()));
+                    Spanned validFrom = Utils.dateFormat(TripObfuscator.maybeObfuscateTS(subscription.getValidFrom()));
+                    Spanned validTo = Utils.dateFormat(TripObfuscator.maybeObfuscateTS(subscription.getValidTo()));
                     ((TextView) view.findViewById(R.id.valid)).setText(getString(R.string.valid_format, validFrom, validTo));
                 } else if (subscription.getValidTo() != null) {
-                    String validTo = Utils.dateFormat(TripObfuscator.maybeObfuscateTS(subscription.getValidTo()));
+                    Spanned validTo = Utils.dateFormat(TripObfuscator.maybeObfuscateTS(subscription.getValidTo()));
                     ((TextView) view.findViewById(R.id.valid)).setText(getString(R.string.valid_to_format, validTo));
                 } else {
                     ((TextView) view.findViewById(R.id.valid)).setText(R.string.valid_not_used);

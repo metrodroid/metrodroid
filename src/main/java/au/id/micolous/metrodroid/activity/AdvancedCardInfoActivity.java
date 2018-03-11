@@ -27,12 +27,19 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 import android.text.ClipboardManager;
+import android.text.Spanned;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import org.simpleframework.xml.Serializer;
+
+import java.util.Calendar;
+
+import au.id.micolous.farebot.R;
+import au.id.micolous.metrodroid.MetrodroidApplication;
 import au.id.micolous.metrodroid.card.Card;
 import au.id.micolous.metrodroid.card.CardHasManufacturingInfo;
 import au.id.micolous.metrodroid.card.CardRawDataFragmentClass;
@@ -42,13 +49,6 @@ import au.id.micolous.metrodroid.fragment.CardHWDetailFragment;
 import au.id.micolous.metrodroid.ui.TabPagerAdapter;
 import au.id.micolous.metrodroid.util.TripObfuscator;
 import au.id.micolous.metrodroid.util.Utils;
-
-import org.simpleframework.xml.Serializer;
-
-import java.util.Calendar;
-
-import au.id.micolous.farebot.R;
-import au.id.micolous.metrodroid.MetrodroidApplication;
 
 public class AdvancedCardInfoActivity extends Activity {
     public static final String EXTRA_CARD = "au.id.micolous.farebot.EXTRA_CARD";
@@ -81,8 +81,8 @@ public class AdvancedCardInfoActivity extends Activity {
         Calendar scannedAt = mCard.getScannedAt();
         if (mCard.getScannedAt().getTimeInMillis() > 0) {
             scannedAt = TripObfuscator.maybeObfuscateTS(scannedAt);
-            String date = Utils.dateFormat(scannedAt);
-            String time = Utils.timeFormat(scannedAt);
+            Spanned date = Utils.dateFormat(scannedAt);
+            Spanned time = Utils.timeFormat(scannedAt);
             actionBar.setSubtitle(Utils.localizeString(R.string.scanned_at_format, time, date));
         }
 

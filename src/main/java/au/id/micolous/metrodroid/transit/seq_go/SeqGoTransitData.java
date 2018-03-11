@@ -20,6 +20,7 @@ package au.id.micolous.metrodroid.transit.seq_go;
 
 import android.net.Uri;
 import android.os.Parcel;
+import android.text.Spanned;
 
 import au.id.micolous.metrodroid.card.UnauthorizedException;
 import au.id.micolous.metrodroid.card.classic.ClassicCard;
@@ -163,7 +164,7 @@ public class SeqGoTransitData extends NextfareTransitData {
     }
 
     @Override
-    public String formatCurrencyString(int currency, boolean isBalance) {
+    public Spanned formatCurrencyString(int currency, boolean isBalance) {
         return Utils.formatCurrencyString(currency, isBalance, "AUD");
     }
 }

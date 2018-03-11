@@ -22,6 +22,7 @@ package au.id.micolous.metrodroid.transit.hsl;
 
 import android.os.Parcel;
 import android.support.annotation.Nullable;
+import android.text.Spanned;
 
 import org.apache.commons.lang3.ArrayUtils;
 
@@ -368,7 +369,7 @@ public class HSLTransitData extends TransitData {
     }
 
     @Override
-    public String formatCurrencyString(int currency, boolean isBalance) {
+    public Spanned formatCurrencyString(int currency, boolean isBalance) {
         // Balance in Euro cents
         return Utils.formatCurrencyString(currency, isBalance, "EUR");
         // TODO: push these into Subscriptions

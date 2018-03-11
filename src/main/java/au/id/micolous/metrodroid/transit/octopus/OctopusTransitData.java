@@ -23,6 +23,7 @@ package au.id.micolous.metrodroid.transit.octopus;
 
 import android.os.Parcel;
 import android.support.annotation.Nullable;
+import android.text.Spanned;
 import android.util.Log;
 
 import au.id.micolous.metrodroid.card.felica.FelicaCard;
@@ -150,11 +151,11 @@ public class OctopusTransitData extends TransitData {
     }
 
     @Override
-    public String formatCurrencyString(int currency, boolean isBalance) {
+    public Spanned formatCurrencyString(int currency, boolean isBalance) {
         return formatCurrencyString(currency, isBalance, !mHasOctopus);
     }
 
-    public String formatCurrencyString(int currency, boolean isBalance, boolean shenzhen) {
+    public Spanned formatCurrencyString(int currency, boolean isBalance, boolean shenzhen) {
         return Utils.formatCurrencyString(currency, isBalance, shenzhen ? "CNY" : "HKD", 10.);
     }
 

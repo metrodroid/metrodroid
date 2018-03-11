@@ -182,6 +182,13 @@ public class SuicaTrip extends Trip {
     }
 
     @Override
+    public String getRouteLanguage() {
+        // Non-Japanese TTS speaking Japanese Romaji is pretty horrible.
+        // If there is a known line name, then mark up as Japanese so we get a Japanese TTS instead.
+        return mStartStation != null ? "ja-JP" : null;
+    }
+
+    @Override
     public String getAgencyName() {
         return (mStartStation != null) ? mStartStation.getCompanyName() : null;
     }

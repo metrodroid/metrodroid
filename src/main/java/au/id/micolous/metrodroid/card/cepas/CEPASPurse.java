@@ -254,7 +254,7 @@ public class CEPASPurse {
     }
 
     public byte[] getCSN() {
-        if (mCAN == null) {
+        if (mCSN == null) {
             return null;
         }
         return mCSN.getData();

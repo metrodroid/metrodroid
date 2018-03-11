@@ -197,7 +197,7 @@
     <string name="opal_action_manly_transfer_same_mode">Overgang (fra annen ferge til Manly Ferry)</string>
     <string name="opal_action_manly_transfer_diff_mode">Overgang (fra annet modus til Manly Ferry)</string>
     <string name="nextfare_system_code">Systemkode</string>
-    <string name="nextfare_card_expiry">Utløpsdato for kort</string>
+    <string name="card_expiry_date">Utløpsdato for kort</string>
 
     <string name="pass_or_transfer">Send/Overfør</string>
     <string name="speak_balance_summary">Konseptutprøving</string>
