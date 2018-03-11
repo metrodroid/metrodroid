@@ -32,6 +32,7 @@ import android.support.annotation.DrawableRes;
 import android.support.annotation.StringRes;
 import android.text.Html;
 import android.text.Spannable;
+import android.text.SpannableString;
 import android.text.SpannableStringBuilder;
 import android.text.style.LocaleSpan;
 import android.text.style.StyleSpan;
@@ -236,7 +237,14 @@ public class CardTripsFragment extends ListFragment {
             }
 
             iconImageView.setImageResource(modeRes);
-            iconImageView.setContentDescription(Utils.localizeString(modeContentDescriptionRes));
+            String s = Utils.localizeString(modeContentDescriptionRes);
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
+                SpannableString ss = new SpannableString(s);
+                ss.setSpan(new LocaleSpan(Locale.getDefault()), 0, ss.length(), 0);
+                iconImageView.setContentDescription(ss);
+            } else {
+                iconImageView.setContentDescription(s);
+            }
 
             if (trip.hasTime()) {
                 timeTextView.setText(Utils.timeFormat(date));
@@ -267,11 +275,11 @@ public class CardTripsFragment extends ListFragment {
                         Matcher m = LINE_NUMBER.matcher(trip.getRouteName());
                         if (!m.find() || m.group(1) == null) {
                             // No line number
-                            Log.d(TAG, "no line number");
+                            //Log.d(TAG, "no line number");
                             routeText.setSpan(new LocaleSpan(Locale.forLanguageTag(trip.getRouteLanguage())), oldLength, routeText.length(), 0);
                         } else {
                             // There is a line number
-                            Log.d(TAG, String.format("num = %s, line = %s", m.group(1), m.group(2)));
+                            //Log.d(TAG, String.format("num = %s, line = %s", m.group(1), m.group(2)));
                             routeText.setSpan(new LocaleSpan(Locale.getDefault()), oldLength, oldLength + m.end(1), 0);
                             routeText.setSpan(new LocaleSpan(Locale.forLanguageTag(trip.getRouteLanguage())), oldLength + m.start(2), routeText.length(), 0);
                         }
