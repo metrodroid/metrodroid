@@ -353,4 +353,45 @@
 
     <string name="erg_agency_id">Vervoerder-ID</string>
 
+<string name="hardware_information">Hardware-informatie</string>
+    <string name="cepas_version">CEPAS-versie</string>
+    <string name="cepas_purse_id">Portemonnee-ID</string>
+    <string name="cepas_purse_status">Portemonnee-status</string>
+    <string name="cepas_purse_balance">Portemonnee-saldo</string>
+    <string name="cepas_purse_creation_date">Portemonnee-creatiedatum</string>
+    <string name="cepas_expiry_date">Portemonnee-vervaldatum</string>
+    <string name="cepas_autoload_amount">Automatisch op te laden bedrag</string>
+    <string name="cepas_last_txn_info">Laatste transactie-informatie</string>
+    <string name="cepas_credit_header">Krediet-kop</string>
+    <string name="cepas_debit_options">Debet-opties</string>
+    <string name="cepas_other_purse_info">Overige portemonnee-informatie</string>
+    <string name="cepas_logfile_record_count">Items in logbestand</string>
+    <string name="cepas_issuer_data_length">Gegevenslengte van uitgever</string>
+    <string name="cepas_issuer_data">Uitgever-specifieke gegevens</string>
+    <string name="cepas_purse_info">Portemonnee-informatie</string>
+
+    <string name="trip_description">(Van )%1$s [→] (naar )%2$s</string>
+
+    <string name="mode_bus">Bus</string>
+    <string name="mode_train">Trein</string>
+    <string name="mode_tram">Tram</string>
+    <string name="mode_metro">Metro</string>
+    <string name="mode_ferry">Veerboot</string>
+    <string name="mode_ticket_machine">Kaartautomaat</string>
+    <string name="mode_vending_machine">Kaartautomaat</string>
+    <string name="mode_pos">Verkooppunt</string>
+    <string name="mode_banned">Verbannen</string>
+    <string name="mode_unknown">Onbekend</string>
+
+
+    <string name="ovc_autocharge_limit">Automatisch opladen-limiet</string>
+    <string name="ovc_autocharge_amount">Automatisch opladen-bedrag</string>
+    <string name="ovc_autocharge">Automatisch opladen</string>
+
+
+    <string name="general_information">Algemene informatie</string>
+    <string name="personal_information">Persoonlijke informatie</string>
+    <string name="date_of_birth">Geboortedatum</string>
+    <string name="credit_information">Kredietinformatie</string>
+    <string name="software_information">Software-informatie</string>
 </resources>
