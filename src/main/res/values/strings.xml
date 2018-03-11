@@ -294,18 +294,24 @@
 
     The %1$s is the starting station. The %2$s is the ending station.
 
-    For example: "Tokyo → Osaka"
+    Text within parentheses: ( )
+      Hidden on the display, and only sent to screen readers.
+      This works with all supported versions of Android, and most screen readers.
+      You can use this any number of times.
+
+    Text within square brackets: [ ]
+      Shown on the display, and not sent to screen readers.
+      This only works with Android 5.0 or later.
+      It works with Talkback, but does not work with Select to Speak.
+      Do not put words in here.
+      You can use this any number of times.
+
+    Example:
+      Source: "(From )Tokyo → (to )Osaka"
+      Written: "Tokyo → Osaka"
+      Spoken: "From Tokyo  to Osaka"
     -->
-    <string name="trip_description">%1$s → %2$s</string>
-
-    <!--
-    Translators: This is a spoken description of a trip entry.
-
-    The %1$s is the starting station. The %2$s is the ending station.
-
-    For example: "From Tokyo to Osaka"
-    -->
-    <string name="trip_description_accessible">From %1$s to %2$s</string>
+    <string name="trip_description">(From )%1$s [→] (to )%2$s</string>
 
     <!-- Locations -->
     <string name="location_seattle">Seattle, WA, USA</string>

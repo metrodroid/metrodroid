@@ -25,10 +25,12 @@ import android.app.Activity;
 import android.app.ListFragment;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.DrawableRes;
 import android.support.annotation.StringRes;
 import android.text.Html;
+import android.text.Spannable;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -55,9 +57,11 @@ import org.apache.commons.lang3.StringUtils;
 import org.simpleframework.xml.Serializer;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Collections;
 import java.util.List;
+import java.util.Locale;
 
 import au.id.micolous.farebot.R;
 import au.id.micolous.metrodroid.MetrodroidApplication;
@@ -132,16 +136,6 @@ public class CardTripsFragment extends ListFragment {
 
     private static class UseLogListAdapter extends ArrayAdapter<Trip> {
         private TransitData mTransitData;
-        private final View.AccessibilityDelegate accessibilityDelegate = new View.AccessibilityDelegate() {
-            @Override
-            public void onInitializeAccessibilityNodeInfo(View host, AccessibilityNodeInfo info) {
-                super.onInitializeAccessibilityNodeInfo(host, info);
-
-                if (host.getContentDescription() != null) {
-                    info.setText(host.getContentDescription());
-                }
-            }
-        };
 
         public UseLogListAdapter(Context context, Trip[] items, TransitData transitData) {
             super(context, 0, items);
@@ -267,11 +261,9 @@ public class CardTripsFragment extends ListFragment {
                 fareTextView.setVisibility(View.INVISIBLE);
             }
 
-            String stationText = Trip.formatStationNames(trip, false);
+            Spannable stationText = Trip.formatStationNames(trip);
             if (stationText != null) {
                 stationTextView.setText(stationText);
-                stationTextView.setContentDescription(Trip.formatStationNames(trip, true));
-                stationTextView.setAccessibilityDelegate(accessibilityDelegate);
                 stationTextView.setVisibility(View.VISIBLE);
             } else {
                 stationTextView.setVisibility(View.GONE);

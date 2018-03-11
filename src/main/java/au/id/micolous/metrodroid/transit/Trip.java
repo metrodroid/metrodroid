@@ -20,8 +20,16 @@
 
 package au.id.micolous.metrodroid.transit;
 
+import android.graphics.Typeface;
+import android.os.Build;
 import android.os.Parcelable;
 import android.support.annotation.Nullable;
+import android.text.Spannable;
+import android.text.SpannableString;
+import android.text.SpannableStringBuilder;
+import android.text.style.StyleSpan;
+import android.text.style.TtsSpan;
+import android.util.Log;
 
 import org.apache.commons.lang3.StringUtils;
 
@@ -30,23 +38,19 @@ import java.util.Calendar;
 import java.util.List;
 
 import au.id.micolous.farebot.R;
+import au.id.micolous.metrodroid.ui.HiddenSpan;
 import au.id.micolous.metrodroid.util.Utils;
 
 public abstract class Trip implements Parcelable {
-
-    public static String formatStationNames(Trip trip) {
-        return formatStationNames(trip, false);
-    }
+    private static final String TAG = Trip.class.getName();
 
     /**
      * Formats a trip description into a localised label.
      *
      * @param trip The trip to describe.
-     * @param screenReader true if the text should be formatted for spoken word, false if it should
-     *                     be formatted for display.
      * @return null if both the start and end stations are unknown.
      */
-    public static String formatStationNames(Trip trip, boolean screenReader) {
+    public static Spannable formatStationNames(Trip trip) {
         String startStationName = null, endStationName = null;
 
         if (trip.getStartStationName() != null) {
@@ -72,13 +76,78 @@ public abstract class Trip implements Parcelable {
 
         // If only the start or only the end station is available, just return that.
         if (startStationName != null && endStationName == null) {
-            return startStationName;
+            return new SpannableString(startStationName);
         }
 
         // Both the start and end station are known.
-        return Utils.localizeString(
-                screenReader ? R.string.trip_description_accessible : R.string.trip_description,
-                startStationName, endStationName);
+        String startPlaceholder = "%1$s";
+        String endPlaceholder = "%2$s";
+        String s = Utils.localizeString(R.string.trip_description, startPlaceholder, endPlaceholder);
+
+        // Build the spans
+        SpannableStringBuilder b = new SpannableStringBuilder(s);
+
+        // Find the TTS-exclusive bits
+        // They are wrapped in parentheses: ( )
+        int x = 0;
+        while (x < b.toString().length()) {
+            int start = b.toString().indexOf("(", x);
+            if (start == -1) break;
+            int end = b.toString().indexOf(")", start);
+            if (end == -1) break;
+
+            // Delete those characters
+            b.delete(end, end+1);
+            b.delete(start, start+1);
+
+            // We have a range, create a span for it
+            b.setSpan(new HiddenSpan(), start, --end, 0);
+
+            x = end;
+        }
+
+        // Find the display-exclusive bits.
+        // They are wrapped in square brackets: [ ]
+        x = 0;
+        while (x < b.toString().length()) {
+            int start = b.toString().indexOf("[", x);
+            if (start == -1) break;
+            int end = b.toString().indexOf("]", start);
+            if (end == -1) break;
+
+            // Delete those characters
+            b.delete(end, end+1);
+            b.delete(start, start+1);
+            end--;
+
+            // We have a range, create a span for it
+            // This only works properly on Lollipop. It's a pretty reasonable target for
+            // compatibility, and most TTS software will not speak out Unicode arrows anyway.
+            //
+            // This works fine with Talkback, but *doesn't* work with Select to Speak.
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                b.setSpan(new TtsSpan.TextBuilder().setText(" ").build(), start, end, 0);
+            }
+
+            x = end;
+        }
+
+        // Finally, insert the actual station names back in the data.
+        x = b.toString().indexOf(startPlaceholder);
+        if (x == -1) {
+            Log.w(TAG, "couldn't find start station placeholder to put back");
+            return null;
+        }
+        b.replace(x, x + startPlaceholder.length(), startStationName);
+
+        x = b.toString().indexOf(endPlaceholder);
+        if (x == -1) {
+            Log.w(TAG, "couldn't find end station placeholder to put back");
+            return null;
+        }
+        b.replace(x, x + endPlaceholder.length(), endStationName);
+
+        return b;
     }
 
     /**
