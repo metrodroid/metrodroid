@@ -76,7 +76,7 @@ public class LaxTapTrip extends NextfareTrip {
     }
 
     private String getStationName(int stationId) {
-        if (stationId == 0 || mModeInt == LaxTapData.AGENCY_SANTA_MONICA) {
+        if (stationId < 0 || mModeInt == LaxTapData.AGENCY_SANTA_MONICA) {
             return null;
         } else if (mModeInt == AGENCY_METRO && stationId >= METRO_BUS_START) {
             // We don't know the station.
@@ -93,7 +93,7 @@ public class LaxTapTrip extends NextfareTrip {
     }
 
     private Station getStation(int stationId) {
-        if (stationId == 0 || mModeInt == LaxTapData.AGENCY_SANTA_MONICA) {
+        if (stationId < 0 || mModeInt == LaxTapData.AGENCY_SANTA_MONICA) {
             // Santa Monica Bus doesn't use this.
             return null;
         }

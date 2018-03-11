@@ -96,7 +96,7 @@ public class SeqGoTrip extends NextfareTrip {
 
     @Override
     public String getStartStationName() {
-        if (mStartStation == 0) {
+        if (mStartStation < 0) {
             return null;
         } else {
             Station s = getStartStation();
@@ -115,7 +115,7 @@ public class SeqGoTrip extends NextfareTrip {
 
     @Override
     public String getEndStationName() {
-        if (mEndStation == 0) {
+        if (mEndStation < 0) {
             return null;
         } else {
             Station s = getEndStation();
