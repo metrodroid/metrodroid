@@ -72,9 +72,9 @@
     <string name="transaction_sequence">#</string>
     <string name="fully_locked_desc">
         No part of this card is freely readable without a key. You have no valid keys installed for it.\n\n
-        If supported by Metrodroid, the card will work once keys are installed for it. More information about acquiring those can be found in the documentation.\n\n
+        If supported by Metrodroid, the card will work once keys are installed for it. These are generally different for each card. More information about acquiring and installing keys can be found in the documentation.\n\n
         If your card is not supported by Metrodroid, it is unlikely it will ever be, unless the key for it is deciphered.\n\n
-        Please lobby the transport agency to allow open data access on issued cards. It is safe to permit open, read-only access to data with modern smartcard technology. Some agencies even provide open documentation about the data format!
+        Please lobby the card issuer to allow open data access on issued cards. It is safe to permit open, read-only access to data with modern smartcard technology. Some agencies even provide open documentation about the data format!
     </string>
     <string name="fully_locked_title">Fully locked card.</string>
     <string name="nfc_off_error">NFC off</string>
