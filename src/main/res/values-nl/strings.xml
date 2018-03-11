@@ -6,7 +6,7 @@
     <string name="license">Licenties</string>
     <string name="title_activity_license">Open bron-licenties</string>
     <string name="directions">Druk op een kaart.</string>
-    <string name="reading_card">Bezig met uitlezen van kaart</string>
+    <string name="reading_card">Bezig met uitlezen van kaart…</string>
     <string name="dont_move">Verplaats de kaart niet</string>
     <string name="advanced_info">Geavanceerde informatie</string>
     <string name="delete_card">Kaart verwijderen</string>
@@ -32,7 +32,7 @@
     <string name="preferences">Voorkeuren</string>
     <string name="accessibility">Toegankelijkheid</string>
     <string name="speak_balance">Saldo voorlezen</string>
-    <string name="speak_balance_summary">Betalingsbewijs</string>
+    <string name="speak_balance_summary">Als u een kaart scant, dan wordt het saldo automatisch voorgelezen. Dit werkt zelfs als er geen tekst-naar-spraak-software beschikbaar is op het apparaat.</string>
     <string name="balance_speech">Saldo <xliff:g id="balance" example="$13.37">%s</xliff:g></string>
     <string name="loading">Bezig met laden…</string>
     <string name="scanned_at_format">Gescand op %1$s op %2$s</string>
@@ -45,7 +45,7 @@
 \n 
 \nAls uw kaart niet wordt ondersteund door Metrodroid, dan zal dat waarschijnlijk ook nooit mogelijk zijn, tenzij de sleutel gekraakt wordt. 
 \n 
-\nNeem contact op met uw vervoerder om te kijken of u toegang kunt krijgen tot de gegevens van de verschafte kaarten. Het is mogelijk om veilige, gelimiteerde toegang te geven.</string>
+\nNeem contact op met uw vervoerder en vraag of open toegang tot de gegevens van de verschafte kaarten mogelijk wordt gemaakt. Het is mogelijk om veilige, alleen-lezen toegang te geven met moderne smartcard-technologie. Sommige vervoerders bieden zelfs openbare documentatie aan over de gegevensopmaak!</string>
     <string name="fully_locked_title">Volledig vergrendelde kaart.</string>
     <string name="nfc_off_error">NFC is uitgeschakeld</string>
     <string name="turn_on_nfc">Schakel NFC in om de kaartinformatie uit te kunnen lezen.</string>
@@ -394,4 +394,7 @@
     <string name="date_of_birth">Geboortedatum</string>
     <string name="credit_information">Kredietinformatie</string>
     <string name="software_information">Software-informatie</string>
+<string name="clipboard_error">Geen toegang tot het klembord</string>
+    <string name="localise_places">Stations- en routenamen uitspreken in landstaal</string>
+    <string name="localise_places_desc">Laat tekst-naar-spraak-software en toegankelijkheid weten dat stations- en routenamen moeten worden uitgesproken in de landstaal i.p.v. uw taal. Dit verbetert de uitspraak van buitenlandse plaatsnamen, maar het kan voor u moeilijker te verstaan zijn. Dit vereist Android 5.0 of hoger, tekst-naar-spraak-software die de LocaleSpan API ondersteunt (zoals bijv. Google TalkBack) en bijbehorende stemmen.</string>
 </resources>
