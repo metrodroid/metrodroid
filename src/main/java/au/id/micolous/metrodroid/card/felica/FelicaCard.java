@@ -134,8 +134,8 @@ public class FelicaCard extends Card {
         CardInfo i = parseEarlyCardInfo(systemCodes);
         if (i != null) {
             Log.d(TAG, String.format(Locale.ENGLISH, "Early Card Info: %s", i.getName()));
-            feedbackInterface.showCardType(i);
             feedbackInterface.updateStatusText(Utils.localizeString(R.string.card_reading_type, i.getName()));
+            feedbackInterface.showCardType(i);
         }
 
         for (FeliCaLib.SystemCode code : codes) {

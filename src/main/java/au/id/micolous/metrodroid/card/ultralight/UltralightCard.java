@@ -100,6 +100,7 @@ public class UltralightCard extends Card {
             }
 
             feedbackInterface.updateStatusText(Utils.localizeString(R.string.mfu_reading));
+            feedbackInterface.showCardType(null);
 
             // Now iterate through the pages and grab all the datas
             int pageNumber = 0;

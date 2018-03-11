@@ -99,8 +99,15 @@
 
     <PreferenceCategory android:title="@string/accessibility">
         <CheckBoxPreference
+            android:title="@string/localise_places"
+            android:summary="@string/localise_places_desc"
+            android:key="pref_localise_places"
+            android:defaultValue="false" />
+
+        <CheckBoxPreference
             android:title="@string/speak_balance"
             android:summary="@string/speak_balance_summary"
-            android:key="pref_key_speak_balance" />
+            android:key="pref_key_speak_balance"
+            android:defaultValue="false" />
     </PreferenceCategory>
 </PreferenceScreen>

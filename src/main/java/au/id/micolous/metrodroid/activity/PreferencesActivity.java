@@ -1,10 +1,7 @@
 /*
- * FareBotPreferenceActivity.java
+ * PreferencesActivity.java
  *
- * Copyright (C) 2011 Eric Butler
- *
- * Authors:
- * Eric Butler <eric@codebutler.com>
+ * Copyright 2011 Eric Butler <eric@codebutler.com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -26,6 +23,7 @@ import android.app.ActionBar;
 import android.content.ComponentName;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.os.Build;
 import android.os.Bundle;
 import android.preference.CheckBoxPreference;
 import android.preference.Preference;
@@ -33,13 +31,15 @@ import android.preference.PreferenceActivity;
 import android.view.MenuItem;
 
 import au.id.micolous.farebot.R;
+import au.id.micolous.metrodroid.MetrodroidApplication;
 
 import static android.content.pm.PackageManager.COMPONENT_ENABLED_STATE_DISABLED;
 import static android.content.pm.PackageManager.COMPONENT_ENABLED_STATE_ENABLED;
 
-public class FareBotPreferenceActivity extends PreferenceActivity implements Preference.OnPreferenceChangeListener {
+public class PreferencesActivity extends PreferenceActivity implements Preference.OnPreferenceChangeListener {
 
     private CheckBoxPreference mPreferenceLaunchFromBackground;
+    private CheckBoxPreference mLocalisePlaces;
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -52,6 +52,12 @@ public class FareBotPreferenceActivity extends PreferenceActivity implements Pre
                 = (CheckBoxPreference) getPreferenceManager().findPreference("pref_launch_from_background");
         mPreferenceLaunchFromBackground.setChecked(isLaunchFromBgEnabled());
         mPreferenceLaunchFromBackground.setOnPreferenceChangeListener(this);
+
+        mLocalisePlaces = (CheckBoxPreference) getPreferenceManager().findPreference(MetrodroidApplication.PREF_LOCALISE_PLACES);
+        if (mLocalisePlaces != null) {
+            mLocalisePlaces.setEnabled(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP);
+        }
+
     }
 
     @Override

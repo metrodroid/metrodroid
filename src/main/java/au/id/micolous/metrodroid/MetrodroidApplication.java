@@ -83,6 +83,8 @@ public class MetrodroidApplication extends Application {
     public static final String PREF_OBFUSCATE_TRIP_FARES = "pref_obfuscate_trip_fares";
     public static final String PREF_OBFUSCATE_BALANCE = "pref_obfuscate_balance";
 
+    public static final String PREF_LOCALISE_PLACES = "pref_localise_places";
+
     private static MetrodroidApplication sInstance;
 
     private SuicaDBUtil mSuicaDBUtil;
@@ -143,7 +145,7 @@ public class MetrodroidApplication extends Application {
         return sInstance;
     }
 
-    private static boolean getBooleanPref(String preference, boolean default_setting) {
+    protected static boolean getBooleanPref(String preference, boolean default_setting) {
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getInstance());
         return prefs.getBoolean(preference, false);
     }
@@ -171,6 +173,10 @@ public class MetrodroidApplication extends Application {
 
     public static boolean obfuscateBalance() {
         return getBooleanPref(PREF_OBFUSCATE_BALANCE, false);
+    }
+
+    public static boolean localisePlaces() {
+        return getBooleanPref(PREF_LOCALISE_PLACES, false);
     }
 
     public SuicaDBUtil getSuicaDBUtil() {

@@ -93,6 +93,7 @@ public class ClassicCard extends Card {
 
     public static ClassicCard dumpTag(byte[] tagId, Tag tag, TagReaderFeedbackInterface feedbackInterface) throws Exception {
         feedbackInterface.updateStatusText(Utils.localizeString(R.string.mfc_reading));
+        feedbackInterface.showCardType(null);
 
         MifareClassic tech = null;
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(MetrodroidApplication.getInstance());

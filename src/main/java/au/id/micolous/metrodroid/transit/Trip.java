@@ -34,6 +34,7 @@ import java.util.Calendar;
 import java.util.Locale;
 
 import au.id.micolous.farebot.R;
+import au.id.micolous.metrodroid.MetrodroidApplication;
 import au.id.micolous.metrodroid.ui.HiddenSpan;
 import au.id.micolous.metrodroid.util.Utils;
 
@@ -49,6 +50,7 @@ public abstract class Trip implements Parcelable {
     public static Spannable formatStationNames(Trip trip) {
         String startStationName = null, endStationName = null;
         String startLanguage = null, endLanguage = null;
+        boolean localisePlaces = MetrodroidApplication.localisePlaces();
 
         if (trip.getStartStationName() != null) {
             startStationName = trip.getStartStationName();
@@ -81,7 +83,7 @@ public abstract class Trip implements Parcelable {
         if (startStationName != null && endStationName == null) {
             SpannableStringBuilder b = new SpannableStringBuilder(startStationName);
 
-            if (startLanguage != null && Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            if (localisePlaces && startLanguage != null && Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
                 b.setSpan(new LocaleSpan(Locale.forLanguageTag(startLanguage)), 0, b.length(), 0);
             }
 
@@ -153,7 +155,7 @@ public abstract class Trip implements Parcelable {
         // Annotate the start station name with the appropriate Locale data.
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             Station startStation = trip.getStartStation();
-            if (startStation != null && startStation.getLanguage() != null) {
+            if (localisePlaces && startStation != null && startStation.getLanguage() != null) {
                 b.setSpan(new LocaleSpan(Locale.forLanguageTag(startStation.getLanguage())), x, x + startStationName.length(), 0);
 
                 // Set the start of the string to the default language, so that the localised
@@ -174,24 +176,26 @@ public abstract class Trip implements Parcelable {
         // Annotate the end station name with the appropriate Locale data.
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             Station endStation = trip.getEndStation();
-            if (endStation != null && endStation.getLanguage() != null) {
-                b.setSpan(new LocaleSpan(Locale.forLanguageTag(endStation.getLanguage())), y, y + endStationName.length(), 0);
+            if (localisePlaces) {
+                if (endStation != null && endStation.getLanguage() != null) {
+                    b.setSpan(new LocaleSpan(Locale.forLanguageTag(endStation.getLanguage())), y, y + endStationName.length(), 0);
 
-                if (localeSpanUsed) {
-                    // Set the locale of the string between the start and end station names.
-                    b.setSpan(new LocaleSpan(Locale.getDefault()), x + startStationName.length(), y, 0);
+                    if (localeSpanUsed) {
+                        // Set the locale of the string between the start and end station names.
+                        b.setSpan(new LocaleSpan(Locale.getDefault()), x + startStationName.length(), y, 0);
+                    } else {
+                        // Set the locale of the string from the start of the string to the end station
+                        // name.
+                        b.setSpan(new LocaleSpan(Locale.getDefault()), 0, y, 0);
+                    }
+
+                    // Set the segment from the end of the end station name to the end of the string
+                    b.setSpan(new LocaleSpan(Locale.getDefault()), y + endStationName.length(), b.length(), 0);
                 } else {
-                    // Set the locale of the string from the start of the string to the end station
-                    // name.
-                    b.setSpan(new LocaleSpan(Locale.getDefault()), 0, y, 0);
+                    // No custom language information for end station
+                    // Set default locale from the end of the start station to the end of the string.
+                    b.setSpan(new LocaleSpan(Locale.getDefault()), x + startStationName.length(), b.length(), 0);
                 }
-
-                // Set the segment from the end of the end station name to the end of the string
-                b.setSpan(new LocaleSpan(Locale.getDefault()), y + endStationName.length(), b.length(), 0);
-            } else {
-                // No custom language information for end station
-                // Set default locale from the end of the start station to the end of the string.
-                b.setSpan(new LocaleSpan(Locale.getDefault()), x + startStationName.length(), b.length(), 0);
             }
         }
 

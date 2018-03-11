@@ -34,7 +34,7 @@
     <string name="license">Licenses</string>
     <string name="title_activity_license">Open Source Licenses</string>
     <string name="directions">Tap a card.</string>
-    <string name="reading_card">Reading Card</string>
+    <string name="reading_card">Reading card…</string>
     <string name="dont_move">Do not move card</string>
     <string name="advanced_info">Advanced Info</string>
     <string name="delete_card">Delete Card</string>
@@ -62,8 +62,8 @@
     <string name="about">About</string>
     <string name="preferences">Preferences</string>
     <string name="accessibility">Accessibility</string>
-    <string name="speak_balance">Speak Balance</string>
-    <string name="speak_balance_summary">Proof of concept</string>
+    <string name="speak_balance">Speak balance aloud</string>
+    <string name="speak_balance_summary">When you scan a card, the balance will be automatically read aloud. This works even when other text-to-speech software is not available.</string>
     <string name="balance_speech">Balance <xliff:g id="balance" example="$13.37">%s</xliff:g></string>
     <string name="loading">Loading…</string>
     <string name="scanned_at_format">Scanned at %1$s on %2$s</string>
@@ -72,9 +72,9 @@
     <string name="transaction_sequence">#</string>
     <string name="fully_locked_desc">
         No part of this card is freely readable without a key. You have no valid keys installed for it.\n\n
-        If supported by Metrodroid, the card will work once keys are installed for it. More information about acquiring those to be found in the documentation.\n\n
+        If supported by Metrodroid, the card will work once keys are installed for it. More information about acquiring those can be found in the documentation.\n\n
         If your card is not supported by Metrodroid, it is unlikely it will ever be, unless the key for it is deciphered.\n\n
-        Please contact your municipal transport authority in order to allow some level of open data access on issued cards. It is possible to safely allow limited read access to data on public transport smartcards.
+        Please lobby the transport agency to allow open data access on issued cards. It is safe to permit open, read-only access to data with modern smartcard technology. Some agencies even provide open documentation about the data format!
     </string>
     <string name="fully_locked_title">Fully locked card.</string>
     <string name="nfc_off_error">NFC off</string>
@@ -165,7 +165,7 @@
     <string name="alternate_purse_balances">Alternate purse balances</string>
     <string name="storage_required">Permission is required to read and write card dumps and keys from/to files.</string>
 
-    <string name="mfc_fallback_desc">Some agencies have no identifying magic on their card. To read them, you must an agency explicitly.</string>
+    <string name="mfc_fallback_desc">Some agencies have no identifying magic on their card. To read them, you must select an agency explicitly.</string>
     <string name="mfc_fallback">Fallback reader</string>
 
     <!-- Obfuscation options -->
@@ -598,4 +598,6 @@
     <string name="credit_information">Credit Information</string>
     <string name="software_information">Software Information</string>
     <string name="clipboard_error">Unable to access the clipboard</string>
+    <string name="localise_places">Pronounce station and line names in native language</string>
+    <string name="localise_places_desc">Adds hints for text to speech and other accessibility software, so that they pronounce station and line names in their native language, rather than your language. This improves the pronunciation of foreign place names, but you may find it more difficult to understand. This requires Android 5.0 or later, text to speech software that supports the LocaleSpan API (such as Google TalkBack), and that you have appropriate voices installed.</string>
 </resources>

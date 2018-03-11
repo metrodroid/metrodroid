@@ -96,7 +96,7 @@
             android:name="au.id.micolous.metrodroid.activity.AdvancedCardInfoActivity"
             android:configChanges="keyboardHidden|orientation" />
         <activity
-            android:name="au.id.micolous.metrodroid.activity.FareBotPreferenceActivity"
+            android:name="au.id.micolous.metrodroid.activity.PreferencesActivity"
             android:label="@string/preferences" />
         <activity
             android:name="au.id.micolous.metrodroid.activity.TripMapActivity"

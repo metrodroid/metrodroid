@@ -23,6 +23,7 @@ package au.id.micolous.metrodroid.activity;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.ContentValues;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -34,6 +35,9 @@ import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.util.Log;
+import android.view.View;
+import android.view.accessibility.AccessibilityEvent;
+import android.view.accessibility.AccessibilityManager;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -60,58 +64,67 @@ public class ReadingTagActivity extends Activity implements TagReaderFeedbackInt
     @Override
     public void updateStatusText(final String msg) {
         //Log.d(TAG, "Status: " + msg);
-        runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                TextView t = (TextView)findViewById(R.id.status_text);
-                t.setText(msg);
-                t.invalidate();
-            }
+        runOnUiThread(() -> {
+            TextView t = findViewById(R.id.status_text);
+            t.setText(msg);
+            t.invalidate();
         });
     }
 
     @Override
     public void updateProgressBar(final int progress, final int max) {
         //Log.d(TAG, String.format(Locale.ENGLISH, "Progress: %d / %d", progress, max));
-        runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                ProgressBar b = (ProgressBar) findViewById(R.id.progress);
-                if (progress == 0 && max == 0) {
-                    b.setIndeterminate(true);
-                    mIndeterminite = true;
-                } else {
-                    if (mIndeterminite) {
-                        b.setIndeterminate(false);
-                        mIndeterminite = false;
-                    }
-
-                    // Improves animation quality on N+
-                    if (mMaximum != max) {
-                        b.setMax(max);
-                        mMaximum = max;
-                    }
-
-                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-                        b.setProgress(progress, true);
-                    } else {
-                        b.setProgress(progress);
-                    }
+        runOnUiThread(() -> {
+            ProgressBar b = findViewById(R.id.progress);
+            if (progress == 0 && max == 0) {
+                b.setIndeterminate(true);
+                mIndeterminite = true;
+            } else {
+                if (mIndeterminite) {
+                    b.setIndeterminate(false);
+                    mIndeterminite = false;
                 }
-                b.invalidate();
+
+                // Improves animation quality on N+
+                if (mMaximum != max) {
+                    b.setMax(max);
+                    mMaximum = max;
+                }
+
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                    b.setProgress(progress, true);
+                } else {
+                    b.setProgress(progress);
+                }
             }
+            b.invalidate();
         });
     }
 
     @Override
     public void showCardType(final CardInfo cardInfo) {
-        runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                ImageView i = (ImageView) findViewById(R.id.card_image);
+        runOnUiThread(() -> {
+            ImageView i = findViewById(R.id.card_image);
+
+            if (cardInfo != null) {
                 i.setImageResource(cardInfo.getImageId());
+                i.setContentDescription(cardInfo.getName());
+                i.invalidate();
+            } else {
+                i.setImageResource(R.drawable.logo);
+                i.setContentDescription("");
                 i.invalidate();
             }
+
+            TextView t = findViewById(R.id.status_text);
+            AccessibilityManager man = (AccessibilityManager) getSystemService(Context.ACCESSIBILITY_SERVICE);
+            if (man != null && man.isEnabled()) {
+                AccessibilityEvent e = AccessibilityEvent.obtain();
+                e.setEventType(AccessibilityEvent.TYPE_ANNOUNCEMENT);
+                e.getText().add(t.getText());
+                man.sendAccessibilityEvent(e);
+            }
+
         });
     }
 
@@ -226,11 +239,7 @@ public class ReadingTagActivity extends Activity implements TagReaderFeedbackInt
                         .setTitle(R.string.unsupported_tag)
                         .setMessage(ex.getMessage())
                         .setCancelable(false)
-                        .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface arg0, int arg1) {
-                                finish();
-                            }
-                        })
+                        .setPositiveButton(android.R.string.ok, (arg0, arg1) -> finish())
                         .show();
             } else {
                 Utils.showErrorAndFinish(ReadingTagActivity.this, mException);

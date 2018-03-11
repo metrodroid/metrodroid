@@ -34,6 +34,12 @@ public interface TagReaderFeedbackInterface {
      *
      * In this case, we can be sent a CardInfo describing the type of card, so that we can show a
      * nice image to reassure the user that we're hard at work.
+     *
+     * This should only ever be called once.
+     *
+     * This is also used as a trigger for accessibility tools, and announces what type of card is
+     * being read (from the last status update). If the card type is not likely to be known quickly,
+     * then sending a 'null' CardInfo will also trigger those accessibility features.
      * @param cardInfo Card information to display.
      */
     void showCardType(final CardInfo cardInfo);

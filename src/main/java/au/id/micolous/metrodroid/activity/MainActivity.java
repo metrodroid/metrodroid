@@ -141,7 +141,7 @@ public class MainActivity extends Activity {
                 startActivity(new Intent(this, AboutActivity.class));
                 break;
             case R.id.prefs:
-                startActivity(new Intent(this, FareBotPreferenceActivity.class));
+                startActivity(new Intent(this, PreferencesActivity.class));
                 break;
             case R.id.keys:
                 startActivity(new Intent(this, KeysActivity.class));

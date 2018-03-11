@@ -154,6 +154,7 @@ public class CardTripsFragment extends ListFragment {
         public View getView(int position, View convertView, ViewGroup parent) {
             Activity activity = (Activity) getContext();
             LayoutInflater inflater = activity.getLayoutInflater();
+            boolean localisePlaces = MetrodroidApplication.localisePlaces();
 
             if (convertView == null) {
                 convertView = inflater.inflate(R.layout.trip_item, parent, false);
@@ -238,7 +239,7 @@ public class CardTripsFragment extends ListFragment {
 
             iconImageView.setImageResource(modeRes);
             String s = Utils.localizeString(modeContentDescriptionRes);
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
+            if (localisePlaces && Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
                 SpannableString ss = new SpannableString(s);
                 ss.setSpan(new LocaleSpan(Locale.getDefault()), 0, ss.length(), 0);
                 iconImageView.setContentDescription(ss);
@@ -259,7 +260,7 @@ public class CardTripsFragment extends ListFragment {
                 routeText.append(trip.getShortAgencyName())
                         .append(" ")
                         .setSpan(new StyleSpan(Typeface.BOLD), 0, trip.getShortAgencyName().length(), 0);
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
                     routeText.setSpan(new LocaleSpan(Locale.getDefault()), 0, routeText.length(), 0);
                 }
             }
@@ -267,7 +268,7 @@ public class CardTripsFragment extends ListFragment {
             if (trip.getRouteName() != null) {
                 int oldLength = routeText.length();
                 routeText.append(trip.getRouteName());
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                if (localisePlaces && Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
                     if (trip.getRouteLanguage() != null) {
                         // SUICA HACK:
                         // If there's something that looks like "#2" at the start, then mark
