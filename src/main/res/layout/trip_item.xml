@@ -62,18 +62,20 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
+
                 <TextView
                     android:id="@+id/route_text_view"
-                    android:text="Route Name"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:text="Agency / Route Name"
                     android:textSize="16sp" />
+
                 <TextView
                     android:id="@+id/station_text_view"
-                    android:text="Station"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:gravity="left|center_vertical" />
+                    android:gravity="left|center_vertical"
+                    android:text="Start Station → End Station" />
             </LinearLayout>
         </LinearLayout>
 

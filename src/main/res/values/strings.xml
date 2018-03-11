@@ -289,6 +289,23 @@
     <string name="enabled">Enabled</string>
     <string name="disabled">Disabled</string>
 
+    <!--
+    Translators: This is shown below a trip entry to describe the start and end stations of a trip.
+
+    The %1$s is the starting station. The %2$s is the ending station.
+
+    For example: "Tokyo → Osaka"
+    -->
+    <string name="trip_description">%1$s → %2$s</string>
+
+    <!--
+    Translators: This is a spoken description of a trip entry.
+
+    The %1$s is the starting station. The %2$s is the ending station.
+
+    For example: "From Tokyo to Osaka"
+    -->
+    <string name="trip_description_accessible">From %1$s to %2$s</string>
 
     <!-- Locations -->
     <string name="location_seattle">Seattle, WA, USA</string>
@@ -322,6 +339,34 @@
     <string name="location_act_australia">Australian Capital Territory, Australia</string>
     <string name="location_wa_australia">Western Australia, Australia</string>
     <string name="location_christchurch_nz">Christchurch, New Zealand</string>
+
+    <!--
+    These strings are used for content descriptions (accessibility), for modes of transport.
+    Using them for custom pages on individual operators is discouraged (eg: Opal), as strings and
+    translations should match the terminology of the operator (eg: light rail vs. tram).
+    -->
+
+    <!-- Used as descriptive text for the bus icon. -->
+    <string name="mode_bus">Bus</string>
+    <!-- Used as descriptive text for the train icon. -->
+    <string name="mode_train">Train</string>
+    <!-- Used as descriptive text for the tram icon. -->
+    <string name="mode_tram">Tram</string>
+    <!-- Used as descriptive text for the metro icon. -->
+    <string name="mode_metro">Metro</string>
+    <!-- Used as descriptive text for the ferry icon. -->
+    <string name="mode_ferry">Ferry</string>
+    <!-- Used as descriptive text for the ticket machine icon. -->
+    <string name="mode_ticket_machine">Ticket Machine</string>
+    <!-- Used as descriptive text for the vending machine icon. -->
+    <string name="mode_vending_machine">Vending Machine</string>
+    <!-- Used as descriptive text for the point of sale icon. -->
+    <string name="mode_pos">Point of Sale</string>
+    <!-- Used as descriptive text for the banned icon. -->
+    <string name="mode_banned">Banned</string>
+    <!-- Used as descriptive text for the unknown transit mode icon. -->
+    <string name="mode_unknown">Unknown</string>
+
 
     <!-- Felica / Suica: These strings must only be used for Felica. -->
 

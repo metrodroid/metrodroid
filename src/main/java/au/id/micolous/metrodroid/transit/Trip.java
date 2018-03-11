@@ -1,7 +1,8 @@
 /*
  * Trip.java
  *
- * Copyright (C) 2011 Eric Butler <eric@codebutler.com>
+ * Copyright 2011 Eric Butler <eric@codebutler.com>
+ * Copyright 2016-2018 Michael Farrell <micolous+git@gmail.com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -28,22 +29,68 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
-public abstract class Trip implements Parcelable {
-    public static String formatStationNames(Trip trip) {
-        List<String> stationText = new ArrayList<>();
-        if (trip.getStartStationName() != null)
-            stationText.add(trip.getStartStationName());
-        if (trip.getEndStationName() != null && (!trip.getEndStationName().equals(trip.getStartStationName())))
-            stationText.add(trip.getEndStationName());
+import au.id.micolous.farebot.R;
+import au.id.micolous.metrodroid.util.Utils;
 
-        if (stationText.size() > 0) {
-            return StringUtils.join(stationText, " → ");
-        } else {
+public abstract class Trip implements Parcelable {
+
+    public static String formatStationNames(Trip trip) {
+        return formatStationNames(trip, false);
+    }
+
+    /**
+     * Formats a trip description into a localised label.
+     *
+     * @param trip The trip to describe.
+     * @param screenReader true if the text should be formatted for spoken word, false if it should
+     *                     be formatted for display.
+     * @return null if both the start and end stations are unknown.
+     */
+    public static String formatStationNames(Trip trip, boolean screenReader) {
+        String startStationName = null, endStationName = null;
+
+        if (trip.getStartStationName() != null) {
+            startStationName = trip.getStartStationName();
+        }
+
+        if (trip.getEndStationName() != null &&
+                (!trip.getEndStationName().equals(trip.getStartStationName()))) {
+            endStationName = trip.getEndStationName();
+        }
+
+
+        // No information is available.
+        if (startStationName == null && endStationName == null) {
             return null;
         }
+
+        // If the start station was not available, make the end station the start station.
+        if (startStationName == null && endStationName != null) {
+            startStationName = endStationName;
+            endStationName = null;
+        }
+
+        // If only the start or only the end station is available, just return that.
+        if (startStationName != null && endStationName == null) {
+            return startStationName;
+        }
+
+        // Both the start and end station are known.
+        return Utils.localizeString(
+                screenReader ? R.string.trip_description_accessible : R.string.trip_description,
+                startStationName, endStationName);
     }
+
+    /**
+     * Starting time of the trip.
+     */
     public abstract Calendar getStartTimestamp();
 
+    /**
+     * Ending time of the trip. If this is not known, return null.
+     *
+     * This returns null if not overridden in a subclass.
+     */
     public Calendar getEndTimestamp() {
         return null;
     }
@@ -142,16 +189,31 @@ public abstract class Trip implements Parcelable {
 
     public abstract Mode getMode();
 
+    /**
+     * Some cards don't store the exact time of day for each transaction, and only store the date.
+     * <p>
+     * If true, then a time should be shown next to the transaction in the history view. If false,
+     * then the time of day will be hidden.
+     * <p>
+     * Trips are always sorted by the startTimestamp (including time of day), regardless of the
+     * value given here.
+     *
+     * @return true if a time of day should be displayed.
+     */
     public abstract boolean hasTime();
 
     public enum Mode {
         BUS,
+        /** Used for non-metro (rapid transit) trains */
         TRAIN,
+        /** Used for trams and light rail */
         TRAM,
+        /** Used for electric metro and subway systems */
         METRO,
         FERRY,
         TICKET_MACHINE,
         VENDING_MACHINE,
+        /** Used for transactions at a store, buying something other than travel. */
         POS,
         OTHER,
         BANNED

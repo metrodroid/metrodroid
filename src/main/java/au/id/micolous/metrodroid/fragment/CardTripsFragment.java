@@ -3,7 +3,7 @@
  *
  * Copyright 2011-2014 Eric Butler <eric@codebutler.com>
  * Copyright 2013 Wilbert Duijvenvoorde <w.a.n.duijvenvoorde@gmail.com>
- * Copryight 2015-2016 Michael Farrell <micolous+git@gmail.com>
+ * Copryight 2015-2018 Michael Farrell <micolous+git@gmail.com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -27,11 +27,13 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.DrawableRes;
+import android.support.annotation.StringRes;
 import android.text.Html;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.accessibility.AccessibilityNodeInfo;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
@@ -130,6 +132,16 @@ public class CardTripsFragment extends ListFragment {
 
     private static class UseLogListAdapter extends ArrayAdapter<Trip> {
         private TransitData mTransitData;
+        private final View.AccessibilityDelegate accessibilityDelegate = new View.AccessibilityDelegate() {
+            @Override
+            public void onInitializeAccessibilityNodeInfo(View host, AccessibilityNodeInfo info) {
+                super.onInitializeAccessibilityNodeInfo(host, info);
+
+                if (host.getContentDescription() != null) {
+                    info.setText(host.getContentDescription());
+                }
+            }
+        };
 
         public UseLogListAdapter(Context context, Trip[] items, TransitData transitData) {
             super(context, 0, items);
@@ -160,58 +172,70 @@ public class CardTripsFragment extends ListFragment {
             convertView.findViewById(R.id.list_divider).setVisibility(isLastInSection(position)
                     ? View.INVISIBLE : View.VISIBLE);
 
-            ImageView iconImageView = (ImageView) convertView.findViewById(R.id.icon_image_view);
-            TextView timeTextView = (TextView) convertView.findViewById(R.id.time_text_view);
-            TextView routeTextView = (TextView) convertView.findViewById(R.id.route_text_view);
-            TextView fareTextView = (TextView) convertView.findViewById(R.id.fare_text_view);
-            TextView stationTextView = (TextView) convertView.findViewById(R.id.station_text_view);
+            ImageView iconImageView = convertView.findViewById(R.id.icon_image_view);
+            TextView timeTextView = convertView.findViewById(R.id.time_text_view);
+            TextView routeTextView = convertView.findViewById(R.id.route_text_view);
+            TextView fareTextView = convertView.findViewById(R.id.fare_text_view);
+            TextView stationTextView = convertView.findViewById(R.id.station_text_view);
 
             @DrawableRes int modeRes;
+            @StringRes int modeContentDescriptionRes = 0;
             switch (trip.getMode()) {
                 case BUS:
                     modeRes = R.drawable.bus;
+                    modeContentDescriptionRes = R.string.mode_bus;
                     break;
 
                 case TRAIN:
                     modeRes = R.drawable.train;
+                    modeContentDescriptionRes = R.string.mode_train;
                     break;
 
                 case TRAM:
                     modeRes = R.drawable.tram;
+                    modeContentDescriptionRes = R.string.mode_tram;
                     break;
 
                 case METRO:
                     modeRes = R.drawable.metro;
+                    modeContentDescriptionRes = R.string.mode_metro;
                     break;
 
                 case FERRY:
                     modeRes = R.drawable.ferry;
+                    modeContentDescriptionRes = R.string.mode_ferry;
                     break;
 
                 case TICKET_MACHINE:
                     modeRes = R.drawable.tvm;
+                    modeContentDescriptionRes = R.string.mode_ticket_machine;
                     break;
 
                 case VENDING_MACHINE:
                     modeRes = R.drawable.vending_machine;
+                    modeContentDescriptionRes = R.string.mode_vending_machine;
                     break;
 
                 case POS:
                     // TODO: Handle currencies other than Yen
                     // This is only used by Edy and Suica at present.
                     modeRes = R.drawable.cashier_yen;
+                    modeContentDescriptionRes = R.string.mode_pos;
                     break;
 
                 case BANNED:
                     modeRes = R.drawable.banned;
+                    modeContentDescriptionRes = R.string.mode_banned;
                     break;
 
                 default:
                     modeRes = R.drawable.unknown;
+                    modeContentDescriptionRes = R.string.mode_unknown;
                     break;
             }
 
             iconImageView.setImageResource(modeRes);
+            iconImageView.setContentDescription(Utils.localizeString(modeContentDescriptionRes));
 
             if (trip.hasTime()) {
                 timeTextView.setText(Utils.timeFormat(date));
@@ -243,9 +267,11 @@ public class CardTripsFragment extends ListFragment {
                 fareTextView.setVisibility(View.INVISIBLE);
             }
 
-            String stationText = Trip.formatStationNames(trip);
+            String stationText = Trip.formatStationNames(trip, false);
             if (stationText != null) {
                 stationTextView.setText(stationText);
+                stationTextView.setContentDescription(Trip.formatStationNames(trip, true));
+                stationTextView.setAccessibilityDelegate(accessibilityDelegate);
                 stationTextView.setVisibility(View.VISIBLE);
             } else {
                 stationTextView.setVisibility(View.GONE);
