@@ -26,6 +26,7 @@ import android.app.ListFragment;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.DrawableRes;
 import android.text.Html;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -165,27 +166,52 @@ public class CardTripsFragment extends ListFragment {
             TextView fareTextView = (TextView) convertView.findViewById(R.id.fare_text_view);
             TextView stationTextView = (TextView) convertView.findViewById(R.id.station_text_view);
 
-            if (trip.getMode() == Trip.Mode.BUS) {
-                iconImageView.setImageResource(R.drawable.bus);
-            } else if (trip.getMode() == Trip.Mode.TRAIN) {
-                iconImageView.setImageResource(R.drawable.train);
-            } else if (trip.getMode() == Trip.Mode.TRAM) {
-                iconImageView.setImageResource(R.drawable.tram);
-            } else if (trip.getMode() == Trip.Mode.METRO) {
-                iconImageView.setImageResource(R.drawable.metro);
-            } else if (trip.getMode() == Trip.Mode.FERRY) {
-                iconImageView.setImageResource(R.drawable.ferry);
-            } else if (trip.getMode() == Trip.Mode.TICKET_MACHINE) {
-                iconImageView.setImageResource(R.drawable.tvm);
-            } else if (trip.getMode() == Trip.Mode.VENDING_MACHINE) {
-                iconImageView.setImageResource(R.drawable.vending_machine);
-            } else if (trip.getMode() == Trip.Mode.POS) {
-                iconImageView.setImageResource(R.drawable.cashier);
-            } else if (trip.getMode() == Trip.Mode.BANNED) {
-                iconImageView.setImageResource(R.drawable.banned);
-            } else {
-                iconImageView.setImageResource(R.drawable.unknown);
+            @DrawableRes int modeRes;
+            switch (trip.getMode()) {
+                case BUS:
+                    modeRes = R.drawable.bus;
+                    break;
+
+                case TRAIN:
+                    modeRes = R.drawable.train;
+                    break;
+
+                case TRAM:
+                    modeRes = R.drawable.tram;
+                    break;
+
+                case METRO:
+                    modeRes = R.drawable.metro;
+                    break;
+
+                case FERRY:
+                    modeRes = R.drawable.ferry;
+                    break;
+
+                case TICKET_MACHINE:
+                    modeRes = R.drawable.tvm;
+                    break;
+
+                case VENDING_MACHINE:
+                    modeRes = R.drawable.vending_machine;
+                    break;
+
+                case POS:
+                    // TODO: Handle currencies other than Yen
+                    // This is only used by Edy and Suica at present.
+                    modeRes = R.drawable.cashier_yen;
+                    break;
+
+                case BANNED:
+                    modeRes = R.drawable.banned;
+                    break;
+
+                default:
+                    modeRes = R.drawable.unknown;
+                    break;
             }
+
+            iconImageView.setImageResource(modeRes);
 
             if (trip.hasTime()) {
                 timeTextView.setText(Utils.timeFormat(date));

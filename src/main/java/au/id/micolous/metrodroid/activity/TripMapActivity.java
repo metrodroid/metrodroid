@@ -102,8 +102,8 @@ public class TripMapActivity extends Activity {
         actionBar.setSubtitle((trip.getRouteName() == null) ? trip.getAgencyName()
                 : String.format("%s %s", trip.getAgencyName(), trip.getRouteName()));
 
-        int startMarkerId = R.drawable.marker_start;
-        int endMarkerId = R.drawable.marker_end;
+        //int startMarkerId = R.drawable.marker_start;
+        //int endMarkerId = R.drawable.marker_end;
 
         /* FIXME: Need icons...
 
