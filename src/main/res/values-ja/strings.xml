@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
     <string name="directions">カードをタップしてください。</string>
-    <string name="reading_card">カードを読み出しています</string>
+    <string name="reading_card">カードを読み込み中…</string>
     <string name="dont_move">カードを移動しないでください</string>
     <string name="advanced_info">高度情報</string>
     <string name="delete_card">カードを削除する</string>
@@ -24,8 +24,8 @@
     <string name="about">について</string>
     <string name="preferences">環境設定</string>
     <string name="accessibility">アクセシビリティ</string>
-    <string name="speak_balance">残高を話す</string>
-    <string name="speak_balance_summary">概念実証</string>
+    <string name="speak_balance">残高を大きく読み上げ</string>
+    <string name="speak_balance_summary">カードをスキャンするとき、残高を自動的に読み上げます。これは、他の音声合成のソフトウェアが利用できない場合でも機能します。</string>
     <string name="balance_speech">残高 <xliff:g id="balance" example="$13.37">%s</xliff:g></string>
     <string name="loading">ロード中…</string>
     <string name="scanned_at_format">%2$sに%1$sにスキャンされました</string>
@@ -267,7 +267,7 @@
 
     <string name="card_expiry_date">カード有効期限</string>
 
-    <string name="mfc_fallback_desc">一部の機関は、カードに識別のマジックがありません。それらを読み取るためには機関を明示的に必要です。</string>
+    <string name="mfc_fallback_desc">一部の機関は、カードに識別のマジックがありません。それらを読み取るためには機関を明示的に選択する必要があります。</string>
     <string name="mfc_fallback">フォールバック リーダー</string>
 
     <string name="location_act_australia">オーストラリア首都特別地域, オーストラリア</string>
@@ -354,4 +354,48 @@
 
     <string name="erg_agency_id">交通機関 ID</string>
 
+<string name="hardware_information">ハードウェア情報</string>
+    <string name="cepas_version">CEPAS バージョン</string>
+    <string name="cepas_purse_id">財布 ID</string>
+    <string name="cepas_purse_status">財布の状態</string>
+    <string name="cepas_purse_balance">財布の残高</string>
+    <string name="cepas_purse_creation_date">財布の作成日</string>
+    <string name="cepas_expiry_date">財布の有効期限</string>
+    <string name="cepas_autoload_amount">自動チャージ金額</string>
+    <string name="cepas_last_txn_info">最後のトランザクション情報</string>
+    <string name="cepas_credit_header">クレジットヘッダー</string>
+    <string name="cepas_debit_options">デビットオプション</string>
+    <string name="cepas_other_purse_info">その他の財布情報</string>
+    <string name="cepas_logfile_record_count">ログファイルのレコード件数</string>
+    <string name="cepas_issuer_data_length">発行者データ長</string>
+    <string name="cepas_issuer_data">発行者固有データ</string>
+    <string name="cepas_purse_info">財布情報</string>
+
+    <string name="trip_description">%1$s(から) [→] %2$s(へ)</string>
+
+    <string name="mode_bus">バス</string>
+    <string name="mode_train">鉄道</string>
+    <string name="mode_tram">路面電車</string>
+    <string name="mode_metro">地下鉄</string>
+    <string name="mode_ferry">フェリー</string>
+    <string name="mode_ticket_machine">券売機</string>
+    <string name="mode_vending_machine">自動販売機</string>
+    <string name="mode_pos">POS</string>
+    <string name="mode_banned">禁止</string>
+    <string name="mode_unknown">不明</string>
+
+
+    <string name="ovc_autocharge_limit">自動チャージ限度</string>
+    <string name="ovc_autocharge_amount">自動チャージのチャージ</string>
+    <string name="ovc_autocharge">自動チャージ</string>
+
+
+    <string name="general_information">全般情報</string>
+    <string name="personal_information">個人情報</string>
+    <string name="date_of_birth">生年月日</string>
+    <string name="credit_information">クレジット情報</string>
+    <string name="software_information">ソフトウェア情報</string>
+    <string name="clipboard_error">クリップボードにアクセスできません</string>
+    <string name="localise_places">母国語で駅名と路線名を発音します</string>
+    <string name="localise_places_desc">お使いの言語ではなく、自分の母国語で駅名と路線名を発音するようにテキスト読み上げおよびその他のユーザー補助ソフトウェアのためのヒントを追加します。これは、外国地名の発音を改善しますが、理解しづらいかもしれません。これは Android 5.0 以降、(Google トークなど) LocaleSpan API をサポートするテキスト読み上げソフトウェア、そして適切な音声がインストールされている必要があります。</string>
 </resources>
