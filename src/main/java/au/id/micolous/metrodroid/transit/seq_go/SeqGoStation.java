@@ -47,4 +47,9 @@ public class SeqGoStation extends Station {
     protected SeqGoStation(Parcel parcel) {
         super(parcel);
     }
+
+    @Override
+    public String getLanguage() {
+        return "en-AU";
+    }
 }

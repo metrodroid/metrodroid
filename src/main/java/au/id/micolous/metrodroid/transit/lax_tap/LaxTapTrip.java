@@ -130,4 +130,9 @@ public class LaxTapTrip extends NextfareTrip {
     public Mode getMode() {
         return mMode;
     }
+
+    @Override
+    public String getRouteLanguage() {
+        return "en-US";
+    }
 }

@@ -140,4 +140,9 @@ public class SeqGoTrip extends NextfareTrip {
     public int getJourneyId() {
         return mJourneyId;
     }
+
+    @Override
+    public String getRouteLanguage() {
+        return "en-AU";
+    }
 }

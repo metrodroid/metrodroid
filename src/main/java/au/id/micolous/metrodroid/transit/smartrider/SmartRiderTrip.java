@@ -136,4 +136,8 @@ public class SmartRiderTrip extends Trip {
         parcel.writeString(mRouteNumber);
     }
 
+    @Override
+    public String getRouteLanguage() {
+        return "en-AU";
+    }
 }

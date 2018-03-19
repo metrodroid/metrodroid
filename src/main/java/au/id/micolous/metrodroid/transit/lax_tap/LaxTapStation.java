@@ -49,11 +49,14 @@ public class LaxTapStation extends Station {
                 null,
                 cursor.getString(cursor.getColumnIndex(LaxTapDBUtil.COLUMN_ROW_LAT)),
                 cursor.getString(cursor.getColumnIndex(LaxTapDBUtil.COLUMN_ROW_LON)));
-
-
     }
 
     protected LaxTapStation(Parcel parcel) {
         super(parcel);
+    }
+
+    @Override
+    public String getLanguage() {
+        return "en-US";
     }
 }
