@@ -37,9 +37,7 @@ def ord2(x):
     return x
 
 def bitoff_to_record(offset, length):
-  boff = offset / 8.0
-
-  return int(boff // 16), (boff % 16)
+  return int(offset // 8.), offset % 8
 
 def keyfilter(x, l=0):
   if x < 16384:
@@ -119,15 +117,18 @@ def main():
     if options.byte_aligned:
       print ('Only byte-aligned values.')
 
+    if options.skip_keys:
+      print ('Skipping MIFARE Classic keys.')
+
     if results_be:
       print ('Big-endian offsets: %r' % (results_be,))
-      print (', '.join('0x%02x_/%.3f' % bitoff_to_record(x, length) for x in results_be))
+      print (', '.join('0x%03x/%d' % bitoff_to_record(x, length) for x in results_be))
     else:
       print ('No big-endian offsets found.')
   
     if results_le:
       print ('Little-endian offsets: %r' % (results_le,))
-      print (', '.join('0x%02x_/%.3f' % bitoff_to_record(x, length) for x in results_le))
+      print (', '.join('0x%03x/%d' % bitoff_to_record(x, length) for x in results_le))
     else:
       print ('No little-endian offsets found.')
 
