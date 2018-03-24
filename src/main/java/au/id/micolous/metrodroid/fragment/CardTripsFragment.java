@@ -34,6 +34,7 @@ import android.text.Html;
 import android.text.Spannable;
 import android.text.SpannableString;
 import android.text.SpannableStringBuilder;
+import android.text.Spanned;
 import android.text.style.LocaleSpan;
 import android.text.style.StyleSpan;
 import android.util.Log;
@@ -143,6 +144,15 @@ public class CardTripsFragment extends ListFragment {
 
     private static class UseLogListAdapter extends ArrayAdapter<Trip> {
         private TransitData mTransitData;
+        /**
+         * Used when localisePlaces=true to ensure route and line numbers are still read out in the
+         * user's language.
+         *
+         * eg:
+         * - "#7 Eastern Line" -> (local)#7 (foreign)Eastern Line
+         * - "300 West" -> (local)300 (foreign)West
+         * - "North Ferry" -> (foreign)North Ferry
+         */
         private static final Pattern LINE_NUMBER = Pattern.compile("(#?\\d+)?(\\D.+)");
 
         public UseLogListAdapter(Context context, Trip[] items, TransitData transitData) {
@@ -167,6 +177,17 @@ public class CardTripsFragment extends ListFragment {
             View listHeader = convertView.findViewById(R.id.list_header);
             if (isFirstInSection(position)) {
                 listHeader.setVisibility(View.VISIBLE);
+                Spanned headerDate = Utils.longDateFormat(date);
+                TextView headerText = listHeader.findViewById(android.R.id.text1);
+
+                if (localisePlaces && Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                    SpannableString ss = new SpannableString(headerDate);
+                    ss.setSpan(new LocaleSpan(Locale.getDefault()), 0, ss.length(), 0);
+                    headerText.setText(ss);
+                } else {
+                    headerText.setText(headerDate);
+                }
+
                 ((TextView) listHeader.findViewById(android.R.id.text1)).setText(Utils.longDateFormat(date));
             } else {
                 listHeader.setVisibility(View.GONE);
