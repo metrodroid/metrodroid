@@ -61,9 +61,6 @@
     <string name="export_all">Export All</string>
     <string name="about">About</string>
     <string name="preferences">Preferences</string>
-    <string name="accessibility">Accessibility</string>
-    <string name="speak_balance">Speak balance aloud</string>
-    <string name="speak_balance_summary">When you scan a card, the balance will be automatically read aloud. This works even when other text-to-speech software is not available.</string>
     <string name="balance_speech">Balance <xliff:g id="balance" example="$13.37">%s</xliff:g></string>
     <string name="loading">Loading…</string>
     <string name="scanned_at_format">Scanned at %1$s on %2$s</string>
@@ -185,6 +182,47 @@
 
     <string name="obfuscation_fares">Obfuscate fares</string>
     <string name="obfuscation_fares_desc">Change fares shown by a random amount</string>
+
+    <!-- Accessibility options -->
+    <string name="accessibility">Accessibility</string>
+
+    <string name="speak_balance">Speak balance aloud</string>
+    <string name="speak_balance_summary">When you scan a card, the balance will be automatically read aloud. This works even when a screen reader is not running.</string>
+
+    <!--
+    TRANSLATORS: "Place names" are proper nouns, eg: "Beijing", "Los Angeles", "Sydney", "Tokyo".
+    -->
+    <string name="localise_places">Add language hints to place names</string>
+
+    <!--
+    TRANSLATORS: "LocaleSpan" is the name of an Android API, and should not be translated.
+
+    "station" in this context refers to a railway (train, light rail, tram, metro, subway) station.
+    "stop" refers to a bus or ferry stop. "line" refers to the name of a railway (train, light rail,
+    tram, metro, subway) line. "route name" refers to a name or identifier of a route that a bus or
+    ferry follows.
+
+    This option is automatically disabled on Android versions that don't support it.
+    -->
+    <string name="localise_places_desc">Adds language hints (LocaleSpan) to place names, such as station, stop, line and route names. This alters the pronunciation used by screen readers and other accessibility software.</string>
+
+    <!--
+    TRANSLATORS: This directs users to a dialog with "localise_places_longdesc" showing more
+    information about the option.
+    -->
+    <string name="localise_places_longdesc_button">About language hints…</string>
+
+    <!--
+    TRANSLATORS: This is shown as the title of the dialog for localise_places_longdesc.
+    -->
+    <string name="localise_places_longdesc_title">About language hints</string>
+
+    <!--
+    TRANSLATORS: Shown in a pop-up dialog, when "localise_places_longdesc_button" is pressed.
+    "LocaleSpan" is the name of an Android API, and should not be translated. "Google TalkBack" is
+    the name of Android's standard screen-reader software.
+    -->
+    <string name="localise_places_longdesc">Text to speech voices normally only work well for one language.\n\nLocaleSpan hints are used to mark text as being in a different language. When applied to a station, stop, line or route name, a screen reader that supports these hints will pronounce the name using synthesized voices from the place\'s native language, rather than the language you have configured Android to use.\n\nEnabling this option generally improves the pronunciation of foreign place names that are not internationally renowned, but you might find it more difficult to understand.\n\nThis does not normally change the on-screen display of place names, but some devices may use a different font.\n\nThis requires Android 5.0 or later, accessibility software that supports the LocaleSpan API (such as Google TalkBack), and that you have appropriate voices installed.</string>
 
     <!-- Translators: This is shown when an unsupported type of card is scanned, and that we were unable to read it at all, let alone parse its content. -->
     <string name="unsupported_tag">Unsupported NFC card media</string>
@@ -598,6 +636,4 @@
     <string name="credit_information">Credit Information</string>
     <string name="software_information">Software Information</string>
     <string name="clipboard_error">Unable to access the clipboard</string>
-    <string name="localise_places">Pronounce station and line names in native language</string>
-    <string name="localise_places_desc">Adds hints for text to speech and other accessibility software, so that they pronounce station and line names in their native language, rather than your language. This improves the pronunciation of foreign place names, but you may find it more difficult to understand. This requires Android 5.0 or later, text to speech software that supports the LocaleSpan API (such as Google TalkBack), and that you have appropriate voices installed.</string>
 </resources>

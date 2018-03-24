@@ -104,6 +104,11 @@
             android:key="pref_localise_places"
             android:defaultValue="false" />
 
+        <au.id.micolous.metrodroid.ui.AlertDialogPreference
+            android:title="@string/localise_places_longdesc_button"
+            android:dialogMessage="@string/localise_places_longdesc"
+            android:dialogTitle="@string/localise_places_longdesc_title" />
+
         <CheckBoxPreference
             android:title="@string/speak_balance"
             android:summary="@string/speak_balance_summary"
