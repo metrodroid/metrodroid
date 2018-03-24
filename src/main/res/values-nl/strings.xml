@@ -32,7 +32,7 @@
     <string name="preferences">Voorkeuren</string>
     <string name="accessibility">Toegankelijkheid</string>
     <string name="speak_balance">Saldo voorlezen</string>
-    <string name="speak_balance_summary">Als u een kaart scant, dan wordt het saldo automatisch voorgelezen. Dit werkt zelfs als er geen tekst-naar-spraak-software beschikbaar is op het apparaat.</string>
+    <string name="speak_balance_summary">Als u een kaart scant, dan wordt het saldo automatisch voorgelezen. Dit werkt zelfs als er geen schermlezer draait.</string>
     <string name="balance_speech">Saldo <xliff:g id="balance" example="$13.37">%s</xliff:g></string>
     <string name="loading">Bezig met laden…</string>
     <string name="scanned_at_format">Gescand op %1$s op %2$s</string>
@@ -396,5 +396,9 @@
     <string name="software_information">Software-informatie</string>
 <string name="clipboard_error">Geen toegang tot het klembord</string>
     <string name="localise_places">Stations- en routenamen uitspreken in landstaal</string>
-    <string name="localise_places_desc">Laat tekst-naar-spraak-software en toegankelijkheid weten dat stations- en routenamen moeten worden uitgesproken in de landstaal i.p.v. uw taal. Dit verbetert de uitspraak van buitenlandse plaatsnamen, maar het kan voor u moeilijker te verstaan zijn. Dit vereist Android 5.0 of hoger, tekst-naar-spraak-software die de LocaleSpan API ondersteunt (zoals bijv. Google TalkBack) en bijbehorende stemmen.</string>
-</resources>
+    <string name="localise_places_desc">Laat tekst-naar-spraak-software en toegankelijkheid weten dat stations- en routenamen moeten worden uitgesproken in de landstaal i.p.v. uw taal. Dit verbetert de uitspraak van buitenlandse plaatsnamen, maar het kan voor u moeilijker te verstaan zijn.</string>
+<string name="localise_places_longdesc_button">Over uitspraak…</string>
+
+    <string name="localise_places_longdesc_title">Over uitspraak</string>
+
+    </resources>
