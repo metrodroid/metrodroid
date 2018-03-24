@@ -1,10 +1,10 @@
-#!/usr/bin/env python3
+#!/usr/bin/env python
 # -*- mode: python; indent-tabs-mode: nil; tab-width: 2 -*-
 """
 find_in_bitfield.py
 Attempts to locate an integer inside of a given file with bitfields
 
-Copyright 2015-2016 Michael Farrell <micolous+git@gmail.com>
+Copyright 2015-2018 Michael Farrell <micolous+git@gmail.com>
 
 Note: This loads the entire file into memory blindly.  Do not use on large file
 sizes, as the memory usage of this file is extremely inefficient.
