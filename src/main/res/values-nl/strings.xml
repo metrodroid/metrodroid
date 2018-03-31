@@ -401,4 +401,15 @@
 
     <string name="localise_places_longdesc_title">Over uitspraak</string>
 
+    <string name="felica_system_title_format">Systeem: 0x%1$s (%2$s)</string>
+    <string name="felica_service_title_format">Dienst: 0x%1$s (%2$s)</string>
+    <string name="felica_service_format">Dienst: 0x%s</string>
+    <plurals name="felica_service_count">
+	<item quantity="one">%d dienst</item>
+	<item quantity="other">%d diensten</item>
+</plurals>
+
+    <string name="felica_idm">Productie-ID (IDm)</string>
+    <string name="felica_pmm">Productieparameter (PMm)</string>
+
     </resources>
