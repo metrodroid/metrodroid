@@ -20,9 +20,12 @@ package au.id.micolous.metrodroid.transit.seq_go;
 
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.util.Log;
 
+import au.id.micolous.metrodroid.MetrodroidApplication;
 import au.id.micolous.metrodroid.transit.Station;
 import au.id.micolous.metrodroid.transit.nextfare.NextfareTrip;
+import au.id.micolous.metrodroid.util.StationTableReader;
 import au.id.micolous.metrodroid.util.Utils;
 
 import java.util.GregorianCalendar;
@@ -48,6 +51,7 @@ public class SeqGoTrip extends NextfareTrip {
     /* Hard coded station IDs for Airtrain */
     private final int DOMESTIC_AIRPORT = 9;
     private final int INTERNATIONAL_AIRPORT = 10;
+    private static final String TAG = SeqGoTrip.class.getSimpleName();
 
     /**
      * This constructor is used for unit tests outside of the package
@@ -110,7 +114,7 @@ public class SeqGoTrip extends NextfareTrip {
 
     @Override
     public Station getStartStation() {
-        return SeqGoDBUtil.getStation(mStartStation);
+        return getStation(mStartStation);
     }
 
     @Override
@@ -129,7 +133,7 @@ public class SeqGoTrip extends NextfareTrip {
 
     @Override
     public Station getEndStation() {
-        return SeqGoDBUtil.getStation(mEndStation);
+        return getStation(mEndStation);
     }
 
     @Override
@@ -144,5 +148,19 @@ public class SeqGoTrip extends NextfareTrip {
     @Override
     public String getRouteLanguage() {
         return "en-AU";
+    }
+
+    private static Station getStation(int stationId) {
+        if (stationId <= 0) return null;
+
+        StationTableReader str = MetrodroidApplication.getInstance().getSeqGoSTR();
+        if (str == null) return null;
+
+        try {
+            return str.getStationById(stationId);
+        } catch (Exception e) {
+            Log.d(TAG, "error in getStation", e);
+            return null;
+        }
     }
 }

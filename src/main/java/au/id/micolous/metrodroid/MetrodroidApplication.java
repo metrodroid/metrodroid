@@ -37,7 +37,6 @@ import au.id.micolous.metrodroid.card.desfire.files.RecordDesfireFile;
 import au.id.micolous.metrodroid.card.desfire.settings.DesfireFileSettings;
 import au.id.micolous.metrodroid.card.ultralight.UltralightPage;
 import au.id.micolous.metrodroid.transit.lax_tap.LaxTapDBUtil;
-import au.id.micolous.metrodroid.transit.seq_go.SeqGoDBUtil;
 import au.id.micolous.metrodroid.util.StationTableReader;
 import au.id.micolous.metrodroid.xml.Base64String;
 import au.id.micolous.metrodroid.xml.CardConverter;
@@ -65,7 +64,6 @@ import org.simpleframework.xml.stream.NodeMap;
 import org.simpleframework.xml.stream.OutputNode;
 import org.simpleframework.xml.transform.RegistryMatcher;
 
-import java.io.File;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 
@@ -86,9 +84,9 @@ public class MetrodroidApplication extends Application {
 
     private static MetrodroidApplication sInstance;
 
-    private SeqGoDBUtil mSeqGoDBUtil;
     private LaxTapDBUtil mLaxTapDBUtil;
 
+    private StationTableReader mSeqGoSTR = null;
     private StationTableReader mSuicaRailSTR = null;
     private StationTableReader mSuicaBusSTR = null;
     private StationTableReader mOVChipSTR = null;
@@ -100,7 +98,6 @@ public class MetrodroidApplication extends Application {
     public MetrodroidApplication() {
         sInstance = this;
 
-        mSeqGoDBUtil = new SeqGoDBUtil(this);
         mLaxTapDBUtil = new LaxTapDBUtil(this);
 
         try {
@@ -147,7 +144,7 @@ public class MetrodroidApplication extends Application {
 
     protected static boolean getBooleanPref(String preference, boolean default_setting) {
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getInstance());
-        return prefs.getBoolean(preference, false);
+        return prefs.getBoolean(preference, default_setting);
     }
 
     /**
@@ -177,10 +174,6 @@ public class MetrodroidApplication extends Application {
 
     public static boolean localisePlaces() {
         return getBooleanPref(PREF_LOCALISE_PLACES, false);
-    }
-
-    public SeqGoDBUtil getSeqGoDBUtil() {
-        return mSeqGoDBUtil;
     }
 
     public LaxTapDBUtil getLaxTapDBUtil() {
@@ -229,6 +222,18 @@ public class MetrodroidApplication extends Application {
         }
 
         return mOVChipSTR;
+    }
+
+    public StationTableReader getSeqGoSTR() {
+        if (mSeqGoSTR == null) {
+            try {
+                mSeqGoSTR = new StationTableReader(this, "seq_go.mdst");
+            } catch (Exception e) {
+                Log.w(TAG, "Couldn't open seq_go", e);
+            }
+        }
+
+        return mSeqGoSTR;
     }
 
     @Override
