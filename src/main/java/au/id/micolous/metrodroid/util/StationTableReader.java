@@ -24,7 +24,6 @@ import android.content.res.AssetManager;
 import android.util.Log;
 
 import java.io.DataInputStream;
-import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Arrays;
@@ -94,10 +93,6 @@ public class StationTableReader {
 
         // Reset back to the start of the station list.
         mTable.reset();
-    }
-
-    File getFile(String dbName) {
-        return new File(mContext.getCacheDir().getAbsolutePath() + "/" + dbName);
     }
 
     boolean useEnglishName() {
