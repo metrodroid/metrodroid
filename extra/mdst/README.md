@@ -14,8 +14,17 @@ Android's in-built SQLite implementation. However, data files shrink by around
 a megabyte, and copying files out of Assets into Cache is no longer required,
 resulting in significant net reductions to application size.
 
-Before MdST, around 3 MiB of storage is used on stop database files. After, we
-use about 1 MiB.
+## File size deltas
+
+Database | sqlite3 size | MdST size | Delta
+---------|--------------|-----------|---------
+LAX TAP  | 6.0 KiB      | 2.4 KiB   | -3.6 KiB
+SEQ Go   | 6.0 KiB      | 2.0 KiB   | -4.0 KiB
+Suica    | 1.3 MiB      | 519.7 KiB | -856 KiB
+OVC      | 1.9 MiB      | 1.0 MiB   | -0.9 MiB
+
+Before MdST, around 3.2 MiB of storage is used on stop database files. After, we
+use about 1.5 MiB.
 
 ## Building it
 
@@ -59,9 +68,4 @@ Type | Length | Name | Description
 repeated `Station` | _varies_ | station(repeated) | Repeated `Station` messages. This is a _delimited_ Protobuf message, and each one is prefixed by a varint representing its length.
 `StationIndex` | _varies_ | station_index | Structure with a Protobuf `map`, describing the offsets of each station by its ID.
 
-## File size deltas
-
-* Suica: sqlite3 = 1.3 MiB, MdST = 521.5 KiB (854 KiB saving)
-
-* OVC: sqlite3 = 1.9 MiB, MdST = 1.03 MiB (891 KiB saving)
 
