@@ -39,6 +39,7 @@ import android.text.Spanned;
 import android.text.SpannedString;
 import android.text.TextUtils;
 import android.text.format.DateFormat;
+import android.text.style.LocaleSpan;
 import android.text.style.TtsSpan;
 import android.util.Log;
 import android.view.WindowManager;
@@ -418,6 +419,7 @@ public class Utils {
                     .setMonth(date.get(Calendar.MONTH))
                     .setDay(date.get(Calendar.DATE))
                     .setWeekday(date.get(Calendar.DAY_OF_WEEK)), 0, b.length(), 0);
+            b.setSpan(new LocaleSpan(Locale.getDefault()), 0, b.length(), 0);
         }
 
         return b;
@@ -433,6 +435,7 @@ public class Utils {
                     .setYear(date.get(Calendar.YEAR))
                     .setMonth(date.get(Calendar.MONTH))
                     .setDay(date.get(Calendar.DAY_OF_MONTH)), 0, b.length(), 0);
+            b.setSpan(new LocaleSpan(Locale.getDefault()), 0, b.length(), 0);
         }
 
         return b;
@@ -446,6 +449,7 @@ public class Utils {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             b.setSpan(new TtsSpan.TimeBuilder(
                     date.get(Calendar.HOUR), date.get(Calendar.MINUTE)), 0, b.length(), 0);
+            b.setSpan(new LocaleSpan(Locale.getDefault()), 0, b.length(), 0);
         }
         return b;
     }
@@ -467,6 +471,8 @@ public class Utils {
 
             b.setSpan(new TtsSpan.TimeBuilder(
                     date.get(Calendar.HOUR), date.get(Calendar.MINUTE)), d.length() + 1, b.length(), 0);
+
+            b.setSpan(new LocaleSpan(Locale.getDefault()), 0, b.length(), 0);
         }
 
         return b;

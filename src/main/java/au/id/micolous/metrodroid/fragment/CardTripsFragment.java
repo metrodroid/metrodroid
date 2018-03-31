@@ -281,7 +281,7 @@ public class CardTripsFragment extends ListFragment {
                 routeText.append(trip.getShortAgencyName())
                         .append(" ")
                         .setSpan(new StyleSpan(Typeface.BOLD), 0, trip.getShortAgencyName().length(), 0);
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                if (localisePlaces && Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
                     routeText.setSpan(new LocaleSpan(Locale.getDefault()), 0, routeText.length(), 0);
                 }
             }
