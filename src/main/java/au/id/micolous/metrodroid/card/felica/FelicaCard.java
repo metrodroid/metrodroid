@@ -209,10 +209,16 @@ public class FelicaCard extends Card {
         return new FelicaCard(tagId, GregorianCalendar.getInstance(), idm, pmm, systemsArray);
     }
 
+    /**
+     * Gets the Manufacturing ID (IDm) of the card.
+     */
     public FeliCaLib.IDm getIDm() {
         return mIDm;
     }
 
+    /**
+     * Gets the Manufacturing Parameter (PMm) of the card.
+     */
     public FeliCaLib.PMm getPMm() {
         return mPMm;
     }

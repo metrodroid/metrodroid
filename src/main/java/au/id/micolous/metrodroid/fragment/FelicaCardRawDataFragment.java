@@ -48,6 +48,7 @@ import org.simpleframework.xml.Serializer;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 import au.id.micolous.farebot.R;
 import au.id.micolous.metrodroid.MetrodroidApplication;
@@ -77,20 +78,18 @@ public class FelicaCardRawDataFragment extends ExpandableListFragment {
 
         List<String> items = new ArrayList<>();
         for (FelicaBlock block : service.getBlocks()) {
-            items.add(String.format("%02d: %s", block.getAddress(), Utils.getHexString(block.getData(), "<ERR>")));
+            items.add(String.format(Locale.ENGLISH, "%02d: %s", block.getAddress(), Utils.getHexString(block.getData(), "<ERR>")));
         }
 
         final ArrayAdapter<String> adapter = new ArrayAdapter(getActivity(), R.layout.monospace_list_item, items);
         new AlertDialog.Builder(getActivity())
-                .setTitle(String.format("Service 0x%s", Integer.toHexString(service.getServiceCode())))
+                .setTitle(Utils.localizeString(R.string.felica_service_format, Integer.toHexString(service.getServiceCode())))
                 .setPositiveButton(android.R.string.ok, null)
-                .setAdapter(adapter, new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialogInterface, int position) {
-                        @SuppressWarnings("deprecation")
-                        ClipboardManager clipboard = (ClipboardManager) getActivity().getSystemService(Activity.CLIPBOARD_SERVICE);
-                        clipboard.setText(adapter.getItem(position));
-                        Toast.makeText(getActivity(), "Copied!", Toast.LENGTH_SHORT).show();
-                    }
+                .setAdapter(adapter, (dialogInterface, position) -> {
+                    @SuppressWarnings("deprecation")
+                    ClipboardManager clipboard = (ClipboardManager) getActivity().getSystemService(Activity.CLIPBOARD_SERVICE);
+                    clipboard.setText(adapter.getItem(position));
+                    Toast.makeText(getActivity(), R.string.copied_to_clipboard, Toast.LENGTH_SHORT).show();
                 })
                 .show();
 
@@ -147,8 +146,8 @@ public class FelicaCardRawDataFragment extends ExpandableListFragment {
 
             FelicaSystem system = mCard.getSystems().get(groupPosition);
 
-            TextView textView = (TextView) view.findViewById(android.R.id.text1);
-            textView.setText(String.format("System: 0x%s (%s)",
+            TextView textView = view.findViewById(android.R.id.text1);
+            textView.setText(Utils.localizeString(R.string.felica_system_title_format,
                     Integer.toHexString(system.getCode()), FelicaUtils.getFriendlySystemName(system.getCode())));
 
             return view;
@@ -161,13 +160,13 @@ public class FelicaCardRawDataFragment extends ExpandableListFragment {
                 view.setLayoutParams(new AbsListView.LayoutParams(MATCH_PARENT, WRAP_CONTENT));
             }
 
-            TextView textView1 = (TextView) view.findViewById(android.R.id.text1);
-            TextView textView2 = (TextView) view.findViewById(android.R.id.text2);
+            TextView textView1 = view.findViewById(android.R.id.text1);
+            TextView textView2 = view.findViewById(android.R.id.text2);
 
             FelicaSystem system = mCard.getSystems().get(groupPosition);
             FelicaService service = system.getServices().get(childPosition);
 
-            textView1.setText(String.format("Service: 0x%s (%s)",
+            textView1.setText(Utils.localizeString(R.string.felica_service_title_format,
                     Integer.toHexString(service.getServiceCode()), FelicaUtils.getFriendlyServiceName(system.getCode(), service.getServiceCode())));
             textView2.setText(Utils.localizePlural(R.plurals.block_count, service.getBlocks().size(), service.getBlocks().size()));
 

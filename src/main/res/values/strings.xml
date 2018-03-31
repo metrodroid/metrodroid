@@ -103,9 +103,21 @@
     <string name="sector_title_format">Sector: 0x%s</string>
     <string name="unauthorized_sector_title_format">Sector: 0x%s (unauthorized)</string>
     <string name="invalid_sector_title_format">Sector: 0x%1$s (invalid: %2$s)</string>
+    <!-- Translators: the first parameter is a hexadecimal number, the second parameter is a string
+    describing a "well known" system code. eg: "System: 0x3 (Suica)" -->
+    <string name="felica_system_title_format">System: 0x%1$s (%2$s)</string>
+    <!-- Translators: the first parameter is a hexadecimal number, the second parameter is a string
+    describing a "well known" service code. eg: "Service: 0x90f (Suica History)" -->
+    <string name="felica_service_title_format">Service: 0x%1$s (%2$s)</string>
+    <!-- Translators: the first parameter is a hexadecimal number. -->
+    <string name="felica_service_format">Service: 0x%s</string>
     <string name="subscriptions">Subscriptions</string>
     <string name="info">Info</string>
+    <!-- Translators: These are both dates, eg: "Valid from 3/12/2017 to 3/3/2018". Dates are
+     formatted according to user preferences. -->
     <string name="valid_format">Valid %1$s to %2$s</string>
+    <!-- Translators: This is an end date, eg: "Valid until 3/3/2018". Dates are formatted according
+     to user preferences. -->
     <string name="valid_to_format">Valid until %1$s</string>
     <string name="valid_not_used">Not yet used</string>
     <string name="unknown_format">Unknown (%s)</string>
@@ -346,6 +358,10 @@
     <string name="cepas_issuer_data_length">Issuer Data Length</string>
     <string name="cepas_issuer_data">Issuer-specific Data</string>
     <string name="cepas_purse_info">Purse information</string>
+
+    <!-- Felica hardware information -->
+    <string name="felica_idm">Manufacturing ID (IDm)</string>
+    <string name="felica_pmm">Manufacturing Parameter (PMm)</string>
 
     <!--
     Translators: This is shown below a trip entry to describe the start and end stations of a trip.

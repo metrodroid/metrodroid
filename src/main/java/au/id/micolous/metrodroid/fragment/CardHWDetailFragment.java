@@ -125,8 +125,8 @@ public class CardHWDetailFragment extends ListFragment {
             }
         } else if (mCard.getCardType() == CardType.FeliCa) {
             FelicaCard card = (FelicaCard) mCard;
-            items.add(new ListItem("IDm", Utils.getHexString(card.getIDm().getBytes(), "err")));
-            items.add(new ListItem("PMm", Utils.getHexString(card.getPMm().getBytes(), "err")));
+            items.add(new ListItem(R.string.felica_idm, Utils.getHexString(card.getIDm().getBytes(), "err")));
+            items.add(new ListItem(R.string.felica_pmm, Utils.getHexString(card.getPMm().getBytes(), "err")));
         }
 
         setListAdapter(new ListItemAdapter(getActivity(), items));
