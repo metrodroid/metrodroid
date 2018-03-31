@@ -310,9 +310,18 @@
         <item quantity="other"><xliff:g id="count" example="3">%d</xliff:g> cards imported!</item>
     </plurals>
 
+    <!-- Translators: "block" is referring to a block of storage. -->
     <plurals name="block_count">
         <item quantity="one">%d block</item>
         <item quantity="other">%d blocks</item>
+    </plurals>
+
+    <!-- Translators: Felica divides cards up into a hierarchy with each card containing 1 or many
+    system codes. Each system code contains 1 or many service codes. Each service code contains 1
+    or many blocks of data. -->
+    <plurals name="felica_service_count">
+        <item quantity="one">%d service</item>
+        <item quantity="other">%d services</item>
     </plurals>
 
     <!-- DESFire -->

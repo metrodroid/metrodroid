@@ -140,15 +140,18 @@ public class FelicaCardRawDataFragment extends ExpandableListFragment {
         public View getGroupView(int groupPosition, boolean isExpanded, View convertView, ViewGroup parent) {
             View view = convertView;
             if (view == null) {
-                view = mActivity.getLayoutInflater().inflate(android.R.layout.simple_expandable_list_item_1, null);
-                view.setLayoutParams(new AbsListView.LayoutParams(MATCH_PARENT, 80));
+                view = mActivity.getLayoutInflater().inflate(android.R.layout.simple_expandable_list_item_2, null);
+                view.setLayoutParams(new AbsListView.LayoutParams(MATCH_PARENT, WRAP_CONTENT));
             }
 
             FelicaSystem system = mCard.getSystems().get(groupPosition);
 
-            TextView textView = view.findViewById(android.R.id.text1);
-            textView.setText(Utils.localizeString(R.string.felica_system_title_format,
+            TextView textView1 = view.findViewById(android.R.id.text1);
+            TextView textView2 = view.findViewById(android.R.id.text2);
+
+            textView1.setText(Utils.localizeString(R.string.felica_system_title_format,
                     Integer.toHexString(system.getCode()), FelicaUtils.getFriendlySystemName(system.getCode())));
+            textView2.setText(Utils.localizePlural(R.plurals.felica_service_count, system.getServices().size(), system.getServices().size()));
 
             return view;
         }
