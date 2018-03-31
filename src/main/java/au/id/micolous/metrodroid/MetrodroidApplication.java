@@ -2,7 +2,7 @@
  * MetrodroidApplication.java
  *
  * Copyright 2011 Eric Butler <eric@codebutler.com>
- * Copyright 2016-2017 Michael Farrell <micolous+git@gmail.com>
+ * Copyright 2016-2018 Michael Farrell <micolous+git@gmail.com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -27,30 +27,6 @@ import android.os.StrictMode;
 import android.preference.PreferenceManager;
 import android.util.Log;
 
-import au.id.micolous.farebot.R;
-import au.id.micolous.metrodroid.card.Card;
-import au.id.micolous.metrodroid.card.CardType;
-import au.id.micolous.metrodroid.card.classic.ClassicSector;
-import au.id.micolous.metrodroid.card.desfire.files.DesfireFile;
-import au.id.micolous.metrodroid.card.desfire.files.InvalidDesfireFile;
-import au.id.micolous.metrodroid.card.desfire.files.RecordDesfireFile;
-import au.id.micolous.metrodroid.card.desfire.settings.DesfireFileSettings;
-import au.id.micolous.metrodroid.card.ultralight.UltralightPage;
-import au.id.micolous.metrodroid.transit.lax_tap.LaxTapDBUtil;
-import au.id.micolous.metrodroid.util.StationTableReader;
-import au.id.micolous.metrodroid.xml.Base64String;
-import au.id.micolous.metrodroid.xml.CardConverter;
-import au.id.micolous.metrodroid.xml.CardTypeTransform;
-import au.id.micolous.metrodroid.xml.ClassicSectorConverter;
-import au.id.micolous.metrodroid.xml.DesfireFileConverter;
-import au.id.micolous.metrodroid.xml.DesfireFileSettingsConverter;
-import au.id.micolous.metrodroid.xml.EpochCalendarTransform;
-import au.id.micolous.metrodroid.xml.FelicaIDmTransform;
-import au.id.micolous.metrodroid.xml.FelicaPMmTransform;
-import au.id.micolous.metrodroid.xml.HexString;
-import au.id.micolous.metrodroid.xml.SkippableRegistryStrategy;
-import au.id.micolous.metrodroid.xml.UltralightPageConverter;
-
 import net.kazzz.felica.lib.FeliCaLib;
 
 import org.simpleframework.xml.Serializer;
@@ -66,6 +42,29 @@ import org.simpleframework.xml.transform.RegistryMatcher;
 
 import java.util.Calendar;
 import java.util.GregorianCalendar;
+
+import au.id.micolous.farebot.R;
+import au.id.micolous.metrodroid.card.Card;
+import au.id.micolous.metrodroid.card.CardType;
+import au.id.micolous.metrodroid.card.classic.ClassicSector;
+import au.id.micolous.metrodroid.card.desfire.files.DesfireFile;
+import au.id.micolous.metrodroid.card.desfire.files.InvalidDesfireFile;
+import au.id.micolous.metrodroid.card.desfire.files.RecordDesfireFile;
+import au.id.micolous.metrodroid.card.desfire.settings.DesfireFileSettings;
+import au.id.micolous.metrodroid.card.ultralight.UltralightPage;
+import au.id.micolous.metrodroid.util.StationTableReader;
+import au.id.micolous.metrodroid.xml.Base64String;
+import au.id.micolous.metrodroid.xml.CardConverter;
+import au.id.micolous.metrodroid.xml.CardTypeTransform;
+import au.id.micolous.metrodroid.xml.ClassicSectorConverter;
+import au.id.micolous.metrodroid.xml.DesfireFileConverter;
+import au.id.micolous.metrodroid.xml.DesfireFileSettingsConverter;
+import au.id.micolous.metrodroid.xml.EpochCalendarTransform;
+import au.id.micolous.metrodroid.xml.FelicaIDmTransform;
+import au.id.micolous.metrodroid.xml.FelicaPMmTransform;
+import au.id.micolous.metrodroid.xml.HexString;
+import au.id.micolous.metrodroid.xml.SkippableRegistryStrategy;
+import au.id.micolous.metrodroid.xml.UltralightPageConverter;
 
 public class MetrodroidApplication extends Application {
     private static final String TAG = "MetrodroidApplication";
@@ -84,8 +83,7 @@ public class MetrodroidApplication extends Application {
 
     private static MetrodroidApplication sInstance;
 
-    private LaxTapDBUtil mLaxTapDBUtil;
-
+    private StationTableReader mLaxTapSTR = null;
     private StationTableReader mSeqGoSTR = null;
     private StationTableReader mSuicaRailSTR = null;
     private StationTableReader mSuicaBusSTR = null;
@@ -97,8 +95,6 @@ public class MetrodroidApplication extends Application {
 
     public MetrodroidApplication() {
         sInstance = this;
-
-        mLaxTapDBUtil = new LaxTapDBUtil(this);
 
         try {
             Visitor visitor = new Visitor() {
@@ -176,10 +172,6 @@ public class MetrodroidApplication extends Application {
         return getBooleanPref(PREF_LOCALISE_PLACES, false);
     }
 
-    public LaxTapDBUtil getLaxTapDBUtil() {
-        return mLaxTapDBUtil;
-    }
-
     public Serializer getSerializer() {
         return mSerializer;
     }
@@ -234,6 +226,18 @@ public class MetrodroidApplication extends Application {
         }
 
         return mSeqGoSTR;
+    }
+
+    public StationTableReader getLaxTapSTR() {
+        if (mLaxTapSTR == null) {
+            try {
+                mLaxTapSTR = new StationTableReader(this, "lax_tap.mdst");
+            } catch (Exception e) {
+                Log.w(TAG, "Couldn't open lax_tap", e);
+            }
+        }
+
+        return mLaxTapSTR;
     }
 
     @Override

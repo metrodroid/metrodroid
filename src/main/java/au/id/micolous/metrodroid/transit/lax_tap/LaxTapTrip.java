@@ -1,7 +1,7 @@
 /*
  * LaxTapTrip.java
  *
- * Copyright 2015-2016 Michael Farrell <micolous+git@gmail.com>
+ * Copyright 2015-2018 Michael Farrell <micolous+git@gmail.com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -19,9 +19,12 @@
 package au.id.micolous.metrodroid.transit.lax_tap;
 
 import android.os.Parcel;
+import android.util.Log;
 
+import au.id.micolous.metrodroid.MetrodroidApplication;
 import au.id.micolous.metrodroid.transit.Station;
 import au.id.micolous.metrodroid.transit.nextfare.NextfareTrip;
+import au.id.micolous.metrodroid.util.StationTableReader;
 import au.id.micolous.metrodroid.util.Utils;
 
 import au.id.micolous.farebot.R;
@@ -46,6 +49,8 @@ public class LaxTapTrip extends NextfareTrip {
         }
     };
 
+    private static final String TAG = LaxTapTrip.class.getSimpleName();
+
     public LaxTapTrip() {
     }
 
@@ -68,7 +73,6 @@ public class LaxTapTrip extends NextfareTrip {
         if (mModeInt == AGENCY_METRO && mStartStation >= METRO_BUS_START) {
             // Metro Bus uses the station_id for route numbers.
             return METRO_BUS_ROUTES.get(mStartStation, Utils.localizeString(R.string.unknown_format, mStartStation));
-
         }
 
         // Normally not possible to guess what the route is.
@@ -103,7 +107,15 @@ public class LaxTapTrip extends NextfareTrip {
             return null;
         }
 
-        return LaxTapDBUtil.getStation(stationId, mModeInt);
+        StationTableReader str = MetrodroidApplication.getInstance().getLaxTapSTR();
+        if (str == null) return null;
+
+        try {
+            return str.getStationById(stationId);
+        } catch (Exception e) {
+            Log.d(TAG, "error in getStation", e);
+            return null;
+        }
     }
 
     @Override

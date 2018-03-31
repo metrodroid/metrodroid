@@ -1,18 +1,19 @@
-.PHONY: clean
+# -*- mode: makefile; indent-tabs-mode: tabs; tab-width: 2 -*-
+.PHONY: clean mdst_deps
 
-all: lax_tap_stations.db3
+MDST = ../../extra/mdst
+GTFS = ../../third_party/gtfs_lacmta_rail/gtfs_rail.zip
 
-lax_tap_stations.db3: mapping.csv ../../third_party/gtfs_lacmta_rail/gtfs_rail.zip ../../extra/compile_stops_from_gtfs.py
-	rm -f lax_tap_stations.db3
-	python3 ../../extra/compile_stops_from_gtfs.py ../../third_party/gtfs_lacmta_rail/gtfs_rail.zip -m mapping.csv -a 1 -o $@
-	
-	@echo ''
-	@echo '## Stop report'
-	@sqlite3 -header $@ 'select agency_id, count(1) stop_count from stops group by agency_id'
-	
-	@echo ''
-	@echo '## Database version'
-	@sqlite3 $@ 'pragma user_version'
+all: lax_tap.mdst lax_tap.csv
+
+mdst_deps: $(MDST)/stations_pb2.py $(MDST)/mdst.py $(MDST)/compile_stops_from_gtfs.py
+
+lax_tap.mdst: mapping.csv $(GTFS) mdst_deps
+	python3 $(MDST)/compile_stops_from_gtfs.py $(GTFS) -m mapping.csv -l en-US -o $@
+
+%.csv: %.mdst mdst_deps
+	python3 $(MDST)/dump2csv.py -o $@ $<
 
 clean:
-	rm -f lax_tap_stations.db3
+	rm -f lax_tap.mdst lax_tap.csv
+
