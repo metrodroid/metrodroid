@@ -160,7 +160,8 @@ public class StationTableReader {
                 selectBestName(ps.getEnglishName(), ps.getLocalName()),
                 null,
                 hasLocation ? Float.toString(ps.getLatitude()) : null,
-                hasLocation ? Float.toString(ps.getLongitude()) : null
+                hasLocation ? Float.toString(ps.getLongitude()) : null,
+                mStationDb.getTtsHintLanguage()
         );
     }
 

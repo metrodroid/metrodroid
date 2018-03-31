@@ -64,6 +64,7 @@ for row in cur:
 sdb = StationDb()
 sdb.version = 1
 sdb.local_languages.append('ja')
+sdb.tts_hint_language = 'ja'
 for i, operator in operators.items():
   sdb.operators[operator[0]].english_name = operator[1]
   sdb.operators[operator[0]].local_name = i

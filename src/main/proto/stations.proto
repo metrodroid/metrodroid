@@ -20,6 +20,10 @@ message StationDb {
 
     // All rail lines in the network.
     map<uint32, Line> lines = 4;
+
+    // Provides a hint for LocaleSpan about which language to mark up the
+    // names with, to improve pronunciation.
+    string tts_hint_language = 5;
 }
 
 message Operator {

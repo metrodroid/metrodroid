@@ -47,7 +47,7 @@ def dump2csv(database, output_fn):
 
   # Read in the header blob
   header = read_delimited_message(StationDb, f)
-  print('file version = %d, local languages = %r' % (header.version, list(header.local_languages)))
+  print('file version = %d, local languages = %r, tts_hint_language = %s' % (header.version, list(header.local_languages), header.tts_hint_language))
   #print(MessageToString(header, as_utf8=True))
 
   output_fh = open(output_fn, mode='w', encoding='utf-8')
