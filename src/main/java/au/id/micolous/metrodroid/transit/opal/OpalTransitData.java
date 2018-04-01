@@ -40,6 +40,7 @@ import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.Locale;
+import java.util.TimeZone;
 
 import au.id.micolous.farebot.R;
 import au.id.micolous.metrodroid.MetrodroidApplication;
@@ -56,6 +57,7 @@ public class OpalTransitData extends TransitData {
     public static final int APP_ID = 0x314553;
     public static final int FILE_ID = 0x7;
 
+    private static final TimeZone OPAL_TZ = TimeZone.getTimeZone("Australia/Sydney");
     private static final GregorianCalendar OPAL_EPOCH = new GregorianCalendar(1980, Calendar.JANUARY, 1);
     private static final OpalSubscription OPAL_AUTOMATIC_TOP_UP = new OpalSubscription();
     private int mSerialNumber;
@@ -69,7 +71,6 @@ public class OpalTransitData extends TransitData {
     private int mDay;
     private int mTransactionNumber;
     private int mLastDigit;
-
 
     @SuppressWarnings("UnusedDeclaration")
     public OpalTransitData(Parcel parcel) {
@@ -174,8 +175,10 @@ public class OpalTransitData extends TransitData {
     private Calendar getLastTransactionTime() {
         Calendar cLastTransaction = GregorianCalendar.getInstance();
         cLastTransaction.setTimeInMillis(OPAL_EPOCH.getTimeInMillis());
+        cLastTransaction.setTimeZone(OPAL_TZ);
         cLastTransaction.add(Calendar.DATE, mDay);
-        cLastTransaction.add(Calendar.MINUTE, mMinute);
+        cLastTransaction.set(Calendar.HOUR_OF_DAY, mMinute / 60); // floor-divide
+        cLastTransaction.set(Calendar.MINUTE, mMinute % 60);
         return cLastTransaction;
     }
 
