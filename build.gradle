@@ -32,7 +32,8 @@ repositories {
 apply plugin: 'com.android.application'
 
 dependencies {
-    compile 'com.android.support:support-v4:27.1.0'
+    compile 'com.android.support:support-core-ui:27.1.0'
+    compile 'com.android.support:support-vector-drawable:27.1.0'
     compile 'commons-io:commons-io:2.5'
     compile 'org.apache.commons:commons-lang3:3.5'
     compile 'com.google.protobuf:protobuf-lite:3.0.0'
@@ -79,9 +80,12 @@ android {
         versionCode "git -C ${projectDir} rev-list --first-parent --count HEAD".execute().text.trim().toInteger()
         versionName "git -C ${projectDir} describe --always --tags --dirty".execute().text.trim().replaceAll("^v", "")
 
-        // Limit language support to where we have translations
+        // Limit language support to where we have translations.
         // Update this whenever new language translations become available in Weblate.
         resConfigs 'en', 'en-rAU', 'en-rNZ', 'fi', 'fr', 'he', 'iw', 'ja', 'kab', 'nb-rNO', 'nl'
+
+        // We want to use the support library for vectors, rather than shipping huge rasters.
+        vectorDrawables.useSupportLibrary = true
     }
 
     buildTypes {
