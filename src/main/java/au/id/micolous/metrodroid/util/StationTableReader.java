@@ -60,7 +60,6 @@ public class StationTableReader {
     public StationTableReader(Context context, String dbName) throws IOException, InvalidHeaderException {
         mContext = context;
         InputStream i = this.mContext.getAssets().open(dbName, AssetManager.ACCESS_RANDOM);
-
         mTable = new DataInputStream(i);
 
         // Read the Magic, and validate it.
