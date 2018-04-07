@@ -18,6 +18,8 @@
  */
 package au.id.micolous.metrodroid.test;
 
+import android.os.Build;
+
 import au.id.micolous.metrodroid.card.desfire.DesfireApplication;
 import au.id.micolous.metrodroid.card.desfire.DesfireCard;
 import au.id.micolous.metrodroid.card.desfire.files.DesfireFile;
@@ -82,7 +84,9 @@ public class OpalTest extends TestCase {
 
         OpalTransitData o = (OpalTransitData)c.parseTransitData();
         assertEquals("2018-03-31 09:00", Utils.isoDateTimeFormat(o.getLastTransactionTime()));
-        assertEquals("2018-03-30T22:00Z", o.getLastTransactionTime().toInstant().atOffset(ZoneOffset.UTC).toString());
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            assertEquals("2018-03-30T22:00Z", o.getLastTransactionTime().toInstant().atOffset(ZoneOffset.UTC).toString());
+        }
 
         // DST transition is at 2018-04-01 03:00
 
@@ -91,7 +95,9 @@ public class OpalTest extends TestCase {
 
         o = (OpalTransitData)c.parseTransitData();
         assertEquals("2018-04-01 09:00", Utils.isoDateTimeFormat(o.getLastTransactionTime()));
-        assertEquals("2018-03-31T23:00Z", o.getLastTransactionTime().toInstant().atOffset(ZoneOffset.UTC).toString());
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            assertEquals("2018-03-31T23:00Z", o.getLastTransactionTime().toInstant().atOffset(ZoneOffset.UTC).toString());
+        }
     }
 
 }
