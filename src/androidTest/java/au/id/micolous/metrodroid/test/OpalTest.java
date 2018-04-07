@@ -29,6 +29,7 @@ import au.id.micolous.metrodroid.util.Utils;
 
 import junit.framework.TestCase;
 
+import java.time.ZoneOffset;
 import java.util.Calendar;
 
 /**
@@ -71,4 +72,26 @@ public class OpalTest extends TestCase {
         assertEquals(39, o.getLastTransactionNumber());
         assertEquals(1, o.getWeeklyTrips());
     }
+
+
+    public void testDaylightSavings() {
+        // This is all mocked-up data, probably has a wrong checksum.
+
+        // 2018-03-31 09:00 UTC+11
+        DesfireCard c = constructOpalCardFromHexString("85D25E07230520A70044DA380419FFFF");
+
+        OpalTransitData o = (OpalTransitData)c.parseTransitData();
+        assertEquals("2018-03-31 09:00", Utils.isoDateTimeFormat(o.getLastTransactionTime()));
+        assertEquals("2018-03-30T22:00Z", o.getLastTransactionTime().toInstant().atOffset(ZoneOffset.UTC).toString());
+
+        // DST transition is at 2018-04-01 03:00
+
+        // 2018-04-01 09:00 UTC+10
+        c = constructOpalCardFromHexString("85D25E07430520A70048DA380419FFFF");
+
+        o = (OpalTransitData)c.parseTransitData();
+        assertEquals("2018-04-01 09:00", Utils.isoDateTimeFormat(o.getLastTransactionTime()));
+        assertEquals("2018-03-31T23:00Z", o.getLastTransactionTime().toInstant().atOffset(ZoneOffset.UTC).toString());
+    }
+
 }
