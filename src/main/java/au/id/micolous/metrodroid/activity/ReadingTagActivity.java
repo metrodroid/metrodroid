@@ -107,7 +107,11 @@ public class ReadingTagActivity extends Activity implements TagReaderFeedbackInt
             ImageView i = findViewById(R.id.card_image);
 
             if (cardInfo != null) {
-                i.setImageResource(cardInfo.getImageId());
+                if (cardInfo.hasBitmap()) {
+                    i.setImageBitmap(cardInfo.getBitmap(getResources()));
+                } else {
+                    i.setImageResource(cardInfo.getImageId());
+                }
                 i.setContentDescription(cardInfo.getName());
                 i.invalidate();
             } else {

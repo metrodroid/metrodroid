@@ -83,7 +83,15 @@ public class SupportedCardsActivity extends Activity {
             Spanned text = Html.fromHtml(String.format("<b>%s</b><br>%s", info.getName(),
                     getString(info.getLocationId())));
 
-            ((ImageView) convertView.findViewById(R.id.image)).setImageResource(info.getImageId());
+            ImageView image = convertView.findViewById(R.id.image);
+            if (info.hasBitmap()) {
+                image.setImageBitmap(info.getBitmap(getResources()));
+                image.invalidate();
+                if (image.isOpaque()) throw new AssertionError();
+            } else {
+                image.setImageResource(info.getImageId());
+            }
+
             ((TextView) convertView.findViewById(R.id.text)).setText(text);
 
             String notes = "";
