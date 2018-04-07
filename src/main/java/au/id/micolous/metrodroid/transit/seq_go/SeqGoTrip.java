@@ -48,9 +48,9 @@ public class SeqGoTrip extends NextfareTrip {
         }
     };
 
-    /* Hard coded station IDs for Airtrain */
-    private final int DOMESTIC_AIRPORT = 9;
-    private final int INTERNATIONAL_AIRPORT = 10;
+    /* Hard coded station IDs for Airtrain; used in tests */
+    public static final int DOMESTIC_AIRPORT = 9;
+    public static final int INTERNATIONAL_AIRPORT = 10;
     private static final String TAG = SeqGoTrip.class.getSimpleName();
 
     /**
