@@ -491,7 +491,7 @@ public class Utils {
      * @param calendar Date/time to format
      * @return String representing the date and time in ISO8601 format.
      */
-    public static String isoDateTimeFormat(GregorianCalendar calendar) {
+    public static String isoDateTimeFormat(Calendar calendar) {
         return ISO_DATETIME_FORMAT.format(calendar.getTime());
     }
 
@@ -502,7 +502,7 @@ public class Utils {
      * @param calendar Date to format
      * @return String representing the date in ISO8601 format.
      */
-    public static String isoDateFormat(GregorianCalendar calendar) {
+    public static String isoDateFormat(Calendar calendar) {
         return ISO_DATE_FORMAT.format(calendar.getTime());
     }
 

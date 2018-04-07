@@ -23,6 +23,7 @@ import au.id.micolous.metrodroid.card.desfire.DesfireCard;
 import au.id.micolous.metrodroid.card.desfire.files.DesfireFile;
 import au.id.micolous.metrodroid.transit.TransitData;
 import au.id.micolous.metrodroid.transit.TransitIdentity;
+import au.id.micolous.metrodroid.transit.opal.OpalData;
 import au.id.micolous.metrodroid.transit.opal.OpalTransitData;
 import au.id.micolous.metrodroid.util.Utils;
 
@@ -35,17 +36,21 @@ import java.util.Calendar;
  */
 
 public class OpalTest extends TestCase {
-    public void testDemoCard() {
-        // This is mocked-up data, probably has a wrong checksum.
-        byte[] demoData = Utils.hexStringToByteArray("87d61200e004002a0014cc44a4133930");
+    private DesfireCard constructOpalCardFromHexString(String s) {
+        byte[] demoData = Utils.hexStringToByteArray(s);
 
         // Construct a card to hold the data.
         DesfireFile f = DesfireFile.create(OpalTransitData.FILE_ID, null, demoData);
         DesfireApplication a = new DesfireApplication(OpalTransitData.APP_ID, new DesfireFile[] { f });
-        DesfireCard c = new DesfireCard(new byte[] {0, 1, 2, 3},
+        return new DesfireCard(new byte[] {0, 1, 2, 3},
                 Calendar.getInstance(),
                 null,
                 new DesfireApplication[] { a });
+    }
+
+    public void testDemoCard() {
+        // This is mocked-up data, probably has a wrong checksum.
+        DesfireCard c = constructOpalCardFromHexString("87d61200e004002a0014cc44a4133930");
 
         // Test TransitIdentity
         TransitIdentity i = c.parseTransitIdentity();
@@ -60,6 +65,10 @@ public class OpalTest extends TestCase {
         assertEquals("3085220012345670", o.getSerialNumber());
         assertEquals(336, o.getBalance().intValue());
         assertEquals(0, o.getSubscriptions().length);
+        assertEquals("2015-10-05 09:06", Utils.isoDateTimeFormat(o.getLastTransactionTime()));
+        assertEquals(OpalData.MODE_BUS, o.getLastTransactionMode());
+        assertEquals(OpalData.ACTION_JOURNEY_COMPLETED_DISTANCE, o.getLastTransaction());
+        assertEquals(39, o.getLastTransactionNumber());
+        assertEquals(1, o.getWeeklyTrips());
     }
-
 }

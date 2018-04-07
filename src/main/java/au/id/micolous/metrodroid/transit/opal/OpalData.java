@@ -1,7 +1,7 @@
 /*
  * OpalData.java
  *
- * Copyright 2015 Michael Farrell <micolous+git@gmail.com>
+ * Copyright 2015-2018 Michael Farrell <micolous+git@gmail.com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -25,32 +25,39 @@ import java.util.HashMap;
 import java.util.Map;
 
 import au.id.micolous.farebot.R;
+import au.id.micolous.metrodroid.util.Utils;
 
-final class OpalData {
-    private static final int VEHICLE_RAIL = 0x00;
-    private static final int VEHICLE_FERRY_LR = 0x01; // also Light Rail
-    private static final int VEHICLE_BUS = 0x02;
+/**
+ * Constants used on an Opal card.
+ */
+@SuppressWarnings("WeakerAccess") // for tests
+public final class OpalData {
+    // Opal travel modes
+    public static final int MODE_RAIL = 0x00;
+    public static final int MODE_FERRY_LR = 0x01; // Ferry and Light Rail
+    public static final int MODE_BUS = 0x02;
 
-    private static final int ACTION_NONE = 0x00;
-    private static final int ACTION_NEW_JOURNEY = 0x01;
-    private static final int ACTION_TRANSFER_SAME_MODE = 0x02;
-    private static final int ACTION_TRANSFER_DIFF_MODE = 0x03;
-    private static final int ACTION_MANLY_NEW_JOURNEY = 0x04;
-    private static final int ACTION_MANLY_TRANSFER_SAME_MODE = 0x05;
-    private static final int ACTION_MANLY_TRANSFER_DIFF_MODE = 0x06;
-    private static final int ACTION_JOURNEY_COMPLETED_DISTANCE = 0x07;
-    private static final int ACTION_JOURNEY_COMPLETED_FLAT_RATE = 0x08;
-    private static final int ACTION_JOURNEY_COMPLETED_AUTO_ON = 0x09;
-    private static final int ACTION_JOURNEY_COMPLETED_AUTO_OFF = 0x0a;
-    private static final int ACTION_TAP_ON_REVERSAL = 0x0b;
-    private static final int ACTION_TAP_ON_REJECTED = 0x0c;
+    // Opal actions
+    public static final int ACTION_NONE = 0x00;
+    public static final int ACTION_NEW_JOURNEY = 0x01;
+    public static final int ACTION_TRANSFER_SAME_MODE = 0x02;
+    public static final int ACTION_TRANSFER_DIFF_MODE = 0x03;
+    public static final int ACTION_MANLY_NEW_JOURNEY = 0x04;
+    public static final int ACTION_MANLY_TRANSFER_SAME_MODE = 0x05;
+    public static final int ACTION_MANLY_TRANSFER_DIFF_MODE = 0x06;
+    public static final int ACTION_JOURNEY_COMPLETED_DISTANCE = 0x07;
+    public static final int ACTION_JOURNEY_COMPLETED_FLAT_RATE = 0x08;
+    public static final int ACTION_JOURNEY_COMPLETED_AUTO_ON = 0x09;
+    public static final int ACTION_JOURNEY_COMPLETED_AUTO_OFF = 0x0a;
+    public static final int ACTION_TAP_ON_REVERSAL = 0x0b;
+    public static final int ACTION_TAP_ON_REJECTED = 0x0c;
 
 
     @SuppressLint("UseSparseArrays")
-    static final Map<Integer, Integer> VEHICLES = new HashMap<Integer, Integer>() {{
-        put(VEHICLE_RAIL, R.string.opal_vehicle_rail);
-        put(VEHICLE_FERRY_LR, R.string.opal_vehicle_ferry_lr);
-        put(VEHICLE_BUS, R.string.opal_vehicle_bus);
+    static final Map<Integer, Integer> MODES = new HashMap<Integer, Integer>() {{
+        put(MODE_RAIL, R.string.opal_vehicle_rail);
+        put(MODE_FERRY_LR, R.string.opal_vehicle_ferry_lr);
+        put(MODE_BUS, R.string.opal_vehicle_bus);
     }};
 
     @SuppressLint("UseSparseArrays")
@@ -71,5 +78,20 @@ final class OpalData {
     }};
 
     private OpalData() {
+    }
+
+    static String getLocalisedMode(int mode) {
+        if (MODES.containsKey(mode)) {
+            return Utils.localizeString(MODES.get(mode));
+        }
+        return Utils.localizeString(R.string.unknown_format, "0x" + Long.toString(mode, 16));
+    }
+
+    static String getLocalisedAction(int action) {
+        if (ACTIONS.containsKey(action)) {
+            return Utils.localizeString(ACTIONS.get(action));
+        }
+
+        return Utils.localizeString(R.string.unknown_format, "0x" + Long.toString(action, 16));
     }
 }

@@ -65,8 +65,8 @@ public class OpalTransitData extends TransitData {
     private int mChecksum;
     private int mWeeklyTrips;
     private boolean mAutoTopup;
-    private int mActionType;
-    private int mVehicleType;
+    private int mAction;
+    private int mMode;
     private int mMinute;
     private int mDay;
     private int mTransactionNumber;
@@ -79,8 +79,8 @@ public class OpalTransitData extends TransitData {
         mChecksum = parcel.readInt();
         mWeeklyTrips = parcel.readInt();
         mAutoTopup = parcel.readByte() == 0x01;
-        mActionType = parcel.readInt();
-        mVehicleType = parcel.readInt();
+        mAction = parcel.readInt();
+        mMode = parcel.readInt();
         mMinute = parcel.readInt();
         mDay = parcel.readInt();
         mTransactionNumber = parcel.readInt();
@@ -98,8 +98,8 @@ public class OpalTransitData extends TransitData {
             mChecksum = Utils.getBitsFromBuffer(data, 0, 16);
             mWeeklyTrips = Utils.getBitsFromBuffer(data, 16, 4);
             mAutoTopup = Utils.getBitsFromBuffer(data, 20, 1) == 0x01;
-            mActionType = Utils.getBitsFromBuffer(data, 21, 4);
-            mVehicleType = Utils.getBitsFromBuffer(data, 25, 3);
+            mAction = Utils.getBitsFromBuffer(data, 21, 4);
+            mMode = Utils.getBitsFromBuffer(data, 25, 3);
             mMinute = Utils.getBitsFromBuffer(data, 28, 11);
             mDay = Utils.getBitsFromBuffer(data, 39, 15);
             iRawBalance = Utils.getBitsFromBuffer(data, 54, 21);
@@ -136,21 +136,6 @@ public class OpalTransitData extends TransitData {
         return new TransitIdentity(NAME, formatSerialNumber(serialNumber, lastDigit));
     }
 
-    public static String getVehicleType(int vehicleType) {
-        if (OpalData.VEHICLES.containsKey(vehicleType)) {
-            return Utils.localizeString(OpalData.VEHICLES.get(vehicleType));
-        }
-        return Utils.localizeString(R.string.unknown_format, "0x" + Long.toString(vehicleType, 16));
-    }
-
-    public static String getActionType(int actionType) {
-        if (OpalData.ACTIONS.containsKey(actionType)) {
-            return Utils.localizeString(OpalData.ACTIONS.get(actionType));
-        }
-
-        return Utils.localizeString(R.string.unknown_format, "0x" + Long.toString(actionType, 16));
-    }
-
     @Override
     public String getCardName() {
         return NAME;
@@ -172,7 +157,7 @@ public class OpalTransitData extends TransitData {
         return formatSerialNumber(mSerialNumber, mLastDigit);
     }
 
-    private Calendar getLastTransactionTime() {
+    public Calendar getLastTransactionTime() {
         Calendar cLastTransaction = GregorianCalendar.getInstance();
         cLastTransaction.setTimeInMillis(OPAL_EPOCH.getTimeInMillis());
         cLastTransaction.setTimeZone(OPAL_TZ);
@@ -182,25 +167,58 @@ public class OpalTransitData extends TransitData {
         return cLastTransaction;
     }
 
+    /**
+     * Gets the last mode of travel.
+     *
+     * Valid values are in OpalData.MODE_*. This does not use the Mode class, due to the merger
+     * of Ferry and Light Rail travel.
+     */
+    public int getLastTransactionMode() {
+        return mMode;
+    }
+
+    /**
+     * Gets the last action performed on the Opal card.
+     *
+     * Valid values are in OpalData.ACTION_*.
+     */
+    public int getLastTransaction() {
+        return mAction;
+    }
+
+    /**
+     * Gets the number of weekly trips taken on this Opal card. Maxes out at 15 trips.
+     */
+    public int getWeeklyTrips() {
+        return mWeeklyTrips;
+    }
+
+    /**
+     * Gets the serial number of the latest transaction on the Opal card.
+     */
+    public int getLastTransactionNumber() {
+        return mTransactionNumber;
+    }
+
     @Override
     public List<ListItem> getInfo() {
         ArrayList<ListItem> items = new ArrayList<>();
 
         items.add(new HeaderListItem(R.string.general));
-        items.add(new ListItem(R.string.opal_weekly_trips, Integer.toString(mWeeklyTrips)));
+        items.add(new ListItem(R.string.opal_weekly_trips, Integer.toString(getWeeklyTrips())));
         if (!MetrodroidApplication.hideCardNumbers()) {
             items.add(new ListItem(R.string.checksum, Integer.toString(mChecksum)));
         }
 
         items.add(new HeaderListItem(R.string.last_transaction));
         if (!MetrodroidApplication.hideCardNumbers()) {
-            items.add(new ListItem(R.string.transaction_sequence, Integer.toString(mTransactionNumber)));
+            items.add(new ListItem(R.string.transaction_sequence, Integer.toString(getLastTransactionNumber())));
         }
         Calendar cLastTransactionTime = TripObfuscator.maybeObfuscateTS(getLastTransactionTime());
         items.add(new ListItem(R.string.date, Utils.longDateFormat(cLastTransactionTime)));
         items.add(new ListItem(R.string.time, Utils.timeFormat(cLastTransactionTime)));
-        items.add(new ListItem(R.string.vehicle_type, getVehicleType(mVehicleType)));
-        items.add(new ListItem(R.string.transaction_type, getActionType(mActionType)));
+        items.add(new ListItem(R.string.vehicle_type, OpalData.getLocalisedMode(getLastTransactionMode())));
+        items.add(new ListItem(R.string.transaction_type, OpalData.getLocalisedAction(getLastTransaction())));
 
         return items;
     }
@@ -211,8 +229,8 @@ public class OpalTransitData extends TransitData {
         parcel.writeInt(mChecksum);
         parcel.writeInt(mWeeklyTrips);
         parcel.writeByte((byte) (mAutoTopup ? 0x01 : 0x00));
-        parcel.writeInt(mActionType);
-        parcel.writeInt(mVehicleType);
+        parcel.writeInt(mAction);
+        parcel.writeInt(mMode);
         parcel.writeInt(mMinute);
         parcel.writeInt(mDay);
         parcel.writeInt(mTransactionNumber);
