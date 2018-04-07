@@ -21,6 +21,7 @@ package au.id.micolous.metrodroid.test;
 import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.test.AndroidTestCase;
+import android.text.Spanned;
 
 import au.id.micolous.metrodroid.util.Utils;
 
@@ -46,6 +47,10 @@ public class CurrencyFormatterTest extends AndroidTestCase {
         r.updateConfiguration(c, r.getDisplayMetrics());
     }
 
+    private static void assertSpannedEquals(String expected, Spanned actual) {
+        assertEquals(expected, actual.toString());
+    }
+
     public void testEnglishAU() {
         // Note: en_AU data in Unicode CLDR currency data was broken in release
         // 28, Android 7.0+:
@@ -54,35 +59,35 @@ public class CurrencyFormatterTest extends AndroidTestCase {
         // Only check to make sure AUD comes out correctly in en_AU.
         setLocale("en-AU");
 
-        assertEquals("$12.34", Utils.formatCurrencyString(1234, true, "AUD"));
+        assertSpannedEquals("$12.34", Utils.formatCurrencyString(1234, true, "AUD"));
     }
 
     public void testEnglishGB() {
         setLocale("en-GB");
 
-        assertEquals("US$12.34", Utils.formatCurrencyString(1234, true, "USD"));
-        assertEquals("A$12.34", Utils.formatCurrencyString(1234, true, "AUD"));
-        assertEquals("£12.34", Utils.formatCurrencyString(1234, true, "GBP"));
-        assertEquals("JP¥1,234", Utils.formatCurrencyString(1234, true, "JPY", 1));
+        assertSpannedEquals("US$12.34", Utils.formatCurrencyString(1234, true, "USD"));
+        assertSpannedEquals("A$12.34", Utils.formatCurrencyString(1234, true, "AUD"));
+        assertSpannedEquals("£12.34", Utils.formatCurrencyString(1234, true, "GBP"));
+        assertSpannedEquals("JP¥1,234", Utils.formatCurrencyString(1234, true, "JPY", 1));
     }
 
     public void testEnglishUS() {
         setLocale("en-US");
 
-        assertEquals("$12.34", Utils.formatCurrencyString(1234, true, "USD"));
-        assertEquals("A$12.34", Utils.formatCurrencyString(1234, true, "AUD"));
-        assertEquals("£12.34", Utils.formatCurrencyString(1234, true, "GBP"));
-        assertEquals("¥1,234", Utils.formatCurrencyString(1234, true, "JPY", 1));
+        assertSpannedEquals("$12.34", Utils.formatCurrencyString(1234, true, "USD"));
+        assertSpannedEquals("A$12.34", Utils.formatCurrencyString(1234, true, "AUD"));
+        assertSpannedEquals("£12.34", Utils.formatCurrencyString(1234, true, "GBP"));
+        assertSpannedEquals("¥1,234", Utils.formatCurrencyString(1234, true, "JPY", 1));
     }
 
     public void testJapanese() {
         setLocale("ja-JP");
 
-        assertEquals("$12.34", Utils.formatCurrencyString(1234, true, "USD"));
+        assertSpannedEquals("$12.34", Utils.formatCurrencyString(1234, true, "USD"));
         // AUD is volatile in older Unicode CLDR.
-        assertEquals("£12.34", Utils.formatCurrencyString(1234, true, "GBP"));
+        assertSpannedEquals("£12.34", Utils.formatCurrencyString(1234, true, "GBP"));
         // Note: this is the full-width yen character
-        assertEquals("￥1,234", Utils.formatCurrencyString(1234, true, "JPY", 1));
+        assertSpannedEquals("￥1,234", Utils.formatCurrencyString(1234, true, "JPY", 1));
     }
 
 }
