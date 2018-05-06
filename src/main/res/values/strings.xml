@@ -663,4 +663,6 @@
     <string name="credit_information">Credit Information</string>
     <string name="software_information">Software Information</string>
     <string name="clipboard_error">Unable to access the clipboard</string>
+    <string name="convert_timezones">Convert times to current timezone</string>
+    <string name="convert_timezones_summary">By default, Metrodroid displays travel times in the timezone of the transit agency. If this option is enabled, Metrodroid will convert travel times to your device\'s current timezone.</string>
 </resources>

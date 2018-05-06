@@ -30,8 +30,8 @@
             android:persistent="false"
             android:key="pref_launch_from_background"/>
         <CheckBoxPreference
-            android:title="Convert times to current timezone"
-            android:summary="By default, Metrodroid displays travel times in the timezone of the transit agency. If this option is enabled, Metrodroid will convert travel times to your device's current timezone."
+            android:title="@string/convert_timezones"
+            android:summary="@string/convert_timezones_summary"
             android:key="pref_convert_timezones"
             android:defaultValue="false"/>
     </PreferenceCategory>
