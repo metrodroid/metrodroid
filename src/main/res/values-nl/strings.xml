@@ -412,4 +412,16 @@
     <string name="felica_idm">Productie-ID (IDm)</string>
     <string name="felica_pmm">Productieparameter (PMm)</string>
 
+    <string name="machine_id">Automaat-ID %s</string>
+
+    <string name="localise_places_longdesc">Tekst-naar-spraak werkt normaal gesproken alleen goed voor één taal.
+\n
+\nLocaleSpan wordt gebruikt om tekst te markeren die in een andere taal is geschreven. Als dit wordt toegepast op een station, halte, lijn of lijnnaam, dan zal de schermlezer (indien ondersteund) de naam uitspreken zoals deze wordt uitgesproken in de oorspronkelijke taal i.p.v. de door u ingestelde taal.
+\n
+\nDoor deze optie in te schakelen wordt de uitspraak van onbekende(re) buitenlandse namen meestal verbeterd, maar het kan voor u moeilijker te verstaan zijn.
+\n
+\nNormaal gesproken wordt de weergave van de naam op het scherm niet gewijzigd, maar sommige apparaten kunnen een ander lettertype toepassen.
+\n
+\nDit vereist Android 5.0 of hoger, toegankelijkheidssoftware dit ondersteuning heeft voor de LocaleSpan-API (zoals bijv. Google TalkBack) en dat u de benodigde stemmen heeft geïnstalleerd.</string>
+
     </resources>
