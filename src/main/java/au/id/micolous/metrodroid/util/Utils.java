@@ -38,6 +38,7 @@ import android.nfc.NfcAdapter;
 import android.os.Build;
 import android.provider.Settings;
 import android.support.annotation.DrawableRes;
+import android.support.annotation.Nullable;
 import android.support.annotation.PluralsRes;
 import android.support.annotation.StringRes;
 import android.text.Spannable;
@@ -62,6 +63,7 @@ import java.util.Currency;
 import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.Locale;
+import java.util.TimeZone;
 
 import au.id.micolous.farebot.R;
 import au.id.micolous.metrodroid.MetrodroidApplication;
@@ -205,10 +207,10 @@ public class Utils {
         if (b.length < offset + length)
             throw new IllegalArgumentException("offset + length must be less than or equal to b.length");
 
-        long value = 0;
+        long value = 0L;
         for (int i = 0; i < length; i++) {
             int shift = (length - 1 - i) * 8;
-            value += (b[i + offset] & 0x000000FF) << shift;
+            value += (b[i + offset] & 0xFFL) << shift;
         }
         return value;
     }
@@ -420,12 +422,16 @@ public class Utils {
         if (date == null) return new SpannableString("");
         String s = DateFormat.getLongDateFormat(MetrodroidApplication.getInstance()).format(date.getTime());
 
+        //Log.d(TAG, "Local TZ = " + DateFormat.getLongDateFormat(MetrodroidApplication.getInstance()).getTimeZone().getID());
+        //Log.d(TAG, "Millis = " + Long.toString(date.getTimeInMillis()));
+        //Log.d(TAG, "Date = " + s);
+
         SpannableString b = new SpannableString(s);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             b.setSpan(new TtsSpan.DateBuilder()
                     .setYear(date.get(Calendar.YEAR))
                     .setMonth(date.get(Calendar.MONTH))
-                    .setDay(date.get(Calendar.DATE))
+                    .setDay(date.get(Calendar.DAY_OF_MONTH))
                     .setWeekday(date.get(Calendar.DAY_OF_WEEK)), 0, b.length(), 0);
             b.setSpan(new LocaleSpan(Locale.getDefault()), 0, b.length(), 0);
         }
@@ -452,6 +458,9 @@ public class Utils {
     public static Spanned timeFormat(Calendar date) {
         if (date == null) return new SpannableString("");
         String s = DateFormat.getTimeFormat(MetrodroidApplication.getInstance()).format(date.getTime());
+
+        //Log.d(TAG, "Local TZ = " + DateFormat.getLongDateFormat(MetrodroidApplication.getInstance()).getTimeZone().getID());
+        //Log.d(TAG, "Time = " + s);
 
         SpannableString b = new SpannableString(s);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
@@ -683,5 +692,35 @@ public class Utils {
 
         // Return the completed bitmap.
         return bitmap;
+    }
+
+    /**
+     * Converts a timestamp in milliseconds since UNIX epoch to Calendar, or null if 0.
+     * @param ts Timestamp to convert, or 0 if unset.
+     * @param tz Timezone to use
+     * @return A Calendar object, or null if the timestamp is 0.
+     */
+    @Nullable
+    public static Calendar longToCalendar(long ts, TimeZone tz) {
+        if (ts == 0) {
+            return null;
+        }
+
+        Calendar c = new GregorianCalendar(tz);
+        c.setTimeInMillis(ts);
+        return c;
+    }
+
+    /**
+     * Converts a Calendar or null to a timestamp in milliseconds since UNIX epoch.
+     * @param c Calendar object to convert
+     * @return Timestamp, or 0 if null.
+     */
+    public static long calendarToLong(@Nullable Calendar c) {
+        if (c == null) {
+            return 0;
+        }
+
+        return c.getTimeInMillis();
     }
 }

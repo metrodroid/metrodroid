@@ -28,6 +28,7 @@ package au.id.micolous.metrodroid.transit.clipper;
 import android.os.Parcel;
 import android.support.annotation.Nullable;
 import android.text.Spanned;
+import android.util.Log;
 
 import org.apache.commons.lang3.ArrayUtils;
 
@@ -41,8 +42,11 @@ import au.id.micolous.metrodroid.util.Utils;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Calendar;
 import java.util.Comparator;
+import java.util.GregorianCalendar;
 import java.util.List;
+import java.util.TimeZone;
 
 import au.id.micolous.farebot.R;
 import au.id.micolous.metrodroid.MetrodroidApplication;
@@ -57,9 +61,25 @@ public class ClipperTransitData extends TransitData {
             return new ClipperTransitData[size];
         }
     };
-    static final int RECORD_LENGTH = 32;
-    private static final long EPOCH_OFFSET = 0x83aa7f18;
-    public static final int APP_ID = 0x9011f2;
+    private static final int RECORD_LENGTH = 32;
+    static final TimeZone CLIPPER_TZ = TimeZone.getTimeZone("America/Los_Angeles");
+    private static final GregorianCalendar CLIPPER_EPOCH;
+
+    static {
+        GregorianCalendar epoch = new GregorianCalendar(TimeZone.getTimeZone("UTC"));
+        epoch.set(Calendar.YEAR, 1900);
+        epoch.set(Calendar.MONTH, Calendar.JANUARY);
+        epoch.set(Calendar.DAY_OF_MONTH, 1);
+        epoch.set(Calendar.HOUR, 0);
+        epoch.set(Calendar.MINUTE, 0);
+        epoch.set(Calendar.SECOND, 0);
+        epoch.set(Calendar.MILLISECOND, 0);
+
+        CLIPPER_EPOCH = epoch;
+    }
+
+    private static final int APP_ID = 0x9011f2;
+
     private long mSerialNumber;
     private short mBalance;
     private ClipperTrip[] mTrips;
@@ -129,14 +149,14 @@ public class ClipperTransitData extends TransitData {
         if (ClipperData.AGENCIES.containsKey(agency)) {
             return ClipperData.AGENCIES.get(agency);
         }
-        return MetrodroidApplication.getInstance().getString(R.string.unknown_format, "0x" + Long.toString(agency, 16));
+        return Utils.localizeString(R.string.unknown_format, "0x" + Long.toString(agency, 16));
     }
 
     public static String getShortAgencyName(int agency) {
         if (ClipperData.SHORT_AGENCIES.containsKey(agency)) {
             return ClipperData.SHORT_AGENCIES.get(agency);
         }
-        return MetrodroidApplication.getInstance().getString(R.string.unknown_format, "0x" + Long.toString(agency, 16));
+        return Utils.localizeString(R.string.unknown_format, "0x" + Long.toString(agency, 16));
     }
 
     @Override
@@ -162,11 +182,10 @@ public class ClipperTransitData extends TransitData {
 
     @Override
     public Trip[] getTrips() {
-        return mTrips;
-    }
-
-    public ClipperRefill[] getRefills() {
-        return mRefills;
+        // This is done in a roundabout way, as the base type used is the first parameter. Adding it
+        // to an empty Trip[] first, coerces types correctly from the start.
+        Trip[] t = new Trip[0];
+        return ArrayUtils.addAll(ArrayUtils.addAll(t, mTrips), mRefills);
     }
 
     private ClipperTrip[] parseTrips(DesfireCard card) {
@@ -185,14 +204,11 @@ public class ClipperTransitData extends TransitData {
             final ClipperTrip trip = createTrip(slice);
             if (trip != null) {
                 // Some transaction types are temporary -- remove previous trip with the same timestamp.
-                ClipperTrip existingTrip = Utils.findInList(result, new Utils.Matcher<ClipperTrip>() {
-                    @Override
-                    public boolean matches(ClipperTrip otherTrip) {
-                        return trip.getTimestamp() == otherTrip.getTimestamp();
-                    }
-                });
+                ClipperTrip existingTrip = Utils.findInList(result,
+                        otherTrip -> trip.getStartTimestamp().equals(otherTrip.getStartTimestamp()));
+
                 if (existingTrip != null) {
-                    if (existingTrip.getExitTimestamp() != 0) {
+                    if (existingTrip.getEndTimestamp() != null) {
                         // Old trip has exit timestamp, and is therefore better.
                         pos -= RECORD_LENGTH;
                         continue;
@@ -227,10 +243,10 @@ public class ClipperTransitData extends TransitData {
         if (agency == 0)
             return null;
 
-        // Use a magic number to offset the timestamp
-        timestamp -= EPOCH_OFFSET;
-
-        return new ClipperTrip(timestamp, exitTimestamp, fare, agency, from, to, route);
+        return new ClipperTrip(
+                clipperTimestampToCalendar(timestamp),
+                clipperTimestampToCalendar(exitTimestamp),
+                fare, agency, from, to, route);
     }
 
     private ClipperRefill[] parseRefills(DesfireCard card) {
@@ -253,28 +269,24 @@ public class ClipperTransitData extends TransitData {
         }
         ClipperRefill[] useLog = new ClipperRefill[result.size()];
         useLog = result.toArray(useLog);
-        Arrays.sort(useLog, new Comparator<ClipperRefill>() {
-            public int compare(ClipperRefill r, ClipperRefill r1) {
-                return Long.valueOf(r1.getTimestamp()).compareTo(r.getTimestamp());
-            }
-        });
+        Arrays.sort(useLog);
         return useLog;
     }
 
     private ClipperRefill createRefill(byte[] useData) {
-        long timestamp, agency, machineid;
+        long timestamp, agency;
+        String machineid;
         int amount;
 
         agency = Utils.byteArrayToLong(useData, 0x2, 2);
         timestamp = Utils.byteArrayToLong(useData, 0x4, 4);
-        machineid = Utils.byteArrayToLong(useData, 0x8, 4);
+        machineid = Utils.getHexString(useData, 0x8, 4);
         amount = Utils.byteArrayToInt(useData, 0xe, 2);
 
         if (timestamp == 0)
             return null;
 
-        timestamp -= EPOCH_OFFSET;
-        return new ClipperRefill(timestamp, amount, agency, machineid);
+        return new ClipperRefill(clipperTimestampToCalendar(timestamp), amount, agency, machineid);
     }
 
     public void writeToParcel(Parcel parcel, int flags) {
@@ -286,5 +298,12 @@ public class ClipperTransitData extends TransitData {
 
         parcel.writeInt(mRefills.length);
         parcel.writeTypedArray(mRefills, flags);
+    }
+
+    private static Calendar clipperTimestampToCalendar(long timestamp) {
+        Calendar c = new GregorianCalendar(CLIPPER_TZ);
+        //Log.d("clipperts", Long.toString(timestamp) + " " + Long.toHexString(timestamp));
+        c.setTimeInMillis(CLIPPER_EPOCH.getTimeInMillis() + (timestamp * 1000));
+        return c;
     }
 }

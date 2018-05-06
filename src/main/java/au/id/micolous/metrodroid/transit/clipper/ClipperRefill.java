@@ -3,6 +3,7 @@
  *
  * Copyright 2011 "an anonymous contributor"
  * Copyright 2011-2014 Eric Butler <eric@codebutler.com>
+ * Copyright 2018 Michael Farrell <micolous+git@gmail.com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -20,10 +21,18 @@
 package au.id.micolous.metrodroid.transit.clipper;
 
 import android.os.Parcel;
+import android.support.annotation.Nullable;
+import android.util.Log;
 
-import au.id.micolous.metrodroid.transit.Refill;
+import java.util.Calendar;
 
-public class ClipperRefill extends Refill {
+import au.id.micolous.farebot.R;
+import au.id.micolous.metrodroid.transit.Trip;
+import au.id.micolous.metrodroid.util.Utils;
+
+import static au.id.micolous.metrodroid.transit.clipper.ClipperTransitData.CLIPPER_TZ;
+
+public class ClipperRefill extends Trip {
     public static final Creator<ClipperRefill> CREATOR = new Creator<ClipperRefill>() {
         public ClipperRefill createFromParcel(Parcel parcel) {
             return new ClipperRefill(parcel);
@@ -33,12 +42,13 @@ public class ClipperRefill extends Refill {
             return new ClipperRefill[size];
         }
     };
-    final long mTimestamp;
-    final int mAmount;
-    final long mMachineID;
-    final long mAgency;
+    private final Calendar mTimestamp;
+    private final int mAmount;
+    private final String mMachineID;
+    private final long mAgency;
 
-    public ClipperRefill(long timestamp, int amount, long agency, long machineid) {
+    public ClipperRefill(Calendar timestamp, int amount, long agency, String machineid) {
+        // NOTE: All data must be in CLIPPER_TZ.
         mTimestamp = timestamp;
         mAmount = amount;
         mMachineID = machineid;
@@ -46,24 +56,21 @@ public class ClipperRefill extends Refill {
     }
 
     public ClipperRefill(Parcel parcel) {
-        mTimestamp = parcel.readLong();
+        mTimestamp = Utils.longToCalendar(parcel.readLong(), CLIPPER_TZ);
         mAmount = parcel.readInt();
-        mMachineID = parcel.readLong();
+        mMachineID = parcel.readString();
         mAgency = parcel.readLong();
     }
 
     @Override
-    public long getTimestamp() {
-        return mTimestamp;
+    public String getStartStationName() {
+        return Utils.localizeString(R.string.machine_id, mMachineID);
     }
 
     @Override
-    public int getAmount() {
-        return mAmount;
-    }
-
-    public long getMachineID() {
-        return mMachineID;
+    public Calendar getStartTimestamp() {
+        Log.d("rts", Long.toString(mTimestamp.getTimeInMillis()));
+        return mTimestamp;
     }
 
     @Override
@@ -76,10 +83,36 @@ public class ClipperRefill extends Refill {
         return ClipperTransitData.getShortAgencyName((int) mAgency);
     }
 
+    @Override
+    public boolean hasFare() {
+        return true;
+    }
+
+    @Nullable
+    @Override
+    public Integer getFare() {
+        return -mAmount;
+    }
+
+    @Override
+    public Mode getMode() {
+        return Mode.TICKET_MACHINE;
+    }
+
+    @Override
+    public boolean hasTime() {
+        return true;
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
     public void writeToParcel(Parcel parcel, int flags) {
-        parcel.writeLong(mTimestamp);
+        parcel.writeLong(Utils.calendarToLong(mTimestamp));
         parcel.writeInt(mAmount);
-        parcel.writeLong(mMachineID);
+        parcel.writeString(mMachineID);
         parcel.writeLong(mAgency);
     }
 }

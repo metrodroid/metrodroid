@@ -78,6 +78,8 @@
     <string name="turn_on_nfc">Please enable NFC to read card information.</string>
     <string name="wireless_settings">Wireless Settings</string>
     <string name="report_error">Report Error</string>
+    <!-- Translators: "Machine ID" is arbitrary. It could be a decimal number, or hexadecimal... -->
+    <string name="machine_id">Machine ID %s</string>
 
     <string name="unknown_card_header">Unknown card format</string>
     <string name="unknown_card_description">This card is not yet supported by Metrodroid. Only raw data can be displayed.</string>

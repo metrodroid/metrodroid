@@ -3,6 +3,7 @@
  *
  * Copyright 2011 "an anonymous contributor"
  * Copyright 2011-2014 Eric Butler <eric@codebutler.com>
+ * Copyright 2018 Michael Farrell <micolous+git@gmail.com>
  *
  * Thanks to:
  * An anonymous contributor for reverse engineering Clipper data and providing
@@ -26,11 +27,17 @@ package au.id.micolous.metrodroid.transit.clipper;
 import android.os.Parcel;
 import android.support.annotation.Nullable;
 
+import java.util.Calendar;
+import java.util.GregorianCalendar;
+
 import au.id.micolous.metrodroid.transit.CompatTrip;
 import au.id.micolous.metrodroid.transit.Station;
 import au.id.micolous.metrodroid.transit.Trip;
+import au.id.micolous.metrodroid.util.Utils;
 
-public class ClipperTrip extends CompatTrip {
+import static au.id.micolous.metrodroid.transit.clipper.ClipperTransitData.CLIPPER_TZ;
+
+public class ClipperTrip extends Trip {
     public static final Creator<ClipperTrip> CREATOR = new Creator<ClipperTrip>() {
         public ClipperTrip createFromParcel(Parcel parcel) {
             return new ClipperTrip(parcel);
@@ -40,15 +47,16 @@ public class ClipperTrip extends CompatTrip {
             return new ClipperTrip[size];
         }
     };
-    private final long mTimestamp;
-    private final long mExitTimestamp;
-    private final int mFare;
+    protected final Calendar mTimestamp;
+    private final Calendar mExitTimestamp;
+    protected final int mFare;
     private final int mAgency;
     private final int mFrom;
     private final int mTo;
     private final int mRoute;
 
-    public ClipperTrip(long timestamp, long exitTimestamp, int fare, int agency, int from, int to, int route) {
+    public ClipperTrip(Calendar timestamp, Calendar exitTimestamp, int fare, int agency, int from, int to, int route) {
+        // NOTE: All timestamps must be in CLIPPER_TZ.
         mTimestamp = timestamp;
         mExitTimestamp = exitTimestamp;
         mFare = fare;
@@ -59,23 +67,13 @@ public class ClipperTrip extends CompatTrip {
     }
 
     ClipperTrip(Parcel parcel) {
-        mTimestamp = parcel.readLong();
-        mExitTimestamp = parcel.readLong();
+        mTimestamp = Utils.longToCalendar(parcel.readLong(), CLIPPER_TZ);
+        mExitTimestamp = Utils.longToCalendar(parcel.readLong(), CLIPPER_TZ);
         mFare = parcel.readInt();
         mAgency = parcel.readInt();
         mFrom = parcel.readInt();
         mTo = parcel.readInt();
         mRoute = parcel.readInt();
-    }
-
-    @Override
-    public long getTimestamp() {
-        return mTimestamp;
-    }
-
-    @Override
-    public long getExitTimestamp() {
-        return mExitTimestamp;
     }
 
     @Override
@@ -86,6 +84,16 @@ public class ClipperTrip extends CompatTrip {
     @Override
     public String getShortAgencyName() {
         return ClipperTransitData.getShortAgencyName((int) mAgency);
+    }
+
+    @Override
+    public Calendar getStartTimestamp() {
+        return mTimestamp;
+    }
+
+    @Override
+    public Calendar getEndTimestamp() {
+        return mExitTimestamp;
     }
 
     @Override
@@ -212,8 +220,8 @@ public class ClipperTrip extends CompatTrip {
     }
 
     public void writeToParcel(Parcel parcel, int flags) {
-        parcel.writeLong(mTimestamp);
-        parcel.writeLong(mExitTimestamp);
+        parcel.writeLong(Utils.calendarToLong(mTimestamp));
+        parcel.writeLong(Utils.calendarToLong(mExitTimestamp));
         parcel.writeInt(mFare);
         parcel.writeInt(mAgency);
         parcel.writeInt(mFrom);
