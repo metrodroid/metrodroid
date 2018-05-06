@@ -82,7 +82,7 @@ android {
 
         // Limit language support to where we have translations.
         // Update this whenever new language translations become available in Weblate.
-        resConfigs 'en', 'en-rAU', 'en-rNZ', 'fi', 'fr', 'he', 'iw', 'ja', 'kab', 'nb-rNO', 'nl'
+        resConfigs 'en', 'en-rAU', 'en-rNZ', 'fi', 'fr', 'he', 'iw', 'ja', 'kab', 'nb-rNO', 'nl', 'tr'
 
         // We want to use the support library for vectors, rather than shipping huge rasters.
         vectorDrawables.useSupportLibrary = true
