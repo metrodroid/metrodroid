@@ -424,4 +424,6 @@
 \n
 \nDit vereist Android 5.0 of hoger, toegankelijkheidssoftware dit ondersteuning heeft voor de LocaleSpan-API (zoals bijv. Google TalkBack) en dat u de benodigde stemmen heeft geïnstalleerd.</string>
 
-    </resources>
+    <string name="convert_timezones">Tijden aanpassen aan huidige tijdzone</string>
+    <string name="convert_timezones_summary">Standaard laat Metrodroid reistijden zien zoals deze zijn in de tijdzone van de vervoerder. Als deze optie wordt ingeschakeld, dan zal Metrodroid de reistijden aanpassen an de huidige tijdzone van uw apparaat.</string>
+</resources>
