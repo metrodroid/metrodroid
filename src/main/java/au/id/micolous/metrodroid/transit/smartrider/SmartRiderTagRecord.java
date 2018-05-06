@@ -19,18 +19,21 @@
 package au.id.micolous.metrodroid.transit.smartrider;
 
 import android.support.annotation.NonNull;
+import android.util.Log;
 
 import au.id.micolous.metrodroid.util.Utils;
 
 import org.apache.commons.lang3.ArrayUtils;
 
 import java.util.Arrays;
+import java.util.Locale;
 
 /**
  * Represents a single "tag on" / "tag off" event.
  */
 
 public class SmartRiderTagRecord implements Comparable<SmartRiderTagRecord> {
+    private static final String TAG = SmartRiderTransitData.class.getSimpleName();
     private long mTimestamp;
     private boolean mTagOn;
     private String mRoute;
@@ -38,7 +41,7 @@ public class SmartRiderTagRecord implements Comparable<SmartRiderTagRecord> {
 
     public SmartRiderTagRecord(byte[] record) {
         byte[] ts = Utils.reverseBuffer(record, 3, 4);
-        mTimestamp = Utils.byteArrayToInt(ts);
+        mTimestamp = Utils.byteArrayToLong(ts);
 
         mTagOn = (record[7] & 0x10) == 0x10;
 
@@ -49,6 +52,8 @@ public class SmartRiderTagRecord implements Comparable<SmartRiderTagRecord> {
         byte[] cost = Utils.reverseBuffer(record, 13, 2);
         mCost = Utils.byteArrayToInt(cost);
 
+        Log.d(TAG, String.format(Locale.ENGLISH, "ts: %s, isTagOn: %s, route: %s, cost: %s",
+                mTimestamp, Boolean.toString(mTagOn), mRoute, mCost));
     }
 
     public long getTimestamp() {

@@ -35,6 +35,8 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
 import java.util.GregorianCalendar;
+import java.util.Locale;
+import java.util.TimeZone;
 
 /**
  * Reader for SmartRider (Western Australia) and MyWay (Australian Capital Territory / Canberra)
@@ -57,7 +59,36 @@ public class SmartRiderTransitData extends TransitData {
         }
     };
     private static final String TAG = "SmartRiderTransitData";
-    private static final GregorianCalendar SMARTRIDER_EPOCH = new GregorianCalendar(2000, Calendar.JANUARY, 1);
+    private static final TimeZone SMARTRIDER_TZ = TimeZone.getTimeZone("Australia/Perth");
+    private static final TimeZone MYWAY_TZ = TimeZone.getTimeZone("Australia/Sydney"); // Canberra
+
+    private static final long SMARTRIDER_EPOCH;
+    private static final long MYWAY_EPOCH;
+
+    static {
+        GregorianCalendar srEpoch = new GregorianCalendar(SMARTRIDER_TZ);
+        srEpoch.set(Calendar.YEAR, 2000);
+        srEpoch.set(Calendar.MONTH, Calendar.JANUARY);
+        srEpoch.set(Calendar.DAY_OF_MONTH, 1);
+        srEpoch.set(Calendar.HOUR_OF_DAY, 0);
+        srEpoch.set(Calendar.MINUTE, 0);
+        srEpoch.set(Calendar.SECOND, 0);
+        srEpoch.set(Calendar.MILLISECOND, 0);
+
+        SMARTRIDER_EPOCH = srEpoch.getTimeInMillis();
+
+        GregorianCalendar mwEpoch = new GregorianCalendar(MYWAY_TZ);
+        mwEpoch.set(Calendar.YEAR, 2000);
+        mwEpoch.set(Calendar.MONTH, Calendar.JANUARY);
+        mwEpoch.set(Calendar.DAY_OF_MONTH, 1);
+        mwEpoch.set(Calendar.HOUR_OF_DAY, 0);
+        mwEpoch.set(Calendar.MINUTE, 0);
+        mwEpoch.set(Calendar.SECOND, 0);
+        mwEpoch.set(Calendar.MILLISECOND, 0);
+
+        MYWAY_EPOCH = mwEpoch.getTimeInMillis();
+    }
+
     private String mSerialNumber;
     private int mBalance;
     private SmartRiderTrip[] mTrips;
@@ -205,6 +236,9 @@ public class SmartRiderTransitData extends TransitData {
                 }
 
                 trips.add(trip);
+                Log.d(TAG, String.format(Locale.ENGLISH, "epoch: %s", Utils.isoDateTimeFormat(addSmartRiderEpoch(0))));
+                Log.d(TAG, String.format(Locale.ENGLISH, "tripStart: %s, route: %s, cost: %s",
+                        Utils.isoDateTimeFormat(trip.mStartTime), trip.mRouteNumber, trip.mCost));
 
                 // Increment to go to the next record
                 i++;
@@ -249,10 +283,21 @@ public class SmartRiderTransitData extends TransitData {
         return new TransitIdentity(detectKeyType(card).getFriendlyName(), getSerialData(card));
     }
 
-    private static Calendar addSmartRiderEpoch(long epochTime) {
-        GregorianCalendar c = new GregorianCalendar();
-        c.setTimeInMillis(SMARTRIDER_EPOCH.getTimeInMillis());
-        c.add(Calendar.SECOND, (int) epochTime);
+    private Calendar addSmartRiderEpoch(long epochTime) {
+        GregorianCalendar c;
+        epochTime *= 1000;
+        switch (mCardType) {
+            case MYWAY:
+                c = new GregorianCalendar(MYWAY_TZ);
+                c.setTimeInMillis(MYWAY_EPOCH + epochTime);
+                break;
+
+            case SMARTRIDER:
+            default:
+                c = new GregorianCalendar(SMARTRIDER_TZ);
+                c.setTimeInMillis(SMARTRIDER_EPOCH + epochTime);
+                break;
+        }
         return c;
     }
 

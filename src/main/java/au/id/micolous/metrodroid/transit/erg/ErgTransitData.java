@@ -44,6 +44,7 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.GregorianCalendar;
 import java.util.List;
+import java.util.TimeZone;
 
 import au.id.micolous.farebot.R;
 
@@ -99,7 +100,7 @@ public class ErgTransitData extends TransitData {
                     continue;
                 }
 
-                ErgRecord record = ErgRecord.recordFromBytes(block.getData(), sector.getIndex(), block.getIndex());
+                ErgRecord record = ErgRecord.recordFromBytes(block.getData(), sector.getIndex(), block.getIndex(), getTimezone());
 
                 if (record != null) {
                     records.add(record);
@@ -255,4 +256,14 @@ public class ErgTransitData extends TransitData {
         return metadataRecord.getCardSerialHex();
     }
 
+    /**
+     * Allows you to override the timezone used for all dates and times. Default timezone is the
+     * current Android OS timezone.
+     *
+     * @return TimeZone for the card.
+     */
+    protected TimeZone getTimezone() {
+        // If we don't know the timezone, assume it is Android local timezone.
+        return TimeZone.getDefault();
+    }
 }

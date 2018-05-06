@@ -37,6 +37,7 @@ import android.support.annotation.Nullable;
 import au.id.micolous.metrodroid.card.felica.FelicaBlock;
 import au.id.micolous.metrodroid.transit.Station;
 import au.id.micolous.metrodroid.transit.Trip;
+import au.id.micolous.metrodroid.util.Utils;
 
 import net.kazzz.felica.lib.Util;
 
@@ -149,8 +150,7 @@ public class SuicaTrip extends Trip {
         mIsCharge = (parcel.readInt() == 1);
 
         mFare = parcel.readInt();
-        mTimestamp = GregorianCalendar.getInstance();
-        mTimestamp.setTimeInMillis(parcel.readLong());
+        mTimestamp = Utils.longToCalendar(parcel.readLong(), SuicaTransitData.TIME_ZONE);
         mRegionCode = parcel.readInt();
 
         mRailEntranceLineCode = parcel.readInt();
@@ -330,7 +330,7 @@ public class SuicaTrip extends Trip {
         parcel.writeInt(mIsCharge ? 1 : 0);
 
         parcel.writeInt(mFare);
-        parcel.writeLong(mTimestamp.getTimeInMillis());
+        parcel.writeLong(Utils.calendarToLong(mTimestamp));
         parcel.writeInt(mRegionCode);
 
         parcel.writeInt(mRailEntranceLineCode);

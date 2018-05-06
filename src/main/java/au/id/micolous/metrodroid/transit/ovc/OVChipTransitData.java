@@ -3,6 +3,7 @@
  *
  * Copyright 2012 Wilbert Duijvenvoorde <w.a.n.duijvenvoorde@gmail.com>
  * Copyright 2012 Eric Butler <eric@codebutler.com>
+ * Copyright 2018 Michael Farrell <micolous+git@gmail.com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -24,6 +25,17 @@ import android.os.Parcel;
 import android.support.annotation.Nullable;
 import android.text.Spanned;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Calendar;
+import java.util.Collections;
+import java.util.GregorianCalendar;
+import java.util.List;
+import java.util.Map;
+import java.util.TimeZone;
+
+import au.id.micolous.farebot.R;
+import au.id.micolous.metrodroid.MetrodroidApplication;
 import au.id.micolous.metrodroid.card.Card;
 import au.id.micolous.metrodroid.card.classic.ClassicCard;
 import au.id.micolous.metrodroid.transit.Subscription;
@@ -35,17 +47,6 @@ import au.id.micolous.metrodroid.ui.ListItem;
 import au.id.micolous.metrodroid.util.ImmutableMapBuilder;
 import au.id.micolous.metrodroid.util.TripObfuscator;
 import au.id.micolous.metrodroid.util.Utils;
-
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Calendar;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.List;
-import java.util.Map;
-
-import au.id.micolous.farebot.R;
-import au.id.micolous.metrodroid.MetrodroidApplication;
 
 
 public class OVChipTransitData extends TransitData {
@@ -70,6 +71,9 @@ public class OVChipTransitData extends TransitData {
     public static final int AGENCY_DUO = 0x0C;    // Could also be 2C though... ( http://www.ov-chipkaart.me/forum/viewtopic.php?f=10&t=299 )
     public static final int AGENCY_STORE = 0x19;
     public static final int AGENCY_DUO_ALT = 0x2C;
+
+    private static final TimeZone TIME_ZONE = TimeZone.getTimeZone("Europe/Amsterdam");
+
     public static final Creator<OVChipTransitData> CREATOR = new Creator<OVChipTransitData>() {
         public OVChipTransitData createFromParcel(Parcel parcel) {
             return new OVChipTransitData(parcel);
@@ -189,12 +193,7 @@ public class OVChipTransitData extends TransitData {
 
         List<OVChipSubscription> subs = new ArrayList<>();
         subs.addAll(Arrays.asList(parser.getSubscriptions()));
-        Collections.sort(subs, new Comparator<OVChipSubscription>() {
-            @Override
-            public int compare(OVChipSubscription s1, OVChipSubscription s2) {
-                return Integer.valueOf(s1.getId()).compareTo(s2.getId());
-            }
-        });
+        Collections.sort(subs, (s1, s2) -> Integer.valueOf(s1.getId()).compareTo(s2.getId()));
 
         mSubscriptions = subs.toArray(new OVChipSubscription[subs.size()]);
     }
@@ -225,7 +224,7 @@ public class OVChipTransitData extends TransitData {
     }
 
     public static Calendar convertDate(int date, int time) {
-        Calendar calendar = Calendar.getInstance();
+        Calendar calendar = new GregorianCalendar(TIME_ZONE);
         calendar.set(Calendar.YEAR, 1997);
         calendar.set(Calendar.MONTH, Calendar.JANUARY);
         calendar.set(Calendar.DAY_OF_MONTH, 1);

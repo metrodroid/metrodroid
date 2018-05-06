@@ -70,8 +70,21 @@ import au.id.micolous.metrodroid.MetrodroidApplication;
 
 public class Utils {
     private static final String TAG = "Utils";
-    private static final SimpleDateFormat ISO_DATETIME_FORMAT = new SimpleDateFormat("yyyy-MM-dd HH:mm", Locale.US);
-    private static final SimpleDateFormat ISO_DATE_FORMAT = new SimpleDateFormat("yyyy-MM-dd", Locale.US);
+
+    /** Formatter which returns ISO8601 datetime in UTC. */
+    private static final SimpleDateFormat ISO_DATETIME_FORMAT;
+    /** Formatter which returns ISO8601 date in UTC. */
+    private static final SimpleDateFormat ISO_DATE_FORMAT;
+    /** Reference to UTC timezone. */
+    public static final TimeZone UTC = TimeZone.getTimeZone("Etc/UTC");
+
+    static {
+        ISO_DATETIME_FORMAT = new SimpleDateFormat("yyyy-MM-dd HH:mm", Locale.US);
+        ISO_DATETIME_FORMAT.setTimeZone(UTC);
+
+        ISO_DATE_FORMAT = new SimpleDateFormat("yyyy-MM-dd", Locale.US);
+        ISO_DATE_FORMAT.setTimeZone(UTC);
+    }
 
     private Utils() {
     }
@@ -201,6 +214,10 @@ public class Utils {
 
     public static int byteArrayToInt(byte[] b, int offset, int length) {
         return (int) byteArrayToLong(b, offset, length);
+    }
+
+    public static long byteArrayToLong(byte[] b) {
+        return byteArrayToLong(b, 0, b.length);
     }
 
     public static long byteArrayToLong(byte[] b, int offset, int length) {
@@ -414,13 +431,33 @@ public class Utils {
         return res.getQuantityString(pluralResource, quantity, formatArgs);
     }
 
+    private static String formatCalendar(java.text.DateFormat df, Calendar c) {
+        if (!MetrodroidApplication.convertTimezones()) {
+            df.setTimeZone(c.getTimeZone());
+        } else {
+            df.setTimeZone(TimeZone.getDefault());
+        }
+
+        return df.format(c.getTime());
+    }
+
+    private static Calendar maybeConvertTimezone(Calendar input) {
+        if (MetrodroidApplication.convertTimezones()) {
+            Calendar o = new GregorianCalendar(TimeZone.getDefault());
+            o.setTimeInMillis(input.getTimeInMillis());
+            return o;
+        } else {
+            return input;
+        }
+    }
+
     // TODO: All these convert a Calendar back into a Date in order to handle
     //       android.text.format.DateFormat#get{Long,Medium,}{Date,Time}Format passing us back a
     //       java.util.DateFormat, rather than a CharSequence with the actual format to use.
     // TODO: Investigate using Joda Time or something else that sucks less than Java at handling dates.
     public static Spanned longDateFormat(Calendar date) {
         if (date == null) return new SpannableString("");
-        String s = DateFormat.getLongDateFormat(MetrodroidApplication.getInstance()).format(date.getTime());
+        String s = formatCalendar(DateFormat.getLongDateFormat(MetrodroidApplication.getInstance()), date);
 
         //Log.d(TAG, "Local TZ = " + DateFormat.getLongDateFormat(MetrodroidApplication.getInstance()).getTimeZone().getID());
         //Log.d(TAG, "Millis = " + Long.toString(date.getTimeInMillis()));
@@ -428,6 +465,8 @@ public class Utils {
 
         SpannableString b = new SpannableString(s);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            date = maybeConvertTimezone(date);
+
             b.setSpan(new TtsSpan.DateBuilder()
                     .setYear(date.get(Calendar.YEAR))
                     .setMonth(date.get(Calendar.MONTH))
@@ -441,10 +480,12 @@ public class Utils {
 
     public static Spanned dateFormat(Calendar date) {
         if (date == null) return new SpannableString("");
-        String s = DateFormat.getDateFormat(MetrodroidApplication.getInstance()).format(date.getTime());
+        String s = formatCalendar(DateFormat.getDateFormat(MetrodroidApplication.getInstance()), date);
 
         SpannableString b = new SpannableString(s);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            date = maybeConvertTimezone(date);
+
             b.setSpan(new TtsSpan.DateBuilder()
                     .setYear(date.get(Calendar.YEAR))
                     .setMonth(date.get(Calendar.MONTH))
@@ -457,15 +498,17 @@ public class Utils {
 
     public static Spanned timeFormat(Calendar date) {
         if (date == null) return new SpannableString("");
-        String s = DateFormat.getTimeFormat(MetrodroidApplication.getInstance()).format(date.getTime());
+        String s = formatCalendar(DateFormat.getTimeFormat(MetrodroidApplication.getInstance()), date);
 
         //Log.d(TAG, "Local TZ = " + DateFormat.getLongDateFormat(MetrodroidApplication.getInstance()).getTimeZone().getID());
         //Log.d(TAG, "Time = " + s);
 
         SpannableString b = new SpannableString(s);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            date = maybeConvertTimezone(date);
+
             b.setSpan(new TtsSpan.TimeBuilder(
-                    date.get(Calendar.HOUR), date.get(Calendar.MINUTE)), 0, b.length(), 0);
+                    date.get(Calendar.HOUR_OF_DAY), date.get(Calendar.MINUTE)), 0, b.length(), 0);
             b.setSpan(new LocaleSpan(Locale.getDefault()), 0, b.length(), 0);
         }
         return b;
@@ -473,32 +516,28 @@ public class Utils {
 
     public static Spanned dateTimeFormat(Calendar date) {
         if (date == null) return new SpannableString("");
-        String d = DateFormat.getDateFormat(MetrodroidApplication.getInstance()).format(date.getTime());
-        String t = DateFormat.getTimeFormat(MetrodroidApplication.getInstance()).format(date.getTime());
+        String d = formatCalendar(DateFormat.getDateFormat(MetrodroidApplication.getInstance()), date);
+        String t = formatCalendar(DateFormat.getTimeFormat(MetrodroidApplication.getInstance()), date);
 
         SpannableStringBuilder b = new SpannableStringBuilder(d);
         b.append(" ");
         b.append(t);
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            date = maybeConvertTimezone(date);
+
             b.setSpan(new TtsSpan.DateBuilder()
                     .setYear(date.get(Calendar.YEAR))
                     .setMonth(date.get(Calendar.MONTH))
                     .setDay(date.get(Calendar.DAY_OF_MONTH)), 0, d.length(), 0);
 
             b.setSpan(new TtsSpan.TimeBuilder(
-                    date.get(Calendar.HOUR), date.get(Calendar.MINUTE)), d.length() + 1, b.length(), 0);
+                    date.get(Calendar.HOUR_OF_DAY), date.get(Calendar.MINUTE)), d.length() + 1, b.length(), 0);
 
             b.setSpan(new LocaleSpan(Locale.getDefault()), 0, b.length(), 0);
         }
 
         return b;
-    }
-
-    public static Calendar millisToCalendar(long milliseconds) {
-        Calendar c = GregorianCalendar.getInstance();
-        c.setTimeInMillis(milliseconds);
-        return c;
     }
 
     /**

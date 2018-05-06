@@ -25,9 +25,13 @@ import android.support.annotation.Nullable;
 import au.id.micolous.metrodroid.transit.Station;
 import au.id.micolous.metrodroid.transit.Trip;
 import au.id.micolous.metrodroid.transit.nextfare.record.NextfareTopupRecord;
+import au.id.micolous.metrodroid.util.Utils;
 
 import java.util.Calendar;
 import java.util.GregorianCalendar;
+import java.util.TimeZone;
+
+import static au.id.micolous.metrodroid.util.Utils.UTC;
 
 /**
  * Represents trips on Nextfare
@@ -46,8 +50,8 @@ public class NextfareTrip extends Trip implements Comparable<NextfareTrip> {
     protected int mJourneyId;
     protected Mode mMode;
     protected int mModeInt;
-    protected GregorianCalendar mStartTime;
-    protected GregorianCalendar mEndTime;
+    protected Calendar mStartTime;
+    protected Calendar mEndTime;
     protected int mStartStation;
     protected int mEndStation;
     protected boolean mContinuation;
@@ -55,18 +59,9 @@ public class NextfareTrip extends Trip implements Comparable<NextfareTrip> {
 
     public NextfareTrip(Parcel parcel) {
         mJourneyId = parcel.readInt();
-        long startTime = parcel.readLong();
-        if (startTime != 0) {
-            mStartTime = new GregorianCalendar();
-            mStartTime.setTimeInMillis(startTime);
-        }
-
-        long endTime = parcel.readLong();
-        if (endTime != 0) {
-            mEndTime = new GregorianCalendar();
-            mEndTime.setTimeInMillis(endTime);
-        }
-
+        TimeZone tz = TimeZone.getTimeZone(parcel.readString());
+        mStartTime = Utils.longToCalendar(parcel.readLong(), tz);
+        mEndTime = Utils.longToCalendar(parcel.readLong(), tz);
         mMode = Mode.valueOf(parcel.readString());
         mStartStation = parcel.readInt();
         mEndStation = parcel.readInt();
@@ -144,8 +139,9 @@ public class NextfareTrip extends Trip implements Comparable<NextfareTrip> {
     @Override
     public void writeToParcel(Parcel parcel, int i) {
         parcel.writeInt(mJourneyId);
-        parcel.writeLong(mStartTime == null ? 0 : mStartTime.getTimeInMillis());
-        parcel.writeLong(mEndTime == null ? 0 : mEndTime.getTimeInMillis());
+        parcel.writeString(mStartTime == null ? UTC.getID() : mStartTime.getTimeZone().getID());
+        parcel.writeLong(Utils.calendarToLong(mStartTime));
+        parcel.writeLong(Utils.calendarToLong(mEndTime));
         parcel.writeString(mMode.toString());
         parcel.writeInt(mStartStation);
         parcel.writeInt(mEndStation);

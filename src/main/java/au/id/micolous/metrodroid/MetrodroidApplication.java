@@ -80,6 +80,7 @@ public class MetrodroidApplication extends Application {
     public static final String PREF_OBFUSCATE_BALANCE = "pref_obfuscate_balance";
 
     public static final String PREF_LOCALISE_PLACES = "pref_localise_places";
+    public static final String PREF_CONVERT_TIMEZONES = "pref_convert_timezones";
 
     private static MetrodroidApplication sInstance;
 
@@ -170,6 +171,10 @@ public class MetrodroidApplication extends Application {
 
     public static boolean localisePlaces() {
         return getBooleanPref(PREF_LOCALISE_PLACES, false);
+    }
+
+    public static boolean convertTimezones() {
+        return getBooleanPref(PREF_CONVERT_TIMEZONES, false);
     }
 
     public Serializer getSerializer() {

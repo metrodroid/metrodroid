@@ -1,7 +1,7 @@
 /*
  * NextfareTravelPassRecord.java
  *
- * Copyright 2016 Michael Farrell <micolous+git@gmail.com>
+ * Copyright 2016-2018 Michael Farrell <micolous+git@gmail.com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -26,7 +26,9 @@ import android.util.Log;
 import au.id.micolous.metrodroid.transit.nextfare.NextfareUtil;
 import au.id.micolous.metrodroid.util.Utils;
 
+import java.util.Calendar;
 import java.util.GregorianCalendar;
+import java.util.TimeZone;
 
 /**
  * Travel pass record type
@@ -46,7 +48,7 @@ public class NextfareTravelPassRecord extends NextfareRecord implements Parcelab
         }
     };
     private static final String TAG = "NextfareTravelPassRec";
-    private GregorianCalendar mExpiry;
+    private Calendar mExpiry;
     private int mChecksum;
     private boolean mAutomatic;
     private int mVersion;
@@ -55,13 +57,13 @@ public class NextfareTravelPassRecord extends NextfareRecord implements Parcelab
     }
 
     public NextfareTravelPassRecord(Parcel parcel) {
-        mExpiry = new GregorianCalendar();
-        mExpiry.setTimeInMillis(parcel.readLong());
+        TimeZone tz = TimeZone.getTimeZone(parcel.readString());
+        mExpiry = Utils.longToCalendar(parcel.readLong(), tz);
         mChecksum = parcel.readInt();
         mAutomatic = parcel.readInt() == 1;
     }
 
-    public static NextfareTravelPassRecord recordFromBytes(byte[] input) {
+    public static NextfareTravelPassRecord recordFromBytes(byte[] input, TimeZone timeZone) {
         //if ((input[0] != 0x01 && input[0] != 0x31) || input[1] != 0x01) throw new AssertionError("Not a topup record");
         byte[] ts = Utils.reverseBuffer(input, 2, 4);
         Log.d(TAG, "ts = " + Utils.getHexString(ts));
@@ -73,7 +75,7 @@ public class NextfareTravelPassRecord extends NextfareRecord implements Parcelab
         NextfareTravelPassRecord record = new NextfareTravelPassRecord();
         record.mVersion = Utils.byteArrayToInt(input, 13, 1);
 
-        record.mExpiry = NextfareUtil.unpackDate(ts);
+        record.mExpiry = NextfareUtil.unpackDate(ts, timeZone);
 
 
         byte[] checksum = Utils.reverseBuffer(input, 14, 2);
@@ -95,12 +97,13 @@ public class NextfareTravelPassRecord extends NextfareRecord implements Parcelab
 
     @Override
     public void writeToParcel(Parcel parcel, int i) {
-        parcel.writeLong(mExpiry.getTimeInMillis());
+        parcel.writeString(mExpiry.getTimeZone().getID());
+        parcel.writeLong(Utils.calendarToLong(mExpiry));
         parcel.writeInt(mChecksum);
         parcel.writeInt(mAutomatic ? 1 : 0);
     }
 
-    public GregorianCalendar getTimestamp() {
+    public Calendar getTimestamp() {
         return mExpiry;
     }
 

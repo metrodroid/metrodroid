@@ -4,7 +4,7 @@
   prefs.xml
 
   Copyright 2011 Eric Butler <eric@codebutler.com>
-  Copyright 2016 Michael Farrell <mioolous+git@gmail.com>
+  Copyright 2016-2018 Michael Farrell <mioolous+git@gmail.com>
 
   This program is free software: you can redistribute it and/or modify
   it under the terms of the GNU General Public License as published by
@@ -29,6 +29,11 @@
             android:title="@string/launch_from_background"
             android:persistent="false"
             android:key="pref_launch_from_background"/>
+        <CheckBoxPreference
+            android:title="Convert times to current timezone"
+            android:summary="By default, Metrodroid displays travel times in the timezone of the transit agency. If this option is enabled, Metrodroid will convert travel times to your device's current timezone."
+            android:key="pref_convert_timezones"
+            android:defaultValue="false"/>
     </PreferenceCategory>
 
     <PreferenceCategory android:title="Maps">

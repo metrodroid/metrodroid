@@ -37,12 +37,7 @@ import au.id.micolous.metrodroid.util.StationTableReader;
 public class OVChipTrip extends Trip {
     private static final String TAG = "OVChipTrip";
 
-    public static final java.util.Comparator<? super OVChipTrip> ID_ORDER = new java.util.Comparator<OVChipTrip>() {
-        @Override
-        public int compare(OVChipTrip t1, OVChipTrip t2) {
-            return Integer.valueOf(t1.getId()).compareTo(t2.getId());
-        }
-    };
+    public static final java.util.Comparator<? super OVChipTrip> ID_ORDER = (java.util.Comparator<OVChipTrip>) (t1, t2) -> Integer.valueOf(t1.getId()).compareTo(t2.getId());
     public static final Creator<OVChipTrip> CREATOR = new Creator<OVChipTrip>() {
         public OVChipTrip createFromParcel(Parcel parcel) {
             return new OVChipTrip(parcel);

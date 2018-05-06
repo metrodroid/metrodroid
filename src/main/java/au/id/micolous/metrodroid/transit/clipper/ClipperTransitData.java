@@ -66,11 +66,11 @@ public class ClipperTransitData extends TransitData {
     private static final GregorianCalendar CLIPPER_EPOCH;
 
     static {
-        GregorianCalendar epoch = new GregorianCalendar(TimeZone.getTimeZone("UTC"));
+        GregorianCalendar epoch = new GregorianCalendar(Utils.UTC);
         epoch.set(Calendar.YEAR, 1900);
         epoch.set(Calendar.MONTH, Calendar.JANUARY);
         epoch.set(Calendar.DAY_OF_MONTH, 1);
-        epoch.set(Calendar.HOUR, 0);
+        epoch.set(Calendar.HOUR_OF_DAY, 0);
         epoch.set(Calendar.MINUTE, 0);
         epoch.set(Calendar.SECOND, 0);
         epoch.set(Calendar.MILLISECOND, 0);

@@ -53,7 +53,7 @@ final class SuicaUtil {
         int yy = date >> 9;
         int mm = (date >> 5) & 0xf;
         int dd = date & 0x1f;
-        Calendar c = GregorianCalendar.getInstance();
+        Calendar c = new GregorianCalendar(SuicaTransitData.TIME_ZONE);
         c.set(Calendar.YEAR, 2000 + yy);
         c.set(Calendar.MONTH, mm - 1);
         c.set(Calendar.DAY_OF_MONTH, dd);

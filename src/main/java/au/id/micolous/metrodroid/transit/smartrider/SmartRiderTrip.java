@@ -6,10 +6,12 @@ import android.support.annotation.Nullable;
 
 import java.util.Calendar;
 import java.util.GregorianCalendar;
+import java.util.TimeZone;
 
 import au.id.micolous.metrodroid.transit.CompatTrip;
 import au.id.micolous.metrodroid.transit.Station;
 import au.id.micolous.metrodroid.transit.Trip;
+import au.id.micolous.metrodroid.util.Utils;
 
 /**
  * Trip on SmartRider / MyWay
@@ -35,17 +37,10 @@ public class SmartRiderTrip extends Trip {
 
     public SmartRiderTrip(Parcel parcel) {
         mCardType = SmartRiderTransitData.CardType.valueOf(parcel.readString());
-        long startTime = parcel.readLong();
-        if (startTime != 0) {
-            mStartTime = new GregorianCalendar();
-            mStartTime.setTimeInMillis(startTime);
-        }
 
-        long endTime = parcel.readLong();
-        if (endTime != 0) {
-            mEndTime = new GregorianCalendar();
-            mEndTime.setTimeInMillis(endTime);
-        }
+        TimeZone tz = TimeZone.getTimeZone(parcel.readString());
+        mStartTime = Utils.longToCalendar(parcel.readLong(), tz);
+        mEndTime = Utils.longToCalendar(parcel.readLong(), tz);
 
         mCost = parcel.readInt();
         mRouteNumber = parcel.readString();
@@ -130,8 +125,9 @@ public class SmartRiderTrip extends Trip {
     @Override
     public void writeToParcel(Parcel parcel, int i) {
         parcel.writeString(mCardType.toString());
-        parcel.writeLong(mStartTime == null ? 0 : mStartTime.getTimeInMillis());
-        parcel.writeLong(mEndTime == null ? 0 : mEndTime.getTimeInMillis());
+        parcel.writeString(mStartTime == null ? Utils.UTC.getID() : mStartTime.getTimeZone().getID());
+        parcel.writeLong(Utils.calendarToLong(mStartTime));
+        parcel.writeLong(Utils.calendarToLong(mEndTime));
         parcel.writeInt(mCost);
         parcel.writeString(mRouteNumber);
     }

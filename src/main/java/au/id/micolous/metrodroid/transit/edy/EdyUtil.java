@@ -3,6 +3,7 @@ package au.id.micolous.metrodroid.transit.edy;
 import net.kazzz.felica.lib.Util;
 
 import java.util.Calendar;
+import java.util.GregorianCalendar;
 
 final class EdyUtil {
     private EdyUtil() {
@@ -16,7 +17,7 @@ final class EdyUtil {
         int dateoffset = fulloffset >>> 17;
         int timeoffset = fulloffset & 0x1ffff;
 
-        Calendar c = Calendar.getInstance();
+        Calendar c = new GregorianCalendar(EdyTransitData.TIME_ZONE);
         c.set(2000, 0, 1, 0, 0, 0);
         c.add(Calendar.DATE, dateoffset);
         c.add(Calendar.SECOND, timeoffset);

@@ -1,7 +1,7 @@
 /*
  * NextfareConfigRecord.java
  *
- * Copyright 2016 Michael Farrell <micolous+git@gmail.com>
+ * Copyright 2016-2018 Michael Farrell <micolous+git@gmail.com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -25,7 +25,9 @@ import android.util.Log;
 import au.id.micolous.metrodroid.transit.nextfare.NextfareUtil;
 import au.id.micolous.metrodroid.util.Utils;
 
+import java.util.Calendar;
 import java.util.GregorianCalendar;
+import java.util.TimeZone;
 
 /**
  * Represents a configuration record on Nextfare MFC.
@@ -46,23 +48,25 @@ public class NextfareConfigRecord extends NextfareRecord implements Parcelable {
     };
     private static final String TAG = "NextfareConfigRecord";
     private int mTicketType;
-    private GregorianCalendar mExpiry;
+    private Calendar mExpiry;
 
     protected NextfareConfigRecord() {
     }
 
     public NextfareConfigRecord(Parcel p) {
+        TimeZone tz = TimeZone.getTimeZone(p.readString());
+        mExpiry = Utils.longToCalendar(p.readLong(), tz);
         mTicketType = p.readInt();
     }
 
-    public static NextfareConfigRecord recordFromBytes(byte[] input) {
+    public static NextfareConfigRecord recordFromBytes(byte[] input, TimeZone timeZone) {
         //if (input[0] != 0x01) throw new AssertionError();
 
         NextfareConfigRecord record = new NextfareConfigRecord();
 
         // Expiry date
         byte[] expiry = Utils.reverseBuffer(input, 4, 4);
-        record.mExpiry = NextfareUtil.unpackDate(expiry);
+        record.mExpiry = NextfareUtil.unpackDate(expiry, timeZone);
 
         // Treat ticket type as little-endian
         byte[] ticketType = Utils.reverseBuffer(input, 8, 2);
@@ -76,7 +80,7 @@ public class NextfareConfigRecord extends NextfareRecord implements Parcelable {
         return mTicketType;
     }
 
-    public GregorianCalendar getExpiry() {
+    public Calendar getExpiry() {
         return mExpiry;
     }
 
@@ -87,6 +91,8 @@ public class NextfareConfigRecord extends NextfareRecord implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel parcel, int i) {
+        parcel.writeString(mExpiry.getTimeZone().getID());
+        parcel.writeLong(Utils.calendarToLong(mExpiry));
         parcel.writeInt(mTicketType);
     }
 }

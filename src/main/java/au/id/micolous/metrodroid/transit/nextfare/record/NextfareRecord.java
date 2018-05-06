@@ -1,7 +1,7 @@
 /*
  * NextfareRecord.java
  *
- * Copyright 2015-2016 Michael Farrell <micolous+git@gmail.com>
+ * Copyright 2015-2018 Michael Farrell <micolous+git@gmail.com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -21,6 +21,8 @@ package au.id.micolous.metrodroid.transit.nextfare.record;
 
 import android.util.Log;
 
+import java.util.TimeZone;
+
 import au.id.micolous.metrodroid.util.Utils;
 
 /**
@@ -34,7 +36,7 @@ public class NextfareRecord {
     protected NextfareRecord() {
     }
 
-    public static NextfareRecord recordFromBytes(byte[] input, int sectorIndex, int blockIndex) {
+    public static NextfareRecord recordFromBytes(byte[] input, int sectorIndex, int blockIndex, TimeZone timeZone) {
         NextfareRecord record = null;
         Log.d(TAG, "Record: " + Utils.getHexString(input));
 
@@ -43,16 +45,16 @@ public class NextfareRecord {
             record = NextfareBalanceRecord.recordFromBytes(input);
         } else if (sectorIndex == 1 && blockIndex == 2) {
             Log.d(TAG, "Configuration record");
-            record = NextfareConfigRecord.recordFromBytes(input);
+            record = NextfareConfigRecord.recordFromBytes(input, timeZone);
         } else if (sectorIndex == 2) {
             Log.d(TAG, "Top-up record");
-            record = NextfareTopupRecord.recordFromBytes(input);
+            record = NextfareTopupRecord.recordFromBytes(input, timeZone);
         } else if (sectorIndex == 3) {
             Log.d(TAG, "Travel pass record");
-            record = NextfareTravelPassRecord.recordFromBytes(input);
+            record = NextfareTravelPassRecord.recordFromBytes(input, timeZone);
         } else if (sectorIndex >= 5 && sectorIndex <= 8) {
             Log.d(TAG, "Transaction record");
-            record = NextfareTransactionRecord.recordFromBytes(input);
+            record = NextfareTransactionRecord.recordFromBytes(input, timeZone);
         }
         return record;
     }

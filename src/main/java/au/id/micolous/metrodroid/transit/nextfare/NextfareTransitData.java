@@ -29,6 +29,7 @@ import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Collections;
 import java.util.List;
+import java.util.TimeZone;
 
 import au.id.micolous.farebot.R;
 import au.id.micolous.metrodroid.card.UnauthorizedException;
@@ -112,7 +113,8 @@ public class NextfareTransitData extends TransitData {
                 }
 
                 Log.d(TAG, "Sector " + sector.getIndex() + " / Block " + block.getIndex());
-                NextfareRecord record = NextfareRecord.recordFromBytes(block.getData(), sector.getIndex(), block.getIndex());
+                NextfareRecord record = NextfareRecord.recordFromBytes(
+                        block.getData(), sector.getIndex(), block.getIndex(), getTimezone());
 
                 if (record != null) {
                     records.add(record);
@@ -359,6 +361,17 @@ public class NextfareTransitData extends TransitData {
      */
     protected Trip.Mode lookupMode(int mode, int stationId) {
         return Trip.Mode.OTHER;
+    }
+
+    /**
+     * Allows you to override the timezone used for all dates and times. Default timezone is the
+     * current Android OS timezone.
+     *
+     * @return TimeZone for the card.
+     */
+    protected TimeZone getTimezone() {
+        // If we don't know the timezone, assume it is Android local timezone.
+        return TimeZone.getDefault();
     }
 
     @Nullable

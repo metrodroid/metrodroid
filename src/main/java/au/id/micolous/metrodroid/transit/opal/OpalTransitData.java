@@ -57,8 +57,22 @@ public class OpalTransitData extends TransitData {
     public static final int APP_ID = 0x314553;
     public static final int FILE_ID = 0x7;
 
-    private static final TimeZone OPAL_TZ = TimeZone.getTimeZone("Australia/Sydney");
-    private static final GregorianCalendar OPAL_EPOCH = new GregorianCalendar(1980, Calendar.JANUARY, 1);
+    public static final TimeZone TIME_ZONE = TimeZone.getTimeZone("Australia/Sydney");
+    private static final GregorianCalendar OPAL_EPOCH;
+
+    static {
+        GregorianCalendar epoch = new GregorianCalendar(TIME_ZONE);
+        epoch.set(Calendar.YEAR, 1980);
+        epoch.set(Calendar.MONTH, Calendar.JANUARY);
+        epoch.set(Calendar.DAY_OF_MONTH, 1);
+        epoch.set(Calendar.HOUR_OF_DAY, 0);
+        epoch.set(Calendar.MINUTE, 0);
+        epoch.set(Calendar.SECOND, 0);
+        epoch.set(Calendar.MILLISECOND, 0);
+
+        OPAL_EPOCH = epoch;
+    }
+
     private static final OpalSubscription OPAL_AUTOMATIC_TOP_UP = new OpalSubscription();
     private int mSerialNumber;
     private int mBalance; // cents
@@ -158,10 +172,12 @@ public class OpalTransitData extends TransitData {
     }
 
     public Calendar getLastTransactionTime() {
-        Calendar cLastTransaction = GregorianCalendar.getInstance();
+        Calendar cLastTransaction = new GregorianCalendar(TIME_ZONE);
         cLastTransaction.setTimeInMillis(OPAL_EPOCH.getTimeInMillis());
-        cLastTransaction.setTimeZone(OPAL_TZ);
         cLastTransaction.add(Calendar.DATE, mDay);
+
+        // Time is set this way, as in Opal all days have 24 hours, even when there is a DST
+        // transition.
         cLastTransaction.set(Calendar.HOUR_OF_DAY, mMinute / 60); // floor-divide
         cLastTransaction.set(Calendar.MINUTE, mMinute % 60);
         return cLastTransaction;

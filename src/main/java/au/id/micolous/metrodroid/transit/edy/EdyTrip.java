@@ -5,7 +5,6 @@ import android.os.Parcel;
 import android.support.annotation.Nullable;
 
 import au.id.micolous.metrodroid.card.felica.FelicaBlock;
-import au.id.micolous.metrodroid.transit.Station;
 import au.id.micolous.metrodroid.transit.Trip;
 
 import net.kazzz.felica.lib.Util;
@@ -56,7 +55,7 @@ public class EdyTrip extends Trip {
         mSequenceNumber = parcel.readInt();
         long t = parcel.readLong();
         if (t != 0) {
-            mTimestamp = GregorianCalendar.getInstance();
+            mTimestamp = new GregorianCalendar(EdyTransitData.TIME_ZONE);
             mTimestamp.setTimeInMillis(t);
         } else {
             mTimestamp = null;
@@ -88,13 +87,6 @@ public class EdyTrip extends Trip {
     @Override
     public Calendar getStartTimestamp() {
         return mTimestamp;
-    }
-
-    public long getTimestamp() {
-        if (mTimestamp != null)
-            return mTimestamp.getTimeInMillis() / 1000;
-        else
-            return 0;
     }
 
     public boolean hasFare() {
@@ -140,7 +132,4 @@ public class EdyTrip extends Trip {
         return 0;
     }
 
-    public long getExitTimestamp() {
-        return 0;
-    }
 }

@@ -1,7 +1,7 @@
 /*
  * NextfareTapRecord.java
  *
- * Copyright 2015-2016 Michael Farrell <micolous+git@gmail.com>
+ * Copyright 2015-2018 Michael Farrell <micolous+git@gmail.com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -27,7 +27,9 @@ import android.util.Log;
 import au.id.micolous.metrodroid.transit.nextfare.NextfareUtil;
 import au.id.micolous.metrodroid.util.Utils;
 
+import java.util.Calendar;
 import java.util.GregorianCalendar;
+import java.util.TimeZone;
 
 /**
  * Tap record type
@@ -46,7 +48,7 @@ public class NextfareTransactionRecord extends NextfareRecord implements Parcela
         }
     };
     private static final String TAG = "NextfareTxnRecord";
-    private GregorianCalendar mTimestamp;
+    private Calendar mTimestamp;
     private int mMode;
     private int mJourney;
     private int mStation;
@@ -58,8 +60,8 @@ public class NextfareTransactionRecord extends NextfareRecord implements Parcela
     }
 
     public NextfareTransactionRecord(Parcel parcel) {
-        mTimestamp = new GregorianCalendar();
-        mTimestamp.setTimeInMillis(parcel.readLong());
+        TimeZone tz = TimeZone.getTimeZone(parcel.readString());
+        mTimestamp = Utils.longToCalendar(parcel.readLong(), tz);
         mMode = parcel.readInt();
         mJourney = parcel.readInt();
         mStation = parcel.readInt();
@@ -68,7 +70,7 @@ public class NextfareTransactionRecord extends NextfareRecord implements Parcela
         mValue = parcel.readInt();
     }
 
-    public static NextfareTransactionRecord recordFromBytes(byte[] input) {
+    public static NextfareTransactionRecord recordFromBytes(byte[] input, TimeZone timeZone) {
         //if (input[0] != 0x31) throw new AssertionError("not a tap record");
 
         // LAX:      input[0] == 0x05 for "Travel Pass" trips.
@@ -92,7 +94,7 @@ public class NextfareTransactionRecord extends NextfareRecord implements Parcela
         record.mMode = Utils.byteArrayToInt(input, 1, 1);
 
         byte[] ts = Utils.reverseBuffer(input, 2, 4);
-        record.mTimestamp = NextfareUtil.unpackDate(ts);
+        record.mTimestamp = NextfareUtil.unpackDate(ts, timeZone);
 
         byte[] journey = Utils.reverseBuffer(input, 5, 2);
         record.mJourney = Utils.byteArrayToInt(journey) >> 5;
@@ -124,7 +126,8 @@ public class NextfareTransactionRecord extends NextfareRecord implements Parcela
 
     @Override
     public void writeToParcel(Parcel parcel, int i) {
-        parcel.writeLong(mTimestamp.getTimeInMillis());
+        parcel.writeString(mTimestamp.getTimeZone().getID());
+        parcel.writeLong(Utils.calendarToLong(mTimestamp));
         parcel.writeInt(mMode);
         parcel.writeInt(mJourney);
         parcel.writeInt(mStation);
@@ -137,7 +140,7 @@ public class NextfareTransactionRecord extends NextfareRecord implements Parcela
         return mMode;
     }
 
-    public GregorianCalendar getTimestamp() {
+    public Calendar getTimestamp() {
         return mTimestamp;
     }
 

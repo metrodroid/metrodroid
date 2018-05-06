@@ -1,7 +1,7 @@
 /*
  * NextfareTopupRecord.java
  *
- * Copyright 2015-2016 Michael Farrell <micolous+git@gmail.com>
+ * Copyright 2015-2018 Michael Farrell <micolous+git@gmail.com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -26,7 +26,9 @@ import android.util.Log;
 import au.id.micolous.metrodroid.transit.nextfare.NextfareUtil;
 import au.id.micolous.metrodroid.util.Utils;
 
+import java.util.Calendar;
 import java.util.GregorianCalendar;
+import java.util.TimeZone;
 
 /**
  * Top-up record type
@@ -45,7 +47,7 @@ public class NextfareTopupRecord extends NextfareRecord implements Parcelable {
         }
     };
     private static final String TAG = "NextfareTopupRecord";
-    private GregorianCalendar mTimestamp;
+    private Calendar mTimestamp;
     private int mCredit;
     private int mStation;
     private int mChecksum;
@@ -55,15 +57,15 @@ public class NextfareTopupRecord extends NextfareRecord implements Parcelable {
     }
 
     public NextfareTopupRecord(Parcel parcel) {
-        mTimestamp = new GregorianCalendar();
-        mTimestamp.setTimeInMillis(parcel.readLong());
+        TimeZone tz = TimeZone.getTimeZone(parcel.readString());
+        mTimestamp = Utils.longToCalendar(parcel.readLong(), tz);
         mCredit = parcel.readInt();
         mStation = parcel.readInt();
         mChecksum = parcel.readInt();
         mAutomatic = parcel.readInt() == 1;
     }
 
-    public static NextfareTopupRecord recordFromBytes(byte[] input) {
+    public static NextfareTopupRecord recordFromBytes(byte[] input, TimeZone timeZone) {
         //if ((input[0] != 0x01 && input[0] != 0x31) || input[1] != 0x01) throw new AssertionError("Not a topup record");
 
         // Check if all the other data is null
@@ -75,7 +77,7 @@ public class NextfareTopupRecord extends NextfareRecord implements Parcelable {
         NextfareTopupRecord record = new NextfareTopupRecord();
 
         byte[] ts = Utils.reverseBuffer(input, 2, 4);
-        record.mTimestamp = NextfareUtil.unpackDate(ts);
+        record.mTimestamp = NextfareUtil.unpackDate(ts, timeZone);
 
         byte[] credit = Utils.reverseBuffer(input, 6, 2);
         record.mCredit = Utils.byteArrayToInt(credit) & 0x7FFF;
@@ -100,14 +102,15 @@ public class NextfareTopupRecord extends NextfareRecord implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel parcel, int i) {
-        parcel.writeLong(mTimestamp.getTimeInMillis());
+        parcel.writeString(mTimestamp.getTimeZone().getID());
+        parcel.writeLong(Utils.calendarToLong(mTimestamp));
         parcel.writeInt(mCredit);
         parcel.writeInt(mStation);
         parcel.writeInt(mChecksum);
         parcel.writeInt(mAutomatic ? 1 : 0);
     }
 
-    public GregorianCalendar getTimestamp() {
+    public Calendar getTimestamp() {
         return mTimestamp;
     }
 

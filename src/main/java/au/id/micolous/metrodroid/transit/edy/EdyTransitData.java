@@ -43,6 +43,7 @@ import org.apache.commons.lang3.ArrayUtils;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.TimeZone;
 
 public class EdyTransitData extends TransitData {
     // defines
@@ -52,6 +53,8 @@ public class EdyTransitData extends TransitData {
     public static final int FELICA_MODE_EDY_DEBIT = 0x20;
     public static final int FELICA_MODE_EDY_CHARGE = 0x02;
     public static final int FELICA_MODE_EDY_GIFT = 0x04;
+    static final TimeZone TIME_ZONE = TimeZone.getTimeZone("Asia/Tokyo");
+
     public static final Creator<EdyTransitData> CREATOR = new Creator<EdyTransitData>() {
         public EdyTransitData createFromParcel(Parcel parcel) {
             return new EdyTransitData(parcel);

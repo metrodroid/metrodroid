@@ -33,12 +33,28 @@ import junit.framework.TestCase;
 
 import java.time.ZoneOffset;
 import java.util.Calendar;
+import java.util.TimeZone;
 
 /**
  * Tests for Opal card
  */
 
 public class OpalTest extends TestCase {
+    private TimeZone originalTz;
+
+    @Override
+    protected void setUp() throws Exception {
+        super.setUp();
+        originalTz = TimeZone.getDefault();
+        TimeZone.setDefault(OpalTransitData.TIME_ZONE);
+    }
+
+    @Override
+    protected void tearDown() throws Exception {
+        super.tearDown();
+        TimeZone.setDefault(originalTz);
+    }
+
     private DesfireCard constructOpalCardFromHexString(String s) {
         byte[] demoData = Utils.hexStringToByteArray(s);
 
@@ -68,7 +84,8 @@ public class OpalTest extends TestCase {
         assertEquals("3085220012345670", o.getSerialNumber());
         assertEquals(336, o.getBalance().intValue());
         assertEquals(0, o.getSubscriptions().length);
-        assertEquals("2015-10-05 09:06", Utils.isoDateTimeFormat(o.getLastTransactionTime()));
+        // 2015-10-05 09:06 UTC+11
+        assertEquals("2015-10-04 22:06", Utils.isoDateTimeFormat(o.getLastTransactionTime()));
         assertEquals(OpalData.MODE_BUS, o.getLastTransactionMode());
         assertEquals(OpalData.ACTION_JOURNEY_COMPLETED_DISTANCE, o.getLastTransaction());
         assertEquals(39, o.getLastTransactionNumber());
@@ -80,10 +97,11 @@ public class OpalTest extends TestCase {
         // This is all mocked-up data, probably has a wrong checksum.
 
         // 2018-03-31 09:00 UTC+11
+        // 2018-03-30 22:00 UTC
         DesfireCard c = constructOpalCardFromHexString("85D25E07230520A70044DA380419FFFF");
 
         OpalTransitData o = (OpalTransitData)c.parseTransitData();
-        assertEquals("2018-03-31 09:00", Utils.isoDateTimeFormat(o.getLastTransactionTime()));
+        assertEquals("2018-03-30 22:00", Utils.isoDateTimeFormat(o.getLastTransactionTime()));
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             assertEquals("2018-03-30T22:00Z", o.getLastTransactionTime().toInstant().atOffset(ZoneOffset.UTC).toString());
         }
@@ -91,10 +109,11 @@ public class OpalTest extends TestCase {
         // DST transition is at 2018-04-01 03:00
 
         // 2018-04-01 09:00 UTC+10
+        // 2018-03-31 23:00 UTC
         c = constructOpalCardFromHexString("85D25E07430520A70048DA380419FFFF");
 
         o = (OpalTransitData)c.parseTransitData();
-        assertEquals("2018-04-01 09:00", Utils.isoDateTimeFormat(o.getLastTransactionTime()));
+        assertEquals("2018-03-31 23:00", Utils.isoDateTimeFormat(o.getLastTransactionTime()));
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             assertEquals("2018-03-31T23:00Z", o.getLastTransactionTime().toInstant().atOffset(ZoneOffset.UTC).toString());
         }

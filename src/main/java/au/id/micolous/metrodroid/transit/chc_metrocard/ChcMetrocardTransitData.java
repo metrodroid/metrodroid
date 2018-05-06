@@ -22,6 +22,7 @@ import android.os.Parcel;
 import android.text.Spanned;
 
 import java.util.GregorianCalendar;
+import java.util.TimeZone;
 
 import au.id.micolous.metrodroid.card.classic.ClassicCard;
 import au.id.micolous.metrodroid.transit.TransitIdentity;
@@ -42,6 +43,7 @@ import au.id.micolous.metrodroid.util.Utils;
 public class ChcMetrocardTransitData extends ErgTransitData {
     public static final String NAME = "Metrocard";
     private static final int AGENCY_ID = 0x0136;
+    private static final TimeZone TIME_ZONE = TimeZone.getTimeZone("Pacific/Auckland");
 
     // Parcel
     public static final Creator<ChcMetrocardTransitData> CREATOR = new Creator<ChcMetrocardTransitData>() {
@@ -97,5 +99,10 @@ public class ChcMetrocardTransitData extends ErgTransitData {
     @Override
     protected String formatSerialNumber(ErgMetadataRecord metadataRecord) {
         return Integer.toString(metadataRecord.getCardSerialDec());
+    }
+
+    @Override
+    protected TimeZone getTimezone() {
+        return TIME_ZONE;
     }
 }

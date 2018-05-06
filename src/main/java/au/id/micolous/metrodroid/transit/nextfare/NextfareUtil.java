@@ -1,7 +1,7 @@
 /*
  * NextfareUtil.java
  *
- * Copyright 2015-2016 Michael Farrell <micolous+git@gmail.com>
+ * Copyright 2015-2018 Michael Farrell <micolous+git@gmail.com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,11 +18,14 @@
  */
 package au.id.micolous.metrodroid.transit.nextfare;
 
+import android.util.Log;
+
 import au.id.micolous.metrodroid.util.Utils;
 
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.Locale;
+import java.util.TimeZone;
 
 
 /**
@@ -47,13 +50,13 @@ public final class NextfareUtil {
      * @param timestamp Four bytes of input representing the timestamp to parse
      * @return Date and time represented by that value
      */
-    public static GregorianCalendar unpackDate(byte[] timestamp) {
+    public static GregorianCalendar unpackDate(byte[] timestamp, TimeZone timeZone) {
         int minute = Utils.getBitsFromBuffer(timestamp, 5, 11);
         int year = Utils.getBitsFromBuffer(timestamp, 16, 7) + 2000;
         int month = Utils.getBitsFromBuffer(timestamp, 23, 4);
         int day = Utils.getBitsFromBuffer(timestamp, 27, 5);
 
-        //Log.i("nextfareutil", "unpackDate: " + minute + " minutes, " + year + '-' + month + '-' + day);
+        Log.i("nextfareutil", "unpackDate: " + minute + " minutes, " + year + '-' + month + '-' + day);
 
         if (minute > 1440)
             throw new AssertionError(String.format(Locale.ENGLISH, "Minute > 1440 (%d)", minute));
@@ -64,7 +67,17 @@ public final class NextfareUtil {
         if (month > 12)
             throw new AssertionError(String.format(Locale.ENGLISH, "Month > 12 (%d)", month));
 
-        GregorianCalendar d = new GregorianCalendar(year, month - 1, day);
+        GregorianCalendar d = new GregorianCalendar(timeZone);
+        d.set(Calendar.YEAR, year);
+        d.set(Calendar.MONTH, month - 1);
+        d.set(Calendar.DAY_OF_MONTH, day);
+
+        // Needs to be set explicitly, as this defaults to localtime.
+        d.set(Calendar.HOUR_OF_DAY, 0);
+        d.set(Calendar.MINUTE, 0);
+        d.set(Calendar.SECOND, 0);
+        d.set(Calendar.MILLISECOND, 0);
+
         d.add(Calendar.MINUTE, minute);
 
         return d;

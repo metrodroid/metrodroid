@@ -21,6 +21,7 @@ package au.id.micolous.metrodroid.transit.manly_fast_ferry;
 import android.os.Parcel;
 
 import java.util.GregorianCalendar;
+import java.util.TimeZone;
 
 import au.id.micolous.metrodroid.card.classic.ClassicCard;
 import au.id.micolous.metrodroid.transit.TransitIdentity;
@@ -43,6 +44,8 @@ import au.id.micolous.metrodroid.transit.erg.record.ErgPurseRecord;
 public class ManlyFastFerryTransitData extends ErgTransitData {
     public static final String NAME = "Manly Fast Ferry";
     private static final int AGENCY_ID = 0x0227;
+    private static final TimeZone TIME_ZONE = TimeZone.getTimeZone("Australia/Sydney");
+
 
     // Parcel
     public static final Creator<ManlyFastFerryTransitData> CREATOR = new Creator<ManlyFastFerryTransitData>() {
@@ -90,4 +93,8 @@ public class ManlyFastFerryTransitData extends ErgTransitData {
         return NAME;
     }
 
+    @Override
+    protected TimeZone getTimezone() {
+        return TIME_ZONE;
+    }
 }

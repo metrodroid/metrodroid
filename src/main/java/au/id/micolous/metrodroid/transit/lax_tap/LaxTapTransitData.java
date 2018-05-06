@@ -30,6 +30,7 @@ import au.id.micolous.metrodroid.transit.nextfare.NextfareTrip;
 import au.id.micolous.metrodroid.transit.nextfare.record.NextfareTransactionRecord;
 
 import java.util.Arrays;
+import java.util.TimeZone;
 
 import static au.id.micolous.metrodroid.transit.lax_tap.LaxTapData.AGENCY_METRO;
 import static au.id.micolous.metrodroid.transit.lax_tap.LaxTapData.METRO_BUS_START;
@@ -61,6 +62,8 @@ public class LaxTapTransitData extends NextfareTransitData {
     static final byte[] SYSTEM_CODE1 = {
             0x01, 0x01, 0x01, 0x01, 0x01, 0x01
     };
+
+    static final TimeZone TIME_ZONE = TimeZone.getTimeZone("America/Los_Angeles");
 
     //private SeqGoTicketType mTicketType;
     private static final String TAG = "LaxTapTransitData";
@@ -147,4 +150,8 @@ public class LaxTapTransitData extends NextfareTransitData {
         return Uri.parse("https://www.taptogo.net/");
     }
 
+    @Override
+    protected TimeZone getTimezone() {
+        return TIME_ZONE;
+    }
 }

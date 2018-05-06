@@ -36,6 +36,7 @@ import au.id.micolous.metrodroid.util.Utils;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.TimeZone;
 
 import au.id.micolous.farebot.R;
 
@@ -70,6 +71,9 @@ public class SeqGoTransitData extends NextfareTransitData {
     static final byte[] SYSTEM_CODE2 = {
             0x20, 0x21, 0x22, 0x23, 0x01, 0x01
     };
+
+    static final TimeZone TIME_ZONE = TimeZone.getTimeZone("Australia/Brisbane");
+
     private static final String TAG = "SeqGoTransitData";
     private SeqGoTicketType mTicketType;
 
@@ -166,5 +170,10 @@ public class SeqGoTransitData extends NextfareTransitData {
     @Override
     public Spanned formatCurrencyString(int currency, boolean isBalance) {
         return Utils.formatCurrencyString(currency, isBalance, "AUD");
+    }
+
+    @Override
+    protected TimeZone getTimezone() {
+        return TIME_ZONE;
     }
 }

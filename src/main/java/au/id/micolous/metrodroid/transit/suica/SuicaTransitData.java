@@ -51,6 +51,7 @@ import org.apache.commons.lang3.ArrayUtils;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.TimeZone;
 
 public class SuicaTransitData extends TransitData {
     public static final Creator<SuicaTransitData> CREATOR = new Creator<SuicaTransitData>() {
@@ -62,6 +63,8 @@ public class SuicaTransitData extends TransitData {
             return new SuicaTransitData[size];
         }
     };
+    static final TimeZone TIME_ZONE = TimeZone.getTimeZone("Asia/Tokyo");
+
     private SuicaTrip[] mTrips;
 
     public SuicaTransitData(Parcel parcel) {
