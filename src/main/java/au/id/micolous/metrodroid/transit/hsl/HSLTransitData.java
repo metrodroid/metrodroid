@@ -40,7 +40,20 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+/**
+ * Implements a reader for HSL transit cards.
+ *
+ * Documentation and sample libraries for this are available at:
+ * http://dev.hsl.fi/#travel-card
+ *
+ * The documentation (in Finnish) is available at:
+ * http://dev.hsl.fi/hsl-card-java/HSL-matkakortin-kuvaus.pdf
+ *
+ * Machine translation to English:
+ * https://translate.google.com/translate?sl=auto&tl=en&js=y&prev=_t&hl=en&ie=UTF-8&u=http%3A%2F%2Fdev.hsl.fi%2Fhsl-card-java%2FHSL-matkakortin-kuvaus.pdf&edit-text=&act=url
+ */
 public class HSLTransitData extends TransitData {
+    // 1997-01-01 00:00 Europe/Helsinki
     private static final long EPOCH = 0x32C97ED0;
     public static final int APP_ID = 0x1120ef;
     private String mSerialNumber;

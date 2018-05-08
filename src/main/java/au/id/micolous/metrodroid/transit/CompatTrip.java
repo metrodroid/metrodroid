@@ -27,6 +27,8 @@ import java.util.GregorianCalendar;
  *
  * New card implementations should avoid using this class, and implement get{Start,End}Timestamp for
  * themselves.
+ *
+ * NOTE: Providers using CompatTrip do not have proper timezone support.
  */
 @Deprecated
 public abstract class CompatTrip extends Trip {
