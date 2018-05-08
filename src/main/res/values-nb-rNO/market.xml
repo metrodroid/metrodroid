@@ -109,4 +109,11 @@
 \n
 \nFlere detaljer: https://github.com/micolous/metrodroid/wiki/Changelog</string>
 
+    <string name="market_changelog_34">* Legger til tidssonestøtte for de fleste kort.
+\n* Clipper: Fiks for uriktige reisetider.
+\n* Opal: Fiks for uriktige reisetider på jamdøgn.
+\n* Nye ikoner, tilgjengelighetsforbedringer, redusert programinstallasjonsstørrelse.
+\n
+\nFlere detaljer: https://github.com/micolous/metrodroid/wiki/Changelog</string>
+
     </resources>
