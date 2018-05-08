@@ -70,4 +70,11 @@ Meer details: https://github.com/micolous/metrodroid/wiki/Changelog</string>
 \n 
 \nMeer details: https://github.com/micolous/metrodroid/wiki/Changelog</string>
 
+    <string name="market_changelog_34">* Tijdzone-ondersteuning voor de meeste kaarten.
+\n* Clipper: probleem opgelost met onjuiste reistijden.
+\n* Opal: probleem opgelost met onjuiste reistijden bij wijziging van winter- naar zomertijd.
+\n* Nieuwe pictogrammen, verbeteringen in de toegankelijkheid, en de installatiegrootte van de app is verkleind.
+\n
+\nMeer informatie is te vinden in het wijzigingslog (Engels): https://github.com/micolous/metrodroid/wiki/Changelog</string>
+
     </resources>
