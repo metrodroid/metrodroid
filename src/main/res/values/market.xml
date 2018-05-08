@@ -87,6 +87,14 @@
     * Newlines must be escaped (\n).  Any newlines in this XML will be removed.
     * Use "smart" quotation marks (eg: ’).
     -->
+    <string name="market_changelog_34">* Adds timezone support for most cards.\n* Clipper: Fix incorrect travel times.\n* Opal: Fix incorrect travel times on Daylight Savings change days.\n* New icons, accessibility improvements, and app install size reduced.\n\nMore details: https://github.com/micolous/metrodroid/wiki/Changelog</string>
+
+    <!--
+    Translators:
+    * 500 character limit
+    * Newlines must be escaped (\n).  Any newlines in this XML will be removed.
+    * Use "smart" quotation marks (eg: ’).
+    -->
     <string name="market_changelog_33">* Adds experimental support for Metrocard (Christchurch, New Zealand).\n* Fixes multiple issues with MIFARE Classic and Ultralight cards.\n* Shows more information while reading a card.\n* Opal: Handle unknown status "0xc".\n\nMore details: https://github.com/micolous/metrodroid/wiki/Changelog</string>
 
     <!--
