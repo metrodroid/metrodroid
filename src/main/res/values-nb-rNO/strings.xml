@@ -287,4 +287,58 @@
     <string name="location_act_australia">Australian Capital Territory, Australia</string>
     <string name="location_wa_australia">Vest-Australia, Australia</string>
 
-    </resources>
+    <string name="machine_id">Maskin-ID %s</string>
+
+    <string name="felica_service_title_format">Tjeneste: 0x%1$s (%2$s)</string>
+    <string name="felica_service_format">Tjeneste: 0x%s</string>
+    <string name="localise_places">Legg til språkhint i stedsnavn</string>
+
+    <string name="localise_places_desc">Legger til språkhint (LocaleSpan) til i stedsnavn, som stasjon, stopp, linje og rutenavn. Dette endrer uttalen brukt av skjermlesere og annen tilgjengelighetsprogramvare.</string>
+
+    <string name="localise_places_longdesc_button">Om språkhint…</string>
+
+    <string name="localise_places_longdesc_title">Om språkhint</string>
+
+    <string name="unsupported_tag">Ustøttet NFC-kortmedia</string>
+
+    <string name="saving_card">Lagrer kort…</string>
+
+    <string name="mfc_reading">Leser MIFARE Classic-kort…</string>
+    <string name="mfc_reading_blocks">Leser sektor %d…</string>
+
+    <string name="mfd_reading">Leser MIFARE DESFire-kort…</string>
+    <string name="mfu_reading">Leser MIFARE Ultralight-kort…</string>
+
+    <plurals name="felica_service_count">
+	<item quantity="one">%d tjeneste</item>
+	<item quantity="other">%d tjenester</item>
+</plurals>
+
+    <string name="cepas_version">CEPAS-versjon</string>
+    <string name="mode_bus">Buss</string>
+    <string name="mode_train">Tog</string>
+    <string name="mode_tram">Trikk</string>
+    <string name="mode_metro">Undergrunn</string>
+    <string name="mode_ferry">Ferge</string>
+    <string name="mode_ticket_machine">Billettmaskin</string>
+    <string name="mode_vending_machine">Salgsmaskin</string>
+    <string name="mode_banned">Bannlyst</string>
+    <string name="mode_unknown">Ukjent</string>
+
+
+    <string name="felica_terminal_vending">Salgsmaskin</string>
+
+    <string name="felica_process_charge">Lad</string>
+    <string name="felica_process_issue_new">Nytt problem</string>
+    <string name="felica_process_bus_pitapa">Buss (PiTaPa)</string>
+    <string name="felica_process_bus_iruca">Buss (IruCa)</string>
+    <string name="felica_process_payment_shinkansen">Shinkansen-betaling</string>
+    <string name="seqgo_ticket_type">Billettype</string>
+    <string name="general_information">Generell informasjon</string>
+    <string name="personal_information">Personlig informasjon</string>
+    <string name="date_of_birth">Fødselsdato</string>
+    <string name="software_information">Programvareinformasjon</string>
+    <string name="clipboard_error">Fikk ikke tilgang til utklippstavle</string>
+    <string name="convert_timezones">Konverter tider til gjeldende tidssone</string>
+    <string name="convert_timezones_summary">Som forvalg viser Metrodroid reisetider i reisebyråets tidssone. Hvis dette valget er påskrudd, vil reisetider konverteres til din enhets nåværende tidssone.</string>
+</resources>
