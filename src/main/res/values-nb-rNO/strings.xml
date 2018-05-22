@@ -341,4 +341,52 @@
     <string name="clipboard_error">Fikk ikke tilgang til utklippstavle</string>
     <string name="convert_timezones">Konverter tider til gjeldende tidssone</string>
     <string name="convert_timezones_summary">Som forvalg viser Metrodroid reisetider i reisebyråets tidssone. Hvis dette valget er påskrudd, vil reisetider konverteres til din enhets nåværende tidssone.</string>
-</resources>
+<string name="felica_system_title_format">System: 0x%1$s (%2$s)</string>
+    <string name="mfc_have_key">Prøver bruker-oppgitt nøkkel for sektoren %d…</string>
+    <string name="mfc_default_key">Prøver velkjente nøkler for sektoren %d…</string>
+    <string name="iso14a_detect">Oppdager ISO 14443-korttype…</string>
+    <string name="card_reading_type">Leser <xliff:g id="card_name" example="Opal">%s</xliff:g>…</string>
+
+    <string name="mfu_detect">Oppdager MIFARE Ultralight-korttype…</string>
+    <string name="desfire_value_format">Type: %1$s, Rekkevidde: %2$s - %3$s, Begrenset kreditt: %4$s (%5$s)</string>
+
+    <string name="hardware_information">Maskinvareinformasjon</string>
+    <string name="cepas_purse_id">Portemoné-ID</string>
+    <string name="cepas_purse_status">Portemoné-status</string>
+    <string name="cepas_purse_balance">Portemoné-saldo</string>
+    <string name="cepas_purse_creation_date">Portemoné-opprettelsesdato</string>
+    <string name="cepas_expiry_date">Portemoné-utløpsdato</string>
+    <string name="cepas_autoload_amount">Autoladingsbeløp</string>
+    <string name="cepas_last_txn_info">Informasjon om siste overføring</string>
+    <string name="cepas_credit_header">Kreditt-topptekst</string>
+    <string name="cepas_debit_options">Debetvalg</string>
+    <string name="cepas_other_purse_info">Annen portemoné-informasjon</string>
+    <string name="cepas_purse_info">Portemoné-informasjon</string>
+
+    <string name="felica_idm">Produksjons-ID (IDm)</string>
+    <string name="felica_pmm">Produksjonsparameter (PMm)</string>
+
+    <string name="trip_description">(Fra )%1$s [→] (til )%2$s</string>
+
+    <string name="felica_terminal_tvm_tokyo_monorail">Tokyo Monorail-billettsystem</string>
+    <string name="felica_terminal_tvm_etc">Billettmaskin, osv.</string>
+    <string name="felica_terminal_turnstile">Rotasjonsport</string>
+    <string name="felica_terminal_ticket_booth">Billettluke</string>
+    <string name="felica_terminal_ticket_office_green">Billettkontor (grønt vindu)</string>
+    <string name="felica_process_fare_exit_gate">Utgangsrotasjonsport</string>
+    <string name="opal_action_journey_completed_auto_off">Tur fullført (grunnet manglende utstempling)</string>
+    <string name="opal_action_journey_completed_auto_on">Tur fullført (grunnet manglende innstempling)</string>
+    <string name="opal_action_tap_on_rejected">Innstempling avslått</string>
+    <string name="card_note_opal">Gratisreisepass og enkeltturbilletter støttes ikke.</string>
+
+    <string name="card_note_bilhete_unico">Må velges som tilbakefallsleser i innstillingene.</string>
+
+    <string name="erg_agency_id">Agentur-ID</string>
+
+    <string name="ovc_autocharge_limit">Autoladingsgrense</string>
+    <string name="ovc_autocharge_amount">Autoladingsbeløp</string>
+    <string name="ovc_autocharge">Autolading</string>
+
+
+    <string name="credit_information">Kredittinformasjon</string>
+    </resources>
