@@ -6,7 +6,7 @@
     <string name="license">Lisenser</string>
     <string name="title_activity_license">Friprog-lisenser</string>
     <string name="directions">Trykk på et kort.</string>
-    <string name="reading_card">Leser kort</string>
+    <string name="reading_card">Leser kort…</string>
     <string name="dont_move">Ikke flytt kortet</string>
     <string name="advanced_info">Avansert info</string>
     <string name="delete_card">Slett kort</string>
@@ -200,13 +200,13 @@
     <string name="card_expiry_date">Utløpsdato for kort</string>
 
     <string name="pass_or_transfer">Send/Overfør</string>
-    <string name="speak_balance_summary">Konseptutprøving</string>
-    <string name="fully_locked_desc">"Ingen del av dette kortet kan leses fritt uten en nøkkel.  Du har ingen gyldig nøkkel installert for det.
-\n
-\nHvis kortet er støttet av Metrodroid, så vil kortet fungere etter at nøkler for det er installert.  Mer informasjon om hvordan du får tak i disse finnes i dokumentasjonen.
-\n
-\nHvis kortet ditt ikke er støttet av Metrodroid, så er det usannsynlig at det noen gang vil bli det, med mindre nøkkelen for det er desifrert.
-\n
+    <string name="speak_balance_summary">Når du skanner et kort, vil saldoen automatisk bli lest høyt. Dette fungerer selv når ikke en skjermleser kjører.</string>
+    <string name="fully_locked_desc">"Ingen del av dette kortet kan leses fritt uten en nøkkel.  Du har ingen gyldig nøkkel installert for det. 
+\n 
+\nHvis kortet er støttet av Metrodroid, så vil kortet fungere etter at nøkler for det er installert.  Mer informasjon om hvordan du får tak i disse finnes i dokumentasjonen. 
+\n 
+\nHvis kortet ditt ikke er støttet av Metrodroid, så er det usannsynlig at det noen gang vil bli det, med mindre nøkkelen for det er dechiffrert.
+\n 
 \nVær så snill å ta kontakt med ditt kommunale kollektivtransportetat for å få et visst nivå av åpen data-tilgang for de utstedte kortene.  Det er mulig å tilby begrenset lesetilgang på en trygg måte til kollektivtransport-smartkort."</string>
     <string name="add_key_directions">Lagre en binærdump av nøklene dine som en fil med endelsen .farebotkeys, send den som et epostvedlegg til deg selv og åpne filen på denne enheten.</string>
     <string name="location_helsinki_finland">Helsingfors, Finland</string>
@@ -389,4 +389,41 @@
 
 
     <string name="credit_information">Kredittinformasjon</string>
+    <string name="alternate_purse_balances">"Bytt portemoné-saldoer "</string>
+    <string name="localise_places_longdesc">Tekst-til-tale -stemmer fungerer vanligvis bare bra for ett språk.
+\n
+\nLocaleSpan-hint brukes til å merke at tekst er forskjellig i et annet språk. Når det brukes på en stasjon, et stopp, linje eller rutenavn, vil en skjermleser som støtter disse hintene uttale navnet ved bruk av syntetiserte stemmer fra stedets lokale språk, snarere enn språket du har satt opp Android til å bruke.
+\n
+\nÅ skru på dette valget forbedrer vanligvis uttalen av stedsnavn som ikke har internasjonal anerkjennelse, men du kan oppleve dem som vanskeligere å forstå.
+\n
+\nDette endrer ikke normalt skjermtastaturvisningen av stedsnavn, men noen steder bruker annen skrift.
+\n
+\nDette krever Android 5.0 eller senere, tilgjengelighetsprogramvare som støtter LocaleSpan API-et (som Google TalkBack), og at du har de nødvendige stemmene installert.</string>
+
+    <string name="mfc_other_key">Prøver andre brukerangitte nøkler for sektoren %d…</string>
+    <string name="cepas_logfile_record_count">Loggfilopptakantall</string>
+    <string name="cepas_issuer_data_length">Utstederdatalengde</string>
+    <string name="cepas_issuer_data">Utstederspesifikk data</string>
+    <string name="location_brisbane_seq_australia">Brisbane &amp; SE QLD, Australia</string>
+    <string name="location_christchurch_nz">Christchurch, New Zealand</string>
+
+    <string name="mode_pos">Salgspunkt</string>
+    <string name="felica_terminal_fare_adjustment">Turkostnadsjusteringsmaskin</string>
+    <string name="felica_terminal_deposit_quick_charge">Hurtigpåfyllingsmaskin</string>
+    <string name="felica_terminal_ticket_validator">Billettbekrefter</string>
+    <string name="felica_terminal_ticket_gate_terminal">Billettluketerminal</string>
+    <string name="felica_terminal_connection_adjustment">Transportbyttejusteringsmaskin</string>
+    <string name="felica_terminal_transfer_adjustment">Overgangsjusteringsmaskin</string>
+    <string name="felica_terminal_simple_deposit">Enkel innskuddsmaskin</string>
+    <string name="felica_terminal_pos">Salgspunktsterminal</string>
+    <string name="felica_process_booth_exit">Hovedstasjonsavlukkeutgang</string>
+    <string name="felica_process_booth_deduction">Avlukketrekk</string>
+    <string name="felica_process_reissue">Re-utstedelse</string>
+    <string name="felica_process_entry_a_autocharge">Inngang A (autolading)</string>
+    <string name="felica_process_exit_a_autocharge">Utgang A (autolading)</string>
+    <string name="felica_process_deposit_bus">Matebuss</string>
+    <string name="felica_process_purchase_special_ticket">Billett (Spesiell buss/bil)</string>
+    <string name="opal_action_tap_on_reversal">Innstemplingsomvendelse</string>
+    <string name="octopus_szt">Shenzhen Tong</string>
+
     </resources>
