@@ -10,7 +10,7 @@ _Formerly known as Farebot M._
 <img src="https://play.google.com/intl/en_us/badges/images/generic/en-play-badge.png" height="80"/></a>
 <a href="https://github.com/micolous/metrodroid/releases">Direct APK download</a>
 
-Version: 2.9.34
+Version: 2.9.35
 
 View your remaining balance, recent trips, and other information from contactless public transit
 cards using your NFC-enabled Android device!
@@ -39,6 +39,7 @@ linux.conf.au 2018, in my talk, [Tap on to reverse engineering](https://youtu.be
 
 ## Supported card protocols
 
+* [Calypso][36]
 * [CEPAS][2] (Not compatible with all devices)
 * [FeliCa][8]
 * [MIFARE Classic][23] (Not compatible with all devices)
@@ -163,3 +164,4 @@ This software and it's authors are not associated with any public transit agency
 [33]: https://github.com/micolous/metrodroid/wiki/Cubic-Nextfare-MFC
 [34]: http://www.metroinfo.co.nz/
 [35]: https://github.com/micolous/metrodroid/wiki/ERG-MFC
+[36]: http://www.calypsotechnology.net/
