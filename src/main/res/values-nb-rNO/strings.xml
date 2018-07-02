@@ -401,7 +401,7 @@
 \nDette krever Android 5.0 eller senere, tilgjengelighetsprogramvare som støtter LocaleSpan API-et (som Google TalkBack), og at du har de nødvendige stemmene installert.</string>
 
     <string name="mfc_other_key">Prøver andre brukerangitte nøkler for sektoren %d…</string>
-    <string name="cepas_logfile_record_count">Loggfilopptakantall</string>
+    <string name="cepas_logfile_record_count">Antall loggførte tidslinjeopptak</string>
     <string name="cepas_issuer_data_length">Utstederdatalengde</string>
     <string name="cepas_issuer_data">Utstederspesifikk data</string>
     <string name="location_brisbane_seq_australia">Brisbane &amp; SE QLD, Australia</string>
@@ -425,5 +425,12 @@
     <string name="felica_process_purchase_special_ticket">Billett (Spesiell buss/bil)</string>
     <string name="opal_action_tap_on_reversal">Innstemplingsomvendelse</string>
     <string name="octopus_szt">Shenzhen Tong</string>
+
+    <string name="file_folder_title_format">Fil: 0x%s/0x%s</string>
+    <string name="record_title_format">Tidslinjeopptak: %s</string>
+    <plurals name="record_count">
+	<item quantity="one">%d tidslinjeopptak</item>
+	<item quantity="other">%d tidslinjeopptak</item>
+</plurals>
 
     </resources>
