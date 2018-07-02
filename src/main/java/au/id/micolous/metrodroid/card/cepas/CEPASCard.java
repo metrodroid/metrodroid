@@ -75,6 +75,8 @@ public class CEPASCard extends Card {
                     cepasHistories[historyId] = new CEPASHistory(historyId, (byte[]) null);
                 }
             }
+        } catch (NotCEPASException e) {
+            return null;
         } finally {
             if (tech.isConnected())
                 tech.close();

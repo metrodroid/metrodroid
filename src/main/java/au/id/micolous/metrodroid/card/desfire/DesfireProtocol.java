@@ -37,8 +37,6 @@ import java.security.AccessControlException;
  * some very basic functionality to interface. In particular, this only supports open communication
  * with the card, and doesn't support writing data.
  *
- * This class implements the
- *
  * Useful references:
  * https://github.com/nfc-tools/libfreefare/blob/master/libfreefare/mifare_desfire.c
  * https://github.com/jekkos/android-hce-desfire/blob/master/hceappletdesfire/src/main/java/net/jpeelaer/hce/desfire/DesfireApplet.java

@@ -113,6 +113,8 @@
     <string name="felica_service_title_format">Service: 0x%1$s (%2$s)</string>
     <!-- Translators: the first parameter is a hexadecimal number. -->
     <string name="felica_service_format">Service: 0x%s</string>
+    <string name="file_folder_title_format">File: 0x%s/0x%s</string>
+    <string name="record_title_format">Record: %s</string>
     <string name="subscriptions">Subscriptions</string>
     <string name="info">Info</string>
     <!-- Translators: These are both dates, eg: "Valid from 3/12/2017 to 3/3/2018". Dates are
@@ -257,6 +259,9 @@
     <string name="mfu_detect">Detecting MIFARE Ultralight card type…</string>
     <string name="mfu_reading">Reading MIFARE Ultralight card…</string>
 
+    <string name="iso7816_probing">Probing ISO7816 card…</string>
+    <string name="calypso_reading">Reading Calypso card…</string>
+
     <!--
     Translators: shown in place of a real card number in some lists when obfuscation is enabled.
     -->
@@ -316,6 +321,12 @@
     <plurals name="block_count">
         <item quantity="one">%d block</item>
         <item quantity="other">%d blocks</item>
+    </plurals>
+
+    <!-- Translators: "record" is referring to structured unit of storage. -->
+    <plurals name="record_count">
+        <item quantity="one">%d record</item>
+        <item quantity="other">%d records</item>
     </plurals>
 
     <!-- Translators: Felica divides cards up into a hierarchy with each card containing 1 or many

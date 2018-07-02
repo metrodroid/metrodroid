@@ -24,6 +24,7 @@ import android.nfc.Tag;
 import android.util.Log;
 
 import au.id.micolous.farebot.R;
+import au.id.micolous.metrodroid.card.iso7816.ISO7816Card;
 import au.id.micolous.metrodroid.card.cepas.CEPASCard;
 import au.id.micolous.metrodroid.card.classic.ClassicCard;
 import au.id.micolous.metrodroid.card.desfire.DesfireCard;
@@ -71,8 +72,18 @@ public abstract class Card {
     public static Card dumpTag(byte[] tagId, Tag tag, TagReaderFeedbackInterface feedbackInterface) throws Exception {
         final String[] techs = tag.getTechList();
         if (ArrayUtils.contains(techs, "android.nfc.tech.NfcB")) {
-            // TODO: Fix Calypso cards
-            return CEPASCard.dumpTag(tag);
+            // FIXME: CEPAS interface should first select the correct Application ID, to ensure it
+            // only triggers on actual CEPAS cards.
+            CEPASCard cepasCard = CEPASCard.dumpTag(tag);
+            if (cepasCard != null) {
+                return cepasCard;
+            }
+
+            ISO7816Card calypsoCard = ISO7816Card.dumpTag(tag, feedbackInterface);
+            if (calypsoCard != null) {
+                return calypsoCard;
+            }
+
         }
 
         if (ArrayUtils.contains(techs, "android.nfc.tech.IsoDep")) {

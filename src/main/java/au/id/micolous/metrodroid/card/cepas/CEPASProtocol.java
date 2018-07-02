@@ -37,6 +37,7 @@ public class CEPASProtocol {
     /* Status codes */
     private static final byte OPERATION_OK = (byte) 0x00;
     private static final byte PERMISSION_DENIED = (byte) 0x9D;
+    private static final byte INCORRECT_APPLICATION = (byte) 0x6E;
 
     private IsoDep mTagTech;
 
@@ -44,7 +45,7 @@ public class CEPASProtocol {
         mTagTech = tagTech;
     }
 
-    public CEPASPurse getPurse(int purseId) throws IOException {
+    public CEPASPurse getPurse(int purseId) throws IOException, NotCEPASException {
         try {
             sendSelectFile();
             byte[] purseBuff = sendRequest((byte) 0x32, (byte) (purseId), (byte) 0, (byte) 0, new byte[]{(byte) 0});
@@ -59,7 +60,7 @@ public class CEPASProtocol {
         }
     }
 
-    public CEPASHistory getHistory(int purseId, int recordCount) throws IOException {
+    public CEPASHistory getHistory(int purseId, int recordCount) throws IOException, NotCEPASException {
         try {
             byte[] fullHistoryBuff = null;
             byte[] historyBuff = sendRequest((byte) 0x32, (byte) (purseId), (byte) 0, (byte) 1,
@@ -100,7 +101,7 @@ public class CEPASProtocol {
     }
 
     private byte[] sendRequest(byte command, byte p1, byte p2, byte lc, byte[] parameters) throws CEPASException,
-            IOException {
+            IOException, NotCEPASException {
         ByteArrayOutputStream output = new ByteArrayOutputStream();
 
         byte[] recvBuffer = mTagTech.transceive(wrapMessage(command, p1, p2, lc, parameters));
@@ -111,6 +112,8 @@ public class CEPASProtocol {
 
             } else if (recvBuffer[recvBuffer.length - 2] == 0x67) {
                 throw new CEPASException("Got invalid file size response.");
+            }   else if (recvBuffer[recvBuffer.length - 2] == INCORRECT_APPLICATION) {
+                throw new NotCEPASException();
             }
 
             throw new CEPASException("Got generic invalid response: "
@@ -137,7 +140,6 @@ public class CEPASProtocol {
         stream.write(p1);          // P1
         stream.write(p2);          // P2
         stream.write(lc);          // Lc
-
         // Write Lc and data fields
         if (parameters != null) {
             stream.write(parameters); // Data field

@@ -2,6 +2,7 @@
  * CardConverter.java
  *
  * Copyright (C) 2014 Eric Butler <eric@codebutler.com>
+ * Copyright 2016-2018 Michael Farrell <micolous+git@gmail.com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -20,6 +21,8 @@ package au.id.micolous.metrodroid.xml;
 
 import au.id.micolous.metrodroid.card.Card;
 import au.id.micolous.metrodroid.card.CardType;
+import au.id.micolous.metrodroid.card.calypso.CalypsoCard;
+import au.id.micolous.metrodroid.card.iso7816.ISO7816Card;
 import au.id.micolous.metrodroid.card.cepas.CEPASCard;
 import au.id.micolous.metrodroid.card.classic.ClassicCard;
 import au.id.micolous.metrodroid.card.desfire.DesfireCard;
@@ -52,6 +55,10 @@ public class CardConverter implements Converter<Card> {
                 return mSerializer.read(ClassicCard.class, node);
             case MifareUltralight:
                 return mSerializer.read(UltralightCard.class, node);
+            case ISO7816:
+                return mSerializer.read(ISO7816Card.class, node);
+            case Calypso:
+                return mSerializer.read(CalypsoCard.class, node);
             default:
                 throw new UnsupportedOperationException("Unsupported card type: " + type);
         }

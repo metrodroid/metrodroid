@@ -2,7 +2,7 @@
  * CardType.java
  *
  * Copyright 2011-2014 Eric Butler <eric@codebutler.com>
- * Copyright 2015 Michael Farrell <micolous+git@gmail.com>
+ * Copyright 2015, 2018 Michael Farrell <micolous+git@gmail.com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -25,6 +25,8 @@ public enum CardType {
     MifareDesfire(2),
     CEPAS(3),
     FeliCa(4),
+    ISO7816(5),
+    Calypso(6),
     Unknown(65535);
 
     private int mValue;
@@ -53,6 +55,10 @@ public enum CardType {
                 return "CEPAS";
             case 4:
                 return "FeliCa";
+            case 5:
+                return "ISO7816";
+            case 6:
+                return "Calypso";
             case 65535:
             default:
                 return "Unknown";

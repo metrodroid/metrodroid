@@ -54,6 +54,8 @@ import android.util.Log;
 import android.view.WindowManager;
 
 import java.math.BigInteger;
+import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -192,6 +194,20 @@ public class Utils {
                     + Character.digit(s.charAt(i + 1), 16));
         }
         return data;
+    }
+
+    /**
+     * Converts a string to a byte array. Assumes the string is US-ASCII. Intended for internal
+     * card communication usage.
+     * @param s String to convert.
+     * @return byte array with string as US-ASCII
+     */
+    public static byte[] stringToByteArray(String s) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            return s.getBytes(StandardCharsets.US_ASCII);
+        } else {
+            return s.getBytes(Charset.forName("US-ASCII"));
+        }
     }
 
     /*
