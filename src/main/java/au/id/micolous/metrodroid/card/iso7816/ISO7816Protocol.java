@@ -29,18 +29,23 @@ import au.id.micolous.metrodroid.util.Utils;
 
 /**
  * Implements communication with cards that talk over ISO7816-4 APDUs.
- *
+ * <p>
  * Android doesn't contain useful classes for interfacing with these APDUs, so this class implements
  * basic parts of the specification. In particular, this only supports open communication with the
  * card, and doesn't support writing data.
- *
+ * <p>
  * This is used by ISO7816 and CEPAS cards, as well as most credit cards.
- *
+ * <p>
  * References:
  * - EMV 4.3 Book 1 (s9, s11)
  * - https://en.wikipedia.org/wiki/Smart_card_application_protocol_data_unit
  */
 public class ISO7816Protocol {
+    /**
+     * If true, this turns on debug logs that show ISO7816 communication.
+     */
+    private static final boolean ENABLE_TRACING = false;
+
     private static final String TAG = ISO7816Protocol.class.getSimpleName();
     private static final byte CLASS_ISO7816 = (byte) 0x00;
 
@@ -49,27 +54,20 @@ public class ISO7816Protocol {
 
     private IsoDep mTagTech;
 
-    public class CalypsoException extends Exception {
-        CalypsoException(String s) {
-            super(s);
-        }
-
-        CalypsoException() {}
-    }
-
     public ISO7816Protocol(IsoDep tagTech) {
         mTagTech = tagTech;
     }
 
     /**
      * Creates a C-APDU. (EMV 4.3 Book 1 s9.4.1)
-     *
+     * <p>
      * This always sends with Le (expected return length) of 0 (=256 bytes).
-     * @param cla Instruction class, may be any value but 0xFF.
-     * @param ins Instruction code within the instruction class.
-     * @param p1 Reference byte completing the INS.
-     * @param p2 Reference byte completing the INS.
-     * @param length Length of the expected return value, or 0 for no limit.
+     *
+     * @param cla        Instruction class, may be any value but 0xFF.
+     * @param ins        Instruction code within the instruction class.
+     * @param p1         Reference byte completing the INS.
+     * @param p2         Reference byte completing the INS.
+     * @param length     Length of the expected return value, or 0 for no limit.
      * @param parameters Additional data to be send in a command.
      * @return A wrapped command.
      */
@@ -81,7 +79,7 @@ public class ISO7816Protocol {
         output[3] = p2;
 
         if (parameters.length > 0) {
-            output[4] = (byte)parameters.length;
+            output[4] = (byte) parameters.length;
             System.arraycopy(parameters, 0, output, 5, parameters.length);
         }
 
@@ -91,34 +89,38 @@ public class ISO7816Protocol {
 
     /**
      * Sends a command to the card and checks the response.
-     * @param cla Instruction class, may be any value but 0xFF.
-     * @param ins Instruction code within the instruction class.
-     * @param p1 Reference byte completing the INS.
-     * @param p2 Reference byte completing the INS.
-     * @param length Length of the expected return value, or 0 for no limit.
+     *
+     * @param cla        Instruction class, may be any value but 0xFF.
+     * @param ins        Instruction code within the instruction class.
+     * @param p1         Reference byte completing the INS.
+     * @param p2         Reference byte completing the INS.
+     * @param length     Length of the expected return value, or 0 for no limit.
      * @param parameters Additional data to be send in a command.
      * @return A wrapped command.
      */
     private byte[] sendRequest(byte cla, byte ins, byte p1, byte p2, byte length, byte... parameters) throws IOException, CalypsoException {
         byte[] sendBuffer = wrapMessage(cla, ins, p1, p2, length, parameters);
-        Log.d(TAG, ">>> " + Utils.getHexString(sendBuffer));
+        if (ENABLE_TRACING) {
+            Log.d(TAG, ">>> " + Utils.getHexString(sendBuffer));
+        }
         byte[] recvBuffer = mTagTech.transceive(sendBuffer);
-        Log.d(TAG, "<<< " + Utils.getHexString(recvBuffer));
+        if (ENABLE_TRACING) {
+            Log.d(TAG, "<<< " + Utils.getHexString(recvBuffer));
+        }
 
         byte sw1 = recvBuffer[recvBuffer.length - 2];
         byte sw2 = recvBuffer[recvBuffer.length - 1];
 
-        if (sw1 != (byte)0x90) {
+        if (sw1 != (byte) 0x90) {
             switch (sw1) {
-                case (byte)0x6A:
+                case (byte) 0x6A:
                     switch (sw2) {
-                        case (byte)0x82: // File not found
+                        case (byte) 0x82: // File not found
                             throw new FileNotFoundException();
-                        case (byte)0x83: // Record not found
+                        case (byte) 0x83: // Record not found
                             throw new EOFException();
                     }
             }
-
 
             // we get error?
             throw new CalypsoException("Got unknown result: " + Utils.getHexString(recvBuffer, recvBuffer.length - 2, 2));
@@ -135,7 +137,7 @@ public class ISO7816Protocol {
         Log.d(TAG, "Select application (any)");
         try {
             return sendRequest(CLASS_ISO7816, INSTRUCTION_ISO7816_SELECT,
-                    (byte)0x04 /* byName */, nextOccurrence ? (byte)0x02 : (byte)0x00, (byte)0);
+                    (byte) 0x04 /* byName */, nextOccurrence ? (byte) 0x02 : (byte) 0x00, (byte) 0);
         } catch (CalypsoException e) {
             Log.e(TAG, "couldn't select application", e);
             return null;
@@ -151,7 +153,7 @@ public class ISO7816Protocol {
         // Select an application by file name
         try {
             sendRequest(CLASS_ISO7816, INSTRUCTION_ISO7816_SELECT,
-                    (byte)0x04 /* byName */, nextOccurrence ? (byte)0x02 : (byte)0x00, (byte)0,
+                    (byte) 0x04 /* byName */, nextOccurrence ? (byte) 0x02 : (byte) 0x00, (byte) 0,
                     Utils.stringToByteArray(application));
         } catch (CalypsoException e) {
             Log.e(TAG, "couldn't select application", e);
@@ -162,7 +164,7 @@ public class ISO7816Protocol {
         Log.d(TAG, "Unselect file");
         try {
             sendRequest(CLASS_ISO7816, INSTRUCTION_ISO7816_SELECT,
-                    (byte)0, (byte)0, (byte)0);
+                    (byte) 0, (byte) 0, (byte) 0);
         } catch (CalypsoException e) {
             Log.e(TAG, "couldn't unselect file", e);
         }
@@ -173,7 +175,7 @@ public class ISO7816Protocol {
         Log.d(TAG, "Select file " + Utils.getHexString(file));
         try {
             sendRequest(CLASS_ISO7816, INSTRUCTION_ISO7816_SELECT,
-                    (byte)0, (byte)0, (byte)0,
+                    (byte) 0, (byte) 0, (byte) 0,
                     file);
         } catch (CalypsoException e) {
             Log.e(TAG, "couldn't select file", e);
@@ -185,13 +187,22 @@ public class ISO7816Protocol {
         Log.d(TAG, "Read record " + recordNumber);
         try {
             ret = sendRequest(CLASS_ISO7816, INSTRUCTION_ISO7816_READ_RECORD,
-                    recordNumber, (byte)0x4 /* p1 is record number */, length);
+                    recordNumber, (byte) 0x4 /* p1 is record number */, length);
             return ret;
         } catch (CalypsoException e) {
             Log.e(TAG, "couldn't read record", e);
             return null;
         }
 
+    }
+
+    public class CalypsoException extends Exception {
+        CalypsoException(String s) {
+            super(s);
+        }
+
+        CalypsoException() {
+        }
     }
 
 }

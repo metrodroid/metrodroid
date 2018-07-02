@@ -43,9 +43,9 @@ import au.id.micolous.metrodroid.util.Utils;
 
 /**
  * Implements communication with Calypso cards.
- *
+ * <p>
  * This builds on top of the ISO7816 implementation, and pokes at certain file paths on the card.
- *
+ * <p>
  * References:
  * - https://github.com/L1L1/cardpeek/tree/master/dot_cardpeek_dir/scripts/calypso
  * - http://demo.calypsostandard.net/
@@ -56,29 +56,75 @@ import au.id.micolous.metrodroid.util.Utils;
 @CardRawDataFragmentClass(CalypsoCardRawDataFragment.class)
 @CardHasManufacturingInfo(false)
 public class CalypsoCard extends ISO7816Card {
-    private static final String TAG = CalypsoCard.class.getName();
     public static final String CALYPSO_FILENAME = "1TIC.ICA";
+    private static final String TAG = CalypsoCard.class.getName();
     @ElementList(name = "records", required = false, empty = false)
 
     private List<CalypsoFile> mFiles;
 
-    /*
-    enum Folder {
-        TICKETING(0x2000),
-        MPP(0x3100),
-        RT2(0x2100),
-        EP(0x1000),
-        E_TICKET(0x8000);
-
-        private int mValue;
-        Folder(int value) {
-            mValue = value;
-        }
-        public int toInteger() {
-            return mValue;
-        }
+    private CalypsoCard(byte[] tagId, Calendar scannedAt, List<CalypsoFile> files) {
+        super(CardType.Calypso, tagId, scannedAt);
+        mFiles = files;
     }
-    */
+
+    private CalypsoCard() {
+        super(); /* For XML Serializer */
+    }
+
+    public static CalypsoCard dumpTag(Tag tag, ISO7816Protocol protocol, TagReaderFeedbackInterface feedbackInterface) throws IOException {
+        // At this point, the connection is already open, we just need to dump the right things...
+
+        feedbackInterface.updateStatusText(Utils.localizeString(R.string.calypso_reading));
+        feedbackInterface.updateProgressBar(0, File.getAll().length);
+
+        try {
+            protocol.selectApplication(CALYPSO_FILENAME);
+        } catch (IOException e) {
+            Log.e(TAG, "couldn't select app", e);
+            return null;
+        }
+
+        // Start dumping...
+        LinkedList<CalypsoFile> files = new LinkedList<>();
+        int counter = 0;
+        for (File f : File.getAll()) {
+            feedbackInterface.updateProgressBar(counter++, File.getAll().length);
+
+            protocol.unselectFile();
+
+            try {
+                f.select(protocol);
+            } catch (IOException e) {
+                Log.e(TAG, "couldn't select file", e);
+                continue;
+            }
+
+            LinkedList<CalypsoRecord> records = new LinkedList<>();
+
+            for (int r = 1; r <= 255; r++) {
+                try {
+                    byte[] record = protocol.readRecord((byte) r, (byte) 0x1D);
+
+                    if (record == null) {
+                        break;
+                    }
+
+                    records.add(new CalypsoRecord(r, record));
+                } catch (EOFException e) {
+                    // End of file, stop here.
+                    break;
+                }
+            }
+
+            files.add(new CalypsoFile(f.getFolder(), f.getFile(), records));
+        }
+
+        return new CalypsoCard(tag.getId(), GregorianCalendar.getInstance(), files);
+    }
+
+    public List<CalypsoFile> getFiles() {
+        return mFiles;
+    }
 
     enum File {
         AID(0x3F04),
@@ -149,6 +195,10 @@ public class CalypsoCard extends ISO7816Card {
             mFile = file;
         }
 
+        public static File[] getAll() {
+            return File.class.getEnumConstants();
+        }
+
         public int getFile() {
             return mFile;
         }
@@ -164,71 +214,5 @@ public class CalypsoCard extends ISO7816Card {
             }
             protocol.selectFile(mFile);
         }
-
-        public static File[] getAll() {
-            return File.class.getEnumConstants();
-        }
-    }
-
-    private CalypsoCard(byte[] tagId, Calendar scannedAt, List<CalypsoFile> files) {
-        super(CardType.Calypso, tagId, scannedAt);
-        mFiles = files;
-    }
-
-    private CalypsoCard() { super(); /* For XML Serializer */ }
-
-    public static CalypsoCard dumpTag(Tag tag, ISO7816Protocol protocol, TagReaderFeedbackInterface feedbackInterface) throws IOException {
-        // At this point, the connection is already open, we just need to dump the right things...
-
-        feedbackInterface.updateStatusText(Utils.localizeString(R.string.calypso_reading));
-        feedbackInterface.updateProgressBar(0, File.getAll().length);
-
-        try {
-            protocol.selectApplication(CALYPSO_FILENAME);
-        } catch (IOException e) {
-            Log.e(TAG, "couldn't select app", e);
-            return null;
-        }
-
-        // Start dumping...
-        LinkedList<CalypsoFile> files = new LinkedList<>();
-        int counter = 0;
-        for (File f : File.getAll()) {
-            feedbackInterface.updateProgressBar(counter++, File.getAll().length);
-
-            protocol.unselectFile();
-
-            try {
-                f.select(protocol);
-            } catch (IOException e) {
-                Log.e(TAG, "couldn't select file", e);
-                continue;
-            }
-
-            LinkedList<CalypsoRecord> records = new LinkedList<>();
-
-            for (int r=1; r<=255; r++) {
-                try {
-                    byte[] record = protocol.readRecord((byte) r, (byte) 0x1D);
-
-                    if (record == null) {
-                        break;
-                    }
-
-                    records.add(new CalypsoRecord(r, record));
-                } catch (EOFException e) {
-                    // End of file, stop here.
-                    break;
-                }
-            }
-
-            files.add(new CalypsoFile(f.getFolder(), f.getFile(), records));
-        }
-
-        return new CalypsoCard(tag.getId(), GregorianCalendar.getInstance(), files);
-    }
-
-    public List<CalypsoFile> getFiles() {
-        return mFiles;
     }
 }

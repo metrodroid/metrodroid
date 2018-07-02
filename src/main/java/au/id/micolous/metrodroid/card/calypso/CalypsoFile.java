@@ -47,9 +47,11 @@ public class CalypsoFile {
     public int getFile() {
         return mFileId;
     }
+
     public int getFolder() {
         return mFolderId;
     }
+
     public List<CalypsoRecord> getRecords() {
         return mRecords;
     }

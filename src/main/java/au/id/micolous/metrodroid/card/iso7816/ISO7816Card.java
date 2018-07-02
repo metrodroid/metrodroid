@@ -52,12 +52,8 @@ import static au.id.micolous.metrodroid.card.calypso.CalypsoCard.CALYPSO_FILENAM
 public class ISO7816Card extends Card {
     private static final String TAG = ISO7816Card.class.getSimpleName();
 
-    protected ISO7816Card(byte[] tagId, Calendar scannedAt /*, CEPASPurse[] purses, CEPASHistory[] histories */) {
+    protected ISO7816Card(byte[] tagId, Calendar scannedAt) {
         super(CardType.ISO7816, tagId, scannedAt);
-        /*
-        mPurses = Utils.arrayAsList(purses);
-        mHistories = Utils.arrayAsList(histories);
-        */
     }
 
     protected ISO7816Card() { /* For XML Serializer */ }
@@ -68,9 +64,10 @@ public class ISO7816Card extends Card {
 
     /**
      * Dumps a ISO7816 tag in the field.
+     *
      * @param tag Tag to dump.
      * @return ISO7816Card of the card contents. Returns null if an unsupported card is in the
-     *         field.
+     * field.
      * @throws Exception On communication errors.
      */
     public static ISO7816Card dumpTag(Tag tag, TagReaderFeedbackInterface feedbackInterface) throws Exception {
@@ -105,13 +102,13 @@ public class ISO7816Card extends Card {
                     break;
                 }
 
-                for (int p=2; p<newApp[1];) {
-                    if (newApp[p] == (byte)0x84) {
+                for (int p = 2; p < newApp[1]; ) {
+                    if (newApp[p] == (byte) 0x84) {
                         // Application name
-                        appName = Utils.byteArraySlice(newApp, p+2, newApp[p+1]);
+                        appName = Utils.byteArraySlice(newApp, p + 2, newApp[p + 1]);
                         break;
                     } else {
-                        p += newApp[p+1] + 2;
+                        p += newApp[p + 1] + 2;
                     }
                 }
 
@@ -174,8 +171,8 @@ public class ISO7816Card extends Card {
         // Get the part of the file name that is actually a string.
         // TODO: figure out the proper way to parse the DFN/Dedicated File Name
         int p;
-        for (p=0; p<b.length; p++) {
-            if (b[p] < (byte)0x20 || b[p] >= (byte)0x7f) {
+        for (p = 0; p < b.length; p++) {
+            if (b[p] < (byte) 0x20 || b[p] >= (byte) 0x7f) {
                 break;
             }
         }

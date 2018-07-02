@@ -29,9 +29,9 @@ import au.id.micolous.metrodroid.xml.Base64String;
  */
 @Root(name = "record")
 public class CalypsoRecord {
-    @Attribute(name="index")
+    @Attribute(name = "index")
     private int mIndex;
-    @Text(required=false)
+    @Text(required = false)
     private Base64String mData;
 
     CalypsoRecord() { /* For XML Serializer */ }
