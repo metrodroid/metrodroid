@@ -418,8 +418,6 @@
     <string name="calypso_manufacturer_irsa">IRSA</string>
     <string name="calypso_manufacturer_innovatron">Innovatron</string>
 
-
-
     <!--
     Translators: This is shown below a trip entry to describe the start and end stations of a trip.
 
@@ -438,7 +436,7 @@
       You can use this any number of times.
 
     Example:
-      Source: "(From )Tokyo → (to )Osaka"
+      Source: "(From )Tokyo [→] (to )Osaka"
       Written: "Tokyo → Osaka"
       Spoken: "From Tokyo  to Osaka"
     -->
