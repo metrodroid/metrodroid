@@ -48,13 +48,14 @@ import au.id.micolous.metrodroid.util.Utils;
  * <p>
  * References:
  * - https://github.com/L1L1/cardpeek/tree/master/dot_cardpeek_dir/scripts/calypso
+ * - https://github.com/zoobab/mobib-extractor
  * - http://demo.calypsostandard.net/
  * - https://github.com/nfc-tools/libnfc/blob/master/examples/pn53x-tamashell-scripts/ReadMobib.sh
  * - https://github.com/nfc-tools/libnfc/blob/master/examples/pn53x-tamashell-scripts/ReadNavigo.sh
  */
 @Root(name = "card")
 @CardRawDataFragmentClass(CalypsoCardRawDataFragment.class)
-@CardHasManufacturingInfo(false)
+@CardHasManufacturingInfo(true)
 public class CalypsoCard extends ISO7816Card {
     public static final String CALYPSO_FILENAME = "1TIC.ICA";
     private static final String TAG = CalypsoCard.class.getName();
@@ -126,7 +127,33 @@ public class CalypsoCard extends ISO7816Card {
         return mFiles;
     }
 
-    enum File {
+    public CalypsoFile getFile(int file) {
+        return getFile(0, file);
+    }
+
+    public CalypsoFile getFile(File f) {
+        return getFile(f.getFolder(), f.getFile());
+    }
+
+    /**
+     * Gets a Calypso file by folder/file.
+     *
+     * This only retrieves cached values, and does not retrieve new files from the card.
+     * @param folder Folder ID to get.
+     * @param file File ID to get.
+     * @return CalypsoFile representing the requested file, or null if not found.
+     */
+    public CalypsoFile getFile(int folder, int file) {
+        for (CalypsoFile f : mFiles) {
+            if (f.getFolder() == folder && f.getFile() == file) {
+                return f;
+            }
+        }
+
+        return null;
+    }
+
+    public enum File {
         AID(0x3F04),
         ICC(0x0002),
         ID(0x0003),

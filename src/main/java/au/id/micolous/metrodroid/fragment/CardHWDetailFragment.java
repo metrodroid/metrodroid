@@ -23,10 +23,16 @@ package au.id.micolous.metrodroid.fragment;
 import android.app.ListFragment;
 import android.os.Bundle;
 
+import com.neovisionaries.i18n.CountryCode;
+
 import au.id.micolous.farebot.R;
 import au.id.micolous.metrodroid.activity.AdvancedCardInfoActivity;
 import au.id.micolous.metrodroid.card.Card;
 import au.id.micolous.metrodroid.card.CardType;
+import au.id.micolous.metrodroid.card.calypso.CalypsoCard;
+import au.id.micolous.metrodroid.card.calypso.CalypsoData;
+import au.id.micolous.metrodroid.card.calypso.CalypsoFile;
+import au.id.micolous.metrodroid.card.calypso.CalypsoRecord;
 import au.id.micolous.metrodroid.card.cepas.CEPASCard;
 import au.id.micolous.metrodroid.card.cepas.CEPASPurse;
 import au.id.micolous.metrodroid.card.desfire.DesfireCard;
@@ -41,6 +47,8 @@ import org.simpleframework.xml.Serializer;
 
 import java.text.NumberFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.Locale;
 
@@ -127,6 +135,54 @@ public class CardHWDetailFragment extends ListFragment {
             FelicaCard card = (FelicaCard) mCard;
             items.add(new ListItem(R.string.felica_idm, Utils.getHexString(card.getIDm().getBytes(), "err")));
             items.add(new ListItem(R.string.felica_pmm, Utils.getHexString(card.getPMm().getBytes(), "err")));
+        } else if (mCard.getCardType() == CardType.Calypso) {
+            CalypsoCard card = (CalypsoCard) mCard;
+            CalypsoFile iccFile = card.getFile(CalypsoCard.File.ICC);
+            CalypsoRecord iccRecord = null;
+            if (iccFile != null) {
+                iccRecord = iccFile.getRecord(1);
+            }
+
+            if (iccRecord != null) {
+                // https://github.com/zoobab/mobib-extractor/blob/master/MOBIB-Extractor.py#L324
+                byte[] data = iccRecord.getData();
+                int countryCode = 0;
+
+                // The country code is a ISO 3166-1 numeric in base16. ie: bytes(0x02,0x40) = 240
+                try {
+                    countryCode = Integer.parseInt(Utils.getHexString(data, 20, 2), 10);
+                } catch (NumberFormatException ignored) {}
+
+                // This shows a country name if it's known, or "unknown (number)" if not.
+                String countryName;
+                if (countryCode > 0) {
+                    countryName = CountryCode.getByCode(countryCode).toLocale().getDisplayCountry();
+                } else {
+                    countryName = Utils.localizeString(R.string.unknown_format, countryCode);
+                }
+
+                CalypsoData.Manufacturer manufacturer = CalypsoData.Manufacturer.get(data[22]);
+                String manufacturerHex = "0x" + Integer.toHexString((int)data[22] & 0xff);
+                String manufacturerName;
+                if (manufacturer != null) {
+                    manufacturerName = String.format(Locale.ENGLISH, "%s (%s)",
+                            Utils.localizeString(manufacturer.getCompanyName()),
+                            manufacturerHex);
+                } else {
+                    manufacturerName = Utils.localizeString(R.string.unknown_format,
+                            manufacturerHex);
+                }
+
+                GregorianCalendar manufactureDate = new GregorianCalendar(CalypsoData.TIME_ZONE);
+                manufactureDate.setTimeInMillis(CalypsoData.MANUFACTURE_EPOCH.getTimeInMillis());
+                manufactureDate.add(Calendar.DATE, Utils.byteArrayToInt(data, 25, 2));
+
+                items.add(new HeaderListItem("ICC"));
+                items.add(new ListItem(R.string.calypso_serial_number, Utils.getHexString(data, 12, 8)));
+                items.add(new ListItem(R.string.calypso_manufacture_country, countryName));
+                items.add(new ListItem(R.string.calypso_manufacturer, manufacturerName));
+                items.add(new ListItem(R.string.calypso_manufacture_date, Utils.longDateFormat(manufactureDate)));
+            }
         }
 
         setListAdapter(new ListItemAdapter(getActivity(), items));

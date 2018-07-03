@@ -19,6 +19,7 @@
 package au.id.micolous.metrodroid.card.iso7816;
 
 import android.nfc.tech.IsoDep;
+import android.support.annotation.Nullable;
 import android.util.Log;
 
 import java.io.EOFException;
@@ -188,6 +189,9 @@ public class ISO7816Protocol {
         try {
             ret = sendRequest(CLASS_ISO7816, INSTRUCTION_ISO7816_READ_RECORD,
                     recordNumber, (byte) 0x4 /* p1 is record number */, length);
+
+
+
             return ret;
         } catch (CalypsoException e) {
             Log.e(TAG, "couldn't read record", e);
@@ -203,6 +207,53 @@ public class ISO7816Protocol {
 
         CalypsoException() {
         }
+    }
+
+    class ReadLengthFieldResult {
+        /** value of the length field */
+        int length;
+        /** the number of bytes it took to encode this length value */
+        int bytesConsumed;
+
+        ReadLengthFieldResult(int length, int bytesConsumed) {
+            this.length = length;
+            this.bytesConsumed = bytesConsumed;
+        }
+    }
+
+    /**
+     * Decodes a BER-TLV length delimiter (X.690 ASN.1).
+     *
+     * This implements the limited subset for ISO 7816 (where it may only consume up to 5 bytes).
+     *
+     * A worked example of the encoding is given at:
+     * https://en.wikipedia.org/wiki/X.690#Definite_form
+     * @param buf Buffer to read
+     * @param offset Offset to start reading from
+     * @return A ReadLengthFieldResult if the value is valid, or NULL if the value is invalid.
+     */
+    @Nullable
+    private ReadLengthFieldResult readLengthField(byte[] buf, int offset) {
+        int bytesConsumed = buf[offset] & 0xff;
+
+        if (bytesConsumed <= 0x7f) {
+            return new ReadLengthFieldResult(bytesConsumed, 1);
+        }
+
+        // Chop off the top bit
+        bytesConsumed &= 0x7f;
+
+        if (bytesConsumed == 0 || bytesConsumed > 4) {
+            // length is invalid
+            return null;
+        }
+
+        int length = 0;
+        for (int x=1; x<=bytesConsumed; x++) {
+            length = (length << 8) | (buf[offset + 1] & 0xff);
+        }
+
+        return new ReadLengthFieldResult(length, bytesConsumed);
     }
 
 }

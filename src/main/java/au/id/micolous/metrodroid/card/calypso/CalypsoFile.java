@@ -56,4 +56,18 @@ public class CalypsoFile {
         return mRecords;
     }
 
+    /**
+     * Gets a record for a given index.
+     * @param index Record index to retrieve.
+     * @return CalypsoRecord with that index, or null if not present.
+     */
+    public CalypsoRecord getRecord(int index) {
+        for (CalypsoRecord record : mRecords) {
+            if (record.getIndex() == index) {
+                return record;
+            }
+        }
+
+        return null;
+    }
 }

@@ -37,6 +37,7 @@ dependencies {
     compile 'commons-io:commons-io:2.5'
     compile 'org.apache.commons:commons-lang3:3.5'
     compile 'com.google.protobuf:protobuf-lite:3.0.0'
+    compile 'com.neovisionaries:nv-i18n:1.23'
     compile('org.simpleframework:simple-xml:2.7.1') {
         exclude module: 'stax'
         exclude module: 'stax-api'
