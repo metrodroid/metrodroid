@@ -38,8 +38,10 @@ import au.id.micolous.metrodroid.transit.myki.MykiTransitData;
 import au.id.micolous.metrodroid.transit.octopus.OctopusTransitData;
 import au.id.micolous.metrodroid.transit.opal.OpalTransitData;
 import au.id.micolous.metrodroid.transit.ovc.OVChipTransitData;
+import au.id.micolous.metrodroid.transit.podorozhnik.PodorozhnikTransitData;
 import au.id.micolous.metrodroid.transit.seq_go.SeqGoTransitData;
 import au.id.micolous.metrodroid.transit.smartrider.SmartRiderTransitData;
+import au.id.micolous.metrodroid.transit.troika.TroikaTransitData;
 import au.id.micolous.metrodroid.util.Utils;
 
 /**
@@ -214,6 +216,21 @@ public class CardInfo {
             .setPreview()
             .build();
 
+    public static final CardInfo TROIKA = new Builder()
+            .setImageId(R.drawable.laxtap_card)
+            .setName(TroikaTransitData.LONG_NAME)
+            .setLocation(R.string.location_moscow)
+            .setCardType(CardType.MifareClassic)
+            .setPreview()
+            .build();
+
+    public static final CardInfo PODOROZHNIK = new Builder()
+            .setImageId(R.drawable.laxtap_card)
+            .setName(PodorozhnikTransitData.LONG_NAME)
+            .setLocation(R.string.location_saint_petersburg)
+            .setCardType(CardType.MifareClassic)
+            .setPreview()
+            .build();
 
     /**
      * A list of all cards in alphabetical order of their name.
@@ -236,10 +253,12 @@ public class CardInfo {
             ORCA,
             OVCHIP,
             PASMO,
+            PODOROZHNIK,
             SZT, // Shenzhen Tong
             SMARTRIDER,
             SUICA,
             LAX_TAP, // TAP
+	    TROIKA,
     };
 
     @DrawableRes

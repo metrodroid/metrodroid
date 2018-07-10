@@ -50,8 +50,11 @@ import au.id.micolous.metrodroid.transit.erg.ErgTransitData;
 import au.id.micolous.metrodroid.transit.manly_fast_ferry.ManlyFastFerryTransitData;
 import au.id.micolous.metrodroid.transit.nextfare.NextfareTransitData;
 import au.id.micolous.metrodroid.transit.ovc.OVChipTransitData;
+import au.id.micolous.metrodroid.transit.podorozhnik.PodorozhnikTransitData;
 import au.id.micolous.metrodroid.transit.seq_go.SeqGoTransitData;
 import au.id.micolous.metrodroid.transit.smartrider.SmartRiderTransitData;
+import au.id.micolous.metrodroid.transit.troika.TroikaHybridTransitData;
+import au.id.micolous.metrodroid.transit.troika.TroikaTransitData;
 import au.id.micolous.metrodroid.transit.unknown.UnauthorizedClassicTransitData;
 import au.id.micolous.metrodroid.util.Utils;
 
@@ -60,6 +63,7 @@ import org.simpleframework.xml.Root;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.List;
@@ -73,8 +77,16 @@ public class ClassicCard extends Card {
     public static final byte[] PREAMBLE_KEY = {(byte) 0x00, (byte) 0x00, (byte) 0x00, (byte) 0x00, (byte) 0x00,
             (byte) 0x00};
 
+    public static final byte[] TROIKA_SECTOR_8_KEY = {
+            (byte) 0xa7, (byte) 0x3f, (byte) 0x5d, (byte) 0xc1, (byte) 0xd3, (byte) 0x33};
+
+    public static final byte[] PODOROZHNIK_SECTOR_4_KEY = {
+            (byte) 0xe5, (byte) 0x6a, (byte) 0xc1, (byte) 0x27, (byte) 0xdd, (byte) 0x45};
+
     static final byte[][] WELL_KNOWN_KEYS = {
             PREAMBLE_KEY,
+            TROIKA_SECTOR_8_KEY,
+            PODOROZHNIK_SECTOR_4_KEY,
             MifareClassic.KEY_DEFAULT,
             MifareClassic.KEY_MIFARE_APPLICATION_DIRECTORY,
             MifareClassic.KEY_NFC_FORUM
@@ -227,6 +239,14 @@ public class ClassicCard extends Card {
                         sectors.add(new ClassicSector(sectorIndex, blocks.toArray(new ClassicBlock[blocks.size()]), correctKey));
 
                         feedbackInterface.updateProgressBar((sectorIndex * 5) + 4, maxProgress);
+                        if (sectorIndex == 8 && Arrays.equals(correctKey, TROIKA_SECTOR_8_KEY)) {
+                            // We don't need the rest. Speed up reading
+                            break;
+                        }
+                        if (sectorIndex == 8 && Arrays.equals(sectors.get(4).getKey(), PODOROZHNIK_SECTOR_4_KEY)) {
+                            // We don't need the rest. Speed up reading
+                            break;
+                        }
                     } else {
                         Log.d(TAG, "Authentication unsuccessful for sector " + sectorIndex + ", giving up");
                         sectors.add(new UnauthorizedClassicSector(sectorIndex));
@@ -359,6 +379,13 @@ public class ClassicCard extends Card {
             }
         } else if (SmartRiderTransitData.check(this)) {
             return SmartRiderTransitData.parseTransitIdentity(this);
+        } else if (TroikaTransitData.check(this)) {
+            if (PodorozhnikTransitData.check(this)) {
+                return TroikaHybridTransitData.parseTransitIdentity(this);
+            }
+            return TroikaTransitData.parseTransitIdentity(this);
+        } else if (PodorozhnikTransitData.check(this)) {
+            return PodorozhnikTransitData.parseTransitIdentity(this);
         } else if (UnauthorizedClassicTransitData.check(this)) {
             // This check must be SECOND TO LAST.
             //
@@ -410,6 +437,13 @@ public class ClassicCard extends Card {
             }
         } else if (SmartRiderTransitData.check(this)) {
             return new SmartRiderTransitData(this);
+        } else if (TroikaTransitData.check(this)) {
+            if (PodorozhnikTransitData.check(this)) {
+                return new TroikaHybridTransitData(this);
+            }
+            return new TroikaTransitData(this);
+        } else if (PodorozhnikTransitData.check(this)) {
+            return new PodorozhnikTransitData(this);
         } else if (UnauthorizedClassicTransitData.check(this)) {
             // This check must be SECOND TO LAST.
             //
