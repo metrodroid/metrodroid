@@ -140,7 +140,7 @@ public class TroikaTransitData extends TransitData {
     }
 
     public static TransitIdentity parseTransitIdentity(ClassicCard card) {
-        return new TransitIdentity("Troika", "" + getSerial(card.getSector(8)));
+        return new TransitIdentity(NAME, "" + getSerial(card.getSector(8)));
     }
 
     public TroikaTransitData(ClassicCard card) {
