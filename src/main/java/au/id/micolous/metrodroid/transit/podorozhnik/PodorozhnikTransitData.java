@@ -50,7 +50,6 @@ public class PodorozhnikTransitData extends TransitData {
         }
     };
 
-    //private SeqGoTicketType mTicketType;
     private static final String TAG = "PodorozhnikTransitData";
 
     private int mBalance;

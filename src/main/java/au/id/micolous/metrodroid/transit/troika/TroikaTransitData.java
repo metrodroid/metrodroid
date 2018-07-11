@@ -60,7 +60,6 @@ public class TroikaTransitData extends TransitData {
         }
     };
 
-    //private SeqGoTicketType mTicketType;
     private static final String TAG = "TroikaTransitData";
 
     private long mSerialNumber;
@@ -85,12 +84,7 @@ public class TroikaTransitData extends TransitData {
 
     public static long getSerial(ClassicSector sector) {
         byte[] b = sector.getBlock(0).getData();
-        long sn = ((long)b[2] & 0xf) << 28;
-        sn |= (b[3] & 0xff) << 20;
-        sn |= (b[4] & 0xff) << 12;
-        sn |= (b[5] & 0xff) << 4;
-        sn |= (b[6] & 0xf0) >> 4;
-        return sn;
+        return ((long) Utils.getBitsFromBuffer(b,20, 32)) & 0xffffffffL;
     }
 
     private static String formatSerial(long sn) {
@@ -100,19 +94,12 @@ public class TroikaTransitData extends TransitData {
 
     private static int getBalance(ClassicSector sector) {
         byte[] b = sector.getBlock(1).getData();
-        int sn = ((int)b[7] & 0xf) << 18;
-        sn |= (b[8] & 0xff) << 10;
-        sn |= (b[9] & 0xff) << 2;
-        sn |= (b[10] & 0xff) >> 6;
-        return sn;
+        return Utils.getBitsFromBuffer(b,60, 22);
     }
 
     private static int getExpiryDays(ClassicSector sector) {
         byte[] b = sector.getBlock(0).getData();
-        int sn = ((int)b[7] & 0x7) << 13;
-        sn |= (b[8] & 0xff) << 5;
-        sn |= (b[9] & 0xff) >> 3;
-        return sn;
+        return Utils.getBitsFromBuffer(b,61, 16);
     }
 
     private static String formatDate(int days) {
