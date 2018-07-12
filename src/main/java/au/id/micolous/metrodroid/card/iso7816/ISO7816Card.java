@@ -34,6 +34,7 @@ import au.id.micolous.metrodroid.card.Card;
 import au.id.micolous.metrodroid.card.CardType;
 import au.id.micolous.metrodroid.card.TagReaderFeedbackInterface;
 import au.id.micolous.metrodroid.card.calypso.CalypsoCard;
+import au.id.micolous.metrodroid.card.tmoney.TMoneyCard;
 import au.id.micolous.metrodroid.transit.TransitData;
 import au.id.micolous.metrodroid.transit.TransitIdentity;
 import au.id.micolous.metrodroid.util.Utils;
@@ -110,6 +111,13 @@ public class ISO7816Card extends Card {
                 return CalypsoCard.dumpTag(iso7816Tag, new ISO7816Info(app, CalypsoCard.CALYPSO_FILENAME,
                                 tag.getId(), GregorianCalendar.getInstance()),
                         feedbackInterface);
+
+            app = iso7816Tag.selectApplication(TMoneyCard.APP_NAME, false);
+            if (app != null)
+                return TMoneyCard.dumpTag(iso7816Tag, new ISO7816Info(app, TMoneyCard.APP_NAME,
+                                tag.getId(), GregorianCalendar.getInstance()),
+                        feedbackInterface);
+
         } catch (TagLostException ex) {
             Log.w(TAG, "tag lost", ex);
             partialRead = true;

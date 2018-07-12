@@ -802,4 +802,6 @@
     <!-- Translators: The name of the ticketing system in Saint Petersburg (Russian: Подорожник).
     May be transliterated. -->
     <string name="card_name_podorozhnik">Podorozhnik</string>
+    <string name="location_seoul">Seoul, Korea</string>
+    <string name="tmoney_date">T-money date</string>
 </resources>
