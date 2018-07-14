@@ -183,6 +183,14 @@ public class CardInfo {
             .setCardType(CardType.FeliCa)
             .build();
 
+    public static final CardInfo PODOROZHNIK = new Builder()
+            .setImageId(R.drawable.laxtap_card)
+            .setName(PodorozhnikTransitData.NAME)
+            .setLocation(R.string.location_saint_petersburg)
+            .setCardType(CardType.MifareClassic)
+            .setPreview()
+            .build();
+
     public static final CardInfo SZT = new CardInfo.Builder()
             .setImageId(R.drawable.szt_card)
             .setName(OctopusTransitData.SZT_NAME)
@@ -209,6 +217,7 @@ public class CardInfo {
 
     public static final CardInfo LAX_TAP = new CardInfo.Builder()
             .setImageId(R.drawable.laxtap_card)
+            // Using the short name (TAP) may be ambiguous
             .setName(LaxTapTransitData.LONG_NAME)
             .setLocation(R.string.location_los_angeles)
             .setCardType(CardType.MifareClassic)
@@ -218,19 +227,13 @@ public class CardInfo {
 
     public static final CardInfo TROIKA = new Builder()
             .setImageId(R.drawable.laxtap_card)
-            .setName(TroikaTransitData.LONG_NAME)
+            .setName(TroikaTransitData.NAME)
             .setLocation(R.string.location_moscow)
             .setCardType(CardType.MifareClassic)
             .setPreview()
             .build();
 
-    public static final CardInfo PODOROZHNIK = new Builder()
-            .setImageId(R.drawable.laxtap_card)
-            .setName(PodorozhnikTransitData.LONG_NAME)
-            .setLocation(R.string.location_saint_petersburg)
-            .setCardType(CardType.MifareClassic)
-            .setPreview()
-            .build();
+
 
     /**
      * A list of all cards in alphabetical order of their name.
@@ -258,7 +261,7 @@ public class CardInfo {
             SMARTRIDER,
             SUICA,
             LAX_TAP, // TAP
-	    TROIKA,
+    	    TROIKA,
     };
 
     @DrawableRes

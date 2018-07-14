@@ -77,16 +77,23 @@ public class ClassicCard extends Card {
     public static final byte[] PREAMBLE_KEY = {(byte) 0x00, (byte) 0x00, (byte) 0x00, (byte) 0x00, (byte) 0x00,
             (byte) 0x00};
 
-    public static final byte[] TROIKA_SECTOR_8_KEY = {
-            (byte) 0xa7, (byte) 0x3f, (byte) 0x5d, (byte) 0xc1, (byte) 0xd3, (byte) 0x33};
-
-    public static final byte[] PODOROZHNIK_SECTOR_4_KEY = {
-            (byte) 0xe5, (byte) 0x6a, (byte) 0xc1, (byte) 0x27, (byte) 0xdd, (byte) 0x45};
-
+    /**
+     * Contains a list of widely used MIFARE Classic keys.
+     *
+     * None of the keys here are unique to a particular transit card, or to a vendor of transit
+     * ticketing systems.
+     *
+     * Even if a transit operator uses (some) fixed keys, please do not add them here.
+     *
+     * If you are unable to identify a card by some data on it (such as a "magic string"), then
+     * you should use {@link Utils#checkKeyHash(byte[], String, String...)}, and include a hashed
+     * version of the key in Metrodroid.
+     *
+     * See {@link SmartRiderTransitData#detectKeyType(ClassicCard)} for an example of how to do
+     * this.
+     */
     static final byte[][] WELL_KNOWN_KEYS = {
             PREAMBLE_KEY,
-            TROIKA_SECTOR_8_KEY,
-            PODOROZHNIK_SECTOR_4_KEY,
             MifareClassic.KEY_DEFAULT,
             MifareClassic.KEY_MIFARE_APPLICATION_DIRECTORY,
             MifareClassic.KEY_NFC_FORUM
@@ -239,14 +246,6 @@ public class ClassicCard extends Card {
                         sectors.add(new ClassicSector(sectorIndex, blocks.toArray(new ClassicBlock[blocks.size()]), correctKey));
 
                         feedbackInterface.updateProgressBar((sectorIndex * 5) + 4, maxProgress);
-                        if (sectorIndex == 8 && Arrays.equals(correctKey, TROIKA_SECTOR_8_KEY)) {
-                            // We don't need the rest. Speed up reading
-                            break;
-                        }
-                        if (sectorIndex == 8 && Arrays.equals(sectors.get(4).getKey(), PODOROZHNIK_SECTOR_4_KEY)) {
-                            // We don't need the rest. Speed up reading
-                            break;
-                        }
                     } else {
                         Log.d(TAG, "Authentication unsuccessful for sector " + sectorIndex + ", giving up");
                         sectors.add(new UnauthorizedClassicSector(sectorIndex));

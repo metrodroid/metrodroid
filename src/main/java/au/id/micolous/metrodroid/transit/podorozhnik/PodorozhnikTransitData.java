@@ -23,6 +23,7 @@ import android.os.Parcel;
 import android.os.Parcelable;
 import android.support.annotation.Nullable;
 import android.text.Spanned;
+import android.util.Log;
 
 import au.id.micolous.metrodroid.card.classic.ClassicCard;
 import au.id.micolous.metrodroid.card.classic.ClassicSector;
@@ -39,7 +40,13 @@ import java.util.Arrays;
 public class PodorozhnikTransitData extends TransitData {
 
     public static final String NAME = "Podorozhnik";
-    public static final String LONG_NAME = "Podorozhnik transit card";
+
+    // We don't want to actually include these keys in the program, so include a hashed version of
+    // this key.
+    private static final String KEY_SALT = "podorozhnik";
+    // md5sum of Salt + Common Key + Salt, used on sector 4.
+    private static final String KEY_DIGEST = "f3267ff451b1fc3076ba12dcee2bf803";
+
     public static final Parcelable.Creator<PodorozhnikTransitData> CREATOR = new Parcelable.Creator<PodorozhnikTransitData>() {
         public PodorozhnikTransitData createFromParcel(Parcel parcel) {
             return new PodorozhnikTransitData(parcel);
@@ -95,7 +102,7 @@ public class PodorozhnikTransitData extends TransitData {
     }
 
     public static TransitIdentity parseTransitIdentity(ClassicCard card) {
-        return new TransitIdentity("Podorozhnik", null);
+        return new TransitIdentity(NAME, null);
     }
 
     public PodorozhnikTransitData(ClassicCard card) {
@@ -103,7 +110,14 @@ public class PodorozhnikTransitData extends TransitData {
         mBalance = getBalance(sector4);
     }
 
-    static public boolean check(ClassicCard card) {
-        return Arrays.equals(ClassicCard.PODOROZHNIK_SECTOR_4_KEY, card.getSector(4).getKey());
+    public static boolean check(ClassicCard card) {
+        byte[] key = card.getSector(4).getKey();
+        if (key == null || key.length != 6) {
+            // We don't have key data, bail out.
+            return false;
+        }
+
+        Log.d(TAG, "Checking for Podorozhnik key...");
+        return Utils.checkKeyHash(key, KEY_SALT, KEY_DIGEST) >= 0;
     }
 }
