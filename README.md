@@ -68,12 +68,12 @@ Card / Agency | Location | Notes
 [Opal][18] | :australia: Sydney (and surrounds), NSW, Australia | :new:
 [ORCA][0] | :us: Seattle, WA, USA |
 [OV-chipkaart][32] | :netherlands: Netherlands | :closed_lock_with_key: `MFC`
-[Podorozhnik][37] | :russia: Saint Petersburg, Russia | :new: :closed_lock_with_key: `MFC`
+[Podorozhnik][37] | :ru: Saint Petersburg, Russia | :new: :closed_lock_with_key: `MFC`
 [Shenzhen Tong][27] | :cn: Shenzhen, Guangdong Province, China | :new:
 [SmartRider][29] | :australia: Western Australia, Australia | :new: :closed_lock_with_key: `MFC`
 [Suica][9], [ICOCA][10], [PASMO][11] | :jp: Japan
 [Transit Access Pass][26] | :us: Los Angeles, CA, USA | :new: :closed_lock_with_key: `MFC`
-[Troika][38] | :russia: Moscow, Russia | :new: :closed_lock_with_key: `MFC`
+[Troika][38] | :ru: Moscow, Russia | :new: :closed_lock_with_key: `MFC`
 
 Note | Meaning
 ---- | -------
