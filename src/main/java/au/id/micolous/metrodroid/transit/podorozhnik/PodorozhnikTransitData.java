@@ -64,7 +64,7 @@ public class PodorozhnikTransitData extends TransitData {
     @Nullable
     @Override
     public Integer getBalance() {
-        return Integer.valueOf(mBalance);
+        return mBalance;
     }
 
     @Override

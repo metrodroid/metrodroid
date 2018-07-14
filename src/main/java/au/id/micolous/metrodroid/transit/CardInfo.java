@@ -184,10 +184,13 @@ public class CardInfo {
             .build();
 
     public static final CardInfo PODOROZHNIK = new Builder()
-            .setImageId(R.drawable.laxtap_card)
+            // seqgo_card_alpha has identical geometry
+            .setImageId(R.drawable.podorozhnik_card, R.drawable.seqgo_card_alpha)
             .setName(PodorozhnikTransitData.NAME)
             .setLocation(R.string.location_saint_petersburg)
             .setCardType(CardType.MifareClassic)
+            .setExtraNote(R.string.card_note_russia)
+            .setKeysRequired()
             .setPreview()
             .build();
 
@@ -226,10 +229,13 @@ public class CardInfo {
             .build();
 
     public static final CardInfo TROIKA = new Builder()
-            .setImageId(R.drawable.laxtap_card)
+            // seqgo_card_alpha has identical geometry
+            .setImageId(R.drawable.troika_card, R.drawable.seqgo_card_alpha)
             .setName(TroikaTransitData.NAME)
             .setLocation(R.string.location_moscow)
             .setCardType(CardType.MifareClassic)
+            .setExtraNote(R.string.card_note_russia)
+            .setKeysRequired()
             .setPreview()
             .build();
 

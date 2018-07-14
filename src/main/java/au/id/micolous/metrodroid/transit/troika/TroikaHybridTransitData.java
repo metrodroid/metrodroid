@@ -29,7 +29,9 @@ import au.id.micolous.metrodroid.card.classic.ClassicCard;
 import au.id.micolous.metrodroid.transit.TransitData;
 import au.id.micolous.metrodroid.transit.TransitIdentity;
 import au.id.micolous.metrodroid.transit.podorozhnik.PodorozhnikTransitData;
+import au.id.micolous.metrodroid.ui.HeaderListItem;
 import au.id.micolous.metrodroid.ui.ListItem;
+import au.id.micolous.metrodroid.util.TripObfuscator;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -51,7 +53,6 @@ public class TroikaHybridTransitData extends TransitData {
         }
     };
 
-    //private SeqGoTicketType mTicketType;
     private static final String TAG = "TroikaHybridTransitData";
 
     private TroikaTransitData mTroika;
@@ -79,11 +80,16 @@ public class TroikaHybridTransitData extends TransitData {
     public List<ListItem> getInfo() {
         ArrayList<ListItem> items = new ArrayList<>();
 
-        items.add(new ListItem(R.string.troika_balance,
-                mTroika.formatCurrencyString(mTroika.getBalance(), true).toString()));
+        items.add(new HeaderListItem(R.string.card_name_troika));
+        items.add(new ListItem(R.string.balance,
+                mTroika.formatCurrencyString(Math.abs(TripObfuscator.maybeObfuscateFare(
+                        mTroika.getBalance())), true).toString()));
         items.addAll(mTroika.getInfo());
-        items.add(new ListItem(R.string.podorozhnik_balance,
-                mPodorozhnik.formatCurrencyString(mPodorozhnik.getBalance(), true).toString()));
+
+        items.add(new HeaderListItem(R.string.card_name_podorozhnik));
+        items.add(new ListItem(R.string.balance,
+                mPodorozhnik.formatCurrencyString(Math.abs(TripObfuscator.maybeObfuscateFare(
+                        mPodorozhnik.getBalance())), true).toString()));
 
         return items;
     }
@@ -106,7 +112,7 @@ public class TroikaHybridTransitData extends TransitData {
     }
 
     public static TransitIdentity parseTransitIdentity(ClassicCard card) {
-        return new TransitIdentity("Troika+Podorozhnik", "" + TroikaTransitData.getSerial(card.getSector(8)));
+        return new TransitIdentity(NAME, "" + TroikaTransitData.getSerial(card.getSector(8)));
     }
 
     public TroikaHybridTransitData(ClassicCard card) {

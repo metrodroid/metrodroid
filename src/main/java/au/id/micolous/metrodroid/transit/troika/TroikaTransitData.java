@@ -30,6 +30,7 @@ import au.id.micolous.metrodroid.card.classic.ClassicCard;
 import au.id.micolous.metrodroid.card.classic.ClassicSector;
 import au.id.micolous.metrodroid.transit.TransitData;
 import au.id.micolous.metrodroid.transit.TransitIdentity;
+import au.id.micolous.metrodroid.ui.HeaderListItem;
 import au.id.micolous.metrodroid.ui.ListItem;
 import au.id.micolous.metrodroid.util.Utils;
 
@@ -75,7 +76,7 @@ public class TroikaTransitData extends TransitData {
     @Nullable
     @Override
     public Integer getBalance() {
-        return Integer.valueOf(mBalance);
+        return mBalance;
     }
 
     @Override
@@ -120,9 +121,7 @@ public class TroikaTransitData extends TransitData {
     @Override
     public List<ListItem> getInfo() {
         ArrayList<ListItem> items = new ArrayList<>();
-
-        items.add(new ListItem(R.string.troika_expires_on, formatDate(mExpiryDays)));
-
+        items.add(new ListItem(R.string.card_expiry_date, formatDate(mExpiryDays)));
         return items;
     }
 

@@ -37,6 +37,7 @@ public class LicenseActivity extends Activity {
             + "Copyright 2012-2013 Wilbert Duijvenvoorde\n"
             + "Copyright 2013 Lauri Andler, Marcelo Liberato, Mike Castleman, Sinpo Wei\n"
             + "Copyright 2014 Bao-Long Nguyen-Trong, Kramer Campbell\n"
+            + "Copyright 2018 Google Inc.\n"
             + "\n"
             + "This program is free software: you can redistribute it and/or modify "
             + "it under the terms of the GNU General Public License as published by "
