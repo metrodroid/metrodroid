@@ -1,7 +1,7 @@
 /*
- * MyWayTransitData.java
+ * SmartRiderTransitData.java
  *
- * Copyright 2016 Michael Farrell <micolous+git@gmail.com>
+ * Copyright 2016-2018 Michael Farrell <micolous+git@gmail.com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -23,20 +23,18 @@ import android.support.annotation.Nullable;
 import android.text.Spanned;
 import android.util.Log;
 
-import au.id.micolous.metrodroid.card.classic.ClassicCard;
-import au.id.micolous.metrodroid.transit.TransitData;
-import au.id.micolous.metrodroid.transit.TransitIdentity;
-import au.id.micolous.metrodroid.transit.Trip;
-import au.id.micolous.metrodroid.util.Utils;
-
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
 import java.util.GregorianCalendar;
 import java.util.Locale;
 import java.util.TimeZone;
+
+import au.id.micolous.metrodroid.card.classic.ClassicCard;
+import au.id.micolous.metrodroid.transit.TransitData;
+import au.id.micolous.metrodroid.transit.TransitIdentity;
+import au.id.micolous.metrodroid.transit.Trip;
+import au.id.micolous.metrodroid.util.Utils;
 
 /**
  * Reader for SmartRider (Western Australia) and MyWay (Australian Capital Territory / Canberra)
@@ -128,41 +126,20 @@ public class SmartRiderTransitData extends TransitData {
     }
 
     private static CardType detectKeyType(ClassicCard card) {
-        MessageDigest md5;
-        String digest;
-
         byte[] key = card.getSector(7).getKey();
         if (key == null || key.length != 6) {
             // We don't have key data, bail out.
             return CardType.UNKNOWN;
         }
 
-        try {
-            md5 = MessageDigest.getInstance("MD5");
-        } catch (NoSuchAlgorithmException e) {
-            Log.w(TAG, "Couldn't find implementation of MD5", e);
-            return CardType.UNKNOWN;
-        }
-
-        md5.update(MYWAY_KEY_SALT.getBytes());
-        md5.update(key);
-        md5.update(MYWAY_KEY_SALT.getBytes());
-
-        digest = Utils.getHexString(md5.digest());
-        Log.d(TAG, "Myway key digest: " + digest);
-
-        if (MYWAY_KEY_DIGEST.equals(digest)) {
+        Log.d(TAG, "Checking for MyWay key...");
+        if (Utils.checkKeyHash(key, MYWAY_KEY_SALT, MYWAY_KEY_DIGEST) >= 0) {
             return CardType.MYWAY;
         }
 
-        md5.update(SMARTRIDER_KEY_SALT.getBytes());
-        md5.update(key);
-        md5.update(SMARTRIDER_KEY_SALT.getBytes());
-
-        digest = Utils.getHexString(md5.digest());
-        Log.d(TAG, "Smartrider key digest: " + digest);
-
-        if (SMARTRIDER_KEY2_DIGEST.equals(digest) || SMARTRIDER_KEY3_DIGEST.equals(digest)) {
+        Log.d(TAG, "Checking for SmartRider key...");
+        if (Utils.checkKeyHash(key, SMARTRIDER_KEY_SALT,
+                SMARTRIDER_KEY2_DIGEST, SMARTRIDER_KEY3_DIGEST) >= 0) {
             return CardType.SMARTRIDER;
         }
 

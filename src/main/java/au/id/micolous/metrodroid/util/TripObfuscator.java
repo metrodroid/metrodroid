@@ -1,5 +1,6 @@
 package au.id.micolous.metrodroid.util;
 
+import android.support.annotation.Nullable;
 import android.util.Log;
 
 import au.id.micolous.metrodroid.transit.Trip;
@@ -135,7 +136,11 @@ public final class TripObfuscator {
      * @param fare input fare
      * @return adjusted fare
      */
-    public static int maybeObfuscateFare(int fare) {
+    public static int maybeObfuscateFare(@Nullable Integer fare) {
+        if (fare == null) {
+            return 0;
+        }
+
         if (!MetrodroidApplication.obfuscateTripFares()) {
             return fare;
         }

@@ -36,6 +36,7 @@ linux.conf.au 2018, in my talk, [Tap on to reverse engineering](https://youtu.be
 * [Rob O'Regan](http://www.robx1.net/nswtkt/private/manlyff/manlyff.htm) (Manly Fast Ferry card image)
 * [The Noun Project][15] (Various icons)
 * [naofum](https://github.com/naofum) (Japanese translations)
+* [Vladimir Serbinenko](https://github.com/phcoder) (Podorozhnik, Troika)
 
 ## Supported card protocols
 
@@ -67,10 +68,12 @@ Card / Agency | Location | Notes
 [Opal][18] | :australia: Sydney (and surrounds), NSW, Australia | :new:
 [ORCA][0] | :us: Seattle, WA, USA |
 [OV-chipkaart][32] | :netherlands: Netherlands | :closed_lock_with_key: `MFC`
+[Podorozhnik][37] | :russia: Saint Petersburg, Russia | :new: :closed_lock_with_key: `MFC`
 [Shenzhen Tong][27] | :cn: Shenzhen, Guangdong Province, China | :new:
 [SmartRider][29] | :australia: Western Australia, Australia | :new: :closed_lock_with_key: `MFC`
 [Suica][9], [ICOCA][10], [PASMO][11] | :jp: Japan
 [Transit Access Pass][26] | :us: Los Angeles, CA, USA | :new: :closed_lock_with_key: `MFC`
+[Troika][38] | :russia: Moscow, Russia | :new: :closed_lock_with_key: `MFC`
 
 Note | Meaning
 ---- | -------
@@ -165,3 +168,6 @@ This software and it's authors are not associated with any public transit agency
 [34]: http://www.metroinfo.co.nz/
 [35]: https://github.com/micolous/metrodroid/wiki/ERG-MFC
 [36]: http://www.calypsotechnology.net/
+[37]: http://podorozhnik.spb.ru/en/
+[38]: http://troika.mos.ru/
+

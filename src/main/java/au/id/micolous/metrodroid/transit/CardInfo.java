@@ -38,8 +38,10 @@ import au.id.micolous.metrodroid.transit.myki.MykiTransitData;
 import au.id.micolous.metrodroid.transit.octopus.OctopusTransitData;
 import au.id.micolous.metrodroid.transit.opal.OpalTransitData;
 import au.id.micolous.metrodroid.transit.ovc.OVChipTransitData;
+import au.id.micolous.metrodroid.transit.podorozhnik.PodorozhnikTransitData;
 import au.id.micolous.metrodroid.transit.seq_go.SeqGoTransitData;
 import au.id.micolous.metrodroid.transit.smartrider.SmartRiderTransitData;
+import au.id.micolous.metrodroid.transit.troika.TroikaTransitData;
 import au.id.micolous.metrodroid.util.Utils;
 
 /**
@@ -181,6 +183,17 @@ public class CardInfo {
             .setCardType(CardType.FeliCa)
             .build();
 
+    public static final CardInfo PODOROZHNIK = new Builder()
+            // seqgo_card_alpha has identical geometry
+            .setImageId(R.drawable.podorozhnik_card, R.drawable.seqgo_card_alpha)
+            .setName(PodorozhnikTransitData.NAME)
+            .setLocation(R.string.location_saint_petersburg)
+            .setCardType(CardType.MifareClassic)
+            .setExtraNote(R.string.card_note_russia)
+            .setKeysRequired()
+            .setPreview()
+            .build();
+
     public static final CardInfo SZT = new CardInfo.Builder()
             .setImageId(R.drawable.szt_card)
             .setName(OctopusTransitData.SZT_NAME)
@@ -207,12 +220,25 @@ public class CardInfo {
 
     public static final CardInfo LAX_TAP = new CardInfo.Builder()
             .setImageId(R.drawable.laxtap_card)
+            // Using the short name (TAP) may be ambiguous
             .setName(LaxTapTransitData.LONG_NAME)
             .setLocation(R.string.location_los_angeles)
             .setCardType(CardType.MifareClassic)
             .setKeysRequired()
             .setPreview()
             .build();
+
+    public static final CardInfo TROIKA = new Builder()
+            // seqgo_card_alpha has identical geometry
+            .setImageId(R.drawable.troika_card, R.drawable.seqgo_card_alpha)
+            .setName(TroikaTransitData.NAME)
+            .setLocation(R.string.location_moscow)
+            .setCardType(CardType.MifareClassic)
+            .setExtraNote(R.string.card_note_russia)
+            .setKeysRequired()
+            .setPreview()
+            .build();
+
 
 
     /**
@@ -236,10 +262,12 @@ public class CardInfo {
             ORCA,
             OVCHIP,
             PASMO,
+            PODOROZHNIK,
             SZT, // Shenzhen Tong
             SMARTRIDER,
             SUICA,
             LAX_TAP, // TAP
+    	    TROIKA,
     };
 
     @DrawableRes

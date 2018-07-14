@@ -50,8 +50,11 @@ import au.id.micolous.metrodroid.transit.erg.ErgTransitData;
 import au.id.micolous.metrodroid.transit.manly_fast_ferry.ManlyFastFerryTransitData;
 import au.id.micolous.metrodroid.transit.nextfare.NextfareTransitData;
 import au.id.micolous.metrodroid.transit.ovc.OVChipTransitData;
+import au.id.micolous.metrodroid.transit.podorozhnik.PodorozhnikTransitData;
 import au.id.micolous.metrodroid.transit.seq_go.SeqGoTransitData;
 import au.id.micolous.metrodroid.transit.smartrider.SmartRiderTransitData;
+import au.id.micolous.metrodroid.transit.troika.TroikaHybridTransitData;
+import au.id.micolous.metrodroid.transit.troika.TroikaTransitData;
 import au.id.micolous.metrodroid.transit.unknown.UnauthorizedClassicTransitData;
 import au.id.micolous.metrodroid.util.Utils;
 
@@ -60,6 +63,7 @@ import org.simpleframework.xml.Root;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.List;
@@ -73,6 +77,21 @@ public class ClassicCard extends Card {
     public static final byte[] PREAMBLE_KEY = {(byte) 0x00, (byte) 0x00, (byte) 0x00, (byte) 0x00, (byte) 0x00,
             (byte) 0x00};
 
+    /**
+     * Contains a list of widely used MIFARE Classic keys.
+     *
+     * None of the keys here are unique to a particular transit card, or to a vendor of transit
+     * ticketing systems.
+     *
+     * Even if a transit operator uses (some) fixed keys, please do not add them here.
+     *
+     * If you are unable to identify a card by some data on it (such as a "magic string"), then
+     * you should use {@link Utils#checkKeyHash(byte[], String, String...)}, and include a hashed
+     * version of the key in Metrodroid.
+     *
+     * See {@link SmartRiderTransitData#detectKeyType(ClassicCard)} for an example of how to do
+     * this.
+     */
     static final byte[][] WELL_KNOWN_KEYS = {
             PREAMBLE_KEY,
             MifareClassic.KEY_DEFAULT,
@@ -359,6 +378,13 @@ public class ClassicCard extends Card {
             }
         } else if (SmartRiderTransitData.check(this)) {
             return SmartRiderTransitData.parseTransitIdentity(this);
+        } else if (TroikaTransitData.check(this)) {
+            if (PodorozhnikTransitData.check(this)) {
+                return TroikaHybridTransitData.parseTransitIdentity(this);
+            }
+            return TroikaTransitData.parseTransitIdentity(this);
+        } else if (PodorozhnikTransitData.check(this)) {
+            return PodorozhnikTransitData.parseTransitIdentity(this);
         } else if (UnauthorizedClassicTransitData.check(this)) {
             // This check must be SECOND TO LAST.
             //
@@ -410,6 +436,13 @@ public class ClassicCard extends Card {
             }
         } else if (SmartRiderTransitData.check(this)) {
             return new SmartRiderTransitData(this);
+        } else if (TroikaTransitData.check(this)) {
+            if (PodorozhnikTransitData.check(this)) {
+                return new TroikaHybridTransitData(this);
+            }
+            return new TroikaTransitData(this);
+        } else if (PodorozhnikTransitData.check(this)) {
+            return new PodorozhnikTransitData(this);
         } else if (UnauthorizedClassicTransitData.check(this)) {
             // This check must be SECOND TO LAST.
             //

@@ -56,6 +56,8 @@ import android.view.WindowManager;
 import java.math.BigInteger;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -667,6 +669,11 @@ public class Utils {
     /**
      * Simple currency formatter, used for TransitData.formatCurrencyString.
      *
+     * This handles Android-specific issues:
+     *
+     * - Some currency formatters return too many or too few fractional amounts. (issue #34)
+     * - Markup with TtsSpan.MoneyBuilder, for accessibility tools.
+     *
      * @param currency     Input currency value to use
      * @param isBalance    True if the value being passed is a balance (ie: don't format credits in a
      *                     special way)
@@ -777,5 +784,64 @@ public class Utils {
         }
 
         return c.getTimeInMillis();
+    }
+
+    /**
+     * Checks if a salted hash of a value is found in a group of expected hash values.
+     *
+     * This is only really useful for MIFARE Classic cards, where the only way to identify a
+     * particular transit card is to check the key against a known list.  We don't want to ship
+     * any agency-specific keys with Metrodroid (no matter how well-known they are), so this
+     * obfuscates the keys.
+     *
+     * It is fairly straight forward to crack any MIFARE Classic card anyway, and this is only
+     * intended to be "on par" with the level of security on the cards themselves.
+     *
+     * This isn't useful for **all** cards, and should only be used as a last resort.  Many transit
+     * cards implement key diversification on all sectors (ie: every sector of every card has a key
+     * that is unique to a single card), which renders this technique unusable.
+     *
+     * The hash is defined as:
+     *
+     *    hash = lowercase(base16(md5(salt + key + salt)))
+     *
+     * @param key The key to test.
+     * @param salt The salt string to add to the key.
+     * @param expectedHashes Expected hash values that might be returned.
+     * @return The index of the hash that matched, or a number less than 0 if the value was not
+     *         found, or there was some other error with the input.
+     */
+    public static int checkKeyHash(byte[] key, String salt, String... expectedHashes) {
+        MessageDigest md5;
+        String digest;
+
+        // Validate input arguments.
+        if (key == null || salt == null || expectedHashes.length < 1) {
+            return -1;
+        }
+
+        try {
+            md5 = MessageDigest.getInstance("MD5");
+        } catch (NoSuchAlgorithmException e) {
+            // Every implementation of the Java platform is required to support MD5.
+            // This should never happen(tm).
+            Log.w(TAG, "Couldn't find implementation of MD5", e);
+            return -2;
+        }
+
+        md5.update(salt.getBytes());
+        md5.update(key);
+        md5.update(salt.getBytes());
+
+        digest = getHexString(md5.digest());
+        Log.d(TAG, "Key digest: " + digest);
+
+        for (int i=0; i<expectedHashes.length; i++) {
+            if (expectedHashes[i].equals(digest)) {
+                return i;
+            }
+        }
+
+        return -1;
     }
 }
