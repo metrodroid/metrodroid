@@ -30,14 +30,13 @@ import au.id.micolous.metrodroid.card.classic.ClassicCard;
 import au.id.micolous.metrodroid.card.classic.ClassicSector;
 import au.id.micolous.metrodroid.transit.TransitData;
 import au.id.micolous.metrodroid.transit.TransitIdentity;
-import au.id.micolous.metrodroid.ui.HeaderListItem;
 import au.id.micolous.metrodroid.ui.ListItem;
+import au.id.micolous.metrodroid.util.TripObfuscator;
 import au.id.micolous.metrodroid.util.Utils;
 
-import java.text.DateFormat;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.TimeZone;
@@ -57,6 +56,16 @@ public class TroikaTransitData extends TransitData {
     private static final String KEY_DIGEST = "6621dd07ad2954ffe49739ad88e744cf";
 
     private static final TimeZone TZ = TimeZone.getTimeZone("Europe/Moscow");
+
+    private static final long TROIKA_EPOCH;
+
+    static {
+        GregorianCalendar epoch = new GregorianCalendar(TZ);
+        epoch.set(1992, Calendar.FEBRUARY, 2, 12, 0, 0);
+
+        TROIKA_EPOCH = epoch.getTimeInMillis();
+    }
+
     public static final Parcelable.Creator<TroikaTransitData> CREATOR = new Parcelable.Creator<TroikaTransitData>() {
         public TroikaTransitData createFromParcel(Parcel parcel) {
             return new TroikaTransitData(parcel);
@@ -70,7 +79,15 @@ public class TroikaTransitData extends TransitData {
     private static final String TAG = "TroikaTransitData";
 
     private long mSerialNumber;
+
+    /**
+     * Balance of the card, in kopeyka (0.01 RUB).
+     */
     private int mBalance;
+
+    /**
+     * Expiry date of the card, in days since the TROIKA_EPOCH.
+     */
     private int mExpiryDays;
 
     @Nullable
@@ -109,19 +126,18 @@ public class TroikaTransitData extends TransitData {
         return Utils.getBitsFromBuffer(b,61, 16);
     }
 
-    private static String formatDate(int days) {
+    private static Calendar convertDate(int days) {
         GregorianCalendar g = new GregorianCalendar(TZ);
-        g.set(1992, 1, 2, 12, 00);
+        g.setTimeInMillis(TROIKA_EPOCH);
         g.add(GregorianCalendar.DAY_OF_YEAR, days);
-
-        DateFormat df = DateFormat.getDateInstance();
-        return df.format(g.getTime());
+        return g;
     }
 
     @Override
     public List<ListItem> getInfo() {
         ArrayList<ListItem> items = new ArrayList<>();
-        items.add(new ListItem(R.string.card_expiry_date, formatDate(mExpiryDays)));
+        items.add(new ListItem(R.string.card_expiry_date,
+                Utils.longDateFormat(TripObfuscator.maybeObfuscateTS(convertDate(mExpiryDays)))));
         return items;
     }
 

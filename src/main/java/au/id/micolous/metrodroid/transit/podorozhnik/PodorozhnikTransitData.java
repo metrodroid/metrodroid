@@ -31,8 +31,6 @@ import au.id.micolous.metrodroid.transit.TransitData;
 import au.id.micolous.metrodroid.transit.TransitIdentity;
 import au.id.micolous.metrodroid.util.Utils;
 
-import java.util.Arrays;
-
 /**
  * Podorozhnik cards.
  */
@@ -78,12 +76,9 @@ public class PodorozhnikTransitData extends TransitData {
     }
 
     private static int getBalance(ClassicSector sector) {
-        byte[] b = sector.getBlock(1).getData();
-        int sn = (b[0] & 0xff);
-        sn |= (b[1] & 0xff) << 8;
-        sn |= (b[2] & 0xff) << 16;
-        sn |= (b[3] & 0xff) << 24;
-        return sn;
+        // Balance is stored in Sector 4.
+        byte[] b = Utils.reverseBuffer(sector.getBlock(1).getData(), 0, 4);
+        return Utils.byteArrayToInt(b, 0, 4);
     }
 
     @Override

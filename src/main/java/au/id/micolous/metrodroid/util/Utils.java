@@ -669,6 +669,11 @@ public class Utils {
     /**
      * Simple currency formatter, used for TransitData.formatCurrencyString.
      *
+     * This handles Android-specific issues:
+     *
+     * - Some currency formatters return too many or too few fractional amounts. (issue #34)
+     * - Markup with TtsSpan.MoneyBuilder, for accessibility tools.
+     *
      * @param currency     Input currency value to use
      * @param isBalance    True if the value being passed is a balance (ie: don't format credits in a
      *                     special way)
