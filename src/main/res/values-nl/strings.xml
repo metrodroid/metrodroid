@@ -467,4 +467,10 @@
     <string name="calypso_manufacturer_irsa">IRSA</string>
     <string name="calypso_manufacturer_innovatron">Innovatron</string>
 
-    </resources>
+    <string name="location_moscow">Moskou, Rusland</string>
+    <string name="location_saint_petersburg">Sint-Petersburg, Rusland</string>
+
+    <string name="card_note_russia">Alleen oplaadbare kaarten worden ondersteund; door de bank uitgegeven kaarten worden niet ondersteund.</string>
+    <string name="card_name_troika">Trojka</string>
+    <string name="card_name_podorozhnik">Podorozhnik</string>
+</resources>
