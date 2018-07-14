@@ -41,7 +41,7 @@ linux.conf.au 2018, in my talk, [Tap on to reverse engineering](https://youtu.be
 ## Supported card protocols
 
 * [Calypso][36]
-* [CEPAS][2] (Not compatible with all devices)
+* [CEPAS][2]
 * [FeliCa][8]
 * [MIFARE Classic][23] (Not compatible with all devices)
 * [MIFARE DESFire][6]
@@ -56,7 +56,7 @@ Card / Agency | Location | Notes
 [Cubic Nextfare][33] | :earth_americas: _many locations_ | :new: :closed_lock_with_key: `MFC`
 [Edy][12] | :jp: Japan
 [ERG][35] | :earth_asia: _many locations_ | :new: :closed_lock_with_key: `MFC`
-[EZ-Link][7] | :singapore: Singapore | `CEPAS`
+[EZ-Link][7] | :singapore: Singapore |
 [Go card][20] | :australia: Brisbane and South East Queensland, Australia | :new: :closed_lock_with_key: `MFC`
 [Manly Fast Ferry][19] | :australia: Sydney, NSW, Australia | :new: :closed_lock_with_key: `MFC`
 [Matkakortti][16], [HSL][17] | :finland: Finland |
@@ -80,7 +80,6 @@ Note | Meaning
 :new: | New in Metrodroid.
 :closed_lock_with_key: | Encryption keys required to read this card.
 `MFC` | MIFARE Classic card; requires NXP NFC chipset in your phone.
-`CEPAS` | CEPAS card; not compatible with all devices.
 `123` | Only the card number can be read.
 `FALLBACK` | Fallback reader -- must be explicitly enabled in the application's settings.
 

@@ -105,12 +105,6 @@ public class SupportedCardsActivity extends Activity {
                     // MIFARE Classic is not supported by this device.
                     notes += Utils.localizeString(R.string.card_not_supported_on_device) + " ";
                 }
-
-                if (info.getCardType() == CardType.CEPAS) {
-                    // TODO: Implement feature detection for CEPAS like MIFARE Classic.
-                    // TODO: It is probably exposed in hasSystemFeature().
-                    notes += Utils.localizeString(R.string.card_note_cepas) + " ";
-                }
             } else {
                 // This device does not support NFC, so all cards are not supported.
                 notes += Utils.localizeString(R.string.card_not_supported_on_device) + " ";
