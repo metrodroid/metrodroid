@@ -24,14 +24,17 @@ import au.id.micolous.metrodroid.transit.Refill;
 
 import au.id.micolous.farebot.R;
 import au.id.micolous.metrodroid.MetrodroidApplication;
+import au.id.micolous.metrodroid.util.Utils;
 
 public class HSLRefill extends Refill {
     private final long mRefillTime;
     private final int mRefillAmount;
 
     public HSLRefill(byte[] data) {
-        mRefillTime = HSLTransitData.cardDateToTimestamp(HSLTransitData.bitsToLong(20, 14, data), HSLTransitData.bitsToLong(34, 11, data));
-        mRefillAmount = (int) HSLTransitData.bitsToLong(45, 20, data);
+        mRefillTime = HSLTransitData.cardDateToTimestamp(
+                Utils.getBitsFromBuffer(data, 20, 14),
+                Utils.getBitsFromBuffer(data, 34, 11));
+        mRefillAmount = Utils.getBitsFromBuffer(data, 45, 20);
     }
 
     public HSLRefill(Parcel parcel) {

@@ -25,7 +25,7 @@ import au.id.micolous.metrodroid.card.desfire.files.DesfireRecord;
 import au.id.micolous.metrodroid.transit.CompatTrip;
 
 import au.id.micolous.farebot.R;
-import au.id.micolous.metrodroid.MetrodroidApplication;
+import au.id.micolous.metrodroid.util.Utils;
 
 public class HSLTrip extends CompatTrip {
     public static final Creator<HSLTrip> CREATOR = new Creator<HSLTrip>() {
@@ -37,53 +37,48 @@ public class HSLTrip extends CompatTrip {
             return new HSLTrip[size];
         }
     };
-    final long mNewBalance;
+    private final int mNewBalance;
     String mLine;
-    long mVehicleNumber;
+    int mVehicleNumber;
     long mTimestamp;
     int mFare;
-    long mArvo;
+    int mArvo;
     long mExpireTimestamp;
-    long mPax;
+    int mPax;
 
     public HSLTrip(DesfireRecord record) {
         byte[] useData = record.getData();
-        long[] usefulData = new long[useData.length];
 
-        for (int i = 0; i < useData.length; i++) {
-            usefulData[i] = ((long) useData[i]) & 0xFF;
-        }
+        mArvo = Utils.getBitsFromBuffer(useData, 0, 1);
 
-        mArvo = HSLTransitData.bitsToLong(0, 1, usefulData);
+        mTimestamp = HSLTransitData.cardDateToTimestamp(Utils.getBitsFromBuffer(useData, 1, 14), Utils.getBitsFromBuffer(useData, 15, 11));
+        mExpireTimestamp = HSLTransitData.cardDateToTimestamp(Utils.getBitsFromBuffer(useData, 26, 14), Utils.getBitsFromBuffer(useData, 40, 11));
 
-        mTimestamp = HSLTransitData.cardDateToTimestamp(HSLTransitData.bitsToLong(1, 14, usefulData), HSLTransitData.bitsToLong(15, 11, usefulData));
-        mExpireTimestamp = HSLTransitData.cardDateToTimestamp(HSLTransitData.bitsToLong(26, 14, usefulData), HSLTransitData.bitsToLong(40, 11, usefulData));
+        mFare = Utils.getBitsFromBuffer(useData, 51, 14);
 
-        mFare = (int) HSLTransitData.bitsToLong(51, 14, usefulData);
-
-        mPax = HSLTransitData.bitsToLong(65, 5, usefulData);
+        mPax = Utils.getBitsFromBuffer(useData, 65, 5);
         mLine = null;
         mVehicleNumber = -1;
 
-        mNewBalance = HSLTransitData.bitsToLong(70, 20, usefulData);
+        mNewBalance = Utils.getBitsFromBuffer(useData, 70, 20);
 
     }
 
     HSLTrip(Parcel parcel) {
         // mArvo, mTimestamp, mExpireTimestamp, mFare, mPax, mNewBalance
-        mArvo = parcel.readLong();
+        mArvo = parcel.readInt();
         mTimestamp = parcel.readLong();
         mExpireTimestamp = parcel.readLong();
         mFare = parcel.readInt();
-        mPax = parcel.readLong();
-        mNewBalance = parcel.readLong();
+        mPax = parcel.readInt();
+        mNewBalance = parcel.readInt();
         mLine = null;
         mVehicleNumber = -1;
     }
 
     public HSLTrip() {
-        mArvo = mTimestamp = mExpireTimestamp = mPax = mNewBalance = mVehicleNumber = -1;
-        mFare = -1;
+        mTimestamp = mExpireTimestamp = -1;
+        mFare = mArvo = mPax = mNewBalance = mVehicleNumber = -1;
         mLine = null;
     }
 
@@ -98,14 +93,13 @@ public class HSLTrip extends CompatTrip {
 
     @Override
     public String getAgencyName() {
-        MetrodroidApplication app = MetrodroidApplication.getInstance();
-        String pax = app.getString(R.string.hsl_person_format, mPax);
+        String pax = Utils.localizeString(R.string.hsl_person_format, Integer.toString(mPax));
         if (mArvo == 1) {
-            String mins = app.getString(R.string.hsl_mins_format, ((this.mExpireTimestamp - this.mTimestamp) / 60));
-            String type = app.getString(R.string.hsl_balance_ticket);
+            String mins = Utils.localizeString(R.string.hsl_mins_format, Integer.toString((int)(this.mExpireTimestamp - this.mTimestamp) / 60));
+            String type = Utils.localizeString(R.string.hsl_balance_ticket);
             return String.format("%s, %s, %s", type, pax, mins);
         } else {
-            String type = app.getString(R.string.hsl_pass_ticket);
+            String type = Utils.localizeString(R.string.hsl_pass_ticket);
             return String.format("%s, %s", type, pax);
         }
     }
@@ -160,12 +154,12 @@ public class HSLTrip extends CompatTrip {
 
     public void writeToParcel(Parcel parcel, int flags) {
         // mArvo, mTimestamp, mExpireTimestamp, mFare, mPax, mNewBalance
-        parcel.writeLong(mArvo);
+        parcel.writeInt(mArvo);
         parcel.writeLong(mTimestamp);
         parcel.writeLong(mExpireTimestamp);
         parcel.writeInt(mFare);
-        parcel.writeLong(mPax);
-        parcel.writeLong(mNewBalance);
+        parcel.writeInt(mPax);
+        parcel.writeInt(mNewBalance);
     }
 
     public int describeContents() {

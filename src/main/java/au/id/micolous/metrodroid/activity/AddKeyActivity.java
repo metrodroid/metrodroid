@@ -54,6 +54,7 @@ import org.apache.commons.lang3.ArrayUtils;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.Locale;
 
 import au.id.micolous.farebot.R;
 import au.id.micolous.metrodroid.MetrodroidApplication;
@@ -194,7 +195,7 @@ public class AddKeyActivity extends Activity {
                 ((TextView) findViewById(R.id.key_data)).setText(Utils.localizePlural(R.plurals.hidden_key_data, mKeyData.length, mKeyData.length));
             } else {
                 ((TextView) findViewById(R.id.card_id)).setText(mTagId);
-                ((TextView) findViewById(R.id.key_data)).setText(Utils.getHexString(mKeyData, "").toUpperCase());
+                ((TextView) findViewById(R.id.key_data)).setText(Utils.getHexString(mKeyData, "").toUpperCase(Locale.US));
             }
 
             findViewById(R.id.directions).setVisibility(View.GONE);

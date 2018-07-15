@@ -37,8 +37,11 @@ import au.id.micolous.metrodroid.transit.Trip;
 import au.id.micolous.metrodroid.util.Utils;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Collections;
+import java.util.GregorianCalendar;
 import java.util.List;
+import java.util.TimeZone;
 
 /**
  * Implements a reader for HSL transit cards.
@@ -53,8 +56,17 @@ import java.util.List;
  * https://translate.google.com/translate?sl=auto&tl=en&js=y&prev=_t&hl=en&ie=UTF-8&u=http%3A%2F%2Fdev.hsl.fi%2Fhsl-card-java%2FHSL-matkakortin-kuvaus.pdf&edit-text=&act=url
  */
 public class HSLTransitData extends TransitData {
-    // 1997-01-01 00:00 Europe/Helsinki
-    private static final long EPOCH = 0x32C97ED0;
+    private static final TimeZone TZ = TimeZone.getTimeZone("Europe/Helsinki");
+    private static final long EPOCH;
+
+    static {
+        GregorianCalendar epoch = new GregorianCalendar(TZ);
+        epoch.set(1997, Calendar.JANUARY,1, 0, 0, 0);
+
+        EPOCH = epoch.getTimeInMillis();
+    }
+
+
     public static final int APP_ID = 0x1120ef;
     private String mSerialNumber;
     private int mBalance;
@@ -72,7 +84,7 @@ public class HSLTransitData extends TransitData {
     private long mArvoExit;
     private long mArvoPurchase;
     private long mArvoExpire;
-    private long mArvoPax;
+    private int mArvoPax;
     private int mArvoPurchasePrice;
     private long mArvoXfer;
     private long mArvoDiscoGroup;
@@ -80,10 +92,10 @@ public class HSLTransitData extends TransitData {
     private long mArvoDuration;
     private long mArvoRegional;
     private long mArvoJOREExt;
-    private long mArvoVehicleNumber;
+    private int mArvoVehicleNumber;
     private long mArvoUnknown;
     private long mArvoLineJORE;
-    private long mKausiVehicleNumber;
+    private int mKausiVehicleNumber;
     private long mKausiUnknown;
     private long mKausiLineJORE;
     private long mKausiJOREExt;
@@ -113,14 +125,14 @@ public class HSLTransitData extends TransitData {
         mArvoDiscoGroup = parcel.readLong();
         mArvoPurchase = parcel.readLong();
         mArvoExpire = parcel.readLong();
-        mArvoPax = parcel.readLong();
+        mArvoPax = parcel.readInt();
         mArvoXfer = parcel.readLong();
-        mArvoVehicleNumber = parcel.readLong();
+        mArvoVehicleNumber = parcel.readInt();
         mArvoUnknown = parcel.readLong();
         mArvoLineJORE = parcel.readLong();
         mArvoJOREExt = parcel.readLong();
         mArvoDirection = parcel.readLong();
-        mKausiVehicleNumber = parcel.readLong();
+        mKausiVehicleNumber = parcel.readInt();
         mKausiUnknown = parcel.readLong();
         mKausiLineJORE = parcel.readLong();
         mKausiJOREExt = parcel.readLong();
@@ -144,7 +156,7 @@ public class HSLTransitData extends TransitData {
 
         try {
             data = desfireCard.getApplication(APP_ID).getFile(0x02).getData();
-            mBalance = (int) bitsToLong(0, 20, data);
+            mBalance = Utils.getBitsFromBuffer(data, 0, 20);
             mLastRefill = new HSLRefill(data);
         } catch (Exception ex) {
             throw new RuntimeException("Error parsing HSL refills", ex);
@@ -167,27 +179,39 @@ public class HSLTransitData extends TransitData {
 
         try {
             data = desfireCard.getApplication(APP_ID).getFile(0x03).getData();
-            mArvoMystery1 = bitsToLong(0, 9, data);
-            mArvoDiscoGroup = bitsToLong(9, 5, data);
-            mArvoDuration = bitsToLong(14, 13, data);
-            mArvoRegional = bitsToLong(27, 5, data);
+            mArvoMystery1 = Utils.byteArrayToInt(data, 0, 9);
+            mArvoDiscoGroup = Utils.byteArrayToInt(data, 9, 5);
+            mArvoDuration = Utils.byteArrayToInt(data, 14, 13);
+            mArvoRegional = Utils.byteArrayToInt(data, 27, 5);
 
-            mArvoExit = cardDateToTimestamp(bitsToLong(32, 14, data), bitsToLong(46, 11, data));
-            mArvoPurchasePrice = (int) bitsToLong(68, 14, data);
-            //mArvoDiscoGroup = bitsToLong(82, 6,data);
-            mArvoPurchase = cardDateToTimestamp(bitsToLong(88, 14, data), bitsToLong(102, 11, data)); //68 price, 82 zone?
-            mArvoExpire = cardDateToTimestamp(bitsToLong(113, 14, data), bitsToLong(127, 11, data)); //68 price, 82 zone?
-            mArvoPax = bitsToLong(138, 6, data);
+            mArvoExit = cardDateToTimestamp(
+                    Utils.byteArrayToInt(data, 32, 14),
+                    Utils.byteArrayToInt(data, 46, 11));
 
-            mArvoXfer = cardDateToTimestamp(bitsToLong(144, 14, data), bitsToLong(158, 11, data)); //68 price, 82 zone?
+            //68 price, 82 zone?
+            mArvoPurchasePrice = Utils.getBitsFromBuffer(data, 68, 14);
+            //mArvoDiscoGroup = Utils.byteArrayToInt(data, 82, 6);
+            mArvoPurchase = cardDateToTimestamp(
+                    Utils.byteArrayToInt(data, 88, 14),
+                    Utils.byteArrayToInt(data, 102, 11));
 
-            mArvoVehicleNumber = bitsToLong(169, 14, data);
+            mArvoExpire = cardDateToTimestamp(
+                    Utils.byteArrayToInt(data, 113, 14),
+                    Utils.byteArrayToInt(data, 127, 11));
 
-            mArvoUnknown = bitsToLong(183, 2, data);
+            mArvoPax = Utils.getBitsFromBuffer(data, 138, 6);
 
-            mArvoLineJORE = bitsToLong(185, 14, data);
-            mArvoJOREExt = bitsToLong(199, 4, data);
-            mArvoDirection = bitsToLong(203, 1, data);
+            mArvoXfer = cardDateToTimestamp(
+                    Utils.byteArrayToInt(data, 144, 14),
+                    Utils.byteArrayToInt(data, 158, 11));
+
+            mArvoVehicleNumber = Utils.getBitsFromBuffer(data, 169, 14);
+
+            mArvoUnknown = Utils.byteArrayToInt(data, 183, 2);
+
+            mArvoLineJORE = Utils.byteArrayToInt(data, 185, 14);
+            mArvoJOREExt = Utils.byteArrayToInt(data, 199, 4);
+            mArvoDirection = Utils.byteArrayToInt(data, 203, 1);
 
             if (balanceIndex > -1) {
                 mTrips.get(balanceIndex).mLine = Long.toString(mArvoLineJORE);
@@ -219,14 +243,14 @@ public class HSLTransitData extends TransitData {
         try {
             data = desfireCard.getApplication(APP_ID).getFile(0x01).getData();
 
-            if (bitsToLong(19, 14, data) == 0 && bitsToLong(67, 14, data) == 0) {
+            if (Utils.byteArrayToInt(data, 19, 14) == 0 && Utils.byteArrayToInt(data, 67, 14) == 0) {
                 mKausiNoData = true;
             }
 
-            mKausiStart = cardDateToTimestamp(bitsToLong(19, 14, data), 0);
-            mKausiEnd = cardDateToTimestamp(bitsToLong(33, 14, data), 0);
-            mKausiPrevStart = cardDateToTimestamp(bitsToLong(67, 14, data), 0);
-            mKausiPrevEnd = cardDateToTimestamp(bitsToLong(81, 14, data), 0);
+            mKausiStart = cardDateToTimestamp(Utils.byteArrayToInt(data, 19, 14), 0);
+            mKausiEnd = cardDateToTimestamp(Utils.byteArrayToInt(data, 33, 14), 0);
+            mKausiPrevStart = cardDateToTimestamp(Utils.byteArrayToInt(data, 67, 14), 0);
+            mKausiPrevEnd = cardDateToTimestamp(Utils.byteArrayToInt(data, 81, 14), 0);
             if (mKausiPrevStart > mKausiStart) {
                 long temp = mKausiStart;
                 long temp2 = mKausiEnd;
@@ -236,19 +260,23 @@ public class HSLTransitData extends TransitData {
                 mKausiPrevEnd = temp2;
             }
             mHasKausi = mKausiEnd > (System.currentTimeMillis() / 1000.0);
-            mKausiPurchase = cardDateToTimestamp(bitsToLong(110, 14, data), bitsToLong(124, 11, data));
-            mKausiPurchasePrice = (int) bitsToLong(149, 15, data);
-            mKausiLastUse = cardDateToTimestamp(bitsToLong(192, 14, data), bitsToLong(206, 11, data));
-            mKausiVehicleNumber = bitsToLong(217, 14, data);
+            mKausiPurchase = cardDateToTimestamp(
+                    Utils.byteArrayToInt(data, 110, 14),
+                    Utils.byteArrayToInt(data, 124, 11));
+            mKausiPurchasePrice = Utils.byteArrayToInt(data, 149, 15);
+            mKausiLastUse = cardDateToTimestamp(
+                    Utils.byteArrayToInt(data, 192, 14),
+                    Utils.byteArrayToInt(data, 206, 11));
+            mKausiVehicleNumber = Utils.byteArrayToInt(data, 217, 14);
             //mTrips[0].mVehicleNumber = mArvoVehicleNumber;
 
-            mKausiUnknown = bitsToLong(231, 2, data);
+            mKausiUnknown = Utils.byteArrayToInt(data, 231, 2);
 
-            mKausiLineJORE = bitsToLong(233, 14, data);
+            mKausiLineJORE = Utils.byteArrayToInt(data, 233, 14);
             //mTrips[0].mLine = Long.toString(mArvoLineJORE).substring(1);
 
-            mKausiJOREExt = bitsToLong(247, 4, data);
-            mKausiDirection = bitsToLong(241, 1, data);
+            mKausiJOREExt = Utils.byteArrayToInt(data, 247, 4);
+            mKausiDirection = Utils.byteArrayToInt(data, 241, 1);
             if (seasonIndex > -1) {
                 mTrips.get(seasonIndex).mVehicleNumber = mKausiVehicleNumber;
                 mTrips.get(seasonIndex).mLine = Long.toString(mKausiLineJORE);
@@ -286,25 +314,17 @@ public class HSLTransitData extends TransitData {
         }
     }
 
-    public static long bitsToLong(int start, int len, byte[] data) {
-        long ret = 0;
-        for (int i = start; i < start + len; ++i) {
-            long bit = ((data[i / 8] >> (7 - i % 8)) & 1);
-            ret = ret | (bit << ((start + len - 1) - i));
-        }
-        return ret;
+    /*
+    public static Calendar cardDateToTimestamp(int day, int minute) {
+        GregorianCalendar c = new GregorianCalendar(TZ);
+        c.setTimeInMillis(EPOCH);
+        c.add(Calendar.DAY_OF_YEAR, day);
+        c.add(Calendar.MINUTE, minute);
+        return c;
     }
+    */
 
-    public static long bitsToLong(int start, int len, long[] data) {
-        long ret = 0;
-        for (int i = start; i < start + len; ++i) {
-            long bit = ((data[i / 8] >> (7 - i % 8)) & 1);
-            ret = ret | (bit << ((start + len - 1) - i));
-        }
-        return ret;
-    }
-
-    public static long cardDateToTimestamp(long day, long minute) {
+    static long cardDateToTimestamp(long day, long minute) {
         return (EPOCH) + day * (60 * 60 * 24) + minute * 60;
     }
 
@@ -416,7 +436,6 @@ public class HSLTransitData extends TransitData {
         if (file instanceof RecordDesfireFile) {
             RecordDesfireFile recordFile = (RecordDesfireFile) card.getApplication(APP_ID).getFile(0x04);
 
-
             List<HSLTrip> useLog = new ArrayList<>();
             for (int i = 0; i < recordFile.getRecords().size(); i++) {
                 useLog.add(new HSLTrip(recordFile.getRecords().get(i)));
@@ -440,14 +459,14 @@ public class HSLTransitData extends TransitData {
         parcel.writeLong(mArvoDiscoGroup);
         parcel.writeLong(mArvoPurchase);
         parcel.writeLong(mArvoExpire);
-        parcel.writeLong(mArvoPax);
+        parcel.writeInt(mArvoPax);
         parcel.writeLong(mArvoXfer);
-        parcel.writeLong(mArvoVehicleNumber);
+        parcel.writeInt(mArvoVehicleNumber);
         parcel.writeLong(mArvoUnknown);
         parcel.writeLong(mArvoLineJORE);
         parcel.writeLong(mArvoJOREExt);
         parcel.writeLong(mArvoDirection);
-        parcel.writeLong(mKausiVehicleNumber);
+        parcel.writeInt(mKausiVehicleNumber);
         parcel.writeLong(mKausiUnknown);
         parcel.writeLong(mKausiLineJORE);
         parcel.writeLong(mKausiJOREExt);

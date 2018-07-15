@@ -100,7 +100,7 @@
     <string name="application_title_format">Application: 0x%s</string>
     <string name="file_title_format">File: 0x%s</string>
     <string name="unauthorized_file_title_format">File: 0x%s (unauthorized)</string>
-    <string name="invalid_file_title_format">File: 0x%1%s (invalid: %2$s)</string>
+    <string name="invalid_file_title_format">File: 0x%1$s (invalid: %2$s)</string>
     <string name="unauthorized_page_title_format">Page: 0x%s (unauthorized)</string>
     <string name="sector_title_format">Sector: 0x%s</string>
     <string name="unauthorized_sector_title_format">Sector: 0x%s (unauthorized)</string>
@@ -687,6 +687,7 @@
     <string name="hsl_season_ticket_price_was">The season ticket\'s price was</string>
     <string name="hsl_you_last_used_this_ticket">You last used this ticket on</string>
     <string name="hsl_person_format">%s person</string>
+    <!-- Translators: This is the short form of "minutes" -->
     <string name="hsl_mins_format">%s mins</string>
     <string name="hsl_value_ticket">Value ticket</string>
     <string name="hsl_value_ticket_bought_on">Ticket bought</string>

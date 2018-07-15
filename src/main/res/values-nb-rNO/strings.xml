@@ -247,7 +247,7 @@
     <string name="application_title_format">Program: 0x%s</string>
     <string name="file_title_format">Fil: 0x%s</string>
     <string name="unauthorized_file_title_format">Fil: 0x%s (uautorisert)</string>
-    <string name="invalid_file_title_format">Fil: 0x%1%s (ugyldig: %2$s)</string>
+    <string name="invalid_file_title_format">Fil: 0x%1$s (ugyldig: %2$s)</string>
     <string name="unauthorized_page_title_format">Side: 0x%s (uautorisert)</string>
     <string name="map_tiles_subdomains_summary">Hvis {s} brukes i kartnettadresse, en kommainndelt liste over underdomene, eller enkelttegnsliste over underdomener.</string>
     <string name="map_tiles_help_summary">For hjelp med bruk av kartflisnettadresser, se Leaflets nettbaserte dokumentasjon (, kun tilgjengelig på Engelsk).</string>

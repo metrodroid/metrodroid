@@ -21,7 +21,7 @@
     <string name="scanned_cards">Amazray</string>
     <string name="subscriptions">Ijerriden</string>
     <string name="info">Talɣut</string>
-    <string name="unknown_format">Arussin</string>
+    <string name="unknown_format">Arussin (%s)</string>
     <string name="unknown">Arussin</string>
     <string name="add_key">Rnu tasarutt n usenneftaɣ</string>
     <string name="error">Tuccḍa</string>
@@ -40,7 +40,6 @@
     <string name="felica_terminal_vending">Asedgar awurman</string>
     <string name="felica_process_issue_new">ugur</string>
     <string name="felica_process_reissue">ugur</string>
-    <string name="hsl_mins_format">s</string>
     <string name="hsl_value_ticket_last_sign">Aneggaru</string>
     <string name="hsl_value_ticket_pax">agraw</string>
     <string name="hsl_value_ticket_line_number">Uṭṭun n iz&amp;irig</string>

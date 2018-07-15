@@ -19,7 +19,9 @@ package au.id.micolous.metrodroid.ui;
 
 import android.app.AlertDialog;
 import android.content.Context;
+import android.os.Build;
 import android.preference.DialogPreference;
+import android.support.annotation.RequiresApi;
 import android.util.AttributeSet;
 
 /**
@@ -28,6 +30,7 @@ import android.util.AttributeSet;
 
 public class AlertDialogPreference extends DialogPreference {
 
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     public AlertDialogPreference(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
         super(context, attrs, defStyleAttr, defStyleRes);
     }

@@ -310,7 +310,7 @@
     <string name="application_title_format">Applicatie: 0x%s</string>
     <string name="file_title_format">Bestand: 0x%s</string>
     <string name="unauthorized_file_title_format">Bestand: 0x%s (niet-geauthoriseerd)</string>
-    <string name="invalid_file_title_format">Bestand: 0x%1%s (onjuist: %2$s)</string>
+    <string name="invalid_file_title_format">Bestand: 0x%1$s (onjuist: %2$s)</string>
     <string name="desfire_standard_file">Standaard bestand</string>
     <string name="desfire_backup_file">Back-upbestand</string>
     <string name="desfire_value_file">Waardebestand</string>

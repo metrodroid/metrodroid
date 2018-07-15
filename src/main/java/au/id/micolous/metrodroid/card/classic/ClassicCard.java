@@ -40,6 +40,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.List;
+import java.util.Locale;
 
 import au.id.micolous.farebot.R;
 import au.id.micolous.metrodroid.MetrodroidApplication;
@@ -356,7 +357,7 @@ public class ClassicCard extends Card {
 
     public static String getFallbackReader() {
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(MetrodroidApplication.getInstance());
-        return prefs.getString(MetrodroidApplication.PREF_MFC_FALLBACK, "null").toLowerCase();
+        return prefs.getString(MetrodroidApplication.PREF_MFC_FALLBACK, "null").toLowerCase(Locale.US);
     }
 
     @Override

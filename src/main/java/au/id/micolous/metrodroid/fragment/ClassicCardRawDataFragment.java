@@ -61,8 +61,8 @@ public class ClassicCardRawDataFragment extends ExpandableListFragment {
 
         String data = Utils.getHexString(block.getData(), "");
 
-        String sectorTitle = getString(R.string.sector_title_format, sector.getIndex());
-        String blockTitle = getString(R.string.block_title_format, block.getIndex());
+        String sectorTitle = getString(R.string.sector_title_format, Integer.toHexString(sector.getIndex()));
+        String blockTitle = getString(R.string.block_title_format, Integer.toString(block.getIndex()));
         new AlertDialog.Builder(getActivity())
                 .setTitle(String.format("%s, %s", sectorTitle, blockTitle))
                 .setPositiveButton(android.R.string.ok, null)
@@ -132,7 +132,7 @@ public class ClassicCardRawDataFragment extends ExpandableListFragment {
             ClassicSector sector = (ClassicSector) getGroup(groupPosition);
             String sectorIndexString = Integer.toHexString(sector.getIndex());
 
-            TextView textView = (TextView) view.findViewById(android.R.id.text1);
+            TextView textView = view.findViewById(android.R.id.text1);
             if (sector instanceof UnauthorizedClassicSector) {
                 textView.setText(mActivity.getString(R.string.unauthorized_sector_title_format, sectorIndexString));
             } else if (sector instanceof InvalidClassicSector) {
@@ -153,7 +153,8 @@ public class ClassicCardRawDataFragment extends ExpandableListFragment {
 
             ClassicBlock block = (ClassicBlock) getChild(groupPosition, childPosition);
 
-            ((TextView) view.findViewById(android.R.id.text1)).setText(mActivity.getString(R.string.block_title_format, block.getIndex()));
+            ((TextView) view.findViewById(android.R.id.text1)).setText(
+                    mActivity.getString(R.string.block_title_format, Integer.toString(block.getIndex())));
             ((TextView) view.findViewById(android.R.id.text2)).setText(block.getType());
 
             return view;

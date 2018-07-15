@@ -1,6 +1,8 @@
-<vector android:autoMirrored="true" android:height="40dp"
+<vector xmlns:tools="http://schemas.android.com/tools"
+    android:autoMirrored="true" android:height="40dp"
     android:viewportHeight="128.0" android:viewportWidth="128.0"
-    android:width="40dp" xmlns:aapt="http://schemas.android.com/aapt" xmlns:android="http://schemas.android.com/apk/res/android">
+    android:width="40dp" xmlns:aapt="http://schemas.android.com/aapt" xmlns:android="http://schemas.android.com/apk/res/android"
+    tools:ignore="UnusedAttribute">
     <path android:pathData="M4,80h120v44h-120z">
         <aapt:attr name="android:fillColor">
             <gradient android:endX="8192.0" android:endY="16082.6368"
