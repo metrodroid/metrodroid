@@ -28,6 +28,7 @@ import au.id.micolous.farebot.R;
 import au.id.micolous.metrodroid.card.classic.ClassicCard;
 import au.id.micolous.metrodroid.transit.TransitData;
 import au.id.micolous.metrodroid.transit.TransitIdentity;
+import au.id.micolous.metrodroid.transit.Trip;
 import au.id.micolous.metrodroid.transit.podorozhnik.PodorozhnikTransitData;
 import au.id.micolous.metrodroid.ui.HeaderListItem;
 import au.id.micolous.metrodroid.ui.ListItem;
@@ -90,6 +91,7 @@ public class TroikaHybridTransitData extends TransitData {
         items.add(new ListItem(R.string.balance,
                 mPodorozhnik.formatCurrencyString(Math.abs(TripObfuscator.maybeObfuscateFare(
                         mPodorozhnik.getBalance())), true).toString()));
+        items.addAll(mPodorozhnik.getInfo());
 
         return items;
     }
@@ -118,5 +120,10 @@ public class TroikaHybridTransitData extends TransitData {
     public TroikaHybridTransitData(ClassicCard card) {
         mTroika = new TroikaTransitData(card);
         mPodorozhnik = new PodorozhnikTransitData(card);
+    }
+
+    @Override
+    public Trip[] getTrips() {
+        return mPodorozhnik.getTrips();
     }
 }

@@ -802,4 +802,9 @@
     <!-- Translators: The name of the ticketing system in Saint Petersburg (Russian: Подорожник).
     May be transliterated. -->
     <string name="card_name_podorozhnik">Podorozhnik</string>
+    <string name="subway_trips">Subway trips counter</string>
+    <string name="ground_trips">Ground trips counter</string>
+    <string name="podorozhnik_topup">Podorozhnik top-up</string>
+    <string name="bus_spb">St-Petersburg Bus</string>
+    <string name="subway_spb">Subway Saint-Petersburg</string>
 </resources>
