@@ -262,6 +262,13 @@
     <string name="iso7816_probing">Probing ISO7816 card…</string>
     <string name="calypso_reading">Reading Calypso card…</string>
 
+    <!-- Translators: this is a short suffix for milliseconds, "%s" will display the number to
+    one decimal place (in localized form). -->
+    <plurals name="milliseconds_short">
+        <item quantity="one"><xliff:g id="milliseconds" example="1.0">%s</xliff:g> ms</item>
+        <item quantity="other"><xliff:g id="milliseconds" example="20.6">%s</xliff:g> ms</item>
+    </plurals>
+
     <!--
     Translators: shown in place of a real card number in some lists when obfuscation is enabled.
     -->
@@ -381,9 +388,43 @@
     <string name="cepas_issuer_data">Issuer-specific Data</string>
     <string name="cepas_purse_info">Purse information</string>
 
-    <!-- Felica hardware information -->
-    <string name="felica_idm">Manufacturing ID (IDm)</string>
-    <string name="felica_pmm">Manufacturing Parameter (PMm)</string>
+    <!--
+    Felica hardware information
+
+    Explanation of terminology:
+    https://www.sony.net/Products/felica/business/tech-support/data/code_descriptions_1.31.pdf
+    -->
+
+    <!-- Translators: IDm is a type of hardware serial number for FeliCa. -->
+    <string name="felica_idm">Manufacture ID (IDm)</string>
+    <!-- Translators: This is an integer code -->
+    <string name="felica_manufacturer_code">Manufacturer code</string>
+    <string name="felica_card_identification_number">Card identification number</string>
+    <!-- Translators: PMm identifies the type and performance of the card. -->
+    <string name="felica_pmm">Manufacture Parameter (PMm)</string>
+    <!-- Translators: This is an integer code -->
+    <string name="felica_rom_type">ROM type</string>
+    <!-- Translators: This is an integer code -->
+    <string name="felica_ic_type">IC type</string>
+    <!-- Translators: FeliCa has a field which describes maximal time to response for different
+    types of commands. -->
+    <string name="felica_maximum_response_time">Maximum response times</string>
+    <!-- Translators: "Request Service" is the name of a FeliCa command -->
+    <string name="felica_response_time_variable">Request Service command (1 node)</string>
+    <string name="felica_response_time_fixed">Fixed response time commands</string>
+    <!-- Translators: "Authentication1" is the name of a FeliCa command -->
+    <string name="felica_response_time_auth1">Authentication1 command (1 node)</string>
+    <!-- Translators: "Authentication2" is the name of a FeliCa command -->
+    <string name="felica_response_time_auth2">Authentication2 command</string>
+    <!-- Translators: "Read" is the name of a FeliCa command -->
+    <string name="felica_response_time_read">Read command (1 block)</string>
+    <!-- Translators: "Write" is the name of a FeliCa command -->
+    <string name="felica_response_time_write">Write command (1 block)</string>
+    <!-- Translators: "Issuance" is the name of group of FeliCa commands -->
+    <string name="felica_response_time_other">Issuance commands</string>
+
+
+
 
     <!-- Calypso hardware information -->
     <string name="calypso_serial_number">Serial number</string>
@@ -392,30 +433,55 @@
     <!-- Translators: The manufacturer is a company name. -->
     <string name="calypso_manufacturer">Manufacturer</string>
 
+    <!-- Translators: This is a company name -->
     <string name="calypso_manufacturer_ask">ASK</string>
+    <!-- Translators: This is a company name -->
     <string name="calypso_manufacturer_intec">Intec</string>
+    <!-- Translators: This is a company name -->
     <string name="calypso_manufacturer_calypso">Calypso</string>
+    <!-- Translators: This is a company name -->
     <string name="calypso_manufacturer_ascom">Ascom</string>
+    <!-- Translators: This is a company name -->
     <string name="calypso_manufacturer_thales">Thales</string>
+    <!-- Translators: This is a company name -->
     <string name="calypso_manufacturer_sagem">Sagem</string>
+    <!-- Translators: This is a company name -->
     <string name="calypso_manufacturer_axalto">Axalto</string>
+    <!-- Translators: This is a company name -->
     <string name="calypso_manufacturer_bull">Bull</string>
+    <!-- Translators: This is a company name -->
     <string name="calypso_manufacturer_spirtech">Spirtech</string>
+    <!-- Translators: This is a company name -->
     <string name="calypso_manufacturer_bms">BMS</string>
+    <!-- Translators: This is a company name -->
     <string name="calypso_manufacturer_oberthur">Oberthur</string>
+    <!-- Translators: This is a company name -->
     <string name="calypso_manufacturer_gemplus">Gemplus</string>
+    <!-- Translators: This is a company name -->
     <string name="calypso_manufacturer_magnadata">Magnadata</string>
+    <!-- Translators: This is a company name -->
     <string name="calypso_manufacturer_calmell">Calmell</string>
+    <!-- Translators: This is a company name -->
     <string name="calypso_manufacturer_mecstar">Mecstar</string>
+    <!-- Translators: This is a company name -->
     <string name="calypso_manufacturer_acg">ACG Identification</string>
+    <!-- Translators: This is a company name -->
     <string name="calypso_manufacturer_stm">STMicroelectronics</string>
+    <!-- Translators: This is a company name -->
     <string name="calypso_manufacturer_gide">Giesecke &amp; Devrient GmbH</string>
+    <!-- Translators: This is a company name -->
     <string name="calypso_manufacturer_oti">OTI</string>
+    <!-- Translators: This is a company name -->
     <string name="calypso_manufacturer_gemalto">Gemalto</string>
+    <!-- Translators: This is a company name -->
     <string name="calypso_manufacturer_watchdata">Watchdata</string>
+    <!-- Translators: This is a company name -->
     <string name="calypso_manufacturer_alios">Alios</string>
+    <!-- Translators: This is a company name -->
     <string name="calypso_manufacturer_sps">S-P-S</string>
+    <!-- Translators: This is a company name -->
     <string name="calypso_manufacturer_irsa">IRSA</string>
+    <!-- Translators: This is a company name -->
     <string name="calypso_manufacturer_innovatron">Innovatron</string>
 
     <!--

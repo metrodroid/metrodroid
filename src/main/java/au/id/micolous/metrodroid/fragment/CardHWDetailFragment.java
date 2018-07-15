@@ -45,6 +45,7 @@ import au.id.micolous.metrodroid.util.Utils;
 
 import org.simpleframework.xml.Serializer;
 
+import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -133,8 +134,47 @@ public class CardHWDetailFragment extends ListFragment {
             }
         } else if (mCard.getCardType() == CardType.FeliCa) {
             FelicaCard card = (FelicaCard) mCard;
-            items.add(new ListItem(R.string.felica_idm, Utils.getHexString(card.getIDm().getBytes(), "err")));
-            items.add(new ListItem(R.string.felica_pmm, Utils.getHexString(card.getPMm().getBytes(), "err")));
+            items.add(new HeaderListItem(R.string.felica_idm));
+            items.add(new ListItem(R.string.felica_manufacturer_code, "0x" + Integer.toHexString(card.getManufacturerCode())));
+            items.add(new ListItem(R.string.felica_card_identification_number, Long.toString(card.getCardIdentificationNumber())));
+
+            items.add(new HeaderListItem(R.string.felica_pmm));
+            items.add(new ListItem(R.string.felica_rom_type, Integer.toString(card.getROMType())));
+            items.add(new ListItem(R.string.felica_ic_type, Integer.toString(card.getICType())));
+
+            items.add(new HeaderListItem(R.string.felica_maximum_response_time));
+
+            DecimalFormat df = new DecimalFormat();
+            df.setMaximumFractionDigits(1);
+            df.setMinimumFractionDigits(1);
+
+            double d = card.getVariableResponseTime(1);
+            items.add(new ListItem(R.string.felica_response_time_variable,
+                    Utils.localizePlural(R.plurals.milliseconds_short, (int)d, df.format(d))));
+
+            d = card.getFixedResponseTime();
+            items.add(new ListItem(R.string.felica_response_time_fixed,
+                    Utils.localizePlural(R.plurals.milliseconds_short, (int)d, df.format(d))));
+
+            d = card.getMutualAuthentication1Time(1);
+            items.add(new ListItem(R.string.felica_response_time_auth1,
+                    Utils.localizePlural(R.plurals.milliseconds_short, (int)d, df.format(d))));
+
+            d = card.getMutualAuthentication2Time();
+            items.add(new ListItem(R.string.felica_response_time_auth2,
+                    Utils.localizePlural(R.plurals.milliseconds_short, (int)d, df.format(d))));
+
+            d = card.getDataReadTime(1);
+            items.add(new ListItem(R.string.felica_response_time_read,
+                    Utils.localizePlural(R.plurals.milliseconds_short, (int)d, df.format(d))));
+
+            d = card.getDataWriteTime(1);
+            items.add(new ListItem(R.string.felica_response_time_write,
+                    Utils.localizePlural(R.plurals.milliseconds_short, (int)d, df.format(d))));
+
+            d = card.getOtherCommandsTime();
+            items.add(new ListItem(R.string.felica_response_time_other,
+                    Utils.localizePlural(R.plurals.milliseconds_short, (int)d, df.format(d))));
         } else if (mCard.getCardType() == CardType.Calypso) {
             CalypsoCard card = (CalypsoCard) mCard;
             CalypsoFile iccFile = card.getFile(CalypsoCard.File.ICC);

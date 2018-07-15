@@ -61,6 +61,8 @@ import java.util.Locale;
 @CardRawDataFragmentClass(FelicaCardRawDataFragment.class)
 public class FelicaCard extends Card {
     private static final String TAG = "FelicaCard";
+    /** used for calculating response times, value is in milliseconds */
+    private static double T = 256.0 * 16.0 / 13560.0;
 
     @Element(name = "idm")
     private FeliCaLib.IDm mIDm;
@@ -211,42 +213,124 @@ public class FelicaCard extends Card {
 
     /**
      * Gets the Manufacturing ID (IDm) of the card.
+     *
+     * See https://www.sony.net/Products/felica/business/tech-support/data/code_descriptions_1.31.pdf
      */
     public FeliCaLib.IDm getIDm() {
         return mIDm;
     }
 
     /**
+     * Gets the Manufacturer Code of the card (part of IDm).  This is a 16 bit value.
+     *
+     * If the lower byte is set to 0xFE, then the Card Identification Number has special assignment
+     * rules.  Otherwise, it is set by the card manufacturer.
+     *
+     * See https://www.sony.net/Products/felica/business/tech-support/data/code_descriptions_1.31.pdf
+     * @return Manufacturer code.
+     */
+    public int getManufacturerCode() {
+        return Utils.byteArrayToInt(getIDm().getBytes(), 0, 2);
+    }
+
+    /**
+     * Gets the Card Identification Number of the card (part of IDm).
+     *
+     * See https://www.sony.net/Products/felica/business/tech-support/data/code_descriptions_1.31.pdf
+     * @return Card identification number.
+     */
+    public long getCardIdentificationNumber() {
+        return Utils.byteArrayToLong(getIDm().getBytes(), 2, 6);
+    }
+
+    /**
      * Gets the Manufacturing Parameter (PMm) of the card.
+     *
+     * See https://www.sony.net/Products/felica/business/tech-support/data/code_descriptions_1.31.pdf
      */
     public FeliCaLib.PMm getPMm() {
         return mPMm;
     }
 
-    // FIXME: Getters that parse IDm...
-
-    // date ????
-    /*
-    public int getManufactureCode() {
-
-    }
-
-    public int getCardIdentification() {
-
-    }
-
+    /**
+     * Gets the ROM type of the card (part of PMm).
+     *
+     * See https://www.sony.net/Products/felica/business/tech-support/data/code_descriptions_1.31.pdf
+     * @return ROM type
+     */
     public int getROMType() {
-
+        return Utils.byteArrayToInt(getPMm().getBytes(), 0, 1);
     }
 
+    /**
+     * Gets the IC type of the card (part of PMm).
+     *
+     * See https://www.sony.net/Products/felica/business/tech-support/data/code_descriptions_1.31.pdf
+     * @return IC type
+     */
     public int getICType() {
-
+        return Utils.byteArrayToInt(getPMm().getBytes(), 1, 1);
     }
 
-    public int getTimeout() {
+    /**
+     * Calculates maximal response time, according to FeliCa manual.
+     * @param position Byte position to read (0 - 5)
+     * @param n N value in calculation formula
+     * @return Response time, in milliseconds.
+     */
+    private double calculateMaximumResponseTime(int position, int n) {
+        // Following FeliCa documentation, first configuration byte for maximum response time
+        // parameter is "D10", and the last is "D15". position(0) = D10, position 5 = D15.
+        if (position < 0 || position > 5) {
+            return Double.NaN;
+        }
 
+        // Position is offset by 2.
+        int configurationByte = getPMm().getBytes()[position + 2] & 0xFF;
+        int e = Utils.getBitsFromInteger(configurationByte, 0, 2);
+        int b = Utils.getBitsFromInteger(configurationByte, 2, 3) + 1;
+        int a = Utils.getBitsFromInteger(configurationByte, 5, 3) + 1;
+
+        return T * (b * n + a) * Math.pow(4, e); // seconds
     }
-    */
+
+    public double getVariableResponseTime(int nodes) {
+        return calculateMaximumResponseTime(0, nodes);
+    }
+
+    public double getFixedResponseTime() {
+        return calculateMaximumResponseTime(1, 0);
+    }
+
+    public double getMutualAuthentication2Time() {
+        return getMutualAuthentication1Time(0);
+    }
+
+    public double getMutualAuthentication1Time(int nodes) {
+        return calculateMaximumResponseTime(2, nodes);
+    }
+
+    public double getDataReadTime(int blocks) {
+        return calculateMaximumResponseTime(3, blocks);
+    }
+
+    public double getDataWriteTime(int blocks) {
+        return calculateMaximumResponseTime(4, blocks);
+    }
+
+    public double getOtherCommandsTime() {
+        return calculateMaximumResponseTime(5, 0);
+    }
+
+    /**
+     * Gets the maximum response time of the card (part of PMm).
+     *
+     * See https://www.sony.net/Products/felica/business/tech-support/data/code_descriptions_1.31.pdf
+     * @return Maximum response time
+     */
+    public long getMaximumResponseTime() {
+        return Utils.byteArrayToLong(getPMm().getBytes(), 2, 6);
+    }
 
     public List<FelicaSystem> getSystems() {
         return mSystems;
