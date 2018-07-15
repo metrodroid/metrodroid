@@ -106,13 +106,18 @@ public class PodorozhnikTransitData extends TransitData {
     }
 
     public static boolean check(ClassicCard card) {
-        byte[] key = card.getSector(4).getKey();
-        if (key == null || key.length != 6) {
-            // We don't have key data, bail out.
-            return false;
-        }
+        try {
+            byte[] key = card.getSector(4).getKey();
+            if (key == null || key.length != 6) {
+                // We don't have key data, bail out.
+                return false;
+            }
 
-        Log.d(TAG, "Checking for Podorozhnik key...");
-        return Utils.checkKeyHash(key, KEY_SALT, KEY_DIGEST) >= 0;
+            Log.d(TAG, "Checking for Podorozhnik key...");
+            return Utils.checkKeyHash(key, KEY_SALT, KEY_DIGEST) >= 0;
+        } catch (IndexOutOfBoundsException ignored) {
+            // If that sector number is too high, then it's not for us.
+        }
+        return false;
     }
 }

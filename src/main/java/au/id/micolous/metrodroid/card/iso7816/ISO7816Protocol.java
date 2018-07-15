@@ -18,6 +18,7 @@
  */
 package au.id.micolous.metrodroid.card.iso7816;
 
+import android.nfc.TagLostException;
 import android.nfc.tech.IsoDep;
 import android.support.annotation.Nullable;
 import android.util.Log;
@@ -47,7 +48,7 @@ public class ISO7816Protocol {
      */
     private static final boolean ENABLE_TRACING = false;
 
-    private static final String TAG = ISO7816Protocol.class.getSimpleName();
+    private static final String TAG = ISO7816Protocol.class.getName();
     private static final byte CLASS_ISO7816 = (byte) 0x00;
 
     private static final byte INSTRUCTION_ISO7816_SELECT = (byte) 0xA4;

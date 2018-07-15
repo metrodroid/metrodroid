@@ -23,12 +23,14 @@ package au.id.micolous.metrodroid.card.classic;
 
 import android.content.SharedPreferences;
 import android.nfc.Tag;
+import android.nfc.TagLostException;
 import android.nfc.tech.MifareClassic;
 import android.nfc.tech.NfcA;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.os.Parcel;
 import android.preference.PreferenceManager;
+import android.support.annotation.Nullable;
 import android.util.Log;
 
 import au.id.micolous.farebot.R;
@@ -105,8 +107,8 @@ public class ClassicCard extends Card {
 
     private ClassicCard() { /* For XML Serializer */ }
 
-    public ClassicCard(byte[] tagId, Calendar scannedAt, ClassicSector[] sectors) {
-        super(CardType.MifareClassic, tagId, scannedAt);
+    public ClassicCard(byte[] tagId, Calendar scannedAt, ClassicSector[] sectors, boolean partialRead) {
+        super(CardType.MifareClassic, tagId, scannedAt, null, partialRead);
         mSectors = Utils.arrayAsList(sectors);
     }
 
@@ -118,6 +120,7 @@ public class ClassicCard extends Card {
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(MetrodroidApplication.getInstance());
         final int retryLimit = prefs.getInt(MetrodroidApplication.PREF_MFC_AUTHRETRY, 5);
         int retriesLeft;
+        boolean partialRead = false;
 
         try {
             try {
@@ -250,12 +253,17 @@ public class ClassicCard extends Card {
                         Log.d(TAG, "Authentication unsuccessful for sector " + sectorIndex + ", giving up");
                         sectors.add(new UnauthorizedClassicSector(sectorIndex));
                     }
+                } catch (TagLostException ex) {
+                    Log.w(TAG, "tag lost!", ex);
+                    sectors.add(new InvalidClassicSector(sectorIndex, Utils.getErrorMessage(ex)));
+                    partialRead = true;
+                    break;
                 } catch (IOException ex) {
                     sectors.add(new InvalidClassicSector(sectorIndex, Utils.getErrorMessage(ex)));
                 }
             }
 
-            return new ClassicCard(tagId, GregorianCalendar.getInstance(), sectors.toArray(new ClassicSector[sectors.size()]));
+            return new ClassicCard(tagId, GregorianCalendar.getInstance(), sectors.toArray(new ClassicSector[sectors.size()]), partialRead);
 
         } finally {
             if (tech != null && tech.isConnected()) {
@@ -469,7 +477,7 @@ public class ClassicCard extends Card {
         return mSectors;
     }
 
-    public ClassicSector getSector(int index) {
+    public ClassicSector getSector(int index) throws IndexOutOfBoundsException {
         return mSectors.get(index);
     }
 }

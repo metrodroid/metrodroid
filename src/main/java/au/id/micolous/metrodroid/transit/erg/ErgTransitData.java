@@ -18,6 +18,7 @@
  */
 package au.id.micolous.metrodroid.transit.erg;
 
+import android.nfc.TagLostException;
 import android.os.Parcel;
 import android.support.annotation.Nullable;
 import android.text.Spanned;
@@ -160,9 +161,12 @@ public class ErgTransitData extends TransitData {
 
         try {
             file1 = card.getSector(0).getBlock(1).getData();
-        } catch (UnauthorizedException ex) {
+        } catch (UnauthorizedException ignored) {
             // These blocks of the card are not protected.
             // This must not be a ERG smartcard.
+            return false;
+        } catch (IndexOutOfBoundsException ignored) {
+            // If that's too high for us, then this isn't an ERG smartcard.
             return false;
         }
 

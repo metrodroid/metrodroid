@@ -76,6 +76,8 @@ public class BilheteUnicoSPTransitData extends TransitData {
         } catch (UnauthorizedException ex) {
             // TODO: implement a better way to handle identifying this card without a key
             return false;
+        } catch (IndexOutOfBoundsException ignored) {
+            return false;
         }
     }
 

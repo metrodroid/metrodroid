@@ -126,21 +126,25 @@ public class SmartRiderTransitData extends TransitData {
     }
 
     private static CardType detectKeyType(ClassicCard card) {
-        byte[] key = card.getSector(7).getKey();
-        if (key == null || key.length != 6) {
-            // We don't have key data, bail out.
-            return CardType.UNKNOWN;
-        }
+        try {
+            byte[] key = card.getSector(7).getKey();
+            if (key == null || key.length != 6) {
+                // We don't have key data, bail out.
+                return CardType.UNKNOWN;
+            }
 
-        Log.d(TAG, "Checking for MyWay key...");
-        if (Utils.checkKeyHash(key, MYWAY_KEY_SALT, MYWAY_KEY_DIGEST) >= 0) {
-            return CardType.MYWAY;
-        }
+            Log.d(TAG, "Checking for MyWay key...");
+            if (Utils.checkKeyHash(key, MYWAY_KEY_SALT, MYWAY_KEY_DIGEST) >= 0) {
+                return CardType.MYWAY;
+            }
 
-        Log.d(TAG, "Checking for SmartRider key...");
-        if (Utils.checkKeyHash(key, SMARTRIDER_KEY_SALT,
-                SMARTRIDER_KEY2_DIGEST, SMARTRIDER_KEY3_DIGEST) >= 0) {
-            return CardType.SMARTRIDER;
+            Log.d(TAG, "Checking for SmartRider key...");
+            if (Utils.checkKeyHash(key, SMARTRIDER_KEY_SALT,
+                    SMARTRIDER_KEY2_DIGEST, SMARTRIDER_KEY3_DIGEST) >= 0) {
+                return CardType.SMARTRIDER;
+            }
+        } catch (IndexOutOfBoundsException ignored) {
+            // If that sector number is too high, then it's not for us.
         }
 
         return CardType.UNKNOWN;

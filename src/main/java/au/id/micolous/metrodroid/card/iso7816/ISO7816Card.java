@@ -19,6 +19,7 @@
 package au.id.micolous.metrodroid.card.iso7816;
 
 import android.nfc.Tag;
+import android.nfc.TagLostException;
 import android.nfc.tech.IsoDep;
 import android.support.annotation.Nullable;
 import android.util.Log;
@@ -52,14 +53,14 @@ import static au.id.micolous.metrodroid.card.calypso.CalypsoCard.CALYPSO_FILENAM
 public class ISO7816Card extends Card {
     private static final String TAG = ISO7816Card.class.getSimpleName();
 
-    protected ISO7816Card(byte[] tagId, Calendar scannedAt) {
-        super(CardType.ISO7816, tagId, scannedAt);
+    protected ISO7816Card(byte[] tagId, Calendar scannedAt, boolean partialRead) {
+        this(CardType.ISO7816, tagId, scannedAt, partialRead);
     }
 
     protected ISO7816Card() { /* For XML Serializer */ }
 
-    protected ISO7816Card(CardType cardType, byte[] tagId, Calendar scannedAt) {
-        super(cardType, tagId, scannedAt);
+    protected ISO7816Card(CardType cardType, byte[] tagId, Calendar scannedAt, boolean partialRead) {
+        super(cardType, tagId, scannedAt, null, partialRead);
     }
 
     /**
@@ -73,6 +74,7 @@ public class ISO7816Card extends Card {
     public static ISO7816Card dumpTag(Tag tag, TagReaderFeedbackInterface feedbackInterface) throws Exception {
         IsoDep tech = IsoDep.get(tag);
         tech.connect();
+        boolean partialRead = false;
 
         try {
             ISO7816Protocol iso7816Tag = new ISO7816Protocol(tech);
@@ -145,12 +147,15 @@ public class ISO7816Card extends Card {
             if (c != null) {
                 return c;
             }
+        } catch (TagLostException ex) {
+            Log.w(TAG, "tag lost", ex);
+            partialRead = true;
         } finally {
             if (tech.isConnected())
                 tech.close();
         }
 
-        return new ISO7816Card(tag.getId(), GregorianCalendar.getInstance());
+        return new ISO7816Card(tag.getId(), GregorianCalendar.getInstance(), partialRead);
     }
 
     private static ISO7816Card getSpecificReader(Tag tag, ISO7816Protocol protocol, Set<byte[]> apps, Set<String> appsString, TagReaderFeedbackInterface feedbackInterface) throws IOException {

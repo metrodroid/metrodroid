@@ -1,7 +1,8 @@
 /*
  * UnauthorizedClassicSector.java
  *
- * Copyright 2012 Eric Butler <eric@codebutler.com>
+ * Copyright 2012-2015 Eric Butler <eric@codebutler.com>
+ * Copyright 2016-2018 Michael Farrell <micolous+git@gmail.com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -24,12 +25,15 @@ import au.id.micolous.metrodroid.card.UnauthorizedException;
 import org.simpleframework.xml.Attribute;
 import org.simpleframework.xml.Root;
 
+import java.util.List;
+
 @Root(name = "sector")
 public class UnauthorizedClassicSector extends ClassicSector {
+    @SuppressWarnings("unused")
     @Attribute(name = "unauthorized")
     public static final boolean UNAUTHORIZED = true;
 
-    private UnauthorizedClassicSector() { /** For XML serializer **/}
+    private UnauthorizedClassicSector() { /* For XML serializer */ }
 
     public UnauthorizedClassicSector(int sectorIndex) {
         super(sectorIndex, null, null);
@@ -41,7 +45,7 @@ public class UnauthorizedClassicSector extends ClassicSector {
     }
 
     @Override
-    public java.util.List<ClassicBlock> getBlocks() {
+    public List<ClassicBlock> getBlocks() {
         throw new UnauthorizedException();
     }
 

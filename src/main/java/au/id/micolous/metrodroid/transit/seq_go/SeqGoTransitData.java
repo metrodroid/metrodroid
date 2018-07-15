@@ -106,6 +106,9 @@ public class SeqGoTransitData extends NextfareTransitData {
         } catch (UnauthorizedException ex) {
             // It is not possible to identify the card without a key
             return false;
+        } catch (IndexOutOfBoundsException ignored) {
+            // If the sector/block number is too high, it's not for us
+            return false;
         }
     }
 

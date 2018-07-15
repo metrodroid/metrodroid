@@ -262,6 +262,14 @@
     <string name="iso7816_probing">Probing ISO7816 card…</string>
     <string name="calypso_reading">Reading Calypso card…</string>
 
+    <string name="card_partial_read_title">Card partially read!</string>
+    <string name="card_partial_read_desc">
+        The card went out of range while reading.\n\n
+        Some data was read, but it might not be enough to get useful data.\n\n
+        Thick cases and metal can interfere with NFC. It could also indicate the card or your device\'s NFC antenna is damaged.
+    </string>
+    <string name="show_partial_data">Show incomplete data</string>
+
     <!-- Translators: this is a short suffix for milliseconds, "%s" will display the number to
     one decimal place (in localized form). -->
     <plurals name="milliseconds_short">

@@ -24,18 +24,17 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.ContentValues;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
 import android.nfc.NfcAdapter;
 import android.nfc.Tag;
+import android.nfc.TagLostException;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.util.Log;
-import android.view.View;
 import android.view.accessibility.AccessibilityEvent;
 import android.view.accessibility.AccessibilityManager;
 import android.widget.ImageView;
@@ -57,7 +56,7 @@ import au.id.micolous.farebot.R;
 import au.id.micolous.metrodroid.MetrodroidApplication;
 
 public class ReadingTagActivity extends Activity implements TagReaderFeedbackInterface {
-    //private static final String TAG = "ReadingTagActivity";
+    private static final String TAG = ReadingTagActivity.class.getName();
     boolean mIndeterminite = true;
     int mMaximum = 0;
 
@@ -186,6 +185,7 @@ public class ReadingTagActivity extends Activity implements TagReaderFeedbackInt
     class ReadingTagTask extends AsyncTask<ReadingTagTaskEventArgs, String, Uri> {
 
         private Exception mException;
+        private boolean mPartialRead;
 
         @Override
         protected Uri doInBackground(ReadingTagTaskEventArgs... params) {
@@ -197,11 +197,14 @@ public class ReadingTagActivity extends Activity implements TagReaderFeedbackInt
 
                 String cardXml = card.toXml(MetrodroidApplication.getInstance().getSerializer());
 
-
                 if (BuildConfig.DEBUG) {
-                    Log.d("ReadingTagActivity", "Dumped card successfully!");
+                    if (card.isPartialRead()) {
+                        Log.w(TAG, "Partial card read.");
+                    } else {
+                        Log.i(TAG, "Dumped card successfully!");
+                    }
                     for (String line : cardXml.split("\n")) {
-                        Log.d("ReadingTagActivity", "XML: " + line);
+                        Log.d(TAG, "XML: " + line);
                     }
                 }
 
@@ -221,6 +224,7 @@ public class ReadingTagActivity extends Activity implements TagReaderFeedbackInt
                 prefs.putLong(MetrodroidApplication.PREF_LAST_READ_AT, GregorianCalendar.getInstance().getTimeInMillis());
                 prefs.apply();
 
+                mPartialRead = card.isPartialRead();
                 return uri;
             } catch (Exception ex) {
                 mException = ex;
@@ -228,16 +232,34 @@ public class ReadingTagActivity extends Activity implements TagReaderFeedbackInt
             }
         }
 
+        private void showCard(Uri cardUri) {
+            Intent intent = new Intent(Intent.ACTION_VIEW, cardUri);
+            intent.putExtra(CardInfoActivity.SPEAK_BALANCE_EXTRA, true);
+            startActivity(intent);
+            finish();
+        }
+
         @Override
         protected void onPostExecute(Uri cardUri) {
-            if (mException == null) {
-                Intent intent = new Intent(Intent.ACTION_VIEW, cardUri);
-                intent.putExtra(CardInfoActivity.SPEAK_BALANCE_EXTRA, true);
-                startActivity(intent);
-                finish();
+            if (mPartialRead) {
+                new AlertDialog.Builder(ReadingTagActivity.this)
+                        .setTitle(R.string.card_partial_read_title)
+                        .setMessage(R.string.card_partial_read_desc)
+                        .setCancelable(false)
+                        .setPositiveButton(R.string.show_partial_data, (arg0, arg1) -> showCard(cardUri))
+                        .setNegativeButton(android.R.string.cancel, (arg0, arg1) -> finish())
+                        .show();
                 return;
             }
-            if (mException instanceof UnsupportedTagException) {
+
+            if (mException == null) {
+                showCard(cardUri);
+                return;
+            }
+
+            if (mException instanceof TagLostException) {
+                // Tag was lost. Just drop out silently.
+            } else if (mException instanceof UnsupportedTagException) {
                 UnsupportedTagException ex = (UnsupportedTagException) mException;
                 new AlertDialog.Builder(ReadingTagActivity.this)
                         .setTitle(R.string.unsupported_tag)

@@ -19,6 +19,7 @@
 package au.id.micolous.metrodroid.card.calypso;
 
 import android.nfc.Tag;
+import android.nfc.TagLostException;
 import android.util.Log;
 
 import org.simpleframework.xml.ElementList;
@@ -63,8 +64,8 @@ public class CalypsoCard extends ISO7816Card {
 
     private List<CalypsoFile> mFiles;
 
-    private CalypsoCard(byte[] tagId, Calendar scannedAt, List<CalypsoFile> files) {
-        super(CardType.Calypso, tagId, scannedAt);
+    private CalypsoCard(byte[] tagId, Calendar scannedAt, List<CalypsoFile> files, boolean partialRead) {
+        super(CardType.Calypso, tagId, scannedAt, partialRead);
         mFiles = files;
     }
 
@@ -88,39 +89,48 @@ public class CalypsoCard extends ISO7816Card {
         // Start dumping...
         LinkedList<CalypsoFile> files = new LinkedList<>();
         int counter = 0;
-        for (File f : File.getAll()) {
-            feedbackInterface.updateProgressBar(counter++, File.getAll().length);
+        boolean partialRead = false;
 
-            protocol.unselectFile();
+        try {
+            for (File f : File.getAll()) {
+                feedbackInterface.updateProgressBar(counter++, File.getAll().length);
 
-            try {
-                f.select(protocol);
-            } catch (IOException e) {
-                Log.e(TAG, "couldn't select file", e);
-                continue;
-            }
+                protocol.unselectFile();
 
-            LinkedList<CalypsoRecord> records = new LinkedList<>();
-
-            for (int r = 1; r <= 255; r++) {
                 try {
-                    byte[] record = protocol.readRecord((byte) r, (byte) 0x1D);
+                    f.select(protocol);
+                } catch (TagLostException e) {
+                    throw e;
+                } catch (IOException e) {
+                    Log.e(TAG, "couldn't select file", e);
+                    continue;
+                }
 
-                    if (record == null) {
+                LinkedList<CalypsoRecord> records = new LinkedList<>();
+
+                for (int r = 1; r <= 255; r++) {
+                    try {
+                        byte[] record = protocol.readRecord((byte) r, (byte) 0x1D);
+
+                        if (record == null) {
+                            break;
+                        }
+
+                        records.add(new CalypsoRecord(r, record));
+                    } catch (EOFException e) {
+                        // End of file, stop here.
                         break;
                     }
-
-                    records.add(new CalypsoRecord(r, record));
-                } catch (EOFException e) {
-                    // End of file, stop here.
-                    break;
                 }
-            }
 
-            files.add(new CalypsoFile(f.getFolder(), f.getFile(), records));
+                files.add(new CalypsoFile(f.getFolder(), f.getFile(), records));
+            }
+        } catch (TagLostException ex) {
+            Log.w(TAG, "tag lost", ex);
+            partialRead = true;
         }
 
-        return new CalypsoCard(tag.getId(), GregorianCalendar.getInstance(), files);
+        return new CalypsoCard(tag.getId(), GregorianCalendar.getInstance(), files, partialRead);
     }
 
     public List<CalypsoFile> getFiles() {

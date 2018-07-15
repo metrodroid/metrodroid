@@ -1,7 +1,8 @@
 /*
  * InvalidClassicSector.java
  *
- * Copyright 2012 Eric Butler <eric@codebutler.com>
+ * Copyright 2012-2015 Eric Butler <eric@codebutler.com>
+ * Copyright 2016-2018 Michael Farrell <micolous+git@gmail.com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -22,8 +23,12 @@ package au.id.micolous.metrodroid.card.classic;
 import org.simpleframework.xml.Attribute;
 import org.simpleframework.xml.Root;
 
+import java.util.Collections;
+import java.util.List;
+
 @Root(name = "sector")
 public class InvalidClassicSector extends ClassicSector {
+    @SuppressWarnings("unused")
     @Attribute(name = "invalid")
     public final boolean mInvalid = true;
     @Attribute(name = "error")
@@ -39,17 +44,17 @@ public class InvalidClassicSector extends ClassicSector {
     }
 
     @Override
-    public byte[] readBlocks(int startBlock, int blockCount) {
-        throw new IllegalStateException(mError);
+    public byte[] readBlocks(int startBlock, int blockCount) throws IndexOutOfBoundsException {
+        throw new IndexOutOfBoundsException("InvalidClassicSector has no blocks");
     }
 
     @Override
-    public java.util.List<ClassicBlock> getBlocks() {
-        throw new IllegalStateException(mError);
+    public List<ClassicBlock> getBlocks() {
+        return Collections.emptyList();
     }
 
     @Override
-    public ClassicBlock getBlock(int index) {
-        throw new IllegalStateException(mError);
+    public ClassicBlock getBlock(int index) throws IndexOutOfBoundsException {
+        throw new IndexOutOfBoundsException("InvalidClassicSector has no blocks");
     }
 }

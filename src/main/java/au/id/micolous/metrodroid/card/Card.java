@@ -54,6 +54,8 @@ public abstract class Card {
     private HexString mTagId;
     @Attribute(name = "scanned_at")
     private Calendar mScannedAt;
+    @Attribute(name = "partial_read", required = false)
+    private boolean mPartialRead;
 
     protected Card() {
     }
@@ -63,10 +65,15 @@ public abstract class Card {
     }
 
     protected Card(CardType type, byte[] tagId, Calendar scannedAt, String label) {
+        this(type, tagId, scannedAt, label, false);
+    }
+
+    protected Card(CardType type, byte[] tagId, Calendar scannedAt, String label, boolean partialRead) {
         mType = type;
         mTagId = new HexString(tagId);
         mScannedAt = scannedAt;
         mLabel = label;
+        mPartialRead = partialRead;
     }
 
     public static Card dumpTag(byte[] tagId, Tag tag, TagReaderFeedbackInterface feedbackInterface) throws Exception {
@@ -149,6 +156,14 @@ public abstract class Card {
 
     public String getLabel() {
         return mLabel;
+    }
+
+    /**
+     * Is this a partial or incomplete card read?
+     * @return true if there is not complete data in this scan.
+     */
+    public boolean isPartialRead() {
+        return mPartialRead;
     }
 
     /**

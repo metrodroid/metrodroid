@@ -1,8 +1,9 @@
 /*
  * ClassicSector.java
  *
- * Copyright 2012 Eric Butler <eric@codebutler.com>
+ * Copyright 2012-2014 Eric Butler <eric@codebutler.com>
  * Copyright 2012 Wilbert Duijvenvoorde <w.a.n.duijvenvoorde@gmail.com>
+ * Copyright 2015-2018 Michael Farrell <micolous+git@gmail.com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -19,6 +20,9 @@
  */
 
 package au.id.micolous.metrodroid.card.classic;
+
+import android.support.annotation.Nullable;
+import android.util.Log;
 
 import au.id.micolous.metrodroid.util.Utils;
 import au.id.micolous.metrodroid.xml.Base64String;
@@ -61,7 +65,7 @@ public class ClassicSector {
         return mBlocks;
     }
 
-    public ClassicBlock getBlock(int index) {
+    public ClassicBlock getBlock(int index) throws IndexOutOfBoundsException {
         return mBlocks.get(index);
     }
 
@@ -72,7 +76,7 @@ public class ClassicSector {
         return mKey.getData();
     }
 
-    public byte[] readBlocks(int startBlock, int blockCount) {
+    public byte[] readBlocks(int startBlock, int blockCount) throws IndexOutOfBoundsException {
         int readBlocks = 0;
         byte[] data = new byte[blockCount * 16];
         for (int index = startBlock; index < (startBlock + blockCount); index++) {
