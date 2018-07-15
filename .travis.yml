@@ -7,7 +7,7 @@ android:
     - android-27
     - extra
 
-    - sys-img-armeabi-v7a-android-26
+    - sys-img-armeabi-v7a-android-27
 
 #    - sys-img-armeabi-v7a-android-27
 #    - sys-img-armeabi-v7a-android-25
@@ -21,7 +21,7 @@ android:
 #    - sys-img-armeabi-v7a-android-17
 
 before_script:
-  - echo no | android create avd --force -n test -t android-26 --abi armeabi-v7a
+  - echo no | android create avd --force -n test -t android-27 --abi armeabi-v7a
   - emulator -avd test -no-audio -no-window &
   - android-wait-for-emulator
   - adb shell input keyevent 82 &
