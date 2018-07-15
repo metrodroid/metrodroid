@@ -473,4 +473,33 @@
     <string name="card_note_russia">Alleen oplaadbare kaarten worden ondersteund; door de bank uitgegeven kaarten worden niet ondersteund.</string>
     <string name="card_name_troika">Trojka</string>
     <string name="card_name_podorozhnik">Podorozhnik</string>
-</resources>
+<string name="card_partial_read_title">Kaart gedeeltelijk uitgelezen!</string>
+    <string name="card_partial_read_desc">De kaart is buiten het bereik gekomen tijdens het uitlezen.
+\n
+\nSommige gegevens zijn gelezen, maar het is waarschijnlijk onvoldoende.
+\n
+\nDikke hoesjes en metaal kunnen het NFC-signaal verstoren. Het kan ook zijn dat de NFC-antenne van je kaart of apparaat beschadigd is.</string>
+    <string name="show_partial_data">Gedeeltelijke gegevens tonen</string>
+
+    <plurals name="milliseconds_short">
+	<item quantity="one"><xliff:g id="milliseconds" example="1.0">1%s</xliff:g>2 ms</item>
+	<item quantity="other"><xliff:g id="milliseconds" example="20.6">3%s</xliff:g>4 ms</item>
+</plurals>
+
+    <string name="felica_manufacturer_code">Producentcode</string>
+    <string name="felica_card_identification_number">Kaartidentificatienummer</string>
+    <string name="felica_rom_type">ROM-type</string>
+    <string name="felica_ic_type">IC-type</string>
+    <string name="felica_maximum_response_time">Maximale terugkoppelingstijden</string>
+    <string name="felica_response_time_variable">Request Service-opdracht (1 node)</string>
+    <string name="felica_response_time_fixed">Vastgestelde terugkoppelingstijden-opdrachten</string>
+    <string name="felica_response_time_auth1">Authentication1-opdracht (1 node)</string>
+    <string name="felica_response_time_auth2">Authentication2-opdracht</string>
+    <string name="felica_response_time_read">Read-opdracht (1 blok)</string>
+    <string name="felica_response_time_write">Write-opdracht (1 blok)</string>
+    <string name="felica_response_time_other">Issuance-opdrachten</string>
+
+
+
+
+    </resources>
