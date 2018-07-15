@@ -32,20 +32,20 @@
     <string name="preferences">Voorkeuren</string>
     <string name="accessibility">Toegankelijkheid</string>
     <string name="speak_balance">Saldo voorlezen</string>
-    <string name="speak_balance_summary">Als u een kaart scant, dan wordt het saldo automatisch voorgelezen. Dit werkt zelfs als er geen schermlezer draait.</string>
+    <string name="speak_balance_summary">Als je een kaart scant, dan wordt het saldo automatisch voorgelezen. Dit werkt zelfs als er geen schermlezer draait.</string>
     <string name="balance_speech">Saldo <xliff:g id="balance" example="$13.37">%s</xliff:g></string>
     <string name="loading">Bezig met laden…</string>
     <string name="scanned_at_format">Gescand op %1$s op %2$s</string>
     <string name="supported_cards">Ondersteunde kaarten</string>
     <string name="pass_or_transfer">Pas/Overstap</string>
     <string name="transaction_sequence">#</string>
-    <string name="fully_locked_desc">Geen enkel onderdeel van deze kaart is leesbaar zonder sleutel. U heeft geen geldige geïnstalleerde sleutels voor deze kaart. 
+    <string name="fully_locked_desc">Geen enkel onderdeel van deze kaart is leesbaar zonder sleutel en je hebt geen geldige geïnstalleerde sleutels voor deze kaart. 
 \n 
-\nAls de kaart momenteel ondersteund wordt door Metrodroid, dan zal hij gaan werken zodra u de benodigde geïnstalleerde sleutels heeft. Meer informatie over het verkrijgen van sleutels is te vinden in de documentatie. 
+\nAls de kaart momenteel ondersteund wordt door Metrodroid, dan zal hij gaan werken zodra je de benodigde sleutels installeert. Meer informatie over het verkrijgen van sleutels is te vinden in de documentatie. 
 \n 
-\nAls uw kaart niet wordt ondersteund door Metrodroid, dan zal dat waarschijnlijk ook nooit mogelijk zijn, tenzij de sleutel gekraakt wordt. 
+\nAls je kaart niet wordt ondersteund door Metrodroid, dan zal dat waarschijnlijk ook nooit mogelijk zijn, tenzij de sleutel gekraakt wordt. 
 \n 
-\nNeem contact op met uw vervoerder en vraag of open toegang tot de gegevens van de verschafte kaarten mogelijk wordt gemaakt. Het is mogelijk om veilige, alleen-lezen toegang te geven met moderne smartcard-technologie. Sommige vervoerders bieden zelfs openbare documentatie aan over de gegevensopmaak!</string>
+\nNeem contact op met je vervoerder en vraag of open toegang tot de gegevens van de verschafte kaarten mogelijk wordt gemaakt. Het is mogelijk om veilige, alleen-lezen toegang te geven met moderne smartcard-technologie. Sommige vervoerders bieden zelfs openbare documentatie aan over de gegevensopmaak!</string>
     <string name="fully_locked_title">Volledig vergrendelde kaart.</string>
     <string name="nfc_off_error">NFC is uitgeschakeld</string>
     <string name="turn_on_nfc">Schakel NFC in om de kaartinformatie uit te kunnen lezen.</string>
@@ -62,9 +62,9 @@
 
 
     <string name="report_error_privacy_title">Privacy-overeenkomst</string>
-    <string name="report_error_privacy_message">Alle gegevens die op deze kaart staan zullen worden bijgevoegd aan uw foutrapport.</string>
+    <string name="report_error_privacy_message">Alle gegevens die op deze kaart staan zullen worden bijgevoegd aan je foutrapport.</string>
     <string name="scanned_cards">Geschiedenis</string>
-    <string name="no_scanned_cards">U heeft geen gescande kaarten.</string>
+    <string name="no_scanned_cards">Je hebt geen gescande kaarten.</string>
     <string name="block_title_format">Blok: %s</string>
     <string name="page_title_format">Pagina: 0x%s</string>
     <string name="sector_title_format">Sector: 0x%s</string>
@@ -84,7 +84,7 @@
     <string name="error">Fout</string>
     <string name="keys">Sleutels</string>
     <string name="delete">Verwijderen</string>
-    <string name="add_key_directions">Sla uw binaire dumpbestand van sleutels op met de extensie .farebotkeys, e-mail het als bijlage naar uzelf en open het op dit apparaat.</string>
+    <string name="add_key_directions">Sla je binaire dumpbestand van sleutels op met de extensie .farebotkeys, e-mail het als bijlage naar jezelf en open het op dit apparaat.</string>
     <string name="no_keys">Geen sleutels.</string>
     <string name="nfc_unavailable">NFC is niet beschikbaar</string>
     <string name="fare_cancelled_format">%s (geannuleerd)</string>
@@ -113,16 +113,16 @@
     <string name="map_tiles_url">Kaarttegels-URL</string>
     <string name="map_tiles_url_summary">Gebruik een aangepaste tegelserver voor ingesloten kaarten m.b.v. Leaflet TileLayer-syntax.</string>
     <string name="map_tiles_subdomains">Kaarttegel-subdomeinen</string>
-    <string name="map_tiles_subdomains_summary">Als u {s} gebruikt in kaartURL\'s, een kommagescheiden lijst van subdomeinen of een losse tekenlijst van subdomeinen.</string>
+    <string name="map_tiles_subdomains_summary">Als je {s} gebruikt in kaartURL\'s, een kommagescheiden lijst van subdomeinen of een losse tekenlijst van subdomeinen.</string>
     <string name="about_card_format">Over dit kaartformaat</string>
     <string name="online_services">Online diensten</string>
     <string name="mifare_classic">MIFARE Classic</string>
     <string name="auth_retries">Authentiecatiepogingen</string>
     <string name="auth_retries_summary">Aantal keren om te proberen elke sector te authenticeren</string>
     <string name="alternate_purse_balances">Alternatieve portemonnee-saldi</string>
-    <string name="storage_required">Toegangsrechten zijn vereist om kaartdumps en -sleutels te lezen/schrijven van/naar bestanden.</string>
+    <string name="storage_required">Machtigingen vereist om kaartdumps en -sleutels te lezen/schrijven van/naar bestanden.</string>
 
-    <string name="mfc_fallback_desc">Sommige vervoerders hebben geen magische identificatie op hun kaart. Om ze te lezen moet u er expliciet één kiezen.</string>
+    <string name="mfc_fallback_desc">Sommige vervoerders hebben geen magische identificatie op hun kaart. Om ze uit te lezen moet je er expliciet één kiezen.</string>
     <string name="mfc_fallback">Terugvallezer</string>
 
     <string name="default_map_tile_url">https://tile{s}.stackcdn.com/osm_tiles_2x/{z}/{x}/{y}.png</string>
@@ -271,18 +271,18 @@
 
     <string name="obfuscation_title">Privacy-opties</string>
     <string name="obfuscation_card_numbers">Kaartnummers verbergen</string>
-    <string name="obfuscation_card_numbers_desc">Kaartnummers nergens weergeven</string>
+    <string name="obfuscation_card_numbers_desc">Kaartnummers nergens tonen</string>
 
-    <string name="obfuscation_balance">Saldo vermommen</string>
+    <string name="obfuscation_balance">Saldo beschermen</string>
     <string name="obfuscation_balance_desc">Wijzig het weergegeven saldo in een willekeurig bedrag</string>
 
-    <string name="obfuscation_dates">Datums vermommen</string>
-    <string name="obfuscation_dates_desc">Reis-, abonnement-, verval- en scandatums als willekeurige datums weergeven</string>
+    <string name="obfuscation_dates">Datums beschermen</string>
+    <string name="obfuscation_dates_desc">Reis-, abonnement-, verval- en scandatums als willekeurige datums tonen</string>
 
     <string name="obfuscation_times">Tijden vermommen</string>
     <string name="obfuscation_times_desc">Resolutie van tijdstempels verlagen en blurren op reizen, abonnementen en scans</string>
 
-    <string name="obfuscation_fares">Tarieven vermommen</string>
+    <string name="obfuscation_fares">Tarieven beschermen</string>
     <string name="obfuscation_fares_desc">Tarieven wijzigen in een willekeurig bedrag</string>
 
     <plurals name="obfuscation_mode_notice">
@@ -291,7 +291,7 @@
 </plurals>
 
     <string name="map_tiles_help">Leaflet TileLayer-documentatie bekijken</string>
-    <string name="map_tiles_help_summary">Als u hulp nodig heeft bij het gebruiken van kaarttegel URL\'s, bekijk dan Leaflet\'s online documentatie (alleen beschikbaar in het Engels).</string>
+    <string name="map_tiles_help_summary">Als je hulp nodig hebt bij het gebruiken van kaarttegel-URL\'s, bekijk dan Leaflet\'s online documentatie (alleen beschikbaar in het Engels).</string>
     <string name="hidden_card_number">Verborgen kaartnummer</string>
 
     <plurals name="hidden_key_data">
@@ -396,7 +396,7 @@
     <string name="software_information">Software-informatie</string>
 <string name="clipboard_error">Geen toegang tot het klembord</string>
     <string name="localise_places">Stations- en routenamen uitspreken in landstaal</string>
-    <string name="localise_places_desc">Laat tekst-naar-spraak-software en toegankelijkheid weten dat stations- en routenamen moeten worden uitgesproken in de landstaal i.p.v. uw taal. Dit verbetert de uitspraak van buitenlandse plaatsnamen, maar het kan voor u moeilijker te verstaan zijn.</string>
+    <string name="localise_places_desc">Laat tekst-naar-spraak-software en toegankelijkheid weten dat stations- en routenamen moeten worden uitgesproken in de landstaal i.p.v. je eigen taal. Dit verbetert de uitspraak van buitenlandse plaatsnamen, maar het kan voor jou moeilijker te verstaan zijn.</string>
 <string name="localise_places_longdesc_button">Over uitspraak…</string>
 
     <string name="localise_places_longdesc_title">Over uitspraak</string>
@@ -414,15 +414,15 @@
 
     <string name="machine_id">Automaat-ID %s</string>
 
-    <string name="localise_places_longdesc">Tekst-naar-spraak werkt normaal gesproken alleen goed voor één taal.
-\n
-\nLocaleSpan wordt gebruikt om tekst te markeren die in een andere taal is geschreven. Als dit wordt toegepast op een station, halte, lijn of lijnnaam, dan zal de schermlezer (indien ondersteund) de naam uitspreken zoals deze wordt uitgesproken in de oorspronkelijke taal i.p.v. de door u ingestelde taal.
-\n
-\nDoor deze optie in te schakelen wordt de uitspraak van onbekende(re) buitenlandse namen meestal verbeterd, maar het kan voor u moeilijker te verstaan zijn.
-\n
-\nNormaal gesproken wordt de weergave van de naam op het scherm niet gewijzigd, maar sommige apparaten kunnen een ander lettertype toepassen.
-\n
-\nDit vereist Android 5.0 of hoger, toegankelijkheidssoftware dit ondersteuning heeft voor de LocaleSpan-API (zoals bijv. Google TalkBack) en dat u de benodigde stemmen heeft geïnstalleerd.</string>
+    <string name="localise_places_longdesc">Tekst-naar-spraak werkt normaal gesproken alleen goed voor één taal. 
+\n 
+\nLocaleSpan wordt gebruikt om tekst te markeren die in een andere taal is geschreven. Als dit wordt toegepast op een station, halte, lijn of lijnnaam, dan zal de schermlezer (indien ondersteund) de naam uitspreken zoals deze wordt uitgesproken in de oorspronkelijke taal i.p.v. de door jou ingestelde taal. 
+\n 
+\nDoor deze optie in te schakelen wordt de uitspraak van onbekende(re) buitenlandse namen meestal verbeterd, maar het kan voor jou moeilijker te verstaan zijn. 
+\n 
+\nNormaal gesproken wordt de weergave van de naam op het scherm niet gewijzigd, maar sommige apparaten kunnen een ander lettertype toepassen. 
+\n 
+\nDit vereist Android 5.0 of hoger, toegankelijkheidssoftware dit ondersteuning heeft voor de LocaleSpan-API (zoals bijv. Google TalkBack) en dat je de benodigde stemmen hebt geïnstalleerd.</string>
 
     <string name="convert_timezones">Tijden aanpassen aan huidige tijdzone</string>
     <string name="convert_timezones_summary">Standaard laat Metrodroid reistijden zien zoals deze zijn in de tijdzone van de vervoerder. Als deze optie wordt ingeschakeld, dan zal Metrodroid de reistijden aanpassen aan de huidige tijdzone van uw apparaat.</string>
