@@ -467,4 +467,39 @@
     <string name="calypso_manufacturer_irsa">IRSA</string>
     <string name="calypso_manufacturer_innovatron">Innovatron</string>
 
-    </resources>
+    <string name="card_partial_read_title">Kort delvis lest!</string>
+    <string name="card_partial_read_desc">Kortet kom utenfor rekkevidden under lesing.
+\n
+\n Noe av dataen ble lest, men det kan ha vært for lite til å etablere mening av den.
+\n
+\n Tykke beholdere og metall kan ha innvirkning på NFC. Det bør også indikere om kortet eller din enhets NFC-antenne er skadet.</string>
+    <string name="show_partial_data">Vis ukomplett data</string>
+
+    <plurals name="milliseconds_short">
+	<item quantity="one"><xliff:g id="milliseconds" example="1.0">%s</xliff:g> ms</item>
+	<item quantity="other"><xliff:g id="milliseconds" example="20.6">%s</xliff:g> ms</item>
+</plurals>
+
+    <string name="felica_manufacturer_code">Fabrikatkode</string>
+    <string name="felica_card_identification_number">Kortidentifikasjonsnummer</string>
+    <string name="felica_rom_type">ROM-type</string>
+    <string name="felica_ic_type">IC-type</string>
+    <string name="felica_maximum_response_time">Maksimale responstider</string>
+    <string name="felica_response_time_variable">Forespør tjeneste-kommando (én node)</string>
+    <string name="felica_response_time_fixed">Fastsatte svartids-kommandoer</string>
+    <string name="felica_response_time_auth1">Authentication1-kommando (én node)</string>
+    <string name="felica_response_time_auth2">Autehntication2-kommando</string>
+    <string name="felica_response_time_read">Read-kommando (én blokk)</string>
+    <string name="felica_response_time_write">Write-kommando (én blokk)</string>
+    <string name="felica_response_time_other">Issuance-kommandoer</string>
+
+
+
+
+    <string name="location_moscow">Moskva, Russland</string>
+    <string name="location_saint_petersburg">St. Petersburg, Russland</string>
+
+    <string name="card_note_russia">Kun påfyllbare e-veskekort støttes. Bank-utstedte kort støttes ikke.</string>
+    <string name="card_name_troika">Troika</string>
+    <string name="card_name_podorozhnik">Podorozhnik</string>
+</resources>
