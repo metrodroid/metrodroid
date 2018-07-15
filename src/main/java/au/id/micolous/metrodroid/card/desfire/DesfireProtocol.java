@@ -21,7 +21,6 @@
 package au.id.micolous.metrodroid.card.desfire;
 
 import android.nfc.tech.IsoDep;
-import android.util.Log;
 
 import au.id.micolous.metrodroid.card.desfire.settings.DesfireFileSettings;
 import au.id.micolous.metrodroid.util.Utils;

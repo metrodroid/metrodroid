@@ -23,8 +23,6 @@ import android.support.annotation.Nullable;
 
 import au.id.micolous.metrodroid.card.desfire.files.DesfireRecord;
 import au.id.micolous.metrodroid.transit.CompatTrip;
-import au.id.micolous.metrodroid.transit.Station;
-import au.id.micolous.metrodroid.transit.Trip;
 
 import au.id.micolous.farebot.R;
 import au.id.micolous.metrodroid.MetrodroidApplication;

@@ -18,7 +18,6 @@
  */
 package au.id.micolous.metrodroid.transit.erg;
 
-import android.nfc.TagLostException;
 import android.os.Parcel;
 import android.support.annotation.Nullable;
 import android.text.Spanned;

@@ -30,7 +30,6 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.DrawableRes;
 import android.support.annotation.StringRes;
-import android.text.Html;
 import android.text.Spannable;
 import android.text.SpannableString;
 import android.text.SpannableStringBuilder;
@@ -41,7 +40,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.accessibility.AccessibilityNodeInfo;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
@@ -59,11 +57,9 @@ import au.id.micolous.metrodroid.transit.orca.OrcaTrip;
 import au.id.micolous.metrodroid.util.TripObfuscator;
 import au.id.micolous.metrodroid.util.Utils;
 
-import org.apache.commons.lang3.StringUtils;
 import org.simpleframework.xml.Serializer;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Collections;
 import java.util.List;

@@ -19,7 +19,6 @@
 package au.id.micolous.metrodroid.transit;
 
 import android.os.Parcel;
-import android.os.Parcelable;
 import android.support.annotation.Nullable;
 
 /**

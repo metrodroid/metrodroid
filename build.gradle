@@ -21,14 +21,16 @@ apply plugin: 'com.android.application'
 apply plugin: 'com.google.protobuf'
 apply plugin: 'checkstyle'
 
+/*
 check.dependsOn 'checkstyle'
 
 task checkstyle(type: Checkstyle) {
     source 'src'
-    include '**/*.java'
-    exclude '**/gen/**'
+    include '** /*.java'
+    exclude '** /gen/**'
     classpath = files()
 }
+*/
 
 dependencies {
     implementation 'com.android.support:support-core-ui:27.1.1'

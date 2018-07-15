@@ -1,7 +1,8 @@
 /*
  * TransitData.java
  *
- * Copyright (C) 2011 Eric Butler <eric@codebutler.com>
+ * Copyright 2011-2014 Eric Butler <eric@codebutler.com>
+ * Copyright 2015-2018 Michael Farrell <micolous+git@gmail.com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -24,6 +25,7 @@ import android.os.Parcelable;
 import android.support.annotation.Nullable;
 import android.text.Spanned;
 
+import au.id.micolous.metrodroid.MetrodroidApplication;
 import au.id.micolous.metrodroid.ui.ListItem;
 
 import java.util.List;
@@ -82,35 +84,34 @@ public abstract class TransitData implements Parcelable {
     }
 
     /**
-     * Allows TransitData implementors to show extra information that doesn't fit within the
+     * Allows {@link TransitData} implementors to show extra information that doesn't fit within the
      * standard bounds of the interface.  By default, this returns null, so the "Info" tab will not
      * be displayed.
      * <p>
      * Note: in order to support obfuscation / hiding behaviour, if you implement this method, you
      * also need to use some other functionality:
-     * <p>
-     * - Check for MetrodroidApplication.hideCardNumbers whenever you show a card number, or other
-     * mark (such as a name) that could be used to identify this card or its holder.
-     * <p>
-     * - Pass Calendar/Date objects (timestamps) through TripObfuscator.maybeObfuscateTS.  This also
-     * works on epoch timestamps (expressed as seconds since UTC).
-     * <p>
-     * - Pass all currency amounts through formatCurrencyString. This is overridden by
-     * ObfuscatedTrip, and will allow you to handle
+     * <ul>
+     * <li>Check for {@link MetrodroidApplication#hideCardNumbers()} whenever you show a card
+     * number, or other mark (such as a name) that could be used to identify this card or its
+     * holder.</li>
      *
-     * @return
+     * <li>Pass {@link java.util.Calendar}/{@link java.util.Date} objects (timestamps) through
+     * {@link au.id.micolous.metrodroid.util.TripObfuscator#maybeObfuscateTS}.  This also
+     * works on epoch timestamps (expressed as seconds since UTC).</li>
+     *
+     * <li>Pass all currency amounts through {@link #formatCurrencyString(int, boolean)} and
+     * {@link au.id.micolous.metrodroid.util.TripObfuscator#maybeObfuscateFare(Integer)}.</li>
+     * </ul>
      */
     public List<ListItem> getInfo() {
         return null;
     }
 
-    ;
-
     public abstract String getCardName();
 
     /**
-     * If a TransitData provider doesn't know some of the stops / stations on a user's card, then
-     * it may raise a signal to the user to submit the unknown stations to our web service.
+     * If a {@link TransitData} provider doesn't know some of the stops / stations on a user's card,
+     * then it may raise a signal to the user to submit the unknown stations to our web service.
      *
      * @return false if all stations are known (default), true if there are unknown stations
      */
@@ -125,7 +126,7 @@ public abstract class TransitData implements Parcelable {
     /**
      * You can optionally add a link to an FAQ page for the card.  This will be shown in the ...
      * drop down menu for cards that are supported, and on the main page for subclasses of
-     * StubTransitData.
+     * {@link au.id.micolous.metrodroid.transit.stub.StubTransitData}.
      *
      * @return Uri pointing to an FAQ page, or null if no page is to be supplied.
      */

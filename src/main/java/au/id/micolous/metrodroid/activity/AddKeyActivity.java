@@ -84,43 +84,37 @@ public class AddKeyActivity extends Activity {
         setContentView(R.layout.activity_add_key);
         getWindow().setLayout(WRAP_CONTENT, MATCH_PARENT);
 
-        findViewById(R.id.cancel).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                setResult(RESULT_CANCELED);
-                finish();
-            }
+        findViewById(R.id.cancel).setOnClickListener(view -> {
+            setResult(RESULT_CANCELED);
+            finish();
         });
 
-        findViewById(R.id.add).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                final String keyType = ((RadioButton) findViewById(R.id.is_key_a)).isChecked() ? ClassicSectorKey.TYPE_KEYA : ClassicSectorKey.TYPE_KEYB;
+        findViewById(R.id.add).setOnClickListener(view -> {
+            final String keyType = ((RadioButton) findViewById(R.id.is_key_a)).isChecked() ? ClassicSectorKey.TYPE_KEYA : ClassicSectorKey.TYPE_KEYB;
 
-                new BetterAsyncTask<Void>(AddKeyActivity.this, true, false) {
-                    @Override
-                    protected Void doInBackground() throws Exception {
-                        ClassicCardKeys keys = ClassicCardKeys.fromDump(keyType, mKeyData);
+            new BetterAsyncTask<Void>(AddKeyActivity.this, true, false) {
+                @Override
+                protected Void doInBackground() throws Exception {
+                    ClassicCardKeys keys = ClassicCardKeys.fromDump(keyType, mKeyData);
 
-                        ContentValues values = new ContentValues();
-                        values.put(KeysTableColumns.CARD_ID, mTagId);
-                        values.put(KeysTableColumns.CARD_TYPE, mCardType);
-                        values.put(KeysTableColumns.KEY_DATA, keys.toJSON().toString());
+                    ContentValues values = new ContentValues();
+                    values.put(KeysTableColumns.CARD_ID, mTagId);
+                    values.put(KeysTableColumns.CARD_TYPE, mCardType);
+                    values.put(KeysTableColumns.KEY_DATA, keys.toJSON().toString());
 
-                        getContentResolver().insert(CardKeyProvider.CONTENT_URI, values);
+                    getContentResolver().insert(CardKeyProvider.CONTENT_URI, values);
 
-                        return null;
-                    }
+                    return null;
+                }
 
-                    @Override
-                    protected void onResult(Void unused) {
-                        Intent intent = new Intent(AddKeyActivity.this, KeysActivity.class);
-                        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                        startActivity(intent);
-                        finish();
-                    }
-                }.execute();
-            }
+                @Override
+                protected void onResult(Void unused) {
+                    Intent intent = new Intent(AddKeyActivity.this, KeysActivity.class);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    startActivity(intent);
+                    finish();
+                }
+            }.execute();
         });
 
         mNfcAdapter = NfcAdapter.getDefaultAdapter(this);

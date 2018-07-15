@@ -21,13 +21,10 @@ package au.id.micolous.metrodroid.transit.manly_fast_ferry;
 
 import android.os.Parcel;
 import android.os.Parcelable;
-import android.support.annotation.Nullable;
 
-import au.id.micolous.metrodroid.transit.Trip;
 import au.id.micolous.metrodroid.transit.erg.ErgTrip;
 import au.id.micolous.metrodroid.transit.erg.record.ErgPurseRecord;
 
-import java.util.Calendar;
 import java.util.GregorianCalendar;
 
 /**

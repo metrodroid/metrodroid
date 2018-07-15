@@ -67,17 +67,9 @@ public class ExpandableListFragment extends Fragment implements OnCreateContextM
 
     private final Handler mHandler = new Handler();
     private final AdapterView.OnItemClickListener mOnClickListener
-            = new AdapterView.OnItemClickListener() {
-        public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
-            onListItemClick((ListView) parent, v, position, id);
-        }
-    };
+            = (parent, v, position, id) -> onListItemClick((ListView) parent, v, position, id);
     private final ExpandableListView.OnChildClickListener mOnChildClickListener
-            = new ExpandableListView.OnChildClickListener() {
-        public boolean onChildClick(ExpandableListView parent, View v, int groupPosition, int childPosition, long id) {
-            return onListChildClick(parent, v, groupPosition, childPosition, id);
-        }
-    };
+            = this::onListChildClick;
     ExpandableListAdapter mAdapter;
     ExpandableListView mList;
     private final Runnable mRequestFocus = new Runnable() {
@@ -232,7 +224,7 @@ public class ExpandableListFragment extends Fragment implements OnCreateContextM
      * <p>
      * <p>Applications do not normally need to use this themselves.  The default
      * behavior of ListFragment is to start with the list not being shown, only
-     * showing it once an adapter is given with {@link #setListAdapter(ListAdapter)}.
+     * showing it once an adapter is given with {@link #setListAdapter(ExpandableListAdapter)}.
      * If the list at that point had not been shown, when it does get shown
      * it will be do without the user ever seeing the hidden state.
      *

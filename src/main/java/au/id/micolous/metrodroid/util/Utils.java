@@ -22,7 +22,6 @@ package au.id.micolous.metrodroid.util;
 
 import android.app.Activity;
 import android.app.AlertDialog;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageInfo;
@@ -41,11 +40,9 @@ import android.support.annotation.DrawableRes;
 import android.support.annotation.Nullable;
 import android.support.annotation.PluralsRes;
 import android.support.annotation.StringRes;
-import android.text.Spannable;
 import android.text.SpannableString;
 import android.text.SpannableStringBuilder;
 import android.text.Spanned;
-import android.text.SpannedString;
 import android.text.TextUtils;
 import android.text.format.DateFormat;
 import android.text.style.LocaleSpan;
@@ -108,16 +105,8 @@ public class Utils {
                 .setTitle(R.string.nfc_off_error)
                 .setMessage(R.string.turn_on_nfc)
                 .setCancelable(true)
-                .setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int id) {
-                        dialog.dismiss();
-                    }
-                })
-                .setNeutralButton(R.string.wireless_settings, new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int id) {
-                        activity.startActivity(new Intent(Settings.ACTION_WIRELESS_SETTINGS));
-                    }
-                })
+                .setNegativeButton(android.R.string.cancel, (dialog, id) -> dialog.dismiss())
+                .setNeutralButton(R.string.wireless_settings, (dialog, id) -> activity.startActivity(new Intent(Settings.ACTION_WIRELESS_SETTINGS)))
                 .show();
     }
 
@@ -136,11 +125,7 @@ public class Utils {
             new AlertDialog.Builder(activity)
                     .setMessage(Utils.getErrorMessage(ex))
                     .setCancelable(false)
-                    .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
-                        public void onClick(DialogInterface arg0, int arg1) {
-                            activity.finish();
-                        }
-                    })
+                    .setPositiveButton(android.R.string.ok, (arg0, arg1) -> activity.finish())
                     .show();
         } catch (WindowManager.BadTokenException unused) {
             /* Ignore... happens if the activity was destroyed */
@@ -153,11 +138,7 @@ public class Utils {
             new AlertDialog.Builder(activity)
                     .setMessage(errorResource)
                     .setCancelable(false)
-                    .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
-                        public void onClick(DialogInterface arg0, int arg1) {
-                            activity.finish();
-                        }
-                    })
+                    .setPositiveButton(android.R.string.ok, (arg0, arg1) -> activity.finish())
                     .show();
         } catch (WindowManager.BadTokenException unused) {
             /* Ignore... happens if the activity was destroyed */

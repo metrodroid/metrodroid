@@ -28,7 +28,7 @@ import au.id.micolous.farebot.R;
 
 public class LicenseActivity extends Activity {
 
-    static final String LICENSE_INTRO = "Metrodroid\n"
+    private static final String LICENSE_INTRO = "Metrodroid\n"
             + "Based on FareBot\n\n"
             + "Copyright 2015-2018 Michael Farrell <micolous@gmail.com> and contributors\n"
             + "Copyright 2011-2014 Eric Butler <eric@codebutler.com> and contributors\n"
@@ -55,7 +55,7 @@ public class LicenseActivity extends Activity {
             + "The source code is available at https://github.com/micolous/metrodroid/\n\n\n";
 
 
-    static final String LEAFLET = "This software contains Leaflet 1.2.0, a Javascript mapping library.  The following terms apply to Leaflet:\n"
+    private static final String LEAFLET = "This software contains Leaflet 1.2.0, a Javascript mapping library.  The following terms apply to Leaflet:\n"
             + "Copyright (c) 2010-2017, Vladimir Agafonkin\n"
             + "Copyright (c) 2010-2011, CloudMade\n"
             + "All rights reserved.\n"
@@ -80,7 +80,7 @@ public class LicenseActivity extends Activity {
             + "TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS "
             + "SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.\n\n\n";
 
-    static final String NFC_FELICA_LIB = "This software contains nfc-felica-lib, an Android library for interfacing with FeliCa smartcards.  "
+    private static final String NFC_FELICA_LIB = "This software contains nfc-felica-lib, an Android library for interfacing with FeliCa smartcards.  "
             + "The following terms apply to nfc-felica-lib:\n"
             + "Copyright 2011 Kazzz.\n"
             + "\n"
@@ -96,7 +96,7 @@ public class LicenseActivity extends Activity {
             + "See the License for the specific language governing permissions and "
             + "limitations under the License.\n\n\n";
 
-    static final String AOSP = "This software contains portions of the Android Open Source Project\n"
+    private static final String AOSP = "This software contains portions of the Android Open Source Project\n"
             + "Copyright 2006, 2011 The Android Open Source Project\n"
             + "\n"
             + "Licensed under the Apache License, Version 2.0 (the \"License\"); "
@@ -111,13 +111,13 @@ public class LicenseActivity extends Activity {
             + "See the License for the specific language governing permissions and "
             + "limitations under the License.\n\n\n";
 
-    static final String NOTO_EMOJI = "This software contains glyphs based on NotoEmoji.\n"
+    private static final String NOTO_EMOJI = "This software contains glyphs based on NotoEmoji.\n"
             + "Copyright 2015 Google, Inc.\n"
             + "\n"
-            + "This Font Software is licensed under the SIL Open Font License,\n" +
-            "Version 1.1.\n" +
-            "\n" +
-            "This license is copied below, and is also available with a FAQ at:\n" +
+            + "This Font Software is licensed under the SIL Open Font License,\n"
+            + "Version 1.1.\n"
+            + "\n"
+            + "This license is copied below, and is also available with a FAQ at:\n" +
             "http://scripts.sil.org/OFL\n" +
             "\n" +
             "-----------------------------------------------------------\n" +
@@ -207,7 +207,7 @@ public class LicenseActivity extends Activity {
             "FROM, OUT OF THE USE OR INABILITY TO USE THE FONT SOFTWARE OR FROM " +
             "OTHER DEALINGS IN THE FONT SOFTWARE.\n\n\n";
 
-    static final String PROTOBUF = "This software contains Protocol Buffers (protobuf)\n"
+    private static final String PROTOBUF = "This software contains Protocol Buffers (protobuf)\n"
             + "Copyright 2014, Google Inc.  All rights reserved.\n" +
             "\n" +
             "Redistribution and use in source and binary forms, with or without " +
@@ -241,7 +241,7 @@ public class LicenseActivity extends Activity {
             "standalone and requires a support library to be linked with it.  This " +
             "support library is itself covered by the above license.\n\n\n";
 
-    static final String SEQ_GO_GTFS = "The SEQ Go Card stop database used in this software "
+    private static final String SEQ_GO_GTFS = "The SEQ Go Card stop database used in this software "
             + "contains information derived from Translink's GTFS feed, made available under the "
             + "Creative Commons Attribution 3.0 Australia license by the Queensland Department "
             + "of Transport and Main Roads.\n"
@@ -252,7 +252,7 @@ public class LicenseActivity extends Activity {
             + "\n"
             + "Stop mapping information is available in Metrodroid's source repository.\n\n\n";
 
-    static final String LAX_TAP_GTFS = "The LAX TAP stop database used in this software "
+    private static final String LAX_TAP_GTFS = "The LAX TAP stop database used in this software "
             + "contains information derived from GTFS feeds by Los Angeles County transit "
             + "operators, including:\n"
             + "\n"

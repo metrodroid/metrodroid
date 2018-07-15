@@ -24,7 +24,6 @@ import android.os.Build;
 import android.os.Parcelable;
 import android.support.annotation.Nullable;
 import android.text.Spannable;
-import android.text.SpannableString;
 import android.text.SpannableStringBuilder;
 import android.text.style.LocaleSpan;
 import android.text.style.TtsSpan;

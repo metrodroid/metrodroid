@@ -29,7 +29,6 @@
 package au.id.micolous.metrodroid.transit.suica;
 
 import android.app.Application;
-import android.util.Log;
 
 import net.kazzz.felica.lib.Util;
 
@@ -38,8 +37,6 @@ import java.util.GregorianCalendar;
 
 import au.id.micolous.farebot.R;
 import au.id.micolous.metrodroid.MetrodroidApplication;
-import au.id.micolous.metrodroid.transit.Station;
-import au.id.micolous.metrodroid.util.StationTableReader;
 
 final class SuicaUtil {
 

@@ -27,7 +27,6 @@ import au.id.micolous.metrodroid.transit.nextfare.NextfareUtil;
 import au.id.micolous.metrodroid.util.Utils;
 
 import java.util.Calendar;
-import java.util.GregorianCalendar;
 import java.util.TimeZone;
 
 /**

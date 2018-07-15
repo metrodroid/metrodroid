@@ -24,7 +24,6 @@ import android.support.annotation.Nullable;
 
 import au.id.micolous.metrodroid.transit.CompatTrip;
 import au.id.micolous.metrodroid.transit.Station;
-import au.id.micolous.metrodroid.transit.Trip;
 
 public class MergedOrcaTrip extends CompatTrip {
     public static final Creator<MergedOrcaTrip> CREATOR = new Creator<MergedOrcaTrip>() {

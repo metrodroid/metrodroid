@@ -69,7 +69,7 @@ public class SupportedCardsActivity extends Activity {
 
     private class CardsAdapter extends ArrayAdapter<CardInfo> {
         public CardsAdapter(Context context) {
-            super(context, 0, new ArrayList<CardInfo>());
+            super(context, 0, new ArrayList<>());
             addAll(CardInfo.ALL_CARDS_ALPHABETICAL);
         }
 

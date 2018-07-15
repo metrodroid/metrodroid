@@ -1,7 +1,7 @@
 /*
  * Marker.java
  *
- * Copyright (C) 2012 Eric Butler <eric@codebutler.com>
+ * Copyright 2016 Michael Farrell <micolous+git@gmail.com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -27,8 +27,8 @@ import au.id.micolous.metrodroid.transit.Station;
  * Markers for Leaflet to consume.
  */
 public class Marker {
-    Station mStation;
-    String mIcon;
+    private Station mStation;
+    private String mIcon;
 
     public Marker(Station station, String icon) {
         this.mStation = station;
@@ -40,6 +40,7 @@ public class Marker {
      *
      * @return String representing the latitude of the point.
      */
+    @SuppressWarnings("unused")
     @JavascriptInterface
     public String getLat() {
         return this.mStation.getLatitude();
@@ -50,6 +51,7 @@ public class Marker {
      *
      * @return String representing the longitude of the point.
      */
+    @SuppressWarnings("unused")
     @JavascriptInterface
     public String getLong() {
         return this.mStation.getLongitude();
@@ -61,6 +63,7 @@ public class Marker {
      *
      * @return HTML
      */
+    @SuppressWarnings("unused")
     @JavascriptInterface
     public String getHTML() {
         String station = this.mStation.getStationName();
@@ -85,6 +88,7 @@ public class Marker {
      *
      * @return Icon name
      */
+    @SuppressWarnings("unused")
     @JavascriptInterface
     public String getIcon() {
         return mIcon;

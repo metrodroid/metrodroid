@@ -40,11 +40,6 @@ import au.id.micolous.metrodroid.card.Card;
 import au.id.micolous.metrodroid.card.calypso.CalypsoCard;
 import au.id.micolous.metrodroid.card.calypso.CalypsoFile;
 import au.id.micolous.metrodroid.card.calypso.CalypsoRecord;
-import au.id.micolous.metrodroid.card.classic.ClassicBlock;
-import au.id.micolous.metrodroid.card.classic.ClassicCard;
-import au.id.micolous.metrodroid.card.classic.ClassicSector;
-import au.id.micolous.metrodroid.card.classic.InvalidClassicSector;
-import au.id.micolous.metrodroid.card.classic.UnauthorizedClassicSector;
 import au.id.micolous.metrodroid.util.Utils;
 
 public class CalypsoCardRawDataFragment extends ExpandableListFragment {

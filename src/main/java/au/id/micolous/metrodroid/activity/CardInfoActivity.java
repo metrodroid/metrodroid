@@ -183,12 +183,7 @@ public class CardInfoActivity extends Activity {
 
                 if (mTransitData.hasUnknownStations()) {
                     findViewById(R.id.need_stations).setVisibility(View.VISIBLE);
-                    findViewById(R.id.need_stations_button).setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View view) {
-                            startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://micolous.github.io/metrodroid/unknown_stops")));
-                        }
-                    });
+                    findViewById(R.id.need_stations_button).setOnClickListener(view -> startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://micolous.github.io/metrodroid/unknown_stops"))));
                 }
 
                 mShowMoreInfo = mTransitData.getMoreInfoPage() != null;

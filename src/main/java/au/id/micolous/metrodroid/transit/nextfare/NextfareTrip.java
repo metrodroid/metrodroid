@@ -22,13 +22,11 @@ import android.os.Parcel;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
-import au.id.micolous.metrodroid.transit.Station;
 import au.id.micolous.metrodroid.transit.Trip;
 import au.id.micolous.metrodroid.transit.nextfare.record.NextfareTopupRecord;
 import au.id.micolous.metrodroid.util.Utils;
 
 import java.util.Calendar;
-import java.util.GregorianCalendar;
 import java.util.TimeZone;
 
 import static au.id.micolous.metrodroid.util.Utils.UTC;

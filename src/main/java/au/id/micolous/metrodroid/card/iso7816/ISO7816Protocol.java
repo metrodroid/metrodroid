@@ -18,7 +18,6 @@
  */
 package au.id.micolous.metrodroid.card.iso7816;
 
-import android.nfc.TagLostException;
 import android.nfc.tech.IsoDep;
 import android.support.annotation.Nullable;
 import android.util.Log;

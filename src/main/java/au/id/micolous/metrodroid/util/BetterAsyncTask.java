@@ -123,12 +123,7 @@ public abstract class BetterAsyncTask<Result> extends AsyncTask<Void, ProgressBa
                 .setPositiveButton(android.R.string.ok, null)
                 .create();
         if (mFinishOnError) {
-            dialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
-                @Override
-                public void onDismiss(DialogInterface dialogInterface) {
-                    mActivity.finish();
-                }
-            });
+            dialog.setOnDismissListener(dialogInterface -> mActivity.finish());
         }
         dialog.show();
     }

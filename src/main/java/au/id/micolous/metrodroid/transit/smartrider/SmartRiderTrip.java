@@ -1,15 +1,11 @@
 package au.id.micolous.metrodroid.transit.smartrider;
 
 import android.os.Parcel;
-import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
 import java.util.Calendar;
-import java.util.GregorianCalendar;
 import java.util.TimeZone;
 
-import au.id.micolous.metrodroid.transit.CompatTrip;
-import au.id.micolous.metrodroid.transit.Station;
 import au.id.micolous.metrodroid.transit.Trip;
 import au.id.micolous.metrodroid.util.Utils;
 

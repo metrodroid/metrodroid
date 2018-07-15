@@ -28,11 +28,7 @@ import au.id.micolous.metrodroid.util.Utils;
 import java.util.Comparator;
 
 public class OVChipTransaction implements Parcelable {
-    public static final Comparator<OVChipTransaction> ID_ORDER = new Comparator<OVChipTransaction>() {
-        public int compare(OVChipTransaction t1, OVChipTransaction t2) {
-            return (t1.getId() < t2.getId() ? -1 : (t1.getId() == t2.getId() ? 0 : 1));
-        }
-    };
+    public static final Comparator<OVChipTransaction> ID_ORDER = (t1, t2) -> (t1.getId() < t2.getId() ? -1 : (t1.getId() == t2.getId() ? 0 : 1));
     public static final Parcelable.Creator<OVChipTransaction> CREATOR = new Parcelable.Creator<OVChipTransaction>() {
         public OVChipTransaction createFromParcel(Parcel source) {
             int transactionSlot;

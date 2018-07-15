@@ -21,9 +21,6 @@
 
 package au.id.micolous.metrodroid.card.classic;
 
-import android.support.annotation.Nullable;
-import android.util.Log;
-
 import au.id.micolous.metrodroid.util.Utils;
 import au.id.micolous.metrodroid.xml.Base64String;
 

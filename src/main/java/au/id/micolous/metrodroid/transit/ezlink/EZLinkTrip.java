@@ -25,12 +25,9 @@ package au.id.micolous.metrodroid.transit.ezlink;
 import android.os.Parcel;
 import android.support.annotation.Nullable;
 
-import java.util.Calendar;
-
 import au.id.micolous.metrodroid.card.cepas.CEPASTransaction;
 import au.id.micolous.metrodroid.transit.CompatTrip;
 import au.id.micolous.metrodroid.transit.Station;
-import au.id.micolous.metrodroid.transit.Trip;
 
 public class EZLinkTrip extends CompatTrip {
     public static final Creator<EZLinkTrip> CREATOR = new Creator<EZLinkTrip>() {

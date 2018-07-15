@@ -44,7 +44,6 @@ import net.kazzz.felica.lib.Util;
 import org.apache.commons.lang3.ArrayUtils;
 
 import java.util.Calendar;
-import java.util.GregorianCalendar;
 
 
 public class SuicaTrip extends Trip {
