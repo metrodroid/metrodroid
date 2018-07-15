@@ -15,9 +15,6 @@ projectFilesBackup/
 project.properties
 
 .gradle
-gradlew
-gradlew.bat
-gradle/
 
 *.keystore
 com_crashlytics_export_strings.xml

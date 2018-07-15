@@ -30,10 +30,19 @@ import android.os.Bundle;
 import android.os.IBinder;
 import android.os.Parcel;
 import android.preference.PreferenceManager;
-import android.support.annotation.Nullable;
 import android.util.Log;
 
+import org.simpleframework.xml.ElementList;
+import org.simpleframework.xml.Root;
+
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.GregorianCalendar;
+import java.util.List;
+
 import au.id.micolous.farebot.R;
+import au.id.micolous.metrodroid.MetrodroidApplication;
 import au.id.micolous.metrodroid.card.Card;
 import au.id.micolous.metrodroid.card.CardHasManufacturingInfo;
 import au.id.micolous.metrodroid.card.CardRawDataFragmentClass;
@@ -47,8 +56,8 @@ import au.id.micolous.metrodroid.transit.TransitData;
 import au.id.micolous.metrodroid.transit.TransitIdentity;
 import au.id.micolous.metrodroid.transit.bilhete_unico.BilheteUnicoSPTransitData;
 import au.id.micolous.metrodroid.transit.chc_metrocard.ChcMetrocardTransitData;
-import au.id.micolous.metrodroid.transit.lax_tap.LaxTapTransitData;
 import au.id.micolous.metrodroid.transit.erg.ErgTransitData;
+import au.id.micolous.metrodroid.transit.lax_tap.LaxTapTransitData;
 import au.id.micolous.metrodroid.transit.manly_fast_ferry.ManlyFastFerryTransitData;
 import au.id.micolous.metrodroid.transit.nextfare.NextfareTransitData;
 import au.id.micolous.metrodroid.transit.ovc.OVChipTransitData;
@@ -59,18 +68,6 @@ import au.id.micolous.metrodroid.transit.troika.TroikaHybridTransitData;
 import au.id.micolous.metrodroid.transit.troika.TroikaTransitData;
 import au.id.micolous.metrodroid.transit.unknown.UnauthorizedClassicTransitData;
 import au.id.micolous.metrodroid.util.Utils;
-
-import org.simpleframework.xml.ElementList;
-import org.simpleframework.xml.Root;
-
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Calendar;
-import java.util.GregorianCalendar;
-import java.util.List;
-
-import au.id.micolous.metrodroid.MetrodroidApplication;
 
 @Root(name = "card")
 @CardRawDataFragmentClass(ClassicCardRawDataFragment.class)
@@ -107,7 +104,11 @@ public class ClassicCard extends Card {
 
     private ClassicCard() { /* For XML Serializer */ }
 
-    public ClassicCard(byte[] tagId, Calendar scannedAt, ClassicSector[] sectors, boolean partialRead) {
+    public ClassicCard(byte[] tagId, Calendar scannedAt, ClassicSector[] sectors) {
+        this(tagId, scannedAt, sectors, false);
+    }
+
+    private ClassicCard(byte[] tagId, Calendar scannedAt, ClassicSector[] sectors, boolean partialRead) {
         super(CardType.MifareClassic, tagId, scannedAt, null, partialRead);
         mSectors = Utils.arrayAsList(sectors);
     }
