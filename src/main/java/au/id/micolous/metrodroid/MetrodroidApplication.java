@@ -80,6 +80,7 @@ public class MetrodroidApplication extends Application {
     public static final String PREF_OBFUSCATE_BALANCE = "pref_obfuscate_balance";
 
     public static final String PREF_LOCALISE_PLACES = "pref_localise_places";
+    public static final String PREF_LOCALISE_PLACES_HELP = "pref_localise_places_help";
     public static final String PREF_CONVERT_TIMEZONES = "pref_convert_timezones";
 
     private static MetrodroidApplication sInstance;

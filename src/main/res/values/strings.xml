@@ -180,6 +180,8 @@
 
     <string name="mfc_fallback_desc">Some agencies have no identifying magic on their card. To read them, you must select an agency explicitly.</string>
     <string name="mfc_fallback">Fallback reader</string>
+    <!-- Shown as a preference description when a feature needs Android 5.0 or later. -->
+    <string name="requires_android_21">Requires Android 5.0 or later.</string>
 
     <!-- Obfuscation options -->
     <string name="obfuscation_title">Obfuscation</string>
@@ -238,7 +240,7 @@
     "LocaleSpan" is the name of an Android API, and should not be translated. "Google TalkBack" is
     the name of Android's standard screen-reader software.
     -->
-    <string name="localise_places_longdesc">Text-to-speech voices normally only work well for one language.\n\nLocaleSpan hints are used to mark text as being in a different language. When applied to a station, stop, line or route name, a screen reader that supports these hints will pronounce the name using synthesized voices from the place\'s native language, rather than the language you have configured Android to use.\n\nEnabling this option generally improves the pronunciation of foreign place names that are not internationally renowned, but you might find it more difficult to understand.\n\nThis does not normally change the on-screen display of place names, but some devices may use a different font.\n\nThis requires Android 5.0 or later, accessibility software that supports the LocaleSpan API (such as Google TalkBack), and that you have appropriate voices installed.</string>
+    <string name="localise_places_longdesc">Text-to-speech voices normally only work well for one language.\n\nLocaleSpan hints are used to mark text as being in a different language. When applied to a station, stop, line or route name, a screen reader that supports these hints will pronounce the name using synthesized voices from the place\'s native language, rather than the language you have configured Android to use.\n\nEnabling this option generally improves the pronunciation of foreign place names that are not internationally renowned, but you might find it more difficult to understand.\n\nThis does not normally change the on-screen display of place names, but some devices may use a different font.\n\nThis requires accessibility software that supports the LocaleSpan API (such as Google TalkBack), and that you have appropriate voices installed.</string>
 
     <!-- Translators: This is shown when an unsupported type of card is scanned, and that we were unable to read it at all, let alone parse its content. -->
     <string name="unsupported_tag">Unsupported NFC card media</string>

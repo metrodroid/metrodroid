@@ -39,7 +39,6 @@ import static android.content.pm.PackageManager.COMPONENT_ENABLED_STATE_ENABLED;
 public class PreferencesActivity extends PreferenceActivity implements Preference.OnPreferenceChangeListener {
 
     private CheckBoxPreference mPreferenceLaunchFromBackground;
-    private CheckBoxPreference mLocalisePlaces;
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -53,11 +52,14 @@ public class PreferencesActivity extends PreferenceActivity implements Preferenc
         mPreferenceLaunchFromBackground.setChecked(isLaunchFromBgEnabled());
         mPreferenceLaunchFromBackground.setOnPreferenceChangeListener(this);
 
-        mLocalisePlaces = (CheckBoxPreference) getPreferenceManager().findPreference(MetrodroidApplication.PREF_LOCALISE_PLACES);
-        if (mLocalisePlaces != null) {
-            mLocalisePlaces.setEnabled(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP);
+        for (String prefKey : new String[]{
+                MetrodroidApplication.PREF_LOCALISE_PLACES,
+                MetrodroidApplication.PREF_LOCALISE_PLACES_HELP}) {
+            Preference pref = getPreferenceManager().findPreference(prefKey);
+            if (pref == null) continue;
+            pref.setEnabled(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP);
+            pref.setSummary(R.string.requires_android_21);
         }
-
     }
 
     @Override
