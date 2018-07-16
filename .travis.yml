@@ -1,33 +1,31 @@
 language: android
 jdk: oraclejdk8
 
+env:
+   global:
+   - ANDROID_API=27
+   - EMULATOR_API=24
+   - ANDROID_BUILD_TOOLS=27.0.3
+
 android:
   components:
-    - build-tools-27.0.3
-    - android-27
-    - extra
+    - tools
+    - android-$EMULATOR_API
+    - platform-tools
+    - build-tools-$ANDROID_BUILD_TOOLS
+    - android-$ANDROID_API
+    - extra-android-support
+    - extra-android-m2repository
+    - extra-google-m2repository
+    - sys-img-armeabi-v7a-android-$EMULATOR_API
 
-#    - platform-tools
-#    - sys-img-armeabi-v7a-android-22
+before_script:
+  - android list targets
+  - echo y | android update sdk -a --no-ui --filter android-$EMULATOR_API
+  - echo y | android update sdk -a --no-ui --filter sys-img-armeabi-v7a-android-$EMULATOR_API
+  - android list targets
+  - echo no | android create avd --force -n test -t android-$EMULATOR_API --abi armeabi-v7a
+  - emulator -avd test -no-skin -no-window &
+  - android-wait-for-emulator
+  - adb shell input keyevent 82 &
 
-#    - sys-img-armeabi-v7a-android-27
-#    - sys-img-armeabi-v7a-android-26
-#    - sys-img-armeabi-v7a-android-25
-#    - sys-img-armeabi-v7a-android-24
-#    - sys-img-armeabi-v7a-android-23
-#    - sys-img-armeabi-v7a-android-22
-#    - sys-img-armeabi-v7a-android-21
-#    - sys-img-armeabi-v7a-android-20
-#    - sys-img-armeabi-v7a-android-19
-#    - sys-img-armeabi-v7a-android-18
-#    - sys-img-armeabi-v7a-android-17
-
-#before_script:
-#  - android list targets
-#  - echo no | android create avd --force -n test -t android-22 --abi armeabi-v7a
-#  - emulator -avd test -no-audio -no-window &
-#  - android-wait-for-emulator
-#  - adb shell input keyevent 82 &
-
-script:
-  - ./gradlew build
