@@ -28,7 +28,7 @@
     <string name="app_name">Metrodroid</string>
 
     <!-- Additional names now noted in the license screen -->
-    <string name="copyright">Copyright 2015 – 2018 Michael Farrell</string>
+    <string name="copyright">Copyright © 2015 – 2018 Michael Farrell</string>
 
     <!-- General application strings -->
     <string name="license">Licenses</string>
@@ -69,24 +69,24 @@
     <string name="transaction_sequence">#</string>
     <string name="fully_locked_desc">
         No part of this card is freely readable without a key. You have no valid keys installed for it.\n\n
-        If supported by Metrodroid, the card will work once keys are installed for it. These are generally different for each card. More information about acquiring and installing keys can be found in the documentation.\n\n
+        If supported by Metrodroid, the card will work once keys are installed for it. These are generally different for each card. More info about acquiring and installing keys can be found in the documentation.\n\n
         If your card is not supported by Metrodroid, it is unlikely it will ever be, unless the key for it is deciphered.\n\n
         Please lobby the card issuer to allow open data access on issued cards. It is safe to permit open, read-only access to data with modern smartcard technology. Some agencies even provide open documentation about the data format!
     </string>
     <string name="fully_locked_title">Fully locked card.</string>
     <string name="nfc_off_error">NFC off</string>
-    <string name="turn_on_nfc">Please enable NFC to read card information.</string>
+    <string name="turn_on_nfc">Please enable NFC to read card info.</string>
     <string name="wireless_settings">Wireless Settings</string>
     <string name="report_error">Report Error</string>
-    <!-- Translators: "Machine ID" is arbitrary. It could be a decimal number, or hexadecimal... -->
+    <!-- Translators: "Machine ID" is arbitrary. It could be a decimal number, or hexadecimal… -->
     <string name="machine_id">Machine ID %s</string>
 
     <string name="unknown_card_header">Unknown card format</string>
     <string name="unknown_card_description">This card is not yet supported by Metrodroid. Only raw data can be displayed.</string>
 
-    <string name="unknown_more_info">More information</string>
+    <string name="unknown_more_info">More info</string>
     <!-- TRANSLATORS: This is used on a list item, which will direct users to Metrodroid's website when touched. -->
-    <string name="unknown_more_info_desc">Tap for more information about Metrodroid support for this card.</string>
+    <string name="unknown_more_info_desc">Tap for more info on Metrodroid support for this card.</string>
 
     <string name="lawyercats">Metrodroid and its authors are not associated with any public transit agency.</string>
 
@@ -153,7 +153,7 @@
     <string name="need_stations_submit">Report</string>
     <string name="card_preview_reader">Beta version of card reader.</string>
     <string name="visit_website">Visit Website</string>
-    <string name="title_activity_about">About Metrodroid</string>
+    <string name="title_activity_about">About</string>
     <string name="card_type">Card type</string>
     <string name="select_file">Select file</string>
     <string name="copied_to_clipboard">Copied to clipboard</string>
@@ -238,7 +238,7 @@
     "LocaleSpan" is the name of an Android API, and should not be translated. "Google TalkBack" is
     the name of Android's standard screen-reader software.
     -->
-    <string name="localise_places_longdesc">Text to speech voices normally only work well for one language.\n\nLocaleSpan hints are used to mark text as being in a different language. When applied to a station, stop, line or route name, a screen reader that supports these hints will pronounce the name using synthesized voices from the place\'s native language, rather than the language you have configured Android to use.\n\nEnabling this option generally improves the pronunciation of foreign place names that are not internationally renowned, but you might find it more difficult to understand.\n\nThis does not normally change the on-screen display of place names, but some devices may use a different font.\n\nThis requires Android 5.0 or later, accessibility software that supports the LocaleSpan API (such as Google TalkBack), and that you have appropriate voices installed.</string>
+    <string name="localise_places_longdesc">Text-to-speech voices normally only work well for one language.\n\nLocaleSpan hints are used to mark text as being in a different language. When applied to a station, stop, line or route name, a screen reader that supports these hints will pronounce the name using synthesized voices from the place\'s native language, rather than the language you have configured Android to use.\n\nEnabling this option generally improves the pronunciation of foreign place names that are not internationally renowned, but you might find it more difficult to understand.\n\nThis does not normally change the on-screen display of place names, but some devices may use a different font.\n\nThis requires Android 5.0 or later, accessibility software that supports the LocaleSpan API (such as Google TalkBack), and that you have appropriate voices installed.</string>
 
     <!-- Translators: This is shown when an unsupported type of card is scanned, and that we were unable to read it at all, let alone parse its content. -->
     <string name="unsupported_tag">Unsupported NFC card media</string>
@@ -253,7 +253,7 @@
 
     <string name="iso14a_detect">Detecting ISO 14443 card type…</string>
     <string name="mfd_reading">Reading MIFARE DESFire card…</string>
-    <!-- Translators: This is substituted with the name of a card, like "Reading Opal..." or "Reading Suica..." -->
+    <!-- Translators: This is substituted with the name of a card, like "Reading Opal…" or "Reading Suica…" -->
     <string name="card_reading_type">Reading <xliff:g id="card_name" example="Opal">%s</xliff:g>…</string>
 
     <string name="mfu_detect">Detecting MIFARE Ultralight card type…</string>
@@ -266,7 +266,7 @@
     <string name="card_partial_read_desc">
         The card went out of range while reading.\n\n
         Some data was read, but it might not be enough to get useful data.\n\n
-        Thick cases and metal can interfere with NFC. It could also indicate the card or your device\'s NFC antenna is damaged.
+        Thick cases and metal can interfere with NFC operation. Failure could also indicate that the card or your device\'s NFC antenna is damaged.
     </string>
     <string name="show_partial_data">Show incomplete data</string>
 
@@ -374,7 +374,7 @@
     <!-- Type: Value file, Range: 0 - 2300, Limited credit: 400 (Enabled) -->
     <string name="desfire_value_format">Type: %1$s, Range: %2$s - %3$s, Limited credit: %4$s (%5$s)</string>
 
-    <string name="hardware_information">Hardware Information</string>
+    <string name="hardware_information">Hardware Info</string>
     <string name="card_expiry_date">Card expiry date</string>
     <string name="enabled">Enabled</string>
     <string name="disabled">Disabled</string>
@@ -384,17 +384,17 @@
     <string name="cepas_purse_id">Purse ID</string>
     <string name="cepas_purse_status">Purse Status</string>
     <string name="cepas_purse_balance">Purse Balance</string>
-    <string name="cepas_purse_creation_date">Purse Creation Date</string>
+    <string name="cepas_purse_creation_date">Date of Purse Creation</string>
     <string name="cepas_expiry_date">Purse Expiry Date</string>
     <string name="cepas_autoload_amount">Autoload Amount</string>
-    <string name="cepas_last_txn_info">Last Transaction Information</string>
+    <string name="cepas_last_txn_info">Info About Last Transaction</string>
     <string name="cepas_credit_header">Credit Header</string>
     <string name="cepas_debit_options">Debit Options</string>
-    <string name="cepas_other_purse_info">Other Purse Information</string>
+    <string name="cepas_other_purse_info">Other Purse Info</string>
     <string name="cepas_logfile_record_count">Logfile Record Count</string>
     <string name="cepas_issuer_data_length">Issuer Data Length</string>
     <string name="cepas_issuer_data">Issuer-specific Data</string>
-    <string name="cepas_purse_info">Purse information</string>
+    <string name="cepas_purse_info">Purse Info</string>
 
     <!--
     Felica hardware information
@@ -778,11 +778,11 @@
     <string name="ovc_autocharge">Autocharge</string>
 
 
-    <string name="general_information">General Information</string>
-    <string name="personal_information">Personal Information</string>
+    <string name="general_information">General Info</string>
+    <string name="personal_information">Personal Info</string>
     <string name="date_of_birth">Date of birth</string>
-    <string name="credit_information">Credit Information</string>
-    <string name="software_information">Software Information</string>
+    <string name="credit_information">Credit Info</string>
+    <string name="software_information">Software Info</string>
     <string name="clipboard_error">Unable to access the clipboard</string>
     <string name="convert_timezones">Convert times to current timezone</string>
     <string name="convert_timezones_summary">By default, Metrodroid displays travel times in the timezone of the transit agency. If this option is enabled, Metrodroid will convert travel times to your device\'s current timezone.</string>
