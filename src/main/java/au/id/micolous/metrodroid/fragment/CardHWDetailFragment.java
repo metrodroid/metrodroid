@@ -87,12 +87,13 @@ public class CardHWDetailFragment extends ListFragment {
             items.add(new ListItem("Storage Size", Integer.toString(data.swStorageSize)));
             items.add(new ListItem("Protocol", Integer.toString(data.swProtocol)));
 
-            items.add(new HeaderListItem("General Information"));
-            items.add(new ListItem("Serial Number", Integer.toString(data.uid)));
-            items.add(new ListItem("Batch Number", Integer.toString(data.batchNo)));
-            items.add(new ListItem("Week of Production", Integer.toString(data.weekProd)));
-            items.add(new ListItem("Year of Production", Integer.toString(data.yearProd)));
-
+            if (!MetrodroidApplication.hideCardNumbers()) {
+                items.add(new HeaderListItem("General Information"));
+                items.add(new ListItem("Serial Number", Integer.toString(data.uid)));
+                items.add(new ListItem("Batch Number", Integer.toString(data.batchNo)));
+                items.add(new ListItem("Week of Production", Integer.toString(data.weekProd)));
+                items.add(new ListItem("Year of Production", Integer.toString(data.yearProd)));
+            }
         } else if (mCard.getCardType() == CardType.CEPAS) {
             CEPASCard card = (CEPASCard) mCard;
 
@@ -136,7 +137,10 @@ public class CardHWDetailFragment extends ListFragment {
             FelicaCard card = (FelicaCard) mCard;
             items.add(new HeaderListItem(R.string.felica_idm));
             items.add(new ListItem(R.string.felica_manufacturer_code, "0x" + Integer.toHexString(card.getManufacturerCode())));
-            items.add(new ListItem(R.string.felica_card_identification_number, Long.toString(card.getCardIdentificationNumber())));
+
+            if (!MetrodroidApplication.hideCardNumbers()) {
+                items.add(new ListItem(R.string.felica_card_identification_number, Long.toString(card.getCardIdentificationNumber())));
+            }
 
             items.add(new HeaderListItem(R.string.felica_pmm));
             items.add(new ListItem(R.string.felica_rom_type, Integer.toString(card.getROMType())));
@@ -218,7 +222,9 @@ public class CardHWDetailFragment extends ListFragment {
                 manufactureDate.add(Calendar.DATE, Utils.byteArrayToInt(data, 25, 2));
 
                 items.add(new HeaderListItem("ICC"));
-                items.add(new ListItem(R.string.calypso_serial_number, Utils.getHexString(data, 12, 8)));
+                if (!MetrodroidApplication.hideCardNumbers()) {
+                    items.add(new ListItem(R.string.calypso_serial_number, Utils.getHexString(data, 12, 8)));
+                }
                 items.add(new ListItem(R.string.calypso_manufacture_country, countryName));
                 items.add(new ListItem(R.string.calypso_manufacturer, manufacturerName));
                 items.add(new ListItem(R.string.calypso_manufacture_date, Utils.longDateFormat(manufactureDate)));
