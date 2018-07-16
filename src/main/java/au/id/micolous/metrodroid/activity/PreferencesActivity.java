@@ -52,13 +52,15 @@ public class PreferencesActivity extends PreferenceActivity implements Preferenc
         mPreferenceLaunchFromBackground.setChecked(isLaunchFromBgEnabled());
         mPreferenceLaunchFromBackground.setOnPreferenceChangeListener(this);
 
-        for (String prefKey : new String[]{
-                MetrodroidApplication.PREF_LOCALISE_PLACES,
-                MetrodroidApplication.PREF_LOCALISE_PLACES_HELP}) {
-            Preference pref = getPreferenceManager().findPreference(prefKey);
-            if (pref == null) continue;
-            pref.setEnabled(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP);
-            pref.setSummary(R.string.requires_android_21);
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
+            for (String prefKey : new String[]{
+                    MetrodroidApplication.PREF_LOCALISE_PLACES,
+                    MetrodroidApplication.PREF_LOCALISE_PLACES_HELP}) {
+                Preference pref = getPreferenceManager().findPreference(prefKey);
+                if (pref == null) continue;
+                pref.setEnabled(false);
+                pref.setSummary(R.string.requires_android_21);
+            }
         }
     }
 
