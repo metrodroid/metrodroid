@@ -3,11 +3,11 @@ jdk: oraclejdk8
 
 env:
   matrix:
-    - env: EMULATOR_API=16
-    - env: EMULATOR_API=21
-    - env: EMULATOR_API=24
+    - EMULATOR_API=16
+    - EMULATOR_API=21
+    - EMULATOR_API=24
 # Not available in vanilla flavour
-#    - env: EMULATOR_API=27
+#    - EMULATOR_API=27
   
   global:
     - ANDROID_API=27
