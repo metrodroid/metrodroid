@@ -1,8 +1,6 @@
 # ![logo](https://github.com/micolous/metrodroid/raw/master/src/main/res/mipmap-hdpi/ic_launcher.png) [Metrodroid](https://github.com/micolous/metrodroid)
 
-[![Translation status](https://hosted.weblate.org/widgets/metrodroid/-/svg-badge.svg)][22]
-
-_Formerly known as Farebot M._
+[![Translation status](https://hosted.weblate.org/widgets/metrodroid/-/svg-badge.svg)][22] [![Build Status](https://travis-ci.org/micolous/metrodroid.svg?branch=master)](https://travis-ci.org/micolous/metrodroid)
 
 <a href="https://f-droid.org/repository/browse/?fdid=au.id.micolous.farebot" target="_blank">
 <img src="https://f-droid.org/badge/get-it-on.png" height="80"/></a>
@@ -22,7 +20,7 @@ linux.conf.au 2018, in my talk, [Tap on to reverse engineering](https://youtu.be
 
 ## Thanks To
 
-* [Eric Butler][5] (Farebot)
+* [Eric Butler][5] (Farebot, on which this project is based)
 * [Karl Koscher][3] (ORCA)
 * [Sean Cross][4] (CEPAS/EZ-Link)
 * Anonymous Contributor (Clipper)

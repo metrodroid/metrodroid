@@ -2,16 +2,17 @@ language: android
 jdk: oraclejdk8
 
 env:
-  global:
-   - ANDROID_API=27
-   - ANDROID_BUILD_TOOLS=27.0.3
-
-matrix:
-  include:
+  matrix:
+    - env: EMULATOR_API=16
     - env: EMULATOR_API=21
-    - env: EMULATOR_API=23
     - env: EMULATOR_API=24
-    - env: EMULATOR_API=27
+# Not available in vanilla flavour
+#    - env: EMULATOR_API=27
+  
+  global:
+    - ANDROID_API=27
+    - ANDROID_BUILD_TOOLS=27.0.3
+
 
 android:
   components:
