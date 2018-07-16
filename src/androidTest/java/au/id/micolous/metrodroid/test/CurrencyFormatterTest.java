@@ -19,15 +19,24 @@
 package au.id.micolous.metrodroid.test;
 
 import android.test.AndroidTestCase;
+import android.text.Spanned;
+
+import org.hamcrest.Matchers;
 
 import au.id.micolous.metrodroid.util.Utils;
+
+import static au.id.micolous.metrodroid.test.TestUtils.assertSpannedEquals;
+import static au.id.micolous.metrodroid.test.TestUtils.assertSpannedThat;
 
 /**
  * Tests the currency formatter.
  */
-
 public class CurrencyFormatterTest extends AndroidTestCase {
 
+    /**
+     * In Australian English, AUD should come out as a bare "$", and USD should come out with some
+     * different prefix.
+     */
     public void testEnglishAU() {
         // Note: en_AU data in Unicode CLDR currency data was broken in release
         // 28, Android 7.0+:
@@ -35,36 +44,76 @@ public class CurrencyFormatterTest extends AndroidTestCase {
         // https://unicode.org/cldr/trac/ticket/10217
         // Only check to make sure AUD comes out correctly in en_AU.
         TestUtils.setLocale(getContext(), "en-AU");
+        assertSpannedEquals("$12.34", Utils.formatCurrencyString(1234, true, "AUD"));
 
-        TestUtils.assertSpannedEquals("$12.34", Utils.formatCurrencyString(1234, true, "AUD"));
+        // May be "USD12.34", "U$12.34" or "US$12.34".
+        Spanned usd = Utils.formatCurrencyString(1234, true, "USD");
+        assertSpannedThat(usd, Matchers.startsWith("U"));
+        assertSpannedThat(usd, Matchers.endsWith("12.34"));
     }
 
+    /**
+     * In British English, everything should come out pretty similar.
+     *
+     * It might clarify USD (US$ vs. $). but that isn't very important.
+     */
     public void testEnglishGB() {
         TestUtils.setLocale(getContext(), "en-GB");
+        // May be "$12.34", "U$12.34" or "US$12.34".
+        assertSpannedThat(Utils.formatCurrencyString(1234, true, "USD"), Matchers.endsWith("$12.34"));
 
-        TestUtils.assertSpannedEquals("US$12.34", Utils.formatCurrencyString(1234, true, "USD"));
-        TestUtils.assertSpannedEquals("A$12.34", Utils.formatCurrencyString(1234, true, "AUD"));
-        TestUtils.assertSpannedEquals("£12.34", Utils.formatCurrencyString(1234, true, "GBP"));
-        TestUtils.assertSpannedEquals("JP¥1,234", Utils.formatCurrencyString(1234, true, "JPY", 1));
+        // May be "A$12.34" or "AU$12.34".
+        Spanned aud = Utils.formatCurrencyString(1234, true, "AUD");
+        assertSpannedThat(aud, Matchers.startsWith("A"));
+        assertSpannedThat(aud, Matchers.endsWith("$12.34"));
+
+        assertSpannedEquals("£12.34", Utils.formatCurrencyString(1234, true, "GBP"));
+
+        // May be "¥1,234" or "JP¥1,234".
+        assertSpannedThat(Utils.formatCurrencyString(1234, true, "JPY", 1), Matchers.endsWith("¥1,234"));
     }
 
+    /**
+     * In American English, USD should come out as a bare "$", and AUD should come out with some
+     * different prefix.
+     */
     public void testEnglishUS() {
         TestUtils.setLocale(getContext(), "en-US");
 
-        TestUtils.assertSpannedEquals("$12.34", Utils.formatCurrencyString(1234, true, "USD"));
-        TestUtils.assertSpannedEquals("A$12.34", Utils.formatCurrencyString(1234, true, "AUD"));
-        TestUtils.assertSpannedEquals("£12.34", Utils.formatCurrencyString(1234, true, "GBP"));
-        TestUtils.assertSpannedEquals("¥1,234", Utils.formatCurrencyString(1234, true, "JPY", 1));
+        assertSpannedEquals("$12.34", Utils.formatCurrencyString(1234, true, "USD"));
+
+        // May be "A$12.34" or "AU$12.34".
+        Spanned aud = Utils.formatCurrencyString(1234, true, "AUD");
+        assertSpannedThat(aud, Matchers.startsWith("A"));
+        assertSpannedThat(aud, Matchers.endsWith("$12.34"));
+
+        assertSpannedEquals("£12.34", Utils.formatCurrencyString(1234, true, "GBP"));
+
+        // May be "¥1,234" or "JP¥1,234".
+        assertSpannedThat(Utils.formatCurrencyString(1234, true, "JPY", 1), Matchers.endsWith("¥1,234"));
     }
 
+    /**
+     * In Japanese, everything should come out pretty similar.  But the Yen character is probably
+     * full-width.
+     *
+     * It might clarify USD (US$ vs. $). but that isn't very important.
+     */
     public void testJapanese() {
         TestUtils.setLocale(getContext(), "ja-JP");
 
-        TestUtils.assertSpannedEquals("$12.34", Utils.formatCurrencyString(1234, true, "USD"));
-        // AUD is volatile in older Unicode CLDR.
-        TestUtils.assertSpannedEquals("£12.34", Utils.formatCurrencyString(1234, true, "GBP"));
+        // May be "$12.34", "U$12.34" or "US$12.34".
+        assertSpannedThat(Utils.formatCurrencyString(1234, true, "USD"), Matchers.endsWith("$12.34"));
+
+        // May be "A$12.34" or "AU$12.34".
+        Spanned aud = Utils.formatCurrencyString(1234, true, "AUD");
+        assertSpannedThat(aud, Matchers.startsWith("A"));
+        assertSpannedThat(aud, Matchers.endsWith("$12.34"));
+
+        assertSpannedEquals("£12.34", Utils.formatCurrencyString(1234, true, "GBP"));
+
         // Note: this is the full-width yen character
-        TestUtils.assertSpannedEquals("￥1,234", Utils.formatCurrencyString(1234, true, "JPY", 1));
+        assertSpannedEquals("￥1,234", Utils.formatCurrencyString(1234, true, "JPY", 1));
     }
 
 }
