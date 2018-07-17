@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2"><string name="app_name">Metrodroid</string>
 
-    <string name="copyright">Copyright 2015 – 2018 Michael Farrell</string>
+    <string name="copyright">Copyright © 2015 – 2018 Michael Farrell</string>
 
     <string name="license">Licenties</string>
     <string name="title_activity_license">Open bron-licenties</string>
@@ -104,7 +104,7 @@
     <string name="need_stations_submit">Rapporteren</string>
     <string name="card_preview_reader">Bètaversie van de kaartlezer.</string>
     <string name="visit_website">Website bezoeken</string>
-    <string name="title_activity_about">Over Metrodroid</string>
+    <string name="title_activity_about">Over</string>
     <string name="card_type">Kaarttype</string>
     <string name="select_file">Bestand selecteren</string>
     <string name="copied_to_clipboard">Gekopieerd naar klembord</string>
@@ -422,7 +422,7 @@
 \n 
 \nNormaal gesproken wordt de weergave van de naam op het scherm niet gewijzigd, maar sommige apparaten kunnen een ander lettertype toepassen. 
 \n 
-\nDit vereist Android 5.0 of hoger, toegankelijkheidssoftware dit ondersteuning heeft voor de LocaleSpan-API (zoals bijv. Google TalkBack) en dat je de benodigde stemmen hebt geïnstalleerd.</string>
+\nDit vereist toegankelijkheidssoftware die ondersteuning heeft voor de LocaleSpan-API (zoals bijv. Google TalkBack) en dat je de benodigde stemmen hebt geïnstalleerd.</string>
 
     <string name="convert_timezones">Tijden aanpassen aan huidige tijdzone</string>
     <string name="convert_timezones_summary">Standaard laat Metrodroid reistijden zien zoals deze zijn in de tijdzone van de vervoerder. Als deze optie wordt ingeschakeld, dan zal Metrodroid de reistijden aanpassen aan de huidige tijdzone van uw apparaat.</string>
@@ -501,5 +501,7 @@
 
 
 
+
+    <string name="requires_android_21">Vereist Android 5.0 of hoger.</string>
 
     </resources>
