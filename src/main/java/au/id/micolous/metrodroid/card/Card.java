@@ -119,6 +119,12 @@ public abstract class Card {
             return UltralightCard.dumpTag(tagId, tag, feedbackInterface);
         }
 
+        if (ArrayUtils.contains(techs, "android.nfc.tech.NfcA")) {
+            UltralightCard u = UltralightCard.dumpTagA(tagId, tag, feedbackInterface);
+            if (u != null)
+                return u;
+        }
+
         throw new UnsupportedTagException(techs, Utils.getHexString(tag.getId()));
     }
 
