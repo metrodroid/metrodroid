@@ -32,7 +32,7 @@ import au.id.micolous.metrodroid.card.CardType;
 import au.id.micolous.metrodroid.card.calypso.CalypsoCard;
 import au.id.micolous.metrodroid.card.calypso.CalypsoData;
 import au.id.micolous.metrodroid.card.calypso.CalypsoFile;
-import au.id.micolous.metrodroid.card.calypso.CalypsoRecord;
+import au.id.micolous.metrodroid.card.iso7816.ISO7816Record;
 import au.id.micolous.metrodroid.card.cepas.CEPASCard;
 import au.id.micolous.metrodroid.card.cepas.CEPASPurse;
 import au.id.micolous.metrodroid.card.desfire.DesfireCard;
@@ -182,7 +182,7 @@ public class CardHWDetailFragment extends ListFragment {
         } else if (mCard.getCardType() == CardType.Calypso) {
             CalypsoCard card = (CalypsoCard) mCard;
             CalypsoFile iccFile = card.getFile(CalypsoCard.File.ICC);
-            CalypsoRecord iccRecord = null;
+            ISO7816Record iccRecord = null;
             if (iccFile != null) {
                 iccRecord = iccFile.getRecord(1);
             }

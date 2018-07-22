@@ -25,7 +25,6 @@ import android.util.Log;
 import org.simpleframework.xml.ElementList;
 import org.simpleframework.xml.Root;
 
-import java.io.EOFException;
 import java.io.IOException;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
@@ -56,16 +55,30 @@ import au.id.micolous.metrodroid.util.Utils;
  */
 @Root(name = "card")
 @CardRawDataFragmentClass(CalypsoCardRawDataFragment.class)
-@CardHasManufacturingInfo(true)
+@CardHasManufacturingInfo(false)
 public class CalypsoCard extends ISO7816Card {
     public static final String CALYPSO_FILENAME = "1TIC.ICA";
-    private static final String TAG = CalypsoCard.class.getName();
-    @ElementList(name = "records", required = false, empty = false)
 
+    // Other seen apps:
+    // 315449432e494341d05600019101
+    // a000000291 a00000019102
+    // a000000291 d05600019001
+    // a000000291 d05600019201
+    // a000000291 d05600019301
+    // a000000291 d05600019302
+    // a000000291 d05600019303
+    // a000000291 d05600029302
+    // a000000291 d05600029401
+    public static final byte[] CALYPSO_PREFIX = Utils.hexStringToByteArray("A000000291");
+
+
+    private static final String TAG = CalypsoCard.class.getName();
+
+    @ElementList(name = "records", required = false, empty = false)
     private List<CalypsoFile> mFiles;
 
     private CalypsoCard(byte[] tagId, Calendar scannedAt, List<CalypsoFile> files, boolean partialRead) {
-        super(CardType.Calypso, tagId, scannedAt, partialRead);
+        //super(CardType.Calypso, tagId, scannedAt, partialRead);
         mFiles = files;
     }
 
@@ -80,7 +93,7 @@ public class CalypsoCard extends ISO7816Card {
         feedbackInterface.updateProgressBar(0, File.getAll().length);
 
         try {
-            protocol.selectApplication(CALYPSO_FILENAME);
+            protocol.selectByName(CALYPSO_FILENAME);
         } catch (IOException e) {
             Log.e(TAG, "couldn't select app", e);
             return null;
@@ -117,7 +130,7 @@ public class CalypsoCard extends ISO7816Card {
                     continue;
                 }
 
-                LinkedList<CalypsoRecord> records = new LinkedList<>();
+                LinkedList<ISO7816Record> records = new LinkedList<>();
 
                 for (int r = 1; r <= 255; r++) {
                     try {
@@ -127,7 +140,7 @@ public class CalypsoCard extends ISO7816Card {
                             break;
                         }
 
-                        records.add(new CalypsoRecord(r, record));
+                        records.add(new ISO7816Record(r, record));
                     } catch (EOFException e) {
                         // End of file, stop here.
                         break;

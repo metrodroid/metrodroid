@@ -262,6 +262,10 @@
     <string name="mfu_reading">Reading MIFARE Ultralight card…</string>
 
     <string name="iso7816_probing">Probing ISO7816 card…</string>
+    <plurals name="iso7816_reading_applications">
+        <item quantity="one">Reading data from <xliff:g id="count" example="1">%d</xliff:g> application…</item>
+        <item quantity="other">Reading data from <xliff:g id="count" example="6">%d</xliff:g> applications…</item>
+    </plurals>
     <string name="calypso_reading">Reading Calypso card…</string>
 
     <string name="card_partial_read_title">Card partially read!</string>

@@ -825,4 +825,60 @@ public class Utils {
 
         return -1;
     }
+
+    public static class ReadLengthFieldResult {
+        /** value of the length field */
+        int length;
+        /** the number of bytes it took to encode this length value */
+        int bytesConsumed;
+
+        public int getLength() {
+            return length;
+        }
+
+        public int getBytesConsumed() {
+            return bytesConsumed;
+        }
+
+        private ReadLengthFieldResult(int length, int bytesConsumed) {
+            this.length = length;
+            this.bytesConsumed = bytesConsumed;
+        }
+    }
+
+
+    /**
+     * Decodes a BER-TLV length delimiter (X.690 ASN.1).
+     *
+     * This implements the limited subset for ISO 7816 (where it may only consume up to 5 bytes).
+     *
+     * A worked example of the encoding is given at:
+     * https://en.wikipedia.org/wiki/X.690#Definite_form
+     * @param buf Buffer to read
+     * @param offset Offset to start reading from
+     * @return A ReadLengthFieldResult if the value is valid, or NULL if the value is invalid.
+     */
+    @Nullable
+    public static ReadLengthFieldResult readLengthField(byte[] buf, int offset) {
+        int bytesConsumed = buf[offset] & 0xff;
+
+        if (bytesConsumed <= 0x7f) {
+            return new ReadLengthFieldResult(bytesConsumed, 1);
+        }
+
+        // Chop off the top bit
+        bytesConsumed &= 0x7f;
+
+        if (bytesConsumed == 0 || bytesConsumed > 4) {
+            // length is invalid
+            return null;
+        }
+
+        int length = 0;
+        for (int x=1; x<=bytesConsumed; x++) {
+            length = (length << 8) | (buf[offset + x] & 0xff);
+        }
+
+        return new ReadLengthFieldResult(length, bytesConsumed);
+    }
 }

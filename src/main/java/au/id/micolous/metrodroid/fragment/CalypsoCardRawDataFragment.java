@@ -39,7 +39,7 @@ import au.id.micolous.metrodroid.activity.AdvancedCardInfoActivity;
 import au.id.micolous.metrodroid.card.Card;
 import au.id.micolous.metrodroid.card.calypso.CalypsoCard;
 import au.id.micolous.metrodroid.card.calypso.CalypsoFile;
-import au.id.micolous.metrodroid.card.calypso.CalypsoRecord;
+import au.id.micolous.metrodroid.card.iso7816.ISO7816Record;
 import au.id.micolous.metrodroid.util.Utils;
 
 public class CalypsoCardRawDataFragment extends ExpandableListFragment {
@@ -55,7 +55,7 @@ public class CalypsoCardRawDataFragment extends ExpandableListFragment {
     @Override
     public boolean onListChildClick(ExpandableListView parent, View v, int groupPosition, int childPosition, long id) {
         CalypsoFile file = mCard.getFiles().get(groupPosition);
-        CalypsoRecord record = file.getRecords().get(childPosition);
+        ISO7816Record record = file.getRecords().get(childPosition);
 
         String data = Utils.getHexString(record.getData(), "");
 
@@ -94,7 +94,7 @@ public class CalypsoCardRawDataFragment extends ExpandableListFragment {
         @Override
         public int getChildrenCount(int groupPosition) {
             CalypsoFile file = mCard.getFiles().get(groupPosition);
-            List<CalypsoRecord> records = file.getRecords();
+            List<ISO7816Record> records = file.getRecords();
             return (records == null) ? 0 : records.size();
         }
 
@@ -151,7 +151,7 @@ public class CalypsoCardRawDataFragment extends ExpandableListFragment {
                 view = mActivity.getLayoutInflater().inflate(android.R.layout.simple_expandable_list_item_1, parent, false);
             }
 
-            CalypsoRecord record = (CalypsoRecord) getChild(groupPosition, childPosition);
+            ISO7816Record record = (ISO7816Record) getChild(groupPosition, childPosition);
 
             ((TextView) view.findViewById(android.R.id.text1)).setText(mActivity.getString(R.string.record_title_format, Integer.toString(record.getIndex())));
             return view;

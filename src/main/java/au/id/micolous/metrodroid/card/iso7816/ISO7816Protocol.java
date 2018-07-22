@@ -19,7 +19,6 @@
 package au.id.micolous.metrodroid.card.iso7816;
 
 import android.nfc.tech.IsoDep;
-import android.support.annotation.Nullable;
 import android.util.Log;
 
 import java.io.EOFException;
@@ -62,12 +61,16 @@ public class ISO7816Protocol {
     private static final byte INS_GET_DATA1 = (byte) 0xCB;
 
     // Error conditions
+    private static final byte ERROR_PROTOCOL = (byte) 0x69;
     private static final byte ERROR_WRONG_PARAMETERS = (byte) 0x6A;
     private static final byte ERROR_WRONG_PARAMETERS_6B = (byte) 0x6B;
 
     // Specific to ERROR_WRONG_PARAMETERS:
     private static final byte ERROR_6A_FILE_NOT_FOUND = (byte) 0x82;
     private static final byte ERROR_6A_RECORD_NOT_FOUND = (byte) 0x83;
+
+    // Specific to ERROR_PROTOCOL:
+    private static final byte ERROR_69_NOT_ALLOWED_NO_CURRENT_EF = (byte) 0x86;
 
 
 
@@ -133,6 +136,15 @@ public class ISO7816Protocol {
 
         if (sw1 != (byte) 0x90) {
             switch (sw1) {
+                /*
+                case ERROR_PROTOCOL:
+                    switch (sw2) {
+                        case ERROR_69_NOT_ALLOWED_NO_CURRENT_EF:
+                            throw new ISO7816Exception.NoCurrentEFException();
+                    }
+                    break;
+                */
+
                 case ERROR_WRONG_PARAMETERS:
                     switch (sw2) {
                         case ERROR_6A_FILE_NOT_FOUND:
@@ -153,29 +165,29 @@ public class ISO7816Protocol {
         return Utils.byteArraySlice(recvBuffer, 0, recvBuffer.length - 2);
     }
 
-    public byte[] selectApplication() throws IOException {
-        return selectApplication(false);
+    public byte[] selectByName() throws IOException {
+        return selectByName(false);
     }
 
-    public byte[] selectApplication(boolean nextOccurrence) throws IOException {
+    public byte[] selectByName(boolean nextOccurrence) throws IOException {
         Log.d(TAG, "Select application (any)");
-        return selectApplication(new byte[0], nextOccurrence);
+        return selectByName(new byte[0], nextOccurrence);
     }
 
-    public byte[] selectApplication(String application) throws IOException {
-        return selectApplication(application, false);
+    public byte[] selectByName(String application) throws IOException {
+        return selectByName(application, false);
     }
 
-    public byte[] selectApplication(String application, boolean nextOccurrence) throws IOException {
+    public byte[] selectByName(String application, boolean nextOccurrence) throws IOException {
         Log.d(TAG, "Select application " + application);
-        return selectApplication(Utils.stringToByteArray(application), nextOccurrence);
+        return selectByName(Utils.stringToByteArray(application), nextOccurrence);
     }
 
-    public byte[] selectApplication(byte[] application) throws IOException {
-        return selectApplication(application, false);
+    public byte[] selectByName(byte[] application) throws IOException {
+        return selectByName(application, false);
     }
 
-    public byte[] selectApplication(byte[] application, boolean nextOccurrence) throws IOException {
+    public byte[] selectByName(byte[] application, boolean nextOccurrence) throws IOException {
         Log.d(TAG, "Select application " + Utils.getHexString(application));
         // Select an application by file name
         try {
@@ -198,30 +210,35 @@ public class ISO7816Protocol {
         }
     }
 
-    public void selectFile(int fileId) throws IOException {
+    public byte[] selectFile(int fileId) throws IOException {
         byte[] file = Utils.integerToByteArray(fileId, 2);
         Log.d(TAG, "Select file " + Utils.getHexString(file));
         try {
-            sendRequest(CLASS_ISO7816, INS_SELECT,
+            return sendRequest(CLASS_ISO7816, INS_SELECT,
                     (byte) 0, (byte) 0, (byte) 0,
                     file);
         } catch (ISO7816Exception e) {
             Log.e(TAG, "couldn't select file", e);
         }
+        return null;
     }
 
-    public void selectFileByPath(long pathId, int length) throws IOException {
+    public byte[] selectFileByPath(long pathId, int length) throws IOException {
         byte[] path = Utils.integerToByteArray(pathId, length);
+        return selectFileByPath(path);
+    }
+
+    public byte[] selectFileByPath(byte[] path) throws IOException {
         Log.d(TAG, "Select file by path " + Utils.getHexString(path));
         try {
-            sendRequest(CLASS_ISO7816, INS_SELECT,
+            return sendRequest(CLASS_ISO7816, INS_SELECT,
                     (byte) 0x8 /* select by path from mf */, (byte) 0, (byte) 0,
                     path);
         } catch (ISO7816Exception e) {
             Log.e(TAG, "couldn't select file", e);
+            return null;
         }
     }
-
 
     public byte[] walkFile(boolean nextFile) throws IOException {
         Log.d(TAG, "Select next file");
@@ -238,7 +255,7 @@ public class ISO7816Protocol {
 
     public byte[] readRecord(byte recordNumber, byte length) throws IOException {
         byte[] ret;
-        Log.d(TAG, "Read record " + recordNumber);
+        Log.d(TAG, "Read record " + (recordNumber & 0xFF));
         try {
             ret = sendRequest(CLASS_ISO7816, INS_READ_RECORD,
                     recordNumber, (byte) 0x4 /* p1 is record number */, length);
@@ -293,8 +310,12 @@ public class ISO7816Protocol {
     }
 
     public byte[] readBinary(int efId) throws IOException {
-        byte[] ret;
         byte[] file = Utils.integerToByteArray(efId, 2);
+        return readBinary(file);
+    }
+
+    public byte[] readBinary(byte[] file) throws IOException {
+        byte[] ret;
         Log.d(TAG, "Read binary " + Utils.getHexString(file));
         try {
             ret = sendRequest(CLASS_ISO7816, INS_READ_BINARY1,
@@ -335,60 +356,5 @@ public class ISO7816Protocol {
         return readFile(0x2f01);
     }
 
-    public class ISO7816Exception extends Exception {
-        ISO7816Exception(String s) {
-            super(s);
-        }
-
-        ISO7816Exception() {
-        }
-    }
-
-    class ReadLengthFieldResult {
-        /** value of the length field */
-        int length;
-        /** the number of bytes it took to encode this length value */
-        int bytesConsumed;
-
-        ReadLengthFieldResult(int length, int bytesConsumed) {
-            this.length = length;
-            this.bytesConsumed = bytesConsumed;
-        }
-    }
-
-    /**
-     * Decodes a BER-TLV length delimiter (X.690 ASN.1).
-     *
-     * This implements the limited subset for ISO 7816 (where it may only consume up to 5 bytes).
-     *
-     * A worked example of the encoding is given at:
-     * https://en.wikipedia.org/wiki/X.690#Definite_form
-     * @param buf Buffer to read
-     * @param offset Offset to start reading from
-     * @return A ReadLengthFieldResult if the value is valid, or NULL if the value is invalid.
-     */
-    @Nullable
-    private ReadLengthFieldResult readLengthField(byte[] buf, int offset) {
-        int bytesConsumed = buf[offset] & 0xff;
-
-        if (bytesConsumed <= 0x7f) {
-            return new ReadLengthFieldResult(bytesConsumed, 1);
-        }
-
-        // Chop off the top bit
-        bytesConsumed &= 0x7f;
-
-        if (bytesConsumed == 0 || bytesConsumed > 4) {
-            // length is invalid
-            return null;
-        }
-
-        int length = 0;
-        for (int x=1; x<=bytesConsumed; x++) {
-            length = (length << 8) | (buf[offset + 1] & 0xff);
-        }
-
-        return new ReadLengthFieldResult(length, bytesConsumed);
-    }
 
 }
