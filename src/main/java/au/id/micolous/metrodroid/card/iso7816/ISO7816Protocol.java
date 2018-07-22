@@ -35,23 +35,41 @@ import au.id.micolous.metrodroid.util.Utils;
  * basic parts of the specification. In particular, this only supports open communication with the
  * card, and doesn't support writing data.
  * <p>
- * This is used by ISO7816 and CEPAS cards, as well as most credit cards.
+ * This is used by Calypso and CEPAS cards, as well as most credit cards.
  * <p>
  * References:
  * - EMV 4.3 Book 1 (s9, s11)
+ * - ISO/IEC 7816-4
  * - https://en.wikipedia.org/wiki/Smart_card_application_protocol_data_unit
  */
 public class ISO7816Protocol {
     /**
      * If true, this turns on debug logs that show ISO7816 communication.
      */
-    private static final boolean ENABLE_TRACING = false;
+    private static final boolean ENABLE_TRACING = true;
 
-    private static final String TAG = ISO7816Protocol.class.getName();
+    private static final String TAG = ISO7816Protocol.class.getSimpleName();
+
+    // CLA
     private static final byte CLASS_ISO7816 = (byte) 0x00;
 
-    private static final byte INSTRUCTION_ISO7816_SELECT = (byte) 0xA4;
-    private static final byte INSTRUCTION_ISO7816_READ_RECORD = (byte) 0xB2;
+    // INS
+    private static final byte INS_SELECT = (byte) 0xA4;
+    private static final byte INS_READ_BINARY = (byte) 0xB0;
+    private static final byte INS_READ_BINARY1 = (byte) 0xB1;
+    private static final byte INS_READ_RECORD = (byte) 0xB2;
+    private static final byte INS_GET_DATA = (byte) 0xCA;
+    private static final byte INS_GET_DATA1 = (byte) 0xCB;
+
+    // Error conditions
+    private static final byte ERROR_WRONG_PARAMETERS = (byte) 0x6A;
+    private static final byte ERROR_WRONG_PARAMETERS_6B = (byte) 0x6B;
+
+    // Specific to ERROR_WRONG_PARAMETERS:
+    private static final byte ERROR_6A_FILE_NOT_FOUND = (byte) 0x82;
+    private static final byte ERROR_6A_RECORD_NOT_FOUND = (byte) 0x83;
+
+
 
     private IsoDep mTagTech;
 
@@ -99,7 +117,8 @@ public class ISO7816Protocol {
      * @param parameters Additional data to be send in a command.
      * @return A wrapped command.
      */
-    private byte[] sendRequest(byte cla, byte ins, byte p1, byte p2, byte length, byte... parameters) throws IOException, CalypsoException {
+    private byte[] sendRequest(byte cla, byte ins, byte p1, byte p2, byte length, byte... parameters)
+            throws IOException, ISO7816Exception, IllegalArgumentException {
         byte[] sendBuffer = wrapMessage(cla, ins, p1, p2, length, parameters);
         if (ENABLE_TRACING) {
             Log.d(TAG, ">>> " + Utils.getHexString(sendBuffer));
@@ -114,17 +133,21 @@ public class ISO7816Protocol {
 
         if (sw1 != (byte) 0x90) {
             switch (sw1) {
-                case (byte) 0x6A:
+                case ERROR_WRONG_PARAMETERS:
                     switch (sw2) {
-                        case (byte) 0x82: // File not found
+                        case ERROR_6A_FILE_NOT_FOUND:
                             throw new FileNotFoundException();
-                        case (byte) 0x83: // Record not found
+                        case ERROR_6A_RECORD_NOT_FOUND:
                             throw new EOFException();
                     }
+                    break;
+
+                case ERROR_WRONG_PARAMETERS_6B:
+                    throw new IllegalArgumentException("Wrong parameters: " + Utils.getHexString(recvBuffer, recvBuffer.length - 2, 2));
             }
 
             // we get error?
-            throw new CalypsoException("Got unknown result: " + Utils.getHexString(recvBuffer, recvBuffer.length - 2, 2));
+            throw new ISO7816Exception("Got unknown result: " + Utils.getHexString(recvBuffer, recvBuffer.length - 2, 2));
         }
 
         return Utils.byteArraySlice(recvBuffer, 0, recvBuffer.length - 2);
@@ -136,37 +159,41 @@ public class ISO7816Protocol {
 
     public byte[] selectApplication(boolean nextOccurrence) throws IOException {
         Log.d(TAG, "Select application (any)");
-        try {
-            return sendRequest(CLASS_ISO7816, INSTRUCTION_ISO7816_SELECT,
-                    (byte) 0x04 /* byName */, nextOccurrence ? (byte) 0x02 : (byte) 0x00, (byte) 0);
-        } catch (CalypsoException e) {
-            Log.e(TAG, "couldn't select application", e);
-            return null;
-        }
+        return selectApplication(new byte[0], nextOccurrence);
     }
 
-    public void selectApplication(String application) throws IOException {
-        selectApplication(application, false);
+    public byte[] selectApplication(String application) throws IOException {
+        return selectApplication(application, false);
     }
 
-    public void selectApplication(String application, boolean nextOccurrence) throws IOException {
+    public byte[] selectApplication(String application, boolean nextOccurrence) throws IOException {
         Log.d(TAG, "Select application " + application);
+        return selectApplication(Utils.stringToByteArray(application), nextOccurrence);
+    }
+
+    public byte[] selectApplication(byte[] application) throws IOException {
+        return selectApplication(application, false);
+    }
+
+    public byte[] selectApplication(byte[] application, boolean nextOccurrence) throws IOException {
+        Log.d(TAG, "Select application " + Utils.getHexString(application));
         // Select an application by file name
         try {
-            sendRequest(CLASS_ISO7816, INSTRUCTION_ISO7816_SELECT,
+            return sendRequest(CLASS_ISO7816, INS_SELECT,
                     (byte) 0x04 /* byName */, nextOccurrence ? (byte) 0x02 : (byte) 0x00, (byte) 0,
-                    Utils.stringToByteArray(application));
-        } catch (CalypsoException e) {
+                    application);
+        } catch (ISO7816Exception e) {
             Log.e(TAG, "couldn't select application", e);
+            return null;
         }
     }
 
     public void unselectFile() throws IOException {
         Log.d(TAG, "Unselect file");
         try {
-            sendRequest(CLASS_ISO7816, INSTRUCTION_ISO7816_SELECT,
+            sendRequest(CLASS_ISO7816, INS_SELECT,
                     (byte) 0, (byte) 0, (byte) 0);
-        } catch (CalypsoException e) {
+        } catch (ISO7816Exception e) {
             Log.e(TAG, "couldn't unselect file", e);
         }
     }
@@ -175,11 +202,37 @@ public class ISO7816Protocol {
         byte[] file = Utils.integerToByteArray(fileId, 2);
         Log.d(TAG, "Select file " + Utils.getHexString(file));
         try {
-            sendRequest(CLASS_ISO7816, INSTRUCTION_ISO7816_SELECT,
+            sendRequest(CLASS_ISO7816, INS_SELECT,
                     (byte) 0, (byte) 0, (byte) 0,
                     file);
-        } catch (CalypsoException e) {
+        } catch (ISO7816Exception e) {
             Log.e(TAG, "couldn't select file", e);
+        }
+    }
+
+    public void selectFileByPath(long pathId, int length) throws IOException {
+        byte[] path = Utils.integerToByteArray(pathId, length);
+        Log.d(TAG, "Select file by path " + Utils.getHexString(path));
+        try {
+            sendRequest(CLASS_ISO7816, INS_SELECT,
+                    (byte) 0x8 /* select by path from mf */, (byte) 0, (byte) 0,
+                    path);
+        } catch (ISO7816Exception e) {
+            Log.e(TAG, "couldn't select file", e);
+        }
+    }
+
+
+    public byte[] walkFile(boolean nextFile) throws IOException {
+        Log.d(TAG, "Select next file");
+        try {
+            return sendRequest(CLASS_ISO7816, INS_SELECT,
+                    (byte) 0 /* mf || df || ef */,
+                    (nextFile ? (byte) 0x02 : (byte) 0x00),
+                    (byte) 0);
+        } catch (ISO7816Exception e) {
+            Log.e(TAG, "couldn't select next file", e);
+            return null;
         }
     }
 
@@ -187,25 +240,107 @@ public class ISO7816Protocol {
         byte[] ret;
         Log.d(TAG, "Read record " + recordNumber);
         try {
-            ret = sendRequest(CLASS_ISO7816, INSTRUCTION_ISO7816_READ_RECORD,
+            ret = sendRequest(CLASS_ISO7816, INS_READ_RECORD,
                     recordNumber, (byte) 0x4 /* p1 is record number */, length);
-
-
-
             return ret;
-        } catch (CalypsoException e) {
+        } catch (ISO7816Exception e) {
             Log.e(TAG, "couldn't read record", e);
             return null;
         }
 
     }
 
-    public class CalypsoException extends Exception {
-        CalypsoException(String s) {
+    public byte[] getAnswerToReset() throws IOException {
+        byte[] ret;
+        Log.d(TAG, "Get answer to reset");
+        try {
+            ret = sendRequest(CLASS_ISO7816, INS_GET_DATA,
+                    (byte) 0x5F, (byte) 0x51, (byte)0);
+
+            return ret;
+        } catch (ISO7816Exception e) {
+            Log.e(TAG, "couldn't read answer to reset");
+            return null;
+        }
+    }
+
+    public byte[] getHistoricalBytes() throws IOException {
+        byte[] ret;
+        Log.d(TAG, "Get historical bytes");
+        try {
+            ret = sendRequest(CLASS_ISO7816, INS_GET_DATA,
+                    (byte) 0x5F, (byte) 0x52, (byte)0);
+
+            return ret;
+        } catch (ISO7816Exception e) {
+            Log.e(TAG, "couldn't read historical bytes");
+            return null;
+        }
+    }
+
+    public byte[] getInitialDataString() throws IOException {
+        byte[] ret;
+        Log.d(TAG, "Get initial data string");
+        try {
+            ret = sendRequest(CLASS_ISO7816, INS_READ_BINARY,
+                    (byte) 0, (byte) 0, (byte)0);
+
+            return ret;
+        } catch (ISO7816Exception e) {
+            Log.e(TAG, "couldn't read initial data string");
+            return null;
+        }
+    }
+
+    public byte[] readBinary(int efId) throws IOException {
+        byte[] ret;
+        byte[] file = Utils.integerToByteArray(efId, 2);
+        Log.d(TAG, "Read binary " + Utils.getHexString(file));
+        try {
+            ret = sendRequest(CLASS_ISO7816, INS_READ_BINARY1,
+                    file[0], file[1], (byte)0);
+
+            return ret;
+        } catch (ISO7816Exception e) {
+            Log.e(TAG, "couldn't read binary");
+            return null;
+        }
+
+    }
+
+    public byte[] readFile(int fileId) throws IOException {
+        byte[] ret;
+        Log.d(TAG, "Get file " + fileId);
+        try {
+            ret = sendRequest(CLASS_ISO7816, INS_GET_DATA1,
+                    (byte) ((fileId >> 8) & 0xFF),
+                    (byte) (fileId & 0xFF),
+                    (byte)0,
+                    /* empty tag list */ (byte)0x5C, (byte)0
+            );
+
+            return ret;
+        } catch (ISO7816Exception e) {
+            Log.e(TAG, "couldn't read file");
+            return null;
+        }
+    }
+
+    public byte[] readEfDir() throws IOException {
+
+        return readRecord((byte)0, (byte)0);
+    }
+
+    public byte[] readEfAtr() throws IOException {
+        return readFile(0x2f01);
+    }
+
+    public class ISO7816Exception extends Exception {
+        ISO7816Exception(String s) {
             super(s);
         }
 
-        CalypsoException() {
+        ISO7816Exception() {
         }
     }
 

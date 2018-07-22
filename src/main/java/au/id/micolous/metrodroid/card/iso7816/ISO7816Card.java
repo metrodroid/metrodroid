@@ -82,6 +82,20 @@ public class ISO7816Card extends Card {
             feedbackInterface.updateStatusText(Utils.localizeString(R.string.iso7816_probing));
             feedbackInterface.updateProgressBar(0, 1);
 
+            // s8.5: Data element retrieval
+            // "Before selecting an application, [...get] the historical bytes, initial data string,
+            // EF.ATR and EF.DIR, in that order, when present.
+
+            // Get historical bytes
+            byte[] historicalBytes = iso7816Tag.getHistoricalBytes();
+
+
+
+            // Get the ATS and Historical Bytes
+            //byte[] a = iso7816Tag.getAnswerToReset();
+            //byte[] id = iso7816Tag.readEfDir();
+
+
             // Try to iterate over the applications on the card.
             // Sometimes we get an explicit "not found" error, sometimes we just get the same file
             // name again...
@@ -90,6 +104,7 @@ public class ISO7816Card extends Card {
                 boolean next = !apps.isEmpty();
                 byte[] appName = null;
                 byte[] newApp;
+
 
                 try {
                     newApp = iso7816Tag.selectApplication(next);
@@ -141,6 +156,23 @@ public class ISO7816Card extends Card {
                     appsString.add(s);
                 }
             }
+
+            // Dump all files in all apps.
+            for (byte[] app : apps) {
+                // Dump all the files in the app
+                iso7816Tag.selectApplication(app);
+
+                TreeSet<byte[]> fileDatas = new TreeSet<>(new ByteArrayComparator());
+                while (true) {
+                    try {
+                        fileDatas.add(iso7816Tag.walkFile(!fileDatas.isEmpty()));
+                    } catch (FileNotFoundException ex) {
+                        Log.w(TAG, "got to last file in card");
+                        break;
+                    }
+                }
+            }
+
 
             ISO7816Card c = getSpecificReader(tag, iso7816Tag, apps, appsString, feedbackInterface);
 

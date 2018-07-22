@@ -21,6 +21,7 @@
   along with this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="au.id.micolous.farebot">
 
     <uses-permission android:name="android.permission.NFC" />
@@ -55,7 +56,8 @@
                 <action android:name="android.intent.action.PICK" />
 
                 <category android:name="android.intent.category.DEFAULT" />
-                <data android:mimeType="vnd.android.cursor.dir/${applicationId}.card" />
+                <data android:mimeType="vnd.android.cursor.dir/${applicationId}.card"
+                    tools:ignore="AppLinkUrlError" />
             </intent-filter>
         </activity>
         <activity
@@ -89,7 +91,8 @@
                 <action android:name="android.intent.action.EDIT" />
 
                 <category android:name="android.intent.category.DEFAULT" />
-                <data android:mimeType="vnd.android.cursor.item/${applicationId}.card" />
+                <data android:mimeType="vnd.android.cursor.item/${applicationId}.card"
+                    tools:ignore="AppLinkUrlError" />
             </intent-filter>
         </activity>
         <activity

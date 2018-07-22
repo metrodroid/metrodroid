@@ -92,6 +92,17 @@ public class CalypsoCard extends ISO7816Card {
         boolean partialRead = false;
 
         try {
+
+            throw new TagLostException();
+            /*
+            protocol.walkFile(false);
+
+            while (protocol.walkFile(true) != null) {
+                counter++;
+            }
+*/
+
+            /*
             for (File f : File.getAll()) {
                 feedbackInterface.updateProgressBar(counter++, File.getAll().length);
 
@@ -125,6 +136,7 @@ public class CalypsoCard extends ISO7816Card {
 
                 files.add(new CalypsoFile(f.getFolder(), f.getFile(), records));
             }
+            */
         } catch (TagLostException ex) {
             Log.w(TAG, "tag lost", ex);
             partialRead = true;
