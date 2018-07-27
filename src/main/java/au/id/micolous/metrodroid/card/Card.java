@@ -85,12 +85,6 @@ public abstract class Card {
             if (cepasCard != null) {
                 return cepasCard;
             }
-
-            ISO7816Card calypsoCard = ISO7816Card.dumpTag(tag, feedbackInterface);
-            if (calypsoCard != null) {
-                return calypsoCard;
-            }
-
         }
 
         if (ArrayUtils.contains(techs, "android.nfc.tech.IsoDep")) {
@@ -101,6 +95,11 @@ public abstract class Card {
             DesfireCard d = DesfireCard.dumpTag(tag, feedbackInterface);
             if (d != null) {
                 return d;
+            }
+
+            ISO7816Card calypsoCard = ISO7816Card.dumpTag(tag, feedbackInterface);
+            if (calypsoCard != null) {
+                return calypsoCard;
             }
 
             // Credit cards fall through here...

@@ -49,6 +49,8 @@ public class ISO7816Protocol {
 
     private static final String TAG = ISO7816Protocol.class.getName();
     private static final byte CLASS_ISO7816 = (byte) 0x00;
+    public static final byte CLASS_80 = (byte) 0x80;
+    public static final byte CLASS_90 = (byte) 0x90;
 
     private static final byte INSTRUCTION_ISO7816_SELECT = (byte) 0xA4;
     private static final byte INSTRUCTION_ISO7816_READ_RECORD = (byte) 0xB2;
@@ -99,7 +101,7 @@ public class ISO7816Protocol {
      * @param parameters Additional data to be send in a command.
      * @return A wrapped command.
      */
-    private byte[] sendRequest(byte cla, byte ins, byte p1, byte p2, byte length, byte... parameters) throws IOException, CalypsoException {
+    public byte[] sendRequest(byte cla, byte ins, byte p1, byte p2, byte length, byte... parameters) throws IOException, CalypsoException {
         byte[] sendBuffer = wrapMessage(cla, ins, p1, p2, length, parameters);
         if (ENABLE_TRACING) {
             Log.d(TAG, ">>> " + Utils.getHexString(sendBuffer));
@@ -130,35 +132,19 @@ public class ISO7816Protocol {
         return Utils.byteArraySlice(recvBuffer, 0, recvBuffer.length - 2);
     }
 
-    public byte[] selectApplication() throws IOException {
-        return selectApplication(false);
-    }
-
-    public byte[] selectApplication(boolean nextOccurrence) throws IOException {
-        Log.d(TAG, "Select application (any)");
-        try {
-            return sendRequest(CLASS_ISO7816, INSTRUCTION_ISO7816_SELECT,
-                    (byte) 0x04 /* byName */, nextOccurrence ? (byte) 0x02 : (byte) 0x00, (byte) 0);
-        } catch (CalypsoException e) {
-            Log.e(TAG, "couldn't select application", e);
-            return null;
-        }
-    }
-
-    public void selectApplication(String application) throws IOException {
-        selectApplication(application, false);
-    }
-
-    public void selectApplication(String application, boolean nextOccurrence) throws IOException {
+    public byte[] selectApplication(byte[] application, boolean nextOccurrence) throws IOException {
+        byte[] reply = null;
         Log.d(TAG, "Select application " + application);
         // Select an application by file name
         try {
-            sendRequest(CLASS_ISO7816, INSTRUCTION_ISO7816_SELECT,
+            reply = sendRequest(CLASS_ISO7816, INSTRUCTION_ISO7816_SELECT,
                     (byte) 0x04 /* byName */, nextOccurrence ? (byte) 0x02 : (byte) 0x00, (byte) 0,
-                    Utils.stringToByteArray(application));
-        } catch (CalypsoException e) {
+                    application);
+        } catch (CalypsoException | FileNotFoundException e) {
             Log.e(TAG, "couldn't select application", e);
+            return null;
         }
+        return reply;
     }
 
     public void unselectFile() throws IOException {

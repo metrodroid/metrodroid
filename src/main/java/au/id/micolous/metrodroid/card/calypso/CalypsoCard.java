@@ -58,14 +58,14 @@ import au.id.micolous.metrodroid.util.Utils;
 @CardRawDataFragmentClass(CalypsoCardRawDataFragment.class)
 @CardHasManufacturingInfo(true)
 public class CalypsoCard extends ISO7816Card {
-    public static final String CALYPSO_FILENAME = "1TIC.ICA";
+    public static final byte[] CALYPSO_FILENAME = Utils.stringToByteArray("1TIC.ICA");
     private static final String TAG = CalypsoCard.class.getName();
     @ElementList(name = "records", required = false, empty = false)
 
     private List<CalypsoFile> mFiles;
 
-    private CalypsoCard(byte[] tagId, Calendar scannedAt, List<CalypsoFile> files, boolean partialRead) {
-        super(CardType.Calypso, tagId, scannedAt, partialRead);
+    private CalypsoCard(ISO7816Info appData, List<CalypsoFile> files, boolean partialRead) {
+        super(CardType.Calypso, appData, partialRead);
         mFiles = files;
     }
 
@@ -73,18 +73,12 @@ public class CalypsoCard extends ISO7816Card {
         super(); /* For XML Serializer */
     }
 
-    public static CalypsoCard dumpTag(Tag tag, ISO7816Protocol protocol, TagReaderFeedbackInterface feedbackInterface) throws IOException {
+    public static CalypsoCard dumpTag(ISO7816Protocol protocol, ISO7816Card.ISO7816Info appData,
+                                      TagReaderFeedbackInterface feedbackInterface) throws IOException {
         // At this point, the connection is already open, we just need to dump the right things...
 
         feedbackInterface.updateStatusText(Utils.localizeString(R.string.calypso_reading));
         feedbackInterface.updateProgressBar(0, File.getAll().length);
-
-        try {
-            protocol.selectApplication(CALYPSO_FILENAME);
-        } catch (IOException e) {
-            Log.e(TAG, "couldn't select app", e);
-            return null;
-        }
 
         // Start dumping...
         LinkedList<CalypsoFile> files = new LinkedList<>();
@@ -130,7 +124,7 @@ public class CalypsoCard extends ISO7816Card {
             partialRead = true;
         }
 
-        return new CalypsoCard(tag.getId(), GregorianCalendar.getInstance(), files, partialRead);
+        return new CalypsoCard(appData, files, partialRead);
     }
 
     public List<CalypsoFile> getFiles() {
