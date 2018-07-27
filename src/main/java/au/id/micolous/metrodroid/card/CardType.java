@@ -28,6 +28,7 @@ public enum CardType {
     ISO7816(5),
     Calypso(6),
     TMoney(7),
+    NewShenzhenTong(8),
     Unknown(65535);
 
     private int mValue;
