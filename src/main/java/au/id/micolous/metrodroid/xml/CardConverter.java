@@ -21,13 +21,13 @@ package au.id.micolous.metrodroid.xml;
 
 import au.id.micolous.metrodroid.card.Card;
 import au.id.micolous.metrodroid.card.CardType;
-import au.id.micolous.metrodroid.card.calypso.CalypsoCard;
 import au.id.micolous.metrodroid.card.iso7816.ISO7816Card;
 import au.id.micolous.metrodroid.card.cepas.CEPASCard;
 import au.id.micolous.metrodroid.card.classic.ClassicCard;
 import au.id.micolous.metrodroid.card.desfire.DesfireCard;
 import au.id.micolous.metrodroid.card.felica.FelicaCard;
 import au.id.micolous.metrodroid.card.ultralight.UltralightCard;
+import au.id.micolous.metrodroid.util.Utils;
 
 import org.simpleframework.xml.Serializer;
 import org.simpleframework.xml.convert.Converter;
@@ -57,8 +57,6 @@ public class CardConverter implements Converter<Card> {
                 return mSerializer.read(UltralightCard.class, node);
             case ISO7816:
                 return mSerializer.read(ISO7816Card.class, node);
-            case Calypso:
-                return mSerializer.read(CalypsoCard.class, node);
             default:
                 throw new UnsupportedOperationException("Unsupported card type: " + type);
         }

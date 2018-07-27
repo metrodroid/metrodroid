@@ -51,6 +51,8 @@ import au.id.micolous.metrodroid.card.desfire.files.DesfireFile;
 import au.id.micolous.metrodroid.card.desfire.files.InvalidDesfireFile;
 import au.id.micolous.metrodroid.card.desfire.files.RecordDesfireFile;
 import au.id.micolous.metrodroid.card.desfire.settings.DesfireFileSettings;
+import au.id.micolous.metrodroid.card.iso7816.ISO7816Application;
+import au.id.micolous.metrodroid.card.iso7816.ISO7816SelectorElement;
 import au.id.micolous.metrodroid.card.ultralight.UltralightPage;
 import au.id.micolous.metrodroid.util.StationTableReader;
 import au.id.micolous.metrodroid.xml.Base64String;
@@ -63,6 +65,7 @@ import au.id.micolous.metrodroid.xml.EpochCalendarTransform;
 import au.id.micolous.metrodroid.xml.FelicaIDmTransform;
 import au.id.micolous.metrodroid.xml.FelicaPMmTransform;
 import au.id.micolous.metrodroid.xml.HexString;
+import au.id.micolous.metrodroid.xml.ISO7816Converter;
 import au.id.micolous.metrodroid.xml.SkippableRegistryStrategy;
 import au.id.micolous.metrodroid.xml.UltralightPageConverter;
 
@@ -122,6 +125,8 @@ public class MetrodroidApplication extends Application {
             registry.bind(ClassicSector.class, new ClassicSectorConverter());
             registry.bind(UltralightPage.class, new UltralightPageConverter());
             registry.bind(Card.class, new CardConverter(mSerializer));
+            registry.bind(ISO7816Application.class, new ISO7816Converter(mSerializer));
+            registry.bind(ISO7816SelectorElement.class, new ISO7816SelectorElement.XMLConverter(mSerializer));
 
             matcher.bind(HexString.class, HexString.Transform.class);
             matcher.bind(Base64String.class, Base64String.Transform.class);

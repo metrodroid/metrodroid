@@ -113,8 +113,8 @@
     <string name="felica_service_title_format">Service: 0x%1$s (%2$s)</string>
     <!-- Translators: the first parameter is a hexadecimal number. -->
     <string name="felica_service_format">Service: 0x%s</string>
-    <string name="file_folder_title_format">File: 0x%s/0x%s</string>
     <string name="record_title_format">Record: %s</string>
+    <string name="binary_title_format">Binary data</string>
     <string name="subscriptions">Subscriptions</string>
     <string name="info">Info</string>
     <!-- Translators: These are both dates, eg: "Valid from 3/12/2017 to 3/3/2018". Dates are

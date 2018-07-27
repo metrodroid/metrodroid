@@ -26,7 +26,6 @@ public enum CardType {
     CEPAS(3),
     FeliCa(4),
     ISO7816(5),
-    Calypso(6),
     Unknown(65535);
 
     private int mValue;

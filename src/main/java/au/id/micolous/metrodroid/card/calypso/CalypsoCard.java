@@ -18,28 +18,19 @@
  */
 package au.id.micolous.metrodroid.card.calypso;
 
-import android.nfc.Tag;
 import android.nfc.TagLostException;
 import android.util.Log;
 
-import org.simpleframework.xml.ElementList;
 import org.simpleframework.xml.Root;
 
-import java.io.EOFException;
 import java.io.IOException;
-import java.util.Calendar;
-import java.util.GregorianCalendar;
-import java.util.LinkedList;
-import java.util.List;
 
 import au.id.micolous.farebot.R;
-import au.id.micolous.metrodroid.card.CardHasManufacturingInfo;
-import au.id.micolous.metrodroid.card.CardRawDataFragmentClass;
-import au.id.micolous.metrodroid.card.CardType;
 import au.id.micolous.metrodroid.card.TagReaderFeedbackInterface;
-import au.id.micolous.metrodroid.card.iso7816.ISO7816Card;
+import au.id.micolous.metrodroid.card.iso7816.ISO7816Application;
+import au.id.micolous.metrodroid.card.iso7816.ISO7816File;
 import au.id.micolous.metrodroid.card.iso7816.ISO7816Protocol;
-import au.id.micolous.metrodroid.fragment.CalypsoCardRawDataFragment;
+import au.id.micolous.metrodroid.card.iso7816.ISO7816Selector;
 import au.id.micolous.metrodroid.util.Utils;
 
 /**
@@ -54,113 +45,46 @@ import au.id.micolous.metrodroid.util.Utils;
  * - https://github.com/nfc-tools/libnfc/blob/master/examples/pn53x-tamashell-scripts/ReadMobib.sh
  * - https://github.com/nfc-tools/libnfc/blob/master/examples/pn53x-tamashell-scripts/ReadNavigo.sh
  */
-@Root(name = "card")
-@CardRawDataFragmentClass(CalypsoCardRawDataFragment.class)
-@CardHasManufacturingInfo(true)
-public class CalypsoCard extends ISO7816Card {
-    public static final String CALYPSO_FILENAME = "1TIC.ICA";
+public class CalypsoCard extends ISO7816Application {
+    public static final byte[] CALYPSO_FILENAME = Utils.stringToByteArray("1TIC.ICA");
     private static final String TAG = CalypsoCard.class.getName();
-    @ElementList(name = "records", required = false, empty = false)
+    public static final String TYPE = "calypso";
 
-    private List<CalypsoFile> mFiles;
-
-    private CalypsoCard(byte[] tagId, Calendar scannedAt, List<CalypsoFile> files, boolean partialRead) {
-        super(CardType.Calypso, tagId, scannedAt, partialRead);
-        mFiles = files;
+    private CalypsoCard(ISO7816Application.ISO7816Info appData, boolean partialRead) {
+        super(appData);
     }
 
     private CalypsoCard() {
         super(); /* For XML Serializer */
     }
 
-    public static CalypsoCard dumpTag(Tag tag, ISO7816Protocol protocol, TagReaderFeedbackInterface feedbackInterface) throws IOException {
+    public static CalypsoCard dumpTag(ISO7816Protocol protocol, ISO7816Application.ISO7816Info appData,
+                                      TagReaderFeedbackInterface feedbackInterface) throws IOException {
         // At this point, the connection is already open, we just need to dump the right things...
 
         feedbackInterface.updateStatusText(Utils.localizeString(R.string.calypso_reading));
         feedbackInterface.updateProgressBar(0, File.getAll().length);
-
-        try {
-            protocol.selectApplication(CALYPSO_FILENAME);
-        } catch (IOException e) {
-            Log.e(TAG, "couldn't select app", e);
-            return null;
-        }
-
-        // Start dumping...
-        LinkedList<CalypsoFile> files = new LinkedList<>();
         int counter = 0;
         boolean partialRead = false;
 
-        try {
             for (File f : File.getAll()) {
                 feedbackInterface.updateProgressBar(counter++, File.getAll().length);
-
-                protocol.unselectFile();
-
                 try {
-                    f.select(protocol);
+                    appData.dumpFile(protocol, f.getSelector(), 0x1d);
                 } catch (TagLostException e) {
-                    throw e;
+                    Log.w(TAG, "tag lost", e);
+                    partialRead = true;
+                    break;
                 } catch (IOException e) {
                     Log.e(TAG, "couldn't select file", e);
-                    continue;
                 }
-
-                LinkedList<CalypsoRecord> records = new LinkedList<>();
-
-                for (int r = 1; r <= 255; r++) {
-                    try {
-                        byte[] record = protocol.readRecord((byte) r, (byte) 0x1D);
-
-                        if (record == null) {
-                            break;
-                        }
-
-                        records.add(new CalypsoRecord(r, record));
-                    } catch (EOFException e) {
-                        // End of file, stop here.
-                        break;
-                    }
-                }
-
-                files.add(new CalypsoFile(f.getFolder(), f.getFile(), records));
             }
-        } catch (TagLostException ex) {
-            Log.w(TAG, "tag lost", ex);
-            partialRead = true;
-        }
 
-        return new CalypsoCard(tag.getId(), GregorianCalendar.getInstance(), files, partialRead);
+        return new CalypsoCard(appData, partialRead);
     }
 
-    public List<CalypsoFile> getFiles() {
-        return mFiles;
-    }
-
-    public CalypsoFile getFile(int file) {
-        return getFile(0, file);
-    }
-
-    public CalypsoFile getFile(File f) {
-        return getFile(f.getFolder(), f.getFile());
-    }
-
-    /**
-     * Gets a Calypso file by folder/file.
-     *
-     * This only retrieves cached values, and does not retrieve new files from the card.
-     * @param folder Folder ID to get.
-     * @param file File ID to get.
-     * @return CalypsoFile representing the requested file, or null if not found.
-     */
-    public CalypsoFile getFile(int folder, int file) {
-        for (CalypsoFile f : mFiles) {
-            if (f.getFolder() == folder && f.getFile() == file) {
-                return f;
-            }
-        }
-
-        return null;
+    public ISO7816File getFile(File f) {
+        return getFile(f.getSelector());
     }
 
     public enum File {
@@ -244,12 +168,10 @@ public class CalypsoCard extends ISO7816Card {
             return mFolder;
         }
 
-        public void select(ISO7816Protocol protocol) throws IOException {
-            protocol.unselectFile();
-            if (mFolder != 0) {
-                protocol.selectFile(mFolder);
-            }
-            protocol.selectFile(mFile);
+        public ISO7816Selector getSelector() {
+            if (mFolder == 0)
+                return ISO7816Selector.makeSelector(mFile);
+            return ISO7816Selector.makeSelector(mFolder, mFile);
         }
     }
 }

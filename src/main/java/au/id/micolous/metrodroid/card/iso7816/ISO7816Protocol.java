@@ -2,6 +2,7 @@
  * ISO7816Protocol.java
  *
  * Copyright 2018 Michael Farrell <micolous+git@gmail.com>
+ * Copyright 2018 Google
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -35,7 +36,7 @@ import au.id.micolous.metrodroid.util.Utils;
  * basic parts of the specification. In particular, this only supports open communication with the
  * card, and doesn't support writing data.
  * <p>
- * This is used by ISO7816 and CEPAS cards, as well as most credit cards.
+ * This is used by Calypso and CEPAS cards, as well as most credit cards.
  * <p>
  * References:
  * - EMV 4.3 Book 1 (s9, s11)
@@ -49,11 +50,14 @@ public class ISO7816Protocol {
 
     private static final String TAG = ISO7816Protocol.class.getName();
     private static final byte CLASS_ISO7816 = (byte) 0x00;
+    public static final byte CLASS_80 = (byte) 0x80;
+    public static final byte CLASS_90 = (byte) 0x90;
 
     private static final byte INSTRUCTION_ISO7816_SELECT = (byte) 0xA4;
+    private static final byte INSTRUCTION_ISO7816_READ_BINARY = (byte) 0xB0;
     private static final byte INSTRUCTION_ISO7816_READ_RECORD = (byte) 0xB2;
 
-    private IsoDep mTagTech;
+    private final IsoDep mTagTech;
 
     public ISO7816Protocol(IsoDep tagTech) {
         mTagTech = tagTech;
@@ -99,7 +103,7 @@ public class ISO7816Protocol {
      * @param parameters Additional data to be send in a command.
      * @return A wrapped command.
      */
-    private byte[] sendRequest(byte cla, byte ins, byte p1, byte p2, byte length, byte... parameters) throws IOException, CalypsoException {
+    public byte[] sendRequest(byte cla, byte ins, byte p1, byte p2, byte length, byte... parameters) throws IOException, ISO7816Exception {
         byte[] sendBuffer = wrapMessage(cla, ins, p1, p2, length, parameters);
         if (ENABLE_TRACING) {
             Log.d(TAG, ">>> " + Utils.getHexString(sendBuffer));
@@ -124,41 +128,25 @@ public class ISO7816Protocol {
             }
 
             // we get error?
-            throw new CalypsoException("Got unknown result: " + Utils.getHexString(recvBuffer, recvBuffer.length - 2, 2));
+            throw new ISO7816Exception("Got unknown result: " + Utils.getHexString(recvBuffer, recvBuffer.length - 2, 2));
         }
 
         return Utils.byteArraySlice(recvBuffer, 0, recvBuffer.length - 2);
     }
 
-    public byte[] selectApplication() throws IOException {
-        return selectApplication(false);
-    }
-
-    public byte[] selectApplication(boolean nextOccurrence) throws IOException {
-        Log.d(TAG, "Select application (any)");
+    public byte[] selectByName(byte[] name, boolean nextOccurrence) throws IOException {
+        byte[] reply;
+        Log.d(TAG, "Select by name " + Utils.getHexString(name));
+        // Select an application by file name
         try {
-            return sendRequest(CLASS_ISO7816, INSTRUCTION_ISO7816_SELECT,
-                    (byte) 0x04 /* byName */, nextOccurrence ? (byte) 0x02 : (byte) 0x00, (byte) 0);
-        } catch (CalypsoException e) {
+            reply = sendRequest(CLASS_ISO7816, INSTRUCTION_ISO7816_SELECT,
+                    (byte) 0x04 /* byName */, nextOccurrence ? (byte) 0x02 : (byte) 0x00, (byte) 0,
+                    name);
+        } catch (ISO7816Exception | FileNotFoundException e) {
             Log.e(TAG, "couldn't select application", e);
             return null;
         }
-    }
-
-    public void selectApplication(String application) throws IOException {
-        selectApplication(application, false);
-    }
-
-    public void selectApplication(String application, boolean nextOccurrence) throws IOException {
-        Log.d(TAG, "Select application " + application);
-        // Select an application by file name
-        try {
-            sendRequest(CLASS_ISO7816, INSTRUCTION_ISO7816_SELECT,
-                    (byte) 0x04 /* byName */, nextOccurrence ? (byte) 0x02 : (byte) 0x00, (byte) 0,
-                    Utils.stringToByteArray(application));
-        } catch (CalypsoException e) {
-            Log.e(TAG, "couldn't select application", e);
-        }
+        return reply;
     }
 
     public void unselectFile() throws IOException {
@@ -166,21 +154,22 @@ public class ISO7816Protocol {
         try {
             sendRequest(CLASS_ISO7816, INSTRUCTION_ISO7816_SELECT,
                     (byte) 0, (byte) 0, (byte) 0);
-        } catch (CalypsoException e) {
+        } catch (ISO7816Exception e) {
             Log.e(TAG, "couldn't unselect file", e);
         }
     }
 
-    public void selectFile(int fileId) throws IOException {
+    public byte[] selectById(int fileId) throws IOException {
         byte[] file = Utils.integerToByteArray(fileId, 2);
         Log.d(TAG, "Select file " + Utils.getHexString(file));
         try {
-            sendRequest(CLASS_ISO7816, INSTRUCTION_ISO7816_SELECT,
+            return sendRequest(CLASS_ISO7816, INSTRUCTION_ISO7816_SELECT,
                     (byte) 0, (byte) 0, (byte) 0,
                     file);
-        } catch (CalypsoException e) {
+        } catch (ISO7816Exception e) {
             Log.e(TAG, "couldn't select file", e);
         }
+        return null;
     }
 
     public byte[] readRecord(byte recordNumber, byte length) throws IOException {
@@ -193,27 +182,30 @@ public class ISO7816Protocol {
 
 
             return ret;
-        } catch (CalypsoException e) {
+        } catch (ISO7816Exception e) {
             Log.e(TAG, "couldn't read record", e);
             return null;
         }
-
     }
 
-    public class CalypsoException extends Exception {
-        CalypsoException(String s) {
-            super(s);
-        }
+    public byte[] readBinary() throws IOException {
+        byte[] ret;
+        Log.d(TAG, "Read binary");
+        try {
+            ret = sendRequest(CLASS_ISO7816, INSTRUCTION_ISO7816_READ_BINARY, (byte) 0, (byte) 0, (byte) 0);
 
-        CalypsoException() {
+            return ret;
+        } catch (ISO7816Exception e) {
+            Log.e(TAG, "couldn't read record", e);
+            return null;
         }
     }
 
     class ReadLengthFieldResult {
         /** value of the length field */
-        int length;
+        final int length;
         /** the number of bytes it took to encode this length value */
-        int bytesConsumed;
+        final int bytesConsumed;
 
         ReadLengthFieldResult(int length, int bytesConsumed) {
             this.length = length;

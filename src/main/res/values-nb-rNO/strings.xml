@@ -426,7 +426,6 @@
     <string name="opal_action_tap_on_reversal">Innstemplingsomvendelse</string>
     <string name="octopus_szt">Shenzhen Tong</string>
 
-    <string name="file_folder_title_format">Fil: 0x%s/0x%s</string>
     <string name="record_title_format">Tidslinjeopptak: %s</string>
     <plurals name="record_count">
 	<item quantity="one">%d tidslinjeopptak</item>
