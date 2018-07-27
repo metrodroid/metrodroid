@@ -21,29 +21,25 @@ package au.id.micolous.metrodroid.card.iso7816;
 import android.nfc.Tag;
 import android.nfc.TagLostException;
 import android.nfc.tech.IsoDep;
-import android.support.annotation.Nullable;
 import android.util.Log;
 
+import org.simpleframework.xml.Element;
 import org.simpleframework.xml.Root;
 
-import java.io.FileNotFoundException;
-import java.io.IOException;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
-import java.util.Set;
-import java.util.TreeSet;
 
 import au.id.micolous.farebot.R;
 import au.id.micolous.metrodroid.card.Card;
 import au.id.micolous.metrodroid.card.CardType;
 import au.id.micolous.metrodroid.card.TagReaderFeedbackInterface;
 import au.id.micolous.metrodroid.card.calypso.CalypsoCard;
+import au.id.micolous.metrodroid.card.newshenzhen.NewShenzhenCard;
+import au.id.micolous.metrodroid.card.tmoney.TMoneyCard;
 import au.id.micolous.metrodroid.transit.TransitData;
 import au.id.micolous.metrodroid.transit.TransitIdentity;
-import au.id.micolous.metrodroid.util.ByteArrayComparator;
 import au.id.micolous.metrodroid.util.Utils;
-
-import static au.id.micolous.metrodroid.card.calypso.CalypsoCard.CALYPSO_FILENAME;
+import au.id.micolous.metrodroid.xml.Base64String;
 
 /**
  * Generic card implementation for ISO7816. This doesn't have many smarts, but dispatches to other
@@ -53,14 +49,36 @@ import static au.id.micolous.metrodroid.card.calypso.CalypsoCard.CALYPSO_FILENAM
 public class ISO7816Card extends Card {
     private static final String TAG = ISO7816Card.class.getSimpleName();
 
-    protected ISO7816Card(byte[] tagId, Calendar scannedAt, boolean partialRead) {
-        this(CardType.ISO7816, tagId, scannedAt, partialRead);
+    protected ISO7816Card(ISO7816Info info, boolean partialRead) {
+        this(CardType.ISO7816, info, partialRead);
     }
 
     protected ISO7816Card() { /* For XML Serializer */ }
 
-    protected ISO7816Card(CardType cardType, byte[] tagId, Calendar scannedAt, boolean partialRead) {
-        super(cardType, tagId, scannedAt, null, partialRead);
+    protected ISO7816Card(CardType cardType, ISO7816Info info, boolean partialRead) {
+        super(cardType, info.mTagId, info.mScannedAt, null, partialRead);
+        mApplicationData = new Base64String(info.mApplicationData);
+        mApplicationName = new Base64String(info.mApplicationName);
+    }
+
+    @Element(name = "application-data")
+    private Base64String mApplicationData;
+
+    @Element(name = "application-name")
+    private Base64String mApplicationName;
+
+    public static class ISO7816Info {
+        private byte[] mTagId;
+        private byte []mApplicationData;
+        private byte []mApplicationName;
+        public Calendar mScannedAt;
+
+        ISO7816Info(byte []applicationData, byte []applicationName, byte[] tagId, Calendar scannedAt) {
+            mApplicationData = applicationData;
+            mApplicationName = applicationName;
+            mTagId = tagId;
+            mScannedAt = scannedAt;
+        }
     }
 
     /**
@@ -82,71 +100,30 @@ public class ISO7816Card extends Card {
             feedbackInterface.updateStatusText(Utils.localizeString(R.string.iso7816_probing));
             feedbackInterface.updateProgressBar(0, 1);
 
-            // Try to iterate over the applications on the card.
-            // Sometimes we get an explicit "not found" error, sometimes we just get the same file
-            // name again...
-            TreeSet<byte[]> apps = new TreeSet<>(new ByteArrayComparator());
-            while (true) {
-                boolean next = !apps.isEmpty();
-                byte[] appName = null;
-                byte[] newApp;
+            byte []app;
+            /*
+             * It's tempting to try to iterate over the apps on the card.
+             * Unfortunately many cards don't reply to iterating requests
+             *
+             */
 
-                try {
-                    newApp = iso7816Tag.selectApplication(next);
-                } catch (FileNotFoundException unused) {
-                    // No more files!
-                    break;
-                }
+            app = iso7816Tag.selectApplication(CalypsoCard.CALYPSO_FILENAME, false);
+            if (app != null)
+                return CalypsoCard.dumpTag(iso7816Tag, new ISO7816Info(app, CalypsoCard.CALYPSO_FILENAME,
+                                tag.getId(), GregorianCalendar.getInstance()),
+                        feedbackInterface);
 
-                // Try to parse the application name.
-                if (newApp == null || newApp[0] != 0x6f) {
-                    // Unexpected data, break out
-                    break;
-                }
+            app = iso7816Tag.selectApplication(TMoneyCard.APP_NAME, false);
+            if (app != null)
+                return TMoneyCard.dumpTag(iso7816Tag, new ISO7816Info(app, TMoneyCard.APP_NAME,
+                                tag.getId(), GregorianCalendar.getInstance()),
+                        feedbackInterface);
 
-                for (int p = 2; p < newApp[1]; ) {
-                    if (newApp[p] == (byte) 0x84) {
-                        // Application name
-                        appName = Utils.byteArraySlice(newApp, p + 2, newApp[p + 1]);
-                        break;
-                    } else {
-                        p += newApp[p + 1] + 2;
-                    }
-                }
-
-                if (appName == null || appName.length == 0) {
-                    // No app name, break out.
-                    break;
-                }
-
-                // Add it to the list
-                if (!apps.add(appName)) {
-                    // We have seen this one before.
-                    break;
-                }
-
-                if (apps.size() > 16) {
-                    // Arbitrary limit
-                    Log.w(TAG, "hit limit of 16 apps, stopping to break the loop...");
-                    break;
-                }
-            }
-
-            TreeSet<String> appsString = new TreeSet<>();
-            Log.d(TAG, "we got a total of " + apps.size() + " app(s)");
-            for (byte[] app : apps) {
-                Log.d(TAG, "  " + Utils.getHexString(app));
-                String s = getAppNamePart(app);
-                if (s != null) {
-                    appsString.add(s);
-                }
-            }
-
-            ISO7816Card c = getSpecificReader(tag, iso7816Tag, apps, appsString, feedbackInterface);
-
-            if (c != null) {
-                return c;
-            }
+            app = iso7816Tag.selectApplication(NewShenzhenCard.APP_NAME, false);
+            if (app != null)
+                return NewShenzhenCard.dumpTag(iso7816Tag, new ISO7816Info(app, NewShenzhenCard.APP_NAME,
+                                tag.getId(), GregorianCalendar.getInstance()),
+                        feedbackInterface);
         } catch (TagLostException ex) {
             Log.w(TAG, "tag lost", ex);
             partialRead = true;
@@ -155,41 +132,20 @@ public class ISO7816Card extends Card {
                 tech.close();
         }
 
-        return new ISO7816Card(tag.getId(), GregorianCalendar.getInstance(), partialRead);
+        return new ISO7816Card(new ISO7816Info(null, null,
+                tag.getId(), GregorianCalendar.getInstance()), partialRead);
     }
 
-    private static ISO7816Card getSpecificReader(Tag tag, ISO7816Protocol protocol, Set<byte[]> apps, Set<String> appsString, TagReaderFeedbackInterface feedbackInterface) throws IOException {
-        if (appsString.contains(CALYPSO_FILENAME)) {
-            // Calypso
-            return CalypsoCard.dumpTag(tag, protocol, feedbackInterface);
-        }
-
-        // FIXME: Hook up the CEPAS reader here.
-        // TODO: Handle other ISO7816 cards genericly.
-
-        return null;
-    }
-
-
-    @Nullable
-    private static String getAppNamePart(byte[] b) {
-        // Get the part of the file name that is actually a string.
-        // TODO: figure out the proper way to parse the DFN/Dedicated File Name
-        int p;
-        for (p = 0; p < b.length; p++) {
-            if (b[p] < (byte) 0x20 || b[p] >= (byte) 0x7f) {
-                break;
+    public static byte[] findAppInfoTag(byte[] newApp, byte id) {
+        for (int p = 2; p < newApp[1]; ) {
+            if (newApp[p] == id) {
+                // Application name
+                return Utils.byteArraySlice(newApp, p + 2, newApp[p + 1]);
+            } else {
+                p += newApp[p + 1] + 2;
             }
         }
-
-        if (p == 0) {
-            return null;
-        } else if (p == b.length) {
-            return new String(b);
-        } else {
-            byte[] appNamePart = Utils.byteArraySlice(b, 0, p);
-            return new String(appNamePart);
-        }
+        return null;
     }
 
     // No transit providers supported at the moment...
@@ -201,5 +157,13 @@ public class ISO7816Card extends Card {
     @Override
     public TransitData parseTransitData() {
         return null;
+    }
+
+    public byte[] getAppData() {
+        return mApplicationData.getData();
+    }
+
+    public byte[] getAppName() {
+        return mApplicationName.getData();
     }
 }

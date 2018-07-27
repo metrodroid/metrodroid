@@ -27,6 +27,8 @@ import au.id.micolous.metrodroid.card.cepas.CEPASCard;
 import au.id.micolous.metrodroid.card.classic.ClassicCard;
 import au.id.micolous.metrodroid.card.desfire.DesfireCard;
 import au.id.micolous.metrodroid.card.felica.FelicaCard;
+import au.id.micolous.metrodroid.card.tmoney.TMoneyCard;
+import au.id.micolous.metrodroid.card.newshenzhen.NewShenzhenCard;
 import au.id.micolous.metrodroid.card.ultralight.UltralightCard;
 
 import org.simpleframework.xml.Serializer;
@@ -59,6 +61,10 @@ public class CardConverter implements Converter<Card> {
                 return mSerializer.read(ISO7816Card.class, node);
             case Calypso:
                 return mSerializer.read(CalypsoCard.class, node);
+            case TMoney:
+                return mSerializer.read(TMoneyCard.class, node);
+            case NewShenzhenTong:
+                return mSerializer.read(NewShenzhenCard.class, node);
             default:
                 throw new UnsupportedOperationException("Unsupported card type: " + type);
         }
