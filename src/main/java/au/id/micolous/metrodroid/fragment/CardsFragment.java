@@ -194,6 +194,7 @@ public class CardsFragment extends ListFragment {
                         String[] mimetypes = {
                                 "application/xml",
                                 "text/xml",
+                                "text/plain",
                                 // Fallback for cases where we didn't get a good mime type from the
                                 // OS, this allows most "other" files to be selected.
                                 "application/octet-stream",
