@@ -39,6 +39,7 @@ import au.id.micolous.metrodroid.transit.octopus.OctopusTransitData;
 import au.id.micolous.metrodroid.transit.opal.OpalTransitData;
 import au.id.micolous.metrodroid.transit.ovc.OVChipTransitData;
 import au.id.micolous.metrodroid.transit.podorozhnik.PodorozhnikTransitData;
+import au.id.micolous.metrodroid.transit.ravkav.RavKavTransitData;
 import au.id.micolous.metrodroid.transit.seq_go.SeqGoTransitData;
 import au.id.micolous.metrodroid.transit.smartrider.SmartRiderTransitData;
 import au.id.micolous.metrodroid.transit.troika.TroikaTransitData;
@@ -194,6 +195,13 @@ public class CardInfo {
             .setPreview()
             .build();
 
+    public static final CardInfo RAVKAV = new CardInfo.Builder()
+            .setName(RavKavTransitData.NAME)
+            .setLocation(R.string.location_israel)
+            .setCardType(CardType.Calypso)
+            .setPreview()
+            .build();
+
     public static final CardInfo SZT = new CardInfo.Builder()
             .setImageId(R.drawable.szt_card)
             .setName(OctopusTransitData.SZT_NAME)
@@ -263,6 +271,7 @@ public class CardInfo {
             OVCHIP,
             PASMO,
             PODOROZHNIK,
+            RAVKAV,
             SZT, // Shenzhen Tong
             SMARTRIDER,
             SUICA,
