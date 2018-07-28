@@ -802,4 +802,5 @@
     <!-- Translators: The name of the ticketing system in Saint Petersburg (Russian: Подорожник).
     May be transliterated. -->
     <string name="card_name_podorozhnik">Podorozhnik</string>
+    <string name="location_israel">Israel</string>
 </resources>

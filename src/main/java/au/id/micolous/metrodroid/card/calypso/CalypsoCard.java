@@ -27,6 +27,7 @@ import org.simpleframework.xml.Root;
 
 import java.io.EOFException;
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.LinkedList;
@@ -40,6 +41,9 @@ import au.id.micolous.metrodroid.card.TagReaderFeedbackInterface;
 import au.id.micolous.metrodroid.card.iso7816.ISO7816Card;
 import au.id.micolous.metrodroid.card.iso7816.ISO7816Protocol;
 import au.id.micolous.metrodroid.fragment.CalypsoCardRawDataFragment;
+import au.id.micolous.metrodroid.transit.TransitData;
+import au.id.micolous.metrodroid.transit.TransitIdentity;
+import au.id.micolous.metrodroid.transit.ravkav.RavKavTransitData;
 import au.id.micolous.metrodroid.util.Utils;
 
 /**
@@ -162,6 +166,36 @@ public class CalypsoCard extends ISO7816Card {
 
         return null;
     }
+
+    public String getAID() {
+        CalypsoFile f = getFile(File.AID);
+        if (f == null)
+            return null;
+        CalypsoRecord r = f.getRecord(1);
+        if (r == null)
+            return null;
+        byte []aid = r.getData();
+        int i;
+        for (i = aid.length - 1; i >= 0; i--)
+            if (aid[i] != 0)
+                break;
+        return new String(Utils.byteArraySlice(aid, 0, i+1));
+    }
+
+    @Override
+    public TransitIdentity parseTransitIdentity() {
+        if (RavKavTransitData.check(this))
+            return RavKavTransitData.parseTransitIdentity(this);
+        return null;
+    }
+
+    @Override
+    public TransitData parseTransitData() {
+        if (RavKavTransitData.check(this))
+            return RavKavTransitData.parseTransitData(this);
+        return null;
+    }
+
 
     public enum File {
         AID(0x3F04),
