@@ -87,8 +87,6 @@ public class FelicaCard extends Card {
         NfcF nfcF = NfcF.get(tag);
         Log.d(TAG, "Default system code: " + Utils.getHexString(nfcF.getSystemCode()));
 
-        boolean octopusMagic = false;
-        boolean sztMagic = false;
         boolean partialRead = false;
 
         FeliCaTag ft = new FeliCaTag(tag);
@@ -122,7 +120,6 @@ public class FelicaCard extends Card {
                     // Octopus has a special knocking sequence to allow unprotected reads, and does not
                     // respond to the normal system code listing.
                     codes.add(new FeliCaLib.SystemCode(FeliCaLib.SYSTEMCODE_OCTOPUS));
-                    octopusMagic = true;
                     feedbackInterface.showCardType(CardInfo.OCTOPUS);
                 }
 
@@ -132,7 +129,6 @@ public class FelicaCard extends Card {
                     // Because Octopus and SZT are similar systems, use the same knocking sequence in
                     // case they have the same bugs with system code listing.
                     codes.add(new FeliCaLib.SystemCode(FeliCaLib.SYSTEMCODE_SZT));
-                    sztMagic = true;
                     feedbackInterface.showCardType(CardInfo.SZT);
                 }
             }
@@ -168,10 +164,10 @@ public class FelicaCard extends Card {
                 List<FelicaService> services = new ArrayList<>();
                 FeliCaLib.ServiceCode[] serviceCodes;
 
-                if (octopusMagic && code.getCode() == FeliCaLib.SYSTEMCODE_OCTOPUS) {
+                if (code.getCode() == FeliCaLib.SYSTEMCODE_OCTOPUS) {
                     Log.d(TAG, "Stuffing in Octopus magic service code");
                     serviceCodes = new FeliCaLib.ServiceCode[]{new FeliCaLib.ServiceCode(FeliCaLib.SERVICE_OCTOPUS)};
-                } else if (sztMagic && code.getCode() == FeliCaLib.SYSTEMCODE_SZT) {
+                } else if (code.getCode() == FeliCaLib.SYSTEMCODE_SZT) {
                     Log.d(TAG, "Stuffing in SZT magic service code");
                     serviceCodes = new FeliCaLib.ServiceCode[]{new FeliCaLib.ServiceCode(FeliCaLib.SERVICE_SZT)};
                 } else {
