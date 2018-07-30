@@ -135,7 +135,7 @@ public class AdvancedCardInfoActivity extends Activity {
             } else if (item.getItemId() == R.id.share_xml) {
                 String xml = mCard.toXml(MetrodroidApplication.getInstance().getSerializer());
                 Intent intent = new Intent(Intent.ACTION_SEND);
-                intent.setType("text/plain");
+                intent.setType("text/xml");
                 intent.putExtra(Intent.EXTRA_TEXT, xml);
                 startActivity(intent);
                 return true;
