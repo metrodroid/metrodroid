@@ -76,7 +76,7 @@ public class CardInfoActivity extends Activity {
     private OnInitListener mTTSInitListener = new OnInitListener() {
         public void onInit(int status) {
             if (status == TextToSpeech.SUCCESS && mTransitData.getBalance() != null) {
-                Spanned balance = mTransitData.formatCurrencyString(mTransitData.getBalance(), true);
+                Spanned balance = mTransitData.getBalance().formatCurrencyString(true);
                 mTTS.speak(getString(R.string.balance_speech, balance), TextToSpeech.QUEUE_FLUSH, null);
             }
         }

@@ -31,6 +31,7 @@ import java.util.GregorianCalendar;
 
 import au.id.micolous.metrodroid.MetrodroidApplication;
 import au.id.micolous.metrodroid.transit.Station;
+import au.id.micolous.metrodroid.transit.TransitCurrency;
 import au.id.micolous.metrodroid.transit.Trip;
 import au.id.micolous.metrodroid.util.StationTableReader;
 
@@ -327,7 +328,7 @@ public class OVChipTrip extends Trip {
 
     @Nullable
     @Override
-    public Integer getFare() {
-        return mFare;
+    public TransitCurrency getFare() {
+        return TransitCurrency.EUR(mFare);
     }
 }

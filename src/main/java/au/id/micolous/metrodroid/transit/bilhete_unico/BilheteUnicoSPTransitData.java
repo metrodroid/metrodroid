@@ -28,6 +28,7 @@ import android.text.Spanned;
 import au.id.micolous.metrodroid.card.Card;
 import au.id.micolous.metrodroid.card.UnauthorizedException;
 import au.id.micolous.metrodroid.card.classic.ClassicCard;
+import au.id.micolous.metrodroid.transit.TransitCurrency;
 import au.id.micolous.metrodroid.transit.TransitData;
 import au.id.micolous.metrodroid.transit.TransitIdentity;
 import au.id.micolous.metrodroid.transit.Trip;
@@ -97,16 +98,11 @@ public class BilheteUnicoSPTransitData extends TransitData {
 
     @Override
     @Nullable
-    public Integer getBalance() {
+    public TransitCurrency getBalance() {
         if (mCredit == null) {
             return null;
         }
-        return mCredit.getCredit();
-    }
-
-    @Override
-    public Spanned formatCurrencyString(int currency, boolean isBalance) {
-        return Utils.formatCurrencyString(currency, isBalance, "BRL");
+        return new TransitCurrency(mCredit.getCredit(), "BRL");
     }
 
     @Override

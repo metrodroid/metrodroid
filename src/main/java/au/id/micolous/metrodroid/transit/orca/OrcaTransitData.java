@@ -33,6 +33,7 @@ import au.id.micolous.metrodroid.card.desfire.DesfireCard;
 import au.id.micolous.metrodroid.card.desfire.files.DesfireFile;
 import au.id.micolous.metrodroid.card.desfire.files.RecordDesfireFile;
 import au.id.micolous.metrodroid.transit.Subscription;
+import au.id.micolous.metrodroid.transit.TransitCurrency;
 import au.id.micolous.metrodroid.transit.TransitData;
 import au.id.micolous.metrodroid.transit.TransitIdentity;
 import au.id.micolous.metrodroid.transit.Trip;
@@ -122,14 +123,9 @@ public class OrcaTransitData extends TransitData {
     }
 
     @Override
-    public Spanned formatCurrencyString(int currency, boolean isBalance) {
-        return Utils.formatCurrencyString(currency, isBalance, "USD");
-    }
-
-    @Override
     @Nullable
-    public Integer getBalance() {
-        return mBalance;
+    public TransitCurrency getBalance() {
+        return TransitCurrency.USD(mBalance);
     }
 
     @Override

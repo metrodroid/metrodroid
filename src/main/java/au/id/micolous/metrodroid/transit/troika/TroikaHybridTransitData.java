@@ -26,6 +26,7 @@ import android.text.Spanned;
 
 import au.id.micolous.farebot.R;
 import au.id.micolous.metrodroid.card.classic.ClassicCard;
+import au.id.micolous.metrodroid.transit.TransitCurrency;
 import au.id.micolous.metrodroid.transit.TransitData;
 import au.id.micolous.metrodroid.transit.TransitIdentity;
 import au.id.micolous.metrodroid.transit.podorozhnik.PodorozhnikTransitData;
@@ -60,15 +61,10 @@ public class TroikaHybridTransitData extends TransitData {
 
     @Nullable
     @Override
-    public Integer getBalance() {
+    public TransitCurrency getBalance() {
         // Don't return balance as we can't handle 2 balances,
         // so instead put both of them as info.
         return null;
-    }
-
-    @Override
-    public Spanned formatCurrencyString(int amount, boolean isBalance) {
-        return mTroika.formatCurrencyString(amount, isBalance);
     }
 
     @Override
@@ -82,14 +78,12 @@ public class TroikaHybridTransitData extends TransitData {
 
         items.add(new HeaderListItem(R.string.card_name_troika));
         items.add(new ListItem(R.string.balance,
-                mTroika.formatCurrencyString(Math.abs(TripObfuscator.maybeObfuscateFare(
-                        mTroika.getBalance())), true).toString()));
+                mTroika.getBalance().maybeObfuscate().formatCurrencyString(true).toString()));
         items.addAll(mTroika.getInfo());
 
         items.add(new HeaderListItem(R.string.card_name_podorozhnik));
         items.add(new ListItem(R.string.balance,
-                mPodorozhnik.formatCurrencyString(Math.abs(TripObfuscator.maybeObfuscateFare(
-                        mPodorozhnik.getBalance())), true).toString()));
+                mPodorozhnik.getBalance().maybeObfuscate().formatCurrencyString(true).toString()));
 
         return items;
     }

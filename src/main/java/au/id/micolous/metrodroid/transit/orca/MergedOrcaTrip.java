@@ -24,6 +24,7 @@ import android.support.annotation.Nullable;
 
 import au.id.micolous.metrodroid.transit.CompatTrip;
 import au.id.micolous.metrodroid.transit.Station;
+import au.id.micolous.metrodroid.transit.TransitCurrency;
 
 public class MergedOrcaTrip extends CompatTrip {
     public static final Creator<MergedOrcaTrip> CREATOR = new Creator<MergedOrcaTrip>() {
@@ -73,7 +74,7 @@ public class MergedOrcaTrip extends CompatTrip {
 
     @Override
     @Nullable
-    public Integer getFare() {
+    public TransitCurrency getFare() {
         if (mEndTrip.mTransType == OrcaTransitData.TRANS_TYPE_CANCEL_TRIP) {
             // No fare applies to the trip, as the tap-on was reversed.
             return null;

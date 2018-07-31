@@ -29,6 +29,7 @@ import android.util.Log;
 import au.id.micolous.metrodroid.card.felica.FelicaCard;
 import au.id.micolous.metrodroid.card.felica.FelicaService;
 import au.id.micolous.metrodroid.transit.CardInfo;
+import au.id.micolous.metrodroid.transit.TransitCurrency;
 import au.id.micolous.metrodroid.transit.TransitData;
 import au.id.micolous.metrodroid.transit.TransitIdentity;
 import au.id.micolous.metrodroid.ui.HeaderListItem;
@@ -136,27 +137,18 @@ public class OctopusTransitData extends TransitData {
 
     @Override
     @Nullable
-    public Integer getBalance() {
+    public TransitCurrency getBalance() {
         if (mHasOctopus) {
             // Octopus balance takes priority 1
-            return mOctopusBalance;
+            return new TransitCurrency(mOctopusBalance, "HKD");
         } else if (mHasShenzhen) {
             // Shenzhen Tong balance takes priority 2
-            return mShenzhenBalance;
+            return new TransitCurrency(mShenzhenBalance, "CNY");
         } else {
             // Unhandled.
             Log.d(TAG, "Unhandled balance, could not find Octopus or SZT");
             return null;
         }
-    }
-
-    @Override
-    public Spanned formatCurrencyString(int currency, boolean isBalance) {
-        return formatCurrencyString(currency, isBalance, !mHasOctopus);
-    }
-
-    public Spanned formatCurrencyString(int currency, boolean isBalance, boolean shenzhen) {
-        return Utils.formatCurrencyString(currency, isBalance, shenzhen ? "CNY" : "HKD", 10.);
     }
 
     @Override
@@ -194,9 +186,8 @@ public class OctopusTransitData extends TransitData {
             // Dual-mode card, show the CNY balance here.
             items.add(new HeaderListItem(R.string.alternate_purse_balances));
             items.add(new ListItem(R.string.octopus_szt,
-                    formatCurrencyString(
-                            Math.abs(TripObfuscator.maybeObfuscateFare(mShenzhenBalance)),
-                            true, true)));
+                    (new TransitCurrency(mShenzhenBalance, "CNY"))
+                            .maybeObfuscate().formatCurrencyString(true)));
 
             return items;
         }

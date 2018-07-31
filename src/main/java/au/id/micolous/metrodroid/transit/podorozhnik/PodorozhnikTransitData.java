@@ -27,6 +27,7 @@ import android.util.Log;
 
 import au.id.micolous.metrodroid.card.classic.ClassicCard;
 import au.id.micolous.metrodroid.card.classic.ClassicSector;
+import au.id.micolous.metrodroid.transit.TransitCurrency;
 import au.id.micolous.metrodroid.transit.TransitData;
 import au.id.micolous.metrodroid.transit.TransitIdentity;
 import au.id.micolous.metrodroid.util.Utils;
@@ -61,13 +62,8 @@ public class PodorozhnikTransitData extends TransitData {
 
     @Nullable
     @Override
-    public Integer getBalance() {
-        return mBalance;
-    }
-
-    @Override
-    public Spanned formatCurrencyString(int amount, boolean isBalance) {
-        return Utils.formatCurrencyString(amount, isBalance, "RUB");
+    public TransitCurrency getBalance() {
+        return new TransitCurrency(mBalance, "RUB");
     }
 
     @Override
