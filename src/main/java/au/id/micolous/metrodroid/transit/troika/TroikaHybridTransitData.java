@@ -22,20 +22,17 @@ package au.id.micolous.metrodroid.transit.troika;
 import android.os.Parcel;
 import android.os.Parcelable;
 import android.support.annotation.Nullable;
-import android.text.Spanned;
 
-import au.id.micolous.farebot.R;
 import au.id.micolous.metrodroid.card.classic.ClassicCard;
+import au.id.micolous.metrodroid.transit.Subscription;
+import au.id.micolous.metrodroid.transit.TransitBalance;
 import au.id.micolous.metrodroid.transit.TransitCurrency;
 import au.id.micolous.metrodroid.transit.TransitData;
 import au.id.micolous.metrodroid.transit.TransitIdentity;
 import au.id.micolous.metrodroid.transit.podorozhnik.PodorozhnikTransitData;
-import au.id.micolous.metrodroid.ui.HeaderListItem;
-import au.id.micolous.metrodroid.ui.ListItem;
-import au.id.micolous.metrodroid.util.TripObfuscator;
 
 import java.util.ArrayList;
-import java.util.List;
+import java.util.Arrays;
 
 /**
  * Hybrid cards containing both Troika and Podorozhnik.
@@ -59,33 +56,9 @@ public class TroikaHybridTransitData extends TransitData {
     private TroikaTransitData mTroika;
     private PodorozhnikTransitData mPodorozhnik;
 
-    @Nullable
-    @Override
-    public TransitCurrency getBalance() {
-        // Don't return balance as we can't handle 2 balances,
-        // so instead put both of them as info.
-        return null;
-    }
-
     @Override
     public String getSerialNumber() {
         return mTroika.getSerialNumber();
-    }
-
-    @Override
-    public List<ListItem> getInfo() {
-        ArrayList<ListItem> items = new ArrayList<>();
-
-        items.add(new HeaderListItem(R.string.card_name_troika));
-        items.add(new ListItem(R.string.balance,
-                mTroika.getBalance().maybeObfuscate().formatCurrencyString(true).toString()));
-        items.addAll(mTroika.getInfo());
-
-        items.add(new HeaderListItem(R.string.card_name_podorozhnik));
-        items.add(new ListItem(R.string.balance,
-                mPodorozhnik.getBalance().maybeObfuscate().formatCurrencyString(true).toString()));
-
-        return items;
     }
 
     @Override
@@ -112,5 +85,13 @@ public class TroikaHybridTransitData extends TransitData {
     public TroikaHybridTransitData(ClassicCard card) {
         mTroika = new TroikaTransitData(card);
         mPodorozhnik = new PodorozhnikTransitData(card);
+    }
+
+    @Override
+    public ArrayList<TransitBalance> getBalances() {
+        ArrayList<TransitBalance> l = new ArrayList<>();
+        l.addAll(mTroika.getBalances());
+        l.addAll(mPodorozhnik.getBalances());
+        return l;
     }
 }

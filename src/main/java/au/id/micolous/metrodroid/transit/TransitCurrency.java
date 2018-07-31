@@ -1,5 +1,5 @@
 /*
- * TroikaCurrency.java
+ * TransitCurrency.java
  *
  * Copyright 2018 Google
  *

@@ -21,12 +21,17 @@ package au.id.micolous.metrodroid.transit.podorozhnik;
 
 import android.os.Parcel;
 import android.os.Parcelable;
-import android.support.annotation.Nullable;
-import android.text.Spanned;
 import android.util.Log;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 import au.id.micolous.metrodroid.card.classic.ClassicCard;
 import au.id.micolous.metrodroid.card.classic.ClassicSector;
+import au.id.micolous.metrodroid.transit.TransitBalance;
+import au.id.micolous.metrodroid.transit.TransitBalanceStored;
+import au.id.micolous.metrodroid.transit.Subscription;
 import au.id.micolous.metrodroid.transit.TransitCurrency;
 import au.id.micolous.metrodroid.transit.TransitData;
 import au.id.micolous.metrodroid.transit.TransitIdentity;
@@ -59,12 +64,6 @@ public class PodorozhnikTransitData extends TransitData {
     private static final String TAG = "PodorozhnikTransitData";
 
     private int mBalance;
-
-    @Nullable
-    @Override
-    public TransitCurrency getBalance() {
-        return new TransitCurrency(mBalance, "RUB");
-    }
 
     @Override
     public String getSerialNumber() {
@@ -99,6 +98,12 @@ public class PodorozhnikTransitData extends TransitData {
     public PodorozhnikTransitData(ClassicCard card) {
         ClassicSector sector4 = card.getSector(4);
         mBalance = getBalance(sector4);
+    }
+
+    @Override
+    public List<TransitBalance> getBalances() {
+        return Arrays.asList(new TransitBalanceStored(new TransitCurrency(mBalance, "RUB"),
+                NAME, null));
     }
 
     public static boolean check(ClassicCard card) {

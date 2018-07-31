@@ -20,32 +20,36 @@
 
 package au.id.micolous.metrodroid.fragment;
 
-import android.app.Fragment;
+import android.app.ListFragment;
+import android.content.Context;
 import android.os.Bundle;
 import android.text.Spanned;
-import android.view.LayoutInflater;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
 import au.id.micolous.metrodroid.activity.AdvancedCardInfoActivity;
 import au.id.micolous.metrodroid.activity.CardInfoActivity;
 import au.id.micolous.metrodroid.card.Card;
+import au.id.micolous.metrodroid.transit.TransitBalance;
 import au.id.micolous.metrodroid.transit.TransitData;
 
 import org.simpleframework.xml.Serializer;
 
-import java.security.SecureRandom;
-import java.util.Random;
+import java.util.List;
 
 import au.id.micolous.farebot.R;
 import au.id.micolous.metrodroid.MetrodroidApplication;
 import au.id.micolous.metrodroid.transit.TransitCurrency;
+import au.id.micolous.metrodroid.util.TripObfuscator;
+import au.id.micolous.metrodroid.util.Utils;
 
-public class CardBalanceFragment extends Fragment {
+public class CardBalanceFragment extends ListFragment {
     private Card mCard;
     private TransitData mTransitData;
-    private static Random mRNG = new SecureRandom();
+    private static final String TAG = "CardBalanceFragment";
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -55,19 +59,68 @@ public class CardBalanceFragment extends Fragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_card_balance, container, false);
-
-        TransitCurrency balance = mTransitData.getBalance();
-        if (balance != null) {
-            if (MetrodroidApplication.obfuscateBalance()) {
-                int offset = mRNG.nextInt(100) - 50;
-                double multiplier = (mRNG.nextDouble() * 0.4) + 0.8;
-                balance.obfuscate(offset, multiplier);
-            }
-            Spanned balanceStr = balance.formatCurrencyString(true);
-            ((TextView) view.findViewById(R.id.balance)).setText(balanceStr);
-        }
-        return view;
+    public void onViewCreated(View view, Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        setListAdapter(new BalancesAdapter(getActivity(), mTransitData.getBalances()));
     }
+
+    private class BalancesAdapter extends ArrayAdapter<TransitBalance> {
+        public BalancesAdapter(Context context, List<TransitBalance> balances) {
+            super(context, 0, balances);
+        }
+
+        @Override
+        public View getView(int position, View convertView, ViewGroup parent) {
+            View view = convertView;
+            if (view == null) {
+                view = getActivity().getLayoutInflater().inflate(R.layout.balance_item, parent, false);
+            }
+
+            TransitBalance balance = getItem(position);
+
+            if (balance == null) {
+                // https://github.com/micolous/metrodroid/issues/28
+                Log.w(TAG, "null balance received -- this is an error");
+                ((TextView) view.findViewById(R.id.balance)).setText("null");
+                return view;
+            }
+
+            TextView validView = view.findViewById(R.id.valid);
+            if (balance.getValidFrom() != null && balance.getValidTo() != null) {
+                Spanned validFrom = Utils.dateFormat(TripObfuscator.maybeObfuscateTS(balance.getValidFrom()));
+                Spanned validTo = Utils.dateFormat(TripObfuscator.maybeObfuscateTS(balance.getValidTo()));
+                validView.setText(getString(R.string.valid_format, validFrom, validTo));
+                validView.setVisibility(View.VISIBLE);
+            } else if (balance.getValidTo() != null) {
+                Spanned validTo = Utils.dateFormat(TripObfuscator.maybeObfuscateTS(balance.getValidTo()));
+                validView.setText(getString(R.string.valid_to_format, validTo));
+                validView.setVisibility(View.VISIBLE);
+            } else {
+                validView.setVisibility(View.GONE);
+            }
+
+            String name = balance.getName();
+            TextView nameView = view.findViewById(R.id.name);
+            TextView balanceView = view.findViewById(R.id.balance);
+            TransitCurrency balanceCur = balance.getBalance();
+            if (name != null) {
+                nameView.setText(name);
+                nameView.setVisibility(View.VISIBLE);
+            } else
+                nameView.setVisibility(View.GONE);
+            if (balanceCur != null) {
+                balanceView.setText(balanceCur.maybeObfuscateBalance().formatCurrencyString(true));
+                balanceView.setVisibility(View.VISIBLE);
+            } else
+                balanceView.setVisibility(View.GONE);
+
+            return view;
+        }
+
+        @Override
+        public boolean isEnabled(int position) {
+            return false;
+        }
+    }
+
 }
