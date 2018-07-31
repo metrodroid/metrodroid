@@ -25,6 +25,7 @@ import android.nfc.tech.IsoDep;
 import android.util.Log;
 
 import au.id.micolous.farebot.R;
+import au.id.micolous.metrodroid.MetrodroidApplication;
 import au.id.micolous.metrodroid.card.Card;
 import au.id.micolous.metrodroid.card.CardRawDataFragmentClass;
 import au.id.micolous.metrodroid.card.CardType;
@@ -47,6 +48,8 @@ import au.id.micolous.metrodroid.transit.orca.OrcaTransitData;
 import au.id.micolous.metrodroid.transit.stub.AdelaideMetrocardStubTransitData;
 import au.id.micolous.metrodroid.transit.stub.AtHopStubTransitData;
 import au.id.micolous.metrodroid.transit.unknown.UnauthorizedDesfireTransitData;
+import au.id.micolous.metrodroid.ui.HeaderListItem;
+import au.id.micolous.metrodroid.ui.ListItem;
 import au.id.micolous.metrodroid.util.Utils;
 
 import org.simpleframework.xml.Element;
@@ -246,6 +249,39 @@ public class DesfireCard extends Card {
         if (UnauthorizedDesfireTransitData.check(this))
             return new UnauthorizedDesfireTransitData();
         return null;
+    }
+
+    @Override
+    public List<ListItem> getManufacturingInfo() {
+        List<ListItem> items = new ArrayList<>();
+        DesfireManufacturingData data = getManufacturingData();
+        items.add(new HeaderListItem(R.string.hardware_information));
+        items.add(new ListItem("Vendor ID", Integer.toString(data.hwVendorID)));
+        items.add(new ListItem("Type", Integer.toString(data.hwType)));
+        items.add(new ListItem("Subtype", Integer.toString(data.hwSubType)));
+        items.add(new ListItem("Major Version", Integer.toString(data.hwMajorVersion)));
+        items.add(new ListItem("Minor Version", Integer.toString(data.hwMinorVersion)));
+        items.add(new ListItem("Storage Size", Integer.toString(data.hwStorageSize)));
+        items.add(new ListItem("Protocol", Integer.toString(data.hwProtocol)));
+
+        items.add(new HeaderListItem(R.string.software_information));
+        items.add(new ListItem("Vendor ID", Integer.toString(data.swVendorID)));
+        items.add(new ListItem("Type", Integer.toString(data.swType)));
+        items.add(new ListItem("Subtype", Integer.toString(data.swSubType)));
+        items.add(new ListItem("Major Version", Integer.toString(data.swMajorVersion)));
+        items.add(new ListItem("Minor Version", Integer.toString(data.swMinorVersion)));
+        items.add(new ListItem("Storage Size", Integer.toString(data.swStorageSize)));
+        items.add(new ListItem("Protocol", Integer.toString(data.swProtocol)));
+
+        if (!MetrodroidApplication.hideCardNumbers()) {
+            items.add(new HeaderListItem("General Information"));
+            items.add(new ListItem("Serial Number", Integer.toString(data.uid)));
+            items.add(new ListItem("Batch Number", Integer.toString(data.batchNo)));
+            items.add(new ListItem("Week of Production", Integer.toString(data.weekProd)));
+            items.add(new ListItem("Year of Production", Integer.toString(data.yearProd)));
+        }
+
+        return items;
     }
 
     public List<DesfireApplication> getApplications() {

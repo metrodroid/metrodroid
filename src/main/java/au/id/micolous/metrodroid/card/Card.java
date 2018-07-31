@@ -32,6 +32,7 @@ import au.id.micolous.metrodroid.card.felica.FelicaCard;
 import au.id.micolous.metrodroid.card.ultralight.UltralightCard;
 import au.id.micolous.metrodroid.transit.TransitData;
 import au.id.micolous.metrodroid.transit.TransitIdentity;
+import au.id.micolous.metrodroid.ui.ListItem;
 import au.id.micolous.metrodroid.util.Utils;
 import au.id.micolous.metrodroid.xml.HexString;
 
@@ -41,6 +42,8 @@ import org.simpleframework.xml.Serializer;
 
 import java.io.StringWriter;
 import java.util.Calendar;
+import java.util.Collection;
+import java.util.List;
 
 public abstract class Card {
     // This must be protected, not private, as otherwise the XML deserialiser fails to read the
@@ -178,4 +181,8 @@ public abstract class Card {
      * @return
      */
     public abstract TransitData parseTransitData();
+
+    public List<ListItem> getManufacturingInfo() {
+        return null;
+    }
 }

@@ -29,6 +29,7 @@ import android.nfc.tech.NfcF;
 import android.util.Log;
 
 import au.id.micolous.farebot.R;
+import au.id.micolous.metrodroid.MetrodroidApplication;
 import au.id.micolous.metrodroid.card.Card;
 import au.id.micolous.metrodroid.card.CardRawDataFragmentClass;
 import au.id.micolous.metrodroid.card.CardType;
@@ -40,6 +41,8 @@ import au.id.micolous.metrodroid.transit.TransitIdentity;
 import au.id.micolous.metrodroid.transit.edy.EdyTransitData;
 import au.id.micolous.metrodroid.transit.octopus.OctopusTransitData;
 import au.id.micolous.metrodroid.transit.suica.SuicaTransitData;
+import au.id.micolous.metrodroid.ui.HeaderListItem;
+import au.id.micolous.metrodroid.ui.ListItem;
 import au.id.micolous.metrodroid.util.Utils;
 
 import net.kazzz.felica.FeliCaTag;
@@ -51,6 +54,7 @@ import org.simpleframework.xml.Element;
 import org.simpleframework.xml.ElementList;
 import org.simpleframework.xml.Root;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
@@ -397,5 +401,56 @@ public class FelicaCard extends Card {
         else if (OctopusTransitData.check(this))
             return new OctopusTransitData(this);
         return null;
+    }
+
+    @Override
+    public List<ListItem> getManufacturingInfo() {
+        List<ListItem> items = new ArrayList<>();
+
+        items.add(new HeaderListItem(R.string.felica_idm));
+        items.add(new ListItem(R.string.felica_manufacturer_code, "0x" + Integer.toHexString(getManufacturerCode())));
+
+        if (!MetrodroidApplication.hideCardNumbers()) {
+            items.add(new ListItem(R.string.felica_card_identification_number, Long.toString(getCardIdentificationNumber())));
+        }
+
+        items.add(new HeaderListItem(R.string.felica_pmm));
+        items.add(new ListItem(R.string.felica_rom_type, Integer.toString(getROMType())));
+        items.add(new ListItem(R.string.felica_ic_type, Integer.toString(getICType())));
+
+        items.add(new HeaderListItem(R.string.felica_maximum_response_time));
+
+        DecimalFormat df = new DecimalFormat();
+        df.setMaximumFractionDigits(1);
+        df.setMinimumFractionDigits(1);
+
+        double d = getVariableResponseTime(1);
+        items.add(new ListItem(R.string.felica_response_time_variable,
+                Utils.localizePlural(R.plurals.milliseconds_short, (int)d, df.format(d))));
+
+        d = getFixedResponseTime();
+        items.add(new ListItem(R.string.felica_response_time_fixed,
+                Utils.localizePlural(R.plurals.milliseconds_short, (int)d, df.format(d))));
+
+        d = getMutualAuthentication1Time(1);
+        items.add(new ListItem(R.string.felica_response_time_auth1,
+                Utils.localizePlural(R.plurals.milliseconds_short, (int)d, df.format(d))));
+
+        d = getMutualAuthentication2Time();
+        items.add(new ListItem(R.string.felica_response_time_auth2,
+                Utils.localizePlural(R.plurals.milliseconds_short, (int)d, df.format(d))));
+
+        d = getDataReadTime(1);
+        items.add(new ListItem(R.string.felica_response_time_read,
+                Utils.localizePlural(R.plurals.milliseconds_short, (int)d, df.format(d))));
+
+        d = getDataWriteTime(1);
+        items.add(new ListItem(R.string.felica_response_time_write,
+                Utils.localizePlural(R.plurals.milliseconds_short, (int)d, df.format(d))));
+
+        d = getOtherCommandsTime();
+        items.add(new ListItem(R.string.felica_response_time_other,
+                Utils.localizePlural(R.plurals.milliseconds_short, (int)d, df.format(d))));
+        return items;
     }
 }
