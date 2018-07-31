@@ -20,10 +20,14 @@ package au.id.micolous.metrodroid.transit.seq_go;
 
 import android.net.Uri;
 import android.os.Parcel;
+import android.support.annotation.Nullable;
 import android.text.Spanned;
 
 import au.id.micolous.metrodroid.card.UnauthorizedException;
 import au.id.micolous.metrodroid.card.classic.ClassicCard;
+import au.id.micolous.metrodroid.transit.TransitBalance;
+import au.id.micolous.metrodroid.transit.TransitBalanceStored;
+import au.id.micolous.metrodroid.transit.TransitCurrency;
 import au.id.micolous.metrodroid.transit.TransitIdentity;
 import au.id.micolous.metrodroid.transit.Trip;
 import au.id.micolous.metrodroid.transit.nextfare.NextfareTransitData;
@@ -159,15 +163,12 @@ public class SeqGoTransitData extends NextfareTransitData {
         return mHasUnknownStations;
     }
 
+    @Nullable
     @Override
-    public List<ListItem> getInfo() {
-        ArrayList<ListItem> items = new ArrayList<>();
-
-        items.add(new HeaderListItem(R.string.general));
-        items.add(new ListItem(R.string.seqgo_ticket_type, mTicketType.getDescription()));
-
-        items.addAll(super.getInfo());
-        return items;
+    public List<TransitBalance> getBalances() {
+        return Arrays.asList(new TransitBalanceStored(getBalance(),
+                Utils.localizeString(mTicketType.getDescription()),
+                mConfig == null ? null : mConfig.getExpiry()));
     }
 
     @Override

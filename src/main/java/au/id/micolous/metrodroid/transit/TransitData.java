@@ -23,11 +23,12 @@ package au.id.micolous.metrodroid.transit;
 import android.net.Uri;
 import android.os.Parcelable;
 import android.support.annotation.Nullable;
-import android.text.Spanned;
 
 import au.id.micolous.metrodroid.MetrodroidApplication;
 import au.id.micolous.metrodroid.ui.ListItem;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public abstract class TransitData implements Parcelable {
@@ -38,7 +39,17 @@ public abstract class TransitData implements Parcelable {
      * @return The balance of the card, or null if it is not known.
      */
     @Nullable
-    public abstract TransitCurrency getBalance();
+    public TransitCurrency getBalance() {
+        return null;
+    }
+
+    @Nullable
+    public List<TransitBalance> getBalances() {
+        TransitCurrency b = getBalance();
+        if (b == null)
+            return null;
+        return Arrays.asList(new TransitBalanceStored(b));
+    }
 
     public abstract String getSerialNumber();
 

@@ -733,7 +733,6 @@
         Go Card (South East Queensland/Brisbane, AU)
         These are deliberately separated strings in order to match the terminology of the agency.
     -->
-    <string name="seqgo_ticket_type">Ticket type</string>
     <string name="seqgo_ticket_type_regular">Regular</string>
     <string name="seqgo_ticket_type_concession">Concession</string>
     <string name="seqgo_ticket_type_child">Child</string>
@@ -757,7 +756,7 @@
     <!-- TRANSLATORS: "Cubic Nextfare" is the name of a ticketing system product, and should not be literally translated. -->
     <string name="nextfare">Cubic Nextfare</string>
     <string name="nextfare_system_code">System code</string>
-    <string name="nextfare_ticket_class">Ticket class code</string>
+    <string name="nextfare_ticket_class">Ticket class code %d</string>
 
     <!--
         Octopus / Shenzhen Tong

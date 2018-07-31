@@ -23,7 +23,6 @@ package au.id.micolous.metrodroid.transit.ovc;
 
 import android.os.Parcel;
 import android.support.annotation.Nullable;
-import android.text.Spanned;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -39,6 +38,8 @@ import au.id.micolous.metrodroid.MetrodroidApplication;
 import au.id.micolous.metrodroid.card.Card;
 import au.id.micolous.metrodroid.card.classic.ClassicCard;
 import au.id.micolous.metrodroid.transit.Subscription;
+import au.id.micolous.metrodroid.transit.TransitBalance;
+import au.id.micolous.metrodroid.transit.TransitBalanceStored;
 import au.id.micolous.metrodroid.transit.TransitCurrency;
 import au.id.micolous.metrodroid.transit.TransitData;
 import au.id.micolous.metrodroid.transit.TransitIdentity;
@@ -270,8 +271,10 @@ public class OVChipTransitData extends TransitData {
 
     @Nullable
     @Override
-    public TransitCurrency getBalance() {
-        return TransitCurrency.EUR(mCredit.getCredit());
+    public List<TransitBalance> getBalances() {
+        return Arrays.asList(new TransitBalanceStored(TransitCurrency.EUR(mCredit.getCredit()),
+                    mPreamble.getType() == 2 ? "Personal" : "Anonymous",
+                OVChipTransitData.convertDate(mPreamble.getExpdate())));
     }
 
     @Override
@@ -303,11 +306,6 @@ public class OVChipTransitData extends TransitData {
             items.add(new ListItem("Serial Number", mPreamble.getId()));
         }
 
-        items.add(new ListItem(R.string.card_expiry_date,
-                Utils.longDateFormat(
-                        TripObfuscator.maybeObfuscateTS(
-                                OVChipTransitData.convertDate(mPreamble.getExpdate())))));
-        items.add(new ListItem("Card Type", (mPreamble.getType() == 2 ? "Personal" : "Anonymous")));
         items.add(new ListItem("Issuer", OVChipTransitData.getShortAgencyName(mInfo.getCompany())));
 
         items.add(new ListItem("Banned", ((mCredit.getBanbits() & (char) 0xC0) == (char) 0xC0) ? "Yes" : "No"));

@@ -23,18 +23,18 @@ package au.id.micolous.metrodroid.transit.octopus;
 
 import android.os.Parcel;
 import android.support.annotation.Nullable;
-import android.text.Spanned;
-import android.util.Log;
 
 import au.id.micolous.metrodroid.card.felica.FelicaCard;
 import au.id.micolous.metrodroid.card.felica.FelicaService;
+import au.id.micolous.metrodroid.transit.TransitBalance;
+import au.id.micolous.metrodroid.transit.TransitBalanceStored;
 import au.id.micolous.metrodroid.transit.CardInfo;
+import au.id.micolous.metrodroid.transit.Subscription;
 import au.id.micolous.metrodroid.transit.TransitCurrency;
 import au.id.micolous.metrodroid.transit.TransitData;
 import au.id.micolous.metrodroid.transit.TransitIdentity;
 import au.id.micolous.metrodroid.ui.HeaderListItem;
 import au.id.micolous.metrodroid.ui.ListItem;
-import au.id.micolous.metrodroid.util.TripObfuscator;
 import au.id.micolous.metrodroid.util.Utils;
 
 import net.kazzz.felica.lib.FeliCaLib;
@@ -137,18 +137,17 @@ public class OctopusTransitData extends TransitData {
 
     @Override
     @Nullable
-    public TransitCurrency getBalance() {
+    public ArrayList<TransitBalance> getBalances() {
+        ArrayList<TransitBalance> bals = new ArrayList<>();
         if (mHasOctopus) {
             // Octopus balance takes priority 1
-            return new TransitCurrency(mOctopusBalance, "HKD");
-        } else if (mHasShenzhen) {
-            // Shenzhen Tong balance takes priority 2
-            return new TransitCurrency(mShenzhenBalance, "CNY");
-        } else {
-            // Unhandled.
-            Log.d(TAG, "Unhandled balance, could not find Octopus or SZT");
-            return null;
+            bals.add(new TransitBalanceStored(new TransitCurrency(mOctopusBalance, "HKD")));
         }
+        if (mHasShenzhen) {
+            // Shenzhen Tong balance takes priority 2
+            bals.add(new TransitBalanceStored(new TransitCurrency(mShenzhenBalance, "CNY")));
+        }
+        return bals;
     }
 
     @Override
@@ -176,21 +175,5 @@ public class OctopusTransitData extends TransitData {
         } else {
             return OCTOPUS_NAME;
         }
-    }
-
-    @Override
-    public List<ListItem> getInfo() {
-        ArrayList<ListItem> items = new ArrayList<>();
-
-        if (mHasOctopus && mHasShenzhen) {
-            // Dual-mode card, show the CNY balance here.
-            items.add(new HeaderListItem(R.string.alternate_purse_balances));
-            items.add(new ListItem(R.string.octopus_szt,
-                    (new TransitCurrency(mShenzhenBalance, "CNY"))
-                            .maybeObfuscate().formatCurrencyString(true)));
-
-            return items;
-        }
-        return null;
     }
 }

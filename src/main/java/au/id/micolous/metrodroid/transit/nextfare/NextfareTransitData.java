@@ -35,6 +35,8 @@ import au.id.micolous.metrodroid.card.UnauthorizedException;
 import au.id.micolous.metrodroid.card.classic.ClassicBlock;
 import au.id.micolous.metrodroid.card.classic.ClassicCard;
 import au.id.micolous.metrodroid.card.classic.ClassicSector;
+import au.id.micolous.metrodroid.transit.TransitBalance;
+import au.id.micolous.metrodroid.transit.TransitBalanceStored;
 import au.id.micolous.metrodroid.transit.Subscription;
 import au.id.micolous.metrodroid.transit.TransitCurrency;
 import au.id.micolous.metrodroid.transit.TransitData;
@@ -401,6 +403,16 @@ public class NextfareTransitData extends TransitData {
     }
 
     @Override
+    public List<TransitBalance> getBalances() {
+        if (mConfig != null) {
+            String name = Utils.localizeString(R.string.nextfare_ticket_class, mConfig.getTicketType());
+
+            return Arrays.asList(new TransitBalanceStored(new TransitCurrency(mBalance, mCurrency), name, mConfig.getExpiry()));
+        } else
+            return Arrays.asList(new TransitBalanceStored(new TransitCurrency(mBalance, mCurrency)));
+    }
+
+    @Override
     public Subscription[] getSubscriptions() {
         return mSubscriptions;
     }
@@ -429,12 +441,6 @@ public class NextfareTransitData extends TransitData {
 
         items.add(new HeaderListItem(R.string.nextfare));
         items.add(new ListItem(R.string.nextfare_system_code, Utils.getHexString(mSystemCode)));
-        if (mConfig != null) {
-            items.add(new ListItem(R.string.nextfare_ticket_class, Integer.valueOf(mConfig.getTicketType()).toString()));
-
-            Calendar expiry = TripObfuscator.maybeObfuscateTS(mConfig.getExpiry());
-            items.add(new ListItem(R.string.card_expiry_date, Utils.longDateFormat(expiry)));
-        }
 
         return items;
     }
