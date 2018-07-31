@@ -22,6 +22,7 @@ import android.os.Parcel;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
+import au.id.micolous.metrodroid.transit.TransitCurrency;
 import au.id.micolous.metrodroid.transit.Trip;
 import au.id.micolous.metrodroid.transit.nextfare.record.NextfareTopupRecord;
 import au.id.micolous.metrodroid.util.Utils;
@@ -54,6 +55,7 @@ public class NextfareTrip extends Trip implements Comparable<NextfareTrip> {
     protected int mEndStation;
     protected boolean mContinuation;
     protected int mCost;
+    private String mCurrency;
 
     public NextfareTrip(Parcel parcel) {
         mJourneyId = parcel.readInt();
@@ -64,6 +66,7 @@ public class NextfareTrip extends Trip implements Comparable<NextfareTrip> {
         mStartStation = parcel.readInt();
         mEndStation = parcel.readInt();
         mModeInt = parcel.readInt();
+        mCurrency = parcel.readString();
     }
 
     public NextfareTrip() {
@@ -71,7 +74,7 @@ public class NextfareTrip extends Trip implements Comparable<NextfareTrip> {
         mEndStation = -1;
     }
 
-    public NextfareTrip(NextfareTopupRecord rec) {
+    public NextfareTrip(NextfareTopupRecord rec, String currency) {
         mStartTime = rec.getTimestamp();
         mEndTime = null;
         mMode = Mode.TICKET_MACHINE;
@@ -79,6 +82,7 @@ public class NextfareTrip extends Trip implements Comparable<NextfareTrip> {
         mEndStation = -1;
         mModeInt = 0;
         mCost = rec.getCredit() * -1;
+        mCurrency = currency;
     }
 
     @Override
@@ -115,8 +119,8 @@ public class NextfareTrip extends Trip implements Comparable<NextfareTrip> {
 
     @Nullable
     @Override
-    public Integer getFare() {
-        return mCost;
+    public TransitCurrency getFare() {
+        return new TransitCurrency(mCost, mCurrency);
     }
 
     @Override
@@ -144,6 +148,7 @@ public class NextfareTrip extends Trip implements Comparable<NextfareTrip> {
         parcel.writeInt(mStartStation);
         parcel.writeInt(mEndStation);
         parcel.writeInt(mModeInt);
+        parcel.writeString(mCurrency);
     }
 
     @Override

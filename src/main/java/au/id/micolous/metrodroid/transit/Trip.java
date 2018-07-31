@@ -313,7 +313,7 @@ public abstract class Trip implements Parcelable {
      * @return The cost of the fare formatted in the local currency of the card.
      */
     @Nullable
-    public abstract Integer getFare();
+    public abstract TransitCurrency getFare();
 
     public abstract Mode getMode();
 

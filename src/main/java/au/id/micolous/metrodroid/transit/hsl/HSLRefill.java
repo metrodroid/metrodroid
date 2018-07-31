@@ -24,6 +24,7 @@ import au.id.micolous.metrodroid.transit.Refill;
 
 import au.id.micolous.farebot.R;
 import au.id.micolous.metrodroid.MetrodroidApplication;
+import au.id.micolous.metrodroid.transit.TransitCurrency;
 import au.id.micolous.metrodroid.util.Utils;
 
 public class HSLRefill extends Refill {
@@ -63,7 +64,7 @@ public class HSLRefill extends Refill {
     }
 
     @Override
-    public int getAmount() {
-        return mRefillAmount;
+    public TransitCurrency getAmount() {
+        return TransitCurrency.EUR(mRefillAmount);
     }
 }

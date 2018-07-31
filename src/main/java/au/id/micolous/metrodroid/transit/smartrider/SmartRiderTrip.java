@@ -6,6 +6,7 @@ import android.support.annotation.Nullable;
 import java.util.Calendar;
 import java.util.TimeZone;
 
+import au.id.micolous.metrodroid.transit.TransitCurrency;
 import au.id.micolous.metrodroid.transit.Trip;
 import au.id.micolous.metrodroid.util.Utils;
 
@@ -72,8 +73,8 @@ public class SmartRiderTrip extends Trip {
 
     @Nullable
     @Override
-    public Integer getFare() {
-        return mCost;
+    public TransitCurrency getFare() {
+        return TransitCurrency.AUD(mCost);
     }
 
     @Override

@@ -26,6 +26,7 @@ import java.util.Calendar;
 
 import au.id.micolous.metrodroid.transit.Station;
 import au.id.micolous.metrodroid.transit.Trip;
+import au.id.micolous.metrodroid.transit.TransitCurrency;
 
 public class MergedOrcaTrip extends Trip {
     public static final Creator<MergedOrcaTrip> CREATOR = new Creator<MergedOrcaTrip>() {
@@ -75,7 +76,7 @@ public class MergedOrcaTrip extends Trip {
 
     @Override
     @Nullable
-    public Integer getFare() {
+    public TransitCurrency getFare() {
         if (mEndTrip.mTransType == OrcaTransitData.TRANS_TYPE_CANCEL_TRIP) {
             // No fare applies to the trip, as the tap-on was reversed.
             return null;

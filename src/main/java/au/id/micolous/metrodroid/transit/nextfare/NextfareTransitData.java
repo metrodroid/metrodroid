@@ -20,7 +20,6 @@ package au.id.micolous.metrodroid.transit.nextfare;
 
 import android.os.Parcel;
 import android.support.annotation.Nullable;
-import android.text.Spanned;
 import android.util.Log;
 
 import java.math.BigInteger;
@@ -37,6 +36,7 @@ import au.id.micolous.metrodroid.card.classic.ClassicBlock;
 import au.id.micolous.metrodroid.card.classic.ClassicCard;
 import au.id.micolous.metrodroid.card.classic.ClassicSector;
 import au.id.micolous.metrodroid.transit.Subscription;
+import au.id.micolous.metrodroid.transit.TransitCurrency;
 import au.id.micolous.metrodroid.transit.TransitData;
 import au.id.micolous.metrodroid.transit.TransitIdentity;
 import au.id.micolous.metrodroid.transit.Trip;
@@ -62,7 +62,7 @@ public class NextfareTransitData extends TransitData {
     public static final String NAME = "Nextfare";
     public static final Creator<NextfareTransitData> CREATOR = new Creator<NextfareTransitData>() {
         public NextfareTransitData createFromParcel(Parcel parcel) {
-            return new NextfareTransitData(parcel);
+            return new NextfareTransitData(parcel, "USD");
         }
 
         public NextfareTransitData[] newArray(int size) {
@@ -81,8 +81,9 @@ public class NextfareTransitData extends TransitData {
     int mBalance;
     NextfareTrip[] mTrips;
     NextfareSubscription[] mSubscriptions;
+    String mCurrency;
 
-    public NextfareTransitData(Parcel parcel) {
+    public NextfareTransitData(Parcel parcel, String currency) {
         mSerialNumber = new BigInteger(parcel.readString());
         mBalance = parcel.readInt();
         mTrips = new NextfareTrip[parcel.readInt()];
@@ -95,6 +96,12 @@ public class NextfareTransitData extends TransitData {
     }
 
     public NextfareTransitData(ClassicCard card) {
+        this(card, "USD");
+    }
+
+    public NextfareTransitData(ClassicCard card, String currency) {
+        mCurrency = currency;
+
         byte[] serialData = card.getSector(0).getBlock(0).getData();
         serialData = Utils.reverseBuffer(serialData, 0, 4);
         mSerialNumber = Utils.byteArrayToBigInteger(serialData, 0, 4);
@@ -328,7 +335,7 @@ public class NextfareTransitData extends TransitData {
      * @return Subclass of NextfareTrip
      */
     protected NextfareTrip newRefill(NextfareTopupRecord record) {
-        return new NextfareTrip(record);
+        return new NextfareTrip(record, mCurrency);
     }
 
     /**
@@ -379,12 +386,8 @@ public class NextfareTransitData extends TransitData {
 
     @Nullable
     @Override
-    public Integer getBalance() {
-        return mBalance;
-    }
-
-    public Spanned formatCurrencyString(int currency, boolean isBalance) {
-        return Utils.formatCurrencyString(currency, isBalance, "USD");
+    public TransitCurrency getBalance() {
+        return new TransitCurrency(mBalance, mCurrency);
     }
 
     @Override

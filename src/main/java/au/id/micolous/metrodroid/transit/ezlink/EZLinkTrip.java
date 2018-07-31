@@ -28,6 +28,7 @@ import android.support.annotation.Nullable;
 import au.id.micolous.metrodroid.card.cepas.CEPASTransaction;
 import au.id.micolous.metrodroid.transit.CompatTrip;
 import au.id.micolous.metrodroid.transit.Station;
+import au.id.micolous.metrodroid.transit.TransitCurrency;
 
 public class EZLinkTrip extends CompatTrip {
     public static final Creator<EZLinkTrip> CREATOR = new Creator<EZLinkTrip>() {
@@ -127,8 +128,8 @@ public class EZLinkTrip extends CompatTrip {
 
     @Nullable
     @Override
-    public Integer getFare() {
-        return mTransaction.getAmount();
+    public TransitCurrency getFare() {
+        return new TransitCurrency(mTransaction.getAmount(), "SGD");
     }
 
     @Override

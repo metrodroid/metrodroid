@@ -46,7 +46,7 @@ public class SeqGoRefill extends NextfareTrip {
     private boolean mAutomatic;
 
     public SeqGoRefill(NextfareTopupRecord topup) {
-        super(topup);
+        super(topup, "USD");
         mAutomatic = topup.getAutomatic();
     }
 

@@ -25,6 +25,7 @@ import android.support.annotation.Nullable;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 
+import au.id.micolous.metrodroid.transit.TransitCurrency;
 import au.id.micolous.metrodroid.transit.Trip;
 import au.id.micolous.metrodroid.transit.erg.record.ErgPurseRecord;
 
@@ -76,13 +77,13 @@ public class ErgTrip extends Trip {
 
     @Nullable
     @Override
-    public Integer getFare() {
+    public TransitCurrency getFare() {
         int o = mPurse.getTransactionValue();
         if (mPurse.getIsCredit()) {
             o *= -1;
         }
 
-        return o;
+        return TransitCurrency.AUD(o);
     }
 
     @Override

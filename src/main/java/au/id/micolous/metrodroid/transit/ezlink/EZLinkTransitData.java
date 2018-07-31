@@ -29,6 +29,7 @@ import android.text.Spanned;
 import au.id.micolous.metrodroid.card.Card;
 import au.id.micolous.metrodroid.card.cepas.CEPASCard;
 import au.id.micolous.metrodroid.card.cepas.CEPASTransaction;
+import au.id.micolous.metrodroid.transit.TransitCurrency;
 import au.id.micolous.metrodroid.transit.TransitData;
 import au.id.micolous.metrodroid.transit.TransitIdentity;
 import au.id.micolous.metrodroid.transit.Trip;
@@ -503,15 +504,11 @@ public class EZLinkTransitData extends TransitData {
 
     @Override
     @Nullable
-    public Integer getBalance() {
+    public TransitCurrency getBalance() {
         // This is stored in cents of SGD
-        return (int) mBalance;
+        return new TransitCurrency((int) mBalance, "SGD");
     }
 
-    @Override
-    public Spanned formatCurrencyString(int currency, boolean isBalance) {
-        return Utils.formatCurrencyString(currency, isBalance, "SGD");
-    }
 
     @Override
     public String getSerialNumber() {

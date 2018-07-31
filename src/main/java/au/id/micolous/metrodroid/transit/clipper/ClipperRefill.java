@@ -28,6 +28,7 @@ import java.lang.Comparable;
 import java.util.Calendar;
 
 import au.id.micolous.farebot.R;
+import au.id.micolous.metrodroid.transit.TransitCurrency;
 import au.id.micolous.metrodroid.transit.Trip;
 import au.id.micolous.metrodroid.util.Utils;
 
@@ -91,8 +92,8 @@ public class ClipperRefill extends Trip implements Comparable {
 
     @Nullable
     @Override
-    public Integer getFare() {
-        return -mAmount;
+    public TransitCurrency getFare() {
+        return TransitCurrency.USD(-mAmount);
     }
 
     @Override

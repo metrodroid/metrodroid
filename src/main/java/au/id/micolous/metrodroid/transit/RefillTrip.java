@@ -56,8 +56,8 @@ public class RefillTrip extends CompatTrip {
 
     @Nullable
     @Override
-    public Integer getFare() {
-        return -mRefill.getAmount();
+    public TransitCurrency getFare() {
+        return mRefill.getAmount().negate();
     }
 
     @Override

@@ -69,7 +69,7 @@ public class LaxTapTransitData extends NextfareTransitData {
     private static final String TAG = "LaxTapTransitData";
 
     public LaxTapTransitData(Parcel parcel) {
-        super(parcel);
+        super(parcel, "USD");
         //mTicketType = (SeqGoTicketType)parcel.readSerializable();
     }
 

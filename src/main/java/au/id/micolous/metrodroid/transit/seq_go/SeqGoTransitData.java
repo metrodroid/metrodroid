@@ -78,12 +78,12 @@ public class SeqGoTransitData extends NextfareTransitData {
     private SeqGoTicketType mTicketType;
 
     public SeqGoTransitData(Parcel parcel) {
-        super(parcel);
+        super(parcel, "AUD");
         mTicketType = (SeqGoTicketType) parcel.readSerializable();
     }
 
     public SeqGoTransitData(ClassicCard card) {
-        super(card);
+        super(card, "AUD");
         if (mConfig != null) {
             mTicketType = SeqGoData.TICKET_TYPE_MAP.get(mConfig.getTicketType(), SeqGoTicketType.UNKNOWN);
         }
@@ -168,11 +168,6 @@ public class SeqGoTransitData extends NextfareTransitData {
 
         items.addAll(super.getInfo());
         return items;
-    }
-
-    @Override
-    public Spanned formatCurrencyString(int currency, boolean isBalance) {
-        return Utils.formatCurrencyString(currency, isBalance, "AUD");
     }
 
     @Override

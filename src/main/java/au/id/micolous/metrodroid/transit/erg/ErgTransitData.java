@@ -26,6 +26,7 @@ import au.id.micolous.metrodroid.card.UnauthorizedException;
 import au.id.micolous.metrodroid.card.classic.ClassicBlock;
 import au.id.micolous.metrodroid.card.classic.ClassicCard;
 import au.id.micolous.metrodroid.card.classic.ClassicSector;
+import au.id.micolous.metrodroid.transit.TransitCurrency;
 import au.id.micolous.metrodroid.transit.TransitData;
 import au.id.micolous.metrodroid.transit.TransitIdentity;
 import au.id.micolous.metrodroid.transit.Trip;
@@ -68,7 +69,7 @@ public class ErgTransitData extends TransitData {
     public static final Creator<ErgTransitData> CREATOR = new Creator<ErgTransitData>() {
         @Override
         public ErgTransitData createFromParcel(Parcel in) {
-            return new ErgTransitData(in);
+            return new ErgTransitData(in, "AUD");
         }
 
         @Override
@@ -76,18 +77,26 @@ public class ErgTransitData extends TransitData {
             return new ErgTransitData[size];
         }
     };
+    private String mCurrency;
 
     @SuppressWarnings("UnusedDeclaration")
-    public ErgTransitData(Parcel parcel) {
+    public ErgTransitData(Parcel parcel, String currency) {
         mSerialNumber = parcel.readString();
         mEpochDate = new GregorianCalendar();
         mEpochDate.setTimeInMillis(parcel.readLong());
         mTrips = parcel.createTypedArray(ManlyFastFerryTrip.CREATOR);
+        mCurrency = currency;
+    }
+
+    public ErgTransitData(ClassicCard card) {
+        this(card, "AUD");
     }
 
     // Decoder
-    public ErgTransitData(ClassicCard card) {
+    public ErgTransitData(ClassicCard card, String currency) {
         ArrayList<ErgRecord> records = new ArrayList<>();
+
+        mCurrency = currency;
 
         // Iterate through blocks on the card and deserialize all the binary data.
         for (ClassicSector sector : card.getSectors()) {
@@ -201,15 +210,8 @@ public class ErgTransitData extends TransitData {
 
     @Override
     @Nullable
-    public Integer getBalance() {
-        return mBalance;
-    }
-
-    @Override
-    public Spanned formatCurrencyString(int currency, boolean isBalance) {
-        // This defaults to AUD (because ERG was an Australian company). Cards with other currencies
-        // should override this appropriately.
-        return Utils.formatCurrencyString(currency, isBalance, "AUD");
+    public TransitCurrency getBalance() {
+        return new TransitCurrency(mBalance, mCurrency);
     }
 
     // Structures

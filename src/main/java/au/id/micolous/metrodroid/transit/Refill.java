@@ -37,7 +37,7 @@ public abstract class Refill implements Parcelable {
 
     public abstract String getShortAgencyName();
 
-    public abstract int getAmount();
+    public abstract TransitCurrency getAmount();
 
     public final int describeContents() {
         return 0;

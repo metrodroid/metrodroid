@@ -40,6 +40,7 @@ import java.util.Random;
 
 import au.id.micolous.farebot.R;
 import au.id.micolous.metrodroid.MetrodroidApplication;
+import au.id.micolous.metrodroid.transit.TransitCurrency;
 
 public class CardBalanceFragment extends Fragment {
     private Card mCard;
@@ -57,17 +58,14 @@ public class CardBalanceFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_card_balance, container, false);
 
-        Integer balance = mTransitData.getBalance();
+        TransitCurrency balance = mTransitData.getBalance();
         if (balance != null) {
             if (MetrodroidApplication.obfuscateBalance()) {
                 int offset = mRNG.nextInt(100) - 50;
                 double multiplier = (mRNG.nextDouble() * 0.4) + 0.8;
-
-                // Apply offset and multiplier, but always return a positive
-                // balance.
-                balance = Math.abs((int) ((balance + offset) * multiplier));
+                balance.obfuscate(offset, multiplier);
             }
-            Spanned balanceStr = mTransitData.formatCurrencyString(balance, true);
+            Spanned balanceStr = balance.formatCurrencyString(true);
             ((TextView) view.findViewById(R.id.balance)).setText(balanceStr);
         }
         return view;

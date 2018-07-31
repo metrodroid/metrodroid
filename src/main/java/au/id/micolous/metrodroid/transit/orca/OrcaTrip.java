@@ -31,6 +31,7 @@ import android.support.annotation.Nullable;
 import au.id.micolous.metrodroid.card.desfire.files.DesfireRecord;
 import au.id.micolous.metrodroid.transit.Station;
 import au.id.micolous.metrodroid.transit.Trip;
+import au.id.micolous.metrodroid.transit.TransitCurrency;
 import au.id.micolous.metrodroid.util.ImmutableMapBuilder;
 
 import java.util.Calendar;
@@ -189,8 +190,8 @@ public class OrcaTrip extends Trip {
 
     @Override
     @Nullable
-    public Integer getFare() {
-        return mFare;
+    public TransitCurrency getFare() {
+        return TransitCurrency.USD(mFare);
     }
 
     @Override

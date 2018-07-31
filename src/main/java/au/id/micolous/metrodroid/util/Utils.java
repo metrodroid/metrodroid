@@ -654,56 +654,6 @@ public class Utils {
         boolean matches(T t);
     }
 
-    public static Spanned formatCurrencyString(int currency, boolean isBalance, String currencyCode) {
-        return formatCurrencyString(currency, isBalance, currencyCode, 100.);
-    }
-
-    /**
-     * Simple currency formatter, used for TransitData.formatCurrencyString.
-     *
-     * This handles Android-specific issues:
-     *
-     * - Some currency formatters return too many or too few fractional amounts. (issue #34)
-     * - Markup with TtsSpan.MoneyBuilder, for accessibility tools.
-     *
-     * @param currency     Input currency value to use
-     * @param isBalance    True if the value being passed is a balance (ie: don't format credits in a
-     *                     special way)
-     * @param currencyCode 3 character currency code (eg: AUD)
-     * @param divisor      value to divide by to get that currency. eg: if the value passed is in cents,
-     *                     then divide by 100 to get dollars. Currencies like yen should divide by 1.
-     * @return Formatted currency string
-     */
-    public static Spanned formatCurrencyString(int currency, boolean isBalance, String currencyCode, double divisor) {
-        Currency c = Currency.getInstance(currencyCode);
-        NumberFormat numberFormat = NumberFormat.getCurrencyInstance();
-        numberFormat.setCurrency(Currency.getInstance(currencyCode));
-
-        // https://github.com/micolous/metrodroid/issues/34
-        // Java's NumberFormat returns too many, or too few fractional amounts
-        // in currencies, depending on the system locale.
-        // In Japanese, AUD is formatted as "A$1" instead of "A$1.23".
-        // In English, JPY is formatted as "¥123.00" instead of "¥123"
-        numberFormat.setMinimumFractionDigits(c.getDefaultFractionDigits());
-
-        SpannableString s;
-
-        if (!isBalance && currency < 0) {
-            s = new SpannableString("+ " + numberFormat.format(Math.abs(((double) currency) / divisor)));
-
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                s.setSpan(new TtsSpan.MoneyBuilder().setQuantity(Integer.toString(Math.abs(currency))).setCurrency(currencyCode).build(), 2, s.length(), 0);
-            }
-        } else {
-            s = new SpannableString(numberFormat.format(((double) currency) / divisor));
-
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                s.setSpan(new TtsSpan.MoneyBuilder().setQuantity(Integer.toString(currency)).setCurrency(currencyCode).build(), 0, s.length(), 0);
-            }
-        }
-        return s;
-    }
-
     /**
      * Creates a drawable with alpha channel from two component resources. This is useful for JPEG
      * images, to give them an alpha channel.

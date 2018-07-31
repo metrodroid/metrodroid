@@ -31,6 +31,7 @@ import au.id.micolous.metrodroid.card.desfire.DesfireCard;
 import au.id.micolous.metrodroid.card.desfire.files.DesfireFile;
 import au.id.micolous.metrodroid.card.desfire.files.RecordDesfireFile;
 import au.id.micolous.metrodroid.transit.Refill;
+import au.id.micolous.metrodroid.transit.TransitCurrency;
 import au.id.micolous.metrodroid.transit.TransitData;
 import au.id.micolous.metrodroid.transit.TransitIdentity;
 import au.id.micolous.metrodroid.transit.Trip;
@@ -397,22 +398,17 @@ public class HSLTransitData extends TransitData {
 
     @Nullable
     @Override
-    public Integer getBalance() {
-        return mBalance;
+    public TransitCurrency getBalance() {
+        return new TransitCurrency(mBalance, "EUR");
     }
 
-    @Override
-    public Spanned formatCurrencyString(int currency, boolean isBalance) {
-        // Balance in Euro cents
-        return Utils.formatCurrencyString(currency, isBalance, "EUR");
-        // TODO: push these into Subscriptions
-        /*
+    // TODO: push these into Subscriptions
+    /*
         if (mHasKausi)
             ret += "\n" + app.getString(R.string.hsl_pass_is_valid);
         if (mArvoExpire * 1000.0 > System.currentTimeMillis())
             ret += "\n" + app.getString(R.string.hsl_value_ticket_is_valid) + "!";
-        */
-    }
+    */
 
     @Override
     public String getSerialNumber() {
