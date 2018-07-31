@@ -30,5 +30,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:id="@+id/gallery"
+        android:dividerHeight="0dp"
+        android:divider="@null"
         android:clickable="false" />
 </LinearLayout>

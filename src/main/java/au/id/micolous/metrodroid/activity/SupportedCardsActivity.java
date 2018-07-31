@@ -80,10 +80,10 @@ public class SupportedCardsActivity extends Activity {
             }
 
             CardInfo info = getItem(position);
-            Spanned text = Html.fromHtml(String.format("<b>%s</b><br>%s", info.getName(),
-                    getString(info.getLocationId())));
+            ((TextView) convertView.findViewById(R.id.card_name)).setText(info.getName());
+            ((TextView) convertView.findViewById(R.id.card_location)).setText(getString(info.getLocationId()));
 
-            ImageView image = convertView.findViewById(R.id.image);
+            ImageView image = convertView.findViewById(R.id.card_image);
             if (info.hasBitmap()) {
                 image.setImageBitmap(info.getBitmap(getResources()));
                 image.invalidate();
@@ -91,8 +91,6 @@ public class SupportedCardsActivity extends Activity {
             } else {
                 image.setImageResource(info.getImageId());
             }
-
-            ((TextView) convertView.findViewById(R.id.text)).setText(text);
 
             String notes = "";
 
@@ -104,16 +102,21 @@ public class SupportedCardsActivity extends Activity {
                 if (info.getCardType() == CardType.MifareClassic && !app.getMifareClassicSupport()) {
                     // MIFARE Classic is not supported by this device.
                     notes += Utils.localizeString(R.string.card_not_supported_on_device) + " ";
-                }
+                    convertView.findViewById(R.id.card_not_supported).setVisibility(View.VISIBLE);
+                } else
+                    convertView.findViewById(R.id.card_not_supported).setVisibility(View.GONE);
             } else {
                 // This device does not support NFC, so all cards are not supported.
                 notes += Utils.localizeString(R.string.card_not_supported_on_device) + " ";
+                convertView.findViewById(R.id.card_not_supported).setVisibility(View.VISIBLE);
             }
 
             // Keys being required is secondary to the card not being supported.
             if (info.getKeysRequired()) {
                 notes += Utils.localizeString(R.string.keys_required) + " ";
-            }
+                convertView.findViewById(R.id.card_locked).setVisibility(View.VISIBLE);
+            } else
+                convertView.findViewById(R.id.card_locked).setVisibility(View.GONE);
 
             if (info.getPreview()) {
                 notes += Utils.localizeString(R.string.card_preview_reader) + " ";
@@ -123,8 +126,12 @@ public class SupportedCardsActivity extends Activity {
                 notes += Utils.localizeString(info.getResourceExtraNote()) + " ";
             }
 
-            ((TextView) convertView.findViewById(R.id.note)).setText(notes);
-
+            TextView note = (TextView) convertView.findViewById(R.id.card_note);
+            note.setText(notes);
+            if (notes.equals(""))
+                note.setVisibility(View.GONE);
+            else
+                note.setVisibility(View.VISIBLE);
 
             return convertView;
         }
