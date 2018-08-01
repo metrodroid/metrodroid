@@ -25,16 +25,20 @@
 package au.id.micolous.metrodroid.transit.orca;
 
 import android.os.Parcel;
+import android.os.Parcelable;
 import android.support.annotation.Nullable;
 
 import au.id.micolous.metrodroid.card.desfire.files.DesfireRecord;
-import au.id.micolous.metrodroid.transit.CompatTrip;
 import au.id.micolous.metrodroid.transit.Station;
+import au.id.micolous.metrodroid.transit.Trip;
 import au.id.micolous.metrodroid.util.ImmutableMapBuilder;
 
+import java.util.Calendar;
+import java.util.GregorianCalendar;
 import java.util.Map;
+import java.util.TimeZone;
 
-public class OrcaTrip extends CompatTrip {
+public class OrcaTrip extends Trip {
     public static final Creator<OrcaTrip> CREATOR = new Creator<OrcaTrip>() {
         public OrcaTrip createFromParcel(Parcel parcel) {
             return new OrcaTrip(parcel);
@@ -44,6 +48,7 @@ public class OrcaTrip extends CompatTrip {
             return new OrcaTrip[size];
         }
     };
+    private static final TimeZone TZ = TimeZone.getTimeZone("America/Los_Angeles");
     private static Station[] sLinkStations = new Station[]{
             new Station("Westlake Station", "Westlake", "47.6113968", "-122.337502"),
             new Station("University Station", "University", "47.6072502", "-122.335754"),
@@ -114,8 +119,12 @@ public class OrcaTrip extends CompatTrip {
     }
 
     @Override
-    public long getTimestamp() {
-        return mTimestamp;
+    public Calendar getStartTimestamp() {
+        if (mTimestamp == 0)
+            return null;
+        Calendar g = new GregorianCalendar(TZ);
+        g.setTimeInMillis(mTimestamp * 1000);
+        return g;
     }
 
     @Override
