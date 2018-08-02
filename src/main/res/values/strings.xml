@@ -98,9 +98,9 @@
     <string name="block_title_format">Block: %s</string>
     <string name="page_title_format">Page: 0x%s</string>
     <string name="application_title_format">Application: 0x%s</string>
-    <string name="file_title_format">File: 0x%s</string>
-    <string name="unauthorized_file_title_format">File: 0x%s (unauthorized)</string>
-    <string name="invalid_file_title_format">File: 0x%1$s (invalid: %2$s)</string>
+    <string name="file_title_format">File: %s</string>
+    <string name="unauthorized_file_title_format">File: %s (unauthorized)</string>
+    <string name="invalid_file_title_format">File: %1$s (invalid: %2$s)</string>
     <string name="unauthorized_page_title_format">Page: 0x%s (unauthorized)</string>
     <string name="sector_title_format">Sector: 0x%s</string>
     <string name="unauthorized_sector_title_format">Sector: 0x%s (unauthorized)</string>

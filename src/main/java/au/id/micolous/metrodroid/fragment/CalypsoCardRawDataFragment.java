@@ -132,9 +132,11 @@ public class CalypsoCardRawDataFragment extends ExpandableListFragment {
 
             CalypsoFile file = (CalypsoFile) getGroup(groupPosition);
 
+            String fileTitle;
+            fileTitle = mActivity.getString(R.string.file_title_format, file.getSelector().formatString());
             TextView textView1 = view.findViewById(android.R.id.text1);
             if (file.getFolder() == 0) {
-                textView1.setText(mActivity.getString(R.string.file_title_format, Integer.toHexString(file.getFile())));
+                textView1.setText(mActivity.getString(R.string.file_title_format, "0x" + Integer.toHexString(file.getFile())));
             } else {
                 textView1.setText(mActivity.getString(R.string.file_folder_title_format, Integer.toHexString(file.getFolder()), Integer.toHexString(file.getFile())));
             }
