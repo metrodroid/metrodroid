@@ -87,8 +87,7 @@ public class CEPASTransaction implements Parcelable {
         mDate = 0;
 
         byte[] userData = new byte[9];
-        for (int i = 0; i < 8; i++)
-            userData[i] = rawData[i + 8];
+        System.arraycopy(rawData, 8, userData, 0, 8);
         userData[8] = '\0';
         mUserData = new String(userData);
     }

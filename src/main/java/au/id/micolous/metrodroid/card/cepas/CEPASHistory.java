@@ -51,8 +51,7 @@ public class CEPASHistory {
             CEPASTransaction[] transactions = new CEPASTransaction[purseCount];
             for (int i = 0; i < purseData.length; i += recordSize) {
                 byte[] tempData = new byte[recordSize];
-                for (int j = 0; j < tempData.length; j++)
-                    tempData[j] = purseData[i + j];
+                System.arraycopy(purseData, i + 0, tempData, 0, tempData.length);
                 transactions[i / tempData.length] = new CEPASTransaction(tempData);
             }
             mTransactions = Utils.arrayAsList(transactions);

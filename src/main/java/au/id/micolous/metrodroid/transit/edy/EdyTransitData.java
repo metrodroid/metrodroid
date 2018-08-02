@@ -81,9 +81,7 @@ public class EdyTransitData extends TransitData {
         List<FelicaBlock> blocksID = serviceID.getBlocks();
         FelicaBlock blockID = blocksID.get(0);
         byte[] dataID = blockID.getData();
-        for (int i = 2; i < 10; i++) {
-            mSerialNumber[i - 2] = dataID[i];
-        }
+        System.arraycopy(dataID, 2, mSerialNumber, 0, 8);
 
         // current balance info in block 0, bytes 0-3, little-endian ordering
         FelicaService serviceBalance = card.getSystem(FeliCaLib.SYSTEMCODE_EDY).getService(FELICA_SERVICE_EDY_BALANCE);
