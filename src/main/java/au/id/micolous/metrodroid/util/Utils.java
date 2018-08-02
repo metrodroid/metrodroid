@@ -155,11 +155,11 @@ public class Utils {
     }
 
     public static String getHexString(byte[] b, int offset, int length) {
-        String result = "";
+        StringBuilder result = new StringBuilder();
         for (int i = offset; i < offset + length; i++) {
-            result += Integer.toString((b[i] & 0xff) + 0x100, 16).substring(1);
+            result.append(Integer.toString((b[i] & 0xff) + 0x100, 16).substring(1));
         }
-        return result;
+        return result.toString();
     }
 
     public static String getHexString(byte[] b, String defaultResult) {

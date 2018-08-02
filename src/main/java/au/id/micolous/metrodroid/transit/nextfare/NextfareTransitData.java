@@ -287,13 +287,14 @@ public class NextfareTransitData extends TransitData {
     }
 
     protected static String formatSerialNumber(BigInteger serialNumber) {
-        String serial = serialNumber.toString();
+        StringBuilder serial = new StringBuilder(serialNumber.toString());
         while (serial.length() < 12) {
-            serial = "0" + serial;
+            serial.insert(0, "0");
         }
 
-        serial = "016" + serial;
-        return serial + Utils.calculateLuhn(serial);
+        serial.insert(0, "016");
+        serial.append(Utils.calculateLuhn(serial.toString()));
+        return serial.toString();
     }
 
     @Override
