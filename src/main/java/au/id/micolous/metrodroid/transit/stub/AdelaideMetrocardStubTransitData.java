@@ -18,6 +18,8 @@
  */
 package au.id.micolous.metrodroid.transit.stub;
 
+import android.os.Parcel;
+
 import au.id.micolous.metrodroid.card.Card;
 import au.id.micolous.metrodroid.card.desfire.DesfireCard;
 import au.id.micolous.metrodroid.transit.TransitIdentity;
@@ -28,7 +30,20 @@ import au.id.micolous.metrodroid.transit.TransitIdentity;
  * https://github.com/micolous/metrodroid/wiki/Metrocard-%28Adelaide%29
  */
 public class AdelaideMetrocardStubTransitData extends StubTransitData {
+    public static final Creator<AdelaideMetrocardStubTransitData> CREATOR = new Creator<AdelaideMetrocardStubTransitData>() {
+        public AdelaideMetrocardStubTransitData createFromParcel(Parcel parcel) {
+            return new AdelaideMetrocardStubTransitData(parcel);
+        }
+
+        public AdelaideMetrocardStubTransitData[] newArray(int size) {
+            return new AdelaideMetrocardStubTransitData[size];
+        }
+    };
+
     public AdelaideMetrocardStubTransitData(Card card) {
+    }
+
+    public AdelaideMetrocardStubTransitData(Parcel parcel) {
     }
 
     public static boolean check(Card card) {

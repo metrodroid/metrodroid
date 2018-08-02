@@ -18,6 +18,8 @@
  */
 package au.id.micolous.metrodroid.transit.unknown;
 
+import android.os.Parcel;
+
 import au.id.micolous.farebot.R;
 import au.id.micolous.metrodroid.card.Card;
 import au.id.micolous.metrodroid.card.ultralight.UltralightCard;
@@ -30,6 +32,22 @@ import au.id.micolous.metrodroid.util.Utils;
  * Handle MIFARE Ultralight with no open pages
  */
 public class UnauthorizedUltralightTransitData extends UnauthorizedTransitData {
+    public static final Creator<UnauthorizedUltralightTransitData> CREATOR = new Creator<UnauthorizedUltralightTransitData>() {
+        public UnauthorizedUltralightTransitData createFromParcel(Parcel parcel) {
+            return new UnauthorizedUltralightTransitData(parcel);
+        }
+
+        public UnauthorizedUltralightTransitData[] newArray(int size) {
+            return new UnauthorizedUltralightTransitData[size];
+        }
+    };
+
+    public UnauthorizedUltralightTransitData(Parcel parcel) {
+    }
+
+    public UnauthorizedUltralightTransitData() {
+    }
+
     /**
      * This should be the last executed MIFARE Ultralight check, after all the other checks are done.
      * <p>
