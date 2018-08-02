@@ -70,7 +70,7 @@ public class OrcaTransitData extends TransitData {
         mBalance = parcel.readInt();
 
         parcel.readInt();
-        mTrips = (Trip[]) parcel.readParcelableArray(null);
+        mTrips = (Trip[]) parcel.readParcelableArray(OrcaTrip.class.getClassLoader());
     }
 
     public OrcaTransitData(Card card) {
