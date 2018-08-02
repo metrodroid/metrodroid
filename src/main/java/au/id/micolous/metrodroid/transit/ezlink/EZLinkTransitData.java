@@ -55,8 +55,6 @@ public class EZLinkTransitData extends TransitData {
         {
             add("CT18");
             add("CT8");
-            add("CT18");
-            add("CT8");
             add("1N");
             add("2");
             add("2N");
@@ -345,7 +343,6 @@ public class EZLinkTransitData extends TransitData {
             put("PGL", new MRTStation("Punggol", "NE17 / PTC", "PGL", "1.405264", "103.902097"));
 
             // Circle Line (CCL)
-            put("DBG", new MRTStation("Dhoby Ghaut", "CC1 / NS24 / NE6", "DBG", "1.299156", "103.845736"));
             put("DBN", new MRTStation("Dhoby Ghaut", "CC1 / NS24 / NE6", "DBN", "1.299156", "103.845736")); // Alternate name (Northeast line entrance)
             put("BBS", new MRTStation("Bras Basah", "CC2", "BBS", "1.296931", "103.850631"));
             put("EPN", new MRTStation("Esplanade", "CC3", "EPN", "1.293436", "103.855381"));
@@ -358,7 +355,6 @@ public class EZLinkTransitData extends TransitData {
             put("MPS", new MRTStation("MacPherson", "CC10 / DT?", "MPS", "1.32665", "103.890019"));
             put("TAS", new MRTStation("Tai Seng", "CC11", "TAS", "1.335833", "103.887942"));
             put("BLY", new MRTStation("Bartley", "CC12", "BLY", "1.342756", "103.879697"));
-            put("SER", new MRTStation("Serangoon", "CC13 / NE12", "SER", "1.349944", "103.873092"));
             put("SRC", new MRTStation("Serangoon", "CC13 / NE12", "SER", "1.349944", "103.873092"));
             put("LRC", new MRTStation("Lorong Chuan", "CC14", "LRC", "1.351636", "103.864064"));
             put("BSH", new MRTStation("Bishan", "CC15 / NS17", "BSH", "1.351236", "103.848456"));
@@ -389,11 +385,9 @@ public class EZLinkTransitData extends TransitData {
             put("PSR", new MRTStation("Pasir Ris", "EW1", "PSR", "1.372411", "103.949369"));
             put("TAM", new MRTStation("Tampines", "EW2 / DT32", "TAM", "1.352528", "103.945322"));
             put("SIM", new MRTStation("Simei", "EW3", "SIM", "1.343444", "103.953172"));
-            put("TNM", new MRTStation("Tanah Merah", "EW4", "TNM", "1.327358", "103.946344"));
             put("BDK", new MRTStation("Bedok", "EW5", "BDK", "1.324039", "103.930036"));
             put("KEM", new MRTStation("Kembangan", "EW6", "KEM", "1.320983", "103.912842"));
             put("EUN", new MRTStation("Eunos", "EW7", "EUN", "1.319725", "103.903108"));
-            put("PYL", new MRTStation("Paya Lebar", "EW8 / CC9", "PYL", "1.317767", "103.892381"));
             put("ALJ", new MRTStation("Aljunied", "EW9", "ALJ", "1.316442", "103.882981"));
             put("KAL", new MRTStation("Kallang", "EW10", "KAL", "1.311469", "103.8714"));
             put("LVR", new MRTStation("Lavender", "EW11", "LVR", "1.307167", "103.863008"));
@@ -401,7 +395,6 @@ public class EZLinkTransitData extends TransitData {
             put("CTH", new MRTStation("City Hall", "EW13 / NS25", "CTH", "1.293239", "103.852219"));
             put("RFP", new MRTStation("Raffles Place", "EW14 / NS26", "RFP", "1.283881", "103.851533"));
             put("TPG", new MRTStation("Tanjong Pagar", "EW15", "TPG", "1.276439", "103.845711"));
-            put("OTP", new MRTStation("Outram Park", "EW16 / NE3", "OTP", "1.280225", "103.839486"));
             put("OTN", new MRTStation("Outram Park", "EW16 / NE3", "OTN", "1.280225", "103.839486")); // Alternate name (Northeast line entrance)
             put("TIB", new MRTStation("Tiong Bahru", "EW17", "TIB", "1.286081", "103.826958"));
             put("RDH", new MRTStation("Redhill", "EW18", "RDH", "1.289733", "103.81675"));
@@ -418,7 +411,6 @@ public class EZLinkTransitData extends TransitData {
             put("JKN", new MRTStation("Joo Koon", "EW29", "JKN", "1.327739", "103.678486"));
 
             // North-South Line (NSL)
-            put("JUR", new MRTStation("Jurong East", "NS1 / EW24", "JUR", "1.333415", "103.742119"));
             put("BBT", new MRTStation("Bukit Batok", "NS2", "BBT", "1.349073", "103.749664"));
             put("BGB", new MRTStation("Bukit Gombak", "NS3", "BGB", "1.358702", "103.751787"));
             put("CCK", new MRTStation("Choa Chu Kang", "NS4 / BP1", "CCK", "1.385092", "103.744322"));
@@ -432,16 +424,12 @@ public class EZLinkTransitData extends TransitData {
             put("KTB", new MRTStation("Khatib", "NS14", "KTB", "1.417167", "103.8329"));
             put("YCK", new MRTStation("Yio Chu Kang", "NS15", "YCK", "1.381906", "103.844817"));
             put("AMK", new MRTStation("Ang Mo Kio", "NS16", "AMK", "1.370017", "103.84945"));
-            put("BSH", new MRTStation("Bishan", "NS17 / CC15", "BSH", "1.351236", "103.848456"));
             put("BDL", new MRTStation("Braddell", "NS18", "BDL", "1.340339", "103.846725"));
             put("TAP", new MRTStation("Toa Payoh", "NS19", "TAP", "1.332703", "103.847808"));
             put("NOV", new MRTStation("Novena", "NS20", "NOV", "1.320394", "103.843689"));
             put("NEW", new MRTStation("Newton", "NS21 / DT11", "NEW", "1.312956", "103.838442"));
             put("ORC", new MRTStation("Orchard", "NS22", "ORC", "1.304314", "103.831939"));
             put("SOM", new MRTStation("Somerset", "NS23", "SOM", "1.300514", "103.839028"));
-            put("DBG", new MRTStation("Dhoby Ghaut", "NS24 / NE6 / CC1", "DBG", "1.299156", "103.845736"));
-            put("CTH", new MRTStation("City Hall", "NS25 / EW13", "CTH", "1.293239", "103.852219"));
-            put("RFP", new MRTStation("Raffles Place", "NS26 / EW14", "RFP", "1.283881", "103.851533"));
             put("MRB", new MRTStation("Marina Bay", "NS27 / CE2", "MRB", "1.276097", "103.854675"));
         }
     };
