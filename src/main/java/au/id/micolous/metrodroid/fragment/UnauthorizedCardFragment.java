@@ -37,15 +37,6 @@ import au.id.micolous.metrodroid.MetrodroidApplication;
 
 
 public class UnauthorizedCardFragment extends Fragment {
-    private Card mCard;
-    private TransitData mTransitData;
-
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        Serializer serializer = MetrodroidApplication.getInstance().getSerializer();
-        mCard = Card.fromXml(serializer, getArguments().getString(AdvancedCardInfoActivity.EXTRA_CARD));
-        mTransitData = getArguments().getParcelable(CardInfoActivity.EXTRA_TRANSIT_DATA);
-    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {

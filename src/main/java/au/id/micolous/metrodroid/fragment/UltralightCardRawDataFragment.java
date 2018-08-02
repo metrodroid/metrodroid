@@ -42,13 +42,11 @@ import au.id.micolous.metrodroid.MetrodroidApplication;
  */
 public class UltralightCardRawDataFragment extends ExpandableListFragment {
 
-    private UltralightCard mCard;
-
     public void onCreate(Bundle bundle) {
         super.onCreate(bundle);
         Serializer serializer = MetrodroidApplication.getInstance().getSerializer();
-        mCard = (UltralightCard) Card.fromXml(serializer, getArguments().getString(AdvancedCardInfoActivity.EXTRA_CARD));
-        setListAdapter(new UltralightRawDataAdapter(getActivity(), mCard));
+        UltralightCard card = (UltralightCard) Card.fromXml(serializer, getArguments().getString(AdvancedCardInfoActivity.EXTRA_CARD));
+        setListAdapter(new UltralightRawDataAdapter(getActivity(), card));
     }
 
     private static class UltralightRawDataAdapter extends BaseExpandableListAdapter {
