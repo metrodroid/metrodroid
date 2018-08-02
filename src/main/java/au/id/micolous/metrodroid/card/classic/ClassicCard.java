@@ -37,6 +37,7 @@ import org.simpleframework.xml.Root;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.List;
@@ -109,7 +110,7 @@ public class ClassicCard extends Card {
 
     private ClassicCard(byte[] tagId, Calendar scannedAt, ClassicSector[] sectors, boolean partialRead) {
         super(CardType.MifareClassic, tagId, scannedAt, null, partialRead);
-        mSectors = Utils.arrayAsList(sectors);
+        mSectors = Arrays.asList(sectors);
     }
 
     public static ClassicCard dumpTag(byte[] tagId, Tag tag, TagReaderFeedbackInterface feedbackInterface) throws Exception {

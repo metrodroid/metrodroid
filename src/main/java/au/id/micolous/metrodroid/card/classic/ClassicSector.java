@@ -28,6 +28,7 @@ import org.simpleframework.xml.Attribute;
 import org.simpleframework.xml.ElementList;
 import org.simpleframework.xml.Root;
 
+import java.util.Arrays;
 import java.util.List;
 
 @Root(name = "sector")
@@ -49,7 +50,7 @@ public class ClassicSector {
             mBlocks = null;
             mKey = null;
         } else {
-            mBlocks = Utils.arrayAsList(blocks);
+            mBlocks = Arrays.asList(blocks);
             mKey = new Base64String(key);
         }
     }

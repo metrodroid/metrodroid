@@ -95,13 +95,6 @@ public class Utils {
     private Utils() {
     }
 
-    public static <T> List<T> arrayAsList(T... array) {
-        if (array == null) {
-            return new ArrayList<>();
-        }
-        return Arrays.asList(array);
-    }
-
     public static void checkNfcEnabled(final Activity activity, NfcAdapter adapter) {
         if (adapter != null && adapter.isEnabled()) {
             return;

@@ -40,6 +40,7 @@ import org.simpleframework.xml.Root;
 
 import java.text.NumberFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.List;
@@ -79,8 +80,8 @@ public class CEPASCard extends Card {
 
     private CEPASCard(byte[] tagId, Calendar scannedAt, CEPASPurse[] purses, CEPASHistory[] histories) {
         super(CardType.CEPAS, tagId, scannedAt);
-        mPurses = Utils.arrayAsList(purses);
-        mHistories = Utils.arrayAsList(histories);
+        mPurses = Arrays.asList(purses);
+        mHistories = Arrays.asList(histories);
     }
 
     private CEPASCard() { /* For XML Serializer */ }

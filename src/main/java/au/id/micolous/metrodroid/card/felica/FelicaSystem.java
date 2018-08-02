@@ -24,6 +24,7 @@ import org.simpleframework.xml.Attribute;
 import org.simpleframework.xml.ElementList;
 import org.simpleframework.xml.Root;
 
+import java.util.Arrays;
 import java.util.List;
 
 @Root(name = "system")
@@ -37,7 +38,7 @@ public class FelicaSystem {
 
     public FelicaSystem(int code, FelicaService[] services) {
         mCode = code;
-        mServices = Utils.arrayAsList(services);
+        mServices = Arrays.asList(services);
     }
 
     public int getCode() {

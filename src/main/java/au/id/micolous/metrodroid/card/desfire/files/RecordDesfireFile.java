@@ -25,6 +25,7 @@ import au.id.micolous.metrodroid.util.Utils;
 import org.apache.commons.lang3.ArrayUtils;
 import org.simpleframework.xml.Root;
 
+import java.util.Arrays;
 import java.util.List;
 
 @Root(name = "file")
@@ -43,7 +44,7 @@ public class RecordDesfireFile extends DesfireFile {
             int offset = settings.getRecordSize() * i;
             records[i] = new DesfireRecord(ArrayUtils.subarray(getData(), offset, offset + settings.getRecordSize()));
         }
-        mRecords = Utils.arrayAsList(records);
+        mRecords = Arrays.asList(records);
     }
 
     public List<DesfireRecord> getRecords() {

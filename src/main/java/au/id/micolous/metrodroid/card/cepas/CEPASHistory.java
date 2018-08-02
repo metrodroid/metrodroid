@@ -27,6 +27,7 @@ import org.simpleframework.xml.ElementList;
 import org.simpleframework.xml.Root;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 @Root(name = "history")
@@ -54,7 +55,7 @@ public class CEPASHistory {
                 System.arraycopy(purseData, i + 0, tempData, 0, tempData.length);
                 transactions[i / tempData.length] = new CEPASTransaction(tempData);
             }
-            mTransactions = Utils.arrayAsList(transactions);
+            mTransactions = Arrays.asList(transactions);
         } else {
             mIsValid = false;
             mErrorMessage = "";
@@ -69,7 +70,7 @@ public class CEPASHistory {
     }
 
     public CEPASHistory(int purseId, CEPASTransaction[] transactions) {
-        mTransactions = Utils.arrayAsList(transactions);
+        mTransactions = Arrays.asList(transactions);
         mId = purseId;
         mIsValid = true;
         mErrorMessage = "";

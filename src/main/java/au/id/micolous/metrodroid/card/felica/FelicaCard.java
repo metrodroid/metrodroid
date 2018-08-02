@@ -82,7 +82,7 @@ public class FelicaCard extends Card {
         super(CardType.FeliCa, tagId, scannedAt, null, partialRead);
         mIDm = idm;
         mPMm = pmm;
-        mSystems = Utils.arrayAsList(systems);
+        mSystems = Arrays.asList(systems);
     }
 
     // https://github.com/tmurakam/felicalib/blob/master/src/dump/dump.c

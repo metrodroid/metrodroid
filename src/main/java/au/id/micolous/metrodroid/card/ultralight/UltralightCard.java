@@ -80,7 +80,7 @@ public class UltralightCard extends Card {
     public UltralightCard(byte[] tagId, Calendar scannedAt, String cardModel, UltralightPage[] pages) {
         super(CardType.MifareUltralight, tagId, scannedAt);
         mCardModel = cardModel;
-        mPages = Utils.arrayAsList(pages);
+        mPages = Arrays.asList(pages);
     }
 
     public static UltralightCard dumpTag(byte[] tagId, Tag tag, TagReaderFeedbackInterface feedbackInterface) throws Exception {
