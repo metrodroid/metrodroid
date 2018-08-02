@@ -316,7 +316,7 @@ public class EZLinkTransitData extends TransitData {
     };
     // Data snagged from http://www.sgwiki.com/wiki/North_East_Line
     // Coordinates taken from respective Wikipedia MRT pages
-    private static TreeMap<String, MRTStation> mrtStations = new TreeMap<String, MRTStation>() {
+    private static final TreeMap<String, MRTStation> mrtStations = new TreeMap<String, MRTStation>() {
         private static final long serialVersionUID = 1L;
 
         {
@@ -433,9 +433,9 @@ public class EZLinkTransitData extends TransitData {
             put("MRB", new MRTStation("Marina Bay", "NS27 / CE2", "MRB", "1.276097", "103.854675"));
         }
     };
-    private String mSerialNumber;
-    private double mBalance;
-    private EZLinkTrip[] mTrips;
+    private final String mSerialNumber;
+    private final double mBalance;
+    private final EZLinkTrip[] mTrips;
 
     public EZLinkTransitData(Parcel parcel) {
         mSerialNumber = parcel.readString();
