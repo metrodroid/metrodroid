@@ -61,7 +61,7 @@ public class ManlyFastFerryTransitData extends ErgTransitData {
     };
 
     public ManlyFastFerryTransitData(Parcel parcel) {
-        super(parcel);
+        super(parcel, "AUD");
     }
 
     public ManlyFastFerryTransitData(ClassicCard card) {

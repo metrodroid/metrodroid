@@ -30,6 +30,7 @@ import android.support.annotation.Nullable;
 import java.util.Calendar;
 
 import au.id.micolous.metrodroid.transit.Station;
+import au.id.micolous.metrodroid.transit.TransitCurrency;
 import au.id.micolous.metrodroid.transit.Trip;
 import au.id.micolous.metrodroid.util.Utils;
 
@@ -107,8 +108,8 @@ public class ClipperTrip extends Trip {
 
     @Override
     @Nullable
-    public Integer getFare() {
-        return mFare;
+    public TransitCurrency getFare() {
+        return TransitCurrency.USD(mFare);
     }
 
     @Override

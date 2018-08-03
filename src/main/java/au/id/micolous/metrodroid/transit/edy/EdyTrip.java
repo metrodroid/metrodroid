@@ -5,6 +5,7 @@ import android.os.Parcel;
 import android.support.annotation.Nullable;
 
 import au.id.micolous.metrodroid.card.felica.FelicaBlock;
+import au.id.micolous.metrodroid.transit.TransitCurrency;
 import au.id.micolous.metrodroid.transit.Trip;
 
 import net.kazzz.felica.lib.Util;
@@ -95,13 +96,13 @@ public class EdyTrip extends Trip {
 
     @Nullable
     @Override
-    public Integer getFare() {
+    public TransitCurrency getFare() {
         if (mProcessType != EdyTransitData.FELICA_MODE_EDY_DEBIT) {
             // Credits are "negative"
-            return -mTransactionAmount;
+            return TransitCurrency.JPY(-mTransactionAmount);
         }
 
-        return mTransactionAmount;
+        return TransitCurrency.JPY(mTransactionAmount);
     }
 
     // use agency name for the transaction number

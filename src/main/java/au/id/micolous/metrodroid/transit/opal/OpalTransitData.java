@@ -21,13 +21,13 @@ package au.id.micolous.metrodroid.transit.opal;
 import android.net.Uri;
 import android.os.Parcel;
 import android.support.annotation.Nullable;
-import android.text.Spanned;
 
 import org.apache.commons.lang3.ArrayUtils;
 
 import au.id.micolous.metrodroid.card.Card;
 import au.id.micolous.metrodroid.card.desfire.DesfireCard;
 import au.id.micolous.metrodroid.transit.Subscription;
+import au.id.micolous.metrodroid.transit.TransitCurrency;
 import au.id.micolous.metrodroid.transit.TransitData;
 import au.id.micolous.metrodroid.transit.TransitIdentity;
 import au.id.micolous.metrodroid.ui.HeaderListItem;
@@ -157,13 +157,8 @@ public class OpalTransitData extends TransitData {
 
     @Nullable
     @Override
-    public Integer getBalance() {
-        return mBalance;
-    }
-
-    @Override
-    public Spanned formatCurrencyString(int currency, boolean isBalance) {
-        return Utils.formatCurrencyString(currency, isBalance, "AUD");
+    public TransitCurrency getBalance() {
+        return TransitCurrency.AUD(mBalance);
     }
 
     @Override

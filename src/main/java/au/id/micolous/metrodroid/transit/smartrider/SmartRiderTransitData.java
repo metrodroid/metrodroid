@@ -31,6 +31,7 @@ import java.util.Locale;
 import java.util.TimeZone;
 
 import au.id.micolous.metrodroid.card.classic.ClassicCard;
+import au.id.micolous.metrodroid.transit.TransitCurrency;
 import au.id.micolous.metrodroid.transit.TransitData;
 import au.id.micolous.metrodroid.transit.TransitIdentity;
 import au.id.micolous.metrodroid.transit.Trip;
@@ -303,13 +304,8 @@ public class SmartRiderTransitData extends TransitData {
 
     @Nullable
     @Override
-    public Integer getBalance() {
-        return mBalance;
-    }
-
-    @Override
-    public Spanned formatCurrencyString(int currency, boolean isBalance) {
-        return Utils.formatCurrencyString(currency, isBalance, "AUD");
+    public TransitCurrency getBalance() {
+        return TransitCurrency.AUD(mBalance);
     }
 
     @Override

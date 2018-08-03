@@ -31,6 +31,7 @@ import android.text.Spanned;
 import au.id.micolous.metrodroid.card.felica.FelicaBlock;
 import au.id.micolous.metrodroid.card.felica.FelicaCard;
 import au.id.micolous.metrodroid.card.felica.FelicaService;
+import au.id.micolous.metrodroid.transit.TransitCurrency;
 import au.id.micolous.metrodroid.transit.TransitData;
 import au.id.micolous.metrodroid.transit.TransitIdentity;
 import au.id.micolous.metrodroid.transit.Trip;
@@ -119,14 +120,9 @@ public class EdyTransitData extends TransitData {
     }
 
     @Override
-    public Spanned formatCurrencyString(int currency, boolean isBalance) {
-        return Utils.formatCurrencyString(currency, isBalance, "JPY", 1);
-    }
-
-    @Override
     @Nullable
-    public Integer getBalance() {
-        return mCurrentBalance;
+    public TransitCurrency getBalance() {
+        return TransitCurrency.JPY(mCurrentBalance);
     }
 
     @Override

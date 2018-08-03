@@ -26,13 +26,13 @@ package au.id.micolous.metrodroid.transit.orca;
 
 import android.os.Parcel;
 import android.support.annotation.Nullable;
-import android.text.Spanned;
 
 import au.id.micolous.metrodroid.card.Card;
 import au.id.micolous.metrodroid.card.desfire.DesfireCard;
 import au.id.micolous.metrodroid.card.desfire.files.DesfireFile;
 import au.id.micolous.metrodroid.card.desfire.files.RecordDesfireFile;
 import au.id.micolous.metrodroid.transit.Subscription;
+import au.id.micolous.metrodroid.transit.TransitCurrency;
 import au.id.micolous.metrodroid.transit.TransitData;
 import au.id.micolous.metrodroid.transit.TransitIdentity;
 import au.id.micolous.metrodroid.transit.Trip;
@@ -122,14 +122,9 @@ public class OrcaTransitData extends TransitData {
     }
 
     @Override
-    public Spanned formatCurrencyString(int currency, boolean isBalance) {
-        return Utils.formatCurrencyString(currency, isBalance, "USD");
-    }
-
-    @Override
     @Nullable
-    public Integer getBalance() {
-        return mBalance;
+    public TransitCurrency getBalance() {
+        return TransitCurrency.USD(mBalance);
     }
 
     @Override

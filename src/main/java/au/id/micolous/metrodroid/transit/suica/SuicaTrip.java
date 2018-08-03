@@ -36,6 +36,7 @@ import android.support.annotation.Nullable;
 
 import au.id.micolous.metrodroid.card.felica.FelicaBlock;
 import au.id.micolous.metrodroid.transit.Station;
+import au.id.micolous.metrodroid.transit.TransitCurrency;
 import au.id.micolous.metrodroid.transit.Trip;
 import au.id.micolous.metrodroid.util.Utils;
 
@@ -199,8 +200,8 @@ public class SuicaTrip extends Trip {
 
     @Nullable
     @Override
-    public Integer getFare() {
-        return mFare;
+    public TransitCurrency getFare() {
+        return TransitCurrency.JPY(mFare);
     }
 
     public int getBalance() {

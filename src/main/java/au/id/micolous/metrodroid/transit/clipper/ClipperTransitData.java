@@ -34,6 +34,7 @@ import org.apache.commons.lang3.ArrayUtils;
 import au.id.micolous.metrodroid.card.Card;
 import au.id.micolous.metrodroid.card.desfire.DesfireCard;
 import au.id.micolous.metrodroid.card.desfire.files.DesfireFile;
+import au.id.micolous.metrodroid.transit.TransitCurrency;
 import au.id.micolous.metrodroid.transit.TransitData;
 import au.id.micolous.metrodroid.transit.TransitIdentity;
 import au.id.micolous.metrodroid.transit.Trip;
@@ -163,13 +164,8 @@ public class ClipperTransitData extends TransitData {
 
     @Nullable
     @Override
-    public Integer getBalance() {
-        return (int) mBalance;
-    }
-
-    @Override
-    public Spanned formatCurrencyString(int currency, boolean isBalance) {
-        return Utils.formatCurrencyString(currency, isBalance, "USD");
+    public TransitCurrency getBalance() {
+        return TransitCurrency.USD((int) mBalance);
     }
 
     @Override

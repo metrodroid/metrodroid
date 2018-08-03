@@ -21,21 +21,19 @@ package au.id.micolous.metrodroid.transit.troika;
 
 import android.os.Parcel;
 import android.os.Parcelable;
-import android.support.annotation.Nullable;
-import android.text.Spanned;
 import android.util.Log;
 
-import au.id.micolous.farebot.R;
 import au.id.micolous.metrodroid.card.classic.ClassicCard;
 import au.id.micolous.metrodroid.card.classic.ClassicSector;
+import au.id.micolous.metrodroid.transit.TransitBalance;
+import au.id.micolous.metrodroid.transit.TransitBalanceStored;
+import au.id.micolous.metrodroid.transit.TransitCurrency;
 import au.id.micolous.metrodroid.transit.TransitData;
 import au.id.micolous.metrodroid.transit.TransitIdentity;
-import au.id.micolous.metrodroid.ui.ListItem;
-import au.id.micolous.metrodroid.util.TripObfuscator;
 import au.id.micolous.metrodroid.util.Utils;
 
 import java.text.DecimalFormat;
-import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.List;
@@ -90,17 +88,6 @@ public class TroikaTransitData extends TransitData {
      */
     private int mExpiryDays;
 
-    @Nullable
-    @Override
-    public Integer getBalance() {
-        return mBalance;
-    }
-
-    @Override
-    public Spanned formatCurrencyString(int amount, boolean isBalance) {
-        return Utils.formatCurrencyString(amount, isBalance, "RUB");
-    }
-
     @Override
     public String getSerialNumber() {
         return formatSerial(mSerialNumber);
@@ -134,11 +121,9 @@ public class TroikaTransitData extends TransitData {
     }
 
     @Override
-    public List<ListItem> getInfo() {
-        ArrayList<ListItem> items = new ArrayList<>();
-        items.add(new ListItem(R.string.card_expiry_date,
-                Utils.longDateFormat(TripObfuscator.maybeObfuscateTS(convertDate(mExpiryDays)))));
-        return items;
+    public List<TransitBalance> getBalances() {
+        return Arrays.asList(new TransitBalanceStored(new TransitCurrency(mBalance, "RUB"),
+                NAME, convertDate(mExpiryDays)));
     }
 
     @Override

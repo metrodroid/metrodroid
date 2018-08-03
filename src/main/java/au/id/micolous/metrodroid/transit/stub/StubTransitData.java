@@ -22,6 +22,7 @@ import android.os.Parcel;
 import android.support.annotation.Nullable;
 import android.text.Spanned;
 
+import au.id.micolous.metrodroid.transit.TransitCurrency;
 import au.id.micolous.metrodroid.transit.TransitData;
 import au.id.micolous.metrodroid.ui.HeaderListItem;
 import au.id.micolous.metrodroid.ui.ListItem;
@@ -62,14 +63,9 @@ public abstract class StubTransitData extends TransitData {
         return items;
     }
 
-    @Override
-    public Spanned formatCurrencyString(int currency, boolean isBalance) {
-        return null;
-    }
-
     @Nullable
     @Override
-    public Integer getBalance() {
+    public TransitCurrency getBalance() {
         return null;
     }
 }

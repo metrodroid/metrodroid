@@ -26,6 +26,7 @@ import java.util.Calendar;
 import java.util.GregorianCalendar;
 
 import au.id.micolous.metrodroid.transit.Station;
+import au.id.micolous.metrodroid.transit.TransitCurrency;
 import au.id.micolous.metrodroid.transit.Trip;
 
 /**
@@ -45,7 +46,7 @@ class ObfuscatedTrip extends Trip implements Parcelable {
     private boolean mHasFare;
     private boolean mHasTime;
     private Mode mMode;
-    private Integer mFare;
+    private TransitCurrency mFare;
 
     public static final Creator<ObfuscatedTrip> CREATOR = new Creator<ObfuscatedTrip>() {
         public ObfuscatedTrip createFromParcel(Parcel parcel) {
@@ -83,7 +84,7 @@ class ObfuscatedTrip extends Trip implements Parcelable {
         mHasTime = parcel.readInt() == 1;
         mMode = Mode.valueOf(parcel.readString());
         if (parcel.readInt() == 1) {
-            mFare = parcel.readInt();
+            mFare = new TransitCurrency(parcel);
         }
         if (parcel.readInt() == 1) {
             mStartStation = Station.CREATOR.createFromParcel(parcel);
@@ -107,7 +108,7 @@ class ObfuscatedTrip extends Trip implements Parcelable {
         parcel.writeString(mMode.toString());
         parcel.writeInt(mFare == null ? 0 : 1);
         if (mFare != null) {
-            parcel.writeInt(mFare);
+            mFare.writeToParcel(parcel, i);
         }
         parcel.writeInt(mStartStation == null ? 0 : 1);
         mStartStation.writeToParcel(parcel, i);
@@ -139,14 +140,9 @@ class ObfuscatedTrip extends Trip implements Parcelable {
         mHasTime = realTrip.hasTime();
         mMode = realTrip.getMode();
 
-        Integer fare = realTrip.getFare();
+        TransitCurrency fare = realTrip.getFare();
         if (fare != null) {
-            mFare = (int) ((fare + fareOffset) * fareMultiplier);
-
-            // Match the sign of the original fare
-            if ((fare >= 0 && mFare < 0) || (fare < 0 && mFare > 0)) {
-                mFare *= -1;
-            }
+            mFare = fare.obfuscate(fareOffset, fareMultiplier);
         }
     }
 
@@ -202,7 +198,7 @@ class ObfuscatedTrip extends Trip implements Parcelable {
 
     @Override
     @Nullable
-    public Integer getFare() {
+    public TransitCurrency getFare() {
         return mFare;
     }
 

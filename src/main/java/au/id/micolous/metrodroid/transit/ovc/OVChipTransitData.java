@@ -23,7 +23,6 @@ package au.id.micolous.metrodroid.transit.ovc;
 
 import android.os.Parcel;
 import android.support.annotation.Nullable;
-import android.text.Spanned;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -39,6 +38,9 @@ import au.id.micolous.metrodroid.MetrodroidApplication;
 import au.id.micolous.metrodroid.card.Card;
 import au.id.micolous.metrodroid.card.classic.ClassicCard;
 import au.id.micolous.metrodroid.transit.Subscription;
+import au.id.micolous.metrodroid.transit.TransitBalance;
+import au.id.micolous.metrodroid.transit.TransitBalanceStored;
+import au.id.micolous.metrodroid.transit.TransitCurrency;
 import au.id.micolous.metrodroid.transit.TransitData;
 import au.id.micolous.metrodroid.transit.TransitIdentity;
 import au.id.micolous.metrodroid.transit.Trip;
@@ -236,10 +238,6 @@ public class OVChipTransitData extends TransitData {
         return calendar;
     }
 
-    public Spanned formatCurrencyString(int amount, boolean isBalance) {
-        return Utils.formatCurrencyString(amount, isBalance, "EUR");
-    }
-
     public static String getAgencyName(int agency) {
         if (sAgencies.containsKey(agency)) {
             return sAgencies.get(agency);
@@ -273,8 +271,10 @@ public class OVChipTransitData extends TransitData {
 
     @Nullable
     @Override
-    public Integer getBalance() {
-        return mCredit.getCredit();
+    public List<TransitBalance> getBalances() {
+        return Arrays.asList(new TransitBalanceStored(TransitCurrency.EUR(mCredit.getCredit()),
+                    mPreamble.getType() == 2 ? "Personal" : "Anonymous",
+                OVChipTransitData.convertDate(mPreamble.getExpdate())));
     }
 
     @Override
@@ -306,11 +306,6 @@ public class OVChipTransitData extends TransitData {
             items.add(new ListItem("Serial Number", mPreamble.getId()));
         }
 
-        items.add(new ListItem(R.string.card_expiry_date,
-                Utils.longDateFormat(
-                        TripObfuscator.maybeObfuscateTS(
-                                OVChipTransitData.convertDate(mPreamble.getExpdate())))));
-        items.add(new ListItem("Card Type", (mPreamble.getType() == 2 ? "Personal" : "Anonymous")));
         items.add(new ListItem("Issuer", OVChipTransitData.getShortAgencyName(mInfo.getCompany())));
 
         items.add(new ListItem("Banned", ((mCredit.getBanbits() & (char) 0xC0) == (char) 0xC0) ? "Yes" : "No"));
@@ -326,9 +321,9 @@ public class OVChipTransitData extends TransitData {
         items.add(new ListItem("Last Credit ID", Integer.toString(mCredit.getCreditId())));
         items.add(new ListItem(R.string.ovc_autocharge, (mInfo.getActive() == (byte) 0x05 ? "Yes" : "No")));
         items.add(new ListItem(R.string.ovc_autocharge_limit,
-                formatCurrencyString(TripObfuscator.maybeObfuscateFare(mInfo.getLimit()), true)));
+                TransitCurrency.EUR(mInfo.getLimit()).maybeObfuscateBalance().formatCurrencyString(true)));
         items.add(new ListItem(R.string.ovc_autocharge_amount,
-                formatCurrencyString(TripObfuscator.maybeObfuscateFare(mInfo.getCharge()), true)));
+                TransitCurrency.EUR(mInfo.getCharge()).maybeObfuscateBalance().formatCurrencyString(true)));
 
         items.add(new HeaderListItem("Recent Slots"));
         items.add(new ListItem("Transaction Slot", "0x" + Integer.toHexString((char) mIndex.getRecentTransactionSlot())));

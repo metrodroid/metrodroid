@@ -25,6 +25,7 @@ import java.util.GregorianCalendar;
 import java.util.TimeZone;
 
 import au.id.micolous.metrodroid.card.classic.ClassicCard;
+import au.id.micolous.metrodroid.transit.TransitCurrency;
 import au.id.micolous.metrodroid.transit.TransitIdentity;
 import au.id.micolous.metrodroid.transit.erg.ErgTransitData;
 import au.id.micolous.metrodroid.transit.erg.ErgTrip;
@@ -59,11 +60,11 @@ public class ChcMetrocardTransitData extends ErgTransitData {
     };
 
     public ChcMetrocardTransitData(Parcel parcel) {
-        super(parcel);
+        super(parcel, "NZD");
     }
 
     public ChcMetrocardTransitData(ClassicCard card) {
-        super(card);
+        super(card, "NZD");
     }
 
     public static boolean check(ClassicCard card) {
@@ -89,11 +90,6 @@ public class ChcMetrocardTransitData extends ErgTransitData {
     @Override
     public String getCardName() {
         return NAME;
-    }
-
-    @Override
-    public Spanned formatCurrencyString(int currency, boolean isBalance) {
-        return Utils.formatCurrencyString(currency, isBalance, "NZD");
     }
 
     @Override

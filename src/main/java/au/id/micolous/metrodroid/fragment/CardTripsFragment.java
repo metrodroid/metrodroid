@@ -316,7 +316,7 @@ public class CardTripsFragment extends ListFragment {
 
             fareTextView.setVisibility(View.VISIBLE);
             if (trip.hasFare()) {
-                fareTextView.setText(mTransitData.formatCurrencyString(trip.getFare(), false));
+                fareTextView.setText(trip.getFare().formatCurrencyString(false));
             } else if (trip instanceof OrcaTrip) {
                 fareTextView.setText(R.string.pass_or_transfer);
             } else {

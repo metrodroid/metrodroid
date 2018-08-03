@@ -46,6 +46,7 @@ import au.id.micolous.metrodroid.fragment.CardSubscriptionsFragment;
 import au.id.micolous.metrodroid.fragment.CardTripsFragment;
 import au.id.micolous.metrodroid.fragment.UnauthorizedCardFragment;
 import au.id.micolous.metrodroid.provider.CardsTableColumns;
+import au.id.micolous.metrodroid.transit.TransitBalance;
 import au.id.micolous.metrodroid.transit.TransitData;
 import au.id.micolous.metrodroid.transit.unknown.UnauthorizedClassicTransitData;
 import au.id.micolous.metrodroid.transit.unknown.UnauthorizedUltralightTransitData;
@@ -75,9 +76,11 @@ public class CardInfoActivity extends Activity {
 
     private OnInitListener mTTSInitListener = new OnInitListener() {
         public void onInit(int status) {
-            if (status == TextToSpeech.SUCCESS && mTransitData.getBalance() != null) {
-                Spanned balance = mTransitData.formatCurrencyString(mTransitData.getBalance(), true);
-                mTTS.speak(getString(R.string.balance_speech, balance), TextToSpeech.QUEUE_FLUSH, null);
+            if (status == TextToSpeech.SUCCESS && mTransitData.getBalances() != null) {
+                for (TransitBalance balanceVal : mTransitData.getBalances()) {
+                    Spanned balance = balanceVal.getBalance().formatCurrencyString(true);
+                    mTTS.speak(getString(R.string.balance_speech, balance), TextToSpeech.QUEUE_FLUSH, null);
+                }
             }
         }
     };
@@ -160,7 +163,7 @@ public class CardInfoActivity extends Activity {
                     return;
                 }
 
-                if (mTransitData.getBalance() != null) {
+                if (mTransitData.getBalances() != null) {
                     mTabsAdapter.addTab(actionBar.newTab().setText(R.string.balance), CardBalanceFragment.class, args);
                 }
 

@@ -25,6 +25,7 @@ import au.id.micolous.metrodroid.card.desfire.files.DesfireRecord;
 import au.id.micolous.metrodroid.transit.CompatTrip;
 
 import au.id.micolous.farebot.R;
+import au.id.micolous.metrodroid.transit.TransitCurrency;
 import au.id.micolous.metrodroid.util.Utils;
 
 public class HSLTrip extends CompatTrip {
@@ -120,8 +121,8 @@ public class HSLTrip extends CompatTrip {
 
     @Nullable
     @Override
-    public Integer getFare() {
-        return mFare;
+    public TransitCurrency getFare() {
+        return TransitCurrency.EUR(mFare);
     }
 
     @Override

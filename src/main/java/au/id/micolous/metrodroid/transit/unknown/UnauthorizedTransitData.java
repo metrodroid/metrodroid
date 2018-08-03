@@ -23,6 +23,7 @@ import android.support.annotation.Nullable;
 import android.text.Spanned;
 
 import au.id.micolous.metrodroid.transit.Subscription;
+import au.id.micolous.metrodroid.transit.TransitCurrency;
 import au.id.micolous.metrodroid.transit.TransitData;
 import au.id.micolous.metrodroid.transit.Trip;
 
@@ -51,14 +52,9 @@ public abstract class UnauthorizedTransitData extends TransitData {
 
     }
 
-    @Override
-    public Spanned formatCurrencyString(int currency, boolean isBalance) {
-        return null;
-    }
-
     @Nullable
     @Override
-    public Integer getBalance() {
+    public TransitCurrency getBalance() {
         return null;
     }
 }

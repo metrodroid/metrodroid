@@ -23,6 +23,7 @@ import android.os.Build;
 import au.id.micolous.metrodroid.card.desfire.DesfireApplication;
 import au.id.micolous.metrodroid.card.desfire.DesfireCard;
 import au.id.micolous.metrodroid.card.desfire.files.DesfireFile;
+import au.id.micolous.metrodroid.transit.TransitCurrency;
 import au.id.micolous.metrodroid.transit.TransitData;
 import au.id.micolous.metrodroid.transit.TransitIdentity;
 import au.id.micolous.metrodroid.transit.opal.OpalData;
@@ -82,7 +83,7 @@ public class OpalTest extends TestCase {
 
         OpalTransitData o = (OpalTransitData)d;
         assertEquals("3085220012345670", o.getSerialNumber());
-        assertEquals(336, o.getBalance().intValue());
+        assertTrue(o.getBalance().equals(TransitCurrency.AUD(336)));
         assertEquals(0, o.getSubscriptions().length);
         // 2015-10-05 09:06 UTC+11
         assertEquals("2015-10-04 22:06", Utils.isoDateTimeFormat(o.getLastTransactionTime()));
