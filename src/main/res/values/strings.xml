@@ -803,6 +803,9 @@
     <string name="card_name_szt">Shenzhen Tong</string>
     <string name="card_name_octopus">Octopus</string>
     <string name="card_name_octopus_szt_dual">Hu Tong Xing</string>
+    <string name="szt_metro">Shenzhen Metro</string>
+    <string name="szt_bus">Shenzhen Bus</string>
+    <string name="szt_station_gate">%s, gate %s</string>
 
     <!--
         Bilhete Único
