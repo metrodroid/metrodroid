@@ -37,6 +37,7 @@ import java.util.Locale;
  * MF0ICU1 (Ultralight): https://www.nxp.com/docs/en/data-sheet/MF0ICU1.pdf
  * MF0ICU2 (Ultralight C): https://www.nxp.com/docs/en/data-sheet/MF0ICU2_SDS.pdf
  * MF0UCx1 (Ultralight EV1): https://www.nxp.com/docs/en/data-sheet/MF0ULX1.pdf
+ * NTAG213/215/216: https://www.nxp.com/docs/en/data-sheet/NTAG213_215_216.pdf
  * MIFARE Commands: https://www.nxp.com/docs/en/application-note/AN10833.pdf
  */
 
@@ -46,14 +47,18 @@ class UltralightProtocol {
     enum UltralightType {
         /** Unknown type */
         UNKNOWN(-1),
-        /** MIFARE Ultralight (MF0ICU1), 15 pages */
-        MF0ICU1(15),
-        /** MIFARE Ultralight C (MF0ICU2), 47 pages (but pages 44-47 are masked), 3DES */
-        MF0ICU2(43),
-        /** MIFARE Ultralight EV1 (MF0UL11), 19 pages */
-        EV1_MF0UL11(19),
-        /** MIFARE Ultralight EV1 (MF0UL21), 40 pages */
-        EV1_MF0UL21(40);
+        /** MIFARE Ultralight (MF0ICU1), 16 pages */
+        MF0ICU1(16),
+        /** MIFARE Ultralight C (MF0ICU2), 48 pages (but pages 44-47 are masked), 3DES */
+        MF0ICU2(44),
+        /** MIFARE Ultralight EV1 (MF0UL11), 20 pages */
+        EV1_MF0UL11(20),
+        /** MIFARE Ultralight EV1 (MF0UL21), 41 pages */
+        EV1_MF0UL21(41),
+
+        NTAG213(45),
+        NTAG215(135),
+        NTAG216(231);
 
         /** Number of pages of memory that the card supports. */
         int pageCount;
@@ -108,6 +113,23 @@ class UltralightProtocol {
             if (b.length != 8) {
                 Log.d(TAG, String.format(Locale.ENGLISH, "getVersion didn't return 8 bytes, got (%d instead): %s", b.length, Utils.getHexString(b)));
                 return UltralightType.UNKNOWN;
+            }
+
+            if (b[2] == 0x04) {
+                // Datasheet suggests we should do some maths here to allow for future card types,
+                // however for all cards, we get an inexact data length. A locked page read does a
+                // NAK, but an authorised read will wrap around to page 0x00.
+                switch (b[6]) {
+                    case 0x0F:
+                        return UltralightType.NTAG213;
+                    case 0x11:
+                        return UltralightType.NTAG215;
+                    case 0x13:
+                        return UltralightType.NTAG216;
+                    default:
+                        Log.d(TAG, String.format(Locale.ENGLISH,"getVersion returned unknown storage size (%d): %s", b[6], Utils.getHexString(b)));
+                        return UltralightType.UNKNOWN;
+                }
             }
 
             if (b[2] != 0x03) {

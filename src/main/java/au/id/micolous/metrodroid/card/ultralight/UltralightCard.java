@@ -107,7 +107,7 @@ public class UltralightCard extends Card {
             byte[] pageBuffer = new byte[0];
             List<UltralightPage> pages = new ArrayList<>();
             boolean unauthorized = false;
-            while (pageNumber <= t.pageCount) {
+            while (pageNumber < t.pageCount) {
                 if (pageNumber % 4 == 0) {
                     feedbackInterface.updateProgressBar(pageNumber, t.pageCount);
                     // Lets make a new buffer of data. (16 bytes = 4 pages * 4 bytes)
