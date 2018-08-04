@@ -80,11 +80,6 @@ public class HSLRefill extends Trip implements Parcelable {
     }
 
     @Override
-    public String getShortAgencyName() {
-        return MetrodroidApplication.getInstance().getString(R.string.hsl_balance_refill);
-    }
-
-    @Override
     public boolean hasFare() {
         return true;
     }
