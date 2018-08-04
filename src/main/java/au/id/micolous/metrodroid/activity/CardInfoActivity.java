@@ -147,7 +147,8 @@ public class CardInfoActivity extends Activity {
                     titleSerial = (mTransitData.getSerialNumber() != null) ? mTransitData.getSerialNumber()
                             : Utils.getHexString(mCard.getTagId(), "");
                 }
-                actionBar.setTitle(mTransitData.getCardName() + " " + titleSerial);
+                actionBar.setTitle(mTransitData.getCardName());
+                actionBar.setSubtitle(titleSerial);
 
                 Bundle args = new Bundle();
                 args.putString(AdvancedCardInfoActivity.EXTRA_CARD,
