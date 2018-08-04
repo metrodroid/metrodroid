@@ -29,6 +29,8 @@
                   android:title="@string/copy_xml" />
             <item android:id="@+id/share_xml"
                   android:title="@string/share_xml" />
+            <item android:id="@+id/save_xml"
+                android:title="@string/save_xml" />
         </menu>
     </item>
 </menu>

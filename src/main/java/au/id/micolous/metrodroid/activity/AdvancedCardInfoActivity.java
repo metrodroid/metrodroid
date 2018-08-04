@@ -2,7 +2,7 @@
  * AdvancedCardInfoActivity.java
  *
  * Copyright (C) 2011 Eric Butler
- * Copyright 2015-2017 Michael Farrell <micolous+git@gmail.com>
+ * Copyright 2015-2018 Michael Farrell <micolous+git@gmail.com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -24,17 +24,28 @@ import android.app.ActionBar;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Intent;
+import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 import android.text.Spanned;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import org.apache.commons.io.FileUtils;
+import org.apache.commons.io.IOUtils;
 import org.simpleframework.xml.Serializer;
 
+import java.io.File;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.nio.charset.Charset;
 import java.util.Calendar;
+import java.util.Locale;
 
 import au.id.micolous.farebot.R;
 import au.id.micolous.metrodroid.MetrodroidApplication;
@@ -51,6 +62,8 @@ import au.id.micolous.metrodroid.util.Utils;
 public class AdvancedCardInfoActivity extends Activity {
     public static final String EXTRA_CARD = "au.id.micolous.farebot.EXTRA_CARD";
     public static final String EXTRA_ERROR = "au.id.micolous.farebot.EXTRA_ERROR";
+    private static final int REQUEST_SAVE_FILE = 2;
+    private static final String TAG = AdvancedCardInfoActivity.class.getName();
 
     private TabPagerAdapter mTabsAdapter;
     private Card mCard;
@@ -119,34 +132,81 @@ public class AdvancedCardInfoActivity extends Activity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.card_advanced_menu, menu);
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.KITKAT) {
+            menu.findItem(R.id.save_xml).setEnabled(false);
+        }
+
         return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         try {
-            if (item.getItemId() == R.id.copy_xml) {
-                String xml = mCard.toXml(MetrodroidApplication.getInstance().getSerializer());
-                ExportHelper.copyXmlToClipboard(this, xml);
-                return true;
+            String xml;
+            Intent i;
 
-            } else if (item.getItemId() == R.id.share_xml) {
-                String xml = mCard.toXml(MetrodroidApplication.getInstance().getSerializer());
-                Intent intent = new Intent(Intent.ACTION_SEND);
-                intent.setType("text/xml");
-                intent.putExtra(Intent.EXTRA_TEXT, xml);
-                startActivity(intent);
-                return true;
+            switch (item.getItemId()) {
+                case R.id.copy_xml:
+                    xml = mCard.toXml(MetrodroidApplication.getInstance().getSerializer());
+                    ExportHelper.copyXmlToClipboard(this, xml);
+                    return true;
 
-            } else if (item.getItemId() == android.R.id.home) {
-                finish();
-                return true;
+                case R.id.share_xml:
+                    xml = mCard.toXml(MetrodroidApplication.getInstance().getSerializer());
+                    i = new Intent(Intent.ACTION_SEND);
+                    i.setType("text/xml");
+                    i.putExtra(Intent.EXTRA_TEXT, xml);
+                    startActivity(i);
+                    return true;
+
+                case R.id.save_xml:
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+                        // Metrodroid-1234abcd-20001231-235900.xml
+                        String filename = String.format(Locale.ENGLISH, "Metrodroid-%s-%s.xml",
+                                Utils.getHexString(mCard.getTagId(), "unknown"),
+                                Utils.isoDateTimeFilenameFormat(mCard.getScannedAt()));
+
+                        i = new Intent(Intent.ACTION_CREATE_DOCUMENT);
+                        i.addCategory(Intent.CATEGORY_OPENABLE);
+                        i.setType("text/xml");
+                        i.putExtra(Intent.EXTRA_TITLE, filename);
+                        startActivityForResult(Intent.createChooser(i, Utils.localizeString(R.string.export_filename)), REQUEST_SAVE_FILE);
+                    }
+
+                    // Intentionally not available on pre-Kitkat (for compatibility reasons).
+                    return true;
+
+                case android.R.id.home:
+                    finish();
+                    return true;
+
             }
         } catch (Exception ex) {
-            new AlertDialog.Builder(this)
-                    .setMessage(ex.toString())
-                    .show();
+            Utils.showError(this, ex);
         }
         return false;
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        Uri uri;
+        String xml;
+
+        try {
+            if (resultCode == Activity.RESULT_OK) {
+                switch (requestCode) {
+                    case REQUEST_SAVE_FILE:
+                        uri = data.getData();
+                        Log.d(TAG, "REQUEST_SAVE_FILE");
+                        OutputStream os = getContentResolver().openOutputStream(uri);
+                        xml = mCard.toXml(MetrodroidApplication.getInstance().getSerializer());
+                        IOUtils.write(xml, os, Charset.defaultCharset());
+                        Toast.makeText(this, R.string.saved_xml_custom, Toast.LENGTH_SHORT).show();
+                        break;
+                }
+            }
+        } catch (Exception ex) {
+            Utils.showError(this, ex);
+        }
     }
 }

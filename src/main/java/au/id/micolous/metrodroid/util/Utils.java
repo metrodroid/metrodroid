@@ -22,7 +22,6 @@ package au.id.micolous.metrodroid.util;
 
 import android.app.Activity;
 import android.app.AlertDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
@@ -55,12 +54,10 @@ import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
-import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
-import java.util.Currency;
 import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.Locale;
@@ -72,6 +69,11 @@ import au.id.micolous.metrodroid.MetrodroidApplication;
 public class Utils {
     private static final String TAG = "Utils";
 
+    /**
+     * Formatter which returns ISO8601 datetime in UTC, but with only characters that can be used
+     * in filenames on most filesystems.
+     */
+    private static final SimpleDateFormat ISO_DATETIME_FORMAT_FILENAME;
     /** Formatter which returns ISO8601 datetime in UTC. */
     private static final SimpleDateFormat ISO_DATETIME_FORMAT;
     /** Formatter which returns ISO8601 date in UTC. */
@@ -80,6 +82,9 @@ public class Utils {
     public static final TimeZone UTC = TimeZone.getTimeZone("Etc/UTC");
 
     static {
+        ISO_DATETIME_FORMAT_FILENAME = new SimpleDateFormat("yyyyMMdd-HHmmss", Locale.US);
+        ISO_DATETIME_FORMAT_FILENAME.setTimeZone(UTC);
+
         ISO_DATETIME_FORMAT = new SimpleDateFormat("yyyy-MM-dd HH:mm", Locale.US);
         ISO_DATETIME_FORMAT.setTimeZone(UTC);
 
@@ -549,6 +554,18 @@ public class Utils {
 
         return b;
     }
+
+    /**
+     * Formats a GregorianCalendar into ISO8601 date and time format, but with only characters that
+     * can be used in filenames on most filesystems.
+     *
+     * @param calendar Date/time to format
+     * @return String representing the date and time in ISO8601 format.
+     */
+    public static String isoDateTimeFilenameFormat(Calendar calendar) {
+        return ISO_DATETIME_FORMAT_FILENAME.format(calendar.getTime());
+    }
+
 
     /**
      * Formats a GregorianCalendar into ISO8601 date and time format. This should only be used for debugging
