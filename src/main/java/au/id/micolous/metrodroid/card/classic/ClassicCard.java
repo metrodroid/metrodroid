@@ -45,7 +45,6 @@ import java.util.Locale;
 import au.id.micolous.farebot.R;
 import au.id.micolous.metrodroid.MetrodroidApplication;
 import au.id.micolous.metrodroid.card.Card;
-import au.id.micolous.metrodroid.card.CardHasManufacturingInfo;
 import au.id.micolous.metrodroid.card.CardRawDataFragmentClass;
 import au.id.micolous.metrodroid.card.CardType;
 import au.id.micolous.metrodroid.card.TagReaderFeedbackInterface;
@@ -72,7 +71,6 @@ import au.id.micolous.metrodroid.util.Utils;
 
 @Root(name = "card")
 @CardRawDataFragmentClass(ClassicCardRawDataFragment.class)
-@CardHasManufacturingInfo(false)
 public class ClassicCard extends Card {
     public static final byte[] PREAMBLE_KEY = {(byte) 0x00, (byte) 0x00, (byte) 0x00, (byte) 0x00, (byte) 0x00,
             (byte) 0x00};

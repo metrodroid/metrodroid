@@ -39,7 +39,6 @@ import java.util.Calendar;
 import au.id.micolous.farebot.R;
 import au.id.micolous.metrodroid.MetrodroidApplication;
 import au.id.micolous.metrodroid.card.Card;
-import au.id.micolous.metrodroid.card.CardHasManufacturingInfo;
 import au.id.micolous.metrodroid.card.CardRawDataFragmentClass;
 import au.id.micolous.metrodroid.card.UnauthorizedException;
 import au.id.micolous.metrodroid.card.UnsupportedCardException;
@@ -101,8 +100,7 @@ public class AdvancedCardInfoActivity extends Activity {
             }
         }
 
-        CardHasManufacturingInfo infoAnnotation = mCard.getClass().getAnnotation(CardHasManufacturingInfo.class);
-        if (infoAnnotation == null || infoAnnotation.value()) {
+        if (mCard.getManufacturingInfo() != null) {
             mTabsAdapter.addTab(actionBar.newTab().setText(R.string.hw_detail), CardHWDetailFragment.class,
                     getIntent().getExtras());
         }

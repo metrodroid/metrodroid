@@ -19,6 +19,8 @@
  */
 package au.id.micolous.metrodroid.card.iso7816;
 
+import android.support.annotation.Nullable;
+
 import org.simpleframework.xml.Attribute;
 import org.simpleframework.xml.Element;
 import org.simpleframework.xml.ElementList;
@@ -32,6 +34,7 @@ import java.util.List;
 
 import au.id.micolous.metrodroid.transit.TransitData;
 import au.id.micolous.metrodroid.transit.TransitIdentity;
+import au.id.micolous.metrodroid.ui.ListItem;
 import au.id.micolous.metrodroid.util.Utils;
 import au.id.micolous.metrodroid.xml.Base64String;
 
@@ -145,6 +148,9 @@ public class ISO7816Application {
     public TransitData parseTransitData() {
         return null;
     }
+
+    @Nullable
+    public List<ListItem> getManufacturingInfo() { return null; }
 
     public byte[] getAppData() {
         return mApplicationData.getData();

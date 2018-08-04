@@ -42,6 +42,7 @@ import au.id.micolous.metrodroid.card.calypso.CalypsoCard;
 import au.id.micolous.metrodroid.fragment.ISO7816CardRawDataFragment;
 import au.id.micolous.metrodroid.transit.TransitData;
 import au.id.micolous.metrodroid.transit.TransitIdentity;
+import au.id.micolous.metrodroid.ui.ListItem;
 import au.id.micolous.metrodroid.util.Utils;
 
 /**
@@ -141,5 +142,17 @@ public class ISO7816Card extends Card {
         if (mApplications.isEmpty())
             return null;
         return mApplications.get(0);
+    }
+
+    @Override
+    public List<ListItem> getManufacturingInfo() {
+        List<ListItem> manufacturingInfo = new ArrayList<>();
+        for (ISO7816Application app : mApplications) {
+            List<ListItem> appManufacturingInfo = app.getManufacturingInfo();
+            if (appManufacturingInfo != null) {
+                manufacturingInfo.addAll(appManufacturingInfo);
+            }
+        }
+        return manufacturingInfo;
     }
 }

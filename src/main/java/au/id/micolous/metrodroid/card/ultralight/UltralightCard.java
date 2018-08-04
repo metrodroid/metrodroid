@@ -25,7 +25,6 @@ import android.util.Log;
 
 import au.id.micolous.farebot.R;
 import au.id.micolous.metrodroid.card.Card;
-import au.id.micolous.metrodroid.card.CardHasManufacturingInfo;
 import au.id.micolous.metrodroid.card.CardRawDataFragmentClass;
 import au.id.micolous.metrodroid.card.CardType;
 import au.id.micolous.metrodroid.card.TagReaderFeedbackInterface;
@@ -53,7 +52,6 @@ import java.util.Locale;
  */
 @Root(name = "card")
 @CardRawDataFragmentClass(UltralightCardRawDataFragment.class)
-@CardHasManufacturingInfo(false)
 public class UltralightCard extends Card {
     private static final String TAG = "UltralightCard";
 
