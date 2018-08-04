@@ -66,7 +66,6 @@ import static android.view.ViewGroup.LayoutParams.WRAP_CONTENT;
  * @author Eric Butler
  */
 public class AddKeyActivity extends Activity {
-    private static final int STORAGE_PERMISSION_CALLBACK = 1000;
     private NfcAdapter mNfcAdapter;
     private PendingIntent mPendingIntent;
     private String[][] mTechLists = new String[][]{
@@ -127,33 +126,9 @@ public class AddKeyActivity extends Activity {
         mPendingIntent = PendingIntent.getActivity(this, 0, intent, 0);
 
         if (getIntent().getAction() != null && getIntent().getAction().equals(Intent.ACTION_VIEW) && getIntent().getData() != null) {
-            // Request permission for storage first
-            if (ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
-                ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, STORAGE_PERMISSION_CALLBACK);
-            } else {
-                // Just read the key file
-                readKeyFile();
-            }
-
-
+            readKeyFile();
         } else {
             finish();
-        }
-    }
-
-    @Override
-    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
-        switch (requestCode) {
-            case STORAGE_PERMISSION_CALLBACK:
-                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    // Permission granted.
-                    readKeyFile();
-                } else {
-                    // Permission denied.
-                    Utils.showErrorAndFinish(this, R.string.storage_required);
-                }
-
-                break;
         }
     }
 

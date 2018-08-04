@@ -22,46 +22,14 @@
 
 package au.id.micolous.metrodroid.activity;
 
-import android.Manifest;
 import android.app.Fragment;
-import android.content.pm.PackageManager;
-import android.os.Bundle;
-import android.support.v4.app.ActivityCompat;
-import android.support.v4.content.ContextCompat;
-import android.widget.Toast;
 
 import au.id.micolous.metrodroid.fragment.KeysFragment;
 
-import au.id.micolous.farebot.R;
-
 public class KeysActivity extends FragmentWrapperActivity {
-    private static final int STORAGE_PERMISSION_CALLBACK = 1001;
 
     @Override
     protected Fragment createFragment() {
         return new KeysFragment();
-    }
-
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-
-        // Request permission for storage right away, as requesting this when a file is explicitly
-        // opened is tedious.
-        if (ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, STORAGE_PERMISSION_CALLBACK);
-        }
-    }
-
-    @Override
-    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
-        switch (requestCode) {
-            case STORAGE_PERMISSION_CALLBACK:
-                if (grantResults.length == 0 || grantResults[0] != PackageManager.PERMISSION_GRANTED) {
-                    // Permission denied.
-                    Toast.makeText(this, R.string.storage_required, Toast.LENGTH_LONG).show();
-                }
-                break;
-        }
     }
 }
