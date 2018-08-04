@@ -3,7 +3,8 @@
  *
  * Copyright 2011 Sean Cross <sean@chumby.com>
  * Copyright 2011-2014 Eric Butler <eric@codebutler.com>
- * *
+ * Copyright 2018 Michael Farrell <micolous+git@gmail.com>
+ *
  * Authors:
  * Sean Cross <sean@chumby.com>
  *
@@ -35,9 +36,6 @@ import java.util.GregorianCalendar;
 
 @Root(name = "purse")
 public class CEPASPurse {
-    /* January 1, 1995 */
-    private static final Calendar CEPAS_EPOCH = new GregorianCalendar(1995, 1, 1);
-
     @Attribute(name = "auto-load-amount", required = false)
     private int mAutoLoadAmount;
     @Attribute(name = "can", required = false)
@@ -180,14 +178,8 @@ public class CEPASPurse {
 
         mCSN = new HexString(csn);
 
-        mPurseExpiryDate = GregorianCalendar.getInstance();
-        mPurseExpiryDate.setTimeInMillis(CEPAS_EPOCH.getTimeInMillis());
-        mPurseExpiryDate.add(Calendar.DATE, Utils.byteArrayToInt(purseData, 24, 2));
-
-        mPurseCreationDate = GregorianCalendar.getInstance();
-        mPurseCreationDate.setTimeInMillis(CEPAS_EPOCH.getTimeInMillis());
-        mPurseCreationDate.add(Calendar.DATE, Utils.byteArrayToInt(purseData, 26, 2));
-
+        mPurseExpiryDate = CEPASCard.daysToCalendar(Utils.byteArrayToInt(purseData, 24, 2));
+        mPurseCreationDate = CEPASCard.daysToCalendar(Utils.byteArrayToInt(purseData, 26, 2));
         mLastCreditTransactionTRP = Utils.byteArrayToInt(purseData, 28, 4);
 
         byte[] lastCreditTransactionHeader = new byte[8];

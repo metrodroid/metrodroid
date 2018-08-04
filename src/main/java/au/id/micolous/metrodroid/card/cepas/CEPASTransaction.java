@@ -3,6 +3,7 @@
  *
  * Copyright 2011 Sean Cross <sean@chumby.com>
  * Copyright 2013-2014 Eric Butler <eric@codebutler.com>
+ * Copyright 2018 Michael Farrell <micolous+git@gmail.com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -25,13 +26,17 @@ import android.os.Parcelable;
 import org.simpleframework.xml.Attribute;
 import org.simpleframework.xml.Root;
 
+import java.util.Calendar;
+
+import au.id.micolous.metrodroid.util.Utils;
+
 @Root(name = "transaction")
 public class CEPASTransaction implements Parcelable {
     public static final Parcelable.Creator<CEPASTransaction> CREATOR = new Parcelable.Creator<CEPASTransaction>() {
         public CEPASTransaction createFromParcel(Parcel source) {
             byte type = source.readByte();
             int amount = source.readInt();
-            int date = source.readInt();
+            Calendar date = Utils.longToCalendar(source.readLong(), CEPASCard.TZ);
             String userData = source.readString();
             return new CEPASTransaction(type, amount, date, userData);
         }
@@ -44,8 +49,24 @@ public class CEPASTransaction implements Parcelable {
     private byte mType;
     @Attribute(name = "amount")
     private int mAmount;
-    @Attribute(name = "date")
-    private int mDate;
+
+    /**
+     * This is the date expressed as seconds since the UNIX epoch. Metrodroid <= 2.9.34 used
+     * this value, but this attribute is required to read old scans.
+     *
+     * Use {@link #mDate2} instead.
+     */
+    @Deprecated
+    @Attribute(name = "date", required = false)
+    private long mDate;
+
+    /**
+     * This is the date expressed as seconds since the CEPAS epoch (1995-01-01 00:00 SGT).
+     * Metrodroid >= 2.9.35 uses this value, old versions use {@link #mDate} instead.
+     */
+    @Attribute(name = "date2", required = false)
+    private Calendar mDate2;
+
     @Attribute(name = "user-data")
     private String mUserData;
 
@@ -61,11 +82,9 @@ public class CEPASTransaction implements Parcelable {
         mAmount = tmp;
 
         /* Date is expressed "in seconds", but the epoch is January 1 1995, SGT */
-        mDate = ((0xff000000 & (rawData[4] << 24))
-                | (0x00ff0000 & (rawData[5] << 16))
-                | (0x0000ff00 & (rawData[6] << 8))
-                | (0x000000ff & (rawData[7] << 0)))
-                + 788947200 - (16 * 3600);
+        long timestamp = Utils.byteArrayToLong(rawData, 4, 4);
+        mDate2 = CEPASCard.timestampToCalendar(timestamp);
+        mDate = 0;
 
         byte[] userData = new byte[9];
         for (int i = 0; i < 8; i++)
@@ -74,10 +93,12 @@ public class CEPASTransaction implements Parcelable {
         mUserData = new String(userData);
     }
 
-    public CEPASTransaction(byte type, int amount, int date, String userData) {
+    public CEPASTransaction(byte type, int amount, Calendar date, String userData) {
         mType = type;
         mAmount = amount;
-        mDate = date;
+        //noinspection deprecation
+        mDate = 0;
+        mDate2 = date;
         mUserData = userData;
     }
 
@@ -105,8 +126,15 @@ public class CEPASTransaction implements Parcelable {
         return mAmount;
     }
 
-    public int getTimestamp() {
-        return mDate;
+    @SuppressWarnings("deprecation")
+    public Calendar getTimestamp() {
+        if (mDate != 0) {
+            // Compatibility for Metrodroid <= 2.9.34
+            // Timestamps were stored as seconds since UNIX epoch.
+            return CEPASCard.timestampToCalendar(mDate - 788947200 + (16 * 3600));
+        }
+
+        return mDate2;
     }
 
     public String getUserData() {
@@ -116,7 +144,7 @@ public class CEPASTransaction implements Parcelable {
     public void writeToParcel(Parcel parcel, int flags) {
         parcel.writeByte(mType);
         parcel.writeInt(mAmount);
-        parcel.writeInt(mDate);
+        parcel.writeLong(Utils.calendarToLong(mDate2));
         parcel.writeString(mUserData);
     }
 

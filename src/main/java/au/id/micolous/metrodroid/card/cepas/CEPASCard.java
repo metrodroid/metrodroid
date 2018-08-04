@@ -3,6 +3,7 @@
  *
  * Copyright 2011 Sean Cross <sean@chumby.com>
  * Copyright 2013-2014 Eric Butler <eric@codebutler.com>
+ * Copyright 2018 Michael Farrell <micolous+git@gmail.com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -43,9 +44,34 @@ import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.Locale;
+import java.util.TimeZone;
 
 @Root(name = "card")
 public class CEPASCard extends Card {
+    static final TimeZone TZ = TimeZone.getTimeZone("Asia/Singapore");
+    private static final long EPOCH;
+
+    static {
+        GregorianCalendar epoch = new GregorianCalendar(TZ);
+        epoch.set(1995, Calendar.JANUARY,1, 0, 0, 0);
+
+        EPOCH = epoch.getTimeInMillis();
+    }
+
+    static Calendar timestampToCalendar(long timestamp) {
+        GregorianCalendar c = new GregorianCalendar(TZ);
+        c.setTimeInMillis(EPOCH);
+        c.add(Calendar.SECOND, (int)timestamp);
+        return c;
+    }
+
+    static Calendar daysToCalendar(int days) {
+        GregorianCalendar c = new GregorianCalendar(TZ);
+        c.setTimeInMillis(EPOCH);
+        c.add(Calendar.DATE, days);
+        return c;
+    }
+
     @ElementList(name = "purses")
     private List<CEPASPurse> mPurses;
     @ElementList(name = "histories")

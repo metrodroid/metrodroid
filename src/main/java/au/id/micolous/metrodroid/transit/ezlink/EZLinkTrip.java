@@ -5,6 +5,7 @@
  * Copyright 2011-2012 Eric Butler <eric@codebutler.com>
  * Copyright 2012 Victor Heng
  * Copyright 2012 Toby Bonang
+ * Copyright 2018 Michael Farrell <micolous+git@gmail.com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -25,12 +26,14 @@ package au.id.micolous.metrodroid.transit.ezlink;
 import android.os.Parcel;
 import android.support.annotation.Nullable;
 
+import java.util.Calendar;
+
 import au.id.micolous.metrodroid.card.cepas.CEPASTransaction;
-import au.id.micolous.metrodroid.transit.CompatTrip;
 import au.id.micolous.metrodroid.transit.Station;
 import au.id.micolous.metrodroid.transit.TransitCurrency;
+import au.id.micolous.metrodroid.transit.Trip;
 
-public class EZLinkTrip extends CompatTrip {
+public class EZLinkTrip extends Trip {
     public static final Creator<EZLinkTrip> CREATOR = new Creator<EZLinkTrip>() {
         public EZLinkTrip createFromParcel(Parcel parcel) {
             return new EZLinkTrip(parcel);
@@ -54,7 +57,7 @@ public class EZLinkTrip extends CompatTrip {
     }
 
     @Override
-    public long getTimestamp() {
+    public Calendar getStartTimestamp() {
         return mTransaction.getTimestamp();
     }
 
