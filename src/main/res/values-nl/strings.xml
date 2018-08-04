@@ -260,7 +260,7 @@
 
     <string name="nextfare">Cubic Nextfare</string>
     <string name="nextfare_system_code">Systeemcode</string>
-    <string name="nextfare_ticket_class">Klassecode</string>
+    <string name="nextfare_ticket_class">Ticketklassificatie %d</string>
     <string name="card_expiry_date">Vervaldatum kaart</string>
 
     <string name="octopus_szt">Shenzhen Tong</string>
@@ -308,9 +308,9 @@
     <string name="locked_mfu_card">Vergrendelde MIFARE Ultralight-kaart</string>
     <string name="locked_mfd_card">Vergrendelde MIFARE DESFire-kaart</string>
     <string name="application_title_format">Applicatie: 0x%s</string>
-    <string name="file_title_format">Bestand: 0x%s</string>
-    <string name="unauthorized_file_title_format">Bestand: 0x%s (niet-geauthoriseerd)</string>
-    <string name="invalid_file_title_format">Bestand: 0x%1$s (onjuist: %2$s)</string>
+    <string name="file_title_format">Bestand: %s</string>
+    <string name="unauthorized_file_title_format">Bestand: %s (niet-geauthoriseerd)</string>
+    <string name="invalid_file_title_format">Bestand: %1$s (onjuist: %2$s)</string>
     <string name="desfire_standard_file">Standaard bestand</string>
     <string name="desfire_backup_file">Back-upbestand</string>
     <string name="desfire_value_file">Waardebestand</string>
@@ -503,4 +503,15 @@
 
     <string name="requires_android_21">Vereist Android 5.0 of hoger.</string>
 
-    </resources>
+    <string name="binary_title_format">Binaire gegevens</string>
+    <string name="subway_trips">Metroreizen</string>
+    <string name="ground_trips">Bovengrondse reizen</string>
+    <string name="podorozhnik_topup">Podorozhnik-opwaardering</string>
+
+    <string name="led_bus">Sint-Petersburg Bus</string>
+    <string name="led_metro">Sint-Petersburg Metro</string>
+
+    <string name="blank_mfu_card">Blanco MIFARE Ultralight-kaart</string>
+    <string name="fully_blank_desc">Deze kaart is, voor zover wij kunnen bepalen, volledig blanco. Hij is geformatteerd, maar er zijn geen gegevens op weggeschreven. Het heeft een serienummer waarmee hij geïdentificeerd kan worden en gekoppeld aan een database, maar de kaart zelf bevat geen verdere gegevens.</string>
+    <string name="fully_blank_title">Blanco kaart</string>
+</resources>
