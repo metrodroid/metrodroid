@@ -39,7 +39,7 @@ public class TransitCurrency extends TransitBalance implements Parcelable {
 
     private final int mCurrency;
     /** 3 character currency code (eg: AUD) */
-    @Nullable
+    @NonNull
     private final String mCurrencyCode;
     /** value to divide by to get that currency. eg: if the value passed is in cents,
      * then divide by 100 to get dollars. Currencies like yen should divide by 1. */
@@ -47,7 +47,7 @@ public class TransitCurrency extends TransitBalance implements Parcelable {
 
     private static final SecureRandom mRNG = new SecureRandom();
 
-    public TransitCurrency(int currency, @Nullable String currencyCode) {
+    public TransitCurrency(int currency, @NonNull String currencyCode) {
         mCurrency = currency;
         mCurrencyCode = currencyCode;
         if (currencyCode.equals("JPY"))
@@ -63,9 +63,7 @@ public class TransitCurrency extends TransitBalance implements Parcelable {
         TransitCurrency other = (TransitCurrency) obj;
         if (!mCurrencyCode.equals(other.mCurrencyCode))
             return false;
-        if (mCurrency != other.mCurrency)
-            return false;
-        return true;
+        return mCurrency == other.mCurrency;
     }
 
     public static final Creator<TransitCurrency> CREATOR = new Creator<TransitCurrency>() {
@@ -96,7 +94,7 @@ public class TransitCurrency extends TransitBalance implements Parcelable {
         return new TransitCurrency(yens, "JPY", 1.);
     }
 
-    private TransitCurrency(int currency, String currencyCode, double divisor) {
+    private TransitCurrency(int currency, @NonNull String currencyCode, double divisor) {
         mCurrency = currency;
         mCurrencyCode = currencyCode;
         mDivisor = divisor;
