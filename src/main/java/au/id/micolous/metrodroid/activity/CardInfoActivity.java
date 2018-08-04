@@ -40,6 +40,7 @@ import android.view.View;
 
 import au.id.micolous.metrodroid.card.Card;
 import au.id.micolous.metrodroid.card.UnsupportedCardException;
+import au.id.micolous.metrodroid.fragment.BlankCardFragment;
 import au.id.micolous.metrodroid.fragment.CardBalanceFragment;
 import au.id.micolous.metrodroid.fragment.CardInfoFragment;
 import au.id.micolous.metrodroid.fragment.CardSubscriptionsFragment;
@@ -47,6 +48,7 @@ import au.id.micolous.metrodroid.fragment.CardTripsFragment;
 import au.id.micolous.metrodroid.fragment.UnauthorizedCardFragment;
 import au.id.micolous.metrodroid.provider.CardsTableColumns;
 import au.id.micolous.metrodroid.transit.TransitData;
+import au.id.micolous.metrodroid.transit.unknown.BlankUltralightTransitData;
 import au.id.micolous.metrodroid.transit.unknown.UnauthorizedClassicTransitData;
 import au.id.micolous.metrodroid.transit.unknown.UnauthorizedUltralightTransitData;
 import au.id.micolous.metrodroid.ui.TabPagerAdapter;
@@ -158,6 +160,11 @@ public class CardInfoActivity extends Activity {
                 if (mTransitData instanceof UnauthorizedClassicTransitData ||
                         mTransitData instanceof UnauthorizedUltralightTransitData) {
                     mTabsAdapter.addTab(actionBar.newTab(), UnauthorizedCardFragment.class, args);
+                    return;
+                }
+
+                if (mTransitData instanceof BlankUltralightTransitData) {
+                    mTabsAdapter.addTab(actionBar.newTab(), BlankCardFragment.class, args);
                     return;
                 }
 

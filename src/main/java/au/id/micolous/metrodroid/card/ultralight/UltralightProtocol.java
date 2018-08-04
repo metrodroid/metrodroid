@@ -46,8 +46,8 @@ class UltralightProtocol {
     enum UltralightType {
         /** Unknown type */
         UNKNOWN(-1),
-        /** MIFARE Ultralight (MF0ICU1), 7 pages */
-        MF0ICU1(7),
+        /** MIFARE Ultralight (MF0ICU1), 15 pages */
+        MF0ICU1(15),
         /** MIFARE Ultralight C (MF0ICU2), 47 pages (but pages 44-47 are masked), 3DES */
         MF0ICU2(43),
         /** MIFARE Ultralight EV1 (MF0UL11), 19 pages */

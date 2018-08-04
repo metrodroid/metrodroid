@@ -20,6 +20,7 @@ package au.id.micolous.metrodroid.card.ultralight;
 
 import android.nfc.Tag;
 import android.nfc.tech.MifareUltralight;
+import android.nfc.tech.NfcA;
 import android.support.annotation.Keep;
 import android.util.Log;
 
@@ -32,6 +33,7 @@ import au.id.micolous.metrodroid.card.UnsupportedTagException;
 import au.id.micolous.metrodroid.fragment.UltralightCardRawDataFragment;
 import au.id.micolous.metrodroid.transit.TransitData;
 import au.id.micolous.metrodroid.transit.TransitIdentity;
+import au.id.micolous.metrodroid.transit.unknown.BlankUltralightTransitData;
 import au.id.micolous.metrodroid.transit.unknown.UnauthorizedUltralightTransitData;
 import au.id.micolous.metrodroid.util.Utils;
 
@@ -142,9 +144,63 @@ public class UltralightCard extends Card {
         }
     }
 
+    public static UltralightCard dumpTagA(byte[] tagId, Tag tag, TagReaderFeedbackInterface feedbackInterface) throws Exception {
+        NfcA tech = null;
+
+        try {
+            tech = NfcA.get(tag);
+            tech.connect();
+            if (tech.getSak() != 0 || !Arrays.equals(tech.getAtqa(), new byte[]{0x44, 0x00}))
+                return null;
+            feedbackInterface.updateProgressBar(0, 1);
+
+            feedbackInterface.updateStatusText(Utils.localizeString(R.string.mfu_reading));
+            feedbackInterface.showCardType(null);
+
+            // Now iterate through the pages and grab all the datas
+            byte[] pageBuffer = new byte[0];
+            while (true) {
+                // Find first unread page
+                int page = pageBuffer.length / 4;
+                if (page >= 0x100)
+                    break;
+                // read command
+                byte []rd = {0x30, (byte) page};
+                byte []res;
+                try {
+                    res = tech.transceive(rd);
+                } catch (Exception e) {
+                    break;
+                }
+                pageBuffer = Utils.concatByteArrays(pageBuffer, res);
+                feedbackInterface.updateProgressBar(pageBuffer.length, 1024);
+            }
+
+            int numPages = (pageBuffer.length / 4);
+            int i;
+            List<UltralightPage> pages = new ArrayList<>();
+            for (i = 0; i < numPages; i++) {
+                pages.add(new UltralightPage(i, Arrays.copyOfRange(
+                        pageBuffer, i * 4, (i+1) * 4)));
+            }
+
+            // Now we have pages to stuff in the card.
+            return new UltralightCard(tagId, GregorianCalendar.getInstance(), "",
+                    pages.toArray(new UltralightPage[pages.size()]));
+
+        } finally {
+            if (tech != null && tech.isConnected()) {
+                tech.close();
+            }
+        }
+    }
 
     @Override
     public TransitIdentity parseTransitIdentity() {
+        if (BlankUltralightTransitData.check(this)) {
+            return BlankUltralightTransitData.parseTransitIdentity(this);
+        }
+
         if (UnauthorizedUltralightTransitData.check(this)) {
             // This check must be LAST.
             //
@@ -158,6 +214,10 @@ public class UltralightCard extends Card {
 
     @Override
     public TransitData parseTransitData() {
+        if (BlankUltralightTransitData.check(this)) {
+            return new BlankUltralightTransitData();
+        }
+
         if (UnauthorizedUltralightTransitData.check(this)) {
             // This check must be LAST.
             //

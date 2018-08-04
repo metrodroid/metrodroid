@@ -379,6 +379,17 @@ public class Utils {
         return input;
     }
 
+    public static byte[] concatByteArrays(byte[] a, byte[] b){
+        byte[] ret = new byte[a.length+b.length];
+        int i;
+        for (i = 0; i < a.length; i++)
+            ret[i] = a[i];
+        for (i = 0; i < b.length; i++)
+            ret[i+a.length] = b[i];
+        return ret;
+    }
+
+
     /* Based on function from mfocGUI by 'Huuf' (http://www.huuf.info/OV/) */
     public static int getBitsFromBuffer(byte[] buffer, int iStartBit, int iLength) {
         // Note: Assumes big-endian

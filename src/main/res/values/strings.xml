@@ -802,4 +802,12 @@
     <!-- Translators: The name of the ticketing system in Saint Petersburg (Russian: Подорожник).
     May be transliterated. -->
     <string name="card_name_podorozhnik">Podorozhnik</string>
+
+    <string name="blank_mfu_card">Blank MIFARE Ultralight card</string>
+    <string name="fully_blank_desc">
+        This card is completely blank as far as we can tell. It is formatted
+        but without any data written to it. It still has a serial number by which it can be
+        uniquely identified and linked to a database but card itself contains no other data.
+    </string>
+    <string name="fully_blank_title">Blank card</string>
 </resources>

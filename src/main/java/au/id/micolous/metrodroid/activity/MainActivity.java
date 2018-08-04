@@ -30,6 +30,7 @@ import android.nfc.NfcAdapter;
 import android.nfc.tech.IsoDep;
 import android.nfc.tech.MifareClassic;
 import android.nfc.tech.MifareUltralight;
+import android.nfc.tech.NfcA;
 import android.nfc.tech.NfcF;
 import android.os.Bundle;
 import android.view.Menu;
@@ -49,7 +50,8 @@ public class MainActivity extends Activity {
             new String[]{IsoDep.class.getName()},
             new String[]{MifareClassic.class.getName()},
             new String[]{MifareUltralight.class.getName()},
-            new String[]{NfcF.class.getName()}
+            new String[]{NfcA.class.getName()},
+            new String[]{NfcF.class.getName()},
     };
 
     @Override
