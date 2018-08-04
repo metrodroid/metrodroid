@@ -1,7 +1,7 @@
 /*
  * SupportedCardsActivity.java
  *
- * Copyright 2011 Eric Butler
+ * Copyright 2011, 2017 Eric Butler
  * Copyright 2015-2018 Michael Farrell
  *
  * This program is free software: you can redistribute it and/or modify
@@ -24,8 +24,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.nfc.NfcAdapter;
 import android.os.Bundle;
-import android.text.Html;
-import android.text.Spanned;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
@@ -34,14 +32,13 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import au.id.micolous.metrodroid.card.CardType;
-import au.id.micolous.metrodroid.transit.CardInfo;
-import au.id.micolous.metrodroid.util.Utils;
-
 import java.util.ArrayList;
 
 import au.id.micolous.farebot.R;
 import au.id.micolous.metrodroid.MetrodroidApplication;
+import au.id.micolous.metrodroid.card.CardType;
+import au.id.micolous.metrodroid.transit.CardInfo;
+import au.id.micolous.metrodroid.util.Utils;
 
 /**
  * @author Eric Butler, Michael Farrell
@@ -101,14 +98,16 @@ public class SupportedCardsActivity extends Activity {
             if (nfcAvailable) {
                 if (info.getCardType() == CardType.MifareClassic && !app.getMifareClassicSupport()) {
                     // MIFARE Classic is not supported by this device.
-                    notes += Utils.localizeString(R.string.card_not_supported_on_device) + " ";
                     convertView.findViewById(R.id.card_not_supported).setVisibility(View.VISIBLE);
-                } else
+                    convertView.findViewById(R.id.card_not_supported_icon).setVisibility(View.VISIBLE);
+                } else {
                     convertView.findViewById(R.id.card_not_supported).setVisibility(View.GONE);
+                    convertView.findViewById(R.id.card_not_supported_icon).setVisibility(View.GONE);
+                }
             } else {
                 // This device does not support NFC, so all cards are not supported.
-                notes += Utils.localizeString(R.string.card_not_supported_on_device) + " ";
                 convertView.findViewById(R.id.card_not_supported).setVisibility(View.VISIBLE);
+                convertView.findViewById(R.id.card_not_supported_icon).setVisibility(View.VISIBLE);
             }
 
             // Keys being required is secondary to the card not being supported.

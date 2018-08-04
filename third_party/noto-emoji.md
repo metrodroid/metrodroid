@@ -10,6 +10,8 @@ Some vector glyphs used in Metrodroid are derived from [Noto Emoji][0]:
 
 * `ferry`: https://github.com/googlei18n/noto-emoji/blob/master/svg/emoji_u26f4.svg
 
+* `locked`: https://github.com/googlei18n/noto-emoji/blob/master/svg/emoji_u1f512.svg
+
 * `metro`: https://github.com/googlei18n/noto-emoji/blob/master/svg/emoji_u1f687.svg
 
 * `train`: https://github.com/googlei18n/noto-emoji/blob/master/svg/emoji_u1f686.svg

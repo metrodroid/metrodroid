@@ -64,13 +64,24 @@
             </LinearLayout>
             <ImageView
                 android:id="@+id/card_locked"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
                 android:layout_gravity="center"
                 android:layout_marginStart="16dp"
                 android:contentDescription="@string/keys_required"
-                android:src="@drawable/ic_lock_yellow_24dp"
-                android:alpha="0.54"/>
+                android:src="@drawable/locked"
+                android:layout_marginLeft="16dp"
+                android:scaleType="fitXY"/>
+            <ImageView
+                android:id="@+id/card_not_supported_icon"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_gravity="center"
+                android:layout_marginStart="16dp"
+                android:contentDescription="@string/card_not_supported_on_device"
+                android:src="@drawable/banned"
+                android:layout_marginLeft="16dp"
+                android:scaleType="fitXY"/>
         </LinearLayout>
         <FrameLayout
             android:layout_width="match_parent"
