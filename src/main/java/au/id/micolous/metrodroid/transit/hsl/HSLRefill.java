@@ -2,6 +2,7 @@
  * HSLRefill.java
  *
  * Copyright 2013 Lauri Andler <lauri.andler@gmail.com>
+ * Copyright 2018 Michael Farrell <micolous+git@gmail.com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -19,37 +20,57 @@
 package au.id.micolous.metrodroid.transit.hsl;
 
 import android.os.Parcel;
+import android.os.Parcelable;
+import android.support.annotation.Nullable;
 
-import au.id.micolous.metrodroid.transit.Refill;
+import java.util.Calendar;
 
 import au.id.micolous.farebot.R;
 import au.id.micolous.metrodroid.MetrodroidApplication;
 import au.id.micolous.metrodroid.transit.TransitCurrency;
+import au.id.micolous.metrodroid.transit.Trip;
 import au.id.micolous.metrodroid.util.Utils;
 
-public class HSLRefill extends Refill {
-    private final long mRefillTime;
+public class HSLRefill extends Trip implements Parcelable {
+    private final Calendar mRefillTime;
     private final int mRefillAmount;
 
     public HSLRefill(byte[] data) {
-        mRefillTime = HSLTransitData.cardDateToTimestamp(
+        mRefillTime = HSLTransitData.cardDateToCalendar(
                 Utils.getBitsFromBuffer(data, 20, 14),
                 Utils.getBitsFromBuffer(data, 34, 11));
         mRefillAmount = Utils.getBitsFromBuffer(data, 45, 20);
     }
 
     public HSLRefill(Parcel parcel) {
-        mRefillTime = parcel.readLong();
+        mRefillTime = Utils.longToCalendar(parcel.readLong(), HSLTransitData.TZ);
         mRefillAmount = parcel.readInt();
     }
 
+    public static final Creator<HSLRefill> CREATOR = new Creator<HSLRefill>() {
+        @Override
+        public HSLRefill createFromParcel(Parcel in) {
+            return new HSLRefill(in);
+        }
+
+        @Override
+        public HSLRefill[] newArray(int size) {
+            return new HSLRefill[size];
+        }
+    };
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
     public void writeToParcel(Parcel dest, int flags) {
-        dest.writeLong(mRefillTime);
+        dest.writeLong(Utils.calendarToLong(mRefillTime));
         dest.writeInt(mRefillAmount);
     }
 
     @Override
-    public long getTimestamp() {
+    public Calendar getStartTimestamp() {
         return mRefillTime;
     }
 
@@ -64,7 +85,24 @@ public class HSLRefill extends Refill {
     }
 
     @Override
-    public TransitCurrency getAmount() {
-        return TransitCurrency.EUR(mRefillAmount);
+    public boolean hasFare() {
+        return true;
     }
+
+    @Nullable
+    @Override
+    public TransitCurrency getFare() {
+        return TransitCurrency.EUR(-mRefillAmount);
+    }
+
+    @Override
+    public Mode getMode() {
+        return Mode.TICKET_MACHINE;
+    }
+
+    @Override
+    public boolean hasTime() {
+        return true;
+    }
+
 }

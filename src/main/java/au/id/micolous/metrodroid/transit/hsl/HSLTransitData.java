@@ -21,21 +21,10 @@
 package au.id.micolous.metrodroid.transit.hsl;
 
 import android.os.Parcel;
+import android.os.Parcelable;
 import android.support.annotation.Nullable;
-import android.text.Spanned;
 
 import org.apache.commons.lang3.ArrayUtils;
-
-import au.id.micolous.metrodroid.card.Card;
-import au.id.micolous.metrodroid.card.desfire.DesfireCard;
-import au.id.micolous.metrodroid.card.desfire.files.DesfireFile;
-import au.id.micolous.metrodroid.card.desfire.files.RecordDesfireFile;
-import au.id.micolous.metrodroid.transit.Refill;
-import au.id.micolous.metrodroid.transit.TransitCurrency;
-import au.id.micolous.metrodroid.transit.TransitData;
-import au.id.micolous.metrodroid.transit.TransitIdentity;
-import au.id.micolous.metrodroid.transit.Trip;
-import au.id.micolous.metrodroid.util.Utils;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -43,6 +32,16 @@ import java.util.Collections;
 import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.TimeZone;
+
+import au.id.micolous.metrodroid.card.Card;
+import au.id.micolous.metrodroid.card.desfire.DesfireCard;
+import au.id.micolous.metrodroid.card.desfire.files.DesfireFile;
+import au.id.micolous.metrodroid.card.desfire.files.RecordDesfireFile;
+import au.id.micolous.metrodroid.transit.TransitCurrency;
+import au.id.micolous.metrodroid.transit.TransitData;
+import au.id.micolous.metrodroid.transit.TransitIdentity;
+import au.id.micolous.metrodroid.transit.Trip;
+import au.id.micolous.metrodroid.util.Utils;
 
 /**
  * Implements a reader for HSL transit cards.
@@ -56,8 +55,9 @@ import java.util.TimeZone;
  * Machine translation to English:
  * https://translate.google.com/translate?sl=auto&tl=en&js=y&prev=_t&hl=en&ie=UTF-8&u=http%3A%2F%2Fdev.hsl.fi%2Fhsl-card-java%2FHSL-matkakortin-kuvaus.pdf&edit-text=&act=url
  */
-public class HSLTransitData extends TransitData {
-    private static final TimeZone TZ = TimeZone.getTimeZone("Europe/Helsinki");
+public class HSLTransitData extends TransitData implements Parcelable {
+
+    static final TimeZone TZ = TimeZone.getTimeZone("Europe/Helsinki");
     private static final long EPOCH;
 
     static {
@@ -298,6 +298,18 @@ public class HSLTransitData extends TransitData {
         }
     }
 
+    public static final Creator<HSLTransitData> CREATOR = new Creator<HSLTransitData>() {
+        @Override
+        public HSLTransitData createFromParcel(Parcel in) {
+            return new HSLTransitData(in);
+        }
+
+        @Override
+        public HSLTransitData[] newArray(int size) {
+            return new HSLTransitData[size];
+        }
+    };
+
     public static boolean check(Card card) {
         return (card instanceof DesfireCard) && (((DesfireCard) card).getApplication(APP_ID) != null);
     }
@@ -315,15 +327,13 @@ public class HSLTransitData extends TransitData {
         }
     }
 
-    /*
-    public static Calendar cardDateToTimestamp(int day, int minute) {
+    public static Calendar cardDateToCalendar(long day, long minute) {
         GregorianCalendar c = new GregorianCalendar(TZ);
         c.setTimeInMillis(EPOCH);
-        c.add(Calendar.DAY_OF_YEAR, day);
-        c.add(Calendar.MINUTE, minute);
+        c.add(Calendar.DAY_OF_YEAR, (int)day);
+        c.add(Calendar.MINUTE, (int)minute);
         return c;
     }
-    */
 
     static long cardDateToTimestamp(long day, long minute) {
         return (EPOCH) + day * (60 * 60 * 24) + minute * 60;
@@ -417,13 +427,11 @@ public class HSLTransitData extends TransitData {
 
     @Override
     public Trip[] getTrips() {
-        return mTrips.toArray(new HSLTrip[mTrips.size()]);
-    }
+        List<Trip> trips = new ArrayList<>(mTrips);
+        trips.add(mLastRefill);
+        Collections.sort(trips, new Trip.Comparator());
 
-    @Override
-    public Refill[] getRefills() {
-        Refill[] ret = {mLastRefill};
-        return ret;
+        return trips.toArray(new Trip[trips.size()]);
     }
 
     private List<HSLTrip> parseTrips(DesfireCard card) {
