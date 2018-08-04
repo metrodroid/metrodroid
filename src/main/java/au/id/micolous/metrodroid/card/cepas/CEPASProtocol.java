@@ -3,7 +3,7 @@
  *
  * Copyright 2011 Sean Cross <sean@chumby.com>
  * Copyright 2013-2014 Eric Butler <eric@codebutler.com>
- *
+ * Copyright 2018 Michael Farrell <micolous+git@gmail.com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -29,6 +29,7 @@ import java.io.IOException;
 
 public class CEPASProtocol {
     private static final String TAG = "CEPASProtocol";
+    // FIXME: This should select the actual CEPAS file by name...
     private static final byte[] CEPAS_SELECT_FILE_COMMAND = new byte[]{
             (byte) 0x00, (byte) 0xA4, (byte) 0x00, (byte) 0x00,
             (byte) 0x02, (byte) 0x40, (byte) 0x00};
@@ -111,13 +112,15 @@ public class CEPASProtocol {
                 throw new CEPASException("File " + p1 + " was an invalid file.");
 
             } else if (recvBuffer[recvBuffer.length - 2] == 0x67) {
-                throw new CEPASException("Got invalid file size response.");
+                // E-Passports tend to land here...
+                Log.d(TAG, "Got invalid file size response.");
             }   else if (recvBuffer[recvBuffer.length - 2] == INCORRECT_APPLICATION) {
-                throw new NotCEPASException();
+                Log.d(TAG, "Got incorrect application response.");
             }
 
-            throw new CEPASException("Got generic invalid response: "
+            Log.d(TAG, "Got invalid response: "
                     + Integer.toHexString(((int) recvBuffer[recvBuffer.length - 2]) & 0xff));
+            throw new NotCEPASException();
         }
 
         output.write(recvBuffer, 0, recvBuffer.length - 2);

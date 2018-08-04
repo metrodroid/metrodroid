@@ -45,8 +45,10 @@ import java.io.StringWriter;
 import java.util.Calendar;
 import java.util.Collection;
 import java.util.List;
+import java.util.Locale;
 
 public abstract class Card {
+    private static String TAG = Card.class.getName();
     // This must be protected, not private, as otherwise the XML deserialiser fails to read the
     // card.
     @SuppressWarnings("WeakerAccess")
@@ -82,6 +84,12 @@ public abstract class Card {
 
     public static Card dumpTag(byte[] tagId, Tag tag, TagReaderFeedbackInterface feedbackInterface) throws Exception {
         final String[] techs = tag.getTechList();
+        Log.d(TAG, String.format(Locale.ENGLISH, "Reading tag %s. %d tech(s) supported:",
+                Utils.getHexString(tagId), techs.length));
+        for (String tech : techs) {
+            Log.d(TAG, tech);
+        }
+
         if (ArrayUtils.contains(techs, "android.nfc.tech.NfcB")) {
             // FIXME: CEPAS interface should first select the correct Application ID, to ensure it
             // only triggers on actual CEPAS cards.
