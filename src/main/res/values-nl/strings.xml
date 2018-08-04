@@ -426,7 +426,6 @@
 
     <string name="convert_timezones">Tijden aanpassen aan huidige tijdzone</string>
     <string name="convert_timezones_summary">Standaard laat Metrodroid reistijden zien zoals deze zijn in de tijdzone van de vervoerder. Als deze optie wordt ingeschakeld, dan zal Metrodroid de reistijden aanpassen aan de huidige tijdzone van uw apparaat.</string>
-<string name="file_folder_title_format">Bestand: 0x%s/0x%s</string>
     <string name="record_title_format">Vermelding: %s</string>
     <string name="iso7816_probing">Bezig met verbinding leggen met ISO7816-kaart…</string>
     <string name="calypso_reading">Bezig met uitlezen van Calypso-kaart…</string>

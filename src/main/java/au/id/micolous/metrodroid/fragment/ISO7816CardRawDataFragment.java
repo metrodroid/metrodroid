@@ -1,8 +1,9 @@
 /*
- * CalypsoCardRawDataFragment.java
+ * ISO7816CardRawDataFragment.java
  *
  * Copyright 2012 Eric Butler <eric@codebutler.com>
  * Copyright 2018 Michael Farrell <micolous+git@gmail.com>
+ * Copyright 2018 Google
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -37,34 +38,50 @@ import au.id.micolous.farebot.R;
 import au.id.micolous.metrodroid.MetrodroidApplication;
 import au.id.micolous.metrodroid.activity.AdvancedCardInfoActivity;
 import au.id.micolous.metrodroid.card.Card;
-import au.id.micolous.metrodroid.card.calypso.CalypsoCard;
-import au.id.micolous.metrodroid.card.calypso.CalypsoFile;
-import au.id.micolous.metrodroid.card.calypso.CalypsoRecord;
+import au.id.micolous.metrodroid.card.iso7816.ISO7816Application;
+import au.id.micolous.metrodroid.card.iso7816.ISO7816Card;
+import au.id.micolous.metrodroid.card.iso7816.ISO7816File;
+import au.id.micolous.metrodroid.card.iso7816.ISO7816Record;
 import au.id.micolous.metrodroid.util.Utils;
 
-public class CalypsoCardRawDataFragment extends ExpandableListFragment {
-    private CalypsoCard mCard;
+public class ISO7816CardRawDataFragment extends ExpandableListFragment {
+    private ISO7816Application mApp;
 
     public void onCreate(Bundle bundle) {
         super.onCreate(bundle);
         Serializer serializer = MetrodroidApplication.getInstance().getSerializer();
-        mCard = (CalypsoCard) Card.fromXml(serializer, getArguments().getString(AdvancedCardInfoActivity.EXTRA_CARD));
-        setListAdapter(new CalypsoRawDataAdapter(getActivity(), mCard));
+        ISO7816Card card = (ISO7816Card) Card.fromXml(serializer, getArguments().getString(AdvancedCardInfoActivity.EXTRA_CARD));
+        ISO7816Application app = card.getFirstApplication();
+        setListAdapter(new ISO7816RawDataAdapter(getActivity(), app));
+        mApp = app;
     }
 
     @Override
     public boolean onListChildClick(ExpandableListView parent, View v, int groupPosition, int childPosition, long id) {
-        CalypsoFile file = mCard.getFiles().get(groupPosition);
-        CalypsoRecord record = file.getRecords().get(childPosition);
+        ISO7816File file = mApp.getFiles().get(groupPosition);
+        if (file.getBinaryData() != null) {
+            if (childPosition == 0) {
+                String data = Utils.getHexString(file.getBinaryData(), "");
+
+                String fileTitle = file.getSelector().formatString();
+
+                String recordTitle = getString(R.string.binary_title_format);
+
+                new AlertDialog.Builder(getActivity())
+                        .setTitle(String.format("%s, %s", fileTitle, recordTitle))
+                        .setPositiveButton(android.R.string.ok, null)
+                        .setMessage(data)
+                        .show();
+
+                return true;
+            }
+            childPosition--;
+        }
+        ISO7816Record record = file.getRecords().get(childPosition);
 
         String data = Utils.getHexString(record.getData(), "");
 
-        String fileTitle;
-        if (file.getFolder() == 0) {
-            fileTitle = getString(R.string.file_title_format, Integer.toHexString(file.getFile()));
-        } else {
-            fileTitle = getString(R.string.file_folder_title_format, Integer.toHexString(file.getFolder()), Integer.toHexString(file.getFile()));
-        }
+        String fileTitle = file.getSelector().formatString();
 
         String recordTitle = getString(R.string.record_title_format, Integer.toString(record.getIndex()));
 
@@ -77,35 +94,51 @@ public class CalypsoCardRawDataFragment extends ExpandableListFragment {
         return true;
     }
 
-    private static class CalypsoRawDataAdapter extends BaseExpandableListAdapter {
-        private Activity mActivity;
-        private CalypsoCard mCard;
+    private static class ISO7816RawDataAdapter extends BaseExpandableListAdapter {
+        private final Activity mActivity;
+        private final ISO7816Application mApp;
 
-        private CalypsoRawDataAdapter(Activity mActivity, CalypsoCard mCard) {
+        private ISO7816RawDataAdapter(Activity mActivity, ISO7816Application mApp) {
             this.mActivity = mActivity;
-            this.mCard = mCard;
+            this.mApp = mApp;
         }
 
         @Override
         public int getGroupCount() {
-            return mCard.getFiles().size();
+            if (mApp == null)
+                return 0;
+            return mApp.getFiles().size();
         }
 
         @Override
         public int getChildrenCount(int groupPosition) {
-            CalypsoFile file = mCard.getFiles().get(groupPosition);
-            List<CalypsoRecord> records = file.getRecords();
-            return (records == null) ? 0 : records.size();
+            if (mApp == null)
+                return 0;
+            ISO7816File file = mApp.getFiles().get(groupPosition);
+            List<ISO7816Record> records = file.getRecords();
+            byte []bin = file.getBinaryData();
+            int res = 0;
+            res += (records == null) ? 0 : records.size();
+            res += (bin == null) ? 0 : 1;
+            return res;
         }
 
         @Override
         public Object getGroup(int groupPosition) {
-            return mCard.getFiles().get(groupPosition);
+            return mApp.getFiles().get(groupPosition);
         }
 
         @Override
         public Object getChild(int groupPosition, int childPosition) {
-            return mCard.getFiles().get(groupPosition).getRecords().get(childPosition);
+            if (mApp == null)
+                return null;
+            ISO7816File file = mApp.getFiles().get(groupPosition);
+            if (file.getBinaryData() != null) {
+                if (childPosition == 0)
+                    return file.getBinaryData();
+                childPosition--;
+            }
+            return file.getRecords().get(childPosition);
         }
 
         @Override
@@ -130,15 +163,11 @@ public class CalypsoCardRawDataFragment extends ExpandableListFragment {
                 view = mActivity.getLayoutInflater().inflate(android.R.layout.simple_expandable_list_item_2, parent, false);
             }
 
-            CalypsoFile file = (CalypsoFile) getGroup(groupPosition);
+            ISO7816File file = (ISO7816File) getGroup(groupPosition);
 
             TextView textView1 = view.findViewById(android.R.id.text1);
-            if (file.getFolder() == 0) {
-                textView1.setText(mActivity.getString(R.string.file_title_format, Integer.toHexString(file.getFile())));
-            } else {
-                textView1.setText(mActivity.getString(R.string.file_folder_title_format, Integer.toHexString(file.getFolder()), Integer.toHexString(file.getFile())));
-            }
-
+	    textView1.setText(mActivity.getString(R.string.file_title_format, file.getSelector().formatString()));
+	    
             TextView textView2 = view.findViewById(android.R.id.text2);
             textView2.setText(Utils.localizePlural(R.plurals.record_count, file.getRecords().size(), file.getRecords().size()));
             return view;
@@ -151,7 +180,14 @@ public class CalypsoCardRawDataFragment extends ExpandableListFragment {
                 view = mActivity.getLayoutInflater().inflate(android.R.layout.simple_expandable_list_item_1, parent, false);
             }
 
-            CalypsoRecord record = (CalypsoRecord) getChild(groupPosition, childPosition);
+            Object child = getChild(groupPosition, childPosition);
+
+            if (child instanceof byte[]) {
+                ((TextView) view.findViewById(android.R.id.text1)).setText(mActivity.getString(R.string.binary_title_format));
+                return view;
+            }
+
+            ISO7816Record record = (ISO7816Record) child;
 
             ((TextView) view.findViewById(android.R.id.text1)).setText(mActivity.getString(R.string.record_title_format, Integer.toString(record.getIndex())));
             return view;

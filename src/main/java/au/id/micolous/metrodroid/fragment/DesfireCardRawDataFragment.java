@@ -119,18 +119,18 @@ public class DesfireCardRawDataFragment extends ExpandableListFragment {
                 DesfireApplication app = mCard.getApplications().get(groupPosition);
                 DesfireFile file = app.getFiles().get(childPosition);
 
-                textView1.setText(Utils.localizeString(R.string.file_title_format, Integer.toHexString(file.getId())));
+                textView1.setText(Utils.localizeString(R.string.file_title_format, "0x" + Integer.toHexString(file.getId())));
 
                 if (file instanceof UnauthorizedDesfireFile) {
                     textView1.setText(Utils.localizeString(R.string.unauthorized_file_title_format,
-                            Integer.toHexString(file.getId())));
+                            "0x" + Integer.toHexString(file.getId())));
                 } else if (file instanceof InvalidDesfireFile) {
                     textView1.setText(Utils.localizeString(R.string.invalid_file_title_format,
-                            Integer.toHexString(file.getId()),
+                            "0x" + Integer.toHexString(file.getId()),
                             ((InvalidDesfireFile)file).getErrorMessage()));
                 } else {
                     textView1.setText(Utils.localizeString(R.string.file_title_format,
-                            Integer.toHexString(file.getId())));
+                            "0x" + Integer.toHexString(file.getId())));
                 }
 
                 if (!(file instanceof InvalidDesfireFile) || (file instanceof UnauthorizedDesfireFile)) {

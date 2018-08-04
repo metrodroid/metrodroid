@@ -31,8 +31,10 @@ import au.id.micolous.metrodroid.card.Card;
 import au.id.micolous.metrodroid.card.CardType;
 import au.id.micolous.metrodroid.card.calypso.CalypsoCard;
 import au.id.micolous.metrodroid.card.calypso.CalypsoData;
-import au.id.micolous.metrodroid.card.calypso.CalypsoFile;
-import au.id.micolous.metrodroid.card.calypso.CalypsoRecord;
+import au.id.micolous.metrodroid.card.iso7816.ISO7816Application;
+import au.id.micolous.metrodroid.card.iso7816.ISO7816Card;
+import au.id.micolous.metrodroid.card.iso7816.ISO7816File;
+import au.id.micolous.metrodroid.card.iso7816.ISO7816Record;
 import au.id.micolous.metrodroid.card.cepas.CEPASCard;
 import au.id.micolous.metrodroid.card.cepas.CEPASPurse;
 import au.id.micolous.metrodroid.card.desfire.DesfireCard;
@@ -179,10 +181,13 @@ public class CardHWDetailFragment extends ListFragment {
             d = card.getOtherCommandsTime();
             items.add(new ListItem(R.string.felica_response_time_other,
                     Utils.localizePlural(R.plurals.milliseconds_short, (int)d, df.format(d))));
-        } else if (mCard.getCardType() == CardType.Calypso) {
-            CalypsoCard card = (CalypsoCard) mCard;
-            CalypsoFile iccFile = card.getFile(CalypsoCard.File.ICC);
-            CalypsoRecord iccRecord = null;
+        } else if (mCard.getCardType() == CardType.ISO7816) {
+            ISO7816Card isocard = (ISO7816Card) mCard;
+            ISO7816Application card = isocard.getFirstApplication();
+            ISO7816File iccFile = null;
+            if (card instanceof CalypsoCard)
+                iccFile = card.getFile(CalypsoCard.File.ICC.getSelector());
+            ISO7816Record iccRecord = null;
             if (iccFile != null) {
                 iccRecord = iccFile.getRecord(1);
             }
