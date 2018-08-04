@@ -54,22 +54,22 @@ import au.id.micolous.metrodroid.util.Utils;
  * - https://github.com/nfc-tools/libnfc/blob/master/examples/pn53x-tamashell-scripts/ReadMobib.sh
  * - https://github.com/nfc-tools/libnfc/blob/master/examples/pn53x-tamashell-scripts/ReadNavigo.sh
  */
-public class CalypsoCard extends ISO7816Application {
+public class CalypsoApplication extends ISO7816Application {
     public static final byte[] CALYPSO_FILENAME = Utils.stringToByteArray("1TIC.ICA");
 
-    private static final String TAG = CalypsoCard.class.getName();
+    private static final String TAG = CalypsoApplication.class.getName();
     public static final String TYPE = "calypso";
 
-    private CalypsoCard(ISO7816Application.ISO7816Info appData, boolean partialRead) {
+    private CalypsoApplication(ISO7816Application.ISO7816Info appData, boolean partialRead) {
         super(appData);
     }
 
-    private CalypsoCard() {
+    private CalypsoApplication() {
         super(); /* For XML Serializer */
     }
 
-    public static CalypsoCard dumpTag(ISO7816Protocol protocol, ISO7816Application.ISO7816Info appData,
-                                      TagReaderFeedbackInterface feedbackInterface) throws IOException {
+    public static CalypsoApplication dumpTag(ISO7816Protocol protocol, ISO7816Application.ISO7816Info appData,
+                                             TagReaderFeedbackInterface feedbackInterface) throws IOException {
         // At this point, the connection is already open, we just need to dump the right things...
 
         feedbackInterface.updateStatusText(Utils.localizeString(R.string.calypso_reading));
@@ -90,7 +90,7 @@ public class CalypsoCard extends ISO7816Application {
                 }
             }
 
-        return new CalypsoCard(appData, partialRead);
+        return new CalypsoApplication(appData, partialRead);
     }
 
     public ISO7816File getFile(File f) {
@@ -142,7 +142,7 @@ public class CalypsoCard extends ISO7816Application {
             manufactureDate.setTimeInMillis(CalypsoData.MANUFACTURE_EPOCH.getTimeInMillis());
             manufactureDate.add(Calendar.DATE, Utils.byteArrayToInt(data, 25, 2));
 
-            items.add(new HeaderListItem("ICC"));
+            items.add(new HeaderListItem("Calypso"));
             if (!MetrodroidApplication.hideCardNumbers()) {
                 items.add(new ListItem(R.string.calypso_serial_number, Utils.getHexString(data, 12, 8)));
             }
@@ -210,34 +210,22 @@ public class CalypsoCard extends ISO7816Application {
         ETICKET_EVENT_LOGS(0x8000, 0x8010),
         ETICKET_PRESELECTION(0x8000, 0x8030);
 
-        private int mFolder;
-        private int mFile;
+        private ISO7816Selector mSelector;
 
         File(int file) {
-            this(0, file);
+            mSelector = ISO7816Selector.makeSelector(file);
         }
 
         File(int folder, int file) {
-            mFolder = folder;
-            mFile = file;
+            mSelector = ISO7816Selector.makeSelector(folder, file);
         }
 
         public static File[] getAll() {
             return File.class.getEnumConstants();
         }
 
-        public int getFile() {
-            return mFile;
-        }
-
-        public int getFolder() {
-            return mFolder;
-        }
-
         public ISO7816Selector getSelector() {
-            if (mFolder == 0)
-                return ISO7816Selector.makeSelector(mFile);
-            return ISO7816Selector.makeSelector(mFolder, mFile);
+            return mSelector;
         }
     }
 }

@@ -25,7 +25,7 @@ import org.simpleframework.xml.convert.Converter;
 import org.simpleframework.xml.stream.InputNode;
 import org.simpleframework.xml.stream.OutputNode;
 
-import au.id.micolous.metrodroid.card.calypso.CalypsoCard;
+import au.id.micolous.metrodroid.card.calypso.CalypsoApplication;
 import au.id.micolous.metrodroid.card.iso7816.ISO7816Application;
 
 public class ISO7816Converter implements Converter<ISO7816Application> {
@@ -38,8 +38,8 @@ public class ISO7816Converter implements Converter<ISO7816Application> {
     @Override
     public ISO7816Application read(InputNode node) throws Exception {
         String appType = node.getAttribute("type").getValue();
-        if (CalypsoCard.TYPE.equals(appType)) {
-            return mSerializer.read(CalypsoCard.class, node);
+        if (CalypsoApplication.TYPE.equals(appType)) {
+            return mSerializer.read(CalypsoApplication.class, node);
         }
         throw new SkippableRegistryStrategy.SkipException();
     }
