@@ -68,23 +68,12 @@ public class HSLTransitData extends TransitData implements Parcelable {
     }
 
 
-    public static final int APP_ID = 0x1120ef;
+    private static final int APP_ID = 0x1120ef;
     private String mSerialNumber;
     private int mBalance;
     private List<HSLTrip> mTrips;
-    private boolean mHasKausi;
-    private long mKausiStart;
-    private long mKausiEnd;
-    private long mKausiPrevStart;
-    private long mKausiPrevEnd;
-    private int mKausiPurchasePrice;
-    private long mKausiLastUse;
-    private long mKausiPurchase;
     private HSLRefill mLastRefill;
-    private boolean mKausiNoData;
     private long mArvoExit;
-    private long mArvoPurchase;
-    private long mArvoExpire;
     private int mArvoPax;
     private int mArvoPurchasePrice;
     private long mArvoXfer;
@@ -124,8 +113,6 @@ public class HSLTransitData extends TransitData implements Parcelable {
         mArvoExit = parcel.readLong();
         mArvoPurchasePrice = parcel.readInt();
         mArvoDiscoGroup = parcel.readLong();
-        mArvoPurchase = parcel.readLong();
-        mArvoExpire = parcel.readLong();
         mArvoPax = parcel.readInt();
         mArvoXfer = parcel.readLong();
         mArvoVehicleNumber = parcel.readInt();
@@ -192,11 +179,11 @@ public class HSLTransitData extends TransitData implements Parcelable {
             //68 price, 82 zone?
             mArvoPurchasePrice = Utils.getBitsFromBuffer(data, 68, 14);
             //mArvoDiscoGroup = Utils.byteArrayToInt(data, 82, 6);
-            mArvoPurchase = cardDateToTimestamp(
+            Calendar mArvoPurchase = cardDateToCalendar(
                     Utils.byteArrayToInt(data, 88, 14),
                     Utils.byteArrayToInt(data, 102, 11));
 
-            mArvoExpire = cardDateToTimestamp(
+            Calendar mArvoExpire = cardDateToCalendar(
                     Utils.byteArrayToInt(data, 113, 14),
                     Utils.byteArrayToInt(data, 127, 11));
 
@@ -217,7 +204,7 @@ public class HSLTransitData extends TransitData implements Parcelable {
             if (balanceIndex > -1) {
                 mTrips.get(balanceIndex).mLine = Long.toString(mArvoLineJORE);
                 mTrips.get(balanceIndex).mVehicleNumber = mArvoVehicleNumber;
-            } else if (mArvoPurchase > 2) {
+            } else if (mArvoPurchase.getTimeInMillis() > 2) {
                 HSLTrip t = new HSLTrip();
                 t.mArvo = 1;
                 t.mExpireTimestamp = mArvoExpire;
@@ -245,13 +232,13 @@ public class HSLTransitData extends TransitData implements Parcelable {
             data = desfireCard.getApplication(APP_ID).getFile(0x01).getData();
 
             if (Utils.byteArrayToInt(data, 19, 14) == 0 && Utils.byteArrayToInt(data, 67, 14) == 0) {
-                mKausiNoData = true;
+                boolean mKausiNoData = true;
             }
 
-            mKausiStart = cardDateToTimestamp(Utils.byteArrayToInt(data, 19, 14), 0);
-            mKausiEnd = cardDateToTimestamp(Utils.byteArrayToInt(data, 33, 14), 0);
-            mKausiPrevStart = cardDateToTimestamp(Utils.byteArrayToInt(data, 67, 14), 0);
-            mKausiPrevEnd = cardDateToTimestamp(Utils.byteArrayToInt(data, 81, 14), 0);
+            long mKausiStart = cardDateToTimestamp(Utils.byteArrayToInt(data, 19, 14), 0);
+            long mKausiEnd = cardDateToTimestamp(Utils.byteArrayToInt(data, 33, 14), 0);
+            long mKausiPrevStart = cardDateToTimestamp(Utils.byteArrayToInt(data, 67, 14), 0);
+            long mKausiPrevEnd = cardDateToTimestamp(Utils.byteArrayToInt(data, 81, 14), 0);
             if (mKausiPrevStart > mKausiStart) {
                 long temp = mKausiStart;
                 long temp2 = mKausiEnd;
@@ -260,12 +247,12 @@ public class HSLTransitData extends TransitData implements Parcelable {
                 mKausiPrevStart = temp;
                 mKausiPrevEnd = temp2;
             }
-            mHasKausi = mKausiEnd > (System.currentTimeMillis() / 1000.0);
-            mKausiPurchase = cardDateToTimestamp(
+            boolean mHasKausi = mKausiEnd > (System.currentTimeMillis() / 1000.0);
+            Calendar mKausiPurchase = cardDateToCalendar(
                     Utils.byteArrayToInt(data, 110, 14),
                     Utils.byteArrayToInt(data, 124, 11));
-            mKausiPurchasePrice = Utils.byteArrayToInt(data, 149, 15);
-            mKausiLastUse = cardDateToTimestamp(
+            int mKausiPurchasePrice = Utils.byteArrayToInt(data, 149, 15);
+            long mKausiLastUse = cardDateToTimestamp(
                     Utils.byteArrayToInt(data, 192, 14),
                     Utils.byteArrayToInt(data, 206, 11));
             mKausiVehicleNumber = Utils.byteArrayToInt(data, 217, 14);
@@ -327,7 +314,7 @@ public class HSLTransitData extends TransitData implements Parcelable {
         }
     }
 
-    public static Calendar cardDateToCalendar(long day, long minute) {
+    static Calendar cardDateToCalendar(long day, long minute) {
         GregorianCalendar c = new GregorianCalendar(TZ);
         c.setTimeInMillis(EPOCH);
         c.add(Calendar.DAY_OF_YEAR, (int)day);
@@ -335,7 +322,7 @@ public class HSLTransitData extends TransitData implements Parcelable {
         return c;
     }
 
-    static long cardDateToTimestamp(long day, long minute) {
+    private static long cardDateToTimestamp(long day, long minute) {
         return (EPOCH) + day * (60 * 60 * 24) + minute * 60;
     }
 
@@ -461,8 +448,8 @@ public class HSLTransitData extends TransitData implements Parcelable {
         parcel.writeLong(mArvoExit);
         parcel.writeInt(mArvoPurchasePrice);
         parcel.writeLong(mArvoDiscoGroup);
-        parcel.writeLong(mArvoPurchase);
-        parcel.writeLong(mArvoExpire);
+        //parcel.writeLong(mArvoPurchase);
+        //parcel.writeLong(mArvoExpire);
         parcel.writeInt(mArvoPax);
         parcel.writeLong(mArvoXfer);
         parcel.writeInt(mArvoVehicleNumber);
