@@ -163,12 +163,9 @@ public class SeqGoTransitData extends NextfareTransitData {
         return mHasUnknownStations;
     }
 
-    @Nullable
     @Override
-    public List<TransitBalance> getBalances() {
-        return Arrays.asList(new TransitBalanceStored(getBalance(),
-                Utils.localizeString(mTicketType.getDescription()),
-                mConfig == null ? null : mConfig.getExpiry()));
+    public String getTicketClass() {
+        return Utils.localizeString(mTicketType.getDescription());
     }
 
     @Override

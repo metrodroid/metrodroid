@@ -26,7 +26,7 @@ import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.TimeZone;
 
-public class TransitBalanceStored implements TransitBalance, Parcelable {
+public class TransitBalanceStored extends TransitBalance implements Parcelable {
     private final Calendar mValidityStart;
     private final TransitCurrency mBal;
     private final String mName;

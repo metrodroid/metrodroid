@@ -48,7 +48,7 @@ public class ManlyFastFerryTrip extends ErgTrip {
     }
 
     public ManlyFastFerryTrip(ErgPurseRecord purse, GregorianCalendar epoch) {
-        super(purse, epoch);
+        super(purse, epoch, ManlyFastFerryTransitData.CURRENCY);
     }
 
     @Override

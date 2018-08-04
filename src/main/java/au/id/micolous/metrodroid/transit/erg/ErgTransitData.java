@@ -247,7 +247,7 @@ public class ErgTransitData extends TransitData {
      * @return Subclass of ErgTrip.
      */
     protected ErgTrip newTrip(ErgPurseRecord purse, GregorianCalendar epoch) {
-        return new ErgTrip(purse, epoch);
+        return new ErgTrip(purse, epoch, mCurrency);
     }
 
     /**

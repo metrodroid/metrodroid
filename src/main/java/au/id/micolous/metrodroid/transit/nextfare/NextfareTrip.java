@@ -74,7 +74,12 @@ public class NextfareTrip extends Trip implements Comparable<NextfareTrip> {
         mEndStation = -1;
     }
 
-    public NextfareTrip(NextfareTopupRecord rec, String currency) {
+    public NextfareTrip(@NonNull String currency) {
+        this();
+        mCurrency = currency;
+    }
+
+    public NextfareTrip(NextfareTopupRecord rec, @NonNull String currency) {
         mStartTime = rec.getTimestamp();
         mEndTime = null;
         mMode = Mode.TICKET_MACHINE;

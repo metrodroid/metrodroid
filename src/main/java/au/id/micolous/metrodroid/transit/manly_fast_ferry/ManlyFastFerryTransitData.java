@@ -45,6 +45,7 @@ public class ManlyFastFerryTransitData extends ErgTransitData {
     public static final String NAME = "Manly Fast Ferry";
     private static final int AGENCY_ID = 0x0227;
     private static final TimeZone TIME_ZONE = TimeZone.getTimeZone("Australia/Sydney");
+    static final String CURRENCY = "AUD";
 
 
     // Parcel
@@ -61,11 +62,11 @@ public class ManlyFastFerryTransitData extends ErgTransitData {
     };
 
     public ManlyFastFerryTransitData(Parcel parcel) {
-        super(parcel, "AUD");
+        super(parcel, CURRENCY);
     }
 
     public ManlyFastFerryTransitData(ClassicCard card) {
-        super(card);
+        super(card, CURRENCY);
     }
 
     public static boolean check(ClassicCard card) {

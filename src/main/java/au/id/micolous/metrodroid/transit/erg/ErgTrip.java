@@ -20,6 +20,7 @@ package au.id.micolous.metrodroid.transit.erg;
 
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
 import java.util.Calendar;
@@ -47,16 +48,20 @@ public class ErgTrip extends Trip {
 
     protected GregorianCalendar mEpoch;
     protected ErgPurseRecord mPurse;
+    @NonNull
+    protected String mCurrency;
 
-    public ErgTrip(ErgPurseRecord purse, GregorianCalendar epoch) {
+    public ErgTrip(ErgPurseRecord purse, GregorianCalendar epoch, @NonNull String currency) {
         mPurse = purse;
         mEpoch = epoch;
+        mCurrency = currency;
     }
 
     public ErgTrip(Parcel parcel) {
         mPurse = new ErgPurseRecord(parcel);
         mEpoch = new GregorianCalendar();
         mEpoch.setTimeInMillis(parcel.readLong());
+        mCurrency = parcel.readString();
     }
 
     // Implemented functionality.
@@ -105,6 +110,7 @@ public class ErgTrip extends Trip {
     public void writeToParcel(Parcel parcel, int i) {
         mPurse.writeToParcel(parcel, i);
         parcel.writeLong(mEpoch.getTimeInMillis());
+        parcel.writeString(mCurrency);
     }
 
 

@@ -19,6 +19,7 @@
 package au.id.micolous.metrodroid.transit.nextfare;
 
 import android.os.Parcel;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.util.Log;
 
@@ -83,9 +84,10 @@ public class NextfareTransitData extends TransitData {
     int mBalance;
     NextfareTrip[] mTrips;
     NextfareSubscription[] mSubscriptions;
+    @NonNull
     String mCurrency;
 
-    public NextfareTransitData(Parcel parcel, String currency) {
+    public NextfareTransitData(Parcel parcel, @NonNull String currency) {
         mSerialNumber = new BigInteger(parcel.readString());
         mBalance = parcel.readInt();
         mTrips = new NextfareTrip[parcel.readInt()];
@@ -93,6 +95,7 @@ public class NextfareTransitData extends TransitData {
         mSubscriptions = new NextfareSubscription[parcel.readInt()];
         parcel.readTypedArray(mSubscriptions, NextfareSubscription.CREATOR);
         parcel.readByteArray(mSystemCode);
+        mCurrency = currency;
 
         mConfig = new NextfareConfigRecord(parcel);
     }
@@ -101,7 +104,7 @@ public class NextfareTransitData extends TransitData {
         this(card, "USD");
     }
 
-    public NextfareTransitData(ClassicCard card, String currency) {
+    public NextfareTransitData(ClassicCard card, @NonNull String currency) {
         mCurrency = currency;
 
         byte[] serialData = card.getSector(0).getBlock(0).getData();
@@ -327,7 +330,7 @@ public class NextfareTransitData extends TransitData {
      * @return Subclass of NextfareTrip.
      */
     protected NextfareTrip newTrip() {
-        return new NextfareTrip();
+        return new NextfareTrip(mCurrency);
     }
 
     /**
@@ -386,12 +389,6 @@ public class NextfareTransitData extends TransitData {
         return TimeZone.getDefault();
     }
 
-    @Nullable
-    @Override
-    public TransitCurrency getBalance() {
-        return new TransitCurrency(mBalance, mCurrency);
-    }
-
     @Override
     public String getSerialNumber() {
         return formatSerialNumber(mSerialNumber);
@@ -403,13 +400,19 @@ public class NextfareTransitData extends TransitData {
     }
 
     @Override
-    public List<TransitBalance> getBalances() {
+    public TransitBalance getBalance() {
         if (mConfig != null) {
-            String name = Utils.localizeString(R.string.nextfare_ticket_class, mConfig.getTicketType());
-
-            return Arrays.asList(new TransitBalanceStored(new TransitCurrency(mBalance, mCurrency), name, mConfig.getExpiry()));
+            return new TransitBalanceStored(new TransitCurrency(mBalance, mCurrency), getTicketClass(), mConfig.getExpiry());
         } else
-            return Arrays.asList(new TransitBalanceStored(new TransitCurrency(mBalance, mCurrency)));
+            return new TransitBalanceStored(new TransitCurrency(mBalance, mCurrency));
+    }
+
+    public String getTicketClass() {
+        if (mConfig != null) {
+            return Utils.localizeString(R.string.nextfare_ticket_class, mConfig.getTicketType());
+        }
+
+        return null;
     }
 
     @Override

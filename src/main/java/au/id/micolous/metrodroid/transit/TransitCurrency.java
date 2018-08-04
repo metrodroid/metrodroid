@@ -22,6 +22,8 @@ package au.id.micolous.metrodroid.transit;
 import android.os.Build;
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.text.SpannableString;
 import android.text.Spanned;
 import android.text.style.TtsSpan;
@@ -33,18 +35,19 @@ import java.util.Random;
 
 import au.id.micolous.metrodroid.MetrodroidApplication;
 
-public class TransitCurrency implements Parcelable {
+public class TransitCurrency extends TransitBalance implements Parcelable {
 
     private final int mCurrency;
-    /* 3 character currency code (eg: AUD) */
+    /** 3 character currency code (eg: AUD) */
+    @Nullable
     private final String mCurrencyCode;
-    /* value to divide by to get that currency. eg: if the value passed is in cents,
+    /** value to divide by to get that currency. eg: if the value passed is in cents,
      * then divide by 100 to get dollars. Currencies like yen should divide by 1. */
     private final double mDivisor;
 
     private static final SecureRandom mRNG = new SecureRandom();
 
-    public TransitCurrency(int currency, String currencyCode) {
+    public TransitCurrency(int currency, @Nullable String currencyCode) {
         mCurrency = currency;
         mCurrencyCode = currencyCode;
         if (currencyCode.equals("JPY"))
@@ -180,5 +183,11 @@ public class TransitCurrency implements Parcelable {
         mCurrency = parcel.readInt();
         mCurrencyCode = parcel.readString();
         mDivisor = parcel.readDouble();
+    }
+
+    @NonNull
+    @Override
+    public TransitCurrency getBalance() {
+        return this;
     }
 }

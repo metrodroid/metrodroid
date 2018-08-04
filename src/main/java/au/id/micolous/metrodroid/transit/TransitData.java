@@ -24,31 +24,56 @@ import android.net.Uri;
 import android.os.Parcelable;
 import android.support.annotation.Nullable;
 
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
+
 import au.id.micolous.metrodroid.MetrodroidApplication;
 import au.id.micolous.metrodroid.ui.ListItem;
-
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 
 public abstract class TransitData implements Parcelable {
 
     /**
-     * Balance of the card. The value is passed to getBalanceString for formatting purposes.
+     * Balance of the card's "purse".
+     *
+     * Cards with a single "purse" balance should implement this method, and
+     * {@link TransitData#getBalances()} will convert single-purse cards.  Most transit cards have
+     * only one purse so should use this.
+     *
+     * Cards with multiple "purse" balances (generally: hybrid transit cards that can act as
+     * multiple transit cards) must implement {@link TransitData#getBalances()} instead.
+     *
+     * If the balance is not known, this does not need to be implemented.
+     *
+     * UI code must call {@link TransitData#getBalances()} to get the balances of purses in the
+     * card, even in the case there is only one purse.
+     *
+     * @see TransitData#getBalances()
+     * @return The balance of the card, or null if it is not known.
+     */
+    @Nullable
+    protected TransitBalance getBalance() {
+        return null;
+    }
+
+    /**
+     * Balances of the card's "purses".
+     *
+     * Cards with multiple "purse" balances (generally: hybrid transit cards that can act as
+     * multiple transit cards) must implement this method, and must not implement
+     * {@link TransitData#getBalance()}.
+     *
+     * Cards with a single "purse" balance should implement {@link TransitData#getBalance()}
+     * instead.
      *
      * @return The balance of the card, or null if it is not known.
      */
     @Nullable
-    public TransitCurrency getBalance() {
-        return null;
-    }
-
-    @Nullable
     public List<TransitBalance> getBalances() {
-        TransitCurrency b = getBalance();
+        TransitBalance b = getBalance();
         if (b == null)
             return null;
-        return Arrays.asList(new TransitBalanceStored(b));
+        return Collections.singletonList(b);
     }
 
     public abstract String getSerialNumber();
@@ -87,8 +112,9 @@ public abstract class TransitData implements Parcelable {
      * {@link au.id.micolous.metrodroid.util.TripObfuscator#maybeObfuscateTS}.  This also
      * works on epoch timestamps (expressed as seconds since UTC).</li>
      *
-     * <li>Pass all currency amounts through {@link au.id.micolous.metrodroid.transit.TransitCurrency#formatCurrencyString(boolean)} and
-     * {@link au.id.micolous.metrodroid.transit.TransitCurrency#maybeObfuscate()}.</li>
+     * <li>Pass all currency amounts through
+     * {@link TransitCurrency#formatCurrencyString(boolean)} and
+     * {@link TransitCurrency#maybeObfuscateBalance()}.</li>
      * </ul>
      */
     public List<ListItem> getInfo() {

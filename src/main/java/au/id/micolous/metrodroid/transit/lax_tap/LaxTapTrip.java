@@ -52,6 +52,7 @@ public class LaxTapTrip extends NextfareTrip {
     private static final String TAG = LaxTapTrip.class.getSimpleName();
 
     public LaxTapTrip() {
+        super("USD");
     }
 
     public LaxTapTrip(Parcel in) {

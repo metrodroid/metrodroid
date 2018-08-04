@@ -45,6 +45,7 @@ public class ChcMetrocardTransitData extends ErgTransitData {
     public static final String NAME = "Metrocard";
     private static final int AGENCY_ID = 0x0136;
     private static final TimeZone TIME_ZONE = TimeZone.getTimeZone("Pacific/Auckland");
+    static final String CURRENCY = "NZD";
 
     // Parcel
     public static final Creator<ChcMetrocardTransitData> CREATOR = new Creator<ChcMetrocardTransitData>() {
@@ -60,11 +61,11 @@ public class ChcMetrocardTransitData extends ErgTransitData {
     };
 
     public ChcMetrocardTransitData(Parcel parcel) {
-        super(parcel, "NZD");
+        super(parcel, CURRENCY);
     }
 
     public ChcMetrocardTransitData(ClassicCard card) {
-        super(card, "NZD");
+        super(card, CURRENCY);
     }
 
     public static boolean check(ClassicCard card) {

@@ -64,6 +64,7 @@ public class SeqGoTrip extends NextfareTrip {
      * @param continuation True if this is a continuation of a previous journey (transfer).
      */
     public SeqGoTrip(int startStation, int endStation, GregorianCalendar startTime, GregorianCalendar endTime, int journeyId, boolean continuation) {
+        this();
         mStartStation = startStation;
         mEndStation = endStation;
         mStartTime = startTime;
@@ -73,6 +74,7 @@ public class SeqGoTrip extends NextfareTrip {
     }
 
     public SeqGoTrip() {
+        super("AUD");
     }
 
     public SeqGoTrip(Parcel in) {

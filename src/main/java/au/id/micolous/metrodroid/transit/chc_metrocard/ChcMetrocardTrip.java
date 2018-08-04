@@ -43,7 +43,7 @@ public class ChcMetrocardTrip extends ErgTrip {
     }
 
     public ChcMetrocardTrip(ErgPurseRecord purse, GregorianCalendar epoch) {
-        super(purse, epoch);
+        super(purse, epoch, ChcMetrocardTransitData.CURRENCY);
     }
 
     @Override

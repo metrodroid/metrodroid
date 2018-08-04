@@ -19,14 +19,27 @@
 
 package au.id.micolous.metrodroid.transit;
 
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
+
 import java.util.Calendar;
 
-public interface TransitBalance {
-    TransitCurrency getBalance();
+public abstract class TransitBalance {
+    @NonNull
+    public abstract TransitCurrency getBalance();
 
-    Calendar getValidFrom();
+    @Nullable
+    public Calendar getValidFrom() {
+        return null;
+    }
 
-    Calendar getValidTo();
+    @Nullable
+    public Calendar getValidTo() {
+        return null;
+    }
 
-    String getName();
+    @Nullable
+    public String getName() {
+        return null;
+    }
 }

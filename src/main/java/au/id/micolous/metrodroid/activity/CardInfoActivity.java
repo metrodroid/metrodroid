@@ -165,7 +165,7 @@ public class CardInfoActivity extends Activity {
                     mTabsAdapter.addTab(actionBar.newTab(), UnauthorizedCardFragment.class, args);
                     return;
                 }
-                
+
                 if (mTransitData instanceof BlankUltralightTransitData) {
                     mTabsAdapter.addTab(actionBar.newTab(), BlankCardFragment.class, args);
                     return;
