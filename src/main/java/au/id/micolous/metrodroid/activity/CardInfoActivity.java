@@ -175,7 +175,7 @@ public class CardInfoActivity extends Activity {
                     mTabsAdapter.addTab(actionBar.newTab().setText(R.string.balance), CardBalanceFragment.class, args);
                 }
 
-                if (mTransitData.getTrips() != null || mTransitData.getRefills() != null) {
+                if (mTransitData.getTrips() != null) {
                     mTabsAdapter.addTab(actionBar.newTab().setText(R.string.history), CardTripsFragment.class, args);
                 }
 

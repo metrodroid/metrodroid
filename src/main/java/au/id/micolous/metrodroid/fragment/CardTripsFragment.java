@@ -45,21 +45,10 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import au.id.micolous.metrodroid.activity.AdvancedCardInfoActivity;
-import au.id.micolous.metrodroid.activity.CardInfoActivity;
-import au.id.micolous.metrodroid.activity.TripMapActivity;
-import au.id.micolous.metrodroid.card.Card;
-import au.id.micolous.metrodroid.transit.Refill;
-import au.id.micolous.metrodroid.transit.RefillTrip;
-import au.id.micolous.metrodroid.transit.TransitData;
-import au.id.micolous.metrodroid.transit.Trip;
-import au.id.micolous.metrodroid.transit.orca.OrcaTrip;
-import au.id.micolous.metrodroid.util.TripObfuscator;
-import au.id.micolous.metrodroid.util.Utils;
-
 import org.simpleframework.xml.Serializer;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Collections;
 import java.util.List;
@@ -69,6 +58,15 @@ import java.util.regex.Pattern;
 
 import au.id.micolous.farebot.R;
 import au.id.micolous.metrodroid.MetrodroidApplication;
+import au.id.micolous.metrodroid.activity.AdvancedCardInfoActivity;
+import au.id.micolous.metrodroid.activity.CardInfoActivity;
+import au.id.micolous.metrodroid.activity.TripMapActivity;
+import au.id.micolous.metrodroid.card.Card;
+import au.id.micolous.metrodroid.transit.TransitData;
+import au.id.micolous.metrodroid.transit.Trip;
+import au.id.micolous.metrodroid.transit.orca.OrcaTrip;
+import au.id.micolous.metrodroid.util.TripObfuscator;
+import au.id.micolous.metrodroid.util.Utils;
 
 
 public class CardTripsFragment extends ListFragment {
@@ -89,16 +87,7 @@ public class CardTripsFragment extends ListFragment {
 
         List<Trip> trips = new ArrayList<>();
         if (mTransitData.getTrips() != null && mTransitData.getTrips().length > 0) {
-            for (Trip t : mTransitData.getTrips()) {
-                trips.add(t);
-            }
-        }
-
-        // This is for "legacy" implementations which have a separate list of refills.
-        if (mTransitData.getRefills() != null && mTransitData.getRefills().length > 0) {
-            for (Refill r : mTransitData.getRefills()) {
-                trips.add(new RefillTrip(r));
-            }
+            trips.addAll(Arrays.asList(mTransitData.getTrips()));
         }
 
         // Explicitly sort these events

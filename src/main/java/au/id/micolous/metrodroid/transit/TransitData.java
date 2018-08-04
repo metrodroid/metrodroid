@@ -87,11 +87,6 @@ public abstract class TransitData implements Parcelable {
         return null;
     }
 
-    @Deprecated
-    public Refill[] getRefills() {
-        return null;
-    }
-
     public Subscription[] getSubscriptions() {
         return null;
     }
