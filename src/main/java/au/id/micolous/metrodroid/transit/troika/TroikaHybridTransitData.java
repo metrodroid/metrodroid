@@ -22,14 +22,21 @@ package au.id.micolous.metrodroid.transit.troika;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-import java.util.ArrayList;
-
+import au.id.micolous.farebot.R;
 import au.id.micolous.metrodroid.card.classic.ClassicCard;
+import au.id.micolous.metrodroid.transit.Subscription;
 import au.id.micolous.metrodroid.transit.TransitBalance;
 import au.id.micolous.metrodroid.transit.TransitData;
 import au.id.micolous.metrodroid.transit.TransitIdentity;
 import au.id.micolous.metrodroid.transit.Trip;
 import au.id.micolous.metrodroid.transit.podorozhnik.PodorozhnikTransitData;
+import au.id.micolous.metrodroid.ui.HeaderListItem;
+import au.id.micolous.metrodroid.ui.ListItem;
+import au.id.micolous.metrodroid.util.Utils;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 /**
  * Hybrid cards containing both Troika and Podorozhnik.
@@ -37,7 +44,6 @@ import au.id.micolous.metrodroid.transit.podorozhnik.PodorozhnikTransitData;
 
 public class TroikaHybridTransitData extends TransitData {
 
-    public static final String NAME = "Troika+Podorozhnik";
     public static final Parcelable.Creator<TroikaHybridTransitData> CREATOR = new Parcelable.Creator<TroikaHybridTransitData>() {
         public TroikaHybridTransitData createFromParcel(Parcel parcel) {
             return new TroikaHybridTransitData(parcel);
@@ -48,10 +54,8 @@ public class TroikaHybridTransitData extends TransitData {
         }
     };
 
-    private static final String TAG = "TroikaHybridTransitData";
-
-    private TroikaTransitData mTroika;
-    private PodorozhnikTransitData mPodorozhnik;
+    private final TroikaTransitData mTroika;
+    private final PodorozhnikTransitData mPodorozhnik;
 
     @Override
     public String getSerialNumber() {
@@ -59,8 +63,29 @@ public class TroikaHybridTransitData extends TransitData {
     }
 
     @Override
+    public List<ListItem> getInfo() {
+        ArrayList<ListItem> items = new ArrayList<>();
+
+        List<ListItem> troikaItems = mTroika.getInfo();
+
+        if (troikaItems != null && !troikaItems.isEmpty()) {
+            items.add(new HeaderListItem(R.string.card_name_troika));
+            items.addAll(troikaItems);
+        }
+
+        List<ListItem> podItems = mPodorozhnik.getInfo();
+
+        if (podItems != null && !podItems.isEmpty()) {
+            items.add(new HeaderListItem(R.string.card_name_podorozhnik));
+            items.addAll(podItems);
+        }
+
+        return items;
+    }
+
+    @Override
     public String getCardName() {
-        return NAME;
+        return Utils.localizeString(R.string.card_name_troika_podorozhnik_hybrid);
     }
 
     @Override
@@ -76,7 +101,8 @@ public class TroikaHybridTransitData extends TransitData {
     }
 
     public static TransitIdentity parseTransitIdentity(ClassicCard card) {
-        return new TransitIdentity(NAME, "" + TroikaTransitData.getSerial(card.getSector(8)));
+        return new TransitIdentity(Utils.localizeString(R.string.card_name_troika_podorozhnik_hybrid),
+				   TroikaBlock.formatSerial(TroikaBlock.getSerial(card.getSector(8).getBlock(0).getData())));
     }
 
     public TroikaHybridTransitData(ClassicCard card) {
@@ -84,15 +110,23 @@ public class TroikaHybridTransitData extends TransitData {
         mPodorozhnik = new PodorozhnikTransitData(card);
     }
 
+    public Trip[] getTrips() {
+        List<Trip> t = new ArrayList<>();
+        t.addAll(Arrays.asList(mPodorozhnik.getTrips()));
+        t.addAll(Arrays.asList(mTroika.getTrips()));
+        return t.toArray(new Trip[0]);
+    }
+
     @Override
     public ArrayList<TransitBalance> getBalances() {
         ArrayList<TransitBalance> l = new ArrayList<>();
-        l.add(mTroika.getBalance());
-        l.add(mPodorozhnik.getBalance());
+        l.addAll(mTroika.getBalances());
+        l.addAll(mPodorozhnik.getBalances());
         return l;
     }
 
-    public Trip[] getTrips() {
-        return mPodorozhnik.getTrips();
+    @Override
+    public Subscription[] getSubscriptions() {
+        return mTroika.getSubscriptions();
     }
 }

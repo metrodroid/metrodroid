@@ -416,6 +416,27 @@ public class Utils {
         }
     }
 
+    public static String formatDurationMinutes(int mins)
+    {
+        int hours, days;
+        String ret = "";
+        if (mins < 0)
+            return localizePlural(R.plurals.minutes, mins, mins);
+        if (mins == 0)
+            return localizePlural(R.plurals.minutes, 0, 0);;
+        if (mins % 60 != 0)
+            ret = localizePlural(R.plurals.minutes, (mins % 60), (mins % 60));
+        if (mins < 60)
+            return ret;
+        hours = mins / 60;
+        if (hours % 24 != 0)
+            ret = localizePlural(R.plurals.hours, (hours % 24), (hours % 24)) + " ";
+        if (hours < 24)
+            return ret;
+        days = hours / 24;
+        return localizePlural(R.plurals.days, days, days);
+    }
+
     /**
      * Given a string resource (R.string), localize the string according to the language preferences
      * on the device.
