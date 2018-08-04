@@ -25,16 +25,22 @@ import android.util.Log;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Calendar;
+import java.util.GregorianCalendar;
 import java.util.List;
+import java.util.TimeZone;
 
+import au.id.micolous.farebot.R;
 import au.id.micolous.metrodroid.card.classic.ClassicCard;
 import au.id.micolous.metrodroid.card.classic.ClassicSector;
+import au.id.micolous.metrodroid.card.classic.UnauthorizedClassicSector;
 import au.id.micolous.metrodroid.transit.TransitBalance;
 import au.id.micolous.metrodroid.transit.TransitBalanceStored;
-import au.id.micolous.metrodroid.transit.Subscription;
 import au.id.micolous.metrodroid.transit.TransitCurrency;
 import au.id.micolous.metrodroid.transit.TransitData;
 import au.id.micolous.metrodroid.transit.TransitIdentity;
+import au.id.micolous.metrodroid.transit.Trip;
+import au.id.micolous.metrodroid.ui.ListItem;
 import au.id.micolous.metrodroid.util.Utils;
 
 /**
@@ -61,19 +67,32 @@ public class PodorozhnikTransitData extends TransitData {
         }
     };
 
+    private static final long PODOROZHNIK_EPOCH;
+    private static final TimeZone TZ = TimeZone.getTimeZone("Europe/Moscow");
+
+    static {
+        GregorianCalendar epoch = new GregorianCalendar(TZ);
+        epoch.set(2010, Calendar.JANUARY, 1, 0, 0, 0);
+
+        PODOROZHNIK_EPOCH = epoch.getTimeInMillis();
+    }
+
     private static final String TAG = "PodorozhnikTransitData";
 
     private int mBalance;
+    private Integer mLastTopup;
+    private Integer mLastTopupTime;
+    private Integer mLastSpend;
+    private Integer mLastSpendTime;
+    private Integer mLastValidator;
+    private Integer mLastTripTime;
+    private Integer mGroundCounter;
+    private Integer mSubwayCounter;
+    private Integer mLastTransport;
 
     @Override
     public String getSerialNumber() {
         return null;
-    }
-
-    private static int getBalance(ClassicSector sector) {
-        // Balance is stored in Sector 4.
-        byte[] b = Utils.reverseBuffer(sector.getBlock(1).getData(), 0, 4);
-        return Utils.byteArrayToInt(b, 0, 4);
     }
 
     @Override
@@ -84,20 +103,132 @@ public class PodorozhnikTransitData extends TransitData {
     @Override
     public void writeToParcel(Parcel dest, int i) {
         dest.writeInt(mBalance);
+	    dest.writeInt(mLastTopup);
+	    dest.writeInt(mLastTopupTime);
+	    dest.writeInt(mLastSpend);
+	    dest.writeInt(mLastSpendTime);
+	    dest.writeInt(mLastTripTime);
+	    dest.writeInt(mLastValidator);
+	    dest.writeInt(mGroundCounter);
+	    dest.writeInt(mSubwayCounter);
     }
 
     @SuppressWarnings("UnusedDeclaration")
     public PodorozhnikTransitData(Parcel p) {
         mBalance = p.readInt();
+    	mLastTopup = p.readInt();
+	    mLastTopupTime = p.readInt();
+	    mLastSpend = p.readInt();
+	    mLastSpendTime = p.readInt();
+	    mLastTripTime = p.readInt();
+	    mLastValidator = p.readInt();
+	    mGroundCounter = p.readInt();
+	    mSubwayCounter = p.readInt();
     }
 
     public static TransitIdentity parseTransitIdentity(ClassicCard card) {
         return new TransitIdentity(NAME, null);
     }
 
-    public PodorozhnikTransitData(ClassicCard card) {
+    private void decodeSector4(ClassicCard card) {
         ClassicSector sector4 = card.getSector(4);
-        mBalance = getBalance(sector4);
+
+	    if (sector4 instanceof UnauthorizedClassicSector)
+	        return;
+
+	    // Block 0 and block 1 are copies. Let's use block 0
+	    byte[] block0 = sector4.getBlock(0).getData();
+	    byte[] block2 = sector4.getBlock(2).getData();
+	    byte[] b;
+	    b = Utils.reverseBuffer(block0, 0, 4);
+        mBalance = Utils.byteArrayToInt(b, 0, 4);
+	    b = Utils.reverseBuffer(block2, 8, 3);
+	    mLastTopup = Utils.byteArrayToInt(b, 0, 3);
+	    b = Utils.reverseBuffer(block2, 2, 3);
+	    mLastTopupTime = Utils.byteArrayToInt(b, 0, 3);
+    }	
+
+    private void decodeSector5(ClassicCard card) {
+        ClassicSector sector5 = card.getSector(5);
+
+	    if (sector5 instanceof UnauthorizedClassicSector)
+	        return;
+
+	    // Block 1 and block 2 are copies. Let's use block 2
+	    byte[] block0 = sector5.getBlock(0).getData();
+	    byte[] block1 = sector5.getBlock(1).getData();
+	    byte[] b;
+
+	    b = Utils.reverseBuffer(block0, 6, 4);
+	    mLastSpend = Utils.byteArrayToInt(b, 0, 4);
+	    b = Utils.reverseBuffer(block0, 0, 3);
+	    mLastSpendTime = Utils.byteArrayToInt(b, 0, 3);
+	    mLastTransport = block0[3] & 0xff;
+	    b = Utils.reverseBuffer(block0, 4, 2);
+	    mLastValidator = Utils.byteArrayToInt(b, 0, 2);
+	    b = Utils.reverseBuffer(block1, 2, 3);
+	    mLastTripTime = Utils.byteArrayToInt(b, 0, 3);
+	    mGroundCounter = block1[0] & 0xff;
+	    mSubwayCounter = block1[1] & 0xff;
+    }	
+
+    public PodorozhnikTransitData(ClassicCard card) {
+	    decodeSector4(card);
+	    decodeSector5(card);
+    }
+
+    public static Calendar convertDate(int mins) {
+        GregorianCalendar g = new GregorianCalendar(TZ);
+        g.setTimeInMillis(PODOROZHNIK_EPOCH);
+        g.add(GregorianCalendar.MINUTE, mins);
+        return g;
+    }
+
+    @Override
+    public Trip[] getTrips() {
+        ArrayList<Trip> items = new ArrayList<>();
+        if (mLastTopup != null && mLastTopup != 0)
+            items.add (new PodorozhnikTrip(mLastTopupTime, -mLastTopup, Trip.Mode.TICKET_MACHINE,
+                    null, Utils.localizeString(R.string.podorozhnik_topup)));
+        if (mLastTripTime != null && mLastTripTime != 0) {
+            if (mLastSpendTime.equals(mLastTripTime))
+                items.add (new PodorozhnikTrip(mLastSpendTime, mLastSpend, guessMode(mLastTransport), mLastValidator,
+                        guessAgency(mLastTransport)));
+            else {
+                items.add (new PodorozhnikTrip(mLastTripTime, null, guessMode(mLastTransport), mLastValidator,
+                        guessAgency(mLastTransport)));
+                items.add (new PodorozhnikTrip(mLastSpendTime, mLastSpend, Trip.Mode.OTHER, null, "Spb POS purchase"));
+            }
+        }
+        return items.toArray(new Trip[0]);
+    }
+
+    private static Trip.Mode guessMode(int lastTransport) {
+        if (lastTransport == 4)
+            return Trip.Mode.BUS;
+        return Trip.Mode.METRO;
+    }
+
+    private static String guessAgency(int lastTransport) {
+        // Always include Spb here to distinguish from Troika on
+        // hybrid cards
+        if (lastTransport == 4)
+            return Utils.localizeString(R.string.bus_spb);
+        return Utils.localizeString(R.string.subway_spb);
+    }
+
+    @Override
+    public List<ListItem> getInfo() {
+        ArrayList<ListItem> items = new ArrayList<>();
+
+	    if (mGroundCounter != null)
+	        items.add(new ListItem(R.string.ground_trips,
+                "" + mGroundCounter));
+	    if (mSubwayCounter != null)
+	        items.add(new ListItem(R.string.subway_trips,
+                "" + mSubwayCounter));
+
+        return items;
     }
 
     @Override

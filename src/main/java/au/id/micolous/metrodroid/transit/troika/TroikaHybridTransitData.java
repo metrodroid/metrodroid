@@ -1,4 +1,3 @@
-package au.id.micolous.metrodroid.transit.troika;
 /*
  * TroikaTransitData.java
  *
@@ -18,21 +17,19 @@ package au.id.micolous.metrodroid.transit.troika;
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+package au.id.micolous.metrodroid.transit.troika;
 
 import android.os.Parcel;
 import android.os.Parcelable;
-import android.support.annotation.Nullable;
-
-import au.id.micolous.metrodroid.card.classic.ClassicCard;
-import au.id.micolous.metrodroid.transit.Subscription;
-import au.id.micolous.metrodroid.transit.TransitBalance;
-import au.id.micolous.metrodroid.transit.TransitCurrency;
-import au.id.micolous.metrodroid.transit.TransitData;
-import au.id.micolous.metrodroid.transit.TransitIdentity;
-import au.id.micolous.metrodroid.transit.podorozhnik.PodorozhnikTransitData;
 
 import java.util.ArrayList;
-import java.util.Arrays;
+
+import au.id.micolous.metrodroid.card.classic.ClassicCard;
+import au.id.micolous.metrodroid.transit.TransitBalance;
+import au.id.micolous.metrodroid.transit.TransitData;
+import au.id.micolous.metrodroid.transit.TransitIdentity;
+import au.id.micolous.metrodroid.transit.Trip;
+import au.id.micolous.metrodroid.transit.podorozhnik.PodorozhnikTransitData;
 
 /**
  * Hybrid cards containing both Troika and Podorozhnik.
@@ -93,5 +90,9 @@ public class TroikaHybridTransitData extends TransitData {
         l.addAll(mTroika.getBalances());
         l.addAll(mPodorozhnik.getBalances());
         return l;
+    }
+
+    public Trip[] getTrips() {
+        return mPodorozhnik.getTrips();
     }
 }
