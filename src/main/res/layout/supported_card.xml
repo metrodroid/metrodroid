@@ -3,7 +3,7 @@
 <!--
   supported_card.xml                                                 
                                                                        
-  Copyright (C) 2011 Eric Butler                                       
+  Copyright (C) 2011-2017 Eric Butler
                                                                        
   Authors:                                                             
   Eric Butler <eric@codebutler.com>                                    
@@ -22,38 +22,92 @@
   along with this program.  If not, see <http://www.gnu.org/licenses/>.
   -->
 
-<RelativeLayout
+<android.support.v7.widget.CardView
     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="wrap_content"
-    android:layout_height="match_parent"
-    android:orientation="vertical">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="16dp"
+    app:cardCornerRadius="4dp"
+    app:cardElevation="4dp"
+    app:cardUseCompatPadding="true">
     <LinearLayout
-        android:id="@+id/card"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="center"
-        android:orientation="vertical"
-        android:paddingTop="2dp">
-        <ImageView
-            android:id="@+id/image"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-        <TextView
-            android:id="@+id/text"
+        android:orientation="vertical">
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textSize="18sp"
-            android:textColor="@android:color/white"
-            android:gravity="center" />
+            android:paddingTop="16dp"
+            android:paddingRight="16dp"
+            android:paddingLeft="16dp"
+            android:orientation="horizontal">
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+                <TextView
+                    android:id="@+id/card_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textStyle="bold"
+                    android:textSize="16sp"
+                    tools:text="Card Name"/>
+                <TextView
+                    android:id="@+id/card_location"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="14sp"
+                    tools:text="Location"/>
+            </LinearLayout>
+            <ImageView
+                android:id="@+id/card_locked"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginStart="16dp"
+                android:contentDescription="@string/keys_required"
+                android:src="@drawable/ic_lock_yellow_24dp"
+                android:alpha="0.54"/>
+        </LinearLayout>
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <ImageView
+                android:id="@+id/card_image"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:src="@drawable/orca_card"
+                android:layout_marginTop="40dp"
+                android:layout_marginBottom="40dp"/>
+            <TextView
+                android:id="@+id/card_not_supported"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/card_not_supported_on_device"
+                android:textAllCaps="true"
+                android:gravity="center"
+                android:textStyle="bold"
+                android:textColor="#FFFFFF"
+                android:background="#e5F44336"
+                android:layout_gravity="center"
+                android:padding="4dp"/>
+        </FrameLayout>
+        <TextView
+            android:id="@+id/card_note"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingBottom="16dp"
+            android:paddingRight="16dp"
+            android:paddingLeft="16dp"
+            android:textSize="16sp"
+            android:textColor="@android:color/darker_gray"
+            android:gravity="center"
+            android:visibility="gone"
+            tools:visibility="visible"
+            tools:text="The quick brown fox jumps over the lazy dog."/>
     </LinearLayout>
-    <TextView
-        android:id="@+id/note"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:paddingTop="1dp"
-        android:paddingBottom="2dp"
-        android:layout_below="@id/card"
-        android:textSize="16sp"
-        android:textColor="@android:color/darker_gray"
-        android:gravity="center" />
-</RelativeLayout>
+</android.support.v7.widget.CardView>
