@@ -86,6 +86,10 @@ public class TransitCurrency extends TransitBalance implements Parcelable {
         return new TransitCurrency(cents, "EUR", 100.);
     }
 
+    static public TransitCurrency RUB(int cents) {
+        return new TransitCurrency(cents, "RUB", 100.);
+    }
+
     static public TransitCurrency USD(int cents) {
         return new TransitCurrency(cents, "USD", 100.);
     }

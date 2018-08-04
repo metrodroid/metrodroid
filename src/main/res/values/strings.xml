@@ -801,11 +801,21 @@
     <!-- Translators: The name of the ticketing system in Saint Petersburg (Russian: Подорожник).
     May be transliterated. -->
     <string name="card_name_podorozhnik">Podorozhnik</string>
-    <string name="subway_trips">Subway trips counter</string>
-    <string name="ground_trips">Ground trips counter</string>
+    <!-- Translators: This is a list item header, and under it is a number.
+    (ie: "Subway trips / 4" => There were 4 trips on the subway taken with this card) -->
+    <string name="subway_trips">Subway trips</string>
+    <!-- Translators: This is a list item header, and under it is a number. "Ground" refers to types
+    of transportation taken at ground level (eg: bus, tram).
+    (ie: "Ground trips / 6" => There were 6 trips on ground-level transportation with this card) -->
+    <string name="ground_trips">Ground trips</string>
+    <!-- Translators: Podorozhnik is the name of the ticketing system in Saint Petersburg (Russian:
+    Подорожник). May be transliterated. -->
     <string name="podorozhnik_topup">Podorozhnik top-up</string>
-    <string name="bus_spb">St-Petersburg Bus</string>
-    <string name="subway_spb">Subway Saint-Petersburg</string>
+
+    <string name="led_bus">Saint Petersburg Bus</string>
+    <!-- Translators: The Saint Petersburg Metro (Russian: Петербу́ргский метрополитен) is the
+    underground railway system in Saint Petersburg and Leningrad Oblast, Russia. -->
+    <string name="led_metro">Saint Petersburg Metro</string>
 
     <string name="blank_mfu_card">Blank MIFARE Ultralight card</string>
     <string name="fully_blank_desc">

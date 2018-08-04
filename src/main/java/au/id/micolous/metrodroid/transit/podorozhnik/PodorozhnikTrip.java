@@ -6,6 +6,7 @@ import android.support.annotation.Nullable;
 
 import java.util.Calendar;
 
+import au.id.micolous.metrodroid.transit.TransitCurrency;
 import au.id.micolous.metrodroid.transit.Trip;
 
 class PodorozhnikTrip extends Trip {
@@ -45,8 +46,12 @@ class PodorozhnikTrip extends Trip {
 
     @Nullable
     @Override
-    public Integer getFare() {
-        return mFare;
+    public TransitCurrency getFare() {
+        if (mFare != null) {
+            return TransitCurrency.RUB(mFare);
+        } else {
+            return null;
+        }
     }
 
     @Override

@@ -87,8 +87,8 @@ public class TroikaHybridTransitData extends TransitData {
     @Override
     public ArrayList<TransitBalance> getBalances() {
         ArrayList<TransitBalance> l = new ArrayList<>();
-        l.addAll(mTroika.getBalances());
-        l.addAll(mPodorozhnik.getBalances());
+        l.add(mTroika.getBalance());
+        l.add(mPodorozhnik.getBalance());
         return l;
     }
 

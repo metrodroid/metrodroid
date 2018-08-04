@@ -121,9 +121,9 @@ public class TroikaTransitData extends TransitData {
     }
 
     @Override
-    public List<TransitBalance> getBalances() {
-        return Arrays.asList(new TransitBalanceStored(new TransitCurrency(mBalance, "RUB"),
-                NAME, convertDate(mExpiryDays)));
+    protected TransitBalance getBalance() {
+        return new TransitBalanceStored(new TransitCurrency(mBalance, "RUB"),
+                NAME, convertDate(mExpiryDays));
     }
 
     @Override

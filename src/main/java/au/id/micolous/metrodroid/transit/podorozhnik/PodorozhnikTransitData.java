@@ -206,15 +206,17 @@ public class PodorozhnikTransitData extends TransitData {
     private static Trip.Mode guessMode(int lastTransport) {
         if (lastTransport == 4)
             return Trip.Mode.BUS;
+        // TODO: Handle trams
         return Trip.Mode.METRO;
     }
 
     private static String guessAgency(int lastTransport) {
-        // Always include Spb here to distinguish from Troika on
-        // hybrid cards
+        // Always include "Saint Petersburg" in names here to distinguish from Troika (Moscow)
+        // trips on hybrid cards
         if (lastTransport == 4)
-            return Utils.localizeString(R.string.bus_spb);
-        return Utils.localizeString(R.string.subway_spb);
+            return Utils.localizeString(R.string.led_bus);
+        // TODO: Handle trams
+        return Utils.localizeString(R.string.led_metro);
     }
 
     @Override
@@ -232,9 +234,9 @@ public class PodorozhnikTransitData extends TransitData {
     }
 
     @Override
-    public List<TransitBalance> getBalances() {
-        return Arrays.asList(new TransitBalanceStored(new TransitCurrency(mBalance, "RUB"),
-                NAME, null));
+    public TransitBalance getBalance() {
+        return new TransitBalanceStored(new TransitCurrency(mBalance, "RUB"),
+                NAME, null);
     }
 
     public static boolean check(ClassicCard card) {
