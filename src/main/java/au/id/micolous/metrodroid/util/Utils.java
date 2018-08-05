@@ -296,22 +296,26 @@ public class Utils {
             nfcEnabled = nfcAdapter.isEnabled();
         }
 
-        return String.format("Version: %s\nModel: %s (%s)\nManufacturer: %s (%s)\nAndroid OS: %s (%s)\n\nNFC: %s, MIFARE Classic: %s\n\n",
-                // Version:
-                getVersionString(),
-                // Model
-                Build.MODEL,
-                Build.DEVICE,
-                // Manufacturer / brand:
-                Build.MANUFACTURER,
-                Build.BRAND,
-                // OS:
-                Build.VERSION.RELEASE,
-                Build.ID,
-                // NFC:
-                nfcAvailable ? (nfcEnabled ? "enabled" : "disabled") : "not available",
-                app.getMifareClassicSupport() ? "supported" : "not supported"
-        );
+        String ret = "";
+
+        // Version:
+        ret += localizeString(R.string.app_version, getVersionString()) + "\n";
+        // Model
+        ret += localizeString(R.string.device_model, Build.MODEL, Build.DEVICE) + "\n";
+        // Manufacturer / brand:
+        ret += localizeString(R.string.device_manufacturer, Build.MANUFACTURER, Build.BRAND) + "\n";
+        // OS:
+        ret += localizeString(R.string.android_os, Build.VERSION.RELEASE, Build.ID) + "\n";
+        ret += "\n";
+        // NFC:
+        ret += localizeString(nfcAvailable ?
+                (nfcEnabled ? R.string.nfc_enabled : R.string.nfc_disabled)
+                : R.string.nfc_not_available) + "\n";
+        ret += localizeString(app.getMifareClassicSupport() ? R.string.mfc_supported
+                : R.string.mfc_not_supported) + "\n";
+        ret += "\n";
+
+        return ret;
     }
 
     private static String getVersionString() {

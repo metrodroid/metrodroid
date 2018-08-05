@@ -34,6 +34,7 @@ package au.id.micolous.metrodroid.transit.suica;
 import android.os.Parcel;
 import android.support.annotation.Nullable;
 
+import au.id.micolous.farebot.R;
 import au.id.micolous.metrodroid.card.felica.FelicaBlock;
 import au.id.micolous.metrodroid.transit.Station;
 import au.id.micolous.metrodroid.transit.TransitCurrency;
@@ -217,11 +218,12 @@ public class SuicaTrip extends Trip {
             return mStartStation.getShortStationName();
         }
         if (mIsBus) {
-            return String.format("Bus Area 0x%s Line 0x%s Stop 0x%s", Integer.toHexString(mRegionCode),
-                    Integer.toHexString(mBusLineCode), Integer.toHexString(mBusStopCode));
+            return Utils.localizeString(R.string.suica_bus_area_line_stop,
+                    "0x" + Integer.toHexString(mRegionCode),
+                    "0x" + Integer.toHexString(mBusLineCode), "0x" + Integer.toHexString(mBusStopCode));
         } else if (!(mRailEntranceLineCode == 0 && mRailEntranceStationCode == 0)) {
-            return String.format("Line 0x%s Station 0x%s", Integer.toHexString(mRailEntranceLineCode),
-                    Integer.toHexString(mRailEntranceStationCode));
+            return Utils.localizeString(R.string.suica_line_station, "0x" + Integer.toHexString(mRailEntranceLineCode),
+                    "0x" + Integer.toHexString(mRailEntranceStationCode));
         } else {
             return null;
         }
@@ -241,8 +243,9 @@ public class SuicaTrip extends Trip {
             return mEndStation.getShortStationName();
         }
         if (!mIsBus) {
-            return String.format("Line 0x%s Station 0x%s", Integer.toHexString(mRailExitLineCode),
-                    Integer.toHexString(mRailExitStationCode));
+            return Utils.localizeString(R.string.suica_line_station,
+                    "0x" + Integer.toHexString(mRailExitLineCode),
+                    "0x" + Integer.toHexString(mRailExitStationCode));
         }
         return null;
     }

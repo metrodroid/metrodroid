@@ -29,6 +29,7 @@ import android.support.annotation.Nullable;
 
 import java.util.Calendar;
 
+import au.id.micolous.farebot.R;
 import au.id.micolous.metrodroid.transit.Station;
 import au.id.micolous.metrodroid.transit.TransitCurrency;
 import au.id.micolous.metrodroid.transit.Trip;
@@ -160,13 +161,13 @@ public class ClipperTrip extends Trip {
             if (station != null)
                 return station.getShortStationName();
             else
-                return "Station #0x" + Long.toString(mFrom, 16);
+                return Utils.localizeString(R.string.unknown_format, "0x" + Long.toString(mFrom, 16));
         } else if (mAgency == ClipperData.AGENCY_MUNI) {
             return null; // Coach number is not collected
         } else if (mAgency == ClipperData.AGENCY_GGT || mAgency == ClipperData.AGENCY_CALTRAIN) {
-            return "Zone #" + mFrom;
+            return Utils.localizeString(R.string.clipper_zone_number, "0x" + Long.toString(mFrom, 16));
         } else {
-            return "(Unknown Station)";
+            return Utils.localizeString(R.string.unknown_format, "0x" + Integer.toHexString(mAgency) + "/0x" + Long.toString(mFrom, 16));
         }
     }
 
@@ -177,16 +178,16 @@ public class ClipperTrip extends Trip {
             if (station != null) {
                 return station.getShortStationName();
             } else {
-                return "Station #0x" + Long.toString(mTo, 16);
+                return Utils.localizeString(R.string.unknown_format, "0x" + Long.toString(mTo, 16));
             }
         } else if (mAgency == ClipperData.AGENCY_MUNI) {
             return null; // Coach number is not collected
         } else if (mAgency == ClipperData.AGENCY_GGT || mAgency == ClipperData.AGENCY_CALTRAIN) {
             if (mTo == 0xffff)
-                return "(End of line)";
-            return "Zone #0x" + Long.toString(mTo, 16);
+                return Utils.localizeString(R.string.clipper_end_of_line);
+            return Utils.localizeString(R.string.clipper_zone_number, "0x" + Long.toString(mTo, 16));
         } else {
-            return "(Unknown Station)";
+            return Utils.localizeString(R.string.unknown_format, "0x" + Integer.toHexString(mAgency) + "/0x" + Long.toString(mTo, 16));
         }
     }
 

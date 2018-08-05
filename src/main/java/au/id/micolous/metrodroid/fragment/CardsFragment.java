@@ -175,7 +175,7 @@ public class CardsFragment extends ListFragment {
 
                     ClipData d = clipboard.getPrimaryClip();
                     if (d == null) {
-                        Toast.makeText(getActivity(), "No data in clipboard.", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getActivity(), R.string.no_data_in_clipboard, Toast.LENGTH_SHORT).show();
                     } else {
                         ClipData.Item ci = d.getItemAt(0);
                         xml = ci.coerceToText(getActivity()).toString();

@@ -29,11 +29,13 @@ import android.util.Log;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 
+import au.id.micolous.farebot.R;
 import au.id.micolous.metrodroid.MetrodroidApplication;
 import au.id.micolous.metrodroid.transit.Station;
 import au.id.micolous.metrodroid.transit.TransitCurrency;
 import au.id.micolous.metrodroid.transit.Trip;
 import au.id.micolous.metrodroid.util.StationTableReader;
+import au.id.micolous.metrodroid.util.Utils;
 
 public class OVChipTrip extends Trip {
     private static final String TAG = "OVChipTrip";
@@ -87,7 +89,7 @@ public class OVChipTrip extends Trip {
             if (getStation(mAgency, outTransaction.getStation()) != null) {
                 mEndStation = getStation(mAgency, outTransaction.getStation());
             } else {
-                mEndStation = new Station(String.format("Unknown (%s)", mEndStationId), null, null);
+                mEndStation = new Station(Utils.localizeString(R.string.unknown_format, mEndStationId), null, null);
             }
             mExitTimestamp = OVChipTransitData.convertDate(outTransaction.getDate(), outTransaction.getTime());
             mFare = outTransaction.getAmount();
@@ -262,7 +264,7 @@ public class OVChipTrip extends Trip {
         if (mStartStation != null && !TextUtils.isEmpty(mStartStation.getStationName())) {
             return mStartStation.getStationName();
         } else {
-            return String.format("Unknown (%s)", mStartStationId);
+            return Utils.localizeString(R.string.unknown_format, mStartStationId);
         }
     }
 
