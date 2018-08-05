@@ -72,7 +72,6 @@ public class CardInfo {
             .setCardType(CardType.FeliCa)
             .build();
 
-
     public static final CardInfo EZ_LINK = new CardInfo.Builder()
             .setImageId(R.drawable.ezlink_card)
             .setName("EZ-Link")
@@ -192,6 +191,13 @@ public class CardInfo {
             .setPreview()
             .build();
 
+    public static final CardInfo RAVKAV = new CardInfo.Builder()
+            .setName(Utils.localizeString(R.string.card_name_ravkav))
+            .setLocation(R.string.location_israel)
+            .setCardType(CardType.ISO7816)
+            .setPreview()
+            .build();
+
     public static final CardInfo SZT = new CardInfo.Builder()
             .setImageId(R.drawable.szt_card)
             .setName(Utils.localizeString(R.string.card_name_szt))
@@ -261,6 +267,7 @@ public class CardInfo {
             OVCHIP,
             PASMO,
             PODOROZHNIK,
+            RAVKAV,
             SZT, // Shenzhen Tong
             SMARTRIDER,
             SUICA,

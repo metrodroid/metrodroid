@@ -437,8 +437,18 @@
     <!-- Translators: "Issuance" is the name of group of FeliCa commands -->
     <string name="felica_response_time_other">Issuance commands</string>
 
-
-
+    <!-- Translators: this is a ticketing system in Israel. (Hebrew: רב-קו‎)
+     May be transliterated. -->
+    <string name="card_name_ravkav">Rav-Kav</string>
+    <!-- Translators: This is Israeli intercity bus operator. (Hebrew:אֶגֶד )  -->
+    <string name="ravkav_agency_egged">Egged</string>
+    <!-- Translators: Bus operator in Tel-Aviv: Dan Bus Company (Hebrew: דן חברה לתחבורה ציבורית‎) -->
+    <string name="ravkav_agency_dan">Dan</string>
+    <!-- Translators: Tram operator in Jerusalem: City pass (Hebrew: 	סיטיפס )
+     May be transliterated.-->
+    <string name="ravkav_agency_city_pass">City Pass</string>
+    <!-- Translators: appears as an agency if user used official top-up app. -->
+    <string name="ravkav_agency_topup_app">RavKav Top-up app</string>
 
     <!-- Calypso hardware information -->
     <string name="calypso_serial_number">Serial number</string>
@@ -563,6 +573,7 @@
     <string name="location_christchurch_nz">Christchurch, New Zealand</string>
     <string name="location_moscow">Moscow, Russia</string>
     <string name="location_saint_petersburg">Saint Petersburg, Russia</string>
+    <string name="location_israel">Israel</string>
 
     <!--
     These strings are used for content descriptions (accessibility), for modes of transport.
