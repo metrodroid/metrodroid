@@ -523,6 +523,7 @@
     <string name="location_san_francisco">San Francisco, CA, USA</string>
     <string name="location_singapore">Singapore</string>
     <string name="location_tokyo">Tokyo, Japan</string>
+    <string name="location_jakarta">Jakarta, Indonesia</string>
     <string name="location_kansai">Kansai, Japan</string>
     <string name="location_the_netherlands">The Netherlands</string>
     <string name="location_sao_paulo">São Paulo, Brazil</string>
@@ -673,6 +674,10 @@
     <string name="felica_process_merchandise_admission_cash">Merchandise/Admission (partially with cash)</string>
     <string name="felica_process_payment_thirdparty">Payment (3rd Party)</string>
     <string name="felica_process_admission_thirdparty">Admission Payment (3rd Party)</string>
+
+    <!-- Kartu Multi Trip -->
+    <string name="kmt_def_route">JABODETABEK</string>
+    <string name="kmt_extra_note">Only for new FeliCa cards. Station data currently displayed as code.</string>
 
     <!-- HSL -->
     <string name="hsl_pass_is_valid">Valid season ticket</string>

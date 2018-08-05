@@ -32,6 +32,7 @@ import java.util.Locale;
 import au.id.micolous.farebot.R;
 import au.id.micolous.metrodroid.card.CardType;
 import au.id.micolous.metrodroid.transit.chc_metrocard.ChcMetrocardTransitData;
+import au.id.micolous.metrodroid.transit.kmt.KMTTransitData;
 import au.id.micolous.metrodroid.transit.lax_tap.LaxTapTransitData;
 import au.id.micolous.metrodroid.transit.manly_fast_ferry.ManlyFastFerryTransitData;
 import au.id.micolous.metrodroid.transit.myki.MykiTransitData;
@@ -73,7 +74,6 @@ public class CardInfo {
             .setLocation(R.string.location_tokyo)
             .setCardType(CardType.FeliCa)
             .build();
-
 
     public static final CardInfo EZ_LINK = new CardInfo.Builder()
             .setImageId(R.drawable.ezlink_card)
@@ -120,6 +120,14 @@ public class CardInfo {
             .setCardType(CardType.MifareClassic)
             .setKeysRequired()
             .setPreview()
+            .build();
+
+    public static final CardInfo KMT = new CardInfo.Builder()
+            .setImageId(R.drawable.kmt_card)
+            .setName(KMTTransitData.NAME)
+            .setLocation(R.string.location_jakarta)
+            .setCardType(CardType.FeliCa)
+            .setExtraNote(R.string.kmt_extra_note)
             .build();
 
     public static final CardInfo MYKI = new CardInfo.Builder()
@@ -254,6 +262,7 @@ public class CardInfo {
             ICOCA,
             MANLY_FAST_FERRY,
             CHC_METROCARD, // Metrocard
+            KMT,
             MYKI,
             MYWAY,
             NETS_FLASHPAY,
