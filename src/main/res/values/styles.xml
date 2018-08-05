@@ -23,7 +23,4 @@
 
 <resources>
 
-    <style name="ButtonBar" parent="@android:style/Holo.ButtonBar.AlertDialog" />
-    <style name="BorderlessButton" parent="@android:style/Widget.Holo.Button.Borderless.Small" />
-    <style name="ButtonBarButton" parent="@style/BorderlessButton" />
 </resources>

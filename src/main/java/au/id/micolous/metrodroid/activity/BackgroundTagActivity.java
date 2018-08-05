@@ -25,7 +25,7 @@ import android.os.Bundle;
 /**
  * @author Eric Butler
  */
-public class BackgroundTagActivity extends Activity {
+public class BackgroundTagActivity extends MetrodroidActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

@@ -43,7 +43,7 @@ import au.id.micolous.metrodroid.util.Utils;
 /**
  * @author Eric Butler, Michael Farrell
  */
-public class SupportedCardsActivity extends Activity {
+public class SupportedCardsActivity extends MetrodroidActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_supported_cards);

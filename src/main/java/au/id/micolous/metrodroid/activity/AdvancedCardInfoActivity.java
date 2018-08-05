@@ -59,7 +59,7 @@ import au.id.micolous.metrodroid.util.ExportHelper;
 import au.id.micolous.metrodroid.util.TripObfuscator;
 import au.id.micolous.metrodroid.util.Utils;
 
-public class AdvancedCardInfoActivity extends Activity {
+public class AdvancedCardInfoActivity extends MetrodroidActivity {
     public static final String EXTRA_CARD = "au.id.micolous.farebot.EXTRA_CARD";
     public static final String EXTRA_ERROR = "au.id.micolous.farebot.EXTRA_ERROR";
     private static final int REQUEST_SAVE_FILE = 2;

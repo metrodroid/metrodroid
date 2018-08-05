@@ -45,7 +45,7 @@ import java.util.List;
 import au.id.micolous.farebot.BuildConfig;
 import au.id.micolous.farebot.R;
 
-public class TripMapActivity extends Activity {
+public class TripMapActivity extends MetrodroidActivity {
     public static final String TRIP_EXTRA = "trip";
     private static final String TAG = "TripMapActivity";
 

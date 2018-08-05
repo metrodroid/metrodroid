@@ -85,6 +85,7 @@ public class MetrodroidApplication extends Application {
     public static final String PREF_LOCALISE_PLACES = "pref_localise_places";
     public static final String PREF_LOCALISE_PLACES_HELP = "pref_localise_places_help";
     public static final String PREF_CONVERT_TIMEZONES = "pref_convert_timezones";
+    public static final String PREF_THEME = "pref_theme";
 
     private static MetrodroidApplication sInstance;
 
@@ -290,4 +291,15 @@ public class MetrodroidApplication extends Application {
                 + (mMifareClassicSupport ? "(found)" : "(missing)"));
     }
 
+    public static String getThemePreference() {
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(MetrodroidApplication.getInstance());
+        return prefs.getString(MetrodroidApplication.PREF_THEME, "dark");
+    }
+
+    public static int chooseTheme() {
+        String theme = getThemePreference();
+        if (theme.equals("light"))
+            return R.style.Metrodroid_Light;
+        return R.style.Metrodroid_Dark;
+    }
 }

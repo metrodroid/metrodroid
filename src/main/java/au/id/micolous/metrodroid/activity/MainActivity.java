@@ -43,7 +43,7 @@ import au.id.micolous.metrodroid.util.Utils;
 import au.id.micolous.farebot.R;
 import au.id.micolous.metrodroid.MetrodroidApplication;
 
-public class MainActivity extends Activity {
+public class MainActivity extends MetrodroidActivity {
     private NfcAdapter mNfcAdapter;
     private PendingIntent mPendingIntent;
     private String[][] mTechLists = new String[][]{
@@ -53,6 +53,11 @@ public class MainActivity extends Activity {
             new String[]{NfcA.class.getName()},
             new String[]{NfcF.class.getName()},
     };
+
+    @Override
+    protected Integer getThemeVariant() {
+        return R.attr.MainActivityTheme;
+    }
 
     @Override
     protected void onCreate(Bundle bundle) {

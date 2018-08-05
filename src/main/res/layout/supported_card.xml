@@ -69,7 +69,7 @@
                 android:layout_gravity="center"
                 android:layout_marginStart="16dp"
                 android:contentDescription="@string/keys_required"
-                android:src="@drawable/locked"
+                android:src="?attr/LockImage"
                 android:layout_marginLeft="16dp"
                 android:scaleType="fitXY"/>
             <ImageView

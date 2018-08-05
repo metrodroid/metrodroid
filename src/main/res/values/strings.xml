@@ -305,11 +305,20 @@
         <item>SmartRider (WA, Australia), MyWay (ACT, Australia)</item>
     </string-array>
 
-    <!-- Translators: do not translate -->
-    <string-array name="mfc_fallback_values">
+    <string-array name="mfc_fallback_values" translatable="false">
         <item>null</item>
         <item>bilhete_unico</item>
         <item>smartrider</item>
+    </string-array>
+
+    <string-array name="themes">
+        <item>Dark</item>
+        <item>Light</item>
+    </string-array>
+
+    <string-array name="theme_values" translatable="false">
+        <item>dark</item>
+        <item>light</item>
     </string-array>
 
     <!--
@@ -824,4 +833,7 @@
         uniquely identified and linked to a database but card itself contains no other data.
     </string>
     <string name="fully_blank_title">Blank card</string>
+
+    <string name="pref_theme">Theme</string>
+    <string name="pref_theme_desc">Choose look and feel</string>
 </resources>

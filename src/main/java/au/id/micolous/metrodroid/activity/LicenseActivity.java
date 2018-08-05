@@ -26,7 +26,7 @@ import android.widget.TextView;
 
 import au.id.micolous.farebot.R;
 
-public class LicenseActivity extends Activity {
+public class LicenseActivity extends MetrodroidActivity {
 
     private static final String LICENSE_INTRO = "Metrodroid\n"
             + "Based on FareBot\n\n"

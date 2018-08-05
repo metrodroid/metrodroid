@@ -331,20 +331,30 @@ public abstract class Trip implements Parcelable {
     public abstract boolean hasTime();
 
     public enum Mode {
-        BUS,
+        BUS(0),
         /** Used for non-metro (rapid transit) trains */
-        TRAIN,
+        TRAIN(1),
         /** Used for trams and light rail */
-        TRAM,
+        TRAM(2),
         /** Used for electric metro and subway systems */
-        METRO,
-        FERRY,
-        TICKET_MACHINE,
-        VENDING_MACHINE,
+        METRO(3),
+        FERRY(4),
+        TICKET_MACHINE(5),
+        VENDING_MACHINE(6),
         /** Used for transactions at a store, buying something other than travel. */
-        POS,
-        OTHER,
-        BANNED
+        POS(7),
+        OTHER(8),
+        BANNED(9);
+
+        final int mImageResourceIdx;
+
+        Mode(int val) {
+            mImageResourceIdx = val;
+        }
+
+        public int getImageResourceIdx() {
+            return mImageResourceIdx;
+        }
     }
 
     public static class Comparator implements java.util.Comparator<Trip> {
