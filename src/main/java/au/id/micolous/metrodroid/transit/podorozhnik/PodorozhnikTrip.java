@@ -1,7 +1,6 @@
 package au.id.micolous.metrodroid.transit.podorozhnik;
 
 import android.os.Parcel;
-import android.os.Parcelable;
 import android.support.annotation.Nullable;
 
 import java.util.Calendar;
@@ -14,7 +13,7 @@ class PodorozhnikTrip extends Trip {
     private final Integer mFare;
     private final Mode mMode;
     private final Integer mLastValidator;
-    private String mAgency;
+    private final String mAgency;
 
     public static final Creator<PodorozhnikTrip> CREATOR = new Creator<PodorozhnikTrip>() {
         public PodorozhnikTrip createFromParcel(Parcel parcel) {
@@ -100,7 +99,7 @@ class PodorozhnikTrip extends Trip {
             dest.writeInt(0);
     }
 
-    public PodorozhnikTrip(Parcel parcel) {
+    private PodorozhnikTrip(Parcel parcel) {
         mTimestamp = parcel.readInt();
         mMode = Mode.valueOf(parcel.readString());
         if (parcel.readInt() == 1)

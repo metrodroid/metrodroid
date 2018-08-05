@@ -38,7 +38,6 @@ import au.id.micolous.metrodroid.transit.myki.MykiTransitData;
 import au.id.micolous.metrodroid.transit.octopus.OctopusTransitData;
 import au.id.micolous.metrodroid.transit.opal.OpalTransitData;
 import au.id.micolous.metrodroid.transit.ovc.OVChipTransitData;
-import au.id.micolous.metrodroid.transit.podorozhnik.PodorozhnikTransitData;
 import au.id.micolous.metrodroid.transit.seq_go.SeqGoTransitData;
 import au.id.micolous.metrodroid.transit.smartrider.SmartRiderTransitData;
 import au.id.micolous.metrodroid.transit.troika.TroikaTransitData;
@@ -186,7 +185,7 @@ public class CardInfo {
     public static final CardInfo PODOROZHNIK = new Builder()
             // seqgo_card_alpha has identical geometry
             .setImageId(R.drawable.podorozhnik_card, R.drawable.seqgo_card_alpha)
-            .setName(PodorozhnikTransitData.NAME)
+            .setName(Utils.localizeString(R.string.card_name_podorozhnik))
             .setLocation(R.string.location_saint_petersburg)
             .setCardType(CardType.MifareClassic)
             .setExtraNote(R.string.card_note_russia)
