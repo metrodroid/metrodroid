@@ -32,6 +32,8 @@ import android.os.Parcel;
 import android.preference.PreferenceManager;
 import android.util.Log;
 
+import au.id.micolous.metrodroid.transit.easycard.EasyCardTransitFactory;
+
 import org.simpleframework.xml.ElementList;
 import org.simpleframework.xml.Root;
 
@@ -434,6 +436,8 @@ public class ClassicCard extends Card {
             return RicaricaMiTransitData.parseTransitIdentity(this);
         } else if (BilheteUnicoSPTransitData.check(this)) {
             return BilheteUnicoSPTransitData.parseTransitIdentity(this);
+        } else if ((new EasyCardTransitFactory(MetrodroidApplication.getInstance())).check(this)) {
+            return (new EasyCardTransitFactory(MetrodroidApplication.getInstance())).parseIdentity(this);
         } else if (UnauthorizedClassicTransitData.check(this)) {
             // This check must be THIRD TO LAST.
             //
@@ -503,6 +507,8 @@ public class ClassicCard extends Card {
             return new RicaricaMiTransitData(this);
         } else if (BilheteUnicoSPTransitData.check(this)) {
             return new BilheteUnicoSPTransitData(this);
+        } else if ((new EasyCardTransitFactory(MetrodroidApplication.getInstance())).check(this)) {
+            return (new EasyCardTransitFactory(MetrodroidApplication.getInstance())).parseInfo(this);
         } else if (UnauthorizedClassicTransitData.check(this)) {
             // This check must be THIRD TO LAST.
             //

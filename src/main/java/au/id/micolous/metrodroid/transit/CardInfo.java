@@ -36,6 +36,7 @@ import au.id.micolous.metrodroid.transit.bilhete_unico.BilheteUnicoSPTransitData
 import au.id.micolous.metrodroid.transit.charlie.CharlieCardTransitData;
 import au.id.micolous.metrodroid.transit.chc_metrocard.ChcMetrocardTransitData;
 import au.id.micolous.metrodroid.transit.clipper.ClipperTransitData;
+import au.id.micolous.metrodroid.transit.easycard.EasyCardTransitFactory;
 import au.id.micolous.metrodroid.transit.edy.EdyTransitData;
 import au.id.micolous.metrodroid.transit.ezlink.EZLinkTransitData;
 import au.id.micolous.metrodroid.transit.hsl.HSLTransitData;
@@ -83,6 +84,7 @@ public class CardInfo {
             CharlieCardTransitData.CARD_INFO,
             ClipperTransitData.CARD_INFO,
             CompassUltralightTransitData.CARD_INFO,
+            EasyCardTransitFactory.Companion.getCARD_INFO(),
             EdyTransitData.CARD_INFO,
             IntercodeTransitData.ENVIBUS_CARD_INFO,
             EZLinkTransitData.EZ_LINK_CARD_INFO,
