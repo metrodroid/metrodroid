@@ -42,6 +42,7 @@ final class ClipperData {
     static final int AGENCY_MUNI = 0x12;
     static final int AGENCY_GG_FERRY = 0x19;
     static final int AGENCY_SF_BAY_FERRY = 0x1b;
+    static final int AGENCY_WHOLE_FOODS = 0x2cf; // For refills
 
     static final Map<Integer, String> AGENCIES = new ImmutableMapBuilder<Integer, String>()
             .put(AGENCY_ACTRAN, "Alameda-Contra Costa Transit District")
@@ -53,6 +54,7 @@ final class ClipperData {
             .put(AGENCY_MUNI, "San Francisco Municipal")
             .put(AGENCY_GG_FERRY, "Golden Gate Ferry")
             .put(AGENCY_SF_BAY_FERRY, "San Francisco Bay Ferry")
+            .put(AGENCY_WHOLE_FOODS, "Whole Foods")
             .build();
 
     static final Map<Integer, String> SHORT_AGENCIES = new ImmutableMapBuilder<Integer, String>()
@@ -65,6 +67,7 @@ final class ClipperData {
             .put(AGENCY_MUNI, "Muni")
             .put(AGENCY_GG_FERRY, "GG Ferry")
             .put(AGENCY_SF_BAY_FERRY, "SF Bay Ferry")
+            .put(AGENCY_WHOLE_FOODS, "Whole Foods")
             .build();
 
     static final Map<Integer, Station> BART_STATIONS = new ImmutableMapBuilder<Integer, Station>()
@@ -101,6 +104,7 @@ final class ClipperData {
             .put(0x24, new Station("Union City Station", "Union City", "37.591203", "-122.017854"))
             .put(0x25, new Station("Fremont Station", "Fremont", "37.557727", "-121.976395"))
             .put(0x26, new Station("Daly City Station", "Daly City", "37.7066", "-122.4696"))
+            .put(0x27, new Station("Dublin/Pleasanton", "Dublin/Pleasanton", "37.7016", "-121.8990"))
             .put(0x28, new Station("South San Francisco Station", "South SF", "37.6744", "-122.442"))
             .put(0x29, new Station("San Bruno Station", "San Bruno", "37.63714", "-122.415622"))
             .put(0x2a, new Station("San Francisco Int'l Airport Station", "SFO", "37.61590", "-122.39263"))
