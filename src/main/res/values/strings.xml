@@ -331,6 +331,9 @@
     <string name="default_map_tile_url">https://tile{s}.stackcdn.com/osm_tiles_2x/{z}/{x}/{y}.png</string>
     <string name="default_map_tile_subdomains">123456</string>
 
+    <string name="pref_show_local_and_english_title">Show both local and English station names</string>
+    <string name="pref_show_local_and_english_desc">If enabled, both local and English names will be shown regardless of locale. If disabled, the most appropriate variant is chosen.</string>
+
     <plurals name="cards_imported">
         <item quantity="one"><xliff:g id="count" example="1">%d</xliff:g> card imported!</item>
         <item quantity="other"><xliff:g id="count" example="3">%d</xliff:g> cards imported!</item>
