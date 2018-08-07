@@ -554,4 +554,9 @@
     <string name="nfc_not_available">NFC: niet beschikbaar</string>
     <string name="mfc_supported">MIFARE Classic: ondersteund</string>
     <string name="mfc_not_supported">MIFARE Classic: niet ondersteund</string>
-</resources>
+<string name="trip_description_unknown_start">naar %s</string>
+    <string name="time_from_to">%s → %s</string>
+    <string name="time_from_unknown_to">?:?? → %s</string>
+
+
+    </resources>
