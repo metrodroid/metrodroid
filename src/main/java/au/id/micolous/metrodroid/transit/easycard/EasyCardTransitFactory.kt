@@ -25,39 +25,34 @@
 
 package au.id.micolous.metrodroid.transit.easycard
 
-import android.content.Context
-import android.os.Parcel
-import android.os.Parcelable
-import au.id.micolous.farebot.R
-import au.id.micolous.farebot.R.string.data
-import au.id.micolous.metrodroid.card.CardType
 import au.id.micolous.metrodroid.card.classic.ClassicCard
 import au.id.micolous.metrodroid.card.classic.ClassicSector
-import au.id.micolous.metrodroid.transit.*
+import au.id.micolous.metrodroid.util.StationTableReader
 import au.id.micolous.metrodroid.util.Utils
+import kotlinx.android.parcel.Parcelize
 import java.util.*
+import au.id.micolous.farebot.R
+import au.id.micolous.metrodroid.card.CardType
+import au.id.micolous.metrodroid.transit.*
 
-class EasyCardTransitFactory(private val context: Context) {
-
+class EasyCardTransitFactory {
     fun check(card: ClassicCard): Boolean {
-        var data: ByteArray?
-        try {
-            data = (card.getSector(0))?.getBlock(1)?.data
+        val data: ByteArray? = try {
+            (card.getSector(0))?.getBlock(1)?.data
         } catch (e: Exception) {
-            data = null
+            null
         }
-        return data != null && Utils.byteArrayToInt(data, 0, 4) == 0x0e140001
+        return data != null && Arrays.equals(data, MAGIC);
     }
 
     fun parseIdentity(card: ClassicCard): TransitIdentity {
         val uid = parseSerialNumber(card)
-        return TransitIdentity("EasyCard", uid)
+        return TransitIdentity(NAME, uid)
     }
 
     fun parseInfo(card: ClassicCard): EasyCardTransitData {
         return EasyCardTransitData(
                 parseSerialNumber(card),
-                parseManufacturingDate(card),
                 parseBalance(card),
                 parseTrips(card),
                 parseRefill(card))
@@ -65,22 +60,22 @@ class EasyCardTransitFactory(private val context: Context) {
 
     private fun parseSerialNumber(card: ClassicCard): String {
         val data = (card.getSector(0))?.getBlock(0)?.data!!
-        return Utils.getHexString(Utils.byteArraySlice(data, 0, 4))
+        return Utils.getHexString(data, 0, 4)
     }
 
     private fun parseBalance(card: ClassicCard): Int {
         val data = (card.getSector(2))?.getBlock(0)?.data
-        return Utils.byteArrayToInt(data, 0, 1)
+        return Utils.byteArrayToIntReversed(data, 0, 4)
     }
 
-    private fun parseRefill(card: ClassicCard): EasyCardRefill {
+    private fun parseRefill(card: ClassicCard): EasyCardTrip {
         val data = (card.getSector(2))?.getBlock(2)?.data!!
 
-        val location = EasyCardStations[data[11].toInt()] ?: "EasyCard Unknown"
-        val date = Utils.byteArrayToLong(Utils.reverseBuffer(Utils.byteArraySlice(data, 1, 5)))
-        val amount = data[6].toInt()
+        val id = data[11].toInt()
+        val date = Utils.byteArrayToLongReversed(data, 1, 4)
+        val amount = Utils.byteArrayToIntReversed(data, 6, 2)
 
-        return EasyCardRefill(date, location, amount)
+        return EasyCardTrip(date, -amount, id, true, false)
     }
 
     private fun parseTrips(card: ClassicCard): List<EasyCardTrip> {
@@ -90,91 +85,89 @@ class EasyCardTransitFactory(private val context: Context) {
                 (card.getSector(5) as ClassicSector).blocks.subList(0, 3))
                 .filter { !it.data.all { it == 0x0.toByte() } }
 
-        return blocks.map { block ->
+        var trips = blocks.map { block ->
             val data = block.data
-            val timestamp = Utils.byteArrayToLong(data.copyOfRange(1, 5).reversedArray())
-            val fare = data[6].toInt()
-            val balance = data[8].toLong()
+            val timestamp = Utils.byteArrayToLongReversed(data, 1, 4)
+            val fare = Utils.byteArrayToIntReversed(data, 6, 2)
             val transactionType = data[11].toInt()
-            EasyCardTrip(timestamp, fare, balance, transactionType)
+            EasyCardTrip(timestamp, fare, transactionType, false,
+                    data[5] == 0x11.toByte())
         }.distinctBy { it.timestamp }
-    }
 
-    private fun parseManufacturingDate(card: ClassicCard): Date {
-        val data = card.getSector(0)?.getBlock(0)?.data
-        return Date(Utils.byteArrayToLong(Utils.reverseBuffer(Utils.byteArraySlice(data, 5, 9))) * 1000L)
+        Collections.sort(trips, Trip.Comparator())
+        Collections.reverse(trips)
+
+        var mergedTrips = ArrayList<EasyCardTrip>()
+
+        for (trip in trips) {
+            if (mergedTrips.isEmpty()) {
+                mergedTrips.add(trip)
+                continue
+            }
+            var lastTrip = mergedTrips.get(mergedTrips.size - 1)
+            if (lastTrip.shouldBeMerged(trip))
+                lastTrip.merge(trip)
+            else
+                mergedTrips.add(trip)
+        }
+
+        return mergedTrips
     }
 
     companion object {
         private val TZ: TimeZone = TimeZone.getTimeZone("Asia/Taipei")
+        const private val NAME = "EasyCard"
         val CARD_INFO = CardInfo.Builder()
                 .setImageId(R.drawable.easycard)
-                .setName("EasyCard")
+                .setName(NAME)
                 .setLocation(R.string.location_taipei)
                 .setCardType(CardType.MifareClassic)
                 .setKeysRequired()
                 .setPreview()
-                .setExtraNote(R.string.easycard_card_note)
                 .build()
+        private val MAGIC = byteArrayOf(
+                0x0e, 0x14, 0x00, 0x01,
+                0x07, 0x02, 0x08, 0x03,
+                0x09, 0x04, 0x08, 0x10,
+                0x00, 0x00, 0x00, 0x00)
+
+        const private val EASYCARD_STR: String = "easycard"
+        const private val POS = 1
+        const private val BUS = 5
     }
 
-    public data class EasyCardRefill(
-        private val timestamp: Long,
-        private val location: String,
-        private val amount: Int
-    ) : Trip() {
-        override fun describeContents(): Int = 0
+    @Parcelize
+    data class EasyCardTransitData(
+            private val serialNumber: String,
+            private val balance: Int,
+            private val trips: List<EasyCardTransitFactory.EasyCardTrip>,
+            private val refill: EasyCardTransitFactory.EasyCardTrip
+    ) : TransitData() {
+        override fun getBalance(): TransitCurrency = TransitCurrency.TWD(balance)
 
-        override fun hasTime(): Boolean = true
+        override fun getCardName(): String = NAME
 
-        override fun getMode(): Mode = Mode.TICKET_MACHINE
+        override fun getSerialNumber(): String? = serialNumber
 
-        constructor(parcel: Parcel) : this(
-                parcel.readLong(),
-                parcel.readString(),
-                parcel.readInt()) {
-        }
-
-        override fun getStartTimestamp(): Calendar {
-            val g = GregorianCalendar(TZ)
-            g.timeInMillis = timestamp * 1000
-            return g
-        }
-
-        override fun getAgencyName(isShort : Boolean): String = location
-
-        override fun getFare(): TransitCurrency = TransitCurrency(amount, "TWD")
-        override fun writeToParcel(parcel: Parcel, flags: Int) {
-            parcel.writeLong(timestamp)
-            parcel.writeString(location)
-            parcel.writeInt(amount)
-        }
-
-        companion object CREATOR : Parcelable.Creator<EasyCardRefill> {
-            override fun createFromParcel(parcel: Parcel): EasyCardRefill {
-                return EasyCardRefill(parcel)
-            }
-
-            override fun newArray(size: Int): Array<EasyCardRefill?> {
-                return arrayOfNulls(size)
-            }
+        override fun getTrips(): Array<out Trip> {
+            val ret: ArrayList<Trip> = ArrayList()
+            ret.addAll(trips)
+            ret.add(refill)
+            return ret.toArray(arrayOf())
         }
     }
 
+    @Parcelize
     data class EasyCardTrip(
             internal val timestamp: Long,
-            private val fare: Int,
-            private val balance: Long,
-            private val transactionType: Int
+            private var fare: Int,
+            private val location: Int,
+            private val isTopup: Boolean,
+            private val isTapOff: Boolean,
+            private var exitTimestamp: Long? = null,
+            private var exitLocation: Int? = null
     ) : Trip() {
-        override fun getFare(): TransitCurrency? = TransitCurrency(fare,"TWD")
-
-        constructor(parcel: Parcel) : this(
-                parcel.readLong(),
-                parcel.readInt(),
-                parcel.readLong(),
-                parcel.readInt()) {
-        }
+        override fun getFare(): TransitCurrency? = TransitCurrency.TWD(fare)
 
         override fun getStartTimestamp(): Calendar {
             val g = GregorianCalendar(TZ)
@@ -182,40 +175,51 @@ class EasyCardTransitFactory(private val context: Context) {
             return g
         }
 
-        override fun getRouteName(): String? = EasyCardStations[transactionType]
-
-        override fun getAgencyName(isShort : Boolean): String? = null
-
-        override fun getStartStation(): Station? = null
-
-        override fun getEndStation(): Station? = null
-
-        override fun getMode(): Mode? = when (transactionType) {
-            0x05 -> Mode.BUS
-            0x01 -> Mode.POS
-            else -> Mode.TRAIN
+        override fun getEndTimestamp(): Calendar? {
+            val g = GregorianCalendar(TZ)
+            g.timeInMillis = (exitTimestamp ?: return null) * 1000
+            return g
         }
 
-        override fun hasTime(): Boolean = true
-        override fun writeToParcel(parcel: Parcel, flags: Int) {
-            parcel.writeLong(timestamp)
-            parcel.writeInt(fare)
-            parcel.writeLong(balance)
-            parcel.writeInt(transactionType)
+        override fun getStartStation(): Station? = when (location) {
+            BUS -> null
+            POS -> null
+            else -> StationTableReader.getStation(EASYCARD_STR, location)
         }
 
-        override fun describeContents(): Int {
-            return 0
+        override fun getEndStation(): Station? {
+            return StationTableReader.getStation(EASYCARD_STR, exitLocation ?: return null)
         }
 
-        companion object CREATOR : Parcelable.Creator<EasyCardTrip> {
-            override fun createFromParcel(parcel: Parcel): EasyCardTrip {
-                return EasyCardTrip(parcel)
+        override fun getMode(): Mode {
+            if (isTopup)
+                return Mode.TICKET_MACHINE
+            return when (location) {
+                BUS -> Mode.BUS
+                POS -> Mode.POS
+                else -> Mode.TRAIN
             }
+        }
 
-            override fun newArray(size: Int): Array<EasyCardTrip?> {
-                return arrayOfNulls(size)
+        override fun getAgencyName(isShort: Boolean): String = when (location) {
+            BUS -> "Bus"
+            POS -> "POS"
+            else -> "Metro"
+        }
+
+        fun shouldBeMerged(trip: EasyCardTrip): Boolean {
+            if (location == POS || location == BUS
+                    || trip.location == POS || trip.location == BUS
+            || trip.exitTimestamp != null || exitTimestamp != null) {
+                return false
             }
+            return (!isTapOff && trip.isTapOff)
+        }
+
+        fun merge(trip: EasyCardTrip) {
+            fare += trip.fare
+            exitLocation = trip.location
+            exitTimestamp = trip.timestamp
         }
     }
 }

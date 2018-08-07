@@ -436,8 +436,8 @@ public class ClassicCard extends Card {
             return RicaricaMiTransitData.parseTransitIdentity(this);
         } else if (BilheteUnicoSPTransitData.check(this)) {
             return BilheteUnicoSPTransitData.parseTransitIdentity(this);
-        } else if ((new EasyCardTransitFactory(MetrodroidApplication.getInstance())).check(this)) {
-            return (new EasyCardTransitFactory(MetrodroidApplication.getInstance())).parseIdentity(this);
+        } else if ((new EasyCardTransitFactory()).check(this)) {
+            return (new EasyCardTransitFactory()).parseIdentity(this);
         } else if (UnauthorizedClassicTransitData.check(this)) {
             // This check must be THIRD TO LAST.
             //
@@ -507,8 +507,8 @@ public class ClassicCard extends Card {
             return new RicaricaMiTransitData(this);
         } else if (BilheteUnicoSPTransitData.check(this)) {
             return new BilheteUnicoSPTransitData(this);
-        } else if ((new EasyCardTransitFactory(MetrodroidApplication.getInstance())).check(this)) {
-            return (new EasyCardTransitFactory(MetrodroidApplication.getInstance())).parseInfo(this);
+        } else if ((new EasyCardTransitFactory()).check(this)) {
+            return (new EasyCardTransitFactory()).parseInfo(this);
         } else if (UnauthorizedClassicTransitData.check(this)) {
             // This check must be THIRD TO LAST.
             //
