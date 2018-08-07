@@ -37,6 +37,22 @@ import au.id.micolous.farebot.R;
  * Dates given are not valid.
  */
 class OpalSubscription extends Subscription {
+    public static final Creator<OpalSubscription> CREATOR = new Creator<OpalSubscription>() {
+        public OpalSubscription createFromParcel(Parcel parcel) {
+            return new OpalSubscription(parcel);
+        }
+
+        public OpalSubscription[] newArray(int size) {
+            return new OpalSubscription[size];
+        }
+    };
+
+    public OpalSubscription(Parcel parcel) {
+    }
+
+    public OpalSubscription() {
+    }
+
 
     @Override
     public int getId() {

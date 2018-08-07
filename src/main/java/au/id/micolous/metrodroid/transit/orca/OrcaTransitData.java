@@ -65,12 +65,23 @@ public class OrcaTransitData extends TransitData {
     private int mBalance;
     private Trip[] mTrips;
 
+    public static final Creator<OrcaTransitData> CREATOR = new Creator<OrcaTransitData>() {
+        public OrcaTransitData createFromParcel(Parcel parcel) {
+            return new OrcaTransitData(parcel);
+        }
+
+        public OrcaTransitData[] newArray(int size) {
+            return new OrcaTransitData[size];
+        }
+    };
+
+
     public OrcaTransitData(Parcel parcel) {
         mSerialNumber = parcel.readInt();
         mBalance = parcel.readInt();
 
         parcel.readInt();
-        mTrips = (Trip[]) parcel.readParcelableArray(null);
+        mTrips = (Trip[]) parcel.readParcelableArray(OrcaTrip.class.getClassLoader());
     }
 
     public OrcaTransitData(Card card) {

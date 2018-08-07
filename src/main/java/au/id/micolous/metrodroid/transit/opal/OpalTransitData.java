@@ -60,6 +60,16 @@ public class OpalTransitData extends TransitData {
     public static final TimeZone TIME_ZONE = TimeZone.getTimeZone("Australia/Sydney");
     private static final GregorianCalendar OPAL_EPOCH;
 
+    public static final Creator<OpalTransitData> CREATOR = new Creator<OpalTransitData>() {
+        public OpalTransitData createFromParcel(Parcel parcel) {
+            return new OpalTransitData(parcel);
+        }
+
+        public OpalTransitData[] newArray(int size) {
+            return new OpalTransitData[size];
+        }
+    };
+
     static {
         GregorianCalendar epoch = new GregorianCalendar(TIME_ZONE);
         epoch.set(Calendar.YEAR, 1980);

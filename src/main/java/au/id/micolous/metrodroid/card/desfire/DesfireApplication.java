@@ -29,6 +29,7 @@ import org.simpleframework.xml.Attribute;
 import org.simpleframework.xml.ElementList;
 import org.simpleframework.xml.Root;
 
+import java.util.Arrays;
 import java.util.List;
 
 @Root(name = "application")
@@ -42,7 +43,7 @@ public class DesfireApplication {
 
     public DesfireApplication(int id, DesfireFile[] files) {
         mId = String.valueOf(id);
-        mFiles = Utils.arrayAsList(files);
+        mFiles = Arrays.asList(files);
     }
 
     public int getId() {

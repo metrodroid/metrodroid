@@ -18,6 +18,8 @@
  */
 package au.id.micolous.metrodroid.transit.stub;
 
+import android.os.Parcel;
+
 import au.id.micolous.metrodroid.card.Card;
 import au.id.micolous.metrodroid.card.desfire.DesfireCard;
 import au.id.micolous.metrodroid.transit.TransitIdentity;
@@ -28,7 +30,20 @@ import au.id.micolous.metrodroid.transit.TransitIdentity;
  * https://github.com/micolous/metrodroid/wiki/AT-HOP
  */
 public class AtHopStubTransitData extends StubTransitData {
+    public static final Creator<AtHopStubTransitData> CREATOR = new Creator<AtHopStubTransitData>() {
+        public AtHopStubTransitData createFromParcel(Parcel parcel) {
+            return new AtHopStubTransitData(parcel);
+        }
+
+        public AtHopStubTransitData[] newArray(int size) {
+            return new AtHopStubTransitData[size];
+        }
+    };
+
     public AtHopStubTransitData(Card card) {
+    }
+
+    public AtHopStubTransitData(Parcel parcel) {
     }
 
     public static boolean check(Card card) {

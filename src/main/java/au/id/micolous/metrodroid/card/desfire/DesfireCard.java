@@ -59,6 +59,7 @@ import org.simpleframework.xml.Root;
 import java.io.IOException;
 import java.security.AccessControlException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.List;
@@ -79,7 +80,7 @@ public class DesfireCard extends Card {
     public DesfireCard(byte[] tagId, Calendar scannedAt, DesfireManufacturingData manfData, DesfireApplication[] apps) {
         super(CardType.MifareDesfire, tagId, scannedAt);
         mManfData = manfData;
-        mApplications = Utils.arrayAsList(apps);
+        mApplications = Arrays.asList(apps);
     }
 
     /**

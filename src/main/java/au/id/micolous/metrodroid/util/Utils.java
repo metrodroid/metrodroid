@@ -95,13 +95,6 @@ public class Utils {
     private Utils() {
     }
 
-    public static <T> List<T> arrayAsList(T... array) {
-        if (array == null) {
-            return new ArrayList<>();
-        }
-        return Arrays.asList(array);
-    }
-
     public static void checkNfcEnabled(final Activity activity, NfcAdapter adapter) {
         if (adapter != null && adapter.isEnabled()) {
             return;
@@ -155,11 +148,11 @@ public class Utils {
     }
 
     public static String getHexString(byte[] b, int offset, int length) {
-        String result = "";
+        StringBuilder result = new StringBuilder();
         for (int i = offset; i < offset + length; i++) {
-            result += Integer.toString((b[i] & 0xff) + 0x100, 16).substring(1);
+            result.append(Integer.toString((b[i] & 0xff) + 0x100, 16).substring(1));
         }
-        return result;
+        return result.toString();
     }
 
     public static String getHexString(byte[] b, String defaultResult) {

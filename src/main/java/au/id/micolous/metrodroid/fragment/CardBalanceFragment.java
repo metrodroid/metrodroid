@@ -47,14 +47,11 @@ import au.id.micolous.metrodroid.util.TripObfuscator;
 import au.id.micolous.metrodroid.util.Utils;
 
 public class CardBalanceFragment extends ListFragment {
-    private Card mCard;
     private TransitData mTransitData;
     private static final String TAG = "CardBalanceFragment";
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Serializer serializer = MetrodroidApplication.getInstance().getSerializer();
-        mCard = Card.fromXml(serializer, getArguments().getString(AdvancedCardInfoActivity.EXTRA_CARD));
         mTransitData = getArguments().getParcelable(CardInfoActivity.EXTRA_TRANSIT_DATA);
     }
 
