@@ -514,4 +514,44 @@
     <string name="blank_mfu_card">Blanco MIFARE Ultralight-kaart</string>
     <string name="fully_blank_desc">Deze kaart is, voor zover wij kunnen bepalen, volledig blanco. Hij is geformatteerd, maar er zijn geen gegevens op weggeschreven. Het heeft een serienummer waarmee hij geïdentificeerd kan worden en gekoppeld aan een database, maar de kaart zelf bevat geen verdere gegevens.</string>
     <string name="fully_blank_title">Blanco kaart</string>
+<string name="pref_theme">Thema</string>
+    <string name="pref_theme_desc">Stel het uiterlijk in</string>
+
+    <string name="clipper_end_of_line">(einde van de regel)</string>
+    <string name="clipper_zone_number">Zone #%s</string>
+
+    <string name="ez_bus_number">Bus #%s</string>
+    <string name="ez_bus_refund">Bus-restitutie</string>
+    <string name="ez_mrt">MRT</string>
+    <string name="ez_topup">Opladen</string>
+    <string name="ez_first_use">Eerste keer</string>
+    <string name="ez_retail_purchase">Winkelaankoop</string>
+    <string name="ez_service_charge">Dienstvergoeding</string>
+
+    <string name="card_name_suica">Suica</string>
+    <string name="card_name_icoca">ICOCA</string>
+    <string name="card_name_pasmo">PASMO</string>
+
+    <string name="felica_terminal_view_altte">VIEW ALTTE</string>
+    <string name="hsl_line_vehicle">Lijn %s, voertuig %s</string>
+
+    <string name="orca_coach_number">#%s klas</string>
+
+    <string name="suica_bus_area_line_stop">Busgebied %s, lijn %s, halte %s</string>
+    <string name="suica_line_station">Lijn %s, station %s</string>
+
+    <string name="card_name_szt">Shenzhen Tong</string>
+    <string name="card_name_octopus">Octopus</string>
+    <string name="card_name_octopus_szt_dual">Hu Tong Xing</string>
+
+    <string name="no_data_in_clipboard">Geen gegevens op het klembord.</string>
+    <string name="app_version">Versie: %s</string>
+    <string name="device_model">Model: %s (%s)</string>
+    <string name="device_manufacturer">Fabrikant: %s (%s)</string>
+    <string name="android_os">Android-versie: %s (%s)</string>
+    <string name="nfc_enabled">NFC: ingeschakeld</string>
+    <string name="nfc_disabled">NFC: uitgeschakeld</string>
+    <string name="nfc_not_available">NFC: niet beschikbaar</string>
+    <string name="mfc_supported">MIFARE Classic: ondersteund</string>
+    <string name="mfc_not_supported">MIFARE Classic: niet ondersteund</string>
 </resources>
