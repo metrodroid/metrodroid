@@ -27,6 +27,8 @@ import android.text.SpannableString;
 import android.text.Spanned;
 import android.text.style.TtsSpan;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.security.SecureRandom;
 import java.text.NumberFormat;
 import java.util.Currency;
@@ -135,6 +137,11 @@ public class TransitCurrency extends TransitBalance implements Parcelable {
         TransitCurrency other = (TransitCurrency) obj;
         return mCurrencyCode.equals(other.mCurrencyCode) && mCurrency == other.mCurrency;
     }
+    
+    static public TransitCurrency TWD(int cents) {
+        return new TransitCurrency(cents, "TWD", 1.);
+    }
+
 
     public TransitCurrency obfuscate(int fareOffset, double fareMultiplier) {
         int cur = (int) ((mCurrency + fareOffset) * fareMultiplier);
