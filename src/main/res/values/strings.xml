@@ -824,4 +824,7 @@
         uniquely identified and linked to a database but card itself contains no other data.
     </string>
     <string name="fully_blank_title">Blank card</string>
+
+    <string name="pref_show_local_and_english_title">Show both local and English station names</string>
+    <string name="pref_show_local_and_english_desc">If true both local and English names will be shown independently of locale. If false the most appropriate variant is chosen</string>
 </resources>

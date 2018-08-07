@@ -120,5 +120,11 @@
             android:summary="@string/speak_balance_summary"
             android:key="pref_key_speak_balance"
             android:defaultValue="false" />
+
+        <CheckBoxPreference
+            android:title="@string/pref_show_local_and_english_title"
+            android:summary="@string/pref_show_local_and_english_desc"
+            android:key="pref_show_local_and_english"
+            android:defaultValue="false" />
     </PreferenceCategory>
 </PreferenceScreen>

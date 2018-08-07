@@ -29,6 +29,7 @@ import java.io.InputStream;
 import java.util.Arrays;
 import java.util.Locale;
 
+import au.id.micolous.metrodroid.MetrodroidApplication;
 import au.id.micolous.metrodroid.proto.Stations;
 import au.id.micolous.metrodroid.transit.Station;
 
@@ -100,6 +101,14 @@ public class StationTableReader {
     }
 
     String selectBestName(String englishName, String localName) {
+        if (showBoth() && englishName != null && !englishName.equals("")
+                && localName != null && !localName.equals("")) {
+            if (englishName.equals(localName))
+                return localName;
+            if (useEnglishName())
+                return englishName + " (" + localName + ")";
+            return localName + " (" + englishName + ")";
+        }
         if (useEnglishName() && englishName != null && !englishName.equals("")) {
             return englishName;
         }
@@ -111,6 +120,10 @@ public class StationTableReader {
             // Local unavailable, use English
             return englishName;
         }
+    }
+
+    private boolean showBoth() {
+        return MetrodroidApplication.showBothLocalAndEnglish();
     }
 
     /**

@@ -87,6 +87,7 @@ public class MetrodroidApplication extends Application {
     public static final String PREF_LOCALISE_PLACES = "pref_localise_places";
     public static final String PREF_LOCALISE_PLACES_HELP = "pref_localise_places_help";
     public static final String PREF_CONVERT_TIMEZONES = "pref_convert_timezones";
+    public static final String PREF_SHOW_LOCAL_AND_ENGLISH = "pref_show_local_and_english";
     private static final Set<String> devicesMifareWorks = new HashSet<>();
     private static final Set<String> devicesMifareNotWorks = new HashSet<>();
 
@@ -189,6 +190,10 @@ public class MetrodroidApplication extends Application {
 
     public static boolean convertTimezones() {
         return getBooleanPref(PREF_CONVERT_TIMEZONES, false);
+    }
+
+    public static boolean showBothLocalAndEnglish() {
+        return getBooleanPref(PREF_SHOW_LOCAL_AND_ENGLISH, false);
     }
 
     public Serializer getSerializer() {
