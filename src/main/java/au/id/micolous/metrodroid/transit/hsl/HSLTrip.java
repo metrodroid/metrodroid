@@ -115,8 +115,7 @@ public class HSLTrip extends Trip {
     @Override
     public String getRouteName() {
         if (mLine != null) {
-            // FIXME: i18n
-            return String.format("Line %s, Vehicle %s", mLine.substring(1), mVehicleNumber);
+            return Utils.localizeString(R.string.hsl_line_vehicle, mLine.substring(1), mVehicleNumber);
         }
         return null;
     }

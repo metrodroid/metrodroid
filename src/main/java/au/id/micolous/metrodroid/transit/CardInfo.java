@@ -100,7 +100,7 @@ public class CardInfo {
 
     public static final CardInfo ICOCA = new CardInfo.Builder()
             .setImageId(R.drawable.icoca_card)
-            .setName("ICOCA")
+            .setName(Utils.localizeString(R.string.card_name_icoca))
             .setLocation(R.string.location_kansai)
             .setCardType(CardType.FeliCa)
             .build();
@@ -176,9 +176,9 @@ public class CardInfo {
             .setKeysRequired()
             .build();
 
-    public static final CardInfo PASMO = new CardInfo.Builder()
+    public static final CardInfo PASMO = new Builder()
             .setImageId(R.drawable.pasmo_card)
-            .setName("PASMO")
+            .setName(Utils.localizeString(R.string.card_name_pasmo))
             .setLocation(R.string.location_tokyo)
             .setCardType(CardType.FeliCa)
             .build();
@@ -213,7 +213,7 @@ public class CardInfo {
 
     public static final CardInfo SUICA = new CardInfo.Builder()
             .setImageId(R.drawable.suica_card)
-            .setName("Suica")
+            .setName(Utils.localizeString(R.string.card_name_suica))
             .setLocation(R.string.location_tokyo)
             .setCardType(CardType.FeliCa)
             .build();

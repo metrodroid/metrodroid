@@ -28,11 +28,13 @@ import android.os.Parcel;
 import android.os.Parcelable;
 import android.support.annotation.Nullable;
 
+import au.id.micolous.farebot.R;
 import au.id.micolous.metrodroid.card.desfire.files.DesfireRecord;
 import au.id.micolous.metrodroid.transit.Station;
 import au.id.micolous.metrodroid.transit.Trip;
 import au.id.micolous.metrodroid.transit.TransitCurrency;
 import au.id.micolous.metrodroid.util.ImmutableMapBuilder;
+import au.id.micolous.metrodroid.util.Utils;
 
 import java.util.Calendar;
 import java.util.GregorianCalendar;
@@ -144,7 +146,7 @@ public class OrcaTrip extends Trip {
             case OrcaTransitData.AGENCY_ET:
                 return "Everett Transit";
         }
-        return String.format("Unknown Agency: %s", mAgency);
+        return Utils.localizeString(R.string.unknown_format, mAgency);
     }
 
     @Override
@@ -163,7 +165,7 @@ public class OrcaTrip extends Trip {
             case OrcaTransitData.AGENCY_ET:
                 return "ET";
         }
-        return String.format("Unknown Agency: %s", mAgency);
+        return Utils.localizeString(R.string.unknown_format, mAgency);
     }
 
     @Override
@@ -216,24 +218,24 @@ public class OrcaTrip extends Trip {
             if (stationNumber < sLinkStations.length) {
                 return sLinkStations[stationNumber].getStationName();
             } else {
-                return String.format("Unknown Station #%s", stationNumber);
+                return Utils.localizeString(R.string.unknown_format, stationNumber);
             }
         } else if (isSounder()) {
             int stationNumber = (int) mCoachNum;
             if (sSounderStations.containsKey(stationNumber)) {
                 return sSounderStations.get(stationNumber).getStationName();
             } else {
-                return String.format("Unknown Station #%s", stationNumber);
+                return Utils.localizeString(R.string.unknown_format, stationNumber);
             }
         } else if (mAgency == OrcaTransitData.AGENCY_WSF) {
             int terminalNumber = (int) mCoachNum;
             if (sWSFTerminals.containsKey(terminalNumber)) {
                 return sWSFTerminals.get(terminalNumber).getStationName();
             } else {
-                return String.format("Unknown Terminal #%s", terminalNumber);
+                return Utils.localizeString(R.string.unknown_format, terminalNumber);
             }
         } else {
-            return String.format("Coach #%s", String.valueOf(mCoachNum));
+            return Utils.localizeString(R.string.orca_coach_number, String.valueOf(mCoachNum));
         }
     }
 

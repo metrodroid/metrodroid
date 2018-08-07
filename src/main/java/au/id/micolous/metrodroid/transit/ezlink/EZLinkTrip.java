@@ -28,10 +28,12 @@ import android.support.annotation.Nullable;
 
 import java.util.Calendar;
 
+import au.id.micolous.farebot.R;
 import au.id.micolous.metrodroid.card.cepas.CEPASTransaction;
 import au.id.micolous.metrodroid.transit.Station;
 import au.id.micolous.metrodroid.transit.TransitCurrency;
 import au.id.micolous.metrodroid.transit.Trip;
+import au.id.micolous.metrodroid.util.Utils;
 
 public class EZLinkTrip extends Trip {
     public static final Creator<EZLinkTrip> CREATOR = new Creator<EZLinkTrip>() {
@@ -104,24 +106,24 @@ public class EZLinkTrip extends Trip {
 
     @Override
     public String getRouteName() {
-        // TODO: i18n
         if (mTransaction.getType() == CEPASTransaction.TransactionType.BUS) {
             if (mTransaction.getUserData().startsWith("SVC"))
-                return "Bus #" + mTransaction.getUserData().substring(3, 7).replace(" ", "");
-            return "(Unknown Bus Route)";
+                return Utils.localizeString(R.string.ez_bus_number,
+                        mTransaction.getUserData().substring(3, 7).replace(" ", ""));
+            return Utils.localizeString(R.string.unknown_format, mTransaction.getUserData());
         } else if (mTransaction.getType() == CEPASTransaction.TransactionType.BUS_REFUND)
-            return "Bus Refund";
+            return Utils.localizeString(R.string.ez_bus_refund);
         else if (mTransaction.getType() == CEPASTransaction.TransactionType.MRT)
-            return "MRT";
+            return Utils.localizeString(R.string.ez_mrt);
         else if (mTransaction.getType() == CEPASTransaction.TransactionType.TOP_UP)
-            return "Top-up";
+            return Utils.localizeString(R.string.ez_topup);
         else if (mTransaction.getType() == CEPASTransaction.TransactionType.CREATION)
-            return "First use";
+            return Utils.localizeString(R.string.ez_first_use);
         else if (mTransaction.getType() == CEPASTransaction.TransactionType.RETAIL)
-            return "Retail Purchase";
+            return Utils.localizeString(R.string.ez_retail_purchase);
         else if (mTransaction.getType() == CEPASTransaction.TransactionType.SERVICE)
-            return "Service Charge";
-        return "(Unknown Route)";
+            return Utils.localizeString(R.string.ez_service_charge);
+        return Utils.localizeString(R.string.unknown_format, mTransaction.getType().toString());
     }
 
     @Override

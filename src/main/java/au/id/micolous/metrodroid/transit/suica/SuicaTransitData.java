@@ -36,6 +36,7 @@ import android.os.Parcel;
 import android.support.annotation.Nullable;
 import android.text.Spanned;
 
+import au.id.micolous.farebot.R;
 import au.id.micolous.metrodroid.card.felica.FelicaBlock;
 import au.id.micolous.metrodroid.card.felica.FelicaCard;
 import au.id.micolous.metrodroid.card.felica.FelicaService;
@@ -110,7 +111,7 @@ public class SuicaTransitData extends TransitData {
     }
 
     public static TransitIdentity parseTransitIdentity(FelicaCard card) {
-        return new TransitIdentity("Suica", null); // FIXME: Could be ICOCA, etc.
+        return new TransitIdentity(Utils.localizeString(R.string.card_name_suica), null); // FIXME: Could be ICOCA, etc.
     }
 
     @Nullable
@@ -134,7 +135,7 @@ public class SuicaTransitData extends TransitData {
 
     @Override
     public String getCardName() {
-        return "Suica"; // FIXME: Could be ICOCA, etc.
+        return Utils.localizeString(R.string.card_name_suica); // FIXME: Could be ICOCA, etc.
     }
 
     public void writeToParcel(Parcel parcel, int flags) {

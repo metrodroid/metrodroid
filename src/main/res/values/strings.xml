@@ -580,8 +580,28 @@
     <!-- Used as descriptive text for the unknown transit mode icon. -->
     <string name="mode_unknown">Unknown</string>
 
+    <string name="clipper_end_of_line">(End of line)</string>
+    <string name="clipper_zone_number">Zone #%s</string>
+
+    <string name="ez_bus_number">Bus #%s</string>
+    <string name="ez_bus_refund">Bus Refund</string>
+    <string name="ez_mrt">MRT</string>
+    <string name="ez_topup">Top-up</string>
+    <string name="ez_first_use">First use</string>
+    <string name="ez_retail_purchase">Retail Purchase</string>
+    <string name="ez_service_charge">Service Charge</string>
 
     <!-- Felica / Suica: These strings must only be used for Felica. -->
+
+    <!-- Translators: it's a ticketing card name in Japan. Japanese: スイカ
+    May be transliterated -->
+    <string name="card_name_suica">Suica</string>
+    <!-- Translators: it's a ticketing card name in Japan. Japanese: イコカ
+    May be transliterated -->
+    <string name="card_name_icoca">ICOCA</string>
+    <!-- Translators: it's a ticketing card name in Japan. Japanese: パスモ
+    May be transliterated -->
+    <string name="card_name_pasmo">PASMO</string>
 
     <!--
         Translators:
@@ -597,6 +617,8 @@
     <string name="felica_terminal_deposit_quick_charge">Quick Charge Machine</string>
     <string name="felica_terminal_tvm_tokyo_monorail">Tokyo Monorail Ticket Machine</string>
     <string name="felica_terminal_tvm_etc">Ticket Machine, etc.</string>
+    <!-- Translators: Japanese ビューアルッテ（VIEW ALTTE) -->
+    <string name="felica_terminal_view_altte">VIEW ALTTE</string>
     <!--
         Translators:
         Japanese: 改札機
@@ -704,6 +726,7 @@
     <string name="hsl_value_ticket_vehicle_type">Vehicle type</string>
     <string name="hsl_value_ticket_line_number">Line number</string>
     <string name="hsl_season_ticket">Season ticket</string>
+    <string name="hsl_line_vehicle">Line %s, Vehicle %s</string>
 
     <!--
         Opal (Sydney, AU).
@@ -729,6 +752,8 @@
     <string name="opal_action_tap_on_rejected">Tap on rejected</string>
     <string name="card_note_opal">Free travel passes and single trip tickets are not supported.</string>
 
+    <string name="orca_coach_number">Coach #%s</string>
+
     <!--
         Go Card (South East Queensland/Brisbane, AU)
         These are deliberately separated strings in order to match the terminology of the agency.
@@ -742,6 +767,9 @@
     <string name="seqgo_refill_automatic">Automatic top-up</string>
 
     <string name="card_note_seqgo">Does not support Go Access, Explore or SEEQ cards.</string>
+
+    <string name="suica_bus_area_line_stop">Bus Area %s Line %s Stop %s</string>
+    <string name="suica_line_station">Line %s Station %s</string>
 
     <!--
         Myki (Victoria, AU)
@@ -824,4 +852,15 @@
         uniquely identified and linked to a database but card itself contains no other data.
     </string>
     <string name="fully_blank_title">Blank card</string>
+
+    <string name="no_data_in_clipboard">No data in clipboard.</string>
+    <string name="app_version">Version: %s</string>
+    <string name="device_model">Model: %s (%s)</string>
+    <string name="device_manufacturer">Manufacturer: %s (%s)</string>
+    <string name="android_os">Android OS: %s (%s)</string>
+    <string name="nfc_enabled">NFC: enabled</string>
+    <string name="nfc_disabled">NFC: disabled</string>
+    <string name="nfc_not_available">NFC: not available</string>
+    <string name="mfc_supported">MIFARE Classic: supported</string>
+    <string name="mfc_not_supported">MIFARE Classic: not supported</string>
 </resources>
