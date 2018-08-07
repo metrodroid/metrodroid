@@ -24,7 +24,6 @@ import android.os.Parcelable;
 import android.util.Log;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.List;
@@ -97,7 +96,7 @@ public class PodorozhnikTransitData extends TransitData {
 
     @Override
     public String getCardName() {
-        return NAME;
+        return Utils.localizeString(R.string.card_name_podorozhnik);
     }
 
     @Override
@@ -127,7 +126,10 @@ public class PodorozhnikTransitData extends TransitData {
     }
 
     public static TransitIdentity parseTransitIdentity(ClassicCard card) {
-        return new TransitIdentity(NAME, null);
+        /* Pure Podorozhnik cards have their own number however
+         * combined Troika+Podorozhnik share the number with Troika part.
+         * I don't have pure Podorozhnik to test, so serial number readin is missing currently.   */
+        return new TransitIdentity(Utils.localizeString(R.string.card_name_podorozhnik), null);
     }
 
     private void decodeSector4(ClassicCard card) {
@@ -168,8 +170,8 @@ public class PodorozhnikTransitData extends TransitData {
 	    mLastValidator = Utils.byteArrayToInt(b, 0, 2);
 	    b = Utils.reverseBuffer(block1, 2, 3);
 	    mLastTripTime = Utils.byteArrayToInt(b, 0, 3);
-	    mGroundCounter = block1[0] & 0xff;
-	    mSubwayCounter = block1[1] & 0xff;
+	    mSubwayCounter = block1[0] & 0xff;
+	    mGroundCounter = block1[1] & 0xff;
     }	
 
     public PodorozhnikTransitData(ClassicCard card) {
@@ -197,26 +199,26 @@ public class PodorozhnikTransitData extends TransitData {
             else {
                 items.add (new PodorozhnikTrip(mLastTripTime, null, guessMode(mLastTransport), mLastValidator,
                         guessAgency(mLastTransport)));
-                items.add (new PodorozhnikTrip(mLastSpendTime, mLastSpend, Trip.Mode.OTHER, null, "Spb POS purchase"));
+                items.add (new PodorozhnikTrip(mLastSpendTime, mLastSpend, Trip.Mode.OTHER, null, null));
             }
         }
         return items.toArray(new Trip[0]);
     }
 
     private static Trip.Mode guessMode(int lastTransport) {
-        if (lastTransport == 4)
-            return Trip.Mode.BUS;
+        if (lastTransport == 1)
+            return Trip.Mode.METRO;
+        return Trip.Mode.BUS;
         // TODO: Handle trams
-        return Trip.Mode.METRO;
     }
 
     private static String guessAgency(int lastTransport) {
         // Always include "Saint Petersburg" in names here to distinguish from Troika (Moscow)
         // trips on hybrid cards
-        if (lastTransport == 4)
-            return Utils.localizeString(R.string.led_bus);
+        if (lastTransport == 1)
+            return Utils.localizeString(R.string.led_metro);
+        return Utils.localizeString(R.string.led_bus);
         // TODO: Handle trams
-        return Utils.localizeString(R.string.led_metro);
     }
 
     @Override
@@ -235,8 +237,8 @@ public class PodorozhnikTransitData extends TransitData {
 
     @Override
     public TransitBalance getBalance() {
-        return new TransitBalanceStored(new TransitCurrency(mBalance, "RUB"),
-                NAME, null);
+        return new TransitBalanceStored(TransitCurrency.RUB(mBalance),
+                Utils.localizeString(R.string.card_name_podorozhnik), null);
     }
 
     public static boolean check(ClassicCard card) {
