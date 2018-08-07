@@ -25,7 +25,10 @@ import android.app.Activity;
 import android.app.ListFragment;
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.Resources;
+import android.content.res.TypedArray;
 import android.graphics.Typeface;
+import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.DrawableRes;
@@ -187,63 +190,71 @@ public class CardTripsFragment extends ListFragment {
             TextView fareTextView = convertView.findViewById(R.id.fare_text_view);
             TextView stationTextView = convertView.findViewById(R.id.station_text_view);
 
-            @DrawableRes int modeRes;
             @StringRes int modeContentDescriptionRes = 0;
             switch (trip.getMode()) {
                 case BUS:
-                    modeRes = R.drawable.bus;
                     modeContentDescriptionRes = R.string.mode_bus;
                     break;
 
                 case TRAIN:
-                    modeRes = R.drawable.train;
                     modeContentDescriptionRes = R.string.mode_train;
                     break;
 
                 case TRAM:
-                    modeRes = R.drawable.tram;
                     modeContentDescriptionRes = R.string.mode_tram;
                     break;
 
                 case METRO:
-                    modeRes = R.drawable.metro;
                     modeContentDescriptionRes = R.string.mode_metro;
                     break;
 
                 case FERRY:
-                    modeRes = R.drawable.ferry;
                     modeContentDescriptionRes = R.string.mode_ferry;
                     break;
 
                 case TICKET_MACHINE:
-                    modeRes = R.drawable.tvm;
                     modeContentDescriptionRes = R.string.mode_ticket_machine;
                     break;
 
                 case VENDING_MACHINE:
-                    modeRes = R.drawable.vending_machine;
                     modeContentDescriptionRes = R.string.mode_vending_machine;
                     break;
 
                 case POS:
-                    // TODO: Handle currencies other than Yen
-                    // This is only used by Edy and Suica at present.
-                    modeRes = R.drawable.cashier_yen;
                     modeContentDescriptionRes = R.string.mode_pos;
                     break;
 
                 case BANNED:
-                    modeRes = R.drawable.banned;
                     modeContentDescriptionRes = R.string.mode_banned;
                     break;
 
                 default:
-                    modeRes = R.drawable.unknown;
                     modeContentDescriptionRes = R.string.mode_unknown;
                     break;
             }
 
-            iconImageView.setImageResource(modeRes);
+            TypedArray a = getContext().obtainStyledAttributes(new int[]{R.attr.TransportIcons});
+            int iconArrayRes = a.getResourceId(0, -1);
+            int iconIdx = trip.getMode().getImageResourceIdx();
+            Drawable icon = null;
+            TypedArray iconArray = null;
+
+            if (iconArrayRes != -1) {
+                iconArray = getContext().getResources().obtainTypedArray(iconArrayRes);
+            }
+
+            if (iconArray != null)
+                icon = iconArray.getDrawable(iconIdx);
+
+            if (icon == null) {
+                iconImageView.setImageResource(R.drawable.unknown);
+            } else
+                iconImageView.setImageDrawable(icon);
+
+            if (a!= null)
+                a.recycle();
+            if (iconArray != null)
+                iconArray.recycle();
             String s = Utils.localizeString(modeContentDescriptionRes);
             if (localisePlaces && Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
                 SpannableString ss = new SpannableString(s);
@@ -254,7 +265,11 @@ public class CardTripsFragment extends ListFragment {
             }
 
             if (trip.hasTime()) {
-                timeTextView.setText(Utils.timeFormat(date));
+                Calendar end = trip.getEndTimestamp();
+                if (end != null)
+                    timeTextView.setText(Utils.timeFormat(date) + " - " + Utils.timeFormat(end));
+                else
+                    timeTextView.setText(Utils.timeFormat(date));
                 timeTextView.setVisibility(View.VISIBLE);
             } else {
                 timeTextView.setVisibility(View.INVISIBLE);

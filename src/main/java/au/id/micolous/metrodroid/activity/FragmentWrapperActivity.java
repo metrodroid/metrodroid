@@ -35,7 +35,7 @@ import au.id.micolous.farebot.R;
 
 import static android.view.ViewGroup.LayoutParams.MATCH_PARENT;
 
-public abstract class FragmentWrapperActivity extends Activity {
+public abstract class FragmentWrapperActivity extends MetrodroidActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

@@ -61,7 +61,7 @@ import au.id.micolous.metrodroid.MetrodroidApplication;
 /**
  * @author Eric Butler
  */
-public class CardInfoActivity extends Activity {
+public class CardInfoActivity extends MetrodroidActivity {
     public static final String EXTRA_TRANSIT_DATA = "transit_data";
     public static final String SPEAK_BALANCE_EXTRA = "au.id.micolous.farebot.speak_balance";
 

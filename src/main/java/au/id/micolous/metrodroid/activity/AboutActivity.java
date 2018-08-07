@@ -35,7 +35,7 @@ import au.id.micolous.farebot.R;
 /**
  * @author Michael Farrell
  */
-public class AboutActivity extends Activity {
+public class AboutActivity extends MetrodroidActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

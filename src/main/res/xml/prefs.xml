@@ -34,6 +34,14 @@
             android:summary="@string/convert_timezones_summary"
             android:key="pref_convert_timezones"
             android:defaultValue="false"/>
+        <ListPreference
+            android:key="pref_theme"
+            android:title="@string/pref_theme"
+            android:summary="@string/pref_theme_desc"
+            android:defaultValue="dark"
+            android:entries="@array/themes"
+            android:entryValues="@array/theme_values"
+            />
     </PreferenceCategory>
 
     <PreferenceCategory android:title="Maps">

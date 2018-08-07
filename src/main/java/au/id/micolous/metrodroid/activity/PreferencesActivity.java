@@ -21,13 +21,17 @@ package au.id.micolous.metrodroid.activity;
 
 import android.app.ActionBar;
 import android.content.ComponentName;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.preference.CheckBoxPreference;
+import android.preference.ListPreference;
 import android.preference.Preference;
 import android.preference.PreferenceActivity;
+import android.preference.PreferenceManager;
 import android.view.MenuItem;
 
 import au.id.micolous.farebot.R;
@@ -39,8 +43,10 @@ import static android.content.pm.PackageManager.COMPONENT_ENABLED_STATE_ENABLED;
 public class PreferencesActivity extends PreferenceActivity implements Preference.OnPreferenceChangeListener {
 
     private CheckBoxPreference mPreferenceLaunchFromBackground;
+    private ListPreference mPreferenceTheme;
 
     public void onCreate(Bundle savedInstanceState) {
+        setTheme(MetrodroidApplication.chooseTheme());
         super.onCreate(savedInstanceState);
         addPreferencesFromResource(R.xml.prefs);
 
@@ -51,6 +57,8 @@ public class PreferencesActivity extends PreferenceActivity implements Preferenc
                 = (CheckBoxPreference) getPreferenceManager().findPreference("pref_launch_from_background");
         mPreferenceLaunchFromBackground.setChecked(isLaunchFromBgEnabled());
         mPreferenceLaunchFromBackground.setOnPreferenceChangeListener(this);
+        mPreferenceTheme = (ListPreference) getPreferenceManager().findPreference(MetrodroidApplication.PREF_THEME);
+        mPreferenceTheme.setOnPreferenceChangeListener(this);
 
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
             for (String prefKey : new String[]{
@@ -80,6 +88,10 @@ public class PreferencesActivity extends PreferenceActivity implements Preferenc
     public boolean onPreferenceChange(Preference preference, Object newValue) {
         if (preference == mPreferenceLaunchFromBackground) {
             setLaunchFromBgEnabled((Boolean) newValue);
+            return true;
+        }
+        if (preference == mPreferenceTheme) {
+            recreate();
             return true;
         }
         return false;
