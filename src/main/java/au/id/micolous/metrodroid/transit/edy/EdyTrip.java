@@ -1,14 +1,29 @@
+/*
+ * EdyTransitData.java
+ *
+ * Copyright 2013 Chris Norden
+ * Copyright 2013-2015 Eric Butler <eric@codebutler.com>
+ * Copyright 2016-2018 Michael Farrell <micolous+git@gmail.com>
+ * Copyright 2018 Google Inc.
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
 package au.id.micolous.metrodroid.transit.edy;
 
 import android.app.Application;
 import android.os.Parcel;
 import android.support.annotation.Nullable;
-
-import au.id.micolous.metrodroid.card.felica.FelicaBlock;
-import au.id.micolous.metrodroid.transit.TransitCurrency;
-import au.id.micolous.metrodroid.transit.Trip;
-
-import net.kazzz.felica.lib.Util;
 
 import java.text.NumberFormat;
 import java.util.Calendar;
@@ -16,6 +31,10 @@ import java.util.GregorianCalendar;
 
 import au.id.micolous.farebot.R;
 import au.id.micolous.metrodroid.MetrodroidApplication;
+import au.id.micolous.metrodroid.card.felica.FelicaBlock;
+import au.id.micolous.metrodroid.transit.TransitCurrency;
+import au.id.micolous.metrodroid.transit.Trip;
+import au.id.micolous.metrodroid.util.Utils;
 
 public class EdyTrip extends Trip {
     public static final Creator<EdyTrip> CREATOR = new Creator<EdyTrip>() {
@@ -45,10 +64,10 @@ public class EdyTrip extends Trip {
         // 0x0c    balance (big-endian)
 
         mProcessType = data[0];
-        mSequenceNumber = Util.toInt(data[1], data[2], data[3]);
-        mTimestamp = EdyUtil.extractDate(data);
-        mTransactionAmount = Util.toInt(data[8], data[9], data[10], data[11]);
-        mBalance = Util.toInt(data[12], data[13], data[14], data[15]);
+        mSequenceNumber = Utils.byteArrayToInt(data, 1, 3);
+        mTimestamp = extractDate(data);
+        mTransactionAmount = Utils.byteArrayToInt(data, 8, 4);
+        mBalance = Utils.byteArrayToInt(data, 12, 4);
     }
 
     public EdyTrip(Parcel parcel) {
@@ -133,4 +152,19 @@ public class EdyTrip extends Trip {
         return 0;
     }
 
+    static Calendar extractDate(byte[] data) {
+        int fulloffset = Utils.byteArrayToInt(data, 4, 4);
+        if (fulloffset == 0)
+            return null;
+
+        int dateoffset = fulloffset >>> 17;
+        int timeoffset = fulloffset & 0x1ffff;
+
+        Calendar c = new GregorianCalendar(EdyTransitData.TIME_ZONE);
+        c.set(2000, 0, 1, 0, 0, 0);
+        c.add(Calendar.DATE, dateoffset);
+        c.add(Calendar.SECOND, timeoffset);
+
+        return c;
+    }
 }

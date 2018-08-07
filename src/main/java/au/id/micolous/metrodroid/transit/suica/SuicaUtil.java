@@ -1,37 +1,29 @@
 /*
- * SuicaTransitData.java
+ * SuicaUtil.java
  *
- * Based on code from http://code.google.com/p/nfc-felica/
- * nfc-felica by Kazzz. See project URL for complete author information.
+ * Copyright 2011 Kazzz
+ * Copyright 2014-2015 Eric Butler <eric@codebutler.com>
+ * Copyright 2016-2018 Michael Farrell <micolous+git@gmail.com>
+ * Copyright 2018 Google Inc.
  *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
  *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- *
- * Thanks to these resources for providing additional information about the Suica format:
- * http://www.denno.net/SFCardFan/
- * http://jennychan.web.fc2.com/format/suica.html
- * http://d.hatena.ne.jp/baroqueworksdev/20110206/1297001722
- * http://handasse.blogspot.com/2008/04/python-pasorisuica.html
- * http://sourceforge.jp/projects/felicalib/wiki/suica
- *
- * Some of these resources have been translated into English at:
- * https://github.com/micolous/metrodroid/wiki/Suica
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 package au.id.micolous.metrodroid.transit.suica;
 
 import android.app.Application;
 
-import net.kazzz.felica.lib.Util;
-
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 
@@ -45,12 +37,12 @@ final class SuicaUtil {
     }
 
     static Calendar extractDate(boolean isProductSale, byte[] data) {
-        int date = Util.toInt(data[4], data[5]);
-        if (date == 0)
+        if (Arrays.equals(Utils.byteArraySlice(data, 4, 2), new byte[] { 0, 0 })) {
             return null;
-        int yy = date >> 9;
-        int mm = (date >> 5) & 0xf;
-        int dd = date & 0x1f;
+        }
+        int yy = Utils.getBitsFromBuffer(data, 32, 7);
+        int mm = Utils.getBitsFromBuffer(data, 32+7, 4);
+        int dd = Utils.getBitsFromBuffer(data, 32+11, 5);
         Calendar c = new GregorianCalendar(SuicaTransitData.TIME_ZONE);
         c.set(Calendar.YEAR, 2000 + yy);
         c.set(Calendar.MONTH, mm - 1);
@@ -59,9 +51,8 @@ final class SuicaUtil {
         // Product sales have time, too.
         // 物販だったら時s間もセット
         if (isProductSale) {
-            int time = Util.toInt(data[6], data[7]);
-            int hh = time >> 11;
-            int min = (time >> 5) & 0x3f;
+            int hh = Utils.getBitsFromBuffer(data, 48, 5);
+            int min = Utils.getBitsFromBuffer (data, 48+5, 6);
             c.set(Calendar.HOUR_OF_DAY, hh);
             c.set(Calendar.MINUTE, min);
         } else {

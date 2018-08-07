@@ -1,32 +1,37 @@
 /*
  * EdyTransitData.java
  *
- * Authors:
- * Chris Norden
- * Eric Butler <eric@codebutler.com>
+ * Copyright 2013 Chris Norden
+ * Copyright 2013-2015 Eric Butler <eric@codebutler.com>
+ * Copyright 2016-2018 Michael Farrell <micolous+git@gmail.com>
+ * Copyright 2018 Google Inc.
  *
- * Based on code from http://code.google.com/p/nfc-felica/
- * nfc-felica by Kazzz. See project URL for complete author information.
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
  *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
 package au.id.micolous.metrodroid.transit.edy;
 
 import android.os.Parcel;
 import android.support.annotation.Nullable;
-import android.text.Spanned;
+
+import net.kazzz.felica.lib.FeliCaLib;
+
+import org.apache.commons.lang3.ArrayUtils;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.TimeZone;
 
 import au.id.micolous.metrodroid.card.felica.FelicaBlock;
 import au.id.micolous.metrodroid.card.felica.FelicaCard;
@@ -36,15 +41,6 @@ import au.id.micolous.metrodroid.transit.TransitData;
 import au.id.micolous.metrodroid.transit.TransitIdentity;
 import au.id.micolous.metrodroid.transit.Trip;
 import au.id.micolous.metrodroid.util.Utils;
-
-import net.kazzz.felica.lib.FeliCaLib;
-import net.kazzz.felica.lib.Util;
-
-import org.apache.commons.lang3.ArrayUtils;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.TimeZone;
 
 public class EdyTransitData extends TransitData {
     // defines
@@ -88,7 +84,7 @@ public class EdyTransitData extends TransitData {
         List<FelicaBlock> blocksBalance = serviceBalance.getBlocks();
         FelicaBlock blockBalance = blocksBalance.get(0);
         byte[] dataBalance = blockBalance.getData();
-        mCurrentBalance = Util.toInt(dataBalance[3], dataBalance[2], dataBalance[1], dataBalance[0]);
+        mCurrentBalance = Utils.byteArrayToInt(Utils.reverseBuffer(dataBalance, 0, 3));
 
         // now read the transaction history
         FelicaService serviceHistory = card.getSystem(FeliCaLib.SYSTEMCODE_EDY).getService(FELICA_SERVICE_EDY_HISTORY);
