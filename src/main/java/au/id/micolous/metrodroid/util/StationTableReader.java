@@ -134,6 +134,20 @@ public class StationTableReader {
         return Stations.Station.parseDelimitedFrom(mTable);
     }
 
+    public String getLineById(int id) {
+        Stations.Line pl = mStationDb.getLinesOrDefault(id, null);
+        if (pl == null)
+            return null;
+        return selectBestName(pl.getEnglishName(), pl.getLocalName());
+    }
+
+    public String getOperatorById(int id) {
+        Stations.Operator po = mStationDb.getOperatorsOrDefault(id, null);
+        if (po == null)
+            return null;
+        return selectBestName(po.getEnglishName(), po.getLocalName());
+    }
+
     /**
      * Gets a Metrodroid-native Station object for a given stop ID.
      * @param id Stop ID.
