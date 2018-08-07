@@ -23,9 +23,9 @@ from argparse import ArgumentParser, FileType
 from stations_pb2 import Station
 from mdst import MdstWriter
 import os
+import csv
 
 DB_PATH = '../../data/szt'
-MAIN_FILE = 'operators.xml'
 OUTPUT = 'shenzhen.mdst'
 
 operators = {}
@@ -51,19 +51,20 @@ def hex2bcd(x):
   return res
 
 def read_metro_line(line_name, line_number, start_id):
-  with open(os.path.join(DB_PATH, line_name + '_en.txt'), 'rb') as enfile:
-    stations_en = enfile.readlines()
-  with open(os.path.join(DB_PATH, line_name + '_zh.txt'), 'rb') as zhfile:
-    stations_zh = zhfile.readlines()
   id = start_id
-  for station_en, station_zh in zip(stations_en,stations_zh):
-    s = Station()
-    s.id = 0x60000100 | (line_number << 24) | (hex2bcd(id) << 12)
-    s.english_name = station_en.strip()
-    s.local_name = station_zh.strip()
-    id = id + 1
-    # Write it out
-    db.push_station(s)
+  with open(os.path.join(DB_PATH, line_name + '.csv'), 'r') as csvfile:
+    stationreader = csv.reader(csvfile, delimiter=';', quotechar='"')
+    for row in stationreader:
+      s = Station()
+      s.id = 0x60000100 | (line_number << 24) | (hex2bcd(id) << 12)
+      s.english_name = row[1].strip()
+      s.local_name = row[0].strip()
+      if row[2].strip() and row[3].strip():
+        s.latitude = float(row[2].strip())
+        s.longitude = float(row[3].strip())
+      id = id + 1
+      # Write it out
+      db.push_station(s)
 
 # I have no idea why line common number doesn't match its ID
 read_metro_line('line1', 8, 1)
