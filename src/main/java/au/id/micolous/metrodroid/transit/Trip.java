@@ -71,14 +71,7 @@ public abstract class Trip implements Parcelable {
             return null;
         }
 
-        // If the start station was not available, make the end station the start station.
-        if (startStationName == null && endStationName != null) {
-            startStationName = endStationName;
-            startLanguage = endLanguage;
-            endStationName = null;
-        }
-
-        // If only the start or only the end station is available, just return that.
+        // If only the start station is available, just return that.
         if (startStationName != null && endStationName == null) {
             SpannableStringBuilder b = new SpannableStringBuilder(startStationName);
 
@@ -93,6 +86,10 @@ public abstract class Trip implements Parcelable {
         String startPlaceholder = "%1$s";
         String endPlaceholder = "%2$s";
         String s = Utils.localizeString(R.string.trip_description, startPlaceholder, endPlaceholder);
+
+        if (startStationName == null) {
+            s = Utils.localizeString(R.string.trip_description_unknown_start, endPlaceholder);
+        }
 
         // Build the spans
         SpannableStringBuilder b = new SpannableStringBuilder(s);
@@ -141,28 +138,34 @@ public abstract class Trip implements Parcelable {
 
             x = end;
         }
+        boolean localeSpanUsed;
 
-        // Finally, insert the actual station names back in the data.
-        x = b.toString().indexOf(startPlaceholder);
-        if (x == -1) {
-            Log.w(TAG, "couldn't find start station placeholder to put back");
-            return null;
-        }
-        b.replace(x, x + startPlaceholder.length(), startStationName);
-
-        boolean localeSpanUsed = false;
-        // Annotate the start station name with the appropriate Locale data.
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            Station startStation = trip.getStartStation();
-            if (localisePlaces && startStation != null && startStation.getLanguage() != null) {
-                b.setSpan(new LocaleSpan(Locale.forLanguageTag(startStation.getLanguage())), x, x + startStationName.length(), 0);
-
-                // Set the start of the string to the default language, so that the localised
-                // TTS for the station name doesn't take over everything.
-                b.setSpan(new LocaleSpan(Locale.getDefault()), 0, x, 0);
-
-                localeSpanUsed = true;
+        if (startStationName != null) {
+            // Finally, insert the actual station names back in the data.
+            x = b.toString().indexOf(startPlaceholder);
+            if (x == -1) {
+                Log.w(TAG, "couldn't find start station placeholder to put back");
+                return null;
             }
+            b.replace(x, x + startPlaceholder.length(), startStationName);
+
+            localeSpanUsed = false;
+            // Annotate the start station name with the appropriate Locale data.
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                Station startStation = trip.getStartStation();
+                if (localisePlaces && startStation != null && startStation.getLanguage() != null) {
+                    b.setSpan(new LocaleSpan(Locale.forLanguageTag(startStation.getLanguage())), x, x + startStationName.length(), 0);
+
+                    // Set the start of the string to the default language, so that the localised
+                    // TTS for the station name doesn't take over everything.
+                    b.setSpan(new LocaleSpan(Locale.getDefault()), 0, x, 0);
+
+                    localeSpanUsed = true;
+                }
+            }
+        } else {
+            localeSpanUsed = true;
+            x = 0;
         }
 
         int y = b.toString().indexOf(endPlaceholder);
