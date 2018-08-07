@@ -761,7 +761,9 @@
     <!--
         Octopus / Shenzhen Tong
     -->
-    <string name="octopus_szt">Shenzhen Tong</string>
+    <string name="card_name_szt">Shenzhen Tong</string>
+    <string name="card_name_octopus">Octopus</string>
+    <string name="card_name_octopus_szt_dual">Hu Tong Xing</string>
 
     <!--
         Bilhete Único
