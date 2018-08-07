@@ -306,12 +306,14 @@
     <string-array name="themes">
         <item>Dark</item>
         <item>Light</item>
+        <item>FareBot</item>
     </string-array>
 
     <!-- Translators: do not translate -->
     <string-array name="theme_values" translatable="false">
         <item>dark</item>
         <item>light</item>
+        <item>farebot</item>
     </string-array>
 
     <!--
