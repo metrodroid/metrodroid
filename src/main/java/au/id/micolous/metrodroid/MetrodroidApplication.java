@@ -42,6 +42,8 @@ import org.simpleframework.xml.transform.RegistryMatcher;
 
 import java.util.Calendar;
 import java.util.GregorianCalendar;
+import java.util.HashSet;
+import java.util.Set;
 
 import au.id.micolous.farebot.R;
 import au.id.micolous.metrodroid.card.Card;
@@ -85,6 +87,12 @@ public class MetrodroidApplication extends Application {
     public static final String PREF_LOCALISE_PLACES = "pref_localise_places";
     public static final String PREF_LOCALISE_PLACES_HELP = "pref_localise_places_help";
     public static final String PREF_CONVERT_TIMEZONES = "pref_convert_timezones";
+    private static final Set<String> devicesMifareWorks = new HashSet<>();
+    private static final Set<String> devicesMifareNotWorks = new HashSet<>();
+
+    static {
+        devicesMifareWorks.add("Pixel 2");
+    }
 
     private static MetrodroidApplication sInstance;
 
@@ -278,6 +286,16 @@ public class MetrodroidApplication extends Application {
             Log.d(TAG, "Android reports no NFC adapter is available");
             return;
         }
+
+        if (devicesMifareNotWorks.contains(android.os.Build.MODEL)) {
+	        mMifareClassicSupport = false;
+	        return;
+	    }
+
+	    if (devicesMifareWorks.contains(android.os.Build.MODEL)) {
+	        mMifareClassicSupport = true;
+	        return;
+	    }
 
         // TODO: Some devices report MIFARE Classic support, when they actually don't have it.
         //
