@@ -21,6 +21,7 @@
 package au.id.micolous.metrodroid.fragment;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.ListFragment;
 import android.app.LoaderManager;
 import android.content.ClipData;
@@ -31,11 +32,14 @@ import android.content.Intent;
 import android.content.Loader;
 import android.database.Cursor;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.content.ClipboardManager;
+import android.support.v4.content.FileProvider;
 import android.util.Log;
+import android.util.Pair;
 import android.view.ContextMenu;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -64,8 +68,10 @@ import org.apache.commons.io.IOUtils;
 import org.simpleframework.xml.Serializer;
 
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.lang.ref.WeakReference;
 import java.nio.charset.Charset;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
@@ -84,7 +90,7 @@ public class CardsFragment extends ListFragment {
 
     private Map<String, TransitIdentity> mDataCache;
 
-    private LoaderManager.LoaderCallbacks<Cursor> mLoaderCallbacks = new LoaderManager.LoaderCallbacks<Cursor>() {
+    private final LoaderManager.LoaderCallbacks<Cursor> mLoaderCallbacks = new LoaderManager.LoaderCallbacks<Cursor>() {
         @Override
         public Loader<Cursor> onCreateLoader(int id, Bundle bundle) {
             return new CursorLoader(getActivity(), CardProvider.CONTENT_URI_CARD,
@@ -179,7 +185,9 @@ public class CardsFragment extends ListFragment {
                     } else {
                         ClipData.Item ci = d.getItemAt(0);
                         xml = ci.coerceToText(getActivity()).toString();
-                        onCardsImported(ExportHelper.importCardsXml(getActivity(), xml));
+                        Uri [] uris = ExportHelper.importCardsXml(getActivity(), xml);
+                        updateListView();
+                        onCardsImported(uris);
                     }
                 } return true;
 
@@ -212,10 +220,7 @@ public class CardsFragment extends ListFragment {
                     return true;
 
                 case R.id.share_xml:
-                    i = new Intent(Intent.ACTION_SEND);
-                    i.setType("text/plain");
-                    i.putExtra(Intent.EXTRA_TEXT, ExportHelper.exportCardsXml(getActivity()));
-                    startActivity(i);
+                    new ShareTask().execute();
                     return true;
 
                 case R.id.save_xml:
@@ -239,6 +244,119 @@ public class CardsFragment extends ListFragment {
         return false;
     }
 
+    private static class ShareTask extends AsyncTask<Void, Integer, Pair<String, File>> {
+
+        @Override
+        protected Pair<String, File> doInBackground(Void... voids) {
+            try {
+                File folder = new File(MetrodroidApplication.getInstance().getCacheDir(), "share");
+                folder.mkdirs();
+                File tf = File.createTempFile("cards", ".xml",
+                        folder);
+                OutputStream os = new FileOutputStream(tf);
+                String xml = ExportHelper.exportCardsXml(MetrodroidApplication.getInstance());
+                IOUtils.write(xml, os, Charset.defaultCharset());
+                os.close();
+                return new Pair<>(null, tf);
+            } catch (Exception ex) {
+                Log.e(TAG, ex.getMessage(), ex);
+                return new Pair<>(Utils.getErrorMessage(ex), null);
+            }
+        }
+
+        @Override
+        protected void onPostExecute(Pair<String, File> res) {
+            String err = res.first;
+            File tf = res.second;
+
+            if (err != null) {
+                new AlertDialog.Builder(MetrodroidApplication.getInstance())
+                        .setMessage(err)
+                        .show();
+                return;
+            }
+
+            Intent i = new Intent(Intent.ACTION_SEND);
+            Uri apkURI = FileProvider.getUriForFile(
+                    MetrodroidApplication.getInstance(),
+                    MetrodroidApplication.getInstance().getPackageName() + ".provider", tf);
+            i.setType("text/xml");
+            i.putExtra(Intent.EXTRA_STREAM, apkURI);
+            i.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+            MetrodroidApplication.getInstance().startActivity(i);
+        }
+    }
+
+    private static class SaveTask extends AsyncTask<Uri, Integer, String> {
+
+        @Override
+        protected String doInBackground(Uri... uris) {
+            try {
+                OutputStream os = MetrodroidApplication.getInstance().getContentResolver().openOutputStream(uris[0]);
+                if (os == null)
+                    return "openOutputStream failed";
+                String xml = ExportHelper.exportCardsXml(MetrodroidApplication.getInstance());
+                IOUtils.write(xml, os, Charset.defaultCharset());
+                os.close();
+                return null;
+            } catch (Exception ex) {
+                Log.e(TAG, ex.getMessage(), ex);
+                return Utils.getErrorMessage(ex);
+            }
+        }
+
+        @Override
+        protected void onPostExecute(String err) {
+            if (err == null) {
+                Toast.makeText(MetrodroidApplication.getInstance(), R.string.saved_xml_custom, Toast.LENGTH_SHORT).show();
+                return;
+            }
+            new AlertDialog.Builder(MetrodroidApplication.getInstance())
+                    .setMessage(err)
+                    .show();
+        }
+    }
+
+    private static class ReadTask extends AsyncTask<Uri, Integer, Pair<String, Uri[]>> {
+        private final WeakReference<CardsFragment> mCardsFragment;
+
+        private ReadTask(CardsFragment cardsFragment) {
+            mCardsFragment = new WeakReference<>(cardsFragment);
+        }
+
+        @Override
+        protected Pair<String, Uri[]> doInBackground(Uri... uris) {
+            try {
+                Log.d(TAG, "REQUEST_SELECT_FILE content_type = " + MetrodroidApplication.getInstance().getContentResolver().getType(uris[0]));
+                InputStream stream = MetrodroidApplication.getInstance().getContentResolver().openInputStream(uris[0]);
+                String xml = org.apache.commons.io.IOUtils.toString(stream, Charset.defaultCharset());
+                Uri[] iuri = ExportHelper.importCardsXml(MetrodroidApplication.getInstance(), xml);
+                return new Pair<>(null, iuri);
+            } catch (Exception ex) {
+                Log.e(TAG, ex.getMessage(), ex);
+                return new Pair<>(Utils.getErrorMessage(ex), null);
+            }
+        }
+
+        @Override
+        protected void onPostExecute(Pair<String, Uri[]> res) {
+            String err = res.first;
+            Uri []uris = res.second;
+            if (err == null) {
+                CardsFragment cf = null;
+                if (mCardsFragment != null)
+                    cf = mCardsFragment.get();
+                if (cf != null)
+                    cf.updateListView();
+                onCardsImported(uris);
+                return;
+            }
+            new AlertDialog.Builder(MetrodroidApplication.getInstance())
+                    .setMessage(err)
+                    .show();
+        }
+    }
+
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         Uri uri;
@@ -247,19 +365,13 @@ public class CardsFragment extends ListFragment {
                 switch (requestCode) {
                     case REQUEST_SELECT_FILE:
                         uri = data.getData();
-                        Log.d(TAG, "REQUEST_SELECT_FILE content_type = " + getActivity().getContentResolver().getType(uri));
-                        InputStream stream = getActivity().getContentResolver().openInputStream(uri);
-                        String xml = org.apache.commons.io.IOUtils.toString(stream, Charset.defaultCharset());
-                        onCardsImported(ExportHelper.importCardsXml(getActivity(), xml));
+                        new ReadTask(this).execute(uri);
                         break;
 
                     case REQUEST_SAVE_FILE:
                         uri = data.getData();
                         Log.d(TAG, "REQUEST_SAVE_FILE");
-                        OutputStream os = getActivity().getContentResolver().openOutputStream(uri);
-                        xml = ExportHelper.exportCardsXml(getActivity());
-                        IOUtils.write(xml, os, Charset.defaultCharset());
-                        Toast.makeText(getActivity(), R.string.saved_xml_custom, Toast.LENGTH_SHORT).show();
+                        new SaveTask().execute(uri);
                         break;
                 }
             }
@@ -268,13 +380,16 @@ public class CardsFragment extends ListFragment {
         }
     }
 
-    private void onCardsImported(Uri[] uris) {
-        ((CursorAdapter) ((ListView) getView().findViewById(android.R.id.list)).getAdapter()).notifyDataSetChanged();
-        Toast.makeText(getActivity(), Utils.localizePlural(R.plurals.cards_imported, uris.length, uris.length), Toast.LENGTH_SHORT).show();
-
+    private static void onCardsImported(Uri[] uris) {
+        Context ctx = MetrodroidApplication.getInstance();
+        Toast.makeText(ctx, Utils.localizePlural(R.plurals.cards_imported, uris.length, uris.length), Toast.LENGTH_SHORT).show();
         if (uris.length == 1) {
-            startActivity(new Intent(Intent.ACTION_VIEW, uris[0]));
+            ctx.startActivity(new Intent(Intent.ACTION_VIEW, uris[0]));
         }
+    }
+
+    private void updateListView() {
+        ((CursorAdapter) ((ListView) getView().findViewById(android.R.id.list)).getAdapter()).notifyDataSetChanged();
     }
 
     private class CardsAdapter extends ResourceCursorAdapter {
