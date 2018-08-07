@@ -157,7 +157,11 @@ public class CardTripsFragment extends ListFragment {
 
             Trip trip = getItem(position);
 
-            Calendar date = trip.getStartTimestamp();
+            Calendar start = trip.getStartTimestamp();
+            Calendar date = start;
+
+            if (date == null)
+                date = trip.getEndTimestamp();
 
             View listHeader = convertView.findViewById(R.id.list_header);
             if (isFirstInSection(position)) {
@@ -254,7 +258,13 @@ public class CardTripsFragment extends ListFragment {
             }
 
             if (trip.hasTime()) {
-                timeTextView.setText(Utils.timeFormat(date));
+                Calendar end = trip.getEndTimestamp();
+                if (end != null && start != null)
+                    timeTextView.setText(Utils.localizeString(R.string.time_from_to, Utils.timeFormat(start), Utils.timeFormat(end)));
+                else if (start != null)
+                    timeTextView.setText(Utils.timeFormat(start));
+                else
+                    timeTextView.setText(Utils.localizeString(R.string.time_from_unknown_to, Utils.timeFormat(end)));
                 timeTextView.setVisibility(View.VISIBLE);
             } else {
                 timeTextView.setVisibility(View.INVISIBLE);
@@ -339,7 +349,11 @@ public class CardTripsFragment extends ListFragment {
             if (position == 0) return true;
 
             Calendar date1 = getItem(position).getStartTimestamp();
+            if (date1 == null)
+                date1 = getItem(position).getEndTimestamp();
             Calendar date2 = getItem(position - 1).getStartTimestamp();
+            if (date2 == null)
+                date2 = getItem(position - 1).getEndTimestamp();
 
             if (date1 == null && date2 != null) return true;
             if (date1 == null || date2 == null) return false;

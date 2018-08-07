@@ -517,6 +517,13 @@
       Spoken: "From Tokyo  to Osaka"
     -->
     <string name="trip_description">(From )%1$s [→] (to )%2$s</string>
+    <!-- Translators: it's used when departure point isn't known -->
+    <string name="trip_description_unknown_start">[? →] (to )%s</string>
+    <!-- Translators: it's used to show time in trip listing e.g. 12:35 - 12:51 -->
+    <string name="time_from_to">%s → %s</string>
+    <!-- Translators: it's used when departure time isn't known -->
+    <string name="time_from_unknown_to">\??:?? → %s</string>
+
 
     <!-- Locations -->
     <string name="location_seattle">Seattle, WA, USA</string>
