@@ -51,9 +51,6 @@ import au.id.micolous.farebot.R;
  * https://github.com/micolous/metrodroid/wiki/Octopus
  */
 public class OctopusTransitData extends TransitData {
-    public static final String OCTOPUS_NAME = "Octopus";
-    public static final String SZT_NAME = "Shenzhen Tong";
-    public static final String DUAL_NAME = "Hu Tong Xing";
     public static final Creator<OctopusTransitData> CREATOR = new Creator<OctopusTransitData>() {
         @Override
         public OctopusTransitData createFromParcel(Parcel in) {
@@ -124,14 +121,14 @@ public class OctopusTransitData extends TransitData {
         if (card.getSystem(FeliCaLib.SYSTEMCODE_SZT) != null) {
             if (card.getSystem(FeliCaLib.SYSTEMCODE_OCTOPUS) != null) {
                 // Dual-mode card.
-                return new TransitIdentity(DUAL_NAME, null);
+                return new TransitIdentity(Utils.localizeString(R.string.card_name_octopus_szt_dual), null);
             } else {
                 // SZT-only card.
-                return new TransitIdentity(SZT_NAME, null);
+                return new TransitIdentity(Utils.localizeString(R.string.card_name_szt), null);
             }
         } else {
             // Octopus-only card.
-            return new TransitIdentity(OCTOPUS_NAME, null);
+            return new TransitIdentity(Utils.localizeString(R.string.card_name_octopus), null);
         }
     }
 
@@ -168,12 +165,12 @@ public class OctopusTransitData extends TransitData {
     public String getCardName() {
         if (mHasShenzhen) {
             if (mHasOctopus) {
-                return DUAL_NAME;
+                return Utils.localizeString(R.string.card_name_octopus_szt_dual);
             } else {
-                return SZT_NAME;
+                return Utils.localizeString(R.string.card_name_szt);
             }
         } else {
-            return OCTOPUS_NAME;
+            return Utils.localizeString(R.string.card_name_octopus);
         }
     }
 }

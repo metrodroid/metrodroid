@@ -35,7 +35,6 @@ import au.id.micolous.metrodroid.transit.chc_metrocard.ChcMetrocardTransitData;
 import au.id.micolous.metrodroid.transit.lax_tap.LaxTapTransitData;
 import au.id.micolous.metrodroid.transit.manly_fast_ferry.ManlyFastFerryTransitData;
 import au.id.micolous.metrodroid.transit.myki.MykiTransitData;
-import au.id.micolous.metrodroid.transit.octopus.OctopusTransitData;
 import au.id.micolous.metrodroid.transit.opal.OpalTransitData;
 import au.id.micolous.metrodroid.transit.ovc.OVChipTransitData;
 import au.id.micolous.metrodroid.transit.seq_go.SeqGoTransitData;
@@ -146,7 +145,7 @@ public class CardInfo {
 
     public static final CardInfo OCTOPUS = new CardInfo.Builder()
             .setImageId(R.drawable.octopus_card, R.drawable.octopus_card_alpha)
-            .setName(OctopusTransitData.OCTOPUS_NAME)
+            .setName(Utils.localizeString(R.string.card_name_octopus))
             .setLocation(R.string.location_hong_kong)
             .setCardType(CardType.FeliCa)
             .build();
@@ -195,7 +194,7 @@ public class CardInfo {
 
     public static final CardInfo SZT = new CardInfo.Builder()
             .setImageId(R.drawable.szt_card)
-            .setName(OctopusTransitData.SZT_NAME)
+            .setName(Utils.localizeString(R.string.card_name_szt))
             .setLocation(R.string.location_shenzhen)
             .setCardType(CardType.FeliCa)
             .setPreview()
