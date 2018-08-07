@@ -18,7 +18,6 @@
  */
 package au.id.micolous.metrodroid.util;
 
-import android.support.annotation.Nullable;
 import android.util.Log;
 
 import au.id.micolous.metrodroid.transit.Trip;
@@ -38,9 +37,6 @@ import au.id.micolous.metrodroid.MetrodroidApplication;
 
 public final class TripObfuscator {
     private static final String TAG = "TripObfuscator";
-    private static final GregorianCalendar UNIX_EPOCH = new GregorianCalendar(1970, Calendar.JANUARY, 1);
-
-    private static final TripObfuscator singleton = new TripObfuscator();
 
     private static final SecureRandom mRNG = new SecureRandom();
 
@@ -66,7 +62,7 @@ public final class TripObfuscator {
      * @param obfuscateTimes true if times should be obfuscated
      * @return maybe obfuscated value
      */
-    public static Calendar maybeObfuscateTS(Calendar input, boolean obfuscateDates, boolean obfuscateTimes) {
+    private static Calendar maybeObfuscateTS(Calendar input, boolean obfuscateDates, boolean obfuscateTimes) {
         if (!obfuscateDates && !obfuscateTimes) {
             return input;
         }
@@ -109,40 +105,9 @@ public final class TripObfuscator {
         return newDate;
     }
 
-    /**
-     * Maybe obfuscates a timestamp
-     *
-     * @param input          seconds since UNIX epoch (1970-01-01)
-     * @param obfuscateDates true if dates should be obfuscated
-     * @param obfuscateTimes true if times should be obfuscated
-     * @return maybe obfuscated value
-     */
-    @Deprecated
-    public static long maybeObfuscateTS(long input, boolean obfuscateDates, boolean obfuscateTimes) {
-        if (!obfuscateDates && !obfuscateTimes) {
-            return input;
-        }
-
-        Calendar s = GregorianCalendar.getInstance();
-        s.setTimeInMillis(UNIX_EPOCH.getTimeInMillis() + (input * 1000));
-
-        return maybeObfuscateTS(s, obfuscateDates, obfuscateTimes).getTimeInMillis() / 1000;
-    }
-
-    @Deprecated
-    public static long maybeObfuscateTS(long input) {
-        return maybeObfuscateTS(input, MetrodroidApplication.obfuscateTripDates(),
-                MetrodroidApplication.obfuscateTripTimes());
-    }
-
     public static Calendar maybeObfuscateTS(Calendar input) {
         return maybeObfuscateTS(input, MetrodroidApplication.obfuscateTripDates(),
                 MetrodroidApplication.obfuscateTripTimes());
-    }
-
-
-    public static TripObfuscator getInstance() {
-        return singleton;
     }
 
     public static List<Trip> obfuscateTrips(List<Trip> trips, boolean obfuscateDates, boolean obfuscateTimes, boolean obfuscateFares) {
