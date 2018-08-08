@@ -1,6 +1,9 @@
 /*
  * KMTTrip.java
  *
+ * Authors:
+ * Bondan Sumbodo <sybond@gmail.com>
+ *
  * This file is part of FareBot.
  * Learn more at: https://codebutler.github.io/farebot/
  *
