@@ -260,9 +260,9 @@ public class CardInfo {
             SEQ_GO, // Go card
             HSL,
             ICOCA,
+            KMT,
             MANLY_FAST_FERRY,
             CHC_METROCARD, // Metrocard
-            KMT,
             MYKI,
             MYWAY,
             NETS_FLASHPAY,

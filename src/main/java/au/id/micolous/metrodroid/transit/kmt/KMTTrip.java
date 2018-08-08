@@ -26,14 +26,17 @@ package au.id.micolous.metrodroid.transit.kmt;
 import android.app.Application;
 import android.os.Parcel;
 import android.support.annotation.Nullable;
-import net.kazzz.felica.lib.Util;
+
 import java.util.Calendar;
+import java.util.Date;
 import java.util.GregorianCalendar;
+
 import au.id.micolous.farebot.R;
 import au.id.micolous.metrodroid.MetrodroidApplication;
 import au.id.micolous.metrodroid.card.felica.FelicaBlock;
 import au.id.micolous.metrodroid.transit.TransitCurrency;
 import au.id.micolous.metrodroid.transit.Trip;
+import au.id.micolous.metrodroid.util.Utils;
 
 public class KMTTrip extends Trip {
     public static final Creator<KMTTrip> CREATOR = new Creator<KMTTrip>() {
@@ -51,32 +54,38 @@ public class KMTTrip extends Trip {
     private final int mTransactionAmount;
     private final int mEndGateCode;
 
+    static Calendar calcDate(byte[] data) {
+        int fulloffset = Utils.byteArrayToInt(data, 0, 4);
+        if (fulloffset == 0) {
+            return null;
+        }
+        Calendar c = new GregorianCalendar(KMTTransitData.TIME_ZONE);
+        c.setTimeInMillis(KMTTransitData.KMT_EPOCH);
+        c.add(Calendar.SECOND, fulloffset);
+        return c;
+    }
+
+
     public KMTTrip(FelicaBlock block) {
         byte[] data = block.getData();
-        mProcessType = data[12];
-        mSequenceNumber = Util.toInt(data[13], data[14], data[15]);
-        mTimestamp = KMTUtil.extractDate(data);
-        mTransactionAmount = Util.toInt(data[4], data[5], data[6], data[7]);
-        mEndGateCode = data[9];
+        mProcessType = data[12] & 0xff;
+        mSequenceNumber = Utils.byteArrayToInt(data, 13, 3);
+        mTimestamp = calcDate(data);
+        mTransactionAmount = Utils.byteArrayToInt(data, 4, 4);
+        mEndGateCode = data[9] & 0xff;
     }
 
     @Override
     public String getEndStationName() {
         // Need to work on decoding gate code
         // Collect the data !!
-        return String.format("[%02X]",mEndGateCode);
+        return String.format("[%02X]", mEndGateCode);
     }
 
     public KMTTrip(Parcel parcel) {
         mProcessType = parcel.readInt();
         mSequenceNumber = parcel.readInt();
-        long t = parcel.readLong();
-        if (t != 0) {
-            mTimestamp = new GregorianCalendar(KMTTransitData.TIME_ZONE);
-            mTimestamp.setTimeInMillis(t);
-        } else {
-            mTimestamp = null;
-        }
+        mTimestamp = Utils.longToCalendar(parcel.readLong(), KMTTransitData.TIME_ZONE);
         mTransactionAmount = parcel.readInt();
         mEndGateCode = parcel.readInt();
     }
@@ -84,7 +93,7 @@ public class KMTTrip extends Trip {
     public void writeToParcel(Parcel parcel, int flags) {
         parcel.writeInt(mProcessType);
         parcel.writeInt(mSequenceNumber);
-        parcel.writeLong(mTimestamp == null ? 0 : mTimestamp.getTimeInMillis());
+        parcel.writeLong(Utils.calendarToLong(mTimestamp));
         parcel.writeInt(mTransactionAmount);
         parcel.writeInt(mEndGateCode);
     }

@@ -26,19 +26,11 @@ package au.id.micolous.metrodroid.transit.kmt;
 
 import android.os.Parcel;
 import android.support.annotation.Nullable;
-
-import net.kazzz.felica.lib.FeliCaLib;
-import net.kazzz.felica.lib.Util;
-
 import org.apache.commons.lang3.ArrayUtils;
-
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashMap;
+import java.util.GregorianCalendar;
 import java.util.List;
-import java.util.Map;
 import java.util.TimeZone;
-
 import au.id.micolous.metrodroid.card.felica.FelicaBlock;
 import au.id.micolous.metrodroid.card.felica.FelicaCard;
 import au.id.micolous.metrodroid.card.felica.FelicaService;
@@ -46,7 +38,7 @@ import au.id.micolous.metrodroid.transit.TransitCurrency;
 import au.id.micolous.metrodroid.transit.TransitData;
 import au.id.micolous.metrodroid.transit.TransitIdentity;
 import au.id.micolous.metrodroid.transit.Trip;
-import au.id.micolous.metrodroid.transit.kmt.KMTTrip;
+import au.id.micolous.metrodroid.util.Utils;
 
 public class KMTTransitData extends TransitData {
     // defines
@@ -56,6 +48,13 @@ public class KMTTransitData extends TransitData {
     public static final int FELICA_SERVICE_KMT_BALANCE = 0x1017;
     public static final int FELICA_SERVICE_KMT_HISTORY = 0x200F;
     static final TimeZone TIME_ZONE = TimeZone.getTimeZone("Asia/Jakarta");
+    public static final long KMT_EPOCH;
+
+    static {
+        GregorianCalendar epoch = new GregorianCalendar(TIME_ZONE);
+        epoch.set(2000, 0, 1, 7, 0, 0);
+        KMT_EPOCH = epoch.getTimeInMillis();
+    }
 
     public static final Creator<KMTTransitData> CREATOR = new Creator<KMTTransitData>() {
         public KMTTransitData createFromParcel(Parcel parcel) {
@@ -67,7 +66,6 @@ public class KMTTransitData extends TransitData {
         }
     };
     private KMTTrip[] mTrips;
-    // private data
     private static String mSerialNumber;
     private int mCurrentBalance;
 
@@ -88,7 +86,7 @@ public class KMTTransitData extends TransitData {
             List<FelicaBlock> blocksBalance = serviceBalance.getBlocks();
             FelicaBlock blockBalance = blocksBalance.get(0);
             byte[] dataBalance = blockBalance.getData();
-            mCurrentBalance = Util.toInt(dataBalance[3], dataBalance[2], dataBalance[1], dataBalance[0]);
+            mCurrentBalance = Utils.byteArrayToInt(Utils.reverseBuffer(dataBalance, 0, 4));
         }
 
         FelicaService serviceHistory = card.getSystem(SYSTEMCODE_KMT).getService(FELICA_SERVICE_KMT_HISTORY);
