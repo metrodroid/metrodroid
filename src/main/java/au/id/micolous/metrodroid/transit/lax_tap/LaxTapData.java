@@ -30,6 +30,7 @@ public final class LaxTapData {
     static final int AGENCY_METRO = 1;
     static final int AGENCY_CULVER_CITY = 3;
     static final int AGENCY_SANTA_MONICA = 11;
+    static final String LAX_TAP_STR = "lax_tap";
 
     // Metro has Subway, Light Rail and Bus services, but all on the same Agency ID on the card.
     // Subway services are < LR_START, and Light Rail services are between LR_START and BUS_START.

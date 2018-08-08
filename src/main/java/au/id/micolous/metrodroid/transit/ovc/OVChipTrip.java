@@ -50,6 +50,7 @@ public class OVChipTrip extends Trip {
             return new OVChipTrip[size];
         }
     };
+    private static final String OVCHIP_STR = "ovc";
     private final int mId;
     private final int mProcessType;
     private final int mAgency;
@@ -184,7 +185,7 @@ public class OVChipTrip extends Trip {
         int stationId = ((companyCode - 1) << 16) + stationCode;
         if (stationId <= 0) return null;
 
-        StationTableReader str = MetrodroidApplication.getInstance().getOVChipSTR();
+        StationTableReader str = StationTableReader.getSTR(OVCHIP_STR);
         if (str == null) return null;
 
         try {

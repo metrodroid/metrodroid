@@ -52,6 +52,7 @@ public class SeqGoTrip extends NextfareTrip {
     public static final int DOMESTIC_AIRPORT = 9;
     public static final int INTERNATIONAL_AIRPORT = 10;
     private static final String TAG = SeqGoTrip.class.getSimpleName();
+    public static final String SEQ_GO_STR = "seq_go";
 
     /**
      * This constructor is used for unit tests outside of the package
@@ -155,7 +156,7 @@ public class SeqGoTrip extends NextfareTrip {
     private static Station getStation(int stationId) {
         if (stationId <= 0) return null;
 
-        StationTableReader str = MetrodroidApplication.getInstance().getSeqGoSTR();
+        StationTableReader str = StationTableReader.getSTR(SEQ_GO_STR);
         if (str == null) return null;
 
         try {

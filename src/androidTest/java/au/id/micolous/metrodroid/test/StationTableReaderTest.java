@@ -15,7 +15,7 @@ import au.id.micolous.metrodroid.util.StationTableReader;
 public class StationTableReaderTest extends AndroidTestCase {
     public void testSeqGoDatabase() throws Exception {
         TestUtils.setLocale(getContext(), "en-US");
-        StationTableReader str = MetrodroidApplication.getInstance().getSeqGoSTR();
+        StationTableReader str = StationTableReader.getSTR(SeqGoTrip.SEQ_GO_STR);
         Station s = str.getStationById(SeqGoTrip.DOMESTIC_AIRPORT);
         assertEquals("Domestic Airport", s.getStationName());
 
