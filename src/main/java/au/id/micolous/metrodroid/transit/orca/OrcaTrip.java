@@ -52,23 +52,23 @@ public class OrcaTrip extends Trip {
         }
     };
     private static final TimeZone TZ = TimeZone.getTimeZone("America/Los_Angeles");
-    private static final Map<Long, Station> LINK_STATIONS = new ImmutableMapBuilder<Long, Station>()
-            .put(10352L, new Station("Capitol Hill Station",               "Captiol Hill",  "47.6192",    "-122.3202"))
-            .put(10351L, new Station("University of Washington Station",   "UW Station",    "47.6496",    "-122.3037"))
-            .put(13193L, new Station("Westlake Station",                   "Westlake",      "47.6113968", "-122.337502"))
-            .put(13194L, new Station("University Street Station",          "University",    "47.6072502", "-122.335754"))
-            .put(13195L, new Station("Pioneer Square Station",             "Pioneer Sq",    "47.6021461", "-122.33107"))
-            .put(13196L, new Station("International District Station",     "ID",            "47.5976601", "-122.328217"))
-            .put(13197L, new Station("Stadium Station",                    "Stadium",       "47.5918121", "-122.327354"))
-            .put(13198L, new Station("SODO Station",                       "SODO",          "47.5799484", "-122.327515"))
-            .put(13199L, new Station("Beacon Hill Station",                "Beacon Hill",   "47.5791245", "-122.311287"))
-            .put(13200L, new Station("Mount Baker Station",                "Mount Baker",   "47.5764389", "-122.297737"))
-            .put(13201L, new Station("Columbia City Station",              "Columbia City", "47.5589523", "-122.292343"))
-            .put(13202L, new Station("Othello Station",                    "Othello",       "47.5375366", "-122.281471"))
-            .put(13203L, new Station("Rainier Beach Station",              "Rainier Beach", "47.5222626", "-122.279579"))
-            .put(13204L, new Station("Tukwila International Blvd Station", "Tukwila",       "47.4642754", "-122.288391"))
-            .put(13205L, new Station("Seatac Airport Station",             "Sea-Tac",       "47.4445305", "-122.297012"))
-            .put(10353L, new Station("Angle Lake Station",                 "Angle Lake",    "47.4227143", "-122.2978669"))
+    private static final Map<Integer, Station> LINK_STATIONS = new ImmutableMapBuilder<Integer, Station>()
+            .put(10352, new Station("Capitol Hill Station",               "Captiol Hill",  "47.6192",    "-122.3202"))
+            .put(10351, new Station("University of Washington Station",   "UW Station",    "47.6496",    "-122.3037"))
+            .put(13193, new Station("Westlake Station",                   "Westlake",      "47.6113968", "-122.337502"))
+            .put(13194, new Station("University Street Station",          "University",    "47.6072502", "-122.335754"))
+            .put(13195, new Station("Pioneer Square Station",             "Pioneer Sq",    "47.6021461", "-122.33107"))
+            .put(13196, new Station("International District Station",     "ID",            "47.5976601", "-122.328217"))
+            .put(13197, new Station("Stadium Station",                    "Stadium",       "47.5918121", "-122.327354"))
+            .put(13198, new Station("SODO Station",                       "SODO",          "47.5799484", "-122.327515"))
+            .put(13199, new Station("Beacon Hill Station",                "Beacon Hill",   "47.5791245", "-122.311287"))
+            .put(13200, new Station("Mount Baker Station",                "Mount Baker",   "47.5764389", "-122.297737"))
+            .put(13201, new Station("Columbia City Station",              "Columbia City", "47.5589523", "-122.292343"))
+            .put(13202, new Station("Othello Station",                    "Othello",       "47.5375366", "-122.281471"))
+            .put(13203, new Station("Rainier Beach Station",              "Rainier Beach", "47.5222626", "-122.279579"))
+            .put(13204, new Station("Tukwila International Blvd Station", "Tukwila",       "47.4642754", "-122.288391"))
+            .put(13205, new Station("Seatac Airport Station",             "Sea-Tac",       "47.4445305", "-122.297012"))
+            .put(10353, new Station("Angle Lake Station",                 "Angle Lake",    "47.4227143", "-122.2978669"))
             .build();
 
     private static Map<Integer, Station> sSounderStations = new ImmutableMapBuilder<Integer, Station>()
@@ -82,48 +82,30 @@ public class OrcaTrip extends Trip {
             .build();
 
     final long mTimestamp;
-    final long mCoachNum;
+    final int mCoachNum;
     final int mFare;
-    final long mNewBalance;
-    final long mAgency;
-    final long mTransType;
+    final int mNewBalance;
+    final int mAgency;
+    final int mTransType;
 
     public OrcaTrip(DesfireRecord record) {
         byte[] useData = record.getData();
-        long[] usefulData = new long[useData.length];
 
-        for (int i = 0; i < useData.length; i++) {
-            usefulData[i] = ((long) useData[i]) & 0xFF;
-        }
-
-        // FIXME: replace with bitslicing code
-        mTimestamp = ((0x0F & usefulData[3]) << 28)
-                | (usefulData[4] << 20)
-                | (usefulData[5] << 12)
-                | (usefulData[6] << 4)
-                | (usefulData[7] >> 4);
-
-        mCoachNum = ((usefulData[9] & 0xf) << 12) | (usefulData[10] << 4) | ((usefulData[11] & 0xf0) >> 4);
-
-        if (usefulData[15] == 0x00 || usefulData[15] == 0xFF) {
-            // FIXME: This appears to be some sort of special case for transfers and passes.
-            mFare = 0;
-        } else {
-            mFare = (int) ((usefulData[15] << 7) | (usefulData[16] >> 1));
-        }
-
-        mNewBalance = (usefulData[34] << 8) | usefulData[35];
-        mAgency = usefulData[3] >> 4;
-        mTransType = (usefulData[17]);
+        mAgency = Utils.getBitsFromBuffer(useData, 24, 4);
+        mTimestamp = Utils.getBitsFromBuffer(useData, 28, 32);
+        mCoachNum = Utils.getBitsFromBuffer(useData, 76, 16);
+        mFare = Utils.getBitsFromBuffer(useData, 120, 15);
+        mTransType = Utils.getBitsFromBuffer(useData, 136, 8);
+        mNewBalance = Utils.getBitsFromBuffer(useData, 272, 16);
     }
 
     OrcaTrip(Parcel parcel) {
         mTimestamp = parcel.readLong();
-        mCoachNum = parcel.readLong();
+        mCoachNum = parcel.readInt();
         mFare = parcel.readInt();
-        mNewBalance = parcel.readLong();
-        mAgency = parcel.readLong();
-        mTransType = parcel.readLong();
+        mNewBalance = parcel.readInt();
+        mAgency = parcel.readInt();
+        mTransType = parcel.readInt();
     }
 
     @Override
@@ -280,11 +262,11 @@ public class OrcaTrip extends Trip {
 
     public void writeToParcel(Parcel parcel, int flags) {
         parcel.writeLong(mTimestamp);
-        parcel.writeLong(mCoachNum);
+        parcel.writeInt(mCoachNum);
         parcel.writeInt(mFare);
-        parcel.writeLong(mNewBalance);
-        parcel.writeLong(mAgency);
-        parcel.writeLong(mTransType);
+        parcel.writeInt(mNewBalance);
+        parcel.writeInt(mAgency);
+        parcel.writeInt(mTransType);
     }
 
     public int describeContents() {
