@@ -83,8 +83,8 @@ public class EZLinkTransitData extends TransitData {
 
     public static Station getStation(String code) {
         if (code.length() != 3)
-            return null;
-        return StationTableReader.getStation(EZLINK_STR, Utils.byteArrayToInt(Utils.stringToByteArray(code)));
+            return Station.unknown(code);
+        return StationTableReader.getStation(EZLINK_STR, Utils.byteArrayToInt(Utils.stringToByteArray(code)), code);
     }
 
     public static boolean check(Card card) {

@@ -30,6 +30,7 @@ import android.support.annotation.Nullable;
 
 import au.id.micolous.farebot.R;
 import au.id.micolous.metrodroid.card.desfire.files.DesfireRecord;
+import au.id.micolous.metrodroid.proto.Stations;
 import au.id.micolous.metrodroid.transit.Station;
 import au.id.micolous.metrodroid.transit.Trip;
 import au.id.micolous.metrodroid.transit.TransitCurrency;
@@ -186,46 +187,24 @@ public class OrcaTrip extends Trip {
     @Override
     public Station getStartStation() {
         if (isLink()) {
-            return LINK_STATIONS.get(mCoachNum);
-        } else if (isSounder()) {
-            return sSounderStations.get((int) mCoachNum);
-        } else if (mAgency == OrcaTransitData.AGENCY_WSF) {
-            return sWSFTerminals.get((int) mCoachNum);
-        }
-        return null;
-    }
-
-    @Override
-    public String getStartStationName() {
-        if (isLink()) {
             if (LINK_STATIONS.containsKey(mCoachNum)) {
-                return LINK_STATIONS.get(mCoachNum).getStationName();
-            } else {
-                return Utils.localizeString(R.string.unknown_format, String.valueOf(mCoachNum));
+                return LINK_STATIONS.get(mCoachNum);
             }
+            return Station.unknown((int) mCoachNum);
         } else if (isSounder()) {
             int stationNumber = (int) mCoachNum;
             if (sSounderStations.containsKey(stationNumber)) {
-                return sSounderStations.get(stationNumber).getStationName();
-            } else {
-                return Utils.localizeString(R.string.unknown_format, stationNumber);
+                return sSounderStations.get(stationNumber);
             }
+            return Station.unknown(stationNumber);
         } else if (mAgency == OrcaTransitData.AGENCY_WSF) {
             int terminalNumber = (int) mCoachNum;
             if (sWSFTerminals.containsKey(terminalNumber)) {
-                return sWSFTerminals.get(terminalNumber).getStationName();
-            } else {
-                return Utils.localizeString(R.string.unknown_format, terminalNumber);
+                return sWSFTerminals.get(terminalNumber);
             }
-        } else {
-            return Utils.localizeString(R.string.orca_coach_number, String.valueOf(mCoachNum));
+            return Station.unknown(terminalNumber);
         }
-    }
-
-    @Override
-    public String getEndStationName() {
-        // ORCA tracks destination in a separate record
-        return null;
+        return Station.nameOnly(Utils.localizeString(R.string.orca_coach_number, String.valueOf(mCoachNum)));
     }
 
     @Override

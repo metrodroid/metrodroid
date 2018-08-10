@@ -5,6 +5,7 @@ import android.support.annotation.Nullable;
 
 import java.util.Calendar;
 
+import au.id.micolous.metrodroid.transit.Station;
 import au.id.micolous.metrodroid.transit.TransitCurrency;
 import au.id.micolous.metrodroid.transit.Trip;
 
@@ -69,8 +70,8 @@ class PodorozhnikTrip extends Trip {
     }
 
     @Override
-    public String getStartStationName() {
-        return mLastValidator == null ? null : Integer.toString(mLastValidator);
+    public Station getStartStation() {
+        return mLastValidator == null ? null : Station.unknown(mLastValidator);
     }
 
     @Override

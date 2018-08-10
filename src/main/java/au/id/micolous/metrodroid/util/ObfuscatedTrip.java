@@ -131,9 +131,7 @@ class ObfuscatedTrip extends Trip implements Parcelable {
         mAgencyName = realTrip.getAgencyName();
         mShortAgencyName = realTrip.getShortAgencyName();
 
-        mStartStationName = realTrip.getStartStationName();
         mStartStation = realTrip.getStartStation();
-        mEndStationName = realTrip.getEndStationName();
         mEndStation = realTrip.getEndStation();
 
         mHasFare = realTrip.hasFare();
@@ -172,18 +170,8 @@ class ObfuscatedTrip extends Trip implements Parcelable {
     }
 
     @Override
-    public String getStartStationName() {
-        return mStartStationName;
-    }
-
-    @Override
     public Station getStartStation() {
         return mStartStation;
-    }
-
-    @Override
-    public String getEndStationName() {
-        return mEndStationName;
     }
 
     @Override

@@ -21,6 +21,8 @@ package au.id.micolous.metrodroid.util;
 
 import android.content.Context;
 import android.content.res.AssetManager;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.util.Log;
 
 import java.io.DataInputStream;
@@ -72,7 +74,8 @@ public class StationTableReader {
         }
     }
 
-    public static Station getStation(String reader, int id) {
+    @Nullable
+    public static Station getStationNoFallback(@NonNull String reader, int id) {
         if (reader == null)
             return null;
         StationTableReader str = StationTableReader.getSTR(reader);
@@ -85,13 +88,20 @@ public class StationTableReader {
         }
     }
 
-    public static String getStationName(String reader, int id, boolean isShort) {
-        if (reader == null)
-            return fallbackName(id);
-        Station s = getStation(reader, id);
-        if (s == null)
-            return fallbackName(id);
-        return isShort ? s.getShortStationName() : s.getStationName();
+    @NonNull
+    public static Station getStation(@NonNull String reader, int id) {
+        Station s = getStationNoFallback(reader, id);
+        if (s != null)
+            return s;
+        return Station.unknown(id);
+    }
+
+    @NonNull
+    public static Station getStation(@NonNull String reader, int id, String fallback) {
+        Station s = getStationNoFallback(reader, id);
+        if (s != null)
+            return s;
+        return Station.unknown(fallback);
     }
 
     private static String fallbackName(int id) {

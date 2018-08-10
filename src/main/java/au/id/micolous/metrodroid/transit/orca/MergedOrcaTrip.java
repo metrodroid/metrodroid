@@ -86,18 +86,8 @@ public class MergedOrcaTrip extends Trip {
     }
 
     @Override
-    public String getStartStationName() {
-        return mStartTrip.getStartStationName();
-    }
-
-    @Override
     public Station getStartStation() {
         return mStartTrip.getStartStation();
-    }
-
-    @Override
-    public String getEndStationName() {
-        return mEndTrip.getStartStationName();
     }
 
     @Override
