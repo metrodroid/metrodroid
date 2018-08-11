@@ -4,6 +4,7 @@
  * Copyright 2011 "an anonymous contributor"
  * Copyright 2011-2014 Eric Butler <eric@codebutler.com>
  * Copyright 2018 Michael Farrell <micolous+git@gmail.com>
+ * Copyright 2018 Google
  *
  * Thanks to:
  * An anonymous contributor for reverse engineering Clipper data and providing
