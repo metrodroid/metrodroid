@@ -28,6 +28,7 @@ package au.id.micolous.metrodroid.transit.clipper;
 
 import android.os.Parcel;
 import android.support.annotation.Nullable;
+import android.support.annotation.VisibleForTesting;
 import android.text.Spanned;
 
 import org.apache.commons.lang3.ArrayUtils;
@@ -77,7 +78,8 @@ public class ClipperTransitData extends TransitData {
         CLIPPER_EPOCH = epoch;
     }
 
-    private static final int APP_ID = 0x9011f2;
+    @VisibleForTesting
+    public static final int APP_ID = 0x9011f2;
 
     private long mSerialNumber;
     private short mBalance;
