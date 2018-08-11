@@ -120,14 +120,11 @@ public class EZLinkTrip extends Trip {
         return Utils.localizeString(R.string.unknown_format, mTransaction.getType().toString());
     }
 
-    @Override
-    public boolean hasFare() {
-        return (mTransaction.getType() != CEPASTransaction.TransactionType.CREATION);
-    }
-
     @Nullable
     @Override
     public TransitCurrency getFare() {
+        if (mTransaction.getType() == CEPASTransaction.TransactionType.CREATION)
+            return null;
         return new TransitCurrency(mTransaction.getAmount(), "SGD");
     }
 

@@ -43,7 +43,6 @@ class ObfuscatedTrip extends Trip implements Parcelable {
     private Station mStartStation;
     private String mEndStationName;
     private Station mEndStation;
-    private boolean mHasFare;
     private boolean mHasTime;
     private Mode mMode;
     private TransitCurrency mFare;
@@ -80,7 +79,6 @@ class ObfuscatedTrip extends Trip implements Parcelable {
         mShortAgencyName = parcel.readString();
         mStartStationName = parcel.readString();
         mEndStationName = parcel.readString();
-        mHasFare = parcel.readInt() == 1;
         mHasTime = parcel.readInt() == 1;
         mMode = Mode.valueOf(parcel.readString());
         if (parcel.readInt() == 1) {
@@ -103,7 +101,6 @@ class ObfuscatedTrip extends Trip implements Parcelable {
         parcel.writeString(mShortAgencyName);
         parcel.writeString(mStartStationName);
         parcel.writeString(mEndStationName);
-        parcel.writeInt(mHasFare ? 1 : 0);
         parcel.writeInt(mHasTime ? 1 : 0);
         parcel.writeString(mMode.toString());
         parcel.writeInt(mFare == null ? 0 : 1);
@@ -134,7 +131,6 @@ class ObfuscatedTrip extends Trip implements Parcelable {
         mStartStation = realTrip.getStartStation();
         mEndStation = realTrip.getEndStation();
 
-        mHasFare = realTrip.hasFare();
         mHasTime = realTrip.hasTime();
         mMode = realTrip.getMode();
 
@@ -177,11 +173,6 @@ class ObfuscatedTrip extends Trip implements Parcelable {
     @Override
     public Station getEndStation() {
         return mEndStation;
-    }
-
-    @Override
-    public boolean hasFare() {
-        return mHasFare;
     }
 
     @Override

@@ -86,11 +86,6 @@ public class ClipperRefill extends Trip implements Comparable {
         return ClipperTransitData.getShortAgencyName((int) mAgency);
     }
 
-    @Override
-    public boolean hasFare() {
-        return true;
-    }
-
     @Nullable
     @Override
     public TransitCurrency getFare() {

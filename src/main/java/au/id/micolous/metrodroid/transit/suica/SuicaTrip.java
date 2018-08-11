@@ -194,11 +194,6 @@ public class SuicaTrip extends Trip {
         return (mStartStation != null) ? mStartStation.getCompanyName() : null;
     }
 
-    @Override
-    public boolean hasFare() {
-        return true;
-    }
-
     @Nullable
     @Override
     public TransitCurrency getFare() {

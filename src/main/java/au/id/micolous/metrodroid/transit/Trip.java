@@ -269,20 +269,6 @@ public abstract class Trip implements Parcelable {
     }
 
     /**
-     * If true, it means that this activity has a known fare associated with it.  This should be
-     * true for most transaction types.
-     * <p>
-     * Reasons for this being false, including not actually having the trip cost available, and for
-     * events like card activation and card banning which have no cost associated with the action.
-     * <p>
-     * If a trip is free of charge, this should still be set to true.  However, if the trip is
-     * associated with a monthly travel pass, then this should be set to false.
-     *
-     * @return true if there is a financial transaction associated with the Trip.
-     */
-    public abstract boolean hasFare();
-
-    /**
      * Formats the cost of the trip in the appropriate local currency.  Be aware that your
      * implementation should use language-specific formatting and not rely on the system language
      * for that information.

@@ -96,11 +96,6 @@ public class MergedOrcaTrip extends Trip {
     }
 
     @Override
-    public boolean hasFare() {
-        return mStartTrip.hasFare();
-    }
-
-    @Override
     public Mode getMode() {
         return mStartTrip.getMode();
     }

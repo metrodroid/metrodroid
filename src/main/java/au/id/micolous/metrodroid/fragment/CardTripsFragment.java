@@ -65,6 +65,7 @@ import au.id.micolous.metrodroid.activity.AdvancedCardInfoActivity;
 import au.id.micolous.metrodroid.activity.CardInfoActivity;
 import au.id.micolous.metrodroid.activity.TripMapActivity;
 import au.id.micolous.metrodroid.card.Card;
+import au.id.micolous.metrodroid.transit.TransitCurrency;
 import au.id.micolous.metrodroid.transit.TransitData;
 import au.id.micolous.metrodroid.transit.Trip;
 import au.id.micolous.metrodroid.transit.orca.OrcaTrip;
@@ -322,12 +323,13 @@ public class CardTripsFragment extends ListFragment {
             }
 
             fareTextView.setVisibility(View.VISIBLE);
-            if (trip.hasFare()) {
-                fareTextView.setText(trip.getFare().formatCurrencyString(false));
+            TransitCurrency fare = trip.getFare();
+            if (fare != null) {
+                fareTextView.setText(fare.formatCurrencyString(false));
             } else if (trip instanceof OrcaTrip) {
                 fareTextView.setText(R.string.pass_or_transfer);
             } else {
-                // Hide the text "Fare" for hasFare == false
+                // Hide the text "Fare" for getFare == null
                 fareTextView.setVisibility(View.INVISIBLE);
             }
 

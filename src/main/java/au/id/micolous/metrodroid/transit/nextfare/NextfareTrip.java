@@ -118,11 +118,6 @@ public class NextfareTrip extends Trip implements Comparable<NextfareTrip> {
         }
     }
 
-    @Override
-    public boolean hasFare() {
-        return true;
-    }
-
     @Nullable
     @Override
     public TransitCurrency getFare() {

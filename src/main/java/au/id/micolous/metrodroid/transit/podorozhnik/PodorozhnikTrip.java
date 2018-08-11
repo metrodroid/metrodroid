@@ -39,11 +39,6 @@ class PodorozhnikTrip extends Trip {
         return PodorozhnikTransitData.convertDate(mTimestamp);
     }
 
-    @Override
-    public boolean hasFare() {
-        return mFare != null;
-    }
-
     @Nullable
     @Override
     public TransitCurrency getFare() {

@@ -174,11 +174,6 @@ public class OrcaTrip extends Trip {
     }
 
     @Override
-    public boolean hasFare() {
-        return true;
-    }
-
-    @Override
     @Nullable
     public TransitCurrency getFare() {
         return TransitCurrency.USD(mFare);

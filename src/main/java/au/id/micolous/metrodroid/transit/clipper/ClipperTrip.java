@@ -114,11 +114,6 @@ public class ClipperTrip extends Trip {
     }
 
     @Override
-    public boolean hasFare() {
-        return true;
-    }
-
-    @Override
     public Station getStartStation() {
         if (mAgency == ClipperData.AGENCY_BART) {
             if (ClipperData.BART_STATIONS.containsKey(mFrom)) {
