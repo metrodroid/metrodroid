@@ -54,9 +54,11 @@ def massage_name(name, suffixes):
 def empty(s):
   return s is None or s.strip() == ''
 
-def compile_stops_from_gtfs(input_gtfs_f, output_f, matching_f=None, version=None, strip_suffixes='', agency_id=-1, tts_hint_language=None):
+def compile_stops_from_gtfs(input_gtfs_f, output_f, matching_f=None, version=None, strip_suffixes='', agency_id=-1, tts_hint_language=None, extra_f=None):
   if matching_f is not None:
     matching_f = codecs.getreader('utf-8-sig')(matching_f)
+  if extra_f is not None:
+    extra_f = codecs.getreader('utf-8-sig')(extra_f)
   # trim whitespace
   strip_suffixes = [x.strip().lower() for x in strip_suffixes.split(',')]
 
@@ -166,6 +168,25 @@ def compile_stops_from_gtfs(input_gtfs_f, output_f, matching_f=None, version=Non
 
     matching_f.close()
 
+  if extra_f is not None:
+    exread = csv.DictReader(extra_f)
+
+    for stop in exread:
+      s = Station()
+      s.id = int(stop['reader_id'], 0)
+      s.name.english = stop['stop_name']
+      if 'short_name' in stop and stop['short_name']:
+        s.name.english_short = stop['short_name']
+      y = float(stop['stop_lat'].strip())
+      x = float(stop['stop_lon'].strip())
+      if y and x:
+        s.latitude = y
+        s.longitude = x
+
+      db.push_station(s)
+      station_count += 1
+    extra_f.close()
+
   index_end_off = db.finalise()
 
   print('Finished writing database.  Here\'s the stats:')
@@ -197,6 +218,11 @@ def main():
     type=FileType('rb'),
     help='If supplied, this is a matching file of reader_id to stop_code or stop_id. Missing stops will be dropped. If a matching file is not supplied, this will produce a list of all stops with stop_code instead.')
 
+  parser.add_argument('-x', '--extra',
+                      required=False,
+                      type=FileType('rb'),
+                      help='If supplied, this is a file with extra stops not derived from gtfs.')
+
   parser.add_argument('-V', '--override-version',
     required=False,
     type=int,
@@ -218,7 +244,7 @@ def main():
 
   options = parser.parse_args()
 
-  compile_stops_from_gtfs(options.input_gtfs[0], options.output, options.matching, options.override_version, options.strip_suffixes, options.agency_id, options.tts_hint_language)
+  compile_stops_from_gtfs(options.input_gtfs[0], options.output, options.matching, options.override_version, options.strip_suffixes, options.agency_id, options.tts_hint_language, options.extra)
 
 if __name__ == '__main__':
   main()
