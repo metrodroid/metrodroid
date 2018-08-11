@@ -193,7 +193,7 @@ public class ClipperTransitData extends TransitData {
         byte[] data = file.getData();
         int pos = data.length - RECORD_LENGTH;
         List<ClipperTrip> result = new ArrayList<>();
-        while (pos > 0) {
+        while (pos >= 0) {
             byte[] slice = Utils.byteArraySlice(data, pos, RECORD_LENGTH);
             final ClipperTrip trip = createTrip(slice);
             if (trip != null) {
@@ -254,7 +254,7 @@ public class ClipperTransitData extends TransitData {
         byte[] data = file.getData();
         int pos = data.length - RECORD_LENGTH;
         List<ClipperRefill> result = new ArrayList<>();
-        while (pos > 0) {
+        while (pos >= 0) {
             byte[] slice = Utils.byteArraySlice(data, pos, RECORD_LENGTH);
             ClipperRefill refill = createRefill(slice);
             if (refill != null)
