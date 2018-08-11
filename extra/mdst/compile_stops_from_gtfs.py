@@ -135,7 +135,7 @@ def compile_stops_from_gtfs(input_gtfs_f, output_f, matching_f=None, version=Non
 
       # Insert rows where a stop_id is specified for the reader_id
       stop_rows = []
-      for reader_id in stop_ids.get(stop['stop_id'], []):
+      for reader_id in stop_ids.get(stop.get('stop_id', 'stop_id_absent'), []):
         s = Station()
         s.id = int(reader_id, 0)
         s.name.english = name
@@ -150,7 +150,7 @@ def compile_stops_from_gtfs(input_gtfs_f, output_f, matching_f=None, version=Non
 
       # Insert rows where a stop_code is specified for the reader_id
       stop_rows = []
-      for reader_id in stop_codes.get(stop['stop_code'], []):
+      for reader_id in stop_codes.get(stop.get('stop_code', 'stop_code_absent'), []):
         s = Station()
         s.id = int(reader_id, 0)
         s.name.english = name
