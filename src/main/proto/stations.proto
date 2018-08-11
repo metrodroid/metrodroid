@@ -26,20 +26,26 @@ message StationDb {
     string tts_hint_language = 5;
 }
 
-message Operator {
-    // The operator's name, written in English.
-    string english_name = 1;
+message Names {
+    string english = 1;
 
-    // The operator's name, written in the local language.
-    string local_name = 2;
+    string local = 2;
+
+    string english_short = 3;
+
+    string local_short = 4;
+}
+
+message Operator {
+    Names name = 3;
+
+    reserved 1, 2;
 }
 
 message Line {
-    // The line's name, written in English.
-    string english_name = 1;
+    Names name = 3;
 
-    // The line's name, written in the local language.
-    string local_name = 2;
+    reserved 1, 2;
 }
 
 message City {
@@ -60,11 +66,7 @@ message Station {
     // minimise file size, the integers should be lower.
     uint32 id = 1;
 
-    // The station's name, written in English.
-    string english_name = 2;
-
-    // The station's name, written in the local language.
-    string local_name = 3;
+    Names name = 8;
 
     // The location of the station, in WGS84 datum.
     // If latitude and longitude are both set to 0, it is presumed that it is
@@ -76,6 +78,8 @@ message Station {
     uint32 operator_id = 6;
     // The ID of the line (from StationDb.lines).
     uint32 line_id = 7;
+
+    reserved 2, 3;
 }
 
 /*

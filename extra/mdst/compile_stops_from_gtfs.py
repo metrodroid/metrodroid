@@ -99,7 +99,7 @@ def compile_stops_from_gtfs(input_gtfs_f, output_f, matching_f=None, version=Non
     for stop_id, stop_name, lat, lon in stop_map:
       s = Station()
       s.id = int(stop_id)
-      s.english_name = stop_name
+      s.name.english = stop_name
       if lat and lon:
         s.latitude = float(lat)
         s.longitude = float(lon)
@@ -137,11 +137,13 @@ def compile_stops_from_gtfs(input_gtfs_f, output_f, matching_f=None, version=Non
       stop_rows = []
       for reader_id in stop_ids.get(stop['stop_id'], []):
         s = Station()
-        s.id = int(reader_id)
-        s.english_name = name
+        s.id = int(reader_id, 0)
+        s.name.english = name
         if y and x:
           s.latitude = y
           s.longitude = x
+        if 'short_name' in stop and stop_ids['short_name']:
+          s.name.english_short = stop_ids['short_name']
 
         db.push_station(s)
         station_count += 1
@@ -150,13 +152,15 @@ def compile_stops_from_gtfs(input_gtfs_f, output_f, matching_f=None, version=Non
       stop_rows = []
       for reader_id in stop_codes.get(stop['stop_code'], []):
         s = Station()
-        s.id = int(reader_id)
-        s.english_name = name
+        s.id = int(reader_id, 0)
+        s.name.english = name
         
         if y and x:
           s.latitude = y
           s.longitude = x
 
+        if 'short_name' in stop and stop_ids['short_name']:
+          s.name.english_short = stop_ids['short_name']
         db.push_station(s)
         station_count += 1
 
