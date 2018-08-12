@@ -19,6 +19,7 @@
 
 package au.id.micolous.metrodroid.ui;
 
+import android.annotation.SuppressLint;
 import android.app.ActionBar;
 import android.app.Activity;
 import android.app.Fragment;
@@ -67,6 +68,7 @@ public class TabPagerAdapter extends PagerAdapter implements ActionBar.TabListen
     public void startUpdate(View view) {
     }
 
+    @SuppressLint("CommitTransaction")
     @Override
     @SuppressWarnings("deprecation")
     public Object instantiateItem(View view, int position) {
@@ -81,6 +83,7 @@ public class TabPagerAdapter extends PagerAdapter implements ActionBar.TabListen
         return fragment;
     }
 
+    @SuppressLint("CommitTransaction")
     @Override
     @SuppressWarnings("deprecation")
     public void destroyItem(View view, int i, Object object) {
