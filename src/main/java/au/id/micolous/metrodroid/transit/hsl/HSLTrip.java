@@ -74,8 +74,8 @@ public class HSLTrip extends Trip {
     HSLTrip(Parcel parcel) {
         // mArvo, mTimestamp, mExpireTimestamp, mFare, mPax, mNewBalance
         mArvo = parcel.readInt();
-        mTimestamp = Utils.longToCalendar(parcel.readLong(), HSLTransitData.TZ);
-        mExpireTimestamp = Utils.longToCalendar(parcel.readLong(), HSLTransitData.TZ);
+        mTimestamp = Utils.unparcelCalendar(parcel);
+        mExpireTimestamp = Utils.unparcelCalendar(parcel);
         mFare = parcel.readInt();
         mPax = parcel.readInt();
         mNewBalance = parcel.readInt();
@@ -157,8 +157,8 @@ public class HSLTrip extends Trip {
     public void writeToParcel(Parcel parcel, int flags) {
         // mArvo, mTimestamp, mExpireTimestamp, mFare, mPax, mNewBalance
         parcel.writeInt(mArvo);
-        parcel.writeLong(Utils.calendarToLong(mTimestamp));
-        parcel.writeLong(Utils.calendarToLong(mExpireTimestamp));
+        Utils.parcelCalendar(parcel, mTimestamp);
+        Utils.parcelCalendar(parcel, mExpireTimestamp);
         parcel.writeInt(mFare);
         parcel.writeInt(mPax);
         parcel.writeInt(mNewBalance);

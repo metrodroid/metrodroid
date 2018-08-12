@@ -35,9 +35,8 @@ public class SmartRiderTrip extends Trip {
     public SmartRiderTrip(Parcel parcel) {
         mCardType = SmartRiderTransitData.CardType.valueOf(parcel.readString());
 
-        TimeZone tz = TimeZone.getTimeZone(parcel.readString());
-        mStartTime = Utils.longToCalendar(parcel.readLong(), tz);
-        mEndTime = Utils.longToCalendar(parcel.readLong(), tz);
+        mStartTime = Utils.unparcelCalendar(parcel);
+        mEndTime = Utils.unparcelCalendar(parcel);
 
         mCost = parcel.readInt();
         mRouteNumber = parcel.readString();
@@ -117,9 +116,8 @@ public class SmartRiderTrip extends Trip {
     @Override
     public void writeToParcel(Parcel parcel, int i) {
         parcel.writeString(mCardType.toString());
-        parcel.writeString(mStartTime == null ? Utils.UTC.getID() : mStartTime.getTimeZone().getID());
-        parcel.writeLong(Utils.calendarToLong(mStartTime));
-        parcel.writeLong(Utils.calendarToLong(mEndTime));
+        Utils.parcelCalendar(parcel, mStartTime);
+        Utils.parcelCalendar(parcel, mEndTime);
         parcel.writeInt(mCost);
         parcel.writeString(mRouteNumber);
     }

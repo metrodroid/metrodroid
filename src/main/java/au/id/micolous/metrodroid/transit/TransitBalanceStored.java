@@ -26,6 +26,8 @@ import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.TimeZone;
 
+import au.id.micolous.metrodroid.util.Utils;
+
 public class TransitBalanceStored extends TransitBalance implements Parcelable {
     private final Calendar mValidityStart;
     private final TransitCurrency mBal;
@@ -53,18 +55,8 @@ public class TransitBalanceStored extends TransitBalance implements Parcelable {
             mName = in.readString();
         } else
             mName = null;
-        if (in.readInt() != 0) {
-            String tz = in.readString();
-            mExpiry = new GregorianCalendar(TimeZone.getTimeZone(tz));
-            mExpiry.setTimeInMillis(in.readLong());
-        } else
-            mExpiry = null;
-        if (in.readInt() != 0) {
-            String tz = in.readString();
-            mValidityStart = new GregorianCalendar(TimeZone.getTimeZone(tz));
-            mValidityStart.setTimeInMillis(in.readLong());
-        } else
-            mValidityStart = null;
+        mExpiry = Utils.unparcelCalendar(in);
+        mValidityStart = Utils.unparcelCalendar(in);
     }
 
     @Override
@@ -80,18 +72,8 @@ public class TransitBalanceStored extends TransitBalance implements Parcelable {
             dest.writeString(mName);
         } else
             dest.writeInt(0);
-        if (mExpiry != null) {
-            dest.writeInt(1);
-            dest.writeString(mExpiry.getTimeZone().getID());
-            dest.writeLong(mExpiry.getTimeInMillis());
-        } else
-            dest.writeInt(0);
-        if (mValidityStart != null) {
-            dest.writeInt(1);
-            dest.writeString(mValidityStart.getTimeZone().getID());
-            dest.writeLong(mValidityStart.getTimeInMillis());
-        } else
-            dest.writeInt(0);
+        Utils.parcelCalendar(dest, mExpiry);
+        Utils.parcelCalendar(dest, mValidityStart);
     }
 
     public static final Creator<TransitBalanceStored> CREATOR = new Creator<TransitBalanceStored>() {

@@ -56,8 +56,7 @@ public class NextfareTopupRecord extends NextfareRecord implements Parcelable {
     }
 
     public NextfareTopupRecord(Parcel parcel) {
-        TimeZone tz = TimeZone.getTimeZone(parcel.readString());
-        mTimestamp = Utils.longToCalendar(parcel.readLong(), tz);
+        mTimestamp = Utils.unparcelCalendar(parcel);
         mCredit = parcel.readInt();
         mStation = parcel.readInt();
         mChecksum = parcel.readInt();
@@ -101,8 +100,7 @@ public class NextfareTopupRecord extends NextfareRecord implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel parcel, int i) {
-        parcel.writeString(mTimestamp.getTimeZone().getID());
-        parcel.writeLong(Utils.calendarToLong(mTimestamp));
+        Utils.parcelCalendar(parcel, mTimestamp);
         parcel.writeInt(mCredit);
         parcel.writeInt(mStation);
         parcel.writeInt(mChecksum);

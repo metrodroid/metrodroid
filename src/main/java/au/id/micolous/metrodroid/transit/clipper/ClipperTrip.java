@@ -68,8 +68,8 @@ public class ClipperTrip extends Trip {
     }
 
     ClipperTrip(Parcel parcel) {
-        mTimestamp = Utils.longToCalendar(parcel.readLong(), CLIPPER_TZ);
-        mExitTimestamp = Utils.longToCalendar(parcel.readLong(), CLIPPER_TZ);
+        mTimestamp = Utils.unparcelCalendar(parcel);
+        mExitTimestamp = Utils.unparcelCalendar(parcel);
         mFare = parcel.readInt();
         mAgency = parcel.readInt();
         mFrom = parcel.readInt();
@@ -155,8 +155,8 @@ public class ClipperTrip extends Trip {
     }
 
     public void writeToParcel(Parcel parcel, int flags) {
-        parcel.writeLong(Utils.calendarToLong(mTimestamp));
-        parcel.writeLong(Utils.calendarToLong(mExitTimestamp));
+        Utils.parcelCalendar(parcel, mTimestamp);
+        Utils.parcelCalendar(parcel, mExitTimestamp);
         parcel.writeInt(mFare);
         parcel.writeInt(mAgency);
         parcel.writeInt(mFrom);

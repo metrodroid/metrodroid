@@ -36,7 +36,7 @@ public class CEPASTransaction implements Parcelable {
         public CEPASTransaction createFromParcel(Parcel source) {
             byte type = source.readByte();
             int amount = source.readInt();
-            Calendar date = Utils.longToCalendar(source.readLong(), CEPASCard.TZ);
+            Calendar date = Utils.unparcelCalendar(source);
             String userData = source.readString();
             return new CEPASTransaction(type, amount, date, userData);
         }
@@ -143,7 +143,7 @@ public class CEPASTransaction implements Parcelable {
     public void writeToParcel(Parcel parcel, int flags) {
         parcel.writeByte(mType);
         parcel.writeInt(mAmount);
-        parcel.writeLong(Utils.calendarToLong(mDate2));
+        Utils.parcelCalendar(parcel, mDate2);
         parcel.writeString(mUserData);
     }
 

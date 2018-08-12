@@ -41,7 +41,7 @@ class TroikaTrip extends Trip {
             mFareDesc = in.readString();
         }
         mTransportType = TroikaBlock.TroikaTransportType.valueOf(in.readString());
-        mStartTime = Utils.longToCalendar(in.readLong(), TroikaBlock.TZ);
+        mStartTime = Utils.unparcelCalendar(in);
     }
 
     @Override
@@ -60,7 +60,7 @@ class TroikaTrip extends Trip {
             dest.writeString(mFareDesc);
         }
         dest.writeString(mTransportType.toString());
-        dest.writeLong(Utils.calendarToLong(mStartTime));
+        Utils.parcelCalendar(dest, mStartTime);
     }
 
     @Override

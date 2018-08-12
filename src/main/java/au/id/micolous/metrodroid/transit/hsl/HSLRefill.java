@@ -43,7 +43,7 @@ public class HSLRefill extends Trip implements Parcelable {
     }
 
     public HSLRefill(Parcel parcel) {
-        mRefillTime = Utils.longToCalendar(parcel.readLong(), HSLTransitData.TZ);
+        mRefillTime = Utils.unparcelCalendar(parcel);
         mRefillAmount = parcel.readInt();
     }
 
@@ -65,7 +65,7 @@ public class HSLRefill extends Trip implements Parcelable {
     }
 
     public void writeToParcel(Parcel dest, int flags) {
-        dest.writeLong(Utils.calendarToLong(mRefillTime));
+        Utils.parcelCalendar(dest, mRefillTime);
         dest.writeInt(mRefillAmount);
     }
 

@@ -34,8 +34,10 @@ import android.graphics.PorterDuff;
 import android.graphics.PorterDuffXfermode;
 import android.nfc.NfcAdapter;
 import android.os.Build;
+import android.os.Parcel;
 import android.provider.Settings;
 import android.support.annotation.DrawableRes;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.annotation.PluralsRes;
 import android.support.annotation.StringRes;
@@ -743,34 +745,23 @@ public class Utils {
         return bitmap;
     }
 
-    /**
-     * Converts a timestamp in milliseconds since UNIX epoch to Calendar, or null if 0.
-     * @param ts Timestamp to convert, or 0 if unset.
-     * @param tz Timezone to use
-     * @return A Calendar object, or null if the timestamp is 0.
-     */
-    @Nullable
-    public static Calendar longToCalendar(long ts, TimeZone tz) {
-        if (ts == 0) {
-            return null;
-        }
-
-        Calendar c = new GregorianCalendar(tz);
-        c.setTimeInMillis(ts);
-        return c;
+    public static void parcelCalendar(@NonNull Parcel dest, @Nullable Calendar c) {
+        if (c != null) {
+            dest.writeInt(1);
+            dest.writeString(c.getTimeZone().getID());
+            dest.writeLong(c.getTimeInMillis());
+        } else
+            dest.writeInt(0);
     }
 
-    /**
-     * Converts a Calendar or null to a timestamp in milliseconds since UNIX epoch.
-     * @param c Calendar object to convert
-     * @return Timestamp, or 0 if null.
-     */
-    public static long calendarToLong(@Nullable Calendar c) {
-        if (c == null) {
-            return 0;
-        }
+    public static Calendar unparcelCalendar(@NonNull Parcel in) {
+        if (in.readInt() == 0)
+            return null;
 
-        return c.getTimeInMillis();
+        String tz = in.readString();
+        Calendar c = new GregorianCalendar(TimeZone.getTimeZone(tz));
+        c.setTimeInMillis(in.readLong());
+        return c;
     }
 
     /**
