@@ -43,7 +43,6 @@ import au.id.micolous.metrodroid.card.UnsupportedCardException;
 import au.id.micolous.metrodroid.fragment.BlankCardFragment;
 import au.id.micolous.metrodroid.fragment.CardBalanceFragment;
 import au.id.micolous.metrodroid.fragment.CardInfoFragment;
-import au.id.micolous.metrodroid.fragment.CardSubscriptionsFragment;
 import au.id.micolous.metrodroid.fragment.CardTripsFragment;
 import au.id.micolous.metrodroid.fragment.UnauthorizedCardFragment;
 import au.id.micolous.metrodroid.provider.CardsTableColumns;
@@ -171,17 +170,13 @@ public class CardInfoActivity extends MetrodroidActivity {
                     return;
                 }
 
-                if (mTransitData.getBalances() != null) {
-                    mTabsAdapter.addTab(actionBar.newTab().setText(R.string.balance), CardBalanceFragment.class, args);
+                if (mTransitData.getBalances() != null || mTransitData.getSubscriptions() != null) {
+                    mTabsAdapter.addTab(actionBar.newTab().setText(R.string.balances_and_subscriptions),
+                            CardBalanceFragment.class, args);
                 }
 
                 if (mTransitData.getTrips() != null) {
                     mTabsAdapter.addTab(actionBar.newTab().setText(R.string.history), CardTripsFragment.class, args);
-                }
-
-                if (mTransitData.getSubscriptions() != null) {
-                    mTabsAdapter.addTab(actionBar.newTab().setText(R.string.subscriptions), CardSubscriptionsFragment.class,
-                            args);
                 }
 
                 if (mTransitData.getInfo() != null) {
