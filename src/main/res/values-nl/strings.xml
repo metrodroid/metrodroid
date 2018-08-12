@@ -605,4 +605,5 @@
     <string name="moscow_ground_transport">Moskou bovengronds vervoer</string>
     <string name="moscow_mcc">Moscow Central Circle (MCC)</string>
     <string name="troika_unknown_ticket">Onbekend troika-kaarttype %s</string>
-    </resources>
+    <string name="balances_and_subscriptions">Kaartjes</string>
+</resources>
