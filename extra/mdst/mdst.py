@@ -41,8 +41,8 @@ class MdstWriter(object):
     fh: required, file-like object to write to.
     version: required, this is a numeric revision number for the database.
     local_languages: optional, list of languages which should be treated as "local".
-    operators: optional, dict of [int](english_name,local_name) declaring a mapping of operators.
-    lines: optional, dict of [int](english_name,local_name) declaring a mapping of lines.
+    operators: optional, dict of [int](name.english,name.local) declaring a mapping of operators.
+    lines: optional, dict of [int](name.english,name.local) declaring a mapping of lines.
     tts_hint_language: optional, str of LocaleSpan hint for station names.
     
     
@@ -58,17 +58,23 @@ class MdstWriter(object):
 
     if operators:
       for k, v in operators.items():
+        if isinstance(v, Operator):
+          sdb.operators[k].name.english = v.name.english
+          sdb.operators[k].name.english_short = v.name.english_short
+          sdb.operators[k].name.local = v.name.local
+          sdb.operators[k].name.local_short = v.name.local_short
+          continue
         if v[0] != None:
-          sdb.operators[k].english_name = v[0]
+          sdb.operators[k].name.english = v[0]
         if len(v) > 1 and v[1] != None:
-          sdb.operators[k].local_name = v[1]
+          sdb.operators[k].name.local = v[1]
 
     if lines:
       for k, v in lines.items():
         if v[0] != None:
-          sdb.lines[k].english_name = v[0]
+          sdb.lines[k].name.english = v[0]
         if len(v) > 1 and v[1] != None:
-          sdb.lines[k].local_name = v[1]
+          sdb.lines[k].name.local = v[1]
 
     # Write out the header
     fh.write(b'MdST')

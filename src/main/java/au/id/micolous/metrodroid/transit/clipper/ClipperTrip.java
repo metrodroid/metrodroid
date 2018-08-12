@@ -4,6 +4,7 @@
  * Copyright 2011 "an anonymous contributor"
  * Copyright 2011-2014 Eric Butler <eric@codebutler.com>
  * Copyright 2018 Michael Farrell <micolous+git@gmail.com>
+ * Copyright 2018 Google
  *
  * Thanks to:
  * An anonymous contributor for reverse engineering Clipper data and providing
@@ -114,81 +115,13 @@ public class ClipperTrip extends Trip {
     }
 
     @Override
-    public boolean hasFare() {
-        return true;
-    }
-
-    @Override
     public Station getStartStation() {
-        if (mAgency == ClipperData.AGENCY_BART) {
-            if (ClipperData.BART_STATIONS.containsKey(mFrom)) {
-                return ClipperData.BART_STATIONS.get(mFrom);
-            }
-        } else if (mAgency == ClipperData.AGENCY_GG_FERRY) {
-            if (ClipperData.GG_FERRY_TERIMINALS.containsKey(mFrom)) {
-                return ClipperData.GG_FERRY_TERIMINALS.get(mFrom);
-            }
-        } else if (mAgency == ClipperData.AGENCY_SF_BAY_FERRY) {
-            if (ClipperData.SF_BAY_FERRY_TERMINALS.containsKey(mFrom)) {
-                return ClipperData.SF_BAY_FERRY_TERMINALS.get(mFrom);
-            }
-        }
-        return null;
+        return ClipperData.getStation(mAgency, mFrom);
     }
 
     @Override
     public Station getEndStation() {
-        if (mAgency == ClipperData.AGENCY_BART) {
-            if (ClipperData.BART_STATIONS.containsKey(mTo)) {
-                return ClipperData.BART_STATIONS.get(mTo);
-            }
-        } else if (mAgency == ClipperData.AGENCY_GG_FERRY) {
-            if (ClipperData.GG_FERRY_TERIMINALS.containsKey(mTo)) {
-                return ClipperData.GG_FERRY_TERIMINALS.get(mTo);
-            }
-        } else if (mAgency == ClipperData.AGENCY_SF_BAY_FERRY) {
-            if (ClipperData.SF_BAY_FERRY_TERMINALS.containsKey(mTo)) {
-                return ClipperData.SF_BAY_FERRY_TERMINALS.get(mTo);
-            }
-        }
-        return null;
-    }
-
-    @Override
-    public String getStartStationName() {
-        if (mAgency == ClipperData.AGENCY_BART || mAgency == ClipperData.AGENCY_GG_FERRY || mAgency == ClipperData.AGENCY_SF_BAY_FERRY) {
-            Station station = getStartStation();
-            if (station != null)
-                return station.getShortStationName();
-            else
-                return Utils.localizeString(R.string.unknown_format, "0x" + Long.toString(mFrom, 16));
-        } else if (mAgency == ClipperData.AGENCY_MUNI) {
-            return null; // Coach number is not collected
-        } else if (mAgency == ClipperData.AGENCY_GGT || mAgency == ClipperData.AGENCY_CALTRAIN) {
-            return Utils.localizeString(R.string.clipper_zone_number, "0x" + Long.toString(mFrom, 16));
-        } else {
-            return Utils.localizeString(R.string.unknown_format, "0x" + Integer.toHexString(mAgency) + "/0x" + Long.toString(mFrom, 16));
-        }
-    }
-
-    @Override
-    public String getEndStationName() {
-        if (mAgency == ClipperData.AGENCY_BART || mAgency == ClipperData.AGENCY_GG_FERRY || mAgency == ClipperData.AGENCY_SF_BAY_FERRY) {
-            Station station = getEndStation();
-            if (station != null) {
-                return station.getShortStationName();
-            } else {
-                return Utils.localizeString(R.string.unknown_format, "0x" + Long.toString(mTo, 16));
-            }
-        } else if (mAgency == ClipperData.AGENCY_MUNI) {
-            return null; // Coach number is not collected
-        } else if (mAgency == ClipperData.AGENCY_GGT || mAgency == ClipperData.AGENCY_CALTRAIN) {
-            if (mTo == 0xffff)
-                return Utils.localizeString(R.string.clipper_end_of_line);
-            return Utils.localizeString(R.string.clipper_zone_number, "0x" + Long.toString(mTo, 16));
-        } else {
-            return Utils.localizeString(R.string.unknown_format, "0x" + Integer.toHexString(mAgency) + "/0x" + Long.toString(mTo, 16));
-        }
+        return ClipperData.getStation(mAgency, mTo);
     }
 
     @Override

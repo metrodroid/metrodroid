@@ -79,11 +79,6 @@ public class HSLRefill extends Trip implements Parcelable {
         return MetrodroidApplication.getInstance().getString(R.string.hsl_balance_refill);
     }
 
-    @Override
-    public boolean hasFare() {
-        return true;
-    }
-
     @Nullable
     @Override
     public TransitCurrency getFare() {

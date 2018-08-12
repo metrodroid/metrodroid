@@ -183,11 +183,6 @@ public class SuicaTrip extends Trip {
         return (mStartStation != null) ? mStartStation.getCompanyName() : null;
     }
 
-    @Override
-    public boolean hasFare() {
-        return true;
-    }
-
     @Nullable
     @Override
     public TransitCurrency getFare() {
@@ -199,49 +194,37 @@ public class SuicaTrip extends Trip {
     }
 
     @Override
-    public String getStartStationName() {
+    public Station getStartStation() {
         if (mIsProductSale || mIsCharge)
             return null;
-
         if (mStartStation != null) {
-            return mStartStation.getShortStationName();
+            return mStartStation;
         }
         if (mIsBus) {
-            return Utils.localizeString(R.string.suica_bus_area_line_stop,
+            return Station.nameOnly(Utils.localizeString(R.string.suica_bus_area_line_stop,
                     "0x" + Integer.toHexString(mRegionCode),
-                    "0x" + Integer.toHexString(mBusLineCode), "0x" + Integer.toHexString(mBusStopCode));
+                    "0x" + Integer.toHexString(mBusLineCode), "0x" + Integer.toHexString(mBusStopCode)));
         } else if (!(mRailEntranceLineCode == 0 && mRailEntranceStationCode == 0)) {
-            return Utils.localizeString(R.string.suica_line_station, "0x" + Integer.toHexString(mRailEntranceLineCode),
-                    "0x" + Integer.toHexString(mRailEntranceStationCode));
+            return Station.nameOnly(Utils.localizeString(R.string.suica_line_station, "0x" + Integer.toHexString(mRailEntranceLineCode),
+                    "0x" + Integer.toHexString(mRailEntranceStationCode)));
         } else {
             return null;
         }
     }
 
     @Override
-    public Station getStartStation() {
-        return mStartStation;
-    }
-
-    @Override
-    public String getEndStationName() {
+    public Station getEndStation() {
         if (mIsProductSale || mIsCharge || isTVM())
             return null;
-
         if (mEndStation != null) {
-            return mEndStation.getShortStationName();
+            return mEndStation;
         }
         if (!mIsBus) {
-            return Utils.localizeString(R.string.suica_line_station,
+            return Station.nameOnly(Utils.localizeString(R.string.suica_line_station,
                     "0x" + Integer.toHexString(mRailExitLineCode),
-                    "0x" + Integer.toHexString(mRailExitStationCode));
+                    "0x" + Integer.toHexString(mRailExitStationCode)));
         }
         return null;
-    }
-
-    @Override
-    public Station getEndStation() {
-        return mEndStation;
     }
 
     @Override

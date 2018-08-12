@@ -21,6 +21,8 @@ package au.id.micolous.metrodroid.util;
 
 import android.content.Context;
 import android.content.res.AssetManager;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.util.Log;
 
 import java.io.DataInputStream;
@@ -72,7 +74,8 @@ public class StationTableReader {
         }
     }
 
-    public static Station getStation(String reader, int id) {
+    @Nullable
+    public static Station getStationNoFallback(@NonNull String reader, int id) {
         if (reader == null)
             return null;
         StationTableReader str = StationTableReader.getSTR(reader);
@@ -85,13 +88,20 @@ public class StationTableReader {
         }
     }
 
-    public static String getStationName(String reader, int id, boolean isShort) {
-        if (reader == null)
-            return fallbackName(id);
-        Station s = getStation(reader, id);
-        if (s == null)
-            return fallbackName(id);
-        return isShort ? s.getShortStationName() : s.getStationName();
+    @NonNull
+    public static Station getStation(@NonNull String reader, int id) {
+        Station s = getStationNoFallback(reader, id);
+        if (s != null)
+            return s;
+        return Station.unknown(id);
+    }
+
+    @NonNull
+    public static Station getStation(@NonNull String reader, int id, String fallback) {
+        Station s = getStationNoFallback(reader, id);
+        if (s != null)
+            return s;
+        return Station.unknown(fallback);
     }
 
     private static String fallbackName(int id) {
@@ -148,25 +158,51 @@ public class StationTableReader {
         return !mStationDb.getLocalLanguagesList().contains(locale);
     }
 
-    String selectBestName(String englishName, String localName) {
-        if (showBoth() && englishName != null && !englishName.equals("")
-                && localName != null && !localName.equals("")) {
-            if (englishName.equals(localName))
-                return localName;
+    private String selectBestName(Stations.Names name, boolean isShort) {
+        String englishFull = name.getEnglish();
+        String englishShort = name.getEnglishShort();
+        String english = null;
+        boolean hasEnglishFull = englishFull != null && englishFull.length() != 0;
+        boolean hasEnglishShort = englishShort != null && englishShort.length() != 0;
+
+        if (hasEnglishFull && !hasEnglishShort)
+            english = englishFull;
+        else if (!hasEnglishFull && hasEnglishShort)
+            english = englishShort;
+        else
+            english = isShort ? englishShort : englishFull;
+
+        String localFull = name.getLocal();
+        String localShort = name.getLocalShort();
+        String local = null;
+        boolean hasLocalFull = localFull != null && localFull.length() != 0;
+        boolean hasLocalShort = localShort != null && localShort.length() != 0;
+
+        if (hasLocalFull && !hasLocalShort)
+            local = localFull;
+        else if (!hasLocalFull && hasLocalShort)
+            local = localShort;
+        else
+            local = isShort ? localShort : localFull;
+
+        if (showBoth() && english != null && !english.equals("")
+                && local != null && !local.equals("")) {
+            if (english.equals(local))
+                return local;
             if (useEnglishName())
-                return englishName + " (" + localName + ")";
-            return localName + " (" + englishName + ")";
+                return english + " (" + local + ")";
+            return local + " (" + english + ")";
         }
-        if (useEnglishName() && englishName != null && !englishName.equals("")) {
-            return englishName;
+        if (useEnglishName() && english != null && !english.equals("")) {
+            return english;
         }
 
-        if (localName != null && !localName.equals("")) {
+        if (local != null && !local.equals("")) {
             // Local preferred, or English not available
-            return localName;
+            return local;
         } else {
             // Local unavailable, use English
-            return englishName;
+            return english;
         }
     }
 
@@ -199,14 +235,14 @@ public class StationTableReader {
         Stations.Line pl = mStationDb.getLinesOrDefault(id, null);
         if (pl == null)
             return null;
-        return selectBestName(pl.getEnglishName(), pl.getLocalName());
+        return selectBestName(pl.getName(), true);
     }
 
-    public String getOperatorById(int id) {
+    public String getOperatorById(int id, boolean isShort) {
         Stations.Operator po = mStationDb.getOperatorsOrDefault(id, null);
         if (po == null)
             return null;
-        return selectBestName(po.getEnglishName(), po.getLocalName());
+        return selectBestName(po.getName(), isShort);
     }
 
     /**
@@ -224,10 +260,10 @@ public class StationTableReader {
         boolean hasLocation = ps.getLatitude() != 0 && ps.getLongitude() != 0;
 
         return new Station(
-                po == null ? null : selectBestName(po.getEnglishName(), po.getLocalName()),
-                pl == null ? null : selectBestName(pl.getEnglishName(), pl.getLocalName()),
-                selectBestName(ps.getEnglishName(), ps.getLocalName()),
-                null,
+                po == null ? null : selectBestName(po.getName(), true),
+                pl == null ? null : selectBestName(pl.getName(), true),
+                selectBestName(ps.getName(), false),
+                selectBestName(ps.getName(), true),
                 hasLocation ? Float.toString(ps.getLatitude()) : null,
                 hasLocation ? Float.toString(ps.getLongitude()) : null,
                 mStationDb.getTtsHintLanguage()

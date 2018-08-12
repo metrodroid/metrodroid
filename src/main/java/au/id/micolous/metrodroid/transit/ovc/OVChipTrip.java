@@ -23,19 +23,15 @@ package au.id.micolous.metrodroid.transit.ovc;
 
 import android.os.Parcel;
 import android.support.annotation.Nullable;
-import android.text.TextUtils;
 import android.util.Log;
 
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 
-import au.id.micolous.farebot.R;
-import au.id.micolous.metrodroid.MetrodroidApplication;
 import au.id.micolous.metrodroid.transit.Station;
 import au.id.micolous.metrodroid.transit.TransitCurrency;
 import au.id.micolous.metrodroid.transit.Trip;
 import au.id.micolous.metrodroid.util.StationTableReader;
-import au.id.micolous.metrodroid.util.Utils;
 
 public class OVChipTrip extends Trip {
     private static final String TAG = "OVChipTrip";
@@ -87,11 +83,7 @@ public class OVChipTrip extends Trip {
 
         if (outTransaction != null) {
             mEndStationId = outTransaction.getStation();
-            if (getStation(mAgency, outTransaction.getStation()) != null) {
-                mEndStation = getStation(mAgency, outTransaction.getStation());
-            } else {
-                mEndStation = new Station(Utils.localizeString(R.string.unknown_format, mEndStationId), null, null);
-            }
+            mEndStation = getStation(mAgency, mEndStationId);
             mExitTimestamp = OVChipTransitData.convertDate(outTransaction.getDate(), outTransaction.getTime());
             mFare = outTransaction.getAmount();
         } else {
@@ -261,25 +253,8 @@ public class OVChipTrip extends Trip {
     }
 
     @Override
-    public String getStartStationName() {
-        if (mStartStation != null && !TextUtils.isEmpty(mStartStation.getStationName())) {
-            return mStartStation.getStationName();
-        } else {
-            return Utils.localizeString(R.string.unknown_format, mStartStationId);
-        }
-    }
-
-    @Override
     public Station getStartStation() {
         return mStartStation;
-    }
-
-    @Override
-    public String getEndStationName() {
-        if (mEndStation != null && !TextUtils.isEmpty(mEndStation.getStationName())) {
-            return mEndStation.getStationName();
-        }
-        return null;
     }
 
     @Override
@@ -322,11 +297,6 @@ public class OVChipTrip extends Trip {
 
     public boolean hasTime() {
         return (mTimestamp != null);
-    }
-
-    @Override
-    public boolean hasFare() {
-        return true;
     }
 
     @Nullable

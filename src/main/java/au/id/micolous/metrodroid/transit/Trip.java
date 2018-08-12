@@ -51,19 +51,15 @@ public abstract class Trip implements Parcelable {
         String startLanguage = null, endLanguage = null;
         boolean localisePlaces = MetrodroidApplication.localisePlaces();
 
-        if (trip.getStartStationName() != null) {
-            startStationName = trip.getStartStationName();
-            if (trip.getStartStation() != null) {
-                startLanguage = trip.getStartStation().getLanguage();
-            }
+        if (trip.getStartStation() != null) {
+            startStationName = trip.getStartStation().getShortStationName();
+            startLanguage = trip.getStartStation().getLanguage();
         }
 
-        if (trip.getEndStationName() != null &&
-                (!trip.getEndStationName().equals(trip.getStartStationName()))) {
-            endStationName = trip.getEndStationName();
-            if (trip.getEndStation() != null) {
-                endLanguage = trip.getEndStation().getLanguage();
-            }
+        if (trip.getEndStation() != null &&
+                (trip.getStartStation() == null && !trip.getEndStation().getStationName().equals(trip.getStartStation().getStationName()))) {
+            endStationName = trip.getEndStation().getShortStationName();
+            endLanguage = trip.getEndStation().getLanguage();
         }
 
         // No information is available.
@@ -255,29 +251,11 @@ public abstract class Trip implements Parcelable {
     }
 
     /**
-     * Starting station name for the trip, or null if unknown.
-     *
-     * If supplied, this will be shown in the travel history.
-     */
-    public String getStartStationName() {
-        return null;
-    }
-
-    /**
      * Starting station info for the trip, or null if unknown.
      *
      * If supplied, this will be used to render a map of the trip.
      */
     public Station getStartStation() {
-        return null;
-    }
-
-    /**
-     * Ending station name for the trip, or null if unknown.
-     *
-     * If supplied, this will be shown in the travel history.
-     */
-    public String getEndStationName() {
         return null;
     }
 
@@ -289,20 +267,6 @@ public abstract class Trip implements Parcelable {
     public Station getEndStation() {
         return null;
     }
-
-    /**
-     * If true, it means that this activity has a known fare associated with it.  This should be
-     * true for most transaction types.
-     * <p>
-     * Reasons for this being false, including not actually having the trip cost available, and for
-     * events like card activation and card banning which have no cost associated with the action.
-     * <p>
-     * If a trip is free of charge, this should still be set to true.  However, if the trip is
-     * associated with a monthly travel pass, then this should be set to false.
-     *
-     * @return true if there is a financial transaction associated with the Trip.
-     */
-    public abstract boolean hasFare();
 
     /**
      * Formats the cost of the trip in the appropriate local currency.  Be aware that your

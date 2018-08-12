@@ -75,11 +75,6 @@ public class ErgTrip extends Trip {
         return ts;
     }
 
-    @Override
-    public boolean hasFare() {
-        return true;
-    }
-
     @Nullable
     @Override
     public TransitCurrency getFare() {

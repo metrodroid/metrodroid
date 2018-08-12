@@ -1,10 +1,7 @@
 /*
  * OrcaTest.java
  *
- * Primary author: Vladimir Serbinenko
- * 
- * Copyright 2017 Michael Farrell <micolous+git@gmail.com>
- * Copyright 2018 Google Inc.
+ * Copyright 2018 Google
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -108,9 +105,9 @@ public class OrcaTest extends AndroidTestCase {
         assertNull(trips[0].getRouteName());
         assertTrue(trips[0].hasTime());
         assertEquals(Trip.Mode.BUS, trips[0].getMode());
-        assertNull(trips[0].getStartStation());
+        assertNotNull(trips[0].getStartStation());
         assertNull(trips[0].getEndStation());
-        assertEquals("Coach #30246", trips[0].getStartStationName());
+        assertEquals("Coach #30246", trips[0].getStartStation().getStationName());
 
         assertEquals("Unknown (15)", trips[1].getAgencyName());
         assertEquals("Unknown (15)", trips[1].getShortAgencyName());
@@ -119,9 +116,9 @@ public class OrcaTest extends AndroidTestCase {
         assertNull(trips[1].getRouteName());
         assertTrue(trips[1].hasTime());
         assertEquals(Trip.Mode.BUS, trips[1].getMode());
-        assertNull(trips[1].getStartStation());
+        assertNotNull(trips[1].getStartStation());
         assertNull(trips[1].getEndStation());
-        assertEquals("Coach #30262", trips[1].getStartStationName());
+        assertEquals("Coach #30262", trips[1].getStartStation().getStationName());
 
         assertEquals("Sound Transit", trips[2].getAgencyName());
         assertEquals("ST", trips[2].getShortAgencyName());

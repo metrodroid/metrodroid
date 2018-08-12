@@ -264,6 +264,17 @@ public class LicenseActivity extends MetrodroidActivity {
             + "\n"
             + "Stop mapping information is available in Metrodroid's source repository.\n\n\n";
 
+    private static final String BART_GTFS = "The BART stop database used in this software "
+            + "contains information derived from BART GTFS feed, made available under the "
+            + "Developer License Agreement by BART.\n"
+            + "\n"
+            + "You may obtain a copy of the raw data and it's license at:\n"
+            + "\n"
+            + "   http://www.bart.gov/schedules/developers/developer-license-agreement\n"
+            + "\n"
+            + "   http://www.bart.gov/schedules/developers/gtfs\n"
+            + "\n"
+            + "Stop mapping information is available in Metrodroid's source repository.\n\n\n";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -291,6 +302,7 @@ public class LicenseActivity extends MetrodroidActivity {
         // TODO: Read this programatically
         lblLicenseText.append(SEQ_GO_GTFS);
         lblLicenseText.append(LAX_TAP_GTFS);
+        lblLicenseText.append(BART_GTFS);
     }
 
 

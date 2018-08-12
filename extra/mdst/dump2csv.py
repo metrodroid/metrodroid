@@ -60,23 +60,23 @@ def dump2csv(database, output_fn):
   while start_pos + index_off > f.tell():
     rec = read_delimited_message(Station, f)
     d = {'id': rec.id}
-    if rec.english_name:
-      d['name_en'] = rec.english_name
-    if rec.local_name:
-      d['name'] = rec.local_name
+    if rec.name.english:
+      d['name_en'] = rec.name.english
+    if rec.name.local:
+      d['name'] = rec.name.local
     if rec.latitude != 0 and rec.longitude != 0:
       d['lat'] = '%.6f' % rec.latitude
       d['lon'] = '%.6f' % rec.longitude
     if rec.operator_id:
       d['oper_id'] = rec.operator_id
       oper = header.operators[rec.operator_id]
-      d['oper_en'] = oper.english_name
-      d['oper'] = oper.local_name
+      d['oper_en'] = oper.name.english
+      d['oper'] = oper.name.local
     if rec.line_id:
       d['line_id'] = rec.line_id
       line = header.lines[rec.line_id]
-      d['line_en'] = line.english_name
-      d['line'] = line.local_name
+      d['line_en'] = line.name.english
+      d['line'] = line.name.local
     writer.writerow(d)
 
   output_fh.close()

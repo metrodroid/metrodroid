@@ -120,27 +120,24 @@ public class EZLinkTrip extends Trip {
         return Utils.localizeString(R.string.unknown_format, mTransaction.getType().toString());
     }
 
-    @Override
-    public boolean hasFare() {
-        return (mTransaction.getType() != CEPASTransaction.TransactionType.CREATION);
-    }
-
     @Nullable
     @Override
     public TransitCurrency getFare() {
+        if (mTransaction.getType() == CEPASTransaction.TransactionType.CREATION)
+            return null;
         return new TransitCurrency(mTransaction.getAmount(), "SGD");
     }
 
     @Override
     public Station getStartStation() {
         if (mTransaction.getType() == CEPASTransaction.TransactionType.CREATION)
-            return null;
+            return Station.nameOnly(mTransaction.getUserData());
         if (mTransaction.getUserData().charAt(3) == '-'
                 || mTransaction.getUserData().charAt(3) == ' ') {
             String startStationAbbr = mTransaction.getUserData().substring(0, 3);
             return EZLinkTransitData.getStation(startStationAbbr);
         }
-        return null;
+        return Station.nameOnly(mTransaction.getUserData());
     }
 
     @Override
@@ -151,30 +148,6 @@ public class EZLinkTrip extends Trip {
                 || mTransaction.getUserData().charAt(3) == ' ') {
             String endStationAbbr = mTransaction.getUserData().substring(4, 7);
             return EZLinkTransitData.getStation(endStationAbbr);
-        }
-        return null;
-    }
-
-    @Override
-    public String getStartStationName() {
-        Station startStation = getStartStation();
-        if (startStation != null)
-            return startStation.getStationName();
-        else if (mTransaction.getUserData().charAt(3) == '-'
-                || mTransaction.getUserData().charAt(3) == ' ') {
-            return mTransaction.getUserData().substring(0, 3); // extract startStationAbbr
-        }
-        return mTransaction.getUserData();
-    }
-
-    @Override
-    public String getEndStationName() {
-        Station endStation = getEndStation();
-        if (endStation != null)
-            return endStation.getStationName();
-        else if (mTransaction.getUserData().charAt(3) == '-'
-                || mTransaction.getUserData().charAt(3) == ' ') {
-            return mTransaction.getUserData().substring(4, 7); // extract endStationAbbr
         }
         return null;
     }

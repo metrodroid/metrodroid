@@ -4,6 +4,7 @@
  * Copyright 2011 "an anonymous contributor"
  * Copyright 2011-2014 Eric Butler <eric@codebutler.com>
  * Copyright 2018 Michael Farrell <micolous+git@gmail.com>
+ * Copyright 2018 Google
  *
  * Thanks to:
  * An anonymous contributor for reverse engineering Clipper data and providing
@@ -27,6 +28,7 @@ package au.id.micolous.metrodroid.transit.clipper;
 
 import android.os.Parcel;
 import android.support.annotation.Nullable;
+import android.support.annotation.VisibleForTesting;
 import android.text.Spanned;
 
 import org.apache.commons.lang3.ArrayUtils;
@@ -76,7 +78,8 @@ public class ClipperTransitData extends TransitData {
         CLIPPER_EPOCH = epoch;
     }
 
-    private static final int APP_ID = 0x9011f2;
+    @VisibleForTesting
+    public static final int APP_ID = 0x9011f2;
 
     private long mSerialNumber;
     private short mBalance;
@@ -192,7 +195,7 @@ public class ClipperTransitData extends TransitData {
         byte[] data = file.getData();
         int pos = data.length - RECORD_LENGTH;
         List<ClipperTrip> result = new ArrayList<>();
-        while (pos > 0) {
+        while (pos >= 0) {
             byte[] slice = Utils.byteArraySlice(data, pos, RECORD_LENGTH);
             final ClipperTrip trip = createTrip(slice);
             if (trip != null) {
@@ -253,7 +256,7 @@ public class ClipperTransitData extends TransitData {
         byte[] data = file.getData();
         int pos = data.length - RECORD_LENGTH;
         List<ClipperRefill> result = new ArrayList<>();
-        while (pos > 0) {
+        while (pos >= 0) {
             byte[] slice = Utils.byteArraySlice(data, pos, RECORD_LENGTH);
             ClipperRefill refill = createRefill(slice);
             if (refill != null)

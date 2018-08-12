@@ -22,6 +22,9 @@ package au.id.micolous.metrodroid.transit;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import au.id.micolous.farebot.R;
+import au.id.micolous.metrodroid.util.Utils;
+
 public class Station implements Parcelable {
     public static final Creator<Station> CREATOR = new Creator<Station>() {
         public Station createFromParcel(Parcel parcel) {
@@ -117,5 +120,18 @@ public class Station implements Parcelable {
         parcel.writeString(mLatitude);
         parcel.writeString(mLongitude);
         parcel.writeString(mLanguage);
+    }
+
+    public static Station unknown(String id) {
+        return new Station(Utils.localizeString(R.string.unknown_format, id), null, null);
+    }
+
+    public static Station unknown(Integer id) {
+        return new Station(Utils.localizeString(R.string.unknown_format,
+                "0x" + Integer.toHexString(id)), null, null);
+    }
+
+    public static Station nameOnly(String name) {
+        return new Station(name, null, null);
     }
 }

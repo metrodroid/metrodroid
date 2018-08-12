@@ -49,7 +49,7 @@ with open(os.path.join(DB_PATH, 'stations.csv'), 'r') as csvfile:
       continue
     s = stations_pb2.Station()
     s.id = getID(row[0].strip())
-    s.english_name = row[1].strip()
+    s.name.english = row[1].strip()
     if row[4].strip() and row[5].strip():
         s.latitude = float(row[4].strip())
         s.longitude = float(row[5].strip())

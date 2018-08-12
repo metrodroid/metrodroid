@@ -66,11 +66,6 @@ public class SmartRiderTrip extends Trip {
         }
     }
 
-    @Override
-    public boolean hasFare() {
-        return true;
-    }
-
     @Nullable
     @Override
     public TransitCurrency getFare() {

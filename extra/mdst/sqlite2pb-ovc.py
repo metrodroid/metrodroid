@@ -94,12 +94,12 @@ for row in cur:
   # create the record
   s = Station()
   s.id = station_id
-  s.english_name = row[3]
+  s.name.english = row[3]
   if row[4] is not None and row[5] is not None:
     s.latitude = row[4]
     s.longitude = row[5]
   #else:
-  #  print('Missing location: (%d) %s' % (s.id, s.english_name))
+  #  print('Missing location: (%d) %s' % (s.id, s.name.english))
   s.operator_id = operator_id
   if line_id is not None:
     s.line_id = line_id

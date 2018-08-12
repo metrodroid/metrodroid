@@ -102,41 +102,29 @@ public class SeqGoTrip extends NextfareTrip {
     }
 
     @Override
-    public String getStartStationName() {
+    public Station getStartStation() {
         if (mStartStation < 0) {
             return null;
-        } else {
-            Station s = getStartStation();
-            if (s == null) {
-                return Utils.localizeString(R.string.unknown_format, mStartStation);
-            } else {
-                return s.getStationName();
-            }
         }
-    }
 
-    @Override
-    public Station getStartStation() {
-        return getStation(mStartStation);
-    }
-
-    @Override
-    public String getEndStationName() {
-        if (mEndStation < 0) {
-            return null;
-        } else {
-            Station s = getEndStation();
-            if (s == null) {
-                return Utils.localizeString(R.string.unknown_format, mEndStation);
-            } else {
-                return s.getStationName();
-            }
-        }
+        Station s = getStation(mStartStation);
+        if (s != null)
+            return s;
+        return Station.unknown(mStartStation);
     }
 
     @Override
     public Station getEndStation() {
-        return getStation(mEndStation);
+        if (mEndStation < 0) {
+            return null;
+        }
+
+        Station s = getStation(mEndStation);
+
+        if (s == null)
+            return s;
+
+        return Station.unknown(mEndStation);
     }
 
     @Override
