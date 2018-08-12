@@ -57,7 +57,8 @@ public abstract class Trip implements Parcelable {
         }
 
         if (trip.getEndStation() != null &&
-                (trip.getStartStation() == null && !trip.getEndStation().getStationName().equals(trip.getStartStation().getStationName()))) {
+                (trip.getStartStation() == null ||
+                        !trip.getEndStation().getStationName().equals(trip.getStartStation().getStationName()))) {
             endStationName = trip.getEndStation().getShortStationName();
             endLanguage = trip.getEndStation().getLanguage();
         }
