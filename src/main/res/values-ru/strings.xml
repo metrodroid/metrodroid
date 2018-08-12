@@ -1,2 +1,148 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources></resources>
+<?xml version='1.0' encoding='UTF-8'?>
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2"><string name="app_name">Метродроид</string>
+
+    <string name="license">Лицензии</string>
+    <string name="directions">Приложите карту.</string>
+    <string name="reading_card">Карта считывается…</string>
+    <string name="dont_move">Не двигайте карту</string>
+    <string name="delete_card">Удалить карту</string>
+    <string name="unknown_card">Неизвестная карта</string>
+    <string name="copy_xml">Скопировать</string>
+    <string name="share_xml">Поделиться</string>
+    <string name="save_xml">Сохранить в файл</string>
+    <string name="history">История</string>
+    <string name="balance">Остаток</string>
+    <string name="no_trip_data">Не обнаружены поездки. Эта карточка использовалась?</string>
+    <string name="import_xml">Импортировать</string>
+    <string name="import_clipboard">Импортировать из буфера обмена</string>
+    <string name="import_file">Импортировать из файла</string>
+    <string name="export">Экспортировать</string>
+    <string name="export_filename">Имя файла для экспорта</string>
+    <string name="export_all">Экспортировать всё</string>
+    <string name="about">О программе</string>
+    <string name="preferences">Настройки</string>
+    <string name="balance_speech">Остаток <xliff:g id="balance" example="$13.37">%s</xliff:g></string>
+    <string name="supported_cards">Поддерживаемые карты</string>
+    <string name="nfc_off_error">NFC оключён</string>
+    <string name="turn_on_nfc">Пожалуйста, включите NFC чтобы прочитать карту.</string>
+    <string name="unknown_card_header">Неизвестная карта</string>
+    <string name="unknown_card_description">Эта карта ещё не поддерживается Метродроидом. Показаны необранотанные данные.</string>
+
+    <string name="unknown_more_info">Более</string>
+    <string name="scanned_cards">Ранее прочитанные карточки</string>
+    <string name="keys_required">Для чтения этой карты необходимы ключи доступа.</string>
+    <string name="nfc_unavailable">NFC недоступен</string>
+    <string name="date">Дата</string>
+    <string name="time">Время</string>
+    <string name="card_type">Тип карты</string>
+    <string name="obfuscation_card_numbers">Спрятать номера карт</string>
+    <string name="obfuscation_card_numbers_desc">Нигде не показывать номера карт</string>
+
+    <string name="hidden_card_number">Номер карты спрятан</string>
+    <string name="pref_show_local_and_english_title">Показывать местное и английское название станций</string>
+    <string name="pref_show_local_and_english_desc">Если включено, то показывает и местное и английское название станций. Если выключено то показывается только один, наиболее подходящий, вариант.</string>
+
+    <plurals name="minutes">
+	<item quantity="one">%d минуту</item>
+	<item quantity="few">%d минуты</item>
+	<item quantity="many">%d минут</item>
+</plurals>
+    <plurals name="hours">
+	<item quantity="one">%d час</item>
+	<item quantity="few">%d часа</item>
+	<item quantity="many">%d часов</item>
+</plurals>
+    <plurals name="days">
+	<item quantity="one">%d день</item>
+	<item quantity="few">%d дня</item>
+	<item quantity="many">%d дней</item>
+</plurals>
+    <plurals name="trips_remaining">
+	<item quantity="one">Осталось %d поездка</item>
+	<item quantity="few">Осталось %d поездки</item>
+	<item quantity="many">Осталось %d поездок</item>
+</plurals>
+    <plurals name="troika_rides">
+	<item quantity="one">%d поездка</item>
+	<item quantity="few">%d поездки</item>
+	<item quantity="many">%d поездок</item>
+</plurals>
+
+    <string name="enabled">Включено</string>
+    <string name="disabled">Выключено</string>
+
+    <string name="card_name_ravkav">Рав Кав</string>
+    <string name="ravkav_agency_egged">Эгед</string>
+    <string name="ravkav_agency_dan">Дан</string>
+    <string name="ravkav_agency_city_pass">Сити Пасс</string>
+    <string name="ravkav_agency_topup_app">Приложение пополнения Рав Кав</string>
+
+    <string name="trip_description">(Из )%1$s [→] (в )%2$s</string>
+    <string name="trip_description_unknown_start">До %s</string>
+    <string name="time_from_to">%s → %s</string>
+    <string name="time_from_unknown_to">?:?? → %s</string>
+
+
+    <string name="location_seattle">Сиэтл, Штат Вашингтон, США</string>
+    <string name="location_san_francisco">Сан Франциско, Калифорния, США</string>
+    <string name="location_singapore">Сингапур</string>
+    <string name="location_tokyo">Токио, Япония</string>
+    <string name="location_kansai">Кансай, Япония</string>
+    <string name="location_the_netherlands">Нидерланды</string>
+    <string name="location_sao_paulo">Сан Пауло, Бразилия</string>
+    <string name="location_helsinki_finland">Хельсинки, Финляндия</string>
+    <string name="location_sydney_australia">Сидней, Австралия</string>
+    <string name="location_brisbane_seq_australia">Брисбен</string>
+    <string name="location_victoria_australia">Виктория, Австралия</string>
+    <string name="location_hong_kong">Гонг-Конг</string>
+    <string name="location_shenzhen">Шэньчжэнь, Китай</string>
+    <string name="location_los_angeles">Лос Анджелес, Калифорния, США</string>
+    <string name="location_act_australia">Канберра, Австралия</string>
+    <string name="location_wa_australia">Западная Австралия, Австралия</string>
+    <string name="location_christchurch_nz">Крайстчёрч, Новая Зеландия</string>
+    <string name="location_moscow">Москва, Россия</string>
+    <string name="location_saint_petersburg">Санкт-Петербург, Россия</string>
+    <string name="location_israel">Израиль</string>
+
+    <string name="mode_bus">Автобус</string>
+    <string name="mode_train">Поезд</string>
+    <string name="mode_tram">Трамвай</string>
+    <string name="mode_metro">Метро</string>
+    <string name="mode_ferry">Паром</string>
+    <string name="ez_topup">Пополнение</string>
+    <string name="card_name_suica">Suica</string>
+    <string name="card_name_icoca">ICOCA</string>
+    <string name="card_name_pasmo">PASMO</string>
+
+    <string name="opal_automatic_top_up">Автоматическое пополнение</string>
+    <string name="opal_weekly_trips">Поездок за неделю</string>
+    <string name="opal_vehicle_bus">Автобус</string>
+    <string name="opal_vehicle_ferry_lr">Паром или трамвай</string>
+    <string name="opal_vehicle_rail">Поезд</string>
+    <string name="opal_action_new_journey">Новая поездка</string>
+    <string name="szt_metro">Метро Шэньчжэня</string>
+    <string name="szt_bus">Автобус Шэньчжэня</string>
+    <string name="szt_station_gate">%s, турникет %s</string>
+
+    <string name="card_name_troika">Тройка</string>
+    <string name="card_name_podorozhnik">Подорожник</string>
+    <string name="card_name_troika_podorozhnik_hybrid">Тройка+Подорожник</string>
+    <string name="troika_fare_single">Единый</string>
+    <string name="troika_fare_90mins">90 минут</string>
+    <string name="validity_length">Валиден %s</string>
+    <string name="moscow_subway">Московское метро</string>
+    <string name="moscow_monorail">Московский Монорельс</string>
+    <string name="moscow_ground_transport">Москова, наземный транспорт</string>
+    <string name="moscow_mcc">Московское Центральное Кольцо (МЦК)</string>
+    <string name="subway_trips">Поездок на метро</string>
+    <string name="ground_trips">Поездок на наземном транспорте</string>
+    <string name="podorozhnik_topup">Пополнение Подорожника</string>
+
+    <string name="led_bus">Автобус Санкт-Петербурга</string>
+    <string name="led_metro">Петербургское метро</string>
+
+    <string name="nfc_enabled">NFC: включено</string>
+    <string name="nfc_disabled">NFC: выключено</string>
+    <string name="nfc_not_available">NFC: не доступно</string>
+    <string name="balances_and_subscriptions">Билеты</string>
+</resources>
