@@ -28,11 +28,6 @@ class TroikaTrip extends Trip {
         mFareDesc = fareDesc;
     }
 
-    @Override
-    public String getStartStationName() {
-        return mValidator != null ? Integer.toString(mValidator) : null;
-    }
-
     private TroikaTrip(Parcel in) {
         if (in.readByte() == 0) {
             mValidator = null;
@@ -108,11 +103,6 @@ class TroikaTrip extends Trip {
     @Override
     public Calendar getStartTimestamp() {
         return mStartTime;
-    }
-
-    @Override
-    public boolean hasFare() {
-        return mFareDesc != null;
     }
 
     // Troika doesn't store monetary price of trip. Only a fare code. So show this fare
