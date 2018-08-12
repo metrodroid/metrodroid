@@ -197,7 +197,7 @@ public class NextfareTransitData extends TransitData {
                 trip.mContinuation = tapOn.isContinuation();
                 trip.mCost = -tapOn.getValue();
 
-                if (!mHasUnknownStations && trip.mStartStation != 0 && trip.getStartStation() == null) {
+                if (!mHasUnknownStations && trip.mStartStation != 0 && trip.getStartStation() != null && trip.getStartStation().isUnknown()) {
                     mHasUnknownStations = true;
                 }
 
@@ -212,7 +212,7 @@ public class NextfareTransitData extends TransitData {
                     trip.mEndStation = tapOff.getStation();
                     trip.mCost -= tapOff.getValue();
 
-                    if (!mHasUnknownStations && trip.mEndStation != 0 && trip.getEndStation() == null) {
+                    if (!mHasUnknownStations && trip.mEndStation != 0 && trip.getEndStation() != null && trip.getEndStation().isUnknown()) {
                         mHasUnknownStations = true;
                     }
 

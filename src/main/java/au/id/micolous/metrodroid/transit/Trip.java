@@ -252,19 +252,31 @@ public abstract class Trip implements Parcelable {
     }
 
     /**
-     * Starting station info for the trip, or null if unknown.
+     * Starting station info for the trip, or null if there is no station information available.
      *
      * If supplied, this will be used to render a map of the trip.
+     *
+     * If there is station information available on the card, but the station is unknown (maybe it
+     * doesn't appear in a MdST file, or there is no MdST data available yet), use
+     * {@link Station#unknown(String)} or {@link Station#unknown(Integer)} to create an unknown
+     * {@link Station}.
      */
+    @Nullable
     public Station getStartStation() {
         return null;
     }
 
     /**
-     * Ending station info for the trip, or null if unknown.
+     * Ending station info for the trip, or null if there is no station information available.
      *
      * If supplied, this will be used to render a map of the trip.
+     *
+     * If there is station information available on the card, but the station is unknown (maybe it
+     * doesn't appear in a MdST file, or there is no MdST data available yet), use
+     * {@link Station#unknown(String)} or {@link Station#unknown(Integer)} to create an unknown
+     * {@link Station}.
      */
+    @Nullable
     public Station getEndStation() {
         return null;
     }

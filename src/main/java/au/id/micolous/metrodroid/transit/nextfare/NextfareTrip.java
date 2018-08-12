@@ -102,6 +102,7 @@ public class NextfareTrip extends Trip implements Comparable<NextfareTrip> {
     }
 
     @Override
+    @Nullable
     public Station getStartStation() {
         if (mStartStation < 0) {
             return null;
@@ -110,6 +111,7 @@ public class NextfareTrip extends Trip implements Comparable<NextfareTrip> {
     }
 
     @Override
+    @Nullable
     public Station getEndStation() {
         if (mEndTime != null && mEndStation > -1) {
             return Station.unknown(mEndStation);

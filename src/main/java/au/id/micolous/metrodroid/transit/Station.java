@@ -36,6 +36,7 @@ public class Station implements Parcelable {
         }
     };
     protected final String mCompanyName, mLineName, mStationName, mShortStationName, mLatitude, mLongitude, mLanguage;
+    protected boolean mIsUnknown = false;
 
     public Station(String stationName, String latitude, String longitude) {
         this(stationName, null, latitude, longitude);
@@ -67,6 +68,7 @@ public class Station implements Parcelable {
         mLatitude = parcel.readString();
         mLongitude = parcel.readString();
         mLanguage = parcel.readString();
+        mIsUnknown = parcel.readInt() == 1;
     }
 
     public String getStationName() {
@@ -120,15 +122,27 @@ public class Station implements Parcelable {
         parcel.writeString(mLatitude);
         parcel.writeString(mLongitude);
         parcel.writeString(mLanguage);
+        parcel.writeInt(mIsUnknown ? 1 : 0);
+    }
+
+    public boolean isUnknown() {
+        return mIsUnknown;
+    }
+
+    private Station setUnknown() {
+        mIsUnknown = true;
+        return this;
     }
 
     public static Station unknown(String id) {
-        return new Station(Utils.localizeString(R.string.unknown_format, id), null, null);
+        return new Station(Utils.localizeString(R.string.unknown_format, id), null, null)
+                .setUnknown();
     }
 
     public static Station unknown(Integer id) {
         return new Station(Utils.localizeString(R.string.unknown_format,
-                "0x" + Integer.toHexString(id)), null, null);
+                "0x" + Integer.toHexString(id)), null, null)
+                .setUnknown();
     }
 
     public static Station nameOnly(String name) {
