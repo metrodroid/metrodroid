@@ -118,7 +118,8 @@ public class CardTripsFragment extends ListFragment {
         Trip trip = (Trip) getListAdapter().getItem(position);
         if (trip == null || !(
                 (trip.getStartStation() != null && trip.getStartStation().hasLocation())
-                        || (trip.getEndStation() != null && trip.getEndStation().hasLocation()))) {
+                        || (trip.getEndStation() != null && trip.getEndStation().hasLocation()))
+                || Build.VERSION.SDK_INT < 17) {
             Log.d(TAG, "Oops, couldn't display the trip, despite advertising we could");
             return;
         }
@@ -346,6 +347,8 @@ public class CardTripsFragment extends ListFragment {
 
         @Override
         public boolean isEnabled(int position) {
+            if (Build.VERSION.SDK_INT < 17)
+                return false;
             Trip trip = getItem(position);
             if (trip == null) {
                 return false;
