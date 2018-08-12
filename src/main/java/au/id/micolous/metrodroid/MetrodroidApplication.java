@@ -27,7 +27,7 @@ import android.os.StrictMode;
 import android.preference.PreferenceManager;
 import android.util.Log;
 
-import net.kazzz.felica.lib.FeliCaLib;
+import net.kazzz.felica.FeliCaLib;
 
 import org.simpleframework.xml.Serializer;
 import org.simpleframework.xml.convert.Registry;
@@ -56,7 +56,6 @@ import au.id.micolous.metrodroid.card.desfire.settings.DesfireFileSettings;
 import au.id.micolous.metrodroid.card.iso7816.ISO7816Application;
 import au.id.micolous.metrodroid.card.iso7816.ISO7816SelectorElement;
 import au.id.micolous.metrodroid.card.ultralight.UltralightPage;
-import au.id.micolous.metrodroid.util.StationTableReader;
 import au.id.micolous.metrodroid.xml.Base64String;
 import au.id.micolous.metrodroid.xml.CardConverter;
 import au.id.micolous.metrodroid.xml.CardTypeTransform;

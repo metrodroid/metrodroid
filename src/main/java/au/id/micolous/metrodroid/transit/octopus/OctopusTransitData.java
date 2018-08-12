@@ -29,20 +29,14 @@ import au.id.micolous.metrodroid.card.felica.FelicaService;
 import au.id.micolous.metrodroid.transit.TransitBalance;
 import au.id.micolous.metrodroid.transit.TransitBalanceStored;
 import au.id.micolous.metrodroid.transit.CardInfo;
-import au.id.micolous.metrodroid.transit.Subscription;
 import au.id.micolous.metrodroid.transit.TransitCurrency;
 import au.id.micolous.metrodroid.transit.TransitData;
 import au.id.micolous.metrodroid.transit.TransitIdentity;
-import au.id.micolous.metrodroid.ui.HeaderListItem;
-import au.id.micolous.metrodroid.ui.ListItem;
 import au.id.micolous.metrodroid.util.Utils;
-
-import net.kazzz.felica.lib.FeliCaLib;
 
 import org.apache.commons.lang3.ArrayUtils;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import au.id.micolous.farebot.R;
 
@@ -62,6 +56,12 @@ public class OctopusTransitData extends TransitData {
             return new OctopusTransitData[size];
         }
     };
+    public static final int SYSTEMCODE_SZT = 0x8005;
+    public static final int SYSTEMCODE_OCTOPUS = 0x8008;
+
+    public static final int SERVICE_OCTOPUS = 0x0117;
+    public static final int SERVICE_SZT = 0x0118;
+
     private static final String TAG = "OctopusTransitData";
     private int mOctopusBalance = 0;
     private int mShenzhenBalance = 0;
@@ -71,7 +71,7 @@ public class OctopusTransitData extends TransitData {
     public OctopusTransitData(FelicaCard card) {
         FelicaService service = null;
         try {
-            service = card.getSystem(FeliCaLib.SYSTEMCODE_OCTOPUS).getService(FeliCaLib.SERVICE_OCTOPUS);
+            service = card.getSystem(SYSTEMCODE_OCTOPUS).getService(SERVICE_OCTOPUS);
         } catch (NullPointerException ignored) {
         }
 
@@ -83,7 +83,7 @@ public class OctopusTransitData extends TransitData {
 
         service = null;
         try {
-            service = card.getSystem(FeliCaLib.SYSTEMCODE_SZT).getService(FeliCaLib.SERVICE_SZT);
+            service = card.getSystem(SYSTEMCODE_SZT).getService(SERVICE_SZT);
         } catch (NullPointerException ignored) {
         }
 
@@ -102,24 +102,24 @@ public class OctopusTransitData extends TransitData {
     }
 
     public static boolean check(FelicaCard card) {
-        return (card.getSystem(FeliCaLib.SYSTEMCODE_OCTOPUS) != null) || (card.getSystem(FeliCaLib.SYSTEMCODE_SZT) != null);
+        return (card.getSystem(SYSTEMCODE_OCTOPUS) != null) || (card.getSystem(SYSTEMCODE_SZT) != null);
     }
 
     public static CardInfo earlyCheck(int[] systemCodes) {
         // OctopusTransitData is special, because it handles two types of cards.  So we can just
         // directly say which cardInfo matches.
-        if (ArrayUtils.contains(systemCodes, FeliCaLib.SYSTEMCODE_OCTOPUS))
+        if (ArrayUtils.contains(systemCodes, SYSTEMCODE_OCTOPUS))
             return CardInfo.OCTOPUS; // also dual-mode cards.
 
-        if (ArrayUtils.contains(systemCodes, FeliCaLib.SYSTEMCODE_SZT))
+        if (ArrayUtils.contains(systemCodes, SYSTEMCODE_SZT))
             return CardInfo.SZT;
 
         return null;
     }
 
     public static TransitIdentity parseTransitIdentity(FelicaCard card) {
-        if (card.getSystem(FeliCaLib.SYSTEMCODE_SZT) != null) {
-            if (card.getSystem(FeliCaLib.SYSTEMCODE_OCTOPUS) != null) {
+        if (card.getSystem(SYSTEMCODE_SZT) != null) {
+            if (card.getSystem(SYSTEMCODE_OCTOPUS) != null) {
                 // Dual-mode card.
                 return new TransitIdentity(Utils.localizeString(R.string.card_name_octopus_szt_dual), null);
             } else {

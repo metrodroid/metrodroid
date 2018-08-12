@@ -25,8 +25,6 @@ package au.id.micolous.metrodroid.transit.edy;
 import android.os.Parcel;
 import android.support.annotation.Nullable;
 
-import net.kazzz.felica.lib.FeliCaLib;
-
 import org.apache.commons.lang3.ArrayUtils;
 
 import java.util.ArrayList;
@@ -44,6 +42,8 @@ import au.id.micolous.metrodroid.util.Utils;
 
 public class EdyTransitData extends TransitData {
     // defines
+    public static final int SYSTEMCODE_EDY = 0xfe00;         // Edy (=共通領域)
+
     public static final int FELICA_SERVICE_EDY_ID = 0x110B;
     public static final int FELICA_SERVICE_EDY_BALANCE = 0x1317;
     public static final int FELICA_SERVICE_EDY_HISTORY = 0x170F;
@@ -73,21 +73,21 @@ public class EdyTransitData extends TransitData {
 
     public EdyTransitData(FelicaCard card) {
         // card ID is in block 0, bytes 2-9, big-endian ordering
-        FelicaService serviceID = card.getSystem(FeliCaLib.SYSTEMCODE_EDY).getService(FELICA_SERVICE_EDY_ID);
+        FelicaService serviceID = card.getSystem(SYSTEMCODE_EDY).getService(FELICA_SERVICE_EDY_ID);
         List<FelicaBlock> blocksID = serviceID.getBlocks();
         FelicaBlock blockID = blocksID.get(0);
         byte[] dataID = blockID.getData();
         System.arraycopy(dataID, 2, mSerialNumber, 0, 8);
 
         // current balance info in block 0, bytes 0-3, little-endian ordering
-        FelicaService serviceBalance = card.getSystem(FeliCaLib.SYSTEMCODE_EDY).getService(FELICA_SERVICE_EDY_BALANCE);
+        FelicaService serviceBalance = card.getSystem(SYSTEMCODE_EDY).getService(FELICA_SERVICE_EDY_BALANCE);
         List<FelicaBlock> blocksBalance = serviceBalance.getBlocks();
         FelicaBlock blockBalance = blocksBalance.get(0);
         byte[] dataBalance = blockBalance.getData();
         mCurrentBalance = Utils.byteArrayToInt(Utils.reverseBuffer(dataBalance, 0, 3));
 
         // now read the transaction history
-        FelicaService serviceHistory = card.getSystem(FeliCaLib.SYSTEMCODE_EDY).getService(FELICA_SERVICE_EDY_HISTORY);
+        FelicaService serviceHistory = card.getSystem(SYSTEMCODE_EDY).getService(FELICA_SERVICE_EDY_HISTORY);
         List<EdyTrip> trips = new ArrayList<>();
 
         // Read blocks in order
@@ -102,11 +102,11 @@ public class EdyTransitData extends TransitData {
     }
 
     public static boolean check(FelicaCard card) {
-        return (card.getSystem(FeliCaLib.SYSTEMCODE_EDY) != null);
+        return (card.getSystem(SYSTEMCODE_EDY) != null);
     }
 
     public static boolean earlyCheck(int[] systemCodes) {
-        return ArrayUtils.contains(systemCodes, FeliCaLib.SYSTEMCODE_EDY);
+        return ArrayUtils.contains(systemCodes, SYSTEMCODE_EDY);
     }
 
     public static TransitIdentity parseTransitIdentity(FelicaCard card) {

@@ -20,7 +20,7 @@ package au.id.micolous.metrodroid.xml;
 
 import android.util.Base64;
 
-import net.kazzz.felica.lib.FeliCaLib;
+import net.kazzz.felica.FeliCaLib;
 
 import org.simpleframework.xml.transform.Transform;
 

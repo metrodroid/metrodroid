@@ -47,7 +47,7 @@ import au.id.micolous.metrodroid.util.Utils;
 
 import net.kazzz.felica.FeliCaTag;
 import net.kazzz.felica.command.ReadResponse;
-import net.kazzz.felica.lib.FeliCaLib;
+import net.kazzz.felica.FeliCaLib;
 
 import org.apache.commons.lang3.ArrayUtils;
 import org.simpleframework.xml.Element;
@@ -120,22 +120,22 @@ public class FelicaCard extends Card {
             // Check if we failed to get a System Code
             if (codes.size() == 0) {
                 // Lets try to ping for an Octopus anyway
-                FeliCaLib.IDm octopusSystem = ft.pollingAndGetIDm(FeliCaLib.SYSTEMCODE_OCTOPUS);
+                FeliCaLib.IDm octopusSystem = ft.pollingAndGetIDm(OctopusTransitData.SYSTEMCODE_OCTOPUS);
                 if (octopusSystem != null) {
                     Log.d(TAG, "Detected Octopus card");
                     // Octopus has a special knocking sequence to allow unprotected reads, and does not
                     // respond to the normal system code listing.
-                    codes.add(new FeliCaLib.SystemCode(FeliCaLib.SYSTEMCODE_OCTOPUS));
+                    codes.add(new FeliCaLib.SystemCode(OctopusTransitData.SYSTEMCODE_OCTOPUS));
                     octopusMagic = true;
                     feedbackInterface.showCardType(CardInfo.OCTOPUS);
                 }
 
-                FeliCaLib.IDm sztSystem = ft.pollingAndGetIDm(FeliCaLib.SYSTEMCODE_SZT);
+                FeliCaLib.IDm sztSystem = ft.pollingAndGetIDm(OctopusTransitData.SYSTEMCODE_SZT);
                 if (sztSystem != null) {
                     Log.d(TAG, "Detected Shenzhen Tong card");
                     // Because Octopus and SZT are similar systems, use the same knocking sequence in
                     // case they have the same bugs with system code listing.
-                    codes.add(new FeliCaLib.SystemCode(FeliCaLib.SYSTEMCODE_SZT));
+                    codes.add(new FeliCaLib.SystemCode(OctopusTransitData.SYSTEMCODE_SZT));
                     sztMagic = true;
                     feedbackInterface.showCardType(CardInfo.SZT);
                 }
@@ -172,12 +172,12 @@ public class FelicaCard extends Card {
                 List<FelicaService> services = new ArrayList<>();
                 FeliCaLib.ServiceCode[] serviceCodes;
 
-                if (octopusMagic && code.getCode() == FeliCaLib.SYSTEMCODE_OCTOPUS) {
+                if (octopusMagic && code.getCode() == OctopusTransitData.SYSTEMCODE_OCTOPUS) {
                     Log.d(TAG, "Stuffing in Octopus magic service code");
-                    serviceCodes = new FeliCaLib.ServiceCode[]{new FeliCaLib.ServiceCode(FeliCaLib.SERVICE_OCTOPUS)};
-                } else if (sztMagic && code.getCode() == FeliCaLib.SYSTEMCODE_SZT) {
+                    serviceCodes = new FeliCaLib.ServiceCode[]{new FeliCaLib.ServiceCode(OctopusTransitData.SERVICE_OCTOPUS)};
+                } else if (sztMagic && code.getCode() == OctopusTransitData.SYSTEMCODE_SZT) {
                     Log.d(TAG, "Stuffing in SZT magic service code");
-                    serviceCodes = new FeliCaLib.ServiceCode[]{new FeliCaLib.ServiceCode(FeliCaLib.SERVICE_SZT)};
+                    serviceCodes = new FeliCaLib.ServiceCode[]{new FeliCaLib.ServiceCode(OctopusTransitData.SERVICE_SZT)};
                 } else {
                     serviceCodes = ft.getServiceCodeList();
                 }

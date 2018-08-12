@@ -24,7 +24,6 @@ package au.id.micolous.metrodroid.transit.suica;
 
 import android.os.Parcel;
 import android.support.annotation.Nullable;
-import android.text.Spanned;
 
 import au.id.micolous.farebot.R;
 import au.id.micolous.metrodroid.card.felica.FelicaBlock;
@@ -35,8 +34,6 @@ import au.id.micolous.metrodroid.transit.TransitData;
 import au.id.micolous.metrodroid.transit.TransitIdentity;
 import au.id.micolous.metrodroid.transit.Trip;
 import au.id.micolous.metrodroid.util.Utils;
-
-import net.kazzz.felica.lib.FeliCaLib;
 
 import org.apache.commons.lang3.ArrayUtils;
 
@@ -55,6 +52,11 @@ public class SuicaTransitData extends TransitData {
             return new SuicaTransitData[size];
         }
     };
+    public static final int SYSTEMCODE_SUICA = 0x0003;
+
+    public static final int SERVICE_SUICA_INOUT = 0x108f;
+    public static final int SERVICE_SUICA_HISTORY = 0x090f;
+
     static final TimeZone TIME_ZONE = TimeZone.getTimeZone("Asia/Tokyo");
 
     private SuicaTrip[] mTrips;
@@ -65,7 +67,7 @@ public class SuicaTransitData extends TransitData {
     }
 
     public SuicaTransitData(FelicaCard card) {
-        FelicaService service = card.getSystem(FeliCaLib.SYSTEMCODE_SUICA).getService(FeliCaLib.SERVICE_SUICA_HISTORY);
+        FelicaService service = card.getSystem(SYSTEMCODE_SUICA).getService(SERVICE_SUICA_HISTORY);
 
         int previousBalance = -1;
 
@@ -93,11 +95,11 @@ public class SuicaTransitData extends TransitData {
     }
 
     public static boolean check(FelicaCard card) {
-        return (card.getSystem(FeliCaLib.SYSTEMCODE_SUICA) != null);
+        return (card.getSystem(SYSTEMCODE_SUICA) != null);
     }
 
     public static boolean earlyCheck(int[] systemCodes) {
-        return ArrayUtils.contains(systemCodes, FeliCaLib.SYSTEMCODE_SUICA);
+        return ArrayUtils.contains(systemCodes, SYSTEMCODE_SUICA);
     }
 
     public static TransitIdentity parseTransitIdentity(FelicaCard card) {
