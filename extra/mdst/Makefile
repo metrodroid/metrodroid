@@ -2,7 +2,7 @@
 
 .PHONY: all clean
 
-all: stations_pb2.py suica_rail.mdst suica_bus.mdst shenzhen.mdst ovc.mdst suica_rail.csv suica_bus.csv ovc.csv shenzhen.csv
+all: stations_pb2.py suica_rail.mdst suica_bus.mdst shenzhen.mdst ovc.mdst orca.mdst suica_rail.csv suica_bus.csv ovc.csv shenzhen.csv orca.csv
 
 stations_pb2.py: stations.proto
 	protoc --python_out=. stations.proto
@@ -12,6 +12,9 @@ clean:
 	rm -f suica_rail.mdst suica_rail.csv
 	rm -f suica_bus.mdst suica_bus.csv
 	rm -f ovc.mdst ovc.csv
+
+orca.mdst: csv2pb-orca.py stations_pb2.py mdst.py ../../data/orca/*.csv
+	python3 csv2pb-orca.py ../../data/orca orca.mdst
 
 suica_rail.mdst: sqlite2pb-suica.py stations_pb2.py mdst.py ../../data/felica_stations.db3
 	python3 sqlite2pb-suica.py
