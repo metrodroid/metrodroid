@@ -79,12 +79,12 @@ public class ClipperTrip extends Trip {
 
     @Override
     public String getAgencyName() {
-        return ClipperTransitData.getAgencyName((int) mAgency);
+        return ClipperData.getAgencyName(mAgency);
     }
 
     @Override
     public String getShortAgencyName() {
-        return ClipperTransitData.getShortAgencyName((int) mAgency);
+        return ClipperData.getShortAgencyName(mAgency);
     }
 
     @Override
@@ -126,27 +126,7 @@ public class ClipperTrip extends Trip {
 
     @Override
     public Mode getMode() {
-        if (mAgency == ClipperData.AGENCY_ACTRAN)
-            return Mode.BUS;
-        if (mAgency == ClipperData.AGENCY_BART)
-            return Mode.METRO;
-        if (mAgency == ClipperData.AGENCY_CALTRAIN)
-            return Mode.TRAIN;
-        if (mAgency == ClipperData.AGENCY_GGT)
-            return Mode.BUS;
-        if (mAgency == ClipperData.AGENCY_SAMTRANS)
-            return Mode.BUS;
-        if (mAgency == ClipperData.AGENCY_VTA)
-            return Mode.BUS; // FIXME: or Mode.TRAM for light rail
-        if (mAgency == ClipperData.AGENCY_MUNI)
-            return Mode.BUS; // FIXME: or Mode.TRAM for "Muni Metro"
-        if (mAgency == ClipperData.AGENCY_GG_FERRY)
-            return Mode.FERRY;
-        if (mAgency == ClipperData.AGENCY_SF_BAY_FERRY)
-            return Mode.FERRY;
-        if (mAgency == ClipperData.AGENCY_CCTA)
-            return Mode.BUS;
-        return Mode.OTHER;
+        return ClipperData.getMode(mAgency);
     }
 
     @Override

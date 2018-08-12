@@ -1,0 +1,15 @@
+id,name,short_name,mode
+0x01,Alameda-Contra Costa Transit District,ACTransit,BUS
+0x04,Bay Area Rapid Transit,BART,METRO
+0x06,Caltrain,Caltrain,TRAIN
+0x08,Contra Costa Transportation Authority,CCTA,BUS
+0x0b,Golden Gate Transit,GGT,BUS
+0x0f,San Mateo County Transit District,SAMTRANS,BUS
+0x11,Santa Clara Valley Transportation Authority,VTA,BUS
+0x12,San Francisco Municipal,Muni,BUS
+0x19,Golden Gate Ferry,GG Ferry,FERRY
+0x1b,San Francisco Bay Ferry,SF Bay Ferry,FERRY
+0x173,Caltrain 8-Rides,Caltrain,
+0x1db,Walgreens,Walgreens,
+0x248,San Francisco International Airport Info Booth,SFO info booth,
+0x2cf,Whole Foods,Whole Foods,

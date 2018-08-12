@@ -48,9 +48,9 @@ public class ClipperRefill extends Trip implements Comparable {
     private final Calendar mTimestamp;
     private final int mAmount;
     private final String mMachineID;
-    private final long mAgency;
+    private final int mAgency;
 
-    public ClipperRefill(Calendar timestamp, int amount, long agency, String machineid) {
+    public ClipperRefill(Calendar timestamp, int amount, int agency, String machineid) {
         // NOTE: All data must be in CLIPPER_TZ.
         mTimestamp = timestamp;
         mAmount = amount;
@@ -62,7 +62,7 @@ public class ClipperRefill extends Trip implements Comparable {
         mTimestamp = Utils.longToCalendar(parcel.readLong(), CLIPPER_TZ);
         mAmount = parcel.readInt();
         mMachineID = parcel.readString();
-        mAgency = parcel.readLong();
+        mAgency = parcel.readInt();
     }
 
     @Override
@@ -78,12 +78,12 @@ public class ClipperRefill extends Trip implements Comparable {
 
     @Override
     public String getAgencyName() {
-        return ClipperTransitData.getAgencyName((int) mAgency);
+        return ClipperData.getAgencyName(mAgency);
     }
 
     @Override
     public String getShortAgencyName() {
-        return ClipperTransitData.getShortAgencyName((int) mAgency);
+        return ClipperData.getShortAgencyName(mAgency);
     }
 
     @Nullable
@@ -111,7 +111,7 @@ public class ClipperRefill extends Trip implements Comparable {
         parcel.writeLong(Utils.calendarToLong(mTimestamp));
         parcel.writeInt(mAmount);
         parcel.writeString(mMachineID);
-        parcel.writeLong(mAgency);
+        parcel.writeInt(mAgency);
     }
 
     @Override

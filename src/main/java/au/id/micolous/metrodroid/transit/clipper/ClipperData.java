@@ -30,6 +30,7 @@ package au.id.micolous.metrodroid.transit.clipper;
 
 import au.id.micolous.farebot.R;
 import au.id.micolous.metrodroid.transit.Station;
+import au.id.micolous.metrodroid.transit.Trip;
 import au.id.micolous.metrodroid.util.ImmutableMapBuilder;
 import au.id.micolous.metrodroid.util.StationTableReader;
 import au.id.micolous.metrodroid.util.Utils;
@@ -37,49 +38,10 @@ import au.id.micolous.metrodroid.util.Utils;
 import java.util.Map;
 
 final class ClipperData {
-    static final int AGENCY_ACTRAN = 0x01;
-    static final int AGENCY_BART = 0x04;
     static final int AGENCY_CALTRAIN = 0x06;
-    static final int AGENCY_CCTA = 0x08;
     static final int AGENCY_GGT = 0x0b;
-    static final int AGENCY_SAMTRANS = 0x0f;
-    static final int AGENCY_VTA = 0x11;
     static final int AGENCY_MUNI = 0x12;
     static final int AGENCY_GG_FERRY = 0x19;
-    static final int AGENCY_SF_BAY_FERRY = 0x1b;
-    // Following codes are for refills
-    static final int AGENCY_CALTRAIN_8RIDE = 0x173; 
-    static final int AGENCY_WHOLE_FOODS = 0x2cf;
-
-    static final Map<Integer, String> AGENCIES = new ImmutableMapBuilder<Integer, String>()
-            .put(AGENCY_ACTRAN, "Alameda-Contra Costa Transit District")
-            .put(AGENCY_BART, "Bay Area Rapid Transit")
-            .put(AGENCY_CALTRAIN, "Caltrain")
-            .put(AGENCY_CCTA, "Contra Costa Transportation Authority")
-            .put(AGENCY_GGT, "Golden Gate Transit")
-            .put(AGENCY_SAMTRANS, "San Mateo County Transit District")
-            .put(AGENCY_VTA, "Santa Clara Valley Transportation Authority")
-            .put(AGENCY_MUNI, "San Francisco Municipal")
-            .put(AGENCY_GG_FERRY, "Golden Gate Ferry")
-            .put(AGENCY_SF_BAY_FERRY, "San Francisco Bay Ferry")
-            .put(AGENCY_CALTRAIN_8RIDE, "Caltrain 8-Rides")
-            .put(AGENCY_WHOLE_FOODS, "Whole Foods")
-            .build();
-
-    static final Map<Integer, String> SHORT_AGENCIES = new ImmutableMapBuilder<Integer, String>()
-            .put(AGENCY_ACTRAN, "ACTransit")
-            .put(AGENCY_BART, "BART")
-            .put(AGENCY_CALTRAIN, "Caltrain")
-            .put(AGENCY_CCTA, "CCTA")
-            .put(AGENCY_GGT, "GGT")
-            .put(AGENCY_SAMTRANS, "SAMTRANS")
-            .put(AGENCY_VTA, "VTA")
-            .put(AGENCY_MUNI, "Muni")
-            .put(AGENCY_GG_FERRY, "GG Ferry")
-            .put(AGENCY_SF_BAY_FERRY, "SF Bay Ferry")
-            .put(AGENCY_CALTRAIN_8RIDE, "Caltrain")
-            .put(AGENCY_WHOLE_FOODS, "Whole Foods")
-            .build();
 
     static final Map<Integer, String> GG_FERRY_ROUTES = new ImmutableMapBuilder<Integer, String>()
             .put(0x03, "Larkspur")
@@ -89,6 +51,18 @@ final class ClipperData {
     private static final String CLIPPER_STR = "clipper";
 
     private ClipperData() {
+    }
+
+    public static Trip.Mode getMode(int agency) {
+        return StationTableReader.getOperatorDefaultMode(CLIPPER_STR, agency);
+    }
+
+    public static String getAgencyName(int agency) {
+        return StationTableReader.getOperatorName(CLIPPER_STR, agency, false);
+    }
+
+    public static String getShortAgencyName(int agency) {
+        return StationTableReader.getOperatorName(CLIPPER_STR, agency, true);
     }
 
     public static Station getStation(int agency, int stationId) {
