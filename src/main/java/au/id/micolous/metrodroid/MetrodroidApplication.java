@@ -258,6 +258,8 @@ public class MetrodroidApplication extends Application {
         String theme = getThemePreference();
         if (theme.equals("light"))
             return R.style.Metrodroid_Light;
+        if (theme.equals("farebot"))
+            return R.style.FareBot_Theme_Common;
         return R.style.Metrodroid_Dark;
     }
 }
