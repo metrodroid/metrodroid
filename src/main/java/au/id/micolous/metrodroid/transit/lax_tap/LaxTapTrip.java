@@ -91,18 +91,7 @@ public class LaxTapTrip extends NextfareTrip {
             return null;
         }
 
-        StationTableReader str = StationTableReader.getSTR(LaxTapData.LAX_TAP_STR);
-        if (str == null) return null;
-
-        try {
-            Station s = str.getStationById(stationId);
-            if (s != null)
-                return s;
-        } catch (Exception e) {
-            Log.d(TAG, "error in getStation", e);
-        }
-
-        return Station.unknown(stationId);
+        return StationTableReader.getStation(LaxTapData.LAX_TAP_STR, stationId);
     }
 
     @Override

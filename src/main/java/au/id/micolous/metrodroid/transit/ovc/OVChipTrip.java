@@ -23,7 +23,6 @@ package au.id.micolous.metrodroid.transit.ovc;
 
 import android.os.Parcel;
 import android.support.annotation.Nullable;
-import android.util.Log;
 
 import java.util.Calendar;
 import java.util.GregorianCalendar;
@@ -177,15 +176,7 @@ public class OVChipTrip extends Trip {
         int stationId = ((companyCode - 1) << 16) + stationCode;
         if (stationId <= 0) return null;
 
-        StationTableReader str = StationTableReader.getSTR(OVCHIP_STR);
-        if (str == null) return null;
-
-        try {
-            return str.getStationById(stationId);
-        } catch (Exception e) {
-            Log.d(TAG, "error in getRailStation", e);
-            return null;
-        }
+        return StationTableReader.getStation(OVCHIP_STR, stationId);
     }
 
     @Override
