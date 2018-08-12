@@ -276,6 +276,14 @@ public class LicenseActivity extends MetrodroidActivity {
             + "\n"
             + "Stop mapping information is available in Metrodroid's source repository.\n\n\n";
 
+    private static final String MYTRANSPORT_SG = "Contains information from " +
+            "\"Train Station Codes and Chinese Names\" and \"TrainStation\" accessed on " +
+            "12-Aug-2018 from " +
+            "\"https://www.mytransport.sg/content/dam/datamall/datasets/PublicTransportRelated/Train%20Station%20Codes%20and%20Chinese%20Names.zip\"" +
+            " and https://www.mytransport.sg/content/dam/datamall/datasets/Geospatial/TrainStation.zip " +
+            "which is made available under the terms of the Singapore Open Data Licence version 1.0" +
+            " https://www.mytransport.sg/content/mytransport/home/dataMall/SingaporeOpenDataLicence.html\n\n\n";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -303,6 +311,7 @@ public class LicenseActivity extends MetrodroidActivity {
         lblLicenseText.append(SEQ_GO_GTFS);
         lblLicenseText.append(LAX_TAP_GTFS);
         lblLicenseText.append(BART_GTFS);
+        lblLicenseText.append(MYTRANSPORT_SG);
     }
 
 
