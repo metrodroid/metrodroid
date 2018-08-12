@@ -423,7 +423,7 @@ public class Utils {
         if (mins < 0)
             return localizePlural(R.plurals.minutes, mins, mins);
         if (mins == 0)
-            return localizePlural(R.plurals.minutes, 0, 0);;
+            return localizePlural(R.plurals.minutes, 0, 0);
         if (mins % 60 != 0)
             ret = localizePlural(R.plurals.minutes, (mins % 60), (mins % 60));
         if (mins < 60)
