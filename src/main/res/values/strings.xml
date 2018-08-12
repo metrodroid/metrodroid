@@ -380,6 +380,27 @@
         <item quantity="other">Type: %1$s, Records: %2$s (%3$s maximum), Record Size: %4$s</item>
     </plurals>
 
+    <plurals name="minutes">
+        <item quantity="one">%d minute</item>
+        <item quantity="other">%d minutes</item>
+    </plurals>
+    <plurals name="hours">
+        <item quantity="one">%d hour</item>
+        <item quantity="other">%d hours</item>
+    </plurals>
+    <plurals name="days">
+        <item quantity="one">%d day</item>
+        <item quantity="other">%d days</item>
+    </plurals>
+    <plurals name="trips_remaining">
+        <item quantity="one">%d trip remaining</item>
+        <item quantity="other">%d trips remaining</item>
+    </plurals>
+    <plurals name="troika_rides">
+        <item quantity="one">Single-ride</item>
+        <item quantity="other">%d-ride</item>
+    </plurals>
+
     <!-- Type: Value file, Range: 0 - 2300, Limited credit: 400 (Enabled) -->
     <string name="desfire_value_format">Type: %1$s, Range: %2$s - %3$s, Limited credit: %4$s (%5$s)</string>
 
@@ -848,16 +869,35 @@
     <!-- Troika / Тройка, Podorozhnik / Подорожник (Russia) -->
 
     <!-- Translators: There are multiple types of tickets used in Moscow and Saint Petersburg. We
-    only support the cards which have a refillable "purse" (balance in rubles). We don't support
-    bank-issued cards that bill the user's bank account at the end of each month (they don't have a
-    balance). -->
-    <string name="card_note_russia">Only refillable "e-purse" cards are supported. Bank-issued cards are not supported.</string>
+    only support the cards which have a refillable "purse" (balance in rubles) and single-rides.
+    We don't support bank-issued cards that bill the user's bank account at the end of each month
+    (they don't have a balance). -->
+    <string name="card_note_russia">Bank-issued cards are not supported.</string>
     <!-- Translators: The name of the ticketing system in Moscow (Russian: Тройка).
     May be transliterated. -->
     <string name="card_name_troika">Troika</string>
     <!-- Translators: The name of the ticketing system in Saint Petersburg (Russian: Подорожник).
     May be transliterated. -->
     <string name="card_name_podorozhnik">Podorozhnik</string>
+    <!-- Translators: this is the card name shown for combined Troika+Podorozhnik card.
+    May be transliterated. -->
+    <string name="card_name_troika_podorozhnik_hybrid">Troika+Podorozhnik</string>
+    <!-- Translators: with Troika card the system automatically chooses between a single ride
+     (in Russian "Edinyj") and 90 minutes pass -->
+    <string name="troika_fare_single">Single-ride</string>
+    <string name="troika_fare_90mins">90 minutes</string>
+    <!-- Translators: %s is a duration. e.g. 5 days -->
+    <string name="validity_length">Valid for %s</string>
+    <!-- Translators: this is shown to the user when impossible to read
+    ticket due ro unknown layout code and followed by hexadecimal code.
+    Feel free to skip translating this one.  -->
+    <string name="troika_layout">Troika layout</string>
+    <string name="moscow_subway">Moscow Subway</string>
+    <string name="moscow_monorail">Moscow Monorail</string>
+    <string name="moscow_ground_transport">Moscow ground transport</string>
+    <!-- Translators: this is a train line in Moscow. Russian МЦК -->
+    <string name="moscow_mcc">Moscow Central Circle (MCC)</string>
+    <string name="troika_unknown_ticket">Unknown troika ticket type %s</string>
     <!-- Translators: This is a list item header, and under it is a number.
     (ie: "Subway trips / 4" => There were 4 trips on the subway taken with this card) -->
     <string name="subway_trips">Subway trips</string>

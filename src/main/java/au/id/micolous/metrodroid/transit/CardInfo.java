@@ -39,7 +39,6 @@ import au.id.micolous.metrodroid.transit.opal.OpalTransitData;
 import au.id.micolous.metrodroid.transit.ovc.OVChipTransitData;
 import au.id.micolous.metrodroid.transit.seq_go.SeqGoTransitData;
 import au.id.micolous.metrodroid.transit.smartrider.SmartRiderTransitData;
-import au.id.micolous.metrodroid.transit.troika.TroikaTransitData;
 import au.id.micolous.metrodroid.util.Utils;
 
 /**
@@ -235,7 +234,7 @@ public class CardInfo {
     public static final CardInfo TROIKA = new Builder()
             // seqgo_card_alpha has identical geometry
             .setImageId(R.drawable.troika_card, R.drawable.seqgo_card_alpha)
-            .setName(TroikaTransitData.NAME)
+            .setName(Utils.localizeString(R.string.card_name_troika))
             .setLocation(R.string.location_moscow)
             .setCardType(CardType.MifareClassic)
             .setExtraNote(R.string.card_note_russia)
