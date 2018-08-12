@@ -46,7 +46,6 @@ import au.id.micolous.metrodroid.ui.ListItem;
 import au.id.micolous.metrodroid.util.Utils;
 
 import net.kazzz.felica.FeliCaTag;
-import net.kazzz.felica.command.ReadResponse;
 import net.kazzz.felica.FeliCaLib;
 
 import org.apache.commons.lang3.ArrayUtils;
@@ -199,7 +198,7 @@ public class FelicaCard extends Card {
                     ft.polling(systemCode);
 
                     byte addr = 0;
-                    ReadResponse result = ft.readWithoutEncryption(serviceCode, addr);
+                    FeliCaLib.ReadResponse result = ft.readWithoutEncryption(serviceCode, addr);
                     while (result != null && result.getStatusFlag1() == 0) {
                         blocks.add(new FelicaBlock(addr, result.getBlockData()));
                         addr++;
