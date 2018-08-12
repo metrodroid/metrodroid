@@ -118,14 +118,6 @@ public class NewShenzhenTrip extends Trip {
     }
 
     @Override
-    public String getEndStationName() {
-        Station station = getEndStation();
-        if (station == null)
-            return null;
-        return station.getStationName();
-    }
-
-    @Override
     public Station getEndStation() {
         int transport = getTransport();
         switch (transport) {
@@ -147,16 +139,6 @@ public class NewShenzhenTrip extends Trip {
                 station.getLatitude(),
                 station.getLongitude(),
                 station.getLanguage());
-    }
-
-    @Override
-    public String getStartStationName() {
-        return null;
-    }
-
-    @Override
-    public boolean hasFare() {
-        return true;
     }
 
     @Nullable

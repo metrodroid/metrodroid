@@ -130,11 +130,6 @@ class RavKavTrip extends Trip {
         return mAgencyName;
     }
 
-    @Override
-    public boolean hasFare() {
-        return mPrice != null;
-    }
-
     @Nullable
     @Override
     public TransitCurrency getFare() {
