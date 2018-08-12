@@ -33,11 +33,14 @@ import android.widget.TextView;
 import au.id.micolous.metrodroid.activity.AdvancedCardInfoActivity;
 import au.id.micolous.metrodroid.activity.CardInfoActivity;
 import au.id.micolous.metrodroid.card.Card;
+import au.id.micolous.metrodroid.transit.Subscription;
 import au.id.micolous.metrodroid.transit.TransitBalance;
 import au.id.micolous.metrodroid.transit.TransitData;
 
 import org.simpleframework.xml.Serializer;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import au.id.micolous.farebot.R;
@@ -58,28 +61,78 @@ public class CardBalanceFragment extends ListFragment {
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        setListAdapter(new BalancesAdapter(getActivity(), mTransitData.getBalances()));
+        ArrayList<Object> combined = new ArrayList<>();
+        List<TransitBalance> balances = mTransitData.getBalances();
+        if (balances != null)
+            combined.addAll(balances);
+        Subscription[] subscriptions = mTransitData.getSubscriptions();
+        if (subscriptions != null)
+            combined.addAll(Arrays.asList(subscriptions));
+        setListAdapter(new BalancesAdapter(getActivity(), combined));
     }
 
-    private class BalancesAdapter extends ArrayAdapter<TransitBalance> {
-        public BalancesAdapter(Context context, List<TransitBalance> balances) {
+    private class BalancesAdapter extends ArrayAdapter<Object> {
+        public BalancesAdapter(Context context, List<Object> balances) {
             super(context, 0, balances);
         }
 
         @Override
         public View getView(int position, View convertView, ViewGroup parent) {
+            Object item = getItem(position);
+
+            if (item == null) {
+                // https://github.com/micolous/metrodroid/issues/28
+                Log.w(TAG, "null balance received -- this is an error");
+                return getErrorView(convertView, parent, "null");
+            }
+
+            if (item instanceof TransitBalance)
+                return getBalanceView(convertView, parent, (TransitBalance) item);
+
+            if (item instanceof Subscription)
+                return getSubscriptionView(convertView, parent, (Subscription) item);
+            return getErrorView(convertView, parent, item.getClass().getSimpleName());
+        }
+
+        private View getErrorView(View convertView, ViewGroup parent, String err) {
             View view = convertView;
             if (view == null) {
                 view = getActivity().getLayoutInflater().inflate(R.layout.balance_item, parent, false);
             }
 
-            TransitBalance balance = getItem(position);
+            ((TextView) view.findViewById(R.id.balance)).setText(err);
+            return view;
+        }
 
-            if (balance == null) {
-                // https://github.com/micolous/metrodroid/issues/28
-                Log.w(TAG, "null balance received -- this is an error");
-                ((TextView) view.findViewById(R.id.balance)).setText("null");
-                return view;
+        public View getSubscriptionView(View convertView, ViewGroup parent, Subscription subscription) {
+            View view = convertView;
+            if (view == null) {
+                view = getActivity().getLayoutInflater().inflate(R.layout.subscription_item, parent, false);
+            }
+
+                if (subscription.getValidFrom() != null && subscription.getValidTo() != null) {
+                    Spanned validFrom = Utils.dateFormat(TripObfuscator.maybeObfuscateTS(subscription.getValidFrom()));
+                    Spanned validTo = Utils.dateFormat(TripObfuscator.maybeObfuscateTS(subscription.getValidTo()));
+                    ((TextView) view.findViewById(R.id.valid)).setText(getString(R.string.valid_format, validFrom, validTo));
+                } else if (subscription.getValidTo() != null) {
+                    Spanned validTo = Utils.dateFormat(TripObfuscator.maybeObfuscateTS(subscription.getValidTo()));
+                    ((TextView) view.findViewById(R.id.valid)).setText(getString(R.string.valid_to_format, validTo));
+                } else {
+                    ((TextView) view.findViewById(R.id.valid)).setText(R.string.valid_not_used);
+                }
+
+                ((TextView) view.findViewById(R.id.company)).setText(subscription.getShortAgencyName());
+                ((TextView) view.findViewById(R.id.name)).setText(subscription.getSubscriptionName());
+                ((TextView) view.findViewById(R.id.used)).setText(subscription.getActivation());
+
+            return view;
+        }
+
+        private View getBalanceView(View convertView,
+                                    ViewGroup parent, TransitBalance balance) {
+            View view = convertView;
+            if (view == null) {
+                view = getActivity().getLayoutInflater().inflate(R.layout.balance_item, parent, false);
             }
 
             TextView validView = view.findViewById(R.id.valid);

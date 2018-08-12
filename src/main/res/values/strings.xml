@@ -932,4 +932,5 @@
     <string name="nfc_not_available">NFC: not available</string>
     <string name="mfc_supported">MIFARE Classic: supported</string>
     <string name="mfc_not_supported">MIFARE Classic: not supported</string>
+    <string name="balances_and_subscriptions">Tickets</string>
 </resources>
