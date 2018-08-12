@@ -31,6 +31,7 @@ import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 
+import au.id.micolous.farebot.R;
 import au.id.micolous.metrodroid.MetrodroidApplication;
 import au.id.micolous.metrodroid.proto.Stations;
 import au.id.micolous.metrodroid.transit.Station;
@@ -50,7 +51,7 @@ public class StationTableReader {
     private Stations.StationIndex mStationIndex;
     private DataInputStream mTable;
 
-    private static Map<String,StationTableReader> mSTRs = new HashMap<>();
+    private static final Map<String,StationTableReader> mSTRs = new HashMap<>();
 
     static public StationTableReader getSTR(String name) {
         synchronized (mSTRs) {
@@ -71,6 +72,31 @@ public class StationTableReader {
         }
     }
 
+    public static Station getStation(String reader, int id) {
+        if (reader == null)
+            return null;
+        StationTableReader str = StationTableReader.getSTR(reader);
+        if (str == null)
+            return null;
+        try {
+            return str.getStationById(id);
+        } catch (IOException e) {
+            return null;
+        }
+    }
+
+    public static String getStationName(String reader, int id, boolean isShort) {
+        if (reader == null)
+            return fallbackName(id);
+        Station s = getStation(reader, id);
+        if (s == null)
+            return fallbackName(id);
+        return isShort ? s.getShortStationName() : s.getStationName();
+    }
+
+    private static String fallbackName(int id) {
+        return Utils.localizeString(R.string.unknown_format, "0x" + Integer.toHexString(id));
+    }
 
     public class InvalidHeaderException extends Exception {}
 
