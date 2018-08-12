@@ -84,6 +84,7 @@ public class CEPASTransaction implements Parcelable {
         /* Date is expressed "in seconds", but the epoch is January 1 1995, SGT */
         long timestamp = Utils.byteArrayToLong(rawData, 4, 4);
         mDate2 = CEPASCard.timestampToCalendar(timestamp);
+        //noinspection deprecation
         mDate = 0;
 
         byte[] userData = new byte[9];

@@ -65,9 +65,7 @@ public class AdvancedCardInfoActivity extends MetrodroidActivity {
     private static final int REQUEST_SAVE_FILE = 2;
     private static final String TAG = AdvancedCardInfoActivity.class.getName();
 
-    private TabPagerAdapter mTabsAdapter;
     private Card mCard;
-    private Exception mError;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -78,7 +76,7 @@ public class AdvancedCardInfoActivity extends MetrodroidActivity {
         mCard = Card.fromXml(serializer, getIntent().getStringExtra(AdvancedCardInfoActivity.EXTRA_CARD));
 
         ViewPager viewPager = (ViewPager) findViewById(R.id.pager);
-        mTabsAdapter = new TabPagerAdapter(this, viewPager);
+        TabPagerAdapter tabsAdapter = new TabPagerAdapter(this, viewPager);
 
         ActionBar actionBar = getActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
@@ -98,10 +96,10 @@ public class AdvancedCardInfoActivity extends MetrodroidActivity {
         }
 
         if (getIntent().hasExtra(EXTRA_ERROR)) {
-            mError = (Exception) getIntent().getSerializableExtra(EXTRA_ERROR);
-            if (mError instanceof UnsupportedCardException) {
+            Exception error = (Exception) getIntent().getSerializableExtra(EXTRA_ERROR);
+            if (error instanceof UnsupportedCardException) {
                 findViewById(R.id.unknown_card).setVisibility(View.VISIBLE);
-            } else if (mError instanceof UnauthorizedException) {
+            } else if (error instanceof UnauthorizedException) {
                 findViewById(R.id.unauthorized_card).setVisibility(View.VISIBLE);
                 findViewById(R.id.load_keys).setOnClickListener(view -> new AlertDialog.Builder(AdvancedCardInfoActivity.this)
                         .setMessage(R.string.add_key_directions)
@@ -109,12 +107,12 @@ public class AdvancedCardInfoActivity extends MetrodroidActivity {
                         .show());
             } else {
                 findViewById(R.id.error).setVisibility(View.VISIBLE);
-                ((TextView) findViewById(R.id.error_text)).setText(Utils.getErrorMessage(mError));
+                ((TextView) findViewById(R.id.error_text)).setText(Utils.getErrorMessage(error));
             }
         }
 
         if (mCard.getManufacturingInfo() != null) {
-            mTabsAdapter.addTab(actionBar.newTab().setText(R.string.hw_detail), CardHWDetailFragment.class,
+            tabsAdapter.addTab(actionBar.newTab().setText(R.string.hw_detail), CardHWDetailFragment.class,
                     getIntent().getExtras());
         }
 
@@ -122,7 +120,7 @@ public class AdvancedCardInfoActivity extends MetrodroidActivity {
         if (annotation != null) {
             Class rawDataFragmentClass = annotation.value();
             if (rawDataFragmentClass != null) {
-                mTabsAdapter.addTab(actionBar.newTab().setText(R.string.data), rawDataFragmentClass,
+                tabsAdapter.addTab(actionBar.newTab().setText(R.string.data), rawDataFragmentClass,
                         getIntent().getExtras());
                 actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
             }

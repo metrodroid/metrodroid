@@ -51,10 +51,6 @@ public class TripMapActivity extends MetrodroidActivity {
     public static final String TRIP_EXTRA = "trip";
     private static final String TAG = "TripMapActivity";
 
-    private WebView mWebView;
-    private String mTileURL;
-    private String mSubdomains;
-
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
@@ -70,30 +66,30 @@ public class TripMapActivity extends MetrodroidActivity {
 
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(TripMapActivity.this);
 
-        mTileURL = prefs.getString("pref_map_tile_url", null);
-        mSubdomains = prefs.getString("pref_map_tile_subdomains", null);
+        String tileURL = prefs.getString("pref_map_tile_url", null);
+        String subdomains = prefs.getString("pref_map_tile_subdomains", null);
 
-        if (mTileURL == null || mTileURL.isEmpty()) {
-            mTileURL = Utils.localizeString(R.string.default_map_tile_url);
+        if (tileURL == null || tileURL.isEmpty()) {
+            tileURL = Utils.localizeString(R.string.default_map_tile_url);
         }
 
-        if (mSubdomains == null || mSubdomains.isEmpty()) {
-            mSubdomains = Utils.localizeString(R.string.default_map_tile_subdomains);
+        if (subdomains == null || subdomains.isEmpty()) {
+            subdomains = Utils.localizeString(R.string.default_map_tile_subdomains);
         }
 
         // Overwrite map preferences again with defaults if it was missing
         prefs.edit()
-                .putString("pref_map_tile_url", mTileURL)
-                .putString("pref_map_tile_subdomains", mSubdomains)
+                .putString("pref_map_tile_url", tileURL)
+                .putString("pref_map_tile_subdomains", subdomains)
                 .apply();
 
-        Log.d(TAG, "TilesURL: " + mTileURL);
-        Log.d(TAG, "Subdomains: " + mSubdomains);
+        Log.d(TAG, "TilesURL: " + tileURL);
+        Log.d(TAG, "Subdomains: " + subdomains);
 
-        mWebView = ((WebViewFragment) getFragmentManager().findFragmentById(R.id.map)).getWebView();
-        mWebView.setWebChromeClient(new WebChromeClient());
+        WebView webView = ((WebViewFragment) getFragmentManager().findFragmentById(R.id.map)).getWebView();
+        webView.setWebChromeClient(new WebChromeClient());
 
-        WebSettings settings = mWebView.getSettings();
+        WebSettings settings = webView.getSettings();
         settings.setJavaScriptEnabled(true);
         settings.setAllowUniversalAccessFromFileURLs(true);
         settings.setUserAgentString(settings.getUserAgentString() + " metrodroid/" + BuildConfig.VERSION_NAME);
@@ -143,11 +139,11 @@ public class TripMapActivity extends MetrodroidActivity {
             points.add(new Marker(trip.getEndStation(), "end-marker"));
         }
 
-        TripMapShim shim = new TripMapShim(points.toArray(new Marker[points.size()]), mTileURL, mSubdomains);
+        TripMapShim shim = new TripMapShim(points.toArray(new Marker[points.size()]), tileURL, subdomains);
 
-        mWebView.addJavascriptInterface(shim, "TripMapShim");
+        webView.addJavascriptInterface(shim, "TripMapShim");
 
-        mWebView.loadUrl("file:///android_asset/map.html");
+        webView.loadUrl("file:///android_asset/map.html");
 
     }
 

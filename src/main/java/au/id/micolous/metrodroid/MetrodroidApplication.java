@@ -99,7 +99,6 @@ public class MetrodroidApplication extends Application {
     private static MetrodroidApplication sInstance;
 
     private final Serializer mSerializer;
-    private boolean mHasNfcHardware = false;
     private boolean mMifareClassicSupport = false;
 
     public MetrodroidApplication() {
@@ -220,9 +219,8 @@ public class MetrodroidApplication extends Application {
 
     private void detectNfcSupport() {
         NfcAdapter nfcAdapter = NfcAdapter.getDefaultAdapter(this);
-        mHasNfcHardware = nfcAdapter != null;
 
-        if (!mHasNfcHardware) {
+        if (nfcAdapter == null) {
             Log.d(TAG, "Android reports no NFC adapter is available");
             return;
         }
