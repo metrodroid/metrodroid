@@ -144,14 +144,6 @@ public class SeqGoTrip extends NextfareTrip {
     private static Station getStation(int stationId) {
         if (stationId <= 0) return null;
 
-        StationTableReader str = StationTableReader.getSTR(SEQ_GO_STR);
-        if (str == null) return null;
-
-        try {
-            return str.getStationById(stationId);
-        } catch (Exception e) {
-            Log.d(TAG, "error in getStation", e);
-            return null;
-        }
+        return StationTableReader.getStation(SEQ_GO_STR, stationId);
     }
 }

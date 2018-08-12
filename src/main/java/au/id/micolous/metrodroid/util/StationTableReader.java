@@ -55,7 +55,7 @@ public class StationTableReader {
 
     private static final Map<String,StationTableReader> mSTRs = new HashMap<>();
 
-    static public StationTableReader getSTR(String name) {
+    static private StationTableReader getSTR(String name) {
         synchronized (mSTRs) {
             if (mSTRs.containsKey(name))
                 return mSTRs.get(name);
@@ -117,7 +117,7 @@ public class StationTableReader {
      * @throws IOException On read errors
      * @throws InvalidHeaderException If the file is not a MdST file.
      */
-    public StationTableReader(Context context, String dbName) throws IOException, InvalidHeaderException {
+    private StationTableReader(Context context, String dbName) throws IOException, InvalidHeaderException {
         InputStream i = context.getAssets().open(dbName, AssetManager.ACCESS_RANDOM);
         mTable = new DataInputStream(i);
 
@@ -153,7 +153,7 @@ public class StationTableReader {
         mTable.reset();
     }
 
-    boolean useEnglishName() {
+    private boolean useEnglishName() {
         String locale = Locale.getDefault().getLanguage();
         return !mStationDb.getLocalLanguagesList().contains(locale);
     }
@@ -216,7 +216,7 @@ public class StationTableReader {
      * @return Station object, or null if it could not be found.
      * @throws IOException on read errors
      */
-    public Stations.Station getProtoStationById(int id) throws IOException {
+    private Stations.Station getProtoStationById(int id) throws IOException {
         mTable.reset();
 
         int offset;
@@ -231,18 +231,28 @@ public class StationTableReader {
         return Stations.Station.parseDelimitedFrom(mTable);
     }
 
-    public String getLineById(int id) {
-        Stations.Line pl = mStationDb.getLinesOrDefault(id, null);
+    public static String getLineName(String reader, int id) {
+        if (reader == null)
+            return fallbackName(id);
+        StationTableReader str = getSTR(reader);
+        if (str == null)
+            return fallbackName(id);
+        Stations.Line pl = str.mStationDb.getLinesOrDefault(id, null);
         if (pl == null)
-            return null;
-        return selectBestName(pl.getName(), true);
+            return fallbackName(id);
+        return str.selectBestName(pl.getName(), false);
     }
 
-    public String getOperatorById(int id, boolean isShort) {
-        Stations.Operator po = mStationDb.getOperatorsOrDefault(id, null);
+    public static String getOperatorName(String reader, int id, boolean isShort) {
+        if (reader == null)
+            return fallbackName(id);
+        StationTableReader str = StationTableReader.getSTR(reader);
+        if (str == null)
+            return fallbackName(id);
+        Stations.Operator po = str.mStationDb.getOperatorsOrDefault(id, null);
         if (po == null)
-            return null;
-        return selectBestName(po.getName(), isShort);
+            return fallbackName(id);
+        return str.selectBestName(po.getName(), isShort);
     }
 
     /**
@@ -251,7 +261,7 @@ public class StationTableReader {
      * @return Station object, or null if it could not be found.
      * @throws IOException on read errors
      */
-    public Station getStationById(int id) throws IOException {
+    private Station getStationById(int id) throws IOException {
         Stations.Station ps = getProtoStationById(id);
         if (ps == null) return null;
 

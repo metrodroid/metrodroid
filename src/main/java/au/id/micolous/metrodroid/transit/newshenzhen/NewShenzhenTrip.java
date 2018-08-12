@@ -59,34 +59,9 @@ public class NewShenzhenTrip extends Trip {
     private final int mType;
     private final long mStation;
     private final static String SHENZHEN_STR = "shenzhen";
- 
-    private String getLineName(long id) {
-        StationTableReader str = StationTableReader.getSTR(SHENZHEN_STR);
-        String line = null;
-        if (str != null) {
-                line = str.getLineById((int) id);
-        }
-        if (line != null)
-            return line;
-
-        return Utils.localizeString(R.string.unknown_format, Long.toHexString(id));
-    }
 
     private static Station getStation(long l) {
-        StationTableReader str = StationTableReader.getSTR(SHENZHEN_STR);
-        Station station = null;
-        if (str != null) {
-            try {
-                station = str.getStationById((int) l);
-            } catch (IOException e) {
-                station = null;
-            }
-        }
-        if (station != null)
-            return station;
-
-        return new Station(Utils.localizeString(R.string.unknown_format, Long.toHexString(l)),
-                null, null);
+        return StationTableReader.getStation(SHENZHEN_STR, (int) l);
     }
 
 
@@ -169,7 +144,7 @@ public class NewShenzhenTrip extends Trip {
         int transport = getTransport();
         switch (transport) {
             case SZT_BUS:
-                return getLineName(mStation);
+                return StationTableReader.getLineName(SHENZHEN_STR, (int) mStation);
             default:
                 return null;
         }
