@@ -57,8 +57,8 @@ def read_metro_line(line_name, line_number, start_id):
     for row in stationreader:
       s = Station()
       s.id = 0x60000100 | (line_number << 24) | (hex2bcd(id) << 12)
-      s.english_name = row[1].strip()
-      s.local_name = row[0].strip()
+      s.name.english = row[1].strip()
+      s.name.local = row[0].strip()
       if row[2].strip() and row[3].strip():
         s.latitude = float(row[2].strip())
         s.longitude = float(row[3].strip())
