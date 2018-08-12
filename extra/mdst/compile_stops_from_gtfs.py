@@ -25,7 +25,7 @@ from __future__ import print_function
 from argparse import ArgumentParser, FileType
 from datetime import datetime, timedelta
 from gtfstools import Gtfs, GtfsDialect
-from stations_pb2 import Station
+from stations_pb2 import Station, Operator, TransportType
 from mdst import MdstWriter
 import codecs, csv, sqlite3
 
@@ -54,9 +54,11 @@ def massage_name(name, suffixes):
 def empty(s):
   return s is None or s.strip() == ''
 
-def compile_stops_from_gtfs(input_gtfs_f, output_f, matching_f=None, version=None, strip_suffixes='', agency_id=-1, tts_hint_language=None, extra_f=None):
+def compile_stops_from_gtfs(input_gtfs_f, output_f, matching_f=None, version=None, strip_suffixes='', agency_id=-1, tts_hint_language=None, operators_f=None, extra_f=None):
   if matching_f is not None:
     matching_f = codecs.getreader('utf-8-sig')(matching_f)
+  if operators_f is not None:
+    operators_f = codecs.getreader('utf-8-sig')(operators_f)
   if extra_f is not None:
     extra_f = codecs.getreader('utf-8-sig')(extra_f)
   # trim whitespace
@@ -84,9 +86,25 @@ def compile_stops_from_gtfs(input_gtfs_f, output_f, matching_f=None, version=Non
     version = (feed_start_date - VERSION_EPOCH).days
     print('Data version: %s (%s)' % (version, feed_start_date.date().isoformat()))
 
+  operators = {}
+
+  if operators_f is not None:
+      opread = csv.DictReader(operators_f)
+    
+      for op in opread:
+        oppb = Operator()
+        oppb.name.english = op['name']
+        if 'short_name' in op and op['short_name']:
+          oppb.name.english_short = op['short_name']
+        if 'mode' in op and op['mode']:
+          oppb.default_transport = TransportType.Value(op['mode'])
+        operators[int(op['id'], 0)] = oppb
+      operators_f.close()
+
   db = MdstWriter(
     fh=open(output_f, 'wb'),
     version=version,
+    operators=operators,
     tts_hint_language=tts_hint_language,
   )
 
@@ -223,6 +241,11 @@ def main():
                       type=FileType('rb'),
                       help='If supplied, this is a file with extra stops not derived from gtfs.')
 
+  parser.add_argument('-p', '--operators',
+    required=False,
+    type=FileType('rb'),
+    help='If supplied, this is an operators file of mapping between ids and operators. If a matching file is not supplied, this will produce an empty list of operators.')
+
   parser.add_argument('-V', '--override-version',
     required=False,
     type=int,
@@ -244,7 +267,7 @@ def main():
 
   options = parser.parse_args()
 
-  compile_stops_from_gtfs(options.input_gtfs[0], options.output, options.matching, options.override_version, options.strip_suffixes, options.agency_id, options.tts_hint_language, options.extra)
+  compile_stops_from_gtfs(options.input_gtfs[0], options.output, options.matching, options.override_version, options.strip_suffixes, options.agency_id, options.tts_hint_language, options.operators, options.extra)
 
 if __name__ == '__main__':
   main()
