@@ -67,10 +67,7 @@ public class EZLinkTrip extends Trip {
     public String getAgencyName() {
         if (mTransaction.getType() == CEPASTransaction.TransactionType.BUS
                 || mTransaction.getType() == CEPASTransaction.TransactionType.BUS_REFUND) {
-            String routeString = mTransaction.getUserData().substring(3, 7).replace(" ", "");
-            if (EZLinkTransitData.sbsBuses.contains(routeString))
-                return "SBS";
-            return "SMRT";
+            return "BUS";
         }
         if (mTransaction.getType() == CEPASTransaction.TransactionType.CREATION
                 || mTransaction.getType() == CEPASTransaction.TransactionType.TOP_UP
@@ -87,10 +84,7 @@ public class EZLinkTrip extends Trip {
     public String getShortAgencyName() {
         if (mTransaction.getType() == CEPASTransaction.TransactionType.BUS
                 || mTransaction.getType() == CEPASTransaction.TransactionType.BUS_REFUND) {
-            String routeString = mTransaction.getUserData().substring(3, 7).replace(" ", "");
-            if (EZLinkTransitData.sbsBuses.contains(routeString))
-                return "SBS";
-            return "SMRT";
+            return "BUS";
         }
         if (mTransaction.getType() == CEPASTransaction.TransactionType.CREATION
                 || mTransaction.getType() == CEPASTransaction.TransactionType.TOP_UP
