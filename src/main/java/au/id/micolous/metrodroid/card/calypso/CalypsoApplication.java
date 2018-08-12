@@ -38,6 +38,9 @@ import au.id.micolous.metrodroid.card.iso7816.ISO7816File;
 import au.id.micolous.metrodroid.card.iso7816.ISO7816Protocol;
 import au.id.micolous.metrodroid.card.iso7816.ISO7816Record;
 import au.id.micolous.metrodroid.card.iso7816.ISO7816Selector;
+import au.id.micolous.metrodroid.transit.TransitData;
+import au.id.micolous.metrodroid.transit.TransitIdentity;
+import au.id.micolous.metrodroid.transit.ravkav.RavKavTransitData;
 import au.id.micolous.metrodroid.ui.HeaderListItem;
 import au.id.micolous.metrodroid.ui.ListItem;
 import au.id.micolous.metrodroid.util.Utils;
@@ -91,6 +94,20 @@ public class CalypsoApplication extends ISO7816Application {
             }
 
         return new CalypsoApplication(appData, partialRead);
+    }
+
+    @Override
+    public TransitData parseTransitData() {
+        if (RavKavTransitData.check(this))
+            return RavKavTransitData.parseTransitData(this);
+        return null;
+    }
+
+    @Override
+    public TransitIdentity parseTransitIdentity() {
+        if (RavKavTransitData.check(this))
+            return RavKavTransitData.parseTransitIdentity(this);
+        return null;
     }
 
     public ISO7816File getFile(File f) {
