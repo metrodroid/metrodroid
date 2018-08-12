@@ -41,6 +41,7 @@ import au.id.micolous.metrodroid.card.TagReaderFeedbackInterface;
 import au.id.micolous.metrodroid.card.calypso.CalypsoApplication;
 import au.id.micolous.metrodroid.fragment.ISO7816CardRawDataFragment;
 import au.id.micolous.metrodroid.card.newshenzhen.NewShenzhenCard;
+import au.id.micolous.metrodroid.card.tmoney.TMoneyCard;
 import au.id.micolous.metrodroid.transit.TransitData;
 import au.id.micolous.metrodroid.transit.TransitIdentity;
 import au.id.micolous.metrodroid.ui.ListItem;
@@ -104,6 +105,11 @@ public class ISO7816Card extends Card {
                         new ISO7816Application.ISO7816Info(appData, CalypsoApplication.CALYPSO_FILENAME, tagId, CalypsoApplication.TYPE),
                         feedbackInterface));
 
+            appData = iso7816Tag.selectByName(TMoneyCard.APP_NAME, false);
+            if (appData != null)
+                apps.add(TMoneyCard.dumpTag(iso7816Tag, new ISO7816Application.ISO7816Info(appData, TMoneyCard.APP_NAME,
+                                tag.getId(), TMoneyCard.TYPE),
+					    feedbackInterface));
             appData = iso7816Tag.selectByName(NewShenzhenCard.APP_NAME, false);
             if (appData != null)
                 apps.add(NewShenzhenCard.dumpTag(iso7816Tag,
