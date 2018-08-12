@@ -2,7 +2,7 @@
 
 .PHONY: all clean
 
-all: stations_pb2.py suica_rail.mdst suica_bus.mdst shenzhen.mdst ovc.mdst ezlink.mdst suica_rail.csv suica_bus.csv ovc.csv ezlink.csv shenzhen.csv
+all: stations_pb2.py suica_rail.mdst suica_bus.mdst opus.mdst shenzhen.mdst ovc.mdst easycard.mdst orca.mdst compass.mdst podorozhnik.mdst troika.mdst suica_rail.csv suica_bus.csv ovc.csv opus.csv shenzhen.csv easycard.csv orca.csv compass.csv podorozhnik.csv troika.csv
 
 stations_pb2.py: stations.proto
 	protoc --python_out=. stations.proto
@@ -24,6 +24,12 @@ ovc.mdst: sqlite2pb-ovc.py stations_pb2.py mdst.py ../../data/ovc_stations.db3
 
 shenzhen.mdst: csv2pb-szt.py stations_pb2.py mdst.py ../../data/szt/*.txt
 	python3 csv2pb-szt.py
+
+podorozhnik.mdst: csv2pb-podorozhnik.py stations_pb2.py mdst.py ../../data/podorozhnik/*.csv
+	python3 csv2pb-podorozhnik.py podorozhnik
+
+troika.mdst: csv2pb-podorozhnik.py stations_pb2.py mdst.py ../../data/troika/*.csv
+	python3 csv2pb-podorozhnik.py troika
 
 ezlink.mdst: csv2pb-ezlink.py stations_pb2.py mdst.py ../../data/ezlink/*.csv
 	python3 csv2pb-ezlink.py

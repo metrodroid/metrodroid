@@ -43,8 +43,6 @@ import java.util.List;
  */
 
 public class TroikaTransitData extends TransitData {
-    public static final String NAME = "Troika";
-
     public static final Parcelable.Creator<TroikaTransitData> CREATOR = new Parcelable.Creator<TroikaTransitData>() {
         public TroikaTransitData createFromParcel(Parcel parcel) {
             return new TroikaTransitData(parcel);

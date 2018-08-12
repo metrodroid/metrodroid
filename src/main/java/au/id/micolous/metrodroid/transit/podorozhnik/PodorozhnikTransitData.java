@@ -47,9 +47,6 @@ import au.id.micolous.metrodroid.util.Utils;
  */
 
 public class PodorozhnikTransitData extends TransitData {
-
-    public static final String NAME = "Podorozhnik";
-
     // We don't want to actually include these keys in the program, so include a hashed version of
     // this key.
     private static final String KEY_SALT = "podorozhnik";
