@@ -133,6 +133,8 @@ class RavKavTrip extends Trip {
     @Nullable
     @Override
     public TransitCurrency getFare() {
+        if (mPrice == null)
+            return null;
         return new TransitCurrency(mPrice, "ILS");
     }
 
