@@ -27,6 +27,7 @@ import org.simpleframework.xml.stream.OutputNode;
 
 import au.id.micolous.metrodroid.card.calypso.CalypsoApplication;
 import au.id.micolous.metrodroid.card.iso7816.ISO7816Application;
+import au.id.micolous.metrodroid.card.newshenzhen.NewShenzhenCard;
 
 public class ISO7816Converter implements Converter<ISO7816Application> {
     private final Serializer mSerializer;
@@ -40,6 +41,9 @@ public class ISO7816Converter implements Converter<ISO7816Application> {
         String appType = node.getAttribute("type").getValue();
         if (CalypsoApplication.TYPE.equals(appType)) {
             return mSerializer.read(CalypsoApplication.class, node);
+        }
+        if (NewShenzhenCard.TYPE.equals(appType)) {
+            return mSerializer.read(NewShenzhenCard.class, node);
         }
         throw new SkippableRegistryStrategy.SkipException();
     }

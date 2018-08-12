@@ -27,7 +27,9 @@ import java.io.DataInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.Locale;
+import java.util.Map;
 
 import au.id.micolous.metrodroid.MetrodroidApplication;
 import au.id.micolous.metrodroid.proto.Stations;
@@ -44,10 +46,31 @@ public class StationTableReader {
     private static final int VERSION = 1;
     private static final String TAG = "StationTableReader";
 
-    private Context mContext;
     private Stations.StationDb mStationDb;
     private Stations.StationIndex mStationIndex;
     private DataInputStream mTable;
+
+    private static Map<String,StationTableReader> mSTRs = new HashMap<>();
+
+    static public StationTableReader getSTR(String name) {
+        synchronized (mSTRs) {
+            if (mSTRs.containsKey(name))
+                return mSTRs.get(name);
+        }
+
+        try {
+            StationTableReader str = new StationTableReader(MetrodroidApplication.getInstance(),
+                    name + ".mdst");
+            synchronized (mSTRs) {
+                mSTRs.put(name, str);
+            }
+            return str;
+        } catch (Exception e) {
+            Log.w(TAG, "Couldn't open DB " + name, e);
+            return null;
+        }
+    }
+
 
     public class InvalidHeaderException extends Exception {}
 
@@ -59,8 +82,7 @@ public class StationTableReader {
      * @throws InvalidHeaderException If the file is not a MdST file.
      */
     public StationTableReader(Context context, String dbName) throws IOException, InvalidHeaderException {
-        mContext = context;
-        InputStream i = this.mContext.getAssets().open(dbName, AssetManager.ACCESS_RANDOM);
+        InputStream i = context.getAssets().open(dbName, AssetManager.ACCESS_RANDOM);
         mTable = new DataInputStream(i);
 
         // Read the Magic, and validate it.

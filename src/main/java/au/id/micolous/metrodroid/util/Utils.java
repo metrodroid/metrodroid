@@ -664,6 +664,16 @@ public class Utils {
         return luhnChecksum(cardNumber) == 0;
     }
 
+    public static int convertBCDtoInteger(int val) {
+        int ret = 0, mul = 1;
+        while (val > 0) {
+            ret += mul * (val & 0xf);
+            mul *= 10;
+            val >>= 4;
+        }
+        return ret;
+    }
+
     public interface Matcher<T> {
         boolean matches(T t);
     }

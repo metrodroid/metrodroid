@@ -108,7 +108,7 @@ public class LaxTapTrip extends NextfareTrip {
             return null;
         }
 
-        StationTableReader str = MetrodroidApplication.getInstance().getLaxTapSTR();
+        StationTableReader str = StationTableReader.getSTR(LaxTapData.LAX_TAP_STR);
         if (str == null) return null;
 
         try {

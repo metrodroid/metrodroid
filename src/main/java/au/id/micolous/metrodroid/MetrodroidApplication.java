@@ -99,12 +99,6 @@ public class MetrodroidApplication extends Application {
 
     private static MetrodroidApplication sInstance;
 
-    private StationTableReader mLaxTapSTR = null;
-    private StationTableReader mSeqGoSTR = null;
-    private StationTableReader mSuicaRailSTR = null;
-    private StationTableReader mSuicaBusSTR = null;
-    private StationTableReader mOVChipSTR = null;
-
     private final Serializer mSerializer;
     private boolean mHasNfcHardware = false;
     private boolean mMifareClassicSupport = false;
@@ -204,66 +198,6 @@ public class MetrodroidApplication extends Application {
 
     public boolean getMifareClassicSupport() {
         return mMifareClassicSupport;
-    }
-
-    public StationTableReader getSuicaRailSTR() {
-        if (mSuicaRailSTR == null) {
-            try {
-                mSuicaRailSTR = new StationTableReader(this, "suica_rail.mdst");
-            } catch (Exception e) {
-                Log.w(TAG, "Couldn't open suica_rail", e);
-            }
-        }
-
-        return mSuicaRailSTR;
-    }
-
-    public StationTableReader getSuicaBusSTR() {
-        if (mSuicaBusSTR == null) {
-            try {
-                mSuicaBusSTR = new StationTableReader(this, "suica_bus.mdst");
-            } catch (Exception e) {
-                Log.w(TAG, "Couldn't open suica_bus", e);
-            }
-        }
-
-        return mSuicaBusSTR;
-    }
-
-    public StationTableReader getOVChipSTR() {
-        if (mOVChipSTR == null) {
-            try {
-                mOVChipSTR = new StationTableReader(this, "ovc.mdst");
-            } catch (Exception e) {
-                Log.w(TAG, "Couldn't open ovc", e);
-            }
-        }
-
-        return mOVChipSTR;
-    }
-
-    public StationTableReader getSeqGoSTR() {
-        if (mSeqGoSTR == null) {
-            try {
-                mSeqGoSTR = new StationTableReader(this, "seq_go.mdst");
-            } catch (Exception e) {
-                Log.w(TAG, "Couldn't open seq_go", e);
-            }
-        }
-
-        return mSeqGoSTR;
-    }
-
-    public StationTableReader getLaxTapSTR() {
-        if (mLaxTapSTR == null) {
-            try {
-                mLaxTapSTR = new StationTableReader(this, "lax_tap.mdst");
-            } catch (Exception e) {
-                Log.w(TAG, "Couldn't open lax_tap", e);
-            }
-        }
-
-        return mLaxTapSTR;
     }
 
     @Override
