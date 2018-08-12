@@ -37,6 +37,7 @@ import au.id.micolous.farebot.R;
 import au.id.micolous.metrodroid.MetrodroidApplication;
 import au.id.micolous.metrodroid.proto.Stations;
 import au.id.micolous.metrodroid.transit.Station;
+import au.id.micolous.metrodroid.transit.Trip;
 
 /**
  * Metrodroid Station Table (MdST) file reader.
@@ -106,6 +107,18 @@ public class StationTableReader {
 
     private static String fallbackName(int id) {
         return Utils.localizeString(R.string.unknown_format, "0x" + Integer.toHexString(id));
+    }
+
+    public static Trip.Mode getOperatorDefaultMode(String reader, int id) {
+        if (reader == null)
+            return Trip.Mode.OTHER;
+        StationTableReader str = StationTableReader.getSTR(reader);
+        if (str == null)
+            return Trip.Mode.OTHER;
+        Trip.Mode m = str.getOperatorDefaultMode(id);
+        if (m == null)
+            return Trip.Mode.OTHER;
+        return m;
     }
 
     public class InvalidHeaderException extends Exception {}
@@ -241,6 +254,15 @@ public class StationTableReader {
         if (pl == null)
             return fallbackName(id);
         return str.selectBestName(pl.getName(), false);
+    }
+
+    private Trip.Mode getOperatorDefaultMode(int oper) {
+        Stations.Operator po = mStationDb.getOperatorsOrDefault(oper, null);
+        if (po == null)
+            return null;
+        if (po.getDefaultTransport() == Stations.TransportType.UNKNOWN)
+            return null;
+        return Trip.Mode.valueOf(po.getDefaultTransport().toString());
     }
 
     public static String getOperatorName(String reader, int id, boolean isShort) {

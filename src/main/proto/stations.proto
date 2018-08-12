@@ -26,6 +26,20 @@ message StationDb {
     string tts_hint_language = 5;
 }
 
+enum TransportType {
+    UNKNOWN = 0;
+    BUS = 1;
+    TRAIN = 2;
+    TRAM = 3;
+    METRO = 4;
+    FERRY = 5;
+    TICKET_MACHINE = 6;
+    VENDING_MACHINE = 7;
+    POS = 8;
+    OTHER = 9;
+    BANNED = 10;
+}
+
 message Names {
     string english = 1;
 
@@ -38,6 +52,9 @@ message Names {
 
 message Operator {
     Names name = 3;
+
+    // Default transport type provided by this operator.
+    TransportType default_transport = 4;
 
     reserved 1, 2;
 }
