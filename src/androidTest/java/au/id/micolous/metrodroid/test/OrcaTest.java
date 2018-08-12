@@ -1,7 +1,10 @@
 /*
- * OpalTest.java
+ * OrcaTest.java
  *
+ * Primary author: Vladimir Serbinenko
+ * 
  * Copyright 2017 Michael Farrell <micolous+git@gmail.com>
+ * Copyright 2018 Google Inc.
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
