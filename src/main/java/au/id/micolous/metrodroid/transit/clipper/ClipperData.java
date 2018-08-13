@@ -72,7 +72,7 @@ final class ClipperData {
         if (agency == ClipperData.AGENCY_GGT || agency == ClipperData.AGENCY_CALTRAIN) {
             if (stationId == 0xffff)
                 return Station.nameOnly(Utils.localizeString(R.string.clipper_end_of_line));
-            return Station.nameOnly(Utils.localizeString(R.string.clipper_zone_number, "0x" + Long.toString(stationId, 16)));
+            return Station.nameOnly(Utils.localizeString(R.string.clipper_zone_number, Integer.toString(stationId)));
         }
 
         // Placeholders
