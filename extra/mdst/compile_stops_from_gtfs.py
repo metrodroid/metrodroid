@@ -132,6 +132,7 @@ def compile_stops_from_gtfs(input_gtfs_f, output_f, matching_f=None, version=Non
     
     stop_codes = {}
     stop_ids = {}
+    short_names = {}
     for match in matching:
       if match['stop_code']:
         if match['stop_code'] not in stop_codes:
@@ -143,8 +144,8 @@ def compile_stops_from_gtfs(input_gtfs_f, output_f, matching_f=None, version=Non
         stop_ids[match['stop_id']].append(match['reader_id'])
       else:
         raise Exception('neither stop_id or stop_code specified in row')
-        
-
+      if 'short_name' in match and match['short_name']:
+        short_names[match['reader_id']] = match['short_name']
 
     # Now run through the stops
     for stop in stops:
@@ -162,8 +163,8 @@ def compile_stops_from_gtfs(input_gtfs_f, output_f, matching_f=None, version=Non
         if y and x:
           s.latitude = y
           s.longitude = x
-        if 'short_name' in stop and stop_ids['short_name']:
-          s.name.english_short = stop_ids['short_name']
+        if reader_id in short_names:
+          s.name.english_short = short_names[reader_id]
 
         db.push_station(s)
         station_count += 1
@@ -179,8 +180,8 @@ def compile_stops_from_gtfs(input_gtfs_f, output_f, matching_f=None, version=Non
           s.latitude = y
           s.longitude = x
 
-        if 'short_name' in stop and stop_ids['short_name']:
-          s.name.english_short = stop_ids['short_name']
+        if reader_id in short_names:
+          s.name.english_short = short_names[reader_id]
         db.push_station(s)
         station_count += 1
 
