@@ -70,7 +70,7 @@ public class DesfireManufacturingData {
     public int weekProd;
     @Element(name = "year-prod")
     public int yearProd;
-    @Element(name = "raw")
+    @Element(name = "raw", required = false)
     private Base64String mRaw;
 
     private DesfireManufacturingData() { /* For XML Serializer */ }
