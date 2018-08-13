@@ -147,12 +147,17 @@ def compile_stops_from_gtfs(input_gtfs_f, output_f, matching_f=None, version=Non
       if 'short_name' in match and match['short_name']:
         short_names[match['reader_id']] = match['short_name']
 
+    total_gtfs_stations = 0
+    dropped_gtfs_stations = 0
+
     # Now run through the stops
     for stop in stops:
       # preprocess stop data
       name = massage_name(stop['stop_name'], strip_suffixes)
       y = float(stop['stop_lat'].strip())
       x = float(stop['stop_lon'].strip())
+
+      used = False
 
       # Insert rows where a stop_id is specified for the reader_id
       stop_rows = []
@@ -168,6 +173,7 @@ def compile_stops_from_gtfs(input_gtfs_f, output_f, matching_f=None, version=Non
 
         db.push_station(s)
         station_count += 1
+        used = True
 
       # Insert rows where a stop_code is specified for the reader_id
       stop_rows = []
@@ -184,6 +190,10 @@ def compile_stops_from_gtfs(input_gtfs_f, output_f, matching_f=None, version=Non
           s.name.english_short = short_names[reader_id]
         db.push_station(s)
         station_count += 1
+        used = True
+      total_gtfs_stations += 1
+      if not used:
+        dropped_gtfs_stations += 1
 
     matching_f.close()
 
@@ -218,6 +228,8 @@ def compile_stops_from_gtfs(input_gtfs_f, output_f, matching_f=None, version=Non
   print(' - stations ......... %8d bytes (%.1f per record)' % (stations_len, stations_len / station_count))
   index_len = (index_end_off - db.index_off)
   print(' - index ............ %8d bytes (%.1f per record)' % (index_len, index_len / station_count))
+  print(' - Dropped %d out of %d GTFS stations' % (dropped_gtfs_stations,
+                                                   total_gtfs_stations))
 
 def main():
   parser = ArgumentParser()
