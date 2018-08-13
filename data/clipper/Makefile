@@ -2,7 +2,7 @@
 .PHONY: clean mdst_deps
 
 MDST = ../../extra/mdst
-ZIPFILE = 'google_transit_20180526_v2.zip'
+ZIPFILE = google_transit_20180526_v2.zip
 
 all: clipper.mdst clipper.csv
 
