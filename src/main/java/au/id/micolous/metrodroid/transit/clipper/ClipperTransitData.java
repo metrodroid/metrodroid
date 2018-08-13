@@ -283,6 +283,8 @@ public class ClipperTransitData extends TransitData {
     }
 
     private static Calendar clipperTimestampToCalendar(long timestamp) {
+        if (timestamp == 0)
+            return null;
         Calendar c = new GregorianCalendar(CLIPPER_TZ);
         //Log.d("clipperts", Long.toString(timestamp) + " " + Long.toHexString(timestamp));
         c.setTimeInMillis(CLIPPER_EPOCH.getTimeInMillis() + (timestamp * 1000));
