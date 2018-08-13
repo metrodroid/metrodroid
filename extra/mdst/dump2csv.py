@@ -26,7 +26,7 @@ from stations_pb2 import StationDb, Station
 import struct
 
 SCHEMA_VER = 1
-FIELD_NAMES = ['id', 'name_en', 'name', 'lat', 'lon', 'oper_id', 'oper_en', 'oper', 'line_id', 'line_en', 'line']
+FIELD_NAMES = ['id', 'name_en', 'name', 'name_short_en', 'lat', 'lon', 'oper_id', 'oper_en', 'oper', 'line_id', 'line_en', 'line']
 
 def read_delimited_message(cls, f):
   t = f.tell()
@@ -62,6 +62,8 @@ def dump2csv(database, output_fn):
     d = {'id': rec.id}
     if rec.name.english:
       d['name_en'] = rec.name.english
+    if rec.name.english_short:
+      d['name_short_en'] = rec.name.english_short
     if rec.name.local:
       d['name'] = rec.name.local
     if rec.latitude != 0 and rec.longitude != 0:
