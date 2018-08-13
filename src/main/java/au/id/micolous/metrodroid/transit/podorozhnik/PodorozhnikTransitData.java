@@ -27,6 +27,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.List;
+import java.util.Locale;
 import java.util.TimeZone;
 
 import au.id.micolous.farebot.R;
@@ -88,10 +89,11 @@ public class PodorozhnikTransitData extends TransitData {
     private Integer mGroundCounter;
     private Integer mSubwayCounter;
     private Integer mLastTransport;
+    private String mSerial;
 
     @Override
     public String getSerialNumber() {
-        return null;
+        return mSerial;
     }
 
     @Override
@@ -110,6 +112,7 @@ public class PodorozhnikTransitData extends TransitData {
 	    dest.writeInt(mLastValidator);
 	    dest.writeInt(mGroundCounter);
 	    dest.writeInt(mSubwayCounter);
+	    dest.writeString(mSerial);
     }
 
     @SuppressWarnings("UnusedDeclaration")
@@ -123,13 +126,24 @@ public class PodorozhnikTransitData extends TransitData {
 	    mLastValidator = p.readInt();
 	    mGroundCounter = p.readInt();
 	    mSubwayCounter = p.readInt();
+	    mSerial = p.readString();
+    }
+
+    private static String getSerial(byte []uid) {
+        String sn;StringBuilder pretty = new StringBuilder();
+        sn = String.format(Locale.ENGLISH, "96433078%017d",
+                Utils.byteArrayToLong(Utils.reverseBuffer(uid, 0, 7)));
+        sn += Utils.calculateLuhn(sn);// last digit is luhn
+        for (int i = 0; i < 6; i++)
+            pretty.append(sn.substring(i * 4, i * 4 + 4)).append(" ");
+        pretty.append(sn.substring(24, 26));
+        return pretty.toString();
+
     }
 
     public static TransitIdentity parseTransitIdentity(ClassicCard card) {
-        /* Pure Podorozhnik cards have their own number however
-         * combined Troika+Podorozhnik share the number with Troika part.
-         * I don't have pure Podorozhnik to test, so serial number readin is missing currently.   */
-        return new TransitIdentity(Utils.localizeString(R.string.card_name_podorozhnik), null);
+        return new TransitIdentity(Utils.localizeString(R.string.card_name_podorozhnik),
+                getSerial(card.getTagId()));
     }
 
     private void decodeSector4(ClassicCard card) {
@@ -175,8 +189,9 @@ public class PodorozhnikTransitData extends TransitData {
     }	
 
     public PodorozhnikTransitData(ClassicCard card) {
-	    decodeSector4(card);
-	    decodeSector5(card);
+        mSerial = getSerial(card.getTagId());
+        decodeSector4(card);
+        decodeSector5(card);
     }
 
     public static Calendar convertDate(int mins) {

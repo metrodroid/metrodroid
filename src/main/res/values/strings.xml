@@ -933,4 +933,5 @@
     <string name="mfc_supported">MIFARE Classic: supported</string>
     <string name="mfc_not_supported">MIFARE Classic: not supported</string>
     <string name="balances_and_subscriptions">Tickets</string>
+    <string name="card_number">Card number</string>
 </resources>
