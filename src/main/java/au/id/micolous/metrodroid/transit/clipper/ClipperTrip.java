@@ -116,12 +116,12 @@ public class ClipperTrip extends Trip {
 
     @Override
     public Station getStartStation() {
-        return ClipperData.getStation(mAgency, mFrom);
+        return ClipperData.getStation(mAgency, mFrom, false);
     }
 
     @Override
     public Station getEndStation() {
-        return ClipperData.getStation(mAgency, mTo);
+        return ClipperData.getStation(mAgency, mTo, true);
     }
 
     @Override

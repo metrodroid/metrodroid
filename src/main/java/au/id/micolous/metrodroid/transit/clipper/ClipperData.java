@@ -40,7 +40,6 @@ import java.util.Map;
 final class ClipperData {
     static final int AGENCY_CALTRAIN = 0x06;
     static final int AGENCY_GGT = 0x0b;
-    static final int AGENCY_MUNI = 0x12;
     static final int AGENCY_GG_FERRY = 0x19;
 
     static final Map<Integer, String> GG_FERRY_ROUTES = new ImmutableMapBuilder<Integer, String>()
@@ -65,19 +64,20 @@ final class ClipperData {
         return StationTableReader.getOperatorName(CLIPPER_STR, agency, true);
     }
 
-    public static Station getStation(int agency, int stationId) {
+    public static Station getStation(int agency, int stationId, boolean isEnd) {
         Station s = StationTableReader.getStationNoFallback(CLIPPER_STR,(agency << 16) | stationId);
         if (s != null)
             return s;
-        if (agency == ClipperData.AGENCY_MUNI) {
-            return null; // Coach number is not collected
-        }
 
         if (agency == ClipperData.AGENCY_GGT || agency == ClipperData.AGENCY_CALTRAIN) {
             if (stationId == 0xffff)
                 return Station.nameOnly(Utils.localizeString(R.string.clipper_end_of_line));
             return Station.nameOnly(Utils.localizeString(R.string.clipper_zone_number, "0x" + Long.toString(stationId, 16)));
         }
+
+        // Placeholders
+        if (stationId == (isEnd ? 0xffff : 0))
+            return null;
 
         return Station.unknown("0x" + Integer.toHexString(agency) + "/0x" + Long.toString(stationId, 16));
     }
