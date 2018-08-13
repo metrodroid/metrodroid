@@ -68,18 +68,26 @@ s.id = getID("GTM")
 s.name.english = "Manual top-up"
 db.push_station(s)
 
+dropped_stations = set(names.keys()) | set(coordinates.keys())
+total_stations = len(dropped_stations)
+
 for station in mapping:
     s = stations_pb2.Station()
     s.id = getID(station["id"].strip())
-    s.name.english = names[station["code"]][0].strip()
-    s.name.local = names[station["code"]][1].strip()
-    s.latitude = coordinates[station["code"]][1]
-    s.longitude = coordinates[station["code"]][0]
+    code = station["code"].strip()
+    s.name.english = names[code][0].strip()
+    s.name.local = names[code][1].strip()
+    s.latitude = coordinates[code][1]
+    s.longitude = coordinates[code][0]
+
+    if code in dropped_stations:
+        dropped_stations.remove(code)
 
     db.push_station(s)
 
-
 mapping_f.close()
+
+print('%d out of %d stations dropped: %s' % (len(dropped_stations), total_stations, dropped_stations))
 
 print('Building index...')
 db.finalise()
