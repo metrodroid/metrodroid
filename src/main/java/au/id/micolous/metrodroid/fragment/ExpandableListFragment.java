@@ -87,6 +87,11 @@ public class ExpandableListFragment extends Fragment implements OnCreateContextM
     public ExpandableListFragment() {
     }
 
+    public View getListView() {
+        ensureList();
+        return mList;
+    }
+
     /**
      * Provide default implementation to return a simple list view.  Subclasses
      * can override to replace with their own layout.  If doing so, the
@@ -172,6 +177,10 @@ public class ExpandableListFragment extends Fragment implements OnCreateContextM
                 setListShown(true, getView().getWindowToken() != null);
             }
         }
+    }
+
+    public ExpandableListAdapter getListAdapter() {
+        return mAdapter;
     }
 
     /**
@@ -296,8 +305,8 @@ public class ExpandableListFragment extends Fragment implements OnCreateContextM
             if (mStandardEmptyView == null) {
                 mEmptyView = root.findViewById(android.R.id.empty);
             }
-            mListContainer = null; //root.findViewById(com.android.internal.R.id.listContainer);
-            View rawListView = root.findViewById(android.R.id.list);
+            mListContainer = root.findViewById(android.R.id.list);
+            View rawListView = mListContainer;
             if (!(rawListView instanceof ExpandableListView)) {
                 if (rawListView == null) {
                     throw new RuntimeException("Your content must have a ExpandableListView whose id attribute is "
