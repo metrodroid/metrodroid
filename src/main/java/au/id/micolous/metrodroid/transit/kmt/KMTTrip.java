@@ -24,7 +24,6 @@ import android.os.Parcel;
 import android.support.annotation.Nullable;
 
 import java.util.Calendar;
-import java.util.Date;
 import java.util.GregorianCalendar;
 
 import au.id.micolous.farebot.R;
@@ -70,11 +69,9 @@ public class KMTTrip extends Trip {
         mEndGateCode = data[9] & 0xff;
     }
 
-    @Override
     public String getEndStationName() {
         // Need to work on decoding gate code
         // Collect the data !!
-//        return String.format("[%02X]", mEndGateCode);
         return KMTTransitData.getStationName(mEndGateCode);
     }
 
