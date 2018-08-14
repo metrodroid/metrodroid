@@ -1,36 +1,38 @@
 /*
  * KMTTransitData.java
  *
- * Authors:
- * Bondan Sumbodo <sybond@gmail.com>
- * Eric Butler <eric@codebutler.com>
+ * Copyright 2018 Bondan Sumbodo <sybond@gmail.com>
  *
- * Based on code from http://code.google.com/p/nfc-felica/
- * nfc-felica by Kazzz. See project URL for complete author information.
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
  *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
 package au.id.micolous.metrodroid.transit.kmt;
 
 import android.os.Parcel;
 import android.support.annotation.Nullable;
+
 import org.apache.commons.lang3.ArrayUtils;
+
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.GregorianCalendar;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
+import java.util.Map;
 import java.util.TimeZone;
+
 import au.id.micolous.metrodroid.card.felica.FelicaBlock;
 import au.id.micolous.metrodroid.card.felica.FelicaCard;
 import au.id.micolous.metrodroid.card.felica.FelicaService;
@@ -48,12 +50,60 @@ public class KMTTransitData extends TransitData {
     public static final int FELICA_SERVICE_KMT_BALANCE = 0x1017;
     public static final int FELICA_SERVICE_KMT_HISTORY = 0x200F;
     static final TimeZone TIME_ZONE = TimeZone.getTimeZone("Asia/Jakarta");
+    private static final Map<Integer, String> ST_NAME;
     public static final long KMT_EPOCH;
 
     static {
+        HashMap<Integer, String> codeToDesc = new HashMap();
+
+        // ---- need to add another station data
+        codeToDesc.put(0x17, "Manggarai");
+        codeToDesc.put(0x16, "Tebet");
+
+        codeToDesc.put(0x31, "Jatinegara");
+        codeToDesc.put(0x30, "Klender");
+        codeToDesc.put(0x29, "Buaran");
+        codeToDesc.put(0x28, "Klender Baru");
+        codeToDesc.put(0x27, "Cakung");
+        codeToDesc.put(0x26, "Kranji");
+        codeToDesc.put(0x25, "Bekasi");
+        codeToDesc.put(0x24, "Bekasi Timur");
+        codeToDesc.put(0x23, "Tambun");
+        codeToDesc.put(0x22, "Cibitung");
+        codeToDesc.put(0x21, "Cikarang");
+
+        codeToDesc.put(0x49, "Tanah Abang");
+        codeToDesc.put(0x50, "Palmerah");
+        codeToDesc.put(0x51, "Kebayoran");
+        codeToDesc.put(0x52, "Pondok Ranji");
+        codeToDesc.put(0x53, "Jurang Mangu");
+        codeToDesc.put(0x54, "Sudimara");
+        codeToDesc.put(0x55, "Rawabuntu");
+        codeToDesc.put(0x56, "Serpong");
+        codeToDesc.put(0x57, "Cisauk");
+        codeToDesc.put(0x58, "Cicayur");
+        codeToDesc.put(0x59, "Parung Panjang");
+        codeToDesc.put(0x60, "Cilejit");
+        codeToDesc.put(0x61, "Daru");
+        codeToDesc.put(0x62, "Tenjo");
+        codeToDesc.put(0x63, "Tigaraksa");
+        codeToDesc.put(0x64, "Maja");
+        codeToDesc.put(0x65, "Citeras");
+        codeToDesc.put(0x66, "Rangkasbitung");
+
+        ST_NAME = Collections.unmodifiableMap(codeToDesc);
+
         GregorianCalendar epoch = new GregorianCalendar(TIME_ZONE);
         epoch.set(2000, 0, 1, 7, 0, 0);
         KMT_EPOCH = epoch.getTimeInMillis();
+    }
+
+    public static String getStationName(int Code) {
+        if (ST_NAME.get(Code) != null) {
+            return String.format(Locale.US, "%s (%02X)", ST_NAME.get(Code), Code);
+        } else {
+            return String.format(Locale.US, "Unknown (%02X)", Code);
+        }
     }
 
     public static final Creator<KMTTransitData> CREATOR = new Creator<KMTTransitData>() {

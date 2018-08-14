@@ -676,8 +676,8 @@
     <string name="felica_process_admission_thirdparty">Admission Payment (3rd Party)</string>
 
     <!-- Kereta Commuter Indonesia's - KMT -->
-    <string name="kmt_def_route">JABODETABEK</string>
-    <string name="kmt_extra_note">Only for new FeliCa cards. Station data currently displayed as code.</string>
+    <string name="kmt_def_route">Jabodetabek Line</string>
+    <string name="kmt_extra_note">Only for new FeliCa cards. Some station names are unknown.</string>
 
     <!-- HSL -->
     <string name="hsl_pass_is_valid">Valid season ticket</string>

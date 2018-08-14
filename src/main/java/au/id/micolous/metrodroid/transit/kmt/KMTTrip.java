@@ -1,14 +1,7 @@
 /*
  * KMTTrip.java
  *
- * Authors:
- * Bondan Sumbodo <sybond@gmail.com>
- *
- * This file is part of FareBot.
- * Learn more at: https://codebutler.github.io/farebot/
- *
- * Copyright (C) 2014-2016 Eric Butler <eric@codebutler.com>
- * Copyright (C) 2016 Michael Farrell <micolous+git@gmail.com>
+ * Copyright 2018 Bondan Sumbodo <sybond@gmail.com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -46,7 +39,6 @@ public class KMTTrip extends Trip {
         public KMTTrip createFromParcel(Parcel parcel) {
             return new KMTTrip(parcel);
         }
-
         public KMTTrip[] newArray(int size) {
             return new KMTTrip[size];
         }
@@ -82,7 +74,8 @@ public class KMTTrip extends Trip {
     public String getEndStationName() {
         // Need to work on decoding gate code
         // Collect the data !!
-        return String.format("[%02X]", mEndGateCode);
+//        return String.format("[%02X]", mEndGateCode);
+        return KMTTransitData.getStationName(mEndGateCode);
     }
 
     public KMTTrip(Parcel parcel) {
