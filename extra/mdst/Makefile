@@ -2,7 +2,7 @@
 
 .PHONY: all clean
 
-all: stations_pb2.py suica_rail.mdst suica_bus.mdst shenzhen.mdst ovc.mdst orca.mdst suica_rail.csv suica_bus.csv ovc.csv shenzhen.csv orca.csv
+all: stations_pb2.py suica_rail.mdst suica_bus.mdst shenzhen.mdst ovc.mdst kmt.mdst orca.mdst suica_rail.csv suica_bus.csv ovc.csv shenzhen.csv orca.csv kmt.csv
 
 stations_pb2.py: stations.proto
 	protoc --python_out=. stations.proto
@@ -21,6 +21,9 @@ suica_rail.mdst: sqlite2pb-suica.py stations_pb2.py mdst.py ../../data/felica_st
 
 suica_bus.mdst: sqlite2pb-suica-bus.py stations_pb2.py ../../data/felica_stations.db3
 	python3 sqlite2pb-suica-bus.py
+
+kmt.mdst: csv2pb.py stations_pb2.py mdst.py ../../data/kmt/stations.csv
+	python3 csv2pb.py ../../data/kmt/stations.csv -o $@ -V 2 -L id
 
 ovc.mdst: sqlite2pb-ovc.py stations_pb2.py mdst.py ../../data/ovc_stations.db3
 	python3 sqlite2pb-ovc.py
