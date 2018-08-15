@@ -23,7 +23,6 @@ import android.os.Build;
 import android.os.Parcel;
 import android.os.Parcelable;
 import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.text.SpannableString;
 import android.text.Spanned;
 import android.text.style.TtsSpan;
@@ -31,7 +30,6 @@ import android.text.style.TtsSpan;
 import java.security.SecureRandom;
 import java.text.NumberFormat;
 import java.util.Currency;
-import java.util.Random;
 
 import au.id.micolous.metrodroid.MetrodroidApplication;
 
@@ -54,10 +52,7 @@ public class TransitCurrency extends TransitBalance implements Parcelable {
     public TransitCurrency(int currency, @NonNull String currencyCode) {
         mCurrency = currency;
         mCurrencyCode = currencyCode;
-        if (currencyCode.equals("JPY"))
-            mDivisor = 1.;
-        else
-            mDivisor = 100.;
+        mDivisor = 100.;
     }
 
     @Override

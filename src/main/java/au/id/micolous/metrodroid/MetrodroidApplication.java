@@ -27,7 +27,7 @@ import android.os.StrictMode;
 import android.preference.PreferenceManager;
 import android.util.Log;
 
-import net.kazzz.felica.lib.FeliCaLib;
+import net.kazzz.felica.FeliCaLib;
 
 import org.simpleframework.xml.Serializer;
 import org.simpleframework.xml.convert.Registry;
@@ -42,6 +42,8 @@ import org.simpleframework.xml.transform.RegistryMatcher;
 
 import java.util.Calendar;
 import java.util.GregorianCalendar;
+import java.util.HashSet;
+import java.util.Set;
 
 import au.id.micolous.farebot.R;
 import au.id.micolous.metrodroid.card.Card;
@@ -54,7 +56,6 @@ import au.id.micolous.metrodroid.card.desfire.settings.DesfireFileSettings;
 import au.id.micolous.metrodroid.card.iso7816.ISO7816Application;
 import au.id.micolous.metrodroid.card.iso7816.ISO7816SelectorElement;
 import au.id.micolous.metrodroid.card.ultralight.UltralightPage;
-import au.id.micolous.metrodroid.util.StationTableReader;
 import au.id.micolous.metrodroid.xml.Base64String;
 import au.id.micolous.metrodroid.xml.CardConverter;
 import au.id.micolous.metrodroid.xml.CardTypeTransform;
@@ -85,14 +86,17 @@ public class MetrodroidApplication extends Application {
     public static final String PREF_LOCALISE_PLACES = "pref_localise_places";
     public static final String PREF_LOCALISE_PLACES_HELP = "pref_localise_places_help";
     public static final String PREF_CONVERT_TIMEZONES = "pref_convert_timezones";
+    public static final String PREF_THEME = "pref_theme";
+    public static final String PREF_SHOW_LOCAL_AND_ENGLISH = "pref_show_local_and_english";
+
+    private static final Set<String> devicesMifareWorks = new HashSet<>();
+    private static final Set<String> devicesMifareNotWorks = new HashSet<>();
+
+    static {
+        devicesMifareWorks.add("Pixel 2");
+    }
 
     private static MetrodroidApplication sInstance;
-
-    private StationTableReader mLaxTapSTR = null;
-    private StationTableReader mSeqGoSTR = null;
-    private StationTableReader mSuicaRailSTR = null;
-    private StationTableReader mSuicaBusSTR = null;
-    private StationTableReader mOVChipSTR = null;
 
     private final Serializer mSerializer;
     private boolean mHasNfcHardware = false;
@@ -183,72 +187,16 @@ public class MetrodroidApplication extends Application {
         return getBooleanPref(PREF_CONVERT_TIMEZONES, false);
     }
 
+    public static boolean showBothLocalAndEnglish() {
+        return getBooleanPref(PREF_SHOW_LOCAL_AND_ENGLISH, false);
+    }
+
     public Serializer getSerializer() {
         return mSerializer;
     }
 
     public boolean getMifareClassicSupport() {
         return mMifareClassicSupport;
-    }
-
-    public StationTableReader getSuicaRailSTR() {
-        if (mSuicaRailSTR == null) {
-            try {
-                mSuicaRailSTR = new StationTableReader(this, "suica_rail.mdst");
-            } catch (Exception e) {
-                Log.w(TAG, "Couldn't open suica_rail", e);
-            }
-        }
-
-        return mSuicaRailSTR;
-    }
-
-    public StationTableReader getSuicaBusSTR() {
-        if (mSuicaBusSTR == null) {
-            try {
-                mSuicaBusSTR = new StationTableReader(this, "suica_bus.mdst");
-            } catch (Exception e) {
-                Log.w(TAG, "Couldn't open suica_bus", e);
-            }
-        }
-
-        return mSuicaBusSTR;
-    }
-
-    public StationTableReader getOVChipSTR() {
-        if (mOVChipSTR == null) {
-            try {
-                mOVChipSTR = new StationTableReader(this, "ovc.mdst");
-            } catch (Exception e) {
-                Log.w(TAG, "Couldn't open ovc", e);
-            }
-        }
-
-        return mOVChipSTR;
-    }
-
-    public StationTableReader getSeqGoSTR() {
-        if (mSeqGoSTR == null) {
-            try {
-                mSeqGoSTR = new StationTableReader(this, "seq_go.mdst");
-            } catch (Exception e) {
-                Log.w(TAG, "Couldn't open seq_go", e);
-            }
-        }
-
-        return mSeqGoSTR;
-    }
-
-    public StationTableReader getLaxTapSTR() {
-        if (mLaxTapSTR == null) {
-            try {
-                mLaxTapSTR = new StationTableReader(this, "lax_tap.mdst");
-            } catch (Exception e) {
-                Log.w(TAG, "Couldn't open lax_tap", e);
-            }
-        }
-
-        return mLaxTapSTR;
     }
 
     @Override
@@ -279,6 +227,16 @@ public class MetrodroidApplication extends Application {
             return;
         }
 
+        if (devicesMifareNotWorks.contains(android.os.Build.MODEL)) {
+	        mMifareClassicSupport = false;
+	        return;
+	    }
+
+	    if (devicesMifareWorks.contains(android.os.Build.MODEL)) {
+	        mMifareClassicSupport = true;
+	        return;
+	    }
+
         // TODO: Some devices report MIFARE Classic support, when they actually don't have it.
         //
         // Detecting based on libraries and device nodes doesn't work great either. There's edge
@@ -290,4 +248,17 @@ public class MetrodroidApplication extends Application {
                 + (mMifareClassicSupport ? "(found)" : "(missing)"));
     }
 
+    public static String getThemePreference() {
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(MetrodroidApplication.getInstance());
+        return prefs.getString(MetrodroidApplication.PREF_THEME, "dark");
+    }
+
+    public static int chooseTheme() {
+        String theme = getThemePreference();
+        if (theme.equals("light"))
+            return R.style.Metrodroid_Light;
+        if (theme.equals("farebot"))
+            return R.style.FareBot_Theme_Common;
+        return R.style.Metrodroid_Dark;
+    }
 }

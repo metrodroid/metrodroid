@@ -21,14 +21,20 @@ package au.id.micolous.metrodroid.util;
 
 import android.content.Context;
 import android.content.res.AssetManager;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.util.Log;
 
 import java.io.DataInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.Locale;
+import java.util.Map;
 
+import au.id.micolous.farebot.R;
+import au.id.micolous.metrodroid.MetrodroidApplication;
 import au.id.micolous.metrodroid.proto.Stations;
 import au.id.micolous.metrodroid.transit.Station;
 
@@ -43,10 +49,64 @@ public class StationTableReader {
     private static final int VERSION = 1;
     private static final String TAG = "StationTableReader";
 
-    private Context mContext;
     private Stations.StationDb mStationDb;
     private Stations.StationIndex mStationIndex;
     private DataInputStream mTable;
+
+    private static final Map<String,StationTableReader> mSTRs = new HashMap<>();
+
+    static private StationTableReader getSTR(String name) {
+        synchronized (mSTRs) {
+            if (mSTRs.containsKey(name))
+                return mSTRs.get(name);
+        }
+
+        try {
+            StationTableReader str = new StationTableReader(MetrodroidApplication.getInstance(),
+                    name + ".mdst");
+            synchronized (mSTRs) {
+                mSTRs.put(name, str);
+            }
+            return str;
+        } catch (Exception e) {
+            Log.w(TAG, "Couldn't open DB " + name, e);
+            return null;
+        }
+    }
+
+    @Nullable
+    public static Station getStationNoFallback(@NonNull String reader, int id) {
+        if (reader == null)
+            return null;
+        StationTableReader str = StationTableReader.getSTR(reader);
+        if (str == null)
+            return null;
+        try {
+            return str.getStationById(id);
+        } catch (IOException e) {
+            return null;
+        }
+    }
+
+    @NonNull
+    public static Station getStation(@NonNull String reader, int id) {
+        Station s = getStationNoFallback(reader, id);
+        if (s != null)
+            return s;
+        return Station.unknown(id);
+    }
+
+    @NonNull
+    public static Station getStation(@NonNull String reader, int id, String fallback) {
+        Station s = getStationNoFallback(reader, id);
+        if (s != null)
+            return s;
+        return Station.unknown(fallback);
+    }
+
+    private static String fallbackName(int id) {
+        return Utils.localizeString(R.string.unknown_format, "0x" + Integer.toHexString(id));
+    }
 
     public class InvalidHeaderException extends Exception {}
 
@@ -57,9 +117,8 @@ public class StationTableReader {
      * @throws IOException On read errors
      * @throws InvalidHeaderException If the file is not a MdST file.
      */
-    public StationTableReader(Context context, String dbName) throws IOException, InvalidHeaderException {
-        mContext = context;
-        InputStream i = this.mContext.getAssets().open(dbName, AssetManager.ACCESS_RANDOM);
+    private StationTableReader(Context context, String dbName) throws IOException, InvalidHeaderException {
+        InputStream i = context.getAssets().open(dbName, AssetManager.ACCESS_RANDOM);
         mTable = new DataInputStream(i);
 
         // Read the Magic, and validate it.
@@ -94,23 +153,61 @@ public class StationTableReader {
         mTable.reset();
     }
 
-    boolean useEnglishName() {
+    private boolean useEnglishName() {
         String locale = Locale.getDefault().getLanguage();
         return !mStationDb.getLocalLanguagesList().contains(locale);
     }
 
-    String selectBestName(String englishName, String localName) {
-        if (useEnglishName() && englishName != null && !englishName.equals("")) {
-            return englishName;
+    private String selectBestName(Stations.Names name, boolean isShort) {
+        String englishFull = name.getEnglish();
+        String englishShort = name.getEnglishShort();
+        String english = null;
+        boolean hasEnglishFull = englishFull != null && englishFull.length() != 0;
+        boolean hasEnglishShort = englishShort != null && englishShort.length() != 0;
+
+        if (hasEnglishFull && !hasEnglishShort)
+            english = englishFull;
+        else if (!hasEnglishFull && hasEnglishShort)
+            english = englishShort;
+        else
+            english = isShort ? englishShort : englishFull;
+
+        String localFull = name.getLocal();
+        String localShort = name.getLocalShort();
+        String local = null;
+        boolean hasLocalFull = localFull != null && localFull.length() != 0;
+        boolean hasLocalShort = localShort != null && localShort.length() != 0;
+
+        if (hasLocalFull && !hasLocalShort)
+            local = localFull;
+        else if (!hasLocalFull && hasLocalShort)
+            local = localShort;
+        else
+            local = isShort ? localShort : localFull;
+
+        if (showBoth() && english != null && !english.equals("")
+                && local != null && !local.equals("")) {
+            if (english.equals(local))
+                return local;
+            if (useEnglishName())
+                return english + " (" + local + ")";
+            return local + " (" + english + ")";
+        }
+        if (useEnglishName() && english != null && !english.equals("")) {
+            return english;
         }
 
-        if (localName != null && !localName.equals("")) {
+        if (local != null && !local.equals("")) {
             // Local preferred, or English not available
-            return localName;
+            return local;
         } else {
             // Local unavailable, use English
-            return englishName;
+            return english;
         }
+    }
+
+    private boolean showBoth() {
+        return MetrodroidApplication.showBothLocalAndEnglish();
     }
 
     /**
@@ -119,7 +216,7 @@ public class StationTableReader {
      * @return Station object, or null if it could not be found.
      * @throws IOException on read errors
      */
-    public Stations.Station getProtoStationById(int id) throws IOException {
+    private Stations.Station getProtoStationById(int id) throws IOException {
         mTable.reset();
 
         int offset;
@@ -134,13 +231,37 @@ public class StationTableReader {
         return Stations.Station.parseDelimitedFrom(mTable);
     }
 
+    public static String getLineName(String reader, int id) {
+        if (reader == null)
+            return fallbackName(id);
+        StationTableReader str = getSTR(reader);
+        if (str == null)
+            return fallbackName(id);
+        Stations.Line pl = str.mStationDb.getLinesOrDefault(id, null);
+        if (pl == null)
+            return fallbackName(id);
+        return str.selectBestName(pl.getName(), false);
+    }
+
+    public static String getOperatorName(String reader, int id, boolean isShort) {
+        if (reader == null)
+            return fallbackName(id);
+        StationTableReader str = StationTableReader.getSTR(reader);
+        if (str == null)
+            return fallbackName(id);
+        Stations.Operator po = str.mStationDb.getOperatorsOrDefault(id, null);
+        if (po == null)
+            return fallbackName(id);
+        return str.selectBestName(po.getName(), isShort);
+    }
+
     /**
      * Gets a Metrodroid-native Station object for a given stop ID.
      * @param id Stop ID.
      * @return Station object, or null if it could not be found.
      * @throws IOException on read errors
      */
-    public Station getStationById(int id) throws IOException {
+    private Station getStationById(int id) throws IOException {
         Stations.Station ps = getProtoStationById(id);
         if (ps == null) return null;
 
@@ -149,10 +270,10 @@ public class StationTableReader {
         boolean hasLocation = ps.getLatitude() != 0 && ps.getLongitude() != 0;
 
         return new Station(
-                po == null ? null : selectBestName(po.getEnglishName(), po.getLocalName()),
-                pl == null ? null : selectBestName(pl.getEnglishName(), pl.getLocalName()),
-                selectBestName(ps.getEnglishName(), ps.getLocalName()),
-                null,
+                po == null ? null : selectBestName(po.getName(), true),
+                pl == null ? null : selectBestName(pl.getName(), true),
+                selectBestName(ps.getName(), false),
+                selectBestName(ps.getName(), true),
                 hasLocation ? Float.toString(ps.getLatitude()) : null,
                 hasLocation ? Float.toString(ps.getLongitude()) : null,
                 mStationDb.getTtsHintLanguage()

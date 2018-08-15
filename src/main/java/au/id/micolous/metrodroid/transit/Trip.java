@@ -51,19 +51,16 @@ public abstract class Trip implements Parcelable {
         String startLanguage = null, endLanguage = null;
         boolean localisePlaces = MetrodroidApplication.localisePlaces();
 
-        if (trip.getStartStationName() != null) {
-            startStationName = trip.getStartStationName();
-            if (trip.getStartStation() != null) {
-                startLanguage = trip.getStartStation().getLanguage();
-            }
+        if (trip.getStartStation() != null) {
+            startStationName = trip.getStartStation().getShortStationName();
+            startLanguage = trip.getStartStation().getLanguage();
         }
 
-        if (trip.getEndStationName() != null &&
-                (!trip.getEndStationName().equals(trip.getStartStationName()))) {
-            endStationName = trip.getEndStationName();
-            if (trip.getEndStation() != null) {
-                endLanguage = trip.getEndStation().getLanguage();
-            }
+        if (trip.getEndStation() != null &&
+                (trip.getStartStation() == null ||
+                        !trip.getEndStation().getStationName().equals(trip.getStartStation().getStationName()))) {
+            endStationName = trip.getEndStation().getShortStationName();
+            endLanguage = trip.getEndStation().getLanguage();
         }
 
         // No information is available.
@@ -71,14 +68,7 @@ public abstract class Trip implements Parcelable {
             return null;
         }
 
-        // If the start station was not available, make the end station the start station.
-        if (startStationName == null && endStationName != null) {
-            startStationName = endStationName;
-            startLanguage = endLanguage;
-            endStationName = null;
-        }
-
-        // If only the start or only the end station is available, just return that.
+        // If only the start station is available, just return that.
         if (startStationName != null && endStationName == null) {
             SpannableStringBuilder b = new SpannableStringBuilder(startStationName);
 
@@ -93,6 +83,10 @@ public abstract class Trip implements Parcelable {
         String startPlaceholder = "%1$s";
         String endPlaceholder = "%2$s";
         String s = Utils.localizeString(R.string.trip_description, startPlaceholder, endPlaceholder);
+
+        if (startStationName == null) {
+            s = Utils.localizeString(R.string.trip_description_unknown_start, endPlaceholder);
+        }
 
         // Build the spans
         SpannableStringBuilder b = new SpannableStringBuilder(s);
@@ -141,28 +135,34 @@ public abstract class Trip implements Parcelable {
 
             x = end;
         }
+        boolean localeSpanUsed;
 
-        // Finally, insert the actual station names back in the data.
-        x = b.toString().indexOf(startPlaceholder);
-        if (x == -1) {
-            Log.w(TAG, "couldn't find start station placeholder to put back");
-            return null;
-        }
-        b.replace(x, x + startPlaceholder.length(), startStationName);
-
-        boolean localeSpanUsed = false;
-        // Annotate the start station name with the appropriate Locale data.
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            Station startStation = trip.getStartStation();
-            if (localisePlaces && startStation != null && startStation.getLanguage() != null) {
-                b.setSpan(new LocaleSpan(Locale.forLanguageTag(startStation.getLanguage())), x, x + startStationName.length(), 0);
-
-                // Set the start of the string to the default language, so that the localised
-                // TTS for the station name doesn't take over everything.
-                b.setSpan(new LocaleSpan(Locale.getDefault()), 0, x, 0);
-
-                localeSpanUsed = true;
+        if (startStationName != null) {
+            // Finally, insert the actual station names back in the data.
+            x = b.toString().indexOf(startPlaceholder);
+            if (x == -1) {
+                Log.w(TAG, "couldn't find start station placeholder to put back");
+                return null;
             }
+            b.replace(x, x + startPlaceholder.length(), startStationName);
+
+            localeSpanUsed = false;
+            // Annotate the start station name with the appropriate Locale data.
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                Station startStation = trip.getStartStation();
+                if (localisePlaces && startStation != null && startStation.getLanguage() != null) {
+                    b.setSpan(new LocaleSpan(Locale.forLanguageTag(startStation.getLanguage())), x, x + startStationName.length(), 0);
+
+                    // Set the start of the string to the default language, so that the localised
+                    // TTS for the station name doesn't take over everything.
+                    b.setSpan(new LocaleSpan(Locale.getDefault()), 0, x, 0);
+
+                    localeSpanUsed = true;
+                }
+            }
+        } else {
+            localeSpanUsed = true;
+            x = 0;
         }
 
         int y = b.toString().indexOf(endPlaceholder);
@@ -252,54 +252,34 @@ public abstract class Trip implements Parcelable {
     }
 
     /**
-     * Starting station name for the trip, or null if unknown.
-     *
-     * If supplied, this will be shown in the travel history.
-     */
-    public String getStartStationName() {
-        return null;
-    }
-
-    /**
-     * Starting station info for the trip, or null if unknown.
+     * Starting station info for the trip, or null if there is no station information available.
      *
      * If supplied, this will be used to render a map of the trip.
+     *
+     * If there is station information available on the card, but the station is unknown (maybe it
+     * doesn't appear in a MdST file, or there is no MdST data available yet), use
+     * {@link Station#unknown(String)} or {@link Station#unknown(Integer)} to create an unknown
+     * {@link Station}.
      */
+    @Nullable
     public Station getStartStation() {
         return null;
     }
 
     /**
-     * Ending station name for the trip, or null if unknown.
-     *
-     * If supplied, this will be shown in the travel history.
-     */
-    public String getEndStationName() {
-        return null;
-    }
-
-    /**
-     * Ending station info for the trip, or null if unknown.
+     * Ending station info for the trip, or null if there is no station information available.
      *
      * If supplied, this will be used to render a map of the trip.
+     *
+     * If there is station information available on the card, but the station is unknown (maybe it
+     * doesn't appear in a MdST file, or there is no MdST data available yet), use
+     * {@link Station#unknown(String)} or {@link Station#unknown(Integer)} to create an unknown
+     * {@link Station}.
      */
+    @Nullable
     public Station getEndStation() {
         return null;
     }
-
-    /**
-     * If true, it means that this activity has a known fare associated with it.  This should be
-     * true for most transaction types.
-     * <p>
-     * Reasons for this being false, including not actually having the trip cost available, and for
-     * events like card activation and card banning which have no cost associated with the action.
-     * <p>
-     * If a trip is free of charge, this should still be set to true.  However, if the trip is
-     * associated with a monthly travel pass, then this should be set to false.
-     *
-     * @return true if there is a financial transaction associated with the Trip.
-     */
-    public abstract boolean hasFare();
 
     /**
      * Formats the cost of the trip in the appropriate local currency.  Be aware that your
@@ -331,20 +311,30 @@ public abstract class Trip implements Parcelable {
     public abstract boolean hasTime();
 
     public enum Mode {
-        BUS,
+        BUS(0),
         /** Used for non-metro (rapid transit) trains */
-        TRAIN,
+        TRAIN(1),
         /** Used for trams and light rail */
-        TRAM,
+        TRAM(2),
         /** Used for electric metro and subway systems */
-        METRO,
-        FERRY,
-        TICKET_MACHINE,
-        VENDING_MACHINE,
+        METRO(3),
+        FERRY(4),
+        TICKET_MACHINE(5),
+        VENDING_MACHINE(6),
         /** Used for transactions at a store, buying something other than travel. */
-        POS,
-        OTHER,
-        BANNED
+        POS(7),
+        OTHER(8),
+        BANNED(9);
+
+        final int mImageResourceIdx;
+
+        Mode(int val) {
+            mImageResourceIdx = val;
+        }
+
+        public int getImageResourceIdx() {
+            return mImageResourceIdx;
+        }
     }
 
     public static class Comparator implements java.util.Comparator<Trip> {

@@ -46,11 +46,12 @@ public class DesfireProtocol {
     static final String TAG = "DesfireProtocol";
 
     // Commands
-    static final byte GET_MANUFACTURING_DATA = (byte) 0x60;
+    static public final byte UNLOCK = (byte) 0x0A;
+    static public final byte GET_MANUFACTURING_DATA = (byte) 0x60;
     static final byte GET_APPLICATION_DIRECTORY = (byte) 0x6A;
     static final byte GET_ADDITIONAL_FRAME = (byte) 0xAF;
     static final byte SELECT_APPLICATION = (byte) 0x5A;
-    static final byte READ_DATA = (byte) 0xBD;
+    static public final byte READ_DATA = (byte) 0xBD;
     static final byte READ_RECORD = (byte) 0xBB;
     static final byte GET_VALUE = (byte) 0x6C;
     static final byte GET_FILES = (byte) 0x6F;
@@ -60,7 +61,7 @@ public class DesfireProtocol {
     static final byte OPERATION_OK = (byte) 0x00;
     static final byte PERMISSION_DENIED = (byte) 0x9D;
     static final byte AUTHENTICATION_ERROR = (byte) 0xAE;
-    static final byte ADDITIONAL_FRAME = (byte) 0xAF;
+    static public final byte ADDITIONAL_FRAME = (byte) 0xAF;
 
     private IsoDep mTagTech;
 
@@ -69,7 +70,7 @@ public class DesfireProtocol {
     }
 
     public DesfireManufacturingData getManufacturingData() throws Exception {
-        byte[] respBuffer = sendRequest(GET_MANUFACTURING_DATA);
+        byte[] respBuffer = sendRequest(GET_MANUFACTURING_DATA, true);
 
         if (respBuffer.length != 28)
             throw new IllegalArgumentException("Invalid response");
@@ -88,7 +89,7 @@ public class DesfireProtocol {
      * @throws Exception on communication failures.
      */
     public int[] getAppList() throws Exception {
-        byte[] appDirBuf = sendRequest(GET_APPLICATION_DIRECTORY);
+        byte[] appDirBuf = sendRequest(GET_APPLICATION_DIRECTORY, true);
 
         int[] appIds = new int[appDirBuf.length / 3];
 
@@ -112,11 +113,11 @@ public class DesfireProtocol {
      */
     public void selectApp(int appId) throws Exception {
         byte[] appIdBuff = Utils.integerToByteArray(appId, 3);
-        sendRequest(SELECT_APPLICATION, appIdBuff);
+        sendRequest(SELECT_APPLICATION, true, appIdBuff);
     }
 
     public int[] getFileList() throws Exception {
-        byte[] buf = sendRequest(GET_FILES);
+        byte[] buf = sendRequest(GET_FILES, true);
         int[] fileIds = new int[buf.length];
         for (int x = 0; x < buf.length; x++) {
             fileIds[x] = (int) buf[x];
@@ -125,27 +126,31 @@ public class DesfireProtocol {
     }
 
     public DesfireFileSettings getFileSettings(int fileNo) throws Exception {
-        byte[] data = sendRequest(GET_FILE_SETTINGS, (byte) fileNo);
+        byte[] data = sendRequest(GET_FILE_SETTINGS, true, (byte) fileNo);
         return DesfireFileSettings.create(data);
     }
 
     public byte[] readFile(int fileNo) throws Exception {
-        return sendRequest(READ_DATA, (byte) fileNo,
+        return sendRequest(READ_DATA, true, (byte) fileNo,
                 (byte) 0x0, (byte) 0x0, (byte) 0x0,
                 (byte) 0x0, (byte) 0x0, (byte) 0x0);
     }
 
     public byte[] readRecord(int fileNum) throws Exception {
-        return sendRequest(READ_RECORD, (byte) fileNum,
+        return sendRequest(READ_RECORD, true, (byte) fileNum,
                 (byte) 0x0, (byte) 0x0, (byte) 0x0,
                 (byte) 0x0, (byte) 0x0, (byte) 0x0);
     }
 
     public byte[] getValue(int fileNum) throws Exception {
-        return sendRequest(GET_VALUE, (byte) fileNum);
+        return sendRequest(GET_VALUE, true, (byte) fileNum);
     }
 
-    private byte[] sendRequest(byte command, byte... parameters) throws IllegalArgumentException, IllegalStateException, AccessControlException, IOException {
+    public byte[] sendUnlock(int keyNum) throws Exception {
+        return sendRequest(UNLOCK, false, (byte) keyNum);
+    }
+
+    private byte[] sendRequest(byte command, boolean getAdditionalFrame, byte... parameters) throws IllegalArgumentException, IllegalStateException, AccessControlException, IOException {
         ByteArrayOutputStream output = new ByteArrayOutputStream();
 
         byte[] sendBuffer = wrapMessage(command, parameters);
@@ -164,6 +169,8 @@ public class DesfireProtocol {
             if (status == OPERATION_OK) {
                 break;
             } else if (status == ADDITIONAL_FRAME) {
+                if (!getAdditionalFrame)
+                    break;
                 recvBuffer = mTagTech.transceive(wrapMessage(GET_ADDITIONAL_FRAME));
                 //Log.d(TAG, "Recv: (additional) " + Utils.getHexString(recvBuffer));
             } else if (status == PERMISSION_DENIED) {
@@ -199,5 +206,9 @@ public class DesfireProtocol {
 
         output[output.length - 1] = 0;
         return output;
+    }
+
+    public byte[] sendAdditionalFrame(byte[] bytes) throws IOException {
+        return sendRequest(ADDITIONAL_FRAME, false, bytes);
     }
 }

@@ -23,6 +23,7 @@
 package au.id.micolous.metrodroid.card.desfire;
 
 import au.id.micolous.metrodroid.util.Utils;
+import au.id.micolous.metrodroid.xml.Base64String;
 
 import org.simpleframework.xml.Element;
 import org.simpleframework.xml.Root;
@@ -69,10 +70,13 @@ public class DesfireManufacturingData {
     public int weekProd;
     @Element(name = "year-prod")
     public int yearProd;
+    @Element(name = "raw")
+    private Base64String mRaw;
 
     private DesfireManufacturingData() { /* For XML Serializer */ }
 
     public DesfireManufacturingData(byte[] data) {
+        mRaw = new Base64String(data);
         ByteArrayInputStream stream = new ByteArrayInputStream(data);
         hwVendorID = stream.read();
         hwType = stream.read();
@@ -103,5 +107,9 @@ public class DesfireManufacturingData {
         // FIXME: These numbers aren't making sense.
         weekProd = stream.read();
         yearProd = stream.read();
+    }
+
+    public byte[] getRaw() {
+        return mRaw.getData();
     }
 }

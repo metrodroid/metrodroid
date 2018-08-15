@@ -18,6 +18,8 @@
  */
 package au.id.micolous.metrodroid.transit.unknown;
 
+import android.os.Parcel;
+
 import au.id.micolous.farebot.R;
 import au.id.micolous.metrodroid.card.Card;
 import au.id.micolous.metrodroid.card.classic.ClassicCard;
@@ -30,6 +32,22 @@ import au.id.micolous.metrodroid.util.Utils;
  * Handle MIFARE Classic with no open sectors
  */
 public class UnauthorizedClassicTransitData extends UnauthorizedTransitData {
+    public static final Creator<UnauthorizedClassicTransitData> CREATOR = new Creator<UnauthorizedClassicTransitData>() {
+        public UnauthorizedClassicTransitData createFromParcel(Parcel parcel) {
+            return new UnauthorizedClassicTransitData(parcel);
+        }
+
+        public UnauthorizedClassicTransitData[] newArray(int size) {
+            return new UnauthorizedClassicTransitData[size];
+        }
+    };
+
+    public UnauthorizedClassicTransitData(Parcel parcel) {
+    }
+
+    public UnauthorizedClassicTransitData() {
+    }
+
     /**
      * This should be the last executed MIFARE Classic check, after all the other checks are done.
      * <p>

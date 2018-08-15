@@ -469,7 +469,7 @@
     <string name="location_moscow">Moskou, Rusland</string>
     <string name="location_saint_petersburg">Sint-Petersburg, Rusland</string>
 
-    <string name="card_note_russia">Alleen oplaadbare kaarten worden ondersteund; door de bank uitgegeven kaarten worden niet ondersteund.</string>
+    <string name="card_note_russia">Door de bank uitgegeven kaarten worden niet ondersteund.</string>
     <string name="card_name_troika">Trojka</string>
     <string name="card_name_podorozhnik">Podorozhnik</string>
 <string name="card_partial_read_title">Kaart gedeeltelijk uitgelezen!</string>
@@ -514,4 +514,95 @@
     <string name="blank_mfu_card">Blanco MIFARE Ultralight-kaart</string>
     <string name="fully_blank_desc">Deze kaart is, voor zover wij kunnen bepalen, volledig blanco. Hij is geformatteerd, maar er zijn geen gegevens op weggeschreven. Het heeft een serienummer waarmee hij geïdentificeerd kan worden en gekoppeld aan een database, maar de kaart zelf bevat geen verdere gegevens.</string>
     <string name="fully_blank_title">Blanco kaart</string>
-</resources>
+<string name="pref_theme">Thema</string>
+    <string name="pref_theme_desc">Stel het uiterlijk in</string>
+
+    <string name="clipper_end_of_line">(einde van de regel)</string>
+    <string name="clipper_zone_number">Zone #%s</string>
+
+    <string name="ez_bus_number">Bus #%s</string>
+    <string name="ez_bus_refund">Bus-restitutie</string>
+    <string name="ez_mrt">MRT</string>
+    <string name="ez_topup">Opladen</string>
+    <string name="ez_first_use">Eerste keer</string>
+    <string name="ez_retail_purchase">Winkelaankoop</string>
+    <string name="ez_service_charge">Dienstvergoeding</string>
+
+    <string name="card_name_suica">Suica</string>
+    <string name="card_name_icoca">ICOCA</string>
+    <string name="card_name_pasmo">PASMO</string>
+
+    <string name="felica_terminal_view_altte">VIEW ALTTE</string>
+    <string name="hsl_line_vehicle">Lijn %s, voertuig %s</string>
+
+    <string name="orca_coach_number">#%s klas</string>
+
+    <string name="suica_bus_area_line_stop">Busgebied %s, lijn %s, halte %s</string>
+    <string name="suica_line_station">Lijn %s, station %s</string>
+
+    <string name="card_name_szt">Shenzhen Tong</string>
+    <string name="card_name_octopus">Octopus</string>
+    <string name="card_name_octopus_szt_dual">Hu Tong Xing</string>
+
+    <string name="no_data_in_clipboard">Geen gegevens op het klembord.</string>
+    <string name="app_version">Versie: %s</string>
+    <string name="device_model">Model: %s (%s)</string>
+    <string name="device_manufacturer">Fabrikant: %s (%s)</string>
+    <string name="android_os">Android-versie: %s (%s)</string>
+    <string name="nfc_enabled">NFC: ingeschakeld</string>
+    <string name="nfc_disabled">NFC: uitgeschakeld</string>
+    <string name="nfc_not_available">NFC: niet beschikbaar</string>
+    <string name="mfc_supported">MIFARE Classic: ondersteund</string>
+    <string name="mfc_not_supported">MIFARE Classic: niet ondersteund</string>
+<string name="trip_description_unknown_start">naar %s</string>
+    <string name="time_from_to">%s → %s</string>
+    <string name="time_from_unknown_to">?:?? → %s</string>
+
+
+    <string name="pref_show_local_and_english_title">Stationsnamen tonen in lokale taal en het Engels</string>
+    <string name="pref_show_local_and_english_desc">Als dit wordt ingeschakeld, dan worden zowel de lokale als de Engelse naam getoond, ongeacht de ingestelde taal. Als dit wordt uitgeschakeld, dan wordt de bijpassende variant getoond.</string>
+
+    <plurals name="minutes">
+	<item quantity="one">%d minuut</item>
+	<item quantity="other">%d minuten</item>
+</plurals>
+    <plurals name="hours">
+	<item quantity="one">%d uur</item>
+	<item quantity="other">%d uur</item>
+</plurals>
+    <plurals name="days">
+	<item quantity="one">%d dag</item>
+	<item quantity="other">%d dagen</item>
+</plurals>
+    <plurals name="trips_remaining">
+	<item quantity="one">%d resterende reis</item>
+	<item quantity="other">%d resterende reizen</item>
+</plurals>
+    <plurals name="troika_rides">
+	<item quantity="one">Eén rit</item>
+	<item quantity="other">%d ritten</item>
+</plurals>
+
+    <string name="card_name_ravkav">Rav-Kav</string>
+    <string name="ravkav_agency_egged">Egged</string>
+    <string name="ravkav_agency_dan">Dan</string>
+    <string name="ravkav_agency_city_pass">City Pass</string>
+    <string name="ravkav_agency_topup_app">RavKav oplaadapp</string>
+
+    <string name="location_israel">Israël</string>
+
+    <string name="szt_metro">Shenzhen Metro</string>
+    <string name="szt_bus">Shenzhen Bus</string>
+    <string name="szt_station_gate">%s, poortje %s</string>
+
+    <string name="card_name_troika_podorozhnik_hybrid">Troika+Podorozhnik</string>
+    <string name="troika_fare_single">Eén rit</string>
+    <string name="troika_fare_90mins">90 minuten</string>
+    <string name="validity_length">Geldigheidsduur: %s</string>
+    <string name="troika_layout">Troika-layout</string>
+    <string name="moscow_subway">Moskou Metro</string>
+    <string name="moscow_monorail">Moskou Monorail</string>
+    <string name="moscow_ground_transport">Moskou bovengronds vervoer</string>
+    <string name="moscow_mcc">Moscow Central Circle (MCC)</string>
+    <string name="troika_unknown_ticket">Onbekend troika-kaarttype %s</string>
+    </resources>

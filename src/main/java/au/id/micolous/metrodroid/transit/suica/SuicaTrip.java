@@ -1,50 +1,39 @@
 /*
- * SuicaTransitData.java
+ * SuicaTrip.java
  *
- * Authors:
- * Eric Butler <eric@codebutler.com>
+ * Copyright 2011 Kazzz
+ * Copyright 2014-2015 Eric Butler <eric@codebutler.com>
+ * Copyright 2016-2018 Michael Farrell <micolous+git@gmail.com>
+ * Copyright 2018 Google Inc.
  *
- * Based on code from http://code.google.com/p/nfc-felica/
- * nfc-felica by Kazzz. See project URL for complete author information.
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
  *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- *
- * Thanks to these resources for providing additional information about the Suica format:
- * http://www.denno.net/SFCardFan/
- * http://jennychan.web.fc2.com/format/suica.html
- * http://d.hatena.ne.jp/baroqueworksdev/20110206/1297001722
- * http://handasse.blogspot.com/2008/04/python-pasorisuica.html
- * http://sourceforge.jp/projects/felicalib/wiki/suica
- *
- * Some of these resources have been translated into English at:
- * https://github.com/micolous/metrodroid/wiki/Suica
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 package au.id.micolous.metrodroid.transit.suica;
 
 import android.os.Parcel;
 import android.support.annotation.Nullable;
 
+import org.apache.commons.lang3.ArrayUtils;
+
+import java.util.Calendar;
+
+import au.id.micolous.farebot.R;
 import au.id.micolous.metrodroid.card.felica.FelicaBlock;
 import au.id.micolous.metrodroid.transit.Station;
 import au.id.micolous.metrodroid.transit.TransitCurrency;
 import au.id.micolous.metrodroid.transit.Trip;
 import au.id.micolous.metrodroid.util.Utils;
-
-import net.kazzz.felica.lib.Util;
-
-import org.apache.commons.lang3.ArrayUtils;
-
-import java.util.Calendar;
 
 
 public class SuicaTrip extends Trip {
@@ -105,7 +94,8 @@ public class SuicaTrip extends Trip {
         mIsCharge = (mProcessType == (byte) 0x02);
 
         mTimestamp = SuicaUtil.extractDate(mIsProductSale, data);
-        mBalance = Util.toInt(data[11], data[10]);
+        // Balance is little-endian
+        mBalance = Utils.byteArrayToInt(Utils.reverseBuffer(data, 10, 2));
 
         mRegionCode = data[15] & 0xFF;
 
@@ -123,8 +113,8 @@ public class SuicaTrip extends Trip {
 
         if (!mIsProductSale && !mIsCharge) {
             if (mIsBus) {
-                mBusLineCode = Util.toInt(data[6], data[7]);
-                mBusStopCode = Util.toInt(data[8], data[9]);
+                mBusLineCode = Utils.byteArrayToInt(data, 6, 2);
+                mBusStopCode = Utils.byteArrayToInt(data, 8, 2);
                 mStartStation = SuicaDBUtil.getBusStop(mRegionCode, mBusLineCode, mBusStopCode);
 
             } else {
@@ -193,11 +183,6 @@ public class SuicaTrip extends Trip {
         return (mStartStation != null) ? mStartStation.getCompanyName() : null;
     }
 
-    @Override
-    public boolean hasFare() {
-        return true;
-    }
-
     @Nullable
     @Override
     public TransitCurrency getFare() {
@@ -209,47 +194,37 @@ public class SuicaTrip extends Trip {
     }
 
     @Override
-    public String getStartStationName() {
+    public Station getStartStation() {
         if (mIsProductSale || mIsCharge)
             return null;
-
         if (mStartStation != null) {
-            return mStartStation.getShortStationName();
+            return mStartStation;
         }
         if (mIsBus) {
-            return String.format("Bus Area 0x%s Line 0x%s Stop 0x%s", Integer.toHexString(mRegionCode),
-                    Integer.toHexString(mBusLineCode), Integer.toHexString(mBusStopCode));
+            return Station.nameOnly(Utils.localizeString(R.string.suica_bus_area_line_stop,
+                    "0x" + Integer.toHexString(mRegionCode),
+                    "0x" + Integer.toHexString(mBusLineCode), "0x" + Integer.toHexString(mBusStopCode)));
         } else if (!(mRailEntranceLineCode == 0 && mRailEntranceStationCode == 0)) {
-            return String.format("Line 0x%s Station 0x%s", Integer.toHexString(mRailEntranceLineCode),
-                    Integer.toHexString(mRailEntranceStationCode));
+            return Station.nameOnly(Utils.localizeString(R.string.suica_line_station, "0x" + Integer.toHexString(mRailEntranceLineCode),
+                    "0x" + Integer.toHexString(mRailEntranceStationCode)));
         } else {
             return null;
         }
     }
 
     @Override
-    public Station getStartStation() {
-        return mStartStation;
-    }
-
-    @Override
-    public String getEndStationName() {
+    public Station getEndStation() {
         if (mIsProductSale || mIsCharge || isTVM())
             return null;
-
         if (mEndStation != null) {
-            return mEndStation.getShortStationName();
+            return mEndStation;
         }
         if (!mIsBus) {
-            return String.format("Line 0x%s Station 0x%s", Integer.toHexString(mRailExitLineCode),
-                    Integer.toHexString(mRailExitStationCode));
+            return Station.nameOnly(Utils.localizeString(R.string.suica_line_station,
+                    "0x" + Integer.toHexString(mRailExitLineCode),
+                    "0x" + Integer.toHexString(mRailExitStationCode)));
         }
         return null;
-    }
-
-    @Override
-    public Station getEndStation() {
-        return mEndStation;
     }
 
     @Override

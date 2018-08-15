@@ -1,41 +1,31 @@
 /*
  * SuicaTransitData.java
  *
- * Authors:
- * Eric Butler <eric@codebutler.com>
+ * Copyright 2011 Kazzz
+ * Copyright 2014-2015 Eric Butler <eric@codebutler.com>
+ * Copyright 2016-2018 Michael Farrell <micolous+git@gmail.com>
+ * Copyright 2018 Google Inc.
  *
- * Based on code from http://code.google.com/p/nfc-felica/
- * nfc-felica by Kazzz. See project URL for complete author information.
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
  *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- *
- * Thanks to these resources for providing additional information about the Suica format:
- * http://www.denno.net/SFCardFan/
- * http://jennychan.web.fc2.com/format/suica.html
- * http://d.hatena.ne.jp/baroqueworksdev/20110206/1297001722
- * http://handasse.blogspot.com/2008/04/python-pasorisuica.html
- * http://sourceforge.jp/projects/felicalib/wiki/suica
- *
- * Some of these resources have been translated into English at:
- * https://github.com/micolous/metrodroid/wiki/Suica
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
 package au.id.micolous.metrodroid.transit.suica;
 
 import android.os.Parcel;
 import android.support.annotation.Nullable;
-import android.text.Spanned;
 
+import au.id.micolous.farebot.R;
 import au.id.micolous.metrodroid.card.felica.FelicaBlock;
 import au.id.micolous.metrodroid.card.felica.FelicaCard;
 import au.id.micolous.metrodroid.card.felica.FelicaService;
@@ -44,8 +34,6 @@ import au.id.micolous.metrodroid.transit.TransitData;
 import au.id.micolous.metrodroid.transit.TransitIdentity;
 import au.id.micolous.metrodroid.transit.Trip;
 import au.id.micolous.metrodroid.util.Utils;
-
-import net.kazzz.felica.lib.FeliCaLib;
 
 import org.apache.commons.lang3.ArrayUtils;
 
@@ -64,6 +52,11 @@ public class SuicaTransitData extends TransitData {
             return new SuicaTransitData[size];
         }
     };
+    public static final int SYSTEMCODE_SUICA = 0x0003;
+
+    public static final int SERVICE_SUICA_INOUT = 0x108f;
+    public static final int SERVICE_SUICA_HISTORY = 0x090f;
+
     static final TimeZone TIME_ZONE = TimeZone.getTimeZone("Asia/Tokyo");
 
     private SuicaTrip[] mTrips;
@@ -74,7 +67,7 @@ public class SuicaTransitData extends TransitData {
     }
 
     public SuicaTransitData(FelicaCard card) {
-        FelicaService service = card.getSystem(FeliCaLib.SYSTEMCODE_SUICA).getService(FeliCaLib.SERVICE_SUICA_HISTORY);
+        FelicaService service = card.getSystem(SYSTEMCODE_SUICA).getService(SERVICE_SUICA_HISTORY);
 
         int previousBalance = -1;
 
@@ -102,15 +95,15 @@ public class SuicaTransitData extends TransitData {
     }
 
     public static boolean check(FelicaCard card) {
-        return (card.getSystem(FeliCaLib.SYSTEMCODE_SUICA) != null);
+        return (card.getSystem(SYSTEMCODE_SUICA) != null);
     }
 
     public static boolean earlyCheck(int[] systemCodes) {
-        return ArrayUtils.contains(systemCodes, FeliCaLib.SYSTEMCODE_SUICA);
+        return ArrayUtils.contains(systemCodes, SYSTEMCODE_SUICA);
     }
 
     public static TransitIdentity parseTransitIdentity(FelicaCard card) {
-        return new TransitIdentity("Suica", null); // FIXME: Could be ICOCA, etc.
+        return new TransitIdentity(Utils.localizeString(R.string.card_name_suica), null); // FIXME: Could be ICOCA, etc.
     }
 
     @Nullable
@@ -134,7 +127,7 @@ public class SuicaTransitData extends TransitData {
 
     @Override
     public String getCardName() {
-        return "Suica"; // FIXME: Could be ICOCA, etc.
+        return Utils.localizeString(R.string.card_name_suica); // FIXME: Could be ICOCA, etc.
     }
 
     public void writeToParcel(Parcel parcel, int flags) {

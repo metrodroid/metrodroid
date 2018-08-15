@@ -23,13 +23,10 @@ package au.id.micolous.metrodroid.transit.ovc;
 
 import android.os.Parcel;
 import android.support.annotation.Nullable;
-import android.text.TextUtils;
-import android.util.Log;
 
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 
-import au.id.micolous.metrodroid.MetrodroidApplication;
 import au.id.micolous.metrodroid.transit.Station;
 import au.id.micolous.metrodroid.transit.TransitCurrency;
 import au.id.micolous.metrodroid.transit.Trip;
@@ -48,6 +45,7 @@ public class OVChipTrip extends Trip {
             return new OVChipTrip[size];
         }
     };
+    private static final String OVCHIP_STR = "ovc";
     private final int mId;
     private final int mProcessType;
     private final int mAgency;
@@ -84,11 +82,7 @@ public class OVChipTrip extends Trip {
 
         if (outTransaction != null) {
             mEndStationId = outTransaction.getStation();
-            if (getStation(mAgency, outTransaction.getStation()) != null) {
-                mEndStation = getStation(mAgency, outTransaction.getStation());
-            } else {
-                mEndStation = new Station(String.format("Unknown (%s)", mEndStationId), null, null);
-            }
+            mEndStation = getStation(mAgency, mEndStationId);
             mExitTimestamp = OVChipTransitData.convertDate(outTransaction.getDate(), outTransaction.getTime());
             mFare = outTransaction.getAmount();
         } else {
@@ -182,15 +176,7 @@ public class OVChipTrip extends Trip {
         int stationId = ((companyCode - 1) << 16) + stationCode;
         if (stationId <= 0) return null;
 
-        StationTableReader str = MetrodroidApplication.getInstance().getOVChipSTR();
-        if (str == null) return null;
-
-        try {
-            return str.getStationById(stationId);
-        } catch (Exception e) {
-            Log.d(TAG, "error in getRailStation", e);
-            return null;
-        }
+        return StationTableReader.getStation(OVCHIP_STR, stationId);
     }
 
     @Override
@@ -258,25 +244,8 @@ public class OVChipTrip extends Trip {
     }
 
     @Override
-    public String getStartStationName() {
-        if (mStartStation != null && !TextUtils.isEmpty(mStartStation.getStationName())) {
-            return mStartStation.getStationName();
-        } else {
-            return String.format("Unknown (%s)", mStartStationId);
-        }
-    }
-
-    @Override
     public Station getStartStation() {
         return mStartStation;
-    }
-
-    @Override
-    public String getEndStationName() {
-        if (mEndStation != null && !TextUtils.isEmpty(mEndStation.getStationName())) {
-            return mEndStation.getStationName();
-        }
-        return null;
     }
 
     @Override
@@ -319,11 +288,6 @@ public class OVChipTrip extends Trip {
 
     public boolean hasTime() {
         return (mTimestamp != null);
-    }
-
-    @Override
-    public boolean hasFare() {
-        return true;
     }
 
     @Nullable

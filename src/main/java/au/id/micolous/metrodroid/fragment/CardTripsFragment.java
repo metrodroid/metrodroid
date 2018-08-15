@@ -25,7 +25,10 @@ import android.app.Activity;
 import android.app.ListFragment;
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.Resources;
+import android.content.res.TypedArray;
 import android.graphics.Typeface;
+import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.DrawableRes;
@@ -62,6 +65,7 @@ import au.id.micolous.metrodroid.activity.AdvancedCardInfoActivity;
 import au.id.micolous.metrodroid.activity.CardInfoActivity;
 import au.id.micolous.metrodroid.activity.TripMapActivity;
 import au.id.micolous.metrodroid.card.Card;
+import au.id.micolous.metrodroid.transit.TransitCurrency;
 import au.id.micolous.metrodroid.transit.TransitData;
 import au.id.micolous.metrodroid.transit.Trip;
 import au.id.micolous.metrodroid.transit.orca.OrcaTrip;
@@ -71,13 +75,10 @@ import au.id.micolous.metrodroid.util.Utils;
 
 public class CardTripsFragment extends ListFragment {
     private static final String TAG = "CardTripsFragment";
-    private Card mCard;
     private TransitData mTransitData;
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Serializer serializer = MetrodroidApplication.getInstance().getSerializer();
-        mCard = Card.fromXml(serializer, getArguments().getString(AdvancedCardInfoActivity.EXTRA_CARD));
         mTransitData = getArguments().getParcelable(CardInfoActivity.EXTRA_TRANSIT_DATA);
     }
 
@@ -117,7 +118,8 @@ public class CardTripsFragment extends ListFragment {
         Trip trip = (Trip) getListAdapter().getItem(position);
         if (trip == null || !(
                 (trip.getStartStation() != null && trip.getStartStation().hasLocation())
-                        || (trip.getEndStation() != null && trip.getEndStation().hasLocation()))) {
+                        || (trip.getEndStation() != null && trip.getEndStation().hasLocation()))
+                || Build.VERSION.SDK_INT < 17) {
             Log.d(TAG, "Oops, couldn't display the trip, despite advertising we could");
             return;
         }
@@ -157,7 +159,11 @@ public class CardTripsFragment extends ListFragment {
 
             Trip trip = getItem(position);
 
-            Calendar date = trip.getStartTimestamp();
+            Calendar start = trip.getStartTimestamp();
+            Calendar date = start;
+
+            if (date == null)
+                date = trip.getEndTimestamp();
 
             View listHeader = convertView.findViewById(R.id.list_header);
             if (isFirstInSection(position)) {
@@ -187,63 +193,71 @@ public class CardTripsFragment extends ListFragment {
             TextView fareTextView = convertView.findViewById(R.id.fare_text_view);
             TextView stationTextView = convertView.findViewById(R.id.station_text_view);
 
-            @DrawableRes int modeRes;
             @StringRes int modeContentDescriptionRes = 0;
             switch (trip.getMode()) {
                 case BUS:
-                    modeRes = R.drawable.bus;
                     modeContentDescriptionRes = R.string.mode_bus;
                     break;
 
                 case TRAIN:
-                    modeRes = R.drawable.train;
                     modeContentDescriptionRes = R.string.mode_train;
                     break;
 
                 case TRAM:
-                    modeRes = R.drawable.tram;
                     modeContentDescriptionRes = R.string.mode_tram;
                     break;
 
                 case METRO:
-                    modeRes = R.drawable.metro;
                     modeContentDescriptionRes = R.string.mode_metro;
                     break;
 
                 case FERRY:
-                    modeRes = R.drawable.ferry;
                     modeContentDescriptionRes = R.string.mode_ferry;
                     break;
 
                 case TICKET_MACHINE:
-                    modeRes = R.drawable.tvm;
                     modeContentDescriptionRes = R.string.mode_ticket_machine;
                     break;
 
                 case VENDING_MACHINE:
-                    modeRes = R.drawable.vending_machine;
                     modeContentDescriptionRes = R.string.mode_vending_machine;
                     break;
 
                 case POS:
-                    // TODO: Handle currencies other than Yen
-                    // This is only used by Edy and Suica at present.
-                    modeRes = R.drawable.cashier_yen;
                     modeContentDescriptionRes = R.string.mode_pos;
                     break;
 
                 case BANNED:
-                    modeRes = R.drawable.banned;
                     modeContentDescriptionRes = R.string.mode_banned;
                     break;
 
                 default:
-                    modeRes = R.drawable.unknown;
                     modeContentDescriptionRes = R.string.mode_unknown;
                     break;
             }
 
-            iconImageView.setImageResource(modeRes);
+            TypedArray a = getContext().obtainStyledAttributes(new int[]{R.attr.TransportIcons});
+            int iconArrayRes = a.getResourceId(0, -1);
+            int iconIdx = trip.getMode().getImageResourceIdx();
+            Drawable icon = null;
+            TypedArray iconArray = null;
+
+            if (iconArrayRes != -1) {
+                iconArray = getContext().getResources().obtainTypedArray(iconArrayRes);
+            }
+
+            if (iconArray != null)
+                icon = iconArray.getDrawable(iconIdx);
+
+            if (icon == null) {
+                iconImageView.setImageResource(R.drawable.unknown);
+            } else
+                iconImageView.setImageDrawable(icon);
+
+            if (a!= null)
+                a.recycle();
+            if (iconArray != null)
+                iconArray.recycle();
             String s = Utils.localizeString(modeContentDescriptionRes);
             if (localisePlaces && Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
                 SpannableString ss = new SpannableString(s);
@@ -254,7 +268,13 @@ public class CardTripsFragment extends ListFragment {
             }
 
             if (trip.hasTime()) {
-                timeTextView.setText(Utils.timeFormat(date));
+                Calendar end = trip.getEndTimestamp();
+                if (end != null && start != null)
+                    timeTextView.setText(Utils.localizeString(R.string.time_from_to, Utils.timeFormat(start), Utils.timeFormat(end)));
+                else if (start != null)
+                    timeTextView.setText(Utils.timeFormat(start));
+                else
+                    timeTextView.setText(Utils.localizeString(R.string.time_from_unknown_to, Utils.timeFormat(end)));
                 timeTextView.setVisibility(View.VISIBLE);
             } else {
                 timeTextView.setVisibility(View.INVISIBLE);
@@ -304,12 +324,13 @@ public class CardTripsFragment extends ListFragment {
             }
 
             fareTextView.setVisibility(View.VISIBLE);
-            if (trip.hasFare()) {
-                fareTextView.setText(trip.getFare().formatCurrencyString(false));
+            TransitCurrency fare = trip.getFare();
+            if (fare != null) {
+                fareTextView.setText(fare.formatCurrencyString(false));
             } else if (trip instanceof OrcaTrip) {
                 fareTextView.setText(R.string.pass_or_transfer);
             } else {
-                // Hide the text "Fare" for hasFare == false
+                // Hide the text "Fare" for getFare == null
                 fareTextView.setVisibility(View.INVISIBLE);
             }
 
@@ -326,6 +347,8 @@ public class CardTripsFragment extends ListFragment {
 
         @Override
         public boolean isEnabled(int position) {
+            if (Build.VERSION.SDK_INT < 17)
+                return false;
             Trip trip = getItem(position);
             if (trip == null) {
                 return false;
@@ -339,7 +362,11 @@ public class CardTripsFragment extends ListFragment {
             if (position == 0) return true;
 
             Calendar date1 = getItem(position).getStartTimestamp();
+            if (date1 == null)
+                date1 = getItem(position).getEndTimestamp();
             Calendar date2 = getItem(position - 1).getStartTimestamp();
+            if (date2 == null)
+                date2 = getItem(position - 1).getEndTimestamp();
 
             if (date1 == null && date2 != null) return true;
             if (date1 == null || date2 == null) return false;

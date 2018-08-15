@@ -95,13 +95,6 @@ public class Utils {
     private Utils() {
     }
 
-    public static <T> List<T> arrayAsList(T... array) {
-        if (array == null) {
-            return new ArrayList<>();
-        }
-        return Arrays.asList(array);
-    }
-
     public static void checkNfcEnabled(final Activity activity, NfcAdapter adapter) {
         if (adapter != null && adapter.isEnabled()) {
             return;
@@ -155,11 +148,11 @@ public class Utils {
     }
 
     public static String getHexString(byte[] b, int offset, int length) {
-        String result = "";
+        StringBuilder result = new StringBuilder();
         for (int i = offset; i < offset + length; i++) {
-            result += Integer.toString((b[i] & 0xff) + 0x100, 16).substring(1);
+            result.append(Integer.toString((b[i] & 0xff) + 0x100, 16).substring(1));
         }
-        return result;
+        return result.toString();
     }
 
     public static String getHexString(byte[] b, String defaultResult) {
@@ -296,22 +289,26 @@ public class Utils {
             nfcEnabled = nfcAdapter.isEnabled();
         }
 
-        return String.format("Version: %s\nModel: %s (%s)\nManufacturer: %s (%s)\nAndroid OS: %s (%s)\n\nNFC: %s, MIFARE Classic: %s\n\n",
-                // Version:
-                getVersionString(),
-                // Model
-                Build.MODEL,
-                Build.DEVICE,
-                // Manufacturer / brand:
-                Build.MANUFACTURER,
-                Build.BRAND,
-                // OS:
-                Build.VERSION.RELEASE,
-                Build.ID,
-                // NFC:
-                nfcAvailable ? (nfcEnabled ? "enabled" : "disabled") : "not available",
-                app.getMifareClassicSupport() ? "supported" : "not supported"
-        );
+        String ret = "";
+
+        // Version:
+        ret += localizeString(R.string.app_version, getVersionString()) + "\n";
+        // Model
+        ret += localizeString(R.string.device_model, Build.MODEL, Build.DEVICE) + "\n";
+        // Manufacturer / brand:
+        ret += localizeString(R.string.device_manufacturer, Build.MANUFACTURER, Build.BRAND) + "\n";
+        // OS:
+        ret += localizeString(R.string.android_os, Build.VERSION.RELEASE, Build.ID) + "\n";
+        ret += "\n";
+        // NFC:
+        ret += localizeString(nfcAvailable ?
+                (nfcEnabled ? R.string.nfc_enabled : R.string.nfc_disabled)
+                : R.string.nfc_not_available) + "\n";
+        ret += localizeString(app.getMifareClassicSupport() ? R.string.mfc_supported
+                : R.string.mfc_not_supported) + "\n";
+        ret += "\n";
+
+        return ret;
     }
 
     private static String getVersionString() {
@@ -417,6 +414,27 @@ public class Utils {
 
             return uRet;
         }
+    }
+
+    public static String formatDurationMinutes(int mins)
+    {
+        int hours, days;
+        String ret = "";
+        if (mins < 0)
+            return localizePlural(R.plurals.minutes, mins, mins);
+        if (mins == 0)
+            return localizePlural(R.plurals.minutes, 0, 0);;
+        if (mins % 60 != 0)
+            ret = localizePlural(R.plurals.minutes, (mins % 60), (mins % 60));
+        if (mins < 60)
+            return ret;
+        hours = mins / 60;
+        if (hours % 24 != 0)
+            ret = localizePlural(R.plurals.hours, (hours % 24), (hours % 24)) + " ";
+        if (hours < 24)
+            return ret;
+        days = hours / 24;
+        return localizePlural(R.plurals.days, days, days);
     }
 
     /**
@@ -665,6 +683,16 @@ public class Utils {
      */
     public static boolean validateLuhn(String cardNumber) {
         return luhnChecksum(cardNumber) == 0;
+    }
+
+    public static int convertBCDtoInteger(int val) {
+        int ret = 0, mul = 1;
+        while (val > 0) {
+            ret += mul * (val & 0xf);
+            mul *= 10;
+            val >>= 4;
+        }
+        return ret;
     }
 
     public interface Matcher<T> {

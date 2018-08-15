@@ -1,5 +1,7 @@
 package au.id.micolous.metrodroid.transit.unknown;
 
+import android.os.Parcel;
+
 import au.id.micolous.farebot.R;
 import au.id.micolous.metrodroid.card.Card;
 import au.id.micolous.metrodroid.card.desfire.DesfireApplication;
@@ -14,6 +16,22 @@ import au.id.micolous.metrodroid.util.Utils;
  */
 
 public class UnauthorizedDesfireTransitData extends UnauthorizedTransitData {
+    public static final Creator<UnauthorizedDesfireTransitData> CREATOR = new Creator<UnauthorizedDesfireTransitData>() {
+        public UnauthorizedDesfireTransitData createFromParcel(Parcel parcel) {
+            return new UnauthorizedDesfireTransitData(parcel);
+        }
+
+        public UnauthorizedDesfireTransitData[] newArray(int size) {
+            return new UnauthorizedDesfireTransitData[size];
+        }
+    };
+
+    public UnauthorizedDesfireTransitData(Parcel parcel) {
+    }
+
+    public UnauthorizedDesfireTransitData() {
+    }
+
     /**
      * This should be the last executed MIFARE DESFire check, after all the other checks are done.
      * <p>

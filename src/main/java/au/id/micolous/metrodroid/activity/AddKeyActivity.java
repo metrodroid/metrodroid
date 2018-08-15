@@ -65,7 +65,7 @@ import static android.view.ViewGroup.LayoutParams.WRAP_CONTENT;
 /**
  * @author Eric Butler
  */
-public class AddKeyActivity extends Activity {
+public class AddKeyActivity extends MetrodroidActivity {
     private NfcAdapter mNfcAdapter;
     private PendingIntent mPendingIntent;
     private String[][] mTechLists = new String[][]{
@@ -77,6 +77,11 @@ public class AddKeyActivity extends Activity {
     private byte[] mKeyData;
     private String mTagId;
     private String mCardType;
+
+    @Override
+    protected Integer getThemeVariant() {
+        return R.attr.AddKeysActivityTheme;
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

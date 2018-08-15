@@ -22,6 +22,7 @@ import android.os.Parcel;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
+import au.id.micolous.metrodroid.transit.Station;
 import au.id.micolous.metrodroid.transit.TransitCurrency;
 import au.id.micolous.metrodroid.transit.Trip;
 import au.id.micolous.metrodroid.transit.nextfare.record.NextfareTopupRecord;
@@ -101,25 +102,22 @@ public class NextfareTrip extends Trip implements Comparable<NextfareTrip> {
     }
 
     @Override
-    public String getStartStationName() {
+    @Nullable
+    public Station getStartStation() {
         if (mStartStation < 0) {
             return null;
         }
-        return Integer.toString(mStartStation);
+        return Station.unknown(mStartStation);
     }
 
     @Override
-    public String getEndStationName() {
+    @Nullable
+    public Station getEndStation() {
         if (mEndTime != null && mEndStation > -1) {
-            return Integer.toString(mEndStation);
+            return Station.unknown(mEndStation);
         } else {
             return null;
         }
-    }
-
-    @Override
-    public boolean hasFare() {
-        return true;
     }
 
     @Nullable

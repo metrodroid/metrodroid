@@ -165,16 +165,12 @@ public class CEPASPurse {
         mAutoLoadAmount = tmp;
 
         byte[] can = new byte[8];
-        for (int i = 0; i < can.length; i++) {
-            can[i] = purseData[8 + i];
-        }
+        System.arraycopy(purseData, 8, can, 0, can.length);
 
         mCAN = new HexString(can);
 
         byte[] csn = new byte[8];
-        for (int i = 0; i < csn.length; i++) {
-            csn[i] = purseData[16 + i];
-        }
+        System.arraycopy(purseData, 16, csn, 0, csn.length);
 
         mCSN = new HexString(csn);
 
@@ -184,9 +180,7 @@ public class CEPASPurse {
 
         byte[] lastCreditTransactionHeader = new byte[8];
 
-        for (int i = 0; i < 8; i++) {
-            lastCreditTransactionHeader[i] = purseData[32 + i];
-        }
+        System.arraycopy(purseData, 32, lastCreditTransactionHeader, 0, 8);
 
         mLastCreditTransactionHeader = new HexString(lastCreditTransactionHeader);
 
@@ -198,15 +192,12 @@ public class CEPASPurse {
 
         {
             byte[] tmpTransaction = new byte[16];
-            for (int i = 0; i < tmpTransaction.length; i++)
-                tmpTransaction[i] = purseData[46 + i];
+            System.arraycopy(purseData, 46, tmpTransaction, 0, tmpTransaction.length);
             mLastTransactionRecord = new CEPASTransaction(tmpTransaction);
         }
 
         byte[] issuerSpecificData = new byte[mIssuerDataLength];
-        for (int i = 0; i < issuerSpecificData.length; i++) {
-            issuerSpecificData[i] = purseData[62 + i];
-        }
+        System.arraycopy(purseData, 62, issuerSpecificData, 0, issuerSpecificData.length);
         mIssuerSpecificData = new HexString(issuerSpecificData);
 
         mLastTransactionDebitOptionsByte = purseData[62 + mIssuerDataLength];

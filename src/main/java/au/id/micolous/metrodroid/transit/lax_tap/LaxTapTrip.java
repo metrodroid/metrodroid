@@ -80,23 +80,6 @@ public class LaxTapTrip extends NextfareTrip {
         return null;
     }
 
-    private String getStationName(int stationId) {
-        if (stationId < 0 || mModeInt == LaxTapData.AGENCY_SANTA_MONICA) {
-            return null;
-        } else if (mModeInt == AGENCY_METRO && stationId >= METRO_BUS_START) {
-            // We don't know the station.
-            return null;
-        }
-
-        // Fall back to database
-        Station s = getStation(stationId);
-        if (s == null) {
-            return Utils.localizeString(R.string.unknown_format, stationId);
-        } else {
-            return s.getStationName();
-        }
-    }
-
     private Station getStation(int stationId) {
         if (stationId < 0 || mModeInt == LaxTapData.AGENCY_SANTA_MONICA) {
             // Santa Monica Bus doesn't use this.
@@ -108,30 +91,12 @@ public class LaxTapTrip extends NextfareTrip {
             return null;
         }
 
-        StationTableReader str = MetrodroidApplication.getInstance().getLaxTapSTR();
-        if (str == null) return null;
-
-        try {
-            return str.getStationById(stationId);
-        } catch (Exception e) {
-            Log.d(TAG, "error in getStation", e);
-            return null;
-        }
-    }
-
-    @Override
-    public String getStartStationName() {
-        return getStationName(mStartStation);
+        return StationTableReader.getStation(LaxTapData.LAX_TAP_STR, stationId);
     }
 
     @Override
     public Station getStartStation() {
         return getStation(mStartStation);
-    }
-
-    @Override
-    public String getEndStationName() {
-        return getStationName(mEndStation);
     }
 
     @Override

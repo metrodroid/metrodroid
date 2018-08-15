@@ -21,48 +21,29 @@ package au.id.micolous.metrodroid.transit.troika;
 
 import android.os.Parcel;
 import android.os.Parcelable;
-import android.util.Log;
 
+import au.id.micolous.metrodroid.card.UnauthorizedException;
 import au.id.micolous.metrodroid.card.classic.ClassicCard;
 import au.id.micolous.metrodroid.card.classic.ClassicSector;
-import au.id.micolous.metrodroid.transit.TransitBalance;
-import au.id.micolous.metrodroid.transit.TransitBalanceStored;
-import au.id.micolous.metrodroid.transit.TransitCurrency;
+import au.id.micolous.metrodroid.card.classic.UnauthorizedClassicSector;
+import au.id.micolous.metrodroid.transit.Subscription;
 import au.id.micolous.metrodroid.transit.TransitData;
 import au.id.micolous.metrodroid.transit.TransitIdentity;
+import au.id.micolous.metrodroid.transit.Trip;
+import au.id.micolous.metrodroid.ui.ListItem;
+import au.id.micolous.metrodroid.transit.TransitBalance;
 import au.id.micolous.metrodroid.util.Utils;
 
-import java.text.DecimalFormat;
-import java.util.Arrays;
-import java.util.Calendar;
-import java.util.GregorianCalendar;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
-import java.util.TimeZone;
 
 /**
  * Troika cards.
  */
 
 public class TroikaTransitData extends TransitData {
-
     public static final String NAME = "Troika";
-
-    // We don't want to actually include these keys in the program, so include a hashed version of
-    // this key.
-    private static final String KEY_SALT = "troika";
-    // md5sum of Salt + Common Key + Salt, used on sector 8.
-    private static final String KEY_DIGEST = "6621dd07ad2954ffe49739ad88e744cf";
-
-    private static final TimeZone TZ = TimeZone.getTimeZone("Europe/Moscow");
-
-    private static final long TROIKA_EPOCH;
-
-    static {
-        GregorianCalendar epoch = new GregorianCalendar(TZ);
-        epoch.set(1992, Calendar.FEBRUARY, 2, 12, 0, 0);
-
-        TROIKA_EPOCH = epoch.getTimeInMillis();
-    }
 
     public static final Parcelable.Creator<TroikaTransitData> CREATOR = new Parcelable.Creator<TroikaTransitData>() {
         public TroikaTransitData createFromParcel(Parcel parcel) {
@@ -74,100 +55,103 @@ public class TroikaTransitData extends TransitData {
         }
     };
 
-    private static final String TAG = "TroikaTransitData";
-
-    private long mSerialNumber;
-
-    /**
-     * Balance of the card, in kopeyka (0.01 RUB).
-     */
-    private int mBalance;
-
-    /**
-     * Expiry date of the card, in days since the TROIKA_EPOCH.
-     */
-    private int mExpiryDays;
+    private final TroikaBlock mBlock7;
+    private final TroikaBlock mBlock8;
 
     @Override
     public String getSerialNumber() {
-        return formatSerial(mSerialNumber);
+        return mBlock8.getSerialNumber();
     }
 
-    public static long getSerial(ClassicSector sector) {
-        byte[] b = sector.getBlock(0).getData();
-        return ((long) Utils.getBitsFromBuffer(b,20, 32)) & 0xffffffffL;
+    public List<ListItem> getInfo() {
+        ArrayList<ListItem> items = new ArrayList<>();
+        List <ListItem> info7 = mBlock7 == null ? null : mBlock7.getInfo();
+        List <ListItem> info8 = mBlock8 == null ? null : mBlock8.getInfo();
+        if (info8 != null)
+            items.addAll(info8);
+        if (info7 != null)
+            items.addAll(info7);
+        return items.isEmpty() ? null : items;
     }
 
-    private static String formatSerial(long sn) {
-        DecimalFormat myFormatter = new DecimalFormat("0000000000");
-        return myFormatter.format(sn);
-    }
-
-    private static int getBalance(ClassicSector sector) {
-        byte[] b = sector.getBlock(1).getData();
-        return Utils.getBitsFromBuffer(b,60, 22);
-    }
-
-    private static int getExpiryDays(ClassicSector sector) {
-        byte[] b = sector.getBlock(0).getData();
-        return Utils.getBitsFromBuffer(b,61, 16);
-    }
-
-    private static Calendar convertDate(int days) {
-        GregorianCalendar g = new GregorianCalendar(TZ);
-        g.setTimeInMillis(TROIKA_EPOCH);
-        g.add(GregorianCalendar.DAY_OF_YEAR, days);
-        return g;
-    }
-
-    @Override
-    protected TransitBalance getBalance() {
-        return new TransitBalanceStored(new TransitCurrency(mBalance, "RUB"),
-                NAME, convertDate(mExpiryDays));
+    public List<TransitBalance> getBalances() {
+        return Collections.singletonList(mBlock8.getBalance());
     }
 
     @Override
     public String getCardName() {
-        return NAME;
+        return mBlock8.getCardName();
     }
 
     @Override
     public void writeToParcel(Parcel dest, int i) {
-        dest.writeLong(mSerialNumber);
-        dest.writeInt(mBalance);
-        dest.writeInt(mExpiryDays);
+        mBlock8.writeToParcel(dest, i);
+
+        if (mBlock7 != null) {
+            dest.writeInt(1);
+            mBlock7.writeToParcel(dest, i);
+        } else
+            dest.writeInt(0);
     }
 
-    @SuppressWarnings("UnusedDeclaration")
     public TroikaTransitData(Parcel p) {
-        mSerialNumber = p.readLong();
-        mBalance = p.readInt();
-        mExpiryDays = p.readInt();
+        mBlock8 = TroikaBlock.restoreFromParcel(p);
+        if (p.readInt() != 0)
+            mBlock7 = TroikaBlock.restoreFromParcel(p);
+        else
+            mBlock7 = null;
     }
 
     public static TransitIdentity parseTransitIdentity(ClassicCard card) {
-        return new TransitIdentity(NAME, "" + getSerial(card.getSector(8)));
+        return TroikaBlock.parseTransitIdentity(card.getSector(8).getBlock(0).getData());
+    }
+
+    private TroikaBlock decodeSector(ClassicCard card, int idx) {
+        ClassicSector sector = card.getSector(idx);
+        if (sector instanceof UnauthorizedClassicSector)
+            return null;
+        byte[] block0 = sector.getBlock(0).getData();
+        if (!TroikaBlock.check(block0))
+            return null;
+        byte []rawData = Utils.concatByteArrays(block0, sector.getBlock(1).getData());
+        rawData = Utils.concatByteArrays(rawData, sector.getBlock(2).getData());
+        return TroikaBlock.parseBlock(rawData);
     }
 
     public TroikaTransitData(ClassicCard card) {
-        ClassicSector sector8 = card.getSector(8);
-        mSerialNumber = getSerial(sector8);
-        mBalance = getBalance(sector8);
-        mExpiryDays = getExpiryDays(sector8);
+        mBlock8 = decodeSector(card, 8);
+        mBlock7 = decodeSector(card, 7);
+    }
+
+    @Override
+    public Trip[] getTrips() {
+        List <Trip> t = new ArrayList<>();
+        if (mBlock7 != null)
+            t.addAll(mBlock7.getTrips());
+        if (mBlock8 != null)
+            t.addAll(mBlock8.getTrips());
+        return t.toArray(new Trip[0]);
+    }
+
+    @Override
+    public Subscription[] getSubscriptions() {
+        Subscription s7 = mBlock7 == null ? null : mBlock7.getSubscription();
+        Subscription s8 = mBlock8 == null ? null : mBlock8.getSubscription();
+        if (s7 != null && s8 != null)
+            return new Subscription[]{s7, s8};
+        if (s7 != null)
+            return new Subscription[]{s7};
+        if (s8 != null)
+            return new Subscription[]{s8};
+        return null;
     }
 
     public static boolean check(ClassicCard card) {
         try {
-            byte[] key = card.getSector(8).getKey();
-            if (key == null || key.length != 6) {
-                // We don't have key data, bail out.
-                return false;
-            }
-
-            Log.d(TAG, "Checking for Troika key...");
-            return Utils.checkKeyHash(key, KEY_SALT, KEY_DIGEST) >= 0;
-        } catch (IndexOutOfBoundsException ignored) {
+            return TroikaBlock.check(card.getSector(8).getBlock(0).getData());
+        } catch (IndexOutOfBoundsException|UnauthorizedException ignored) {
             // If that sector number is too high, then it's not for us.
+            // If we can't read we can't do anything
         }
         return false;
     }

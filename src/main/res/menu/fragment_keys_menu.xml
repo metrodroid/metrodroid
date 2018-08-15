@@ -23,7 +23,7 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
         android:id="@+id/add_key"
-        android:icon="@android:drawable/ic_menu_add"
+        android:icon="?attr/AddKeyIcon"
         android:showAsAction="always"
         android:title="@string/add_key" />
 </menu>

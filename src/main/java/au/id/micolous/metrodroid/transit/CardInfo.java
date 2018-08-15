@@ -36,13 +36,10 @@ import au.id.micolous.metrodroid.transit.kmt.KMTTransitData;
 import au.id.micolous.metrodroid.transit.lax_tap.LaxTapTransitData;
 import au.id.micolous.metrodroid.transit.manly_fast_ferry.ManlyFastFerryTransitData;
 import au.id.micolous.metrodroid.transit.myki.MykiTransitData;
-import au.id.micolous.metrodroid.transit.octopus.OctopusTransitData;
 import au.id.micolous.metrodroid.transit.opal.OpalTransitData;
 import au.id.micolous.metrodroid.transit.ovc.OVChipTransitData;
-import au.id.micolous.metrodroid.transit.podorozhnik.PodorozhnikTransitData;
 import au.id.micolous.metrodroid.transit.seq_go.SeqGoTransitData;
 import au.id.micolous.metrodroid.transit.smartrider.SmartRiderTransitData;
-import au.id.micolous.metrodroid.transit.troika.TroikaTransitData;
 import au.id.micolous.metrodroid.util.Utils;
 
 /**
@@ -100,7 +97,7 @@ public class CardInfo {
 
     public static final CardInfo ICOCA = new CardInfo.Builder()
             .setImageId(R.drawable.icoca_card)
-            .setName("ICOCA")
+            .setName(Utils.localizeString(R.string.card_name_icoca))
             .setLocation(R.string.location_kansai)
             .setCardType(CardType.FeliCa)
             .build();
@@ -155,7 +152,7 @@ public class CardInfo {
 
     public static final CardInfo OCTOPUS = new CardInfo.Builder()
             .setImageId(R.drawable.octopus_card, R.drawable.octopus_card_alpha)
-            .setName(OctopusTransitData.OCTOPUS_NAME)
+            .setName(Utils.localizeString(R.string.card_name_octopus))
             .setLocation(R.string.location_hong_kong)
             .setCardType(CardType.FeliCa)
             .build();
@@ -184,9 +181,9 @@ public class CardInfo {
             .setKeysRequired()
             .build();
 
-    public static final CardInfo PASMO = new CardInfo.Builder()
+    public static final CardInfo PASMO = new Builder()
             .setImageId(R.drawable.pasmo_card)
-            .setName("PASMO")
+            .setName(Utils.localizeString(R.string.card_name_pasmo))
             .setLocation(R.string.location_tokyo)
             .setCardType(CardType.FeliCa)
             .build();
@@ -194,7 +191,7 @@ public class CardInfo {
     public static final CardInfo PODOROZHNIK = new Builder()
             // seqgo_card_alpha has identical geometry
             .setImageId(R.drawable.podorozhnik_card, R.drawable.seqgo_card_alpha)
-            .setName(PodorozhnikTransitData.NAME)
+            .setName(Utils.localizeString(R.string.card_name_podorozhnik))
             .setLocation(R.string.location_saint_petersburg)
             .setCardType(CardType.MifareClassic)
             .setExtraNote(R.string.card_note_russia)
@@ -202,9 +199,16 @@ public class CardInfo {
             .setPreview()
             .build();
 
+    public static final CardInfo RAVKAV = new CardInfo.Builder()
+            .setName(Utils.localizeString(R.string.card_name_ravkav))
+            .setLocation(R.string.location_israel)
+            .setCardType(CardType.ISO7816)
+            .setPreview()
+            .build();
+
     public static final CardInfo SZT = new CardInfo.Builder()
             .setImageId(R.drawable.szt_card)
-            .setName(OctopusTransitData.SZT_NAME)
+            .setName(Utils.localizeString(R.string.card_name_szt))
             .setLocation(R.string.location_shenzhen)
             .setCardType(CardType.FeliCa)
             .setPreview()
@@ -221,7 +225,7 @@ public class CardInfo {
 
     public static final CardInfo SUICA = new CardInfo.Builder()
             .setImageId(R.drawable.suica_card)
-            .setName("Suica")
+            .setName(Utils.localizeString(R.string.card_name_suica))
             .setLocation(R.string.location_tokyo)
             .setCardType(CardType.FeliCa)
             .build();
@@ -239,7 +243,7 @@ public class CardInfo {
     public static final CardInfo TROIKA = new Builder()
             // seqgo_card_alpha has identical geometry
             .setImageId(R.drawable.troika_card, R.drawable.seqgo_card_alpha)
-            .setName(TroikaTransitData.NAME)
+            .setName(Utils.localizeString(R.string.card_name_troika))
             .setLocation(R.string.location_moscow)
             .setCardType(CardType.MifareClassic)
             .setExtraNote(R.string.card_note_russia)
@@ -272,6 +276,7 @@ public class CardInfo {
             OVCHIP,
             PASMO,
             PODOROZHNIK,
+            RAVKAV,
             SZT, // Shenzhen Tong
             SMARTRIDER,
             SUICA,

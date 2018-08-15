@@ -38,13 +38,10 @@ import org.simpleframework.xml.Serializer;
 import au.id.micolous.metrodroid.MetrodroidApplication;
 
 public class CardInfoFragment extends ListFragment {
-    private Card mCard;
     private TransitData mTransitData;
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Serializer serializer = MetrodroidApplication.getInstance().getSerializer();
-        mCard = Card.fromXml(serializer, getArguments().getString(AdvancedCardInfoActivity.EXTRA_CARD));
         mTransitData = getArguments().getParcelable(CardInfoActivity.EXTRA_TRANSIT_DATA);
     }
 

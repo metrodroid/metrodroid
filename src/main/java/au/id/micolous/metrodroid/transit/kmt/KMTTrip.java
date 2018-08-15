@@ -27,10 +27,11 @@ import java.util.Calendar;
 import java.util.GregorianCalendar;
 
 import au.id.micolous.farebot.R;
-import au.id.micolous.metrodroid.MetrodroidApplication;
 import au.id.micolous.metrodroid.card.felica.FelicaBlock;
+import au.id.micolous.metrodroid.transit.Station;
 import au.id.micolous.metrodroid.transit.TransitCurrency;
 import au.id.micolous.metrodroid.transit.Trip;
+import au.id.micolous.metrodroid.util.StationTableReader;
 import au.id.micolous.metrodroid.util.Utils;
 
 public class KMTTrip extends Trip {
@@ -47,8 +48,9 @@ public class KMTTrip extends Trip {
     private final Calendar mTimestamp;
     private final int mTransactionAmount;
     private final int mEndGateCode;
+    private static final String KMT_STR = "kmt";
 
-    static Calendar calcDate(byte[] data) {
+    private static Calendar calcDate(byte[] data) {
         int fulloffset = Utils.byteArrayToInt(data, 0, 4);
         if (fulloffset == 0) {
             return null;
@@ -59,6 +61,9 @@ public class KMTTrip extends Trip {
         return c;
     }
 
+    private static Station getStation(int Code) {
+        return StationTableReader.getStation(KMT_STR, Code);
+    }
 
     public KMTTrip(FelicaBlock block) {
         byte[] data = block.getData();
@@ -69,13 +74,11 @@ public class KMTTrip extends Trip {
         mEndGateCode = data[9] & 0xff;
     }
 
-    public String getEndStationName() {
-        // Need to work on decoding gate code
-        // Collect the data !!
-        return KMTTransitData.getStationName(mEndGateCode);
+    public Station getEndStation() {
+        return getStation(mEndGateCode);
     }
 
-    public KMTTrip(Parcel parcel) {
+    private KMTTrip(Parcel parcel) {
         mProcessType = parcel.readInt();
         mSequenceNumber = parcel.readInt();
         mTimestamp = Utils.longToCalendar(parcel.readLong(), KMTTransitData.TIME_ZONE);
@@ -109,10 +112,6 @@ public class KMTTrip extends Trip {
         return mTimestamp;
     }
 
-    public boolean hasFare() {
-        return true;
-    }
-
     @Nullable
     @Override
     public TransitCurrency getFare() {
@@ -123,12 +122,11 @@ public class KMTTrip extends Trip {
     }
 
     public String getAgencyName() {
-        Application app = MetrodroidApplication.getInstance();
         String str;
         if (mProcessType == 1)
-            str = app.getString(R.string.felica_process_charge);
+            str = Utils.localizeString(R.string.felica_process_charge);
         else
-            str = app.getString(R.string.felica_terminal_pos);
+            str = Utils.localizeString(R.string.felica_terminal_pos);
         return str;
     }
 
@@ -137,8 +135,7 @@ public class KMTTrip extends Trip {
     }
 
     public String getRouteName() {
-        Application app = MetrodroidApplication.getInstance();
-        return app.getString(R.string.kmt_def_route);
+        return Utils.localizeString(R.string.kmt_def_route);
     }
 
     public int describeContents() {

@@ -52,6 +52,7 @@ public class SeqGoTrip extends NextfareTrip {
     public static final int DOMESTIC_AIRPORT = 9;
     public static final int INTERNATIONAL_AIRPORT = 10;
     private static final String TAG = SeqGoTrip.class.getSimpleName();
+    public static final String SEQ_GO_STR = "seq_go";
 
     /**
      * This constructor is used for unit tests outside of the package
@@ -101,41 +102,29 @@ public class SeqGoTrip extends NextfareTrip {
     }
 
     @Override
-    public String getStartStationName() {
+    public Station getStartStation() {
         if (mStartStation < 0) {
             return null;
-        } else {
-            Station s = getStartStation();
-            if (s == null) {
-                return Utils.localizeString(R.string.unknown_format, mStartStation);
-            } else {
-                return s.getStationName();
-            }
         }
-    }
 
-    @Override
-    public Station getStartStation() {
-        return getStation(mStartStation);
-    }
-
-    @Override
-    public String getEndStationName() {
-        if (mEndStation < 0) {
-            return null;
-        } else {
-            Station s = getEndStation();
-            if (s == null) {
-                return Utils.localizeString(R.string.unknown_format, mEndStation);
-            } else {
-                return s.getStationName();
-            }
-        }
+        Station s = getStation(mStartStation);
+        if (s != null)
+            return s;
+        return Station.unknown(mStartStation);
     }
 
     @Override
     public Station getEndStation() {
-        return getStation(mEndStation);
+        if (mEndStation < 0) {
+            return null;
+        }
+
+        Station s = getStation(mEndStation);
+
+        if (s == null)
+            return s;
+
+        return Station.unknown(mEndStation);
     }
 
     @Override
@@ -155,14 +144,6 @@ public class SeqGoTrip extends NextfareTrip {
     private static Station getStation(int stationId) {
         if (stationId <= 0) return null;
 
-        StationTableReader str = MetrodroidApplication.getInstance().getSeqGoSTR();
-        if (str == null) return null;
-
-        try {
-            return str.getStationById(stationId);
-        } catch (Exception e) {
-            Log.d(TAG, "error in getStation", e);
-            return null;
-        }
+        return StationTableReader.getStation(SEQ_GO_STR, stationId);
     }
 }

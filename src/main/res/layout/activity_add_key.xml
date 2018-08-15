@@ -59,7 +59,7 @@
                 android:paddingBottom="2dip"
                 android:paddingLeft="5dip"
                 android:text="Card Type"
-                android:textColor="#FFFFFF"
+                android:textColor="?attr/AddKeyTextColor"
                 style="?android:attr/listSeparatorTextViewStyle" />
 
             <TextView
@@ -71,7 +71,7 @@
                 android:paddingLeft="5dip"
                 android:text="MIFARE Classic"
                 android:textSize="16sp"
-                android:textColor="#FFFFFF" />
+                android:textColor="?attr/AddKeyTextColor" />
 
             <TextView
                 android:layout_width="fill_parent"
@@ -80,7 +80,7 @@
                 android:paddingBottom="2dip"
                 android:paddingLeft="5dip"
                 android:text="Card ID"
-                android:textColor="#FFFFFF"
+                android:textColor="?attr/AddKeyTextColor"
                 style="?android:attr/listSeparatorTextViewStyle" />
 
             <TextView
@@ -92,7 +92,7 @@
                 android:paddingLeft="5dip"
                 android:text="123456780"
                 android:textSize="16sp"
-                android:textColor="#FFFFFF" />
+                android:textColor="?attr/AddKeyTextColor" />
 
             <TextView
                 android:layout_width="fill_parent"
@@ -101,7 +101,7 @@
                 android:paddingBottom="2dip"
                 android:paddingLeft="5dip"
                 android:text="Key Type"
-                android:textColor="#FFFFFF"
+                android:textColor="?attr/AddKeyTextColor"
                 style="?android:attr/listSeparatorTextViewStyle" />
 
             <RadioGroup
@@ -115,7 +115,7 @@
                     android:layout_height="wrap_content"
                     android:text="KeyA"
                     android:textSize="16sp"
-                    android:textColor="#FFFFFF" />
+                    android:textColor="?attr/AddKeyTextColor" />
                 <RadioButton
                     android:id="@+id/is_key_b"
                     android:layout_width="0dp"
@@ -124,7 +124,7 @@
                     android:checked="true"
                     android:text="KeyB"
                     android:textSize="16sp"
-                    android:textColor="#FFFFFF" />
+                    android:textColor="?attr/AddKeyTextColor" />
             </RadioGroup>
 
             <TextView
@@ -134,7 +134,7 @@
                 android:paddingBottom="2dip"
                 android:paddingLeft="5dip"
                 android:text="Key Data"
-                android:textColor="#FFFFFF"
+                android:textColor="?attr/AddKeyTextColor"
                 style="?android:attr/listSeparatorTextViewStyle" />
 
             <TextView
@@ -144,7 +144,7 @@
                 android:paddingTop="8dip"
                 android:paddingBottom="8dip"
                 android:paddingLeft="5dip"
-                android:textColor="#FFFFFF"
+                android:textColor="?attr/AddKeyTextColor"
                 android:typeface="monospace" />
 
         </LinearLayout>
@@ -159,19 +159,19 @@
         android:showDividers="beginning"
         android:dividerPadding="0dip">
         <LinearLayout
-            style="@style/ButtonBar"
+            style="?attr/ButtonBarStyle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:measureWithLargestChild="true">
             <Button
-                style="@style/ButtonBarButton"
+                style="?attr/ButtonBarButtonStyle"
                 android:id="@+id/cancel"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="@android:string/cancel" />
             <Button
-                style="@style/ButtonBarButton"
+                style="?attr/ButtonBarButtonStyle"
                 android:id="@+id/add"
                 android:visibility="gone"
                 android:layout_width="wrap_content"

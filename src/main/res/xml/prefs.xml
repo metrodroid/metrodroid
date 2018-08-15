@@ -34,6 +34,14 @@
             android:summary="@string/convert_timezones_summary"
             android:key="pref_convert_timezones"
             android:defaultValue="false"/>
+        <ListPreference
+            android:key="pref_theme"
+            android:title="@string/pref_theme"
+            android:summary="@string/pref_theme_desc"
+            android:defaultValue="dark"
+            android:entries="@array/themes"
+            android:entryValues="@array/theme_values"
+            />
     </PreferenceCategory>
 
     <PreferenceCategory android:title="Maps">
@@ -119,6 +127,12 @@
             android:title="@string/speak_balance"
             android:summary="@string/speak_balance_summary"
             android:key="pref_key_speak_balance"
+            android:defaultValue="false" />
+
+        <CheckBoxPreference
+            android:title="@string/pref_show_local_and_english_title"
+            android:summary="@string/pref_show_local_and_english_desc"
+            android:key="pref_show_local_and_english"
             android:defaultValue="false" />
     </PreferenceCategory>
 </PreferenceScreen>

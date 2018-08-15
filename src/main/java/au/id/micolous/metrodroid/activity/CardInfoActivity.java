@@ -43,7 +43,6 @@ import au.id.micolous.metrodroid.card.UnsupportedCardException;
 import au.id.micolous.metrodroid.fragment.BlankCardFragment;
 import au.id.micolous.metrodroid.fragment.CardBalanceFragment;
 import au.id.micolous.metrodroid.fragment.CardInfoFragment;
-import au.id.micolous.metrodroid.fragment.CardSubscriptionsFragment;
 import au.id.micolous.metrodroid.fragment.CardTripsFragment;
 import au.id.micolous.metrodroid.fragment.UnauthorizedCardFragment;
 import au.id.micolous.metrodroid.provider.CardsTableColumns;
@@ -61,7 +60,7 @@ import au.id.micolous.metrodroid.MetrodroidApplication;
 /**
  * @author Eric Butler
  */
-public class CardInfoActivity extends Activity {
+public class CardInfoActivity extends MetrodroidActivity {
     public static final String EXTRA_TRANSIT_DATA = "transit_data";
     public static final String SPEAK_BALANCE_EXTRA = "au.id.micolous.farebot.speak_balance";
 
@@ -171,17 +170,13 @@ public class CardInfoActivity extends Activity {
                     return;
                 }
 
-                if (mTransitData.getBalances() != null) {
-                    mTabsAdapter.addTab(actionBar.newTab().setText(R.string.balance), CardBalanceFragment.class, args);
+                if (mTransitData.getBalances() != null || mTransitData.getSubscriptions() != null) {
+                    mTabsAdapter.addTab(actionBar.newTab().setText(R.string.balances_and_subscriptions),
+                            CardBalanceFragment.class, args);
                 }
 
                 if (mTransitData.getTrips() != null) {
                     mTabsAdapter.addTab(actionBar.newTab().setText(R.string.history), CardTripsFragment.class, args);
-                }
-
-                if (mTransitData.getSubscriptions() != null) {
-                    mTabsAdapter.addTab(actionBar.newTab().setText(R.string.subscriptions), CardSubscriptionsFragment.class,
-                            args);
                 }
 
                 if (mTransitData.getInfo() != null) {

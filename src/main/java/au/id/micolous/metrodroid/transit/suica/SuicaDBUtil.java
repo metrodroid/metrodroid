@@ -30,6 +30,8 @@ import au.id.micolous.metrodroid.util.StationTableReader;
 
 final class SuicaDBUtil {
     private static final String TAG = "SuicaUtil";
+    private static final String SUICA_BUS_STR = "suica_bus";
+    private static final String SUICA_RAIL_STR = "suica_rail";
 
     /**
      * Gets bus stop information from the IruCa (イルカ) table.
@@ -46,15 +48,7 @@ final class SuicaDBUtil {
         int stationId = (lineCode << 8) + stationCode;
         if (stationId == 0) return null;
 
-        StationTableReader str = MetrodroidApplication.getInstance().getSuicaBusSTR();
-        if (str == null) return null;
-
-        try {
-            return str.getStationById(stationId);
-        } catch (Exception e) {
-            Log.d(TAG, "error in getBusStop", e);
-            return null;
-        }
+        return StationTableReader.getStationNoFallback(SUICA_BUS_STR, stationId);
     }
 
     /**
@@ -74,14 +68,6 @@ final class SuicaDBUtil {
         int stationId = (areaCode << 16) + (lineCode << 8) + stationCode;
         if (stationId == 0) return null;
 
-        StationTableReader str = MetrodroidApplication.getInstance().getSuicaRailSTR();
-        if (str == null) return null;
-
-        try {
-            return str.getStationById(stationId);
-        } catch (Exception e) {
-            Log.d(TAG, "error in getRailStation", e);
-            return null;
-        }
+        return StationTableReader.getStationNoFallback(SUICA_RAIL_STR, stationId);
     }
 }

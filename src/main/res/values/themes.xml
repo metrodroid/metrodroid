@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  themes.xml
+  This file is part of Metrodroid.
+  Copyright (C) 2017 Eric Butler <eric@codebutler.com>
+  Copyright (C) 2018 Google
+  This program is free software: you can redistribute it and/or modify
+  it under the terms of the GNU General Public License as published by
+  the Free Software Foundation, either version 3 of the License, or
+  (at your option) any later version.
+  This program is distributed in the hope that it will be useful,
+  but WITHOUT ANY WARRANTY; without even the implied warranty of
+  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  GNU General Public License for more details.
+  You should have received a copy of the GNU General Public License
+  along with this program.  If not, see <http://www.gnu.org/licenses/>.
+  -->
+
+<resources>
+    <style name="Metrodroid.Dark" parent="@android:style/Theme.DeviceDefault">
+        <item name="ButtonBarStyle">@android:style/Holo.ButtonBar.AlertDialog</item>
+        <item name="BorderlessButtonStyle">@android:style/Widget.Holo.Button.Borderless.Small</item>
+        <item name="ButtonBarButtonStyle">@android:style/Widget.Holo.Button.Borderless.Small</item>
+        <item name="AddKeyIcon">@android:drawable/ic_menu_add</item>
+        <item name="AddKeyTextColor">@android:color/white</item>
+        <item name="LockImage">@drawable/locked</item>
+        <item name="AddKeysActivityTheme">@style/Metrodroid.Dark.Dialog</item>
+        <item name="MainActivityTheme">@style/Metrodroid.Dark</item>
+        <item name="ListHeaderTextColor">@android:color/background_light</item>
+        <item name="TransportIcons">@array/Metrodroid.Dark.TransportIcons</item>
+    </style>
+
+    <style name="Metrodroid.Dark.Dialog" parent="@android:style/Theme.DeviceDefault.Dialog">
+        <item name="ButtonBarStyle">@android:style/Holo.ButtonBar.AlertDialog</item>
+        <item name="BorderlessButtonStyle">@android:style/Widget.Holo.Button.Borderless.Small</item>
+        <item name="ButtonBarButtonStyle">@android:style/Widget.Holo.Button.Borderless.Small</item>
+        <item name="AddKeyIcon">@android:drawable/ic_menu_add</item>
+        <item name="AddKeyTextColor">@android:color/white</item>
+        <item name="LockImage">@drawable/locked</item>
+        <item name="ListHeaderTextColor">@android:color/background_light</item>
+    </style>
+
+    <integer-array name="Metrodroid.Dark.TransportIcons" >
+        <item>@drawable/bus</item>
+        <item>@drawable/train</item>
+        <item>@drawable/tram</item>
+        <item>@drawable/metro</item>
+        <item>@drawable/ferry</item>
+        <item>@drawable/tvm</item>
+        <item>@drawable/vending_machine</item>
+        <!-- TODO: Handle currencies other than Yen
+             This is only used by Edy and Suica at present. -->
+        <item>@drawable/cashier_yen</item>
+        <item>@drawable/unknown</item>
+        <item>@drawable/banned</item>
+    </integer-array>
+
+    <style name="Metrodroid.Light" parent="@android:style/Theme.DeviceDefault.Light">
+        <item name="ButtonBarStyle">@android:style/Holo.Light.ButtonBar.AlertDialog</item>
+        <item name="BorderlessButtonStyle">@android:style/Widget.Holo.Light.Button.Borderless.Small</item>
+        <item name="ButtonBarButtonStyle">@android:style/Widget.Holo.Light.Button.Borderless.Small</item>
+        <item name="AddKeyIcon">@android:drawable/ic_menu_add</item>
+        <item name="AddKeyTextColor">@android:color/black</item>
+        <item name="LockImage">@drawable/locked</item>
+        <item name="AddKeysActivityTheme">@style/Metrodroid.Light.Dialog</item>
+        <item name="MainActivityTheme">@style/Metrodroid.Light</item>
+        <item name="ListHeaderTextColor">@android:color/background_dark</item>
+        <item name="TransportIcons">@array/Metrodroid.Light.TransportIcons</item>
+    </style>
+
+    <style name="Metrodroid.Light.Dialog" parent="@android:style/Theme.DeviceDefault.Dialog">
+        <item name="ButtonBarStyle">@android:style/Holo.Light.ButtonBar.AlertDialog</item>
+        <item name="BorderlessButtonStyle">@android:style/Widget.Holo.Light.Button.Borderless.Small</item>
+        <item name="ButtonBarButtonStyle">@android:style/Widget.Holo.Light.Button.Borderless.Small</item>
+        <item name="AddKeyIcon">@android:drawable/ic_menu_add</item>
+        <item name="AddKeyTextColor">@android:color/black</item>
+        <item name="LockImage">@drawable/locked</item>
+        <item name="ListHeaderTextColor">@android:color/background_dark</item>
+    </style>
+
+    <integer-array name="Metrodroid.Light.TransportIcons" >
+        <item>@drawable/bus</item>
+        <item>@drawable/train</item>
+        <item>@drawable/tram</item>
+        <item>@drawable/metro</item>
+        <item>@drawable/ferry</item>
+        <item>@drawable/tvm_black</item>
+        <item>@drawable/vending_machine_black</item>
+        <!-- TODO: Handle currencies other than Yen
+                This is only used by Edy and Suica at present. -->
+        <item>@drawable/cashier_yen</item>
+        <item>@drawable/unknown_black</item>
+	<item>@drawable/banned</item>
+    </integer-array>
+
+    <style name="FareBot.Theme.Base" parent="@android:style/Theme.DeviceDefault.Light">
+        <item name="android:windowBackground">@color/FareBot.Theme.WindowBackground</item>
+        <item name="android:actionBarStyle">@style/FareBot.Theme.ActionBar</item>
+        <item name="android:actionBarDivider">@null</item>
+        <item name="android:windowContentOverlay">@null</item>
+        <item name="ButtonBarStyle">@android:style/Holo.ButtonBar.AlertDialog</item>
+        <item name="BorderlessButtonStyle">@android:style/Widget.Holo.Light.Button.Borderless.Small</item>
+        <item name="ButtonBarButtonStyle">@android:style/Widget.Holo.Light.Button.Borderless.Small</item>
+        <item name="AddKeyIcon">@drawable/ic_add_black_24dp</item>
+        <item name="AddKeyTextColor">@android:color/black</item>
+        <item name="LockImage">@drawable/locked</item>
+        <item name="ListHeaderTextColor">@color/FareBot.Theme.HeaderColor</item>
+        <item name="TransportIcons">@array/FareBot.Theme.TransportIcons</item>
+    </style>
+
+    <style name="FareBot.Theme.Main" parent="@style/FareBot.Theme.Base">
+        <item name="android:windowActionBarOverlay">true</item>
+        <item name="android:actionBarDivider">@android:color/transparent</item>
+        <item name="android:colorBackgroundCacheHint">@null</item>
+        <item name="android:windowContentOverlay">@null</item>
+        <item name="android:windowBackground">@color/FareBot.Theme.WindowBackground</item>
+        <item name="android:actionBarStyle">@style/FareBot.Theme.ActionBar.Main</item>
+    </style>
+
+    <style name="FareBot.Theme.Common" parent="@style/FareBot.Theme.Base">
+        <item name="AddKeysActivityTheme">@style/FareBot.Theme.Base</item>
+        <item name="MainActivityTheme">@style/FareBot.Theme.Main</item>
+    </style>
+
+    <style name="FareBot.Theme.ActionBar" parent="@android:style/Widget.DeviceDefault.Light.ActionBar">
+        <item name="android:textColor">#FFFFFF</item>
+        <item name="android:titleTextStyle">@style/FareBot.Theme.ActionBar.TitleTextStyle</item>
+        <item name="android:background">#00ACC1</item>
+    </style>
+
+    <style name="FareBot.Theme.ActionBar.TitleTextStyle" parent="@android:style/TextAppearance.DeviceDefault.Widget.ActionBar.Title">
+        <item name="android:textColor">#ffffff</item>
+    </style>
+    <style name="FareBot.Theme.ActionBar.Main" parent="@android:style/Widget.DeviceDefault.Light.ActionBar">
+        <item name="android:actionBarDivider">@android:color/transparent</item>
+    </style>
+
+    <color name="FareBot.Theme.WindowBackground">#eeeeee</color>
+    <color name="FareBot.Theme.HeaderColor">#006D8F</color>
+    <integer-array name="FareBot.Theme.TransportIcons" >
+        <item>@drawable/ic_transaction_bus_32dp</item>
+        <item>@drawable/ic_transaction_train_32dp</item>
+        <item>@drawable/ic_transaction_tram_32dp</item>
+        <item>@drawable/ic_transaction_metro_32dp</item>
+        <item>@drawable/ic_transaction_ferry_32dp</item>
+        <item>@drawable/ic_transaction_tvm_32dp</item>
+        <item>@drawable/ic_transaction_vend_32dp</item>
+        <item>@drawable/ic_transaction_pos_32dp</item>
+        <item>@drawable/ic_transaction_unknown_32dp</item>
+        <item>@drawable/ic_transaction_banned_32dp</item>
+    </integer-array>
+</resources>

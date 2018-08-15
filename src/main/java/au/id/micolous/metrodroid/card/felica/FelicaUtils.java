@@ -1,6 +1,10 @@
 package au.id.micolous.metrodroid.card.felica;
 
-import net.kazzz.felica.lib.FeliCaLib;
+import net.kazzz.felica.FeliCaLib;
+
+import au.id.micolous.metrodroid.transit.edy.EdyTransitData;
+import au.id.micolous.metrodroid.transit.octopus.OctopusTransitData;
+import au.id.micolous.metrodroid.transit.suica.SuicaTransitData;
 
 /**
  * Utilities for working with FeliCa cards.
@@ -20,14 +24,16 @@ public final class FelicaUtils {
      */
     public static String getFriendlySystemName(int systemCode) {
         switch (systemCode) {
-            case FeliCaLib.SYSTEMCODE_SUICA:
+            case SuicaTransitData.SYSTEMCODE_SUICA:
                 return "Suica";
-            case FeliCaLib.SYSTEMCODE_EDY:
+            case EdyTransitData.SYSTEMCODE_EDY:
                 return "Common / Edy";
             case FeliCaLib.SYSTEMCODE_FELICA_LITE:
                 return "FeliCa Lite";
-            case FeliCaLib.SYSTEMCODE_OCTOPUS:
+            case OctopusTransitData.SYSTEMCODE_OCTOPUS:
                 return "Octopus";
+            case OctopusTransitData.SYSTEMCODE_SZT:
+                return "SZT";
             default:
                 return "Unknown";
         }
@@ -35,11 +41,11 @@ public final class FelicaUtils {
 
     public static String getFriendlyServiceName(int systemCode, int serviceCode) {
         switch (systemCode) {
-            case FeliCaLib.SYSTEMCODE_SUICA:
+            case SuicaTransitData.SYSTEMCODE_SUICA:
                 switch (serviceCode) {
-                    case FeliCaLib.SERVICE_SUICA_HISTORY:
+                    case SuicaTransitData.SERVICE_SUICA_HISTORY:
                         return "Suica History";
-                    case FeliCaLib.SERVICE_SUICA_INOUT:
+                    case SuicaTransitData.SERVICE_SUICA_INOUT:
                         return "Suica In/Out";
                 }
                 break;
@@ -53,11 +59,20 @@ public final class FelicaUtils {
                 }
                 break;
 
-            case FeliCaLib.SYSTEMCODE_OCTOPUS:
+            case OctopusTransitData.SYSTEMCODE_OCTOPUS:
                 switch (serviceCode) {
-                    case FeliCaLib.SERVICE_OCTOPUS:
+                    case OctopusTransitData.SERVICE_OCTOPUS:
                         return "Octopus Metadata";
                 }
+                break;
+
+            case OctopusTransitData.SYSTEMCODE_SZT:
+                switch (serviceCode) {
+                    case OctopusTransitData.SERVICE_SZT:
+                        return "SZT Metadata";
+                }
+                break;
+
         }
 
         return "Unknown";

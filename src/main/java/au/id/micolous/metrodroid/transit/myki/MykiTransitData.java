@@ -47,6 +47,16 @@ public class MykiTransitData extends StubTransitData {
     private long mSerialNumber1;
     private long mSerialNumber2;
 
+    public static final Creator<MykiTransitData> CREATOR = new Creator<MykiTransitData>() {
+        public MykiTransitData createFromParcel(Parcel parcel) {
+            return new MykiTransitData(parcel);
+        }
+
+        public MykiTransitData[] newArray(int size) {
+            return new MykiTransitData[size];
+        }
+    };
+
     @SuppressWarnings("UnusedDeclaration")
     public MykiTransitData(Parcel parcel) {
         mSerialNumber1 = parcel.readLong();

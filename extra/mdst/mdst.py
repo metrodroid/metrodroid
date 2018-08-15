@@ -22,6 +22,7 @@ from __future__ import absolute_import, print_function
 from google.protobuf.internal import encoder
 from stations_pb2 import StationDb, Operator, Line, Station, StationIndex
 import struct
+import csv
 
 SCHEMA_VER = 1
 
@@ -41,8 +42,8 @@ class MdstWriter(object):
     fh: required, file-like object to write to.
     version: required, this is a numeric revision number for the database.
     local_languages: optional, list of languages which should be treated as "local".
-    operators: optional, dict of [int](english_name,local_name) declaring a mapping of operators.
-    lines: optional, dict of [int](english_name,local_name) declaring a mapping of lines.
+    operators: optional, dict of [int](name.english,name.local) declaring a mapping of operators.
+    lines: optional, dict of [int](name.english,name.local) declaring a mapping of lines.
     tts_hint_language: optional, str of LocaleSpan hint for station names.
     
     
@@ -58,17 +59,23 @@ class MdstWriter(object):
 
     if operators:
       for k, v in operators.items():
+        if isinstance(v, Operator):
+          sdb.operators[k].name.english = v.name.english
+          sdb.operators[k].name.english_short = v.name.english_short
+          sdb.operators[k].name.local = v.name.local
+          sdb.operators[k].name.local_short = v.name.local_short
+          continue
         if v[0] != None:
-          sdb.operators[k].english_name = v[0]
+          sdb.operators[k].name.english = v[0]
         if len(v) > 1 and v[1] != None:
-          sdb.operators[k].local_name = v[1]
+          sdb.operators[k].name.local = v[1]
 
     if lines:
       for k, v in lines.items():
         if v[0] != None:
-          sdb.lines[k].english_name = v[0]
+          sdb.lines[k].name.english = v[0]
         if len(v) > 1 and v[1] != None:
-          sdb.lines[k].local_name = v[1]
+          sdb.lines[k].name.local = v[1]
 
     # Write out the header
     fh.write(b'MdST')
@@ -108,3 +115,37 @@ class MdstWriter(object):
     return index_end_off
 
 
+def read_stops_from_csv(db, csv_f):
+  exread = csv.DictReader(csv_f)
+
+  for stop in exread:
+    s = Station()
+    s.id = int(stop['reader_id'], 0)
+    s.name.english = stop['stop_name']
+    if 'local_name' in stop and stop['local_name']:
+      s.name.local = stop['local_name']
+    if 'short_name' in stop and stop['short_name']:
+      s.name.english_short = stop['short_name']
+    y = stop.get('stop_lat', '').strip()
+    x = stop.get('stop_lon', '').strip()
+    if y and x:
+      s.latitude = float(y)
+      s.longitude = float(x)
+
+    db.push_station(s)
+
+
+def read_operators_from_csv(db, csv_f):
+  opread = csv.DictReader(csv_f)
+    
+  for op in opread:
+    oppb = Operator()
+    oppb.name.english = op['name']
+    if 'short_name' in op and op['short_name']:
+      oppb.name.english_short = op['short_name']
+    if 'local_name' in op and op['local_name']:
+      oppb.name.local = op['local_name']
+    if 'mode' in op and op['mode']:
+      oppb.default_transport = TransportType.Value(op['mode'])
+    operators[int(op['id'], 0)] = oppb
+    operators_f.close()

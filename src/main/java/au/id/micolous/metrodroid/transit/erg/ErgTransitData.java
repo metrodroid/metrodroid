@@ -232,7 +232,7 @@ public class ErgTransitData extends TransitData {
         items.add(new ListItem(R.string.card_epoch,
                 Utils.longDateFormat(TripObfuscator.maybeObfuscateTS(mEpochDate))));
         items.add(new ListItem(R.string.erg_agency_id,
-                "0x" + Long.toHexString(mAgencyID)));
+                Utils.localizeString(R.string.unknown_format, "0x" + Long.toHexString(mAgencyID))));
         return items;
     }
 

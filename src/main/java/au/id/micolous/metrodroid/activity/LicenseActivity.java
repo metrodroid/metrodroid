@@ -26,16 +26,16 @@ import android.widget.TextView;
 
 import au.id.micolous.farebot.R;
 
-public class LicenseActivity extends Activity {
+public class LicenseActivity extends MetrodroidActivity {
 
     private static final String LICENSE_INTRO = "Metrodroid\n"
             + "Based on FareBot\n\n"
             + "Copyright 2015-2018 Michael Farrell <micolous@gmail.com> and contributors\n"
             + "Copyright 2011-2017 Eric Butler <eric@codebutler.com> and contributors\n"
-            + "Copyright 2011 \"an anonymous contributor\", Chris Hundt, David Hoover, Devin Carraway, Sean Cross\n"
+            + "Copyright 2011 \"an anonymous contributor\", Chris Hundt, David Hoover, Devin Carraway, Kazzz, Sean Cross\n"
             + "Copyright 2012 Jason Hsu, Sebastian Oliva, Shayan Guha, Toby Bonang, Victor Heng\n"
             + "Copyright 2012-2013 Wilbert Duijvenvoorde\n"
-            + "Copyright 2013 Lauri Andler, Marcelo Liberato, Mike Castleman, Sinpo Wei\n"
+            + "Copyright 2013 Chris Norden, Lauri Andler, Marcelo Liberato, Mike Castleman, Sinpo Wei\n"
             + "Copyright 2014 Bao-Long Nguyen-Trong, Kramer Campbell\n"
             + "Copyright 2018 Google Inc.\n"
             + "\n"
@@ -264,6 +264,25 @@ public class LicenseActivity extends Activity {
             + "\n"
             + "Stop mapping information is available in Metrodroid's source repository.\n\n\n";
 
+    private static final String BART_GTFS = "The BART stop database used in this software "
+            + "contains information derived from BART GTFS feed, made available under the "
+            + "Developer License Agreement by BART.\n"
+            + "\n"
+            + "You may obtain a copy of the raw data and it's license at:\n"
+            + "\n"
+            + "   http://www.bart.gov/schedules/developers/developer-license-agreement\n"
+            + "\n"
+            + "   http://www.bart.gov/schedules/developers/gtfs\n"
+            + "\n"
+            + "Stop mapping information is available in Metrodroid's source repository.\n\n\n";
+
+    private static final String MYTRANSPORT_SG = "Contains information from " +
+            "\"Train Station Codes and Chinese Names\" and \"TrainStation\" accessed on " +
+            "12-Aug-2018 from " +
+            "\"https://www.mytransport.sg/content/dam/datamall/datasets/PublicTransportRelated/Train%20Station%20Codes%20and%20Chinese%20Names.zip\"" +
+            " and https://www.mytransport.sg/content/dam/datamall/datasets/Geospatial/TrainStation.zip " +
+            "which is made available under the terms of the Singapore Open Data Licence version 1.0" +
+            " https://www.mytransport.sg/content/mytransport/home/dataMall/SingaporeOpenDataLicence.html\n\n\n";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -291,6 +310,8 @@ public class LicenseActivity extends Activity {
         // TODO: Read this programatically
         lblLicenseText.append(SEQ_GO_GTFS);
         lblLicenseText.append(LAX_TAP_GTFS);
+        lblLicenseText.append(BART_GTFS);
+        lblLicenseText.append(MYTRANSPORT_SG);
     }
 
 

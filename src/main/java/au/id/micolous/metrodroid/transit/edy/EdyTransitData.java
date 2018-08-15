@@ -1,32 +1,35 @@
 /*
  * EdyTransitData.java
  *
- * Authors:
- * Chris Norden
- * Eric Butler <eric@codebutler.com>
+ * Copyright 2013 Chris Norden
+ * Copyright 2013-2015 Eric Butler <eric@codebutler.com>
+ * Copyright 2016-2018 Michael Farrell <micolous+git@gmail.com>
+ * Copyright 2018 Google Inc.
  *
- * Based on code from http://code.google.com/p/nfc-felica/
- * nfc-felica by Kazzz. See project URL for complete author information.
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
  *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
 package au.id.micolous.metrodroid.transit.edy;
 
 import android.os.Parcel;
 import android.support.annotation.Nullable;
-import android.text.Spanned;
+
+import org.apache.commons.lang3.ArrayUtils;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.TimeZone;
 
 import au.id.micolous.metrodroid.card.felica.FelicaBlock;
 import au.id.micolous.metrodroid.card.felica.FelicaCard;
@@ -37,17 +40,10 @@ import au.id.micolous.metrodroid.transit.TransitIdentity;
 import au.id.micolous.metrodroid.transit.Trip;
 import au.id.micolous.metrodroid.util.Utils;
 
-import net.kazzz.felica.lib.FeliCaLib;
-import net.kazzz.felica.lib.Util;
-
-import org.apache.commons.lang3.ArrayUtils;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.TimeZone;
-
 public class EdyTransitData extends TransitData {
     // defines
+    public static final int SYSTEMCODE_EDY = 0xfe00;         // Edy (=共通領域)
+
     public static final int FELICA_SERVICE_EDY_ID = 0x110B;
     public static final int FELICA_SERVICE_EDY_BALANCE = 0x1317;
     public static final int FELICA_SERVICE_EDY_HISTORY = 0x170F;
@@ -77,23 +73,21 @@ public class EdyTransitData extends TransitData {
 
     public EdyTransitData(FelicaCard card) {
         // card ID is in block 0, bytes 2-9, big-endian ordering
-        FelicaService serviceID = card.getSystem(FeliCaLib.SYSTEMCODE_EDY).getService(FELICA_SERVICE_EDY_ID);
+        FelicaService serviceID = card.getSystem(SYSTEMCODE_EDY).getService(FELICA_SERVICE_EDY_ID);
         List<FelicaBlock> blocksID = serviceID.getBlocks();
         FelicaBlock blockID = blocksID.get(0);
         byte[] dataID = blockID.getData();
-        for (int i = 2; i < 10; i++) {
-            mSerialNumber[i - 2] = dataID[i];
-        }
+        System.arraycopy(dataID, 2, mSerialNumber, 0, 8);
 
         // current balance info in block 0, bytes 0-3, little-endian ordering
-        FelicaService serviceBalance = card.getSystem(FeliCaLib.SYSTEMCODE_EDY).getService(FELICA_SERVICE_EDY_BALANCE);
+        FelicaService serviceBalance = card.getSystem(SYSTEMCODE_EDY).getService(FELICA_SERVICE_EDY_BALANCE);
         List<FelicaBlock> blocksBalance = serviceBalance.getBlocks();
         FelicaBlock blockBalance = blocksBalance.get(0);
         byte[] dataBalance = blockBalance.getData();
-        mCurrentBalance = Util.toInt(dataBalance[3], dataBalance[2], dataBalance[1], dataBalance[0]);
+        mCurrentBalance = Utils.byteArrayToInt(Utils.reverseBuffer(dataBalance, 0, 3));
 
         // now read the transaction history
-        FelicaService serviceHistory = card.getSystem(FeliCaLib.SYSTEMCODE_EDY).getService(FELICA_SERVICE_EDY_HISTORY);
+        FelicaService serviceHistory = card.getSystem(SYSTEMCODE_EDY).getService(FELICA_SERVICE_EDY_HISTORY);
         List<EdyTrip> trips = new ArrayList<>();
 
         // Read blocks in order
@@ -108,11 +102,11 @@ public class EdyTransitData extends TransitData {
     }
 
     public static boolean check(FelicaCard card) {
-        return (card.getSystem(FeliCaLib.SYSTEMCODE_EDY) != null);
+        return (card.getSystem(SYSTEMCODE_EDY) != null);
     }
 
     public static boolean earlyCheck(int[] systemCodes) {
-        return ArrayUtils.contains(systemCodes, FeliCaLib.SYSTEMCODE_EDY);
+        return ArrayUtils.contains(systemCodes, SYSTEMCODE_EDY);
     }
 
     public static TransitIdentity parseTransitIdentity(FelicaCard card) {
