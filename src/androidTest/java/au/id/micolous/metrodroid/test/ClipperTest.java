@@ -87,7 +87,7 @@ public class ClipperTest extends AndroidTestCase {
         ClipperTransitData o = (ClipperTransitData)d;
         assertEquals("572691763", o.getSerialNumber());
         assertEquals("Clipper", o.getCardName());
-        assertTrue(o.getBalance().equals(TransitCurrency.USD(30583)));
+        assertTrue(o.getBalance().getBalance().equals(TransitCurrency.USD(30583)));
         assertEquals(null, o.getSubscriptions());
 
         Trip []trips = o.getTrips();

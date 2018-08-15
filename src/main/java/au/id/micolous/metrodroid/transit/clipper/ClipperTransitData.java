@@ -36,6 +36,8 @@ import org.apache.commons.lang3.ArrayUtils;
 import au.id.micolous.metrodroid.card.Card;
 import au.id.micolous.metrodroid.card.desfire.DesfireCard;
 import au.id.micolous.metrodroid.card.desfire.files.DesfireFile;
+import au.id.micolous.metrodroid.transit.TransitBalance;
+import au.id.micolous.metrodroid.transit.TransitBalanceStored;
 import au.id.micolous.metrodroid.transit.TransitCurrency;
 import au.id.micolous.metrodroid.transit.TransitData;
 import au.id.micolous.metrodroid.transit.TransitIdentity;
@@ -81,14 +83,16 @@ public class ClipperTransitData extends TransitData {
     @VisibleForTesting
     public static final int APP_ID = 0x9011f2;
 
-    private long mSerialNumber;
-    private short mBalance;
-    private ClipperTrip[] mTrips;
-    private ClipperRefill[] mRefills;
+    private final long mSerialNumber;
+    private final int mBalance;
+    private final int mExpiry;
+    private final ClipperTrip[] mTrips;
+    private final ClipperRefill[] mRefills;
 
     public ClipperTransitData(Parcel parcel) {
         mSerialNumber = parcel.readLong();
-        mBalance = (short) parcel.readLong();
+        mBalance = parcel.readInt();
+        mExpiry = parcel.readInt();
 
         mTrips = new ClipperTrip[parcel.readInt()];
         parcel.readTypedArray(mTrips, ClipperTrip.CREATOR);
@@ -98,6 +102,7 @@ public class ClipperTransitData extends TransitData {
     }
 
     public ClipperTransitData(Card card) {
+        int expiry;
         DesfireCard desfireCard = (DesfireCard) card;
 
         byte[] data;
@@ -110,8 +115,16 @@ public class ClipperTransitData extends TransitData {
         }
 
         try {
+            data = desfireCard.getApplication(APP_ID).getFile(0x01).getData();
+            expiry = Utils.byteArrayToInt(data, 8, 2);
+        } catch (Exception ex) {
+            expiry = 0;
+        }
+
+        mExpiry = expiry;
+        try {
             data = desfireCard.getApplication(APP_ID).getFile(0x02).getData();
-            mBalance = (short) (((0xFF & data[18]) << 8) | (0xFF & data[19]));
+            mBalance = (short) Utils.byteArrayToInt(data, 18, 2);
         } catch (Exception ex) {
             throw new RuntimeException("Error parsing Clipper balance", ex);
         }
@@ -153,8 +166,9 @@ public class ClipperTransitData extends TransitData {
 
     @Nullable
     @Override
-    public TransitCurrency getBalance() {
-        return TransitCurrency.USD((int) mBalance);
+    public TransitBalance getBalance() {
+        return new TransitBalanceStored(TransitCurrency.USD(mBalance),
+                null, clipperTimestampToCalendar(mExpiry * 86400L));
     }
 
     @Override
@@ -273,7 +287,8 @@ public class ClipperTransitData extends TransitData {
 
     public void writeToParcel(Parcel parcel, int flags) {
         parcel.writeLong(mSerialNumber);
-        parcel.writeLong(mBalance);
+        parcel.writeInt(mBalance);
+        parcel.writeInt(mExpiry);
 
         parcel.writeInt(mTrips.length);
         parcel.writeTypedArray(mTrips, flags);
