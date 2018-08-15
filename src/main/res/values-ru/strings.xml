@@ -75,7 +75,7 @@
     <string name="ravkav_agency_egged">Эгед</string>
     <string name="ravkav_agency_dan">Дан</string>
     <string name="ravkav_agency_city_pass">Сити Пасс</string>
-    <string name="ravkav_agency_topup_app">Приложение пополнения Рав Кав</string>
+    <string name="ravkav_agency_topup_app">Пополнение в приложении Рав Кав</string>
 
     <string name="trip_description">(Из )%1$s [→] (в )%2$s</string>
     <string name="trip_description_unknown_start">До %s</string>
