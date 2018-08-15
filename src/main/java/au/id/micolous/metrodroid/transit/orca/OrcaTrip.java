@@ -58,10 +58,12 @@ public class OrcaTrip extends Trip {
     final int mNewBalance;
     final int mAgency;
     final int mTransType;
+    final boolean mIsTopup;
 
-    public OrcaTrip(DesfireRecord record) {
+    public OrcaTrip(DesfireRecord record, boolean isTopup) {
         byte[] useData = record.getData();
 
+        mIsTopup = isTopup;
         mAgency = Utils.getBitsFromBuffer(useData, 24, 4);
         mTimestamp = Utils.getBitsFromBuffer(useData, 28, 32);
         mCoachNum = Utils.getBitsFromBuffer(useData, 76, 16);
@@ -77,6 +79,7 @@ public class OrcaTrip extends Trip {
         mNewBalance = parcel.readInt();
         mAgency = parcel.readInt();
         mTransType = parcel.readInt();
+        mIsTopup = parcel.readInt() != 0;
     }
 
     @Override
@@ -100,6 +103,8 @@ public class OrcaTrip extends Trip {
 
     @Override
     public String getRouteName() {
+        if (mIsTopup)
+            return Utils.localizeString(R.string.orca_topup);
         if (isLink()) {
             return "Link Light Rail";
         } else if (isSounder()) {
@@ -118,7 +123,7 @@ public class OrcaTrip extends Trip {
     @Override
     @Nullable
     public TransitCurrency getFare() {
-        return TransitCurrency.USD(mFare);
+        return TransitCurrency.USD(mIsTopup ? -mFare : mFare);
     }
 
     private static Station getStation(int agency, int stationId) {
@@ -127,6 +132,8 @@ public class OrcaTrip extends Trip {
 
     @Override
     public Station getStartStation() {
+        if (mIsTopup)
+            return Station.nameOnly(Utils.localizeString(R.string.orca_topup_machine, String.valueOf(mCoachNum)));
         Station s = getStation(mAgency, mCoachNum);
         if (s != null)
             return s;
@@ -145,15 +152,19 @@ public class OrcaTrip extends Trip {
 
     @Override
     public Mode getMode() {
+        if (mIsTopup)
+            return Mode.TICKET_MACHINE;
         if (isLink()) {
             return Mode.METRO;
-        } else if (isSounder()) {
-            return Mode.TRAIN;
-        } else if (mAgency == OrcaTransitData.AGENCY_WSF) {
-            return Mode.FERRY;
-        } else {
-            return Mode.BUS;
         }
+        if (isSounder()) {
+            return Mode.TRAIN;
+        }
+        if (mAgency == OrcaTransitData.AGENCY_WSF) {
+            return Mode.FERRY;
+        }
+
+        return Mode.BUS;
     }
 
     @Override
@@ -168,6 +179,7 @@ public class OrcaTrip extends Trip {
         parcel.writeInt(mNewBalance);
         parcel.writeInt(mAgency);
         parcel.writeInt(mTransType);
+        parcel.writeInt(mIsTopup ? 1 : 0);
     }
 
     public int describeContents() {

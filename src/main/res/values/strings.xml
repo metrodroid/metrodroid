@@ -798,6 +798,8 @@
     <string name="card_note_opal">Free travel passes and single trip tickets are not supported.</string>
 
     <string name="orca_coach_number">Coach #%s</string>
+    <string name="orca_topup_machine">Machine #%s</string>
+    <string name="orca_topup">Top-up</string>
 
     <!--
         Go Card (South East Queensland/Brisbane, AU)
