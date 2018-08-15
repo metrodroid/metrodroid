@@ -32,6 +32,7 @@ import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.DrawableRes;
+import android.support.annotation.RequiresApi;
 import android.support.annotation.StringRes;
 import android.text.Spannable;
 import android.text.SpannableString;
@@ -124,9 +125,12 @@ public class CardTripsFragment extends ListFragment {
             return;
         }
 
-        Intent intent = new Intent(getActivity(), TripMapActivity.class);
-        intent.putExtra(TripMapActivity.TRIP_EXTRA, trip);
-        startActivity(intent);
+        // Make linter happy with explicit if, even though previous if is sufficient
+        if (Build.VERSION.SDK_INT >= 17) {
+            Intent intent = new Intent(getActivity(), TripMapActivity.class);
+            intent.putExtra(TripMapActivity.TRIP_EXTRA, trip);
+            startActivity(intent);
+        }
     }
 
     private static class UseLogListAdapter extends ArrayAdapter<Trip> {

@@ -45,7 +45,7 @@
                 android:drawableTop="@drawable/logo"
                 android:drawablePadding="16dp"
                 android:text="@string/directions"
-                android:textSize="45dp"
+                android:textSize="45sp"
                 android:gravity="center" />
             <LinearLayout
                 android:layout_width="match_parent"
