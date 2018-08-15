@@ -60,9 +60,8 @@ public class NextfareTrip extends Trip implements Comparable<NextfareTrip> {
 
     public NextfareTrip(Parcel parcel) {
         mJourneyId = parcel.readInt();
-        TimeZone tz = TimeZone.getTimeZone(parcel.readString());
-        mStartTime = Utils.longToCalendar(parcel.readLong(), tz);
-        mEndTime = Utils.longToCalendar(parcel.readLong(), tz);
+        mStartTime = Utils.unparcelCalendar(parcel);
+        mEndTime = Utils.unparcelCalendar(parcel);
         mMode = Mode.valueOf(parcel.readString());
         mStartStation = parcel.readInt();
         mEndStation = parcel.readInt();
@@ -144,9 +143,8 @@ public class NextfareTrip extends Trip implements Comparable<NextfareTrip> {
     @Override
     public void writeToParcel(Parcel parcel, int i) {
         parcel.writeInt(mJourneyId);
-        parcel.writeString(mStartTime == null ? UTC.getID() : mStartTime.getTimeZone().getID());
-        parcel.writeLong(Utils.calendarToLong(mStartTime));
-        parcel.writeLong(Utils.calendarToLong(mEndTime));
+        Utils.parcelCalendar(parcel, mStartTime);
+        Utils.parcelCalendar(parcel, mEndTime);
         parcel.writeString(mMode.toString());
         parcel.writeInt(mStartStation);
         parcel.writeInt(mEndStation);

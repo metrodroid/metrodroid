@@ -53,8 +53,7 @@ public class NextfareConfigRecord extends NextfareRecord implements Parcelable {
     }
 
     public NextfareConfigRecord(Parcel p) {
-        TimeZone tz = TimeZone.getTimeZone(p.readString());
-        mExpiry = Utils.longToCalendar(p.readLong(), tz);
+        mExpiry = Utils.unparcelCalendar(p);
         mTicketType = p.readInt();
     }
 
@@ -90,8 +89,7 @@ public class NextfareConfigRecord extends NextfareRecord implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel parcel, int i) {
-        parcel.writeString(mExpiry.getTimeZone().getID());
-        parcel.writeLong(Utils.calendarToLong(mExpiry));
+        Utils.parcelCalendar(parcel, mExpiry);
         parcel.writeInt(mTicketType);
     }
 }

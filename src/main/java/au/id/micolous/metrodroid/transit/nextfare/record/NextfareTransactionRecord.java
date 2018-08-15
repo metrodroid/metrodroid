@@ -59,8 +59,7 @@ public class NextfareTransactionRecord extends NextfareRecord implements Parcela
     }
 
     public NextfareTransactionRecord(Parcel parcel) {
-        TimeZone tz = TimeZone.getTimeZone(parcel.readString());
-        mTimestamp = Utils.longToCalendar(parcel.readLong(), tz);
+        mTimestamp = Utils.unparcelCalendar(parcel);
         mMode = parcel.readInt();
         mJourney = parcel.readInt();
         mStation = parcel.readInt();
@@ -125,8 +124,7 @@ public class NextfareTransactionRecord extends NextfareRecord implements Parcela
 
     @Override
     public void writeToParcel(Parcel parcel, int i) {
-        parcel.writeString(mTimestamp.getTimeZone().getID());
-        parcel.writeLong(Utils.calendarToLong(mTimestamp));
+        Utils.parcelCalendar(parcel, mTimestamp);
         parcel.writeInt(mMode);
         parcel.writeInt(mJourney);
         parcel.writeInt(mStation);

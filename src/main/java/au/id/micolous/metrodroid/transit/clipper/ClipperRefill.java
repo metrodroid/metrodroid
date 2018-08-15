@@ -59,7 +59,7 @@ public class ClipperRefill extends Trip implements Comparable {
     }
 
     public ClipperRefill(Parcel parcel) {
-        mTimestamp = Utils.longToCalendar(parcel.readLong(), CLIPPER_TZ);
+        mTimestamp = Utils.unparcelCalendar(parcel);
         mAmount = parcel.readInt();
         mMachineID = parcel.readString();
         mAgency = parcel.readLong();
@@ -108,7 +108,7 @@ public class ClipperRefill extends Trip implements Comparable {
     }
 
     public void writeToParcel(Parcel parcel, int flags) {
-        parcel.writeLong(Utils.calendarToLong(mTimestamp));
+        Utils.parcelCalendar(parcel, mTimestamp);
         parcel.writeInt(mAmount);
         parcel.writeString(mMachineID);
         parcel.writeLong(mAgency);

@@ -56,8 +56,7 @@ public class NextfareTravelPassRecord extends NextfareRecord implements Parcelab
     }
 
     public NextfareTravelPassRecord(Parcel parcel) {
-        TimeZone tz = TimeZone.getTimeZone(parcel.readString());
-        mExpiry = Utils.longToCalendar(parcel.readLong(), tz);
+        mExpiry = Utils.unparcelCalendar(parcel);
         mChecksum = parcel.readInt();
         mAutomatic = parcel.readInt() == 1;
     }
@@ -96,8 +95,7 @@ public class NextfareTravelPassRecord extends NextfareRecord implements Parcelab
 
     @Override
     public void writeToParcel(Parcel parcel, int i) {
-        parcel.writeString(mExpiry.getTimeZone().getID());
-        parcel.writeLong(Utils.calendarToLong(mExpiry));
+        Utils.parcelCalendar(parcel, mExpiry);
         parcel.writeInt(mChecksum);
         parcel.writeInt(mAutomatic ? 1 : 0);
     }

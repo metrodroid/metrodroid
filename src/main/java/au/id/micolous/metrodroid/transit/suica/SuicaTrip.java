@@ -140,7 +140,7 @@ public class SuicaTrip extends Trip {
         mIsCharge = (parcel.readInt() == 1);
 
         mFare = parcel.readInt();
-        mTimestamp = Utils.longToCalendar(parcel.readLong(), SuicaTransitData.TIME_ZONE);
+        mTimestamp = Utils.unparcelCalendar(parcel);
         mRegionCode = parcel.readInt();
 
         mRailEntranceLineCode = parcel.readInt();
@@ -305,7 +305,7 @@ public class SuicaTrip extends Trip {
         parcel.writeInt(mIsCharge ? 1 : 0);
 
         parcel.writeInt(mFare);
-        parcel.writeLong(Utils.calendarToLong(mTimestamp));
+        Utils.parcelCalendar(parcel, mTimestamp);
         parcel.writeInt(mRegionCode);
 
         parcel.writeInt(mRailEntranceLineCode);
