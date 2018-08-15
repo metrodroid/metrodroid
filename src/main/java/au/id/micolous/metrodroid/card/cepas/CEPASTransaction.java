@@ -75,9 +75,9 @@ public class CEPASTransaction implements Parcelable {
 
         mType = rawData[0];
 
-        tmp = (0x00ff0000 & ((rawData[1])) << 16) | (0x0000ff00 & (rawData[2] << 8)) | (0x000000ff & (rawData[3]));
+        tmp = Utils.byteArrayToInt(rawData, 1, 3);
         /* Sign-extend the value */
-        if (0 != (rawData[1] & 0x80))
+        if (0 != (tmp & 0x800000))
             tmp |= 0xff000000;
         mAmount = tmp;
 

@@ -45,6 +45,7 @@ public abstract class MetrodroidActivity extends Activity {
                     new int[] { variant });
 
             theme = a.getResourceId(0, baseTheme);
+            a.recycle();
         } else
             theme = baseTheme;
         setTheme(theme);
