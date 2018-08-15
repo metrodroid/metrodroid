@@ -36,11 +36,15 @@ import au.id.micolous.metrodroid.MetrodroidApplication;
 public class TransitCurrency extends TransitBalance implements Parcelable {
 
     private final int mCurrency;
-    /** 3 character currency code (eg: AUD) */
+    /**
+     * 3 character currency code (eg: AUD)
+     */
     @NonNull
     private final String mCurrencyCode;
-    /** value to divide by to get that currency. eg: if the value passed is in cents,
-     * then divide by 100 to get dollars. Currencies like yen should divide by 1. */
+    /**
+     * value to divide by to get that currency. eg: if the value passed is in cents,
+     * then divide by 100 to get dollars. Currencies like yen should divide by 1.
+     */
     private final double mDivisor;
 
     private static final SecureRandom mRNG = new SecureRandom();
@@ -81,6 +85,10 @@ public class TransitCurrency extends TransitBalance implements Parcelable {
         return new TransitCurrency(cents, "EUR", 100.);
     }
 
+    static public TransitCurrency IDR(int cents) {
+        return new TransitCurrency(cents, "IDR", 1.);
+    }
+
     static public TransitCurrency RUB(int kopeyka) {
         return new TransitCurrency(kopeyka, "RUB", 100.);
     }
@@ -111,14 +119,13 @@ public class TransitCurrency extends TransitBalance implements Parcelable {
     }
 
     /**
-     *
      * This handles Android-specific issues:
-     *
+     * <p>
      * - Some currency formatters return too many or too few fractional amounts. (issue #34)
      * - Markup with TtsSpan.MoneyBuilder, for accessibility tools.
      *
-     * @param isBalance    True if the value being passed is a balance (ie: don't format credits in a
-     *                     special way)
+     * @param isBalance True if the value being passed is a balance (ie: don't format credits in a
+     *                  special way)
      * @return Formatted currency string
      */
     public Spanned formatCurrencyString(boolean isBalance) {

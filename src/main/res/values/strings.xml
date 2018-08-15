@@ -597,6 +597,7 @@
     <string name="location_moscow">Moscow, Russia</string>
     <string name="location_saint_petersburg">Saint Petersburg, Russia</string>
     <string name="location_israel">Israel</string>
+    <string name="location_jakarta">Jakarta, Indonesia</string>
 
     <!--
     These strings are used for content descriptions (accessibility), for modes of transport.
@@ -740,6 +741,10 @@
     <string name="felica_process_merchandise_admission_cash">Merchandise/Admission (partially with cash)</string>
     <string name="felica_process_payment_thirdparty">Payment (3rd Party)</string>
     <string name="felica_process_admission_thirdparty">Admission Payment (3rd Party)</string>
+
+    <!-- Kereta Commuter Indonesia's - KMT -->
+    <string name="kmt_def_route">Jabodetabek Line</string>
+    <string name="kmt_extra_note">Only for new FeliCa cards.</string>
 
     <!-- HSL -->
     <string name="hsl_pass_is_valid">Valid season ticket</string>

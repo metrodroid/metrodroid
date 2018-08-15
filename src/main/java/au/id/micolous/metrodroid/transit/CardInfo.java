@@ -32,6 +32,7 @@ import java.util.Locale;
 import au.id.micolous.farebot.R;
 import au.id.micolous.metrodroid.card.CardType;
 import au.id.micolous.metrodroid.transit.chc_metrocard.ChcMetrocardTransitData;
+import au.id.micolous.metrodroid.transit.kmt.KMTTransitData;
 import au.id.micolous.metrodroid.transit.lax_tap.LaxTapTransitData;
 import au.id.micolous.metrodroid.transit.manly_fast_ferry.ManlyFastFerryTransitData;
 import au.id.micolous.metrodroid.transit.myki.MykiTransitData;
@@ -99,6 +100,14 @@ public class CardInfo {
             .setName(Utils.localizeString(R.string.card_name_icoca))
             .setLocation(R.string.location_kansai)
             .setCardType(CardType.FeliCa)
+            .build();
+
+    public static final CardInfo KMT = new CardInfo.Builder()
+            .setImageId(R.drawable.kmt_card)
+            .setName(KMTTransitData.NAME)
+            .setLocation(R.string.location_jakarta)
+            .setCardType(CardType.FeliCa)
+            .setExtraNote(R.string.kmt_extra_note)
             .build();
 
     public static final CardInfo MANLY_FAST_FERRY = new CardInfo.Builder()
@@ -255,6 +264,7 @@ public class CardInfo {
             SEQ_GO, // Go card
             HSL,
             ICOCA,
+            KMT,
             MANLY_FAST_FERRY,
             CHC_METROCARD, // Metrocard
             MYKI,
