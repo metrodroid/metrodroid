@@ -146,20 +146,6 @@ public class ClipperTransitData extends TransitData {
         }
     }
 
-    public static String getAgencyName(int agency) {
-        if (ClipperData.AGENCIES.containsKey(agency)) {
-            return ClipperData.AGENCIES.get(agency);
-        }
-        return Utils.localizeString(R.string.unknown_format, "0x" + Long.toString(agency, 16));
-    }
-
-    public static String getShortAgencyName(int agency) {
-        if (ClipperData.SHORT_AGENCIES.containsKey(agency)) {
-            return ClipperData.SHORT_AGENCIES.get(agency);
-        }
-        return Utils.localizeString(R.string.unknown_format, "0x" + Long.toString(agency, 16));
-    }
-
     @Override
     public String getCardName() {
         return "Clipper";
@@ -270,11 +256,11 @@ public class ClipperTransitData extends TransitData {
     }
 
     private ClipperRefill createRefill(byte[] useData) {
-        long timestamp, agency;
+        long timestamp;
         String machineid;
-        int amount;
+        int amount, agency;
 
-        agency = Utils.byteArrayToLong(useData, 0x2, 2);
+        agency = Utils.byteArrayToInt(useData, 0x2, 2);
         timestamp = Utils.byteArrayToLong(useData, 0x4, 4);
         machineid = Utils.getHexString(useData, 0x8, 4);
         amount = Utils.byteArrayToInt(useData, 0xe, 2);
@@ -297,6 +283,8 @@ public class ClipperTransitData extends TransitData {
     }
 
     private static Calendar clipperTimestampToCalendar(long timestamp) {
+        if (timestamp == 0)
+            return null;
         Calendar c = new GregorianCalendar(CLIPPER_TZ);
         //Log.d("clipperts", Long.toString(timestamp) + " " + Long.toHexString(timestamp));
         c.setTimeInMillis(CLIPPER_EPOCH.getTimeInMillis() + (timestamp * 1000));

@@ -109,8 +109,8 @@ public class OrcaTest extends AndroidTestCase {
         assertNull(trips[0].getEndStation());
         assertEquals("Coach #30246", trips[0].getStartStation().getStationName());
 
-        assertEquals("Unknown (15)", trips[1].getAgencyName());
-        assertEquals("Unknown (15)", trips[1].getShortAgencyName());
+        assertEquals("Unknown (0xf)", trips[1].getAgencyName());
+        assertEquals("Unknown (0xf)", trips[1].getShortAgencyName());
         assertEquals(1514843334L * 1000, trips[1].getStartTimestamp().getTimeInMillis());
         assertTrue(trips[1].getFare().equals(TransitCurrency.USD(289)));
         assertNull(trips[1].getRouteName());

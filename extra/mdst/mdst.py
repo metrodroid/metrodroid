@@ -63,6 +63,7 @@ class MdstWriter(object):
           sdb.operators[k].name.english_short = v.name.english_short
           sdb.operators[k].name.local = v.name.local
           sdb.operators[k].name.local_short = v.name.local_short
+          sdb.operators[k].default_transport = v.default_transport
           continue
         if v[0] != None:
           sdb.operators[k].name.english = v[0]

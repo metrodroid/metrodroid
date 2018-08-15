@@ -25,7 +25,7 @@ from __future__ import print_function
 from argparse import ArgumentParser, FileType
 from datetime import datetime, timedelta
 from gtfstools import Gtfs, GtfsDialect
-from stations_pb2 import Station
+from stations_pb2 import Station, Operator, TransportType
 from mdst import MdstWriter
 import codecs, csv, sqlite3
 
@@ -54,9 +54,11 @@ def massage_name(name, suffixes):
 def empty(s):
   return s is None or s.strip() == ''
 
-def compile_stops_from_gtfs(input_gtfs_f, output_f, matching_f=None, version=None, strip_suffixes='', agency_id=-1, tts_hint_language=None, extra_f=None):
+def compile_stops_from_gtfs(input_gtfs_f, output_f, matching_f=None, version=None, strip_suffixes='', agency_id=-1, tts_hint_language=None, operators_f=None, extra_f=None):
   if matching_f is not None:
     matching_f = codecs.getreader('utf-8-sig')(matching_f)
+  if operators_f is not None:
+    operators_f = codecs.getreader('utf-8-sig')(operators_f)
   if extra_f is not None:
     extra_f = codecs.getreader('utf-8-sig')(extra_f)
   # trim whitespace
@@ -84,9 +86,25 @@ def compile_stops_from_gtfs(input_gtfs_f, output_f, matching_f=None, version=Non
     version = (feed_start_date - VERSION_EPOCH).days
     print('Data version: %s (%s)' % (version, feed_start_date.date().isoformat()))
 
+  operators = {}
+
+  if operators_f is not None:
+      opread = csv.DictReader(operators_f)
+    
+      for op in opread:
+        oppb = Operator()
+        oppb.name.english = op['name']
+        if 'short_name' in op and op['short_name']:
+          oppb.name.english_short = op['short_name']
+        if 'mode' in op and op['mode']:
+          oppb.default_transport = TransportType.Value(op['mode'])
+        operators[int(op['id'], 0)] = oppb
+      operators_f.close()
+
   db = MdstWriter(
     fh=open(output_f, 'wb'),
     version=version,
+    operators=operators,
     tts_hint_language=tts_hint_language,
   )
 
@@ -114,6 +132,7 @@ def compile_stops_from_gtfs(input_gtfs_f, output_f, matching_f=None, version=Non
     
     stop_codes = {}
     stop_ids = {}
+    short_names = {}
     for match in matching:
       if match['stop_code']:
         if match['stop_code'] not in stop_codes:
@@ -125,8 +144,11 @@ def compile_stops_from_gtfs(input_gtfs_f, output_f, matching_f=None, version=Non
         stop_ids[match['stop_id']].append(match['reader_id'])
       else:
         raise Exception('neither stop_id or stop_code specified in row')
-        
+      if 'short_name' in match and match['short_name']:
+        short_names[match['reader_id']] = match['short_name']
 
+    total_gtfs_stations = 0
+    dropped_gtfs_stations = 0
 
     # Now run through the stops
     for stop in stops:
@@ -134,6 +156,8 @@ def compile_stops_from_gtfs(input_gtfs_f, output_f, matching_f=None, version=Non
       name = massage_name(stop['stop_name'], strip_suffixes)
       y = float(stop['stop_lat'].strip())
       x = float(stop['stop_lon'].strip())
+
+      used = False
 
       # Insert rows where a stop_id is specified for the reader_id
       stop_rows = []
@@ -144,11 +168,12 @@ def compile_stops_from_gtfs(input_gtfs_f, output_f, matching_f=None, version=Non
         if y and x:
           s.latitude = y
           s.longitude = x
-        if 'short_name' in stop and stop_ids['short_name']:
-          s.name.english_short = stop_ids['short_name']
+        if reader_id in short_names:
+          s.name.english_short = short_names[reader_id]
 
         db.push_station(s)
         station_count += 1
+        used = True
 
       # Insert rows where a stop_code is specified for the reader_id
       stop_rows = []
@@ -161,10 +186,14 @@ def compile_stops_from_gtfs(input_gtfs_f, output_f, matching_f=None, version=Non
           s.latitude = y
           s.longitude = x
 
-        if 'short_name' in stop and stop_ids['short_name']:
-          s.name.english_short = stop_ids['short_name']
+        if reader_id in short_names:
+          s.name.english_short = short_names[reader_id]
         db.push_station(s)
         station_count += 1
+        used = True
+      total_gtfs_stations += 1
+      if not used:
+        dropped_gtfs_stations += 1
 
     matching_f.close()
 
@@ -199,6 +228,8 @@ def compile_stops_from_gtfs(input_gtfs_f, output_f, matching_f=None, version=Non
   print(' - stations ......... %8d bytes (%.1f per record)' % (stations_len, stations_len / station_count))
   index_len = (index_end_off - db.index_off)
   print(' - index ............ %8d bytes (%.1f per record)' % (index_len, index_len / station_count))
+  print(' - Dropped %d out of %d GTFS stations' % (dropped_gtfs_stations,
+                                                   total_gtfs_stations))
 
 def main():
   parser = ArgumentParser()
@@ -223,6 +254,11 @@ def main():
                       type=FileType('rb'),
                       help='If supplied, this is a file with extra stops not derived from gtfs.')
 
+  parser.add_argument('-p', '--operators',
+    required=False,
+    type=FileType('rb'),
+    help='If supplied, this is an operators file of mapping between ids and operators. If a matching file is not supplied, this will produce an empty list of operators.')
+
   parser.add_argument('-V', '--override-version',
     required=False,
     type=int,
@@ -244,7 +280,7 @@ def main():
 
   options = parser.parse_args()
 
-  compile_stops_from_gtfs(options.input_gtfs[0], options.output, options.matching, options.override_version, options.strip_suffixes, options.agency_id, options.tts_hint_language, options.extra)
+  compile_stops_from_gtfs(options.input_gtfs[0], options.output, options.matching, options.override_version, options.strip_suffixes, options.agency_id, options.tts_hint_language, options.operators, options.extra)
 
 if __name__ == '__main__':
   main()
