@@ -75,8 +75,14 @@ public class TroikaHybridTransitData extends TransitData {
 
         List<ListItem> podItems = mPodorozhnik.getInfo();
 
+        items.add(new HeaderListItem(R.string.card_name_podorozhnik));
+        // This is Podorozhnik serial number. Combined card
+        // has both serial numbers and both are printed on it.
+        // We show Troika number as main serial as it's shorter
+        // and printed in larger letters.
+        items.add(new ListItem(R.string.card_number, mPodorozhnik.getSerialNumber()));
+
         if (podItems != null && !podItems.isEmpty()) {
-            items.add(new HeaderListItem(R.string.card_name_podorozhnik));
             items.addAll(podItems);
         }
 
