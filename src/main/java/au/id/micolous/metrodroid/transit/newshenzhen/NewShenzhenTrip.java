@@ -60,8 +60,8 @@ public class NewShenzhenTrip extends Trip {
     private final long mStation;
     private final static String SHENZHEN_STR = "shenzhen";
 
-    private static Station getStation(long l) {
-        return StationTableReader.getStation(SHENZHEN_STR, (int) l);
+    private static Station getStation(long l, String humanReadableId) {
+        return StationTableReader.getStation(SHENZHEN_STR, (int) l, humanReadableId);
     }
 
 
@@ -97,7 +97,8 @@ public class NewShenzhenTrip extends Trip {
         int transport = getTransport();
         switch (transport) {
             case SZT_METRO:
-                return getStation(mStation & ~0xff).addAttribute(
+                return StationTableReader.getStation(SHENZHEN_STR, (int) (mStation & ~0xff),
+                        Long.toHexString(mStation >> 8)).addAttribute(
                         Utils.localizeString(R.string.szt_station_gate,
                                 Integer.toHexString((int)(mStation & 0xff))));
             default:
