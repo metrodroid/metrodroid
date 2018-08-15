@@ -18,16 +18,13 @@ import au.id.micolous.metrodroid.util.Utils;
 public class UnauthorizedDesfireTransitData extends UnauthorizedTransitData {
     public static final Creator<UnauthorizedDesfireTransitData> CREATOR = new Creator<UnauthorizedDesfireTransitData>() {
         public UnauthorizedDesfireTransitData createFromParcel(Parcel parcel) {
-            return new UnauthorizedDesfireTransitData(parcel);
+            return new UnauthorizedDesfireTransitData();
         }
 
         public UnauthorizedDesfireTransitData[] newArray(int size) {
             return new UnauthorizedDesfireTransitData[size];
         }
     };
-
-    public UnauthorizedDesfireTransitData(Parcel parcel) {
-    }
 
     public UnauthorizedDesfireTransitData() {
     }

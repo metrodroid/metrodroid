@@ -34,16 +34,13 @@ import au.id.micolous.metrodroid.util.Utils;
 public class UnauthorizedClassicTransitData extends UnauthorizedTransitData {
     public static final Creator<UnauthorizedClassicTransitData> CREATOR = new Creator<UnauthorizedClassicTransitData>() {
         public UnauthorizedClassicTransitData createFromParcel(Parcel parcel) {
-            return new UnauthorizedClassicTransitData(parcel);
+            return new UnauthorizedClassicTransitData();
         }
 
         public UnauthorizedClassicTransitData[] newArray(int size) {
             return new UnauthorizedClassicTransitData[size];
         }
     };
-
-    public UnauthorizedClassicTransitData(Parcel parcel) {
-    }
 
     public UnauthorizedClassicTransitData() {
     }

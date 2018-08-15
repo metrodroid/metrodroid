@@ -38,23 +38,7 @@ public abstract class UnauthorizedTransitData extends TransitData {
     }
 
     @Override
-    public Trip[] getTrips() {
-        return null;
-    }
-
-    @Override
-    public Subscription[] getSubscriptions() {
-        return null;
-    }
-
-    @Override
     public void writeToParcel(Parcel parcel, int i) {
 
-    }
-
-    @Nullable
-    @Override
-    public TransitCurrency getBalance() {
-        return null;
     }
 }

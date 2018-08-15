@@ -222,7 +222,11 @@ public class UltralightCard extends Card {
         if (TroikaUltralightTransitData.check(this)) {
             return new TroikaUltralightTransitData(this);
         }
+
         if (BlankUltralightTransitData.check(this)) {
+            // This check must be second to last.
+            //
+            // This is to throw up a warning if we get a blank card.
             return new BlankUltralightTransitData();
         }
 
