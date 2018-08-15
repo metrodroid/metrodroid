@@ -33,6 +33,7 @@ import au.id.micolous.metrodroid.card.TagReaderFeedbackInterface;
 import au.id.micolous.metrodroid.card.iso7816.ISO7816Application;
 import au.id.micolous.metrodroid.card.iso7816.ISO7816Protocol;
 import au.id.micolous.metrodroid.card.iso7816.ISO7816Selector;
+import au.id.micolous.metrodroid.transit.CardInfo;
 import au.id.micolous.metrodroid.transit.TransitData;
 import au.id.micolous.metrodroid.transit.TransitIdentity;
 import au.id.micolous.metrodroid.transit.newshenzhen.NewShenzhenTransitData;
@@ -96,7 +97,11 @@ public class NewShenzhenCard extends ISO7816Application {
         List <Balance> bals = new ArrayList<>();
 
         try {
-            feedbackInterface.updateStatusText(Utils.localizeString(R.string.mfd_reading));
+            feedbackInterface.updateStatusText(Utils.localizeString(R.string.card_reading_type,
+                    CardInfo.SZT.getName()));
+            feedbackInterface.updateProgressBar(0, 6);
+            feedbackInterface.showCardType(CardInfo.SZT);
+
             feedbackInterface.updateProgressBar(0, 5);
             for (int i = 0; i < 4; i++) {
                 try {
