@@ -134,5 +134,11 @@
             android:summary="@string/pref_show_local_and_english_desc"
             android:key="pref_show_local_and_english"
             android:defaultValue="false" />
+
+        <CheckBoxPreference
+            android:title="@string/pref_show_raw_station_ids"
+            android:summary="@string/pref_show_raw_station_ids_desc"
+            android:key="pref_show_raw_ids"
+            android:defaultValue="false" />
     </PreferenceCategory>
 </PreferenceScreen>

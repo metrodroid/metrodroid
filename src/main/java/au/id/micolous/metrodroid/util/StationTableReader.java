@@ -76,33 +76,34 @@ public class StationTableReader {
     }
 
     @Nullable
-    public static Station getStationNoFallback(@NonNull String reader, int id) {
-        if (reader == null)
-            return null;
+    public static Station getStationNoFallback(@NonNull String reader, int id,
+                                               String humanReadableId) {
         StationTableReader str = StationTableReader.getSTR(reader);
         if (str == null)
             return null;
         try {
-            return str.getStationById(id);
+            return str.getStationById(id, humanReadableId);
         } catch (IOException e) {
             return null;
         }
     }
 
-    @NonNull
-    public static Station getStation(@NonNull String reader, int id) {
-        Station s = getStationNoFallback(reader, id);
-        if (s != null)
-            return s;
-        return Station.unknown(id);
+    @Nullable
+    public static Station getStationNoFallback(@NonNull String reader, int id) {
+        return getStationNoFallback(reader, id, "0x" + Integer.toHexString(id));
     }
 
     @NonNull
-    public static Station getStation(@NonNull String reader, int id, String fallback) {
-        Station s = getStationNoFallback(reader, id);
-        if (s != null)
-            return s;
-        return Station.unknown(fallback);
+    public static Station getStation(@NonNull String reader, int id, String humanReadableId) {
+        Station s = getStationNoFallback(reader, id, humanReadableId);
+        if (s == null)
+            return Station.unknown(humanReadableId);
+        return s;
+    }
+
+    @NonNull
+    public static Station getStation(@NonNull String reader, int id) {
+        return getStation(reader, id, "0x" + Integer.toHexString(id));
     }
 
     private static String fallbackName(int id) {
@@ -171,7 +172,7 @@ public class StationTableReader {
         return !mStationDb.getLocalLanguagesList().contains(locale);
     }
 
-    private String selectBestName(Stations.Names name, boolean isShort) {
+    public String selectBestName(Stations.Names name, boolean isShort) {
         String englishFull = name.getEnglish();
         String englishShort = name.getEnglishShort();
         String english = null;
@@ -283,23 +284,14 @@ public class StationTableReader {
      * @return Station object, or null if it could not be found.
      * @throws IOException on read errors
      */
-    private Station getStationById(int id) throws IOException {
+    private Station getStationById(int id, String humanReadableID) throws IOException {
         Stations.Station ps = getProtoStationById(id);
         if (ps == null) return null;
 
-        Stations.Operator po = mStationDb.getOperatorsOrDefault(ps.getOperatorId(), null);
-        Stations.Line pl = mStationDb.getLinesOrDefault(ps.getLineId(), null);
-        boolean hasLocation = ps.getLatitude() != 0 && ps.getLongitude() != 0;
-
-        return new Station(
-                po == null ? null : selectBestName(po.getName(), true),
-                pl == null ? null : selectBestName(pl.getName(), true),
-                selectBestName(ps.getName(), false),
-                selectBestName(ps.getName(), true),
-                hasLocation ? Float.toString(ps.getLatitude()) : null,
-                hasLocation ? Float.toString(ps.getLongitude()) : null,
-                mStationDb.getTtsHintLanguage()
-        );
+        return Station.fromProto(humanReadableID, ps,
+                mStationDb.getOperatorsOrDefault(ps.getOperatorId(), null),
+                mStationDb.getLinesOrDefault(ps.getLineId(), null),
+                mStationDb.getTtsHintLanguage(), this);
     }
 
 }

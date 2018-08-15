@@ -839,7 +839,7 @@
     <string name="card_name_octopus_szt_dual">Hu Tong Xing</string>
     <string name="szt_metro">Shenzhen Metro</string>
     <string name="szt_bus">Shenzhen Bus</string>
-    <string name="szt_station_gate">%s, gate %s</string>
+    <string name="szt_station_gate">gate %s</string>
 
     <!--
         Bilhete Único
@@ -934,4 +934,6 @@
     <string name="mfc_not_supported">MIFARE Classic: not supported</string>
     <string name="balances_and_subscriptions">Tickets</string>
     <string name="card_number">Card number</string>
+    <string name="pref_show_raw_station_ids">Show raw station IDs</string>
+    <string name="pref_show_raw_station_ids_desc">If true, a raw station ID is shown in addition to station name</string>
 </resources>

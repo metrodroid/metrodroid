@@ -97,23 +97,12 @@ public class NewShenzhenTrip extends Trip {
         int transport = getTransport();
         switch (transport) {
             case SZT_METRO:
-                return addGateNumber(getStation(mStation & ~0xff),
-                        Integer.toHexString((int)(mStation & 0xff)));
+                return getStation(mStation & ~0xff).addAttribute(
+                        Utils.localizeString(R.string.szt_station_gate,
+                                Integer.toHexString((int)(mStation & 0xff))));
             default:
                 return null;
         }
-    }
-
-    private static Station addGateNumber(Station station, String gate) {
-        return new Station(
-                station.getCompanyName(),
-                station.getLineName(),
-                Utils.localizeString(R.string.szt_station_gate,
-                        station.getStationName(), gate),
-                station.getShortStationName(),
-                station.getLatitude(),
-                station.getLongitude(),
-                station.getLanguage());
     }
 
     @Nullable

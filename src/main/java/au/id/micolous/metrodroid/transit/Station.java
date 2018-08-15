@@ -22,7 +22,14 @@ package au.id.micolous.metrodroid.transit;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Locale;
+
 import au.id.micolous.farebot.R;
+import au.id.micolous.metrodroid.MetrodroidApplication;
+import au.id.micolous.metrodroid.proto.Stations;
+import au.id.micolous.metrodroid.util.StationTableReader;
 import au.id.micolous.metrodroid.util.Utils;
 
 public class Station implements Parcelable {
@@ -35,22 +42,20 @@ public class Station implements Parcelable {
             return new Station[size];
         }
     };
-    protected final String mCompanyName, mLineName, mStationName, mShortStationName, mLatitude, mLongitude, mLanguage;
-    protected boolean mIsUnknown = false;
+    private final String mCompanyName, mLineName, mStationName, mShortStationName, mLatitude, mLongitude, mLanguage;
+    private final boolean mIsUnknown;
+    private final String mHumanReadableId;
+    private List<String> mAttributes;
 
-    public Station(String stationName, String latitude, String longitude) {
-        this(stationName, null, latitude, longitude);
+    private Station(String humanReadableId, String stationName, boolean isUnknown) {
+        this(humanReadableId, null, null, stationName,
+                null, null, null, null, isUnknown);
     }
 
-    public Station(String stationName, String shortStationName, String latitude, String longitude) {
-        this(null, null, stationName, shortStationName, latitude, longitude);
-    }
-
-    public Station(String companyName, String lineName, String stationName, String shortStationName, String latitude, String longitude) {
-        this(companyName, lineName, stationName, shortStationName, latitude, longitude, null);
-    }
-
-    public Station(String companyName, String lineName, String stationName, String shortStationName, String latitude, String longitude, String language) {
+    private Station(String humanReadableId, String companyName, String lineName,
+                    String stationName, String shortStationName, String latitude,
+                    String longitude, String language, boolean isUnknown) {
+        mHumanReadableId = humanReadableId;
         mCompanyName = companyName;
         mLineName = lineName;
         mStationName = stationName;
@@ -58,9 +63,11 @@ public class Station implements Parcelable {
         mLatitude = latitude;
         mLongitude = longitude;
         mLanguage = language;
+        mAttributes = new ArrayList<>();
+        mIsUnknown = isUnknown;
     }
 
-    protected Station(Parcel parcel) {
+    private Station(Parcel parcel) {
         mCompanyName = parcel.readString();
         mLineName = parcel.readString();
         mStationName = parcel.readString();
@@ -69,14 +76,40 @@ public class Station implements Parcelable {
         mLongitude = parcel.readString();
         mLanguage = parcel.readString();
         mIsUnknown = parcel.readInt() == 1;
+        mHumanReadableId = parcel.readString();
+        parcel.readList(mAttributes, Station.class.getClassLoader());
     }
 
     public String getStationName() {
-        return mStationName;
+        String ret;
+        if (mStationName == null)
+            ret = Utils.localizeString(R.string.unknown_format, mHumanReadableId);
+        else
+            ret = mStationName;
+        if (showRawId() && mStationName != null && !mStationName.equals(mHumanReadableId))
+            ret = String.format(Locale.ENGLISH, "%s [%s]", ret, mHumanReadableId);
+        if (!mAttributes.isEmpty())
+            for (String attribute : mAttributes)
+                ret = String.format(Locale.ENGLISH, "%s, %s", ret, attribute);
+        return ret;
+    }
+
+    private boolean showRawId() {
+        return MetrodroidApplication.showRawStationIds();
     }
 
     public String getShortStationName() {
-        return (mShortStationName != null) ? mShortStationName : mStationName;
+        String ret;
+        if (mStationName == null && mShortStationName == null)
+            ret = Utils.localizeString(R.string.unknown_format, mHumanReadableId);
+        else
+            ret = (mShortStationName != null) ? mShortStationName : mStationName;
+        if (showRawId() && mStationName != null && !mStationName.equals(mHumanReadableId))
+            ret = String.format(Locale.ENGLISH, "%s [%s]", ret, mHumanReadableId);
+        if (!mAttributes.isEmpty())
+            for (String attribute : mAttributes)
+                ret = String.format(Locale.ENGLISH, "%s, %s", ret, attribute);
+        return ret;
     }
 
     public String getCompanyName() {
@@ -123,29 +156,44 @@ public class Station implements Parcelable {
         parcel.writeString(mLongitude);
         parcel.writeString(mLanguage);
         parcel.writeInt(mIsUnknown ? 1 : 0);
+        parcel.writeString(mHumanReadableId);
+        parcel.writeList(mAttributes);
     }
 
     public boolean isUnknown() {
         return mIsUnknown;
     }
 
-    private Station setUnknown() {
-        mIsUnknown = true;
-        return this;
-    }
-
     public static Station unknown(String id) {
-        return new Station(Utils.localizeString(R.string.unknown_format, id), null, null)
-                .setUnknown();
+        return new Station(id, null, true);
     }
 
     public static Station unknown(Integer id) {
-        return new Station(Utils.localizeString(R.string.unknown_format,
-                "0x" + Integer.toHexString(id)), null, null)
-                .setUnknown();
+        return unknown("0x" + Integer.toHexString(id));
     }
 
     public static Station nameOnly(String name) {
-        return new Station(name, null, null);
+        return new Station(name, name, false);
+    }
+
+    public Station addAttribute(String s) {
+        mAttributes.add(s);
+        return this;
+    }
+
+    public static Station fromProto(String humanReadableID, Stations.Station ps,
+                                    Stations.Operator po, Stations.Line pl, String ttsHintLanguage,
+                                    StationTableReader str) {
+        boolean hasLocation = ps.getLatitude() != 0 && ps.getLongitude() != 0;
+
+        return new Station(
+                humanReadableID,
+                po == null ? null : str.selectBestName(po.getName(), true),
+                pl == null ? null : str.selectBestName(pl.getName(), true),
+                str.selectBestName(ps.getName(), false),
+                str.selectBestName(ps.getName(), true),
+                hasLocation ? Float.toString(ps.getLatitude()) : null,
+                hasLocation ? Float.toString(ps.getLongitude()) : null,
+                ttsHintLanguage, false);
     }
 }
