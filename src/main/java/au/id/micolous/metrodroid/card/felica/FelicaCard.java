@@ -39,6 +39,7 @@ import au.id.micolous.metrodroid.transit.CardInfo;
 import au.id.micolous.metrodroid.transit.TransitData;
 import au.id.micolous.metrodroid.transit.TransitIdentity;
 import au.id.micolous.metrodroid.transit.edy.EdyTransitData;
+import au.id.micolous.metrodroid.transit.kmt.KMTTransitData;
 import au.id.micolous.metrodroid.transit.octopus.OctopusTransitData;
 import au.id.micolous.metrodroid.transit.suica.SuicaTransitData;
 import au.id.micolous.metrodroid.ui.HeaderListItem;
@@ -375,6 +376,8 @@ public class FelicaCard extends Card {
             return CardInfo.SUICA;
         if (EdyTransitData.earlyCheck(systemCodes))
             return CardInfo.EDY;
+        if (KMTTransitData.earlyCheck(systemCodes))
+            return CardInfo.KMT;
 
         // Do Octopus last -- it returns null if it's not a supported Octopus derivative.
         return OctopusTransitData.earlyCheck(systemCodes);
@@ -388,6 +391,8 @@ public class FelicaCard extends Card {
             return EdyTransitData.parseTransitIdentity(this);
         else if (OctopusTransitData.check(this))
             return OctopusTransitData.parseTransitIdentity(this);
+        else if (KMTTransitData.check(this))
+            return KMTTransitData.parseTransitIdentity(this);
         return null;
     }
 
@@ -399,6 +404,8 @@ public class FelicaCard extends Card {
             return new EdyTransitData(this);
         else if (OctopusTransitData.check(this))
             return new OctopusTransitData(this);
+        else if (KMTTransitData.check(this))
+            return new KMTTransitData(this);
         return null;
     }
 

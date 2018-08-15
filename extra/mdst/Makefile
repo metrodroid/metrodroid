@@ -30,4 +30,3 @@ ezlink.mdst: csv2pb-ezlink.py stations_pb2.py mdst.py ../../data/ezlink/*.csv
 
 %.csv: %.mdst dump2csv.py stations_pb2.py
 	python3 dump2csv.py -o $@ $<
-
