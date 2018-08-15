@@ -25,8 +25,8 @@ from __future__ import print_function
 from argparse import ArgumentParser, FileType
 from datetime import datetime, timedelta
 from gtfstools import Gtfs, GtfsDialect
-from stations_pb2 import Station, Operator
-import mdst
+from stations_pb2 import Station
+from mdst import MdstWriter
 import codecs, csv, sqlite3
 
 DB_SCHEMA = """
@@ -47,7 +47,7 @@ def massage_name(name, suffixes):
   for suffix in suffixes:
     if name.lower().endswith(suffix):
       name = name[:-len(suffix)].strip()
-  
+
   return name
 
 
@@ -62,7 +62,7 @@ def compile_stops_from_gtfs(input_gtfs_f, output_f, matching_f=None, version=Non
   # trim whitespace
   strip_suffixes = [x.strip().lower() for x in strip_suffixes.split(',')]
 
-  
+
   gtfs = Gtfs(input_gtfs_f)
 
   if version is None:
@@ -84,7 +84,7 @@ def compile_stops_from_gtfs(input_gtfs_f, output_f, matching_f=None, version=Non
     version = (feed_start_date - VERSION_EPOCH).days
     print('Data version: %s (%s)' % (version, feed_start_date.date().isoformat()))
 
-  db = mdst.MdstWriter(
+  db = MdstWriter(
     fh=open(output_f, 'wb'),
     version=version,
     tts_hint_language=tts_hint_language,
@@ -97,7 +97,7 @@ def compile_stops_from_gtfs(input_gtfs_f, output_f, matching_f=None, version=Non
     # No matching data, dump all stops.
     stop_map = map(lambda stop: [stop['stop_id'], massage_name(stop['stop_name'], strip_suffixes), stop['stop_lat'].strip(), stop['stop_lon'].strip()],
       stops)
-    
+
     for stop_id, stop_name, lat, lon in stop_map:
       s = Station()
       s.id = int(stop_id)
@@ -105,13 +105,13 @@ def compile_stops_from_gtfs(input_gtfs_f, output_f, matching_f=None, version=Non
       if lat and lon:
         s.latitude = float(lat)
         s.longitude = float(lon)
-      
+
       db.push_station(s)
       station_count += 1
   else:
     # Matching data is available.  Lets use that.
     matching = csv.DictReader(matching_f)
-    
+
     stop_codes = {}
     stop_ids = {}
     for match in matching:
@@ -125,7 +125,7 @@ def compile_stops_from_gtfs(input_gtfs_f, output_f, matching_f=None, version=Non
         stop_ids[match['stop_id']].append(match['reader_id'])
       else:
         raise Exception('neither stop_id or stop_code specified in row')
-        
+
 
 
     # Now run through the stops
@@ -156,7 +156,7 @@ def compile_stops_from_gtfs(input_gtfs_f, output_f, matching_f=None, version=Non
         s = Station()
         s.id = int(reader_id, 0)
         s.name.english = name
-        
+
         if y and x:
           s.latitude = y
           s.longitude = x
@@ -169,7 +169,22 @@ def compile_stops_from_gtfs(input_gtfs_f, output_f, matching_f=None, version=Non
     matching_f.close()
 
   if extra_f is not None:
-    mdst.read_stops_from_csv(db, extra_f)
+    exread = csv.DictReader(extra_f)
+
+    for stop in exread:
+      s = Station()
+      s.id = int(stop['reader_id'], 0)
+      s.name.english = stop['stop_name']
+      if 'short_name' in stop and stop['short_name']:
+        s.name.english_short = stop['short_name']
+      y = float(stop['stop_lat'].strip())
+      x = float(stop['stop_lon'].strip())
+      if y and x:
+        s.latitude = y
+        s.longitude = x
+
+      db.push_station(s)
+      station_count += 1
     extra_f.close()
 
   index_end_off = db.finalise()

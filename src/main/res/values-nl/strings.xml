@@ -129,14 +129,14 @@
     <string name="default_map_tile_subdomains">123456</string>
 
     <plurals name="cards_imported">
-	<item quantity="one"><xliff:g id="count" example="1">%d</xliff:g> kaart geïmporteerd!</item>
-	<item quantity="other"><xliff:g id="count" example="3">%d</xliff:g> kaarten geïmporteerd!</item>
-</plurals>
+        <item quantity="one"><xliff:g id="count" example="1">%d</xliff:g> kaart geïmporteerd!</item>
+        <item quantity="other"><xliff:g id="count" example="3">%d</xliff:g> kaarten geïmporteerd!</item>
+    </plurals>
 
     <plurals name="block_count">
-	<item quantity="one">%d blok</item>
-	<item quantity="other">%d blokken</item>
-</plurals>
+        <item quantity="one">%d blok</item>
+        <item quantity="other">%d blokken</item>
+    </plurals>
 
     <string name="location_seattle">Seattle, WA, VS</string>
     <string name="location_san_francisco">San Francisco, CA, VS</string>
@@ -267,7 +267,7 @@
 
     <string name="card_note_bilhete_unico">Moet worden geselecteerd in de voorkeuren als terugvallezer.</string>
 
-<string name="location_wa_australia">West-Australië, Australië</string>
+    <string name="location_wa_australia">West-Australië, Australië</string>
 
     <string name="obfuscation_title">Privacy-opties</string>
     <string name="obfuscation_card_numbers">Kaartnummers verbergen</string>
@@ -286,18 +286,18 @@
     <string name="obfuscation_fares_desc">Tarieven wijzigen in een willekeurig bedrag</string>
 
     <plurals name="obfuscation_mode_notice">
-	<item quantity="one"><xliff:g id="count" example="1">%d</xliff:g> privacyvlag ingeschakeld</item>
-	<item quantity="other"><xliff:g id="count" example="3">%d</xliff:g> privacyvlaggen ingeschakeld</item>
-</plurals>
+        <item quantity="one"><xliff:g id="count" example="1">%d</xliff:g> privacyvlag ingeschakeld</item>
+        <item quantity="other"><xliff:g id="count" example="3">%d</xliff:g> privacyvlaggen ingeschakeld</item>
+    </plurals>
 
     <string name="map_tiles_help">Leaflet TileLayer-documentatie bekijken</string>
     <string name="map_tiles_help_summary">Als je hulp nodig hebt bij het gebruiken van kaarttegel-URL\'s, bekijk dan Leaflet\'s online documentatie (alleen beschikbaar in het Engels).</string>
     <string name="hidden_card_number">Verborgen kaartnummer</string>
 
     <plurals name="hidden_key_data">
-	<item quantity="one">Verborgen sleutelgegevens (<xliff:g id="count" example="3"> %d</xliff:g> byte)</item>
-	<item quantity="other">Verborgen sleutelgegevens (<xliff:g id="count" example="3"> %d</xliff:g> bytes)</item>
-</plurals>
+        <item quantity="one">Verborgen sleutelgegevens (<xliff:g id="count" example="3"> %d</xliff:g> byte)</item>
+        <item quantity="other">Verborgen sleutelgegevens (<xliff:g id="count" example="3"> %d</xliff:g> bytes)</item>
+    </plurals>
 
     <string name="opal_action_tap_on_rejected">Omgekeerd afgewezen</string>
 
@@ -318,14 +318,14 @@
     <string name="desfire_cyclic_record">Cycli-verslag</string>
     <string name="desfire_unknown_file">Onbekende bestandssoort</string>
     <plurals name="desfire_standard_format">
-	<item quantity="one">Soort: %1$s, Lengte: %2$s byte</item>
-	<item quantity="other">Soort: %1$s, Lengte: %2$s bytes</item>
-</plurals>
+        <item quantity="one">Soort: %1$s, Lengte: %2$s byte</item>
+        <item quantity="other">Soort: %1$s, Lengte: %2$s bytes</item>
+    </plurals>
 
     <plurals name="desfire_record_format">
-	<item quantity="one">Soort: %1$s, Vermelding: %2$s (maximaal %3$s), Vermeldingsgrootte: %4$s byte</item>
-	<item quantity="other">Soort: %1$s, Vermeldingen: %2$s (maximaal %3$s), Vermeldingsgrootte: %4$s bytes</item>
-</plurals>
+        <item quantity="one">Soort: %1$s, Vermelding: %2$s (maximaal %3$s), Vermeldingsgrootte: %4$s byte</item>
+        <item quantity="other">Soort: %1$s, Vermeldingen: %2$s (maximaal %3$s), Vermeldingsgrootte: %4$s bytes</item>
+    </plurals>
 
     <string name="desfire_value_format">Soort: %1$s, Bereik: %2$s - %3$s, Laag saldo: %4$s (%5$s)</string>
     <string name="enabled">Ingeschakeld</string>
@@ -353,7 +353,7 @@
 
     <string name="erg_agency_id">Vervoerder-ID</string>
 
-<string name="hardware_information">Hardware-informatie</string>
+    <string name="hardware_information">Hardware-informatie</string>
     <string name="cepas_version">CEPAS-versie</string>
     <string name="cepas_purse_id">Portemonnee-ID</string>
     <string name="cepas_purse_status">Portemonnee-status</string>
@@ -394,10 +394,10 @@
     <string name="date_of_birth">Geboortedatum</string>
     <string name="credit_information">Kredietinformatie</string>
     <string name="software_information">Software-informatie</string>
-<string name="clipboard_error">Geen toegang tot het klembord</string>
+    <string name="clipboard_error">Geen toegang tot het klembord</string>
     <string name="localise_places">Stations- en routenamen uitspreken in landstaal</string>
     <string name="localise_places_desc">Laat tekst-naar-spraak-software en toegankelijkheid weten dat stations- en routenamen moeten worden uitgesproken in de landstaal i.p.v. je eigen taal. Dit verbetert de uitspraak van buitenlandse plaatsnamen, maar het kan voor jou moeilijker te verstaan zijn.</string>
-<string name="localise_places_longdesc_button">Over uitspraak…</string>
+    <string name="localise_places_longdesc_button">Over uitspraak…</string>
 
     <string name="localise_places_longdesc_title">Over uitspraak</string>
 
@@ -405,9 +405,9 @@
     <string name="felica_service_title_format">Dienst: 0x%1$s (%2$s)</string>
     <string name="felica_service_format">Dienst: 0x%s</string>
     <plurals name="felica_service_count">
-	<item quantity="one">%d dienst</item>
-	<item quantity="other">%d diensten</item>
-</plurals>
+        <item quantity="one">%d dienst</item>
+        <item quantity="other">%d diensten</item>
+    </plurals>
 
     <string name="felica_idm">Productie-ID (IDm)</string>
     <string name="felica_pmm">Productieparameter (PMm)</string>
@@ -431,9 +431,9 @@
     <string name="calypso_reading">Bezig met uitlezen van Calypso-kaart…</string>
 
     <plurals name="record_count">
-	<item quantity="one">%d vermelding</item>
-	<item quantity="other">%d vermeldingen</item>
-</plurals>
+        <item quantity="one">%d vermelding</item>
+        <item quantity="other">%d vermeldingen</item>
+    </plurals>
 
     <string name="calypso_serial_number">Serienummer</string>
     <string name="calypso_manufacture_country">Geproduceerd in</string>
@@ -472,7 +472,7 @@
     <string name="card_note_russia">Door de bank uitgegeven kaarten worden niet ondersteund.</string>
     <string name="card_name_troika">Trojka</string>
     <string name="card_name_podorozhnik">Podorozhnik</string>
-<string name="card_partial_read_title">Kaart gedeeltelijk uitgelezen!</string>
+    <string name="card_partial_read_title">Kaart gedeeltelijk uitgelezen!</string>
     <string name="card_partial_read_desc">De kaart is buiten het bereik gekomen tijdens het uitlezen.
 \n
 \nSommige gegevens zijn gelezen, maar het is waarschijnlijk onvoldoende.
@@ -481,9 +481,9 @@
     <string name="show_partial_data">Gedeeltelijke gegevens tonen</string>
 
     <plurals name="milliseconds_short">
-	<item quantity="one"><xliff:g id="milliseconds" example="1.0">1%s</xliff:g>2 ms</item>
-	<item quantity="other"><xliff:g id="milliseconds" example="20.6">3%s</xliff:g>4 ms</item>
-</plurals>
+        <item quantity="one"><xliff:g id="milliseconds" example="1.0">1%s</xliff:g>2 ms</item>
+        <item quantity="other"><xliff:g id="milliseconds" example="20.6">3%s</xliff:g>4 ms</item>
+    </plurals>
 
     <string name="felica_manufacturer_code">Producentcode</string>
     <string name="felica_card_identification_number">Kaartidentificatienummer</string>
@@ -514,7 +514,7 @@
     <string name="blank_mfu_card">Blanco MIFARE Ultralight-kaart</string>
     <string name="fully_blank_desc">Deze kaart is, voor zover wij kunnen bepalen, volledig blanco. Hij is geformatteerd, maar er zijn geen gegevens op weggeschreven. Het heeft een serienummer waarmee hij geïdentificeerd kan worden en gekoppeld aan een database, maar de kaart zelf bevat geen verdere gegevens.</string>
     <string name="fully_blank_title">Blanco kaart</string>
-<string name="pref_theme">Thema</string>
+    <string name="pref_theme">Thema</string>
     <string name="pref_theme_desc">Stel het uiterlijk in</string>
 
     <string name="clipper_end_of_line">(einde van de regel)</string>
@@ -554,7 +554,7 @@
     <string name="nfc_not_available">NFC: niet beschikbaar</string>
     <string name="mfc_supported">MIFARE Classic: ondersteund</string>
     <string name="mfc_not_supported">MIFARE Classic: niet ondersteund</string>
-<string name="trip_description_unknown_start">naar %s</string>
+    <string name="trip_description_unknown_start">naar %s</string>
     <string name="time_from_to">%s → %s</string>
     <string name="time_from_unknown_to">?:?? → %s</string>
 
@@ -563,25 +563,25 @@
     <string name="pref_show_local_and_english_desc">Als dit wordt ingeschakeld, dan worden zowel de lokale als de Engelse naam getoond, ongeacht de ingestelde taal. Als dit wordt uitgeschakeld, dan wordt de bijpassende variant getoond.</string>
 
     <plurals name="minutes">
-	<item quantity="one">%d minuut</item>
-	<item quantity="other">%d minuten</item>
-</plurals>
+        <item quantity="one">%d minuut</item>
+        <item quantity="other">%d minuten</item>
+    </plurals>
     <plurals name="hours">
-	<item quantity="one">%d uur</item>
-	<item quantity="other">%d uur</item>
-</plurals>
+        <item quantity="one">%d uur</item>
+        <item quantity="other">%d uur</item>
+    </plurals>
     <plurals name="days">
-	<item quantity="one">%d dag</item>
-	<item quantity="other">%d dagen</item>
-</plurals>
+        <item quantity="one">%d dag</item>
+        <item quantity="other">%d dagen</item>
+    </plurals>
     <plurals name="trips_remaining">
-	<item quantity="one">%d resterende reis</item>
-	<item quantity="other">%d resterende reizen</item>
-</plurals>
+        <item quantity="one">%d resterende reis</item>
+        <item quantity="other">%d resterende reizen</item>
+    </plurals>
     <plurals name="troika_rides">
-	<item quantity="one">Eén rit</item>
-	<item quantity="other">%d ritten</item>
-</plurals>
+        <item quantity="one">Eén rit</item>
+        <item quantity="other">%d ritten</item>
+    </plurals>
 
     <string name="card_name_ravkav">Rav-Kav</string>
     <string name="ravkav_agency_egged">Egged</string>
@@ -605,4 +605,5 @@
     <string name="moscow_ground_transport">Moskou bovengronds vervoer</string>
     <string name="moscow_mcc">Moscow Central Circle (MCC)</string>
     <string name="troika_unknown_ticket">Onbekend troika-kaarttype %s</string>
-    </resources>
+    <string name="balances_and_subscriptions">Kaartjes</string>
+</resources>

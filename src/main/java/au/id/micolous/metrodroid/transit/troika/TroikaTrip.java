@@ -8,14 +8,11 @@ import android.text.Spanned;
 import java.util.Calendar;
 
 import au.id.micolous.farebot.R;
-import au.id.micolous.metrodroid.transit.Station;
 import au.id.micolous.metrodroid.transit.TransitCurrency;
 import au.id.micolous.metrodroid.transit.Trip;
-import au.id.micolous.metrodroid.util.StationTableReader;
 import au.id.micolous.metrodroid.util.Utils;
 
 class TroikaTrip extends Trip {
-    private static final String TROIKA_STR = "troika";
     private final Calendar mStartTime;
     private final TroikaBlock.TroikaTransportType mTransportType;
     private final Integer mValidator;
@@ -29,13 +26,6 @@ class TroikaTrip extends Trip {
         mValidator = validator;
         mRawTransport = rawTransport;
         mFareDesc = fareDesc;
-    }
-
-    @Override
-    public Station getStartStation() {
-        if (mValidator == null)
-            return null;
-        return StationTableReader.getStation(TROIKA_STR, mValidator);
     }
 
     private TroikaTrip(Parcel in) {
