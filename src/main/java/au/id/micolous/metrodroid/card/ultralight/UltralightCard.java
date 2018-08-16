@@ -33,6 +33,7 @@ import au.id.micolous.metrodroid.card.UnsupportedTagException;
 import au.id.micolous.metrodroid.fragment.UltralightCardRawDataFragment;
 import au.id.micolous.metrodroid.transit.TransitData;
 import au.id.micolous.metrodroid.transit.TransitIdentity;
+import au.id.micolous.metrodroid.transit.compass.CompassUltralightTransitData;
 import au.id.micolous.metrodroid.transit.troika.TroikaUltralightTransitData;
 import au.id.micolous.metrodroid.transit.unknown.BlankUltralightTransitData;
 import au.id.micolous.metrodroid.transit.unknown.UnauthorizedUltralightTransitData;
@@ -201,6 +202,9 @@ public class UltralightCard extends Card {
         if (TroikaUltralightTransitData.check(this)) {
             return TroikaUltralightTransitData.parseTransitIdentity(this);
         }
+        if (CompassUltralightTransitData.check(this)) {
+            return CompassUltralightTransitData.parseTransitIdentity(this);
+        }
 
         if (BlankUltralightTransitData.check(this)) {
             return BlankUltralightTransitData.parseTransitIdentity(this);
@@ -221,6 +225,9 @@ public class UltralightCard extends Card {
     public TransitData parseTransitData() {
         if (TroikaUltralightTransitData.check(this)) {
             return new TroikaUltralightTransitData(this);
+        }
+        if (CompassUltralightTransitData.check(this)) {
+            return new CompassUltralightTransitData(this);
         }
 
         if (BlankUltralightTransitData.check(this)) {

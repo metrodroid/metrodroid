@@ -215,6 +215,14 @@ public class Utils {
         return (int) byteArrayToLong(b, offset, length);
     }
 
+    public static int byteArrayToIntReversed(byte[] b, int offset, int length) {
+        return (int) byteArrayToLong(reverseBuffer(b, offset, length));
+    }
+
+    public static long byteArrayToLongReversed(byte[] b, int offset, int length) {
+        return byteArrayToLong(reverseBuffer(b, offset, length));
+    }
+
     public static long byteArrayToLong(byte[] b) {
         return byteArrayToLong(b, 0, b.length);
     }

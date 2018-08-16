@@ -32,6 +32,7 @@ import java.util.Locale;
 import au.id.micolous.farebot.R;
 import au.id.micolous.metrodroid.card.CardType;
 import au.id.micolous.metrodroid.transit.chc_metrocard.ChcMetrocardTransitData;
+import au.id.micolous.metrodroid.transit.compass.CompassUltralightTransitData;
 import au.id.micolous.metrodroid.transit.lax_tap.LaxTapTransitData;
 import au.id.micolous.metrodroid.transit.manly_fast_ferry.ManlyFastFerryTransitData;
 import au.id.micolous.metrodroid.transit.myki.MykiTransitData;
@@ -62,6 +63,13 @@ public class CardInfo {
             .setName("Clipper")
             .setLocation(R.string.location_san_francisco)
             .setCardType(CardType.MifareDesfire)
+            .build();
+
+    public static final CardInfo COMPASS = new CardInfo.Builder()
+            .setName(CompassUltralightTransitData.NAME)
+            .setLocation(R.string.location_vancouver)
+            .setCardType(CardType.MifareUltralight)
+            .setExtraNote(R.string.compass_note)
             .build();
 
     public static final CardInfo EDY = new CardInfo.Builder()
@@ -250,6 +258,7 @@ public class CardInfo {
     public static final CardInfo[] ALL_CARDS_ALPHABETICAL = {
             BILHETE_UNICO,
             CLIPPER,
+            COMPASS,
             EDY,
             EZ_LINK,
             SEQ_GO, // Go card
