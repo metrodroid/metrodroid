@@ -18,19 +18,17 @@
  */
 package au.id.micolous.metrodroid.activity;
 
-import android.app.ActionBar;
-import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.v7.app.ActionBar;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 
-import au.id.micolous.metrodroid.util.Utils;
-
 import au.id.micolous.farebot.R;
+import au.id.micolous.metrodroid.util.Utils;
 
 /**
  * @author Michael Farrell
@@ -42,7 +40,7 @@ public class AboutActivity extends MetrodroidActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_about);
 
-        ActionBar actionBar = getActionBar();
+        ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
 
         ((TextView) this.findViewById(R.id.lblDebugText)).setText(Utils.getDeviceInfoString());

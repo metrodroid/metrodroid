@@ -22,8 +22,6 @@
 
 package au.id.micolous.metrodroid.activity;
 
-import android.app.ActionBar;
-import android.app.Activity;
 import android.app.PendingIntent;
 import android.content.Intent;
 import android.nfc.NfcAdapter;
@@ -33,15 +31,15 @@ import android.nfc.tech.MifareUltralight;
 import android.nfc.tech.NfcA;
 import android.nfc.tech.NfcF;
 import android.os.Bundle;
+import android.support.v7.app.ActionBar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 
-import au.id.micolous.metrodroid.util.Utils;
-
 import au.id.micolous.farebot.R;
 import au.id.micolous.metrodroid.MetrodroidApplication;
+import au.id.micolous.metrodroid.util.Utils;
 
 public class MainActivity extends MetrodroidActivity {
     private NfcAdapter mNfcAdapter;
@@ -64,8 +62,10 @@ public class MainActivity extends MetrodroidActivity {
         super.onCreate(bundle);
         setContentView(R.layout.activity_main);
 
-        ActionBar actionBar = getActionBar();
+        ActionBar actionBar = getSupportActionBar();
         actionBar.setHomeButtonEnabled(false);
+        actionBar.setDisplayShowHomeEnabled(true);
+        actionBar.setDisplayUseLogoEnabled(true);
 
         mNfcAdapter = NfcAdapter.getDefaultAdapter(this);
 

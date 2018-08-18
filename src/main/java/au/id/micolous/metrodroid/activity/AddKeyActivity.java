@@ -22,13 +22,10 @@
 
 package au.id.micolous.metrodroid.activity;
 
-import android.Manifest;
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.PendingIntent;
 import android.content.ContentValues;
 import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.nfc.NfcAdapter;
 import android.nfc.Tag;
 import android.nfc.tech.IsoDep;
@@ -36,18 +33,9 @@ import android.nfc.tech.MifareClassic;
 import android.nfc.tech.MifareUltralight;
 import android.nfc.tech.NfcF;
 import android.os.Bundle;
-import android.support.v4.app.ActivityCompat;
-import android.support.v4.content.ContextCompat;
 import android.view.View;
 import android.widget.RadioButton;
 import android.widget.TextView;
-
-import au.id.micolous.metrodroid.key.ClassicCardKeys;
-import au.id.micolous.metrodroid.key.ClassicSectorKey;
-import au.id.micolous.metrodroid.provider.CardKeyProvider;
-import au.id.micolous.metrodroid.provider.KeysTableColumns;
-import au.id.micolous.metrodroid.util.BetterAsyncTask;
-import au.id.micolous.metrodroid.util.Utils;
 
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang3.ArrayUtils;
@@ -58,6 +46,12 @@ import java.util.Locale;
 
 import au.id.micolous.farebot.R;
 import au.id.micolous.metrodroid.MetrodroidApplication;
+import au.id.micolous.metrodroid.key.ClassicCardKeys;
+import au.id.micolous.metrodroid.key.ClassicSectorKey;
+import au.id.micolous.metrodroid.provider.CardKeyProvider;
+import au.id.micolous.metrodroid.provider.KeysTableColumns;
+import au.id.micolous.metrodroid.util.BetterAsyncTask;
+import au.id.micolous.metrodroid.util.Utils;
 
 import static android.view.ViewGroup.LayoutParams.MATCH_PARENT;
 import static android.view.ViewGroup.LayoutParams.WRAP_CONTENT;

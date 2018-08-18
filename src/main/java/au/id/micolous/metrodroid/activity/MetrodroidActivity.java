@@ -19,14 +19,16 @@
 
 package au.id.micolous.metrodroid.activity;
 
+import android.app.ActionBar;
 import android.app.Activity;
 import android.content.res.TypedArray;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v7.app.AppCompatActivity;
 
 import au.id.micolous.metrodroid.MetrodroidApplication;
 
-public abstract class MetrodroidActivity extends Activity {
+public abstract class MetrodroidActivity extends AppCompatActivity {
     int mAppliedTheme;
 
     protected Integer getThemeVariant() {
@@ -58,5 +60,12 @@ public abstract class MetrodroidActivity extends Activity {
 
         if (MetrodroidApplication.chooseTheme() != mAppliedTheme)
             recreate();
+    }
+
+    @Deprecated
+    @Nullable
+    @Override
+    public ActionBar getActionBar() {
+        return null;
     }
 }

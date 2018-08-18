@@ -19,28 +19,25 @@
 
 package au.id.micolous.metrodroid.activity;
 
-import android.app.ActionBar;
 import android.content.ComponentName;
-import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.preference.CheckBoxPreference;
 import android.preference.ListPreference;
 import android.preference.Preference;
-import android.preference.PreferenceActivity;
-import android.preference.PreferenceManager;
+import android.support.v7.app.ActionBar;
 import android.view.MenuItem;
 
 import au.id.micolous.farebot.R;
 import au.id.micolous.metrodroid.MetrodroidApplication;
+import au.id.micolous.metrodroid.ui.AppCompatPreferenceActivity;
 
 import static android.content.pm.PackageManager.COMPONENT_ENABLED_STATE_DISABLED;
 import static android.content.pm.PackageManager.COMPONENT_ENABLED_STATE_ENABLED;
 
-public class PreferencesActivity extends PreferenceActivity implements Preference.OnPreferenceChangeListener {
+public class PreferencesActivity extends AppCompatPreferenceActivity implements Preference.OnPreferenceChangeListener {
 
     private CheckBoxPreference mPreferenceLaunchFromBackground;
     private ListPreference mPreferenceTheme;
@@ -50,8 +47,10 @@ public class PreferencesActivity extends PreferenceActivity implements Preferenc
         super.onCreate(savedInstanceState);
         addPreferencesFromResource(R.xml.prefs);
 
-        ActionBar actionBar = getActionBar();
-        actionBar.setDisplayHomeAsUpEnabled(true);
+        ActionBar actionBar = getSupportActionBar();
+        if (actionBar != null) {
+            actionBar.setDisplayHomeAsUpEnabled(true);
+        }
 
         mPreferenceLaunchFromBackground
                 = (CheckBoxPreference) getPreferenceManager().findPreference("pref_launch_from_background");

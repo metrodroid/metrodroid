@@ -20,7 +20,6 @@
 
 package au.id.micolous.metrodroid.activity;
 
-import android.app.ActionBar;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Intent;
@@ -28,6 +27,7 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
+import android.support.v7.app.ActionBar;
 import android.text.Spanned;
 import android.util.Log;
 import android.view.Menu;
@@ -36,12 +36,9 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.IOUtils;
 import org.simpleframework.xml.Serializer;
 
-import java.io.File;
-import java.io.InputStream;
 import java.io.OutputStream;
 import java.nio.charset.Charset;
 import java.util.Calendar;
@@ -78,7 +75,7 @@ public class AdvancedCardInfoActivity extends MetrodroidActivity {
         ViewPager viewPager = (ViewPager) findViewById(R.id.pager);
         TabPagerAdapter tabsAdapter = new TabPagerAdapter(this, viewPager);
 
-        ActionBar actionBar = getActionBar();
+        ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
 
         if (MetrodroidApplication.hideCardNumbers()) {

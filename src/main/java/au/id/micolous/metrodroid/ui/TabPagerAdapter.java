@@ -20,14 +20,15 @@
 package au.id.micolous.metrodroid.ui;
 
 import android.annotation.SuppressLint;
-import android.app.ActionBar;
-import android.app.Activity;
 import android.app.Fragment;
 import android.app.FragmentTransaction;
 import android.os.Bundle;
 import android.os.Parcelable;
+import android.support.annotation.NonNull;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.support.v7.app.ActionBar;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 
 import java.util.ArrayList;
@@ -35,15 +36,15 @@ import java.util.ArrayList;
 import au.id.micolous.farebot.R;
 
 public class TabPagerAdapter extends PagerAdapter implements ActionBar.TabListener, ViewPager.OnPageChangeListener {
-    private final Activity mActivity;
+    private final AppCompatActivity mActivity;
     private final ActionBar mActionBar;
     private final ViewPager mViewPager;
     private final ArrayList<TabInfo> mTabs = new ArrayList<>();
     private FragmentTransaction mCurTransaction = null;
 
-    public TabPagerAdapter(Activity activity, ViewPager pager) {
+    public TabPagerAdapter(AppCompatActivity activity, ViewPager pager) {
         mActivity = activity;
-        mActionBar = activity.getActionBar();
+        mActionBar = activity.getSupportActionBar();
         mViewPager = pager;
         mViewPager.setAdapter(this);
         mViewPager.setOnPageChangeListener(this);
@@ -68,10 +69,11 @@ public class TabPagerAdapter extends PagerAdapter implements ActionBar.TabListen
     public void startUpdate(View view) {
     }
 
+    @NonNull
     @SuppressLint("CommitTransaction")
     @Override
     @SuppressWarnings("deprecation")
-    public Object instantiateItem(View view, int position) {
+    public Object instantiateItem(@NonNull View view, int position) {
         TabInfo info = mTabs.get(position);
 
         if (mCurTransaction == null) {
@@ -86,7 +88,7 @@ public class TabPagerAdapter extends PagerAdapter implements ActionBar.TabListen
     @SuppressLint("CommitTransaction")
     @Override
     @SuppressWarnings("deprecation")
-    public void destroyItem(View view, int i, Object object) {
+    public void destroyItem(@NonNull View view, int i, @NonNull Object object) {
         if (mCurTransaction == null) {
             mCurTransaction = mActivity.getFragmentManager().beginTransaction();
         }
@@ -95,7 +97,7 @@ public class TabPagerAdapter extends PagerAdapter implements ActionBar.TabListen
 
     @Override
     @SuppressWarnings("deprecation")
-    public void finishUpdate(View view) {
+    public void finishUpdate(@NonNull View view) {
         if (mCurTransaction != null) {
             mCurTransaction.commitAllowingStateLoss();
             mCurTransaction = null;
@@ -104,7 +106,7 @@ public class TabPagerAdapter extends PagerAdapter implements ActionBar.TabListen
     }
 
     @Override
-    public boolean isViewFromObject(View view, Object object) {
+    public boolean isViewFromObject(@NonNull View view, @NonNull Object object) {
         return ((Fragment) object).getView() == view;
     }
 
@@ -127,7 +129,8 @@ public class TabPagerAdapter extends PagerAdapter implements ActionBar.TabListen
     public void onPageScrollStateChanged(int state) {
     }
 
-    public void onTabSelected(ActionBar.Tab tab, FragmentTransaction fragmentTransaction) {
+    @Override
+    public void onTabSelected(ActionBar.Tab tab, android.support.v4.app.FragmentTransaction ft) {
         Object tag = tab.getTag();
         for (int i = 0; i < mTabs.size(); i++) {
             if (mTabs.get(i) == tag) {
@@ -136,10 +139,14 @@ public class TabPagerAdapter extends PagerAdapter implements ActionBar.TabListen
         }
     }
 
-    public void onTabUnselected(ActionBar.Tab tab, FragmentTransaction fragmentTransaction) {
+    @Override
+    public void onTabUnselected(ActionBar.Tab tab, android.support.v4.app.FragmentTransaction ft) {
+
     }
 
-    public void onTabReselected(ActionBar.Tab tab, FragmentTransaction fragmentTransaction) {
+    @Override
+    public void onTabReselected(ActionBar.Tab tab, android.support.v4.app.FragmentTransaction ft) {
+
     }
 
     private static final class TabInfo {

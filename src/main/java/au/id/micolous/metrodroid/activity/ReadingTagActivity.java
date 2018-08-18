@@ -20,7 +20,6 @@
 
 package au.id.micolous.metrodroid.activity;
 
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.ContentValues;
 import android.content.Context;
@@ -41,6 +40,11 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import java.util.GregorianCalendar;
+
+import au.id.micolous.farebot.BuildConfig;
+import au.id.micolous.farebot.R;
+import au.id.micolous.metrodroid.MetrodroidApplication;
 import au.id.micolous.metrodroid.card.Card;
 import au.id.micolous.metrodroid.card.TagReaderFeedbackInterface;
 import au.id.micolous.metrodroid.card.UnsupportedTagException;
@@ -48,12 +52,6 @@ import au.id.micolous.metrodroid.provider.CardProvider;
 import au.id.micolous.metrodroid.provider.CardsTableColumns;
 import au.id.micolous.metrodroid.transit.CardInfo;
 import au.id.micolous.metrodroid.util.Utils;
-
-import java.util.GregorianCalendar;
-
-import au.id.micolous.farebot.BuildConfig;
-import au.id.micolous.farebot.R;
-import au.id.micolous.metrodroid.MetrodroidApplication;
 
 public class ReadingTagActivity extends MetrodroidActivity implements TagReaderFeedbackInterface {
     private static final String TAG = ReadingTagActivity.class.getName();

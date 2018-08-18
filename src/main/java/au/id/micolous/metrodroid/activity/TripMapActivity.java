@@ -22,12 +22,11 @@
 
 package au.id.micolous.metrodroid.activity;
 
-import android.app.ActionBar;
-import android.app.Activity;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.annotation.RequiresApi;
+import android.support.v7.app.ActionBar;
 import android.util.Log;
 import android.view.MenuItem;
 import android.webkit.JavascriptInterface;
@@ -36,15 +35,14 @@ import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewFragment;
 
-import au.id.micolous.metrodroid.transit.Trip;
-import au.id.micolous.metrodroid.util.Marker;
-import au.id.micolous.metrodroid.util.Utils;
-
 import java.util.ArrayList;
 import java.util.List;
 
 import au.id.micolous.farebot.BuildConfig;
 import au.id.micolous.farebot.R;
+import au.id.micolous.metrodroid.transit.Trip;
+import au.id.micolous.metrodroid.util.Marker;
+import au.id.micolous.metrodroid.util.Utils;
 
 @RequiresApi(17)
 public class TripMapActivity extends MetrodroidActivity {
@@ -94,12 +92,13 @@ public class TripMapActivity extends MetrodroidActivity {
         settings.setAllowUniversalAccessFromFileURLs(true);
         settings.setUserAgentString(settings.getUserAgentString() + " metrodroid/" + BuildConfig.VERSION_NAME);
 
-        ActionBar actionBar = getActionBar();
-        actionBar.setDisplayHomeAsUpEnabled(true);
-        actionBar.setTitle(Trip.formatStationNames(trip));
-        actionBar.setSubtitle((trip.getRouteName() == null) ? trip.getAgencyName()
-                : String.format("%s %s", trip.getAgencyName(), trip.getRouteName()));
-
+        ActionBar actionBar = getSupportActionBar();
+        if (actionBar != null) {
+            actionBar.setDisplayHomeAsUpEnabled(true);
+            actionBar.setTitle(Trip.formatStationNames(trip));
+            actionBar.setSubtitle((trip.getRouteName() == null) ? trip.getAgencyName()
+                    : String.format("%s %s", trip.getAgencyName(), trip.getRouteName()));
+        }
         //int startMarkerId = R.drawable.marker_start;
         //int endMarkerId = R.drawable.marker_end;
 

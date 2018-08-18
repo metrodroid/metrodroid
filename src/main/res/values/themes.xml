@@ -17,7 +17,7 @@
   -->
 
 <resources>
-    <style name="Metrodroid.Dark" parent="@android:style/Theme.DeviceDefault">
+    <style name="Metrodroid.Dark" parent="Theme.AppCompat">
         <item name="ButtonBarStyle">@android:style/Holo.ButtonBar.AlertDialog</item>
         <item name="BorderlessButtonStyle">@android:style/Widget.Holo.Button.Borderless.Small</item>
         <item name="ButtonBarButtonStyle">@android:style/Widget.Holo.Button.Borderless.Small</item>
@@ -25,9 +25,20 @@
         <item name="AddKeyTextColor">@android:color/white</item>
         <item name="LockImage">@drawable/locked</item>
         <item name="AddKeysActivityTheme">@style/Metrodroid.Dark.Dialog</item>
-        <item name="MainActivityTheme">@style/Metrodroid.Dark</item>
+        <item name="MainActivityTheme">@style/Metrodroid.Dark.Main</item>
         <item name="ListHeaderTextColor">@android:color/background_light</item>
         <item name="TransportIcons">@array/Metrodroid.Dark.TransportIcons</item>
+        <item name="colorPrimary">@color/Metrodroid.Dark.HeaderColor</item>
+        <item name="colorPrimaryDark">@color/Metrodroid.Dark.HeaderColor</item>
+    </style>
+
+    <style name="Metrodroid.Dark.Main" parent="Metrodroid.Dark">
+        <item name="actionBarStyle">@style/Metrodroid.Dark.ActionBar.Main</item>
+    </style>
+
+    <style name="Metrodroid.Dark.ActionBar.Main" parent="Widget.AppCompat.ActionBar.Solid">
+        <item name="displayOptions">useLogo|showHome|showTitle</item>
+        <item name="logo">@drawable/ic_logo_glyph</item>
     </style>
 
     <style name="Metrodroid.Dark.Dialog" parent="@android:style/Theme.DeviceDefault.Dialog">
@@ -55,7 +66,9 @@
         <item>@drawable/banned</item>
     </integer-array>
 
-    <style name="Metrodroid.Light" parent="@android:style/Theme.DeviceDefault.Light">
+    <color name="Metrodroid.Dark.HeaderColor">#042</color>
+
+    <style name="Metrodroid.Light" parent="Theme.AppCompat.Light.DarkActionBar">
         <item name="ButtonBarStyle">@android:style/Holo.Light.ButtonBar.AlertDialog</item>
         <item name="BorderlessButtonStyle">@android:style/Widget.Holo.Light.Button.Borderless.Small</item>
         <item name="ButtonBarButtonStyle">@android:style/Widget.Holo.Light.Button.Borderless.Small</item>
@@ -63,9 +76,20 @@
         <item name="AddKeyTextColor">@android:color/black</item>
         <item name="LockImage">@drawable/locked</item>
         <item name="AddKeysActivityTheme">@style/Metrodroid.Light.Dialog</item>
-        <item name="MainActivityTheme">@style/Metrodroid.Light</item>
+        <item name="MainActivityTheme">@style/Metrodroid.Light.Main</item>
         <item name="ListHeaderTextColor">@android:color/background_dark</item>
         <item name="TransportIcons">@array/Metrodroid.Light.TransportIcons</item>
+        <item name="colorPrimary">@color/Metrodroid.Light.HeaderColor</item>
+        <item name="colorPrimaryDark">@color/Metrodroid.Light.HeaderColor</item>
+    </style>
+
+    <style name="Metrodroid.Light.Main" parent="Metrodroid.Light">
+        <item name="actionBarStyle">@style/Metrodroid.Light.ActionBar.Main</item>
+    </style>
+
+    <style name="Metrodroid.Light.ActionBar.Main" parent="Widget.AppCompat.Light.ActionBar.Solid">
+        <item name="displayOptions">useLogo|showHome|showTitle</item>
+        <item name="logo">@drawable/ic_logo_glyph</item>
     </style>
 
     <style name="Metrodroid.Light.Dialog" parent="@android:style/Theme.DeviceDefault.Dialog">
@@ -93,9 +117,11 @@
 	<item>@drawable/banned</item>
     </integer-array>
 
-    <style name="FareBot.Theme.Base" parent="@android:style/Theme.DeviceDefault.Light">
+    <color name="Metrodroid.Light.HeaderColor">#063</color>
+
+    <style name="FareBot.Theme.Base" parent="Theme.AppCompat.Light.DarkActionBar">
         <item name="android:windowBackground">@color/FareBot.Theme.WindowBackground</item>
-        <item name="android:actionBarStyle">@style/FareBot.Theme.ActionBar</item>
+        <item name="actionBarStyle">@style/FareBot.Theme.ActionBar</item>
         <item name="android:actionBarDivider">@null</item>
         <item name="android:windowContentOverlay">@null</item>
         <item name="ButtonBarStyle">@android:style/Holo.ButtonBar.AlertDialog</item>
@@ -105,6 +131,8 @@
         <item name="AddKeyTextColor">@android:color/black</item>
         <item name="LockImage">@drawable/locked</item>
         <item name="ListHeaderTextColor">@color/FareBot.Theme.HeaderColor</item>
+        <item name="colorPrimary">@color/FareBot.Theme.LighterHeaderColor</item>
+        <item name="colorPrimaryDark">@color/FareBot.Theme.HeaderColor</item>
         <item name="TransportIcons">@array/FareBot.Theme.TransportIcons</item>
     </style>
 
@@ -114,7 +142,7 @@
         <item name="android:colorBackgroundCacheHint">@null</item>
         <item name="android:windowContentOverlay">@null</item>
         <item name="android:windowBackground">@color/FareBot.Theme.WindowBackground</item>
-        <item name="android:actionBarStyle">@style/FareBot.Theme.ActionBar.Main</item>
+        <item name="actionBarStyle">@style/FareBot.Theme.ActionBar.Main</item>
     </style>
 
     <style name="FareBot.Theme.Common" parent="@style/FareBot.Theme.Base">
@@ -122,21 +150,27 @@
         <item name="MainActivityTheme">@style/FareBot.Theme.Main</item>
     </style>
 
-    <style name="FareBot.Theme.ActionBar" parent="@android:style/Widget.DeviceDefault.Light.ActionBar">
+    <style name="FareBot.Theme.ActionBar" parent="Widget.AppCompat.ActionBar">
         <item name="android:textColor">#FFFFFF</item>
-        <item name="android:titleTextStyle">@style/FareBot.Theme.ActionBar.TitleTextStyle</item>
-        <item name="android:background">#00ACC1</item>
+        <item name="titleTextStyle">@style/FareBot.Theme.ActionBar.TitleTextStyle</item>
+        <item name="background">@color/FareBot.Theme.LighterHeaderColor</item>
+        <item name="colorControlNormal">@android:color/black</item>
     </style>
 
     <style name="FareBot.Theme.ActionBar.TitleTextStyle" parent="@android:style/TextAppearance.DeviceDefault.Widget.ActionBar.Title">
         <item name="android:textColor">#ffffff</item>
+        <item name="colorControlNormal">@android:color/black</item>
     </style>
-    <style name="FareBot.Theme.ActionBar.Main" parent="@android:style/Widget.DeviceDefault.Light.ActionBar">
-        <item name="android:actionBarDivider">@android:color/transparent</item>
+
+    <style name="FareBot.Theme.ActionBar.Main" parent="Widget.AppCompat.Light.ActionBar.Solid">
+        <item name="divider">@android:color/transparent</item>
+        <item name="displayOptions">useLogo|showHome|showTitle</item>
+        <item name="logo">@drawable/ic_logo_glyph</item>
     </style>
 
     <color name="FareBot.Theme.WindowBackground">#eeeeee</color>
     <color name="FareBot.Theme.HeaderColor">#006D8F</color>
+    <color name="FareBot.Theme.LighterHeaderColor">#00ACC1</color>
     <integer-array name="FareBot.Theme.TransportIcons" >
         <item>@drawable/ic_transaction_bus_32dp</item>
         <item>@drawable/ic_transaction_train_32dp</item>

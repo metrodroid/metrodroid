@@ -54,7 +54,8 @@
             android:name="au.id.micolous.metrodroid.activity.MainActivity"
             android:configChanges="keyboardHidden|orientation"
             android:screenOrientation="sensorPortrait"
-            android:theme="@style/Metrodroid.Dark">
+            android:logo="@drawable/ic_logo_glyph"
+            android:theme="@style/Metrodroid.Dark.Main">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

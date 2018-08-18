@@ -18,9 +18,8 @@
  */
 package au.id.micolous.metrodroid.activity;
 
-import android.app.ActionBar;
-import android.app.Activity;
 import android.os.Bundle;
+import android.support.v7.app.ActionBar;
 import android.view.MenuItem;
 import android.widget.TextView;
 
@@ -289,7 +288,7 @@ public class LicenseActivity extends MetrodroidActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_license);
 
-        ActionBar actionBar = getActionBar();
+        ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {
             actionBar.setDisplayHomeAsUpEnabled(true);
         }

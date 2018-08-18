@@ -48,7 +48,7 @@ public class SupportedCardsActivity extends MetrodroidActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_supported_cards);
 
-        getActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         ((ListView) findViewById(R.id.gallery)).setAdapter(new CardsAdapter(this));
     }
