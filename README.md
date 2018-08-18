@@ -57,7 +57,7 @@ Card / Agency | Location | Notes
 [ERG][35] | :earth_asia: _many locations_ | :new: :closed_lock_with_key: `MFC`
 [EZ-Link][7] | :singapore: Singapore |
 [Go card][20] | :australia: Brisbane and South East Queensland, Australia | :new: :closed_lock_with_key: `MFC`
-[KMT][39] | :id: Jakarta, Indonesia | :new:
+[KMT][39] | :indonesia: Jakarta, Indonesia | :new:
 [Manly Fast Ferry][19] | :australia: Sydney, NSW, Australia | :new: :closed_lock_with_key: `MFC`
 [Matkakortti][16], [HSL][17] | :finland: Finland |
 [Metrocard][34] | :new_zealand: Christchurch, New Zealand | :new: :closed_lock_with_key: `MFC`
