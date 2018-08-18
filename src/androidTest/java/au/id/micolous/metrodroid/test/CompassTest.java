@@ -155,7 +155,7 @@ public class CompassTest extends TestCase {
             {"0001 2810 6914 3998 3363","04FFA1D2827C3F804148000000000000","0A04006C1F0183000000005200004E8F","46870201030000190136000929D46CB7","368402FF0200000001410009F5740201"},
     };
 
-    public UltralightCard createUltralightFromString(String[] cardData) {
+    private UltralightCard createUltralightFromString(String[] cardData) {
         Calendar d = new GregorianCalendar(2010, 1, 1, 0, 0, 0);
         d.setTimeZone(TimeZone.getTimeZone("GMT"));
         byte[] serial = Utils.hexStringToByteArray(cardData[1].substring(0, 18));
