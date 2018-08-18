@@ -1,0 +1,75 @@
+reader_id,stop_name,comment
+1,Waterfront Stn,"Expo and Millenium Lines, SeaBus"
+2,Burrard Stn,
+3,Granville Stn,
+4,Stadium Stn,
+5,Main St. Stn,
+6,Broadway Stn,
+7,Nanaimo Stn,
+8,29th Ave Stn,
+9,Joyce Stn,
+10,Patterson Stn,
+11,Metrotown Stn,
+12,Royal Oak Stn,
+13,Edmonds Stn,
+14,22nd St. Stn,
+15,New West Stn,
+16,Columbia Stn,
+17,Scott Road Stn,
+18,Gateway Stn,
+19,Surrey Central Stn,
+20,King George Stn,
+31,VCC/Clark Stn,
+32,Commercial Stn,
+33,Renfrew Stn,
+34,Rupert Stn,
+35,Gilmore Stn,
+36,Brentwood Stn,
+37,Holdom Stn,
+38,Sperling Stn,
+39,Lake City Way Stn,
+40,Production Way Stn,
+41,Lougheed Stn,
+42,Braid Stn,
+43,Sapperton Stn,
+44,,Reserved for Woodlands Stn
+50,Waterfront Stn,Canada Line
+51,Vancouver City Stn,
+52,Yaletown-Roundhouse Stn,
+53,Olympic Village Stn,
+54,Broadway-City Hall Stn,
+55,King Edward Stn,
+56,,Reserved for 33rd Avenue Stn
+57,Oakridge-41st Stn,
+58,Langara-49th Stn,
+59,,Reserved for 57th Avenue Stn
+60,Marine Drive Stn,
+61,Bridgeport Stn,
+62,,Reserved for Capstan Stn
+63,Aberdeen Stn,
+64,Lansdowne Stn,
+65,Brighouse Stn,
+70,Templeton Stn,
+71,Sea Island Stn,
+72,,Reserved for YVR 3 Stn
+73,YVR Stn,
+75,London Drugs,
+76,BC Ferries,
+80,Waterfront Stn,West Coast Express
+81,Port Moody Stn,West Coast Express
+82,Coquitlam Central Stn,West Coast Express
+83,Port Coquitlam Stn,Unverified speculation
+84,Pitt Meadows Stn,Unverified speculation
+85,Maple Meadows Stn,Unverified speculation
+86,Port Haney Stn,Unverified speculation
+87,Mission City Stn,Unverified speculation
+90,Lonsdale Quay,SeaBus Terminal
+91,Burquitlam Stn,
+92,,Reserved for Queens Stn
+93,Moody Centre Stn,
+94,Inlet Centre Stn,
+95,,Reserved for Falcon Stn
+96,Coquitlam Central Stn,
+97,Lincoln Stn,
+98,Lafarge Lake Stn,
+99,Lincoln Stn,Bogus entry because the fare gates record 99 instead of 97

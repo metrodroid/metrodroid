@@ -77,6 +77,10 @@ public class TransitCurrency extends TransitBalance implements Parcelable {
         return new TransitCurrency(cents, "AUD", 100.);
     }
 
+    static public TransitCurrency CAD(int cents) {
+        return new TransitCurrency(cents, "CAD", 100.);
+    }
+
     static public TransitCurrency EUR(int cents) {
         return new TransitCurrency(cents, "EUR", 100.);
     }
