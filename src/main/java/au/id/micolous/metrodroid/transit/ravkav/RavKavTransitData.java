@@ -28,7 +28,6 @@ import java.util.List;
 
 import au.id.micolous.farebot.R;
 import au.id.micolous.metrodroid.card.calypso.CalypsoApplication;
-import au.id.micolous.metrodroid.card.iso7816.ISO7816Application;
 import au.id.micolous.metrodroid.card.iso7816.ISO7816Record;
 import au.id.micolous.metrodroid.transit.TransitCurrency;
 import au.id.micolous.metrodroid.transit.TransitData;
@@ -37,7 +36,7 @@ import au.id.micolous.metrodroid.transit.Trip;
 import au.id.micolous.metrodroid.util.Utils;
 
 public class RavKavTransitData extends TransitData {
-    private static final byte[] RAVKAV_TAG = new byte[]{0x53, 0x07, 0x06, 0x0a, 0x07, 0x06, 0x20, 0x04, 0x2d};
+    private static final String RAVKAV_TICKET_ENV = "06ec06000006";
     private final String mSerial;
     private final int mBalance;
     private final List<RavKavTrip> mTrips;
@@ -80,14 +79,12 @@ public class RavKavTransitData extends TransitData {
         return new TransitIdentity(Utils.localizeString(R.string.card_name_ravkav), getSerial(card));
     }
 
-    public static boolean check(ISO7816Application card) {
-        byte[]appdata = card.getAppData();
-        if (appdata == null)
+    public static boolean check(CalypsoApplication card) {
+        try {
+            return RAVKAV_TICKET_ENV.equals(Utils.getHexString(card.getFile(CalypsoApplication.File.TICKETING_ENVIRONMENT).getRecord(1).getData(), 0, 6));
+        } catch (Exception e) {
             return false;
-        byte[] taga5 = ISO7816Application.findAppInfoTag(appdata, (byte) 0xa5);
-        if (taga5 == null || taga5.length != 0x16)
-            return false;
-        return Arrays.equals (RAVKAV_TAG, Utils.byteArraySlice(taga5, 0xd, 9));
+        }
     }
 
     public static RavKavTransitData parseTransitData(CalypsoApplication card) {
