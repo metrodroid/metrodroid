@@ -60,8 +60,8 @@ public class NewShenzhenTrip extends Trip {
     private final long mStation;
     private final static String SHENZHEN_STR = "shenzhen";
 
-    private static Station getStation(long l) {
-        return StationTableReader.getStation(SHENZHEN_STR, (int) l);
+    private static Station getStation(long l, String humanReadableId) {
+        return StationTableReader.getStation(SHENZHEN_STR, (int) l, humanReadableId);
     }
 
 
@@ -97,23 +97,13 @@ public class NewShenzhenTrip extends Trip {
         int transport = getTransport();
         switch (transport) {
             case SZT_METRO:
-                return addGateNumber(getStation(mStation & ~0xff),
-                        Integer.toHexString((int)(mStation & 0xff)));
+                return StationTableReader.getStation(SHENZHEN_STR, (int) (mStation & ~0xff),
+                        Long.toHexString(mStation >> 8)).addAttribute(
+                        Utils.localizeString(R.string.szt_station_gate,
+                                Integer.toHexString((int)(mStation & 0xff))));
             default:
                 return null;
         }
-    }
-
-    private static Station addGateNumber(Station station, String gate) {
-        return new Station(
-                station.getCompanyName(),
-                station.getLineName(),
-                Utils.localizeString(R.string.szt_station_gate,
-                        station.getStationName(), gate),
-                station.getShortStationName(),
-                station.getLatitude(),
-                station.getLongitude(),
-                station.getLanguage());
     }
 
     @Nullable

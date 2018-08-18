@@ -91,6 +91,7 @@ public class MetrodroidApplication extends Application {
 
     private static final Set<String> devicesMifareWorks = new HashSet<>();
     private static final Set<String> devicesMifareNotWorks = new HashSet<>();
+    private static final String PREF_SHOW_RAW_IDS = "pref_show_raw_ids";
 
     static {
         devicesMifareWorks.add("Pixel 2");
@@ -258,5 +259,10 @@ public class MetrodroidApplication extends Application {
         if (theme.equals("farebot"))
             return R.style.FareBot_Theme_Common;
         return R.style.Metrodroid_Dark;
+    }
+
+    public static boolean showRawStationIds() {
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(MetrodroidApplication.getInstance());
+        return prefs.getBoolean(MetrodroidApplication.PREF_SHOW_RAW_IDS, false);
     }
 }

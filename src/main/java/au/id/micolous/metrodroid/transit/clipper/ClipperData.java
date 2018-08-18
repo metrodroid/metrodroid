@@ -65,7 +65,9 @@ final class ClipperData {
     }
 
     public static Station getStation(int agency, int stationId, boolean isEnd) {
-        Station s = StationTableReader.getStationNoFallback(CLIPPER_STR,(agency << 16) | stationId);
+        String humanReadableId = "0x" + Integer.toHexString(agency) + "/0x" + Integer.toHexString(stationId);
+        Station s = StationTableReader.getStationNoFallback(CLIPPER_STR,(agency << 16) | stationId,
+                humanReadableId);
         if (s != null)
             return s;
 
@@ -79,6 +81,6 @@ final class ClipperData {
         if (stationId == (isEnd ? 0xffff : 0))
             return null;
 
-        return Station.unknown("0x" + Integer.toHexString(agency) + "/0x" + Long.toString(stationId, 16));
+        return Station.unknown(humanReadableId);
     }
 }
