@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  The English (Canada) translation is intended to simplify names of Canadian places.
+-->
+<resources>
+    <string name="location_vancouver">Vancouver, BC</string>
+</resources>
