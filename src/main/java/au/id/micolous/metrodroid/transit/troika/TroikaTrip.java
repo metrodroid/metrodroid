@@ -174,9 +174,4 @@ class TroikaTrip extends Trip {
                 return Mode.TRAIN;
         }
     }
-
-    @Override
-    public boolean hasTime() {
-        return true;
-    }
 }

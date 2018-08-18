@@ -271,8 +271,8 @@ public class CardTripsFragment extends ListFragment {
                 iconImageView.setContentDescription(s);
             }
 
-            if (trip.hasTime()) {
-                Calendar end = trip.getEndTimestamp();
+            Calendar end = trip.getEndTimestamp();
+            if (trip.hasTime() && (start != null || end != null)) {
                 if (end != null && start != null)
                     timeTextView.setText(Utils.localizeString(R.string.time_from_to, Utils.timeFormat(start), Utils.timeFormat(end)));
                 else if (start != null)

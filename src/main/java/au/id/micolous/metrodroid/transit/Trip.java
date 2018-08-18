@@ -308,7 +308,9 @@ public abstract class Trip implements Parcelable {
      *
      * @return true if a time of day should be displayed.
      */
-    public abstract boolean hasTime();
+    public boolean hasTime() {
+	return true;
+    }
 
     public enum Mode {
         BUS(0),

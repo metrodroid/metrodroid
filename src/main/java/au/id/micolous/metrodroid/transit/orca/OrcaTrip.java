@@ -167,11 +167,6 @@ public class OrcaTrip extends Trip {
         return Mode.BUS;
     }
 
-    @Override
-    public boolean hasTime() {
-        return true;
-    }
-
     public void writeToParcel(Parcel parcel, int flags) {
         parcel.writeLong(mTimestamp);
         parcel.writeInt(mCoachNum);

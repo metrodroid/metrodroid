@@ -98,11 +98,6 @@ public class ClipperRefill extends Trip implements Comparable {
     }
 
     @Override
-    public boolean hasTime() {
-        return true;
-    }
-
-    @Override
     public int describeContents() {
         return 0;
     }

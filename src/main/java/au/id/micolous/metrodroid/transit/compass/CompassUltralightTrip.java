@@ -130,11 +130,6 @@ public class CompassUltralightTrip extends Trip implements Parcelable {
     }
 
     @Override
-    public boolean hasTime() {
-        return getStartTimestamp() != null || getEndTimestamp() != null;
-    }
-
-    @Override
     public int describeContents() {
         return 0;
     }

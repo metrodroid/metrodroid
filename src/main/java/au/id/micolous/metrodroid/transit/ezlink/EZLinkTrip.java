@@ -167,11 +167,6 @@ public class EZLinkTrip extends Trip {
         return Mode.OTHER;
     }
 
-    @Override
-    public boolean hasTime() {
-        return true;
-    }
-
     public void writeToParcel(Parcel parcel, int flags) {
         parcel.writeParcelable(mTransaction, flags);
     }

@@ -89,10 +89,4 @@ public class HSLRefill extends Trip implements Parcelable {
     public Mode getMode() {
         return Mode.TICKET_MACHINE;
     }
-
-    @Override
-    public boolean hasTime() {
-        return true;
-    }
-
 }

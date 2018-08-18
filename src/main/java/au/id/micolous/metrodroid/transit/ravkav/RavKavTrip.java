@@ -144,11 +144,6 @@ class RavKavTrip extends Trip {
     }
 
     @Override
-    public boolean hasTime() {
-        return true;
-    }
-
-    @Override
     public int describeContents() {
         return 0;
     }

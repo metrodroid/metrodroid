@@ -154,11 +154,6 @@ public class NewShenzhenTrip extends Trip {
     }
 
     @Override
-    public boolean hasTime() {
-        return true;
-    }
-
-    @Override
     public Calendar getStartTimestamp() {
         int transport = getTransport();
         if (transport == SZT_METRO)

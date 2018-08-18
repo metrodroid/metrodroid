@@ -88,11 +88,6 @@ public class TMoneyTrip extends Trip {
         }
     }
 
-    @Override
-    public boolean hasTime() {
-        return mTime != INVALID_DATETIME;
-    }
-
     private static Calendar parseHexDateTime(long val) {
         if (val == INVALID_DATETIME)
             return null;
