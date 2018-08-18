@@ -98,6 +98,7 @@
     <string name="unauthorized_page_title_format">Page: 0x%s (unauthorized)</string>
     <string name="sector_title_format">Sector: 0x%s</string>
     <string name="unauthorized_sector_title_format">Sector: 0x%s (unauthorized)</string>
+    <string name="sector_title_format_empty">Sector: 0x%s (empty)</string>
     <string name="invalid_sector_title_format">Sector: 0x%1$s (invalid: %2$s)</string>
     <!-- Translators: the first parameter is a hexadecimal number, the second parameter is a string
     describing a "well known" system code. eg: "System: 0x3 (Suica)" -->

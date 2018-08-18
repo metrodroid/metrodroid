@@ -84,4 +84,21 @@ public class ClassicSector {
         }
         return data;
     }
+
+    public boolean isEmpty() {
+        try {
+            List<ClassicBlock> blocks = getBlocks();
+            for (ClassicBlock block : blocks) {
+                if (getIndex() == 0 && block.getIndex() == 0)
+                    continue;
+                if (block.getIndex() == blocks.size() - 1)
+                    continue;
+                if (!block.isEmpty())
+                    return false;
+            }
+        } catch (Exception e) {
+            return true;
+        }
+        return true;
+    }
 }
