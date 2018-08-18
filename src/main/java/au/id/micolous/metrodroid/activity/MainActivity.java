@@ -106,7 +106,7 @@ public class MainActivity extends MetrodroidActivity {
                         (MetrodroidApplication.obfuscateTripFares() ? 1 : 0) +
                         (MetrodroidApplication.obfuscateTripTimes() ? 1 : 0);
 
-        TextView directions = (TextView)findViewById(R.id.directions);
+        TextView directions = findViewById(R.id.directions);
 
         if (obfuscationFlagsOn > 0) {
             directions.setText(Utils.localizePlural(R.plurals.obfuscation_mode_notice,
