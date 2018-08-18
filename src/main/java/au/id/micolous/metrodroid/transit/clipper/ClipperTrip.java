@@ -129,11 +129,6 @@ public class ClipperTrip extends Trip {
         return ClipperData.getMode(mAgency);
     }
 
-    @Override
-    public boolean hasTime() {
-        return true;
-    }
-
     public void writeToParcel(Parcel parcel, int flags) {
         Utils.parcelCalendar(parcel, mTimestamp);
         Utils.parcelCalendar(parcel, mExitTimestamp);

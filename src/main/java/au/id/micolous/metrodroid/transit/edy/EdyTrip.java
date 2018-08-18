@@ -139,10 +139,6 @@ public class EdyTrip extends Trip {
         return str;
     }
 
-    public boolean hasTime() {
-        return mTimestamp != null;
-    }
-
     // unused
     public String getRouteName() {
         return null;

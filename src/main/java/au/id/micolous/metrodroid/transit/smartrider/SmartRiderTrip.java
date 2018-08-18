@@ -94,11 +94,6 @@ public class SmartRiderTrip extends Trip {
     }
 
     @Override
-    public boolean hasTime() {
-        return mStartTime != null;
-    }
-
-    @Override
     public Calendar getStartTimestamp() {
         return mStartTime;
     }

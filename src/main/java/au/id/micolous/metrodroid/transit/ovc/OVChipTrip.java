@@ -286,10 +286,6 @@ public class OVChipTrip extends Trip {
         return mExitTimestamp;
     }
 
-    public boolean hasTime() {
-        return (mTimestamp != null);
-    }
-
     @Nullable
     @Override
     public TransitCurrency getFare() {
