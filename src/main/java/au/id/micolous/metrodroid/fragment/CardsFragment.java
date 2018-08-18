@@ -187,7 +187,7 @@ public class CardsFragment extends ListFragment {
                         xml = ci.coerceToText(getActivity()).toString();
                         Uri [] uris = ExportHelper.importCardsXml(getActivity(), xml);
                         updateListView();
-                        onCardsImported(uris);
+                        onCardsImported(getActivity(), uris);
                     }
                 } return true;
 
@@ -342,16 +342,17 @@ public class CardsFragment extends ListFragment {
         protected void onPostExecute(Pair<String, Uri[]> res) {
             String err = res.first;
             Uri []uris = res.second;
+            CardsFragment cf = mCardsFragment.get();
+
+            if (cf == null)
+                return;
+
             if (err == null) {
-                CardsFragment cf = null;
-                if (mCardsFragment != null)
-                    cf = mCardsFragment.get();
-                if (cf != null)
-                    cf.updateListView();
-                onCardsImported(uris);
+                cf.updateListView();
+                onCardsImported(cf.getActivity(), uris);
                 return;
             }
-            new AlertDialog.Builder(MetrodroidApplication.getInstance())
+            new AlertDialog.Builder(cf.getActivity())
                     .setMessage(err)
                     .show();
         }
@@ -380,8 +381,7 @@ public class CardsFragment extends ListFragment {
         }
     }
 
-    private static void onCardsImported(Uri[] uris) {
-        Context ctx = MetrodroidApplication.getInstance();
+    private static void onCardsImported(Context ctx, Uri[] uris) {
         Toast.makeText(ctx, Utils.localizePlural(R.plurals.cards_imported, uris.length, uris.length), Toast.LENGTH_SHORT).show();
         if (uris.length == 1) {
             ctx.startActivity(new Intent(Intent.ACTION_VIEW, uris[0]));
