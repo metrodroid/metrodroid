@@ -60,7 +60,7 @@ public class OrcaTransitData extends TransitData {
 
     private int mSerialNumber;
     private int mBalance;
-    private Trip[] mTrips;
+    private List<Trip> mTrips;
 
     public static final Creator<OrcaTransitData> CREATOR = new Creator<OrcaTransitData>() {
         public OrcaTransitData createFromParcel(Parcel parcel) {
@@ -77,8 +77,8 @@ public class OrcaTransitData extends TransitData {
         mSerialNumber = parcel.readInt();
         mBalance = parcel.readInt();
 
-        parcel.readInt();
-        mTrips = (Trip[]) parcel.readParcelableArray(OrcaTrip.class.getClassLoader());
+        mTrips = new ArrayList<>();
+        parcel.readList(mTrips, OrcaTrip.class.getClassLoader());
     }
 
     public OrcaTransitData(Card card) {
@@ -101,7 +101,8 @@ public class OrcaTransitData extends TransitData {
         }
 
         try {
-            mTrips = parseTrips(desfireCard);
+            mTrips = parseTrips(desfireCard, 2, false);
+            mTrips.addAll(parseTrips(desfireCard, 3, true));
         } catch (Exception ex) {
             throw new RuntimeException("Error parsing ORCA trips", ex);
         }
@@ -142,7 +143,7 @@ public class OrcaTransitData extends TransitData {
 
     @Override
     public Trip[] getTrips() {
-        return mTrips;
+        return mTrips.toArray(new Trip[0]);
     }
 
     @Override
@@ -150,35 +151,39 @@ public class OrcaTransitData extends TransitData {
         return null;
     }
 
-    private Trip[] parseTrips(DesfireCard card) {
+    private List <Trip> parseTrips(DesfireCard card, int fileId, boolean isTopup) {
+        DesfireFile file = card.getApplication(APP_ID).getFile(fileId);
+        if (!(file instanceof RecordDesfireFile))
+            return new ArrayList<>();
+
+        RecordDesfireFile recordFile = (RecordDesfireFile) card.getApplication(APP_ID).getFile(fileId);
+
+        OrcaTrip[] useLog = new OrcaTrip[recordFile.getRecords().size()];
+        for (int i = 0; i < useLog.length; i++) {
+            useLog[i] = new OrcaTrip(recordFile.getRecords().get(i), isTopup);
+        }
+        Arrays.sort(useLog, new Trip.Comparator());
+        if (isTopup) {
+            return Arrays.asList(useLog);
+        }
+        ArrayUtils.reverse(useLog);
+
         List<Trip> trips = new ArrayList<>();
 
-        DesfireFile file = card.getApplication(APP_ID).getFile(0x02);
-        if (file instanceof RecordDesfireFile) {
-            RecordDesfireFile recordFile = (RecordDesfireFile) card.getApplication(APP_ID).getFile(0x02);
+        for (int i = 0; i < useLog.length; i++) {
+            OrcaTrip trip = useLog[i];
+            OrcaTrip nextTrip = (i + 1 < useLog.length) ? useLog[i + 1] : null;
 
-            OrcaTrip[] useLog = new OrcaTrip[recordFile.getRecords().size()];
-            for (int i = 0; i < useLog.length; i++) {
-                useLog[i] = new OrcaTrip(recordFile.getRecords().get(i));
+            if (isSameTrip(trip, nextTrip)) {
+                trips.add(new MergedOrcaTrip(trip, nextTrip));
+                i++;
+                continue;
             }
-            Arrays.sort(useLog, new Trip.Comparator());
-            ArrayUtils.reverse(useLog);
 
-            for (int i = 0; i < useLog.length; i++) {
-                OrcaTrip trip = useLog[i];
-                OrcaTrip nextTrip = (i + 1 < useLog.length) ? useLog[i + 1] : null;
-
-                if (isSameTrip(trip, nextTrip)) {
-                    trips.add(new MergedOrcaTrip(trip, nextTrip));
-                    i++;
-                    continue;
-                }
-
-                trips.add(trip);
-            }
+            trips.add(trip);
         }
         Collections.sort(trips, new Trip.Comparator());
-        return trips.toArray(new Trip[trips.size()]);
+        return trips;
     }
 
     private boolean isSameTrip(OrcaTrip firstTrip, OrcaTrip secondTrip) {
@@ -193,12 +198,7 @@ public class OrcaTransitData extends TransitData {
         parcel.writeInt(mSerialNumber);
         parcel.writeInt(mBalance);
 
-        if (mTrips != null) {
-            parcel.writeInt(mTrips.length);
-            parcel.writeParcelableArray(mTrips, flags);
-        } else {
-            parcel.writeInt(0);
-        }
+        parcel.writeList(mTrips);
     }
 
 }
