@@ -36,7 +36,7 @@ public class UnauthorizedClassicSector extends ClassicSector {
     private UnauthorizedClassicSector() { /* For XML serializer */ }
 
     public UnauthorizedClassicSector(int sectorIndex) {
-        super(sectorIndex, null, null);
+        super(sectorIndex, null, null, null);
     }
 
     @Override
