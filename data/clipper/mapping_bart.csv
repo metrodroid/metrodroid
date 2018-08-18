@@ -16,6 +16,7 @@ reader_id,stop_id,stop_code,short_name
 0x04000f,ROCK,,
 0x040011,LAFY,,
 0x040012,WCRK,,
+0x040013,PHIL,,Pleasant Hill
 0x040014,CONC,,
 0x040015,NCON,,N. Concord/Martinez
 0x040017,ASHB,,
