@@ -593,7 +593,7 @@
 
     <string name="szt_metro">Shenzhen Metro</string>
     <string name="szt_bus">Shenzhen Bus</string>
-    <string name="szt_station_gate">%s, poortje %s</string>
+    <string name="szt_station_gate">poortje %s</string>
 
     <string name="card_name_troika_podorozhnik_hybrid">Troika+Podorozhnik</string>
     <string name="troika_fare_single">Eén rit</string>
@@ -606,4 +606,30 @@
     <string name="moscow_mcc">Moscow Central Circle (MCC)</string>
     <string name="troika_unknown_ticket">Onbekend troika-kaarttype %s</string>
     <string name="balances_and_subscriptions">Kaartjes</string>
+<string name="sector_title_format_empty">Sector: 0x%s (leeg)</string>
+    <string name="location_vancouver">Vancouver, BC, Canada</string>
+
+    <string name="location_jakarta">Jakarta, Indonesië</string>
+
+    <string name="kmt_def_route">Jabodetabek-lijn</string>
+    <string name="kmt_extra_note">Alleen voor nieuwe FeliCa-kaarten.</string>
+
+    <string name="orca_topup_machine">Automaat #%s</string>
+    <string name="orca_topup">Opladen</string>
+
+    <string name="compass_product_type">Productsoort</string>
+    <string name="compass_machine_code">Automaatcode</string>
+    <string name="compass_ticket_type">Kaartsoort</string>
+    <string name="compass_ticket_type_concession">Concessie</string>
+    <string name="compass_ticket_type_regular">Regulier</string>
+    <string name="compass_expiry_date">Vervaldatum</string>
+    <string name="compass_note">Alleen voor eenmalige kaartjes</string>
+
+    <string name="location_seoul">Seoel, Zuid-Korea</string>
+    <string name="card_name_tmoney">T-Money</string>
+    <string name="tmoney_date">T-Money-datum</string>
+
+    <string name="card_number">Kaartnummer</string>
+    <string name="pref_show_raw_station_ids">Stationsverkortingen tonen</string>
+    <string name="pref_show_raw_station_ids_desc">Als dit wordt ingeschakeld, dan worden ook de verkortingen vermeld bij de stationsnaam</string>
 </resources>
