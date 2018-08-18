@@ -35,6 +35,7 @@ linux.conf.au 2018, in my talk, [Tap on to reverse engineering](https://youtu.be
 * [The Noun Project][15] (Various icons)
 * [naofum](https://github.com/naofum) (Japanese translations)
 * [Vladimir Serbinenko](https://github.com/phcoder) (Podorozhnik, Troika)
+* [Bondan](https://github.com/sybond) [Sumbodo](http://sybond.web.id) (Kartu Multi Trip, COMMET)
 
 ## Supported card protocols
 
@@ -56,6 +57,7 @@ Card / Agency | Location | Notes
 [ERG][35] | :earth_asia: _many locations_ | :new: :closed_lock_with_key: `MFC`
 [EZ-Link][7] | :singapore: Singapore |
 [Go card][20] | :australia: Brisbane and South East Queensland, Australia | :new: :closed_lock_with_key: `MFC`
+[KMT][39] | :id: Jakarta, Indonesia | :new:
 [Manly Fast Ferry][19] | :australia: Sydney, NSW, Australia | :new: :closed_lock_with_key: `MFC`
 [Matkakortti][16], [HSL][17] | :finland: Finland |
 [Metrocard][34] | :new_zealand: Christchurch, New Zealand | :new: :closed_lock_with_key: `MFC`
@@ -167,4 +169,5 @@ This software and it's authors are not associated with any public transit agency
 [36]: http://www.calypsotechnology.net/
 [37]: http://podorozhnik.spb.ru/en/
 [38]: http://troika.mos.ru/
+[39]: https://en.wikipedia.org/wiki/Kereta_Commuter_Indonesia
 
