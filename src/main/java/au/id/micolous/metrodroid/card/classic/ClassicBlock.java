@@ -67,4 +67,13 @@ public class ClassicBlock {
     public byte[] getData() {
         return mData.getData();
     }
+
+    private static final String ZERO = "AAAAAAAAAAAAAAAAAAAAAA==";
+    private static final String FF = "/////////////////////w==";
+    private static final String ZERO_VB = "AAAAAP////8AAAAAAP8A/w==";
+
+    public boolean isEmpty() {
+        String actual = mData.toBase64();
+        return actual.equals(ZERO) || actual.equals(FF) || actual.equals(ZERO_VB);
+    }
 }

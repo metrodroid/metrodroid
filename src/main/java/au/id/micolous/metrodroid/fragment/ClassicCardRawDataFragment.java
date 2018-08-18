@@ -137,6 +137,8 @@ public class ClassicCardRawDataFragment extends ExpandableListFragment {
                 textView.setText(mActivity.getString(R.string.unauthorized_sector_title_format, sectorIndexString));
             } else if (sector instanceof InvalidClassicSector) {
                 textView.setText(mActivity.getString(R.string.invalid_sector_title_format, sectorIndexString, ((InvalidClassicSector) sector).getError()));
+            } else if (sector.isEmpty()) {
+                textView.setText(mActivity.getString(R.string.sector_title_format_empty, sectorIndexString));
             } else {
                 textView.setText(mActivity.getString(R.string.sector_title_format, sectorIndexString));
             }
