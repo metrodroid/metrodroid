@@ -105,6 +105,10 @@ public class TransitCurrency extends TransitBalance implements Parcelable {
         return new TransitCurrency(yens, "JPY", 1.);
     }
 
+    static public TransitCurrency KRW(int wons) {
+        return new TransitCurrency(wons, "KRW", 1.);
+    }
+
     private TransitCurrency(int currency, @NonNull String currencyCode, double divisor) {
         mCurrency = currency;
         mCurrencyCode = currencyCode;

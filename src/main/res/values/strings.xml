@@ -939,6 +939,12 @@
     </string>
     <string name="fully_blank_title">Blank card</string>
 
+    <string name="location_seoul">Seoul, Korea</string>
+    <!-- Translators: T-money is Korean payment/transit system. Korean: 티머니
+    May be transliterated -->
+    <string name="card_name_tmoney">T-Money</string>
+    <string name="tmoney_date">T-money date</string>
+
     <string name="no_data_in_clipboard">No data in clipboard.</string>
     <string name="app_version">Version: %s</string>
     <string name="device_model">Model: %s (%s)</string>

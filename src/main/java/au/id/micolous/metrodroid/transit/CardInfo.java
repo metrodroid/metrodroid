@@ -248,6 +248,14 @@ public class CardInfo {
             .setPreview()
             .build();
 
+    public static final CardInfo TMONEY = new Builder()
+            .setImageId(R.drawable.laxtap_card)
+            .setName(Utils.localizeString(R.string.card_name_tmoney))
+            .setLocation(R.string.location_seoul)
+            .setCardType(CardType.ISO7816)
+            .setPreview()
+            .build();
+
     public static final CardInfo TROIKA = new Builder()
             // seqgo_card_alpha has identical geometry
             .setImageId(R.drawable.troika_card, R.drawable.seqgo_card_alpha)
@@ -290,6 +298,7 @@ public class CardInfo {
             SMARTRIDER,
             SUICA,
             LAX_TAP, // TAP
+            TMONEY,
     	    TROIKA,
     };
 
