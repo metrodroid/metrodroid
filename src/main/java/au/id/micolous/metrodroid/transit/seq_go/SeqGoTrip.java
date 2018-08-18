@@ -103,28 +103,20 @@ public class SeqGoTrip extends NextfareTrip {
 
     @Override
     public Station getStartStation() {
-        if (mStartStation < 0) {
+        if (mStartStation <= 0) {
             return null;
         }
 
-        Station s = getStation(mStartStation);
-        if (s != null)
-            return s;
-        return Station.unknown(mStartStation);
+        return StationTableReader.getStation(SEQ_GO_STR, mStartStation);
     }
 
     @Override
     public Station getEndStation() {
-        if (mEndStation < 0) {
+        if (mEndStation <= 0) {
             return null;
         }
 
-        Station s = getStation(mEndStation);
-
-        if (s == null)
-            return s;
-
-        return Station.unknown(mEndStation);
+        return StationTableReader.getStation(SEQ_GO_STR, mEndStation);
     }
 
     @Override
@@ -139,11 +131,5 @@ public class SeqGoTrip extends NextfareTrip {
     @Override
     public String getRouteLanguage() {
         return "en-AU";
-    }
-
-    private static Station getStation(int stationId) {
-        if (stationId <= 0) return null;
-
-        return StationTableReader.getStation(SEQ_GO_STR, stationId);
     }
 }
