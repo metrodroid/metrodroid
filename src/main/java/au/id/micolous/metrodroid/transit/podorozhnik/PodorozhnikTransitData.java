@@ -55,7 +55,8 @@ public class PodorozhnikTransitData extends TransitData {
     // this key.
     private static final String KEY_SALT = "podorozhnik";
     // md5sum of Salt + Common Key + Salt, used on sector 4.
-    private static final String KEY_DIGEST = "f3267ff451b1fc3076ba12dcee2bf803";
+    private static final String KEY_DIGEST_A = "f3267ff451b1fc3076ba12dcee2bf803";
+    private static final String KEY_DIGEST_B = "3823b5f0b45f3519d0ce4a8b5b9f1437";
 
     public static final Parcelable.Creator<PodorozhnikTransitData> CREATOR = new Parcelable.Creator<PodorozhnikTransitData>() {
         public PodorozhnikTransitData createFromParcel(Parcel parcel) {
@@ -265,7 +266,7 @@ public class PodorozhnikTransitData extends TransitData {
             }
 
             Log.d(TAG, "Checking for Podorozhnik key...");
-            return Utils.checkKeyHash(key, KEY_SALT, KEY_DIGEST) >= 0;
+            return Utils.checkKeyHash(key, KEY_SALT, KEY_DIGEST_A, KEY_DIGEST_B) >= 0;
         } catch (IndexOutOfBoundsException ignored) {
             // If that sector number is too high, then it's not for us.
         }
