@@ -38,6 +38,7 @@ import au.id.micolous.metrodroid.transit.lax_tap.LaxTapTransitData;
 import au.id.micolous.metrodroid.transit.manly_fast_ferry.ManlyFastFerryTransitData;
 import au.id.micolous.metrodroid.transit.myki.MykiTransitData;
 import au.id.micolous.metrodroid.transit.opal.OpalTransitData;
+import au.id.micolous.metrodroid.transit.opus.OpusTransitData;
 import au.id.micolous.metrodroid.transit.ovc.OVChipTransitData;
 import au.id.micolous.metrodroid.transit.seq_go.SeqGoTransitData;
 import au.id.micolous.metrodroid.transit.smartrider.SmartRiderTransitData;
@@ -173,6 +174,13 @@ public class CardInfo {
             .setExtraNote(R.string.card_note_opal)
             .build();
 
+    public static final CardInfo OPUS = new CardInfo.Builder()
+            .setName(OpusTransitData.NAME)
+            .setLocation(R.string.location_quebec)
+            .setCardType(CardType.ISO7816)
+            .setPreview()
+            .build();
+
     public static final CardInfo ORCA = new CardInfo.Builder()
             .setImageId(R.drawable.orca_card)
             .setName("ORCA")
@@ -289,6 +297,7 @@ public class CardInfo {
             NETS_FLASHPAY,
             OCTOPUS,
             OPAL,
+            OPUS,
             ORCA,
             OVCHIP,
             PASMO,

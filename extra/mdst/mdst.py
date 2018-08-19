@@ -73,6 +73,13 @@ class MdstWriter(object):
 
     if lines:
       for k, v in lines.items():
+        if isinstance(v, Line):
+          sdb.lines[k].name.english = v.name.english
+          sdb.lines[k].name.english_short = v.name.english_short
+          sdb.lines[k].name.local = v.name.local
+          sdb.lines[k].name.local_short = v.name.local_short
+          sdb.lines[k].transport = v.transport
+          continue
         if v[0] != None:
           sdb.lines[k].name.english = v[0]
         if len(v) > 1 and v[1] != None:

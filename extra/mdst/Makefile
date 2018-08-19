@@ -2,7 +2,7 @@
 
 .PHONY: all clean
 
-all: stations_pb2.py suica_rail.mdst suica_bus.mdst shenzhen.mdst ovc.mdst kmt.mdst orca.mdst compass.mdst troika.mdst suica_rail.csv suica_bus.csv ovc.csv shenzhen.csv orca.csv compass.csv kmt.csv troika.csv orca.csv
+all: stations_pb2.py suica_rail.mdst suica_bus.mdst shenzhen.mdst ovc.mdst kmt.mdst orca.mdst compass.mdst troika.mdst opus.mdst suica_rail.csv suica_bus.csv ovc.csv shenzhen.csv orca.csv compass.csv kmt.csv troika.csv opus.csv
 
 stations_pb2.py: stations.proto
 	protoc --python_out=. stations.proto
@@ -31,13 +31,14 @@ ovc.mdst: sqlite2pb-ovc.py stations_pb2.py mdst.py ../../data/ovc_stations.db3
 shenzhen.mdst: csv2pb-szt.py stations_pb2.py mdst.py ../../data/szt/*.txt
 	python3 csv2pb-szt.py
 
-<<<<<<< HEAD
+opus.mdst: xml2pb-opus.py stations_pb2.py mdst.py ../../data/opus/*.xml
+	python3 xml2pb-opus.py
+
 compass.mdst: csv2pb.py stations_pb2.py mdst.py ../../data/compass/stations.csv
 	python3 csv2pb.py ../../data/compass/stations.csv -o $@ -V 2
-=======
+
 troika.mdst: csv2pb.py stations_pb2.py mdst.py ../../data/troika/stations.csv
 	python3 csv2pb.py ../../data/troika/stations.csv -o $@ -V 2 -L ru
->>>>>>> phcoder/troika
 
 %.csv: %.mdst dump2csv.py stations_pb2.py
 	python3 dump2csv.py -o $@ $<

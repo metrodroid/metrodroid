@@ -62,6 +62,8 @@ message Operator {
 message Line {
     Names name = 3;
 
+    TransportType transport = 4;
+
     reserved 1, 2;
 }
 
