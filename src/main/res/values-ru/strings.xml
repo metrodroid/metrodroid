@@ -122,7 +122,7 @@
     <string name="opal_action_new_journey">Новая поездка</string>
     <string name="szt_metro">Метро Шэньчжэня</string>
     <string name="szt_bus">Автобус Шэньчжэня</string>
-    <string name="szt_station_gate">%s, турникет %s</string>
+    <string name="szt_station_gate">турникет %s</string>
 
     <string name="card_name_troika">Тройка</string>
     <string name="card_name_podorozhnik">Подорожник</string>
@@ -145,4 +145,7 @@
     <string name="nfc_disabled">NFC: выключено</string>
     <string name="nfc_not_available">NFC: не доступно</string>
     <string name="balances_and_subscriptions">Билеты</string>
-</resources>
+<string name="scanned_at_format">Прочитано %2$s в %1$s</string>
+    <string name="machine_id">Автомат %s</string>
+
+    </resources>
