@@ -40,6 +40,7 @@ import au.id.micolous.metrodroid.card.iso7816.ISO7816Record;
 import au.id.micolous.metrodroid.card.iso7816.ISO7816Selector;
 import au.id.micolous.metrodroid.transit.TransitData;
 import au.id.micolous.metrodroid.transit.TransitIdentity;
+import au.id.micolous.metrodroid.transit.opus.OpusTransitData;
 import au.id.micolous.metrodroid.transit.ravkav.RavKavTransitData;
 import au.id.micolous.metrodroid.ui.HeaderListItem;
 import au.id.micolous.metrodroid.ui.ListItem;
@@ -100,6 +101,8 @@ public class CalypsoApplication extends ISO7816Application {
     public TransitData parseTransitData() {
         if (RavKavTransitData.check(this))
             return RavKavTransitData.parseTransitData(this);
+        if (OpusTransitData.check(this))
+            return OpusTransitData.parseTransitData(this);
         return null;
     }
 
@@ -107,6 +110,8 @@ public class CalypsoApplication extends ISO7816Application {
     public TransitIdentity parseTransitIdentity() {
         if (RavKavTransitData.check(this))
             return RavKavTransitData.parseTransitIdentity(this);
+        if (OpusTransitData.check(this))
+            return OpusTransitData.parseTransitIdentity(this);
         return null;
     }
 

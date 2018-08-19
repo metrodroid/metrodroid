@@ -257,6 +257,20 @@ public class StationTableReader {
         return str.selectBestName(pl.getName(), false);
     }
 
+    public static Trip.Mode getLineMode(String reader, int id) {
+        if (reader == null)
+            return null;
+        StationTableReader str = getSTR(reader);
+        if (str == null)
+            return null;
+        Stations.Line pl = str.mStationDb.getLinesOrDefault(id, null);
+        if (pl == null)
+            return null;
+        if (pl.getTransport() == Stations.TransportType.UNKNOWN)
+            return null;
+        return Trip.Mode.valueOf(pl.getTransport().toString());
+    }
+
     private Trip.Mode getOperatorDefaultMode(int oper) {
         Stations.Operator po = mStationDb.getOperatorsOrDefault(oper, null);
         if (po == null)
