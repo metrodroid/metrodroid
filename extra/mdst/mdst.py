@@ -22,6 +22,7 @@ from __future__ import absolute_import, print_function
 from google.protobuf.internal import encoder
 from stations_pb2 import StationDb, Operator, Line, Station, StationIndex
 import struct
+import csv
 
 SCHEMA_VER = 1
 
@@ -115,3 +116,37 @@ class MdstWriter(object):
     return index_end_off
 
 
+def read_stops_from_csv(db, csv_f):
+  exread = csv.DictReader(csv_f)
+
+  for stop in exread:
+    s = Station()
+    s.id = int(stop['reader_id'], 0)
+    s.name.english = stop['stop_name']
+    if 'local_name' in stop and stop['local_name']:
+      s.name.local = stop['local_name']
+    if 'short_name' in stop and stop['short_name']:
+      s.name.english_short = stop['short_name']
+    y = stop.get('stop_lat', '').strip()
+    x = stop.get('stop_lon', '').strip()
+    if y and x:
+      s.latitude = float(y)
+      s.longitude = float(x)
+
+    db.push_station(s)
+
+
+def read_operators_from_csv(db, csv_f):
+  opread = csv.DictReader(csv_f)
+    
+  for op in opread:
+    oppb = Operator()
+    oppb.name.english = op['name']
+    if 'short_name' in op and op['short_name']:
+      oppb.name.english_short = op['short_name']
+    if 'local_name' in op and op['local_name']:
+      oppb.name.local = op['local_name']
+    if 'mode' in op and op['mode']:
+      oppb.default_transport = TransportType.Value(op['mode'])
+    operators[int(op['id'], 0)] = oppb
+    operators_f.close()

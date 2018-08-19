@@ -26,7 +26,7 @@ from argparse import ArgumentParser, FileType
 from datetime import datetime, timedelta
 from gtfstools import Gtfs, GtfsDialect
 from stations_pb2 import Station, Operator, TransportType
-from mdst import MdstWriter
+import mdst
 import codecs, csv, sqlite3
 
 DB_SCHEMA = """
@@ -101,7 +101,7 @@ def compile_stops_from_gtfs(input_gtfs_f, output_f, matching_f=None, version=Non
         operators[int(op['id'], 0)] = oppb
       operators_f.close()
 
-  db = MdstWriter(
+  db = mdst.MdstWriter(
     fh=open(output_f, 'wb'),
     version=version,
     operators=operators,
@@ -198,22 +198,7 @@ def compile_stops_from_gtfs(input_gtfs_f, output_f, matching_f=None, version=Non
     matching_f.close()
 
   if extra_f is not None:
-    exread = csv.DictReader(extra_f)
-
-    for stop in exread:
-      s = Station()
-      s.id = int(stop['reader_id'], 0)
-      s.name.english = stop['stop_name']
-      if 'short_name' in stop and stop['short_name']:
-        s.name.english_short = stop['short_name']
-      y = float(stop['stop_lat'].strip())
-      x = float(stop['stop_lon'].strip())
-      if y and x:
-        s.latitude = y
-        s.longitude = x
-
-      db.push_station(s)
-      station_count += 1
+    mdst.read_stops_from_csv(db, extra_f)
     extra_f.close()
 
   index_end_off = db.finalise()
