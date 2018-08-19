@@ -24,7 +24,6 @@ import android.support.annotation.Nullable;
 import org.simpleframework.xml.Attribute;
 import org.simpleframework.xml.Element;
 import org.simpleframework.xml.ElementList;
-import org.simpleframework.xml.Root;
 
 import java.io.EOFException;
 import java.io.IOException;
@@ -62,7 +61,7 @@ public class ISO7816Application {
     }
 
     @Attribute(name = "type")
-    @SuppressWarnings("FieldCanBeLocal")
+    @SuppressWarnings({"FieldCanBeLocal", "unused"})
     private String mType;
 
     @Element(name = "application-data")
@@ -129,14 +128,49 @@ public class ISO7816Application {
         return null;
     }
 
-    public static byte[] findAppInfoTag(byte[] newApp, byte id) {
-        for (int p = 2; p < newApp[1]; ) {
-            if (newApp[p] == id) {
-                // Application name
-                return Utils.byteArraySlice(newApp, p + 2, newApp[p + 1]);
-            } else {
-                p += newApp[p + 1] + 2;
+    // return: <leadBits, id, idlen>
+    private static int[] decodeTLVID(byte[] buf, int p) {
+        int headByte = buf[p] & 0xff;
+        int leadBits = headByte >> 5;
+        if ((headByte & 0x1f) != 0x1f)
+            return new int[]{leadBits, headByte & 0x1f, 1};
+        int val = 0, len = 1;
+        do
+            val = (val << 7) | (buf[p + len] & 0x7f);
+        while ((buf[len++] & 0x80) != 0);
+        return new int[]{leadBits, val, len};
+    }
+
+    // return lenlen, lenvalue
+    private static int[] decodeTLVLen(byte[] buf, int p) {
+        int headByte = buf[p] & 0xff;
+        if ((headByte >> 7) == 0)
+            return new int[]{1, headByte & 0x7f};
+        int numfollowingbytes = headByte & 0x7f;
+        return new int[]{1+numfollowingbytes,
+                Utils.byteArrayToInt(buf, p + 1, numfollowingbytes)};
+    }
+
+    public static byte[] findBERTLV(byte[] buf, int targetLeadBits, int targetId, boolean keepHeader) {
+        // Skip ID
+        int p = decodeTLVID(buf, 0)[2];
+        int[]lenfieldhead = decodeTLVLen(buf, p);
+        p += lenfieldhead[0];
+        int fulllen = lenfieldhead[1];
+
+        while (p < fulllen) {
+            int []id = decodeTLVID(buf, p);
+            int idlen = id[2];
+            int []lenfield = decodeTLVLen(buf, p + idlen);
+            int lenlen = lenfield[0];
+            int datalen = lenfield[1];
+            if (id[0] == targetLeadBits && id[1] == targetId) {
+                if (keepHeader)
+                    return Utils.byteArraySlice(buf, p, idlen + lenlen + datalen);
+                return Utils.byteArraySlice(buf, p + idlen + lenlen, datalen);
             }
+
+            p += idlen + lenlen + datalen;
         }
         return null;
     }

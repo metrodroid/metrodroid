@@ -22,7 +22,6 @@ package au.id.micolous.metrodroid.transit.tmoney;
 import android.os.Parcel;
 import android.os.Parcelable;
 import android.support.annotation.Nullable;
-import android.text.Spanned;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -30,7 +29,6 @@ import java.util.List;
 
 import au.id.micolous.farebot.R;
 import au.id.micolous.metrodroid.card.iso7816.ISO7816Application;
-import au.id.micolous.metrodroid.card.iso7816.ISO7816Card;
 import au.id.micolous.metrodroid.card.iso7816.ISO7816Record;
 import au.id.micolous.metrodroid.card.iso7816.ISO7816Selector;
 import au.id.micolous.metrodroid.card.tmoney.TMoneyCard;
@@ -52,7 +50,6 @@ public class TMoneyTransitData extends TransitData {
         }
     };
 
-    private static final byte TMONEY_INFO_TAG = (byte )0xb0;
 
     private final String mSerialNumber;
     private final int mBalance;
@@ -124,8 +121,12 @@ public class TMoneyTransitData extends TransitData {
         return new TransitIdentity(Utils.localizeString(R.string.card_name_tmoney), parseSerial(card));
     }
 
+    private static byte[] getSerialTag(TMoneyCard card) {
+        return ISO7816Application.findBERTLV(card.getAppData(), 5, 0x10, false);
+    }
+
     private static String parseSerial(TMoneyCard card) {
-        byte []tmoneytag = ISO7816Application.findAppInfoTag(card.getAppData(), TMONEY_INFO_TAG);
+        byte []tmoneytag = getSerialTag(card);
         StringBuilder res = new StringBuilder();
         for (int i = 0; i < 4; i++)
             res.append(" ").append(Utils.getHexString(tmoneytag, 4 + 2 * i, 2));
@@ -133,7 +134,7 @@ public class TMoneyTransitData extends TransitData {
     }
 
     private static String parseDate(TMoneyCard card) {
-        byte []tmoneytag = ISO7816Application.findAppInfoTag(card.getAppData(), TMONEY_INFO_TAG);
+        byte []tmoneytag = getSerialTag(card);
         return Utils.getHexString(tmoneytag, 17, 2) + "/"
                 + Utils.getHexString(tmoneytag, 19, 1);
     }

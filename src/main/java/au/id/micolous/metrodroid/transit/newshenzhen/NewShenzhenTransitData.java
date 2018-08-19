@@ -68,10 +68,10 @@ public class NewShenzhenTransitData extends TransitData {
         // restore sign bit
         mBalance = bal | ((bal & 0x40000000) << 1);
         mSerial = parseSerial(card);
-        byte []szttag = ISO7816Application.findAppInfoTag(card.getAppData(), (byte) 0xa5);
+        byte []szttag = getTagInfo(card);
 
-        mValidityStart = Utils.byteArrayToInt(szttag, 27, 4);
-        mValidityEnd = Utils.byteArrayToInt(szttag, 31, 4);
+        mValidityStart = Utils.byteArrayToInt(szttag, 20, 4);
+        mValidityEnd = Utils.byteArrayToInt(szttag, 24, 4);
 
         mTrips = new ArrayList<>();
         for (ISO7816Record record : card.getFile(ISO7816Selector.makeSelector(0x18)).getRecords()) {
@@ -156,9 +156,13 @@ public class NewShenzhenTransitData extends TransitData {
         return Integer.toString(sn) + "(" + Integer.toString(lastDigit) + ")";
     }
 
+    private static byte[] getTagInfo(NewShenzhenCard card) {
+        byte []szttag = ISO7816Application.findBERTLV(card.getAppData(), 5,  5, true);
+        return ISO7816Application.findBERTLV(szttag, 4,  0xc, false);
+    }
+
     private static int parseSerial(NewShenzhenCard card) {
-        byte []szttag = ISO7816Application.findAppInfoTag(card.getAppData(), (byte) 0xa5);
-        return Utils.byteArrayToInt(Utils.reverseBuffer(Utils.byteArraySlice(szttag, 23,4)));
+        return Utils.byteArrayToIntReversed(getTagInfo(card), 16,4);
     }
 
     @Override
