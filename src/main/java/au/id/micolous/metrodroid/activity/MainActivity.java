@@ -121,7 +121,7 @@ public class MainActivity extends MetrodroidActivity {
             public void onAnimationEnd(Animation animation) {
                 llCardViewGroup.setVisibility(View.GONE);
                 try {
-                    Thread.sleep(3000);
+                    Thread.sleep(1000);
                 } catch (InterruptedException e) {
                     return;
                 }
@@ -161,7 +161,7 @@ public class MainActivity extends MetrodroidActivity {
         @Override
         protected Void doInBackground(MainActivity... activities) {
             try {
-                Thread.sleep(10000);
+                Thread.sleep(5000);
             } catch (InterruptedException e) {
                 return null;
             }
