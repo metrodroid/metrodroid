@@ -926,6 +926,8 @@
     <!-- Translators: Podorozhnik is the name of the ticketing system in Saint Petersburg (Russian:
     Подорожник). May be transliterated. -->
     <string name="podorozhnik_topup">Podorozhnik top-up</string>
+    <string name="podorozhnik_gate">gate %s</string>
+    <string name="podorozhnik_tvm">TVM %d</string>
 
     <string name="led_bus">Saint Petersburg Bus</string>
     <!-- Translators: The Saint Petersburg Metro (Russian: Петербу́ргский метрополитен) is the
