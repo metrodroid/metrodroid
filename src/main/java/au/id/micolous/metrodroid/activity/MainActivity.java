@@ -24,21 +24,28 @@ package au.id.micolous.metrodroid.activity;
 
 import android.app.PendingIntent;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.nfc.NfcAdapter;
 import android.nfc.tech.IsoDep;
 import android.nfc.tech.MifareClassic;
 import android.nfc.tech.MifareUltralight;
 import android.nfc.tech.NfcA;
 import android.nfc.tech.NfcF;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import au.id.micolous.farebot.R;
 import au.id.micolous.metrodroid.MetrodroidApplication;
+import au.id.micolous.metrodroid.transit.CardInfo;
 import au.id.micolous.metrodroid.util.Utils;
 
 public class MainActivity extends MetrodroidActivity {
@@ -51,6 +58,9 @@ public class MainActivity extends MetrodroidActivity {
             new String[]{NfcA.class.getName()},
             new String[]{NfcF.class.getName()},
     };
+    private Animation mCardSlideIn;
+    private Animation mCardSlideOut;
+    private ViewGroup llCardViewGroup;
 
     @Override
     protected Integer getThemeVariant() {
@@ -78,6 +88,87 @@ public class MainActivity extends MetrodroidActivity {
         }
 
         updateObfuscationNotice(mNfcAdapter != null);
+
+        // Setup transitions for llCard
+        llCardViewGroup = findViewById(R.id.llCard);
+        mCardSlideIn = AnimationUtils.loadAnimation(this, R.anim.slide_in);
+        mCardSlideIn.setAnimationListener(new Animation.AnimationListener() {
+            @Override
+            public void onAnimationStart(Animation animation) {
+                llCardViewGroup.setVisibility(View.VISIBLE);
+            }
+
+            @Override
+            public void onAnimationEnd(Animation animation) {
+
+            }
+
+            @Override
+            public void onAnimationRepeat(Animation animation) {
+
+            }
+        });
+
+
+        mCardSlideOut = AnimationUtils.loadAnimation(this, R.anim.slide_out);
+        mCardSlideOut.setAnimationListener(new Animation.AnimationListener() {
+            @Override
+            public void onAnimationStart(Animation animation) {
+
+            }
+
+            @Override
+            public void onAnimationEnd(Animation animation) {
+                llCardViewGroup.setVisibility(View.GONE);
+                try {
+                    Thread.sleep(3000);
+                } catch (InterruptedException e) {
+                    return;
+                }
+                setupCardAnimation();
+            }
+
+            @Override
+            public void onAnimationRepeat(Animation animation) {
+
+            }
+        });
+
+        setupCardAnimation();
+    }
+
+    private void setupCardAnimation() {
+        // Pick some card
+        // TODO: make this better
+        Bitmap b = CardInfo.OPAL.getBitmap(getResources());
+
+        // Set it to the image
+        ImageView v = findViewById(R.id.imgCard);
+        v.setImageBitmap(b);
+
+        // Animate it in
+        llCardViewGroup.startAnimation(mCardSlideIn);
+
+        // Schedule its removal
+        new CardAnimationReplacement().execute(this);
+    }
+
+    private void replaceCard() {
+        runOnUiThread(() -> findViewById(R.id.llCard).startAnimation(mCardSlideOut));
+    }
+
+    static class CardAnimationReplacement extends AsyncTask<MainActivity, Void, Void> {
+        @Override
+        protected Void doInBackground(MainActivity... activities) {
+            try {
+                Thread.sleep(10000);
+            } catch (InterruptedException e) {
+                return null;
+            }
+
+            activities[0].replaceCard();
+            return null;
+        }
     }
 
     @Override

@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="48mm"
+   height="64mm"
+   viewBox="0 0 48 64.000003"
+   version="1.1"
+   id="svg3910"
+   inkscape:version="0.92.3 (2405546, 2018-03-11)"
+   sodipodi:docname="metro-phone.svg">
+  <defs
+     id="defs3904" />
+  <sodipodi:namedview
+     id="base"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageopacity="0.0"
+     inkscape:pageshadow="2"
+     inkscape:zoom="3.9999998"
+     inkscape:cx="82.323606"
+     inkscape:cy="131.2307"
+     inkscape:document-units="mm"
+     inkscape:current-layer="layer1"
+     showgrid="true"
+     fit-margin-top="0"
+     fit-margin-left="0"
+     fit-margin-right="0"
+     fit-margin-bottom="0"
+     showguides="true"
+     inkscape:guide-bbox="true"
+     inkscape:window-width="2560"
+     inkscape:window-height="1376"
+     inkscape:window-x="0"
+     inkscape:window-y="27"
+     inkscape:window-maximized="1"
+     inkscape:measure-start="0,0"
+     inkscape:measure-end="0,0">
+    <inkscape:grid
+       type="xygrid"
+       id="grid3941"
+       units="mm"
+       spacingy="0.25"
+       spacingx="0.25"
+       empspacing="4" />
+  </sodipodi:namedview>
+  <metadata
+     id="metadata3907">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title></dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1"
+     transform="translate(-37.639351,-19.979636)">
+    <rect
+       style="fill:#00ff00;fill-opacity:1;stroke:none"
+       id="phoneW"
+       width="44"
+       height="54"
+       x="40"
+       y="30" />
+    <path
+       id="logo"
+       style="fill:#000000;fill-opacity:1;fill-rule:evenodd;stroke:none"
+       d="m 70.639351,69.979635 4,-1 v -4 l -4,1 z m -18,-4 -4,-1 v 4 l 4,1 z m 25,-11.999998 v 17.999998 l -16,4 -16,-4 V 53.979637 l 16,-4 z m -25,-3.999998 v -5.000002 l 7,-2 v 5.000002 l 2,-0.500002 2,0.500002 v -5.000002 l 7,2.000002 v 5 l 4,1 v -9 l -13,-4.000002 -13,4.000002 v 9 z m -7,28.999998 h 3 v -3.000004 l 4,2e-6 v 3.000002 h 18 v -3.000002 l 4,-2e-6 v 3.000004 h 3 v 3 h -32 z"
+       inkscape:connector-curvature="0" />
+    <rect
+       style="fill:#4d4d4d;fill-opacity:1;stroke:none"
+       id="phoneG"
+       width="30"
+       height="5"
+       x="43"
+       y="24" />
+    <path
+       style="fill:#000000;fill-opacity:1;stroke:none"
+       d="m 11.337891,3.7792969 c -3.7788358,0 -7.5585941,3.779765 -7.5585941,7.5585941 V 241.89062 H 11.337891 V 49.133635 c 0,-3.779297 3.780219,-7.558593 7.560547,-7.558593 H 162.51953 c 3.77968,0 7.55921,3.779296 7.55859,7.558593 V 241.89062 h 7.56055 V 11.337891 c 0,-3.7788291 -3.7804,-7.5585941 -7.56055,-7.5585941 z M 28.345703,18.896484 c 3.131555,-3.48e-4 5.67027,2.538367 5.669922,5.669922 3.48e-4,3.131556 -2.538366,5.67027 -5.669922,5.669922 -3.130793,-7.3e-4 -5.668317,-2.539129 -5.667969,-5.669922 -3.48e-4,-3.130793 2.537176,-5.669192 5.667969,-5.669922 z m 34.015625,2.001954 h 56.693362 c 3.77953,0 5.66992,-0.111559 5.66992,3.667968 0,3.779528 -1.89039,3.669922 -5.66992,3.669922 H 62.361328 c -3.779527,0 -5.667969,0.109606 -5.667969,-3.669922 0,-3.779527 1.888442,-3.667968 5.667969,-3.667968 z"
+       transform="matrix(0.26458333,0,0,0.26458333,37.639351,19.979636)"
+       id="phoneK"
+       inkscape:connector-curvature="0"
+       sodipodi:nodetypes="ssccssscccssscccccsssssss"
+       inkscape:label="#phoneK" />
+  </g>
+</svg>

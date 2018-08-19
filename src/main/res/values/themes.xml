@@ -30,6 +30,9 @@
         <item name="TransportIcons">@array/Metrodroid.Dark.TransportIcons</item>
         <item name="colorPrimary">@color/Metrodroid.Dark.HeaderColor</item>
         <item name="colorPrimaryDark">@color/Metrodroid.Dark.HeaderColor</item>
+        <item name="PhoneColor">@android:color/white</item>
+        <item name="PhoneSpeakerColor">@android:color/darker_gray</item>
+        <item name="PhoneLogoColor">@android:color/white</item>
     </style>
 
     <style name="Metrodroid.Dark.Main" parent="Metrodroid.Dark">
@@ -81,6 +84,9 @@
         <item name="TransportIcons">@array/Metrodroid.Light.TransportIcons</item>
         <item name="colorPrimary">@color/Metrodroid.Light.HeaderColor</item>
         <item name="colorPrimaryDark">@color/Metrodroid.Light.HeaderColor</item>
+        <item name="PhoneColor">@android:color/black</item>
+        <item name="PhoneSpeakerColor">@android:color/darker_gray</item>
+        <item name="PhoneLogoColor">@android:color/white</item>
     </style>
 
     <style name="Metrodroid.Light.Main" parent="Metrodroid.Light">
@@ -134,6 +140,9 @@
         <item name="colorPrimary">@color/FareBot.Theme.LighterHeaderColor</item>
         <item name="colorPrimaryDark">@color/FareBot.Theme.HeaderColor</item>
         <item name="TransportIcons">@array/FareBot.Theme.TransportIcons</item>
+        <item name="PhoneColor">@android:color/black</item>
+        <item name="PhoneSpeakerColor">@android:color/darker_gray</item>
+        <item name="PhoneLogoColor">@android:color/white</item>
     </style>
 
     <style name="FareBot.Theme.Main" parent="@style/FareBot.Theme.Base">

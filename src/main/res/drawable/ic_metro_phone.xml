@@ -1,0 +1,12 @@
+<vector android:height="256dp" android:viewportHeight="64"
+    android:viewportWidth="48" android:width="192dp" xmlns:android="http://schemas.android.com/apk/res/android">
+    <path android:fillAlpha="1" android:fillColor="?attr/colorPrimary"
+        android:pathData="M2.3606,10.0204h44v54h-44z" android:strokeColor="#00000000"/>
+    <path android:fillAlpha="1" android:fillColor="?attr/PhoneLogoColor"
+        android:fillType="evenOdd"
+        android:pathData="m33,50 l4,-1v-4l-4,1zM15,46 L11,45v4l4,1zM40,34v18l-16,4 -16,-4L8,34l16,-4zM15,30v-5l7,-2v5l2,-0.5 2,0.5v-5l7,2v5l4,1v-9l-13,-4 -13,4v9zM8,59h3v-3l4,0v3h18v-3l4,-0v3h3v3h-32z" android:strokeColor="#00000000"/>
+    <path android:fillAlpha="1" android:fillColor="?attr/PhoneSpeakerColor"
+        android:pathData="M5.3606,4.0204h30v5h-30z" android:strokeColor="#00000000"/>
+    <path android:fillAlpha="1" android:fillColor="?attr/PhoneColor"
+        android:pathData="m2.9998,0.9999c-0.9998,0 -1.9999,1.0001 -1.9999,1.9999L0.9999,64.0002L2.9998,64.0002L2.9998,12.9999c0,-0.9999 1.0002,-1.9999 2.0004,-1.9999L43,11.0001c1,0 2,0.9999 1.9999,1.9999L44.9998,64.0002l2.0004,0L47.0002,2.9998c0,-0.9998 -1.0002,-1.9999 -2.0004,-1.9999zM7.4998,4.9997c0.8286,-0.0001 1.5003,0.6716 1.5002,1.5002 0.0001,0.8286 -0.6716,1.5003 -1.5002,1.5002 -0.8284,-0.0002 -1.4997,-0.6718 -1.4997,-1.5002 -0.0001,-0.8284 0.6713,-1.5 1.4997,-1.5002zM16.4998,5.5294l15.0001,0c1,0 1.5002,-0.0295 1.5002,0.9705 0,1 -0.5002,0.971 -1.5002,0.971L16.4998,7.4709c-1,0 -1.4997,0.029 -1.4997,-0.971 0,-1 0.4997,-0.9705 1.4997,-0.9705z" android:strokeColor="#00000000"/>
+</vector>

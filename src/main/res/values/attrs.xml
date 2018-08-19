@@ -25,4 +25,7 @@
     <attr name="LockImage" format="reference" />
     <attr name="ListHeaderTextColor" format="reference" />
     <attr name="TransportIcons" format="reference" />
+    <attr name="PhoneColor" format="reference" />
+    <attr name="PhoneSpeakerColor" format="reference" />
+    <attr name="PhoneLogoColor" format="reference" />
 </resources>
