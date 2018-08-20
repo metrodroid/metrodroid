@@ -22,15 +22,51 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 """
 
 from argparse import ArgumentParser, FileType
-from json import dumps
 from lxml import objectify
 from os.path import join
 from zipfile import ZipFile
+import base64
+import codecs
 
 
-def zipify(input_xml, output_zipf, mfcdump):
+def getMobibName(file_id, record_id):
+    full = '/'.join([file_id, record_id])
+    mapping = {
+        ':2/1': 'ICC',
+        ':3f1c/1': 'Holder1',
+        ':3f1c/2': 'Holder2',
+        ':2000:2001/1': 'EnvHol1',
+        ':2000:2001/2': 'EnvHol2',
+        ':2000:2010/1': 'EvLog1',
+        ':2000:2010/2': 'EvLog2',
+        ':2000:2010/3': 'EvLog3',
+        ':2000:2050/1': 'ConList',
+        ':2000:2020/1': 'Contra1',
+        ':2000:2020/2': 'Contra2',
+        ':2000:2020/3': 'Contra3',
+        ':2000:2020/4': 'Contra4',
+        ':2000:2020/5': 'Contra5',
+        ':2000:2020/6': 'Contra6',
+        ':2000:2020/7': 'Contra7',
+        ':2000:2020/8': 'Contra8',
+        ':2000:2020/9': 'Contra9',
+        ':2000:2020/10': 'Contra10',
+        ':2000:2020/11': 'Contra11',
+        ':2000:2020/12': 'Contra12',
+        ':2000:2069/1': 'Counter',
+        ':1000:1014/1': 'LoadLog',
+        ':1000:1015/1': 'Purcha1',
+        ':1000:1015/2': 'Purcha2',
+        ':1000:1015/3': 'Purcha3',
+    }
+    return mapping.get(full, full)
+
+
+def zipify(input_xml, output_zipf, mfcdump, mobib):
   output_zip = None
-  if not mfcdump:
+  if mobib:
+      output_zipf = codecs.getwriter('ascii')(output_zipf)
+  elif not mfcdump:
     output_zip = ZipFile(output_zipf, 'w')
   xml = objectify.parse(input_xml)
   root = xml.getroot()
@@ -39,12 +75,14 @@ def zipify(input_xml, output_zipf, mfcdump):
   elif root.tag == 'card':
     cards = [root]
   else:
-    print 'unexpected root node: %r' % (root.tag,)
+    print ('unexpected root node: %r' % (root.tag,))
     return
 
-  if mfcdump and len(cards) != 1:
-    print 'expected 1 card dump in mfcdump mode, there were %d' % (len(cards),)
+  if (mfcdump or mobib) and len(cards) != 1:
+    print ('expected 1 card dump in mfcdump and mobib modes, there were %d' % (len(cards),))
     return
+
+  used_card_dirs = set()
 
   # iterate through cards
   for card in cards:
@@ -54,10 +92,20 @@ def zipify(input_xml, output_zipf, mfcdump):
     card_type = card.get('type')
 
     if mfcdump and card_type != '0':
-      print 'Only MIFARE Classic cards can be dumped this way'
+      print ('Only MIFARE Classic cards can be dumped this way')
       return
-    
+
+    if mobib and card_type != '5':
+      print ('Only Calypso cards can be dumped this way')
+      return
+
     card_dir = 'scan_%s_%s' % (scanned_at, card_id)
+    if card_dir in used_card_dirs:
+        counter = 1
+        while ('%s_%s' % (card_dir, counter)) in used_card_dirs:
+            counter += 1
+        card_dir = '%s_%s' % (card_dir, counter)
+    used_card_dirs.add(card_dir)
 
     sectors = card.find('sectors')
     if sectors is not None:
@@ -68,7 +116,7 @@ def zipify(input_xml, output_zipf, mfcdump):
         sector_id = sector.get('index')
         if sector.get('unauthorized') == 'true':
           if mfcdump:
-            print 'locked sector found, cannot recreate dump'
+            print ('locked sector found, cannot recreate dump')
             return
 
           # Locked sector, skip and leave marker
@@ -80,25 +128,43 @@ def zipify(input_xml, output_zipf, mfcdump):
           # Lets pull some blocks!
           assert block.get('type') == 'data'
           if mfcdump:
-            output_zipf.write(str(block.find('data')).decode('base64'))
+            output_zipf.write(base64.b64decode(block.find('data').text))
           else:
-            output_zip.writestr(join(card_dir, sector_id, block.get('index')), str(block.find('data')).decode('base64'))
+            output_zip.writestr(join(card_dir, sector_id, block.get('index')),
+                                base64.b64decode(block.find('data').text))
       continue
 
     applications = card.find('applications')
     if applications is not None:
       # MIFARE DESfire or like
       for application in applications.findall('application'):
-        application_id = application.get('id')
-        for f in application.find('files').findall('file'):
+        application_id = application.get('id') or application.get('type')
+        files = application.find('files')
+        for f in files.findall('file') if files is not None else []:
           file_id = f.get('id')
           error = f.find('error')
           if error is not None:
             continue
           
-          output_zip.writestr(join(card_dir, application_id, file_id), str(f.find('data')).decode('base64'))
-      continue
-          
+          output_zip.writestr(join(card_dir, application_id, file_id),
+                              base64.b64decode(f.find('data').text))
+        records = application.find('records')
+        for f in records.findall('file') if records is not None else []:
+            file_id = f.get('name')
+            error = f.find('error')
+            if error is not None:
+              continue
+
+            for rec in f.find('records').findall('record'):
+              record_id = rec.get('index')
+              if mobib:
+                hexs = base64.b64decode(rec.text).hex()
+                hexsp = ' '.join(a+b for a,b in zip(hexs[::2], hexs[1::2]))
+                output_zipf.write(getMobibName(file_id, record_id) + ": "
+                                  + hexsp.upper() + "\n")
+              else:
+                output_zip.writestr(join(card_dir, application_id, file_id, record_id), base64.b64decode(rec.text))
+
     systems = card.find('systems')
     if systems is not None:
       # FeliCa
@@ -107,13 +173,13 @@ def zipify(input_xml, output_zipf, mfcdump):
         for service in system.find('services').findall('service'):
           service_id = service.get('code')
           last_addr = -1
-          data = ''
+          data = b''
           for block in service.find('blocks').findall('block'):
             addr = int(block.get('address'))
             assert last_addr < addr, 'blocks not in order'
             last_addr = addr
 
-            data += str(block).decode('base64')
+            data += base64.b64decode(block.text)
 
           output_zip.writestr(join(card_dir, system_id, service_id), data)
       continue
@@ -123,7 +189,7 @@ def zipify(input_xml, output_zipf, mfcdump):
       # MIFARE Ultralight
       for page in pages.findall('page'):
         page_id = page.get('index')
-        data = str(page.find('data')).decode('base64')
+        data = base64.b64decode(page.find('data').text)
         output_zip.writestr(join(card_dir, page_id), data)
       
       continue
@@ -143,8 +209,11 @@ def main():
   parser.add_argument('-m', '--mfcdump', action='store_true',
     help='Instead of writing a ZIP file, store an MFC/MFD raw binary backup of the card. Only for single MIFARE Classic exports.')
 
+  parser.add_argument('--mobib', action='store_true',
+                      help='Instead of writing a ZIP file, store a MOBIB-extractor raw text dump of the card. Only for single Calypso exports.')
+
   options = parser.parse_args()
-  zipify(options.input_xml[0], options.output, options.mfcdump)
+  zipify(options.input_xml[0], options.output, options.mfcdump, options.mobib)
 
 
 if __name__ == '__main__':
