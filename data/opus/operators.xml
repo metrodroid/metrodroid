@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
 <!--
   operators.xml
 
@@ -16,7 +17,6 @@
   You should have received a copy of the GNU General Public License
   along with this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
-<?xml version="1.0" encoding="utf-8"?>
 <operators>
     <operator id="20" name="RTC" file="rtc" logo="rtc" />
     <operator id="8" name="STM" file="stm" logo="stm" />

@@ -42,7 +42,7 @@ translations = {
   "METRO Ligne orange": "METRO Orange line",
   "METRO Ligne verte": "METRO Green line",
   "METRO Ligne jaune": "METRO Yellow line",
-  "METRO Ligne bleue": "METRO Bluw line"
+  "METRO Ligne bleue": "METRO Blue line"
 }
 
 
