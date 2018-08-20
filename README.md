@@ -34,7 +34,10 @@ linux.conf.au 2018, in my talk, [Tap on to reverse engineering](https://youtu.be
 * [Rob O'Regan](http://www.robx1.net/nswtkt/private/manlyff/manlyff.htm) (Manly Fast Ferry card image)
 * [The Noun Project][15] (Various icons)
 * [naofum](https://github.com/naofum) (Japanese translations)
-* [Vladimir Serbinenko](https://github.com/phcoder) (Podorozhnik, Troika)
+* [Vladimir Serbinenko](https://github.com/phcoder) (Podorozhnik, Troika, Compass, Shenzhen Tong, Rav-Kav, T-money)
+* [Toomas Losin](http://www.lenrek.net) (Compass)
+* [Sinpo Lib](https://github.com/sinpolib) (Shenzhen Tong)
+* Maria Komar (Podorozhnik database and dumps)
 * [Bondan](https://github.com/sybond) [Sumbodo](http://sybond.web.id) (Kartu Multi Trip, COMMET)
 
 ## Supported card protocols
