@@ -36,7 +36,9 @@ import au.id.micolous.metrodroid.transit.Trip;
 import au.id.micolous.metrodroid.util.Utils;
 
 public class RavKavTransitData extends TransitData {
-    private static final String RAVKAV_TICKET_ENV = "06ec06000006";
+    // 376 = Israel
+    private static final int RAVKAV_NETWORK_ID_A = 0x37602;
+    private static final int RAVKAV_NETWORK_ID_B = 0x37603;
     private final String mSerial;
     private final int mBalance;
     private final List<RavKavTrip> mTrips;
@@ -81,7 +83,10 @@ public class RavKavTransitData extends TransitData {
 
     public static boolean check(CalypsoApplication card) {
         try {
-            return RAVKAV_TICKET_ENV.equals(Utils.getHexString(card.getFile(CalypsoApplication.File.TICKETING_ENVIRONMENT).getRecord(1).getData(), 0, 6));
+            int networkID = Utils.getBitsFromBuffer(
+                    card.getFile(CalypsoApplication.File.TICKETING_ENVIRONMENT).getRecord(1).getData(),
+                    3, 20);
+            return RAVKAV_NETWORK_ID_A == networkID || RAVKAV_NETWORK_ID_B == networkID;
         } catch (Exception e) {
             return false;
         }
