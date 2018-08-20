@@ -31,13 +31,11 @@ ovc.mdst: sqlite2pb-ovc.py stations_pb2.py mdst.py ../../data/ovc_stations.db3
 shenzhen.mdst: csv2pb-szt.py stations_pb2.py mdst.py ../../data/szt/*.txt
 	python3 csv2pb-szt.py
 
-<<<<<<< HEAD
 compass.mdst: csv2pb.py stations_pb2.py mdst.py ../../data/compass/stations.csv
 	python3 csv2pb.py ../../data/compass/stations.csv -o $@ -V 2
-=======
+
 troika.mdst: csv2pb.py stations_pb2.py mdst.py ../../data/troika/stations.csv
 	python3 csv2pb.py ../../data/troika/stations.csv -o $@ -V 2 -L ru
->>>>>>> phcoder/troika
 
 %.csv: %.mdst dump2csv.py stations_pb2.py
 	python3 dump2csv.py -o $@ $<
