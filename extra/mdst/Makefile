@@ -2,7 +2,7 @@
 
 .PHONY: all clean
 
-all: stations_pb2.py suica_rail.mdst suica_bus.mdst shenzhen.mdst ovc.mdst kmt.mdst orca.mdst compass.mdst troika.mdst podorozhnik.mdst suica_rail.csv suica_bus.csv ovc.csv shenzhen.csv orca.csv compass.csv kmt.csv troika.csv orca.csv podorozhnik.csv
+all: stations_pb2.py suica_rail.mdst suica_bus.mdst shenzhen.mdst ovc.mdst kmt.mdst orca.mdst compass.mdst troika.mdst opus.mdst podorozhnik.mdst suica_rail.csv suica_bus.csv ovc.csv shenzhen.csv orca.csv compass.csv kmt.csv troika.csv opus.csv orca.csv podorozhnik.csv
 
 stations_pb2.py: stations.proto
 	protoc --python_out=. stations.proto
@@ -33,6 +33,9 @@ shenzhen.mdst: csv2pb-szt.py stations_pb2.py mdst.py ../../data/szt/*.txt
 
 podorozhnik.mdst: csv2pb-podorozhnik.py stations_pb2.py mdst.py ../../data/podorozhnik/*.csv
 	python3 csv2pb-podorozhnik.py
+
+opus.mdst: xml2pb-opus.py stations_pb2.py mdst.py ../../data/opus/*.xml
+	python3 xml2pb-opus.py
 
 compass.mdst: csv2pb.py stations_pb2.py mdst.py ../../data/compass/stations.csv
 	python3 csv2pb.py ../../data/compass/stations.csv -o $@ -V 2

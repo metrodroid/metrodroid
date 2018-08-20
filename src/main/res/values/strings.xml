@@ -574,6 +574,7 @@
     <string name="location_helsinki_finland">Helsinki, Finland</string>
     <string name="location_sydney_australia">Sydney, Australia</string>
     <string name="location_vancouver">Vancouver, BC, Canada</string>
+    <string name="location_quebec">Québec province, Canada</string>
 
     <!--
       Translators:
@@ -883,6 +884,10 @@
     <string name="compass_ticket_type_regular">Regular</string>
     <string name="compass_expiry_date">Expiry date</string>
     <string name="compass_note">Single ride tickets only</string>
+
+    <string name="opus_subscription">Subscription</string>
+    <string name="opus_card_expiry_date">Card Expiry</string>
+    <string name="opus_single_trips">Single trips</string>
 
     <!-- Troika / Тройка, Podorozhnik / Подорожник (Russia) -->
 
