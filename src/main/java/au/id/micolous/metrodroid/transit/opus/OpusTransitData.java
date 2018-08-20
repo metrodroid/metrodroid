@@ -45,7 +45,8 @@ import au.id.micolous.metrodroid.ui.ListItem;
 import au.id.micolous.metrodroid.util.Utils;
 
 public class OpusTransitData extends TransitData {
-    private static final int OPUS_TICKET_ENV = 0x7892;
+    // 124 = Canada
+    private static final int OPUS_NETWORK_ID = 0x124001;
     public static final String NAME = "Opus";
     private final String mSerial;
     private final int mExpiry;
@@ -124,7 +125,8 @@ public class OpusTransitData extends TransitData {
 
     public static boolean check(CalypsoApplication card) {
         try {
-            return OPUS_TICKET_ENV == Utils.byteArrayToInt(card.getFile(CalypsoApplication.File.TICKETING_ENVIRONMENT).getRecord(1).getData(), 1, 2);
+            return OPUS_NETWORK_ID == Utils.getBitsFromBuffer(card.getFile(CalypsoApplication.File.TICKETING_ENVIRONMENT).getRecord(1).getData(),
+                    13, 24);
         } catch (Exception e) {
             return false;
         }
