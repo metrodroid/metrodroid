@@ -86,7 +86,6 @@ public class RavKavTransitData extends TransitData {
             RavKavTrip t = new RavKavTrip(record.getData());
             if (t.shouldBeDropped())
                 continue;
-            RavKavTrip t = new RavKavTrip(record.getData());
             if (last != null && last.shouldBeMerged(t)) {
                 last.merge(t);
                 continue;
