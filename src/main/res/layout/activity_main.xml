@@ -52,7 +52,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="32dp"
                 android:layout_gravity="center"
-                android:gravity="center">
+                android:gravity="center"
+                android:visibility="?attr/MainButtonsVisibility">
 
                 <Button
                     android:layout_width="0dp"

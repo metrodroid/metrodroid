@@ -24,5 +24,7 @@
     <attr name="AddKeysActivityTheme" format="reference" />
     <attr name="LockImage" format="reference" />
     <attr name="ListHeaderTextColor" format="reference" />
+    <attr name="MainButtonsVisibility" format="integer" />
+    <attr name="MainMenuItemsVisibility" format="integer" />
     <attr name="TransportIcons" format="reference" />
 </resources>

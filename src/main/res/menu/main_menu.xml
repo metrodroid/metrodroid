@@ -34,4 +34,16 @@
         android:id="@+id/about"
         android:title="@string/about"
         android:icon="@android:drawable/ic_menu_info_details" />
+    <item
+        android:id="@+id/scanned_cards"
+        android:title="@string/scanned_cards"
+        android:showAsAction="ifRoom"
+        android:visible="?attr/MainMenuItemsVisibility"
+        android:icon="@drawable/ic_history_grey_24dp" />
+    <item
+        android:id="@+id/supported_cards"
+        android:title="@string/supported_cards"
+        android:showAsAction="ifRoom"
+        android:visible="?attr/MainMenuItemsVisibility"
+        android:icon="@drawable/ic_help_outline_grey_24dp" />
 </menu>

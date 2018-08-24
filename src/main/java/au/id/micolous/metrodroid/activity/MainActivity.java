@@ -144,6 +144,12 @@ public class MainActivity extends MetrodroidActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
+            case R.id.supported_cards:
+                onSupportedCardsClick(null);
+                break;
+            case R.id.scanned_cards:
+                onHistoryClick(null);
+                break;
             case R.id.about:
                 startActivity(new Intent(this, AboutActivity.class));
                 break;
