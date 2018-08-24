@@ -60,7 +60,11 @@ import au.id.micolous.metrodroid.util.Utils;
  * - https://github.com/nfc-tools/libnfc/blob/master/examples/pn53x-tamashell-scripts/ReadNavigo.sh
  */
 public class CalypsoApplication extends ISO7816Application {
-    public static final byte[] CALYPSO_FILENAME = Utils.stringToByteArray("1TIC.ICA");
+    public static final byte[][] CALYPSO_FILENAMES =
+            {
+                    Utils.stringToByteArray("1TIC.ICA"),
+                    Utils.stringToByteArray("3MTR.ICA")
+            };
 
     private static final String TAG = CalypsoApplication.class.getName();
     public static final String TYPE = "calypso";
