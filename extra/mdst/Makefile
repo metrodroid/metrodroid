@@ -52,6 +52,10 @@ MDSTS += ravkav.mdst
 ravkav.mdst: csv2pb.py stations_pb2.py mdst.py ../../data/ravkav/operators.csv ../../data/ravkav/stations.csv
 	python3 csv2pb.py -p ../../data/ravkav/operators.csv -o $@ -V 2 ../../data/ravkav/stations.csv
 
+MDSTS += navigo.mdst
+navigo.mdst: csv2pb.py stations_pb2.py mdst.py ../../data/navigo/operators.csv ../../data/navigo/stations.csv
+	python3 csv2pb.py -p ../../data/navigo/operators.csv -o $@ -V 2 ../../data/navigo/stations.csv
+
 MDSTS += compass.mdst
 compass.mdst: csv2pb.py stations_pb2.py mdst.py ../../data/compass/stations.csv
 	python3 csv2pb.py ../../data/compass/stations.csv -o $@ -V 2
