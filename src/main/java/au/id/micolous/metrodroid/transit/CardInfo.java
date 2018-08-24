@@ -33,6 +33,7 @@ import au.id.micolous.farebot.R;
 import au.id.micolous.metrodroid.card.CardType;
 import au.id.micolous.metrodroid.transit.chc_metrocard.ChcMetrocardTransitData;
 import au.id.micolous.metrodroid.transit.compass.CompassUltralightTransitData;
+import au.id.micolous.metrodroid.transit.intercode.IntercodeTransitData;
 import au.id.micolous.metrodroid.transit.kmt.KMTTransitData;
 import au.id.micolous.metrodroid.transit.lax_tap.LaxTapTransitData;
 import au.id.micolous.metrodroid.transit.manly_fast_ferry.ManlyFastFerryTransitData;
@@ -157,6 +158,12 @@ public class CardInfo {
             .setLocation(R.string.location_act_australia)
             .setCardType(CardType.MifareClassic)
             .setKeysRequired()
+            .build();
+
+    public static final CardInfo NAVIGO = new CardInfo.Builder()
+            .setName(IntercodeTransitData.NAVIGO_NAME)
+            .setLocation(R.string.location_paris)
+            .setCardType(CardType.ISO7816)
             .build();
 
     public static final CardInfo NETS_FLASHPAY = new CardInfo.Builder()
@@ -302,6 +309,7 @@ public class CardInfo {
             MOBIB,
             MYKI,
             MYWAY,
+            NAVIGO,
             NETS_FLASHPAY,
             OCTOPUS,
             OPAL,
