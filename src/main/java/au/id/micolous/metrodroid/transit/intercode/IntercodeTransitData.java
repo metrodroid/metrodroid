@@ -63,6 +63,7 @@ import au.id.micolous.metrodroid.util.Utils;
 public class IntercodeTransitData extends TransitData {
     private static final int COUNTRY_ID_FRANCE = 0x250;
     public static final String NAVIGO_NAME = "Navigo";
+    public static final String OURA_NAME = "OùRA";
     private final List<IntercodeSubscription> mSubscriptions;
     private final List<IntercodeTrip> mTrips;
 
@@ -257,6 +258,7 @@ public class IntercodeTransitData extends TransitData {
     private static final Map<Integer, Pair<String, IntercodeLookup>> NETWORKS = new HashMap<>();
 
     static {
+        NETWORKS.put(0x250502, Pair.create(OURA_NAME, new IntercodeLookupSTR("oura")));
         NETWORKS.put(0x250901, Pair.create(NAVIGO_NAME, new IntercodeLookupNavigo()));
         NETWORKS.put(0x250920, Pair.create("Envibus", new IntercodeLookupUnknown()));
     }

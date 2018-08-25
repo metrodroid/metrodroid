@@ -56,6 +56,10 @@ MDSTS += navigo.mdst
 navigo.mdst: csv2pb.py stations_pb2.py mdst.py ../../data/navigo/operators.csv ../../data/navigo/stations.csv
 	python3 csv2pb.py -p ../../data/navigo/operators.csv -o $@ -V 2 ../../data/navigo/stations.csv
 
+MDSTS += oura.mdst
+oura.mdst: csv2pb.py stations_pb2.py mdst.py ../../data/oura/operators.csv ../../data/oura/stations.csv ../../data/oura/lines.csv
+	python3 csv2pb.py -r ../../data/oura/lines.csv -p ../../data/oura/operators.csv -o $@ -V 2 ../../data/oura/stations.csv
+
 MDSTS += compass.mdst
 compass.mdst: csv2pb.py stations_pb2.py mdst.py ../../data/compass/stations.csv
 	python3 csv2pb.py ../../data/compass/stations.csv -o $@ -V 2

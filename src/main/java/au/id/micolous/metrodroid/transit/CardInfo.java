@@ -202,6 +202,11 @@ public class CardInfo {
             .setCardType(CardType.MifareDesfire)
             .build();
 
+    public static final CardInfo OURA = new CardInfo.Builder()
+            .setName(IntercodeTransitData.OURA_NAME)
+            .setLocation(R.string.location_grenoble)
+            .setCardType(CardType.ISO7816)
+            .build();
 
     public static final CardInfo OVCHIP = new CardInfo.Builder()
             .setImageId(R.drawable.ovchip_card)
@@ -315,6 +320,7 @@ public class CardInfo {
             OPAL,
             OPUS,
             ORCA,
+            OURA,
             OVCHIP,
             PASMO,
             PODOROZHNIK,

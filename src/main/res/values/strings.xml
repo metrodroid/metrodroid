@@ -999,4 +999,5 @@
     <string name="subscription_number">Subscription #%s</string>
     <string name="intercode_issuer">Issuer</string>
     <string name="location_paris">Paris, France</string>
+    <string name="location_grenoble">Grenoble, France</string>
 </resources>
