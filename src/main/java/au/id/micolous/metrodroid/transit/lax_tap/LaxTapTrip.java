@@ -19,9 +19,7 @@
 package au.id.micolous.metrodroid.transit.lax_tap;
 
 import android.os.Parcel;
-import android.util.Log;
 
-import au.id.micolous.metrodroid.MetrodroidApplication;
 import au.id.micolous.metrodroid.transit.Station;
 import au.id.micolous.metrodroid.transit.nextfare.NextfareTrip;
 import au.id.micolous.metrodroid.util.StationTableReader;

@@ -36,12 +36,9 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.IOUtils;
 import org.simpleframework.xml.Serializer;
 
-import java.io.File;
-import java.io.InputStream;
 import java.io.OutputStream;
 import java.nio.charset.Charset;
 import java.util.Calendar;

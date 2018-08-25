@@ -19,7 +19,6 @@
  */
 package au.id.micolous.metrodroid.activity;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.nfc.NfcAdapter;

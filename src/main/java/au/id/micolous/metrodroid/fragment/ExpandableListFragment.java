@@ -53,7 +53,6 @@ import android.widget.AdapterView;
 import android.widget.ExpandableListAdapter;
 import android.widget.ExpandableListView;
 import android.widget.FrameLayout;
-import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 

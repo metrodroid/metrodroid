@@ -29,9 +29,6 @@ import au.id.micolous.metrodroid.transit.nextfare.record.NextfareTopupRecord;
 import au.id.micolous.metrodroid.util.Utils;
 
 import java.util.Calendar;
-import java.util.TimeZone;
-
-import static au.id.micolous.metrodroid.util.Utils.UTC;
 
 /**
  * Represents trips on Nextfare

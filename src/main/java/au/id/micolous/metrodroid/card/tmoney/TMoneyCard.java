@@ -22,17 +22,12 @@ package au.id.micolous.metrodroid.card.tmoney;
 import android.util.Log;
 
 import org.simpleframework.xml.Element;
-import org.simpleframework.xml.Root;
 
 import au.id.micolous.farebot.R;
-import au.id.micolous.metrodroid.card.CardRawDataFragmentClass;
-import au.id.micolous.metrodroid.card.CardType;
 import au.id.micolous.metrodroid.card.TagReaderFeedbackInterface;
 import au.id.micolous.metrodroid.card.iso7816.ISO7816Application;
-import au.id.micolous.metrodroid.card.iso7816.ISO7816Card;
 import au.id.micolous.metrodroid.card.iso7816.ISO7816Protocol;
 import au.id.micolous.metrodroid.card.iso7816.ISO7816Selector;
-import au.id.micolous.metrodroid.fragment.ISO7816CardRawDataFragment;
 import au.id.micolous.metrodroid.transit.CardInfo;
 import au.id.micolous.metrodroid.transit.TransitData;
 import au.id.micolous.metrodroid.transit.TransitIdentity;

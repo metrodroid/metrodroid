@@ -19,19 +19,16 @@
 package au.id.micolous.metrodroid.transit.chc_metrocard;
 
 import android.os.Parcel;
-import android.text.Spanned;
 
 import java.util.GregorianCalendar;
 import java.util.TimeZone;
 
 import au.id.micolous.metrodroid.card.classic.ClassicCard;
-import au.id.micolous.metrodroid.transit.TransitCurrency;
 import au.id.micolous.metrodroid.transit.TransitIdentity;
 import au.id.micolous.metrodroid.transit.erg.ErgTransitData;
 import au.id.micolous.metrodroid.transit.erg.ErgTrip;
 import au.id.micolous.metrodroid.transit.erg.record.ErgMetadataRecord;
 import au.id.micolous.metrodroid.transit.erg.record.ErgPurseRecord;
-import au.id.micolous.metrodroid.util.Utils;
 
 /**
  * Transit data type for Metrocard (Christchurch, NZ).

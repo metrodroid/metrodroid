@@ -20,7 +20,6 @@ package au.id.micolous.metrodroid.transit.smartrider;
 
 import android.os.Parcel;
 import android.support.annotation.Nullable;
-import android.text.Spanned;
 import android.util.Log;
 
 import java.util.ArrayList;

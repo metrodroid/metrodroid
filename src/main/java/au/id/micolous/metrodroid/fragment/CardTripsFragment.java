@@ -25,14 +25,11 @@ import android.app.Activity;
 import android.app.ListFragment;
 import android.content.Context;
 import android.content.Intent;
-import android.content.res.Resources;
 import android.content.res.TypedArray;
 import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Bundle;
-import android.support.annotation.DrawableRes;
-import android.support.annotation.RequiresApi;
 import android.support.annotation.StringRes;
 import android.text.Spannable;
 import android.text.SpannableString;
@@ -49,8 +46,6 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import org.simpleframework.xml.Serializer;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
@@ -62,10 +57,8 @@ import java.util.regex.Pattern;
 
 import au.id.micolous.farebot.R;
 import au.id.micolous.metrodroid.MetrodroidApplication;
-import au.id.micolous.metrodroid.activity.AdvancedCardInfoActivity;
 import au.id.micolous.metrodroid.activity.CardInfoActivity;
 import au.id.micolous.metrodroid.activity.TripMapActivity;
-import au.id.micolous.metrodroid.card.Card;
 import au.id.micolous.metrodroid.transit.TransitCurrency;
 import au.id.micolous.metrodroid.transit.TransitData;
 import au.id.micolous.metrodroid.transit.Trip;

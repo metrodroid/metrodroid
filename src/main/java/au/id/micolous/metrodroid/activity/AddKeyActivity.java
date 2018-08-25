@@ -22,13 +22,10 @@
 
 package au.id.micolous.metrodroid.activity;
 
-import android.Manifest;
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.PendingIntent;
 import android.content.ContentValues;
 import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.nfc.NfcAdapter;
 import android.nfc.Tag;
 import android.nfc.tech.IsoDep;
@@ -36,8 +33,6 @@ import android.nfc.tech.MifareClassic;
 import android.nfc.tech.MifareUltralight;
 import android.nfc.tech.NfcF;
 import android.os.Bundle;
-import android.support.v4.app.ActivityCompat;
-import android.support.v4.content.ContextCompat;
 import android.view.View;
 import android.widget.RadioButton;
 import android.widget.TextView;

@@ -18,9 +18,6 @@
  */
 package au.id.micolous.metrodroid.transit.suica;
 
-import android.util.Log;
-
-import au.id.micolous.metrodroid.MetrodroidApplication;
 import au.id.micolous.metrodroid.transit.Station;
 import au.id.micolous.metrodroid.util.StationTableReader;
 

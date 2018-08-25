@@ -21,19 +21,10 @@ package au.id.micolous.metrodroid.transit.newshenzhen;
 
 import android.os.Parcel;
 import android.support.annotation.Nullable;
-import android.util.Pair;
 
-import java.io.IOException;
-import java.util.Arrays;
 import java.util.Calendar;
-import java.util.GregorianCalendar;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.TimeZone;
 
 import au.id.micolous.farebot.R;
-import au.id.micolous.metrodroid.MetrodroidApplication;
-import au.id.micolous.metrodroid.proto.Stations;
 import au.id.micolous.metrodroid.transit.Station;
 import au.id.micolous.metrodroid.transit.TransitCurrency;
 import au.id.micolous.metrodroid.transit.Trip;

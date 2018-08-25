@@ -22,7 +22,6 @@
 
 package au.id.micolous.metrodroid.activity;
 
-import android.app.Activity;
 import android.app.Fragment;
 import android.app.FragmentTransaction;
 import android.content.Intent;

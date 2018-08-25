@@ -27,7 +27,6 @@ import au.id.micolous.metrodroid.card.classic.ClassicCard;
 import au.id.micolous.metrodroid.card.desfire.DesfireCard;
 import au.id.micolous.metrodroid.card.felica.FelicaCard;
 import au.id.micolous.metrodroid.card.ultralight.UltralightCard;
-import au.id.micolous.metrodroid.util.Utils;
 
 import org.simpleframework.xml.Serializer;
 import org.simpleframework.xml.convert.Converter;

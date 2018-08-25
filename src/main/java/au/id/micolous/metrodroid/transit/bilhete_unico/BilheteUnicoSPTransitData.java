@@ -23,7 +23,6 @@ package au.id.micolous.metrodroid.transit.bilhete_unico;
 
 import android.os.Parcel;
 import android.support.annotation.Nullable;
-import android.text.Spanned;
 
 import au.id.micolous.metrodroid.card.Card;
 import au.id.micolous.metrodroid.card.UnauthorizedException;
@@ -33,7 +32,6 @@ import au.id.micolous.metrodroid.transit.TransitData;
 import au.id.micolous.metrodroid.transit.TransitIdentity;
 import au.id.micolous.metrodroid.transit.Trip;
 import au.id.micolous.metrodroid.transit.ovc.OVChipCredit;
-import au.id.micolous.metrodroid.util.Utils;
 
 public class BilheteUnicoSPTransitData extends TransitData {
 

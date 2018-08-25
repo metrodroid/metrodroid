@@ -23,7 +23,6 @@
 package au.id.micolous.metrodroid.activity;
 
 import android.app.ActionBar;
-import android.app.Activity;
 import android.app.PendingIntent;
 import android.content.Intent;
 import android.nfc.NfcAdapter;
