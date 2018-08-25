@@ -89,6 +89,8 @@ public class CardsFragment extends ExpandableListFragment {
     private static final int REQUEST_SAVE_FILE = 2;
     private static final String STD_EXPORT_FILENAME = "Metrodroid-Export.xml";
     private static final String SD_EXPORT_PATH = Environment.getExternalStorageDirectory() + "/" + STD_EXPORT_FILENAME;
+    private static final String STD_IMPORT_FILENAME = "Metrodroid-Import.xml";
+    private static final String SD_IMPORT_PATH = Environment.getExternalStorageDirectory() + "/" + STD_IMPORT_FILENAME;
 
     private class Scan {
         private final long mScannedAt;
@@ -224,12 +226,12 @@ public class CardsFragment extends ExpandableListFragment {
                 } return true;
 
                 case R.id.import_file:
-                    uri = Uri.fromFile(Environment.getExternalStorageDirectory());
-                    i = new Intent(Intent.ACTION_GET_CONTENT);
-                    i.putExtra(Intent.EXTRA_STREAM, uri);
                     // Some files are text/xml, some are application/xml.
                     // In Android 4.4 and later, we can say the right thing!
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+                        uri = Uri.fromFile(Environment.getExternalStorageDirectory());
+                        i = new Intent(Intent.ACTION_GET_CONTENT);
+                        i.putExtra(Intent.EXTRA_STREAM, uri);
                         i.setType("*/*");
                         String[] mimetypes = {
                                 "application/xml",
@@ -240,11 +242,11 @@ public class CardsFragment extends ExpandableListFragment {
                                 "application/octet-stream",
                         };
                         i.putExtra(Intent.EXTRA_MIME_TYPES, mimetypes);
+                        startActivityForResult(Intent.createChooser(i, Utils.localizeString(R.string.select_file)), REQUEST_SELECT_FILE);
                     } else {
                         // Failsafe, used in the emulator for local files
-                        i.setType("text/xml");
+                        new ReadTask(this).execute(Uri.fromFile(new File(SD_IMPORT_PATH)));
                     }
-                    startActivityForResult(Intent.createChooser(i, Utils.localizeString(R.string.select_file)), REQUEST_SELECT_FILE);
                     return true;
 
                 case R.id.copy_xml:
