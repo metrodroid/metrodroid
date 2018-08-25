@@ -283,6 +283,14 @@ public class CardInfo {
             .setPreview()
             .build();
 
+
+    public static final CardInfo TRANSGIRONDE = new Builder()
+            .setName(IntercodeTransitData.GIRONDE_NAME)
+            .setLocation(R.string.location_gironde)
+            .setCardType(CardType.ISO7816)
+            .setPreview()
+            .build();
+
     public static final CardInfo TROIKA = new Builder()
             // seqgo_card_alpha has identical geometry
             .setImageId(R.drawable.troika_card, R.drawable.seqgo_card_alpha)
@@ -330,6 +338,7 @@ public class CardInfo {
             SUICA,
             LAX_TAP, // TAP
             TMONEY,
+            TRANSGIRONDE,
     	    TROIKA,
     };
 

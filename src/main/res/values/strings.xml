@@ -1000,4 +1000,5 @@
     <string name="intercode_issuer">Issuer</string>
     <string name="location_paris">Paris, France</string>
     <string name="location_grenoble">Grenoble, France</string>
+    <string name="location_gironde">Gironde, France</string>
 </resources>

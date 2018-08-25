@@ -64,6 +64,7 @@ public class IntercodeTransitData extends TransitData {
     private static final int COUNTRY_ID_FRANCE = 0x250;
     public static final String NAVIGO_NAME = "Navigo";
     public static final String OURA_NAME = "OùRA";
+    public static final String GIRONDE_NAME = "TransGironde";
     private final List<IntercodeSubscription> mSubscriptions;
     private final List<IntercodeTrip> mTrips;
 
@@ -262,6 +263,7 @@ public class IntercodeTransitData extends TransitData {
         NETWORKS.put(0x250502, Pair.create(OURA_NAME, new IntercodeLookupSTR("oura")));
         NETWORKS.put(0x250901, Pair.create(NAVIGO_NAME, new IntercodeLookupNavigo()));
         NETWORKS.put(0x250920, Pair.create("Envibus", new IntercodeLookupUnknown()));
+        NETWORKS.put(0x250921, Pair.create(GIRONDE_NAME, new IntercodeLookupGironde()));
     }
 
     public static IntercodeLookup getLookup(int networkId) {

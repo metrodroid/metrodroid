@@ -60,6 +60,10 @@ MDSTS += oura.mdst
 oura.mdst: csv2pb.py stations_pb2.py mdst.py ../../data/oura/operators.csv ../../data/oura/stations.csv ../../data/oura/lines.csv
 	python3 csv2pb.py -r ../../data/oura/lines.csv -p ../../data/oura/operators.csv -o $@ -V 2 ../../data/oura/stations.csv
 
+MDSTS += gironde.mdst
+gironde.mdst: csv2pb.py stations_pb2.py mdst.py ../../data/gironde/operators.csv ../../data/gironde/stations.csv ../../data/gironde/lines.csv
+	python3 csv2pb.py -r ../../data/gironde/lines.csv -p ../../data/gironde/operators.csv -o $@ -V 2 ../../data/gironde/stations.csv
+
 MDSTS += compass.mdst
 compass.mdst: csv2pb.py stations_pb2.py mdst.py ../../data/compass/stations.csv
 	python3 csv2pb.py ../../data/compass/stations.csv -o $@ -V 2
