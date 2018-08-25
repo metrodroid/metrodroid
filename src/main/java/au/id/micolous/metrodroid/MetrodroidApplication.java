@@ -23,6 +23,7 @@ package au.id.micolous.metrodroid;
 import android.app.Application;
 import android.content.SharedPreferences;
 import android.nfc.NfcAdapter;
+import android.os.Build;
 import android.os.StrictMode;
 import android.preference.PreferenceManager;
 import android.util.Log;
@@ -256,7 +257,7 @@ public class MetrodroidApplication extends Application {
         String theme = getThemePreference();
         if (theme.equals("light"))
             return R.style.Metrodroid_Light;
-        if (theme.equals("farebot"))
+        if (theme.equals("farebot") && Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP)
             return R.style.FareBot_Theme_Common;
         return R.style.Metrodroid_Dark;
     }
