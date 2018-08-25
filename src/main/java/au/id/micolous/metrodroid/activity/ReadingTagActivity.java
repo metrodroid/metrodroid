@@ -116,15 +116,16 @@ public class ReadingTagActivity extends MetrodroidActivity implements TagReaderF
                 i.invalidate();
             }
 
-            TextView t = findViewById(R.id.status_text);
-            AccessibilityManager man = (AccessibilityManager) getSystemService(Context.ACCESSIBILITY_SERVICE);
-            if (man != null && man.isEnabled()) {
-                AccessibilityEvent e = AccessibilityEvent.obtain();
-                e.setEventType(AccessibilityEvent.TYPE_ANNOUNCEMENT);
-                e.getText().add(t.getText());
-                man.sendAccessibilityEvent(e);
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+                TextView t = findViewById(R.id.status_text);
+                AccessibilityManager man = (AccessibilityManager) getSystemService(Context.ACCESSIBILITY_SERVICE);
+                if (man != null && man.isEnabled()) {
+                    AccessibilityEvent e = AccessibilityEvent.obtain();
+                    e.setEventType(AccessibilityEvent.TYPE_ANNOUNCEMENT);
+                    e.getText().add(t.getText());
+                    man.sendAccessibilityEvent(e);
+                }
             }
-
         });
     }
 
