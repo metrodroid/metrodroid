@@ -33,9 +33,12 @@ import android.text.Spanned;
 
 import org.apache.commons.lang3.ArrayUtils;
 
+import au.id.micolous.farebot.R;
 import au.id.micolous.metrodroid.card.Card;
+import au.id.micolous.metrodroid.card.CardType;
 import au.id.micolous.metrodroid.card.desfire.DesfireCard;
 import au.id.micolous.metrodroid.card.desfire.files.DesfireFile;
+import au.id.micolous.metrodroid.transit.CardInfo;
 import au.id.micolous.metrodroid.transit.TransitBalance;
 import au.id.micolous.metrodroid.transit.TransitBalanceStored;
 import au.id.micolous.metrodroid.transit.TransitCurrency;
@@ -79,6 +82,13 @@ public class ClipperTransitData extends TransitData {
 
         CLIPPER_EPOCH = epoch;
     }
+
+    public static final CardInfo CARD_INFO = new CardInfo.Builder()
+            .setImageId(R.drawable.clipper_card)
+            .setName("Clipper")
+            .setLocation(R.string.location_san_francisco)
+            .setCardType(CardType.MifareDesfire)
+            .build();
 
     @VisibleForTesting
     public static final int APP_ID = 0x9011f2;

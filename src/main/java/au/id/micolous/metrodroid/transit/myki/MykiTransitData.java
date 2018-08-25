@@ -24,8 +24,11 @@ import android.os.Parcel;
 
 import org.apache.commons.lang3.ArrayUtils;
 
+import au.id.micolous.farebot.R;
 import au.id.micolous.metrodroid.card.Card;
+import au.id.micolous.metrodroid.card.CardType;
 import au.id.micolous.metrodroid.card.desfire.DesfireCard;
+import au.id.micolous.metrodroid.transit.CardInfo;
 import au.id.micolous.metrodroid.transit.TransitIdentity;
 import au.id.micolous.metrodroid.transit.stub.StubTransitData;
 import au.id.micolous.metrodroid.util.Utils;
@@ -46,6 +49,14 @@ public class MykiTransitData extends StubTransitData {
     public static final int APP_ID_2 = 0xf010f2;
     private long mSerialNumber1;
     private long mSerialNumber2;
+
+    public static final CardInfo CARD_INFO = new CardInfo.Builder()
+            .setImageId(R.drawable.myki_card)
+            .setName(MykiTransitData.NAME)
+            .setCardType(CardType.MifareDesfire)
+            .setLocation(R.string.location_victoria_australia)
+            .setExtraNote(R.string.card_note_myki)
+            .build();
 
     public static final Creator<MykiTransitData> CREATOR = new Creator<MykiTransitData>() {
         public MykiTransitData createFromParcel(Parcel parcel) {

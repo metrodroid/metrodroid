@@ -29,9 +29,12 @@ import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.TimeZone;
 
+import au.id.micolous.farebot.R;
+import au.id.micolous.metrodroid.card.CardType;
 import au.id.micolous.metrodroid.card.felica.FelicaBlock;
 import au.id.micolous.metrodroid.card.felica.FelicaCard;
 import au.id.micolous.metrodroid.card.felica.FelicaService;
+import au.id.micolous.metrodroid.transit.CardInfo;
 import au.id.micolous.metrodroid.transit.TransitCurrency;
 import au.id.micolous.metrodroid.transit.TransitData;
 import au.id.micolous.metrodroid.transit.TransitIdentity;
@@ -47,6 +50,14 @@ public class KMTTransitData extends TransitData {
     private static final int FELICA_SERVICE_KMT_HISTORY = 0x200F;
     static final TimeZone TIME_ZONE = TimeZone.getTimeZone("Asia/Jakarta");
     public static final long KMT_EPOCH;
+
+    public static final CardInfo CARD_INFO = new CardInfo.Builder()
+            .setImageId(R.drawable.kmt_card)
+            .setName(KMTTransitData.NAME)
+            .setLocation(R.string.location_jakarta)
+            .setCardType(CardType.FeliCa)
+            .setExtraNote(R.string.kmt_extra_note)
+            .build();
 
     static {
         GregorianCalendar epoch = new GregorianCalendar(TIME_ZONE);

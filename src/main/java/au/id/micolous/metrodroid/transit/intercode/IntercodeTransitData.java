@@ -36,10 +36,12 @@ import java.util.Map;
 import java.util.TimeZone;
 
 import au.id.micolous.farebot.R;
+import au.id.micolous.metrodroid.card.CardType;
 import au.id.micolous.metrodroid.card.calypso.CalypsoApplication;
 import au.id.micolous.metrodroid.card.calypso.CalypsoData;
 import au.id.micolous.metrodroid.card.iso7816.ISO7816File;
 import au.id.micolous.metrodroid.card.iso7816.ISO7816Record;
+import au.id.micolous.metrodroid.transit.CardInfo;
 import au.id.micolous.metrodroid.transit.TransitCurrency;
 import au.id.micolous.metrodroid.transit.TransitData;
 import au.id.micolous.metrodroid.transit.TransitIdentity;
@@ -70,6 +72,25 @@ public class IntercodeTransitData extends TransitData {
 
     public static final TimeZone TZ = TimeZone.getTimeZone("Europe/Paris");
     private static final long EPOCH = CalypsoData.TRAVEL_EPOCH.getTimeInMillis();
+
+    public static final CardInfo TRANSGIRONDE_CARD_INFO = new CardInfo.Builder()
+            .setName(IntercodeTransitData.GIRONDE_NAME)
+            .setLocation(R.string.location_gironde)
+            .setCardType(CardType.ISO7816)
+            .setPreview()
+            .build();
+
+    public static final CardInfo OURA_CARD_INFO = new CardInfo.Builder()
+            .setName(IntercodeTransitData.OURA_NAME)
+            .setLocation(R.string.location_grenoble)
+            .setCardType(CardType.ISO7816)
+            .build();
+
+    public static final CardInfo NAVIGO_CARD_INFO = new CardInfo.Builder()
+            .setName(IntercodeTransitData.NAVIGO_NAME)
+            .setLocation(R.string.location_paris)
+            .setCardType(CardType.ISO7816)
+            .build();
 
     public static final Creator<IntercodeTransitData> CREATOR = new Creator<IntercodeTransitData>() {
         @NonNull

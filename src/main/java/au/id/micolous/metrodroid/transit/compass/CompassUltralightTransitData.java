@@ -33,8 +33,10 @@ import java.util.Map;
 import java.util.TimeZone;
 
 import au.id.micolous.farebot.R;
+import au.id.micolous.metrodroid.card.CardType;
 import au.id.micolous.metrodroid.card.UnauthorizedException;
 import au.id.micolous.metrodroid.card.ultralight.UltralightCard;
+import au.id.micolous.metrodroid.transit.CardInfo;
 import au.id.micolous.metrodroid.transit.TransitCurrency;
 import au.id.micolous.metrodroid.transit.TransitData;
 import au.id.micolous.metrodroid.transit.TransitIdentity;
@@ -55,6 +57,14 @@ public class CompassUltralightTransitData extends TransitData {
             return new CompassUltralightTransitData[size];
         }
     };
+
+    public static final CardInfo CARD_INFO = new CardInfo.Builder()
+            .setName(CompassUltralightTransitData.NAME)
+            .setLocation(R.string.location_vancouver)
+            .setCardType(CardType.MifareUltralight)
+            .setExtraNote(R.string.compass_note)
+            .build();
+
     public static final String NAME = "Compass Ultralight";
     private final int mProductCode;
     private final long mSerial;

@@ -30,7 +30,9 @@ import java.util.GregorianCalendar;
 import java.util.Locale;
 import java.util.TimeZone;
 
+import au.id.micolous.farebot.R;
 import au.id.micolous.metrodroid.card.classic.ClassicCard;
+import au.id.micolous.metrodroid.transit.CardInfo;
 import au.id.micolous.metrodroid.transit.TransitCurrency;
 import au.id.micolous.metrodroid.transit.TransitData;
 import au.id.micolous.metrodroid.transit.TransitIdentity;
@@ -60,6 +62,23 @@ public class SmartRiderTransitData extends TransitData {
     private static final String TAG = "SmartRiderTransitData";
     private static final TimeZone SMARTRIDER_TZ = TimeZone.getTimeZone("Australia/Perth");
     private static final TimeZone MYWAY_TZ = TimeZone.getTimeZone("Australia/Sydney"); // Canberra
+
+    public static final CardInfo SMARTRIDER_CARD_INFO = new CardInfo.Builder()
+            .setImageId(R.drawable.smartrider_card)
+            .setName(SmartRiderTransitData.SMARTRIDER_NAME)
+            .setLocation(R.string.location_wa_australia)
+            .setCardType(au.id.micolous.metrodroid.card.CardType.MifareClassic)
+            .setKeysRequired()
+            .setPreview() // We don't know about ferries.
+            .build();
+
+    public static final CardInfo MYWAY_CARD_INFO = new CardInfo.Builder()
+            .setImageId(R.drawable.myway_card)
+            .setName(SmartRiderTransitData.MYWAY_NAME)
+            .setLocation(R.string.location_act_australia)
+            .setCardType(au.id.micolous.metrodroid.card.CardType.MifareClassic)
+            .setKeysRequired()
+            .build();
 
     private static final long SMARTRIDER_EPOCH;
     private static final long MYWAY_EPOCH;

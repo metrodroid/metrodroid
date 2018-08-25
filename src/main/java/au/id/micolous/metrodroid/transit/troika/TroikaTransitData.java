@@ -22,10 +22,13 @@ package au.id.micolous.metrodroid.transit.troika;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import au.id.micolous.farebot.R;
+import au.id.micolous.metrodroid.card.CardType;
 import au.id.micolous.metrodroid.card.UnauthorizedException;
 import au.id.micolous.metrodroid.card.classic.ClassicCard;
 import au.id.micolous.metrodroid.card.classic.ClassicSector;
 import au.id.micolous.metrodroid.card.classic.UnauthorizedClassicSector;
+import au.id.micolous.metrodroid.transit.CardInfo;
 import au.id.micolous.metrodroid.transit.Subscription;
 import au.id.micolous.metrodroid.transit.TransitData;
 import au.id.micolous.metrodroid.transit.TransitIdentity;
@@ -54,6 +57,17 @@ public class TroikaTransitData extends TransitData {
             return new TroikaTransitData[size];
         }
     };
+
+    public static final CardInfo CARD_INFO = new CardInfo.Builder()
+            // seqgo_card_alpha has identical geometry
+            .setImageId(R.drawable.troika_card, R.drawable.seqgo_card_alpha)
+            .setName(Utils.localizeString(R.string.card_name_troika))
+            .setLocation(R.string.location_moscow)
+            .setCardType(CardType.MifareClassic)
+            .setExtraNote(R.string.card_note_russia)
+            .setKeysRequired()
+            .setPreview()
+            .build();
 
     private final TroikaBlock mBlock7;
     private final TroikaBlock mBlock8;

@@ -33,10 +33,12 @@ import java.util.TimeZone;
 
 import au.id.micolous.farebot.R;
 import au.id.micolous.metrodroid.MetrodroidApplication;
+import au.id.micolous.metrodroid.card.CardType;
 import au.id.micolous.metrodroid.card.calypso.CalypsoApplication;
 import au.id.micolous.metrodroid.card.calypso.CalypsoData;
 import au.id.micolous.metrodroid.card.iso7816.ISO7816File;
 import au.id.micolous.metrodroid.card.iso7816.ISO7816Record;
+import au.id.micolous.metrodroid.transit.CardInfo;
 import au.id.micolous.metrodroid.transit.Subscription;
 import au.id.micolous.metrodroid.transit.TransitCurrency;
 import au.id.micolous.metrodroid.transit.TransitData;
@@ -65,6 +67,12 @@ public class MobibTransitData extends TransitData {
     private final int mTotalTrips;
     private final List<MobibSubscription> mSubscriptions;
     private final List<MobibTrip> mTrips;
+
+    public static final CardInfo CARD_INFO = new CardInfo.Builder()
+            .setName(MobibTransitData.NAME)
+            .setCardType(CardType.ISO7816)
+            .setLocation(R.string.location_brussels)
+            .build();
 
     private static final TimeZone TZ = TimeZone.getTimeZone("Europe/Bruxelles");
     private static final long MOBIB_EPOCH = CalypsoData.TRAVEL_EPOCH.getTimeInMillis();

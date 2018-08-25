@@ -26,9 +26,11 @@ import android.os.Parcel;
 import android.support.annotation.Nullable;
 
 import au.id.micolous.farebot.R;
+import au.id.micolous.metrodroid.card.CardType;
 import au.id.micolous.metrodroid.card.felica.FelicaBlock;
 import au.id.micolous.metrodroid.card.felica.FelicaCard;
 import au.id.micolous.metrodroid.card.felica.FelicaService;
+import au.id.micolous.metrodroid.transit.CardInfo;
 import au.id.micolous.metrodroid.transit.TransitCurrency;
 import au.id.micolous.metrodroid.transit.TransitData;
 import au.id.micolous.metrodroid.transit.TransitIdentity;
@@ -52,6 +54,28 @@ public class SuicaTransitData extends TransitData {
             return new SuicaTransitData[size];
         }
     };
+
+    public static final CardInfo ICOCA_CARD_INFO = new CardInfo.Builder()
+            .setImageId(R.drawable.icoca_card)
+            .setName(Utils.localizeString(R.string.card_name_icoca))
+            .setLocation(R.string.location_kansai)
+            .setCardType(CardType.FeliCa)
+            .build();
+
+    public static final CardInfo SUICA_CARD_INFO = new CardInfo.Builder()
+            .setImageId(R.drawable.suica_card)
+            .setName(Utils.localizeString(R.string.card_name_suica))
+            .setLocation(R.string.location_tokyo)
+            .setCardType(CardType.FeliCa)
+            .build();
+
+    public static final CardInfo PASMO_CARD_INFO = new CardInfo.Builder()
+            .setImageId(R.drawable.pasmo_card)
+            .setName(Utils.localizeString(R.string.card_name_pasmo))
+            .setLocation(R.string.location_tokyo)
+            .setCardType(CardType.FeliCa)
+            .build();
+
     public static final int SYSTEMCODE_SUICA = 0x0003;
 
     public static final int SERVICE_SUICA_INOUT = 0x108f;

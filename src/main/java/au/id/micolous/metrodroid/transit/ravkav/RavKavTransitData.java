@@ -29,8 +29,10 @@ import java.util.GregorianCalendar;
 import java.util.List;
 
 import au.id.micolous.farebot.R;
+import au.id.micolous.metrodroid.card.CardType;
 import au.id.micolous.metrodroid.card.calypso.CalypsoApplication;
 import au.id.micolous.metrodroid.card.iso7816.ISO7816Record;
+import au.id.micolous.metrodroid.transit.CardInfo;
 import au.id.micolous.metrodroid.transit.TransitBalance;
 import au.id.micolous.metrodroid.transit.TransitBalanceStored;
 import au.id.micolous.metrodroid.transit.TransitCurrency;
@@ -50,6 +52,13 @@ public class RavKavTransitData extends TransitData {
     private final String mSerial;
     private final int mBalance;
     private final List<RavKavTrip> mTrips;
+
+    public static final CardInfo CARD_INFO = new CardInfo.Builder()
+            .setName(Utils.localizeString(R.string.card_name_ravkav))
+            .setLocation(R.string.location_israel)
+            .setCardType(CardType.ISO7816)
+            .setPreview()
+            .build();
 
     // TODO: subscriptions
 

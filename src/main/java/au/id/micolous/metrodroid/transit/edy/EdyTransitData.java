@@ -31,9 +31,12 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.TimeZone;
 
+import au.id.micolous.farebot.R;
+import au.id.micolous.metrodroid.card.CardType;
 import au.id.micolous.metrodroid.card.felica.FelicaBlock;
 import au.id.micolous.metrodroid.card.felica.FelicaCard;
 import au.id.micolous.metrodroid.card.felica.FelicaService;
+import au.id.micolous.metrodroid.transit.CardInfo;
 import au.id.micolous.metrodroid.transit.TransitCurrency;
 import au.id.micolous.metrodroid.transit.TransitData;
 import au.id.micolous.metrodroid.transit.TransitIdentity;
@@ -43,6 +46,13 @@ import au.id.micolous.metrodroid.util.Utils;
 public class EdyTransitData extends TransitData {
     // defines
     public static final int SYSTEMCODE_EDY = 0xfe00;         // Edy (=共通領域)
+
+    public static final CardInfo CARD_INFO = new CardInfo.Builder()
+            .setImageId(R.drawable.edy_card)
+            .setName("Edy")
+            .setLocation(R.string.location_tokyo)
+            .setCardType(CardType.FeliCa)
+            .build();
 
     public static final int FELICA_SERVICE_EDY_ID = 0x110B;
     public static final int FELICA_SERVICE_EDY_BALANCE = 0x1317;
