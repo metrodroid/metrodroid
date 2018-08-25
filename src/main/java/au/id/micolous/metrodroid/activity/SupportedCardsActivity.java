@@ -125,7 +125,7 @@ public class SupportedCardsActivity extends MetrodroidActivity {
                 notes += Utils.localizeString(info.getResourceExtraNote()) + " ";
             }
 
-            TextView note = (TextView) convertView.findViewById(R.id.card_note);
+            TextView note = convertView.findViewById(R.id.card_note);
             note.setText(notes);
             if (notes.equals(""))
                 note.setVisibility(View.GONE);

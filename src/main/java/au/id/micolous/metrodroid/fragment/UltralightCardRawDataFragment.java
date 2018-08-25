@@ -104,7 +104,7 @@ public class UltralightCardRawDataFragment extends ExpandableListFragment {
             UltralightPage sector = (UltralightPage) getGroup(groupPosition);
             String sectorIndexString = Integer.toHexString(sector.getIndex());
 
-            TextView textView = (TextView) view.findViewById(android.R.id.text1);
+            TextView textView = view.findViewById(android.R.id.text1);
 
             if (sector instanceof UnauthorizedUltralightPage) {
                 textView.setText(mActivity.getString(R.string.unauthorized_page_title_format, sectorIndexString));

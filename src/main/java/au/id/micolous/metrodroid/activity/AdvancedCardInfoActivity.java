@@ -75,7 +75,7 @@ public class AdvancedCardInfoActivity extends MetrodroidActivity {
         Serializer serializer = MetrodroidApplication.getInstance().getSerializer();
         mCard = Card.fromXml(serializer, getIntent().getStringExtra(AdvancedCardInfoActivity.EXTRA_CARD));
 
-        ViewPager viewPager = (ViewPager) findViewById(R.id.pager);
+        ViewPager viewPager = findViewById(R.id.pager);
         TabPagerAdapter tabsAdapter = new TabPagerAdapter(this, viewPager);
 
         ActionBar actionBar = getActionBar();

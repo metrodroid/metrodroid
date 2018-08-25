@@ -97,7 +97,7 @@ public class DesfireCardRawDataFragment extends ExpandableListFragment {
                     convertView = layoutInflater.inflate(android.R.layout.simple_expandable_list_item_1, parent, false);
                 }
 
-                TextView textView = (TextView) convertView.findViewById(android.R.id.text1);
+                TextView textView = convertView.findViewById(android.R.id.text1);
 
                 DesfireApplication app = mCard.getApplications().get(groupPosition);
 
@@ -113,8 +113,8 @@ public class DesfireCardRawDataFragment extends ExpandableListFragment {
                     convertView = layoutInflater.inflate(android.R.layout.simple_expandable_list_item_2, parent, false);
                 }
 
-                TextView textView1 = (TextView) convertView.findViewById(android.R.id.text1);
-                TextView textView2 = (TextView) convertView.findViewById(android.R.id.text2);
+                TextView textView1 = convertView.findViewById(android.R.id.text1);
+                TextView textView2 = convertView.findViewById(android.R.id.text2);
 
                 DesfireApplication app = mCard.getApplications().get(groupPosition);
                 DesfireFile file = app.getFiles().get(childPosition);

@@ -202,8 +202,8 @@ public class KeysFragment extends ListFragment implements AdapterView.OnItemLong
             String id = cursor.getString(cursor.getColumnIndex(KeysTableColumns.CARD_ID));
             String type = cursor.getString(cursor.getColumnIndex(KeysTableColumns.CARD_TYPE));
 
-            TextView textView1 = (TextView) view.findViewById(android.R.id.text1);
-            TextView textView2 = (TextView) view.findViewById(android.R.id.text2);
+            TextView textView1 = view.findViewById(android.R.id.text1);
+            TextView textView2 = view.findViewById(android.R.id.text2);
 
             if (MetrodroidApplication.hideCardNumbers()) {
                 textView1.setText(R.string.hidden_card_number);

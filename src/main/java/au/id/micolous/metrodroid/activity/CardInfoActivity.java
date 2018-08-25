@@ -89,7 +89,7 @@ public class CardInfoActivity extends MetrodroidActivity {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_card_info);
-        final ViewPager viewPager = (ViewPager) findViewById(R.id.pager);
+        final ViewPager viewPager = findViewById(R.id.pager);
         mTabsAdapter = new TabPagerAdapter(this, viewPager);
 
         final ActionBar actionBar = getActionBar();
