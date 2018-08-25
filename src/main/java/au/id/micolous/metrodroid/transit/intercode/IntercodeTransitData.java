@@ -258,6 +258,7 @@ public class IntercodeTransitData extends TransitData {
     private static final Map<Integer, Pair<String, IntercodeLookup>> NETWORKS = new HashMap<>();
 
     static {
+        NETWORKS.put(0x250064, Pair.create("TAM Montpellier", new IntercodeLookupUnknown()));
         NETWORKS.put(0x250502, Pair.create(OURA_NAME, new IntercodeLookupSTR("oura")));
         NETWORKS.put(0x250901, Pair.create(NAVIGO_NAME, new IntercodeLookupNavigo()));
         NETWORKS.put(0x250920, Pair.create("Envibus", new IntercodeLookupUnknown()));
