@@ -49,6 +49,7 @@ import au.id.micolous.metrodroid.fragment.UnauthorizedCardFragment;
 import au.id.micolous.metrodroid.provider.CardsTableColumns;
 import au.id.micolous.metrodroid.transit.TransitBalance;
 import au.id.micolous.metrodroid.transit.TransitData;
+import au.id.micolous.metrodroid.transit.unknown.BlankClassicTransitData;
 import au.id.micolous.metrodroid.transit.unknown.BlankUltralightTransitData;
 import au.id.micolous.metrodroid.transit.unknown.UnauthorizedTransitData;
 import au.id.micolous.metrodroid.ui.TabPagerAdapter;
@@ -161,7 +162,8 @@ public class CardInfoActivity extends MetrodroidActivity {
                     return;
                 }
 
-                if (mTransitData instanceof BlankUltralightTransitData) {
+                if (mTransitData instanceof BlankUltralightTransitData
+		    || mTransitData instanceof BlankClassicTransitData) {
                     mTabsAdapter.addTab(actionBar.newTab(), BlankCardFragment.class, args);
                     return;
                 }
