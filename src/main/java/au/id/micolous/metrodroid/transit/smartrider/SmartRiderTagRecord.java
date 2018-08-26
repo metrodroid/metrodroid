@@ -40,8 +40,7 @@ public class SmartRiderTagRecord implements Comparable<SmartRiderTagRecord> {
     private int mCost;
 
     public SmartRiderTagRecord(byte[] record) {
-        byte[] ts = Utils.reverseBuffer(record, 3, 4);
-        mTimestamp = Utils.byteArrayToLong(ts);
+        mTimestamp = Utils.byteArrayToLongReversed(record, 3, 4);
 
         mTagOn = (record[7] & 0x10) == 0x10;
 
@@ -49,8 +48,7 @@ public class SmartRiderTagRecord implements Comparable<SmartRiderTagRecord> {
         route = ArrayUtils.removeAllOccurences(route, (byte) 0x00);
         mRoute = new String(route);
 
-        byte[] cost = Utils.reverseBuffer(record, 13, 2);
-        mCost = Utils.byteArrayToInt(cost);
+        mCost = Utils.byteArrayToIntReversed(record, 13, 2);
 
         Log.d(TAG, String.format(Locale.ENGLISH, "ts: %s, isTagOn: %s, route: %s, cost: %s",
                 mTimestamp, Boolean.toString(mTagOn), mRoute, mCost));

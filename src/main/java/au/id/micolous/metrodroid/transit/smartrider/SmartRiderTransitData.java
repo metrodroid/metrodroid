@@ -242,11 +242,8 @@ public class SmartRiderTransitData extends TransitData {
         byte[] recordA = card.getSector(2).getBlock(2).getData();
         byte[] recordB = card.getSector(3).getBlock(2).getData();
 
-        byte[] balanceDataA = Utils.reverseBuffer(recordA, 7, 2);
-        byte[] balanceDataB = Utils.reverseBuffer(recordB, 7, 2);
-
-        int balanceA = Utils.byteArrayToInt(balanceDataA);
-        int balanceB = Utils.byteArrayToInt(balanceDataB);
+        int balanceA = Utils.byteArrayToIntReversed(recordA, 7, 2);
+        int balanceB = Utils.byteArrayToIntReversed(recordB, 7, 2);
 
         Log.d(TAG, String.format("balanceA = %d, balanceB = %d", balanceA, balanceB));
         mBalance = balanceA < balanceB ? balanceA : balanceB;
