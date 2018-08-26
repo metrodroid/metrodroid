@@ -79,7 +79,7 @@ public class NextfareTransitData extends TransitData {
     private static final String TAG = "NextfareTransitData";
     protected NextfareConfigRecord mConfig = null;
     protected boolean mHasUnknownStations = false;
-    BigInteger mSerialNumber;
+    long mSerialNumber;
     byte[] mSystemCode;
     int mBalance;
     NextfareTrip[] mTrips;
@@ -88,7 +88,7 @@ public class NextfareTransitData extends TransitData {
     String mCurrency;
 
     public NextfareTransitData(Parcel parcel, @NonNull String currency) {
-        mSerialNumber = new BigInteger(parcel.readString());
+        mSerialNumber = parcel.readLong();
         mBalance = parcel.readInt();
         mTrips = new NextfareTrip[parcel.readInt()];
         parcel.readTypedArray(mTrips, NextfareTrip.CREATOR);
@@ -108,8 +108,7 @@ public class NextfareTransitData extends TransitData {
         mCurrency = currency;
 
         byte[] serialData = card.getSector(0).getBlock(0).getData();
-        serialData = Utils.reverseBuffer(serialData, 0, 4);
-        mSerialNumber = Utils.byteArrayToBigInteger(serialData, 0, 4);
+        mSerialNumber = Utils.byteArrayToLongReversed(serialData, 0, 4);
 
         byte[] magicData = card.getSector(0).getBlock(1).getData();
         mSystemCode = Arrays.copyOfRange(magicData, 9, 15);
@@ -281,13 +280,12 @@ public class NextfareTransitData extends TransitData {
 
     protected static TransitIdentity parseTransitIdentity(ClassicCard card, String name) {
         byte[] serialData = card.getSector(0).getBlock(0).getData();
-        serialData = Utils.reverseBuffer(serialData, 0, 4);
-        BigInteger serialNumber = Utils.byteArrayToBigInteger(serialData, 0, 4);
+        long serialNumber = Utils.byteArrayToLongReversed(serialData, 0, 4);
         return new TransitIdentity(name, formatSerialNumber(serialNumber));
     }
 
-    protected static String formatSerialNumber(BigInteger serialNumber) {
-        StringBuilder serial = new StringBuilder(serialNumber.toString());
+    protected static String formatSerialNumber(long serialNumber) {
+        StringBuilder serial = new StringBuilder(Long.toString(serialNumber));
         while (serial.length() < 12) {
             serial.insert(0, "0");
         }
@@ -299,7 +297,7 @@ public class NextfareTransitData extends TransitData {
 
     @Override
     public void writeToParcel(Parcel parcel, int i) {
-        parcel.writeString(mSerialNumber.toString());
+        parcel.writeLong(mSerialNumber);
         parcel.writeInt(mBalance);
         parcel.writeInt(mTrips.length);
         parcel.writeTypedArray(mTrips, i);
