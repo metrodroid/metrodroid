@@ -30,6 +30,7 @@ import au.id.micolous.metrodroid.card.desfire.files.UnauthorizedDesfireFile;
 import au.id.micolous.metrodroid.card.ultralight.UltralightCard;
 import au.id.micolous.metrodroid.card.ultralight.UltralightPage;
 import au.id.micolous.metrodroid.card.ultralight.UnauthorizedUltralightPage;
+import au.id.micolous.metrodroid.key.ClassicSectorKey;
 import au.id.micolous.metrodroid.transit.unknown.UnauthorizedClassicTransitData;
 import au.id.micolous.metrodroid.transit.unknown.UnauthorizedDesfireTransitData;
 import au.id.micolous.metrodroid.transit.unknown.UnauthorizedUltralightTransitData;
@@ -152,7 +153,7 @@ public class CardTest extends TestCase {
             b[y] = ClassicBlock.create(ClassicBlock.TYPE_DATA, y, e);
         }
 
-        l[2] = new ClassicSector(2, b, k);
+        l[2] = new ClassicSector(2, b, k, ClassicSectorKey.TYPE_KEYA);
         Card c2 = new ClassicCard(Utils.hexStringToByteArray("12345678"), d, l);
 
         assertFalse(c2.parseTransitData() instanceof UnauthorizedClassicTransitData);
@@ -160,7 +161,7 @@ public class CardTest extends TestCase {
         // Build a card with all readable data.
         l = new ClassicSector[16];
         for (int x=0; x < 16; x++) {
-            l[x] = new ClassicSector(x, b, k);
+            l[x] = new ClassicSector(x, b, k, ClassicSectorKey.TYPE_KEYA);
         }
 
         Card c3 = new ClassicCard(Utils.hexStringToByteArray("12345678"), d, l);

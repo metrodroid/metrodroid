@@ -38,19 +38,24 @@ public class ClassicSector {
     private List<ClassicBlock> mBlocks;
     @Attribute(name = "key", required = false)
     private Base64String mKey;
+    @SuppressWarnings("FieldCanBeLocal")
+    @Attribute(name = "keytype", required = false)
+    private String mKeyType;
 
     protected ClassicSector() {
     }
 
-    public ClassicSector(int index, ClassicBlock[] blocks, byte[] key) {
+    public ClassicSector(int index, ClassicBlock[] blocks, byte[] key, String keyType) {
         mIndex = index;
         if (blocks == null) {
             // invalid / unauthorised sectors should be null
             mBlocks = null;
             mKey = null;
+            mKeyType = null;
         } else {
             mBlocks = Arrays.asList(blocks);
             mKey = new Base64String(key);
+            mKeyType = keyType;
         }
     }
 
