@@ -2,8 +2,6 @@ package au.id.micolous.metrodroid.test;
 
 import android.test.AndroidTestCase;
 
-import au.id.micolous.metrodroid.MetrodroidApplication;
-import au.id.micolous.metrodroid.proto.Stations;
 import au.id.micolous.metrodroid.transit.Station;
 import au.id.micolous.metrodroid.transit.seq_go.SeqGoTrip;
 import au.id.micolous.metrodroid.util.StationTableReader;

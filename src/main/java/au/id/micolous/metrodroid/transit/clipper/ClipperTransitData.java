@@ -29,7 +29,6 @@ package au.id.micolous.metrodroid.transit.clipper;
 import android.os.Parcel;
 import android.support.annotation.Nullable;
 import android.support.annotation.VisibleForTesting;
-import android.text.Spanned;
 
 import org.apache.commons.lang3.ArrayUtils;
 
@@ -50,8 +49,6 @@ import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.TimeZone;
-
-import au.id.micolous.farebot.R;
 
 public class ClipperTransitData extends TransitData {
     public static final Creator<ClipperTransitData> CREATOR = new Creator<ClipperTransitData>() {

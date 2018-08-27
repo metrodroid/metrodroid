@@ -32,8 +32,8 @@ public class MergedOrcaTrip extends Trip {
     public static final Creator<MergedOrcaTrip> CREATOR = new Creator<MergedOrcaTrip>() {
         public MergedOrcaTrip createFromParcel(Parcel parcel) {
             return new MergedOrcaTrip(
-                    (OrcaTrip) parcel.readParcelable(OrcaTrip.class.getClassLoader()),
-                    (OrcaTrip) parcel.readParcelable(OrcaTrip.class.getClassLoader())
+                    parcel.readParcelable(OrcaTrip.class.getClassLoader()),
+                    parcel.readParcelable(OrcaTrip.class.getClassLoader())
             );
         }
 

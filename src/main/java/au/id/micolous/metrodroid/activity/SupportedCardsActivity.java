@@ -19,7 +19,6 @@
  */
 package au.id.micolous.metrodroid.activity;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.nfc.NfcAdapter;
@@ -125,7 +124,7 @@ public class SupportedCardsActivity extends MetrodroidActivity {
                 notes += Utils.localizeString(info.getResourceExtraNote()) + " ";
             }
 
-            TextView note = (TextView) convertView.findViewById(R.id.card_note);
+            TextView note = convertView.findViewById(R.id.card_note);
             note.setText(notes);
             if (notes.equals(""))
                 note.setVisibility(View.GONE);

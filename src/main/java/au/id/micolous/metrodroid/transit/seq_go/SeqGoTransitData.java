@@ -20,29 +20,18 @@ package au.id.micolous.metrodroid.transit.seq_go;
 
 import android.net.Uri;
 import android.os.Parcel;
-import android.support.annotation.Nullable;
-import android.text.Spanned;
 
 import au.id.micolous.metrodroid.card.UnauthorizedException;
 import au.id.micolous.metrodroid.card.classic.ClassicCard;
-import au.id.micolous.metrodroid.transit.TransitBalance;
-import au.id.micolous.metrodroid.transit.TransitBalanceStored;
-import au.id.micolous.metrodroid.transit.TransitCurrency;
 import au.id.micolous.metrodroid.transit.TransitIdentity;
 import au.id.micolous.metrodroid.transit.Trip;
 import au.id.micolous.metrodroid.transit.nextfare.NextfareTransitData;
 import au.id.micolous.metrodroid.transit.nextfare.NextfareTrip;
 import au.id.micolous.metrodroid.transit.nextfare.record.NextfareTopupRecord;
-import au.id.micolous.metrodroid.ui.HeaderListItem;
-import au.id.micolous.metrodroid.ui.ListItem;
 import au.id.micolous.metrodroid.util.Utils;
 
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
 import java.util.TimeZone;
-
-import au.id.micolous.farebot.R;
 
 /**
  * Transit data type for Go card (Brisbane / South-East Queensland, AU), used by Translink.

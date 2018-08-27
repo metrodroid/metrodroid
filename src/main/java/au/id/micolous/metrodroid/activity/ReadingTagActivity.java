@@ -20,7 +20,6 @@
 
 package au.id.micolous.metrodroid.activity;
 
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.ContentValues;
 import android.content.Context;

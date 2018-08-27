@@ -175,7 +175,7 @@ public class StationTableReader {
     public String selectBestName(Stations.Names name, boolean isShort) {
         String englishFull = name.getEnglish();
         String englishShort = name.getEnglishShort();
-        String english = null;
+        String english;
         boolean hasEnglishFull = englishFull != null && englishFull.length() != 0;
         boolean hasEnglishShort = englishShort != null && englishShort.length() != 0;
 
@@ -188,7 +188,7 @@ public class StationTableReader {
 
         String localFull = name.getLocal();
         String localShort = name.getLocalShort();
-        String local = null;
+        String local;
         boolean hasLocalFull = localFull != null && localFull.length() != 0;
         boolean hasLocalShort = localShort != null && localShort.length() != 0;
 

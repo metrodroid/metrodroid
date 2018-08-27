@@ -33,8 +33,6 @@ import au.id.micolous.metrodroid.transit.TransitCurrency;
 import au.id.micolous.metrodroid.transit.Trip;
 import au.id.micolous.metrodroid.util.Utils;
 
-import static au.id.micolous.metrodroid.transit.clipper.ClipperTransitData.CLIPPER_TZ;
-
 public class ClipperRefill extends Trip implements Comparable {
     public static final Creator<ClipperRefill> CREATOR = new Creator<ClipperRefill>() {
         public ClipperRefill createFromParcel(Parcel parcel) {

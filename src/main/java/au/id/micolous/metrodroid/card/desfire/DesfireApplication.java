@@ -23,7 +23,6 @@
 package au.id.micolous.metrodroid.card.desfire;
 
 import au.id.micolous.metrodroid.card.desfire.files.DesfireFile;
-import au.id.micolous.metrodroid.util.Utils;
 
 import org.simpleframework.xml.Attribute;
 import org.simpleframework.xml.ElementList;

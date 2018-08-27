@@ -25,14 +25,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import org.simpleframework.xml.Serializer;
-
 import au.id.micolous.farebot.R;
-import au.id.micolous.metrodroid.MetrodroidApplication;
-import au.id.micolous.metrodroid.activity.AdvancedCardInfoActivity;
-import au.id.micolous.metrodroid.activity.CardInfoActivity;
-import au.id.micolous.metrodroid.card.Card;
-import au.id.micolous.metrodroid.transit.TransitData;
 
 public class BlankCardFragment extends Fragment {
     @Override

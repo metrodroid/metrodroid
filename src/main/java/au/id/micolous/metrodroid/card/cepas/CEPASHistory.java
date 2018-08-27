@@ -20,8 +20,6 @@
 
 package au.id.micolous.metrodroid.card.cepas;
 
-import au.id.micolous.metrodroid.util.Utils;
-
 import org.simpleframework.xml.Attribute;
 import org.simpleframework.xml.ElementList;
 import org.simpleframework.xml.Root;

@@ -25,14 +25,11 @@ import java.util.Calendar;
 import au.id.micolous.metrodroid.card.desfire.DesfireApplication;
 import au.id.micolous.metrodroid.card.desfire.DesfireCard;
 import au.id.micolous.metrodroid.card.desfire.files.DesfireFile;
-import au.id.micolous.metrodroid.card.desfire.files.RecordDesfireFile;
-import au.id.micolous.metrodroid.card.desfire.settings.RecordDesfireFileSettings;
 import au.id.micolous.metrodroid.transit.TransitCurrency;
 import au.id.micolous.metrodroid.transit.TransitData;
 import au.id.micolous.metrodroid.transit.TransitIdentity;
 import au.id.micolous.metrodroid.transit.Trip;
 import au.id.micolous.metrodroid.transit.clipper.ClipperTransitData;
-import au.id.micolous.metrodroid.transit.orca.OrcaTransitData;
 import au.id.micolous.metrodroid.util.Utils;
 
 /**

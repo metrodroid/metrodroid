@@ -19,9 +19,6 @@
 package au.id.micolous.metrodroid.test;
 
 import android.test.AndroidTestCase;
-import android.util.Base64;
-
-import junit.framework.TestCase;
 
 import java.util.Calendar;
 

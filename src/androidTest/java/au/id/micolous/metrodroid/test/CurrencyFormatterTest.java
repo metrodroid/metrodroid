@@ -23,9 +23,7 @@ import android.text.Spanned;
 
 import org.hamcrest.Matchers;
 
-import au.id.micolous.metrodroid.transit.TransitBalance;
 import au.id.micolous.metrodroid.transit.TransitCurrency;
-import au.id.micolous.metrodroid.util.Utils;
 
 import static au.id.micolous.metrodroid.test.TestUtils.assertSpannedEquals;
 import static au.id.micolous.metrodroid.test.TestUtils.assertSpannedThat;

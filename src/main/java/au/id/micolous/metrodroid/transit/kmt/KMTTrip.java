@@ -19,7 +19,6 @@
 
 package au.id.micolous.metrodroid.transit.kmt;
 
-import android.app.Application;
 import android.os.Parcel;
 import android.support.annotation.Nullable;
 

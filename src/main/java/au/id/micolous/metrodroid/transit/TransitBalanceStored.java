@@ -23,8 +23,6 @@ import android.os.Parcel;
 import android.os.Parcelable;
 
 import java.util.Calendar;
-import java.util.GregorianCalendar;
-import java.util.TimeZone;
 
 import au.id.micolous.metrodroid.util.Utils;
 

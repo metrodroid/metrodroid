@@ -60,9 +60,7 @@ public class TransitCurrency extends TransitBalance implements Parcelable {
         if (!(obj instanceof TransitCurrency))
             return false;
         TransitCurrency other = (TransitCurrency) obj;
-        if (!mCurrencyCode.equals(other.mCurrencyCode))
-            return false;
-        return mCurrency == other.mCurrency;
+        return mCurrencyCode.equals(other.mCurrencyCode) && mCurrency == other.mCurrency;
     }
 
     public static final Creator<TransitCurrency> CREATOR = new Creator<TransitCurrency>() {

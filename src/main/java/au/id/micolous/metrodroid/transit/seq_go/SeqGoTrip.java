@@ -20,17 +20,12 @@ package au.id.micolous.metrodroid.transit.seq_go;
 
 import android.os.Parcel;
 import android.os.Parcelable;
-import android.util.Log;
 
-import au.id.micolous.metrodroid.MetrodroidApplication;
 import au.id.micolous.metrodroid.transit.Station;
 import au.id.micolous.metrodroid.transit.nextfare.NextfareTrip;
 import au.id.micolous.metrodroid.util.StationTableReader;
-import au.id.micolous.metrodroid.util.Utils;
 
 import java.util.GregorianCalendar;
-
-import au.id.micolous.farebot.R;
 
 /**
  * Represents trip events on Go Card.

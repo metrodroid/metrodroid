@@ -30,13 +30,10 @@ import android.support.annotation.Nullable;
 
 import java.util.Calendar;
 
-import au.id.micolous.farebot.R;
 import au.id.micolous.metrodroid.transit.Station;
 import au.id.micolous.metrodroid.transit.TransitCurrency;
 import au.id.micolous.metrodroid.transit.Trip;
 import au.id.micolous.metrodroid.util.Utils;
-
-import static au.id.micolous.metrodroid.transit.clipper.ClipperTransitData.CLIPPER_TZ;
 
 public class ClipperTrip extends Trip {
     public static final Creator<ClipperTrip> CREATOR = new Creator<ClipperTrip>() {
