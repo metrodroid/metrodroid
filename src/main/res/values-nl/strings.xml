@@ -623,7 +623,7 @@
     <string name="compass_ticket_type_concession">Concessie</string>
     <string name="compass_ticket_type_regular">Regulier</string>
     <string name="compass_expiry_date">Vervaldatum</string>
-    <string name="compass_note">Alleen voor eenmalige kaartjes</string>
+    <string name="compass_note">Alleen voor enkele reizen</string>
 
     <string name="location_seoul">Seoel, Zuid-Korea</string>
     <string name="card_name_tmoney">T-Money</string>
@@ -632,4 +632,15 @@
     <string name="card_number">Kaartnummer</string>
     <string name="pref_show_raw_station_ids">Stationsverkortingen tonen</string>
     <string name="pref_show_raw_station_ids_desc">Als dit wordt ingeschakeld, dan worden ook de verkortingen vermeld bij de stationsnaam</string>
-</resources>
+<string name="location_quebec">Quebec, Canada</string>
+
+    <string name="opus_subscription">Abonnement</string>
+    <string name="opus_card_expiry_date">Kaart vervalt op</string>
+    <string name="opus_single_trips">Enkele reis</string>
+
+    <string name="podorozhnik_gate">poortje %s</string>
+    <string name="podorozhnik_tvm">Kaartautomaat %d</string>
+
+    <string name="led_shared_taxi">Sint-Petersburg Gedeelde Taxi</string>
+
+    </resources>
