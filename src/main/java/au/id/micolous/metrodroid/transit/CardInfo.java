@@ -257,7 +257,7 @@ public class CardInfo {
             .build();
 
     public static final CardInfo TMONEY = new Builder()
-            .setImageId(R.drawable.laxtap_card)
+            .setImageId(R.drawable.tmoney_card)
             .setName(Utils.localizeString(R.string.card_name_tmoney))
             .setLocation(R.string.location_seoul)
             .setCardType(CardType.ISO7816)
