@@ -36,6 +36,10 @@ MDSTS += shenzhen.mdst
 shenzhen.mdst: csv2pb-szt.py stations_pb2.py mdst.py ../../data/szt/*.txt
 	python3 csv2pb-szt.py
 
+MDSTS += mobib.mdst
+mobib.mdst: csv2pb-mobib.py stations_pb2.py mdst.py ../../data/mobib/Metro.csv ../../data/mobib/Bus.csv
+	python3 csv2pb-mobib.py ../../data/mobib/Metro.csv ../../data/mobib/Bus.csv -p ../../data/mobib/operators.csv -o $@ -V 2 -L fr
+
 MDSTS += podorozhnik.mdst
 podorozhnik.mdst: csv2pb-podorozhnik.py stations_pb2.py mdst.py ../../data/podorozhnik/*.csv
 	python3 csv2pb-podorozhnik.py
@@ -43,6 +47,10 @@ podorozhnik.mdst: csv2pb-podorozhnik.py stations_pb2.py mdst.py ../../data/podor
 MDSTS += opus.mdst
 opus.mdst: xml2pb-opus.py stations_pb2.py mdst.py ../../data/opus/*.xml
 	python3 xml2pb-opus.py
+
+MDSTS += ravkav.mdst
+ravkav.mdst: csv2pb.py stations_pb2.py mdst.py ../../data/ravkav/operators.csv ../../data/ravkav/stations.csv
+	python3 csv2pb.py -p ../../data/ravkav/operators.csv -o $@ -V 2 ../../data/ravkav/stations.csv
 
 MDSTS += compass.mdst
 compass.mdst: csv2pb.py stations_pb2.py mdst.py ../../data/compass/stations.csv

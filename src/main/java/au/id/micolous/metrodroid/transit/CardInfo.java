@@ -36,6 +36,7 @@ import au.id.micolous.metrodroid.transit.compass.CompassUltralightTransitData;
 import au.id.micolous.metrodroid.transit.kmt.KMTTransitData;
 import au.id.micolous.metrodroid.transit.lax_tap.LaxTapTransitData;
 import au.id.micolous.metrodroid.transit.manly_fast_ferry.ManlyFastFerryTransitData;
+import au.id.micolous.metrodroid.transit.mobib.MobibTransitData;
 import au.id.micolous.metrodroid.transit.myki.MykiTransitData;
 import au.id.micolous.metrodroid.transit.opal.OpalTransitData;
 import au.id.micolous.metrodroid.transit.opus.OpusTransitData;
@@ -134,6 +135,12 @@ public class CardInfo {
             .setCardType(CardType.MifareClassic)
             .setKeysRequired()
             .setPreview()
+            .build();
+
+    public static final CardInfo MOBIB = new CardInfo.Builder()
+            .setName(MobibTransitData.NAME)
+            .setCardType(CardType.ISO7816)
+            .setLocation(R.string.location_brussels)
             .build();
 
     public static final CardInfo MYKI = new CardInfo.Builder()
@@ -292,6 +299,7 @@ public class CardInfo {
             KMT,
             MANLY_FAST_FERRY,
             CHC_METROCARD, // Metrocard
+            MOBIB,
             MYKI,
             MYWAY,
             NETS_FLASHPAY,

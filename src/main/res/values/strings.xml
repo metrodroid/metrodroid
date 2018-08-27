@@ -401,6 +401,10 @@
         <item quantity="one">Single-ride</item>
         <item quantity="other">%d-ride</item>
     </plurals>
+    <plurals name="mobib_pax_count">
+        <item quantity="one">%d passenger</item>
+        <item quantity="other">%d passengers</item>
+    </plurals>
 
     <!-- Type: Value file, Range: 0 - 2300, Limited credit: 400 (Enabled) -->
     <string name="desfire_value_format">Type: %1$s, Range: %2$s - %3$s, Limited credit: %4$s (%5$s)</string>
@@ -464,15 +468,14 @@
     <!-- Translators: this is a ticketing system in Israel. (Hebrew: רב-קו‎)
      May be transliterated. -->
     <string name="card_name_ravkav">Rav-Kav</string>
-    <!-- Translators: This is Israeli intercity bus operator. (Hebrew:אֶגֶד )  -->
-    <string name="ravkav_agency_egged">Egged</string>
-    <!-- Translators: Bus operator in Tel-Aviv: Dan Bus Company (Hebrew: דן חברה לתחבורה ציבורית‎) -->
-    <string name="ravkav_agency_dan">Dan</string>
-    <!-- Translators: Tram operator in Jerusalem: City pass (Hebrew: 	סיטיפס )
-     May be transliterated.-->
-    <string name="ravkav_agency_city_pass">City Pass</string>
     <!-- Translators: appears as an agency if user used official top-up app. -->
     <string name="ravkav_agency_topup_app">RavKav Top-up app</string>
+    <string name="ravkav_issue_date">Issue date</string>
+    <string name="ravkav_type">RavKav type</string>
+    <string name="ravkav_anon">Anonymous</string>
+    <string name="ravkav_personal">Personal</string>
+    <string name="ravkav_owner_id">Owner ID</string>
+    <string name="ravkav_date_of_birth">Date of birth</string>
 
     <!-- Calypso hardware information -->
     <string name="calypso_serial_number">Serial number</string>
@@ -602,6 +605,7 @@
     <string name="location_saint_petersburg">Saint Petersburg, Russia</string>
     <string name="location_israel">Israel</string>
     <string name="location_jakarta">Jakarta, Indonesia</string>
+    <string name="location_brussels">Brussels, Belgium</string>
 
     <!--
     These strings are used for content descriptions (accessibility), for modes of transport.
@@ -888,6 +892,20 @@
     <string name="opus_subscription">Subscription</string>
     <string name="opus_card_expiry_date">Card Expiry</string>
     <string name="opus_single_trips">Single trips</string>
+
+    <string name="mobib_card_purchase_date">Date Purchased</string>
+    <string name="mobib_card_holder">Holder</string>
+    <string name="mobib_anon">Anonymous</string>
+    <string name="mobib_card_type">Card type</string>
+    <string name="mobib_personal">Personal</string>
+    <string name="mobib_card_holder_gender">Gender</string>
+    <string name="mobib_card_holder_male">Male</string>
+    <string name="mobib_card_holder_female">Female</string>
+    <string name="mobib_card_dob">Date of birth</string>
+    <string name="mobib_card_zip">Zip Code</string>
+    <string name="mobib_daily_subscription">Daily Subscription</string>
+    <string name="mobib_single_trips">Single trips</string>
+    <string name="mobib_total_trips">Total trips</string>
 
     <!-- Troika / Тройка, Podorozhnik / Подорожник (Russia) -->
 
