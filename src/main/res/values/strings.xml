@@ -938,6 +938,9 @@
     <!-- Translators: The Saint Petersburg Metro (Russian: Петербу́ргский метрополитен) is the
     underground railway system in Saint Petersburg and Leningrad Oblast, Russia. -->
     <string name="led_metro">Saint Petersburg Metro</string>
+    <!-- Translators: The Saint Petersburg Shared Taxi (маршрутки) are a system of
+    private mini-buses going along predefined lines. -->
+    <string name="led_shared_taxi">Saint Petersburg Shared Taxi</string>
 
     <string name="blank_mfu_card">Blank MIFARE Ultralight card</string>
     <string name="fully_blank_desc">
