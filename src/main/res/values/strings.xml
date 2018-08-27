@@ -574,7 +574,8 @@
     <string name="location_helsinki_finland">Helsinki, Finland</string>
     <string name="location_sydney_australia">Sydney, Australia</string>
     <string name="location_vancouver">Vancouver, BC, Canada</string>
-    <string name="location_quebec">Québec province, Canada</string>
+    <!-- Translators: This refers to the province of Québec (not Québec City) -->
+    <string name="location_quebec">Québec, Canada</string>
 
     <!--
       Translators:

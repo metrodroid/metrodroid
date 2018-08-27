@@ -175,6 +175,7 @@ public class CardInfo {
             .build();
 
     public static final CardInfo OPUS = new CardInfo.Builder()
+            .setImageId(R.drawable.opus_card)
             .setName(OpusTransitData.NAME)
             .setLocation(R.string.location_quebec)
             .setCardType(CardType.ISO7816)
