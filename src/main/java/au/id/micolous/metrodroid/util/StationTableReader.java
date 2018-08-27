@@ -110,6 +110,10 @@ public class StationTableReader {
         return Utils.localizeString(R.string.unknown_format, "0x" + Integer.toHexString(id));
     }
 
+    private static String fallbackName(String humanReadableId) {
+        return Utils.localizeString(R.string.unknown_format, humanReadableId);
+    }
+
     public static Trip.Mode getOperatorDefaultMode(String reader, int id) {
         if (reader == null)
             return Trip.Mode.OTHER;
@@ -246,14 +250,18 @@ public class StationTableReader {
     }
 
     public static String getLineName(String reader, int id) {
+        return getLineName(reader, id, "0x" + Integer.toHexString(id));
+    }
+
+    public static String getLineName(String reader, int id, String humanReadableId) {
         if (reader == null)
-            return fallbackName(id);
+            return fallbackName(humanReadableId);
         StationTableReader str = getSTR(reader);
         if (str == null)
-            return fallbackName(id);
+            return fallbackName(humanReadableId);
         Stations.Line pl = str.mStationDb.getLinesOrDefault(id, null);
         if (pl == null)
-            return fallbackName(id);
+            return fallbackName(humanReadableId);
         return str.selectBestName(pl.getName(), false);
     }
 

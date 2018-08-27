@@ -20,7 +20,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 """
 from __future__ import absolute_import, print_function
 from google.protobuf.internal import encoder
-from stations_pb2 import StationDb, Operator, Line, Station, StationIndex
+from stations_pb2 import StationDb, Operator, Line, Station, StationIndex, TransportType
 import struct
 import csv
 
@@ -143,8 +143,10 @@ def read_stops_from_csv(db, csv_f):
     db.push_station(s)
 
 
-def read_operators_from_csv(db, csv_f):
+def read_operators_from_csv(csv_f):
   opread = csv.DictReader(csv_f)
+
+  operators = {}
     
   for op in opread:
     oppb = Operator()
@@ -156,4 +158,4 @@ def read_operators_from_csv(db, csv_f):
     if 'mode' in op and op['mode']:
       oppb.default_transport = TransportType.Value(op['mode'])
     operators[int(op['id'], 0)] = oppb
-    operators_f.close()
+  return operators

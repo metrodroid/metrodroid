@@ -33,9 +33,11 @@ import au.id.micolous.farebot.R;
 import au.id.micolous.metrodroid.card.CardType;
 import au.id.micolous.metrodroid.transit.chc_metrocard.ChcMetrocardTransitData;
 import au.id.micolous.metrodroid.transit.compass.CompassUltralightTransitData;
+import au.id.micolous.metrodroid.transit.intercode.IntercodeTransitData;
 import au.id.micolous.metrodroid.transit.kmt.KMTTransitData;
 import au.id.micolous.metrodroid.transit.lax_tap.LaxTapTransitData;
 import au.id.micolous.metrodroid.transit.manly_fast_ferry.ManlyFastFerryTransitData;
+import au.id.micolous.metrodroid.transit.mobib.MobibTransitData;
 import au.id.micolous.metrodroid.transit.myki.MykiTransitData;
 import au.id.micolous.metrodroid.transit.opal.OpalTransitData;
 import au.id.micolous.metrodroid.transit.opus.OpusTransitData;
@@ -136,6 +138,12 @@ public class CardInfo {
             .setPreview()
             .build();
 
+    public static final CardInfo MOBIB = new CardInfo.Builder()
+            .setName(MobibTransitData.NAME)
+            .setCardType(CardType.ISO7816)
+            .setLocation(R.string.location_brussels)
+            .build();
+
     public static final CardInfo MYKI = new CardInfo.Builder()
             .setImageId(R.drawable.myki_card)
             .setName(MykiTransitData.NAME)
@@ -150,6 +158,12 @@ public class CardInfo {
             .setLocation(R.string.location_act_australia)
             .setCardType(CardType.MifareClassic)
             .setKeysRequired()
+            .build();
+
+    public static final CardInfo NAVIGO = new CardInfo.Builder()
+            .setName(IntercodeTransitData.NAVIGO_NAME)
+            .setLocation(R.string.location_paris)
+            .setCardType(CardType.ISO7816)
             .build();
 
     public static final CardInfo NETS_FLASHPAY = new CardInfo.Builder()
@@ -188,6 +202,11 @@ public class CardInfo {
             .setCardType(CardType.MifareDesfire)
             .build();
 
+    public static final CardInfo OURA = new CardInfo.Builder()
+            .setName(IntercodeTransitData.OURA_NAME)
+            .setLocation(R.string.location_grenoble)
+            .setCardType(CardType.ISO7816)
+            .build();
 
     public static final CardInfo OVCHIP = new CardInfo.Builder()
             .setImageId(R.drawable.ovchip_card)
@@ -264,6 +283,14 @@ public class CardInfo {
             .setPreview()
             .build();
 
+
+    public static final CardInfo TRANSGIRONDE = new Builder()
+            .setName(IntercodeTransitData.GIRONDE_NAME)
+            .setLocation(R.string.location_gironde)
+            .setCardType(CardType.ISO7816)
+            .setPreview()
+            .build();
+
     public static final CardInfo TROIKA = new Builder()
             // seqgo_card_alpha has identical geometry
             .setImageId(R.drawable.troika_card, R.drawable.seqgo_card_alpha)
@@ -292,13 +319,16 @@ public class CardInfo {
             KMT,
             MANLY_FAST_FERRY,
             CHC_METROCARD, // Metrocard
+            MOBIB,
             MYKI,
             MYWAY,
+            NAVIGO,
             NETS_FLASHPAY,
             OCTOPUS,
             OPAL,
             OPUS,
             ORCA,
+            OURA,
             OVCHIP,
             PASMO,
             PODOROZHNIK,
@@ -308,6 +338,7 @@ public class CardInfo {
             SUICA,
             LAX_TAP, // TAP
             TMONEY,
+            TRANSGIRONDE,
     	    TROIKA,
     };
 
