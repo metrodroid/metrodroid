@@ -143,66 +143,73 @@ public class CardInfoActivity extends MetrodroidActivity {
                     return;
                 }
 
-                String titleSerial = "";
-                if (!MetrodroidApplication.hideCardNumbers()) {
-                    titleSerial = (mTransitData.getSerialNumber() != null) ? mTransitData.getSerialNumber()
-                            : Utils.getHexString(mCard.getTagId(), "");
-                }
-                actionBar.setTitle(mTransitData.getCardName());
-                actionBar.setSubtitle(titleSerial);
+                try {
 
-                Bundle args = new Bundle();
-                args.putString(AdvancedCardInfoActivity.EXTRA_CARD,
-                        mCard.toXml(MetrodroidApplication.getInstance().getSerializer()));
-                args.putParcelable(EXTRA_TRANSIT_DATA, mTransitData);
+                    String titleSerial = "";
+                    if (!MetrodroidApplication.hideCardNumbers()) {
+                        titleSerial = (mTransitData.getSerialNumber() != null) ? mTransitData.getSerialNumber()
+                                : Utils.getHexString(mCard.getTagId(), "");
+                    }
+                    actionBar.setTitle(mTransitData.getCardName());
+                    actionBar.setSubtitle(titleSerial);
 
-                if (mTransitData instanceof UnauthorizedTransitData) {
-                    mTabsAdapter.addTab(actionBar.newTab(), UnauthorizedCardFragment.class, args);
-                    return;
-                }
+                    Bundle args = new Bundle();
+                    args.putString(AdvancedCardInfoActivity.EXTRA_CARD,
+                            mCard.toXml(MetrodroidApplication.getInstance().getSerializer()));
+                    args.putParcelable(EXTRA_TRANSIT_DATA, mTransitData);
 
-                if (mTransitData instanceof BlankUltralightTransitData) {
-                    mTabsAdapter.addTab(actionBar.newTab(), BlankCardFragment.class, args);
-                    return;
-                }
+                    if (mTransitData instanceof UnauthorizedTransitData) {
+                        mTabsAdapter.addTab(actionBar.newTab(), UnauthorizedCardFragment.class, args);
+                        return;
+                    }
 
-                if (mTransitData.getBalances() != null || mTransitData.getSubscriptions() != null) {
-                    mTabsAdapter.addTab(actionBar.newTab().setText(R.string.balances_and_subscriptions),
-                            CardBalanceFragment.class, args);
-                }
+                    if (mTransitData instanceof BlankUltralightTransitData) {
+                        mTabsAdapter.addTab(actionBar.newTab(), BlankCardFragment.class, args);
+                        return;
+                    }
 
-                if (mTransitData.getTrips() != null) {
-                    mTabsAdapter.addTab(actionBar.newTab().setText(R.string.history), CardTripsFragment.class, args);
-                }
+                    if (mTransitData.getBalances() != null || mTransitData.getSubscriptions() != null) {
+                        mTabsAdapter.addTab(actionBar.newTab().setText(R.string.balances_and_subscriptions),
+                                CardBalanceFragment.class, args);
+                    }
 
-                if (mTransitData.getInfo() != null) {
-                    mTabsAdapter.addTab(actionBar.newTab().setText(R.string.info), CardInfoFragment.class, args);
-                }
+                    if (mTransitData.getTrips() != null) {
+                        mTabsAdapter.addTab(actionBar.newTab().setText(R.string.history), CardTripsFragment.class, args);
+                    }
 
-                if (mTabsAdapter.getCount() > 1) {
-                    actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
-                }
+                    if (mTransitData.getInfo() != null) {
+                        mTabsAdapter.addTab(actionBar.newTab().setText(R.string.info), CardInfoFragment.class, args);
+                    }
 
-                if (mTransitData.hasUnknownStations()) {
-                    findViewById(R.id.need_stations).setVisibility(View.VISIBLE);
-                    findViewById(R.id.need_stations_button).setOnClickListener(view -> startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://micolous.github.io/metrodroid/unknown_stops"))));
-                }
+                    if (mTabsAdapter.getCount() > 1) {
+                        actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
+                    }
 
-                mShowMoreInfo = mTransitData.getMoreInfoPage() != null;
-                mShowOnlineServices = mTransitData.getOnlineServicesPage() != null;
+                    if (mTransitData.hasUnknownStations()) {
+                        findViewById(R.id.need_stations).setVisibility(View.VISIBLE);
+                        findViewById(R.id.need_stations_button).setOnClickListener(view -> startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://micolous.github.io/metrodroid/unknown_stops"))));
+                    }
 
-                if (mMenu != null) {
-                    mMenu.findItem(R.id.online_services).setVisible(mShowOnlineServices);
-                    mMenu.findItem(R.id.more_info).setVisible(mShowMoreInfo);
-                }
+                    mShowMoreInfo = mTransitData.getMoreInfoPage() != null;
+                    mShowOnlineServices = mTransitData.getOnlineServicesPage() != null;
 
-                boolean speakBalanceRequested = getIntent().getBooleanExtra(SPEAK_BALANCE_EXTRA, false);
-                if (mSpeakBalanceEnabled && speakBalanceRequested) {
-                    mTTS = new TextToSpeech(CardInfoActivity.this, mTTSInitListener);
-                }
+                    if (mMenu != null) {
+                        mMenu.findItem(R.id.online_services).setVisible(mShowOnlineServices);
+                        mMenu.findItem(R.id.more_info).setVisible(mShowMoreInfo);
+                    }
 
-                if (savedInstanceState != null) {
-                    viewPager.setCurrentItem(savedInstanceState.getInt(KEY_SELECTED_TAB, 0));
+                    boolean speakBalanceRequested = getIntent().getBooleanExtra(SPEAK_BALANCE_EXTRA, false);
+                    if (mSpeakBalanceEnabled && speakBalanceRequested) {
+                        mTTS = new TextToSpeech(CardInfoActivity.this, mTTSInitListener);
+                    }
+
+                    if (savedInstanceState != null) {
+                        viewPager.setCurrentItem(savedInstanceState.getInt(KEY_SELECTED_TAB, 0));
+                    }
+                } catch (Exception e) {
+                    Log.e("CardInfoActivity", "Error parsing transit data", e);
+                    showAdvancedInfo(e);
+                    finish();
                 }
             }
         }.execute();
