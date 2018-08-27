@@ -45,16 +45,18 @@ public final class NextfareUtil {
      * Bottom 11 bits = minutes since 00:00
      * Time is represented in localtime
      * <p>
-     * Assumes that data has already been byte-reversed for big endian parsing.
+     * Assumes that data has not been byte-reversed.
      *
-     * @param timestamp Four bytes of input representing the timestamp to parse
+     * @param input Bytes of input representing the timestamp to parse
+     * @param offset Offset in byte to timestamp
      * @return Date and time represented by that value
      */
-    public static GregorianCalendar unpackDate(byte[] timestamp, TimeZone timeZone) {
-        int minute = Utils.getBitsFromBuffer(timestamp, 5, 11);
-        int year = Utils.getBitsFromBuffer(timestamp, 16, 7) + 2000;
-        int month = Utils.getBitsFromBuffer(timestamp, 23, 4);
-        int day = Utils.getBitsFromBuffer(timestamp, 27, 5);
+    public static GregorianCalendar unpackDate(byte[] input, int offset, TimeZone timeZone) {
+        int timestamp = Utils.byteArrayToIntReversed(input, offset, 4);
+        int minute = Utils.getBitsFromInteger(timestamp, 16, 11);
+        int year = Utils.getBitsFromInteger(timestamp, 9, 7) + 2000;
+        int month = Utils.getBitsFromInteger(timestamp, 5, 4);
+        int day = Utils.getBitsFromInteger(timestamp, 0, 5);
 
         Log.i("nextfareutil", "unpackDate: " + minute + " minutes, " + year + '-' + month + '-' + day);
 

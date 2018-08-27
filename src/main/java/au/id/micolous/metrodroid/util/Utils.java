@@ -349,7 +349,7 @@ public class Utils {
     }
 
     public static int getBitsFromInteger(int buffer, int iStartBit, int iLength) {
-        return (buffer >> (iStartBit)) & ((char) 0xFF >> (8 - iLength));
+        return (buffer >> (iStartBit)) & ((1 << iLength) - 1);
     }
 
     public static byte[] reverseBuffer(byte[] buffer) {

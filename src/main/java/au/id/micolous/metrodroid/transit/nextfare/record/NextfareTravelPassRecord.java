@@ -63,9 +63,7 @@ public class NextfareTravelPassRecord extends NextfareRecord implements Parcelab
 
     public static NextfareTravelPassRecord recordFromBytes(byte[] input, TimeZone timeZone) {
         //if ((input[0] != 0x01 && input[0] != 0x31) || input[1] != 0x01) throw new AssertionError("Not a topup record");
-        byte[] ts = Utils.reverseBuffer(input, 2, 4);
-        Log.d(TAG, "ts = " + Utils.getHexString(ts));
-        if (ts[0] == 0 && ts[1] == 0 && ts[2] == 0 && ts[3] == 0) {
+        if (Utils.byteArrayToInt(input, 2, 4) == 0) {
             // Timestamp is null, ignore.
             return null;
         }
@@ -73,11 +71,8 @@ public class NextfareTravelPassRecord extends NextfareRecord implements Parcelab
         NextfareTravelPassRecord record = new NextfareTravelPassRecord();
         record.mVersion = Utils.byteArrayToInt(input, 13, 1);
 
-        record.mExpiry = NextfareUtil.unpackDate(ts, timeZone);
-
-
-        byte[] checksum = Utils.reverseBuffer(input, 14, 2);
-        record.mChecksum = Utils.byteArrayToInt(checksum);
+        record.mExpiry = NextfareUtil.unpackDate(input, 2, timeZone);
+        record.mChecksum = Utils.byteArrayToIntReversed(input, 14, 2);
 
         Log.d(TAG, "@" + Utils.isoDateTimeFormat(record.mExpiry) + ": version " + record.mVersion);
 

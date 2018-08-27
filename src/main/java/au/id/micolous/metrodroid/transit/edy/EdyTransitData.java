@@ -84,7 +84,7 @@ public class EdyTransitData extends TransitData {
         List<FelicaBlock> blocksBalance = serviceBalance.getBlocks();
         FelicaBlock blockBalance = blocksBalance.get(0);
         byte[] dataBalance = blockBalance.getData();
-        mCurrentBalance = Utils.byteArrayToInt(Utils.reverseBuffer(dataBalance, 0, 3));
+        mCurrentBalance = Utils.byteArrayToIntReversed(dataBalance, 0, 3);
 
         // now read the transaction history
         FelicaService serviceHistory = card.getSystem(SYSTEMCODE_EDY).getService(FELICA_SERVICE_EDY_HISTORY);

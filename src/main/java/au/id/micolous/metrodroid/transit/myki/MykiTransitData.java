@@ -66,11 +66,10 @@ public class MykiTransitData extends StubTransitData {
     public MykiTransitData(Card card) {
         DesfireCard desfireCard = (DesfireCard) card;
         byte[] metadata = desfireCard.getApplication(APP_ID_1).getFile(15).getData();
-        metadata = Utils.reverseBuffer(metadata, 0, 16);
 
         try {
-            mSerialNumber1 = Utils.getBitsFromBuffer(metadata, 96, 32);
-            mSerialNumber2 = Utils.getBitsFromBuffer(metadata, 64, 32);
+            mSerialNumber1 = Utils.byteArrayToIntReversed(metadata, 4, 4);
+            mSerialNumber2 = Utils.byteArrayToIntReversed(metadata, 8, 4);
         } catch (Exception ex) {
             throw new RuntimeException("Error parsing Myki data", ex);
         }
@@ -94,10 +93,10 @@ public class MykiTransitData extends StubTransitData {
     public static TransitIdentity parseTransitIdentity(Card card) {
         DesfireCard desfireCard = (DesfireCard) card;
         byte[] data = desfireCard.getApplication(APP_ID_1).getFile(15).getData();
-        data = Utils.reverseBuffer(data, 0, 16);
 
-        long serialNumber1 = Utils.getBitsFromBuffer(data, 96, 32);
-        long serialNumber2 = Utils.getBitsFromBuffer(data, 64, 32);
+        long serialNumber1 = Utils.byteArrayToIntReversed(data, 4, 4);
+        long serialNumber2 = Utils.byteArrayToIntReversed(data, 8, 4);
+
         return new TransitIdentity(NAME, formatSerialNumber(serialNumber1, serialNumber2));
     }
 
