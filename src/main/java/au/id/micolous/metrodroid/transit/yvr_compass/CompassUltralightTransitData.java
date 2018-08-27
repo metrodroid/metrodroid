@@ -16,7 +16,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package au.id.micolous.metrodroid.transit.compass;
+package au.id.micolous.metrodroid.transit.yvr_compass;
 
 import android.os.Parcel;
 import android.os.Parcelable;
@@ -55,7 +55,7 @@ public class CompassUltralightTransitData extends TransitData {
             return new CompassUltralightTransitData[size];
         }
     };
-    public static final String NAME = "Compass Ultralight";
+    public static final String NAME = "Compass";
     private final int mProductCode;
     private final long mSerial;
     private final byte mType;

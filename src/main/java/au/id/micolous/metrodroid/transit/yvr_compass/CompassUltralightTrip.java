@@ -17,7 +17,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package au.id.micolous.metrodroid.transit.compass;
+package au.id.micolous.metrodroid.transit.yvr_compass;
 
 import android.os.Parcel;
 import android.os.Parcelable;
