@@ -139,7 +139,7 @@ public class ClassicCard extends Card {
 
             for (int sectorIndex = 0; sectorIndex < tech.getSectorCount(); sectorIndex++) {
                 try {
-                    byte[] correctKey = null;
+                    ClassicSectorKey correctKey = null;
                     feedbackInterface.updateProgressBar(sectorIndex * 5, maxProgress);
 
                     if (keys != null) {
@@ -155,15 +155,17 @@ public class ClassicCard extends Card {
                             if (sectorKey != null) {
                                 if (sectorKey.getType().equals(ClassicSectorKey.TYPE_KEYA)) {
                                     if (tech.authenticateSectorWithKeyA(sectorIndex, sectorKey.getKey())) {
-                                        correctKey = sectorKey.getKey();
+                                        correctKey = sectorKey;
                                     } else if (tech.authenticateSectorWithKeyB(sectorIndex, sectorKey.getKey())) {
-                                        correctKey = sectorKey.getKey();
+                                        correctKey = new ClassicSectorKey(
+                                                ClassicSectorKey.TYPE_KEYB, sectorKey.getKey());
                                     }
                                 } else {
                                     if (tech.authenticateSectorWithKeyB(sectorIndex, sectorKey.getKey())) {
-                                        correctKey = sectorKey.getKey();
+                                        correctKey = sectorKey;
                                     } else if (tech.authenticateSectorWithKeyA(sectorIndex, sectorKey.getKey())) {
-                                        correctKey = sectorKey.getKey();
+                                        correctKey = new ClassicSectorKey(
+                                                ClassicSectorKey.TYPE_KEYA, sectorKey.getKey());
                                     }
                                 }
                             }
@@ -197,11 +199,11 @@ public class ClassicCard extends Card {
 
                                     if (cardKeys[keyIndex].getType().equals(ClassicSectorKey.TYPE_KEYA)) {
                                         if (tech.authenticateSectorWithKeyA(sectorIndex, cardKeys[keyIndex].getKey())) {
-                                            correctKey = cardKeys[keyIndex].getKey();
+                                            correctKey = cardKeys[keyIndex];
                                         }
                                     } else {
                                         if (tech.authenticateSectorWithKeyB(sectorIndex, cardKeys[keyIndex].getKey())) {
-                                            correctKey = cardKeys[keyIndex].getKey();
+                                            correctKey = cardKeys[keyIndex];
                                         }
                                     }
 
@@ -221,10 +223,10 @@ public class ClassicCard extends Card {
                                 feedbackInterface.updateStatusText(Utils.localizeString(R.string.mfc_default_key, sectorIndex));
                                 for (byte[] wkKey : WELL_KNOWN_KEYS) {
                                     if (tech.authenticateSectorWithKeyA(sectorIndex, wkKey)) {
-                                        correctKey = wkKey;
+                                        correctKey = new ClassicSectorKey(ClassicSectorKey.TYPE_KEYA, wkKey);
                                         break;
                                     } else if (tech.authenticateSectorWithKeyB(sectorIndex, wkKey)) {
-                                        correctKey = wkKey;
+                                        correctKey = new ClassicSectorKey(ClassicSectorKey.TYPE_KEYB, wkKey);
                                         break;
                                     }
                                 }
@@ -247,7 +249,7 @@ public class ClassicCard extends Card {
                             String type = ClassicBlock.TYPE_DATA; // FIXME
                             blocks.add(ClassicBlock.create(type, blockIndex, data));
                         }
-                        sectors.add(new ClassicSector(sectorIndex, blocks.toArray(new ClassicBlock[blocks.size()]), correctKey));
+                        sectors.add(new ClassicSector(sectorIndex, blocks.toArray(new ClassicBlock[blocks.size()]), correctKey.getKey(), correctKey.getType()));
 
                         feedbackInterface.updateProgressBar((sectorIndex * 5) + 4, maxProgress);
                     } else {
