@@ -216,6 +216,7 @@ public class CardInfo {
             .build();
 
     public static final CardInfo RAVKAV = new CardInfo.Builder()
+            .setImageId(R.drawable.ravkav_card)
             .setName(Utils.localizeString(R.string.card_name_ravkav))
             .setLocation(R.string.location_israel)
             .setCardType(CardType.ISO7816)
