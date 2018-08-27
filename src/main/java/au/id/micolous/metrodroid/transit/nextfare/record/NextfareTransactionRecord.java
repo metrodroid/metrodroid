@@ -76,8 +76,11 @@ public class NextfareTransactionRecord extends NextfareRecord implements Parcela
         // LAX:      input[0] == 0x41 for "Travel Pass" sale.
         // LAX:      input[0] == 0x71 for "Stored Value" sale -- effectively recorded twice
         // SEQ, LAX: input[0] == 0x79 for "Stored Value" sale
+        // Minneapolis: input[0] == 0x89 unknown transaction type, no date, only a small number
+        // around 100
 
-        if (input[0] > 0x70) {
+        int transhead = (input[0] & 0xff);
+        if (transhead == 0x89 || transhead == 0x71 || transhead == 0x79) {
             return null;
         }
 
