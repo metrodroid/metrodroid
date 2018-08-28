@@ -18,7 +18,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package au.id.micolous.metrodroid.card.cepas;
+package au.id.micolous.metrodroid.transit.ezlink;
 
 import org.simpleframework.xml.Attribute;
 import org.simpleframework.xml.ElementList;
@@ -30,18 +30,11 @@ import java.util.List;
 
 @Root(name = "history")
 public class CEPASHistory {
-    @Attribute(name = "id")
-    private int mId;
-    @ElementList(name = "transaction", inline = true, required = false)
     private List<CEPASTransaction> mTransactions;
-    @Attribute(name = "valid")
     private boolean mIsValid;
-    @Attribute(name = "error", required = false)
     private String mErrorMessage;
 
-    public CEPASHistory(int purseId, byte[] purseData) {
-        mId = purseId;
-
+    public CEPASHistory(byte[] purseData) {
         if (purseData != null) {
             mIsValid = true;
             mErrorMessage = "";
@@ -62,27 +55,17 @@ public class CEPASHistory {
     }
 
     public CEPASHistory(int purseId, String errorMessage) {
-        mId = purseId;
         mErrorMessage = errorMessage;
         mIsValid = false;
     }
 
     public CEPASHistory(int purseId, CEPASTransaction[] transactions) {
         mTransactions = Arrays.asList(transactions);
-        mId = purseId;
         mIsValid = true;
         mErrorMessage = "";
     }
 
     private CEPASHistory() { /* For XML Serializer */ }
-
-    public static CEPASHistory create(int purseId, byte[] purseData) {
-        return new CEPASHistory(purseId, purseData);
-    }
-
-    public int getId() {
-        return mId;
-    }
 
     public List<CEPASTransaction> getTransactions() {
         return mTransactions;

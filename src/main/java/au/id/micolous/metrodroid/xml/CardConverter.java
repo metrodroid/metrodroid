@@ -22,7 +22,7 @@ package au.id.micolous.metrodroid.xml;
 import au.id.micolous.metrodroid.card.Card;
 import au.id.micolous.metrodroid.card.CardType;
 import au.id.micolous.metrodroid.card.iso7816.ISO7816Card;
-import au.id.micolous.metrodroid.card.cepas.CEPASCard;
+import au.id.micolous.metrodroid.card.cepascompat.CEPASCard;
 import au.id.micolous.metrodroid.card.classic.ClassicCard;
 import au.id.micolous.metrodroid.card.desfire.DesfireCard;
 import au.id.micolous.metrodroid.card.felica.FelicaCard;
