@@ -643,4 +643,10 @@
 
     <string name="led_shared_taxi">Sint-Petersburg Gedeelde Taxi</string>
 
-    </resources>
+    <string name="developer_options">Ontwikkelaarsopties</string>
+    <string name="station_database">Stationsdatabank</string>
+    <string name="developer_options_desc">Gebruik van stationsdatabanken, verdoezelmodi...</string>
+    <string name="advanced_options">Geavanceerde opties</string>
+    <string name="nfc">Near Field Communication</string>
+    <string name="nfc_options_desc">Terugvallezer voor MIFARE Classic, fysieke kaartinstellingen...</string>
+</resources>
