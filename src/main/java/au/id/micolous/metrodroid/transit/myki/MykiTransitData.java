@@ -21,15 +21,19 @@ package au.id.micolous.metrodroid.transit.myki;
 
 import android.net.Uri;
 import android.os.Parcel;
+import android.support.annotation.NonNull;
 
 import org.apache.commons.lang3.ArrayUtils;
 
 import au.id.micolous.metrodroid.card.Card;
+import au.id.micolous.metrodroid.card.desfire.DesfireApplication;
 import au.id.micolous.metrodroid.card.desfire.DesfireCard;
+import au.id.micolous.metrodroid.card.desfire.files.DesfireFile;
 import au.id.micolous.metrodroid.transit.TransitIdentity;
 import au.id.micolous.metrodroid.transit.stub.StubTransitData;
 import au.id.micolous.metrodroid.util.Utils;
 
+import java.util.Arrays;
 import java.util.Locale;
 
 /**
@@ -44,8 +48,12 @@ public class MykiTransitData extends StubTransitData {
     public static final String NAME = "Myki";
     public static final int APP_ID_1 = 0x11f2;
     public static final int APP_ID_2 = 0xf010f2;
-    private long mSerialNumber1;
-    private long mSerialNumber2;
+
+    // 308425 as a uint32_le (the serial number prefix)
+    private static final byte[] MYKI_HEADER = {(byte)0xc9, (byte)0xb4, 0x04, 0x00};
+    private static final long MYKI_PREFIX = 308425;
+
+    private String mSerial;
 
     public static final Creator<MykiTransitData> CREATOR = new Creator<MykiTransitData>() {
         public MykiTransitData createFromParcel(Parcel parcel) {
@@ -59,8 +67,7 @@ public class MykiTransitData extends StubTransitData {
 
     @SuppressWarnings("UnusedDeclaration")
     public MykiTransitData(Parcel parcel) {
-        mSerialNumber1 = parcel.readLong();
-        mSerialNumber2 = parcel.readLong();
+        mSerial = parcel.readString();
     }
 
     public MykiTransitData(Card card) {
@@ -68,36 +75,64 @@ public class MykiTransitData extends StubTransitData {
         byte[] metadata = desfireCard.getApplication(APP_ID_1).getFile(15).getData();
 
         try {
-            mSerialNumber1 = Utils.byteArrayToIntReversed(metadata, 4, 4);
-            mSerialNumber2 = Utils.byteArrayToIntReversed(metadata, 8, 4);
+            mSerial = parseSerial(metadata);
+            if (mSerial == null) {
+                throw new RuntimeException("Invalid Myki data (parseSerial = null)");
+            }
         } catch (Exception ex) {
             throw new RuntimeException("Error parsing Myki data", ex);
         }
     }
 
-    public static boolean check(Card card) {
-        return (card instanceof DesfireCard)
-                && (((DesfireCard) card).getApplication(APP_ID_1) != null)
-                && (((DesfireCard) card).getApplication(APP_ID_2) != null);
+    public static boolean check(@NonNull DesfireCard card) {
+        DesfireApplication app1 = card.getApplication(APP_ID_1);
+        if (app1 == null || card.getApplication(APP_ID_2) == null) {
+            return false;
+        }
+
+        DesfireFile file = app1.getFile(15);
+        if (file == null) {
+            return false;
+        }
+
+        byte[] data = file.getData();
+        if (data == null) {
+            return false;
+        }
+
+        // Check that we have the correct serial prefix (308425)
+        return Arrays.equals(Arrays.copyOfRange(data, 0, 4),
+                MYKI_HEADER);
+    }
+
+    /**
+     * Parses a serial number in 0x11f2 file 0xf
+     * @param file content of the serial file
+     * @return String with the complete serial number, or null on error
+     */
+    private static String parseSerial(byte[] file) {
+        long serial1 = Utils.byteArrayToLongReversed(file, 0, 4);
+        if (serial1 != MYKI_PREFIX) {
+            return null;
+        }
+
+        long serial2 = Utils.byteArrayToLongReversed(file, 4, 4);
+        if (serial2 > 99999999) {
+            return null;
+        }
+
+        String formattedSerial = String.format(Locale.ENGLISH, "%06d%08d", serial1, serial2);
+        return formattedSerial + Utils.calculateLuhn(formattedSerial);
     }
 
     public static boolean earlyCheck(int[] appIds) {
         return ArrayUtils.contains(appIds, APP_ID_1) && ArrayUtils.contains(appIds, APP_ID_2);
     }
 
-    private static String formatSerialNumber(long serialNumber1, long serialNumber2) {
-        String formattedSerial = String.format(Locale.ENGLISH, "%06d%08d", serialNumber1, serialNumber2);
-        return formattedSerial + Utils.calculateLuhn(formattedSerial);
-    }
-
     public static TransitIdentity parseTransitIdentity(Card card) {
         DesfireCard desfireCard = (DesfireCard) card;
         byte[] data = desfireCard.getApplication(APP_ID_1).getFile(15).getData();
-
-        long serialNumber1 = Utils.byteArrayToIntReversed(data, 4, 4);
-        long serialNumber2 = Utils.byteArrayToIntReversed(data, 8, 4);
-
-        return new TransitIdentity(NAME, formatSerialNumber(serialNumber1, serialNumber2));
+        return new TransitIdentity(NAME, parseSerial(data));
     }
 
     @Override
@@ -107,12 +142,11 @@ public class MykiTransitData extends StubTransitData {
 
     @Override
     public String getSerialNumber() {
-        return formatSerialNumber(mSerialNumber1, mSerialNumber2);
+        return mSerial;
     }
 
     public void writeToParcel(Parcel parcel, int flags) {
-        parcel.writeLong(mSerialNumber1);
-        parcel.writeLong(mSerialNumber2);
+        parcel.writeString(mSerial);
     }
 
     @Override
