@@ -106,9 +106,7 @@ public class ReadingTagActivity extends MetrodroidActivity implements TagReaderF
 
             if (cardInfo != null) {
                 if (cardInfo.hasBitmap()) {
-                    i.setImageBitmap(cardInfo.getBitmap(getResources()));
-                } else {
-                    i.setImageResource(cardInfo.getImageId());
+                    i.setImageDrawable(cardInfo.getDrawable(this));
                 }
                 i.setContentDescription(cardInfo.getName());
                 i.invalidate();
