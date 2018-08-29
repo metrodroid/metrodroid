@@ -116,4 +116,10 @@
 \n
 \nFlere detaljer: https://github.com/micolous/metrodroid/wiki/Changelog</string>
 
+    <string name="market_changelog_35">* Ny støtte for Kartu Multi Trip, Opus, Podorozhnik, Rav-Kav, T-Money, Troika cards og enkeltturs Compass (Vancouver) -kort.
+\n* Fiks av kræsjfeil for noen Clipper-kort.
+\n* Mange endringer under panseret.
+\n
+\nFlere detaljer: https://github.com/micolous/metrodroid/wiki/Changelog</string>
+
     </resources>

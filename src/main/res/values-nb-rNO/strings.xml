@@ -501,4 +501,93 @@
     <string name="card_note_russia">Kun påfyllbare e-veskekort støttes. Bank-utstedte kort støttes ikke.</string>
     <string name="card_name_troika">Troika</string>
     <string name="card_name_podorozhnik">Podorozhnik</string>
-</resources>
+<string name="sector_title_format_empty">Sektor: 0x%s (tom)</string>
+    <string name="binary_title_format">Binærdata</string>
+    <string name="requires_android_21">Krever Android 5.0 eller senere</string>
+
+    <string name="pref_theme">Drakt</string>
+    <string name="pref_theme_desc">Velg utseende og oppførsel</string>
+
+    <string name="pref_show_local_and_english_title">Vis både lokale og engelske stasjonsnavn</string>
+    <plurals name="minutes">
+	<item quantity="one">%d minutt</item>
+	<item quantity="other">%d minutter</item>
+</plurals>
+    <plurals name="hours">
+	<item quantity="one">%d time</item>
+	<item quantity="other">%d timer</item>
+</plurals>
+    <plurals name="days">
+	<item quantity="one">%d dag</item>
+	<item quantity="other">%d dager</item>
+</plurals>
+    <plurals name="trips_remaining">
+	<item quantity="one">%d tur gjenstår</item>
+	<item quantity="other">%d turer gjenstår</item>
+</plurals>
+    <plurals name="troika_rides">
+	<item quantity="one">Enkelttur</item>
+	<item quantity="other"></item>
+</plurals>
+
+    <string name="trip_description_unknown_start">til %s</string>
+    <string name="time_from_to">%s → %s</string>
+    <string name="time_from_unknown_to">?:?? → %s</string>
+
+
+    <string name="location_israel">Israel</string>
+    <string name="clipper_end_of_line">(Siste stoppested)</string>
+    <string name="clipper_zone_number">Sone #%s</string>
+
+    <string name="ez_bus_number">Buss #%s</string>
+    <string name="ez_bus_refund">Buss-tilbakebetaling</string>
+    <string name="ez_topup">Påfylling</string>
+    <string name="ez_first_use">Første bruk</string>
+    <string name="kmt_extra_note">Kun for nye FeliCa-kort.</string>
+
+    <string name="orca_topup_machine">Maskin #%s</string>
+    <string name="orca_topup">Fyll på</string>
+
+    <string name="suica_bus_area_line_stop">Bussområde %s Linje %s Stopp %s</string>
+    <string name="suica_line_station">Linje %s Stasjon %s</string>
+
+    <string name="compass_product_type">Produkttype</string>
+    <string name="compass_machine_code">Maskinkode</string>
+    <string name="compass_ticket_type">Billettkode</string>
+    <string name="compass_ticket_type_concession">Honør</string>
+    <string name="compass_ticket_type_regular">Vanlig</string>
+    <string name="compass_expiry_date">Utløpsdato</string>
+    <string name="compass_note">Kun enkelttursbilletter</string>
+
+    <string name="opus_subscription">Abonnement</string>
+    <string name="opus_card_expiry_date">Kortutløp</string>
+    <string name="opus_single_trips">Enkeltturer</string>
+
+    <string name="troika_fare_90mins">90 minutter</string>
+    <string name="validity_length">Gyldig i %s</string>
+    <string name="podorozhnik_topup">Podorozhnik påfylling</string>
+    <string name="led_bus">St. Petersburgs buss</string>
+    <string name="led_metro">St. Petersburgs metro</string>
+    <string name="led_shared_taxi">St. Petersburg delt drosje</string>
+
+    <string name="blank_mfu_card">Blankt MIFARE Ultralight-kort</string>
+    <string name="fully_blank_desc">Dette kortet er helt blankt så langt det går an å se. Det er formatert, men uten data skrevet på det. Det har et serienummer, slik at det kan identifiseres, og det er lenket til en database, men selve kortet inneholder ingen annen data.</string>
+    <string name="fully_blank_title">Blankt kort</string>
+
+    <string name="location_seoul">Seoul, Sør-Korea</string>
+    <string name="card_name_tmoney">T-Money</string>
+    <string name="tmoney_date">T-money-dato</string>
+
+    <string name="no_data_in_clipboard">Ingen data i utklippstavle.</string>
+    <string name="app_version">Versjon: %s</string>
+    <string name="device_model">Modell: %s (%s)</string>
+    <string name="android_os">Android OS: %s (%s)</string>
+    <string name="nfc_enabled">NFC: Avskrudd</string>
+    <string name="nfc_disabled">NFC: Avskrudd</string>
+    <string name="nfc_not_available">NFC: Ikke støttet</string>
+    <string name="mfc_supported">MIFARE CLASSIC: Støttet</string>
+    <string name="mfc_not_supported">MIFARE Classic: Ikke støttet</string>
+    <string name="balances_and_subscriptions">Billetter</string>
+    <string name="card_number">Kortnummer</string>
+    <string name="pref_show_raw_station_ids">Vis råe stasjons-ID-er</string>
+    </resources>
