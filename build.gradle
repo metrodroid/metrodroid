@@ -91,7 +91,10 @@ android {
         resConfigs 'en', 'en-rAU', 'en-rCA', 'en-rNZ', 'fi', 'fr', 'he', 'iw', 'ja', 'kab', 'nb-rNO', 'nl', 'ru', 'tr'
 
         // We want to use the support library for vectors, rather than shipping huge rasters.
-        vectorDrawables.useSupportLibrary = true
+        vectorDrawables {
+            useSupportLibrary = true
+            generatedDensities 'ldpi', 'mdpi', 'hdpi', 'xhdpi'
+        }
     }
 
     buildTypes {
