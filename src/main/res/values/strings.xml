@@ -971,4 +971,10 @@
     <string name="card_number">Card number</string>
     <string name="pref_show_raw_station_ids">Show raw station IDs</string>
     <string name="pref_show_raw_station_ids_desc">If true, a raw station ID is shown in addition to station name</string>
+    <string name="developer_options">Developer options</string>
+    <string name="station_database">Station database</string>
+    <string name="developer_options_desc">Use of station databases, obfuscation modes...</string>
+    <string name="advanced_options">Advanced options</string>
+    <string name="nfc">Near Field Communication</string>
+    <string name="nfc_options_desc">Fallback reader for MIFARE Classic, physical card interface settings...</string>
 </resources>
