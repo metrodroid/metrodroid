@@ -732,6 +732,12 @@
     <string name="felica_process_bus_pitapa">Bus (PiTaPa)</string>
     <string name="felica_process_bus_iruca">Bus (IruCa)</string>
     <string name="felica_process_reissue">Re-issue</string>
+    <!--
+        Translators:
+        https://en.wikipedia.org/wiki/Shinkansen
+        The "Shinkansen" (Japanese: 新幹線) is a high speed (240-320 km/h) railway network connecting
+        Japan's largest cities.
+    -->
     <string name="felica_process_payment_shinkansen">Shinkansen Payment</string>
     <string name="felica_process_entry_a_autocharge">Entry A (Autocharge)</string>
     <string name="felica_process_exit_a_autocharge">Exit A (Autocharge)</string>
