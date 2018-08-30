@@ -38,6 +38,7 @@ public class KMTTrip extends Trip {
         public KMTTrip createFromParcel(Parcel parcel) {
             return new KMTTrip(parcel);
         }
+
         public KMTTrip[] newArray(int size) {
             return new KMTTrip[size];
         }
@@ -70,7 +71,7 @@ public class KMTTrip extends Trip {
         mSequenceNumber = Utils.byteArrayToInt(data, 13, 3);
         mTimestamp = calcDate(data);
         mTransactionAmount = Utils.byteArrayToInt(data, 4, 4);
-        mEndGateCode = data[9] & 0xff;
+        mEndGateCode = Utils.byteArrayToInt(data, 8, 2);
     }
 
     public Station getEndStation() {
