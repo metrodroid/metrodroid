@@ -649,4 +649,5 @@
     <string name="advanced_options">Geavanceerde opties</string>
     <string name="nfc">Near Field Communication</string>
     <string name="nfc_options_desc">Terugvallezer voor MIFARE Classic, fysieke kaartinstellingen...</string>
-</resources>
+<string name="kmt_agency">Kereta Commuter Indonesia</string>
+    </resources>
