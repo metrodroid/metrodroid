@@ -23,6 +23,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.nfc.NfcAdapter;
 import android.os.Bundle;
+import android.support.annotation.Keep;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
@@ -42,6 +43,7 @@ import au.id.micolous.metrodroid.util.Utils;
 /**
  * @author Eric Butler, Michael Farrell
  */
+@Keep
 public class SupportedCardsActivity extends MetrodroidActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

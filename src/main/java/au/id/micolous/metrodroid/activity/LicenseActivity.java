@@ -20,11 +20,13 @@ package au.id.micolous.metrodroid.activity;
 
 import android.app.ActionBar;
 import android.os.Bundle;
+import android.support.annotation.Keep;
 import android.view.MenuItem;
 import android.widget.TextView;
 
 import au.id.micolous.farebot.R;
 
+@Keep
 public class LicenseActivity extends MetrodroidActivity {
 
     private static final String LICENSE_INTRO = "Metrodroid\n"

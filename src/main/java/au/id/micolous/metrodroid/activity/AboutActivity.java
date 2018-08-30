@@ -23,6 +23,7 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.Keep;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
@@ -34,6 +35,7 @@ import au.id.micolous.farebot.R;
 /**
  * @author Michael Farrell
  */
+@Keep
 public class AboutActivity extends MetrodroidActivity {
 
     @Override

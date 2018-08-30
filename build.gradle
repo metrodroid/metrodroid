@@ -109,7 +109,7 @@ android {
         }
         release {
             minifyEnabled true
-            useProguard false
+            useProguard true
             proguardFiles getDefaultProguardFile('proguard-android.txt'),
                     'proguard.cfg'
         }

@@ -30,6 +30,7 @@ import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.speech.tts.TextToSpeech;
 import android.speech.tts.TextToSpeech.OnInitListener;
+import android.support.annotation.Keep;
 import android.support.v4.view.ViewPager;
 import android.text.Spanned;
 import android.util.Log;
@@ -57,6 +58,7 @@ import au.id.micolous.metrodroid.util.Utils;
 /**
  * @author Eric Butler
  */
+@Keep
 public class CardInfoActivity extends MetrodroidActivity {
     public static final String EXTRA_TRANSIT_DATA = "transit_data";
     public static final String SPEAK_BALANCE_EXTRA = "au.id.micolous.farebot.speak_balance";

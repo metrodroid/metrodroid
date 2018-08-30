@@ -20,10 +20,12 @@ package au.id.micolous.metrodroid.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.Keep;
 
 /**
  * @author Eric Butler
  */
+@Keep
 public class BackgroundTagActivity extends MetrodroidActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {

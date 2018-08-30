@@ -32,6 +32,7 @@ import android.nfc.tech.MifareUltralight;
 import android.nfc.tech.NfcA;
 import android.nfc.tech.NfcF;
 import android.os.Bundle;
+import android.support.annotation.Keep;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -42,6 +43,7 @@ import au.id.micolous.metrodroid.util.Utils;
 import au.id.micolous.farebot.R;
 import au.id.micolous.metrodroid.MetrodroidApplication;
 
+@Keep
 public class MainActivity extends MetrodroidActivity {
     private NfcAdapter mNfcAdapter;
     private PendingIntent mPendingIntent;

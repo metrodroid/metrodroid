@@ -26,6 +26,7 @@ import android.app.Fragment;
 import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.Keep;
 import android.view.MenuItem;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
@@ -34,6 +35,7 @@ import au.id.micolous.farebot.R;
 
 import static android.view.ViewGroup.LayoutParams.MATCH_PARENT;
 
+@Keep
 public abstract class FragmentWrapperActivity extends MetrodroidActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {

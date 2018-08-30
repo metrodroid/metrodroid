@@ -33,6 +33,7 @@ import android.nfc.tech.MifareClassic;
 import android.nfc.tech.MifareUltralight;
 import android.nfc.tech.NfcF;
 import android.os.Bundle;
+import android.support.annotation.Keep;
 import android.view.View;
 import android.widget.RadioButton;
 import android.widget.TextView;
@@ -60,6 +61,7 @@ import static android.view.ViewGroup.LayoutParams.WRAP_CONTENT;
 /**
  * @author Eric Butler
  */
+@Keep
 public class AddKeyActivity extends MetrodroidActivity {
     private NfcAdapter mNfcAdapter;
     private PendingIntent mPendingIntent;

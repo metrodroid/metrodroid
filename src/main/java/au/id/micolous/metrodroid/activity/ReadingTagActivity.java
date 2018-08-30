@@ -33,6 +33,7 @@ import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.support.annotation.Keep;
 import android.util.Log;
 import android.view.accessibility.AccessibilityEvent;
 import android.view.accessibility.AccessibilityManager;
@@ -54,6 +55,7 @@ import au.id.micolous.farebot.BuildConfig;
 import au.id.micolous.farebot.R;
 import au.id.micolous.metrodroid.MetrodroidApplication;
 
+@Keep
 public class ReadingTagActivity extends MetrodroidActivity implements TagReaderFeedbackInterface {
     private static final String TAG = ReadingTagActivity.class.getName();
     boolean mIndeterminite = true;

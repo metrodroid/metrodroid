@@ -23,10 +23,12 @@
 package au.id.micolous.metrodroid.activity;
 
 import android.app.Fragment;
+import android.support.annotation.Keep;
 
 import au.id.micolous.metrodroid.fragment.CardsFragment;
 
 
+@Keep
 public class CardsActivity extends FragmentWrapperActivity {
     @Override
     protected Fragment createFragment() {

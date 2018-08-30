@@ -26,6 +26,7 @@ import android.app.ActionBar;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.support.annotation.Keep;
 import android.support.annotation.RequiresApi;
 import android.util.Log;
 import android.view.MenuItem;
@@ -45,6 +46,7 @@ import java.util.List;
 import au.id.micolous.farebot.BuildConfig;
 import au.id.micolous.farebot.R;
 
+@Keep
 @RequiresApi(17)
 public class TripMapActivity extends MetrodroidActivity {
     public static final String TRIP_EXTRA = "trip";

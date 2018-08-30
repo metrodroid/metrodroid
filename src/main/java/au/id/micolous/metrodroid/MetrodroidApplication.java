@@ -26,6 +26,7 @@ import android.nfc.NfcAdapter;
 import android.os.Build;
 import android.os.StrictMode;
 import android.preference.PreferenceManager;
+import android.support.annotation.Keep;
 import android.util.Log;
 
 import net.kazzz.felica.FeliCaLib;
@@ -71,6 +72,7 @@ import au.id.micolous.metrodroid.xml.ISO7816Converter;
 import au.id.micolous.metrodroid.xml.SkippableRegistryStrategy;
 import au.id.micolous.metrodroid.xml.UltralightPageConverter;
 
+@Keep
 public class MetrodroidApplication extends Application {
     private static final String TAG = "MetrodroidApplication";
     public static final String PREF_LAST_READ_ID = "last_read_id";
@@ -93,6 +95,8 @@ public class MetrodroidApplication extends Application {
     private static final Set<String> devicesMifareWorks = new HashSet<>();
     private static final Set<String> devicesMifareNotWorks = new HashSet<>();
     private static final String PREF_SHOW_RAW_IDS = "pref_show_raw_ids";
+
+    public static final int keep = R.raw.keep;
 
     static {
         devicesMifareWorks.add("Pixel 2");

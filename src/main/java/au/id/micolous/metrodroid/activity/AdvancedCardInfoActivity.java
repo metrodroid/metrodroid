@@ -27,6 +27,7 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.Keep;
 import android.support.v4.view.ViewPager;
 import android.text.Spanned;
 import android.util.Log;
@@ -56,6 +57,7 @@ import au.id.micolous.metrodroid.util.ExportHelper;
 import au.id.micolous.metrodroid.util.TripObfuscator;
 import au.id.micolous.metrodroid.util.Utils;
 
+@Keep
 public class AdvancedCardInfoActivity extends MetrodroidActivity {
     public static final String EXTRA_CARD = "au.id.micolous.farebot.EXTRA_CARD";
     public static final String EXTRA_ERROR = "au.id.micolous.farebot.EXTRA_ERROR";

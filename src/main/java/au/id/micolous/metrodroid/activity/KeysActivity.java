@@ -23,9 +23,11 @@
 package au.id.micolous.metrodroid.activity;
 
 import android.app.Fragment;
+import android.support.annotation.Keep;
 
 import au.id.micolous.metrodroid.fragment.KeysFragment;
 
+@Keep
 public class KeysActivity extends FragmentWrapperActivity {
 
     @Override

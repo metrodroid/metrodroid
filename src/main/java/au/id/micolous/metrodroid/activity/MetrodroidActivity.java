@@ -22,10 +22,12 @@ package au.id.micolous.metrodroid.activity;
 import android.app.Activity;
 import android.content.res.TypedArray;
 import android.os.Bundle;
+import android.support.annotation.Keep;
 import android.support.annotation.Nullable;
 
 import au.id.micolous.metrodroid.MetrodroidApplication;
 
+@Keep
 public abstract class MetrodroidActivity extends Activity {
     int mAppliedTheme;
 

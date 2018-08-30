@@ -29,6 +29,7 @@ import android.preference.CheckBoxPreference;
 import android.preference.ListPreference;
 import android.preference.Preference;
 import android.preference.PreferenceActivity;
+import android.support.annotation.Keep;
 import android.view.MenuItem;
 
 import au.id.micolous.farebot.R;
@@ -37,6 +38,7 @@ import au.id.micolous.metrodroid.MetrodroidApplication;
 import static android.content.pm.PackageManager.COMPONENT_ENABLED_STATE_DISABLED;
 import static android.content.pm.PackageManager.COMPONENT_ENABLED_STATE_ENABLED;
 
+@Keep
 public class PreferencesActivity extends PreferenceActivity implements Preference.OnPreferenceChangeListener {
 
     private CheckBoxPreference mPreferenceLaunchFromBackground;
