@@ -81,11 +81,9 @@ public class SupportedCardsActivity extends MetrodroidActivity {
 
             ImageView image = convertView.findViewById(R.id.card_image);
             if (info.hasBitmap()) {
-                image.setImageBitmap(info.getBitmap(getResources()));
+                image.setImageDrawable(info.getDrawable(getContext()));
                 image.invalidate();
                 if (image.isOpaque()) throw new AssertionError();
-            } else {
-                image.setImageResource(info.getImageId());
             }
 
             String notes = "";

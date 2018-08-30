@@ -31,6 +31,7 @@ import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.StringRes;
+import android.support.v7.content.res.AppCompatResources;
 import android.text.Spannable;
 import android.text.SpannableString;
 import android.text.SpannableStringBuilder;
@@ -234,8 +235,11 @@ public class CardTripsFragment extends ListFragment {
             }
 
             TypedArray a = getContext().obtainStyledAttributes(new int[]{R.attr.TransportIcons});
-            int iconArrayRes = a.getResourceId(0, -1);
+            int iconArrayRes = -1;
+            if (a != null)
+                iconArrayRes = a.getResourceId(0, -1);
             int iconIdx = trip.getMode().getImageResourceIdx();
+            int iconResId = -1;
             Drawable icon = null;
             TypedArray iconArray = null;
 
@@ -243,8 +247,16 @@ public class CardTripsFragment extends ListFragment {
                 iconArray = getContext().getResources().obtainTypedArray(iconArrayRes);
             }
 
-            if (iconArray != null)
-                icon = iconArray.getDrawable(iconIdx);
+            if (iconArray != null) {
+                iconResId = iconArray.getResourceId(iconIdx, -1);
+            }
+            if (iconResId != -1) {
+                try {
+                    icon = AppCompatResources.getDrawable(getContext(), iconResId);
+                } catch (Exception ex) {
+                    icon = null;
+                }
+            }
 
             if (icon == null) {
                 iconImageView.setImageResource(R.drawable.unknown);
