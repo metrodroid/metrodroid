@@ -753,8 +753,27 @@
     <string name="felica_process_payment_thirdparty">Payment (3rd Party)</string>
     <string name="felica_process_admission_thirdparty">Admission Payment (3rd Party)</string>
 
-    <!-- Kereta Commuter Indonesia's - KMT -->
-    <string name="kmt_def_route">Jabodetabek Line</string>
+    <!--
+        Translators: https://en.wikipedia.org/wiki/Kereta_Commuter_Indonesia
+
+        You should generally just transliterate "Kereta Commuter Indonesia" (a name of a company)
+        here.
+
+        "kereta api" = "train": https://en.wiktionary.org/wiki/kereta_api
+        "kereta commuter" = "commuter train".
+        "PT" is "perseroan terbatas", meaning "corporation".
+
+        Background:
+
+        "PT Kereta Commuter Indonesia" (KCI, literal translation: Indonesian Commuter Railway
+        Company) is a subsidiary of "PT Kereta Api Indonesia" (KAI, lit: Indonesian Railway
+        Company). KCI is responsible for public transportation in the greater Jakarta metropolitan
+        area (Jabodetabek).
+
+        KCI was historically known as "PT KAI Commuter Jabodetabek" (KCJ) and "PT Kereta Api
+        Jabodetabek Division".
+    -->
+    <string name="kmt_agency">Kereta Commuter Indonesia</string>
     <string name="kmt_extra_note">Only for new FeliCa cards.</string>
 
     <!-- HSL -->

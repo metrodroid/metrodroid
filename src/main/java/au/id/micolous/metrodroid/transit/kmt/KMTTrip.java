@@ -74,7 +74,23 @@ public class KMTTrip extends Trip {
         mEndGateCode = Utils.byteArrayToInt(data, 8, 2);
     }
 
+    @Nullable
+    @Override
+    public Station getStartStation() {
+        // Normally, only the end station is recorded.  But top-ups only have a "starting" station.
+        if (mProcessType == 0 || mProcessType == 2) {
+            return getStation(mEndGateCode);
+        }
+        return null;
+    }
+
+    @Nullable
+    @Override
     public Station getEndStation() {
+        if (mProcessType == 0 || mProcessType == 2) {
+            // "Ending station" doesn't make sense for Ticket Machines or Point-of-sale
+            return null;
+        }
         return getStation(mEndGateCode);
     }
 
@@ -122,20 +138,11 @@ public class KMTTrip extends Trip {
     }
 
     public String getAgencyName() {
-        String str;
-        if (mProcessType == 1)
-            str = Utils.localizeString(R.string.felica_process_charge);
-        else
-            str = Utils.localizeString(R.string.felica_terminal_pos);
-        return str;
+        return Utils.localizeString(R.string.kmt_agency);
     }
 
     public boolean hasTime() {
         return mTimestamp != null;
-    }
-
-    public String getRouteName() {
-        return Utils.localizeString(R.string.kmt_def_route);
     }
 
     public int describeContents() {
