@@ -97,14 +97,10 @@ class MobibTrip extends Trip {
     }
 
     @Override
-    public String getAgencyName() {
-        return StationTableReader.getOperatorName(MOBIB_STR, mAgency, false);
+    public String getAgencyName(boolean isShort) {
+        return StationTableReader.getOperatorName(MOBIB_STR, mAgency, isShort);
     }
 
-    @Override
-    public String getShortAgencyName() {
-        return StationTableReader.getOperatorName(MOBIB_STR, mAgency, true);
-    }
 
     @Nullable
     @Override

@@ -56,13 +56,10 @@ final class ClipperData {
         return StationTableReader.getOperatorDefaultMode(CLIPPER_STR, agency);
     }
 
-    public static String getAgencyName(int agency) {
-        return StationTableReader.getOperatorName(CLIPPER_STR, agency, false);
+    public static String getAgencyName(int agency, boolean isShort) {
+        return StationTableReader.getOperatorName(CLIPPER_STR, agency, isShort);
     }
 
-    public static String getShortAgencyName(int agency) {
-        return StationTableReader.getOperatorName(CLIPPER_STR, agency, true);
-    }
 
     public static Station getStation(int agency, int stationId, boolean isEnd) {
         String humanReadableId = "0x" + Integer.toHexString(agency) + "/0x" + Integer.toHexString(stationId);

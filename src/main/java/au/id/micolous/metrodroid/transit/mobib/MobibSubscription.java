@@ -81,12 +81,7 @@ class MobibSubscription extends Subscription {
     }
 
     @Override
-    public String getAgencyName() {
-        return null;
-    }
-
-    @Override
-    public String getShortAgencyName() {
+    public String getAgencyName(boolean isShort) {
         return null;
     }
 

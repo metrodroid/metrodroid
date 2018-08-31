@@ -257,13 +257,8 @@ public class OVChipSubscription extends Subscription {
     }
 
     @Override
-    public String getAgencyName() {
+    public String getAgencyName(boolean isShort) {
         return OVChipTransitData.getShortAgencyName(mAgency);    // Nobody uses most of the long names
-    }
-
-    @Override
-    public String getShortAgencyName() {
-        return OVChipTransitData.getShortAgencyName(mAgency);
     }
 
     public int getUnknown1() {

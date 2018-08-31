@@ -52,7 +52,7 @@ class PodorozhnikTopup extends Trip {
     }
 
     @Override
-    public String getAgencyName() {
+    public String getAgencyName(boolean isShort) {
         switch (mAgency) {
             case 1:
                 return Utils.localizeString(R.string.podorozhnik_topup);

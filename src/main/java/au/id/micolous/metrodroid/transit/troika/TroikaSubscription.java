@@ -122,12 +122,7 @@ class TroikaSubscription extends Subscription {
     }
 
     @Override
-    public String getAgencyName() {
-        return Utils.localizeString(R.string.card_name_troika);
-    }
-
-    @Override
-    public String getShortAgencyName() {
+    public String getAgencyName(boolean isShort) {
         return Utils.localizeString(R.string.card_name_troika);
     }
 

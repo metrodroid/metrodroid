@@ -68,7 +68,7 @@ class PodorozhnikTrip extends Trip {
     }
 
     @Override
-    public String getAgencyName() {
+    public String getAgencyName(boolean isShort) {
         // Always include "Saint Petersburg" in names here to distinguish from Troika (Moscow)
         // trips on hybrid cards
         // Some validators are misconfigured and show up as Metro, station 0, gate 0.

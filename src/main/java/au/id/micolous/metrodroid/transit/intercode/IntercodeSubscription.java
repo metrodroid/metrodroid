@@ -236,13 +236,8 @@ class IntercodeSubscription extends Subscription {
     }
 
     @Override
-    public String getAgencyName() {
+    public String getAgencyName(boolean isShort) {
         return IntercodeTransitData.getAgencyName(mNetworkId, mParsed.getInt("ContractProvider"), false);
-    }
-
-    @Override
-    public String getShortAgencyName() {
-        return IntercodeTransitData.getAgencyName(mNetworkId, mParsed.getInt("ContractProvider"), true);
     }
 
     @Override

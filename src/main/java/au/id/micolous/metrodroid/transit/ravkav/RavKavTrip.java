@@ -135,10 +135,10 @@ class RavKavTrip extends Trip {
     }
 
     @Override
-    public String getAgencyName() {
+    public String getAgencyName(boolean isShort) {
         if (mEventType == EVENT_TYPE_TOPUP && mAgency == 0x19)
             return Utils.localizeString(R.string.ravkav_agency_topup_app);
-        return StationTableReader.getOperatorName(RAVKAV_STR, mAgency, false);
+        return StationTableReader.getOperatorName(RAVKAV_STR, mAgency, isShort);
     }
 
     @Nullable
@@ -161,13 +161,6 @@ class RavKavTrip extends Trip {
     @Override
     public Calendar getEndTimestamp() {
         return parseTime(mEndTime);
-    }
-
-    @Override
-    public String getShortAgencyName() {
-        if (mEventType == EVENT_TYPE_TOPUP && mAgency == 0x19)
-            return Utils.localizeString(R.string.ravkav_agency_topup_app);
-        return StationTableReader.getOperatorName(RAVKAV_STR, mAgency, true);
     }
 
     @Nullable

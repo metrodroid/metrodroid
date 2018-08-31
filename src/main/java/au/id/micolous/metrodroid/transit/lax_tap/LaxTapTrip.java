@@ -58,7 +58,7 @@ public class LaxTapTrip extends NextfareTrip {
     }
 
     @Override
-    public String getAgencyName() {
+    public String getAgencyName(boolean isShort) {
         String agency = LaxTapData.AGENCIES.get(mModeInt, null);
         if (agency == null) {
             return Utils.localizeString(R.string.unknown_format, mModeInt);

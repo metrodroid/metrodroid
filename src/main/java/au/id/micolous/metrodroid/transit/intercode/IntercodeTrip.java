@@ -124,14 +124,10 @@ class IntercodeTrip extends Trip {
     }
 
     @Override
-    public String getAgencyName() {
-        return IntercodeTransitData.getAgencyName(mNetworkId, mAgency, true);
+    public String getAgencyName(boolean isShort) {
+        return IntercodeTransitData.getAgencyName(mNetworkId, mAgency, isShort);
     }
 
-    @Override
-    public String getShortAgencyName() {
-        return IntercodeTransitData.getAgencyName(mNetworkId, mAgency, true);
-    }
 
     @Nullable
     public Station getStation(int station) {
