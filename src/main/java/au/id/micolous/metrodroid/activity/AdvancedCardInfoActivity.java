@@ -196,6 +196,7 @@ public class AdvancedCardInfoActivity extends MetrodroidActivity {
                         OutputStream os = getContentResolver().openOutputStream(uri);
                         xml = mCard.toXml(MetrodroidApplication.getInstance().getSerializer());
                         IOUtils.write(xml, os, Charset.defaultCharset());
+                        os.close();
                         Toast.makeText(this, R.string.saved_xml_custom, Toast.LENGTH_SHORT).show();
                         break;
                 }
