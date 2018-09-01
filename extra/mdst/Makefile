@@ -17,12 +17,12 @@ orca.mdst: csv2pb-orca.py stations_pb2.py mdst.py ../../data/orca/*.csv
 	python3 csv2pb-orca.py ../../data/orca orca.mdst
 
 MDSTS += suica_rail.mdst
-suica_rail.mdst: sqlite2pb-suica.py stations_pb2.py mdst.py ../../data/felica_stations.db3
-	python3 sqlite2pb-suica.py
+suica_rail.mdst: csv2pb-suica.py stations_pb2.py mdst.py ../../data/felica/stations.csv
+	python3 csv2pb-suica.py
 
 MDSTS += suica_bus.mdst
-suica_bus.mdst: sqlite2pb-suica-bus.py stations_pb2.py ../../data/felica_stations.db3
-	python3 sqlite2pb-suica-bus.py
+suica_bus.mdst: csv2pb-suica-bus.py stations_pb2.py ../../data/felica/iruca_stations.csv
+	python3 csv2pb-suica-bus.py
 
 MDSTS += kmt.mdst
 kmt.mdst: csv2pb.py stations_pb2.py mdst.py ../../data/kmt/stations.csv
