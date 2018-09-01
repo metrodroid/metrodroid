@@ -3948,7 +3948,7 @@ AreaCode,LineCode,StationCode,CompanyName,CompanyName_en,LineName,LineName_en,St
 0,239,10,"東京都交通局",Toei,"1号線浅草","#1 Asakusa","東銀座",Higashiginza,,35.669464,139.767253
 0,239,11,"東京都交通局",Toei,"1号線浅草","#1 Asakusa","新橋",Shinbashi,,35.665498,139.75964
 0,239,12,"東京都交通局",Toei,"1号線浅草","#1 Asakusa","大門",Daimon,,35.656785,139.75466
-0,239,13,"東京都交通局",Toei,"1号線浅草","#1 Asakusa","三田",Sanda,,34.888449,135.22997
+0,239,13,"東京都交通局",Toei,"1号線浅草","#1 Asakusa","三田駅",Mita,,35.648174, 139.748807
 0,239,14,"東京都交通局",Toei,"1号線浅草","#1 Asakusa","泉岳寺",Sengakuji,,35.638692,139.74002
 0,239,15,"東京都交通局",Toei,"1号線浅草","#1 Asakusa","高輪台",Takanawa-dai,,35.631679,139.730305
 0,239,16,"東京都交通局",Toei,"1号線浅草","#1 Asakusa","五反田",Gotanda,,35.626446,139.723444
