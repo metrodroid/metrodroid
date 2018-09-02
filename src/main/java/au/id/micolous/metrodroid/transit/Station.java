@@ -45,7 +45,7 @@ public class Station implements Parcelable {
     private final String mCompanyName, mLineName, mStationName, mShortStationName, mLatitude, mLongitude, mLanguage;
     private final boolean mIsUnknown;
     private final String mHumanReadableId;
-    private List<String> mAttributes;
+    private final List<String> mAttributes;
 
     private Station(String humanReadableId, String stationName, boolean isUnknown) {
         this(humanReadableId, null, null, stationName,
@@ -77,6 +77,7 @@ public class Station implements Parcelable {
         mLanguage = parcel.readString();
         mIsUnknown = parcel.readInt() == 1;
         mHumanReadableId = parcel.readString();
+        mAttributes = new ArrayList<>();
         parcel.readList(mAttributes, Station.class.getClassLoader());
     }
 

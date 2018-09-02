@@ -33,9 +33,16 @@ task checkstyle(type: Checkstyle) {
 */
 
 dependencies {
-    implementation 'com.android.support:appcompat-v7:27.1.1'
+    implementation ('com.android.support:appcompat-v7:27.1.1') {
+        exclude module: 'animated-vector-drawable'
+        exclude module: 'support-fragment'
+    }
     implementation 'com.android.support:cardview-v7:27.1.1'
+    implementation 'com.android.support:support-annotations:27.1.1'
     implementation 'com.android.support:support-core-ui:27.1.1'
+    implementation ('com.android.support:support-core-utils:27.1.1') {
+        exclude module: 'support-compat'
+    }
     implementation 'com.android.support:support-vector-drawable:27.1.1'
     implementation 'commons-io:commons-io:2.5'
     implementation 'org.apache.commons:commons-lang3:3.5'
@@ -86,14 +93,30 @@ android {
         versionCode "git -C ${projectDir} rev-list --count HEAD".execute().text.trim().toInteger()
         versionName "git -C ${projectDir} describe --always --tags --dirty".execute().text.trim().replaceAll("^v", "")
 
-        // Limit language support to where we have translations.
-        // Update this whenever new language translations become available in Weblate.
-        resConfigs 'en', 'en-rAU', 'en-rCA', 'en-rNZ', 'fi', 'fr', 'he', 'iw', 'ja', 'kab', 'nb-rNO', 'nl', 'ru', 'tr'
+        resConfigs ([
+                // Update this whenever new language translations become available in Weblate.
+                // Languages we support
+                'en', 'en-rAU', 'en-rCA', 'en-rNZ',
+                'fi',
+                'fr',
+                // Hebrew
+                'he', 'iw',
+                // Indonesian
+                'id', 'in',
+                'ja',
+                'kab',
+                'nb-rNO',
+                'nl',
+                'ru',
+                'tr',
 
-        // We want to use the support library for vectors, rather than shipping huge rasters.
+                // UI mode
+
+
+        ])
         vectorDrawables {
             useSupportLibrary = true
-            generatedDensities 'ldpi', 'mdpi', 'hdpi', 'xhdpi'
+            generatedDensities 'ldpi', 'mdpi', 'hdpi'
         }
     }
 
@@ -102,6 +125,7 @@ android {
         dev {
             applicationIdSuffix '.dev'
             minifyEnabled true
+            shrinkResources true
             useProguard false
             proguardFiles getDefaultProguardFile('proguard-android.txt'),
                     'proguard.cfg'
@@ -109,6 +133,7 @@ android {
         }
         release {
             minifyEnabled true
+            shrinkResources true
             useProguard false
             proguardFiles getDefaultProguardFile('proguard-android.txt'),
                     'proguard.cfg'

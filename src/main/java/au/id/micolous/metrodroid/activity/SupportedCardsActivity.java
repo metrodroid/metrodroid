@@ -83,7 +83,6 @@ public class SupportedCardsActivity extends MetrodroidActivity {
             if (info.hasBitmap()) {
                 image.setImageDrawable(info.getDrawable(getContext()));
                 image.invalidate();
-                if (image.isOpaque()) throw new AssertionError();
             }
 
             String notes = "";

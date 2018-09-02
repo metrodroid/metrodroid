@@ -1,7 +1,7 @@
-ID;IDstr;Name;ShortName;DefaultType
-0x02;CT;Community Transit;CT;BUS
-0x03;ET;Everett Transit;ET;BUS
-0x04;KCM;King County Metro Transit;KCM;BUS
-0x06;PT;Pierce Transit;PT;BUS
-0x07;ST;Sound Transit;ST;TRAIN
-0x08;WSF;Washington State Ferries;WSF;FERRY
+id,name,short_name,mode
+2,Community Transit,CT,BUS
+3,Everett Transit,ET,BUS
+4,King County Metro Transit,KCM,BUS
+6,Pierce Transit,PT,BUS
+7,Sound Transit,ST,TRAIN
+8,Washington State Ferries,WSF,FERRY

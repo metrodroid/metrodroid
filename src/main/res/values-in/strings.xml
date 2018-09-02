@@ -1,0 +1,158 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2"><string name="app_name">Metrodroid</string>
+
+    <string name="license">Lisensi</string>
+    <string name="title_activity_license">Lisensi Open Source</string>
+    <string name="directions">Tempelkan kartu.</string>
+    <string name="reading_card">Membaca kartu…</string>
+    <string name="dont_move">Kartu jangan dipindah</string>
+    <string name="advanced_info">Info Tambahan</string>
+    <string name="delete_card">Hapus Kartu</string>
+    <string name="unknown_card">Kartu tidak dikenal</string>
+    <string name="locked_mfc_card">Kartu MIFARE Classic terkunci</string>
+    <string name="locked_mfu_card">Kartu MIFARE Ultralight terkunci</string>
+    <string name="locked_mfd_card">Kartu MIFARE DESFire terkunci</string>
+    <string name="hw_detail">Info Pabrikan</string>
+    <string name="data">Data Mentah</string>
+    <string name="copy_xml">Salin</string>
+    <string name="share_xml">Bagikan</string>
+    <string name="save_xml">Simpan ke File</string>
+    <string name="history">List Transaksi</string>
+    <string name="balance">Saldo</string>
+    <string name="no_trip_data">Data perjalanan tidak ada. Apakah kartu pernah dipergunakan?</string>
+    <string name="import_xml">Impor</string>
+    <string name="import_clipboard">Salin dari Clipboard</string>
+    <string name="import_file">Impor dari File</string>
+    <string name="export">Ekspor</string>
+    <string name="export_filename">Nama file Ekspor</string>
+    <string name="export_all">Ekspor Semua</string>
+    <string name="about">Tentang</string>
+    <string name="preferences">Pengaturan</string>
+    <string name="loading">Memuat…</string>
+    <string name="supported_cards">Kartu yang didukung</string>
+    <string name="turn_on_nfc">Silakan aktifkan NFC untuk membaca kartu.</string>
+    <string name="copyright">Copyright © 2015 – 2018 Michael Farrell</string>
+
+    <string name="balance_speech">Saldo <xliff:g id="balance" example="$13.37">%s</xliff:g></string>
+    <string name="scanned_at_format">Discan pada %1$s di %2$s</string>
+    <string name="pass_or_transfer">Pass/Xfer</string>
+    <string name="transaction_sequence">#</string>
+    <string name="fully_locked_desc">Tidak ada bagian dari kartu yang tidak dapat dibaca tanpa kunci. Anda tidak memiliki kunci yang terpasang.
+\n
+\nJika didukung oleh Metrodroid, kartu hanya dapat dibaca ketika kunci telah terpasang. Tiap kartu akan berbeda. Info tambahan mengenai cara mendapatkan dan memasang kunci dapat dicari di dokumen.
+\n
+\nJika kartu tidak didukung, maka tidak akan mungkin dapat dibaca walaupun kunci ada.
+\n
+\nSilakan hubungi penerbit kartu untuk dapat membuka akses data pada kartu. Akan aman jika diperbolehkan untuk membuka, dengan mode \"read-only\" kepada data dengan menggunakan teknologi terkini smartcard. Beberapa penerbit kartu bahkan menyediakan dokumen tentang format data yang dipergunakan pada kartu!</string>
+    <string name="fully_locked_title">Kartu terkunci semua.</string>
+    <string name="nfc_off_error">NFC mati</string>
+    <string name="wireless_settings">Seting Wireless</string>
+    <string name="machine_id">ID Mesin %s</string>
+
+    <string name="unknown_card_header">Format kartu tidak diketahui</string>
+    <string name="unknown_card_description">Kartu ini belum disupport oleh Metrodroid. Hanya raw data yang dapat ditampilkan.</string>
+
+    <string name="unknown_more_info">Info tambahan</string>
+    <string name="unknown_more_info_desc">Tekan untuk melihat support Metrodroid terhadap kartu ini.</string>
+
+    <string name="lawyercats">Metrodroid dan para pembuatnya tidak berhubungan dengan perusahaan penyedia layanan.</string>
+
+
+    <string name="scanned_cards">Riwayat</string>
+    <string name="no_scanned_cards">Anda belum melakukan pembacaan kartu.</string>
+    <string name="block_title_format">Blok: %s</string>
+    <string name="page_title_format">Halaman: 0x%s</string>
+    <string name="application_title_format">Aplikasi: 0x%s</string>
+    <string name="file_title_format">File: %s</string>
+    <string name="unauthorized_file_title_format">File: %s (akses ditolak)</string>
+    <string name="invalid_file_title_format">File: %1$s (sakah: %2$s)</string>
+    <string name="unauthorized_page_title_format">Halaman: 0x%s (tidak sah)</string>
+    <string name="sector_title_format">Sektor: 0x%s</string>
+    <string name="unauthorized_sector_title_format">Sektor: 0x%s (tidak sah)</string>
+    <string name="sector_title_format_empty">Sektor: 0x%s (kosong)</string>
+    <string name="invalid_sector_title_format">Sektor: 0x%1$s (salah: %2$s)</string>
+    <string name="felica_system_title_format">Sistem: 0x%1$s (%2$s)</string>
+    <string name="felica_service_title_format">Servis: 0x%1$s (%2$s)</string>
+    <string name="felica_service_format">Servis: 0x%s</string>
+    <string name="record_title_format">Rekaman: %s</string>
+    <string name="binary_title_format">Data biner</string>
+    <string name="subscriptions">Langganan</string>
+    <string name="info">Info</string>
+    <string name="valid_format">Berlaku dari %1$s s/d %2$s</string>
+    <string name="valid_to_format">Berlaku sampai %1$s</string>
+    <string name="valid_not_used">Belum dipergunakan</string>
+    <string name="unknown_format">Tidak dikenal (%s)</string>
+    <string name="unknown">Tidak dikenal</string>
+    <string name="keys_required">Kunci enkripsi diperlukan untuk membaca kartu ini.</string>
+    <string name="load_keys">Memuat Kunci</string>
+    <string name="card_keys_not_supported">Metrodroid belum mendukung kunci untuk kartu jenis ini.</string>
+    <string name="add_key">Tambah Kunci</string>
+    <string name="error">Error</string>
+    <string name="keys">Kunci</string>
+    <string name="delete">Hapus</string>
+    <string name="add_key_directions">Simpan dump biner dari kunci anda sebagai file, dengan ekstensi .farebotkeys, imel dan lampirkan kepada diri sendiri, kemudian buka pada device ini.</string>
+    <string name="no_keys">Tidak ada kunci.</string>
+    <string name="nfc_unavailable">NFC Tidak ada</string>
+    <string name="general">Umum</string>
+    <string name="launch_from_background">Jalankan dari background</string>
+    <string name="checksum">Ceksum</string>
+    <string name="last_transaction">Transaksi terakhir</string>
+    <string name="date">Tanggal</string>
+    <string name="time">Jam</string>
+    <string name="vehicle_type">Tipe kendaraan</string>
+    <string name="transaction_type">Tipe transaksi</string>
+    <string name="card_epoch">Epoch Kartu</string>
+    <string name="card_not_supported_on_device">Kartu ini tidak didukung oleh handset anda.</string>
+    <string name="need_stations">Beberapa nama stasiun tidak diketahui.</string>
+    <string name="need_stations_submit">Lapor</string>
+    <string name="card_preview_reader">Versi BETA dari card reader.</string>
+    <string name="visit_website">Kunjungi Web</string>
+    <string name="title_activity_about">Tentang</string>
+    <string name="card_type">Tipe kartu</string>
+    <string name="select_file">Pilih file</string>
+    <string name="copied_to_clipboard">Telah disalin ke clipboard</string>
+    <string name="saved_xml">Tulis Metrodroid-Export.xml ke penyimpanan USB.</string>
+    <string name="saved_xml_custom">Tulis XML ke penyimpanan USB.</string>
+    <string name="map_tiles_url">URL Peta</string>
+    <string name="map_tiles_url_summary">Gunakan server tile custom untuk peta tertanam, menggunakan sintaks Leaflet TileLayer.</string>
+    <string name="map_tiles_subdomains">Subdomain petak peta</string>
+    <string name="map_tiles_subdomains_summary">Jika menggunakan {s} pada URLs peta, list subdomain dipisahkan dengan koma, atau dengan list subdomain dengan satu karakter.</string>
+    <string name="online_services">Online services</string>
+    <string name="mifare_classic">MIFARE Classic</string>
+    <string name="auth_retries">Ulang autentikasi</string>
+    <string name="auth_retries_summary">Jumlah berapa kali percobaan autentikasi di tiap sektor</string>
+
+    <string name="mfc_fallback_desc">Beberapa agensi tidak memiliki kode khusus dalam kartunya. Untuk membacanya, anda harus memilih agensi secara khusus.</string>
+    <string name="mfc_fallback">Fallback reader</string>
+    <string name="requires_android_21">Membutuhkan Android 5.0 keatas.</string>
+
+    <string name="obfuscation_title">Obfuscation</string>
+    <string name="obfuscation_card_numbers">Sembunyikan nomor kartu</string>
+    <string name="obfuscation_card_numbers_desc">Jangan tampilkan nomor kartu di manapun</string>
+
+    <string name="obfuscation_balance">Obfuscate saldo</string>
+    <string name="obfuscation_balance_desc">Ganti nilai saldo yang tampil dengan nilai acak</string>
+
+    <string name="obfuscation_dates">Obfuscate tanggal</string>
+    <string name="obfuscation_dates_desc">Tunjukan perjalanan, langganan, kadaluarsa dan tanggal scan dengan nilai lain</string>
+
+    <string name="obfuscation_times">Obfuscate waktu</string>
+    <string name="obfuscation_times_desc">Kaburkan resolusi dari data waktu pada perjalanan, pendaftara, dan pembacaan</string>
+
+    <string name="obfuscation_fares">Obfuscate biaya</string>
+    <string name="obfuscation_fares_desc">Ganti biaya yang ditampilkan dengan nilai acak</string>
+
+    <string name="accessibility">Aksesibilitas</string>
+
+    <string name="speak_balance">Ucapkan nilai saldo</string>
+    <string name="speak_balance_summary">Ketika anda menyekan kartu, nilai saldo akan secara otomatis dibacakan dengan keras. Walaupun screen reader tidak aktif.</string>
+
+    <string name="localise_places">Tambahkan petunjuk pada nama kota</string>
+
+    <string name="localise_places_desc">Adds language hints (LocaleSpan) to place names, such as station, stop, line and route names. This alters the pronunciation used by screen readers and other accessibility software.</string>
+
+    <string name="localise_places_longdesc_button">Tentang petunjuk bahasa…</string>
+
+    <string name="localise_places_longdesc_title">Tentang petunjuk bahasa</string>
+
+    </resources>

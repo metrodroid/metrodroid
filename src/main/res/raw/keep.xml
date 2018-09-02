@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:tools="http://schemas.android.com/tools"
+    tools:shrinkMode="strict"
+    tools:keep="@raw/keep"
+    tools:discard="@drawable/abc_ic_*,@layout/abc_alert_dialog_*,@layout/abc_search_view"
+    />

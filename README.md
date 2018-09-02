@@ -8,7 +8,7 @@
 <img src="https://play.google.com/intl/en_us/badges/images/generic/en-play-badge.png" height="80"/></a>
 <a href="https://github.com/micolous/metrodroid/releases">Direct APK download</a>
 
-Version: 2.9.35
+Version: 2.9.36
 
 View your remaining balance, recent trips, and other information from contactless public transit
 cards using your NFC-enabled Android device!
@@ -48,6 +48,7 @@ Thanks to those who have [helped to make Metrodroid available in languages other
 * French: [Albirew](https://github.com/Albirew)
 * Hebrew: [Steven Steiner](https://github.com/steets250)
 * Japanese: [naofum](https://github.com/naofum)
+* Indonesian: [Bondan](https://github.com/sybond) [Sumbodo](http://sybond.web.id)
 * Kabyle: [belkacem77](https://github.com/belkacem77), [aqvayli](https://github.com/aqvayli)
 * Norwegian Bokmål: [comradekingu](https://github.com/comradekingu)
 * Russian: [Vladimir Serbinenko](https://github.com/phcoder)
@@ -83,7 +84,7 @@ Card / Agency | Location | Notes
 [NETS FlashPay][31] | :singapore: Singapore | 
 [Octopus][25] | :hong_kong: Hong Kong | :new:
 [Opal][18] | :australia: Sydney (and surrounds), NSW, Australia | :new:
-[Opus][40] | :canada: Montréal, QC, Canada | :new:
+[Opus][40] | :canada: Québec, Canada | :new:
 [ORCA][0] | :us: Seattle, WA, USA |
 [OV-chipkaart][32] | :netherlands: Netherlands | :closed_lock_with_key: `MFC`
 [Podorozhnik][37] | :ru: Saint Petersburg, Russia | :new: :closed_lock_with_key: `MFC`
@@ -196,3 +197,4 @@ This software and it's authors are not associated with any public transit agency
 [41]: https://www.compasscard.ca/
 [42]: https://www.rail.co.il/en/ravkav/Pages/default.aspx
 [43]: https://www.t-money.co.kr/
+
