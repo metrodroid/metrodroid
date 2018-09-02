@@ -125,7 +125,7 @@ public class OrcaTest extends AndroidTestCase {
         assertTrue(trips[2].hasTime());
         assertEquals(Trip.Mode.METRO, trips[2].getMode());
         assertNotNull(trips[2].getStartStation());
-        assertEquals("Stadium Station", trips[2].getStartStation().getStationName());
+        assertEquals("Stadium", trips[2].getStartStation().getStationName());
         assertEquals("Stadium", trips[2].getStartStation().getShortStationName());
         assertEquals(47.5918121, Float.parseFloat(trips[2].getStartStation().getLatitude()), 0.00001);
         assertEquals(-122.327354, Float.parseFloat(trips[2].getStartStation().getLongitude()), 0.00001);
@@ -139,8 +139,8 @@ public class OrcaTest extends AndroidTestCase {
         assertTrue(trips[3].hasTime());
         assertEquals(Trip.Mode.TRAIN, trips[3].getMode());
         assertNotNull(trips[3].getStartStation());
-        assertEquals("King Street Station", trips[3].getStartStation().getStationName());
-        assertEquals("King Street", trips[3].getStartStation().getShortStationName());
+        assertEquals("King Street", trips[3].getStartStation().getStationName());
+        assertEquals("King St", trips[3].getStartStation().getShortStationName());
         assertEquals(47.598445, Float.parseFloat(trips[3].getStartStation().getLatitude()), 0.00001);
         assertEquals(-122.330161, Float.parseFloat(trips[3].getStartStation().getLongitude()), 0.00001);
         assertNull(trips[3].getEndStation());
