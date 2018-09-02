@@ -11,7 +11,6 @@ mdst_deps: $(MDST)/stations_pb2.py $(MDST)/mdst.py $(MDST)/csv2pb.py
 clean:
 	rm -f shenzhen.mdst shenzhen.csv
 
-MDSTS += shenzhen.mdst
 shenzhen.mdst: stations.csv mdst_deps
 	python3 $(MDST)/csv2pb.py ../../data/szt/stations.csv -o $@ -V 2 -l zh -L zh
 
