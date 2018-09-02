@@ -84,7 +84,7 @@ Card / Agency | Location | Notes
 [NETS FlashPay][31] | :singapore: Singapore | 
 [Octopus][25] | :hong_kong: Hong Kong | :new:
 [Opal][18] | :australia: Sydney (and surrounds), NSW, Australia | :new:
-[Opus][40] | :canada: Montréal, QC, Canada | :new:
+[Opus][40] | :canada: Québec, Canada | :new:
 [ORCA][0] | :us: Seattle, WA, USA |
 [OV-chipkaart][32] | :netherlands: Netherlands | :closed_lock_with_key: `MFC`
 [Podorozhnik][37] | :ru: Saint Petersburg, Russia | :new: :closed_lock_with_key: `MFC`
@@ -197,3 +197,4 @@ This software and it's authors are not associated with any public transit agency
 [41]: https://www.compasscard.ca/
 [42]: https://www.rail.co.il/en/ravkav/Pages/default.aspx
 [43]: https://www.t-money.co.kr/
+
