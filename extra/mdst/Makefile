@@ -32,10 +32,6 @@ MDSTS += ovc.mdst
 ovc.mdst: sqlite2pb-ovc.py stations_pb2.py mdst.py ../../data/ovc_stations.db3
 	python3 sqlite2pb-ovc.py
 
-MDSTS += shenzhen.mdst
-shenzhen.mdst: csv2pb.py stations_pb2.py mdst.py ../../data/szt/stations.csv
-	python3 csv2pb.py ../../data/szt/stations.csv -o $@ -V 2 -L id
-
 MDSTS += podorozhnik.mdst
 podorozhnik.mdst: csv2pb-podorozhnik.py stations_pb2.py mdst.py ../../data/podorozhnik/*.csv
 	python3 csv2pb-podorozhnik.py
