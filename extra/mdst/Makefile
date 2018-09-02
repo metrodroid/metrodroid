@@ -24,10 +24,6 @@ MDSTS += ovc.mdst
 ovc.mdst: sqlite2pb-ovc.py stations_pb2.py mdst.py ../../data/ovc_stations.db3
 	python3 sqlite2pb-ovc.py
 
-MDSTS += shenzhen.mdst
-shenzhen.mdst: csv2pb-szt.py stations_pb2.py mdst.py ../../data/szt/*.txt
-	python3 csv2pb-szt.py
-
 MDSTS += mobib.mdst
 mobib.mdst: csv2pb-mobib.py stations_pb2.py mdst.py ../../data/mobib/Metro.csv ../../data/mobib/Bus.csv
 	python3 csv2pb-mobib.py ../../data/mobib/Metro.csv ../../data/mobib/Bus.csv -p ../../data/mobib/operators.csv -o $@ -V 2 -L fr
