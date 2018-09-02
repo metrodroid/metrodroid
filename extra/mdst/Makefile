@@ -12,10 +12,6 @@ clean:
 	rm -f $(MDSTS)
 	rm -f $(MDSTS:.mdst=.csv)
 
-MDSTS += orca.mdst
-orca.mdst: csv2pb-orca.py stations_pb2.py mdst.py ../../data/orca/*.csv
-	python3 csv2pb-orca.py ../../data/orca orca.mdst
-
 MDSTS += suica_rail.mdst
 suica_rail.mdst: sqlite2pb-suica.py stations_pb2.py mdst.py ../../data/felica_stations.db3
 	python3 sqlite2pb-suica.py
