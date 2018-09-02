@@ -12,7 +12,7 @@ buildscript {
     }
 
     dependencies {
-        classpath 'com.android.tools.build:gradle:3.1.3'
+        classpath 'com.android.tools.build:gradle:3.1.4'
         classpath 'com.google.protobuf:protobuf-gradle-plugin:0.8.4'
     }
 }
@@ -33,6 +33,8 @@ task checkstyle(type: Checkstyle) {
 */
 
 dependencies {
+    implementation 'com.android.support:appcompat-v7:27.1.1'
+    implementation 'com.android.support:cardview-v7:27.1.1'
     implementation 'com.android.support:support-core-ui:27.1.1'
     implementation 'com.android.support:support-vector-drawable:27.1.1'
     implementation 'commons-io:commons-io:2.5'
@@ -45,10 +47,8 @@ dependencies {
         exclude module: 'xpp3'
     }
     implementation project(':nfc-felica-lib')
-
     androidTestImplementation 'org.hamcrest:hamcrest-core:1.3'
     androidTestImplementation 'org.hamcrest:hamcrest-library:1.3'
-    implementation 'com.android.support:cardview-v7:27.1.1'
 }
 
 protobuf {
@@ -91,7 +91,10 @@ android {
         resConfigs 'en', 'en-rAU', 'en-rCA', 'en-rNZ', 'fi', 'fr', 'he', 'iw', 'ja', 'kab', 'nb-rNO', 'nl', 'ru', 'tr'
 
         // We want to use the support library for vectors, rather than shipping huge rasters.
-        vectorDrawables.useSupportLibrary = true
+        vectorDrawables {
+            useSupportLibrary = true
+            generatedDensities 'ldpi', 'mdpi', 'hdpi', 'xhdpi'
+        }
     }
 
     buildTypes {

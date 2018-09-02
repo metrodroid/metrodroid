@@ -29,19 +29,40 @@
             android:title="@string/launch_from_background"
             android:persistent="false"
             android:key="pref_launch_from_background"/>
+
         <CheckBoxPreference
             android:title="@string/convert_timezones"
             android:summary="@string/convert_timezones_summary"
             android:key="pref_convert_timezones"
             android:defaultValue="false"/>
+
         <ListPreference
             android:key="pref_theme"
             android:title="@string/pref_theme"
             android:summary="@string/pref_theme_desc"
             android:defaultValue="dark"
             android:entries="@array/themes"
-            android:entryValues="@array/theme_values"
-            />
+            android:entryValues="@array/theme_values" />
+    </PreferenceCategory>
+
+    <PreferenceCategory android:title="@string/accessibility">
+        <CheckBoxPreference
+            android:title="@string/localise_places"
+            android:summary="@string/localise_places_desc"
+            android:key="pref_localise_places"
+            android:defaultValue="false" />
+
+        <au.id.micolous.metrodroid.ui.AlertDialogPreference
+            android:title="@string/localise_places_longdesc_button"
+            android:dialogMessage="@string/localise_places_longdesc"
+            android:dialogTitle="@string/localise_places_longdesc_title"
+            android:key="pref_localise_places_help" />
+
+        <CheckBoxPreference
+            android:title="@string/speak_balance"
+            android:summary="@string/speak_balance_summary"
+            android:key="pref_key_speak_balance"
+            android:defaultValue="false" />
     </PreferenceCategory>
 
     <PreferenceCategory android:title="Maps">
@@ -63,82 +84,73 @@
         </PreferenceScreen>
     </PreferenceCategory>
 
-    <PreferenceCategory android:title="@string/obfuscation_title">
-        <CheckBoxPreference
-            android:title="@string/obfuscation_card_numbers"
-            android:summary="@string/obfuscation_card_numbers_desc"
-            android:key="pref_hide_card_numbers"
-            android:defaultValue="false" />
-        <CheckBoxPreference
-            android:title="@string/obfuscation_balance"
-            android:summary="@string/obfuscation_balance_desc"
-            android:key="pref_obfuscate_balance"
-            android:defaultValue="false" />
-        <CheckBoxPreference
-            android:title="@string/obfuscation_dates"
-            android:summary="@string/obfuscation_dates_desc"
-            android:key="pref_obfuscate_trip_dates"
-            android:defaultValue="false" />
-        <CheckBoxPreference
-            android:title="@string/obfuscation_times"
-            android:summary="@string/obfuscation_times_desc"
-            android:key="pref_obfuscate_trip_times"
-            android:defaultValue="false" />
-        <CheckBoxPreference
-            android:title="@string/obfuscation_fares"
-            android:summary="@string/obfuscation_fares_desc"
-            android:key="pref_obfuscate_trip_fares"
-            android:defaultValue="false" />
-    </PreferenceCategory>
+    <PreferenceCategory android:title="@string/advanced_options">
+        <PreferenceScreen android:title="@string/nfc"
+            android:summary="@string/nfc_options_desc">
+            <PreferenceCategory android:title="@string/mifare_classic">
+                <au.id.micolous.metrodroid.ui.NumberPickerPreference
+                    android:title="@string/auth_retries"
+                    android:summary="@string/auth_retries_summary"
+                    android:defaultValue="5"
+                    android:key="pref_mfc_authretry"
+                    npp:minValue="1"
+                    npp:maxValue="20" />
 
-    <PreferenceCategory android:title="@string/mifare_classic">
-        <au.id.micolous.metrodroid.ui.NumberPickerPreference
-            android:title="@string/auth_retries"
-            android:summary="@string/auth_retries_summary"
-            android:defaultValue="5"
-            android:key="pref_mfc_authretry"
-            npp:minValue="1"
-            npp:maxValue="20" />
+                <ListPreference
+                    android:key="pref_mfc_fallback"
+                    android:title="@string/mfc_fallback"
+                    android:summary="@string/mfc_fallback_desc"
+                    android:defaultValue="null"
+                    android:entries="@array/mfc_fallbacks"
+                    android:entryValues="@array/mfc_fallback_values"
+                    />
+            </PreferenceCategory>
+    </PreferenceScreen>
 
-        <ListPreference
-            android:key="pref_mfc_fallback"
-            android:title="@string/mfc_fallback"
-            android:summary="@string/mfc_fallback_desc"
-            android:defaultValue="null"
-            android:entries="@array/mfc_fallbacks"
-            android:entryValues="@array/mfc_fallback_values"
-            />
-    </PreferenceCategory>
+    <PreferenceScreen
+        android:title="@string/developer_options"
+        android:summary="@string/developer_options_desc">
+        <PreferenceCategory android:title="@string/station_database">
+            <CheckBoxPreference
+                android:title="@string/pref_show_local_and_english_title"
+                android:summary="@string/pref_show_local_and_english_desc"
+                android:key="pref_show_local_and_english"
+                android:defaultValue="false" />
 
-    <PreferenceCategory android:title="@string/accessibility">
-        <CheckBoxPreference
-            android:title="@string/localise_places"
-            android:summary="@string/localise_places_desc"
-            android:key="pref_localise_places"
-            android:defaultValue="false" />
+            <CheckBoxPreference
+                android:title="@string/pref_show_raw_station_ids"
+                android:summary="@string/pref_show_raw_station_ids_desc"
+                android:key="pref_show_raw_ids"
+                android:defaultValue="false" />
+        </PreferenceCategory>
 
-        <au.id.micolous.metrodroid.ui.AlertDialogPreference
-            android:title="@string/localise_places_longdesc_button"
-            android:dialogMessage="@string/localise_places_longdesc"
-            android:dialogTitle="@string/localise_places_longdesc_title"
-            android:key="pref_localise_places_help" />
-
-        <CheckBoxPreference
-            android:title="@string/speak_balance"
-            android:summary="@string/speak_balance_summary"
-            android:key="pref_key_speak_balance"
-            android:defaultValue="false" />
-
-        <CheckBoxPreference
-            android:title="@string/pref_show_local_and_english_title"
-            android:summary="@string/pref_show_local_and_english_desc"
-            android:key="pref_show_local_and_english"
-            android:defaultValue="false" />
-
-        <CheckBoxPreference
-            android:title="@string/pref_show_raw_station_ids"
-            android:summary="@string/pref_show_raw_station_ids_desc"
-            android:key="pref_show_raw_ids"
-            android:defaultValue="false" />
+        <PreferenceCategory android:title="@string/obfuscation_title">
+            <CheckBoxPreference
+                android:title="@string/obfuscation_card_numbers"
+                android:summary="@string/obfuscation_card_numbers_desc"
+                android:key="pref_hide_card_numbers"
+                android:defaultValue="false" />
+            <CheckBoxPreference
+                android:title="@string/obfuscation_balance"
+                android:summary="@string/obfuscation_balance_desc"
+                android:key="pref_obfuscate_balance"
+                android:defaultValue="false" />
+            <CheckBoxPreference
+                android:title="@string/obfuscation_dates"
+                android:summary="@string/obfuscation_dates_desc"
+                android:key="pref_obfuscate_trip_dates"
+                android:defaultValue="false" />
+            <CheckBoxPreference
+                android:title="@string/obfuscation_times"
+                android:summary="@string/obfuscation_times_desc"
+                android:key="pref_obfuscate_trip_times"
+                android:defaultValue="false" />
+            <CheckBoxPreference
+                android:title="@string/obfuscation_fares"
+                android:summary="@string/obfuscation_fares_desc"
+                android:key="pref_obfuscate_trip_fares"
+                android:defaultValue="false" />
+        </PreferenceCategory>
+    </PreferenceScreen>
     </PreferenceCategory>
 </PreferenceScreen>

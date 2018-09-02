@@ -19,12 +19,16 @@
  */
 package au.id.micolous.metrodroid.transit;
 
+import android.content.Context;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.support.annotation.DrawableRes;
 import android.support.annotation.NonNull;
 import android.support.annotation.StringRes;
+import android.support.v7.content.res.AppCompatResources;
 import android.util.Log;
 
 import java.util.Locale;
@@ -127,21 +131,17 @@ public class CardInfo {
     }
 
     public boolean hasBitmap() {
-        return mImageAlphaId != 0;
+        return mImageAlphaId != 0 || mImageId != 0;
     }
 
-    public Bitmap getBitmap(Resources res) {
+    public Drawable getDrawable(Context ctxt) {
         if (mImageAlphaId != 0) {
             Log.d("CardInfo", String.format(Locale.ENGLISH, "masked bitmap %x / %x", mImageId, mImageAlphaId));
-            return Utils.getMaskedBitmap(res, mImageId, mImageAlphaId);
+            Resources res = ctxt.getResources();
+            return new BitmapDrawable(res, Utils.getMaskedBitmap(res, mImageId, mImageAlphaId));
         } else {
-            return BitmapFactory.decodeResource(res, mImageId);
+            return AppCompatResources.getDrawable(ctxt, mImageId);
         }
-    }
-
-    @DrawableRes
-    public int getImageId() {
-        return mImageId;
     }
 
     @NonNull

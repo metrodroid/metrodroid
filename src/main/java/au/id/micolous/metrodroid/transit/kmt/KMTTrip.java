@@ -19,7 +19,6 @@
 
 package au.id.micolous.metrodroid.transit.kmt;
 
-import android.app.Application;
 import android.os.Parcel;
 import android.support.annotation.Nullable;
 
@@ -39,6 +38,7 @@ public class KMTTrip extends Trip {
         public KMTTrip createFromParcel(Parcel parcel) {
             return new KMTTrip(parcel);
         }
+
         public KMTTrip[] newArray(int size) {
             return new KMTTrip[size];
         }
@@ -71,10 +71,26 @@ public class KMTTrip extends Trip {
         mSequenceNumber = Utils.byteArrayToInt(data, 13, 3);
         mTimestamp = calcDate(data);
         mTransactionAmount = Utils.byteArrayToInt(data, 4, 4);
-        mEndGateCode = data[9] & 0xff;
+        mEndGateCode = Utils.byteArrayToInt(data, 8, 2);
     }
 
+    @Nullable
+    @Override
+    public Station getStartStation() {
+        // Normally, only the end station is recorded.  But top-ups only have a "starting" station.
+        if (mProcessType == 0 || mProcessType == 2) {
+            return getStation(mEndGateCode);
+        }
+        return null;
+    }
+
+    @Nullable
+    @Override
     public Station getEndStation() {
+        if (mProcessType == 0 || mProcessType == 2) {
+            // "Ending station" doesn't make sense for Ticket Machines or Point-of-sale
+            return null;
+        }
         return getStation(mEndGateCode);
     }
 
@@ -122,20 +138,11 @@ public class KMTTrip extends Trip {
     }
 
     public String getAgencyName() {
-        String str;
-        if (mProcessType == 1)
-            str = Utils.localizeString(R.string.felica_process_charge);
-        else
-            str = Utils.localizeString(R.string.felica_terminal_pos);
-        return str;
+        return Utils.localizeString(R.string.kmt_agency);
     }
 
     public boolean hasTime() {
         return mTimestamp != null;
-    }
-
-    public String getRouteName() {
-        return Utils.localizeString(R.string.kmt_def_route);
     }
 
     public int describeContents() {

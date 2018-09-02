@@ -20,7 +20,6 @@ package au.id.micolous.metrodroid.card.desfire.files;
 
 import au.id.micolous.metrodroid.card.desfire.settings.DesfireFileSettings;
 import au.id.micolous.metrodroid.card.desfire.settings.RecordDesfireFileSettings;
-import au.id.micolous.metrodroid.util.Utils;
 
 import org.apache.commons.lang3.ArrayUtils;
 import org.simpleframework.xml.Root;

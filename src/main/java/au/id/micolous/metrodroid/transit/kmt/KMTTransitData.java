@@ -97,7 +97,7 @@ public class KMTTransitData extends TransitData {
             List<FelicaBlock> blocksBalance = serviceBalance.getBlocks();
             FelicaBlock blockBalance = blocksBalance.get(0);
             byte[] dataBalance = blockBalance.getData();
-            mCurrentBalance = Utils.byteArrayToInt(Utils.reverseBuffer(dataBalance, 0, 4));
+            mCurrentBalance = Utils.byteArrayToIntReversed(dataBalance, 0, 4);
         }
 
         FelicaService serviceHistory = card.getSystem(SYSTEMCODE_KMT).getService(FELICA_SERVICE_KMT_HISTORY);

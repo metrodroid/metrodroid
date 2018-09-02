@@ -26,16 +26,10 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.ListView;
 
-import au.id.micolous.metrodroid.activity.AdvancedCardInfoActivity;
 import au.id.micolous.metrodroid.activity.CardInfoActivity;
-import au.id.micolous.metrodroid.card.Card;
 import au.id.micolous.metrodroid.transit.TransitData;
 import au.id.micolous.metrodroid.ui.ListItem;
 import au.id.micolous.metrodroid.ui.UriListItem;
-
-import org.simpleframework.xml.Serializer;
-
-import au.id.micolous.metrodroid.MetrodroidApplication;
 
 public class CardInfoFragment extends ListFragment {
     private TransitData mTransitData;

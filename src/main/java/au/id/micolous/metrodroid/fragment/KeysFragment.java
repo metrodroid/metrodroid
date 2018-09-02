@@ -161,7 +161,7 @@ public class KeysFragment extends ListFragment implements AdapterView.OnItemLong
             // In Android 4.4 and later, we can say the right thing!
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
                 i.setType("*/*");
-                String[] mimetypes = {"application/xml", "text/xml", "application/octet-stream"};
+                String[] mimetypes = {"application/octet-stream", "application/x-extension-bin" };
                 i.putExtra(Intent.EXTRA_MIME_TYPES, mimetypes);
             } else {
                 // Failsafe, used in the emulator for local files
@@ -202,8 +202,8 @@ public class KeysFragment extends ListFragment implements AdapterView.OnItemLong
             String id = cursor.getString(cursor.getColumnIndex(KeysTableColumns.CARD_ID));
             String type = cursor.getString(cursor.getColumnIndex(KeysTableColumns.CARD_TYPE));
 
-            TextView textView1 = (TextView) view.findViewById(android.R.id.text1);
-            TextView textView2 = (TextView) view.findViewById(android.R.id.text2);
+            TextView textView1 = view.findViewById(android.R.id.text1);
+            TextView textView2 = view.findViewById(android.R.id.text2);
 
             if (MetrodroidApplication.hideCardNumbers()) {
                 textView1.setText(R.string.hidden_card_number);

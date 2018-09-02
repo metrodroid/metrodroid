@@ -57,8 +57,6 @@ import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.List;
@@ -349,7 +347,7 @@ public class Utils {
     }
 
     public static int getBitsFromInteger(int buffer, int iStartBit, int iLength) {
-        return (buffer >> (iStartBit)) & ((char) 0xFF >> (8 - iLength));
+        return (buffer >> (iStartBit)) & ((1 << iLength) - 1);
     }
 
     public static byte[] reverseBuffer(byte[] buffer) {

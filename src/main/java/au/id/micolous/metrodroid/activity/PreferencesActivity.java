@@ -21,9 +21,7 @@ package au.id.micolous.metrodroid.activity;
 
 import android.app.ActionBar;
 import android.content.ComponentName;
-import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
@@ -31,7 +29,6 @@ import android.preference.CheckBoxPreference;
 import android.preference.ListPreference;
 import android.preference.Preference;
 import android.preference.PreferenceActivity;
-import android.preference.PreferenceManager;
 import android.view.MenuItem;
 
 import au.id.micolous.farebot.R;

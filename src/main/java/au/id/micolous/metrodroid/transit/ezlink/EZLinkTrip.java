@@ -101,7 +101,7 @@ public class EZLinkTrip extends Trip {
     @Override
     public String getRouteName() {
         if (mTransaction.getType() == CEPASTransaction.TransactionType.BUS) {
-            if (mTransaction.getUserData().startsWith("SVC"))
+            if (mTransaction.getUserData().startsWith("SVC") || mTransaction.getUserData().startsWith("BUS"))
                 return Utils.localizeString(R.string.ez_bus_number,
                         mTransaction.getUserData().substring(3, 7).replace(" ", ""));
             return Utils.localizeString(R.string.unknown_format, mTransaction.getUserData());
@@ -125,11 +125,15 @@ public class EZLinkTrip extends Trip {
     public TransitCurrency getFare() {
         if (mTransaction.getType() == CEPASTransaction.TransactionType.CREATION)
             return null;
-        return new TransitCurrency(mTransaction.getAmount(), "SGD");
+        return new TransitCurrency(-mTransaction.getAmount(), "SGD");
     }
 
     @Override
     public Station getStartStation() {
+        if (mTransaction.getType() == CEPASTransaction.TransactionType.BUS
+                && (mTransaction.getUserData().startsWith("SVC")
+                || mTransaction.getUserData().startsWith("BUS")))
+            return null;
         if (mTransaction.getType() == CEPASTransaction.TransactionType.CREATION)
             return Station.nameOnly(mTransaction.getUserData());
         if (mTransaction.getUserData().charAt(3) == '-'

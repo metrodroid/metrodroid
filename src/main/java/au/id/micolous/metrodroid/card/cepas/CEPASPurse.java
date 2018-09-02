@@ -32,7 +32,6 @@ import org.simpleframework.xml.Element;
 import org.simpleframework.xml.Root;
 
 import java.util.Calendar;
-import java.util.GregorianCalendar;
 
 @Root(name = "purse")
 public class CEPASPurse {

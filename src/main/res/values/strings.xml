@@ -577,7 +577,11 @@
     <string name="location_helsinki_finland">Helsinki, Finland</string>
     <string name="location_sydney_australia">Sydney, Australia</string>
     <string name="location_vancouver">Vancouver, BC, Canada</string>
-    <string name="location_quebec">Québec province, Canada</string>
+    <!-- Translators: This refers to the province of Québec (not Québec City) -->
+    <string name="location_quebec">Québec, Canada</string>
+    <string name="location_paris">Paris, France</string>
+    <string name="location_grenoble">Grenoble, France</string>
+    <string name="location_gironde">Gironde, France</string>
 
     <!--
       Translators:
@@ -735,6 +739,12 @@
     <string name="felica_process_bus_pitapa">Bus (PiTaPa)</string>
     <string name="felica_process_bus_iruca">Bus (IruCa)</string>
     <string name="felica_process_reissue">Re-issue</string>
+    <!--
+        Translators:
+        https://en.wikipedia.org/wiki/Shinkansen
+        The "Shinkansen" (Japanese: 新幹線) is a high speed (240-320 km/h) railway network connecting
+        Japan's largest cities.
+    -->
     <string name="felica_process_payment_shinkansen">Shinkansen Payment</string>
     <string name="felica_process_entry_a_autocharge">Entry A (Autocharge)</string>
     <string name="felica_process_exit_a_autocharge">Exit A (Autocharge)</string>
@@ -750,8 +760,27 @@
     <string name="felica_process_payment_thirdparty">Payment (3rd Party)</string>
     <string name="felica_process_admission_thirdparty">Admission Payment (3rd Party)</string>
 
-    <!-- Kereta Commuter Indonesia's - KMT -->
-    <string name="kmt_def_route">Jabodetabek Line</string>
+    <!--
+        Translators: https://en.wikipedia.org/wiki/Kereta_Commuter_Indonesia
+
+        You should generally just transliterate "Kereta Commuter Indonesia" (a name of a company)
+        here.
+
+        "kereta api" = "train": https://en.wiktionary.org/wiki/kereta_api
+        "kereta commuter" = "commuter train".
+        "PT" is "perseroan terbatas", meaning "corporation".
+
+        Background:
+
+        "PT Kereta Commuter Indonesia" (KCI, literal translation: Indonesian Commuter Railway
+        Company) is a subsidiary of "PT Kereta Api Indonesia" (KAI, lit: Indonesian Railway
+        Company). KCI is responsible for public transportation in the greater Jakarta metropolitan
+        area (Jabodetabek).
+
+        KCI was historically known as "PT KAI Commuter Jabodetabek" (KCJ) and "PT Kereta Api
+        Jabodetabek Division".
+    -->
+    <string name="kmt_agency">Kereta Commuter Indonesia</string>
     <string name="kmt_extra_note">Only for new FeliCa cards.</string>
 
     <!-- HSL -->
@@ -907,6 +936,21 @@
     <string name="mobib_single_trips">Single trips</string>
     <string name="mobib_total_trips">Total trips</string>
 
+    <string name="calypso_network_id">Network ID</string>
+    <string name="bought_on">Bought on %s</string>
+    <string name="bought_on_for_with_card">Bought on %s for %s with card</string>
+    <string name="bought_on_for_with_cash">Bought on %s for %s with cash</string>
+    <string name="bought_on_for">Bought on %s for %s</string>
+    <string name="sold_by">Sold by %s</string>
+    <string name="unknown_status">Unknown status (%s)</string>
+    <string name="never_used">Never Used</string>
+    <string name="subscription_validated">Validated</string>
+    <string name="subscription_expired">Expired</string>
+    <string name="zones">Zones: %s</string>
+    <string name="subscription_number">Subscription #%s</string>
+    <string name="intercode_issuer">Issuer</string>
+
+
     <!-- Troika / Тройка, Podorozhnik / Подорожник (Russia) -->
 
     <!-- Translators: There are multiple types of tickets used in Moscow and Saint Petersburg. We
@@ -956,6 +1000,9 @@
     <!-- Translators: The Saint Petersburg Metro (Russian: Петербу́ргский метрополитен) is the
     underground railway system in Saint Petersburg and Leningrad Oblast, Russia. -->
     <string name="led_metro">Saint Petersburg Metro</string>
+    <!-- Translators: The Saint Petersburg Shared Taxi (маршрутки) are a system of
+    private mini-buses going along predefined lines. -->
+    <string name="led_shared_taxi">Saint Petersburg Shared Taxi</string>
 
     <string name="blank_mfu_card">Blank MIFARE Ultralight card</string>
     <string name="fully_blank_desc">
@@ -985,20 +1032,11 @@
     <string name="card_number">Card number</string>
     <string name="pref_show_raw_station_ids">Show raw station IDs</string>
     <string name="pref_show_raw_station_ids_desc">If true, a raw station ID is shown in addition to station name</string>
-    <string name="calypso_network_id">Network ID</string>
-    <string name="bought_on">Bought on %s</string>
-    <string name="bought_on_for_with_card">Bought on %s for %s with card</string>
-    <string name="bought_on_for_with_cash">Bought on %s for %s with cash</string>
-    <string name="bought_on_for">Bought on %s for %s</string>
-    <string name="sold_by">Sold by %s</string>
-    <string name="unknown_status">Unknown status (%s)</string>
-    <string name="never_used">Never Used</string>
-    <string name="subscription_validated">Validated</string>
-    <string name="subscription_expired">Expired</string>
-    <string name="zones">Zones: %s</string>
-    <string name="subscription_number">Subscription #%s</string>
-    <string name="intercode_issuer">Issuer</string>
-    <string name="location_paris">Paris, France</string>
-    <string name="location_grenoble">Grenoble, France</string>
-    <string name="location_gironde">Gironde, France</string>
+
+    <string name="developer_options">Developer options</string>
+    <string name="station_database">Station database</string>
+    <string name="developer_options_desc">Use of station databases, obfuscation modes...</string>
+    <string name="advanced_options">Advanced options</string>
+    <string name="nfc">Near Field Communication</string>
+    <string name="nfc_options_desc">Fallback reader for MIFARE Classic, physical card interface settings...</string>
 </resources>

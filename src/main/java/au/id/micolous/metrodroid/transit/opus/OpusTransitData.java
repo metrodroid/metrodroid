@@ -66,7 +66,8 @@ public class OpusTransitData extends TransitData {
     }
 
     public static final CardInfo CARD_INFO = new CardInfo.Builder()
-            .setName(OpusTransitData.NAME)
+            .setImageId(R.drawable.opus_card)
+            .setName(NAME)
             .setLocation(R.string.location_quebec)
             .setCardType(CardType.ISO7816)
             .setPreview()

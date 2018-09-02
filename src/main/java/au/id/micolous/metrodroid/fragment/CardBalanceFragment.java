@@ -30,21 +30,16 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
-import au.id.micolous.metrodroid.activity.AdvancedCardInfoActivity;
 import au.id.micolous.metrodroid.activity.CardInfoActivity;
-import au.id.micolous.metrodroid.card.Card;
 import au.id.micolous.metrodroid.transit.Subscription;
 import au.id.micolous.metrodroid.transit.TransitBalance;
 import au.id.micolous.metrodroid.transit.TransitData;
-
-import org.simpleframework.xml.Serializer;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
 import au.id.micolous.farebot.R;
-import au.id.micolous.metrodroid.MetrodroidApplication;
 import au.id.micolous.metrodroid.transit.TransitCurrency;
 import au.id.micolous.metrodroid.util.TripObfuscator;
 import au.id.micolous.metrodroid.util.Utils;
@@ -110,20 +105,42 @@ public class CardBalanceFragment extends ListFragment {
                 view = getActivity().getLayoutInflater().inflate(R.layout.subscription_item, parent, false);
             }
 
-                if (subscription.getValidFrom() != null && subscription.getValidTo() != null) {
-                    Spanned validFrom = Utils.dateFormat(TripObfuscator.maybeObfuscateTS(subscription.getValidFrom()));
-                    Spanned validTo = Utils.dateFormat(TripObfuscator.maybeObfuscateTS(subscription.getValidTo()));
-                    ((TextView) view.findViewById(R.id.valid)).setText(getString(R.string.valid_format, validFrom, validTo));
-                } else if (subscription.getValidTo() != null) {
-                    Spanned validTo = Utils.dateFormat(TripObfuscator.maybeObfuscateTS(subscription.getValidTo()));
-                    ((TextView) view.findViewById(R.id.valid)).setText(getString(R.string.valid_to_format, validTo));
-                } else {
-                    ((TextView) view.findViewById(R.id.valid)).setText(R.string.valid_not_used);
-                }
+            TextView validView = view.findViewById(R.id.valid);
+            if (subscription.getValidFrom() != null && subscription.getValidTo() != null) {
+                Spanned validFrom = Utils.dateFormat(TripObfuscator.maybeObfuscateTS(subscription.getValidFrom()));
+                Spanned validTo = Utils.dateFormat(TripObfuscator.maybeObfuscateTS(subscription.getValidTo()));
+                validView.setText(getString(R.string.valid_format, validFrom, validTo));
+                validView.setVisibility(View.VISIBLE);
+            } else if (subscription.getValidTo() != null) {
+                Spanned validTo = Utils.dateFormat(TripObfuscator.maybeObfuscateTS(subscription.getValidTo()));
+                validView.setText(getString(R.string.valid_to_format, validTo));
+                validView.setVisibility(View.VISIBLE);
+            } else {
+                validView.setVisibility(View.GONE);
+            }
 
-                ((TextView) view.findViewById(R.id.company)).setText(subscription.getShortAgencyName());
-                ((TextView) view.findViewById(R.id.name)).setText(subscription.getSubscriptionName());
-                ((TextView) view.findViewById(R.id.used)).setText(subscription.getActivation());
+            TextView companyView = view.findViewById(R.id.company);
+            String agencyName = subscription.getShortAgencyName();
+            if (agencyName != null) {
+                companyView.setText(agencyName);
+                companyView.setVisibility(View.VISIBLE);
+            } else
+                companyView.setVisibility(View.GONE);
+            TextView nameView = view.findViewById(R.id.name);
+            String name = subscription.getSubscriptionName();
+            if (name != null)  {
+                nameView.setText(name);
+                nameView.setVisibility(View.VISIBLE);
+            } else {
+                nameView.setVisibility(View.GONE);
+            }
+            String used = subscription.getActivation();
+            TextView usedView = view.findViewById(R.id.used);
+            if (used != null) {
+                usedView.setText(used);
+                usedView.setVisibility(View.VISIBLE);
+            } else
+                usedView.setVisibility(View.GONE);
 
             return view;
         }

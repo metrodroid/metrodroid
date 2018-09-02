@@ -53,6 +53,7 @@ public class TMoneyTransitData extends TransitData {
     };
 
     public static final CardInfo CARD_INFO = new CardInfo.Builder()
+            .setImageId(R.drawable.tmoney_card)
             .setName(Utils.localizeString(R.string.card_name_tmoney))
             .setLocation(R.string.location_seoul)
             .setCardType(CardType.ISO7816)

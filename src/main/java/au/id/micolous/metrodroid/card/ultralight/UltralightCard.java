@@ -33,7 +33,7 @@ import au.id.micolous.metrodroid.card.UnsupportedTagException;
 import au.id.micolous.metrodroid.fragment.UltralightCardRawDataFragment;
 import au.id.micolous.metrodroid.transit.TransitData;
 import au.id.micolous.metrodroid.transit.TransitIdentity;
-import au.id.micolous.metrodroid.transit.compass.CompassUltralightTransitData;
+import au.id.micolous.metrodroid.transit.yvr_compass.CompassUltralightTransitData;
 import au.id.micolous.metrodroid.transit.troika.TroikaUltralightTransitData;
 import au.id.micolous.metrodroid.transit.unknown.BlankUltralightTransitData;
 import au.id.micolous.metrodroid.transit.unknown.UnauthorizedUltralightTransitData;

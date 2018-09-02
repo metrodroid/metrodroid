@@ -280,10 +280,10 @@ public class OVChipTransitData extends TransitData {
 
     @Nullable
     @Override
-    public List<TransitBalance> getBalances() {
-        return Arrays.asList(new TransitBalanceStored(TransitCurrency.EUR(mCredit.getCredit()),
-                    mPreamble.getType() == 2 ? "Personal" : "Anonymous",
-                OVChipTransitData.convertDate(mPreamble.getExpdate())));
+    public TransitBalance getBalance() {
+        return new TransitBalanceStored(TransitCurrency.EUR(mCredit.getCredit()),
+                mPreamble.getType() == 2 ? "Personal" : "Anonymous",
+                OVChipTransitData.convertDate(mPreamble.getExpdate()));
     }
 
     @Override

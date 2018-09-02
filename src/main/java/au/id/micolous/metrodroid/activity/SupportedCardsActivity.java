@@ -19,7 +19,6 @@
  */
 package au.id.micolous.metrodroid.activity;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.nfc.NfcAdapter;
@@ -82,11 +81,9 @@ public class SupportedCardsActivity extends MetrodroidActivity {
 
             ImageView image = convertView.findViewById(R.id.card_image);
             if (info.hasBitmap()) {
-                image.setImageBitmap(info.getBitmap(getResources()));
+                image.setImageDrawable(info.getDrawable(getContext()));
                 image.invalidate();
                 if (image.isOpaque()) throw new AssertionError();
-            } else {
-                image.setImageResource(info.getImageId());
             }
 
             String notes = "";
@@ -125,7 +122,7 @@ public class SupportedCardsActivity extends MetrodroidActivity {
                 notes += Utils.localizeString(info.getResourceExtraNote()) + " ";
             }
 
-            TextView note = (TextView) convertView.findViewById(R.id.card_note);
+            TextView note = convertView.findViewById(R.id.card_note);
             note.setText(notes);
             if (notes.equals(""))
                 note.setVisibility(View.GONE);

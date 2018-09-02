@@ -95,7 +95,7 @@ public class SuicaTrip extends Trip {
 
         mTimestamp = SuicaUtil.extractDate(mIsProductSale, data);
         // Balance is little-endian
-        mBalance = Utils.byteArrayToInt(Utils.reverseBuffer(data, 10, 2));
+        mBalance = Utils.byteArrayToIntReversed(data, 10, 2);
 
         mRegionCode = data[15] & 0xFF;
 

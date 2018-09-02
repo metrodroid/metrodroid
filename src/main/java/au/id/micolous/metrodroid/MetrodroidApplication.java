@@ -23,6 +23,7 @@ package au.id.micolous.metrodroid;
 import android.app.Application;
 import android.content.SharedPreferences;
 import android.nfc.NfcAdapter;
+import android.os.Build;
 import android.os.StrictMode;
 import android.preference.PreferenceManager;
 import android.util.Log;

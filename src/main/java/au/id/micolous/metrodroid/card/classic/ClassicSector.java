@@ -21,7 +21,6 @@
 
 package au.id.micolous.metrodroid.card.classic;
 
-import au.id.micolous.metrodroid.util.Utils;
 import au.id.micolous.metrodroid.xml.Base64String;
 
 import org.simpleframework.xml.Attribute;
