@@ -48,6 +48,7 @@ Thanks to those who have [helped to make Metrodroid available in languages other
 * French: [Albirew](https://github.com/Albirew)
 * Hebrew: [Steven Steiner](https://github.com/steets250)
 * Japanese: [naofum](https://github.com/naofum)
+* Indonesian: [Bondan](https://github.com/sybond) [Sumbodo](http://sybond.web.id)
 * Kabyle: [belkacem77](https://github.com/belkacem77), [aqvayli](https://github.com/aqvayli)
 * Norwegian Bokmål: [comradekingu](https://github.com/comradekingu)
 * Russian: [Vladimir Serbinenko](https://github.com/phcoder)
