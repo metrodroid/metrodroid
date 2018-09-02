@@ -99,9 +99,10 @@ android {
                 'en', 'en-rAU', 'en-rCA', 'en-rNZ',
                 'fi',
                 'fr',
-                'he',
-                'id',
-                'iw',
+                // Hebrew
+                'he', 'iw',
+                // Indonesian
+                'id', 'in',
                 'ja',
                 'kab',
                 'nb-rNO',
