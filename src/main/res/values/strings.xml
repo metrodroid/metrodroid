@@ -91,7 +91,7 @@
     <string name="no_scanned_cards">You have not scanned any cards.</string>
     <string name="block_title_format">Block: %s</string>
     <string name="page_title_format">Page: 0x%s</string>
-    <string name="application_title_format">Application: 0x%s</string>
+    <string name="application_title_format">Application: %s</string>
     <string name="file_title_format">File: %s</string>
     <string name="unauthorized_file_title_format">File: %s (unauthorized)</string>
     <string name="invalid_file_title_format">File: %1$s (invalid: %2$s)</string>
@@ -1002,4 +1002,9 @@
     <string name="advanced_options">Advanced options</string>
     <string name="nfc">Near Field Communication</string>
     <string name="nfc_options_desc">Fallback reader for MIFARE Classic, physical card interface settings...</string>
+    <string name="file_fci">File FCI</string>
+    <string name="app_fci">App FCI</string>
+    <string name="classic_key_format_a">Key (A): %s</string>
+    <string name="classic_key_format_b">Key (B): %s</string>
+    <string name="classic_key_format">Key: %s</string>
 </resources>

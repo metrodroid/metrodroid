@@ -56,6 +56,7 @@ dependencies {
     implementation project(':nfc-felica-lib')
     androidTestImplementation 'org.hamcrest:hamcrest-core:1.3'
     androidTestImplementation 'org.hamcrest:hamcrest-library:1.3'
+    implementation 'com.github.bmelnychuk:atv:1.2.+'
 }
 
 protobuf {

@@ -23,6 +23,11 @@ import android.util.Log;
 
 import org.simpleframework.xml.Element;
 
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.List;
+
 import au.id.micolous.farebot.R;
 import au.id.micolous.metrodroid.card.TagReaderFeedbackInterface;
 import au.id.micolous.metrodroid.card.iso7816.ISO7816Application;
@@ -32,6 +37,8 @@ import au.id.micolous.metrodroid.transit.CardInfo;
 import au.id.micolous.metrodroid.transit.TransitData;
 import au.id.micolous.metrodroid.transit.TransitIdentity;
 import au.id.micolous.metrodroid.transit.tmoney.TMoneyTransitData;
+import au.id.micolous.metrodroid.ui.ListItem;
+import au.id.micolous.metrodroid.ui.ListItemRecursive;
 import au.id.micolous.metrodroid.util.Utils;
 
 public class TMoneyCard extends ISO7816Application {
@@ -69,6 +76,12 @@ public class TMoneyCard extends ISO7816Application {
         super(appData);
         mBalance = balance;
     }
+
+    public List<ListItem> getRawData() {
+        return Collections.singletonList(ListItemRecursive.collapsedValue("Tmoney balance",
+                Integer.toHexString(mBalance)));
+    }
+
 
     /**
      * Dumps a TMoney card in the field.

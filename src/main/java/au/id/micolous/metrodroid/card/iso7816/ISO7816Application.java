@@ -74,6 +74,10 @@ public class ISO7816Application {
         return mTagId.getData();
     }
 
+    public List<ListItem> getRawData() {
+        return null;
+    }
+
     public static class ISO7816Info {
         private final byte []mApplicationData;
         private final byte []mApplicationName;
@@ -187,10 +191,14 @@ public class ISO7816Application {
     public List<ListItem> getManufacturingInfo() { return null; }
 
     public byte[] getAppData() {
+        if (mApplicationData == null)
+            return null;
         return mApplicationData.getData();
     }
 
     public byte[] getAppName() {
+        if (mApplicationName == null)
+            return null;
         return mApplicationName.getData();
     }
 }

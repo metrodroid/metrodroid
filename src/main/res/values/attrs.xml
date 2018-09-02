@@ -25,4 +25,7 @@
     <attr name="LockImage" format="reference" />
     <attr name="ListHeaderTextColor" format="reference" />
     <attr name="TransportIcons" format="reference" />
+    <attr name="CardIdTextColor" format="reference" />
+    <attr name="DrawableClosedIndicator" format="reference" />
+    <attr name="DrawableOpenIndicator" format="reference" />
 </resources>

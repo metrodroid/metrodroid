@@ -28,6 +28,8 @@
         <item name="MainActivityTheme">@style/Metrodroid.Dark</item>
         <item name="ListHeaderTextColor">@android:color/background_light</item>
         <item name="TransportIcons">@array/Metrodroid.Dark.TransportIcons</item>
+        <item name="DrawableClosedIndicator">@drawable/expander_close_holo_dark</item>
+        <item name="DrawableOpenIndicator">@drawable/expander_open_holo_dark</item>
     </style>
 
     <style name="Metrodroid.Dark.Dialog" parent="@android:style/Theme.DeviceDefault.Dialog">
@@ -66,6 +68,8 @@
         <item name="MainActivityTheme">@style/Metrodroid.Light</item>
         <item name="ListHeaderTextColor">@android:color/background_dark</item>
         <item name="TransportIcons">@array/Metrodroid.Light.TransportIcons</item>
+        <item name="DrawableClosedIndicator">@drawable/expander_close_holo_light</item>
+        <item name="DrawableOpenIndicator">@drawable/expander_open_holo_light</item>
     </style>
 
     <style name="Metrodroid.Light.Dialog" parent="@android:style/Theme.DeviceDefault.Dialog">
@@ -106,6 +110,8 @@
         <item name="LockImage">@drawable/locked</item>
         <item name="ListHeaderTextColor">@color/FareBot.Theme.HeaderColor</item>
         <item name="TransportIcons">@array/FareBot.Theme.TransportIcons</item>
+        <item name="DrawableClosedIndicator">@drawable/expander_close_holo_light</item>
+        <item name="DrawableOpenIndicator">@drawable/expander_open_holo_light</item>
     </style>
 
     <style name="FareBot.Theme.Main" parent="@style/FareBot.Theme.Base">

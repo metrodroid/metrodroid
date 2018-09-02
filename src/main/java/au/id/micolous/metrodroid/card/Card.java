@@ -191,4 +191,8 @@ public abstract class Card {
     public List<ListItem> getManufacturingInfo() {
         return null;
     }
+
+    public List<ListItem> getRawData() {
+        return null;
+    }
 }
