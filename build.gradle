@@ -86,14 +86,29 @@ android {
         versionCode "git -C ${projectDir} rev-list --count HEAD".execute().text.trim().toInteger()
         versionName "git -C ${projectDir} describe --always --tags --dirty".execute().text.trim().replaceAll("^v", "")
 
-        // Limit language support to where we have translations.
-        // Update this whenever new language translations become available in Weblate.
-        resConfigs 'en', 'en-rAU', 'en-rCA', 'en-rNZ', 'fi', 'fr', 'he', 'id', 'iw', 'ja', 'kab', 'nb-rNO', 'nl', 'ru', 'tr'
+        resConfigs ([
+                // Update this whenever new language translations become available in Weblate.
+                // Languages we support
+                'en', 'en-rAU', 'en-rCA', 'en-rNZ',
+                'fi',
+                'fr',
+                'he',
+                'id',
+                'iw',
+                'ja',
+                'kab',
+                'nb-rNO',
+                'nl',
+                'ru',
+                'tr',
 
-        // We want to use the support library for vectors, rather than shipping huge rasters.
+                // UI mode
+
+
+        ])
         vectorDrawables {
             useSupportLibrary = true
-            generatedDensities 'ldpi', 'mdpi', 'hdpi', 'xhdpi'
+            generatedDensities 'ldpi', 'mdpi', 'hdpi'
         }
     }
 
@@ -102,6 +117,7 @@ android {
         dev {
             applicationIdSuffix '.dev'
             minifyEnabled true
+            shrinkResources true
             useProguard false
             proguardFiles getDefaultProguardFile('proguard-android.txt'),
                     'proguard.cfg'
@@ -109,6 +125,7 @@ android {
         }
         release {
             minifyEnabled true
+            shrinkResources true
             useProguard false
             proguardFiles getDefaultProguardFile('proguard-android.txt'),
                     'proguard.cfg'
