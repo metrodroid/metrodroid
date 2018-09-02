@@ -32,10 +32,6 @@ MDSTS += opus.mdst
 opus.mdst: xml2pb-opus.py stations_pb2.py mdst.py ../../data/opus/*.xml
 	python3 xml2pb-opus.py
 
-MDSTS += troika.mdst
-troika.mdst: csv2pb.py stations_pb2.py mdst.py ../../data/troika/stations.csv
-	python3 csv2pb.py ../../data/troika/stations.csv -o $@ -V 2 -L ru
-
 %.csv: %.mdst dump2csv.py stations_pb2.py
 	python3 dump2csv.py -o $@ $<
 
