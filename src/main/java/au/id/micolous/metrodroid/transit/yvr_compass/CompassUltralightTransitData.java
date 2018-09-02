@@ -58,6 +58,8 @@ public class CompassUltralightTransitData extends TransitData {
         }
     };
 
+    public static final String NAME = "Compass";
+
     public static final CardInfo CARD_INFO = new CardInfo.Builder()
 	    .setImageId(R.drawable.yvr_compass_card)
             .setName(NAME)
@@ -66,7 +68,6 @@ public class CompassUltralightTransitData extends TransitData {
             .setExtraNote(R.string.compass_note)
             .build();
 
-    public static final String NAME = "Compass";
     private final int mProductCode;
     private final long mSerial;
     private final byte mType;
