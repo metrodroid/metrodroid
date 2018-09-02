@@ -12,6 +12,8 @@ layout: home
 
 ## Supported cards / agencies
 
+Card / Agency | Location | Notes
+------------- | -------- | -----
 [Bilhete Único][30] | :brazil: São Paulo, Brazil | :closed_lock_with_key: `MFC` `FALLBACK`
 [Clipper][1] | :us: San Francisco, CA, USA
 [Compass][41] | :canada: Vancouver, BC, Canada | :new: `SINGLE`
