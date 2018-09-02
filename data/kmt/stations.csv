@@ -1,4 +1,4 @@
-reader_id,stop_name,stop_lat,stop_lon
+reader_id,local_name,stop_lat,stop_lon
 0x1,Tanah Abang,-6.18574476,106.8108382
 0x101,Bogor,-6.59561005,106.7904379
 0x102,Cilebut,-6.53050343,106.8005885

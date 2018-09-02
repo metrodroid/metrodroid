@@ -24,10 +24,6 @@ MDSTS += suica_bus.mdst
 suica_bus.mdst: sqlite2pb-suica-bus.py stations_pb2.py ../../data/felica_stations.db3
 	python3 sqlite2pb-suica-bus.py
 
-MDSTS += kmt.mdst
-kmt.mdst: csv2pb.py stations_pb2.py mdst.py ../../data/kmt/stations.csv
-	python3 csv2pb.py ../../data/kmt/stations.csv -o $@ -V 2 -l id -L id
-
 MDSTS += ovc.mdst
 ovc.mdst: sqlite2pb-ovc.py stations_pb2.py mdst.py ../../data/ovc_stations.db3
 	python3 sqlite2pb-ovc.py

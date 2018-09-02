@@ -129,7 +129,8 @@ def read_stops_from_csv(db, csv_f):
   for stop in exread:
     s = Station()
     s.id = int(stop['reader_id'], 0)
-    s.name.english = stop['stop_name']
+    if 'stop_name' in stop and stop['stop_name']:
+      s.name.english = stop['stop_name']
     if 'local_name' in stop and stop['local_name']:
       s.name.local = stop['local_name']
     if 'short_name' in stop and stop['short_name']:
