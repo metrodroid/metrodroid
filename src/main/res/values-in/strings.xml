@@ -46,7 +46,7 @@
 \nSilakan hubungi penerbit kartu untuk dapat membuka akses data pada kartu. Akan aman jika diperbolehkan untuk membuka, dengan mode \"read-only\" kepada data dengan menggunakan teknologi terkini smartcard. Beberapa penerbit kartu bahkan menyediakan dokumen tentang format data yang dipergunakan pada kartu!</string>
     <string name="fully_locked_title">Kartu terkunci semua.</string>
     <string name="nfc_off_error">NFC mati</string>
-    <string name="wireless_settings">Seting Wireless</string>
+    <string name="wireless_settings">Pengaturan Nirkabel</string>
     <string name="machine_id">ID Mesin %s</string>
 
     <string name="unknown_card_header">Format kartu tidak diketahui</string>
@@ -117,7 +117,7 @@
     <string name="map_tiles_url_summary">Gunakan server tile custom untuk peta tertanam, menggunakan sintaks Leaflet TileLayer.</string>
     <string name="map_tiles_subdomains">Subdomain petak peta</string>
     <string name="map_tiles_subdomains_summary">Jika menggunakan {s} pada URLs peta, list subdomain dipisahkan dengan koma, atau dengan list subdomain dengan satu karakter.</string>
-    <string name="online_services">Online services</string>
+    <string name="online_services">Pelayanan online</string>
     <string name="mifare_classic">MIFARE Classic</string>
     <string name="auth_retries">Ulang autentikasi</string>
     <string name="auth_retries_summary">Jumlah berapa kali percobaan autentikasi di tiap sektor</string>
@@ -155,4 +155,51 @@
 
     <string name="localise_places_longdesc_title">Tentang petunjuk bahasa</string>
 
+    <string name="map_tiles_help">Lihat dokumentasi Leaflet TileLayer</string>
+    <string name="map_tiles_help_summary">Untuk bantuan bagaimana menggunakan Map tile URLs, lihat dokumentasi Leaflet (hanya dalam Bahasa Inggris).</string>
+    <string name="about_card_format">Tentang format kartu ini</string>
+    <string name="card_partial_read_desc">Kartu dipindahkan ketika sedang dibaca.
+\n
+\nSebagian data terbaca, namun tidak cukup untuk dapat digunakan.
+\n
+\nTempat kartu yang tebal dan bahan metal dapat mengganggu NFC. Kegagalan juga bisa mengindikasikan bahwa kartu atau antena handset anda bermasalah.</string>
+    <string name="show_partial_data">Lihat data yang belum lengkap</string>
+
+    <string name="pref_show_local_and_english_title">Tampilkan nama stasiun dalam bahasa lokal serta dalam bahasa Inggris</string>
+    <string name="pref_show_local_and_english_desc">Jika diaktifkan, kedua bahasa lokal dan Inggris akan ditampilkan. Jika dinonaktifkan, varian yang paling cocok akan dipilih.</string>
+
+    <plurals name="cards_imported">
+	<item quantity="other"><xliff:g id="count" example="1">%d</xliff:g> card imported!</item>
+</plurals>
+
+    <plurals name="block_count">
+	<item quantity="other">%d blok</item>
+</plurals>
+
+    <plurals name="record_count">
+	<item quantity="other">%d record</item>
+</plurals>
+
+    <plurals name="felica_service_count">
+	<item quantity="other">%d servis</item>
+</plurals>
+
+    <string name="desfire_standard_file">File standard</string>
+    <string name="desfire_backup_file">File backup</string>
+    <string name="desfire_value_file">Value file</string>
+    <string name="desfire_unknown_file">Tipe file tidak dikenal</string>
+    <plurals name="desfire_standard_format">
+	<item quantity="other">Type: %1$s, Length: %2$s byte</item>
+</plurals>
+
+    <plurals name="desfire_record_format">
+	<item quantity="other">Type: %1$s, Record: %2$s (%3$s maximum), Record Size: %4$s</item>
+</plurals>
+
+    <plurals name="minutes">
+	<item quantity="other">%d menit</item>
+</plurals>
+    <plurals name="hours">
+	<item quantity="other">%d jam</item>
+</plurals>
     </resources>
