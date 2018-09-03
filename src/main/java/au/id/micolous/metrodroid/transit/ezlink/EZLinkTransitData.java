@@ -25,9 +25,12 @@ package au.id.micolous.metrodroid.transit.ezlink;
 import android.os.Parcel;
 import android.support.annotation.Nullable;
 
+import au.id.micolous.farebot.R;
 import au.id.micolous.metrodroid.card.Card;
+import au.id.micolous.metrodroid.card.CardType;
 import au.id.micolous.metrodroid.card.cepas.CEPASCard;
 import au.id.micolous.metrodroid.card.cepas.CEPASTransaction;
+import au.id.micolous.metrodroid.transit.CardInfo;
 import au.id.micolous.metrodroid.transit.Station;
 import au.id.micolous.metrodroid.transit.TransitCurrency;
 import au.id.micolous.metrodroid.transit.TransitData;
@@ -49,6 +52,20 @@ public class EZLinkTransitData extends TransitData {
         }
     };
     private static final String EZLINK_STR = "ezlink";
+
+    public static final CardInfo EZ_LINK_CARD_INFO = new CardInfo.Builder()
+            .setImageId(R.drawable.ezlink_card)
+            .setName("EZ-Link")
+            .setLocation(R.string.location_singapore)
+            .setCardType(CardType.CEPAS)
+            .build();
+
+    public static final CardInfo NETS_FLASHPAY_CARD_INFO = new CardInfo.Builder()
+            .setImageId(R.drawable.nets_card)
+            .setName("NETS FlashPay")
+            .setLocation(R.string.location_singapore)
+            .setCardType(CardType.CEPAS)
+            .build();
 
     private final String mSerialNumber;
     private final double mBalance;

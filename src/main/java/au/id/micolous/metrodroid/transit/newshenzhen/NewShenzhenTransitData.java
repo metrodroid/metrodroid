@@ -32,10 +32,12 @@ import java.util.List;
 import java.util.TimeZone;
 
 import au.id.micolous.farebot.R;
+import au.id.micolous.metrodroid.card.CardType;
 import au.id.micolous.metrodroid.card.iso7816.ISO7816Application;
 import au.id.micolous.metrodroid.card.iso7816.ISO7816Record;
 import au.id.micolous.metrodroid.card.iso7816.ISO7816Selector;
 import au.id.micolous.metrodroid.card.newshenzhen.NewShenzhenCard;
+import au.id.micolous.metrodroid.transit.CardInfo;
 import au.id.micolous.metrodroid.transit.TransitBalance;
 import au.id.micolous.metrodroid.transit.TransitBalanceStored;
 import au.id.micolous.metrodroid.transit.TransitCurrency;
@@ -51,6 +53,14 @@ public class NewShenzhenTransitData extends TransitData {
     private final int mSerial;
     private static final TimeZone TZ = TimeZone.getTimeZone("Asia/Beijing");
     private final List<NewShenzhenTrip> mTrips;
+
+    public static final CardInfo CARD_INFO = new CardInfo.Builder()
+            .setImageId(R.drawable.szt_card)
+            .setName(Utils.localizeString(R.string.card_name_szt))
+            .setLocation(R.string.location_shenzhen)
+            .setCardType(CardType.FeliCa)
+            .setPreview()
+            .build();
 
     public static final Parcelable.Creator<NewShenzhenTransitData> CREATOR = new Parcelable.Creator<NewShenzhenTransitData>() {
         public NewShenzhenTransitData createFromParcel(Parcel parcel) {

@@ -1,4 +1,4 @@
-operator_id,reader_id,name,short_name,stop_lat,stop_lon
+operator_id,reader_id,stop_name,short_name,stop_lat,stop_lon
 7,458755,King Street,King St,47.598445,-122.330161
 7,458757,Kent,,47.384257,-122.233151
 7,469104,Capitol Hill,,47.6192,-122.3202

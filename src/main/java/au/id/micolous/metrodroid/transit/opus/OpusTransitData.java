@@ -32,10 +32,12 @@ import java.util.List;
 import java.util.TimeZone;
 
 import au.id.micolous.farebot.R;
+import au.id.micolous.metrodroid.card.CardType;
 import au.id.micolous.metrodroid.card.calypso.CalypsoApplication;
 import au.id.micolous.metrodroid.card.iso7816.ISO7816File;
 import au.id.micolous.metrodroid.card.iso7816.ISO7816Record;
 import au.id.micolous.metrodroid.card.iso7816.ISO7816Selector;
+import au.id.micolous.metrodroid.transit.CardInfo;
 import au.id.micolous.metrodroid.transit.Subscription;
 import au.id.micolous.metrodroid.transit.TransitCurrency;
 import au.id.micolous.metrodroid.transit.TransitData;
@@ -63,6 +65,13 @@ public class OpusTransitData extends TransitData {
         OPUS_EPOCH = epoch.getTimeInMillis();
     }
 
+    public static final CardInfo CARD_INFO = new CardInfo.Builder()
+            .setImageId(R.drawable.opus_card)
+            .setName(NAME)
+            .setLocation(R.string.location_quebec)
+            .setCardType(CardType.ISO7816)
+            .setPreview()
+            .build();
 
     public static final Creator<OpusTransitData> CREATOR = new Creator<OpusTransitData>() {
         public OpusTransitData createFromParcel(Parcel parcel) {
