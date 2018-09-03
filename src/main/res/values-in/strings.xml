@@ -202,4 +202,9 @@
     <plurals name="hours">
 	<item quantity="other">%d jam</item>
 </plurals>
+    <string name="kmt_agency">Kereta Commuter Indonesia</string>
+    <string name="kmt_extra_note">Hanya untuk kartu FeliCa baru.</string>
+
+    <string name="convert_timezones_summary">Secara default, Metrodroid menampilkan waktu perjalanan dalam timezone tiap penerbit kartu/agensi. Jika opsi ini diaktifkan, Metrodroid akan melakukan konversi ke timezone handset anda.</string>
+
     </resources>
