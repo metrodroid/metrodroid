@@ -28,10 +28,12 @@ import java.util.Arrays;
 import java.util.List;
 
 import au.id.micolous.farebot.R;
+import au.id.micolous.metrodroid.card.CardType;
 import au.id.micolous.metrodroid.card.iso7816.ISO7816Application;
 import au.id.micolous.metrodroid.card.iso7816.ISO7816Record;
 import au.id.micolous.metrodroid.card.iso7816.ISO7816Selector;
 import au.id.micolous.metrodroid.card.tmoney.TMoneyCard;
+import au.id.micolous.metrodroid.transit.CardInfo;
 import au.id.micolous.metrodroid.transit.TransitCurrency;
 import au.id.micolous.metrodroid.transit.TransitData;
 import au.id.micolous.metrodroid.transit.TransitIdentity;
@@ -50,6 +52,13 @@ public class TMoneyTransitData extends TransitData {
         }
     };
 
+    public static final CardInfo CARD_INFO = new CardInfo.Builder()
+            .setImageId(R.drawable.tmoney_card)
+            .setName(Utils.localizeString(R.string.card_name_tmoney))
+            .setLocation(R.string.location_seoul)
+            .setCardType(CardType.ISO7816)
+            .setPreview()
+            .build();
 
     private final String mSerialNumber;
     private final int mBalance;

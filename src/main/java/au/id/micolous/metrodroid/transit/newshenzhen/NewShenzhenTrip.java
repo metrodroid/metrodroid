@@ -132,7 +132,7 @@ public class NewShenzhenTrip extends Trip {
     }
 
     @Override
-    public String getAgencyName() {
+    public String getAgencyName(boolean isShort) {
         int transport = getTransport();
         switch (transport) {
             case SZT_METRO:

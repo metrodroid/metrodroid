@@ -21,24 +21,40 @@ package au.id.micolous.metrodroid.transit.ravkav;
 
 import android.os.Parcel;
 import android.support.annotation.Nullable;
+import android.util.Log;
 
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.TimeZone;
 
 import au.id.micolous.farebot.R;
+import au.id.micolous.metrodroid.transit.Station;
 import au.id.micolous.metrodroid.transit.TransitCurrency;
 import au.id.micolous.metrodroid.transit.Trip;
+import au.id.micolous.metrodroid.transit.en1545.En1545Bitmap;
+import au.id.micolous.metrodroid.transit.en1545.En1545Container;
+import au.id.micolous.metrodroid.transit.en1545.En1545Field;
+import au.id.micolous.metrodroid.transit.en1545.En1545FixedInteger;
+import au.id.micolous.metrodroid.transit.en1545.En1545Parsed;
+import au.id.micolous.metrodroid.transit.en1545.En1545Parser;
+import au.id.micolous.metrodroid.util.StationTableReader;
 import au.id.micolous.metrodroid.util.Utils;
 
 class RavKavTrip extends Trip {
-    private static final int EGGED = 0x62;
-    private int mTime;
-    private int mAgency;
-    private String mAgencyName;
-    private Integer mPrice;
-    private Integer mRoute;
-    private Mode mMode;
+    private static final int EGGED = 0x3;
+    private static final int EVENT_TYPE_CANCELLED = 9;
+    private static final int EVENT_TYPE_TAPON = 1;
+    private static final int EVENT_TYPE_TAPOFF = 2;
+    private static final int EVENT_TYPE_TRANSIT = 6;
+    private static final int EVENT_TYPE_TOPUP = 13;
+    private static final String RAVKAV_STR = "ravkav";
+    private final int mModeCode;
+    private final int mEventType;
+    private final En1545Parsed mParsed;
+    private final int mTime;
+    private final int mAgency;
+    private int mEndLocation;
+    private int mEndTime;
 
     public static final Creator<RavKavTrip> CREATOR = new Creator<RavKavTrip>() {
         public RavKavTrip createFromParcel(Parcel parcel) {
@@ -50,7 +66,7 @@ class RavKavTrip extends Trip {
         }
     };
 
-    private static final TimeZone TZ = TimeZone.getTimeZone("Asia/Jerusalem");
+    static final TimeZone TZ = TimeZone.getTimeZone("Asia/Jerusalem");
     private static final long RAVKAV_EPOCH;
 
     static {
@@ -60,55 +76,43 @@ class RavKavTrip extends Trip {
         RAVKAV_EPOCH = epoch.getTimeInMillis();
     }
 
+    private static final En1545Field tripFields = new En1545Container(
+            new En1545Bitmap(
+                    new En1545FixedInteger("Location", 16),
+                    new En1545FixedInteger("LineNumber", 16),
+                    new En1545FixedInteger("StopEnRoute", 8),
+                    new En1545FixedInteger("Unknown1", 12),
+                    new En1545FixedInteger("Vehicle", 14),
+                    new En1545FixedInteger("Unknown2", 4),
+                    new En1545FixedInteger("Unknown3", 8)
+            ),
+            new En1545Bitmap(
+                    new En1545Container(
+                            new En1545FixedInteger("RouteSystem", 10),
+                            new En1545FixedInteger("FareCode", 8),
+                            new En1545FixedInteger("Price", 16)
+                    ),
+                    new En1545FixedInteger("Unknown4", 32),
+                    new En1545FixedInteger("Unknown5", 32)
+            )
+    );
+
     public RavKavTrip(byte[] data) {
-        mAgency = Utils.getBitsFromBuffer(data, 0, 16);
-        int modeCode = Utils.getBitsFromBuffer(data, 16, 4);
+        // 3 bits version number
+        mAgency = Utils.getBitsFromBuffer(data, 3, 8);
+        // 4 bits contract ID
+        mModeCode = Utils.getBitsFromBuffer(data, 15, 4);
+        mEventType = Utils.getBitsFromBuffer(data, 19, 4);
         mTime = Utils.getBitsFromBuffer(data, 23, 30);
-        switch (modeCode) {
-            case 2:
-                mMode = Mode.BUS;
-                break;
-            case 3:
-                mMode = Mode.TICKET_MACHINE;
-                break;
-            case 8:
-                mMode = Mode.TRAM;
-                break;
-            default:
-                mMode = Mode.BUS;
-                break;
-        }
-        switch (mAgency) {
-            case EGGED:
-                mRoute = Utils.getBitsFromBuffer(data, 140, 9);
-                mPrice = Utils.getBitsFromBuffer(data, 194, 16);
-                mAgencyName = Utils.localizeString(R.string.ravkav_agency_egged);
-                break;
-            case 0xa2:
-                mRoute = Utils.getBitsFromBuffer(data, 140, 15);
-                mPrice = Utils.getBitsFromBuffer(data, 202, 16);
-                mAgencyName = Utils.localizeString(R.string.ravkav_agency_dan);
-                break;
-            case 0x2a2:
-                mRoute = Utils.getBitsFromBuffer(data, 140, 15);
-                mPrice = Utils.getBitsFromBuffer(data, 210, 16);
-                mAgencyName = Utils.localizeString(R.string.ravkav_agency_city_pass);
-                break;
-            case 0x322:
-                mAgencyName = Utils.localizeString(R.string.ravkav_agency_topup_app);
-                break;
-            default:
-                mAgencyName = Utils.localizeString(R.string.unknown_format, Integer.toHexString(mAgency));
-                break;
-        }
-        if (modeCode == 3) {
-            // It seems that topup value is not recorded.
-            mRoute = null;
-            mPrice = null;
-        }
+        // 1 bit transit/transfer flag
+        // 30 bits: first board time
+        // 32 bits: contract prefs
+        mParsed = En1545Parser.parse(data, 116, tripFields);
     }
 
-    private static Calendar parseTime(int val) {
+    public static Calendar parseTime(int val) {
+        if (val == 0)
+            return null;
         GregorianCalendar g = new GregorianCalendar(TZ);
         g.setTimeInMillis(RAVKAV_EPOCH);
         g.add(Calendar.SECOND, val);
@@ -117,7 +121,12 @@ class RavKavTrip extends Trip {
 
     @Override
     public String getRouteName() {
-        return mRoute == null ? null : Integer.toString(mRoute);
+        Integer route = mParsed.getInt("LineNumber");
+        if (route == null)
+            return null;
+        if (mAgency == EGGED)
+            return Integer.toString(route%1000);
+        return Integer.toString(route);
     }
 
     @Override
@@ -126,21 +135,56 @@ class RavKavTrip extends Trip {
     }
 
     @Override
-    public String getAgencyName() {
-        return mAgencyName;
+    public String getAgencyName(boolean isShort) {
+        if (mEventType == EVENT_TYPE_TOPUP && mAgency == 0x19)
+            return Utils.localizeString(R.string.ravkav_agency_topup_app);
+        return StationTableReader.getOperatorName(RAVKAV_STR, mAgency, isShort);
+    }
+
+    @Nullable
+    @Override
+    public Station getStartStation() {
+        int stationId = mParsed.getIntOrZero("Location");
+        if (stationId == 0)
+            return null;
+        return StationTableReader.getStation(RAVKAV_STR, stationId);
+    }
+
+    @Nullable
+    @Override
+    public Station getEndStation() {
+        if (mEndLocation == 0)
+            return null;
+        return StationTableReader.getStation(RAVKAV_STR, mEndLocation);
+    }
+
+    @Override
+    public Calendar getEndTimestamp() {
+        return parseTime(mEndTime);
     }
 
     @Nullable
     @Override
     public TransitCurrency getFare() {
-        if (mPrice == null)
+        Integer price = mParsed.getInt("Price");
+        if (price == null)
             return null;
-        return new TransitCurrency(mPrice, "ILS");
+        return new TransitCurrency(price, "ILS");
     }
 
     @Override
     public Mode getMode() {
-        return mMode;
+        if (mEventType == EVENT_TYPE_TOPUP)
+            return Mode.TICKET_MACHINE;
+
+        switch (mModeCode) {
+            case 1:
+                return Mode.BUS;
+            case 4:
+                return Mode.TRAM;
+            default:
+                return Mode.BUS;
+        }
     }
 
     @Override
@@ -152,38 +196,35 @@ class RavKavTrip extends Trip {
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeInt(mTime);
         dest.writeInt(mAgency);
-        dest.writeString(mAgencyName);
-        dest.writeString(mMode.toString());
-        if (mPrice != null && mRoute != null) {
-            dest.writeInt(1);
-            dest.writeInt(mPrice);
-            dest.writeInt(mRoute);
-        } else
-            dest.writeInt(0);
+        dest.writeInt(mModeCode);
+        dest.writeInt(mEventType);
+        dest.writeInt(mEndLocation);
+        dest.writeInt(mEndTime);
+        mParsed.writeToParcel(dest, flags);
     }
 
     public RavKavTrip(Parcel parcel) {
         mTime = parcel.readInt();
         mAgency = parcel.readInt();
-        mAgencyName = parcel.readString();
-        mMode = Mode.valueOf(parcel.readString());
-        if (parcel.readInt() != 0) {
-            mPrice = parcel.readInt();
-            mRoute = parcel.readInt();
-        }
+        mModeCode = parcel.readInt();
+        mEventType = parcel.readInt();
+        mEndLocation = parcel.readInt();
+        mEndTime = parcel.readInt();
+        mParsed = new En1545Parsed(parcel);
+    }
+
+    public boolean shouldBeDropped() {
+        return mEventType == EVENT_TYPE_CANCELLED;
     }
 
     public boolean shouldBeMerged(RavKavTrip t) {
-        // Topup creates 2 entries. One of them is with
-        // Egged agency independently of real agency
-        return mMode.equals(Mode.TICKET_MACHINE) && t.mMode.equals(Mode.TICKET_MACHINE)
-                && mTime == t.mTime;
+        return mAgency == t.mAgency && mModeCode == t.mModeCode
+                && (mEventType == EVENT_TYPE_TAPON || mEventType == EVENT_TYPE_TRANSIT)
+                && t.mEventType == EVENT_TYPE_TAPOFF;
     }
 
     public void merge(RavKavTrip t) {
-        if (mMode.equals(Mode.TICKET_MACHINE) && mAgency == EGGED) {
-            mAgencyName = t.mAgencyName;
-            mAgency = t.mAgency;
-        }
+        mEndLocation = t.mParsed.getIntOrZero("Location");
+        mEndTime = t.mTime;
     }
 }

@@ -291,10 +291,10 @@ public class CardTripsFragment extends ListFragment {
 
             SpannableStringBuilder routeText = new SpannableStringBuilder();
 
-            if (trip.getShortAgencyName() != null) {
-                routeText.append(trip.getShortAgencyName())
+            if (trip.getAgencyName(true) != null) {
+                routeText.append(trip.getAgencyName(true))
                         .append(" ")
-                        .setSpan(new StyleSpan(Typeface.BOLD), 0, trip.getShortAgencyName().length(), 0);
+                        .setSpan(new StyleSpan(Typeface.BOLD), 0, trip.getAgencyName(true).length(), 0);
                 if (localisePlaces && Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
                     routeText.setSpan(new LocaleSpan(Locale.getDefault()), 0, routeText.length(), 0);
                 }

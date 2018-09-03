@@ -64,7 +64,7 @@ public class EZLinkTrip extends Trip {
     }
 
     @Override
-    public String getAgencyName() {
+    public String getAgencyName(boolean isShort) {
         if (mTransaction.getType() == CEPASTransaction.TransactionType.BUS
                 || mTransaction.getType() == CEPASTransaction.TransactionType.BUS_REFUND) {
             return "BUS";
@@ -72,25 +72,8 @@ public class EZLinkTrip extends Trip {
         if (mTransaction.getType() == CEPASTransaction.TransactionType.CREATION
                 || mTransaction.getType() == CEPASTransaction.TransactionType.TOP_UP
                 || mTransaction.getType() == CEPASTransaction.TransactionType.SERVICE) {
+            if (mCardName.equals("EZ-Link") && isShort) return "EZ";
             return mCardName;
-        }
-        if (mTransaction.getType() == CEPASTransaction.TransactionType.RETAIL) {
-            return "POS";
-        }
-        return "SMRT";
-    }
-
-    @Override
-    public String getShortAgencyName() {
-        if (mTransaction.getType() == CEPASTransaction.TransactionType.BUS
-                || mTransaction.getType() == CEPASTransaction.TransactionType.BUS_REFUND) {
-            return "BUS";
-        }
-        if (mTransaction.getType() == CEPASTransaction.TransactionType.CREATION
-                || mTransaction.getType() == CEPASTransaction.TransactionType.TOP_UP
-                || mTransaction.getType() == CEPASTransaction.TransactionType.SERVICE) {
-            if (mCardName.equals("EZ-Link")) return "EZ";
-            else return mCardName;
         }
         if (mTransaction.getType() == CEPASTransaction.TransactionType.RETAIL) {
             return "POS";

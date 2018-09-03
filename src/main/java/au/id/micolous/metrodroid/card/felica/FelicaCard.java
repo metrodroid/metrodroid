@@ -40,6 +40,7 @@ import au.id.micolous.metrodroid.transit.TransitData;
 import au.id.micolous.metrodroid.transit.TransitIdentity;
 import au.id.micolous.metrodroid.transit.edy.EdyTransitData;
 import au.id.micolous.metrodroid.transit.kmt.KMTTransitData;
+import au.id.micolous.metrodroid.transit.newshenzhen.NewShenzhenTransitData;
 import au.id.micolous.metrodroid.transit.octopus.OctopusTransitData;
 import au.id.micolous.metrodroid.transit.suica.SuicaTransitData;
 import au.id.micolous.metrodroid.ui.HeaderListItem;
@@ -127,7 +128,7 @@ public class FelicaCard extends Card {
                     // respond to the normal system code listing.
                     codes.add(new FeliCaLib.SystemCode(OctopusTransitData.SYSTEMCODE_OCTOPUS));
                     octopusMagic = true;
-                    feedbackInterface.showCardType(CardInfo.OCTOPUS);
+                    feedbackInterface.showCardType(OctopusTransitData.CARD_INFO);
                 }
 
                 FeliCaLib.IDm sztSystem = ft.pollingAndGetIDm(OctopusTransitData.SYSTEMCODE_SZT);
@@ -137,7 +138,7 @@ public class FelicaCard extends Card {
                     // case they have the same bugs with system code listing.
                     codes.add(new FeliCaLib.SystemCode(OctopusTransitData.SYSTEMCODE_SZT));
                     sztMagic = true;
-                    feedbackInterface.showCardType(CardInfo.SZT);
+                    feedbackInterface.showCardType(NewShenzhenTransitData.CARD_INFO);
                 }
             }
 
@@ -373,11 +374,11 @@ public class FelicaCard extends Card {
      */
     static CardInfo parseEarlyCardInfo(int[] systemCodes) {
         if (SuicaTransitData.earlyCheck(systemCodes))
-            return CardInfo.SUICA;
+            return SuicaTransitData.SUICA_CARD_INFO;
         if (EdyTransitData.earlyCheck(systemCodes))
-            return CardInfo.EDY;
+            return EdyTransitData.CARD_INFO;
         if (KMTTransitData.earlyCheck(systemCodes))
-            return CardInfo.KMT;
+            return KMTTransitData.CARD_INFO;
 
         // Do Octopus last -- it returns null if it's not a supported Octopus derivative.
         return OctopusTransitData.earlyCheck(systemCodes);

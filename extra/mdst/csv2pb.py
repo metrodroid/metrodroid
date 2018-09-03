@@ -25,20 +25,35 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 from __future__ import print_function
 from argparse import ArgumentParser, FileType
 from datetime import datetime, timedelta
-from stations_pb2 import Station, Operator
+from stations_pb2 import Station, Operator, Line
 import mdst
 import codecs, csv
 
 
-def compile_stops_from_csv(csv_f, output_f, version=None, tts_hint_language=None, operators_f=None, local_languages=None):
+def compile_stops_from_csv(csv_f, output_f, version=None, tts_hint_language=None, operators_f=None, local_languages=None,
+                           lines_f=None):
   csv_f = codecs.getreader('utf-8-sig')(csv_f)
 
   operators = {}
+  lines = {}
 
   if operators_f is not None:
     operators_f = codecs.getreader('utf-8-sig')(operators_f)
     operators = mdst.read_operators_from_csv(operators_f)
     operators_f.close()
+
+  if lines_f is not None:
+    lines_f = codecs.getreader('utf-8-sig')(lines_f)
+    lineread = csv.DictReader(lines_f)
+
+    for line in lineread:
+        linepb = Line()
+        linepb.name.english = line['name']
+        if 'short_name' in line and line['short_name']:
+          linepb.name.english_short = line['short_name']
+        if 'local_name' in line and line['local_name']:
+          linepb.name.local = line['local_name']
+        lines[int(line['id'], 0)] = linepb
 
   db = mdst.MdstWriter(
     fh=open(output_f, 'wb'),
@@ -74,6 +89,11 @@ def main():
     type=FileType('rb'),
     help='If supplied, this is an operators file of mapping between ids and operators. If a matching file is not supplied, this will produce an empty list of operators.')
 
+  parser.add_argument('-r', '--lines',
+    required=False,
+    type=FileType('rb'),
+    help='If supplied, this is a lines file of mapping between ids and lines. If a matching file is not supplied, this will produce an empty list of lines.')
+
   parser.add_argument('-V', '--version',
     required=True,
     type=int,
@@ -89,7 +109,7 @@ def main():
 
   options = parser.parse_args()
 
-  compile_stops_from_csv(options.input_csv[0], options.output, options.version, options.tts_hint_language, options.operators, options.local_languages)
+  compile_stops_from_csv(options.input_csv[0], options.output, options.version, options.tts_hint_language, options.operators, options.local_languages, options.lines)
 
 if __name__ == '__main__':
   main()

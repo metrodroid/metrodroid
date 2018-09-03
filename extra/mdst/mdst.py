@@ -161,5 +161,4 @@ def read_operators_from_csv(csv_f):
       oppb.default_transport = TransportType.Value(op['mode'])
     operators[int(op['id'], 0)] = oppb
 
-
   return operators

@@ -40,6 +40,8 @@ import au.id.micolous.metrodroid.card.iso7816.ISO7816Record;
 import au.id.micolous.metrodroid.card.iso7816.ISO7816Selector;
 import au.id.micolous.metrodroid.transit.TransitData;
 import au.id.micolous.metrodroid.transit.TransitIdentity;
+import au.id.micolous.metrodroid.transit.intercode.IntercodeTransitData;
+import au.id.micolous.metrodroid.transit.mobib.MobibTransitData;
 import au.id.micolous.metrodroid.transit.opus.OpusTransitData;
 import au.id.micolous.metrodroid.transit.ravkav.RavKavTransitData;
 import au.id.micolous.metrodroid.ui.HeaderListItem;
@@ -59,7 +61,11 @@ import au.id.micolous.metrodroid.util.Utils;
  * - https://github.com/nfc-tools/libnfc/blob/master/examples/pn53x-tamashell-scripts/ReadNavigo.sh
  */
 public class CalypsoApplication extends ISO7816Application {
-    public static final byte[] CALYPSO_FILENAME = Utils.stringToByteArray("1TIC.ICA");
+    public static final byte[][] CALYPSO_FILENAMES =
+            {
+                    Utils.stringToByteArray("1TIC.ICA"),
+                    Utils.stringToByteArray("3MTR.ICA")
+            };
 
     private static final String TAG = CalypsoApplication.class.getName();
     public static final String TYPE = "calypso";
@@ -103,6 +109,10 @@ public class CalypsoApplication extends ISO7816Application {
             return RavKavTransitData.parseTransitData(this);
         if (OpusTransitData.check(this))
             return OpusTransitData.parseTransitData(this);
+        if (MobibTransitData.check(this))
+            return MobibTransitData.parseTransitData(this);
+	    if (IntercodeTransitData.check(this))
+            return IntercodeTransitData.parseTransitData(this);
         return null;
     }
 
@@ -110,8 +120,14 @@ public class CalypsoApplication extends ISO7816Application {
     public TransitIdentity parseTransitIdentity() {
         if (RavKavTransitData.check(this))
             return RavKavTransitData.parseTransitIdentity(this);
+        if (MobibTransitData.check(this))
+            return MobibTransitData.parseTransitIdentity(this);
         if (OpusTransitData.check(this))
             return OpusTransitData.parseTransitIdentity(this);
+        if (MobibTransitData.check(this))
+            return MobibTransitData.parseTransitIdentity(this);
+        if (IntercodeTransitData.check(this))
+            return IntercodeTransitData.parseTransitIdentity(this);
         return null;
     }
 

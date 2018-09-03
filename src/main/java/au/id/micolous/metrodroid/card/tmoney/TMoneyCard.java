@@ -84,9 +84,9 @@ public class TMoneyCard extends ISO7816Application {
 
         try {
             feedbackInterface.updateStatusText(Utils.localizeString(R.string.card_reading_type,
-                    CardInfo.TMONEY.getName()));
+                    TMoneyTransitData.CARD_INFO.getName()));
             feedbackInterface.updateProgressBar(0, 6);
-            feedbackInterface.showCardType(CardInfo.TMONEY);
+            feedbackInterface.showCardType(TMoneyTransitData.CARD_INFO);
             balanceResponse = iso7816Tag.sendRequest(ISO7816Protocol.CLASS_90, INS_GET_BALANCE,
                         (byte) 0, (byte) 0, BALANCE_RESP_LEN);
             feedbackInterface.updateProgressBar(1, 6);

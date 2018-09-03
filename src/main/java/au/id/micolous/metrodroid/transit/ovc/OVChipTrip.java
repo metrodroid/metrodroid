@@ -239,7 +239,7 @@ public class OVChipTrip extends Trip {
     }
 
     @Override
-    public String getAgencyName() {
+    public String getAgencyName(boolean isShort) {
         return OVChipTransitData.getShortAgencyName(mAgency);    // Nobody uses most of the long names
     }
 

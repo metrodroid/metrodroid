@@ -31,9 +31,11 @@ import java.util.Locale;
 import java.util.TimeZone;
 
 import au.id.micolous.farebot.R;
+import au.id.micolous.metrodroid.card.CardType;
 import au.id.micolous.metrodroid.card.classic.ClassicCard;
 import au.id.micolous.metrodroid.card.classic.ClassicSector;
 import au.id.micolous.metrodroid.card.classic.UnauthorizedClassicSector;
+import au.id.micolous.metrodroid.transit.CardInfo;
 import au.id.micolous.metrodroid.transit.TransitBalance;
 import au.id.micolous.metrodroid.transit.TransitBalanceStored;
 import au.id.micolous.metrodroid.transit.TransitCurrency;
@@ -64,6 +66,18 @@ public class PodorozhnikTransitData extends TransitData {
             return new PodorozhnikTransitData[size];
         }
     };
+
+    public static final CardInfo CARD_INFO = new CardInfo.Builder()
+            // seqgo_card_alpha has identical geometry
+            .setImageId(R.drawable.podorozhnik_card, R.drawable.seqgo_card_alpha)
+            .setName(Utils.localizeString(R.string.card_name_podorozhnik))
+            .setLocation(R.string.location_saint_petersburg)
+            .setCardType(CardType.MifareClassic)
+            .setExtraNote(R.string.card_note_russia)
+            .setKeysRequired()
+            .setPreview()
+            .build();
+
 
     private static final long PODOROZHNIK_EPOCH;
     private static final TimeZone TZ = TimeZone.getTimeZone("Europe/Moscow");
