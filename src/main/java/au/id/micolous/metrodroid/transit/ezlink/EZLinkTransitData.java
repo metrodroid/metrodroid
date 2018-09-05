@@ -54,6 +54,20 @@ public class EZLinkTransitData extends TransitData {
     };
     private static final String EZLINK_STR = "ezlink";
 
+    public static final CardInfo EZ_LINK_CARD_INFO = new CardInfo.Builder()
+            .setImageId(R.drawable.ezlink_card)
+            .setName("EZ-Link")
+            .setLocation(R.string.location_singapore)
+            .setCardType(CardType.CEPAS)
+            .build();
+
+    public static final CardInfo NETS_FLASHPAY_CARD_INFO = new CardInfo.Builder()
+            .setImageId(R.drawable.nets_card)
+            .setName("NETS FlashPay")
+            .setLocation(R.string.location_singapore)
+            .setCardType(CardType.CEPAS)
+            .build();
+
     public static final TimeZone TZ = TimeZone.getTimeZone("Asia/Singapore");
     private static final long EPOCH;
 

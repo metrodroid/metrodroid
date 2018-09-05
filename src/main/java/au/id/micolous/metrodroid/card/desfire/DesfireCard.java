@@ -191,15 +191,15 @@ public class DesfireCard extends Card {
      */
     static CardInfo parseEarlyCardInfo(int[] appIds) {
         if (OrcaTransitData.earlyCheck(appIds))
-            return CardInfo.ORCA;
+            return OrcaTransitData.CARD_INFO;
         if (ClipperTransitData.earlyCheck(appIds))
-            return CardInfo.CLIPPER;
+            return ClipperTransitData.CARD_INFO;
         if (HSLTransitData.earlyCheck(appIds))
-            return CardInfo.HSL;
+            return HSLTransitData.CARD_INFO;
         if (OpalTransitData.earlyCheck(appIds))
-            return CardInfo.OPAL;
+            return OpalTransitData.CARD_INFO;
         if (MykiTransitData.earlyCheck(appIds))
-            return CardInfo.MYKI;
+            return MykiTransitData.CARD_INFO;
 
         return null;
     }

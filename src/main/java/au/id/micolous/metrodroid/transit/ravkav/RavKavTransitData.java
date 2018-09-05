@@ -20,6 +20,7 @@
 package au.id.micolous.metrodroid.transit.ravkav;
 
 import android.os.Parcel;
+import android.os.Parcelable;
 import android.support.annotation.Nullable;
 
 import java.util.ArrayList;
@@ -27,8 +28,10 @@ import java.util.Arrays;
 import java.util.List;
 
 import au.id.micolous.farebot.R;
+import au.id.micolous.metrodroid.card.CardType;
 import au.id.micolous.metrodroid.card.calypso.CalypsoApplication;
 import au.id.micolous.metrodroid.card.iso7816.ISO7816Record;
+import au.id.micolous.metrodroid.transit.CardInfo;
 import au.id.micolous.metrodroid.transit.TransitCurrency;
 import au.id.micolous.metrodroid.transit.TransitData;
 import au.id.micolous.metrodroid.transit.TransitIdentity;
@@ -43,7 +46,15 @@ public class RavKavTransitData extends TransitData {
     private final int mBalance;
     private final List<RavKavTrip> mTrips;
 
-    public static final Creator<RavKavTransitData> CREATOR = new Creator<RavKavTransitData>() {
+    public static final CardInfo CARD_INFO = new CardInfo.Builder()
+            .setImageId(R.drawable.ravkav_card)
+            .setName(Utils.localizeString(R.string.card_name_ravkav))
+            .setLocation(R.string.location_israel)
+            .setCardType(CardType.ISO7816)
+            .setPreview()
+            .build();
+
+    public static final Parcelable.Creator<RavKavTransitData> CREATOR = new Parcelable.Creator<RavKavTransitData>() {
         public RavKavTransitData createFromParcel(Parcel parcel) {
             return new RavKavTransitData(parcel);
         }

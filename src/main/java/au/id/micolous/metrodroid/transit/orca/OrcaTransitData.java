@@ -27,10 +27,13 @@ package au.id.micolous.metrodroid.transit.orca;
 import android.os.Parcel;
 import android.support.annotation.Nullable;
 
+import au.id.micolous.farebot.R;
 import au.id.micolous.metrodroid.card.Card;
+import au.id.micolous.metrodroid.card.CardType;
 import au.id.micolous.metrodroid.card.desfire.DesfireCard;
 import au.id.micolous.metrodroid.card.desfire.files.DesfireFile;
 import au.id.micolous.metrodroid.card.desfire.files.RecordDesfireFile;
+import au.id.micolous.metrodroid.transit.CardInfo;
 import au.id.micolous.metrodroid.transit.Subscription;
 import au.id.micolous.metrodroid.transit.TransitCurrency;
 import au.id.micolous.metrodroid.transit.TransitData;
@@ -57,6 +60,13 @@ public class OrcaTransitData extends TransitData {
     static final int TRANS_TYPE_PASS_USE = 0x60;
 
     public static final int APP_ID = 0x3010f2;
+
+    public static final CardInfo CARD_INFO = new CardInfo.Builder()
+            .setImageId(R.drawable.orca_card)
+            .setName("ORCA")
+            .setLocation(R.string.location_seattle)
+            .setCardType(CardType.MifareDesfire)
+            .build();
 
     private int mSerialNumber;
     private int mBalance;

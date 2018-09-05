@@ -33,10 +33,13 @@ import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.TimeZone;
 
+import au.id.micolous.farebot.R;
 import au.id.micolous.metrodroid.card.Card;
+import au.id.micolous.metrodroid.card.CardType;
 import au.id.micolous.metrodroid.card.desfire.DesfireCard;
 import au.id.micolous.metrodroid.card.desfire.files.DesfireFile;
 import au.id.micolous.metrodroid.card.desfire.files.RecordDesfireFile;
+import au.id.micolous.metrodroid.transit.CardInfo;
 import au.id.micolous.metrodroid.transit.TransitCurrency;
 import au.id.micolous.metrodroid.transit.TransitData;
 import au.id.micolous.metrodroid.transit.TransitIdentity;
@@ -67,6 +70,12 @@ public class HSLTransitData extends TransitData implements Parcelable {
         EPOCH = epoch.getTimeInMillis();
     }
 
+    public static final CardInfo CARD_INFO = new CardInfo.Builder()
+            .setImageId(R.drawable.hsl_card)
+            .setName("HSL")
+            .setLocation(R.string.location_helsinki_finland)
+            .setCardType(CardType.MifareDesfire)
+            .build();
 
     private static final int APP_ID = 0x1120ef;
     private String mSerialNumber;

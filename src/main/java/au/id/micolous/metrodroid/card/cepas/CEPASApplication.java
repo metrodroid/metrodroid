@@ -75,9 +75,9 @@ public class CEPASApplication extends ISO7816Application {
 
     private static void setProgress(TagReaderFeedbackInterface feedbackInterface, int val) {
         feedbackInterface.updateStatusText(Utils.localizeString(R.string.card_reading_type,
-                CardInfo.EZ_LINK.getName()));
+                EZLinkTransitData.EZ_LINK_CARD_INFO.getName()));
         feedbackInterface.updateProgressBar(val, 64);
-        feedbackInterface.showCardType(CardInfo.EZ_LINK);
+        feedbackInterface.showCardType(EZLinkTransitData.EZ_LINK_CARD_INFO);
     }
 
     public static CEPASApplication dumpTag(ISO7816Protocol iso7816Tag, ISO7816Application.ISO7816Info app,

@@ -23,7 +23,10 @@ import android.os.Parcel;
 import java.util.GregorianCalendar;
 import java.util.TimeZone;
 
+import au.id.micolous.farebot.R;
+import au.id.micolous.metrodroid.card.CardType;
 import au.id.micolous.metrodroid.card.classic.ClassicCard;
+import au.id.micolous.metrodroid.transit.CardInfo;
 import au.id.micolous.metrodroid.transit.TransitIdentity;
 import au.id.micolous.metrodroid.transit.erg.ErgTransitData;
 import au.id.micolous.metrodroid.transit.erg.ErgTrip;
@@ -47,6 +50,13 @@ public class ManlyFastFerryTransitData extends ErgTransitData {
     private static final TimeZone TIME_ZONE = TimeZone.getTimeZone("Australia/Sydney");
     static final String CURRENCY = "AUD";
 
+    public static final CardInfo CARD_INFO = new CardInfo.Builder()
+            .setImageId(R.drawable.manly_fast_ferry_card)
+            .setName(ManlyFastFerryTransitData.NAME)
+            .setLocation(R.string.location_sydney_australia)
+            .setCardType(CardType.MifareClassic)
+            .setKeysRequired()
+            .build();
 
     // Parcel
     public static final Creator<ManlyFastFerryTransitData> CREATOR = new Creator<ManlyFastFerryTransitData>() {

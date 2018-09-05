@@ -23,7 +23,10 @@ import android.os.Parcel;
 import java.util.GregorianCalendar;
 import java.util.TimeZone;
 
+import au.id.micolous.farebot.R;
+import au.id.micolous.metrodroid.card.CardType;
 import au.id.micolous.metrodroid.card.classic.ClassicCard;
+import au.id.micolous.metrodroid.transit.CardInfo;
 import au.id.micolous.metrodroid.transit.TransitIdentity;
 import au.id.micolous.metrodroid.transit.erg.ErgTransitData;
 import au.id.micolous.metrodroid.transit.erg.ErgTrip;
@@ -43,6 +46,15 @@ public class ChcMetrocardTransitData extends ErgTransitData {
     private static final int AGENCY_ID = 0x0136;
     private static final TimeZone TIME_ZONE = TimeZone.getTimeZone("Pacific/Auckland");
     static final String CURRENCY = "NZD";
+
+    public static final CardInfo CARD_INFO = new CardInfo.Builder()
+            .setImageId(R.drawable.chc_metrocard)
+            .setName(ChcMetrocardTransitData.NAME)
+            .setLocation(R.string.location_christchurch_nz)
+            .setCardType(CardType.MifareClassic)
+            .setKeysRequired()
+            .setPreview()
+            .build();
 
     // Parcel
     public static final Creator<ChcMetrocardTransitData> CREATOR = new Creator<ChcMetrocardTransitData>() {
