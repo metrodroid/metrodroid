@@ -38,7 +38,6 @@ import au.id.micolous.metrodroid.util.Utils;
 import org.apache.commons.lang3.ArrayUtils;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.TimeZone;
 
@@ -68,28 +67,67 @@ public class SuicaTransitData extends TransitData {
 
     public SuicaTransitData(FelicaCard card) {
         FelicaService service = card.getSystem(SYSTEMCODE_SUICA).getService(SERVICE_SUICA_HISTORY);
+        FelicaService tapService = card.getSystem(SYSTEMCODE_SUICA).getService(SERVICE_SUICA_INOUT);
 
-        int previousBalance = -1;
+        int matchingTap = -1;
 
         List<SuicaTrip> trips = new ArrayList<>();
 
         // Read blocks oldest-to-newest to calculate fare.
         List<FelicaBlock> blocks = service.getBlocks();
-        for (int i = (blocks.size() - 1); i >= 0; i--) {
+        List<FelicaBlock> tapBlocks = tapService != null ? tapService.getBlocks() : null;
+        for (int i = 0; i < blocks.size(); i++) {
             FelicaBlock block = blocks.get(i);
 
+            int previousBalance = -1;
+            if (i + 1 < blocks.size())
+                previousBalance = Utils.byteArrayToIntReversed(blocks.get(i + 1).getData(),
+                        10, 2);
             SuicaTrip trip = new SuicaTrip(block, previousBalance);
-            previousBalance = trip.getBalance();
 
             if (trip.getStartTimestamp() == null) {
                 continue;
             }
 
+            // We match only JR for now
+            if (trip.getConsoleTypeInt() == 0x16 && tapBlocks != null) {
+                for (matchingTap++; matchingTap < tapBlocks.size(); matchingTap++) {
+                    byte[] tapBlock = tapBlocks.get(matchingTap).getData();
+                    // Skip tap-ons
+                    if ((tapBlock[0] & 0x80) != 0 || (tapBlock[4] >> 4) != 2)
+                        continue;
+                    int station = Utils.byteArrayToInt(tapBlock, 2, 2);
+                    if (station != trip.getEndStationId())
+                        continue;
+                    int dateNum = Utils.byteArrayToInt(tapBlock, 6, 2);
+                    if (dateNum != trip.getDateRaw())
+                        continue;
+                    int fare = Utils.byteArrayToIntReversed(tapBlock, 10, 2);
+                    if (fare != trip.getFareRaw())
+                        continue;
+                    trip.setEndTime(Utils.convertBCDtoInteger(tapBlock[8]),
+                            Utils.convertBCDtoInteger(tapBlock[9]));
+                    break;
+                }
+                for (matchingTap++; matchingTap < tapBlocks.size(); matchingTap++) {
+                    byte[] tapBlock = tapBlocks.get(matchingTap).getData();
+                    // Skip tap-offs
+                    if ((tapBlock[0] & 0x80) == 0 || (tapBlock[4] >> 4) != 1)
+                        continue;
+                    int station = Utils.byteArrayToInt(tapBlock, 2, 2);
+                    if (station != trip.getStartStationId())
+                        continue;
+                    int dateNum = Utils.byteArrayToInt(tapBlock, 6, 2);
+                    if (dateNum != trip.getDateRaw())
+                        continue;
+                    trip.setStartTime(Utils.convertBCDtoInteger(tapBlock[8]),
+                            Utils.convertBCDtoInteger(tapBlock[9]));
+                    break;
+                }
+            }
+
             trips.add(trip);
         }
-
-        // Return trips in descending order.
-        Collections.reverse(trips);
 
         mTrips = trips.toArray(new SuicaTrip[trips.size()]);
     }

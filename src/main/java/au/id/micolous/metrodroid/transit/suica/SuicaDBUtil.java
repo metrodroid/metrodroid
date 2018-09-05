@@ -18,8 +18,10 @@
  */
 package au.id.micolous.metrodroid.transit.suica;
 
+import au.id.micolous.farebot.R;
 import au.id.micolous.metrodroid.transit.Station;
 import au.id.micolous.metrodroid.util.StationTableReader;
+import au.id.micolous.metrodroid.util.Utils;
 
 /**
  * Helpers for accessing Suica-related stop databases.
@@ -45,7 +47,11 @@ final class SuicaDBUtil {
         int stationId = (lineCode << 8) + stationCode;
         if (stationId == 0) return null;
 
-        return StationTableReader.getStationNoFallback(SUICA_BUS_STR, stationId);
+        return StationTableReader.getStation(SUICA_BUS_STR, stationId,
+                Utils.localizeString(R.string.suica_bus_area_line_stop,
+                        "0x" + Integer.toHexString(regionCode),
+                        "0x" + Integer.toHexString(lineCode),
+                        "0x" + Integer.toHexString(stationCode)));
     }
 
     /**
@@ -65,6 +71,9 @@ final class SuicaDBUtil {
         int stationId = (areaCode << 16) + (lineCode << 8) + stationCode;
         if (stationId == 0) return null;
 
-        return StationTableReader.getStationNoFallback(SUICA_RAIL_STR, stationId);
+        return StationTableReader.getStation(SUICA_RAIL_STR, stationId,
+                Utils.localizeString(R.string.suica_line_station,
+                        "0x" + Integer.toHexString(lineCode),
+                        "0x" + Integer.toHexString(stationCode)));
     }
 }
