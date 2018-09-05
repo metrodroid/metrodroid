@@ -179,7 +179,7 @@ public class SuicaTrip extends Trip {
     }
 
     @Override
-    public String getAgencyName() {
+    public String getAgencyName(boolean isShort) {
         return (mStartStation != null) ? mStartStation.getCompanyName() : null;
     }
 

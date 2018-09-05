@@ -63,13 +63,8 @@ public class EZLinkTrip extends Trip {
     }
 
     @Override
-    public String getAgencyName() {
-        return getAgencyName(mTransaction.getType(), mCardName, false);
-    }
-
-    @Override
-    public String getShortAgencyName() {
-        return getAgencyName(mTransaction.getType(), mCardName, true);
+    public String getAgencyName(boolean isShort) {
+        return getAgencyName(mTransaction.getType(), mCardName, isShort);
     }
 
     @Override

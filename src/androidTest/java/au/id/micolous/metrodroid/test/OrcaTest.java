@@ -95,8 +95,8 @@ public class OrcaTest extends AndroidTestCase {
 
         Trip []trips = o.getTrips();
         assertNotNull(trips);
-        assertEquals("Community Transit", trips[0].getAgencyName());
-        assertEquals("CT", trips[0].getShortAgencyName());
+        assertEquals("Community Transit", trips[0].getAgencyName(false));
+        assertEquals("CT", trips[0].getAgencyName(true));
         assertEquals((1514843334L + 256) * 1000, trips[0].getStartTimestamp().getTimeInMillis());
         assertTrue(trips[0].getFare().equals(TransitCurrency.USD(534)));
         assertNull(trips[0].getRouteName());
@@ -106,8 +106,8 @@ public class OrcaTest extends AndroidTestCase {
         assertNull(trips[0].getEndStation());
         assertEquals("Coach #30246", trips[0].getStartStation().getStationName());
 
-        assertEquals("Unknown (0xf)", trips[1].getAgencyName());
-        assertEquals("Unknown (0xf)", trips[1].getShortAgencyName());
+        assertEquals("Unknown (0xf)", trips[1].getAgencyName(false));
+        assertEquals("Unknown (0xf)", trips[1].getAgencyName(true));
         assertEquals(1514843334L * 1000, trips[1].getStartTimestamp().getTimeInMillis());
         assertTrue(trips[1].getFare().equals(TransitCurrency.USD(289)));
         assertNull(trips[1].getRouteName());
@@ -117,8 +117,8 @@ public class OrcaTest extends AndroidTestCase {
         assertNull(trips[1].getEndStation());
         assertEquals("Coach #30262", trips[1].getStartStation().getStationName());
 
-        assertEquals("Sound Transit", trips[2].getAgencyName());
-        assertEquals("ST", trips[2].getShortAgencyName());
+        assertEquals("Sound Transit", trips[2].getAgencyName(false));
+        assertEquals("ST", trips[2].getAgencyName(true));
         assertEquals((1514843334L-256) * 1000, trips[2].getStartTimestamp().getTimeInMillis());
         assertTrue(trips[2].getFare().equals(TransitCurrency.USD(179)));
         assertEquals("Link Light Rail", trips[2].getRouteName());
@@ -131,8 +131,8 @@ public class OrcaTest extends AndroidTestCase {
         assertEquals(-122.327354, Float.parseFloat(trips[2].getStartStation().getLongitude()), 0.00001);
         assertNull(trips[2].getEndStation());
 
-        assertEquals("Sound Transit", trips[3].getAgencyName());
-        assertEquals("ST", trips[3].getShortAgencyName());
+        assertEquals("Sound Transit", trips[3].getAgencyName(false));
+        assertEquals("ST", trips[3].getAgencyName(true));
         assertEquals((1514843334L-512) * 1000, trips[3].getStartTimestamp().getTimeInMillis());
         assertTrue(trips[3].getFare().equals(TransitCurrency.USD(178)));
         assertEquals("Sounder Train", trips[3].getRouteName());
@@ -145,8 +145,8 @@ public class OrcaTest extends AndroidTestCase {
         assertEquals(-122.330161, Float.parseFloat(trips[3].getStartStation().getLongitude()), 0.00001);
         assertNull(trips[3].getEndStation());
 
-        assertEquals("Washington State Ferries", trips[4].getAgencyName());
-        assertEquals("WSF", trips[4].getShortAgencyName());
+        assertEquals("Washington State Ferries", trips[4].getAgencyName(false));
+        assertEquals("WSF", trips[4].getAgencyName(true));
         assertEquals((1514843334L-768) * 1000, trips[4].getStartTimestamp().getTimeInMillis());
         assertTrue(trips[4].getFare().equals(TransitCurrency.USD(177)));
         assertNull(trips[4].getRouteName());

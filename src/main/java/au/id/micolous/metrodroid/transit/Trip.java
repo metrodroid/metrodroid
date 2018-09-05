@@ -238,17 +238,11 @@ public abstract class Trip implements Parcelable {
      * If this is not known (or there is only one agency for the card), then return null.
      *
      * By default, this returns null.
+     *
+     * When isShort is true it means to return short name for trip list where space is limited.
      */
-    public String getAgencyName() {
+    public String getAgencyName(boolean isShort) {
         return null;
-    }
-
-    /**
-     * Short name of the agency for the trip. This is used in the travel history, where there is
-     * limited space for agency names. By default, this will be the same as getAgencyName.
-     */
-    public String getShortAgencyName() {
-        return getAgencyName();
     }
 
     /**

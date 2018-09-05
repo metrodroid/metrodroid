@@ -89,8 +89,8 @@ public class ClipperTest extends AndroidTestCase {
 
         Trip []trips = o.getTrips();
         assertNotNull(trips);
-        assertEquals("Whole Foods", trips[1].getAgencyName());
-        assertEquals("Whole Foods", trips[1].getShortAgencyName());
+        assertEquals("Whole Foods", trips[1].getAgencyName(false));
+        assertEquals("Whole Foods", trips[1].getAgencyName(true));
         assertEquals(1520009600000L, trips[1].getStartTimestamp().getTimeInMillis());
         assertTrue(trips[1].getFare().equals(TransitCurrency.USD(-5000)));
         assertNull(trips[1].getRouteName());
@@ -100,8 +100,8 @@ public class ClipperTest extends AndroidTestCase {
         assertNull(trips[1].getEndStation());
         assertEquals("Machine ID 78123456", trips[1].getStartStation().getStationName());
 
-        assertEquals("Bay Area Rapid Transit", trips[0].getAgencyName());
-        assertEquals("BART", trips[0].getShortAgencyName());
+        assertEquals("Bay Area Rapid Transit", trips[0].getAgencyName(false));
+        assertEquals("BART", trips[0].getAgencyName(true));
         assertEquals(1521320320000L, trips[0].getStartTimestamp().getTimeInMillis());
         assertTrue(trips[0].getFare().equals(TransitCurrency.USD(630)));
         assertNull(trips[0].getRouteName());

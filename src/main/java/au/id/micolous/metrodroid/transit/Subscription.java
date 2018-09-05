@@ -60,9 +60,7 @@ public abstract class Subscription implements Parcelable {
      */
     public abstract Calendar getValidTo();
 
-    public abstract String getAgencyName();
-
-    public abstract String getShortAgencyName();
+    public abstract String getAgencyName(boolean isShort);
 
     public abstract int getMachineId();
 

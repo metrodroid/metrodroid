@@ -137,7 +137,8 @@ public class KMTTrip extends Trip {
         return TransitCurrency.IDR(mTransactionAmount);
     }
 
-    public String getAgencyName() {
+    @Override
+    public String getAgencyName(boolean isShort) {
         return Utils.localizeString(R.string.kmt_agency);
     }
 

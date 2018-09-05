@@ -65,13 +65,8 @@ public class MergedOrcaTrip extends Trip {
     }
 
     @Override
-    public String getAgencyName() {
-        return mStartTrip.getAgencyName();
-    }
-
-    @Override
-    public String getShortAgencyName() {
-        return mStartTrip.getShortAgencyName();
+    public String getAgencyName(boolean isShort) {
+        return mStartTrip.getAgencyName(isShort);
     }
 
     @Override

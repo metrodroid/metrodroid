@@ -126,7 +126,7 @@ class RavKavTrip extends Trip {
     }
 
     @Override
-    public String getAgencyName() {
+    public String getAgencyName(boolean isShort) {
         return mAgencyName;
     }
 

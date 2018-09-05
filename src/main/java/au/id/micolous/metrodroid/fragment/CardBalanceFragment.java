@@ -120,7 +120,7 @@ public class CardBalanceFragment extends ListFragment {
             }
 
             TextView companyView = view.findViewById(R.id.company);
-            String agencyName = subscription.getShortAgencyName();
+            String agencyName = subscription.getAgencyName(true);
             if (agencyName != null) {
                 companyView.setText(agencyName);
                 companyView.setVisibility(View.VISIBLE);

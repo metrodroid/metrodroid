@@ -75,13 +75,8 @@ public class ClipperTrip extends Trip {
     }
 
     @Override
-    public String getAgencyName() {
-        return ClipperData.getAgencyName(mAgency);
-    }
-
-    @Override
-    public String getShortAgencyName() {
-        return ClipperData.getShortAgencyName(mAgency);
+    public String getAgencyName(boolean isShort) {
+        return ClipperData.getAgencyName(mAgency, isShort);
     }
 
     @Override

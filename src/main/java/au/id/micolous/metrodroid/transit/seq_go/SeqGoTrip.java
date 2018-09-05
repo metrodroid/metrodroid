@@ -78,7 +78,7 @@ public class SeqGoTrip extends NextfareTrip {
     }
 
     @Override
-    public String getAgencyName() {
+    public String getAgencyName(boolean isShort) {
         switch (mMode) {
             case FERRY:
                 return "Transdev Brisbane Ferries";

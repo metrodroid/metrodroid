@@ -83,13 +83,8 @@ class OpusSubscription extends Subscription {
     }
 
     @Override
-    public String getAgencyName() {
-        return StationTableReader.getOperatorName(OpusTrip.OPUS_STR, mAgency, false);
-    }
-
-    @Override
-    public String getShortAgencyName() {
-        return StationTableReader.getOperatorName(OpusTrip.OPUS_STR, mAgency, true);
+    public String getAgencyName(boolean isShort) {
+        return StationTableReader.getOperatorName(OpusTrip.OPUS_STR, mAgency, isShort);
     }
 
     @Override
