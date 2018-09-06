@@ -94,7 +94,7 @@ public class KMTTransitData extends TransitData {
         List<FelicaBlock> blocks = serviceHistory.getBlocks();
         for (int i = 0; i < blocks.size(); i++) {
             FelicaBlock block = blocks.get(i);
-            if (block.getData()[0] != 0) {
+            if (block.getData()[0] != 0 && Utils.byteArrayToInt(block.getData(), 8, 2) != 0) {
                 KMTTrip trip = new KMTTrip(block);
                 trips.add(trip);
             }
