@@ -576,6 +576,7 @@
     <string name="location_vancouver">Vancouver, BC, Canada</string>
     <!-- Translators: This refers to the province of Québec (not Québec City) -->
     <string name="location_quebec">Québec, Canada</string>
+    <string name="location_boston">Boston, USA</string>
 
     <!--
       Translators:
@@ -990,6 +991,8 @@
     May be transliterated -->
     <string name="card_name_tmoney">T-Money</string>
     <string name="tmoney_date">T-money date</string>
+
+    <string name="charlie_2nd_card_number">Second number</string>
 
     <string name="no_data_in_clipboard">No data in clipboard.</string>
     <string name="app_version">Version: %s</string>

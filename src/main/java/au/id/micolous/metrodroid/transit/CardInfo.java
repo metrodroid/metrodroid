@@ -35,6 +35,7 @@ import java.util.Locale;
 
 import au.id.micolous.metrodroid.card.CardType;
 import au.id.micolous.metrodroid.transit.bilhete_unico.BilheteUnicoSPTransitData;
+import au.id.micolous.metrodroid.transit.charlie.CharlieCardTransitData;
 import au.id.micolous.metrodroid.transit.chc_metrocard.ChcMetrocardTransitData;
 import au.id.micolous.metrodroid.transit.clipper.ClipperTransitData;
 import au.id.micolous.metrodroid.transit.edy.EdyTransitData;
@@ -80,6 +81,7 @@ public class CardInfo {
             SuicaTransitData.ICOCA_CARD_INFO,
             KMTTransitData.CARD_INFO,
             ManlyFastFerryTransitData.CARD_INFO,
+            CharlieCardTransitData.CARD_INFO,
             ChcMetrocardTransitData.CARD_INFO, // Metrocard
             MykiTransitData.CARD_INFO,
             SmartRiderTransitData.MYWAY_CARD_INFO,

@@ -55,6 +55,7 @@ import au.id.micolous.metrodroid.key.ClassicSectorKey;
 import au.id.micolous.metrodroid.transit.TransitData;
 import au.id.micolous.metrodroid.transit.TransitIdentity;
 import au.id.micolous.metrodroid.transit.bilhete_unico.BilheteUnicoSPTransitData;
+import au.id.micolous.metrodroid.transit.charlie.CharlieCardTransitData;
 import au.id.micolous.metrodroid.transit.chc_metrocard.ChcMetrocardTransitData;
 import au.id.micolous.metrodroid.transit.erg.ErgTransitData;
 import au.id.micolous.metrodroid.transit.lax_tap.LaxTapTransitData;
@@ -397,6 +398,8 @@ public class ClassicCard extends Card {
             return TroikaTransitData.parseTransitIdentity(this);
         } else if (PodorozhnikTransitData.check(this)) {
             return PodorozhnikTransitData.parseTransitIdentity(this);
+        } else if (CharlieCardTransitData.check(this)) {
+            return CharlieCardTransitData.parseTransitIdentity(this);
         } else if (UnauthorizedClassicTransitData.check(this)) {
             // This check must be THIRD TO LAST.
             //
@@ -460,6 +463,8 @@ public class ClassicCard extends Card {
             return new TroikaTransitData(this);
         } else if (PodorozhnikTransitData.check(this)) {
             return new PodorozhnikTransitData(this);
+        } else if (CharlieCardTransitData.check(this)) {
+            return new CharlieCardTransitData(this);
         } else if (UnauthorizedClassicTransitData.check(this)) {
             // This check must be THIRD TO LAST.
             //
