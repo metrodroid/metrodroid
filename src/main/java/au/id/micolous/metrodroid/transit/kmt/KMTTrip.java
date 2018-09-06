@@ -132,7 +132,7 @@ public class KMTTrip extends Trip {
     @Override
     public TransitCurrency getFare() {
         if (mProcessType != 1) {
-            return TransitCurrency.IDR(-mTransactionAmount);
+            return TransitCurrency.IDR(mTransactionAmount).negate();
         }
         return TransitCurrency.IDR(mTransactionAmount);
     }
