@@ -13,12 +13,16 @@ env:
     - ANDROID_API=27
     - ANDROID_BUILD_TOOLS=27.0.3
 
-
 android:
   components:
+# Tools specified twice to support newested SDK tools
+# https://docs.travis-ci.com/user/languages/android/#installing-a-newer-sdk-platform-tools-revision
     - tools
-    - android-$EMULATOR_API
     - platform-tools
+    - tools
+
+# Other dependencies:
+    - android-$EMULATOR_API
     - build-tools-$ANDROID_BUILD_TOOLS
     - android-$ANDROID_API
     - extra-android-support
