@@ -15,7 +15,7 @@ env:
 
 android:
   components:
-# Tools specified twice to support newested SDK tools
+# Tools specified twice to support newest SDK tools
 # https://docs.travis-ci.com/user/languages/android/#installing-a-newer-sdk-platform-tools-revision
     - tools
     - platform-tools
