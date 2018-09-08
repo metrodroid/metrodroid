@@ -26,6 +26,17 @@ android:
     - extra-google-m2repository
     - sys-img-armeabi-v7a-android-$EMULATOR_API
 
+# Android caching
+before_cache:
+  - rm -f  $HOME/.gradle/caches/modules-2/modules-2.lock
+  - rm -fr $HOME/.gradle/caches/*/plugin-resolution/
+
+cache:
+  directories:
+    - $HOME/.gradle/caches/
+    - $HOME/.gradle/wrapper/
+    - $HOME/.android/build-cache
+
 before_script:
   - android list targets
   - echo y | android update sdk -a --no-ui --filter android-$EMULATOR_API
