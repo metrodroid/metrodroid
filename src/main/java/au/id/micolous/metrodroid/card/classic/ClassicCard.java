@@ -39,6 +39,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
+import java.util.Collections;
 import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.Locale;
@@ -46,10 +47,8 @@ import java.util.Locale;
 import au.id.micolous.farebot.R;
 import au.id.micolous.metrodroid.MetrodroidApplication;
 import au.id.micolous.metrodroid.card.Card;
-import au.id.micolous.metrodroid.card.CardRawDataFragmentClass;
 import au.id.micolous.metrodroid.card.CardType;
 import au.id.micolous.metrodroid.card.TagReaderFeedbackInterface;
-import au.id.micolous.metrodroid.fragment.ClassicCardRawDataFragment;
 import au.id.micolous.metrodroid.key.CardKeys;
 import au.id.micolous.metrodroid.key.ClassicCardKeys;
 import au.id.micolous.metrodroid.key.ClassicSectorKey;
@@ -69,10 +68,11 @@ import au.id.micolous.metrodroid.transit.troika.TroikaHybridTransitData;
 import au.id.micolous.metrodroid.transit.troika.TroikaTransitData;
 import au.id.micolous.metrodroid.transit.unknown.BlankClassicTransitData;
 import au.id.micolous.metrodroid.transit.unknown.UnauthorizedClassicTransitData;
+import au.id.micolous.metrodroid.ui.ListItem;
+import au.id.micolous.metrodroid.ui.ListItemRecursive;
 import au.id.micolous.metrodroid.util.Utils;
 
 @Root(name = "card")
-@CardRawDataFragmentClass(ClassicCardRawDataFragment.class)
 public class ClassicCard extends Card {
     public static final byte[] PREAMBLE_KEY = {(byte) 0x00, (byte) 0x00, (byte) 0x00, (byte) 0x00, (byte) 0x00,
             (byte) 0x00};
@@ -493,5 +493,67 @@ public class ClassicCard extends Card {
 
     public ClassicSector getSector(int index) throws IndexOutOfBoundsException {
         return mSectors.get(index);
+    }
+
+    @Override
+    public List<ListItem> getManufacturingInfo() {
+        ClassicSector sec0 = getSector(0);
+        if (sec0 instanceof UnauthorizedClassicSector || sec0 instanceof InvalidClassicSector)
+            return null;
+
+        byte[] data = sec0.getBlock(0).getData();
+
+        List<ListItem> items = new ArrayList<>();
+        items.add(new ListItem("Week of Production", Integer.toHexString(data[14])));
+        items.add(new ListItem("Year of Production", Integer.toHexString(data[15])));
+        return items;
+    }
+
+    @Override
+    public List<ListItem> getRawData() {
+        List<ListItem> li = new ArrayList<>();
+
+        for (ClassicSector sector : mSectors) {
+            String sectorIndexString = Integer.toHexString(sector.getIndex());
+            String key = null;
+            if (sector.getKey() != null) {
+                int res = R.string.classic_key_format;
+                if (ClassicSectorKey.TYPE_KEYB.equals(sector.getKeyType()))
+                    res = R.string.classic_key_format_b;
+                if (ClassicSectorKey.TYPE_KEYA.equals(sector.getKeyType()))
+                    res = R.string.classic_key_format_a;
+                key = Utils.localizeString(res, Utils.getHexString(sector.getKey()));
+            }
+
+            if (sector instanceof UnauthorizedClassicSector) {
+                li.add(new ListItemRecursive(Utils.localizeString(R.string.unauthorized_sector_title_format, sectorIndexString),
+                        key, null));
+                continue;
+            }
+            if (sector instanceof InvalidClassicSector) {
+                li.add(new ListItemRecursive(Utils.localizeString(R.string.invalid_sector_title_format, sectorIndexString),
+                        key, null));
+                continue;
+            }
+            List<ListItem> bli = new ArrayList<>();
+            for (ClassicBlock block : sector.getBlocks()) {
+                bli.add(new ListItemRecursive(
+                        Utils.localizeString(R.string.block_title_format,
+                                Integer.toString(block.getIndex())),
+                        block.getType(),
+                        Collections.singletonList(new ListItem(null, Utils.getHexString(block.getData())))
+                ));
+            }
+            if (sector.isEmpty()) {
+                li.add(new ListItemRecursive(
+                        Utils.localizeString(R.string.sector_title_format_empty, sectorIndexString),
+                        key, bli));
+            } else {
+                li.add(new ListItemRecursive(
+                        Utils.localizeString(R.string.sector_title_format, sectorIndexString),
+                        key, bli));
+            }
+        }
+        return li;
     }
 }
