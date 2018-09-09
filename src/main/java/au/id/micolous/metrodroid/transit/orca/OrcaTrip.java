@@ -92,13 +92,8 @@ public class OrcaTrip extends Trip {
     }
 
     @Override
-    public String getAgencyName() {
-        return StationTableReader.getOperatorName(ORCA_STR, mAgency, false);
-    }
-
-    @Override
-    public String getShortAgencyName() {
-        return StationTableReader.getOperatorName(ORCA_STR, mAgency, true);
+    public String getAgencyName(boolean isShort) {
+        return StationTableReader.getOperatorName(ORCA_STR, mAgency, isShort);
     }
 
     @Override

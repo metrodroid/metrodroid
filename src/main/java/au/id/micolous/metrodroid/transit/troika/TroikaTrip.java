@@ -91,7 +91,7 @@ class TroikaTrip extends Trip {
     };
 
     @Override
-    public String getAgencyName() {
+    public String getAgencyName(boolean isShort) {
         if (mTransportType == null)
             return mRawTransport;
         switch (mTransportType) {

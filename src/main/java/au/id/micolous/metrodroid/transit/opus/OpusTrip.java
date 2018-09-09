@@ -68,8 +68,8 @@ class OpusTrip extends Trip {
     }
 
     @Override
-    public String getAgencyName() {
-        return StationTableReader.getOperatorName(OPUS_STR, mAgency, false);
+    public String getAgencyName(boolean isShort) {
+        return StationTableReader.getOperatorName(OPUS_STR, mAgency, isShort);
     }
 
     @Override

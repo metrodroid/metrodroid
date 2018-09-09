@@ -51,7 +51,7 @@ public class SmartRiderTrip extends Trip {
     }
 
     @Override
-    public String getAgencyName() {
+    public String getAgencyName(boolean isShort) {
         switch (mCardType) {
             case MYWAY:
                 return "ACTION";
