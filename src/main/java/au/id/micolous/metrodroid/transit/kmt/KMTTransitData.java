@@ -172,8 +172,7 @@ public class KMTTransitData extends TransitData {
     public List<ListItem> getInfo() {
         ArrayList<ListItem> items = new ArrayList<>();
         items.add(new HeaderListItem(R.string.kmt_other_data));
-        items.add(new ListItem(R.string.kmt_trx_count, String.format("%d", mTransactionCounter)));
-        items.add(new ListItem(R.string.kmt_balance, TransitCurrency.IDR(mCurrentBalance).formatCurrencyString(true)));
+        items.add(new ListItem(R.string.transaction_counter, Integer.toString(mTransactionCounter)));
         items.add(new ListItem(R.string.kmt_last_trx_amount, TransitCurrency.IDR(mLastTransAmount).formatCurrencyString(true)));
         return items;
     }

@@ -38,8 +38,7 @@
     <string name="scanned_at_format">Gescand op %1$s op %2$s</string>
     <string name="supported_cards">Ondersteunde kaarten</string>
     <string name="pass_or_transfer">Pas/Overstap</string>
-    <string name="transaction_sequence">#</string>
-    <string name="fully_locked_desc">Geen enkel onderdeel van deze kaart is leesbaar zonder sleutel en je hebt geen geldige geïnstalleerde sleutels voor deze kaart. 
+    <string name="fully_locked_desc">Geen enkel onderdeel van deze kaart is leesbaar zonder sleutel en je hebt geen geldige geïnstalleerde sleutels voor deze kaart.
 \n 
 \nAls de kaart momenteel ondersteund wordt door Metrodroid, dan zal hij gaan werken zodra je de benodigde sleutels installeert. Meer informatie over het verkrijgen van sleutels is te vinden in de documentatie. 
 \n 

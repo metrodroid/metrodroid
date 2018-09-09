@@ -243,7 +243,7 @@ public class OpalTransitData extends TransitData {
 
         items.add(new HeaderListItem(R.string.last_transaction));
         if (!MetrodroidApplication.hideCardNumbers()) {
-            items.add(new ListItem(R.string.transaction_sequence, Integer.toString(getLastTransactionNumber())));
+            items.add(new ListItem(R.string.transaction_counter, Integer.toString(getLastTransactionNumber())));
         }
         Calendar cLastTransactionTime = TripObfuscator.maybeObfuscateTS(getLastTransactionTime());
         items.add(new ListItem(R.string.date, Utils.longDateFormat(cLastTransactionTime)));
