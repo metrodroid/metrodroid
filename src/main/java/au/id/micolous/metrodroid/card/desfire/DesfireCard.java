@@ -309,7 +309,8 @@ public class DesfireCard extends Card {
             for (DesfireFile file : app.getFiles()) {
                 if ((file instanceof InvalidDesfireFile) && !(file instanceof UnauthorizedDesfireFile)) {
                     ali.add(new ListItem(Utils.localizeString(R.string.invalid_file_title_format,
-                            "0x" + Integer.toHexString(file.getId())), null));
+                            "0x" + Integer.toHexString(file.getId()),
+                            ((InvalidDesfireFile) file).getErrorMessage()), null));
                     continue;
                 }
 
