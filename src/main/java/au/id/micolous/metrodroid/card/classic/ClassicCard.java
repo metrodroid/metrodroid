@@ -67,6 +67,7 @@ import au.id.micolous.metrodroid.transit.seq_go.SeqGoTransitData;
 import au.id.micolous.metrodroid.transit.smartrider.SmartRiderTransitData;
 import au.id.micolous.metrodroid.transit.troika.TroikaHybridTransitData;
 import au.id.micolous.metrodroid.transit.troika.TroikaTransitData;
+import au.id.micolous.metrodroid.transit.unknown.BlankClassicTransitData;
 import au.id.micolous.metrodroid.transit.unknown.UnauthorizedClassicTransitData;
 import au.id.micolous.metrodroid.util.Utils;
 
@@ -397,10 +398,15 @@ public class ClassicCard extends Card {
         } else if (PodorozhnikTransitData.check(this)) {
             return PodorozhnikTransitData.parseTransitIdentity(this);
         } else if (UnauthorizedClassicTransitData.check(this)) {
-            // This check must be SECOND TO LAST.
+            // This check must be THIRD TO LAST.
             //
             // This is to throw up a warning whenever there is a card with all locked sectors
             return UnauthorizedClassicTransitData.parseTransitIdentity(this);
+        } else if (BlankClassicTransitData.check(this)) {
+            // This check must be SECOND TO LAST.
+            //
+            // This is to throw up a warning whenever there is a card with all empty sectors
+            return BlankClassicTransitData.parseTransitIdentity(this);
         } else {
             // This check must be LAST.
             //
@@ -455,10 +461,15 @@ public class ClassicCard extends Card {
         } else if (PodorozhnikTransitData.check(this)) {
             return new PodorozhnikTransitData(this);
         } else if (UnauthorizedClassicTransitData.check(this)) {
-            // This check must be SECOND TO LAST.
+            // This check must be THIRD TO LAST.
             //
             // This is to throw up a warning whenever there is a card with all locked sectors
             return new UnauthorizedClassicTransitData();
+        } else if (BlankClassicTransitData.check(this)) {
+            // This check must be SECOND TO LAST.
+            //
+            // This is to throw up a warning whenever there is a card with all empty sectors
+            return new BlankClassicTransitData();
         } else {
             // This check must be LAST.
             //

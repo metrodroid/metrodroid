@@ -27,13 +27,14 @@ import au.id.micolous.farebot.R;
 import au.id.micolous.metrodroid.card.ultralight.UltralightCard;
 import au.id.micolous.metrodroid.card.ultralight.UltralightPage;
 import au.id.micolous.metrodroid.card.ultralight.UnauthorizedUltralightPage;
+import au.id.micolous.metrodroid.transit.TransitData;
 import au.id.micolous.metrodroid.transit.TransitIdentity;
 import au.id.micolous.metrodroid.util.Utils;
 
 /**
  * Handle MIFARE Ultralight with no non-default data
  */
-public class BlankUltralightTransitData extends UnauthorizedTransitData {
+public class BlankUltralightTransitData extends TransitData {
     public static final Parcelable.Creator<BlankUltralightTransitData> CREATOR = new Parcelable.Creator<BlankUltralightTransitData>() {
         public BlankUltralightTransitData createFromParcel(Parcel parcel) {
             return new BlankUltralightTransitData(parcel);
@@ -149,6 +150,11 @@ public class BlankUltralightTransitData extends UnauthorizedTransitData {
 
     public static TransitIdentity parseTransitIdentity(UltralightCard card) {
         return new TransitIdentity(Utils.localizeString(R.string.blank_mfu_card), null);
+    }
+
+    @Override
+    public String getSerialNumber() {
+        return null;
     }
 
     @Override

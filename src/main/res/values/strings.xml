@@ -973,6 +973,7 @@
     <string name="led_shared_taxi">Saint Petersburg Shared Taxi</string>
 
     <string name="blank_mfu_card">Blank MIFARE Ultralight card</string>
+    <string name="blank_mfc_card">Blank Mifare Classic card</string>
     <string name="fully_blank_desc">
         This card is completely blank as far as we can tell. It is formatted
         but without any data written to it. It still has a serial number by which it can be
