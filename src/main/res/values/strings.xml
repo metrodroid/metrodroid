@@ -855,7 +855,7 @@
     <string name="card_note_seqgo">Does not support Go Access, Explore or SEEQ cards.</string>
 
     <string name="suica_bus_area_line_stop">Bus Area %s Line %s Stop %s</string>
-    <string name="suica_line_station">Line %s Station %s</string>
+    <string name="suica_area_line_station">Area %s Line %s Station %s</string>
 
     <!--
         Myki (Victoria, AU)

@@ -24,7 +24,13 @@ package au.id.micolous.metrodroid.transit.suica;
 
 import android.os.Parcel;
 import android.support.annotation.Nullable;
-import android.util.Log;
+import android.support.v4.util.ArraySet;
+
+import org.apache.commons.lang3.ArrayUtils;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.TimeZone;
 
 import au.id.micolous.farebot.R;
 import au.id.micolous.metrodroid.card.CardType;
@@ -37,12 +43,6 @@ import au.id.micolous.metrodroid.transit.TransitData;
 import au.id.micolous.metrodroid.transit.TransitIdentity;
 import au.id.micolous.metrodroid.transit.Trip;
 import au.id.micolous.metrodroid.util.Utils;
-
-import org.apache.commons.lang3.ArrayUtils;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.TimeZone;
 
 public class SuicaTransitData extends TransitData {
     public static final Creator<SuicaTransitData> CREATOR = new Creator<SuicaTransitData>() {
@@ -82,6 +82,7 @@ public class SuicaTransitData extends TransitData {
     public static final int SERVICE_SUICA_HISTORY = 0x090f;
 
     static final TimeZone TIME_ZONE = TimeZone.getTimeZone("Asia/Tokyo");
+    static final String TAG = SuicaTransitData.class.getSimpleName();
 
     private SuicaTrip[] mTrips;
 
@@ -94,8 +95,7 @@ public class SuicaTransitData extends TransitData {
         FelicaService service = card.getSystem(SYSTEMCODE_SUICA).getService(SERVICE_SUICA_HISTORY);
         FelicaService tapService = card.getSystem(SYSTEMCODE_SUICA).getService(SERVICE_SUICA_INOUT);
 
-        int matchingTap = -1;
-
+        ArraySet<Integer> matchedTaps = new ArraySet<>();
         List<SuicaTrip> trips = new ArrayList<>();
 
         // Read blocks oldest-to-newest to calculate fare.
@@ -114,45 +114,109 @@ public class SuicaTransitData extends TransitData {
                 continue;
             }
 
-            // We match only JR for now
-            if (trip.getConsoleTypeInt() == 0x16 && tapBlocks != null) {
-                for (matchingTap++; matchingTap < tapBlocks.size(); matchingTap++) {
+            /*
+            Log.d(TAG, String.format(Locale.ENGLISH,
+                    "On %s, consoletype = %s, station = %s -> %s",
+                    Utils.isoDateFormat(trip.getStartTimestamp()),
+                    Integer.toHexString(trip.getConsoleTypeInt()),
+                    Integer.toHexString(trip.getStartStationId()),
+                    Integer.toHexString(trip.getEndStationId())));
+            */
+
+            if (tapBlocks != null && trip.getConsoleTypeInt() == 0x16) {
+                for (int matchingTap = 0; matchingTap < tapBlocks.size(); matchingTap++) {
+                    if (matchedTaps.contains(matchingTap)) continue;
                     byte[] tapBlock = tapBlocks.get(matchingTap).getData();
+
+                    /*
+                    Log.d(TAG, String.format(Locale.ENGLISH,
+                            "tap off block %d; station %s (%s), datenum %s (%s), fare %s (%s), %d %d",
+                            matchingTap,
+                            station, trip.getEndStationId(),
+                            dateNum, trip.getDateRaw(),
+                            fare, trip.getFareRaw(),
+                            (tapBlock[0] & 0x80), (tapBlock[4] >> 4)
+                            ));
+                    Log.d(TAG, String.format("time is %02d:%02d", Utils.convertBCDtoInteger(tapBlock[8]),
+                            Utils.convertBCDtoInteger(tapBlock[9])));
+                    */
+
                     // Skip tap-ons
-                    if ((tapBlock[0] & 0x80) != 0 || (tapBlock[4] >> 4) != 2)
+                    // Don't check (tapBlock[4] >> 4) != 2, as this is only applicable on JR East.
+                    // JR West and JR East use the same Area Code.
+                    if ((tapBlock[0] & 0x80) != 0)
                         continue;
+
                     int station = Utils.byteArrayToInt(tapBlock, 2, 2);
                     if (station != trip.getEndStationId())
                         continue;
+
                     int dateNum = Utils.byteArrayToInt(tapBlock, 6, 2);
                     if (dateNum != trip.getDateRaw())
                         continue;
+
                     int fare = Utils.byteArrayToIntReversed(tapBlock, 10, 2);
                     if (fare != trip.getFareRaw())
                         continue;
+
                     trip.setEndTime(Utils.convertBCDtoInteger(tapBlock[8]),
                             Utils.convertBCDtoInteger(tapBlock[9]));
+                    matchedTaps.add(matchingTap);
                     break;
                 }
-                for (matchingTap++; matchingTap < tapBlocks.size(); matchingTap++) {
+                for (int matchingTap = 0; matchingTap < tapBlocks.size(); matchingTap++) {
+                    if (matchedTaps.contains(matchingTap)) continue;
                     byte[] tapBlock = tapBlocks.get(matchingTap).getData();
+
+                    /*
+                    int fare = Utils.byteArrayToIntReversed(tapBlock, 10, 2);
+                    Log.d(TAG, String.format(Locale.ENGLISH,
+                            "tap on block %d; station %s (%s), datenum %s (%s), fare %s (%s), %d %d",
+                            matchingTap,
+                            station, trip.getStartStationId(),
+                            dateNum, trip.getDateRaw(),
+                            fare, trip.getFareRaw(),
+                            (tapBlock[0] & 0x80), (tapBlock[4] >> 4)
+                    ));
+
+                    Log.d(TAG, String.format("time is %02d:%02d", Utils.convertBCDtoInteger(tapBlock[8]),
+                            Utils.convertBCDtoInteger(tapBlock[9])));
+                    */
+
                     // Skip tap-offs
-                    if ((tapBlock[0] & 0x80) == 0 || (tapBlock[4] >> 4) != 1)
+                    // Don't check (tapBlock[4] >> 4) != 1, as this is only applicable on JR East.
+                    // JR West and JR East use the same Area Code.
+                    if ((tapBlock[0] & 0x80) == 0)
                         continue;
+
                     int station = Utils.byteArrayToInt(tapBlock, 2, 2);
                     if (station != trip.getStartStationId())
                         continue;
+
                     int dateNum = Utils.byteArrayToInt(tapBlock, 6, 2);
                     if (dateNum != trip.getDateRaw())
                         continue;
+
                     trip.setStartTime(Utils.convertBCDtoInteger(tapBlock[8]),
                             Utils.convertBCDtoInteger(tapBlock[9]));
+                    matchedTaps.add(matchingTap);
                     break;
+                }
+
+                // Check if we have matched every tap we can, if so, destroy the tap list so we
+                // don't peek again.
+                if (matchedTaps.size() == tapBlocks.size()) {
+                    tapBlocks = null;
                 }
             }
 
             trips.add(trip);
         }
+
+        /*
+        Log.d(TAG, String.format(Locale.ENGLISH, "Found %d unmatched taps", tapBlocks == null ? 0 : tapBlocks.size()));
+        Log.d(TAG, String.format(Locale.ENGLISH, "Matched %d taps", matchedTaps.size()));
+        */
 
         mTrips = trips.toArray(new SuicaTrip[trips.size()]);
     }

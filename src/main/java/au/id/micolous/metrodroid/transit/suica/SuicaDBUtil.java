@@ -72,7 +72,8 @@ final class SuicaDBUtil {
         if (stationId == 0) return null;
 
         return StationTableReader.getStation(SUICA_RAIL_STR, stationId,
-                Utils.localizeString(R.string.suica_line_station,
+                Utils.localizeString(R.string.suica_area_line_station,
+                        "0x" + Integer.toHexString(regionCode),
                         "0x" + Integer.toHexString(lineCode),
                         "0x" + Integer.toHexString(stationCode)));
     }

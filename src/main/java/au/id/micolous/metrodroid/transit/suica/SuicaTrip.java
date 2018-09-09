@@ -54,6 +54,7 @@ public class SuicaTrip extends Trip {
     private final Calendar mEndTimestamp;
     private final Station mStartStation;
     private final Station mEndStation;
+    private final int mRegionCode;
     private final int mStartStationId;
     private final int mEndStationId;
     private final int mDateRaw;
@@ -92,11 +93,11 @@ public class SuicaTrip extends Trip {
 
         mDateRaw = Utils.byteArrayToInt(data, 4, 2);
         mStartTimestamp = SuicaUtil.extractDate(isProductSale, data);
-        mEndTimestamp = (Calendar) mStartTimestamp.clone();
+        mEndTimestamp = mStartTimestamp == null ? null : (Calendar)mStartTimestamp.clone();
         // Balance is little-endian
         mBalance = Utils.byteArrayToIntReversed(data, 10, 2);
 
-        int regionCode = data[15] & 0xFF;
+        mRegionCode = data[15] & 0xFF;
 
         if (previousBalance >= 0) {
             mFare = (previousBalance - mBalance);
@@ -121,16 +122,16 @@ public class SuicaTrip extends Trip {
         } else if (mConsoleType == (byte) CONSOLE_BUS) {
             int busLineCode = Utils.byteArrayToInt(data, 6, 2);
             int busStopCode = Utils.byteArrayToInt(data, 8, 2);
-            mStartStation = SuicaDBUtil.getBusStop(regionCode, busLineCode, busStopCode);
+            mStartStation = SuicaDBUtil.getBusStop(mRegionCode, busLineCode, busStopCode);
             mEndStation = null;
         } else {
             int railEntranceLineCode = data[6] & 0xFF;
             int railEntranceStationCode = data[7] & 0xFF;
             int railExitLineCode = data[8] & 0xFF;
             int railExitStationCode = data[9] & 0xFF;
-            mStartStation = SuicaDBUtil.getRailStation(regionCode, railEntranceLineCode,
+            mStartStation = SuicaDBUtil.getRailStation(mRegionCode, railEntranceLineCode,
                     railEntranceStationCode);
-            mEndStation = SuicaDBUtil.getRailStation(regionCode, railExitLineCode,
+            mEndStation = SuicaDBUtil.getRailStation(mRegionCode, railExitLineCode,
                     railExitStationCode);
         }
     }
@@ -150,6 +151,7 @@ public class SuicaTrip extends Trip {
         mHasStartTime = parcel.readInt() != 0;
         mHasEndTime = parcel.readInt() != 0;
         mDateRaw = parcel.readInt();
+        mRegionCode = parcel.readInt();
 
         if (parcel.readInt() == 1)
             mStartStation = parcel.readParcelable(Station.class.getClassLoader());
@@ -259,32 +261,12 @@ public class SuicaTrip extends Trip {
         return mIsCharge;
     }
 
-    public int getRegionCode() {
-        return mRegionCode;
-    }
-
     public int getBusLineCode() {
         return mBusLineCode;
     }
 
     public int getBusStopCode() {
         return mBusStopCode;
-    }
-
-    public int getRailEntranceLineCode() {
-        return mRailEntranceLineCode;
-    }
-
-    public int getRailEntranceStationCode() {
-        return mRailEntranceStationCode;
-    }
-
-    public int getRailExitLineCode() {
-        return mRailExitLineCode;
-    }
-
-    public int getRailExitStationCode() {
-        return mRailExitStationCode;
     }
     */
 
@@ -303,6 +285,7 @@ public class SuicaTrip extends Trip {
         parcel.writeInt(mHasStartTime ? 1 : 0);
         parcel.writeInt(mHasEndTime ? 1 : 0);
         parcel.writeInt(mDateRaw);
+        parcel.writeInt(mRegionCode);
 
         if (mStartStation != null) {
             parcel.writeInt(1);
@@ -343,6 +326,10 @@ public class SuicaTrip extends Trip {
 
     public int getFareRaw() {
         return mFare;
+    }
+
+    public int getRegionCode() {
+        return mRegionCode;
     }
 
     public void setEndTime(int hour, int min) {
