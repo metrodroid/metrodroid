@@ -98,9 +98,9 @@ public class NewShenzhenCard extends ISO7816Application {
 
         try {
             feedbackInterface.updateStatusText(Utils.localizeString(R.string.card_reading_type,
-                    CardInfo.SZT.getName()));
+                    NewShenzhenTransitData.CARD_INFO.getName()));
             feedbackInterface.updateProgressBar(0, 6);
-            feedbackInterface.showCardType(CardInfo.SZT);
+            feedbackInterface.showCardType(NewShenzhenTransitData.CARD_INFO);
 
             feedbackInterface.updateProgressBar(0, 5);
             for (int i = 0; i < 4; i++) {

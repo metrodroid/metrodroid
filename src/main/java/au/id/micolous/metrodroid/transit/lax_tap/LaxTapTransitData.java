@@ -21,8 +21,11 @@ package au.id.micolous.metrodroid.transit.lax_tap;
 import android.net.Uri;
 import android.os.Parcel;
 
+import au.id.micolous.farebot.R;
+import au.id.micolous.metrodroid.card.CardType;
 import au.id.micolous.metrodroid.card.UnauthorizedException;
 import au.id.micolous.metrodroid.card.classic.ClassicCard;
+import au.id.micolous.metrodroid.transit.CardInfo;
 import au.id.micolous.metrodroid.transit.TransitIdentity;
 import au.id.micolous.metrodroid.transit.Trip;
 import au.id.micolous.metrodroid.transit.nextfare.NextfareTransitData;
@@ -64,6 +67,16 @@ public class LaxTapTransitData extends NextfareTransitData {
     };
 
     static final TimeZone TIME_ZONE = TimeZone.getTimeZone("America/Los_Angeles");
+
+    public static final CardInfo CARD_INFO = new CardInfo.Builder()
+            .setImageId(R.drawable.laxtap_card)
+            // Using the short name (TAP) may be ambiguous
+            .setName(LaxTapTransitData.LONG_NAME)
+            .setLocation(R.string.location_los_angeles)
+            .setCardType(CardType.MifareClassic)
+            .setKeysRequired()
+            .setPreview()
+            .build();
 
     //private SeqGoTicketType mTicketType;
     private static final String TAG = "LaxTapTransitData";

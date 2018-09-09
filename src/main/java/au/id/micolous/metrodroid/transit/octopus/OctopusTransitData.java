@@ -24,6 +24,7 @@ package au.id.micolous.metrodroid.transit.octopus;
 import android.os.Parcel;
 import android.support.annotation.Nullable;
 
+import au.id.micolous.metrodroid.card.CardType;
 import au.id.micolous.metrodroid.card.felica.FelicaCard;
 import au.id.micolous.metrodroid.card.felica.FelicaService;
 import au.id.micolous.metrodroid.transit.TransitBalance;
@@ -32,6 +33,7 @@ import au.id.micolous.metrodroid.transit.CardInfo;
 import au.id.micolous.metrodroid.transit.TransitCurrency;
 import au.id.micolous.metrodroid.transit.TransitData;
 import au.id.micolous.metrodroid.transit.TransitIdentity;
+import au.id.micolous.metrodroid.transit.newshenzhen.NewShenzhenTransitData;
 import au.id.micolous.metrodroid.util.Utils;
 
 import org.apache.commons.lang3.ArrayUtils;
@@ -58,6 +60,13 @@ public class OctopusTransitData extends TransitData {
     };
     public static final int SYSTEMCODE_SZT = 0x8005;
     public static final int SYSTEMCODE_OCTOPUS = 0x8008;
+
+    public static final CardInfo CARD_INFO = new CardInfo.Builder()
+            .setImageId(R.drawable.octopus_card, R.drawable.octopus_card_alpha)
+            .setName(Utils.localizeString(R.string.card_name_octopus))
+            .setLocation(R.string.location_hong_kong)
+            .setCardType(CardType.FeliCa)
+            .build();
 
     public static final int SERVICE_OCTOPUS = 0x0117;
     public static final int SERVICE_SZT = 0x0118;
@@ -109,10 +118,10 @@ public class OctopusTransitData extends TransitData {
         // OctopusTransitData is special, because it handles two types of cards.  So we can just
         // directly say which cardInfo matches.
         if (ArrayUtils.contains(systemCodes, SYSTEMCODE_OCTOPUS))
-            return CardInfo.OCTOPUS; // also dual-mode cards.
+            return CARD_INFO; // also dual-mode cards.
 
         if (ArrayUtils.contains(systemCodes, SYSTEMCODE_SZT))
-            return CardInfo.SZT;
+            return NewShenzhenTransitData.CARD_INFO;
 
         return null;
     }

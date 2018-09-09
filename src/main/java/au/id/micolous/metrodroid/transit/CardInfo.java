@@ -33,19 +33,31 @@ import android.util.Log;
 
 import java.util.Locale;
 
-import au.id.micolous.farebot.R;
 import au.id.micolous.metrodroid.card.CardType;
+import au.id.micolous.metrodroid.transit.bilhete_unico.BilheteUnicoSPTransitData;
 import au.id.micolous.metrodroid.transit.chc_metrocard.ChcMetrocardTransitData;
+import au.id.micolous.metrodroid.transit.clipper.ClipperTransitData;
+import au.id.micolous.metrodroid.transit.edy.EdyTransitData;
+import au.id.micolous.metrodroid.transit.ezlink.EZLinkTransitData;
+import au.id.micolous.metrodroid.transit.hsl.HSLTransitData;
 import au.id.micolous.metrodroid.transit.yvr_compass.CompassUltralightTransitData;
 import au.id.micolous.metrodroid.transit.kmt.KMTTransitData;
 import au.id.micolous.metrodroid.transit.lax_tap.LaxTapTransitData;
 import au.id.micolous.metrodroid.transit.manly_fast_ferry.ManlyFastFerryTransitData;
 import au.id.micolous.metrodroid.transit.myki.MykiTransitData;
+import au.id.micolous.metrodroid.transit.newshenzhen.NewShenzhenTransitData;
+import au.id.micolous.metrodroid.transit.octopus.OctopusTransitData;
 import au.id.micolous.metrodroid.transit.opal.OpalTransitData;
 import au.id.micolous.metrodroid.transit.opus.OpusTransitData;
+import au.id.micolous.metrodroid.transit.orca.OrcaTransitData;
 import au.id.micolous.metrodroid.transit.ovc.OVChipTransitData;
+import au.id.micolous.metrodroid.transit.podorozhnik.PodorozhnikTransitData;
+import au.id.micolous.metrodroid.transit.ravkav.RavKavTransitData;
 import au.id.micolous.metrodroid.transit.seq_go.SeqGoTransitData;
 import au.id.micolous.metrodroid.transit.smartrider.SmartRiderTransitData;
+import au.id.micolous.metrodroid.transit.suica.SuicaTransitData;
+import au.id.micolous.metrodroid.transit.tmoney.TMoneyTransitData;
+import au.id.micolous.metrodroid.transit.troika.TroikaTransitData;
 import au.id.micolous.metrodroid.util.Utils;
 
 /**
@@ -54,268 +66,38 @@ import au.id.micolous.metrodroid.util.Utils;
 
 @SuppressWarnings("WeakerAccess")
 public class CardInfo {
-    public static final CardInfo BILHETE_UNICO = new CardInfo.Builder()
-            .setImageId(R.drawable.bilheteunicosp_card, R.drawable.bilheteunicosp_card_alpha)
-            .setName("Bilhete Único")
-            .setLocation(R.string.location_sao_paulo)
-            .setCardType(CardType.MifareClassic)
-            .setKeysRequired()
-            .setExtraNote(R.string.card_note_bilhete_unico)
-            .build();
-
-
-    public static final CardInfo CLIPPER = new CardInfo.Builder()
-            .setImageId(R.drawable.clipper_card)
-            .setName("Clipper")
-            .setLocation(R.string.location_san_francisco)
-            .setCardType(CardType.MifareDesfire)
-            .build();
-
-    public static final CardInfo COMPASS = new CardInfo.Builder()
-            .setImageId(R.drawable.yvr_compass_card)
-            .setName(CompassUltralightTransitData.NAME)
-            .setLocation(R.string.location_vancouver)
-            .setCardType(CardType.MifareUltralight)
-            .setExtraNote(R.string.compass_note)
-            .build();
-
-    public static final CardInfo EDY = new CardInfo.Builder()
-            .setImageId(R.drawable.edy_card)
-            .setName("Edy")
-            .setLocation(R.string.location_tokyo)
-            .setCardType(CardType.FeliCa)
-            .build();
-
-    public static final CardInfo EZ_LINK = new CardInfo.Builder()
-            .setImageId(R.drawable.ezlink_card)
-            .setName("EZ-Link")
-            .setLocation(R.string.location_singapore)
-            .setCardType(CardType.CEPAS)
-            .build();
-
-    public static final CardInfo SEQ_GO = new CardInfo.Builder()
-            .setImageId(R.drawable.seqgo_card, R.drawable.seqgo_card_alpha)
-            .setName(SeqGoTransitData.NAME)
-            .setLocation(R.string.location_brisbane_seq_australia)
-            .setCardType(CardType.MifareClassic)
-            .setKeysRequired()
-            .setExtraNote(R.string.card_note_seqgo)
-            .build();
-
-    public static final CardInfo HSL = new CardInfo.Builder()
-            .setImageId(R.drawable.hsl_card)
-            .setName("HSL")
-            .setLocation(R.string.location_helsinki_finland)
-            .setCardType(CardType.MifareDesfire)
-            .build();
-
-    public static final CardInfo ICOCA = new CardInfo.Builder()
-            .setImageId(R.drawable.icoca_card)
-            .setName(Utils.localizeString(R.string.card_name_icoca))
-            .setLocation(R.string.location_kansai)
-            .setCardType(CardType.FeliCa)
-            .build();
-
-    public static final CardInfo KMT = new CardInfo.Builder()
-            .setImageId(R.drawable.kmt_card)
-            .setName(KMTTransitData.NAME)
-            .setLocation(R.string.location_jakarta)
-            .setCardType(CardType.FeliCa)
-            .setExtraNote(R.string.kmt_extra_note)
-            .build();
-
-    public static final CardInfo MANLY_FAST_FERRY = new CardInfo.Builder()
-            .setImageId(R.drawable.manly_fast_ferry_card)
-            .setName(ManlyFastFerryTransitData.NAME)
-            .setLocation(R.string.location_sydney_australia)
-            .setCardType(CardType.MifareClassic)
-            .setKeysRequired()
-            .build();
-
-    public static final CardInfo CHC_METROCARD = new CardInfo.Builder()
-            .setImageId(R.drawable.chc_metrocard)
-            .setName(ChcMetrocardTransitData.NAME)
-            .setLocation(R.string.location_christchurch_nz)
-            .setCardType(CardType.MifareClassic)
-            .setKeysRequired()
-            .setPreview()
-            .build();
-
-    public static final CardInfo MYKI = new CardInfo.Builder()
-            .setImageId(R.drawable.myki_card)
-            .setName(MykiTransitData.NAME)
-            .setCardType(CardType.MifareDesfire)
-            .setLocation(R.string.location_victoria_australia)
-            .setExtraNote(R.string.card_note_myki)
-            .build();
-
-    public static final CardInfo MYWAY = new CardInfo.Builder()
-            .setImageId(R.drawable.myway_card)
-            .setName(SmartRiderTransitData.MYWAY_NAME)
-            .setLocation(R.string.location_act_australia)
-            .setCardType(CardType.MifareClassic)
-            .setKeysRequired()
-            .build();
-
-    public static final CardInfo NETS_FLASHPAY = new CardInfo.Builder()
-            .setImageId(R.drawable.nets_card)
-            .setName("NETS FlashPay")
-            .setLocation(R.string.location_singapore)
-            .setCardType(CardType.CEPAS)
-            .build();
-
-    public static final CardInfo OCTOPUS = new CardInfo.Builder()
-            .setImageId(R.drawable.octopus_card, R.drawable.octopus_card_alpha)
-            .setName(Utils.localizeString(R.string.card_name_octopus))
-            .setLocation(R.string.location_hong_kong)
-            .setCardType(CardType.FeliCa)
-            .build();
-
-    public static final CardInfo OPAL = new CardInfo.Builder()
-            .setImageId(R.drawable.opal_card)
-            .setName(OpalTransitData.NAME)
-            .setLocation(R.string.location_sydney_australia)
-            .setCardType(CardType.MifareDesfire)
-            .setExtraNote(R.string.card_note_opal)
-            .build();
-
-    public static final CardInfo OPUS = new CardInfo.Builder()
-            .setImageId(R.drawable.opus_card)
-            .setName(OpusTransitData.NAME)
-            .setLocation(R.string.location_quebec)
-            .setCardType(CardType.ISO7816)
-            .setPreview()
-            .build();
-
-    public static final CardInfo ORCA = new CardInfo.Builder()
-            .setImageId(R.drawable.orca_card)
-            .setName("ORCA")
-            .setLocation(R.string.location_seattle)
-            .setCardType(CardType.MifareDesfire)
-            .build();
-
-
-    public static final CardInfo OVCHIP = new CardInfo.Builder()
-            .setImageId(R.drawable.ovchip_card)
-            .setName(OVChipTransitData.NAME)
-            .setLocation(R.string.location_the_netherlands)
-            .setCardType(CardType.MifareClassic)
-            .setKeysRequired()
-            .build();
-
-    public static final CardInfo PASMO = new Builder()
-            .setImageId(R.drawable.pasmo_card)
-            .setName(Utils.localizeString(R.string.card_name_pasmo))
-            .setLocation(R.string.location_tokyo)
-            .setCardType(CardType.FeliCa)
-            .build();
-
-    public static final CardInfo PODOROZHNIK = new Builder()
-            // seqgo_card_alpha has identical geometry
-            .setImageId(R.drawable.podorozhnik_card, R.drawable.seqgo_card_alpha)
-            .setName(Utils.localizeString(R.string.card_name_podorozhnik))
-            .setLocation(R.string.location_saint_petersburg)
-            .setCardType(CardType.MifareClassic)
-            .setExtraNote(R.string.card_note_russia)
-            .setKeysRequired()
-            .setPreview()
-            .build();
-
-    public static final CardInfo RAVKAV = new CardInfo.Builder()
-            .setImageId(R.drawable.ravkav_card)
-            .setName(Utils.localizeString(R.string.card_name_ravkav))
-            .setLocation(R.string.location_israel)
-            .setCardType(CardType.ISO7816)
-            .setPreview()
-            .build();
-
-    public static final CardInfo SZT = new CardInfo.Builder()
-            .setImageId(R.drawable.szt_card)
-            .setName(Utils.localizeString(R.string.card_name_szt))
-            .setLocation(R.string.location_shenzhen)
-            .setCardType(CardType.FeliCa)
-            .setPreview()
-            .build();
-
-    public static final CardInfo SMARTRIDER = new CardInfo.Builder()
-            .setImageId(R.drawable.smartrider_card)
-            .setName(SmartRiderTransitData.SMARTRIDER_NAME)
-            .setLocation(R.string.location_wa_australia)
-            .setCardType(CardType.MifareClassic)
-            .setKeysRequired()
-            .setPreview() // We don't know about ferries.
-            .build();
-
-    public static final CardInfo SUICA = new CardInfo.Builder()
-            .setImageId(R.drawable.suica_card)
-            .setName(Utils.localizeString(R.string.card_name_suica))
-            .setLocation(R.string.location_tokyo)
-            .setCardType(CardType.FeliCa)
-            .build();
-
-    public static final CardInfo LAX_TAP = new CardInfo.Builder()
-            .setImageId(R.drawable.laxtap_card)
-            // Using the short name (TAP) may be ambiguous
-            .setName(LaxTapTransitData.LONG_NAME)
-            .setLocation(R.string.location_los_angeles)
-            .setCardType(CardType.MifareClassic)
-            .setKeysRequired()
-            .setPreview()
-            .build();
-
-    public static final CardInfo TMONEY = new Builder()
-            .setImageId(R.drawable.tmoney_card)
-            .setName(Utils.localizeString(R.string.card_name_tmoney))
-            .setLocation(R.string.location_seoul)
-            .setCardType(CardType.ISO7816)
-            .setPreview()
-            .build();
-
-    public static final CardInfo TROIKA = new Builder()
-            // seqgo_card_alpha has identical geometry
-            .setImageId(R.drawable.troika_card, R.drawable.seqgo_card_alpha)
-            .setName(Utils.localizeString(R.string.card_name_troika))
-            .setLocation(R.string.location_moscow)
-            .setCardType(CardType.MifareClassic)
-            .setExtraNote(R.string.card_note_russia)
-            .setKeysRequired()
-            .setPreview()
-            .build();
-
-
-
     /**
      * A list of all cards in alphabetical order of their name.
      */
     public static final CardInfo[] ALL_CARDS_ALPHABETICAL = {
-            BILHETE_UNICO,
-            CLIPPER,
-            COMPASS,
-            EDY,
-            EZ_LINK,
-            SEQ_GO, // Go card
-            HSL,
-            ICOCA,
-            KMT,
-            MANLY_FAST_FERRY,
-            CHC_METROCARD, // Metrocard
-            MYKI,
-            MYWAY,
-            NETS_FLASHPAY,
-            OCTOPUS,
-            OPAL,
-            OPUS,
-            ORCA,
-            OVCHIP,
-            PASMO,
-            PODOROZHNIK,
-            RAVKAV,
-            SZT, // Shenzhen Tong
-            SMARTRIDER,
-            SUICA,
-            LAX_TAP, // TAP
-            TMONEY,
-    	    TROIKA,
+            BilheteUnicoSPTransitData.CARD_INFO,
+            ClipperTransitData.CARD_INFO,
+            CompassUltralightTransitData.CARD_INFO,
+            EdyTransitData.CARD_INFO,
+            EZLinkTransitData.EZ_LINK_CARD_INFO,
+            SeqGoTransitData.CARD_INFO, // Go card
+            HSLTransitData.CARD_INFO,
+            SuicaTransitData.ICOCA_CARD_INFO,
+            KMTTransitData.CARD_INFO,
+            ManlyFastFerryTransitData.CARD_INFO,
+            ChcMetrocardTransitData.CARD_INFO, // Metrocard
+            MykiTransitData.CARD_INFO,
+            SmartRiderTransitData.MYWAY_CARD_INFO,
+            EZLinkTransitData.NETS_FLASHPAY_CARD_INFO,
+            OctopusTransitData.CARD_INFO,
+            OpalTransitData.CARD_INFO,
+            OpusTransitData.CARD_INFO,
+            OrcaTransitData.CARD_INFO,
+            OVChipTransitData.CARD_INFO,
+            SuicaTransitData.PASMO_CARD_INFO,
+            PodorozhnikTransitData.CARD_INFO,
+            RavKavTransitData.CARD_INFO,
+            NewShenzhenTransitData.CARD_INFO, // Shenzhen Tong
+            SmartRiderTransitData.SMARTRIDER_CARD_INFO,
+            SuicaTransitData.SUICA_CARD_INFO,
+            LaxTapTransitData.CARD_INFO, // TAP
+            TMoneyTransitData.CARD_INFO,
+            TroikaTransitData.CARD_INFO,
     };
 
     @DrawableRes
@@ -389,7 +171,7 @@ public class CardInfo {
         return mResourceExtraNote;
     }
 
-    static class Builder {
+    public static class Builder {
         @DrawableRes
         private int mImageId;
         @DrawableRes
@@ -403,49 +185,49 @@ public class CardInfo {
         @StringRes
         private int mResourceExtraNote;
 
-        Builder() {
+        public Builder() {
         }
 
-        CardInfo build() {
+        public CardInfo build() {
             return new CardInfo(mImageId, mName, mLocationId, mCardType, mKeysRequired, mPreview, mResourceExtraNote, mImageAlphaId);
         }
 
-        Builder setImageId(@DrawableRes int id) {
+        public Builder setImageId(@DrawableRes int id) {
             return setImageId(id, 0);
         }
 
-        Builder setImageId(@DrawableRes int id, @DrawableRes int alpha) {
+        public Builder setImageId(@DrawableRes int id, @DrawableRes int alpha) {
             mImageId = id;
             mImageAlphaId = alpha;
             return this;
         }
 
-        Builder setName(String name) {
+        public Builder setName(String name) {
             mName = name;
             return this;
         }
 
-        Builder setLocation(@StringRes int id) {
+        public Builder setLocation(@StringRes int id) {
             mLocationId = id;
             return this;
         }
 
-        Builder setCardType(CardType type) {
+        public Builder setCardType(CardType type) {
             mCardType = type;
             return this;
         }
 
-        Builder setKeysRequired() {
+        public Builder setKeysRequired() {
             mKeysRequired = true;
             return this;
         }
 
-        Builder setPreview() {
+        public Builder setPreview() {
             mPreview = true;
             return this;
         }
 
-        Builder setExtraNote(@StringRes int id) {
+        public Builder setExtraNote(@StringRes int id) {
             mResourceExtraNote = id;
             return this;
         }

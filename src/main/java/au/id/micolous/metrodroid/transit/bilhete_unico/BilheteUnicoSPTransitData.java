@@ -24,9 +24,12 @@ package au.id.micolous.metrodroid.transit.bilhete_unico;
 import android.os.Parcel;
 import android.support.annotation.Nullable;
 
+import au.id.micolous.farebot.R;
 import au.id.micolous.metrodroid.card.Card;
+import au.id.micolous.metrodroid.card.CardType;
 import au.id.micolous.metrodroid.card.UnauthorizedException;
 import au.id.micolous.metrodroid.card.classic.ClassicCard;
+import au.id.micolous.metrodroid.transit.CardInfo;
 import au.id.micolous.metrodroid.transit.TransitCurrency;
 import au.id.micolous.metrodroid.transit.TransitData;
 import au.id.micolous.metrodroid.transit.TransitIdentity;
@@ -34,6 +37,15 @@ import au.id.micolous.metrodroid.transit.Trip;
 import au.id.micolous.metrodroid.transit.ovc.OVChipCredit;
 
 public class BilheteUnicoSPTransitData extends TransitData {
+    public static final CardInfo CARD_INFO = new CardInfo.Builder()
+            .setImageId(R.drawable.bilheteunicosp_card, R.drawable.bilheteunicosp_card_alpha)
+            .setName("Bilhete Único")
+            .setLocation(R.string.location_sao_paulo)
+            .setCardType(CardType.MifareClassic)
+            .setKeysRequired()
+            .setExtraNote(R.string.card_note_bilhete_unico)
+            .build();
+
 
     public static final Creator<BilheteUnicoSPTransitData> CREATOR = new Creator<BilheteUnicoSPTransitData>() {
         public BilheteUnicoSPTransitData createFromParcel(Parcel parcel) {
