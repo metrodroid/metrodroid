@@ -536,7 +536,7 @@
 
     <string name="orca_coach_number">#%s klas</string>
 
-    <string name="suica_bus_area_line_stop">Busgebied %s, lijn %s, halte %s</string>
+    <string name="suica_bus_area_line_stop">Buszone %1$s, lijn %2$s, halte %3$s</string>
     <string name="suica_line_station">Lijn %s, station %s</string>
 
     <string name="card_name_szt">Shenzhen Tong</string>
@@ -644,10 +644,10 @@
 
     <string name="developer_options">Ontwikkelaarsopties</string>
     <string name="station_database">Stationsdatabank</string>
-    <string name="developer_options_desc">Gebruik van stationsdatabanken, verdoezelmodi...</string>
+    <string name="developer_options_desc">Gebruik van stationsdatabanken, verdoezelmodi…</string>
     <string name="advanced_options">Geavanceerde opties</string>
     <string name="nfc">Near Field Communication</string>
-    <string name="nfc_options_desc">Terugvallezer voor MIFARE Classic, fysieke kaartinstellingen...</string>
+    <string name="nfc_options_desc">Terugvallezer voor MIFARE Classic, fysieke kaartinstellingen…</string>
 <string name="kmt_agency">Kereta Commuter Indonesia</string>
     <string name="transaction_counter">Transactieteller</string>
     <string name="kmt_trx_count">Transactieteller</string>
@@ -656,7 +656,7 @@
     <string name="kmt_last_trx_amount">Recentste transactiebedrag</string>
 
     <string name="blank_mfc_card">Blanco MIFARE Classic-kaart</string>
-    <string name="suica_area_line_station">Zone %s - Lijn %s - Halte %s</string>
+    <string name="suica_area_line_station">Zone %1$s - Lijn %2$s - Halte %3$s</string>
 
     <string name="file_fci">Bestand FCI</string>
     <string name="app_fci">App FCI</string>
