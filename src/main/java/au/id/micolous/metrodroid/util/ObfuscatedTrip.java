@@ -108,12 +108,16 @@ class ObfuscatedTrip extends Trip implements Parcelable {
             mFare.writeToParcel(parcel, i);
         }
         parcel.writeInt(mStartStation == null ? 0 : 1);
-        mStartStation.writeToParcel(parcel, i);
+        if (mStartStation != null) {
+            mStartStation.writeToParcel(parcel, i);
+        }
         parcel.writeInt(mEndStation == null ? 0 : 1);
-        mEndStation.writeToParcel(parcel, i);
+        if (mEndStation != null) {
+            mEndStation.writeToParcel(parcel, i);
+        }
     }
 
-    ObfuscatedTrip(Trip realTrip, long timeDelta, int fareOffset, double fareMultiplier) {
+    ObfuscatedTrip(Trip realTrip, long timeDelta, boolean obfuscateFares) {
         if (realTrip.getStartTimestamp() != null) {
             mStartTimestamp = new GregorianCalendar();
             mStartTimestamp.setTimeInMillis(realTrip.getStartTimestamp().getTimeInMillis() + timeDelta);
@@ -136,7 +140,11 @@ class ObfuscatedTrip extends Trip implements Parcelable {
 
         TransitCurrency fare = realTrip.getFare();
         if (fare != null) {
-            mFare = fare.obfuscate(fareOffset, fareMultiplier);
+            if (obfuscateFares) {
+                mFare = fare.obfuscate();
+            } else {
+                mFare = fare;
+            }
         }
     }
 

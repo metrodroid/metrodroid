@@ -115,8 +115,6 @@ public final class TripObfuscator {
         for (Trip trip : trips) {
             Calendar start = trip.getStartTimestamp();
             long timeDelta = 0;
-            int fareOffset = 0;
-            double fareMultiplier = 1.0;
 
             if (start != null) {
                 timeDelta = maybeObfuscateTS(start, obfuscateDates, obfuscateTimes).getTimeInMillis() - start.getTimeInMillis();
@@ -124,15 +122,8 @@ public final class TripObfuscator {
                 timeDelta = 0;
             }
 
-            if (obfuscateFares) {
-                // These are unique for each fare
-                fareOffset = mRNG.nextInt(100) - 50;
 
-                // Multiplier may be 0.8 ~ 1.2
-                fareMultiplier = (mRNG.nextDouble() * 0.4) + 0.8;
-            }
-
-            newTrips.add(new ObfuscatedTrip(trip, timeDelta, fareOffset, fareMultiplier));
+            newTrips.add(new ObfuscatedTrip(trip, timeDelta, obfuscateFares));
         }
         return newTrips;
     }

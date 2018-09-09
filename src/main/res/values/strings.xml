@@ -63,7 +63,7 @@
     <string name="scanned_at_format">Scanned at %1$s on %2$s</string>
     <string name="supported_cards">Supported Cards</string>
     <string name="pass_or_transfer">Pass/Xfer</string>
-    <string name="transaction_sequence">#</string>
+    <string name="transaction_counter">Transaction counter</string>
     <string name="fully_locked_desc">
         No part of this card is freely readable without a key. You have no valid keys installed for it.\n\n
         If supported by Metrodroid, the card will work once keys are installed for it. These are generally different for each card. More info about acquiring and installing keys can be found in the documentation.\n\n
@@ -775,6 +775,10 @@
     -->
     <string name="kmt_agency">Kereta Commuter Indonesia</string>
     <string name="kmt_extra_note">Only for new FeliCa cards.</string>
+    <string name="kmt_trx_count">Transaction Counter</string>
+    <string name="kmt_balance">Balance</string>
+    <string name="kmt_other_data">Other data</string>
+    <string name="kmt_last_trx_amount">Last transaction amount</string>
 
     <!-- HSL -->
     <string name="hsl_pass_is_valid">Valid season ticket</string>

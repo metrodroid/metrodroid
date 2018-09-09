@@ -36,7 +36,6 @@
     <string name="loading">טוען…</string>
     <string name="scanned_at_format">סריקה ב%1$s ב %2$s</string>
     <string name="supported_cards">כרטיסים נתמכים</string>
-    <string name="transaction_sequence">#</string>
     <string name="fully_locked_desc">"
  כרטיס זה אין כל חלק ממנו אשר ניתן לקריאה בחופשיות ללא מפתח. אין לך מפתחות המותקנים אשר תקפים עבור כרטיס זה.
 

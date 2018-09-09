@@ -34,7 +34,6 @@
     <string name="balance_speech">Balanse <xliff:g id="balance" example="$13.37">%s</xliff:g></string>
     <string name="loading">Laster…</string>
     <string name="supported_cards">Støttede kort</string>
-    <string name="transaction_sequence">#</string>
     <string name="fully_locked_title">Helt låst kort.</string>
     <string name="nfc_off_error">NFC avskrudd</string>
     <string name="turn_on_nfc">Skru på NFC for å lese kortinformasjon.</string>

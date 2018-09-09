@@ -21,16 +21,12 @@
  */
 package au.id.micolous.metrodroid.transit.edy;
 
-import android.app.Application;
 import android.os.Parcel;
 import android.support.annotation.Nullable;
 
-import java.text.NumberFormat;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 
-import au.id.micolous.farebot.R;
-import au.id.micolous.metrodroid.MetrodroidApplication;
 import au.id.micolous.metrodroid.card.felica.FelicaBlock;
 import au.id.micolous.metrodroid.transit.TransitCurrency;
 import au.id.micolous.metrodroid.transit.Trip;
@@ -93,6 +89,7 @@ public class EdyTrip extends Trip {
     }
 
     public Mode getMode() {
+        // TODO: Revisit this, and check that these Modes are sensible.
         if (mProcessType == EdyTransitData.FELICA_MODE_EDY_DEBIT) {
             return Mode.POS;
         } else if (mProcessType == EdyTransitData.FELICA_MODE_EDY_CHARGE) {
@@ -109,10 +106,6 @@ public class EdyTrip extends Trip {
         return mTimestamp;
     }
 
-    public boolean hasFare() {
-        return true;
-    }
-
     @Nullable
     @Override
     public TransitCurrency getFare() {
@@ -122,26 +115,6 @@ public class EdyTrip extends Trip {
         }
 
         return TransitCurrency.JPY(mTransactionAmount);
-    }
-
-    // use agency name for the transaction number
-    public String getAgencyName() {
-        NumberFormat format = NumberFormat.getIntegerInstance();
-        format.setMinimumIntegerDigits(8);
-        format.setGroupingUsed(false);
-        Application app = MetrodroidApplication.getInstance();
-        String str;
-        if (mProcessType != EdyTransitData.FELICA_MODE_EDY_DEBIT)
-            str = app.getString(R.string.felica_process_charge);
-        else
-            str = app.getString(R.string.felica_process_merchandise_purchase);
-        str += " " + app.getString(R.string.transaction_sequence) + format.format(mSequenceNumber);
-        return str;
-    }
-
-    // unused
-    public String getRouteName() {
-        return null;
     }
 
     public int describeContents() {

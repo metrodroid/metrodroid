@@ -152,7 +152,6 @@
     <string name="hw_detail">Информация о производителе</string>
     <string name="data">Необработанные данные</string>
     <string name="loading">Считывание…</string>
-    <string name="transaction_sequence">#</string>
     <string name="wireless_settings">Беспроводные настройки</string>
     <string name="unknown_more_info_desc">Больше информации о поддержки этой карты Метродроидом.</string>
 
