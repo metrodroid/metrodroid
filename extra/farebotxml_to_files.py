@@ -148,12 +148,28 @@ def zipify(input_xml, output_zipf, mfcdump, mobib):
           
           output_zip.writestr(join(card_dir, application_id, file_id),
                               base64.b64decode(f.find('data').text))
+        histories = application.find('histories')
+        for f in histories.findall('history') if histories is not None else []:
+            if f.text is not None:
+                output_zip.writestr(join(card_dir, application_id, "histories", f.get('idx')), base64.b64decode(f.text))
+        purses = application.find('purses')
+        for f in purses.findall('purse') if purses is not None else []:
+            if f.text is not None:
+                output_zip.writestr(join(card_dir, application_id, "purses", f.get('idx')), base64.b64decode(f.text))
         records = application.find('records')
         for f in records.findall('file') if records is not None else []:
             file_id = f.get('name')
             error = f.find('error')
             if error is not None:
               continue
+
+            datanode = f.find('data')
+            if datanode is not None:
+                output_zip.writestr(join(card_dir, application_id, file_id, "data"), base64.b64decode(datanode.text))
+
+            fcinode = f.find('fci')
+            if fcinode is not None:
+                output_zip.writestr(join(card_dir, application_id, file_id, "fci"), base64.b64decode(fcinode.text))
 
             for rec in f.find('records').findall('record'):
               record_id = rec.get('index')

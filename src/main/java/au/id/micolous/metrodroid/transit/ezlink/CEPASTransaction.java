@@ -18,7 +18,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package au.id.micolous.metrodroid.card.cepas;
+package au.id.micolous.metrodroid.transit.ezlink;
 
 import android.os.Parcel;
 import android.os.Parcelable;
@@ -30,7 +30,6 @@ import java.util.Calendar;
 
 import au.id.micolous.metrodroid.util.Utils;
 
-@Root(name = "transaction")
 public class CEPASTransaction implements Parcelable {
     public static final Parcelable.Creator<CEPASTransaction> CREATOR = new Parcelable.Creator<CEPASTransaction>() {
         public CEPASTransaction createFromParcel(Parcel source) {
@@ -45,29 +44,9 @@ public class CEPASTransaction implements Parcelable {
             return new CEPASTransaction[size];
         }
     };
-    @Attribute(name = "type")
     private byte mType;
-    @Attribute(name = "amount")
     private int mAmount;
-
-    /**
-     * This is the date expressed as seconds since the UNIX epoch. Metrodroid <= 2.9.34 used
-     * this value, but this attribute is required to read old scans.
-     *
-     * Use {@link #mDate2} instead.
-     */
-    @Deprecated
-    @Attribute(name = "date", required = false)
-    private long mDate;
-
-    /**
-     * This is the date expressed as seconds since the CEPAS epoch (1995-01-01 00:00 SGT).
-     * Metrodroid >= 2.9.35 uses this value, old versions use {@link #mDate} instead.
-     */
-    @Attribute(name = "date2", required = false)
-    private Calendar mDate2;
-
-    @Attribute(name = "user-data")
+    private Calendar mDate;
     private String mUserData;
 
     public CEPASTransaction(byte[] rawData) {
@@ -83,9 +62,7 @@ public class CEPASTransaction implements Parcelable {
 
         /* Date is expressed "in seconds", but the epoch is January 1 1995, SGT */
         long timestamp = Utils.byteArrayToLong(rawData, 4, 4);
-        mDate2 = CEPASCard.timestampToCalendar(timestamp);
-        //noinspection deprecation
-        mDate = 0;
+        mDate = EZLinkTransitData.timestampToCalendar(timestamp);
 
         byte[] userData = new byte[9];
         System.arraycopy(rawData, 8, userData, 0, 8);
@@ -96,30 +73,14 @@ public class CEPASTransaction implements Parcelable {
     public CEPASTransaction(byte type, int amount, Calendar date, String userData) {
         mType = type;
         mAmount = amount;
-        //noinspection deprecation
-        mDate = 0;
-        mDate2 = date;
+        mDate = date;
         mUserData = userData;
     }
 
     private CEPASTransaction() { /* For XML Serializer */ }
 
     public TransactionType getType() {
-        if (mType == 48)
-            return TransactionType.MRT;
-        if (mType == 117 || mType == 3)
-            return TransactionType.TOP_UP;
-        if (mType == 49)
-            return TransactionType.BUS;
-        if (mType == 118)
-            return TransactionType.BUS_REFUND;
-        if (mType == -16 || mType == 5)
-            return TransactionType.CREATION;
-        if (mType == 4)
-            return TransactionType.SERVICE;
-        if (mType == 1)
-            return TransactionType.RETAIL;
-        return TransactionType.UNKNOWN;
+        return getType(mType);
     }
 
     public int getAmount() {
@@ -128,13 +89,7 @@ public class CEPASTransaction implements Parcelable {
 
     @SuppressWarnings("deprecation")
     public Calendar getTimestamp() {
-        if (mDate != 0) {
-            // Compatibility for Metrodroid <= 2.9.34
-            // Timestamps were stored as seconds since UNIX epoch.
-            return CEPASCard.timestampToCalendar(mDate - 788947200 + (16 * 3600));
-        }
-
-        return mDate2;
+        return mDate;
     }
 
     public String getUserData() {
@@ -144,12 +99,30 @@ public class CEPASTransaction implements Parcelable {
     public void writeToParcel(Parcel parcel, int flags) {
         parcel.writeByte(mType);
         parcel.writeInt(mAmount);
-        Utils.parcelCalendar(parcel, mDate2);
+        Utils.parcelCalendar(parcel, mDate);
         parcel.writeString(mUserData);
     }
 
     public int describeContents() {
         return 0;
+    }
+
+    public static TransactionType getType(byte type) {
+        if (type == 48)
+            return TransactionType.MRT;
+        if (type == 117 || type == 3)
+            return TransactionType.TOP_UP;
+        if (type == 49)
+            return TransactionType.BUS;
+        if (type == 118)
+            return TransactionType.BUS_REFUND;
+        if (type == -16 || type == 5)
+            return TransactionType.CREATION;
+        if (type == 4)
+            return TransactionType.SERVICE;
+        if (type == 1)
+            return TransactionType.RETAIL;
+        return TransactionType.UNKNOWN;
     }
 
     public enum TransactionType {

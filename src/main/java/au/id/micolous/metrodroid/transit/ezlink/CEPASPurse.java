@@ -22,7 +22,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package au.id.micolous.metrodroid.card.cepas;
+package au.id.micolous.metrodroid.transit.ezlink;
 
 import au.id.micolous.metrodroid.util.Utils;
 import au.id.micolous.metrodroid.xml.HexString;
@@ -33,110 +33,27 @@ import org.simpleframework.xml.Root;
 
 import java.util.Calendar;
 
-@Root(name = "purse")
 public class CEPASPurse {
-    @Attribute(name = "auto-load-amount", required = false)
     private int mAutoLoadAmount;
-    @Attribute(name = "can", required = false)
     private HexString mCAN;
-    @Attribute(name = "cepas-version", required = false)
     private byte mCepasVersion;
-    @Attribute(name = "csn", required = false)
     private HexString mCSN;
-    @Attribute(name = "error", required = false)
     private String mErrorMessage;
-    @Attribute(name = "id", required = false)
-    private int mId;
-    @Attribute(name = "issuer-data-length", required = false)
     private int mIssuerDataLength;
-    @Attribute(name = "issuer-specific-data", required = false)
     private HexString mIssuerSpecificData;
-    @Attribute(name = "last-credit-transaction-header", required = false)
     private HexString mLastCreditTransactionHeader;
-    @Attribute(name = "last-credit-transaction-trp", required = false)
     private int mLastCreditTransactionTRP;
-    @Attribute(name = "last-transaction-debit-options", required = false)
     private byte mLastTransactionDebitOptionsByte;
-    @Attribute(name = "last-transaction-trp", required = false)
     private int mLastTransactionTRP;
-    @Attribute(name = "logfile-record-count", required = false)
     private byte mLogfileRecordCount;
-    @Attribute(name = "purse-balance", required = false)
     private int mPurseBalance;
-    @Attribute(name = "purse-expiry-date", required = false)
     private Calendar mPurseExpiryDate;
-    @Attribute(name = "purse-status", required = false)
     private byte mPurseStatus;
-    @Attribute(name = "purse-creation-date", required = false)
     private Calendar mPurseCreationDate;
-    @Attribute(name = "valid", required = false)
     private boolean mIsValid;
-    @Element(name = "transaction", required = false)
     private CEPASTransaction mLastTransactionRecord;
 
-    public CEPASPurse(
-            int id,
-            byte cepasVersion,
-            byte purseStatus,
-            int purseBalance,
-            int autoLoadAmount,
-            byte[] can,
-            byte[] csn,
-            Calendar purseExpiryDate,
-            Calendar purseCreationDate,
-            int lastCreditTransactionTRP,
-            byte[] lastCreditTransactionHeader,
-            byte logfileRecordCount,
-            int issuerDataLength,
-            int lastTransactionTRP,
-            CEPASTransaction lastTransactionRecord,
-            byte[] issuerSpecificData,
-            byte lastTransactionDebitOptionsByte
-    ) {
-        mId = id;
-        mCepasVersion = cepasVersion;
-        mPurseStatus = purseStatus;
-        mPurseBalance = purseBalance;
-        mAutoLoadAmount = autoLoadAmount;
-        mCAN = new HexString(can);
-        mCSN = new HexString(csn);
-        mPurseExpiryDate = purseExpiryDate;
-        mPurseCreationDate = purseCreationDate;
-        mLastCreditTransactionTRP = lastCreditTransactionTRP;
-        mLastCreditTransactionHeader = new HexString(lastCreditTransactionHeader);
-        mLogfileRecordCount = logfileRecordCount;
-        mIssuerDataLength = issuerDataLength;
-        mLastTransactionTRP = lastTransactionTRP;
-        mLastTransactionRecord = lastTransactionRecord;
-        mIssuerSpecificData = new HexString(issuerSpecificData);
-        mLastTransactionDebitOptionsByte = lastTransactionDebitOptionsByte;
-        mIsValid = true;
-        mErrorMessage = "";
-    }
-
-    public CEPASPurse(int purseId, String errorMessage) {
-        mId = purseId;
-        mCepasVersion = 0;
-        mPurseStatus = 0;
-        mPurseBalance = 0;
-        mAutoLoadAmount = 0;
-        mCAN = null;
-        mCSN = null;
-        mPurseExpiryDate = null;
-        mPurseCreationDate = null;
-        mLastCreditTransactionTRP = 0;
-        mLastCreditTransactionHeader = null;
-        mLogfileRecordCount = 0;
-        mIssuerDataLength = 0;
-        mLastTransactionTRP = 0;
-        mLastTransactionRecord = null;
-        mIssuerSpecificData = null;
-        mLastTransactionDebitOptionsByte = 0;
-        mIsValid = false;
-        mErrorMessage = errorMessage;
-    }
-
-    public CEPASPurse(int purseId, byte[] purseData) {
+    public CEPASPurse(byte[] purseData) {
         int tmp;
         if (purseData == null) {
             purseData = new byte[128];
@@ -147,7 +64,6 @@ public class CEPASPurse {
             mErrorMessage = "";
         }
 
-        mId = purseId;
         mCepasVersion = purseData[0];
         mPurseStatus = purseData[1];
 
@@ -173,8 +89,8 @@ public class CEPASPurse {
 
         mCSN = new HexString(csn);
 
-        mPurseExpiryDate = CEPASCard.daysToCalendar(Utils.byteArrayToInt(purseData, 24, 2));
-        mPurseCreationDate = CEPASCard.daysToCalendar(Utils.byteArrayToInt(purseData, 26, 2));
+        mPurseExpiryDate = EZLinkTransitData.daysToCalendar(Utils.byteArrayToInt(purseData, 24, 2));
+        mPurseCreationDate = EZLinkTransitData.daysToCalendar(Utils.byteArrayToInt(purseData, 26, 2));
         mLastCreditTransactionTRP = Utils.byteArrayToInt(purseData, 28, 4);
 
         byte[] lastCreditTransactionHeader = new byte[8];
@@ -204,12 +120,8 @@ public class CEPASPurse {
 
     private CEPASPurse() { /* For XML Serializer */ }
 
-    public static CEPASPurse create(int purseId, byte[] purseData) {
-        return new CEPASPurse(purseId, purseData);
-    }
-
-    public int getId() {
-        return mId;
+    public static CEPASPurse create(byte[] purseData) {
+        return new CEPASPurse(purseData);
     }
 
     public byte getCepasVersion() {

@@ -53,8 +53,8 @@ public class ISO7816Application {
     protected ISO7816Application() { /* For XML Serializer */ }
 
     protected ISO7816Application(ISO7816Info info) {
-        mApplicationData = new Base64String(info.mApplicationData);
-        mApplicationName = new Base64String(info.mApplicationName);
+        mApplicationData = info.mApplicationData == null ? null : new Base64String(info.mApplicationData);
+        mApplicationName = info.mApplicationName == null ? null : new Base64String(info.mApplicationName);
         mFiles = info.mFiles;
         mTagId = new Base64String(info.mTagId);
         mType = info.mType;
@@ -64,10 +64,10 @@ public class ISO7816Application {
     @SuppressWarnings({"FieldCanBeLocal", "unused"})
     private String mType;
 
-    @Element(name = "application-data")
+    @Element(name = "application-data", required = false)
     private Base64String mApplicationData;
 
-    @Element(name = "application-name")
+    @Element(name = "application-name", required = false)
     private Base64String mApplicationName;
 
     public byte[] getTagId() {
@@ -92,7 +92,7 @@ public class ISO7816Application {
         public void dumpFile(ISO7816Protocol protocol, ISO7816Selector sel, int recordLen) throws IOException {
             // Start dumping...
             protocol.unselectFile();
-            sel.select(protocol);
+            byte[] fci = sel.select(protocol);
             byte [] data = protocol.readBinary();
             LinkedList<ISO7816Record> records = new LinkedList<>();
 
@@ -110,7 +110,7 @@ public class ISO7816Application {
                     break;
                 }
             }
-            mFiles.add(new ISO7816File(sel, records, data));
+            mFiles.add(new ISO7816File(sel, records, data, fci));
         }
     }
 

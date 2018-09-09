@@ -21,133 +21,65 @@
 
 package au.id.micolous.metrodroid.card.cepas;
 
-import android.nfc.tech.IsoDep;
 import android.util.Log;
 
-import java.io.ByteArrayOutputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
+
+import au.id.micolous.metrodroid.card.iso7816.ISO7816Exception;
+import au.id.micolous.metrodroid.card.iso7816.ISO7816Protocol;
+import au.id.micolous.metrodroid.util.Utils;
 
 public class CEPASProtocol {
     private static final String TAG = "CEPASProtocol";
-    // FIXME: This should select the actual CEPAS file by name...
-    private static final byte[] CEPAS_SELECT_FILE_COMMAND = new byte[]{
-            (byte) 0x00, (byte) 0xA4, (byte) 0x00, (byte) 0x00,
-            (byte) 0x02, (byte) 0x40, (byte) 0x00};
+    private ISO7816Protocol mTagTech;
 
-
-    /* Status codes */
-    private static final byte OPERATION_OK = (byte) 0x00;
-    private static final byte PERMISSION_DENIED = (byte) 0x9D;
-    private static final byte INCORRECT_APPLICATION = (byte) 0x6E;
-
-    private IsoDep mTagTech;
-
-    public CEPASProtocol(IsoDep tagTech) {
+    public CEPASProtocol(ISO7816Protocol tagTech) {
         mTagTech = tagTech;
     }
 
-    public CEPASPurse getPurse(int purseId) throws IOException, NotCEPASException {
+    public byte[] getPurse(int purseId) throws IOException {
         try {
-            sendSelectFile();
-            byte[] purseBuff = sendRequest((byte) 0x32, (byte) (purseId), (byte) 0, (byte) 0, new byte[]{(byte) 0});
-            if (purseBuff != null) {
-                return new CEPASPurse(purseId, purseBuff);
+            mTagTech.unselectFile();
+            mTagTech.selectById(0x3f00);
+            mTagTech.selectById(0x4000);
+            byte[] purseBuff = mTagTech.sendRequest(ISO7816Protocol.CLASS_90, (byte) 0x32, (byte) (purseId), (byte) 0, (byte) 0);
+            if (purseBuff.length != 0) {
+                return purseBuff;
             } else {
-                return new CEPASPurse(purseId, "No purse found");
+                return null;
             }
-        } catch (CEPASException ex) {
+        } catch (ISO7816Exception | FileNotFoundException ex) {
             Log.w(TAG, "Error reading purse " + purseId, ex);
-            return new CEPASPurse(purseId, ex.getMessage());
+            return null;
         }
     }
 
-    public CEPASHistory getHistory(int purseId, int recordCount) throws IOException, NotCEPASException {
+    public byte[] getHistory(int purseId) throws IOException {
         try {
-            byte[] fullHistoryBuff = null;
-            byte[] historyBuff = sendRequest((byte) 0x32, (byte) (purseId), (byte) 0, (byte) 1,
-                    new byte[]{(byte) 0, (byte) (recordCount <= 15 ? recordCount * 16 : 15 * 16)});
+            byte[] historyBuff = mTagTech.sendRequest(
+                    ISO7816Protocol.CLASS_90,
+                    (byte) 0x32, (byte) (purseId), (byte) 0,
+                    (byte) 0, (byte) 0);
 
             if (historyBuff != null) {
-                if (recordCount > 15) {
                     byte[] historyBuff2 = null;
                     try {
-                        historyBuff2 = sendRequest((byte) 0x32, (byte) (purseId), (byte) 0, (byte) 1,
-                                new byte[]{(byte) 0x0F, (byte) ((recordCount - 15) * 16)});
-                    } catch (CEPASException ex) {
+                        historyBuff2 = mTagTech.sendRequest(
+                                ISO7816Protocol.CLASS_90,
+                                (byte) 0x32, (byte) (purseId), (byte) 0,
+                                (byte) 0,
+                                (byte) (historyBuff.length / 16));
+                        historyBuff = Utils.concatByteArrays(historyBuff, historyBuff2);
+                    } catch (ISO7816Exception ex) {
                         Log.w(TAG, "Error reading 2nd purse history " + purseId, ex);
                     }
-                    fullHistoryBuff = new byte[historyBuff.length + (historyBuff2 != null ? historyBuff2.length : 0)];
-
-                    System.arraycopy(historyBuff, 0, fullHistoryBuff, 0, historyBuff.length);
-                    if (historyBuff2 != null)
-                        System.arraycopy(historyBuff2, 0, fullHistoryBuff, historyBuff.length, historyBuff2.length);
-                } else {
-                    fullHistoryBuff = historyBuff;
-                }
             }
 
-            if (fullHistoryBuff != null) {
-                return new CEPASHistory(purseId, fullHistoryBuff);
-            } else {
-                return new CEPASHistory(purseId, "No history found");
-            }
-        } catch (CEPASException ex) {
+            return historyBuff;
+        } catch (ISO7816Exception ex) {
             Log.w(TAG, "Error reading purse history " + purseId, ex);
-            return new CEPASHistory(purseId, ex.getMessage());
+            return null;
         }
-    }
-
-    private byte[] sendSelectFile() throws IOException {
-        return mTagTech.transceive(CEPAS_SELECT_FILE_COMMAND);
-    }
-
-    private byte[] sendRequest(byte command, byte p1, byte p2, byte lc, byte[] parameters) throws CEPASException,
-            IOException, NotCEPASException {
-        ByteArrayOutputStream output = new ByteArrayOutputStream();
-
-        byte[] recvBuffer = mTagTech.transceive(wrapMessage(command, p1, p2, lc, parameters));
-
-        if (recvBuffer[recvBuffer.length - 2] != (byte) 0x90) {
-            if (recvBuffer[recvBuffer.length - 2] == 0x6b) {
-                throw new CEPASException("File " + p1 + " was an invalid file.");
-
-            } else if (recvBuffer[recvBuffer.length - 2] == 0x67) {
-                // E-Passports tend to land here...
-                Log.d(TAG, "Got invalid file size response.");
-            }   else if (recvBuffer[recvBuffer.length - 2] == INCORRECT_APPLICATION) {
-                Log.d(TAG, "Got incorrect application response.");
-            }
-
-            Log.d(TAG, "Got invalid response: "
-                    + Integer.toHexString(((int) recvBuffer[recvBuffer.length - 2]) & 0xff));
-            throw new NotCEPASException();
-        }
-
-        output.write(recvBuffer, 0, recvBuffer.length - 2);
-
-        byte status = recvBuffer[recvBuffer.length - 1];
-        if (status == OPERATION_OK) {
-            return output.toByteArray();
-        } else if (status == PERMISSION_DENIED) {
-            throw new CEPASException("Permission denied");
-        } else {
-            throw new CEPASException("Unknown status code: " + Integer.toHexString(status & 0xFF));
-        }
-    }
-
-    private byte[] wrapMessage(byte command, byte p1, byte p2, byte lc, byte[] parameters) throws IOException {
-        ByteArrayOutputStream stream = new ByteArrayOutputStream();
-
-        stream.write((byte) 0x90); // CLA
-        stream.write(command);     // INS
-        stream.write(p1);          // P1
-        stream.write(p2);          // P2
-        stream.write(lc);          // Lc
-        // Write Lc and data fields
-        if (parameters != null) {
-            stream.write(parameters); // Data field
-        }
-
-        return stream.toByteArray();
     }
 }

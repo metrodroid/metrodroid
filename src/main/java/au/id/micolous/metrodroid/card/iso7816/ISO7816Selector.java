@@ -23,6 +23,7 @@ import org.simpleframework.xml.ElementList;
 import org.simpleframework.xml.Root;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Iterator;
@@ -47,14 +48,6 @@ public class ISO7816Selector {
         return ret.toString();
     }
 
-    static public ISO7816Selector makeSelector(int id) {
-        return new ISO7816Selector(Collections.singletonList(new ISO7816SelectorById(id)));
-    }
-
-    static public ISO7816Selector makeSelector(int folder, int file) {
-        return new ISO7816Selector(Arrays.asList(new ISO7816SelectorById(folder), new ISO7816SelectorById(file)));
-    }
-
     static public ISO7816Selector makeSelector(byte []name) {
         return new ISO7816Selector(Collections.singletonList(new ISO7816SelectorByName(name)));
     }
@@ -63,10 +56,12 @@ public class ISO7816Selector {
         return new ISO7816Selector(Arrays.asList(new ISO7816SelectorByName(folder), new ISO7816SelectorById(file)));
     }
 
-    public void select(ISO7816Protocol tag) throws IOException {
+    public byte[] select(ISO7816Protocol tag) throws IOException {
+        byte[] fci = null;
         for (ISO7816SelectorElement sel : mFullPath) {
-            sel.select(tag);
+            fci = sel.select(tag);
         }
+        return fci;
     }
 
     @Override
@@ -84,5 +79,12 @@ public class ISO7816Selector {
             if (!a.next().equals(b.next()))
                 return false;
         }
+    }
+
+    public static ISO7816Selector makeSelector(int... path) {
+        List<ISO7816SelectorElement> sels = new ArrayList<>();
+        for (int el : path)
+            sels.add(new ISO7816SelectorById(el));
+        return new ISO7816Selector(sels);
     }
 }
