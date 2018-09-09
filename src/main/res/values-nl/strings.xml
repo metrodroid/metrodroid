@@ -306,7 +306,7 @@
     <string name="locked_mfc_card">Vergrendelde MIFARE Classic-kaart</string>
     <string name="locked_mfu_card">Vergrendelde MIFARE Ultralight-kaart</string>
     <string name="locked_mfd_card">Vergrendelde MIFARE DESFire-kaart</string>
-    <string name="application_title_format">Applicatie: 0x%s</string>
+    <string name="application_title_format">Applicatie: %s</string>
     <string name="file_title_format">Bestand: %s</string>
     <string name="unauthorized_file_title_format">Bestand: %s (niet-geauthoriseerd)</string>
     <string name="invalid_file_title_format">Bestand: %1$s (onjuist: %2$s)</string>
@@ -656,4 +656,11 @@
     <string name="kmt_last_trx_amount">Recentste transactiebedrag</string>
 
     <string name="blank_mfc_card">Blanco MIFARE Classic-kaart</string>
-    </resources>
+    <string name="suica_area_line_station">Zone %s - Lijn %s - Halte %s</string>
+
+    <string name="file_fci">Bestand FCI</string>
+    <string name="app_fci">App FCI</string>
+    <string name="classic_key_format_a">Sleutel (A): %s</string>
+    <string name="classic_key_format_b">Sleutel (B): %s</string>
+    <string name="classic_key_format">Sleutel: %s</string>
+</resources>
