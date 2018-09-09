@@ -531,7 +531,7 @@
 
     <string name="trip_description_unknown_start">til %s</string>
     <string name="time_from_to">%s → %s</string>
-    <string name="time_from_unknown_to">?:?? → %s</string>
+    <string name="time_from_unknown_to">\?:?? → %s</string>
 
 
     <string name="location_israel">Israel</string>

@@ -559,7 +559,7 @@
     <string name="trip_description_unknown_start">to %s</string>
     <!-- Translators: it's used to show time in trip listing e.g. 12:35 - 12:51 -->
     <string name="time_from_to">%s → %s</string>
-    <!-- Translators: it's used when departure time isn't known -->
+    <!-- Translators: it's used when departure time isn't known. If "?" is the first character, it must be prefixed with "\". -->
     <string name="time_from_unknown_to">\??:?? → %s</string>
 
 

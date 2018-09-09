@@ -555,7 +555,7 @@
     <string name="mfc_not_supported">MIFARE Classic: niet ondersteund</string>
 <string name="trip_description_unknown_start">naar %s</string>
     <string name="time_from_to">%s → %s</string>
-    <string name="time_from_unknown_to">??:?? → %s</string>
+    <string name="time_from_unknown_to">\??:?? → %s</string>
 
 
     <string name="pref_show_local_and_english_title">Stationsnamen tonen in lokale taal en het Engels</string>

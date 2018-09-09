@@ -80,7 +80,7 @@
     <string name="trip_description">(Из )%1$s [→] (в )%2$s</string>
     <string name="trip_description_unknown_start">До %s</string>
     <string name="time_from_to">%s → %s</string>
-    <string name="time_from_unknown_to">?:?? → %s</string>
+    <string name="time_from_unknown_to">\?:?? → %s</string>
 
 
     <string name="location_seattle">Сиэтл, Штат Вашингтон, США</string>
