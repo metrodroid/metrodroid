@@ -854,8 +854,12 @@
 
     <string name="card_note_seqgo">Does not support Go Access, Explore or SEEQ cards.</string>
 
-    <string name="suica_bus_area_line_stop">Bus Area %s Line %s Stop %s</string>
-    <string name="suica_area_line_station">Area %s Line %s Station %s</string>
+    <!-- Translators: Each of the string substitutions is a hex number. Used when "show raw station
+    IDs" is enabled in the preferences. -->
+    <string name="suica_bus_area_line_stop">Bus Area %1$s Line %2$s Stop %3$s</string>
+    <!-- Translators: Each of the string substitutions is a hex number. Used when "show raw station
+    IDs" is enabled in the preferences. -->
+    <string name="suica_area_line_station">Area %1$s Line %2$s Station %3$s</string>
 
     <!--
         Myki (Victoria, AU)
@@ -1001,13 +1005,24 @@
     <string name="card_number">Card number</string>
     <string name="pref_show_raw_station_ids">Show raw station IDs</string>
     <string name="pref_show_raw_station_ids_desc">If true, a raw station ID is shown in addition to station name</string>
-    <string name="developer_options">Developer options</string>
     <string name="station_database">Station database</string>
-    <string name="developer_options_desc">Use of station databases, obfuscation modes...</string>
+
+    <!-- Translators: Used as a menu title in the preferences screen -->
     <string name="advanced_options">Advanced options</string>
+
+    <!-- Translators: Used as a submenu title in the preferences screen -->
+    <string name="developer_options">Developer options</string>
+    <!-- Translators: Used as a description for the Developer options submenu -->
+    <string name="developer_options_desc">Use of station databases, obfuscation modes…</string>
+
+    <!-- Translators: Used as a submenu title in the preferences screen -->
     <string name="nfc">Near Field Communication</string>
-    <string name="nfc_options_desc">Fallback reader for MIFARE Classic, physical card interface settings...</string>
+    <!-- Translators: Used as a description for the Near Field Communication options submenu -->
+    <string name="nfc_options_desc">Fallback reader for MIFARE Classic, physical card interface settings…</string>
+
+    <!-- Translators: FCI = File Control Information. Used in the context of ISO 7816 cards. -->
     <string name="file_fci">File FCI</string>
+    <!-- Translators: FCI = File Control Information. Used in the context of ISO 7816 cards. -->
     <string name="app_fci">App FCI</string>
     <string name="classic_key_format_a">Key (A): %s</string>
     <string name="classic_key_format_b">Key (B): %s</string>
