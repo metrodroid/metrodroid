@@ -555,7 +555,7 @@
     <string name="mfc_not_supported">MIFARE Classic: niet ondersteund</string>
 <string name="trip_description_unknown_start">naar %s</string>
     <string name="time_from_to">%s → %s</string>
-    <string name="time_from_unknown_to">?:?? → %s</string>
+    <string name="time_from_unknown_to">??:?? → %s</string>
 
 
     <string name="pref_show_local_and_english_title">Stationsnamen tonen in lokale taal en het Engels</string>
@@ -649,4 +649,11 @@
     <string name="nfc">Near Field Communication</string>
     <string name="nfc_options_desc">Terugvallezer voor MIFARE Classic, fysieke kaartinstellingen...</string>
 <string name="kmt_agency">Kereta Commuter Indonesia</string>
+    <string name="transaction_counter">Transactieteller</string>
+    <string name="kmt_trx_count">Transactieteller</string>
+    <string name="kmt_balance">Saldo</string>
+    <string name="kmt_other_data">Overige gegevens</string>
+    <string name="kmt_last_trx_amount">Recentste transactiebedrag</string>
+
+    <string name="blank_mfc_card">Blanco MIFARE Classic-kaart</string>
     </resources>
