@@ -703,6 +703,14 @@ public class Utils {
         return ret;
     }
 
+    public static boolean isASCII(byte[] str) {
+        for (byte b: str)
+            /* bytes 0x80 and over are considered negative in java. */
+            if (b < 0x20 && b != 0xd && b!= 0xa)
+                return false;
+        return true;
+    }
+
     public interface Matcher<T> {
         boolean matches(T t);
     }

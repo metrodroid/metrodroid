@@ -22,6 +22,12 @@ package au.id.micolous.metrodroid.ui;
 
 import android.support.annotation.StringRes;
 import android.text.Spanned;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.TextView;
+
+import au.id.micolous.farebot.R;
 
 public class HeaderListItem extends ListItem {
     public HeaderListItem(@StringRes int titleResource) {
@@ -34,5 +40,13 @@ public class HeaderListItem extends ListItem {
 
     public HeaderListItem(Spanned title) {
         super(title);
+    }
+
+    @Override
+    public View getView(LayoutInflater inflater, ViewGroup root, boolean attachToRoot) {
+        View view = inflater.inflate(R.layout.list_header, root, attachToRoot);
+
+        ((TextView) view.findViewById(android.R.id.text1)).setText(getText1());
+        return view;
     }
 }

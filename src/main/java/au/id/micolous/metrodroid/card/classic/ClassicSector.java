@@ -105,4 +105,8 @@ public class ClassicSector {
         }
         return true;
     }
+
+    public String getKeyType() {
+        return mKeyType;
+    }
 }

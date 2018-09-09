@@ -48,6 +48,7 @@ import au.id.micolous.metrodroid.transit.TransitIdentity;
 import au.id.micolous.metrodroid.transit.ezlink.EZLinkTransitData;
 import au.id.micolous.metrodroid.ui.HeaderListItem;
 import au.id.micolous.metrodroid.ui.ListItem;
+import au.id.micolous.metrodroid.ui.ListItemRecursive;
 import au.id.micolous.metrodroid.util.TripObfuscator;
 import au.id.micolous.metrodroid.util.Utils;
 import au.id.micolous.metrodroid.xml.Base64String;
@@ -62,6 +63,19 @@ public class CEPASApplication extends ISO7816Application {
     private Map<Integer, Base64String> mPurses;
     @ElementMap(name = "histories", entry = "history", key = "idx", attribute = true)
     private Map<Integer, Base64String> mHistories;
+
+    public List<ListItem> getRawData() {
+        List <ListItem> li = new ArrayList<>();
+        for (Map.Entry<Integer, Base64String> entry : mPurses.entrySet()) {
+            li.add(ListItemRecursive.collapsedValue("CEPAS purse " + entry.getKey(),
+                    Utils.getHexString(entry.getValue().getData())));
+        }
+        for (Map.Entry<Integer, Base64String> entry : mHistories.entrySet()) {
+            li.add(ListItemRecursive.collapsedValue("CEPAS history " + entry.getKey(),
+                    Utils.getHexString(entry.getValue().getData())));
+        }
+        return li;
+    }
 
     private CEPASApplication(ISO7816Application.ISO7816Info appData,
                              Map<Integer, Base64String> purses,
