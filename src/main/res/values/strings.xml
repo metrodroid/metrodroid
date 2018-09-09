@@ -775,6 +775,10 @@
     -->
     <string name="kmt_agency">Kereta Commuter Indonesia</string>
     <string name="kmt_extra_note">Only for new FeliCa cards.</string>
+    <string name="kmt_trx_count">Transaction Counter</string>
+    <string name="kmt_balance">Balance</string>
+    <string name="kmt_other_data">Other data</string>
+    <string name="kmt_last_trx_amount">Last transaction amount</string>
 
     <!-- HSL -->
     <string name="hsl_pass_is_valid">Valid season ticket</string>

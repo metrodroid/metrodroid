@@ -39,6 +39,8 @@ import au.id.micolous.metrodroid.transit.TransitCurrency;
 import au.id.micolous.metrodroid.transit.TransitData;
 import au.id.micolous.metrodroid.transit.TransitIdentity;
 import au.id.micolous.metrodroid.transit.Trip;
+import au.id.micolous.metrodroid.ui.HeaderListItem;
+import au.id.micolous.metrodroid.ui.ListItem;
 import au.id.micolous.metrodroid.util.Utils;
 
 public class KMTTransitData extends TransitData {
@@ -77,12 +79,16 @@ public class KMTTransitData extends TransitData {
     private KMTTrip[] mTrips;
     private String mSerialNumber;
     private int mCurrentBalance;
+    private int mTransactionCounter;
+    private int mLastTransAmount;
 
     private KMTTransitData(Parcel parcel) {
         mTrips = new KMTTrip[parcel.readInt()];
         parcel.readTypedArray(mTrips, KMTTrip.CREATOR);
         mCurrentBalance = parcel.readInt();
         mSerialNumber = parcel.readString();
+        mTransactionCounter = parcel.readInt();
+        mLastTransAmount = parcel.readInt();
     }
 
     public KMTTransitData(FelicaCard card) {
@@ -98,6 +104,8 @@ public class KMTTransitData extends TransitData {
             FelicaBlock blockBalance = blocksBalance.get(0);
             byte[] dataBalance = blockBalance.getData();
             mCurrentBalance = Utils.byteArrayToIntReversed(dataBalance, 0, 4);
+            mTransactionCounter = Utils.byteArrayToInt(dataBalance, 13, 3);
+            mLastTransAmount = Utils.byteArrayToIntReversed(dataBalance, 4, 4);
         }
 
         FelicaService serviceHistory = card.getSystem(SYSTEMCODE_KMT).getService(FELICA_SERVICE_KMT_HISTORY);
@@ -105,7 +113,7 @@ public class KMTTransitData extends TransitData {
         List<FelicaBlock> blocks = serviceHistory.getBlocks();
         for (int i = 0; i < blocks.size(); i++) {
             FelicaBlock block = blocks.get(i);
-            if (block.getData()[0] != 0) {
+            if (block.getData()[0] != 0 && Utils.byteArrayToInt(block.getData(), 8, 2) != 0) {
                 KMTTrip trip = new KMTTrip(block);
                 trips.add(trip);
             }
@@ -156,6 +164,18 @@ public class KMTTransitData extends TransitData {
         parcel.writeTypedArray(mTrips, flags);
         parcel.writeInt(mCurrentBalance);
         parcel.writeString(mSerialNumber);
+        parcel.writeInt(mTransactionCounter);
+        parcel.writeInt(mLastTransAmount);
+    }
+
+    @Override
+    public List<ListItem> getInfo() {
+        ArrayList<ListItem> items = new ArrayList<>();
+        items.add(new HeaderListItem(R.string.kmt_other_data));
+        items.add(new ListItem(R.string.kmt_trx_count, String.format("%d", mTransactionCounter)));
+        items.add(new ListItem(R.string.kmt_balance, TransitCurrency.IDR(mCurrentBalance).formatCurrencyString(true)));
+        items.add(new ListItem(R.string.kmt_last_trx_amount, TransitCurrency.IDR(mLastTransAmount).formatCurrencyString(true)));
+        return items;
     }
 }
 
