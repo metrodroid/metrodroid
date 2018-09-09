@@ -30,6 +30,7 @@ import java.util.List;
 import java.util.TimeZone;
 
 import au.id.micolous.farebot.R;
+import au.id.micolous.metrodroid.MetrodroidApplication;
 import au.id.micolous.metrodroid.card.CardType;
 import au.id.micolous.metrodroid.card.felica.FelicaBlock;
 import au.id.micolous.metrodroid.card.felica.FelicaCard;
@@ -41,6 +42,7 @@ import au.id.micolous.metrodroid.transit.TransitIdentity;
 import au.id.micolous.metrodroid.transit.Trip;
 import au.id.micolous.metrodroid.ui.HeaderListItem;
 import au.id.micolous.metrodroid.ui.ListItem;
+import au.id.micolous.metrodroid.util.TripObfuscator;
 import au.id.micolous.metrodroid.util.Utils;
 
 public class KMTTransitData extends TransitData {
@@ -172,8 +174,11 @@ public class KMTTransitData extends TransitData {
     public List<ListItem> getInfo() {
         ArrayList<ListItem> items = new ArrayList<>();
         items.add(new HeaderListItem(R.string.kmt_other_data));
-        items.add(new ListItem(R.string.transaction_counter, Integer.toString(mTransactionCounter)));
-        items.add(new ListItem(R.string.kmt_last_trx_amount, TransitCurrency.IDR(mLastTransAmount).formatCurrencyString(true)));
+        if (!MetrodroidApplication.hideCardNumbers()) {
+            items.add(new ListItem(R.string.transaction_counter, Integer.toString(mTransactionCounter)));
+        }
+        items.add(new ListItem(R.string.kmt_last_trx_amount,
+                TransitCurrency.IDR(mLastTransAmount).maybeObfuscateFare().formatCurrencyString(false)));
         return items;
     }
 }

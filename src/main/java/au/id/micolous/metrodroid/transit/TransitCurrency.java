@@ -124,6 +124,11 @@ public class TransitCurrency extends TransitBalance implements Parcelable {
         return new TransitCurrency(cur, mCurrencyCode, mDivisor);
     }
 
+    public TransitCurrency obfuscate() {
+        return obfuscate(mRNG.nextInt(100) - 50,
+                (mRNG.nextDouble() * 0.4) + 0.8);
+    }
+
     /**
      * This handles Android-specific issues:
      * <p>
@@ -169,8 +174,15 @@ public class TransitCurrency extends TransitBalance implements Parcelable {
             return this;
         }
 
-        return obfuscate(mRNG.nextInt(100) - 50,
-                (mRNG.nextDouble() * 0.4) + 0.8);
+        return obfuscate();
+    }
+
+    public TransitCurrency maybeObfuscateFare() {
+        if (!MetrodroidApplication.obfuscateTripFares()) {
+            return this;
+        }
+
+        return obfuscate();
     }
 
     public TransitCurrency negate() {
