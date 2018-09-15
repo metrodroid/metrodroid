@@ -62,6 +62,7 @@ import au.id.micolous.metrodroid.transit.manly_fast_ferry.ManlyFastFerryTransitD
 import au.id.micolous.metrodroid.transit.nextfare.NextfareTransitData;
 import au.id.micolous.metrodroid.transit.ovc.OVChipTransitData;
 import au.id.micolous.metrodroid.transit.podorozhnik.PodorozhnikTransitData;
+import au.id.micolous.metrodroid.transit.ricaricami.RicaricaMiTransitData;
 import au.id.micolous.metrodroid.transit.seq_go.SeqGoTransitData;
 import au.id.micolous.metrodroid.transit.smartrider.SmartRiderTransitData;
 import au.id.micolous.metrodroid.transit.strelka.StrelkaTransitData;
@@ -397,6 +398,8 @@ public class ClassicCard extends Card {
             return PodorozhnikTransitData.parseTransitIdentity(this);
         } else if (StrelkaTransitData.check(this)) {
             return StrelkaTransitData.parseTransitIdentity(this);
+        } else if (RicaricaMiTransitData.check(this)) {
+            return RicaricaMiTransitData.parseTransitIdentity(this);
         } else if (UnauthorizedClassicTransitData.check(this)) {
             // This check must be THIRD TO LAST.
             //
@@ -460,6 +463,8 @@ public class ClassicCard extends Card {
             return new PodorozhnikTransitData(this);
         } else if (StrelkaTransitData.check(this)) {
             return new StrelkaTransitData(this);
+        } else if (RicaricaMiTransitData.check(this)) {
+            return new RicaricaMiTransitData(this);
         } else if (UnauthorizedClassicTransitData.check(this)) {
             // This check must be THIRD TO LAST.
             //
@@ -493,20 +498,6 @@ public class ClassicCard extends Card {
 
     public ClassicSector getSector(int index) throws IndexOutOfBoundsException {
         return mSectors.get(index);
-    }
-
-    @Override
-    public List<ListItem> getManufacturingInfo() {
-        ClassicSector sec0 = getSector(0);
-        if (sec0 instanceof UnauthorizedClassicSector || sec0 instanceof InvalidClassicSector)
-            return null;
-
-        byte[] data = sec0.getBlock(0).getData();
-
-        List<ListItem> items = new ArrayList<>();
-        items.add(new ListItem("Week of Production", Integer.toHexString(data[14])));
-        items.add(new ListItem("Year of Production", Integer.toHexString(data[15])));
-        return items;
     }
 
     @Override

@@ -21,30 +21,33 @@ package au.id.micolous.metrodroid.transit.ravkav;
 
 import android.os.Parcel;
 import android.os.Parcelable;
-import android.support.annotation.Nullable;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import au.id.micolous.farebot.R;
 import au.id.micolous.metrodroid.card.CardType;
 import au.id.micolous.metrodroid.card.calypso.CalypsoApplication;
-import au.id.micolous.metrodroid.card.iso7816.ISO7816Record;
 import au.id.micolous.metrodroid.transit.CardInfo;
-import au.id.micolous.metrodroid.transit.TransitCurrency;
-import au.id.micolous.metrodroid.transit.TransitData;
 import au.id.micolous.metrodroid.transit.TransitIdentity;
 import au.id.micolous.metrodroid.transit.Trip;
+import au.id.micolous.metrodroid.transit.en1545.Calypso1545TransitData;
+import au.id.micolous.metrodroid.transit.en1545.En1545Container;
+import au.id.micolous.metrodroid.transit.en1545.En1545FixedHex;
+import au.id.micolous.metrodroid.transit.en1545.En1545FixedInteger;
+import au.id.micolous.metrodroid.transit.en1545.En1545Lookup;
+import au.id.micolous.metrodroid.transit.en1545.En1545Parsed;
+import au.id.micolous.metrodroid.transit.en1545.En1545Subscription;
+import au.id.micolous.metrodroid.transit.en1545.En1545Transaction;
+import au.id.micolous.metrodroid.ui.ListItem;
 import au.id.micolous.metrodroid.util.Utils;
 
-public class RavKavTransitData extends TransitData {
+// Reference: https://github.com/L1L1/cardpeek/blob/master/dot_cardpeek_dir/scripts/calypso/c376n3.lua
+// supplemented with personal experimentation
+public class RavKavTransitData extends Calypso1545TransitData {
     // 376 = Israel
     private static final int RAVKAV_NETWORK_ID_A = 0x37602;
     private static final int RAVKAV_NETWORK_ID_B = 0x37603;
-    private final String mSerial;
-    private final int mBalance;
-    private final List<RavKavTrip> mTrips;
 
     public static final CardInfo CARD_INFO = new CardInfo.Builder()
             .setImageId(R.drawable.ravkav_card)
@@ -64,27 +67,23 @@ public class RavKavTransitData extends TransitData {
         }
     };
 
+    private static final En1545Container TICKETING_ENV_FIELDS = new En1545Container(
+            new En1545FixedInteger("EnvVersionNumber", 3),
+            new En1545FixedInteger("EnvNetworkId", 20),
+            new En1545FixedInteger("UnknownB", 26),
+            En1545FixedInteger.date("EnvApplicationIssue"),
+            En1545FixedInteger.date("EnvApplicationValidityEnd"),
+            new En1545FixedInteger("PayMethod", 3),
+            new En1545FixedInteger("HolderBirthDate", 32),
+            new En1545FixedHex("UnknownC", 44),
+            new En1545FixedInteger("HolderIdNumber", 30)
+    );
 
     private RavKavTransitData(CalypsoApplication card) {
-        mSerial = getSerial(card);
-        mBalance = Utils.byteArrayToInt(card.getFile(CalypsoApplication.File.TICKETING_COUNTERS_1).getRecord(1).getData(),
-                0, 3);
-        mTrips = new ArrayList<>();
-        RavKavTrip last = null;
-        for (ISO7816Record record : card.getFile(CalypsoApplication.File.TICKETING_LOG).getRecords()) {
-            if (Utils.byteArrayToLong(record.getData(), 0, 8) == 0)
-                continue;
-            RavKavTrip t = new RavKavTrip(record.getData());
-            if (last != null && last.shouldBeMerged(t)) {
-                last.merge(t);
-                continue;
-            }
-            last = t;
-            mTrips.add(t);
-        }
+        super(card, TICKETING_ENV_FIELDS, null, getSerial(card));
     }
 
-    private static String getSerial(CalypsoApplication card) {
+    public static String getSerial(CalypsoApplication card) {
         return Long.toString(Utils.byteArrayToLong(card.getTagId()));
     }
 
@@ -92,11 +91,9 @@ public class RavKavTransitData extends TransitData {
         return new TransitIdentity(Utils.localizeString(R.string.card_name_ravkav), getSerial(card));
     }
 
-    public static boolean check(CalypsoApplication card) {
+    public static boolean check(byte[] ticketEnv) {
         try {
-            int networkID = Utils.getBitsFromBuffer(
-                    card.getFile(CalypsoApplication.File.TICKETING_ENVIRONMENT).getRecord(1).getData(),
-                    3, 20);
+            int networkID = Utils.getBitsFromBuffer(ticketEnv, 3, 20);
             return RAVKAV_NETWORK_ID_A == networkID || RAVKAV_NETWORK_ID_B == networkID;
         } catch (Exception e) {
             return false;
@@ -108,19 +105,22 @@ public class RavKavTransitData extends TransitData {
     }
 
     @Override
-    public Trip[] getTrips() {
-        return mTrips.toArray(new RavKavTrip[0]);
-    }
-
-    @Nullable
-    @Override
-    public TransitCurrency getBalance() {
-        return new TransitCurrency(mBalance, "ILS");
+    protected En1545Subscription createSubscription(CalypsoApplication card, byte[] data, En1545Parsed contractList, Integer listNum, int recordNum) {
+        byte[] ctr9 = card.getFile(CalypsoApplication.File.TICKETING_COUNTERS_9).getRecord(1).getData();
+        return new RavKavSubscription(data, Utils.byteArrayToInt(ctr9, (recordNum - 1) * 3, 3), recordNum);
     }
 
     @Override
-    public String getSerialNumber() {
-        return mSerial;
+    protected Trip createSpecialEvent(byte[] data) {
+        return null;
+    }
+
+    @Override
+    protected En1545Transaction createTrip(byte[] data) {
+        RavKavTransaction t = new RavKavTransaction(data);
+        if (t.shouldBeDropped())
+            return null;
+        return t;
     }
 
     @Override
@@ -129,15 +129,23 @@ public class RavKavTransitData extends TransitData {
     }
 
     @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        dest.writeString(mSerial);
-        dest.writeInt(mBalance);
-        dest.writeParcelableArray(mTrips.toArray(new RavKavTrip[0]), flags);
+    public List<ListItem> getInfo() {
+        ArrayList<ListItem> li = new ArrayList<>();
+        if (mTicketEnvParsed.getIntOrZero("HolderIdNumber") == 0)
+            li.add(new ListItem(R.string.ravkav_type, R.string.ravkav_anon));
+        else {
+            li.add(new ListItem(R.string.ravkav_type, R.string.ravkav_personal));
+        }
+        li.addAll(super.getInfo());
+        return li;
+    }
+
+    @Override
+    protected En1545Lookup getLookup() {
+        return RavKavLookup.getInstance();
     }
 
     private RavKavTransitData(Parcel parcel) {
-        mSerial = parcel.readString();
-        mBalance = parcel.readInt();
-        mTrips = Arrays.asList((RavKavTrip[]) parcel.readParcelableArray(RavKavTrip.class.getClassLoader()));
+        super(parcel);
     }
 }

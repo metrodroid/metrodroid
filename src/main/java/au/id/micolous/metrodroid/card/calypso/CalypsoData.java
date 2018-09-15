@@ -15,8 +15,6 @@ import au.id.micolous.farebot.R;
 public final class CalypsoData {
     public static final TimeZone TIME_ZONE = TimeZone.getTimeZone("UTC");
     public static final GregorianCalendar MANUFACTURE_EPOCH;
-    public static final GregorianCalendar TRAVEL_EPOCH;
-
 
     static {
         GregorianCalendar epoch = new GregorianCalendar(TIME_ZONE);
@@ -29,17 +27,6 @@ public final class CalypsoData {
         epoch.set(Calendar.MILLISECOND, 0);
 
         MANUFACTURE_EPOCH = epoch;
-
-        epoch = new GregorianCalendar(TIME_ZONE);
-        epoch.set(Calendar.YEAR, 1997);
-        epoch.set(Calendar.MONTH, Calendar.JANUARY);
-        epoch.set(Calendar.DAY_OF_MONTH, 1);
-        epoch.set(Calendar.HOUR_OF_DAY, 0);
-        epoch.set(Calendar.MINUTE, 0);
-        epoch.set(Calendar.SECOND, 0);
-        epoch.set(Calendar.MILLISECOND, 0);
-
-        TRAVEL_EPOCH = epoch;
     }
 
     public enum Manufacturer {
@@ -77,8 +64,9 @@ public final class CalypsoData {
         INNOVATRON((byte)0x21, R.string.calypso_manufacturer_innovatron),
         CALYPSO_3((byte)0x2E, R.string.calypso_manufacturer_calypso);
 
-        byte mId;
-        @StringRes int mCompanyName;
+        final byte mId;
+        @StringRes
+        final int mCompanyName;
         Manufacturer(byte id, @StringRes int companyName) {
             this.mId = id;
             this.mCompanyName = companyName;
