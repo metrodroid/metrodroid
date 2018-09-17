@@ -56,6 +56,7 @@ import au.id.micolous.metrodroid.transit.ravkav.RavKavTransitData;
 import au.id.micolous.metrodroid.transit.seq_go.SeqGoTransitData;
 import au.id.micolous.metrodroid.transit.smartrider.SmartRiderTransitData;
 import au.id.micolous.metrodroid.transit.suica.SuicaTransitData;
+import au.id.micolous.metrodroid.transit.tfi_leap.LeapTransitData;
 import au.id.micolous.metrodroid.transit.tmoney.TMoneyTransitData;
 import au.id.micolous.metrodroid.transit.troika.TroikaTransitData;
 import au.id.micolous.metrodroid.util.Utils;
@@ -79,6 +80,7 @@ public class CardInfo {
             HSLTransitData.CARD_INFO,
             SuicaTransitData.ICOCA_CARD_INFO,
             KMTTransitData.CARD_INFO,
+            LeapTransitData.CARD_INFO,
             ManlyFastFerryTransitData.CARD_INFO,
             ChcMetrocardTransitData.CARD_INFO, // Metrocard
             MykiTransitData.CARD_INFO,

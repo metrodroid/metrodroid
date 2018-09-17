@@ -77,6 +77,7 @@ public class MetrodroidApplication extends Application {
     public static final String PREF_LAST_READ_AT = "last_read_at";
     public static final String PREF_MFC_AUTHRETRY = "pref_mfc_authretry";
     public static final String PREF_MFC_FALLBACK = "pref_mfc_fallback";
+    public static final String PREF_RETRIEVE_LEAP_KEYS = "pref_retrieve_leap_keys";
 
     public static final String PREF_HIDE_CARD_NUMBERS = "pref_hide_card_numbers";
     public static final String PREF_OBFUSCATE_TRIP_DATES = "pref_obfuscate_trip_dates";

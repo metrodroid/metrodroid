@@ -46,6 +46,8 @@ import au.id.micolous.metrodroid.transit.opal.OpalTransitData;
 import au.id.micolous.metrodroid.transit.orca.OrcaTransitData;
 import au.id.micolous.metrodroid.transit.stub.AdelaideMetrocardStubTransitData;
 import au.id.micolous.metrodroid.transit.stub.AtHopStubTransitData;
+import au.id.micolous.metrodroid.transit.tfi_leap.LeapTransitData;
+import au.id.micolous.metrodroid.transit.tfi_leap.LeapUnlocker;
 import au.id.micolous.metrodroid.transit.unknown.UnauthorizedDesfireTransitData;
 import au.id.micolous.metrodroid.ui.HeaderListItem;
 import au.id.micolous.metrodroid.ui.ListItem;
@@ -135,6 +137,8 @@ public class DesfireCard extends Card {
                 List<DesfireFile> files = new ArrayList<>();
 
                 DesfireUnlocker unlocker = null;
+                if(LeapTransitData.earlyCheck(appId))
+                    unlocker = LeapUnlocker.createUnlocker(appId, manufData);
                 int[] fileIds = desfireTag.getFileList();
                 if (unlocker != null)
                     fileIds = unlocker.getOrder(desfireTag, fileIds);
@@ -205,6 +209,8 @@ public class DesfireCard extends Card {
             return OpalTransitData.CARD_INFO;
         if (MykiTransitData.earlyCheck(appIds))
             return MykiTransitData.CARD_INFO;
+        if (LeapTransitData.earlyCheck(appIds))
+            return LeapTransitData.CARD_INFO;
 
         return null;
     }
@@ -221,6 +227,8 @@ public class DesfireCard extends Card {
             return OpalTransitData.parseTransitIdentity(this);
         if (MykiTransitData.check(this))
             return MykiTransitData.parseTransitIdentity(this);
+        if (LeapTransitData.check(this))
+            return LeapTransitData.parseTransitIdentity(this);
 
         // Stub card types go last
         if (AdelaideMetrocardStubTransitData.check(this))
@@ -245,6 +253,8 @@ public class DesfireCard extends Card {
             return new OpalTransitData(this);
         if (MykiTransitData.check(this))
             return new MykiTransitData(this);
+        if (LeapTransitData.check(this))
+            return new LeapTransitData(this);
 
         // Stub card types go last
         if (AdelaideMetrocardStubTransitData.check(this))
