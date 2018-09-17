@@ -64,6 +64,7 @@ import au.id.micolous.metrodroid.transit.ovc.OVChipTransitData;
 import au.id.micolous.metrodroid.transit.podorozhnik.PodorozhnikTransitData;
 import au.id.micolous.metrodroid.transit.seq_go.SeqGoTransitData;
 import au.id.micolous.metrodroid.transit.smartrider.SmartRiderTransitData;
+import au.id.micolous.metrodroid.transit.strelka.StrelkaTransitData;
 import au.id.micolous.metrodroid.transit.troika.TroikaHybridTransitData;
 import au.id.micolous.metrodroid.transit.troika.TroikaTransitData;
 import au.id.micolous.metrodroid.transit.unknown.BlankClassicTransitData;
@@ -391,12 +392,11 @@ public class ClassicCard extends Card {
         } else if (SmartRiderTransitData.check(this)) {
             return SmartRiderTransitData.parseTransitIdentity(this);
         } else if (TroikaTransitData.check(this)) {
-            if (PodorozhnikTransitData.check(this)) {
-                return TroikaHybridTransitData.parseTransitIdentity(this);
-            }
-            return TroikaTransitData.parseTransitIdentity(this);
+            return TroikaHybridTransitData.parseTransitIdentity(this);
         } else if (PodorozhnikTransitData.check(this)) {
             return PodorozhnikTransitData.parseTransitIdentity(this);
+        } else if (StrelkaTransitData.check(this)) {
+            return StrelkaTransitData.parseTransitIdentity(this);
         } else if (UnauthorizedClassicTransitData.check(this)) {
             // This check must be THIRD TO LAST.
             //
@@ -454,12 +454,12 @@ public class ClassicCard extends Card {
         } else if (SmartRiderTransitData.check(this)) {
             return new SmartRiderTransitData(this);
         } else if (TroikaTransitData.check(this)) {
-            if (PodorozhnikTransitData.check(this)) {
-                return new TroikaHybridTransitData(this);
-            }
-            return new TroikaTransitData(this);
+            // This class will figure out details
+            return new TroikaHybridTransitData(this);
         } else if (PodorozhnikTransitData.check(this)) {
             return new PodorozhnikTransitData(this);
+        } else if (StrelkaTransitData.check(this)) {
+            return new StrelkaTransitData(this);
         } else if (UnauthorizedClassicTransitData.check(this)) {
             // This check must be THIRD TO LAST.
             //

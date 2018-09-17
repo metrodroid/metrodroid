@@ -40,6 +40,7 @@ import au.id.micolous.metrodroid.transit.clipper.ClipperTransitData;
 import au.id.micolous.metrodroid.transit.edy.EdyTransitData;
 import au.id.micolous.metrodroid.transit.ezlink.EZLinkTransitData;
 import au.id.micolous.metrodroid.transit.hsl.HSLTransitData;
+import au.id.micolous.metrodroid.transit.strelka.StrelkaTransitData;
 import au.id.micolous.metrodroid.transit.yvr_compass.CompassUltralightTransitData;
 import au.id.micolous.metrodroid.transit.kmt.KMTTransitData;
 import au.id.micolous.metrodroid.transit.lax_tap.LaxTapTransitData;
@@ -94,6 +95,7 @@ public class CardInfo {
             RavKavTransitData.CARD_INFO,
             NewShenzhenTransitData.CARD_INFO, // Shenzhen Tong
             SmartRiderTransitData.SMARTRIDER_CARD_INFO,
+            StrelkaTransitData.CARD_INFO,
             SuicaTransitData.SUICA_CARD_INFO,
             LaxTapTransitData.CARD_INFO, // TAP
             TMoneyTransitData.CARD_INFO,
