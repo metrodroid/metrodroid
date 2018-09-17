@@ -397,6 +397,8 @@ public class ClassicCard extends Card {
             return PodorozhnikTransitData.parseTransitIdentity(this);
         } else if (StrelkaTransitData.check(this)) {
             return StrelkaTransitData.parseTransitIdentity(this);
+        } else if (BilheteUnicoSPTransitData.check(this)) {
+            return BilheteUnicoSPTransitData.parseTransitIdentity(this);
         } else if (UnauthorizedClassicTransitData.check(this)) {
             // This check must be THIRD TO LAST.
             //
@@ -412,9 +414,7 @@ public class ClassicCard extends Card {
             //
             // This is for agencies who don't have identifying "magic" in their card.
             String fallback = getFallbackReader();
-            if (fallback.equals("bilhete_unico")) {
-                return BilheteUnicoSPTransitData.parseTransitIdentity(this);
-            } else if (fallback.equals("myway") || fallback.equals("smartrider")) {
+            if (fallback.equals("myway") || fallback.equals("smartrider")) {
                 // This has a proper check now, but is included for legacy reasons.
                 //
                 // Before the introduction of key-based detection for these cards, Metrodroid did
@@ -460,6 +460,8 @@ public class ClassicCard extends Card {
             return new PodorozhnikTransitData(this);
         } else if (StrelkaTransitData.check(this)) {
             return new StrelkaTransitData(this);
+        } else if (BilheteUnicoSPTransitData.check(this)) {
+            return new BilheteUnicoSPTransitData(this);
         } else if (UnauthorizedClassicTransitData.check(this)) {
             // This check must be THIRD TO LAST.
             //
@@ -475,9 +477,7 @@ public class ClassicCard extends Card {
             //
             // This is for agencies who don't have identifying "magic" in their card.
             String fallback = getFallbackReader();
-            if (fallback.equals("bilhete_unico")) {
-                return new BilheteUnicoSPTransitData(this);
-            } else if (fallback.equals("myway")) {
+            if (fallback.equals("myway")) {
                 // TODO: Replace this with a proper check, and take out of fallback mode.
                 return new SmartRiderTransitData(this);
             }

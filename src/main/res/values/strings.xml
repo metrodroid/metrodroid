@@ -291,13 +291,11 @@
 
     <string-array name="mfc_fallbacks">
         <item>None (disabled)</item>
-        <item>Bilhete Único (São Paulo, Brazil)</item>
         <item>SmartRider (WA, Australia), MyWay (ACT, Australia)</item>
     </string-array>
 
     <string-array name="mfc_fallback_values" translatable="false">
         <item>null</item>
-        <item>bilhete_unico</item>
         <item>smartrider</item>
     </string-array>
 
@@ -1034,4 +1032,6 @@
     <string name="classic_key_format_a">Key (A): %s</string>
     <string name="classic_key_format_b">Key (B): %s</string>
     <string name="classic_key_format">Key: %s</string>
+    <string name="trip_counter">Trips counter</string>
+    <string name="refill_counter">Refill counter</string>
 </resources>

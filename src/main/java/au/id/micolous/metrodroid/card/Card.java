@@ -44,8 +44,10 @@ import org.simpleframework.xml.Serializer;
 
 import java.io.StringWriter;
 import java.util.Calendar;
+import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.Locale;
+import java.util.TimeZone;
 
 public abstract class Card {
     private static String TAG = Card.class.getName();
