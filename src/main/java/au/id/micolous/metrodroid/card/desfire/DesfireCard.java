@@ -134,10 +134,16 @@ public class DesfireCard extends Card {
 
                 List<DesfireFile> files = new ArrayList<>();
 
+                DesfireUnlocker unlocker = null;
                 int[] fileIds = desfireTag.getFileList();
+                if (unlocker != null)
+                    fileIds = unlocker.getOrder(desfireTag, fileIds);
                 maxProgress += fileIds.length;
+                List<DesfireAuthLog> authLog = new ArrayList<>();
                 for (int fileId : fileIds) {
                     feedbackInterface.updateProgressBar(progress, maxProgress);
+                    if (unlocker != null)
+                        unlocker.unlock(desfireTag, files, fileId, authLog);
                     DesfireFileSettings settings = null;
                     try {
                         settings = desfireTag.getFileSettings(fileId);
@@ -163,7 +169,7 @@ public class DesfireCard extends Card {
                 DesfireFile[] filesArray = new DesfireFile[files.size()];
                 files.toArray(filesArray);
 
-                apps.add(new DesfireApplication(appId, filesArray));
+                apps.add(new DesfireApplication(appId, filesArray, authLog));
             }
 
             appsArray = new DesfireApplication[apps.size()];

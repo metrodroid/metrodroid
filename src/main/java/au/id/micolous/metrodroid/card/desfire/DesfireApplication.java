@@ -41,18 +41,23 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+@SuppressWarnings("FieldCanBeLocal")
 @Root(name = "application")
 public class DesfireApplication {
     @Attribute(name = "id")
     private String mId;
     @ElementList(name = "files")
     private List<DesfireFile> mFiles;
+    @SuppressWarnings("unused")
+    @ElementList(name = "auth-log", required = false)
+    private List<DesfireAuthLog> mAuthLog;
 
     private DesfireApplication() { /* For XML Serializer */ }
 
-    public DesfireApplication(int id, DesfireFile[] files) {
+    public DesfireApplication(int id, DesfireFile[] files, List<DesfireAuthLog> authLog) {
         mId = String.valueOf(id);
         mFiles = Arrays.asList(files);
+        mAuthLog = authLog;
     }
 
     public int getId() {
