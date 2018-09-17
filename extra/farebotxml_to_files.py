@@ -114,13 +114,16 @@ def zipify(input_xml, output_zipf, mfcdump, mobib):
       sectors_i = sorted(sectors.findall('sector'), key=lambda e: int(e.get('index')))
       for sector in sectors_i:
         sector_id = sector.get('index')
-        if sector.get('unauthorized') == 'true':
+        if sector.get('unauthorized') == 'true' or sector.get('invalid') == 'true':
           if mfcdump:
             print ('locked sector found, cannot recreate dump')
             return
 
           # Locked sector, skip and leave marker
-          output_zip.writestr(join(card_dir, sector_id, '.unauthorized'), '')
+          marker = '.invalid'
+          if sector.get('unauthorized') == 'true':
+            marker = '.unauthorized'
+          output_zip.writestr(join(card_dir, sector_id, marker), '')
           continue
 
         blocks = sorted(sector.find('blocks').findall('block'), key=lambda e: int(e.get('index')))
