@@ -304,58 +304,7 @@ public class DesfireCard extends Card {
     public List<ListItem> getRawData() {
         List<ListItem> li = new ArrayList<>();
         for (DesfireApplication app : mApplications) {
-            List<ListItem> ali = new ArrayList<>();
-
-            for (DesfireFile file : app.getFiles()) {
-                if ((file instanceof InvalidDesfireFile) && !(file instanceof UnauthorizedDesfireFile)) {
-                    ali.add(new ListItem(Utils.localizeString(R.string.invalid_file_title_format,
-                            "0x" + Integer.toHexString(file.getId()),
-                            ((InvalidDesfireFile) file).getErrorMessage()), null));
-                    continue;
-                }
-
-                String title = Utils.localizeString(R.string.file_title_format,
-                        "0x" + Integer.toHexString(file.getId()));
-                String subtitle;
-
-                if (file instanceof UnauthorizedDesfireFile) {
-                    title = Utils.localizeString(R.string.unauthorized_file_title_format,
-                            "0x" + Integer.toHexString(file.getId()));
-                }
-
-                if (file.getFileSettings() instanceof StandardDesfireFileSettings) {
-                    StandardDesfireFileSettings fileSettings = (StandardDesfireFileSettings) file.getFileSettings();
-                    subtitle = Utils.localizePlural(R.plurals.desfire_standard_format,
-                                fileSettings.getFileSize(),
-                                Utils.localizeString(fileSettings.getFileTypeString()),
-                                fileSettings.getFileSize());
-                } else if (file.getFileSettings() instanceof RecordDesfireFileSettings) {
-                    RecordDesfireFileSettings fileSettings = (RecordDesfireFileSettings) file.getFileSettings();
-                    subtitle = Utils.localizePlural(R.plurals.desfire_record_format,
-                            fileSettings.getCurRecords(),
-                            Utils.localizeString(fileSettings.getFileTypeString()),
-                            fileSettings.getCurRecords(),
-                            fileSettings.getMaxRecords(),
-                            fileSettings.getRecordSize());
-                } else if (file.getFileSettings() instanceof ValueDesfireFileSettings) {
-                    ValueDesfireFileSettings fileSettings = (ValueDesfireFileSettings) file.getFileSettings();
-
-                    subtitle = Utils.localizeString(R.string.desfire_value_format,
-                            Utils.localizeString(fileSettings.getFileTypeString()),
-                            fileSettings.getLowerLimit(),
-                            fileSettings.getUpperLimit(),
-                            fileSettings.getLimitedCreditValue(),
-                            Utils.localizeString(fileSettings.getLimitedCreditEnabled() ? R.string.enabled : R.string.disabled));
-                } else {
-                    subtitle = Utils.localizeString(R.string.desfire_unknown_file);
-                }
-
-                String data = null;
-                if (!(file instanceof UnauthorizedDesfireFile))
-                    data = Utils.getHexString(file.getData());
-                ali.add(ListItemRecursive.collapsedValue(title, subtitle, data));
-            }
-
+            List<ListItem> ali = app.getRawData();
             li.add(new ListItemRecursive(
                     Utils.localizeString(R.string.application_title_format,
                             "0x" + Integer.toHexString(app.getId())),
