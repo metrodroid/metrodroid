@@ -60,6 +60,10 @@ public class DesfireApplication {
         mAuthLog = authLog;
     }
 
+    public DesfireApplication(int id, DesfireFile[] files) {
+	this(id, files, null);
+    }
+
     public int getId() {
         return Integer.parseInt(mId);
     }
