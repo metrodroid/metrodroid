@@ -369,6 +369,12 @@
     <string name="desfire_linear_record">Linear record</string>
     <string name="desfire_cyclic_record">Cyclic record</string>
     <string name="desfire_unknown_file">Unknown file type</string>
+    <string name="desfire_challenge">Challenge</string>
+    <string name="desfire_response">Response</string>
+    <string name="desfire_confirmation">Confirmation</string>
+    <string name="desfire_keyex">Key exchange</string>
+    <string name="desfire_key_number">Key %s</string>
+
     <!-- Type: Standard file, Length: 16 bytes -->
     <plurals name="desfire_standard_format">
         <item quantity="one">Type: %1$s, Length: %2$s byte</item>

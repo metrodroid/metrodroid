@@ -22,6 +22,13 @@ package au.id.micolous.metrodroid.card.desfire;
 import org.simpleframework.xml.Element;
 import org.simpleframework.xml.Root;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import au.id.micolous.farebot.R;
+import au.id.micolous.metrodroid.ui.ListItem;
+import au.id.micolous.metrodroid.ui.ListItemRecursive;
+import au.id.micolous.metrodroid.util.Utils;
 import au.id.micolous.metrodroid.xml.Base64String;
 
 @SuppressWarnings({"WeakerAccess", "CanBeFinal", "unused"})
@@ -45,5 +52,19 @@ public class DesfireAuthLog {
 
     public DesfireAuthLog() {
         /* For XML serializer */
+    }
+
+    public ListItem getRawData() {
+        List<ListItem> vals = new ArrayList<>();
+        if (mChallenge != null)
+            vals.add(ListItemRecursive.collapsedValue(R.string.desfire_challenge, Utils.getHexString(mChallenge.getData())));
+        if (mResponse != null)
+            vals.add(ListItemRecursive.collapsedValue(R.string.desfire_response, Utils.getHexString(mResponse.getData())));
+        if (mConfirm != null)
+            vals.add(ListItemRecursive.collapsedValue(R.string.desfire_confirmation, Utils.getHexString(mConfirm.getData())));
+
+        return new ListItemRecursive(R.string.desfire_keyex, Utils.localizeString(R.string.desfire_key_number,
+                "0x" + Integer.toHexString(mKeyId)),
+                vals);
     }
 }

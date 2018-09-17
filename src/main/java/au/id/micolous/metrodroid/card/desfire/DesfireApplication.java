@@ -128,6 +128,11 @@ public class DesfireApplication {
                 data = Utils.getHexString(file.getData());
             ali.add(ListItemRecursive.collapsedValue(title, subtitle, data));
         }
+        if (mAuthLog != null) {
+            for (DesfireAuthLog authLog : mAuthLog) {
+                ali.add(authLog.getRawData());
+            }
+        }
         return ali;
     }
 }
