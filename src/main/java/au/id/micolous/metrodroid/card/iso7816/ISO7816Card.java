@@ -32,6 +32,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.List;
+import java.util.Locale;
 
 import au.id.micolous.farebot.R;
 import au.id.micolous.metrodroid.card.Card;
@@ -205,7 +206,12 @@ public class ISO7816Card extends Card {
                 for (ISO7816Record record : records)
                     recList.add(ListItemRecursive.collapsedValue(Utils.localizeString(R.string.record_title_format, record.getIndex()),
                             Utils.getHexString(record.getData())));
-                rawAppData.add(new ListItemRecursive(Utils.localizeString(R.string.file_title_format, file.getSelector().formatString()),
+                ISO7816Selector selector = file.getSelector();
+                String selectorStr = selector.formatString();
+                String fileDesc = app.nameFile(selector);
+                if (fileDesc != null)
+                    selectorStr = String.format(Locale.ENGLISH, "%s (%s)", selectorStr, fileDesc);
+                rawAppData.add(new ListItemRecursive(Utils.localizeString(R.string.file_title_format, selectorStr),
                         Utils.localizePlural(R.plurals.record_count, records.size(), records.size()),
                         recList));
             }
