@@ -87,7 +87,7 @@ for station in mapping:
 
 mapping_f.close()
 
-print('%d out of %d stations dropped: %s' % (len(dropped_stations), total_stations, dropped_stations))
+print('%d out of %d stations dropped: %s' % (len(dropped_stations), total_stations, sorted(dropped_stations)))
 
 print('Building index...')
 db.finalise()
