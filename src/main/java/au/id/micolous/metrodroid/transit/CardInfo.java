@@ -40,6 +40,7 @@ import au.id.micolous.metrodroid.transit.clipper.ClipperTransitData;
 import au.id.micolous.metrodroid.transit.edy.EdyTransitData;
 import au.id.micolous.metrodroid.transit.ezlink.EZLinkTransitData;
 import au.id.micolous.metrodroid.transit.hsl.HSLTransitData;
+import au.id.micolous.metrodroid.transit.msp_goto.MspGotoTransitData;
 import au.id.micolous.metrodroid.transit.yvr_compass.CompassUltralightTransitData;
 import au.id.micolous.metrodroid.transit.kmt.KMTTransitData;
 import au.id.micolous.metrodroid.transit.lax_tap.LaxTapTransitData;
@@ -76,6 +77,7 @@ public class CardInfo {
             EdyTransitData.CARD_INFO,
             EZLinkTransitData.EZ_LINK_CARD_INFO,
             SeqGoTransitData.CARD_INFO, // Go card
+            MspGotoTransitData.CARD_INFO, // Go-to card
             HSLTransitData.CARD_INFO,
             SuicaTransitData.ICOCA_CARD_INFO,
             KMTTransitData.CARD_INFO,

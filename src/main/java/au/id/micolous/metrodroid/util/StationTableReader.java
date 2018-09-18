@@ -56,7 +56,9 @@ public class StationTableReader {
 
     private static final Map<String,StationTableReader> mSTRs = new HashMap<>();
 
-    static private StationTableReader getSTR(String name) {
+    static private StationTableReader getSTR(@Nullable String name) {
+        if (name == null)
+            return null;
         synchronized (mSTRs) {
             if (mSTRs.containsKey(name))
                 return mSTRs.get(name);
@@ -76,7 +78,7 @@ public class StationTableReader {
     }
 
     @Nullable
-    public static Station getStationNoFallback(@NonNull String reader, int id,
+    public static Station getStationNoFallback(@Nullable String reader, int id,
                                                String humanReadableId) {
         StationTableReader str = StationTableReader.getSTR(reader);
         if (str == null)
@@ -89,12 +91,12 @@ public class StationTableReader {
     }
 
     @Nullable
-    public static Station getStationNoFallback(@NonNull String reader, int id) {
+    public static Station getStationNoFallback(@Nullable String reader, int id) {
         return getStationNoFallback(reader, id, "0x" + Integer.toHexString(id));
     }
 
     @NonNull
-    public static Station getStation(@NonNull String reader, int id, String humanReadableId) {
+    public static Station getStation(@Nullable String reader, int id, String humanReadableId) {
         Station s = getStationNoFallback(reader, id, humanReadableId);
         if (s == null)
             return Station.unknown(humanReadableId);
@@ -102,7 +104,7 @@ public class StationTableReader {
     }
 
     @NonNull
-    public static Station getStation(@NonNull String reader, int id) {
+    public static Station getStation(@Nullable String reader, int id) {
         return getStation(reader, id, "0x" + Integer.toHexString(id));
     }
 
@@ -110,7 +112,7 @@ public class StationTableReader {
         return Utils.localizeString(R.string.unknown_format, "0x" + Integer.toHexString(id));
     }
 
-    public static Trip.Mode getOperatorDefaultMode(String reader, int id) {
+    public static Trip.Mode getOperatorDefaultMode(@Nullable String reader, int id) {
         if (reader == null)
             return Trip.Mode.OTHER;
         StationTableReader str = StationTableReader.getSTR(reader);
@@ -245,9 +247,7 @@ public class StationTableReader {
         return Stations.Station.parseDelimitedFrom(mTable);
     }
 
-    public static String getLineName(String reader, int id) {
-        if (reader == null)
-            return fallbackName(id);
+    public static String getLineName(@Nullable String reader, int id) {
         StationTableReader str = getSTR(reader);
         if (str == null)
             return fallbackName(id);
@@ -257,9 +257,7 @@ public class StationTableReader {
         return str.selectBestName(pl.getName(), false);
     }
 
-    public static Trip.Mode getLineMode(String reader, int id) {
-        if (reader == null)
-            return null;
+    public static Trip.Mode getLineMode(@Nullable String reader, int id) {
         StationTableReader str = getSTR(reader);
         if (str == null)
             return null;
@@ -280,9 +278,7 @@ public class StationTableReader {
         return Trip.Mode.valueOf(po.getDefaultTransport().toString());
     }
 
-    public static String getOperatorName(String reader, int id, boolean isShort) {
-        if (reader == null)
-            return fallbackName(id);
+    public static String getOperatorName(@Nullable String reader, int id, boolean isShort) {
         StationTableReader str = StationTableReader.getSTR(reader);
         if (str == null)
             return fallbackName(id);

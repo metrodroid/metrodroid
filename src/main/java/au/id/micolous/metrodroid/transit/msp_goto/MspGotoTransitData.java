@@ -1,25 +1,9 @@
-/*
- * LaxTapTransitData.java
- *
- * Copyright 2015-2016 Michael Farrell <micolous+git@gmail.com>
- *
- * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
- */
-package au.id.micolous.metrodroid.transit.lax_tap;
+package au.id.micolous.metrodroid.transit.msp_goto;
 
-import android.net.Uri;
 import android.os.Parcel;
+
+import java.util.Arrays;
+import java.util.TimeZone;
 
 import au.id.micolous.farebot.R;
 import au.id.micolous.metrodroid.card.CardType;
@@ -31,25 +15,16 @@ import au.id.micolous.metrodroid.transit.nextfare.NextfareTransitData;
 import au.id.micolous.metrodroid.transit.nextfare.NextfareTrip;
 import au.id.micolous.metrodroid.transit.nextfare.record.NextfareTransactionRecord;
 
-import java.util.Arrays;
-import java.util.TimeZone;
-
-/**
- * Los Angeles Transit Access Pass (LAX TAP) card.
- * https://github.com/micolous/metrodroid/wiki/Transit-Access-Pass
- */
-
-public class LaxTapTransitData extends NextfareTransitData {
-
-    public static final String NAME = "TAP";
-    public static final String LONG_NAME = "Transit Access Pass";
-    public static final Creator<LaxTapTransitData> CREATOR = new Creator<LaxTapTransitData>() {
-        public LaxTapTransitData createFromParcel(Parcel parcel) {
-            return new LaxTapTransitData(parcel);
+public class MspGotoTransitData extends NextfareTransitData {
+    public static final String NAME = "Go-to";
+    public static final String LONG_NAME = "Minessota Go-to";
+    public static final Creator<MspGotoTransitData> CREATOR = new Creator<MspGotoTransitData>() {
+        public MspGotoTransitData createFromParcel(Parcel parcel) {
+            return new MspGotoTransitData(parcel);
         }
 
-        public LaxTapTransitData[] newArray(int size) {
-            return new LaxTapTransitData[size];
+        public MspGotoTransitData[] newArray(int size) {
+            return new MspGotoTransitData[size];
         }
     };
     static final byte[] BLOCK1 = {
@@ -59,26 +34,28 @@ public class LaxTapTransitData extends NextfareTransitData {
             0x01, 0x01
     };
     static final byte[] BLOCK2 = {
-            0x00, 0x00, 0x00, 0x00
+            0x3f, 0x33, 0x22, 0x11,
+            -0x40, -0x34, -0x23, -0x12,
+            0x3f, 0x33, 0x22, 0x11,
+            0x01, -2, 0x01, -2
     };
 
     public static final CardInfo CARD_INFO = new CardInfo.Builder()
-            .setImageId(R.drawable.laxtap_card)
-            // Using the short name (TAP) may be ambiguous
-            .setName(LaxTapTransitData.LONG_NAME)
-            .setLocation(R.string.location_los_angeles)
+            // Using the short name (Goto) may be ambiguous
+            .setName(LONG_NAME)
+            .setLocation(R.string.location_minneapolis)
             .setCardType(CardType.MifareClassic)
             .setKeysRequired()
             .setPreview()
             .build();
 
-    static final TimeZone TIME_ZONE = TimeZone.getTimeZone("America/Los_Angeles");
+    static final TimeZone TIME_ZONE = TimeZone.getTimeZone("America/Chicago");
 
-    public LaxTapTransitData(Parcel parcel) {
+    public MspGotoTransitData(Parcel parcel) {
         super(parcel, "USD");
     }
 
-    public LaxTapTransitData(ClassicCard card) {
+    public MspGotoTransitData(ClassicCard card) {
         super(card);
     }
 
@@ -94,7 +71,7 @@ public class LaxTapTransitData extends NextfareTransitData {
             }
 
             byte[] block2 = card.getSector(0).getBlock(2).getData();
-            return Arrays.equals(Arrays.copyOfRange(block2, 0, 4), BLOCK2);
+            return Arrays.equals(block2, BLOCK2);
         } catch (UnauthorizedException ex) {
             // It is not possible to identify the card without a key
             return false;
@@ -106,7 +83,7 @@ public class LaxTapTransitData extends NextfareTransitData {
 
     @Override
     protected NextfareTrip newTrip() {
-        return new LaxTapTrip();
+        return new NextfareTrip("USD", null);
     }
 
     @Override
@@ -119,18 +96,6 @@ public class LaxTapTransitData extends NextfareTransitData {
     @Override
     public String getCardName() {
         return NAME;
-    }
-
-    /*
-    @Override
-    public Uri getMoreInfoPage() {
-        return Uri.parse("https://micolous.github.io/metrodroid/laxtap");
-    }
-    */
-
-    @Override
-    public Uri getOnlineServicesPage() {
-        return Uri.parse("https://www.taptogo.net/");
     }
 
     @Override
