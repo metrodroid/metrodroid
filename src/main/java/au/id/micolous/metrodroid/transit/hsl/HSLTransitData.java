@@ -176,39 +176,39 @@ public class HSLTransitData extends TransitData implements Parcelable {
 
         try {
             data = desfireCard.getApplication(APP_ID).getFile(0x03).getData();
-            mArvoMystery1 = Utils.byteArrayToInt(data, 0, 9);
-            mArvoDiscoGroup = Utils.byteArrayToInt(data, 9, 5);
-            mArvoDuration = Utils.byteArrayToInt(data, 14, 13);
-            mArvoRegional = Utils.byteArrayToInt(data, 27, 5);
+            mArvoMystery1 = Utils.getBitsFromBuffer(data, 0, 9);
+            mArvoDiscoGroup = Utils.getBitsFromBuffer(data, 9, 5);
+            mArvoDuration = Utils.getBitsFromBuffer(data, 14, 13);
+            mArvoRegional = Utils.getBitsFromBuffer(data, 27, 5);
 
             mArvoExit = cardDateToTimestamp(
-                    Utils.byteArrayToInt(data, 32, 14),
-                    Utils.byteArrayToInt(data, 46, 11));
+                    Utils.getBitsFromBuffer(data, 32, 14),
+                    Utils.getBitsFromBuffer(data, 46, 11));
 
             //68 price, 82 zone?
             mArvoPurchasePrice = Utils.getBitsFromBuffer(data, 68, 14);
-            //mArvoDiscoGroup = Utils.byteArrayToInt(data, 82, 6);
+            //mArvoDiscoGroup = Utils.getBitsFromBuffer(data, 82, 6);
             Calendar mArvoPurchase = cardDateToCalendar(
-                    Utils.byteArrayToInt(data, 88, 14),
-                    Utils.byteArrayToInt(data, 102, 11));
+                    Utils.getBitsFromBuffer(data, 88, 14),
+                    Utils.getBitsFromBuffer(data, 102, 11));
 
             Calendar mArvoExpire = cardDateToCalendar(
-                    Utils.byteArrayToInt(data, 113, 14),
-                    Utils.byteArrayToInt(data, 127, 11));
+                    Utils.getBitsFromBuffer(data, 113, 14),
+                    Utils.getBitsFromBuffer(data, 127, 11));
 
             mArvoPax = Utils.getBitsFromBuffer(data, 138, 6);
 
             mArvoXfer = cardDateToTimestamp(
-                    Utils.byteArrayToInt(data, 144, 14),
-                    Utils.byteArrayToInt(data, 158, 11));
+                    Utils.getBitsFromBuffer(data, 144, 14),
+                    Utils.getBitsFromBuffer(data, 158, 11));
 
             mArvoVehicleNumber = Utils.getBitsFromBuffer(data, 169, 14);
 
-            mArvoUnknown = Utils.byteArrayToInt(data, 183, 2);
+            mArvoUnknown = Utils.getBitsFromBuffer(data, 183, 2);
 
-            mArvoLineJORE = Utils.byteArrayToInt(data, 185, 14);
-            mArvoJOREExt = Utils.byteArrayToInt(data, 199, 4);
-            mArvoDirection = Utils.byteArrayToInt(data, 203, 1);
+            mArvoLineJORE = Utils.getBitsFromBuffer(data, 185, 14);
+            mArvoJOREExt = Utils.getBitsFromBuffer(data, 199, 4);
+            mArvoDirection = Utils.getBitsFromBuffer(data, 203, 1);
 
             if (balanceIndex > -1) {
                 mTrips.get(balanceIndex).mLine = Long.toString(mArvoLineJORE);
@@ -240,14 +240,14 @@ public class HSLTransitData extends TransitData implements Parcelable {
         try {
             data = desfireCard.getApplication(APP_ID).getFile(0x01).getData();
 
-            if (Utils.byteArrayToInt(data, 19, 14) == 0 && Utils.byteArrayToInt(data, 67, 14) == 0) {
+            if (Utils.getBitsFromBuffer(data, 19, 14) == 0 && Utils.getBitsFromBuffer(data, 67, 14) == 0) {
                 boolean mKausiNoData = true;
             }
 
-            long mKausiStart = cardDateToTimestamp(Utils.byteArrayToInt(data, 19, 14), 0);
-            long mKausiEnd = cardDateToTimestamp(Utils.byteArrayToInt(data, 33, 14), 0);
-            long mKausiPrevStart = cardDateToTimestamp(Utils.byteArrayToInt(data, 67, 14), 0);
-            long mKausiPrevEnd = cardDateToTimestamp(Utils.byteArrayToInt(data, 81, 14), 0);
+            long mKausiStart = cardDateToTimestamp(Utils.getBitsFromBuffer(data, 19, 14), 0);
+            long mKausiEnd = cardDateToTimestamp(Utils.getBitsFromBuffer(data, 33, 14), 0);
+            long mKausiPrevStart = cardDateToTimestamp(Utils.getBitsFromBuffer(data, 67, 14), 0);
+            long mKausiPrevEnd = cardDateToTimestamp(Utils.getBitsFromBuffer(data, 81, 14), 0);
             if (mKausiPrevStart > mKausiStart) {
                 long temp = mKausiStart;
                 long temp2 = mKausiEnd;
@@ -258,22 +258,22 @@ public class HSLTransitData extends TransitData implements Parcelable {
             }
             boolean mHasKausi = mKausiEnd > (System.currentTimeMillis() / 1000.0);
             Calendar mKausiPurchase = cardDateToCalendar(
-                    Utils.byteArrayToInt(data, 110, 14),
-                    Utils.byteArrayToInt(data, 124, 11));
-            int mKausiPurchasePrice = Utils.byteArrayToInt(data, 149, 15);
+                    Utils.getBitsFromBuffer(data, 110, 14),
+                    Utils.getBitsFromBuffer(data, 124, 11));
+            int mKausiPurchasePrice = Utils.getBitsFromBuffer(data, 149, 15);
             long mKausiLastUse = cardDateToTimestamp(
-                    Utils.byteArrayToInt(data, 192, 14),
-                    Utils.byteArrayToInt(data, 206, 11));
-            mKausiVehicleNumber = Utils.byteArrayToInt(data, 217, 14);
+                    Utils.getBitsFromBuffer(data, 192, 14),
+                    Utils.getBitsFromBuffer(data, 206, 11));
+            mKausiVehicleNumber = Utils.getBitsFromBuffer(data, 217, 14);
             //mTrips[0].mVehicleNumber = mArvoVehicleNumber;
 
-            mKausiUnknown = Utils.byteArrayToInt(data, 231, 2);
+            mKausiUnknown = Utils.getBitsFromBuffer(data, 231, 2);
 
-            mKausiLineJORE = Utils.byteArrayToInt(data, 233, 14);
+            mKausiLineJORE = Utils.getBitsFromBuffer(data, 233, 14);
             //mTrips[0].mLine = Long.toString(mArvoLineJORE).substring(1);
 
-            mKausiJOREExt = Utils.byteArrayToInt(data, 247, 4);
-            mKausiDirection = Utils.byteArrayToInt(data, 241, 1);
+            mKausiJOREExt = Utils.getBitsFromBuffer(data, 247, 4);
+            mKausiDirection = Utils.getBitsFromBuffer(data, 241, 1);
             if (seasonIndex > -1) {
                 mTrips.get(seasonIndex).mVehicleNumber = mKausiVehicleNumber;
                 mTrips.get(seasonIndex).mLine = Long.toString(mKausiLineJORE);
