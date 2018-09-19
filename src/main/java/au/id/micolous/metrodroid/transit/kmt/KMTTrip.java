@@ -142,10 +142,6 @@ public class KMTTrip extends Trip {
         return Utils.localizeString(R.string.kmt_agency);
     }
 
-    public boolean hasTime() {
-        return mTimestamp != null;
-    }
-
     public int describeContents() {
         return 0;
     }

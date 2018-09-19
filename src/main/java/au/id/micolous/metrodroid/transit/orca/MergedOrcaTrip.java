@@ -96,11 +96,6 @@ public class MergedOrcaTrip extends Trip {
     }
 
     @Override
-    public boolean hasTime() {
-        return mStartTrip.hasTime();
-    }
-
-    @Override
     public void writeToParcel(Parcel parcel, int flags) {
         mStartTrip.writeToParcel(parcel, flags);
         mEndTrip.writeToParcel(parcel, flags);
