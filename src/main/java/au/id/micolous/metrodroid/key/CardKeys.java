@@ -35,6 +35,11 @@ import org.json.JSONObject;
 import au.id.micolous.metrodroid.MetrodroidApplication;
 
 public abstract class CardKeys {
+    public static final String JSON_KEY_TYPE_KEY = "KeyType";
+    public static final String TYPE_MFC = "MifareClassic";
+    public static final String TYPE_MFC_STATIC = "MifareClassicStatic";
+    public static final String JSON_TAG_ID_KEY = "TagId";
+
     public static CardKeys forTagId(byte[] tagId) throws Exception {
         String tagIdString = Utils.getHexString(tagId);
         MetrodroidApplication app = MetrodroidApplication.getInstance();
@@ -52,7 +57,7 @@ public abstract class CardKeys {
 
         JSONObject keyJSON = new JSONObject(keyData);
 
-        if (cardType.equals("MifareClassic")) {
+        if (cardType.equals(TYPE_MFC)) {
             return ClassicCardKeys.fromJSON(keyJSON);
         }
 
