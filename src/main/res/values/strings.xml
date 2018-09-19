@@ -1027,4 +1027,13 @@
     <string name="classic_key_format_a">Key (A): %s</string>
     <string name="classic_key_format_b">Key (B): %s</string>
     <string name="classic_key_format">Key: %s</string>
+    <string name="add_key_raw">Raw</string>
+    <string name="add_key_json">JSON</string>
+    <string name="add_key_mct_static">Static from MCT</string>
+    <string name="invalid_json_key_type">Invalid JSON: key type missing</string>
+    <string name="invalid_json">Invalid JSON</string>
+    <string name="invalid_mct_static">Invalid MCT extended-std.key</string>
+    <string name="partial_keys">%s (partial)</string>
+    <string name="static_imported">Imported: %s</string>
+    <string name="static_keys">Static keys</string>
 </resources>

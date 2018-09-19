@@ -52,6 +52,7 @@ import au.id.micolous.metrodroid.card.TagReaderFeedbackInterface;
 import au.id.micolous.metrodroid.key.CardKeys;
 import au.id.micolous.metrodroid.key.ClassicCardKeys;
 import au.id.micolous.metrodroid.key.ClassicSectorKey;
+import au.id.micolous.metrodroid.key.ClassicStaticKeys;
 import au.id.micolous.metrodroid.transit.TransitData;
 import au.id.micolous.metrodroid.transit.TransitIdentity;
 import au.id.micolous.metrodroid.transit.bilhete_unico.BilheteUnicoSPTransitData;
@@ -134,16 +135,20 @@ public class ClassicCard extends Card {
             tech.connect();
 
             ClassicCardKeys keys = (ClassicCardKeys) CardKeys.forTagId(tagId);
+            ClassicStaticKeys staticKeys = null;
+            if (keys == null)
+                staticKeys = (ClassicStaticKeys) CardKeys.forStaticClassic();
 
+            int sectorCount = tech.getSectorCount();
             List<ClassicSector> sectors = new ArrayList<>();
             final int maxProgress = tech.getSectorCount() * 5;
 
-            for (int sectorIndex = 0; sectorIndex < tech.getSectorCount(); sectorIndex++) {
+            for (int sectorIndex = 0; sectorIndex < sectorCount; sectorIndex++) {
                 try {
                     ClassicSectorKey correctKey = null;
                     feedbackInterface.updateProgressBar(sectorIndex * 5, maxProgress);
 
-                    if (keys != null) {
+                    if (keys != null || staticKeys != null) {
                         feedbackInterface.updateStatusText(Utils.localizeString(R.string.mfc_have_key, sectorIndex));
                         // Try to authenticate with the sector multiple times, in case we have
                         // impaired communications with the card.
@@ -152,8 +157,17 @@ public class ClassicCard extends Card {
                         while (correctKey == null && retriesLeft-- > 0) {
                             // If we have a known key for the sector on the card, try this first.
                             Log.d(TAG, "Attempting authentication on sector " + sectorIndex + ", " + retriesLeft + " tries remain...");
-                            ClassicSectorKey sectorKey = keys.keyForSector(sectorIndex);
-                            if (sectorKey != null) {
+                            List <ClassicSectorKey> candidates;
+                            if (keys != null) {
+                                ClassicSectorKey sectorKey = keys.keyForSector(sectorIndex);
+                                if (sectorKey != null) {
+                                    candidates = Collections.singletonList(sectorKey);
+                                } else
+                                    candidates = Collections.emptyList();
+                            } else {
+                                candidates = staticKeys.getCandidates(sectorIndex);
+                            }
+                            for (ClassicSectorKey sectorKey : candidates) {
                                 if (sectorKey.getType().equals(ClassicSectorKey.TYPE_KEYA)) {
                                     if (tech.authenticateSectorWithKeyA(sectorIndex, sectorKey.getKey())) {
                                         correctKey = sectorKey;
@@ -248,6 +262,15 @@ public class ClassicCard extends Card {
                         for (int blockIndex = 0; blockIndex < tech.getBlockCountInSector(sectorIndex); blockIndex++) {
                             byte[] data = tech.readBlock(firstBlockIndex + blockIndex);
                             String type = ClassicBlock.TYPE_DATA; // FIXME
+                            // Sometimes the result is just a single byte 04
+                            // Reauthenticate if that happens
+                            if (data.length < 4) {
+                                if (correctKey.getType().equals(ClassicSectorKey.TYPE_KEYA))
+                                    tech.authenticateSectorWithKeyA(sectorIndex, correctKey.getKey());
+                                else
+                                    tech.authenticateSectorWithKeyB(sectorIndex, correctKey.getKey());
+                                data = tech.readBlock(firstBlockIndex + blockIndex);
+                            }
                             blocks.add(ClassicBlock.create(type, blockIndex, data));
                         }
                         sectors.add(new ClassicSector(sectorIndex, blocks.toArray(new ClassicBlock[blocks.size()]), correctKey.getKey(), correctKey.getType()));

@@ -34,7 +34,7 @@ public class ClassicSectorKey {
     private static final String TYPE = "type";
     private static final String KEY = "key";
     private String mType;
-    private byte[] mKey;
+    protected byte[] mKey;
 
     public ClassicSectorKey(String type, byte[] key) {
         mType = type;
@@ -57,7 +57,8 @@ public class ClassicSectorKey {
         try {
             JSONObject json = new JSONObject();
             json.put(TYPE, mType);
-            json.put(KEY, Utils.getHexString(mKey));
+            if (mKey != null)
+                json.put(KEY, Utils.getHexString(mKey));
             return json;
         } catch (Exception ex) {
             throw new RuntimeException(ex);
