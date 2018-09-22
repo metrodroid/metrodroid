@@ -31,7 +31,6 @@ import au.id.micolous.metrodroid.card.CardType;
 import au.id.micolous.metrodroid.card.desfire.DesfireCard;
 import au.id.micolous.metrodroid.transit.CardInfo;
 import au.id.micolous.metrodroid.card.desfire.DesfireApplication;
-import au.id.micolous.metrodroid.card.desfire.DesfireCard;
 import au.id.micolous.metrodroid.card.desfire.files.DesfireFile;
 import au.id.micolous.metrodroid.transit.TransitIdentity;
 import au.id.micolous.metrodroid.transit.stub.StubTransitData;
@@ -64,7 +63,7 @@ public class MykiTransitData extends StubTransitData {
             .setName(MykiTransitData.NAME)
             .setCardType(CardType.MifareDesfire)
             .setLocation(R.string.location_victoria_australia)
-            .setExtraNote(R.string.card_note_myki)
+            .setExtraNote(R.string.card_note_card_number_only)
             .build();
 
     public static final Creator<MykiTransitData> CREATOR = new Creator<MykiTransitData>() {

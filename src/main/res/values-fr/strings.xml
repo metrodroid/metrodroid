@@ -258,7 +258,7 @@
 
     <string name="card_note_seqgo">Ne gère pas les cartes Go Access, Explore ou SEEQ.</string>
 
-    <string name="card_note_myki">Seulement le numéro de la carte peut être lu.</string>
+    <string name="card_note_card_number_only">Seulement le numéro de la carte peut être lu.</string>
 
     <string name="nextfare">Cubic Nextfare</string>
     <string name="nextfare_system_code">Code système</string>

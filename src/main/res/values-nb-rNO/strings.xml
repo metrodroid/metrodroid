@@ -236,7 +236,7 @@
 
     <string name="card_note_seqgo">Støtter ikke Go Access, Explore eller SEEQ -kort.</string>
 
-    <string name="card_note_myki">Kun kortnummeret kan leses.</string>
+    <string name="card_note_card_number_only">Kun kortnummeret kan leses.</string>
 
     <string name="nextfare">Cubic Nextfare</string>
     <string name="nextfare_ticket_class">Billettypekode</string>

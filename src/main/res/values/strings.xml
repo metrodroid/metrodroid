@@ -865,7 +865,7 @@
         Myki (Victoria, AU)
         These are deliberately separated strings in order to match the terminology of the agency.
     -->
-    <string name="card_note_myki">Only the card number can be read.</string>
+    <string name="card_note_card_number_only">Only the card number can be read.</string>
 
     <!--
         Cubic Nextfare

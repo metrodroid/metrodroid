@@ -1,7 +1,10 @@
 /*
- * MykiTransitData.java
+ * IstanbulKartTransitData.java
  *
  * Copyright 2015-2016 Michael Farrell <micolous+git@gmail.com>
+ * Copyright 2018 Google Inc.
+ *
+ * Authors: Vladimir Serbinenko, Michael Farrell
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -19,19 +22,15 @@
 
 package au.id.micolous.metrodroid.transit.istanbulkart;
 
-import android.net.Uri;
 import android.os.Parcel;
 import android.support.annotation.NonNull;
 
 import org.apache.commons.lang3.ArrayUtils;
 
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
-import java.util.Locale;
 
 import au.id.micolous.farebot.R;
-import au.id.micolous.metrodroid.card.Card;
 import au.id.micolous.metrodroid.card.CardType;
 import au.id.micolous.metrodroid.card.desfire.DesfireApplication;
 import au.id.micolous.metrodroid.card.desfire.DesfireCard;
@@ -61,7 +60,7 @@ public class IstanbulKartTransitData extends StubTransitData {
             .setName(NAME)
             .setCardType(CardType.MifareDesfire)
             .setLocation(R.string.location_istanbul)
-            .setExtraNote(R.string.card_note_myki)
+            .setExtraNote(R.string.card_note_card_number_only)
             .build();
 
     public static final Creator<IstanbulKartTransitData> CREATOR = new Creator<IstanbulKartTransitData>() {

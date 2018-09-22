@@ -208,7 +208,7 @@
     <string name="seqgo_refill_automatic">自動チャージ</string>
     <string name="card_note_seqgo">Go Access, Explore または SEEQ カードはサポートしません。</string>
 
-    <string name="card_note_myki">カード番号のみ読み取ることができます。</string>
+    <string name="card_note_card_number_only">カード番号のみ読み取ることができます。</string>
 <string name="unknown_card_header">不明なカード フォーマット</string>
     <string name="unknown_more_info">詳細情報</string>
     <string name="unknown_more_info_desc">このカードの Metrodroid のサポートの詳細については、タップしてください。</string>

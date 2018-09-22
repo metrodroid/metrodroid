@@ -255,7 +255,7 @@
 
     <string name="card_note_seqgo">Ondersteund geen kaarten met Go Acces, Explore of SEEQ.</string>
 
-    <string name="card_note_myki">Alleen het kaartnummer kan worden uitgelezen.</string>
+    <string name="card_note_card_number_only">Alleen het kaartnummer kan worden uitgelezen.</string>
 
     <string name="nextfare">Cubic Nextfare</string>
     <string name="nextfare_system_code">Systeemcode</string>
