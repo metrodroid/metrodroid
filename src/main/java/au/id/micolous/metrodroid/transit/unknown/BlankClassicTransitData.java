@@ -57,6 +57,7 @@ public class BlankClassicTransitData extends TransitData {
      */
     public static boolean check(ClassicCard card) {
         List<ClassicSector> sectors = card.getSectors();
+	boolean allZero = true, allFF = true;
         // check to see if all sectors are blocked
         for (ClassicSector s : sectors) {
             if ((s instanceof UnauthorizedClassicSector) || (s instanceof InvalidClassicSector))
@@ -70,9 +71,14 @@ public class BlankClassicTransitData extends TransitData {
                     continue;
                 if (bl.getIndex() == numBlocks - 1)
                     continue;
-                for (byte b : bl.getData())
+                for (byte b : bl.getData()) {
                     if (b != 0)
-                        return false;
+                        allZero = false;
+		    if (b != -1)
+                        allFF = false;
+		    if (!allZero && !allFF)
+			return false;
+		}
             }
         }
         return true;
