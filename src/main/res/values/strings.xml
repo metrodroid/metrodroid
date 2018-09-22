@@ -1017,6 +1017,8 @@
 
     <!-- Translators: Used as a submenu title in the preferences screen -->
     <string name="nfc">Near Field Communication</string>
+    <string name="istanbulkart_2nd_card_number">Secondary serial</string>
+    <string name="location_istanbul">Istanbul, Turkey</string>
     <!-- Translators: Used as a description for the Near Field Communication options submenu -->
     <string name="nfc_options_desc">Fallback reader for MIFARE Classic, physical card interface settings…</string>
 

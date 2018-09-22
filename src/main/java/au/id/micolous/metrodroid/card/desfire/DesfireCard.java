@@ -41,6 +41,7 @@ import au.id.micolous.metrodroid.transit.TransitData;
 import au.id.micolous.metrodroid.transit.TransitIdentity;
 import au.id.micolous.metrodroid.transit.clipper.ClipperTransitData;
 import au.id.micolous.metrodroid.transit.hsl.HSLTransitData;
+import au.id.micolous.metrodroid.transit.istanbulkart.IstanbulKartTransitData;
 import au.id.micolous.metrodroid.transit.myki.MykiTransitData;
 import au.id.micolous.metrodroid.transit.opal.OpalTransitData;
 import au.id.micolous.metrodroid.transit.orca.OrcaTransitData;
@@ -199,6 +200,8 @@ public class DesfireCard extends Card {
             return OpalTransitData.CARD_INFO;
         if (MykiTransitData.earlyCheck(appIds))
             return MykiTransitData.CARD_INFO;
+        if (IstanbulKartTransitData.earlyCheck(appIds))
+            return IstanbulKartTransitData.CARD_INFO;
 
         return null;
     }
@@ -221,6 +224,8 @@ public class DesfireCard extends Card {
             return AdelaideMetrocardStubTransitData.parseTransitIdentity(this);
         if (AtHopStubTransitData.check(this))
             return AtHopStubTransitData.parseTransitIdentity(this);
+        if (IstanbulKartTransitData.check(this))
+            return IstanbulKartTransitData.parseTransitIdentity(this);
 
         if (UnauthorizedDesfireTransitData.check(this))
             return UnauthorizedDesfireTransitData.parseTransitIdentity(this);
@@ -241,6 +246,8 @@ public class DesfireCard extends Card {
             return new MykiTransitData(this);
 
         // Stub card types go last
+        if (IstanbulKartTransitData.check(this))
+            return new IstanbulKartTransitData(this);
         if (AdelaideMetrocardStubTransitData.check(this))
             return new AdelaideMetrocardStubTransitData(this);
         if (AtHopStubTransitData.check(this))
