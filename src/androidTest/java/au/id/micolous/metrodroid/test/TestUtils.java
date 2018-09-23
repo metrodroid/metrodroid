@@ -82,4 +82,8 @@ final class TestUtils {
     static void showRawStationIds(boolean state) {
         setBooleanPref(MetrodroidApplication.PREF_SHOW_RAW_IDS, state);
     }
+
+    static void showLocalAndEnglish(boolean state) {
+        setBooleanPref(MetrodroidApplication.PREF_SHOW_LOCAL_AND_ENGLISH, state);
+    }
 }

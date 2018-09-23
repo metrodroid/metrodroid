@@ -27,7 +27,7 @@ import au.id.micolous.metrodroid.util.Utils;
  * Helpers for accessing Suica-related stop databases.
  */
 
-final class SuicaDBUtil {
+public final class SuicaDBUtil {
     private static final String TAG = "SuicaUtil";
     private static final String SUICA_BUS_STR = "suica_bus";
     private static final String SUICA_RAIL_STR = "suica_rail";
@@ -63,7 +63,7 @@ final class SuicaDBUtil {
      * @return If the stop is known, a Station is returned describing it. If the stop is unknown,
      *         or there was some other database error, null is returned.
      */
-    static Station getRailStation(int regionCode, int lineCode, int stationCode) {
+    public static Station getRailStation(int regionCode, int lineCode, int stationCode) {
         int areaCode = (regionCode >> 6) & 0xFF;
         lineCode &= 0xFF;
         stationCode &= 0xFF;

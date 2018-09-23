@@ -4,6 +4,7 @@ import android.test.AndroidTestCase;
 
 import au.id.micolous.metrodroid.transit.Station;
 import au.id.micolous.metrodroid.transit.seq_go.SeqGoTrip;
+import au.id.micolous.metrodroid.transit.suica.SuicaDBUtil;
 import au.id.micolous.metrodroid.util.StationTableReader;
 
 /**
@@ -25,5 +26,56 @@ public class StationTableReaderTest extends AndroidTestCase {
 
         // Reset back to default
         TestUtils.showRawStationIds(false);
+    }
+
+    private final int SHINJUKU_REGION_CODE = 0;
+    private final int SHINJUKU_LINE_CODE = 37;
+    private final int SHINJUKU_STATION_CODE = 10;
+
+    public void testSuicaDatabase() {
+        // Suica has localised station names. Make sure these come out correctly
+        TestUtils.setLocale(getContext(), "en-US");
+        TestUtils.showRawStationIds(false);
+        TestUtils.showLocalAndEnglish(false);
+
+        // Test a station in English
+        Station s = SuicaDBUtil.getRailStation(SHINJUKU_REGION_CODE, SHINJUKU_LINE_CODE, SHINJUKU_STATION_CODE);
+        assertNotNull(s);
+        assertEquals("JR East", s.getCompanyName());
+        assertEquals("Shinjuku", s.getStationName());
+        // FIXME: We currently have incorrect romanisation for the Yamanote line (Yamate), so just
+        // check that this is not the Japanese name.
+        assertFalse(s.getLineName().equalsIgnoreCase("山手"));
+
+        // Test in Japanese
+        TestUtils.setLocale(getContext(), "ja-JP");
+        s = SuicaDBUtil.getRailStation(SHINJUKU_REGION_CODE, SHINJUKU_LINE_CODE, SHINJUKU_STATION_CODE);
+        assertNotNull(s);
+        assertEquals("東日本旅客鉄道", s.getCompanyName());
+        assertEquals("新宿", s.getStationName());
+        assertEquals("山手", s.getLineName());
+
+        // Test in another supported language. We should fall back to English here.
+        TestUtils.setLocale(getContext(), "nl");
+        s = SuicaDBUtil.getRailStation(SHINJUKU_REGION_CODE, SHINJUKU_LINE_CODE, SHINJUKU_STATION_CODE);
+        assertNotNull(s);
+        assertEquals("JR East", s.getCompanyName());
+        assertEquals("Shinjuku", s.getStationName());
+        // FIXME: We currently have incorrect romanisation for the Yamanote line (Yamate), so just
+        // check that this is not the Japanese name.
+        assertFalse(s.getLineName().equalsIgnoreCase("山手"));
+
+        // Test showing both English and Japanese strings
+        TestUtils.setLocale(getContext(), "en-US");
+        TestUtils.showLocalAndEnglish(true);
+        s = SuicaDBUtil.getRailStation(SHINJUKU_REGION_CODE, SHINJUKU_LINE_CODE, SHINJUKU_STATION_CODE);
+        assertNotNull(s);
+        assertEquals("Shinjuku (新宿)", s.getStationName());
+
+        // Test showing both Japanese and English strings.
+        TestUtils.setLocale(getContext(), "ja-JP");
+        s = SuicaDBUtil.getRailStation(SHINJUKU_REGION_CODE, SHINJUKU_LINE_CODE, SHINJUKU_STATION_CODE);
+        assertNotNull(s);
+        assertEquals("新宿 (Shinjuku)", s.getStationName());
     }
 }
