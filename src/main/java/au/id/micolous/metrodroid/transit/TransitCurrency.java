@@ -30,6 +30,7 @@ import android.text.style.TtsSpan;
 import java.security.SecureRandom;
 import java.text.NumberFormat;
 import java.util.Currency;
+import java.util.Locale;
 
 import au.id.micolous.metrodroid.MetrodroidApplication;
 
@@ -77,6 +78,10 @@ public class TransitCurrency extends TransitBalance implements Parcelable {
 
     static public TransitCurrency AUD(int cents) {
         return new TransitCurrency(cents, "AUD", 100.);
+    }
+
+    static public TransitCurrency BRL(int centavo) {
+        return new TransitCurrency(centavo, "BRL", 100.);
     }
 
     static public TransitCurrency CAD(int cents) {
@@ -211,5 +216,22 @@ public class TransitCurrency extends TransitBalance implements Parcelable {
     @Override
     public TransitCurrency getBalance() {
         return this;
+    }
+
+    /**
+     * String representation of a TransitCurrency.
+     *
+     * This should only ever be used by debug logs and unit tests. It does not handle any
+     * localisation or formatting.
+     *
+     * @return String representation of the value, eg: "TransitCurrency.AUD(1234)" for AUD 12.34.
+     */
+    @Override
+    public String toString() {
+        return String.format(Locale.ENGLISH,
+                "%s.%s(%d)",
+                getClass().getSimpleName(),
+                mCurrencyCode,
+                mCurrency);
     }
 }

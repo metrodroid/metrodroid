@@ -141,6 +141,12 @@ android {
         }
     }
 
+    sourceSets {
+        androidTest.assets.srcDirs += [
+                'third_party/vpereira_bilhete/',
+        ]
+    }
+
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
