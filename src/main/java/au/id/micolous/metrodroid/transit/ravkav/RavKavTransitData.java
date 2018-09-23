@@ -115,7 +115,7 @@ public class RavKavTransitData extends TransitData {
     @Nullable
     @Override
     public TransitCurrency getBalance() {
-        return new TransitCurrency(mBalance, "ILS");
+        return TransitCurrency.ILS(mBalance);
     }
 
     @Override
