@@ -128,11 +128,6 @@ public class NextfareTrip extends Trip implements Comparable<NextfareTrip> {
     }
 
     @Override
-    public boolean hasTime() {
-        return mStartTime != null;
-    }
-
-    @Override
     public int describeContents() {
         return 0;
     }
