@@ -1,11 +1,14 @@
 package au.id.micolous.metrodroid.test;
 
+import static au.id.micolous.metrodroid.MetrodroidApplication.getInstance;
 import static org.hamcrest.MatcherAssert.assertThat;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.os.Build;
+import android.preference.PreferenceManager;
 import android.text.Spanned;
 
 import junit.framework.Assert;
@@ -15,6 +18,7 @@ import org.hamcrest.Matcher;
 import java.util.Locale;
 import java.util.Map;
 
+import au.id.micolous.metrodroid.MetrodroidApplication;
 import au.id.micolous.metrodroid.util.ImmutableMapBuilder;
 
 /**
@@ -61,5 +65,21 @@ final class TestUtils {
         Configuration c = r.getConfiguration();
         c.locale = l;
         r.updateConfiguration(c, r.getDisplayMetrics());
+    }
+
+    /**
+     * Sets a boolean preference.
+     * @param preference Key to the preference
+     * @param value Desired state of the preference.
+     */
+    private static void setBooleanPref(String preference, boolean value) {
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getInstance());
+        prefs.edit()
+                .putBoolean(preference, value)
+                .apply();
+    }
+
+    static void showRawStationIds(boolean state) {
+        setBooleanPref(MetrodroidApplication.PREF_SHOW_RAW_IDS, state);
     }
 }

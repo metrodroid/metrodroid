@@ -75,6 +75,7 @@ public class OrcaTest extends AndroidTestCase {
 
     public void testDemoCard() {
         TestUtils.setLocale(getContext(), "en-US");
+        TestUtils.showRawStationIds(false);
 
         // This is mocked-up data, probably has a wrong checksum.
         DesfireCard c = constructOrcaCard();

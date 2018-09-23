@@ -67,6 +67,7 @@ public class ClipperTest extends AndroidTestCase {
 
     public void testDemoCard() {
         TestUtils.setLocale(getContext(), "en-US");
+        TestUtils.showRawStationIds(false);
 
         assertEquals(32*2, refill.length());
 

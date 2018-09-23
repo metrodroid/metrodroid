@@ -31,6 +31,8 @@ import au.id.micolous.metrodroid.transit.ezlink.EZLinkTransitData;
 public class MRTReaderTest extends AndroidTestCase {
     public void testGetStation() {
         TestUtils.setLocale(getContext(), "en-US");
+        TestUtils.showRawStationIds(false);
+
         Station s = EZLinkTransitData.getStation("CGA");
         assertEquals("Changi Airport", s.getStationName());
         assertEquals(1.3575, Float.valueOf(s.getLatitude()), 0.001);
