@@ -920,7 +920,7 @@
     <string name="compass_ticket_type">Ticket type</string>
     <string name="compass_ticket_type_concession">Concession</string>
     <string name="compass_ticket_type_regular">Regular</string>
-    <string name="compass_expiry_date">Expiry date</string>
+    <string name="expiry_date">Expiry date</string>
     <string name="compass_note">Single ride tickets only</string>
 
     <!-- En1545 and related cards -->

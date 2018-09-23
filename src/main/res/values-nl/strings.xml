@@ -621,7 +621,7 @@
     <string name="compass_ticket_type">Kaartsoort</string>
     <string name="compass_ticket_type_concession">Concessie</string>
     <string name="compass_ticket_type_regular">Regulier</string>
-    <string name="compass_expiry_date">Vervaldatum</string>
+    <string name="expiry_date">Vervaldatum</string>
     <string name="compass_note">Alleen voor enkele reizen</string>
 
     <string name="location_seoul">Seoel, Zuid-Korea</string>

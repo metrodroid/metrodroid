@@ -37,12 +37,13 @@ import au.id.micolous.metrodroid.card.CardType;
 import au.id.micolous.metrodroid.card.UnauthorizedException;
 import au.id.micolous.metrodroid.card.ultralight.UltralightCard;
 import au.id.micolous.metrodroid.transit.CardInfo;
+import au.id.micolous.metrodroid.transit.TransitBalance;
+import au.id.micolous.metrodroid.transit.TransitBalanceStored;
 import au.id.micolous.metrodroid.transit.TransitCurrency;
 import au.id.micolous.metrodroid.transit.TransitData;
 import au.id.micolous.metrodroid.transit.TransitIdentity;
 import au.id.micolous.metrodroid.transit.Trip;
 import au.id.micolous.metrodroid.ui.ListItem;
-import au.id.micolous.metrodroid.util.TripObfuscator;
 import au.id.micolous.metrodroid.util.Utils;
 
 /* Based on reference at http://www.lenrek.net/experiments/compass-tickets/. */
@@ -90,8 +91,10 @@ public class CompassUltralightTransitData extends TransitData {
 
     @Nullable
     @Override
-    public TransitCurrency getBalance() {
-        return TransitCurrency.CAD(mBalance);
+    public TransitBalance getBalance() {
+        return new TransitBalanceStored(
+                TransitCurrency.CAD(mBalance),
+                parseDateTime(mBaseDate, mExpiry, 0));
     }
 
     @Override
@@ -228,7 +231,6 @@ public class CompassUltralightTransitData extends TransitData {
         else
             items.add(new ListItem(R.string.compass_product_type, Integer.toHexString(mProductCode)));
         items.add(new ListItem(R.string.compass_machine_code, Integer.toHexString(mMachineCode)));
-        items.add(new ListItem(R.string.compass_expiry_date, Utils.longDateFormat(TripObfuscator.maybeObfuscateTS(parseDateTime(mBaseDate, -mExpiry, 0)))));
         return items;
     }
 
@@ -242,7 +244,7 @@ public class CompassUltralightTransitData extends TransitData {
         g.set((baseDate >> 9) + 2000,
                 ((baseDate >> 5) & 0xf) - 1,
                 baseDate & 0x1f, 0, 0, 0);
-        g.add(Calendar.DAY_OF_YEAR, date);
+        g.add(Calendar.DAY_OF_YEAR, -date);
         g.add(Calendar.MINUTE, time);
         return g;
     }

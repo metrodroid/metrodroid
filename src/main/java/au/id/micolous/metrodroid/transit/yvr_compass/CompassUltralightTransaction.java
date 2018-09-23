@@ -114,7 +114,7 @@ public class CompassUltralightTransaction implements Parcelable {
     }
 
     public Calendar getTimestamp() {
-        return CompassUltralightTransitData.parseDateTime(mBaseDate, -mDate, mTime);
+        return CompassUltralightTransitData.parseDateTime(mBaseDate, mDate, mTime);
     }
 
     public boolean isSameTripTapOut(CompassUltralightTransaction other) {

@@ -36,6 +36,10 @@ public class TransitBalanceStored extends TransitBalance implements Parcelable {
         this(bal, null, null, null);
     }
 
+    public TransitBalanceStored(TransitCurrency bal, Calendar expiry) {
+        this(bal, null, null, expiry);
+    }
+
     public TransitBalanceStored(TransitCurrency bal, String name, Calendar expiry) {
         this(bal, name, null, expiry);
     }
