@@ -103,6 +103,8 @@ public class CEPASApplication extends ISO7816Application {
 
         CEPASProtocol cepasTag = new CEPASProtocol(iso7816Tag);
 
+        iso7816Tag.selectById(0x4000);
+
         for (int purseId = 0; purseId < numPurses; purseId++) {
             byte[] purse = cepasTag.getPurse(purseId);
             if (purse != null) {
