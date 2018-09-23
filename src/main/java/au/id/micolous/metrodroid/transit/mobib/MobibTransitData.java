@@ -143,9 +143,9 @@ public class MobibTransitData extends Calypso1545TransitData {
         li.add(new ListItem(R.string.transaction_counter, Integer.toString(mTotalTrips)));
         int gender = mExtHolderParsed.getIntOrZero("HolderGender");
         if (gender == 0) {
-            li.add(new ListItem(R.string.mobib_card_type, R.string.card_type_anonymous));
+            li.add(new ListItem(R.string.card_type, R.string.card_type_anonymous));
         } else {
-            li.add(new ListItem(R.string.mobib_card_type, R.string.card_type_personal));
+            li.add(new ListItem(R.string.card_type, R.string.card_type_personal));
         }
         if (gender != 0 && !MetrodroidApplication.hideCardNumbers()
                 && !MetrodroidApplication.obfuscateTripDates()) {

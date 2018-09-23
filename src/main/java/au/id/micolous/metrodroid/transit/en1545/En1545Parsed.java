@@ -21,6 +21,8 @@ package au.id.micolous.metrodroid.transit.en1545;
 
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.util.Pair;
 
 import java.util.ArrayList;
@@ -124,12 +126,14 @@ public class En1545Parsed implements Parcelable {
         return "[" + makeString(", ", Collections.EMPTY_SET) + "]";
     }
 
+    @Nullable
     public Integer getInt(String name, String path) {
         if (!mMap.containsKey(makeFullName(name, path)))
             return null;
         return (Integer) mMap.get(makeFullName(name, path));
     }
 
+    @Nullable
     public Integer getInt(String name, int... ipath) {
         StringBuilder path = new StringBuilder();
         for (int iel : ipath)
@@ -140,28 +144,28 @@ public class En1545Parsed implements Parcelable {
     }
 
     public int getIntOrZero(String name, String path) {
-        if (!mMap.containsKey(makeFullName(name, path)))
-            return 0;
-        return (Integer) mMap.get(makeFullName(name, path));
+        Integer i = getInt(name, path);
+        return i == null ? 0 : i;
     }
 
+    @Nullable
     public String getString(String name, String path) {
         if (!mMap.containsKey(makeFullName(name, path)))
             return null;
         return (String) mMap.get(makeFullName(name, path));
     }
 
-    private Pair<Calendar,Integer> getTimeStampFlags(String name, TimeZone tz) {
+    private Pair<Calendar,Integer> getTimeStampFlags(@NonNull String name, TimeZone tz) {
         if (contains(name + "DateTime"))
-            return Pair.create(En1545FixedInteger.parseTimeSec(getInt(name + "DateTime"), tz), 3);
+            return Pair.create(En1545FixedInteger.parseTimeSec(getIntOrZero(name + "DateTime"), tz), 3);
         if (contains(name + "Time") && contains(name + "Date"))
-            return Pair.create(En1545FixedInteger.parseTime(getInt(name + "Date"), getInt(name + "Time"), tz),
+            return Pair.create(En1545FixedInteger.parseTime(getIntOrZero(name + "Date"), getIntOrZero(name + "Time"), tz),
                     3);
         if (contains(name + "TimeLocal") && contains(name + "Date"))
-            return Pair.create(En1545FixedInteger.parseTimeLocal(getInt(name + "Date"), getIntOrZero(name + "TimeLocal"), tz),
+            return Pair.create(En1545FixedInteger.parseTimeLocal(getIntOrZero(name + "Date"), getIntOrZero(name + "TimeLocal"), tz),
                     3);
         if (contains(name + "Date"))
-            return Pair.create(En1545FixedInteger.parseDate(getInt(name + "Date"), tz), 2);
+            return Pair.create(En1545FixedInteger.parseDate(getIntOrZero(name + "Date"), tz), 2);
         if (contains(name + "TimeLocal"))
             return Pair.create(En1545FixedInteger.parseTimeLocal(0, getIntOrZero(name + "TimeLocal"), tz),
                     1);
@@ -200,10 +204,12 @@ public class En1545Parsed implements Parcelable {
         return getIntOrZero(name, "");
     }
 
+    @Nullable
     public Integer getInt(String name) {
         return getInt(name, "");
     }
 
+    @Nullable
     public String getString(String name) {
         return getString(name, "");
     }

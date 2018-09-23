@@ -19,6 +19,8 @@
 
 package au.id.micolous.metrodroid.transit.en1545;
 
+import android.support.annotation.Nullable;
+
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.TimeZone;
@@ -61,6 +63,7 @@ public class En1545FixedInteger implements En1545Field {
         UTC_EPOCH = getEpoch(TimeZone.getTimeZone("UTC"));
     }
 
+    @Nullable
     private static Calendar parseTime(long epoch, int d, int t, TimeZone tz) {
         if (d == 0 && t == 0)
             return null;
@@ -71,18 +74,22 @@ public class En1545FixedInteger implements En1545Field {
         return g;
     }
 
+    @Nullable
     public static Calendar parseTime(int d, int t, TimeZone tz) {
         return parseTime(UTC_EPOCH, d, t, tz);
     }
 
+    @Nullable
     public static Calendar parseTimeLocal(int d, int t, TimeZone tz) {
         return parseTime(getEpoch(tz), d, t, tz);
     }
 
+    @Nullable
     public static Calendar parseDate(int d, TimeZone tz) {
         return parseTime(getEpoch(tz), d, 0, tz);
     }
 
+    @Nullable
     public static Calendar parseTimeSec(int val, TimeZone tz) {
         if (val == 0)
             return null;
