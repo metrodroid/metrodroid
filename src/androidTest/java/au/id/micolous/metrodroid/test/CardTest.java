@@ -31,6 +31,7 @@ import au.id.micolous.metrodroid.card.ultralight.UltralightCard;
 import au.id.micolous.metrodroid.card.ultralight.UltralightPage;
 import au.id.micolous.metrodroid.card.ultralight.UnauthorizedUltralightPage;
 import au.id.micolous.metrodroid.key.ClassicSectorKey;
+import au.id.micolous.metrodroid.transit.unknown.BlankClassicTransitData;
 import au.id.micolous.metrodroid.transit.unknown.UnauthorizedClassicTransitData;
 import au.id.micolous.metrodroid.transit.unknown.UnauthorizedDesfireTransitData;
 import au.id.micolous.metrodroid.transit.unknown.UnauthorizedUltralightTransitData;
@@ -167,7 +168,53 @@ public class CardTest extends TestCase {
         Card c3 = new ClassicCard(Utils.hexStringToByteArray("12345678"), d, l);
 
         assertFalse(c3.parseTransitData() instanceof UnauthorizedClassicTransitData);
+    }
 
+    public void testBlankMifareClassic() {
+        byte[] all00Bytes = new byte[] { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
+        byte[] allFFBytes = new byte[] {
+                (byte)0xff, (byte)0xff, (byte)0xff, (byte)0xff, (byte)0xff, (byte)0xff, (byte)0xff,
+                (byte)0xff, (byte)0xff, (byte)0xff, (byte)0xff, (byte)0xff, (byte)0xff, (byte)0xff,
+                (byte)0xff, (byte)0xff };
+        byte[] otherBytes = new byte[] { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16 };
+
+        byte[] k = new byte[] { 0, 0, 0, 0, 0, 0 };
+        Calendar d = new GregorianCalendar(2010, 1, 1, 0, 0, 0);
+        d.setTimeZone(TimeZone.getTimeZone("GMT"));
+
+        ClassicBlock[] all00Blocks = new ClassicBlock[4];
+        ClassicBlock[] allFFBlocks = new ClassicBlock[4];
+        ClassicBlock[] otherBlocks = new ClassicBlock[4];
+
+        for (int x=0; x < 4; x++) {
+            all00Blocks[x] = ClassicBlock.create(ClassicBlock.TYPE_DATA, x, all00Bytes);
+            allFFBlocks[x] = ClassicBlock.create(ClassicBlock.TYPE_DATA, x, allFFBytes);
+            otherBlocks[x] = ClassicBlock.create(ClassicBlock.TYPE_DATA, x, otherBytes);
+        }
+
+        ClassicSector[] all00Sectors = new ClassicSector[16];
+        ClassicSector[] allFFSectors = new ClassicSector[16];
+        ClassicSector[] otherSectors = new ClassicSector[16];
+
+        for (int x=0; x < 16; x++) {
+            all00Sectors[x] = new ClassicSector(x, all00Blocks, k, ClassicSectorKey.TYPE_KEYA);
+            allFFSectors[x] = new ClassicSector(x, allFFBlocks, k, ClassicSectorKey.TYPE_KEYA);
+            otherSectors[x] = new ClassicSector(x, otherBlocks, k, ClassicSectorKey.TYPE_KEYA);
+        }
+
+        Card all00Card = new ClassicCard(Utils.hexStringToByteArray("12345678"), d, all00Sectors);
+        Card allFFCard = new ClassicCard(Utils.hexStringToByteArray("87654321"), d, allFFSectors);
+        Card otherCard = new ClassicCard(Utils.hexStringToByteArray("21436587"), d, otherSectors);
+
+        assertTrue("A card with all 00 in its blocks is BlankClassicTransitData",
+                all00Card.parseTransitData() instanceof BlankClassicTransitData);
+        assertTrue("A card with all FF in its blocks is BlankClassicTransitData",
+                allFFCard.parseTransitData() instanceof BlankClassicTransitData);
+
+        // If the tests crash here, this is a bug in the other reader module. We shouldn't be able
+        // to crash reader modules with garbage data.
+        assertFalse("A card with other data in its blocks is not BlankClassicTransitData",
+                otherCard.parseTransitData() instanceof BlankClassicTransitData);
     }
 
     public void testUnauthorizedDesfire() {
