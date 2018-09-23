@@ -663,4 +663,17 @@
     <string name="classic_key_format_a">Sleutel (A): %s</string>
     <string name="classic_key_format_b">Sleutel (B): %s</string>
     <string name="classic_key_format">Sleutel: %s</string>
+<string name="location_boston">Boston, MA, VS</string>
+
+    <string name="troika_unformatted">De Troika is onjuist geformatteerd. Hij moet worden opgeladen bij een kaartautomaat voordat hij kan worden gebruikt.</string>
+    <string name="card_name_strelka">Strelka</string>
+    <string name="strelka_long_serial">Strelka - lang nummer</string>
+    <string name="card_name_troika_strelka_hybrid">Troika+Strelka</string>
+
+    <string name="charlie_2nd_card_number">Tweede getal</string>
+
+    <string name="istanbulkart_2nd_card_number">Tweede serienummer</string>
+    <string name="location_istanbul">Istanboel, Turkije</string>
+    <string name="trip_counter">Reisteller</string>
+    <string name="refill_counter">Oplaadteller</string>
 </resources>
