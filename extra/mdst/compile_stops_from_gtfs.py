@@ -27,19 +27,8 @@ from datetime import datetime, timedelta
 from gtfstools import Gtfs, GtfsDialect
 from stations_pb2 import Station, Operator, TransportType
 import mdst
-import codecs, csv, sqlite3
+import codecs, csv
 
-DB_SCHEMA = """
-CREATE TABLE stops (
-  id unique,
-  agency_id int,
-  name,
-  y,
-  x
-);
-"""
-
-INSERT_QUERY = 'INSERT INTO stops VALUES (?, ?, ?, ?, ?)'
 VERSION_EPOCH = datetime(2006, 1, 1)
 
 def massage_name(name, suffixes):
@@ -54,7 +43,7 @@ def massage_name(name, suffixes):
 def empty(s):
   return s is None or s.strip() == ''
 
-def compile_stops_from_gtfs(input_gtfs_f, output_f, matching_f=None, version=None, strip_suffixes='', agency_id=-1, tts_hint_language=None, operators_f=None, extra_f=None):
+def compile_stops_from_gtfs(input_gtfs_f, output_f, matching_f=None, version=None, strip_suffixes='', agency_id=-1, tts_hint_language=None, operators_f=None, extra_f=None, local_languages=None):
   if matching_f is not None:
     matching_f = codecs.getreader('utf-8-sig')(matching_f)
   if operators_f is not None:
@@ -63,7 +52,6 @@ def compile_stops_from_gtfs(input_gtfs_f, output_f, matching_f=None, version=Non
     extra_f = codecs.getreader('utf-8-sig')(extra_f)
   # trim whitespace
   strip_suffixes = [x.strip().lower() for x in strip_suffixes.split(',')]
-
   
   gtfs = Gtfs(input_gtfs_f)
 
@@ -96,6 +84,10 @@ def compile_stops_from_gtfs(input_gtfs_f, output_f, matching_f=None, version=Non
         oppb.name.english = op['name']
         if 'short_name' in op and op['short_name']:
           oppb.name.english_short = op['short_name']
+        if 'local_name' in op and op['local_name']:
+          oppb.name.local = op['local_name']
+        if 'local_short_name' in op and op['local_short_name']:
+          oppb.name.local_short = op['local_short_name']
         if 'mode' in op and op['mode']:
           oppb.default_transport = TransportType.Value(op['mode'])
         operators[int(op['id'], 0)] = oppb
@@ -105,6 +97,7 @@ def compile_stops_from_gtfs(input_gtfs_f, output_f, matching_f=None, version=Non
     fh=open(output_f, 'wb'),
     version=version,
     operators=operators,
+    local_languages=local_languages.split(',') if local_languages is not None else [],
     tts_hint_language=tts_hint_language,
   )
 
@@ -170,6 +163,8 @@ def compile_stops_from_gtfs(input_gtfs_f, output_f, matching_f=None, version=Non
           s.longitude = x
         if reader_id in short_names:
           s.name.english_short = short_names[reader_id]
+        if agency_id >= 0:
+          s.operator_id = agency_id
 
         db.push_station(s)
         station_count += 1
@@ -188,6 +183,9 @@ def compile_stops_from_gtfs(input_gtfs_f, output_f, matching_f=None, version=Non
 
         if reader_id in short_names:
           s.name.english_short = short_names[reader_id]
+        if agency_id >= 0:
+          s.operator_id = agency_id
+
         db.push_station(s)
         station_count += 1
         used = True
@@ -263,9 +261,13 @@ def main():
     required=False,
     help='If specified, provides a hint for LocaleSpan when marking up station names and lines. The default is to specify no language.')
 
+  parser.add_argument('-L', '--local-languages',
+    required=False,
+    help='If specified, provides a list of languages when to show local name. Comma-separated')
+
   options = parser.parse_args()
 
-  compile_stops_from_gtfs(options.input_gtfs[0], options.output, options.matching, options.override_version, options.strip_suffixes, options.agency_id, options.tts_hint_language, options.operators, options.extra)
+  compile_stops_from_gtfs(options.input_gtfs[0], options.output, options.matching, options.override_version, options.strip_suffixes, options.agency_id, options.tts_hint_language, options.operators, options.extra, options.local_languages)
 
 if __name__ == '__main__':
   main()

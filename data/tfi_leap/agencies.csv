@@ -1,0 +1,5 @@
+id,name,short_name,local_name,mode
+10,,,,TICKET_MACHINE
+11,Leap top-up app,App,,TICKET_MACHINE
+20,Dublin Bus,Dublin Bus,Bus Átha Cliath,BUS
+21,Irish Rail,Irish Rail,Iarnród Éireann,TRAIN
