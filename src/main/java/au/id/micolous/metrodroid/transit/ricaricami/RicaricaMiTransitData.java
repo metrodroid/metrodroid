@@ -54,7 +54,7 @@ public class RicaricaMiTransitData extends En1545TransitData {
     public static final CardInfo CARD_INFO = new CardInfo.Builder()
             .setName(NAME)
             .setLocation(R.string.location_milan)
-            .setCardType(CardType.ISO7816)
+            .setCardType(CardType.MifareClassic)
             .setKeysRequired()
             .setPreview()
             .build();
