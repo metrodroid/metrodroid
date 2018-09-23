@@ -78,6 +78,10 @@ public class ISO7816Application {
         return null;
     }
 
+    public String nameFile(ISO7816Selector selector) {
+        return null;
+    }
+
     public static class ISO7816Info {
         private final byte []mApplicationData;
         private final byte []mApplicationName;

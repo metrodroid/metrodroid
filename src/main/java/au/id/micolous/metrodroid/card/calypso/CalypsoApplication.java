@@ -27,8 +27,10 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 
 import au.id.micolous.farebot.R;
 import au.id.micolous.metrodroid.MetrodroidApplication;
@@ -63,6 +65,7 @@ public class CalypsoApplication extends ISO7816Application {
 
     private static final String TAG = CalypsoApplication.class.getName();
     public static final String TYPE = "calypso";
+    private static final Map<String, String> NAME_MAP = new HashMap<>();
 
     private CalypsoApplication(ISO7816Application.ISO7816Info appData, boolean partialRead) {
         super(appData);
@@ -175,6 +178,14 @@ public class CalypsoApplication extends ISO7816Application {
         return items;
     }
 
+    @Override
+    public String nameFile(ISO7816Selector selector) {
+        String selStr = selector.formatString();
+        if (NAME_MAP.containsKey(selStr))
+            return NAME_MAP.get(selStr);
+        return null;
+    }
+
     public enum File {
         AID(0x3F04),
         ICC(0x0002),
@@ -248,6 +259,12 @@ public class CalypsoApplication extends ISO7816Application {
 
         public ISO7816Selector getSelector() {
             return mSelector;
+        }
+    }
+
+    static {
+        for (File f : File.getAll()) {
+            NAME_MAP.put(f.mSelector.formatString(), f.name());
         }
     }
 }
