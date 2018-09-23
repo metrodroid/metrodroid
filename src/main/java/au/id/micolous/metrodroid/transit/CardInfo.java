@@ -74,6 +74,7 @@ public class CardInfo {
      */
     public static final CardInfo[] ALL_CARDS_ALPHABETICAL = {
             BilheteUnicoSPTransitData.CARD_INFO,
+            CharlieCardTransitData.CARD_INFO,
             ClipperTransitData.CARD_INFO,
             CompassUltralightTransitData.CARD_INFO,
             EdyTransitData.CARD_INFO,
@@ -84,7 +85,6 @@ public class CardInfo {
             SuicaTransitData.ICOCA_CARD_INFO,
             KMTTransitData.CARD_INFO,
             ManlyFastFerryTransitData.CARD_INFO,
-            CharlieCardTransitData.CARD_INFO,
             ChcMetrocardTransitData.CARD_INFO, // Metrocard
             MykiTransitData.CARD_INFO,
             SmartRiderTransitData.MYWAY_CARD_INFO,
