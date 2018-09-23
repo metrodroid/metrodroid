@@ -189,10 +189,11 @@ public class MobibTransitData extends Calypso1545TransitData {
     public static String getSerial(CalypsoApplication card) {
         byte[] holder = card.getFile(CalypsoApplication.File.HOLDER_EXTENDED).getRecord(1).getData();
         return String.format(Locale.ENGLISH,
-                "%06d%06d%06d%01d",
+                "%06d / %06d%04d %02d / %01d",
                 Utils.convertBCDtoInteger(Utils.getBitsFromBuffer(holder, 18, 24)),
                 Utils.convertBCDtoInteger(Utils.getBitsFromBuffer(holder, 42, 24)),
-                Utils.convertBCDtoInteger(Utils.getBitsFromBuffer(holder, 66, 24)),
+                Utils.convertBCDtoInteger(Utils.getBitsFromBuffer(holder, 66, 16)),
+                Utils.convertBCDtoInteger(Utils.getBitsFromBuffer(holder, 82, 8)),
                 Utils.convertBCDtoInteger(Utils.getBitsFromBuffer(holder, 90, 4)));
     }
 
