@@ -22,9 +22,9 @@
   along with this program.  If not, see <http://www.gnu.org/licenses/>.
   -->
 
-<android.support.v7.widget.CardView
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -39,48 +39,50 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:padding="8dp">
-    <FrameLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
     <TextView
+        tools:text="Company Name"
         android:id="@+id/company"
         android:textSize="30sp"
         android:textStyle="bold"
         android:layout_gravity="start"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content" />
-    </FrameLayout>
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
-        <TextView
+
+        <android.support.v7.widget.AppCompatTextView
             android:id="@+id/name"
-            android:textSize="50sp"
-            android:layout_gravity="center"
-            android:layout_width="wrap_content"
-            android:layout_marginTop="4dp"
-            android:layout_marginBottom="4dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textStyle="bold"/>
+            android:layout_gravity="center"
+            android:layout_marginBottom="4dp"
+            android:layout_marginTop="4dp"
+            android:gravity="center"
+            android:textSize="50sp"
+            android:textStyle="bold"
+            android:maxLines="1"
+            android:singleLine="false"
+            app:autoSizeMaxTextSize="50dp"
+            app:autoSizeMinTextSize="30sp"
+            app:autoSizeTextType="uniform"
+            tools:text="Multipass" />
     </FrameLayout>
-    <FrameLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+
     <TextView
         android:id="@+id/used"
-        android:gravity="end"
-        android:layout_gravity="end"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
-    </FrameLayout>
-    <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_gravity="end"
+        android:gravity="end"
+        tools:text="Used" />
+
     <TextView
         android:id="@+id/valid"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:layout_gravity="end"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
-    </FrameLayout>
+        android:gravity="end"
+        tools:text="Valid 2010-01-31 to 2011-01-30" />
 </LinearLayout>
 </android.support.v7.widget.CardView>
