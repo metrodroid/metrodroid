@@ -1061,7 +1061,6 @@
     <string name="leap_accumulator_agency">%s total spend</string>
     <string name="leap_daily_accumulators">Daily fare caps</string>
     <string name="leap_weekly_accumulators">Weekly fare caps</string>
-    <string name="leap_format_date">Format date</string>
 
     <string name="initialisation_date">Initialisation date</string>
     <string name="issue_date">Date of issue</string>
