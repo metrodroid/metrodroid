@@ -50,12 +50,12 @@ public class EZLinkCompatTransitData extends TransitData {
     };
 
     private final String mSerialNumber;
-    private final double mBalance;
+    private final int mBalance;
     private final EZLinkCompatTrip[] mTrips;
 
     public EZLinkCompatTransitData(Parcel parcel) {
         mSerialNumber = parcel.readString();
-        mBalance = parcel.readDouble();
+        mBalance = parcel.readInt();
 
         mTrips = new EZLinkCompatTrip[parcel.readInt()];
         parcel.readTypedArray(mTrips, EZLinkCompatTrip.CREATOR);
@@ -81,7 +81,7 @@ public class EZLinkCompatTransitData extends TransitData {
     @Nullable
     public TransitCurrency getBalance() {
         // This is stored in cents of SGD
-        return new TransitCurrency((int) mBalance, "SGD");
+        return TransitCurrency.SGD(mBalance);
     }
 
 
@@ -110,7 +110,7 @@ public class EZLinkCompatTransitData extends TransitData {
 
     public void writeToParcel(Parcel parcel, int flags) {
         parcel.writeString(mSerialNumber);
-        parcel.writeDouble(mBalance);
+        parcel.writeInt(mBalance);
 
         parcel.writeInt(mTrips.length);
         parcel.writeTypedArray(mTrips, flags);

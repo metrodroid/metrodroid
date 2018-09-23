@@ -37,23 +37,32 @@ import au.id.micolous.metrodroid.MetrodroidApplication;
 public class TransitCurrency extends TransitBalance implements Parcelable {
 
     private final int mCurrency;
+
     /**
      * 3 character currency code (eg: AUD)
      */
     @NonNull
     private final String mCurrencyCode;
+
     /**
-     * value to divide by to get that currency. eg: if the value passed is in cents,
-     * then divide by 100 to get dollars. Currencies like yen should divide by 1.
+     * Value to divide by to get that currency's value in non-fractional parts.
+     *
+     * If the value passed is in cents, then divide by 100 to get dollars. This is the default.
+     *
+     * If the currency has no fractional part (eg: IDR, JPY, KRW), then the divisor should be 1,
      */
     private final double mDivisor;
 
     private static final SecureRandom mRNG = new SecureRandom();
 
     public TransitCurrency(int currency, @NonNull String currencyCode) {
+        this(currency, currencyCode, 100.);
+    }
+
+    private TransitCurrency(int currency, @NonNull String currencyCode, double divisor) {
         mCurrency = currency;
         mCurrencyCode = currencyCode;
-        mDivisor = 100.;
+        mDivisor = divisor;
     }
 
     @Override
@@ -77,19 +86,19 @@ public class TransitCurrency extends TransitBalance implements Parcelable {
     };
 
     static public TransitCurrency AUD(int cents) {
-        return new TransitCurrency(cents, "AUD", 100.);
+        return new TransitCurrency(cents, "AUD");
     }
 
     static public TransitCurrency BRL(int centavo) {
-        return new TransitCurrency(centavo, "BRL", 100.);
+        return new TransitCurrency(centavo, "BRL");
     }
 
     static public TransitCurrency CAD(int cents) {
-        return new TransitCurrency(cents, "CAD", 100.);
+        return new TransitCurrency(cents, "CAD");
     }
 
     static public TransitCurrency EUR(int cents) {
-        return new TransitCurrency(cents, "EUR", 100.);
+        return new TransitCurrency(cents, "EUR");
     }
 
     static public TransitCurrency IDR(int cents) {
@@ -97,11 +106,15 @@ public class TransitCurrency extends TransitBalance implements Parcelable {
     }
 
     static public TransitCurrency RUB(int kopeyka) {
-        return new TransitCurrency(kopeyka, "RUB", 100.);
+        return new TransitCurrency(kopeyka, "RUB");
+    }
+
+    public static TransitCurrency SGD(int cents) {
+        return new TransitCurrency(cents, "SGD");
     }
 
     static public TransitCurrency USD(int cents) {
-        return new TransitCurrency(cents, "USD", 100.);
+        return new TransitCurrency(cents, "USD");
     }
 
     static public TransitCurrency JPY(int yens) {
@@ -110,12 +123,6 @@ public class TransitCurrency extends TransitBalance implements Parcelable {
 
     static public TransitCurrency KRW(int wons) {
         return new TransitCurrency(wons, "KRW", 1.);
-    }
-
-    private TransitCurrency(int currency, @NonNull String currencyCode, double divisor) {
-        mCurrency = currency;
-        mCurrencyCode = currencyCode;
-        mDivisor = divisor;
     }
 
     public TransitCurrency obfuscate(int fareOffset, double fareMultiplier) {

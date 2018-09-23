@@ -94,7 +94,7 @@ public class EZLinkTrip extends Trip {
     public TransitCurrency getFare() {
         if (mTransaction.getType() == CEPASTransaction.TransactionType.CREATION)
             return null;
-        return new TransitCurrency(-mTransaction.getAmount(), "SGD");
+        return TransitCurrency.SGD(-mTransaction.getAmount());
     }
 
     @Override
