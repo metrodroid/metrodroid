@@ -200,13 +200,18 @@
 
     <string name="pass_or_transfer">Send/Overfør</string>
     <string name="speak_balance_summary">Når du skanner et kort, vil saldoen automatisk bli lest høyt. Dette fungerer selv når ikke en skjermleser kjører.</string>
-    <string name="fully_locked_desc">"Ingen del av dette kortet kan leses fritt uten en nøkkel.  Du har ingen gyldig nøkkel installert for det. 
-\n 
-\nHvis kortet er støttet av Metrodroid, så vil kortet fungere etter at nøkler for det er installert.  Mer informasjon om hvordan du får tak i disse finnes i dokumentasjonen. 
-\n 
+    <string name="fully_locked_desc">"Ingen del av dette kortet kan leses fritt uten en nøkkel.  Du har ingen gyldig nøkkel installert for det.
+\n
+\n
+\n
+\nHvis kortet er støttet av Metrodroid, så vil kortet fungere etter at nøkler for det er installert.  Mer informasjon om hvordan du får tak i disse finnes i dokumentasjonen.
+\n
+\n
+\n
 \nHvis kortet ditt ikke er støttet av Metrodroid, så er det usannsynlig at det noen gang vil bli det, med mindre nøkkelen for det er dechiffrert.
-\n 
-\nVær så snill å ta kontakt med ditt kommunale kollektivtransportetat for å få et visst nivå av åpen data-tilgang for de utstedte kortene.  Det er mulig å tilby begrenset lesetilgang på en trygg måte til kollektivtransport-smartkort."</string>
+\n
+\n
+\nTa kontakt med ditt kommunale kollektivtransportetat for prøve å få et visst nivå av åpen datatilgang for de utstedte kortene.  Det er mulig å tilby lesetilgang på en trygg måte med moderne smartkortteknologi. Nonen byråer dokumenterer faktisk også dataformatet!"</string>
     <string name="add_key_directions">Lagre en binærdump av nøklene dine som en fil med endelsen .farebotkeys, send den som et epostvedlegg til deg selv og åpne filen på denne enheten.</string>
     <string name="location_helsinki_finland">Helsingfors, Finland</string>
     <string name="location_sydney_australia">Sydney, Australia</string>
@@ -502,7 +507,7 @@
     <string name="card_name_podorozhnik">Podorozhnik</string>
 <string name="sector_title_format_empty">Sektor: 0x%s (tom)</string>
     <string name="binary_title_format">Binærdata</string>
-    <string name="requires_android_21">Krever Android 5.0 eller senere</string>
+    <string name="requires_android_21">Krever Android 5.0 eller senere.</string>
 
     <string name="pref_theme">Drakt</string>
     <string name="pref_theme_desc">Velg utseende og oppførsel</string>
@@ -526,7 +531,7 @@
 </plurals>
     <plurals name="troika_rides">
 	<item quantity="one">Enkelttur</item>
-	<item quantity="other"></item>
+	<item quantity="other">%-tur</item>
 </plurals>
 
     <string name="trip_description_unknown_start">til %s</string>
@@ -589,4 +594,9 @@
     <string name="balances_and_subscriptions">Billetter</string>
     <string name="card_number">Kortnummer</string>
     <string name="pref_show_raw_station_ids">Vis råe stasjons-ID-er</string>
+    <string name="nfc">Nærfeltskommunikasjon</string>
+    <string name="location_istanbul">Istanbul, Tyrkia</string>
+    <string name="classic_key_format_a">Nøkkkel (A): %s</string>
+    <string name="classic_key_format_b">Nøkkel (B): %s</string>
+    <string name="classic_key_format">Nøkkel: %s</string>
     </resources>
