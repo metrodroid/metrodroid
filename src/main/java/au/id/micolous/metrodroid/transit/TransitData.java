@@ -150,4 +150,8 @@ public abstract class TransitData implements Parcelable {
     public Uri getOnlineServicesPage() {
         return null;
     }
+
+    public String getWarning() {
+        return null;
+    }
 }

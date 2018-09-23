@@ -30,6 +30,7 @@ import au.id.micolous.metrodroid.card.classic.ClassicSector;
 import au.id.micolous.metrodroid.card.classic.UnauthorizedClassicSector;
 import au.id.micolous.metrodroid.transit.CardInfo;
 import au.id.micolous.metrodroid.transit.Subscription;
+import au.id.micolous.metrodroid.transit.TransitCurrency;
 import au.id.micolous.metrodroid.transit.TransitData;
 import au.id.micolous.metrodroid.transit.TransitIdentity;
 import au.id.micolous.metrodroid.transit.Trip;
@@ -45,9 +46,7 @@ import java.util.List;
  * Troika cards.
  */
 
-public class TroikaTransitData extends TransitData {
-    public static final String NAME = "Troika";
-
+public class TroikaTransitData implements Parcelable {
     public static final Parcelable.Creator<TroikaTransitData> CREATOR = new Parcelable.Creator<TroikaTransitData>() {
         public TroikaTransitData createFromParcel(Parcel parcel) {
             return new TroikaTransitData(parcel);
@@ -69,32 +68,44 @@ public class TroikaTransitData extends TransitData {
             .setPreview()
             .build();
 
+    private final TroikaBlock mBlock4;
     private final TroikaBlock mBlock7;
     private final TroikaBlock mBlock8;
 
-    @Override
     public String getSerialNumber() {
         return mBlock8.getSerialNumber();
     }
 
     public List<ListItem> getInfo() {
         ArrayList<ListItem> items = new ArrayList<>();
+        List <ListItem> info4 = mBlock4 == null ? null : mBlock4.getInfo();
         List <ListItem> info7 = mBlock7 == null ? null : mBlock7.getInfo();
         List <ListItem> info8 = mBlock8 == null ? null : mBlock8.getInfo();
         if (info8 != null)
             items.addAll(info8);
         if (info7 != null)
             items.addAll(info7);
+        if (info4 != null)
+            items.addAll(info4);
         return items.isEmpty() ? null : items;
     }
 
-    public List<TransitBalance> getBalances() {
-        return Collections.singletonList(mBlock8.getBalance());
+    public TransitBalance getBalance() {
+        TransitBalance b = mBlock8.getBalance();
+        if (b == null)
+            return TransitCurrency.RUB(0);
+        return b;
+    }
+
+    public String getWarning() {
+        if (mBlock8.getBalance() == null)
+            return Utils.localizeString(R.string.troika_unformatted);
+        return null;
     }
 
     @Override
-    public String getCardName() {
-        return mBlock8.getCardName();
+    public int describeContents() {
+        return 0;
     }
 
     @Override
@@ -106,6 +117,11 @@ public class TroikaTransitData extends TransitData {
             mBlock7.writeToParcel(dest, i);
         } else
             dest.writeInt(0);
+        if (mBlock4 != null) {
+            dest.writeInt(1);
+            mBlock4.writeToParcel(dest, i);
+        } else
+            dest.writeInt(0);
     }
 
     public TroikaTransitData(Parcel p) {
@@ -114,50 +130,58 @@ public class TroikaTransitData extends TransitData {
             mBlock7 = TroikaBlock.restoreFromParcel(p);
         else
             mBlock7 = null;
+        if (p.readInt() != 0)
+            mBlock4 = TroikaBlock.restoreFromParcel(p);
+        else
+            mBlock4 = null;
     }
 
-    public static TransitIdentity parseTransitIdentity(ClassicCard card) {
-        return TroikaBlock.parseTransitIdentity(card.getSector(8).getBlock(0).getData());
-    }
-
-    private TroikaBlock decodeSector(ClassicCard card, int idx) {
-        ClassicSector sector = card.getSector(idx);
-        if (sector instanceof UnauthorizedClassicSector)
+    private static TroikaBlock decodeSector(ClassicCard card, int idx) {
+        try {
+            ClassicSector sector = card.getSector(idx);
+            if (sector instanceof UnauthorizedClassicSector)
+                return null;
+            byte[] block0 = sector.getBlock(0).getData();
+            if (!TroikaBlock.check(block0))
+                return null;
+            byte[] rawData = Utils.concatByteArrays(block0, sector.getBlock(1).getData());
+            rawData = Utils.concatByteArrays(rawData, sector.getBlock(2).getData());
+            return TroikaBlock.parseBlock(rawData);
+        } catch (Exception e) {
+            e.printStackTrace();
             return null;
-        byte[] block0 = sector.getBlock(0).getData();
-        if (!TroikaBlock.check(block0))
-            return null;
-        byte []rawData = Utils.concatByteArrays(block0, sector.getBlock(1).getData());
-        rawData = Utils.concatByteArrays(rawData, sector.getBlock(2).getData());
-        return TroikaBlock.parseBlock(rawData);
+        }
     }
 
     public TroikaTransitData(ClassicCard card) {
         mBlock8 = decodeSector(card, 8);
         mBlock7 = decodeSector(card, 7);
+        mBlock4 = decodeSector(card, 4);
     }
 
-    @Override
     public Trip[] getTrips() {
         List <Trip> t = new ArrayList<>();
         if (mBlock7 != null)
             t.addAll(mBlock7.getTrips());
         if (mBlock8 != null)
             t.addAll(mBlock8.getTrips());
+        if (mBlock4 != null)
+            t.addAll(mBlock4.getTrips());
         return t.toArray(new Trip[0]);
     }
 
-    @Override
     public Subscription[] getSubscriptions() {
+        Subscription s4 = mBlock4 == null ? null : mBlock4.getSubscription();
         Subscription s7 = mBlock7 == null ? null : mBlock7.getSubscription();
         Subscription s8 = mBlock8 == null ? null : mBlock8.getSubscription();
-        if (s7 != null && s8 != null)
-            return new Subscription[]{s7, s8};
+        ArrayList<Subscription> s = new ArrayList<>();
         if (s7 != null)
-            return new Subscription[]{s7};
+            s.add(s7);
         if (s8 != null)
-            return new Subscription[]{s8};
-        return null;
+            s.add(s8);
+        if (s4 != null)
+            s.add(s4);
+        return s.toArray(new Subscription[0]);
     }
 
     public static boolean check(ClassicCard card) {

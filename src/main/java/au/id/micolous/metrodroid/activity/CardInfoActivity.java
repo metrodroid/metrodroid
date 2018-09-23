@@ -36,6 +36,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.TextView;
 
 import au.id.micolous.farebot.R;
 import au.id.micolous.metrodroid.MetrodroidApplication;
@@ -192,10 +193,24 @@ public class CardInfoActivity extends MetrodroidActivity {
                         actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
                     }
 
-                    if (mTransitData.hasUnknownStations()) {
+                    String w = mTransitData.getWarning();
+                    boolean hasUnknownStation = mTransitData.hasUnknownStations();
+                    if (w != null || hasUnknownStation) {
                         findViewById(R.id.need_stations).setVisibility(View.VISIBLE);
-                        findViewById(R.id.need_stations_button).setOnClickListener(view -> startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://micolous.github.io/metrodroid/unknown_stops"))));
+                        String txt = "";
+                        if (hasUnknownStation)
+                            txt = getString(R.string.need_stations);
+                        if (w != null && txt.length() > 0)
+                            txt += "\n";
+                        if (w != null)
+                            txt += w;
+
+                        ((TextView) findViewById(R.id.need_stations_text)).setText(txt);
+                        findViewById(R.id.need_stations_button).setVisibility(hasUnknownStation
+                                ? View.VISIBLE : View.GONE);
                     }
+                    if (hasUnknownStation)
+                        findViewById(R.id.need_stations_button).setOnClickListener(view -> startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://micolous.github.io/metrodroid/unknown_stops"))));
 
                     mShowMoreInfo = mTransitData.getMoreInfoPage() != null;
                     mShowOnlineServices = mTransitData.getOnlineServicesPage() != null;

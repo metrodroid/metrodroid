@@ -955,6 +955,11 @@
     <!-- Translators: this is a train line in Moscow. Russian МЦК -->
     <string name="moscow_mcc">Moscow Central Circle (MCC)</string>
     <string name="troika_unknown_ticket">Unknown troika ticket type %s</string>
+    <string name="troika_unformatted">This Troika is not properly formatted. It needs to be topped up at ticket counter before it can be used.</string>
+    <string name="card_name_strelka">Strelka</string>
+    <string name="strelka_long_serial">Strelka long number</string>
+    <string name="card_name_troika_strelka_hybrid">Troika+Strelka</string>
+
     <!-- Translators: This is a list item header, and under it is a number.
     (ie: "Subway trips / 4" => There were 4 trips on the subway taken with this card) -->
     <string name="subway_trips">Subway trips</string>
