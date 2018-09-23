@@ -52,8 +52,8 @@ class MobibSubscription extends En1545Subscription {
     private final int mTicketsRemaining;
     private final boolean mIsSubscription;
 
-    public MobibSubscription(byte[] dataSub, int dataCtr, int num) {
-        super(dataSub, FIELDS, num);
+    public MobibSubscription(byte[] dataSub, int dataCtr) {
+        super(dataSub, FIELDS);
         if(dataCtr != 0x2f02){
             // Ticket
             mIsSubscription = false;
@@ -66,7 +66,7 @@ class MobibSubscription extends En1545Subscription {
     }
 
     @Override
-    protected Integer getCounter() {
+    public Integer getRemainingTripCount() {
         return mIsSubscription ? null : mTicketsRemaining;
     }
 

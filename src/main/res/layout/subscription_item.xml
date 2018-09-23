@@ -25,64 +25,87 @@
 <android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:padding="8dp"
     android:layout_marginBottom="16dp"
+    android:orientation="vertical"
+    android:padding="8dp"
     app:cardCornerRadius="4dp"
     app:cardElevation="4dp"
     app:cardUseCompatPadding="true">
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:padding="8dp">
-    <TextView
-        tools:text="Company Name"
-        android:id="@+id/company"
-        android:textSize="30sp"
-        android:textStyle="bold"
-        android:layout_gravity="start"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
-    <FrameLayout
+
+    <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/linearLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
+        <TextView
+            android:id="@+id/company"
+            android:layout_height="40dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginLeft="8dp"
+            android:textSize="30sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/passengerCount"
+            tools:text="Company Name"
+            android:layout_width="0dp" />
+
+
+        <TextView
+            android:id="@+id/passengerCount"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="30sp"
+            android:textStyle="bold"
+            android:layout_marginStart="8dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginRight="8dp"
+            android:layout_marginTop="8dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/tvm_black"
+            tools:text="2"/>
+
         <android.support.v7.widget.AppCompatTextView
             android:id="@+id/name"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginBottom="4dp"
-            android:layout_marginTop="4dp"
+            android:layout_height="68dp"
             android:gravity="center"
-            android:textSize="50sp"
-            android:textStyle="bold"
             android:maxLines="1"
             android:singleLine="false"
+            android:textSize="50sp"
+            android:textStyle="bold"
             app:autoSizeMaxTextSize="50dp"
             app:autoSizeMinTextSize="30sp"
             app:autoSizeTextType="uniform"
-            tools:text="Multipass" />
-    </FrameLayout>
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/company"
+            tools:text="Multipass"
+            android:layout_width="0dp" />
 
-    <TextView
-        android:id="@+id/used"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="end"
-        android:gravity="end"
-        tools:text="Used" />
 
-    <TextView
-        android:id="@+id/valid"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="end"
-        android:gravity="end"
-        tools:text="Valid 2010-01-31 to 2011-01-30" />
-</LinearLayout>
+        <TextView
+            android:id="@+id/used"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:gravity="end"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/name"
+            tools:text="Used" />
+
+        <TextView
+            android:id="@+id/valid"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:gravity="end"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/used"
+            tools:text="Valid 2010-01-31 to 2011-01-30" />
+    </android.support.constraint.ConstraintLayout>
 </android.support.v7.widget.CardView>

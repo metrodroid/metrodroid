@@ -39,7 +39,7 @@ import au.id.micolous.farebot.R;
 class OpalSubscription extends Subscription {
     public static final Creator<OpalSubscription> CREATOR = new Creator<OpalSubscription>() {
         public OpalSubscription createFromParcel(Parcel parcel) {
-            return new OpalSubscription(parcel);
+            return OpalSubscription.getInstance();
         }
 
         public OpalSubscription[] newArray(int size) {
@@ -47,16 +47,13 @@ class OpalSubscription extends Subscription {
         }
     };
 
-    public OpalSubscription(Parcel parcel) {
+    private static final OpalSubscription OPAL_SUBSCRIPTION = new OpalSubscription();
+
+    public static OpalSubscription getInstance() {
+        return OPAL_SUBSCRIPTION;
     }
 
-    public OpalSubscription() {
-    }
-
-
-    @Override
-    public int getId() {
-        return 0;
+    private OpalSubscription() {
     }
 
     @Override
@@ -73,22 +70,12 @@ class OpalSubscription extends Subscription {
 
     @Override
     public String getAgencyName(boolean isShort) {
-        return "Opal";
-    }
-
-    @Override
-    public int getMachineId() {
-        return 0;
+        return Utils.localizeString(R.string.opal_agency_tfnsw);
     }
 
     @Override
     public String getSubscriptionName() {
         return Utils.localizeString(R.string.opal_automatic_top_up);
-    }
-
-    @Override
-    public String getActivation() {
-        return null;
     }
 
     @Override

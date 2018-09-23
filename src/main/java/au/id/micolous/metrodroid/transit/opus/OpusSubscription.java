@@ -60,8 +60,8 @@ class OpusSubscription extends En1545Subscription {
 
     private final int mTicketsRemaining;
 
-    public OpusSubscription(byte[] dataSub, byte[] dataCtr, int num) {
-        super(dataSub, FIELDS, num);
+    public OpusSubscription(byte[] dataSub, byte[] dataCtr) {
+        super(dataSub, FIELDS);
         mTicketsRemaining = dataCtr == null ? 0 : Utils.getBitsFromBuffer(dataCtr, 16, 8);
     }
 
@@ -71,7 +71,7 @@ class OpusSubscription extends En1545Subscription {
     }
 
     @Override
-    protected Integer getCounter() {
+    public Integer getRemainingTripCount() {
         return mParsed.getIntOrZero("ContractEndDate") == 0 ? mTicketsRemaining : null;
     }
 

@@ -32,7 +32,6 @@ import au.id.micolous.metrodroid.card.iso7816.ISO7816Record;
 import au.id.micolous.metrodroid.card.iso7816.ISO7816Selector;
 import au.id.micolous.metrodroid.transit.CardInfo;
 import au.id.micolous.metrodroid.transit.TransitIdentity;
-import au.id.micolous.metrodroid.transit.Trip;
 import au.id.micolous.metrodroid.transit.en1545.Calypso1545TransitData;
 import au.id.micolous.metrodroid.transit.en1545.En1545Bitmap;
 import au.id.micolous.metrodroid.transit.en1545.En1545Container;
@@ -132,7 +131,7 @@ public class OpusTransitData extends Calypso1545TransitData {
                 ISO7816Selector.makeSelector(0x2000, 0x202A + recordNum - 1));
         if (matchingCtr == null)
             return null;
-        return new OpusSubscription(data, matchingCtr.getRecord(1).getData(), recordNum);
+        return new OpusSubscription(data, matchingCtr.getRecord(1).getData());
     }
 
     @Override

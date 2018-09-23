@@ -163,8 +163,8 @@ class IntercodeSubscription extends En1545Subscription {
     );
     private final int mNetworkId;
 
-    public IntercodeSubscription(byte[] data, int num, int type, int networkId) {
-        super(data, getFields(type), num);
+    public IntercodeSubscription(byte[] data, int type, int networkId) {
+        super(data, getFields(type));
 
         Integer nid = mParsed.getInt("ContractNetworkId");
         if (nid != null)

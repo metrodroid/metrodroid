@@ -172,13 +172,30 @@ public class En1545Parsed implements Parcelable {
         return null;
     }
 
-    public Calendar getTimeStamp(String name, TimeZone tz) {
+    @Nullable
+    public Calendar getTimeStamp(@NonNull String name, TimeZone tz) {
         Pair<Calendar,Integer> timeFlag = getTimeStampFlags(name, tz);
         if (timeFlag == null)
             return null;
         return timeFlag.first;
     }
 
+    boolean getTimeStampContainsTime(@NonNull String name) {
+        if (contains(name + "DateTime"))
+            return true;
+        if (contains(name + "Time") && contains(name + "Date"))
+            return true;
+        if (contains(name + "TimeLocal") && contains(name + "Date"))
+            return true;
+        if (contains(name + "Date"))
+            return false;
+        if (contains(name + "TimeLocal"))
+            return true;
+        return false;
+    }
+
+    @Deprecated
+    @Nullable
     public String getTimeStampString(String name, TimeZone tz) {
         Pair<Calendar,Integer> timeFlag = getTimeStampFlags(name, tz);
         if (timeFlag == null)

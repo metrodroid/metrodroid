@@ -93,7 +93,6 @@ public class OpalTransitData extends TransitData {
         OPAL_EPOCH = epoch;
     }
 
-    private static final OpalSubscription OPAL_AUTOMATIC_TOP_UP = new OpalSubscription();
     private int mSerialNumber;
     private int mBalance; // cents
     private int mChecksum;
@@ -272,7 +271,7 @@ public class OpalTransitData extends TransitData {
     public Subscription[] getSubscriptions() {
         // Opal has no concept of "subscriptions" (travel pass), only automatic top up.
         if (mAutoTopup) {
-            return new Subscription[]{OPAL_AUTOMATIC_TOP_UP};
+            return new Subscription[]{ OpalSubscription.getInstance() };
         }
         return new Subscription[]{};
     }

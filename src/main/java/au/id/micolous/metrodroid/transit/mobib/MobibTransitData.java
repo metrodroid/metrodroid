@@ -219,8 +219,8 @@ public class MobibTransitData extends Calypso1545TransitData {
     protected En1545Subscription createSubscription(CalypsoApplication card, byte[] data, En1545Parsed contractList, Integer listNum, int recordNum) {
         byte[] ctr9 = card.getFile(CalypsoApplication.File.TICKETING_COUNTERS_9).getRecord(1).getData();
         return new MobibSubscription(data,
-                Utils.byteArrayToInt(ctr9, (recordNum - 1) * 3, 3),
-                recordNum);
+                Utils.byteArrayToInt(ctr9, (recordNum - 1) * 3, 3)
+        );
     }
 
     @Override

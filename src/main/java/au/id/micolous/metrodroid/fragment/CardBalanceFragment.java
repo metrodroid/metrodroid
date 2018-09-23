@@ -108,12 +108,26 @@ public class CardBalanceFragment extends ListFragment {
             TextView validView = view.findViewById(R.id.valid);
             if (subscription.getValidFrom() != null && subscription.getValidTo() != null) {
                 Spanned validFrom = Utils.dateFormat(TripObfuscator.maybeObfuscateTS(subscription.getValidFrom()));
-                Spanned validTo = Utils.dateFormat(TripObfuscator.maybeObfuscateTS(subscription.getValidTo()));
+                Spanned validTo;
+                if (subscription.validToHasTime()) {
+                    validTo = Utils.dateTimeFormat(TripObfuscator.maybeObfuscateTS(subscription.getValidTo()));
+                } else {
+                    validTo = Utils.dateFormat(TripObfuscator.maybeObfuscateTS(subscription.getValidTo()));
+                }
                 validView.setText(getString(R.string.valid_format, validFrom, validTo));
                 validView.setVisibility(View.VISIBLE);
             } else if (subscription.getValidTo() != null) {
-                Spanned validTo = Utils.dateFormat(TripObfuscator.maybeObfuscateTS(subscription.getValidTo()));
+                Spanned validTo;
+                if (subscription.validToHasTime()) {
+                    validTo = Utils.dateTimeFormat(TripObfuscator.maybeObfuscateTS(subscription.getValidTo()));
+                } else {
+                    validTo = Utils.dateFormat(TripObfuscator.maybeObfuscateTS(subscription.getValidTo()));
+                }
                 validView.setText(getString(R.string.valid_to_format, validTo));
+                validView.setVisibility(View.VISIBLE);
+            } else if (subscription.getValidFrom() != null) {
+                Spanned validTo = Utils.dateFormat(TripObfuscator.maybeObfuscateTS(subscription.getValidFrom()));
+                validView.setText(getString(R.string.valid_from_format, validTo));
                 validView.setVisibility(View.VISIBLE);
             } else {
                 validView.setVisibility(View.GONE);
@@ -134,13 +148,35 @@ public class CardBalanceFragment extends ListFragment {
             } else {
                 nameView.setVisibility(View.GONE);
             }
+
+            // TODO: Replace this with structured data.
+            TextView usedView = view.findViewById(R.id.used);
+            usedView.setVisibility(View.GONE);
+            /*
             String used = subscription.getActivation();
             TextView usedView = view.findViewById(R.id.used);
             if (used != null) {
                 usedView.setText(used);
                 usedView.setVisibility(View.VISIBLE);
-            } else
+            } else {
                 usedView.setVisibility(View.GONE);
+            }
+            */
+
+            TextView passengerCountView = view.findViewById(R.id.passengerCount);
+            if (subscription.getPassengerCount() <= 1) {
+                passengerCountView.setVisibility(View.GONE);
+            } else {
+                passengerCountView.setText(
+                        Utils.localizePlural(R.plurals.passenger_count_short,
+                        subscription.getPassengerCount(), subscription.getPassengerCount()));
+
+                passengerCountView.setContentDescription(
+                        Utils.localizePlural(R.plurals.passenger_count,
+                        subscription.getPassengerCount(), subscription.getPassengerCount()));
+
+                passengerCountView.setVisibility(View.VISIBLE);
+            }
 
             return view;
         }

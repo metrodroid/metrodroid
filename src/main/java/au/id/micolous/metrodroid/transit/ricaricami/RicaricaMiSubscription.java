@@ -47,7 +47,7 @@ public class RicaricaMiSubscription extends En1545Subscription {
     private final int mCounter;
 
     public RicaricaMiSubscription(byte[] data, byte[] counter, int id) {
-        super(data, FIELDS, id);
+        super(data, FIELDS);
         mCounter = Utils.byteArrayToIntReversed(counter, 0, 4);
     }
 
@@ -72,20 +72,27 @@ public class RicaricaMiSubscription extends En1545Subscription {
     }
 
     @Override
-    public String getActivation() {
-        String append = "";
+    public Integer getRemainingDayCount() {
         if (getTariff() == RicaricaMiLookup.TARIFF_URBAN_2X6) {
             int val = mParsed.getIntOrZero("ContractValidationsInDay");
-            if (val == 0 && mCounter == 6)
-                append = Utils.localizeString(R.string.en1545_never_used) + "\n";
-            else {
-                append = Utils.localizePlural(R.plurals.ricaricami_remains_on_day, 2 - val,
-                        2 - val, mParsed.getTimeStampString("ContractLastUse", RicaricaMiLookup.TZ)) + "\n";
-                append += Utils.localizePlural(R.plurals.ricaricami_days_remaining, mCounter - 1,
-                        mCounter - 1) + "\n";
+            if (val == 0 && mCounter == 6) {
+                return 6;
             }
+
+            return mCounter - 1;
         }
-        return super.getActivation() + append;
+
+        return null;
+    }
+
+    @Override
+    public Integer getRemainingTripsInDayCount() {
+        if (getTariff() == RicaricaMiLookup.TARIFF_URBAN_2X6) {
+            int val = mParsed.getIntOrZero("ContractValidationsInDay");
+            return 2 - val;
+        }
+
+        return null;
     }
 
     private int getTariff() {
@@ -93,7 +100,7 @@ public class RicaricaMiSubscription extends En1545Subscription {
     }
 
     @Override
-    protected Integer getCounter() {
+    public Integer getRemainingTripCount() {
         if (getTariff() == RicaricaMiLookup.TARIFF_URBAN)
             return mCounter;
         return null;

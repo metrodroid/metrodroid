@@ -29,7 +29,6 @@ import au.id.micolous.metrodroid.card.CardType;
 import au.id.micolous.metrodroid.card.calypso.CalypsoApplication;
 import au.id.micolous.metrodroid.transit.CardInfo;
 import au.id.micolous.metrodroid.transit.TransitIdentity;
-import au.id.micolous.metrodroid.transit.Trip;
 import au.id.micolous.metrodroid.transit.en1545.Calypso1545TransitData;
 import au.id.micolous.metrodroid.transit.en1545.En1545Bitmap;
 import au.id.micolous.metrodroid.transit.en1545.En1545Container;
@@ -162,7 +161,7 @@ public class IntercodeTransitData extends Calypso1545TransitData {
         Integer tariff = contractList.getInt("ContractsTariff", listNum);
         if (tariff == null)
             return null;
-        return new IntercodeSubscription(data, listNum, (tariff >> 4) & 0xff, mNetworkId);
+        return new IntercodeSubscription(data, (tariff >> 4) & 0xff, mNetworkId);
     }
 
     private static final SparseArray<Pair<CardInfo, En1545Lookup>> NETWORKS = new SparseArray<>();

@@ -30,7 +30,6 @@ import au.id.micolous.metrodroid.card.CardType;
 import au.id.micolous.metrodroid.card.calypso.CalypsoApplication;
 import au.id.micolous.metrodroid.transit.CardInfo;
 import au.id.micolous.metrodroid.transit.TransitIdentity;
-import au.id.micolous.metrodroid.transit.Trip;
 import au.id.micolous.metrodroid.transit.en1545.Calypso1545TransitData;
 import au.id.micolous.metrodroid.transit.en1545.En1545Container;
 import au.id.micolous.metrodroid.transit.en1545.En1545FixedHex;
@@ -107,7 +106,7 @@ public class RavKavTransitData extends Calypso1545TransitData {
     @Override
     protected En1545Subscription createSubscription(CalypsoApplication card, byte[] data, En1545Parsed contractList, Integer listNum, int recordNum) {
         byte[] ctr9 = card.getFile(CalypsoApplication.File.TICKETING_COUNTERS_9).getRecord(1).getData();
-        return new RavKavSubscription(data, Utils.byteArrayToInt(ctr9, (recordNum - 1) * 3, 3), recordNum);
+        return new RavKavSubscription(data, Utils.byteArrayToInt(ctr9, (recordNum - 1) * 3, 3));
     }
 
     @Override

@@ -20,6 +20,14 @@ package au.id.micolous.metrodroid.transit.en1545;
 
 import au.id.micolous.metrodroid.util.Utils;
 
+/**
+ * EN1545 Repeated Fields
+ *
+ * A repeated field consists of a EN1545 Fixed Integer, containing the number of times that the
+ * field value has been repeated.
+ *
+ * Then the field values.
+ */
 public class En1545Repeat implements En1545Field {
     private final En1545Field mField;
     private final int mCtrLen;

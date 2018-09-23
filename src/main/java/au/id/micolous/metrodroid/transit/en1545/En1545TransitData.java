@@ -34,6 +34,8 @@ import au.id.micolous.metrodroid.util.TripObfuscator;
 import au.id.micolous.metrodroid.util.Utils;
 
 abstract public class En1545TransitData extends TransitData {
+    //protected final static String
+
     protected final En1545Parsed mTicketEnvParsed;
 
     protected En1545TransitData(Parcel parcel) {

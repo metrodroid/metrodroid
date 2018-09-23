@@ -20,8 +20,16 @@
 package au.id.micolous.metrodroid.transit.en1545;
 
 import android.os.Parcel;
+import android.support.annotation.Nullable;
+import android.support.annotation.StringRes;
+import android.util.Log;
+import android.util.Pair;
+import android.util.SparseArray;
 import android.util.SparseIntArray;
 
+import org.apache.commons.lang3.ArrayUtils;
+
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.HashSet;
@@ -30,11 +38,12 @@ import java.util.Set;
 import au.id.micolous.farebot.R;
 import au.id.micolous.metrodroid.transit.Subscription;
 import au.id.micolous.metrodroid.transit.TransitBalance;
+import au.id.micolous.metrodroid.transit.TransitCurrency;
 import au.id.micolous.metrodroid.util.Utils;
 
 public abstract class En1545Subscription extends Subscription {
+    private static final String TAG = En1545Subscription.class.getSimpleName();
     protected final En1545Parsed mParsed;
-    private final int mId;
 
     protected Set<String> getHandledFieldSet() {
         return new HashSet<>(Arrays.asList(
@@ -57,149 +66,115 @@ public abstract class En1545Subscription extends Subscription {
                 "UnknownA", "UnknownB", "UnknownC", "UnknownD"));
     }
 
-    private static final SparseIntArray STATUS_STRINGS = new SparseIntArray();
-
-    static {
-        STATUS_STRINGS.put(0, R.string.en1545_never_used);
-        STATUS_STRINGS.put(1, R.string.en1545_subscription_validated);
-        STATUS_STRINGS.put(0xff, R.string.en1545_subscription_expired);
-    }
-
     public En1545Subscription(Parcel parcel) {
         mParsed = new En1545Parsed(parcel);
-        mId = parcel.readInt();
     }
 
-    protected Integer getCounter() {
-        return null;
-    }
-
-    public En1545Subscription(byte[] data, En1545Field fields, int id) {
+    public En1545Subscription(byte[] data, En1545Field fields) {
         mParsed = En1545Parser.parse(data, fields);
-        mId = id;
-    }
-
-    private String formatZones(){
-        if (!mParsed.contains("ContractZones"))
-            return "";
-        StringBuilder ret = new StringBuilder();
-        int zonenum = 1;
-        int zonecode = mParsed.getInt("ContractZones");
-        Integer first = null;
-        while (zonecode > 0 || first != null) {
-            if ((zonecode & 1) != 0 && first == null)
-                first = zonenum;
-            if ((zonecode & 1) == 0 && first != null) {
-                int last = zonenum - 1;
-                if (ret.length() != 0)
-                    ret.append(",");
-                if (first == last)
-                    ret.append(last);
-                else
-                    ret.append("").append(first).append("-").append(last);
-                first = null;
-            }
-
-            zonecode /= 2;
-            zonenum++;
-        }
-        return Utils.localizeString(R.string.en1545_zones, ret.toString()) + "\n";
-    }
-
-    private String formatBoughtString() {
-        String priceStr = "";
-        String timeStr;
-        if (mParsed.getIntOrZero("ContractPriceAmount") != 0)
-            priceStr = getLookup().parseCurrency((mParsed.getInt("ContractPriceAmount")))
-                    .maybeObfuscateBalance().formatCurrencyString(true).toString();
-        timeStr = mParsed.getTimeStampString("ContractSale", getLookup().getTimeZone());
-
-        if (timeStr == null)
-            timeStr = "";
-
-        if (timeStr.equals("") && priceStr.equals(""))
-            return "";
-
-        if (!priceStr.equals(""))
-            switch (mParsed.getIntOrZero("ContractPayMethod")) {
-                case 0x90:
-                    return Utils.localizeString(R.string.en1545_bought_on_for_with_cash,
-                            timeStr, priceStr) + "\n";
-                case 0xb3:
-                    return Utils.localizeString(R.string.en1545_bought_on_for_with_card,
-                            timeStr, priceStr) + "\n";
-                default:
-                case 0:
-                    return Utils.localizeString(R.string.en1545_bought_on_for,
-                            timeStr, priceStr) + "\n";
-            }
-        return Utils.localizeString(R.string.en1545_bought_on, timeStr) + "\n";
-    }
-
-    private String formatLastUseString() {
-        String timeStr;
-        timeStr = mParsed.getTimeStampString("ContractLastUse", getLookup().getTimeZone());
-
-        if (timeStr == null || timeStr.equals(""))
-            return "";
-
-        return Utils.localizeString(R.string.en1545_last_used_on, timeStr) + "\n";
     }
 
     @Override
-    public String getActivation() {
-        return formatBoughtString() + formatPassengersString()
-                + formatSellerAgency() + formatSellerMachine() + formatStatusString()
-                + formatZones() + formatSerialNumber()
-                + mParsed.makeString("\n", getHandledFieldSet())
-                + formatLastUseString()
-                + formatTrips();
+    public int[] getZones() {
+        Integer zonecode = mParsed.getInt("ContractZones");
+        if (zonecode == null) {
+            return null;
+        }
+
+        ArrayList<Integer> zones = new ArrayList<>();
+        for (int zone=0; (zonecode >> zone) > 0; zone++) {
+            if (zonecode >> zone > 0) {
+                zones.add(zone);
+            }
+        }
+
+        return ArrayUtils.toPrimitive(zones.toArray(new Integer[0]));
     }
 
-    private String formatTrips() {
-        Integer counter = getCounter();
-        if (counter == null)
-            return "";
-        return Utils.localizePlural(R.plurals.trips_remaining, counter, counter) + "\n";
+    @Nullable
+    @Override
+    public Calendar getPurchaseTimestamp() {
+        return mParsed.getTimeStamp("ContractSale", getLookup().getTimeZone());
     }
 
-    private String formatSerialNumber() {
-        int sn = mParsed.getIntOrZero("ContractSerialNumber");
-        if (sn == 0)
-            return "";
-        return Utils.localizeString(R.string.en1545_subscription_number, Integer.toString(sn)) + "\n";
+    @Override
+    public boolean purchaseTimestampHasTime() {
+        return mParsed.getTimeStampContainsTime("ContractSale");
     }
 
-    private String formatStatusString() {
-        if (!mParsed.contains("ContractStatus"))
-            return "";
-        int status = mParsed.getInt("ContractStatus");
-        int statusRes = STATUS_STRINGS.get(status, 0);
-        if (statusRes != 0)
-            return Utils.localizeString(statusRes)+"\n";
-        return Utils.localizeString(R.string.en1545_unknown_status,
-                "0x" + Integer.toHexString(status))+"\n";
+    @Nullable
+    @Override
+    public TransitCurrency cost() {
+        int cost = mParsed.getIntOrZero("ContractPriceAmount");
+        if (cost == 0) {
+            return null;
+        }
+
+        return getLookup().parseCurrency(cost);
     }
 
-    private String formatSellerMachine() {
-        if (mParsed.getIntOrZero("ContractSaleDevice") == 0)
-            return "";
-        return Utils.localizeString(R.string.machine_id,
-                Integer.toString(mParsed.getIntOrZero("ContractSaleDevice"))) + "\n";
+    @Override
+    public PaymentMethod getPaymentMethod() {
+        if (cost() == null) {
+            return super.getPaymentMethod();
+        }
+
+        switch (mParsed.getIntOrZero("ContractPayMethod")) {
+            case 0x90: return PaymentMethod.CASH;
+            case 0xb3: return PaymentMethod.CREDIT_CARD;
+
+            case 0:
+            default: return PaymentMethod.UNKNOWN;
+        }
     }
 
-    private String formatSellerAgency() {
-        if (!mParsed.contains("ContractSaleAgent"))
-            return "";
-        int agency = mParsed.getIntOrZero("ContractSaleAgent");
-        return Utils.localizeString(R.string.en1545_sold_by, getLookup().getAgencyName(agency, false)) + "\n";
+    @Nullable
+    @Override
+    public Calendar getLastUseTimestamp() {
+        return mParsed.getTimeStamp("ContractLastUse", getLookup().getTimeZone());
     }
 
-    private String formatPassengersString() {
-        if (!mParsed.contains("ContractPassengerTotal"))
-            return "";
-        int pax = mParsed.getInt("ContractPassengerTotal");
-        return Utils.localizePlural(R.plurals.en1545_pax_count, pax, pax) + "\n";
+    @Override
+    public boolean lastUseTimestampHasTime() {
+        return mParsed.getTimeStampContainsTime("ContractLastUse");
+    }
+
+    @Override
+    public SubscriptionState getSubscriptionState() {
+        Integer status = mParsed.getInt("ContractStatus");
+        if (status == null) {
+            return super.getSubscriptionState();
+        }
+
+        switch (status) {
+            case 0: return SubscriptionState.UNUSED;
+            case 1: return SubscriptionState.STARTED;
+            case 0xFF: return SubscriptionState.EXPIRED;
+        }
+
+        Log.d(TAG, "Unknown subscription state: 0x" + Integer.toHexString(status));
+        return SubscriptionState.UNKNOWN;
+    }
+
+    @Nullable
+    @Override
+    public String getSaleAgencyName() {
+        Integer agency = mParsed.getInt("ContractSaleAgent");
+        if (agency == null) {
+            return null;
+        }
+
+        return getLookup().getAgencyName(agency, false);
+    }
+
+    @Override
+    public int getPassengerCount() {
+        Integer pax = mParsed.getInt("ContractPassengerTotal");
+        if (pax == null) {
+            return super.getPassengerCount();
+        }
+
+        return pax;
     }
 
     @Override
@@ -226,19 +201,18 @@ public abstract class En1545Subscription extends Subscription {
     protected abstract En1545Lookup getLookup();
 
     @Override
-    public int getMachineId() {
-        return 0;
+    public Integer getMachineId() {
+        return mParsed.getInt("ContractSaleDevice");
     }
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
         mParsed.writeToParcel(dest, flags);
-        dest.writeInt(mId);
     }
 
     @Override
-    public int getId() {
-        return mId;
+    public Integer getId() {
+        return mParsed.getInt("ContractSerialNumber");
     }
 
     public TransitBalance getBalance() {

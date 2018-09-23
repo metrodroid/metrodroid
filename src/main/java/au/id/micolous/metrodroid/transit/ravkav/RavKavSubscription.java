@@ -56,8 +56,8 @@ public class RavKavSubscription extends En1545Subscription {
     );
     private final int mCounter;
 
-    public RavKavSubscription(byte[] data, int ctr, int recordNum) {
-        super(data, SUB_FIELDS, recordNum);
+    public RavKavSubscription(byte[] data, int ctr) {
+        super(data, SUB_FIELDS);
         mCounter = ctr;
     }
 
@@ -81,7 +81,7 @@ public class RavKavSubscription extends En1545Subscription {
     }
 
     @Override
-    protected Integer getCounter() {
+    public Integer getRemainingTripCount() {
         if (getCtrUse() == 2)
             return mCounter;
         return null;

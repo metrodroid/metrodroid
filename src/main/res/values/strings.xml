@@ -123,6 +123,9 @@
     <!-- Translators: This is an end date, eg: "Valid until 3/3/2018". Dates are formatted according
      to user preferences. -->
     <string name="valid_to_format">Valid until %1$s</string>
+    <!-- Translators: This is a start date, eg: "Valid from 3/12/2017". Dates are formatted according
+     to user preferences. -->
+    <string name="valid_from_format">Valid from %1$s</string>
     <string name="valid_not_used">Not yet used</string>
     <string name="unknown_format">Unknown (%s)</string>
     <string name="unknown">Unknown</string>
@@ -406,10 +409,26 @@
         <item quantity="one">Single-ride</item>
         <item quantity="other">%d-ride</item>
     </plurals>
-    <plurals name="en1545_pax_count">
+
+    <!-- Translators: this is used as a content description for accessibility software. -->
+    <plurals name="passenger_count">
         <item quantity="one">%d passenger</item>
         <item quantity="other">%d passengers</item>
     </plurals>
+    <!--
+    Translators: This may contain at most 1 character after the number, to indicate a number of
+    passengers. It will only be shown if there is more than 1 passenger associated with travel /
+    subscription (eg: family tickets).
+
+    This is for languages like Japanese where a single character can be used for "person".
+
+    The content description has a full description of the item.
+    -->
+    <plurals name="passenger_count_short">
+        <item quantity="one">%d</item>
+        <item quantity="other">%d</item>
+    </plurals>
+
     <plurals name="ricaricami_days_remaining">
         <item quantity="one">%d day remaining</item>
         <item quantity="other">%d days remaining</item>
@@ -845,6 +864,11 @@
     <string name="opal_action_journey_completed_auto_on">Journey completed (failure to tap on)</string>
     <string name="opal_action_tap_on_reversal">Tap on reversal</string>
     <string name="opal_action_tap_on_rejected">Tap on rejected</string>
+    <!--
+    Translators: This is the name of the public transport authority in Sydney.
+    Full name: "Transport for New South Wales"
+    -->
+    <string name="opal_agency_tfnsw">Transport for NSW</string>
     <string name="card_note_opal">Free travel passes and single trip tickets are not supported.</string>
 
     <string name="orca_coach_number">Coach #%s</string>
@@ -941,14 +965,7 @@
 
     <string name="en1545_issue_date">Issue date</string>
     <string name="en1545_network_id">Network ID</string>
-    <string name="en1545_bought_on">Bought on %s</string>
-    <string name="en1545_bought_on_for_with_card">Bought on %s for %s with card</string>
-    <string name="en1545_bought_on_for_with_cash">Bought on %s for %s with cash</string>
-    <string name="en1545_bought_on_for">Bought on %s for %s</string>
-    <string name="en1545_sold_by">Sold by %s</string>
-    <string name="en1545_subscription_number">Subscription #%s</string>
     <string name="en1545_card_issuer">Issuer</string>
-    <string name="en1545_zones">Zones: %s</string>
     <string name="vehicle_number">Vehicle #%s</string>
 
     <string name="en1545_card_purchase_date">Date Purchased</string>

@@ -100,6 +100,7 @@ public class HSLTrip extends Trip {
 
     @Override
     public String getAgencyName(boolean isShort) {
+        // TODO: Transform this into structured data.
         String pax = Utils.localizeString(R.string.hsl_person_format, Integer.toString(mPax));
         if (mArvo == 1) {
             String mins = Utils.localizeString(R.string.hsl_mins_format,
