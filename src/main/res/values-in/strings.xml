@@ -107,7 +107,7 @@
     <string name="card_preview_reader">Versi BETA dari card reader.</string>
     <string name="visit_website">Kunjungi Web</string>
     <string name="title_activity_about">Tentang</string>
-    <string name="card_type">Tipe kartu</string>
+    <string name="card_format">Tipe kartu</string>
     <string name="select_file">Pilih file</string>
     <string name="copied_to_clipboard">Telah disalin ke clipboard</string>
     <string name="saved_xml">Tulis Metrodroid-Export.xml ke penyimpanan USB.</string>

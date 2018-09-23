@@ -109,7 +109,7 @@
     <string name="card_preview_reader">Version bêta du lecteur de cartes.</string>
     <string name="visit_website">Visitez le site web</string>
     <string name="title_activity_about">A propos de Metrodroid</string>
-    <string name="card_type">Type de carte</string>
+    <string name="card_format">Type de carte</string>
     <string name="select_file">Sélectionner un fichier</string>
     <string name="copied_to_clipboard">Copié dans le presse-papier</string>
     <string name="saved_xml">Metrodroid-Export.xml écrit dans le stockage USB.</string>

@@ -63,6 +63,11 @@
     <string name="scanned_at_format">Scanned at %1$s on %2$s</string>
     <string name="supported_cards">Supported Cards</string>
     <string name="pass_or_transfer">Pass/Xfer</string>
+    <!--
+    Translators: This is used for a total number of transactions that have been performed on the
+    card. This is slightly different to a "trip counter", as many tickets count both the tap-on
+    (entry) and tap-off (exit), as well as top-ups as different transactions.
+    -->
     <string name="transaction_counter">Transaction counter</string>
     <string name="fully_locked_desc">
         No part of this card is freely readable without a key. You have no valid keys installed for it.\n\n
@@ -77,7 +82,7 @@
     <!-- Translators: "Machine ID" is arbitrary. It could be a decimal number, or hexadecimal… -->
     <string name="machine_id">Machine ID %s</string>
 
-    <string name="unknown_card_header">Unknown card format</string>
+    <string name="unknown_card_header">Unsupported card format</string>
     <string name="unknown_card_description">This card is not yet supported by Metrodroid. Only raw data can be displayed.</string>
 
     <string name="unknown_more_info">More info</string>
@@ -146,7 +151,9 @@
     <string name="card_preview_reader">Beta version of card reader.</string>
     <string name="visit_website">Visit Website</string>
     <string name="title_activity_about">About</string>
-    <string name="card_type">Card type</string>
+    <!-- Translators: This is used to label a card's product name. For example, "Opal". -->
+    <string name="card_format">Card format</string>
+
     <string name="select_file">Select file</string>
     <string name="copied_to_clipboard">Copied to clipboard</string>
     <string name="saved_xml">Wrote Metrodroid-Export.xml to USB Storage.</string>
@@ -923,13 +930,16 @@
     <string name="expiry_date">Expiry date</string>
     <string name="compass_note">Single ride tickets only</string>
 
+    <!--
+    Translators: Some cards record the cardholder's gender, this is used to label the field.
+    -->
+    <string name="gender">Gender</string>
+    <string name="gender_female">Female</string>
+    <string name="gender_male">Male</string>
+
     <!-- En1545 and related cards -->
 
     <string name="en1545_issue_date">Issue date</string>
-    <string name="en1545_date_of_birth">Date of birth</string>
-    <string name="en1545_card_holder_gender">Gender</string>
-    <string name="en1545_card_holder_male">Male</string>
-    <string name="en1545_card_holder_female">Female</string>
     <string name="en1545_network_id">Network ID</string>
     <string name="en1545_bought_on">Bought on %s</string>
     <string name="en1545_bought_on_for_with_card">Bought on %s for %s with card</string>
@@ -939,7 +949,8 @@
     <string name="en1545_subscription_number">Subscription #%s</string>
     <string name="en1545_card_issuer">Issuer</string>
     <string name="en1545_zones">Zones: %s</string>
-    <string name="en1545_vehicle_number">Vehicle #%s</string>
+    <string name="vehicle_number">Vehicle #%s</string>
+
     <string name="en1545_card_purchase_date">Date Purchased</string>
     <string name="en1545_single_trips">Single trips</string>
     <string name="en1545_monthly_subscription">Monthly subscription</string>
@@ -951,24 +962,32 @@
     <string name="en1545_unknown_status">Unknown status (%s)</string>
     <string name="en1545_never_used">Never Used</string>
     <string name="en1545_last_used_on">Last used on %s</string>
-    <string name="en1545_card_expiry_date">Expiry date</string>
 
-    <string name="mobib_card_holder">Holder</string>
-    <string name="mobib_anon">Anonymous</string>
-    <string name="mobib_card_type">Card type</string>
-    <string name="mobib_personal">Personal</string>
-    <string name="mobib_card_zip">Zip Code</string>
-    <string name="mobib_total_trips">Total trips</string>
+    <!-- Translators: This refers to a person's name. -->
+    <string name="card_holders_name">Cardholder\'s name</string>
+
+    <!--
+    Translators: This is used to describe whether a card is personalised (registered to an
+    individual) or anonymous (not registered).
+     -->
+    <string name="card_type">Card type</string>
+
+    <!-- Translators: Used to describe a card that is not registered to any individual. -->
+    <string name="card_type_anonymous">Anonymous</string>
+    <!-- Translators: Used to describe a card that has been registered in an individual's name. -->
+    <string name="card_type_personal">Personal</string>
+
+    <!--
+    Translators: This should never be translated as "ZIP code".
+    This string should not be used for ticketing systems in USA.
+    -->
+    <string name="postal_code">Postal code</string>
 
     <!-- Translators: this is a ticketing system in Israel. (Hebrew: רב-קו‎)
  May be transliterated. -->
     <string name="card_name_ravkav">Rav-Kav</string>
     <!-- Translators: appears as an agency if user used official top-up app. -->
     <string name="ravkav_agency_topup_app">RavKav Top-up app</string>
-    <string name="ravkav_type">RavKav type</string>
-    <string name="ravkav_anon">Anonymous</string>
-    <string name="ravkav_personal">Personal</string>
-    <string name="ravkav_owner_id">Owner ID</string>
 
     <!-- RicaricaMi -->
     <string name="ricaricami_trolleybus_short">Trolley</string>

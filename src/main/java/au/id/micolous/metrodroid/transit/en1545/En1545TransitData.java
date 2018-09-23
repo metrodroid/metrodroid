@@ -52,10 +52,10 @@ abstract public class En1545TransitData extends TransitData {
             li.add(new ListItem(R.string.en1545_network_id,
                     Integer.toHexString(mTicketEnvParsed.getIntOrZero("EnvNetworkId"))));
         if (mTicketEnvParsed.getIntOrZero("EnvApplicationValidityEndDate") != 0)
-            li.add(new ListItem(R.string.en1545_card_expiry_date,
+            li.add(new ListItem(R.string.expiry_date,
                     mTicketEnvParsed.getTimeStampString("EnvApplicationValidityEnd", tz)));
         if (mTicketEnvParsed.getIntOrZero("HolderBirthDate") != 0)
-            li.add(new ListItem(R.string.en1545_date_of_birth,
+            li.add(new ListItem(R.string.date_of_birth,
                     Utils.longDateFormat(En1545FixedInteger.parseBCDDate(
                             mTicketEnvParsed.getIntOrZero("HolderBirthDate"), tz))));
         if (mTicketEnvParsed.getIntOrZero("EnvApplicationIssuerId") != 0)
@@ -71,9 +71,9 @@ abstract public class En1545TransitData extends TransitData {
                     Utils.longDateFormat(TripObfuscator.maybeObfuscateTS(En1545FixedInteger.parseDate(
                             mTicketEnvParsed.getIntOrZero("HolderProfileDate"), tz)))));
 
-        if (mTicketEnvParsed.getIntOrZero("HolderZip") != 0)
-            li.add(new ListItem(R.string.mobib_card_zip,
-                    Integer.toString(mTicketEnvParsed.getIntOrZero("HolderZip"))));
+        if (mTicketEnvParsed.getIntOrZero("HolderPostalCode") != 0)
+            li.add(new ListItem(R.string.postal_code,
+                    Integer.toString(mTicketEnvParsed.getIntOrZero("HolderPostalCode"))));
 
         HashSet<String> handled = new HashSet<>(Arrays.asList(
                 "EnvNetworkId",
@@ -83,7 +83,7 @@ abstract public class En1545TransitData extends TransitData {
                 "EnvAuthenticator",
                 "HolderProfileDate",
                 "HolderBirthDate",
-                "HolderZip",
+                "HolderPostalCode",
 
                 "UnknownA", "UnknownB", "UnknownC", "EnvVersionNumber",
                 "HolderUnknownA", "HolderUnknownB", "HolderUnknownC",

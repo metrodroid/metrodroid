@@ -99,7 +99,7 @@
     <string name="card_preview_reader">Kart okuyucunun Beta sürümü.</string>
     <string name="visit_website">Websitesini Ziyaret Et</string>
     <string name="title_activity_about">Metrodroid Hakkında</string>
-    <string name="card_type">Kart tipi</string>
+    <string name="card_format">Kart tipi</string>
     <string name="select_file">Dosya seç</string>
     <string name="copied_to_clipboard">Hafızaya kopyalandı</string>
     <string name="saved_xml">Metrodroid-Export.xml USB Belleğe yazıldı.</string>

@@ -37,7 +37,6 @@ import au.id.micolous.metrodroid.card.iso7816.ISO7816File;
 import au.id.micolous.metrodroid.card.iso7816.ISO7816Record;
 import au.id.micolous.metrodroid.transit.CardInfo;
 import au.id.micolous.metrodroid.transit.TransitIdentity;
-import au.id.micolous.metrodroid.transit.Trip;
 import au.id.micolous.metrodroid.transit.en1545.Calypso1545TransitData;
 import au.id.micolous.metrodroid.transit.en1545.En1545Container;
 import au.id.micolous.metrodroid.transit.en1545.En1545Field;
@@ -94,7 +93,7 @@ public class MobibTransitData extends Calypso1545TransitData {
             new En1545FixedInteger("HolderBirthDate", 32),
             new En1545FixedHex("EnvCardSerial", 76),
             new En1545FixedInteger("EnvUnknownD", 5),
-            new En1545FixedInteger("HolderZip", 14),
+            new En1545FixedInteger("HolderPostalCode", 14),
             new En1545FixedHex("EnvUnknownE", 34)
     );
     private final static En1545Container extHolderFields = new En1545Container(
@@ -141,28 +140,28 @@ public class MobibTransitData extends Calypso1545TransitData {
         if (mPurchase != 0)
             li.add(new ListItem(R.string.en1545_card_purchase_date,
                     Utils.longDateFormat(En1545FixedInteger.parseDate(mPurchase, TZ))));
-        li.add(new ListItem(R.string.mobib_total_trips, Integer.toString(mTotalTrips)));
+        li.add(new ListItem(R.string.transaction_counter, Integer.toString(mTotalTrips)));
         int gender = mExtHolderParsed.getIntOrZero("HolderGender");
         if (gender == 0) {
-            li.add(new ListItem(R.string.mobib_card_type, R.string.mobib_anon));
+            li.add(new ListItem(R.string.mobib_card_type, R.string.card_type_anonymous));
         } else {
-            li.add(new ListItem(R.string.mobib_card_type, R.string.mobib_personal));
+            li.add(new ListItem(R.string.mobib_card_type, R.string.card_type_personal));
         }
         if (gender != 0 && !MetrodroidApplication.hideCardNumbers()
                 && !MetrodroidApplication.obfuscateTripDates()) {
-            li.add(new ListItem(R.string.mobib_card_holder,
+            li.add(new ListItem(R.string.card_holders_name,
                     mExtHolderParsed.getString("HolderName")));
             switch (gender) {
                 case 1:
-                    li.add(new ListItem(R.string.en1545_card_holder_gender,
-                            R.string.en1545_card_holder_male));
+                    li.add(new ListItem(R.string.gender,
+                            R.string.gender_male));
                     break;
                 case 2:
-                    li.add(new ListItem(R.string.en1545_card_holder_gender,
-                            R.string.en1545_card_holder_female));
+                    li.add(new ListItem(R.string.gender,
+                            R.string.gender_female));
                     break;
                 default:
-                    li.add(new ListItem(R.string.en1545_card_holder_gender,
+                    li.add(new ListItem(R.string.gender,
                             Integer.toHexString(gender)));
                     break;
             }

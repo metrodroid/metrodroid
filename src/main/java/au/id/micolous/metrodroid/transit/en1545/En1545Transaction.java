@@ -89,7 +89,7 @@ public abstract class En1545Transaction implements Parcelable {
             components.add(Utils.localizePlural(R.plurals.en1545_pax_count, pax, pax));
         int vhn = mParsed.getIntOrZero("EventVehiculeId");
         if (vhn != 0)
-            components.add(Utils.localizeString(R.string.en1545_vehicle_number, Integer.toString(vhn)));
+            components.add(Utils.localizeString(R.string.vehicle_number, Integer.toString(vhn)));
         if (components.isEmpty())
             return null;
         return TextUtils.join(", ", components);

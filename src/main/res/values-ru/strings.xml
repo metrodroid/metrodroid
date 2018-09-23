@@ -34,7 +34,7 @@
     <string name="nfc_unavailable">NFC недоступен</string>
     <string name="date">Дата</string>
     <string name="time">Время</string>
-    <string name="card_type">Тип карты</string>
+    <string name="card_format">Тип карты</string>
     <string name="obfuscation_card_numbers">Спрятать номера карт</string>
     <string name="obfuscation_card_numbers_desc">Нигде не показывать номера карт</string>
 

@@ -84,7 +84,7 @@
     <string name="card_preview_reader">Betaversjon av kortleseren.</string>
     <string name="visit_website">Besøk nettsiden</string>
     <string name="title_activity_about">Om Metrodroid</string>
-    <string name="card_type">Korttype</string>
+    <string name="card_format">Korttype</string>
     <string name="select_file">Velg fil</string>
     <string name="copied_to_clipboard">Kopiert til utklippstavle</string>
     <string name="saved_xml">Skrev Metrodroid-Export.xml til USB-lagring.</string>
