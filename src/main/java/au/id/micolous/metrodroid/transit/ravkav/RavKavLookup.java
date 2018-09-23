@@ -58,7 +58,7 @@ class RavKavLookup extends En1545LookupSTR {
 
     @Override
     public TransitCurrency parseCurrency(int price) {
-        return new TransitCurrency(price, "ILS");
+        return TransitCurrency.ILS(price);
     }
 
     @Override

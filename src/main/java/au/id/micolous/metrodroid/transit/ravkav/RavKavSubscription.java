@@ -77,7 +77,7 @@ public class RavKavSubscription extends En1545Subscription {
     public TransitBalance getBalance() {
         if (getCtrUse() != 3)
             return null;
-        return new TransitCurrency(mCounter, "ILS");
+        return TransitCurrency.ILS(mCounter);
     }
 
     @Override
