@@ -555,7 +555,7 @@
     <string name="compass_ticket_type">Billettkode</string>
     <string name="compass_ticket_type_concession">Honør</string>
     <string name="compass_ticket_type_regular">Vanlig</string>
-    <string name="compass_expiry_date">Utløpsdato</string>
+    <string name="expiry_date">Utløpsdato</string>
     <string name="compass_note">Kun enkelttursbilletter</string>
 
     <string name="opus_subscription">Abonnement</string>
