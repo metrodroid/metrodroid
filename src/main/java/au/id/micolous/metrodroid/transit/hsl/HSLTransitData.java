@@ -405,7 +405,7 @@ public class HSLTransitData extends TransitData implements Parcelable {
     @Nullable
     @Override
     public TransitCurrency getBalance() {
-        return new TransitCurrency(mBalance, "EUR");
+        return TransitCurrency.EUR(mBalance);
     }
 
     // TODO: push these into Subscriptions
