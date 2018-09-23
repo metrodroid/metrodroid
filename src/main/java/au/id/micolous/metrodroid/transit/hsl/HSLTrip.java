@@ -143,11 +143,6 @@ public class HSLTrip extends Trip {
         }
     }
 
-    @Override
-    public boolean hasTime() {
-        return false;
-    }
-
     public long getCoachNumber() {
         if (mVehicleNumber > -1)
             return mVehicleNumber;
