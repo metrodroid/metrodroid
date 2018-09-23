@@ -56,7 +56,7 @@ public class StationTableReaderTest extends AndroidTestCase {
         assertEquals("山手", s.getLineName());
 
         // Test in another supported language. We should fall back to English here.
-        TestUtils.setLocale(getContext(), "nl-NL");
+        TestUtils.setLocale(getContext(), "fr-FR");
         s = SuicaDBUtil.getRailStation(SHINJUKU_REGION_CODE, SHINJUKU_LINE_CODE, SHINJUKU_STATION_CODE);
         assertNotNull(s);
         assertEquals("JR East", s.getCompanyName());
