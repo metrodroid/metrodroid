@@ -32,6 +32,7 @@ public class MRTReaderTest extends AndroidTestCase {
     public void testGetStation() {
         TestUtils.setLocale(getContext(), "en-US");
         TestUtils.showRawStationIds(false);
+        TestUtils.showLocalAndEnglish(false);
 
         Station s = EZLinkTransitData.getStation("CGA");
         assertEquals("Changi Airport", s.getStationName());
