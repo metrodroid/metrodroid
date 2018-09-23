@@ -17,6 +17,8 @@
   -->
 
 <resources>
+    <color name="Metrodroid.Dark.CardIdTextColor">#ffcc44</color>
+
     <style name="Metrodroid.Dark" parent="@android:style/Theme.DeviceDefault">
         <item name="ButtonBarStyle">@android:style/Holo.ButtonBar.AlertDialog</item>
         <item name="BorderlessButtonStyle">@android:style/Widget.Holo.Button.Borderless.Small</item>
@@ -27,6 +29,7 @@
         <item name="AddKeysActivityTheme">@style/Metrodroid.Dark.Dialog</item>
         <item name="MainActivityTheme">@style/Metrodroid.Dark</item>
         <item name="ListHeaderTextColor">@android:color/background_light</item>
+        <item name="CardIdTextColor">@color/Metrodroid.Dark.CardIdTextColor</item>
         <item name="TransportIcons">@array/Metrodroid.Dark.TransportIcons</item>
         <item name="DrawableClosedIndicator">@drawable/expander_close_holo_dark</item>
         <item name="DrawableOpenIndicator">@drawable/expander_open_holo_dark</item>
@@ -57,6 +60,8 @@
         <item>@drawable/banned</item>
     </integer-array>
 
+    <color name="Metrodroid.Light.CardIdTextColor">#bb5500</color>
+
     <style name="Metrodroid.Light" parent="@android:style/Theme.DeviceDefault.Light">
         <item name="ButtonBarStyle">@android:style/Holo.Light.ButtonBar.AlertDialog</item>
         <item name="BorderlessButtonStyle">@android:style/Widget.Holo.Light.Button.Borderless.Small</item>
@@ -68,6 +73,7 @@
         <item name="MainActivityTheme">@style/Metrodroid.Light</item>
         <item name="ListHeaderTextColor">@android:color/background_dark</item>
         <item name="TransportIcons">@array/Metrodroid.Light.TransportIcons</item>
+        <item name="CardIdTextColor">@color/Metrodroid.Light.CardIdTextColor</item>
         <item name="DrawableClosedIndicator">@drawable/expander_close_holo_light</item>
         <item name="DrawableOpenIndicator">@drawable/expander_open_holo_light</item>
     </style>
@@ -97,6 +103,8 @@
 	<item>@drawable/banned</item>
     </integer-array>
 
+    <color name="FareBot.Theme.CardIdTextColor">#bb5500</color>
+
     <style name="FareBot.Theme.Base" parent="@android:style/Theme.DeviceDefault.Light">
         <item name="android:windowBackground">@color/FareBot.Theme.WindowBackground</item>
         <item name="android:actionBarStyle">@style/FareBot.Theme.ActionBar</item>
@@ -110,6 +118,7 @@
         <item name="LockImage">@drawable/locked</item>
         <item name="ListHeaderTextColor">@color/FareBot.Theme.HeaderColor</item>
         <item name="TransportIcons">@array/FareBot.Theme.TransportIcons</item>
+        <item name="CardIdTextColor">@color/FareBot.Theme.CardIdTextColor</item>
         <item name="DrawableClosedIndicator">@drawable/expander_close_holo_light</item>
         <item name="DrawableOpenIndicator">@drawable/expander_open_holo_light</item>
     </style>

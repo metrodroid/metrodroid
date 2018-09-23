@@ -18,10 +18,10 @@
   along with this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <operators>
-    <operator id="20" name="RTC" file="rtc" logo="rtc" />
-    <operator id="8" name="STM" file="stm" logo="stm" />
-    <operator id="24" name="STL" file="stl" logo="stl" />
-    <operator id="12" name="RTL" file="rtl" logo="rtl" />
-    <operator id="16" name="RTM" file="rtm" logo="rtm" />
-    <operator id="64" name="STLévis" file="stlevis" logo="stlevis" />
+  <operator id="2" name="STM" file="stm" logo="stm" />
+  <operator id="3" name="RTL" file="rtl" logo="rtl" />
+  <operator id="4" name="RTM" file="rtm" logo="rtm" />
+  <operator id="5" name="RTC" file="rtc" logo="rtc" />
+  <operator id="6" name="STL" file="stl" logo="stl" />
+  <operator id="16" name="STLévis" file="stlevis" logo="stlevis" />
 </operators>

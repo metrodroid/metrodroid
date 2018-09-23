@@ -335,10 +335,12 @@ public abstract class Trip implements Parcelable {
 
     public static class Comparator implements java.util.Comparator<Trip> {
         @Override
-        public int compare(Trip trip, Trip trip1) {
-            if (trip1.getStartTimestamp() != null && trip.getStartTimestamp() != null) {
-                return trip1.getStartTimestamp().compareTo(trip.getStartTimestamp());
-            } else if (trip1.getStartTimestamp() != null) {
+        public int compare(Trip trip1, Trip trip2) {
+            Calendar t1 = trip1.getStartTimestamp() != null ? trip1.getStartTimestamp() : trip1.getEndTimestamp();
+            Calendar t2 = trip2.getStartTimestamp() != null ? trip2.getStartTimestamp() : trip2.getEndTimestamp();
+            if (t2 != null && t1 != null) {
+                return t2.compareTo(t1);
+            } else if (t2 != null) {
                 return 1;
             } else {
                 return 0;

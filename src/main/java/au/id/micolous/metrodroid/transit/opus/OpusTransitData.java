@@ -21,15 +21,8 @@
 package au.id.micolous.metrodroid.transit.opus;
 
 import android.os.Parcel;
-import android.support.annotation.Nullable;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Calendar;
-import java.util.Collections;
-import java.util.GregorianCalendar;
 import java.util.List;
-import java.util.TimeZone;
 
 import au.id.micolous.farebot.R;
 import au.id.micolous.metrodroid.card.CardType;
@@ -38,32 +31,34 @@ import au.id.micolous.metrodroid.card.iso7816.ISO7816File;
 import au.id.micolous.metrodroid.card.iso7816.ISO7816Record;
 import au.id.micolous.metrodroid.card.iso7816.ISO7816Selector;
 import au.id.micolous.metrodroid.transit.CardInfo;
-import au.id.micolous.metrodroid.transit.Subscription;
-import au.id.micolous.metrodroid.transit.TransitCurrency;
-import au.id.micolous.metrodroid.transit.TransitData;
 import au.id.micolous.metrodroid.transit.TransitIdentity;
 import au.id.micolous.metrodroid.transit.Trip;
-import au.id.micolous.metrodroid.ui.ListItem;
+import au.id.micolous.metrodroid.transit.en1545.Calypso1545TransitData;
+import au.id.micolous.metrodroid.transit.en1545.En1545Bitmap;
+import au.id.micolous.metrodroid.transit.en1545.En1545Container;
+import au.id.micolous.metrodroid.transit.en1545.En1545Field;
+import au.id.micolous.metrodroid.transit.en1545.En1545FixedInteger;
+import au.id.micolous.metrodroid.transit.en1545.En1545Lookup;
+import au.id.micolous.metrodroid.transit.en1545.En1545Parsed;
+import au.id.micolous.metrodroid.transit.en1545.En1545Repeat;
+import au.id.micolous.metrodroid.transit.en1545.En1545Subscription;
+import au.id.micolous.metrodroid.transit.en1545.En1545Transaction;
+import au.id.micolous.metrodroid.transit.intercode.IntercodeTransitData;
 import au.id.micolous.metrodroid.util.Utils;
 
-public class OpusTransitData extends TransitData {
+public class OpusTransitData extends Calypso1545TransitData {
     // 124 = Canada
     private static final int OPUS_NETWORK_ID = 0x124001;
-    public static final String NAME = "Opus";
-    private final String mSerial;
-    private final int mExpiry;
-    private final List<OpusSubscription> mSubscriptions;
-    private final List<OpusTrip> mTrips;
+    private static final String NAME = "Opus";
 
-    private static final TimeZone TZ = TimeZone.getTimeZone("America/Montreal");
-    private static final long OPUS_EPOCH;
-
-    static {
-        GregorianCalendar epoch = new GregorianCalendar(TZ);
-        epoch.set(1997, Calendar.JANUARY, 1, 0, 0, 0);
-
-        OPUS_EPOCH = epoch.getTimeInMillis();
-    }
+    private static final En1545Field contractListFields = new En1545Repeat(4,
+            new En1545Bitmap(
+                    new En1545FixedInteger("ContractProvider", 8),
+                    new En1545FixedInteger("ContractsTariff", 16),
+                    new En1545FixedInteger("unknownA", 4),
+                    new En1545FixedInteger("ContractsPointer", 5)
+            )
+    );
 
     public static final CardInfo CARD_INFO = new CardInfo.Builder()
             .setImageId(R.drawable.opus_card)
@@ -83,59 +78,38 @@ public class OpusTransitData extends TransitData {
         }
     };
 
+    private final static En1545Container ticketEnvFields = new En1545Container(
+            IntercodeTransitData.TICKET_ENV_FIELDS,
+            new En1545Bitmap(
+                    new En1545Container(
+                            new En1545FixedInteger("HolderUnknownA", 3),
+                            En1545FixedInteger.BCDdate("HolderBirthDate"),
+                            new En1545FixedInteger("HolderUnknownB", 13),
+                            En1545FixedInteger.date("HolderProfile"),
+                            new En1545FixedInteger("HolderUnknownC", 8)
+                    ),
+                    // Possibly part of HolderUnknownB or HolderUnknownC
+                    new En1545FixedInteger("HolderUnknownD", 8)
+            )
+    );
 
     private OpusTransitData(CalypsoApplication card) {
-        mSerial = getSerial(card);
-        mExpiry = Utils.getBitsFromBuffer(card.getFile(CalypsoApplication.File.TICKETING_ENVIRONMENT)
-                        .getRecord(1).getData(),
-                45, 14);
-        mTrips = new ArrayList<>();
-        for (ISO7816Record record : card.getFile(CalypsoApplication.File.TICKETING_LOG).getRecords()) {
-            if (Utils.byteArrayToLong(record.getData(), 0, 8) == 0)
-                continue;
-            mTrips.add(new OpusTrip(record.getData()));
-        }
-        mSubscriptions = new ArrayList<>();
-        int i = 0;
-        for (ISO7816Record record : card.getFile(CalypsoApplication.File.TICKETING_CONTRACTS_1).getRecords()) {
-            if (Utils.byteArrayToLong(record.getData(), 0, 8) == 0)
-                continue;
-            ISO7816File matchingCtr = card.getFile(
-                    ISO7816Selector.makeSelector(0x2000, 0x202A + record.getIndex() - 1));
-            if (matchingCtr == null)
-                continue;
-            mSubscriptions.add(new OpusSubscription(record.getData(), matchingCtr.getRecord(1).getData(),
-                    i++));
-        }
-    }
-
-    public static Calendar parseTime(int d, int t) {
-        GregorianCalendar g = new GregorianCalendar(TZ);
-        g.setTimeInMillis(OPUS_EPOCH);
-        g.add(Calendar.DAY_OF_YEAR, d);
-        g.add(Calendar.MINUTE, t);
-        return g;
+        super(card, ticketEnvFields, contractListFields);
     }
 
     @Override
-    public List<ListItem> getInfo() {
-        return Collections.singletonList(new ListItem(R.string.opus_card_expiry_date, Utils.longDateFormat(parseTime(mExpiry, 0))));
-    }
-
-
-    private static String getSerial(CalypsoApplication card) {
-        return Long.toString(Utils.byteArrayToLong(card.getFile(CalypsoApplication.File.ICC)
-                .getRecord(1).getData(), 16, 4));
+    protected En1545Lookup getLookup() {
+        return OpusLookup.getInstance();
     }
 
     public static TransitIdentity parseTransitIdentity(CalypsoApplication card) {
         return new TransitIdentity(NAME, getSerial(card));
     }
 
-    public static boolean check(CalypsoApplication card) {
+    public static boolean check(byte[] ticketEnv) {
         try {
-            return OPUS_NETWORK_ID == Utils.getBitsFromBuffer(card.getFile(CalypsoApplication.File.TICKETING_ENVIRONMENT).getRecord(1).getData(),
-                    13, 24);
+            int networkID = Utils.getBitsFromBuffer(ticketEnv, 13, 24);
+            return OPUS_NETWORK_ID == networkID;
         } catch (Exception e) {
             return false;
         }
@@ -146,25 +120,29 @@ public class OpusTransitData extends TransitData {
     }
 
     @Override
-    public Trip[] getTrips() {
-        return mTrips.toArray(new OpusTrip[0]);
+    protected List<ISO7816Record> getContracts(CalypsoApplication card) {
+        // Contracts 2 is a copy of contract list on opus
+        return card.getFile(CalypsoApplication.File.TICKETING_CONTRACTS_1).getRecords();
     }
 
     @Override
-    public Subscription[] getSubscriptions() {
-        return mSubscriptions.toArray(new OpusSubscription[0]);
+    protected En1545Subscription createSubscription(CalypsoApplication card, byte[] data,
+                                                    En1545Parsed contractList, Integer contractNum, int recordNum) {
+        ISO7816File matchingCtr = card.getFile(
+                ISO7816Selector.makeSelector(0x2000, 0x202A + recordNum - 1));
+        if (matchingCtr == null)
+            return null;
+        return new OpusSubscription(data, matchingCtr.getRecord(1).getData(), recordNum);
     }
 
-    @Nullable
     @Override
-    public TransitCurrency getBalance() {
+    protected Trip createSpecialEvent(byte[] data) {
         return null;
     }
 
-
     @Override
-    public String getSerialNumber() {
-        return mSerial;
+    protected En1545Transaction createTrip(byte[] data) {
+        return new OpusTransaction(data);
     }
 
     @Override
@@ -172,18 +150,7 @@ public class OpusTransitData extends TransitData {
         return NAME;
     }
 
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        dest.writeString(mSerial);
-        dest.writeInt(mExpiry);
-        dest.writeParcelableArray(mTrips.toArray(new OpusTrip[0]), flags);
-        dest.writeParcelableArray(mSubscriptions.toArray(new OpusSubscription[0]), flags);
-    }
-
     private OpusTransitData(Parcel parcel) {
-        mSerial = parcel.readString();
-        mExpiry = parcel.readInt();
-        mTrips = Arrays.asList((OpusTrip[]) parcel.readParcelableArray(OpusTrip.class.getClassLoader()));
-        mSubscriptions = Arrays.asList((OpusSubscription[]) parcel.readParcelableArray(OpusSubscription.class.getClassLoader()  ));
+        super(parcel);
     }
 }

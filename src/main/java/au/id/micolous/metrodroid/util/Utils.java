@@ -741,6 +741,13 @@ public class Utils {
         return true;
     }
 
+    public static boolean isAllZero(byte[] data) {
+        for (byte b : data)
+            if (b != 0)
+                return false;
+        return true;
+    }
+
     public interface Matcher<T> {
         boolean matches(T t);
     }

@@ -89,17 +89,8 @@ def compile_stops_from_gtfs(input_gtfs_f, output_f, matching_f=None, version=Non
   operators = {}
 
   if operators_f is not None:
-      opread = csv.DictReader(operators_f)
-    
-      for op in opread:
-        oppb = Operator()
-        oppb.name.english = op['name']
-        if 'short_name' in op and op['short_name']:
-          oppb.name.english_short = op['short_name']
-        if 'mode' in op and op['mode']:
-          oppb.default_transport = TransportType.Value(op['mode'])
-        operators[int(op['id'], 0)] = oppb
-      operators_f.close()
+    operators = mdst.read_operators_from_csv(operators_f)
+    operators_f.close()
 
   db = mdst.MdstWriter(
     fh=open(output_f, 'wb'),

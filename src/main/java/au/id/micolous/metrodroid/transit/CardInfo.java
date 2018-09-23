@@ -43,10 +43,13 @@ import au.id.micolous.metrodroid.transit.ezlink.EZLinkTransitData;
 import au.id.micolous.metrodroid.transit.hsl.HSLTransitData;
 import au.id.micolous.metrodroid.transit.istanbulkart.IstanbulKartTransitData;
 import au.id.micolous.metrodroid.transit.strelka.StrelkaTransitData;
+import au.id.micolous.metrodroid.transit.intercode.IntercodeTransitData;
+import au.id.micolous.metrodroid.transit.ricaricami.RicaricaMiTransitData;
 import au.id.micolous.metrodroid.transit.yvr_compass.CompassUltralightTransitData;
 import au.id.micolous.metrodroid.transit.kmt.KMTTransitData;
 import au.id.micolous.metrodroid.transit.lax_tap.LaxTapTransitData;
 import au.id.micolous.metrodroid.transit.manly_fast_ferry.ManlyFastFerryTransitData;
+import au.id.micolous.metrodroid.transit.mobib.MobibTransitData;
 import au.id.micolous.metrodroid.transit.myki.MykiTransitData;
 import au.id.micolous.metrodroid.transit.newshenzhen.NewShenzhenTransitData;
 import au.id.micolous.metrodroid.transit.octopus.OctopusTransitData;
@@ -86,23 +89,28 @@ public class CardInfo {
             KMTTransitData.CARD_INFO,
             ManlyFastFerryTransitData.CARD_INFO,
             ChcMetrocardTransitData.CARD_INFO, // Metrocard
+            MobibTransitData.CARD_INFO,
             MykiTransitData.CARD_INFO,
             SmartRiderTransitData.MYWAY_CARD_INFO,
+            IntercodeTransitData.NAVIGO_CARD_INFO,
             EZLinkTransitData.NETS_FLASHPAY_CARD_INFO,
             OctopusTransitData.CARD_INFO,
             OpalTransitData.CARD_INFO,
             OpusTransitData.CARD_INFO,
             OrcaTransitData.CARD_INFO,
+            IntercodeTransitData.OURA_CARD_INFO,
             OVChipTransitData.CARD_INFO,
             SuicaTransitData.PASMO_CARD_INFO,
             PodorozhnikTransitData.CARD_INFO,
             RavKavTransitData.CARD_INFO,
+            RicaricaMiTransitData.CARD_INFO,
             NewShenzhenTransitData.CARD_INFO, // Shenzhen Tong
             SmartRiderTransitData.SMARTRIDER_CARD_INFO,
             StrelkaTransitData.CARD_INFO,
             SuicaTransitData.SUICA_CARD_INFO,
             LaxTapTransitData.CARD_INFO, // TAP
             TMoneyTransitData.CARD_INFO,
+            IntercodeTransitData.TRANSGIRONDE_CARD_INFO,
             TroikaTransitData.CARD_INFO,
     };
 
