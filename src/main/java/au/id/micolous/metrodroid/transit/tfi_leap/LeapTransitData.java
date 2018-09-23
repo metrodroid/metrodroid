@@ -33,6 +33,7 @@ import java.util.Locale;
 import java.util.TimeZone;
 
 import au.id.micolous.farebot.R;
+import au.id.micolous.metrodroid.MetrodroidApplication;
 import au.id.micolous.metrodroid.card.Card;
 import au.id.micolous.metrodroid.card.CardType;
 import au.id.micolous.metrodroid.card.desfire.DesfireApplication;
@@ -48,6 +49,7 @@ import au.id.micolous.metrodroid.transit.Trip;
 import au.id.micolous.metrodroid.ui.HeaderListItem;
 import au.id.micolous.metrodroid.ui.ListItem;
 import au.id.micolous.metrodroid.util.StationTableReader;
+import au.id.micolous.metrodroid.util.TripObfuscator;
 import au.id.micolous.metrodroid.util.Utils;
 
 public class LeapTransitData extends TransitData {
@@ -72,7 +74,7 @@ public class LeapTransitData extends TransitData {
             .setPreview()
             .build();
 
-    private static final String NAME = "TFI Leap";
+    private static final String NAME = "Leap";
     private static final int BLOCK_SIZE = 0x180;
     private static final long LEAP_EPOCH;
     static final String LEAP_STR = "tfi_leap";
@@ -114,21 +116,33 @@ public class LeapTransitData extends TransitData {
         }
 
         private List<ListItem> getInfo() {
+            // Fare cap explanation: https://about.leapcard.ie/fare-capping
+            //
+            // There are two types of caps:
+            // - Daily travel spend
+            // - Weekly travel spend
+            //
+            // There are then two levels of caps:
+            // - Single-operator spend (and each operator has different thresholds)
+            // - All-operator spend (which applies to the sum of all fares)
+            //
+            // Certair services are excluded from the caps.
             ArrayList<ListItem> items = new ArrayList<>();
 
             items.add(new ListItem(
                     R.string.leap_period_start,
-                    Utils.dateTimeFormat(mAccumulatorStart).toString()));
+                    Utils.dateTimeFormat(TripObfuscator.maybeObfuscateTS(mAccumulatorStart))));
             items.add(new ListItem(R.string.leap_accumulator_region, Integer.toString(mAccumulatorRegion)));
             items.add(new ListItem(R.string.leap_accumulator_total, TransitCurrency.EUR(mAccumulatorScheme).maybeObfuscateBalance().formatCurrencyString(true).toString()));
 
             for (int i = 0; i < mAccumulators.length; i++) {
         		if (mAccumulators[i] == 0)
 		            continue;
-                items.add(new ListItem(Utils.localizeString(
-                        R.string.leap_accumulator_value, i), TransitCurrency.EUR(mAccumulators[i]).maybeObfuscateBalance().formatCurrencyString(true).toString()));
-                items.add(new ListItem(Utils.localizeString(
-                        R.string.leap_accumulator_agency, i), StationTableReader.getOperatorName(LEAP_STR, mAccumulatorAgencies[i], false)));
+
+        		items.add(new ListItem(
+        		        Utils.localizeString(R.string.leap_accumulator_agency, StationTableReader.getOperatorName(LEAP_STR, mAccumulatorAgencies[i], false)),
+                        TransitCurrency.EUR(mAccumulators[i]).maybeObfuscateBalance().formatCurrencyString(true).toString()
+                ));
             }
 
             return items;
@@ -268,9 +282,13 @@ public class LeapTransitData extends TransitData {
             items.add(new ListItem(R.string.leap_locked_warning, ""));
             return items;
         }
-        items.add(new ListItem(R.string.leap_format_date, Utils.dateTimeFormat(mInitDate).toString()));
-        items.add(new ListItem(R.string.leap_issue_date, Utils.dateTimeFormat(mIssueDate).toString()));
-        items.add(new ListItem(R.string.leap_issuer_id, Integer.toString(mIssuerId)));
+        items.add(new ListItem(R.string.initialisation_date,
+                Utils.dateTimeFormat(TripObfuscator.maybeObfuscateTS(mInitDate))));
+        items.add(new ListItem(R.string.issue_date,
+                Utils.dateTimeFormat(TripObfuscator.maybeObfuscateTS(mIssueDate))));
+        if (MetrodroidApplication.hideCardNumbers()) {
+            items.add(new ListItem(R.string.leap_issuer_id, Integer.toString(mIssuerId)));
+        }
         items.add(new HeaderListItem(R.string.leap_daily_accumulators));
         items.addAll(mDailyAccumulators.getInfo());
 

@@ -1048,17 +1048,24 @@
 
     <!-- TFI Leap -->
     <string name="leap_retrieve_keys">Retrieve keys for Leap cards</string>
-    <string name="leap_retrieve_keys_longdesc">Retrieve keys for Leap cards from Leap server</string>
+    <string name="leap_retrieve_keys_longdesc">This will share your card details with Transport for Ireland, in order to respond to the Leap card\'s authentication challenge. TFI will be able to know that you used Metrodroid on this card. The card is not readable without this key.</string>
+
     <string name="locked_leap">Locked Leap</string>
     <string name="leap_period_start">Period start</string>
     <string name="leap_accumulator_region">Region</string>
-    <string name="leap_accumulator_total">Total</string>
-    <string name="leap_accumulator_value">Value %d</string>
-    <string name="leap_accumulator_agency">Agency %d</string>
-    <string name="leap_daily_accumulators">Daily accumulators</string>
-    <string name="leap_weekly_accumulators">Weekly accumulators</string>
+    <string name="leap_accumulator_total">Total spend</string>
+    <!--
+    Translators: "%s" will be replaced with the name of a transit operator.
+     eg: "Dublin Bus total spend"
+    -->
+    <string name="leap_accumulator_agency">%s total spend</string>
+    <string name="leap_daily_accumulators">Daily fare caps</string>
+    <string name="leap_weekly_accumulators">Weekly fare caps</string>
     <string name="leap_format_date">Format date</string>
-    <string name="leap_issue_date">Issue date</string>
+
+    <string name="initialisation_date">Initialisation date</string>
+    <string name="issue_date">Date of issue</string>
+
     <string name="leap_issuer_id">Issuer ID</string>
     <string name="leap_locked_warning">This card was not unlocked. Please enable retrieval of Leap keys in settings</string>
 </resources>
