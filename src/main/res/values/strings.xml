@@ -367,6 +367,12 @@
     <string name="desfire_linear_record">Linear record</string>
     <string name="desfire_cyclic_record">Cyclic record</string>
     <string name="desfire_unknown_file">Unknown file type</string>
+    <string name="desfire_challenge">Challenge</string>
+    <string name="desfire_response">Response</string>
+    <string name="desfire_confirmation">Confirmation</string>
+    <string name="desfire_keyex">Key exchange</string>
+    <string name="desfire_key_number">Key %s</string>
+
     <!-- Type: Standard file, Length: 16 bytes -->
     <plurals name="desfire_standard_format">
         <item quantity="one">Type: %1$s, Length: %2$s byte</item>
@@ -602,6 +608,7 @@
     <string name="location_saint_petersburg">Saint Petersburg, Russia</string>
     <string name="location_israel">Israel</string>
     <string name="location_jakarta">Jakarta, Indonesia</string>
+    <string name="location_ireland">Ireland</string>
 
     <!--
     These strings are used for content descriptions (accessibility), for modes of transport.
@@ -1037,4 +1044,21 @@
     <string name="classic_key_format">Key: %s</string>
     <string name="trip_counter">Trips counter</string>
     <string name="refill_counter">Refill counter</string>
+    <string name="mifare_desfire">MIFARE DESFire</string>
+
+    <!-- TFI Leap -->
+    <string name="leap_retrieve_keys">Retrieve keys for Leap cards</string>
+    <string name="leap_retrieve_keys_longdesc">Retrieve keys for Leap cards from Leap server</string>
+    <string name="locked_leap">Locked Leap</string>
+    <string name="leap_period_start">Period start</string>
+    <string name="leap_accumulator_region">Region</string>
+    <string name="leap_accumulator_total">Total</string>
+    <string name="leap_accumulator_value">Value %d</string>
+    <string name="leap_accumulator_agency">Agency %d</string>
+    <string name="leap_daily_accumulators">Daily accumulators</string>
+    <string name="leap_weekly_accumulators">Weekly accumulators</string>
+    <string name="leap_format_date">Format date</string>
+    <string name="leap_issue_date">Issue date</string>
+    <string name="leap_issuer_id">Issuer ID</string>
+    <string name="leap_locked_warning">This card was not unlocked. Please enable retrieval of Leap keys in settings</string>
 </resources>

@@ -283,6 +283,17 @@ public class LicenseActivity extends MetrodroidActivity {
             "which is made available under the terms of the Singapore Open Data Licence version 1.0" +
             " https://www.mytransport.sg/content/mytransport/home/dataMall/SingaporeOpenDataLicence.html\n\n\n";
 
+    private static final String TFI_GTFS = "The TFI stop database used in this software "
+            + "contains information derived from TFI GTFS feed, made available under the "
+            + "Creative Commons Attribution 4.0 International license by the TFI.\n"
+            + "\n"
+            + "You may obtain a copy of the raw data and it's license at:\n"
+            + "\n"
+            + "   https://data.gov.ie/pages/opendatalicence\n"
+            + "   https://www.transportforireland.ie/transitData/PT_Data.html\n"
+            + "\n"
+            + "Stop mapping information is available in Metrodroid's source repository.\n\n\n";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -311,6 +322,7 @@ public class LicenseActivity extends MetrodroidActivity {
         lblLicenseText.append(LAX_TAP_GTFS);
         lblLicenseText.append(BART_GTFS);
         lblLicenseText.append(MYTRANSPORT_SG);
+        lblLicenseText.append(TFI_GTFS);
     }
 
 
