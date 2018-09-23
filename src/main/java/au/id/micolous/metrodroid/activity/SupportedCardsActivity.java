@@ -21,8 +21,10 @@ package au.id.micolous.metrodroid.activity;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.nfc.NfcAdapter;
 import android.os.Bundle;
+import android.support.v7.content.res.AppCompatResources;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
@@ -80,10 +82,13 @@ public class SupportedCardsActivity extends MetrodroidActivity {
             ((TextView) convertView.findViewById(R.id.card_location)).setText(getString(info.getLocationId()));
 
             ImageView image = convertView.findViewById(R.id.card_image);
-            if (info.hasBitmap()) {
-                image.setImageDrawable(info.getDrawable(getContext()));
-                image.invalidate();
-            }
+            Drawable d = null;
+            if (info.hasBitmap())
+                d = info.getDrawable(getContext());
+            if (d == null)
+                d = AppCompatResources.getDrawable(getContext(), R.drawable.logo);
+            image.setImageDrawable(d);
+            image.invalidate();
 
             String notes = "";
 
