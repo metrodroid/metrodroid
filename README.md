@@ -108,7 +108,13 @@ Note | Meaning
 `KMT` | Only new FeliCa-based cards can be read.
 `SINGLE` | Only single-use tickets can be read.
 
-This project **will only read data from the card itself**, without having to connect to the agency's back-office systems. In some cases, limited data is available, so balance information and trip history might not be available.
+This project **will only read data from the card itself**, without having to
+connect to the agency's back-office systems. In some cases, limited data is
+available, so balance information and trip history might not be available.
+
+Note: The Leap card reader connects to Transport for Ireland's server for
+challenge-response authentication with the card. The data is otherwise
+interpreted locally, and _connectivity is disabled by default._
 
 ## Supported Phones
 

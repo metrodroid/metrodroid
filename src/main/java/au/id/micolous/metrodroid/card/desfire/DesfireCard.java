@@ -141,14 +141,22 @@ public class DesfireCard extends Card {
                 if(LeapTransitData.earlyCheck(appId))
                     unlocker = LeapUnlocker.createUnlocker(appId, manufData);
                 int[] fileIds = desfireTag.getFileList();
-                if (unlocker != null)
+                if (unlocker != null) {
                     fileIds = unlocker.getOrder(desfireTag, fileIds);
-                maxProgress += fileIds.length;
+                }
+                maxProgress += fileIds.length * (unlocker == null ? 1 : 2);
                 List<DesfireAuthLog> authLog = new ArrayList<>();
                 for (int fileId : fileIds) {
                     feedbackInterface.updateProgressBar(progress, maxProgress);
-                    if (unlocker != null)
+                    if (unlocker != null) {
+                        if (i != null) {
+                            feedbackInterface.updateStatusText(
+                                    Utils.localizeString(R.string.mfd_unlocking, i.getName()));
+                        }
                         unlocker.unlock(desfireTag, files, fileId, authLog);
+                        feedbackInterface.updateProgressBar(++progress, maxProgress);
+                    }
+
                     DesfireFileSettings settings = null;
                     try {
                         settings = desfireTag.getFileSettings(fileId);
