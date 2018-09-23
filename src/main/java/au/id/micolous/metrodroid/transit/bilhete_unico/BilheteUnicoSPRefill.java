@@ -77,7 +77,7 @@ class BilheteUnicoSPRefill extends Trip {
     @Nullable
     @Override
     public TransitCurrency getFare() {
-        return new TransitCurrency(-mAmount, "BRL");
+        return TransitCurrency.BRL(-mAmount);
     }
 
     @Override

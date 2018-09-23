@@ -116,7 +116,7 @@ class BilheteUnicoSPTrip extends Trip {
     @Nullable
     @Override
     public TransitCurrency getFare() {
-        return new TransitCurrency(mFare, "BRL");
+        return TransitCurrency.BRL(mFare);
     }
 
     @Override
