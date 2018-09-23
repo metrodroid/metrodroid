@@ -676,4 +676,32 @@
     <string name="location_istanbul">Istanboel, Turkije</string>
     <string name="trip_counter">Reisteller</string>
     <string name="refill_counter">Oplaadteller</string>
+<string name="mfd_unlocking">Bezig met ontgrendelen van kaart <xliff:g id="card_name" example="Leap">%s</xliff:g>…</string>
+
+    <string name="desfire_challenge">Uitdaging</string>
+    <string name="desfire_response">Antwoord</string>
+    <string name="desfire_confirmation">Bevestiging</string>
+    <string name="desfire_keyex">Sleuteluitwisseling</string>
+    <string name="desfire_key_number">Sleutel %s</string>
+
+    <string name="location_ireland">Ierland</string>
+
+    <string name="mifare_desfire">MIFARE DESFire</string>
+
+    <string name="leap_retrieve_keys">Sleutels ophalen voor Leap-kaarten</string>
+    <string name="leap_retrieve_keys_longdesc">Dit deelt je kaartgegevens met Transport for Ireland, zodat er kan worden geantwoord op de authenticatie-uitdaging van de Leap-kaart. TfI zal te weten komen dat je Metrodroid hebt gebruikt. Zonder deze sleutel is de kaart onleesbaar.</string>
+
+    <string name="locked_leap">Vergrendelde Leap-kaart</string>
+    <string name="leap_period_start">Begin van periode</string>
+    <string name="leap_accumulator_region">Regio</string>
+    <string name="leap_accumulator_total">Totale kosten</string>
+    <string name="leap_accumulator_agency">%s - totale kosten</string>
+    <string name="leap_daily_accumulators">Dagelijkse tariefbeperkingen</string>
+    <string name="leap_weekly_accumulators">Wekelijkse tariefbeperkingen</string>
+
+    <string name="initialisation_date">Initialisatiedatum</string>
+    <string name="issue_date">Uitgavedatum</string>
+
+    <string name="leap_issuer_id">Uitgave-ID</string>
+    <string name="leap_locked_warning">Deze kaart is niet ontgrendeld; schakel ophalen van Leap-sleutels in in de instellingen</string>
 </resources>
