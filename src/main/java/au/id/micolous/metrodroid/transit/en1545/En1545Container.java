@@ -21,6 +21,11 @@ package au.id.micolous.metrodroid.transit.en1545;
 import java.util.Arrays;
 import java.util.List;
 
+/**
+ * EN1545 Container
+ *
+ * This consists of a concatenation of all fields inside of it, with no additional data.
+ */
 public class En1545Container implements En1545Field {
     private final List<En1545Field> mFields;
 

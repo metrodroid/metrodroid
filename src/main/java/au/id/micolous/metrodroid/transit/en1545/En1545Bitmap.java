@@ -23,6 +23,13 @@ import java.util.List;
 
 import au.id.micolous.metrodroid.util.Utils;
 
+/**
+ * EN1545 Bitmaps
+ *
+ * Consists of:
+ *  - 1 bit for every field present inside the bitmap.
+ *  - Where a bit is non-zero, the embedded field.
+ */
 public class En1545Bitmap implements En1545Field {
     private final List<En1545Field> mFields;
 
