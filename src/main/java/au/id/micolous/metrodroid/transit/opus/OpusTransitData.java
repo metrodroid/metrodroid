@@ -136,11 +136,6 @@ public class OpusTransitData extends Calypso1545TransitData {
     }
 
     @Override
-    protected Trip createSpecialEvent(byte[] data) {
-        return null;
-    }
-
-    @Override
     protected En1545Transaction createTrip(byte[] data) {
         return new OpusTransaction(data);
     }

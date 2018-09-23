@@ -165,11 +165,6 @@ public class IntercodeTransitData extends Calypso1545TransitData {
         return new IntercodeSubscription(data, listNum, (tariff >> 4) & 0xff, mNetworkId);
     }
 
-    @Override
-    protected Trip createSpecialEvent(byte[] data) {
-        return null;
-    }
-
     private static final SparseArray<Pair<CardInfo, En1545Lookup>> NETWORKS = new SparseArray<>();
 
     static {
