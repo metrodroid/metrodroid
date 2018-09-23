@@ -88,12 +88,24 @@ public class TransitCurrency extends TransitBalance implements Parcelable {
         return new TransitCurrency(cents, "CAD");
     }
 
+    public static TransitCurrency CNY(int fen) {
+        return new TransitCurrency(fen, "CNY");
+    }
+
     public static TransitCurrency EUR(int cents) {
         return new TransitCurrency(cents, "EUR");
     }
 
+    public static TransitCurrency HKD(int cents) {
+        return new TransitCurrency(cents, "HKD");
+    }
+
     public static TransitCurrency IDR(int cents) {
         return new TransitCurrency(cents, "IDR", 1.);
+    }
+
+    public static TransitCurrency ILS(int agorot) {
+        return new TransitCurrency(agorot, "ILS");
     }
 
     public static TransitCurrency JPY(int yen) {
