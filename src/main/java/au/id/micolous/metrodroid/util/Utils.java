@@ -693,6 +693,36 @@ public class Utils {
         return luhnChecksum(cardNumber) == 0;
     }
 
+    // TODO: optimize this
+    private static int calculateCRCReversed(byte[]data, int init, int[] table) {
+        int cur = init;
+        for (byte b : data) {
+            cur = (cur >> 8) ^ table[(cur ^ b) & 0xff];
+        }
+        return cur;
+    }
+
+    private static int[] getCRCTableReversed(int poly) {
+        int[] table = new int[0x100];
+        for (int v = 0; v < 256; v++) {
+            int cur = v;
+            for (int i = 0; i < 8; i++) {
+                int trail = cur & 1;
+                cur = cur >> 1;
+                if (trail != 0)
+                    cur ^= poly;
+            }
+            table[v] = cur;
+        }
+        return table;
+    }
+
+    private static final int[] CRC16_IBM_TABLE = getCRCTableReversed(0xa001);
+
+    public static int calculateCRC16IBM(byte[] data, int crc) {
+        return calculateCRCReversed(data, crc, CRC16_IBM_TABLE);
+    }
+
     public static int convertBCDtoInteger(int val) {
         int ret = 0, mul = 1;
         while (val > 0) {
