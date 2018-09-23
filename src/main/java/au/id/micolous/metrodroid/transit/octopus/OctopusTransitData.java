@@ -147,11 +147,11 @@ public class OctopusTransitData extends TransitData {
         ArrayList<TransitBalance> bals = new ArrayList<>();
         if (mHasOctopus) {
             // Octopus balance takes priority 1
-            bals.add(new TransitBalanceStored(new TransitCurrency(mOctopusBalance, "HKD")));
+            bals.add(new TransitBalanceStored(TransitCurrency.HKD(mOctopusBalance)));
         }
         if (mHasShenzhen) {
             // Shenzhen Tong balance takes priority 2
-            bals.add(new TransitBalanceStored(new TransitCurrency(mShenzhenBalance, "CNY")));
+            bals.add(new TransitBalanceStored(TransitCurrency.CNY(mShenzhenBalance)));
         }
         return bals;
     }

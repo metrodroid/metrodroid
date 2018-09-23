@@ -100,7 +100,7 @@ public class NewShenzhenTrip extends Trip {
     @Nullable
     @Override
     public TransitCurrency getFare() {
-        return new TransitCurrency(mCost, "CNY");
+        return TransitCurrency.CNY(mCost);
     }
 
     private int getTransport() {

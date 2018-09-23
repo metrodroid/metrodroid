@@ -118,7 +118,7 @@ public class NewShenzhenTransitData extends TransitData {
     public List<TransitBalance> getBalances() {
 
         return Collections.singletonList(
-                new TransitBalanceStored(new TransitCurrency(mBalance, "CNY"),
+                new TransitBalanceStored(TransitCurrency.CNY(mBalance),
                 null, parseHexDate(mValidityStart), parseHexDate(mValidityEnd)));
     }
 
