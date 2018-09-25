@@ -1071,4 +1071,14 @@
 
     <string name="leap_issuer_id">Issuer ID</string>
     <string name="leap_locked_warning">This card was not unlocked. Please enable retrieval of Leap keys in settings</string>
+
+    <string name="add_key_raw">Raw</string>
+    <string name="add_key_json">JSON</string>
+    <string name="add_key_mct_static">Static from MCT</string>
+    <string name="invalid_json_key_type">Invalid JSON: key type missing</string>
+    <string name="invalid_json">Invalid JSON</string>
+    <string name="invalid_mct_static">Invalid MCT extended-std.key</string>
+    <string name="partial_keys">%s (partial)</string>
+    <string name="static_imported">Imported: %s</string>
+    <string name="static_keys">Static keys</string>
 </resources>

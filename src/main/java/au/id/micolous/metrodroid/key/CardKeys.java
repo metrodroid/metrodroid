@@ -35,10 +35,26 @@ import org.json.JSONObject;
 import au.id.micolous.metrodroid.MetrodroidApplication;
 
 public abstract class CardKeys {
+    public static final String JSON_KEY_TYPE_KEY = "KeyType";
+    public static final String TYPE_MFC = "MifareClassic";
+    public static final String TYPE_MFC_STATIC = "MifareClassicStatic";
+    public static final String JSON_TAG_ID_KEY = "TagId";
+    public static final String CLASSIC_STATIC_TAG_ID = "staticclassic";
+
     public static CardKeys forTagId(byte[] tagId) throws Exception {
         String tagIdString = Utils.getHexString(tagId);
         MetrodroidApplication app = MetrodroidApplication.getInstance();
         Cursor cursor = app.getContentResolver().query(Uri.withAppendedPath(CardKeyProvider.CONTENT_URI, tagIdString), null, null, null, null);
+        if (cursor.moveToFirst()) {
+            return CardKeys.fromCursor(cursor);
+        } else {
+            return null;
+        }
+    }
+
+    public static CardKeys forStaticClassic() throws JSONException {
+        MetrodroidApplication app = MetrodroidApplication.getInstance();
+        Cursor cursor = app.getContentResolver().query(Uri.withAppendedPath(CardKeyProvider.CONTENT_URI, CLASSIC_STATIC_TAG_ID), null, null, null, null);
         if (cursor.moveToFirst()) {
             return CardKeys.fromCursor(cursor);
         } else {
@@ -52,8 +68,20 @@ public abstract class CardKeys {
 
         JSONObject keyJSON = new JSONObject(keyData);
 
-        if (cardType.equals("MifareClassic")) {
+        if (cardType.equals(TYPE_MFC)) {
             return ClassicCardKeys.fromJSON(keyJSON);
+        }
+
+        if (cardType.equals(TYPE_MFC_STATIC)) {
+            ClassicStaticKeys keys = ClassicStaticKeys.fromJSON(keyJSON);
+            while (cursor.moveToNext()) {
+                if (cursor.getString(cursor.getColumnIndex(KeysTableColumns.CARD_TYPE)).equals(TYPE_MFC_STATIC))
+                    try {
+                        keys.mergeJSON(new JSONObject(cursor.getString(cursor.getColumnIndex(KeysTableColumns.KEY_DATA))));
+                    } catch (JSONException ignored) {
+                    }
+            }
+            return keys;
         }
 
         throw new IllegalArgumentException("Unknown card type for key: " + cardType);

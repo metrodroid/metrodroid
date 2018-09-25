@@ -42,8 +42,20 @@ import android.widget.AdapterView;
 import android.widget.CursorAdapter;
 import android.widget.ResourceCursorAdapter;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import org.apache.commons.io.IOUtils;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.IOException;
+import java.io.InputStream;
 
 import au.id.micolous.metrodroid.activity.AddKeyActivity;
+import au.id.micolous.metrodroid.key.CardKeys;
+import au.id.micolous.metrodroid.key.ClassicCardKeys;
+import au.id.micolous.metrodroid.key.ClassicStaticKeys;
+import au.id.micolous.metrodroid.key.InsertKeyTask;
 import au.id.micolous.metrodroid.provider.CardKeyProvider;
 import au.id.micolous.metrodroid.provider.KeysTableColumns;
 import au.id.micolous.metrodroid.util.BetterAsyncTask;
@@ -55,7 +67,10 @@ import au.id.micolous.metrodroid.MetrodroidApplication;
 public class KeysFragment extends ListFragment implements AdapterView.OnItemLongClickListener {
     private ActionMode mActionMode;
     private int mActionKeyId;
-    private static final int REQUEST_SELECT_FILE = 1;
+    private static final int REQUEST_SELECT_FILE_RAW = 1;
+    private static final int REQUEST_SELECT_FILE_JSON = 2;
+    private static final int REQUEST_SELECT_FILE_MCT_STATIC = 3;
+
     private static final String TAG = "KeysFragment";
 
     private android.view.ActionMode.Callback mActionModeCallback = new ActionMode.Callback() {
@@ -153,7 +168,8 @@ public class KeysFragment extends ListFragment implements AdapterView.OnItemLong
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        if (item.getItemId() == R.id.add_key) {
+        if (item.getItemId() == R.id.add_key_raw || item.getItemId() == R.id.add_key_json
+                || item.getItemId() == R.id.add_key_mct_static) {
             Uri uri = Uri.fromFile(Environment.getExternalStorageDirectory());
             Intent i = new Intent(Intent.ACTION_GET_CONTENT);
             i.putExtra(Intent.EXTRA_STREAM, uri);
@@ -161,13 +177,32 @@ public class KeysFragment extends ListFragment implements AdapterView.OnItemLong
             // In Android 4.4 and later, we can say the right thing!
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
                 i.setType("*/*");
-                String[] mimetypes = {"application/octet-stream", "application/x-extension-bin" };
+                String[] mimetypes;
+                switch (item.getItemId()) {
+                    case R.id.add_key_mct_static:
+                        mimetypes = new String[]{"text/plain"};
+                        break;
+                    case R.id.add_key_json:
+                        mimetypes = new String[]{"application/json"};
+                        break;
+                    default:
+                        mimetypes = new String[]{"application/octet-stream", "application/x-extension-bin"};
+                        break;
+                }
                 i.putExtra(Intent.EXTRA_MIME_TYPES, mimetypes);
             } else {
                 // Failsafe, used in the emulator for local files
                 i.setType("text/xml");
             }
-            startActivityForResult(Intent.createChooser(i, Utils.localizeString(R.string.select_file)), REQUEST_SELECT_FILE);
+            if (item.getItemId() == R.id.add_key_raw)
+                startActivityForResult(Intent.createChooser(i, Utils.localizeString(R.string.select_file)),
+                        REQUEST_SELECT_FILE_RAW);
+            if (item.getItemId() == R.id.add_key_json)
+                startActivityForResult(Intent.createChooser(i, Utils.localizeString(R.string.select_file)),
+                        REQUEST_SELECT_FILE_JSON);
+            if (item.getItemId() == R.id.add_key_mct_static)
+                startActivityForResult(Intent.createChooser(i, Utils.localizeString(R.string.select_file)),
+                        REQUEST_SELECT_FILE_MCT_STATIC);
             return true;
         }
         return false;
@@ -179,16 +214,70 @@ public class KeysFragment extends ListFragment implements AdapterView.OnItemLong
         try {
             if (resultCode == Activity.RESULT_OK) {
                 switch (requestCode) {
-                    case REQUEST_SELECT_FILE:
+                    case REQUEST_SELECT_FILE_RAW:
                         uri = data.getData();
-                        Log.d(TAG, "REQUEST_SELECT_FILE content_type = " + getActivity().getContentResolver().getType(uri));
+                        Log.d(TAG, "REQUEST_SELECT_FILE_RAW content_type = " + getActivity().getContentResolver().getType(uri));
 
                         startActivity(new Intent(Intent.ACTION_VIEW, uri, getActivity(), AddKeyActivity.class));
+                        break;
+                    case REQUEST_SELECT_FILE_JSON:
+                        uri = data.getData();
+                        Log.d(TAG, "REQUEST_SELECT_FILE_JSON content_type = " + getActivity().getContentResolver().getType(uri));
+
+                        int err = importKeysFromJSON(uri);
+                        if (err != 0)
+                            Toast.makeText(getActivity(), err, Toast.LENGTH_SHORT).show();
+                        break;
+                    case REQUEST_SELECT_FILE_MCT_STATIC:
+                        uri = data.getData();
+                        Log.d(TAG, "REQUEST_SELECT_FILE_MCT_STATIC content_type = " + getActivity().getContentResolver().getType(uri));
+
+                        err = importKeysFromMCTStatic(uri);
+                        if (err != 0)
+                            Toast.makeText(getActivity(), err, Toast.LENGTH_SHORT).show();
                         break;
                 }
             }
         } catch (Exception ex) {
             Utils.showError(getActivity(), ex);
+        }
+    }
+
+    private int importKeysFromMCTStatic(Uri uri) throws IOException, JSONException {
+        InputStream stream = getActivity().getContentResolver().openInputStream(uri);
+        ClassicStaticKeys csk;
+        try {
+            csk = ClassicStaticKeys.fromMCTStatic(getActivity(), stream);
+        } catch (JSONException e) {
+            e.printStackTrace();
+            csk = null;
+        }
+        if (csk == null)
+            return R.string.invalid_mct_static;
+        Log.d(TAG, "inserting key");
+        new InsertKeyTask(getActivity(), CardKeys.TYPE_MFC_STATIC, csk.toJSON().toString(),
+                CardKeys.CLASSIC_STATIC_TAG_ID, true).execute();
+        Toast.makeText(getActivity(), Utils.localizeString(R.string.static_imported,
+                csk.getDescription()), Toast.LENGTH_LONG).show();
+        return 0;
+    }
+
+    private int importKeysFromJSON(Uri uri) throws IOException {
+        InputStream stream = getActivity().getContentResolver().openInputStream(uri);
+        byte []keyData = IOUtils.toByteArray(stream);
+        try {
+            JSONObject json = new JSONObject(new String(keyData));
+            String type = json.getString(CardKeys.JSON_KEY_TYPE_KEY);
+            Log.d(TAG, "keyType = " + type);
+            if (!type.equals(CardKeys.TYPE_MFC) && !type.equals(CardKeys.TYPE_MFC_STATIC))
+                return R.string.invalid_json_key_type;
+            Log.d(TAG, "inserting key");
+            new InsertKeyTask(getActivity(), type, json.toString(),
+                    json.getString(CardKeys.JSON_TAG_ID_KEY), true).execute();
+            return 0;
+        } catch (JSONException ex) {
+            Log.d(TAG, "jsonException", ex);
+            return R.string.invalid_json;
         }
     }
 
@@ -204,6 +293,20 @@ public class KeysFragment extends ListFragment implements AdapterView.OnItemLong
 
             TextView textView1 = view.findViewById(android.R.id.text1);
             TextView textView2 = view.findViewById(android.R.id.text2);
+
+            if (type.equals(CardKeys.TYPE_MFC_STATIC)) {
+                String keyData = cursor.getString(cursor.getColumnIndex(KeysTableColumns.KEY_DATA));
+                textView1.setText(R.string.static_keys);
+                String desc;
+                try {
+                    desc = new JSONObject(keyData).optString(ClassicStaticKeys.JSON_TAG_ID_DESC);
+                } catch (Exception e) {
+                    desc = null;
+                }
+                if (desc != null)
+                    textView2.setText(desc);
+                return;
+            }
 
             if (MetrodroidApplication.hideCardNumbers()) {
                 textView1.setText(R.string.hidden_card_number);
