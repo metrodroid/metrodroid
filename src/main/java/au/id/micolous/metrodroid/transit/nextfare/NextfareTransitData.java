@@ -188,7 +188,6 @@ public class NextfareTransitData extends TransitData {
                 trip.mJourneyId = tapOn.getJourney();
                 trip.mStartTime = tapOn.getTimestamp();
                 trip.mStartStation = tapOn.getStation();
-                trip.mMode = lookupMode(tapOn.getMode(), tapOn.getStation());
                 trip.mModeInt = tapOn.getMode();
                 trip.mContinuation = tapOn.isContinuation();
                 trip.mCost = -tapOn.getValue();
@@ -326,7 +325,7 @@ public class NextfareTransitData extends TransitData {
      * @return Subclass of NextfareTrip.
      */
     protected NextfareTrip newTrip() {
-        return new NextfareTrip(mCurrency);
+        return new NextfareTrip(mCurrency, null);
     }
 
     /**
@@ -336,7 +335,7 @@ public class NextfareTransitData extends TransitData {
      * @return Subclass of NextfareTrip
      */
     protected NextfareTrip newRefill(NextfareTopupRecord record) {
-        return new NextfareTrip(record, mCurrency);
+        return new NextfareTrip(record, mCurrency, null);
     }
 
     /**

@@ -3,6 +3,7 @@ package au.id.micolous.metrodroid.test;
 import android.test.AndroidTestCase;
 
 import au.id.micolous.metrodroid.transit.Station;
+import au.id.micolous.metrodroid.transit.seq_go.SeqGoData;
 import au.id.micolous.metrodroid.transit.seq_go.SeqGoTrip;
 import au.id.micolous.metrodroid.transit.suica.SuicaDBUtil;
 import au.id.micolous.metrodroid.util.StationTableReader;
@@ -16,12 +17,12 @@ public class StationTableReaderTest extends AndroidTestCase {
         TestUtils.setLocale(getContext(), "en-US");
         TestUtils.showRawStationIds(false);
 
-        Station s = StationTableReader.getStation(SeqGoTrip.SEQ_GO_STR, SeqGoTrip.DOMESTIC_AIRPORT);
+        Station s = StationTableReader.getStation(SeqGoData.SEQ_GO_STR, SeqGoTrip.DOMESTIC_AIRPORT);
         assertEquals("Domestic Airport", s.getStationName());
 
         // Try when Raw Station IDs are enabled.
         TestUtils.showRawStationIds(true);
-        s = StationTableReader.getStation(SeqGoTrip.SEQ_GO_STR, SeqGoTrip.DOMESTIC_AIRPORT);
+        s = StationTableReader.getStation(SeqGoData.SEQ_GO_STR, SeqGoTrip.DOMESTIC_AIRPORT);
         assertEquals("Domestic Airport [0x9]", s.getStationName());
 
         // Reset back to default

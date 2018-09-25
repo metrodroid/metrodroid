@@ -60,6 +60,7 @@ import au.id.micolous.metrodroid.transit.chc_metrocard.ChcMetrocardTransitData;
 import au.id.micolous.metrodroid.transit.erg.ErgTransitData;
 import au.id.micolous.metrodroid.transit.lax_tap.LaxTapTransitData;
 import au.id.micolous.metrodroid.transit.manly_fast_ferry.ManlyFastFerryTransitData;
+import au.id.micolous.metrodroid.transit.msp_goto.MspGotoTransitData;
 import au.id.micolous.metrodroid.transit.nextfare.NextfareTransitData;
 import au.id.micolous.metrodroid.transit.ovc.OVChipTransitData;
 import au.id.micolous.metrodroid.transit.podorozhnik.PodorozhnikTransitData;
@@ -386,6 +387,8 @@ public class ClassicCard extends Card {
                 return SeqGoTransitData.parseTransitIdentity(this);
             } else if (LaxTapTransitData.check(this)) {
                 return LaxTapTransitData.parseTransitIdentity(this);
+            } else if (MspGotoTransitData.check(this)) {
+                return MspGotoTransitData.parseTransitIdentity(this);
             } else {
                 // Fallback
                 return NextfareTransitData.parseTransitIdentity(this);
@@ -450,6 +453,8 @@ public class ClassicCard extends Card {
                 return new SeqGoTransitData(this);
             } else if (LaxTapTransitData.check(this)) {
                 return new LaxTapTransitData(this);
+            } else if (MspGotoTransitData.check(this)) {
+                return new MspGotoTransitData(this);
             } else {
                 // Fallback
                 return new NextfareTransitData(this);
