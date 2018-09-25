@@ -659,4 +659,8 @@
     <string name="leap_issuer_id">Uitgave-ID</string>
     <string name="leap_locked_warning">Deze kaart is niet ontgrendeld; schakel ophalen van Leap-sleutels in in de instellingen</string>
 <string name="location_minneapolis">Minneapolis, MN, VS</string>
-    </resources>
+    <string name="add_key_raw">Platte tekst</string>
+    <string name="add_key_json">JSON</string>
+    <string name="invalid_json_key_type">Ongeldige JSON: sleuteltype ontbreekt</string>
+    <string name="invalid_json">Ongeldige JSON</string>
+</resources>
