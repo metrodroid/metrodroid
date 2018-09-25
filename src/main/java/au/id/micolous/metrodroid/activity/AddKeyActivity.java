@@ -24,7 +24,6 @@ package au.id.micolous.metrodroid.activity;
 
 import android.app.AlertDialog;
 import android.app.PendingIntent;
-import android.content.ContentValues;
 import android.content.Intent;
 import android.nfc.NfcAdapter;
 import android.nfc.Tag;
@@ -37,11 +36,10 @@ import android.view.View;
 import android.widget.RadioButton;
 import android.widget.TextView;
 
+import au.id.micolous.metrodroid.key.CardKeys;
 import au.id.micolous.metrodroid.key.ClassicCardKeys;
 import au.id.micolous.metrodroid.key.ClassicSectorKey;
-import au.id.micolous.metrodroid.provider.CardKeyProvider;
-import au.id.micolous.metrodroid.provider.KeysTableColumns;
-import au.id.micolous.metrodroid.util.BetterAsyncTask;
+import au.id.micolous.metrodroid.key.InsertKeyTask;
 import au.id.micolous.metrodroid.util.Utils;
 
 import org.apache.commons.io.IOUtils;
@@ -91,30 +89,10 @@ public class AddKeyActivity extends MetrodroidActivity {
 
         findViewById(R.id.add).setOnClickListener(view -> {
             final String keyType = ((RadioButton) findViewById(R.id.is_key_a)).isChecked() ? ClassicSectorKey.TYPE_KEYA : ClassicSectorKey.TYPE_KEYB;
+            ClassicCardKeys keys = ClassicCardKeys.fromDump(keyType, mKeyData);
 
-            new BetterAsyncTask<Void>(AddKeyActivity.this, true, false) {
-                @Override
-                protected Void doInBackground() throws Exception {
-                    ClassicCardKeys keys = ClassicCardKeys.fromDump(keyType, mKeyData);
-
-                    ContentValues values = new ContentValues();
-                    values.put(KeysTableColumns.CARD_ID, mTagId);
-                    values.put(KeysTableColumns.CARD_TYPE, mCardType);
-                    values.put(KeysTableColumns.KEY_DATA, keys.toJSON().toString());
-
-                    getContentResolver().insert(CardKeyProvider.CONTENT_URI, values);
-
-                    return null;
-                }
-
-                @Override
-                protected void onResult(Void unused) {
-                    Intent intent = new Intent(AddKeyActivity.this, KeysActivity.class);
-                    intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                    startActivity(intent);
-                    finish();
-                }
-            }.execute();
+            new InsertKeyTask(AddKeyActivity.this, CardKeys.TYPE_MFC, keys.toJSON().toString(),
+                    mTagId, true).execute();
         });
 
         mNfcAdapter = NfcAdapter.getDefaultAdapter(this);
@@ -163,7 +141,7 @@ public class AddKeyActivity extends MetrodroidActivity {
         mTagId = Utils.getHexString(tag.getId(), "");
 
         if (ArrayUtils.contains(tag.getTechList(), "android.nfc.tech.MifareClassic")) {
-            mCardType = "MifareClassic";
+            mCardType = CardKeys.TYPE_MFC;
             ((TextView) findViewById(R.id.card_type)).setText(R.string.mifare_classic);
             if (MetrodroidApplication.hideCardNumbers()) {
                 ((TextView) findViewById(R.id.card_id)).setText(R.string.hidden_card_number);
