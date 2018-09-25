@@ -43,6 +43,7 @@ import au.id.micolous.metrodroid.transit.ezlink.EZLinkTransitData;
 import au.id.micolous.metrodroid.transit.hsl.HSLTransitData;
 import au.id.micolous.metrodroid.transit.istanbulkart.IstanbulKartTransitData;
 import au.id.micolous.metrodroid.transit.strelka.StrelkaTransitData;
+import au.id.micolous.metrodroid.transit.msp_goto.MspGotoTransitData;
 import au.id.micolous.metrodroid.transit.yvr_compass.CompassUltralightTransitData;
 import au.id.micolous.metrodroid.transit.kmt.KMTTransitData;
 import au.id.micolous.metrodroid.transit.lax_tap.LaxTapTransitData;
@@ -81,6 +82,7 @@ public class CardInfo {
             EdyTransitData.CARD_INFO,
             EZLinkTransitData.EZ_LINK_CARD_INFO,
             SeqGoTransitData.CARD_INFO, // Go card
+            MspGotoTransitData.CARD_INFO, // Go-to card
             HSLTransitData.CARD_INFO,
             IstanbulKartTransitData.CARD_INFO,
             SuicaTransitData.ICOCA_CARD_INFO,
@@ -103,8 +105,8 @@ public class CardInfo {
             SmartRiderTransitData.SMARTRIDER_CARD_INFO,
             StrelkaTransitData.CARD_INFO,
             SuicaTransitData.SUICA_CARD_INFO,
-            LaxTapTransitData.CARD_INFO, // TAP
             TMoneyTransitData.CARD_INFO,
+            LaxTapTransitData.CARD_INFO, // Transit Access Pass
             TroikaTransitData.CARD_INFO,
     };
 

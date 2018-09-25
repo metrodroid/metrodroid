@@ -1,7 +1,7 @@
 /*
  * NextfareTransitData.java
  *
- * Copyright 2015-2017 Michael Farrell <micolous+git@gmail.com>
+ * Copyright 2015-2018 Michael Farrell <micolous+git@gmail.com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -78,6 +78,7 @@ public class NextfareTransitData extends TransitData {
     protected boolean mHasUnknownStations = false;
     long mSerialNumber;
     byte[] mSystemCode;
+    byte[] mBlock2;
     int mBalance;
     NextfareTrip[] mTrips;
     NextfareSubscription[] mSubscriptions;
@@ -92,6 +93,7 @@ public class NextfareTransitData extends TransitData {
         mSubscriptions = new NextfareSubscription[parcel.readInt()];
         parcel.readTypedArray(mSubscriptions, NextfareSubscription.CREATOR);
         parcel.readByteArray(mSystemCode);
+        parcel.readByteArray(mBlock2);
         mCurrency = currency;
 
         mConfig = new NextfareConfigRecord(parcel);
@@ -110,6 +112,8 @@ public class NextfareTransitData extends TransitData {
         byte[] magicData = card.getSector(0).getBlock(1).getData();
         mSystemCode = Arrays.copyOfRange(magicData, 9, 15);
         Log.d(TAG, "SystemCode = " + Utils.getHexString(mSystemCode));
+        mBlock2 = card.getSector(0).getBlock(2).getData();
+        Log.d(TAG, "Block2 = " + Utils.getHexString(mBlock2));
 
         ArrayList<NextfareRecord> records = new ArrayList<>();
 
@@ -188,7 +192,6 @@ public class NextfareTransitData extends TransitData {
                 trip.mJourneyId = tapOn.getJourney();
                 trip.mStartTime = tapOn.getTimestamp();
                 trip.mStartStation = tapOn.getStation();
-                trip.mMode = lookupMode(tapOn.getMode(), tapOn.getStation());
                 trip.mModeInt = tapOn.getMode();
                 trip.mContinuation = tapOn.isContinuation();
                 trip.mCost = -tapOn.getValue();
@@ -301,6 +304,7 @@ public class NextfareTransitData extends TransitData {
         parcel.writeInt(mSubscriptions.length);
         parcel.writeTypedArray(mSubscriptions, i);
         parcel.writeByteArray(mSystemCode);
+        parcel.writeByteArray(mBlock2);
         mConfig.writeToParcel(parcel, i);
     }
 
@@ -326,7 +330,7 @@ public class NextfareTransitData extends TransitData {
      * @return Subclass of NextfareTrip.
      */
     protected NextfareTrip newTrip() {
-        return new NextfareTrip(mCurrency);
+        return new NextfareTrip(mCurrency, null);
     }
 
     /**
@@ -336,7 +340,7 @@ public class NextfareTransitData extends TransitData {
      * @return Subclass of NextfareTrip
      */
     protected NextfareTrip newRefill(NextfareTopupRecord record) {
-        return new NextfareTrip(record, mCurrency);
+        return new NextfareTrip(record, mCurrency, null);
     }
 
     /**
@@ -440,6 +444,12 @@ public class NextfareTransitData extends TransitData {
 
         items.add(new HeaderListItem(R.string.nextfare));
         items.add(new ListItem(R.string.nextfare_system_code, Utils.getHexString(mSystemCode)));
+
+        // The Los Angeles Tap and Minneapolis Go-To cards have the same system code, but different
+        // data in Block 2.
+        items.add(new ListItem(
+                Utils.localizeString(R.string.block_title_format, 2),
+                Utils.getHexString(mBlock2)));
 
         return items;
     }

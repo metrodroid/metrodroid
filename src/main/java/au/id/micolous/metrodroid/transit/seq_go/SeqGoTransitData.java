@@ -135,11 +135,6 @@ public class SeqGoTransitData extends NextfareTransitData {
     }
 
     @Override
-    protected Trip.Mode lookupMode(int mode, int stationId) {
-        return SeqGoData.VEHICLES.get(mode, Trip.Mode.OTHER);
-    }
-
-    @Override
     public String getCardName() {
         return NAME;
     }
