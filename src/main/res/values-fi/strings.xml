@@ -32,10 +32,8 @@
     <string name="copy_xml">Kopioi</string>
     <string name="share_xml">Jaa</string>
     <string name="save_xml">Tallenna USB-muistille</string>
-    <string name="trips">Matkat</string>
     <string name="history">Historia</string>
     <string name="balance">Saldo</string>
-    <string name="refills">Lataukset</string>
     <string name="no_trip_data">Ei löytynyt matkoja. Onko korttia käytetty?</string>
     <string name="import_xml">Import</string>
     <string name="import_clipboard">Importtaa leikepöydältä</string>
@@ -57,10 +55,7 @@
     <string name="nfc_off_error">NFC on pois päältä</string>
     <string name="turn_on_nfc">Salli NFC:n käyttö jotta voin lukea kortin tiedot.</string>
     <string name="wireless_settings">Tiedonsiirtoasetukset</string>
-    <string name="report_error">Raportoi virheestä</string>
     <string name="unknown_card_description">Metrodroid ei vielä tue tätä korttia. Vain raakadata voidaan näyttää.</string>
-    <string name="report_error_privacy_title">Yksityisyydensuoja</string>
-    <string name="report_error_privacy_message">Kaikki tällä kortilla löytyvä tieto liitetään lähettämääsi virheraporttiin.</string>
 
     <string name="hsl_pass_is_valid">Kausi voimassa</string>
     <string name="hsl_1zone_ticket">Sisäinen lippu</string>

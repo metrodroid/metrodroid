@@ -11,16 +11,13 @@
     <string name="advanced_info">Geavanceerde informatie</string>
     <string name="delete_card">Kaart verwijderen</string>
     <string name="unknown_card">Onbekende kaart</string>
-    <string name="locked_card">Vergrendelde kaart</string>
     <string name="hw_detail">Productie-informatie</string>
     <string name="data">Onbewerkte gegevens</string>
     <string name="copy_xml">Kopiëren</string>
     <string name="share_xml">Delen</string>
     <string name="save_xml">Opslaan naar bestand</string>
-    <string name="trips">Reizen</string>
     <string name="history">Geschiedenis</string>
     <string name="balance">Saldo</string>
-    <string name="refills">Opgeladen</string>
     <string name="no_trip_data">Geen reizen gevonden. Is er wel gereisd met deze kaart?</string>
     <string name="import_xml">Importeren</string>
     <string name="import_clipboard">Plakken uit klembord</string>
@@ -49,7 +46,6 @@
     <string name="nfc_off_error">NFC is uitgeschakeld</string>
     <string name="turn_on_nfc">Schakel NFC in om de kaartinformatie uit te kunnen lezen.</string>
     <string name="wireless_settings">Draadloze instellingen</string>
-    <string name="report_error">Fout rapporteren</string>
 
     <string name="unknown_card_header">Onbekend kaartformaat</string>
     <string name="unknown_card_description">Deze kaart wordt nog niet ondersteund door Metrodroid. Alleen onbewerkte gegevens kunnen worden weergegeven.</string>
@@ -60,8 +56,6 @@
     <string name="lawyercats">(De auteurs van) Metrodroid zijn niet verbonden aan een openbaar vervoerder.</string>
 
 
-    <string name="report_error_privacy_title">Privacy-overeenkomst</string>
-    <string name="report_error_privacy_message">Alle gegevens die op deze kaart staan zullen worden bijgevoegd aan je foutrapport.</string>
     <string name="scanned_cards">Geschiedenis</string>
     <string name="no_scanned_cards">Je hebt geen gescande kaarten.</string>
     <string name="block_title_format">Blok: %s</string>
@@ -86,10 +80,8 @@
     <string name="add_key_directions">Sla je binaire dumpbestand van sleutels op met de extensie .farebotkeys, e-mail het als bijlage naar jezelf en open het op dit apparaat.</string>
     <string name="no_keys">Geen sleutels.</string>
     <string name="nfc_unavailable">NFC is niet beschikbaar</string>
-    <string name="fare_cancelled_format">%s (geannuleerd)</string>
     <string name="general">Algemeen</string>
     <string name="launch_from_background">Starten vanaf achtergrond</string>
-    <string name="error_report_sent">Foutrapport is verstuurd.</string>
     <string name="checksum">Controlesom</string>
     <string name="last_transaction">Laatste transactie</string>
     <string name="date">Datum</string>
@@ -98,7 +90,6 @@
     <string name="transaction_type">Transactietype</string>
     <string name="card_epoch">Kaartgeneratie</string>
     <string name="card_not_supported_on_device">Deze kaart wordt niet ondersteund door uw apparaat.</string>
-    <string name="card_note_cepas">Niet compatibel met alle apparaten.</string>
     <string name="need_stations">Sommige stationsnamen zijn niet bekend.</string>
     <string name="need_stations_submit">Rapporteren</string>
     <string name="card_preview_reader">Bètaversie van de kaartlezer.</string>
@@ -118,8 +109,6 @@
     <string name="mifare_classic">MIFARE Classic</string>
     <string name="auth_retries">Authentiecatiepogingen</string>
     <string name="auth_retries_summary">Aantal keren om te proberen elke sector te authenticeren</string>
-    <string name="alternate_purse_balances">Alternatieve portemonnee-saldi</string>
-    <string name="storage_required">Machtigingen vereist om kaartdumps en -sleutels te lezen/schrijven van/naar bestanden.</string>
 
     <string name="mfc_fallback_desc">Sommige vervoerders hebben geen magische identificatie op hun kaart. Om ze uit te lezen moet je er expliciet één kiezen.</string>
     <string name="mfc_fallback">Terugvallezer</string>
@@ -244,7 +233,6 @@
     <string name="opal_action_journey_completed_auto_on">Reis voltooid (niet ingecheckt)</string>
     <string name="opal_action_tap_on_reversal">Omgekeerd inchecken</string>
 
-    <string name="seqgo_ticket_type">Kaartsoort</string>
     <string name="seqgo_ticket_type_regular">Regulier</string>
     <string name="seqgo_ticket_type_concession">Concessie</string>
     <string name="seqgo_ticket_type_child">Kind</string>
@@ -260,9 +248,7 @@
     <string name="nextfare">Cubic Nextfare</string>
     <string name="nextfare_system_code">Systeemcode</string>
     <string name="nextfare_ticket_class">Ticketklassificatie %d</string>
-    <string name="card_expiry_date">Vervaldatum kaart</string>
 
-    <string name="octopus_szt">Shenzhen Tong</string>
 
     <string name="card_note_bilhete_unico">Moet worden geselecteerd in de voorkeuren als terugvallezer.</string>
 
@@ -537,7 +523,6 @@
     <string name="orca_coach_number">#%s klas</string>
 
     <string name="suica_bus_area_line_stop">Buszone %1$s, lijn %2$s, halte %3$s</string>
-    <string name="suica_line_station">Lijn %s, station %s</string>
 
     <string name="card_name_szt">Shenzhen Tong</string>
     <string name="card_name_octopus">Octopus</string>
@@ -610,7 +595,6 @@
 
     <string name="location_jakarta">Jakarta, Indonesië</string>
 
-    <string name="kmt_def_route">Jabodetabek-lijn</string>
     <string name="kmt_extra_note">Alleen voor nieuwe FeliCa-kaarten.</string>
 
     <string name="orca_topup_machine">Automaat #%s</string>

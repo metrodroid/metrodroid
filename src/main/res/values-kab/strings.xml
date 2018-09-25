@@ -16,7 +16,6 @@
     <string name="accessibility">Ittuseblel i tuffart</string>
     <string name="loading">Asali…</string>
     <string name="unknown_more_info">Ugar n telɣut</string>
-    <string name="report_error_privacy_title">Tasertit n tbaḍnit</string>
     <string name="scanned_cards">Amazray</string>
     <string name="subscriptions">Ijerriden</string>
     <string name="info">Talɣut</string>
@@ -54,12 +53,9 @@
     <string name="directions">Ssit ɣef takarḍa</string>
     <string name="reading_card">Takarḍa n tɣuri</string>
     <string name="dont_move">Ur sembiwil ara takarḍa</string>
-    <string name="locked_card">Takarḍa tsekkweṛ</string>
     <string name="hw_detail">Talɣut n usmagi</string>
     <string name="data">Isefku arewway</string>
     <string name="save_xml">Sekles deg aḥraz n USB</string>
-    <string name="trips">Isikilen</string>
-    <string name="refills">Tacaṛin</string>
     <string name="no_trip_data">Ulac asikil yellan.wis takarḍa yagi ma tettwaseqdec?</string>
     <string name="import_clipboard">Kter seg ɣef afus</string>
     <string name="import_file">Kter seg afaylu</string>

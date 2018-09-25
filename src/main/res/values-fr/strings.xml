@@ -11,16 +11,13 @@
     <string name="advanced_info">Infos avancées</string>
     <string name="delete_card">Supprimer carte</string>
     <string name="unknown_card">Carte inconnue</string>
-    <string name="locked_card">Carte bloquée</string>
     <string name="hw_detail">Infos constructeur</string>
     <string name="data">Données brutes</string>
     <string name="copy_xml">Copier</string>
     <string name="share_xml">Partager</string>
     <string name="save_xml">Enregistrer sur le stockage USB</string>
-    <string name="trips">Déplacements</string>
     <string name="history">Historique</string>
     <string name="balance">Solde</string>
-    <string name="refills">Recharges</string>
     <string name="no_trip_data">Aucun déplacement trouvé. Cette carte a-t-elle été utilisée?</string>
     <string name="import_xml">Importer</string>
     <string name="import_clipboard">Importer depuis le presse-papier</string>
@@ -54,8 +51,6 @@
     <string name="nfc_off_error">Le NFC est désactivé</string>
     <string name="turn_on_nfc">Veuillez activer le NFC afin de lire les informations de la carte.</string>
     <string name="wireless_settings">Paramètres sans fil</string>
-    <string name="report_error">Rapporter une erreur</string>
-
     <string name="unknown_card_header">Format de carte inconnu</string>
     <string name="unknown_card_description">Cette carte n\'est pas encore supportée par Metrodroid. Seule les données brutes peuvent être affichées.</string>
 
@@ -63,10 +58,6 @@
     <string name="unknown_more_info_desc">Touchez ici pour ponts d\'informations sur le support Metrodroid de cette carte.</string>
 
     <string name="lawyercats">Metrodroid et ses auteurs ne sont associés avec aucune agence de transport public.</string>
-
-
-    <string name="report_error_privacy_title">Informations sur la confidentialité</string>
-    <string name="report_error_privacy_message">Toutes les données contenues dans cette carte seront inclues dans votre rapport d\'erreur.</string>
     <string name="scanned_cards">Historique</string>
     <string name="no_scanned_cards">Vous n\'avez scanné aucune carte.</string>
     <string name="block_title_format">Bloc: %s</string>
@@ -91,10 +82,8 @@
     <string name="add_key_directions">Sauvegardez vos clés dans un fichier de vidange en binaire avec l\'extension .farebotkeys, envoyez le fichier de vidange en pièce jointe à vous-même, et ouvrez-le sur cet appareil.</string>
     <string name="no_keys">Pas de clé.</string>
     <string name="nfc_unavailable">NFC non disponible</string>
-    <string name="fare_cancelled_format">%s (Annulé)</string>
     <string name="general">Général</string>
     <string name="launch_from_background">Démarrer depuis l\'arrière plan</string>
-    <string name="error_report_sent">Rapport d\'erreur envoyé !</string>
     <string name="checksum">Somme de contrôle</string>
     <string name="last_transaction">Dernière transaction</string>
     <string name="date">Date</string>
@@ -103,7 +92,6 @@
     <string name="transaction_type">Type de transaction</string>
     <string name="card_epoch">Époque de la carte</string>
     <string name="card_not_supported_on_device">Cette carte n\'est pas supportée par votre appareil.</string>
-    <string name="card_note_cepas">Pas compatible avec tout les appareils.</string>
     <string name="need_stations">Les noms des stations ne sont pas tous connus.</string>
     <string name="need_stations_submit">Rapporter</string>
     <string name="card_preview_reader">Version bêta du lecteur de cartes.</string>
@@ -123,8 +111,6 @@
     <string name="mifare_classic">MIFARE Classic</string>
     <string name="auth_retries">Tentatives d\'authentification</string>
     <string name="auth_retries_summary">Nombre de tentatives d\'authentification pour chaque secteur</string>
-    <string name="alternate_purse_balances">Solde alternatif du porte-monnaie</string>
-    <string name="storage_required">Une permission est requise afin de lire et écrire les fichiers de vidanges et les clés depuis/vers des fichiers.</string>
 
     <string name="mfc_fallback_desc">Certaines agences n\'ont pas de magie d\'identification sur leur carte. Pour les lire, vous devez explicitement choisir une agence.</string>
     <string name="mfc_fallback">Lecteur de secours</string>
@@ -247,7 +233,6 @@
     <string name="opal_action_journey_completed_flat_rate">Voyage terminé (tarif forfaitaire)</string>
     <string name="opal_action_journey_completed_auto_off">Voyage terminé (défaut de sortie)</string>
     <string name="opal_action_journey_completed_auto_on">Voyage terminé (défaut d\'entrée)</string>
-    <string name="seqgo_ticket_type">Type de billet</string>
     <string name="seqgo_ticket_type_regular">Normal</string>
     <string name="seqgo_ticket_type_concession">Rabais</string>
     <string name="seqgo_ticket_type_child">Enfant</string>
@@ -263,9 +248,6 @@
     <string name="nextfare">Cubic Nextfare</string>
     <string name="nextfare_system_code">Code système</string>
     <string name="nextfare_ticket_class">Code de classe du ticket</string>
-    <string name="card_expiry_date">Date d’expiration de la carte</string>
-
-    <string name="octopus_szt">Shenzhen Tong</string>
 
     <string name="card_note_bilhete_unico">Doit être sélectionné en tant que lecteur de secours dans les préférences.</string>
 

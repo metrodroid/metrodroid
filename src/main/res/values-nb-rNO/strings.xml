@@ -11,16 +11,13 @@
     <string name="advanced_info">Avansert info</string>
     <string name="delete_card">Slett kort</string>
     <string name="unknown_card">Ukjent kort</string>
-    <string name="locked_card">Låst kort</string>
     <string name="hw_detail">Fabrikatsinfo</string>
     <string name="data">Rådata</string>
     <string name="copy_xml">Kopier</string>
     <string name="share_xml">Del</string>
     <string name="save_xml">Lagre til fil</string>
-    <string name="trips">Turer</string>
     <string name="history">Historikk</string>
     <string name="balance">Balanse</string>
-    <string name="refills">Påfyllinger</string>
     <string name="no_trip_data">Fant ingen turer. Har dette kortet vært i bruk?</string>
     <string name="import_xml">Importer</string>
     <string name="import_clipboard">Lim inn fra utklippstavle</string>
@@ -38,14 +35,11 @@
     <string name="nfc_off_error">NFC avskrudd</string>
     <string name="turn_on_nfc">Skru på NFC for å lese kortinformasjon.</string>
     <string name="wireless_settings">Trådløsinnstillinger</string>
-    <string name="report_error">Innrapporter feil</string>
 
     <string name="unknown_card_header">Ukjent kortformat</string>
     <string name="unknown_card_description">Dette kortet er ikke støttet av Metrodroid enda. Bare råkortdata kan vises.</string>
 
     <string name="unknown_more_info">Mer informasjon</string>
-    <string name="report_error_privacy_title">Personvernsmerknad</string>
-    <string name="report_error_privacy_message">All data på dette kortet vil bli inkludert i din feilrapport.</string>
     <string name="scanned_cards">Historikk</string>
     <string name="no_scanned_cards">Du har ikke skannet noen kort.</string>
     <string name="block_title_format">Blokk: %s</string>
@@ -69,9 +63,7 @@
     <string name="delete">Slett</string>
     <string name="no_keys">Ingen nøkler.</string>
     <string name="nfc_unavailable">NFC utilgjengelig</string>
-    <string name="fare_cancelled_format">%s (Avbrutt)</string>
     <string name="general">Grunnleggende</string>
-    <string name="error_report_sent">Feilrapport sendt.</string>
     <string name="checksum">Sjekksum</string>
     <string name="last_transaction">Siste overføring</string>
     <string name="date">Dato</string>
@@ -79,7 +71,6 @@
     <string name="vehicle_type">Kjøretøystype</string>
     <string name="transaction_type">Overføringstype</string>
     <string name="card_not_supported_on_device">Dette kortet støttes ikke av enheten din.</string>
-    <string name="card_note_cepas">Ikke kompatibel med alle enheter.</string>
     <string name="need_stations">Noen stasjonsnavn er ukjente.</string>
     <string name="card_preview_reader">Betaversjon av kortleseren.</string>
     <string name="visit_website">Besøk nettsiden</string>
@@ -125,7 +116,6 @@
     <string name="about_card_format">Om dette kortformatet</string>
     <string name="mifare_classic">MIFARE Classic</string>
     <string name="auth_retries_summary">Antall ganger autentisering skal forsøkes for hver sektor</string>
-    <string name="storage_required">Tilgang kreves for å lese og skrive kortdumper og nøkler fra/til filer.</string>
 
     <string name="mfc_fallback_desc">Noen byrå har ingen identifiserende magi på kortene sine. For å lese dem, må du eksplisitt velge et byrå.</string>
     <string name="mfc_fallback">Tilbakefallsleser</string>
@@ -196,7 +186,6 @@
     <string name="opal_action_manly_transfer_same_mode">Overgang (fra annen ferge til Manly Ferry)</string>
     <string name="opal_action_manly_transfer_diff_mode">Overgang (fra annet modus til Manly Ferry)</string>
     <string name="nextfare_system_code">Systemkode</string>
-    <string name="card_expiry_date">Utløpsdato for kort</string>
 
     <string name="pass_or_transfer">Send/Overfør</string>
     <string name="speak_balance_summary">Når du skanner et kort, vil saldoen automatisk bli lest høyt. Dette fungerer selv når ikke en skjermleser kjører.</string>
@@ -332,7 +321,6 @@
     <string name="felica_process_bus_pitapa">Buss (PiTaPa)</string>
     <string name="felica_process_bus_iruca">Buss (IruCa)</string>
     <string name="felica_process_payment_shinkansen">Shinkansen-betaling</string>
-    <string name="seqgo_ticket_type">Billettype</string>
     <string name="general_information">Generell informasjon</string>
     <string name="personal_information">Personlig informasjon</string>
     <string name="date_of_birth">Fødselsdato</string>
@@ -388,7 +376,6 @@
 
 
     <string name="credit_information">Kredittinformasjon</string>
-    <string name="alternate_purse_balances">"Bytt portemoné-saldoer "</string>
     <string name="localise_places_longdesc">Tekst-til-tale -stemmer fungerer vanligvis bare bra for ett språk.
 \n
 \nLocaleSpan-hint brukes til å merke at tekst er forskjellig i et annet språk. Når det brukes på en stasjon, et stopp, linje eller rutenavn, vil en skjermleser som støtter disse hintene uttale navnet ved bruk av syntetiserte stemmer fra stedets lokale språk, snarere enn språket du har satt opp Android til å bruke.
@@ -423,7 +410,6 @@
     <string name="felica_process_deposit_bus">Matebuss</string>
     <string name="felica_process_purchase_special_ticket">Billett (Spesiell buss/bil)</string>
     <string name="opal_action_tap_on_reversal">Innstemplingsomvendelse</string>
-    <string name="octopus_szt">Shenzhen Tong</string>
 
     <string name="record_title_format">Tidslinjeopptak: %s</string>
     <plurals name="record_count">
@@ -548,7 +534,6 @@
     <string name="orca_topup">Fyll på</string>
 
     <string name="suica_bus_area_line_stop">Bussområde %s Linje %s Stopp %s</string>
-    <string name="suica_line_station">Linje %s Stasjon %s</string>
 
     <string name="compass_product_type">Produkttype</string>
     <string name="compass_machine_code">Maskinkode</string>
