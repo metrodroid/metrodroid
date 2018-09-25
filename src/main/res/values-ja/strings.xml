@@ -12,7 +12,6 @@
     <string name="share_xml">共有</string>
     <string name="save_xml">ファイルに保存</string>
     <string name="history">ヒストリー</string>
-    <string name="balance">残高</string>
     <string name="no_trip_data">履歴は見つかりませんでした。このカードを使用しましたか?</string>
     <string name="import_xml">インポート</string>
     <string name="import_clipboard">クリップボードから貼り付け</string>
@@ -100,7 +99,6 @@
     <string name="sector_title_format">セクター: 0x%s</string>
     <string name="unauthorized_sector_title_format">セクター: 0x%s (未承認)</string>
     <string name="invalid_sector_title_format">セクター: 0x%1$s (無効: %2$s)</string>
-    <string name="subscriptions">サブスクリプション</string>
     <string name="info">情報</string>
     <string name="valid_format">有効な %1$s %2$s へ</string>
     <string name="unknown_format">不明 (%s)</string>
@@ -148,34 +146,11 @@
     <string name="location_victoria_australia">オーストラリア ビクトリア州</string>
 
     <string name="felica_process_booth_exit">駅長ブース出口</string>
-    <string name="hsl_pass_is_valid">有効なシーズン チケット</string>
-    <string name="hsl_1zone_ticket">内部チケット</string>
-    <string name="hsl_2zone_ticket">地域チケット</string>
     <string name="hsl_balance_refill">残高チャージ</string>
     <string name="hsl_balance_ticket">バリュー チケット</string>
-    <string name="hsl_value_ticket_is_valid">有効なバリュー チケット</string>
     <string name="hsl_pass_ticket">シーズン チケット</string>
-    <string name="hsl_season_ticket_starts">シーズン チケット開始</string>
-    <string name="hsl_season_ticket_ends">シーズン チケット終了</string>
-    <string name="hsl_season_ticket_bought_on">シーズン チケット購入</string>
-    <string name="hsl_previous_season_ticket">前のシーズン チケットは</string>
-    <string name="hsl_season_ticket_price_was">シーズン チケットの値段は</string>
-    <string name="hsl_you_last_used_this_ticket">最後にこのチケットを使用したのは</string>
     <string name="hsl_person_format">%s 人</string>
     <string name="hsl_mins_format">%s 分</string>
-    <string name="hsl_value_ticket">バリュー チケット</string>
-    <string name="hsl_value_ticket_bought_on">チケット購入</string>
-    <string name="hsl_value_ticket_expires_on">チケットの有効期限</string>
-    <string name="hsl_value_ticket_last_transfer">最後の乗換</string>
-    <string name="hsl_value_ticket_last_sign">最後の署名</string>
-    <string name="hsl_value_ticket_price">バリュー チケットの値段</string>
-    <string name="hsl_value_ticket_disco_group">割引グループ</string>
-    <string name="hsl_value_ticket_pax">グループ サイズ</string>
-    <string name="hsl_value_ticket_duration">チケット有効期間</string>
-    <string name="hsl_value_ticket_vehicle_number">乗り物番号</string>
-    <string name="hsl_value_ticket_vehicle_type">乗り物の種類</string>
-    <string name="hsl_value_ticket_line_number">路線番号</string>
-    <string name="hsl_season_ticket">シーズン チケット</string>
 
     <string name="opal_automatic_top_up">自動チャージ</string>
     <string name="opal_weekly_trips">毎週の旅行</string>
@@ -237,7 +212,6 @@
     <string name="nextfare_ticket_class">チケット クラス コード</string>
 
 <string name="export_filename">エクスポート ファイル名</string>
-    <string name="valid_not_used">まだ使用していません</string>
     <string name="saved_xml_custom">USB ストレージに XML を書き込みました。</string>
     <string name="location_hong_kong">香港</string>
 

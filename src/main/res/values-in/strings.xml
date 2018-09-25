@@ -18,7 +18,6 @@
     <string name="share_xml">Bagikan</string>
     <string name="save_xml">Simpan ke File</string>
     <string name="history">List Transaksi</string>
-    <string name="balance">Saldo</string>
     <string name="no_trip_data">Data perjalanan tidak ada. Apakah kartu pernah dipergunakan?</string>
     <string name="import_xml">Impor</string>
     <string name="import_clipboard">Salin dari Clipboard</string>
@@ -72,14 +71,11 @@
     <string name="invalid_sector_title_format">Sektor: 0x%1$s (salah: %2$s)</string>
     <string name="felica_system_title_format">Sistem: 0x%1$s (%2$s)</string>
     <string name="felica_service_title_format">Servis: 0x%1$s (%2$s)</string>
-    <string name="felica_service_format">Servis: 0x%s</string>
     <string name="record_title_format">Rekaman: %s</string>
     <string name="binary_title_format">Data biner</string>
-    <string name="subscriptions">Langganan</string>
     <string name="info">Info</string>
     <string name="valid_format">Berlaku dari %1$s s/d %2$s</string>
     <string name="valid_to_format">Berlaku sampai %1$s</string>
-    <string name="valid_not_used">Belum dipergunakan</string>
     <string name="unknown_format">Tidak dikenal (%s)</string>
     <string name="unknown">Tidak dikenal</string>
     <string name="keys_required">Kunci enkripsi diperlukan untuk membaca kartu ini.</string>

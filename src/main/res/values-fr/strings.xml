@@ -17,7 +17,6 @@
     <string name="share_xml">Partager</string>
     <string name="save_xml">Enregistrer sur le stockage USB</string>
     <string name="history">Historique</string>
-    <string name="balance">Solde</string>
     <string name="no_trip_data">Aucun déplacement trouvé. Cette carte a-t-elle été utilisée?</string>
     <string name="import_xml">Importer</string>
     <string name="import_clipboard">Importer depuis le presse-papier</string>
@@ -65,11 +64,9 @@
     <string name="sector_title_format">Secteur: 0x%s</string>
     <string name="unauthorized_sector_title_format">Secteur: 0x%s (Non autorisé)</string>
     <string name="invalid_sector_title_format">Secteur: 0x%1$s (Invalide: %2$s)</string>
-    <string name="subscriptions">Souscriptions</string>
     <string name="info">Info</string>
     <string name="valid_format">Valide %1$s à %2$s</string>
     <string name="valid_to_format">Valide jusqu\'au %1$s</string>
-    <string name="valid_not_used">Pas encore utilisée</string>
     <string name="unknown_format">Inconnu (%s)</string>
     <string name="unknown">Inconnu</string>
     <string name="keys_required">Des clés de chiffrement sont requises pour lire cette carte.</string>
@@ -188,34 +185,11 @@
     <string name="felica_process_payment_thirdparty">Paiement (tier)</string>
     <string name="felica_process_admission_thirdparty">Frais d\'admission (entreprise tierce)</string>
 
-    <string name="hsl_pass_is_valid">Billet de saison valide</string>
-    <string name="hsl_1zone_ticket">Billet interne</string>
-    <string name="hsl_2zone_ticket">Billet régional</string>
     <string name="hsl_balance_refill">Recharge du solde</string>
     <string name="hsl_balance_ticket">Ticket solde</string>
-    <string name="hsl_value_ticket_is_valid">Value ticket valide</string>
     <string name="hsl_pass_ticket">Ticket saisonnier</string>
-    <string name="hsl_season_ticket_starts">Début du ticket saisonnier</string>
-    <string name="hsl_season_ticket_ends">Fin du ticket saisonnier</string>
-    <string name="hsl_season_ticket_bought_on">Ticket saisonnier acheté en</string>
-    <string name="hsl_previous_season_ticket">Le précédent ticket saisonnier était</string>
-    <string name="hsl_season_ticket_price_was">Le prix du ticket saisonnier était de</string>
-    <string name="hsl_you_last_used_this_ticket">Dernière utilisation de ce billet sur</string>
     <string name="hsl_person_format">%s personnes</string>
     <string name="hsl_mins_format">%s mn</string>
-    <string name="hsl_value_ticket">Valeur du billet</string>
-    <string name="hsl_value_ticket_bought_on">Ticket acheté</string>
-    <string name="hsl_value_ticket_expires_on">Expiration du ticket</string>
-    <string name="hsl_value_ticket_last_transfer">Dernier transfert</string>
-    <string name="hsl_value_ticket_last_sign">Dernière signature</string>
-    <string name="hsl_value_ticket_price">Prix du value ticket</string>
-    <string name="hsl_value_ticket_disco_group">Prix de groupe</string>
-    <string name="hsl_value_ticket_pax">Taille de groupe</string>
-    <string name="hsl_value_ticket_duration">Validité du billet</string>
-    <string name="hsl_value_ticket_vehicle_number">Numéro du véhicule</string>
-    <string name="hsl_value_ticket_vehicle_type">Type de véhicule</string>
-    <string name="hsl_value_ticket_line_number">Numéro de ligne</string>
-    <string name="hsl_season_ticket">Billets saisonnier</string>
 
     <string name="opal_automatic_top_up">Recharge automatique</string>
     <string name="opal_weekly_trips">Déplacements hebdomadaires</string>

@@ -17,7 +17,6 @@
     <string name="share_xml">Del</string>
     <string name="save_xml">Lagre til fil</string>
     <string name="history">Historikk</string>
-    <string name="balance">Balanse</string>
     <string name="no_trip_data">Fant ingen turer. Har dette kortet vært i bruk?</string>
     <string name="import_xml">Importer</string>
     <string name="import_clipboard">Lim inn fra utklippstavle</string>
@@ -47,11 +46,9 @@
     <string name="sector_title_format">Sektor: 0x%s</string>
     <string name="unauthorized_sector_title_format">Sektor: 0x%s (ikke autorisert)</string>
     <string name="invalid_sector_title_format">Sektor: 0x%1$s (ugyldig: %2$s)</string>
-    <string name="subscriptions">Abonnementer</string>
     <string name="info">Info</string>
     <string name="valid_format">Gydlig %1$s til %2$s</string>
     <string name="valid_to_format">Gyldig til %1$s</string>
-    <string name="valid_not_used">Ikke i bruk enda</string>
     <string name="unknown_format">Ukjent (%s)</string>
     <string name="unknown">Ukjent</string>
     <string name="keys_required">Krypteringsnøkler kreves for å lese dette kortet.</string>
@@ -95,7 +92,6 @@
 
     <string name="hsl_person_format">%s person</string>
     <string name="hsl_mins_format">%s min</string>
-    <string name="hsl_value_ticket_vehicle_type">Kjøretøysnummer</string>
     <string name="opal_vehicle_bus">Buss</string>
     <string name="opal_vehicle_rail">Tog</string>
     <string name="opal_action_none">Intet (nytt, ubrukt kort)</string>
@@ -153,29 +149,9 @@
     <string name="felica_process_purchase_magnetic">Magnetisk billett</string>
     <string name="felica_process_fare_adjustment">Reiseprisjustering</string>
     <string name="felica_process_admission_payment">Påstigningsbetaling</string>
-    <string name="hsl_1zone_ticket">Internbillett</string>
-    <string name="hsl_2zone_ticket">Regionbillett</string>
     <string name="hsl_balance_refill">Saldopåfylling</string>
     <string name="hsl_balance_ticket">Verdibillett</string>
-    <string name="hsl_value_ticket_is_valid">Gyldig verdibillett</string>
     <string name="hsl_pass_ticket">Sesongbillett</string>
-    <string name="hsl_season_ticket_starts">Sesongbillett starter</string>
-    <string name="hsl_season_ticket_ends">Sesongbillett slutter</string>
-    <string name="hsl_season_ticket_bought_on">Sesongbillett kjøpt den</string>
-    <string name="hsl_previous_season_ticket">Forrige sesongbillett var</string>
-    <string name="hsl_you_last_used_this_ticket">Du brukte denne billetten sist den</string>
-    <string name="hsl_value_ticket">Verdibillett</string>
-    <string name="hsl_value_ticket_bought_on">Billett kjøpt</string>
-    <string name="hsl_value_ticket_expires_on">Billetten utløper</string>
-    <string name="hsl_value_ticket_last_transfer">Siste overføring</string>
-    <string name="hsl_value_ticket_last_sign">Siste signering</string>
-    <string name="hsl_value_ticket_price">Pris på verdibillett</string>
-    <string name="hsl_value_ticket_disco_group">Rabattgruppe</string>
-    <string name="hsl_value_ticket_pax">Gruppestørrelse</string>
-    <string name="hsl_value_ticket_duration">Billettgyldighet</string>
-    <string name="hsl_value_ticket_vehicle_number">Kjøretøysnummer</string>
-    <string name="hsl_value_ticket_line_number">Linjenummer</string>
-    <string name="hsl_season_ticket">Sesongbillett</string>
 
     <string name="opal_automatic_top_up">Automatisk oppfylling</string>
     <string name="opal_weekly_trips">Ukentlige turer</string>
@@ -210,8 +186,6 @@
     <string name="felica_process_payment_thirdparty">Betaling (tredjepart)</string>
     <string name="felica_process_admission_thirdparty">Inngangsbetaling (tredjepart)</string>
 
-    <string name="hsl_pass_is_valid">Gyldig sesongbillett</string>
-    <string name="hsl_season_ticket_price_was">Pris for inneværende sesongbillett var</string>
     <string name="opal_vehicle_ferry_lr">Ferge eller nærbane</string>
     <string name="opal_action_journey_completed_distance">Tur fullført (strekningstakst)</string>
     <string name="opal_action_journey_completed_flat_rate">Tur fullført (fast takst)</string>
@@ -278,7 +252,6 @@
     <string name="machine_id">Maskin-ID %s</string>
 
     <string name="felica_service_title_format">Tjeneste: 0x%1$s (%2$s)</string>
-    <string name="felica_service_format">Tjeneste: 0x%s</string>
     <string name="localise_places">Legg til språkhint i stedsnavn</string>
 
     <string name="localise_places_desc">Legger til språkhint (LocaleSpan) til i stedsnavn, som stasjon, stopp, linje og rutenavn. Dette endrer uttalen brukt av skjermlesere og annen tilgjengelighetsprogramvare.</string>
@@ -540,7 +513,6 @@
     <string name="compass_ticket_type">Billettkode</string>
     <string name="compass_ticket_type_concession">Honør</string>
     <string name="compass_ticket_type_regular">Vanlig</string>
-    <string name="expiry_date">Utløpsdato</string>
     <string name="compass_note">Kun enkelttursbilletter</string>
 
     <string name="opus_subscription">Abonnement</string>
@@ -604,8 +576,6 @@
 
     <string name="felica_terminal_view_altte">VIEW ALTTE</string>
     <string name="kmt_agency">Kereta Commuter (pendler) Indonesia</string>
-    <string name="kmt_trx_count">skranke</string>
-    <string name="kmt_balance">Saldo</string>
     <string name="kmt_other_data">Annen data</string>
     <string name="kmt_last_trx_amount">Siste overføringsmengde</string>
 

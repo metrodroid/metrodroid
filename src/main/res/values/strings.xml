@@ -48,7 +48,6 @@
     <string name="share_xml">Share</string>
     <string name="save_xml">Save to File</string>
     <string name="history">History</string>
-    <string name="balance">Balance</string>
     <string name="no_trip_data">No trips found. Has this card been used?</string>
     <string name="import_xml">Import</string>
     <string name="import_clipboard">Paste from Clipboard</string>
@@ -107,10 +106,8 @@
     describing a "well known" service code. eg: "Service: 0x90f (Suica History)" -->
     <string name="felica_service_title_format">Service: 0x%1$s (%2$s)</string>
     <!-- Translators: the first parameter is a hexadecimal number. -->
-    <string name="felica_service_format">Service: 0x%s</string>
     <string name="record_title_format">Record: %s</string>
     <string name="binary_title_format">Binary data</string>
-    <string name="subscriptions">Subscriptions</string>
     <string name="info">Info</string>
     <!-- Translators: These are both dates, eg: "Valid from 3/12/2017 to 3/3/2018". Dates are
      formatted according to user preferences. -->
@@ -118,7 +115,6 @@
     <!-- Translators: This is an end date, eg: "Valid until 3/3/2018". Dates are formatted according
      to user preferences. -->
     <string name="valid_to_format">Valid until %1$s</string>
-    <string name="valid_not_used">Not yet used</string>
     <string name="unknown_format">Unknown (%s)</string>
     <string name="unknown">Unknown</string>
     <string name="keys_required">Encryption keys are required to read this card.</string>
@@ -786,41 +782,16 @@
     -->
     <string name="kmt_agency">Kereta Commuter Indonesia</string>
     <string name="kmt_extra_note">Only for new FeliCa cards.</string>
-    <string name="kmt_trx_count">Transaction Counter</string>
-    <string name="kmt_balance">Balance</string>
     <string name="kmt_other_data">Other data</string>
     <string name="kmt_last_trx_amount">Last transaction amount</string>
 
     <!-- HSL -->
-    <string name="hsl_pass_is_valid">Valid season ticket</string>
-    <string name="hsl_1zone_ticket">Internal ticket</string>
-    <string name="hsl_2zone_ticket">Regional ticket</string>
     <string name="hsl_balance_refill">Balance refill</string>
     <string name="hsl_balance_ticket">Value ticket</string>
-    <string name="hsl_value_ticket_is_valid">Valid value ticket</string>
     <string name="hsl_pass_ticket">Season ticket</string>
-    <string name="hsl_season_ticket_starts">Season ticket starts</string>
-    <string name="hsl_season_ticket_ends">Season ticket ends</string>
-    <string name="hsl_season_ticket_bought_on">Season ticket bought on</string>
-    <string name="hsl_previous_season_ticket">Previous season ticket was</string>
-    <string name="hsl_season_ticket_price_was">The season ticket\'s price was</string>
-    <string name="hsl_you_last_used_this_ticket">You last used this ticket on</string>
     <string name="hsl_person_format">%s person</string>
     <!-- Translators: This is the short form of "minutes" -->
     <string name="hsl_mins_format">%s mins</string>
-    <string name="hsl_value_ticket">Value ticket</string>
-    <string name="hsl_value_ticket_bought_on">Ticket bought</string>
-    <string name="hsl_value_ticket_expires_on">Ticket expires</string>
-    <string name="hsl_value_ticket_last_transfer">Last transfer</string>
-    <string name="hsl_value_ticket_last_sign">Last sign</string>
-    <string name="hsl_value_ticket_price">Price of value ticket</string>
-    <string name="hsl_value_ticket_disco_group">Discount group</string>
-    <string name="hsl_value_ticket_pax">Group size</string>
-    <string name="hsl_value_ticket_duration">Ticket validity</string>
-    <string name="hsl_value_ticket_vehicle_number">Vehicle number</string>
-    <string name="hsl_value_ticket_vehicle_type">Vehicle type</string>
-    <string name="hsl_value_ticket_line_number">Line number</string>
-    <string name="hsl_season_ticket">Season ticket</string>
     <string name="hsl_line_vehicle">Line %s, Vehicle %s</string>
 
     <!--
@@ -928,7 +899,6 @@
     <string name="compass_ticket_type">Ticket type</string>
     <string name="compass_ticket_type_concession">Concession</string>
     <string name="compass_ticket_type_regular">Regular</string>
-    <string name="expiry_date">Expiry date</string>
     <string name="compass_note">Single ride tickets only</string>
 
     <string name="opus_subscription">Subscription</string>

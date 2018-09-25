@@ -17,7 +17,6 @@
     <string name="share_xml">Delen</string>
     <string name="save_xml">Opslaan naar bestand</string>
     <string name="history">Geschiedenis</string>
-    <string name="balance">Saldo</string>
     <string name="no_trip_data">Geen reizen gevonden. Is er wel gereisd met deze kaart?</string>
     <string name="import_xml">Importeren</string>
     <string name="import_clipboard">Plakken uit klembord</string>
@@ -63,11 +62,9 @@
     <string name="sector_title_format">Sector: 0x%s</string>
     <string name="unauthorized_sector_title_format">Sector: 0x%s (niet-geauthoriseerd)</string>
     <string name="invalid_sector_title_format">Sector: 0x%1$s (onjuist: %2$s)</string>
-    <string name="subscriptions">Abonnementen</string>
     <string name="info">Informatie</string>
     <string name="valid_format">Geldig van %1$s tot %2$s</string>
     <string name="valid_to_format">Geldig tot %1$s</string>
-    <string name="valid_not_used">Nog niet gebruikt</string>
     <string name="unknown_format">Onbekend (%s)</string>
     <string name="unknown">Onbekend</string>
     <string name="keys_required">Er zijn ontsleutelingssleutels benodigd om deze kaart uit te kunnen lezen.</string>
@@ -186,34 +183,11 @@
     <string name="felica_process_payment_thirdparty">Betaling (derde partij)</string>
     <string name="felica_process_admission_thirdparty">Toelatingsbetaling (derde partij)</string>
 
-    <string name="hsl_pass_is_valid">Geldige seizoenskaart</string>
-    <string name="hsl_1zone_ticket">Interne kaart</string>
-    <string name="hsl_2zone_ticket">Regionale kaart</string>
     <string name="hsl_balance_refill">Saldo-oplading</string>
     <string name="hsl_balance_ticket">Voordeelkaart</string>
-    <string name="hsl_value_ticket_is_valid">Geldige voordeelkaart</string>
     <string name="hsl_pass_ticket">Seizoenskaart</string>
-    <string name="hsl_season_ticket_starts">Seizoenskaart gaat in op</string>
-    <string name="hsl_season_ticket_ends">Seizoenskaart eindigt op</string>
-    <string name="hsl_season_ticket_bought_on">Seizoenskaart is gekocht op</string>
-    <string name="hsl_previous_season_ticket">Vorige seizoenskaart was</string>
-    <string name="hsl_season_ticket_price_was">De seizoenskaartprijs was</string>
-    <string name="hsl_you_last_used_this_ticket">U heeft deze kaart voor het laatst gebruikt op</string>
     <string name="hsl_person_format">%s persoon</string>
     <string name="hsl_mins_format">%s minuten</string>
-    <string name="hsl_value_ticket">Voordeelkaart</string>
-    <string name="hsl_value_ticket_bought_on">Kaart gekocht</string>
-    <string name="hsl_value_ticket_expires_on">Kaart verloopt op</string>
-    <string name="hsl_value_ticket_last_transfer">Laatste overstap</string>
-    <string name="hsl_value_ticket_last_sign">Laatste teken</string>
-    <string name="hsl_value_ticket_price">Voordeelkaartprijs</string>
-    <string name="hsl_value_ticket_disco_group">Groepskorting</string>
-    <string name="hsl_value_ticket_pax">Groepsgrootte</string>
-    <string name="hsl_value_ticket_duration">Kaartgeldigheid</string>
-    <string name="hsl_value_ticket_vehicle_number">Voertuignummer</string>
-    <string name="hsl_value_ticket_vehicle_type">Voertuigtype</string>
-    <string name="hsl_value_ticket_line_number">Rijnummer</string>
-    <string name="hsl_season_ticket">Seizoenskaart</string>
 
     <string name="opal_automatic_top_up">Automatisch opladen</string>
     <string name="opal_weekly_trips">Wekelijkse reizen</string>
@@ -388,7 +362,6 @@
 
     <string name="felica_system_title_format">Systeem: 0x%1$s (%2$s)</string>
     <string name="felica_service_title_format">Dienst: 0x%1$s (%2$s)</string>
-    <string name="felica_service_format">Dienst: 0x%s</string>
     <plurals name="felica_service_count">
 	<item quantity="one">%d dienst</item>
 	<item quantity="other">%d diensten</item>
@@ -605,7 +578,6 @@
     <string name="compass_ticket_type">Kaartsoort</string>
     <string name="compass_ticket_type_concession">Concessie</string>
     <string name="compass_ticket_type_regular">Regulier</string>
-    <string name="expiry_date">Vervaldatum</string>
     <string name="compass_note">Alleen voor enkele reizen</string>
 
     <string name="location_seoul">Seoel, Zuid-Korea</string>
@@ -634,8 +606,6 @@
     <string name="nfc_options_desc">Terugvallezer voor MIFARE Classic, fysieke kaartinstellingen…</string>
 <string name="kmt_agency">Kereta Commuter Indonesia</string>
     <string name="transaction_counter">Transactieteller</string>
-    <string name="kmt_trx_count">Transactieteller</string>
-    <string name="kmt_balance">Saldo</string>
     <string name="kmt_other_data">Overige gegevens</string>
     <string name="kmt_last_trx_amount">Recentste transactiebedrag</string>
 

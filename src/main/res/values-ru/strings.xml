@@ -11,7 +11,6 @@
     <string name="share_xml">Поделиться</string>
     <string name="save_xml">Сохранить в файл</string>
     <string name="history">История</string>
-    <string name="balance">Остаток</string>
     <string name="no_trip_data">Не обнаружены поездки. Эта карточка использовалась?</string>
     <string name="import_xml">Импортировать</string>
     <string name="import_clipboard">Импортировать из буфера обмена</string>
@@ -169,10 +168,8 @@
     <string name="invalid_sector_title_format">Сектор: 0x%1$s (невалиден: %2$s)</string>
     <string name="felica_system_title_format">Система: 0x%1$s (%2$s)</string>
     <string name="felica_service_title_format">Сервис: 0x%1$s (%2$s)</string>
-    <string name="felica_service_format">Сервис: 0x%s</string>
     <string name="record_title_format">Запись: %s</string>
     <string name="binary_title_format">Двоичные данные</string>
-    <string name="subscriptions">Проездные</string>
     <string name="info">Информация</string>
     <string name="valid_format">Действителен с %1$s по %2$s</string>
     <string name="valid_to_format">Действителен по %1$s</string>

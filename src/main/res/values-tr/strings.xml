@@ -18,7 +18,6 @@
     <string name="share_xml">Paylaş</string>
     <string name="save_xml">Dosyaya Kaydet</string>
     <string name="history">Geçmiş</string>
-    <string name="balance">Bakiye</string>
     <string name="no_trip_data">Hiç yolculuk bulunamadı. Kart daha önce kullanıldı mı?</string>
     <string name="import_xml">İçeri Aktar</string>
     <string name="import_clipboard">Hafızadan Yapıştır</string>
@@ -59,11 +58,9 @@
     <string name="sector_title_format">Sektör: 0x%s</string>
     <string name="unauthorized_sector_title_format">Sektör: 0x%s (yetkisiz)</string>
     <string name="invalid_sector_title_format">Sektör: 0x%1$s (geçersiz: %2$s)</string>
-    <string name="subscriptions">Abonelikler</string>
     <string name="info">Bilgi</string>
     <string name="valid_format">%1$s den %2$s Geçerli</string>
     <string name="valid_to_format">%1$s a kadar geçerli</string>
-    <string name="valid_not_used">Henüz kullanılmamış</string>
     <string name="unknown_format">Bilinmeyen (%s)</string>
     <string name="unknown">Bilinmeyen</string>
     <string name="keys_required">Bu kartı okumak için şifreleme anahtarları gerekmektedir.</string>

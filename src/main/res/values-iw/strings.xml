@@ -17,7 +17,6 @@
     <string name="share_xml">לחלוק</string>
     <string name="save_xml">לחסוך כדי אחסון USB</string>
     <string name="history">היסטוריה</string>
-    <string name="balance">כמות</string>
     <string name="no_trip_data">לא נמצאו נסיעות. כרטיס זה נוצל בעבר?</string>
     <string name="import_xml">יבוא</string>
     <string name="import_clipboard">יבוא מלוח</string>
