@@ -16,8 +16,7 @@ import au.id.micolous.metrodroid.transit.nextfare.NextfareTrip;
 import au.id.micolous.metrodroid.transit.nextfare.record.NextfareTransactionRecord;
 
 public class MspGotoTransitData extends NextfareTransitData {
-    public static final String NAME = "Go-to";
-    public static final String LONG_NAME = "Minessota Go-to";
+    public static final String NAME = "Go-To card";
     public static final Creator<MspGotoTransitData> CREATOR = new Creator<MspGotoTransitData>() {
         public MspGotoTransitData createFromParcel(Parcel parcel) {
             return new MspGotoTransitData(parcel);
@@ -42,7 +41,7 @@ public class MspGotoTransitData extends NextfareTransitData {
 
     public static final CardInfo CARD_INFO = new CardInfo.Builder()
             // Using the short name (Goto) may be ambiguous
-            .setName(LONG_NAME)
+            .setName(NAME)
             .setLocation(R.string.location_minneapolis)
             .setCardType(CardType.MifareClassic)
             .setKeysRequired()

@@ -105,8 +105,8 @@ public class CardInfo {
             SmartRiderTransitData.SMARTRIDER_CARD_INFO,
             StrelkaTransitData.CARD_INFO,
             SuicaTransitData.SUICA_CARD_INFO,
-            LaxTapTransitData.CARD_INFO, // TAP
             TMoneyTransitData.CARD_INFO,
+            LaxTapTransitData.CARD_INFO, // Transit Access Pass
             TroikaTransitData.CARD_INFO,
     };
 
