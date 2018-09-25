@@ -704,4 +704,5 @@
 
     <string name="leap_issuer_id">Uitgave-ID</string>
     <string name="leap_locked_warning">Deze kaart is niet ontgrendeld; schakel ophalen van Leap-sleutels in in de instellingen</string>
-</resources>
+<string name="location_minneapolis">Minneapolis, MN, VS</string>
+    </resources>
