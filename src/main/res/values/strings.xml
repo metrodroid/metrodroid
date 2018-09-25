@@ -570,47 +570,50 @@
 
 
     <!-- Locations -->
-    <string name="location_seattle">Seattle, WA, USA</string>
-    <string name="location_san_francisco">San Francisco, CA, USA</string>
-    <string name="location_singapore">Singapore</string>
-    <string name="location_tokyo">Tokyo, Japan</string>
-    <string name="location_kansai">Kansai, Japan</string>
-    <string name="location_the_netherlands">The Netherlands</string>
-    <string name="location_sao_paulo">São Paulo, Brazil</string>
-    <string name="location_helsinki_finland">Helsinki, Finland</string>
-    <string name="location_sydney_australia">Sydney, Australia</string>
-    <string name="location_vancouver">Vancouver, BC, Canada</string>
-    <!-- Translators: This refers to the province of Québec (not Québec City) -->
-    <string name="location_quebec">Québec, Canada</string>
-    <string name="location_boston">Boston, MA, USA</string>
 
+    <string name="location_act_australia">Australian Capital Territory, Australia</string>
     <!--
       Translators:
 
-      "SE QLD" is an abbreviation for "South East Queensland".
-
-      "Queensland" is a state of Australia: https://en.wikipedia.org/wiki/Queensland
-
-      "South East Queensland" is used to describe the most populated area of Queensland, which
-      includes Brisbane, Gold Coast and Sunshine Coast:
+      "SE QLD" is an abbreviation for "South East Queensland". This is the most populated area of
+      Queensland, which includes Brisbane, Gold Coast and Sunshine Coast:
       https://en.wikipedia.org/wiki/South_East_Queensland
 
       If there isn't a good way to abbreviate it in your language, please translate this as
       "Brisbane, Australia" instead.
     -->
     <string name="location_brisbane_seq_australia">Brisbane &amp; SE QLD, Australia</string>
-    <string name="location_victoria_australia">Victoria, Australia</string>
-    <string name="location_hong_kong">Hong Kong</string>
-    <string name="location_shenzhen">Shenzhen, Guangdong Province, China</string>
-    <string name="location_los_angeles">Los Angeles, CA, USA</string>
-    <string name="location_act_australia">Australian Capital Territory, Australia</string>
-    <string name="location_wa_australia">Western Australia, Australia</string>
+    <string name="location_boston">Boston, MA, USA</string>
     <string name="location_christchurch_nz">Christchurch, New Zealand</string>
-    <string name="location_moscow">Moscow, Russia</string>
-    <string name="location_saint_petersburg">Saint Petersburg, Russia</string>
-    <string name="location_israel">Israel</string>
-    <string name="location_jakarta">Jakarta, Indonesia</string>
+    <string name="location_helsinki_finland">Helsinki, Finland</string>
+    <string name="location_hong_kong">Hong Kong</string>
     <string name="location_ireland">Ireland</string>
+    <string name="location_israel">Israel</string>
+    <string name="location_istanbul">Istanbul, Turkey</string>
+    <string name="location_jakarta">Jakarta, Indonesia</string>
+    <!--
+    Translators: This refers to the Kansai region (Japanese: 関西地方 / Kansai-chihō).
+    This is not a city or prefecture.
+    -->
+    <string name="location_kansai">Kansai, Japan</string>
+    <string name="location_los_angeles">Los Angeles, CA, USA</string>
+    <string name="location_minneapolis">Minneapolis, MN, USA</string>
+    <string name="location_moscow">Moscow, Russia</string>
+    <string name="location_the_netherlands">The Netherlands</string>
+    <!-- Translators: This refers to the province of Québec (not Québec City) -->
+    <string name="location_quebec">Québec, Canada</string>
+    <string name="location_saint_petersburg">Saint Petersburg, Russia</string>
+    <string name="location_san_francisco">San Francisco, CA, USA</string>
+    <string name="location_sao_paulo">São Paulo, Brazil</string>
+    <string name="location_seattle">Seattle, WA, USA</string>
+    <string name="location_seoul">Seoul, Korea</string>
+    <string name="location_shenzhen">Shenzhen, Guangdong Province, China</string>
+    <string name="location_singapore">Singapore</string>
+    <string name="location_sydney_australia">Sydney, Australia</string>
+    <string name="location_tokyo">Tokyo, Japan</string>
+    <string name="location_vancouver">Vancouver, BC, Canada</string>
+    <string name="location_victoria_australia">Victoria, Australia</string>
+    <string name="location_wa_australia">Western Australia, Australia</string>
 
     <!--
     These strings are used for content descriptions (accessibility), for modes of transport.
@@ -999,7 +1002,6 @@
     </string>
     <string name="fully_blank_title">Blank card</string>
 
-    <string name="location_seoul">Seoul, Korea</string>
     <!-- Translators: T-money is Korean payment/transit system. Korean: 티머니
     May be transliterated -->
     <string name="card_name_tmoney">T-Money</string>
@@ -1034,8 +1036,6 @@
     <!-- Translators: Used as a submenu title in the preferences screen -->
     <string name="nfc">Near Field Communication</string>
     <string name="istanbulkart_2nd_card_number">Secondary serial</string>
-    <string name="location_istanbul">Istanbul, Turkey</string>
-    <string name="location_minneapolis">Minneapolis</string>
     <!-- Translators: Used as a description for the Near Field Communication options submenu -->
     <string name="nfc_options_desc">Fallback reader for MIFARE Classic, physical card interface settings…</string>
 
