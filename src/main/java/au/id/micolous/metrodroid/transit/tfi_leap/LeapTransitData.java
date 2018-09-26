@@ -22,6 +22,7 @@ package au.id.micolous.metrodroid.transit.tfi_leap;
 import android.os.Parcel;
 import android.os.Parcelable;
 import android.support.annotation.Nullable;
+import android.text.SpannableString;
 
 import org.apache.commons.lang3.ArrayUtils;
 
@@ -133,15 +134,17 @@ public class LeapTransitData extends TransitData {
                     R.string.leap_period_start,
                     Utils.dateTimeFormat(TripObfuscator.maybeObfuscateTS(mAccumulatorStart))));
             items.add(new ListItem(R.string.leap_accumulator_region, Integer.toString(mAccumulatorRegion)));
-            items.add(new ListItem(R.string.leap_accumulator_total, TransitCurrency.EUR(mAccumulatorScheme).maybeObfuscateBalance().formatCurrencyString(true).toString()));
+            items.add(new ListItem(R.string.leap_accumulator_total, TransitCurrency.EUR(mAccumulatorScheme).maybeObfuscateBalance().formatCurrencyString(true)));
 
             for (int i = 0; i < mAccumulators.length; i++) {
         		if (mAccumulators[i] == 0)
 		            continue;
 
         		items.add(new ListItem(
-        		        Utils.localizeString(R.string.leap_accumulator_agency, StationTableReader.getOperatorName(LEAP_STR, mAccumulatorAgencies[i], false)),
-                        TransitCurrency.EUR(mAccumulators[i]).maybeObfuscateBalance().formatCurrencyString(true).toString()
+        		        new SpannableString(Utils.localizeString(R.string.leap_accumulator_agency,
+                                StationTableReader.getOperatorName(LEAP_STR, mAccumulatorAgencies[i],
+                                        false))),
+                        TransitCurrency.EUR(mAccumulators[i]).maybeObfuscateBalance().formatCurrencyString(true)
                 ));
             }
 
