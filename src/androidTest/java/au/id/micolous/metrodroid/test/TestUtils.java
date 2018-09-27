@@ -46,6 +46,7 @@ final class TestUtils {
             .put("en-AU", new Locale("en", "AU"))
             .put("en-GB", Locale.UK)
             .put("en-US", Locale.US)
+            .put("fr-FR", Locale.FRANCE)
             .put("ja", Locale.JAPANESE)
             .put("ja-JP", Locale.JAPAN)
             .build();
