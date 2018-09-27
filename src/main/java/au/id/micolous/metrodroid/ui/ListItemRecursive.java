@@ -1,5 +1,8 @@
 package au.id.micolous.metrodroid.ui;
 
+import android.text.Spannable;
+import android.text.SpannableString;
+import android.text.Spanned;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -37,16 +40,16 @@ public class ListItemRecursive extends ListItem {
         return mSubTree;
     }
 
-    public static ListItem collapsedValue(String name, String value) {
+    public static ListItem collapsedValue(String name, Spanned value) {
         return collapsedValue(name, null, value);
     }
 
-    public static ListItem collapsedValue(int nameRes, String value) {
+    public static ListItem collapsedValue(int nameRes, Spanned value) {
         return new ListItemRecursive(nameRes, null,
                 value != null ? Collections.singletonList(new ListItem(null, value)) : null);
     }
 
-    public static ListItem collapsedValue(String title, String subtitle, String value) {
+    public static ListItem collapsedValue(String title, String subtitle, Spanned value) {
         return new ListItemRecursive(title, subtitle,
                 value != null ? Collections.singletonList(new ListItem(null, value)) : null);
     }

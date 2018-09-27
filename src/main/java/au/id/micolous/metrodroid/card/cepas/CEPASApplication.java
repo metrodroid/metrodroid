@@ -23,6 +23,7 @@ package au.id.micolous.metrodroid.card.cepas;
 
 import android.nfc.Tag;
 import android.nfc.tech.IsoDep;
+import android.text.SpannableString;
 import android.util.Log;
 
 import org.simpleframework.xml.ElementList;
@@ -68,11 +69,11 @@ public class CEPASApplication extends ISO7816Application {
         List <ListItem> li = new ArrayList<>();
         for (Map.Entry<Integer, Base64String> entry : mPurses.entrySet()) {
             li.add(ListItemRecursive.collapsedValue("CEPAS purse " + entry.getKey(),
-                    Utils.getHexString(entry.getValue().getData())));
+                    Utils.getHexDump(entry.getValue().getData())));
         }
         for (Map.Entry<Integer, Base64String> entry : mHistories.entrySet()) {
             li.add(ListItemRecursive.collapsedValue("CEPAS history " + entry.getKey(),
-                    Utils.getHexString(entry.getValue().getData())));
+                    Utils.getHexDump(entry.getValue().getData())));
         }
         return li;
     }
@@ -182,19 +183,19 @@ public class CEPASApplication extends ISO7816Application {
             items.add(new ListItem(R.string.cepas_expiry_date,
                     Utils.longDateFormat(TripObfuscator.maybeObfuscateTS(purse.getPurseExpiryDate()))));
             items.add(new ListItem(R.string.cepas_autoload_amount, Integer.toString(purse.getAutoLoadAmount())));
-            items.add(new ListItem("CAN", Utils.getHexString(purse.getCAN(), "<Error>")));
-            items.add(new ListItem("CSN", Utils.getHexString(purse.getCSN(), "<Error>")));
+            items.add(new ListItem(new SpannableString("CAN"), Utils.getHexDump(purse.getCAN(), "<Error>")));
+            items.add(new ListItem(new SpannableString("CSN"), Utils.getHexDump(purse.getCSN(), "<Error>")));
 
             items.add(new HeaderListItem(R.string.cepas_last_txn_info));
             items.add(new ListItem("TRP", Integer.toString(purse.getLastTransactionTRP())));
             items.add(new ListItem("Credit TRP", Integer.toString(purse.getLastCreditTransactionTRP())));
-            items.add(new ListItem(R.string.cepas_credit_header, Utils.getHexString(purse.getLastCreditTransactionHeader(), "<Error>")));
+            items.add(new ListItem(R.string.cepas_credit_header, Utils.getHexDump(purse.getLastCreditTransactionHeader(), "<Error>")));
             items.add(new ListItem(R.string.cepas_debit_options, Byte.toString(purse.getLastTransactionDebitOptionsByte())));
 
             items.add(new HeaderListItem(R.string.cepas_other_purse_info));
             items.add(new ListItem(R.string.cepas_logfile_record_count, Byte.toString(purse.getLogfileRecordCount())));
             items.add(new ListItem(R.string.cepas_issuer_data_length, Integer.toString(purse.getIssuerDataLength())));
-            items.add(new ListItem(R.string.cepas_issuer_data, Utils.getHexString(purse.getIssuerSpecificData(), "<Error>")));
+            items.add(new ListItem(R.string.cepas_issuer_data, Utils.getHexDump(purse.getIssuerSpecificData(), "<Error>")));
         }
 
         return items;

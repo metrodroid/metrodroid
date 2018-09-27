@@ -41,6 +41,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.annotation.PluralsRes;
 import android.support.annotation.StringRes;
+import android.text.Spannable;
 import android.text.SpannableString;
 import android.text.SpannableStringBuilder;
 import android.text.Spanned;
@@ -48,6 +49,7 @@ import android.text.TextUtils;
 import android.text.format.DateFormat;
 import android.text.style.LocaleSpan;
 import android.text.style.TtsSpan;
+import android.text.style.TypefaceSpan;
 import android.util.Log;
 import android.view.WindowManager;
 
@@ -160,6 +162,41 @@ public class Utils {
             return getHexString(b);
         } catch (Exception ex) {
             return defaultResult;
+        }
+    }
+
+    public static SpannableString getHexDump(byte[] b) {
+        return getHexDump(b, 0, b.length);
+    }
+
+    @NonNull
+    public static SpannableString getHexDump(byte[] b, int offset, int length) {
+        StringBuilder result = new StringBuilder();
+        int alen;
+        if (length <= 16)
+            alen = 0;
+        else
+            for (alen = 2; (1 << (4 * alen)) < length; alen += 2);
+        for (int i = 0; i < length; i++) {
+            if ((i & 0xf) == 0 && alen != 0)
+                result.append(String.format(Locale.ENGLISH, "%0" + alen + "x: ", i));
+            result.append(Integer.toString((b[i+offset] & 0xff) + 0x100, 16).substring(1));
+            if (((i & 0xf) == 0xf))
+                result.append('\n');
+            else if ((i & 3) == 3 && ((i & 0xf) != 0xf))
+                result.append(' ');
+        }
+        SpannableString s = new SpannableString(result);
+        s.setSpan(new TypefaceSpan("monospace"), 0, result.length(),
+                Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+        return s;
+    }
+
+    public static SpannableString getHexDump(byte[] b, String defaultResult) {
+        try {
+            return getHexDump(b);
+        } catch (Exception ex) {
+            return new SpannableString(defaultResult);
         }
     }
 

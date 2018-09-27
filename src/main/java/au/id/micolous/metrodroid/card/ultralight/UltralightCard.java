@@ -277,7 +277,7 @@ public class UltralightCard extends Card {
             } else {
                 li.add(ListItemRecursive.collapsedValue(Utils.localizeString(
                         R.string.page_title_format, sectorIndexString),
-                        null, Utils.getHexString(sector.getData())));
+                        null, Utils.getHexDump(sector.getData())));
             }
         }
         return li;

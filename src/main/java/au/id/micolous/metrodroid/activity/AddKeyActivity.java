@@ -148,7 +148,7 @@ public class AddKeyActivity extends MetrodroidActivity {
                 ((TextView) findViewById(R.id.key_data)).setText(Utils.localizePlural(R.plurals.hidden_key_data, mKeyData.length, mKeyData.length));
             } else {
                 ((TextView) findViewById(R.id.card_id)).setText(mTagId);
-                ((TextView) findViewById(R.id.key_data)).setText(Utils.getHexString(mKeyData, "").toUpperCase(Locale.US));
+                ((TextView) findViewById(R.id.key_data)).setText(Utils.getHexDump(mKeyData, ""));
             }
 
             findViewById(R.id.directions).setVisibility(View.GONE);
