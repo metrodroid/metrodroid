@@ -41,6 +41,7 @@ final class ClipperData {
     static final int AGENCY_CALTRAIN = 0x06;
     static final int AGENCY_GGT = 0x0b;
     static final int AGENCY_GG_FERRY = 0x19;
+    static final int AGENCY_BAY_FERRY = 0x1b;
 
     static final Map<Integer, String> GG_FERRY_ROUTES = new ImmutableMapBuilder<Integer, String>()
             .put(0x03, "Larkspur")
