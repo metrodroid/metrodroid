@@ -64,8 +64,8 @@ public class ClipperRefill extends Trip implements Comparable {
     }
 
     @Override
-    public Station getStartStation() {
-        return Station.nameOnly(Utils.localizeString(R.string.machine_id, mMachineID));
+    public String getVehicleID() {
+        return mMachineID;
     }
 
     @Override

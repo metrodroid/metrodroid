@@ -1046,4 +1046,5 @@
     <string name="add_key_json">JSON</string>
     <string name="invalid_json_key_type">Invalid JSON: key type missing</string>
     <string name="invalid_json">Invalid JSON</string>
+    <string name="vehicle_number">Vehicle #%s</string>
 </resources>

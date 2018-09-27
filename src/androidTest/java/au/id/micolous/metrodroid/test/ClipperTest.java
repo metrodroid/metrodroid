@@ -97,9 +97,9 @@ public class ClipperTest extends AndroidTestCase {
         assertNull(trips[1].getRouteName());
         assertTrue(trips[1].hasTime());
         assertEquals(Trip.Mode.TICKET_MACHINE, trips[1].getMode());
-        assertNotNull(trips[1].getStartStation());
+        assertNull(trips[1].getStartStation());
         assertNull(trips[1].getEndStation());
-        assertEquals("Machine ID 78123456", trips[1].getStartStation().getStationName());
+        assertEquals("78123456", trips[1].getVehicleID());
 
         assertEquals("Bay Area Rapid Transit", trips[0].getAgencyName(false));
         assertEquals("BART", trips[0].getAgencyName(true));

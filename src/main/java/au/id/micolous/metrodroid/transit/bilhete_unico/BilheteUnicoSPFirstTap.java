@@ -91,7 +91,7 @@ class BilheteUnicoSPFirstTap extends Trip {
     }
 
     @Override
-    public String getAgencyName(boolean isShort) {
+    public String getRouteName() {
         return Integer.toHexString(mLine);
     }
 }

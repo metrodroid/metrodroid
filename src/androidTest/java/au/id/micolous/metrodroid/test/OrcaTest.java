@@ -103,9 +103,9 @@ public class OrcaTest extends AndroidTestCase {
         assertNull(trips[0].getRouteName());
         assertTrue(trips[0].hasTime());
         assertEquals(Trip.Mode.BUS, trips[0].getMode());
-        assertNotNull(trips[0].getStartStation());
+        assertNull(trips[0].getStartStation());
         assertNull(trips[0].getEndStation());
-        assertEquals("Coach #30246", trips[0].getStartStation().getStationName());
+        assertEquals("30246", trips[0].getVehicleID());
 
         assertEquals("Unknown (0xf)", trips[1].getAgencyName(false));
         assertEquals("Unknown (0xf)", trips[1].getAgencyName(true));
@@ -114,9 +114,9 @@ public class OrcaTest extends AndroidTestCase {
         assertNull(trips[1].getRouteName());
         assertTrue(trips[1].hasTime());
         assertEquals(Trip.Mode.BUS, trips[1].getMode());
-        assertNotNull(trips[1].getStartStation());
+        assertNull(trips[1].getStartStation());
         assertNull(trips[1].getEndStation());
-        assertEquals("Coach #30262", trips[1].getStartStation().getStationName());
+        assertEquals("30262", trips[1].getVehicleID());
 
         assertEquals("Sound Transit", trips[2].getAgencyName(false));
         assertEquals("ST", trips[2].getAgencyName(true));

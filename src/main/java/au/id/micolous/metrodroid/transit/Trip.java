@@ -232,6 +232,25 @@ public abstract class Trip implements Parcelable {
     }
 
     /**
+     * Farebox, vehicle, or ticket machine number where the event was recorded.
+     *
+     * This is generally <em>not</em> the Station ID, which is declared in
+     * {@link #getStartStation()}.
+     */
+    public String getVehicleID() {
+        return null;
+    }
+
+    /**
+     * Number of passengers.
+     *
+     * -1 is unknown or irrelevant (eg: ticket machine purchases).
+     */
+    public int getPassengerCount() {
+        return -1;
+    }
+
+    /**
      * Full name of the agency for the trip. This is used on the map of the trip, where there is
      * space for longer agency names.
      *
