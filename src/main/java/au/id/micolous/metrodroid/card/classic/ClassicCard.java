@@ -572,7 +572,7 @@ public class ClassicCard extends Card {
                         Utils.localizeString(R.string.block_title_format,
                                 Integer.toString(block.getIndex())),
                         block.getType(),
-                        Collections.singletonList(new ListItem(null, Utils.getHexString(block.getData())))
+                        Collections.singletonList(new ListItem(null, Utils.getHexDump(block.getData())))
                 ));
             }
             if (sector.isEmpty()) {

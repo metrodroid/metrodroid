@@ -39,6 +39,7 @@ import org.simpleframework.xml.Root;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 @SuppressWarnings("FieldCanBeLocal")
@@ -87,7 +88,7 @@ public class DesfireApplication {
             if ((file instanceof InvalidDesfireFile) && !(file instanceof UnauthorizedDesfireFile)) {
                 ali.add(new ListItem(Utils.localizeString(R.string.invalid_file_title_format,
                         "0x" + Integer.toHexString(file.getId()),
-                        ((InvalidDesfireFile) file).getErrorMessage()), null));
+                        ((InvalidDesfireFile) file).getErrorMessage())));
                 continue;
             }
 
@@ -127,10 +128,30 @@ public class DesfireApplication {
                 subtitle = Utils.localizeString(R.string.desfire_unknown_file);
             }
 
-            String data = null;
-            if (!(file instanceof UnauthorizedDesfireFile))
-                data = Utils.getHexString(file.getData());
-            ali.add(ListItemRecursive.collapsedValue(title, subtitle, data));
+            List<ListItem> data;
+            if (file instanceof UnauthorizedDesfireFile)
+                data = null;
+            else if (file.getFileSettings() instanceof RecordDesfireFileSettings) {
+                RecordDesfireFileSettings fileSettings = (RecordDesfireFileSettings) file.getFileSettings();
+                int recSize = fileSettings.getRecordSize();
+                if (recSize == 0)
+                    data = Collections.singletonList(new ListItem(null, Utils.getHexDump(file.getData())));
+                else {
+                    byte[] fileData = file.getData();
+                    int numRecs = (fileData.length + recSize - 1) / recSize;
+                    data = new ArrayList<>();
+                    for (int i = 0; i < numRecs; i++) {
+                        int start = i * recSize;
+                        int len = recSize;
+                        if (start + len > fileData.length)
+                            len = fileData.length - start;
+                        data.add(ListItemRecursive.collapsedValue(Utils.localizeString(R.string.record_title_format, i), null,
+                                Utils.getHexDump(fileData, start, len)));
+                    }
+                }
+            } else
+                data = Collections.singletonList(new ListItem(null, Utils.getHexDump(file.getData())));
+            ali.add(new ListItemRecursive(title, subtitle, data));
         }
         if (mAuthLog != null) {
             for (DesfireAuthLog authLog : mAuthLog) {

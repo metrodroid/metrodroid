@@ -20,6 +20,7 @@ package au.id.micolous.metrodroid.transit.nextfare;
 
 import android.os.Parcel;
 import android.support.annotation.NonNull;
+import android.text.SpannableString;
 import android.util.Log;
 
 import java.math.BigInteger;
@@ -443,13 +444,13 @@ public class NextfareTransitData extends TransitData {
         ArrayList<ListItem> items = new ArrayList<>();
 
         items.add(new HeaderListItem(R.string.nextfare));
-        items.add(new ListItem(R.string.nextfare_system_code, Utils.getHexString(mSystemCode)));
+        items.add(new ListItem(R.string.nextfare_system_code, Utils.getHexDump(mSystemCode)));
 
         // The Los Angeles Tap and Minneapolis Go-To cards have the same system code, but different
         // data in Block 2.
         items.add(new ListItem(
-                Utils.localizeString(R.string.block_title_format, 2),
-                Utils.getHexString(mBlock2)));
+                new SpannableString(Utils.localizeString(R.string.block_title_format, 2)),
+                Utils.getHexDump(mBlock2)));
 
         return items;
     }

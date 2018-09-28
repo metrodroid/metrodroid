@@ -26,6 +26,7 @@ package au.id.micolous.metrodroid.card.felica;
 import android.nfc.Tag;
 import android.nfc.TagLostException;
 import android.nfc.tech.NfcF;
+import android.text.SpannableString;
 import android.util.Log;
 
 import au.id.micolous.farebot.R;
@@ -468,9 +469,10 @@ public class FelicaCard extends Card {
             for (FelicaService service : system.getServices()) {
                 List<ListItem> bli = new ArrayList<>();
                 for (FelicaBlock block : service.getBlocks()) {
-                    bli.add(new ListItem(String.format(Locale.ENGLISH,
-                            "%02d", block.getAddress()),
-                            Utils.getHexString(block.getData(), "<ERR>")));
+                    bli.add(new ListItem(
+                            new SpannableString(String.format(Locale.ENGLISH,
+                            "%02d", block.getAddress())),
+                            Utils.getHexDump(block.getData(), "<ERR>")));
                 }
 
                 sli.add(new ListItemRecursive(

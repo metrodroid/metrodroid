@@ -57,11 +57,11 @@ public class DesfireAuthLog {
     public ListItem getRawData() {
         List<ListItem> vals = new ArrayList<>();
         if (mChallenge != null)
-            vals.add(ListItemRecursive.collapsedValue(R.string.desfire_challenge, Utils.getHexString(mChallenge.getData())));
+            vals.add(ListItemRecursive.collapsedValue(R.string.desfire_challenge, Utils.getHexDump(mChallenge.getData())));
         if (mResponse != null)
-            vals.add(ListItemRecursive.collapsedValue(R.string.desfire_response, Utils.getHexString(mResponse.getData())));
+            vals.add(ListItemRecursive.collapsedValue(R.string.desfire_response, Utils.getHexDump(mResponse.getData())));
         if (mConfirm != null)
-            vals.add(ListItemRecursive.collapsedValue(R.string.desfire_confirmation, Utils.getHexString(mConfirm.getData())));
+            vals.add(ListItemRecursive.collapsedValue(R.string.desfire_confirmation, Utils.getHexDump(mConfirm.getData())));
 
         return new ListItemRecursive(R.string.desfire_keyex, Utils.localizeString(R.string.desfire_key_number,
                 "0x" + Integer.toHexString(mKeyId)),

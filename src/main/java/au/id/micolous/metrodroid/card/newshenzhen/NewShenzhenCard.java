@@ -75,7 +75,7 @@ public class NewShenzhenCard extends ISO7816Application {
         List <ListItem> li = new ArrayList<>();
         for (Balance entry : mBalances) {
             li.add(ListItemRecursive.collapsedValue("Shenzhen balance " + entry.mIdx,
-                    Utils.getHexString(entry.mData.getData())));
+                    Utils.getHexDump(entry.mData.getData())));
         }
         return li;
     }

@@ -190,7 +190,7 @@ public class ISO7816Card extends Card {
             byte[] appData = app.getAppData();
             if (appData != null)
                 rawAppData.add(ListItemRecursive.collapsedValue(
-                        R.string.app_fci, Utils.getHexString(appData)));
+                        R.string.app_fci, Utils.getHexDump(appData)));
             List<ISO7816File> files = app.getFiles();
             for (ISO7816File file : files) {
                 List<ListItem> recList = new ArrayList<>();
@@ -198,14 +198,14 @@ public class ISO7816Card extends Card {
                 byte[] fciData = file.getFci();
                 if (binaryData != null)
                     recList.add(ListItemRecursive.collapsedValue(Utils.localizeString(R.string.binary_title_format),
-                            Utils.getHexString(binaryData)));
+                            Utils.getHexDump(binaryData)));
                 if (fciData != null)
                     recList.add(ListItemRecursive.collapsedValue(Utils.localizeString(R.string.file_fci),
-                            Utils.getHexString(fciData)));
+                            Utils.getHexDump(fciData)));
                 List<ISO7816Record> records = file.getRecords();
                 for (ISO7816Record record : records)
                     recList.add(ListItemRecursive.collapsedValue(Utils.localizeString(R.string.record_title_format, record.getIndex()),
-                            Utils.getHexString(record.getData())));
+                            Utils.getHexDump(record.getData())));
                 ISO7816Selector selector = file.getSelector();
                 String selectorStr = selector.formatString();
                 String fileDesc = app.nameFile(selector);

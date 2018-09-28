@@ -19,6 +19,7 @@
 
 package au.id.micolous.metrodroid.card.tmoney;
 
+import android.text.SpannableString;
 import android.util.Log;
 
 import org.simpleframework.xml.Element;
@@ -79,7 +80,7 @@ public class TMoneyCard extends ISO7816Application {
 
     public List<ListItem> getRawData() {
         return Collections.singletonList(ListItemRecursive.collapsedValue("Tmoney balance",
-                Integer.toHexString(mBalance)));
+                new SpannableString(Integer.toHexString(mBalance))));
     }
 
 
