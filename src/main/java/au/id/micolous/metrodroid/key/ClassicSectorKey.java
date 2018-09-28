@@ -23,26 +23,31 @@
 package au.id.micolous.metrodroid.key;
 
 
-import au.id.micolous.metrodroid.util.Utils;
+import android.support.annotation.NonNull;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
-public class ClassicSectorKey {
+import java.util.Arrays;
+
+import au.id.micolous.metrodroid.util.Utils;
+
+public class ClassicSectorKey implements Comparable<ClassicSectorKey> {
     public static final String TYPE_KEYA = "KeyA";
     public static final String TYPE_KEYB = "KeyB";
-    private static final String TYPE = "type";
-    private static final String KEY = "key";
+    static final String KEY_TYPE = "type";
+    static final String KEY_VALUE = "key";
     private String mType;
-    protected byte[] mKey;
+    private byte[] mKey;
 
-    public ClassicSectorKey(String type, byte[] key) {
+    public ClassicSectorKey(@NonNull String type, @NonNull byte[] key) {
         mType = type;
         mKey = key;
     }
 
     public static ClassicSectorKey fromJSON(JSONObject json) throws JSONException {
-        return new ClassicSectorKey(json.getString(TYPE), Utils.hexStringToByteArray(json.getString(KEY)));
+        return new ClassicSectorKey(json.getString(KEY_TYPE),
+                Utils.hexStringToByteArray(json.getString(KEY_VALUE)));
     }
 
     public String getType() {
@@ -56,12 +61,24 @@ public class ClassicSectorKey {
     public JSONObject toJSON() {
         try {
             JSONObject json = new JSONObject();
-            json.put(TYPE, mType);
+            json.put(KEY_TYPE, mType);
             if (mKey != null)
-                json.put(KEY, Utils.getHexString(mKey));
+                json.put(KEY_VALUE, Utils.getHexString(mKey));
             return json;
         } catch (Exception ex) {
             throw new RuntimeException(ex);
+        }
+    }
+
+    @Override
+    public int compareTo(@NonNull ClassicSectorKey o) {
+        int d = mType.compareTo(o.mType);
+        if (d != 0) return d;
+
+        if (Arrays.equals(mKey, o.mKey)) {
+            return 0;
+        } else {
+            return 1;
         }
     }
 }

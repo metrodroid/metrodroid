@@ -32,6 +32,8 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
+import android.support.annotation.StringRes;
+import android.support.annotation.VisibleForTesting;
 import android.util.Log;
 import android.view.ActionMode;
 import android.view.Menu;
@@ -51,21 +53,22 @@ import org.json.JSONObject;
 import java.io.IOException;
 import java.io.InputStream;
 
+import au.id.micolous.farebot.R;
+import au.id.micolous.metrodroid.MetrodroidApplication;
 import au.id.micolous.metrodroid.activity.AddKeyActivity;
 import au.id.micolous.metrodroid.key.CardKeys;
+import au.id.micolous.metrodroid.key.ClassicCardKeys;
+import au.id.micolous.metrodroid.key.ClassicStaticKeys;
 import au.id.micolous.metrodroid.key.InsertKeyTask;
 import au.id.micolous.metrodroid.provider.CardKeyProvider;
 import au.id.micolous.metrodroid.provider.KeysTableColumns;
 import au.id.micolous.metrodroid.util.BetterAsyncTask;
 import au.id.micolous.metrodroid.util.Utils;
 
-import au.id.micolous.farebot.R;
-import au.id.micolous.metrodroid.MetrodroidApplication;
-
 public class KeysFragment extends ListFragment implements AdapterView.OnItemLongClickListener {
     private ActionMode mActionMode;
     private int mActionKeyId;
-    private static final int REQUEST_SELECT_FILE_RAW = 1;
+    private static final int REQUEST_SELECT_FILE = 1;
     private static final int REQUEST_SELECT_FILE_JSON = 2;
 
     private static final String TAG = "KeysFragment";
@@ -165,36 +168,27 @@ public class KeysFragment extends ListFragment implements AdapterView.OnItemLong
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        if (item.getItemId() == R.id.add_key_raw || item.getItemId() == R.id.add_key_json) {
+        if (item.getItemId() == R.id.add_key) {
             Uri uri = Uri.fromFile(Environment.getExternalStorageDirectory());
             Intent i = new Intent(Intent.ACTION_GET_CONTENT);
             i.putExtra(Intent.EXTRA_STREAM, uri);
-            // Some files are text/xml, some are application/xml.
+
             // In Android 4.4 and later, we can say the right thing!
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
                 i.setType("*/*");
-                String[] mimetypes;
-                switch (item.getItemId()) {
-                    case R.id.add_key_json:
-                        mimetypes = new String[]{"application/json"};
-                        break;
-                    default:
-                        mimetypes = new String[]{"application/octet-stream", "application/x-extension-bin"};
-                        break;
-                }
+                String[] mimetypes = new String[]{"application/json", "application/octet-stream", "application/x-extension-bin"};
                 i.putExtra(Intent.EXTRA_MIME_TYPES, mimetypes);
             } else {
                 // Failsafe, used in the emulator for local files
-                i.setType("text/xml");
+                i.setType("application/octet-stream");
             }
 
-            if (item.getItemId() == R.id.add_key_raw)
+            if (item.getItemId() == R.id.add_key)
                 startActivityForResult(Intent.createChooser(i, Utils.localizeString(R.string.select_file)),
-                        REQUEST_SELECT_FILE_RAW);
-            if (item.getItemId() == R.id.add_key_json)
-                startActivityForResult(Intent.createChooser(i, Utils.localizeString(R.string.select_file)),
-                        REQUEST_SELECT_FILE_JSON);
+                        REQUEST_SELECT_FILE);
             return true;
+        } else if (item.getItemId() == R.id.key_more_info) {
+            startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://micolous.github.io/metrodroid/key_formats")));
         }
         return false;
     }
@@ -205,19 +199,37 @@ public class KeysFragment extends ListFragment implements AdapterView.OnItemLong
         try {
             if (resultCode == Activity.RESULT_OK) {
                 switch (requestCode) {
-                    case REQUEST_SELECT_FILE_RAW:
+                    case REQUEST_SELECT_FILE:
                         uri = data.getData();
-                        Log.d(TAG, "REQUEST_SELECT_FILE_RAW content_type = " + getActivity().getContentResolver().getType(uri));
+                        String type = getActivity().getContentResolver().getType(uri);
+                        Log.d(TAG, "REQUEST_SELECT_FILE content_type = " + type);
 
-                        startActivity(new Intent(Intent.ACTION_VIEW, uri, getActivity(), AddKeyActivity.class));
-                        break;
-                    case REQUEST_SELECT_FILE_JSON:
-                        uri = data.getData();
-                        Log.d(TAG, "REQUEST_SELECT_FILE_JSON content_type = " + getActivity().getContentResolver().getType(uri));
+                        KeyFormat f;
+                        if ("application/json".equals(type)) {
+                            f = KeyFormat.JSON;
+                        } else {
+                            // Old versions of Android also land here, so we need proper detection.
+                            f = detectKeyFormat(getActivity(), uri);
+                            Log.d(TAG, "Detected file format: " + f.name());
+                        }
 
-                        int err = importKeysFromJSON(uri);
-                        if (err != 0)
-                            Toast.makeText(getActivity(), err, Toast.LENGTH_SHORT).show();
+                        switch (f) {
+                            case JSON:
+                                @StringRes int err = importKeysFromJSON(getActivity(), uri);
+                                if (err != 0) {
+                                    Toast.makeText(getActivity(), err, Toast.LENGTH_SHORT).show();
+                                }
+                                break;
+
+                            case RAW_MFC:
+                                startActivity(new Intent(Intent.ACTION_VIEW, uri, getActivity(), AddKeyActivity.class));
+                                break;
+
+                            case UNKNOWN:
+                                Toast.makeText(getActivity(), R.string.invalid_key_file, Toast.LENGTH_SHORT).show();
+                                break;
+                        }
+
                         break;
                 }
             }
@@ -226,18 +238,119 @@ public class KeysFragment extends ListFragment implements AdapterView.OnItemLong
         }
     }
 
-    private int importKeysFromJSON(Uri uri) throws IOException {
-        InputStream stream = getActivity().getContentResolver().openInputStream(uri);
-        byte []keyData = IOUtils.toByteArray(stream);
+    public enum KeyFormat {
+        UNKNOWN,
+        RAW_MFC,
+        JSON
+    }
+
+    private static final int MIFARE_SECTOR_COUNT_MAX = 40;
+    private static final int MIFARE_KEY_LENGTH = 6;
+
+    private static boolean isRawMifareClassicKeyFileLength(int length) {
+        return length > 0 &&
+                length % MIFARE_KEY_LENGTH == 0 &&
+                length <= MIFARE_SECTOR_COUNT_MAX * MIFARE_KEY_LENGTH * 2;
+    }
+
+    private static KeyFormat detectKeyFormat(Context ctx, Uri uri) {
+        byte[] data;
+        try {
+            InputStream stream = ctx.getContentResolver().openInputStream(uri);
+            data = IOUtils.toByteArray(stream);
+        } catch (IOException e) {
+            Log.w(TAG, "error detecting key format", e);
+            return KeyFormat.UNKNOWN;
+        }
+
+        return detectKeyFormat(data);
+    }
+
+    @VisibleForTesting
+    public static KeyFormat detectKeyFormat(byte[] data) {
+
+        if (data[0] != '{') {
+            // This isn't a JSON file.
+            Log.d(TAG, "couldn't find starting {");
+            return isRawMifareClassicKeyFileLength(data.length) ? KeyFormat.RAW_MFC : KeyFormat.UNKNOWN;
+        }
+
+        // Scan for the } at the end of the file.
+        for (int i=data.length-1; i>0; i--) {
+            String s;
+            try {
+                s = new String(new byte[]{data[i]});
+            } catch (Exception ex) {
+                Log.d(TAG, "unsupported encoding at byte " + i, ex);
+                // Unlikely to be JSON
+                return isRawMifareClassicKeyFileLength(data.length) ? KeyFormat.RAW_MFC : KeyFormat.UNKNOWN;
+            }
+
+            if ("\n\r\t ".contains(s)) {
+                continue;
+            }
+
+            if (s.equals("}")) {
+                break;
+            } else {
+                // This isn't a JSON file.
+                Log.d(TAG, "couldn't find ending }");
+                return isRawMifareClassicKeyFileLength(data.length) ? KeyFormat.RAW_MFC : KeyFormat.UNKNOWN;
+            }
+        }
+
+        // Now see if it actually parses.
+        try {
+            new JSONObject(new String(data));
+            return KeyFormat.JSON;
+        } catch (JSONException e) {
+            Log.d(TAG, "couldn't parse JSON object in detectKeyFormat", e);
+        }
+
+        // Couldn't parse as JSON -- fallback
+        return isRawMifareClassicKeyFileLength(data.length) ? KeyFormat.RAW_MFC : KeyFormat.UNKNOWN;
+    }
+
+    @StringRes
+    private static int importKeysFromJSON(Activity activity, Uri uri) throws IOException {
+        InputStream stream = activity.getContentResolver().openInputStream(uri);
+        byte[] keyData = IOUtils.toByteArray(stream);
+        return importKeysFromJSON(activity, keyData);
+    }
+
+    @StringRes
+    public static int importKeysFromJSON(Activity activity, byte[] keyData) {
         try {
             JSONObject json = new JSONObject(new String(keyData));
             String type = json.getString(CardKeys.JSON_KEY_TYPE_KEY);
             Log.d(TAG, "keyType = " + type);
-            if (!type.equals(CardKeys.TYPE_MFC) && !type.equals(CardKeys.TYPE_MFC_STATIC))
-                return R.string.invalid_json_key_type;
             Log.d(TAG, "inserting key");
-            new InsertKeyTask(getActivity(), type, json.toString(),
-                    json.getString(CardKeys.JSON_TAG_ID_KEY), true).execute();
+            switch (type) {
+                case CardKeys.TYPE_MFC: {
+                    // Test that we can deserialise this
+                    ClassicCardKeys k = ClassicCardKeys.fromJSON(json);
+                    if (k.keys().size() == 0) {
+                        throw new JSONException("key file is empty");
+                    }
+
+                    new InsertKeyTask(activity, type, json.toString(),
+                            json.getString(CardKeys.JSON_TAG_ID_KEY), true).execute();
+                    break;
+                }
+                case CardKeys.TYPE_MFC_STATIC: {
+                    // Test that we can deserialise this
+                    ClassicStaticKeys k = ClassicStaticKeys.fromJSON(json);
+                    if (k.keys().size() == 0) {
+                        throw new JSONException("key file is empty");
+                    }
+
+                    new InsertKeyTask(activity, type, json.toString(),
+                            CardKeys.CLASSIC_STATIC_TAG_ID, true).execute();
+                    break;
+                }
+                default:
+                    return R.string.invalid_json_key_type;
+            }
             return 0;
         } catch (JSONException ex) {
             Log.d(TAG, "jsonException", ex);
@@ -258,12 +371,51 @@ public class KeysFragment extends ListFragment implements AdapterView.OnItemLong
             TextView textView1 = view.findViewById(android.R.id.text1);
             TextView textView2 = view.findViewById(android.R.id.text2);
 
-            if (MetrodroidApplication.hideCardNumbers()) {
-                textView1.setText(R.string.hidden_card_number);
-            } else {
-                textView1.setText(id);
+            switch (type) {
+                case CardKeys.TYPE_MFC_STATIC: {
+                    String keyData = cursor.getString(cursor.getColumnIndex(KeysTableColumns.KEY_DATA));
+                    int keyCount = 0;
+
+                    String desc = null;
+                    try {
+                        ClassicStaticKeys k = ClassicStaticKeys.fromJSON(new JSONObject(keyData));
+                        desc = k.getDescription();
+                        keyCount = k.keys().size();
+                    } catch (JSONException ignored) { }
+
+                    if (desc != null) {
+                        textView1.setText(desc);
+                    } else {
+                        textView1.setText(R.string.untitled_key_group);
+                    }
+
+                    textView2.setText(Utils.localizePlural(R.plurals.keytype_mfc_static, keyCount, keyCount));
+                    break;
+                }
+                case CardKeys.TYPE_MFC: {
+                    String keyData = cursor.getString(cursor.getColumnIndex(KeysTableColumns.KEY_DATA));
+                    int keyCount = 0;
+
+                    try {
+                        ClassicCardKeys k = ClassicCardKeys.fromJSON(new JSONObject(keyData));
+                        keyCount = k.keys().size();
+                    } catch (JSONException ignored) { }
+
+                    if (MetrodroidApplication.hideCardNumbers()) {
+                        textView1.setText(R.string.hidden_card_number);
+                    } else {
+                        textView1.setText(id);
+                    }
+
+                    textView2.setText(Utils.localizePlural(R.plurals.keytype_mfc, keyCount, keyCount));
+                    break;
+                }
+                default:
+                    textView1.setText(R.string.unknown);
+                    textView2.setText(R.string.unknown);
+                    break;
             }
-            textView2.setText(type);
+
         }
     }
 }

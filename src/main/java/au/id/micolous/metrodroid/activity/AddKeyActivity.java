@@ -32,6 +32,7 @@ import android.nfc.tech.MifareClassic;
 import android.nfc.tech.MifareUltralight;
 import android.nfc.tech.NfcF;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.RadioButton;
 import android.widget.TextView;
@@ -44,6 +45,7 @@ import au.id.micolous.metrodroid.util.Utils;
 
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang3.ArrayUtils;
+import org.json.JSONException;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -59,6 +61,7 @@ import static android.view.ViewGroup.LayoutParams.WRAP_CONTENT;
  * @author Eric Butler
  */
 public class AddKeyActivity extends MetrodroidActivity {
+    private static final String TAG = AddKeyActivity.class.getSimpleName();
     private NfcAdapter mNfcAdapter;
     private PendingIntent mPendingIntent;
     private String[][] mTechLists = new String[][]{
@@ -90,8 +93,15 @@ public class AddKeyActivity extends MetrodroidActivity {
         findViewById(R.id.add).setOnClickListener(view -> {
             final String keyType = ((RadioButton) findViewById(R.id.is_key_a)).isChecked() ? ClassicSectorKey.TYPE_KEYA : ClassicSectorKey.TYPE_KEYB;
             ClassicCardKeys keys = ClassicCardKeys.fromDump(keyType, mKeyData);
+            String json;
+            try {
+                json = keys.toJSON().toString();
+            } catch (JSONException e) {
+                Log.w(TAG, "unexpected error in ClassicCardKeys.fromDump.toJSON", e);
+                return;
+            }
 
-            new InsertKeyTask(AddKeyActivity.this, CardKeys.TYPE_MFC, keys.toJSON().toString(),
+            new InsertKeyTask(AddKeyActivity.this, CardKeys.TYPE_MFC, json,
                     mTagId, true).execute();
         });
 

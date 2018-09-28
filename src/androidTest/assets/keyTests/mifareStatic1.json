@@ -1,0 +1,22 @@
+{
+  "KeyType": "MifareClassicStatic",
+  "Description": "Example transit agency",
+  "keys": [
+    {
+      "type": "KeyA",
+      "key": "010203040506",
+      "sector": 0
+    },
+    {
+      "type": "KeyA",
+      "key": "102030405060",
+      "sector": 0
+    },
+    {
+      "type": "KeyA",
+      "key": "112233445566",
+      "sector": 10
+    }
+  ]
+}
+

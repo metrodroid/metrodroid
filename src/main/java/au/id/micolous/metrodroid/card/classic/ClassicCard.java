@@ -52,6 +52,7 @@ import au.id.micolous.metrodroid.card.TagReaderFeedbackInterface;
 import au.id.micolous.metrodroid.key.CardKeys;
 import au.id.micolous.metrodroid.key.ClassicCardKeys;
 import au.id.micolous.metrodroid.key.ClassicSectorKey;
+import au.id.micolous.metrodroid.key.ClassicStaticKeys;
 import au.id.micolous.metrodroid.transit.TransitData;
 import au.id.micolous.metrodroid.transit.TransitIdentity;
 import au.id.micolous.metrodroid.transit.bilhete_unico.BilheteUnicoSPTransitData;
@@ -136,7 +137,9 @@ public class ClassicCard extends Card {
             }
             tech.connect();
 
-            ClassicCardKeys keys = (ClassicCardKeys) CardKeys.forTagId(tagId);
+            ClassicCardKeys keys = CardKeys.forTagId(tagId);
+            if (keys == null)
+                keys = CardKeys.forStaticClassic();
 
             int sectorCount = tech.getSectorCount();
             List<ClassicSector> sectors = new ArrayList<>();
@@ -156,17 +159,7 @@ public class ClassicCard extends Card {
                         while (correctKey == null && retriesLeft-- > 0) {
                             // If we have a known key for the sector on the card, try this first.
                             Log.d(TAG, "Attempting authentication on sector " + sectorIndex + ", " + retriesLeft + " tries remain...");
-                            List <ClassicSectorKey> candidates;
-                            if (keys != null) {
-                                ClassicSectorKey sectorKey = keys.keyForSector(sectorIndex);
-                                if (sectorKey != null) {
-                                    candidates = Collections.singletonList(sectorKey);
-                                } else {
-                                    candidates = Collections.emptyList();
-                                }
-                            } else {
-                                candidates = Collections.emptyList();
-                            }
+                            List <ClassicSectorKey> candidates = keys.getCandidates(sectorIndex);
 
                             for (ClassicSectorKey sectorKey : candidates) {
                                 if (sectorKey.getType().equals(ClassicSectorKey.TYPE_KEYA)) {
@@ -205,28 +198,21 @@ public class ClassicCard extends Card {
                                 //
                                 // This takes longer, of course, but means that users aren't scratching
                                 // their heads when we don't get the right key straight away.
-                                ClassicSectorKey[] cardKeys = keys.keys();
-
-                                for (int keyIndex = 0; keyIndex < cardKeys.length; keyIndex++) {
-                                    if (keyIndex == sectorIndex) {
-                                        // We tried this before
-                                        continue;
-                                    }
-
-                                    if (cardKeys[keyIndex].getType().equals(ClassicSectorKey.TYPE_KEYA)) {
-                                        if (tech.authenticateSectorWithKeyA(sectorIndex, cardKeys[keyIndex].getKey())) {
-                                            correctKey = cardKeys[keyIndex];
+                                for (ClassicSectorKey key : keys.keys()) {
+                                    if (key.getType().equals(ClassicSectorKey.TYPE_KEYA)) {
+                                        if (tech.authenticateSectorWithKeyA(sectorIndex, key.getKey())) {
+                                            correctKey = key;
                                         }
                                     } else {
-                                        if (tech.authenticateSectorWithKeyB(sectorIndex, cardKeys[keyIndex].getKey())) {
-                                            correctKey = cardKeys[keyIndex];
+                                        if (tech.authenticateSectorWithKeyB(sectorIndex, key.getKey())) {
+                                            correctKey = key;
                                         }
                                     }
 
                                     if (correctKey != null) {
                                         // Jump out if we have the key
-                                        Log.d(TAG, String.format("Authenticated successfully to sector %d with key for sector %d. "
-                                                + "Fix the key file to speed up authentication", sectorIndex, keyIndex));
+                                        Log.d(TAG, String.format("Authenticated successfully to sector %d with other key. "
+                                                + "Fix the key file to speed up authentication", sectorIndex));
                                         break;
                                     }
                                 }

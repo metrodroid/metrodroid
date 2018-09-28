@@ -1042,8 +1042,26 @@
     <string name="leap_issuer_id">Issuer ID</string>
     <string name="leap_locked_warning">This card was not unlocked. Please enable retrieval of Leap keys in settings</string>
 
-    <string name="add_key_raw">Raw</string>
-    <string name="add_key_json">JSON</string>
+    <!--
+    Translators: This button will open a web page with technical descriptions of the file formats,
+    written in English.
+    -->
+    <string name="about_key_formats">About key formats…</string>
     <string name="invalid_json_key_type">Invalid JSON: key type missing</string>
     <string name="invalid_json">Invalid JSON</string>
+    <string name="invalid_key_file">Invalid key file</string>
+
+    <string name="static_imported">Imported: %s</string>
+
+    <!-- Translators: Shown as a label for a group of keys that does not have any label or description. -->
+    <string name="untitled_key_group">Untitled key group</string>
+
+    <plurals name="keytype_mfc">
+        <item quantity="one">%d MIFARE Classic key</item>
+        <item quantity="other">%d MIFARE Classic keys</item>
+    </plurals>
+    <plurals name="keytype_mfc_static">
+        <item quantity="one">%d static MIFARE Classic key</item>
+        <item quantity="other">%d static MIFARE Classic keys</item>
+    </plurals>
 </resources>
