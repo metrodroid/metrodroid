@@ -172,7 +172,7 @@
 \nHvis kortet ditt ikke er støttet av Metrodroid, så er det usannsynlig at det noen gang vil bli det, med mindre nøkkelen for det er dechiffrert.
 \n
 \nTa kontakt med ditt kommunale kollektivtransportetat for prøve å få et visst nivå av åpen datatilgang for de utstedte kortene.  Det er mulig å tilby lesetilgang på en trygg måte med moderne smartkortteknologi. Nonen byråer dokumenterer faktisk også dataformatet!"</string>
-    <string name="add_key_directions">Lagre en binærdump av nøklene dine som en fil med endelsen .farebotkeys, send den som et epostvedlegg til deg selv og åpne filen på denne enheten.</string>
+    <string name="add_key_directions">Lagre en binærdump av nøklene dine som en fil med endelsen .farebotkeys, send den som et e-postvedlegg til deg selv og åpne filen på denne enheten.</string>
     <string name="location_helsinki_finland">Helsingfors, Finland</string>
     <string name="location_sydney_australia">Sydney, Australia</string>
     <string name="felica_terminal_mobile_phone">Mobiltelefon</string>
@@ -639,4 +639,26 @@
     <string name="location_ireland">Irland</string>
     <string name="add_key_json">JSON</string>
     <string name="invalid_json">Ugyldig JSON</string>
-</resources>
+<string name="location_minneapolis">Minneapolis, MN, USA</string>
+    <string name="mifare_desfire">MIFARE DESFire</string>
+
+    <string name="leap_retrieve_keys">Hent nøkler for Leap-kort</string>
+    <string name="leap_retrieve_keys_longdesc">Dette vil dele dine kortdetaljer med Transport for Irland, for å kunne besvare Leap-kortets identitetsbekreftelsesutfordring. TFI vil kunne vite at du brukte Metrodroid på dette kortet. Kortet er ikke lesbart uten denne nøkkelen.</string>
+
+    <string name="locked_leap">Låst Leap</string>
+    <string name="leap_period_start">Periodestart</string>
+    <string name="leap_accumulator_region">Region</string>
+    <string name="leap_accumulator_total">Totalt forbruk</string>
+    <string name="leap_accumulator_agency">%s-totalforbruk</string>
+    <string name="leap_daily_accumulators">Daglig kostnadstak</string>
+    <string name="leap_weekly_accumulators">Ukentlig kostnadstak</string>
+
+    <string name="initialisation_date">Igangsettingsdato</string>
+    <string name="issue_date">Utstedelsesdato</string>
+
+    <string name="leap_issuer_id">Utsteder-ID</string>
+    <string name="leap_locked_warning">Dette kortet ble ikke låst opp. Skru på innhenting av Leap-nøkler i innstillingene</string>
+
+    <string name="add_key_raw">Rå</string>
+    <string name="invalid_json_key_type">Ugyldig JSON: Nøkkeltype mangler</string>
+    </resources>
