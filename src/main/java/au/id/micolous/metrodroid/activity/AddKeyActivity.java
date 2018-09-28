@@ -1,10 +1,14 @@
 /*
  * AddKeyActivity.java
  *
- * Copyright (C) 2012 Eric Butler
+ * Copyright 2012-2014 Eric Butler
+ * Copyright 2016-2018 Michael Farrell
+ * Copyright 2018 Google Inc.
  *
  * Authors:
  * Eric Butler <eric@codebutler.com>
+ * Michael Farrell <micolous+git@gmail.com>
+ * Vladimir Serbinenko
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -58,7 +62,7 @@ import static android.view.ViewGroup.LayoutParams.MATCH_PARENT;
 import static android.view.ViewGroup.LayoutParams.WRAP_CONTENT;
 
 /**
- * @author Eric Butler
+ * Activity for associating a key import with a card.
  */
 public class AddKeyActivity extends MetrodroidActivity {
     private static final String TAG = AddKeyActivity.class.getSimpleName();
