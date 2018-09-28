@@ -121,9 +121,32 @@ public class CharlieCardTransitData extends TransitData {
     @Override
     protected TransitBalance getBalance() {
         Calendar start = parseTimestamp(mStartDate);
+
+        // After 2011, all cards expire 10 years after issue.
+        // Cards were first issued in 2006, and would expire after 5 years, and had no printed
+        // expiry date.
+        // However, currently (2018), all of these have expired anyway.
         Calendar expiry = (Calendar) start.clone();
         expiry.add(Calendar.YEAR, 11);
         expiry.add(Calendar.DAY_OF_YEAR, -1);
+
+        // Find the last trip taken on the card.
+        Calendar lastTrip = null;
+        for (CharlieCardTrip t : mTrips) {
+            if (lastTrip == null || t.getStartTimestamp().getTimeInMillis() > lastTrip.getTimeInMillis()) {
+                lastTrip = t.getStartTimestamp();
+            }
+        }
+
+        if (lastTrip != null) {
+            // Cards not used for 2 years will also expire
+            lastTrip = (Calendar) lastTrip.clone();
+            lastTrip.add(Calendar.YEAR, 2);
+
+            if (lastTrip.getTimeInMillis() < expiry.getTimeInMillis()) {
+                expiry = lastTrip;
+            }
+        }
         return new TransitBalanceStored(TransitCurrency.USD(mBalance), null, start, expiry);
     }
 
