@@ -5,6 +5,8 @@ import android.os.Parcelable;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
+import org.apache.commons.lang3.ArrayUtils;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
@@ -246,7 +248,12 @@ public class LeapTrip extends Trip implements Comparable<LeapTrip> {
         mEnd = end;
     }
 
+    @Nullable
     public static LeapTrip parseTopup(byte []file, int offset) {
+        if (isNull(file, offset, 9)) {
+            return null;
+        }
+
         // 3 bytes serial
         Calendar c = LeapTransitData.parseDate(file, offset+3);
         int agency = Utils.byteArrayToInt(file, offset+7, 2);
@@ -284,7 +291,24 @@ public class LeapTrip extends Trip implements Comparable<LeapTrip> {
             mMode = trip.mMode;
     }
 
+    private static boolean isNull(byte[] data, int offset, int length) {
+        boolean allNull = true;
+        for (byte b : ArrayUtils.subarray(data, offset, offset + length)) {
+            if (b != 0) {
+                allNull = false;
+                break;
+            }
+        }
+
+        return allNull;
+    }
+
+    @Nullable
     public static LeapTrip parsePurseTrip(byte[] file, int offset) {
+        if (isNull(file, offset, 7)) {
+            return null;
+        }
+
         int eventCode = file[offset]&0xff;
         Calendar c = LeapTransitData.parseDate(file, offset+1);
         int amount = LeapTransitData.parseBalance(file, offset+5);
@@ -300,7 +324,12 @@ public class LeapTrip extends Trip implements Comparable<LeapTrip> {
                 agency, null, event, null);
     }
 
+    @Nullable
     public static LeapTrip parseTrip(byte[] file, int offset) {
+        if (isNull(file, offset, 7)) {
+            return null;
+        }
+
         int eventCode2 = file[offset] & 0xff;
         Calendar eventTime = LeapTransitData.parseDate(file, offset+1);
         int agency = Utils.byteArrayToInt(file, offset+5, 2);
