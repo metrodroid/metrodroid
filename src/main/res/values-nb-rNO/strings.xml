@@ -628,4 +628,15 @@
     <string name="app_fci">Filkontrollinformasjon for program</string>
     <string name="trip_counter">Tur-telleverk</string>
     <string name="refill_counter">Påfyllingsskranke</string>
+<string name="mfd_unlocking">Låser opp <xliff:g id="card_name" example="Leap">%s</xliff:g> kort…</string>
+
+    <string name="desfire_challenge">Utfordring</string>
+    <string name="desfire_response">Svar</string>
+    <string name="desfire_confirmation">Bekreftelse</string>
+    <string name="desfire_keyex">Nøkkelutveksling</string>
+    <string name="desfire_key_number">Nøkkel %s</string>
+
+    <string name="location_ireland">Irland</string>
+    <string name="add_key_json">JSON</string>
+    <string name="invalid_json">Ugyldig JSON</string>
 </resources>
