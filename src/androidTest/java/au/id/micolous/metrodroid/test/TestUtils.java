@@ -44,10 +44,14 @@ final class TestUtils {
     private static final Map<String, Locale> LOCALES = new ImmutableMapBuilder<String, Locale>()
             .put("en", Locale.ENGLISH)
             .put("en-AU", new Locale("en", "AU"))
+            .put("en-CA", Locale.CANADA)
             .put("en-GB", Locale.UK)
             .put("en-US", Locale.US)
             .put("ja", Locale.JAPANESE)
             .put("ja-JP", Locale.JAPAN)
+            .put("fr", Locale.FRENCH)
+            .put("fr-CA", Locale.CANADA_FRENCH)
+            .put("fr-FR", Locale.FRANCE)
             .build();
 
     static void assertSpannedEquals(String expected, Spanned actual) {

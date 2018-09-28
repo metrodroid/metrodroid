@@ -57,17 +57,15 @@ public class StationTableReaderTest extends AndroidTestCase {
         assertEquals("新宿", s.getStationName());
         assertEquals("山手", s.getLineName());
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            // Test in another supported language. We should fall back to English here.
-            TestUtils.setLocale(getContext(), "fr-FR");
-            s = SuicaDBUtil.getRailStation(SHINJUKU_REGION_CODE, SHINJUKU_LINE_CODE, SHINJUKU_STATION_CODE);
-            assertNotNull(s);
-            assertEquals("JR East", s.getCompanyName());
-            assertEquals("Shinjuku", s.getStationName());
-            // FIXME: We currently have incorrect romanisation for the Yamanote line (Yamate), so just
-            // check that this is not the Japanese name.
-            assertFalse(s.getLineName().equalsIgnoreCase("山手"));
-        }
+        // Test in another supported language. We should fall back to English here.
+        TestUtils.setLocale(getContext(), "fr-FR");
+        s = SuicaDBUtil.getRailStation(SHINJUKU_REGION_CODE, SHINJUKU_LINE_CODE, SHINJUKU_STATION_CODE);
+        assertNotNull(s);
+        assertEquals("JR East", s.getCompanyName());
+        assertEquals("Shinjuku", s.getStationName());
+        // FIXME: We currently have incorrect romanisation for the Yamanote line (Yamate), so just
+        // check that this is not the Japanese name.
+        assertFalse(s.getLineName().equalsIgnoreCase("山手"));
 
         // Test showing both English and Japanese strings
         TestUtils.setLocale(getContext(), "en-US");
