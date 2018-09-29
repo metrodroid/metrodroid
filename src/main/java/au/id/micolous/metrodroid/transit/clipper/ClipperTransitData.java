@@ -200,28 +200,26 @@ public class ClipperTransitData extends TransitData {
          *  manually.
          */
         byte[] data = file.getData();
-        int pos = data.length - RECORD_LENGTH;
         List<ClipperTrip> result = new ArrayList<>();
-        while (pos >= 0) {
-            byte[] slice = Utils.byteArraySlice(data, pos, RECORD_LENGTH);
-            final ClipperTrip trip = createTrip(slice);
-            if (trip != null) {
-                // Some transaction types are temporary -- remove previous trip with the same timestamp.
-                ClipperTrip existingTrip = Utils.findInList(result,
-                        otherTrip -> trip.getStartTimestamp().equals(otherTrip.getStartTimestamp()));
+        for (int pos = data.length - RECORD_LENGTH; pos >= 0; pos -= RECORD_LENGTH) {
+            if (Utils.byteArrayToInt(data, pos + 0x2, 2) == 0)
+                continue;
 
-                if (existingTrip != null) {
-                    if (existingTrip.getEndTimestamp() != null) {
-                        // Old trip has exit timestamp, and is therefore better.
-                        pos -= RECORD_LENGTH;
-                        continue;
-                    } else {
-                        result.remove(existingTrip);
-                    }
+            final ClipperTrip trip = new ClipperTrip(Utils.byteArraySlice(data, pos, RECORD_LENGTH));
+
+            // Some transaction types are temporary -- remove previous trip with the same timestamp.
+            ClipperTrip existingTrip = Utils.findInList(result,
+                    otherTrip -> trip.getStartTimestamp().equals(otherTrip.getStartTimestamp()));
+
+            if (existingTrip != null) {
+                if (existingTrip.getEndTimestamp() != null) {
+                    // Old trip has exit timestamp, and is therefore better.
+                    continue;
+                } else {
+                    result.remove(existingTrip);
                 }
-                result.add(trip);
             }
-            pos -= RECORD_LENGTH;
+            result.add(trip);
         }
         ClipperTrip[] useLog = new ClipperTrip[result.size()];
         result.toArray(useLog);
@@ -229,27 +227,6 @@ public class ClipperTransitData extends TransitData {
         Arrays.sort(useLog, new Trip.Comparator());
 
         return useLog;
-    }
-
-    private ClipperTrip createTrip(byte[] useData) {
-        long timestamp, exitTimestamp;
-        int fare, agency, from, to, route;
-
-        timestamp = Utils.byteArrayToLong(useData, 0xc, 4);
-        exitTimestamp = Utils.byteArrayToLong(useData, 0x10, 4);
-        fare = Utils.byteArrayToInt(useData, 0x6, 2);
-        agency = Utils.byteArrayToInt(useData, 0x2, 2);
-        from = Utils.byteArrayToInt(useData, 0x14, 2);
-        to = Utils.byteArrayToInt(useData, 0x16, 2);
-        route = Utils.byteArrayToInt(useData, 0x1c, 2);
-
-        if (agency == 0)
-            return null;
-
-        return new ClipperTrip(
-                clipperTimestampToCalendar(timestamp),
-                clipperTimestampToCalendar(exitTimestamp),
-                fare, agency, from, to, route);
     }
 
     private ClipperRefill[] parseRefills(DesfireCard card) {
@@ -304,7 +281,7 @@ public class ClipperTransitData extends TransitData {
         parcel.writeTypedArray(mRefills, flags);
     }
 
-    private static Calendar clipperTimestampToCalendar(long timestamp) {
+    static Calendar clipperTimestampToCalendar(long timestamp) {
         if (timestamp == 0)
             return null;
         Calendar c = new GregorianCalendar(CLIPPER_TZ);

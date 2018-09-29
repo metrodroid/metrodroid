@@ -46,6 +46,8 @@ class ObfuscatedTrip extends Trip implements Parcelable {
     private boolean mHasTime;
     private Mode mMode;
     private TransitCurrency mFare;
+    private String mVehicleID;
+    private Integer mPassengerCount;
 
     public static final Creator<ObfuscatedTrip> CREATOR = new Creator<ObfuscatedTrip>() {
         public ObfuscatedTrip createFromParcel(Parcel parcel) {
@@ -90,6 +92,12 @@ class ObfuscatedTrip extends Trip implements Parcelable {
         if (parcel.readInt() == 1) {
             mEndStation = Station.CREATOR.createFromParcel(parcel);
         }
+	if (parcel.readInt() == 1) {
+            mVehicleID = parcel.readString();
+        }
+	if (parcel.readInt() == 1) {
+            mPassengerCount = parcel.readInt();
+        }
     }
 
     @Override
@@ -114,6 +122,14 @@ class ObfuscatedTrip extends Trip implements Parcelable {
         parcel.writeInt(mEndStation == null ? 0 : 1);
         if (mEndStation != null) {
             mEndStation.writeToParcel(parcel, i);
+        }
+	    parcel.writeInt(mVehicleID == null ? 0 : 1);
+        if (mVehicleID != null) {
+            parcel.writeString(mVehicleID);
+        }
+	    parcel.writeInt(mPassengerCount == null ? 0 : 1);
+        if (mPassengerCount != null) {
+            parcel.writeInt(mPassengerCount);
         }
     }
 
@@ -146,6 +162,9 @@ class ObfuscatedTrip extends Trip implements Parcelable {
                 mFare = fare;
             }
         }
+
+	mPassengerCount = realTrip.getPassengerCount();
+	mVehicleID = realTrip.getVehicleID();
     }
 
     @Override

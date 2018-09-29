@@ -71,6 +71,13 @@
                     android:textSize="16sp" />
 
                 <TextView
+                    android:id="@+id/additional_info"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="left|center_vertical"
+                    android:text="Vehicle #1234" />
+
+                <TextView
                     android:id="@+id/station_text_view"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"

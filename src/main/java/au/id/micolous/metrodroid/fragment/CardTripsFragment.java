@@ -36,6 +36,7 @@ import android.text.Spannable;
 import android.text.SpannableString;
 import android.text.SpannableStringBuilder;
 import android.text.Spanned;
+import android.text.TextUtils;
 import android.text.style.LocaleSpan;
 import android.text.style.StyleSpan;
 import android.util.Log;
@@ -190,9 +191,11 @@ public class CardTripsFragment extends ListFragment {
             TextView routeTextView = convertView.findViewById(R.id.route_text_view);
             TextView fareTextView = convertView.findViewById(R.id.fare_text_view);
             TextView stationTextView = convertView.findViewById(R.id.station_text_view);
+            TextView addInfoView = convertView.findViewById(R.id.additional_info);
 
             @StringRes int modeContentDescriptionRes = 0;
-            switch (trip.getMode()) {
+            Trip.Mode mode = trip.getMode();
+            switch (mode) {
                 case BUS:
                     modeContentDescriptionRes = R.string.mode_bus;
                     break;
@@ -349,6 +352,28 @@ public class CardTripsFragment extends ListFragment {
                 stationTextView.setVisibility(View.VISIBLE);
             } else {
                 stationTextView.setVisibility(View.GONE);
+            }
+
+            List<String> addInfo = new ArrayList<>();
+
+            String vehicleNumber = trip.getVehicleID();
+            if (vehicleNumber != null) {
+                if (mode == Trip.Mode.TICKET_MACHINE) {
+                    addInfo.add(Utils.localizeString(R.string.machine_id, vehicleNumber));
+                } else {
+                    addInfo.add(Utils.localizeString(R.string.vehicle_number, vehicleNumber));
+                }
+            }
+
+            Integer paxCount = trip.getPassengerCount();
+            if (paxCount != null)
+                addInfo.add(Utils.localizePlural(R.plurals.en1545_pax_count, paxCount, paxCount));
+
+            if (addInfo.isEmpty())
+                addInfoView.setVisibility(View.GONE);
+            else {
+                addInfoView.setVisibility(View.VISIBLE);
+                addInfoView.setText(TextUtils.join(", ", addInfo));
             }
 
             return convertView;

@@ -231,6 +231,16 @@ public abstract class Trip implements Parcelable {
         return null;
     }
 
+    /* Vehicle Number. For refills TVM number.  */
+    public String getVehicleID() {
+        return null;
+    }
+
+    /* Number of passengers. Null is unknown or irrelevant  */
+    public Integer getPassengerCount() {
+        return null;
+    }
+
     /**
      * Full name of the agency for the trip. This is used on the map of the trip, where there is
      * space for longer agency names.
