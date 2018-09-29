@@ -294,6 +294,18 @@ public class LicenseActivity extends MetrodroidActivity {
             + "\n"
             + "Stop mapping information is available in Metrodroid's source repository.\n\n\n";
 
+    private static final String VTA_GTFS = "The VTA stop database used in this software "
+            + "contains information derived from VTA GTFS feed, made available under the "
+            + "Developer License Agreement by VTA.\n"
+            + "\n"
+            + "You may obtain a copy of the raw data and it's license at:\n"
+            + "\n"
+            + "   http://www.vta.org/getting-around/gtfs-info/dev-terms-of-use\n"
+            + "\n"
+            + "   http://www.vta.org/getting-around/gtfs-info/data-file\n"
+            + "\n"
+            + "Stop mapping information is available in Metrodroid's source repository.\n\n\n";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -321,6 +333,7 @@ public class LicenseActivity extends MetrodroidActivity {
         lblLicenseText.append(SEQ_GO_GTFS);
         lblLicenseText.append(LAX_TAP_GTFS);
         lblLicenseText.append(BART_GTFS);
+        lblLicenseText.append(VTA_GTFS);
         lblLicenseText.append(MYTRANSPORT_SG);
         lblLicenseText.append(TFI_GTFS);
     }

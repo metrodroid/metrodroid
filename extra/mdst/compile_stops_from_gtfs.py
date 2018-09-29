@@ -43,25 +43,26 @@ def massage_name(name, suffixes):
 def empty(s):
   return s is None or s.strip() == ''
 
-def compile_stops_from_gtfs(input_gtfs_f, output_f, matching_f=None, version=None, strip_suffixes='', agency_id=-1, tts_hint_language=None, operators_f=None, extra_f=None, local_languages=None):
-  if matching_f is not None:
-    matching_f = codecs.getreader('utf-8-sig')(matching_f)
+def compile_stops_from_gtfs(input_gtfs_f, output_f, all_matching_f=None, version=None, strip_suffixes='', agency_id=-1, tts_hint_language=None, operators_f=None, extra_f=None, local_languages=None):
+  if all_matching_f is not None:
+    all_matching_f = [codecs.getreader('utf-8-sig')(x) for x in all_matching_f]
   if operators_f is not None:
     operators_f = codecs.getreader('utf-8-sig')(operators_f)
   if extra_f is not None:
     extra_f = codecs.getreader('utf-8-sig')(extra_f)
   # trim whitespace
   strip_suffixes = [x.strip().lower() for x in strip_suffixes.split(',')]
-  
-  gtfs = Gtfs(input_gtfs_f)
+
+  all_gtfs = [Gtfs(x) for x in input_gtfs_f]
+  first_gtfs = all_gtfs[0]
 
   if version is None:
     try:
-      feed_info = gtfs.open('feed_info.txt')
+      feed_info = first_gtfs.open('feed_info.txt')
     except KeyError:
       # feed_info.txt is not in the file. Find the newest file in the archive
       feed_start_date = None
-      for f in gtfs.infolist():
+      for f in first_gtfs.infolist():
         ts = datetime(*f.date_time)
         if feed_start_date is None or feed_start_date < ts:
           feed_start_date = ts
@@ -101,99 +102,109 @@ def compile_stops_from_gtfs(input_gtfs_f, output_f, matching_f=None, version=Non
     tts_hint_language=tts_hint_language,
   )
 
-  stops = gtfs.open('stops.txt')
   station_count = 0
-  # See if there is a matching file
-  if matching_f is None:
-    # No matching data, dump all stops.
-    stop_map = map(lambda stop: [stop['stop_id'], massage_name(stop['stop_name'], strip_suffixes), stop['stop_lat'].strip(), stop['stop_lon'].strip()],
-      stops)
-    
-    for stop_id, stop_name, lat, lon in stop_map:
-      s = Station()
-      s.id = int(stop_id)
-      s.name.english = stop_name
-      if lat and lon:
-        s.latitude = float(lat)
-        s.longitude = float(lon)
-      
-      db.push_station(s)
-      station_count += 1
-  else:
-    # Matching data is available.  Lets use that.
-    matching = csv.DictReader(matching_f)
-    
-    stop_codes = {}
-    stop_ids = {}
-    short_names = {}
-    for match in matching:
-      if match['stop_code']:
-        if match['stop_code'] not in stop_codes:
-          stop_codes[match['stop_code']] = []
-        stop_codes[match['stop_code']].append(match['reader_id'])
-      elif match['stop_id']:
-        if match['stop_id'] not in stop_ids:
-          stop_ids[match['stop_id']] = []
-        stop_ids[match['stop_id']].append(match['reader_id'])
-      else:
-        raise Exception('neither stop_id or stop_code specified in row')
-      if 'short_name' in match and match['short_name']:
-        short_names[match['reader_id']] = match['short_name']
 
-    total_gtfs_stations = 0
-    dropped_gtfs_stations = 0
+  for num, gtfs in enumerate(all_gtfs):
+    stops = gtfs.open('stops.txt')
+    # See if there is a matching file
+    if all_matching_f is not None and len(all_matching_f) > num:
+      matching_f = all_matching_f[num]
+    else:
+      matching_f = None
+    if matching_f is None:
+      # No matching data, dump all stops.
+      stop_map = map(lambda stop: [stop['stop_id'], massage_name(stop['stop_name'], strip_suffixes), stop['stop_lat'].strip(), stop['stop_lon'].strip()],
+        stops)
 
-    # Now run through the stops
-    for stop in stops:
-      # preprocess stop data
-      name = massage_name(stop['stop_name'], strip_suffixes)
-      y = float(stop['stop_lat'].strip())
-      x = float(stop['stop_lon'].strip())
-
-      used = False
-
-      # Insert rows where a stop_id is specified for the reader_id
-      stop_rows = []
-      for reader_id in stop_ids.get(stop.get('stop_id', 'stop_id_absent'), []):
+      for stop_id, stop_name, lat, lon in stop_map:
         s = Station()
-        s.id = int(reader_id, 0)
-        s.name.english = name
-        if y and x:
-          s.latitude = y
-          s.longitude = x
-        if reader_id in short_names:
-          s.name.english_short = short_names[reader_id]
-        if agency_id >= 0:
-          s.operator_id = agency_id
+        s.id = int(stop_id)
+        s.name.english = stop_name
+        if lat and lon:
+          s.latitude = float(lat)
+          s.longitude = float(lon)
 
         db.push_station(s)
         station_count += 1
-        used = True
+    else:
+      # Matching data is available.  Lets use that.
+      matching = csv.DictReader(matching_f)
 
-      # Insert rows where a stop_code is specified for the reader_id
-      stop_rows = []
-      for reader_id in stop_codes.get(stop.get('stop_code', 'stop_code_absent'), []):
-        s = Station()
-        s.id = int(reader_id, 0)
-        s.name.english = name
-        
-        if y and x:
-          s.latitude = y
-          s.longitude = x
+      stop_codes = {}
+      stop_ids = {}
+      short_names = {}
+      for match in matching:
+        if match['stop_code']:
+          if match['stop_code'] not in stop_codes:
+            stop_codes[match['stop_code']] = []
+          stop_codes[match['stop_code']].append(match['reader_id'])
+        elif match['stop_id']:
+          if match['stop_id'] not in stop_ids:
+            stop_ids[match['stop_id']] = []
+          stop_ids[match['stop_id']].append(match['reader_id'])
+        else:
+          raise Exception('neither stop_id or stop_code specified in row')
+        if 'short_name' in match and match['short_name']:
+          short_names[match['reader_id']] = match['short_name']
 
-        if reader_id in short_names:
-          s.name.english_short = short_names[reader_id]
-        if agency_id >= 0:
-          s.operator_id = agency_id
+      total_gtfs_stations = 0
+      dropped_gtfs_stations = 0
 
-        db.push_station(s)
-        station_count += 1
-        used = True
-      total_gtfs_stations += 1
-      if not used:
-        dropped_gtfs_stations += 1
+      # Now run through the stops
+      for stop in stops:
+        # preprocess stop data
+        name = massage_name(stop['stop_name'], strip_suffixes)
+        y = float(stop['stop_lat'].strip())
+        x = float(stop['stop_lon'].strip())
 
-    matching_f.close()
+        used = False
+
+        # Insert rows where a stop_id is specified for the reader_id
+        stop_rows = []
+        for reader_id in stop_ids.get(stop.get('stop_id', 'stop_id_absent'), []):
+          s = Station()
+          s.id = int(reader_id, 0)
+          s.name.english = name
+          if y and x:
+            s.latitude = y
+            s.longitude = x
+          if reader_id in short_names:
+            s.name.english_short = short_names[reader_id]
+          if agency_id >= 0:
+            s.operator_id = agency_id
+
+          db.push_station(s)
+          station_count += 1
+          used = True
+
+        # Insert rows where a stop_code is specified for the reader_id
+        stop_rows = []
+        for reader_id in stop_codes.get(stop.get('stop_code', 'stop_code_absent'), []):
+          s = Station()
+          s.id = int(reader_id, 0)
+          s.name.english = name
+
+          if y and x:
+            s.latitude = y
+            s.longitude = x
+
+          if reader_id in short_names:
+            s.name.english_short = short_names[reader_id]
+          if agency_id >= 0:
+            s.operator_id = agency_id
+
+          db.push_station(s)
+          station_count += 1
+          used = True
+        total_gtfs_stations += 1
+        if not used:
+          dropped_gtfs_stations += 1
+
+      matching_f.close()
+      print('Finished parsing GTFS ' + str(num) + '.  Here\'s the stats:')
+      print(' - Dropped %d out of %d GTFS stations' % (dropped_gtfs_stations,
+                                                     total_gtfs_stations))
+      print()
 
   if extra_f is not None:
     mdst.read_stops_from_csv(db, extra_f)
@@ -211,8 +222,6 @@ def compile_stops_from_gtfs(input_gtfs_f, output_f, matching_f=None, version=Non
   print(' - stations ......... %8d bytes (%.1f per record)' % (stations_len, stations_len / station_count))
   index_len = (index_end_off - db.index_off)
   print(' - index ............ %8d bytes (%.1f per record)' % (index_len, index_len / station_count))
-  print(' - Dropped %d out of %d GTFS stations' % (dropped_gtfs_stations,
-                                                   total_gtfs_stations))
 
 def main():
   parser = ArgumentParser()
@@ -223,12 +232,13 @@ def main():
   )
 
   parser.add_argument('input_gtfs',
-    nargs=1,
+    nargs='+',
     type=FileType('rb'),
     help='Path to GTFS ZIP file to extract data from.')
   
   parser.add_argument('-m', '--matching',
     required=False,
+    action='append',
     type=FileType('rb'),
     help='If supplied, this is a matching file of reader_id to stop_code or stop_id. Missing stops will be dropped. If a matching file is not supplied, this will produce a list of all stops with stop_code instead.')
 
@@ -267,7 +277,7 @@ def main():
 
   options = parser.parse_args()
 
-  compile_stops_from_gtfs(options.input_gtfs[0], options.output, options.matching, options.override_version, options.strip_suffixes, options.agency_id, options.tts_hint_language, options.operators, options.extra, options.local_languages)
+  compile_stops_from_gtfs(options.input_gtfs, options.output, options.matching, options.override_version, options.strip_suffixes, options.agency_id, options.tts_hint_language, options.operators, options.extra, options.local_languages)
 
 if __name__ == '__main__':
   main()
