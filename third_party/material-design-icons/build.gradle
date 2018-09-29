@@ -52,7 +52,7 @@ task colouriseIcons(type: Copy) {
     into 'build/generated/icons/drawable'
     include '**/drawable-anydpi-v21/*.xml'
     includeEmptyDirs false
-    eachFile { it.path = name }
+    eachFile { it.path = 'material_' + (name.replaceAll('_black_24dp.xml', '_24dp.xml')) }
     filter { line -> line.replaceAll('android:fillColor="#FF000000"', 'android:fillColor="?android:attr/textColorPrimary"')}
 }
 
