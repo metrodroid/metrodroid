@@ -23,6 +23,7 @@ package au.id.micolous.metrodroid.transit;
 import android.os.Build;
 import android.os.Parcelable;
 import android.support.annotation.Nullable;
+import android.support.annotation.StringRes;
 import android.text.Spannable;
 import android.text.SpannableStringBuilder;
 import android.text.style.LocaleSpan;
@@ -326,29 +327,37 @@ public abstract class Trip implements Parcelable {
     }
 
     public enum Mode {
-        BUS(0),
+        BUS(0, R.string.mode_bus),
         /** Used for non-metro (rapid transit) trains */
-        TRAIN(1),
+        TRAIN(1, R.string.mode_train),
         /** Used for trams and light rail */
-        TRAM(2),
+        TRAM(2, R.string.mode_tram),
         /** Used for electric metro and subway systems */
-        METRO(3),
-        FERRY(4),
-        TICKET_MACHINE(5),
-        VENDING_MACHINE(6),
+        METRO(3, R.string.mode_metro),
+        FERRY(4, R.string.mode_ferry),
+        TICKET_MACHINE(5, R.string.mode_ticket_machine),
+        VENDING_MACHINE(6, R.string.mode_vending_machine),
         /** Used for transactions at a store, buying something other than travel. */
-        POS(7),
-        OTHER(8),
-        BANNED(9);
+        POS(7, R.string.mode_pos),
+        OTHER(8, R.string.mode_unknown),
+        BANNED(9, R.string.mode_banned);
 
         final int mImageResourceIdx;
+        @StringRes
+        final int mDescription;
 
-        Mode(int val) {
-            mImageResourceIdx = val;
+        Mode(int imageResourceIdx, @StringRes int description) {
+            mImageResourceIdx = imageResourceIdx;
+            mDescription = description;
         }
 
         public int getImageResourceIdx() {
             return mImageResourceIdx;
+        }
+
+        @StringRes
+        public int getDescription() {
+            return mDescription;
         }
     }
 

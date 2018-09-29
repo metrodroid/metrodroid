@@ -191,48 +191,7 @@ public class CardTripsFragment extends ListFragment {
             TextView fareTextView = convertView.findViewById(R.id.fare_text_view);
             TextView stationTextView = convertView.findViewById(R.id.station_text_view);
 
-            @StringRes int modeContentDescriptionRes = 0;
-            switch (trip.getMode()) {
-                case BUS:
-                    modeContentDescriptionRes = R.string.mode_bus;
-                    break;
-
-                case TRAIN:
-                    modeContentDescriptionRes = R.string.mode_train;
-                    break;
-
-                case TRAM:
-                    modeContentDescriptionRes = R.string.mode_tram;
-                    break;
-
-                case METRO:
-                    modeContentDescriptionRes = R.string.mode_metro;
-                    break;
-
-                case FERRY:
-                    modeContentDescriptionRes = R.string.mode_ferry;
-                    break;
-
-                case TICKET_MACHINE:
-                    modeContentDescriptionRes = R.string.mode_ticket_machine;
-                    break;
-
-                case VENDING_MACHINE:
-                    modeContentDescriptionRes = R.string.mode_vending_machine;
-                    break;
-
-                case POS:
-                    modeContentDescriptionRes = R.string.mode_pos;
-                    break;
-
-                case BANNED:
-                    modeContentDescriptionRes = R.string.mode_banned;
-                    break;
-
-                default:
-                    modeContentDescriptionRes = R.string.mode_unknown;
-                    break;
-            }
+            @StringRes int modeContentDescriptionRes = trip.getMode().getDescription();
 
             TypedArray a = getContext().obtainStyledAttributes(new int[]{R.attr.TransportIcons});
             int iconArrayRes = -1;
