@@ -358,6 +358,12 @@
         <item quantity="other">%d services</item>
     </plurals>
 
+    <!-- Translators: used as an accessibility label for a passengers icon -->
+    <plurals name="passengers">
+        <item quantity="one">passenger</item>
+        <item quantity="other">passengers</item>
+    </plurals>
+
     <!-- DESFire -->
     <string name="desfire_standard_file">Standard file</string>
     <string name="desfire_backup_file">Backup file</string>
@@ -1046,5 +1052,6 @@
     <string name="add_key_json">JSON</string>
     <string name="invalid_json_key_type">Invalid JSON: key type missing</string>
     <string name="invalid_json">Invalid JSON</string>
-    <string name="vehicle_number">Vehicle #%s</string>
+
+    <string name="farebox_number">Farebox #%s</string>
 </resources>

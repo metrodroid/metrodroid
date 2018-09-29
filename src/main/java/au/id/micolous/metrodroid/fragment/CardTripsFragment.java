@@ -31,6 +31,8 @@ import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.StringRes;
+import android.support.graphics.drawable.VectorDrawableCompat;
+import android.support.v4.widget.ImageViewCompat;
 import android.support.v7.content.res.AppCompatResources;
 import android.text.Spannable;
 import android.text.SpannableString;
@@ -44,6 +46,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -190,6 +193,10 @@ public class CardTripsFragment extends ListFragment {
             TextView routeTextView = convertView.findViewById(R.id.route_text_view);
             TextView fareTextView = convertView.findViewById(R.id.fare_text_view);
             TextView stationTextView = convertView.findViewById(R.id.station_text_view);
+            LinearLayout paxLayout = convertView.findViewById(R.id.pax_layout);
+            ImageView paxIcon = convertView.findViewById(R.id.pax_icon);
+            TextView paxTextView = convertView.findViewById(R.id.pax_text_view);
+            TextView machineIdTextView = convertView.findViewById(R.id.machine_id_text_view);
 
             @StringRes int modeContentDescriptionRes = trip.getMode().getDescription();
 
@@ -308,6 +315,30 @@ public class CardTripsFragment extends ListFragment {
                 stationTextView.setVisibility(View.VISIBLE);
             } else {
                 stationTextView.setVisibility(View.GONE);
+            }
+
+            // Passenger count
+            int pax = trip.getPassengerCount();
+
+            if (pax >= 1) {
+                paxTextView.setText(String.format(Locale.getDefault(), "%d", pax));
+                paxIcon.setContentDescription(Utils.localizePlural(R.plurals.passengers, pax));
+
+                paxIcon.setImageDrawable(AppCompatResources.getDrawable(getContext(),
+                        pax == 1 ? R.drawable.material_ic_person_24dp : R.drawable.material_ic_person_24dp));
+
+                paxLayout.setVisibility(View.VISIBLE);
+            } else {
+                // No information.
+                paxLayout.setVisibility(View.GONE);
+            }
+
+            // Machine ID
+            if (trip.getVehicleID() != null) {
+                machineIdTextView.setText(Utils.localizeString(R.string.farebox_number, trip.getVehicleID()));
+                machineIdTextView.setVisibility(View.VISIBLE);
+            } else {
+                machineIdTextView.setVisibility(View.GONE);
             }
 
             return convertView;

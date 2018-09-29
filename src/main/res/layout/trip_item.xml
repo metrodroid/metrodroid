@@ -2,10 +2,8 @@
 <!--
   trip_item.xml
 
-  Copyright (C) 2011 Eric Butler
-
-  Authors:
-  Eric Butler <eric@codebutler.com>
+  Copyright 2011-2012 Eric Butler <eric@codebutler.com>
+  Copyright 2018 Michael Farrell <micolous+git@gmail.com>
 
   This program is free software: you can redistribute it and/or modify
   it under the terms of the GNU General Public License as published by
@@ -21,10 +19,11 @@
   along with this program.  If not, see <http://www.gnu.org/licenses/>.
   -->
 
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    xmlns:tools="http://schemas.android.com/tools"
     android:gravity="center"
     android:orientation="vertical">
 
@@ -50,6 +49,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
+            tools:src="@drawable/bus"
             android:padding="5dip" />
 
         <LinearLayout
@@ -67,15 +67,22 @@
                     android:id="@+id/route_text_view"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Agency / Route Name"
+                    tools:text="Agency / Route Name"
                     android:textSize="16sp" />
 
                 <TextView
                     android:id="@+id/station_text_view"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:gravity="left|center_vertical"
-                    android:text="Start Station → End Station" />
+                    android:gravity="start|center_vertical"
+                    tools:text="Start Station → End Station" />
+
+                <TextView
+                    android:id="@+id/machine_id_text_view"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="start|center_vertical"
+                    tools:text="Machine #1234" />
             </LinearLayout>
         </LinearLayout>
 
@@ -86,20 +93,45 @@
             android:orientation="vertical">
             <TextView
                 android:id="@+id/fare_text_view"
-                android:text="Fare"
+                tools:text="$1.23"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="right|center_vertical"
-                android:gravity="right|center_vertical"
+                android:layout_gravity="end|center_vertical"
+                android:gravity="end|center_vertical"
                 android:textSize="16sp"
                 android:singleLine="true" />
             <TextView
                 android:id="@+id/time_text_view"
-                android:text="Time"
+                tools:text="Time"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="right|center_vertical"
-                android:gravity="center_vertical|right" />
+                android:layout_gravity="end|center_vertical"
+                android:gravity="center_vertical|end" />
+            <LinearLayout
+                android:id="@+id/pax_layout"
+                android:orientation="horizontal"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_gravity="end|center_vertical">
+                <TextView
+                    android:id="@+id/pax_text_view"
+                    tools:text="3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="end|center_vertical"
+                    android:gravity="center_vertical|end" />
+
+                <android.support.v7.widget.AppCompatImageView
+                    android:id="@+id/pax_icon"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:layout_gravity="center"
+                    android:paddingStart="5dip"
+                    android:paddingEnd="0dp"
+                    tools:src="@drawable/material_ic_group_24dp"
+                    android:paddingLeft="5dip"
+                    android:paddingRight="0dp" />
+            </LinearLayout>
         </LinearLayout>
     </LinearLayout>
 
