@@ -1,15 +1,9 @@
 package au.id.micolous.metrodroid.ui;
 
-import android.text.Spannable;
-import android.text.SpannableString;
 import android.text.Spanned;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.RelativeLayout;
-import android.widget.TextView;
-
-import com.unnamed.b.atv.model.TreeNode;
 
 import java.util.Collections;
 import java.util.List;
