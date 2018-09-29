@@ -1,35 +1,35 @@
-import shapefile
+#!/usr/bin/env python3
+# -*- mode: python; indent-tabs-mode: nil; tab-width: 4 -*-
 import csv
 import codecs
-from osgeo import osr,ogr
+# gdal-python3
+from osgeo import osr, ogr
 from mdst import MdstWriter
 import stations_pb2
 import zipfile
-import io
+from sys import exit
 
 OUTPUT = "ezlink.mdst"
+esri_driver = ogr.GetDriverByName('ESRI Shapefile')
 
 tfz = zipfile.ZipFile("names.zip")
 tfb = tfz.open("Train Station Codes and Chinese Names.csv", "r")
 tf = codecs.getreader('utf-16')(tfb)
 
-stationszip = zipfile.ZipFile("stations.zip")
 sfName = "TrainStation_Oct2017/MRTLRTStnPtt"
-shpcontents = {}
-shpfiles = {}
-for ext in ["prj", "shp", "dbf"]:
-    with stationszip.open(sfName + "." + ext, "r") as f:
-        shpcontents[ext] = f.read()
-        shpfiles[ext] = io.BytesIO(shpcontents[ext])
-sf = shapefile.Reader(**shpfiles)
+shp = esri_driver.Open('/vsizip/stations.zip/' + sfName + '.shp', 0) # read only
+if shp is None:
+    print('Cannot open shapefile')
+    exit(1)
 
-sourcesr=osr.SpatialReference(wkt=codecs.decode(shpcontents["prj"], "utf-8"))
+layer = shp.GetLayer(0)
 
+# Setup a transform to EPSG 4326
 targetsr = osr.SpatialReference()
 targetsr.ImportFromEPSG(4326)
-    
-transform = osr.CoordinateTransformation(sourcesr, targetsr)
+transform = osr.CoordinateTransformation(layer.GetSpatialRef(), targetsr)
 
+# Read in the station names
 tf_reader = csv.DictReader(tf, delimiter="\t")
 
 names = {}
@@ -38,14 +38,15 @@ for tf_record in tf_reader:
 
 coordinates = {}
 
-for shapeRec in sf.shapeRecords():
-    name = shapeRec.record[1]
-    for id in  map(lambda x: x.strip(), shapeRec.record[2].split("/")):
-        geom = ogr.Geometry(ogr.wkbPoint)
-        geom.AddPoint(shapeRec.shape.points[0][0],
-                      shapeRec.shape.points[0][1])
-        geom.Transform(transform)
-        coordinates[id] = (geom.GetX(), geom.GetY())
+for shapeRec in layer:
+    geom = shapeRec.GetGeometryRef()
+    geom.Transform(transform)
+    for stn_id in map(lambda x: x.strip(), shapeRec.GetField('STN_NO').split('/')):
+         coordinates[stn_id] = (geom.GetX(), geom.GetY())
+    shapeRec.Destroy()
+
+
+shp.Destroy()
 
 mapping_f = codecs.open("mapping.csv", "r", "utf-8")
 mapping = csv.DictReader(mapping_f)
@@ -93,3 +94,4 @@ print('Building index...')
 db.finalise()
 
 print('Finished writing database.')
+
