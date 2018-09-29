@@ -100,23 +100,33 @@ public class HSLTrip extends Trip {
 
     @Override
     public String getAgencyName(boolean isShort) {
-        String pax = Utils.localizeString(R.string.hsl_person_format, Integer.toString(mPax));
         if (mArvo == 1) {
             String mins = Utils.localizeString(R.string.hsl_mins_format,
                     Integer.toString((int)((this.mExpireTimestamp.getTimeInMillis() - this.mTimestamp.getTimeInMillis()) / 60000L)));
             String type = Utils.localizeString(R.string.hsl_balance_ticket);
-            return String.format("%s, %s, %s", type, pax, mins);
+            return String.format("%s, %s", type, mins);
         } else {
-            String type = Utils.localizeString(R.string.hsl_pass_ticket);
-            return String.format("%s, %s", type, pax);
+            return Utils.localizeString(R.string.hsl_pass_ticket);
         }
+    }
+
+    @Override
+    public int getPassengerCount() {
+        return mPax;
     }
 
     @Override
     public String getRouteName() {
         if (mLine != null) {
-            return Utils.localizeString(R.string.hsl_line_vehicle, mLine.substring(1), mVehicleNumber);
+            return mLine.substring(1);
         }
+        return null;
+    }
+
+    @Override
+    public String getVehicleID() {
+        if (mVehicleNumber != 0 && mVehicleNumber != -1)
+            return Integer.toString(mVehicleNumber);
         return null;
     }
 

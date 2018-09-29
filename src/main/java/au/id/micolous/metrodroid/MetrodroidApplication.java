@@ -26,6 +26,7 @@ import android.nfc.NfcAdapter;
 import android.os.Build;
 import android.os.StrictMode;
 import android.preference.PreferenceManager;
+import android.support.v7.app.AppCompatDelegate;
 import android.util.Log;
 
 import net.kazzz.felica.FeliCaLib;
@@ -211,6 +212,7 @@ public class MetrodroidApplication extends Application {
             Log.w(TAG, "Detecting nfc support failed", e);
         }
 
+        AppCompatDelegate.setCompatVectorFromResourcesEnabled(true);
         PreferenceManager.setDefaultValues(this, R.xml.prefs, false);
 
         StrictMode.setThreadPolicy(new StrictMode.ThreadPolicy.Builder()

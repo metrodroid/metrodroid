@@ -358,6 +358,12 @@
         <item quantity="other">%d services</item>
     </plurals>
 
+    <!-- Translators: used as an accessibility label for a passengers icon -->
+    <plurals name="passengers">
+        <item quantity="one">passenger</item>
+        <item quantity="other">passengers</item>
+    </plurals>
+
     <!-- DESFire -->
     <string name="desfire_standard_file">Standard file</string>
     <string name="desfire_backup_file">Backup file</string>
@@ -1064,4 +1070,6 @@
         <item quantity="one">%d static MIFARE Classic key</item>
         <item quantity="other">%d static MIFARE Classic keys</item>
     </plurals>
+
+    <string name="farebox_number">Farebox #%s</string>
 </resources>

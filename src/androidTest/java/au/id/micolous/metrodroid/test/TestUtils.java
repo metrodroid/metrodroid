@@ -8,6 +8,7 @@ import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.os.Build;
 import android.preference.PreferenceManager;
+import android.support.annotation.NonNull;
 import android.test.InstrumentationTestCase;
 import android.text.Spanned;
 
@@ -62,11 +63,16 @@ final class TestUtils {
         assertThat(actual.toString(), matcher);
     }
 
+    @NonNull
     private static Locale compatLocaleForLanguageTag(String languageTag) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             return Locale.forLanguageTag(languageTag);
         } else {
-            return LOCALES.get(languageTag);
+            Locale l = LOCALES.get(languageTag);
+            if (l == null) {
+                throw new IllegalArgumentException("For API < 21, add entry to TestUtils.LOCALES for: " + languageTag);
+            }
+            return l;
         }
     }
 
