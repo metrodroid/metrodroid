@@ -2,7 +2,11 @@
 .PHONY:: all clean %.clean %.build hermetic web
 MDST = ../extra/mdst/
 
-# All targets that do not need an internet connection to return the same result.
+# All targets that do not need an internet connection, and should always return
+# the same results.
+#
+# If GTFS or other data is fetched only from git, then it can go here (eg:
+# lax_tap).
 HERMETIC_TARGETS := \
 	compass \
 	kmt \
@@ -11,7 +15,8 @@ HERMETIC_TARGETS := \
 	szt \
 	troika
 
-# All targets that need to fetch some data from the internet (non-hermetic)
+# All targets that need to fetch some data from the internet, so may not always
+# return the same result.
 WEB_TARGETS := \
 	clipper \
 	ezlink \
