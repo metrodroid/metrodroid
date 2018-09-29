@@ -1,0 +1,62 @@
+allprojects {
+    repositories {
+        google()
+        jcenter()
+    }
+}
+
+buildscript {
+    repositories {
+        google()
+        jcenter()
+    }
+    dependencies {
+        classpath 'com.android.tools.build:gradle:3.1.4'
+    }
+}
+
+apply plugin: 'com.android.library'
+
+dependencies {
+}
+
+android {
+    compileSdkVersion 27
+    buildToolsVersion '27.0.3'
+
+    defaultConfig {
+        // We can go back to API 10, but Metrodroid only runs on API 16+
+        minSdkVersion 16
+        targetSdkVersion 27
+        vectorDrawables {
+            useSupportLibrary = true
+            generatedDensities = []
+        }
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+    sourceSets {
+        main {
+            res.srcDirs = ['build/generated/icons']
+        }
+    }
+
+}
+
+task colouriseIcons(type: Copy) {
+    from 'icons/'
+    into 'build/generated/icons/drawable'
+    include '**/drawable-anydpi-v21/*.xml'
+    includeEmptyDirs false
+    eachFile { it.path = name }
+    filter { line -> line.replaceAll('android:fillColor="#FF000000"', 'android:fillColor="?android:attr/textColorPrimary"')}
+}
+
+project.afterEvaluate {
+    generateDebugResources.dependsOn(colouriseIcons)
+    generateReleaseResources.dependsOn(colouriseIcons)
+}

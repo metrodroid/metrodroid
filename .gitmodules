@@ -7,3 +7,6 @@
 [submodule "third_party/vpereira_bilhete"]
 	path = third_party/vpereira_bilhete
 	url = https://github.com/vpereira/bilhete.git
+[submodule "third_party/material-design-icons/icons"]
+	path = third_party/material-design-icons/icons
+	url = https://github.com/google/material-design-icons.git
