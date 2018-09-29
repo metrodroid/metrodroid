@@ -45,6 +45,11 @@ android {
         }
     }
 
+    lintOptions {
+        // We actually support these attributes in older API versions, with the support library.
+        abortOnError false
+        disable 'NewApi'
+    }
 }
 
 task colouriseIcons(type: Copy) {
