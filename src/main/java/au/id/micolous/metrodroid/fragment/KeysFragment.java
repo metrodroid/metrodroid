@@ -211,7 +211,7 @@ public class KeysFragment extends ListFragment implements AdapterView.OnItemLong
                         switch (f) {
                             case JSON_MFC_STATIC:
                                 // Static keys can't be prompted
-                                @StringRes int err = importKeysFromJSON(getActivity(), uri, f);
+                                @StringRes int err = importKeysFromStaticJSON(getActivity(), uri);
                                 if (err != 0) {
                                     Toast.makeText(getActivity(), err, Toast.LENGTH_SHORT).show();
                                 }
@@ -237,32 +237,21 @@ public class KeysFragment extends ListFragment implements AdapterView.OnItemLong
     }
 
     @StringRes
-    private static int importKeysFromJSON(Activity activity, Uri uri, KeyFormat f) throws IOException {
+    private static int importKeysFromStaticJSON(Activity activity, Uri uri) throws IOException {
         InputStream stream = activity.getContentResolver().openInputStream(uri);
         byte[] keyData = IOUtils.toByteArray(stream);
-        return importKeysFromJSON(activity, keyData, f);
-    }
 
-    @StringRes
-    public static int importKeysFromJSON(Activity activity, byte[] keyData, KeyFormat f) {
         try {
             JSONObject json = new JSONObject(new String(keyData));
-            Log.d(TAG, "keyType = " + f);
             Log.d(TAG, "inserting key");
-            switch (f) {
-                case JSON_MFC_STATIC: {
-                    // Test that we can deserialise this
-                    ClassicStaticKeys k = ClassicStaticKeys.fromJSON(json);
-                    if (k.keys().size() == 0) {
-                        throw new JSONException("key file is empty");
-                    }
 
-                    new InsertKeyTask(activity, k, true).execute();
-                    break;
-                }
-                default:
-                    return R.string.invalid_json_key_type;
+            // Test that we can deserialise this
+            ClassicStaticKeys k = ClassicStaticKeys.fromJSON(json);
+            if (k.keys().size() == 0) {
+                return R.string.key_file_empty;
             }
+
+            new InsertKeyTask(activity, k, true).execute();
             return 0;
         } catch (JSONException ex) {
             Log.d(TAG, "jsonException", ex);

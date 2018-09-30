@@ -1071,6 +1071,8 @@
     <string name="invalid_json_key_type">Invalid JSON: key type missing</string>
     <string name="invalid_json">Invalid JSON</string>
     <string name="invalid_key_file">Invalid key file</string>
+    <!-- Translators: "key file" is a file containing encryption keys. -->
+    <string name="key_file_empty">Key file is empty!</string>
 
     <string name="static_imported">Imported: %s</string>
 
