@@ -27,12 +27,10 @@ import android.app.LoaderManager;
 import android.content.ContentUris;
 import android.content.Context;
 import android.content.CursorLoader;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.Loader;
 import android.database.Cursor;
 import android.net.Uri;
-import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
@@ -69,7 +67,6 @@ import au.id.micolous.metrodroid.key.InsertKeyTask;
 import au.id.micolous.metrodroid.provider.CardKeyProvider;
 import au.id.micolous.metrodroid.provider.KeysTableColumns;
 import au.id.micolous.metrodroid.util.BetterAsyncTask;
-import au.id.micolous.metrodroid.util.ExportHelper;
 import au.id.micolous.metrodroid.util.KeyFormat;
 import au.id.micolous.metrodroid.util.Utils;
 
@@ -106,9 +103,7 @@ public class KeysFragment extends ListFragment implements AdapterView.OnItemLong
                     new AlertDialog.Builder(getActivity())
                             .setTitle(R.string.cant_delete_with_obfuscation)
                             .setMessage(R.string.cant_delete_with_obfuscation_message)
-                            .setPositiveButton(android.R.string.ok, (dialog, which) -> {
-                                dialog.dismiss();
-                            })
+                            .setPositiveButton(android.R.string.ok, (dialog, which) -> dialog.dismiss())
                             .show();
                     return true;
                 }
@@ -149,9 +144,7 @@ public class KeysFragment extends ListFragment implements AdapterView.OnItemLong
                             }.execute();
                             dialog.dismiss();
                         })
-                        .setNegativeButton(android.R.string.cancel, (dialog, which) -> {
-                            dialog.cancel();
-                        })
+                        .setNegativeButton(android.R.string.cancel, (dialog, which) -> dialog.cancel())
                         .show();
                 return true;
             } else if (item.getItemId() == R.id.export_key) {

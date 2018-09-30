@@ -34,8 +34,6 @@ import au.id.micolous.metrodroid.util.Utils;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.util.List;
-
 import au.id.micolous.metrodroid.MetrodroidApplication;
 
 public abstract class CardKeys {

@@ -33,7 +33,6 @@ import au.id.micolous.metrodroid.card.desfire.files.DesfireFile;
 import au.id.micolous.metrodroid.card.desfire.files.InvalidDesfireFile;
 import au.id.micolous.metrodroid.card.desfire.files.UnauthorizedDesfireFile;
 import au.id.micolous.metrodroid.card.desfire.settings.DesfireFileSettings;
-import au.id.micolous.metrodroid.card.desfire.settings.RecordDesfireFileSettings;
 import au.id.micolous.metrodroid.card.desfire.settings.StandardDesfireFileSettings;
 import au.id.micolous.metrodroid.card.desfire.settings.ValueDesfireFileSettings;
 import au.id.micolous.metrodroid.transit.CardInfo;

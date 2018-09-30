@@ -30,7 +30,6 @@ import android.support.annotation.Nullable;
 
 import java.util.Calendar;
 
-import au.id.micolous.farebot.R;
 import au.id.micolous.metrodroid.transit.Station;
 import au.id.micolous.metrodroid.transit.TransitCurrency;
 import au.id.micolous.metrodroid.transit.Trip;

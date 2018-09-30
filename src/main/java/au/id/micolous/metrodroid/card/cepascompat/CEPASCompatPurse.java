@@ -24,14 +24,10 @@
 
 package au.id.micolous.metrodroid.card.cepascompat;
 
-import au.id.micolous.metrodroid.util.Utils;
 import au.id.micolous.metrodroid.xml.HexString;
 
 import org.simpleframework.xml.Attribute;
-import org.simpleframework.xml.Element;
 import org.simpleframework.xml.Root;
-
-import java.util.Calendar;
 
 // This file is only for reading old dumps
 @Root(name = "purse", strict = false)

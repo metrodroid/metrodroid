@@ -21,8 +21,6 @@ package au.id.micolous.metrodroid.transit.seq_go;
 
 import android.util.SparseArray;
 
-import au.id.micolous.metrodroid.transit.Trip;
-
 
 /**
  * Constants used in Go card

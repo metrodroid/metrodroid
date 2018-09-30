@@ -27,8 +27,6 @@ import android.util.Log;
 import java.lang.Comparable;
 import java.util.Calendar;
 
-import au.id.micolous.farebot.R;
-import au.id.micolous.metrodroid.transit.Station;
 import au.id.micolous.metrodroid.transit.TransitCurrency;
 import au.id.micolous.metrodroid.transit.Trip;
 import au.id.micolous.metrodroid.util.Utils;

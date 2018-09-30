@@ -20,8 +20,6 @@ package au.id.micolous.metrodroid.transit.lax_tap;
 
 import android.util.SparseArray;
 
-import au.id.micolous.metrodroid.transit.Trip;
-
 /**
  * Static data structures for LAX TAP
  */

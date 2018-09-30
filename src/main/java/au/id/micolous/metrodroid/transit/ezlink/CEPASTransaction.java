@@ -23,9 +23,6 @@ package au.id.micolous.metrodroid.transit.ezlink;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-import org.simpleframework.xml.Attribute;
-import org.simpleframework.xml.Root;
-
 import java.util.Calendar;
 
 import au.id.micolous.metrodroid.util.Utils;

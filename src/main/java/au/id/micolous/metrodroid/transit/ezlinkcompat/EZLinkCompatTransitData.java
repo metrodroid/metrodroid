@@ -34,7 +34,6 @@ import au.id.micolous.metrodroid.transit.TransitData;
 import au.id.micolous.metrodroid.transit.TransitIdentity;
 import au.id.micolous.metrodroid.transit.Trip;
 import au.id.micolous.metrodroid.transit.ezlink.EZLinkTransitData;
-import au.id.micolous.metrodroid.transit.ezlink.EZLinkTrip;
 import au.id.micolous.metrodroid.util.Utils;
 
 // This is only to read old dumps

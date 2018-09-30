@@ -1,6 +1,5 @@
 package au.id.micolous.metrodroid.test;
 
-import android.app.Instrumentation;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.res.AssetManager;

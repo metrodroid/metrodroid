@@ -29,7 +29,6 @@ import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import au.id.micolous.farebot.R;
 import au.id.micolous.metrodroid.util.Utils;
 
 public class ListItem {

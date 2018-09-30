@@ -29,8 +29,6 @@ import org.simpleframework.xml.Root;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 
-import au.id.micolous.metrodroid.card.cepas.CEPASApplication;
-import au.id.micolous.metrodroid.transit.ezlink.CEPASTransaction;
 import au.id.micolous.metrodroid.transit.ezlink.EZLinkTransitData;
 import au.id.micolous.metrodroid.util.Utils;
 

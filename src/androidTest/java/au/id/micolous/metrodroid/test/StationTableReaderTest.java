@@ -1,6 +1,5 @@
 package au.id.micolous.metrodroid.test;
 
-import android.os.Build;
 import android.test.AndroidTestCase;
 
 import au.id.micolous.metrodroid.transit.Station;
