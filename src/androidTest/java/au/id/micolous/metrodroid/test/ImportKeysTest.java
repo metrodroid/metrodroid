@@ -29,11 +29,11 @@ import org.json.JSONObject;
 import java.io.IOException;
 import java.io.InputStream;
 
-import au.id.micolous.metrodroid.fragment.KeysFragment;
 import au.id.micolous.metrodroid.key.CardKeys;
 import au.id.micolous.metrodroid.key.ClassicCardKeys;
 import au.id.micolous.metrodroid.key.ClassicSectorKey;
 import au.id.micolous.metrodroid.key.ClassicStaticKeys;
+import au.id.micolous.metrodroid.util.KeyFormat;
 import au.id.micolous.metrodroid.util.Utils;
 
 public class ImportKeysTest extends InstrumentationTestCase {
@@ -55,14 +55,14 @@ public class ImportKeysTest extends InstrumentationTestCase {
     private JSONObject loadTestJSON(String path, boolean doDetect) throws IOException, JSONException {
         byte[] d = loadTestFile(path);
         if (doDetect) {
-            assertEquals(KeysFragment.KeyFormat.JSON, KeysFragment.detectKeyFormat(d));
+            assertEquals(KeyFormat.JSON, Utils.detectKeyFormat(d));
         }
         return new JSONObject(new String(d));
     }
 
     private ClassicCardKeys loadClassicCardRawKeys(String path) throws IOException {
         byte[] d = loadTestFile(path);
-        assertEquals(KeysFragment.KeyFormat.RAW_MFC, KeysFragment.detectKeyFormat(d));
+        assertEquals(KeyFormat.RAW_MFC, Utils.detectKeyFormat(d));
         return ClassicCardKeys.fromDump(ClassicSectorKey.TYPE_KEYA, d);
     }
 

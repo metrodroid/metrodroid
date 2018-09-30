@@ -33,7 +33,6 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.support.annotation.StringRes;
-import android.support.annotation.VisibleForTesting;
 import android.util.Log;
 import android.view.ActionMode;
 import android.view.Menu;
@@ -63,6 +62,7 @@ import au.id.micolous.metrodroid.key.InsertKeyTask;
 import au.id.micolous.metrodroid.provider.CardKeyProvider;
 import au.id.micolous.metrodroid.provider.KeysTableColumns;
 import au.id.micolous.metrodroid.util.BetterAsyncTask;
+import au.id.micolous.metrodroid.util.KeyFormat;
 import au.id.micolous.metrodroid.util.Utils;
 
 public class KeysFragment extends ListFragment implements AdapterView.OnItemLongClickListener {
@@ -209,7 +209,7 @@ public class KeysFragment extends ListFragment implements AdapterView.OnItemLong
                             f = KeyFormat.JSON;
                         } else {
                             // Old versions of Android also land here, so we need proper detection.
-                            f = detectKeyFormat(getActivity(), uri);
+                            f = Utils.detectKeyFormat(getActivity(), uri);
                             Log.d(TAG, "Detected file format: " + f.name());
                         }
 
@@ -236,79 +236,6 @@ public class KeysFragment extends ListFragment implements AdapterView.OnItemLong
         } catch (Exception ex) {
             Utils.showError(getActivity(), ex);
         }
-    }
-
-    public enum KeyFormat {
-        UNKNOWN,
-        RAW_MFC,
-        JSON
-    }
-
-    private static final int MIFARE_SECTOR_COUNT_MAX = 40;
-    private static final int MIFARE_KEY_LENGTH = 6;
-
-    private static boolean isRawMifareClassicKeyFileLength(int length) {
-        return length > 0 &&
-                length % MIFARE_KEY_LENGTH == 0 &&
-                length <= MIFARE_SECTOR_COUNT_MAX * MIFARE_KEY_LENGTH * 2;
-    }
-
-    private static KeyFormat detectKeyFormat(Context ctx, Uri uri) {
-        byte[] data;
-        try {
-            InputStream stream = ctx.getContentResolver().openInputStream(uri);
-            data = IOUtils.toByteArray(stream);
-        } catch (IOException e) {
-            Log.w(TAG, "error detecting key format", e);
-            return KeyFormat.UNKNOWN;
-        }
-
-        return detectKeyFormat(data);
-    }
-
-    @VisibleForTesting
-    public static KeyFormat detectKeyFormat(byte[] data) {
-
-        if (data[0] != '{') {
-            // This isn't a JSON file.
-            Log.d(TAG, "couldn't find starting {");
-            return isRawMifareClassicKeyFileLength(data.length) ? KeyFormat.RAW_MFC : KeyFormat.UNKNOWN;
-        }
-
-        // Scan for the } at the end of the file.
-        for (int i=data.length-1; i>0; i--) {
-            String s;
-            try {
-                s = new String(new byte[]{data[i]});
-            } catch (Exception ex) {
-                Log.d(TAG, "unsupported encoding at byte " + i, ex);
-                // Unlikely to be JSON
-                return isRawMifareClassicKeyFileLength(data.length) ? KeyFormat.RAW_MFC : KeyFormat.UNKNOWN;
-            }
-
-            if ("\n\r\t ".contains(s)) {
-                continue;
-            }
-
-            if (s.equals("}")) {
-                break;
-            } else {
-                // This isn't a JSON file.
-                Log.d(TAG, "couldn't find ending }");
-                return isRawMifareClassicKeyFileLength(data.length) ? KeyFormat.RAW_MFC : KeyFormat.UNKNOWN;
-            }
-        }
-
-        // Now see if it actually parses.
-        try {
-            new JSONObject(new String(data));
-            return KeyFormat.JSON;
-        } catch (JSONException e) {
-            Log.d(TAG, "couldn't parse JSON object in detectKeyFormat", e);
-        }
-
-        // Couldn't parse as JSON -- fallback
-        return isRawMifareClassicKeyFileLength(data.length) ? KeyFormat.RAW_MFC : KeyFormat.UNKNOWN;
     }
 
     @StringRes

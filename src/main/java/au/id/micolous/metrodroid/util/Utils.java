@@ -2,7 +2,7 @@
  * Utils.java
  *
  * Copyright 2011 Eric Butler <eric@codebutler.com>
- * Copyright 2015-2017 Michael Farrell <micolous+git@gmail.com>
+ * Copyright 2015-2018 Michael Farrell <micolous+git@gmail.com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -22,6 +22,7 @@ package au.id.micolous.metrodroid.util;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
@@ -32,6 +33,7 @@ import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.PorterDuff;
 import android.graphics.PorterDuffXfermode;
+import android.net.Uri;
 import android.nfc.NfcAdapter;
 import android.os.Build;
 import android.os.Parcel;
@@ -41,6 +43,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.annotation.PluralsRes;
 import android.support.annotation.StringRes;
+import android.support.annotation.VisibleForTesting;
 import android.text.Spannable;
 import android.text.SpannableString;
 import android.text.SpannableStringBuilder;
@@ -53,6 +56,12 @@ import android.text.style.TypefaceSpan;
 import android.util.Log;
 import android.view.WindowManager;
 
+import org.apache.commons.io.IOUtils;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.IOException;
+import java.io.InputStream;
 import java.math.BigInteger;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
@@ -82,6 +91,8 @@ public class Utils {
     private static final SimpleDateFormat ISO_DATE_FORMAT;
     /** Reference to UTC timezone. */
     public static final TimeZone UTC = TimeZone.getTimeZone("Etc/UTC");
+    private static final int MIFARE_SECTOR_COUNT_MAX = 40;
+    private static final int MIFARE_KEY_LENGTH = 6;
 
     static {
         ISO_DATETIME_FORMAT_FILENAME = new SimpleDateFormat("yyyyMMdd-HHmmss", Locale.US);
@@ -776,6 +787,69 @@ public class Utils {
             if (b < 0x20 && b != 0xd && b!= 0xa)
                 return false;
         return true;
+    }
+
+    private static boolean isRawMifareClassicKeyFileLength(int length) {
+        return length > 0 &&
+                length % MIFARE_KEY_LENGTH == 0 &&
+                length <= MIFARE_SECTOR_COUNT_MAX * MIFARE_KEY_LENGTH * 2;
+    }
+
+    public static KeyFormat detectKeyFormat(Context ctx, Uri uri) {
+        byte[] data;
+        try {
+            InputStream stream = ctx.getContentResolver().openInputStream(uri);
+            data = IOUtils.toByteArray(stream);
+        } catch (IOException e) {
+            Log.w(TAG, "error detecting key format", e);
+            return KeyFormat.UNKNOWN;
+        }
+
+        return detectKeyFormat(data);
+    }
+
+    public static KeyFormat detectKeyFormat(byte[] data) {
+
+        if (data[0] != '{') {
+            // This isn't a JSON file.
+            Log.d(TAG, "couldn't find starting {");
+            return isRawMifareClassicKeyFileLength(data.length) ? KeyFormat.RAW_MFC : KeyFormat.UNKNOWN;
+        }
+
+        // Scan for the } at the end of the file.
+        for (int i=data.length-1; i>0; i--) {
+            String s;
+            try {
+                s = new String(new byte[]{data[i]});
+            } catch (Exception ex) {
+                Log.d(TAG, "unsupported encoding at byte " + i, ex);
+                // Unlikely to be JSON
+                return isRawMifareClassicKeyFileLength(data.length) ? KeyFormat.RAW_MFC : KeyFormat.UNKNOWN;
+            }
+
+            if ("\n\r\t ".contains(s)) {
+                continue;
+            }
+
+            if (s.equals("}")) {
+                break;
+            } else {
+                // This isn't a JSON file.
+                Log.d(TAG, "couldn't find ending }");
+                return isRawMifareClassicKeyFileLength(data.length) ? KeyFormat.RAW_MFC : KeyFormat.UNKNOWN;
+            }
+        }
+
+        // Now see if it actually parses.
+        try {
+            new JSONObject(new String(data));
+            return KeyFormat.JSON;
+        } catch (JSONException e) {
+            Log.d(TAG, "couldn't parse JSON object in detectKeyFormat", e);
+        }
+
+        // Couldn't parse as JSON -- fallback
+        return isRawMifareClassicKeyFileLength(data.length) ? KeyFormat.RAW_MFC : KeyFormat.UNKNOWN;
     }
 
     public interface Matcher<T> {
