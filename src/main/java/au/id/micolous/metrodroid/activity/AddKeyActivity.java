@@ -109,6 +109,7 @@ public class AddKeyActivity extends MetrodroidActivity {
         ((RadioGroup)findViewById(R.id.keys_radio)).setOnCheckedChangeListener((view, checkedId) -> {
             mKeyData.setAllKeyTypes(checkedId == R.id.is_key_a ? ClassicSectorKey.KeyType.A :
                     ClassicSectorKey.KeyType.B);
+            drawUI();
         });
 
         mNfcAdapter = NfcAdapter.getDefaultAdapter(this);
