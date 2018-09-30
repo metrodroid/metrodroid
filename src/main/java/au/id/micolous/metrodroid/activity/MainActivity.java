@@ -149,7 +149,8 @@ public class MainActivity extends MetrodroidActivity {
 
         // Pick some card
         // TODO: make this better
-        Drawable b = OpalTransitData.CARD_INFO.getDrawable(getBaseContext());
+        Drawable b;// = OpalTransitData.CARD_INFO.getDrawable(getBaseContext());
+        b = CardInfo.ALL_CARDS_ALPHABETICAL[19].getDrawable(getBaseContext());
 
         // Set it to the image
         ImageView v = findViewById(R.id.imgCard);

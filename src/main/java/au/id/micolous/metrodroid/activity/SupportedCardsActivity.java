@@ -24,7 +24,9 @@ import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.nfc.NfcAdapter;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v7.content.res.AppCompatResources;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
@@ -34,6 +36,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 import au.id.micolous.farebot.R;
 import au.id.micolous.metrodroid.MetrodroidApplication;
@@ -78,6 +81,8 @@ public class SupportedCardsActivity extends MetrodroidActivity {
             }
 
             CardInfo info = getItem(position);
+            Objects.requireNonNull(info);
+
             ((TextView) convertView.findViewById(R.id.card_name)).setText(info.getName());
             ((TextView) convertView.findViewById(R.id.card_location)).setText(getString(info.getLocationId()));
 
@@ -86,7 +91,7 @@ public class SupportedCardsActivity extends MetrodroidActivity {
             if (info.hasBitmap())
                 d = info.getDrawable(getContext());
             if (d == null)
-                d = AppCompatResources.getDrawable(getContext(), R.drawable.logo);
+                d = AppCompatResources.getDrawable(getContext(), R.drawable.ic_logo_glyph);
             image.setImageDrawable(d);
             image.invalidate();
 

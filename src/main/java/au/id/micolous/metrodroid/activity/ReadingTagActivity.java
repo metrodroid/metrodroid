@@ -110,7 +110,7 @@ public class ReadingTagActivity extends MetrodroidActivity implements TagReaderF
                 i.setContentDescription(cardInfo.getName());
                 i.invalidate();
             } else {
-                i.setImageResource(R.drawable.logo);
+                i.setImageResource(R.drawable.ic_logo_glyph);
                 i.setContentDescription("");
                 i.invalidate();
             }
