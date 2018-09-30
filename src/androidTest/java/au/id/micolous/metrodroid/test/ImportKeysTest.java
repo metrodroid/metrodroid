@@ -113,9 +113,16 @@ public class ImportKeysTest extends InstrumentationTestCase {
 
         assertEquals("010203040506", Utils.getHexString(k0.getKey()));
         assertEquals("102030405060", Utils.getHexString(k1.getKey()));
+
+        // Test serialisation of ClassicCardKeys
+        String j = mifare1.toJSON().toString();
+        assertTrue("KeyA must be in j", j.contains("KeyA"));
+        assertTrue("010203040506 must be in j", j.contains("010203040506"));
+        assertTrue("KeyB must be in j", j.contains("KeyB"));
+        assertTrue("102030405060 must be in j", j.contains("102030405060"));
     }
 
-    public void testSerialiser() throws IOException, JSONException {
+    public void testSectorKeySerialiser() throws JSONException {
         ClassicSectorKey k0 = ClassicSectorKey.fromJSON(new JSONObject("{\"type\": \"KeyA\", \"key\": \"010203040506\"}"));
         ClassicSectorKey k1 = ClassicSectorKey.fromJSON(new JSONObject("{\"type\": \"KeyB\", \"key\": \"102030405060\"}"));
 
@@ -160,11 +167,6 @@ public class ImportKeysTest extends InstrumentationTestCase {
             assertEquals(0, mifareStatic1.getCandidates(i).size());
         }
 
-        // All keys are KeyA.
-        for (ClassicSectorKey k : mifareStatic1.keys()) {
-            assertEquals(ClassicSectorKey.KeyType.A, k.getType());
-        }
-
         ClassicSectorKey k0a = mifareStatic1.getCandidates(0).get(0);
         ClassicSectorKey k0b = mifareStatic1.getCandidates(0).get(1);
         ClassicSectorKey k10 = mifareStatic1.getCandidates(10).get(0);
@@ -176,6 +178,18 @@ public class ImportKeysTest extends InstrumentationTestCase {
         assertEquals("010203040506", Utils.getHexString(k0a.getKey()));
         assertEquals("102030405060", Utils.getHexString(k0b.getKey()));
         assertEquals("112233445566", Utils.getHexString(k10.getKey()));
+
+        assertEquals(ClassicSectorKey.KeyType.A, k0a.getType());
+        assertEquals(ClassicSectorKey.KeyType.A, k0b.getType());
+        assertEquals(ClassicSectorKey.KeyType.B, k10.getType());
+
+        // Test serialisation of ClassicStaticKeys
+        String j = mifareStatic1.toJSON().toString();
+        assertTrue("KeyA must be in j", j.contains("KeyA"));
+        assertTrue("010203040506 must be in j", j.contains("010203040506"));
+        assertTrue("KeyB must be in j", j.contains("KeyB"));
+        assertTrue("112233445566 must be in j", j.contains("112233445566"));
+        assertTrue("sector 10 must be in j", j.contains("\"sector\":10"));
     }
 
     public void testInvalidJSON() throws IOException {
