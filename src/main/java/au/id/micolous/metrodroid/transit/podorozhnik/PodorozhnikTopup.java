@@ -82,7 +82,7 @@ class PodorozhnikTopup extends Trip {
     }
 
     @Override
-    public String getVehicleID() {
+    public String getMachineID() {
         return Integer.toString(mTopupMachine);
     }
 

@@ -1102,6 +1102,11 @@
 
     <string name="no_static_key_assignment">Static keys cannot be assigned to a single card.</string>
 
-    <string name="farebox_number">Farebox #%s</string>
+    <!--
+    Translators: This is used to describe a vehicle number/ID. It doesn't have to be a number.
+
+    eg: "Vehicle 1024", "Vehicle 2A10"
+    -->
+    <string name="vehicle_number">Vehicle %s</string>
     <string name="card_id">Card ID</string>
 </resources>

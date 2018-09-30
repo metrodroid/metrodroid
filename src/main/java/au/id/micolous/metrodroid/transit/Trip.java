@@ -233,12 +233,29 @@ public abstract class Trip implements Parcelable {
     }
 
     /**
-     * Farebox, vehicle, or ticket machine number where the event was recorded.
+     * Vehicle number where the event was recorded.
      *
      * This is generally <em>not</em> the Station ID, which is declared in
      * {@link #getStartStation()}.
+     *
+     * This is <em>not</em> the Farebox or Machine number.
      */
+    @Nullable
     public String getVehicleID() {
+        return null;
+    }
+
+    /**
+     * Machine ID that recorded the transaction. A machine in this context is a farebox, ticket
+     * machine, or ticket validator.
+     *
+     * This is generally <em>not</em> the Station ID, which is declared in
+     * {@link #getStartStation()}.
+     *
+     * This is <em>not</em> the Vehicle number.
+     */
+    @Nullable
+    public String getMachineID() {
         return null;
     }
 
