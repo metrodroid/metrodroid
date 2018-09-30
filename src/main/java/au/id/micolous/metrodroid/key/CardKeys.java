@@ -46,26 +46,39 @@ public abstract class CardKeys {
 
     public static final String CLASSIC_STATIC_TAG_ID = "staticclassic";
 
+    /**
+     * Retrieves a MIFARE Classic card keys from storage by its UID.
+     * @param tagId The UID to look up (4 bytes)
+     * @return Matching {@link ClassicCardKeys}, or null if not found
+     */
     @Nullable
-    public static ClassicCardKeys forTagId(byte[] tagId) throws Exception {
+    public static ClassicCardKeys forTagId(byte[] tagId) throws JSONException {
         String tagIdString = Utils.getHexString(tagId);
-        MetrodroidApplication app = MetrodroidApplication.getInstance();
-        Cursor cursor = app.getContentResolver().query(Uri.withAppendedPath(CardKeyProvider.CONTENT_URI, tagIdString), null, null, null, null);
-        if (cursor == null) {
-            return null;
-        }
+        return fromUri(Uri.withAppendedPath(CardKeyProvider.CONTENT_BY_UID_URI, tagIdString));
+    }
 
-        if (cursor.moveToFirst()) {
-            return CardKeys.fromCursor(cursor);
-        } else {
-            return null;
-        }
+    /**
+     * Retrieves all statically defined MIFARE Classic keys.
+     * @return All {@link ClassicCardKeys}, or null if not found
+     */
+    @Nullable
+    public static ClassicCardKeys forStaticClassic() throws JSONException {
+        return fromUri(Uri.withAppendedPath(CardKeyProvider.CONTENT_BY_UID_URI, CLASSIC_STATIC_TAG_ID));
+    }
+
+    /**
+     * Retrieves a key by its internal ID.
+     * @return Matching {@link ClassicCardKeys}, or null if not found.
+     */
+    public static ClassicCardKeys forID(int id) throws JSONException {
+        return fromUri(Uri.withAppendedPath(CardKeyProvider.CONTENT_URI, Integer.toString(id)));
     }
 
     @Nullable
-    public static ClassicCardKeys forStaticClassic() throws JSONException {
+    public static ClassicCardKeys fromUri(Uri uri) throws JSONException {
         MetrodroidApplication app = MetrodroidApplication.getInstance();
-        Cursor cursor = app.getContentResolver().query(Uri.withAppendedPath(CardKeyProvider.CONTENT_URI, CLASSIC_STATIC_TAG_ID), null, null, null, null);
+        Cursor cursor = app.getContentResolver().query(uri,
+                null, null, null, null);
         if (cursor == null) {
             return null;
         }

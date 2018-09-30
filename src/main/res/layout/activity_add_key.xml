@@ -37,13 +37,12 @@
         style="?android:attr/listSeparatorTextViewStyle"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-
+        android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginLeft="8dp"
         android:layout_marginRight="8dp"
         android:layout_marginStart="8dp"
         android:text="@string/card_type"
-        android:textColor="?attr/AddKeyTextColor"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -52,13 +51,12 @@
         android:id="@+id/card_type"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-
+        android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginLeft="8dp"
         android:layout_marginRight="8dp"
         android:layout_marginStart="8dp"
         android:text="@string/mifare_classic"
-        android:textColor="?attr/AddKeyTextColor"
         android:textSize="16sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -69,13 +67,12 @@
         style="?android:attr/listSeparatorTextViewStyle"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-
+        android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginLeft="8dp"
         android:layout_marginRight="8dp"
         android:layout_marginStart="8dp"
-        android:text="Card ID"
-        android:textColor="?attr/AddKeyTextColor"
+        android:text="@string/card_id"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/card_type" />
@@ -84,12 +81,11 @@
         android:id="@+id/card_id"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-
         android:layout_marginEnd="8dp"
         android:layout_marginLeft="8dp"
         android:layout_marginRight="8dp"
         android:layout_marginStart="8dp"
-        android:textColor="?attr/AddKeyTextColor"
+        android:layout_marginTop="8dp"
         android:textSize="16sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -134,14 +130,12 @@
         style="?android:attr/listSeparatorTextViewStyle"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-
+        android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginLeft="8dp"
         android:layout_marginRight="8dp"
         android:layout_marginStart="8dp"
         android:text="@string/classic_key"
-
-        android:textColor="?attr/AddKeyTextColor"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/barrier2" />
@@ -150,6 +144,7 @@
         android:id="@+id/keys_radio"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginLeft="8dp"
         android:layout_marginRight="8dp"
@@ -165,18 +160,15 @@
             android:layout_height="wrap_content"
             android:layout_margin="8dp"
             android:text="@string/classic_key_a"
-            android:textColor="?attr/AddKeyTextColor"
             android:textSize="16sp" />
 
         <RadioButton
             android:id="@+id/is_key_b"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-
             android:layout_margin="8dp"
             android:checked="true"
             android:text="@string/classic_key_b"
-            android:textColor="?attr/AddKeyTextColor"
             android:textSize="16sp" />
 
     </RadioGroup>
@@ -187,13 +179,12 @@
         style="?android:attr/listSeparatorTextViewStyle"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-
+        android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginLeft="8dp"
         android:layout_marginRight="8dp"
         android:layout_marginStart="8dp"
         android:text="@string/key_data"
-        android:textColor="?attr/AddKeyTextColor"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/keys_radio" />
@@ -201,6 +192,7 @@
     <ScrollView
         android:layout_width="0dp"
         android:layout_height="0dp"
+        android:layout_marginTop="8dp"
         android:layout_marginBottom="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginLeft="8dp"
@@ -213,19 +205,17 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:orientation="vertical">
 
             <TextView
                 android:id="@+id/key_data"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-
                 android:layout_marginEnd="8dp"
                 android:layout_marginLeft="8dp"
                 android:layout_marginRight="8dp"
                 android:layout_marginStart="8dp"
-                android:textColor="?attr/AddKeyTextColor"
                 android:typeface="monospace"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -265,9 +255,9 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
-        android:layout_marginEnd="16dp"
+        android:layout_marginEnd="8dp"
         android:layout_marginLeft="8dp"
-        android:layout_marginRight="16dp"
+        android:layout_marginRight="8dp"
         android:layout_marginStart="8dp"
         android:text="@string/add_key"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -280,6 +270,4 @@
         android:layout_height="wrap_content"
         android:orientation="vertical"
         app:layout_constraintGuide_percent="0.5" />
-
-
 </android.support.constraint.ConstraintLayout>

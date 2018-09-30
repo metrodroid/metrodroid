@@ -19,7 +19,9 @@
 
 package au.id.micolous.metrodroid.fragment;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.ListFragment;
 import android.app.LoaderManager;
 import android.content.ContentUris;
@@ -29,6 +31,7 @@ import android.content.Intent;
 import android.content.Loader;
 import android.database.Cursor;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
@@ -51,6 +54,9 @@ import org.json.JSONObject;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.OutputStream;
+import java.nio.charset.Charset;
+import java.util.Objects;
 
 import au.id.micolous.farebot.R;
 import au.id.micolous.metrodroid.MetrodroidApplication;
@@ -62,6 +68,7 @@ import au.id.micolous.metrodroid.key.InsertKeyTask;
 import au.id.micolous.metrodroid.provider.CardKeyProvider;
 import au.id.micolous.metrodroid.provider.KeysTableColumns;
 import au.id.micolous.metrodroid.util.BetterAsyncTask;
+import au.id.micolous.metrodroid.util.ExportHelper;
 import au.id.micolous.metrodroid.util.KeyFormat;
 import au.id.micolous.metrodroid.util.Utils;
 
@@ -69,7 +76,9 @@ public class KeysFragment extends ListFragment implements AdapterView.OnItemLong
     private ActionMode mActionMode;
     private int mActionKeyId;
     private static final int REQUEST_SELECT_FILE = 1;
-    private static final int REQUEST_SELECT_FILE_JSON = 2;
+    private static final int REQUEST_SAVE_FILE = 2;
+
+    private static final String STD_EXPORT_FILENAME = "Metrodroid-Keys.json";
 
     private static final String TAG = "KeysFragment";
 
@@ -78,6 +87,9 @@ public class KeysFragment extends ListFragment implements AdapterView.OnItemLong
         public boolean onCreateActionMode(ActionMode mode, Menu menu) {
             MenuInflater inflater = mode.getMenuInflater();
             inflater.inflate(R.menu.keys_contextual, menu);
+            if (Build.VERSION.SDK_INT < Build.VERSION_CODES.KITKAT) {
+                menu.findItem(R.id.export_key).setVisible(false);
+            }
             return true;
         }
 
@@ -104,7 +116,17 @@ public class KeysFragment extends ListFragment implements AdapterView.OnItemLong
                     }
                 }.execute();
                 return true;
+            } else if (item.getItemId() == R.id.export_key) {
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+                    Intent i = new Intent(Intent.ACTION_CREATE_DOCUMENT);
+                    i.addCategory(Intent.CATEGORY_OPENABLE);
+                    i.setType("application/json");
+                    i.putExtra(Intent.EXTRA_TITLE, STD_EXPORT_FILENAME);
+
+                    startActivityForResult(Intent.createChooser(i, Utils.localizeString(R.string.export_filename)), REQUEST_SAVE_FILE);
+                }
             }
+
             return false;
         }
 
@@ -193,13 +215,14 @@ public class KeysFragment extends ListFragment implements AdapterView.OnItemLong
         return false;
     }
 
+    @SuppressLint("StaticFieldLeak")
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         Uri uri;
         try {
             if (resultCode == Activity.RESULT_OK) {
                 switch (requestCode) {
-                    case REQUEST_SELECT_FILE:
+                    case REQUEST_SELECT_FILE: {
                         uri = data.getData();
                         String type = getActivity().getContentResolver().getType(uri);
                         Log.d(TAG, "REQUEST_SELECT_FILE content_type = " + type);
@@ -229,6 +252,37 @@ public class KeysFragment extends ListFragment implements AdapterView.OnItemLong
                         }
 
                         break;
+                    }
+
+                    case REQUEST_SAVE_FILE: {
+                        Log.d(TAG, "REQUEST_SAVE_FILE");
+                        uri = data.getData();
+                        Objects.requireNonNull(uri);
+
+                        new BetterAsyncTask<Void>(getActivity(), false, false) {
+                            @Override
+                            protected Void doInBackground() throws Exception {
+                                OutputStream os = MetrodroidApplication.getInstance().getContentResolver().openOutputStream(uri);
+                                Objects.requireNonNull(os);
+
+                                ClassicCardKeys keys = CardKeys.forID(mActionKeyId);
+                                Objects.requireNonNull(keys);
+                                String json = keys.toJSON().toString(2);
+
+                                IOUtils.write(json, os, Charset.defaultCharset());
+                                os.close();
+                                return null;
+
+                            }
+
+                            @Override
+                            protected void onResult(Void unused) {
+                                Toast.makeText(MetrodroidApplication.getInstance(), R.string.file_exported, Toast.LENGTH_SHORT).show();
+                                mActionMode.finish();
+                            }
+                        }.execute();
+                        break;
+                    }
                 }
             }
         } catch (Exception ex) {
