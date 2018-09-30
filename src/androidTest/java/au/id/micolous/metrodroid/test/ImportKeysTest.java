@@ -20,7 +20,9 @@ package au.id.micolous.metrodroid.test;
 
 import android.content.Context;
 import android.content.res.AssetManager;
+import android.support.annotation.Nullable;
 import android.test.InstrumentationTestCase;
+import android.util.Pair;
 
 import org.apache.commons.lang3.ArrayUtils;
 import org.json.JSONException;
@@ -29,12 +31,13 @@ import org.json.JSONObject;
 import java.io.IOException;
 import java.io.InputStream;
 
-import au.id.micolous.metrodroid.key.CardKeys;
 import au.id.micolous.metrodroid.key.ClassicCardKeys;
 import au.id.micolous.metrodroid.key.ClassicSectorKey;
 import au.id.micolous.metrodroid.key.ClassicStaticKeys;
 import au.id.micolous.metrodroid.util.KeyFormat;
 import au.id.micolous.metrodroid.util.Utils;
+
+import static au.id.micolous.metrodroid.key.CardKeys.CLASSIC_STATIC_TAG_ID;
 
 public class ImportKeysTest extends InstrumentationTestCase {
     private byte[] loadTestFile(String path) throws IOException {
@@ -52,41 +55,41 @@ public class ImportKeysTest extends InstrumentationTestCase {
         return ArrayUtils.subarray(out, 0, realLen);
     }
 
-    private JSONObject loadTestJSON(String path, boolean doDetect) throws IOException, JSONException {
+    private Pair<JSONObject, KeyFormat> loadTestJSON(String path, @Nullable KeyFormat expectedFormat) throws IOException, JSONException {
         byte[] d = loadTestFile(path);
-        if (doDetect) {
-            assertEquals(KeyFormat.JSON, Utils.detectKeyFormat(d));
+        KeyFormat f = Utils.detectKeyFormat(d);
+        if (expectedFormat != null) {
+            assertEquals(expectedFormat, f);
         }
-        return new JSONObject(new String(d));
+        return new Pair<>(new JSONObject(new String(d)), f);
     }
 
     private ClassicCardKeys loadClassicCardRawKeys(String path) throws IOException {
         byte[] d = loadTestFile(path);
         assertEquals(KeyFormat.RAW_MFC, Utils.detectKeyFormat(d));
-        return ClassicCardKeys.fromDump(ClassicSectorKey.TYPE_KEYA, d);
+        return ClassicCardKeys.fromDump(d, ClassicSectorKey.KeyType.A);
     }
 
-    private ClassicCardKeys loadClassicCardKeys(String path, String expectedID, boolean doDetect) throws IOException, JSONException {
-        JSONObject json = loadTestJSON(path, doDetect);
+    private ClassicCardKeys loadClassicCardKeys(String path, @Nullable String expectedID, @Nullable KeyFormat expectedFormat) throws IOException, JSONException {
+        Pair<JSONObject, KeyFormat> json = loadTestJSON(path, expectedFormat);
+        ClassicCardKeys k = ClassicCardKeys.fromJSON(json.first, json.second);
 
-        String id = json.getString(CardKeys.JSON_TAG_ID_KEY);
-        assertEquals(expectedID, id);
-
-        String type = json.getString(CardKeys.JSON_KEY_TYPE_KEY);
-        assertEquals(CardKeys.TYPE_MFC, type);
-        return ClassicCardKeys.fromJSON(json);
+        if (expectedID != null) {
+            assertEquals(expectedID, k.getUID());
+        }
+        return k;
     }
 
     private ClassicStaticKeys loadClassicStaticCardKeys(String path) throws IOException, JSONException {
-        JSONObject json = loadTestJSON(path, true);
-
-        String type = json.getString(CardKeys.JSON_KEY_TYPE_KEY);
-        assertEquals(CardKeys.TYPE_MFC_STATIC, type);
-        return ClassicStaticKeys.fromJSON(json);
+        Pair<JSONObject, KeyFormat> json = loadTestJSON(path, KeyFormat.JSON_MFC_STATIC);
+        ClassicCardKeys k = ClassicCardKeys.fromJSON(json.first, json.second);
+        assertTrue(k instanceof ClassicStaticKeys);
+        assertEquals(CLASSIC_STATIC_TAG_ID, k.getUID());
+        return (ClassicStaticKeys)k;
     }
 
     public void testClassicKeys() throws IOException, JSONException {
-        ClassicCardKeys mifare1 = loadClassicCardKeys("mifare1.json", "12345678", true);
+        ClassicCardKeys mifare1 = loadClassicCardKeys("mifare1.json", "12345678", KeyFormat.JSON_MFC);
 
         assertEquals(1, mifare1.getCandidates(0).size());
         assertEquals(1, mifare1.getCandidates(1).size());
@@ -105,8 +108,8 @@ public class ImportKeysTest extends InstrumentationTestCase {
         assertEquals(k0, mifare1.keys().get(0));
         assertEquals(k1, mifare1.keys().get(1));
 
-        assertEquals(ClassicSectorKey.TYPE_KEYA, k0.getType());
-        assertEquals(ClassicSectorKey.TYPE_KEYB, k1.getType());
+        assertEquals(ClassicSectorKey.KeyType.A, k0.getType());
+        assertEquals(ClassicSectorKey.KeyType.B, k1.getType());
 
         assertEquals("010203040506", Utils.getHexString(k0.getKey()));
         assertEquals("102030405060", Utils.getHexString(k1.getKey()));
@@ -127,7 +130,7 @@ public class ImportKeysTest extends InstrumentationTestCase {
 
         // All keys are KeyA.
         for (ClassicSectorKey k : mifareStatic1.keys()) {
-            assertEquals(ClassicSectorKey.TYPE_KEYA, k.getType());
+            assertEquals(ClassicSectorKey.KeyType.A, k.getType());
         }
 
         ClassicSectorKey k0a = mifareStatic1.getCandidates(0).get(0);
@@ -145,7 +148,7 @@ public class ImportKeysTest extends InstrumentationTestCase {
 
     public void testInvalidJSON() throws IOException {
         try {
-            ClassicCardKeys card = loadClassicCardKeys("invalidMifare1.json", "12345678", false);
+            ClassicCardKeys card = loadClassicCardKeys("invalidMifare1.json", "12345678", KeyFormat.UNKNOWN);
         } catch (JSONException e) {
             assertTrue("got expected JSON throw", true);
             return;
@@ -185,5 +188,17 @@ public class ImportKeysTest extends InstrumentationTestCase {
 
         // { NULL } SPACE @ SPACE
         assertEquals("7b007d204020", Utils.getHexString(k0.getKey()));
+    }
+
+    public void testEmptyUID() throws Exception {
+        loadClassicCardKeys("mifareEmptyUID.json", null, KeyFormat.JSON_MFC_NO_UID);
+    }
+
+    public void testNoUID() throws Exception {
+        loadClassicCardKeys("mifareNoUID.json", null, KeyFormat.JSON_MFC_NO_UID);
+    }
+
+    public void testNullUID() throws Exception {
+        loadClassicCardKeys("mifareNullUID.json", null, KeyFormat.JSON_MFC_NO_UID);
     }
 }

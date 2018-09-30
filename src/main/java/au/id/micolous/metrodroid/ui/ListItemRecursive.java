@@ -1,5 +1,6 @@
 package au.id.micolous.metrodroid.ui;
 
+import android.support.annotation.StringRes;
 import android.text.Spanned;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,7 +19,7 @@ public class ListItemRecursive extends ListItem {
         mSubTree = subTree;
     }
 
-    public ListItemRecursive(int text1Res, String text2, List<ListItem> subTree) {
+    public ListItemRecursive(@StringRes int text1Res, String text2, List<ListItem> subTree) {
         super(text1Res, text2);
         mSubTree = subTree;
     }

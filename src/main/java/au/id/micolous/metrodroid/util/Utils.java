@@ -76,6 +76,8 @@ import java.util.TimeZone;
 
 import au.id.micolous.farebot.R;
 import au.id.micolous.metrodroid.MetrodroidApplication;
+import au.id.micolous.metrodroid.key.ClassicCardKeys;
+import au.id.micolous.metrodroid.key.ClassicSectorKey;
 
 public class Utils {
     private static final String TAG = "Utils";
@@ -795,6 +797,7 @@ public class Utils {
                 length <= MIFARE_SECTOR_COUNT_MAX * MIFARE_KEY_LENGTH * 2;
     }
 
+    @NonNull
     public static KeyFormat detectKeyFormat(Context ctx, Uri uri) {
         byte[] data;
         try {
@@ -808,8 +811,8 @@ public class Utils {
         return detectKeyFormat(data);
     }
 
-    public static KeyFormat detectKeyFormat(byte[] data) {
-
+    @NonNull
+    public static KeyFormat detectKeyFormat(@NonNull byte[] data) {
         if (data[0] != '{') {
             // This isn't a JSON file.
             Log.d(TAG, "couldn't find starting {");
@@ -842,7 +845,23 @@ public class Utils {
 
         // Now see if it actually parses.
         try {
-            new JSONObject(new String(data));
+            JSONObject o = new JSONObject(new String(data));
+            String type = o.optString(ClassicCardKeys.JSON_KEY_TYPE_KEY);
+            switch (type) {
+                case ClassicCardKeys.TYPE_MFC:
+                    if (!o.has(ClassicCardKeys.JSON_TAG_ID_KEY)
+                            || o.isNull(ClassicCardKeys.JSON_TAG_ID_KEY)
+                            || o.getString(ClassicCardKeys.JSON_TAG_ID_KEY).isEmpty()) {
+                        return KeyFormat.JSON_MFC_NO_UID;
+                    } else {
+                        return KeyFormat.JSON_MFC;
+                    }
+
+                case ClassicCardKeys.TYPE_MFC_STATIC:
+                    return KeyFormat.JSON_MFC_STATIC;
+            }
+
+            // Unhandled JSON format
             return KeyFormat.JSON;
         } catch (JSONException e) {
             Log.d(TAG, "couldn't parse JSON object in detectKeyFormat", e);
@@ -944,12 +963,12 @@ public class Utils {
      * @return The index of the hash that matched, or a number less than 0 if the value was not
      *         found, or there was some other error with the input.
      */
-    public static int checkKeyHash(byte[] key, String salt, String... expectedHashes) {
+    private static int checkKeyHash(@NonNull byte[] key, @NonNull String salt, String... expectedHashes) {
         MessageDigest md5;
         String digest;
 
         // Validate input arguments.
-        if (key == null || salt == null || expectedHashes.length < 1) {
+        if (expectedHashes.length < 1) {
             return -1;
         }
 
@@ -976,5 +995,9 @@ public class Utils {
         }
 
         return -1;
+    }
+
+    public static int checkKeyHash(@NonNull ClassicSectorKey key, @NonNull String salt, String... expectedHashes) {
+        return checkKeyHash(key.getKey(), salt, expectedHashes);
     }
 }

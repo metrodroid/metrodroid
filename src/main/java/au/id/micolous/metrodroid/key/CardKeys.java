@@ -28,6 +28,7 @@ import android.support.annotation.Nullable;
 
 import au.id.micolous.metrodroid.provider.CardKeyProvider;
 import au.id.micolous.metrodroid.provider.KeysTableColumns;
+import au.id.micolous.metrodroid.util.KeyFormat;
 import au.id.micolous.metrodroid.util.Utils;
 
 import org.json.JSONException;
@@ -84,7 +85,7 @@ public abstract class CardKeys {
 
         // We only return a single set of keys when given a card ID
         if (cardType.equals(TYPE_MFC)) {
-            return ClassicCardKeys.fromJSON(keyJSON);
+            return ClassicCardKeys.fromJSON(keyJSON, KeyFormat.JSON_MFC);
         }
 
         // Static key requests should give all of the static keys.
@@ -104,4 +105,6 @@ public abstract class CardKeys {
     }
 
     public abstract JSONObject toJSON() throws JSONException;
+
+    public abstract String getType();
 }

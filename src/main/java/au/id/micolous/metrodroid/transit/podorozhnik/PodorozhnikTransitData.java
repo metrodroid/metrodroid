@@ -35,6 +35,7 @@ import au.id.micolous.metrodroid.card.CardType;
 import au.id.micolous.metrodroid.card.classic.ClassicCard;
 import au.id.micolous.metrodroid.card.classic.ClassicSector;
 import au.id.micolous.metrodroid.card.classic.UnauthorizedClassicSector;
+import au.id.micolous.metrodroid.key.ClassicSectorKey;
 import au.id.micolous.metrodroid.transit.CardInfo;
 import au.id.micolous.metrodroid.transit.TransitBalance;
 import au.id.micolous.metrodroid.transit.TransitBalanceStored;
@@ -268,8 +269,8 @@ public class PodorozhnikTransitData extends TransitData {
 
     public static boolean check(ClassicCard card) {
         try {
-            byte[] key = card.getSector(4).getKey();
-            if (key == null || key.length != 6) {
+            ClassicSectorKey key = card.getSector(4).getKey();
+            if (key == null) {
                 // We don't have key data, bail out.
                 return false;
             }

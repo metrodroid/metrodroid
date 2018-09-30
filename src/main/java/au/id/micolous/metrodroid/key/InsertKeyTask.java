@@ -25,16 +25,27 @@ import android.app.Activity;
 import android.content.ContentValues;
 import android.content.Intent;
 
+import org.json.JSONException;
+
 import au.id.micolous.metrodroid.provider.CardKeyProvider;
 import au.id.micolous.metrodroid.provider.KeysTableColumns;
 import au.id.micolous.metrodroid.util.BetterAsyncTask;
 
 public class InsertKeyTask extends BetterAsyncTask<Void> {
-    private final String mKeyType;
-    private final String mKeyData;
-    private final boolean mFinishResult;
-    private final String mTagId;
+    private final ClassicCardKeys mKeys;
 
+    //private final String mKeyType;
+    //private final String mKeyData;
+    private final boolean mFinishResult;
+    //private final String mTagId;
+
+    public InsertKeyTask(Activity activity, ClassicCardKeys keys, boolean finishOnResult) {
+        super(activity, true, false);
+        mKeys = keys;
+        mFinishResult = finishOnResult;
+    }
+
+    /*
     public InsertKeyTask(Activity activity, String keytype, String keyData,
                          String tagId, boolean finishOnResult) {
         super(activity,true, false);
@@ -43,13 +54,14 @@ public class InsertKeyTask extends BetterAsyncTask<Void> {
         mFinishResult = finishOnResult;
         mTagId = tagId;
     }
+    */
 
     @Override
-    protected Void doInBackground() {
+    protected Void doInBackground() throws JSONException {
         ContentValues values = new ContentValues();
-        values.put(KeysTableColumns.CARD_ID, mTagId);
-        values.put(KeysTableColumns.CARD_TYPE, mKeyType);
-        values.put(KeysTableColumns.KEY_DATA, mKeyData);
+        values.put(KeysTableColumns.CARD_ID, mKeys.getUID());
+        values.put(KeysTableColumns.CARD_TYPE, mKeys.getType());
+        values.put(KeysTableColumns.KEY_DATA, mKeys.toJSON().toString());
 
         mActivity.getContentResolver().insert(CardKeyProvider.CONTENT_URI, values);
 

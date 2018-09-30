@@ -23,161 +23,263 @@
   -->
 
 
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/linearLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:gravity="center_horizontal"
-    android:baselineAligned="false">
+    android:baselineAligned="false"
+    android:gravity="center_horizontal">
+
+    <TextView
+        android:id="@+id/textView3"
+        style="?android:attr/listSeparatorTextViewStyle"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+
+        android:layout_marginEnd="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginStart="8dp"
+        android:text="@string/card_type"
+        android:textColor="?attr/AddKeyTextColor"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/card_type"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+
+        android:layout_marginEnd="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginStart="8dp"
+        android:text="@string/mifare_classic"
+        android:textColor="?attr/AddKeyTextColor"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView3" />
+
+    <TextView
+        android:id="@+id/textView4"
+        style="?android:attr/listSeparatorTextViewStyle"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+
+        android:layout_marginEnd="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginStart="8dp"
+        android:text="Card ID"
+        android:textColor="?attr/AddKeyTextColor"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/card_type" />
+
+    <TextView
+        android:id="@+id/card_id"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+
+        android:layout_marginEnd="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginStart="8dp"
+        android:textColor="?attr/AddKeyTextColor"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/textView4"
+        tools:text="123456780" />
+
     <TextView
         android:id="@+id/directions"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:background="#fff57f17"
+        android:gravity="center"
+        android:paddingBottom="16dp"
+        android:paddingTop="16dp"
         android:text="@string/directions"
+        android:textColor="#000000"
         android:textSize="20sp"
-        android:gravity="center" />
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/textView4" />
+
+    <android.support.constraint.Barrier
+        android:id="@+id/barrier2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:barrierDirection="bottom"
+        app:constraint_referenced_ids="card_id,directions"
+        app:layout_constraintTop_toBottomOf="@id/textView4"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        tools:layout_editor_absoluteY="600dp" />
+
+
+    <TextView
+        android:id="@+id/keys_label"
+        style="?android:attr/listSeparatorTextViewStyle"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+
+        android:layout_marginEnd="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginStart="8dp"
+        android:text="@string/classic_key"
+
+        android:textColor="?attr/AddKeyTextColor"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/barrier2" />
+
+    <RadioGroup
+        android:id="@+id/keys_radio"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginStart="8dp"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/keys_label">
+
+        <RadioButton
+            android:id="@+id/is_key_a"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="8dp"
+            android:text="@string/classic_key_a"
+            android:textColor="?attr/AddKeyTextColor"
+            android:textSize="16sp" />
+
+        <RadioButton
+            android:id="@+id/is_key_b"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+
+            android:layout_margin="8dp"
+            android:checked="true"
+            android:text="@string/classic_key_b"
+            android:textColor="?attr/AddKeyTextColor"
+            android:textSize="16sp" />
+
+    </RadioGroup>
+
+
+    <TextView
+        android:id="@+id/textView5"
+        style="?android:attr/listSeparatorTextViewStyle"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+
+        android:layout_marginEnd="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginStart="8dp"
+        android:text="@string/key_data"
+        android:textColor="?attr/AddKeyTextColor"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/keys_radio" />
 
     <ScrollView
-        android:id="@+id/info"
-        android:visibility="gone"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_weight="1">
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginStart="8dp"
+        app:layout_constraintBottom_toTopOf="@+id/barrier"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView5">
+
         <LinearLayout
-            android:orientation="vertical"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:paddingTop="8dp"
-            android:paddingRight="16dp"
-            android:paddingBottom="8dp"
-            android:paddingLeft="16dp">
-            <TextView
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:paddingBottom="2dip"
-                android:paddingLeft="5dip"
-                android:text="Card Type"
-                android:textColor="?attr/AddKeyTextColor"
-                style="?android:attr/listSeparatorTextViewStyle" />
-
-            <TextView
-                android:id="@+id/card_type"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:paddingTop="8dip"
-                android:paddingBottom="8dip"
-                android:paddingLeft="5dip"
-                android:text="MIFARE Classic"
-                android:textSize="16sp"
-                android:textColor="?attr/AddKeyTextColor" />
-
-            <TextView
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:paddingTop="2dip"
-                android:paddingBottom="2dip"
-                android:paddingLeft="5dip"
-                android:text="Card ID"
-                android:textColor="?attr/AddKeyTextColor"
-                style="?android:attr/listSeparatorTextViewStyle" />
-
-            <TextView
-                android:id="@+id/card_id"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:paddingTop="8dip"
-                android:paddingBottom="8dip"
-                android:paddingLeft="5dip"
-                android:text="123456780"
-                android:textSize="16sp"
-                android:textColor="?attr/AddKeyTextColor" />
-
-            <TextView
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:paddingTop="2dip"
-                android:paddingBottom="2dip"
-                android:paddingLeft="5dip"
-                android:text="Key Type"
-                android:textColor="?attr/AddKeyTextColor"
-                style="?android:attr/listSeparatorTextViewStyle" />
-
-            <RadioGroup
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
-                <RadioButton
-                    android:id="@+id/is_key_a"
-                    android:layout_width="0dp"
-                    android:layout_weight="1"
-                    android:layout_height="wrap_content"
-                    android:text="KeyA"
-                    android:textSize="16sp"
-                    android:textColor="?attr/AddKeyTextColor" />
-                <RadioButton
-                    android:id="@+id/is_key_b"
-                    android:layout_width="0dp"
-                    android:layout_weight="1"
-                    android:layout_height="wrap_content"
-                    android:checked="true"
-                    android:text="KeyB"
-                    android:textSize="16sp"
-                    android:textColor="?attr/AddKeyTextColor" />
-            </RadioGroup>
-
-            <TextView
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:paddingTop="2dip"
-                android:paddingBottom="2dip"
-                android:paddingLeft="5dip"
-                android:text="Key Data"
-                android:textColor="?attr/AddKeyTextColor"
-                style="?android:attr/listSeparatorTextViewStyle" />
+            android:layout_height="match_parent"
+            android:orientation="vertical">
 
             <TextView
                 android:id="@+id/key_data"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:paddingTop="8dip"
-                android:paddingBottom="8dip"
-                android:paddingLeft="5dip"
-                android:textColor="?attr/AddKeyTextColor"
-                android:typeface="monospace" />
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
 
+                android:layout_marginEnd="8dp"
+                android:layout_marginLeft="8dp"
+                android:layout_marginRight="8dp"
+                android:layout_marginStart="8dp"
+                android:textColor="?attr/AddKeyTextColor"
+                android:typeface="monospace"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/textView5"
+                tools:text="123456789012 123456789012 123456789012 123456789012" />
         </LinearLayout>
     </ScrollView>
 
-    <LinearLayout
-        android:id="@+id/buttonPanel"
-        android:layout_width="match_parent"
+
+    <android.support.constraint.Barrier
+        android:id="@+id/barrier"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:barrierDirection="top"
+        app:constraint_referenced_ids="cancel,add"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        tools:layout_editor_absoluteY="600dp" />
+
+    <Button
+        android:id="@+id/cancel"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginStart="8dp"
+        android:text="@android:string/cancel"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/guideline2"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <Button
+        android:id="@+id/add"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="16dp"
+        android:layout_marginStart="8dp"
+        android:text="@string/add_key"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/guideline2" />
+
+    <android.support.constraint.Guideline
+        android:id="@+id/guideline2"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:divider="@drawable/list_divider_holo_dark"
-        android:showDividers="beginning"
-        android:dividerPadding="0dip">
-        <LinearLayout
-            style="?attr/ButtonBarStyle"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:measureWithLargestChild="true">
-            <Button
-                style="?attr/ButtonBarButtonStyle"
-                android:id="@+id/cancel"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="@android:string/cancel" />
-            <Button
-                style="?attr/ButtonBarButtonStyle"
-                android:id="@+id/add"
-                android:visibility="gone"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="@string/add_key" />
-        </LinearLayout>
-    </LinearLayout>
-</LinearLayout>
+        app:layout_constraintGuide_percent="0.5" />
+
+
+</android.support.constraint.ConstraintLayout>

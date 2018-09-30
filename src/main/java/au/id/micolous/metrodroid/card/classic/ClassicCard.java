@@ -96,11 +96,11 @@ public class ClassicCard extends Card {
      * See {@link SmartRiderTransitData#detectKeyType(ClassicCard)} for an example of how to do
      * this.
      */
-    static final byte[][] WELL_KNOWN_KEYS = {
-            PREAMBLE_KEY,
-            MifareClassic.KEY_DEFAULT,
-            MifareClassic.KEY_MIFARE_APPLICATION_DIRECTORY,
-            MifareClassic.KEY_NFC_FORUM
+    private static final ClassicSectorKey[] WELL_KNOWN_KEYS = {
+            ClassicSectorKey.wellKnown(PREAMBLE_KEY),
+            ClassicSectorKey.wellKnown(MifareClassic.KEY_DEFAULT),
+            ClassicSectorKey.wellKnown(MifareClassic.KEY_MIFARE_APPLICATION_DIRECTORY),
+            ClassicSectorKey.wellKnown(MifareClassic.KEY_NFC_FORUM)
     };
 
     private static final String TAG = "ClassicCard";
@@ -116,6 +116,50 @@ public class ClassicCard extends Card {
     private ClassicCard(byte[] tagId, Calendar scannedAt, ClassicSector[] sectors, boolean partialRead) {
         super(CardType.MifareClassic, tagId, scannedAt, null, partialRead);
         mSectors = Arrays.asList(sectors);
+    }
+
+    /**
+     * Tries to authenticate with the given key.
+     *
+     * This is a thin wrapper around {@link MifareClassic#authenticateSectorWithKeyA(int, byte[])}
+     * and {@link MifareClassic#authenticateSectorWithKeyB(int, byte[])} so that we can pass a
+     * {@link ClassicSectorKey};
+     * @param tech MIFARE Classic card to autheticate with.
+     * @param sectorIndex Sector number to authenticate for.
+     * @param key Key to authenticate with.
+     * @return true on success, false on failure.
+     * @throws IOException On card communication errors.
+     */
+    private static boolean authenticateWithKey(MifareClassic tech, int sectorIndex, ClassicSectorKey key) throws IOException {
+        if (key.getType() == ClassicSectorKey.KeyType.A || key.getType() == ClassicSectorKey.KeyType.UNKNOWN) {
+            return tech.authenticateSectorWithKeyA(sectorIndex, key.getKey());
+        }
+        return tech.authenticateSectorWithKeyB(sectorIndex, key.getKey());
+    }
+
+    /**
+     * Tries to authenticate with the given key as both the "A" and "B" keys.
+     *
+     * Returns the correct key on success, null otherwise.  If we had to use the alternate key, then
+     * an inverse clone of {@param key} is returned.
+     * @param tech MIFARE Classic card to authenticate with.
+     * @param sectorIndex Sector number to authenticate for.
+     * @param key Key to try.
+     * @return null on error, correct key on success.
+     * @throws IOException On card communication errors.
+     */
+    private static ClassicSectorKey tryAuthenticateWithKey(MifareClassic tech, int sectorIndex, ClassicSectorKey key) throws IOException {
+        ClassicSectorKey myKey = key.clone();
+        if (authenticateWithKey(tech, sectorIndex, myKey)) {
+            return myKey;
+        }
+
+        myKey.invertType();
+        if (authenticateWithKey(tech, sectorIndex, myKey)) {
+            return myKey;
+        }
+
+        return null;
     }
 
     public static ClassicCard dumpTag(byte[] tagId, Tag tag, TagReaderFeedbackInterface feedbackInterface) throws Exception {
@@ -162,21 +206,7 @@ public class ClassicCard extends Card {
                             List <ClassicSectorKey> candidates = keys.getCandidates(sectorIndex);
 
                             for (ClassicSectorKey sectorKey : candidates) {
-                                if (sectorKey.getType().equals(ClassicSectorKey.TYPE_KEYA)) {
-                                    if (tech.authenticateSectorWithKeyA(sectorIndex, sectorKey.getKey())) {
-                                        correctKey = sectorKey;
-                                    } else if (tech.authenticateSectorWithKeyB(sectorIndex, sectorKey.getKey())) {
-                                        correctKey = new ClassicSectorKey(
-                                                ClassicSectorKey.TYPE_KEYB, sectorKey.getKey());
-                                    }
-                                } else {
-                                    if (tech.authenticateSectorWithKeyB(sectorIndex, sectorKey.getKey())) {
-                                        correctKey = sectorKey;
-                                    } else if (tech.authenticateSectorWithKeyA(sectorIndex, sectorKey.getKey())) {
-                                        correctKey = new ClassicSectorKey(
-                                                ClassicSectorKey.TYPE_KEYA, sectorKey.getKey());
-                                    }
-                                }
+                                correctKey = tryAuthenticateWithKey(tech, sectorIndex, sectorKey);
                             }
                         }
                     }
@@ -199,15 +229,7 @@ public class ClassicCard extends Card {
                                 // This takes longer, of course, but means that users aren't scratching
                                 // their heads when we don't get the right key straight away.
                                 for (ClassicSectorKey key : keys.keys()) {
-                                    if (key.getType().equals(ClassicSectorKey.TYPE_KEYA)) {
-                                        if (tech.authenticateSectorWithKeyA(sectorIndex, key.getKey())) {
-                                            correctKey = key;
-                                        }
-                                    } else {
-                                        if (tech.authenticateSectorWithKeyB(sectorIndex, key.getKey())) {
-                                            correctKey = key;
-                                        }
-                                    }
+                                    correctKey = tryAuthenticateWithKey(tech, sectorIndex, key);
 
                                     if (correctKey != null) {
                                         // Jump out if we have the key
@@ -223,14 +245,8 @@ public class ClassicCard extends Card {
                                 feedbackInterface.updateProgressBar((sectorIndex * 5) + 2, maxProgress);
 
                                 feedbackInterface.updateStatusText(Utils.localizeString(R.string.mfc_default_key, sectorIndex));
-                                for (byte[] wkKey : WELL_KNOWN_KEYS) {
-                                    if (tech.authenticateSectorWithKeyA(sectorIndex, wkKey)) {
-                                        correctKey = new ClassicSectorKey(ClassicSectorKey.TYPE_KEYA, wkKey);
-                                        break;
-                                    } else if (tech.authenticateSectorWithKeyB(sectorIndex, wkKey)) {
-                                        correctKey = new ClassicSectorKey(ClassicSectorKey.TYPE_KEYB, wkKey);
-                                        break;
-                                    }
+                                for (ClassicSectorKey wkKey : WELL_KNOWN_KEYS) {
+                                    correctKey = tryAuthenticateWithKey(tech, sectorIndex, wkKey);
                                 }
                             }
 
@@ -249,18 +265,18 @@ public class ClassicCard extends Card {
                         for (int blockIndex = 0; blockIndex < tech.getBlockCountInSector(sectorIndex); blockIndex++) {
                             byte[] data = tech.readBlock(firstBlockIndex + blockIndex);
                             String type = ClassicBlock.TYPE_DATA; // FIXME
+
                             // Sometimes the result is just a single byte 04
                             // Reauthenticate if that happens
                             if (data.length < 4) {
-                                if (correctKey.getType().equals(ClassicSectorKey.TYPE_KEYA))
-                                    tech.authenticateSectorWithKeyA(sectorIndex, correctKey.getKey());
-                                else
-                                    tech.authenticateSectorWithKeyB(sectorIndex, correctKey.getKey());
+                                authenticateWithKey(tech, sectorIndex, correctKey);
                                 data = tech.readBlock(firstBlockIndex + blockIndex);
                             }
                             blocks.add(ClassicBlock.create(type, blockIndex, data));
                         }
-                        sectors.add(new ClassicSector(sectorIndex, blocks.toArray(new ClassicBlock[blocks.size()]), correctKey.getKey(), correctKey.getType()));
+                        sectors.add(new ClassicSector(sectorIndex,
+                                blocks.toArray(new ClassicBlock[blocks.size()]),
+                                correctKey));
 
                         feedbackInterface.updateProgressBar((sectorIndex * 5) + 4, maxProgress);
                     } else {
@@ -532,26 +548,22 @@ public class ClassicCard extends Card {
 
         for (ClassicSector sector : mSectors) {
             String sectorIndexString = Integer.toHexString(sector.getIndex());
+            ClassicSectorKey k = sector.getKey();
             String key = null;
-            if (sector.getKey() != null) {
-                int res = R.string.classic_key_format;
-                if (ClassicSectorKey.TYPE_KEYB.equals(sector.getKeyType()))
-                    res = R.string.classic_key_format_b;
-                if (ClassicSectorKey.TYPE_KEYA.equals(sector.getKeyType()))
-                    res = R.string.classic_key_format_a;
-                key = Utils.localizeString(res, Utils.getHexString(sector.getKey()));
+            if (k != null) {
+                key = Utils.localizeString(k.getType().getFormatRes(), Utils.getHexString(k.getKey()));
             }
 
             if (sector instanceof UnauthorizedClassicSector) {
-                li.add(new ListItemRecursive(Utils.localizeString(R.string.unauthorized_sector_title_format, sectorIndexString),
-                        key, null));
+                li.add(new ListItem(Utils.localizeString(R.string.unauthorized_sector_title_format, sectorIndexString)));
                 continue;
             }
+
             if (sector instanceof InvalidClassicSector) {
-                li.add(new ListItemRecursive(Utils.localizeString(R.string.invalid_sector_title_format, sectorIndexString),
-                        key, null));
+                li.add(new ListItem(Utils.localizeString(R.string.invalid_sector_title_format, sectorIndexString)));
                 continue;
             }
+
             List<ListItem> bli = new ArrayList<>();
             for (ClassicBlock block : sector.getBlocks()) {
                 bli.add(new ListItemRecursive(

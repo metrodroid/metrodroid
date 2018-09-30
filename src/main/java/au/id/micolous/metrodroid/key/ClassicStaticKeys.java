@@ -21,6 +21,7 @@ package au.id.micolous.metrodroid.key;
 
 import android.annotation.SuppressLint;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -69,27 +70,35 @@ public class ClassicStaticKeys extends ClassicCardKeys {
     }
 
     private static class ClassicSectorKeyWrapper extends ClassicSectorKey {
+        private int mSectorIndex;
 
-        private ClassicSectorKeyWrapper(JSONObject json) throws JSONException {
-            super(json.getString(KEY_TYPE), json.has(KEY_VALUE) ?
-                    Utils.hexStringToByteArray(json.getString(KEY_VALUE)) : null);
+        private ClassicSectorKeyWrapper() {}
+
+        public static ClassicSectorKeyWrapper fromJSON(JSONObject json) throws JSONException {
+            ClassicSectorKeyWrapper w = new ClassicSectorKeyWrapper();
+            w.mSectorIndex = json.getInt(SECTOR_IDX);
+            fromJSON(w, json);
+            return w;
         }
 
-        private JSONObject toJSON(int idx) throws JSONException {
-            JSONObject json = new JSONObject();
-            json.put(SECTOR_IDX, idx);
-            json.put(KEY_TYPE, getType());
-            json.put(KEY_VALUE, Utils.getHexString(getKey()));
-            return json;
+        public JSONObject toJSON() throws JSONException {
+            JSONObject o = super.toJSON();
+            o.put(SECTOR_IDX, mSectorIndex);
+            return o;
         }
 
+        int getSectorIndex() {
+            return mSectorIndex;
+        }
     }
 
     public JSONObject toJSON() throws JSONException {
         JSONArray keysJson = new JSONArray();
-        for (Map.Entry<Integer, List<ClassicSectorKeyWrapper>> sector : mKeys.entrySet())
-            for (ClassicSectorKeyWrapper key : sector.getValue())
-                keysJson.put(key.toJSON(sector.getKey()));
+        for (Map.Entry<Integer, List<ClassicSectorKeyWrapper>> sector : mKeys.entrySet()) {
+            for (ClassicSectorKey key : sector.getValue()) {
+                keysJson.put(key.toJSON());
+            }
+        }
 
         JSONObject json = new JSONObject();
         json.put(KEYS, keysJson);
@@ -105,13 +114,16 @@ public class ClassicStaticKeys extends ClassicCardKeys {
         for (int i = 0; i < keysJSON.length(); i++) {
             JSONObject json = keysJSON.getJSONObject(i);
 
-            int idx = json.getInt(SECTOR_IDX);
-            if (!ins.mKeys.containsKey(idx))
-                ins.mKeys.put(idx, new ArrayList<>());
+            ClassicSectorKeyWrapper w = ClassicSectorKeyWrapper.fromJSON(json);
 
-            ins.mKeys.get(idx).add(
-                    new ClassicSectorKeyWrapper(json));
+            if (!ins.mKeys.containsKey(w.getSectorIndex())) {
+                ins.mKeys.put(w.getSectorIndex(), new ArrayList<>());
+            }
+
+            ins.mKeys.get(w.getSectorIndex()).add(w);
         }
+
+        ins.setLengthAndReturn(jsonRoot);
         return ins;
     }
 
@@ -133,4 +145,14 @@ public class ClassicStaticKeys extends ClassicCardKeys {
         return allKeys;
     }
 
+    @Override
+    public String getType() {
+        return CardKeys.TYPE_MFC_STATIC;
+    }
+
+    @Nullable
+    @Override
+    public String getUID() {
+        return CLASSIC_STATIC_TAG_ID;
+    }
 }

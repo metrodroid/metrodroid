@@ -135,7 +135,7 @@ public class CardTest extends TestCase {
                                 (byte) 0x64, (byte) 0x72, (byte) 0x6f, (byte) 0x69, (byte) 0x64,
                                 (byte) 0x43, (byte) 0x6c, (byte) 0x61, (byte) 0x73, (byte) 0x73,
                                 (byte) 0x69 };
-        byte[] k = new byte[] { 0, 0, 0, 0, 0, 0 };
+        ClassicSectorKey k = ClassicSectorKey.wellKnown(new byte[] { 0, 0, 0, 0, 0, 0 });
         Calendar d = new GregorianCalendar(2010, 1, 1, 0, 0, 0);
         d.setTimeZone(TimeZone.getTimeZone("GMT"));
 
@@ -154,7 +154,7 @@ public class CardTest extends TestCase {
             b[y] = ClassicBlock.create(ClassicBlock.TYPE_DATA, y, e);
         }
 
-        l[2] = new ClassicSector(2, b, k, ClassicSectorKey.TYPE_KEYA);
+        l[2] = new ClassicSector(2, b, k);
         Card c2 = new ClassicCard(Utils.hexStringToByteArray("12345678"), d, l);
 
         assertFalse(c2.parseTransitData() instanceof UnauthorizedClassicTransitData);
@@ -162,7 +162,7 @@ public class CardTest extends TestCase {
         // Build a card with all readable data.
         l = new ClassicSector[16];
         for (int x=0; x < 16; x++) {
-            l[x] = new ClassicSector(x, b, k, ClassicSectorKey.TYPE_KEYA);
+            l[x] = new ClassicSector(x, b, k);
         }
 
         Card c3 = new ClassicCard(Utils.hexStringToByteArray("12345678"), d, l);
@@ -178,7 +178,7 @@ public class CardTest extends TestCase {
                 (byte)0xff, (byte)0xff };
         byte[] otherBytes = new byte[] { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16 };
 
-        byte[] k = new byte[] { 0, 0, 0, 0, 0, 0 };
+        ClassicSectorKey k = ClassicSectorKey.wellKnown(new byte[] { 0, 0, 0, 0, 0, 0 });
         Calendar d = new GregorianCalendar(2010, 1, 1, 0, 0, 0);
         d.setTimeZone(TimeZone.getTimeZone("GMT"));
 
@@ -197,9 +197,9 @@ public class CardTest extends TestCase {
         ClassicSector[] otherSectors = new ClassicSector[16];
 
         for (int x=0; x < 16; x++) {
-            all00Sectors[x] = new ClassicSector(x, all00Blocks, k, ClassicSectorKey.TYPE_KEYA);
-            allFFSectors[x] = new ClassicSector(x, allFFBlocks, k, ClassicSectorKey.TYPE_KEYA);
-            otherSectors[x] = new ClassicSector(x, otherBlocks, k, ClassicSectorKey.TYPE_KEYA);
+            all00Sectors[x] = new ClassicSector(x, all00Blocks, k);
+            allFFSectors[x] = new ClassicSector(x, allFFBlocks, k);
+            otherSectors[x] = new ClassicSector(x, otherBlocks, k);
         }
 
         Card all00Card = new ClassicCard(Utils.hexStringToByteArray("12345678"), d, all00Sectors);

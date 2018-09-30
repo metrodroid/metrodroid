@@ -28,6 +28,21 @@ public enum KeyFormat {
     UNKNOWN,
     /** Traditional raw (farebotkeys) binary format */
     RAW_MFC,
-    /** JSON format */
-    JSON
+    /** JSON format (unspecified) */
+    JSON,
+    /** JSON format (MifareClassic, with UID) */
+    JSON_MFC,
+    /** JSON format (MifareClassic, without UID) */
+    JSON_MFC_NO_UID,
+    /** JSON format (MifareClassicStatic) */
+    JSON_MFC_STATIC,
+
+    ;
+
+    public boolean isJSON() {
+        return this == KeyFormat.JSON
+                || this == KeyFormat.JSON_MFC
+                || this == KeyFormat.JSON_MFC_NO_UID
+                || this == KeyFormat.JSON_MFC_STATIC;
+    }
 }

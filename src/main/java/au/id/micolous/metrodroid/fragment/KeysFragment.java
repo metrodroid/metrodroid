@@ -205,27 +205,25 @@ public class KeysFragment extends ListFragment implements AdapterView.OnItemLong
                         Log.d(TAG, "REQUEST_SELECT_FILE content_type = " + type);
 
                         KeyFormat f;
-                        if ("application/json".equals(type)) {
-                            f = KeyFormat.JSON;
-                        } else {
-                            // Old versions of Android also land here, so we need proper detection.
-                            f = Utils.detectKeyFormat(getActivity(), uri);
-                            Log.d(TAG, "Detected file format: " + f.name());
-                        }
+                        f = Utils.detectKeyFormat(getActivity(), uri);
+                        Log.d(TAG, "Detected file format: " + f.name());
 
                         switch (f) {
-                            case JSON:
-                                @StringRes int err = importKeysFromJSON(getActivity(), uri);
+                            case JSON_MFC_STATIC:
+                                // Static keys can't be prompted
+                                @StringRes int err = importKeysFromJSON(getActivity(), uri, f);
                                 if (err != 0) {
                                     Toast.makeText(getActivity(), err, Toast.LENGTH_SHORT).show();
                                 }
                                 break;
 
+                            case JSON_MFC:
+                            case JSON_MFC_NO_UID:
                             case RAW_MFC:
                                 startActivity(new Intent(Intent.ACTION_VIEW, uri, getActivity(), AddKeyActivity.class));
                                 break;
 
-                            case UNKNOWN:
+                            default:
                                 Toast.makeText(getActivity(), R.string.invalid_key_file, Toast.LENGTH_SHORT).show();
                                 break;
                         }
@@ -239,40 +237,27 @@ public class KeysFragment extends ListFragment implements AdapterView.OnItemLong
     }
 
     @StringRes
-    private static int importKeysFromJSON(Activity activity, Uri uri) throws IOException {
+    private static int importKeysFromJSON(Activity activity, Uri uri, KeyFormat f) throws IOException {
         InputStream stream = activity.getContentResolver().openInputStream(uri);
         byte[] keyData = IOUtils.toByteArray(stream);
-        return importKeysFromJSON(activity, keyData);
+        return importKeysFromJSON(activity, keyData, f);
     }
 
     @StringRes
-    public static int importKeysFromJSON(Activity activity, byte[] keyData) {
+    public static int importKeysFromJSON(Activity activity, byte[] keyData, KeyFormat f) {
         try {
             JSONObject json = new JSONObject(new String(keyData));
-            String type = json.getString(CardKeys.JSON_KEY_TYPE_KEY);
-            Log.d(TAG, "keyType = " + type);
+            Log.d(TAG, "keyType = " + f);
             Log.d(TAG, "inserting key");
-            switch (type) {
-                case CardKeys.TYPE_MFC: {
-                    // Test that we can deserialise this
-                    ClassicCardKeys k = ClassicCardKeys.fromJSON(json);
-                    if (k.keys().size() == 0) {
-                        throw new JSONException("key file is empty");
-                    }
-
-                    new InsertKeyTask(activity, type, json.toString(),
-                            json.getString(CardKeys.JSON_TAG_ID_KEY), true).execute();
-                    break;
-                }
-                case CardKeys.TYPE_MFC_STATIC: {
+            switch (f) {
+                case JSON_MFC_STATIC: {
                     // Test that we can deserialise this
                     ClassicStaticKeys k = ClassicStaticKeys.fromJSON(json);
                     if (k.keys().size() == 0) {
                         throw new JSONException("key file is empty");
                     }
 
-                    new InsertKeyTask(activity, type, json.toString(),
-                            CardKeys.CLASSIC_STATIC_TAG_ID, true).execute();
+                    new InsertKeyTask(activity, k, true).execute();
                     break;
                 }
                 default:
@@ -324,7 +309,7 @@ public class KeysFragment extends ListFragment implements AdapterView.OnItemLong
                     int keyCount = 0;
 
                     try {
-                        ClassicCardKeys k = ClassicCardKeys.fromJSON(new JSONObject(keyData));
+                        ClassicCardKeys k = ClassicCardKeys.fromJSON(new JSONObject(keyData), KeyFormat.JSON_MFC);
                         keyCount = k.keys().size();
                     } catch (JSONException ignored) { }
 

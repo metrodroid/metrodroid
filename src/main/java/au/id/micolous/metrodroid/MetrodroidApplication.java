@@ -58,6 +58,7 @@ import au.id.micolous.metrodroid.card.desfire.settings.DesfireFileSettings;
 import au.id.micolous.metrodroid.card.iso7816.ISO7816Application;
 import au.id.micolous.metrodroid.card.iso7816.ISO7816SelectorElement;
 import au.id.micolous.metrodroid.card.ultralight.UltralightPage;
+import au.id.micolous.metrodroid.key.ClassicSectorKey;
 import au.id.micolous.metrodroid.xml.Base64String;
 import au.id.micolous.metrodroid.xml.CardConverter;
 import au.id.micolous.metrodroid.xml.CardTypeTransform;
@@ -142,6 +143,7 @@ public class MetrodroidApplication extends Application {
             matcher.bind(FeliCaLib.IDm.class, FelicaIDmTransform.class);
             matcher.bind(FeliCaLib.PMm.class, FelicaPMmTransform.class);
             matcher.bind(CardType.class, CardTypeTransform.class);
+            matcher.bind(ClassicSectorKey.KeyType.class, ClassicSectorKey.KeyType.Transform.class);
 
         } catch (Exception ex) {
             throw new RuntimeException(ex);

@@ -275,6 +275,8 @@
         <item quantity="one">Hidden key data (<xliff:g id="count" example="1">%d</xliff:g> byte)</item>
         <item quantity="other">Hidden key data (<xliff:g id="count" example="3">%d</xliff:g> bytes)</item>
     </plurals>
+    <!-- Translators: "key" is an encryption key, which is displayed below this label. -->
+    <string name="key_data">Key data</string>
 
     <!--
     Translators: There is an obfuscation mode, with many flags (options) available. The value
@@ -1019,6 +1021,19 @@
     <string name="file_fci">File FCI</string>
     <!-- Translators: FCI = File Control Information. Used in the context of ISO 7816 cards. -->
     <string name="app_fci">App FCI</string>
+    <string name="classic_key">MIFARE Classic key</string>
+    <!--
+    Translators: MIFARE Classic has two keys: key "A" and key "B".
+    "Key" can be translated, but do not transliterate "A" or "B".
+    -->
+    <string name="classic_key_a">Key A</string>
+    <!--
+    Translators: MIFARE Classic has two keys: key "A" and key "B".
+    "Key" can be translated, but do not transliterate "A" or "B".
+    -->
+    <string name="classic_key_b">Key B</string>
+
+
     <string name="classic_key_format_a">Key (A): %s</string>
     <string name="classic_key_format_b">Key (B): %s</string>
     <string name="classic_key_format">Key: %s</string>
@@ -1070,6 +1085,8 @@
         <item quantity="one">%d static MIFARE Classic key</item>
         <item quantity="other">%d static MIFARE Classic keys</item>
     </plurals>
+
+    <string name="no_static_key_assignment">Static keys cannot be assigned to a single card.</string>
 
     <string name="farebox_number">Farebox #%s</string>
 </resources>
