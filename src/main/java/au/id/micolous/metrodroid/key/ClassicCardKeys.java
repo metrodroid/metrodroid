@@ -33,7 +33,9 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
+import au.id.micolous.farebot.R;
 import au.id.micolous.metrodroid.util.KeyFormat;
+import au.id.micolous.metrodroid.util.Utils;
 
 /**
  * Helper for access to MIFARE Classic keys.
@@ -162,6 +164,11 @@ public class ClassicCardKeys extends CardKeys {
         return mUID;
     }
 
+    @Nullable
+    public String getDescription() {
+        return mUID;
+    }
+
     public void setUID(@NonNull String value) {
         mUID = value;
     }
@@ -224,5 +231,17 @@ public class ClassicCardKeys extends CardKeys {
     @Override
     public String getType() {
         return CardKeys.TYPE_MFC;
+    }
+
+    /**
+     * Returns a localised description of the key file type and its contents.
+     */
+    public String getFileType() {
+        int keyCount = 0;
+        if (mSectorKeys != null) {
+            keyCount = mSectorKeys.length;
+        }
+
+        return Utils.localizePlural(R.plurals.keytype_mfc_static, keyCount, keyCount);
     }
 }

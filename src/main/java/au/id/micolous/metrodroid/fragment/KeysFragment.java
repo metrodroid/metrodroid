@@ -27,6 +27,7 @@ import android.app.LoaderManager;
 import android.content.ContentUris;
 import android.content.Context;
 import android.content.CursorLoader;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.Loader;
 import android.database.Cursor;
@@ -101,20 +102,57 @@ public class KeysFragment extends ListFragment implements AdapterView.OnItemLong
         @Override
         public boolean onActionItemClicked(ActionMode mode, MenuItem item) {
             if (item.getItemId() == R.id.delete_key) {
-                new BetterAsyncTask<Void>(getActivity(), false, false) {
-                    @Override
-                    protected Void doInBackground() throws Exception {
-                        Uri uri = ContentUris.withAppendedId(CardKeyProvider.CONTENT_URI, mActionKeyId);
-                        getActivity().getContentResolver().delete(uri, null, null);
-                        return null;
-                    }
+                if (MetrodroidApplication.hideCardNumbers()) {
+                    new AlertDialog.Builder(getActivity())
+                            .setTitle(R.string.cant_delete_with_obfuscation)
+                            .setMessage(R.string.cant_delete_with_obfuscation_message)
+                            .setPositiveButton(android.R.string.ok, (dialog, which) -> {
+                                dialog.dismiss();
+                            })
+                            .show();
+                    return true;
+                }
 
-                    @Override
-                    protected void onResult(Void unused) {
-                        mActionMode.finish();
-                        ((KeysAdapter) getListAdapter()).notifyDataSetChanged();
-                    }
-                }.execute();
+                ClassicCardKeys keys = null;
+                try {
+                    keys = CardKeys.forID(mActionKeyId);
+                } catch (JSONException e) {
+                    Log.d(TAG, "JSON error in deleting key?");
+                }
+
+                String deleteMessage;
+                if (keys != null) {
+                    deleteMessage = Utils.localizeString(R.string.delete_key_confirm_message,
+                            keys.getDescription(), keys.getFileType());
+                } else {
+                    deleteMessage = Utils.localizeString(R.string.delete_key_confirm_message,
+                            "??", "??");
+                }
+
+                new AlertDialog.Builder(getActivity())
+                        .setTitle(R.string.delete_key_confirm_title)
+                        .setMessage(deleteMessage)
+                        .setPositiveButton(R.string.delete, (dialog, which) -> {
+                            new BetterAsyncTask<Void>(getActivity(), false, false) {
+                                @Override
+                                protected Void doInBackground() throws Exception {
+                                    Uri uri = ContentUris.withAppendedId(CardKeyProvider.CONTENT_URI, mActionKeyId);
+                                    getActivity().getContentResolver().delete(uri, null, null);
+                                    return null;
+                                }
+
+                                @Override
+                                protected void onResult(Void unused) {
+                                    mActionMode.finish();
+                                    ((KeysAdapter) getListAdapter()).notifyDataSetChanged();
+                                }
+                            }.execute();
+                            dialog.dismiss();
+                        })
+                        .setNegativeButton(android.R.string.cancel, (dialog, which) -> {
+                            dialog.cancel();
+                        })
+                        .show();
                 return true;
             } else if (item.getItemId() == R.id.export_key) {
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
@@ -329,13 +367,12 @@ public class KeysFragment extends ListFragment implements AdapterView.OnItemLong
             switch (type) {
                 case CardKeys.TYPE_MFC_STATIC: {
                     String keyData = cursor.getString(cursor.getColumnIndex(KeysTableColumns.KEY_DATA));
-                    int keyCount = 0;
-
                     String desc = null;
+                    String fileType = null;
                     try {
                         ClassicStaticKeys k = ClassicStaticKeys.fromJSON(new JSONObject(keyData));
                         desc = k.getDescription();
-                        keyCount = k.keys().size();
+                        fileType = k.getFileType();
                     } catch (JSONException ignored) { }
 
                     if (desc != null) {
@@ -344,16 +381,20 @@ public class KeysFragment extends ListFragment implements AdapterView.OnItemLong
                         textView1.setText(R.string.untitled_key_group);
                     }
 
-                    textView2.setText(Utils.localizePlural(R.plurals.keytype_mfc_static, keyCount, keyCount));
+                    if (fileType != null) {
+                        textView2.setText(fileType);
+                    } else {
+                        textView2.setText(R.string.unknown);
+                    }
                     break;
                 }
                 case CardKeys.TYPE_MFC: {
                     String keyData = cursor.getString(cursor.getColumnIndex(KeysTableColumns.KEY_DATA));
-                    int keyCount = 0;
+                    String fileType = null;
 
                     try {
                         ClassicCardKeys k = ClassicCardKeys.fromJSON(new JSONObject(keyData), KeyFormat.JSON_MFC);
-                        keyCount = k.keys().size();
+                        fileType = k.getFileType();
                     } catch (JSONException ignored) { }
 
                     if (MetrodroidApplication.hideCardNumbers()) {
@@ -362,7 +403,11 @@ public class KeysFragment extends ListFragment implements AdapterView.OnItemLong
                         textView1.setText(id);
                     }
 
-                    textView2.setText(Utils.localizePlural(R.plurals.keytype_mfc, keyCount, keyCount));
+                    if (fileType != null) {
+                        textView2.setText(fileType);
+                    } else {
+                        textView2.setText(R.string.unknown);
+                    }
                     break;
                 }
                 default:

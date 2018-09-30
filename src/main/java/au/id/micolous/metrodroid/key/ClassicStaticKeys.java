@@ -33,6 +33,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import au.id.micolous.farebot.R;
 import au.id.micolous.metrodroid.util.Utils;
 
 /**
@@ -154,5 +155,14 @@ public class ClassicStaticKeys extends ClassicCardKeys {
     @Override
     public String getUID() {
         return CLASSIC_STATIC_TAG_ID;
+    }
+
+    public String getFileType() {
+        int keyCount = 0;
+        for (List<ClassicSectorKeyWrapper> keys : mKeys.values()) {
+            keyCount += keys.size();
+        }
+
+        return Utils.localizePlural(R.plurals.keytype_mfc_static, keyCount, keyCount);
     }
 }

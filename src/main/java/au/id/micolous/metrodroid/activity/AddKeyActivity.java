@@ -79,18 +79,10 @@ public class AddKeyActivity extends MetrodroidActivity {
 
     private ClassicCardKeys mKeyData;
 
-    /*
-    @Override
-    protected Integer getThemeVariant() {
-        return R.attr.AddKeysActivityTheme;
-    }
-    */
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_key);
-        // getWindow().setLayout(WRAP_CONTENT, MATCH_PARENT);
 
         findViewById(R.id.cancel).setOnClickListener(view -> {
             setResult(RESULT_CANCELED);

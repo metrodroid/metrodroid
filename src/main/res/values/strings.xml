@@ -124,6 +124,17 @@
     <string name="error">Error</string>
     <string name="keys">Keys</string>
     <string name="delete">Delete</string>
+    <string name="delete_key_confirm_title">Really delete key?</string>
+    <!--
+    Translators:
+    %1$s is a user supplied name for an encryption key.
+    %2$s is a description of the type of key. This will be populated with a localised string (keytype_mfc or keytype_mfc_static).
+    -->
+    <string name="delete_key_confirm_message">The key file "<xliff:g id="description" example="a1b2c3d4">%1$s</xliff:g>" (containing <xliff:g id="key_type" example="1 MIFARE Classic key">%2$s</xliff:g>) will be gone forever.</string>
+    <!-- Translators: in this context, "key" refers to an encryption key -->
+    <string name="cant_delete_with_obfuscation">Deleting keys is currently unavailable</string>
+    <!-- Translators: in this context, "key" refers to an encryption key -->
+    <string name="cant_delete_with_obfuscation_message">For safety reasons, you can\'t delete keys while card number obfuscation is enabled. Turn it off if you want to delete keys.</string>
     <string name="add_key_directions">Save a binary dump of your keys as a file with a .farebotkeys extension, e-mail it as an attachment to yourself, and then open it on this device.</string>
     <string name="no_keys">No keys.</string>
     <string name="nfc_unavailable">NFC Unavailable</string>

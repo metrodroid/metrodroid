@@ -20,6 +20,7 @@
 
 package au.id.micolous.metrodroid.activity;
 
+import android.annotation.SuppressLint;
 import android.app.ActionBar;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -86,6 +87,7 @@ public class CardInfoActivity extends MetrodroidActivity {
     };
 
 
+    @SuppressLint("StaticFieldLeak")
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
