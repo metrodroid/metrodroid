@@ -963,7 +963,8 @@ public class Utils {
      * @return The index of the hash that matched, or a number less than 0 if the value was not
      *         found, or there was some other error with the input.
      */
-    private static int checkKeyHash(@NonNull byte[] key, @NonNull String salt, String... expectedHashes) {
+    @VisibleForTesting
+    public static int checkKeyHash(@NonNull byte[] key, @NonNull String salt, String... expectedHashes) {
         MessageDigest md5;
         String digest;
 
