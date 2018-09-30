@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:tools="http://schemas.android.com/tools"
+    tools:shrinkMode="strict"
+    tools:keep="@raw/keep,@drawable/material_ic_group_24dp,@drawable/material_ic_person_24dp,@drawable/material_ic_add_24dp,@drawable/material_ic_save_24dp,@drawable/material_ic_delete_24dp"
+    tools:discard="@drawable/abc_ic_*,@layout/abc_alert_dialog_*,@layout/abc_search_view,@drawable/material_ic_*"
+    />

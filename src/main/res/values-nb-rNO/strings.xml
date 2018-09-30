@@ -11,16 +11,12 @@
     <string name="advanced_info">Avansert info</string>
     <string name="delete_card">Slett kort</string>
     <string name="unknown_card">Ukjent kort</string>
-    <string name="locked_card">Låst kort</string>
     <string name="hw_detail">Fabrikatsinfo</string>
     <string name="data">Rådata</string>
     <string name="copy_xml">Kopier</string>
     <string name="share_xml">Del</string>
     <string name="save_xml">Lagre til fil</string>
-    <string name="trips">Turer</string>
     <string name="history">Historikk</string>
-    <string name="balance">Balanse</string>
-    <string name="refills">Påfyllinger</string>
     <string name="no_trip_data">Fant ingen turer. Har dette kortet vært i bruk?</string>
     <string name="import_xml">Importer</string>
     <string name="import_clipboard">Lim inn fra utklippstavle</string>
@@ -34,19 +30,15 @@
     <string name="balance_speech">Balanse <xliff:g id="balance" example="$13.37">%s</xliff:g></string>
     <string name="loading">Laster…</string>
     <string name="supported_cards">Støttede kort</string>
-    <string name="transaction_sequence">#</string>
     <string name="fully_locked_title">Helt låst kort.</string>
     <string name="nfc_off_error">NFC avskrudd</string>
     <string name="turn_on_nfc">Skru på NFC for å lese kortinformasjon.</string>
     <string name="wireless_settings">Trådløsinnstillinger</string>
-    <string name="report_error">Innrapporter feil</string>
 
     <string name="unknown_card_header">Ukjent kortformat</string>
     <string name="unknown_card_description">Dette kortet er ikke støttet av Metrodroid enda. Bare råkortdata kan vises.</string>
 
     <string name="unknown_more_info">Mer informasjon</string>
-    <string name="report_error_privacy_title">Personvernsmerknad</string>
-    <string name="report_error_privacy_message">All data på dette kortet vil bli inkludert i din feilrapport.</string>
     <string name="scanned_cards">Historikk</string>
     <string name="no_scanned_cards">Du har ikke skannet noen kort.</string>
     <string name="block_title_format">Blokk: %s</string>
@@ -54,11 +46,9 @@
     <string name="sector_title_format">Sektor: 0x%s</string>
     <string name="unauthorized_sector_title_format">Sektor: 0x%s (ikke autorisert)</string>
     <string name="invalid_sector_title_format">Sektor: 0x%1$s (ugyldig: %2$s)</string>
-    <string name="subscriptions">Abonnementer</string>
     <string name="info">Info</string>
     <string name="valid_format">Gydlig %1$s til %2$s</string>
     <string name="valid_to_format">Gyldig til %1$s</string>
-    <string name="valid_not_used">Ikke i bruk enda</string>
     <string name="unknown_format">Ukjent (%s)</string>
     <string name="unknown">Ukjent</string>
     <string name="keys_required">Krypteringsnøkler kreves for å lese dette kortet.</string>
@@ -70,9 +60,7 @@
     <string name="delete">Slett</string>
     <string name="no_keys">Ingen nøkler.</string>
     <string name="nfc_unavailable">NFC utilgjengelig</string>
-    <string name="fare_cancelled_format">%s (Avbrutt)</string>
     <string name="general">Grunnleggende</string>
-    <string name="error_report_sent">Feilrapport sendt.</string>
     <string name="checksum">Sjekksum</string>
     <string name="last_transaction">Siste overføring</string>
     <string name="date">Dato</string>
@@ -80,7 +68,6 @@
     <string name="vehicle_type">Kjøretøystype</string>
     <string name="transaction_type">Overføringstype</string>
     <string name="card_not_supported_on_device">Dette kortet støttes ikke av enheten din.</string>
-    <string name="card_note_cepas">Ikke kompatibel med alle enheter.</string>
     <string name="need_stations">Noen stasjonsnavn er ukjente.</string>
     <string name="card_preview_reader">Betaversjon av kortleseren.</string>
     <string name="visit_website">Besøk nettsiden</string>
@@ -105,7 +92,6 @@
 
     <string name="hsl_person_format">%s person</string>
     <string name="hsl_mins_format">%s min</string>
-    <string name="hsl_value_ticket_vehicle_type">Kjøretøysnummer</string>
     <string name="opal_vehicle_bus">Buss</string>
     <string name="opal_vehicle_rail">Tog</string>
     <string name="opal_action_none">Intet (nytt, ubrukt kort)</string>
@@ -126,7 +112,6 @@
     <string name="about_card_format">Om dette kortformatet</string>
     <string name="mifare_classic">MIFARE Classic</string>
     <string name="auth_retries_summary">Antall ganger autentisering skal forsøkes for hver sektor</string>
-    <string name="storage_required">Tilgang kreves for å lese og skrive kortdumper og nøkler fra/til filer.</string>
 
     <string name="mfc_fallback_desc">Noen byrå har ingen identifiserende magi på kortene sine. For å lese dem, må du eksplisitt velge et byrå.</string>
     <string name="mfc_fallback">Tilbakefallsleser</string>
@@ -164,29 +149,9 @@
     <string name="felica_process_purchase_magnetic">Magnetisk billett</string>
     <string name="felica_process_fare_adjustment">Reiseprisjustering</string>
     <string name="felica_process_admission_payment">Påstigningsbetaling</string>
-    <string name="hsl_1zone_ticket">Internbillett</string>
-    <string name="hsl_2zone_ticket">Regionbillett</string>
     <string name="hsl_balance_refill">Saldopåfylling</string>
     <string name="hsl_balance_ticket">Verdibillett</string>
-    <string name="hsl_value_ticket_is_valid">Gyldig verdibillett</string>
     <string name="hsl_pass_ticket">Sesongbillett</string>
-    <string name="hsl_season_ticket_starts">Sesongbillett starter</string>
-    <string name="hsl_season_ticket_ends">Sesongbillett slutter</string>
-    <string name="hsl_season_ticket_bought_on">Sesongbillett kjøpt den</string>
-    <string name="hsl_previous_season_ticket">Forrige sesongbillett var</string>
-    <string name="hsl_you_last_used_this_ticket">Du brukte denne billetten sist den</string>
-    <string name="hsl_value_ticket">Verdibillett</string>
-    <string name="hsl_value_ticket_bought_on">Billett kjøpt</string>
-    <string name="hsl_value_ticket_expires_on">Billetten utløper</string>
-    <string name="hsl_value_ticket_last_transfer">Siste overføring</string>
-    <string name="hsl_value_ticket_last_sign">Siste signering</string>
-    <string name="hsl_value_ticket_price">Pris på verdibillett</string>
-    <string name="hsl_value_ticket_disco_group">Rabattgruppe</string>
-    <string name="hsl_value_ticket_pax">Gruppestørrelse</string>
-    <string name="hsl_value_ticket_duration">Billettgyldighet</string>
-    <string name="hsl_value_ticket_vehicle_number">Kjøretøysnummer</string>
-    <string name="hsl_value_ticket_line_number">Linjenummer</string>
-    <string name="hsl_season_ticket">Sesongbillett</string>
 
     <string name="opal_automatic_top_up">Automatisk oppfylling</string>
     <string name="opal_weekly_trips">Ukentlige turer</string>
@@ -197,18 +162,17 @@
     <string name="opal_action_manly_transfer_same_mode">Overgang (fra annen ferge til Manly Ferry)</string>
     <string name="opal_action_manly_transfer_diff_mode">Overgang (fra annet modus til Manly Ferry)</string>
     <string name="nextfare_system_code">Systemkode</string>
-    <string name="card_expiry_date">Utløpsdato for kort</string>
 
     <string name="pass_or_transfer">Send/Overfør</string>
     <string name="speak_balance_summary">Når du skanner et kort, vil saldoen automatisk bli lest høyt. Dette fungerer selv når ikke en skjermleser kjører.</string>
-    <string name="fully_locked_desc">"Ingen del av dette kortet kan leses fritt uten en nøkkel.  Du har ingen gyldig nøkkel installert for det. 
-\n 
-\nHvis kortet er støttet av Metrodroid, så vil kortet fungere etter at nøkler for det er installert.  Mer informasjon om hvordan du får tak i disse finnes i dokumentasjonen. 
-\n 
+    <string name="fully_locked_desc">"Ingen del av dette kortet kan leses ut på vanlig måte uten en nøkkel. Du har ingen gyldig nøkkel installert for det.
+\n
+\nHvis kortet er støttet av Metrodroid, så vil kortet fungere etter at nøkler for det er installert.  Mer info om hvordan du får tak i disse finnes i dokumentasjonen.
+\n
 \nHvis kortet ditt ikke er støttet av Metrodroid, så er det usannsynlig at det noen gang vil bli det, med mindre nøkkelen for det er dechiffrert.
-\n 
-\nVær så snill å ta kontakt med ditt kommunale kollektivtransportetat for å få et visst nivå av åpen data-tilgang for de utstedte kortene.  Det er mulig å tilby begrenset lesetilgang på en trygg måte til kollektivtransport-smartkort."</string>
-    <string name="add_key_directions">Lagre en binærdump av nøklene dine som en fil med endelsen .farebotkeys, send den som et epostvedlegg til deg selv og åpne filen på denne enheten.</string>
+\n
+\nTa kontakt med ditt kommunale kollektivtransportetat for prøve å få et visst nivå av åpen datatilgang for de utstedte kortene.  Det er mulig å tilby lesetilgang på en trygg måte med moderne smartkortteknologi. Nonen byråer dokumenterer faktisk også dataformatet!"</string>
+    <string name="add_key_directions">Lagre en binærdump av nøklene dine som en fil med endelsen .farebotkeys, send den som et e-postvedlegg til deg selv og åpne filen på denne enheten.</string>
     <string name="location_helsinki_finland">Helsingfors, Finland</string>
     <string name="location_sydney_australia">Sydney, Australia</string>
     <string name="felica_terminal_mobile_phone">Mobiltelefon</string>
@@ -222,8 +186,6 @@
     <string name="felica_process_payment_thirdparty">Betaling (tredjepart)</string>
     <string name="felica_process_admission_thirdparty">Inngangsbetaling (tredjepart)</string>
 
-    <string name="hsl_pass_is_valid">Gyldig sesongbillett</string>
-    <string name="hsl_season_ticket_price_was">Pris for inneværende sesongbillett var</string>
     <string name="opal_vehicle_ferry_lr">Ferge eller nærbane</string>
     <string name="opal_action_journey_completed_distance">Tur fullført (strekningstakst)</string>
     <string name="opal_action_journey_completed_flat_rate">Tur fullført (fast takst)</string>
@@ -237,7 +199,7 @@
 
     <string name="card_note_seqgo">Støtter ikke Go Access, Explore eller SEEQ -kort.</string>
 
-    <string name="card_note_myki">Kun kortnummeret kan leses.</string>
+    <string name="card_note_card_number_only">Kun kortnummeret kan leses.</string>
 
     <string name="nextfare">Cubic Nextfare</string>
     <string name="nextfare_ticket_class">Billettypekode</string>
@@ -290,7 +252,6 @@
     <string name="machine_id">Maskin-ID %s</string>
 
     <string name="felica_service_title_format">Tjeneste: 0x%1$s (%2$s)</string>
-    <string name="felica_service_format">Tjeneste: 0x%s</string>
     <string name="localise_places">Legg til språkhint i stedsnavn</string>
 
     <string name="localise_places_desc">Legger til språkhint (LocaleSpan) til i stedsnavn, som stasjon, stopp, linje og rutenavn. Dette endrer uttalen brukt av skjermlesere og annen tilgjengelighetsprogramvare.</string>
@@ -333,7 +294,6 @@
     <string name="felica_process_bus_pitapa">Buss (PiTaPa)</string>
     <string name="felica_process_bus_iruca">Buss (IruCa)</string>
     <string name="felica_process_payment_shinkansen">Shinkansen-betaling</string>
-    <string name="seqgo_ticket_type">Billettype</string>
     <string name="general_information">Generell informasjon</string>
     <string name="personal_information">Personlig informasjon</string>
     <string name="date_of_birth">Fødselsdato</string>
@@ -389,7 +349,6 @@
 
 
     <string name="credit_information">Kredittinformasjon</string>
-    <string name="alternate_purse_balances">"Bytt portemoné-saldoer "</string>
     <string name="localise_places_longdesc">Tekst-til-tale -stemmer fungerer vanligvis bare bra for ett språk.
 \n
 \nLocaleSpan-hint brukes til å merke at tekst er forskjellig i et annet språk. Når det brukes på en stasjon, et stopp, linje eller rutenavn, vil en skjermleser som støtter disse hintene uttale navnet ved bruk av syntetiserte stemmer fra stedets lokale språk, snarere enn språket du har satt opp Android til å bruke.
@@ -424,7 +383,6 @@
     <string name="felica_process_deposit_bus">Matebuss</string>
     <string name="felica_process_purchase_special_ticket">Billett (Spesiell buss/bil)</string>
     <string name="opal_action_tap_on_reversal">Innstemplingsomvendelse</string>
-    <string name="octopus_szt">Shenzhen Tong</string>
 
     <string name="record_title_format">Tidslinjeopptak: %s</string>
     <plurals name="record_count">
@@ -501,4 +459,204 @@
     <string name="card_note_russia">Kun påfyllbare e-veskekort støttes. Bank-utstedte kort støttes ikke.</string>
     <string name="card_name_troika">Troika</string>
     <string name="card_name_podorozhnik">Podorozhnik</string>
-</resources>
+<string name="sector_title_format_empty">Sektor: 0x%s (tom)</string>
+    <string name="binary_title_format">Binærdata</string>
+    <string name="requires_android_21">Krever Android 5.0 eller senere.</string>
+
+    <string name="pref_theme">Drakt</string>
+    <string name="pref_theme_desc">Velg utseende og oppførsel</string>
+
+    <string name="pref_show_local_and_english_title">Vis både lokale og engelske stasjonsnavn</string>
+    <plurals name="minutes">
+	<item quantity="one">%d minutt</item>
+	<item quantity="other">%d minutter</item>
+</plurals>
+    <plurals name="hours">
+	<item quantity="one">%d time</item>
+	<item quantity="other">%d timer</item>
+</plurals>
+    <plurals name="days">
+	<item quantity="one">%d dag</item>
+	<item quantity="other">%d dager</item>
+</plurals>
+    <plurals name="trips_remaining">
+	<item quantity="one">%d tur gjenstår</item>
+	<item quantity="other">%d turer gjenstår</item>
+</plurals>
+    <plurals name="troika_rides">
+	<item quantity="one">Enkelttur</item>
+	<item quantity="other">%-tur</item>
+</plurals>
+
+    <string name="trip_description_unknown_start">til %s</string>
+    <string name="time_from_to">%s → %s</string>
+    <string name="time_from_unknown_to">\?:?? → %s</string>
+
+
+    <string name="location_israel">Israel</string>
+    <string name="clipper_end_of_line">(Siste stoppested)</string>
+    <string name="clipper_zone_number">Sone #%s</string>
+
+    <string name="ez_bus_number">Buss #%s</string>
+    <string name="ez_bus_refund">Buss-tilbakebetaling</string>
+    <string name="ez_topup">Påfylling</string>
+    <string name="ez_first_use">Første bruk</string>
+    <string name="kmt_extra_note">Kun for nye FeliCa-kort.</string>
+
+    <string name="orca_topup_machine">Maskin #%s</string>
+    <string name="orca_topup">Fyll på</string>
+
+    <string name="suica_bus_area_line_stop">Bussområde %s Linje %s Stopp %s</string>
+
+    <string name="compass_product_type">Produkttype</string>
+    <string name="compass_machine_code">Maskinkode</string>
+    <string name="compass_ticket_type">Billettkode</string>
+    <string name="compass_ticket_type_concession">Honør</string>
+    <string name="compass_ticket_type_regular">Vanlig</string>
+    <string name="compass_note">Kun enkelttursbilletter</string>
+
+    <string name="opus_subscription">Abonnement</string>
+    <string name="opus_card_expiry_date">Kortutløp</string>
+    <string name="opus_single_trips">Enkeltturer</string>
+
+    <string name="troika_fare_90mins">90 minutter</string>
+    <string name="validity_length">Gyldig i %s</string>
+    <string name="podorozhnik_topup">Podorozhnik påfylling</string>
+    <string name="led_bus">St. Petersburgs buss</string>
+    <string name="led_metro">St. Petersburgs metro</string>
+    <string name="led_shared_taxi">St. Petersburg delt drosje</string>
+
+    <string name="blank_mfu_card">Blankt MIFARE Ultralight-kort</string>
+    <string name="fully_blank_desc">Dette kortet er helt blankt så langt det går an å se. Det er formatert, men uten data skrevet på det. Det har et serienummer, slik at det kan identifiseres, og det er lenket til en database, men selve kortet inneholder ingen annen data.</string>
+    <string name="fully_blank_title">Blankt kort</string>
+
+    <string name="location_seoul">Seoul, Sør-Korea</string>
+    <string name="card_name_tmoney">T-Money</string>
+    <string name="tmoney_date">T-money-dato</string>
+
+    <string name="no_data_in_clipboard">Ingen data i utklippstavle.</string>
+    <string name="app_version">Versjon: %s</string>
+    <string name="device_model">Modell: %s (%s)</string>
+    <string name="android_os">Android OS: %s (%s)</string>
+    <string name="nfc_enabled">NFC: Avskrudd</string>
+    <string name="nfc_disabled">NFC: Avskrudd</string>
+    <string name="nfc_not_available">NFC: Ikke støttet</string>
+    <string name="mfc_supported">MIFARE CLASSIC: Støttet</string>
+    <string name="mfc_not_supported">MIFARE Classic: Ikke støttet</string>
+    <string name="balances_and_subscriptions">Billetter</string>
+    <string name="card_number">Kortnummer</string>
+    <string name="pref_show_raw_station_ids">Vis råe stasjons-ID-er</string>
+    <string name="nfc">Nærfeltskommunikasjon</string>
+    <string name="location_istanbul">Istanbul, Tyrkia</string>
+    <string name="classic_key_format_a">Nøkkkel (A): %s</string>
+    <string name="classic_key_format_b">Nøkkel (B): %s</string>
+    <string name="classic_key_format">Nøkkel: %s</string>
+    <string name="transaction_counter">Handelsskranke</string>
+    <string name="pref_show_local_and_english_desc">Hvis påskrudd, vil både lokale og engelske navn vises uansett regionaldata. Hvis avskrudd vil den mest passende varianten velges.</string>
+
+    <string name="card_name_ravkav">Rav-Kav</string>
+    <string name="ravkav_agency_egged">Egged</string>
+    <string name="ravkav_agency_dan">Dan</string>
+    <string name="ravkav_agency_city_pass">City Pass</string>
+    <string name="ravkav_agency_topup_app">RavKav-påfyllingsapp</string>
+
+    <string name="location_vancouver">Vancouver, BC, Canada</string>
+    <string name="location_quebec">Québec-provinsen, Canada</string>
+    <string name="location_boston">Boston, MA, USA</string>
+
+    <string name="location_jakarta">Jakarta, Indonesia</string>
+
+    <string name="ez_mrt">MRT</string>
+    <string name="ez_retail_purchase">Detaljhandelkjøp</string>
+    <string name="ez_service_charge">Betalingskostnad</string>
+
+    <string name="card_name_suica">Suica</string>
+    <string name="card_name_icoca">ICOCA</string>
+    <string name="card_name_pasmo">PASMO</string>
+
+    <string name="felica_terminal_view_altte">VIEW ALTTE</string>
+    <string name="kmt_agency">Kereta Commuter (pendler) Indonesia</string>
+    <string name="kmt_other_data">Annen data</string>
+    <string name="kmt_last_trx_amount">Siste overføringsmengde</string>
+
+    <string name="hsl_line_vehicle">Rute %s, kjøretøy %s</string>
+
+    <string name="orca_coach_number">Vogn #%s</string>
+    <string name="suica_area_line_station">Område %1$s rute %2$s stasjon %3$s</string>
+
+    <string name="card_name_szt">Shenzhen Tong</string>
+    <string name="card_name_octopus">Octopus</string>
+    <string name="card_name_octopus_szt_dual">Hu Tong Xing</string>
+    <string name="szt_metro">Shenzhen metro</string>
+    <string name="szt_bus">Shenzhen-buss</string>
+    <string name="szt_station_gate">gate %s</string>
+
+    <string name="card_name_troika_podorozhnik_hybrid">Troika+Podorozhnik</string>
+    <string name="troika_fare_single">Enkelttur</string>
+    <string name="troika_layout">Troika-oppsett</string>
+    <string name="moscow_subway">Moskva undergrunnsbane</string>
+    <string name="moscow_monorail">Moskva énskinnebane</string>
+    <string name="moscow_ground_transport">Moskva jernbane</string>
+    <string name="moscow_mcc">Moscow Central Circle (MCC)</string>
+    <string name="troika_unknown_ticket">Ukjent troika-billettype %s</string>
+    <string name="troika_unformatted">Denne Troika-en er ikke formatert rett. Den må påfylles fra et billettkontor før den kan brukes.</string>
+    <string name="card_name_strelka">Strelka</string>
+    <string name="strelka_long_serial">Langt tall for Strelka</string>
+    <string name="card_name_troika_strelka_hybrid">Troika+Strelka</string>
+
+    <string name="subway_trips">Undergrunnsbaneturer</string>
+    <string name="ground_trips">Jernbaneturer</string>
+    <string name="podorozhnik_gate">gate %s</string>
+    <string name="podorozhnik_tvm">TVM %d</string>
+
+    <string name="blank_mfc_card">Blankt MIFARE Classic-kort</string>
+    <string name="charlie_2nd_card_number">Sekundært tall</string>
+
+    <string name="device_manufacturer">Fabrikant: %s (%s)</string>
+    <string name="pref_show_raw_station_ids_desc">Hvis sant, vil en rådatastasjons-ID vises i tillegg til stasjonsnavn</string>
+    <string name="station_database">Stasjonsdatabase</string>
+
+    <string name="advanced_options">Avanserte valg</string>
+
+    <string name="developer_options">Utviklervalg</string>
+    <string name="developer_options_desc">Bruk av stasjonsdatabaser, tilsløringsmodus…</string>
+
+    <string name="istanbulkart_2nd_card_number">Sekundær seriell</string>
+    <string name="nfc_options_desc">Tilbakefallsleser for MIFARE Classic, fysiske kortgrensesnittsinnstillinger…</string>
+
+    <string name="file_fci">Filkontrollinformasjon for fil</string>
+    <string name="app_fci">Filkontrollinformasjon for program</string>
+    <string name="trip_counter">Tur-telleverk</string>
+    <string name="refill_counter">Påfyllingsskranke</string>
+<string name="mfd_unlocking">Låser opp <xliff:g id="card_name" example="Leap">%s</xliff:g> kort…</string>
+
+    <string name="desfire_challenge">Utfordring</string>
+    <string name="desfire_response">Svar</string>
+    <string name="desfire_confirmation">Bekreftelse</string>
+    <string name="desfire_keyex">Nøkkelutveksling</string>
+    <string name="desfire_key_number">Nøkkel %s</string>
+
+    <string name="location_ireland">Irland</string>
+<string name="location_minneapolis">Minneapolis, MN, USA</string>
+    <string name="mifare_desfire">MIFARE DESFire</string>
+
+    <string name="leap_retrieve_keys">Hent nøkler for Leap-kort</string>
+    <string name="leap_retrieve_keys_longdesc">Dette vil dele dine kortdetaljer med Transport for Irland, for å kunne besvare Leap-kortets identitetsbekreftelsesutfordring. TFI vil kunne vite at du brukte Metrodroid på dette kortet. Kortet er ikke lesbart uten denne nøkkelen.</string>
+
+    <string name="locked_leap">Låst Leap</string>
+    <string name="leap_period_start">Periodestart</string>
+    <string name="leap_accumulator_region">Region</string>
+    <string name="leap_accumulator_total">Totalt forbruk</string>
+    <string name="leap_accumulator_agency">%s-totalforbruk</string>
+    <string name="leap_daily_accumulators">Daglig kostnadstak</string>
+    <string name="leap_weekly_accumulators">Ukentlig kostnadstak</string>
+
+    <string name="initialisation_date">Igangsettingsdato</string>
+    <string name="issue_date">Utstedelsesdato</string>
+
+    <string name="leap_issuer_id">Utsteder-ID</string>
+    <string name="leap_locked_warning">Dette kortet ble ikke låst opp. Skru på innhenting av Leap-nøkler i innstillingene</string>
+
+    <string name="add_key_raw">Rå</string>
+    <string name="invalid_json_key_type">Ugyldig JSON: Nøkkeltype mangler</string>
+    </resources>

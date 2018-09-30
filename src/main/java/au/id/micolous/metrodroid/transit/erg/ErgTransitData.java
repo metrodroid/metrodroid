@@ -20,7 +20,6 @@ package au.id.micolous.metrodroid.transit.erg;
 
 import android.os.Parcel;
 import android.support.annotation.Nullable;
-import android.text.Spanned;
 
 import au.id.micolous.metrodroid.card.UnauthorizedException;
 import au.id.micolous.metrodroid.card.classic.ClassicBlock;

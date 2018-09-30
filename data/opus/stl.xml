@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  stl.xml
+
+  Copyright 2018 Etienne Dubeau
+
+  This program is free software: you can redistribute it and/or modify
+  it under the terms of the GNU General Public License as published by
+  the Free Software Foundation, either version 3 of the License, or
+  (at your option) any later version.
+
+  This program is distributed in the hope that it will be useful,
+  but WITHOUT ANY WARRANTY; without even the implied warranty of
+  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  GNU General Public License for more details.
+
+  You should have received a copy of the GNU General Public License
+  along with this program.  If not, see <http://www.gnu.org/licenses/>.
+-->
+<stl>
+    <bus id="146" logo="" name="2" />
+    <bus id="" logo="" name="12" />
+    <bus id="" logo="" name="17" />
+    <bus id="" logo="" name="20" />
+    <bus id="" logo="" name="22" />
+    <bus id="" logo="" name="24" />
+    <bus id="7" logo="" name="26" />
+    <bus id="" logo="" name="27" />
+    <bus id="" logo="" name="31" />
+    <bus id="" logo="" name="33" />
+    <bus id="" logo="" name="36" />
+    <bus id="12" logo="" name="37" />
+    <bus id="13" logo="" name="39" />
+    <bus id="" logo="" name="40" />
+    <bus id="" logo="" name="41" />
+    <bus id="16" logo="" name="42" />
+    <bus id="" logo="" name="43" />
+    <bus id="" logo="" name="45" />
+    <bus id="" logo="" name="46" />
+    <bus id="" logo="" name="48" />
+    <bus id="" logo="" name="50" />
+    <bus id="" logo="" name="52" />
+    <bus id="135" logo="" name="55" />
+    <bus id="" logo="" name="56" />
+    <bus id="137" logo="" name="58" />
+    <bus id="" logo="" name="60" />
+    <bus id="" logo="" name="61" />
+    <bus id="140" logo="" name="63" />
+    <bus id="141" logo="" name="65" />
+    <bus id="" logo="" name="66" />
+    <bus id="143" logo="" name="70" />
+    <bus id="144" logo="" name="73" />
+    <bus id="" logo="" name="74" />
+    <bus id="146" logo="" name="76" />
+    <bus id="147" logo="" name="144" />
+    <bus id="148" logo="" name="151" />
+    <bus id="" logo="" name="222" />
+    <bus id="" logo="" name="252" />
+    <bus id="" logo="" name="360" />
+    <bus id="" logo="" name="402" />
+    <bus id="" logo="" name="404" />
+    <bus id="" logo="" name="901" />
+    <bus id="" logo="" name="902" />
+    <bus id="155" logo="" name="903" />
+    <bus id="" logo="" name="925" />
+</stl>

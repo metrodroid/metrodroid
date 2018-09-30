@@ -25,9 +25,10 @@ package au.id.micolous.metrodroid.transit.ezlink;
 import android.os.Parcel;
 import android.support.annotation.Nullable;
 
-import au.id.micolous.metrodroid.card.Card;
-import au.id.micolous.metrodroid.card.cepas.CEPASCard;
-import au.id.micolous.metrodroid.card.cepas.CEPASTransaction;
+import au.id.micolous.farebot.R;
+import au.id.micolous.metrodroid.card.CardType;
+import au.id.micolous.metrodroid.card.cepas.CEPASApplication;
+import au.id.micolous.metrodroid.transit.CardInfo;
 import au.id.micolous.metrodroid.transit.Station;
 import au.id.micolous.metrodroid.transit.TransitCurrency;
 import au.id.micolous.metrodroid.transit.TransitData;
@@ -36,7 +37,10 @@ import au.id.micolous.metrodroid.transit.Trip;
 import au.id.micolous.metrodroid.util.StationTableReader;
 import au.id.micolous.metrodroid.util.Utils;
 
+import java.util.Calendar;
+import java.util.GregorianCalendar;
 import java.util.List;
+import java.util.TimeZone;
 
 public class EZLinkTransitData extends TransitData {
     public static final Creator<EZLinkTransitData> CREATOR = new Creator<EZLinkTransitData>() {
@@ -50,26 +54,64 @@ public class EZLinkTransitData extends TransitData {
     };
     private static final String EZLINK_STR = "ezlink";
 
+    public static final CardInfo EZ_LINK_CARD_INFO = new CardInfo.Builder()
+            .setImageId(R.drawable.ezlink_card)
+            .setName("EZ-Link")
+            .setLocation(R.string.location_singapore)
+            .setCardType(CardType.CEPAS)
+            .build();
+
+    public static final CardInfo NETS_FLASHPAY_CARD_INFO = new CardInfo.Builder()
+            .setImageId(R.drawable.nets_card)
+            .setName("NETS FlashPay")
+            .setLocation(R.string.location_singapore)
+            .setCardType(CardType.CEPAS)
+            .build();
+
+    public static final TimeZone TZ = TimeZone.getTimeZone("Asia/Singapore");
+    private static final long EPOCH;
+
+    static {
+        GregorianCalendar epoch = new GregorianCalendar(TZ);
+        epoch.set(1995, Calendar.JANUARY,1, 0, 0, 0);
+
+        EPOCH = epoch.getTimeInMillis();
+    }
+
+    public static Calendar timestampToCalendar(long timestamp) {
+        GregorianCalendar c = new GregorianCalendar(TZ);
+        c.setTimeInMillis(EPOCH);
+        c.add(Calendar.SECOND, (int)timestamp);
+        return c;
+    }
+
+    static Calendar daysToCalendar(int days) {
+        GregorianCalendar c = new GregorianCalendar(TZ);
+        c.setTimeInMillis(EPOCH);
+        c.add(Calendar.DATE, days);
+        return c;
+    }
+
     private final String mSerialNumber;
-    private final double mBalance;
+    private final int mBalance;
     private final EZLinkTrip[] mTrips;
 
     public EZLinkTransitData(Parcel parcel) {
         mSerialNumber = parcel.readString();
-        mBalance = parcel.readDouble();
+        mBalance = parcel.readInt();
 
         mTrips = new EZLinkTrip[parcel.readInt()];
         parcel.readTypedArray(mTrips, EZLinkTrip.CREATOR);
     }
 
-    public EZLinkTransitData(Card card) {
-        CEPASCard cepasCard = (CEPASCard) card;
-        mSerialNumber = Utils.getHexString(cepasCard.getPurse(3).getCAN(), "<Error>");
-        mBalance = cepasCard.getPurse(3).getPurseBalance();
+    public EZLinkTransitData(CEPASApplication cepasCard) {
+        CEPASPurse purse = new CEPASPurse(cepasCard.getPurse(3));
+        mSerialNumber = Utils.getHexString(purse.getCAN(), "<Error>");
+        mBalance = purse.getPurseBalance();
         mTrips = parseTrips(cepasCard);
     }
 
-    private static String getCardIssuer(String canNo) {
+    public static String getCardIssuer(String canNo) {
         int issuerId = Integer.parseInt(canNo.substring(0, 3));
         switch (issuerId) {
             case 100:
@@ -87,20 +129,14 @@ public class EZLinkTransitData extends TransitData {
         return StationTableReader.getStation(EZLINK_STR, Utils.byteArrayToInt(Utils.stringToByteArray(code)), code);
     }
 
-    public static boolean check(Card card) {
-        if (card instanceof CEPASCard) {
-            CEPASCard cepasCard = (CEPASCard) card;
-            return cepasCard.getHistory(3) != null
-                    && cepasCard.getHistory(3).isValid()
-                    && cepasCard.getPurse(3) != null
-                    && cepasCard.getPurse(3).isValid();
-        }
-
-        return false;
+    public static boolean check(CEPASApplication cepasCard) {
+        return cepasCard.getHistory(3) != null
+                && cepasCard.getPurse(3) != null;
     }
 
-    public static TransitIdentity parseTransitIdentity(Card card) {
-        String canNo = Utils.getHexString(((CEPASCard) card).getPurse(3).getCAN(), "<Error>");
+    public static TransitIdentity parseTransitIdentity(CEPASApplication card) {
+        CEPASPurse purse = new CEPASPurse(card.getPurse(3));
+        String canNo = Utils.getHexString(purse.getCAN(), "<Error>");
         return new TransitIdentity(getCardIssuer(canNo), canNo);
     }
 
@@ -113,9 +149,8 @@ public class EZLinkTransitData extends TransitData {
     @Nullable
     public TransitCurrency getBalance() {
         // This is stored in cents of SGD
-        return new TransitCurrency((int) mBalance, "SGD");
+        return TransitCurrency.SGD(mBalance);
     }
-
 
     @Override
     public String getSerialNumber() {
@@ -127,8 +162,9 @@ public class EZLinkTransitData extends TransitData {
         return mTrips;
     }
 
-    private EZLinkTrip[] parseTrips(CEPASCard card) {
-        List<CEPASTransaction> transactions = card.getHistory(3).getTransactions();
+    private EZLinkTrip[] parseTrips(CEPASApplication card) {
+        CEPASHistory history = new CEPASHistory(card.getHistory(3));
+        List<CEPASTransaction> transactions = history.getTransactions();
         if (transactions != null) {
             EZLinkTrip[] trips = new EZLinkTrip[transactions.size()];
 
@@ -142,7 +178,7 @@ public class EZLinkTransitData extends TransitData {
 
     public void writeToParcel(Parcel parcel, int flags) {
         parcel.writeString(mSerialNumber);
-        parcel.writeDouble(mBalance);
+        parcel.writeInt(mBalance);
 
         parcel.writeInt(mTrips.length);
         parcel.writeTypedArray(mTrips, flags);

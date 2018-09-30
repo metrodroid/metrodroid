@@ -27,7 +27,6 @@ import android.util.Log;
 import au.id.micolous.farebot.R;
 import au.id.micolous.metrodroid.MetrodroidApplication;
 import au.id.micolous.metrodroid.card.Card;
-import au.id.micolous.metrodroid.card.CardRawDataFragmentClass;
 import au.id.micolous.metrodroid.card.CardType;
 import au.id.micolous.metrodroid.card.TagReaderFeedbackInterface;
 import au.id.micolous.metrodroid.card.desfire.files.DesfireFile;
@@ -36,20 +35,23 @@ import au.id.micolous.metrodroid.card.desfire.files.UnauthorizedDesfireFile;
 import au.id.micolous.metrodroid.card.desfire.settings.DesfireFileSettings;
 import au.id.micolous.metrodroid.card.desfire.settings.StandardDesfireFileSettings;
 import au.id.micolous.metrodroid.card.desfire.settings.ValueDesfireFileSettings;
-import au.id.micolous.metrodroid.fragment.DesfireCardRawDataFragment;
 import au.id.micolous.metrodroid.transit.CardInfo;
 import au.id.micolous.metrodroid.transit.TransitData;
 import au.id.micolous.metrodroid.transit.TransitIdentity;
 import au.id.micolous.metrodroid.transit.clipper.ClipperTransitData;
 import au.id.micolous.metrodroid.transit.hsl.HSLTransitData;
+import au.id.micolous.metrodroid.transit.istanbulkart.IstanbulKartTransitData;
 import au.id.micolous.metrodroid.transit.myki.MykiTransitData;
 import au.id.micolous.metrodroid.transit.opal.OpalTransitData;
 import au.id.micolous.metrodroid.transit.orca.OrcaTransitData;
 import au.id.micolous.metrodroid.transit.stub.AdelaideMetrocardStubTransitData;
 import au.id.micolous.metrodroid.transit.stub.AtHopStubTransitData;
+import au.id.micolous.metrodroid.transit.tfi_leap.LeapTransitData;
+import au.id.micolous.metrodroid.transit.tfi_leap.LeapUnlocker;
 import au.id.micolous.metrodroid.transit.unknown.UnauthorizedDesfireTransitData;
 import au.id.micolous.metrodroid.ui.HeaderListItem;
 import au.id.micolous.metrodroid.ui.ListItem;
+import au.id.micolous.metrodroid.ui.ListItemRecursive;
 import au.id.micolous.metrodroid.util.Utils;
 
 import org.simpleframework.xml.Element;
@@ -66,7 +68,6 @@ import java.util.List;
 import java.util.Locale;
 
 @Root(name = "card")
-@CardRawDataFragmentClass(DesfireCardRawDataFragment.class)
 public class DesfireCard extends Card {
     private static final String TAG = "DesfireCard";
 
@@ -135,10 +136,26 @@ public class DesfireCard extends Card {
 
                 List<DesfireFile> files = new ArrayList<>();
 
+                DesfireUnlocker unlocker = null;
+                if(LeapTransitData.earlyCheck(appId))
+                    unlocker = LeapUnlocker.createUnlocker(appId, manufData);
                 int[] fileIds = desfireTag.getFileList();
-                maxProgress += fileIds.length;
+                if (unlocker != null) {
+                    fileIds = unlocker.getOrder(desfireTag, fileIds);
+                }
+                maxProgress += fileIds.length * (unlocker == null ? 1 : 2);
+                List<DesfireAuthLog> authLog = new ArrayList<>();
                 for (int fileId : fileIds) {
                     feedbackInterface.updateProgressBar(progress, maxProgress);
+                    if (unlocker != null) {
+                        if (i != null) {
+                            feedbackInterface.updateStatusText(
+                                    Utils.localizeString(R.string.mfd_unlocking, i.getName()));
+                        }
+                        unlocker.unlock(desfireTag, files, fileId, authLog);
+                        feedbackInterface.updateProgressBar(++progress, maxProgress);
+                    }
+
                     DesfireFileSettings settings = null;
                     try {
                         settings = desfireTag.getFileSettings(fileId);
@@ -164,7 +181,7 @@ public class DesfireCard extends Card {
                 DesfireFile[] filesArray = new DesfireFile[files.size()];
                 files.toArray(filesArray);
 
-                apps.add(new DesfireApplication(appId, filesArray));
+                apps.add(new DesfireApplication(appId, filesArray, authLog));
             }
 
             appsArray = new DesfireApplication[apps.size()];
@@ -191,15 +208,19 @@ public class DesfireCard extends Card {
      */
     static CardInfo parseEarlyCardInfo(int[] appIds) {
         if (OrcaTransitData.earlyCheck(appIds))
-            return CardInfo.ORCA;
+            return OrcaTransitData.CARD_INFO;
         if (ClipperTransitData.earlyCheck(appIds))
-            return CardInfo.CLIPPER;
+            return ClipperTransitData.CARD_INFO;
         if (HSLTransitData.earlyCheck(appIds))
-            return CardInfo.HSL;
+            return HSLTransitData.CARD_INFO;
         if (OpalTransitData.earlyCheck(appIds))
-            return CardInfo.OPAL;
+            return OpalTransitData.CARD_INFO;
         if (MykiTransitData.earlyCheck(appIds))
-            return CardInfo.MYKI;
+            return MykiTransitData.CARD_INFO;
+        if (IstanbulKartTransitData.earlyCheck(appIds))
+            return IstanbulKartTransitData.CARD_INFO;
+        if (LeapTransitData.earlyCheck(appIds))
+            return LeapTransitData.CARD_INFO;
 
         return null;
     }
@@ -216,12 +237,16 @@ public class DesfireCard extends Card {
             return OpalTransitData.parseTransitIdentity(this);
         if (MykiTransitData.check(this))
             return MykiTransitData.parseTransitIdentity(this);
+        if (LeapTransitData.check(this))
+            return LeapTransitData.parseTransitIdentity(this);
 
         // Stub card types go last
         if (AdelaideMetrocardStubTransitData.check(this))
             return AdelaideMetrocardStubTransitData.parseTransitIdentity(this);
         if (AtHopStubTransitData.check(this))
             return AtHopStubTransitData.parseTransitIdentity(this);
+        if (IstanbulKartTransitData.check(this))
+            return IstanbulKartTransitData.parseTransitIdentity(this);
 
         if (UnauthorizedDesfireTransitData.check(this))
             return UnauthorizedDesfireTransitData.parseTransitIdentity(this);
@@ -240,8 +265,12 @@ public class DesfireCard extends Card {
             return new OpalTransitData(this);
         if (MykiTransitData.check(this))
             return new MykiTransitData(this);
+        if (LeapTransitData.check(this))
+            return new LeapTransitData(this);
 
         // Stub card types go last
+        if (IstanbulKartTransitData.check(this))
+            return new IstanbulKartTransitData(this);
         if (AdelaideMetrocardStubTransitData.check(this))
             return new AdelaideMetrocardStubTransitData(this);
         if (AtHopStubTransitData.check(this))
@@ -299,5 +328,18 @@ public class DesfireCard extends Card {
 
     public DesfireManufacturingData getManufacturingData() {
         return mManfData;
+    }
+
+    @Override
+    public List<ListItem> getRawData() {
+        List<ListItem> li = new ArrayList<>();
+        for (DesfireApplication app : mApplications) {
+            List<ListItem> ali = app.getRawData();
+            li.add(new ListItemRecursive(
+                    Utils.localizeString(R.string.application_title_format,
+                            "0x" + Integer.toHexString(app.getId())),
+                    null, ali));
+        }
+        return li;
     }
 }

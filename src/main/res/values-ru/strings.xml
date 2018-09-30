@@ -11,7 +11,6 @@
     <string name="share_xml">Поделиться</string>
     <string name="save_xml">Сохранить в файл</string>
     <string name="history">История</string>
-    <string name="balance">Остаток</string>
     <string name="no_trip_data">Не обнаружены поездки. Эта карточка использовалась?</string>
     <string name="import_xml">Импортировать</string>
     <string name="import_clipboard">Импортировать из буфера обмена</string>
@@ -80,7 +79,7 @@
     <string name="trip_description">(Из )%1$s [→] (в )%2$s</string>
     <string name="trip_description_unknown_start">До %s</string>
     <string name="time_from_to">%s → %s</string>
-    <string name="time_from_unknown_to">?:?? → %s</string>
+    <string name="time_from_unknown_to">\?:?? → %s</string>
 
 
     <string name="location_seattle">Сиэтл, Штат Вашингтон, США</string>
@@ -148,4 +147,204 @@
 <string name="scanned_at_format">Прочитано %2$s в %1$s</string>
     <string name="machine_id">Автомат %s</string>
 
-    </resources>
+    <string name="advanced_info">Расширенная информация</string>
+    <string name="hw_detail">Информация о производителе</string>
+    <string name="data">Необработанные данные</string>
+    <string name="loading">Считывание…</string>
+    <string name="wireless_settings">Беспроводные настройки</string>
+    <string name="unknown_more_info_desc">Больше информации о поддержки этой карты Метродроидом.</string>
+
+    <string name="no_scanned_cards">Вы не прочитали ни одной карты.</string>
+    <string name="block_title_format">Блок: %s</string>
+    <string name="page_title_format">Страница: 0x%s</string>
+    <string name="application_title_format">Приложение: 0x%s</string>
+    <string name="file_title_format">Файл: %s</string>
+    <string name="unauthorized_file_title_format">Файл: %s (доступ запрещен)</string>
+    <string name="invalid_file_title_format">Файл: %1$s (невалиден: %2$s)</string>
+    <string name="unauthorized_page_title_format">Страница: 0х%s (доступ запрещен)</string>
+    <string name="sector_title_format">Сектор: 0x%s</string>
+    <string name="unauthorized_sector_title_format">Сектор: 0x%s (доступ запрещен)</string>
+    <string name="sector_title_format_empty">Сектор: 0x%s (пустой)</string>
+    <string name="invalid_sector_title_format">Сектор: 0x%1$s (невалиден: %2$s)</string>
+    <string name="felica_system_title_format">Система: 0x%1$s (%2$s)</string>
+    <string name="felica_service_title_format">Сервис: 0x%1$s (%2$s)</string>
+    <string name="record_title_format">Запись: %s</string>
+    <string name="binary_title_format">Двоичные данные</string>
+    <string name="info">Информация</string>
+    <string name="valid_format">Действителен с %1$s по %2$s</string>
+    <string name="valid_to_format">Действителен по %1$s</string>
+    <string name="unknown_format">Неизвестно (%s)</string>
+    <string name="unknown">Неизвестно</string>
+    <string name="load_keys">Загрузить ключи</string>
+    <string name="card_keys_not_supported">Метродроид еще не поддерживает ключи данного типа.</string>
+    <string name="add_key">Добавить ключ</string>
+    <string name="error">Ошибка</string>
+    <string name="keys">Ключи</string>
+    <string name="delete">Удалить</string>
+    <string name="add_key_directions">Сохраните дамп ваших ключей как файл с расширением .farebotkeys, потом откройте этот файл на данном устройстве.</string>
+    <string name="no_keys">Нет ключей.</string>
+    <string name="general">Общее</string>
+    <string name="launch_from_background">Запускать из фона</string>
+    <string name="checksum">Контрольная сумма</string>
+    <string name="last_transaction">Последняя транзакция</string>
+    <string name="vehicle_type">Тип транспорта</string>
+    <string name="transaction_type">Тип транзакции</string>
+    <string name="card_epoch">Дата отсчета карточки</string>
+    <string name="card_not_supported_on_device">Эта карта не поддерживается вашим устройством.</string>
+    <string name="need_stations">Некоторые станции неизвестны.</string>
+    <string name="need_stations_submit">Отчет</string>
+    <string name="card_preview_reader">Бета версия читателя карт.</string>
+    <string name="visit_website">Вебсайт</string>
+    <string name="title_activity_about">О программе</string>
+    <string name="select_file">Выбрать файл</string>
+    <string name="copied_to_clipboard">Скопировано в буффер обмена</string>
+    <string name="saved_xml">Файл Metrodroid-Export.xml записан на носителе USB.</string>
+    <string name="saved_xml_custom">Файл XML записан на USB носитель.</string>
+    <string name="about_card_format">Об этом формате карт</string>
+    <string name="online_services">Онлайн сервисы</string>
+    <string name="mifare_classic">MIFARE Classic</string>
+    <string name="auth_retries">Количество попыток аутентификации</string>
+    <string name="auth_retries_summary">Количество попыток аутентификации для каждого сектора</string>
+
+    <string name="mfc_fallback_desc">На картах некоторых транспортных компаний нету идентификатора. Чтобы их прочитать вам нужно выбрать транспортную компанию явно.</string>
+    <string name="requires_android_21">Требуется Андроид 5.0 или выше.</string>
+
+    <string name="speak_balance">Прочитать остаток вслух</string>
+    <string name="speak_balance_summary">Когда вы считываете карту, остаток будет автоматически прочитан вслух. Это работает даже без считывателя экрана.</string>
+
+    <string name="unsupported_tag">Неподдерживаемый тип NFC карты</string>
+
+    <string name="saving_card">Карта записывается…</string>
+
+    <string name="mfc_reading">Считывание карты MIFARE Classic…</string>
+    <string name="mfc_have_key">Пробуем пользовательский ключ для сектора %d…</string>
+    <string name="mfc_other_key">Пробуем другие пользовательские ключи для сектора %d…</string>
+    <string name="mfc_default_key">Пробуем известные ключи для сектора %d…</string>
+    <string name="mfc_reading_blocks">Считываем сектор %d…</string>
+
+    <string name="iso14a_detect">Определяем тип карты ISO 14443…</string>
+    <string name="mfd_reading">Считываем карту MIFARE DESFire…</string>
+    <string name="card_reading_type">Считываем <xliff:g id="card_name" example="Opal">%s</xliff:g>…</string>
+
+    <string name="mfu_detect">Определям тип карты MIFARE Ultralight…</string>
+    <string name="mfu_reading">Считываем карту MIFARE Ultralight…</string>
+
+    <string name="iso7816_probing">Сканируем карту ISO7816…</string>
+    <string name="calypso_reading">Считываем карту Calypso…</string>
+
+    <string name="card_partial_read_title">Частично считанная карта!</string>
+    <string name="show_partial_data">Показать неполные данные</string>
+
+    <string name="pref_theme">Скин</string>
+    <string name="pref_theme_desc">Выберите внешний вид приложения</string>
+
+    <plurals name="cards_imported">
+	<item quantity="one">Импортирована <xliff:g id="count" example="1">%d</xliff:g> карта!</item>
+	<item quantity="few">Импортированы <xliff:g id="count" example="1">%d</xliff:g> карты!</item>
+	<item quantity="many">Импортированао<xliff:g id="count" example="1">%d</xliff:g> карт!</item>
+</plurals>
+
+    <plurals name="block_count">
+	<item quantity="one">%d блок</item>
+	<item quantity="few">%d блока</item>
+	<item quantity="many">%d блоков</item>
+</plurals>
+
+    <plurals name="record_count">
+	<item quantity="one">%d запись</item>
+	<item quantity="few">%d записи</item>
+	<item quantity="many">%d записей</item>
+</plurals>
+
+    <plurals name="felica_service_count">
+	<item quantity="one">%d сервис</item>
+	<item quantity="few">%d сервиса</item>
+	<item quantity="many">%d сервисов</item>
+</plurals>
+
+    <string name="desfire_standard_file">Стандартный файл</string>
+    <string name="desfire_backup_file">Резервный файл</string>
+    <string name="desfire_value_file">Файл значений</string>
+    <string name="desfire_linear_record">Линейная запись</string>
+    <string name="desfire_cyclic_record">Циклическая запись</string>
+    <string name="desfire_unknown_file">Неизвестный тип файла</string>
+    <string name="cepas_purse_id">ИДентификатор кошелька</string>
+    <string name="cepas_purse_status">Статус кошелька</string>
+    <string name="cepas_purse_balance">Остаток на кошельке</string>
+    <string name="cepas_purse_creation_date">Дата создания кошелька</string>
+    <string name="cepas_last_txn_info">Информация о последней транзакции</string>
+    <string name="felica_idm">Идентификатор производителя (IDm)</string>
+    <string name="felica_manufacturer_code">Код производителя</string>
+    <string name="felica_rom_type">Тип ПЗУ</string>
+    <string name="felica_ic_type">Тип микросхемы</string>
+    <string name="felica_maximum_response_time">Максималхное время отклика</string>
+    <string name="calypso_manufacturer">Производитель</string>
+
+    <string name="location_vancouver">Ванкувер, Британская Колумбия, Канада</string>
+    <string name="location_quebec">Провинция Квебек, Канада</string>
+
+    <string name="location_jakarta">Джакарта, Индонезия</string>
+
+    <string name="mode_unknown">Неизвестно</string>
+
+    <string name="clipper_end_of_line">(Конец линии)</string>
+    <string name="clipper_zone_number">Зона #%s</string>
+
+    <string name="ez_bus_number">Автобус #%s</string>
+    <string name="felica_terminal_portable">Переносной терминал</string>
+    <string name="kmt_extra_note">Только карты FeliCa.</string>
+
+    <string name="opal_action_none">Нет (новая, неиспользованная карта)</string>
+    <string name="opal_action_transfer_same_mode">Пересадка (тот же тип транспорта)</string>
+    <string name="opal_action_transfer_diff_mode">Пересадка (с другого типа транспорта)</string>
+    <string name="opal_action_manly_new_journey">Новая поезка (Manly Ferry)</string>
+    <string name="opal_action_manly_transfer_same_mode">Пересадка (с другого корабля на Manly Ferry)</string>
+    <string name="opal_action_manly_transfer_diff_mode">Пересадка (с другого транспорта на Manly Ferry)</string>
+    <string name="opal_action_journey_completed_distance">Поездка завершена (тариф по расстоянию)</string>
+    <string name="opal_action_journey_completed_flat_rate">Поездка завершена (фиксированный тариф)</string>
+    <string name="orca_topup_machine">Автомат #%s</string>
+    <string name="orca_topup">Пополнение</string>
+
+    <string name="seqgo_ticket_type_regular">Обычный</string>
+    <string name="seqgo_ticket_type_concession">Льготный</string>
+    <string name="seqgo_ticket_type_child">Детский</string>
+    <string name="seqgo_refill_manual">Ручное пополнение</string>
+    <string name="seqgo_refill_automatic">Автоматическое пополнение</string>
+
+    <string name="card_note_seqgo">Карты Go Acces, Explore и SEEQ не поддерживаются.</string>
+
+    <string name="nextfare_system_code">Код системы</string>
+    <string name="nextfare_ticket_class">Билет с кодом класса %d</string>
+
+    <string name="general_information">Общая информация</string>
+    <string name="personal_information">Личная информация</string>
+    <string name="date_of_birth">Дата рождения</string>
+    <string name="convert_timezones">Перевести время в текущий часовой пояс</string>
+    <string name="convert_timezones_summary">По умолчанию, Метродроид показывает все времена в часовом поясе карты. Если эта опция включена, то Метродроид переведет время в текущий часовой пояс вашего устройства.</string>
+
+    <string name="compass_product_type">Тип продукта</string>
+    <string name="compass_machine_code">Код автомата</string>
+    <string name="compass_ticket_type">Тип билета</string>
+    <string name="compass_ticket_type_concession">Льготный</string>
+    <string name="compass_ticket_type_regular">Обычный</string>
+    <string name="compass_note">Только одноразовые билеты</string>
+
+    <string name="opus_subscription">Проездной</string>
+    <string name="podorozhnik_gate">турникет %s</string>
+    <string name="podorozhnik_tvm">Автомат %d</string>
+
+    <string name="led_shared_taxi">Маршрутка Санкт-Петербурга</string>
+
+    <string name="blank_mfu_card">Пустая карта MIFARE Ultralight</string>
+    <string name="fully_blank_title">Пустая карта</string>
+
+    <string name="location_seoul">Сеул, Южная Корея</string>
+    <string name="app_version">Версия: %s</string>
+    <string name="device_model">Модель: %s (%s)</string>
+    <string name="device_manufacturer">Производитель: %s (%s)</string>
+    <string name="mfc_supported">MIFARE Classic: поддерживается</string>
+    <string name="mfc_not_supported">MIFARE Classic: не поддерживается</string>
+    <string name="card_number">Номер карты</string>
+    <string name="pref_show_raw_station_ids">Показывать необработанные коды станций</string>
+    <string name="pref_show_raw_station_ids_desc">Если включено, то показывать необработанный идентификатор в дополнение к имени станции</string>
+</resources>

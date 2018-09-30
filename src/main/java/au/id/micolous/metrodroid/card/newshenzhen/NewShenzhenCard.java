@@ -33,10 +33,11 @@ import au.id.micolous.metrodroid.card.TagReaderFeedbackInterface;
 import au.id.micolous.metrodroid.card.iso7816.ISO7816Application;
 import au.id.micolous.metrodroid.card.iso7816.ISO7816Protocol;
 import au.id.micolous.metrodroid.card.iso7816.ISO7816Selector;
-import au.id.micolous.metrodroid.transit.CardInfo;
 import au.id.micolous.metrodroid.transit.TransitData;
 import au.id.micolous.metrodroid.transit.TransitIdentity;
 import au.id.micolous.metrodroid.transit.newshenzhen.NewShenzhenTransitData;
+import au.id.micolous.metrodroid.ui.ListItem;
+import au.id.micolous.metrodroid.ui.ListItemRecursive;
 import au.id.micolous.metrodroid.util.Utils;
 import au.id.micolous.metrodroid.xml.HexString;
 
@@ -65,6 +66,15 @@ public class NewShenzhenCard extends ISO7816Application {
             mIdx = idx;
             mData = new HexString(data);
         }
+    }
+
+    public List<ListItem> getRawData() {
+        List <ListItem> li = new ArrayList<>();
+        for (Balance entry : mBalances) {
+            li.add(ListItemRecursive.collapsedValue("Shenzhen balance " + entry.mIdx,
+                    Utils.getHexDump(entry.mData.getData())));
+        }
+        return li;
     }
 
     @Override
@@ -98,9 +108,9 @@ public class NewShenzhenCard extends ISO7816Application {
 
         try {
             feedbackInterface.updateStatusText(Utils.localizeString(R.string.card_reading_type,
-                    CardInfo.SZT.getName()));
+                    NewShenzhenTransitData.CARD_INFO.getName()));
             feedbackInterface.updateProgressBar(0, 6);
-            feedbackInterface.showCardType(CardInfo.SZT);
+            feedbackInterface.showCardType(NewShenzhenTransitData.CARD_INFO);
 
             feedbackInterface.updateProgressBar(0, 5);
             for (int i = 0; i < 4; i++) {

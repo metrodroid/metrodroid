@@ -18,17 +18,16 @@
  */
 package au.id.micolous.metrodroid.transit.suica;
 
-import android.util.Log;
-
-import au.id.micolous.metrodroid.MetrodroidApplication;
+import au.id.micolous.farebot.R;
 import au.id.micolous.metrodroid.transit.Station;
 import au.id.micolous.metrodroid.util.StationTableReader;
+import au.id.micolous.metrodroid.util.Utils;
 
 /**
  * Helpers for accessing Suica-related stop databases.
  */
 
-final class SuicaDBUtil {
+public final class SuicaDBUtil {
     private static final String TAG = "SuicaUtil";
     private static final String SUICA_BUS_STR = "suica_bus";
     private static final String SUICA_RAIL_STR = "suica_rail";
@@ -48,7 +47,11 @@ final class SuicaDBUtil {
         int stationId = (lineCode << 8) + stationCode;
         if (stationId == 0) return null;
 
-        return StationTableReader.getStationNoFallback(SUICA_BUS_STR, stationId);
+        return StationTableReader.getStation(SUICA_BUS_STR, stationId,
+                Utils.localizeString(R.string.suica_bus_area_line_stop,
+                        "0x" + Integer.toHexString(regionCode),
+                        "0x" + Integer.toHexString(lineCode),
+                        "0x" + Integer.toHexString(stationCode)));
     }
 
     /**
@@ -60,7 +63,7 @@ final class SuicaDBUtil {
      * @return If the stop is known, a Station is returned describing it. If the stop is unknown,
      *         or there was some other database error, null is returned.
      */
-    static Station getRailStation(int regionCode, int lineCode, int stationCode) {
+    public static Station getRailStation(int regionCode, int lineCode, int stationCode) {
         int areaCode = (regionCode >> 6) & 0xFF;
         lineCode &= 0xFF;
         stationCode &= 0xFF;
@@ -68,6 +71,10 @@ final class SuicaDBUtil {
         int stationId = (areaCode << 16) + (lineCode << 8) + stationCode;
         if (stationId == 0) return null;
 
-        return StationTableReader.getStationNoFallback(SUICA_RAIL_STR, stationId);
+        return StationTableReader.getStation(SUICA_RAIL_STR, stationId,
+                Utils.localizeString(R.string.suica_area_line_station,
+                        "0x" + Integer.toHexString(regionCode),
+                        "0x" + Integer.toHexString(lineCode),
+                        "0x" + Integer.toHexString(stationCode)));
     }
 }

@@ -72,12 +72,7 @@ class OpalSubscription extends Subscription {
     }
 
     @Override
-    public String getAgencyName() {
-        return getShortAgencyName();
-    }
-
-    @Override
-    public String getShortAgencyName() {
+    public String getAgencyName(boolean isShort) {
         return "Opal";
     }
 

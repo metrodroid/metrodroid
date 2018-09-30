@@ -26,24 +26,25 @@ package au.id.micolous.metrodroid.card.felica;
 import android.nfc.Tag;
 import android.nfc.TagLostException;
 import android.nfc.tech.NfcF;
+import android.text.SpannableString;
 import android.util.Log;
 
 import au.id.micolous.farebot.R;
 import au.id.micolous.metrodroid.MetrodroidApplication;
 import au.id.micolous.metrodroid.card.Card;
-import au.id.micolous.metrodroid.card.CardRawDataFragmentClass;
 import au.id.micolous.metrodroid.card.CardType;
 import au.id.micolous.metrodroid.card.TagReaderFeedbackInterface;
-import au.id.micolous.metrodroid.fragment.FelicaCardRawDataFragment;
 import au.id.micolous.metrodroid.transit.CardInfo;
 import au.id.micolous.metrodroid.transit.TransitData;
 import au.id.micolous.metrodroid.transit.TransitIdentity;
 import au.id.micolous.metrodroid.transit.edy.EdyTransitData;
 import au.id.micolous.metrodroid.transit.kmt.KMTTransitData;
+import au.id.micolous.metrodroid.transit.newshenzhen.NewShenzhenTransitData;
 import au.id.micolous.metrodroid.transit.octopus.OctopusTransitData;
 import au.id.micolous.metrodroid.transit.suica.SuicaTransitData;
 import au.id.micolous.metrodroid.ui.HeaderListItem;
 import au.id.micolous.metrodroid.ui.ListItem;
+import au.id.micolous.metrodroid.ui.ListItemRecursive;
 import au.id.micolous.metrodroid.util.Utils;
 
 import net.kazzz.felica.FeliCaTag;
@@ -63,7 +64,6 @@ import java.util.List;
 import java.util.Locale;
 
 @Root(name = "card")
-@CardRawDataFragmentClass(FelicaCardRawDataFragment.class)
 public class FelicaCard extends Card {
     private static final String TAG = "FelicaCard";
     /** used for calculating response times, value is in milliseconds */
@@ -127,7 +127,7 @@ public class FelicaCard extends Card {
                     // respond to the normal system code listing.
                     codes.add(new FeliCaLib.SystemCode(OctopusTransitData.SYSTEMCODE_OCTOPUS));
                     octopusMagic = true;
-                    feedbackInterface.showCardType(CardInfo.OCTOPUS);
+                    feedbackInterface.showCardType(OctopusTransitData.CARD_INFO);
                 }
 
                 FeliCaLib.IDm sztSystem = ft.pollingAndGetIDm(OctopusTransitData.SYSTEMCODE_SZT);
@@ -137,7 +137,7 @@ public class FelicaCard extends Card {
                     // case they have the same bugs with system code listing.
                     codes.add(new FeliCaLib.SystemCode(OctopusTransitData.SYSTEMCODE_SZT));
                     sztMagic = true;
-                    feedbackInterface.showCardType(CardInfo.SZT);
+                    feedbackInterface.showCardType(NewShenzhenTransitData.CARD_INFO);
                 }
             }
 
@@ -373,11 +373,11 @@ public class FelicaCard extends Card {
      */
     static CardInfo parseEarlyCardInfo(int[] systemCodes) {
         if (SuicaTransitData.earlyCheck(systemCodes))
-            return CardInfo.SUICA;
+            return SuicaTransitData.SUICA_CARD_INFO;
         if (EdyTransitData.earlyCheck(systemCodes))
-            return CardInfo.EDY;
+            return EdyTransitData.CARD_INFO;
         if (KMTTransitData.earlyCheck(systemCodes))
-            return CardInfo.KMT;
+            return KMTTransitData.CARD_INFO;
 
         // Do Octopus last -- it returns null if it's not a supported Octopus derivative.
         return OctopusTransitData.earlyCheck(systemCodes);
@@ -458,5 +458,39 @@ public class FelicaCard extends Card {
         items.add(new ListItem(R.string.felica_response_time_other,
                 Utils.localizePlural(R.plurals.milliseconds_short, (int)d, df.format(d))));
         return items;
+    }
+
+    @Override
+    public List<ListItem> getRawData() {
+        List<ListItem> li = new ArrayList<>();
+        for (FelicaSystem system : getSystems()) {
+            List<ListItem> sli = new ArrayList<>();
+
+            for (FelicaService service : system.getServices()) {
+                List<ListItem> bli = new ArrayList<>();
+                for (FelicaBlock block : service.getBlocks()) {
+                    bli.add(new ListItem(
+                            new SpannableString(String.format(Locale.ENGLISH,
+                            "%02d", block.getAddress())),
+                            Utils.getHexDump(block.getData(), "<ERR>")));
+                }
+
+                sli.add(new ListItemRecursive(
+                        Utils.localizeString(R.string.felica_service_title_format,
+                        Integer.toHexString(service.getServiceCode()),
+                                FelicaUtils.getFriendlyServiceName(system.getCode(),
+                                        service.getServiceCode())),
+                        Utils.localizePlural(R.plurals.block_count,
+                                service.getBlocks().size(), service.getBlocks().size()), bli));
+            }
+
+            li.add(new ListItemRecursive(
+                    Utils.localizeString(R.string.felica_system_title_format,
+                    Integer.toHexString(system.getCode()), FelicaUtils.getFriendlySystemName(system.getCode())),
+                    Utils.localizePlural(R.plurals.felica_service_count,
+                            system.getServices().size(), system.getServices().size()), sli));
+
+        }
+        return li;
     }
 }

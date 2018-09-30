@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  rtm.xml
+
+  Copyright 2018 Etienne Dubeau
+
+  This program is free software: you can redistribute it and/or modify
+  it under the terms of the GNU General Public License as published by
+  the Free Software Foundation, either version 3 of the License, or
+  (at your option) any later version.
+
+  This program is distributed in the hope that it will be useful,
+  but WITHOUT ANY WARRANTY; without even the implied warranty of
+  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  GNU General Public License for more details.
+
+  You should have received a copy of the GNU General Public License
+  along with this program.  If not, see <http://www.gnu.org/licenses/>.
+-->
+<rtm>
+    <bus id="1" logo="rtm_dm" name="TRAIN Deux-Montagnes" />
+    <bus id="2" logo="rtm_vh" name="TRAIN Vaudreuil&#8211;Hudson" />
+    <bus id="3" logo="rtm_sj" name="TRAIN Saint-J&#233;r&#244;me" />
+    <bus id="1" logo="rtm_sh" name="TRAIN Mont-Saint-Hilaire" />
+    <bus id="" logo="rtm_ca" name="TRAIN Candiac" />
+    <bus id="7" logo="rtm_ma" name="TRAIN Mascouche" />
+</rtm>

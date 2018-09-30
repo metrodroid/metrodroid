@@ -1,0 +1,184 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  rtc.xml
+
+  Copyright 2018 Etienne Dubeau
+
+  This program is free software: you can redistribute it and/or modify
+  it under the terms of the GNU General Public License as published by
+  the Free Software Foundation, either version 3 of the License, or
+  (at your option) any later version.
+
+  This program is distributed in the hope that it will be useful,
+  but WITHOUT ANY WARRANTY; without even the implied warranty of
+  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  GNU General Public License for more details.
+
+  You should have received a copy of the GNU General Public License
+  along with this program.  If not, see <http://www.gnu.org/licenses/>.
+-->
+<rtc>
+    <bus id="1" logo="lebus" name="LEBUS 1" />
+    <bus id="2" logo="lebus" name="LEBUS 3" />
+    <bus id="" logo="lebus" name="LEBUS 3a" />
+    <bus id="" logo="lebus" name="LEBUS 3g" />
+    <bus id="3" logo="lebus" name="LEBUS 4" />
+    <bus id="" logo="lebus" name="LEBUS 9" />
+    <bus id="7" logo="lebus" name="LEBUS 11" />
+    <bus id="" logo="lebus" name="LEBUS 11g" />
+    <bus id="9" logo="lebus" name="LEBUS 13" />
+    <bus id="" logo="lebus" name="LEBUS 13a" />
+    <bus id="" logo="lebus" name="LEBUS 13b" />
+    <bus id="" logo="lebus" name="LEBUS 14" />
+    <bus id="" logo="lebus" name="LEBUS 14a" />
+    <bus id="" logo="lebus" name="LEBUS 14g" />
+    <bus id="" logo="lebus" name="LEBUS 15" />
+    <bus id="" logo="lebus" name="LEBUS 15a" />
+    <bus id="" logo="lebus" name="LEBUS 15b" />
+    <bus id="11" logo="lebus" name="LEBUS 16" />
+    <bus id="12" logo="lebus" name="LEBUS 18" />
+    <bus id="316" logo="lebus" name="LEBUS 19" />
+    <bus id="" logo="lebus" name="LEBUS 22" />
+    <bus id="15" logo="lebus" name="LEBUS 25" />
+    <bus id="" logo="lebus" name="LEBUS 25g" />
+    <bus id="16" logo="lebus" name="LEBUS 28" />
+    <bus id="" logo="lebus" name="LEBUS 29" />
+    <bus id="18" logo="lebus" name="LEBUS 31" />
+    <bus id="19" logo="lebus" name="LEBUS 32" />
+    <bus id="" logo="lebus" name="LEBUS 33" />
+    <bus id="" logo="lebus" name="LEBUS 34" />
+    <bus id="" logo="lebus" name="LEBUS 36" />
+    <bus id="25" logo="lebus" name="LEBUS 39" />
+    <bus id="" logo="lebus" name="LEBUS 44" />
+    <bus id="26" logo="lebus" name="LEBUS 50" />
+    <bus id="321" logo="lebus" name="LEBUS 51" />
+    <bus id="27" logo="lebus" name="LEBUS 52" />
+    <bus id="28" logo="lebus" name="LEBUS 53" />
+    <bus id="29" logo="lebus" name="LEBUS 54" />
+    <bus id="" logo="lebus" name="LEBUS 54a" />
+    <bus id="" logo="lebus" name="LEBUS 54g" />
+    <bus id="30" logo="lebus" name="LEBUS 55" />
+    <bus id="" logo="lebus" name="LEBUS 55a" />
+    <bus id="" logo="lebus" name="LEBUS 55g" />
+    <bus id="" logo="lebus" name="LEBUS 55h" />
+    <bus id="" logo="lebus" name="LEBUS 57" />
+    <bus id="32" logo="lebus" name="LEBUS 58" />
+    <bus id="" logo="lebus" name="LEBUS 59" />
+    <bus id="171" logo="lebus" name="LEBUS 61" />
+    <bus id="161" logo="lebus" name="LEBUS 64" />
+    <bus id="162" logo="lebus" name="LEBUS 65" />
+    <bus id="" logo="lebus" name="LEBUS 70" />
+    <bus id="36" logo="lebus" name="LEBUS 72" />
+    <bus id="37" logo="lebus" name="LEBUS 74" />
+    <bus id="38" logo="lebus" name="LEBUS 75" />
+    <bus id="39" logo="lebus" name="LEBUS 77" />
+    <bus id="" logo="lebus" name="LEBUS 78" />
+    <bus id="40" logo="lebus" name="LEBUS 79" />
+    <bus id="" logo="lebus" name="LEBUS 79a" />
+    <bus id="" logo="lebus" name="LEBUS 79b" />
+    <bus id="" logo="lebus" name="LEBUS 79g" />
+    <bus id="164" logo="lebus" name="LEBUS 80" />
+    <bus id="" logo="lebus" name="LEBUS 80a" />
+    <bus id="" logo="lebus" name="LEBUS 80g" />
+    <bus id="42" logo="lebus" name="LEBUS 81" />
+    <bus id="43" logo="lebus" name="LEBUS 82" />
+    <bus id="" logo="lebus" name="LEBUS 82a" />
+    <bus id="44" logo="lebus" name="LEBUS 84" />
+    <bus id="" logo="lebus" name="LEBUS 84g" />
+    <bus id="" logo="lebus" name="LEBUS 85" />
+    <bus id="46" logo="lebus" name="LEBUS 86" />
+    <bus id="" logo="lebus" name="LEBUS 86g" />
+    <bus id="" logo="lebus" name="LEBUS 88" />
+    <bus id="" logo="lebus" name="LEBUS 92" />
+    <bus id="" logo="lebus" name="LEBUS 92a" />
+    <bus id="49" logo="lebus" name="LEBUS 93" />
+    <bus id="" logo="lebus" name="LEBUS 94" />
+    <bus id="" logo="lebus" name="LEBUS 95" />
+    <bus id="" logo="lebus" name="LEBUS 107" />
+    <bus id="" logo="lebus" name="LEBUS 125" />
+    <bus id="53" logo="lebus" name="LEBUS 133" />
+    <bus id="" logo="lebus" name="LEBUS 136" />
+    <bus id="" logo="lebus" name="LEBUS 185" />
+    <bus id="" logo="express" name="EXPRESS 214" />
+    <bus id="" logo="express" name="EXPRESS 215" />
+    <bus id="" logo="express" name="EXPRESS 230" />
+    <bus id="59" logo="express" name="EXPRESS 236" />
+    <bus id="" logo="express" name="EXPRESS 238" />
+    <bus id="" logo="express" name="EXPRESS 239" />
+    <bus id="62" logo="express" name="EXPRESS 250" />
+    <bus id="63" logo="express" name="EXPRESS 251" />
+    <bus id="" logo="express" name="EXPRESS 253" />
+    <bus id="64" logo="express" name="EXPRESS 254" />
+    <bus id="65" logo="express" name="EXPRESS 255" />
+    <bus id="67" logo="express" name="EXPRESS 272" />
+    <bus id="" logo="express" name="EXPRESS 273" />
+    <bus id="" logo="express" name="EXPRESS 274" />
+    <bus id="" logo="express" name="EXPRESS 277" />
+    <bus id="" logo="express" name="EXPRESS 279" />
+    <bus id="" logo="express" name="EXPRESS 280" />
+    <bus id="" logo="express" name="EXPRESS 281" />
+    <bus id="" logo="express" name="EXPRESS 282" />
+    <bus id="" logo="express" name="EXPRESS 283" />
+    <bus id="" logo="express" name="EXPRESS 284" />
+    <bus id="168" logo="express" name="EXPRESS 289" />
+    <bus id="" logo="express" name="EXPRESS 290" />
+    <bus id="148" logo="express" name="EXPRESS 294" />
+    <bus id="" logo="express" name="EXPRESS 295" />
+    <bus id="" logo="express" name="EXPRESS 315" />
+    <bus id="78" logo="express" name="EXPRESS 330" />
+    <bus id="" logo="express" name="EXPRESS 331" />
+    <bus id="" logo="express" name="EXPRESS 332" />
+    <bus id="" logo="express" name="EXPRESS 336" />
+    <bus id="82" logo="express" name="EXPRESS 337" />
+    <bus id="83" logo="express" name="EXPRESS 338" />
+    <bus id="84" logo="express" name="EXPRESS 350" />
+    <bus id="" logo="express" name="EXPRESS 354" />
+    <bus id="" logo="express" name="EXPRESS 355" />
+    <bus id="" logo="express" name="EXPRESS 358" />
+    <bus id="" logo="express" name="EXPRESS 372" />
+    <bus id="" logo="express" name="EXPRESS 374" />
+    <bus id="" logo="express" name="EXPRESS 377" />
+    <bus id="" logo="express" name="EXPRESS 380" />
+    <bus id="" logo="express" name="EXPRESS 381" />
+    <bus id="90" logo="express" name="EXPRESS 382" />
+    <bus id="" logo="express" name="EXPRESS 384" />
+    <bus id="94" logo="express" name="EXPRESS 391" />
+    <bus id="" logo="express" name="EXPRESS 405" />
+    <bus id="" logo="express" name="EXPRESS 410" />
+    <bus id="" logo="express" name="EXPRESS 420" />
+    <bus id="" logo="express" name="EXPRESS 430" />
+    <bus id="" logo="express" name="EXPRESS 450" />
+    <bus id="" logo="express" name="EXPRESS 530" />
+    <bus id="" logo="express" name="EXPRESS 536" />
+    <bus id="" logo="express" name="EXPRESS 537" />
+    <bus id="" logo="express" name="EXPRESS 538" />
+    <bus id="" logo="express" name="EXPRESS 550" />
+    <bus id="" logo="express" name="EXPRESS 555" />
+    <bus id="" logo="express" name="EXPRESS 558" />
+    <bus id="" logo="express" name="EXPRESS 572" />
+    <bus id="" logo="express" name="EXPRESS 574" />
+    <bus id="" logo="express" name="EXPRESS 577" />
+    <bus id="" logo="express" name="EXPRESS 580" />
+    <bus id="" logo="express" name="EXPRESS 581" />
+    <bus id="" logo="express" name="EXPRESS 582" />
+    <bus id="" logo="express" name="EXPRESS 584" />
+    <bus id="95" logo="metrobus" name="METROBUS 800" />
+    <bus id="96" logo="metrobus" name="METROBUS 801" />
+    <bus id="164" logo="metrobus" name="METROBUS 802" />
+    <bus id="172" logo="metrobus" name="METROBUS 803" />
+    <bus id="318" logo="metrobus" name="METROBUS 804" />
+    <bus id="317" logo="metrobus" name="METROBUS 807" />
+    <bus id="" logo="couche_tard" name="COUCHE-TARD 904" />
+    <bus id="" logo="couche_tard" name="COUCHE-TARD 907" />
+    <bus id="" logo="couche_tard" name="COUCHE-TARD 915" />
+    <bus id="" logo="couche_tard" name="COUCHE-TARD 925" />
+    <bus id="" logo="couche_tard" name="COUCHE-TARD 931" />
+    <bus id="" logo="couche_tard" name="COUCHE-TARD 936" />
+    <bus id="208" logo="couche_tard" name="COUCHE-TARD 950" />
+    <bus id="" logo="couche_tard" name="COUCHE-TARD 954" />
+    <bus id="" logo="couche_tard" name="COUCHE-TARD 972" />
+    <bus id="" logo="couche_tard" name="COUCHE-TARD 980" />
+    <bus id="" logo="couche_tard" name="COUCHE-TARD 982" />
+    <bus id="" logo="couche_tard" name="COUCHE-TARD 984" />
+    <bus id="" logo="couche_tard" name="COUCHE-TARD 992" />
+</rtc>

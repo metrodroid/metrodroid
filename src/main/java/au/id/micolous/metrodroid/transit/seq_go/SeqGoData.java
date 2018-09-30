@@ -21,27 +21,15 @@ package au.id.micolous.metrodroid.transit.seq_go;
 
 import android.util.SparseArray;
 
-import au.id.micolous.metrodroid.transit.Trip;
-
 
 /**
  * Constants used in Go card
  */
-final class SeqGoData {
-    private static final int VEHICLE_FARE_MACHINE = 1;
-    private static final int VEHICLE_BUS = 4;
-    private static final int VEHICLE_RAIL = 5;
-    private static final int VEHICLE_FERRY = 18;
-    private static final int VEHICLE_FARE_MACHINE_TRIP = 23;
+public final class SeqGoData {
+    public static final String SEQ_GO_STR = "seq_go";
 
-    static final SparseArray<Trip.Mode> VEHICLES = new SparseArray<Trip.Mode>() {{
-        put(VEHICLE_FARE_MACHINE, Trip.Mode.TICKET_MACHINE);
-        put(VEHICLE_RAIL, Trip.Mode.TRAIN);
-        put(VEHICLE_FERRY, Trip.Mode.FERRY);
-        put(VEHICLE_BUS, Trip.Mode.BUS);
-        put(VEHICLE_FARE_MACHINE_TRIP, Trip.Mode.TICKET_MACHINE);
-        // TODO: Gold Coast Light Rail
-    }};
+    protected static final int VEHICLE_RAIL = 5;
+    protected static final int VEHICLE_FERRY = 18;
 
     // TICKET TYPES
     // https://github.com/micolous/metrodroid/wiki/Go-(SEQ)#ticket-types

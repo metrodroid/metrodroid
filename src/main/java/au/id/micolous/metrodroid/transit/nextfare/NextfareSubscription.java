@@ -77,12 +77,7 @@ public class NextfareSubscription extends Subscription implements Parcelable {
     }
 
     @Override
-    public String getAgencyName() {
-        return "Nextfare";
-    }
-
-    @Override
-    public String getShortAgencyName() {
+    public String getAgencyName(boolean isShort) {
         return "Nextfare";
     }
 

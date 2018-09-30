@@ -25,15 +25,13 @@ import android.app.Activity;
 import android.app.ListFragment;
 import android.content.Context;
 import android.content.Intent;
-import android.content.res.Resources;
 import android.content.res.TypedArray;
 import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Bundle;
-import android.support.annotation.DrawableRes;
-import android.support.annotation.RequiresApi;
 import android.support.annotation.StringRes;
+import android.support.v7.content.res.AppCompatResources;
 import android.text.Spannable;
 import android.text.SpannableString;
 import android.text.SpannableStringBuilder;
@@ -46,10 +44,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
-
-import org.simpleframework.xml.Serializer;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -62,10 +59,8 @@ import java.util.regex.Pattern;
 
 import au.id.micolous.farebot.R;
 import au.id.micolous.metrodroid.MetrodroidApplication;
-import au.id.micolous.metrodroid.activity.AdvancedCardInfoActivity;
 import au.id.micolous.metrodroid.activity.CardInfoActivity;
 import au.id.micolous.metrodroid.activity.TripMapActivity;
-import au.id.micolous.metrodroid.card.Card;
 import au.id.micolous.metrodroid.transit.TransitCurrency;
 import au.id.micolous.metrodroid.transit.TransitData;
 import au.id.micolous.metrodroid.transit.Trip;
@@ -196,53 +191,19 @@ public class CardTripsFragment extends ListFragment {
             TextView routeTextView = convertView.findViewById(R.id.route_text_view);
             TextView fareTextView = convertView.findViewById(R.id.fare_text_view);
             TextView stationTextView = convertView.findViewById(R.id.station_text_view);
+            LinearLayout paxLayout = convertView.findViewById(R.id.pax_layout);
+            ImageView paxIcon = convertView.findViewById(R.id.pax_icon);
+            TextView paxTextView = convertView.findViewById(R.id.pax_text_view);
+            TextView machineIdTextView = convertView.findViewById(R.id.machine_id_text_view);
 
-            @StringRes int modeContentDescriptionRes = 0;
-            switch (trip.getMode()) {
-                case BUS:
-                    modeContentDescriptionRes = R.string.mode_bus;
-                    break;
-
-                case TRAIN:
-                    modeContentDescriptionRes = R.string.mode_train;
-                    break;
-
-                case TRAM:
-                    modeContentDescriptionRes = R.string.mode_tram;
-                    break;
-
-                case METRO:
-                    modeContentDescriptionRes = R.string.mode_metro;
-                    break;
-
-                case FERRY:
-                    modeContentDescriptionRes = R.string.mode_ferry;
-                    break;
-
-                case TICKET_MACHINE:
-                    modeContentDescriptionRes = R.string.mode_ticket_machine;
-                    break;
-
-                case VENDING_MACHINE:
-                    modeContentDescriptionRes = R.string.mode_vending_machine;
-                    break;
-
-                case POS:
-                    modeContentDescriptionRes = R.string.mode_pos;
-                    break;
-
-                case BANNED:
-                    modeContentDescriptionRes = R.string.mode_banned;
-                    break;
-
-                default:
-                    modeContentDescriptionRes = R.string.mode_unknown;
-                    break;
-            }
+            @StringRes int modeContentDescriptionRes = trip.getMode().getDescription();
 
             TypedArray a = getContext().obtainStyledAttributes(new int[]{R.attr.TransportIcons});
-            int iconArrayRes = a.getResourceId(0, -1);
+            int iconArrayRes = -1;
+            if (a != null)
+                iconArrayRes = a.getResourceId(0, -1);
             int iconIdx = trip.getMode().getImageResourceIdx();
+            int iconResId = -1;
             Drawable icon = null;
             TypedArray iconArray = null;
 
@@ -250,8 +211,16 @@ public class CardTripsFragment extends ListFragment {
                 iconArray = getContext().getResources().obtainTypedArray(iconArrayRes);
             }
 
-            if (iconArray != null)
-                icon = iconArray.getDrawable(iconIdx);
+            if (iconArray != null) {
+                iconResId = iconArray.getResourceId(iconIdx, -1);
+            }
+            if (iconResId != -1) {
+                try {
+                    icon = AppCompatResources.getDrawable(getContext(), iconResId);
+                } catch (Exception ex) {
+                    icon = null;
+                }
+            }
 
             if (icon == null) {
                 iconImageView.setImageResource(R.drawable.unknown);
@@ -286,10 +255,10 @@ public class CardTripsFragment extends ListFragment {
 
             SpannableStringBuilder routeText = new SpannableStringBuilder();
 
-            if (trip.getShortAgencyName() != null) {
-                routeText.append(trip.getShortAgencyName())
+            if (trip.getAgencyName(true) != null) {
+                routeText.append(trip.getAgencyName(true))
                         .append(" ")
-                        .setSpan(new StyleSpan(Typeface.BOLD), 0, trip.getShortAgencyName().length(), 0);
+                        .setSpan(new StyleSpan(Typeface.BOLD), 0, trip.getAgencyName(true).length(), 0);
                 if (localisePlaces && Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
                     routeText.setSpan(new LocaleSpan(Locale.getDefault()), 0, routeText.length(), 0);
                 }
@@ -344,6 +313,33 @@ public class CardTripsFragment extends ListFragment {
                 stationTextView.setVisibility(View.VISIBLE);
             } else {
                 stationTextView.setVisibility(View.GONE);
+            }
+
+            // Passenger count
+            int pax = trip.getPassengerCount();
+
+            if (pax >= 1) {
+                paxTextView.setText(String.format(Locale.getDefault(), "%d", pax));
+                paxIcon.setContentDescription(Utils.localizePlural(R.plurals.passengers, pax));
+
+                paxIcon.setImageDrawable(AppCompatResources.getDrawable(getContext(),
+                        pax == 1 ? R.drawable.material_ic_person_24dp : R.drawable.material_ic_group_24dp));
+
+                paxLayout.setVisibility(View.VISIBLE);
+            } else {
+                // No information.
+                paxLayout.setVisibility(View.GONE);
+            }
+
+            // Machine ID
+            if (trip.getVehicleID() != null) {
+                machineIdTextView.setText(Utils.localizeString(R.string.vehicle_number, trip.getVehicleID()));
+                machineIdTextView.setVisibility(View.VISIBLE);
+            } else if (trip.getMachineID() != null) {
+                machineIdTextView.setText(Utils.localizeString(R.string.machine_id, trip.getMachineID()));
+                machineIdTextView.setVisibility(View.VISIBLE);
+            } else {
+                machineIdTextView.setVisibility(View.GONE);
             }
 
             return convertView;

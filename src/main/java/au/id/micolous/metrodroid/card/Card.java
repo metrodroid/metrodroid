@@ -26,7 +26,6 @@ import android.util.Log;
 
 import au.id.micolous.farebot.R;
 import au.id.micolous.metrodroid.card.iso7816.ISO7816Card;
-import au.id.micolous.metrodroid.card.cepas.CEPASCard;
 import au.id.micolous.metrodroid.card.classic.ClassicCard;
 import au.id.micolous.metrodroid.card.desfire.DesfireCard;
 import au.id.micolous.metrodroid.card.felica.FelicaCard;
@@ -43,7 +42,6 @@ import org.simpleframework.xml.Serializer;
 
 import java.io.StringWriter;
 import java.util.Calendar;
-import java.util.Collection;
 import java.util.List;
 import java.util.Locale;
 
@@ -88,15 +86,6 @@ public abstract class Card {
                 Utils.getHexString(tagId), techs.length));
         for (String tech : techs) {
             Log.d(TAG, tech);
-        }
-
-        if (ArrayUtils.contains(techs, "android.nfc.tech.NfcB")) {
-            // FIXME: CEPAS interface should first select the correct Application ID, to ensure it
-            // only triggers on actual CEPAS cards.
-            CEPASCard cepasCard = CEPASCard.dumpTag(tag);
-            if (cepasCard != null) {
-                return cepasCard;
-            }
         }
 
         if (ArrayUtils.contains(techs, "android.nfc.tech.IsoDep")) {
@@ -198,6 +187,10 @@ public abstract class Card {
 
     @Nullable
     public List<ListItem> getManufacturingInfo() {
+        return null;
+    }
+
+    public List<ListItem> getRawData() {
         return null;
     }
 }

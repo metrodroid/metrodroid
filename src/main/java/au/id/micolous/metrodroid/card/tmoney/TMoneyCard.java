@@ -19,24 +19,24 @@
 
 package au.id.micolous.metrodroid.card.tmoney;
 
+import android.text.SpannableString;
 import android.util.Log;
 
 import org.simpleframework.xml.Element;
-import org.simpleframework.xml.Root;
+
+import java.util.Collections;
+import java.util.List;
 
 import au.id.micolous.farebot.R;
-import au.id.micolous.metrodroid.card.CardRawDataFragmentClass;
-import au.id.micolous.metrodroid.card.CardType;
 import au.id.micolous.metrodroid.card.TagReaderFeedbackInterface;
 import au.id.micolous.metrodroid.card.iso7816.ISO7816Application;
-import au.id.micolous.metrodroid.card.iso7816.ISO7816Card;
 import au.id.micolous.metrodroid.card.iso7816.ISO7816Protocol;
 import au.id.micolous.metrodroid.card.iso7816.ISO7816Selector;
-import au.id.micolous.metrodroid.fragment.ISO7816CardRawDataFragment;
-import au.id.micolous.metrodroid.transit.CardInfo;
 import au.id.micolous.metrodroid.transit.TransitData;
 import au.id.micolous.metrodroid.transit.TransitIdentity;
 import au.id.micolous.metrodroid.transit.tmoney.TMoneyTransitData;
+import au.id.micolous.metrodroid.ui.ListItem;
+import au.id.micolous.metrodroid.ui.ListItemRecursive;
 import au.id.micolous.metrodroid.util.Utils;
 
 public class TMoneyCard extends ISO7816Application {
@@ -75,6 +75,12 @@ public class TMoneyCard extends ISO7816Application {
         mBalance = balance;
     }
 
+    public List<ListItem> getRawData() {
+        return Collections.singletonList(ListItemRecursive.collapsedValue("Tmoney balance",
+                new SpannableString(Integer.toHexString(mBalance))));
+    }
+
+
     /**
      * Dumps a TMoney card in the field.
      * @param app ISO7816 app info of the tag.
@@ -89,9 +95,9 @@ public class TMoneyCard extends ISO7816Application {
 
         try {
             feedbackInterface.updateStatusText(Utils.localizeString(R.string.card_reading_type,
-                    CardInfo.TMONEY.getName()));
+                    TMoneyTransitData.CARD_INFO.getName()));
             feedbackInterface.updateProgressBar(0, 6);
-            feedbackInterface.showCardType(CardInfo.TMONEY);
+            feedbackInterface.showCardType(TMoneyTransitData.CARD_INFO);
             balanceResponse = iso7816Tag.sendRequest(ISO7816Protocol.CLASS_90, INS_GET_BALANCE,
                         (byte) 0, (byte) 0, BALANCE_RESP_LEN);
             feedbackInterface.updateProgressBar(1, 6);

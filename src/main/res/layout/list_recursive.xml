@@ -1,0 +1,35 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:minHeight="?android:attr/listPreferredItemHeight"
+    android:mode="twoLine"
+    android:paddingStart="?android:attr/listPreferredItemPaddingStart"
+    android:paddingEnd="?android:attr/listPreferredItemPaddingEnd"
+    android:paddingLeft="?android:attr/listPreferredItemPaddingLeft"
+    android:paddingRight="?android:attr/listPreferredItemPaddingRight">
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:id="@+id/arrow_img"
+        android:src="?attr/DrawableClosedIndicator"
+        />
+    <TextView android:id="@android:id/text1"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        android:layout_toEndOf="@id/arrow_img"
+        android:layout_toRightOf="@id/arrow_img"
+        android:layout_marginTop="8dp"
+        android:textAppearance="?android:attr/textAppearanceListItem"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+    <TextView android:id="@android:id/text2"
+        android:textSize="16sp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@android:id/text1"
+        android:layout_alignStart="@android:id/text1"
+        android:textAppearance="?android:attr/textAppearanceListItem"
+        android:layout_alignLeft="@android:id/text1" />
+</RelativeLayout>

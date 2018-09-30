@@ -4,7 +4,6 @@ import android.os.Parcel;
 import android.support.annotation.Nullable;
 
 import java.util.Calendar;
-import java.util.TimeZone;
 
 import au.id.micolous.metrodroid.transit.TransitCurrency;
 import au.id.micolous.metrodroid.transit.Trip;
@@ -52,7 +51,7 @@ public class SmartRiderTrip extends Trip {
     }
 
     @Override
-    public String getAgencyName() {
+    public String getAgencyName(boolean isShort) {
         switch (mCardType) {
             case MYWAY:
                 return "ACTION";

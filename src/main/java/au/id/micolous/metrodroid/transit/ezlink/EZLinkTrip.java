@@ -29,7 +29,6 @@ import android.support.annotation.Nullable;
 import java.util.Calendar;
 
 import au.id.micolous.farebot.R;
-import au.id.micolous.metrodroid.card.cepas.CEPASTransaction;
 import au.id.micolous.metrodroid.transit.Station;
 import au.id.micolous.metrodroid.transit.TransitCurrency;
 import au.id.micolous.metrodroid.transit.Trip;
@@ -64,44 +63,14 @@ public class EZLinkTrip extends Trip {
     }
 
     @Override
-    public String getAgencyName() {
-        if (mTransaction.getType() == CEPASTransaction.TransactionType.BUS
-                || mTransaction.getType() == CEPASTransaction.TransactionType.BUS_REFUND) {
-            return "BUS";
-        }
-        if (mTransaction.getType() == CEPASTransaction.TransactionType.CREATION
-                || mTransaction.getType() == CEPASTransaction.TransactionType.TOP_UP
-                || mTransaction.getType() == CEPASTransaction.TransactionType.SERVICE) {
-            return mCardName;
-        }
-        if (mTransaction.getType() == CEPASTransaction.TransactionType.RETAIL) {
-            return "POS";
-        }
-        return "SMRT";
-    }
-
-    @Override
-    public String getShortAgencyName() {
-        if (mTransaction.getType() == CEPASTransaction.TransactionType.BUS
-                || mTransaction.getType() == CEPASTransaction.TransactionType.BUS_REFUND) {
-            return "BUS";
-        }
-        if (mTransaction.getType() == CEPASTransaction.TransactionType.CREATION
-                || mTransaction.getType() == CEPASTransaction.TransactionType.TOP_UP
-                || mTransaction.getType() == CEPASTransaction.TransactionType.SERVICE) {
-            if (mCardName.equals("EZ-Link")) return "EZ";
-            else return mCardName;
-        }
-        if (mTransaction.getType() == CEPASTransaction.TransactionType.RETAIL) {
-            return "POS";
-        }
-        return "SMRT";
+    public String getAgencyName(boolean isShort) {
+        return getAgencyName(mTransaction.getType(), mCardName, isShort);
     }
 
     @Override
     public String getRouteName() {
         if (mTransaction.getType() == CEPASTransaction.TransactionType.BUS) {
-            if (mTransaction.getUserData().startsWith("SVC"))
+            if (mTransaction.getUserData().startsWith("SVC") || mTransaction.getUserData().startsWith("BUS"))
                 return Utils.localizeString(R.string.ez_bus_number,
                         mTransaction.getUserData().substring(3, 7).replace(" ", ""));
             return Utils.localizeString(R.string.unknown_format, mTransaction.getUserData());
@@ -125,11 +94,15 @@ public class EZLinkTrip extends Trip {
     public TransitCurrency getFare() {
         if (mTransaction.getType() == CEPASTransaction.TransactionType.CREATION)
             return null;
-        return new TransitCurrency(mTransaction.getAmount(), "SGD");
+        return TransitCurrency.SGD(-mTransaction.getAmount());
     }
 
     @Override
     public Station getStartStation() {
+        if (mTransaction.getType() == CEPASTransaction.TransactionType.BUS
+                && (mTransaction.getUserData().startsWith("SVC")
+                || mTransaction.getUserData().startsWith("BUS")))
+            return null;
         if (mTransaction.getType() == CEPASTransaction.TransactionType.CREATION)
             return Station.nameOnly(mTransaction.getUserData());
         if (mTransaction.getUserData().charAt(3) == '-'
@@ -152,19 +125,24 @@ public class EZLinkTrip extends Trip {
         return null;
     }
 
-    @Override
-    public Mode getMode() {
-        if (mTransaction.getType() == CEPASTransaction.TransactionType.BUS
-                || mTransaction.getType() == CEPASTransaction.TransactionType.BUS_REFUND)
+    public static Mode getMode(CEPASTransaction.TransactionType type) {
+        if (type == CEPASTransaction.TransactionType.BUS
+                || type == CEPASTransaction.TransactionType.BUS_REFUND)
             return Mode.BUS;
-        else if (mTransaction.getType() == CEPASTransaction.TransactionType.MRT)
+        else if (type == CEPASTransaction.TransactionType.MRT)
             return Mode.METRO;
-        else if (mTransaction.getType() == CEPASTransaction.TransactionType.TOP_UP)
+        else if (type == CEPASTransaction.TransactionType.TOP_UP)
             return Mode.TICKET_MACHINE;
-        else if (mTransaction.getType() == CEPASTransaction.TransactionType.RETAIL
-                || mTransaction.getType() == CEPASTransaction.TransactionType.SERVICE)
+        else if (type == CEPASTransaction.TransactionType.RETAIL
+                || type == CEPASTransaction.TransactionType.SERVICE)
             return Mode.POS;
         return Mode.OTHER;
+    }
+
+
+    @Override
+    public Mode getMode() {
+        return getMode(mTransaction.getType());
     }
 
     public void writeToParcel(Parcel parcel, int flags) {
@@ -173,5 +151,43 @@ public class EZLinkTrip extends Trip {
 
     public int describeContents() {
         return 0;
+    }
+
+    public static String getAgencyName(CEPASTransaction.TransactionType type, String cardName, boolean isShort) {
+        if (type == CEPASTransaction.TransactionType.BUS
+                || type == CEPASTransaction.TransactionType.BUS_REFUND) {
+            return "BUS";
+        }
+        if (type == CEPASTransaction.TransactionType.CREATION
+                || type == CEPASTransaction.TransactionType.TOP_UP
+                || type == CEPASTransaction.TransactionType.SERVICE) {
+            if (isShort && cardName.equals("EZ-Link")) return "EZ";
+            return cardName;
+        }
+        if (type == CEPASTransaction.TransactionType.RETAIL) {
+            return "POS";
+        }
+        return "SMRT";
+    }
+
+    public static String getRouteName(CEPASTransaction.TransactionType type, String userData) {
+        if (type == CEPASTransaction.TransactionType.BUS) {
+            if (userData.startsWith("SVC") || userData.startsWith("BUS"))
+                return Utils.localizeString(R.string.ez_bus_number,
+                        userData.substring(3, 7).replace(" ", ""));
+            return Utils.localizeString(R.string.unknown_format, userData);
+        } else if (type == CEPASTransaction.TransactionType.BUS_REFUND)
+            return Utils.localizeString(R.string.ez_bus_refund);
+        else if (type == CEPASTransaction.TransactionType.MRT)
+            return Utils.localizeString(R.string.ez_mrt);
+        else if (type == CEPASTransaction.TransactionType.TOP_UP)
+            return Utils.localizeString(R.string.ez_topup);
+        else if (type == CEPASTransaction.TransactionType.CREATION)
+            return Utils.localizeString(R.string.ez_first_use);
+        else if (type == CEPASTransaction.TransactionType.RETAIL)
+            return Utils.localizeString(R.string.ez_retail_purchase);
+        else if (type == CEPASTransaction.TransactionType.SERVICE)
+            return Utils.localizeString(R.string.ez_service_charge);
+        return Utils.localizeString(R.string.unknown_format, type.toString());
     }
 }

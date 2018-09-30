@@ -20,11 +20,17 @@
   along with this program.  If not, see <http://www.gnu.org/licenses/>.
   -->
 
-<menu xmlns:app="http://schemas.android.com/apk/res-auto"
+<menu xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:android="http://schemas.android.com/apk/res/android">
     <item
         android:id="@+id/add_key"
-        android:icon="?attr/AddKeyIcon"
+        android:icon="@drawable/material_ic_add_24dp"
         android:title="@string/add_key"
-        app:showAsAction="always" />
+        android:showAsAction="ifRoom"
+        app:showAsAction="ifRoom"
+        tools:ignore="AppCompatResource" />
+    <item
+        android:id="@+id/key_more_info"
+        android:title="@string/about_key_formats"  />
 </menu>

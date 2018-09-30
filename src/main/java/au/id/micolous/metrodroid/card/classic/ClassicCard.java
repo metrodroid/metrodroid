@@ -39,6 +39,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
+import java.util.Collections;
 import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.Locale;
@@ -46,32 +47,35 @@ import java.util.Locale;
 import au.id.micolous.farebot.R;
 import au.id.micolous.metrodroid.MetrodroidApplication;
 import au.id.micolous.metrodroid.card.Card;
-import au.id.micolous.metrodroid.card.CardRawDataFragmentClass;
 import au.id.micolous.metrodroid.card.CardType;
 import au.id.micolous.metrodroid.card.TagReaderFeedbackInterface;
-import au.id.micolous.metrodroid.fragment.ClassicCardRawDataFragment;
 import au.id.micolous.metrodroid.key.CardKeys;
 import au.id.micolous.metrodroid.key.ClassicCardKeys;
 import au.id.micolous.metrodroid.key.ClassicSectorKey;
 import au.id.micolous.metrodroid.transit.TransitData;
 import au.id.micolous.metrodroid.transit.TransitIdentity;
 import au.id.micolous.metrodroid.transit.bilhete_unico.BilheteUnicoSPTransitData;
+import au.id.micolous.metrodroid.transit.charlie.CharlieCardTransitData;
 import au.id.micolous.metrodroid.transit.chc_metrocard.ChcMetrocardTransitData;
 import au.id.micolous.metrodroid.transit.erg.ErgTransitData;
 import au.id.micolous.metrodroid.transit.lax_tap.LaxTapTransitData;
 import au.id.micolous.metrodroid.transit.manly_fast_ferry.ManlyFastFerryTransitData;
+import au.id.micolous.metrodroid.transit.msp_goto.MspGotoTransitData;
 import au.id.micolous.metrodroid.transit.nextfare.NextfareTransitData;
 import au.id.micolous.metrodroid.transit.ovc.OVChipTransitData;
 import au.id.micolous.metrodroid.transit.podorozhnik.PodorozhnikTransitData;
 import au.id.micolous.metrodroid.transit.seq_go.SeqGoTransitData;
 import au.id.micolous.metrodroid.transit.smartrider.SmartRiderTransitData;
+import au.id.micolous.metrodroid.transit.strelka.StrelkaTransitData;
 import au.id.micolous.metrodroid.transit.troika.TroikaHybridTransitData;
 import au.id.micolous.metrodroid.transit.troika.TroikaTransitData;
+import au.id.micolous.metrodroid.transit.unknown.BlankClassicTransitData;
 import au.id.micolous.metrodroid.transit.unknown.UnauthorizedClassicTransitData;
+import au.id.micolous.metrodroid.ui.ListItem;
+import au.id.micolous.metrodroid.ui.ListItemRecursive;
 import au.id.micolous.metrodroid.util.Utils;
 
 @Root(name = "card")
-@CardRawDataFragmentClass(ClassicCardRawDataFragment.class)
 public class ClassicCard extends Card {
     public static final byte[] PREAMBLE_KEY = {(byte) 0x00, (byte) 0x00, (byte) 0x00, (byte) 0x00, (byte) 0x00,
             (byte) 0x00};
@@ -91,11 +95,11 @@ public class ClassicCard extends Card {
      * See {@link SmartRiderTransitData#detectKeyType(ClassicCard)} for an example of how to do
      * this.
      */
-    static final byte[][] WELL_KNOWN_KEYS = {
-            PREAMBLE_KEY,
-            MifareClassic.KEY_DEFAULT,
-            MifareClassic.KEY_MIFARE_APPLICATION_DIRECTORY,
-            MifareClassic.KEY_NFC_FORUM
+    private static final ClassicSectorKey[] WELL_KNOWN_KEYS = {
+            ClassicSectorKey.wellKnown(PREAMBLE_KEY),
+            ClassicSectorKey.wellKnown(MifareClassic.KEY_DEFAULT),
+            ClassicSectorKey.wellKnown(MifareClassic.KEY_MIFARE_APPLICATION_DIRECTORY),
+            ClassicSectorKey.wellKnown(MifareClassic.KEY_NFC_FORUM)
     };
 
     private static final String TAG = "ClassicCard";
@@ -111,6 +115,50 @@ public class ClassicCard extends Card {
     private ClassicCard(byte[] tagId, Calendar scannedAt, ClassicSector[] sectors, boolean partialRead) {
         super(CardType.MifareClassic, tagId, scannedAt, null, partialRead);
         mSectors = Arrays.asList(sectors);
+    }
+
+    /**
+     * Tries to authenticate with the given key.
+     *
+     * This is a thin wrapper around {@link MifareClassic#authenticateSectorWithKeyA(int, byte[])}
+     * and {@link MifareClassic#authenticateSectorWithKeyB(int, byte[])} so that we can pass a
+     * {@link ClassicSectorKey};
+     * @param tech MIFARE Classic card to autheticate with.
+     * @param sectorIndex Sector number to authenticate for.
+     * @param key Key to authenticate with.
+     * @return true on success, false on failure.
+     * @throws IOException On card communication errors.
+     */
+    private static boolean authenticateWithKey(MifareClassic tech, int sectorIndex, ClassicSectorKey key) throws IOException {
+        if (key.getType() == ClassicSectorKey.KeyType.A || key.getType() == ClassicSectorKey.KeyType.UNKNOWN) {
+            return tech.authenticateSectorWithKeyA(sectorIndex, key.getKey());
+        }
+        return tech.authenticateSectorWithKeyB(sectorIndex, key.getKey());
+    }
+
+    /**
+     * Tries to authenticate with the given key as both the "A" and "B" keys.
+     *
+     * Returns the correct key on success, null otherwise.  If we had to use the alternate key, then
+     * an inverse clone of {@param key} is returned.
+     * @param tech MIFARE Classic card to authenticate with.
+     * @param sectorIndex Sector number to authenticate for.
+     * @param key Key to try.
+     * @return null on error, correct key on success.
+     * @throws IOException On card communication errors.
+     */
+    private static ClassicSectorKey tryAuthenticateWithKey(MifareClassic tech, int sectorIndex, ClassicSectorKey key) throws IOException {
+        ClassicSectorKey myKey = key.clone();
+        if (authenticateWithKey(tech, sectorIndex, myKey)) {
+            return myKey;
+        }
+
+        myKey.invertType();
+        if (authenticateWithKey(tech, sectorIndex, myKey)) {
+            return myKey;
+        }
+
+        return null;
     }
 
     public static ClassicCard dumpTag(byte[] tagId, Tag tag, TagReaderFeedbackInterface feedbackInterface) throws Exception {
@@ -132,14 +180,17 @@ public class ClassicCard extends Card {
             }
             tech.connect();
 
-            ClassicCardKeys keys = (ClassicCardKeys) CardKeys.forTagId(tagId);
+            ClassicCardKeys keys = CardKeys.forTagId(tagId);
+            if (keys == null)
+                keys = CardKeys.forStaticClassic();
 
+            int sectorCount = tech.getSectorCount();
             List<ClassicSector> sectors = new ArrayList<>();
             final int maxProgress = tech.getSectorCount() * 5;
 
-            for (int sectorIndex = 0; sectorIndex < tech.getSectorCount(); sectorIndex++) {
+            for (int sectorIndex = 0; sectorIndex < sectorCount; sectorIndex++) {
                 try {
-                    byte[] correctKey = null;
+                    ClassicSectorKey correctKey = null;
                     feedbackInterface.updateProgressBar(sectorIndex * 5, maxProgress);
 
                     if (keys != null) {
@@ -151,21 +202,10 @@ public class ClassicCard extends Card {
                         while (correctKey == null && retriesLeft-- > 0) {
                             // If we have a known key for the sector on the card, try this first.
                             Log.d(TAG, "Attempting authentication on sector " + sectorIndex + ", " + retriesLeft + " tries remain...");
-                            ClassicSectorKey sectorKey = keys.keyForSector(sectorIndex);
-                            if (sectorKey != null) {
-                                if (sectorKey.getType().equals(ClassicSectorKey.TYPE_KEYA)) {
-                                    if (tech.authenticateSectorWithKeyA(sectorIndex, sectorKey.getKey())) {
-                                        correctKey = sectorKey.getKey();
-                                    } else if (tech.authenticateSectorWithKeyB(sectorIndex, sectorKey.getKey())) {
-                                        correctKey = sectorKey.getKey();
-                                    }
-                                } else {
-                                    if (tech.authenticateSectorWithKeyB(sectorIndex, sectorKey.getKey())) {
-                                        correctKey = sectorKey.getKey();
-                                    } else if (tech.authenticateSectorWithKeyA(sectorIndex, sectorKey.getKey())) {
-                                        correctKey = sectorKey.getKey();
-                                    }
-                                }
+                            List <ClassicSectorKey> candidates = keys.getCandidates(sectorIndex);
+
+                            for (ClassicSectorKey sectorKey : candidates) {
+                                correctKey = tryAuthenticateWithKey(tech, sectorIndex, sectorKey);
                             }
                         }
                     }
@@ -187,28 +227,13 @@ public class ClassicCard extends Card {
                                 //
                                 // This takes longer, of course, but means that users aren't scratching
                                 // their heads when we don't get the right key straight away.
-                                ClassicSectorKey[] cardKeys = keys.keys();
-
-                                for (int keyIndex = 0; keyIndex < cardKeys.length; keyIndex++) {
-                                    if (keyIndex == sectorIndex) {
-                                        // We tried this before
-                                        continue;
-                                    }
-
-                                    if (cardKeys[keyIndex].getType().equals(ClassicSectorKey.TYPE_KEYA)) {
-                                        if (tech.authenticateSectorWithKeyA(sectorIndex, cardKeys[keyIndex].getKey())) {
-                                            correctKey = cardKeys[keyIndex].getKey();
-                                        }
-                                    } else {
-                                        if (tech.authenticateSectorWithKeyB(sectorIndex, cardKeys[keyIndex].getKey())) {
-                                            correctKey = cardKeys[keyIndex].getKey();
-                                        }
-                                    }
+                                for (ClassicSectorKey key : keys.keys()) {
+                                    correctKey = tryAuthenticateWithKey(tech, sectorIndex, key);
 
                                     if (correctKey != null) {
                                         // Jump out if we have the key
-                                        Log.d(TAG, String.format("Authenticated successfully to sector %d with key for sector %d. "
-                                                + "Fix the key file to speed up authentication", sectorIndex, keyIndex));
+                                        Log.d(TAG, String.format("Authenticated successfully to sector %d with other key. "
+                                                + "Fix the key file to speed up authentication", sectorIndex));
                                         break;
                                     }
                                 }
@@ -219,14 +244,8 @@ public class ClassicCard extends Card {
                                 feedbackInterface.updateProgressBar((sectorIndex * 5) + 2, maxProgress);
 
                                 feedbackInterface.updateStatusText(Utils.localizeString(R.string.mfc_default_key, sectorIndex));
-                                for (byte[] wkKey : WELL_KNOWN_KEYS) {
-                                    if (tech.authenticateSectorWithKeyA(sectorIndex, wkKey)) {
-                                        correctKey = wkKey;
-                                        break;
-                                    } else if (tech.authenticateSectorWithKeyB(sectorIndex, wkKey)) {
-                                        correctKey = wkKey;
-                                        break;
-                                    }
+                                for (ClassicSectorKey wkKey : WELL_KNOWN_KEYS) {
+                                    correctKey = tryAuthenticateWithKey(tech, sectorIndex, wkKey);
                                 }
                             }
 
@@ -245,9 +264,18 @@ public class ClassicCard extends Card {
                         for (int blockIndex = 0; blockIndex < tech.getBlockCountInSector(sectorIndex); blockIndex++) {
                             byte[] data = tech.readBlock(firstBlockIndex + blockIndex);
                             String type = ClassicBlock.TYPE_DATA; // FIXME
+
+                            // Sometimes the result is just a single byte 04
+                            // Reauthenticate if that happens
+                            if (data.length < 4) {
+                                authenticateWithKey(tech, sectorIndex, correctKey);
+                                data = tech.readBlock(firstBlockIndex + blockIndex);
+                            }
                             blocks.add(ClassicBlock.create(type, blockIndex, data));
                         }
-                        sectors.add(new ClassicSector(sectorIndex, blocks.toArray(new ClassicBlock[blocks.size()]), correctKey));
+                        sectors.add(new ClassicSector(sectorIndex,
+                                blocks.toArray(new ClassicBlock[blocks.size()]),
+                                correctKey));
 
                         feedbackInterface.updateProgressBar((sectorIndex * 5) + 4, maxProgress);
                     } else {
@@ -381,6 +409,8 @@ public class ClassicCard extends Card {
                 return SeqGoTransitData.parseTransitIdentity(this);
             } else if (LaxTapTransitData.check(this)) {
                 return LaxTapTransitData.parseTransitIdentity(this);
+            } else if (MspGotoTransitData.check(this)) {
+                return MspGotoTransitData.parseTransitIdentity(this);
             } else {
                 // Fallback
                 return NextfareTransitData.parseTransitIdentity(this);
@@ -388,25 +418,31 @@ public class ClassicCard extends Card {
         } else if (SmartRiderTransitData.check(this)) {
             return SmartRiderTransitData.parseTransitIdentity(this);
         } else if (TroikaTransitData.check(this)) {
-            if (PodorozhnikTransitData.check(this)) {
-                return TroikaHybridTransitData.parseTransitIdentity(this);
-            }
-            return TroikaTransitData.parseTransitIdentity(this);
+            return TroikaHybridTransitData.parseTransitIdentity(this);
         } else if (PodorozhnikTransitData.check(this)) {
             return PodorozhnikTransitData.parseTransitIdentity(this);
+        } else if (StrelkaTransitData.check(this)) {
+            return StrelkaTransitData.parseTransitIdentity(this);
+        } else if (CharlieCardTransitData.check(this)) {
+            return CharlieCardTransitData.parseTransitIdentity(this);
+        } else if (BilheteUnicoSPTransitData.check(this)) {
+            return BilheteUnicoSPTransitData.parseTransitIdentity(this);
         } else if (UnauthorizedClassicTransitData.check(this)) {
-            // This check must be SECOND TO LAST.
+            // This check must be THIRD TO LAST.
             //
             // This is to throw up a warning whenever there is a card with all locked sectors
             return UnauthorizedClassicTransitData.parseTransitIdentity(this);
+        } else if (BlankClassicTransitData.check(this)) {
+            // This check must be SECOND TO LAST.
+            //
+            // This is to throw up a warning whenever there is a card with all empty sectors
+            return BlankClassicTransitData.parseTransitIdentity(this);
         } else {
             // This check must be LAST.
             //
             // This is for agencies who don't have identifying "magic" in their card.
             String fallback = getFallbackReader();
-            if (fallback.equals("bilhete_unico")) {
-                return BilheteUnicoSPTransitData.parseTransitIdentity(this);
-            } else if (fallback.equals("myway") || fallback.equals("smartrider")) {
+            if (fallback.equals("myway") || fallback.equals("smartrider")) {
                 // This has a proper check now, but is included for legacy reasons.
                 //
                 // Before the introduction of key-based detection for these cards, Metrodroid did
@@ -439,6 +475,8 @@ public class ClassicCard extends Card {
                 return new SeqGoTransitData(this);
             } else if (LaxTapTransitData.check(this)) {
                 return new LaxTapTransitData(this);
+            } else if (MspGotoTransitData.check(this)) {
+                return new MspGotoTransitData(this);
             } else {
                 // Fallback
                 return new NextfareTransitData(this);
@@ -446,25 +484,32 @@ public class ClassicCard extends Card {
         } else if (SmartRiderTransitData.check(this)) {
             return new SmartRiderTransitData(this);
         } else if (TroikaTransitData.check(this)) {
-            if (PodorozhnikTransitData.check(this)) {
-                return new TroikaHybridTransitData(this);
-            }
-            return new TroikaTransitData(this);
+            // This class will figure out details
+            return new TroikaHybridTransitData(this);
         } else if (PodorozhnikTransitData.check(this)) {
             return new PodorozhnikTransitData(this);
+        } else if (StrelkaTransitData.check(this)) {
+            return new StrelkaTransitData(this);
+        } else if (CharlieCardTransitData.check(this)) {
+            return new CharlieCardTransitData(this);
+        } else if (BilheteUnicoSPTransitData.check(this)) {
+            return new BilheteUnicoSPTransitData(this);
         } else if (UnauthorizedClassicTransitData.check(this)) {
-            // This check must be SECOND TO LAST.
+            // This check must be THIRD TO LAST.
             //
             // This is to throw up a warning whenever there is a card with all locked sectors
             return new UnauthorizedClassicTransitData();
+        } else if (BlankClassicTransitData.check(this)) {
+            // This check must be SECOND TO LAST.
+            //
+            // This is to throw up a warning whenever there is a card with all empty sectors
+            return new BlankClassicTransitData();
         } else {
             // This check must be LAST.
             //
             // This is for agencies who don't have identifying "magic" in their card.
             String fallback = getFallbackReader();
-            if (fallback.equals("bilhete_unico")) {
-                return new BilheteUnicoSPTransitData(this);
-            } else if (fallback.equals("myway")) {
+            if (fallback.equals("myway")) {
                 // TODO: Replace this with a proper check, and take out of fallback mode.
                 return new SmartRiderTransitData(this);
             }
@@ -480,5 +525,63 @@ public class ClassicCard extends Card {
 
     public ClassicSector getSector(int index) throws IndexOutOfBoundsException {
         return mSectors.get(index);
+    }
+
+    @Override
+    public List<ListItem> getManufacturingInfo() {
+        ClassicSector sec0 = getSector(0);
+        if (sec0 instanceof UnauthorizedClassicSector || sec0 instanceof InvalidClassicSector)
+            return null;
+
+        byte[] data = sec0.getBlock(0).getData();
+
+        List<ListItem> items = new ArrayList<>();
+        items.add(new ListItem("Week of Production", Integer.toHexString(data[14])));
+        items.add(new ListItem("Year of Production", Integer.toHexString(data[15])));
+        return items;
+    }
+
+    @Override
+    public List<ListItem> getRawData() {
+        List<ListItem> li = new ArrayList<>();
+
+        for (ClassicSector sector : mSectors) {
+            String sectorIndexString = Integer.toHexString(sector.getIndex());
+            ClassicSectorKey k = sector.getKey();
+            String key = null;
+            if (k != null) {
+                key = Utils.localizeString(k.getType().getFormatRes(), Utils.getHexString(k.getKey()));
+            }
+
+            if (sector instanceof UnauthorizedClassicSector) {
+                li.add(new ListItem(Utils.localizeString(R.string.unauthorized_sector_title_format, sectorIndexString)));
+                continue;
+            }
+
+            if (sector instanceof InvalidClassicSector) {
+                li.add(new ListItem(Utils.localizeString(R.string.invalid_sector_title_format, sectorIndexString)));
+                continue;
+            }
+
+            List<ListItem> bli = new ArrayList<>();
+            for (ClassicBlock block : sector.getBlocks()) {
+                bli.add(new ListItemRecursive(
+                        Utils.localizeString(R.string.block_title_format,
+                                Integer.toString(block.getIndex())),
+                        block.getType(),
+                        Collections.singletonList(new ListItem(null, Utils.getHexDump(block.getData())))
+                ));
+            }
+            if (sector.isEmpty()) {
+                li.add(new ListItemRecursive(
+                        Utils.localizeString(R.string.sector_title_format_empty, sectorIndexString),
+                        key, bli));
+            } else {
+                li.add(new ListItemRecursive(
+                        Utils.localizeString(R.string.sector_title_format, sectorIndexString),
+                        key, bli));
+            }
+        }
+        return li;
     }
 }

@@ -1,22 +1,22 @@
-Agency;StationID;StationName;ShortName;Latititude;Longitude
-ST;3;King Street Station;King Street;47.598445;-122.330161
-ST;5;Kent Station;Kent;47.384257;-122.233151
-ST;10352;Capitol Hill Station;               Captiol Hill;  47.6192;   -122.3202
-ST;10351;University of Washington Station;   UW Station;    47.6496;   -122.3037
-ST;13193;Westlake Station;                   Westlake;      47.6113968;-122.337502
-ST;13194;University Street Station;          University;    47.6072502;-122.335754
-ST;13195;Pioneer Square Station;             Pioneer Sq;    47.6021461;-122.33107
-ST;13196;International District Station;     ID;            47.5976601;-122.328217
-ST;13197;Stadium Station;                    Stadium;       47.5918121;-122.327354
-ST;13198;SODO Station;                       SODO;          47.5799484;-122.327515
-ST;13199;Beacon Hill Station;                Beacon Hill;   47.5791245;-122.311287
-ST;13200;Mount Baker Station;                Mount Baker;   47.5764389;-122.297737
-ST;13201;Columbia City Station;              Columbia City; 47.5589523;-122.292343
-ST;13202;Othello Station;                    Othello;       47.5375366;-122.281471
-ST;13203;Rainier Beach Station;              Rainier Beach; 47.5222626;-122.279579
-ST;13204;Tukwila International Blvd Station; Tukwila;       47.4642754;-122.288391
-ST;13205;Seatac Airport Station;             Sea-Tac;       47.4445305;-122.297012
-ST;10353;Angle Lake Station;                 Angle Lake;    47.4227143;-122.2978669
-WSF;10101;Seattle Terminal;Seattle;47.602722;-122.338512
-WSF;10103;Bainbridge Island Terminal;Bainbridge;47.62362;-122.51082
-WSF;10104;Fauntleroy Terminal;Seattle;47.5231;-122.39602
+operator_id,reader_id,stop_name,short_name,stop_lat,stop_lon
+7,458755,King Street,King St,47.598445,-122.330161
+7,458757,Kent,,47.384257,-122.233151
+7,469104,Capitol Hill,,47.6192,-122.3202
+7,469103,University of Washington,UW Station,47.6496,-122.3037
+7,471945,Westlake,Westlake,47.6113968,-122.337502
+7,471946,University Street,University,47.6072502,-122.335754
+7,471947,Pioneer Square,Pioneer Sq,47.6021461,-122.33107
+7,471948,International District,ID,47.5976601,-122.328217
+7,471949,Stadium,,47.5918121,-122.327354
+7,471950,SODO,,47.5799484,-122.327515
+7,471951,Beacon Hill,,47.5791245,-122.311287
+7,471952,Mount Baker,,47.5764389,-122.297737
+7,471953,Columbia City,,47.5589523,-122.292343
+7,471954,Othello,,47.5375366,-122.281471
+7,471955,Rainier Beach,,47.5222626,-122.279579
+7,471956,Tukwila International Blvd,Tukwila,47.4642754,-122.288391
+7,471957,Seatac Airport,Sea-Tac,47.4445305,-122.297012
+7,469105,Angle Lake,,47.4227143,-122.2978669
+8,534389,Seattle Terminal,Seattle,47.602722,-122.338512
+8,534391,Bainbridge Island Terminal,Bainbridge,47.62362,-122.51082
+8,534392,Fauntleroy Terminal,Seattle,47.5231,-122.39602

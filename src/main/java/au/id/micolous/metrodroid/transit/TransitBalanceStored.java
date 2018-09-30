@@ -23,8 +23,6 @@ import android.os.Parcel;
 import android.os.Parcelable;
 
 import java.util.Calendar;
-import java.util.GregorianCalendar;
-import java.util.TimeZone;
 
 import au.id.micolous.metrodroid.util.Utils;
 
@@ -36,6 +34,10 @@ public class TransitBalanceStored extends TransitBalance implements Parcelable {
 
     public TransitBalanceStored(TransitCurrency bal) {
         this(bal, null, null, null);
+    }
+
+    public TransitBalanceStored(TransitCurrency bal, Calendar expiry) {
+        this(bal, null, null, expiry);
     }
 
     public TransitBalanceStored(TransitCurrency bal, String name, Calendar expiry) {

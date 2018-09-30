@@ -26,17 +26,17 @@ import android.util.Log;
 
 import au.id.micolous.farebot.R;
 import au.id.micolous.metrodroid.card.Card;
-import au.id.micolous.metrodroid.card.CardRawDataFragmentClass;
 import au.id.micolous.metrodroid.card.CardType;
 import au.id.micolous.metrodroid.card.TagReaderFeedbackInterface;
 import au.id.micolous.metrodroid.card.UnsupportedTagException;
-import au.id.micolous.metrodroid.fragment.UltralightCardRawDataFragment;
 import au.id.micolous.metrodroid.transit.TransitData;
 import au.id.micolous.metrodroid.transit.TransitIdentity;
-import au.id.micolous.metrodroid.transit.compass.CompassUltralightTransitData;
+import au.id.micolous.metrodroid.transit.yvr_compass.CompassUltralightTransitData;
 import au.id.micolous.metrodroid.transit.troika.TroikaUltralightTransitData;
 import au.id.micolous.metrodroid.transit.unknown.BlankUltralightTransitData;
 import au.id.micolous.metrodroid.transit.unknown.UnauthorizedUltralightTransitData;
+import au.id.micolous.metrodroid.ui.ListItem;
+import au.id.micolous.metrodroid.ui.ListItemRecursive;
 import au.id.micolous.metrodroid.util.Utils;
 
 import org.simpleframework.xml.Attribute;
@@ -55,7 +55,6 @@ import java.util.Locale;
  * Utility class for reading MIFARE Ultralight / Ultralight C
  */
 @Root(name = "card")
-@CardRawDataFragmentClass(UltralightCardRawDataFragment.class)
 public class UltralightCard extends Card {
     private static final String TAG = "UltralightCard";
 
@@ -263,5 +262,24 @@ public class UltralightCard extends Card {
      */
     public String getCardModel() {
         return mCardModel;
+    }
+
+    @Override
+    public List<ListItem> getRawData() {
+        List<ListItem> li = new ArrayList<>();
+        for (UltralightPage sector : mPages) {
+            String sectorIndexString = Integer.toHexString(sector.getIndex());
+
+            if (sector instanceof UnauthorizedUltralightPage) {
+                li.add(ListItemRecursive.collapsedValue(Utils.localizeString(
+                        R.string.unauthorized_page_title_format, sectorIndexString),
+                        null, null));
+            } else {
+                li.add(ListItemRecursive.collapsedValue(Utils.localizeString(
+                        R.string.page_title_format, sectorIndexString),
+                        null, Utils.getHexDump(sector.getData())));
+            }
+        }
+        return li;
     }
 }

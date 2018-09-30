@@ -15,17 +15,17 @@
   along with this program.  If not, see <http://www.gnu.org/licenses/>.
   -->
 <resources>
-    <attr name="AddKeyIcon" format="reference" />
-    <attr name="AddKeyTextColor" format="reference" />
     <attr name="ButtonBarButtonStyle" format="reference" />
     <attr name="ButtonBarStyle" format="reference" />
     <attr name="BorderlessButtonStyle" format="reference" />
     <attr name="MainActivityTheme" format="reference" />
-    <attr name="AddKeysActivityTheme" format="reference" />
     <attr name="LockImage" format="reference" />
     <attr name="ListHeaderTextColor" format="reference" />
     <attr name="TransportIcons" format="reference" />
     <attr name="PhoneColor" format="reference" />
     <attr name="PhoneSpeakerColor" format="reference" />
     <attr name="PhoneLogoColor" format="reference" />
+    <attr name="CardIdTextColor" format="reference" />
+    <attr name="DrawableClosedIndicator" format="reference" />
+    <attr name="DrawableOpenIndicator" format="reference" />
 </resources>

@@ -53,7 +53,6 @@ import android.widget.AdapterView;
 import android.widget.ExpandableListAdapter;
 import android.widget.ExpandableListView;
 import android.widget.FrameLayout;
-import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -85,6 +84,11 @@ public class ExpandableListFragment extends Fragment implements OnCreateContextM
     boolean mFinishedStart = false;
 
     public ExpandableListFragment() {
+    }
+
+    public View getListView() {
+        ensureList();
+        return mList;
     }
 
     /**
@@ -172,6 +176,10 @@ public class ExpandableListFragment extends Fragment implements OnCreateContextM
                 setListShown(true, getView().getWindowToken() != null);
             }
         }
+    }
+
+    public ExpandableListAdapter getListAdapter() {
+        return mAdapter;
     }
 
     /**
@@ -292,12 +300,12 @@ public class ExpandableListFragment extends Fragment implements OnCreateContextM
         if (root instanceof ExpandableListView) {
             mList = (ExpandableListView) root;
         } else {
-            mStandardEmptyView = (TextView) root.findViewById(INTERNAL_EMPTY_ID);
+            mStandardEmptyView = root.findViewById(INTERNAL_EMPTY_ID);
             if (mStandardEmptyView == null) {
                 mEmptyView = root.findViewById(android.R.id.empty);
             }
-            mListContainer = null; //root.findViewById(com.android.internal.R.id.listContainer);
-            View rawListView = root.findViewById(android.R.id.list);
+            mListContainer = root.findViewById(android.R.id.list);
+            View rawListView = mListContainer;
             if (!(rawListView instanceof ExpandableListView)) {
                 if (rawListView == null) {
                     throw new RuntimeException("Your content must have a ExpandableListView whose id attribute is "
@@ -350,7 +358,7 @@ public class ExpandableListFragment extends Fragment implements OnCreateContextM
 
     public void onContentChanged() {
         View emptyView = getView().findViewById(android.R.id.empty);
-        mList = (ExpandableListView) getView().findViewById(android.R.id.list);
+        mList = getView().findViewById(android.R.id.list);
         if (mList == null) {
             throw new RuntimeException("Your content must have a ExpandableListView whose id attribute is "
                     + "'android.R.id.list'");

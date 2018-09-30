@@ -25,7 +25,9 @@ import android.support.annotation.Nullable;
 import org.apache.commons.lang3.ArrayUtils;
 
 import au.id.micolous.metrodroid.card.Card;
+import au.id.micolous.metrodroid.card.CardType;
 import au.id.micolous.metrodroid.card.desfire.DesfireCard;
+import au.id.micolous.metrodroid.transit.CardInfo;
 import au.id.micolous.metrodroid.transit.Subscription;
 import au.id.micolous.metrodroid.transit.TransitCurrency;
 import au.id.micolous.metrodroid.transit.TransitData;
@@ -56,6 +58,14 @@ public class OpalTransitData extends TransitData {
     public static final String NAME = "Opal";
     public static final int APP_ID = 0x314553;
     public static final int FILE_ID = 0x7;
+
+    public static final CardInfo CARD_INFO = new CardInfo.Builder()
+            .setImageId(R.drawable.opal_card)
+            .setName(OpalTransitData.NAME)
+            .setLocation(R.string.location_sydney_australia)
+            .setCardType(CardType.MifareDesfire)
+            .setExtraNote(R.string.card_note_opal)
+            .build();
 
     public static final TimeZone TIME_ZONE = TimeZone.getTimeZone("Australia/Sydney");
     private static final GregorianCalendar OPAL_EPOCH;
@@ -233,7 +243,7 @@ public class OpalTransitData extends TransitData {
 
         items.add(new HeaderListItem(R.string.last_transaction));
         if (!MetrodroidApplication.hideCardNumbers()) {
-            items.add(new ListItem(R.string.transaction_sequence, Integer.toString(getLastTransactionNumber())));
+            items.add(new ListItem(R.string.transaction_counter, Integer.toString(getLastTransactionNumber())));
         }
         Calendar cLastTransactionTime = TripObfuscator.maybeObfuscateTS(getLastTransactionTime());
         items.add(new ListItem(R.string.date, Utils.longDateFormat(cLastTransactionTime)));

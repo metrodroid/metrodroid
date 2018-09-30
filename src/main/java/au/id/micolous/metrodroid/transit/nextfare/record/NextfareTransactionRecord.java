@@ -76,8 +76,11 @@ public class NextfareTransactionRecord extends NextfareRecord implements Parcela
         // LAX:      input[0] == 0x41 for "Travel Pass" sale.
         // LAX:      input[0] == 0x71 for "Stored Value" sale -- effectively recorded twice
         // SEQ, LAX: input[0] == 0x79 for "Stored Value" sale
+        // Minneapolis: input[0] == 0x89 unknown transaction type, no date, only a small number
+        // around 100
 
-        if (input[0] > 0x70) {
+        int transhead = (input[0] & 0xff);
+        if (transhead == 0x89 || transhead == 0x71 || transhead == 0x79) {
             return null;
         }
 
@@ -91,24 +94,17 @@ public class NextfareTransactionRecord extends NextfareRecord implements Parcela
 
         record.mMode = Utils.byteArrayToInt(input, 1, 1);
 
-        byte[] ts = Utils.reverseBuffer(input, 2, 4);
-        record.mTimestamp = NextfareUtil.unpackDate(ts, timeZone);
+        record.mTimestamp = NextfareUtil.unpackDate(input, 2, timeZone);
+        record.mJourney = Utils.byteArrayToIntReversed(input, 5, 2) >> 5;
+        record.mContinuation = (Utils.byteArrayToIntReversed(input, 5, 2) & 0x10) > 1;
 
-        byte[] journey = Utils.reverseBuffer(input, 5, 2);
-        record.mJourney = Utils.byteArrayToInt(journey) >> 5;
-        record.mContinuation = (Utils.byteArrayToInt(journey) & 0x10) > 1;
-
-        byte[] value = Utils.reverseBuffer(input, 7, 2);
-        record.mValue = Utils.byteArrayToInt(value);
+        record.mValue = Utils.byteArrayToIntReversed(input, 7 ,2);
         if (record.mValue > 0x8000) {
             record.mValue = -(record.mValue & 0x7fff);
         }
 
-        byte[] station = Utils.reverseBuffer(input, 12, 2);
-        record.mStation = Utils.byteArrayToInt(station);
-
-        byte[] checksum = Utils.reverseBuffer(input, 14, 2);
-        record.mChecksum = Utils.byteArrayToInt(checksum);
+        record.mStation = Utils.byteArrayToIntReversed(input, 12, 2);
+        record.mChecksum = Utils.byteArrayToIntReversed(input, 14, 2);
 
         Log.d(TAG, String.format("@%s: mode %d, station %d, value %d, journey %d, %s",
                 Utils.isoDateTimeFormat(record.mTimestamp), record.mMode, record.mStation, record.mValue,

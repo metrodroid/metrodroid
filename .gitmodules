@@ -4,3 +4,12 @@
 [submodule "third_party/gtfs_lacmta_rail"]
 	path = third_party/gtfs_lacmta_rail
 	url = https://gitlab.com/LACMTA/gtfs_rail.git
+[submodule "third_party/vpereira_bilhete"]
+	path = third_party/vpereira_bilhete
+	url = https://github.com/vpereira/bilhete.git
+[submodule "third_party/material-design-icons/icons"]
+	path = third_party/material-design-icons/icons
+	url = https://github.com/google/material-design-icons.git
+[submodule "third_party/ovc-tools"]
+	path = third_party/ovc-tools
+	url = https://github.com/wandcode/ovc-tools

@@ -11,16 +11,12 @@
     <string name="advanced_info">Infos avancées</string>
     <string name="delete_card">Supprimer carte</string>
     <string name="unknown_card">Carte inconnue</string>
-    <string name="locked_card">Carte bloquée</string>
     <string name="hw_detail">Infos constructeur</string>
     <string name="data">Données brutes</string>
     <string name="copy_xml">Copier</string>
     <string name="share_xml">Partager</string>
     <string name="save_xml">Enregistrer sur le stockage USB</string>
-    <string name="trips">Déplacements</string>
     <string name="history">Historique</string>
-    <string name="balance">Solde</string>
-    <string name="refills">Recharges</string>
     <string name="no_trip_data">Aucun déplacement trouvé. Cette carte a-t-elle été utilisée?</string>
     <string name="import_xml">Importer</string>
     <string name="import_clipboard">Importer depuis le presse-papier</string>
@@ -38,7 +34,6 @@
     <string name="scanned_at_format">Scanné à %1$s le %2$s</string>
     <string name="supported_cards">Cartes supportées</string>
     <string name="pass_or_transfer">Pass/Transfer</string>
-    <string name="transaction_sequence">#</string>
     <string name="fully_locked_desc">"
  Cette carte ne possède aucune paire lisible librement sans une clé. Vous n\'avez aucune clé installée qui soit valide pour cette carte.
 
@@ -55,8 +50,6 @@
     <string name="nfc_off_error">Le NFC est désactivé</string>
     <string name="turn_on_nfc">Veuillez activer le NFC afin de lire les informations de la carte.</string>
     <string name="wireless_settings">Paramètres sans fil</string>
-    <string name="report_error">Rapporter une erreur</string>
-
     <string name="unknown_card_header">Format de carte inconnu</string>
     <string name="unknown_card_description">Cette carte n\'est pas encore supportée par Metrodroid. Seule les données brutes peuvent être affichées.</string>
 
@@ -64,10 +57,6 @@
     <string name="unknown_more_info_desc">Touchez ici pour ponts d\'informations sur le support Metrodroid de cette carte.</string>
 
     <string name="lawyercats">Metrodroid et ses auteurs ne sont associés avec aucune agence de transport public.</string>
-
-
-    <string name="report_error_privacy_title">Informations sur la confidentialité</string>
-    <string name="report_error_privacy_message">Toutes les données contenues dans cette carte seront inclues dans votre rapport d\'erreur.</string>
     <string name="scanned_cards">Historique</string>
     <string name="no_scanned_cards">Vous n\'avez scanné aucune carte.</string>
     <string name="block_title_format">Bloc: %s</string>
@@ -75,11 +64,9 @@
     <string name="sector_title_format">Secteur: 0x%s</string>
     <string name="unauthorized_sector_title_format">Secteur: 0x%s (Non autorisé)</string>
     <string name="invalid_sector_title_format">Secteur: 0x%1$s (Invalide: %2$s)</string>
-    <string name="subscriptions">Souscriptions</string>
     <string name="info">Info</string>
     <string name="valid_format">Valide %1$s à %2$s</string>
     <string name="valid_to_format">Valide jusqu\'au %1$s</string>
-    <string name="valid_not_used">Pas encore utilisée</string>
     <string name="unknown_format">Inconnu (%s)</string>
     <string name="unknown">Inconnu</string>
     <string name="keys_required">Des clés de chiffrement sont requises pour lire cette carte.</string>
@@ -92,10 +79,8 @@
     <string name="add_key_directions">Sauvegardez vos clés dans un fichier de vidange en binaire avec l\'extension .farebotkeys, envoyez le fichier de vidange en pièce jointe à vous-même, et ouvrez-le sur cet appareil.</string>
     <string name="no_keys">Pas de clé.</string>
     <string name="nfc_unavailable">NFC non disponible</string>
-    <string name="fare_cancelled_format">%s (Annulé)</string>
     <string name="general">Général</string>
     <string name="launch_from_background">Démarrer depuis l\'arrière plan</string>
-    <string name="error_report_sent">Rapport d\'erreur envoyé !</string>
     <string name="checksum">Somme de contrôle</string>
     <string name="last_transaction">Dernière transaction</string>
     <string name="date">Date</string>
@@ -104,7 +89,6 @@
     <string name="transaction_type">Type de transaction</string>
     <string name="card_epoch">Époque de la carte</string>
     <string name="card_not_supported_on_device">Cette carte n\'est pas supportée par votre appareil.</string>
-    <string name="card_note_cepas">Pas compatible avec tout les appareils.</string>
     <string name="need_stations">Les noms des stations ne sont pas tous connus.</string>
     <string name="need_stations_submit">Rapporter</string>
     <string name="card_preview_reader">Version bêta du lecteur de cartes.</string>
@@ -124,8 +108,6 @@
     <string name="mifare_classic">MIFARE Classic</string>
     <string name="auth_retries">Tentatives d\'authentification</string>
     <string name="auth_retries_summary">Nombre de tentatives d\'authentification pour chaque secteur</string>
-    <string name="alternate_purse_balances">Solde alternatif du porte-monnaie</string>
-    <string name="storage_required">Une permission est requise afin de lire et écrire les fichiers de vidanges et les clés depuis/vers des fichiers.</string>
 
     <string name="mfc_fallback_desc">Certaines agences n\'ont pas de magie d\'identification sur leur carte. Pour les lire, vous devez explicitement choisir une agence.</string>
     <string name="mfc_fallback">Lecteur de secours</string>
@@ -203,34 +185,11 @@
     <string name="felica_process_payment_thirdparty">Paiement (tier)</string>
     <string name="felica_process_admission_thirdparty">Frais d\'admission (entreprise tierce)</string>
 
-    <string name="hsl_pass_is_valid">Billet de saison valide</string>
-    <string name="hsl_1zone_ticket">Billet interne</string>
-    <string name="hsl_2zone_ticket">Billet régional</string>
     <string name="hsl_balance_refill">Recharge du solde</string>
     <string name="hsl_balance_ticket">Ticket solde</string>
-    <string name="hsl_value_ticket_is_valid">Value ticket valide</string>
     <string name="hsl_pass_ticket">Ticket saisonnier</string>
-    <string name="hsl_season_ticket_starts">Début du ticket saisonnier</string>
-    <string name="hsl_season_ticket_ends">Fin du ticket saisonnier</string>
-    <string name="hsl_season_ticket_bought_on">Ticket saisonnier acheté en</string>
-    <string name="hsl_previous_season_ticket">Le précédent ticket saisonnier était</string>
-    <string name="hsl_season_ticket_price_was">Le prix du ticket saisonnier était de</string>
-    <string name="hsl_you_last_used_this_ticket">Dernière utilisation de ce billet sur</string>
     <string name="hsl_person_format">%s personnes</string>
     <string name="hsl_mins_format">%s mn</string>
-    <string name="hsl_value_ticket">Valeur du billet</string>
-    <string name="hsl_value_ticket_bought_on">Ticket acheté</string>
-    <string name="hsl_value_ticket_expires_on">Expiration du ticket</string>
-    <string name="hsl_value_ticket_last_transfer">Dernier transfert</string>
-    <string name="hsl_value_ticket_last_sign">Dernière signature</string>
-    <string name="hsl_value_ticket_price">Prix du value ticket</string>
-    <string name="hsl_value_ticket_disco_group">Prix de groupe</string>
-    <string name="hsl_value_ticket_pax">Taille de groupe</string>
-    <string name="hsl_value_ticket_duration">Validité du billet</string>
-    <string name="hsl_value_ticket_vehicle_number">Numéro du véhicule</string>
-    <string name="hsl_value_ticket_vehicle_type">Type de véhicule</string>
-    <string name="hsl_value_ticket_line_number">Numéro de ligne</string>
-    <string name="hsl_season_ticket">Billets saisonnier</string>
 
     <string name="opal_automatic_top_up">Recharge automatique</string>
     <string name="opal_weekly_trips">Déplacements hebdomadaires</string>
@@ -248,7 +207,6 @@
     <string name="opal_action_journey_completed_flat_rate">Voyage terminé (tarif forfaitaire)</string>
     <string name="opal_action_journey_completed_auto_off">Voyage terminé (défaut de sortie)</string>
     <string name="opal_action_journey_completed_auto_on">Voyage terminé (défaut d\'entrée)</string>
-    <string name="seqgo_ticket_type">Type de billet</string>
     <string name="seqgo_ticket_type_regular">Normal</string>
     <string name="seqgo_ticket_type_concession">Rabais</string>
     <string name="seqgo_ticket_type_child">Enfant</string>
@@ -259,14 +217,11 @@
 
     <string name="card_note_seqgo">Ne gère pas les cartes Go Access, Explore ou SEEQ.</string>
 
-    <string name="card_note_myki">Seulement le numéro de la carte peut être lu.</string>
+    <string name="card_note_card_number_only">Seulement le numéro de la carte peut être lu.</string>
 
     <string name="nextfare">Cubic Nextfare</string>
     <string name="nextfare_system_code">Code système</string>
     <string name="nextfare_ticket_class">Code de classe du ticket</string>
-    <string name="card_expiry_date">Date d’expiration de la carte</string>
-
-    <string name="octopus_szt">Shenzhen Tong</string>
 
     <string name="card_note_bilhete_unico">Doit être sélectionné en tant que lecteur de secours dans les préférences.</string>
 

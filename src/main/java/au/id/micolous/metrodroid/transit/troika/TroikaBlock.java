@@ -147,7 +147,7 @@ public abstract class TroikaBlock implements Parcelable {
     }
 
     private static int getTicketType(byte[] rawData) {
-        return Utils.getBitsFromBuffer(rawData, 12,8);
+        return Utils.getBitsFromBuffer(rawData, 4,16);
     }
 
     private static int getLayout(byte[] rawData) {
@@ -161,19 +161,22 @@ public abstract class TroikaBlock implements Parcelable {
 
     public static String getHeader(int ticketType) {
         switch (ticketType) {
-            case 0x3d:
+            case 0x5d3d:
+            case 0x5d3e:
+            case 0x5d48:
+            case 0x2135:
                 // This should never be shown to user, don't localize.
                 return "Empty ticket holder";
-            case 0x9b:
+            case 0x5d9b:
                 return troikaRides(1);
-            case 0x9c:
+            case 0x5d9c:
                 return troikaRides(2);
-            case 0xa0:
+            case 0x5da0:
                 return troikaRides(20);
-            case 0xb1:
+            case 0x5db1:
                 // This should never be shown to user, don't localize.
                 return "Troika purse";
-            case 0xd3:
+            case 0x5dd3:
                 return troikaRides(60);
         }
         return Utils.localizeString(R.string.troika_unknown_ticket, Integer.toHexString(ticketType));
@@ -198,12 +201,13 @@ public abstract class TroikaBlock implements Parcelable {
         if (rawTransport == null)
             rawTransport = Integer.toHexString((mLastTransportLeadingCode << 8)| mLastTransportLongCode);
         if (mLastValidationTime != null) {
-            t.add(new TroikaTrip(mLastValidationTime, getTransportType(false), mLastValidator, rawTransport, mFareDesc));
             if (mLastTransfer != null && mLastTransfer != 0) {
                 Calendar lastTransfer = (Calendar) mLastValidationTime.clone();
                 lastTransfer.add(Calendar.MINUTE, mLastTransfer);
-                t.add(new TroikaTrip(lastTransfer, getTransportType(true), null, rawTransport, mFareDesc));
-            }
+                t.add(new TroikaTrip(lastTransfer, getTransportType(true), mLastValidator, rawTransport, mFareDesc));
+                t.add(new TroikaTrip(mLastValidationTime, getTransportType(false), null, rawTransport, mFareDesc));
+            } else
+                t.add(new TroikaTrip(mLastValidationTime, getTransportType(true), mLastValidator, rawTransport, mFareDesc));
         }
         return t;
     }
@@ -220,7 +224,8 @@ public abstract class TroikaBlock implements Parcelable {
     }
 
     public static boolean check(byte[] rawData) {
-        return Utils.getBitsFromBuffer(rawData, 0, 12) == 0x45d;
+        return Utils.getBitsFromBuffer(rawData, 0, 10) == 0x117
+            ||  Utils.getBitsFromBuffer(rawData, 0, 10) == 0x108;
     }
 
     public String getCardName() {
@@ -231,8 +236,6 @@ public abstract class TroikaBlock implements Parcelable {
         int layout = getLayout(rawData);
         switch (layout) {
             case 0x2:
-                if (getTicketType(rawData) == 0x3d)
-                    return null;
                 return new TroikaLayout2(rawData);
             case 0xa:
                 return new TroikaLayoutA(rawData);
@@ -265,14 +268,16 @@ public abstract class TroikaBlock implements Parcelable {
         MCC
     }
 
-    protected TroikaTransportType getTransportType(boolean isTransfer) {
+    protected TroikaTransportType getTransportType(boolean getLast) {
         switch (mLastTransportLeadingCode) {
             case 0:
                 return TroikaTransportType.NONE;
             case 1:
                 break;
             case 2:
-                return TroikaTransportType.GROUND;
+                if (getLast)
+                    return TroikaTransportType.GROUND;
+                /* Fallthrough */
             default:
                 return TroikaTransportType.UNKNOWN;
         }
@@ -284,7 +289,7 @@ public abstract class TroikaBlock implements Parcelable {
         TroikaTransportType first = null;
         TroikaTransportType last = null;
 
-        int i;
+        int i, found = 0;
         for (i = 6; i >= 0; i -= 2) {
             int shortCode = (mLastTransportLongCode >> i) & 3;
             if (shortCode == 0)
@@ -304,7 +309,10 @@ public abstract class TroikaBlock implements Parcelable {
             if (first == null)
                 first = type;
             last = type;
+            found++;
         }
-        return isTransfer ? last : first;
+        if (found == 1 && !getLast)
+            return TroikaTransportType.UNKNOWN;
+        return getLast ? last : first;
     }
 }

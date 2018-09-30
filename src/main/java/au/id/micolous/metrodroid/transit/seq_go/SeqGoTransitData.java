@@ -20,29 +20,20 @@ package au.id.micolous.metrodroid.transit.seq_go;
 
 import android.net.Uri;
 import android.os.Parcel;
-import android.support.annotation.Nullable;
-import android.text.Spanned;
 
+import au.id.micolous.farebot.R;
+import au.id.micolous.metrodroid.card.CardType;
 import au.id.micolous.metrodroid.card.UnauthorizedException;
 import au.id.micolous.metrodroid.card.classic.ClassicCard;
-import au.id.micolous.metrodroid.transit.TransitBalance;
-import au.id.micolous.metrodroid.transit.TransitBalanceStored;
-import au.id.micolous.metrodroid.transit.TransitCurrency;
+import au.id.micolous.metrodroid.transit.CardInfo;
 import au.id.micolous.metrodroid.transit.TransitIdentity;
-import au.id.micolous.metrodroid.transit.Trip;
 import au.id.micolous.metrodroid.transit.nextfare.NextfareTransitData;
 import au.id.micolous.metrodroid.transit.nextfare.NextfareTrip;
 import au.id.micolous.metrodroid.transit.nextfare.record.NextfareTopupRecord;
-import au.id.micolous.metrodroid.ui.HeaderListItem;
-import au.id.micolous.metrodroid.ui.ListItem;
 import au.id.micolous.metrodroid.util.Utils;
 
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
 import java.util.TimeZone;
-
-import au.id.micolous.farebot.R;
 
 /**
  * Transit data type for Go card (Brisbane / South-East Queensland, AU), used by Translink.
@@ -63,6 +54,16 @@ public class SeqGoTransitData extends NextfareTransitData {
             return new SeqGoTransitData[size];
         }
     };
+
+    public static final CardInfo CARD_INFO = new CardInfo.Builder()
+            .setImageId(R.drawable.seqgo_card, R.drawable.seqgo_card_alpha)
+            .setName(SeqGoTransitData.NAME)
+            .setLocation(R.string.location_brisbane_seq_australia)
+            .setCardType(CardType.MifareClassic)
+            .setKeysRequired()
+            .setExtraNote(R.string.card_note_seqgo)
+            .build();
+
     static final byte[] MANUFACTURER = {
             0x16, 0x18, 0x1A, 0x1B,
             0x1C, 0x1D, 0x1E, 0x1F
@@ -130,11 +131,6 @@ public class SeqGoTransitData extends NextfareTransitData {
     @Override
     protected NextfareTrip newRefill(NextfareTopupRecord record) {
         return new SeqGoRefill(record);
-    }
-
-    @Override
-    protected Trip.Mode lookupMode(int mode, int stationId) {
-        return SeqGoData.VEHICLES.get(mode, Trip.Mode.OTHER);
     }
 
     @Override

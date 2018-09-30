@@ -24,7 +24,6 @@ import android.support.annotation.Nullable;
 import org.simpleframework.xml.Attribute;
 import org.simpleframework.xml.Element;
 import org.simpleframework.xml.ElementList;
-import org.simpleframework.xml.Root;
 
 import java.io.EOFException;
 import java.io.IOException;
@@ -54,25 +53,33 @@ public class ISO7816Application {
     protected ISO7816Application() { /* For XML Serializer */ }
 
     protected ISO7816Application(ISO7816Info info) {
-        mApplicationData = new Base64String(info.mApplicationData);
-        mApplicationName = new Base64String(info.mApplicationName);
+        mApplicationData = info.mApplicationData == null ? null : new Base64String(info.mApplicationData);
+        mApplicationName = info.mApplicationName == null ? null : new Base64String(info.mApplicationName);
         mFiles = info.mFiles;
         mTagId = new Base64String(info.mTagId);
         mType = info.mType;
     }
 
     @Attribute(name = "type")
-    @SuppressWarnings("FieldCanBeLocal")
+    @SuppressWarnings({"FieldCanBeLocal", "unused"})
     private String mType;
 
-    @Element(name = "application-data")
+    @Element(name = "application-data", required = false)
     private Base64String mApplicationData;
 
-    @Element(name = "application-name")
+    @Element(name = "application-name", required = false)
     private Base64String mApplicationName;
 
     public byte[] getTagId() {
         return mTagId.getData();
+    }
+
+    public List<ListItem> getRawData() {
+        return null;
+    }
+
+    public String nameFile(ISO7816Selector selector) {
+        return null;
     }
 
     public static class ISO7816Info {
@@ -93,7 +100,7 @@ public class ISO7816Application {
         public void dumpFile(ISO7816Protocol protocol, ISO7816Selector sel, int recordLen) throws IOException {
             // Start dumping...
             protocol.unselectFile();
-            sel.select(protocol);
+            byte[] fci = sel.select(protocol);
             byte [] data = protocol.readBinary();
             LinkedList<ISO7816Record> records = new LinkedList<>();
 
@@ -111,7 +118,7 @@ public class ISO7816Application {
                     break;
                 }
             }
-            mFiles.add(new ISO7816File(sel, records, data));
+            mFiles.add(new ISO7816File(sel, records, data, fci));
         }
     }
 
@@ -129,14 +136,49 @@ public class ISO7816Application {
         return null;
     }
 
-    public static byte[] findAppInfoTag(byte[] newApp, byte id) {
-        for (int p = 2; p < newApp[1]; ) {
-            if (newApp[p] == id) {
-                // Application name
-                return Utils.byteArraySlice(newApp, p + 2, newApp[p + 1]);
-            } else {
-                p += newApp[p + 1] + 2;
+    // return: <leadBits, id, idlen>
+    private static int[] decodeTLVID(byte[] buf, int p) {
+        int headByte = buf[p] & 0xff;
+        int leadBits = headByte >> 5;
+        if ((headByte & 0x1f) != 0x1f)
+            return new int[]{leadBits, headByte & 0x1f, 1};
+        int val = 0, len = 1;
+        do
+            val = (val << 7) | (buf[p + len] & 0x7f);
+        while ((buf[len++] & 0x80) != 0);
+        return new int[]{leadBits, val, len};
+    }
+
+    // return lenlen, lenvalue
+    private static int[] decodeTLVLen(byte[] buf, int p) {
+        int headByte = buf[p] & 0xff;
+        if ((headByte >> 7) == 0)
+            return new int[]{1, headByte & 0x7f};
+        int numfollowingbytes = headByte & 0x7f;
+        return new int[]{1+numfollowingbytes,
+                Utils.byteArrayToInt(buf, p + 1, numfollowingbytes)};
+    }
+
+    public static byte[] findBERTLV(byte[] buf, int targetLeadBits, int targetId, boolean keepHeader) {
+        // Skip ID
+        int p = decodeTLVID(buf, 0)[2];
+        int[]lenfieldhead = decodeTLVLen(buf, p);
+        p += lenfieldhead[0];
+        int fulllen = lenfieldhead[1];
+
+        while (p < fulllen) {
+            int []id = decodeTLVID(buf, p);
+            int idlen = id[2];
+            int []lenfield = decodeTLVLen(buf, p + idlen);
+            int lenlen = lenfield[0];
+            int datalen = lenfield[1];
+            if (id[0] == targetLeadBits && id[1] == targetId) {
+                if (keepHeader)
+                    return Utils.byteArraySlice(buf, p, idlen + lenlen + datalen);
+                return Utils.byteArraySlice(buf, p + idlen + lenlen, datalen);
             }
+
+            p += idlen + lenlen + datalen;
         }
         return null;
     }
@@ -153,10 +195,14 @@ public class ISO7816Application {
     public List<ListItem> getManufacturingInfo() { return null; }
 
     public byte[] getAppData() {
+        if (mApplicationData == null)
+            return null;
         return mApplicationData.getData();
     }
 
     public byte[] getAppName() {
+        if (mApplicationName == null)
+            return null;
         return mApplicationName.getData();
     }
 }

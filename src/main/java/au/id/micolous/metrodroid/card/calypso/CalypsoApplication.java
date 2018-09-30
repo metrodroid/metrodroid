@@ -27,8 +27,10 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 
 import au.id.micolous.farebot.R;
 import au.id.micolous.metrodroid.MetrodroidApplication;
@@ -40,6 +42,7 @@ import au.id.micolous.metrodroid.card.iso7816.ISO7816Record;
 import au.id.micolous.metrodroid.card.iso7816.ISO7816Selector;
 import au.id.micolous.metrodroid.transit.TransitData;
 import au.id.micolous.metrodroid.transit.TransitIdentity;
+import au.id.micolous.metrodroid.transit.opus.OpusTransitData;
 import au.id.micolous.metrodroid.transit.ravkav.RavKavTransitData;
 import au.id.micolous.metrodroid.ui.HeaderListItem;
 import au.id.micolous.metrodroid.ui.ListItem;
@@ -62,6 +65,7 @@ public class CalypsoApplication extends ISO7816Application {
 
     private static final String TAG = CalypsoApplication.class.getName();
     public static final String TYPE = "calypso";
+    private static final Map<String, String> NAME_MAP = new HashMap<>();
 
     private CalypsoApplication(ISO7816Application.ISO7816Info appData, boolean partialRead) {
         super(appData);
@@ -100,6 +104,8 @@ public class CalypsoApplication extends ISO7816Application {
     public TransitData parseTransitData() {
         if (RavKavTransitData.check(this))
             return RavKavTransitData.parseTransitData(this);
+        if (OpusTransitData.check(this))
+            return OpusTransitData.parseTransitData(this);
         return null;
     }
 
@@ -107,6 +113,8 @@ public class CalypsoApplication extends ISO7816Application {
     public TransitIdentity parseTransitIdentity() {
         if (RavKavTransitData.check(this))
             return RavKavTransitData.parseTransitIdentity(this);
+        if (OpusTransitData.check(this))
+            return OpusTransitData.parseTransitIdentity(this);
         return null;
     }
 
@@ -168,6 +176,14 @@ public class CalypsoApplication extends ISO7816Application {
             items.add(new ListItem(R.string.calypso_manufacture_date, Utils.longDateFormat(manufactureDate)));
         }
         return items;
+    }
+
+    @Override
+    public String nameFile(ISO7816Selector selector) {
+        String selStr = selector.formatString();
+        if (NAME_MAP.containsKey(selStr))
+            return NAME_MAP.get(selStr);
+        return null;
     }
 
     public enum File {
@@ -243,6 +259,12 @@ public class CalypsoApplication extends ISO7816Application {
 
         public ISO7816Selector getSelector() {
             return mSelector;
+        }
+    }
+
+    static {
+        for (File f : File.getAll()) {
+            NAME_MAP.put(f.mSelector.formatString(), f.name());
         }
     }
 }

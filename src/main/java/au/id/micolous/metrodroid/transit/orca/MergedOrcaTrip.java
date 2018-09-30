@@ -32,8 +32,8 @@ public class MergedOrcaTrip extends Trip {
     public static final Creator<MergedOrcaTrip> CREATOR = new Creator<MergedOrcaTrip>() {
         public MergedOrcaTrip createFromParcel(Parcel parcel) {
             return new MergedOrcaTrip(
-                    (OrcaTrip) parcel.readParcelable(OrcaTrip.class.getClassLoader()),
-                    (OrcaTrip) parcel.readParcelable(OrcaTrip.class.getClassLoader())
+                    parcel.readParcelable(OrcaTrip.class.getClassLoader()),
+                    parcel.readParcelable(OrcaTrip.class.getClassLoader())
             );
         }
 
@@ -65,13 +65,8 @@ public class MergedOrcaTrip extends Trip {
     }
 
     @Override
-    public String getAgencyName() {
-        return mStartTrip.getAgencyName();
-    }
-
-    @Override
-    public String getShortAgencyName() {
-        return mStartTrip.getShortAgencyName();
+    public String getAgencyName(boolean isShort) {
+        return mStartTrip.getAgencyName(isShort);
     }
 
     @Override
@@ -98,11 +93,6 @@ public class MergedOrcaTrip extends Trip {
     @Override
     public Mode getMode() {
         return mStartTrip.getMode();
-    }
-
-    @Override
-    public boolean hasTime() {
-        return mStartTrip.hasTime();
     }
 
     @Override

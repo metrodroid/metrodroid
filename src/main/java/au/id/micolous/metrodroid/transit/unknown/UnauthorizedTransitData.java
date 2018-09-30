@@ -19,13 +19,8 @@
 package au.id.micolous.metrodroid.transit.unknown;
 
 import android.os.Parcel;
-import android.support.annotation.Nullable;
-import android.text.Spanned;
 
-import au.id.micolous.metrodroid.transit.Subscription;
-import au.id.micolous.metrodroid.transit.TransitCurrency;
 import au.id.micolous.metrodroid.transit.TransitData;
-import au.id.micolous.metrodroid.transit.Trip;
 
 /**
  * Base class for all types of cards where we are unable to read any useful data (without a key).

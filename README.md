@@ -8,7 +8,7 @@
 <img src="https://play.google.com/intl/en_us/badges/images/generic/en-play-badge.png" height="80"/></a>
 <a href="https://github.com/micolous/metrodroid/releases">Direct APK download</a>
 
-Version: 2.9.35
+Version: 2.9.36
 
 View your remaining balance, recent trips, and other information from contactless public transit
 cards using your NFC-enabled Android device!
@@ -18,7 +18,7 @@ cards using your NFC-enabled Android device!
 I presented Metrodroid and the work I did on supporting a number of Australian agencies' cards at
 linux.conf.au 2018, in my talk, [Tap on to reverse engineering](https://youtu.be/qVvNdfKRw7M).
 
-## Thanks To
+## Thanks to
 
 * [Eric Butler][5] (Farebot, on which this project is based)
 * [Karl Koscher][3] (ORCA)
@@ -30,12 +30,29 @@ linux.conf.au 2018, in my talk, [Tap on to reverse engineering](https://youtu.be
 * [Marcelo Liberato](https://github.com/mliberato) (Bilhete Único)
 * [Lauri Andler](https://github.com/landler/) (HSL)
 * [Michael](https://github.com/micolous/) (Opal, Manly Fast Ferry, Go card, Myki, Octopus, Cubic Nextfare, LAX TAP, SmartRider, MyWay, MIFARE Ultralight, ERG, Christchurch Metrocard)
-* [Steven](https://github.com/steets250) (LAX TAP)
+* [Steven Steiner](https://github.com/steets250) (LAX TAP)
 * [Rob O'Regan](http://www.robx1.net/nswtkt/private/manlyff/manlyff.htm) (Manly Fast Ferry card image)
 * [The Noun Project][15] (Various icons)
-* [naofum](https://github.com/naofum) (Japanese translations)
-* [Vladimir Serbinenko](https://github.com/phcoder) (Podorozhnik, Troika)
+* [Vladimir Serbinenko](https://github.com/phcoder) (Podorozhnik, Troika, Compass, Shenzhen Tong, Rav-Kav, T-money, Leap)
+* [Toomas Losin](http://www.lenrek.net) (Compass)
+* [Sinpo Lib](https://github.com/sinpolib) (Shenzhen Tong)
+* Maria Komar (Podorozhnik database and dumps)
 * [Bondan](https://github.com/sybond) [Sumbodo](http://sybond.web.id) (Kartu Multi Trip, COMMET)
+
+## Translated by
+
+Thanks to those who have [helped to make Metrodroid available in languages other than English][22]:
+
+* Dutch: [Vistaus](https://github.com/Vistaus)
+* Finnish: Lari Oesch
+* French: [Albirew](https://github.com/Albirew)
+* Hebrew: [Steven Steiner](https://github.com/steets250)
+* Japanese: [naofum](https://github.com/naofum)
+* Indonesian: [Bondan](https://github.com/sybond) [Sumbodo](http://sybond.web.id)
+* Kabyle: [belkacem77](https://github.com/belkacem77), [aqvayli](https://github.com/aqvayli)
+* Norwegian Bokmål: [comradekingu](https://github.com/comradekingu)
+* Russian: [Vladimir Serbinenko](https://github.com/phcoder)
+* Turkish: [omersiar](https://github.com/omersiar)
 
 ## Supported card protocols
 
@@ -51,13 +68,15 @@ linux.conf.au 2018, in my talk, [Tap on to reverse engineering](https://youtu.be
 Card / Agency | Location | Notes
 ------------- | -------- | -----
 [Bilhete Único][30] | :brazil: São Paulo, Brazil | :closed_lock_with_key: `MFC` `FALLBACK`
-[Clipper][1] | :us: San Francisco, CA, USA | 
+[Clipper][1] | :us: San Francisco, CA, USA
+[Compass][41] | :canada: Vancouver, BC, Canada | :new: `SINGLE`
 [Cubic Nextfare][33] | :earth_americas: _many locations_ | :new: :closed_lock_with_key: `MFC`
 [Edy][12] | :jp: Japan
 [ERG][35] | :earth_asia: _many locations_ | :new: :closed_lock_with_key: `MFC`
 [EZ-Link][7] | :singapore: Singapore |
 [Go card][20] | :australia: Brisbane and South East Queensland, Australia | :new: :closed_lock_with_key: `MFC`
-[KMT][39] | :indonesia: Jakarta, Indonesia | :new:
+[Kartu Multi Trip][39] | :indonesia: Jakarta, Indonesia | `KMT`
+[Leap][44] | :ireland: Ireland | :new: :unlock:
 [Manly Fast Ferry][19] | :australia: Sydney, NSW, Australia | :new: :closed_lock_with_key: `MFC`
 [Matkakortti][16], [HSL][17] | :finland: Finland |
 [Metrocard][34] | :new_zealand: Christchurch, New Zealand | :new: :closed_lock_with_key: `MFC`
@@ -66,12 +85,15 @@ Card / Agency | Location | Notes
 [NETS FlashPay][31] | :singapore: Singapore | 
 [Octopus][25] | :hong_kong: Hong Kong | :new:
 [Opal][18] | :australia: Sydney (and surrounds), NSW, Australia | :new:
+[Opus][40] | :canada: Québec, Canada | :new:
 [ORCA][0] | :us: Seattle, WA, USA |
 [OV-chipkaart][32] | :netherlands: Netherlands | :closed_lock_with_key: `MFC`
 [Podorozhnik][37] | :ru: Saint Petersburg, Russia | :new: :closed_lock_with_key: `MFC`
+[Rav-Kav][42] | :israel: Israel | :new:
 [Shenzhen Tong][27] | :cn: Shenzhen, Guangdong Province, China | :new:
 [SmartRider][29] | :australia: Western Australia, Australia | :new: :closed_lock_with_key: `MFC`
 [Suica][9], [ICOCA][10], [PASMO][11] | :jp: Japan
+[T-Money][43] | :kr: South Korea | :new:
 [Transit Access Pass][26] | :us: Los Angeles, CA, USA | :new: :closed_lock_with_key: `MFC`
 [Troika][38] | :ru: Moscow, Russia | :new: :closed_lock_with_key: `MFC`
 
@@ -79,11 +101,20 @@ Note | Meaning
 ---- | -------
 :new: | New in Metrodroid.
 :closed_lock_with_key: | Encryption keys required to read this card.
+:unlock: | Encryption keys are downloaded from the operator.
 `MFC` | MIFARE Classic card; requires NXP NFC chipset in your phone.
 `123` | Only the card number can be read.
 `FALLBACK` | Fallback reader -- must be explicitly enabled in the application's settings.
+`KMT` | Only new FeliCa-based cards can be read.
+`SINGLE` | Only single-use tickets can be read.
 
-This project **will only read data from the card itself**, without having to connect to the agency's back-office systems. In some cases, limited data is available, so balance information and trip history might not be available.
+This project **will only read data from the card itself**, without having to
+connect to the agency's back-office systems. In some cases, limited data is
+available, so balance information and trip history might not be available.
+
+Note: The Leap card reader connects to Transport for Ireland's server for
+challenge-response authentication with the card. The data is otherwise
+interpreted locally, and _connectivity is disabled by default._
 
 ## Supported Phones
 
@@ -170,4 +201,9 @@ This software and it's authors are not associated with any public transit agency
 [37]: http://podorozhnik.spb.ru/en/
 [38]: http://troika.mos.ru/
 [39]: https://en.wikipedia.org/wiki/Kereta_Commuter_Indonesia
+[40]: http://www.stm.info/en/info/fares/opus-cards-and-other-fare-media/opus-card
+[41]: https://www.compasscard.ca/
+[42]: https://www.rail.co.il/en/ravkav/Pages/default.aspx
+[43]: https://www.t-money.co.kr/
+[44]: https://www.leapcard.ie/
 

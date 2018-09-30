@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  stlevis.xml
+
+  Copyright 2018 Etienne Dubeau
+
+  This program is free software: you can redistribute it and/or modify
+  it under the terms of the GNU General Public License as published by
+  the Free Software Foundation, either version 3 of the License, or
+  (at your option) any later version.
+
+  This program is distributed in the hope that it will be useful,
+  but WITHOUT ANY WARRANTY; without even the implied warranty of
+  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  GNU General Public License for more details.
+
+  You should have received a copy of the GNU General Public License
+  along with this program.  If not, see <http://www.gnu.org/licenses/>.
+-->
+<stlevis>
+    <bus id="" logo="" name="L1" />
+    <bus id="45" logo="" name="L2" />
+    <bus id="89" logo="" name="L3" />
+    <bus id="" logo="" name="11" />
+    <bus id="" logo="" name="11A" />
+    <bus id="" logo="" name="12" />
+    <bus id="" logo="" name="13" />
+    <bus id="" logo="" name="13A" />
+    <bus id="" logo="" name="14" />
+    <bus id="" logo="" name="15" />
+    <bus id="" logo="" name="19" />
+    <bus id="" logo="" name="22" />
+    <bus id="" logo="" name="23" />
+    <bus id="" logo="" name="24" />
+    <bus id="" logo="" name="27E" />
+    <bus id="" logo="" name="27R" />
+    <bus id="" logo="" name="31E" />
+    <bus id="" logo="" name="33E" />
+    <bus id="" logo="" name="34E" />
+    <bus id="" logo="" name="35E" />
+    <bus id="" logo="" name="35R" />
+    <bus id="" logo="" name="41E" />
+    <bus id="" logo="" name="43E" />
+    <bus id="" logo="" name="60E" />
+    <bus id="" logo="" name="65" />
+    <bus id="" logo="" name="ECQ" />
+    <bus id="" logo="" name="ELQ" />
+    <bus id="144" logo="" name="EOQ" />
+    <bus id="" logo="" name="ESQ" />
+    <bus id="" logo="" name="T1" />
+    <bus id="" logo="" name="T11" />
+    <bus id="" logo="" name="T16" />
+    <bus id="" logo="" name="T2" />
+    <bus id="" logo="" name="T22" />
+    <bus id="" logo="" name="T23" />
+    <bus id="" logo="" name="T25" />
+    <bus id="" logo="" name="T65" />
+    <bus id="" logo="" name="131" />
+    <bus id="" logo="" name="135" />
+    <bus id="" logo="" name="141" />
+    <bus id="" logo="" name="161" />
+    <bus id="" logo="" name="165" />
+    <bus id="" logo="" name="171" />
+    <bus id="" logo="" name="175" />
+    <bus id="" logo="" name="181" />
+    <bus id="" logo="" name="185" />
+    <bus id="" logo="" name="221" />
+    <bus id="" logo="" name="222" />
+    <bus id="" logo="" name="225" />
+    <bus id="" logo="" name="231" />
+    <bus id="" logo="" name="232" />
+    <bus id="" logo="" name="235" />
+    <bus id="" logo="" name="241" />
+    <bus id="" logo="" name="242" />
+    <bus id="" logo="" name="243" />
+    <bus id="" logo="" name="245" />
+    <bus id="" logo="" name="246" />
+    <bus id="" logo="" name="915" />
+    <bus id="" logo="" name="916" />
+</stlevis>

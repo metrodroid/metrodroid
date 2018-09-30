@@ -22,7 +22,6 @@ package au.id.micolous.metrodroid.util;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
-import android.content.DialogInterface;
 import android.os.AsyncTask;
 import android.text.TextUtils;
 import android.util.Log;
@@ -34,7 +33,7 @@ public abstract class BetterAsyncTask<Result> extends AsyncTask<Void, ProgressBa
     private static final String TAG = "BetterAsyncTask";
 
     private ProgressDialog mProgressDialog;
-    private Activity mActivity;
+    protected Activity mActivity;
     private boolean mFinishOnError;
 
     public BetterAsyncTask(Activity activity) {

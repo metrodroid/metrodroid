@@ -47,10 +47,10 @@ import java.util.Locale;
 import au.id.micolous.farebot.R;
 import au.id.micolous.metrodroid.MetrodroidApplication;
 import au.id.micolous.metrodroid.card.Card;
-import au.id.micolous.metrodroid.card.CardRawDataFragmentClass;
 import au.id.micolous.metrodroid.card.UnauthorizedException;
 import au.id.micolous.metrodroid.card.UnsupportedCardException;
 import au.id.micolous.metrodroid.fragment.CardHWDetailFragment;
+import au.id.micolous.metrodroid.fragment.CardRawDataFragment;
 import au.id.micolous.metrodroid.ui.TabPagerAdapter;
 import au.id.micolous.metrodroid.util.ExportHelper;
 import au.id.micolous.metrodroid.util.TripObfuscator;
@@ -72,7 +72,7 @@ public class AdvancedCardInfoActivity extends MetrodroidActivity {
         Serializer serializer = MetrodroidApplication.getInstance().getSerializer();
         mCard = Card.fromXml(serializer, getIntent().getStringExtra(AdvancedCardInfoActivity.EXTRA_CARD));
 
-        ViewPager viewPager = (ViewPager) findViewById(R.id.pager);
+        ViewPager viewPager = findViewById(R.id.pager);
         TabPagerAdapter tabsAdapter = new TabPagerAdapter(this, viewPager);
 
         ActionBar actionBar = getSupportActionBar();
@@ -113,14 +113,10 @@ public class AdvancedCardInfoActivity extends MetrodroidActivity {
                     getIntent().getExtras());
         }
 
-        CardRawDataFragmentClass annotation = mCard.getClass().getAnnotation(CardRawDataFragmentClass.class);
-        if (annotation != null) {
-            Class rawDataFragmentClass = annotation.value();
-            if (rawDataFragmentClass != null) {
-                tabsAdapter.addTab(actionBar.newTab().setText(R.string.data), rawDataFragmentClass,
-                        getIntent().getExtras());
-                actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
-            }
+        if (mCard.getRawData() != null) {
+            tabsAdapter.addTab(actionBar.newTab().setText(R.string.data), CardRawDataFragment.class,
+                    getIntent().getExtras());
+            actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
         }
     }
 
@@ -196,6 +192,7 @@ public class AdvancedCardInfoActivity extends MetrodroidActivity {
                         OutputStream os = getContentResolver().openOutputStream(uri);
                         xml = mCard.toXml(MetrodroidApplication.getInstance().getSerializer());
                         IOUtils.write(xml, os, Charset.defaultCharset());
+                        os.close();
                         Toast.makeText(this, R.string.saved_xml_custom, Toast.LENGTH_SHORT).show();
                         break;
                 }

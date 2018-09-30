@@ -4,6 +4,7 @@ permalink: /screenshots
 ---
 
 * [English](#english)
+* [Bahasa Indonesia](#bahasa-indonesia)
 * [日本語](#日本語) (Japanese)
 * [Norwegian Bokmål](#norwegian-bokmål)
 * [Nederlands](#nederlands) (Dutch)
@@ -21,6 +22,10 @@ permalink: /screenshots
 ### New Zealand
 
 {% include screenshots.html screenshots=site.data.en_nz %}
+
+## Bahasa Indonesia
+
+{% include screenshots.html screenshots=site.data.id %}
 
 ## 日本語
 

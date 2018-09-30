@@ -1,0 +1,21 @@
+# -*- mode: makefile; indent-tabs-mode: tabs; tab-width: 2 -*-
+.PHONY:: mdst_clean mdst_proto mdst clean
+
+mdst_sources := $(wildcard $(MDST)/*.py)
+
+# Builds the python proto definitions.
+$(MDST)/stations_pb2.py: $(MDST)/stations.proto
+	make -C $(MDST) stations_pb2.py
+
+# Used to declare a dependency on the MdST library.
+# This will make all targets rebuild if the library has changed.
+mdst: $(MDST)/stations_pb2.py $(mdst_sources)
+
+# Dumps a CSV file from a MdST file.
+%.csv: %.mdst mdst
+	python3 $(MDST)/dump2csv.py -o $@ $<
+
+# Deletes the generated Python proto definitions.
+mdst_clean:
+	make -C $(MDST) clean
+

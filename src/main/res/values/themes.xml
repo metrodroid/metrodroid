@@ -17,17 +17,19 @@
   -->
 
 <resources>
+    <color name="Metrodroid.Dark.CardIdTextColor">#ffcc44</color>
+
     <style name="Metrodroid.Dark" parent="Theme.AppCompat">
         <item name="ButtonBarStyle">@android:style/Holo.ButtonBar.AlertDialog</item>
         <item name="BorderlessButtonStyle">@android:style/Widget.Holo.Button.Borderless.Small</item>
         <item name="ButtonBarButtonStyle">@android:style/Widget.Holo.Button.Borderless.Small</item>
-        <item name="AddKeyIcon">@android:drawable/ic_menu_add</item>
-        <item name="AddKeyTextColor">@android:color/white</item>
         <item name="LockImage">@drawable/locked</item>
-        <item name="AddKeysActivityTheme">@style/Metrodroid.Dark.Dialog</item>
         <item name="MainActivityTheme">@style/Metrodroid.Dark.Main</item>
         <item name="ListHeaderTextColor">@android:color/background_light</item>
+        <item name="CardIdTextColor">@color/Metrodroid.Dark.CardIdTextColor</item>
         <item name="TransportIcons">@array/Metrodroid.Dark.TransportIcons</item>
+        <item name="DrawableClosedIndicator">@drawable/expander_close_holo_dark</item>
+        <item name="DrawableOpenIndicator">@drawable/expander_open_holo_dark</item>
         <item name="colorPrimary">@color/Metrodroid.Dark.HeaderColor</item>
         <item name="colorPrimaryDark">@color/Metrodroid.Dark.HeaderColor</item>
         <item name="PhoneColor">@android:color/white</item>
@@ -48,8 +50,6 @@
         <item name="ButtonBarStyle">@android:style/Holo.ButtonBar.AlertDialog</item>
         <item name="BorderlessButtonStyle">@android:style/Widget.Holo.Button.Borderless.Small</item>
         <item name="ButtonBarButtonStyle">@android:style/Widget.Holo.Button.Borderless.Small</item>
-        <item name="AddKeyIcon">@android:drawable/ic_menu_add</item>
-        <item name="AddKeyTextColor">@android:color/white</item>
         <item name="LockImage">@drawable/locked</item>
         <item name="ListHeaderTextColor">@android:color/background_light</item>
     </style>
@@ -70,18 +70,19 @@
     </integer-array>
 
     <color name="Metrodroid.Dark.HeaderColor">#042</color>
+    <color name="Metrodroid.Light.CardIdTextColor">#bb5500</color>
 
     <style name="Metrodroid.Light" parent="Theme.AppCompat.Light.DarkActionBar">
         <item name="ButtonBarStyle">@android:style/Holo.Light.ButtonBar.AlertDialog</item>
         <item name="BorderlessButtonStyle">@android:style/Widget.Holo.Light.Button.Borderless.Small</item>
         <item name="ButtonBarButtonStyle">@android:style/Widget.Holo.Light.Button.Borderless.Small</item>
-        <item name="AddKeyIcon">@android:drawable/ic_menu_add</item>
-        <item name="AddKeyTextColor">@android:color/black</item>
         <item name="LockImage">@drawable/locked</item>
-        <item name="AddKeysActivityTheme">@style/Metrodroid.Light.Dialog</item>
-        <item name="MainActivityTheme">@style/Metrodroid.Light.Main</item>
+        <item name="MainActivityTheme">@style/Metrodroid.Light</item>
         <item name="ListHeaderTextColor">@android:color/background_dark</item>
         <item name="TransportIcons">@array/Metrodroid.Light.TransportIcons</item>
+        <item name="DrawableClosedIndicator">@drawable/expander_close_holo_light</item>
+        <item name="DrawableOpenIndicator">@drawable/expander_open_holo_light</item>
+        <item name="CardIdTextColor">@color/Metrodroid.Light.CardIdTextColor</item>
         <item name="colorPrimary">@color/Metrodroid.Light.HeaderColor</item>
         <item name="colorPrimaryDark">@color/Metrodroid.Light.HeaderColor</item>
         <item name="PhoneColor">@android:color/black</item>
@@ -102,8 +103,6 @@
         <item name="ButtonBarStyle">@android:style/Holo.Light.ButtonBar.AlertDialog</item>
         <item name="BorderlessButtonStyle">@android:style/Widget.Holo.Light.Button.Borderless.Small</item>
         <item name="ButtonBarButtonStyle">@android:style/Widget.Holo.Light.Button.Borderless.Small</item>
-        <item name="AddKeyIcon">@android:drawable/ic_menu_add</item>
-        <item name="AddKeyTextColor">@android:color/black</item>
         <item name="LockImage">@drawable/locked</item>
         <item name="ListHeaderTextColor">@android:color/background_dark</item>
     </style>
@@ -124,6 +123,7 @@
     </integer-array>
 
     <color name="Metrodroid.Light.HeaderColor">#063</color>
+    <color name="FareBot.Theme.CardIdTextColor">#bb5500</color>
 
     <style name="FareBot.Theme.Base" parent="Theme.AppCompat.Light.DarkActionBar">
         <item name="android:windowBackground">@color/FareBot.Theme.WindowBackground</item>
@@ -133,8 +133,6 @@
         <item name="ButtonBarStyle">@android:style/Holo.ButtonBar.AlertDialog</item>
         <item name="BorderlessButtonStyle">@android:style/Widget.Holo.Light.Button.Borderless.Small</item>
         <item name="ButtonBarButtonStyle">@android:style/Widget.Holo.Light.Button.Borderless.Small</item>
-        <item name="AddKeyIcon">@drawable/ic_add_black_24dp</item>
-        <item name="AddKeyTextColor">@android:color/black</item>
         <item name="LockImage">@drawable/locked</item>
         <item name="ListHeaderTextColor">@color/FareBot.Theme.HeaderColor</item>
         <item name="colorPrimary">@color/FareBot.Theme.LighterHeaderColor</item>
@@ -143,6 +141,9 @@
         <item name="PhoneColor">@android:color/black</item>
         <item name="PhoneSpeakerColor">@android:color/darker_gray</item>
         <item name="PhoneLogoColor">@android:color/white</item>
+        <item name="DrawableClosedIndicator">@drawable/expander_close_holo_light</item>
+        <item name="DrawableOpenIndicator">@drawable/expander_open_holo_light</item>
+        <item name="CardIdTextColor">@color/FareBot.Theme.CardIdTextColor</item>
     </style>
 
     <style name="FareBot.Theme.Main" parent="@style/FareBot.Theme.Base">
@@ -155,7 +156,6 @@
     </style>
 
     <style name="FareBot.Theme.Common" parent="@style/FareBot.Theme.Base">
-        <item name="AddKeysActivityTheme">@style/FareBot.Theme.Base</item>
         <item name="MainActivityTheme">@style/FareBot.Theme.Main</item>
     </style>
 

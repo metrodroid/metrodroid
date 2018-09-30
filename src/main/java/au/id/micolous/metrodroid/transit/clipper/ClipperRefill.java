@@ -27,13 +27,9 @@ import android.util.Log;
 import java.lang.Comparable;
 import java.util.Calendar;
 
-import au.id.micolous.farebot.R;
-import au.id.micolous.metrodroid.transit.Station;
 import au.id.micolous.metrodroid.transit.TransitCurrency;
 import au.id.micolous.metrodroid.transit.Trip;
 import au.id.micolous.metrodroid.util.Utils;
-
-import static au.id.micolous.metrodroid.transit.clipper.ClipperTransitData.CLIPPER_TZ;
 
 public class ClipperRefill extends Trip implements Comparable {
     public static final Creator<ClipperRefill> CREATOR = new Creator<ClipperRefill>() {
@@ -66,8 +62,8 @@ public class ClipperRefill extends Trip implements Comparable {
     }
 
     @Override
-    public Station getStartStation() {
-        return Station.nameOnly(Utils.localizeString(R.string.machine_id, mMachineID));
+    public String getVehicleID() {
+        return mMachineID;
     }
 
     @Override
@@ -77,13 +73,8 @@ public class ClipperRefill extends Trip implements Comparable {
     }
 
     @Override
-    public String getAgencyName() {
-        return ClipperData.getAgencyName(mAgency);
-    }
-
-    @Override
-    public String getShortAgencyName() {
-        return ClipperData.getShortAgencyName(mAgency);
+    public String getAgencyName(boolean isShort) {
+        return ClipperData.getAgencyName(mAgency, isShort);
     }
 
     @Nullable

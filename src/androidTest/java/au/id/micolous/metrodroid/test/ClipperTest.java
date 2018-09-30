@@ -25,14 +25,11 @@ import java.util.Calendar;
 import au.id.micolous.metrodroid.card.desfire.DesfireApplication;
 import au.id.micolous.metrodroid.card.desfire.DesfireCard;
 import au.id.micolous.metrodroid.card.desfire.files.DesfireFile;
-import au.id.micolous.metrodroid.card.desfire.files.RecordDesfireFile;
-import au.id.micolous.metrodroid.card.desfire.settings.RecordDesfireFileSettings;
 import au.id.micolous.metrodroid.transit.TransitCurrency;
 import au.id.micolous.metrodroid.transit.TransitData;
 import au.id.micolous.metrodroid.transit.TransitIdentity;
 import au.id.micolous.metrodroid.transit.Trip;
 import au.id.micolous.metrodroid.transit.clipper.ClipperTransitData;
-import au.id.micolous.metrodroid.transit.orca.OrcaTransitData;
 import au.id.micolous.metrodroid.util.Utils;
 
 /**
@@ -45,7 +42,7 @@ public class ClipperTest extends AndroidTestCase {
     static private final String refill = "000002cfde4400007812345600001388000000000000" +
             "00000000000000000000";
     static private final String trip = "000000040000027600000000de580000de58100000080027000000000000" +
-            "0000";
+            "006f";
     static private final String testFile0x2 = "0000000000000000000000000000000000007777";
     static private final String testFile0x4 = refill;
     static private final String testFile0x8 = "0022229533";
@@ -70,6 +67,7 @@ public class ClipperTest extends AndroidTestCase {
 
     public void testDemoCard() {
         TestUtils.setLocale(getContext(), "en-US");
+        TestUtils.showRawStationIds(false);
 
         assertEquals(32*2, refill.length());
 
@@ -92,19 +90,19 @@ public class ClipperTest extends AndroidTestCase {
 
         Trip []trips = o.getTrips();
         assertNotNull(trips);
-        assertEquals("Whole Foods", trips[1].getAgencyName());
-        assertEquals("Whole Foods", trips[1].getShortAgencyName());
+        assertEquals("Whole Foods", trips[1].getAgencyName(false));
+        assertEquals("Whole Foods", trips[1].getAgencyName(true));
         assertEquals(1520009600000L, trips[1].getStartTimestamp().getTimeInMillis());
         assertTrue(trips[1].getFare().equals(TransitCurrency.USD(-5000)));
         assertNull(trips[1].getRouteName());
         assertTrue(trips[1].hasTime());
         assertEquals(Trip.Mode.TICKET_MACHINE, trips[1].getMode());
-        assertNotNull(trips[1].getStartStation());
+        assertNull(trips[1].getStartStation());
         assertNull(trips[1].getEndStation());
-        assertEquals("Machine ID 78123456", trips[1].getStartStation().getStationName());
+        assertEquals("78123456", trips[1].getVehicleID());
 
-        assertEquals("Bay Area Rapid Transit", trips[0].getAgencyName());
-        assertEquals("BART", trips[0].getShortAgencyName());
+        assertEquals("Bay Area Rapid Transit", trips[0].getAgencyName(false));
+        assertEquals("BART", trips[0].getAgencyName(true));
         assertEquals(1521320320000L, trips[0].getStartTimestamp().getTimeInMillis());
         assertTrue(trips[0].getFare().equals(TransitCurrency.USD(630)));
         assertNull(trips[0].getRouteName());

@@ -41,6 +41,7 @@ final class ClipperData {
     static final int AGENCY_CALTRAIN = 0x06;
     static final int AGENCY_GGT = 0x0b;
     static final int AGENCY_GG_FERRY = 0x19;
+    static final int AGENCY_BAY_FERRY = 0x1b;
 
     static final Map<Integer, String> GG_FERRY_ROUTES = new ImmutableMapBuilder<Integer, String>()
             .put(0x03, "Larkspur")
@@ -56,13 +57,10 @@ final class ClipperData {
         return StationTableReader.getOperatorDefaultMode(CLIPPER_STR, agency);
     }
 
-    public static String getAgencyName(int agency) {
-        return StationTableReader.getOperatorName(CLIPPER_STR, agency, false);
+    public static String getAgencyName(int agency, boolean isShort) {
+        return StationTableReader.getOperatorName(CLIPPER_STR, agency, isShort);
     }
 
-    public static String getShortAgencyName(int agency) {
-        return StationTableReader.getOperatorName(CLIPPER_STR, agency, true);
-    }
 
     public static Station getStation(int agency, int stationId, boolean isEnd) {
         String humanReadableId = "0x" + Integer.toHexString(agency) + "/0x" + Integer.toHexString(stationId);

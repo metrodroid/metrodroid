@@ -46,6 +46,8 @@ class ObfuscatedTrip extends Trip implements Parcelable {
     private boolean mHasTime;
     private Mode mMode;
     private TransitCurrency mFare;
+    private String mVehicleID;
+    private Integer mPassengerCount;
 
     public static final Creator<ObfuscatedTrip> CREATOR = new Creator<ObfuscatedTrip>() {
         public ObfuscatedTrip createFromParcel(Parcel parcel) {
@@ -90,6 +92,12 @@ class ObfuscatedTrip extends Trip implements Parcelable {
         if (parcel.readInt() == 1) {
             mEndStation = Station.CREATOR.createFromParcel(parcel);
         }
+	if (parcel.readInt() == 1) {
+            mVehicleID = parcel.readString();
+        }
+	if (parcel.readInt() == 1) {
+            mPassengerCount = parcel.readInt();
+        }
     }
 
     @Override
@@ -108,12 +116,24 @@ class ObfuscatedTrip extends Trip implements Parcelable {
             mFare.writeToParcel(parcel, i);
         }
         parcel.writeInt(mStartStation == null ? 0 : 1);
-        mStartStation.writeToParcel(parcel, i);
+        if (mStartStation != null) {
+            mStartStation.writeToParcel(parcel, i);
+        }
         parcel.writeInt(mEndStation == null ? 0 : 1);
-        mEndStation.writeToParcel(parcel, i);
+        if (mEndStation != null) {
+            mEndStation.writeToParcel(parcel, i);
+        }
+	    parcel.writeInt(mVehicleID == null ? 0 : 1);
+        if (mVehicleID != null) {
+            parcel.writeString(mVehicleID);
+        }
+	    parcel.writeInt(mPassengerCount == null ? 0 : 1);
+        if (mPassengerCount != null) {
+            parcel.writeInt(mPassengerCount);
+        }
     }
 
-    ObfuscatedTrip(Trip realTrip, long timeDelta, int fareOffset, double fareMultiplier) {
+    ObfuscatedTrip(Trip realTrip, long timeDelta, boolean obfuscateFares) {
         if (realTrip.getStartTimestamp() != null) {
             mStartTimestamp = new GregorianCalendar();
             mStartTimestamp.setTimeInMillis(realTrip.getStartTimestamp().getTimeInMillis() + timeDelta);
@@ -125,8 +145,8 @@ class ObfuscatedTrip extends Trip implements Parcelable {
         }
 
         mRouteName = realTrip.getRouteName();
-        mAgencyName = realTrip.getAgencyName();
-        mShortAgencyName = realTrip.getShortAgencyName();
+        mAgencyName = realTrip.getAgencyName(false);
+        mShortAgencyName = realTrip.getAgencyName(true);
 
         mStartStation = realTrip.getStartStation();
         mEndStation = realTrip.getEndStation();
@@ -136,8 +156,15 @@ class ObfuscatedTrip extends Trip implements Parcelable {
 
         TransitCurrency fare = realTrip.getFare();
         if (fare != null) {
-            mFare = fare.obfuscate(fareOffset, fareMultiplier);
+            if (obfuscateFares) {
+                mFare = fare.obfuscate();
+            } else {
+                mFare = fare;
+            }
         }
+
+	mPassengerCount = realTrip.getPassengerCount();
+	mVehicleID = realTrip.getVehicleID();
     }
 
     @Override
@@ -156,13 +183,8 @@ class ObfuscatedTrip extends Trip implements Parcelable {
     }
 
     @Override
-    public String getAgencyName() {
-        return mAgencyName;
-    }
-
-    @Override
-    public String getShortAgencyName() {
-        return mShortAgencyName;
+    public String getAgencyName(boolean isShort) {
+        return isShort ? mShortAgencyName : mAgencyName;
     }
 
     @Override

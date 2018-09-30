@@ -24,7 +24,6 @@ import android.net.Uri;
 import android.os.Parcelable;
 import android.support.annotation.Nullable;
 
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
@@ -149,6 +148,10 @@ public abstract class TransitData implements Parcelable {
      * @return Uri pointing to online services page, or null if no page is to be supplied.
      */
     public Uri getOnlineServicesPage() {
+        return null;
+    }
+
+    public String getWarning() {
         return null;
     }
 }

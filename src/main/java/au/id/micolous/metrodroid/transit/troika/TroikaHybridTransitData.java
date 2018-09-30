@@ -30,6 +30,7 @@ import au.id.micolous.metrodroid.transit.TransitData;
 import au.id.micolous.metrodroid.transit.TransitIdentity;
 import au.id.micolous.metrodroid.transit.Trip;
 import au.id.micolous.metrodroid.transit.podorozhnik.PodorozhnikTransitData;
+import au.id.micolous.metrodroid.transit.strelka.StrelkaTransitData;
 import au.id.micolous.metrodroid.ui.HeaderListItem;
 import au.id.micolous.metrodroid.ui.ListItem;
 import au.id.micolous.metrodroid.util.Utils;
@@ -56,6 +57,7 @@ public class TroikaHybridTransitData extends TransitData {
 
     private final TroikaTransitData mTroika;
     private final PodorozhnikTransitData mPodorozhnik;
+    private final StrelkaTransitData mStrelka;
 
     @Override
     public String getSerialNumber() {
@@ -73,52 +75,105 @@ public class TroikaHybridTransitData extends TransitData {
             items.addAll(troikaItems);
         }
 
-        List<ListItem> podItems = mPodorozhnik.getInfo();
+        if (mPodorozhnik != null) {
+            items.add(new HeaderListItem(R.string.card_name_podorozhnik));
+            // This is Podorozhnik serial number. Combined card
+            // has both serial numbers and both are printed on it.
+            // We show Troika number as main serial as it's shorter
+            // and printed in larger letters.
+            items.add(new ListItem(R.string.card_number, mPodorozhnik.getSerialNumber()));
 
-        items.add(new HeaderListItem(R.string.card_name_podorozhnik));
-        // This is Podorozhnik serial number. Combined card
-        // has both serial numbers and both are printed on it.
-        // We show Troika number as main serial as it's shorter
-        // and printed in larger letters.
-        items.add(new ListItem(R.string.card_number, mPodorozhnik.getSerialNumber()));
-
-        if (podItems != null && !podItems.isEmpty()) {
-            items.addAll(podItems);
+            List<ListItem> podItems = mPodorozhnik.getInfo();
+            if (podItems != null && !podItems.isEmpty()) {
+                items.addAll(podItems);
+            }
         }
+
+        if (mStrelka != null) {
+            items.add(new HeaderListItem(R.string.card_name_strelka));
+            // This is Podorozhnik serial number. Combined card
+            // has both serial numbers and both are printed on it.
+            // We show Troika number as main serial as it's shorter
+            // and printed in larger letters.
+            items.add(new ListItem(R.string.card_number, mStrelka.getSerialNumber()));
+
+            List<ListItem> sItems = mStrelka.getInfo();
+            if (sItems != null && !sItems.isEmpty()) {
+                items.addAll(sItems);
+            }
+        }
+
+        if (items.isEmpty())
+            return null;
 
         return items;
     }
 
     @Override
     public String getCardName() {
-        return Utils.localizeString(R.string.card_name_troika_podorozhnik_hybrid);
+        int nameRes = R.string.card_name_troika;
+        if (mStrelka != null)
+            nameRes = R.string.card_name_troika_strelka_hybrid;
+        if (mPodorozhnik != null)
+            nameRes = R.string.card_name_troika_podorozhnik_hybrid;
+        return Utils.localizeString(nameRes);
     }
 
     @Override
     public void writeToParcel(Parcel dest, int i) {
         mTroika.writeToParcel(dest, i);
-        mPodorozhnik.writeToParcel(dest, i);
+        if (mPodorozhnik != null) {
+            dest.writeInt(1);
+            mPodorozhnik.writeToParcel(dest, i);
+        } else
+            dest.writeInt(0);
+        if (mStrelka != null) {
+            dest.writeInt(1);
+            mStrelka.writeToParcel(dest, i);
+        } else
+            dest.writeInt(0);
     }
 
     @SuppressWarnings("UnusedDeclaration")
     public TroikaHybridTransitData(Parcel p) {
         mTroika = new TroikaTransitData(p);
-        mPodorozhnik = new PodorozhnikTransitData(p);
+        if (p.readInt() != 0)
+            mPodorozhnik = new PodorozhnikTransitData(p);
+        else
+            mPodorozhnik = null;
+        if (p.readInt() != 0)
+            mStrelka = new StrelkaTransitData(p);
+        else
+            mStrelka = null;
     }
 
     public static TransitIdentity parseTransitIdentity(ClassicCard card) {
-        return new TransitIdentity(Utils.localizeString(R.string.card_name_troika_podorozhnik_hybrid),
+        int nameRes = R.string.card_name_troika;
+        if (StrelkaTransitData.check(card))
+            nameRes = R.string.card_name_troika_strelka_hybrid;
+        if (PodorozhnikTransitData.check(card))
+            nameRes = R.string.card_name_troika_podorozhnik_hybrid;
+        return new TransitIdentity(Utils.localizeString(nameRes),
 				   TroikaBlock.formatSerial(TroikaBlock.getSerial(card.getSector(8).getBlock(0).getData())));
     }
 
     public TroikaHybridTransitData(ClassicCard card) {
         mTroika = new TroikaTransitData(card);
-        mPodorozhnik = new PodorozhnikTransitData(card);
+        if (PodorozhnikTransitData.check(card))
+            mPodorozhnik = new PodorozhnikTransitData(card);
+        else
+            mPodorozhnik = null;
+        if (StrelkaTransitData.check(card))
+            mStrelka = new StrelkaTransitData(card);
+        else
+            mStrelka = null;
     }
 
     public Trip[] getTrips() {
         List<Trip> t = new ArrayList<>();
-        t.addAll(Arrays.asList(mPodorozhnik.getTrips()));
+        if (mPodorozhnik != null) {
+            t.addAll(Arrays.asList(mPodorozhnik.getTrips()));
+        }
         t.addAll(Arrays.asList(mTroika.getTrips()));
         return t.toArray(new Trip[0]);
     }
@@ -126,13 +181,20 @@ public class TroikaHybridTransitData extends TransitData {
     @Override
     public ArrayList<TransitBalance> getBalances() {
         ArrayList<TransitBalance> l = new ArrayList<>();
-        l.addAll(mTroika.getBalances());
-        l.addAll(mPodorozhnik.getBalances());
+        l.add(mTroika.getBalance());
+        if (mPodorozhnik != null) {
+            l.addAll(mPodorozhnik.getBalances());
+        }
         return l;
     }
 
     @Override
     public Subscription[] getSubscriptions() {
         return mTroika.getSubscriptions();
+    }
+
+    @Override
+    public String getWarning() {
+        return mTroika.getWarning();
     }
 }

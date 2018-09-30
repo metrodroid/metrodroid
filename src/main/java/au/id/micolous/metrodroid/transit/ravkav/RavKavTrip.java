@@ -126,7 +126,7 @@ class RavKavTrip extends Trip {
     }
 
     @Override
-    public String getAgencyName() {
+    public String getAgencyName(boolean isShort) {
         return mAgencyName;
     }
 
@@ -135,7 +135,7 @@ class RavKavTrip extends Trip {
     public TransitCurrency getFare() {
         if (mPrice == null)
             return null;
-        return new TransitCurrency(mPrice, "ILS");
+        return TransitCurrency.ILS(mPrice);
     }
 
     @Override

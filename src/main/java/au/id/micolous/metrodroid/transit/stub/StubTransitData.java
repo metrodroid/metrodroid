@@ -20,7 +20,6 @@ package au.id.micolous.metrodroid.transit.stub;
 
 import android.os.Parcel;
 import android.support.annotation.Nullable;
-import android.text.Spanned;
 
 import au.id.micolous.metrodroid.transit.TransitCurrency;
 import au.id.micolous.metrodroid.transit.TransitData;

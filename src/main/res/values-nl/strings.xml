@@ -11,16 +11,12 @@
     <string name="advanced_info">Geavanceerde informatie</string>
     <string name="delete_card">Kaart verwijderen</string>
     <string name="unknown_card">Onbekende kaart</string>
-    <string name="locked_card">Vergrendelde kaart</string>
     <string name="hw_detail">Productie-informatie</string>
     <string name="data">Onbewerkte gegevens</string>
     <string name="copy_xml">Kopiëren</string>
     <string name="share_xml">Delen</string>
     <string name="save_xml">Opslaan naar bestand</string>
-    <string name="trips">Reizen</string>
     <string name="history">Geschiedenis</string>
-    <string name="balance">Saldo</string>
-    <string name="refills">Opgeladen</string>
     <string name="no_trip_data">Geen reizen gevonden. Is er wel gereisd met deze kaart?</string>
     <string name="import_xml">Importeren</string>
     <string name="import_clipboard">Plakken uit klembord</string>
@@ -38,8 +34,7 @@
     <string name="scanned_at_format">Gescand op %1$s op %2$s</string>
     <string name="supported_cards">Ondersteunde kaarten</string>
     <string name="pass_or_transfer">Pas/Overstap</string>
-    <string name="transaction_sequence">#</string>
-    <string name="fully_locked_desc">Geen enkel onderdeel van deze kaart is leesbaar zonder sleutel en je hebt geen geldige geïnstalleerde sleutels voor deze kaart. 
+    <string name="fully_locked_desc">Geen enkel onderdeel van deze kaart is leesbaar zonder sleutel en je hebt geen geldige geïnstalleerde sleutels voor deze kaart.
 \n 
 \nAls de kaart momenteel ondersteund wordt door Metrodroid, dan zal hij gaan werken zodra je de benodigde sleutels installeert. Meer informatie over het verkrijgen van sleutels is te vinden in de documentatie. 
 \n 
@@ -50,7 +45,6 @@
     <string name="nfc_off_error">NFC is uitgeschakeld</string>
     <string name="turn_on_nfc">Schakel NFC in om de kaartinformatie uit te kunnen lezen.</string>
     <string name="wireless_settings">Draadloze instellingen</string>
-    <string name="report_error">Fout rapporteren</string>
 
     <string name="unknown_card_header">Onbekend kaartformaat</string>
     <string name="unknown_card_description">Deze kaart wordt nog niet ondersteund door Metrodroid. Alleen onbewerkte gegevens kunnen worden weergegeven.</string>
@@ -61,8 +55,6 @@
     <string name="lawyercats">(De auteurs van) Metrodroid zijn niet verbonden aan een openbaar vervoerder.</string>
 
 
-    <string name="report_error_privacy_title">Privacy-overeenkomst</string>
-    <string name="report_error_privacy_message">Alle gegevens die op deze kaart staan zullen worden bijgevoegd aan je foutrapport.</string>
     <string name="scanned_cards">Geschiedenis</string>
     <string name="no_scanned_cards">Je hebt geen gescande kaarten.</string>
     <string name="block_title_format">Blok: %s</string>
@@ -70,11 +62,9 @@
     <string name="sector_title_format">Sector: 0x%s</string>
     <string name="unauthorized_sector_title_format">Sector: 0x%s (niet-geauthoriseerd)</string>
     <string name="invalid_sector_title_format">Sector: 0x%1$s (onjuist: %2$s)</string>
-    <string name="subscriptions">Abonnementen</string>
     <string name="info">Informatie</string>
     <string name="valid_format">Geldig van %1$s tot %2$s</string>
     <string name="valid_to_format">Geldig tot %1$s</string>
-    <string name="valid_not_used">Nog niet gebruikt</string>
     <string name="unknown_format">Onbekend (%s)</string>
     <string name="unknown">Onbekend</string>
     <string name="keys_required">Er zijn ontsleutelingssleutels benodigd om deze kaart uit te kunnen lezen.</string>
@@ -87,10 +77,8 @@
     <string name="add_key_directions">Sla je binaire dumpbestand van sleutels op met de extensie .farebotkeys, e-mail het als bijlage naar jezelf en open het op dit apparaat.</string>
     <string name="no_keys">Geen sleutels.</string>
     <string name="nfc_unavailable">NFC is niet beschikbaar</string>
-    <string name="fare_cancelled_format">%s (geannuleerd)</string>
     <string name="general">Algemeen</string>
     <string name="launch_from_background">Starten vanaf achtergrond</string>
-    <string name="error_report_sent">Foutrapport is verstuurd.</string>
     <string name="checksum">Controlesom</string>
     <string name="last_transaction">Laatste transactie</string>
     <string name="date">Datum</string>
@@ -99,7 +87,6 @@
     <string name="transaction_type">Transactietype</string>
     <string name="card_epoch">Kaartgeneratie</string>
     <string name="card_not_supported_on_device">Deze kaart wordt niet ondersteund door uw apparaat.</string>
-    <string name="card_note_cepas">Niet compatibel met alle apparaten.</string>
     <string name="need_stations">Sommige stationsnamen zijn niet bekend.</string>
     <string name="need_stations_submit">Rapporteren</string>
     <string name="card_preview_reader">Bètaversie van de kaartlezer.</string>
@@ -119,8 +106,6 @@
     <string name="mifare_classic">MIFARE Classic</string>
     <string name="auth_retries">Authentiecatiepogingen</string>
     <string name="auth_retries_summary">Aantal keren om te proberen elke sector te authenticeren</string>
-    <string name="alternate_purse_balances">Alternatieve portemonnee-saldi</string>
-    <string name="storage_required">Machtigingen vereist om kaartdumps en -sleutels te lezen/schrijven van/naar bestanden.</string>
 
     <string name="mfc_fallback_desc">Sommige vervoerders hebben geen magische identificatie op hun kaart. Om ze uit te lezen moet je er expliciet één kiezen.</string>
     <string name="mfc_fallback">Terugvallezer</string>
@@ -198,34 +183,11 @@
     <string name="felica_process_payment_thirdparty">Betaling (derde partij)</string>
     <string name="felica_process_admission_thirdparty">Toelatingsbetaling (derde partij)</string>
 
-    <string name="hsl_pass_is_valid">Geldige seizoenskaart</string>
-    <string name="hsl_1zone_ticket">Interne kaart</string>
-    <string name="hsl_2zone_ticket">Regionale kaart</string>
     <string name="hsl_balance_refill">Saldo-oplading</string>
     <string name="hsl_balance_ticket">Voordeelkaart</string>
-    <string name="hsl_value_ticket_is_valid">Geldige voordeelkaart</string>
     <string name="hsl_pass_ticket">Seizoenskaart</string>
-    <string name="hsl_season_ticket_starts">Seizoenskaart gaat in op</string>
-    <string name="hsl_season_ticket_ends">Seizoenskaart eindigt op</string>
-    <string name="hsl_season_ticket_bought_on">Seizoenskaart is gekocht op</string>
-    <string name="hsl_previous_season_ticket">Vorige seizoenskaart was</string>
-    <string name="hsl_season_ticket_price_was">De seizoenskaartprijs was</string>
-    <string name="hsl_you_last_used_this_ticket">U heeft deze kaart voor het laatst gebruikt op</string>
     <string name="hsl_person_format">%s persoon</string>
     <string name="hsl_mins_format">%s minuten</string>
-    <string name="hsl_value_ticket">Voordeelkaart</string>
-    <string name="hsl_value_ticket_bought_on">Kaart gekocht</string>
-    <string name="hsl_value_ticket_expires_on">Kaart verloopt op</string>
-    <string name="hsl_value_ticket_last_transfer">Laatste overstap</string>
-    <string name="hsl_value_ticket_last_sign">Laatste teken</string>
-    <string name="hsl_value_ticket_price">Voordeelkaartprijs</string>
-    <string name="hsl_value_ticket_disco_group">Groepskorting</string>
-    <string name="hsl_value_ticket_pax">Groepsgrootte</string>
-    <string name="hsl_value_ticket_duration">Kaartgeldigheid</string>
-    <string name="hsl_value_ticket_vehicle_number">Voertuignummer</string>
-    <string name="hsl_value_ticket_vehicle_type">Voertuigtype</string>
-    <string name="hsl_value_ticket_line_number">Rijnummer</string>
-    <string name="hsl_season_ticket">Seizoenskaart</string>
 
     <string name="opal_automatic_top_up">Automatisch opladen</string>
     <string name="opal_weekly_trips">Wekelijkse reizen</string>
@@ -245,7 +207,6 @@
     <string name="opal_action_journey_completed_auto_on">Reis voltooid (niet ingecheckt)</string>
     <string name="opal_action_tap_on_reversal">Omgekeerd inchecken</string>
 
-    <string name="seqgo_ticket_type">Kaartsoort</string>
     <string name="seqgo_ticket_type_regular">Regulier</string>
     <string name="seqgo_ticket_type_concession">Concessie</string>
     <string name="seqgo_ticket_type_child">Kind</string>
@@ -256,14 +217,12 @@
 
     <string name="card_note_seqgo">Ondersteund geen kaarten met Go Acces, Explore of SEEQ.</string>
 
-    <string name="card_note_myki">Alleen het kaartnummer kan worden uitgelezen.</string>
+    <string name="card_note_card_number_only">Alleen het kaartnummer kan worden uitgelezen.</string>
 
     <string name="nextfare">Cubic Nextfare</string>
     <string name="nextfare_system_code">Systeemcode</string>
     <string name="nextfare_ticket_class">Ticketklassificatie %d</string>
-    <string name="card_expiry_date">Vervaldatum kaart</string>
 
-    <string name="octopus_szt">Shenzhen Tong</string>
 
     <string name="card_note_bilhete_unico">Moet worden geselecteerd in de voorkeuren als terugvallezer.</string>
 
@@ -307,7 +266,7 @@
     <string name="locked_mfc_card">Vergrendelde MIFARE Classic-kaart</string>
     <string name="locked_mfu_card">Vergrendelde MIFARE Ultralight-kaart</string>
     <string name="locked_mfd_card">Vergrendelde MIFARE DESFire-kaart</string>
-    <string name="application_title_format">Applicatie: 0x%s</string>
+    <string name="application_title_format">Applicatie: %s</string>
     <string name="file_title_format">Bestand: %s</string>
     <string name="unauthorized_file_title_format">Bestand: %s (niet-geauthoriseerd)</string>
     <string name="invalid_file_title_format">Bestand: %1$s (onjuist: %2$s)</string>
@@ -403,7 +362,6 @@
 
     <string name="felica_system_title_format">Systeem: 0x%1$s (%2$s)</string>
     <string name="felica_service_title_format">Dienst: 0x%1$s (%2$s)</string>
-    <string name="felica_service_format">Dienst: 0x%s</string>
     <plurals name="felica_service_count">
 	<item quantity="one">%d dienst</item>
 	<item quantity="other">%d diensten</item>
@@ -537,8 +495,7 @@
 
     <string name="orca_coach_number">#%s klas</string>
 
-    <string name="suica_bus_area_line_stop">Busgebied %s, lijn %s, halte %s</string>
-    <string name="suica_line_station">Lijn %s, station %s</string>
+    <string name="suica_bus_area_line_stop">Buszone %1$s, lijn %2$s, halte %3$s</string>
 
     <string name="card_name_szt">Shenzhen Tong</string>
     <string name="card_name_octopus">Octopus</string>
@@ -556,7 +513,7 @@
     <string name="mfc_not_supported">MIFARE Classic: niet ondersteund</string>
 <string name="trip_description_unknown_start">naar %s</string>
     <string name="time_from_to">%s → %s</string>
-    <string name="time_from_unknown_to">?:?? → %s</string>
+    <string name="time_from_unknown_to">\??:?? → %s</string>
 
 
     <string name="pref_show_local_and_english_title">Stationsnamen tonen in lokale taal en het Engels</string>
@@ -611,7 +568,6 @@
 
     <string name="location_jakarta">Jakarta, Indonesië</string>
 
-    <string name="kmt_def_route">Jabodetabek-lijn</string>
     <string name="kmt_extra_note">Alleen voor nieuwe FeliCa-kaarten.</string>
 
     <string name="orca_topup_machine">Automaat #%s</string>
@@ -622,8 +578,7 @@
     <string name="compass_ticket_type">Kaartsoort</string>
     <string name="compass_ticket_type_concession">Concessie</string>
     <string name="compass_ticket_type_regular">Regulier</string>
-    <string name="compass_expiry_date">Vervaldatum</string>
-    <string name="compass_note">Alleen voor eenmalige kaartjes</string>
+    <string name="compass_note">Alleen voor enkele reizen</string>
 
     <string name="location_seoul">Seoel, Zuid-Korea</string>
     <string name="card_name_tmoney">T-Money</string>
@@ -632,4 +587,115 @@
     <string name="card_number">Kaartnummer</string>
     <string name="pref_show_raw_station_ids">Stationsverkortingen tonen</string>
     <string name="pref_show_raw_station_ids_desc">Als dit wordt ingeschakeld, dan worden ook de verkortingen vermeld bij de stationsnaam</string>
+<string name="location_quebec">Quebec, Canada</string>
+
+    <string name="opus_subscription">Abonnement</string>
+    <string name="opus_card_expiry_date">Kaart vervalt op</string>
+    <string name="opus_single_trips">Enkele reis</string>
+
+    <string name="podorozhnik_gate">poortje %s</string>
+    <string name="podorozhnik_tvm">Kaartautomaat %d</string>
+
+    <string name="led_shared_taxi">Sint-Petersburg Gedeelde Taxi</string>
+
+    <string name="developer_options">Ontwikkelaarsopties</string>
+    <string name="station_database">Stationsdatabank</string>
+    <string name="developer_options_desc">Gebruik van stationsdatabanken, verdoezelmodi…</string>
+    <string name="advanced_options">Geavanceerde opties</string>
+    <string name="nfc">Near Field Communication</string>
+    <string name="nfc_options_desc">Terugvallezer voor MIFARE Classic, fysieke kaartinstellingen…</string>
+<string name="kmt_agency">Kereta Commuter Indonesia</string>
+    <string name="transaction_counter">Transactieteller</string>
+    <string name="kmt_other_data">Overige gegevens</string>
+    <string name="kmt_last_trx_amount">Recentste transactiebedrag</string>
+
+    <string name="blank_mfc_card">Blanco MIFARE Classic-kaart</string>
+    <string name="suica_area_line_station">Zone %1$s - Lijn %2$s - Halte %3$s</string>
+
+    <string name="file_fci">Bestand FCI</string>
+    <string name="app_fci">App FCI</string>
+    <string name="classic_key_format_a">Sleutel (A): %s</string>
+    <string name="classic_key_format_b">Sleutel (B): %s</string>
+    <string name="classic_key_format">Sleutel: %s</string>
+<string name="location_boston">Boston, MA, VS</string>
+
+    <string name="troika_unformatted">De Troika is onjuist geformatteerd. Hij moet worden opgeladen bij een kaartautomaat voordat hij kan worden gebruikt.</string>
+    <string name="card_name_strelka">Strelka</string>
+    <string name="strelka_long_serial">Strelka - lang nummer</string>
+    <string name="card_name_troika_strelka_hybrid">Troika+Strelka</string>
+
+    <string name="charlie_2nd_card_number">Tweede getal</string>
+
+    <string name="istanbulkart_2nd_card_number">Tweede serienummer</string>
+    <string name="location_istanbul">Istanboel, Turkije</string>
+    <string name="trip_counter">Reisteller</string>
+    <string name="refill_counter">Oplaadteller</string>
+<string name="mfd_unlocking">Bezig met ontgrendelen van kaart <xliff:g id="card_name" example="Leap">%s</xliff:g>…</string>
+
+    <string name="desfire_challenge">Uitdaging</string>
+    <string name="desfire_response">Antwoord</string>
+    <string name="desfire_confirmation">Bevestiging</string>
+    <string name="desfire_keyex">Sleuteluitwisseling</string>
+    <string name="desfire_key_number">Sleutel %s</string>
+
+    <string name="location_ireland">Ierland</string>
+
+    <string name="mifare_desfire">MIFARE DESFire</string>
+
+    <string name="leap_retrieve_keys">Sleutels ophalen voor Leap-kaarten</string>
+    <string name="leap_retrieve_keys_longdesc">Dit deelt je kaartgegevens met Transport for Ireland, zodat er kan worden geantwoord op de authenticatie-uitdaging van de Leap-kaart. TfI zal te weten komen dat je Metrodroid hebt gebruikt. Zonder deze sleutel is de kaart onleesbaar.</string>
+
+    <string name="locked_leap">Vergrendelde Leap-kaart</string>
+    <string name="leap_period_start">Begin van periode</string>
+    <string name="leap_accumulator_region">Regio</string>
+    <string name="leap_accumulator_total">Totale kosten</string>
+    <string name="leap_accumulator_agency">%s - totale kosten</string>
+    <string name="leap_daily_accumulators">Dagelijkse tariefbeperkingen</string>
+    <string name="leap_weekly_accumulators">Wekelijkse tariefbeperkingen</string>
+
+    <string name="initialisation_date">Initialisatiedatum</string>
+    <string name="issue_date">Uitgavedatum</string>
+
+    <string name="leap_issuer_id">Uitgave-ID</string>
+    <string name="leap_locked_warning">Deze kaart is niet ontgrendeld; schakel ophalen van Leap-sleutels in in de instellingen</string>
+<string name="location_minneapolis">Minneapolis, MN, VS</string>
+    <string name="invalid_json_key_type">Ongeldige JSON: sleuteltype ontbreekt</string>
+    <string name="invalid_json">Ongeldige JSON</string>
+<plurals name="passengers">
+	<item quantity="one">passagier</item>
+	<item quantity="other">passagiers</item>
+</plurals>
+
+<string name="delete_key_confirm_title">Weet je zeker dat je de sleutel wilt verwijderen?</string>
+    <string name="delete_key_confirm_message">Het sleutelbestand <xliff:g id="description" example="a1b2c3d4">%1$s</xliff:g> (bevattende <xliff:g id="key_type" example="1 MIFARE Classic key">%2$s) </xliff:g> gaat verloren.</string>
+    <string name="cant_delete_with_obfuscation">Sleutels verwijderen is momenteel niet mogelijk</string>
+    <string name="cant_delete_with_obfuscation_message">Vanwege veiligheidsredenen kun je geen sleutels verwijderen terwijl kaartnummerverdoezeling is ingeschakeld. Schakel dit uit om sleutels te verwijderen.</string>
+    <string name="file_exported">Bestand is geëxporteerd.</string>
+    <string name="key_data">Sleutelgegevens</string>
+
+    <string name="classic_key">MIFARE Classic-sleutel</string>
+    <string name="classic_key_a">Sleutel A</string>
+    <string name="classic_key_b">Sleutel B</string>
+
+
+    <string name="about_key_formats">Over sleutelindelingen…</string>
+    <string name="invalid_key_file">Ongeldig sleutelbestand</string>
+    <string name="key_file_empty">Leeg sleutelbestand!</string>
+
+    <string name="static_imported">Geïmporteerd: %s</string>
+
+    <string name="untitled_key_group">Naamloze sleutelgroep</string>
+
+    <plurals name="keytype_mfc">
+	<item quantity="one">%d MIFARE Classic-sleutel</item>
+	<item quantity="other">%d MIFARE Classic-sleutels</item>
+</plurals>
+    <plurals name="keytype_mfc_static">
+	<item quantity="one">%d statische MIFARE Classic-sleutel</item>
+	<item quantity="other">%d statische MIFARE Classic-sleutels</item>
+</plurals>
+
+    <string name="no_static_key_assignment">Statistische sleutels kunnen niet worden toegewezen aan een losse kaart.</string>
+
+    <string name="card_id">Kaart-ID</string>
 </resources>

@@ -20,7 +20,6 @@ package au.id.micolous.metrodroid.transit.smartrider;
 
 import android.os.Parcel;
 import android.support.annotation.Nullable;
-import android.text.Spanned;
 import android.util.Log;
 
 import java.util.ArrayList;
@@ -30,7 +29,10 @@ import java.util.GregorianCalendar;
 import java.util.Locale;
 import java.util.TimeZone;
 
+import au.id.micolous.farebot.R;
 import au.id.micolous.metrodroid.card.classic.ClassicCard;
+import au.id.micolous.metrodroid.key.ClassicSectorKey;
+import au.id.micolous.metrodroid.transit.CardInfo;
 import au.id.micolous.metrodroid.transit.TransitCurrency;
 import au.id.micolous.metrodroid.transit.TransitData;
 import au.id.micolous.metrodroid.transit.TransitIdentity;
@@ -60,6 +62,23 @@ public class SmartRiderTransitData extends TransitData {
     private static final String TAG = "SmartRiderTransitData";
     private static final TimeZone SMARTRIDER_TZ = TimeZone.getTimeZone("Australia/Perth");
     private static final TimeZone MYWAY_TZ = TimeZone.getTimeZone("Australia/Sydney"); // Canberra
+
+    public static final CardInfo SMARTRIDER_CARD_INFO = new CardInfo.Builder()
+            .setImageId(R.drawable.smartrider_card)
+            .setName(SmartRiderTransitData.SMARTRIDER_NAME)
+            .setLocation(R.string.location_wa_australia)
+            .setCardType(au.id.micolous.metrodroid.card.CardType.MifareClassic)
+            .setKeysRequired()
+            .setPreview() // We don't know about ferries.
+            .build();
+
+    public static final CardInfo MYWAY_CARD_INFO = new CardInfo.Builder()
+            .setImageId(R.drawable.myway_card)
+            .setName(SmartRiderTransitData.MYWAY_NAME)
+            .setLocation(R.string.location_act_australia)
+            .setCardType(au.id.micolous.metrodroid.card.CardType.MifareClassic)
+            .setKeysRequired()
+            .build();
 
     private static final long SMARTRIDER_EPOCH;
     private static final long MYWAY_EPOCH;
@@ -128,8 +147,8 @@ public class SmartRiderTransitData extends TransitData {
 
     private static CardType detectKeyType(ClassicCard card) {
         try {
-            byte[] key = card.getSector(7).getKey();
-            if (key == null || key.length != 6) {
+            ClassicSectorKey key = card.getSector(7).getKey();
+            if (key == null) {
                 // We don't have key data, bail out.
                 return CardType.UNKNOWN;
             }
@@ -242,11 +261,8 @@ public class SmartRiderTransitData extends TransitData {
         byte[] recordA = card.getSector(2).getBlock(2).getData();
         byte[] recordB = card.getSector(3).getBlock(2).getData();
 
-        byte[] balanceDataA = Utils.reverseBuffer(recordA, 7, 2);
-        byte[] balanceDataB = Utils.reverseBuffer(recordB, 7, 2);
-
-        int balanceA = Utils.byteArrayToInt(balanceDataA);
-        int balanceB = Utils.byteArrayToInt(balanceDataB);
+        int balanceA = Utils.byteArrayToIntReversed(recordA, 7, 2);
+        int balanceB = Utils.byteArrayToIntReversed(recordB, 7, 2);
 
         Log.d(TAG, String.format("balanceA = %d, balanceB = %d", balanceA, balanceB));
         mBalance = balanceA < balanceB ? balanceA : balanceB;

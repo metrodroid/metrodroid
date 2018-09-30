@@ -60,6 +60,7 @@ public class CardDBHelper extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
+        //noinspection SyntaxError
         db.execSQL("CREATE TABLE cards ("
                 + "_id        INTEGER PRIMARY KEY, "
                 + "type       TEXT NOT NULL, "

@@ -46,7 +46,7 @@ public class SeqGoRefill extends NextfareTrip {
     private boolean mAutomatic;
 
     public SeqGoRefill(NextfareTopupRecord topup) {
-        super(topup, "AUD");
+        super(topup, "AUD", SeqGoData.SEQ_GO_STR);
         mAutomatic = topup.getAutomatic();
     }
 
@@ -62,7 +62,7 @@ public class SeqGoRefill extends NextfareTrip {
     }
 
     @Override
-    public String getAgencyName() {
+    public String getAgencyName(boolean isShort) {
         return Utils.localizeString(mAutomatic
                 ? R.string.seqgo_refill_automatic
                 : R.string.seqgo_refill_manual);

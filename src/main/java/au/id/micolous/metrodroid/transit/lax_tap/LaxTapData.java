@@ -20,15 +20,12 @@ package au.id.micolous.metrodroid.transit.lax_tap;
 
 import android.util.SparseArray;
 
-import au.id.micolous.metrodroid.transit.Trip;
-
 /**
  * Static data structures for LAX TAP
  */
 
 public final class LaxTapData {
     static final int AGENCY_METRO = 1;
-    static final int AGENCY_CULVER_CITY = 3;
     static final int AGENCY_SANTA_MONICA = 11;
     static final String LAX_TAP_STR = "lax_tap";
 
@@ -36,19 +33,6 @@ public final class LaxTapData {
     // Subway services are < LR_START, and Light Rail services are between LR_START and BUS_START.
     static final int METRO_LR_START = 0x0100;
     static final int METRO_BUS_START = 0x8000;
-
-    static final SparseArray<String> AGENCIES = new SparseArray<String>() {{
-        put(AGENCY_METRO, "Metro");
-        put(AGENCY_CULVER_CITY, "Culver City Bus");
-        put(AGENCY_SANTA_MONICA, "Santa Monica Bus");
-    }};
-
-    static final SparseArray<Trip.Mode> AGENCY_MODES = new SparseArray<Trip.Mode>() {{
-        // Metro has special handling, see LaxTapTransitData.lookupMode
-        put(AGENCY_CULVER_CITY, Trip.Mode.BUS);
-        put(AGENCY_SANTA_MONICA, Trip.Mode.BUS);
-    }};
-
 
     /**
      * Map representing the different bus routes for Metro. We don't use the GTFS data for this one,

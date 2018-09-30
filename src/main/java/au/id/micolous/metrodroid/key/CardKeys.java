@@ -24,9 +24,11 @@ package au.id.micolous.metrodroid.key;
 
 import android.database.Cursor;
 import android.net.Uri;
+import android.support.annotation.Nullable;
 
 import au.id.micolous.metrodroid.provider.CardKeyProvider;
 import au.id.micolous.metrodroid.provider.KeysTableColumns;
+import au.id.micolous.metrodroid.util.KeyFormat;
 import au.id.micolous.metrodroid.util.Utils;
 
 import org.json.JSONException;
@@ -35,10 +37,50 @@ import org.json.JSONObject;
 import au.id.micolous.metrodroid.MetrodroidApplication;
 
 public abstract class CardKeys {
-    public static CardKeys forTagId(byte[] tagId) throws Exception {
+    public static final String JSON_KEY_TYPE_KEY = "KeyType";
+    public static final String TYPE_MFC = "MifareClassic";
+    public static final String TYPE_MFC_STATIC = "MifareClassicStatic";
+    public static final String JSON_TAG_ID_KEY = "TagId";
+
+    public static final String CLASSIC_STATIC_TAG_ID = "staticclassic";
+
+    /**
+     * Retrieves a MIFARE Classic card keys from storage by its UID.
+     * @param tagId The UID to look up (4 bytes)
+     * @return Matching {@link ClassicCardKeys}, or null if not found
+     */
+    @Nullable
+    public static ClassicCardKeys forTagId(byte[] tagId) throws JSONException {
         String tagIdString = Utils.getHexString(tagId);
+        return fromUri(Uri.withAppendedPath(CardKeyProvider.CONTENT_BY_UID_URI, tagIdString));
+    }
+
+    /**
+     * Retrieves all statically defined MIFARE Classic keys.
+     * @return All {@link ClassicCardKeys}, or null if not found
+     */
+    @Nullable
+    public static ClassicCardKeys forStaticClassic() throws JSONException {
+        return fromUri(Uri.withAppendedPath(CardKeyProvider.CONTENT_BY_UID_URI, CLASSIC_STATIC_TAG_ID));
+    }
+
+    /**
+     * Retrieves a key by its internal ID.
+     * @return Matching {@link ClassicCardKeys}, or null if not found.
+     */
+    public static ClassicCardKeys forID(int id) throws JSONException {
+        return fromUri(Uri.withAppendedPath(CardKeyProvider.CONTENT_URI, Integer.toString(id)));
+    }
+
+    @Nullable
+    public static ClassicCardKeys fromUri(Uri uri) throws JSONException {
         MetrodroidApplication app = MetrodroidApplication.getInstance();
-        Cursor cursor = app.getContentResolver().query(Uri.withAppendedPath(CardKeyProvider.CONTENT_URI, tagIdString), null, null, null, null);
+        Cursor cursor = app.getContentResolver().query(uri,
+                null, null, null, null);
+        if (cursor == null) {
+            return null;
+        }
+
         if (cursor.moveToFirst()) {
             return CardKeys.fromCursor(cursor);
         } else {
@@ -46,18 +88,34 @@ public abstract class CardKeys {
         }
     }
 
-    private static CardKeys fromCursor(Cursor cursor) throws JSONException {
+    private static ClassicCardKeys fromCursor(Cursor cursor) throws JSONException {
         String cardType = cursor.getString(cursor.getColumnIndex(KeysTableColumns.CARD_TYPE));
         String keyData = cursor.getString(cursor.getColumnIndex(KeysTableColumns.KEY_DATA));
 
         JSONObject keyJSON = new JSONObject(keyData);
 
-        if (cardType.equals("MifareClassic")) {
-            return ClassicCardKeys.fromJSON(keyJSON);
+        // We only return a single set of keys when given a card ID
+        if (cardType.equals(TYPE_MFC)) {
+            return ClassicCardKeys.fromJSON(keyJSON, KeyFormat.JSON_MFC);
+        }
+
+        // Static key requests should give all of the static keys.
+        if (cardType.equals(TYPE_MFC_STATIC)) {
+            ClassicStaticKeys keys = ClassicStaticKeys.fromJSON(keyJSON);
+            while (cursor.moveToNext()) {
+                if (cursor.getString(cursor.getColumnIndex(KeysTableColumns.CARD_TYPE)).equals(TYPE_MFC_STATIC))
+                    try {
+                        keys.mergeJSON(new JSONObject(cursor.getString(cursor.getColumnIndex(KeysTableColumns.KEY_DATA))));
+                    } catch (JSONException ignored) {
+                    }
+            }
+            return keys;
         }
 
         throw new IllegalArgumentException("Unknown card type for key: " + cardType);
     }
 
     public abstract JSONObject toJSON() throws JSONException;
+
+    public abstract String getType();
 }

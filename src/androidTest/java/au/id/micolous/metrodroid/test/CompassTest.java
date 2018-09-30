@@ -11,7 +11,7 @@ import java.util.TimeZone;
 import au.id.micolous.metrodroid.card.ultralight.UltralightCard;
 import au.id.micolous.metrodroid.card.ultralight.UltralightPage;
 import au.id.micolous.metrodroid.transit.TransitData;
-import au.id.micolous.metrodroid.transit.compass.CompassUltralightTransitData;
+import au.id.micolous.metrodroid.transit.yvr_compass.CompassUltralightTransitData;
 import au.id.micolous.metrodroid.util.Utils;
 
 /**

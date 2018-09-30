@@ -1,0 +1,193 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  rtl.xml
+
+  Copyright 2018 Etienne Dubeau
+
+  This program is free software: you can redistribute it and/or modify
+  it under the terms of the GNU General Public License as published by
+  the Free Software Foundation, either version 3 of the License, or
+  (at your option) any later version.
+
+  This program is distributed in the hope that it will be useful,
+  but WITHOUT ANY WARRANTY; without even the implied warranty of
+  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  GNU General Public License for more details.
+
+  You should have received a copy of the GNU General Public License
+  along with this program.  If not, see <http://www.gnu.org/licenses/>.
+-->
+<rtl>
+    <bus id="2" logo="" name="1" />
+    <bus id="" logo="" name="2" />
+    <bus id="" logo="" name="3" />
+    <bus id="5" logo="" name="4" />
+    <bus id="" logo="" name="5" />
+    <bus id="8" logo="" name="6" />
+    <bus id="9" logo="" name="8" />
+    <bus id="" logo="" name="9" />
+    <bus id="" logo="" name="10" />
+    <bus id="12" logo="" name="13" />
+    <bus id="13" logo="" name="14" />
+    <bus id="14" logo="" name="15" />
+    <bus id="16" logo="" name="16" />
+    <bus id="17" logo="" name="17" />
+    <bus id="18" logo="" name="19" />
+    <bus id="19" logo="" name="20" />
+    <bus id="20" logo="" name="21" />
+    <bus id="" logo="" name="22" />
+    <bus id="" logo="" name="23" />
+    <bus id="" logo="" name="25" />
+    <bus id="" logo="" name="28" />
+    <bus id="23" logo="" name="29" />
+    <bus id="" logo="" name="30" />
+    <bus id="" logo="" name="31" />
+    <bus id="26" logo="" name="32" />
+    <bus id="28" logo="" name="33" />
+    <bus id="29" logo="" name="34" />
+    <bus id="30" logo="" name="35" />
+    <bus id="" logo="" name="37" />
+    <bus id="" logo="" name="38" />
+    <bus id="" logo="" name="39" />
+    <bus id="" logo="" name="41" />
+    <bus id="35" logo="" name="42" />
+    <bus id="" logo="" name="43" />
+    <bus id="" logo="" name="44" />
+    <bus id="39" logo="" name="45" />
+    <bus id="" logo="" name="46" />
+    <bus id="" logo="" name="47" />
+    <bus id="44" logo="" name="49" />
+    <bus id="" logo="" name="50" />
+    <bus id="" logo="" name="54" />
+    <bus id="" logo="" name="55" />
+    <bus id="" logo="" name="59" />
+    <bus id="320" logo="" name="60" />
+    <bus id="" logo="" name="61" />
+    <bus id="52" logo="" name="71" />
+    <bus id="53" logo="" name="73" />
+    <bus id="" logo="" name="74" />
+    <bus id="55" logo="" name="75" />
+    <bus id="" logo="" name="76" />
+    <bus id="56" logo="" name="77" />
+    <bus id="" logo="" name="78" />
+    <bus id="57" logo="" name="80" />
+    <bus id="" logo="" name="81" />
+    <bus id="" logo="" name="82" />
+    <bus id="" logo="" name="83" />
+    <bus id="61" logo="" name="84" />
+    <bus id="" logo="" name="85" />
+    <bus id="" logo="" name="86" />
+    <bus id="" logo="" name="87" />
+    <bus id="65" logo="" name="88" />
+    <bus id="66" logo="" name="90" />
+    <bus id="" logo="" name="91" />
+    <bus id="" logo="" name="92" />
+    <bus id="" logo="" name="98" />
+    <bus id="147" logo="" name="99" />
+    <bus id="" logo="" name="106" />
+    <bus id="" logo="" name="115" />
+    <bus id="" logo="" name="120" />
+    <bus id="70" logo="" name="123" />
+    <bus id="" logo="" name="125" />
+    <bus id="" logo="" name="128" />
+    <bus id="" logo="" name="132" />
+    <bus id="" logo="" name="135" />
+    <bus id="73" logo="" name="142" />
+    <bus id="" logo="" name="144" />
+    <bus id="" logo="" name="150" />
+    <bus id="" logo="" name="161" />
+    <bus id="" logo="" name="170" />
+    <bus id="" logo="" name="177" />
+    <bus id="" logo="" name="180" />
+    <bus id="" logo="" name="185" />
+    <bus id="" logo="" name="192" />
+    <bus id="" logo="" name="199" />
+    <bus id="" logo="" name="410" />
+    <bus id="340" logo="" name="417" />
+    <bus id="" logo="" name="500" />
+    <bus id="" logo="" name="501" />
+    <bus id="" logo="" name="503" />
+    <bus id="" logo="" name="504" />
+    <bus id="" logo="" name="505" />
+    <bus id="" logo="" name="506" />
+    <bus id="" logo="" name="521" />
+    <bus id="" logo="" name="524" />
+    <bus id="" logo="" name="525" />
+    <bus id="" logo="" name="526" />
+    <bus id="" logo="" name="530" />
+    <bus id="" logo="" name="532" />
+    <bus id="" logo="" name="533" />
+    <bus id="" logo="" name="534" />
+    <bus id="" logo="" name="535" />
+    <bus id="" logo="" name="536" />
+    <bus id="" logo="" name="538" />
+    <bus id="" logo="" name="539" />
+    <bus id="" logo="" name="540" />
+    <bus id="" logo="" name="542" />
+    <bus id="" logo="" name="544" />
+    <bus id="" logo="" name="546" />
+    <bus id="" logo="" name="547" />
+    <bus id="" logo="" name="549" />
+    <bus id="" logo="" name="550" />
+    <bus id="" logo="" name="551" />
+    <bus id="" logo="" name="560" />
+    <bus id="" logo="" name="565" />
+    <bus id="" logo="" name="570" />
+    <bus id="" logo="" name="572" />
+    <bus id="" logo="" name="575" />
+    <bus id="" logo="" name="580" />
+    <bus id="" logo="" name="600" />
+    <bus id="" logo="" name="601" />
+    <bus id="" logo="" name="602" />
+    <bus id="" logo="" name="603" />
+    <bus id="" logo="" name="604" />
+    <bus id="" logo="" name="605" />
+    <bus id="" logo="" name="606" />
+    <bus id="" logo="" name="608" />
+    <bus id="" logo="" name="613" />
+    <bus id="" logo="" name="614" />
+    <bus id="" logo="" name="616" />
+    <bus id="" logo="" name="618" />
+    <bus id="" logo="" name="620" />
+    <bus id="" logo="" name="621" />
+    <bus id="" logo="" name="622" />
+    <bus id="" logo="" name="624" />
+    <bus id="" logo="" name="626" />
+    <bus id="" logo="" name="628" />
+    <bus id="" logo="" name="640" />
+    <bus id="" logo="" name="644" />
+    <bus id="" logo="" name="650" />
+    <bus id="" logo="" name="653" />
+    <bus id="" logo="" name="656" />
+    <bus id="" logo="" name="660" />
+    <bus id="" logo="" name="664" />
+    <bus id="" logo="" name="665" />
+    <bus id="" logo="" name="670" />
+    <bus id="" logo="" name="674" />
+    <bus id="" logo="" name="677" />
+    <bus id="" logo="" name="681" />
+    <bus id="" logo="" name="682" />
+    <bus id="" logo="" name="683" />
+    <bus id="" logo="" name="684" />
+    <bus id="" logo="" name="690" />
+    <bus id="" logo="" name="691" />
+    <bus id="" logo="" name="692" />
+    <bus id="" logo="" name="693" />
+    <bus id="" logo="" name="694" />
+    <bus id="" logo="" name="695" />
+    <bus id="" logo="" name="696" />
+    <bus id="" logo="" name="T18" />
+    <bus id="" logo="" name="T19" />
+    <bus id="" logo="" name="T20" />
+    <bus id="" logo="" name="T21" />
+    <bus id="" logo="" name="T22" />
+    <bus id="" logo="" name="T23" />
+    <bus id="" logo="" name="T48" />
+    <bus id="" logo="" name="T77" />
+    <bus id="" logo="" name="T89" />
+    <bus id="" logo="" name="T90" />
+    <bus id="" logo="" name="T92" />
+    <bus id="" logo="" name="T93" />
+    <bus id="" logo="" name="T94" />
+    <bus id="" logo="" name="T97" />
+</rtl>

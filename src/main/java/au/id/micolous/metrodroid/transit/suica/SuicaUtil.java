@@ -22,6 +22,7 @@
 package au.id.micolous.metrodroid.transit.suica;
 
 import android.app.Application;
+import android.support.annotation.Nullable;
 
 import java.util.Arrays;
 import java.util.Calendar;
@@ -36,6 +37,7 @@ final class SuicaUtil {
     private SuicaUtil() {
     }
 
+    @Nullable
     static Calendar extractDate(boolean isProductSale, byte[] data) {
         if (Arrays.equals(Utils.byteArraySlice(data, 4, 2), new byte[] { 0, 0 })) {
             return null;

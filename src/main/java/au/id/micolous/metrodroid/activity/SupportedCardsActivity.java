@@ -19,11 +19,12 @@
  */
 package au.id.micolous.metrodroid.activity;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.nfc.NfcAdapter;
 import android.os.Bundle;
+import android.support.v7.content.res.AppCompatResources;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
@@ -81,13 +82,13 @@ public class SupportedCardsActivity extends MetrodroidActivity {
             ((TextView) convertView.findViewById(R.id.card_location)).setText(getString(info.getLocationId()));
 
             ImageView image = convertView.findViewById(R.id.card_image);
-            if (info.hasBitmap()) {
-                image.setImageBitmap(info.getBitmap(getResources()));
-                image.invalidate();
-                if (image.isOpaque()) throw new AssertionError();
-            } else {
-                image.setImageResource(info.getImageId());
-            }
+            Drawable d = null;
+            if (info.hasBitmap())
+                d = info.getDrawable(getContext());
+            if (d == null)
+                d = AppCompatResources.getDrawable(getContext(), R.drawable.logo);
+            image.setImageDrawable(d);
+            image.invalidate();
 
             String notes = "";
 
@@ -125,7 +126,7 @@ public class SupportedCardsActivity extends MetrodroidActivity {
                 notes += Utils.localizeString(info.getResourceExtraNote()) + " ";
             }
 
-            TextView note = (TextView) convertView.findViewById(R.id.card_note);
+            TextView note = convertView.findViewById(R.id.card_note);
             note.setText(notes);
             if (notes.equals(""))
                 note.setVisibility(View.GONE);

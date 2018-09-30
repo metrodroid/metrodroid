@@ -54,7 +54,7 @@ import au.id.micolous.metrodroid.transit.CardInfo;
 import au.id.micolous.metrodroid.util.Utils;
 
 public class ReadingTagActivity extends MetrodroidActivity implements TagReaderFeedbackInterface {
-    private static final String TAG = ReadingTagActivity.class.getName();
+    private static final String TAG = ReadingTagActivity.class.getSimpleName();
     boolean mIndeterminite = true;
     int mMaximum = 0;
 
@@ -105,9 +105,7 @@ public class ReadingTagActivity extends MetrodroidActivity implements TagReaderF
 
             if (cardInfo != null) {
                 if (cardInfo.hasBitmap()) {
-                    i.setImageBitmap(cardInfo.getBitmap(getResources()));
-                } else {
-                    i.setImageResource(cardInfo.getImageId());
+                    i.setImageDrawable(cardInfo.getDrawable(this));
                 }
                 i.setContentDescription(cardInfo.getName());
                 i.invalidate();
@@ -117,15 +115,16 @@ public class ReadingTagActivity extends MetrodroidActivity implements TagReaderF
                 i.invalidate();
             }
 
-            TextView t = findViewById(R.id.status_text);
-            AccessibilityManager man = (AccessibilityManager) getSystemService(Context.ACCESSIBILITY_SERVICE);
-            if (man != null && man.isEnabled()) {
-                AccessibilityEvent e = AccessibilityEvent.obtain();
-                e.setEventType(AccessibilityEvent.TYPE_ANNOUNCEMENT);
-                e.getText().add(t.getText());
-                man.sendAccessibilityEvent(e);
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+                TextView t = findViewById(R.id.status_text);
+                AccessibilityManager man = (AccessibilityManager) getSystemService(Context.ACCESSIBILITY_SERVICE);
+                if (man != null && man.isEnabled()) {
+                    AccessibilityEvent e = AccessibilityEvent.obtain();
+                    e.setEventType(AccessibilityEvent.TYPE_ANNOUNCEMENT);
+                    e.getText().add(t.getText());
+                    man.sendAccessibilityEvent(e);
+                }
             }
-
         });
     }
 

@@ -25,6 +25,7 @@ package au.id.micolous.metrodroid.activity;
 import android.app.PendingIntent;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.drawable.Drawable;
 import android.nfc.NfcAdapter;
 import android.nfc.tech.IsoDep;
 import android.nfc.tech.MifareClassic;
@@ -46,6 +47,7 @@ import android.widget.TextView;
 import au.id.micolous.farebot.R;
 import au.id.micolous.metrodroid.MetrodroidApplication;
 import au.id.micolous.metrodroid.transit.CardInfo;
+import au.id.micolous.metrodroid.transit.opal.OpalTransitData;
 import au.id.micolous.metrodroid.util.Utils;
 
 public class MainActivity extends MetrodroidActivity {
@@ -140,11 +142,11 @@ public class MainActivity extends MetrodroidActivity {
     private void setupCardAnimation() {
         // Pick some card
         // TODO: make this better
-        Bitmap b = CardInfo.OPAL.getBitmap(getResources());
+        Drawable b = OpalTransitData.CARD_INFO.getDrawable(getBaseContext());
 
         // Set it to the image
         ImageView v = findViewById(R.id.imgCard);
-        v.setImageBitmap(b);
+        v.setImageDrawable(b);
 
         // Animate it in
         llCardViewGroup.startAnimation(mCardSlideIn);
@@ -230,7 +232,6 @@ public class MainActivity extends MetrodroidActivity {
         getMenuInflater().inflate(R.menu.main_menu, menu);
         return true;
     }
-
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {

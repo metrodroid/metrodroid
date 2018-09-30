@@ -1,2 +1,4 @@
 include 'nfc-felica-lib'
 project(':nfc-felica-lib').projectDir = new File('third_party/nfc-felica-lib')
+include 'material-design-icons'
+project(':material-design-icons').projectDir = new File('third_party/material-design-icons')

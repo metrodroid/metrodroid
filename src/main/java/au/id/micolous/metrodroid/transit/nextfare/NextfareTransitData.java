@@ -1,7 +1,7 @@
 /*
  * NextfareTransitData.java
  *
- * Copyright 2015-2017 Michael Farrell <micolous+git@gmail.com>
+ * Copyright 2015-2018 Michael Farrell <micolous+git@gmail.com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -20,13 +20,11 @@ package au.id.micolous.metrodroid.transit.nextfare;
 
 import android.os.Parcel;
 import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
+import android.text.SpannableString;
 import android.util.Log;
 
-import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Calendar;
 import java.util.Collections;
 import java.util.List;
 import java.util.TimeZone;
@@ -51,7 +49,6 @@ import au.id.micolous.metrodroid.transit.nextfare.record.NextfareTransactionReco
 import au.id.micolous.metrodroid.transit.nextfare.record.NextfareTravelPassRecord;
 import au.id.micolous.metrodroid.ui.HeaderListItem;
 import au.id.micolous.metrodroid.ui.ListItem;
-import au.id.micolous.metrodroid.util.TripObfuscator;
 import au.id.micolous.metrodroid.util.Utils;
 
 /**
@@ -79,8 +76,9 @@ public class NextfareTransitData extends TransitData {
     private static final String TAG = "NextfareTransitData";
     protected NextfareConfigRecord mConfig = null;
     protected boolean mHasUnknownStations = false;
-    BigInteger mSerialNumber;
+    long mSerialNumber;
     byte[] mSystemCode;
+    byte[] mBlock2;
     int mBalance;
     NextfareTrip[] mTrips;
     NextfareSubscription[] mSubscriptions;
@@ -88,13 +86,14 @@ public class NextfareTransitData extends TransitData {
     String mCurrency;
 
     public NextfareTransitData(Parcel parcel, @NonNull String currency) {
-        mSerialNumber = new BigInteger(parcel.readString());
+        mSerialNumber = parcel.readLong();
         mBalance = parcel.readInt();
         mTrips = new NextfareTrip[parcel.readInt()];
         parcel.readTypedArray(mTrips, NextfareTrip.CREATOR);
         mSubscriptions = new NextfareSubscription[parcel.readInt()];
         parcel.readTypedArray(mSubscriptions, NextfareSubscription.CREATOR);
         parcel.readByteArray(mSystemCode);
+        parcel.readByteArray(mBlock2);
         mCurrency = currency;
 
         mConfig = new NextfareConfigRecord(parcel);
@@ -108,12 +107,13 @@ public class NextfareTransitData extends TransitData {
         mCurrency = currency;
 
         byte[] serialData = card.getSector(0).getBlock(0).getData();
-        serialData = Utils.reverseBuffer(serialData, 0, 4);
-        mSerialNumber = Utils.byteArrayToBigInteger(serialData, 0, 4);
+        mSerialNumber = Utils.byteArrayToLongReversed(serialData, 0, 4);
 
         byte[] magicData = card.getSector(0).getBlock(1).getData();
         mSystemCode = Arrays.copyOfRange(magicData, 9, 15);
         Log.d(TAG, "SystemCode = " + Utils.getHexString(mSystemCode));
+        mBlock2 = card.getSector(0).getBlock(2).getData();
+        Log.d(TAG, "Block2 = " + Utils.getHexString(mBlock2));
 
         ArrayList<NextfareRecord> records = new ArrayList<>();
 
@@ -192,7 +192,6 @@ public class NextfareTransitData extends TransitData {
                 trip.mJourneyId = tapOn.getJourney();
                 trip.mStartTime = tapOn.getTimestamp();
                 trip.mStartStation = tapOn.getStation();
-                trip.mMode = lookupMode(tapOn.getMode(), tapOn.getStation());
                 trip.mModeInt = tapOn.getMode();
                 trip.mContinuation = tapOn.isContinuation();
                 trip.mCost = -tapOn.getValue();
@@ -281,13 +280,12 @@ public class NextfareTransitData extends TransitData {
 
     protected static TransitIdentity parseTransitIdentity(ClassicCard card, String name) {
         byte[] serialData = card.getSector(0).getBlock(0).getData();
-        serialData = Utils.reverseBuffer(serialData, 0, 4);
-        BigInteger serialNumber = Utils.byteArrayToBigInteger(serialData, 0, 4);
+        long serialNumber = Utils.byteArrayToLongReversed(serialData, 0, 4);
         return new TransitIdentity(name, formatSerialNumber(serialNumber));
     }
 
-    protected static String formatSerialNumber(BigInteger serialNumber) {
-        StringBuilder serial = new StringBuilder(serialNumber.toString());
+    protected static String formatSerialNumber(long serialNumber) {
+        StringBuilder serial = new StringBuilder(Long.toString(serialNumber));
         while (serial.length() < 12) {
             serial.insert(0, "0");
         }
@@ -299,13 +297,14 @@ public class NextfareTransitData extends TransitData {
 
     @Override
     public void writeToParcel(Parcel parcel, int i) {
-        parcel.writeString(mSerialNumber.toString());
+        parcel.writeLong(mSerialNumber);
         parcel.writeInt(mBalance);
         parcel.writeInt(mTrips.length);
         parcel.writeTypedArray(mTrips, i);
         parcel.writeInt(mSubscriptions.length);
         parcel.writeTypedArray(mSubscriptions, i);
         parcel.writeByteArray(mSystemCode);
+        parcel.writeByteArray(mBlock2);
         mConfig.writeToParcel(parcel, i);
     }
 
@@ -331,7 +330,7 @@ public class NextfareTransitData extends TransitData {
      * @return Subclass of NextfareTrip.
      */
     protected NextfareTrip newTrip() {
-        return new NextfareTrip(mCurrency);
+        return new NextfareTrip(mCurrency, null);
     }
 
     /**
@@ -341,7 +340,7 @@ public class NextfareTransitData extends TransitData {
      * @return Subclass of NextfareTrip
      */
     protected NextfareTrip newRefill(NextfareTopupRecord record) {
-        return new NextfareTrip(record, mCurrency);
+        return new NextfareTrip(record, mCurrency, null);
     }
 
     /**
@@ -444,7 +443,13 @@ public class NextfareTransitData extends TransitData {
         ArrayList<ListItem> items = new ArrayList<>();
 
         items.add(new HeaderListItem(R.string.nextfare));
-        items.add(new ListItem(R.string.nextfare_system_code, Utils.getHexString(mSystemCode)));
+        items.add(new ListItem(R.string.nextfare_system_code, Utils.getHexDump(mSystemCode)));
+
+        // The Los Angeles Tap and Minneapolis Go-To cards have the same system code, but different
+        // data in Block 2.
+        items.add(new ListItem(
+                new SpannableString(Utils.localizeString(R.string.block_title_format, 2)),
+                Utils.getHexDump(mBlock2)));
 
         return items;
     }

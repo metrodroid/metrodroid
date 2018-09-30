@@ -42,11 +42,11 @@ public class NextfareBalanceRecord extends NextfareRecord implements Comparable<
         record.mVersion = Utils.byteArrayToInt(input, 13, 1);
 
         // Do some flipping for the balance
-        byte[] balance = Utils.reverseBuffer(input, 2, 2);
-        record.mBalance = Utils.byteArrayToInt(balance, 0, 2);
+        record.mBalance = Utils.byteArrayToIntReversed(input, 2, 2);
 
         // Negative balance
-        if ((input[1] & 0x80) == 0x80) {
+        if ((record.mBalance & 0x8000) == 0x8000) {
+            record.mBalance &= 0x7fff;
             record.mBalance *= -1;
         }
 

@@ -20,17 +20,8 @@ package au.id.micolous.metrodroid.transit.seq_go;
 
 import android.os.Parcel;
 import android.os.Parcelable;
-import android.util.Log;
 
-import au.id.micolous.metrodroid.MetrodroidApplication;
-import au.id.micolous.metrodroid.transit.Station;
 import au.id.micolous.metrodroid.transit.nextfare.NextfareTrip;
-import au.id.micolous.metrodroid.util.StationTableReader;
-import au.id.micolous.metrodroid.util.Utils;
-
-import java.util.GregorianCalendar;
-
-import au.id.micolous.farebot.R;
 
 /**
  * Represents trip events on Go Card.
@@ -51,31 +42,9 @@ public class SeqGoTrip extends NextfareTrip {
     /* Hard coded station IDs for Airtrain; used in tests */
     public static final int DOMESTIC_AIRPORT = 9;
     public static final int INTERNATIONAL_AIRPORT = 10;
-    private static final String TAG = SeqGoTrip.class.getSimpleName();
-    public static final String SEQ_GO_STR = "seq_go";
-
-    /**
-     * This constructor is used for unit tests outside of the package
-     *
-     * @param startStation Starting station ID.
-     * @param endStation   Ending station ID.
-     * @param startTime    Start time of the journey.
-     * @param endTime      End time of the journey.
-     * @param journeyId    Journey ID.
-     * @param continuation True if this is a continuation of a previous journey (transfer).
-     */
-    public SeqGoTrip(int startStation, int endStation, GregorianCalendar startTime, GregorianCalendar endTime, int journeyId, boolean continuation) {
-        this();
-        mStartStation = startStation;
-        mEndStation = endStation;
-        mStartTime = startTime;
-        mEndTime = endTime;
-        mJourneyId = journeyId;
-        mContinuation = continuation;
-    }
 
     public SeqGoTrip() {
-        super("AUD");
+        super("AUD", SeqGoData.SEQ_GO_STR);
     }
 
     public SeqGoTrip(Parcel in) {
@@ -83,11 +52,11 @@ public class SeqGoTrip extends NextfareTrip {
     }
 
     @Override
-    public String getAgencyName() {
-        switch (mMode) {
-            case FERRY:
+    public String getAgencyName(boolean isShort) {
+        switch (mModeInt) {
+            case SeqGoData.VEHICLE_FERRY:
                 return "Transdev Brisbane Ferries";
-            case TRAIN:
+            case SeqGoData.VEHICLE_RAIL:
                 if (mStartStation == DOMESTIC_AIRPORT ||
                         mEndStation == DOMESTIC_AIRPORT ||
                         mStartStation == INTERNATIONAL_AIRPORT ||
@@ -99,33 +68,6 @@ public class SeqGoTrip extends NextfareTrip {
             default:
                 return "TransLink";
         }
-    }
-
-    @Override
-    public Station getStartStation() {
-        if (mStartStation <= 0) {
-            return null;
-        }
-
-        return StationTableReader.getStation(SEQ_GO_STR, mStartStation);
-    }
-
-    @Override
-    public Station getEndStation() {
-        if (mEndStation <= 0) {
-            return null;
-        }
-
-        return StationTableReader.getStation(SEQ_GO_STR, mEndStation);
-    }
-
-    @Override
-    public Mode getMode() {
-        return mMode;
-    }
-
-    public int getJourneyId() {
-        return mJourneyId;
     }
 
     @Override

@@ -22,11 +22,20 @@
   along with this program.  If not, see <http://www.gnu.org/licenses/>.
   -->
 
-<menu xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:android="http://schemas.android.com/apk/res/android">
+<menu xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    tools:ignore="AppCompatResource">
+
+    <item android:id="@+id/export_key"
+        android:title="@string/export"
+        android:icon="@drawable/material_ic_save_24dp"
+        android:showAsAction="ifRoom"
+        app:showAsAction="ifRoom" />
     <item
         android:id="@+id/delete_key"
         android:title="@string/delete"
-        android:icon="@android:drawable/ic_menu_delete"
+        android:icon="@drawable/material_ic_delete_24dp"
+        android:showAsAction="ifRoom"
         app:showAsAction="ifRoom" />
 </menu>

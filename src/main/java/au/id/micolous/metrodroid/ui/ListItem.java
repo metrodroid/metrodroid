@@ -23,6 +23,11 @@ package au.id.micolous.metrodroid.ui;
 import android.support.annotation.StringRes;
 import android.text.SpannableString;
 import android.text.Spanned;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import au.id.micolous.metrodroid.util.Utils;
 
@@ -46,12 +51,13 @@ public class ListItem {
         this(new SpannableString(Utils.localizeString(nameResource)), value);
     }
 
-    protected ListItem(String name) {
+    public ListItem(String name) {
         this(new SpannableString(name), null);
     }
 
     public ListItem(String name, String value) {
-        this(new SpannableString(name), new SpannableString(value));
+        this(name != null ? new SpannableString(name) : null,
+                value != null ? new SpannableString(value) : null);
     }
 
     protected ListItem(Spanned name) {
@@ -69,5 +75,43 @@ public class ListItem {
 
     public Spanned getText2() {
         return mText2;
+    }
+
+    protected void adjustView(View view) {
+        boolean text1Empty = mText1 == null || mText1.toString().isEmpty();
+        boolean text2Empty = mText2 == null || mText2.toString().isEmpty();
+        TextView text1 = view.findViewById(android.R.id.text1);
+        TextView text2 = view.findViewById(android.R.id.text2);
+        if (text1Empty && text2Empty) {
+            text1.setVisibility(View.GONE);
+            text2.setVisibility(View.GONE);
+            return;
+        }
+        if (text1Empty) {
+            text1.setVisibility(View.GONE);
+            RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) text2.getLayoutParams();
+            params.addRule(RelativeLayout.CENTER_VERTICAL|RelativeLayout.CENTER_IN_PARENT,
+                    text2.getId());
+            text2.setText(mText2);
+            text2.setVisibility(View.VISIBLE);
+        } else if (text2Empty) {
+            text1.setText(mText1);
+            text1.setVisibility(View.VISIBLE);
+            text2.setVisibility(View.GONE);
+            RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) text1.getLayoutParams();
+            params.addRule(RelativeLayout.CENTER_VERTICAL|RelativeLayout.CENTER_IN_PARENT,
+                    text1.getId());
+        } else {
+            text1.setText(mText1);
+            text1.setVisibility(View.VISIBLE);
+            text2.setText(mText2);
+            text2.setVisibility(View.VISIBLE);
+        }
+    }
+
+    public View getView(LayoutInflater inflater, ViewGroup root, boolean attachToRoot) {
+        View view = inflater.inflate(android.R.layout.simple_list_item_2, root, attachToRoot);
+        adjustView(view);
+        return view;
     }
 }

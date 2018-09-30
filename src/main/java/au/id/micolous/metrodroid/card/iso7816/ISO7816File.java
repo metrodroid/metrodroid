@@ -45,17 +45,21 @@ public class ISO7816File {
     private Base64String mBinaryData;
     @ElementList(name = "records", required = false, empty = false)
     private List<ISO7816Record> mRecords;
+    @Element(name = "fci", required = false)
+    private Base64String mFci;
 
     ISO7816File() { /* For XML Serializer */ }
 
     ISO7816File(ISO7816Selector selector,
                 List<ISO7816Record> records,
-                byte[] binaryData) {
+                byte[] binaryData, byte[] fci) {
         mSelector = selector;
         mRecords = records;
         if (binaryData != null)
             mBinaryData = new Base64String(binaryData);
         mReadableName = mSelector.formatString();
+        if (fci != null)
+            mFci = new Base64String(fci);
     }
 
     public List<ISO7816Record> getRecords() {
@@ -66,6 +70,15 @@ public class ISO7816File {
     public byte[] getBinaryData() {
         if (mBinaryData != null) {
             return mBinaryData.getData();
+        } else {
+            return null;
+        }
+    }
+
+    @Nullable
+    public byte[] getFci() {
+        if (mFci != null) {
+            return mFci.getData();
         } else {
             return null;
         }

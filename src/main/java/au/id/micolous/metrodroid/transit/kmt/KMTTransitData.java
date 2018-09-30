@@ -29,13 +29,19 @@ import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.TimeZone;
 
+import au.id.micolous.farebot.R;
+import au.id.micolous.metrodroid.MetrodroidApplication;
+import au.id.micolous.metrodroid.card.CardType;
 import au.id.micolous.metrodroid.card.felica.FelicaBlock;
 import au.id.micolous.metrodroid.card.felica.FelicaCard;
 import au.id.micolous.metrodroid.card.felica.FelicaService;
+import au.id.micolous.metrodroid.transit.CardInfo;
 import au.id.micolous.metrodroid.transit.TransitCurrency;
 import au.id.micolous.metrodroid.transit.TransitData;
 import au.id.micolous.metrodroid.transit.TransitIdentity;
 import au.id.micolous.metrodroid.transit.Trip;
+import au.id.micolous.metrodroid.ui.HeaderListItem;
+import au.id.micolous.metrodroid.ui.ListItem;
 import au.id.micolous.metrodroid.util.Utils;
 
 public class KMTTransitData extends TransitData {
@@ -47,6 +53,14 @@ public class KMTTransitData extends TransitData {
     private static final int FELICA_SERVICE_KMT_HISTORY = 0x200F;
     static final TimeZone TIME_ZONE = TimeZone.getTimeZone("Asia/Jakarta");
     public static final long KMT_EPOCH;
+
+    public static final CardInfo CARD_INFO = new CardInfo.Builder()
+            .setImageId(R.drawable.kmt_card)
+            .setName(KMTTransitData.NAME)
+            .setLocation(R.string.location_jakarta)
+            .setCardType(CardType.FeliCa)
+            .setExtraNote(R.string.kmt_extra_note)
+            .build();
 
     static {
         GregorianCalendar epoch = new GregorianCalendar(TIME_ZONE);
@@ -66,12 +80,16 @@ public class KMTTransitData extends TransitData {
     private KMTTrip[] mTrips;
     private String mSerialNumber;
     private int mCurrentBalance;
+    private int mTransactionCounter;
+    private int mLastTransAmount;
 
     private KMTTransitData(Parcel parcel) {
         mTrips = new KMTTrip[parcel.readInt()];
         parcel.readTypedArray(mTrips, KMTTrip.CREATOR);
         mCurrentBalance = parcel.readInt();
         mSerialNumber = parcel.readString();
+        mTransactionCounter = parcel.readInt();
+        mLastTransAmount = parcel.readInt();
     }
 
     public KMTTransitData(FelicaCard card) {
@@ -86,7 +104,9 @@ public class KMTTransitData extends TransitData {
             List<FelicaBlock> blocksBalance = serviceBalance.getBlocks();
             FelicaBlock blockBalance = blocksBalance.get(0);
             byte[] dataBalance = blockBalance.getData();
-            mCurrentBalance = Utils.byteArrayToInt(Utils.reverseBuffer(dataBalance, 0, 4));
+            mCurrentBalance = Utils.byteArrayToIntReversed(dataBalance, 0, 4);
+            mTransactionCounter = Utils.byteArrayToInt(dataBalance, 13, 3);
+            mLastTransAmount = Utils.byteArrayToIntReversed(dataBalance, 4, 4);
         }
 
         FelicaService serviceHistory = card.getSystem(SYSTEMCODE_KMT).getService(FELICA_SERVICE_KMT_HISTORY);
@@ -94,7 +114,7 @@ public class KMTTransitData extends TransitData {
         List<FelicaBlock> blocks = serviceHistory.getBlocks();
         for (int i = 0; i < blocks.size(); i++) {
             FelicaBlock block = blocks.get(i);
-            if (block.getData()[0] != 0) {
+            if (block.getData()[0] != 0 && Utils.byteArrayToInt(block.getData(), 8, 2) != 0) {
                 KMTTrip trip = new KMTTrip(block);
                 trips.add(trip);
             }
@@ -145,6 +165,20 @@ public class KMTTransitData extends TransitData {
         parcel.writeTypedArray(mTrips, flags);
         parcel.writeInt(mCurrentBalance);
         parcel.writeString(mSerialNumber);
+        parcel.writeInt(mTransactionCounter);
+        parcel.writeInt(mLastTransAmount);
+    }
+
+    @Override
+    public List<ListItem> getInfo() {
+        ArrayList<ListItem> items = new ArrayList<>();
+        items.add(new HeaderListItem(R.string.kmt_other_data));
+        if (!MetrodroidApplication.hideCardNumbers()) {
+            items.add(new ListItem(R.string.transaction_counter, Integer.toString(mTransactionCounter)));
+        }
+        items.add(new ListItem(R.string.kmt_last_trx_amount,
+                TransitCurrency.IDR(mLastTransAmount).maybeObfuscateFare().formatCurrencyString(false)));
+        return items;
     }
 }
 

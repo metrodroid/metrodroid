@@ -20,6 +20,7 @@
 package au.id.micolous.metrodroid.transit.ravkav;
 
 import android.os.Parcel;
+import android.os.Parcelable;
 import android.support.annotation.Nullable;
 
 import java.util.ArrayList;
@@ -27,8 +28,10 @@ import java.util.Arrays;
 import java.util.List;
 
 import au.id.micolous.farebot.R;
+import au.id.micolous.metrodroid.card.CardType;
 import au.id.micolous.metrodroid.card.calypso.CalypsoApplication;
 import au.id.micolous.metrodroid.card.iso7816.ISO7816Record;
+import au.id.micolous.metrodroid.transit.CardInfo;
 import au.id.micolous.metrodroid.transit.TransitCurrency;
 import au.id.micolous.metrodroid.transit.TransitData;
 import au.id.micolous.metrodroid.transit.TransitIdentity;
@@ -36,12 +39,22 @@ import au.id.micolous.metrodroid.transit.Trip;
 import au.id.micolous.metrodroid.util.Utils;
 
 public class RavKavTransitData extends TransitData {
-    private static final String RAVKAV_TICKET_ENV = "06ec06000006";
+    // 376 = Israel
+    private static final int RAVKAV_NETWORK_ID_A = 0x37602;
+    private static final int RAVKAV_NETWORK_ID_B = 0x37603;
     private final String mSerial;
     private final int mBalance;
     private final List<RavKavTrip> mTrips;
 
-    public static final Creator<RavKavTransitData> CREATOR = new Creator<RavKavTransitData>() {
+    public static final CardInfo CARD_INFO = new CardInfo.Builder()
+            .setImageId(R.drawable.ravkav_card)
+            .setName(Utils.localizeString(R.string.card_name_ravkav))
+            .setLocation(R.string.location_israel)
+            .setCardType(CardType.ISO7816)
+            .setPreview()
+            .build();
+
+    public static final Parcelable.Creator<RavKavTransitData> CREATOR = new Parcelable.Creator<RavKavTransitData>() {
         public RavKavTransitData createFromParcel(Parcel parcel) {
             return new RavKavTransitData(parcel);
         }
@@ -81,7 +94,10 @@ public class RavKavTransitData extends TransitData {
 
     public static boolean check(CalypsoApplication card) {
         try {
-            return RAVKAV_TICKET_ENV.equals(Utils.getHexString(card.getFile(CalypsoApplication.File.TICKETING_ENVIRONMENT).getRecord(1).getData(), 0, 6));
+            int networkID = Utils.getBitsFromBuffer(
+                    card.getFile(CalypsoApplication.File.TICKETING_ENVIRONMENT).getRecord(1).getData(),
+                    3, 20);
+            return RAVKAV_NETWORK_ID_A == networkID || RAVKAV_NETWORK_ID_B == networkID;
         } catch (Exception e) {
             return false;
         }
@@ -99,7 +115,7 @@ public class RavKavTransitData extends TransitData {
     @Nullable
     @Override
     public TransitCurrency getBalance() {
-        return new TransitCurrency(mBalance, "ILS");
+        return TransitCurrency.ILS(mBalance);
     }
 
     @Override

@@ -32,19 +32,20 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.List;
+import java.util.Locale;
 
 import au.id.micolous.farebot.R;
 import au.id.micolous.metrodroid.card.Card;
-import au.id.micolous.metrodroid.card.CardRawDataFragmentClass;
 import au.id.micolous.metrodroid.card.CardType;
 import au.id.micolous.metrodroid.card.TagReaderFeedbackInterface;
 import au.id.micolous.metrodroid.card.calypso.CalypsoApplication;
-import au.id.micolous.metrodroid.fragment.ISO7816CardRawDataFragment;
+import au.id.micolous.metrodroid.card.cepas.CEPASApplication;
 import au.id.micolous.metrodroid.card.newshenzhen.NewShenzhenCard;
 import au.id.micolous.metrodroid.card.tmoney.TMoneyCard;
 import au.id.micolous.metrodroid.transit.TransitData;
 import au.id.micolous.metrodroid.transit.TransitIdentity;
 import au.id.micolous.metrodroid.ui.ListItem;
+import au.id.micolous.metrodroid.ui.ListItemRecursive;
 import au.id.micolous.metrodroid.util.Utils;
 
 /**
@@ -52,13 +53,12 @@ import au.id.micolous.metrodroid.util.Utils;
  * readers.
  */
 @Root(name = "card")
-@CardRawDataFragmentClass(ISO7816CardRawDataFragment.class)
 public class ISO7816Card extends Card {
     private static final String TAG = ISO7816Card.class.getSimpleName();
 
     @ElementList(name = "applications", entry = "application")
     private List<ISO7816Application> mApplications;
-
+    
     protected ISO7816Card() { /* For XML Serializer */ }
 
     public ISO7816Card(List<ISO7816Application> apps, byte[] tagId, Calendar scannedAt, boolean partialRead) {
@@ -99,7 +99,18 @@ public class ISO7816Card extends Card {
             // FIXME: At some point we want to make this an iteration over supported apps
             // rather than copy-paste.
 
-            appData = iso7816Tag.selectByName(CalypsoApplication.CALYPSO_FILENAME, false);
+            // CEPAS specification makes selection by AID optional. I couldn't find an AID that
+            // works on my cards. But CEPAS needs to have CEPAS app implicitly selected,
+            // so try selecting its main file
+            // So this needs to be before selecting any real application as selecting APP by AID
+            // may deselect default app
+            ISO7816Application cepas = CEPASApplication.dumpTag(iso7816Tag, new ISO7816Application.ISO7816Info(null, null,
+                                tag.getId(), CEPASApplication.TYPE),
+                        feedbackInterface);
+            if (cepas != null)
+                apps.add(cepas);
+
+	    appData = iso7816Tag.selectByName(CalypsoApplication.CALYPSO_FILENAME, false);
             if (appData != null)
                 apps.add(CalypsoApplication.dumpTag(iso7816Tag,
                         new ISO7816Application.ISO7816Info(appData, CalypsoApplication.CALYPSO_FILENAME, tagId, CalypsoApplication.TYPE),
@@ -149,16 +160,6 @@ public class ISO7816Card extends Card {
         return null;
     }
 
-    // FIXME: not all parts of code support multi-app
-    // cards. As we haven't come across multi-app card
-    // so far, we're in no hurry to fix all the code,
-    // so this just picks any app.
-    public ISO7816Application getFirstApplication() {
-        if (mApplications.isEmpty())
-            return null;
-        return mApplications.get(0);
-    }
-
     @Override
     public List<ListItem> getManufacturingInfo() {
         List<ListItem> manufacturingInfo = new ArrayList<>();
@@ -168,6 +169,58 @@ public class ISO7816Card extends Card {
                 manufacturingInfo.addAll(appManufacturingInfo);
             }
         }
+        if (manufacturingInfo.isEmpty())
+            return null;
         return manufacturingInfo;
+    }
+
+    @Override
+    public List<ListItem> getRawData() {
+        List<ListItem> rawData = new ArrayList<>();
+        for (ISO7816Application app : mApplications) {
+            String appTitle;
+            byte[] appName = app.getAppName();
+            if (appName == null)
+                appTitle = app.getClass().getSimpleName();
+            else if (Utils.isASCII(appName))
+                appTitle = new String(appName);
+            else
+                appTitle = Utils.getHexString(appName);
+            List<ListItem> rawAppData = new ArrayList<>();
+            byte[] appData = app.getAppData();
+            if (appData != null)
+                rawAppData.add(ListItemRecursive.collapsedValue(
+                        R.string.app_fci, Utils.getHexDump(appData)));
+            List<ISO7816File> files = app.getFiles();
+            for (ISO7816File file : files) {
+                List<ListItem> recList = new ArrayList<>();
+                byte[] binaryData = file.getBinaryData();
+                byte[] fciData = file.getFci();
+                if (binaryData != null)
+                    recList.add(ListItemRecursive.collapsedValue(Utils.localizeString(R.string.binary_title_format),
+                            Utils.getHexDump(binaryData)));
+                if (fciData != null)
+                    recList.add(ListItemRecursive.collapsedValue(Utils.localizeString(R.string.file_fci),
+                            Utils.getHexDump(fciData)));
+                List<ISO7816Record> records = file.getRecords();
+                for (ISO7816Record record : records)
+                    recList.add(ListItemRecursive.collapsedValue(Utils.localizeString(R.string.record_title_format, record.getIndex()),
+                            Utils.getHexDump(record.getData())));
+                ISO7816Selector selector = file.getSelector();
+                String selectorStr = selector.formatString();
+                String fileDesc = app.nameFile(selector);
+                if (fileDesc != null)
+                    selectorStr = String.format(Locale.ENGLISH, "%s (%s)", selectorStr, fileDesc);
+                rawAppData.add(new ListItemRecursive(Utils.localizeString(R.string.file_title_format, selectorStr),
+                        Utils.localizePlural(R.plurals.record_count, records.size(), records.size()),
+                        recList));
+            }
+            List<ListItem> extra = app.getRawData();
+            if (extra != null)
+                rawAppData.addAll(extra);
+            rawData.add(new ListItemRecursive(Utils.localizeString(R.string.application_title_format,
+                    appTitle), null, rawAppData));
+        }
+        return rawData;
     }
 }

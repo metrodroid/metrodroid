@@ -30,41 +30,11 @@ import android.text.style.TtsSpan;
 import java.security.SecureRandom;
 import java.text.NumberFormat;
 import java.util.Currency;
+import java.util.Locale;
 
 import au.id.micolous.metrodroid.MetrodroidApplication;
 
 public class TransitCurrency extends TransitBalance implements Parcelable {
-
-    private final int mCurrency;
-    /**
-     * 3 character currency code (eg: AUD)
-     */
-    @NonNull
-    private final String mCurrencyCode;
-    /**
-     * value to divide by to get that currency. eg: if the value passed is in cents,
-     * then divide by 100 to get dollars. Currencies like yen should divide by 1.
-     */
-    private final double mDivisor;
-
-    private static final SecureRandom mRNG = new SecureRandom();
-
-    public TransitCurrency(int currency, @NonNull String currencyCode) {
-        mCurrency = currency;
-        mCurrencyCode = currencyCode;
-        mDivisor = 100.;
-    }
-
-    @Override
-    public boolean equals(Object obj) {
-        if (!(obj instanceof TransitCurrency))
-            return false;
-        TransitCurrency other = (TransitCurrency) obj;
-        if (!mCurrencyCode.equals(other.mCurrencyCode))
-            return false;
-        return mCurrency == other.mCurrency;
-    }
-
     public static final Creator<TransitCurrency> CREATOR = new Creator<TransitCurrency>() {
         @Override
         public TransitCurrency createFromParcel(Parcel in) {
@@ -77,42 +47,93 @@ public class TransitCurrency extends TransitBalance implements Parcelable {
         }
     };
 
-    static public TransitCurrency AUD(int cents) {
-        return new TransitCurrency(cents, "AUD", 100.);
-    }
+    private final int mCurrency;
 
-    static public TransitCurrency CAD(int cents) {
-        return new TransitCurrency(cents, "CAD", 100.);
-    }
+    /**
+     * 3 character currency code (eg: AUD)
+     */
+    @NonNull
+    private final String mCurrencyCode;
 
-    static public TransitCurrency EUR(int cents) {
-        return new TransitCurrency(cents, "EUR", 100.);
-    }
+    /**
+     * Value to divide by to get that currency's value in non-fractional parts.
+     *
+     * If the value passed is in cents, then divide by 100 to get dollars. This is the default.
+     *
+     * If the currency has no fractional part (eg: IDR, JPY, KRW), then the divisor should be 1,
+     */
+    private final double mDivisor;
 
-    static public TransitCurrency IDR(int cents) {
-        return new TransitCurrency(cents, "IDR", 1.);
-    }
+    private static final SecureRandom mRNG = new SecureRandom();
 
-    static public TransitCurrency RUB(int kopeyka) {
-        return new TransitCurrency(kopeyka, "RUB", 100.);
-    }
-
-    static public TransitCurrency USD(int cents) {
-        return new TransitCurrency(cents, "USD", 100.);
-    }
-
-    static public TransitCurrency JPY(int yens) {
-        return new TransitCurrency(yens, "JPY", 1.);
-    }
-
-    static public TransitCurrency KRW(int wons) {
-        return new TransitCurrency(wons, "KRW", 1.);
+    public TransitCurrency(int currency, @NonNull String currencyCode) {
+        this(currency, currencyCode, 100.);
     }
 
     private TransitCurrency(int currency, @NonNull String currencyCode, double divisor) {
         mCurrency = currency;
         mCurrencyCode = currencyCode;
         mDivisor = divisor;
+    }
+
+    public static TransitCurrency AUD(int cents) {
+        return new TransitCurrency(cents, "AUD");
+    }
+
+    public static TransitCurrency BRL(int centavos) {
+        return new TransitCurrency(centavos, "BRL");
+    }
+
+    public static TransitCurrency CAD(int cents) {
+        return new TransitCurrency(cents, "CAD");
+    }
+
+    public static TransitCurrency CNY(int fen) {
+        return new TransitCurrency(fen, "CNY");
+    }
+
+    public static TransitCurrency EUR(int cents) {
+        return new TransitCurrency(cents, "EUR");
+    }
+
+    public static TransitCurrency HKD(int cents) {
+        return new TransitCurrency(cents, "HKD");
+    }
+
+    public static TransitCurrency IDR(int cents) {
+        return new TransitCurrency(cents, "IDR", 1.);
+    }
+
+    public static TransitCurrency ILS(int agorot) {
+        return new TransitCurrency(agorot, "ILS");
+    }
+
+    public static TransitCurrency JPY(int yen) {
+        return new TransitCurrency(yen, "JPY", 1.);
+    }
+
+    public static TransitCurrency KRW(int won) {
+        return new TransitCurrency(won, "KRW", 1.);
+    }
+
+    public static TransitCurrency RUB(int kopeyka) {
+        return new TransitCurrency(kopeyka, "RUB");
+    }
+
+    public static TransitCurrency SGD(int cents) {
+        return new TransitCurrency(cents, "SGD");
+    }
+
+    public static TransitCurrency USD(int cents) {
+        return new TransitCurrency(cents, "USD");
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (!(obj instanceof TransitCurrency))
+            return false;
+        TransitCurrency other = (TransitCurrency) obj;
+        return mCurrencyCode.equals(other.mCurrencyCode) && mCurrency == other.mCurrency;
     }
 
     public TransitCurrency obfuscate(int fareOffset, double fareMultiplier) {
@@ -124,6 +145,11 @@ public class TransitCurrency extends TransitBalance implements Parcelable {
         }
 
         return new TransitCurrency(cur, mCurrencyCode, mDivisor);
+    }
+
+    public TransitCurrency obfuscate() {
+        return obfuscate(mRNG.nextInt(100) - 50,
+                (mRNG.nextDouble() * 0.4) + 0.8);
     }
 
     /**
@@ -171,8 +197,15 @@ public class TransitCurrency extends TransitBalance implements Parcelable {
             return this;
         }
 
-        return obfuscate(mRNG.nextInt(100) - 50,
-                (mRNG.nextDouble() * 0.4) + 0.8);
+        return obfuscate();
+    }
+
+    public TransitCurrency maybeObfuscateFare() {
+        if (!MetrodroidApplication.obfuscateTripFares()) {
+            return this;
+        }
+
+        return obfuscate();
     }
 
     public TransitCurrency negate() {
@@ -201,5 +234,22 @@ public class TransitCurrency extends TransitBalance implements Parcelable {
     @Override
     public TransitCurrency getBalance() {
         return this;
+    }
+
+    /**
+     * String representation of a TransitCurrency.
+     *
+     * This should only ever be used by debug logs and unit tests. It does not handle any
+     * localisation or formatting.
+     *
+     * @return String representation of the value, eg: "TransitCurrency.AUD(1234)" for AUD 12.34.
+     */
+    @Override
+    public String toString() {
+        return String.format(Locale.ENGLISH,
+                "%s.%s(%d)",
+                getClass().getSimpleName(),
+                mCurrencyCode,
+                mCurrency);
     }
 }

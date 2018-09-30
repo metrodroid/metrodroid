@@ -2,7 +2,7 @@
  * Utils.java
  *
  * Copyright 2011 Eric Butler <eric@codebutler.com>
- * Copyright 2015-2017 Michael Farrell <micolous+git@gmail.com>
+ * Copyright 2015-2018 Michael Farrell <micolous+git@gmail.com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -22,6 +22,7 @@ package au.id.micolous.metrodroid.util;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
@@ -32,6 +33,7 @@ import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.PorterDuff;
 import android.graphics.PorterDuffXfermode;
+import android.net.Uri;
 import android.nfc.NfcAdapter;
 import android.os.Build;
 import android.os.Parcel;
@@ -41,6 +43,8 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.annotation.PluralsRes;
 import android.support.annotation.StringRes;
+import android.support.annotation.VisibleForTesting;
+import android.text.Spannable;
 import android.text.SpannableString;
 import android.text.SpannableStringBuilder;
 import android.text.Spanned;
@@ -48,17 +52,22 @@ import android.text.TextUtils;
 import android.text.format.DateFormat;
 import android.text.style.LocaleSpan;
 import android.text.style.TtsSpan;
+import android.text.style.TypefaceSpan;
 import android.util.Log;
 import android.view.WindowManager;
 
+import org.apache.commons.io.IOUtils;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.IOException;
+import java.io.InputStream;
 import java.math.BigInteger;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.List;
@@ -67,6 +76,8 @@ import java.util.TimeZone;
 
 import au.id.micolous.farebot.R;
 import au.id.micolous.metrodroid.MetrodroidApplication;
+import au.id.micolous.metrodroid.key.ClassicCardKeys;
+import au.id.micolous.metrodroid.key.ClassicSectorKey;
 
 public class Utils {
     private static final String TAG = "Utils";
@@ -82,6 +93,8 @@ public class Utils {
     private static final SimpleDateFormat ISO_DATE_FORMAT;
     /** Reference to UTC timezone. */
     public static final TimeZone UTC = TimeZone.getTimeZone("Etc/UTC");
+    private static final int MIFARE_SECTOR_COUNT_MAX = 40;
+    private static final int MIFARE_KEY_LENGTH = 6;
 
     static {
         ISO_DATETIME_FORMAT_FILENAME = new SimpleDateFormat("yyyyMMdd-HHmmss", Locale.US);
@@ -162,6 +175,41 @@ public class Utils {
             return getHexString(b);
         } catch (Exception ex) {
             return defaultResult;
+        }
+    }
+
+    public static SpannableString getHexDump(byte[] b) {
+        return getHexDump(b, 0, b.length);
+    }
+
+    @NonNull
+    public static SpannableString getHexDump(byte[] b, int offset, int length) {
+        StringBuilder result = new StringBuilder();
+        int alen;
+        if (length <= 16)
+            alen = 0;
+        else
+            for (alen = 2; (1 << (4 * alen)) < length; alen += 2);
+        for (int i = 0; i < length; i++) {
+            if ((i & 0xf) == 0 && alen != 0)
+                result.append(String.format(Locale.ENGLISH, "%0" + alen + "x: ", i));
+            result.append(Integer.toString((b[i+offset] & 0xff) + 0x100, 16).substring(1));
+            if (((i & 0xf) == 0xf))
+                result.append('\n');
+            else if ((i & 3) == 3 && ((i & 0xf) != 0xf))
+                result.append(' ');
+        }
+        SpannableString s = new SpannableString(result);
+        s.setSpan(new TypefaceSpan("monospace"), 0, result.length(),
+                Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+        return s;
+    }
+
+    public static SpannableString getHexDump(byte[] b, String defaultResult) {
+        try {
+            return getHexDump(b);
+        } catch (Exception ex) {
+            return new SpannableString(defaultResult);
         }
     }
 
@@ -349,7 +397,7 @@ public class Utils {
     }
 
     public static int getBitsFromInteger(int buffer, int iStartBit, int iLength) {
-        return (buffer >> (iStartBit)) & ((char) 0xFF >> (8 - iLength));
+        return (buffer >> (iStartBit)) & ((1 << iLength) - 1);
     }
 
     public static byte[] reverseBuffer(byte[] buffer) {
@@ -695,6 +743,36 @@ public class Utils {
         return luhnChecksum(cardNumber) == 0;
     }
 
+    // TODO: optimize this
+    private static int calculateCRCReversed(byte[]data, int init, int[] table) {
+        int cur = init;
+        for (byte b : data) {
+            cur = (cur >> 8) ^ table[(cur ^ b) & 0xff];
+        }
+        return cur;
+    }
+
+    private static int[] getCRCTableReversed(int poly) {
+        int[] table = new int[0x100];
+        for (int v = 0; v < 256; v++) {
+            int cur = v;
+            for (int i = 0; i < 8; i++) {
+                int trail = cur & 1;
+                cur = cur >> 1;
+                if (trail != 0)
+                    cur ^= poly;
+            }
+            table[v] = cur;
+        }
+        return table;
+    }
+
+    private static final int[] CRC16_IBM_TABLE = getCRCTableReversed(0xa001);
+
+    public static int calculateCRC16IBM(byte[] data, int crc) {
+        return calculateCRCReversed(data, crc, CRC16_IBM_TABLE);
+    }
+
     public static int convertBCDtoInteger(int val) {
         int ret = 0, mul = 1;
         while (val > 0) {
@@ -703,6 +781,94 @@ public class Utils {
             val >>= 4;
         }
         return ret;
+    }
+
+    public static boolean isASCII(byte[] str) {
+        for (byte b: str)
+            /* bytes 0x80 and over are considered negative in java. */
+            if (b < 0x20 && b != 0xd && b!= 0xa)
+                return false;
+        return true;
+    }
+
+    private static boolean isRawMifareClassicKeyFileLength(int length) {
+        return length > 0 &&
+                length % MIFARE_KEY_LENGTH == 0 &&
+                length <= MIFARE_SECTOR_COUNT_MAX * MIFARE_KEY_LENGTH * 2;
+    }
+
+    @NonNull
+    public static KeyFormat detectKeyFormat(Context ctx, Uri uri) {
+        byte[] data;
+        try {
+            InputStream stream = ctx.getContentResolver().openInputStream(uri);
+            data = IOUtils.toByteArray(stream);
+        } catch (IOException e) {
+            Log.w(TAG, "error detecting key format", e);
+            return KeyFormat.UNKNOWN;
+        }
+
+        return detectKeyFormat(data);
+    }
+
+    @NonNull
+    public static KeyFormat detectKeyFormat(@NonNull byte[] data) {
+        if (data[0] != '{') {
+            // This isn't a JSON file.
+            Log.d(TAG, "couldn't find starting {");
+            return isRawMifareClassicKeyFileLength(data.length) ? KeyFormat.RAW_MFC : KeyFormat.UNKNOWN;
+        }
+
+        // Scan for the } at the end of the file.
+        for (int i=data.length-1; i>0; i--) {
+            String s;
+            try {
+                s = new String(new byte[]{data[i]});
+            } catch (Exception ex) {
+                Log.d(TAG, "unsupported encoding at byte " + i, ex);
+                // Unlikely to be JSON
+                return isRawMifareClassicKeyFileLength(data.length) ? KeyFormat.RAW_MFC : KeyFormat.UNKNOWN;
+            }
+
+            if ("\n\r\t ".contains(s)) {
+                continue;
+            }
+
+            if (s.equals("}")) {
+                break;
+            } else {
+                // This isn't a JSON file.
+                Log.d(TAG, "couldn't find ending }");
+                return isRawMifareClassicKeyFileLength(data.length) ? KeyFormat.RAW_MFC : KeyFormat.UNKNOWN;
+            }
+        }
+
+        // Now see if it actually parses.
+        try {
+            JSONObject o = new JSONObject(new String(data));
+            String type = o.optString(ClassicCardKeys.JSON_KEY_TYPE_KEY);
+            switch (type) {
+                case ClassicCardKeys.TYPE_MFC:
+                    if (!o.has(ClassicCardKeys.JSON_TAG_ID_KEY)
+                            || o.isNull(ClassicCardKeys.JSON_TAG_ID_KEY)
+                            || o.getString(ClassicCardKeys.JSON_TAG_ID_KEY).isEmpty()) {
+                        return KeyFormat.JSON_MFC_NO_UID;
+                    } else {
+                        return KeyFormat.JSON_MFC;
+                    }
+
+                case ClassicCardKeys.TYPE_MFC_STATIC:
+                    return KeyFormat.JSON_MFC_STATIC;
+            }
+
+            // Unhandled JSON format
+            return KeyFormat.JSON;
+        } catch (JSONException e) {
+            Log.d(TAG, "couldn't parse JSON object in detectKeyFormat", e);
+        }
+
+        // Couldn't parse as JSON -- fallback
+        return isRawMifareClassicKeyFileLength(data.length) ? KeyFormat.RAW_MFC : KeyFormat.UNKNOWN;
     }
 
     public interface Matcher<T> {
@@ -797,12 +963,13 @@ public class Utils {
      * @return The index of the hash that matched, or a number less than 0 if the value was not
      *         found, or there was some other error with the input.
      */
-    public static int checkKeyHash(byte[] key, String salt, String... expectedHashes) {
+    @VisibleForTesting
+    public static int checkKeyHash(@NonNull byte[] key, @NonNull String salt, String... expectedHashes) {
         MessageDigest md5;
         String digest;
 
         // Validate input arguments.
-        if (key == null || salt == null || expectedHashes.length < 1) {
+        if (expectedHashes.length < 1) {
             return -1;
         }
 
@@ -829,5 +996,9 @@ public class Utils {
         }
 
         return -1;
+    }
+
+    public static int checkKeyHash(@NonNull ClassicSectorKey key, @NonNull String salt, String... expectedHashes) {
+        return checkKeyHash(key.getKey(), salt, expectedHashes);
     }
 }

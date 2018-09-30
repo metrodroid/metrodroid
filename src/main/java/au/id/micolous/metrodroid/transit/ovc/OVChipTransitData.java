@@ -36,7 +36,9 @@ import java.util.TimeZone;
 import au.id.micolous.farebot.R;
 import au.id.micolous.metrodroid.MetrodroidApplication;
 import au.id.micolous.metrodroid.card.Card;
+import au.id.micolous.metrodroid.card.CardType;
 import au.id.micolous.metrodroid.card.classic.ClassicCard;
+import au.id.micolous.metrodroid.transit.CardInfo;
 import au.id.micolous.metrodroid.transit.Subscription;
 import au.id.micolous.metrodroid.transit.TransitBalance;
 import au.id.micolous.metrodroid.transit.TransitBalanceStored;
@@ -73,6 +75,14 @@ public class OVChipTransitData extends TransitData {
     public static final int AGENCY_DUO = 0x0C;    // Could also be 2C though... ( http://www.ov-chipkaart.me/forum/viewtopic.php?f=10&t=299 )
     public static final int AGENCY_STORE = 0x19;
     public static final int AGENCY_DUO_ALT = 0x2C;
+
+    public static final CardInfo CARD_INFO = new CardInfo.Builder()
+            .setImageId(R.drawable.ovchip_card)
+            .setName(OVChipTransitData.NAME)
+            .setLocation(R.string.location_the_netherlands)
+            .setCardType(CardType.MifareClassic)
+            .setKeysRequired()
+            .build();
 
     private static final TimeZone TIME_ZONE = TimeZone.getTimeZone("Europe/Amsterdam");
 
@@ -270,10 +280,10 @@ public class OVChipTransitData extends TransitData {
 
     @Nullable
     @Override
-    public List<TransitBalance> getBalances() {
-        return Arrays.asList(new TransitBalanceStored(TransitCurrency.EUR(mCredit.getCredit()),
-                    mPreamble.getType() == 2 ? "Personal" : "Anonymous",
-                OVChipTransitData.convertDate(mPreamble.getExpdate())));
+    public TransitBalance getBalance() {
+        return new TransitBalanceStored(TransitCurrency.EUR(mCredit.getCredit()),
+                mPreamble.getType() == 2 ? "Personal" : "Anonymous",
+                OVChipTransitData.convertDate(mPreamble.getExpdate()));
     }
 
     @Override

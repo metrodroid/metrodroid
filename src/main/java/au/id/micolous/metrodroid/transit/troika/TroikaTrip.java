@@ -91,12 +91,13 @@ class TroikaTrip extends Trip {
     };
 
     @Override
-    public String getAgencyName() {
+    public String getAgencyName(boolean isShort) {
         if (mTransportType == null)
             return mRawTransport;
         switch (mTransportType) {
-            case NONE:
             case UNKNOWN:
+                return Utils.localizeString(R.string.unknown);
+            case NONE:
             default:
                 return mRawTransport;
             case SUBWAY:

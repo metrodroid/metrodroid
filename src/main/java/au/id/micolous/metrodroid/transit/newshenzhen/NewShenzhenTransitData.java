@@ -32,10 +32,12 @@ import java.util.List;
 import java.util.TimeZone;
 
 import au.id.micolous.farebot.R;
+import au.id.micolous.metrodroid.card.CardType;
 import au.id.micolous.metrodroid.card.iso7816.ISO7816Application;
 import au.id.micolous.metrodroid.card.iso7816.ISO7816Record;
 import au.id.micolous.metrodroid.card.iso7816.ISO7816Selector;
 import au.id.micolous.metrodroid.card.newshenzhen.NewShenzhenCard;
+import au.id.micolous.metrodroid.transit.CardInfo;
 import au.id.micolous.metrodroid.transit.TransitBalance;
 import au.id.micolous.metrodroid.transit.TransitBalanceStored;
 import au.id.micolous.metrodroid.transit.TransitCurrency;
@@ -51,6 +53,14 @@ public class NewShenzhenTransitData extends TransitData {
     private final int mSerial;
     private static final TimeZone TZ = TimeZone.getTimeZone("Asia/Beijing");
     private final List<NewShenzhenTrip> mTrips;
+
+    public static final CardInfo CARD_INFO = new CardInfo.Builder()
+            .setImageId(R.drawable.szt_card)
+            .setName(Utils.localizeString(R.string.card_name_szt))
+            .setLocation(R.string.location_shenzhen)
+            .setCardType(CardType.FeliCa)
+            .setPreview()
+            .build();
 
     public static final Parcelable.Creator<NewShenzhenTransitData> CREATOR = new Parcelable.Creator<NewShenzhenTransitData>() {
         public NewShenzhenTransitData createFromParcel(Parcel parcel) {
@@ -68,10 +78,10 @@ public class NewShenzhenTransitData extends TransitData {
         // restore sign bit
         mBalance = bal | ((bal & 0x40000000) << 1);
         mSerial = parseSerial(card);
-        byte []szttag = ISO7816Application.findAppInfoTag(card.getAppData(), (byte) 0xa5);
+        byte []szttag = getTagInfo(card);
 
-        mValidityStart = Utils.byteArrayToInt(szttag, 27, 4);
-        mValidityEnd = Utils.byteArrayToInt(szttag, 31, 4);
+        mValidityStart = Utils.byteArrayToInt(szttag, 20, 4);
+        mValidityEnd = Utils.byteArrayToInt(szttag, 24, 4);
 
         mTrips = new ArrayList<>();
         for (ISO7816Record record : card.getFile(ISO7816Selector.makeSelector(0x18)).getRecords()) {
@@ -108,7 +118,7 @@ public class NewShenzhenTransitData extends TransitData {
     public List<TransitBalance> getBalances() {
 
         return Collections.singletonList(
-                new TransitBalanceStored(new TransitCurrency(mBalance, "CNY"),
+                new TransitBalanceStored(TransitCurrency.CNY(mBalance),
                 null, parseHexDate(mValidityStart), parseHexDate(mValidityEnd)));
     }
 
@@ -156,9 +166,13 @@ public class NewShenzhenTransitData extends TransitData {
         return Integer.toString(sn) + "(" + Integer.toString(lastDigit) + ")";
     }
 
+    private static byte[] getTagInfo(NewShenzhenCard card) {
+        byte []szttag = ISO7816Application.findBERTLV(card.getAppData(), 5,  5, true);
+        return ISO7816Application.findBERTLV(szttag, 4,  0xc, false);
+    }
+
     private static int parseSerial(NewShenzhenCard card) {
-        byte []szttag = ISO7816Application.findAppInfoTag(card.getAppData(), (byte) 0xa5);
-        return Utils.byteArrayToInt(Utils.reverseBuffer(Utils.byteArraySlice(szttag, 23,4)));
+        return Utils.byteArrayToIntReversed(getTagInfo(card), 16,4);
     }
 
     @Override
