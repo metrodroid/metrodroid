@@ -666,4 +666,36 @@
 	<item quantity="other">passagiers</item>
 </plurals>
 
+<string name="delete_key_confirm_title">Weet je zeker dat je de sleutel wilt verwijderen?</string>
+    <string name="delete_key_confirm_message">Het sleutelbestand <xliff:g id="description" example="a1b2c3d4">%1$s</xliff:g> (bevattende <xliff:g id="key_type" example="1 MIFARE Classic key">%2$s) </xliff:g> gaat verloren.</string>
+    <string name="cant_delete_with_obfuscation">Sleutels verwijderen is momenteel niet mogelijk</string>
+    <string name="cant_delete_with_obfuscation_message">Vanwege veiligheidsredenen kun je geen sleutels verwijderen terwijl kaartnummerverdoezeling is ingeschakeld. Schakel dit uit om sleutels te verwijderen.</string>
+    <string name="file_exported">Bestand is geëxporteerd.</string>
+    <string name="key_data">Sleutelgegevens</string>
+
+    <string name="classic_key">MIFARE Classic-sleutel</string>
+    <string name="classic_key_a">Sleutel A</string>
+    <string name="classic_key_b">Sleutel B</string>
+
+
+    <string name="about_key_formats">Over sleutelindelingen…</string>
+    <string name="invalid_key_file">Ongeldig sleutelbestand</string>
+    <string name="key_file_empty">Leeg sleutelbestand!</string>
+
+    <string name="static_imported">Geïmporteerd: %s</string>
+
+    <string name="untitled_key_group">Naamloze sleutelgroep</string>
+
+    <plurals name="keytype_mfc">
+	<item quantity="one">%d MIFARE Classic-sleutel</item>
+	<item quantity="other">%d MIFARE Classic-sleutels</item>
+</plurals>
+    <plurals name="keytype_mfc_static">
+	<item quantity="one">%d statische MIFARE Classic-sleutel</item>
+	<item quantity="other">%d statische MIFARE Classic-sleutels</item>
+</plurals>
+
+    <string name="no_static_key_assignment">Statistische sleutels kunnen niet worden toegewezen aan een losse kaart.</string>
+
+    <string name="card_id">Kaart-ID</string>
 </resources>
