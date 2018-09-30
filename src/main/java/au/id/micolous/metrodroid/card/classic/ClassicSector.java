@@ -21,6 +21,9 @@
 
 package au.id.micolous.metrodroid.card.classic;
 
+import android.support.annotation.Nullable;
+
+import au.id.micolous.metrodroid.key.ClassicSectorKey;
 import au.id.micolous.metrodroid.xml.Base64String;
 
 import org.simpleframework.xml.Attribute;
@@ -40,12 +43,12 @@ public class ClassicSector {
     private Base64String mKey;
     @SuppressWarnings("FieldCanBeLocal")
     @Attribute(name = "keytype", required = false)
-    private String mKeyType;
+    private ClassicSectorKey.KeyType mKeyType;
 
     protected ClassicSector() {
     }
 
-    public ClassicSector(int index, ClassicBlock[] blocks, byte[] key, String keyType) {
+    public ClassicSector(int index, ClassicBlock[] blocks, ClassicSectorKey key) {
         mIndex = index;
         if (blocks == null) {
             // invalid / unauthorised sectors should be null
@@ -54,8 +57,8 @@ public class ClassicSector {
             mKeyType = null;
         } else {
             mBlocks = Arrays.asList(blocks);
-            mKey = new Base64String(key);
-            mKeyType = keyType;
+            mKey = new Base64String(key.getKey());
+            mKeyType = key.getType();
         }
     }
 
@@ -71,11 +74,18 @@ public class ClassicSector {
         return mBlocks.get(index);
     }
 
-    public byte[] getKey() {
+    @Nullable
+    public ClassicSectorKey getKey() {
         if (mKey == null) {
             return null;
         }
-        return mKey.getData();
+
+        ClassicSectorKey k = ClassicSectorKey.fromDump(mKey.getData());
+        if (mKeyType != null) {
+            k.setType(mKeyType);
+        }
+
+        return k;
     }
 
     public byte[] readBlocks(int startBlock, int blockCount) throws IndexOutOfBoundsException {
@@ -104,9 +114,5 @@ public class ClassicSector {
             return true;
         }
         return true;
-    }
-
-    public String getKeyType() {
-        return mKeyType;
     }
 }

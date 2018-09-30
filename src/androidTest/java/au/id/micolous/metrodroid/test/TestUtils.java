@@ -170,7 +170,8 @@ final class TestUtils {
                 }
             }
 
-            sectors.add(new ClassicSector(sectorNum, blocks.toArray(new ClassicBlock[0]), key, ClassicSectorKey.TYPE_KEYA));
+            assert key != null;
+            sectors.add(new ClassicSector(sectorNum, blocks.toArray(new ClassicBlock[0]), ClassicSectorKey.wellKnown(key)));
         }
 
         Calendar d = new GregorianCalendar(2010, 1, 1, 0, 0, 0);

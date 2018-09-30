@@ -1,0 +1,14 @@
+{
+  "KeyType": "MifareClassic",
+  "TagId": "",
+  "keys": [
+    {
+      "type": "KeyA",
+      "key": "010203040506"
+    },
+    {
+      "type": "KeyB",
+      "key": "102030405060"
+    }
+  ]
+}

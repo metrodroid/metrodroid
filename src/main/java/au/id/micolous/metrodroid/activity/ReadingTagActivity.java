@@ -55,7 +55,7 @@ import au.id.micolous.farebot.R;
 import au.id.micolous.metrodroid.MetrodroidApplication;
 
 public class ReadingTagActivity extends MetrodroidActivity implements TagReaderFeedbackInterface {
-    private static final String TAG = ReadingTagActivity.class.getName();
+    private static final String TAG = ReadingTagActivity.class.getSimpleName();
     boolean mIndeterminite = true;
     int mMaximum = 0;
 

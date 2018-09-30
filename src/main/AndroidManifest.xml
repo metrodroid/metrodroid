@@ -125,8 +125,7 @@
             android:label="@string/keys" />
         <activity
             android:name="au.id.micolous.metrodroid.activity.AddKeyActivity"
-            android:label="@string/add_key"
-            android:theme="@style/Metrodroid.Dark.Dialog" >
+            android:label="@string/add_key">
             <intent-filter android:priority="1">
                 <category android:name="android.intent.category.BROWSABLE" />
                 <category android:name="android.intent.category.DEFAULT" />
