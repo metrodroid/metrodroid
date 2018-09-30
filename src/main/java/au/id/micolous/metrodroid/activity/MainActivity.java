@@ -63,6 +63,7 @@ public class MainActivity extends MetrodroidActivity {
     private Animation mCardSlideIn;
     private Animation mCardSlideOut;
     private ViewGroup llCardViewGroup;
+    private CardAnimationReplacement mCardAnimationReplacement = null;
 
     @Override
     protected Integer getThemeVariant() {
@@ -140,6 +141,12 @@ public class MainActivity extends MetrodroidActivity {
     }
 
     private void setupCardAnimation() {
+        // Cancel any running animation
+        if (mCardAnimationReplacement != null) {
+            mCardAnimationReplacement.cancel(true);
+            mCardAnimationReplacement = null;
+        }
+
         // Pick some card
         // TODO: make this better
         Drawable b = OpalTransitData.CARD_INFO.getDrawable(getBaseContext());
@@ -152,10 +159,12 @@ public class MainActivity extends MetrodroidActivity {
         llCardViewGroup.startAnimation(mCardSlideIn);
 
         // Schedule its removal
-        new CardAnimationReplacement().execute(this);
+        mCardAnimationReplacement = new CardAnimationReplacement();
+        mCardAnimationReplacement.execute(this);
     }
 
     private void replaceCard() {
+        mCardAnimationReplacement = null;
         runOnUiThread(() -> findViewById(R.id.llCard).startAnimation(mCardSlideOut));
     }
 
@@ -188,6 +197,12 @@ public class MainActivity extends MetrodroidActivity {
         super.onWindowFocusChanged(hasFocus);
         if (hasFocus) {
             updateObfuscationNotice(mNfcAdapter != null);
+            setupCardAnimation();
+        } else {
+            if (mCardAnimationReplacement != null) {
+                mCardAnimationReplacement.cancel(true);
+                mCardAnimationReplacement = null;
+            }
         }
     }
 
