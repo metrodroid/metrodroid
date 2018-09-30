@@ -637,8 +637,6 @@
     <string name="desfire_key_number">Nøkkel %s</string>
 
     <string name="location_ireland">Irland</string>
-    <string name="add_key_json">JSON</string>
-    <string name="invalid_json">Ugyldig JSON</string>
 <string name="location_minneapolis">Minneapolis, MN, USA</string>
     <string name="mifare_desfire">MIFARE DESFire</string>
 
