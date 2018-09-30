@@ -5,9 +5,7 @@
     android:minHeight="?android:attr/listPreferredItemHeight"
     android:mode="twoLine"
     android:paddingStart="?android:attr/listPreferredItemPaddingStart"
-    android:paddingEnd="?android:attr/listPreferredItemPaddingEnd"
-    android:paddingLeft="?android:attr/listPreferredItemPaddingLeft"
-    android:paddingRight="?android:attr/listPreferredItemPaddingRight">
+    android:paddingEnd="?android:attr/listPreferredItemPaddingEnd">
     <ImageView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -19,7 +17,6 @@
         android:textSize="16sp"
         android:textStyle="bold"
         android:layout_toEndOf="@id/arrow_img"
-        android:layout_toRightOf="@id/arrow_img"
         android:layout_marginTop="8dp"
         android:textAppearance="?android:attr/textAppearanceListItem"
         android:layout_width="match_parent"
@@ -30,6 +27,5 @@
         android:layout_height="wrap_content"
         android:layout_below="@android:id/text1"
         android:layout_alignStart="@android:id/text1"
-        android:textAppearance="?android:attr/textAppearanceListItem"
-        android:layout_alignLeft="@android:id/text1" />
+        android:textAppearance="?android:attr/textAppearanceListItemSecondary" />
 </RelativeLayout>

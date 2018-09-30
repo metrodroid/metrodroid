@@ -19,9 +19,7 @@
     android:orientation="vertical"
     android:minHeight="?android:attr/listPreferredItemHeight"
     android:paddingStart="35dp"
-    android:paddingEnd="0dp"
-    android:paddingLeft="35dp"
-    android:paddingRight="0dp">
+    android:paddingEnd="0dp">
 
     <TextView android:id="@android:id/text1"
         android:layout_width="match_parent"
@@ -35,6 +33,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textSize="16sp"
-        android:textAppearance="?android:attr/textAppearanceListItem"
-        android:textColor="?attr/CardIdTextColor" />
+        android:textColor="?attr/CardIdTextColor"
+        android:textAppearance="?android:attr/textAppearanceListItemSecondary" />
 </LinearLayout>

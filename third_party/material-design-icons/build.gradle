@@ -1,20 +1,3 @@
-allprojects {
-    repositories {
-        google()
-        jcenter()
-    }
-}
-
-buildscript {
-    repositories {
-        google()
-        jcenter()
-    }
-    dependencies {
-        classpath 'com.android.tools.build:gradle:3.1.4'
-    }
-}
-
 apply plugin: 'com.android.library'
 
 dependencies {
@@ -45,6 +28,11 @@ android {
         }
     }
 
+    lintOptions {
+        // We actually support these attributes in older API versions, with the support library.
+        abortOnError false
+        disable 'NewApi'
+    }
 }
 
 task colouriseIcons(type: Copy) {
@@ -53,7 +41,7 @@ task colouriseIcons(type: Copy) {
     include '**/drawable-anydpi-v21/*.xml'
     includeEmptyDirs false
     eachFile { it.path = 'material_' + (name.replaceAll('_black_24dp.xml', '_24dp.xml')) }
-    filter { line -> line.replaceAll('android:fillColor="#FF000000"', 'android:fillColor="?android:attr/textColorPrimary"')}
+    filter { line -> line.replaceAll(/android:fillColor="#(FF)?(0[01]){3}"/, 'android:fillColor="?android:attr/textColorPrimary"')}
 }
 
 project.afterEvaluate {

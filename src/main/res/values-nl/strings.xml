@@ -663,4 +663,10 @@
     <string name="add_key_json">JSON</string>
     <string name="invalid_json_key_type">Ongeldige JSON: sleuteltype ontbreekt</string>
     <string name="invalid_json">Ongeldige JSON</string>
+<plurals name="passengers">
+	<item quantity="one">passagier</item>
+	<item quantity="other">passagiers</item>
+</plurals>
+
+    <string name="farebox_number">Incheckpaal #%s</string>
 </resources>

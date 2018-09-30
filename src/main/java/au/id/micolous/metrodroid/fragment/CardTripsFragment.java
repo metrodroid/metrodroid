@@ -325,7 +325,7 @@ public class CardTripsFragment extends ListFragment {
                 paxIcon.setContentDescription(Utils.localizePlural(R.plurals.passengers, pax));
 
                 paxIcon.setImageDrawable(AppCompatResources.getDrawable(getContext(),
-                        pax == 1 ? R.drawable.material_ic_person_24dp : R.drawable.material_ic_person_24dp));
+                        pax == 1 ? R.drawable.material_ic_person_24dp : R.drawable.material_ic_group_24dp));
 
                 paxLayout.setVisibility(View.VISIBLE);
             } else {
