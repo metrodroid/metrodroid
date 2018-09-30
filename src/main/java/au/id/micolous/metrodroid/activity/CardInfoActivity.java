@@ -24,14 +24,19 @@ import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.Cursor;
+import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.speech.tts.TextToSpeech;
 import android.speech.tts.TextToSpeech.OnInitListener;
+import android.support.annotation.NonNull;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
+import android.support.v7.graphics.Palette;
+import android.support.v7.widget.Toolbar;
 import android.text.Spanned;
 import android.util.Log;
 import android.view.Menu;
@@ -51,6 +56,7 @@ import au.id.micolous.metrodroid.fragment.UnauthorizedCardFragment;
 import au.id.micolous.metrodroid.provider.CardsTableColumns;
 import au.id.micolous.metrodroid.transit.TransitBalance;
 import au.id.micolous.metrodroid.transit.TransitData;
+import au.id.micolous.metrodroid.transit.opal.OpalTransitData;
 import au.id.micolous.metrodroid.transit.unknown.BlankClassicTransitData;
 import au.id.micolous.metrodroid.transit.unknown.BlankUltralightTransitData;
 import au.id.micolous.metrodroid.transit.unknown.UnauthorizedTransitData;
@@ -148,6 +154,21 @@ public class CardInfoActivity extends MetrodroidActivity {
                 }
 
                 try {
+                    // Setup a theme
+                    if (mTransitData instanceof OpalTransitData) {
+                        ((OpalTransitData)mTransitData).getCardInfo().buildPaletteAsync(getBaseContext(), palette -> {
+                            Log.d("Opal", "palette");
+                            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                                Palette.Swatch vibrant = palette.getDominantSwatch();
+                                if (vibrant != null) {
+                                    getWindow().setStatusBarColor(vibrant.getRgb());
+                                    actionBar.setBackgroundDrawable(new ColorDrawable(vibrant.getRgb()));
+
+                                }
+
+                            }
+                        });
+                    }
 
                     String titleSerial = "";
                     if (!MetrodroidApplication.hideCardNumbers()) {
