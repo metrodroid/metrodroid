@@ -115,6 +115,38 @@ public class ImportKeysTest extends InstrumentationTestCase {
         assertEquals("102030405060", Utils.getHexString(k1.getKey()));
     }
 
+    public void testSerialiser() throws IOException, JSONException {
+        ClassicSectorKey k0 = ClassicSectorKey.fromJSON(new JSONObject("{\"type\": \"KeyA\", \"key\": \"010203040506\"}"));
+        ClassicSectorKey k1 = ClassicSectorKey.fromJSON(new JSONObject("{\"type\": \"KeyB\", \"key\": \"102030405060\"}"));
+
+        assertEquals("010203040506", Utils.getHexString(k0.getKey()));
+        assertEquals("102030405060", Utils.getHexString(k1.getKey()));
+        assertEquals(ClassicSectorKey.KeyType.A, k0.getType());
+        assertEquals(ClassicSectorKey.KeyType.B, k1.getType());
+
+        String j0 = k0.toJSON().toString();
+        String j1 = k1.toJSON().toString();
+
+        assertTrue("KeyA must be in j0", j0.contains("KeyA"));
+        assertTrue("010203040506 must be in j0", j0.contains("010203040506"));
+        assertTrue("KeyB must be in j1", j1.contains("KeyB"));
+        assertTrue("102030405060 must be in j1", j1.contains("102030405060"));
+
+        ClassicSectorKey k0s = ClassicSectorKey.fromJSON(new JSONObject(j0));
+        ClassicSectorKey k1s = ClassicSectorKey.fromJSON(new JSONObject(j1));
+
+        String j0s = k0s.toJSON().toString();
+        String j1s = k1s.toJSON().toString();
+
+        assertEquals(j0, j0s);
+        assertEquals(j1, j1s);
+
+        assertEquals("010203040506", Utils.getHexString(k0s.getKey()));
+        assertEquals("102030405060", Utils.getHexString(k1s.getKey()));
+        assertEquals(ClassicSectorKey.KeyType.A, k0s.getType());
+        assertEquals(ClassicSectorKey.KeyType.B, k1s.getType());
+    }
+
     public void testClassicStaticKeys() throws IOException, JSONException {
         ClassicStaticKeys mifareStatic1 = loadClassicStaticCardKeys("mifareStatic1.json");
 

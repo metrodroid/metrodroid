@@ -175,11 +175,11 @@ public class ClassicSectorKey implements Comparable<ClassicSectorKey>, Cloneable
         JSONObject json = new JSONObject();
         switch (mType) {
             case A:
-                json.put(KEY_VALUE, TYPE_KEYA);
+                json.put(KEY_TYPE, TYPE_KEYA);
                 break;
 
             case B:
-                json.put(KEY_VALUE, TYPE_KEYB);
+                json.put(KEY_TYPE, TYPE_KEYB);
                 break;
         }
 
