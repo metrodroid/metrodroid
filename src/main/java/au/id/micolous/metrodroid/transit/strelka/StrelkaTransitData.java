@@ -56,6 +56,7 @@ public class StrelkaTransitData extends TransitData {
             .setLocation(R.string.location_moscow)
             .setCardType(CardType.MifareClassic)
             .setExtraNote(R.string.card_note_card_number_only)
+            .setImageId(R.drawable.strelka_card, R.drawable.iso7810_id1_alpha)
             .setKeysRequired()
             .setPreview()
             .build();

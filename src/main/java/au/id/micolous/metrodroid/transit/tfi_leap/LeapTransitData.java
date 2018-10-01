@@ -72,6 +72,8 @@ public class LeapTransitData extends TransitData {
             .setName(LeapTransitData.NAME)
             .setLocation(R.string.location_ireland)
             .setCardType(CardType.MifareDesfire)
+            .setImageId(R.drawable.leap_card, R.drawable.iso7810_id1_alpha)
+            .setExtraNote(R.string.card_note_leap)
             .setPreview()
             .build();
 

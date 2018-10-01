@@ -61,6 +61,7 @@ public class IstanbulKartTransitData extends StubTransitData {
             .setCardType(CardType.MifareDesfire)
             .setLocation(R.string.location_istanbul)
             .setExtraNote(R.string.card_note_card_number_only)
+            .setImageId(R.drawable.istanbulkart_card, R.drawable.iso7810_id1_alpha)
             .build();
 
     public static final Creator<IstanbulKartTransitData> CREATOR = new Creator<IstanbulKartTransitData>() {

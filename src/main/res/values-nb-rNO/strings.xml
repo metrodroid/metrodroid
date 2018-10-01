@@ -659,4 +659,43 @@
 
     <string name="add_key_raw">Rå</string>
     <string name="invalid_json_key_type">Ugyldig JSON: Nøkkeltype mangler</string>
-    </resources>
+    <string name="delete_key_confirm_title">Vil du virkelig slette nøkkelen?</string>
+    <string name="delete_key_confirm_message">Nøkkelfilen <xliff:g id="description" example="a1b2c3d4">%1$s</xliff:g> (som inneholder <xliff:g id="key_type" example="1 MIFARE Classic key">%2$s</xliff:g>) vil gå tapt for alltid.</string>
+    <string name="cant_delete_with_obfuscation">Sletting av nøkler er foreløpig utilgjengelig</string>
+    <string name="cant_delete_with_obfuscation_message">Av sikkerhetshensyn, kan du ikke slette nøkler mens nummertilsløring er påskrudd. Skru det av hvis du ønsker å slette nøkler.</string>
+    <string name="file_exported">Fil eksportert.</string>
+    <string name="key_data">Nøkkeldata</string>
+
+    <plurals name="passengers">
+	<item quantity="one">passasjer</item>
+	<item quantity="other">passasjerer</item>
+</plurals>
+
+    <string name="classic_key">MIFARE Classic-nøkkel</string>
+    <string name="classic_key_a">Nøkkel A</string>
+    <string name="classic_key_b">Nøkkel B</string>
+
+
+    <string name="about_key_formats">Om nøkkelformater…</string>
+    <string name="invalid_json">Ugyldig JSON</string>
+    <string name="invalid_key_file">Ugyldig nøkkelfil</string>
+    <string name="key_file_empty">Nøkkelfilen er tom!</string>
+
+    <string name="static_imported">Importert: %s</string>
+
+    <string name="untitled_key_group">Nøkkelgruppe uten tittel</string>
+
+    <plurals name="keytype_mfc">
+	<item quantity="one">%d MIFARE Classic-nøkkel</item>
+	<item quantity="other">%d MIFARE Classic-nøkler</item>
+</plurals>
+    <plurals name="keytype_mfc_static">
+	<item quantity="one">%d statisk MIFARE Classic-nøkkel</item>
+	<item quantity="other">%d statiske MIFARE Classic-nøkler</item>
+</plurals>
+
+    <string name="no_static_key_assignment">Statiske nøkler kan ille tilknyttes ett kort.</string>
+
+    <string name="vehicle_number">Kjøretøy %s</string>
+    <string name="card_id">Kort-ID</string>
+</resources>

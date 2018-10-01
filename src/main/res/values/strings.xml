@@ -1073,7 +1073,21 @@
     <string name="issue_date">Date of issue</string>
 
     <string name="leap_issuer_id">Issuer ID</string>
-    <string name="leap_locked_warning">This card was not unlocked. Please enable retrieval of Leap keys in settings</string>
+    <!--
+    Translators:
+    keys = encryption keys
+
+    Shown when the user has scanned a Leap card (Irish transit card) when they don't have the needed
+    encryption keys.
+    -->
+    <string name="leap_locked_warning">This card was not unlocked. Please enable retrieval of Leap keys in the NFC Preferences screen.</string>
+    <!--
+    Translators:
+    - Shown in "supported cards" list.
+    - keys = encryption keys
+    - TFI = Transport for Ireland (brand of Údarás Náisiúnta Iompair / National Transport Authority)
+    -->
+    <string name="card_note_leap">Requires retrieving keys from TFI, which must be enabled in the NFC Preferences screen.</string>
 
     <!--
     Translators: This button will open a web page with technical descriptions of the file formats,
