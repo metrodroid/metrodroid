@@ -220,6 +220,7 @@ public abstract class Trip implements Parcelable {
      * Route name for the trip. This could be a bus line, a tram line, a rail line, etc.
      * If this is not known, then return null.
      */
+    @Nullable
     public String getRouteName() {
         return null;
     }
