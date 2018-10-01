@@ -1,0 +1,13 @@
+id,name,short_name,mode
+1,Carris,,BUS
+2,Metro Lisboa,Metro,METRO
+3,CP,CP,TRAIN
+4,Transtejo,,FERRY
+5,Transportes Sul do Tejo,,BUS
+6,Rodoviária de Lisboa,,
+7,Solfusa,,FERRY
+8,Transportes Colectivos do Barreiro,,BUS
+9,Vimeca,,BUS
+13,Barraqueiro,,BUS
+15,Fertagus,,TRAIN
+16,Metro Transportes do Sul,,TRAM

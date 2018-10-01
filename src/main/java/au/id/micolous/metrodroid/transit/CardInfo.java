@@ -40,6 +40,7 @@ import au.id.micolous.metrodroid.transit.edy.EdyTransitData;
 import au.id.micolous.metrodroid.transit.ezlink.EZLinkTransitData;
 import au.id.micolous.metrodroid.transit.hsl.HSLTransitData;
 import au.id.micolous.metrodroid.transit.istanbulkart.IstanbulKartTransitData;
+import au.id.micolous.metrodroid.transit.lisboaviva.LisboaVivaTransitData;
 import au.id.micolous.metrodroid.transit.strelka.StrelkaTransitData;
 import au.id.micolous.metrodroid.transit.intercode.IntercodeTransitData;
 import au.id.micolous.metrodroid.transit.ricaricami.RicaricaMiTransitData;
@@ -89,6 +90,7 @@ public class CardInfo {
             SuicaTransitData.ICOCA_CARD_INFO,
             KMTTransitData.CARD_INFO,
             LeapTransitData.CARD_INFO,
+            LisboaVivaTransitData.CARD_INFO,
             ManlyFastFerryTransitData.CARD_INFO,
             ChcMetrocardTransitData.CARD_INFO, // Metrocard
             MobibTransitData.CARD_INFO,
