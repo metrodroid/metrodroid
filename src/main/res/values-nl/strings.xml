@@ -658,7 +658,7 @@
     <string name="issue_date">Uitgavedatum</string>
 
     <string name="leap_issuer_id">Uitgave-ID</string>
-    <string name="leap_locked_warning">Deze kaart is niet ontgrendeld; schakel ophalen van Leap-sleutels in in de instellingen</string>
+    <string name="leap_locked_warning">Deze kaart is niet ontgrendeld; schakel ophalen van Leap-sleutels in in de NFC-instellingen.</string>
 <string name="location_minneapolis">Minneapolis, MN, VS</string>
     <string name="invalid_json_key_type">Ongeldige JSON: sleuteltype ontbreekt</string>
     <string name="invalid_json">Ongeldige JSON</string>
@@ -700,4 +700,6 @@
 
     <string name="card_id">Kaart-ID</string>
 <string name="vehicle_number">Voertuig %s</string>
+    <string name="card_note_leap">Vereist het ophalen van sleutel van TFI, wat moet worden ingeschakeld in de NFC-instellingen.</string>
+
     </resources>
