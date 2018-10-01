@@ -35,7 +35,7 @@
     <string name="turn_on_nfc">Skru på NFC for å lese kortinformasjon.</string>
     <string name="wireless_settings">Trådløsinnstillinger</string>
 
-    <string name="unknown_card_header">Ukjent kortformat</string>
+    <string name="unknown_card_header">Ustøttet kortformat</string>
     <string name="unknown_card_description">Dette kortet er ikke støttet av Metrodroid enda. Bare råkortdata kan vises.</string>
 
     <string name="unknown_more_info">Mer informasjon</string>
@@ -202,14 +202,14 @@
     <string name="card_note_card_number_only">Kun kortnummeret kan leses.</string>
 
     <string name="nextfare">Cubic Nextfare</string>
-    <string name="nextfare_ticket_class">Billettypekode</string>
+    <string name="nextfare_ticket_class">Billettypekode %d</string>
     <string name="locked_mfc_card">Låst MIFARE Classic-kort</string>
     <string name="locked_mfu_card">Låst MIFARE Ultralight-kort</string>
     <string name="locked_mfd_card">Låst MIFARE DESFire-kort</string>
-    <string name="application_title_format">Program: 0x%s</string>
-    <string name="file_title_format">Fil: 0x%s</string>
-    <string name="unauthorized_file_title_format">Fil: 0x%s (uautorisert)</string>
-    <string name="invalid_file_title_format">Fil: 0x%1$s (ugyldig: %2$s)</string>
+    <string name="application_title_format">Program: %s</string>
+    <string name="file_title_format">Fil: %s</string>
+    <string name="unauthorized_file_title_format">Fil: %s (uautorisert)</string>
+    <string name="invalid_file_title_format">Fil: %1$s (ugyldig: %2$s)</string>
     <string name="unauthorized_page_title_format">Side: 0x%s (uautorisert)</string>
     <string name="map_tiles_subdomains_summary">Hvis {s} brukes i kartnettadresse, en kommainndelt liste over underdomene, eller enkelttegnsliste over underdomener.</string>
     <string name="map_tiles_help_summary">For hjelp med bruk av kartflisnettadresser, se Leaflets nettbaserte dokumentasjon (, kun tilgjengelig på Engelsk).</string>
@@ -456,7 +456,7 @@
     <string name="location_moscow">Moskva, Russland</string>
     <string name="location_saint_petersburg">St. Petersburg, Russland</string>
 
-    <string name="card_note_russia">Kun påfyllbare e-veskekort støttes. Bank-utstedte kort støttes ikke.</string>
+    <string name="card_note_russia">Bank-utstedte kort støttes ikke.</string>
     <string name="card_name_troika">Troika</string>
     <string name="card_name_podorozhnik">Podorozhnik</string>
 <string name="sector_title_format_empty">Sektor: 0x%s (tom)</string>
@@ -490,7 +490,7 @@
 
     <string name="trip_description_unknown_start">til %s</string>
     <string name="time_from_to">%s → %s</string>
-    <string name="time_from_unknown_to">\?:?? → %s</string>
+    <string name="time_from_unknown_to">??:?? → %s</string>
 
 
     <string name="location_israel">Israel</string>
@@ -506,7 +506,7 @@
     <string name="orca_topup_machine">Maskin #%s</string>
     <string name="orca_topup">Fyll på</string>
 
-    <string name="suica_bus_area_line_stop">Bussområde %s Linje %s Stopp %s</string>
+    <string name="suica_bus_area_line_stop">Bussområde %1$s Linje %2$s Stopp %3$s</string>
 
     <string name="compass_product_type">Produkttype</string>
     <string name="compass_machine_code">Maskinkode</string>
@@ -656,7 +656,7 @@
     <string name="issue_date">Utstedelsesdato</string>
 
     <string name="leap_issuer_id">Utsteder-ID</string>
-    <string name="leap_locked_warning">Dette kortet ble ikke låst opp. Skru på innhenting av Leap-nøkler i innstillingene</string>
+    <string name="leap_locked_warning">Dette kortet ble ikke låst opp. Skru på innhenting av Leap-nøkler i NFC-innstillingene.</string>
 
     <string name="add_key_raw">Rå</string>
     <string name="invalid_json_key_type">Ugyldig JSON: Nøkkeltype mangler</string>
@@ -701,4 +701,81 @@
     <string name="card_id">Kort-ID</string>
 <string name="card_note_leap">Krever innhenting av nøkler fra TFI, som må skrus på i NFC-innstillingene i Metrodroid.</string>
 
-    </resources>
+    <string name="machine_id">Maskin-ID</string>
+
+    <string name="valid_from_format">Gyldig fra %1$s</string>
+    <string name="valid_not_used">Ikke brukt enda</string>
+    <plurals name="ricaricami_days_remaining">
+	<item quantity="one">%d dag gjenstår</item>
+	<item quantity="other">%d dager gjenstår</item>
+</plurals>
+    <plurals name="ricaricami_remains_on_day">
+	<item quantity="one">Gjenstår %d tur på %s</item>
+	<item quantity="other">Gjenstår %d turer på %s</item>
+</plurals>
+
+    <string name="location_brussels">Brussel, Belgia</string>
+    <string name="location_gironde">Gironde, Frankrike</string>
+    <string name="location_grenoble">Grenoble, Frankrike</string>
+    <string name="location_lisbon">Lisboa, Portugal</string>
+    <string name="location_milan">Milano, Italia</string>
+    <string name="location_paris">Paris, Frankrike</string>
+    <string name="mode_trolleybus">Trolleybuss</string>
+    <string name="opal_agency_tfnsw">Transport for NSW</string>
+    <string name="gender">Kjønn</string>
+    <string name="gender_female">Kvinne</string>
+    <string name="gender_male">Mann</string>
+
+    <string name="seller_agency">Salgsbyrå</string>
+    <string name="remaining_trip_count">Turer gjenstår</string>
+    <plurals name="remaining_trips_total">
+	<item quantity="one">Ingen turer gjenstår</item>
+	<item quantity="other">%1$d tur gjenstår</item>
+</plurals>
+
+    <plurals name="remaining_trip_on_day">
+	<item quantity="one">%1$d tur gjenstår på %2$s</item>
+	<item quantity="other">%1$d turer gjenstår på %2$s</item>
+</plurals>
+    <string name="remaining_day_count">Dager gjenstår</string>
+    <plurals name="travel_zones">
+	<item quantity="one">Reisesone</item>
+	<item quantity="other">Reisesoner</item>
+</plurals>
+
+    <string name="en1545_network_id">Nettverks-ID</string>
+    <string name="card_issuer">Utsteder</string>
+
+    <string name="purchase_date">Kjøpsdato</string>
+    <string name="single_trips">Enkeltturer</string>
+    <string name="monthly_subscription">Månedlig abonnement</string>
+    <string name="weekly_subscription">Ukentlig abonnement</string>
+    <string name="en1545_card_expiry_date_profile">Profilutløpsdato</string>
+    <string name="daily_subscription">Daglig abonnement</string>
+
+    <string name="subscription_inactive">Inaktivt</string>
+    <string name="subscription_unused">Ubrukt</string>
+    <string name="subscription_started">Startet</string>
+    <string name="subscription_used">Brukt</string>
+    <string name="subscription_expired">Utløpt</string>
+
+    <string name="last_used_on">Sist brukt</string>
+    <string name="payment_method">Betalingsmetode</string>
+    <string name="payment_method_cash">Kontant</string>
+    <string name="payment_method_credit_card">Kredittkort</string>
+    <string name="payment_method_debit_card">Debetkort</string>
+    <string name="payment_method_transit_card">Reisekort</string>
+    <string name="payment_method_cheque">Sjekk</string>
+    <string name="payment_method_free">Gratis</string>
+
+    <string name="card_holders_name">Kortholders navn</string>
+
+    <string name="card_type">Korttype</string>
+
+    <string name="card_type_anonymous">Anonym</string>
+    <string name="card_type_personal">Personlig</string>
+
+    <string name="postal_code">Postkode</string>
+
+    <string name="tap_for_more_info">Trykk for mer info…</string>
+</resources>
