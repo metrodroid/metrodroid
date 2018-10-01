@@ -23,6 +23,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 from argparse import ArgumentParser, FileType
 from base64 import b16decode
 
+# https://github.com/ikarus23/MifareClassicTool/blob/master/tools/example-files/example-dump-file.txt
 # What an unreadable block looks like from MCT
 UNREADABLE_BLOCK = '--------------------------------'
 SECTOR_HEADER = '+Sector: '

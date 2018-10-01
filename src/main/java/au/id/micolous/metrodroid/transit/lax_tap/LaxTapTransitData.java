@@ -27,17 +27,12 @@ import au.id.micolous.metrodroid.card.UnauthorizedException;
 import au.id.micolous.metrodroid.card.classic.ClassicCard;
 import au.id.micolous.metrodroid.transit.CardInfo;
 import au.id.micolous.metrodroid.transit.TransitIdentity;
-import au.id.micolous.metrodroid.transit.Trip;
 import au.id.micolous.metrodroid.transit.nextfare.NextfareTransitData;
 import au.id.micolous.metrodroid.transit.nextfare.NextfareTrip;
 import au.id.micolous.metrodroid.transit.nextfare.record.NextfareTransactionRecord;
 
 import java.util.Arrays;
 import java.util.TimeZone;
-
-import static au.id.micolous.metrodroid.transit.lax_tap.LaxTapData.AGENCY_METRO;
-import static au.id.micolous.metrodroid.transit.lax_tap.LaxTapData.METRO_BUS_START;
-import static au.id.micolous.metrodroid.transit.lax_tap.LaxTapData.METRO_LR_START;
 
 /**
  * Los Angeles Transit Access Pass (LAX TAP) card.
@@ -57,16 +52,15 @@ public class LaxTapTransitData extends NextfareTransitData {
             return new LaxTapTransitData[size];
         }
     };
-    static final byte[] MANUFACTURER = {
+    static final byte[] BLOCK1 = {
             0x16, 0x18, 0x1A, 0x1B,
-            0x1C, 0x1D, 0x1E, 0x1F
+            0x1C, 0x1D, 0x1E, 0x1F,
+            0x01, 0x01, 0x01, 0x01,
+            0x01, 0x01
     };
-
-    static final byte[] SYSTEM_CODE1 = {
-            0x01, 0x01, 0x01, 0x01, 0x01, 0x01
+    static final byte[] BLOCK2 = {
+            0x00, 0x00, 0x00, 0x00
     };
-
-    static final TimeZone TIME_ZONE = TimeZone.getTimeZone("America/Los_Angeles");
 
     public static final CardInfo CARD_INFO = new CardInfo.Builder()
             .setImageId(R.drawable.laxtap_card)
@@ -78,19 +72,14 @@ public class LaxTapTransitData extends NextfareTransitData {
             .setPreview()
             .build();
 
-    //private SeqGoTicketType mTicketType;
-    private static final String TAG = "LaxTapTransitData";
+    static final TimeZone TIME_ZONE = TimeZone.getTimeZone("America/Los_Angeles");
 
     public LaxTapTransitData(Parcel parcel) {
         super(parcel, "USD");
-        //mTicketType = (SeqGoTicketType)parcel.readSerializable();
     }
 
     public LaxTapTransitData(ClassicCard card) {
         super(card);
-        if (mConfig != null) {
-            //mTicketType = SeqGoData.TICKET_TYPE_MAP.get(mConfig.getTicketType(), SeqGoTicketType.UNKNOWN);
-        }
     }
 
     public static TransitIdentity parseTransitIdentity(ClassicCard card) {
@@ -99,14 +88,13 @@ public class LaxTapTransitData extends NextfareTransitData {
 
     public static boolean check(ClassicCard card) {
         try {
-            byte[] blockData = card.getSector(0).getBlock(1).getData();
-            if (!Arrays.equals(Arrays.copyOfRange(blockData, 1, 9), MANUFACTURER)) {
+            byte[] block1 = card.getSector(0).getBlock(1).getData();
+            if (!Arrays.equals(Arrays.copyOfRange(block1, 1, 15), BLOCK1)) {
                 return false;
             }
 
-            byte[] systemCode = Arrays.copyOfRange(blockData, 9, 15);
-            //Log.d(TAG, "SystemCode = " + Utils.getHexString(systemCode));
-            return Arrays.equals(systemCode, SYSTEM_CODE1);
+            byte[] block2 = card.getSector(0).getBlock(2).getData();
+            return Arrays.equals(Arrays.copyOfRange(block2, 0, 4), BLOCK2);
         } catch (UnauthorizedException ex) {
             // It is not possible to identify the card without a key
             return false;
@@ -114,12 +102,6 @@ public class LaxTapTransitData extends NextfareTransitData {
             // If the sector/block number is too high, it's not for us
             return false;
         }
-    }
-
-    @Override
-    public void writeToParcel(Parcel parcel, int i) {
-        super.writeToParcel(parcel, i);
-        //parcel.writeSerializable(mTicketType);
     }
 
     @Override
@@ -132,21 +114,6 @@ public class LaxTapTransitData extends NextfareTransitData {
         // LAX TAP does not record tap-offs. Sometimes this merges trips that are bus -> rail
         // otherwise, but we don't need to do the complex logic in order to figure it out correctly.
         return false;
-    }
-
-    @Override
-    protected Trip.Mode lookupMode(int mode, int stationId) {
-        if (mode == AGENCY_METRO) {
-            if (stationId >= METRO_BUS_START) {
-                return Trip.Mode.BUS;
-            } else if (stationId < METRO_LR_START && stationId != 61) {
-                return Trip.Mode.METRO;
-            } else {
-                return Trip.Mode.TRAM;
-            }
-        } else {
-            return LaxTapData.AGENCY_MODES.get(mode, Trip.Mode.OTHER);
-        }
     }
 
     @Override

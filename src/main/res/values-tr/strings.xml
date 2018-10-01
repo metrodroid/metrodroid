@@ -9,7 +9,6 @@
     <string name="advanced_info">Gelişmiş Bilgi</string>
     <string name="delete_card">Kartı Sil</string>
     <string name="unknown_card">Bilinmeyen Kart</string>
-    <string name="locked_card">Kilitli Kart</string>
     <string name="locked_mfc_card">Kilitli MIFARE Classic kart</string>
     <string name="locked_mfu_card">Kilitli MIFARE Ultralight kart</string>
     <string name="locked_mfd_card">Kilitli MIFARE DESFire kart</string>
@@ -18,10 +17,7 @@
     <string name="copy_xml">Kopyala</string>
     <string name="share_xml">Paylaş</string>
     <string name="save_xml">Dosyaya Kaydet</string>
-    <string name="trips">Yolculuklar</string>
     <string name="history">Geçmiş</string>
-    <string name="balance">Bakiye</string>
-    <string name="refills">Dolumlar</string>
     <string name="no_trip_data">Hiç yolculuk bulunamadı. Kart daha önce kullanıldı mı?</string>
     <string name="import_xml">İçeri Aktar</string>
     <string name="import_clipboard">Hafızadan Yapıştır</string>
@@ -40,7 +36,6 @@
     <string name="nfc_off_error">NFC kapalı</string>
     <string name="turn_on_nfc">Kart bilgilerini okumak için lütfen NFC\'yi açın.</string>
     <string name="wireless_settings">Kablosuz Ayarlar</string>
-    <string name="report_error">Hata Raporla</string>
 
     <string name="unknown_card_header">Bilinmeyen kart formatı</string>
     <string name="unknown_card_description">Bu kart Metrodroid tarafından henüz desteklenmemektedir. Sadece ham data görüntülenebilir.</string>
@@ -51,8 +46,6 @@
     <string name="lawyercats">Metrodroid ve yaratıcılarının herhangi bir toplu taşıma kurumuyla ilişiği yoktur.</string>
 
 
-    <string name="report_error_privacy_title">Gizlilik Bildirimi</string>
-    <string name="report_error_privacy_message">Bu kartın tüm verisi hata raporuna eklenecektir.</string>
     <string name="scanned_cards">Geçmiş</string>
     <string name="no_scanned_cards">Henüz herhangi bir kart okutmadınız.</string>
     <string name="block_title_format">Blok: %s</string>
@@ -65,11 +58,9 @@
     <string name="sector_title_format">Sektör: 0x%s</string>
     <string name="unauthorized_sector_title_format">Sektör: 0x%s (yetkisiz)</string>
     <string name="invalid_sector_title_format">Sektör: 0x%1$s (geçersiz: %2$s)</string>
-    <string name="subscriptions">Abonelikler</string>
     <string name="info">Bilgi</string>
     <string name="valid_format">%1$s den %2$s Geçerli</string>
     <string name="valid_to_format">%1$s a kadar geçerli</string>
-    <string name="valid_not_used">Henüz kullanılmamış</string>
     <string name="unknown_format">Bilinmeyen (%s)</string>
     <string name="unknown">Bilinmeyen</string>
     <string name="keys_required">Bu kartı okumak için şifreleme anahtarları gerekmektedir.</string>
@@ -81,10 +72,8 @@
     <string name="delete">Sil</string>
     <string name="no_keys">Anahtar yok.</string>
     <string name="nfc_unavailable">NFC Kullanım Dışı</string>
-    <string name="fare_cancelled_format">%s (İptal Edildi)</string>
     <string name="general">Genel</string>
     <string name="launch_from_background">Arka planda aç</string>
-    <string name="error_report_sent">Hata raporu gönderildi.</string>
     <string name="checksum">Sağlama</string>
     <string name="last_transaction">Son işlem</string>
     <string name="date">Tarih</string>
@@ -93,7 +82,6 @@
     <string name="transaction_type">İşlem tipi</string>
     <string name="card_epoch">Kart Dönemi</string>
     <string name="card_not_supported_on_device">Bu kart cihazınız tarafından desteklenmemektedir.</string>
-    <string name="card_note_cepas">Her cihazla uyumlu değildir.</string>
     <string name="need_stations">Bazı durak isimleri bilinmemektedir.</string>
     <string name="need_stations_submit">Raporla</string>
     <string name="card_preview_reader">Kart okuyucunun Beta sürümü.</string>

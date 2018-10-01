@@ -23,29 +23,147 @@
 package au.id.micolous.metrodroid.key;
 
 
-import au.id.micolous.metrodroid.util.Utils;
+import android.support.annotation.NonNull;
+import android.support.annotation.StringRes;
 
+import org.apache.commons.lang3.ArrayUtils;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-public class ClassicSectorKey {
-    public static final String TYPE_KEYA = "KeyA";
-    public static final String TYPE_KEYB = "KeyB";
-    private static final String TYPE = "type";
-    private static final String KEY = "key";
-    private String mType;
-    private byte[] mKey;
+import java.util.Arrays;
+import java.util.Locale;
 
-    public ClassicSectorKey(String type, byte[] key) {
-        mType = type;
-        mKey = key;
+import au.id.micolous.farebot.R;
+import au.id.micolous.metrodroid.util.Utils;
+
+public class ClassicSectorKey implements Comparable<ClassicSectorKey>, Cloneable {
+    private static final String TYPE_KEYA = "KeyA";
+    private static final String TYPE_KEYB = "KeyB";
+
+    private static final String KEY_TYPE = "type";
+    private static final String KEY_VALUE = "key";
+    static final int KEY_LEN = 6;
+
+    private KeyType mType = KeyType.UNKNOWN;
+    private byte[] mKey = null;
+
+    public enum KeyType {
+        UNKNOWN,
+        A,
+        B,
+        MULTIPLE;
+
+        @StringRes
+        public int getFormatRes() {
+            switch (this) {
+                case A:
+                    return R.string.classic_key_format_a;
+                case B:
+                    return R.string.classic_key_format_b;
+                default:
+                    return R.string.classic_key_format;
+            }
+        }
+
+        public KeyType inverse() {
+            if (this == B) {
+                return A;
+            } else {
+                return B;
+            }
+        }
+
+        public String toString() {
+            if (this == B) {
+                return TYPE_KEYB;
+            } else {
+                return TYPE_KEYA;
+            }
+        }
+
+        public static KeyType fromString(String keyType) {
+            if (keyType.equals(TYPE_KEYB)) {
+                return B;
+            } else {
+                return A;
+            }
+        }
+
+        public static final class Transform implements org.simpleframework.xml.transform.Transform<KeyType> {
+            @Override
+            public KeyType read(String value) {
+                return fromString(value);
+            }
+
+            @Override
+            public String write(KeyType value) {
+                return value.toString();
+            }
+        }
+    }
+
+    protected ClassicSectorKey() {}
+
+    public static ClassicSectorKey wellKnown(@NonNull byte[] b) {
+        ClassicSectorKey k = fromDump(b);
+        k.setType(KeyType.A);
+        return k;
+    }
+
+    public static ClassicSectorKey fromDump(@NonNull byte[] b) {
+        if (b.length != KEY_LEN) {
+            throw new IllegalArgumentException(
+                    String.format(Locale.ENGLISH, "Key data must be %d bytes, got %d", KEY_LEN, b.length));
+        }
+
+        ClassicSectorKey k = new ClassicSectorKey();
+        k.mKey = b;
+        return k;
+    }
+
+    public static ClassicSectorKey fromDump(@NonNull byte[] b, int offset) {
+        byte[] data = Arrays.copyOfRange(b, offset, offset + ClassicSectorKey.KEY_LEN);
+        return fromDump(data);
     }
 
     public static ClassicSectorKey fromJSON(JSONObject json) throws JSONException {
-        return new ClassicSectorKey(json.getString(TYPE), Utils.hexStringToByteArray(json.getString(KEY)));
+        ClassicSectorKey k = new ClassicSectorKey();
+        fromJSON(k, json);
+        return k;
     }
 
-    public String getType() {
+    protected static void fromJSON(ClassicSectorKey k, JSONObject json) throws JSONException {
+        KeyType kt = KeyType.UNKNOWN;
+
+        if (json.has(KEY_TYPE) && !json.isNull(KEY_TYPE) && !json.getString(KEY_TYPE).isEmpty()) {
+            String t = json.getString(KEY_TYPE);
+            if (TYPE_KEYA.equals(t)) {
+                kt = KeyType.A;
+            } else if (TYPE_KEYB.equals(t)) {
+                kt = KeyType.B;
+            }
+        }
+
+        byte[] keyData = Utils.hexStringToByteArray(json.getString(KEY_VALUE));
+
+        // Check that the key is the correct length
+        if (keyData.length != KEY_LEN) {
+            throw new JSONException(
+                    String.format(Locale.ENGLISH, "Expected %d bytes in key, got %d",
+                            KEY_LEN, keyData.length
+                    ));
+        }
+
+        // Checks completed, pass the data back.
+        k.setType(kt);
+        k.mKey = keyData;
+    }
+
+    public void setType(KeyType k) {
+        mType = k;
+    }
+
+    public KeyType getType() {
         return mType;
     }
 
@@ -53,14 +171,47 @@ public class ClassicSectorKey {
         return mKey;
     }
 
-    public JSONObject toJSON() {
-        try {
-            JSONObject json = new JSONObject();
-            json.put(TYPE, mType);
-            json.put(KEY, Utils.getHexString(mKey));
-            return json;
-        } catch (Exception ex) {
-            throw new RuntimeException(ex);
+    public JSONObject toJSON() throws JSONException {
+        JSONObject json = new JSONObject();
+        switch (mType) {
+            case A:
+                json.put(KEY_TYPE, TYPE_KEYA);
+                break;
+
+            case B:
+                json.put(KEY_TYPE, TYPE_KEYB);
+                break;
         }
+
+        if (mKey != null) {
+            json.put(KEY_VALUE, Utils.getHexString(mKey));
+        }
+
+        return json;
+    }
+
+    @Override
+    public int compareTo(@NonNull ClassicSectorKey o) {
+        int d = mType.compareTo(o.mType);
+        if (d != 0) return d;
+
+        if (Arrays.equals(mKey, o.mKey)) {
+            return 0;
+        } else {
+            return 1;
+        }
+    }
+
+    @SuppressWarnings("MethodDoesntCallSuperMethod")
+    @Override
+    public ClassicSectorKey clone() {
+        ClassicSectorKey k = new ClassicSectorKey();
+        k.mKey = ArrayUtils.clone(mKey);
+        k.mType = mType;
+        return k;
+    }
+
+    public void invertType() {
+        mType = mType.inverse();
     }
 }

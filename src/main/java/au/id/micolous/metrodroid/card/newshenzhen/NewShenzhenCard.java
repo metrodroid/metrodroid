@@ -27,21 +27,18 @@ import org.simpleframework.xml.ElementList;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 import au.id.micolous.farebot.R;
 import au.id.micolous.metrodroid.card.TagReaderFeedbackInterface;
 import au.id.micolous.metrodroid.card.iso7816.ISO7816Application;
 import au.id.micolous.metrodroid.card.iso7816.ISO7816Protocol;
 import au.id.micolous.metrodroid.card.iso7816.ISO7816Selector;
-import au.id.micolous.metrodroid.transit.CardInfo;
 import au.id.micolous.metrodroid.transit.TransitData;
 import au.id.micolous.metrodroid.transit.TransitIdentity;
 import au.id.micolous.metrodroid.transit.newshenzhen.NewShenzhenTransitData;
 import au.id.micolous.metrodroid.ui.ListItem;
 import au.id.micolous.metrodroid.ui.ListItemRecursive;
 import au.id.micolous.metrodroid.util.Utils;
-import au.id.micolous.metrodroid.xml.Base64String;
 import au.id.micolous.metrodroid.xml.HexString;
 
 public class NewShenzhenCard extends ISO7816Application {
@@ -75,7 +72,7 @@ public class NewShenzhenCard extends ISO7816Application {
         List <ListItem> li = new ArrayList<>();
         for (Balance entry : mBalances) {
             li.add(ListItemRecursive.collapsedValue("Shenzhen balance " + entry.mIdx,
-                    Utils.getHexString(entry.mData.getData())));
+                    Utils.getHexDump(entry.mData.getData())));
         }
         return li;
     }

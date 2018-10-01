@@ -21,8 +21,8 @@ suica_bus.mdst: sqlite2pb-suica-bus.py stations_pb2.py ../../data/felica_station
 	python3 sqlite2pb-suica-bus.py
 
 MDSTS += ovc.mdst
-ovc.mdst: sqlite2pb-ovc.py stations_pb2.py mdst.py ../../data/ovc_stations.db3
-	python3 sqlite2pb-ovc.py
+ovc.mdst: tsv2pb-ovc.py stations_pb2.py mdst.py ../../third_party/ovc-tools/stations/*.tsv
+	python3 tsv2pb-ovc.py
 
 MDSTS += podorozhnik.mdst
 podorozhnik.mdst: csv2pb-podorozhnik.py stations_pb2.py mdst.py ../../data/podorozhnik/*.csv

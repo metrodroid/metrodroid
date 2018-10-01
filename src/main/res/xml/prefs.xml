@@ -105,6 +105,14 @@
                     android:entryValues="@array/mfc_fallback_values"
                     />
             </PreferenceCategory>
+	    
+	        <PreferenceCategory android:title="@string/mifare_desfire">
+                <CheckBoxPreference
+                    android:title="@string/leap_retrieve_keys"
+                    android:summary="@string/leap_retrieve_keys_longdesc"
+                    android:key="pref_retrieve_leap_keys"
+                    android:defaultValue="false" />
+	        </PreferenceCategory>
     </PreferenceScreen>
 
     <PreferenceScreen

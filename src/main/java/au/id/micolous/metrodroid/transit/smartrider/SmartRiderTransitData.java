@@ -31,6 +31,7 @@ import java.util.TimeZone;
 
 import au.id.micolous.farebot.R;
 import au.id.micolous.metrodroid.card.classic.ClassicCard;
+import au.id.micolous.metrodroid.key.ClassicSectorKey;
 import au.id.micolous.metrodroid.transit.CardInfo;
 import au.id.micolous.metrodroid.transit.TransitCurrency;
 import au.id.micolous.metrodroid.transit.TransitData;
@@ -146,8 +147,8 @@ public class SmartRiderTransitData extends TransitData {
 
     private static CardType detectKeyType(ClassicCard card) {
         try {
-            byte[] key = card.getSector(7).getKey();
-            if (key == null || key.length != 6) {
+            ClassicSectorKey key = card.getSector(7).getKey();
+            if (key == null) {
                 // We don't have key data, bail out.
                 return CardType.UNKNOWN;
             }

@@ -128,15 +128,26 @@ public class OrcaTrip extends Trip {
     @Override
     public Station getStartStation() {
         if (mIsTopup)
-            return Station.nameOnly(Utils.localizeString(R.string.orca_topup_machine, String.valueOf(mCoachNum)));
+            return null;
         Station s = getStation(mAgency, mCoachNum);
         if (s != null)
             return s;
         if (isLink() || isSounder() || mAgency == OrcaTransitData.AGENCY_WSF) {
             return Station.unknown(mCoachNum);
         } else {
-            return Station.nameOnly(Utils.localizeString(R.string.orca_coach_number, String.valueOf(mCoachNum)));
+            return null;
         }
+    }
+
+    @Override
+    public String getVehicleID() {
+        if (mIsTopup)
+            return String.valueOf(mCoachNum);
+        if (isLink() || isSounder() || mAgency == OrcaTransitData.AGENCY_WSF) {
+            return null;
+        }
+
+        return String.valueOf(mCoachNum);
     }
 
     @Override

@@ -1,6 +1,5 @@
 package au.id.micolous.metrodroid.test;
 
-import android.app.Instrumentation;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.res.AssetManager;
@@ -8,6 +7,7 @@ import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.os.Build;
 import android.preference.PreferenceManager;
+import android.support.annotation.NonNull;
 import android.test.InstrumentationTestCase;
 import android.text.Spanned;
 
@@ -44,8 +44,12 @@ final class TestUtils {
     private static final Map<String, Locale> LOCALES = new ImmutableMapBuilder<String, Locale>()
             .put("en", Locale.ENGLISH)
             .put("en-AU", new Locale("en", "AU"))
+            .put("en-CA", Locale.CANADA)
             .put("en-GB", Locale.UK)
             .put("en-US", Locale.US)
+            .put("fr", Locale.FRENCH)
+            .put("fr-CA", Locale.CANADA_FRENCH)
+            .put("fr-FR", Locale.FRANCE)
             .put("ja", Locale.JAPANESE)
             .put("ja-JP", Locale.JAPAN)
             .build();
@@ -58,11 +62,16 @@ final class TestUtils {
         assertThat(actual.toString(), matcher);
     }
 
+    @NonNull
     private static Locale compatLocaleForLanguageTag(String languageTag) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             return Locale.forLanguageTag(languageTag);
         } else {
-            return LOCALES.get(languageTag);
+            Locale l = LOCALES.get(languageTag);
+            if (l == null) {
+                throw new IllegalArgumentException("For API < 21, add entry to TestUtils.LOCALES for: " + languageTag);
+            }
+            return l;
         }
     }
 
@@ -160,7 +169,8 @@ final class TestUtils {
                 }
             }
 
-            sectors.add(new ClassicSector(sectorNum, blocks.toArray(new ClassicBlock[0]), key, ClassicSectorKey.TYPE_KEYA));
+            assert key != null;
+            sectors.add(new ClassicSector(sectorNum, blocks.toArray(new ClassicBlock[0]), ClassicSectorKey.wellKnown(key)));
         }
 
         Calendar d = new GregorianCalendar(2010, 1, 1, 0, 0, 0);

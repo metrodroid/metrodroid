@@ -11,10 +11,7 @@
     <string name="copy_xml">コピー</string>
     <string name="share_xml">共有</string>
     <string name="save_xml">ファイルに保存</string>
-    <string name="trips">旅行</string>
     <string name="history">ヒストリー</string>
-    <string name="balance">残高</string>
-    <string name="refills">リフィル</string>
     <string name="no_trip_data">履歴は見つかりませんでした。このカードを使用しましたか?</string>
     <string name="import_xml">インポート</string>
     <string name="import_clipboard">クリップボードから貼り付け</string>
@@ -79,10 +76,7 @@
     <string name="nfc_off_error">NFCオフ</string>
     <string name="turn_on_nfc">カードのデータを読み込むためにNFCを有効してください。</string>
     <string name="wireless_settings">無線設定</string>
-    <string name="report_error">エラー情報を送信する</string>
     <string name="unknown_card_description">読み込んだカードは Metrodroid で対応していません。データだけが表示されます。</string>
-    <string name="report_error_privacy_title">個人情報の取扱いについて</string>
-    <string name="report_error_privacy_message">このカードの全てのデータがエラーレポートに含まれます。</string>
     <string name="scanned_cards">履歴</string>
     <string name="no_scanned_cards">カードがまだスキャンされていません。</string>
 
@@ -92,8 +86,7 @@
     <string name="copyright">Copyright 2015 – 2018 Michael Farrell</string>
     <string name="license">ライセンス</string>
     <string name="title_activity_license">オープンソース ライセンス</string>
-    <string name="locked_card">ロックされたカード</string>
-    <string name="fully_locked_desc">このカードは鍵なしに自由に読み取りできる部分はありません。有効な鍵がインストールされていません。 
+    <string name="fully_locked_desc">このカードは鍵なしに自由に読み取りできる部分はありません。有効な鍵がインストールされていません。
 \n
 \n
 \n Metrodroid によってサポートされている場合、鍵をインストールすると、カードを動作させることができます。これらは一般的にカードごとに異なります。鍵の取得およびインストールの詳細についてはドキュメントを参照してください。 
@@ -106,7 +99,6 @@
     <string name="sector_title_format">セクター: 0x%s</string>
     <string name="unauthorized_sector_title_format">セクター: 0x%s (未承認)</string>
     <string name="invalid_sector_title_format">セクター: 0x%1$s (無効: %2$s)</string>
-    <string name="subscriptions">サブスクリプション</string>
     <string name="info">情報</string>
     <string name="valid_format">有効な %1$s %2$s へ</string>
     <string name="unknown_format">不明 (%s)</string>
@@ -120,10 +112,8 @@
     <string name="add_key_directions">鍵のバイナリダンプを .farebotkeys 拡張子のファイルで保存して、添付ファイルとしてメールで送信し、その後このデバイスで開きます。</string>
     <string name="no_keys">鍵がありません。</string>
     <string name="nfc_unavailable">NFC が利用不可</string>
-    <string name="fare_cancelled_format">%s (キャンセル)</string>
     <string name="general">全般</string>
     <string name="launch_from_background">バックグラウンドで起動</string>
-    <string name="error_report_sent">エラー報告を送信しました。</string>
     <string name="checksum">チェックサム</string>
     <string name="last_transaction">最後のトランザクション</string>
     <string name="date">日付</string>
@@ -132,7 +122,6 @@
     <string name="transaction_type">トランザクションの種類</string>
     <string name="card_epoch">カード エポック</string>
     <string name="card_not_supported_on_device">このカードは、お使いのデバイスでサポートされていません。</string>
-    <string name="card_note_cepas">すべてのデバイスと互換性がありません。</string>
     <string name="need_stations">一部の駅の名前が不明です。</string>
     <string name="need_stations_submit">報告</string>
     <string name="card_preview_reader">ベータ版のカードリーダーです。</string>
@@ -157,34 +146,11 @@
     <string name="location_victoria_australia">オーストラリア ビクトリア州</string>
 
     <string name="felica_process_booth_exit">駅長ブース出口</string>
-    <string name="hsl_pass_is_valid">有効なシーズン チケット</string>
-    <string name="hsl_1zone_ticket">内部チケット</string>
-    <string name="hsl_2zone_ticket">地域チケット</string>
     <string name="hsl_balance_refill">残高チャージ</string>
     <string name="hsl_balance_ticket">バリュー チケット</string>
-    <string name="hsl_value_ticket_is_valid">有効なバリュー チケット</string>
     <string name="hsl_pass_ticket">シーズン チケット</string>
-    <string name="hsl_season_ticket_starts">シーズン チケット開始</string>
-    <string name="hsl_season_ticket_ends">シーズン チケット終了</string>
-    <string name="hsl_season_ticket_bought_on">シーズン チケット購入</string>
-    <string name="hsl_previous_season_ticket">前のシーズン チケットは</string>
-    <string name="hsl_season_ticket_price_was">シーズン チケットの値段は</string>
-    <string name="hsl_you_last_used_this_ticket">最後にこのチケットを使用したのは</string>
     <string name="hsl_person_format">%s 人</string>
     <string name="hsl_mins_format">%s 分</string>
-    <string name="hsl_value_ticket">バリュー チケット</string>
-    <string name="hsl_value_ticket_bought_on">チケット購入</string>
-    <string name="hsl_value_ticket_expires_on">チケットの有効期限</string>
-    <string name="hsl_value_ticket_last_transfer">最後の乗換</string>
-    <string name="hsl_value_ticket_last_sign">最後の署名</string>
-    <string name="hsl_value_ticket_price">バリュー チケットの値段</string>
-    <string name="hsl_value_ticket_disco_group">割引グループ</string>
-    <string name="hsl_value_ticket_pax">グループ サイズ</string>
-    <string name="hsl_value_ticket_duration">チケット有効期間</string>
-    <string name="hsl_value_ticket_vehicle_number">乗り物番号</string>
-    <string name="hsl_value_ticket_vehicle_type">乗り物の種類</string>
-    <string name="hsl_value_ticket_line_number">路線番号</string>
-    <string name="hsl_season_ticket">シーズン チケット</string>
 
     <string name="opal_automatic_top_up">自動チャージ</string>
     <string name="opal_weekly_trips">毎週の旅行</string>
@@ -236,7 +202,6 @@
 
 <string name="valid_to_format">%1$s まで有効</string>
     <string name="unknown">不明</string>
-    <string name="seqgo_ticket_type">チケットの種類</string>
     <string name="seqgo_ticket_type_regular">正規</string>
     <string name="seqgo_ticket_type_concession">割引</string>
     <string name="seqgo_ticket_type_child">子供</string>
@@ -247,22 +212,12 @@
     <string name="nextfare_ticket_class">チケット クラス コード</string>
 
 <string name="export_filename">エクスポート ファイル名</string>
-    <string name="valid_not_used">まだ使用していません</string>
     <string name="saved_xml_custom">USB ストレージに XML を書き込みました。</string>
     <string name="location_hong_kong">香港</string>
 
     <string name="location_los_angeles">米国 カリフォルニア州 ロサンゼルス</string>
 
-    <string name="alternate_purse_balances">代替財布残高</string>
-
-
-    <string name="octopus_szt">深圳通</string>
 <string name="location_shenzhen">中国、広東省、深圳</string>
-    <string name="storage_required">カードのダンプと鍵ファイルへの読み書きのためにアクセス許可が必要です。</string>
-
-
-    <string name="card_expiry_date">カード有効期限</string>
-
     <string name="mfc_fallback_desc">一部の機関は、カードに識別のマジックがありません。それらを読み取るためには機関を明示的に選択する必要があります。</string>
     <string name="mfc_fallback">フォールバック リーダー</string>
 

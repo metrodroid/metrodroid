@@ -34,6 +34,8 @@ import au.id.micolous.farebot.BuildConfig;
 public class CardKeyProvider extends BetterContentProvider {
     public static final String AUTHORITY = BuildConfig.APPLICATION_ID + ".keyprovider";
     public static final Uri CONTENT_URI = Uri.parse("content://" + AUTHORITY + "/keys");
+    public static final Uri CONTENT_BY_UID_URI = Uri.withAppendedPath(CONTENT_URI, "/by-uid");
+    protected static final int KEY_BY_UID = 1000;
 
     public CardKeyProvider() {
         super(
@@ -54,24 +56,20 @@ public class CardKeyProvider extends BetterContentProvider {
 
     @Override
     protected UriMatcher createUriMatcher(Uri contentUri, String basePath) {
-        UriMatcher matcher = new UriMatcher(UriMatcher.NO_MATCH);
-        matcher.addURI(contentUri.getAuthority(), basePath, CODE_COLLECTION);
-        matcher.addURI(contentUri.getAuthority(), basePath + "/*", CODE_SINGLE);
+        UriMatcher matcher = super.createUriMatcher(contentUri, basePath);
+        matcher.addURI(contentUri.getAuthority(), basePath + "/by-uid/*", KEY_BY_UID);
         return matcher;
     }
 
     @Override
     protected void appendWheres(SQLiteQueryBuilder builder, UriMatcher matcher, Uri uri) {
         switch (matcher.match(uri)) {
-            case CODE_COLLECTION:
-                // Nothing needed here
-                break;
-            case CODE_SINGLE:
+            case KEY_BY_UID:
                 // FIXME: Prevent sql injection.
                 builder.appendWhere(KeysTableColumns.CARD_ID + "= \"" + uri.getPathSegments().get(1) + "\"");
                 break;
             default:
-                throw new IllegalArgumentException("Unknown URI: " + uri);
+                super.appendWheres(builder, matcher, uri);
         }
     }
 }

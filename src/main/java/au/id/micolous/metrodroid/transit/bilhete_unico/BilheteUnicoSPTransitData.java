@@ -24,6 +24,7 @@ package au.id.micolous.metrodroid.transit.bilhete_unico;
 
 import android.os.Parcel;
 import android.support.annotation.Nullable;
+import android.text.SpannableString;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -137,8 +138,8 @@ public class BilheteUnicoSPTransitData extends TransitData {
         li.add(new ListItem(R.string.refill_counter,
                 Integer.toString(mRefillTransactionCounter)));
         // It looks like issue date but on some dumps it's after the trips, so it can't be.
-        li.add(new ListItem("Date 1",
-                Utils.longDateFormat(BilheteUnicoSPTrip.parseTimestamp(mDay2, 0)).toString()));
+        li.add(new ListItem(new SpannableString("Date 1"),
+                Utils.longDateFormat(BilheteUnicoSPTrip.parseTimestamp(mDay2, 0))));
         return li;
     }
 

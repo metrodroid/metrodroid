@@ -19,12 +19,11 @@
 
 package au.id.micolous.metrodroid.card.tmoney;
 
+import android.text.SpannableString;
 import android.util.Log;
 
 import org.simpleframework.xml.Element;
 
-import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
@@ -33,7 +32,6 @@ import au.id.micolous.metrodroid.card.TagReaderFeedbackInterface;
 import au.id.micolous.metrodroid.card.iso7816.ISO7816Application;
 import au.id.micolous.metrodroid.card.iso7816.ISO7816Protocol;
 import au.id.micolous.metrodroid.card.iso7816.ISO7816Selector;
-import au.id.micolous.metrodroid.transit.CardInfo;
 import au.id.micolous.metrodroid.transit.TransitData;
 import au.id.micolous.metrodroid.transit.TransitIdentity;
 import au.id.micolous.metrodroid.transit.tmoney.TMoneyTransitData;
@@ -79,7 +77,7 @@ public class TMoneyCard extends ISO7816Application {
 
     public List<ListItem> getRawData() {
         return Collections.singletonList(ListItemRecursive.collapsedValue("Tmoney balance",
-                Integer.toHexString(mBalance)));
+                new SpannableString(Integer.toHexString(mBalance))));
     }
 
 

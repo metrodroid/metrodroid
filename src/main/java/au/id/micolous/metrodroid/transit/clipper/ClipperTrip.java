@@ -45,33 +45,38 @@ public class ClipperTrip extends Trip {
             return new ClipperTrip[size];
         }
     };
-    protected final Calendar mTimestamp;
-    private final Calendar mExitTimestamp;
-    protected final int mFare;
+    private final long mTimestamp;
+    private final long mExitTimestamp;
+    private final int mFare;
     private final int mAgency;
     private final int mFrom;
     private final int mTo;
     private final int mRoute;
+    private final int mVehicleNum;
+    private final int mTransportCode;
 
-    public ClipperTrip(Calendar timestamp, Calendar exitTimestamp, int fare, int agency, int from, int to, int route) {
-        // NOTE: All timestamps must be in CLIPPER_TZ.
-        mTimestamp = timestamp;
-        mExitTimestamp = exitTimestamp;
-        mFare = fare;
-        mAgency = agency;
-        mFrom = from;
-        mTo = to;
-        mRoute = route;
-    }
-
-    ClipperTrip(Parcel parcel) {
-        mTimestamp = Utils.unparcelCalendar(parcel);
-        mExitTimestamp = Utils.unparcelCalendar(parcel);
+    private ClipperTrip(Parcel parcel) {
+        mTimestamp = parcel.readLong();
+        mExitTimestamp = parcel.readLong();
         mFare = parcel.readInt();
         mAgency = parcel.readInt();
         mFrom = parcel.readInt();
         mTo = parcel.readInt();
         mRoute = parcel.readInt();
+        mVehicleNum = parcel.readInt();
+        mTransportCode = parcel.readInt();
+    }
+
+    ClipperTrip(byte[] useData) {
+        mAgency = Utils.byteArrayToInt(useData, 0x2, 2);
+        mFare = Utils.byteArrayToInt(useData, 0x6, 2);
+        mVehicleNum = Utils.byteArrayToInt(useData, 0xa, 2);
+        mTimestamp = Utils.byteArrayToLong(useData, 0xc, 4);
+        mExitTimestamp = Utils.byteArrayToLong(useData, 0x10, 4);
+        mFrom = Utils.byteArrayToInt(useData, 0x14, 2);
+        mTo = Utils.byteArrayToInt(useData, 0x16, 2);
+        mRoute = Utils.byteArrayToInt(useData, 0x1c, 2);
+        mTransportCode = Utils.byteArrayToInt(useData, 0x1e, 2);
     }
 
     @Override
@@ -81,12 +86,12 @@ public class ClipperTrip extends Trip {
 
     @Override
     public Calendar getStartTimestamp() {
-        return mTimestamp;
+        return ClipperTransitData.clipperTimestampToCalendar(mTimestamp);
     }
 
     @Override
     public Calendar getEndTimestamp() {
-        return mExitTimestamp;
+        return ClipperTransitData.clipperTimestampToCalendar(mExitTimestamp);
     }
 
     @Override
@@ -94,10 +99,16 @@ public class ClipperTrip extends Trip {
         if (mAgency == ClipperData.AGENCY_GG_FERRY) {
             return ClipperData.GG_FERRY_ROUTES.get(mRoute);
         } else {
-            // FIXME: Need to find bus route #s
-            // return "(Route 0x" + Long.toString(mRoute, 16) + ")";
+            // Bus doesn't record line
             return null;
         }
+    }
+
+    @Override
+    public String getVehicleID() {
+        if (mVehicleNum != 0 && mVehicleNum != 0xffff)
+            return Integer.toString(mVehicleNum);
+        return null;
     }
 
     @Override
@@ -118,17 +129,33 @@ public class ClipperTrip extends Trip {
 
     @Override
     public Mode getMode() {
-        return ClipperData.getMode(mAgency);
+        switch (mTransportCode) {
+            case 0x62:
+                if (mAgency == ClipperData.AGENCY_BAY_FERRY
+                        || mAgency == ClipperData.AGENCY_GG_FERRY)
+                    return Mode.FERRY;
+                if (mAgency == ClipperData.AGENCY_CALTRAIN)
+                    return Trip.Mode.TRAIN;
+                return Trip.Mode.TRAM;
+            case 0x6f:
+                return Trip.Mode.METRO;
+            case 0x61:
+            case 0x75:
+                return Trip.Mode.BUS;
+        }
+        return Mode.OTHER;
     }
 
     public void writeToParcel(Parcel parcel, int flags) {
-        Utils.parcelCalendar(parcel, mTimestamp);
-        Utils.parcelCalendar(parcel, mExitTimestamp);
+        parcel.writeLong(mTimestamp);
+        parcel.writeLong(mExitTimestamp);
         parcel.writeInt(mFare);
         parcel.writeInt(mAgency);
         parcel.writeInt(mFrom);
         parcel.writeInt(mTo);
         parcel.writeInt(mRoute);
+        parcel.writeInt(mVehicleNum);
+        parcel.writeInt(mTransportCode);
     }
 
     public int describeContents() {

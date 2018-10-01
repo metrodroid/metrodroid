@@ -44,6 +44,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -190,49 +191,12 @@ public class CardTripsFragment extends ListFragment {
             TextView routeTextView = convertView.findViewById(R.id.route_text_view);
             TextView fareTextView = convertView.findViewById(R.id.fare_text_view);
             TextView stationTextView = convertView.findViewById(R.id.station_text_view);
+            LinearLayout paxLayout = convertView.findViewById(R.id.pax_layout);
+            ImageView paxIcon = convertView.findViewById(R.id.pax_icon);
+            TextView paxTextView = convertView.findViewById(R.id.pax_text_view);
+            TextView machineIdTextView = convertView.findViewById(R.id.machine_id_text_view);
 
-            @StringRes int modeContentDescriptionRes = 0;
-            switch (trip.getMode()) {
-                case BUS:
-                    modeContentDescriptionRes = R.string.mode_bus;
-                    break;
-
-                case TRAIN:
-                    modeContentDescriptionRes = R.string.mode_train;
-                    break;
-
-                case TRAM:
-                    modeContentDescriptionRes = R.string.mode_tram;
-                    break;
-
-                case METRO:
-                    modeContentDescriptionRes = R.string.mode_metro;
-                    break;
-
-                case FERRY:
-                    modeContentDescriptionRes = R.string.mode_ferry;
-                    break;
-
-                case TICKET_MACHINE:
-                    modeContentDescriptionRes = R.string.mode_ticket_machine;
-                    break;
-
-                case VENDING_MACHINE:
-                    modeContentDescriptionRes = R.string.mode_vending_machine;
-                    break;
-
-                case POS:
-                    modeContentDescriptionRes = R.string.mode_pos;
-                    break;
-
-                case BANNED:
-                    modeContentDescriptionRes = R.string.mode_banned;
-                    break;
-
-                default:
-                    modeContentDescriptionRes = R.string.mode_unknown;
-                    break;
-            }
+            @StringRes int modeContentDescriptionRes = trip.getMode().getDescription();
 
             TypedArray a = getContext().obtainStyledAttributes(new int[]{R.attr.TransportIcons});
             int iconArrayRes = -1;
@@ -349,6 +313,33 @@ public class CardTripsFragment extends ListFragment {
                 stationTextView.setVisibility(View.VISIBLE);
             } else {
                 stationTextView.setVisibility(View.GONE);
+            }
+
+            // Passenger count
+            int pax = trip.getPassengerCount();
+
+            if (pax >= 1) {
+                paxTextView.setText(String.format(Locale.getDefault(), "%d", pax));
+                paxIcon.setContentDescription(Utils.localizePlural(R.plurals.passengers, pax));
+
+                paxIcon.setImageDrawable(AppCompatResources.getDrawable(getContext(),
+                        pax == 1 ? R.drawable.material_ic_person_24dp : R.drawable.material_ic_group_24dp));
+
+                paxLayout.setVisibility(View.VISIBLE);
+            } else {
+                // No information.
+                paxLayout.setVisibility(View.GONE);
+            }
+
+            // Machine ID
+            if (trip.getVehicleID() != null) {
+                machineIdTextView.setText(Utils.localizeString(R.string.vehicle_number, trip.getVehicleID()));
+                machineIdTextView.setVisibility(View.VISIBLE);
+            } else if (trip.getMachineID() != null) {
+                machineIdTextView.setText(Utils.localizeString(R.string.machine_id, trip.getMachineID()));
+                machineIdTextView.setVisibility(View.VISIBLE);
+            } else {
+                machineIdTextView.setVisibility(View.GONE);
             }
 
             return convertView;

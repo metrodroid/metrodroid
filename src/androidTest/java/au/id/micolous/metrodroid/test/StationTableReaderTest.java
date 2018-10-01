@@ -3,6 +3,7 @@ package au.id.micolous.metrodroid.test;
 import android.test.AndroidTestCase;
 
 import au.id.micolous.metrodroid.transit.Station;
+import au.id.micolous.metrodroid.transit.seq_go.SeqGoData;
 import au.id.micolous.metrodroid.transit.seq_go.SeqGoTrip;
 import au.id.micolous.metrodroid.transit.suica.SuicaDBUtil;
 import au.id.micolous.metrodroid.util.StationTableReader;
@@ -12,16 +13,16 @@ import au.id.micolous.metrodroid.util.StationTableReader;
  */
 
 public class StationTableReaderTest extends AndroidTestCase {
-    public void testSeqGoDatabase() throws Exception {
+    public void testSeqGoDatabase() {
         TestUtils.setLocale(getContext(), "en-US");
         TestUtils.showRawStationIds(false);
 
-        Station s = StationTableReader.getStation(SeqGoTrip.SEQ_GO_STR, SeqGoTrip.DOMESTIC_AIRPORT);
+        Station s = StationTableReader.getStation(SeqGoData.SEQ_GO_STR, SeqGoTrip.DOMESTIC_AIRPORT);
         assertEquals("Domestic Airport", s.getStationName());
 
         // Try when Raw Station IDs are enabled.
         TestUtils.showRawStationIds(true);
-        s = StationTableReader.getStation(SeqGoTrip.SEQ_GO_STR, SeqGoTrip.DOMESTIC_AIRPORT);
+        s = StationTableReader.getStation(SeqGoData.SEQ_GO_STR, SeqGoTrip.DOMESTIC_AIRPORT);
         assertEquals("Domestic Airport [0x9]", s.getStationName());
 
         // Reset back to default
@@ -56,7 +57,7 @@ public class StationTableReaderTest extends AndroidTestCase {
         assertEquals("山手", s.getLineName());
 
         // Test in another supported language. We should fall back to English here.
-        TestUtils.setLocale(getContext(), "nl");
+        TestUtils.setLocale(getContext(), "fr-FR");
         s = SuicaDBUtil.getRailStation(SHINJUKU_REGION_CODE, SHINJUKU_LINE_CODE, SHINJUKU_STATION_CODE);
         assertNotNull(s);
         assertEquals("JR East", s.getCompanyName());

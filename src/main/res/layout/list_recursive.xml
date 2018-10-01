@@ -30,6 +30,6 @@
         android:layout_height="wrap_content"
         android:layout_below="@android:id/text1"
         android:layout_alignStart="@android:id/text1"
-        android:textAppearance="?android:attr/textAppearanceListItemSecondary"
+        android:textAppearance="?android:attr/textAppearanceListItem"
         android:layout_alignLeft="@android:id/text1" />
 </RelativeLayout>

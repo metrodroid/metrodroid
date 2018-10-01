@@ -23,9 +23,9 @@ package au.id.micolous.metrodroid;
 import android.app.Application;
 import android.content.SharedPreferences;
 import android.nfc.NfcAdapter;
-import android.os.Build;
 import android.os.StrictMode;
 import android.preference.PreferenceManager;
+import android.support.v7.app.AppCompatDelegate;
 import android.util.Log;
 
 import net.kazzz.felica.FeliCaLib;
@@ -57,6 +57,7 @@ import au.id.micolous.metrodroid.card.desfire.settings.DesfireFileSettings;
 import au.id.micolous.metrodroid.card.iso7816.ISO7816Application;
 import au.id.micolous.metrodroid.card.iso7816.ISO7816SelectorElement;
 import au.id.micolous.metrodroid.card.ultralight.UltralightPage;
+import au.id.micolous.metrodroid.key.ClassicSectorKey;
 import au.id.micolous.metrodroid.xml.Base64String;
 import au.id.micolous.metrodroid.xml.CardConverter;
 import au.id.micolous.metrodroid.xml.CardTypeTransform;
@@ -77,6 +78,7 @@ public class MetrodroidApplication extends Application {
     public static final String PREF_LAST_READ_AT = "last_read_at";
     public static final String PREF_MFC_AUTHRETRY = "pref_mfc_authretry";
     public static final String PREF_MFC_FALLBACK = "pref_mfc_fallback";
+    public static final String PREF_RETRIEVE_LEAP_KEYS = "pref_retrieve_leap_keys";
 
     public static final String PREF_HIDE_CARD_NUMBERS = "pref_hide_card_numbers";
     public static final String PREF_OBFUSCATE_TRIP_DATES = "pref_obfuscate_trip_dates";
@@ -140,6 +142,7 @@ public class MetrodroidApplication extends Application {
             matcher.bind(FeliCaLib.IDm.class, FelicaIDmTransform.class);
             matcher.bind(FeliCaLib.PMm.class, FelicaPMmTransform.class);
             matcher.bind(CardType.class, CardTypeTransform.class);
+            matcher.bind(ClassicSectorKey.KeyType.class, ClassicSectorKey.KeyType.Transform.class);
 
         } catch (Exception ex) {
             throw new RuntimeException(ex);
@@ -210,6 +213,7 @@ public class MetrodroidApplication extends Application {
             Log.w(TAG, "Detecting nfc support failed", e);
         }
 
+        AppCompatDelegate.setCompatVectorFromResourcesEnabled(true);
         PreferenceManager.setDefaultValues(this, R.xml.prefs, false);
 
         StrictMode.setThreadPolicy(new StrictMode.ThreadPolicy.Builder()

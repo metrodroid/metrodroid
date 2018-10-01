@@ -33,7 +33,7 @@ linux.conf.au 2018, in my talk, [Tap on to reverse engineering](https://youtu.be
 * [Steven Steiner](https://github.com/steets250) (LAX TAP)
 * [Rob O'Regan](http://www.robx1.net/nswtkt/private/manlyff/manlyff.htm) (Manly Fast Ferry card image)
 * [The Noun Project][15] (Various icons)
-* [Vladimir Serbinenko](https://github.com/phcoder) (Podorozhnik, Troika, Compass, Shenzhen Tong, Rav-Kav, T-money)
+* [Vladimir Serbinenko](https://github.com/phcoder) (Podorozhnik, Troika, Compass, Shenzhen Tong, Rav-Kav, T-money, Leap)
 * [Toomas Losin](http://www.lenrek.net) (Compass)
 * [Sinpo Lib](https://github.com/sinpolib) (Shenzhen Tong)
 * Maria Komar (Podorozhnik database and dumps)
@@ -76,6 +76,7 @@ Card / Agency | Location | Notes
 [EZ-Link][7] | :singapore: Singapore |
 [Go card][20] | :australia: Brisbane and South East Queensland, Australia | :new: :closed_lock_with_key: `MFC`
 [Kartu Multi Trip][39] | :indonesia: Jakarta, Indonesia | `KMT`
+[Leap][44] | :ireland: Ireland | :new: :unlock:
 [Manly Fast Ferry][19] | :australia: Sydney, NSW, Australia | :new: :closed_lock_with_key: `MFC`
 [Matkakortti][16], [HSL][17] | :finland: Finland |
 [Metrocard][34] | :new_zealand: Christchurch, New Zealand | :new: :closed_lock_with_key: `MFC`
@@ -100,13 +101,20 @@ Note | Meaning
 ---- | -------
 :new: | New in Metrodroid.
 :closed_lock_with_key: | Encryption keys required to read this card.
+:unlock: | Encryption keys are downloaded from the operator.
 `MFC` | MIFARE Classic card; requires NXP NFC chipset in your phone.
 `123` | Only the card number can be read.
 `FALLBACK` | Fallback reader -- must be explicitly enabled in the application's settings.
 `KMT` | Only new FeliCa-based cards can be read.
 `SINGLE` | Only single-use tickets can be read.
 
-This project **will only read data from the card itself**, without having to connect to the agency's back-office systems. In some cases, limited data is available, so balance information and trip history might not be available.
+This project **will only read data from the card itself**, without having to
+connect to the agency's back-office systems. In some cases, limited data is
+available, so balance information and trip history might not be available.
+
+Note: The Leap card reader connects to Transport for Ireland's server for
+challenge-response authentication with the card. The data is otherwise
+interpreted locally, and _connectivity is disabled by default._
 
 ## Supported Phones
 
@@ -197,4 +205,5 @@ This software and it's authors are not associated with any public transit agency
 [41]: https://www.compasscard.ca/
 [42]: https://www.rail.co.il/en/ravkav/Pages/default.aspx
 [43]: https://www.t-money.co.kr/
+[44]: https://www.leapcard.ie/
 

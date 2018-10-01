@@ -48,7 +48,6 @@
     <string name="share_xml">Share</string>
     <string name="save_xml">Save to File</string>
     <string name="history">History</string>
-    <string name="balance">Balance</string>
     <string name="no_trip_data">No trips found. Has this card been used?</string>
     <string name="import_xml">Import</string>
     <string name="import_clipboard">Paste from Clipboard</string>
@@ -112,10 +111,8 @@
     describing a "well known" service code. eg: "Service: 0x90f (Suica History)" -->
     <string name="felica_service_title_format">Service: 0x%1$s (%2$s)</string>
     <!-- Translators: the first parameter is a hexadecimal number. -->
-    <string name="felica_service_format">Service: 0x%s</string>
     <string name="record_title_format">Record: %s</string>
     <string name="binary_title_format">Binary data</string>
-    <string name="subscriptions">Subscriptions</string>
     <string name="info">Info</string>
     <!-- Translators: These are both dates, eg: "Valid from 3/12/2017 to 3/3/2018". Dates are
      formatted according to user preferences. -->
@@ -136,6 +133,17 @@
     <string name="error">Error</string>
     <string name="keys">Keys</string>
     <string name="delete">Delete</string>
+    <string name="delete_key_confirm_title">Really delete key?</string>
+    <!--
+    Translators:
+    %1$s is a user supplied name for an encryption key.
+    %2$s is a description of the type of key. This will be populated with a localised string (keytype_mfc or keytype_mfc_static).
+    -->
+    <string name="delete_key_confirm_message">The key file "<xliff:g id="description" example="a1b2c3d4">%1$s</xliff:g>" (containing <xliff:g id="key_type" example="1 MIFARE Classic key">%2$s</xliff:g>) will be gone forever.</string>
+    <!-- Translators: in this context, "key" refers to an encryption key -->
+    <string name="cant_delete_with_obfuscation">Deleting keys is currently unavailable</string>
+    <!-- Translators: in this context, "key" refers to an encryption key -->
+    <string name="cant_delete_with_obfuscation_message">For safety reasons, you can\'t delete keys while card number obfuscation is enabled. Turn it off if you want to delete keys.</string>
     <string name="add_key_directions">Save a binary dump of your keys as a file with a .farebotkeys extension, e-mail it as an attachment to yourself, and then open it on this device.</string>
     <string name="no_keys">No keys.</string>
     <string name="nfc_unavailable">NFC Unavailable</string>
@@ -161,6 +169,7 @@
     <string name="copied_to_clipboard">Copied to clipboard</string>
     <string name="saved_xml">Wrote Metrodroid-Export.xml to USB Storage.</string>
     <string name="saved_xml_custom">Wrote XML to USB Storage.</string>
+    <string name="file_exported">File exported successfully.</string>
     <string name="map_tiles_url">Map tiles URL</string>
     <string name="map_tiles_url_summary">Use a custom tile server for embedded maps, using Leaflet TileLayer syntax.</string>
     <string name="map_tiles_subdomains">Map tile subdomains</string>
@@ -260,6 +269,8 @@
 
     <string name="mfu_detect">Detecting MIFARE Ultralight card type…</string>
     <string name="mfu_reading">Reading MIFARE Ultralight card…</string>
+    <!-- Translators: This is substituted with the name of a card, like "Unlocking Leap card…" -->
+    <string name="mfd_unlocking">Unlocking <xliff:g id="card_name" example="Leap">%s</xliff:g> card…</string>
 
     <string name="iso7816_probing">Probing ISO7816 card…</string>
     <string name="calypso_reading">Reading Calypso card…</string>
@@ -287,6 +298,8 @@
         <item quantity="one">Hidden key data (<xliff:g id="count" example="1">%d</xliff:g> byte)</item>
         <item quantity="other">Hidden key data (<xliff:g id="count" example="3">%d</xliff:g> bytes)</item>
     </plurals>
+    <!-- Translators: "key" is an encryption key, which is displayed below this label. -->
+    <string name="key_data">Key data</string>
 
     <!--
     Translators: There is an obfuscation mode, with many flags (options) available. The value
@@ -370,6 +383,12 @@
         <item quantity="other">%d services</item>
     </plurals>
 
+    <!-- Translators: used as an accessibility label for a passengers icon -->
+    <plurals name="passengers">
+        <item quantity="one">passenger</item>
+        <item quantity="other">passengers</item>
+    </plurals>
+
     <!-- DESFire -->
     <string name="desfire_standard_file">Standard file</string>
     <string name="desfire_backup_file">Backup file</string>
@@ -377,6 +396,12 @@
     <string name="desfire_linear_record">Linear record</string>
     <string name="desfire_cyclic_record">Cyclic record</string>
     <string name="desfire_unknown_file">Unknown file type</string>
+    <string name="desfire_challenge">Challenge</string>
+    <string name="desfire_response">Response</string>
+    <string name="desfire_confirmation">Confirmation</string>
+    <string name="desfire_keyex">Key exchange</string>
+    <string name="desfire_key_number">Key %s</string>
+
     <!-- Type: Standard file, Length: 16 bytes -->
     <plurals name="desfire_standard_format">
         <item quantity="one">Type: %1$s, Length: %2$s byte</item>
@@ -587,52 +612,55 @@
 
 
     <!-- Locations -->
-    <string name="location_seattle">Seattle, WA, USA</string>
-    <string name="location_san_francisco">San Francisco, CA, USA</string>
-    <string name="location_singapore">Singapore</string>
-    <string name="location_tokyo">Tokyo, Japan</string>
-    <string name="location_kansai">Kansai, Japan</string>
-    <string name="location_the_netherlands">The Netherlands</string>
-    <string name="location_sao_paulo">São Paulo, Brazil</string>
-    <string name="location_helsinki_finland">Helsinki, Finland</string>
-    <string name="location_sydney_australia">Sydney, Australia</string>
-    <string name="location_vancouver">Vancouver, BC, Canada</string>
-    <!-- Translators: This refers to the province of Québec (not Québec City) -->
-    <string name="location_quebec">Québec, Canada</string>
-    <string name="location_boston">Boston, MA, USA</string>
-    <string name="location_paris">Paris, France</string>
-    <string name="location_grenoble">Grenoble, France</string>
-    <string name="location_gironde">Gironde, France</string>
-    <string name="location_lisbon">Lisbon, Portugal</string>
-    <string name="location_milan">Milan, Italy</string>
-    <string name="location_brussels">Brussels, Belgium</string>
-
+    <string name="location_act_australia">Australian Capital Territory, Australia</string>
     <!--
       Translators:
 
-      "SE QLD" is an abbreviation for "South East Queensland".
-
-      "Queensland" is a state of Australia: https://en.wikipedia.org/wiki/Queensland
-
-      "South East Queensland" is used to describe the most populated area of Queensland, which
-      includes Brisbane, Gold Coast and Sunshine Coast:
+      "SE QLD" is an abbreviation for "South East Queensland". This is the most populated area of
+      Queensland, which includes Brisbane, Gold Coast and Sunshine Coast:
       https://en.wikipedia.org/wiki/South_East_Queensland
 
       If there isn't a good way to abbreviate it in your language, please translate this as
       "Brisbane, Australia" instead.
     -->
     <string name="location_brisbane_seq_australia">Brisbane &amp; SE QLD, Australia</string>
-    <string name="location_victoria_australia">Victoria, Australia</string>
-    <string name="location_hong_kong">Hong Kong</string>
-    <string name="location_shenzhen">Shenzhen, Guangdong Province, China</string>
-    <string name="location_los_angeles">Los Angeles, CA, USA</string>
-    <string name="location_act_australia">Australian Capital Territory, Australia</string>
-    <string name="location_wa_australia">Western Australia, Australia</string>
+    <string name="location_brussels">Brussels, Belgium</string>
+    <string name="location_boston">Boston, MA, USA</string>
     <string name="location_christchurch_nz">Christchurch, New Zealand</string>
-    <string name="location_moscow">Moscow, Russia</string>
-    <string name="location_saint_petersburg">Saint Petersburg, Russia</string>
+    <string name="location_gironde">Gironde, France</string>
+    <string name="location_grenoble">Grenoble, France</string>
+    <string name="location_helsinki_finland">Helsinki, Finland</string>
+    <string name="location_hong_kong">Hong Kong</string>
+    <string name="location_ireland">Ireland</string>
     <string name="location_israel">Israel</string>
+    <string name="location_istanbul">Istanbul, Turkey</string>
     <string name="location_jakarta">Jakarta, Indonesia</string>
+    <!--
+    Translators: This refers to the Kansai region (Japanese: 関西地方 / Kansai-chihō).
+    This is not a city or prefecture.
+    -->
+    <string name="location_kansai">Kansai, Japan</string>
+    <string name="location_lisbon">Lisbon, Portugal</string>
+    <string name="location_los_angeles">Los Angeles, CA, USA</string>
+    <string name="location_milan">Milan, Italy</string>
+    <string name="location_minneapolis">Minneapolis, MN, USA</string>
+    <string name="location_moscow">Moscow, Russia</string>
+    <string name="location_paris">Paris, France</string>
+    <!-- Translators: This refers to the province of Québec (not Québec City) -->
+    <string name="location_quebec">Québec, Canada</string>
+    <string name="location_saint_petersburg">Saint Petersburg, Russia</string>
+    <string name="location_san_francisco">San Francisco, CA, USA</string>
+    <string name="location_sao_paulo">São Paulo, Brazil</string>
+    <string name="location_seattle">Seattle, WA, USA</string>
+    <string name="location_seoul">Seoul, Korea</string>
+    <string name="location_shenzhen">Shenzhen, Guangdong Province, China</string>
+    <string name="location_singapore">Singapore</string>
+    <string name="location_sydney_australia">Sydney, Australia</string>
+    <string name="location_the_netherlands">The Netherlands</string>
+    <string name="location_tokyo">Tokyo, Japan</string>
+    <string name="location_vancouver">Vancouver, BC, Canada</string>
+    <string name="location_victoria_australia">Victoria, Australia</string>
+    <string name="location_wa_australia">Western Australia, Australia</string>
 
     <!--
     These strings are used for content descriptions (accessibility), for modes of transport.
@@ -805,41 +833,16 @@
     -->
     <string name="kmt_agency">Kereta Commuter Indonesia</string>
     <string name="kmt_extra_note">Only for new FeliCa cards.</string>
-    <string name="kmt_trx_count">Transaction Counter</string>
-    <string name="kmt_balance">Balance</string>
     <string name="kmt_other_data">Other data</string>
     <string name="kmt_last_trx_amount">Last transaction amount</string>
 
     <!-- HSL -->
-    <string name="hsl_pass_is_valid">Valid season ticket</string>
-    <string name="hsl_1zone_ticket">Internal ticket</string>
-    <string name="hsl_2zone_ticket">Regional ticket</string>
     <string name="hsl_balance_refill">Balance refill</string>
     <string name="hsl_balance_ticket">Value ticket</string>
-    <string name="hsl_value_ticket_is_valid">Valid value ticket</string>
     <string name="hsl_pass_ticket">Season ticket</string>
-    <string name="hsl_season_ticket_starts">Season ticket starts</string>
-    <string name="hsl_season_ticket_ends">Season ticket ends</string>
-    <string name="hsl_season_ticket_bought_on">Season ticket bought on</string>
-    <string name="hsl_previous_season_ticket">Previous season ticket was</string>
-    <string name="hsl_season_ticket_price_was">The season ticket\'s price was</string>
-    <string name="hsl_you_last_used_this_ticket">You last used this ticket on</string>
     <string name="hsl_person_format">%s person</string>
     <!-- Translators: This is the short form of "minutes" -->
     <string name="hsl_mins_format">%s mins</string>
-    <string name="hsl_value_ticket">Value ticket</string>
-    <string name="hsl_value_ticket_bought_on">Ticket bought</string>
-    <string name="hsl_value_ticket_expires_on">Ticket expires</string>
-    <string name="hsl_value_ticket_last_transfer">Last transfer</string>
-    <string name="hsl_value_ticket_last_sign">Last sign</string>
-    <string name="hsl_value_ticket_price">Price of value ticket</string>
-    <string name="hsl_value_ticket_disco_group">Discount group</string>
-    <string name="hsl_value_ticket_pax">Group size</string>
-    <string name="hsl_value_ticket_duration">Ticket validity</string>
-    <string name="hsl_value_ticket_vehicle_number">Vehicle number</string>
-    <string name="hsl_value_ticket_vehicle_type">Vehicle type</string>
-    <string name="hsl_value_ticket_line_number">Line number</string>
-    <string name="hsl_season_ticket">Season ticket</string>
     <string name="hsl_line_vehicle">Line %s, Vehicle %s</string>
 
     <!--
@@ -908,6 +911,7 @@
     -->
     <!-- TRANSLATORS: "Cubic Nextfare" is the name of a ticketing system product, and should not be literally translated. -->
     <string name="nextfare">Cubic Nextfare</string>
+    <!-- Translators: This is a code used on the card which identifies which city's transit network it is associated with -->
     <string name="nextfare_system_code">System code</string>
     <string name="nextfare_ticket_class">Ticket class code %d</string>
 
@@ -951,8 +955,8 @@
     <string name="compass_ticket_type">Ticket type</string>
     <string name="compass_ticket_type_concession">Concession</string>
     <string name="compass_ticket_type_regular">Regular</string>
-    <string name="expiry_date">Expiry date</string>
     <string name="compass_note">Single ride tickets only</string>
+    <string name="expiry_date">Expiry date</string>
 
     <!--
     Translators: Some cards record the cardholder's gender, this is used to label the field.
@@ -966,7 +970,6 @@
     <string name="en1545_issue_date">Issue date</string>
     <string name="en1545_network_id">Network ID</string>
     <string name="en1545_card_issuer">Issuer</string>
-    <string name="vehicle_number">Vehicle #%s</string>
 
     <string name="en1545_card_purchase_date">Date Purchased</string>
     <string name="en1545_single_trips">Single trips</string>
@@ -1076,7 +1079,6 @@
     </string>
     <string name="fully_blank_title">Blank card</string>
 
-    <string name="location_seoul">Seoul, Korea</string>
     <!-- Translators: T-money is Korean payment/transit system. Korean: 티머니
     May be transliterated -->
     <string name="card_name_tmoney">T-Money</string>
@@ -1111,7 +1113,6 @@
     <!-- Translators: Used as a submenu title in the preferences screen -->
     <string name="nfc">Near Field Communication</string>
     <string name="istanbulkart_2nd_card_number">Secondary serial</string>
-    <string name="location_istanbul">Istanbul, Turkey</string>
     <!-- Translators: Used as a description for the Near Field Communication options submenu -->
     <string name="nfc_options_desc">Fallback reader for MIFARE Classic, physical card interface settings…</string>
 
@@ -1119,9 +1120,94 @@
     <string name="file_fci">File FCI</string>
     <!-- Translators: FCI = File Control Information. Used in the context of ISO 7816 cards. -->
     <string name="app_fci">App FCI</string>
+    <string name="classic_key">MIFARE Classic key</string>
+    <!--
+    Translators: MIFARE Classic has two keys: key "A" and key "B".
+    "Key" can be translated, but do not transliterate "A" or "B".
+    -->
+    <string name="classic_key_a">Key A</string>
+    <!--
+    Translators: MIFARE Classic has two keys: key "A" and key "B".
+    "Key" can be translated, but do not transliterate "A" or "B".
+    -->
+    <string name="classic_key_b">Key B</string>
+
+
     <string name="classic_key_format_a">Key (A): %s</string>
     <string name="classic_key_format_b">Key (B): %s</string>
     <string name="classic_key_format">Key: %s</string>
     <string name="trip_counter">Trips counter</string>
     <string name="refill_counter">Refill counter</string>
+    <string name="mifare_desfire">MIFARE DESFire</string>
+
+    <!-- TFI Leap -->
+    <string name="leap_retrieve_keys">Retrieve keys for Leap cards</string>
+    <string name="leap_retrieve_keys_longdesc">This will share your card details with Transport for Ireland, in order to respond to the Leap card\'s authentication challenge. TFI will be able to know that you used Metrodroid on this card. The card is not readable without this key.</string>
+
+    <string name="locked_leap">Locked Leap</string>
+    <string name="leap_period_start">Period start</string>
+    <string name="leap_accumulator_region">Region</string>
+    <string name="leap_accumulator_total">Total spend</string>
+    <!--
+    Translators: "%s" will be replaced with the name of a transit operator.
+     eg: "Dublin Bus total spend"
+    -->
+    <string name="leap_accumulator_agency">%s total spend</string>
+    <string name="leap_daily_accumulators">Daily fare caps</string>
+    <string name="leap_weekly_accumulators">Weekly fare caps</string>
+
+    <string name="initialisation_date">Initialisation date</string>
+    <string name="issue_date">Date of issue</string>
+
+    <string name="leap_issuer_id">Issuer ID</string>
+    <!--
+    Translators:
+    keys = encryption keys
+
+    Shown when the user has scanned a Leap card (Irish transit card) when they don't have the needed
+    encryption keys.
+    -->
+    <string name="leap_locked_warning">This card was not unlocked. Please enable retrieval of Leap keys in the NFC Preferences screen.</string>
+    <!--
+    Translators:
+    - Shown in "supported cards" list.
+    - keys = encryption keys
+    - TFI = Transport for Ireland (brand of Údarás Náisiúnta Iompair / National Transport Authority)
+    -->
+    <string name="card_note_leap">Requires retrieving keys from TFI, which must be enabled in the NFC Preferences screen.</string>
+
+    <!--
+    Translators: This button will open a web page with technical descriptions of the file formats,
+    written in English.
+    -->
+    <string name="about_key_formats">About key formats…</string>
+    <string name="invalid_json_key_type">Invalid JSON: key type missing</string>
+    <string name="invalid_json">Invalid JSON</string>
+    <string name="invalid_key_file">Invalid key file</string>
+    <!-- Translators: "key file" is a file containing encryption keys. -->
+    <string name="key_file_empty">Key file is empty!</string>
+
+    <string name="static_imported">Imported: %s</string>
+
+    <!-- Translators: Shown as a label for a group of keys that does not have any label or description. -->
+    <string name="untitled_key_group">Untitled key group</string>
+
+    <plurals name="keytype_mfc">
+        <item quantity="one">%d MIFARE Classic key</item>
+        <item quantity="other">%d MIFARE Classic keys</item>
+    </plurals>
+    <plurals name="keytype_mfc_static">
+        <item quantity="one">%d static MIFARE Classic key</item>
+        <item quantity="other">%d static MIFARE Classic keys</item>
+    </plurals>
+
+    <string name="no_static_key_assignment">Static keys cannot be assigned to a single card.</string>
+
+    <!--
+    Translators: This is used to describe a vehicle number/ID. It doesn't have to be a number.
+
+    eg: "Vehicle 1024", "Vehicle 2A10"
+    -->
+    <string name="vehicle_number">Vehicle %s</string>
+    <string name="card_id">Card ID</string>
 </resources>

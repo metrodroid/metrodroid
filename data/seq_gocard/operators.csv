@@ -1,0 +1,6 @@
+id,name,short_name,mode
+1,Ticket Machine,Ticket Machine,TICKET_MACHINE
+4,Translink,Translink,BUS
+5,Queensland Rail,Queensland Rail,TRAIN
+18,Transdev Brisbane Ferries,Transdev Brisbane Ferries,FERRY
+23,Ticket Machine,Ticket Machine,TICKET_MACHINE

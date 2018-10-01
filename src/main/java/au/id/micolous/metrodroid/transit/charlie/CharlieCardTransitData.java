@@ -53,7 +53,6 @@ public class CharlieCardTransitData extends TransitData {
     private final long mSerial;
     private final long mSecondSerial;
     private final int mBalance;
-    private final int mExpiry;
     private final int mStartDate;
     private final List<CharlieCardTrip> mTrips;
     private static final long CHARLIE_EPOCH;
@@ -62,13 +61,14 @@ public class CharlieCardTransitData extends TransitData {
             .setName(NAME)
             .setLocation(R.string.location_boston)
             .setCardType(CardType.MifareClassic)
+            .setImageId(R.drawable.charlie_card, R.drawable.iso7810_id1_alpha)
             .setKeysRequired()
             .setPreview()
             .build();
 
     static {
         GregorianCalendar epoch = new GregorianCalendar(TZ);
-        epoch.set(2004, Calendar.JANUARY, 1, 0, 0, 0);
+        epoch.set(2003, Calendar.JANUARY, 1, 0, 0, 0);
 
         CHARLIE_EPOCH = epoch.getTimeInMillis();
     }
@@ -85,12 +85,11 @@ public class CharlieCardTransitData extends TransitData {
         else
             balanceSector = sector3;
         mBalance = getPrice(balanceSector.getBlock(1).getData(), 5);
-        mExpiry = Utils.byteArrayToInt(balanceSector.getBlock(1).getData(), 0, 3);
         mStartDate = Utils.byteArrayToInt(balanceSector.getBlock(0).getData(), 6, 3);
         mTrips = new ArrayList<>();
         for (int i = 0; i < 12; i++) {
             ClassicBlock block = card.getSector(6 + (i / 6)).getBlock((i / 2) % 3);
-            if (Utils.byteArrayToInt(block.getData(), 0, 4) == 0)
+            if (Utils.byteArrayToInt(block.getData(), 7 * (i % 2), 4) == 0)
                 continue;
             mTrips.add(new CharlieCardTrip(block.getData(), 7 * (i % 2)));
         }
@@ -108,7 +107,6 @@ public class CharlieCardTransitData extends TransitData {
         mSerial = in.readLong();
         mSecondSerial = in.readLong();
         mBalance = in.readInt();
-        mExpiry = in.readInt();
         mStartDate = in.readInt();
         mTrips = in.readArrayList(CharlieCardTrip.class.getClassLoader());
     }
@@ -123,8 +121,34 @@ public class CharlieCardTransitData extends TransitData {
     @Nullable
     @Override
     protected TransitBalance getBalance() {
-        return new TransitBalanceStored(TransitCurrency.USD(mBalance), null,
-                parseTimestamp(mStartDate), parseTimestamp(mExpiry));
+        Calendar start = parseTimestamp(mStartDate);
+
+        // After 2011, all cards expire 10 years after issue.
+        // Cards were first issued in 2006, and would expire after 5 years, and had no printed
+        // expiry date.
+        // However, currently (2018), all of these have expired anyway.
+        Calendar expiry = (Calendar) start.clone();
+        expiry.add(Calendar.YEAR, 11);
+        expiry.add(Calendar.DAY_OF_YEAR, -1);
+
+        // Find the last trip taken on the card.
+        Calendar lastTrip = null;
+        for (CharlieCardTrip t : mTrips) {
+            if (lastTrip == null || t.getStartTimestamp().getTimeInMillis() > lastTrip.getTimeInMillis()) {
+                lastTrip = t.getStartTimestamp();
+            }
+        }
+
+        if (lastTrip != null) {
+            // Cards not used for 2 years will also expire
+            lastTrip = (Calendar) lastTrip.clone();
+            lastTrip.add(Calendar.YEAR, 2);
+
+            if (lastTrip.getTimeInMillis() < expiry.getTimeInMillis()) {
+                expiry = lastTrip;
+            }
+        }
+        return new TransitBalanceStored(TransitCurrency.USD(mBalance), null, start, expiry);
     }
 
     @Override
@@ -137,7 +161,6 @@ public class CharlieCardTransitData extends TransitData {
         dest.writeLong(mSerial);
         dest.writeLong(mSecondSerial);
         dest.writeInt(mBalance);
-        dest.writeInt(mExpiry);
         dest.writeInt(mStartDate);
         dest.writeList(mTrips);
     }
@@ -196,6 +219,8 @@ public class CharlieCardTransitData extends TransitData {
 
     @Override
     public List<ListItem> getInfo() {
+        if (mSecondSerial == 0 || mSecondSerial == 0xffffffffL)
+            return null;
         return Collections.singletonList(new ListItem(R.string.charlie_2nd_card_number,
                 String.format(Locale.ENGLISH, "A%010d", mSecondSerial)));
     }

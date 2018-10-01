@@ -81,6 +81,11 @@ class PodorozhnikTopup extends Trip {
         mTopupMachine = parcel.readInt();
     }
 
+    @Override
+    public String getMachineID() {
+        return Integer.toString(mTopupMachine);
+    }
+
     @Nullable
     @Override
     public Station getStartStation() {
@@ -88,8 +93,7 @@ class PodorozhnikTopup extends Trip {
             int station = mTopupMachine / 10;
             int stationId = (PodorozhnikTrip.TRANSPORT_METRO << 16) | (station << 6);
             return StationTableReader.getStation(PodorozhnikTrip.PODOROZHNIK_STR,
-                    stationId, Integer.toString(station))
-                    .addAttribute(Utils.localizeString(R.string.podorozhnik_tvm, mTopupMachine));
+                    stationId, Integer.toString(station));
         }
         // TODO: handle other transports better.
         return Station.unknown(Integer.toHexString(mAgency) + "/" + Integer.toHexString(mTopupMachine));

@@ -1,12 +1,10 @@
 package au.id.micolous.metrodroid.ui;
 
+import android.support.annotation.StringRes;
+import android.text.Spanned;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.RelativeLayout;
-import android.widget.TextView;
-
-import com.unnamed.b.atv.model.TreeNode;
 
 import java.util.Collections;
 import java.util.List;
@@ -21,7 +19,7 @@ public class ListItemRecursive extends ListItem {
         mSubTree = subTree;
     }
 
-    public ListItemRecursive(int text1Res, String text2, List<ListItem> subTree) {
+    public ListItemRecursive(@StringRes int text1Res, String text2, List<ListItem> subTree) {
         super(text1Res, text2);
         mSubTree = subTree;
     }
@@ -37,16 +35,16 @@ public class ListItemRecursive extends ListItem {
         return mSubTree;
     }
 
-    public static ListItem collapsedValue(String name, String value) {
+    public static ListItem collapsedValue(String name, Spanned value) {
         return collapsedValue(name, null, value);
     }
 
-    public static ListItem collapsedValue(int nameRes, String value) {
+    public static ListItem collapsedValue(int nameRes, Spanned value) {
         return new ListItemRecursive(nameRes, null,
                 value != null ? Collections.singletonList(new ListItem(null, value)) : null);
     }
 
-    public static ListItem collapsedValue(String title, String subtitle, String value) {
+    public static ListItem collapsedValue(String title, String subtitle, Spanned value) {
         return new ListItemRecursive(title, subtitle,
                 value != null ? Collections.singletonList(new ListItem(null, value)) : null);
     }

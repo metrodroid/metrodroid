@@ -11,16 +11,12 @@
     <string name="advanced_info">מידע מתקדם</string>
     <string name="delete_card">מחק כרטיס</string>
     <string name="unknown_card">לא יודע כרטיס</string>
-    <string name="locked_card">כרטיס נעול</string>
     <string name="hw_detail">מידע ייצור</string>
     <string name="data">קבצי נתונים</string>
     <string name="copy_xml">עותק</string>
     <string name="share_xml">לחלוק</string>
     <string name="save_xml">לחסוך כדי אחסון USB</string>
-    <string name="trips">טיולים</string>
     <string name="history">היסטוריה</string>
-    <string name="balance">כמות</string>
-    <string name="refills">מילוי</string>
     <string name="no_trip_data">לא נמצאו נסיעות. כרטיס זה נוצל בעבר?</string>
     <string name="import_xml">יבוא</string>
     <string name="import_clipboard">יבוא מלוח</string>
@@ -55,8 +51,6 @@
 <xliff:g id="balance" example="$13.37">%s</xliff:g></string>
     <string name="pass_or_transfer">מעבר</string>
     <string name="wireless_settings">הגדרות אלחוטיות</string>
-    <string name="report_error">דוח שגיאות</string>
-
     <string name="unknown_card_header">פורמט כרטיס לא ידוע</string>
     <string name="unknown_card_description">כרטיס זה עדיין אינו נתמך על ידי מטרו-דרואיד. ניתן להציג נתונים גולמיים בלבד.</string>
 
@@ -64,10 +58,6 @@
     <string name="unknown_more_info_desc">גע כאן לקבלת מידע נוסף על התמיכה של מטרו-דרואיד של הכרטיס הזה.</string>
 
     <string name="lawyercats">מטרו-דרואיד ומחבריו אינם קשורים עם כל סוכנות תחבורה ציבורית.</string>
-
-
-    <string name="report_error_privacy_title">הצהרת פרטיות</string>
-    <string name="report_error_privacy_message">כל הנתונים כלולים כרטיס זו ייכללו בדוח השגיאה שלך.</string>
     <string name="scanned_cards">היסטוריה</string>
     <string name="no_scanned_cards">לא סרקת כל קלפים.</string>
     <string name="block_title_format">בלוק: %s</string>

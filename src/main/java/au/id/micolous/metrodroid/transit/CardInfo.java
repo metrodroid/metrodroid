@@ -21,8 +21,6 @@ package au.id.micolous.metrodroid.transit;
 
 import android.content.Context;
 import android.content.res.Resources;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.support.annotation.DrawableRes;
@@ -45,6 +43,7 @@ import au.id.micolous.metrodroid.transit.istanbulkart.IstanbulKartTransitData;
 import au.id.micolous.metrodroid.transit.strelka.StrelkaTransitData;
 import au.id.micolous.metrodroid.transit.intercode.IntercodeTransitData;
 import au.id.micolous.metrodroid.transit.ricaricami.RicaricaMiTransitData;
+import au.id.micolous.metrodroid.transit.msp_goto.MspGotoTransitData;
 import au.id.micolous.metrodroid.transit.yvr_compass.CompassUltralightTransitData;
 import au.id.micolous.metrodroid.transit.kmt.KMTTransitData;
 import au.id.micolous.metrodroid.transit.lax_tap.LaxTapTransitData;
@@ -62,6 +61,7 @@ import au.id.micolous.metrodroid.transit.ravkav.RavKavTransitData;
 import au.id.micolous.metrodroid.transit.seq_go.SeqGoTransitData;
 import au.id.micolous.metrodroid.transit.smartrider.SmartRiderTransitData;
 import au.id.micolous.metrodroid.transit.suica.SuicaTransitData;
+import au.id.micolous.metrodroid.transit.tfi_leap.LeapTransitData;
 import au.id.micolous.metrodroid.transit.tmoney.TMoneyTransitData;
 import au.id.micolous.metrodroid.transit.troika.TroikaTransitData;
 import au.id.micolous.metrodroid.util.Utils;
@@ -83,10 +83,12 @@ public class CardInfo {
             EdyTransitData.CARD_INFO,
             EZLinkTransitData.EZ_LINK_CARD_INFO,
             SeqGoTransitData.CARD_INFO, // Go card
+            MspGotoTransitData.CARD_INFO, // Go-to card
             HSLTransitData.CARD_INFO,
             IstanbulKartTransitData.CARD_INFO,
             SuicaTransitData.ICOCA_CARD_INFO,
             KMTTransitData.CARD_INFO,
+            LeapTransitData.CARD_INFO,
             ManlyFastFerryTransitData.CARD_INFO,
             ChcMetrocardTransitData.CARD_INFO, // Metrocard
             MobibTransitData.CARD_INFO,
@@ -108,9 +110,9 @@ public class CardInfo {
             SmartRiderTransitData.SMARTRIDER_CARD_INFO,
             StrelkaTransitData.CARD_INFO,
             SuicaTransitData.SUICA_CARD_INFO,
-            LaxTapTransitData.CARD_INFO, // TAP
             TMoneyTransitData.CARD_INFO,
             IntercodeTransitData.TRANSGIRONDE_CARD_INFO,
+            LaxTapTransitData.CARD_INFO, // Transit Access Pass
             TroikaTransitData.CARD_INFO,
     };
 
