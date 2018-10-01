@@ -79,7 +79,9 @@
     <string name="turn_on_nfc">Please enable NFC to read card info.</string>
     <string name="wireless_settings">Wireless Settings</string>
     <!-- Translators: "Machine ID" is arbitrary. It could be a decimal number, or hexadecimal… -->
-    <string name="machine_id">Machine ID %s</string>
+    <string name="machine_id_format">Machine ID %s</string>
+    <!-- Translators: "Machine ID" is arbitrary. It could be a decimal number, or hexadecimal… -->
+    <string name="machine_id">Machine ID</string>
 
     <string name="unknown_card_header">Unsupported card format</string>
     <string name="unknown_card_description">This card is not yet supported by Metrodroid. Only raw data can be displayed.</string>
@@ -948,11 +950,31 @@
 
     <!-- En1545 and related cards -->
 
+    <!-- Translators: The name of the transit agency who sold a subscription -->
+    <string name="seller_agency">Seller agency</string>
+    <!-- Translators: Attribute to describe the number of remaining trips on the card or subscription. -->
+    <string name="remaining_trip_count">Trips remaining</string>
+    <plurals name="remaining_trips_total">
+        <item quantity="zero">No trips remain</item>
+        <item quantity="one">%1$d trip remains</item>
+        <item quantity="other">%1$d trips remaining</item>
+    </plurals>
+
+    <plurals name="remaining_trip_on_day">
+        <item quantity="one">%1$d trip remains on %2$s</item>
+        <item quantity="other">%1$d trips remaining on %2$s</item>
+    </plurals>
+    <string name="remaining_day_count">Days remaining</string>
+    <plurals name="travel_zones">
+        <item quantity="one">Travel zone</item>
+        <item quantity="other">Travel zones</item>
+    </plurals>
+
     <string name="en1545_issue_date">Issue date</string>
     <string name="en1545_network_id">Network ID</string>
     <string name="en1545_card_issuer">Issuer</string>
 
-    <string name="en1545_card_purchase_date">Date Purchased</string>
+    <string name="purchase_date">Date purchased</string>
     <string name="en1545_single_trips">Single trips</string>
     <string name="en1545_monthly_subscription">Monthly subscription</string>
     <string name="en1545_weekly_subscription">Weekly subscription</string>
@@ -962,7 +984,16 @@
     <string name="en1545_subscription_expired">Expired</string>
     <string name="en1545_unknown_status">Unknown status (%s)</string>
     <string name="en1545_never_used">Never Used</string>
-    <string name="en1545_last_used_on">Last used on %s</string>
+    <!-- Translators "Last used" is a date, time or date+time attribute -->
+    <string name="last_used_on">Last used</string>
+    <string name="payment_method">Payment method</string>
+    <string name="payment_method_cash">Cash</string>
+    <string name="payment_method_credit_card">Credit card</string>
+    <string name="payment_method_debit_card">Debit card</string>
+    <string name="payment_method_transit_card">Transit card</string>
+    <string name="payment_method_cheque">Cheque</string>
+    <!-- Translators: Free as in "gratis" (costing no money) -->
+    <string name="payment_method_free">Free</string>
 
     <!-- Translators: This refers to a person's name. -->
     <string name="card_holders_name">Cardholder\'s name</string>
@@ -1191,4 +1222,5 @@
     -->
     <string name="vehicle_number">Vehicle %s</string>
     <string name="card_id">Card ID</string>
+    <string name="tap_for_more_info">Tap for more information…</string>
 </resources>

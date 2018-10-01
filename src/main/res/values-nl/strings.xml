@@ -370,7 +370,7 @@
     <string name="felica_idm">Productie-ID (IDm)</string>
     <string name="felica_pmm">Productieparameter (PMm)</string>
 
-    <string name="machine_id">Automaat-ID %s</string>
+    <string name="machine_id_format">Automaat-ID %s</string>
 
     <string name="localise_places_longdesc">Tekst-naar-spraak werkt normaal gesproken alleen goed voor één taal. 
 \n 

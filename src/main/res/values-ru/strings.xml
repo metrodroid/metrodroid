@@ -145,7 +145,7 @@
     <string name="nfc_not_available">NFC: не доступно</string>
     <string name="balances_and_subscriptions">Билеты</string>
 <string name="scanned_at_format">Прочитано %2$s в %1$s</string>
-    <string name="machine_id">Автомат %s</string>
+    <string name="machine_id_format">Автомат %s</string>
 
     <string name="advanced_info">Расширенная информация</string>
     <string name="hw_detail">Информация о производителе</string>

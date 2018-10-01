@@ -59,6 +59,8 @@
             android:layout_height="0dp"
             android:layout_gravity="end|center_vertical"
             android:layout_marginTop="8dp"
+            android:layout_marginRight="8dp"
+            android:layout_marginEnd="8dp"
             android:baselineAligned="true"
             app:layout_constraintBottom_toBottomOf="@+id/company"
             app:layout_constraintEnd_toEndOf="parent"
@@ -110,20 +112,66 @@
             android:id="@+id/used"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:gravity="end"
-            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginBottom="8dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:gravity="start"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/name"
+            app:layout_constraintTop_toBottomOf="@+id/name"
             tools:text="Used" />
 
         <TextView
             android:id="@+id/valid"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:layout_marginRight="8dp"
+            android:layout_marginTop="8dp"
             android:gravity="end"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/used"
+            app:layout_constraintTop_toBottomOf="@+id/name"
             tools:text="Valid 2010-01-31 to 2011-01-30" />
+
+        <android.support.constraint.Barrier
+            android:id="@+id/barrier"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:barrierDirection="bottom"
+            app:constraint_referenced_ids="used,valid"
+            app:layout_constraintTop_toBottomOf="@id/name"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            tools:layout_editor_absoluteY="600dp" />
+
+        <TextView
+            android:id="@+id/more_info_prompt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginRight="8dp"
+            android:layout_marginTop="8dp"
+            android:text="@string/tap_for_more_info"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/barrier" />
+
+        <ListView
+            android:id="@+id/properties"
+            android:layout_width="fill_parent"
+            android:layout_height="0dp"
+            android:clickable="false"
+            android:divider="@null"
+            android:dividerHeight="0dp"
+            android:isScrollContainer="false"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/barrier" >
+
+        </ListView>
     </android.support.constraint.ConstraintLayout>
 </android.support.v7.widget.CardView>

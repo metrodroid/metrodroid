@@ -28,9 +28,13 @@ import android.text.Spanned;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Adapter;
 import android.widget.ArrayAdapter;
+import android.widget.ExpandableListView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ListAdapter;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import au.id.micolous.metrodroid.activity.CardInfoActivity;
@@ -45,6 +49,7 @@ import java.util.Locale;
 
 import au.id.micolous.farebot.R;
 import au.id.micolous.metrodroid.transit.TransitCurrency;
+import au.id.micolous.metrodroid.ui.ListItem;
 import au.id.micolous.metrodroid.util.TripObfuscator;
 import au.id.micolous.metrodroid.util.Utils;
 
@@ -185,6 +190,18 @@ public class CardBalanceFragment extends ListFragment {
                 paxLayout.setVisibility(View.GONE);
             }
 
+            boolean hasExtraInfo = subscription.getInfo() != null;
+            ListView properties = view.findViewById(R.id.properties);
+            TextView moreInfoPrompt = view.findViewById(R.id.more_info_prompt);
+
+            if (hasExtraInfo) {
+                moreInfoPrompt.setVisibility(View.VISIBLE);
+                properties.setVisibility(View.GONE);
+            } else {
+                properties.setVisibility(View.GONE);
+                moreInfoPrompt.setVisibility(View.GONE);
+            }
+
             return view;
         }
 
@@ -229,8 +246,75 @@ public class CardBalanceFragment extends ListFragment {
 
         @Override
         public boolean isEnabled(int position) {
+            Object item = getItem(position);
+
+            if (item == null) {
+                return false;
+            }
+
+            if (item instanceof TransitBalance) {
+                // We don't do anything for balances, yet.
+                return false;
+            }
+
+            if (item instanceof Subscription) {
+                return ((Subscription) item).getInfo() != null;
+            }
+
             return false;
         }
     }
 
+    @Override
+    public void onListItemClick(ListView l, View v, int position, long id) {
+        Log.d(TAG, "Clicked " + id + " " + position );
+        Object item = getListAdapter().getItem(position);
+        if (item == null) {
+            return;
+        }
+
+        if (item instanceof TransitBalance) {
+            return;
+        }
+
+        if (item instanceof Subscription) {
+            List<ListItem> infos = ((Subscription)item).getInfo();
+            if (infos == null) {
+                return;
+            }
+
+            ListView lv = v.findViewById(R.id.properties);
+            TextView tv = v.findViewById(R.id.more_info_prompt);
+
+            if (lv.getVisibility() == View.VISIBLE) {
+                lv.setVisibility(View.GONE);
+                tv.setVisibility(View.VISIBLE);
+                lv.setAdapter(null);
+                return;
+            }
+
+            tv.setVisibility(View.GONE);
+            lv.setVisibility(View.INVISIBLE);
+
+            ListAdapter a = new ListItemAdapter(getActivity(), infos);
+            lv.setAdapter(a);
+
+            // Calculate correct height
+            int totalHeight = 0;
+            for (int i=0; i < a.getCount(); i++) {
+                View li = a.getView(i, null, lv);
+                li.measure(0, 0);
+                totalHeight += li.getMeasuredHeight();
+            }
+
+            // Set correct height
+            ViewGroup.LayoutParams par = lv.getLayoutParams();
+            par.height = totalHeight + (lv.getDividerHeight() * (a.getCount() - 1));
+            lv.setLayoutParams(par);
+            lv.setVisibility(View.VISIBLE);
+            lv.requestLayout();
+
+            lv.setVisibility(View.VISIBLE);
+        }
+    }
 }

@@ -138,7 +138,7 @@ public class MobibTransitData extends Calypso1545TransitData {
     public List<ListItem> getInfo() {
         ArrayList <ListItem> li = new ArrayList<>();
         if (mPurchase != 0)
-            li.add(new ListItem(R.string.en1545_card_purchase_date,
+            li.add(new ListItem(R.string.purchase_date,
                     Utils.longDateFormat(En1545FixedInteger.parseDate(mPurchase, TZ))));
         li.add(new ListItem(R.string.transaction_counter, Integer.toString(mTotalTrips)));
         int gender = mExtHolderParsed.getIntOrZero("HolderGender");

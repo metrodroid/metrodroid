@@ -336,7 +336,7 @@ public class CardTripsFragment extends ListFragment {
                 machineIdTextView.setText(Utils.localizeString(R.string.vehicle_number, trip.getVehicleID()));
                 machineIdTextView.setVisibility(View.VISIBLE);
             } else if (trip.getMachineID() != null) {
-                machineIdTextView.setText(Utils.localizeString(R.string.machine_id, trip.getMachineID()));
+                machineIdTextView.setText(Utils.localizeString(R.string.machine_id_format, trip.getMachineID()));
                 machineIdTextView.setVisibility(View.VISIBLE);
             } else {
                 machineIdTextView.setVisibility(View.GONE);

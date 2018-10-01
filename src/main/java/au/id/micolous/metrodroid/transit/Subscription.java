@@ -23,9 +23,22 @@
 package au.id.micolous.metrodroid.transit;
 
 import android.os.Parcelable;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.annotation.StringRes;
+import android.util.Log;
 
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
+import java.util.Locale;
+
+import au.id.micolous.farebot.R;
+import au.id.micolous.metrodroid.MetrodroidApplication;
+import au.id.micolous.metrodroid.ui.HeaderListItem;
+import au.id.micolous.metrodroid.ui.ListItem;
+import au.id.micolous.metrodroid.util.TripObfuscator;
+import au.id.micolous.metrodroid.util.Utils;
 
 /**
  * Represents subscriptions on a card.  Subscriptions can be used to represent a number of different
@@ -223,19 +236,36 @@ public abstract class Subscription implements Parcelable {
         return null;
     }
 
+    /**
+     * Describes payment methods for a {@link Subscription}.
+     */
     public enum PaymentMethod {
-        UNKNOWN,
-        CASH,
-        CREDIT_CARD,
-        DEBIT_CARD,
-        CHEQUE,
-        TRANSIT_CARD,
+        UNKNOWN(R.string.unknown),
+        CASH(R.string.payment_method_cash),
+        CREDIT_CARD(R.string.payment_method_credit_card),
+        DEBIT_CARD(R.string.payment_method_debit_card),
+        CHEQUE(R.string.payment_method_cheque),
+        /** The payment is made using stored balance on the transit card itself. */
+        TRANSIT_CARD(R.string.payment_method_transit_card),
+        /** The subscription costs nothing (gratis) */
+        FREE(R.string.payment_method_free);
+
+        @StringRes int mDescription;
+        PaymentMethod(@StringRes int description) {
+            mDescription = description;
+        }
+
+        @StringRes
+        public int getDescription() {
+            return mDescription;
+        }
     }
 
     /**
      * The method by which this subscription was purchased.  If {@link PaymentMethod#UNKNOWN}, then
      * nothing will be displayed.
      */
+    @NonNull
     public PaymentMethod getPaymentMethod() {
         return PaymentMethod.UNKNOWN;
     }
@@ -245,6 +275,7 @@ public abstract class Subscription implements Parcelable {
      *
      * If unknown or there is no limit to the number of trips, return null (default).
      */
+    @Nullable
     public Integer getRemainingTripCount() {
         return null;
     }
@@ -257,19 +288,22 @@ public abstract class Subscription implements Parcelable {
      *
      * Returns null if this is unknown, or there is no restriction.
      */
+    @Nullable
     public Integer getRemainingDayCount() {
         return null;
     }
 
     /**
      * Where a subscription limits the number of trips in a day that may be taken, this value
-     * indicates the number of trips remaining.
+     * indicates the number of trips remaining on the day of last use,
+     * {@link #getLastUseTimestamp()}.
      *
      * For example, if a subscription states that it may be used for 2 trips per day, then this will
      * go 2, 1, 0... as it is used up.
      *
      * Returns null if this is unknown, or there is no restriction.
      */
+    @Nullable
     public Integer getRemainingTripsInDayCount() {
         return null;
     }
@@ -279,8 +313,94 @@ public abstract class Subscription implements Parcelable {
      *
      * Returns null if there are no restrictions, or the restrictions are unknown (default).
      */
+    @Nullable
     public int[] getZones() {
         return null;
     }
 
+    /**
+     * Allows {@link Subscription} implementors to show extra information that doesn't fit within the
+     * standard bounds of the interface.  By default, this attempts to collect less common
+     * attributes, and put them in here.
+     * <p>
+     * Note: in order to support obfuscation / hiding behaviour, if you implement this method, you
+     * also need to use some other functionality:
+     * <ul>
+     * <li>Check for {@link MetrodroidApplication#hideCardNumbers()} whenever you show a card
+     * number, or other mark (such as a name) that could be used to identify this card or its
+     * holder.</li>
+     *
+     * <li>Pass {@link java.util.Calendar}/{@link java.util.Date} objects (timestamps) through
+     * {@link au.id.micolous.metrodroid.util.TripObfuscator#maybeObfuscateTS}.  This also
+     * works on epoch timestamps (expressed as seconds since UTC).</li>
+     *
+     * <li>Pass all currency amounts through
+     * {@link TransitCurrency#formatCurrencyString(boolean)} and
+     * {@link TransitCurrency#maybeObfuscateBalance()}.</li>
+     * </ul>
+     */
+    @Nullable
+    public List<ListItem> getInfo() {
+        List<ListItem> items = new ArrayList<>();
+        if (getSaleAgencyName() != null) {
+            items.add(new ListItem(R.string.seller_agency, getSaleAgencyName()));
+        }
+
+        if (getMachineId() != null) {
+            items.add(new ListItem(R.string.machine_id,
+                    Integer.toString(getMachineId())));
+        }
+
+        Calendar purchaseTS = getPurchaseTimestamp();
+        if (purchaseTS != null) {
+            purchaseTS = TripObfuscator.maybeObfuscateTS(purchaseTS);
+
+            items.add(new ListItem(R.string.purchase_date, purchaseTimestampHasTime() ?
+                    Utils.dateTimeFormat(purchaseTS) :
+                    Utils.dateFormat(purchaseTS)));
+        }
+
+        Calendar lastUseTS = getLastUseTimestamp();
+        if (lastUseTS != null) {
+            lastUseTS = TripObfuscator.maybeObfuscateTS(lastUseTS);
+
+            items.add(new ListItem(R.string.last_used_on, lastUseTimestampHasTime() ?
+                    Utils.dateTimeFormat(lastUseTS) :
+                    Utils.dateFormat(lastUseTS)));
+        }
+
+        if (getPaymentMethod() != PaymentMethod.UNKNOWN) {
+            // TODO: i18n
+            items.add(new ListItem(R.string.payment_method, getPaymentMethod().getDescription()));
+        }
+
+        if (getRemainingTripCount() != null) {
+            items.add(new ListItem(R.string.remaining_trip_count,
+                    Integer.toString(getRemainingTripCount())));
+        }
+
+        if (getRemainingTripsInDayCount() != null && lastUseTS != null) {
+            items.add(new ListItem(R.string.remaining_trip_count, Utils.localizePlural(
+                    R.plurals.remaining_trip_on_day, getRemainingTripsInDayCount(),
+                    getRemainingTripsInDayCount(), Utils.longDateFormat(lastUseTS))));
+        }
+
+        if (getRemainingDayCount() != null) {
+            items.add(new ListItem(R.string.remaining_day_count,
+                    Integer.toString(getRemainingDayCount())));
+        }
+
+        int[] zones = getZones();
+        if (zones != null && zones.length > 0) {
+            StringBuilder zones_list = new StringBuilder();
+            for (int z : zones) {
+                zones_list.append(Integer.toString(z));
+            }
+
+            items.add(new ListItem(Utils.localizePlural(R.plurals.travel_zones,
+                    zones.length, zones_list)));
+        }
+
+        return items.size() > 0 ? items : null;
+    }
 }

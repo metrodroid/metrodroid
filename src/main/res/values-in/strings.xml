@@ -45,7 +45,7 @@
     <string name="fully_locked_title">Kartu terkunci semua.</string>
     <string name="nfc_off_error">NFC mati</string>
     <string name="wireless_settings">Pengaturan Nirkabel</string>
-    <string name="machine_id">ID Mesin %s</string>
+    <string name="machine_id_format">ID Mesin %s</string>
 
     <string name="unknown_card_header">Format kartu tidak diketahui</string>
     <string name="unknown_card_description">Kartu ini belum disupport oleh Metrodroid. Hanya raw data yang dapat ditampilkan.</string>
