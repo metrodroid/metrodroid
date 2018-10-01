@@ -44,6 +44,8 @@ import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import java.security.SecureRandom;
+
 import au.id.micolous.farebot.R;
 import au.id.micolous.metrodroid.MetrodroidApplication;
 import au.id.micolous.metrodroid.transit.CardInfo;
@@ -140,6 +142,8 @@ public class MainActivity extends MetrodroidActivity {
         setupCardAnimation();
     }
 
+    private static final SecureRandom mRNG = new SecureRandom();
+
     private void setupCardAnimation() {
         // Cancel any running animation
         if (mCardAnimationReplacement != null) {
@@ -148,13 +152,19 @@ public class MainActivity extends MetrodroidActivity {
         }
 
         // Pick some card
-        // TODO: make this better
-        Drawable b;// = OpalTransitData.CARD_INFO.getDrawable(getBaseContext());
-        b = CardInfo.ALL_CARDS_ALPHABETICAL[19].getDrawable(getBaseContext());
+        // TODO: make this better, show user some cards that they scan regularly
+        CardInfo c = CardInfo.HOME_SCREEN_CARDS[Math.abs(mRNG.nextInt() % CardInfo.HOME_SCREEN_CARDS.length)];
+        Drawable b = c.getDrawable(getBaseContext());
 
         // Set it to the image
         ImageView v = findViewById(R.id.imgCard);
         v.setImageDrawable(b);
+
+        if (!MetrodroidApplication.animateHomeScreen()) {
+            // Show the card immediately, without any animations.
+            llCardViewGroup.setVisibility(View.VISIBLE);
+            return;
+        }
 
         // Animate it in
         llCardViewGroup.startAnimation(mCardSlideIn);

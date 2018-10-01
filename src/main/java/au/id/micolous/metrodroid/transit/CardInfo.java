@@ -112,6 +112,31 @@ public class CardInfo {
             TroikaTransitData.CARD_INFO,
     };
 
+    /**
+     * Cards which we can display in the home screen animation. They should not require encryption
+     * keys, require MIFARE Classic support, and should at least have the balance information
+     * available.
+     */
+    public static final CardInfo[] HOME_SCREEN_CARDS = {
+            // FIXME: Portrait cards don't look good :(
+            //ClipperTransitData.CARD_INFO,
+            EZLinkTransitData.EZ_LINK_CARD_INFO,
+            HSLTransitData.CARD_INFO,
+            SuicaTransitData.ICOCA_CARD_INFO,
+            KMTTransitData.CARD_INFO,
+            EZLinkTransitData.NETS_FLASHPAY_CARD_INFO,
+            OctopusTransitData.CARD_INFO,
+            OpalTransitData.CARD_INFO,
+            OpusTransitData.CARD_INFO,
+            OrcaTransitData.CARD_INFO,
+            SuicaTransitData.PASMO_CARD_INFO,
+            RavKavTransitData.CARD_INFO,
+            // FIXME: SZT doesn't have a correct card image
+            //NewShenzhenTransitData.CARD_INFO, // Shenzhen Tong
+            SuicaTransitData.SUICA_CARD_INFO,
+            TMoneyTransitData.CARD_INFO,
+    };
+
     @DrawableRes
     private final int mImageId;
     @DrawableRes

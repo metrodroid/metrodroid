@@ -43,6 +43,11 @@
             android:defaultValue="dark"
             android:entries="@array/themes"
             android:entryValues="@array/theme_values" />
+
+        <CheckBoxPreference
+            android:title="Animate home screen"
+            android:key="pref_animate_home_screen"
+            android:defaultValue="true" />
     </PreferenceCategory>
 
     <PreferenceCategory android:title="@string/accessibility">
