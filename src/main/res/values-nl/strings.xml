@@ -46,7 +46,7 @@
     <string name="turn_on_nfc">Schakel NFC in om de kaartinformatie uit te kunnen lezen.</string>
     <string name="wireless_settings">Draadloze instellingen</string>
 
-    <string name="unknown_card_header">Onbekend kaartformaat</string>
+    <string name="unknown_card_header">Niet-ondersteund kaartformaat</string>
     <string name="unknown_card_description">Deze kaart wordt nog niet ondersteund door Metrodroid. Alleen onbewerkte gegevens kunnen worden weergegeven.</string>
 
     <string name="unknown_more_info">Meer informatie</string>
@@ -702,4 +702,81 @@
 <string name="vehicle_number">Voertuig %s</string>
     <string name="card_note_leap">Vereist het ophalen van sleutel van TFI, wat moet worden ingeschakeld in de NFC-instellingen.</string>
 
-    </resources>
+    <string name="machine_id">Machine-ID</string>
+
+    <string name="valid_from_format">Geldig vanaf %1$s</string>
+    <string name="valid_not_used">Nog niet in gebruik</string>
+    <plurals name="ricaricami_days_remaining">
+	<item quantity="one">%d dag resterend</item>
+	<item quantity="other">%d dagen resterend</item>
+</plurals>
+    <plurals name="ricaricami_remains_on_day">
+	<item quantity="one">%d reis resterend op %s</item>
+	<item quantity="other">%d reizen resterend op %s</item>
+</plurals>
+
+    <string name="location_brussels">Brussel, België</string>
+    <string name="location_gironde">Gironde, Frankrijk</string>
+    <string name="location_grenoble">Grenoble, Frankrijk</string>
+    <string name="location_lisbon">Lissabon, Portugal</string>
+    <string name="location_milan">Milaan, Italië</string>
+    <string name="location_paris">Parijs, Frankrijk</string>
+    <string name="mode_trolleybus">Trolleybus</string>
+    <string name="opal_agency_tfnsw">Transport for NSW</string>
+    <string name="gender">Geslacht</string>
+    <string name="gender_female">Vrouw</string>
+    <string name="gender_male">Man</string>
+
+    <string name="seller_agency">Verkoopmaatschappij</string>
+    <string name="remaining_trip_count">Resterende reizen</string>
+    <plurals name="remaining_trips_total">
+	<item quantity="one">Geen resterende reizen</item>
+	<item quantity="other">%1$d resterende reis</item>
+</plurals>
+
+    <plurals name="remaining_trip_on_day">
+	<item quantity="one">%1$d resterende reis op %2$s</item>
+	<item quantity="other">%1$d resterende reizen op %2$s</item>
+</plurals>
+    <string name="remaining_day_count">Resterende dagen</string>
+    <plurals name="travel_zones">
+	<item quantity="one">Reisgebied</item>
+	<item quantity="other">Reisgebieden</item>
+</plurals>
+
+    <string name="en1545_network_id">Netwerk-ID</string>
+    <string name="card_issuer">Uitgever</string>
+
+    <string name="purchase_date">Aanschafdatum</string>
+    <string name="single_trips">Enkele reizen</string>
+    <string name="monthly_subscription">Maandabonnement</string>
+    <string name="weekly_subscription">Weekabonnement</string>
+    <string name="en1545_card_expiry_date_profile">Profiel-vervaldatum</string>
+    <string name="daily_subscription">Dagkaart</string>
+
+    <string name="subscription_inactive">Inactief</string>
+    <string name="subscription_unused">Ongebruikt</string>
+    <string name="subscription_started">Ingegaan</string>
+    <string name="subscription_used">Gebruikt</string>
+    <string name="subscription_expired">Verlopen</string>
+
+    <string name="last_used_on">Laatst gebruikt</string>
+    <string name="payment_method">Betaalmethode</string>
+    <string name="payment_method_cash">Contant</string>
+    <string name="payment_method_credit_card">Creditcard</string>
+    <string name="payment_method_debit_card">Bankpas</string>
+    <string name="payment_method_transit_card">Vervoerskaart</string>
+    <string name="payment_method_cheque">Cheque</string>
+    <string name="payment_method_free">Gratis</string>
+
+    <string name="card_holders_name">Naam van kaarthouder</string>
+
+    <string name="card_type">Kaartsoort</string>
+
+    <string name="card_type_anonymous">Anoniem</string>
+    <string name="card_type_personal">Persoonlijk</string>
+
+    <string name="postal_code">Postcode</string>
+
+    <string name="tap_for_more_info">Druk voor meer informatie…</string>
+</resources>
