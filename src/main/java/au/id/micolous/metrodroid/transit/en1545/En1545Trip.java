@@ -21,12 +21,14 @@ package au.id.micolous.metrodroid.transit.en1545;
 
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
 
 import au.id.micolous.metrodroid.transit.Station;
 import au.id.micolous.metrodroid.transit.TransitCurrency;
@@ -36,7 +38,7 @@ public class En1545Trip extends Trip implements Parcelable {
     private En1545Transaction mStart;
     private En1545Transaction mEnd;
 
-    private En1545Trip(En1545Transaction transaction) {
+    private En1545Trip(@NonNull En1545Transaction transaction) {
         if (transaction.isTapOff())
             mEnd = transaction;
         else
@@ -85,9 +87,25 @@ public class En1545Trip extends Trip implements Parcelable {
         return mStart == null ? mEnd : mStart;
     }
 
+    @Nullable
     @Override
     public String getRouteName() {
         return getAny().getRouteName();
+    }
+
+    @Override
+    public int getPassengerCount() {
+        return getAny().getPassengerCount();
+    }
+
+    @Nullable
+    @Override
+    public String getVehicleID() {
+        int vehicleNum = getAny().getVehicleNumber();
+        if (vehicleNum == 0) {
+            return null;
+        }
+        return Integer.toString(vehicleNum);
     }
 
     @Override

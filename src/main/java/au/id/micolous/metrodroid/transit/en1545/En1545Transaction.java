@@ -66,7 +66,7 @@ public abstract class En1545Transaction implements Parcelable {
         mParsed.writeToParcel(dest, flags);
     }
 
-    protected String getRouteNameReal() {
+    public String getRouteName() {
         String route = getLookup().getRouteName(
                 mParsed.getInt("EventRouteNumber"),
                 mParsed.getInt("EventRouteVariant"),
@@ -79,20 +79,12 @@ public abstract class En1545Transaction implements Parcelable {
         return st.getLineName();
     }
 
-    public String getRouteName() {
-        String route = getRouteNameReal();
-        ArrayList <String> components = new ArrayList<>();
-        if (route != null)
-            components.add(route);
-        int pax = mParsed.getIntOrZero("EventPassengerCount");
-        if (pax != 0)
-            components.add(Utils.localizePlural(R.plurals.passenger_count, pax, pax));
-        int vhn = mParsed.getIntOrZero("EventVehiculeId");
-        if (vhn != 0)
-            components.add(Utils.localizeString(R.string.vehicle_number, Integer.toString(vhn)));
-        if (components.isEmpty())
-            return null;
-        return TextUtils.join(", ", components);
+    public int getPassengerCount() {
+        return mParsed.getIntOrZero("EventPassengerCount");
+    }
+
+    public int getVehicleNumber() {
+        return mParsed.getIntOrZero("EventVehicleId");
     }
 
     private int getEventCode() {
