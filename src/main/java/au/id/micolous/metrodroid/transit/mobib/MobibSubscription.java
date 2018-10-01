@@ -73,8 +73,8 @@ class MobibSubscription extends En1545Subscription {
     @Override
     public String getSubscriptionName() {
         if (mIsSubscription)
-            return Utils.localizeString(R.string.en1545_daily_subscription);
-        return Utils.localizeString(R.string.en1545_single_trips);
+            return Utils.localizeString(R.string.daily_subscription);
+        return Utils.localizeString(R.string.single_trips);
     }
 
     @Override

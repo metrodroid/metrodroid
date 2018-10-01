@@ -54,9 +54,9 @@ public class OpusLookup extends En1545LookupSTR {
     private static final SparseIntArray SUBSCRIPTIONS = new SparseIntArray();
 
     static {
-        SUBSCRIPTIONS.put(0xb1, R.string.en1545_monthly_subscription);
-        SUBSCRIPTIONS.put(0xb2, R.string.en1545_weekly_subscription);
-        SUBSCRIPTIONS.put(0x1c7, R.string.en1545_single_trips);
+        SUBSCRIPTIONS.put(0xb1, R.string.monthly_subscription);
+        SUBSCRIPTIONS.put(0xb2, R.string.weekly_subscription);
+        SUBSCRIPTIONS.put(0x1c7, R.string.single_trips);
     }
 
     @Override

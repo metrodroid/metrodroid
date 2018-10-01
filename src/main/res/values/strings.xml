@@ -970,20 +970,47 @@
         <item quantity="other">Travel zones</item>
     </plurals>
 
-    <string name="en1545_issue_date">Issue date</string>
     <string name="en1545_network_id">Network ID</string>
-    <string name="en1545_card_issuer">Issuer</string>
+    <string name="card_issuer">Issuer</string>
 
     <string name="purchase_date">Date purchased</string>
-    <string name="en1545_single_trips">Single trips</string>
-    <string name="en1545_monthly_subscription">Monthly subscription</string>
-    <string name="en1545_weekly_subscription">Weekly subscription</string>
+    <!-- Translators: Used to describe a subscription (travel pass) made of single trips. -->
+    <string name="single_trips">Single trips</string>
+    <!-- Translators: Used to describe a subscription (travel pass) lasting for a month. -->
+    <string name="monthly_subscription">Monthly subscription</string>
+    <!-- Translators: Used to describe a subscription (travel pass) lasting for a week. -->
+    <string name="weekly_subscription">Weekly subscription</string>
     <string name="en1545_card_expiry_date_profile">Profile expiry date</string>
-    <string name="en1545_daily_subscription">Daily Subscription</string>
-    <string name="en1545_subscription_validated">Validated</string>
-    <string name="en1545_subscription_expired">Expired</string>
-    <string name="en1545_unknown_status">Unknown status (%s)</string>
-    <string name="en1545_never_used">Never Used</string>
+    <!-- Translators: Used to describe a subscription (travel pass) lasting for a day. -->
+    <string name="daily_subscription">Daily subscription</string>
+
+    <!-- Translators:
+    The subscription is present on the card, but currently disabled.
+    -->
+    <string name="subscription_inactive">Inactive</string>
+    <!-- Translators:
+    The subscription has been purchased, but never used.
+    -->
+    <string name="subscription_unused">Unused</string>
+    <!-- Translators:
+    The subscription has been purchased, and has started.
+    -->
+    <string name="subscription_started">Started</string>
+    <!-- Translators:
+    The subscription has been "used up".
+
+    This is the "final" state when there are a fixed number of trips associated with a
+    subscription, eg: the card holder bought 10 trips, and has taken 10 trips.
+    -->
+    <string name="subscription_used">Used</string>
+    <!-- Translators:
+    The subscription has expired.
+
+    This is the "final" state when the card has been scanned after the end date/time of the
+    subscription.
+    -->
+    <string name="subscription_expired">Expired</string>
+
     <!-- Translators "Last used" is a date, time or date+time attribute -->
     <string name="last_used_on">Last used</string>
     <string name="payment_method">Payment method</string>
@@ -1171,7 +1198,6 @@
     <string name="initialisation_date">Initialisation date</string>
     <string name="issue_date">Date of issue</string>
 
-    <string name="leap_issuer_id">Issuer ID</string>
     <!--
     Translators:
     keys = encryption keys

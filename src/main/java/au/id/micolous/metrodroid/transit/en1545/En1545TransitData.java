@@ -64,7 +64,7 @@ abstract public class En1545TransitData extends TransitData {
             li.add(new ListItem(R.string.en1545_card_issuer,
                     getLookup().getAgencyName(mTicketEnvParsed.getIntOrZero("EnvApplicationIssuerId"), false)));
         if (mTicketEnvParsed.getIntOrZero("EnvApplicationIssueDate") != 0)
-            li.add(new ListItem(R.string.en1545_issue_date,
+            li.add(new ListItem(R.string.issue_date,
                     Utils.longDateFormat(TripObfuscator.maybeObfuscateTS(En1545FixedInteger.parseDate(
                             mTicketEnvParsed.getIntOrZero("EnvApplicationIssueDate"), tz)))));
 

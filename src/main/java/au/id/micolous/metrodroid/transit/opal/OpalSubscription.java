@@ -1,7 +1,7 @@
 /*
  * OpalSubscription.java
  *
- * Copyright 2015 Michael Farrell <micolous+git@gmail.com>
+ * Copyright 2015-2018 Michael Farrell <micolous+git@gmail.com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -19,6 +19,7 @@
 package au.id.micolous.metrodroid.transit.opal;
 
 import android.os.Parcel;
+import android.support.annotation.NonNull;
 
 import au.id.micolous.metrodroid.transit.Subscription;
 import au.id.micolous.metrodroid.util.Utils;
@@ -76,6 +77,12 @@ class OpalSubscription extends Subscription {
     @Override
     public String getSubscriptionName() {
         return Utils.localizeString(R.string.opal_automatic_top_up);
+    }
+
+    @NonNull
+    @Override
+    public PaymentMethod getPaymentMethod() {
+        return PaymentMethod.CREDIT_CARD;
     }
 
     @Override

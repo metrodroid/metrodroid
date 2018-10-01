@@ -160,17 +160,12 @@ public class CardBalanceFragment extends ListFragment {
 
             // TODO: Replace this with structured data.
             TextView usedView = view.findViewById(R.id.used);
-            usedView.setVisibility(View.GONE);
-            /*
-            String used = subscription.getActivation();
-            TextView usedView = view.findViewById(R.id.used);
-            if (used != null) {
-                usedView.setText(used);
-                usedView.setVisibility(View.VISIBLE);
-            } else {
+            if (subscription.getSubscriptionState() == Subscription.SubscriptionState.UNKNOWN) {
                 usedView.setVisibility(View.GONE);
+            } else {
+                usedView.setText(subscription.getSubscriptionState().getDescription());
+                usedView.setVisibility(View.VISIBLE);
             }
-            */
 
             LinearLayout paxLayout = view.findViewById(R.id.pax_layout);
             ImageView paxIcon = view.findViewById(R.id.pax_icon);

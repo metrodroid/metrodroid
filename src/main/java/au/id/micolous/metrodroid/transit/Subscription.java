@@ -117,7 +117,15 @@ public abstract class Subscription implements Parcelable {
         return null;
     }
 
-    public abstract String getSubscriptionName();
+    /**
+     * A name (or description) of the subscription.
+     *
+     * eg: "Travel Ten", "Multi-trip", "City Pass"...
+     */
+    @Nullable
+    public String getSubscriptionName() {
+        return null;
+    }
 
     /**
      * The number of passengers that the subscription is valid for. If a value greater than 1 is
@@ -129,12 +137,12 @@ public abstract class Subscription implements Parcelable {
 
     public enum SubscriptionState {
         /** No state is known, display no UI for the state. */
-        UNKNOWN,
+        UNKNOWN(R.string.unknown),
 
         /**
          * The subscription is present on the card, but currently disabled.
          */
-        INACTIVE,
+        INACTIVE(R.string.subscription_inactive),
 
         /**
          * The subscription has been purchased, but never used.
@@ -145,7 +153,7 @@ public abstract class Subscription implements Parcelable {
          * In systems where a subscription does not have a fixed start date, or does not *yet* have
          * a fixed start date, this means that there are no trips recorded on this subscription.
          */
-        UNUSED,
+        UNUSED(R.string.subscription_unused),
 
         /**
          * The subscription has been purchased, and has started.
@@ -156,7 +164,7 @@ public abstract class Subscription implements Parcelable {
          * In systems where a subscription does not have a fixed start date, this state should
          * appear after the first trip has been taken.
          */
-        STARTED,
+        STARTED(R.string.subscription_started),
 
         /**
          * The subscription has been "used up".
@@ -164,7 +172,7 @@ public abstract class Subscription implements Parcelable {
          * This is the "final" state when there are a fixed number of trips associated with a
          * subscription, eg: the card holder bought 10 trips, and has taken 10 trips.
          */
-        USED,
+        USED(R.string.subscription_used),
 
         /**
          * The subscription has expired.
@@ -172,7 +180,17 @@ public abstract class Subscription implements Parcelable {
          * This is the "final" state when the card has been scanned after the end date/time of the
          * subscription.
          */
-        EXPIRED,
+        EXPIRED(R.string.subscription_expired);
+
+        @StringRes int mDescription;
+        SubscriptionState(@StringRes int description) {
+            mDescription = description;
+        }
+
+        @StringRes
+        public int getDescription() {
+            return mDescription;
+        }
     }
 
     public SubscriptionState getSubscriptionState() {

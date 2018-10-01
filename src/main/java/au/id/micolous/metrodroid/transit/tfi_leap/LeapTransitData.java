@@ -292,7 +292,7 @@ public class LeapTransitData extends TransitData {
         items.add(new ListItem(R.string.issue_date,
                 Utils.dateTimeFormat(TripObfuscator.maybeObfuscateTS(mIssueDate))));
         if (MetrodroidApplication.hideCardNumbers()) {
-            items.add(new ListItem(R.string.leap_issuer_id, Integer.toString(mIssuerId)));
+            items.add(new ListItem(R.string.card_issuer, Integer.toString(mIssuerId)));
         }
         items.add(new HeaderListItem(R.string.leap_daily_accumulators));
         items.addAll(mDailyAccumulators.getInfo());
