@@ -61,6 +61,7 @@ public class CharlieCardTransitData extends TransitData {
             .setName(NAME)
             .setLocation(R.string.location_boston)
             .setCardType(CardType.MifareClassic)
+            .setImageId(R.drawable.charlie_card, R.drawable.iso7810_id1_alpha)
             .setKeysRequired()
             .setPreview()
             .build();
