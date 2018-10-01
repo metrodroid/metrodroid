@@ -92,13 +92,14 @@ public class RicaricaMiTransaction extends En1545Transaction {
             case RicaricaMiLookup.TRANSPORT_METRO:
                 return Trip.Mode.METRO;
             case RicaricaMiLookup.TRANSPORT_TROLLEYBUS:
-                return Trip.Mode.BUS;
+                return Trip.Mode.TROLLEYBUS;
             case RicaricaMiLookup.TRANSPORT_TRAM:
                 return Trip.Mode.TRAM;
         }
         return Trip.Mode.OTHER;
     }
 
+    /*
     @Override
     public String getAgencyName(boolean isShort) {
         // TODO: Is there an agency field?
@@ -106,12 +107,13 @@ public class RicaricaMiTransaction extends En1545Transaction {
             case RicaricaMiLookup.TRANSPORT_METRO:
                 return Utils.localizeString(R.string.mode_metro);
             case RicaricaMiLookup.TRANSPORT_TROLLEYBUS:
-                return Utils.localizeString(R.string.ricaricami_trolleybus_short);
+                return Utils.localizeString(R.string.mode_trolleybus);
             case RicaricaMiLookup.TRANSPORT_TRAM:
                 return Utils.localizeString(R.string.mode_tram);
         }
         return Utils.localizeString(R.string.unknown_format, getTransport());
     }
+    */
 
     public static final Creator<RicaricaMiTransaction> CREATOR = new Creator<RicaricaMiTransaction>() {
         @Override

@@ -358,7 +358,8 @@ public abstract class Trip implements Parcelable {
         /** Used for transactions at a store, buying something other than travel. */
         POS(7, R.string.mode_pos),
         OTHER(8, R.string.mode_unknown),
-        BANNED(9, R.string.mode_banned);
+        BANNED(9, R.string.mode_banned),
+        TROLLEYBUS(10, R.string.mode_trolleybus);
 
         final int mImageResourceIdx;
         @StringRes

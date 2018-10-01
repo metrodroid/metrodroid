@@ -669,6 +669,8 @@
     <string name="mode_pos">Point of Sale</string>
     <!-- Used as descriptive text for the banned icon. -->
     <string name="mode_banned">Banned</string>
+    <!-- Used as descriptive text for the trolleybus icon. -->
+    <string name="mode_trolleybus">Trolleybus</string>
     <!-- Used as descriptive text for the unknown transit mode icon. -->
     <string name="mode_unknown">Unknown</string>
 
@@ -1047,9 +1049,6 @@
     <string name="card_name_ravkav">Rav-Kav</string>
     <!-- Translators: appears as an agency if user used official top-up app. -->
     <string name="ravkav_agency_topup_app">RavKav Top-up app</string>
-
-    <!-- RicaricaMi -->
-    <string name="ricaricami_trolleybus_short">Trolley</string>
 
     <!-- Troika / Тройка, Podorozhnik / Подорожник (Russia) -->
 
