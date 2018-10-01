@@ -33,7 +33,7 @@
     <string name="nfc_unavailable">NFC недоступен</string>
     <string name="date">Дата</string>
     <string name="time">Время</string>
-    <string name="card_type">Тип карты</string>
+    <string name="card_format">Тип карты</string>
     <string name="obfuscation_card_numbers">Спрятать номера карт</string>
     <string name="obfuscation_card_numbers_desc">Нигде не показывать номера карт</string>
 
@@ -145,7 +145,7 @@
     <string name="nfc_not_available">NFC: не доступно</string>
     <string name="balances_and_subscriptions">Билеты</string>
 <string name="scanned_at_format">Прочитано %2$s в %1$s</string>
-    <string name="machine_id">Автомат %s</string>
+    <string name="machine_id_format">Автомат %s</string>
 
     <string name="advanced_info">Расширенная информация</string>
     <string name="hw_detail">Информация о производителе</string>

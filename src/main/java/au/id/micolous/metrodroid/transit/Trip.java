@@ -220,6 +220,7 @@ public abstract class Trip implements Parcelable {
      * Route name for the trip. This could be a bus line, a tram line, a rail line, etc.
      * If this is not known, then return null.
      */
+    @Nullable
     public String getRouteName() {
         return null;
     }
@@ -357,7 +358,8 @@ public abstract class Trip implements Parcelable {
         /** Used for transactions at a store, buying something other than travel. */
         POS(7, R.string.mode_pos),
         OTHER(8, R.string.mode_unknown),
-        BANNED(9, R.string.mode_banned);
+        BANNED(9, R.string.mode_banned),
+        TROLLEYBUS(10, R.string.mode_trolleybus);
 
         final int mImageResourceIdx;
         @StringRes
@@ -380,10 +382,12 @@ public abstract class Trip implements Parcelable {
 
     public static class Comparator implements java.util.Comparator<Trip> {
         @Override
-        public int compare(Trip trip, Trip trip1) {
-            if (trip1.getStartTimestamp() != null && trip.getStartTimestamp() != null) {
-                return trip1.getStartTimestamp().compareTo(trip.getStartTimestamp());
-            } else if (trip1.getStartTimestamp() != null) {
+        public int compare(Trip trip1, Trip trip2) {
+            Calendar t1 = trip1.getStartTimestamp() != null ? trip1.getStartTimestamp() : trip1.getEndTimestamp();
+            Calendar t2 = trip2.getStartTimestamp() != null ? trip2.getStartTimestamp() : trip2.getEndTimestamp();
+            if (t2 != null && t1 != null) {
+                return t2.compareTo(t1);
+            } else if (t2 != null) {
                 return 1;
             } else {
                 return 0;

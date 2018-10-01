@@ -217,7 +217,7 @@ public class OVChipSubscription extends Subscription {
     }
 
     @Override
-    public int getId() {
+    public Integer getId() {
         return mId;
     }
 
@@ -243,16 +243,15 @@ public class OVChipSubscription extends Subscription {
     }
 
     @Override
-    public String getActivation() {
-        // FIXME: i18n
+    public SubscriptionState getSubscriptionState() {
         if (mType1 != 0) {
-            return mUsed != 0 ? "Activated and used" : "Activated but not used";
+            return mUsed != 0 ? SubscriptionState.USED : SubscriptionState.STARTED;
         }
-        return "Deactivated";
+        return SubscriptionState.INACTIVE;
     }
 
     @Override
-    public int getMachineId() {
+    public Integer getMachineId() {
         return mMachineId;
     }
 

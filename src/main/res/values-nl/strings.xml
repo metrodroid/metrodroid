@@ -92,7 +92,7 @@
     <string name="card_preview_reader">Bètaversie van de kaartlezer.</string>
     <string name="visit_website">Website bezoeken</string>
     <string name="title_activity_about">Over</string>
-    <string name="card_type">Kaarttype</string>
+    <string name="card_format">Kaarttype</string>
     <string name="select_file">Bestand selecteren</string>
     <string name="copied_to_clipboard">Gekopieerd naar klembord</string>
     <string name="saved_xml">Metrodroid-Export.xml weggeschreven naar USB-opslag.</string>
@@ -370,7 +370,7 @@
     <string name="felica_idm">Productie-ID (IDm)</string>
     <string name="felica_pmm">Productieparameter (PMm)</string>
 
-    <string name="machine_id">Automaat-ID %s</string>
+    <string name="machine_id_format">Automaat-ID %s</string>
 
     <string name="localise_places_longdesc">Tekst-naar-spraak werkt normaal gesproken alleen goed voor één taal. 
 \n 
@@ -578,6 +578,7 @@
     <string name="compass_ticket_type">Kaartsoort</string>
     <string name="compass_ticket_type_concession">Concessie</string>
     <string name="compass_ticket_type_regular">Regulier</string>
+    <string name="expiry_date">Vervaldatum</string>
     <string name="compass_note">Alleen voor enkele reizen</string>
 
     <string name="location_seoul">Seoel, Zuid-Korea</string>

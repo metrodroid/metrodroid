@@ -53,7 +53,7 @@ public abstract class StubTransitData extends TransitData {
         ArrayList<ListItem> items = new ArrayList<>();
 
         items.add(new HeaderListItem(R.string.general));
-        items.add(new ListItem(R.string.card_type, getCardName()));
+        items.add(new ListItem(R.string.card_format, getCardName()));
         items.add(new ListItem(R.string.unknown_card_header, R.string.unknown_card_description));
 
         if (getMoreInfoPage() != null) {

@@ -23,11 +23,18 @@ package au.id.micolous.metrodroid.fragment;
 import android.app.ListFragment;
 import android.content.Context;
 import android.os.Bundle;
+import android.support.v7.content.res.AppCompatResources;
 import android.text.Spanned;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Adapter;
 import android.widget.ArrayAdapter;
+import android.widget.ExpandableListView;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.ListAdapter;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import au.id.micolous.metrodroid.activity.CardInfoActivity;
@@ -38,9 +45,11 @@ import au.id.micolous.metrodroid.transit.TransitData;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Locale;
 
 import au.id.micolous.farebot.R;
 import au.id.micolous.metrodroid.transit.TransitCurrency;
+import au.id.micolous.metrodroid.ui.ListItem;
 import au.id.micolous.metrodroid.util.TripObfuscator;
 import au.id.micolous.metrodroid.util.Utils;
 
@@ -108,12 +117,26 @@ public class CardBalanceFragment extends ListFragment {
             TextView validView = view.findViewById(R.id.valid);
             if (subscription.getValidFrom() != null && subscription.getValidTo() != null) {
                 Spanned validFrom = Utils.dateFormat(TripObfuscator.maybeObfuscateTS(subscription.getValidFrom()));
-                Spanned validTo = Utils.dateFormat(TripObfuscator.maybeObfuscateTS(subscription.getValidTo()));
+                Spanned validTo;
+                if (subscription.validToHasTime()) {
+                    validTo = Utils.dateTimeFormat(TripObfuscator.maybeObfuscateTS(subscription.getValidTo()));
+                } else {
+                    validTo = Utils.dateFormat(TripObfuscator.maybeObfuscateTS(subscription.getValidTo()));
+                }
                 validView.setText(getString(R.string.valid_format, validFrom, validTo));
                 validView.setVisibility(View.VISIBLE);
             } else if (subscription.getValidTo() != null) {
-                Spanned validTo = Utils.dateFormat(TripObfuscator.maybeObfuscateTS(subscription.getValidTo()));
+                Spanned validTo;
+                if (subscription.validToHasTime()) {
+                    validTo = Utils.dateTimeFormat(TripObfuscator.maybeObfuscateTS(subscription.getValidTo()));
+                } else {
+                    validTo = Utils.dateFormat(TripObfuscator.maybeObfuscateTS(subscription.getValidTo()));
+                }
                 validView.setText(getString(R.string.valid_to_format, validTo));
+                validView.setVisibility(View.VISIBLE);
+            } else if (subscription.getValidFrom() != null) {
+                Spanned validTo = Utils.dateFormat(TripObfuscator.maybeObfuscateTS(subscription.getValidFrom()));
+                validView.setText(getString(R.string.valid_from_format, validTo));
                 validView.setVisibility(View.VISIBLE);
             } else {
                 validView.setVisibility(View.GONE);
@@ -134,13 +157,45 @@ public class CardBalanceFragment extends ListFragment {
             } else {
                 nameView.setVisibility(View.GONE);
             }
-            String used = subscription.getActivation();
+
+            // TODO: Replace this with structured data.
             TextView usedView = view.findViewById(R.id.used);
-            if (used != null) {
-                usedView.setText(used);
-                usedView.setVisibility(View.VISIBLE);
-            } else
+            if (subscription.getSubscriptionState() == Subscription.SubscriptionState.UNKNOWN) {
                 usedView.setVisibility(View.GONE);
+            } else {
+                usedView.setText(subscription.getSubscriptionState().getDescription());
+                usedView.setVisibility(View.VISIBLE);
+            }
+
+            LinearLayout paxLayout = view.findViewById(R.id.pax_layout);
+            ImageView paxIcon = view.findViewById(R.id.pax_icon);
+            TextView paxTextView = view.findViewById(R.id.pax_text_view);
+            int pax = subscription.getPassengerCount();
+
+            if (pax >= 1) {
+                paxTextView.setText(String.format(Locale.getDefault(), "%d", pax));
+                paxIcon.setContentDescription(Utils.localizePlural(R.plurals.passengers, pax));
+
+                paxIcon.setImageDrawable(AppCompatResources.getDrawable(getContext(),
+                        pax == 1 ? R.drawable.material_ic_person_24dp : R.drawable.material_ic_group_24dp));
+
+                paxLayout.setVisibility(View.VISIBLE);
+            } else {
+                // No information.
+                paxLayout.setVisibility(View.GONE);
+            }
+
+            boolean hasExtraInfo = subscription.getInfo() != null;
+            ListView properties = view.findViewById(R.id.properties);
+            TextView moreInfoPrompt = view.findViewById(R.id.more_info_prompt);
+
+            if (hasExtraInfo) {
+                moreInfoPrompt.setVisibility(View.VISIBLE);
+                properties.setVisibility(View.GONE);
+            } else {
+                properties.setVisibility(View.GONE);
+                moreInfoPrompt.setVisibility(View.GONE);
+            }
 
             return view;
         }
@@ -186,8 +241,75 @@ public class CardBalanceFragment extends ListFragment {
 
         @Override
         public boolean isEnabled(int position) {
+            Object item = getItem(position);
+
+            if (item == null) {
+                return false;
+            }
+
+            if (item instanceof TransitBalance) {
+                // We don't do anything for balances, yet.
+                return false;
+            }
+
+            if (item instanceof Subscription) {
+                return ((Subscription) item).getInfo() != null;
+            }
+
             return false;
         }
     }
 
+    @Override
+    public void onListItemClick(ListView l, View v, int position, long id) {
+        Log.d(TAG, "Clicked " + id + " " + position );
+        Object item = getListAdapter().getItem(position);
+        if (item == null) {
+            return;
+        }
+
+        if (item instanceof TransitBalance) {
+            return;
+        }
+
+        if (item instanceof Subscription) {
+            List<ListItem> infos = ((Subscription)item).getInfo();
+            if (infos == null) {
+                return;
+            }
+
+            ListView lv = v.findViewById(R.id.properties);
+            TextView tv = v.findViewById(R.id.more_info_prompt);
+
+            if (lv.getVisibility() == View.VISIBLE) {
+                lv.setVisibility(View.GONE);
+                tv.setVisibility(View.VISIBLE);
+                lv.setAdapter(null);
+                return;
+            }
+
+            tv.setVisibility(View.GONE);
+            lv.setVisibility(View.INVISIBLE);
+
+            ListAdapter a = new ListItemAdapter(getActivity(), infos);
+            lv.setAdapter(a);
+
+            // Calculate correct height
+            int totalHeight = 0;
+            for (int i=0; i < a.getCount(); i++) {
+                View li = a.getView(i, null, lv);
+                li.measure(0, 0);
+                totalHeight += li.getMeasuredHeight();
+            }
+
+            // Set correct height
+            ViewGroup.LayoutParams par = lv.getLayoutParams();
+            par.height = totalHeight + (lv.getDividerHeight() * (a.getCount() - 1));
+            lv.setLayoutParams(par);
+            lv.setVisibility(View.VISIBLE);
+            lv.requestLayout();
+
+            lv.setVisibility(View.VISIBLE);
+        }
+    }
 }

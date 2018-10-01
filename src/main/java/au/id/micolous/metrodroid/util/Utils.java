@@ -638,7 +638,7 @@ public class Utils {
      * @param calendar Date/time to format
      * @return String representing the date and time in ISO8601 format.
      */
-    public static String isoDateTimeFilenameFormat(Calendar calendar) {
+    public static String isoDateTimeFilenameFormat(@NonNull Calendar calendar) {
         return ISO_DATETIME_FORMAT_FILENAME.format(calendar.getTime());
     }
 
@@ -650,7 +650,7 @@ public class Utils {
      * @param calendar Date/time to format
      * @return String representing the date and time in ISO8601 format.
      */
-    public static String isoDateTimeFormat(Calendar calendar) {
+    public static String isoDateTimeFormat(@NonNull Calendar calendar) {
         return ISO_DATETIME_FORMAT.format(calendar.getTime());
     }
 
@@ -661,7 +661,7 @@ public class Utils {
      * @param calendar Date to format
      * @return String representing the date in ISO8601 format.
      */
-    public static String isoDateFormat(Calendar calendar) {
+    public static String isoDateFormat(@NonNull Calendar calendar) {
         return ISO_DATE_FORMAT.format(calendar.getTime());
     }
 
@@ -787,6 +787,13 @@ public class Utils {
         for (byte b: str)
             /* bytes 0x80 and over are considered negative in java. */
             if (b < 0x20 && b != 0xd && b!= 0xa)
+                return false;
+        return true;
+    }
+
+    public static boolean isAllZero(byte[] data) {
+        for (byte b : data)
+            if (b != 0)
                 return false;
         return true;
     }

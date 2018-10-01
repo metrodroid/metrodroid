@@ -62,6 +62,11 @@
     <string name="scanned_at_format">Scanned at %1$s on %2$s</string>
     <string name="supported_cards">Supported Cards</string>
     <string name="pass_or_transfer">Pass/Xfer</string>
+    <!--
+    Translators: This is used for a total number of transactions that have been performed on the
+    card. This is slightly different to a "trip counter", as many tickets count both the tap-on
+    (entry) and tap-off (exit), as well as top-ups as different transactions.
+    -->
     <string name="transaction_counter">Transaction counter</string>
     <string name="fully_locked_desc">
         No part of this card is freely readable without a key. You have no valid keys installed for it.\n\n
@@ -74,9 +79,11 @@
     <string name="turn_on_nfc">Please enable NFC to read card info.</string>
     <string name="wireless_settings">Wireless Settings</string>
     <!-- Translators: "Machine ID" is arbitrary. It could be a decimal number, or hexadecimal… -->
-    <string name="machine_id">Machine ID %s</string>
+    <string name="machine_id_format">Machine ID %s</string>
+    <!-- Translators: "Machine ID" is arbitrary. It could be a decimal number, or hexadecimal… -->
+    <string name="machine_id">Machine ID</string>
 
-    <string name="unknown_card_header">Unknown card format</string>
+    <string name="unknown_card_header">Unsupported card format</string>
     <string name="unknown_card_description">This card is not yet supported by Metrodroid. Only raw data can be displayed.</string>
 
     <string name="unknown_more_info">More info</string>
@@ -115,6 +122,10 @@
     <!-- Translators: This is an end date, eg: "Valid until 3/3/2018". Dates are formatted according
      to user preferences. -->
     <string name="valid_to_format">Valid until %1$s</string>
+    <!-- Translators: This is a start date, eg: "Valid from 3/12/2017". Dates are formatted according
+     to user preferences. -->
+    <string name="valid_from_format">Valid from %1$s</string>
+    <string name="valid_not_used">Not yet used</string>
     <string name="unknown_format">Unknown (%s)</string>
     <string name="unknown">Unknown</string>
     <string name="keys_required">Encryption keys are required to read this card.</string>
@@ -153,7 +164,9 @@
     <string name="card_preview_reader">Beta version of card reader.</string>
     <string name="visit_website">Visit Website</string>
     <string name="title_activity_about">About</string>
-    <string name="card_type">Card type</string>
+    <!-- Translators: This is used to label a card's product name. For example, "Opal". -->
+    <string name="card_format">Card format</string>
+
     <string name="select_file">Select file</string>
     <string name="copied_to_clipboard">Copied to clipboard</string>
     <string name="saved_xml">Wrote Metrodroid-Export.xml to USB Storage.</string>
@@ -424,6 +437,15 @@
         <item quantity="other">%d-ride</item>
     </plurals>
 
+    <plurals name="ricaricami_days_remaining">
+        <item quantity="one">%d day remaining</item>
+        <item quantity="other">%d days remaining</item>
+    </plurals>
+    <plurals name="ricaricami_remains_on_day">
+        <item quantity="one">Remains %d trip on %s</item>
+        <item quantity="other">Remains %d trips on %s</item>
+    </plurals>
+
     <!-- Type: Value file, Range: 0 - 2300, Limited credit: 400 (Enabled) -->
     <string name="desfire_value_format">Type: %1$s, Range: %2$s - %3$s, Limited credit: %4$s (%5$s)</string>
 
@@ -482,19 +504,6 @@
     <string name="felica_response_time_write">Write command (1 block)</string>
     <!-- Translators: "Issuance" is the name of group of FeliCa commands -->
     <string name="felica_response_time_other">Issuance commands</string>
-
-    <!-- Translators: this is a ticketing system in Israel. (Hebrew: רב-קו‎)
-     May be transliterated. -->
-    <string name="card_name_ravkav">Rav-Kav</string>
-    <!-- Translators: This is Israeli intercity bus operator. (Hebrew:אֶגֶד )  -->
-    <string name="ravkav_agency_egged">Egged</string>
-    <!-- Translators: Bus operator in Tel-Aviv: Dan Bus Company (Hebrew: דן חברה לתחבורה ציבורית‎) -->
-    <string name="ravkav_agency_dan">Dan</string>
-    <!-- Translators: Tram operator in Jerusalem: City pass (Hebrew: 	סיטיפס )
-     May be transliterated.-->
-    <string name="ravkav_agency_city_pass">City Pass</string>
-    <!-- Translators: appears as an agency if user used official top-up app. -->
-    <string name="ravkav_agency_topup_app">RavKav Top-up app</string>
 
     <!-- Calypso hardware information -->
     <string name="calypso_serial_number">Serial number</string>
@@ -586,7 +595,6 @@
 
 
     <!-- Locations -->
-
     <string name="location_act_australia">Australian Capital Territory, Australia</string>
     <!--
       Translators:
@@ -599,8 +607,11 @@
       "Brisbane, Australia" instead.
     -->
     <string name="location_brisbane_seq_australia">Brisbane &amp; SE QLD, Australia</string>
+    <string name="location_brussels">Brussels, Belgium</string>
     <string name="location_boston">Boston, MA, USA</string>
     <string name="location_christchurch_nz">Christchurch, New Zealand</string>
+    <string name="location_gironde">Gironde, France</string>
+    <string name="location_grenoble">Grenoble, France</string>
     <string name="location_helsinki_finland">Helsinki, Finland</string>
     <string name="location_hong_kong">Hong Kong</string>
     <string name="location_ireland">Ireland</string>
@@ -612,10 +623,12 @@
     This is not a city or prefecture.
     -->
     <string name="location_kansai">Kansai, Japan</string>
+    <string name="location_lisbon">Lisbon, Portugal</string>
     <string name="location_los_angeles">Los Angeles, CA, USA</string>
+    <string name="location_milan">Milan, Italy</string>
     <string name="location_minneapolis">Minneapolis, MN, USA</string>
     <string name="location_moscow">Moscow, Russia</string>
-    <string name="location_the_netherlands">The Netherlands</string>
+    <string name="location_paris">Paris, France</string>
     <!-- Translators: This refers to the province of Québec (not Québec City) -->
     <string name="location_quebec">Québec, Canada</string>
     <string name="location_saint_petersburg">Saint Petersburg, Russia</string>
@@ -626,6 +639,7 @@
     <string name="location_shenzhen">Shenzhen, Guangdong Province, China</string>
     <string name="location_singapore">Singapore</string>
     <string name="location_sydney_australia">Sydney, Australia</string>
+    <string name="location_the_netherlands">The Netherlands</string>
     <string name="location_tokyo">Tokyo, Japan</string>
     <string name="location_vancouver">Vancouver, BC, Canada</string>
     <string name="location_victoria_australia">Victoria, Australia</string>
@@ -655,6 +669,8 @@
     <string name="mode_pos">Point of Sale</string>
     <!-- Used as descriptive text for the banned icon. -->
     <string name="mode_banned">Banned</string>
+    <!-- Used as descriptive text for the trolleybus icon. -->
+    <string name="mode_trolleybus">Trolleybus</string>
     <!-- Used as descriptive text for the unknown transit mode icon. -->
     <string name="mode_unknown">Unknown</string>
 
@@ -836,6 +852,11 @@
     <string name="opal_action_journey_completed_auto_on">Journey completed (failure to tap on)</string>
     <string name="opal_action_tap_on_reversal">Tap on reversal</string>
     <string name="opal_action_tap_on_rejected">Tap on rejected</string>
+    <!--
+    Translators: This is the name of the public transport authority in Sydney.
+    Full name: "Transport for New South Wales"
+    -->
+    <string name="opal_agency_tfnsw">Transport for NSW</string>
     <string name="card_note_opal">Free travel passes and single trip tickets are not supported.</string>
 
     <string name="orca_coach_number">Coach #%s</string>
@@ -920,10 +941,114 @@
     <string name="compass_ticket_type_concession">Concession</string>
     <string name="compass_ticket_type_regular">Regular</string>
     <string name="compass_note">Single ride tickets only</string>
+    <string name="expiry_date">Expiry date</string>
 
-    <string name="opus_subscription">Subscription</string>
-    <string name="opus_card_expiry_date">Card Expiry</string>
-    <string name="opus_single_trips">Single trips</string>
+    <!--
+    Translators: Some cards record the cardholder's gender, this is used to label the field.
+    -->
+    <string name="gender">Gender</string>
+    <string name="gender_female">Female</string>
+    <string name="gender_male">Male</string>
+
+    <!-- En1545 and related cards -->
+
+    <!-- Translators: The name of the transit agency who sold a subscription -->
+    <string name="seller_agency">Seller agency</string>
+    <!-- Translators: Attribute to describe the number of remaining trips on the card or subscription. -->
+    <string name="remaining_trip_count">Trips remaining</string>
+    <plurals name="remaining_trips_total">
+        <item quantity="zero">No trips remain</item>
+        <item quantity="one">%1$d trip remains</item>
+        <item quantity="other">%1$d trips remaining</item>
+    </plurals>
+
+    <plurals name="remaining_trip_on_day">
+        <item quantity="one">%1$d trip remains on %2$s</item>
+        <item quantity="other">%1$d trips remaining on %2$s</item>
+    </plurals>
+    <string name="remaining_day_count">Days remaining</string>
+    <plurals name="travel_zones">
+        <item quantity="one">Travel zone</item>
+        <item quantity="other">Travel zones</item>
+    </plurals>
+
+    <string name="en1545_network_id">Network ID</string>
+    <string name="card_issuer">Issuer</string>
+
+    <string name="purchase_date">Date purchased</string>
+    <!-- Translators: Used to describe a subscription (travel pass) made of single trips. -->
+    <string name="single_trips">Single trips</string>
+    <!-- Translators: Used to describe a subscription (travel pass) lasting for a month. -->
+    <string name="monthly_subscription">Monthly subscription</string>
+    <!-- Translators: Used to describe a subscription (travel pass) lasting for a week. -->
+    <string name="weekly_subscription">Weekly subscription</string>
+    <string name="en1545_card_expiry_date_profile">Profile expiry date</string>
+    <!-- Translators: Used to describe a subscription (travel pass) lasting for a day. -->
+    <string name="daily_subscription">Daily subscription</string>
+
+    <!-- Translators:
+    The subscription is present on the card, but currently disabled.
+    -->
+    <string name="subscription_inactive">Inactive</string>
+    <!-- Translators:
+    The subscription has been purchased, but never used.
+    -->
+    <string name="subscription_unused">Unused</string>
+    <!-- Translators:
+    The subscription has been purchased, and has started.
+    -->
+    <string name="subscription_started">Started</string>
+    <!-- Translators:
+    The subscription has been "used up".
+
+    This is the "final" state when there are a fixed number of trips associated with a
+    subscription, eg: the card holder bought 10 trips, and has taken 10 trips.
+    -->
+    <string name="subscription_used">Used</string>
+    <!-- Translators:
+    The subscription has expired.
+
+    This is the "final" state when the card has been scanned after the end date/time of the
+    subscription.
+    -->
+    <string name="subscription_expired">Expired</string>
+
+    <!-- Translators "Last used" is a date, time or date+time attribute -->
+    <string name="last_used_on">Last used</string>
+    <string name="payment_method">Payment method</string>
+    <string name="payment_method_cash">Cash</string>
+    <string name="payment_method_credit_card">Credit card</string>
+    <string name="payment_method_debit_card">Debit card</string>
+    <string name="payment_method_transit_card">Transit card</string>
+    <string name="payment_method_cheque">Cheque</string>
+    <!-- Translators: Free as in "gratis" (costing no money) -->
+    <string name="payment_method_free">Free</string>
+
+    <!-- Translators: This refers to a person's name. -->
+    <string name="card_holders_name">Cardholder\'s name</string>
+
+    <!--
+    Translators: This is used to describe whether a card is personalised (registered to an
+    individual) or anonymous (not registered).
+     -->
+    <string name="card_type">Card type</string>
+
+    <!-- Translators: Used to describe a card that is not registered to any individual. -->
+    <string name="card_type_anonymous">Anonymous</string>
+    <!-- Translators: Used to describe a card that has been registered in an individual's name. -->
+    <string name="card_type_personal">Personal</string>
+
+    <!--
+    Translators: This should never be translated as "ZIP code".
+    This string should not be used for ticketing systems in USA.
+    -->
+    <string name="postal_code">Postal code</string>
+
+    <!-- Translators: this is a ticketing system in Israel. (Hebrew: רב-קו‎)
+ May be transliterated. -->
+    <string name="card_name_ravkav">Rav-Kav</string>
+    <!-- Translators: appears as an agency if user used official top-up app. -->
+    <string name="ravkav_agency_topup_app">RavKav Top-up app</string>
 
     <!-- Troika / Тройка, Podorozhnik / Подорожник (Russia) -->
 
@@ -1072,7 +1197,6 @@
     <string name="initialisation_date">Initialisation date</string>
     <string name="issue_date">Date of issue</string>
 
-    <string name="leap_issuer_id">Issuer ID</string>
     <!--
     Translators:
     keys = encryption keys
@@ -1123,4 +1247,5 @@
     -->
     <string name="vehicle_number">Vehicle %s</string>
     <string name="card_id">Card ID</string>
+    <string name="tap_for_more_info">Tap for more information…</string>
 </resources>

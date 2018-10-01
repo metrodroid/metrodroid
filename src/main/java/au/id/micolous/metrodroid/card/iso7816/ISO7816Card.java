@@ -110,11 +110,16 @@ public class ISO7816Card extends Card {
             if (cepas != null)
                 apps.add(cepas);
 
-	    appData = iso7816Tag.selectByName(CalypsoApplication.CALYPSO_FILENAME, false);
-            if (appData != null)
-                apps.add(CalypsoApplication.dumpTag(iso7816Tag,
-                        new ISO7816Application.ISO7816Info(appData, CalypsoApplication.CALYPSO_FILENAME, tagId, CalypsoApplication.TYPE),
-                        feedbackInterface));
+            for (byte[] calypsoFilename : CalypsoApplication.CALYPSO_FILENAMES) {
+                appData = iso7816Tag.selectByName(calypsoFilename, false);
+                if (appData != null) {
+                    apps.add(CalypsoApplication.dumpTag(iso7816Tag,
+                            new ISO7816Application.ISO7816Info(appData, calypsoFilename,
+                                    tagId, CalypsoApplication.TYPE),
+                            feedbackInterface));
+                    break;
+                }
+            }
 
             appData = iso7816Tag.selectByName(TMoneyCard.APP_NAME, false);
             if (appData != null)

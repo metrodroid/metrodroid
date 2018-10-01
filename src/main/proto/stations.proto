@@ -38,6 +38,7 @@ enum TransportType {
     POS = 8;
     OTHER = 9;
     BANNED = 10;
+    TROLLEYBUS = 11;
 }
 
 message Names {

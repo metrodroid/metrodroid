@@ -1,0 +1,556 @@
+reader_id,stop_name
+0x5033450,Val de Fontenay
+0x5033460,Bry-sur-Marne|Neuilly-Plaisance
+0x5033470,Noisy-le-Grand (Mont d'Est)
+0x50334c0,Val d'europe
+0x50334b0,Bussy-Saint-Georges
+0x50334d0,Marne-la-Vallée Chessy
+0x5033480,Noisy-Champs
+0x50334a0,Lognes|Noisiel|Torcy
+0x5030200,Châtelet-Les Halles
+0x5030210,Châtelet-Les Halles
+0x5030270,Luxembourg
+0x5035aa0,Grigny-Centre
+0x5035ac0,Le Bras-de-Fer - Evry
+0x5035ab0,Evry Courcouronnes|Orangis Bois de l'Epine
+0x5036aa0,Bouffemont Moisselles|Montsoult Maffliers
+0x5036a60,Deuil Montmagny
+0x5036a70,Groslay
+0x5036a90,Domont|Ecouen Ezanville
+0x5036ab0,Belloy-Saint-Martin|Luzarches|Seugy|Viarmes|Villaines
+0x5036a80,Sarcelles Saint-Brice
+0x5030600,Saint-Michel Notre-Dame
+0x5039670,Les Saules|Orly-Ville
+0x5039690,Pont de Rungis Aéroport|Rungis-La Fraternelle
+0x50396c0,Massy-Verrières
+0x50396a0,Chemin d'Antony
+0x5030c00,Auber
+0x50398d0,Breuillet Bruyères-le-Châtel|Breuillet-Village|Saint-Chéron
+0x50398c0,Arpajon|Egly|La Norville
+0x50398e0,Sermaise
+0x50398f0,Dourdan|Dourdan-la-Forêt
+0x5036ca0,Pierrelaye
+0x5036cc0,Boissy-l'Aillerie|Osny
+0x5036c90,Franconville|Montigny Beauchamp|Montigny-Beauchamp
+0x5036cb0,Pontoise|Saint-Ouen-l'Aumône|Saint-Ouen-l'Aumone-Liesse
+0x5036c80,Cernay
+0x5036cf0,Chars|Montgeroult Courcelles|Santeuil Le Perchay|Us
+0x5031ec0,Port Royal
+0x5031ed0,Denfert-Rochereau
+0x5032ed0,Couilly Saint-Germain Quincy|Les Champs-Forts|Montry Condé
+0x5032ee0,Crécy-en-Brie La Chapelle|Villiers-Montbarbin
+0x5033e70,Chaville-Rive Droite|Sèvres Ville-d'Avray|Viroflay-Rive Droite
+0x5033e80,Montreuil|Versailles-Rive Droite
+0x5036e50,Gennevilliers
+0x5036e10,Péreire-Levallois
+0x5036e70,Saint-Gratien
+0x5036e20,Porte de Clichy
+0x5036e00,Avenue Foch|Avenue Henri-Martin|Kennedy Radio-France|Boulainvilliers|Neuilly-Porte Maillot
+0x5036e30,Saint-Ouen
+0x5036e40,Les Grésillons
+0x5036e60,Epinay-sur-Seine
+0x5037e70,Porchefontaine|Versailles-Rive Gauche
+0x50340c0,Les Clairières de Verneuil|Vernouillet Verneuil
+0x50340d0,Aubergenville-Elisabethville|Les Mureaux
+0x50340e0,Epône Mézières
+0x5034070,Houilles Carrières-sur-Seine|Sartrouville
+0x5034100,Bonnières|Mantes-la-Jolie|Mantes-Station|Port-Villez|Rosny-sur-Seine
+0x5034090,Maisons-Laffitte
+0x50340a0,Poissy
+0x5034050,La Garenne-Colombes|Les Vallées|Nanterre-Université
+0x50340b0,Médan|Villennes-sur-Seine
+0x50350c0,Corbeil-Essonnes|Mennecy|Moulin-Galant
+0x5035060,Villeneuve-Prairie
+0x50350d0,Ballancourt|Fontenay le Vicomte
+0x5035010,Gare de Lyon|Gare de Lyon (Banlieue)
+0x50350e0,La Ferté-Alais
+0x5035070,Villeneuve-Triage
+0x5035080,Villeneuve-Saint-Georges
+0x5035110,Boigneville|Buno-Gironville
+0x5035090,Juvisy|Vigneux-sur-Seine
+0x50350a0,Ris-Orangis|Viry-Châtillon
+0x5035050,Le Vert de Maisons|Maisons-Alfort Alfortville
+0x50350b0,Evry Val de Seine|Grand-Bourg
+0x5035100,Boutigny|Maisse
+0x50370b0,Auvers-sur-Oise|Chaponval|Epluches|Pont Petit
+0x5032050,Le Parc de Saint-Maur
+0x5032010,Nation
+0x5032070,La Varenne-Chennevières
+0x5032020,Fontenay-sous-Bois|Vincennes
+0x5032080,Boissy-Saint-Léger|Sucy Bonneuil
+0x5032030,Joinville-le-Pont|Nogent-sur-Marne
+0x5032040,Saint-Maur Créteil
+0x5032060,Champigny
+0x5032860,Bondy
+0x50328d0,Esbly
+0x5032810,Gare de l'Est
+0x50328e0,Meaux
+0x5032870,Gagny|Le Raincy Villemomble
+0x50328f0,Changis-Saint-Jean|Isles-Armentières Congis|Lizy-sur-Ourcq|Trilport
+0x5032900,Crouy-sur-Ourcq|La Ferté-sous-Jouarre|Nanteuil Saacy
+0x5032840,Pantin
+0x5032890,Chelles Gournay|Le Chênay Gagny
+0x50328a0,Vaires Torcy
+0x5032850,Noisy-le-Sec
+0x50328b0,Lagny-Thorigny
+0x5033840,Fontenay-aux-Roses|Robinson|Sceaux
+0x50342a0,Achères-Grand-Cormier|Achères-Ville
+0x50342c0,Cergy-le-Haut|Cergy-Saint-Christophe
+0x50342b0,Cergy-Préfecture|Neuville-Université
+0x5035200,Saint-Michel Notre-Dame|Musée d'Orsay
+0x5035210,Gare d'Austerlitz
+0x5035230,Boulevard Masséna
+0x5035270,Villeneuve-le-Roi
+0x5035280,Ablon
+0x5035240,Ivry-sur-Seine|Vitry-sur-Seine
+0x5035290,Athis-Mons
+0x5035220,Bibliotheque-Francois
+0x5035250,Choisy-le-Roi|Les Ardoines
+0x50372b0,Presles Courcelles
+0x50372c0,Nointel Mours
+0x5034470,Bas Meudon|Bellevue funiculaire
+0x5034450,Suresnes - Lonchamp
+0x5034460,Les Côteaux|Pont de Saint Cloud|Pont de Sèvres
+0x5034480,Les Moulineaux - Billancourt
+0x50354a0,Sainte-Geneviève-des-Bois
+0x50354c0,Brétigny-sur-Orge|Marolles-en-Hurepoix
+0x50354e0,Chamarande|Etampes|Etréchy
+0x5035490,Epinay-sur-Orge|Savigny-sur-Orge
+0x50354b0,Saint-Michel-sur-Orge
+0x50354d0,Bouray|Lardy
+0x5035510,Guillerval
+0x5035500,Saint-Martin d'Etampes
+0x50364c0,Bruyères-sur-Oise|Champagne-sur-Oise|L'Isle-Adam Parmain|Persan Beaumont
+0x5036460,La Barre-Ormesson
+0x5036400,Haussmann-Saint-Lazare
+0x5036410,Gare du Nord|Gare du Nord (Surface)|Magenta|Paris-Nord
+0x5036470,Champ de Courses d'Enghien|Enghien-les-Bains
+0x5036480,Ermont Eaubonne|Ermont-Eaubonne|Ermont-Halte|Gros-Noyer Saint-Prix
+0x5036490,Saint-Leu-La-Forêt|Taverny|Vaucelles
+0x50364a0,Bessancourt|Frépillon|Mery
+0x5036450,Epinay-Villetaneuse|Saint-Denis|Sèvres-Rive Gauche
+0x50364b0,Mériel|Valmondois
+0x5031c40,Cité Universitaire
+0x5032250,Nanterre-Université|Nanterre-Ville|Nanterre-Préfecture
+0x5032210,Charles de Gaulle-Etoile
+0x5032290,Le Vésinet-Centre|Le Vésinet-Le Pecq|Saint-Germain-en-Laye
+0x5032280,Chatou-Croissy
+0x5032240,La Défense (Grande Arche)
+0x5032260,Rueil-Malmaison
+0x5032ac0,Gretz-Armainvilliers|Tournan
+0x5032a60,Nogent Le-Perreux
+0x5032a70,Les Boullereaux Champigny
+0x5032af0,Courquetaine|Faremoutiers Pommeuse|Guerard La-Celle-sur-Morin|Liverdy en Brie|Marles-en-Brie|Mormant|Mortcerf|Mouroux|Ozouer le voulgis|Verneuil-l'Etang|Villepatour - Presles|Yebles|Yebles - Guignes
+0x5032a80,Villiers-sur-Marne
+0x5032b10,Champbenoist-Poigny|La Ferté-Gaucher|Longueville|Provins|Sainte-Colombe-Septveilles
+0x5032a90,Les Yvris Noisy-le-Grand
+0x5032b20,Flamboin|Meilleray|Villiers St Georges
+0x5032aa0,Emerainville|Roissy-en-Brie
+0x5032a50,Rosny-Bois-Perrier|Rosny-sous-Bois|Val de Fontenay
+0x5032ab0,Ozoir-la-Ferrière
+0x5032b00,Chailly Boissy-le-Châtel|Chauffry|Coulommiers|Jouy-sur-Morin Le-Marais|Nangis|Saint-Rémy-la-Vanne|Saint-Siméon
+0x50346c0,Triel-sur-Seine|Vaux-sur-Seine
+0x5034660,Argenteuil
+0x50346d0,Meulan Hadricourt|Thun-le-Paradis
+0x50346e0,Gargenville|Juziers
+0x50346f0,Issou Porcheville|Limay
+0x5034680,Cormeilles-en-Parisis|Val d'Argenteuil
+0x5034640,Bois-Colombes
+0x5034690,Herblay|La Frette Montigny
+0x50346a0,Conflans-Fin d'Oise|Conflans-Sainte-Honorine
+0x5034650,Colombes|Le Stade
+0x50346b0,Andrésy|Chanteloup-lès-Vignes|Maurecourt
+0x5034700,Breval|Ménerville
+0x50356a0,Brunoy
+0x50356c0,Lieusaint Moissy
+0x5035710,Champagne-sur-Seine|Héricy|La Grande Paroisse|Vernou-sur-Seine|Vulaines-sur-Seine Samoreau
+0x5035690,Montgeron Crosne|Yerres
+0x50356b0,Boussy-Saint-Antoine|Combs-la-Ville Quincy
+0x50356d0,Cesson|Savigny-le-Temple Nandy
+0x50356f0,Le Mée|Melun
+0x5035700,Chartrettes|Fontaine-le-Port|Livry-sur-Seine
+0x5036650,Le Bourget
+0x50366c0,Dammartin Juilly Saint-Mard|Thieux Nantouillet
+0x5036670,Blanc-Mesnil|Drancy
+0x5036690,Sevran Livry|Vert-Galant
+0x50366b0,Compans|Mitry Claye|Mitry-Claye
+0x50366a0,Villeparisis
+0x5036640,La Courneuve-Aubervilliers|La Plaine-Stade de France
+0x5036680,Aulnay-sous-Bois
+0x50392b0,Eragny Neuville|Saint-Ouen-l'Aumône (Eglise)
+0x5037aa0,Fontenay-le-Fleury
+0x5037ac0,Plaisir Grignon|Plaisir Les-Clayes
+0x5037ab0,Villepreux Les-Clayes
+0x5037ad0,Beynes|Mareil-sur-Mauldre|Maule|Nézel Aulnay
+0x5037af0,Garancières La-Queue|Montfort-l'Amaury Méré|Orgerus Behoust|Tacoignères Richebourg|Villiers Neauphle
+0x5037b00,Houdan
+0x5038c90,Parc des Expositions|Sevran-Beaudottes|Villepinte
+0x5038ca0,Aéroport Charles de Gaulle 1|Aéroport Charles de Gaulle 2
+0x50382a0,Igny
+0x50382c0,Longjumeau
+0x50382e0,Gravigny-Balizy|Petit-Vaux
+0x5038290,Vauboyen
+0x50382b0,Massy-Palaiseau
+0x50382d0,Chilly-Mazarin
+0x5038280,Jouy-en-Josas|Petit-Jouy-les-Loges
+0x5038050,Issy|Meudon-Val-Fleury
+0x5038010,Champ de Mars-Tour Eiffel
+0x5038020,Javel
+0x5038000,Pont de l'alma|Invalides
+0x5038030,Boulevard Victor - Pont du Garigliano
+0x5038040,Issy-Val de Seine
+0x5039070,Sannois
+0x50358c0,Essonnes-Robinson|Villabé
+0x50358e0,Boissise-le-Roi|Ponthierry Pringy
+0x5035910,Bagneaux-sur-Loing|Bourron-Marlotte Grez|Fontainebleau-Avon|Montereau|Montigny-sur-Loing|Moret Veneux-les-Sablons|Nemours Saint-Pierre|Saint-Mammés|Souppes|Thomery
+0x50358d0,Coudray-Montceaux|Le Plessis-Chenet-IBM|Saint-Fargeau
+0x50358f0,Vosves
+0x5035900,Bois-le-Roi
+0x5036850,Stade de France-Saint-Denis
+0x5036860,Pierrefitte Stains
+0x5036870,Garges-Sarcelles
+0x50368b0,La Borne-Blanche|Survilliers-Fosses
+0x5036880,Villiers-le-Bel (Gonesse -
+0x50368a0,Goussainville|Les Noues|Louvres
+0x50378c0,Coignières|La Verrière
+0x5037860,Chaville-Rive Gauche|Chaville-Vélizy|Viroflay-Rive Gauche
+0x50378d0,Les Essarts-le-Roi
+0x5037810,Gare Montparnasse|Paris Montparnasse3 Vaug.
+0x50378e0,Le Perray|Rambouillet
+0x5037870,Versailles-Chantiers
+0x50378f0,Gazeran
+0x5037840,Clamart|Vanves Malakoff
+0x50378a0,Saint-Cyr
+0x5037850,Bellevue|Bièvres|Meudon
+0x50378b0,Saint-Quentin-en-Yvelines -|Trappes
+0x5032460,Massy-Palaiseau|Massy-Verrières
+0x5032400,Denfert-Rochereau
+0x5032410,Gentilly
+0x5032430,Bagneux|Bourg-la-Reine
+0x5032470,Palaiseau|Palaiseau Villebon
+0x5032480,Lozère
+0x5032440,La Croix-de-Berny|Parc de Sceaux
+0x5032490,Le Guichet|Orsay-Ville
+0x5032420,Arcueil-Cachan|Laplace
+0x5032450,Antony|Fontaine-Michalon|Les Baconnets
+0x50324a0,Bures-sur-Yvette|Courcelle-sur-Yvette|Gif-sur-Yvette|La Hacquinière|Saint-Rémy-lès-Chevreuse
+0x5032c70,Allée de la Tour-Rendez-Vous|La Remise-à-Jorelle|Les Coquetiers|Les Pavillons-sous-Bois
+0x5032c90,Freinville Sevran|L'Abbaye|Lycée Henri Sellier|Rougemont-Chanteloup
+0x5032c80,Gargan
+0x5033c50,Puteaux|Suresnes Mont-Valérien
+0x5033c10,Gare Saint-Lazare
+0x5033c70,Garches Marne-la-Coquette|Le Val d'Or|Saint-Cloud
+0x5033c90,Bougival|La Celle-Saint-Cloud|Louveciennes|Marly-le-Roi
+0x5033ca0,L'Etang-la-Ville|Saint-Nom-la-Bretêche Forêt
+0x5033c30,Pont Cardinet
+0x5033c40,Asnières|Bécon-les-Bruyères|Clichy Levallois|Courbevoie|La Défense (Grande Arche)
+0x5033c80,Vaucresson
+0x3021cc0,Campo-Formio
+0x3021cd0,Les Gobelins
+0x3021c30,Porte d'Italie
+0x3021cf0,Corvisart
+0x3021c40,Cité universitaire
+0x3021ce0,Place d'Italie
+0x3021c20,Porte de Choisy
+0x3021ca0,Tolbiac
+0x3021cb0,Nationale
+0x3021c90,Maison Blanche
+0x30202c0,Louvre - Rivoli
+0x3020260,Maubert - Mutualité
+0x30202d0,Pont Neuf
+0x3020210,Saint-Michel
+0x30202e0,Cité
+0x3020270,Luxembourg
+0x30202f0,Hôtel de Ville
+0x3020280,Châtelet
+0x3020240,Odéon
+0x30202a0,Les Halles
+0x30202b0,Les Halles
+0x3020250,Cluny - La Sorbonne
+0x3020290,Les Halles
+0x30206c0,Bobigny - Pablo Picasso
+0x3020660,Fort d'Aubervilliers
+0x3020670,La Courneuve - 8 Mai 1945
+0x3020640,Porte de la Villette
+0x30206a0,Église de Pantin
+0x3020650,Aubervilliers - Pantin - Quatre Chemins
+0x30206b0,Bobigny - Pantin - Raymond Queneau
+0x3020690,Hoche
+0x3020ec0,Mirabeau
+0x3020e30,Porte de Saint-Cloud
+0x3020e70,Porte d'Auteuil
+0x3020ef0,Jasmin
+0x3020e80,Église d'Auteuil
+0x3020ea0,Michel-Ange - Molitor
+0x3020ee0,Exelmans
+0x3020eb0,Chardon-Lagache
+0x3020e90,Michel-Ange - Auteuil
+0x3021e60,Olympiades
+0x3021e10,Cour Saint-Emilion
+0x3021e30,Bibliothèque François Mitterrand
+0x3021e80,Glacière
+0x3021e40,Mouton-Duvernet
+0x3021ee0,Denfert-Rochereau
+0x3021e20,Porte d'Orléans
+0x3021e50,Alésia
+0x3021ea0,Raspail
+0x3021e90,Saint-Jacques
+0x3023ec0,Rome
+0x3023e60,Pigalle
+0x3023ed0,Place de Clichy
+0x3023e30,Funiculaire de Montmartre (station supérieure)
+0x3023e70,Blanche
+0x3023e80,Trinité - d'Estienne d'Orves
+0x3023e40,Anvers
+0x3023ee0,La Fourche
+0x3023e20,Funiculaire de Montmartre (station inférieure)
+0x3023e50,Abbesses
+0x3023ea0,Saint-Georges
+0x3023e90,Notre-Dame-de-Lorette
+0x30220c0,Félix Faure
+0x3022060,Porte de Versailles
+0x30220d0,Charles Michels
+0x3022010,Falguière
+0x3022030,Volontaires
+0x30220e0,Javel - André Citroën
+0x3022040,Vaugirard
+0x30220a0,Lourmel
+0x3022020,Pasteur
+0x3022050,Convention
+0x30220b0,Boucicaut
+0x3022090,Balard
+0x30210c0,Filles du Calvaire
+0x3021060,Temple
+0x30210d0,Saint-Sébastien - Froissart
+0x3021010,Rambuteau
+0x3021030,Arts et Métiers
+0x3021070,République
+0x30210f0,Saint-Ambroise
+0x3021040,Jacques Bonsergent
+0x30210a0,Oberkampf
+0x3021050,Goncourt
+0x30210b0,Parmentier
+0x30210e0,Richard-Lenoir
+0x3022260,Avenue Émile Zola
+0x30222d0,Rue de la Pompe
+0x30222e0,Boissière
+0x3022270,Dupleix
+0x30222f0,Trocadéro
+0x3022280,Passy
+0x3022240,La Motte-Picquet - Grenelle
+0x3022220,Porte Dauphine
+0x3022250,Commerce
+0x30222b0,La Muette
+0x3022290,Ranelagh
+0x30208c0,Saint-Placide
+0x3020860,Edgar Quinet
+0x3020830,Plaisance
+0x3020870,Vavin
+0x3020880,Montparnasse - Bienvenüe
+0x3020840,Gaîté
+0x3020820,Pernety
+0x30208e0,Notre-Dame-des-Champs
+0x30212a0,Quai de la Rapée
+0x3021210,Quai de la Gare
+0x3021220,Chevaleret
+0x3021280,Gare de Lyon
+0x3021240,Saint-Marcel
+0x3021270,Gare d'Austerlitz
+0x30226d0,Carrefour Pleyel
+0x3022610,Mairie de Clichy
+0x3022630,Les Agnettes
+0x30226f0,Basilique de Saint-Denis
+0x3022640,Asnières - Gennevilliers - Les Courtilles
+0x30226e0,Saint-Denis - Porte de Paris
+0x3022620,Gabriel Péri
+0x30226a0,Garibaldi
+0x30226b0,Mairie de Saint-Ouen
+0x3022690,La Chapelle)
+0x3023c50,Pereire
+0x3023c10,Porte Maillot
+0x3023c90,Porte de Clichy
+0x3023cc0,Guy Môquet
+0x3023cd0,Porte de Saint-Ouen
+0x3023c40,Wagram
+0x3023c80,Brochant
+0x30228a0,Simplon
+0x3022810,Porte de Clignancourt
+0x3022890,Marcadet - Poissonniers
+0x30228b0,Jules Joffrin
+0x30228c0,Lamarck - Caulaincourt
+0x3022870,Marx Dormoy
+0x3022860,Porte de la Chapelle
+0x30214c0,Varenne
+0x30214d0,Assemblée nationale
+0x3021410,Champs-Élysées - Clemenceau
+0x3021430,Madeleine
+0x3021470,École Militaire
+0x3021480,La Tour-Maubourg
+0x3021440,Bir-Hakeim
+0x3021420,Concorde
+0x30214e0,Solférino
+0x30214b0,Saint-Denis - Université
+0x3021490,Invalides
+0x3022a10,Chaussée d'Antin - La Fayette
+0x3022a30,Cadet
+0x3022a70,Barbès - Rochechouart
+0x3022a80,Gare du Nord
+0x3022a40,Château Rouge
+0x3022a20,Le Peletier
+0x3022aa0,Poissonnière
+0x3022ab0,Château-Landon
+0x3022a90,Gare de l'Est
+0x30204c0,Saint-Sulpice
+0x3020460,Saint-François-Xavier
+0x3020430,Sèvres - Lecourbe
+0x3020470,Duroc
+0x30204f0,Saint-Germain-des-Prés
+0x3020480,Vaneau
+0x3020440,Ségur
+0x30204e0,Mabillon
+0x3020420,Cambronne
+0x30204a0,Rue du Bac
+0x30204b0,Rennes
+0x3020490,Sèvres - Babylone
+0x3020ac0,Avron
+0x3020a60,Rue des Boulets
+0x3020ad0,Alexandre Dumas
+0x3020a30,Porte de Montreuil
+0x3020a70,Porte de Vincennes
+0x3020a40,Maraîchers
+0x3020a20,Robespierre
+0x3020a50,Buzenval
+0x3020aa0,Nation
+0x3020a90,Picpus
+0x3021660,Grands Boulevards
+0x30216d0,Sentier
+0x3021610,Tuileries
+0x3021630,Pyramides
+0x3021670,Richelieu - Drouot
+0x30216f0,Étienne Marcel
+0x3021680,Bonne Nouvelle
+0x3021640,Bourse
+0x3021620,Palais Royal - Musée du Louvre
+0x30216e0,Réaumur - Sébastopol
+0x30216b0,Château d'Eau
+0x30216a0,Strasbourg - Saint-Denis
+0x3022ed0,Buttes Chaumont
+0x3022e30,Mairie des Lilas
+0x3022ee0,Jourdain
+0x3022ef0,Télégraphe
+0x3022e80,Place des Fêtes
+0x3022e40,Porte de Bagnolet
+0x3022ea0,Danube
+0x3022e20,Porte des Lilas
+0x3022e50,Gallieni
+0x3022eb0,Pré Saint-Gervais
+0x3022e90,Botzaris
+0x3023ac0,Porte de Champerret
+0x3023a00,La Défense (correspondance RER)
+0x3023ae0,Anatole France
+0x3023af0,Pont de Levallois - Bécon
+0x3023a80,Les Sablons
+0x3023a40,Boulogne - Jean Jaurès
+0x3023ad0,Louise Michel
+0x3023aa0,Esplanade de la Défense
+0x3023a50,Boulogne - Pont de Saint-Cloud
+0x3023ab0,La Défense
+0x3023a90,Pont de Neuilly
+0x30230c0,Belleville
+0x3023060,Rue Saint-Maur
+0x30230d0,Couronnes
+0x3023010,Voltaire
+0x30230e0,Pyrénées
+0x3023070,Philippe Auguste
+0x3023080,Saint-Fargeau
+0x3023040,Père Lachaise
+0x3023020,Charonne
+0x3023050,Ménilmontant
+0x30230a0,Gambetta
+0x3023090,Pelleport
+0x30218c0,Bastille
+0x3021860,Cardinal Lemoine
+0x30218d0,Chemin Vert
+0x3021810,Faidherbe - Chaligny
+0x3021830,Montgallet
+0x3021870,Jussieu
+0x30218f0,Ledru-Rollin
+0x3021880,Sully - Morland
+0x3021840,Censier - Daubenton
+0x30218e0,Bréguet - Sabin
+0x3021820,Reuilly - Diderot
+0x3021850,Place Monge
+0x30218a0,Saint-Paul
+0x3021890,Pont Marie
+0x30232c0,Liberté
+0x3023260,Créteil - Université
+0x30232d0,Charenton - Écoles
+0x3023230,Mairie de Montreuil
+0x3023270,Créteil - Préfecture
+0x30232f0,Maisons-Alfort - Stade
+0x3023280,Saint-Mandé
+0x3023240,Maisons-Alfort - Les Juilliottes
+0x30232e0,École vétérinaire de Maisons-Alfort
+0x3023220,Croix de Chavaux
+0x3023250,Créteil - L'Échat
+0x30232b0,Château de Vincennes
+0x30232a0,Bérault
+0x3022cc0,Jaurès
+0x3022c60,Crimée
+0x3022cd0,Laumière
+0x3022c10,Porte de Pantin
+0x3022ce0,Bolivar
+0x3022cf0,Colonel Fabien
+0x3022c80,Riquet
+0x3022c40,Corentin Cariou
+0x3022c20,Ourcq
+0x3022ca0,Louis Blanc
+0x3022cb0,Stalingrad
+0x3022c90,La Chapelle
+0x3020cc0,Europe
+0x3020c60,Auber
+0x3020cd0,Liège
+0x3020c10,Malesherbes
+0x3020c30,Villiers
+0x3020c70,Havre - Caumartin
+0x3020c80,Saint-Lazare
+0x3020c40,Quatre-Septembre
+0x3020c20,Monceau
+0x3020c50,Opéra
+0x3020ca0,Saint-Augustin
+0x3020c90,Saint-Lazare
+0x3021aa0,Michel Bizot
+0x3021a10,Porte Dorée
+0x3021ac0,Bel-Air
+0x3021ab0,Daumesnil
+0x3021a30,Porte de Charenton
+0x3021a80,Dugommier
+0x3021a70,Bercy
+0x3023620,Porte de Vanves
+0x3023690,Châtillon - Montrouge
+0x3023680,Malakoff - Rue Étienne Dolet
+0x3023670,Malakoff - Plateau de Vanves
+0x3023450,Mairie d'Ivry
+0x3023460,Le Kremlin-Bicêtre
+0x3023490,Villejuif - Louis Aragon
+0x3023480,Villejuif - Paul Vaillant-Couturier
+0x3023430,Porte d'Ivry
+0x3023440,Pierre et Marie Curie
+0x3023470,Villejuif - Léo Lagrange
+0x30238a0,Pont de Sèvres
+0x3023820,Corentin Celton
+0x3023830,Mairie d'Issy
+0x3023880,Marcel Sembat
+0x3023890,Billancourt
+0x30224c0,Charles de Gaulle - ?~Itoile
+0x3022410,Iéna
+0x3022430,Alma - Marceau
+0x3022470,Franklin D. Roosevelt
+0x30224f0,Courcelles
+0x3022480,George V
+0x3022440,Miromesnil
+0x30224e0,Ternes
+0x30224a0,Victor Hugo
+0x3022450,Saint-Philippe du Roule
+0x30224b0,Argentine
+0x3022490,Kléber

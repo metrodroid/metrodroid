@@ -53,6 +53,7 @@
         <item>@drawable/cashier_yen</item>
         <item>@drawable/unknown</item>
         <item>@drawable/banned</item>
+        <item>@drawable/trolleybus</item>
     </integer-array>
 
     <color name="Metrodroid.Light.CardIdTextColor">#bb5500</color>
@@ -65,9 +66,9 @@
         <item name="MainActivityTheme">@style/Metrodroid.Light</item>
         <item name="ListHeaderTextColor">@android:color/background_dark</item>
         <item name="TransportIcons">@array/Metrodroid.Light.TransportIcons</item>
+        <item name="CardIdTextColor">@color/Metrodroid.Light.CardIdTextColor</item>
         <item name="DrawableClosedIndicator">@drawable/expander_close_holo_light</item>
         <item name="DrawableOpenIndicator">@drawable/expander_open_holo_light</item>
-        <item name="CardIdTextColor">@color/Metrodroid.Light.CardIdTextColor</item>
     </style>
 
     <style name="Metrodroid.Light.Dialog" parent="@android:style/Theme.DeviceDefault.Dialog">
@@ -90,7 +91,8 @@
                 This is only used by Edy and Suica at present. -->
         <item>@drawable/cashier_yen</item>
         <item>@drawable/unknown_black</item>
-	<item>@drawable/banned</item>
+    	<item>@drawable/banned</item>
+        <item>@drawable/trolleybus</item>
     </integer-array>
 
     <color name="FareBot.Theme.CardIdTextColor">#bb5500</color>
@@ -106,6 +108,7 @@
         <item name="LockImage">@drawable/locked</item>
         <item name="ListHeaderTextColor">@color/FareBot.Theme.HeaderColor</item>
         <item name="TransportIcons">@array/FareBot.Theme.TransportIcons</item>
+        <item name="CardIdTextColor">@color/FareBot.Theme.CardIdTextColor</item>
         <item name="DrawableClosedIndicator">@drawable/expander_close_holo_light</item>
         <item name="DrawableOpenIndicator">@drawable/expander_open_holo_light</item>
         <item name="CardIdTextColor">@color/FareBot.Theme.CardIdTextColor</item>
@@ -150,5 +153,7 @@
         <item>@drawable/ic_transaction_pos_32dp</item>
         <item>@drawable/ic_transaction_unknown_32dp</item>
         <item>@drawable/ic_transaction_banned_32dp</item>
+        <!-- TODO: Add trolleybus icon -->
+        <item>@drawable/ic_transaction_bus_32dp</item>
     </integer-array>
 </resources>

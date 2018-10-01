@@ -72,7 +72,7 @@
     <string name="card_preview_reader">Betaversjon av kortleseren.</string>
     <string name="visit_website">Besøk nettsiden</string>
     <string name="title_activity_about">Om Metrodroid</string>
-    <string name="card_type">Korttype</string>
+    <string name="card_format">Korttype</string>
     <string name="select_file">Velg fil</string>
     <string name="copied_to_clipboard">Kopiert til utklippstavle</string>
     <string name="saved_xml">Skrev Metrodroid-Export.xml til USB-lagring.</string>
@@ -249,7 +249,7 @@
     <string name="location_act_australia">Australian Capital Territory, Australia</string>
     <string name="location_wa_australia">Vest-Australia, Australia</string>
 
-    <string name="machine_id">Maskin-ID %s</string>
+    <string name="machine_id_format">Maskin-ID %s</string>
 
     <string name="felica_service_title_format">Tjeneste: 0x%1$s (%2$s)</string>
     <string name="localise_places">Legg til språkhint i stedsnavn</string>
@@ -513,6 +513,7 @@
     <string name="compass_ticket_type">Billettkode</string>
     <string name="compass_ticket_type_concession">Honør</string>
     <string name="compass_ticket_type_regular">Vanlig</string>
+    <string name="expiry_date">Utløpsdato</string>
     <string name="compass_note">Kun enkelttursbilletter</string>
 
     <string name="opus_subscription">Abonnement</string>

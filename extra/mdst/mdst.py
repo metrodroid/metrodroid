@@ -157,6 +157,8 @@ def read_operators_from_csv(csv_f):
       oppb.name.english_short = op['short_name']
     if 'local_name' in op and op['local_name']:
       oppb.name.local = op['local_name']
+    if 'local_short_name' in op and op['local_short_name']:
+      oppb.name.local_short = op['local_short_name']
     if 'mode' in op and op['mode']:
       oppb.default_transport = TransportType.Value(op['mode'])
     operators[int(op['id'], 0)] = oppb
