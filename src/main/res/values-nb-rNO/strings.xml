@@ -698,4 +698,6 @@
 
     <string name="vehicle_number">Kjøretøy %s</string>
     <string name="card_id">Kort-ID</string>
-</resources>
+<string name="card_note_leap">Krever innhenting av nøkler fra TFI, som må skrus på i NFC-innstillingene i Metrodroid.</string>
+
+    </resources>
