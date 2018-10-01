@@ -67,27 +67,6 @@ public abstract class En1545Subscription extends Subscription {
     protected static final String CONTRACT_AUTHENTICATOR = "ContractAuthnticator";
     protected final En1545Parsed mParsed;
 
-    protected Set<String> getHandledFieldSet() {
-        return new HashSet<>(Arrays.asList(
-                "ContractPriceAmount",
-                "ContractSaleDate",
-                "ContractSaleTime",
-                "ContractAuthenticator",
-                "ContractStartDate",
-                "ContractEndDate",
-                "ContractProvider",
-                "ContractPayMethod",
-                "ContractPassengerTotal",
-                "ContractSaleAgent",
-                "ContractSaleDevice",
-                "ContractStatus",
-                "ContractZones",
-                "ContractSerialNumber",
-                "ContractTariff",
-
-                "UnknownA", "UnknownB", "UnknownC", "UnknownD"));
-    }
-
     public En1545Subscription(Parcel parcel) {
         mParsed = new En1545Parsed(parcel);
     }

@@ -92,22 +92,6 @@ abstract public class En1545TransitData extends TransitData {
             li.add(new ListItem(R.string.postal_code,
                     Integer.toString(mTicketEnvParsed.getIntOrZero(HOLDER_POSTAL_CODE))));
 
-        HashSet<String> handled = new HashSet<>(Arrays.asList(
-                "EnvNetworkId",
-                "EnvApplicationIssueDate",
-                "EnvApplicationIssuerId",
-                "EnvApplicationValidityEndDate",
-                "EnvAuthenticator",
-                "HolderProfileDate",
-                "HolderBirthDate",
-                "HolderPostalCode",
-
-                "UnknownA", "UnknownB", "UnknownC", "EnvVersionNumber",
-                "HolderUnknownA", "HolderUnknownB", "HolderUnknownC",
-                "HolderUnknownD", "HolderUnknownE",
-                "EnvUnknownA", "EnvUnknownB", "EnvUnknownC", "EnvUnknownD",
-                "EnvUnknownE", "EnvCardSerial"));
-        li.addAll(mTicketEnvParsed.getInfo(handled));
         return li;
     }
 

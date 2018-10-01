@@ -175,16 +175,6 @@ public class MobibTransitData extends Calypso1545TransitData {
                     break;
             }
         }
-        HashSet<String> handled = new HashSet<>(Arrays.asList(
-                "EnvApplicationValidityEndDate",
-                "DateOfBirth",
-                "CardSerial",
-                "HolderGender",
-                "HolderName",
-
-                "ExtHolderUnknownA", "ExtHolderUnknownB",
-                "ExtHolderUnknownC", "ExtHolderUnknownD"));
-        li.addAll(mExtHolderParsed.getInfo(handled));
         li.addAll(super.getInfo());
         return li;
     }

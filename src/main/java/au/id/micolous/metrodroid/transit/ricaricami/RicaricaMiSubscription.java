@@ -53,16 +53,6 @@ public class RicaricaMiSubscription extends En1545Subscription {
     }
 
     @Override
-    protected Set<String> getHandledFieldSet() {
-        Set<String> handled = super.getHandledFieldSet();
-        handled.addAll(Arrays.asList(
-                "ContractLastUseDate",
-                "ContractValidationsInDay",
-                "TransactionCounter"));
-        return handled;
-    }
-
-    @Override
     public Calendar getValidTo() {
         if (getTariff() == RicaricaMiLookup.TARIFF_URBAN_2X6 && mParsed.getIntOrZero(CONTRACT_START + "Date") != 0) {
             Calendar end = (Calendar) mParsed.getTimeStamp(CONTRACT_START, RicaricaMiLookup.TZ).clone();

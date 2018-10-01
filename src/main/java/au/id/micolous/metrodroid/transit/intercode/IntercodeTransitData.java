@@ -24,6 +24,10 @@ import android.support.annotation.NonNull;
 import android.util.Pair;
 import android.util.SparseArray;
 
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.List;
+
 import au.id.micolous.farebot.R;
 import au.id.micolous.metrodroid.card.CardType;
 import au.id.micolous.metrodroid.card.calypso.CalypsoApplication;
@@ -38,6 +42,7 @@ import au.id.micolous.metrodroid.transit.en1545.En1545FixedString;
 import au.id.micolous.metrodroid.transit.en1545.En1545Lookup;
 import au.id.micolous.metrodroid.transit.en1545.En1545Parsed;
 import au.id.micolous.metrodroid.transit.en1545.En1545Repeat;
+import au.id.micolous.metrodroid.ui.ListItem;
 import au.id.micolous.metrodroid.util.Utils;
 
 public class IntercodeTransitData extends Calypso1545TransitData {
@@ -223,6 +228,22 @@ public class IntercodeTransitData extends Calypso1545TransitData {
         if (NETWORKS.get(netId) != null)
             return NETWORKS.get(netId).first;
         return null;
+    }
+
+    @Override
+    public List<ListItem> getInfo() {
+        List <ListItem> items =  super.getInfo();
+        HashSet<String> handled = new HashSet<>(Arrays.asList(
+                ENV_NETWORK_ID,
+                ENV_APPLICATION_ISSUE + "Date",
+                ENV_APPLICATION_ISSUER_ID,
+                ENV_APPLICATION_VALIDITY_END + "Date",
+                ENV_AUTHENTICATOR,
+                HOLDER_PROFILE + "Date",
+                HOLDER_BIRTH_DATE,
+                HOLDER_POSTAL_CODE));
+        items.addAll(mTicketEnvParsed.getInfo(handled));
+        return items;
     }
 
     @Override
