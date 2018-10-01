@@ -102,21 +102,10 @@ public class RicaricaMiTransaction extends En1545Transaction {
         return Trip.Mode.OTHER;
     }
 
-    /*
     @Override
     public String getAgencyName(boolean isShort) {
-        // TODO: Is there an agency field?
-        switch (getTransport()) {
-            case RicaricaMiLookup.TRANSPORT_METRO:
-                return Utils.localizeString(R.string.mode_metro);
-            case RicaricaMiLookup.TRANSPORT_TROLLEYBUS:
-                return Utils.localizeString(R.string.mode_trolleybus);
-            case RicaricaMiLookup.TRANSPORT_TRAM:
-                return Utils.localizeString(R.string.mode_tram);
-        }
-        return Utils.localizeString(R.string.unknown_format, getTransport());
+	return isShort ? "ATM" : "Azienda Trasporti Milanesi";
     }
-    */
 
     public static final Creator<RicaricaMiTransaction> CREATOR = new Creator<RicaricaMiTransaction>() {
         @Override
