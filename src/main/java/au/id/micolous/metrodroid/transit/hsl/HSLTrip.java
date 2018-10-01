@@ -153,12 +153,6 @@ public class HSLTrip extends Trip {
         }
     }
 
-    public long getVehicleNumber() {
-        if (mVehicleNumber > -1)
-            return mVehicleNumber;
-        return mPax;
-    }
-
     public void writeToParcel(Parcel parcel, int flags) {
         // mArvo, mTimestamp, mExpireTimestamp, mFare, mPax, mNewBalance
         parcel.writeInt(mArvo);
