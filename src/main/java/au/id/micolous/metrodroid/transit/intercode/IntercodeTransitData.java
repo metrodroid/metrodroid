@@ -67,12 +67,13 @@ public class IntercodeTransitData extends Calypso1545TransitData {
             .setCardType(CardType.ISO7816)
             .build();
 
-    private static final CardInfo ENVIBUS_CARD_INFO = new CardInfo.Builder()
+    public static final CardInfo ENVIBUS_CARD_INFO = new CardInfo.Builder()
             .setName("Envibus")
+            .setLocation(R.string.location_sophia_antipolis)
             .setCardType(CardType.ISO7816)
             .build();
 
-    private static final CardInfo TAM_MONTPELLIER_CARD_INFO = new CardInfo.Builder()
+    public static final CardInfo TAM_MONTPELLIER_CARD_INFO = new CardInfo.Builder()
             .setName("TAM Montpellier")
             .setCardType(CardType.ISO7816)
             .build();

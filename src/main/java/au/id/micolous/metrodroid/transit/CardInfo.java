@@ -82,6 +82,7 @@ public class CardInfo {
             ClipperTransitData.CARD_INFO,
             CompassUltralightTransitData.CARD_INFO,
             EdyTransitData.CARD_INFO,
+            IntercodeTransitData.ENVIBUS_CARD_INFO,
             EZLinkTransitData.EZ_LINK_CARD_INFO,
             SeqGoTransitData.CARD_INFO, // Go card
             MspGotoTransitData.CARD_INFO, // Go-to card
@@ -112,6 +113,7 @@ public class CardInfo {
             SmartRiderTransitData.SMARTRIDER_CARD_INFO,
             StrelkaTransitData.CARD_INFO,
             SuicaTransitData.SUICA_CARD_INFO,
+            IntercodeTransitData.TAM_MONTPELLIER_CARD_INFO,
             TMoneyTransitData.CARD_INFO,
             IntercodeTransitData.TRANSGIRONDE_CARD_INFO,
             LaxTapTransitData.CARD_INFO, // Transit Access Pass
