@@ -44,6 +44,7 @@ public class MspGotoTransitData extends NextfareTransitData {
             .setName(NAME)
             .setLocation(R.string.location_minneapolis)
             .setCardType(CardType.MifareClassic)
+            .setImageId(R.drawable.msp_goto_card, R.drawable.iso7810_id1_alpha)
             .setKeysRequired()
             .setPreview()
             .build();
