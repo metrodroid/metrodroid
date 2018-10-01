@@ -41,40 +41,59 @@
 
         <TextView
             android:id="@+id/company"
+            android:layout_width="0dp"
             android:layout_height="40dp"
-            android:layout_marginTop="8dp"
-            android:layout_marginStart="8dp"
             android:layout_marginLeft="8dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
             android:textSize="30sp"
             android:textStyle="bold"
+            app:layout_constraintEnd_toStartOf="@id/pax_layout"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintEnd_toStartOf="@id/passengerCount"
-            tools:text="Company Name"
-            android:layout_width="0dp" />
+            tools:text="Company Name" />
 
-
-        <TextView
-            android:id="@+id/passengerCount"
+        <LinearLayout
+            android:id="@+id/pax_layout"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="30sp"
-            android:textStyle="bold"
-            android:layout_marginStart="8dp"
-            android:layout_marginLeft="8dp"
-            android:layout_marginEnd="8dp"
-            android:layout_marginRight="8dp"
+            android:layout_height="0dp"
+            android:layout_gravity="end|center_vertical"
             android:layout_marginTop="8dp"
+            android:baselineAligned="true"
+            app:layout_constraintBottom_toBottomOf="@+id/company"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/tvm_black"
-            tools:text="2"/>
+            app:layout_constraintTop_toTopOf="parent">
+
+            <TextView
+                android:id="@+id/pax_text_view"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="end|center_vertical"
+                android:gravity="center_vertical|end"
+                android:textSize="30sp"
+                android:textStyle="bold"
+                tools:text="3" />
+
+            <android.support.v7.widget.AppCompatImageView
+                android:id="@+id/pax_icon"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:paddingEnd="0dp"
+                android:paddingLeft="5dip"
+                android:paddingRight="0dp"
+                android:paddingStart="5dip"
+                tools:src="@drawable/material_ic_group_24dp" />
+        </LinearLayout>
 
         <android.support.v7.widget.AppCompatTextView
             android:id="@+id/name"
-            android:layout_height="68dp"
+            android:layout_width="0dp"
+            android:layout_height="76dp"
             android:gravity="center"
             android:maxLines="1"
+            android:paddingBottom="4dp"
+            android:paddingTop="4dp"
             android:singleLine="false"
             android:textSize="50sp"
             android:textStyle="bold"
@@ -84,8 +103,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/company"
-            tools:text="Multipass"
-            android:layout_width="0dp" />
+            tools:text="Multipass" />
 
 
         <TextView

@@ -23,11 +23,14 @@ package au.id.micolous.metrodroid.fragment;
 import android.app.ListFragment;
 import android.content.Context;
 import android.os.Bundle;
+import android.support.v7.content.res.AppCompatResources;
 import android.text.Spanned;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import au.id.micolous.metrodroid.activity.CardInfoActivity;
@@ -38,6 +41,7 @@ import au.id.micolous.metrodroid.transit.TransitData;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Locale;
 
 import au.id.micolous.farebot.R;
 import au.id.micolous.metrodroid.transit.TransitCurrency;
@@ -163,19 +167,22 @@ public class CardBalanceFragment extends ListFragment {
             }
             */
 
-            TextView passengerCountView = view.findViewById(R.id.passengerCount);
-            if (subscription.getPassengerCount() <= 1) {
-                passengerCountView.setVisibility(View.GONE);
+            LinearLayout paxLayout = view.findViewById(R.id.pax_layout);
+            ImageView paxIcon = view.findViewById(R.id.pax_icon);
+            TextView paxTextView = view.findViewById(R.id.pax_text_view);
+            int pax = subscription.getPassengerCount();
+
+            if (pax >= 1) {
+                paxTextView.setText(String.format(Locale.getDefault(), "%d", pax));
+                paxIcon.setContentDescription(Utils.localizePlural(R.plurals.passengers, pax));
+
+                paxIcon.setImageDrawable(AppCompatResources.getDrawable(getContext(),
+                        pax == 1 ? R.drawable.material_ic_person_24dp : R.drawable.material_ic_group_24dp));
+
+                paxLayout.setVisibility(View.VISIBLE);
             } else {
-                passengerCountView.setText(
-                        Utils.localizePlural(R.plurals.passenger_count_short,
-                        subscription.getPassengerCount(), subscription.getPassengerCount()));
-
-                passengerCountView.setContentDescription(
-                        Utils.localizePlural(R.plurals.passenger_count,
-                        subscription.getPassengerCount(), subscription.getPassengerCount()));
-
-                passengerCountView.setVisibility(View.VISIBLE);
+                // No information.
+                paxLayout.setVisibility(View.GONE);
             }
 
             return view;

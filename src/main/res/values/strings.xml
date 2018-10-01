@@ -435,25 +435,6 @@
         <item quantity="other">%d-ride</item>
     </plurals>
 
-    <!-- Translators: this is used as a content description for accessibility software. -->
-    <plurals name="passenger_count">
-        <item quantity="one">%d passenger</item>
-        <item quantity="other">%d passengers</item>
-    </plurals>
-    <!--
-    Translators: This may contain at most 1 character after the number, to indicate a number of
-    passengers. It will only be shown if there is more than 1 passenger associated with travel /
-    subscription (eg: family tickets).
-
-    This is for languages like Japanese where a single character can be used for "person".
-
-    The content description has a full description of the item.
-    -->
-    <plurals name="passenger_count_short">
-        <item quantity="one">%d</item>
-        <item quantity="other">%d</item>
-    </plurals>
-
     <plurals name="ricaricami_days_remaining">
         <item quantity="one">%d day remaining</item>
         <item quantity="other">%d days remaining</item>
