@@ -698,4 +698,5 @@
     <string name="no_static_key_assignment">Statistische sleutels kunnen niet worden toegewezen aan een losse kaart.</string>
 
     <string name="card_id">Kaart-ID</string>
-</resources>
+<string name="vehicle_number">Voertuig %s</string>
+    </resources>
