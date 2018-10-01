@@ -47,24 +47,24 @@ class IntercodeTransaction extends En1545Transaction {
     };
 
     private static final En1545Field tripFields = new En1545Container(
-            En1545FixedInteger.date("Event"),
-            En1545FixedInteger.time("Event"),
+            En1545FixedInteger.date(EVENT),
+            En1545FixedInteger.time(EVENT),
             new En1545Bitmap(
                     new En1545FixedInteger("EventDisplayData", 8),
-                    new En1545FixedInteger("EventNetworkId", 24),
+                    new En1545FixedInteger(EVENT_NETWORK_ID, 24),
                     new En1545FixedInteger("EventCode", 8),
                     new En1545FixedInteger("EventResult", 8),
-                    new En1545FixedInteger("EventServiceProvider", 8),
+                    new En1545FixedInteger(EVENT_SERVICE_PROVIDER, 8),
                     new En1545FixedInteger("EventNotOkCounter", 8),
                     new En1545FixedInteger("EventSerialNumber", 24),
                     new En1545FixedInteger("EventDestination", 16),
-                    new En1545FixedInteger("EventLocationId", 16),
+                    new En1545FixedInteger(EVENT_LOCATION_ID, 16),
                     new En1545FixedInteger("EventLocationGate", 8),
                     new En1545FixedInteger("EventDevice", 16),
-                    new En1545FixedInteger("EventRouteNumber", 16),
-                    new En1545FixedInteger("EventRouteVariant", 8),
+                    new En1545FixedInteger(EVENT_ROUTE_NUMBER, 16),
+                    new En1545FixedInteger(EVENT_ROUTE_VARIANT, 8),
                     new En1545FixedInteger("EventJourneyRun", 16),
-                    new En1545FixedInteger("EventVehiculeId", 16),
+                    new En1545FixedInteger(EVENT_VEHICLE_ID, 16),
                     new En1545FixedInteger("EventVehiculeClass", 8),
                     new En1545FixedInteger("EventLocationType", 5),
                     new En1545FixedString("EventEmployee", 240),
@@ -73,10 +73,10 @@ class IntercodeTransaction extends En1545Transaction {
                     new En1545FixedInteger("EventPeriodJourneys", 16),
                     new En1545FixedInteger("EventTotalJourneys", 16),
                     new En1545FixedInteger("EventJourneyDistance", 16),
-                    new En1545FixedInteger("EventPriceAmount", 16),
+                    new En1545FixedInteger(EVENT_PRICE_AMOUNT, 16),
                     new En1545FixedInteger("EventPriceUnit", 16),
-                    new En1545FixedInteger("EventContractPointer", 5),
-                    new En1545FixedInteger("EventAuthenticator", 16),
+                    new En1545FixedInteger(EVENT_CONTRACT_POINTER, 5),
+                    new En1545FixedInteger(EVENT_AUTHENTICATOR, 16),
                     new En1545Bitmap(
                             En1545FixedInteger.date("EventFirstStamp"),
                             En1545FixedInteger.time("EventFirstStamp"),
@@ -90,7 +90,7 @@ class IntercodeTransaction extends En1545Transaction {
     public IntercodeTransaction(byte[] data, int networkId) {
         super(data, tripFields);
 
-        Integer nid = mParsed.getInt("EventNetworkId");
+        Integer nid = mParsed.getInt(EVENT_NETWORK_ID);
         if (nid != null)
             mNetworkId = nid;
         else

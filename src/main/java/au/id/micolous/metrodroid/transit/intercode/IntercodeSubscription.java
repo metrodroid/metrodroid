@@ -44,23 +44,23 @@ class IntercodeSubscription extends En1545Subscription {
     };
 
     private static final En1545Field subFieldsTypeFF = new En1545Bitmap(
-            new En1545FixedInteger("ContractNetworkId", 24),
-            new En1545FixedInteger("ContractProvider", 8),
-            new En1545FixedInteger("ContractTariff", 16),
-            new En1545FixedInteger("ContractSerialNumber", 32),
+            new En1545FixedInteger(CONTRACT_NETWORK_ID, 24),
+            new En1545FixedInteger(CONTRACT_PROVIDER, 8),
+            new En1545FixedInteger(CONTRACT_TARIFF, 16),
+            new En1545FixedInteger(CONTRACT_SERIAL_NUMBER, 32),
             new En1545Bitmap(
                     new En1545FixedInteger("ContractCustomerProfile", 6),
                     new En1545FixedInteger("ContractCustomerNumber", 32)
             ),
             new En1545Bitmap(
-                    new En1545FixedInteger("ContractPassengerClass", 8),
-                    new En1545FixedInteger("ContractPassengerTotal", 8)
+                    new En1545FixedInteger(CONTRACT_PASSENGER_CLASS, 8),
+                    new En1545FixedInteger(CONTRACT_PASSENGER_TOTAL, 8)
             ),
             new En1545FixedInteger("ContractVehiculeClassAllowed", 6),
             new En1545FixedInteger("ContractPaymentPointer", 32),
-            new En1545FixedInteger("ContractPayMethod", 11),
+            new En1545FixedInteger(CONTRACT_PAY_METHOD, 11),
             new En1545FixedInteger("ContractServices", 16),
-            new En1545FixedInteger("ContractPriceAmount", 16),
+            new En1545FixedInteger(CONTRACT_PRICE_AMOUNT, 16),
             new En1545FixedInteger("ContractPriceUnit", 16),
             new En1545Bitmap(
                     En1545FixedInteger.time("ContractRestrictStart"),
@@ -72,13 +72,13 @@ class IntercodeSubscription extends En1545Subscription {
                     new En1545FixedInteger("ContractRestrictLocation", 16)
             ),
             new En1545Bitmap(
-                    En1545FixedInteger.date("ContractStart"),
-                    En1545FixedInteger.time("ContractStart"),
-                    En1545FixedInteger.date("ContractEnd"),
-                    En1545FixedInteger.time("ContractEnd"),
+                    En1545FixedInteger.date(CONTRACT_START),
+                    En1545FixedInteger.time(CONTRACT_START),
+                    En1545FixedInteger.date(CONTRACT_END),
+                    En1545FixedInteger.time(CONTRACT_END),
                     new En1545FixedInteger("ContractDuration", 8),
                     En1545FixedInteger.date("ContractLimit"),
-                    new En1545FixedInteger("ContractZones", 8),
+                    new En1545FixedInteger(CONTRACT_ZONES, 8),
                     new En1545FixedInteger("ContractJourneys", 16),
                     new En1545FixedInteger("ContractPeriodJourneys", 16)
             ),
@@ -93,40 +93,40 @@ class IntercodeSubscription extends En1545Subscription {
                     new En1545FixedInteger("ContractInterchange", 8)
             ),
             new En1545Bitmap(
-                    En1545FixedInteger.date("ContractSale"),
-                    En1545FixedInteger.time("ContractSale"),
-                    new En1545FixedInteger("ContractSaleAgent", 8),
-                    new En1545FixedInteger("ContractSaleDevice", 16)
+                    En1545FixedInteger.date(CONTRACT_SALE),
+                    En1545FixedInteger.time(CONTRACT_SALE),
+                    new En1545FixedInteger(CONTRACT_SALE_AGENT, 8),
+                    new En1545FixedInteger(CONTRACT_SALE_DEVICE, 16)
             ),
-            new En1545FixedInteger("ContractStatus", 8),
+            new En1545FixedInteger(CONTRACT_STATUS, 8),
             new En1545FixedInteger("ContractLoyaltyPoints", 16),
-            new En1545FixedInteger("ContractAuthenticator", 16),
+            new En1545FixedInteger(CONTRACT_AUTHENTICATOR, 16),
             new En1545FixedInteger("ContractExtra", 0)
     );
 
     private static final En1545Field subFieldsTypeOther = new En1545Bitmap(
-            new En1545FixedInteger("ContractProvider", 8),
-            new En1545FixedInteger("ContractTariff", 16),
-            new En1545FixedInteger("ContractSerialNumber", 32),
-            new En1545FixedInteger("ContractPassengerClass", 8),
+            new En1545FixedInteger(CONTRACT_PROVIDER, 8),
+            new En1545FixedInteger(CONTRACT_TARIFF, 16),
+            new En1545FixedInteger(CONTRACT_SERIAL_NUMBER, 32),
+            new En1545FixedInteger(CONTRACT_PASSENGER_CLASS, 8),
             new En1545Bitmap(
-                    En1545FixedInteger.date("ContractStart"),
-                    En1545FixedInteger.date("ContractEnd")
+                    En1545FixedInteger.date(CONTRACT_START),
+                    En1545FixedInteger.date(CONTRACT_END)
             ),
-            new En1545FixedInteger("ContractStatus", 8),
+            new En1545FixedInteger(CONTRACT_STATUS, 8),
             new En1545FixedInteger("ContractExtra", 0)
     );
 
     private static final En1545Field subFieldsType20 = new En1545Bitmap(
-            new En1545FixedInteger("ContractProvider", 8),
-            new En1545FixedInteger("ContractTariff", 16),
-            new En1545FixedInteger("ContractSerialNumber", 32),
-            new En1545FixedInteger("ContractPassengerClass", 8),
+            new En1545FixedInteger(CONTRACT_PROVIDER, 8),
+            new En1545FixedInteger(CONTRACT_TARIFF, 16),
+            new En1545FixedInteger(CONTRACT_SERIAL_NUMBER, 32),
+            new En1545FixedInteger(CONTRACT_PASSENGER_CLASS, 8),
             new En1545Bitmap(
-                    En1545FixedInteger.date("ContractStart"),
-                    En1545FixedInteger.date("ContractEnd")
+                    En1545FixedInteger.date(CONTRACT_START),
+                    En1545FixedInteger.date(CONTRACT_END)
             ),
-            new En1545FixedInteger("ContractStatus", 8),
+            new En1545FixedInteger(CONTRACT_STATUS, 8),
             new En1545Bitmap(
                     new En1545Container(
                             new En1545FixedInteger("ContractOrigin1", 16),
@@ -137,18 +137,18 @@ class IntercodeSubscription extends En1545Subscription {
                             new En1545FixedInteger("ContractOrigin2", 16),
                             new En1545FixedInteger("ContractDestination2", 16)
                     ),
-                    new En1545FixedInteger("ContractZones", 16),
+                    new En1545FixedInteger(CONTRACT_ZONES, 16),
                     new En1545Container(
-                            En1545FixedInteger.date("ContractSale"),
-                            new En1545FixedInteger("ContractSaleDevice", 16),
-                            new En1545FixedInteger("ContractSaleAgent", 8)
+                            En1545FixedInteger.date(CONTRACT_SALE),
+                            new En1545FixedInteger(CONTRACT_SALE_DEVICE, 16),
+                            new En1545FixedInteger(CONTRACT_SALE_AGENT, 8)
                     ),
                     new En1545Container(
-                            new En1545FixedInteger("ContractPayMethod", 11),
+                            new En1545FixedInteger(CONTRACT_PAY_METHOD, 11),
                             new En1545FixedInteger("ContractPriceAmount", 16),
                             new En1545FixedInteger("ContractReceiptDelivered", 1)
                     ),
-                    new En1545FixedInteger("ContractPassengerTotal", 6),
+                    new En1545FixedInteger(CONTRACT_PASSENGER_TOTAL, 6),
                     new En1545Container(
                             new En1545FixedInteger("ContractEndPeriod", 14),
                             new En1545FixedInteger("ContractSoldPeriod", 6)
@@ -166,7 +166,7 @@ class IntercodeSubscription extends En1545Subscription {
     public IntercodeSubscription(byte[] data, int type, int networkId) {
         super(data, getFields(type));
 
-        Integer nid = mParsed.getInt("ContractNetworkId");
+        Integer nid = mParsed.getInt(CONTRACT_NETWORK_ID);
         if (nid != null)
             mNetworkId = nid;
         else

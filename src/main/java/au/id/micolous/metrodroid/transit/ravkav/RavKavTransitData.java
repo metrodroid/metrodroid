@@ -67,15 +67,15 @@ public class RavKavTransitData extends Calypso1545TransitData {
     };
 
     private static final En1545Container TICKETING_ENV_FIELDS = new En1545Container(
-            new En1545FixedInteger("EnvVersionNumber", 3),
-            new En1545FixedInteger("EnvNetworkId", 20),
-            new En1545FixedInteger("UnknownB", 26),
-            En1545FixedInteger.date("EnvApplicationIssue"),
-            En1545FixedInteger.date("EnvApplicationValidityEnd"),
+            new En1545FixedInteger(ENV_VERSION_NUMBER, 3),
+            new En1545FixedInteger(ENV_NETWORK_ID, 20),
+            new En1545FixedInteger(ENV_UNKNOWN_A, 26),
+            En1545FixedInteger.date(ENV_APPLICATION_ISSUE),
+            En1545FixedInteger.date(ENV_APPLICATION_VALIDITY_END),
             new En1545FixedInteger("PayMethod", 3),
-            new En1545FixedInteger("HolderBirthDate", 32),
-            new En1545FixedHex("UnknownC", 44),
-            new En1545FixedInteger("HolderIdNumber", 30)
+            new En1545FixedInteger(HOLDER_BIRTH_DATE, 32),
+            new En1545FixedHex(ENV_UNKNOWN_B, 44),
+            new En1545FixedInteger(HOLDER_ID_NUMBER, 30)
     );
 
     private RavKavTransitData(CalypsoApplication card) {
@@ -125,7 +125,7 @@ public class RavKavTransitData extends Calypso1545TransitData {
     @Override
     public List<ListItem> getInfo() {
         ArrayList<ListItem> li = new ArrayList<>();
-        if (mTicketEnvParsed.getIntOrZero("HolderIdNumber") == 0) {
+        if (mTicketEnvParsed.getIntOrZero(HOLDER_ID_NUMBER) == 0) {
             li.add(new ListItem(R.string.card_type, R.string.card_type_anonymous));
         } else {
             li.add(new ListItem(R.string.card_type, R.string.card_type_personal));

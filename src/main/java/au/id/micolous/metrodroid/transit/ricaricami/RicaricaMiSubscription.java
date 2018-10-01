@@ -35,14 +35,15 @@ import au.id.micolous.metrodroid.transit.en1545.En1545Subscription;
 import au.id.micolous.metrodroid.util.Utils;
 
 public class RicaricaMiSubscription extends En1545Subscription {
+    private static final String CONTRACT_VALIDATIONS_IN_DAY = "ContractValidationsInDay";
     private static final En1545Field FIELDS = new En1545Container(
-            new En1545FixedInteger("ContractValidationsInDay", 6),
-            En1545FixedInteger.date("ContractLastUse"),
-            new En1545FixedInteger("UnknownA", 10),
-            new En1545FixedInteger("ContractTariff", 16),
-            En1545FixedInteger.date("ContractStart"),
-            En1545FixedInteger.date("ContractEnd"),
-            new En1545FixedHex("UnknownB", 52)
+            new En1545FixedInteger(CONTRACT_VALIDATIONS_IN_DAY, 6),
+            En1545FixedInteger.date(CONTRACT_LAST_USE),
+            new En1545FixedInteger(CONTRACT_UNKNOWN_A, 10),
+            new En1545FixedInteger(CONTRACT_TARIFF, 16),
+            En1545FixedInteger.date(CONTRACT_START),
+            En1545FixedInteger.date(CONTRACT_END),
+            new En1545FixedHex(CONTRACT_UNKNOWN_B, 52)
     );
     private final int mCounter;
 
@@ -63,8 +64,8 @@ public class RicaricaMiSubscription extends En1545Subscription {
 
     @Override
     public Calendar getValidTo() {
-        if (getTariff() == RicaricaMiLookup.TARIFF_URBAN_2X6 && mParsed.getIntOrZero("ContractStartDate") != 0) {
-            Calendar end = (Calendar) mParsed.getTimeStamp("ContractStart", RicaricaMiLookup.TZ).clone();
+        if (getTariff() == RicaricaMiLookup.TARIFF_URBAN_2X6 && mParsed.getIntOrZero(CONTRACT_START + "Date") != 0) {
+            Calendar end = (Calendar) mParsed.getTimeStamp(CONTRACT_START, RicaricaMiLookup.TZ).clone();
             end.add(Calendar.DAY_OF_YEAR, 6);
             return end;
         }
@@ -74,7 +75,7 @@ public class RicaricaMiSubscription extends En1545Subscription {
     @Override
     public Integer getRemainingDayCount() {
         if (getTariff() == RicaricaMiLookup.TARIFF_URBAN_2X6) {
-            int val = mParsed.getIntOrZero("ContractValidationsInDay");
+            int val = mParsed.getIntOrZero(CONTRACT_VALIDATIONS_IN_DAY);
             if (val == 0 && mCounter == 6) {
                 return 6;
             }
@@ -88,7 +89,7 @@ public class RicaricaMiSubscription extends En1545Subscription {
     @Override
     public Integer getRemainingTripsInDayCount() {
         if (getTariff() == RicaricaMiLookup.TARIFF_URBAN_2X6) {
-            int val = mParsed.getIntOrZero("ContractValidationsInDay");
+            int val = mParsed.getIntOrZero(CONTRACT_VALIDATIONS_IN_DAY);
             return 2 - val;
         }
 
@@ -96,7 +97,7 @@ public class RicaricaMiSubscription extends En1545Subscription {
     }
 
     private int getTariff() {
-        return mParsed.getIntOrZero("ContractTariff");
+        return mParsed.getIntOrZero(CONTRACT_TARIFF);
     }
 
     @Override

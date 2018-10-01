@@ -43,6 +43,28 @@ import au.id.micolous.metrodroid.util.Utils;
 
 public abstract class En1545Subscription extends Subscription {
     private static final String TAG = En1545Subscription.class.getSimpleName();
+    protected static final String CONTRACT_ZONES = "ContractZones";
+    protected static final String CONTRACT_SALE = "ContractSale";
+    protected static final String CONTRACT_PRICE_AMOUNT = "ContractPriceAmount";
+    protected static final String CONTRACT_PAY_METHOD = "ContractPayMethod";
+    protected static final String CONTRACT_LAST_USE = "ContractLastUse";
+    protected static final String CONTRACT_STATUS = "ContractStatus";
+    protected static final String CONTRACT_SALE_AGENT = "ContractSaleAgent";
+    protected static final String CONTRACT_PASSENGER_TOTAL = "ContractPassengerTotal";
+    protected static final String CONTRACT_START = "ContractStart";
+    protected static final String CONTRACT_END = "ContractEnd";
+    protected static final String CONTRACT_PROVIDER = "ContractProvider";
+    protected static final String CONTRACT_TARIFF = "ContractTariff";
+    protected static final String CONTRACT_SALE_DEVICE = "ContractSaleDevice";
+    protected static final String CONTRACT_SERIAL_NUMBER = "ContractSerialNumber";
+    protected static final String CONTRACT_UNKNOWN_A = "ContractUnknownA";
+    protected static final String CONTRACT_UNKNOWN_B = "ContractUnknownB";
+    protected static final String CONTRACT_UNKNOWN_C = "ContractUnknownC";
+    protected static final String CONTRACT_UNKNOWN_D = "ContractUnknownD";
+    protected static final String CONTRACT_UNKNOWN_E = "ContractUnknownE";
+    protected static final String CONTRACT_NETWORK_ID = "ContractNetworkId";
+    protected static final String CONTRACT_PASSENGER_CLASS = "ContractPassengerClass";
+    protected static final String CONTRACT_AUTHENTICATOR = "ContractAuthnticator";
     protected final En1545Parsed mParsed;
 
     protected Set<String> getHandledFieldSet() {
@@ -76,7 +98,7 @@ public abstract class En1545Subscription extends Subscription {
 
     @Override
     public int[] getZones() {
-        Integer zonecode = mParsed.getInt("ContractZones");
+        Integer zonecode = mParsed.getInt(CONTRACT_ZONES);
         if (zonecode == null) {
             return null;
         }
@@ -94,18 +116,18 @@ public abstract class En1545Subscription extends Subscription {
     @Nullable
     @Override
     public Calendar getPurchaseTimestamp() {
-        return mParsed.getTimeStamp("ContractSale", getLookup().getTimeZone());
+        return mParsed.getTimeStamp(CONTRACT_SALE, getLookup().getTimeZone());
     }
 
     @Override
     public boolean purchaseTimestampHasTime() {
-        return mParsed.getTimeStampContainsTime("ContractSale");
+        return mParsed.getTimeStampContainsTime(CONTRACT_SALE);
     }
 
     @Nullable
     @Override
     public TransitCurrency cost() {
-        int cost = mParsed.getIntOrZero("ContractPriceAmount");
+        int cost = mParsed.getIntOrZero(CONTRACT_PRICE_AMOUNT);
         if (cost == 0) {
             return null;
         }
@@ -119,7 +141,7 @@ public abstract class En1545Subscription extends Subscription {
             return super.getPaymentMethod();
         }
 
-        switch (mParsed.getIntOrZero("ContractPayMethod")) {
+        switch (mParsed.getIntOrZero(CONTRACT_PAY_METHOD)) {
             case 0x90: return PaymentMethod.CASH;
             case 0xb3: return PaymentMethod.CREDIT_CARD;
 
@@ -131,17 +153,17 @@ public abstract class En1545Subscription extends Subscription {
     @Nullable
     @Override
     public Calendar getLastUseTimestamp() {
-        return mParsed.getTimeStamp("ContractLastUse", getLookup().getTimeZone());
+        return mParsed.getTimeStamp(CONTRACT_LAST_USE, getLookup().getTimeZone());
     }
 
     @Override
     public boolean lastUseTimestampHasTime() {
-        return mParsed.getTimeStampContainsTime("ContractLastUse");
+        return mParsed.getTimeStampContainsTime(CONTRACT_LAST_USE);
     }
 
     @Override
     public SubscriptionState getSubscriptionState() {
-        Integer status = mParsed.getInt("ContractStatus");
+        Integer status = mParsed.getInt(CONTRACT_STATUS);
         if (status == null) {
             return super.getSubscriptionState();
         }
@@ -159,7 +181,7 @@ public abstract class En1545Subscription extends Subscription {
     @Nullable
     @Override
     public String getSaleAgencyName() {
-        Integer agency = mParsed.getInt("ContractSaleAgent");
+        Integer agency = mParsed.getInt(CONTRACT_SALE_AGENT);
         if (agency == null) {
             return null;
         }
@@ -169,7 +191,7 @@ public abstract class En1545Subscription extends Subscription {
 
     @Override
     public int getPassengerCount() {
-        Integer pax = mParsed.getInt("ContractPassengerTotal");
+        Integer pax = mParsed.getInt(CONTRACT_PASSENGER_TOTAL);
         if (pax == null) {
             return super.getPassengerCount();
         }
@@ -179,30 +201,30 @@ public abstract class En1545Subscription extends Subscription {
 
     @Override
     public Calendar getValidFrom() {
-        return mParsed.getTimeStamp("ContractStart", getLookup().getTimeZone());
+        return mParsed.getTimeStamp(CONTRACT_START, getLookup().getTimeZone());
     }
 
     @Override
     public Calendar getValidTo() {
-        return mParsed.getTimeStamp("ContractEnd", getLookup().getTimeZone());
+        return mParsed.getTimeStamp(CONTRACT_END, getLookup().getTimeZone());
     }
 
     @Override
     public String getAgencyName(boolean isShort) {
-        return getLookup().getAgencyName(mParsed.getInt("ContractProvider"), false);
+        return getLookup().getAgencyName(mParsed.getInt(CONTRACT_PROVIDER), false);
     }
 
     @Override
     public String getSubscriptionName() {
-        return getLookup().getSubscriptionName(mParsed.getInt("ContractProvider"),
-                mParsed.getInt("ContractTariff"));
+        return getLookup().getSubscriptionName(mParsed.getInt(CONTRACT_PROVIDER),
+                mParsed.getInt(CONTRACT_TARIFF));
     }
 
     protected abstract En1545Lookup getLookup();
 
     @Override
     public Integer getMachineId() {
-        return mParsed.getInt("ContractSaleDevice");
+        return mParsed.getInt(CONTRACT_SALE_DEVICE);
     }
 
     @Override
@@ -212,7 +234,7 @@ public abstract class En1545Subscription extends Subscription {
 
     @Override
     public Integer getId() {
-        return mParsed.getInt("ContractSerialNumber");
+        return mParsed.getInt(CONTRACT_SERIAL_NUMBER);
     }
 
     public TransitBalance getBalance() {

@@ -34,23 +34,23 @@ import au.id.micolous.metrodroid.transit.en1545.En1545Subscription;
 public class RavKavSubscription extends En1545Subscription {
     private static final En1545Field SUB_FIELDS = new En1545Container(
             new En1545FixedInteger("Version", 3),
-            En1545FixedInteger.date("ContractStart"),
-            new En1545FixedInteger("ContractProvider", 8),
-            new En1545FixedInteger("ContractTariff", 11),
-            En1545FixedInteger.date("ContractSale"),
-            new En1545FixedInteger("ContractSaleDevice", 12),
+            En1545FixedInteger.date(CONTRACT_START),
+            new En1545FixedInteger(CONTRACT_PROVIDER, 8),
+            new En1545FixedInteger(CONTRACT_TARIFF, 11),
+            En1545FixedInteger.date(CONTRACT_SALE),
+            new En1545FixedInteger(CONTRACT_SALE_DEVICE, 12),
             new En1545FixedInteger("ContractSaleNumber", 10),
             new En1545FixedInteger("ContractInterchange",1),
             new En1545Bitmap(
-                    new En1545FixedInteger("Validity[1]", 5),
+                    new En1545FixedInteger(CONTRACT_UNKNOWN_A, 5),
                     new En1545FixedInteger("ContractRestrictCode", 5),
                     new En1545FixedInteger("ContractRestrictDuration", 6),
-                    En1545FixedInteger.date("ContractEnd"),
+                    En1545FixedInteger.date(CONTRACT_END),
                     new En1545FixedInteger("ContractDuration", 8),
-                    new En1545FixedInteger("Validity[5]", 32),
-                    new En1545FixedInteger("Validity[6]", 6),
-                    new En1545FixedInteger("Validity[7]", 32),
-                    new En1545FixedInteger("Validity[8]", 32)
+                    new En1545FixedInteger(CONTRACT_UNKNOWN_B, 32),
+                    new En1545FixedInteger(CONTRACT_UNKNOWN_C, 6),
+                    new En1545FixedInteger(CONTRACT_UNKNOWN_D, 32),
+                    new En1545FixedInteger(CONTRACT_UNKNOWN_E, 32)
             )
             // TODO: parse locations?
     );
@@ -88,7 +88,7 @@ public class RavKavSubscription extends En1545Subscription {
     }
 
     private int getCtrUse() {
-        int tariffType = mParsed.getIntOrZero("ContractTariff");
+        int tariffType = mParsed.getIntOrZero(CONTRACT_TARIFF);
         return (tariffType >> 6) & 0x7;
     }
 
