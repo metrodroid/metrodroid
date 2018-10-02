@@ -48,6 +48,7 @@ import au.id.micolous.metrodroid.transit.stub.AdelaideMetrocardStubTransitData;
 import au.id.micolous.metrodroid.transit.stub.AtHopStubTransitData;
 import au.id.micolous.metrodroid.transit.tfi_leap.LeapTransitData;
 import au.id.micolous.metrodroid.transit.tfi_leap.LeapUnlocker;
+import au.id.micolous.metrodroid.transit.trimethop.TrimetHopTransitData;
 import au.id.micolous.metrodroid.transit.unknown.UnauthorizedDesfireTransitData;
 import au.id.micolous.metrodroid.ui.HeaderListItem;
 import au.id.micolous.metrodroid.ui.ListItem;
@@ -221,6 +222,8 @@ public class DesfireCard extends Card {
             return IstanbulKartTransitData.CARD_INFO;
         if (LeapTransitData.earlyCheck(appIds))
             return LeapTransitData.CARD_INFO;
+        if (TrimetHopTransitData.earlyCheck(appIds))
+            return TrimetHopTransitData.CARD_INFO;
 
         return null;
     }
@@ -247,6 +250,8 @@ public class DesfireCard extends Card {
             return AtHopStubTransitData.parseTransitIdentity(this);
         if (IstanbulKartTransitData.check(this))
             return IstanbulKartTransitData.parseTransitIdentity(this);
+        if (TrimetHopTransitData.check(this))
+            return TrimetHopTransitData.parseTransitIdentity(this);
 
         if (UnauthorizedDesfireTransitData.check(this))
             return UnauthorizedDesfireTransitData.parseTransitIdentity(this);
@@ -271,6 +276,8 @@ public class DesfireCard extends Card {
         // Stub card types go last
         if (IstanbulKartTransitData.check(this))
             return new IstanbulKartTransitData(this);
+        if (TrimetHopTransitData.check(this))
+            return new TrimetHopTransitData(this);
         if (AdelaideMetrocardStubTransitData.check(this))
             return new AdelaideMetrocardStubTransitData(this);
         if (AtHopStubTransitData.check(this))
