@@ -1,5 +1,5 @@
 /*
- * CompassUltralightTrip.java
+ * NextfareUltralightTrip.java
  *
  * Copyright 2018 Google
  *
@@ -17,7 +17,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package au.id.micolous.metrodroid.transit.yvr_compass;
+package au.id.micolous.metrodroid.transit.nextfare.ultralight;
 
 import android.os.Parcel;
 import android.os.Parcelable;
@@ -29,34 +29,34 @@ import au.id.micolous.metrodroid.transit.Station;
 import au.id.micolous.metrodroid.transit.TransitCurrency;
 import au.id.micolous.metrodroid.transit.Trip;
 
-public class CompassUltralightTrip extends Trip implements Parcelable {
-    public static final Creator<CompassUltralightTrip> CREATOR = new Creator<CompassUltralightTrip>() {
-        public CompassUltralightTrip createFromParcel(Parcel parcel) {
-            return new CompassUltralightTrip(parcel);
+public class NextfareUltralightTrip extends Trip implements Parcelable {
+    public static final Creator<NextfareUltralightTrip> CREATOR = new Creator<NextfareUltralightTrip>() {
+        public NextfareUltralightTrip createFromParcel(Parcel parcel) {
+            return new NextfareUltralightTrip(parcel);
         }
 
-        public CompassUltralightTrip[] newArray(int size) {
-            return new CompassUltralightTrip[size];
+        public NextfareUltralightTrip[] newArray(int size) {
+            return new NextfareUltralightTrip[size];
         }
     };
 
-    private final CompassUltralightTransaction mStart;
-    private final CompassUltralightTransaction mEnd;
+    private final NextfareUltralightTransaction mStart;
+    private final NextfareUltralightTransaction mEnd;
 
 
-    public CompassUltralightTrip(CompassUltralightTransaction start, CompassUltralightTransaction end) {
+    public NextfareUltralightTrip(NextfareUltralightTransaction start, NextfareUltralightTransaction end) {
         mStart = start;
         mEnd = end;
     }
 
-    CompassUltralightTrip(Parcel parcel) {
+    NextfareUltralightTrip(Parcel parcel) {
         int flags = parcel.readInt();
         if ((flags & 1) != 0)
-            mStart = new CompassUltralightTransaction(parcel);
+            mStart = parcel.readParcelable(NextfareUltralightTransaction.class.getClassLoader());
         else
             mStart = null;
         if ((flags & 2) != 0)
-            mEnd = new CompassUltralightTransaction(parcel);
+            mEnd = parcel.readParcelable(NextfareUltralightTransaction.class.getClassLoader());
         else
             mEnd = null;
     }
@@ -72,9 +72,9 @@ public class CompassUltralightTrip extends Trip implements Parcelable {
         }
         dest.writeInt(flg);
         if (mStart != null)
-            mStart.writeToParcel(dest, flags);
+            dest.writeParcelable(mStart, flags);
         if (mEnd != null)
-            mEnd.writeToParcel(dest, flags);
+            dest.writeParcelable(mEnd, flags);
     }
 
     @Override
