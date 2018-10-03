@@ -52,7 +52,7 @@ class OpusSubscription extends En1545Subscription {
                     new En1545Container(
                             new En1545FixedInteger(CONTRACT_UNKNOWN_B, 17),
                             En1545FixedInteger.date(CONTRACT_SALE),
-			                En1545FixedInteger.time(CONTRACT_SALE),
+			                En1545FixedInteger.timeLocal(CONTRACT_SALE),
                             new En1545FixedHex(CONTRACT_UNKNOWN_C, 80)
                     )
             )
