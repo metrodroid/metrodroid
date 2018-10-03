@@ -31,6 +31,8 @@ import au.id.micolous.metrodroid.card.TagReaderFeedbackInterface;
 import au.id.micolous.metrodroid.card.UnsupportedTagException;
 import au.id.micolous.metrodroid.transit.TransitData;
 import au.id.micolous.metrodroid.transit.TransitIdentity;
+import au.id.micolous.metrodroid.transit.nextfare.ultralight.NextfareUnknownUltralightTransitData;
+import au.id.micolous.metrodroid.transit.ventra.VentraUltralightTransitData;
 import au.id.micolous.metrodroid.transit.yvr_compass.CompassUltralightTransitData;
 import au.id.micolous.metrodroid.transit.troika.TroikaUltralightTransitData;
 import au.id.micolous.metrodroid.transit.unknown.BlankUltralightTransitData;
@@ -204,6 +206,13 @@ public class UltralightCard extends Card {
         if (CompassUltralightTransitData.check(this)) {
             return CompassUltralightTransitData.parseTransitIdentity(this);
         }
+        if (VentraUltralightTransitData.check(this)) {
+            return VentraUltralightTransitData.parseTransitIdentity(this);
+        }
+        // This must be after the checks for known Nextfare MFU deployments.
+        if (NextfareUnknownUltralightTransitData.check(this)) {
+            return NextfareUnknownUltralightTransitData.parseTransitIdentity(this);
+        }
 
         if (BlankUltralightTransitData.check(this)) {
             return BlankUltralightTransitData.parseTransitIdentity(this);
@@ -227,6 +236,13 @@ public class UltralightCard extends Card {
         }
         if (CompassUltralightTransitData.check(this)) {
             return new CompassUltralightTransitData(this);
+        }
+        if (VentraUltralightTransitData.check(this)) {
+            return new VentraUltralightTransitData(this);
+        }
+        // This must be after the checks for known Nextfare MFU deployments.
+        if (NextfareUnknownUltralightTransitData.check(this)) {
+            return new NextfareUnknownUltralightTransitData(this);
         }
 
         if (BlankUltralightTransitData.check(this)) {
