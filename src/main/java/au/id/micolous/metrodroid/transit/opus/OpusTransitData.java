@@ -52,10 +52,10 @@ public class OpusTransitData extends Calypso1545TransitData {
 
     private static final En1545Field contractListFields = new En1545Repeat(4,
             new En1545Bitmap(
-                    new En1545FixedInteger("ContractProvider", 8),
-                    new En1545FixedInteger("ContractsTariff", 16),
-                    new En1545FixedInteger("unknownA", 4),
-                    new En1545FixedInteger("ContractsPointer", 5)
+                    new En1545FixedInteger(CONTRACTS_PROVIDER, 8),
+                    new En1545FixedInteger(CONTRACTS_TARIFF, 16),
+                    new En1545FixedInteger(CONTRACTS_UNKNOWN_A, 4),
+                    new En1545FixedInteger(CONTRACTS_POINTER, 5)
             )
     );
 
@@ -81,14 +81,14 @@ public class OpusTransitData extends Calypso1545TransitData {
             IntercodeTransitData.TICKET_ENV_FIELDS,
             new En1545Bitmap(
                     new En1545Container(
-                            new En1545FixedInteger("HolderUnknownA", 3),
-                            En1545FixedInteger.BCDdate("HolderBirthDate"),
-                            new En1545FixedInteger("HolderUnknownB", 13),
-                            En1545FixedInteger.date("HolderProfile"),
-                            new En1545FixedInteger("HolderUnknownC", 8)
+                            new En1545FixedInteger(HOLDER_UNKNOWN_A, 3),
+                            En1545FixedInteger.BCDdate(HOLDER_BIRTH_DATE),
+                            new En1545FixedInteger(HOLDER_UNKNOWN_B, 13),
+                            En1545FixedInteger.date(HOLDER_PROFILE),
+                            new En1545FixedInteger(HOLDER_UNKNOWN_C, 8)
                     ),
                     // Possibly part of HolderUnknownB or HolderUnknownC
-                    new En1545FixedInteger("HolderUnknownD", 8)
+                    new En1545FixedInteger(HOLDER_UNKNOWN_D, 8)
             )
     );
 

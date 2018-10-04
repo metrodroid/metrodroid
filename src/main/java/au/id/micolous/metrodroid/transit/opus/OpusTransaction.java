@@ -41,27 +41,27 @@ class OpusTransaction extends En1545Transaction {
     };
 
     private static final En1545Field tripFields = new En1545Container(
-            En1545FixedInteger.date("Event"),
-            En1545FixedInteger.timeLocal("Event"),
+            En1545FixedInteger.date(EVENT),
+            En1545FixedInteger.timeLocal(EVENT),
             new En1545FixedInteger("UnknownX", 19), // Possibly part of following bitmap
             new En1545Bitmap(
-                    new En1545FixedInteger("unknownA", 8),
-                    new En1545FixedInteger("unknownB", 8),
-                    new En1545FixedInteger("EventServiceProvider", 8),
-                    new En1545FixedInteger("unknownC", 16),
-                    new En1545FixedInteger("EventRouteNumber", 16),
+                    new En1545FixedInteger(EVENT_UNKNOWN_A, 8),
+                    new En1545FixedInteger(EVENT_UNKNOWN_B, 8),
+                    new En1545FixedInteger(EVENT_SERVICE_PROVIDER, 8),
+                    new En1545FixedInteger(EVENT_UNKNOWN_C, 16),
+                    new En1545FixedInteger(EVENT_ROUTE_NUMBER, 16),
                     // How 32 bits are split among next 2 fields is unclear
-                    new En1545FixedInteger("unknownD", 16),
-                    new En1545FixedInteger("unknownE", 16),
-                    new En1545FixedInteger("EventContractPointer", 5),
+                    new En1545FixedInteger(EVENT_UNKNOWN_D, 16),
+                    new En1545FixedInteger(EVENT_UNKNOWN_E, 16),
+                    new En1545FixedInteger(EVENT_CONTRACT_POINTER, 5),
                     new En1545Bitmap(
-                            En1545FixedInteger.date("EventFirstStamp"),
-                            En1545FixedInteger.time("EventFirstStamp"),
+                            En1545FixedInteger.date(EVENT_FIRST_STAMP),
+                            En1545FixedInteger.timeLocal(EVENT_FIRST_STAMP),
                             new En1545FixedInteger("EventDataSimulation", 1),
-                            new En1545FixedInteger("unknownG", 4),
-                            new En1545FixedInteger("unknownH", 4),
-                            new En1545FixedInteger("unknownI", 4),
-                            new En1545FixedInteger("unknownJ", 4)
+                            new En1545FixedInteger(EVENT_UNKNOWN_F, 4),
+                            new En1545FixedInteger(EVENT_UNKNOWN_G, 4),
+                            new En1545FixedInteger(EVENT_UNKNOWN_H, 4),
+                            new En1545FixedInteger(EVENT_UNKNOWN_I, 4)
                     )
             )
     );

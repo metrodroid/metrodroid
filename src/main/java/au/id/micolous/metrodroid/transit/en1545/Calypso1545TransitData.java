@@ -35,6 +35,12 @@ import au.id.micolous.metrodroid.transit.Trip;
 import au.id.micolous.metrodroid.util.Utils;
 
 public abstract class Calypso1545TransitData extends En1545TransitData {
+    protected final static String CONTRACTS_PROVIDER = "ContractsProvider";
+    protected static final String CONTRACTS_POINTER = "ContractsPointer";
+    protected static final String CONTRACTS_TARIFF = "ContractsTariff";
+    protected static final String CONTRACTS_UNKNOWN_A = "ContractsUnknownA";
+    protected static final String CONTRACTS_UNKNOWN_B = "ContractsUnknownB";
+    protected static final String CONTRACTS_NETWORK_ID = "ContractsNetworkId";
     protected final int mNetworkId;
     private final List<Trip> mTrips;
     private final List<En1545Subscription> mSubscriptions;
@@ -53,7 +59,7 @@ public abstract class Calypso1545TransitData extends En1545TransitData {
             ticketEnv = Utils.concatByteArrays(ticketEnv, record.getData());
         }
         mTicketEnvParsed.append(ticketEnv, ticketEnvHolderFields);
-        mNetworkId = mTicketEnvParsed.getIntOrZero("EnvNetworkId");
+        mNetworkId = mTicketEnvParsed.getIntOrZero(ENV_NETWORK_ID);
 
         List<En1545Transaction> transactions = new ArrayList<>();
         for (ISO7816Record record : card.getFile(CalypsoApplication.File.TICKETING_LOG).getRecords()) {
@@ -88,7 +94,7 @@ public abstract class Calypso1545TransitData extends En1545TransitData {
         if (contractListFields != null) {
             En1545Parsed contractList = En1545Parser.parse(card.getFile(CalypsoApplication.File.TICKETING_CONTRACT_LIST).getRecord(1).getData(), contractListFields);
             for (int i = 0; i < 16; i++) {
-                Integer ptr = contractList.getInt("ContractsPointer", i);
+                Integer ptr = contractList.getInt(CONTRACTS_POINTER, i);
                 if (ptr == null)
                     continue;
                 parsed.add(ptr);

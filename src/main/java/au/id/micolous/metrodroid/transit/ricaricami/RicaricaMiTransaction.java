@@ -32,27 +32,30 @@ import au.id.micolous.metrodroid.transit.en1545.En1545Transaction;
 import au.id.micolous.metrodroid.util.Utils;
 
 public class RicaricaMiTransaction extends En1545Transaction {
+    private static final String TRANSPORT_TYPE = "TransportType";
+    private static final String TRANSACTION_TYPE = "TransactionType";
+    private static final String TRANSACTION_COUNTER = "TransactionCounter";
     private static final En1545Field TRIP_FIELDS = new En1545Container(
-            En1545FixedInteger.date("Event"),
-            En1545FixedInteger.timeLocal("Event"),
-            new En1545FixedInteger("UnknownA", 32),
-            new En1545FixedInteger("TransactionType", 2),
-            new En1545FixedInteger("UnknownB", 5),
-            new En1545FixedInteger("EventLocationId", 12),
-            new En1545FixedInteger("UnknownC", 2),
-            new En1545FixedInteger("EventRouteNumber", 10),
-            new En1545FixedInteger("UnknownD", 13),
-            new En1545FixedInteger("EventVehiculeId", 13),
-            new En1545FixedInteger("TransportType", 4),
-            new En1545FixedInteger("UnknownE", 20),
-            new En1545FixedInteger("EventContractPointer", 5),
-            new En1545FixedInteger("UnknownF", 16),
-            En1545FixedInteger.timeLocal("EventFirstStamp"),
-            new En1545FixedInteger("EventFirstLocationId", 12),
-            new En1545FixedInteger("UnknownG", 3),
-            new En1545FixedInteger("TransactionCounter", 4),
-            new En1545FixedInteger("UnknownH", 3),
-            new En1545FixedHex("UnknownI", 64)
+            En1545FixedInteger.date(EVENT),
+            En1545FixedInteger.timeLocal(EVENT),
+            new En1545FixedInteger(EVENT_UNKNOWN_A, 32),
+            new En1545FixedInteger(TRANSACTION_TYPE, 2),
+            new En1545FixedInteger(EVENT_UNKNOWN_B, 5),
+            new En1545FixedInteger(EVENT_LOCATION_ID, 12),
+            new En1545FixedInteger(EVENT_UNKNOWN_C, 2),
+            new En1545FixedInteger(EVENT_ROUTE_NUMBER, 10),
+            new En1545FixedInteger(EVENT_UNKNOWN_D, 13),
+            new En1545FixedInteger(EVENT_VEHICLE_ID, 13),
+            new En1545FixedInteger(TRANSPORT_TYPE, 4),
+            new En1545FixedInteger(EVENT_UNKNOWN_E, 20),
+            new En1545FixedInteger(EVENT_CONTRACT_POINTER, 5),
+            new En1545FixedInteger(EVENT_UNKNOWN_F, 16),
+            En1545FixedInteger.timeLocal(EVENT_FIRST_STAMP),
+            new En1545FixedInteger(EVENT_FIRST_LOCATION_ID, 12),
+            new En1545FixedInteger(EVENT_UNKNOWN_G, 3),
+            new En1545FixedInteger(TRANSACTION_COUNTER, 4),
+            new En1545FixedInteger(EVENT_UNKNOWN_H, 3),
+            new En1545FixedHex(EVENT_UNKNOWN_I, 64)
     );
 
     public RicaricaMiTransaction(byte[] tripData) {
@@ -65,7 +68,7 @@ public class RicaricaMiTransaction extends En1545Transaction {
 
     @Override
     protected int getTransport() {
-        return mParsed.getIntOrZero("TransportType");
+        return mParsed.getIntOrZero(TRANSPORT_TYPE);
     }
 
     private static final int TRANSACTION_TAP_ON = 1;
@@ -73,7 +76,7 @@ public class RicaricaMiTransaction extends En1545Transaction {
     private static final int TRANSACTION_TAP_OFF = 3;
 
     private int getTransactionType() {
-        return mParsed.getIntOrZero("TransactionType");
+        return mParsed.getIntOrZero(TRANSACTION_TYPE);
     }
 
     @Override
@@ -99,21 +102,10 @@ public class RicaricaMiTransaction extends En1545Transaction {
         return Trip.Mode.OTHER;
     }
 
-    /*
     @Override
     public String getAgencyName(boolean isShort) {
-        // TODO: Is there an agency field?
-        switch (getTransport()) {
-            case RicaricaMiLookup.TRANSPORT_METRO:
-                return Utils.localizeString(R.string.mode_metro);
-            case RicaricaMiLookup.TRANSPORT_TROLLEYBUS:
-                return Utils.localizeString(R.string.mode_trolleybus);
-            case RicaricaMiLookup.TRANSPORT_TRAM:
-                return Utils.localizeString(R.string.mode_tram);
-        }
-        return Utils.localizeString(R.string.unknown_format, getTransport());
+	return isShort ? "ATM" : "Azienda Trasporti Milanesi";
     }
-    */
 
     public static final Creator<RicaricaMiTransaction> CREATOR = new Creator<RicaricaMiTransaction>() {
         @Override

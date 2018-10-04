@@ -41,19 +41,19 @@ class OpusSubscription extends En1545Subscription {
         }
     };
     private static final En1545Field FIELDS = new En1545Container(
-            new En1545FixedInteger("UnknownA", 3),
+            new En1545FixedInteger(CONTRACT_UNKNOWN_A, 3),
             new En1545Bitmap(
-                    new En1545FixedInteger("ContractProvider", 8),
-                    new En1545FixedInteger("ContractTariff", 16),
+                    new En1545FixedInteger(CONTRACT_PROVIDER, 8),
+                    new En1545FixedInteger(CONTRACT_TARIFF, 16),
                     new En1545Bitmap(
-                            En1545FixedInteger.date("ContractStart"),
-                            En1545FixedInteger.date("ContractEnd")
+                            En1545FixedInteger.date(CONTRACT_START),
+                            En1545FixedInteger.date(CONTRACT_END)
                     ),
                     new En1545Container(
-                            new En1545FixedInteger("UnknownC", 17),
-                            En1545FixedInteger.date("ContractSale"),
-			    En1545FixedInteger.time("ContractSale"),
-                            new En1545FixedHex("UnknownD", 80)
+                            new En1545FixedInteger(CONTRACT_UNKNOWN_B, 17),
+                            En1545FixedInteger.date(CONTRACT_SALE),
+			                En1545FixedInteger.timeLocal(CONTRACT_SALE),
+                            new En1545FixedHex(CONTRACT_UNKNOWN_C, 80)
                     )
             )
     );
@@ -72,7 +72,7 @@ class OpusSubscription extends En1545Subscription {
 
     @Override
     public Integer getRemainingTripCount() {
-        return mParsed.getIntOrZero("ContractEndDate") == 0 ? mTicketsRemaining : null;
+        return mParsed.getIntOrZero(CONTRACT_END + "Date") == 0 ? mTicketsRemaining : null;
     }
 
     @Override
