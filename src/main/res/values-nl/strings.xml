@@ -329,7 +329,7 @@
     <string name="cepas_issuer_data">Uitgever-specifieke gegevens</string>
     <string name="cepas_purse_info">Portemonnee-informatie</string>
 
-    <string name="trip_description">(Van )%1$s [→] (naar )%2$s</string>
+    <string name="trip_description">(Van )<xliff:g id="start_station" example="Tokyo">%1$s</xliff:g> [→] (naar )<xliff:g id="end_station" example="Osaka">%2$s</xliff:g></string>
 
     <string name="mode_bus">Bus</string>
     <string name="mode_train">Trein</string>
@@ -491,7 +491,7 @@
     <string name="card_name_pasmo">PASMO</string>
 
     <string name="felica_terminal_view_altte">VIEW ALTTE</string>
-    <string name="hsl_line_vehicle">Lijn %s, voertuig %s</string>
+    <string name="hsl_line_vehicle">Lijn %1$s, Voertuig %2$s</string>
 
     <string name="orca_coach_number">#%s klas</string>
 
@@ -503,17 +503,17 @@
 
     <string name="no_data_in_clipboard">Geen gegevens op het klembord.</string>
     <string name="app_version">Versie: %s</string>
-    <string name="device_model">Model: %s (%s)</string>
-    <string name="device_manufacturer">Fabrikant: %s (%s)</string>
-    <string name="android_os">Android-versie: %s (%s)</string>
+    <string name="device_model">Model: <xliff:g id="model_name" example="Pixel 2">%1$s</xliff:g><xliff:g id="model_codename" example="walleye">(%2$s)</xliff:g></string>
+    <string name="device_manufacturer">Fabrikant: <xliff:g id="manufacturer" example="HTC">%1$s</xliff:g> <xliff:g id="brand" example="Google">(%2$s)</xliff:g></string>
+    <string name="android_os">Android-versie: <xliff:g id="version" example="9.0">%1$s</xliff:g> <xliff:g id="build_id" example="PPR2.180905.006">(%2$s)</xliff:g></string>
     <string name="nfc_enabled">NFC: ingeschakeld</string>
     <string name="nfc_disabled">NFC: uitgeschakeld</string>
     <string name="nfc_not_available">NFC: niet beschikbaar</string>
     <string name="mfc_supported">MIFARE Classic: ondersteund</string>
     <string name="mfc_not_supported">MIFARE Classic: niet ondersteund</string>
 <string name="trip_description_unknown_start">naar %s</string>
-    <string name="time_from_to">%s → %s</string>
-    <string name="time_from_unknown_to">\??:?? → %s</string>
+    <string name="time_from_to"><xliff:g id="start_time" example="12:35">%1$s</xliff:g> → <xliff:g id="end_time" example="12:51">%2$s</xliff:g></string>
+    <string name="time_from_unknown_to">??:?? → <xliff:g id="end_time" example="12:51">%s</xliff:g></string>
 
 
     <string name="pref_show_local_and_english_title">Stationsnamen tonen in lokale taal en het Engels</string>
@@ -771,4 +771,15 @@
 
     <string name="tap_for_more_info">Druk voor meer informatie…</string>
 <string name="location_chicago">Chicago, IL, VS</string>
+    <plurals name="lisboaviva_valid_days">
+	<item quantity="one">%d dag geldig</item>
+	<item quantity="other">%d dagen geldig</item>
+</plurals>
+    <plurals name="lisboaviva_valid_months">
+	<item quantity="one">%d maand geldig</item>
+	<item quantity="other">%d maanden geldig</item>
+</plurals>
+
+    <string name="location_sophia_antipolis">Sophia Antipolis, Frankrijk</string>
+    <string name="lisboaviva_unknown_period">Onbekende geldigheidsduur %x/%x</string>
     </resources>
