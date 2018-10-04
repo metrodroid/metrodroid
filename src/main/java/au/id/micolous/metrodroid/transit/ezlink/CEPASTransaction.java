@@ -30,32 +30,22 @@ import au.id.micolous.metrodroid.util.Utils;
 public class CEPASTransaction implements Parcelable {
     public static final Parcelable.Creator<CEPASTransaction> CREATOR = new Parcelable.Creator<CEPASTransaction>() {
         public CEPASTransaction createFromParcel(Parcel source) {
-            byte type = source.readByte();
-            int amount = source.readInt();
-            Calendar date = Utils.unparcelCalendar(source);
-            String userData = source.readString();
-            return new CEPASTransaction(type, amount, date, userData);
+            return new CEPASTransaction(source);
         }
 
         public CEPASTransaction[] newArray(int size) {
             return new CEPASTransaction[size];
         }
     };
-    private byte mType;
-    private int mAmount;
-    private Calendar mDate;
-    private String mUserData;
+    private final byte mType;
+    private final int mAmount;
+    private final Calendar mDate;
+    private final String mUserData;
 
     public CEPASTransaction(byte[] rawData) {
-        int tmp;
-
         mType = rawData[0];
 
-        tmp = Utils.byteArrayToInt(rawData, 1, 3);
-        /* Sign-extend the value */
-        if (0 != (tmp & 0x800000))
-            tmp |= 0xff000000;
-        mAmount = tmp;
+        mAmount = Utils.getBitsFromBufferSigned(rawData, 8, 24);
 
         /* Date is expressed "in seconds", but the epoch is January 1 1995, SGT */
         long timestamp = Utils.byteArrayToLong(rawData, 4, 4);
@@ -67,14 +57,12 @@ public class CEPASTransaction implements Parcelable {
         mUserData = new String(userData);
     }
 
-    public CEPASTransaction(byte type, int amount, Calendar date, String userData) {
-        mType = type;
-        mAmount = amount;
-        mDate = date;
-        mUserData = userData;
+    private CEPASTransaction(Parcel source) {
+        mType = source.readByte();
+        mAmount = source.readInt();
+        mDate = Utils.unparcelCalendar(source);
+        mUserData = source.readString();
     }
-
-    private CEPASTransaction() { /* For XML Serializer */ }
 
     public TransactionType getType() {
         return getType(mType);

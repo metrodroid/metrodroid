@@ -168,11 +168,7 @@ public class CEPASApplication extends ISO7816Application {
         items.add(new HeaderListItem(R.string.cepas_purse_info));
 
         if (purse == null || !purse.isValid()) {
-            if (purse != null && purse.getErrorMessage() != null && !purse.getErrorMessage().equals("")) {
-                items.add(new ListItem(R.string.error, purse.getErrorMessage()));
-            } else {
-                items.add(new ListItem(R.string.error, R.string.unknown));
-            }
+            items.add(new ListItem(R.string.error, R.string.unknown));
         } else {
             items.add(new ListItem(R.string.cepas_version, Byte.toString(purse.getCepasVersion())));
             items.add(new ListItem(R.string.cepas_purse_id, "3"));
