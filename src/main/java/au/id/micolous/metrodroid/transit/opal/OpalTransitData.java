@@ -123,7 +123,6 @@ public class OpalTransitData extends TransitData {
     public OpalTransitData(Card card) {
         DesfireCard desfireCard = (DesfireCard) card;
         byte[] data = desfireCard.getApplication(APP_ID).getFile(FILE_ID).getData();
-        int iRawBalance;
 
         data = Utils.reverseBuffer(data, 0, 16);
 
@@ -135,7 +134,7 @@ public class OpalTransitData extends TransitData {
             mMode = Utils.getBitsFromBuffer(data, 25, 3);
             mMinute = Utils.getBitsFromBuffer(data, 28, 11);
             mDay = Utils.getBitsFromBuffer(data, 39, 15);
-            iRawBalance = Utils.getBitsFromBuffer(data, 54, 21);
+            mBalance = Utils.getBitsFromBufferSigned(data, 54, 21);
             mTransactionNumber = Utils.getBitsFromBuffer(data, 75, 16);
             // Skip bit here
             mLastDigit = Utils.getBitsFromBuffer(data, 92, 4);
@@ -143,8 +142,6 @@ public class OpalTransitData extends TransitData {
         } catch (Exception ex) {
             throw new RuntimeException("Error parsing Opal data", ex);
         }
-
-        mBalance = Utils.unsignedToTwoComplement(iRawBalance, 20);
     }
 
     public static boolean check(Card card) {

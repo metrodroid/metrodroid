@@ -226,11 +226,7 @@ public class LeapTransitData extends TransitData {
     }
 
     public static int parseBalance(byte[] file, int offset) {
-        int balance = Utils.byteArrayToInt(file, offset, 3);
-        if ((balance & 0x800000) != 0) {
-            balance = balance - 0x1000000;
-        }
-        return balance;
+        return Utils.getBitsFromBufferSigned(file, offset * 8, 24);
     }
 
     public static Calendar parseDate(byte[] file, int offset) {
