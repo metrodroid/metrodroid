@@ -203,10 +203,12 @@ public class ClassicCard extends Card {
                         while (correctKey == null && retriesLeft-- > 0) {
                             // If we have a known key for the sector on the card, try this first.
                             Log.d(TAG, "Attempting authentication on sector " + sectorIndex + ", " + retriesLeft + " tries remain...");
-                            List <ClassicSectorKey> candidates = keys.getCandidates(sectorIndex);
+                            List <? extends ClassicSectorKey> candidates = keys.getCandidates(sectorIndex);
 
                             for (ClassicSectorKey sectorKey : candidates) {
                                 correctKey = tryAuthenticateWithKey(tech, sectorIndex, sectorKey);
+                                if (correctKey != null)
+                                    break;
                             }
                         }
                     }
@@ -247,6 +249,8 @@ public class ClassicCard extends Card {
                                 feedbackInterface.updateStatusText(Utils.localizeString(R.string.mfc_default_key, sectorIndex));
                                 for (ClassicSectorKey wkKey : WELL_KNOWN_KEYS) {
                                     correctKey = tryAuthenticateWithKey(tech, sectorIndex, wkKey);
+                                    if (correctKey != null)
+                                        break;
                                 }
                             }
 
@@ -550,7 +554,8 @@ public class ClassicCard extends Card {
             }
 
             if (sector instanceof InvalidClassicSector) {
-                li.add(new ListItem(Utils.localizeString(R.string.invalid_sector_title_format, sectorIndexString)));
+                li.add(new ListItem(Utils.localizeString(R.string.invalid_sector_title_format, sectorIndexString,
+                        ((InvalidClassicSector) sector).getError())));
                 continue;
             }
 

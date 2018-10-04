@@ -136,7 +136,7 @@ public class ClassicCardKeys extends CardKeys {
      *         no known key, or the sector is out of range.
      */
     @NonNull
-    public List<ClassicSectorKey> getCandidates(int sectorNumber) {
+    public List<? extends ClassicSectorKey> getCandidates(int sectorNumber) {
         if (mSectorKeys == null || sectorNumber >= mSectorKeys.length) {
             return Collections.emptyList();
         }
@@ -194,6 +194,7 @@ public class ClassicCardKeys extends CardKeys {
         if (mUID != null) {
             json.put(JSON_TAG_ID_KEY, mUID);
         }
+        json.put(JSON_KEY_TYPE_KEY, getType());
         return json;
     }
 
