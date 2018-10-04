@@ -194,7 +194,6 @@ public class En1545Parsed implements Parcelable {
         return false;
     }
 
-    @Deprecated
     @Nullable
     public String getTimeStampString(String name, TimeZone tz) {
         Pair<Calendar,Integer> timeFlag = getTimeStampFlags(name, tz);

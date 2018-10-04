@@ -44,9 +44,9 @@ class MobibSubscription extends En1545Subscription {
         }
     };
     private static final En1545Field FIELDS = new En1545Container(
-            new En1545FixedHex("UnknownA", 41),
-            En1545FixedInteger.date("ContractSale"),
-            new En1545FixedHex("UnknownD", 177)
+            new En1545FixedHex(CONTRACT_UNKNOWN_A, 41),
+            En1545FixedInteger.date(CONTRACT_SALE),
+            new En1545FixedHex(CONTRACT_UNKNOWN_B, 177)
     );
 
     private final int mTicketsRemaining;

@@ -24,6 +24,10 @@ import android.support.annotation.NonNull;
 import android.util.Pair;
 import android.util.SparseArray;
 
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.List;
+
 import au.id.micolous.farebot.R;
 import au.id.micolous.metrodroid.card.CardType;
 import au.id.micolous.metrodroid.card.calypso.CalypsoApplication;
@@ -38,6 +42,7 @@ import au.id.micolous.metrodroid.transit.en1545.En1545FixedString;
 import au.id.micolous.metrodroid.transit.en1545.En1545Lookup;
 import au.id.micolous.metrodroid.transit.en1545.En1545Parsed;
 import au.id.micolous.metrodroid.transit.en1545.En1545Repeat;
+import au.id.micolous.metrodroid.ui.ListItem;
 import au.id.micolous.metrodroid.util.Utils;
 
 public class IntercodeTransitData extends Calypso1545TransitData {
@@ -62,12 +67,13 @@ public class IntercodeTransitData extends Calypso1545TransitData {
             .setCardType(CardType.ISO7816)
             .build();
 
-    private static final CardInfo ENVIBUS_CARD_INFO = new CardInfo.Builder()
+    public static final CardInfo ENVIBUS_CARD_INFO = new CardInfo.Builder()
             .setName("Envibus")
+            .setLocation(R.string.location_sophia_antipolis)
             .setCardType(CardType.ISO7816)
             .build();
 
-    private static final CardInfo TAM_MONTPELLIER_CARD_INFO = new CardInfo.Builder()
+    public static final CardInfo TAM_MONTPELLIER_CARD_INFO = new CardInfo.Builder()
             .setName("TAM Montpellier")
             .setCardType(CardType.ISO7816)
             .build();
@@ -84,13 +90,13 @@ public class IntercodeTransitData extends Calypso1545TransitData {
         }
     };
     public final static En1545Container TICKET_ENV_FIELDS = new En1545Container(
-            new En1545FixedInteger("EnvVersionNumber", 6),
+            new En1545FixedInteger(ENV_VERSION_NUMBER, 6),
             new En1545Bitmap(
-                    new En1545FixedInteger("EnvNetworkId", 24),
-                    new En1545FixedInteger("EnvApplicationIssuerId", 8),
-                    En1545FixedInteger.date("EnvApplicationValidityEnd"),
+                    new En1545FixedInteger(ENV_NETWORK_ID, 24),
+                    new En1545FixedInteger(ENV_APPLICATION_ISSUER_ID, 8),
+                    En1545FixedInteger.date(ENV_APPLICATION_VALIDITY_END),
                     new En1545FixedInteger("EnvPayMethod", 11),
-                    new En1545FixedInteger("EnvAuthenticator", 16),
+                    new En1545FixedInteger(ENV_AUTHENTICATOR, 16),
                     new En1545FixedInteger("EnvSelectList", 32),
                     new En1545Container(
                             new En1545FixedInteger("EnvCardStatus", 1),
@@ -105,18 +111,18 @@ public class IntercodeTransitData extends Calypso1545TransitData {
                             new En1545FixedString("HolderForename", 85)
                     ),
                     new En1545Bitmap(
-                            new En1545FixedInteger("HolderBirthDate", 32),
+                            new En1545FixedInteger(HOLDER_BIRTH_DATE, 32),
                             new En1545FixedString("HolderBirthPlace", 115)
                     ),
                     new En1545FixedString("HolderBirthName", 85),
-                    new En1545FixedInteger("HolderIdNumber", 32),
+                    new En1545FixedInteger(HOLDER_ID_NUMBER, 32),
                     new En1545FixedInteger("HolderCountryAlpha", 24),
                     new En1545FixedInteger("HolderCompany", 32),
                     new En1545Repeat(2,
                             new En1545Bitmap(
                                     new En1545FixedInteger("HolderProfileNetworkId", 24),
                                     new En1545FixedInteger("HolderProfileNumber", 8),
-                                    En1545FixedInteger.date("HolderProfile")
+                                    En1545FixedInteger.date(HOLDER_PROFILE)
                             )
                     ),
                     new En1545Bitmap(
@@ -140,9 +146,9 @@ public class IntercodeTransitData extends Calypso1545TransitData {
 
     private static final En1545Field contractListFields = new En1545Repeat(4,
             new En1545Bitmap(
-                    new En1545FixedInteger("ContractsNetworkId", 24),
-                    new En1545FixedInteger("ContractsTariff", 16),
-                    new En1545FixedInteger("ContractsPointer", 5)
+                    new En1545FixedInteger(CONTRACTS_NETWORK_ID, 24),
+                    new En1545FixedInteger(CONTRACTS_TARIFF, 16),
+                    new En1545FixedInteger(CONTRACTS_POINTER, 5)
             )
     );
 
@@ -158,7 +164,7 @@ public class IntercodeTransitData extends Calypso1545TransitData {
                                                        En1545Parsed contractList, Integer listNum, int recordNum) {
         if (contractList == null)
             return null;
-        Integer tariff = contractList.getInt("ContractsTariff", listNum);
+        Integer tariff = contractList.getInt(CONTRACTS_TARIFF, listNum);
         if (tariff == null)
             return null;
         return new IntercodeSubscription(data, (tariff >> 4) & 0xff, mNetworkId);
@@ -223,6 +229,22 @@ public class IntercodeTransitData extends Calypso1545TransitData {
         if (NETWORKS.get(netId) != null)
             return NETWORKS.get(netId).first;
         return null;
+    }
+
+    @Override
+    public List<ListItem> getInfo() {
+        List <ListItem> items =  super.getInfo();
+        HashSet<String> handled = new HashSet<>(Arrays.asList(
+                ENV_NETWORK_ID,
+                ENV_APPLICATION_ISSUE + "Date",
+                ENV_APPLICATION_ISSUER_ID,
+                ENV_APPLICATION_VALIDITY_END + "Date",
+                ENV_AUTHENTICATOR,
+                HOLDER_PROFILE + "Date",
+                HOLDER_BIRTH_DATE,
+                HOLDER_POSTAL_CODE));
+        items.addAll(mTicketEnvParsed.getInfo(handled));
+        return items;
     }
 
     @Override

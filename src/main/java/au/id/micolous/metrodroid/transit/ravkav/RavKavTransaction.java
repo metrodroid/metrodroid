@@ -43,30 +43,30 @@ class RavKavTransaction extends En1545Transaction {
 
     private static final En1545Field tripFields = new En1545Container(
             new En1545FixedInteger("EventVersion", 3),
-            new En1545FixedInteger("EventServiceProvider", 8),
-            new En1545FixedInteger("EventContractPointer", 4),
-            new En1545FixedInteger("EventCode", 8),
-            En1545FixedInteger.dateTime("Event"),
+            new En1545FixedInteger(EVENT_SERVICE_PROVIDER, 8),
+            new En1545FixedInteger(EVENT_CONTRACT_POINTER, 4),
+            new En1545FixedInteger(EVENT_CODE, 8),
+            En1545FixedInteger.dateTime(EVENT),
             new En1545FixedInteger("EventTransferFlag", 1),
-            En1545FixedInteger.dateTime("EventFirstStamp"),
+            En1545FixedInteger.dateTime(EVENT_FIRST_STAMP),
             new En1545FixedInteger("EventContractPrefs", 32),
             new En1545Bitmap(
-                    new En1545FixedInteger("EventLocationId", 16),
-                    new En1545FixedInteger("EventRouteNumber", 16),
+                    new En1545FixedInteger(EVENT_LOCATION_ID, 16),
+                    new En1545FixedInteger(EVENT_ROUTE_NUMBER, 16),
                     new En1545FixedInteger("StopEnRoute", 8),
-                    new En1545FixedInteger("Unknown1", 12),
-                    new En1545FixedInteger("Vehicle", 14),
-                    new En1545FixedInteger("Unknown2", 4),
-                    new En1545FixedInteger("Unknown3", 8)
+                    new En1545FixedInteger(EVENT_UNKNOWN_A, 12),
+                    new En1545FixedInteger(EVENT_VEHICLE_ID, 14),
+                    new En1545FixedInteger(EVENT_UNKNOWN_B, 4),
+                    new En1545FixedInteger(EVENT_UNKNOWN_C, 8)
             ),
             new En1545Bitmap(
                     new En1545Container(
                             new En1545FixedInteger("RouteSystem", 10),
                             new En1545FixedInteger("FareCode", 8),
-                            new En1545FixedInteger("EventPriceAmount", 16)
+                            new En1545FixedInteger(EVENT_PRICE_AMOUNT, 16)
                     ),
-                    new En1545FixedInteger("Unknown4", 32),
-                    new En1545FixedInteger("Unknown5", 32)
+                    new En1545FixedInteger(EVENT_UNKNOWN_D, 32),
+                    new En1545FixedInteger(EVENT_UNKNOWN_E, 32)
             )
     );
 

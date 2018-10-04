@@ -59,6 +59,7 @@ def compile_stops_from_csv(csv_f, output_f, version=None, tts_hint_language=None
     fh=open(output_f, 'wb'),
     version=version,
     operators=operators,
+    lines=lines,
     local_languages=local_languages.split(',') if local_languages is not None else [],
     tts_hint_language=tts_hint_language,
   )

@@ -40,6 +40,7 @@ import au.id.micolous.metrodroid.transit.edy.EdyTransitData;
 import au.id.micolous.metrodroid.transit.ezlink.EZLinkTransitData;
 import au.id.micolous.metrodroid.transit.hsl.HSLTransitData;
 import au.id.micolous.metrodroid.transit.istanbulkart.IstanbulKartTransitData;
+import au.id.micolous.metrodroid.transit.lisboaviva.LisboaVivaTransitData;
 import au.id.micolous.metrodroid.transit.strelka.StrelkaTransitData;
 import au.id.micolous.metrodroid.transit.intercode.IntercodeTransitData;
 import au.id.micolous.metrodroid.transit.ricaricami.RicaricaMiTransitData;
@@ -82,6 +83,7 @@ public class CardInfo {
             ClipperTransitData.CARD_INFO,
             CompassUltralightTransitData.CARD_INFO,
             EdyTransitData.CARD_INFO,
+            IntercodeTransitData.ENVIBUS_CARD_INFO,
             EZLinkTransitData.EZ_LINK_CARD_INFO,
             SeqGoTransitData.CARD_INFO, // Go card
             MspGotoTransitData.CARD_INFO, // Go-to card
@@ -90,6 +92,7 @@ public class CardInfo {
             SuicaTransitData.ICOCA_CARD_INFO,
             KMTTransitData.CARD_INFO,
             LeapTransitData.CARD_INFO,
+            LisboaVivaTransitData.CARD_INFO,
             ManlyFastFerryTransitData.CARD_INFO,
             ChcMetrocardTransitData.CARD_INFO, // Metrocard
             MobibTransitData.CARD_INFO,
@@ -111,6 +114,7 @@ public class CardInfo {
             SmartRiderTransitData.SMARTRIDER_CARD_INFO,
             StrelkaTransitData.CARD_INFO,
             SuicaTransitData.SUICA_CARD_INFO,
+            IntercodeTransitData.TAM_MONTPELLIER_CARD_INFO,
             TMoneyTransitData.CARD_INFO,
             IntercodeTransitData.TRANSGIRONDE_CARD_INFO,
             LaxTapTransitData.CARD_INFO, // Transit Access Pass

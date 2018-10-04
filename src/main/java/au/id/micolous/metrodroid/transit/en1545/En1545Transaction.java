@@ -34,6 +34,31 @@ import au.id.micolous.metrodroid.transit.Trip;
 import au.id.micolous.metrodroid.util.Utils;
 
 public abstract class En1545Transaction implements Parcelable {
+    protected static final String EVENT_ROUTE_NUMBER = "EventRouteNumber";
+    protected static final String EVENT_ROUTE_VARIANT = "EventRouteVariant";
+    protected static final String EVENT_PASSENGER_COUNT = "EventPassengerCount";
+    protected static final String EVENT_VEHICLE_ID = "EventVehicleId";
+    protected static final String EVENT_CODE = "EventCode";
+    protected static final String EVENT_SERVICE_PROVIDER = "EventServiceProvider";
+    protected static final String EVENT = "Event";
+    protected static final String EVENT_PRICE_AMOUNT = "EventPriceAmount";
+    protected static final String EVENT_LOCATION_ID = "EventLocationId";
+    protected static final String EVENT_UNKNOWN_A = "EventUnknownA";
+    protected static final String EVENT_UNKNOWN_B = "EventUnknownB";
+    protected static final String EVENT_UNKNOWN_C = "EventUnknownC";
+    protected static final String EVENT_UNKNOWN_D = "EventUnknownD";
+    protected static final String EVENT_UNKNOWN_E = "EventUnknownE";
+    protected static final String EVENT_UNKNOWN_F = "EventUnknownF";
+    protected static final String EVENT_UNKNOWN_G = "EventUnknownG";
+    protected static final String EVENT_UNKNOWN_H = "EventUnknownH";
+    protected static final String EVENT_UNKNOWN_I = "EventUnknownI";
+    protected static final String EVENT_CONTRACT_POINTER = "EventContractPointer";
+    protected static final String EVENT_SERIAL_NUMBER = "EventSerialNumber";
+    protected static final String EVENT_AUTHENTICATOR = "EventAuthenticator";
+    protected static final String EVENT_NETWORK_ID = "EventNetworkId";
+    protected static final String EVENT_FIRST_STAMP = "EventFirstStamp";
+    protected static final String EVENT_FIRST_LOCATION_ID = "EventFirstLocationId";
+    protected static final String EVENT_DEVICE_ID = "EventDeviceId";
     protected final En1545Parsed mParsed;
 
     private static final int EVENT_TYPE_BOARD = 1;
@@ -68,8 +93,8 @@ public abstract class En1545Transaction implements Parcelable {
 
     public String getRouteName() {
         String route = getLookup().getRouteName(
-                mParsed.getInt("EventRouteNumber"),
-                mParsed.getInt("EventRouteVariant"),
+                mParsed.getInt(EVENT_ROUTE_NUMBER),
+                mParsed.getInt(EVENT_ROUTE_VARIANT),
                 getAgency(), getTransport());
         if (route != null)
             return route;
@@ -80,15 +105,15 @@ public abstract class En1545Transaction implements Parcelable {
     }
 
     public int getPassengerCount() {
-        return mParsed.getIntOrZero("EventPassengerCount");
+        return mParsed.getIntOrZero(EVENT_PASSENGER_COUNT);
     }
 
     public int getVehicleNumber() {
-        return mParsed.getIntOrZero("EventVehicleId");
+        return mParsed.getIntOrZero(EVENT_VEHICLE_ID);
     }
 
     private int getEventCode() {
-        return mParsed.getIntOrZero("EventCode");
+        return mParsed.getIntOrZero(EVENT_CODE);
     }
 
     private static int getTransport(int eventCode) {
@@ -100,7 +125,7 @@ public abstract class En1545Transaction implements Parcelable {
     }
 
     protected Integer getAgency() {
-        return mParsed.getInt("EventServiceProvider");
+        return mParsed.getInt(EVENT_SERVICE_PROVIDER);
     }
 
     public String getAgencyName(boolean isShort) {
@@ -120,7 +145,7 @@ public abstract class En1545Transaction implements Parcelable {
     }
 
     public Calendar getTimestamp() {
-        return mParsed.getTimeStamp("Event", getLookup().getTimeZone());
+        return mParsed.getTimeStamp(EVENT, getLookup().getTimeZone());
     }
 
     private static Trip.Mode eventCodeToMode(int ec) {
@@ -148,10 +173,10 @@ public abstract class En1545Transaction implements Parcelable {
     }
 
     public Trip.Mode getMode() {
-        Integer ec = mParsed.getInt("EventCode");
+        Integer ec = mParsed.getInt(EVENT_CODE);
         if (ec != null)
             return eventCodeToMode(ec);
-        return getLookup().getMode(getAgency(), mParsed.getInt("EventRouteNumber"));
+        return getLookup().getMode(getAgency(), mParsed.getInt(EVENT_ROUTE_NUMBER));
     }
 
     @Override
@@ -163,7 +188,7 @@ public abstract class En1545Transaction implements Parcelable {
 
     @Nullable
     public TransitCurrency getFare() {
-        Integer x = mParsed.getInt("EventPriceAmount");
+        Integer x = mParsed.getInt(EVENT_PRICE_AMOUNT);
         if (x == null)
             return null;
         return getLookup().parseCurrency(x);
@@ -185,16 +210,16 @@ public abstract class En1545Transaction implements Parcelable {
 
     protected boolean isSameTrip(En1545Transaction other) {
         return getTransport() == (other.getTransport())
-                && mParsed.getIntOrZero("EventServiceProvider") == other.mParsed.getIntOrZero("EventServiceProvider")
-                && mParsed.getIntOrZero("EventRouteNumber") == other.mParsed.getIntOrZero("EventRouteNumber")
-                && mParsed.getIntOrZero("EventRouteVariant") == other.mParsed.getIntOrZero("EventRouteVariant");
+                && mParsed.getIntOrZero(EVENT_SERVICE_PROVIDER) == other.mParsed.getIntOrZero(EVENT_SERVICE_PROVIDER)
+                && mParsed.getIntOrZero(EVENT_ROUTE_NUMBER) == other.mParsed.getIntOrZero(EVENT_ROUTE_NUMBER)
+                && mParsed.getIntOrZero(EVENT_ROUTE_VARIANT) == other.mParsed.getIntOrZero(EVENT_ROUTE_VARIANT);
     }
 
     boolean shouldBeMerged(En1545Transaction other) {
         return isTapOn() && other.isTapOff() && isSameTrip(other);
     }
 
-    private Integer getStationId() {
-        return mParsed.getInt("EventLocationId");
+    protected Integer getStationId() {
+        return mParsed.getInt(EVENT_LOCATION_ID);
     }
 }

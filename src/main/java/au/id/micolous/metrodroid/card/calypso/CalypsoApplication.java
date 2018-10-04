@@ -44,6 +44,7 @@ import au.id.micolous.metrodroid.transit.CardInfo;
 import au.id.micolous.metrodroid.transit.TransitData;
 import au.id.micolous.metrodroid.transit.TransitIdentity;
 import au.id.micolous.metrodroid.transit.intercode.IntercodeTransitData;
+import au.id.micolous.metrodroid.transit.lisboaviva.LisboaVivaTransitData;
 import au.id.micolous.metrodroid.transit.mobib.MobibTransitData;
 import au.id.micolous.metrodroid.transit.opus.OpusTransitData;
 import au.id.micolous.metrodroid.transit.ravkav.RavKavTransitData;
@@ -129,6 +130,8 @@ public class CalypsoApplication extends ISO7816Application {
             ci = MobibTransitData.CARD_INFO;
         if (IntercodeTransitData.check(tenv))
             ci = IntercodeTransitData.getCardInfo(tenv);
+        if (LisboaVivaTransitData.check(tenv))
+            ci = LisboaVivaTransitData.CARD_INFO;
 
         if (ci != null) {
             feedbackInterface.updateStatusText(Utils.localizeString(R.string.card_reading_type,
@@ -161,6 +164,8 @@ public class CalypsoApplication extends ISO7816Application {
             return MobibTransitData.parseTransitData(this);
 	    if (IntercodeTransitData.check(tenv))
             return IntercodeTransitData.parseTransitData(this);
+        if (LisboaVivaTransitData.check(tenv))
+            return LisboaVivaTransitData.parseTransitData(this);
         return null;
     }
 
@@ -179,6 +184,8 @@ public class CalypsoApplication extends ISO7816Application {
             return MobibTransitData.parseTransitIdentity(this);
         if (IntercodeTransitData.check(tenv))
             return IntercodeTransitData.parseTransitIdentity(this);
+        if (LisboaVivaTransitData.check(tenv))
+            return LisboaVivaTransitData.parseTransitIdentity(this);
         return null;
     }
 

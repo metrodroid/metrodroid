@@ -34,7 +34,26 @@ import au.id.micolous.metrodroid.util.TripObfuscator;
 import au.id.micolous.metrodroid.util.Utils;
 
 abstract public class En1545TransitData extends TransitData {
-    //protected final static String
+    protected final static String ENV_NETWORK_ID = "EnvNetworkId";
+    protected final static String ENV_VERSION_NUMBER = "EnvVersionNumber";
+    protected static final String HOLDER_BIRTH_DATE = "HolderBirthDate";
+    protected static final String ENV_APPLICATION_VALIDITY_END = "EnvApplicationValidityEnd";
+    protected static final String ENV_APPLICATION_ISSUER_ID = "EnvApplicationIssuerId";
+    protected static final String ENV_APPLICATION_ISSUE = "EnvApplicationIssue";
+    protected static final String HOLDER_PROFILE = "HolderProfile";
+    protected static final String HOLDER_POSTAL_CODE = "HolderPostalCode";
+    protected static final String ENV_AUTHENTICATOR = "EnvAuthenticator";
+    protected static final String ENV_UNKNOWN_A = "EnvUnknownA";
+    protected static final String ENV_UNKNOWN_B = "EnvUnknownB";
+    protected static final String ENV_UNKNOWN_C = "EnvUnknownC";
+    protected static final String ENV_UNKNOWN_D = "EnvUnknownD";
+    protected static final String ENV_UNKNOWN_E = "EnvUnknownE";
+    protected static final String ENV_CARD_SERIAL = "EnvCardSerial";
+    protected static final String HOLDER_ID_NUMBER = "HolderIdNumber";
+    protected static final String HOLDER_UNKNOWN_A = "HolderUnknownA";
+    protected static final String HOLDER_UNKNOWN_B = "HolderUnknownB";
+    protected static final String HOLDER_UNKNOWN_C = "HolderUnknownC";
+    protected static final String HOLDER_UNKNOWN_D = "HolderUnknownD";
 
     protected final En1545Parsed mTicketEnvParsed;
 
@@ -50,49 +69,29 @@ abstract public class En1545TransitData extends TransitData {
     public List<ListItem> getInfo() {
         ArrayList<ListItem> li = new ArrayList<>();
         TimeZone tz = getLookup().getTimeZone();
-        if (mTicketEnvParsed.contains("EnvNetworkId"))
+        if (mTicketEnvParsed.contains(ENV_NETWORK_ID))
             li.add(new ListItem(R.string.en1545_network_id,
-                    Integer.toHexString(mTicketEnvParsed.getIntOrZero("EnvNetworkId"))));
-        if (mTicketEnvParsed.getIntOrZero("EnvApplicationValidityEndDate") != 0)
+                    Integer.toHexString(mTicketEnvParsed.getIntOrZero(ENV_NETWORK_ID))));
+        if (mTicketEnvParsed.getIntOrZero(ENV_APPLICATION_VALIDITY_END + "Date") != 0)
             li.add(new ListItem(R.string.expiry_date,
-                    mTicketEnvParsed.getTimeStampString("EnvApplicationValidityEnd", tz)));
-        if (mTicketEnvParsed.getIntOrZero("HolderBirthDate") != 0)
+                    mTicketEnvParsed.getTimeStampString(ENV_APPLICATION_VALIDITY_END, tz)));
+        if (mTicketEnvParsed.getIntOrZero(HOLDER_BIRTH_DATE) != 0)
             li.add(new ListItem(R.string.date_of_birth,
                     Utils.longDateFormat(En1545FixedInteger.parseBCDDate(
-                            mTicketEnvParsed.getIntOrZero("HolderBirthDate"), tz))));
-        if (mTicketEnvParsed.getIntOrZero("EnvApplicationIssuerId") != 0)
+                            mTicketEnvParsed.getIntOrZero(HOLDER_BIRTH_DATE), tz))));
+        if (mTicketEnvParsed.getIntOrZero(ENV_APPLICATION_ISSUER_ID) != 0)
             li.add(new ListItem(R.string.card_issuer,
-                    getLookup().getAgencyName(mTicketEnvParsed.getIntOrZero("EnvApplicationIssuerId"), false)));
-        if (mTicketEnvParsed.getIntOrZero("EnvApplicationIssueDate") != 0)
-            li.add(new ListItem(R.string.issue_date,
-                    Utils.longDateFormat(TripObfuscator.maybeObfuscateTS(En1545FixedInteger.parseDate(
-                            mTicketEnvParsed.getIntOrZero("EnvApplicationIssueDate"), tz)))));
+                    getLookup().getAgencyName(mTicketEnvParsed.getIntOrZero(ENV_APPLICATION_ISSUER_ID), false)));
+        if (mTicketEnvParsed.getIntOrZero(ENV_APPLICATION_ISSUE + "Date") != 0)
+            li.add(new ListItem(R.string.issue_date, mTicketEnvParsed.getTimeStampString(ENV_APPLICATION_ISSUE, tz)));
 
-        if (mTicketEnvParsed.getIntOrZero("HolderProfileDate") != 0)
-            li.add(new ListItem(R.string.en1545_card_expiry_date_profile,
-                    Utils.longDateFormat(TripObfuscator.maybeObfuscateTS(En1545FixedInteger.parseDate(
-                            mTicketEnvParsed.getIntOrZero("HolderProfileDate"), tz)))));
+        if (mTicketEnvParsed.getIntOrZero(HOLDER_PROFILE + "Date") != 0)
+            li.add(new ListItem(R.string.en1545_card_expiry_date_profile, mTicketEnvParsed.getTimeStampString(HOLDER_PROFILE, tz)));
 
-        if (mTicketEnvParsed.getIntOrZero("HolderPostalCode") != 0)
+        if (mTicketEnvParsed.getIntOrZero(HOLDER_POSTAL_CODE) != 0)
             li.add(new ListItem(R.string.postal_code,
-                    Integer.toString(mTicketEnvParsed.getIntOrZero("HolderPostalCode"))));
+                    Integer.toString(mTicketEnvParsed.getIntOrZero(HOLDER_POSTAL_CODE))));
 
-        HashSet<String> handled = new HashSet<>(Arrays.asList(
-                "EnvNetworkId",
-                "EnvApplicationIssueDate",
-                "EnvApplicationIssuerId",
-                "EnvApplicationValidityEndDate",
-                "EnvAuthenticator",
-                "HolderProfileDate",
-                "HolderBirthDate",
-                "HolderPostalCode",
-
-                "UnknownA", "UnknownB", "UnknownC", "EnvVersionNumber",
-                "HolderUnknownA", "HolderUnknownB", "HolderUnknownC",
-                "HolderUnknownD", "HolderUnknownE",
-                "EnvUnknownA", "EnvUnknownB", "EnvUnknownC", "EnvUnknownD",
-                "EnvUnknownE", "EnvCardSerial"));
-        li.addAll(mTicketEnvParsed.getInfo(handled));
         return li;
     }
 

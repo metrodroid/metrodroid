@@ -60,6 +60,7 @@ public class MobibTransitData extends Calypso1545TransitData {
     // 56 = Belgium
     private static final int MOBIB_NETWORK_ID = 0x56001;
     private static final String NAME = "Mobib";
+    private static final String EXT_HOLDER_NAME = "ExtHolderName";
     private final En1545Parsed mExtHolderParsed;
     private final int mPurchase;
     private final int mTotalTrips;
@@ -85,33 +86,41 @@ public class MobibTransitData extends Calypso1545TransitData {
     };
 
     private final static En1545Container ticketEnvFields = new En1545Container(
-            new En1545FixedInteger("EnvUnknownA", 13),
-            new En1545FixedInteger("EnvNetworkId", 24),
-            new En1545FixedInteger("EnvUnknownB", 9),
-            En1545FixedInteger.date("EnvApplicationValidityEnd"),
-            new En1545FixedInteger("EnvUnknownC", 6),
-            new En1545FixedInteger("HolderBirthDate", 32),
-            new En1545FixedHex("EnvCardSerial", 76),
-            new En1545FixedInteger("EnvUnknownD", 5),
-            new En1545FixedInteger("HolderPostalCode", 14),
-            new En1545FixedHex("EnvUnknownE", 34)
+            new En1545FixedInteger(ENV_UNKNOWN_A, 13),
+            new En1545FixedInteger(ENV_NETWORK_ID, 24),
+            new En1545FixedInteger(ENV_UNKNOWN_B, 9),
+            En1545FixedInteger.date(ENV_APPLICATION_VALIDITY_END),
+            new En1545FixedInteger(ENV_UNKNOWN_C, 6),
+            new En1545FixedInteger(HOLDER_BIRTH_DATE, 32),
+            new En1545FixedHex(ENV_CARD_SERIAL, 76),
+            new En1545FixedInteger(ENV_UNKNOWN_D, 5),
+            new En1545FixedInteger(HOLDER_POSTAL_CODE, 14),
+            new En1545FixedHex(ENV_UNKNOWN_E, 34)
     );
+    private static final String EXT_HOLDER_GENDER = "ExtHolderGender";
+    private static final String EXT_HOLDER_DATE_OF_BIRTH = "ExtHolderDateOfBirth";
+    private static final String EXT_HOLDER_CARD_SERIAL = "ExtHolderCardSerial";
+    private static final String EXT_HOLDER_UNKNOWN_A = "ExtHolderUnknownA";
+    private static final String EXT_HOLDER_UNKNOWN_B = "ExtHolderUnknownB";
+    private static final String EXT_HOLDER_UNKNOWN_C = "ExtHolderUnknownC";
+    private static final String EXT_HOLDER_UNKNOWN_D = "ExtHolderUnknownD";
+
     private final static En1545Container extHolderFields = new En1545Container(
-            new En1545FixedInteger("ExtHolderUnknownA", 18),
-            new En1545FixedHex("CardSerial", 76),
-            new En1545FixedInteger("ExtHolderUnknownB", 16),
-            new En1545FixedHex("ExtHolderUnknownC", 58),
-            new En1545FixedInteger("DateOfBirth", 32),
-            new En1545FixedInteger("HolderGender", 2),
-            new En1545FixedInteger("ExtHolderUnknownD", 3),
-            new En1545FixedString("HolderName", 259)
+            new En1545FixedInteger(EXT_HOLDER_UNKNOWN_A, 18),
+            new En1545FixedHex(EXT_HOLDER_CARD_SERIAL, 76),
+            new En1545FixedInteger(EXT_HOLDER_UNKNOWN_B, 16),
+            new En1545FixedHex(EXT_HOLDER_UNKNOWN_C, 58),
+            new En1545FixedInteger(EXT_HOLDER_DATE_OF_BIRTH, 32),
+            new En1545FixedInteger(EXT_HOLDER_GENDER, 2),
+            new En1545FixedInteger(EXT_HOLDER_UNKNOWN_D, 3),
+            new En1545FixedString(EXT_HOLDER_NAME, 259)
     );
 
     private static final En1545Field contractListFields = new En1545Repeat(4,
             new En1545Container(
-                new En1545FixedHex("CLunknownA", 18),
-                    new En1545FixedInteger("ContractsPointer", 5),
-                    new En1545FixedHex("CLunknownB", 16)
+                new En1545FixedHex(CONTRACTS_UNKNOWN_A, 18),
+                    new En1545FixedInteger(CONTRACTS_POINTER, 5),
+                    new En1545FixedHex(CONTRACTS_UNKNOWN_B, 16)
             )
     );
 
@@ -141,7 +150,7 @@ public class MobibTransitData extends Calypso1545TransitData {
             li.add(new ListItem(R.string.purchase_date,
                     Utils.longDateFormat(En1545FixedInteger.parseDate(mPurchase, TZ))));
         li.add(new ListItem(R.string.transaction_counter, Integer.toString(mTotalTrips)));
-        int gender = mExtHolderParsed.getIntOrZero("HolderGender");
+        int gender = mExtHolderParsed.getIntOrZero(EXT_HOLDER_GENDER);
         if (gender == 0) {
             li.add(new ListItem(R.string.card_type, R.string.card_type_anonymous));
         } else {
@@ -150,7 +159,7 @@ public class MobibTransitData extends Calypso1545TransitData {
         if (gender != 0 && !MetrodroidApplication.hideCardNumbers()
                 && !MetrodroidApplication.obfuscateTripDates()) {
             li.add(new ListItem(R.string.card_holders_name,
-                    mExtHolderParsed.getString("HolderName")));
+                    mExtHolderParsed.getString(EXT_HOLDER_NAME)));
             switch (gender) {
                 case 1:
                     li.add(new ListItem(R.string.gender,
@@ -166,16 +175,6 @@ public class MobibTransitData extends Calypso1545TransitData {
                     break;
             }
         }
-        HashSet<String> handled = new HashSet<>(Arrays.asList(
-                "EnvApplicationValidityEndDate",
-                "DateOfBirth",
-                "CardSerial",
-                "HolderGender",
-                "HolderName",
-
-                "ExtHolderUnknownA", "ExtHolderUnknownB",
-                "ExtHolderUnknownC", "ExtHolderUnknownD"));
-        li.addAll(mExtHolderParsed.getInfo(handled));
         li.addAll(super.getInfo());
         return li;
     }
