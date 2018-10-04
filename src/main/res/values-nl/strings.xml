@@ -770,4 +770,5 @@
     <string name="postal_code">Postcode</string>
 
     <string name="tap_for_more_info">Druk voor meer informatie…</string>
-</resources>
+<string name="location_chicago">Chicago, IL, VS</string>
+    </resources>
