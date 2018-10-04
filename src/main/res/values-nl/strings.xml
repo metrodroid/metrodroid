@@ -513,7 +513,7 @@
     <string name="mfc_not_supported">MIFARE Classic: niet ondersteund</string>
 <string name="trip_description_unknown_start">naar %s</string>
     <string name="time_from_to"><xliff:g id="start_time" example="12:35">%1$s</xliff:g> → <xliff:g id="end_time" example="12:51">%2$s</xliff:g></string>
-    <string name="time_from_unknown_to">\\??:?? → <xliff:g id="end_time" example="12:51">%s</xliff:g></string>
+    <string name="time_from_unknown_to">\??:?? → <xliff:g id="end_time" example="12:51">%s</xliff:g></string>
 
 
     <string name="pref_show_local_and_english_title">Stationsnamen tonen in lokale taal en het Engels</string>
