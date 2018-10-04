@@ -769,4 +769,17 @@
     <string name="postal_code">Postkode</string>
 
     <string name="tap_for_more_info">Trykk for mer info…</string>
-</resources>
+<plurals name="lisboaviva_valid_days">
+	<item quantity="one">Gyldig i én dag</item>
+	<item quantity="other">Gyldig i %d dager</item>
+</plurals>
+    <plurals name="lisboaviva_valid_months">
+	<item quantity="one">Gyldig i én måned</item>
+	<item quantity="other">Gyldig i %d måneder</item>
+</plurals>
+
+    <string name="location_chicago">Chicago, IL, USA</string>
+    <string name="location_portland">Portland, OR, USA</string>
+    <string name="location_sophia_antipolis">Sophia Antipolis, Frankrike</string>
+    <string name="lisboaviva_unknown_period">Ukjent gyldighet %x/%x</string>
+    </resources>
