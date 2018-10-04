@@ -46,6 +46,7 @@ import au.id.micolous.metrodroid.transit.intercode.IntercodeTransitData;
 import au.id.micolous.metrodroid.transit.ricaricami.RicaricaMiTransitData;
 import au.id.micolous.metrodroid.transit.msp_goto.MspGotoTransitData;
 import au.id.micolous.metrodroid.transit.ventra.VentraUltralightTransitData;
+import au.id.micolous.metrodroid.transit.trimethop.TrimetHopTransitData;
 import au.id.micolous.metrodroid.transit.yvr_compass.CompassUltralightTransitData;
 import au.id.micolous.metrodroid.transit.kmt.KMTTransitData;
 import au.id.micolous.metrodroid.transit.lax_tap.LaxTapTransitData;
@@ -115,9 +116,10 @@ public class CardInfo {
             StrelkaTransitData.CARD_INFO,
             SuicaTransitData.SUICA_CARD_INFO,
             IntercodeTransitData.TAM_MONTPELLIER_CARD_INFO,
-            TMoneyTransitData.CARD_INFO,
-            IntercodeTransitData.TRANSGIRONDE_CARD_INFO,
+            TMoneyTransitData.CARD_INFO, // T-Money
+            IntercodeTransitData.TRANSGIRONDE_CARD_INFO, // TransGironde
             LaxTapTransitData.CARD_INFO, // Transit Access Pass
+            TrimetHopTransitData.CARD_INFO,
             TroikaTransitData.CARD_INFO,
             VentraUltralightTransitData.CARD_INFO
     };
