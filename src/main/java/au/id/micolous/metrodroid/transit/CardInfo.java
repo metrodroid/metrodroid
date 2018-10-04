@@ -44,6 +44,7 @@ import au.id.micolous.metrodroid.transit.strelka.StrelkaTransitData;
 import au.id.micolous.metrodroid.transit.intercode.IntercodeTransitData;
 import au.id.micolous.metrodroid.transit.ricaricami.RicaricaMiTransitData;
 import au.id.micolous.metrodroid.transit.msp_goto.MspGotoTransitData;
+import au.id.micolous.metrodroid.transit.ventra.VentraUltralightTransitData;
 import au.id.micolous.metrodroid.transit.yvr_compass.CompassUltralightTransitData;
 import au.id.micolous.metrodroid.transit.kmt.KMTTransitData;
 import au.id.micolous.metrodroid.transit.lax_tap.LaxTapTransitData;
@@ -114,6 +115,7 @@ public class CardInfo {
             IntercodeTransitData.TRANSGIRONDE_CARD_INFO,
             LaxTapTransitData.CARD_INFO, // Transit Access Pass
             TroikaTransitData.CARD_INFO,
+            VentraUltralightTransitData.CARD_INFO
     };
 
     @DrawableRes

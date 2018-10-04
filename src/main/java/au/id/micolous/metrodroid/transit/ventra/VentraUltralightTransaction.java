@@ -1,5 +1,5 @@
 /*
- * CompassUltralightTrip.java
+ * VentraUltralightTrip.java
  *
  * Copyright 2018 Google
  *
@@ -17,7 +17,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package au.id.micolous.metrodroid.transit.yvr_compass;
+package au.id.micolous.metrodroid.transit.ventra;
 
 import android.os.Parcel;
 import android.os.Parcelable;
@@ -28,25 +28,23 @@ import au.id.micolous.metrodroid.card.ultralight.UltralightCard;
 import au.id.micolous.metrodroid.transit.Station;
 import au.id.micolous.metrodroid.transit.Trip;
 import au.id.micolous.metrodroid.transit.nextfare.ultralight.NextfareUltralightTransaction;
-import au.id.micolous.metrodroid.util.StationTableReader;
 
-public class CompassUltralightTransaction extends NextfareUltralightTransaction implements Parcelable {
-    public static final Parcelable.Creator<CompassUltralightTransaction> CREATOR = new Parcelable.Creator<CompassUltralightTransaction>() {
-        public CompassUltralightTransaction createFromParcel(Parcel parcel) {
-            return new CompassUltralightTransaction(parcel);
+public class VentraUltralightTransaction extends NextfareUltralightTransaction implements Parcelable {
+    public static final Parcelable.Creator<VentraUltralightTransaction> CREATOR = new Parcelable.Creator<VentraUltralightTransaction>() {
+        public VentraUltralightTransaction createFromParcel(Parcel parcel) {
+            return new VentraUltralightTransaction(parcel);
         }
 
-        public CompassUltralightTransaction[] newArray(int size) {
-            return new CompassUltralightTransaction[size];
+        public VentraUltralightTransaction[] newArray(int size) {
+            return new VentraUltralightTransaction[size];
         }
     };
-    private static final String COMPASS_STR = "compass";
 
-    CompassUltralightTransaction(UltralightCard card, int startPage, int baseDate) {
+    VentraUltralightTransaction(UltralightCard card, int startPage, int baseDate) {
         super(card, startPage, baseDate);
     }
 
-    private CompassUltralightTransaction(Parcel parcel) {
+    private VentraUltralightTransaction(Parcel parcel) {
         super(parcel);
     }
 
@@ -57,23 +55,21 @@ public class CompassUltralightTransaction extends NextfareUltralightTransaction 
     public Station getStation() {
         if (mLocation == 0)
             return null;
-        return StationTableReader.getStation(COMPASS_STR, mLocation);
+        return Station.unknown(mLocation);
     }
 
     @Override
     protected TimeZone getTimezone() {
-        return CompassUltralightTransitData.TZ;
+        return VentraUltralightTransitData.TZ;
     }
 
     protected boolean isBus() {
-        return mRoute == 5 || mRoute == 7;
+        return false;
     }
 
     public Trip.Mode getMode() {
         if (isBus())
             return Trip.Mode.BUS;
-        if (mRoute == 3 || mRoute == 9 || mRoute == 0xa)
-            return Trip.Mode.TRAIN;
         if (mRoute == 0)
             return Trip.Mode.TICKET_MACHINE;
         return Trip.Mode.OTHER;
