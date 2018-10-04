@@ -71,9 +71,6 @@
     <string name="disabled">Выключено</string>
 
     <string name="card_name_ravkav">Рав Кав</string>
-    <string name="ravkav_agency_egged">Эгед</string>
-    <string name="ravkav_agency_dan">Дан</string>
-    <string name="ravkav_agency_city_pass">Сити Пасс</string>
     <string name="ravkav_agency_topup_app">Пополнение в приложении Рав Кав</string>
 
     <string name="trip_description">(Из )%1$s [→] (в )%2$s</string>
@@ -329,7 +326,6 @@
     <string name="compass_ticket_type_regular">Обычный</string>
     <string name="compass_note">Только одноразовые билеты</string>
 
-    <string name="opus_subscription">Проездной</string>
     <string name="podorozhnik_gate">турникет %s</string>
     <string name="podorozhnik_tvm">Автомат %d</string>
 

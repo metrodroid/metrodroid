@@ -490,7 +490,7 @@
 
     <string name="trip_description_unknown_start">til %s</string>
     <string name="time_from_to">%s → %s</string>
-    <string name="time_from_unknown_to">??:?? → %s</string>
+    <string name="time_from_unknown_to">\??:?? → %s</string>
 
 
     <string name="location_israel">Israel</string>
@@ -515,10 +515,6 @@
     <string name="compass_ticket_type_regular">Vanlig</string>
     <string name="expiry_date">Utløpsdato</string>
     <string name="compass_note">Kun enkelttursbilletter</string>
-
-    <string name="opus_subscription">Abonnement</string>
-    <string name="opus_card_expiry_date">Kortutløp</string>
-    <string name="opus_single_trips">Enkeltturer</string>
 
     <string name="troika_fare_90mins">90 minutter</string>
     <string name="validity_length">Gyldig i %s</string>
@@ -556,9 +552,6 @@
     <string name="pref_show_local_and_english_desc">Hvis påskrudd, vil både lokale og engelske navn vises uansett regionaldata. Hvis avskrudd vil den mest passende varianten velges.</string>
 
     <string name="card_name_ravkav">Rav-Kav</string>
-    <string name="ravkav_agency_egged">Egged</string>
-    <string name="ravkav_agency_dan">Dan</string>
-    <string name="ravkav_agency_city_pass">City Pass</string>
     <string name="ravkav_agency_topup_app">RavKav-påfyllingsapp</string>
 
     <string name="location_vancouver">Vancouver, BC, Canada</string>
@@ -655,10 +648,8 @@
     <string name="initialisation_date">Igangsettingsdato</string>
     <string name="issue_date">Utstedelsesdato</string>
 
-    <string name="leap_issuer_id">Utsteder-ID</string>
     <string name="leap_locked_warning">Dette kortet ble ikke låst opp. Skru på innhenting av Leap-nøkler i NFC-innstillingene.</string>
 
-    <string name="add_key_raw">Rå</string>
     <string name="invalid_json_key_type">Ugyldig JSON: Nøkkeltype mangler</string>
     <string name="delete_key_confirm_title">Vil du virkelig slette nøkkelen?</string>
     <string name="delete_key_confirm_message">Nøkkelfilen <xliff:g id="description" example="a1b2c3d4">%1$s</xliff:g> (som inneholder <xliff:g id="key_type" example="1 MIFARE Classic key">%2$s</xliff:g>) vil gå tapt for alltid.</string>
