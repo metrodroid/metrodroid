@@ -585,13 +585,19 @@
       Written: "Tokyo → Osaka"
       Spoken: "From Tokyo  to Osaka"
     -->
-    <string name="trip_description">(From )%1$s [→] (to )%2$s</string>
+    <string name="trip_description">(From )<xliff:g id="start_station" example="Tokyo">%1$s</xliff:g> [→] (to )<xliff:g id="end_station" example="Osaka">%2$s</xliff:g></string>
     <!-- Translators: it's used when departure point isn't known, eg: "to Central Station" -->
     <string name="trip_description_unknown_start">to %s</string>
-    <!-- Translators: it's used to show time in trip listing e.g. 12:35 - 12:51 -->
-    <string name="time_from_to">%s → %s</string>
-    <!-- Translators: it's used when departure time isn't known. If "?" is the first character, it must be prefixed with "\". -->
-    <string name="time_from_unknown_to">\??:?? → %s</string>
+    <!--
+    Translators: it's used to show time in trip listing e.g. 12:35 - 12:51.
+    The time will be formatted according to user preferences.
+    -->
+    <string name="time_from_to"><xliff:g id="start_time" example="12:35">%1$s</xliff:g> → <xliff:g id="end_time" example="12:51">%2$s</xliff:g></string>
+    <!--
+    Translators: it's used when departure time isn't known.
+    If "?" is the first character, it must be prefixed with "\".
+    -->
+    <string name="time_from_unknown_to">\??:?? → <xliff:g id="end_time" example="12:51">%s</xliff:g></string>
 
 
     <!-- Locations -->
@@ -829,7 +835,7 @@
     <string name="hsl_person_format">%s person</string>
     <!-- Translators: This is the short form of "minutes" -->
     <string name="hsl_mins_format">%s mins</string>
-    <string name="hsl_line_vehicle">Line %s, Vehicle %s</string>
+    <string name="hsl_line_vehicle">Line %1$s, Vehicle %2$s</string>
 
     <!--
         Opal (Sydney, AU).
@@ -1127,9 +1133,9 @@
 
     <string name="no_data_in_clipboard">No data in clipboard.</string>
     <string name="app_version">Version: %s</string>
-    <string name="device_model">Model: %s (%s)</string>
-    <string name="device_manufacturer">Manufacturer: %s (%s)</string>
-    <string name="android_os">Android OS: %s (%s)</string>
+    <string name="device_model">Model: <xliff:g id="model_name" example="Pixel 2">%1$s</xliff:g> (<xliff:g id="model_codename" example="walleye">%2$s</xliff:g>)</string>
+    <string name="device_manufacturer">Manufacturer: <xliff:g id="manufacturer" example="HTC">%1$s</xliff:g> (<xliff:g id="brand" example="Google">%2$s</xliff:g>)</string>
+    <string name="android_os">Android OS: <xliff:g id="version" example="9.0">%1$s</xliff:g> (<xliff:g id="build_id" example="PPR2.180905.006">%2$s</xliff:g>)</string>
     <string name="nfc_enabled">NFC: enabled</string>
     <string name="nfc_disabled">NFC: disabled</string>
     <string name="nfc_not_available">NFC: not available</string>
