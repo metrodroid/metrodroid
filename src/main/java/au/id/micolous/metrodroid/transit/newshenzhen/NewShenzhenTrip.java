@@ -51,10 +51,6 @@ public class NewShenzhenTrip extends Trip {
     private final long mStation;
     private final static String SHENZHEN_STR = "shenzhen";
 
-    private static Station getStation(long l, String humanReadableId) {
-        return StationTableReader.getStation(SHENZHEN_STR, (int) l, humanReadableId);
-    }
-
 
     public NewShenzhenTrip(Parcel parcel) {
         mTime = parcel.readLong();
