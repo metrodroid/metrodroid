@@ -31,6 +31,7 @@ import java.util.TimeZone;
 
 import au.id.micolous.farebot.R;
 import au.id.micolous.metrodroid.card.ultralight.UltralightCard;
+import au.id.micolous.metrodroid.transit.TransactionTrip;
 import au.id.micolous.metrodroid.transit.TransitBalance;
 import au.id.micolous.metrodroid.transit.TransitBalanceStored;
 import au.id.micolous.metrodroid.transit.TransitCurrency;
@@ -46,7 +47,7 @@ public abstract class NextfareUltralightTransitData extends TransitData {
     private final byte mType;
     private final int mBaseDate;
     private final int mMachineCode;
-    private final List<NextfareUltralightTrip> mTrips;
+    private final List<TransactionTrip> mTrips;
     private final int mExpiry;
     private final int mBalance;
 
@@ -76,7 +77,7 @@ public abstract class NextfareUltralightTransitData extends TransitData {
         dest.writeInt(mMachineCode);
         dest.writeInt(mBalance);
         dest.writeInt(mExpiry);
-        dest.writeParcelableArray(mTrips.toArray(new NextfareUltralightTrip[0]), flags);
+        dest.writeList(mTrips);
     }
 
     protected NextfareUltralightTransitData(Parcel p) {
@@ -87,7 +88,7 @@ public abstract class NextfareUltralightTransitData extends TransitData {
         mMachineCode = p.readInt();
         mBalance = p.readInt();
         mExpiry = p.readInt();
-        mTrips = Arrays.asList((NextfareUltralightTrip[]) p.readParcelableArray(NextfareUltralightTrip.class.getClassLoader()));
+        mTrips = p.readArrayList(NextfareUltralightTransaction.class.getClassLoader());
     }
 
     protected NextfareUltralightTransitData(UltralightCard card) {
@@ -101,17 +102,17 @@ public abstract class NextfareUltralightTransitData extends TransitData {
         mBaseDate = (upperBaseDate << 8) | lowerBaseDate;
         mProductCode = page1[2] & 0x7f;
         mMachineCode = Utils.byteArrayToIntReversed(page3, 0, 2);
-        mTrips = new ArrayList<>();
-        NextfareUltralightTransaction trA = null, trB = null;
-        if (isTransactionValid(card, 8))
-            trA = makeTransaction(card, 8, mBaseDate);
-        if (isTransactionValid(card, 12))
-            trB = makeTransaction(card, 12, mBaseDate);
-        NextfareUltralightTransaction trLater;
-        if (trB == null || trA != null && trA.isSeqNoGreater(trB))
-            trLater = trA;
-        else
-            trLater = trB;
+        List <NextfareUltralightTransaction> transactions = new ArrayList<>();
+        if (isTransactionValid(card, 8)) {
+            transactions.add(makeTransaction(card, 8, mBaseDate));
+        }
+        if (isTransactionValid(card, 12)) {
+            transactions.add(makeTransaction(card, 12, mBaseDate));
+        }
+        NextfareUltralightTransaction trLater = null;
+        for (NextfareUltralightTransaction tr : transactions)
+            if (trLater == null || tr.isSeqNoGreater(trLater))
+                trLater = tr;
         if (trLater != null) {
             mExpiry = trLater.getExpiry();
             mBalance = trLater.getBalance();
@@ -119,20 +120,7 @@ public abstract class NextfareUltralightTransitData extends TransitData {
             mExpiry = 0;
             mBalance = 0;
         }
-        if (trA != null && trB != null && trA.isSameTripTapOut(trB))
-            mTrips.add(new NextfareUltralightTrip(trB, trA));
-        else if (trA != null && trB != null && trB.isSameTripTapOut(trA))
-            mTrips.add(new NextfareUltralightTrip(trA, trB));
-        else {
-            if (trA != null && trA.isTapOut())
-                mTrips.add(new NextfareUltralightTrip(null, trA));
-            else if (trA != null)
-                mTrips.add(new NextfareUltralightTrip(trA, null));
-            if (trB != null && trB.isTapOut())
-                mTrips.add(new NextfareUltralightTrip(null, trB));
-            else if (trB != null)
-                mTrips.add(new NextfareUltralightTrip(trB, null));
-        }
+        mTrips = TransactionTrip.merge(transactions);
     }
 
     private static boolean isTransactionValid(UltralightCard card, int startPage) {
@@ -188,7 +176,7 @@ public abstract class NextfareUltralightTransitData extends TransitData {
 
     @Override
     public Trip[] getTrips() {
-        return mTrips.toArray(new NextfareUltralightTrip[0]);
+        return mTrips.toArray(new TransactionTrip[0]);
     }
 
     public static Calendar parseDateTime(TimeZone tz, int baseDate, int date, int time) {

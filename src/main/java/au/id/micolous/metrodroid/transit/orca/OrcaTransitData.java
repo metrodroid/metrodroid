@@ -35,6 +35,7 @@ import au.id.micolous.metrodroid.card.desfire.files.DesfireFile;
 import au.id.micolous.metrodroid.card.desfire.files.RecordDesfireFile;
 import au.id.micolous.metrodroid.transit.CardInfo;
 import au.id.micolous.metrodroid.transit.Subscription;
+import au.id.micolous.metrodroid.transit.TransactionTrip;
 import au.id.micolous.metrodroid.transit.TransitCurrency;
 import au.id.micolous.metrodroid.transit.TransitData;
 import au.id.micolous.metrodroid.transit.TransitIdentity;
@@ -52,12 +53,6 @@ public class OrcaTransitData extends TransitData {
     static final int AGENCY_KCM = 0x04;
     static final int AGENCY_ST = 0x07;
     static final int AGENCY_WSF = 0x08;
-
-    static final int TRANS_TYPE_PURSE_USE = 0x0c;
-    static final int TRANS_TYPE_CANCEL_TRIP = 0x01;
-    static final int TRANS_TYPE_TAP_IN = 0x03;
-    static final int TRANS_TYPE_TAP_OUT = 0x07;
-    static final int TRANS_TYPE_PASS_USE = 0x60;
 
     public static final int APP_ID = 0x3010f2;
 
@@ -111,7 +106,8 @@ public class OrcaTransitData extends TransitData {
         }
 
         try {
-            mTrips = parseTrips(desfireCard, 2, false);
+            mTrips = new ArrayList<>();
+            mTrips.addAll(parseTrips(desfireCard, 2, false));
             mTrips.addAll(parseTrips(desfireCard, 3, true));
         } catch (Exception ex) {
             throw new RuntimeException("Error parsing ORCA trips", ex);
@@ -161,7 +157,7 @@ public class OrcaTransitData extends TransitData {
         return null;
     }
 
-    private List <Trip> parseTrips(DesfireCard card, int fileId, boolean isTopup) {
+    private List <TransactionTrip> parseTrips(DesfireCard card, int fileId, boolean isTopup) {
         DesfireFile file = card.getApplication(APP_ID).getFile(fileId);
         if (!(file instanceof RecordDesfireFile))
             return new ArrayList<>();
@@ -172,36 +168,7 @@ public class OrcaTransitData extends TransitData {
         for (int i = 0; i < useLog.length; i++) {
             useLog[i] = new OrcaTrip(recordFile.getRecords().get(i), isTopup);
         }
-        Arrays.sort(useLog, new Trip.Comparator());
-        if (isTopup) {
-            return Arrays.asList(useLog);
-        }
-        ArrayUtils.reverse(useLog);
-
-        List<Trip> trips = new ArrayList<>();
-
-        for (int i = 0; i < useLog.length; i++) {
-            OrcaTrip trip = useLog[i];
-            OrcaTrip nextTrip = (i + 1 < useLog.length) ? useLog[i + 1] : null;
-
-            if (isSameTrip(trip, nextTrip)) {
-                trips.add(new MergedOrcaTrip(trip, nextTrip));
-                i++;
-                continue;
-            }
-
-            trips.add(trip);
-        }
-        Collections.sort(trips, new Trip.Comparator());
-        return trips;
-    }
-
-    private boolean isSameTrip(OrcaTrip firstTrip, OrcaTrip secondTrip) {
-        return firstTrip != null
-                && secondTrip != null
-                && firstTrip.mTransType == TRANS_TYPE_TAP_IN
-                && (secondTrip.mTransType == TRANS_TYPE_TAP_OUT || secondTrip.mTransType == TRANS_TYPE_CANCEL_TRIP)
-                && firstTrip.mAgency == secondTrip.mAgency;
+        return TransactionTrip.merge(Arrays.asList(useLog));
     }
 
     public void writeToParcel(Parcel parcel, int flags) {

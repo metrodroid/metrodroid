@@ -30,6 +30,7 @@ import java.util.Set;
 import au.id.micolous.metrodroid.card.calypso.CalypsoApplication;
 import au.id.micolous.metrodroid.card.iso7816.ISO7816File;
 import au.id.micolous.metrodroid.card.iso7816.ISO7816Record;
+import au.id.micolous.metrodroid.transit.TransactionTrip;
 import au.id.micolous.metrodroid.transit.TransitBalance;
 import au.id.micolous.metrodroid.transit.Trip;
 import au.id.micolous.metrodroid.util.Utils;
@@ -70,7 +71,7 @@ public abstract class Calypso1545TransitData extends En1545TransitData {
                 continue;
             transactions.add(transaction);
         }
-        mTrips = new ArrayList<>(En1545Trip.merge(transactions));
+        mTrips = new ArrayList<>(TransactionTrip.merge(transactions));
 
         ISO7816File specialEvents = card.getFile(CalypsoApplication.File.TICKETING_SPECIAL_EVENTS);
         if (specialEvents != null) {

@@ -27,10 +27,12 @@ import java.util.TimeZone;
 
 import au.id.micolous.metrodroid.card.ultralight.UltralightCard;
 import au.id.micolous.metrodroid.transit.Station;
+import au.id.micolous.metrodroid.transit.Transaction;
+import au.id.micolous.metrodroid.transit.TransitCurrency;
 import au.id.micolous.metrodroid.transit.Trip;
 import au.id.micolous.metrodroid.util.Utils;
 
-public abstract class NextfareUltralightTransaction implements Parcelable {
+public abstract class NextfareUltralightTransaction extends Transaction {
     private final int mTime;
     private final int mDate;
     protected final int mRoute;
@@ -105,12 +107,17 @@ public abstract class NextfareUltralightTransaction implements Parcelable {
 
     protected abstract TimeZone getTimezone();
 
-    public boolean isSameTripTapOut(NextfareUltralightTransaction other) {
-        if (mSeqNo != ((other.mSeqNo + 1) & 0x7f))
-            return false;
-        if (isBus() || other.isBus())
-            return false;
-        return mRoute == other.mRoute && isTapOut() && other.isTapIn();
+    public boolean shouldBeMerged(Transaction other) {
+        return other instanceof NextfareUltralightTransaction
+                && ((NextfareUltralightTransaction) other).mSeqNo == ((mSeqNo + 1) & 0x7f)
+                && super.shouldBeMerged(other);
+    }
+
+    @Override
+    protected boolean isSameTrip(Transaction other) {
+        return (other instanceof NextfareUltralightTransaction)
+                && !isBus() && !((NextfareUltralightTransaction) other).isBus()
+                && mRoute == ((NextfareUltralightTransaction) other).mRoute;
     }
 
     @Override
@@ -120,11 +127,13 @@ public abstract class NextfareUltralightTransaction implements Parcelable {
 
     abstract protected boolean isBus();
 
-    public boolean isTapOut() {
+    @Override
+    protected boolean isTapOff() {
         return mRecordType == 6 && !isBus();
     }
 
-    private boolean isTapIn() {
+    @Override
+    protected boolean isTapOn() {
         return mRecordType == 2
                 || mRecordType == 4
                 || (mRecordType == 6 && isBus())
@@ -138,6 +147,16 @@ public abstract class NextfareUltralightTransaction implements Parcelable {
 
     public int getBalance() {
         return mBalance;
+    }
+
+    @Override
+    public String getAgencyName(boolean isShort) {
+        return null;
+    }
+
+    @Override
+    public TransitCurrency getFare() {
+        return null;
     }
 
     public abstract Trip.Mode getMode();

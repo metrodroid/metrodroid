@@ -300,8 +300,6 @@ public class CardTripsFragment extends ListFragment {
             TransitCurrency fare = trip.getFare();
             if (fare != null) {
                 fareTextView.setText(fare.formatCurrencyString(false));
-            } else if (trip instanceof OrcaTrip) {
-                fareTextView.setText(R.string.pass_or_transfer);
             } else {
                 // Hide the text "Fare" for getFare == null
                 fareTextView.setVisibility(View.INVISIBLE);

@@ -23,16 +23,13 @@ import android.support.annotation.Nullable;
 import android.util.Log;
 
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Collections;
-import java.util.GregorianCalendar;
-import java.util.Locale;
-import java.util.TimeZone;
+import java.util.List;
 
 import au.id.micolous.farebot.R;
 import au.id.micolous.metrodroid.card.classic.ClassicCard;
 import au.id.micolous.metrodroid.key.ClassicSectorKey;
 import au.id.micolous.metrodroid.transit.CardInfo;
+import au.id.micolous.metrodroid.transit.TransactionTrip;
 import au.id.micolous.metrodroid.transit.TransitCurrency;
 import au.id.micolous.metrodroid.transit.TransitData;
 import au.id.micolous.metrodroid.transit.TransitIdentity;
@@ -46,8 +43,8 @@ import au.id.micolous.metrodroid.util.Utils;
  */
 
 public class SmartRiderTransitData extends TransitData {
-    public static final String SMARTRIDER_NAME = "SmartRider";
-    public static final String MYWAY_NAME = "MyWay";
+    private static final String SMARTRIDER_NAME = "SmartRider";
+    private static final String MYWAY_NAME = "MyWay";
     public static final Creator<SmartRiderTransitData> CREATOR = new Creator<SmartRiderTransitData>() {
         @Override
         public SmartRiderTransitData createFromParcel(Parcel in) {
@@ -60,8 +57,6 @@ public class SmartRiderTransitData extends TransitData {
         }
     };
     private static final String TAG = "SmartRiderTransitData";
-    private static final TimeZone SMARTRIDER_TZ = TimeZone.getTimeZone("Australia/Perth");
-    private static final TimeZone MYWAY_TZ = TimeZone.getTimeZone("Australia/Sydney"); // Canberra
 
     public static final CardInfo SMARTRIDER_CARD_INFO = new CardInfo.Builder()
             .setImageId(R.drawable.smartrider_card)
@@ -80,36 +75,9 @@ public class SmartRiderTransitData extends TransitData {
             .setKeysRequired()
             .build();
 
-    private static final long SMARTRIDER_EPOCH;
-    private static final long MYWAY_EPOCH;
-
-    static {
-        GregorianCalendar srEpoch = new GregorianCalendar(SMARTRIDER_TZ);
-        srEpoch.set(Calendar.YEAR, 2000);
-        srEpoch.set(Calendar.MONTH, Calendar.JANUARY);
-        srEpoch.set(Calendar.DAY_OF_MONTH, 1);
-        srEpoch.set(Calendar.HOUR_OF_DAY, 0);
-        srEpoch.set(Calendar.MINUTE, 0);
-        srEpoch.set(Calendar.SECOND, 0);
-        srEpoch.set(Calendar.MILLISECOND, 0);
-
-        SMARTRIDER_EPOCH = srEpoch.getTimeInMillis();
-
-        GregorianCalendar mwEpoch = new GregorianCalendar(MYWAY_TZ);
-        mwEpoch.set(Calendar.YEAR, 2000);
-        mwEpoch.set(Calendar.MONTH, Calendar.JANUARY);
-        mwEpoch.set(Calendar.DAY_OF_MONTH, 1);
-        mwEpoch.set(Calendar.HOUR_OF_DAY, 0);
-        mwEpoch.set(Calendar.MINUTE, 0);
-        mwEpoch.set(Calendar.SECOND, 0);
-        mwEpoch.set(Calendar.MILLISECOND, 0);
-
-        MYWAY_EPOCH = mwEpoch.getTimeInMillis();
-    }
-
     private String mSerialNumber;
     private int mBalance;
-    private SmartRiderTrip[] mTrips;
+    private List<TransactionTrip> mTrips;
     private CardType mCardType;
 
     // Unfortunately, there's no way to reliably identify these cards except for the "standard" keys
@@ -174,8 +142,7 @@ public class SmartRiderTransitData extends TransitData {
         mCardType = CardType.valueOf(p.readString());
         mSerialNumber = p.readString();
         mBalance = p.readInt();
-        mTrips = new SmartRiderTrip[p.readInt()];
-        p.readTypedArray(mTrips, SmartRiderTrip.CREATOR);
+        mTrips = p.readArrayList(TransactionTrip.class.getClassLoader());
     }
 
     public static boolean check(ClassicCard card) {
@@ -188,69 +155,22 @@ public class SmartRiderTransitData extends TransitData {
 
         // Read trips.
         ArrayList<SmartRiderTagRecord> tagRecords = new ArrayList<>();
-        ArrayList<SmartRiderTrip> trips = new ArrayList<>();
 
         for (int s = 10; s <= 13; s++) {
             for (int b = 0; b <= 2; b++) {
-                SmartRiderTagRecord r = new SmartRiderTagRecord(card.getSector(s).getBlock(b).getData());
+                SmartRiderTagRecord r = new SmartRiderTagRecord(mCardType, card.getSector(s).getBlock(b).getData());
 
-                if (r.getTimestamp() != 0) {
+                if (r.isValid()) {
                     tagRecords.add(r);
                 }
             }
         }
 
+        mTrips = new ArrayList<>();
+
         // Build the Tag events into trips.
-        if (tagRecords.size() >= 1) {
-            Collections.sort(tagRecords);
-            // Lets figure out the trips.
-            int i = 0;
-
-            while (tagRecords.size() > i) {
-                SmartRiderTagRecord tapOn = tagRecords.get(i);
-
-                //Log.d(TAG, "TapOn @" + Utils.isoDateTimeFormat(tapOn.getTimestamp()));
-                // Start by creating an empty trip
-
-                SmartRiderTrip trip = new SmartRiderTrip(mCardType);
-
-                // Put in the metadatas
-                trip.mStartTime = addSmartRiderEpoch(tapOn.getTimestamp());
-                trip.mRouteNumber = tapOn.getRoute();
-                trip.mCost = tapOn.getCost();
-
-                // Peek at the next record and see if it is part of
-                // this journey
-                if (tagRecords.size() > i + 1 && shouldMergeJourneys(tapOn, tagRecords.get(i + 1))) {
-                    // There is a tap off.  Lets put that data in
-                    SmartRiderTagRecord tapOff = tagRecords.get(i + 1);
-                    //Log.d(TAG, "TapOff @" + Utils.isoDateTimeFormat(tapOff.getTimestamp()));
-
-                    trip.mEndTime = addSmartRiderEpoch(tapOff.getTimestamp());
-                    trip.mCost += tapOff.getCost();
-
-                    // Increment to skip the next record
-                    i++;
-                } else {
-                    // There is no tap off. Journey is probably in progress, or the agency doesn't
-                    // do tap offs.
-                }
-
-                trips.add(trip);
-                Log.d(TAG, String.format(Locale.ENGLISH, "epoch: %s", Utils.isoDateTimeFormat(addSmartRiderEpoch(0))));
-                Log.d(TAG, String.format(Locale.ENGLISH, "tripStart: %s, route: %s, cost: %s",
-                        Utils.isoDateTimeFormat(trip.mStartTime), trip.mRouteNumber, trip.mCost));
-
-                // Increment to go to the next record
-                i++;
-            }
-
-            // Now sort the trips array
-            Collections.sort(trips, new Trip.Comparator());
-
-        }
-
-        mTrips = trips.toArray(new SmartRiderTrip[trips.size()]);
+        if (tagRecords.size() >= 1)
+            mTrips.addAll(TransactionTrip.merge(tagRecords, SmartRiderTrip::new));
 
         // TODO: Figure out balance priorities properly.
 
@@ -281,43 +201,6 @@ public class SmartRiderTransitData extends TransitData {
         return new TransitIdentity(detectKeyType(card).getFriendlyName(), getSerialData(card));
     }
 
-    private Calendar addSmartRiderEpoch(long epochTime) {
-        GregorianCalendar c;
-        epochTime *= 1000;
-        switch (mCardType) {
-            case MYWAY:
-                c = new GregorianCalendar(MYWAY_TZ);
-                c.setTimeInMillis(MYWAY_EPOCH + epochTime);
-                break;
-
-            case SMARTRIDER:
-            default:
-                c = new GregorianCalendar(SMARTRIDER_TZ);
-                c.setTimeInMillis(SMARTRIDER_EPOCH + epochTime);
-                break;
-        }
-        return c;
-    }
-
-    private static boolean shouldMergeJourneys(SmartRiderTagRecord first, SmartRiderTagRecord second) {
-        // Are the two trips on different routes?
-        if (!first.getRoute().equals(second.getRoute())) {
-            return false;
-        }
-
-        // Is the first trip a tag off, or is the second trip a tag on?
-        if (!first.isTagOn() || second.isTagOn()) {
-            return false;
-        }
-
-        // Are the two trips within 90 minutes of each other (sanity check)
-        if (second.getTimestamp() - first.getTimestamp() > 5400) {
-            return false;
-        }
-
-        return true;
-    }
-
     @Nullable
     @Override
     public TransitCurrency getBalance() {
@@ -331,7 +214,7 @@ public class SmartRiderTransitData extends TransitData {
 
     @Override
     public Trip[] getTrips() {
-        return mTrips;
+        return mTrips.toArray(new Trip[0]);
     }
 
     @Override
@@ -344,7 +227,6 @@ public class SmartRiderTransitData extends TransitData {
         dest.writeString(mCardType.toString());
         dest.writeString(mSerialNumber);
         dest.writeInt(mBalance);
-        dest.writeInt(mTrips.length);
-        dest.writeTypedArray(mTrips, flags);
+        dest.writeList(mTrips);
     }
 }
