@@ -2,6 +2,7 @@ id,name,short_name,mode
 2,Community Transit,CT,BUS
 3,Everett Transit,ET,BUS
 4,King County Metro Transit,KCM,BUS
+5,Kitsap Transit,KT,BUS
 6,Pierce Transit,PT,BUS
 7,Sound Transit,ST,TRAIN
 8,Washington State Ferries,WSF,FERRY
