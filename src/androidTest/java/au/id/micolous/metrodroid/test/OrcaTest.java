@@ -20,7 +20,9 @@ package au.id.micolous.metrodroid.test;
 
 import android.test.AndroidTestCase;
 
+import java.util.Arrays;
 import java.util.Calendar;
+import java.util.Collections;
 
 import au.id.micolous.metrodroid.card.desfire.DesfireApplication;
 import au.id.micolous.metrodroid.card.desfire.DesfireCard;
@@ -96,6 +98,7 @@ public class OrcaTest extends AndroidTestCase {
 
         Trip []trips = o.getTrips();
         assertNotNull(trips);
+        Arrays.sort(trips, new Trip.Comparator());
         assertEquals("Community Transit", trips[0].getAgencyName(false));
         assertEquals("CT", trips[0].getAgencyName(true));
         assertEquals((1514843334L + 256) * 1000, trips[0].getStartTimestamp().getTimeInMillis());
