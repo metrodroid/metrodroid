@@ -262,8 +262,6 @@ public class StationTableReader {
      * @throws IOException on read errors
      */
     private Stations.Station getProtoStationById(int id) throws IOException {
-        mTable.reset();
-
         int offset;
         try {
             offset = mStationIndex.get().getStationMapOrThrow(id);
@@ -272,6 +270,7 @@ public class StationTableReader {
             return null;
         }
 
+        mTable.reset();
         mTable.skipBytes(offset);
         return Stations.Station.parseDelimitedFrom(mTable);
     }
