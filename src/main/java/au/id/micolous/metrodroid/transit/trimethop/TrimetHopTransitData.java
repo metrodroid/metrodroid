@@ -65,6 +65,7 @@ public class TrimetHopTransitData extends TransitData {
     public static final CardInfo CARD_INFO = new CardInfo.Builder()
             .setName(NAME)
             .setCardType(CardType.MifareDesfire)
+            .setImageId(R.drawable.trimethop_card)
             .setLocation(R.string.location_portland)
             .setExtraNote(R.string.card_note_card_number_only)
             .build();
