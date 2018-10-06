@@ -1,5 +1,5 @@
 # -*- mode: makefile; indent-tabs-mode: tabs; tab-width: 2 -*-
-MDST = ../../extra/mdst
+MDROOT = ../..
 
 all: compass.mdst compass.csv
 
@@ -8,6 +8,8 @@ clean:
 
 compass.mdst: stations.csv mdst
 	python3 $(MDST)/csv2pb.py stations.csv -o $@ -V 2 -l en_CA
+
+copy: compass.copy
 
 include ../Makefile.common
 

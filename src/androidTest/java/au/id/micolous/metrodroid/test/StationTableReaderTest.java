@@ -29,6 +29,12 @@ public class StationTableReaderTest extends AndroidTestCase {
         TestUtils.showRawStationIds(false);
     }
 
+    public void testLicenseNotice() {
+        String notice = StationTableReader.getNotice(SeqGoData.SEQ_GO_STR);
+        assertNotNull(notice);
+        assertTrue(notice.contains("Translink"));
+    }
+
     private final int SHINJUKU_REGION_CODE = 0;
     private final int SHINJUKU_LINE_CODE = 37;
     private final int SHINJUKU_STATION_CODE = 10;

@@ -9,6 +9,7 @@ import stations_pb2
 import zipfile
 from sys import exit
 
+NOTICE = "NOTICE"
 OUTPUT = "ezlink.mdst"
 esri_driver = ogr.GetDriverByName('ESRI Shapefile')
 
@@ -62,6 +63,7 @@ db = MdstWriter(
   version=1,
   local_languages=['zh'],
   tts_hint_language='zh',
+  license_notice_f=open(NOTICE, 'r'),
 )
 
 s = stations_pb2.Station()
