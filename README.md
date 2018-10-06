@@ -33,7 +33,7 @@ linux.conf.au 2018, in my talk, [Tap on to reverse engineering](https://youtu.be
 * [Steven Steiner](https://github.com/steets250) (LAX TAP)
 * [Rob O'Regan](http://www.robx1.net/nswtkt/private/manlyff/manlyff.htm) (Manly Fast Ferry card image)
 * [The Noun Project][15] (Various icons)
-* [Vladimir Serbinenko](https://github.com/phcoder) (Podorozhnik, Troika, Compass, Shenzhen Tong, Rav-Kav, T-money, Leap)
+* [Vladimir Serbinenko](https://github.com/phcoder) (Podorozhnik, Troika, Compass, Shenzhen Tong, Rav-Kav, T-money, Leap, CharlieCard, EN1545, Intercode, IstanbulKart, Lisboa Viva, Mobib, RicaricaMi)
 * [Toomas Losin](http://www.lenrek.net) (Compass)
 * [Sinpo Lib](https://github.com/sinpolib) (Shenzhen Tong)
 * Maria Komar (Podorozhnik database and dumps)
@@ -67,35 +67,48 @@ Thanks to those who have [helped to make Metrodroid available in languages other
 
 Card / Agency | Location | Notes
 ------------- | -------- | -----
-[Bilhete Único][30] | :brazil: São Paulo, Brazil | :closed_lock_with_key: `MFC` `FALLBACK`
+[Bilhete Único][30] | :brazil: São Paulo, Brazil | :closed_lock_with_key: `MFC`
+[CharlieCard][45] | :us: Boston, MA, USA | :new: :closed_lock_with_key: `MFC`
 [Clipper][1] | :us: San Francisco, CA, USA
 [Compass][41] | :canada: Vancouver, BC, Canada | :new: `SINGLE`
 [Cubic Nextfare][33] | :earth_americas: _many locations_ | :new: :closed_lock_with_key: `MFC`
 [Edy][12] | :jp: Japan
+[Envibus][46] | :fr: Sophia Antipolis, France | :new:
 [ERG][35] | :earth_asia: _many locations_ | :new: :closed_lock_with_key: `MFC`
 [EZ-Link][7] | :singapore: Singapore |
 [Go card][20] | :australia: Brisbane and South East Queensland, Australia | :new: :closed_lock_with_key: `MFC`
+[Go-to card][47] | :us: Minneapolis-St. Paul, MN, USA | :new: :closed_lock_with_key: `MFC`
+[HSL][17], [Matkakortti][16] | :finland: Finland |
+[IstanbulKart][48] | :tr: Istanbul, Turkey | :new: `123`
 [Kartu Multi Trip][39] | :indonesia: Jakarta, Indonesia | `KMT`
 [Leap][44] | :ireland: Ireland | :new: :unlock:
+[Lisboa Viva][49] | :portugal: Lisbon, Portugal
 [Manly Fast Ferry][19] | :australia: Sydney, NSW, Australia | :new: :closed_lock_with_key: `MFC`
-[Matkakortti][16], [HSL][17] | :finland: Finland |
 [Metrocard][34] | :new_zealand: Christchurch, New Zealand | :new: :closed_lock_with_key: `MFC`
+[Mobib][50] | :belgium: Brussels, Belgium | :new:
 [Myki][21] | :australia: Melbourne (and surrounds), VIC, Australia | :new: `123`
 [MyWay][28] | :australia: Australian Capital Territory, Australia | :new: :closed_lock_with_key: `MFC`
-[NETS FlashPay][31] | :singapore: Singapore | 
+[Navigo][51] | :fr: Paris, France | :new:
+[NETS FlashPay][31] | :singapore: Singapore |
 [Octopus][25] | :hong_kong: Hong Kong | :new:
 [Opal][18] | :australia: Sydney (and surrounds), NSW, Australia | :new:
 [Opus][40] | :canada: Québec, Canada | :new:
 [ORCA][0] | :us: Seattle, WA, USA |
+[OùRA][52] | :fr: Grenoble, France | :new:
 [OV-chipkaart][32] | :netherlands: Netherlands | :closed_lock_with_key: `MFC`
 [Podorozhnik][37] | :ru: Saint Petersburg, Russia | :new: :closed_lock_with_key: `MFC`
 [Rav-Kav][42] | :israel: Israel | :new:
+[RicaricaMi][53] | :it: Milan, Italy | :new: :closed_lock_with_key: `MFC`
 [Shenzhen Tong][27] | :cn: Shenzhen, Guangdong Province, China | :new:
 [SmartRider][29] | :australia: Western Australia, Australia | :new: :closed_lock_with_key: `MFC`
+[Strelka][54] | :russia: Moscow, Russia | :closed_lock_with_key: `123` `MFC`
 [Suica][9], [ICOCA][10], [PASMO][11] | :jp: Japan
+[TaM][55] | :fr: Montpellier, France | :new:
 [T-Money][43] | :kr: South Korea | :new:
+[TransGironde][56] | :fr: Gironde, France | :new:
 [Transit Access Pass][26] | :us: Los Angeles, CA, USA | :new: :closed_lock_with_key: `MFC`
 [Troika][38] | :ru: Moscow, Russia | :new: :closed_lock_with_key: `MFC`
+[Ventra][57] | :us: Chicago, IL, USA | :new: `SINGLE`
 
 Note | Meaning
 ---- | -------
@@ -206,4 +219,16 @@ This software and it's authors are not associated with any public transit agency
 [42]: https://www.rail.co.il/en/ravkav/Pages/default.aspx
 [43]: https://www.t-money.co.kr/
 [44]: https://www.leapcard.ie/
-
+[45]: https://www.mbta.com/fares/charliecard
+[46]: http://www.envibus.fr/
+[47]: https://www.metrotransit.org/go-to-card
+[48]: https://www.istanbulkart.istanbul/
+[49]: https://www.portalviva.pt/
+[50]: https://mobib.be/
+[51]: http://www.navigo.fr/
+[52]: https://www.oura.com/
+[53]: https://www.atm.it/en/ViaggiaConNoi/Biglietti/Pages/TesseraRIcaricaMI.aspx
+[54]: https://strelkacard.ru/
+[55]: http://www.tam-voyages.com/
+[56]: https://www.transgironde.fr/
+[57]: https://www.ventrachicago.com/
