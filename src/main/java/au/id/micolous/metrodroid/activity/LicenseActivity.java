@@ -36,18 +36,9 @@ import java.nio.charset.Charset;
 
 import au.id.micolous.farebot.R;
 import au.id.micolous.metrodroid.transit.clipper.ClipperTransitData;
+import au.id.micolous.metrodroid.transit.seq_go.SeqGoTransitData;
 
 public class LicenseActivity extends MetrodroidActivity {
-    private static final String SEQ_GO_GTFS = "The SEQ Go Card stop database used in this software "
-            + "contains information derived from Translink's GTFS feed, made available under the "
-            + "Creative Commons Attribution 3.0 Australia license by the Queensland Department "
-            + "of Transport and Main Roads.\n"
-            + "\n"
-            + "You may obtain a copy of the raw data and it's license at:\n"
-            + "\n"
-            + "   https://data.qld.gov.au/dataset/general-transit-feed-specification-gtfs-seq\n"
-            + "\n"
-            + "Stop mapping information is available in Metrodroid's source repository.\n\n\n";
 
     private static final String LAX_TAP_GTFS = "The LAX TAP stop database used in this software "
             + "contains information derived from GTFS feeds by Los Angeles County transit "
@@ -104,8 +95,8 @@ public class LicenseActivity extends MetrodroidActivity {
         readLicenseTextFromAsset("third_party/NOTICE.noto-emoji.txt");
         readLicenseTextFromAsset("third_party/NOTICE.protobuf.txt");
 
-        // TODO: Read this programatically
-        lblLicenseText.append(SEQ_GO_GTFS);
+        // TODO: Get a list of files programatically
+        addNotice(SeqGoTransitData.getNotice());
         lblLicenseText.append(LAX_TAP_GTFS);
         addNotice(ClipperTransitData.getNotice());
         lblLicenseText.append(MYTRANSPORT_SG);

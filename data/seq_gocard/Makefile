@@ -4,7 +4,7 @@ MDST = ../../extra/mdst
 all: seq_go.mdst seq_go.csv
 
 seq_go.mdst: mapping.csv operators.csv SEQ_GTFS.zip mdst
-	python3 $(MDST)/compile_stops_from_gtfs.py SEQ_GTFS.zip -m mapping.csv -p operators.csv -l en-AU -o $@
+	python3 $(MDST)/compile_stops_from_gtfs.py SEQ_GTFS.zip -m mapping.csv -p operators.csv -l en-AU -n NOTICE -o $@
 
 SEQ_GTFS.zip:
 	wget -N https://gtfsrt.api.translink.com.au/GTFS/$@

@@ -1,0 +1,7 @@
+The SEQ Go Card stop database used in this software contains information derived from Translink's GTFS feed, made available under the Creative Commons Attribution 3.0 Australia license by the Queensland Department of Transport and Main Roads.
+
+You may obtain a copy of the raw data and it's license at:
+
+   https://data.qld.gov.au/dataset/general-transit-feed-specification-gtfs-seq
+
+Stop mapping information is available in Metrodroid's source repository.
