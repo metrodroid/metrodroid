@@ -65,7 +65,7 @@
             android:defaultValue="false" />
     </PreferenceCategory>
 
-    <PreferenceCategory android:title="Maps">
+    <PreferenceCategory android:title="@string/maps">
         <EditTextPreference
             android:title="@string/map_tiles_url"
             android:summary="@string/map_tiles_url_summary"

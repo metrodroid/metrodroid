@@ -1258,4 +1258,6 @@
     <string name="vehicle_number">Vehicle %s</string>
     <string name="card_id">Card ID</string>
     <string name="tap_for_more_info">Tap for more information…</string>
+    <!-- Translators: used as a preference category label, for settings related to the display of maps -->
+    <string name="maps">Maps</string>
 </resources>
