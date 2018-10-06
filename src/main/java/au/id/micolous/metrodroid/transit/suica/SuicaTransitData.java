@@ -29,6 +29,7 @@ import android.support.v4.util.ArraySet;
 import org.apache.commons.lang3.ArrayUtils;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 import java.util.TimeZone;
 
@@ -38,6 +39,8 @@ import au.id.micolous.metrodroid.card.felica.FelicaBlock;
 import au.id.micolous.metrodroid.card.felica.FelicaCard;
 import au.id.micolous.metrodroid.card.felica.FelicaService;
 import au.id.micolous.metrodroid.transit.CardInfo;
+import au.id.micolous.metrodroid.transit.TransitBalance;
+import au.id.micolous.metrodroid.transit.TransitBalanceStored;
 import au.id.micolous.metrodroid.transit.TransitCurrency;
 import au.id.micolous.metrodroid.transit.TransitData;
 import au.id.micolous.metrodroid.transit.TransitIdentity;
@@ -235,9 +238,18 @@ public class SuicaTransitData extends TransitData {
 
     @Nullable
     @Override
-    public TransitCurrency getBalance() {
-        if (mTrips.length > 0)
-            return TransitCurrency.JPY(mTrips[0].getBalance());
+    public TransitBalance getBalance() {
+        if (mTrips.length > 0) {
+            Calendar expiry = mTrips[0].getEndTimestamp();
+            if (expiry == null)
+                expiry = mTrips[0].getStartTimestamp();
+            if (expiry != null) {
+                expiry = (Calendar) expiry.clone();
+                expiry.add(Calendar.YEAR, 10);
+            }
+            return new TransitBalanceStored(TransitCurrency.JPY(mTrips[0].getBalance()),
+                    null, expiry);
+        }
         return null;
     }
 
