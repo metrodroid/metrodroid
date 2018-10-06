@@ -28,6 +28,8 @@ import android.util.Log;
 import com.google.protobuf.ByteString;
 
 import org.apache.commons.io.IOUtils;
+import org.apache.commons.lang3.concurrent.ConcurrentException;
+import org.apache.commons.lang3.concurrent.LazyInitializer;
 
 import java.io.DataInputStream;
 import java.io.IOException;
@@ -59,8 +61,9 @@ public class StationTableReader {
     private static final String TAG = "StationTableReader";
 
     private Stations.StationDb mStationDb;
-    private Stations.StationIndex mStationIndex;
+    private LazyInitializer<Stations.StationIndex> mStationIndex;
     private DataInputStream mTable;
+    private final int mStationsLength;
 
     private static final Map<String,StationTableReader> mSTRs = new HashMap<>();
 
@@ -151,7 +154,10 @@ public class StationTableReader {
 
         // Read the Magic, and validate it.
         byte[] header = new byte[4];
-        mTable.read(header);
+        if (mTable.read(header) != 4) {
+            throw new InvalidHeaderException();
+        }
+
         if (!Arrays.equals(header, MAGIC)) {
             throw new InvalidHeaderException();
         }
@@ -162,7 +168,7 @@ public class StationTableReader {
             throw new InvalidHeaderException();
         }
 
-        int stationsLength = mTable.readInt();
+        mStationsLength = mTable.readInt();
 
         // Read out the header
         mStationDb = Stations.StationDb.parseDelimitedFrom(mTable);
@@ -171,14 +177,25 @@ public class StationTableReader {
         // AssetInputStream allows unlimited seeking, no need to specify a readlimit.
         mTable.mark(0);
 
-        // Skip over the station list
-        mTable.skipBytes(stationsLength);
+        // Defer reading the index until actually needed.
+        mStationIndex = new LazyInitializer<Stations.StationIndex>() {
+            @Override
+            protected Stations.StationIndex initialize() {
+                try {
+                    // Reset back to the start of the station list.
+                    mTable.reset();
 
-        // Read out the index
-        mStationIndex = Stations.StationIndex.parseDelimitedFrom(mTable);
+                    // Skip over the station list
+                    mTable.skipBytes(mStationsLength);
 
-        // Reset back to the start of the station list.
-        mTable.reset();
+                    // Read out the index
+                    return Stations.StationIndex.parseDelimitedFrom(mTable);
+                } catch (IOException e) {
+                    Log.e(TAG, "error reading index", e);
+                    return null;
+                }
+            }
+        };
     }
 
     private boolean useEnglishName() {
@@ -249,8 +266,8 @@ public class StationTableReader {
 
         int offset;
         try {
-            offset = mStationIndex.getStationMapOrThrow(id);
-        } catch (IllegalArgumentException e) {
+            offset = mStationIndex.get().getStationMapOrThrow(id);
+        } catch (ConcurrentException | IllegalArgumentException e) {
             Log.d(TAG, String.format(Locale.ENGLISH, "Unknown station %d", id), e);
             return null;
         }
