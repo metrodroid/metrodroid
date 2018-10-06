@@ -1,0 +1,9 @@
+The BART stop database used in this software contains information derived from BART GTFS feed, made available under the Developer License Agreement by BART.
+
+You may obtain a copy of the raw data and it's license at:
+
+   http://www.bart.gov/schedules/developers/developer-license-agreement
+
+   http://www.bart.gov/schedules/developers/gtfs
+
+Stop mapping information is available in Metrodroid's source repository.

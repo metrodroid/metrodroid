@@ -10,7 +10,7 @@ MAPPING_FILES = mapping_bart.csv mapping_vta.csv operators.csv stations.csv
 all: clipper.mdst clipper.csv
 
 clipper.mdst: $(MAPPING_FILES) $(ZIP_FILES) mdst
-	python3 $(MDST)/compile_stops_from_gtfs.py $(ZIPFILE_BART) $(ZIPFILE_VTA) -m mapping_bart.csv -m mapping_vta.csv -l en-US -p operators.csv -x stations.csv -o $@
+	python3 $(MDST)/compile_stops_from_gtfs.py $(ZIPFILE_BART) $(ZIPFILE_VTA) -m mapping_bart.csv -m mapping_vta.csv -l en-US -p operators.csv -x stations.csv -n NOTICE -o $@
 
 $(ZIPFILE_BART):
 	wget -N https://www.bart.gov/sites/default/files/docs/$@

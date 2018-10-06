@@ -24,6 +24,7 @@ from csv import DictWriter
 import google.protobuf.internal.decoder as decoder
 from stations_pb2 import StationDb, Station
 import struct
+import zlib
 
 SCHEMA_VER = 1
 FIELD_NAMES = ['id', 'name_en', 'name', 'name_short_en', 'lat', 'lon', 'oper_id', 'oper_en', 'oper', 'line_id', 'line_en', 'line']
@@ -48,6 +49,10 @@ def dump2csv(database, output_fn):
   # Read in the header blob
   header = read_delimited_message(StationDb, f)
   print('file version = %d, local languages = %r, tts_hint_language = %s' % (header.version, list(header.local_languages), header.tts_hint_language))
+  license_notice = zlib.decompress(header.license_notice).decode('utf-8')
+  print('== START OF LICENSE NOTICE ==')
+  print(license_notice)
+  print('== END OF LICENSE NOTICE ==')
   #print(MessageToString(header, as_utf8=True))
 
   output_fh = open(output_fn, mode='w', encoding='utf-8')
