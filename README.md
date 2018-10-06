@@ -25,6 +25,7 @@ linux.conf.au 2018, in my talk, [Tap on to reverse engineering](https://youtu.be
 * [Sean Cross][4] (CEPAS/EZ-Link)
 * Anonymous Contributor (Clipper)
 * [nfc-felica][13] and [IC SFCard Fan][14] projects (Suica)
+* [Chris Norden](https://github.com/cnorden) (Edy)
 * [Wilbert Duijvenvoorde](https://github.com/wandcode) (MIFARE Classic/OV-chipkaart)
 * [tbonang](https://github.com/tbonang) (NETS FlashPay)
 * [Marcelo Liberato](https://github.com/mliberato) (Bilhete Único)
@@ -47,10 +48,10 @@ Thanks to those who have [helped to make Metrodroid available in languages other
 * Finnish: Lari Oesch
 * French: [Albirew](https://github.com/Albirew)
 * Hebrew: [Steven Steiner](https://github.com/steets250)
-* Japanese: [naofum](https://github.com/naofum)
 * Indonesian: [Bondan](https://github.com/sybond) [Sumbodo](http://sybond.web.id)
+* Japanese: [naofum](https://github.com/naofum), [Chris Norden](https://github.com/cnorden), [Eric Butler][5]
 * Kabyle: [belkacem77](https://github.com/belkacem77), [aqvayli](https://github.com/aqvayli)
-* Norwegian Bokmål: [comradekingu](https://github.com/comradekingu)
+* Norwegian Bokmål: [comradekingu](https://github.com/comradekingu), Petter Reinholdtsen
 * Russian: [Vladimir Serbinenko](https://github.com/phcoder)
 * Turkish: [omersiar](https://github.com/omersiar)
 
@@ -102,7 +103,7 @@ Card / Agency | Location | Notes
 [RicaricaMi][53] | :it: Milan, Italy | :new: :closed_lock_with_key: `MFC`
 [Shenzhen Tong][27] | :cn: Shenzhen, Guangdong Province, China | :new:
 [SmartRider][29] | :australia: Western Australia, Australia | :new: :closed_lock_with_key: `MFC`
-[Strelka][54] | :russia: Moscow, Russia | :closed_lock_with_key: `123` `MFC`
+[Strelka][54] | :ru: Moscow, Russia | :closed_lock_with_key: `123` `MFC`
 [Suica][9], [ICOCA][10], [PASMO][11] | :jp: Japan
 [TaM][55] | :fr: Montpellier, France | :new:
 [T-Money][43] | :kr: South Korea | :new:
