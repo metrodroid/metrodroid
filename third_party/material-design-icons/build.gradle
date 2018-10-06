@@ -3,6 +3,25 @@ apply plugin: 'com.android.library'
 dependencies {
 }
 
+task colouriseIcons(type: Copy) {
+    from 'icons/'
+    into 'build/generated/icons/drawable'
+    includeEmptyDirs false
+    eachFile { it.path = 'material_' + (name.replaceAll('_black_24dp.xml', '_24dp.xml')) }
+    filter { line -> line.replaceAll(/android:fillColor="#(FF)?(0[01]){3}"/, 'android:fillColor="?android:attr/textColorPrimary"')}
+
+    // Explicitly declare each icon we want to use
+    include ([
+            'person',
+            'group',
+            'add',
+            'save',
+            'delete',
+    ].collect { r ->
+        '**/drawable-anydpi-v21/ic_' + r + '_black_24dp.xml'
+    })
+}
+
 android {
     compileSdkVersion 27
     buildToolsVersion '28.0.2'
@@ -22,40 +41,12 @@ android {
         targetCompatibility JavaVersion.VERSION_1_8
     }
 
-    sourceSets {
-        main {
-            res.srcDirs = ['build/generated/icons']
-        }
-    }
+    preBuild.dependsOn colouriseIcons
+    sourceSets.main.res.srcDirs = ['build/generated/icons']
 
     lintOptions {
         // We actually support these attributes in older API versions, with the support library.
         abortOnError false
         disable 'NewApi'
     }
-}
-
-task colouriseIcons(type: Copy) {
-    from 'icons/'
-    into 'build/generated/icons/drawable'
-    includeEmptyDirs false
-    eachFile { it.path = 'material_' + (name.replaceAll('_black_24dp.xml', '_24dp.xml')) }
-    filter { line -> line.replaceAll(/android:fillColor="#(FF)?(0[01]){3}"/, 'android:fillColor="?android:attr/textColorPrimary"')}
-
-    // Explicitly declare each icon we want to use
-    include ([
-            'person',
-            'group',
-            'add',
-            'save',
-            'delete',
-    ].collect { r ->
-        '**/drawable-anydpi-v21/ic_' + r + '_black_24dp.xml'
-    })
-
-}
-
-project.afterEvaluate {
-    generateDebugResources.dependsOn(colouriseIcons)
-    generateReleaseResources.dependsOn(colouriseIcons)
 }

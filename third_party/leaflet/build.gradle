@@ -28,11 +28,6 @@ android {
     }
 
     preBuild.dependsOn copyLeaflet
-
-    sourceSets {
-        main {
-            assets.srcDirs = ['build/assets/']
-        }
-    }
+    sourceSets.main.assets.srcDirs = ['build/assets/']
 }
 

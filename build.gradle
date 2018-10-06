@@ -87,6 +87,13 @@ protobuf {
     }
 }
 
+task copyThirdPartyNotices(type: Copy) {
+    from 'third_party/'
+    into 'build/assets/third_party'
+    eachFile { it.path = name }
+    include 'NOTICE.**.txt'
+}
+
 android {
     compileSdkVersion 27
     buildToolsVersion '28.0.2'
@@ -145,10 +152,13 @@ android {
         }
     }
 
+    preBuild.dependsOn copyThirdPartyNotices
+
     sourceSets {
         androidTest.assets.srcDirs += [
                 'third_party/vpereira_bilhete/',
         ]
+        main.assets.srcDirs += ['build/assets']
     }
 
     compileOptions {
