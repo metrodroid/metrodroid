@@ -11,9 +11,9 @@ id,name,short_name,mode
 0x1b,San Francisco Bay Ferry,SF Bay Ferry,FERRY
 0x173,Caltrain 8-Rides,Caltrain,
 0x1bc,Walgreens,Walgreens,
-0x1be,Walgreens,Walgreens,
+0x1be,Walgreens #7080 (105 El Camino Real),Walgreens,
 0x1db,Walgreens,Walgreens,
-0x1fe,Walgreens (Chestnut & Steiner),Walgreens,
-0x1ff,Walgreens (Lombard & Divisadero),Walgreens,
+0x1fe,Walgreens #6625 (Chestnut & Steiner),Walgreens,
+0x1ff,Walgreens #1403 (Lombard & Divisadero),Walgreens,
 0x248,San Francisco International Airport Info Booth,SFO info booth,
 0x2cf,Whole Foods,Whole Foods,
