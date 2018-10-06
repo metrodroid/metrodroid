@@ -36,6 +36,7 @@ OTHER_LANG = 'values-'
 RESC_FILE = 'market.xml'
 DEFAULT_MARKET = os.path.join(RESOURCES_DIR, DEFAULT_LANG, RESC_FILE)
 CHANGELOG = 'market_changelog_'
+CHANGELOG_GENERIC = CHANGELOG + 'generic'
 
 def get_languages():
   with scandir(RESOURCES_DIR) as it:
@@ -126,7 +127,8 @@ def show_changelog(version=None):
         d = str(t)
         v = version
         break
-
+    elif t.get('name') == CHANGELOG_GENERIC:
+      continue
     elif t.get('name').startswith(CHANGELOG):
       tv = int(t.get('name')[len(CHANGELOG):])
       if tv > v:
@@ -149,6 +151,7 @@ def show_changelog(version=None):
       continue
     
     f = False
+    generic = None
     for t in objectify.parse(p).getroot().iterchildren():
       if t.tag != 'string':
         continue
@@ -159,9 +162,17 @@ def show_changelog(version=None):
         print('')
         f = True
         break
+      if t.get('name') == CHANGELOG_GENERIC:
+        generic = android_resource_unescape(str(t))
     
     if not f:
-      print('## No changelog for %s' % c)
+      if generic:
+        print('## Generic changelog for %s:' % c)
+        print('<%s>' % c)
+        print(generic)
+        print('</%s>' % c)
+      else:
+        print('## No changelog for %s' % c)
       print('')
       
 
