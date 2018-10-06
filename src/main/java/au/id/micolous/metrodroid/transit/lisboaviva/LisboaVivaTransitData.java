@@ -59,7 +59,7 @@ public class LisboaVivaTransitData extends Calypso1545TransitData {
     private final String mHolderName;
 
     public static final CardInfo CARD_INFO = new CardInfo.Builder()
-            .setName("Lisboa Viva")
+            .setName("Lisboa Viva") // The card is literally branded like this.
             .setLocation(R.string.location_lisbon)
             .setCardType(CardType.ISO7816)
             .setPreview()
