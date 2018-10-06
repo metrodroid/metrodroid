@@ -75,7 +75,7 @@
 
     <string name="trip_description">(Из )%1$s [→] (в )%2$s</string>
     <string name="trip_description_unknown_start">До %s</string>
-    <string name="time_from_to">%s → %s</string>
+    <string name="time_from_to">%1$s → %2$s</string>
     <string name="time_from_unknown_to">\?:?? → %s</string>
 
 
@@ -336,8 +336,8 @@
 
     <string name="location_seoul">Сеул, Южная Корея</string>
     <string name="app_version">Версия: %s</string>
-    <string name="device_model">Модель: %s (%s)</string>
-    <string name="device_manufacturer">Производитель: %s (%s)</string>
+    <string name="device_model">Модель: %1$s (%2$s)</string>
+    <string name="device_manufacturer">Производитель: %1$s (%2$s)</string>
     <string name="mfc_supported">MIFARE Classic: поддерживается</string>
     <string name="mfc_not_supported">MIFARE Classic: не поддерживается</string>
     <string name="card_number">Номер карты</string>
