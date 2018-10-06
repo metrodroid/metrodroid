@@ -68,6 +68,7 @@ public class MobibTransitData extends Calypso1545TransitData {
     public static final CardInfo CARD_INFO = new CardInfo.Builder()
             .setName(MobibTransitData.NAME)
             .setCardType(CardType.ISO7816)
+            .setImageId(R.drawable.mobib_card, R.drawable.iso7810_id1_alpha)
             .setLocation(R.string.location_brussels)
             .build();
 
