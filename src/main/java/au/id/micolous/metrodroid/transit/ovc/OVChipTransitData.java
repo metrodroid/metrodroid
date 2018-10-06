@@ -38,6 +38,9 @@ import au.id.micolous.metrodroid.MetrodroidApplication;
 import au.id.micolous.metrodroid.card.Card;
 import au.id.micolous.metrodroid.card.CardType;
 import au.id.micolous.metrodroid.card.classic.ClassicCard;
+import au.id.micolous.metrodroid.card.classic.ClassicSector;
+import au.id.micolous.metrodroid.card.classic.InvalidClassicSector;
+import au.id.micolous.metrodroid.card.classic.UnauthorizedClassicSector;
 import au.id.micolous.metrodroid.transit.CardInfo;
 import au.id.micolous.metrodroid.transit.Subscription;
 import au.id.micolous.metrodroid.transit.TransitBalance;
@@ -218,9 +221,14 @@ public class OVChipTransitData extends TransitData {
         if (classicCard.getSectors().size() != 40)
             return false;
 
+        ClassicSector sector = classicCard.getSector(0);
+
+        if (sector instanceof UnauthorizedClassicSector || sector instanceof InvalidClassicSector)
+            return false;
+
         // Starting at 0×010, 8400 0000 0603 a000 13ae e401 xxxx 0e80 80e8 seems to exist on all OVC's (with xxxx different).
         // http://www.ov-chipkaart.de/back-up/3-8-11/www.ov-chipkaart.me/blog/index7e09.html?page_id=132
-        byte[] blockData = classicCard.getSector(0).readBlocks(1, 1);
+        byte[] blockData = sector.readBlocks(1, 1);
         return Arrays.equals(Arrays.copyOfRange(blockData, 0, 11), OVC_HEADER);
     }
 
