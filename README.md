@@ -45,7 +45,7 @@ linux.conf.au 2018, in my talk, [Tap on to reverse engineering](https://youtu.be
 Thanks to those who have [helped to make Metrodroid available in languages other than English][22]:
 
 * Dutch: [Vistaus](https://github.com/Vistaus)
-* Finnish: Lari Oesch
+* Finnish: Lari Oesch, Lauri Andler
 * French: [Albirew](https://github.com/Albirew)
 * Hebrew: [Steven Steiner](https://github.com/steets250)
 * Indonesian: [Bondan](https://github.com/sybond) [Sumbodo](http://sybond.web.id)
