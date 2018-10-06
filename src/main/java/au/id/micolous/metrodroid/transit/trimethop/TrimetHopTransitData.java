@@ -46,7 +46,7 @@ import au.id.micolous.metrodroid.ui.ListItem;
 import au.id.micolous.metrodroid.util.Utils;
 
 /**
- * Transit data type for TrimetHop.
+ * Transit data type for TriMet Hop Fastpass.
  * <p>
  * This is a very limited implementation of reading TrimetHop, because only
  * little data is stored on the card
@@ -54,7 +54,7 @@ import au.id.micolous.metrodroid.util.Utils;
  * Documentation of format: https://github.com/micolous/metrodroid/wiki/TrimetHopFastPass
  */
 public class TrimetHopTransitData extends TransitData {
-    public static final String NAME = "Trimet Hop FastPass";
+    public static final String NAME = "Hop Fastpass";
     public static final int APP_ID = 0xe010f2;
 
     private int mSerial;

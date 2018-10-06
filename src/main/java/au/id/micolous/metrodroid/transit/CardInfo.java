@@ -88,6 +88,7 @@ public class CardInfo {
             EZLinkTransitData.EZ_LINK_CARD_INFO,
             SeqGoTransitData.CARD_INFO, // Go card
             MspGotoTransitData.CARD_INFO, // Go-to card
+            TrimetHopTransitData.CARD_INFO, // Hop
             HSLTransitData.CARD_INFO,
             IstanbulKartTransitData.CARD_INFO,
             SuicaTransitData.ICOCA_CARD_INFO,
@@ -119,7 +120,6 @@ public class CardInfo {
             TMoneyTransitData.CARD_INFO, // T-Money
             IntercodeTransitData.TRANSGIRONDE_CARD_INFO, // TransGironde
             LaxTapTransitData.CARD_INFO, // Transit Access Pass
-            TrimetHopTransitData.CARD_INFO,
             TroikaTransitData.CARD_INFO,
             VentraUltralightTransitData.CARD_INFO
     };

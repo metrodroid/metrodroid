@@ -78,6 +78,7 @@ Card / Agency | Location | Notes
 [EZ-Link][7] | :singapore: Singapore |
 [Go card][20] | :australia: Brisbane and South East Queensland, Australia | :new: :closed_lock_with_key: `MFC`
 [Go-to card][47] | :us: Minneapolis-St. Paul, MN, USA | :new: :closed_lock_with_key: `MFC`
+[Hop Fastpass][58] | :us: Portland, OR, USA | :new: `123`
 [HSL][17], [Matkakortti][16] | :finland: Finland |
 [IstanbulKart][48] | :tr: Istanbul, Turkey | :new: `123`
 [Kartu Multi Trip][39] | :indonesia: Jakarta, Indonesia | `KMT`
@@ -232,3 +233,4 @@ This software and it's authors are not associated with any public transit agency
 [55]: http://www.tam-voyages.com/
 [56]: https://www.transgironde.fr/
 [57]: https://www.ventrachicago.com/
+[58]: https://myhopcard.com/
