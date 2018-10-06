@@ -36,19 +36,11 @@ import java.nio.charset.Charset;
 
 import au.id.micolous.farebot.R;
 import au.id.micolous.metrodroid.transit.clipper.ClipperTransitData;
+import au.id.micolous.metrodroid.transit.ezlink.EZLinkTransitData;
 import au.id.micolous.metrodroid.transit.lax_tap.LaxTapTransitData;
 import au.id.micolous.metrodroid.transit.seq_go.SeqGoTransitData;
 
 public class LicenseActivity extends MetrodroidActivity {
-
-    private static final String MYTRANSPORT_SG = "Contains information from " +
-            "\"Train Station Codes and Chinese Names\" and \"TrainStation\" accessed on " +
-            "12-Aug-2018 from " +
-            "\"https://www.mytransport.sg/content/dam/datamall/datasets/PublicTransportRelated/Train%20Station%20Codes%20and%20Chinese%20Names.zip\"" +
-            " and https://www.mytransport.sg/content/dam/datamall/datasets/Geospatial/TrainStation.zip " +
-            "which is made available under the terms of the Singapore Open Data Licence version 1.0" +
-            " https://www.mytransport.sg/content/mytransport/home/dataMall/SingaporeOpenDataLicence.html\n\n\n";
-
     private static final String TFI_GTFS = "The TFI stop database used in this software "
             + "contains information derived from TFI GTFS feed, made available under the "
             + "Creative Commons Attribution 4.0 International license by the TFI.\n"
@@ -87,7 +79,7 @@ public class LicenseActivity extends MetrodroidActivity {
         addNotice(SeqGoTransitData.getNotice());
         addNotice(LaxTapTransitData.getNotice());
         addNotice(ClipperTransitData.getNotice());
-        lblLicenseText.append(MYTRANSPORT_SG);
+        addNotice(EZLinkTransitData.getNotice());
         lblLicenseText.append(TFI_GTFS);
 
         lblLicenseText.endBatchEdit();

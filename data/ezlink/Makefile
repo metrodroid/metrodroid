@@ -9,7 +9,7 @@ all: ezlink.mdst ezlink.csv
 clean:
 	rm -f ezlink.mdst ezlink.csv
 
-ezlink.mdst: mapping.csv mdst names.zip stations.zip
+ezlink.mdst: mapping.csv mdst names.zip stations.zip NOTICE
 	python3 $(MDST)/ezlink.py
 
 stations.zip:
