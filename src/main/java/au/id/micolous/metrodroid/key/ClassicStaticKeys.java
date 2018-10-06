@@ -105,6 +105,7 @@ public class ClassicStaticKeys extends ClassicCardKeys {
         json.put(KEYS, keysJson);
         if (mDescription != null)
             json.put(JSON_TAG_ID_DESC, mDescription);
+        json.put(JSON_KEY_TYPE_KEY, CardKeys.TYPE_MFC_STATIC);
         return json;
     }
 
@@ -130,10 +131,10 @@ public class ClassicStaticKeys extends ClassicCardKeys {
 
     @Override
     @NonNull
-    public List<ClassicSectorKey> getCandidates(int sectorIndex) {
+    public List<? extends ClassicSectorKey> getCandidates(int sectorIndex) {
         if (!mKeys.containsKey(sectorIndex))
             return Collections.emptyList();
-        return (List<ClassicSectorKey>)(List<?>)mKeys.get(sectorIndex);
+        return mKeys.get(sectorIndex);
     }
 
     @NonNull
