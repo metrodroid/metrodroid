@@ -39,19 +39,9 @@ import au.id.micolous.metrodroid.transit.clipper.ClipperTransitData;
 import au.id.micolous.metrodroid.transit.ezlink.EZLinkTransitData;
 import au.id.micolous.metrodroid.transit.lax_tap.LaxTapTransitData;
 import au.id.micolous.metrodroid.transit.seq_go.SeqGoTransitData;
+import au.id.micolous.metrodroid.transit.tfi_leap.LeapTransitData;
 
 public class LicenseActivity extends MetrodroidActivity {
-    private static final String TFI_GTFS = "The TFI stop database used in this software "
-            + "contains information derived from TFI GTFS feed, made available under the "
-            + "Creative Commons Attribution 4.0 International license by the TFI.\n"
-            + "\n"
-            + "You may obtain a copy of the raw data and it's license at:\n"
-            + "\n"
-            + "   https://data.gov.ie/pages/opendatalicence\n"
-            + "   https://www.transportforireland.ie/transitData/PT_Data.html\n"
-            + "\n"
-            + "Stop mapping information is available in Metrodroid's source repository.\n\n\n";
-
     private static final String TAG = LicenseActivity.class.getSimpleName();
 
     private TextView lblLicenseText;
@@ -80,7 +70,7 @@ public class LicenseActivity extends MetrodroidActivity {
         addNotice(LaxTapTransitData.getNotice());
         addNotice(ClipperTransitData.getNotice());
         addNotice(EZLinkTransitData.getNotice());
-        lblLicenseText.append(TFI_GTFS);
+        addNotice(LeapTransitData.getNotice());
 
         lblLicenseText.endBatchEdit();
         lblLicenseText = null;

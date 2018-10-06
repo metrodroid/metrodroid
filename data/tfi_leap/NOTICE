@@ -1,0 +1,8 @@
+The TFI stop database used in this software contains information derived from TFI GTFS feed, made available under the Creative Commons Attribution 4.0 International license by the TFI.
+
+You may obtain a copy of the raw data and it's license at:
+
+   https://data.gov.ie/pages/opendatalicence
+   https://www.transportforireland.ie/transitData/PT_Data.html
+
+Stop mapping information is available in Metrodroid's source repository.
