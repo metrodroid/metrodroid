@@ -36,22 +36,10 @@ import java.nio.charset.Charset;
 
 import au.id.micolous.farebot.R;
 import au.id.micolous.metrodroid.transit.clipper.ClipperTransitData;
+import au.id.micolous.metrodroid.transit.lax_tap.LaxTapTransitData;
 import au.id.micolous.metrodroid.transit.seq_go.SeqGoTransitData;
 
 public class LicenseActivity extends MetrodroidActivity {
-
-    private static final String LAX_TAP_GTFS = "The LAX TAP stop database used in this software "
-            + "contains information derived from GTFS feeds by Los Angeles County transit "
-            + "operators, including:\n"
-            + "\n"
-            + "   - Los Angeles County Metropolitan Transportation Authority (Metro)\n"
-            + "\n"
-            + "You may obtain a copy of the raw data and it's license at:\n"
-            + "\n"
-            + "   https://gitlab.com/LACMTA/gtfs_rail\n"
-            + "\n"
-            + "Stop mapping information is available in Metrodroid's source repository.\n\n\n";
-
 
     private static final String MYTRANSPORT_SG = "Contains information from " +
             "\"Train Station Codes and Chinese Names\" and \"TrainStation\" accessed on " +
@@ -97,7 +85,7 @@ public class LicenseActivity extends MetrodroidActivity {
 
         // TODO: Get a list of files programatically
         addNotice(SeqGoTransitData.getNotice());
-        lblLicenseText.append(LAX_TAP_GTFS);
+        addNotice(LaxTapTransitData.getNotice());
         addNotice(ClipperTransitData.getNotice());
         lblLicenseText.append(MYTRANSPORT_SG);
         lblLicenseText.append(TFI_GTFS);
