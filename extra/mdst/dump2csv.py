@@ -50,7 +50,7 @@ def dump2csv(database, output_fn):
   header = read_delimited_message(StationDb, f)
   print('file version = %d, local languages = %r, tts_hint_language = %s' % (header.version, list(header.local_languages), header.tts_hint_language))
   if header.license_notice:
-    license_notice = zlib.decompress(header.license_notice).decode('utf-8')
+    license_notice = header.license_notice # zlib.decompress(header.license_notice).decode('utf-8')
     print('== START OF LICENSE NOTICE (compressed: %d bytes, uncompressed: %d bytes) ==' % (len(header.license_notice), len(license_notice)))
     print(license_notice)
     print('== END OF LICENSE NOTICE ==')

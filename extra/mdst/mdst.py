@@ -24,6 +24,7 @@ from stations_pb2 import StationDb, Operator, Line, Station, StationIndex, Trans
 import struct
 import csv
 import zlib
+import brotli
 
 SCHEMA_VER = 1
 
@@ -89,23 +90,33 @@ class MdstWriter(object):
 
     if license_notice_f:
       t = license_notice_f.read().encode('utf-8')
-      sdb.license_notice = zlib.compress(t, 9)
+      sdb.license_notice = t # zlib.compress(t, 9)
 
     # Write out the header
     fh.write(b'MdST')
     fh.write(struct.pack('!II', SCHEMA_VER, 0))
-    fh.write(delimited_value(sdb))
+    h = delimited_value(sdb)
+    fh.write(h)
+    print("header compression: %d original -> %d brotli %d zlib" % (len(h), len(brotli.compress(h)), len(zlib.compress(h, 9))))
     
     self.stationlist_off = fh.tell()
     self.fh = fh
     self.stations = {}
+    self.mock_compression_size = 0
+    self.mock_bcompression_size = 0
+    self.mock_compression_buffer = b''
 
   def push_station(self, station):
     """
     Adds a station entry. Expects a Station message.
     """
     self.stations[station.id] = self.fh.tell() - self.stationlist_off
-    self.fh.write(delimited_value(station))
+    d = delimited_value(station)
+    self.fh.write(d)
+    self.mock_compression_size += len(zlib.compress(d, 9))
+    self.mock_bcompression_size += len(brotli.compress(d))
+    self.mock_compression_buffer += d
+
 
   def finalise(self):
     """
@@ -118,7 +129,13 @@ class MdstWriter(object):
     for station_id, offset in self.stations.items():
       sidx.station_map[station_id] = offset
     self.fh.write(delimited_value(sidx))
-    
+
+    print("zlib mock compression: records: %d bytes, index: %d bytes" % (self.mock_compression_size, len(zlib.compress(sidx.SerializeToString(), 9)),))
+    print("brotli mock compression: records: %d bytes, index: %d bytes" % (self.mock_bcompression_size, len(brotli.compress(sidx.SerializeToString())),))
+    print("solid records mode: %d bytes" % len(self.mock_compression_buffer))
+    print("zlib: %d bytes" % len(zlib.compress(self.mock_compression_buffer, 9)))
+    print("brotli: %d bytes" % len(brotli.compress(self.mock_compression_buffer)))
+
     index_end_off = self.fh.tell()
 
     # Write the location of the index
