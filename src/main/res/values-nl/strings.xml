@@ -697,14 +697,6 @@
 
     <string name="valid_from_format">Geldig vanaf %1$s</string>
     <string name="valid_not_used">Nog niet in gebruik</string>
-    <plurals name="ricaricami_days_remaining">
-	<item quantity="one">%d dag resterend</item>
-	<item quantity="other">%d dagen resterend</item>
-</plurals>
-    <plurals name="ricaricami_remains_on_day">
-	<item quantity="one">%d reis resterend op %s</item>
-	<item quantity="other">%d reizen resterend op %s</item>
-</plurals>
 
     <string name="location_brussels">Brussel, België</string>
     <string name="location_gironde">Gironde, Frankrijk</string>

@@ -696,14 +696,6 @@
 
     <string name="valid_from_format">Gyldig fra %1$s</string>
     <string name="valid_not_used">Ikke brukt enda</string>
-    <plurals name="ricaricami_days_remaining">
-	<item quantity="one">%d dag gjenstår</item>
-	<item quantity="other">%d dager gjenstår</item>
-</plurals>
-    <plurals name="ricaricami_remains_on_day">
-	<item quantity="one">Gjenstår %d tur på %s</item>
-	<item quantity="other">Gjenstår %d turer på %s</item>
-</plurals>
 
     <string name="location_brussels">Brussel, Belgia</string>
     <string name="location_gironde">Gironde, Frankrike</string>

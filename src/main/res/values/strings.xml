@@ -445,15 +445,6 @@
         <item quantity="other">Valid for %d months</item>
     </plurals>
 
-    <plurals name="ricaricami_days_remaining">
-        <item quantity="one">%d day remaining</item>
-        <item quantity="other">%d days remaining</item>
-    </plurals>
-    <plurals name="ricaricami_remains_on_day">
-        <item quantity="one">Remains %d trip on %s</item>
-        <item quantity="other">Remains %d trips on %s</item>
-    </plurals>
-
     <!-- Type: Value file, Range: 0 - 2300, Limited credit: 400 (Enabled) -->
     <string name="desfire_value_format">Type: %1$s, Range: %2$s - %3$s, Limited credit: %4$s (%5$s)</string>
 
