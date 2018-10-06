@@ -431,9 +431,7 @@ public class Utils {
      */
     public static int unsignedToTwoComplement(int input, int highestBit) {
         if (getBitsFromInteger(input, highestBit, 1) == 1) {
-            // inverse all bits
-            input ^= (2 << highestBit) - 1;
-            return -(1 + input);
+            return input - (2 << highestBit);
         }
 
         return input;
@@ -876,6 +874,11 @@ public class Utils {
 
         // Couldn't parse as JSON -- fallback
         return isRawMifareClassicKeyFileLength(data.length) ? KeyFormat.RAW_MFC : KeyFormat.UNKNOWN;
+    }
+
+    public static int getBitsFromBufferSigned(byte[] data, int startBit, int bitLength) {
+        int val = getBitsFromBuffer(data, startBit, bitLength);
+        return unsignedToTwoComplement(val, bitLength - 1);
     }
 
     public interface Matcher<T> {

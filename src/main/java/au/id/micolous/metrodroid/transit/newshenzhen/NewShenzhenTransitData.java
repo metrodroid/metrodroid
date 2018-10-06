@@ -74,9 +74,7 @@ public class NewShenzhenTransitData extends TransitData {
 
     public NewShenzhenTransitData(NewShenzhenCard card) {
         // upper bit is some garbage
-        int bal = Utils.getBitsFromBuffer(card.getBalance(0), 1, 31);
-        // restore sign bit
-        mBalance = bal | ((bal & 0x40000000) << 1);
+        mBalance = Utils.getBitsFromBufferSigned(card.getBalance(0), 1, 31);
         mSerial = parseSerial(card);
         byte []szttag = getTagInfo(card);
 
