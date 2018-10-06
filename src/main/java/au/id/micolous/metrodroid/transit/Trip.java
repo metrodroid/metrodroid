@@ -344,6 +344,16 @@ public abstract class Trip implements Parcelable {
 	return true;
     }
 
+    /**
+     * Is there geographic data associated with this trip?
+     */
+    public boolean hasLocation() {
+        final Station startStation = getStartStation();
+        final Station endStation = getEndStation();
+        return (startStation != null && startStation.hasLocation()) ||
+                (endStation != null && endStation.hasLocation());
+    }
+
     public enum Mode {
         BUS(0, R.string.mode_bus),
         /** Used for non-metro (rapid transit) trains */

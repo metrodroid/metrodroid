@@ -100,7 +100,7 @@ public class CardTripsFragment extends ListFragment {
                         MetrodroidApplication.obfuscateTripFares());
                 Collections.sort(trips, new Trip.Comparator());
             }
-            setListAdapter(new UseLogListAdapter(getActivity(), trips.toArray(new Trip[trips.size()]), mTransitData));
+            setListAdapter(new UseLogListAdapter(getActivity(), trips.toArray(new Trip[0]), mTransitData));
         } else {
             view.findViewById(android.R.id.list).setVisibility(View.GONE);
             view.findViewById(R.id.error_text).setVisibility(View.VISIBLE);
@@ -111,21 +111,20 @@ public class CardTripsFragment extends ListFragment {
 
     @Override
     public void onListItemClick(ListView l, View v, int position, long id) {
+        if (Build.VERSION.SDK_INT < 17) {
+            return;
+        }
+
         Trip trip = (Trip) getListAdapter().getItem(position);
-        if (trip == null || !(
-                (trip.getStartStation() != null && trip.getStartStation().hasLocation())
-                        || (trip.getEndStation() != null && trip.getEndStation().hasLocation()))
-                || Build.VERSION.SDK_INT < 17) {
+        if (trip == null || !trip.hasLocation()) {
             Log.d(TAG, "Oops, couldn't display the trip, despite advertising we could");
             return;
         }
 
         // Make linter happy with explicit if, even though previous if is sufficient
-        if (Build.VERSION.SDK_INT >= 17) {
-            Intent intent = new Intent(getActivity(), TripMapActivity.class);
-            intent.putExtra(TripMapActivity.TRIP_EXTRA, trip);
-            startActivity(intent);
-        }
+        Intent intent = new Intent(getActivity(), TripMapActivity.class);
+        intent.putExtra(TripMapActivity.TRIP_EXTRA, trip);
+        startActivity(intent);
     }
 
     private static class UseLogListAdapter extends ArrayAdapter<Trip> {
@@ -352,8 +351,7 @@ public class CardTripsFragment extends ListFragment {
                 return false;
             }
 
-            return (trip.getStartStation() != null && trip.getStartStation().hasLocation())
-                    || (trip.getEndStation() != null && trip.getEndStation().hasLocation());
+            return trip.hasLocation();
         }
 
         private boolean isFirstInSection(int position) {

@@ -27,8 +27,8 @@ import au.id.micolous.metrodroid.transit.Station;
  * Markers for Leaflet to consume.
  */
 public class Marker {
-    private Station mStation;
-    private String mIcon;
+    private final Station mStation;
+    private final String mIcon;
 
     public Marker(Station station, String icon) {
         this.mStation = station;
