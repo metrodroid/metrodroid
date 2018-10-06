@@ -207,13 +207,13 @@ public class FelicaCard extends Card {
                     }
 
                     if (blocks.size() > 0) { // Most service codes appear to be empty...
-                        FelicaBlock[] blocksArray = blocks.toArray(new FelicaBlock[blocks.size()]);
+                        FelicaBlock[] blocksArray = blocks.toArray(new FelicaBlock[0]);
                         services.add(new FelicaService(serviceCodeInt, blocksArray));
                         Log.d(TAG, "- Service code " + serviceCodeInt + " had " + blocks.size() + " blocks");
                     }
                 }
 
-                FelicaService[] servicesArray = services.toArray(new FelicaService[services.size()]);
+                FelicaService[] servicesArray = services.toArray(new FelicaService[0]);
                 systems.add(new FelicaSystem(code.getCode(), servicesArray));
             }
 
@@ -221,7 +221,7 @@ public class FelicaCard extends Card {
             Log.w(TAG, "Tag was lost! Returning a partial read.");
             partialRead = true;
         }
-        FelicaSystem[] systemsArray = systems.toArray(new FelicaSystem[systems.size()]);
+        FelicaSystem[] systemsArray = systems.toArray(new FelicaSystem[0]);
         return new FelicaCard(tagId, GregorianCalendar.getInstance(), partialRead, idm, pmm, systemsArray);
     }
 

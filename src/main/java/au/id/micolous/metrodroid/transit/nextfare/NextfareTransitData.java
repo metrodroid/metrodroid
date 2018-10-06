@@ -257,8 +257,8 @@ public class NextfareTransitData extends TransitData {
             subscriptions.add(newSubscription(passes.get(0)));
         }
 
-        mSubscriptions = subscriptions.toArray(new NextfareSubscription[subscriptions.size()]);
-        mTrips = trips.toArray(new NextfareTrip[trips.size()]);
+        mSubscriptions = subscriptions.toArray(new NextfareSubscription[0]);
+        mTrips = trips.toArray(new NextfareTrip[0]);
     }
 
     public static boolean check(ClassicCard card) {

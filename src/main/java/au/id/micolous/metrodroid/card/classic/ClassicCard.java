@@ -279,7 +279,7 @@ public class ClassicCard extends Card {
                             blocks.add(ClassicBlock.create(type, blockIndex, data));
                         }
                         sectors.add(new ClassicSector(sectorIndex,
-                                blocks.toArray(new ClassicBlock[blocks.size()]),
+                                blocks.toArray(new ClassicBlock[0]),
                                 correctKey));
 
                         feedbackInterface.updateProgressBar((sectorIndex * 5) + 4, maxProgress);
@@ -297,7 +297,7 @@ public class ClassicCard extends Card {
                 }
             }
 
-            return new ClassicCard(tagId, GregorianCalendar.getInstance(), sectors.toArray(new ClassicSector[sectors.size()]), partialRead);
+            return new ClassicCard(tagId, GregorianCalendar.getInstance(), sectors.toArray(new ClassicSector[0]), partialRead);
 
         } finally {
             if (tech != null && tech.isConnected()) {

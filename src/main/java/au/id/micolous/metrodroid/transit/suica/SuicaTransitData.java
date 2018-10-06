@@ -221,7 +221,7 @@ public class SuicaTransitData extends TransitData {
         Log.d(TAG, String.format(Locale.ENGLISH, "Matched %d taps", matchedTaps.size()));
         */
 
-        mTrips = trips.toArray(new SuicaTrip[trips.size()]);
+        mTrips = trips.toArray(new SuicaTrip[0]);
     }
 
     public static boolean check(FelicaCard card) {

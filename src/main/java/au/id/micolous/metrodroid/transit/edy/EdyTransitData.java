@@ -108,7 +108,7 @@ public class EdyTransitData extends TransitData {
             trips.add(trip);
         }
 
-        mTrips = trips.toArray(new EdyTrip[trips.size()]);
+        mTrips = trips.toArray(new EdyTrip[0]);
     }
 
     public static boolean check(FelicaCard card) {

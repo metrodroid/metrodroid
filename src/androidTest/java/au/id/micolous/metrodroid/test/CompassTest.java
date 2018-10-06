@@ -172,7 +172,7 @@ public class CompassTest extends TestCase {
         }
 
         return new UltralightCard(
-                serial, d, "MF0ICU2", pages.toArray(new UltralightPage[pages.size()])
+                serial, d, "MF0ICU2", pages.toArray(new UltralightPage[0])
         );
     }
 

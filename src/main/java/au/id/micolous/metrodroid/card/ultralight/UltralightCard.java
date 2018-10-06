@@ -138,7 +138,7 @@ public class UltralightCard extends Card {
 
             // Now we have pages to stuff in the card.
             return new UltralightCard(tagId, GregorianCalendar.getInstance(), t.toString(),
-                    pages.toArray(new UltralightPage[pages.size()]));
+                    pages.toArray(new UltralightPage[0]));
 
         } finally {
             if (tech != null && tech.isConnected()) {
@@ -189,7 +189,7 @@ public class UltralightCard extends Card {
 
             // Now we have pages to stuff in the card.
             return new UltralightCard(tagId, GregorianCalendar.getInstance(), "",
-                    pages.toArray(new UltralightPage[pages.size()]));
+                    pages.toArray(new UltralightPage[0]));
 
         } finally {
             if (tech != null && tech.isConnected()) {
@@ -264,7 +264,7 @@ public class UltralightCard extends Card {
     }
 
     public UltralightPage[] getPages() {
-        return mPages.toArray(new UltralightPage[mPages.size()]);
+        return mPages.toArray(new UltralightPage[0]);
     }
 
     public UltralightPage getPage(int index) {

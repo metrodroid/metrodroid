@@ -149,7 +149,7 @@ public class ErgTransitData extends TransitData {
         }
 
         Collections.sort(trips, new Trip.Comparator());
-        mTrips = trips.toArray(new Trip[trips.size()]);
+        mTrips = trips.toArray(new Trip[0]);
     }
 
     /**

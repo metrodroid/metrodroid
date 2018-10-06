@@ -81,7 +81,7 @@ public class ClassicCardKeys extends CardKeys {
             keys.add(k);
         }
 
-        ClassicCardKeys kk = new ClassicCardKeys(null, keys.toArray(new ClassicSectorKey[keys.size()]));
+        ClassicCardKeys kk = new ClassicCardKeys(null, keys.toArray(new ClassicSectorKey[0]));
         kk.mSourceDataLength = keyData.length;
         return kk;
     }

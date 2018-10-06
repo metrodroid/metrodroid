@@ -427,7 +427,7 @@ public class HSLTransitData extends TransitData implements Parcelable {
         trips.add(mLastRefill);
         Collections.sort(trips, new Trip.Comparator());
 
-        return trips.toArray(new Trip[trips.size()]);
+        return trips.toArray(new Trip[0]);
     }
 
     private List<HSLTrip> parseTrips(DesfireCard card) {

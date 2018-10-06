@@ -119,7 +119,7 @@ public class KMTTransitData extends TransitData {
                 trips.add(trip);
             }
         }
-        mTrips = trips.toArray(new KMTTrip[trips.size()]);
+        mTrips = trips.toArray(new KMTTrip[0]);
     }
 
     public static boolean check(FelicaCard card) {

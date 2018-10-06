@@ -204,12 +204,12 @@ public class OVChipTransitData extends TransitData {
         }
 
         Collections.sort(trips, OVChipTrip.ID_ORDER);
-        mTrips = trips.toArray(new OVChipTrip[trips.size()]);
+        mTrips = trips.toArray(new OVChipTrip[0]);
 
         List<OVChipSubscription> subs = new ArrayList<>(Arrays.asList(parser.getSubscriptions()));
         Collections.sort(subs, (s1, s2) -> Integer.valueOf(s1.getId()).compareTo(s2.getId()));
 
-        mSubscriptions = subs.toArray(new OVChipSubscription[subs.size()]);
+        mSubscriptions = subs.toArray(new OVChipSubscription[0]);
     }
 
     public static boolean check(Card card) {
