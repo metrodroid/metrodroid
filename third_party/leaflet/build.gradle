@@ -1,0 +1,38 @@
+apply plugin: 'com.android.library'
+
+dependencies {
+}
+
+task copyLeaflet(type: Copy) {
+    from './'
+    into 'build/assets/third_party/leaflet'
+    include ([
+            'LICENSE',
+            'leaflet.css',
+            'leaflet.js',
+            // 'images/layers-2x.png',
+            // 'images/layers.png',
+            'images/marker-icon-2x.png',
+            'images/marker-icon.png',
+            'images/marker-shadow.png',
+    ])
+}
+
+android {
+    compileSdkVersion 27
+    buildToolsVersion '28.0.2'
+
+    defaultConfig {
+        minSdkVersion 1
+        targetSdkVersion 27
+    }
+
+    preBuild.dependsOn copyLeaflet
+
+    sourceSets {
+        main {
+            assets.srcDirs = ['build/assets/']
+        }
+    }
+}
+
