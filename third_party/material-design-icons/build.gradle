@@ -38,10 +38,21 @@ android {
 task colouriseIcons(type: Copy) {
     from 'icons/'
     into 'build/generated/icons/drawable'
-    include '**/drawable-anydpi-v21/*.xml'
     includeEmptyDirs false
     eachFile { it.path = 'material_' + (name.replaceAll('_black_24dp.xml', '_24dp.xml')) }
     filter { line -> line.replaceAll(/android:fillColor="#(FF)?(0[01]){3}"/, 'android:fillColor="?android:attr/textColorPrimary"')}
+
+    // Explicitly declare each icon we want to use
+    include ([
+            'person',
+            'group',
+            'add',
+            'save',
+            'delete',
+    ].collect { r ->
+        '**/drawable-anydpi-v21/ic_' + r + '_black_24dp.xml'
+    })
+
 }
 
 project.afterEvaluate {
