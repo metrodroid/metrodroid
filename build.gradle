@@ -133,6 +133,9 @@ android {
     }
 
     buildTypes {
+        debug {
+            pseudoLocalesEnabled true
+        }
         dev.initWith(buildTypes.debug)
         dev {
             applicationIdSuffix '.dev'
@@ -149,6 +152,13 @@ android {
             useProguard false
             proguardFiles getDefaultProguardFile('proguard-android.txt'),
                     'proguard.cfg'
+        }
+    }
+
+    applicationVariants.all { variant ->
+        if (variant.buildType.name.equals("debug")) {
+            variant.mergedFlavor.resourceConfigurations.add("en-rXA")
+            variant.mergedFlavor.resourceConfigurations.add("ar-rXB")
         }
     }
 
