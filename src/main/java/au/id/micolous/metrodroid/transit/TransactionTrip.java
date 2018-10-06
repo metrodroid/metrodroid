@@ -1,5 +1,5 @@
 /*
- * En1545Trip.java
+ * TransactionTrip.java
  *
  * Copyright 2018 Google
  *
@@ -17,7 +17,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package au.id.micolous.metrodroid.transit.en1545;
+package au.id.micolous.metrodroid.transit;
 
 import android.os.Parcel;
 import android.os.Parcelable;
@@ -26,26 +26,24 @@ import android.support.annotation.Nullable;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
-import java.util.Objects;
 
-import au.id.micolous.metrodroid.transit.Station;
-import au.id.micolous.metrodroid.transit.TransitCurrency;
-import au.id.micolous.metrodroid.transit.Trip;
+import au.id.micolous.metrodroid.transit.smartrider.SmartRiderTagRecord;
 
-public class En1545Trip extends Trip implements Parcelable {
-    private En1545Transaction mStart;
-    private En1545Transaction mEnd;
+public class TransactionTrip extends Trip implements Parcelable {
+    protected Transaction mStart;
+    protected Transaction mEnd;
 
-    private En1545Trip(@NonNull En1545Transaction transaction) {
-        if (transaction.isTapOff())
+    protected TransactionTrip(@NonNull Transaction transaction) {
+        if (transaction.isTapOff() || transaction.isCancel())
             mEnd = transaction;
         else
             mStart = transaction;
     }
 
-    private En1545Trip(Parcel in) {
+    protected TransactionTrip(Parcel in) {
         if (in.readInt() != 0)
             mStart = in.readParcelable(getClass().getClassLoader());
         if (in.readInt() != 0)
@@ -71,19 +69,19 @@ public class En1545Trip extends Trip implements Parcelable {
         return 0;
     }
 
-    public static final Creator<En1545Trip> CREATOR = new Creator<En1545Trip>() {
+    public static final Creator<TransactionTrip> CREATOR = new Creator<TransactionTrip>() {
         @Override
-        public En1545Trip createFromParcel(Parcel in) {
-            return new En1545Trip(in);
+        public TransactionTrip createFromParcel(Parcel in) {
+            return new TransactionTrip(in);
         }
 
         @Override
-        public En1545Trip[] newArray(int size) {
-            return new En1545Trip[size];
+        public TransactionTrip[] newArray(int size) {
+            return new TransactionTrip[size];
         }
     };
 
-    private En1545Transaction getAny() {
+    private Transaction getAny() {
         return mStart == null ? mEnd : mStart;
     }
 
@@ -101,11 +99,7 @@ public class En1545Trip extends Trip implements Parcelable {
     @Nullable
     @Override
     public String getVehicleID() {
-        int vehicleNum = getAny().getVehicleNumber();
-        if (vehicleNum == 0) {
-            return null;
-        }
-        return Integer.toString(vehicleNum);
+        return getAny().getVehicleID();
     }
 
     @Override
@@ -151,23 +145,37 @@ public class En1545Trip extends Trip implements Parcelable {
     @Nullable
     @Override
     public TransitCurrency getFare() {
+        if (mEnd != null && mEnd.isCancel()) {
+            // No fare applies to the trip, as the tap-on was reversed.
+            return null;
+        }
+
         return getAny().getFare();
     }
 
-    public static List<En1545Trip> merge(List<En1545Transaction> transactions) {
+    public interface TransactionTripFactory {
+        TransactionTrip createTrip(Transaction el);
+    }
+
+    public static List<TransactionTrip> merge(List<? extends Transaction> transactions,
+                                              TransactionTripFactory factory) {
         Collections.sort(transactions, (a, b) -> a.getTimestamp().compareTo(b.getTimestamp()));
-        List<En1545Trip> trips = new ArrayList<>();
-        for (En1545Transaction el : transactions) {
+        List<TransactionTrip> trips = new ArrayList<>();
+        for (Transaction el : transactions) {
             if (trips.isEmpty()) {
-                trips.add(new En1545Trip(el));
+                trips.add(factory.createTrip(el));
                 continue;
             }
-            En1545Trip previous = trips.get(trips.size() - 1);
+            TransactionTrip previous = trips.get(trips.size() - 1);
             if (previous.mEnd == null && previous.mStart.shouldBeMerged(el))
                 previous.mEnd = el;
             else
-                trips.add(new En1545Trip(el));
+                trips.add(factory.createTrip(el));
         }
         return trips;
+    }
+
+    public static List<TransactionTrip> merge(List<? extends Transaction> transactions) {
+        return merge(transactions, TransactionTrip::new);
     }
 }

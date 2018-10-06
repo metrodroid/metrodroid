@@ -22,6 +22,7 @@ package au.id.micolous.metrodroid.transit.ricaricami;
 import android.os.Parcel;
 
 import au.id.micolous.farebot.R;
+import au.id.micolous.metrodroid.transit.Transaction;
 import au.id.micolous.metrodroid.transit.Trip;
 import au.id.micolous.metrodroid.transit.en1545.En1545Container;
 import au.id.micolous.metrodroid.transit.en1545.En1545Field;
@@ -125,7 +126,7 @@ public class RicaricaMiTransaction extends En1545Transaction {
     }
 
     @Override
-    protected boolean isSameTrip(En1545Transaction other) {
+    protected boolean isSameTrip(Transaction other) {
         return (getTransport() == RicaricaMiLookup.TRANSPORT_METRO
                 && (other instanceof RicaricaMiTransaction)
                 && ((RicaricaMiTransaction) other).getTransport() == RicaricaMiLookup.TRANSPORT_METRO)

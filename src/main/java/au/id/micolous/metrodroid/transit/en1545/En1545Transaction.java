@@ -29,11 +29,12 @@ import java.util.Calendar;
 
 import au.id.micolous.farebot.R;
 import au.id.micolous.metrodroid.transit.Station;
+import au.id.micolous.metrodroid.transit.Transaction;
 import au.id.micolous.metrodroid.transit.TransitCurrency;
 import au.id.micolous.metrodroid.transit.Trip;
 import au.id.micolous.metrodroid.util.Utils;
 
-public abstract class En1545Transaction implements Parcelable {
+public abstract class En1545Transaction extends Transaction {
     protected static final String EVENT_ROUTE_NUMBER = "EventRouteNumber";
     protected static final String EVENT_ROUTE_VARIANT = "EventRouteVariant";
     protected static final String EVENT_PASSENGER_COUNT = "EventPassengerCount";
@@ -108,8 +109,9 @@ public abstract class En1545Transaction implements Parcelable {
         return mParsed.getIntOrZero(EVENT_PASSENGER_COUNT);
     }
 
-    public int getVehicleNumber() {
-        return mParsed.getIntOrZero(EVENT_VEHICLE_ID);
+    public String getVehicleID() {
+        int id = mParsed.getIntOrZero(EVENT_VEHICLE_ID);
+        return id == 0 ? null : Integer.toString(id);
     }
 
     private int getEventCode() {
@@ -208,15 +210,15 @@ public abstract class En1545Transaction implements Parcelable {
         return (eventCode & 0xf) == EVENT_TYPE_EXIT || (eventCode & 0xf) == EVENT_TYPE_EXIT_TRANSFER;
     }
 
-    protected boolean isSameTrip(En1545Transaction other) {
+    @Override
+    protected boolean isSameTrip(Transaction otherx) {
+        if (!(otherx instanceof En1545Transaction))
+            return false;
+        En1545Transaction other = (En1545Transaction) otherx;
         return getTransport() == (other.getTransport())
                 && mParsed.getIntOrZero(EVENT_SERVICE_PROVIDER) == other.mParsed.getIntOrZero(EVENT_SERVICE_PROVIDER)
                 && mParsed.getIntOrZero(EVENT_ROUTE_NUMBER) == other.mParsed.getIntOrZero(EVENT_ROUTE_NUMBER)
                 && mParsed.getIntOrZero(EVENT_ROUTE_VARIANT) == other.mParsed.getIntOrZero(EVENT_ROUTE_VARIANT);
-    }
-
-    boolean shouldBeMerged(En1545Transaction other) {
-        return isTapOn() && other.isTapOff() && isSameTrip(other);
     }
 
     protected Integer getStationId() {

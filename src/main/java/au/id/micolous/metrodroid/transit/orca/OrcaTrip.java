@@ -30,6 +30,7 @@ import android.support.annotation.Nullable;
 import au.id.micolous.farebot.R;
 import au.id.micolous.metrodroid.card.desfire.files.DesfireRecord;
 import au.id.micolous.metrodroid.transit.Station;
+import au.id.micolous.metrodroid.transit.Transaction;
 import au.id.micolous.metrodroid.transit.Trip;
 import au.id.micolous.metrodroid.transit.TransitCurrency;
 import au.id.micolous.metrodroid.util.StationTableReader;
@@ -39,7 +40,7 @@ import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.TimeZone;
 
-public class OrcaTrip extends Trip {
+public class OrcaTrip extends Transaction {
     public static final Creator<OrcaTrip> CREATOR = new Creator<OrcaTrip>() {
         public OrcaTrip createFromParcel(Parcel parcel) {
             return new OrcaTrip(parcel);
@@ -59,6 +60,13 @@ public class OrcaTrip extends Trip {
     final int mAgency;
     final int mTransType;
     final boolean mIsTopup;
+
+    static final int TRANS_TYPE_PURSE_USE = 0x0c;
+    static final int TRANS_TYPE_CANCEL_TRIP = 0x01;
+    static final int TRANS_TYPE_TAP_IN = 0x03;
+    static final int TRANS_TYPE_TAP_OUT = 0x07;
+    static final int TRANS_TYPE_PASS_USE = 0x60;
+
 
     public OrcaTrip(DesfireRecord record, boolean isTopup) {
         byte[] useData = record.getData();
@@ -83,7 +91,7 @@ public class OrcaTrip extends Trip {
     }
 
     @Override
-    public Calendar getStartTimestamp() {
+    public Calendar getTimestamp() {
         if (mTimestamp == 0)
             return null;
         Calendar g = new GregorianCalendar(TZ);
@@ -94,6 +102,16 @@ public class OrcaTrip extends Trip {
     @Override
     public String getAgencyName(boolean isShort) {
         return StationTableReader.getOperatorName(ORCA_STR, mAgency, isShort);
+    }
+
+    @Override
+    protected boolean isTapOff() {
+        return !mIsTopup && mTransType == TRANS_TYPE_TAP_OUT;
+    }
+
+    @Override
+    protected boolean isCancel() {
+        return !mIsTopup && mTransType == TRANS_TYPE_CANCEL_TRIP;
     }
 
     @Override
@@ -126,7 +144,7 @@ public class OrcaTrip extends Trip {
     }
 
     @Override
-    public Station getStartStation() {
+    public Station getStation() {
         if (mIsTopup)
             return null;
         Station s = getStation(mAgency, mCoachNum);
@@ -151,26 +169,30 @@ public class OrcaTrip extends Trip {
     }
 
     @Override
-    public Station getEndStation() {
-        // ORCA tracks destination in a separate record
-        return null;
+    public Trip.Mode getMode() {
+        if (mIsTopup)
+            return Trip.Mode.TICKET_MACHINE;
+        if (isLink()) {
+            return Trip.Mode.METRO;
+        }
+        if (isSounder()) {
+            return Trip.Mode.TRAIN;
+        }
+        if (mAgency == OrcaTransitData.AGENCY_WSF) {
+            return Trip.Mode.FERRY;
+        }
+
+        return Trip.Mode.BUS;
     }
 
     @Override
-    public Mode getMode() {
-        if (mIsTopup)
-            return Mode.TICKET_MACHINE;
-        if (isLink()) {
-            return Mode.METRO;
-        }
-        if (isSounder()) {
-            return Mode.TRAIN;
-        }
-        if (mAgency == OrcaTransitData.AGENCY_WSF) {
-            return Mode.FERRY;
-        }
+    protected boolean isSameTrip(Transaction other) {
+        return other instanceof OrcaTrip && mAgency == ((OrcaTrip) other).mAgency;
+    }
 
-        return Mode.BUS;
+    @Override
+    protected boolean isTapOn() {
+        return !mIsTopup && mTransType == TRANS_TYPE_TAP_IN;
     }
 
     public void writeToParcel(Parcel parcel, int flags) {

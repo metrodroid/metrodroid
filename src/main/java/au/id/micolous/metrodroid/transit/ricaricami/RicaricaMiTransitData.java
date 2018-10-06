@@ -31,6 +31,7 @@ import au.id.micolous.metrodroid.card.classic.ClassicCard;
 import au.id.micolous.metrodroid.card.classic.ClassicSector;
 import au.id.micolous.metrodroid.transit.CardInfo;
 import au.id.micolous.metrodroid.transit.Subscription;
+import au.id.micolous.metrodroid.transit.TransactionTrip;
 import au.id.micolous.metrodroid.transit.TransitIdentity;
 import au.id.micolous.metrodroid.transit.Trip;
 import au.id.micolous.metrodroid.transit.en1545.En1545Container;
@@ -41,14 +42,13 @@ import au.id.micolous.metrodroid.transit.en1545.En1545Lookup;
 import au.id.micolous.metrodroid.transit.en1545.En1545Subscription;
 import au.id.micolous.metrodroid.transit.en1545.En1545TransitData;
 import au.id.micolous.metrodroid.transit.en1545.En1545Transaction;
-import au.id.micolous.metrodroid.transit.en1545.En1545Trip;
 import au.id.micolous.metrodroid.util.Utils;
 
 public class RicaricaMiTransitData extends En1545TransitData {
     private static final int RICARICA_MI_ID = 0x0221;
     private static final String NAME = "RicaricaMi";
     private final String mSerial;
-    private final List<En1545Trip> mTrips;
+    private final List<TransactionTrip> mTrips;
     private final List<En1545Subscription> mSubscriptions;
 
     public static final CardInfo CARD_INFO = new CardInfo.Builder()
@@ -87,7 +87,7 @@ public class RicaricaMiTransitData extends En1545TransitData {
             }
             trips.add(new RicaricaMiTransaction(tripData));
         }
-        mTrips = En1545Trip.merge(trips);
+        mTrips = TransactionTrip.merge(trips);
         mSubscriptions = new ArrayList<>();
         for (int i = 0; i < 3; i++) {
             ClassicSector sec = card.getSector(i+6);
