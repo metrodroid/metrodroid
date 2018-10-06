@@ -48,6 +48,9 @@ import au.id.micolous.metrodroid.util.Utils;
 public class IntercodeTransitData extends Calypso1545TransitData {
     private static final int COUNTRY_ID_FRANCE = 0x250;
 
+    // NOTE: Many French smart-cards don't have a brand name, and are simply referred to as a "titre
+    // de transport" (ticket). Here they take the name of the transit agency.
+
     public static final CardInfo TRANSGIRONDE_CARD_INFO = new CardInfo.Builder()
             .setName("TransGironde")
             .setLocation(R.string.location_gironde)
@@ -74,7 +77,8 @@ public class IntercodeTransitData extends Calypso1545TransitData {
             .build();
 
     public static final CardInfo TAM_MONTPELLIER_CARD_INFO = new CardInfo.Builder()
-            .setName("TAM Montpellier")
+            .setName("TaM") // Transports de l'agglomération de Montpellier
+            .setLocation(R.string.location_montpellier)
             .setCardType(CardType.ISO7816)
             .build();
 
