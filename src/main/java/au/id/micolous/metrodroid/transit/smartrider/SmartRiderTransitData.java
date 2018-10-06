@@ -56,7 +56,7 @@ public class SmartRiderTransitData extends TransitData {
             return new SmartRiderTransitData[size];
         }
     };
-    private static final String TAG = "SmartRiderTransitData";
+    private static final String TAG = SmartRiderTransitData.class.getSimpleName();
 
     public static final CardInfo SMARTRIDER_CARD_INFO = new CardInfo.Builder()
             .setImageId(R.drawable.smartrider_card)

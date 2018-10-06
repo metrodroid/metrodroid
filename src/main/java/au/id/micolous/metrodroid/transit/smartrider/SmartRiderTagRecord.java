@@ -42,7 +42,7 @@ import java.util.TimeZone;
  */
 
 public class SmartRiderTagRecord extends Transaction {
-    private static final String TAG = SmartRiderTransitData.class.getSimpleName();
+    private static final String TAG = SmartRiderTagRecord.class.getSimpleName();
     private long mTimestamp;
     private boolean mTagOn;
     private String mRoute;
