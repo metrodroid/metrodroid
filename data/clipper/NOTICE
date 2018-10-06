@@ -7,3 +7,14 @@ You may obtain a copy of the raw data and it's license at:
    http://www.bart.gov/schedules/developers/gtfs
 
 Stop mapping information is available in Metrodroid's source repository.
+
+
+The VTA stop database used in this software contains information derived from VTA GTFS feed, made available under the Developer License Agreement by VTA.
+
+You may obtain a copy of the raw data and it's license at:
+
+   http://www.vta.org/getting-around/gtfs-info/dev-terms-of-use
+
+   http://www.vta.org/getting-around/gtfs-info/data-file
+
+Stop mapping information is available in Metrodroid's source repository.

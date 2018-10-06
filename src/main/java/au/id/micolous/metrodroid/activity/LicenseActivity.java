@@ -22,6 +22,7 @@ import android.app.ActionBar;
 import android.content.res.AssetManager;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.util.Log;
 import android.view.MenuItem;
 import android.widget.TextView;
@@ -34,6 +35,7 @@ import java.io.InputStream;
 import java.nio.charset.Charset;
 
 import au.id.micolous.farebot.R;
+import au.id.micolous.metrodroid.transit.clipper.ClipperTransitData;
 
 public class LicenseActivity extends MetrodroidActivity {
     private static final String SEQ_GO_GTFS = "The SEQ Go Card stop database used in this software "
@@ -59,17 +61,6 @@ public class LicenseActivity extends MetrodroidActivity {
             + "\n"
             + "Stop mapping information is available in Metrodroid's source repository.\n\n\n";
 
-    private static final String BART_GTFS = "The BART stop database used in this software "
-            + "contains information derived from BART GTFS feed, made available under the "
-            + "Developer License Agreement by BART.\n"
-            + "\n"
-            + "You may obtain a copy of the raw data and it's license at:\n"
-            + "\n"
-            + "   http://www.bart.gov/schedules/developers/developer-license-agreement\n"
-            + "\n"
-            + "   http://www.bart.gov/schedules/developers/gtfs\n"
-            + "\n"
-            + "Stop mapping information is available in Metrodroid's source repository.\n\n\n";
 
     private static final String MYTRANSPORT_SG = "Contains information from " +
             "\"Train Station Codes and Chinese Names\" and \"TrainStation\" accessed on " +
@@ -90,18 +81,6 @@ public class LicenseActivity extends MetrodroidActivity {
             + "\n"
             + "Stop mapping information is available in Metrodroid's source repository.\n\n\n";
 
-    private static final String VTA_GTFS = "The VTA stop database used in this software "
-            + "contains information derived from VTA GTFS feed, made available under the "
-            + "Developer License Agreement by VTA.\n"
-            + "\n"
-            + "You may obtain a copy of the raw data and it's license at:\n"
-            + "\n"
-            + "   http://www.vta.org/getting-around/gtfs-info/dev-terms-of-use\n"
-            + "\n"
-            + "   http://www.vta.org/getting-around/gtfs-info/data-file\n"
-            + "\n"
-            + "Stop mapping information is available in Metrodroid's source repository.\n\n\n";
-
     private static final String TAG = LicenseActivity.class.getSimpleName();
 
     private TextView lblLicenseText;
@@ -117,6 +96,7 @@ public class LicenseActivity extends MetrodroidActivity {
         }
 
         lblLicenseText = findViewById(R.id.lblLicenseText);
+        lblLicenseText.beginBatchEdit();
         readLicenseTextFromAsset("Metrodroid-NOTICE.txt");
         readLicenseTextFromAsset("third_party/leaflet/LICENSE");
         readLicenseTextFromAsset("third_party/nfc-felica-lib/NOTICE");
@@ -127,17 +107,22 @@ public class LicenseActivity extends MetrodroidActivity {
         // TODO: Read this programatically
         lblLicenseText.append(SEQ_GO_GTFS);
         lblLicenseText.append(LAX_TAP_GTFS);
-        lblLicenseText.append(BART_GTFS);
-        lblLicenseText.append(VTA_GTFS);
+        addNotice(ClipperTransitData.getNotice());
         lblLicenseText.append(MYTRANSPORT_SG);
         lblLicenseText.append(TFI_GTFS);
 
+        lblLicenseText.endBatchEdit();
         lblLicenseText = null;
+    }
+
+    private void addNotice(@Nullable String notice) {
+        if (notice == null) return;
+        lblLicenseText.append(notice);
+        lblLicenseText.append("\n\n");
     }
 
     private void readLicenseTextFromAsset(@NonNull String path) {
         InputStream s = null;
-        lblLicenseText.beginBatchEdit();
         try {
             s = getAssets().open(path, AssetManager.ACCESS_RANDOM);
             LineIterator i = IOUtils.lineIterator(s, Charset.defaultCharset());
@@ -154,7 +139,6 @@ public class LicenseActivity extends MetrodroidActivity {
         }
 
         lblLicenseText.append("\n\n");
-        lblLicenseText.endBatchEdit();
     }
 
     @Override

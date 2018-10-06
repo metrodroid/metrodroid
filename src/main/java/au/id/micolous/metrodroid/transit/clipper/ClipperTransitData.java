@@ -44,6 +44,7 @@ import au.id.micolous.metrodroid.transit.TransitCurrency;
 import au.id.micolous.metrodroid.transit.TransitData;
 import au.id.micolous.metrodroid.transit.TransitIdentity;
 import au.id.micolous.metrodroid.transit.Trip;
+import au.id.micolous.metrodroid.util.StationTableReader;
 import au.id.micolous.metrodroid.util.Utils;
 
 import java.util.ArrayList;
@@ -288,5 +289,10 @@ public class ClipperTransitData extends TransitData {
         //Log.d("clipperts", Long.toString(timestamp) + " " + Long.toHexString(timestamp));
         c.setTimeInMillis(CLIPPER_EPOCH.getTimeInMillis() + (timestamp * 1000));
         return c;
+    }
+
+    @Nullable
+    public static String getNotice() {
+        return StationTableReader.getNotice(ClipperData.CLIPPER_STR);
     }
 }

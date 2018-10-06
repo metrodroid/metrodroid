@@ -25,13 +25,21 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.util.Log;
 
+import com.google.protobuf.ByteString;
+
+import org.apache.commons.io.IOUtils;
+
 import java.io.DataInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.nio.charset.Charset;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
+import java.util.zip.Inflater;
+import java.util.zip.InflaterInputStream;
+import java.util.zip.InflaterOutputStream;
 
 import au.id.micolous.farebot.R;
 import au.id.micolous.metrodroid.MetrodroidApplication;
@@ -315,4 +323,36 @@ public class StationTableReader {
                 mStationDb.getTtsHintLanguage(), this);
     }
 
+    /**
+     * Gets a licensing notice that applies to a particular MdST file.
+     * @param reader Station database to read from.
+     * @return String containing license notice, or null if not available.
+     */
+    @Nullable
+    public static String getNotice(@Nullable String reader) {
+        StationTableReader str = StationTableReader.getSTR(reader);
+        if (str == null)
+            return null;
+
+        return str.getNotice();
+    }
+
+    @Nullable
+    public String getNotice() {
+        if (mStationDb.getLicenseNotice().isEmpty()) {
+            Log.d(TAG, "Notice does not exist");
+            return null;
+        }
+
+        InflaterInputStream i = new InflaterInputStream(
+                mStationDb.getLicenseNotice().newInput());
+        try {
+            return IOUtils.toString(i, Charset.defaultCharset());
+        } catch (IOException e) {
+            Log.w(TAG, "Error reading from notice", e);
+        } finally {
+            IOUtils.closeQuietly(i);
+        }
+        return null;
+    }
 }
