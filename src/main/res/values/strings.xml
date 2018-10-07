@@ -601,6 +601,7 @@
 
     <!-- Locations -->
     <string name="location_act_australia">Australian Capital Territory, Australia</string>
+    <string name="location_adelaide">Adelaide, Australia</string>
     <!--
       Translators:
 
@@ -871,6 +872,12 @@
     <string name="orca_coach_number">Coach #%s</string>
     <string name="orca_topup_machine">Machine #%s</string>
     <string name="orca_topup">Top-up</string>
+
+    <!--
+	Adelaide Metro Card
+    -->
+    <string name="card_note_adelaide">Only serial, trips and subscriptions can be read</string>
+    <string name="purse_serial_number">Purse serial number</string>
 
     <!--
         Go Card (South East Queensland/Brisbane, AU)
