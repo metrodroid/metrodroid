@@ -28,6 +28,9 @@ message StationDb {
     // Licensing notice for the file, gzip-compressed.
     // Text is encoded as UTF-8.
     string license_notice = 6;
+
+    // VERSION 2 ONLY
+    uint32 v2_stations_length = 7;
 }
 
 enum TransportType {

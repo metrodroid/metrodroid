@@ -59,6 +59,8 @@ All integers are big endian.
 
 Protocol buffers are described in `stations.proto`.
 
+### Version 1
+
 Type | Length | Name | Description
 -----|--------|------|-------------
 `char` | 4      | magic | Always set to `MdST`.
@@ -68,4 +70,16 @@ Type | Length | Name | Description
 repeated `Station` | _varies_ | station(repeated) | Repeated `Station` messages. This is a _delimited_ Protobuf message, and each one is prefixed by a varint representing its length.
 `StationIndex` | _varies_ | station_index | Structure with a Protobuf `map`, describing the offsets of each station by its ID.
 
+### Version 2
 
+This version compresses data with brotli (or anything else)
+
+Type | Length | Name | Description
+-----|--------|------|-------------
+`char` | 4      | magic | Always set to `MdST`.
+`uint32` | 4    | version | Always set to 2. This is the file format version, and not intended to describe the contents of this file.
+`varint` | _varies_ | header_len | Length of `header`.
+`compressed(StationDb)` | _varies_ | header | Metadata header, containing compressed the `StationDb` message.
+`compressed(repeated Station)` | _varies_ | Repeated station messages. The entire block is compressed, the length being in `header.v2_stations_length`. Each message is delimited (prefixed with `varint` of its length.
+`varint` | _varies_ | index_len | Length of `index`.
+`compressed(StationIndex)` | _varies_ | index | Structure with a Protobuf `map`, describing the offsets of each station by its ID.

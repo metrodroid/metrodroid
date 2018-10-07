@@ -28,6 +28,8 @@
  */
 package au.id.micolous.metrodroid.transit.clipper;
 
+import android.support.annotation.Nullable;
+
 import au.id.micolous.farebot.R;
 import au.id.micolous.metrodroid.transit.Station;
 import au.id.micolous.metrodroid.transit.Trip;
@@ -61,13 +63,15 @@ final class ClipperData {
         return StationTableReader.getOperatorName(CLIPPER_STR, agency, isShort);
     }
 
-
+    @Nullable
     public static Station getStation(int agency, int stationId, boolean isEnd) {
         String humanReadableId = "0x" + Integer.toHexString(agency) + "/0x" + Integer.toHexString(stationId);
-        Station s = StationTableReader.getStationNoFallback(CLIPPER_STR,(agency << 16) | stationId,
+        Station s = StationTableReader.getStation(CLIPPER_STR,(agency << 16) | stationId,
                 humanReadableId);
-        if (s != null)
+
+        if (!s.isUnknown()) {
             return s;
+        }
 
         if (agency == ClipperData.AGENCY_GGT || agency == ClipperData.AGENCY_CALTRAIN) {
             if (stationId == 0xffff)
@@ -75,10 +79,10 @@ final class ClipperData {
             return Station.nameOnly(Utils.localizeString(R.string.clipper_zone_number, Integer.toString(stationId)));
         }
 
-        // Placeholders
+        // The trip is still in progress, or did not have a recorded location.
         if (stationId == (isEnd ? 0xffff : 0))
             return null;
 
-        return Station.unknown(humanReadableId);
+        return s;
     }
 }

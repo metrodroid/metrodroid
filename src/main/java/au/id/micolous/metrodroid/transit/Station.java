@@ -21,6 +21,7 @@ package au.id.micolous.metrodroid.transit;
 
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.support.annotation.NonNull;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -182,6 +183,7 @@ public class Station implements Parcelable {
         return this;
     }
 
+    @NonNull
     public static Station fromProto(String humanReadableID, Stations.Station ps,
                                     Stations.Operator po, Stations.Line pl, String ttsHintLanguage,
                                     StationTableReader str) {

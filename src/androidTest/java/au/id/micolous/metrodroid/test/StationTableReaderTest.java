@@ -22,11 +22,14 @@ public class StationTableReaderTest extends AndroidTestCase {
 
         // Try when Raw Station IDs are enabled.
         TestUtils.showRawStationIds(true);
+        assertEquals("Domestic Airport [0x9]", s.getStationName());
+
         s = StationTableReader.getStation(SeqGoData.SEQ_GO_STR, SeqGoTrip.DOMESTIC_AIRPORT);
         assertEquals("Domestic Airport [0x9]", s.getStationName());
 
         // Reset back to default
         TestUtils.showRawStationIds(false);
+        assertEquals("Domestic Airport", s.getStationName());
     }
 
     public void testLicenseNotice() {

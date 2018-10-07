@@ -25,8 +25,17 @@ import struct
 import csv
 import zlib
 import brotli
+from io import BytesIO
 
-SCHEMA_VER = 1
+SCHEMA_VER = 2
+
+class FakeCompression:
+  def compress(self, d):
+    return d
+  def decompress(self, d):
+    return d
+
+compression = brotli
 
 def delimited_value(msg):
   # Emits a writeDelimited compatible Protobuf message
@@ -34,10 +43,16 @@ def delimited_value(msg):
   d = encoder._VarintBytes(len(o))
   return d + o
 
+def delimited_raw_write(f, msg):
+  # Emits a writeDelimited compatible Protobuf message
+  f.write(encoder._VarintBytes(len(msg)))
+  f.write(msg)
+
+
 class MdstWriter(object):
   def __init__(self, fh, version, local_languages=None, operators=None, lines=None, tts_hint_language=None, license_notice_f=None):
     """
-    Creates a new MdST database.
+    Creates a new MdST v2 database.
     
     This class must be initialised with the parameters in the StationDb header.
     
@@ -51,71 +66,63 @@ class MdstWriter(object):
     
     
     """
-    sdb = StationDb()
-    sdb.version = version
+    self.sdb = StationDb()
+    self.sdb.version = version
     if tts_hint_language:
-      sdb.tts_hint_language = tts_hint_language
+      self.sdb.tts_hint_language = tts_hint_language
     
     if local_languages:
       for l in local_languages:
-        sdb.local_languages.append(l)
+        self.sdb.local_languages.append(l)
 
     if operators:
       for k, v in operators.items():
         if isinstance(v, Operator):
-          sdb.operators[k].name.english = v.name.english
-          sdb.operators[k].name.english_short = v.name.english_short
-          sdb.operators[k].name.local = v.name.local
-          sdb.operators[k].name.local_short = v.name.local_short
-          sdb.operators[k].default_transport = v.default_transport
+          self.sdb.operators[k].name.english = v.name.english
+          self.sdb.operators[k].name.english_short = v.name.english_short
+          self.sdb.operators[k].name.local = v.name.local
+          self.sdb.operators[k].name.local_short = v.name.local_short
+          self.sdb.operators[k].default_transport = v.default_transport
           continue
         if v[0] != None:
-          sdb.operators[k].name.english = v[0]
+          self.sdb.operators[k].name.english = v[0]
         if len(v) > 1 and v[1] != None:
-          sdb.operators[k].name.local = v[1]
+          self.sdb.operators[k].name.local = v[1]
 
     if lines:
       for k, v in lines.items():
         if isinstance(v, Line):
-          sdb.lines[k].name.english = v.name.english
-          sdb.lines[k].name.english_short = v.name.english_short
-          sdb.lines[k].name.local = v.name.local
-          sdb.lines[k].name.local_short = v.name.local_short
-          sdb.lines[k].transport = v.transport
+          self.sdb.lines[k].name.english = v.name.english
+          self.sdb.lines[k].name.english_short = v.name.english_short
+          self.sdb.lines[k].name.local = v.name.local
+          self.sdb.lines[k].name.local_short = v.name.local_short
+          self.sdb.lines[k].transport = v.transport
           continue
         if v[0] != None:
-          sdb.lines[k].name.english = v[0]
+          self.sdb.lines[k].name.english = v[0]
         if len(v) > 1 and v[1] != None:
-          sdb.lines[k].name.local = v[1]
+          self.sdb.lines[k].name.local = v[1]
 
     if license_notice_f:
-      t = license_notice_f.read().encode('utf-8')
-      sdb.license_notice = t # zlib.compress(t, 9)
+      self.sdb.license_notice = license_notice_f.read()
 
     # Write out the header
     fh.write(b'MdST')
-    fh.write(struct.pack('!II', SCHEMA_VER, 0))
-    h = delimited_value(sdb)
-    fh.write(h)
-    print("header compression: %d original -> %d brotli %d zlib" % (len(h), len(brotli.compress(h)), len(zlib.compress(h, 9))))
-    
-    self.stationlist_off = fh.tell()
+    fh.write(struct.pack('!I', SCHEMA_VER))
+
     self.fh = fh
     self.stations = {}
     self.mock_compression_size = 0
     self.mock_bcompression_size = 0
     self.mock_compression_buffer = b''
+    self.station_data_fh = BytesIO()
 
   def push_station(self, station):
     """
     Adds a station entry. Expects a Station message.
     """
-    self.stations[station.id] = self.fh.tell() - self.stationlist_off
-    d = delimited_value(station)
-    self.fh.write(d)
-    self.mock_compression_size += len(zlib.compress(d, 9))
-    self.mock_bcompression_size += len(brotli.compress(d))
-    self.mock_compression_buffer += d
+    self.stations[station.id] = self.station_data_fh.tell()
+    self.station_data_fh.write(delimited_value(station))
 
 
   def finalise(self):
@@ -124,25 +131,37 @@ class MdstWriter(object):
 
     Returns the total size of the file.
     """
-    self.index_off = self.fh.tell()
-    sidx = StationIndex()
-    for station_id, offset in self.stations.items():
-      sidx.station_map[station_id] = offset
-    self.fh.write(delimited_value(sidx))
 
-    print("zlib mock compression: records: %d bytes, index: %d bytes" % (self.mock_compression_size, len(zlib.compress(sidx.SerializeToString(), 9)),))
-    print("brotli mock compression: records: %d bytes, index: %d bytes" % (self.mock_bcompression_size, len(brotli.compress(sidx.SerializeToString())),))
-    print("solid records mode: %d bytes" % len(self.mock_compression_buffer))
-    print("zlib: %d bytes" % len(zlib.compress(self.mock_compression_buffer, 9)))
-    print("brotli: %d bytes" % len(brotli.compress(self.mock_compression_buffer)))
+    # Compress the list of stations
+    stations_data = compression.compress(self.station_data_fh.getvalue())
+
+    # Build an index
+    # Pre-sort the station ID list.
+    station_ids = list(self.stations.keys())
+    station_ids.sort()
+    sidx = StationIndex()
+    for station_id in station_ids:
+      sidx.station_map[station_id] = self.stations[station_id]
+
+    index_data = compression.compress(delimited_value(sidx))
+
+    # Build a header
+    self.sdb.v2_stations_length = len(stations_data)
+    header_data = compression.compress(delimited_value(self.sdb))
+
+    # for stats
+    self.stationlist_off = len(header_data) + self.fh.tell()
+    self.index_off = self.stationlist_off + self.sdb.v2_stations_length
+
+    # Now we have data, write it properly
+    delimited_raw_write(self.fh, header_data)
+    # Note: station data is not delimited, total length is in the header
+    self.fh.write(stations_data)
+    delimited_raw_write(self.fh, index_data)
 
     index_end_off = self.fh.tell()
 
-    # Write the location of the index
-    self.fh.seek(4+4)
-    self.fh.write(struct.pack('!I', self.index_off - self.stationlist_off))
     self.fh.close()
-    
     return index_end_off
 
 

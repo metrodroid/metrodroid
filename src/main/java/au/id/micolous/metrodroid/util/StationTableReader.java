@@ -23,25 +23,24 @@ import android.content.Context;
 import android.content.res.AssetManager;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.util.LruCache;
 import android.util.Log;
 
-import com.google.protobuf.ByteString;
+import com.google.protobuf.AbstractMessageLite;
+import com.google.protobuf.CodedInputStream;
 
-import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang3.concurrent.ConcurrentException;
 import org.apache.commons.lang3.concurrent.LazyInitializer;
+import org.brotli.dec.BrotliInputStream;
 
 import java.io.DataInputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.nio.charset.Charset;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
-import java.util.zip.Inflater;
-import java.util.zip.InflaterInputStream;
-import java.util.zip.InflaterOutputStream;
+import java.util.concurrent.TimeUnit;
 
 import au.id.micolous.farebot.R;
 import au.id.micolous.metrodroid.MetrodroidApplication;
@@ -57,7 +56,8 @@ import au.id.micolous.metrodroid.transit.Trip;
  */
 public class StationTableReader {
     private static final byte[] MAGIC = new byte[] { 0x4d, 0x64, 0x53, 0x54 };
-    private static final int VERSION = 1;
+    private static final int VERSION_1 = 1;
+    private static final int VERSION_2 = 2;
     private static final String TAG = "StationTableReader";
 
     private Stations.StationDb mStationDb;
@@ -66,6 +66,7 @@ public class StationTableReader {
     private final int mStationsLength;
 
     private static final Map<String,StationTableReader> mSTRs = new HashMap<>();
+    private final int mVersion;
 
     static private StationTableReader getSTR(@Nullable String name) {
         if (name == null)
@@ -88,22 +89,15 @@ public class StationTableReader {
         }
     }
 
+    // TODO: make this private
     @Nullable
     public static Station getStationNoFallback(@Nullable String reader, int id,
                                                String humanReadableId) {
         StationTableReader str = StationTableReader.getSTR(reader);
         if (str == null)
             return null;
-        try {
-            return str.getStationById(id, humanReadableId);
-        } catch (IOException e) {
-            return null;
-        }
-    }
 
-    @Nullable
-    public static Station getStationNoFallback(@Nullable String reader, int id) {
-        return getStationNoFallback(reader, id, "0x" + Integer.toHexString(id));
+        return str.getStationById(id, humanReadableId);
     }
 
     @NonNull
@@ -115,8 +109,13 @@ public class StationTableReader {
     }
 
     @NonNull
+    public static Station getStation(@Nullable String reader, int id, int humanReadableId) {
+        return getStation(reader, id, "0x" + Integer.toHexString(humanReadableId));
+    }
+
+    @NonNull
     public static Station getStation(@Nullable String reader, int id) {
-        return getStation(reader, id, "0x" + Integer.toHexString(id));
+        return getStation(reader, id, id);
     }
 
     private static String fallbackName(int id) {
@@ -141,6 +140,37 @@ public class StationTableReader {
 
     public class InvalidHeaderException extends Exception {}
 
+    @Nullable
+    private static Integer readVarInt32(InputStream s) throws IOException {
+        int firstByte = s.read();
+        if (firstByte == -1) {
+            return null;
+        }
+
+        return CodedInputStream.readRawVarint32(firstByte, s);
+    }
+
+    @FunctionalInterface
+    interface ExceptionalFunction<T, R, E extends Throwable>  {
+        R apply(T input) throws E;
+    }
+
+    @Nullable
+    private <U extends AbstractMessageLite> U parseFromTable(
+            ExceptionalFunction<InputStream, U, IOException> creator) throws IOException {
+        if (mVersion == 1) {
+            return creator.apply(mTable);
+        } else if (mVersion == 2) {
+            // Decompress it first
+            Integer l = readVarInt32(mTable);
+            if (l == null) return null;
+            InputStream is = new BrotliInputStream(
+                    new LimitedInputStream(mTable, l));
+            return creator.apply(is);
+        }
+        return null;
+    }
+
     /**
      * Initialises a "connection" to a Metrodroid Station Table kept in the `assets/` directory.
      * @param context Application context to use for fetching Assets.
@@ -163,15 +193,26 @@ public class StationTableReader {
         }
 
         // Check the version
-        int version = mTable.readInt();
-        if (version != VERSION) {
+        mVersion = mTable.readInt();
+        int stationsLength = -1;
+        if (mVersion == VERSION_1) {
+            stationsLength = mTable.readInt();
+        }
+
+        mStationDb = parseFromTable(Stations.StationDb::parseDelimitedFrom);
+        if (mStationDb == null) {
             throw new InvalidHeaderException();
         }
 
-        mStationsLength = mTable.readInt();
+        if (mVersion == VERSION_2) {
+            stationsLength = mStationDb.getV2StationsLength();
+        }
 
-        // Read out the header
-        mStationDb = Stations.StationDb.parseDelimitedFrom(mTable);
+        if (stationsLength < 0) {
+            throw new InvalidHeaderException();
+        }
+
+        mStationsLength = stationsLength;
 
         // Mark where the start of the station list is.
         // AssetInputStream allows unlimited seeking, no need to specify a readlimit.
@@ -189,7 +230,7 @@ public class StationTableReader {
                     mTable.skipBytes(mStationsLength);
 
                     // Read out the index
-                    return Stations.StationIndex.parseDelimitedFrom(mTable);
+                    return parseFromTable(Stations.StationIndex::parseDelimitedFrom);
                 } catch (IOException e) {
                     Log.e(TAG, "error reading index", e);
                     return null;
@@ -258,21 +299,35 @@ public class StationTableReader {
     /**
      * Gets a Station object, according to the MdST Protobuf definition.
      * @param id Stop ID
-     * @return Station object, or null if it could not be found.
-     * @throws IOException on read errors
+     * @return Station object, or null if it could not be found, or on read errors.
      */
-    private Stations.Station getProtoStationById(int id) throws IOException {
-        int offset;
+    private Stations.Station getProtoStationById(int id) {
         try {
-            offset = mStationIndex.get().getStationMapOrThrow(id);
-        } catch (ConcurrentException | IllegalArgumentException e) {
-            Log.d(TAG, String.format(Locale.ENGLISH, "Unknown station %d", id), e);
+            int offset;
+            try {
+                offset = mStationIndex.get().getStationMapOrThrow(id);
+            } catch (ConcurrentException | IllegalArgumentException e) {
+                Log.d(TAG, String.format(Locale.ENGLISH, "Unknown station %d", id), e);
+                return null;
+            }
+
+            mTable.reset();
+
+            if (mVersion == VERSION_1) {
+                mTable.skipBytes(offset);
+                return Stations.Station.parseDelimitedFrom(mTable);
+            } else if (mVersion == VERSION_2) {
+                InputStream is = new BrotliInputStream(
+                        new LimitedInputStream(mTable, mStationsLength));
+                is.skip(offset);
+                return Stations.Station.parseDelimitedFrom(is);
+            } else {
+                return null;
+            }
+        } catch (IOException ex) {
+            Log.w(TAG, "IOException reading station " + id, ex);
             return null;
         }
-
-        mTable.reset();
-        mTable.skipBytes(offset);
-        return Stations.Station.parseDelimitedFrom(mTable);
     }
 
     public static String getLineName(@Nullable String reader, int id) {
@@ -323,20 +378,40 @@ public class StationTableReader {
         return str.selectBestName(po.getName(), isShort);
     }
 
+    private LruCache<Integer, Station> mStationCache = new LruCache<>(25);
+    private LruCache<Integer, Boolean> mStationNullCache = new LruCache<>(100);
+
     /**
      * Gets a Metrodroid-native Station object for a given stop ID.
      * @param id Stop ID.
      * @return Station object, or null if it could not be found.
-     * @throws IOException on read errors
      */
-    private Station getStationById(int id, String humanReadableID) throws IOException {
-        Stations.Station ps = getProtoStationById(id);
-        if (ps == null) return null;
+    private Station getStationById(int id, String humanReadableID) {
+        // Check caches
+        // We have to do this all by hand, because we want to actually cache a null result,
+        // and a null result is acceptable.
+        if (mStationNullCache.get(id) != null) {
+            return null;
+        }
 
-        return Station.fromProto(humanReadableID, ps,
-                mStationDb.getOperatorsOrDefault(ps.getOperatorId(), null),
-                mStationDb.getLinesOrDefault(ps.getLineId(), null),
-                mStationDb.getTtsHintLanguage(), this);
+        Station s = mStationCache.get(id);
+        if (s != null) {
+            return s;
+        }
+
+        // There is no cached result, fetch again!
+        Stations.Station ps = getProtoStationById(id);
+        if (ps == null) {
+            mStationNullCache.put(id, true);
+            return null;
+        } else {
+            s = Station.fromProto(humanReadableID, ps,
+                    mStationDb.getOperatorsOrDefault(ps.getOperatorId(), null),
+                    mStationDb.getLinesOrDefault(ps.getLineId(), null),
+                    mStationDb.getTtsHintLanguage(), this);
+            mStationCache.put(id, s);
+            return s;
+        }
     }
 
     /**
@@ -360,15 +435,6 @@ public class StationTableReader {
             return null;
         }
 
-        InflaterInputStream i = new InflaterInputStream(
-                mStationDb.getLicenseNotice().newInput());
-        try {
-            return IOUtils.toString(i, Charset.defaultCharset());
-        } catch (IOException e) {
-            Log.w(TAG, "Error reading from notice", e);
-        } finally {
-            IOUtils.closeQuietly(i);
-        }
-        return null;
+        return mStationDb.getLicenseNotice();
     }
 }

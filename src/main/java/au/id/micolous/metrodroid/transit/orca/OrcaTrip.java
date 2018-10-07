@@ -139,19 +139,18 @@ public class OrcaTrip extends Transaction {
         return TransitCurrency.USD(mIsTopup ? -mFare : mFare);
     }
 
-    private static Station getStation(int agency, int stationId) {
-        return StationTableReader.getStationNoFallback(ORCA_STR, ((agency << 16)|stationId));
-    }
-
     @Override
     public Station getStation() {
         if (mIsTopup)
             return null;
-        Station s = getStation(mAgency, mCoachNum);
-        if (s != null)
+
+        Station s = StationTableReader.getStation(
+                ORCA_STR, ((mAgency<< 16) | mCoachNum), mCoachNum);
+
+        if (!s.isUnknown())
             return s;
         if (isLink() || isSounder() || mAgency == OrcaTransitData.AGENCY_WSF) {
-            return Station.unknown(mCoachNum);
+            return s;
         } else {
             return null;
         }
