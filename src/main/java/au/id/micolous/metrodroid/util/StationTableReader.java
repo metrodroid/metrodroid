@@ -23,8 +23,9 @@ import android.content.Context;
 import android.content.res.AssetManager;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.util.LruCache;
+import android.support.annotation.VisibleForTesting;
 import android.util.Log;
+import android.util.LruCache;
 
 import com.google.protobuf.AbstractMessageLite;
 import com.google.protobuf.CodedInputStream;
@@ -37,10 +38,10 @@ import java.io.DataInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
-import java.util.concurrent.TimeUnit;
 
 import au.id.micolous.farebot.R;
 import au.id.micolous.metrodroid.MetrodroidApplication;
@@ -68,7 +69,7 @@ public class StationTableReader {
     private static final Map<String,StationTableReader> mSTRs = new HashMap<>();
     private final int mVersion;
 
-    static private StationTableReader getSTR(@Nullable String name) {
+    private static StationTableReader getSTR(@Nullable String name) {
         if (name == null)
             return null;
         synchronized (mSTRs) {
@@ -87,6 +88,23 @@ public class StationTableReader {
             Log.w(TAG, "Couldn't open DB " + name, e);
             return null;
         }
+    }
+
+    @VisibleForTesting
+    public static void evictCaches() {
+        Collection<StationTableReader> strs;
+        synchronized (mSTRs) {
+            strs = mSTRs.values();
+        }
+
+        for (StationTableReader r : strs) {
+            r.evictCache();
+        }
+    }
+
+    private void evictCache() {
+        mStationCache.evictAll();
+        mStationNullCache.evictAll();
     }
 
     // TODO: make this private

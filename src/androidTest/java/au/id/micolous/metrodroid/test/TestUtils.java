@@ -32,6 +32,7 @@ import au.id.micolous.metrodroid.card.classic.ClassicCard;
 import au.id.micolous.metrodroid.card.classic.ClassicSector;
 import au.id.micolous.metrodroid.key.ClassicSectorKey;
 import au.id.micolous.metrodroid.util.ImmutableMapBuilder;
+import au.id.micolous.metrodroid.util.StationTableReader;
 
 import static au.id.micolous.metrodroid.MetrodroidApplication.getInstance;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -89,6 +90,7 @@ final class TestUtils {
         Configuration c = r.getConfiguration();
         c.locale = l;
         r.updateConfiguration(c, r.getDisplayMetrics());
+        StationTableReader.evictCaches();
     }
 
     /**
