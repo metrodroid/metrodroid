@@ -145,7 +145,7 @@ class IntercodeSubscription extends En1545Subscription {
                     ),
                     new En1545Container(
                             new En1545FixedInteger(CONTRACT_PAY_METHOD, 11),
-                            new En1545FixedInteger("ContractPriceAmount", 16),
+                            new En1545FixedInteger(CONTRACT_PRICE_AMOUNT, 16),
                             new En1545FixedInteger("ContractReceiptDelivered", 1)
                     ),
                     new En1545FixedInteger(CONTRACT_PASSENGER_TOTAL, 6),
