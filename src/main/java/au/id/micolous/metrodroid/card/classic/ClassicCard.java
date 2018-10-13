@@ -32,6 +32,8 @@ import android.os.Parcel;
 import android.preference.PreferenceManager;
 import android.util.Log;
 
+import au.id.micolous.metrodroid.transit.easycard.EasyCardTransitFactory;
+
 import org.simpleframework.xml.ElementList;
 import org.simpleframework.xml.Root;
 
@@ -437,6 +439,8 @@ public class ClassicCard extends Card {
             return BilheteUnicoSPTransitData.parseTransitIdentity(this);
         } else if (KievTransitData.check(this)) {
             return KievTransitData.parseTransitIdentity(this);
+        } else if ((new EasyCardTransitFactory()).check(this)) {
+            return (new EasyCardTransitFactory()).parseIdentity(this);
         } else if (UnauthorizedClassicTransitData.check(this)) {
             // This check must be THIRD TO LAST.
             //
@@ -508,6 +512,8 @@ public class ClassicCard extends Card {
             return new BilheteUnicoSPTransitData(this);
         } else if (KievTransitData.check(this)) {
             return new KievTransitData(this);
+        } else if ((new EasyCardTransitFactory()).check(this)) {
+            return (new EasyCardTransitFactory()).parseInfo(this);
         } else if (UnauthorizedClassicTransitData.check(this)) {
             // This check must be THIRD TO LAST.
             //
