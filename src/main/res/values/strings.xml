@@ -629,6 +629,7 @@
     This is not a city or prefecture.
     -->
     <string name="location_kansai">Kansai, Japan</string>
+    <string name="location_kiev">Kiev, Ukraine</string>
     <string name="location_lisbon">Lisbon, Portugal</string>
     <string name="location_los_angeles">Los Angeles, CA, USA</string>
     <string name="location_milan">Milan, Italy</string>
@@ -1260,4 +1261,6 @@
     <string name="tap_for_more_info">Tap for more information…</string>
     <!-- Translators: used as a preference category label, for settings related to the display of maps -->
     <string name="maps">Maps</string>
+    <string name="card_note_kiev">Only pre-2016 cards. Only trip log can be read</string>
+    <string name="card_name_kiev">Kiev Metro</string>
 </resources>
