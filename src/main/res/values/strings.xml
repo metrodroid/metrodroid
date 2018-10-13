@@ -125,6 +125,7 @@
     <!-- Translators: This is a start date, eg: "Valid from 3/12/2017". Dates are formatted according
      to user preferences. -->
     <string name="valid_from_format">Valid from %1$s</string>
+    <string name="subscription_cost">Cost</string>
     <string name="valid_not_used">Not yet used</string>
     <string name="unknown_format">Unknown (%s)</string>
     <string name="unknown">Unknown</string>
