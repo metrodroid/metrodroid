@@ -284,7 +284,7 @@ public class DesfireCard extends Card {
             return new AtHopStubTransitData(this);
 
         if (UnauthorizedDesfireTransitData.check(this))
-            return new UnauthorizedDesfireTransitData();
+            return new UnauthorizedDesfireTransitData(this);
         return null;
     }
 
