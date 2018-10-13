@@ -101,6 +101,7 @@ android {
     defaultConfig {
         minSdkVersion 16
         targetSdkVersion 27
+        testApplicationId "au.id.micolous.farebot.test"
         versionCode "git -C ${projectDir} rev-list --count HEAD".execute().text.trim().toInteger()
         versionName "git -C ${projectDir} describe --always --tags --dirty".execute().text.trim().replaceAll("^v", "")
 
