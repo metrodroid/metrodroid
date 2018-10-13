@@ -63,6 +63,7 @@ import au.id.micolous.metrodroid.transit.erg.ErgTransitData;
 import au.id.micolous.metrodroid.transit.kiev.KievTransitData;
 import au.id.micolous.metrodroid.transit.lax_tap.LaxTapTransitData;
 import au.id.micolous.metrodroid.transit.manly_fast_ferry.ManlyFastFerryTransitData;
+import au.id.micolous.metrodroid.transit.metroq.MetroQTransitData;
 import au.id.micolous.metrodroid.transit.msp_goto.MspGotoTransitData;
 import au.id.micolous.metrodroid.transit.nextfare.NextfareTransitData;
 import au.id.micolous.metrodroid.transit.ovc.OVChipTransitData;
@@ -441,6 +442,8 @@ public class ClassicCard extends Card {
             return KievTransitData.parseTransitIdentity(this);
         } else if ((new EasyCardTransitFactory()).check(this)) {
             return (new EasyCardTransitFactory()).parseIdentity(this);
+        } else if (MetroQTransitData.check(this)) {
+            return MetroQTransitData.parseTransitIdentity(this);
         } else if (UnauthorizedClassicTransitData.check(this)) {
             // This check must be THIRD TO LAST.
             //
@@ -514,6 +517,8 @@ public class ClassicCard extends Card {
             return new KievTransitData(this);
         } else if ((new EasyCardTransitFactory()).check(this)) {
             return (new EasyCardTransitFactory()).parseInfo(this);
+        } else if (MetroQTransitData.check(this)) {
+            return new MetroQTransitData(this);
         } else if (UnauthorizedClassicTransitData.check(this)) {
             // This check must be THIRD TO LAST.
             //
