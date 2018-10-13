@@ -1,6 +1,10 @@
 package au.id.micolous.metrodroid.transit.unknown;
 
 import android.os.Parcel;
+import android.util.Pair;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import au.id.micolous.farebot.R;
 import au.id.micolous.metrodroid.card.Card;
@@ -18,15 +22,26 @@ import au.id.micolous.metrodroid.util.Utils;
 public class UnauthorizedDesfireTransitData extends UnauthorizedTransitData {
     public static final Creator<UnauthorizedDesfireTransitData> CREATOR = new Creator<UnauthorizedDesfireTransitData>() {
         public UnauthorizedDesfireTransitData createFromParcel(Parcel parcel) {
-            return new UnauthorizedDesfireTransitData();
+            return new UnauthorizedDesfireTransitData(parcel);
         }
 
         public UnauthorizedDesfireTransitData[] newArray(int size) {
             return new UnauthorizedDesfireTransitData[size];
         }
     };
+    private final String mName;
 
-    public UnauthorizedDesfireTransitData() {
+    public UnauthorizedDesfireTransitData(DesfireCard card) {
+        mName = getName(card);
+    }
+
+    private UnauthorizedDesfireTransitData(Parcel parcel) {
+        mName = parcel.readString();
+    }
+
+    @Override
+    public void writeToParcel(Parcel parcel, int i) {
+        parcel.writeString(mName);
     }
 
     /**
@@ -51,13 +66,29 @@ public class UnauthorizedDesfireTransitData extends UnauthorizedTransitData {
         return true;
     }
 
-    public static TransitIdentity parseTransitIdentity(Card card) {
-        return new TransitIdentity(Utils.localizeString(R.string.locked_mfd_card), null);
+
+
+    public static TransitIdentity parseTransitIdentity(DesfireCard card) {
+        return new TransitIdentity(getName(card), null);
+    }
+
+    private static final List<Pair<Integer, String>> TYPES = new ArrayList<>();
+    static {
+        TYPES.add(Pair.create(0x31594f, "Oyster"));
+        TYPES.add(Pair.create(0x425301, "Thailand BEM"));
+    };
+
+    private static String getName(DesfireCard card) {
+        for (Pair<Integer, String> type : TYPES) {
+            if (card.getApplication(type.first) != null)
+                return type.second;
+        }
+        return Utils.localizeString(R.string.locked_mfd_card);
     }
 
     @Override
     public String getCardName() {
-        return Utils.localizeString(R.string.locked_mfd_card);
+        return mName;
     }
 
 }
