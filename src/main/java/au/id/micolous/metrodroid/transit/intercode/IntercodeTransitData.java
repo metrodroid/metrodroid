@@ -54,6 +54,13 @@ public class IntercodeTransitData extends Calypso1545TransitData {
     // NOTE: Many French smart-cards don't have a brand name, and are simply referred to as a "titre
     // de transport" (ticket). Here they take the name of the transit agency.
 
+    public static final CardInfo TISSEO_CARD_INFO = new CardInfo.Builder()
+            .setName("Pastel")
+            .setLocation(R.string.location_toulouse)
+            .setCardType(CardType.ISO7816)
+            .setPreview()
+            .build();
+
     public static final CardInfo TRANSGIRONDE_CARD_INFO = new CardInfo.Builder()
             .setName("TransGironde")
             .setLocation(R.string.location_gironde)
@@ -189,6 +196,7 @@ public class IntercodeTransitData extends Calypso1545TransitData {
         NETWORKS.put(0x250064, Pair.create(TAM_MONTPELLIER_CARD_INFO, new IntercodeLookupUnknown()));
         NETWORKS.put(0x250502, Pair.create(OURA_CARD_INFO, new IntercodeLookupSTR("oura")));
         NETWORKS.put(0x250901, Pair.create(NAVIGO_CARD_INFO, new IntercodeLookupNavigo()));
+        NETWORKS.put(0x250916, Pair.create(TISSEO_CARD_INFO, new IntercodeLookupTisseo()));
         NETWORKS.put(0x250920, Pair.create(ENVIBUS_CARD_INFO, new IntercodeLookupUnknown()));
         NETWORKS.put(0x250921, Pair.create(TRANSGIRONDE_CARD_INFO, new IntercodeLookupGironde()));
     }
