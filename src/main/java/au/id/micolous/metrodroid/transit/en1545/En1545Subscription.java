@@ -65,6 +65,8 @@ public abstract class En1545Subscription extends Subscription {
     protected static final String CONTRACT_NETWORK_ID = "ContractNetworkId";
     protected static final String CONTRACT_PASSENGER_CLASS = "ContractPassengerClass";
     protected static final String CONTRACT_AUTHENTICATOR = "ContractAuthnticator";
+    public static final String CONTRACT_SOLD = "ContractSold";
+    public static final String CONTRACT_DEBIT_SOLD = "ContractDebitSold";
     protected final En1545Parsed mParsed;
 
     public En1545Subscription(Parcel parcel) {
