@@ -417,11 +417,13 @@ public abstract class Subscription implements Parcelable {
         if (zones != null && zones.length > 0) {
             StringBuilder zones_list = new StringBuilder();
             for (int z : zones) {
+                if (zones_list.length() != 0)
+                    zones_list.append(", ");
                 zones_list.append(Integer.toString(z));
             }
 
             items.add(new ListItem(Utils.localizePlural(R.plurals.travel_zones,
-                    zones.length, zones_list)));
+                    zones.length), zones_list.toString()));
         }
 
         return items.size() > 0 ? items : null;

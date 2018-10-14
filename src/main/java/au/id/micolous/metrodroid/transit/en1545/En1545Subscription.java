@@ -93,8 +93,8 @@ public abstract class En1545Subscription extends Subscription {
 
         ArrayList<Integer> zones = new ArrayList<>();
         for (int zone=0; (zonecode >> zone) > 0; zone++) {
-            if (zonecode >> zone > 0) {
-                zones.add(zone);
+            if ((zonecode & (1 << zone)) != 0) {
+                zones.add(zone + 1);
             }
         }
 
