@@ -21,6 +21,11 @@ package au.id.micolous.metrodroid.transit.intercode;
 import android.os.Parcel;
 import android.os.Parcelable;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 import au.id.micolous.metrodroid.transit.en1545.En1545Bitmap;
 import au.id.micolous.metrodroid.transit.en1545.En1545Container;
@@ -28,9 +33,10 @@ import au.id.micolous.metrodroid.transit.en1545.En1545Field;
 import au.id.micolous.metrodroid.transit.en1545.En1545FixedInteger;
 import au.id.micolous.metrodroid.transit.en1545.En1545Lookup;
 import au.id.micolous.metrodroid.transit.en1545.En1545Subscription;
+import au.id.micolous.metrodroid.ui.ListItem;
+import au.id.micolous.metrodroid.util.Utils;
 
 public class IntercodeSubscription extends En1545Subscription {
-
     public static final Parcelable.Creator<IntercodeSubscription> CREATOR = new Parcelable.Creator<IntercodeSubscription>() {
         @NonNull
         public IntercodeSubscription createFromParcel(Parcel parcel) {
@@ -79,7 +85,7 @@ public class IntercodeSubscription extends En1545Subscription {
                     new En1545FixedInteger("ContractDuration", 8),
                     En1545FixedInteger.date("ContractLimit"),
                     new En1545FixedInteger(CONTRACT_ZONES, 8),
-                    new En1545FixedInteger("ContractJourneys", 16),
+                    new En1545FixedInteger(CONTRACT_JOURNEYS, 16),
                     new En1545FixedInteger("ContractPeriodJourneys", 16)
             ),
             new En1545Bitmap(
@@ -166,16 +172,30 @@ public class IntercodeSubscription extends En1545Subscription {
             MULTIMODAL_EXTRA
     );
     private static final En1545Field subFieldsType46 = commonFormat(
-            new En1545Container(
-                    // Likely part of bitmap but so far it is always 0
-                    new En1545FixedHex("ContractExtraA", 7),
-                    MULTIMODAL_EXTRA
+            new En1545Bitmap(
+                    OVD1_CONTAINER,
+                    OD2_CONTAINER,
+                    ZONE_MASK,
+                    SALE_CONTAINER,
+                    PAY_CONTAINER,
+                    PASSENGER_COUNTER,
+                    PERIOD_CONTAINER,
+                    SOLD_CONTAINER,
+                    new En1545FixedInteger("ContractVehiculeClassAllowed", 4),
+                    new En1545FixedInteger("LinkedContract", 5),
+                    En1545FixedInteger.time(CONTRACT_START),
+                    En1545FixedInteger.time(CONTRACT_END),
+                    En1545FixedInteger.date("ContractDataEndInhibition"),
+                    En1545FixedInteger.date("ContractDataValidityLimit"),
+                    new En1545FixedInteger("ContractDataGeoLine", 28),
+                    new En1545FixedInteger(CONTRACT_JOURNEYS, 16),
+                    new En1545FixedInteger("ContractDataSaleSecureDevice", 32)
             )
     );
     private final int mNetworkId;
 
-    public IntercodeSubscription(byte[] data, int type, int networkId) {
-        super(data, getFields(type));
+    public IntercodeSubscription(byte[] data, int type, int networkId, Integer ctr) {
+        super(data, getFields(type), ctr);
 
         Integer nid = mParsed.getInt(CONTRACT_NETWORK_ID);
         if (nid != null)
@@ -211,5 +231,31 @@ public class IntercodeSubscription extends En1545Subscription {
     private IntercodeSubscription(Parcel parcel) {
         super(parcel);
         mNetworkId = parcel.readInt();
+    }
+
+    @Nullable
+    @Override
+    public Integer getRemainingTripCount() {
+        if (mParsed.getIntOrZero(CONTRACT_DEBIT_SOLD) != 0
+                && mParsed.getIntOrZero(CONTRACT_SOLD) != 0) {
+            return mCounter / mParsed.getIntOrZero(CONTRACT_DEBIT_SOLD);
+        }
+        if (mParsed.getIntOrZero(CONTRACT_JOURNEYS) != 0) {
+            return mCounter;
+        }
+        return null;
+    }
+
+    @Nullable
+    @Override
+    public Integer getTotalTripCount() {
+        if (mParsed.getIntOrZero(CONTRACT_DEBIT_SOLD) != 0
+                && mParsed.getIntOrZero(CONTRACT_SOLD) != 0) {
+            return mParsed.getIntOrZero(CONTRACT_SOLD) / mParsed.getIntOrZero(CONTRACT_DEBIT_SOLD);
+        }
+        if (mParsed.getIntOrZero(CONTRACT_JOURNEYS) != 0) {
+            return mParsed.getIntOrZero(CONTRACT_JOURNEYS);
+        }
+        return null;
     }
 }

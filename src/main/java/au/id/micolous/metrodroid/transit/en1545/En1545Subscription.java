@@ -67,14 +67,21 @@ public abstract class En1545Subscription extends Subscription {
     protected static final String CONTRACT_AUTHENTICATOR = "ContractAuthnticator";
     public static final String CONTRACT_SOLD = "ContractSold";
     public static final String CONTRACT_DEBIT_SOLD = "ContractDebitSold";
+    protected static final String CONTRACT_JOURNEYS = "ContractJourneys";
     protected final En1545Parsed mParsed;
+    protected final Integer mCounter;
 
     public En1545Subscription(Parcel parcel) {
         mParsed = new En1545Parsed(parcel);
+        if (parcel.readInt() != 0)
+            mCounter = parcel.readInt();
+        else
+            mCounter = null;
     }
 
-    public En1545Subscription(byte[] data, En1545Field fields) {
+    public En1545Subscription(byte[] data, En1545Field fields, Integer counter) {
         mParsed = En1545Parser.parse(data, fields);
+        mCounter = counter;
     }
 
     @Override
@@ -211,6 +218,9 @@ public abstract class En1545Subscription extends Subscription {
     @Override
     public void writeToParcel(Parcel dest, int flags) {
         mParsed.writeToParcel(dest, flags);
+        dest.writeInt(mCounter != null ? 1 : 0);
+        if (mCounter != null)
+            dest.writeInt(mCounter);
     }
 
     @Override

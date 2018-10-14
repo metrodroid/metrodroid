@@ -31,6 +31,8 @@ import java.util.List;
 import au.id.micolous.farebot.R;
 import au.id.micolous.metrodroid.card.CardType;
 import au.id.micolous.metrodroid.card.calypso.CalypsoApplication;
+import au.id.micolous.metrodroid.card.iso7816.ISO7816File;
+import au.id.micolous.metrodroid.card.iso7816.ISO7816Selector;
 import au.id.micolous.metrodroid.transit.CardInfo;
 import au.id.micolous.metrodroid.transit.TransitIdentity;
 import au.id.micolous.metrodroid.transit.en1545.Calypso1545TransitData;
@@ -164,14 +166,14 @@ public class IntercodeTransitData extends Calypso1545TransitData {
         return new IntercodeTransaction(data, mNetworkId);
     }
 
-    protected IntercodeSubscription createSubscription(CalypsoApplication card, byte[] data,
-                                                       En1545Parsed contractList, Integer listNum, int recordNum) {
-        if (contractList == null)
+    protected IntercodeSubscription createSubscription(byte[] data, En1545Parsed contractList, Integer listNum,
+                                                       int recordNum, Integer counter) {
+        if (contractList == null || listNum == null)
             return null;
         Integer tariff = contractList.getInt(CONTRACTS_TARIFF, listNum);
         if (tariff == null)
             return null;
-        return new IntercodeSubscription(data, (tariff >> 4) & 0xff, mNetworkId);
+        return new IntercodeSubscription(data, (tariff >> 4) & 0xff, mNetworkId, counter);
     }
 
     private static final SparseArray<Pair<CardInfo, En1545Lookup>> NETWORKS = new SparseArray<>();

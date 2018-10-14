@@ -58,11 +58,8 @@ class OpusSubscription extends En1545Subscription {
             )
     );
 
-    private final int mTicketsRemaining;
-
-    public OpusSubscription(byte[] dataSub, byte[] dataCtr) {
-        super(dataSub, FIELDS);
-        mTicketsRemaining = dataCtr == null ? 0 : Utils.getBitsFromBuffer(dataCtr, 16, 8);
+    public OpusSubscription(byte[] dataSub, Integer ctr) {
+        super(dataSub, FIELDS, ctr);
     }
 
     @Override
@@ -72,17 +69,10 @@ class OpusSubscription extends En1545Subscription {
 
     @Override
     public Integer getRemainingTripCount() {
-        return mParsed.getIntOrZero(CONTRACT_END + "Date") == 0 ? mTicketsRemaining : null;
-    }
-
-    @Override
-    public void writeToParcel(Parcel parcel, int i) {
-        super.writeToParcel(parcel, i);
-        parcel.writeInt(mTicketsRemaining);
+        return mParsed.getIntOrZero(CONTRACT_END + "Date") == 0 ? mCounter : null;
     }
 
     private OpusSubscription(Parcel parcel) {
         super(parcel);
-        mTicketsRemaining = parcel.readInt();
     }
 }

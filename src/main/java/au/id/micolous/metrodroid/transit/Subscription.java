@@ -299,6 +299,16 @@ public abstract class Subscription implements Parcelable {
     }
 
     /**
+     * The total number of trips in this subscription.
+     *
+     * If unknown or there is no limit to the number of trips, return null (default).
+     */
+    @Nullable
+    public Integer getTotalTripCount() {
+        return null;
+    }
+
+    /**
      * The total number of remaining days that this subscription can be used on.
      *
      * This is distinct to {@link #getValidTo()} -- this is for subscriptions where it can be used
@@ -393,8 +403,14 @@ public abstract class Subscription implements Parcelable {
         }
 
         if (getRemainingTripCount() != null) {
-            items.add(new ListItem(R.string.remaining_trip_count,
-                    Integer.toString(getRemainingTripCount())));
+            if (getTotalTripCount() != null)
+                items.add(new ListItem(R.string.remaining_trip_count,
+                        Utils.localizeString(R.string.trips_out_of,
+                                getRemainingTripCount(),
+                                getTotalTripCount())));
+            else
+                items.add(new ListItem(R.string.remaining_trip_count,
+                        Integer.toString(getRemainingTripCount())));
         }
 
         if (getRemainingTripsInDayCount() != null && lastUseTS != null) {
