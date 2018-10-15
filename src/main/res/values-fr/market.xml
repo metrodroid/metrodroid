@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='UTF-8'?>
-<resources><string name="market_title">Metrodroid (anciennement Farebot M)</string>
+<resources><string name="market_title">Metrodroid (ex. Farebot M)</string>
 
     <string name="market_short_desc">Metrodroid peux lire les informations des cartes NFC de quelques transports publiques.</string>
 
