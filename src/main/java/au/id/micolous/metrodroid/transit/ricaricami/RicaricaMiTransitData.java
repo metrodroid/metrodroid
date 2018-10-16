@@ -101,7 +101,7 @@ public class RicaricaMiTransitData extends En1545TransitData {
             };
             int sel = selectSubData(subData[0], subData[1]);
             mSubscriptions.add(new RicaricaMiSubscription(subData[sel],
-                    card.getSector(i+2).getBlock(sel).getData(), i));
+                    card.getSector(i+2).getBlock(sel).getData()));
         }
         // TODO: check following. It might have more to do with subscription type
         // than slot
@@ -113,7 +113,7 @@ public class RicaricaMiTransitData extends En1545TransitData {
         if (!Utils.isAllZero(subData[0]) || !Utils.isAllZero(subData[1])) {
             int sel = selectSubData(subData[0], subData[1]);
             mSubscriptions.add(new RicaricaMiSubscription(subData[sel],
-                    card.getSector(5).getBlock(1).getData(), 4));
+                    card.getSector(5).getBlock(1).getData()));
         }
     }
 

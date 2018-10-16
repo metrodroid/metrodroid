@@ -125,13 +125,11 @@ public class OpusTransitData extends Calypso1545TransitData {
     }
 
     @Override
-    protected En1545Subscription createSubscription(CalypsoApplication card, byte[] data,
-                                                    En1545Parsed contractList, Integer contractNum, int recordNum) {
-        ISO7816File matchingCtr = card.getFile(
-                ISO7816Selector.makeSelector(0x2000, 0x202A + recordNum - 1));
-        if (matchingCtr == null)
+    protected En1545Subscription createSubscription(byte[] data, En1545Parsed contractList,
+                                                    Integer contractNum, int recordNum, Integer counter) {
+        if (counter == null)
             return null;
-        return new OpusSubscription(data, matchingCtr.getRecord(1).getData());
+        return new OpusSubscription(data, counter);
     }
 
     @Override

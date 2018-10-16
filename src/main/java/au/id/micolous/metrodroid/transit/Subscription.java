@@ -299,6 +299,16 @@ public abstract class Subscription implements Parcelable {
     }
 
     /**
+     * The total number of trips in this subscription.
+     *
+     * If unknown or there is no limit to the number of trips, return null (default).
+     */
+    @Nullable
+    public Integer getTotalTripCount() {
+        return null;
+    }
+
+    /**
      * The total number of remaining days that this subscription can be used on.
      *
      * This is distinct to {@link #getValidTo()} -- this is for subscriptions where it can be used
@@ -397,11 +407,6 @@ public abstract class Subscription implements Parcelable {
             items.add(new ListItem(R.string.payment_method, getPaymentMethod().getDescription()));
         }
 
-        if (getRemainingTripCount() != null) {
-            items.add(new ListItem(R.string.remaining_trip_count,
-                    Integer.toString(getRemainingTripCount())));
-        }
-
         if (getRemainingTripsInDayCount() != null && lastUseTS != null) {
             items.add(new ListItem(R.string.remaining_trip_count, Utils.localizePlural(
                     R.plurals.remaining_trip_on_day, getRemainingTripsInDayCount(),
@@ -417,11 +422,13 @@ public abstract class Subscription implements Parcelable {
         if (zones != null && zones.length > 0) {
             StringBuilder zones_list = new StringBuilder();
             for (int z : zones) {
+                if (zones_list.length() != 0)
+                    zones_list.append(", ");
                 zones_list.append(Integer.toString(z));
             }
 
             items.add(new ListItem(Utils.localizePlural(R.plurals.travel_zones,
-                    zones.length, zones_list)));
+                    zones.length), zones_list.toString()));
         }
 
         return items.size() > 0 ? items : null;
