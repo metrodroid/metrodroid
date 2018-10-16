@@ -46,7 +46,7 @@ public class RicaricaMiSubscription extends En1545Subscription {
             new En1545FixedHex(CONTRACT_UNKNOWN_B, 52)
     );
 
-    public RicaricaMiSubscription(byte[] data, byte[] counter, int id) {
+    public RicaricaMiSubscription(byte[] data, byte[] counter) {
         super(data, FIELDS, Utils.byteArrayToIntReversed(counter, 0, 4));
     }
 
