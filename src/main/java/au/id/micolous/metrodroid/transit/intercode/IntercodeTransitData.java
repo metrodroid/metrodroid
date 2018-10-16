@@ -21,6 +21,7 @@ package au.id.micolous.metrodroid.transit.intercode;
 
 import android.os.Parcel;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.util.Pair;
 import android.util.SparseArray;
 
@@ -163,6 +164,12 @@ public class IntercodeTransitData extends Calypso1545TransitData {
     }
 
     protected IntercodeTransaction createTrip(byte[] data) {
+        return new IntercodeTransaction(data, mNetworkId);
+    }
+
+    @Nullable
+    @Override
+    protected IntercodeTransaction createSpecialEvent(byte[] data) {
         return new IntercodeTransaction(data, mNetworkId);
     }
 

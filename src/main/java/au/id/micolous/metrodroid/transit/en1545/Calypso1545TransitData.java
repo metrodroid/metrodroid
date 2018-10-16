@@ -71,19 +71,19 @@ public abstract class Calypso1545TransitData extends En1545TransitData {
                 continue;
             transactions.add(transaction);
         }
-        mTrips = new ArrayList<>(TransactionTrip.merge(transactions));
 
         ISO7816File specialEvents = card.getFile(CalypsoApplication.File.TICKETING_SPECIAL_EVENTS);
         if (specialEvents != null) {
             for (ISO7816Record record : specialEvents.getRecords()) {
                 if (Utils.isAllZero(record.getData()))
                     continue;
-                Trip trip = createSpecialEvent(record.getData());
-                if (trip == null)
+                En1545Transaction transaction = createSpecialEvent(record.getData());
+                if (transaction == null)
                     continue;
-                mTrips.add(trip);
+                transactions.add(transaction);
             }
         }
+        mTrips = new ArrayList<>(TransactionTrip.merge(transactions));
 
         mSubscriptions = new ArrayList<>();
         mBalances = new ArrayList<>();
@@ -185,7 +185,7 @@ public abstract class Calypso1545TransitData extends En1545TransitData {
 
     @SuppressWarnings("WeakerAccess")
     @Nullable
-    protected Trip createSpecialEvent(byte[] data) {
+    protected En1545Transaction createSpecialEvent(byte[] data) {
         return null;
     }
 
