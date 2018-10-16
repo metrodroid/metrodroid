@@ -432,6 +432,10 @@
         <item quantity="one">%d trip remaining</item>
         <item quantity="other">%d trips remaining</item>
     </plurals>
+    <plurals name="trips_remaining_total">
+        <item quantity="one">%d trip remaining out of %d</item>
+        <item quantity="other">%d trips remaining out of %d</item>
+    </plurals>
     <plurals name="troika_rides">
         <item quantity="one">Single-ride</item>
         <item quantity="other">%d-ride</item>

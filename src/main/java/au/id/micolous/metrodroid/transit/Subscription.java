@@ -402,17 +402,6 @@ public abstract class Subscription implements Parcelable {
             items.add(new ListItem(R.string.payment_method, getPaymentMethod().getDescription()));
         }
 
-        if (getRemainingTripCount() != null) {
-            if (getTotalTripCount() != null)
-                items.add(new ListItem(R.string.remaining_trip_count,
-                        Utils.localizeString(R.string.trips_out_of,
-                                getRemainingTripCount(),
-                                getTotalTripCount())));
-            else
-                items.add(new ListItem(R.string.remaining_trip_count,
-                        Integer.toString(getRemainingTripCount())));
-        }
-
         if (getRemainingTripsInDayCount() != null && lastUseTS != null) {
             items.add(new ListItem(R.string.remaining_trip_count, Utils.localizePlural(
                     R.plurals.remaining_trip_on_day, getRemainingTripsInDayCount(),
