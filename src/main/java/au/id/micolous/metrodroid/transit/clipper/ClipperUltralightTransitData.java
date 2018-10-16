@@ -163,19 +163,19 @@ public class ClipperUltralightTransitData extends TransitData {
                 ClipperTransitData.clipperTimestampToCalendar((mBaseDate - 89) * 86400L))));
         switch (mType) {
             case 0x04:
-                items.add(new ListItem(R.string.muni_ticket_type, R.string.muni_ticket_type_adult));
+                items.add(new ListItem(R.string.clipper_ticket_type, R.string.clipper_ticket_type_adult));
                 break;
             case 0x44:
-                items.add(new ListItem(R.string.muni_ticket_type, R.string.muni_ticket_type_senior));
+                items.add(new ListItem(R.string.clipper_ticket_type, R.string.clipper_ticket_type_senior));
                 break;
             case 0x84:
-                items.add(new ListItem(R.string.muni_ticket_type, R.string.muni_ticket_type_disabled));
+                items.add(new ListItem(R.string.clipper_ticket_type, R.string.clipper_ticket_type_disabled));
                 break;
             case 0xc4:
-                items.add(new ListItem(R.string.muni_ticket_type, R.string.muni_ticket_type_youth));
+                items.add(new ListItem(R.string.clipper_ticket_type, R.string.clipper_ticket_type_youth));
                 break;
             default:
-                items.add(new ListItem(R.string.muni_ticket_type, Integer.toHexString(mType)));
+                items.add(new ListItem(R.string.clipper_ticket_type, Integer.toHexString(mType)));
                 break;
         }
 

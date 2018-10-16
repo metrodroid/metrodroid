@@ -114,7 +114,7 @@ class ClipperUltralightSubscription extends Subscription {
         if (mTransferExpiry != 0) {
             if (li == null)
                 li = new ArrayList<>();
-            li.add(new ListItem(R.string.muni_free_transfers_until,
+            li.add(new ListItem(R.string.clipper_free_transfers_until,
                     Utils.dateTimeFormat(TripObfuscator.maybeObfuscateTS(
                             ClipperTransitData.clipperTimestampToCalendar(mTransferExpiry * 60L)))));
         }

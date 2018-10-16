@@ -695,6 +695,12 @@
 
     <string name="clipper_end_of_line">(End of line)</string>
     <string name="clipper_zone_number">Zone #%s</string>
+    <string name="clipper_free_transfers_until">Free transfers until</string>
+    <string name="clipper_ticket_type">Ticket type</string>
+    <string name="clipper_ticket_type_adult">Adult</string>
+    <string name="clipper_ticket_type_senior">Senior</string>
+    <string name="clipper_ticket_type_disabled">Disabled</string>
+    <string name="clipper_ticket_type_youth">Youth</string>
 
     <string name="ez_bus_number">Bus #%s</string>
     <string name="ez_bus_refund">Bus Refund</string>
