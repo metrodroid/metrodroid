@@ -17,21 +17,18 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package au.id.micolous.metrodroid.transit.newshenzhen;
+package au.id.micolous.metrodroid.transit.china;
 
 import android.os.Parcel;
-import android.support.annotation.Nullable;
 
 import java.util.Calendar;
 
 import au.id.micolous.farebot.R;
 import au.id.micolous.metrodroid.transit.Station;
-import au.id.micolous.metrodroid.transit.TransitCurrency;
-import au.id.micolous.metrodroid.transit.Trip;
 import au.id.micolous.metrodroid.util.StationTableReader;
 import au.id.micolous.metrodroid.util.Utils;
 
-public class NewShenzhenTrip extends Trip {
+public class NewShenzhenTrip extends ChinaTrip {
     public static final Creator<NewShenzhenTrip> CREATOR = new Creator<NewShenzhenTrip>() {
 
         public NewShenzhenTrip createFromParcel(Parcel in) {
@@ -44,39 +41,15 @@ public class NewShenzhenTrip extends Trip {
     };
     private static final int SZT_BUS = 3;
     private static final int SZT_METRO = 6;
-
-    private final long mTime;
-    private final int mCost;
-    private final int mType;
-    private final long mStation;
     private final static String SHENZHEN_STR = "shenzhen";
 
 
     public NewShenzhenTrip(Parcel parcel) {
-        mTime = parcel.readLong();
-        mCost = parcel.readInt();
-        mType = parcel.readInt();
-        mStation = parcel.readLong();
+        super(parcel);
     }
 
-    @Override
-    public int describeContents() {
-        return 0;
-    }
-
-    @Override
-    public void writeToParcel(Parcel parcel, int i) {
-        parcel.writeLong(mTime);
-        parcel.writeInt(mCost);
-        parcel.writeInt(mType);
-        parcel.writeLong(mStation);
-    }
-
-    public NewShenzhenTrip(int cost, long time, int agency, long station) {
-        mCost = cost;
-        mTime = time;
-        mType = agency;
-        mStation = station;
+    public NewShenzhenTrip(byte[]data) {
+        super(data);
     }
 
     @Override
@@ -93,18 +66,10 @@ public class NewShenzhenTrip extends Trip {
         }
     }
 
-    @Nullable
-    @Override
-    public TransitCurrency getFare() {
-        return TransitCurrency.CNY(mCost);
-    }
-
-    private int getTransport() {
-        return (int)(mStation >> 28);
-    }
-
     @Override
     public Mode getMode() {
+        if (isTopup())
+            return Mode.TICKET_MACHINE;
         int transport = getTransport();
         switch (transport) {
             case SZT_METRO:
@@ -145,7 +110,7 @@ public class NewShenzhenTrip extends Trip {
         int transport = getTransport();
         if (transport == SZT_METRO)
             return null;
-        return NewShenzhenTransitData.parseHexDateTime (mTime);
+        return getTimestamp();
     }
 
     @Override
@@ -153,25 +118,6 @@ public class NewShenzhenTrip extends Trip {
         int transport = getTransport();
         if (transport != SZT_METRO)
             return null;
-        return NewShenzhenTransitData.parseHexDateTime (mTime);
-    }
-
-    @Nullable
-    public static NewShenzhenTrip parseTrip(byte[] data) {
-        int cost;
-        long time;
-        int type;
-        Long station;
-        // 2 bytes counter
-        // 3 bytes zero
-        // 4 bytes cost
-        cost = Utils.byteArrayToInt(data, 5,4);
-        type = data[9];
-        // 2 bytes zero
-        station = Utils.byteArrayToLong(data, 12, 4);
-        time = Utils.byteArrayToLong(data, 16, 7);
-        if (cost == 0 && time == 0)
-            return null;
-        return new NewShenzhenTrip(cost, time, type, station);
+        return getTimestamp();
     }
 }
