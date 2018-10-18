@@ -607,6 +607,7 @@
     <!-- Locations -->
     <string name="location_act_australia">Australian Capital Territory, Australia</string>
     <string name="location_adelaide">Adelaide, Australia</string>
+    <string name="location_beijing">Beijing, China</string>
     <!--
       Translators:
 
@@ -621,6 +622,7 @@
     <string name="location_brussels">Brussels, Belgium</string>
     <string name="location_boston">Boston, MA, USA</string>
     <string name="location_chicago">Chicago, IL, USA</string>
+    <string name="location_tunion">Mainland China</string>
     <string name="location_christchurch_nz">Christchurch, New Zealand</string>
     <string name="location_gironde">Gironde, France</string>
     <string name="location_grenoble">Grenoble, France</string>
@@ -652,6 +654,7 @@
     <string name="location_sao_paulo">São Paulo, Brazil</string>
     <string name="location_seattle">Seattle, WA, USA</string>
     <string name="location_seoul">Seoul, Korea</string>
+    <string name="location_cityunion">Shanghai and others, China</string>
     <string name="location_shenzhen">Shenzhen, Guangdong Province, China</string>
     <string name="location_singapore">Singapore</string>
     <string name="location_sophia_antipolis">Sophia Antipolis, France</string>
@@ -663,7 +666,8 @@
     <string name="location_vancouver">Vancouver, BC, Canada</string>
     <string name="location_victoria_australia">Victoria, Australia</string>
     <string name="location_wa_australia">Western Australia, Australia</string>
-
+    <string name="location_wuhan">Wuhan, China</string>
+    
     <!--
     These strings are used for content descriptions (accessibility), for modes of transport.
     Using them for custom pages on individual operators is discouraged (eg: Opal), as strings and
@@ -943,6 +947,12 @@
     <string name="szt_metro">Shenzhen Metro</string>
     <string name="szt_bus">Shenzhen Bus</string>
     <string name="szt_station_gate">gate %s</string>
+
+    <string name="card_name_beijing">Beijing Municipal Card</string>
+    <string name="card_name_wuhantong">Wuhan Tong</string>
+    <string name="card_name_cityunion">City Union</string>
+    <string name="card_name_tunion">TUnion</string>
+    <string name="city_union_city">City</string>
 
     <!--
         Bilhete Único
