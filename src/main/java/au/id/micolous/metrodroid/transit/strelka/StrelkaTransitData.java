@@ -22,6 +22,7 @@ package au.id.micolous.metrodroid.transit.strelka;
 
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.support.annotation.NonNull;
 
 import java.util.Collections;
 import java.util.List;
@@ -30,9 +31,12 @@ import au.id.micolous.farebot.R;
 import au.id.micolous.metrodroid.card.CardType;
 import au.id.micolous.metrodroid.card.UnauthorizedException;
 import au.id.micolous.metrodroid.card.classic.ClassicCard;
+import au.id.micolous.metrodroid.card.classic.ClassicCardTransitFactory;
+import au.id.micolous.metrodroid.card.classic.ClassicSector;
 import au.id.micolous.metrodroid.transit.CardInfo;
 import au.id.micolous.metrodroid.transit.TransitData;
 import au.id.micolous.metrodroid.transit.TransitIdentity;
+import au.id.micolous.metrodroid.transit.smartrider.SmartRiderTransitData;
 import au.id.micolous.metrodroid.ui.ListItem;
 import au.id.micolous.metrodroid.util.Utils;
 
@@ -99,23 +103,55 @@ public class StrelkaTransitData extends TransitData {
                 .getBlock(0).getData(), 2, 10).substring(0,19);
     }
 
-    public static TransitIdentity parseTransitIdentity(ClassicCard card) {
-        return new TransitIdentity(Utils.localizeString(R.string.card_name_strelka),
-                formatShortSerial(getSerial(card)));
-    }
-
-    public static boolean check(ClassicCard card) {
-        try {
-            byte[] toc = card.getSector(0).getBlock(2).getData();
-            // Check toc entries for sectors 10,12,13,14 and 15
-            return Utils.byteArrayToInt(toc, 4, 2) == 0x18f0
-                    && Utils.byteArrayToInt(toc, 8, 2) == 5
-                    && Utils.byteArrayToInt(toc, 10, 2) == 0x18e0
-                    && Utils.byteArrayToInt(toc, 12, 2) == 0x18e8;
-        } catch (IndexOutOfBoundsException | UnauthorizedException ignored) {
-            // If that sector number is too high, then it's not for us.
-            // If we can't read we can't do anything
+    public static final ClassicCardTransitFactory FACTORY = new ClassicCardTransitFactory() {
+        @Override
+        public  TransitIdentity parseTransitIdentity(@NonNull ClassicCard card) {
+            return new TransitIdentity(Utils.localizeString(R.string.card_name_strelka),
+                    formatShortSerial(getSerial(card)));
         }
-        return false;
-    }
+
+        @Override
+        public TransitData parseTransitData(@NonNull ClassicCard classicCard) {
+            return new StrelkaTransitData(classicCard);
+        }
+
+        @Override
+        public boolean check(@NonNull ClassicCard card) {
+            try {
+                return check(card.getSector(0));
+            } catch (IndexOutOfBoundsException | UnauthorizedException ignored) {
+                // If that sector number is too high, then it's not for us.
+                // If we can't read we can't do anything
+            }
+            return false;
+        }
+
+        private boolean check(ClassicSector sector0) {
+            try {
+                byte[] toc = sector0.getBlock(2).getData();
+                // Check toc entries for sectors 10,12,13,14 and 15
+                return Utils.byteArrayToInt(toc, 4, 2) == 0x18f0
+                        && Utils.byteArrayToInt(toc, 8, 2) == 5
+                        && Utils.byteArrayToInt(toc, 10, 2) == 0x18e0
+                        && Utils.byteArrayToInt(toc, 12, 2) == 0x18e8;
+            } catch (IndexOutOfBoundsException | UnauthorizedException ignored) {
+                // If that sector number is too high, then it's not for us.
+                // If we can't read we can't do anything
+            }
+            return false;
+        }
+
+        @Override
+        public int earlySectors() {
+            // 1 is actually enough but let's show Troika+Strelka as Troika
+            return 2;
+        }
+
+        @Override
+        public CardInfo earlyCardInfo(List<ClassicSector> sectors) {
+            if (check(sectors.get(0)))
+                return CARD_INFO;
+            return null;
+        }
+    };
 }
