@@ -55,7 +55,7 @@ public class IntercodeTransitData extends Calypso1545TransitData {
     // de transport" (ticket). Here they take the name of the transit agency.
 
     public static final CardInfo TISSEO_CARD_INFO = new CardInfo.Builder()
-            .setName("Tisséo")
+            .setName("Pastel")
             .setLocation(R.string.location_toulouse)
             .setCardType(CardType.ISO7816)
             .setPreview()
