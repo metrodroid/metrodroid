@@ -156,20 +156,26 @@ public class IntercodeSubscription extends En1545Subscription {
             new En1545FixedInteger("ContractOrigin2", 16),
             new En1545FixedInteger("ContractDestination2", 16)
     );
-    public static final En1545Bitmap MULTIMODAL_EXTRA = new En1545Bitmap(
-            OVD1_CONTAINER,
-            OD2_CONTAINER,
-            ZONE_MASK,
-            SALE_CONTAINER,
-            PAY_CONTAINER,
-            PASSENGER_COUNTER,
-            PERIOD_CONTAINER,
-            SOLD_CONTAINER,
-            new En1545FixedInteger("ContractVehiculeClassAllowed", 4),
-            new En1545FixedInteger("LinkedContract", 5)
-    );
     private static final En1545Field subFieldsType20 = commonFormat(
-            MULTIMODAL_EXTRA
+            new En1545Bitmap(
+                    OVD1_CONTAINER,
+                    OD2_CONTAINER,
+                    ZONE_MASK,
+                    SALE_CONTAINER,
+                    PAY_CONTAINER,
+                    PASSENGER_COUNTER,
+                    PERIOD_CONTAINER,
+                    SOLD_CONTAINER,
+                    new En1545FixedInteger("ContractVehiculeClassAllowed", 4),
+                    new En1545FixedInteger("LinkedContract", 5),
+                    En1545FixedInteger.time(CONTRACT_START),
+                    En1545FixedInteger.time(CONTRACT_END),
+                    En1545FixedInteger.date("ContractDataEndInhibition"),
+                    En1545FixedInteger.date("ContractDataValidityLimit"),
+                    new En1545FixedInteger("ContractDataGeoLine", 28),
+                    new En1545FixedInteger(CONTRACT_JOURNEYS, 16),
+                    new En1545FixedInteger("ContractDataSaleSecureDevice", 32)
+            )
     );
     private static final En1545Field subFieldsType46 = commonFormat(
             new En1545Bitmap(
