@@ -20,6 +20,7 @@
 package au.id.micolous.metrodroid.transit.metroq;
 
 import android.os.Parcel;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.text.SpannableString;
 
@@ -37,6 +38,7 @@ import au.id.micolous.metrodroid.card.CardType;
 import au.id.micolous.metrodroid.card.UnauthorizedException;
 import au.id.micolous.metrodroid.card.classic.ClassicBlock;
 import au.id.micolous.metrodroid.card.classic.ClassicCard;
+import au.id.micolous.metrodroid.card.classic.ClassicCardTransitFactory;
 import au.id.micolous.metrodroid.card.classic.ClassicSector;
 import au.id.micolous.metrodroid.transit.CardInfo;
 import au.id.micolous.metrodroid.transit.TransitBalance;
@@ -50,7 +52,6 @@ import au.id.micolous.metrodroid.ui.ListItem;
 import au.id.micolous.metrodroid.util.Utils;
 
 public class MetroQTransitData extends TransitData {
-
     private final static String NAME = "Metro Q";
     private static final int METRO_Q_ID = 0x5420;
     private static final TimeZone TZ = TimeZone.getTimeZone("America/Houston");
@@ -67,7 +68,7 @@ public class MetroQTransitData extends TransitData {
     private final Calendar mExpiry;
     private final Calendar mDate1;
 
-    public MetroQTransitData(ClassicCard card) {
+    private MetroQTransitData(ClassicCard card) {
         mSerial = getSerial(card);
         ClassicSector balanceSector = card.getSector(8);
         ClassicBlock balanceBlock0 = balanceSector.getBlock(0);
@@ -101,32 +102,61 @@ public class MetroQTransitData extends TransitData {
         mProduct = in.readInt();
     }
 
-    public static boolean check(ClassicCard card) {
-        return check(card.getSector(0));
-    }
-
-    public static boolean earlyCheck(ClassicSector sector) {
-        return check(sector);
-    }
-
-    public static boolean check(ClassicSector sector) {
-        try {
-            for (int i = 1; i < 3; i++) {
-                byte[] block = sector.getBlock(i).getData();
-                for (int j = (i == 1 ? 1 : 0); j < 8; j++)
-                    if (Utils.byteArrayToInt(block, j * 2, 2) != METRO_Q_ID
-                            && (i != 2 || j != 6))
-                        return false;
+    public static final ClassicCardTransitFactory FACTORY = new ClassicCardTransitFactory() {
+        @Override
+        public boolean check(@NonNull ClassicCard card) {
+            try {
+                return check(card.getSector(0));
+            } catch (UnauthorizedException ex) {
+                // Not ours
+                return false;
+            } catch (IndexOutOfBoundsException ignored) {
+                // If the sector/block number is too high, it's not for us
+                return false;
             }
-            return true;
-        } catch (UnauthorizedException ex) {
-            // Not ours
-            return false;
-        } catch (IndexOutOfBoundsException ignored) {
-            // If the sector/block number is too high, it's not for us
-            return false;
         }
-    }
+
+        private boolean check(ClassicSector sector) {
+            try {
+                for (int i = 1; i < 3; i++) {
+                    byte[] block = sector.getBlock(i).getData();
+                    for (int j = (i == 1 ? 1 : 0); j < 8; j++)
+                        if (Utils.byteArrayToInt(block, j * 2, 2) != METRO_Q_ID
+                                && (i != 2 || j != 6))
+                            return false;
+                }
+                return true;
+            } catch (UnauthorizedException ex) {
+                // Not ours
+                return false;
+            } catch (IndexOutOfBoundsException ignored) {
+                // If the sector/block number is too high, it's not for us
+                return false;
+            }
+        }
+
+        @Override
+        public int earlySectors() {
+            return 1;
+        }
+
+        @Override
+        public CardInfo earlyCardInfo(List<ClassicSector> sectors) {
+            if (check(sectors.get(0)))
+                return CARD_INFO;
+            return null;
+        }
+
+        @Override
+        public TransitIdentity parseTransitIdentity(@NonNull ClassicCard card) {
+            return new TransitIdentity(NAME, formatSerial(getSerial(card)));
+        }
+
+        @Override
+        public TransitData parseTransitData(@NonNull ClassicCard classicCard) {
+            return new MetroQTransitData(classicCard);
+        }
+    };
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
@@ -165,10 +195,6 @@ public class MetroQTransitData extends TransitData {
     @Override
     public String getCardName() {
         return NAME;
-    }
-
-    public static TransitIdentity parseTransitIdentity(ClassicCard card) {
-        return new TransitIdentity(NAME, formatSerial(getSerial(card)));
     }
 
     @Nullable
