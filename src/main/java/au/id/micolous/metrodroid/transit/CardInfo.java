@@ -116,6 +116,7 @@ public class CardInfo {
             OrcaTransitData.CARD_INFO,
             IntercodeTransitData.OURA_CARD_INFO,
             OVChipTransitData.CARD_INFO,
+            IntercodeTransitData.TISSEO_CARD_INFO, // Pastel
             SuicaTransitData.PASMO_CARD_INFO,
             PodorozhnikTransitData.CARD_INFO,
             RavKavTransitData.CARD_INFO,
