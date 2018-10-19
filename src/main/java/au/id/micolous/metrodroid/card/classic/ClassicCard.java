@@ -288,9 +288,6 @@ public class ClassicCard extends Card {
                         if (!gotType)
                             gotType = earlyCheck(sectors, feedbackInterface);
 
-                        if (!gotType)
-                            gotType = earlyCheck(sectors, feedbackInterface);
-
                         feedbackInterface.updateProgressBar((sectorIndex * 5) + 4, maxProgress);
                     } else {
                         Log.d(TAG, "Authentication unsuccessful for sector " + sectorIndex + ", giving up");
@@ -461,6 +458,8 @@ public class ClassicCard extends Card {
             if (factory.check(this))
                 return factory.parseTransitIdentity(this);
         }
+
+        // The card could not be identified, but has some open sectors.
         return null;
     }
 
