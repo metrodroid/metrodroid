@@ -180,14 +180,4 @@ public class TroikaTransitData implements Parcelable {
             s.add(s4);
         return s.toArray(new Subscription[0]);
     }
-
-    public static boolean check(ClassicCard card) {
-        try {
-            return TroikaBlock.check(card.getSector(8).getBlock(0).getData());
-        } catch (IndexOutOfBoundsException|UnauthorizedException ignored) {
-            // If that sector number is too high, then it's not for us.
-            // If we can't read we can't do anything
-        }
-        return false;
-    }
 }

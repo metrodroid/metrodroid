@@ -20,6 +20,7 @@
 package au.id.micolous.metrodroid.transit.ricaricami;
 
 import android.os.Parcel;
+import android.support.annotation.NonNull;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,10 +29,12 @@ import au.id.micolous.farebot.R;
 import au.id.micolous.metrodroid.card.CardType;
 import au.id.micolous.metrodroid.card.UnauthorizedException;
 import au.id.micolous.metrodroid.card.classic.ClassicCard;
+import au.id.micolous.metrodroid.card.classic.ClassicCardTransitFactory;
 import au.id.micolous.metrodroid.card.classic.ClassicSector;
 import au.id.micolous.metrodroid.transit.CardInfo;
 import au.id.micolous.metrodroid.transit.Subscription;
 import au.id.micolous.metrodroid.transit.TransactionTrip;
+import au.id.micolous.metrodroid.transit.TransitData;
 import au.id.micolous.metrodroid.transit.TransitIdentity;
 import au.id.micolous.metrodroid.transit.Trip;
 import au.id.micolous.metrodroid.transit.en1545.En1545Container;
@@ -70,7 +73,7 @@ public class RicaricaMiTransitData extends En1545TransitData {
             new En1545FixedHex(ENV_UNKNOWN_D, 49)
     );
 
-    public RicaricaMiTransitData(ClassicCard card) {
+    private RicaricaMiTransitData(ClassicCard card) {
         mSerial = getSerial(card);
         ClassicSector sector1 = card.getSector(1);
         mTicketEnvParsed.append(sector1.getBlock(0).getData(), BLOCK_1_0_FIELDS);
@@ -187,27 +190,60 @@ public class RicaricaMiTransitData extends En1545TransitData {
         }
     };
 
-    public static boolean check(ClassicCard card) {
-        try {
-            for (int i = 1; i < 3; i++) {
-                byte[] block = card.getSector(0).getBlock(i).getData();
-                for (int j = (i == 1 ? 1 : 0); j < 8; j++)
-                    if (Utils.byteArrayToInt(block, j * 2, 2) != RICARICA_MI_ID)
-                        return false;
+    public static final ClassicCardTransitFactory FACTORY = new ClassicCardTransitFactory() {
+        private boolean check(ClassicSector sector0) {
+            try {
+                for (int i = 1; i < 3; i++) {
+                    byte[] block = sector0.getBlock(i).getData();
+                    for (int j = (i == 1 ? 1 : 0); j < 8; j++)
+                        if (Utils.byteArrayToInt(block, j * 2, 2) != RICARICA_MI_ID)
+                            return false;
+                }
+                return true;
+            } catch (UnauthorizedException ex) {
+                // Not ours
+                return false;
+            } catch (IndexOutOfBoundsException ignored) {
+                // If the sector/block number is too high, it's not for us
+                return false;
             }
-            return true;
-        } catch (UnauthorizedException ex) {
-            // Not ours
-            return false;
-        } catch (IndexOutOfBoundsException ignored) {
-            // If the sector/block number is too high, it's not for us
-            return false;
         }
-    }
 
-    public static TransitIdentity parseTransitIdentity(ClassicCard card) {
-        return new TransitIdentity(NAME, getSerial(card));
-    }
+        @Override
+        public boolean check(@NonNull ClassicCard card) {
+            try {
+                return check(card.getSector(0));
+            } catch (UnauthorizedException ex) {
+                // Not ours
+                return false;
+            } catch (IndexOutOfBoundsException ignored) {
+                // If the sector/block number is too high, it's not for us
+                return false;
+            }
+        }
+
+        @Override
+        public TransitIdentity parseTransitIdentity(@NonNull ClassicCard card) {
+            return new TransitIdentity(NAME, getSerial(card));
+        }
+
+        @Override
+        public TransitData parseTransitData(@NonNull ClassicCard classicCard) {
+            return new RicaricaMiTransitData(classicCard);
+        }
+
+        @Override
+        public int earlySectors() {
+            return 1;
+        }
+
+        @Override
+        public CardInfo earlyCardInfo(List<ClassicSector> sectors) {
+            if (check(sectors.get(0)))
+                return CARD_INFO;
+            return null;
+        }
+    };
 
     private static String getSerial(ClassicCard card) {
         byte[] block2 = card.getSector(2).getBlock(2).getData();

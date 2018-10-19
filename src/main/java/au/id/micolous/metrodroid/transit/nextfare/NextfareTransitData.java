@@ -33,6 +33,7 @@ import au.id.micolous.farebot.R;
 import au.id.micolous.metrodroid.card.UnauthorizedException;
 import au.id.micolous.metrodroid.card.classic.ClassicBlock;
 import au.id.micolous.metrodroid.card.classic.ClassicCard;
+import au.id.micolous.metrodroid.card.classic.ClassicCardTransitFactory;
 import au.id.micolous.metrodroid.card.classic.ClassicSector;
 import au.id.micolous.metrodroid.transit.TransitBalance;
 import au.id.micolous.metrodroid.transit.TransitBalanceStored;
@@ -69,6 +70,7 @@ public class NextfareTransitData extends TransitData {
             return new NextfareTransitData[size];
         }
     };
+    public static final ClassicCardTransitFactory FALLBACK_FACTORY = new NextFareTransitFactory();
     static final byte[] MANUFACTURER = {
             0x16, 0x18, 0x1A, 0x1B,
             0x1C, 0x1D, 0x1E, 0x1F
@@ -261,27 +263,36 @@ public class NextfareTransitData extends TransitData {
         mTrips = trips.toArray(new NextfareTrip[0]);
     }
 
-    public static boolean check(ClassicCard card) {
-        try {
-            byte[] blockData = card.getSector(0).getBlock(1).getData();
-            return Arrays.equals(Arrays.copyOfRange(blockData, 1, 9), MANUFACTURER);
-        } catch (UnauthorizedException ex) {
-            // It is not possible to identify the card without a key
-            return false;
-        } catch (IndexOutOfBoundsException ignored) {
-            // If the sector/block number is too high, it's not for us
-            return false;
+    protected static class NextFareTransitFactory extends ClassicCardTransitFactory {
+        @Override
+        public boolean check(@NonNull ClassicCard card) {
+            try {
+                byte[] blockData = card.getSector(0).getBlock(1).getData();
+                return Arrays.equals(Arrays.copyOfRange(blockData, 1, 9), MANUFACTURER);
+            } catch (UnauthorizedException ex) {
+                // It is not possible to identify the card without a key
+                return false;
+            } catch (IndexOutOfBoundsException ignored) {
+                // If the sector/block number is too high, it's not for us
+                return false;
+            }
         }
-    }
 
-    public static TransitIdentity parseTransitIdentity(ClassicCard card) {
-        return NextfareTransitData.parseTransitIdentity(card, NAME);
-    }
+        @Override
+        public TransitIdentity parseTransitIdentity(@NonNull ClassicCard card) {
+            return parseTransitIdentity(card, NAME);
+        }
 
-    protected static TransitIdentity parseTransitIdentity(ClassicCard card, String name) {
-        byte[] serialData = card.getSector(0).getBlock(0).getData();
-        long serialNumber = Utils.byteArrayToLongReversed(serialData, 0, 4);
-        return new TransitIdentity(name, formatSerialNumber(serialNumber));
+        protected TransitIdentity parseTransitIdentity(ClassicCard card, String name) {
+            byte[] serialData = card.getSector(0).getBlock(0).getData();
+            long serialNumber = Utils.byteArrayToLongReversed(serialData, 0, 4);
+            return new TransitIdentity(name, formatSerialNumber(serialNumber));
+        }
+
+        @Override
+        public TransitData parseTransitData(@NonNull ClassicCard classicCard) {
+            return new NextfareTransitData(classicCard);
+        }
     }
 
     protected static String formatSerialNumber(long serialNumber) {

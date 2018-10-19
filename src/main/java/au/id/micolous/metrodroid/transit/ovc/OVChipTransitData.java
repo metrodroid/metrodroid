@@ -22,6 +22,7 @@
 package au.id.micolous.metrodroid.transit.ovc;
 
 import android.os.Parcel;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
 import java.util.ArrayList;
@@ -38,6 +39,7 @@ import au.id.micolous.metrodroid.MetrodroidApplication;
 import au.id.micolous.metrodroid.card.Card;
 import au.id.micolous.metrodroid.card.CardType;
 import au.id.micolous.metrodroid.card.classic.ClassicCard;
+import au.id.micolous.metrodroid.card.classic.ClassicCardTransitFactory;
 import au.id.micolous.metrodroid.card.classic.ClassicSector;
 import au.id.micolous.metrodroid.card.classic.InvalidClassicSector;
 import au.id.micolous.metrodroid.card.classic.UnauthorizedClassicSector;
@@ -212,31 +214,52 @@ public class OVChipTransitData extends TransitData {
         mSubscriptions = subs.toArray(new OVChipSubscription[0]);
     }
 
-    public static boolean check(Card card) {
-        if (!(card instanceof ClassicCard))
-            return false;
+    public static final ClassicCardTransitFactory FACTORY = new ClassicCardTransitFactory() {
+        @Override
+        public boolean check(@NonNull ClassicCard classicCard) {
+            if (classicCard.getSectors().size() != 40)
+                return false;
 
-        ClassicCard classicCard = (ClassicCard) card;
+            ClassicSector sector = classicCard.getSector(0);
 
-        if (classicCard.getSectors().size() != 40)
-            return false;
+            if (sector instanceof UnauthorizedClassicSector || sector instanceof InvalidClassicSector)
+                return false;
 
-        ClassicSector sector = classicCard.getSector(0);
+            // Starting at 0×010, 8400 0000 0603 a000 13ae e401 xxxx 0e80 80e8 seems to exist on all OVC's (with xxxx different).
+            // http://www.ov-chipkaart.de/back-up/3-8-11/www.ov-chipkaart.me/blog/index7e09.html?page_id=132
+            byte[] blockData = sector.readBlocks(1, 1);
+            return Arrays.equals(Arrays.copyOfRange(blockData, 0, 11), OVC_HEADER);
+        }
 
-        if (sector instanceof UnauthorizedClassicSector || sector instanceof InvalidClassicSector)
-            return false;
+        @Override
+        public TransitIdentity parseTransitIdentity(@NonNull ClassicCard card) {
+            String hex = Utils.getHexString(card.getSector(0).getBlock(0).getData(), null);
+            String id = hex.substring(0, 8);
+            return new TransitIdentity("OV-chipkaart", id);
+        }
 
-        // Starting at 0×010, 8400 0000 0603 a000 13ae e401 xxxx 0e80 80e8 seems to exist on all OVC's (with xxxx different).
-        // http://www.ov-chipkaart.de/back-up/3-8-11/www.ov-chipkaart.me/blog/index7e09.html?page_id=132
-        byte[] blockData = sector.readBlocks(1, 1);
-        return Arrays.equals(Arrays.copyOfRange(blockData, 0, 11), OVC_HEADER);
-    }
+        @Override
+        public TransitData parseTransitData(@NonNull ClassicCard classicCard) {
+            return new OVChipTransitData(classicCard);
+        }
 
-    public static TransitIdentity parseTransitIdentity(Card card) {
-        String hex = Utils.getHexString(((ClassicCard) card).getSector(0).getBlock(0).getData(), null);
-        String id = hex.substring(0, 8);
-        return new TransitIdentity("OV-chipkaart", id);
-    }
+        @Override
+        public int earlySectors() {
+            return 1;
+        }
+
+        @Override
+        public CardInfo earlyCardInfo(List<ClassicSector> sectors) {
+            ClassicSector sector = sectors.get(0);
+
+            // Starting at 0×010, 8400 0000 0603 a000 13ae e401 xxxx 0e80 80e8 seems to exist on all OVC's (with xxxx different).
+            // http://www.ov-chipkaart.de/back-up/3-8-11/www.ov-chipkaart.me/blog/index7e09.html?page_id=132
+            byte[] blockData = sector.readBlocks(1, 1);
+            if (Arrays.equals(Arrays.copyOfRange(blockData, 0, 11), OVC_HEADER))
+                return CARD_INFO;
+            return null;
+        }
+    };
 
     public static Calendar convertDate(int date) {
         return convertDate(date, 0);
