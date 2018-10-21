@@ -1,0 +1,12 @@
+Declaration regarding Open Access to Government Data Online
+
+1. Licensing Methods and Scope
+To promote applications of online government information, all data and materials on the Taipei Rapid Transit Corporation (hereinafter referred to as TRTC) website shall be accessible by the public without compensation, non-exclusively, and shall be sublicensed to other parties. Users shall be able to reproduce, adapt, edit, publicly transmit, or utilize the data in other ways. Users shall also be given an irrevocable license to develop products or services based on the data (referred to as derivative works) without any restrictions with regard to time or territory. In addition, users shall not be required to obtain the license in written or other forms from the TRTC but will, however, be required to clearly accredit the relevant source.
+
+2. Relevant Matters
+(1) The scope of the license shall only extend to areas stipulated by the Copyright Act, but not extend to other intellectual property rights, including but not limited to the provision of patents, trademarks, and the logo of the TRTC.
+(2) Whether the personal information made public by the parties or by law shall be collected, processed, or used shall be governed pursuant to Personal Information Protection Act. Users shall take protective measures stipulated by Personal Information Act for accessing the personal information.
+(3) Certain video or audio recordings, images, music scores, articles etc., shall only be published on the TRTC website but not used for other purposes according to specific agreements. Therefore, data or materials specifically designated by the TRTC shall be accessed only after consent is obtained and fall beyond the scope of the license.
+(4) Data or materials obtained from the TRTC website shall not be maliciously changed or altered. Users shall be subject to civil or criminal liability should the information edited or adapted is inconsistent with the original purpose or content.
+
+3. The license granted does not imply that the TRTC recommends, approves, or agrees with users developing derivative works based on data from the TRTC website.

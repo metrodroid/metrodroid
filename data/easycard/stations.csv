@@ -1,100 +1,110 @@
-reader_id,stop_name
-0x47,Tamsui
-0x46,Hongshulin
-0x45,Zhuwei
-0x44,Guandu
-0x43,Zhongyi
-0x41,Xinbeitou
-0x40,Beitou
-0x3f,Qiyan
-0x3e,Qilian
-0x3d,Shipai
-0x3c,Mingde
-0x3b,Zhishan
-0x3a,Shilin
-0x39,Jiantan
-0x38,Yuanshan
-0x37,Minquan W. Rd.
-0x36,Shuanglian
-0x35,Zhongshan
-0x53,Xinpu
-0x54,Jiangzicui
-0x55,Longshan Temple
-0x56,Ximen
-0x58,Shandao Temple
-0x59,Zhongxiao Xinsheng
-0x5b,Zhongxiao Dunhua
-0x5c,Sun Yat-Sen Memorial Hall
-0x5d,Taipei City Hall
-0x5f,Houshanpi
-0x5e,Yongchun
-0x60,Kunyang
-0x61,Nangang
-0x13,Taipei Zoo
-0x12,Muzha
-0x11,Wanfang Community
-0x10,Wanfang Hospital
-0x0f,Xinhai
-0x0e,Linguang
-0x0d,Liuzhangli
-0x0c,Technology Building
-0x0b,Daan
-0x09,Nanjing E. Rd.
-0x08,Zhongshan Junior High School
-0x0a,Zhongxiao Fuxing
-0x21,Xindian
-0x30,Nanshijiao
-0x2f,Jingan
-0x2e,Yongan Market
-0x2d,Dingxi
-0x22,Xindian District Office
-0x23,Qizhang
-0x24,Dapinglin
-0x25,Jingmei
-0x26,Wanlong
-0x27,Gongguan
-0x28,Taipower Building
-0x29,Guting
-0x2a,Chiang Kai-Shek Memorial Hall
-0x2b,Xiaonanmen
-0x32,NTU Hospital
-0x34,Taipei Main Station
-0x42,Fuxinggang
-0x4f,Haishan
-0x4e,Tucheng
-0x4d,Yongning
-0x52,Banqiao
-0x51,Fuzhong
-0x50,Far Eastern Hospital
-0x20,Xiaobitan
-0x07,Songshan Airport
-0x15,Dazhi
-0x16,Jiannan Rd.
-0x17,Xihu
-0x18,Gangqian
-0x19,Wende
-0x1a,Neihu
-0x1b,Dahu Park
-0x1c,Huzhou
-0x1d,Donghu
-0x1e,Nangang Software Park
-0x1f,Taipei Nangang Exhibition Center
-0xae,Luzhou
-0xaf,Sanmin Senior High School
-0xb0,St. Ignatius High School
-0xb1,Sanhe Junior High School
-0xb2,Sanchong Elementary School
-0x80,Daqiaotou
-0x82,Zhongshan Elementary School
-0x83,Xingtian Temple
-0x84,Songjiang Nanjing
-0x86,Dongmen
-0x7f,Taipei Bridge
-0x7e,Cailiao
-0x7d,Sanchong
-0x7c,Xianse Temple
-0x7b,Touqianzhuang
-0x7a,Xinzhuang
-0x79,Fu Jen University
-0xb3,Huilong
-0xb4,Danfeng
+reader_id,stop_name,local_name,ref,line_id,note
+0x7,Songshan Airport,松山機場,BR13,1,
+0x8,Zhongshan Junior High School,中山國中,BR12,1,
+0x9,Nanjing Fuxing,南京復興,"G16,BR11","3,1",
+0xa,Zhongxiao Fuxing,忠孝復興,"BL15,BR10","5,1",
+0xb,Daan,大安,"R05,BR09","2,1",
+0xc,Technology Building,科技大樓,BR08,1,
+0xd,Liuzhangli,六張犁,BR07,1,
+0xe,Linguang,麟光,BR06,1,
+0xf,Xinhai,辛亥,BR05,1,
+0x10,Wanfang Hospital,萬芳醫院,BR04,1,
+0x11,Wanfang Community,萬芳社區,BR03,1,
+0x12,Muzha,木柵,BR02,1,
+0x13,Taipei Zoo,動物園,BR01,1,
+0x15,Dazhi,大直,BR14,1,
+0x16,Jiannan Rd.,劍南路,BR15,1,
+0x17,Xihu,西湖,BR16,1,
+0x18,Gangqian,港墘,BR17,1,
+0x19,Wende,文德,BR18,1,
+0x1a,Neihu,內湖,BR19,1,
+0x1b,Dahu Park,大湖公園,BR20,1,
+0x1c,Huzhou,葫洲,BR21,1,
+0x1d,Donghu,東湖,BR22,1,
+0x1e,Nangang Software Park,南港軟體園區,BR23,1,
+0x1f,Taipei Nangang Exhibition Center,南港展覽館,"BL23,BR24","5,1",
+0x20,Xiaobitan,小碧潭,G03A,3,
+0x21,Xindian,新店,G01,3,
+0x22,Xindian District Office,新店區公所,G02,3,
+0x23,Qizhang,七張,G03,3,
+0x24,Dapinglin,大坪林,G04,3,
+0x25,Jingmei,景美,G05,3,
+0x26,Wanlong,萬隆,G06,3,
+0x27,Gongguan,公館,G07,3,
+0x28,Taipower Building,台電大樓,G08,3,
+0x29,Guting,古亭,"G09,O05","3,4",
+0x2a,C.K.S. Memorial Hall,中正紀念堂,"G10,R08","3,2",
+0x2b,Xiaonanmen,小南門,G11,3,
+0x2d,Dingxi,頂溪,O04,4,
+0x2e,Yongan Market,永安市場,O03,4,
+0x2f,Jingan,景安,O02,4,
+0x30,Nanshijiao,南勢角,O01,4,
+0x32,NTU Hospital,台大醫院,R09,2,
+0x33,Taipei Main Station,台北車站,"BL12,R10","5,2",TRTC website says 0x33
+0x34,Taipei Main Station,台北車站,"BL12,R10","5,2",easydump says 0x34
+0x35,Zhongshan,中山,"G14,R11","3,2",
+0x36,Shuanglian,雙連,R12,2,
+0x37,Minquan W. Rd.,民權西路,"O11,R13","4,2",
+0x38,Yuanshan,圓山,R14,2,
+0x39,Jiantan,劍潭,R15,2,
+0x3a,Shilin,士林,R16,2,
+0x3b,Zhishan,芝山,R17,2,
+0x3c,Mingde,明德,R18,2,
+0x3d,Shipai,石牌,R19,2,
+0x3e,Qilian,唭哩岸,R20,2,
+0x3f,Qiyan,奇岩,R21,2,
+0x40,Beitou,北投,R22,2,
+0x41,Xinbeitou,新北投,R22A,2,
+0x42,Fuxinggang,復興崗,R23,2,
+0x43,Zhongyi,忠義,R24,2,
+0x44,Guandu,關渡,R25,2,
+0x45,Zhuwei,竹圍,R26,2,
+0x46,Hongshulin,紅樹林,R27,2,
+0x47,Tamsui,淡水,R28,2,
+0x4c,Dingpu,頂埔,BL01,5,
+0x4d,Yongning,永寧,BL02,5,
+0x4e,Tucheng,土城,BL03,5,
+0x4f,Haishan,海山,BL04,5,
+0x50,Far Eastern Hospital,亞東醫院,BL05,5,
+0x51,Fuzhong,府中,BL06,5,
+0x52,Banqiao,板橋,BL07,5,
+0x53,Xinpu,新埔,BL08,5,
+0x54,Jiangzicui,江子翠,BL09,5,
+0x55,Longshan Temple,龍山寺,BL10,5,
+0x56,Ximen,西門,"BL11,G12","5,3",
+0x58,Shandao Temple,善導寺,BL13,5,
+0x59,Zhongxiao Xinsheng,忠孝新生,"BL14,O07","5,4",
+0x5b,Zhongxiao Dunhua,忠孝敦化,BL16,5,
+0x5c,S.Y.S. Memorial Hall,國父紀念館,BL17,5,
+0x5d,Taipei City Hall,市政府,BL18,5,
+0x5e,Yongchun,永春,BL19,5,
+0x5f,Houshanpi,後山埤,BL20,5,
+0x60,Kunyang,昆陽,BL21,5,
+0x61,Nangang,南港,BL22,5,
+0x63,Xiangshan,象山,R02,2,
+0x64,Taipei 101/World Trade Center,台北101/世貿,R03,2,
+0x65,Xinyi Anhe,信義安和,R04,2,
+0x67,Daan Park,大安森林公園,R06,2,
+0x69,Beimen,北門,G13,3,
+0x6d,Taipei Arena,台北小巨蛋,G17,3,
+0x6e,Nanjing Sanmin,南京三民,G18,3,
+0x6f,Songshan,松山,G19,3,
+0x79,Fu Jen University,輔大,O19,4,
+0x7a,Xinzhuang,新莊,O18,4,
+0x7b,Touqianzhuang,頭前庄,O17,4,
+0x7c,Xianse Temple,先嗇宮,O16,4,
+0x7d,Sanchong,三重,O15,4,
+0x7e,Cailiao,菜寮,O14,4,
+0x7f,Taipei Bridge,台北橋,O13,4,
+0x80,Daqiaotou,大橋頭,O12,4,
+0x82,Zhongshan Elementary School,中山國小,O10,4,
+0x83,Xingtian Temple,行天宮,O09,4,
+0x84,Songjiang Nanjing,松江南京,"G15,O08","3,4",
+0x86,Dongmen,東門,"R07,O06","2,4",
+0xae,Luzhou,蘆洲,O54,4,
+0xaf,Sanmin Senior High School,三民高中,O53,4,
+0xb0,St. Ignatius High School,徐匯中學,O52,4,
+0xb1,Sanhe Junior High School,三和國中,O51,4,
+0xb2,Sanchong Elementary School,三重國小,O50,4,
+0xb3,Huilong,迴龍,O21,4,
+0xb4,Danfeng,丹鳳,O20,4,
