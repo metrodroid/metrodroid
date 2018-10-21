@@ -25,7 +25,6 @@ import android.os.Parcelable;
 import java.util.TimeZone;
 
 import au.id.micolous.metrodroid.card.ultralight.UltralightCard;
-import au.id.micolous.metrodroid.transit.Station;
 import au.id.micolous.metrodroid.transit.Trip;
 import au.id.micolous.metrodroid.transit.nextfare.ultralight.NextfareUltralightTransaction;
 
@@ -46,16 +45,6 @@ public class VentraUltralightTransaction extends NextfareUltralightTransaction i
 
     private VentraUltralightTransaction(Parcel parcel) {
         super(parcel);
-    }
-
-    public String getRouteName() {
-        return Integer.toHexString(mRoute);
-    }
-
-    public Station getStation() {
-        if (mLocation == 0)
-            return null;
-        return Station.unknown(mLocation);
     }
 
     @Override

@@ -64,7 +64,6 @@ import au.id.micolous.metrodroid.activity.TripMapActivity;
 import au.id.micolous.metrodroid.transit.TransitCurrency;
 import au.id.micolous.metrodroid.transit.TransitData;
 import au.id.micolous.metrodroid.transit.Trip;
-import au.id.micolous.metrodroid.transit.orca.OrcaTrip;
 import au.id.micolous.metrodroid.util.TripObfuscator;
 import au.id.micolous.metrodroid.util.Utils;
 
