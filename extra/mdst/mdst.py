@@ -137,6 +137,8 @@ def read_stops_from_csv(db, csv_f):
       s.name.english_short = stop['short_name']
     if 'operator_id' in stop and stop['operator_id']:
       s.operator_id = int(stop['operator_id'])
+    if 'line_id' in stop and stop['line_id']:
+      s.line_id.extend([int(x.strip()) for x in stop['line_id'].split(',')])
     y = stop.get('stop_lat', '').strip()
     x = stop.get('stop_lon', '').strip()
     if y and x:

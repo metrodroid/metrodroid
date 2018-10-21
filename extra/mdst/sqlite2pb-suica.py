@@ -82,7 +82,7 @@ for row in cur:
   #else:
   #  print('Missing location: (%d) %s' % (s.id, s.name.english))
   s.operator_id = operator_id
-  s.line_id = line_id
+  s.line_id.append(line_id)
   
   db.push_station(s)
   station_count += 1

@@ -65,7 +65,7 @@ index = read_delimited_message(StationIndex, f)
 
 # Find the record
 if station_id not in index.station_map:
-  raise Exception, 'station not found'
+  raise Exception('station not found')
 
 station_off = index.station_map[station_id]
 print('station record offset = %d (%d actual)' % (station_off, station_off + stationlist_off))
@@ -81,8 +81,8 @@ if rec.operator_id:
   print('Operator:')
   print(MessageToString(header.operators[rec.operator_id], as_utf8=True))
 
-if rec.line_id:
+for line in rec.line_id:
   print('Line:')
-  print(MessageToString(header.lines[rec.line_id], as_utf8=True))
+  print(MessageToString(header.lines[line], as_utf8=True))
 
 
