@@ -20,7 +20,11 @@
 package au.id.micolous.metrodroid.transit.lisboaviva;
 
 import android.os.Parcel;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+
+import java.util.Collections;
+import java.util.List;
 
 import au.id.micolous.metrodroid.transit.Station;
 import au.id.micolous.metrodroid.transit.en1545.En1545Container;
@@ -82,18 +86,19 @@ class LisboaVivaTransaction extends En1545Transaction {
         super(parcel);
     }
 
+    @NonNull
     @Override
-    public String getRouteName() {
+    public List<String> getRouteNames() {
         int routeNumber = mParsed.getInt(EVENT_ROUTE_NUMBER);
         if (getAgency() == LisboaVivaLookup.AGENCY_CP
                 && routeNumber == LisboaVivaLookup.ROUTE_CASCAIS_SADO) {
             if (getStationId() <= 54)
-                return "Cascais";
+                return Collections.singletonList("Cascais");
             else
-                return "Sado";
+                return Collections.singletonList("Sado");
         }
 
-        return super.getRouteName();
+        return super.getRouteNames();
     }
 
     @Override

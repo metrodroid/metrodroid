@@ -20,7 +20,6 @@
 package au.id.micolous.metrodroid.transit.nextfare.ultralight;
 
 import android.os.Parcel;
-import android.os.Parcelable;
 
 import java.util.Calendar;
 import java.util.TimeZone;
@@ -99,7 +98,12 @@ public abstract class NextfareUltralightTransaction extends Transaction {
         return Integer.toHexString(mRoute);
     }
 
-    abstract public Station getStation();
+    public Station getStation() {
+        if (mLocation == 0) {
+            return null;
+        }
+        return Station.unknown(mLocation);
+    }
 
     public Calendar getTimestamp() {
         return NextfareUltralightTransitData.parseDateTime(getTimezone(), mBaseDate, mDate, mTime);

@@ -90,7 +90,7 @@ for row in cur:
   if operator_id is not None:
     s.operator_id = operator_id
   if line_id is not None:
-    s.line_id = line_id
+    s.line_id.append(line_id)
   
   db.push_station(s)
   station_count += 1

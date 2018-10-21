@@ -85,12 +85,6 @@ public class TransactionTrip extends Trip implements Parcelable {
         return mStart == null ? mEnd : mStart;
     }
 
-    @Nullable
-    @Override
-    public String getRouteName() {
-        return getAny().getRouteName();
-    }
-
     @Override
     public int getPassengerCount() {
         return getAny().getPassengerCount();

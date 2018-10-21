@@ -138,7 +138,7 @@ for tsvname in os.listdir(TSV_DIR):
     #  print('Missing location: (%d) %s' % (s.id, s.name.english))
     s.operator_id = operator_id
     if line_id is not None:
-      s.line_id = line_id
+      s.line_id.append(line_id)
 
     # Write it out
     db.push_station(s)
