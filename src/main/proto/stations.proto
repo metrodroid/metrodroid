@@ -97,7 +97,7 @@ message Station {
     // The ID of the operator (from StationDb.operators).
     uint32 operator_id = 6;
     // The ID of the line (from StationDb.lines).
-    uint32 line_id = 7;
+    repeated uint32 line_id = 7;
 
     reserved 2, 3;
 }

@@ -183,7 +183,9 @@ public class SuicaTrip extends Trip {
 
     @Override
     public String getRouteName() {
-        return (mStartStation != null) ? mStartStation.getLineName() : (getConsoleType() + " " + getProcessType());
+        return (mStartStation != null) ?
+                super.getRouteName() :
+                (getConsoleType() + " " + getProcessType());
     }
 
     @Override

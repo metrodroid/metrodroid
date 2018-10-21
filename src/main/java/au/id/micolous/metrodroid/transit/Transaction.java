@@ -20,13 +20,34 @@
 package au.id.micolous.metrodroid.transit;
 
 import android.os.Parcelable;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 
 import java.util.Calendar;
+import java.util.Collections;
+import java.util.List;
 
 public abstract class Transaction implements Parcelable {
     protected abstract boolean isTapOff();
 
-    public abstract String getRouteName();
+    /**
+     * External callers: use {@link #getRouteName()} instead.
+     */
+    @Nullable
+    protected String getRouteName() {
+        return null;
+    }
+
+    @NonNull
+    public List<String> getRouteNames() {
+        // This is a compatibility wrapper that calls getRouteName()
+        String routeName = getRouteName();
+        if (routeName == null) {
+            return Collections.emptyList();
+        }
+
+        return Collections.singletonList(routeName);
+    }
 
     public String getVehicleID() {
         return null;
