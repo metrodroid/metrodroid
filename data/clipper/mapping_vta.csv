@@ -1,20 +1,20 @@
 reader_id,stop_id,stop_code,short_name,comment
 0x110004,"4729",,Almaden,
-0x110005,"5242",,Alum Rock,unconfirmed
+0x110005,"5242",,Alum Rock,
 0x110006,"5377",,Bascom,
 0x110007,"5239",,Berryessa,unconfirmed
 0x110008,"4739",,Blossom Hill,unconfirmed
 0x110009,"4756",,Bonaventura,
 0x11000a,"4815",,Borregas,unconfirmed
 0x11000b,"4801",,Baypointe,B.pointe
-0x11000c,"4740",,Branham,unconfirmed
+0x11000c,"4740",,Branham,
 0x11000d,"4817",,Bayshore/NASA,
 0x11000e,"5379",,Campbell,
-0x11000f,"4741",,Capitol (unconfirmed)
+0x11000f,"4741",,Capitol,
 0x110010,"4745",,Children's Discovery Museum,Why before "Champion"?
 0x110011,"4807",,Champion,
 0x110012,"4802",,Cisco Way,
-0x110013,"4751",,Civic center,
+0x110013,"4751",,Civic Center,
 0x110014,"4755",,Component,
 0x110015,"4737",,Cottle,unconfirmed
 0x110016,"5237",,Cropley,unconfirmed
@@ -25,7 +25,7 @@ reader_id,stop_id,stop_code,short_name,comment
 0x11001c,"4813",,Fair Oaks
 0x11001d,"5376",,Fruitdale,
 0x11001e,"4752",,Gish,
-0x11001f,"5235",,Great Mall,unconfirmed
+0x11001f,"5235",,Great Mall,
 0x110020,"4809",,Great America,Why after Great Mall?
 0x110021,"5378",,Hamilton,
 0x110022,"5238",,Hostetter,unconfirmed
@@ -33,16 +33,16 @@ reader_id,stop_id,stop_code,short_name,comment
 0x110024,"4754",,Karina,unconfirmed
 0x110025,"4808",,Lick Mill,
 0x110026,"4816",,Lockheed Martin,
-0x110027,"5241",,McKee,unconfirmed
+0x110027,"5241",,McKee,
 0x110028,"4753",,Metro/Airport,
 0x110029,"4818",,Middlefield,
-0x11002a,"4803",,Milpitas,unconfirmed
-0x11002b,"5024",,Moffett park,
+0x11002a,"4803",,I-880/Milpitas,
+0x11002b,"5024",,Moffett Park,
 0x11002c,"5236",,Montague,unconfirmed
 0x11002d,"4821",,Mountain View Downtown,
 0x11002e,"4730",,Oakridge,
 0x11002f,"4733",,Ohlone-Chynoweth
-0x110030,"4810",,Old ironsides
+0x110030,"4810",,Old Ironsides
 0x110031,"4757",,Orchard
 0x110032,"5240",,Penitencia Creek,unconfirmed
 0x110033,"5375",,Race
@@ -56,7 +56,7 @@ reader_id,stop_id,stop_code,short_name,comment
 0x11003b,"4749",,St James North
 0x11003c,"4772",,St James South
 0x11003d,"4736",,Santa Teresa,unconfirmed
-0x11003e,"4738",,Snell,unconfirmed
+0x11003e,"4738",,Snell,
 0x11003f,"4743",,Tamien,unconfirmed
 0x110040,"4759",,Tasman
 0x110041,"4812",,Vienna,unconfirmed
