@@ -167,14 +167,7 @@ public class IntercodeSubscription extends En1545Subscription {
                     PERIOD_CONTAINER,
                     SOLD_CONTAINER,
                     new En1545FixedInteger("ContractVehiculeClassAllowed", 4),
-                    new En1545FixedInteger("LinkedContract", 5),
-                    En1545FixedInteger.time(CONTRACT_START),
-                    En1545FixedInteger.time(CONTRACT_END),
-                    En1545FixedInteger.date("ContractDataEndInhibition"),
-                    En1545FixedInteger.date("ContractDataValidityLimit"),
-                    new En1545FixedInteger("ContractDataGeoLine", 28),
-                    new En1545FixedInteger(CONTRACT_JOURNEYS, 16),
-                    new En1545FixedInteger("ContractDataSaleSecureDevice", 32)
+                    new En1545FixedInteger("LinkedContract", 5)
             )
     );
     private static final En1545Field subFieldsType46 = commonFormat(
