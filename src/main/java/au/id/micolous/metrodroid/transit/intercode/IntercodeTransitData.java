@@ -33,6 +33,7 @@ import au.id.micolous.farebot.R;
 import au.id.micolous.metrodroid.card.CardType;
 import au.id.micolous.metrodroid.card.calypso.CalypsoApplication;
 import au.id.micolous.metrodroid.card.iso7816.ISO7816File;
+import au.id.micolous.metrodroid.card.iso7816.ISO7816Record;
 import au.id.micolous.metrodroid.card.iso7816.ISO7816Selector;
 import au.id.micolous.metrodroid.transit.CardInfo;
 import au.id.micolous.metrodroid.transit.TransitIdentity;
@@ -167,7 +168,7 @@ public class IntercodeTransitData extends Calypso1545TransitData {
     );
 
     private IntercodeTransitData(CalypsoApplication card) {
-        super(card, TICKET_ENV_HOLDER_FIELDS, contractListFields);
+        super(card, TICKET_ENV_HOLDER_FIELDS, contractListFields, getSerial(getNetId(card), card));
     }
 
     protected IntercodeTransaction createTrip(byte[] data) {
@@ -217,10 +218,42 @@ public class IntercodeTransitData extends Calypso1545TransitData {
 
     @NonNull
     public static TransitIdentity parseTransitIdentity(CalypsoApplication card) {
-        int netId = Utils.getBitsFromBuffer(card.getFile(CalypsoApplication.File.TICKETING_ENVIRONMENT).getRecord(1).getData(),
-                13, 24);
-        return new TransitIdentity(getCardName(netId), getSerial(card));
+        int netId = getNetId(card);
+        return new TransitIdentity(getCardName(netId), getSerial(netId, card));
     }
+
+    private static int getNetId(CalypsoApplication card) {
+        return Utils.getBitsFromBuffer(card.getFile(CalypsoApplication.File.TICKETING_ENVIRONMENT).getRecord(1).getData(),
+                13, 24);
+    }
+
+    protected static String getSerial(int netId, CalypsoApplication card) {
+        ISO7816File iccFile = card.getFile(CalypsoApplication.File.ICC);
+        if (iccFile == null) {
+            return null;
+        }
+
+        ISO7816Record iccRecord = iccFile.getRecord(1);
+
+        if (iccRecord == null) {
+            return null;
+        }
+        byte[] data = iccRecord.getData();
+
+        if (netId == 0x250502)
+            return Utils.getHexString(data, 20, 6).substring(1,11);
+
+        if (Utils.byteArrayToLong(data, 16, 4) != 0) {
+            return Long.toString(Utils.byteArrayToLong(data, 16, 4));
+        }
+
+        if (Utils.byteArrayToLong(data, 0, 4) != 0) {
+            return Long.toString(Utils.byteArrayToLong(data, 0, 4));
+        }
+
+        return null;
+    }
+
 
     public static boolean check(byte[] ticketEnv) {
         try {
