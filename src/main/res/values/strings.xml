@@ -966,6 +966,10 @@
 
     <!-- En1545 and related cards -->
 
+    <string name="passenger_class">Class</string>
+    <string name="without_receipt">Without receipt</string>
+    <string name="with_receipt">With receipt</string>
+
     <!-- Translators: The name of the transit agency who sold a subscription -->
     <string name="seller_agency">Seller agency</string>
     <!-- Translators: Attribute to describe the number of remaining trips on the card or subscription. -->

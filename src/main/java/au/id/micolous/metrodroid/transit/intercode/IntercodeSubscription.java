@@ -24,9 +24,12 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
 
+import au.id.micolous.farebot.R;
 import au.id.micolous.metrodroid.transit.en1545.En1545Bitmap;
 import au.id.micolous.metrodroid.transit.en1545.En1545Container;
 import au.id.micolous.metrodroid.transit.en1545.En1545Field;
@@ -134,7 +137,7 @@ public class IntercodeSubscription extends En1545Subscription {
     private static final En1545Container PAY_CONTAINER = new En1545Container(
             new En1545FixedInteger(CONTRACT_PAY_METHOD, 11),
             new En1545FixedInteger(CONTRACT_PRICE_AMOUNT, 16),
-            new En1545FixedInteger("ContractReceiptDelivered", 1)
+            new En1545FixedInteger(CONTRACT_RECEIPT_DELIVERED, 1)
     );
     private static final En1545Container SOLD_CONTAINER = new En1545Container(
             new En1545FixedInteger(CONTRACT_SOLD, 8),
@@ -256,5 +259,26 @@ public class IntercodeSubscription extends En1545Subscription {
             return mParsed.getIntOrZero(CONTRACT_JOURNEYS);
         }
         return null;
+    }
+
+    @Nullable
+    @Override
+    public List<ListItem> getInfo() {
+        List<ListItem> li = super.getInfo();
+        li.addAll(mParsed.getInfo(new HashSet<>(Arrays.asList(
+                CONTRACT_TARIFF,
+                CONTRACT_PRICE_AMOUNT,
+                CONTRACT_PAY_METHOD,
+                CONTRACT_SALE_DEVICE,
+                CONTRACT_SALE_AGENT,
+                CONTRACT_SALE + "Date",
+                CONTRACT_START + "Date",
+                CONTRACT_END + "Date",
+                CONTRACT_STATUS,
+                CONTRACT_PROVIDER,
+                CONTRACT_RECEIPT_DELIVERED,
+                CONTRACT_PASSENGER_CLASS
+        ))));
+        return li;
     }
 }
