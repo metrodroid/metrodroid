@@ -774,4 +774,7 @@
     <string name="location_portland">Portland, OR, USA</string>
     <string name="location_sophia_antipolis">Sophia Antipolis, Frankrike</string>
     <string name="lisboaviva_unknown_period">Ukjent gyldighet %x/%x</string>
-    </resources>
+    <string name="subscription_cost">Kostnad</string>
+    <string name="location_montpellier">Montpellier, Frankrike</string>
+    <string name="maps">Kart</string>
+</resources>
