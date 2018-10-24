@@ -787,4 +787,17 @@
     <string name="metroq_fare_card">Kaart op saldo</string>
     <string name="metroq_day_pass">Dagkaart</string>
 
+    <string name="free_transfers_until">Gratis overstappen tot</string>
+    <string name="clipper_ticket_type_adult">Volwassene</string>
+    <string name="clipper_ticket_type_senior">Oudere</string>
+    <string name="clipper_ticket_type_youth">Jongere</string>
+
+    <string name="clipper_single">Enkele reis (<xliff:g id="ticket_class" example="Adult">%1$s</xliff:g>)</string>
+    <string name="clipper_return">Retour (<xliff:g id="ticket_class" example="Adult">%1$s</xliff:g>)</string>
+    <string name="card_note_clipper">Ondersteuning voor zowel plastic (herbruikbaar) als papieren (enkele reizen, uitgegeven door Golden Gate Ferry and Muni) Clipper-kaarten.</string>
+
+    <string name="passenger_class">klas</string>
+    <string name="without_receipt">Zonder bonnetje</string>
+    <string name="with_receipt">Met bonnetje</string>
+
     </resources>
