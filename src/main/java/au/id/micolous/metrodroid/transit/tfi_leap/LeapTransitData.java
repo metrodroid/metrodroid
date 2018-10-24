@@ -339,4 +339,9 @@ public class LeapTransitData extends TransitData {
     public static boolean earlyCheck(int appId) {
         return appId == APP_ID;
     }
+
+    @Nullable
+    public static String getNotice() {
+        return StationTableReader.getNotice(LEAP_STR);
+    }
 }

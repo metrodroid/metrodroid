@@ -48,7 +48,7 @@ final class ClipperData {
             .put(0x04, "San Francisco")
             .build();
 
-    private static final String CLIPPER_STR = "clipper";
+    static final String CLIPPER_STR = "clipper";
 
     private ClipperData() {
     }
