@@ -1,0 +1,9 @@
+The LAX TAP stop database used in this software contains information derived from GTFS feeds by Los Angeles County transit operators, including:
+
+   - Los Angeles County Metropolitan Transportation Authority (Metro)
+
+You may obtain a copy of the raw data and its license at:
+
+   https://gitlab.com/LACMTA/gtfs_rail
+
+Stop mapping information is available in Metrodroid's source repository.

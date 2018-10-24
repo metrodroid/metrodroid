@@ -1,6 +1,6 @@
 # -*- mode: makefile; indent-tabs-mode: tabs; tab-width: 2 -*-
-.PHONY:: all clean %.clean %.build hermetic web
-MDST = ../extra/mdst/
+.PHONY:: all clean %.clean %.build hermetic web %.copy
+MDROOT=..
 
 # All targets that do not need an internet connection, and should always return
 # the same results.
@@ -9,9 +9,14 @@ MDST = ../extra/mdst/
 # lax_tap).
 HERMETIC_TARGETS := \
 	compass \
+	gironde \
 	kmt \
 	lax_tap \
+	lisboa_viva \
+	navigo \
 	orca \
+	oura \
+	ravkav \
 	szt \
 	troika
 
@@ -20,7 +25,9 @@ HERMETIC_TARGETS := \
 WEB_TARGETS := \
 	clipper \
 	ezlink \
-	seq_gocard \
+	mobib \
+	ricaricami \
+	seq_go \
 	tfi_leap
 
 ALL_TARGETS := $(HERMETIC_TARGETS) $(WEB_TARGETS)
@@ -34,10 +41,14 @@ hermetic: $(foreach d,$(HERMETIC_TARGETS),$(d).build)
 
 web: $(foreach d,$(WEB_TARGETS),$(d).build)
 
+%.copy: %
+	make -C $< copy
+
+copy: $(foreach d,$(ALL_TARGETS),$(d).copy)
+
 %.clean: %
 	make -C $< clean
 
 clean: $(foreach d,$(ALL_TARGETS),$(d).clean) mdst_clean
 
 include Makefile.common
-

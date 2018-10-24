@@ -20,6 +20,7 @@ package au.id.micolous.metrodroid.transit.lax_tap;
 
 import android.net.Uri;
 import android.os.Parcel;
+import android.support.annotation.Nullable;
 
 import au.id.micolous.farebot.R;
 import au.id.micolous.metrodroid.card.CardType;
@@ -30,6 +31,7 @@ import au.id.micolous.metrodroid.transit.TransitIdentity;
 import au.id.micolous.metrodroid.transit.nextfare.NextfareTransitData;
 import au.id.micolous.metrodroid.transit.nextfare.NextfareTrip;
 import au.id.micolous.metrodroid.transit.nextfare.record.NextfareTransactionRecord;
+import au.id.micolous.metrodroid.util.StationTableReader;
 
 import java.util.Arrays;
 import java.util.TimeZone;
@@ -136,5 +138,10 @@ public class LaxTapTransitData extends NextfareTransitData {
     @Override
     protected TimeZone getTimezone() {
         return TIME_ZONE;
+    }
+
+    @Nullable
+    public static String getNotice() {
+        return StationTableReader.getNotice(LaxTapData.LAX_TAP_STR);
     }
 }

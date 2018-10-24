@@ -1,5 +1,5 @@
 # -*- mode: makefile; indent-tabs-mode: tabs; tab-width: 2 -*-
-MDST = ../../extra/mdst
+MDROOT = ../..
 
 all: kmt.mdst kmt.csv
 
@@ -9,5 +9,6 @@ clean:
 kmt.mdst: stations.csv mdst
 	python3 $(MDST)/csv2pb.py stations.csv -o $@ -V 2 -l id -L id
 
-include ../Makefile.common
+copy: kmt.copy
 
+include ../Makefile.common
