@@ -53,13 +53,17 @@ public class ChinaCard extends ISO7816Application {
     public final static String OLD_TYPE = "shenzhentong";
 
     private static final byte[] SZT_APP_NAME = Utils.stringToByteArray("PAY.SZT");
-    private static final byte[] BEIJING_APP_NAME = Utils.stringToByteArray("OC");
+    private static final byte[][] BEIJING_APP_NAMES = {
+            Utils.stringToByteArray("OC"),
+            Utils.stringToByteArray("PBOC")
+    };
     private static final byte[] WUHANTONG_APP_NAME = Utils.stringToByteArray("AP1.WHCTC");
     private static final byte[] CITYUNION_APP_NAME = Utils.hexStringToByteArray("A00000000386980701");
     private static final byte[] TUNION_APP_NAME = Utils.hexStringToByteArray("A000000632010105");
     public static final byte[][] APP_NAMES = {
             SZT_APP_NAME,
-            BEIJING_APP_NAME,
+            BEIJING_APP_NAMES[0],
+            BEIJING_APP_NAMES[1],
             WUHANTONG_APP_NAME,
             CITYUNION_APP_NAME,
             TUNION_APP_NAME
@@ -99,7 +103,8 @@ public class ChinaCard extends ISO7816Application {
     public TransitIdentity parseTransitIdentity() {
         if (Arrays.equals(getAppName(), SZT_APP_NAME))
             return NewShenzhenTransitData.parseTransitIdentity(this);
-        if (Arrays.equals(getAppName(), BEIJING_APP_NAME))
+        if (Arrays.equals(getAppName(), BEIJING_APP_NAMES[0])
+                || Arrays.equals(getAppName(), BEIJING_APP_NAMES[1]))
             return BeijingTransitData.parseTransitIdentity(this);
         if (Arrays.equals(getAppName(), WUHANTONG_APP_NAME))
             return WuhanTongTransitData.parseTransitIdentity(this);
@@ -114,7 +119,8 @@ public class ChinaCard extends ISO7816Application {
     public TransitData parseTransitData() {
         if (Arrays.equals(getAppName(), SZT_APP_NAME))
             return new NewShenzhenTransitData(this);
-        if (Arrays.equals(getAppName(), BEIJING_APP_NAME))
+        if (Arrays.equals(getAppName(), BEIJING_APP_NAMES[0])
+                || Arrays.equals(getAppName(), BEIJING_APP_NAMES[1]))
             return new BeijingTransitData(this);
         if (Arrays.equals(getAppName(), WUHANTONG_APP_NAME))
             return new WuhanTongTransitData(this);
@@ -149,7 +155,8 @@ public class ChinaCard extends ISO7816Application {
             CardInfo ci = null;
             if (Arrays.equals(app.getAppName(), SZT_APP_NAME))
                 ci = NewShenzhenTransitData.CARD_INFO;
-            if (Arrays.equals(app.getAppName(), BEIJING_APP_NAME))
+            if (Arrays.equals(app.getAppName(), BEIJING_APP_NAMES[0])
+                    || Arrays.equals(app.getAppName(), BEIJING_APP_NAMES[1]))
                 ci = BeijingTransitData.CARD_INFO;
             if (Arrays.equals(app.getAppName(), WUHANTONG_APP_NAME))
                 ci = WuhanTongTransitData.CARD_INFO;
