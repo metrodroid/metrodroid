@@ -1058,6 +1058,10 @@
 
     <!-- En1545 and related cards -->
 
+    <!--
+    Translators: This refers to the travel class of the ticket (ie: "1st Class", "2nd Class").
+    https://en.wikipedia.org/wiki/Travel_class
+    -->
     <string name="passenger_class">Class</string>
     <string name="without_receipt">Without receipt</string>
     <string name="with_receipt">With receipt</string>
