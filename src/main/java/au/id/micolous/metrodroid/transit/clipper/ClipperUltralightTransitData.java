@@ -50,12 +50,6 @@ public class ClipperUltralightTransitData extends TransitData {
 
     private static final String NAME = "Clipper Ultralight";
 
-    public static final CardInfo CARD_INFO = new CardInfo.Builder()
-            .setName(NAME)
-            .setLocation(R.string.location_san_francisco)
-            .setCardType(CardType.MifareUltralight)
-            .build();
-
     private final long mSerial;
     private final int mBaseDate;
     private final List<ClipperUltralightTrip> mTrips;
@@ -131,7 +125,7 @@ public class ClipperUltralightTransitData extends TransitData {
             tripsRemaining = trLast.getTripsRemaining();
             transferExpiry = trLast.getTransferExpiry();
         }
-        mSub = new ClipperUltralightSubscription(product, tripsRemaining, transferExpiry);
+        mSub = new ClipperUltralightSubscription(product, tripsRemaining, transferExpiry, mBaseDate);
     }
 
     @Override
@@ -156,25 +150,21 @@ public class ClipperUltralightTransitData extends TransitData {
     @Override
     public List<ListItem> getInfo() {
         ArrayList<ListItem> items = new ArrayList<>();
-        items.add(new ListItem(R.string.expiry_date, Utils.longDateFormat(
-                ClipperTransitData.clipperTimestampToCalendar(mBaseDate * 86400L))));
-        items.add(new ListItem(R.string.issue_date, Utils.longDateFormat(
-                ClipperTransitData.clipperTimestampToCalendar((mBaseDate - 89) * 86400L))));
         switch (mType) {
             case 0x04:
-                items.add(new ListItem(R.string.clipper_ticket_type, R.string.clipper_ticket_type_adult));
+                items.add(new ListItem(R.string.ticket_type, R.string.clipper_ticket_type_adult));
                 break;
             case 0x44:
-                items.add(new ListItem(R.string.clipper_ticket_type, R.string.clipper_ticket_type_senior));
+                items.add(new ListItem(R.string.ticket_type, R.string.clipper_ticket_type_senior));
                 break;
             case 0x84:
-                items.add(new ListItem(R.string.clipper_ticket_type, R.string.clipper_ticket_type_rtc));
+                items.add(new ListItem(R.string.ticket_type, R.string.clipper_ticket_type_rtc));
                 break;
             case 0xc4:
-                items.add(new ListItem(R.string.clipper_ticket_type, R.string.clipper_ticket_type_youth));
+                items.add(new ListItem(R.string.ticket_type, R.string.clipper_ticket_type_youth));
                 break;
             default:
-                items.add(new ListItem(R.string.clipper_ticket_type, Integer.toHexString(mType)));
+                items.add(new ListItem(R.string.ticket_type, Integer.toHexString(mType)));
                 break;
         }
 

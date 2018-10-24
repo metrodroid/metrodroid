@@ -86,6 +86,7 @@ public class ClipperTransitData extends TransitData {
             .setName("Clipper")
             .setLocation(R.string.location_san_francisco)
             .setCardType(CardType.MifareDesfire)
+            .setExtraNote(R.string.card_note_clipper)
             .build();
 
     @VisibleForTesting

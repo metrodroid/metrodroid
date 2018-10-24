@@ -36,17 +36,20 @@ class ClipperUltralightSubscription extends Subscription {
     private final int mProduct;
     private final int mTripsRemaining;
     private final int mTransferExpiry;
+    private final int mBaseDate;
 
-    public ClipperUltralightSubscription(int product, int tripsRemaining, int transferExpiry) {
+    public ClipperUltralightSubscription(int product, int tripsRemaining, int transferExpiry, int baseDate) {
         mProduct = product;
         mTripsRemaining = tripsRemaining;
         mTransferExpiry = transferExpiry;
+        mBaseDate = baseDate;
     }
 
     public ClipperUltralightSubscription(Parcel in) {
         mProduct = in.readInt();
         mTripsRemaining = in.readInt();
         mTransferExpiry = in.readInt();
+        mBaseDate = in.readInt();
     }
 
     @Override
@@ -54,6 +57,7 @@ class ClipperUltralightSubscription extends Subscription {
         dest.writeInt(mProduct);
         dest.writeInt(mTripsRemaining);
         dest.writeInt(mTransferExpiry);
+        dest.writeInt(mBaseDate);
     }
 
     public static final Creator<ClipperUltralightSubscription> CREATOR = new Creator<ClipperUltralightSubscription>() {
@@ -71,24 +75,31 @@ class ClipperUltralightSubscription extends Subscription {
     @Nullable
     @Override
     public String getSubscriptionName() {
-        // TODO: i18n
         switch (mProduct & 0xf) {
             case 0x3:
-                return "Single-ride";
+                return Utils.localizeString(R.string.clipper_single,
+                        Utils.localizeString(R.string.clipper_ticket_type_adult));
             case 0x4:
-                return "Round trip";
+                return Utils.localizeString(R.string.clipper_return,
+                        Utils.localizeString(R.string.clipper_ticket_type_adult));
             case 0x5:
-                return "Single-ride (senior)";
+                return Utils.localizeString(R.string.clipper_single,
+                        Utils.localizeString(R.string.clipper_ticket_type_senior));
             case 0x6:
-                return "Round trip (senior)";
+                return Utils.localizeString(R.string.clipper_return,
+                        Utils.localizeString(R.string.clipper_ticket_type_senior));
             case 0x7:
-                return "Single-ride (RTC)";
+                return Utils.localizeString(R.string.clipper_single,
+                        Utils.localizeString(R.string.clipper_ticket_type_rtc));
             case 0x8:
-                return "Round trip (RTC)";
+                return Utils.localizeString(R.string.clipper_return,
+                        Utils.localizeString(R.string.clipper_ticket_type_rtc));
             case 0x9:
-                return "Single-ride (youth)";
+                return Utils.localizeString(R.string.clipper_single,
+                        Utils.localizeString(R.string.clipper_ticket_type_youth));
             case 0xa:
-                return "Round trip (youth)";
+                return Utils.localizeString(R.string.clipper_return,
+                        Utils.localizeString(R.string.clipper_ticket_type_youth));
             default:
                 return Integer.toHexString(mProduct);
         }
@@ -108,9 +119,44 @@ class ClipperUltralightSubscription extends Subscription {
         return mTripsRemaining == -1 ? null : mTripsRemaining;
     }
 
+    @Override
+    public SubscriptionState getSubscriptionState() {
+        if (mTripsRemaining == -1) {
+            return SubscriptionState.UNUSED;
+        } else if (mTripsRemaining == 0) {
+            return SubscriptionState.USED;
+        } else if (mTripsRemaining > 0) {
+            return SubscriptionState.STARTED;
+        } else {
+            return SubscriptionState.UNKNOWN;
+        }
+    }
+
     @Nullable
     @Override
     public Calendar getTransferEndTimestamp() {
         return ClipperTransitData.clipperTimestampToCalendar(mTransferExpiry * 60L);
+    }
+
+    @Nullable
+    @Override
+    public Calendar getValidTo() {
+        return ClipperTransitData.clipperTimestampToCalendar(mBaseDate * 86400L);
+    }
+
+    @Override
+    public boolean validToHasTime() {
+        return false;
+    }
+
+    @Nullable
+    @Override
+    public Calendar getPurchaseTimestamp() {
+        return ClipperTransitData.clipperTimestampToCalendar((mBaseDate - 89) * 86400L);
+    }
+
+    @Override
+    public boolean purchaseTimestampHasTime() {
+        return false;
     }
 }
