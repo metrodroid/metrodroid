@@ -778,4 +778,13 @@
     <string name="location_montpellier">Montpellier, Frankrijk</string>
     <string name="maps">Kaarten</string>
 <string name="subscription_cost">Kosten</string>
+    <plurals name="trips_remaining_total">
+	<item quantity="one">%d van %d reis resterend</item>
+	<item quantity="other">%d van %d reizen resterend</item>
+</plurals>
+    <string name="location_houston">Houston, TX, VS</string>
+    <string name="location_toulouse">Toulouse, Frankrijk</string>
+    <string name="metroq_fare_card">Kaart op saldo</string>
+    <string name="metroq_day_pass">Dagkaart</string>
+
     </resources>
