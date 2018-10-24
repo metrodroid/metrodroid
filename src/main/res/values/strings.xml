@@ -692,6 +692,93 @@
 
     <string name="clipper_end_of_line">(End of line)</string>
     <string name="clipper_zone_number">Zone #%s</string>
+    <!--
+    Translators:
+
+    This is shown as a list item, the value is a date and time.
+
+    For networks that allow transfers (ie: multiple vehicles may be used as part of a single trip
+    and charged at a flat rate), this shows the latest time that transfers may be made.
+
+    For example, a subscription may allow 2 trips per day, but allow a 2 hour transfer window. So
+    a passenger who boards their first vehicle at 10:00, then leaves the vehicle at 10:30, could
+    then board a second vehicle at 10:45 and still have it counted as the first "trip".
+    -->
+    <string name="free_transfers_until">Free transfers until</string>
+    <!--
+    Translators:
+
+    This is the "default" type of Clipper card, for people who do not qualify for any discounts.
+    -->
+    <string name="clipper_ticket_type_adult">Adult</string>
+    <!--
+    Translators:
+
+    This is a type of Clipper card that is available for people 65 years of age and over.
+
+    Clipper translates the name as:
+    - Spanish: "Adulto Major"
+    - Chinese: "長者"
+
+    English: https://www.clippercard.com/ClipperWeb/discounts/senior.do
+    Spanish: https://docs.clippercard.com/brochures/es/clipper_seniormailinapp_SPANISH_01-11-16.pdf
+    Chinese: https://docs.clippercard.com/brochures/zh/clipper_seniorapp_mailin_01-11-16_Trad%20Chinese.pdf
+    -->
+    <string name="clipper_ticket_type_senior">Senior</string>
+    <!--
+    Translators:
+
+    "RTC" = "Regional Transit Connection". This is a type of Clipper card that is available for
+    people under 65 years of age with "qualifying disabilities".
+
+    Clipper always uses the English acronym "RTC", regardless of the language.
+
+    English: https://www.clippercard.com/ClipperWeb/discounts/rtc.do
+    Spanish: https://docs.clippercard.com/brochures/es/ClipperRTC_booklet_SMART%2006_2017_Spanish.pdf
+    Chinese: https://docs.clippercard.com/brochures/zh/ClipperRTC_booklet_SMART%20Chinese_06_2017_TCH_Updated.pdf
+    -->
+    <string name="clipper_ticket_type_rtc" translatable="false">RTC</string>
+    <!--
+    Translators:
+
+    This is a type of Clipper card that is available for children.
+
+    Clipper translates the name as:
+    - Spanish: "Joven"
+    - Chinese: "青少年"
+
+    English: https://www.clippercard.com/ClipperWeb/discounts/youth.do
+    Spanish: https://docs.clippercard.com/brochures/es/clipper_youthmailinapp_noACT_SPANISH_01-11-16.pdf
+    Chinese: https://docs.clippercard.com/brochures/zh/clipper_youthapp_mailin_01-11-16_Chin.pdf
+    -->
+    <string name="clipper_ticket_type_youth">Youth</string>
+
+    <!--
+    Translators: the "ticket class" is one of: clipper_ticket_type_adult, clipper_ticket_type_senior,
+    clipper_ticket_type_rtc, clipper_ticket_type_youth.
+
+    eg: "Single-ride (Adult)"
+
+    This is used for one-way tickets (A -> B).
+    -->
+    <string name="clipper_single">Single-ride (<xliff:g id="ticket_class" example="Adult">%1$s</xliff:g>)</string>
+    <!--
+    Translators: the "ticket class" is one of: clipper_ticket_type_adult, clipper_ticket_type_senior,
+    clipper_ticket_type_rtc, clipper_ticket_type_youth.
+
+    eg: "Return (Adult)"
+
+    This is used for return tickets (A -> B -> A).
+    -->
+    <string name="clipper_return">Return (<xliff:g id="ticket_class" example="Adult">%1$s</xliff:g>)</string>
+    <!--
+    Translators:
+    Clipper card is the transit card for the San Francisco Bay Area.
+
+    Clipper card has been available as a plastic, reloadable value card for a long time. Two
+    operators have introduced single-use paper Clipper cards: Golden Gate Ferry, and Muni.
+    -->
+    <string name="card_note_clipper">Supports both plastic (reloadable) and paper (single-use cards issued by Golden Gate Ferry and Muni) Clipper cards.</string>
 
     <string name="ez_bus_number">Bus #%s</string>
     <string name="ez_bus_refund">Bus Refund</string>
@@ -956,7 +1043,7 @@
 
     <string name="compass_product_type">Product type</string>
     <string name="compass_machine_code">Machine code</string>
-    <string name="compass_ticket_type">Ticket type</string>
+    <string name="ticket_type">Ticket type</string>
     <string name="compass_ticket_type_concession">Concession</string>
     <string name="compass_ticket_type_regular">Regular</string>
     <string name="compass_note">Single ride tickets only</string>

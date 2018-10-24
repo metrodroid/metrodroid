@@ -572,7 +572,7 @@
 
     <string name="compass_product_type">Productsoort</string>
     <string name="compass_machine_code">Automaatcode</string>
-    <string name="compass_ticket_type">Kaartsoort</string>
+    <string name="ticket_type">Kaartsoort</string>
     <string name="compass_ticket_type_concession">Concessie</string>
     <string name="compass_ticket_type_regular">Regulier</string>
     <string name="expiry_date">Vervaldatum</string>
