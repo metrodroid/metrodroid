@@ -33,12 +33,14 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import au.id.micolous.farebot.R;
 import au.id.micolous.metrodroid.transit.Subscription;
 import au.id.micolous.metrodroid.transit.TransitBalance;
 import au.id.micolous.metrodroid.transit.TransitCurrency;
+import au.id.micolous.metrodroid.ui.ListItem;
 import au.id.micolous.metrodroid.util.Utils;
 
 public abstract class En1545Subscription extends Subscription {
@@ -68,6 +70,7 @@ public abstract class En1545Subscription extends Subscription {
     public static final String CONTRACT_SOLD = "ContractSold";
     public static final String CONTRACT_DEBIT_SOLD = "ContractDebitSold";
     protected static final String CONTRACT_JOURNEYS = "ContractJourneys";
+    protected static final String CONTRACT_RECEIPT_DELIVERED = "ContractReceiptDelivered";
     protected final En1545Parsed mParsed;
     protected final Integer mCounter;
 
@@ -230,5 +233,22 @@ public abstract class En1545Subscription extends Subscription {
 
     public TransitBalance getBalance() {
         return null;
+    }
+
+    @Nullable
+    @Override
+    public List<ListItem> getInfo() {
+        List<ListItem> li = super.getInfo();
+        if (li == null)
+            li = new ArrayList<>();
+        Integer clas = mParsed.getInt(CONTRACT_PASSENGER_CLASS);
+        if (clas != null)
+            li.add(new ListItem(R.string.passenger_class, Integer.toString(clas)));
+        Integer receipt = mParsed.getInt(CONTRACT_RECEIPT_DELIVERED);
+        if (receipt != null && receipt != 0)
+            li.add(new ListItem(Utils.localizeString(R.string.with_receipt)));
+        if (receipt != null && receipt == 0)
+            li.add(new ListItem(Utils.localizeString(R.string.without_receipt)));
+        return li;
     }
 }

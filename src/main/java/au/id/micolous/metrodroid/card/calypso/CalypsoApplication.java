@@ -216,8 +216,12 @@ public class CalypsoApplication extends ISO7816Application {
 
             // This shows a country name if it's known, or "unknown (number)" if not.
             String countryName;
+            CountryCode cc = null;
             if (countryCode > 0) {
-                countryName = CountryCode.getByCode(countryCode).toLocale().getDisplayCountry();
+                cc = CountryCode.getByCode(countryCode);
+            }
+            if (cc != null) {
+                countryName = cc.toLocale().getDisplayCountry();
             } else {
                 countryName = Utils.localizeString(R.string.unknown_format, countryCode);
             }
