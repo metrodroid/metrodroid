@@ -782,4 +782,8 @@
 	<item quantity="other">%d av %d turer gjenstår</item>
 </plurals>
     <string name="location_toulouse">Toulouse, Frankrike</string>
+    <string name="location_houston">Houston, TX, USA</string>
+    <string name="metroq_fare_card">Klippekort</string>
+    <string name="metroq_day_pass">Dagspass</string>
+
     </resources>
