@@ -786,4 +786,13 @@
     <string name="metroq_fare_card">Klippekort</string>
     <string name="metroq_day_pass">Dagspass</string>
 
+    <string name="free_transfers_until">Gratis overganger til</string>
+    <string name="clipper_ticket_type_adult">Voksen</string>
+    <string name="clipper_ticket_type_senior">Honnør</string>
+    <string name="clipper_ticket_type_youth">Barn</string>
+
+    <string name="clipper_single">Enkelttur (<xliff:g id="ticket_class" example="Adult">%1$s</xliff:g>)</string>
+    <string name="clipper_return">Retur (<xliff:g id="ticket_class" example="Adult">%1$s</xliff:g>)</string>
+    <string name="card_note_clipper">Støtter både plastikk- (oppladbart) og papir- (enkeltturskort utstedt av Golden Gate-fergen og Muni) Clipper-kort.</string>
+
     </resources>
