@@ -695,8 +695,46 @@
     <string name="clipper_free_transfers_until">Free transfers until</string>
     <string name="clipper_ticket_type">Ticket type</string>
     <string name="clipper_ticket_type_adult">Adult</string>
+    <!--
+    Translators:
+
+    This is a type of Clipper card that is available for people 65 years of age and over.
+
+    Clipper translates the name as:
+    - Spanish: "Adulto Major"
+    - Chinese: "長者"
+
+    English: https://www.clippercard.com/ClipperWeb/discounts/senior.do
+    Spanish: https://docs.clippercard.com/brochures/es/clipper_seniormailinapp_SPANISH_01-11-16.pdf
+    Chinese: https://docs.clippercard.com/brochures/zh/clipper_seniorapp_mailin_01-11-16_Trad%20Chinese.pdf
+    -->
     <string name="clipper_ticket_type_senior">Senior</string>
-    <string name="clipper_ticket_type_disabled">Disabled</string>
+    <!--
+    Translators:
+
+    "RTC" = "Regional Transit Connection". This is a type of Clipper card that is available for
+    people under 65 years of age with "qualifying disabilities".
+
+    Clipper always uses the English acronym "RTC", regardless of the language.
+
+    English: https://www.clippercard.com/ClipperWeb/discounts/rtc.do
+    Spanish: https://docs.clippercard.com/brochures/es/ClipperRTC_booklet_SMART%2006_2017_Spanish.pdf
+    Chinese: https://docs.clippercard.com/brochures/zh/ClipperRTC_booklet_SMART%20Chinese_06_2017_TCH_Updated.pdf
+    -->
+    <string name="clipper_ticket_type_rtc" translatable="false">RTC</string>
+    <!--
+    Translators:
+
+    This is a type of Clipper card that is available for children.
+
+    Clipper translates the name as:
+    - Spanish: "Joven"
+    - Chinese: "青少年"
+
+    English: https://www.clippercard.com/ClipperWeb/discounts/youth.do
+    Spanish: https://docs.clippercard.com/brochures/es/clipper_youthmailinapp_noACT_SPANISH_01-11-16.pdf
+    Chinese: https://docs.clippercard.com/brochures/zh/clipper_youthapp_mailin_01-11-16_Chin.pdf
+    -->
     <string name="clipper_ticket_type_youth">Youth</string>
 
     <string name="ez_bus_number">Bus #%s</string>

@@ -81,9 +81,9 @@ class ClipperUltralightSubscription extends Subscription {
             case 0x6:
                 return "Round trip (senior)";
             case 0x7:
-                return "Single-ride (disabled)";
+                return "Single-ride (RTC)";
             case 0x8:
-                return "Round trip (disabled)";
+                return "Round trip (RTC)";
             case 0x9:
                 return "Single-ride (youth)";
             case 0xa:

@@ -22,7 +22,6 @@ import android.os.Parcel;
 import android.os.Parcelable;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 import au.id.micolous.farebot.R;
@@ -169,7 +168,7 @@ public class ClipperUltralightTransitData extends TransitData {
                 items.add(new ListItem(R.string.clipper_ticket_type, R.string.clipper_ticket_type_senior));
                 break;
             case 0x84:
-                items.add(new ListItem(R.string.clipper_ticket_type, R.string.clipper_ticket_type_disabled));
+                items.add(new ListItem(R.string.clipper_ticket_type, R.string.clipper_ticket_type_rtc));
                 break;
             case 0xc4:
                 items.add(new ListItem(R.string.clipper_ticket_type, R.string.clipper_ticket_type_youth));
