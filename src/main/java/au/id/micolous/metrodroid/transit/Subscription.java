@@ -83,7 +83,7 @@ public abstract class Subscription implements Parcelable {
      * For example, a 7 day travel pass may be loaded on the card as "available", but the travel
      * pass has never been used, so it will begin on the date that it is first used.
      *
-     * @return Calendar representing the subcription date, or null if the subscription has no end
+     * @return Calendar representing the subscription date, or null if the subscription has no end
      *         date.
      * @see #getSubscriptionState()
      */
@@ -397,7 +397,7 @@ public abstract class Subscription implements Parcelable {
 
             items.add(new ListItem(R.string.purchase_date, purchaseTimestampHasTime() ?
                     Utils.dateTimeFormat(purchaseTS) :
-                    Utils.dateFormat(purchaseTS)));
+                    Utils.longDateFormat(purchaseTS)));
         }
 
         Calendar lastUseTS = getLastUseTimestamp();
@@ -406,7 +406,7 @@ public abstract class Subscription implements Parcelable {
 
             items.add(new ListItem(R.string.last_used_on, lastUseTimestampHasTime() ?
                     Utils.dateTimeFormat(lastUseTS) :
-                    Utils.dateFormat(lastUseTS)));
+                    Utils.longDateFormat(lastUseTS)));
         }
 
         TransitCurrency cost = cost();
