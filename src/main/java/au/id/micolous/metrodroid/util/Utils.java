@@ -1008,7 +1008,9 @@ public class Utils {
         return -1;
     }
 
-    public static int checkKeyHash(@NonNull ClassicSectorKey key, @NonNull String salt, String... expectedHashes) {
+    public static int checkKeyHash(@Nullable ClassicSectorKey key, @NonNull String salt, String... expectedHashes) {
+        if (key == null)
+            return -1;
         return checkKeyHash(key.getKey(), salt, expectedHashes);
     }
 }

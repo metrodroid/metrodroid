@@ -58,6 +58,7 @@ import au.id.micolous.metrodroid.transit.bilhete_unico.BilheteUnicoSPTransitData
 import au.id.micolous.metrodroid.transit.charlie.CharlieCardTransitData;
 import au.id.micolous.metrodroid.transit.chc_metrocard.ChcMetrocardTransitData;
 import au.id.micolous.metrodroid.transit.erg.ErgTransitData;
+import au.id.micolous.metrodroid.transit.kiev.KievTransitData;
 import au.id.micolous.metrodroid.transit.lax_tap.LaxTapTransitData;
 import au.id.micolous.metrodroid.transit.manly_fast_ferry.ManlyFastFerryTransitData;
 import au.id.micolous.metrodroid.transit.metroq.MetroQTransitData;
@@ -437,6 +438,8 @@ public class ClassicCard extends Card {
             return BilheteUnicoSPTransitData.parseTransitIdentity(this);
         } else if (MetroQTransitData.check(this)) {
             return MetroQTransitData.parseTransitIdentity(this);
+        } else if (KievTransitData.check(this)) {
+            return KievTransitData.parseTransitIdentity(this);
         } else if (UnauthorizedClassicTransitData.check(this)) {
             // This check must be THIRD TO LAST.
             //
@@ -508,6 +511,8 @@ public class ClassicCard extends Card {
             return new BilheteUnicoSPTransitData(this);
         } else if (MetroQTransitData.check(this)) {
             return new MetroQTransitData(this);
+        } else if (KievTransitData.check(this)) {
+            return new KievTransitData(this);
         } else if (UnauthorizedClassicTransitData.check(this)) {
             // This check must be THIRD TO LAST.
             //
