@@ -21,6 +21,7 @@ package au.id.micolous.metrodroid.transit.intercode;
 
 import android.os.Parcel;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.util.Pair;
 import android.util.SparseArray;
 
@@ -31,6 +32,8 @@ import java.util.List;
 import au.id.micolous.farebot.R;
 import au.id.micolous.metrodroid.card.CardType;
 import au.id.micolous.metrodroid.card.calypso.CalypsoApplication;
+import au.id.micolous.metrodroid.card.iso7816.ISO7816File;
+import au.id.micolous.metrodroid.card.iso7816.ISO7816Selector;
 import au.id.micolous.metrodroid.transit.CardInfo;
 import au.id.micolous.metrodroid.transit.TransitIdentity;
 import au.id.micolous.metrodroid.transit.en1545.Calypso1545TransitData;
@@ -50,6 +53,14 @@ public class IntercodeTransitData extends Calypso1545TransitData {
 
     // NOTE: Many French smart-cards don't have a brand name, and are simply referred to as a "titre
     // de transport" (ticket). Here they take the name of the transit agency.
+
+    // https://www.tisseo.fr/les-tarifs/obtenir-une-carte-pastel
+    public static final CardInfo TISSEO_CARD_INFO = new CardInfo.Builder()
+            .setName("Pastel")
+            .setLocation(R.string.location_toulouse)
+            .setCardType(CardType.ISO7816)
+            .setPreview()
+            .build();
 
     public static final CardInfo TRANSGIRONDE_CARD_INFO = new CardInfo.Builder()
             .setName("TransGironde")
@@ -164,14 +175,20 @@ public class IntercodeTransitData extends Calypso1545TransitData {
         return new IntercodeTransaction(data, mNetworkId);
     }
 
-    protected IntercodeSubscription createSubscription(CalypsoApplication card, byte[] data,
-                                                       En1545Parsed contractList, Integer listNum, int recordNum) {
-        if (contractList == null)
+    @Nullable
+    @Override
+    protected IntercodeTransaction createSpecialEvent(byte[] data) {
+        return new IntercodeTransaction(data, mNetworkId);
+    }
+
+    protected IntercodeSubscription createSubscription(byte[] data, En1545Parsed contractList, Integer listNum,
+                                                       int recordNum, Integer counter) {
+        if (contractList == null || listNum == null)
             return null;
         Integer tariff = contractList.getInt(CONTRACTS_TARIFF, listNum);
         if (tariff == null)
             return null;
-        return new IntercodeSubscription(data, (tariff >> 4) & 0xff, mNetworkId);
+        return new IntercodeSubscription(data, (tariff >> 4) & 0xff, mNetworkId, counter);
     }
 
     private static final SparseArray<Pair<CardInfo, En1545Lookup>> NETWORKS = new SparseArray<>();
@@ -180,6 +197,7 @@ public class IntercodeTransitData extends Calypso1545TransitData {
         NETWORKS.put(0x250064, Pair.create(TAM_MONTPELLIER_CARD_INFO, new IntercodeLookupUnknown()));
         NETWORKS.put(0x250502, Pair.create(OURA_CARD_INFO, new IntercodeLookupSTR("oura")));
         NETWORKS.put(0x250901, Pair.create(NAVIGO_CARD_INFO, new IntercodeLookupNavigo()));
+        NETWORKS.put(0x250916, Pair.create(TISSEO_CARD_INFO, new IntercodeLookupTisseo()));
         NETWORKS.put(0x250920, Pair.create(ENVIBUS_CARD_INFO, new IntercodeLookupUnknown()));
         NETWORKS.put(0x250921, Pair.create(TRANSGIRONDE_CARD_INFO, new IntercodeLookupGironde()));
     }

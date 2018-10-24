@@ -53,22 +53,13 @@ public class LisboaVivaSubscription extends En1545Subscription {
             new En1545FixedInteger(CONTRACT_PERIOD, 7),
             new En1545FixedHex(CONTRACT_UNKNOWN_C, 38)
     );
-    private final int mCounter;
 
-    public LisboaVivaSubscription(byte[] data, int ctr) {
-        super(data, SUB_FIELDS);
-        mCounter = ctr;
+    public LisboaVivaSubscription(byte[] data, Integer ctr) {
+        super(data, SUB_FIELDS, ctr);
     }
 
     private LisboaVivaSubscription(Parcel in) {
         super(in);
-        mCounter = in.readInt();
-    }
-
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        super.writeToParcel(dest, flags);
-        dest.writeInt(mCounter);
     }
 
     @Nullable

@@ -54,22 +54,13 @@ public class RavKavSubscription extends En1545Subscription {
             )
             // TODO: parse locations?
     );
-    private final int mCounter;
 
-    public RavKavSubscription(byte[] data, int ctr) {
-        super(data, SUB_FIELDS);
-        mCounter = ctr;
+    public RavKavSubscription(byte[] data, Integer ctr) {
+        super(data, SUB_FIELDS, ctr);
     }
 
     private RavKavSubscription(Parcel in) {
         super(in);
-        mCounter = in.readInt();
-    }
-
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        super.writeToParcel(dest, flags);
-        dest.writeInt(mCounter);
     }
 
     @Nullable

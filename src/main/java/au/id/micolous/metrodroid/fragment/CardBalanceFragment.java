@@ -142,6 +142,22 @@ public class CardBalanceFragment extends ListFragment {
                 validView.setVisibility(View.GONE);
             }
 
+            TextView tripsView = view.findViewById(R.id.trips);
+            Integer remainingTrips = subscription.getRemainingTripCount();
+            Integer totalTrips = subscription.getTotalTripCount();
+
+            if (remainingTrips != null && totalTrips != null) {
+                tripsView.setText(Utils.localizePlural(R.plurals.trips_remaining_total,
+                        remainingTrips, remainingTrips, totalTrips));
+                tripsView.setVisibility(View.VISIBLE);
+            } else if (subscription.getRemainingTripCount() != null) {
+                tripsView.setText(Utils.localizePlural(R.plurals.trips_remaining,
+                        remainingTrips, remainingTrips));
+                tripsView.setVisibility(View.VISIBLE);
+            } else {
+                tripsView.setVisibility(View.GONE);
+            }
+
             TextView companyView = view.findViewById(R.id.company);
             String agencyName = subscription.getAgencyName(true);
             if (agencyName != null) {

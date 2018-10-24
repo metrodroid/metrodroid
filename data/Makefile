@@ -18,6 +18,7 @@ HERMETIC_TARGETS := \
 	oura \
 	ravkav \
 	szt \
+	tisseo \
 	troika
 
 # All targets that need to fetch some data from the internet, so may not always

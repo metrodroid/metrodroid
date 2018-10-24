@@ -433,6 +433,10 @@
         <item quantity="one">%d trip remaining</item>
         <item quantity="other">%d trips remaining</item>
     </plurals>
+    <plurals name="trips_remaining_total">
+        <item quantity="one">%d trip remaining out of %d</item>
+        <item quantity="other">%d trips remaining out of %d</item>
+    </plurals>
     <plurals name="troika_rides">
         <item quantity="one">Single-ride</item>
         <item quantity="other">%d-ride</item>
@@ -651,6 +655,7 @@
     <string name="location_sydney_australia">Sydney, Australia</string>
     <string name="location_the_netherlands">The Netherlands</string>
     <string name="location_tokyo">Tokyo, Japan</string>
+    <string name="location_toulouse">Toulouse, France</string>
     <string name="location_vancouver">Vancouver, BC, Canada</string>
     <string name="location_victoria_australia">Victoria, Australia</string>
     <string name="location_wa_australia">Western Australia, Australia</string>
