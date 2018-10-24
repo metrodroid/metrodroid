@@ -39,7 +39,7 @@ public class CityUnionTransitData extends ChinaTransitData {
 
     public static final CardInfo CARD_INFO = new CardInfo.Builder()
             .setName(Utils.localizeString(R.string.card_name_cityunion))
-            .setLocation(R.string.location_cityunion)
+            .setLocation(R.string.location_china_mainland)
             .setCardType(CardType.ISO7816)
             .setPreview()
             .build();

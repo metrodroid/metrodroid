@@ -616,7 +616,15 @@
     <string name="location_brussels">Brussels, Belgium</string>
     <string name="location_boston">Boston, MA, USA</string>
     <string name="location_chicago">Chicago, IL, USA</string>
-    <string name="location_tunion">Mainland China</string>
+    <!--
+    Translators:
+
+    This refers to the mainland area of the People's Republic of China, excluding the special
+    administrative regions of Hong Kong and Macau.
+
+    https://en.wikipedia.org/wiki/Mainland_China
+    -->
+    <string name="location_china_mainland">Mainland China</string>
     <string name="location_christchurch_nz">Christchurch, New Zealand</string>
     <string name="location_gironde">Gironde, France</string>
     <string name="location_grenoble">Grenoble, France</string>
@@ -646,8 +654,7 @@
     <string name="location_sao_paulo">São Paulo, Brazil</string>
     <string name="location_seattle">Seattle, WA, USA</string>
     <string name="location_seoul">Seoul, Korea</string>
-    <string name="location_cityunion">Shanghai and others, China</string>
-    <string name="location_shenzhen">Shenzhen, Guangdong Province, China</string>
+    <string name="location_shenzhen">Shenzhen, China</string>
     <string name="location_singapore">Singapore</string>
     <string name="location_sophia_antipolis">Sophia Antipolis, France</string>
     <string name="location_sydney_australia">Sydney, Australia</string>
@@ -925,8 +932,18 @@
 
     <string name="card_name_beijing">Beijing Municipal Card</string>
     <string name="card_name_wuhantong">Wuhan Tong</string>
+    <!--
+    Translators: Name of an interoperable transit card system used in China. May be transliterated.
+
+    Does not have a Chinese-language name.
+    -->
     <string name="card_name_cityunion">City Union</string>
-    <string name="card_name_tunion">TUnion</string>
+    <!--
+    Translators: Name of an interoperable transit card system used in China. May be transliterated.
+
+    Chinese: 交通联合
+    -->
+    <string name="card_name_tunion">T-Union</string>
     <string name="city_union_city">City</string>
 
     <!--
