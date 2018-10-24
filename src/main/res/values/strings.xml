@@ -625,6 +625,7 @@
     <string name="location_grenoble">Grenoble, France</string>
     <string name="location_helsinki_finland">Helsinki, Finland</string>
     <string name="location_hong_kong">Hong Kong</string>
+    <string name="location_houston">Houston, USA</string>
     <string name="location_ireland">Ireland</string>
     <string name="location_israel">Israel</string>
     <string name="location_istanbul">Istanbul, Turkey</string>
@@ -844,6 +845,9 @@
     <!-- Translators: This is the short form of "minutes" -->
     <string name="hsl_mins_format">%s mins</string>
     <string name="hsl_line_vehicle">Line %1$s, Vehicle %2$s</string>
+
+    <string name="metroq_fare_card">Fare card</string>
+    <string name="metroq_day_pass">Day pass</string>
 
     <!--
         Opal (Sydney, AU).
