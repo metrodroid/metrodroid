@@ -777,4 +777,5 @@
     <string name="location_portland">Portland, OR, VS</string>
     <string name="location_montpellier">Montpellier, Frankrijk</string>
     <string name="maps">Kaarten</string>
-</resources>
+<string name="subscription_cost">Kosten</string>
+    </resources>
