@@ -23,6 +23,7 @@ import android.os.Parcel;
 import android.support.annotation.Nullable;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 import au.id.micolous.farebot.R;
@@ -109,15 +110,7 @@ class ClipperUltralightSubscription extends Subscription {
 
     @Nullable
     @Override
-    public List<ListItem> getInfo() {
-        List<ListItem> li = super.getInfo();
-        if (mTransferExpiry != 0) {
-            if (li == null)
-                li = new ArrayList<>();
-            li.add(new ListItem(R.string.clipper_free_transfers_until,
-                    Utils.dateTimeFormat(TripObfuscator.maybeObfuscateTS(
-                            ClipperTransitData.clipperTimestampToCalendar(mTransferExpiry * 60L)))));
-        }
-        return li;
+    public Calendar getTransferEndTimestamp() {
+        return ClipperTransitData.clipperTimestampToCalendar(mTransferExpiry * 60L);
     }
 }

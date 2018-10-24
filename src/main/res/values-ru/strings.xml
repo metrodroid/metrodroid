@@ -321,7 +321,7 @@
 
     <string name="compass_product_type">Тип продукта</string>
     <string name="compass_machine_code">Код автомата</string>
-    <string name="compass_ticket_type">Тип билета</string>
+    <string name="ticket_type">Тип билета</string>
     <string name="compass_ticket_type_concession">Льготный</string>
     <string name="compass_ticket_type_regular">Обычный</string>
     <string name="compass_note">Только одноразовые билеты</string>

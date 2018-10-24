@@ -510,7 +510,7 @@
 
     <string name="compass_product_type">Produkttype</string>
     <string name="compass_machine_code">Maskinkode</string>
-    <string name="compass_ticket_type">Billettkode</string>
+    <string name="ticket_type">Billettkode</string>
     <string name="compass_ticket_type_concession">Honør</string>
     <string name="compass_ticket_type_regular">Vanlig</string>
     <string name="expiry_date">Utløpsdato</string>

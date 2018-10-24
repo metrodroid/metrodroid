@@ -26,16 +26,13 @@ import android.os.Parcelable;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.annotation.StringRes;
-import android.util.Log;
 
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
-import java.util.Locale;
 
 import au.id.micolous.farebot.R;
 import au.id.micolous.metrodroid.MetrodroidApplication;
-import au.id.micolous.metrodroid.ui.HeaderListItem;
 import au.id.micolous.metrodroid.ui.ListItem;
 import au.id.micolous.metrodroid.util.TripObfuscator;
 import au.id.micolous.metrodroid.util.Utils;
@@ -347,6 +344,21 @@ public abstract class Subscription implements Parcelable {
     }
 
     /**
+     * For networks that allow transfers (ie: multiple vehicles may be used as part of a single trip
+     * and charged at a flat rate), this shows the latest time that transfers may be made.
+     *
+     * For example, a subscription may allow 2 trips per day, but allow a 2 hour transfer window. So
+     * a passenger who boards their first vehicle at 10:00, then leaves the vehicle at 10:30, could
+     * then board a second vehicle at 10:45 and still have it counted as the first "trip".
+     *
+     * Returns null if there is no such functionality, or the restrictions are unknown (default).
+     */
+    @Nullable
+    public Calendar getTransferEndTimestamp() {
+        return null;
+    }
+
+    /**
      * Allows {@link Subscription} implementors to show extra information that doesn't fit within the
      * standard bounds of the interface.  By default, this attempts to collect less common
      * attributes, and put them in here.
@@ -397,14 +409,23 @@ public abstract class Subscription implements Parcelable {
                     Utils.dateFormat(lastUseTS)));
         }
 
-        if (cost() != null) {
+        TransitCurrency cost = cost();
+        if (cost != null) {
             items.add(new ListItem(R.string.subscription_cost,
-                    cost().maybeObfuscateFare().formatCurrencyString(true)));
+                    cost.maybeObfuscateFare().formatCurrencyString(true)));
         }
 
         if (getPaymentMethod() != PaymentMethod.UNKNOWN) {
             // TODO: i18n
             items.add(new ListItem(R.string.payment_method, getPaymentMethod().getDescription()));
+        }
+
+        Calendar transferEndTimestamp = getTransferEndTimestamp();
+        if (transferEndTimestamp != null && lastUseTS != null) {
+            transferEndTimestamp = TripObfuscator.maybeObfuscateTS(transferEndTimestamp);
+
+            items.add(new ListItem(R.string.free_transfers_until,
+                    Utils.dateTimeFormat(transferEndTimestamp)));
         }
 
         if (getRemainingTripsInDayCount() != null && lastUseTS != null) {

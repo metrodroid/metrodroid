@@ -22,7 +22,6 @@ import android.os.Parcel;
 import android.support.annotation.Nullable;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.List;
@@ -159,9 +158,9 @@ public abstract class NextfareUltralightTransitData extends TransitData {
     public List<ListItem> getInfo() {
         ArrayList<ListItem> items = new ArrayList<>();
         if (mType == 8)
-            items.add(new ListItem(R.string.compass_ticket_type, R.string.compass_ticket_type_concession));
+            items.add(new ListItem(R.string.ticket_type, R.string.compass_ticket_type_concession));
         else
-            items.add(new ListItem(R.string.compass_ticket_type, R.string.compass_ticket_type_regular));
+            items.add(new ListItem(R.string.ticket_type, R.string.compass_ticket_type_regular));
 
         String productName = getProductName(mProductCode);
         if (productName != null)
