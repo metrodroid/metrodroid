@@ -795,4 +795,8 @@
     <string name="clipper_return">Retur (<xliff:g id="ticket_class" example="Adult">%1$s</xliff:g>)</string>
     <string name="card_note_clipper">Støtter både plastikk- (oppladbart) og papir- (enkeltturskort utstedt av Golden Gate-fergen og Muni) Clipper-kort.</string>
 
+    <string name="passenger_class">Klasse</string>
+    <string name="without_receipt">Uten kvittering</string>
+    <string name="with_receipt">Med kvittering</string>
+
     </resources>
