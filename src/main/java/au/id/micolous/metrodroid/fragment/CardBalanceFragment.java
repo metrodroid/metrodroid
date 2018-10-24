@@ -150,7 +150,7 @@ public class CardBalanceFragment extends ListFragment {
                 tripsView.setText(Utils.localizePlural(R.plurals.trips_remaining_total,
                         remainingTrips, remainingTrips, totalTrips));
                 tripsView.setVisibility(View.VISIBLE);
-            } else if (subscription.getRemainingTripCount() != null) {
+            } else if (remainingTrips != null) {
                 tripsView.setText(Utils.localizePlural(R.plurals.trips_remaining,
                         remainingTrips, remainingTrips));
                 tripsView.setVisibility(View.VISIBLE);
