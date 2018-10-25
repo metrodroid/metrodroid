@@ -135,7 +135,7 @@
     <string name="location_brisbane_seq_australia">Brisbane &amp; ZO QLD, Australië</string>
     <string name="location_victoria_australia">Victoria, Australië</string>
     <string name="location_hong_kong">Hongkong</string>
-    <string name="location_shenzhen">Shenzhen, Guangdong-provincie, China</string>
+    <string name="location_shenzhen">Shenzhen, China</string>
     <string name="location_los_angeles">Los Angeles, CA, VS</string>
     <string name="location_act_australia">Australian Capital Territory, Australië</string>
 
@@ -800,4 +800,17 @@
     <string name="without_receipt">Zonder bonnetje</string>
     <string name="with_receipt">Met bonnetje</string>
 
-    </resources>
+    <string name="location_beijing">Peking, China</string>
+    <string name="location_china_mainland">Continentaal China</string>
+    <string name="location_kiev">Kiev, Oekraïne</string>
+    <string name="location_wuhan">Wuhan, China</string>
+    
+    <string name="card_name_beijing">Beijing Municipal Card</string>
+    <string name="card_name_wuhantong">Wuhan Tong</string>
+    <string name="card_name_cityunion">City Union</string>
+    <string name="card_name_tunion">T-Union</string>
+    <string name="city_union_city">Stad</string>
+
+    <string name="card_note_kiev">Geldt alleen voor kaarten van vóór 2016; alleen het reislogboek kan worden ingezien</string>
+    <string name="card_name_kiev">Kiev Metro</string>
+</resources>
