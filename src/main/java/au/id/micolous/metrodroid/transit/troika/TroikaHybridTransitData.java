@@ -35,7 +35,7 @@ import au.id.micolous.metrodroid.transit.TransitData;
 import au.id.micolous.metrodroid.transit.TransitIdentity;
 import au.id.micolous.metrodroid.transit.Trip;
 import au.id.micolous.metrodroid.transit.podorozhnik.PodorozhnikTransitData;
-import au.id.micolous.metrodroid.transit.strelka.StrelkaTransitData;
+import au.id.micolous.metrodroid.transit.serialonly.StrelkaTransitData;
 import au.id.micolous.metrodroid.ui.HeaderListItem;
 import au.id.micolous.metrodroid.ui.ListItem;
 import au.id.micolous.metrodroid.util.Utils;
@@ -102,7 +102,7 @@ public class TroikaHybridTransitData extends TransitData {
             // and printed in larger letters.
             items.add(new ListItem(R.string.card_number, mStrelka.getSerialNumber()));
 
-            List<ListItem> sItems = mStrelka.getInfo();
+            List<ListItem> sItems = mStrelka.getExtraInfo();
             if (sItems != null && !sItems.isEmpty()) {
                 items.addAll(sItems);
             }

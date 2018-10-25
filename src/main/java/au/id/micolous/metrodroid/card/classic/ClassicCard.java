@@ -71,7 +71,7 @@ import au.id.micolous.metrodroid.transit.podorozhnik.PodorozhnikTransitData;
 import au.id.micolous.metrodroid.transit.ricaricami.RicaricaMiTransitData;
 import au.id.micolous.metrodroid.transit.seq_go.SeqGoTransitData;
 import au.id.micolous.metrodroid.transit.smartrider.SmartRiderTransitData;
-import au.id.micolous.metrodroid.transit.strelka.StrelkaTransitData;
+import au.id.micolous.metrodroid.transit.serialonly.StrelkaTransitData;
 import au.id.micolous.metrodroid.transit.troika.TroikaHybridTransitData;
 import au.id.micolous.metrodroid.transit.troika.TroikaTransitData;
 import au.id.micolous.metrodroid.transit.unknown.BlankClassicTransitData;
