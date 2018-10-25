@@ -31,6 +31,7 @@ import au.id.micolous.metrodroid.card.TagReaderFeedbackInterface;
 import au.id.micolous.metrodroid.card.UnsupportedTagException;
 import au.id.micolous.metrodroid.transit.TransitData;
 import au.id.micolous.metrodroid.transit.TransitIdentity;
+import au.id.micolous.metrodroid.transit.clipper.ClipperUltralightTransitData;
 import au.id.micolous.metrodroid.transit.nextfare.ultralight.NextfareUnknownUltralightTransitData;
 import au.id.micolous.metrodroid.transit.ventra.VentraUltralightTransitData;
 import au.id.micolous.metrodroid.transit.yvr_compass.CompassUltralightTransitData;
@@ -213,6 +214,9 @@ public class UltralightCard extends Card {
         if (NextfareUnknownUltralightTransitData.check(this)) {
             return NextfareUnknownUltralightTransitData.parseTransitIdentity(this);
         }
+        if (ClipperUltralightTransitData.check(this)) {
+            return ClipperUltralightTransitData.parseTransitIdentity(this);
+        }
 
         if (BlankUltralightTransitData.check(this)) {
             return BlankUltralightTransitData.parseTransitIdentity(this);
@@ -243,6 +247,9 @@ public class UltralightCard extends Card {
         // This must be after the checks for known Nextfare MFU deployments.
         if (NextfareUnknownUltralightTransitData.check(this)) {
             return new NextfareUnknownUltralightTransitData(this);
+        }
+        if (ClipperUltralightTransitData.check(this)) {
+            return new ClipperUltralightTransitData(this);
         }
 
         if (BlankUltralightTransitData.check(this)) {

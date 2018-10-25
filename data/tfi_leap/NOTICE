@@ -1,0 +1,8 @@
+The Leap stop database used in this software contains information derived from Transport for Ireland GTFS feed, made available under the Creative Commons Attribution 4.0 International license by Transport for Ireland.
+
+You may obtain a copy of the raw data and its license at:
+
+   https://data.gov.ie/pages/opendatalicence
+   https://www.transportforireland.ie/transitData/PT_Data.html
+
+Stop mapping information is available in Metrodroid's source repository.

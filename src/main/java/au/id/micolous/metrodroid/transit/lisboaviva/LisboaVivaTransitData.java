@@ -136,12 +136,8 @@ public class LisboaVivaTransitData extends Calypso1545TransitData {
     }
 
     @Override
-    protected En1545Subscription createSubscription(CalypsoApplication card, byte[] data, En1545Parsed contractList, Integer listNum, int recordNum) {
-        ISO7816File matchingCtr = card.getFile(
-                ISO7816Selector.makeSelector(0x2000, 0x202A + recordNum - 1));
-        int ctr = 0;
-        if (matchingCtr != null)
-            ctr = Utils.byteArrayToInt(matchingCtr.getRecord(1).getData(), 0, 3);
+    protected En1545Subscription createSubscription(byte[] data, En1545Parsed contractList,
+                                                    Integer listNum, int recordNum, Integer ctr) {
         return new LisboaVivaSubscription(data, ctr);
     }
 

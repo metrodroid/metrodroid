@@ -11,7 +11,7 @@ env:
   
   global:
     - ANDROID_API=27
-    - ANDROID_BUILD_TOOLS=28.0.2
+    - ANDROID_BUILD_TOOLS=28.0.3
 
 android:
   components:

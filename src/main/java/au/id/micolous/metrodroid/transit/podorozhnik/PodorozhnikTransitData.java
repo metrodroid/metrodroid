@@ -278,10 +278,6 @@ public class PodorozhnikTransitData extends TransitData {
         private boolean check(ClassicSector sector4) {
             try {
                 ClassicSectorKey key = sector4.getKey();
-                if (key == null) {
-                    // We don't have key data, bail out.
-                    return false;
-                }
 
                 Log.d(TAG, "Checking for Podorozhnik key...");
                 return Utils.checkKeyHash(key, KEY_SALT, KEY_DIGEST_A, KEY_DIGEST_B) >= 0;

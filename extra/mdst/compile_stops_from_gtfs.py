@@ -39,11 +39,13 @@ def massage_name(name, suffixes):
   
   return name
 
-
 def empty(s):
   return s is None or s.strip() == ''
 
-def compile_stops_from_gtfs(input_gtfs_f, output_f, all_matching_f=None, version=None, strip_suffixes='', agency_id=-1, tts_hint_language=None, operators_f=None, extra_f=None, local_languages=None):
+def compile_stops_from_gtfs(input_gtfs_f, output_f, all_matching_f=None, version=None,
+                            strip_suffixes='', agency_id=-1, tts_hint_language=None,
+                            operators_f=None, extra_f=None, local_languages=None,
+                            license_notice_f=None):
   if all_matching_f is not None:
     all_matching_f = [codecs.getreader('utf-8-sig')(x) for x in all_matching_f]
   if operators_f is not None:
@@ -88,6 +90,7 @@ def compile_stops_from_gtfs(input_gtfs_f, output_f, all_matching_f=None, version
     operators=operators,
     local_languages=local_languages.split(',') if local_languages is not None else [],
     tts_hint_language=tts_hint_language,
+    license_notice_f=license_notice_f,
   )
 
   station_count = 0
@@ -263,9 +266,14 @@ def main():
     required=False,
     help='If specified, provides a list of languages when to show local name. Comma-separated')
 
+  parser.add_argument('-n', '--license-notice',
+    required=False,
+    type=FileType('r'),
+    help='If specified, the file from which to read a license notice from.')
+
   options = parser.parse_args()
 
-  compile_stops_from_gtfs(options.input_gtfs, options.output, options.matching, options.override_version, options.strip_suffixes, options.agency_id, options.tts_hint_language, options.operators, options.extra, options.local_languages)
+  compile_stops_from_gtfs(options.input_gtfs, options.output, options.matching, options.override_version, options.strip_suffixes, options.agency_id, options.tts_hint_language, options.operators, options.extra, options.local_languages, options.license_notice)
 
 if __name__ == '__main__':
   main()

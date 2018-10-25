@@ -184,4 +184,8 @@ public class EZLinkTransitData extends TransitData {
         parcel.writeTypedArray(mTrips, flags);
     }
 
+    @Nullable
+    public static String getNotice() {
+        return StationTableReader.getNotice(EZLINK_STR);
+    }
 }

@@ -71,19 +71,19 @@ public abstract class Calypso1545TransitData extends En1545TransitData {
                 continue;
             transactions.add(transaction);
         }
-        mTrips = new ArrayList<>(TransactionTrip.merge(transactions));
 
         ISO7816File specialEvents = card.getFile(CalypsoApplication.File.TICKETING_SPECIAL_EVENTS);
         if (specialEvents != null) {
             for (ISO7816Record record : specialEvents.getRecords()) {
                 if (Utils.isAllZero(record.getData()))
                     continue;
-                Trip trip = createSpecialEvent(record.getData());
-                if (trip == null)
+                En1545Transaction transaction = createSpecialEvent(record.getData());
+                if (transaction == null)
                     continue;
-                mTrips.add(trip);
+                transactions.add(transaction);
             }
         }
+        mTrips = new ArrayList<>(TransactionTrip.merge(transactions));
 
         mSubscriptions = new ArrayList<>();
         mBalances = new ArrayList<>();
@@ -102,7 +102,7 @@ public abstract class Calypso1545TransitData extends En1545TransitData {
                 if (ptr > contracts.size())
                     continue;
                 ISO7816Record record = contracts.get(ptr - 1);
-                insertSub(createSubscription(card, record.getData(), contractList, i, ptr));
+                insertSub(card, record.getData(), contractList, i, ptr);
             }
         }
 
@@ -113,8 +113,8 @@ public abstract class Calypso1545TransitData extends En1545TransitData {
                 continue;
             if (parsed.contains(record.getIndex()))
                 continue;
-            insertSub(createSubscription(card, record.getData(), null,
-                    null, idx));
+            insertSub(card, record.getData(), null,
+                    null, idx);
         }
     }
 
@@ -141,8 +141,37 @@ public abstract class Calypso1545TransitData extends En1545TransitData {
             mSubscriptions.add(sub);
     }
 
-    protected abstract En1545Subscription createSubscription(CalypsoApplication card, byte[] data,
-                                                             En1545Parsed contractList, Integer listNum, int recordNum);
+    private static final CalypsoApplication.File[] COUNTERS = new CalypsoApplication.File[]{
+            CalypsoApplication.File.TICKETING_COUNTERS_1,
+            CalypsoApplication.File.TICKETING_COUNTERS_2,
+            CalypsoApplication.File.TICKETING_COUNTERS_3,
+            CalypsoApplication.File.TICKETING_COUNTERS_4,
+    };
+
+    private static Integer getCounter(CalypsoApplication card, int recordNum) {
+        if (recordNum > 4)
+            return null;
+        ISO7816File commonCtr = card.getFile(CalypsoApplication.File.TICKETING_COUNTERS_9);
+        if (commonCtr != null && commonCtr.getRecord(1) != null) {
+            return Utils.byteArrayToInt(commonCtr.getRecord(1).getData(), 3 * (recordNum - 1), 3);
+        }
+        ISO7816File ownCtr = card.getFile(COUNTERS[recordNum - 1]);
+        if (ownCtr != null && ownCtr.getRecord(1) != null) {
+            return Utils.byteArrayToInt(ownCtr.getRecord(1).getData(), 0, 3);
+        }
+        return null;
+    }
+
+    private void insertSub(CalypsoApplication card, byte[] data,
+                           En1545Parsed contractList, Integer listNum,
+                           int recordNum) {
+        insertSub(createSubscription(data, contractList, listNum, recordNum,
+                getCounter(card, recordNum)));
+    }
+
+    protected abstract En1545Subscription createSubscription(byte[] data,
+                                                             En1545Parsed contractList, Integer listNum,
+                                                             int recordNum, Integer counter);
 
     @Override
     public Trip[] getTrips() {
@@ -156,7 +185,7 @@ public abstract class Calypso1545TransitData extends En1545TransitData {
 
     @SuppressWarnings("WeakerAccess")
     @Nullable
-    protected Trip createSpecialEvent(byte[] data) {
+    protected En1545Transaction createSpecialEvent(byte[] data) {
         return null;
     }
 

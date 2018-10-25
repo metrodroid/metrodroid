@@ -40,7 +40,7 @@ import au.id.micolous.metrodroid.card.CardType;
 import au.id.micolous.metrodroid.card.TagReaderFeedbackInterface;
 import au.id.micolous.metrodroid.card.calypso.CalypsoApplication;
 import au.id.micolous.metrodroid.card.cepas.CEPASApplication;
-import au.id.micolous.metrodroid.card.newshenzhen.NewShenzhenCard;
+import au.id.micolous.metrodroid.card.china.ChinaCard;
 import au.id.micolous.metrodroid.card.tmoney.TMoneyCard;
 import au.id.micolous.metrodroid.transit.TransitData;
 import au.id.micolous.metrodroid.transit.TransitIdentity;
@@ -126,12 +126,14 @@ public class ISO7816Card extends Card {
                 apps.add(TMoneyCard.dumpTag(iso7816Tag, new ISO7816Application.ISO7816Info(appData, TMoneyCard.APP_NAME,
                                 tag.getId(), TMoneyCard.TYPE),
 					    feedbackInterface));
-            appData = iso7816Tag.selectByName(NewShenzhenCard.APP_NAME, false);
-            if (appData != null)
-                apps.add(NewShenzhenCard.dumpTag(iso7816Tag,
-                        new ISO7816Application.ISO7816Info(appData, NewShenzhenCard.APP_NAME,
-                                tag.getId(), NewShenzhenCard.TYPE),
-                        feedbackInterface));
+            for (byte[] appName : ChinaCard.APP_NAMES) {
+                appData = iso7816Tag.selectByName(appName, false);
+                if (appData != null)
+                    apps.add(ChinaCard.dumpTag(iso7816Tag,
+                            new ISO7816Application.ISO7816Info(appData, appName,
+                                    tag.getId(), ChinaCard.TYPE),
+                            feedbackInterface));
+            }
         } catch (TagLostException ex) {
             Log.w(TAG, "tag lost", ex);
             partialRead = true;

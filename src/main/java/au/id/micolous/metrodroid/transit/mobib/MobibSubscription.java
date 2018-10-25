@@ -49,25 +49,22 @@ class MobibSubscription extends En1545Subscription {
             new En1545FixedHex(CONTRACT_UNKNOWN_B, 177)
     );
 
-    private final int mTicketsRemaining;
     private final boolean mIsSubscription;
 
-    public MobibSubscription(byte[] dataSub, int dataCtr) {
-        super(dataSub, FIELDS);
-        if(dataCtr != 0x2f02){
+    public MobibSubscription(byte[] dataSub, Integer ctr) {
+        super(dataSub, FIELDS, ctr);
+        if(ctr != 0x2f02){
             // Ticket
             mIsSubscription = false;
-            mTicketsRemaining = dataCtr;
         } else {
             // Subscription
             mIsSubscription = true;
-            mTicketsRemaining = 0;
         }
     }
 
     @Override
     public Integer getRemainingTripCount() {
-        return mIsSubscription ? null : mTicketsRemaining;
+        return mIsSubscription ? null : mCounter;
     }
 
     @Override
@@ -85,13 +82,11 @@ class MobibSubscription extends En1545Subscription {
     @Override
     public void writeToParcel(Parcel parcel, int i) {
         super.writeToParcel(parcel, i);
-        parcel.writeInt(mTicketsRemaining);
         parcel.writeInt(mIsSubscription ? 1 : 0);
     }
 
     private MobibSubscription(Parcel parcel) {
         super(parcel);
-        mTicketsRemaining = parcel.readInt();
         mIsSubscription = parcel.readInt() == 1;
     }
 }

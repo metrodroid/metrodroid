@@ -24,7 +24,7 @@ task colouriseIcons(type: Copy) {
 
 android {
     compileSdkVersion 27
-    buildToolsVersion '28.0.2'
+    buildToolsVersion '28.0.3'
 
     defaultConfig {
         // We can go back to API 10, but Metrodroid only runs on API 16+

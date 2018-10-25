@@ -284,7 +284,7 @@ public class DesfireCard extends Card {
             return new AtHopStubTransitData(this);
 
         if (UnauthorizedDesfireTransitData.check(this))
-            return new UnauthorizedDesfireTransitData();
+            return new UnauthorizedDesfireTransitData(this);
         return null;
     }
 
@@ -312,10 +312,10 @@ public class DesfireCard extends Card {
 
         if (!MetrodroidApplication.hideCardNumbers()) {
             items.add(new HeaderListItem("General Information"));
-            items.add(new ListItem("Serial Number", Integer.toString(data.uid)));
-            items.add(new ListItem("Batch Number", Integer.toString(data.batchNo)));
-            items.add(new ListItem("Week of Production", Integer.toString(data.weekProd)));
-            items.add(new ListItem("Year of Production", Integer.toString(data.yearProd)));
+            items.add(new ListItem("Serial Number", Integer.toHexString(data.uid)));
+            items.add(new ListItem("Batch Number", Integer.toHexString(data.batchNo)));
+            items.add(new ListItem("Week of Production", Integer.toHexString(data.weekProd)));
+            items.add(new ListItem("Year of Production", Integer.toHexString(data.yearProd)));
         }
 
         return items;
