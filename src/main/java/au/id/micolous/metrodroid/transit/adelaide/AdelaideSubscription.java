@@ -112,7 +112,7 @@ public class AdelaideSubscription extends En1545Subscription {
     }
 
     AdelaideSubscription(byte[]data) {
-        super(data, SUB_FIELDS);
+        super(data, SUB_FIELDS, null);
     }
 
     @Override

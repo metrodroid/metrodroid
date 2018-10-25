@@ -47,13 +47,6 @@ public class AdelaideLookup extends En1545LookupSTR {
     }
 
     @Override
-    public String getAgencyName(Integer agency, boolean isShort) {
-        if (agency != null && agency == 1)
-            return "ADL Metro";
-        return super.getAgencyName(agency, isShort);
-    }
-
-    @Override
     public String getSubscriptionName(Integer agency, Integer contractTariff) {
         if (contractTariff == null)
             return null;
