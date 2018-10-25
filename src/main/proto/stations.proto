@@ -24,6 +24,9 @@ message StationDb {
     // Provides a hint for LocaleSpan about which language to mark up the
     // names with, to improve pronunciation.
     string tts_hint_language = 5;
+
+    // Licensing notice for the file.
+    string license_notice = 6;
 }
 
 enum TransportType {

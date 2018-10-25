@@ -22,6 +22,7 @@ import android.app.ActionBar;
 import android.content.res.AssetManager;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.util.Log;
 import android.view.MenuItem;
 import android.widget.TextView;
@@ -34,74 +35,13 @@ import java.io.InputStream;
 import java.nio.charset.Charset;
 
 import au.id.micolous.farebot.R;
+import au.id.micolous.metrodroid.transit.clipper.ClipperTransitData;
+import au.id.micolous.metrodroid.transit.ezlink.EZLinkTransitData;
+import au.id.micolous.metrodroid.transit.lax_tap.LaxTapTransitData;
+import au.id.micolous.metrodroid.transit.seq_go.SeqGoTransitData;
+import au.id.micolous.metrodroid.transit.tfi_leap.LeapTransitData;
 
 public class LicenseActivity extends MetrodroidActivity {
-    private static final String SEQ_GO_GTFS = "The SEQ Go Card stop database used in this software "
-            + "contains information derived from Translink's GTFS feed, made available under the "
-            + "Creative Commons Attribution 3.0 Australia license by the Queensland Department "
-            + "of Transport and Main Roads.\n"
-            + "\n"
-            + "You may obtain a copy of the raw data and it's license at:\n"
-            + "\n"
-            + "   https://data.qld.gov.au/dataset/general-transit-feed-specification-gtfs-seq\n"
-            + "\n"
-            + "Stop mapping information is available in Metrodroid's source repository.\n\n\n";
-
-    private static final String LAX_TAP_GTFS = "The LAX TAP stop database used in this software "
-            + "contains information derived from GTFS feeds by Los Angeles County transit "
-            + "operators, including:\n"
-            + "\n"
-            + "   - Los Angeles County Metropolitan Transportation Authority (Metro)\n"
-            + "\n"
-            + "You may obtain a copy of the raw data and it's license at:\n"
-            + "\n"
-            + "   https://gitlab.com/LACMTA/gtfs_rail\n"
-            + "\n"
-            + "Stop mapping information is available in Metrodroid's source repository.\n\n\n";
-
-    private static final String BART_GTFS = "The BART stop database used in this software "
-            + "contains information derived from BART GTFS feed, made available under the "
-            + "Developer License Agreement by BART.\n"
-            + "\n"
-            + "You may obtain a copy of the raw data and it's license at:\n"
-            + "\n"
-            + "   http://www.bart.gov/schedules/developers/developer-license-agreement\n"
-            + "\n"
-            + "   http://www.bart.gov/schedules/developers/gtfs\n"
-            + "\n"
-            + "Stop mapping information is available in Metrodroid's source repository.\n\n\n";
-
-    private static final String MYTRANSPORT_SG = "Contains information from " +
-            "\"Train Station Codes and Chinese Names\" and \"TrainStation\" accessed on " +
-            "12-Aug-2018 from " +
-            "\"https://www.mytransport.sg/content/dam/datamall/datasets/PublicTransportRelated/Train%20Station%20Codes%20and%20Chinese%20Names.zip\"" +
-            " and https://www.mytransport.sg/content/dam/datamall/datasets/Geospatial/TrainStation.zip " +
-            "which is made available under the terms of the Singapore Open Data Licence version 1.0" +
-            " https://www.mytransport.sg/content/mytransport/home/dataMall/SingaporeOpenDataLicence.html\n\n\n";
-
-    private static final String TFI_GTFS = "The TFI stop database used in this software "
-            + "contains information derived from TFI GTFS feed, made available under the "
-            + "Creative Commons Attribution 4.0 International license by the TFI.\n"
-            + "\n"
-            + "You may obtain a copy of the raw data and it's license at:\n"
-            + "\n"
-            + "   https://data.gov.ie/pages/opendatalicence\n"
-            + "   https://www.transportforireland.ie/transitData/PT_Data.html\n"
-            + "\n"
-            + "Stop mapping information is available in Metrodroid's source repository.\n\n\n";
-
-    private static final String VTA_GTFS = "The VTA stop database used in this software "
-            + "contains information derived from VTA GTFS feed, made available under the "
-            + "Developer License Agreement by VTA.\n"
-            + "\n"
-            + "You may obtain a copy of the raw data and it's license at:\n"
-            + "\n"
-            + "   http://www.vta.org/getting-around/gtfs-info/dev-terms-of-use\n"
-            + "\n"
-            + "   http://www.vta.org/getting-around/gtfs-info/data-file\n"
-            + "\n"
-            + "Stop mapping information is available in Metrodroid's source repository.\n\n\n";
-
     private static final String TAG = LicenseActivity.class.getSimpleName();
 
     private TextView lblLicenseText;
@@ -117,6 +57,7 @@ public class LicenseActivity extends MetrodroidActivity {
         }
 
         lblLicenseText = findViewById(R.id.lblLicenseText);
+        lblLicenseText.beginBatchEdit();
         readLicenseTextFromAsset("Metrodroid-NOTICE.txt");
         readLicenseTextFromAsset("third_party/leaflet/LICENSE");
         readLicenseTextFromAsset("third_party/nfc-felica-lib/NOTICE");
@@ -124,20 +65,25 @@ public class LicenseActivity extends MetrodroidActivity {
         readLicenseTextFromAsset("third_party/NOTICE.noto-emoji.txt");
         readLicenseTextFromAsset("third_party/NOTICE.protobuf.txt");
 
-        // TODO: Read this programatically
-        lblLicenseText.append(SEQ_GO_GTFS);
-        lblLicenseText.append(LAX_TAP_GTFS);
-        lblLicenseText.append(BART_GTFS);
-        lblLicenseText.append(VTA_GTFS);
-        lblLicenseText.append(MYTRANSPORT_SG);
-        lblLicenseText.append(TFI_GTFS);
+        // TODO: Get a list of files programatically
+        addNotice(SeqGoTransitData.getNotice());
+        addNotice(LaxTapTransitData.getNotice());
+        addNotice(ClipperTransitData.getNotice());
+        addNotice(EZLinkTransitData.getNotice());
+        addNotice(LeapTransitData.getNotice());
 
+        lblLicenseText.endBatchEdit();
         lblLicenseText = null;
+    }
+
+    private void addNotice(@Nullable String notice) {
+        if (notice == null) return;
+        lblLicenseText.append(notice);
+        lblLicenseText.append("\n\n");
     }
 
     private void readLicenseTextFromAsset(@NonNull String path) {
         InputStream s = null;
-        lblLicenseText.beginBatchEdit();
         try {
             s = getAssets().open(path, AssetManager.ACCESS_RANDOM);
             LineIterator i = IOUtils.lineIterator(s, Charset.defaultCharset());
@@ -154,7 +100,6 @@ public class LicenseActivity extends MetrodroidActivity {
         }
 
         lblLicenseText.append("\n\n");
-        lblLicenseText.endBatchEdit();
     }
 
     @Override

@@ -116,10 +116,6 @@ public class SmartRiderTransitData extends TransitData {
     private static CardType detectKeyType(ClassicCard card) {
         try {
             ClassicSectorKey key = card.getSector(7).getKey();
-            if (key == null) {
-                // We don't have key data, bail out.
-                return CardType.UNKNOWN;
-            }
 
             Log.d(TAG, "Checking for MyWay key...");
             if (Utils.checkKeyHash(key, MYWAY_KEY_SALT, MYWAY_KEY_DIGEST) >= 0) {

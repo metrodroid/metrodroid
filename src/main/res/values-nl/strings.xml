@@ -572,7 +572,7 @@
 
     <string name="compass_product_type">Productsoort</string>
     <string name="compass_machine_code">Automaatcode</string>
-    <string name="compass_ticket_type">Kaartsoort</string>
+    <string name="ticket_type">Kaartsoort</string>
     <string name="compass_ticket_type_concession">Concessie</string>
     <string name="compass_ticket_type_regular">Regulier</string>
     <string name="expiry_date">Vervaldatum</string>
@@ -777,4 +777,27 @@
     <string name="location_portland">Portland, OR, VS</string>
     <string name="location_montpellier">Montpellier, Frankrijk</string>
     <string name="maps">Kaarten</string>
-</resources>
+<string name="subscription_cost">Kosten</string>
+    <plurals name="trips_remaining_total">
+	<item quantity="one">%d van %d reis resterend</item>
+	<item quantity="other">%d van %d reizen resterend</item>
+</plurals>
+    <string name="location_houston">Houston, TX, VS</string>
+    <string name="location_toulouse">Toulouse, Frankrijk</string>
+    <string name="metroq_fare_card">Kaart op saldo</string>
+    <string name="metroq_day_pass">Dagkaart</string>
+
+    <string name="free_transfers_until">Gratis overstappen tot</string>
+    <string name="clipper_ticket_type_adult">Volwassene</string>
+    <string name="clipper_ticket_type_senior">Oudere</string>
+    <string name="clipper_ticket_type_youth">Jongere</string>
+
+    <string name="clipper_single">Enkele reis (<xliff:g id="ticket_class" example="Adult">%1$s</xliff:g>)</string>
+    <string name="clipper_return">Retour (<xliff:g id="ticket_class" example="Adult">%1$s</xliff:g>)</string>
+    <string name="card_note_clipper">Ondersteuning voor zowel plastic (herbruikbaar) als papieren (enkele reizen, uitgegeven door Golden Gate Ferry and Muni) Clipper-kaarten.</string>
+
+    <string name="passenger_class">klas</string>
+    <string name="without_receipt">Zonder bonnetje</string>
+    <string name="with_receipt">Met bonnetje</string>
+
+    </resources>

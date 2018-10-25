@@ -1008,7 +1008,17 @@ public class Utils {
         return -1;
     }
 
-    public static int checkKeyHash(@NonNull ClassicSectorKey key, @NonNull String salt, String... expectedHashes) {
+    /**
+     * Checks a keyhash with a {@link ClassicSectorKey}.
+     *
+     * See {@link #checkKeyHash(byte[], String, String...)} for further information.
+     *
+     * @param key The key to check. If this is null, then this will always return a value less than
+     *            0 (ie: error).
+     */
+    public static int checkKeyHash(@Nullable ClassicSectorKey key, @NonNull String salt, String... expectedHashes) {
+        if (key == null)
+            return -1;
         return checkKeyHash(key.getKey(), salt, expectedHashes);
     }
 }

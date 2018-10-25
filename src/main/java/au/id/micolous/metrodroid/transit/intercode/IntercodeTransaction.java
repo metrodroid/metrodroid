@@ -52,7 +52,7 @@ class IntercodeTransaction extends En1545Transaction {
             new En1545Bitmap(
                     new En1545FixedInteger("EventDisplayData", 8),
                     new En1545FixedInteger(EVENT_NETWORK_ID, 24),
-                    new En1545FixedInteger("EventCode", 8),
+                    new En1545FixedInteger(EVENT_CODE, 8),
                     new En1545FixedInteger("EventResult", 8),
                     new En1545FixedInteger(EVENT_SERVICE_PROVIDER, 8),
                     new En1545FixedInteger("EventNotOkCounter", 8),
@@ -78,8 +78,8 @@ class IntercodeTransaction extends En1545Transaction {
                     new En1545FixedInteger(EVENT_CONTRACT_POINTER, 5),
                     new En1545FixedInteger(EVENT_AUTHENTICATOR, 16),
                     new En1545Bitmap(
-                            En1545FixedInteger.date("EventFirstStamp"),
-                            En1545FixedInteger.time("EventFirstStamp"),
+                            En1545FixedInteger.date(EVENT_FIRST_STAMP),
+                            En1545FixedInteger.time(EVENT_FIRST_STAMP),
                             new En1545FixedInteger("EventDataSimulation", 1),
                             new En1545FixedInteger("EventDataTrip", 2),
                             new En1545FixedInteger("EventDataRouteDirection", 2)

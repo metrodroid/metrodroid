@@ -19,13 +19,16 @@
 
 package au.id.micolous.metrodroid.transit.seq_go;
 
+import android.support.annotation.VisibleForTesting;
 import android.util.SparseArray;
 
 
 /**
  * Constants used in Go card
  */
+@VisibleForTesting(otherwise = VisibleForTesting.PACKAGE_PRIVATE)
 public final class SeqGoData {
+    @VisibleForTesting(otherwise = VisibleForTesting.PACKAGE_PRIVATE)
     public static final String SEQ_GO_STR = "seq_go";
 
     protected static final int VEHICLE_RAIL = 5;

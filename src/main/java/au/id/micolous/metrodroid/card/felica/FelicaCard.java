@@ -39,7 +39,7 @@ import au.id.micolous.metrodroid.transit.TransitData;
 import au.id.micolous.metrodroid.transit.TransitIdentity;
 import au.id.micolous.metrodroid.transit.edy.EdyTransitData;
 import au.id.micolous.metrodroid.transit.kmt.KMTTransitData;
-import au.id.micolous.metrodroid.transit.newshenzhen.NewShenzhenTransitData;
+import au.id.micolous.metrodroid.transit.china.NewShenzhenTransitData;
 import au.id.micolous.metrodroid.transit.octopus.OctopusTransitData;
 import au.id.micolous.metrodroid.transit.suica.SuicaTransitData;
 import au.id.micolous.metrodroid.ui.HeaderListItem;

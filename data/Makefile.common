@@ -1,5 +1,6 @@
 # -*- mode: makefile; indent-tabs-mode: tabs; tab-width: 2 -*-
-.PHONY:: mdst_clean mdst_proto mdst clean
+.PHONY:: mdst_clean mdst_proto mdst clean copy %.copy
+MDST = $(MDROOT)/extra/mdst
 
 mdst_sources := $(wildcard $(MDST)/*.py)
 
@@ -15,7 +16,10 @@ mdst: $(MDST)/stations_pb2.py $(mdst_sources)
 %.csv: %.mdst mdst
 	python3 $(MDST)/dump2csv.py -o $@ $<
 
+# Copies a MdST file in place.
+%.copy: %.mdst mdst
+	cp $< $(MDROOT)/src/main/assets/
+
 # Deletes the generated Python proto definitions.
 mdst_clean:
 	make -C $(MDST) clean
-

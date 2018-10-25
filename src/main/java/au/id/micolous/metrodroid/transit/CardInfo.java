@@ -41,7 +41,9 @@ import au.id.micolous.metrodroid.transit.edy.EdyTransitData;
 import au.id.micolous.metrodroid.transit.ezlink.EZLinkTransitData;
 import au.id.micolous.metrodroid.transit.hsl.HSLTransitData;
 import au.id.micolous.metrodroid.transit.istanbulkart.IstanbulKartTransitData;
+import au.id.micolous.metrodroid.transit.kiev.KievTransitData;
 import au.id.micolous.metrodroid.transit.lisboaviva.LisboaVivaTransitData;
+import au.id.micolous.metrodroid.transit.metroq.MetroQTransitData;
 import au.id.micolous.metrodroid.transit.strelka.StrelkaTransitData;
 import au.id.micolous.metrodroid.transit.intercode.IntercodeTransitData;
 import au.id.micolous.metrodroid.transit.ricaricami.RicaricaMiTransitData;
@@ -54,7 +56,7 @@ import au.id.micolous.metrodroid.transit.lax_tap.LaxTapTransitData;
 import au.id.micolous.metrodroid.transit.manly_fast_ferry.ManlyFastFerryTransitData;
 import au.id.micolous.metrodroid.transit.mobib.MobibTransitData;
 import au.id.micolous.metrodroid.transit.myki.MykiTransitData;
-import au.id.micolous.metrodroid.transit.newshenzhen.NewShenzhenTransitData;
+import au.id.micolous.metrodroid.transit.china.NewShenzhenTransitData;
 import au.id.micolous.metrodroid.transit.octopus.OctopusTransitData;
 import au.id.micolous.metrodroid.transit.opal.OpalTransitData;
 import au.id.micolous.metrodroid.transit.opus.OpusTransitData;
@@ -93,12 +95,14 @@ public class CardInfo {
             HSLTransitData.CARD_INFO,
             IstanbulKartTransitData.CARD_INFO,
             SuicaTransitData.ICOCA_CARD_INFO,
+            KievTransitData.CARD_INFO,
             KMTTransitData.CARD_INFO,
             LeapTransitData.CARD_INFO,
             LisboaVivaTransitData.CARD_INFO,
             ManlyFastFerryTransitData.CARD_INFO,
             AdelaideMetrocardTransitData.CARD_INFO,  // Metrocard
             ChcMetrocardTransitData.CARD_INFO, // Metrocard
+            MetroQTransitData.CARD_INFO,
             MobibTransitData.CARD_INFO,
             MykiTransitData.CARD_INFO,
             SmartRiderTransitData.MYWAY_CARD_INFO,
@@ -110,6 +114,7 @@ public class CardInfo {
             OrcaTransitData.CARD_INFO,
             IntercodeTransitData.OURA_CARD_INFO,
             OVChipTransitData.CARD_INFO,
+            IntercodeTransitData.TISSEO_CARD_INFO, // Pastel
             SuicaTransitData.PASMO_CARD_INFO,
             PodorozhnikTransitData.CARD_INFO,
             RavKavTransitData.CARD_INFO,

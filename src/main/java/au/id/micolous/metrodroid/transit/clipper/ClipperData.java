@@ -40,6 +40,7 @@ import java.util.Map;
 final class ClipperData {
     static final int AGENCY_CALTRAIN = 0x06;
     static final int AGENCY_GGT = 0x0b;
+    static final int AGENCY_MUNI = 0x12;
     static final int AGENCY_GG_FERRY = 0x19;
     static final int AGENCY_BAY_FERRY = 0x1b;
 
@@ -48,7 +49,7 @@ final class ClipperData {
             .put(0x04, "San Francisco")
             .build();
 
-    private static final String CLIPPER_STR = "clipper";
+    static final String CLIPPER_STR = "clipper";
 
     private ClipperData() {
     }

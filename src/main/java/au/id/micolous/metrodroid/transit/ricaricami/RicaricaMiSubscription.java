@@ -45,11 +45,9 @@ public class RicaricaMiSubscription extends En1545Subscription {
             En1545FixedInteger.date(CONTRACT_END),
             new En1545FixedHex(CONTRACT_UNKNOWN_B, 52)
     );
-    private final int mCounter;
 
-    public RicaricaMiSubscription(byte[] data, byte[] counter, int id) {
-        super(data, FIELDS);
-        mCounter = Utils.byteArrayToIntReversed(counter, 0, 4);
+    public RicaricaMiSubscription(byte[] data, byte[] counter) {
+        super(data, FIELDS, Utils.byteArrayToIntReversed(counter, 0, 4));
     }
 
     @Override
@@ -99,13 +97,6 @@ public class RicaricaMiSubscription extends En1545Subscription {
 
     private RicaricaMiSubscription(Parcel in) {
         super(in);
-        mCounter = in.readInt();
-    }
-
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        super.writeToParcel(dest, flags);
-        dest.writeInt(mCounter);
     }
 
     public static final Creator<RicaricaMiSubscription> CREATOR = new Creator<RicaricaMiSubscription>() {

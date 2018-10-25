@@ -33,12 +33,14 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import au.id.micolous.farebot.R;
 import au.id.micolous.metrodroid.transit.Subscription;
 import au.id.micolous.metrodroid.transit.TransitBalance;
 import au.id.micolous.metrodroid.transit.TransitCurrency;
+import au.id.micolous.metrodroid.ui.ListItem;
 import au.id.micolous.metrodroid.util.Utils;
 
 public abstract class En1545Subscription extends Subscription {
@@ -65,14 +67,24 @@ public abstract class En1545Subscription extends Subscription {
     protected static final String CONTRACT_NETWORK_ID = "ContractNetworkId";
     protected static final String CONTRACT_PASSENGER_CLASS = "ContractPassengerClass";
     protected static final String CONTRACT_AUTHENTICATOR = "ContractAuthnticator";
+    public static final String CONTRACT_SOLD = "ContractSold";
+    public static final String CONTRACT_DEBIT_SOLD = "ContractDebitSold";
+    protected static final String CONTRACT_JOURNEYS = "ContractJourneys";
+    protected static final String CONTRACT_RECEIPT_DELIVERED = "ContractReceiptDelivered";
     protected final En1545Parsed mParsed;
+    protected final Integer mCounter;
 
     public En1545Subscription(Parcel parcel) {
         mParsed = new En1545Parsed(parcel);
+        if (parcel.readInt() != 0)
+            mCounter = parcel.readInt();
+        else
+            mCounter = null;
     }
 
-    public En1545Subscription(byte[] data, En1545Field fields) {
+    public En1545Subscription(byte[] data, En1545Field fields, Integer counter) {
         mParsed = En1545Parser.parse(data, fields);
+        mCounter = counter;
     }
 
     @Override
@@ -84,8 +96,8 @@ public abstract class En1545Subscription extends Subscription {
 
         ArrayList<Integer> zones = new ArrayList<>();
         for (int zone=0; (zonecode >> zone) > 0; zone++) {
-            if (zonecode >> zone > 0) {
-                zones.add(zone);
+            if ((zonecode & (1 << zone)) != 0) {
+                zones.add(zone + 1);
             }
         }
 
@@ -209,6 +221,9 @@ public abstract class En1545Subscription extends Subscription {
     @Override
     public void writeToParcel(Parcel dest, int flags) {
         mParsed.writeToParcel(dest, flags);
+        dest.writeInt(mCounter != null ? 1 : 0);
+        if (mCounter != null)
+            dest.writeInt(mCounter);
     }
 
     @Override
@@ -218,5 +233,22 @@ public abstract class En1545Subscription extends Subscription {
 
     public TransitBalance getBalance() {
         return null;
+    }
+
+    @Nullable
+    @Override
+    public List<ListItem> getInfo() {
+        List<ListItem> li = super.getInfo();
+        if (li == null)
+            li = new ArrayList<>();
+        Integer clas = mParsed.getInt(CONTRACT_PASSENGER_CLASS);
+        if (clas != null)
+            li.add(new ListItem(R.string.passenger_class, Integer.toString(clas)));
+        Integer receipt = mParsed.getInt(CONTRACT_RECEIPT_DELIVERED);
+        if (receipt != null && receipt != 0)
+            li.add(new ListItem(Utils.localizeString(R.string.with_receipt)));
+        if (receipt != null && receipt == 0)
+            li.add(new ListItem(Utils.localizeString(R.string.without_receipt)));
+        return li;
     }
 }
