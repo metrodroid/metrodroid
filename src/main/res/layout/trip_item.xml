@@ -91,15 +91,34 @@
             android:layout_height="wrap_content"
             android:padding="5dip"
             android:orientation="vertical">
-            <TextView
-                android:id="@+id/fare_text_view"
-                tools:text="$1.23"
+            <LinearLayout
+                android:orientation="horizontal"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="end|center_vertical"
-                android:gravity="end|center_vertical"
-                android:textSize="16sp"
-                android:singleLine="true" />
+                android:layout_height="match_parent"
+                android:layout_gravity="end|center_vertical">
+                <android.support.v7.widget.AppCompatImageView
+                    android:id="@+id/xfer_icon"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:layout_gravity="center"
+                    android:paddingStart="0dp"
+                    android:paddingEnd="5dip"
+                    app:srcCompat="@drawable/material_ic_transfer_within_a_station_24dp"
+                    android:contentDescription="@string/transfer"
+                    android:paddingLeft="0dp"
+                    android:paddingRight="5dip" />
+
+                <TextView
+                    android:id="@+id/fare_text_view"
+                    tools:text="$1.23"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="end|center_vertical"
+                    android:gravity="end|center_vertical"
+                    android:textSize="16sp"
+                    android:singleLine="true" />
+            </LinearLayout>
+
             <TextView
                 android:id="@+id/time_text_view"
                 tools:text="Time"

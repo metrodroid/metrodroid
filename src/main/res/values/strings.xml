@@ -1395,4 +1395,7 @@
     <string name="maps">Maps</string>
     <string name="card_note_kiev">Only pre-2016 cards. Only trip log can be read</string>
     <string name="card_name_kiev">Kiev Metro</string>
+    <!-- Translators: Used to indicate a reduced second fare, as a result of taking multiple trips
+    within a time period. -->
+    <string name="transfer">Transfer</string>
 </resources>

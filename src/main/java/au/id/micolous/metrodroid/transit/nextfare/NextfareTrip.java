@@ -170,4 +170,9 @@ public class NextfareTrip extends Trip implements Comparable<NextfareTrip> {
             return null;
         return StationTableReader.getOperatorName(mSTR, mModeInt, isShort);
     }
+
+    @Override
+    public boolean isTransfer() {
+        return mContinuation;
+    }
 }

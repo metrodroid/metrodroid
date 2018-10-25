@@ -200,14 +200,22 @@ public abstract class En1545Transaction extends Transaction {
         return (getEventCode() & 0xf);
     }
 
+    @Override
     protected boolean isTapOn() {
-        int eventCode = getEventCode();
-        return (eventCode & 0xf) == EVENT_TYPE_BOARD || (eventCode & 0xf) == EVENT_TYPE_BOARD_TRANSFER;
+        int eventCode = getEventType();
+        return eventCode == EVENT_TYPE_BOARD || eventCode == EVENT_TYPE_BOARD_TRANSFER;
     }
 
+    @Override
     protected boolean isTapOff() {
-        int eventCode = getEventCode();
-        return (eventCode & 0xf) == EVENT_TYPE_EXIT || (eventCode & 0xf) == EVENT_TYPE_EXIT_TRANSFER;
+        int eventCode = getEventType();
+        return eventCode == EVENT_TYPE_EXIT || eventCode == EVENT_TYPE_EXIT_TRANSFER;
+    }
+
+    @Override
+    protected boolean isTransfer() {
+        int eventCode = getEventType();
+        return eventCode == EVENT_TYPE_BOARD_TRANSFER || eventCode == EVENT_TYPE_EXIT_TRANSFER;
     }
 
     @Override
