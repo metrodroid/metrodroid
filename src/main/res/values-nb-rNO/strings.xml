@@ -810,4 +810,7 @@
     <string name="card_name_tunion">T-Union</string>
     <string name="card_note_kiev">Kun kort fra før 2016. Kun turlogg kan leses</string>
     <string name="card_name_kiev">Kiev Metro</string>
+<string name="city_union_city">City</string>
+
+    <string name="transfer">Overgang</string>
 </resources>
