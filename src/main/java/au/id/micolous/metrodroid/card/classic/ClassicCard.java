@@ -420,6 +420,8 @@ public class ClassicCard extends Card {
             CharlieCardTransitData.FACTORY,
             RicaricaMiTransitData.FACTORY,
             BilheteUnicoSPTransitData.FACTORY,
+            KievTransitData.FACTORY,
+            MetroQTransitData.FACTORY,
             // This check must be THIRD TO LAST.
             //
             // This is to throw up a warning whenever there is a card with all locked sectors

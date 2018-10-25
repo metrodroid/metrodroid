@@ -20,6 +20,7 @@
 package au.id.micolous.metrodroid.transit.kiev;
 
 import android.os.Parcel;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.text.SpannableString;
 import android.text.Spanned;
@@ -39,6 +40,7 @@ import au.id.micolous.metrodroid.card.CardType;
 import au.id.micolous.metrodroid.card.UnauthorizedException;
 import au.id.micolous.metrodroid.card.classic.ClassicBlock;
 import au.id.micolous.metrodroid.card.classic.ClassicCard;
+import au.id.micolous.metrodroid.card.classic.ClassicCardTransitFactory;
 import au.id.micolous.metrodroid.card.classic.ClassicSector;
 import au.id.micolous.metrodroid.transit.CardInfo;
 import au.id.micolous.metrodroid.transit.TransitBalance;
@@ -124,17 +126,48 @@ public class KievTransitData extends TransitData {
         return Utils.localizeString(R.string.card_name_kiev);
     }
 
-    public static boolean check(ClassicCard card) {
-        try {
-            return Utils.checkKeyHash(card.getSector(1).getKey(), "kiev",
-                    "902a69a9d68afa1ddac7b61a512f7d4f") >= 0;
-        } catch (IndexOutOfBoundsException | UnauthorizedException ignored) {
-            // If that sector number is too high, then it's not for us.
-        }
-        return false;
-    }
+    public static final ClassicCardTransitFactory FACTORY = new ClassicCardTransitFactory() {
 
-    public static TransitIdentity parseTransitIdentity(ClassicCard card) {
-        return new TransitIdentity(Utils.localizeString(R.string.card_name_kiev), formatSerial(getSerial(card)));
-    }
+        private boolean check(ClassicSector sector1) {
+            try {
+                return Utils.checkKeyHash(sector1.getKey(), "kiev",
+                        "902a69a9d68afa1ddac7b61a512f7d4f") >= 0;
+            } catch (IndexOutOfBoundsException | UnauthorizedException ignored) {
+                // If that sector number is too high, then it's not for us.
+            }
+            return false;
+        }
+
+        @Override
+        public boolean check(@NonNull ClassicCard card) {
+            try {
+                return check(card.getSector(1));
+            } catch (IndexOutOfBoundsException | UnauthorizedException ignored) {
+                // If that sector number is too high, then it's not for us.
+            }
+            return false;
+        }
+
+        @Override
+        public TransitIdentity parseTransitIdentity(@NonNull ClassicCard card) {
+            return new TransitIdentity(Utils.localizeString(R.string.card_name_kiev), formatSerial(getSerial(card)));
+        }
+
+        @Override
+        public TransitData parseTransitData(@NonNull ClassicCard classicCard) {
+            return new KievTransitData(classicCard);
+        }
+
+        @Override
+        public int earlySectors() {
+            return 2;
+        }
+
+        @Override
+        public CardInfo earlyCardInfo(List<ClassicSector> sectors) {
+            if (check(sectors.get(1)))
+                return CARD_INFO;
+            return null;
+        }
+    };
 }
