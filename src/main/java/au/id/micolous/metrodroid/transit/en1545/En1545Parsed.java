@@ -123,7 +123,7 @@ public class En1545Parsed implements Parcelable {
 
     @Override
     public String toString() {
-        return "[" + makeString(", ", Collections.EMPTY_SET) + "]";
+        return "[" + makeString(", ", Collections.emptySet()) + "]";
     }
 
     @Nullable

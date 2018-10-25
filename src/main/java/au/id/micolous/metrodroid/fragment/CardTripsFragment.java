@@ -188,6 +188,7 @@ public class CardTripsFragment extends ListFragment {
             ImageView iconImageView = convertView.findViewById(R.id.icon_image_view);
             TextView timeTextView = convertView.findViewById(R.id.time_text_view);
             TextView routeTextView = convertView.findViewById(R.id.route_text_view);
+            ImageView xferIcon = convertView.findViewById(R.id.xfer_icon);
             TextView fareTextView = convertView.findViewById(R.id.fare_text_view);
             TextView stationTextView = convertView.findViewById(R.id.station_text_view);
             LinearLayout paxLayout = convertView.findViewById(R.id.pax_layout);
@@ -295,13 +296,15 @@ public class CardTripsFragment extends ListFragment {
                 routeTextView.setVisibility(View.INVISIBLE);
             }
 
+            xferIcon.setVisibility(trip.isTransfer() ? View.VISIBLE : View.GONE);
+
             fareTextView.setVisibility(View.VISIBLE);
             TransitCurrency fare = trip.getFare();
             if (fare != null) {
                 fareTextView.setText(fare.formatCurrencyString(false));
             } else {
                 // Hide the text "Fare" for getFare == null
-                fareTextView.setVisibility(View.INVISIBLE);
+                fareTextView.setVisibility(View.GONE);
             }
 
             Spannable stationText = Trip.formatStationNames(trip);
