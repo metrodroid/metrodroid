@@ -266,7 +266,7 @@ public class StationTableReader {
         try {
             offset = mStationIndex.get().getStationMapOrThrow(id);
         } catch (ConcurrentException | IllegalArgumentException e) {
-            Log.d(TAG, String.format(Locale.ENGLISH, "Unknown station %d", id), e);
+            Log.d(TAG, String.format(Locale.ENGLISH, "Unknown station %d", id) /*, e */);
             return null;
         }
 

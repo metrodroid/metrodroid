@@ -1,5 +1,5 @@
 /*
- * IntercodeTrip.java
+ * AdelaideTransaction.java
  *
  * Copyright 2018 Google
  *
@@ -17,12 +17,12 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package au.id.micolous.metrodroid.transit.intercode;
+package au.id.micolous.metrodroid.transit.adelaide;
 
 import android.os.Parcel;
 import android.os.Parcelable;
-import android.support.annotation.NonNull;
 
+import au.id.micolous.metrodroid.transit.Trip;
 import au.id.micolous.metrodroid.transit.en1545.En1545Bitmap;
 import au.id.micolous.metrodroid.transit.en1545.En1545Container;
 import au.id.micolous.metrodroid.transit.en1545.En1545Field;
@@ -31,24 +31,11 @@ import au.id.micolous.metrodroid.transit.en1545.En1545FixedString;
 import au.id.micolous.metrodroid.transit.en1545.En1545Lookup;
 import au.id.micolous.metrodroid.transit.en1545.En1545Transaction;
 
-class IntercodeTransaction extends En1545Transaction {
-    private final int mNetworkId;
-
-    public static final Parcelable.Creator<IntercodeTransaction> CREATOR = new Parcelable.Creator<IntercodeTransaction>() {
-        @NonNull
-        public IntercodeTransaction createFromParcel(Parcel parcel) {
-            return new IntercodeTransaction(parcel);
-        }
-
-        @NonNull
-        public IntercodeTransaction[] newArray(int size) {
-            return new IntercodeTransaction[size];
-        }
-    };
-
-    private static final En1545Field tripFields = new En1545Container(
+public class AdelaideTransaction extends En1545Transaction implements Parcelable {
+    // Intercode but with local time instead of UTC
+    private static final En1545Field TRIP_FIELDS = new En1545Container(
             En1545FixedInteger.date(EVENT),
-            En1545FixedInteger.time(EVENT),
+            En1545FixedInteger.timeLocal(EVENT),
             new En1545Bitmap(
                     new En1545FixedInteger("EventDisplayData", 8),
                     new En1545FixedInteger(EVENT_NETWORK_ID, 24),
@@ -79,7 +66,7 @@ class IntercodeTransaction extends En1545Transaction {
                     new En1545FixedInteger(EVENT_AUTHENTICATOR, 16),
                     new En1545Bitmap(
                             En1545FixedInteger.date(EVENT_FIRST_STAMP),
-                            En1545FixedInteger.time(EVENT_FIRST_STAMP),
+                            En1545FixedInteger.timeLocal(EVENT_FIRST_STAMP),
                             new En1545FixedInteger("EventDataSimulation", 1),
                             new En1545FixedInteger("EventDataTrip", 2),
                             new En1545FixedInteger("EventDataRouteDirection", 2)
@@ -87,29 +74,34 @@ class IntercodeTransaction extends En1545Transaction {
             )
     );
 
-    public IntercodeTransaction(byte[] data, int networkId) {
-        super(data, tripFields);
-
-        Integer nid = mParsed.getInt(EVENT_NETWORK_ID);
-        if (nid != null)
-            mNetworkId = nid;
-        else
-            mNetworkId = networkId;
+    public AdelaideTransaction(byte[] data) {
+        super(data, TRIP_FIELDS);
     }
+
+    private AdelaideTransaction(Parcel in) {
+        super(in);
+    }
+
+    public static final Creator<AdelaideTransaction> CREATOR = new Creator<AdelaideTransaction>() {
+        @Override
+        public AdelaideTransaction createFromParcel(Parcel in) {
+            return new AdelaideTransaction(in);
+        }
+
+        @Override
+        public AdelaideTransaction[] newArray(int size) {
+            return new AdelaideTransaction[size];
+        }
+    };
 
     @Override
     protected En1545Lookup getLookup() {
-        return IntercodeTransitData.getLookup(mNetworkId);
+        return AdelaideLookup.getInstance();
     }
 
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        super.writeToParcel(dest, flags);
-        dest.writeInt(mNetworkId);
-    }
-
-    private IntercodeTransaction(Parcel parcel) {
-        super(parcel);
-        mNetworkId = parcel.readInt();
+    protected boolean isRejected() {
+        // The tap-on was rejected (insufficient funds).
+        // Successful events don't set EVENT_RESULT.
+        return mParsed.getIntOrZero(EVENT_RESULT) == 2;
     }
 }

@@ -60,6 +60,7 @@ public abstract class En1545Transaction extends Transaction {
     protected static final String EVENT_FIRST_STAMP = "EventFirstStamp";
     protected static final String EVENT_FIRST_LOCATION_ID = "EventFirstLocationId";
     protected static final String EVENT_DEVICE_ID = "EventDeviceId";
+    protected static final String EVENT_RESULT = "EventResult";
     protected final En1545Parsed mParsed;
 
     private static final int EVENT_TYPE_BOARD = 1;
@@ -231,5 +232,10 @@ public abstract class En1545Transaction extends Transaction {
 
     protected Integer getStationId() {
         return mParsed.getInt(EVENT_LOCATION_ID);
+    }
+
+    @Override
+    public String toString() {
+        return getClass().getSimpleName() + mParsed.toString();
     }
 }

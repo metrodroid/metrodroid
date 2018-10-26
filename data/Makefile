@@ -8,6 +8,7 @@ MDROOT=..
 # If GTFS or other data is fetched only from git, then it can go here (eg:
 # lax_tap).
 HERMETIC_TARGETS := \
+    adelaide \
 	compass \
 	gironde \
 	kmt \

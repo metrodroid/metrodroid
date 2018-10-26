@@ -32,6 +32,7 @@ import android.util.Log;
 import java.util.Locale;
 
 import au.id.micolous.metrodroid.card.CardType;
+import au.id.micolous.metrodroid.transit.adelaide.AdelaideMetrocardTransitData;
 import au.id.micolous.metrodroid.transit.bilhete_unico.BilheteUnicoSPTransitData;
 import au.id.micolous.metrodroid.transit.charlie.CharlieCardTransitData;
 import au.id.micolous.metrodroid.transit.chc_metrocard.ChcMetrocardTransitData;
@@ -99,6 +100,7 @@ public class CardInfo {
             LeapTransitData.CARD_INFO,
             LisboaVivaTransitData.CARD_INFO,
             ManlyFastFerryTransitData.CARD_INFO,
+            AdelaideMetrocardTransitData.CARD_INFO,  // Metrocard
             ChcMetrocardTransitData.CARD_INFO, // Metrocard
             MetroQTransitData.CARD_INFO,
             MobibTransitData.CARD_INFO,

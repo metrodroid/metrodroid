@@ -44,7 +44,7 @@ import au.id.micolous.metrodroid.transit.istanbulkart.IstanbulKartTransitData;
 import au.id.micolous.metrodroid.transit.myki.MykiTransitData;
 import au.id.micolous.metrodroid.transit.opal.OpalTransitData;
 import au.id.micolous.metrodroid.transit.orca.OrcaTransitData;
-import au.id.micolous.metrodroid.transit.stub.AdelaideMetrocardStubTransitData;
+import au.id.micolous.metrodroid.transit.adelaide.AdelaideMetrocardTransitData;
 import au.id.micolous.metrodroid.transit.stub.AtHopStubTransitData;
 import au.id.micolous.metrodroid.transit.tfi_leap.LeapTransitData;
 import au.id.micolous.metrodroid.transit.tfi_leap.LeapUnlocker;
@@ -224,6 +224,8 @@ public class DesfireCard extends Card {
             return LeapTransitData.CARD_INFO;
         if (TrimetHopTransitData.earlyCheck(appIds))
             return TrimetHopTransitData.CARD_INFO;
+        if (AdelaideMetrocardTransitData.earlyCheck(appIds))
+            return AdelaideMetrocardTransitData.CARD_INFO;
 
         return null;
     }
@@ -242,10 +244,10 @@ public class DesfireCard extends Card {
             return MykiTransitData.parseTransitIdentity(this);
         if (LeapTransitData.check(this))
             return LeapTransitData.parseTransitIdentity(this);
+        if (AdelaideMetrocardTransitData.check(this))
+            return AdelaideMetrocardTransitData.parseTransitIdentity(this);
 
         // Stub card types go last
-        if (AdelaideMetrocardStubTransitData.check(this))
-            return AdelaideMetrocardStubTransitData.parseTransitIdentity(this);
         if (AtHopStubTransitData.check(this))
             return AtHopStubTransitData.parseTransitIdentity(this);
         if (IstanbulKartTransitData.check(this))
@@ -272,14 +274,14 @@ public class DesfireCard extends Card {
             return new MykiTransitData(this);
         if (LeapTransitData.check(this))
             return new LeapTransitData(this);
+        if (AdelaideMetrocardTransitData.check(this))
+            return new AdelaideMetrocardTransitData(this);
 
         // Stub card types go last
         if (IstanbulKartTransitData.check(this))
             return new IstanbulKartTransitData(this);
         if (TrimetHopTransitData.check(this))
             return new TrimetHopTransitData(this);
-        if (AdelaideMetrocardStubTransitData.check(this))
-            return new AdelaideMetrocardStubTransitData(this);
         if (AtHopStubTransitData.check(this))
             return new AtHopStubTransitData(this);
 
