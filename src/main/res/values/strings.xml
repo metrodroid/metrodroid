@@ -137,6 +137,8 @@
     <string name="keys">Keys</string>
     <string name="delete">Delete</string>
     <string name="delete_key_confirm_title">Really delete key?</string>
+    <!-- Translators: shown when a trip attempt was denied (mainly due to insufficient funds.) -->
+    <string name="rejected">Rejected</string>
     <!--
     Translators:
     %1$s is a user supplied name for an encryption key.
@@ -1405,4 +1407,5 @@
     <!-- Translators: Used to indicate a reduced second fare, as a result of taking multiple trips
     within a time period. -->
     <string name="transfer">Transfer</string>
+    <string name="copy_card_number">Copy card number</string>
 </resources>

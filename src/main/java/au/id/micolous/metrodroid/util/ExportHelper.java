@@ -20,19 +20,10 @@
 
 package au.id.micolous.metrodroid.util;
 
-import android.content.ClipData;
-import android.content.ClipboardManager;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.net.Uri;
-import android.util.Log;
-import android.widget.Toast;
-
-import au.id.micolous.farebot.R;
-import au.id.micolous.metrodroid.provider.CardDBHelper;
-import au.id.micolous.metrodroid.provider.CardProvider;
-import au.id.micolous.metrodroid.provider.CardsTableColumns;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -53,25 +44,16 @@ import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 
-import static android.content.Context.CLIPBOARD_SERVICE;
+import au.id.micolous.metrodroid.provider.CardDBHelper;
+import au.id.micolous.metrodroid.provider.CardProvider;
+import au.id.micolous.metrodroid.provider.CardsTableColumns;
 
-public class ExportHelper {
-    private static final String TAG = ExportHelper.class.getName();
-
+public final class ExportHelper {
     private ExportHelper() {
     }
 
     public static void copyXmlToClipboard(Context context, String xml) {
-        ClipData data = ClipData.newPlainText("metrodroid card", xml);
-
-        ClipboardManager clipboard = (ClipboardManager) context.getSystemService(CLIPBOARD_SERVICE);
-        if (clipboard == null) {
-            Log.w(TAG, "Unable to access ClipboardManager.");
-            Toast.makeText(context, R.string.clipboard_error, Toast.LENGTH_SHORT).show();
-            return;
-        }
-        clipboard.setPrimaryClip(data);
-        Toast.makeText(context, R.string.copied_to_clipboard, Toast.LENGTH_SHORT).show();
+        Utils.copyTextToClipboard(context, "metrodroid card", xml);
     }
 
     public static String exportCardsXml(Context context) throws Exception {

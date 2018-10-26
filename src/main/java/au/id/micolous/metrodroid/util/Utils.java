@@ -22,6 +22,8 @@ package au.id.micolous.metrodroid.util;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.content.ClipData;
+import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageInfo;
@@ -55,6 +57,7 @@ import android.text.style.TtsSpan;
 import android.text.style.TypefaceSpan;
 import android.util.Log;
 import android.view.WindowManager;
+import android.widget.Toast;
 
 import org.apache.commons.io.IOUtils;
 import org.json.JSONException;
@@ -78,6 +81,8 @@ import au.id.micolous.farebot.R;
 import au.id.micolous.metrodroid.MetrodroidApplication;
 import au.id.micolous.metrodroid.key.ClassicCardKeys;
 import au.id.micolous.metrodroid.key.ClassicSectorKey;
+
+import static android.content.Context.CLIPBOARD_SERVICE;
 
 public class Utils {
     private static final String TAG = "Utils";
@@ -1021,4 +1026,18 @@ public class Utils {
             return -1;
         return checkKeyHash(key.getKey(), salt, expectedHashes);
     }
+
+    public static void copyTextToClipboard(Context context, String label, String text) {
+        ClipData data = ClipData.newPlainText(label, text);
+
+        ClipboardManager clipboard = (ClipboardManager) context.getSystemService(CLIPBOARD_SERVICE);
+        if (clipboard == null) {
+            Log.w(TAG, "Unable to access ClipboardManager.");
+            Toast.makeText(context, R.string.clipboard_error, Toast.LENGTH_SHORT).show();
+            return;
+        }
+        clipboard.setPrimaryClip(data);
+        Toast.makeText(context, R.string.copied_to_clipboard, Toast.LENGTH_SHORT).show();
+    }
+
 }
