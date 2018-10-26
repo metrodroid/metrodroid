@@ -23,6 +23,7 @@
 package au.id.micolous.metrodroid.transit.bilhete_unico;
 
 import android.os.Parcel;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.text.SpannableString;
 
@@ -35,6 +36,7 @@ import au.id.micolous.metrodroid.card.CardType;
 import au.id.micolous.metrodroid.card.UnauthorizedException;
 import au.id.micolous.metrodroid.card.classic.ClassicBlock;
 import au.id.micolous.metrodroid.card.classic.ClassicCard;
+import au.id.micolous.metrodroid.card.classic.ClassicCardTransitFactory;
 import au.id.micolous.metrodroid.card.classic.ClassicSector;
 import au.id.micolous.metrodroid.transit.CardInfo;
 import au.id.micolous.metrodroid.transit.TransitCurrency;
@@ -81,7 +83,7 @@ public class BilheteUnicoSPTransitData extends TransitData {
         mTrips = parcel.readArrayList(BilheteUnicoSPTrip.class.getClassLoader());
     }
 
-    public BilheteUnicoSPTransitData(ClassicCard card) {
+    private BilheteUnicoSPTransitData(ClassicCard card) {
         mSerial = getSerial(card);
         ClassicSector identitySector = card.getSector(2);
         mDay2 = Utils.getBitsFromBuffer(identitySector.getBlock(0).getData(), 2, 14);
@@ -120,10 +122,6 @@ public class BilheteUnicoSPTransitData extends TransitData {
     private static String formatSerial(long val) {
         return String.format(Locale.ENGLISH, "%02d0 %09d",
                 val >> 36, (val >> 4) & 0xffffffffL);
-    }
-
-    public static TransitIdentity parseTransitIdentity(ClassicCard card) {
-        return new TransitIdentity(NAME, formatSerial(getSerial(card)));
     }
 
     private static long getSerial(ClassicCard card) {
@@ -191,26 +189,52 @@ public class BilheteUnicoSPTransitData extends TransitData {
         return crc == 0;
     }
 
-    public static boolean check(ClassicCard card) {
-        try {
-            // Normally both sectors are identical but occasionally one of them might get corrupted,
-            // so tolerate one failure
-            if (!checkCRC16Sector(card.getSector(3))
-                    && !checkCRC16Sector(card.getSector(4)))
-                return false;
-            for (int sectoridx = 5; sectoridx <= 8; sectoridx++) {
-                int addr = sectoridx * 4 + 1;
-                ClassicSector sector = card.getSector(sectoridx);
-                if (!checkValueBlock(sector.getBlock(1), addr))
+    public static final ClassicCardTransitFactory FACTORY = new ClassicCardTransitFactory () {
+        @Override
+        public boolean check (@NonNull ClassicCard card) {
+            try {
+                // Normally both sectors are identical but occasionally one of them might get corrupted,
+                // so tolerate one failure
+                if (!checkCRC16Sector(card.getSector(3))
+                        && !checkCRC16Sector(card.getSector(4)))
                     return false;
-                if (!checkValueBlock(sector.getBlock(2), addr))
-                    return false;
+                for (int sectoridx = 5; sectoridx <= 8; sectoridx++) {
+                    int addr = sectoridx * 4 + 1;
+                    ClassicSector sector = card.getSector(sectoridx);
+                    if (!checkValueBlock(sector.getBlock(1), addr))
+                        return false;
+                    if (!checkValueBlock(sector.getBlock(2), addr))
+                        return false;
+                }
+                return true;
+            } catch (IndexOutOfBoundsException | UnauthorizedException ignored) {
+                // If that sector number is too high, then it's not for us.
+                // If we can't read we can't do anything
             }
-            return true;
-        } catch (IndexOutOfBoundsException|UnauthorizedException ignored) {
-            // If that sector number is too high, then it's not for us.
-            // If we can't read we can't do anything
+            return false;
         }
-        return false;
-    }
+
+        @Override
+        public TransitIdentity parseTransitIdentity(@NonNull ClassicCard card) {
+            return new TransitIdentity(NAME, formatSerial(getSerial(card)));
+        }
+
+        @Override
+        public TransitData parseTransitData(@NonNull ClassicCard classicCard) {
+            return new BilheteUnicoSPTransitData(classicCard);
+        }
+
+        @Override
+        public int earlySectors() {
+            return 4;
+        }
+
+        @Override
+        public CardInfo earlyCardInfo(List<ClassicSector> sectors) {
+            if (checkCRC16Sector(sectors.get(3))
+                    && !Utils.isAllZero(sectors.get(3).getBlock(0).getData()))
+                return CARD_INFO;
+            return null;
+        }
+    };
 }

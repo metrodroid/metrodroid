@@ -20,6 +20,7 @@
 package au.id.micolous.metrodroid.transit.charlie;
 
 import android.os.Parcel;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
 import java.util.ArrayList;
@@ -36,7 +37,9 @@ import au.id.micolous.metrodroid.card.CardType;
 import au.id.micolous.metrodroid.card.UnauthorizedException;
 import au.id.micolous.metrodroid.card.classic.ClassicBlock;
 import au.id.micolous.metrodroid.card.classic.ClassicCard;
+import au.id.micolous.metrodroid.card.classic.ClassicCardTransitFactory;
 import au.id.micolous.metrodroid.card.classic.ClassicSector;
+import au.id.micolous.metrodroid.card.classic.UnauthorizedClassicSector;
 import au.id.micolous.metrodroid.transit.CardInfo;
 import au.id.micolous.metrodroid.transit.TransitBalance;
 import au.id.micolous.metrodroid.transit.TransitBalanceStored;
@@ -73,7 +76,7 @@ public class CharlieCardTransitData extends TransitData {
         CHARLIE_EPOCH = epoch.getTimeInMillis();
     }
 
-    public CharlieCardTransitData(ClassicCard card) {
+    private CharlieCardTransitData(ClassicCard card) {
         mSerial = getSerial(card);
         mSecondSerial = Utils.byteArrayToLong(card.getSector(8).getBlock(0).getData(), 0, 4);
         ClassicSector sector2 = card.getSector(2);
@@ -195,27 +198,55 @@ public class CharlieCardTransitData extends TransitData {
         return NAME;
     }
 
-    public static boolean check(ClassicCard card) {
-        try {
-            byte[] b = card.getSector(0).getBlock(1).getData();
-            if (!Arrays.equals(b, new byte[] {
-                    0x4E, 0x0F, 0x04, 0x10, 0x04, 0x10, 0x04, 0x10,
+    public static final ClassicCardTransitFactory FACTORY = new ClassicCardTransitFactory() {
+        private boolean check(@NonNull ClassicSector sector0) {
+            byte[] b = sector0.getBlock(1).getData();
+            return Arrays.equals(Utils.byteArraySlice(b, 2, 14), new byte[] {
+                    0x04, 0x10, 0x04, 0x10, 0x04, 0x10,
                     0x04, 0x10, 0x04, 0x10, 0x04, 0x10, 0x04, 0x10
-            }))
-                return false;
-            b = card.getSector(1).getBlock(0).getData();
-            return Arrays.equals(Utils.byteArraySlice(b, 0, 6), new byte[] {
-                    0x04, 0x10, 0x23, 0x45, 0x66, 0x77
-            });
-        } catch (IndexOutOfBoundsException | UnauthorizedException ignored) {
-            // If that sector number is too high, then it's not for us.
+		});
         }
-        return false;
-    }
 
-    public static TransitIdentity parseTransitIdentity(ClassicCard card) {
-        return new TransitIdentity(NAME, formatSerial(getSerial(card)));
-    }
+        @Override
+        public boolean check(@NonNull ClassicCard card) {
+            try {
+                if (!check(card.getSector(0)))
+                    return false;
+                ClassicSector sector1 = card.getSector(1);
+                if (sector1 instanceof UnauthorizedClassicSector)
+                    return true;
+                byte[] b = sector1.getBlock(0).getData();
+                return Arrays.equals(Utils.byteArraySlice(b, 0, 6), new byte[]{
+                        0x04, 0x10, 0x23, 0x45, 0x66, 0x77
+                });
+            } catch (IndexOutOfBoundsException | UnauthorizedException ignored) {
+                // If that sector number is too high, then it's not for us.
+            }
+            return false;
+        }
+
+        @Override
+        public TransitIdentity parseTransitIdentity(@NonNull ClassicCard card) {
+            return new TransitIdentity(NAME, formatSerial(getSerial(card)));
+        }
+
+        @Override
+        public TransitData parseTransitData(@NonNull ClassicCard classicCard) {
+            return new CharlieCardTransitData(classicCard);
+        }
+
+        @Override
+        public int earlySectors() {
+            return 1;
+        }
+
+        @Override
+        public CardInfo earlyCardInfo(List<ClassicSector> sectors) {
+            if (check(sectors.get(0)))
+                return CARD_INFO;
+            return null;
+        }
+    };
 
     @Override
     public List<ListItem> getInfo() {

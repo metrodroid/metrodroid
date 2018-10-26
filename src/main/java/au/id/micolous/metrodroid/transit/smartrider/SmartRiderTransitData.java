@@ -19,6 +19,7 @@
 package au.id.micolous.metrodroid.transit.smartrider;
 
 import android.os.Parcel;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.util.Log;
 
@@ -27,6 +28,7 @@ import java.util.List;
 
 import au.id.micolous.farebot.R;
 import au.id.micolous.metrodroid.card.classic.ClassicCard;
+import au.id.micolous.metrodroid.card.classic.ClassicCardTransitFactory;
 import au.id.micolous.metrodroid.key.ClassicSectorKey;
 import au.id.micolous.metrodroid.transit.CardInfo;
 import au.id.micolous.metrodroid.transit.TransactionTrip;
@@ -134,18 +136,32 @@ public class SmartRiderTransitData extends TransitData {
         return CardType.UNKNOWN;
     }
 
-    public SmartRiderTransitData(Parcel p) {
+    private SmartRiderTransitData(Parcel p) {
         mCardType = CardType.valueOf(p.readString());
         mSerialNumber = p.readString();
         mBalance = p.readInt();
         mTrips = p.readArrayList(TransactionTrip.class.getClassLoader());
     }
 
-    public static boolean check(ClassicCard card) {
-        return detectKeyType(card) != CardType.UNKNOWN;
-    }
+    public static final ClassicCardTransitFactory FACTORY = new ClassicCardTransitFactory() {
+        @Override
+        public boolean check(@NonNull ClassicCard card) {
+            return detectKeyType(card) != CardType.UNKNOWN;
+        }
 
-    public SmartRiderTransitData(ClassicCard card) {
+        @Override
+        public TransitIdentity parseTransitIdentity(@NonNull ClassicCard card) {
+            return new TransitIdentity(detectKeyType(card).getFriendlyName(), getSerialData(card));
+        }
+
+
+        @Override
+        public TransitData parseTransitData(@NonNull ClassicCard classicCard) {
+            return new SmartRiderTransitData(classicCard);
+        }
+    };
+
+    private SmartRiderTransitData(ClassicCard card) {
         mCardType = detectKeyType(card);
         mSerialNumber = getSerialData(card);
 
@@ -191,10 +207,6 @@ public class SmartRiderTransitData extends TransitData {
             serial = serial.substring(1);
         }
         return serial;
-    }
-
-    public static TransitIdentity parseTransitIdentity(ClassicCard card) {
-        return new TransitIdentity(detectKeyType(card).getFriendlyName(), getSerialData(card));
     }
 
     @Nullable
