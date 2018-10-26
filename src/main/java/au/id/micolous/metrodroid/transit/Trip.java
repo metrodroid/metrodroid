@@ -371,6 +371,18 @@ public abstract class Trip implements Parcelable {
         return false;
     }
 
+    /**
+     * If the tap-on event was rejected for the trip, return true.
+     *
+     * This should be used for where a record is added to the card in the case of insufficient
+     * funds to pay for the journey.
+     *
+     * Otherwise, return false.  The default is to return false.
+     */
+    public boolean isRejected() {
+        return false;
+    }
+
     public enum Mode {
         BUS(0, R.string.mode_bus),
         /** Used for non-metro (rapid transit) trains */

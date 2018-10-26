@@ -18,6 +18,7 @@ task colouriseIcons(type: Copy) {
             'save',
             'delete',
             'transfer_within_a_station',
+            'error',
     ].collect { r ->
         '**/drawable-anydpi-v21/ic_' + r + '_black_24dp.xml'
     })

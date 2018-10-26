@@ -53,7 +53,7 @@ class IntercodeTransaction extends En1545Transaction {
                     new En1545FixedInteger("EventDisplayData", 8),
                     new En1545FixedInteger(EVENT_NETWORK_ID, 24),
                     new En1545FixedInteger(EVENT_CODE, 8),
-                    new En1545FixedInteger("EventResult", 8),
+                    new En1545FixedInteger(EVENT_RESULT, 8),
                     new En1545FixedInteger(EVENT_SERVICE_PROVIDER, 8),
                     new En1545FixedInteger("EventNotOkCounter", 8),
                     new En1545FixedInteger("EventSerialNumber", 24),

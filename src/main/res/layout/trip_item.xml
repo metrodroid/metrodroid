@@ -97,6 +97,18 @@
                 android:layout_height="match_parent"
                 android:layout_gravity="end|center_vertical">
                 <android.support.v7.widget.AppCompatImageView
+                    android:id="@+id/rejected_icon"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:layout_gravity="center"
+                    android:paddingStart="0dp"
+                    android:paddingEnd="5dip"
+                    app:srcCompat="@drawable/material_ic_error_24dp"
+                    android:contentDescription="@string/rejected"
+                    android:paddingLeft="0dp"
+                    android:paddingRight="5dip" />
+
+                <android.support.v7.widget.AppCompatImageView
                     android:id="@+id/xfer_icon"
                     android:layout_width="24dp"
                     android:layout_height="24dp"

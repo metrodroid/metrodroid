@@ -189,6 +189,7 @@ public class CardTripsFragment extends ListFragment {
             TextView timeTextView = convertView.findViewById(R.id.time_text_view);
             TextView routeTextView = convertView.findViewById(R.id.route_text_view);
             ImageView xferIcon = convertView.findViewById(R.id.xfer_icon);
+            ImageView rejectedIcon = convertView.findViewById(R.id.rejected_icon);
             TextView fareTextView = convertView.findViewById(R.id.fare_text_view);
             TextView stationTextView = convertView.findViewById(R.id.station_text_view);
             LinearLayout paxLayout = convertView.findViewById(R.id.pax_layout);
@@ -297,11 +298,15 @@ public class CardTripsFragment extends ListFragment {
             }
 
             xferIcon.setVisibility(trip.isTransfer() ? View.VISIBLE : View.GONE);
+            rejectedIcon.setVisibility(trip.isRejected() ? View.VISIBLE : View.GONE);
 
             fareTextView.setVisibility(View.VISIBLE);
             TransitCurrency fare = trip.getFare();
             if (fare != null) {
                 fareTextView.setText(fare.formatCurrencyString(false));
+            } else if (trip.isRejected()) {
+                // If no other fare has been displayed, then display the "rejected" text.
+                fareTextView.setText(R.string.rejected);
             } else {
                 // Hide the text "Fare" for getFare == null
                 fareTextView.setVisibility(View.GONE);

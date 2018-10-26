@@ -22,6 +22,7 @@ package au.id.micolous.metrodroid.transit.adelaide;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import au.id.micolous.metrodroid.transit.Trip;
 import au.id.micolous.metrodroid.transit.en1545.En1545Bitmap;
 import au.id.micolous.metrodroid.transit.en1545.En1545Container;
 import au.id.micolous.metrodroid.transit.en1545.En1545Field;
@@ -39,7 +40,7 @@ public class AdelaideTransaction extends En1545Transaction implements Parcelable
                     new En1545FixedInteger("EventDisplayData", 8),
                     new En1545FixedInteger(EVENT_NETWORK_ID, 24),
                     new En1545FixedInteger(EVENT_CODE, 8),
-                    new En1545FixedInteger("EventResult", 8),
+                    new En1545FixedInteger(EVENT_RESULT, 8),
                     new En1545FixedInteger(EVENT_SERVICE_PROVIDER, 8),
                     new En1545FixedInteger("EventNotOkCounter", 8),
                     new En1545FixedInteger("EventSerialNumber", 24),
@@ -96,5 +97,11 @@ public class AdelaideTransaction extends En1545Transaction implements Parcelable
     @Override
     protected En1545Lookup getLookup() {
         return AdelaideLookup.getInstance();
+    }
+
+    protected boolean isRejected() {
+        // The tap-on was rejected (insufficient funds).
+        // Successful events don't set EVENT_RESULT.
+        return mParsed.getIntOrZero(EVENT_RESULT) == 2;
     }
 }

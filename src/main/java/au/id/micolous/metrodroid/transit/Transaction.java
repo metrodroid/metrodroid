@@ -61,4 +61,8 @@ public abstract class Transaction implements Parcelable {
     protected boolean isTransfer() {
         return false;
     }
+
+    protected boolean isRejected() {
+        return false;
+    }
 }
