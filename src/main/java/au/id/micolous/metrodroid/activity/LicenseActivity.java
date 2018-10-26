@@ -59,6 +59,7 @@ public class LicenseActivity extends MetrodroidActivity {
         lblLicenseText = findViewById(R.id.lblLicenseText);
         lblLicenseText.beginBatchEdit();
         readLicenseTextFromAsset("Metrodroid-NOTICE.txt");
+        readLicenseTextFromAsset("third_party/leaflet/LICENSE-prefix");
         readLicenseTextFromAsset("third_party/leaflet/LICENSE");
         readLicenseTextFromAsset("third_party/nfc-felica-lib/NOTICE");
         readLicenseTextFromAsset("third_party/NOTICE.AOSP.txt");

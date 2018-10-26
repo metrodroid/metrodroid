@@ -7,6 +7,7 @@ task copyLeaflet(type: Copy) {
     from './'
     into 'build/assets/third_party/leaflet'
     include ([
+            'LICENSE-prefix',
             'LICENSE',
             'leaflet.css',
             'leaflet.js',
