@@ -27,6 +27,7 @@ import org.apache.commons.lang3.ArrayUtils;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
+import java.util.Locale;
 
 import au.id.micolous.farebot.R;
 import au.id.micolous.metrodroid.card.CardType;
@@ -148,7 +149,11 @@ public class AdelaideMetrocardTransitData extends En1545TransitData {
     }
 
     private static String formatSerial(long serial) {
-        return "01-" + Long.toString(serial);
+        return String.format(Locale.ENGLISH, "01-%03d %04d %04d %04d",
+                (serial / 1000000000000L) % 1000L,
+                (serial / 100000000L) % 10000L,
+                (serial / 10000L) % 10000L,
+                serial % 10000L);
     }
 
     private static long getSerial(byte[] tagId) {
