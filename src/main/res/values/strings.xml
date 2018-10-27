@@ -668,6 +668,7 @@
     <string name="location_singapore">Singapore</string>
     <string name="location_sophia_antipolis">Sophia Antipolis, France</string>
     <string name="location_sydney_australia">Sydney, Australia</string>
+    <string name="location_tartu">Tartu, Estonia</string>
     <string name="location_the_netherlands">The Netherlands</string>
     <string name="location_tokyo">Tokyo, Japan</string>
     <string name="location_toulouse">Toulouse, France</string>
@@ -1413,6 +1414,7 @@
     <string name="serial_only_card_description_not_stored">This card contains no data other than its serial number. Its balance and history are only stored in a central database.</string>
     <string name="serial_only_card_description_locked">This card is locked, and only serial number can be read. Its balance and history might be stored on it, but are not accessible.</string>
     <string name="serial_only_card_description_more_research">Support for this card is in development, and currently only serial number can be read.</string>
-    <string name="location_tartu">Tartu, Estonia</string>
-    <string name="long_number">Long number</string>
+    <!-- Translators: some card serial numbers are very long, this is shown as a list item for
+    the full version of the card's serial number -->
+    <string name="full_serial_number">Full serial number</string>
 </resources>

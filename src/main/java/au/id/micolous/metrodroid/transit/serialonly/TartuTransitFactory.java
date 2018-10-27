@@ -134,7 +134,7 @@ public class TartuTransitFactory extends ClassicCardTransitFactory {
 
         @Override
         protected List<ListItem> getExtraInfo() {
-            return Collections.singletonList(new ListItem(R.string.long_number, mSerial));
+            return Collections.singletonList(new ListItem(R.string.full_serial_number, mSerial));
         }
 
         @Override
