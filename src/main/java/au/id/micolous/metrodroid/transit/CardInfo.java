@@ -36,6 +36,7 @@ import java.util.List;
 import java.util.Locale;
 
 import au.id.micolous.metrodroid.card.CardType;
+import au.id.micolous.metrodroid.card.calypso.CalypsoApplication;
 import au.id.micolous.metrodroid.card.classic.ClassicCard;
 import au.id.micolous.metrodroid.transit.adelaide.AdelaideMetrocardTransitData;
 import au.id.micolous.metrodroid.transit.bilhete_unico.BilheteUnicoSPTransitData;
@@ -90,7 +91,6 @@ public class CardInfo {
             ClipperTransitData.CARD_INFO,
             CompassUltralightTransitData.CARD_INFO,
             EdyTransitData.CARD_INFO,
-            IntercodeTransitData.ENVIBUS_CARD_INFO,
             EZLinkTransitData.EZ_LINK_CARD_INFO,
             TrimetHopTransitData.CARD_INFO, // Hop
             HSLTransitData.CARD_INFO,
@@ -98,25 +98,16 @@ public class CardInfo {
             SuicaTransitData.ICOCA_CARD_INFO,
             KMTTransitData.CARD_INFO,
             LeapTransitData.CARD_INFO,
-            LisboaVivaTransitData.CARD_INFO,
             AdelaideMetrocardTransitData.CARD_INFO,  // Metrocard
-            MobibTransitData.CARD_INFO,
             MykiTransitData.CARD_INFO,
-            IntercodeTransitData.NAVIGO_CARD_INFO,
             EZLinkTransitData.NETS_FLASHPAY_CARD_INFO,
             OctopusTransitData.CARD_INFO,
             OpalTransitData.CARD_INFO,
-            OpusTransitData.CARD_INFO,
             OrcaTransitData.CARD_INFO,
-            IntercodeTransitData.OURA_CARD_INFO,
-            IntercodeTransitData.TISSEO_CARD_INFO, // Pastel
             SuicaTransitData.PASMO_CARD_INFO,
-            RavKavTransitData.CARD_INFO,
             NewShenzhenTransitData.CARD_INFO, // Shenzhen Tong
             SuicaTransitData.SUICA_CARD_INFO,
-            IntercodeTransitData.TAM_MONTPELLIER_CARD_INFO,
             TMoneyTransitData.CARD_INFO, // T-Money
-            IntercodeTransitData.TRANSGIRONDE_CARD_INFO, // TransGironde
             VentraUltralightTransitData.CARD_INFO
     };
 
@@ -124,6 +115,11 @@ public class CardInfo {
         List<CardInfo> ret = new ArrayList<>();
         ret.addAll(Arrays.asList(LEGACY_LIST));
         for (CardTransitFactory factory : ClassicCard.getAllFactories()) {
+            List<CardInfo> ac = factory.getAllCards();
+            if (ac != null)
+                ret.addAll(ac);
+        }
+        for (CardTransitFactory factory : CalypsoApplication.getAllFactories()) {
             List<CardInfo> ac = factory.getAllCards();
             if (ac != null)
                 ret.addAll(ac);

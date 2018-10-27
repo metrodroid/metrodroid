@@ -23,12 +23,15 @@ import android.os.Parcel;
 import android.os.Parcelable;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import au.id.micolous.farebot.R;
 import au.id.micolous.metrodroid.card.CardType;
 import au.id.micolous.metrodroid.card.calypso.CalypsoApplication;
+import au.id.micolous.metrodroid.card.calypso.CalypsoCardTransitFactory;
 import au.id.micolous.metrodroid.transit.CardInfo;
+import au.id.micolous.metrodroid.transit.TransitData;
 import au.id.micolous.metrodroid.transit.TransitIdentity;
 import au.id.micolous.metrodroid.transit.en1545.Calypso1545TransitData;
 import au.id.micolous.metrodroid.transit.en1545.En1545Container;
@@ -86,22 +89,37 @@ public class RavKavTransitData extends Calypso1545TransitData {
         return Long.toString(Utils.byteArrayToLong(card.getTagId()));
     }
 
-    public static TransitIdentity parseTransitIdentity(CalypsoApplication card) {
-        return new TransitIdentity(Utils.localizeString(R.string.card_name_ravkav), getSerial(card));
-    }
-
-    public static boolean check(byte[] ticketEnv) {
-        try {
-            int networkID = Utils.getBitsFromBuffer(ticketEnv, 3, 20);
-            return RAVKAV_NETWORK_ID_A == networkID || RAVKAV_NETWORK_ID_B == networkID;
-        } catch (Exception e) {
-            return false;
+    public final static CalypsoCardTransitFactory FACTORY = new CalypsoCardTransitFactory() {
+        @Override
+        public List<CardInfo> getAllCards() {
+            return Collections.singletonList(CARD_INFO);
         }
-    }
 
-    public static RavKavTransitData parseTransitData(CalypsoApplication card) {
-        return new RavKavTransitData(card);
-    }
+        @Override
+        public TransitIdentity parseTransitIdentity(CalypsoApplication card) {
+            return new TransitIdentity(Utils.localizeString(R.string.card_name_ravkav), getSerial(card));
+        }
+
+        @Override
+        public boolean check(byte[] ticketEnv) {
+            try {
+                int networkID = Utils.getBitsFromBuffer(ticketEnv, 3, 20);
+                return RAVKAV_NETWORK_ID_A == networkID || RAVKAV_NETWORK_ID_B == networkID;
+            } catch (Exception e) {
+                return false;
+            }
+        }
+
+        @Override
+        public CardInfo getCardInfo(byte[] tenv) {
+            return CARD_INFO;
+        }
+
+        @Override
+        public RavKavTransitData parseTransitData(CalypsoApplication card) {
+            return new RavKavTransitData(card);
+        }
+    };
 
     @Override
     protected En1545Subscription createSubscription(byte[] data, En1545Parsed contractList,
