@@ -22,14 +22,18 @@ import android.os.Parcel;
 import android.os.Parcelable;
 import android.util.SparseArray;
 
+import java.util.Collections;
+import java.util.List;
 import java.util.TimeZone;
 
 import au.id.micolous.farebot.R;
 import au.id.micolous.metrodroid.card.CardType;
 import au.id.micolous.metrodroid.card.UnauthorizedException;
 import au.id.micolous.metrodroid.card.ultralight.UltralightCard;
+import au.id.micolous.metrodroid.card.ultralight.UltralightCardTransitFactory;
 import au.id.micolous.metrodroid.transit.CardInfo;
 import au.id.micolous.metrodroid.transit.TransitCurrency;
+import au.id.micolous.metrodroid.transit.TransitData;
 import au.id.micolous.metrodroid.transit.TransitIdentity;
 import au.id.micolous.metrodroid.transit.nextfare.ultralight.NextfareUltralightTransaction;
 import au.id.micolous.metrodroid.transit.nextfare.ultralight.NextfareUltralightTransitData;
@@ -60,21 +64,39 @@ public class CompassUltralightTransitData extends NextfareUltralightTransitData 
 
     static final TimeZone TZ = TimeZone.getTimeZone("America/Vancouver");
 
-    public static boolean check(UltralightCard card) {
-        try {
-            int head = Utils.byteArrayToInt(card.getPage(4).getData(), 0, 3);
-            if (head != 0x0a0400 && head != 0x0a0800)
-                return false;
-            byte []page1 = card.getPage(5).getData();
-            if (page1[1] != 1 || ((page1[2] & 0x80) != 0x80) || page1[3] != 0)
-                return false;
-            byte []page2 = card.getPage(6).getData();
-            return Utils.byteArrayToInt(page2, 0, 3) == 0;
-        } catch (IndexOutOfBoundsException | UnauthorizedException ignored) {
-            // If that sector number is too high, then it's not for us.
-            return false;
+    public final static UltralightCardTransitFactory FACTORY = new UltralightCardTransitFactory() {
+        @Override
+        public List<CardInfo> getAllCards() {
+            return Collections.singletonList(CARD_INFO);
         }
-    }
+
+        @Override
+        public boolean check(UltralightCard card) {
+            try {
+                int head = Utils.byteArrayToInt(card.getPage(4).getData(), 0, 3);
+                if (head != 0x0a0400 && head != 0x0a0800)
+                    return false;
+                byte[] page1 = card.getPage(5).getData();
+                if (page1[1] != 1 || ((page1[2] & 0x80) != 0x80) || page1[3] != 0)
+                    return false;
+                byte[] page2 = card.getPage(6).getData();
+                return Utils.byteArrayToInt(page2, 0, 3) == 0;
+            } catch (IndexOutOfBoundsException | UnauthorizedException ignored) {
+                // If that sector number is too high, then it's not for us.
+                return false;
+            }
+        }
+
+        @Override
+        public TransitData parseTransitData(UltralightCard ultralightCard) {
+            return new CompassUltralightTransitData(ultralightCard);
+        }
+
+        @Override
+        public TransitIdentity parseTransitIdentity(UltralightCard card) {
+            return new TransitIdentity(NAME, formatSerial(getSerial(card)));
+        }
+    };
 
     @Override
     protected TransitCurrency makeCurrency(int val) {
@@ -102,10 +124,6 @@ public class CompassUltralightTransitData extends NextfareUltralightTransitData 
     @Override
     protected NextfareUltralightTransaction makeTransaction(UltralightCard card, int startPage, int baseDate) {
         return new CompassUltralightTransaction(card, startPage, baseDate);
-    }
-
-    public static TransitIdentity parseTransitIdentity(UltralightCard card) {
-        return new TransitIdentity(NAME, formatSerial(getSerial(card)));
     }
 
     private static final SparseArray<String> productCodes = new SparseArray<>();

@@ -22,11 +22,14 @@ import android.os.Parcel;
 import android.os.Parcelable;
 
 import java.util.Arrays;
+import java.util.List;
 
 import au.id.micolous.farebot.R;
 import au.id.micolous.metrodroid.card.ultralight.UltralightCard;
+import au.id.micolous.metrodroid.card.ultralight.UltralightCardTransitFactory;
 import au.id.micolous.metrodroid.card.ultralight.UltralightPage;
 import au.id.micolous.metrodroid.card.ultralight.UnauthorizedUltralightPage;
+import au.id.micolous.metrodroid.transit.CardInfo;
 import au.id.micolous.metrodroid.transit.TransitData;
 import au.id.micolous.metrodroid.transit.TransitIdentity;
 import au.id.micolous.metrodroid.util.Utils;
@@ -49,108 +52,121 @@ public class BlankUltralightTransitData extends TransitData {
 
     }
 
-    /**
-     *
-     * @param card Card to read.
-     * @return true if all sectors on the card are blank.
-     */
-    public static boolean check(UltralightCard card) {
-        UltralightPage[] pages = card.getPages();
-        // check to see if all sectors are blocked
-        for (UltralightPage p : pages) {
-            // Page 2 is serial, internal and lock bytes
-            // Page 3 is OTP counters
-            // User memory is page 4 and above
-            if (p.getIndex() <= 2) {
-                continue;
-            }
-            if (p instanceof UnauthorizedUltralightPage) {
-                // At least one page is "closed", this is not for us
-                return false;
-            }
-            byte [] data = p.getData();
-            int idx = p.getIndex();
-            if (idx == 0x2) {
-                if (data[2] != 0 || data[3] != 0)
-                    return false;
-                continue;
-            }
+    public final static UltralightCardTransitFactory FACTORY = new UltralightCardTransitFactory() {
+        @Override
+        public List<CardInfo> getAllCards() {
+            return null;
+        }
 
-            if (card.getCardModel().startsWith("NTAG21")) {
-                // Factory-set data on NTAG
-                if (card.getCardModel().equals("NTAG213")) {
-                    if (idx == 0x03 && Arrays.equals(data, new byte[] {(byte)0xE1, 0x10, 0x12, 0}))
-                        continue;
-                    if (idx == 0x04 && Arrays.equals(data, new byte[] {0x01, 0x03, (byte)0xA0, 0x0C}))
-                        continue;
-                    if (idx == 0x05 && Arrays.equals(data, new byte[] {0x34, 0x03, 0, (byte)0xFE}))
-                        continue;
-                }
-
-                if (card.getCardModel().equals("NTAG215")) {
-                    if (idx == 0x03 && Arrays.equals(data, new byte[] {(byte)0xE1, 0x10, 0x3E, 0}))
-                        continue;
-                    if (idx == 0x04 && Arrays.equals(data, new byte[] {0x03, 0, (byte)0xFE, 0}))
-                        continue;
-                    // Page 5 is all null
-                }
-
-                if (card.getCardModel().equals("NTAG215")) {
-                    if (idx == 0x03 && Arrays.equals(data, new byte[] {(byte)0xE1, 0x10, 0x6D, 0}))
-                        continue;
-                    if (idx == 0x04 && Arrays.equals(data, new byte[] {0x03, 0, (byte)0xFE, 0}))
-                        continue;
-                    // Page 5 is all null
-                }
-
-                // Ignore configuration pages
-                if (idx == pages.length - 5) {
-                    // LOCK BYTE / RFUI
-                    // Only care about first three bytes
-                    if (Arrays.equals(Utils.byteArraySlice(data, 0, 3), new byte[] {0, 0, 0}))
-                        continue;
-                }
-
-                if (idx == pages.length - 4) {
-                    // MIRROR / RFUI / MIRROR_PAGE / AUTH0
-                    // STRG_MOD_EN = 1
-                    // AUTHO = 0xff
-                    if (Arrays.equals(data, new byte[] {4, 0, 0, (byte)0xFF}))
-                        continue;
-                }
-
-                if (idx == pages.length - 3) {
-                    // ACCESS / RFUI
-                    // Only care about first byte
-                    if (data[0] == 0)
-                        continue;
-                }
-
-                if (idx <= pages.length - 2) {
-                    // PWD (always masked)
-                    // PACK / RFUI
+        /**
+         * @param card Card to read.
+         * @return true if all sectors on the card are blank.
+         */
+        @Override
+        public boolean check(UltralightCard card) {
+            UltralightPage[] pages = card.getPages();
+            // check to see if all sectors are blocked
+            for (UltralightPage p : pages) {
+                // Page 2 is serial, internal and lock bytes
+                // Page 3 is OTP counters
+                // User memory is page 4 and above
+                if (p.getIndex() <= 2) {
                     continue;
                 }
-            } else {
-                // page 0x10 and 0x11 on 384-bit card are config
-                if (pages.length == 0x14) {
-                    if (idx == 0x10 && Arrays.equals(data, new byte[]{0, 0, 0, -1}))
+                if (p instanceof UnauthorizedUltralightPage) {
+                    // At least one page is "closed", this is not for us
+                    return false;
+                }
+                byte[] data = p.getData();
+                int idx = p.getIndex();
+                if (idx == 0x2) {
+                    if (data[2] != 0 || data[3] != 0)
+                        return false;
+                    continue;
+                }
+
+                if (card.getCardModel().startsWith("NTAG21")) {
+                    // Factory-set data on NTAG
+                    if (card.getCardModel().equals("NTAG213")) {
+                        if (idx == 0x03 && Arrays.equals(data, new byte[]{(byte) 0xE1, 0x10, 0x12, 0}))
+                            continue;
+                        if (idx == 0x04 && Arrays.equals(data, new byte[]{0x01, 0x03, (byte) 0xA0, 0x0C}))
+                            continue;
+                        if (idx == 0x05 && Arrays.equals(data, new byte[]{0x34, 0x03, 0, (byte) 0xFE}))
+                            continue;
+                    }
+
+                    if (card.getCardModel().equals("NTAG215")) {
+                        if (idx == 0x03 && Arrays.equals(data, new byte[]{(byte) 0xE1, 0x10, 0x3E, 0}))
+                            continue;
+                        if (idx == 0x04 && Arrays.equals(data, new byte[]{0x03, 0, (byte) 0xFE, 0}))
+                            continue;
+                        // Page 5 is all null
+                    }
+
+                    if (card.getCardModel().equals("NTAG215")) {
+                        if (idx == 0x03 && Arrays.equals(data, new byte[]{(byte) 0xE1, 0x10, 0x6D, 0}))
+                            continue;
+                        if (idx == 0x04 && Arrays.equals(data, new byte[]{0x03, 0, (byte) 0xFE, 0}))
+                            continue;
+                        // Page 5 is all null
+                    }
+
+                    // Ignore configuration pages
+                    if (idx == pages.length - 5) {
+                        // LOCK BYTE / RFUI
+                        // Only care about first three bytes
+                        if (Arrays.equals(Utils.byteArraySlice(data, 0, 3), new byte[]{0, 0, 0}))
+                            continue;
+                    }
+
+                    if (idx == pages.length - 4) {
+                        // MIRROR / RFUI / MIRROR_PAGE / AUTH0
+                        // STRG_MOD_EN = 1
+                        // AUTHO = 0xff
+                        if (Arrays.equals(data, new byte[]{4, 0, 0, (byte) 0xFF}))
+                            continue;
+                    }
+
+                    if (idx == pages.length - 3) {
+                        // ACCESS / RFUI
+                        // Only care about first byte
+                        if (data[0] == 0)
+                            continue;
+                    }
+
+                    if (idx <= pages.length - 2) {
+                        // PWD (always masked)
+                        // PACK / RFUI
                         continue;
-                    if (idx == 0x11 && Arrays.equals(data, new byte[]{0, 5, 0, 0}))
-                        continue;
+                    }
+                } else {
+                    // page 0x10 and 0x11 on 384-bit card are config
+                    if (pages.length == 0x14) {
+                        if (idx == 0x10 && Arrays.equals(data, new byte[]{0, 0, 0, -1}))
+                            continue;
+                        if (idx == 0x11 && Arrays.equals(data, new byte[]{0, 5, 0, 0}))
+                            continue;
+                    }
+                }
+
+                if (!Arrays.equals(data, new byte[]{0, 0, 0, 0})) {
+                    return false;
                 }
             }
-
-            if (!Arrays.equals(data, new byte[]{0,0,0,0})){
-                return false;
-            }
+            return true;
         }
-        return true;
-    }
 
-    public static TransitIdentity parseTransitIdentity(UltralightCard card) {
-        return new TransitIdentity(Utils.localizeString(R.string.blank_mfu_card), null);
-    }
+        @Override
+        public TransitData parseTransitData(UltralightCard ultralightCard) {
+            return new BlankUltralightTransitData();
+        }
+
+        @Override
+        public TransitIdentity parseTransitIdentity(UltralightCard card) {
+            return new TransitIdentity(Utils.localizeString(R.string.blank_mfu_card), null);
+        }
+    };
 
     @Override
     public String getSerialNumber() {

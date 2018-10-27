@@ -27,6 +27,8 @@ import java.util.List;
 
 import au.id.micolous.metrodroid.card.UnauthorizedException;
 import au.id.micolous.metrodroid.card.ultralight.UltralightCard;
+import au.id.micolous.metrodroid.card.ultralight.UltralightCardTransitFactory;
+import au.id.micolous.metrodroid.transit.CardInfo;
 import au.id.micolous.metrodroid.transit.Subscription;
 import au.id.micolous.metrodroid.transit.TransitBalance;
 import au.id.micolous.metrodroid.transit.TransitData;
@@ -49,14 +51,34 @@ public class TroikaUltralightTransitData extends TransitData {
         }
     };
 
-    public static boolean check(UltralightCard card) {
-        try {
-            return TroikaBlock.check(card.getPage(4).getData());
-        } catch (IndexOutOfBoundsException | UnauthorizedException ignored) {
-            // If that sector number is too high, then it's not for us.
-            return false;
+    public final static UltralightCardTransitFactory FACTORY = new UltralightCardTransitFactory() {
+        @Override
+        public List<CardInfo> getAllCards() {
+            // Already added by Classic variant
+            return null;
         }
-    }
+
+        @Override
+        public boolean check(UltralightCard card) {
+            try {
+                return TroikaBlock.check(card.getPage(4).getData());
+            } catch (IndexOutOfBoundsException | UnauthorizedException ignored) {
+                // If that sector number is too high, then it's not for us.
+                return false;
+            }
+        }
+
+        @Override
+        public TransitIdentity parseTransitIdentity(UltralightCard card) {
+            return TroikaBlock.parseTransitIdentity(Utils.concatByteArrays(card.getPage(4).getData(),
+                    card.getPage(5).getData()));
+        }
+
+        @Override
+        public TransitData parseTransitData(UltralightCard ultralightCard) {
+            return new TroikaUltralightTransitData(ultralightCard);
+        }
+    };
 
     @Nullable
     @Override
@@ -112,10 +134,5 @@ public class TroikaUltralightTransitData extends TransitData {
             rawData = Utils.concatByteArrays(rawData, card.getPage(i + 4).getData());
         }
         mBlock = TroikaBlock.parseBlock(rawData);
-    }
-
-    public static TransitIdentity parseTransitIdentity(UltralightCard card) {
-        return TroikaBlock.parseTransitIdentity(Utils.concatByteArrays(card.getPage(4).getData(),
-                card.getPage(5).getData()));
     }
 }
