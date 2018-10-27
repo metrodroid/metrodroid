@@ -35,6 +35,7 @@ import au.id.micolous.metrodroid.card.classic.ClassicBlock;
 import au.id.micolous.metrodroid.card.classic.ClassicCard;
 import au.id.micolous.metrodroid.card.classic.ClassicCardTransitFactory;
 import au.id.micolous.metrodroid.card.classic.ClassicSector;
+import au.id.micolous.metrodroid.transit.CardInfo;
 import au.id.micolous.metrodroid.transit.TransitBalance;
 import au.id.micolous.metrodroid.transit.TransitBalanceStored;
 import au.id.micolous.metrodroid.transit.Subscription;
@@ -292,6 +293,11 @@ public class NextfareTransitData extends TransitData {
         @Override
         public TransitData parseTransitData(@NonNull ClassicCard classicCard) {
             return new NextfareTransitData(classicCard);
+        }
+
+        @Override
+        public List<CardInfo> getAllCards() {
+            return null;
         }
     }
 

@@ -27,6 +27,7 @@ import au.id.micolous.metrodroid.card.classic.ClassicBlock;
 import au.id.micolous.metrodroid.card.classic.ClassicCard;
 import au.id.micolous.metrodroid.card.classic.ClassicCardTransitFactory;
 import au.id.micolous.metrodroid.card.classic.ClassicSector;
+import au.id.micolous.metrodroid.transit.CardInfo;
 import au.id.micolous.metrodroid.transit.TransitCurrency;
 import au.id.micolous.metrodroid.transit.TransitData;
 import au.id.micolous.metrodroid.transit.TransitIdentity;
@@ -211,6 +212,12 @@ public class ErgTransitData extends TransitData {
         @Override
         public TransitData parseTransitData(@NonNull ClassicCard classicCard) {
             return new ErgTransitData(classicCard);
+        }
+
+        // Specific readers add their CardInfo
+        @Override
+        public List<CardInfo> getAllCards() {
+            return null;
         }
     }
 

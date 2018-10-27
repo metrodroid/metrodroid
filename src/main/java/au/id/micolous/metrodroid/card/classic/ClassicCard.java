@@ -33,6 +33,9 @@ import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.util.Log;
 
+import au.id.micolous.metrodroid.transit.CardInfo;
+import au.id.micolous.metrodroid.transit.CardTransitFactory;
+
 import org.simpleframework.xml.ElementList;
 import org.simpleframework.xml.Root;
 
@@ -458,6 +461,10 @@ public class ClassicCard extends Card {
         return false;
     }
 
+    public static CardTransitFactory[] getAllFactories() {
+        return FACTORIES;
+    }
+
     @Override
     public TransitIdentity parseTransitIdentity() {
         for (ClassicCardTransitFactory factory : FACTORIES) {
@@ -570,6 +577,11 @@ public class ClassicCard extends Card {
                 // not record the key inside the ClassicCard XML structure.
                 return SmartRiderTransitData.FACTORY.parseTransitData(classicCard);
             }
+            return null;
+        }
+
+        @Override
+        public List<CardInfo> getAllCards() {
             return null;
         }
     }

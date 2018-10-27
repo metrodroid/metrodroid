@@ -249,6 +249,11 @@ public class OVChipTransitData extends TransitData {
         }
 
         @Override
+        public List<CardInfo> getAllCards() {
+            return Collections.singletonList(CARD_INFO);
+        }
+
+        @Override
         public CardInfo earlyCardInfo(List<ClassicSector> sectors) {
             ClassicSector sector = sectors.get(0);
 

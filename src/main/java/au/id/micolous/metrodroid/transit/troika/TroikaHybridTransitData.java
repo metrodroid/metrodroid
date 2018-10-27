@@ -42,6 +42,7 @@ import au.id.micolous.metrodroid.util.Utils;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -191,6 +192,11 @@ public class TroikaHybridTransitData extends TransitData {
                     "0045ccfe4749673d77273162e8d53015") >= 0)
                 return TroikaTransitData.CARD_INFO;
             return null;
+        }
+
+        @Override
+        public List<CardInfo> getAllCards() {
+            return Collections.singletonList(TroikaTransitData.CARD_INFO);
         }
     };
 

@@ -29,9 +29,14 @@ import android.support.annotation.StringRes;
 import android.support.v7.content.res.AppCompatResources;
 import android.util.Log;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
 import java.util.Locale;
 
 import au.id.micolous.metrodroid.card.CardType;
+import au.id.micolous.metrodroid.card.classic.ClassicCard;
 import au.id.micolous.metrodroid.transit.adelaide.AdelaideMetrocardTransitData;
 import au.id.micolous.metrodroid.transit.bilhete_unico.BilheteUnicoSPTransitData;
 import au.id.micolous.metrodroid.transit.charlie.CharlieCardTransitData;
@@ -81,31 +86,22 @@ public class CardInfo {
     /**
      * A list of all cards in alphabetical order of their name.
      */
-    public static final CardInfo[] ALL_CARDS_ALPHABETICAL = {
-            BilheteUnicoSPTransitData.CARD_INFO,
-            CharlieCardTransitData.CARD_INFO,
+    private static final CardInfo[] LEGACY_LIST = {
             ClipperTransitData.CARD_INFO,
             CompassUltralightTransitData.CARD_INFO,
             EdyTransitData.CARD_INFO,
             IntercodeTransitData.ENVIBUS_CARD_INFO,
             EZLinkTransitData.EZ_LINK_CARD_INFO,
-            SeqGoTransitData.CARD_INFO, // Go card
-            MspGotoTransitData.CARD_INFO, // Go-to card
             TrimetHopTransitData.CARD_INFO, // Hop
             HSLTransitData.CARD_INFO,
             IstanbulKartTransitData.CARD_INFO,
             SuicaTransitData.ICOCA_CARD_INFO,
-            KievTransitData.CARD_INFO,
             KMTTransitData.CARD_INFO,
             LeapTransitData.CARD_INFO,
             LisboaVivaTransitData.CARD_INFO,
-            ManlyFastFerryTransitData.CARD_INFO,
             AdelaideMetrocardTransitData.CARD_INFO,  // Metrocard
-            ChcMetrocardTransitData.CARD_INFO, // Metrocard
-            MetroQTransitData.CARD_INFO,
             MobibTransitData.CARD_INFO,
             MykiTransitData.CARD_INFO,
-            SmartRiderTransitData.MYWAY_CARD_INFO,
             IntercodeTransitData.NAVIGO_CARD_INFO,
             EZLinkTransitData.NETS_FLASHPAY_CARD_INFO,
             OctopusTransitData.CARD_INFO,
@@ -113,23 +109,28 @@ public class CardInfo {
             OpusTransitData.CARD_INFO,
             OrcaTransitData.CARD_INFO,
             IntercodeTransitData.OURA_CARD_INFO,
-            OVChipTransitData.CARD_INFO,
             IntercodeTransitData.TISSEO_CARD_INFO, // Pastel
             SuicaTransitData.PASMO_CARD_INFO,
-            PodorozhnikTransitData.CARD_INFO,
             RavKavTransitData.CARD_INFO,
-            RicaricaMiTransitData.CARD_INFO,
             NewShenzhenTransitData.CARD_INFO, // Shenzhen Tong
-            SmartRiderTransitData.SMARTRIDER_CARD_INFO,
-            StrelkaTransitData.CARD_INFO,
             SuicaTransitData.SUICA_CARD_INFO,
             IntercodeTransitData.TAM_MONTPELLIER_CARD_INFO,
             TMoneyTransitData.CARD_INFO, // T-Money
             IntercodeTransitData.TRANSGIRONDE_CARD_INFO, // TransGironde
-            LaxTapTransitData.CARD_INFO, // Transit Access Pass
-            TroikaTransitData.CARD_INFO,
             VentraUltralightTransitData.CARD_INFO
     };
+
+    public static List<CardInfo> getAllCardsAlphabetical() {
+        List<CardInfo> ret = new ArrayList<>();
+        ret.addAll(Arrays.asList(LEGACY_LIST));
+        for (CardTransitFactory factory : ClassicCard.getAllFactories()) {
+            List<CardInfo> ac = factory.getAllCards();
+            if (ac != null)
+                ret.addAll(ac);
+        }
+        Collections.sort(ret, (a, b) -> a.getName().compareToIgnoreCase(b.getName()));
+        return ret;
+    }
 
     @DrawableRes
     private final int mImageId;

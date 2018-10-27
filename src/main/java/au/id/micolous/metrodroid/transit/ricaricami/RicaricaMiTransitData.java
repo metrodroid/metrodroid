@@ -23,6 +23,7 @@ import android.os.Parcel;
 import android.support.annotation.NonNull;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import au.id.micolous.farebot.R;
@@ -242,6 +243,11 @@ public class RicaricaMiTransitData extends En1545TransitData {
             if (check(sectors.get(0)))
                 return CARD_INFO;
             return null;
+        }
+
+        @Override
+        public List<CardInfo> getAllCards() {
+            return Collections.singletonList(CARD_INFO);
         }
     };
 

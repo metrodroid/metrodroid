@@ -5,10 +5,11 @@ import android.support.annotation.NonNull;
 import java.util.List;
 
 import au.id.micolous.metrodroid.transit.CardInfo;
+import au.id.micolous.metrodroid.transit.CardTransitFactory;
 import au.id.micolous.metrodroid.transit.TransitData;
 import au.id.micolous.metrodroid.transit.TransitIdentity;
 
-public abstract class ClassicCardTransitFactory {
+public abstract class ClassicCardTransitFactory extends CardTransitFactory {
     public abstract boolean check(@NonNull ClassicCard classicCard);
 
     public abstract TransitIdentity parseTransitIdentity(@NonNull ClassicCard classicCard);

@@ -157,5 +157,10 @@ public class StrelkaTransitData extends SerialOnlyTransitData {
                 return CARD_INFO;
             return null;
         }
+
+        @Override
+        public List<CardInfo> getAllCards() {
+            return Collections.singletonList(CARD_INFO);
+        }
     };
 }

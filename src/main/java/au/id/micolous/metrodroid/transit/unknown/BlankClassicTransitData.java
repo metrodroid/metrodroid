@@ -21,6 +21,7 @@ package au.id.micolous.metrodroid.transit.unknown;
 import android.os.Parcel;
 import android.support.annotation.NonNull;
 
+import java.util.Collections;
 import java.util.List;
 
 import au.id.micolous.farebot.R;
@@ -30,6 +31,7 @@ import au.id.micolous.metrodroid.card.classic.ClassicCardTransitFactory;
 import au.id.micolous.metrodroid.card.classic.ClassicSector;
 import au.id.micolous.metrodroid.card.classic.InvalidClassicSector;
 import au.id.micolous.metrodroid.card.classic.UnauthorizedClassicSector;
+import au.id.micolous.metrodroid.transit.CardInfo;
 import au.id.micolous.metrodroid.transit.TransitData;
 import au.id.micolous.metrodroid.transit.TransitIdentity;
 import au.id.micolous.metrodroid.util.Utils;
@@ -53,6 +55,11 @@ public class BlankClassicTransitData extends TransitData {
     }
 
     public static final ClassicCardTransitFactory FACTORY = new ClassicCardTransitFactory() {
+        @Override
+        public List<CardInfo> getAllCards() {
+            return null;
+        }
+
         /**
          * @param card Card to read.
          * @return true if all sectors on the card are blank.
