@@ -35,6 +35,7 @@ import au.id.micolous.farebot.R;
 import au.id.micolous.metrodroid.card.CardType;
 import au.id.micolous.metrodroid.card.felica.FelicaBlock;
 import au.id.micolous.metrodroid.card.felica.FelicaCard;
+import au.id.micolous.metrodroid.card.felica.FelicaCardTransitFactory;
 import au.id.micolous.metrodroid.card.felica.FelicaService;
 import au.id.micolous.metrodroid.transit.CardInfo;
 import au.id.micolous.metrodroid.transit.TransitCurrency;
@@ -111,17 +112,27 @@ public class EdyTransitData extends TransitData {
         mTrips = trips.toArray(new EdyTrip[0]);
     }
 
-    public static boolean check(FelicaCard card) {
-        return (card.getSystem(SYSTEMCODE_EDY) != null);
-    }
+    public final static FelicaCardTransitFactory FACTORY = new FelicaCardTransitFactory() {
+        @Override
+        public boolean earlyCheck(int[] systemCodes) {
+            return ArrayUtils.contains(systemCodes, SYSTEMCODE_EDY);
+        }
 
-    public static boolean earlyCheck(int[] systemCodes) {
-        return ArrayUtils.contains(systemCodes, SYSTEMCODE_EDY);
-    }
+        @Override
+        protected CardInfo getCardInfo() {
+            return CARD_INFO;
+        }
 
-    public static TransitIdentity parseTransitIdentity(FelicaCard card) {
-        return new TransitIdentity("Edy", null);
-    }
+        @Override
+        public TransitData parseTransitData(FelicaCard felicaCard) {
+            return new EdyTransitData(felicaCard);
+        }
+
+        @Override
+        public TransitIdentity parseTransitIdentity(FelicaCard card) {
+            return new TransitIdentity("Edy", null);
+        }
+    };
 
     @Override
     @Nullable

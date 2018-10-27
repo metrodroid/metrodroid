@@ -90,15 +90,9 @@ public class CardInfo {
      */
     private static final CardInfo[] LEGACY_LIST = {
             CompassUltralightTransitData.CARD_INFO,
-            EdyTransitData.CARD_INFO,
             EZLinkTransitData.EZ_LINK_CARD_INFO,
-            SuicaTransitData.ICOCA_CARD_INFO,
-            KMTTransitData.CARD_INFO,
             EZLinkTransitData.NETS_FLASHPAY_CARD_INFO,
-            OctopusTransitData.CARD_INFO,
-            SuicaTransitData.PASMO_CARD_INFO,
             NewShenzhenTransitData.CARD_INFO, // Shenzhen Tong
-            SuicaTransitData.SUICA_CARD_INFO,
             TMoneyTransitData.CARD_INFO, // T-Money
             VentraUltralightTransitData.CARD_INFO
     };
