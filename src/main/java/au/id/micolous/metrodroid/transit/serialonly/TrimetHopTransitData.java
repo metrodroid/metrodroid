@@ -20,7 +20,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package au.id.micolous.metrodroid.transit.trimethop;
+package au.id.micolous.metrodroid.transit.serialonly;
 
 import android.os.Parcel;
 import android.support.annotation.NonNull;
@@ -53,7 +53,7 @@ import au.id.micolous.metrodroid.util.Utils;
  * <p>
  * Documentation of format: https://github.com/micolous/metrodroid/wiki/TrimetHopFastPass
  */
-public class TrimetHopTransitData extends TransitData {
+public class TrimetHopTransitData extends SerialOnlyTransitData {
     public static final String NAME = "Hop Fastpass";
     public static final int APP_ID = 0xe010f2;
 
@@ -82,10 +82,10 @@ public class TrimetHopTransitData extends TransitData {
 
     private TrimetHopTransitData(Parcel parcel) {
         mSerial = parcel.readInt();
+        mIssueDate = parcel.readInt();
     }
 
     public TrimetHopTransitData(DesfireCard card) {
-
         try {
             DesfireApplication app = card.getApplication(APP_ID);
 	        byte[] file1 = app.getFile(1).getData();
@@ -136,11 +136,11 @@ public class TrimetHopTransitData extends TransitData {
 
     public void writeToParcel(Parcel parcel, int flags) {
         parcel.writeInt(mSerial);
-	    parcel.writeInt(mIssueDate);
+        parcel.writeInt(mIssueDate);
     }
 
     @Override
-    public List<ListItem> getInfo() {
+    public List<ListItem> getExtraInfo() {
         return Collections.singletonList(new ListItem(R.string.issue_date,
                 Utils.dateTimeFormat(parseTime(mIssueDate))));
     }
@@ -150,5 +150,10 @@ public class TrimetHopTransitData extends TransitData {
         // Unix Time
         c.setTimeInMillis(date * 1000L);
         return c;
+    }
+
+    @Override
+    protected Reason getReason() {
+        return Reason.NOT_STORED;
     }
 }

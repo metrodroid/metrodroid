@@ -17,7 +17,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package au.id.micolous.metrodroid.transit.myki;
+package au.id.micolous.metrodroid.transit.serialonly;
 
 import android.net.Uri;
 import android.os.Parcel;
@@ -33,7 +33,6 @@ import au.id.micolous.metrodroid.transit.CardInfo;
 import au.id.micolous.metrodroid.card.desfire.DesfireApplication;
 import au.id.micolous.metrodroid.card.desfire.files.DesfireFile;
 import au.id.micolous.metrodroid.transit.TransitIdentity;
-import au.id.micolous.metrodroid.transit.stub.StubTransitData;
 import au.id.micolous.metrodroid.util.Utils;
 
 import java.util.Arrays;
@@ -47,7 +46,7 @@ import java.util.Locale;
  * <p>
  * Documentation of format: https://github.com/micolous/metrodroid/wiki/Myki
  */
-public class MykiTransitData extends StubTransitData {
+public class MykiTransitData extends SerialOnlyTransitData {
     public static final String NAME = "Myki";
     public static final int APP_ID_1 = 0x11f2;
     public static final int APP_ID_2 = 0xf010f2;
@@ -163,5 +162,10 @@ public class MykiTransitData extends StubTransitData {
     @Override
     public Uri getMoreInfoPage() {
         return Uri.parse("https://micolous.github.io/metrodroid/myki");
+    }
+
+    @Override
+    protected Reason getReason() {
+        return Reason.LOCKED;
     }
 }

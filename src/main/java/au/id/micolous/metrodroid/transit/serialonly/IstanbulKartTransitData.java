@@ -20,7 +20,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package au.id.micolous.metrodroid.transit.istanbulkart;
+package au.id.micolous.metrodroid.transit.serialonly;
 
 import android.os.Parcel;
 import android.support.annotation.NonNull;
@@ -49,7 +49,7 @@ import au.id.micolous.metrodroid.util.Utils;
  * <p>
  * Documentation of format: https://github.com/micolous/metrodroid/wiki/IstanbulKart
  */
-public class IstanbulKartTransitData extends StubTransitData {
+public class IstanbulKartTransitData extends SerialOnlyTransitData {
     public static final String NAME = "IstanbulKart";
     public static final int APP_ID = 0x422201;
 
@@ -138,7 +138,12 @@ public class IstanbulKartTransitData extends StubTransitData {
     }
 
     @Override
-    public List<ListItem> getInfo() {
+    public List<ListItem> getExtraInfo() {
         return Collections.singletonList(new ListItem(R.string.istanbulkart_2nd_card_number, mSerial2));
+    }
+
+    @Override
+    protected Reason getReason() {
+        return Reason.LOCKED;
     }
 }

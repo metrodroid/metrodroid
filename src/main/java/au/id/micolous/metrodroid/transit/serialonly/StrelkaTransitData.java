@@ -18,7 +18,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package au.id.micolous.metrodroid.transit.strelka;
+package au.id.micolous.metrodroid.transit.serialonly;
 
 import android.os.Parcel;
 import android.os.Parcelable;
@@ -36,7 +36,6 @@ import au.id.micolous.metrodroid.card.classic.ClassicSector;
 import au.id.micolous.metrodroid.transit.CardInfo;
 import au.id.micolous.metrodroid.transit.TransitData;
 import au.id.micolous.metrodroid.transit.TransitIdentity;
-import au.id.micolous.metrodroid.transit.smartrider.SmartRiderTransitData;
 import au.id.micolous.metrodroid.ui.ListItem;
 import au.id.micolous.metrodroid.util.Utils;
 
@@ -44,7 +43,7 @@ import au.id.micolous.metrodroid.util.Utils;
  * Strelka cards.
  */
 
-public class StrelkaTransitData extends TransitData {
+public class StrelkaTransitData extends SerialOnlyTransitData {
     public static final Parcelable.Creator<StrelkaTransitData> CREATOR = new Parcelable.Creator<StrelkaTransitData>() {
         public StrelkaTransitData createFromParcel(Parcel parcel) {
             return new StrelkaTransitData(parcel);
@@ -76,8 +75,13 @@ public class StrelkaTransitData extends TransitData {
         return formatShortSerial(mSerial);
     }
 
-    public List<ListItem> getInfo() {
+    public List<ListItem> getExtraInfo() {
         return Collections.singletonList(new ListItem(R.string.strelka_long_serial, mSerial));
+    }
+
+    @Override
+    protected Reason getReason() {
+        return Reason.MORE_RESEARCH_NEEDED;
     }
 
     @Override
