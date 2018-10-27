@@ -813,4 +813,7 @@
 <string name="city_union_city">City</string>
 
     <string name="transfer">Overgang</string>
+<string name="rejected">Avslått</string>
+    <string name="location_adelaide">Adelaide, Australia</string>
+    <string name="copy_card_number">Kopier kortnummer</string>
 </resources>
