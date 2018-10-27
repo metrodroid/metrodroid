@@ -26,17 +26,21 @@ import org.apache.commons.lang3.ArrayUtils;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
 
 import au.id.micolous.farebot.R;
 import au.id.micolous.metrodroid.card.CardType;
+import au.id.micolous.metrodroid.card.calypso.CalypsoCardTransitFactory;
 import au.id.micolous.metrodroid.card.desfire.DesfireApplication;
 import au.id.micolous.metrodroid.card.desfire.DesfireCard;
+import au.id.micolous.metrodroid.card.desfire.DesfireCardTransitFactory;
 import au.id.micolous.metrodroid.transit.CardInfo;
 import au.id.micolous.metrodroid.transit.Subscription;
 import au.id.micolous.metrodroid.transit.Transaction;
 import au.id.micolous.metrodroid.transit.TransactionTrip;
+import au.id.micolous.metrodroid.transit.TransitData;
 import au.id.micolous.metrodroid.transit.TransitIdentity;
 import au.id.micolous.metrodroid.transit.Trip;
 import au.id.micolous.metrodroid.transit.en1545.En1545Lookup;
@@ -140,13 +144,27 @@ public class AdelaideMetrocardTransitData extends En1545TransitData {
         return AdelaideLookup.getInstance();
     }
 
-    public static boolean check(DesfireCard card) {
-        return card.getApplication(APP_ID) != null;
-    }
+    public final static DesfireCardTransitFactory FACTORY = new DesfireCardTransitFactory() {
+        @Override
+        public TransitIdentity parseTransitIdentity(DesfireCard card) {
+            return new TransitIdentity(NAME, formatSerial(getSerial(card.getTagId())));
+        }
 
-    public static TransitIdentity parseTransitIdentity(DesfireCard card) {
-        return new TransitIdentity(NAME, formatSerial(getSerial(card.getTagId())));
-    }
+        @Override
+        public boolean earlyCheck(int[] appIds) {
+            return ArrayUtils.contains(appIds, APP_ID);
+        }
+
+        @Override
+        public CardInfo getCardInfo() {
+            return CARD_INFO;
+        }
+
+        @Override
+        public TransitData parseTransitData(DesfireCard desfireCard) {
+            return new AdelaideMetrocardTransitData(desfireCard);
+        }
+    };
 
     private static String formatSerial(long serial) {
         return String.format(Locale.ENGLISH, "01-%03d %04d %04d %04d",
@@ -214,9 +232,5 @@ public class AdelaideMetrocardTransitData extends En1545TransitData {
                 items.add(new ListItem(R.string.purse_serial_number, Integer.toHexString(purseId)));
         }
         return items;
-    }
-
-    public static boolean earlyCheck(int[] appIds) {
-        return ArrayUtils.contains(appIds, APP_ID);
     }
 }

@@ -10,8 +10,11 @@ import au.id.micolous.farebot.R;
 import au.id.micolous.metrodroid.card.Card;
 import au.id.micolous.metrodroid.card.desfire.DesfireApplication;
 import au.id.micolous.metrodroid.card.desfire.DesfireCard;
+import au.id.micolous.metrodroid.card.desfire.DesfireCardTransitFactory;
 import au.id.micolous.metrodroid.card.desfire.files.DesfireFile;
 import au.id.micolous.metrodroid.card.desfire.files.UnauthorizedDesfireFile;
+import au.id.micolous.metrodroid.transit.CardInfo;
+import au.id.micolous.metrodroid.transit.TransitData;
 import au.id.micolous.metrodroid.transit.TransitIdentity;
 import au.id.micolous.metrodroid.util.Utils;
 
@@ -44,33 +47,49 @@ public class UnauthorizedDesfireTransitData extends UnauthorizedTransitData {
         parcel.writeString(mName);
     }
 
-    /**
-     * This should be the last executed MIFARE DESFire check, after all the other checks are done.
-     * <p>
-     * This is because it will catch others' cards.
-     *
-     * @param card Card to read.
-     * @return true if all sectors on the card are locked.
-     */
-    public static boolean check(DesfireCard card) {
-        for (DesfireApplication app : card.getApplications()) {
-            for (DesfireFile f : app.getFiles()) {
-                if (!(f instanceof UnauthorizedDesfireFile)) {
-                    // At least one file is "open", this is not for us.
-                    return false;
-                }
-            }
+    public final static DesfireCardTransitFactory FACTORY = new DesfireCardTransitFactory() {
+        @Override
+        public boolean earlyCheck(int[] appIds) {
+            return false;
         }
 
-        // No file had open access.
-        return true;
-    }
+        @Override
+        protected CardInfo getCardInfo() {
+            return null;
+        }
 
+        /**
+         * This should be the last executed MIFARE DESFire check, after all the other checks are done.
+         * <p>
+         * This is because it will catch others' cards.
+         *
+         * @param card Card to read.
+         * @return true if all sectors on the card are locked.
+         */
+        public boolean check(DesfireCard card) {
+            for (DesfireApplication app : card.getApplications()) {
+                for (DesfireFile f : app.getFiles()) {
+                    if (!(f instanceof UnauthorizedDesfireFile)) {
+                        // At least one file is "open", this is not for us.
+                        return false;
+                    }
+                }
+            }
 
+            // No file had open access.
+            return true;
+        }
 
-    public static TransitIdentity parseTransitIdentity(DesfireCard card) {
-        return new TransitIdentity(getName(card), null);
-    }
+        @Override
+        public TransitData parseTransitData(DesfireCard desfireCard) {
+            return new UnauthorizedDesfireTransitData(desfireCard);
+        }
+
+        @Override
+        public TransitIdentity parseTransitIdentity(DesfireCard card) {
+            return new TransitIdentity(getName(card), null);
+        }
+    };
 
     private static final List<Pair<Integer, String>> TYPES = new ArrayList<>();
     static {

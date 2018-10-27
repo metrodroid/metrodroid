@@ -39,6 +39,7 @@ import au.id.micolous.metrodroid.card.Card;
 import au.id.micolous.metrodroid.card.CardType;
 import au.id.micolous.metrodroid.card.desfire.DesfireApplication;
 import au.id.micolous.metrodroid.card.desfire.DesfireCard;
+import au.id.micolous.metrodroid.card.desfire.DesfireCardTransitFactory;
 import au.id.micolous.metrodroid.card.desfire.files.UnauthorizedDesfireFile;
 import au.id.micolous.metrodroid.transit.CardInfo;
 import au.id.micolous.metrodroid.transit.TransitBalance;
@@ -238,15 +239,6 @@ public class LeapTransitData extends TransitData {
         return g;
     }
 
-    public static boolean check(Card card) {
-        return (card instanceof DesfireCard)
-                && (((DesfireCard) card).getApplication(APP_ID) != null);
-    }
-
-    public static boolean earlyCheck(int[] appIds) {
-        return ArrayUtils.contains(appIds, APP_ID);
-    }
-
     private static String getSerial(DesfireCard card) {
         DesfireApplication app = card.getApplication(APP_ID);
         int serial = Utils.byteArrayToInt(app.getFile(2).getData(),0x25, 4);
@@ -258,14 +250,32 @@ public class LeapTransitData extends TransitData {
                 initDate.get(Calendar.YEAR) % 100);
     }
 
-    public static TransitIdentity parseTransitIdentity(DesfireCard card) {
-        try {
-            return new TransitIdentity(NAME, getSerial(card));
-        } catch (Exception e) {
-            return new TransitIdentity(
-                    Utils.localizeString(R.string.locked_leap), null);
+    public final static DesfireCardTransitFactory FACTORY = new DesfireCardTransitFactory() {
+        @Override
+        public boolean earlyCheck(int[] appIds) {
+            return ArrayUtils.contains(appIds, APP_ID);
         }
-    }
+
+        @Override
+        protected CardInfo getCardInfo() {
+            return CARD_INFO;
+        }
+
+        @Override
+        public TransitData parseTransitData(DesfireCard desfireCard) {
+            return new LeapTransitData(desfireCard);
+        }
+
+        @Override
+        public TransitIdentity parseTransitIdentity(DesfireCard card) {
+            try {
+                return new TransitIdentity(NAME, getSerial(card));
+            } catch (Exception e) {
+                return new TransitIdentity(
+                        Utils.localizeString(R.string.locked_leap), null);
+            }
+        }
+    };
 
     @Nullable
     @Override

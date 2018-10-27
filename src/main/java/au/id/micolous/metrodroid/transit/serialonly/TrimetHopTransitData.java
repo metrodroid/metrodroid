@@ -38,6 +38,7 @@ import au.id.micolous.farebot.R;
 import au.id.micolous.metrodroid.card.CardType;
 import au.id.micolous.metrodroid.card.desfire.DesfireApplication;
 import au.id.micolous.metrodroid.card.desfire.DesfireCard;
+import au.id.micolous.metrodroid.card.desfire.DesfireCardTransitFactory;
 import au.id.micolous.metrodroid.card.desfire.files.DesfireFile;
 import au.id.micolous.metrodroid.transit.CardInfo;
 import au.id.micolous.metrodroid.transit.TransitData;
@@ -96,29 +97,33 @@ public class TrimetHopTransitData extends SerialOnlyTransitData {
         }
     }
 
-    public static boolean check(@NonNull DesfireCard card) {
-        DesfireApplication app = card.getApplication(APP_ID);
-        if (app == null) {
-            return false;
-        }
-
-        DesfireFile file = app.getFile(0);
-        return file != null && (file.getData() != null);
-    }
-
     private static int parseSerial(DesfireApplication app) {
 	    DesfireFile file = app.getFile(0);
         return Utils.byteArrayToInt(file.getData(), 0xc, 4);
     }
 
-    public static boolean earlyCheck(int[] appIds) {
-        return ArrayUtils.contains(appIds, APP_ID);
-    }
+    public final static DesfireCardTransitFactory FACTORY = new DesfireCardTransitFactory() {
+        @Override
+        public boolean earlyCheck(int[] appIds) {
+            return ArrayUtils.contains(appIds, APP_ID);
+        }
 
-    public static TransitIdentity parseTransitIdentity(DesfireCard card) {
-        DesfireApplication app = card.getApplication(APP_ID);
-        return new TransitIdentity(NAME, formatSerial(parseSerial(app)));
-    }
+        @Override
+        protected CardInfo getCardInfo() {
+            return CARD_INFO;
+        }
+
+        @Override
+        public TransitData parseTransitData(DesfireCard desfireCard) {
+            return new TrimetHopTransitData(desfireCard);
+        }
+
+        @Override
+        public TransitIdentity parseTransitIdentity(DesfireCard card) {
+            DesfireApplication app = card.getApplication(APP_ID);
+            return new TransitIdentity(NAME, formatSerial(parseSerial(app)));
+        }
+    };
 
     @Override
     public String getCardName() {

@@ -20,8 +20,15 @@ package au.id.micolous.metrodroid.transit.stub;
 
 import android.os.Parcel;
 
+import org.apache.commons.lang3.ArrayUtils;
+
+import java.util.Arrays;
+
 import au.id.micolous.metrodroid.card.Card;
 import au.id.micolous.metrodroid.card.desfire.DesfireCard;
+import au.id.micolous.metrodroid.card.desfire.DesfireCardTransitFactory;
+import au.id.micolous.metrodroid.transit.CardInfo;
+import au.id.micolous.metrodroid.transit.TransitData;
 import au.id.micolous.metrodroid.transit.TransitIdentity;
 
 /**
@@ -46,15 +53,27 @@ public class AtHopStubTransitData extends StubTransitData {
     public AtHopStubTransitData(Parcel parcel) {
     }
 
-    public static boolean check(Card card) {
-        return (card instanceof DesfireCard)
-                && (((DesfireCard) card).getApplication(0x4055) != null)
-                && (((DesfireCard) card).getApplication(0xffffff) != null);
-    }
+    public final static DesfireCardTransitFactory FACTORY = new DesfireCardTransitFactory() {
+        @Override
+        public boolean earlyCheck(int[] appIds) {
+            return ArrayUtils.contains(appIds, 0x4055) && ArrayUtils.contains(appIds, 0xffffff);
+        }
 
-    public static TransitIdentity parseTransitIdentity(Card card) {
-        return new TransitIdentity("AT HOP", null);
-    }
+        @Override
+        protected CardInfo getCardInfo() {
+            return null;
+        }
+
+        @Override
+        public TransitData parseTransitData(DesfireCard desfireCard) {
+            return new AtHopStubTransitData(desfireCard);
+        }
+
+        @Override
+        public TransitIdentity parseTransitIdentity(DesfireCard desfireCard) {
+            return new TransitIdentity("AT HOP", null);
+        }
+    };
 
     @Override
     public String getCardName() {

@@ -25,7 +25,9 @@ import com.neovisionaries.i18n.CountryCode;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
+import java.util.Collection;
 import java.util.GregorianCalendar;
 import java.util.HashMap;
 import java.util.List;
@@ -41,6 +43,7 @@ import au.id.micolous.metrodroid.card.iso7816.ISO7816Protocol;
 import au.id.micolous.metrodroid.card.iso7816.ISO7816Record;
 import au.id.micolous.metrodroid.card.iso7816.ISO7816Selector;
 import au.id.micolous.metrodroid.transit.CardInfo;
+import au.id.micolous.metrodroid.transit.CardTransitFactory;
 import au.id.micolous.metrodroid.transit.TransitData;
 import au.id.micolous.metrodroid.transit.TransitIdentity;
 import au.id.micolous.metrodroid.transit.intercode.IntercodeTransitData;
@@ -143,8 +146,8 @@ public class CalypsoApplication extends ISO7816Application {
         }
     }
 
-    public static CalypsoCardTransitFactory[] getAllFactories() {
-        return FACTORIES;
+    public static List<CardTransitFactory> getAllFactories() {
+        return Arrays.asList(FACTORIES);
     }
 
     private byte[] getTicketEnv() {

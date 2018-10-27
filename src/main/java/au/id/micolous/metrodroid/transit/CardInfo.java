@@ -38,6 +38,7 @@ import java.util.Locale;
 import au.id.micolous.metrodroid.card.CardType;
 import au.id.micolous.metrodroid.card.calypso.CalypsoApplication;
 import au.id.micolous.metrodroid.card.classic.ClassicCard;
+import au.id.micolous.metrodroid.card.desfire.DesfireCard;
 import au.id.micolous.metrodroid.transit.adelaide.AdelaideMetrocardTransitData;
 import au.id.micolous.metrodroid.transit.bilhete_unico.BilheteUnicoSPTransitData;
 import au.id.micolous.metrodroid.transit.charlie.CharlieCardTransitData;
@@ -88,22 +89,13 @@ public class CardInfo {
      * A list of all cards in alphabetical order of their name.
      */
     private static final CardInfo[] LEGACY_LIST = {
-            ClipperTransitData.CARD_INFO,
             CompassUltralightTransitData.CARD_INFO,
             EdyTransitData.CARD_INFO,
             EZLinkTransitData.EZ_LINK_CARD_INFO,
-            TrimetHopTransitData.CARD_INFO, // Hop
-            HSLTransitData.CARD_INFO,
-            IstanbulKartTransitData.CARD_INFO,
             SuicaTransitData.ICOCA_CARD_INFO,
             KMTTransitData.CARD_INFO,
-            LeapTransitData.CARD_INFO,
-            AdelaideMetrocardTransitData.CARD_INFO,  // Metrocard
-            MykiTransitData.CARD_INFO,
             EZLinkTransitData.NETS_FLASHPAY_CARD_INFO,
             OctopusTransitData.CARD_INFO,
-            OpalTransitData.CARD_INFO,
-            OrcaTransitData.CARD_INFO,
             SuicaTransitData.PASMO_CARD_INFO,
             NewShenzhenTransitData.CARD_INFO, // Shenzhen Tong
             SuicaTransitData.SUICA_CARD_INFO,
@@ -114,12 +106,11 @@ public class CardInfo {
     public static List<CardInfo> getAllCardsAlphabetical() {
         List<CardInfo> ret = new ArrayList<>();
         ret.addAll(Arrays.asList(LEGACY_LIST));
-        for (CardTransitFactory factory : ClassicCard.getAllFactories()) {
-            List<CardInfo> ac = factory.getAllCards();
-            if (ac != null)
-                ret.addAll(ac);
-        }
-        for (CardTransitFactory factory : CalypsoApplication.getAllFactories()) {
+        List<CardTransitFactory> allFactories = new ArrayList<>();
+        allFactories.addAll(ClassicCard.getAllFactories());
+        allFactories.addAll(CalypsoApplication.getAllFactories());
+        allFactories.addAll(DesfireCard.getAllFactories());
+        for (CardTransitFactory factory : allFactories) {
             List<CardInfo> ac = factory.getAllCards();
             if (ac != null)
                 ret.addAll(ac);
