@@ -70,6 +70,7 @@ import au.id.micolous.metrodroid.transit.ovc.OVChipTransitData;
 import au.id.micolous.metrodroid.transit.podorozhnik.PodorozhnikTransitData;
 import au.id.micolous.metrodroid.transit.ricaricami.RicaricaMiTransitData;
 import au.id.micolous.metrodroid.transit.seq_go.SeqGoTransitData;
+import au.id.micolous.metrodroid.transit.serialonly.TartuTransitFactory;
 import au.id.micolous.metrodroid.transit.smartrider.SmartRiderTransitData;
 import au.id.micolous.metrodroid.transit.serialonly.StrelkaTransitData;
 import au.id.micolous.metrodroid.transit.troika.TroikaHybridTransitData;
@@ -422,6 +423,7 @@ public class ClassicCard extends Card {
             BilheteUnicoSPTransitData.FACTORY,
             KievTransitData.FACTORY,
             MetroQTransitData.FACTORY,
+            new TartuTransitFactory(),
             // This check must be THIRD TO LAST.
             //
             // This is to throw up a warning whenever there is a card with all locked sectors

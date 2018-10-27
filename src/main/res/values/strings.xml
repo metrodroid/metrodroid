@@ -1413,4 +1413,6 @@
     <string name="serial_only_card_description_not_stored">This card contains no data other than its serial number. Its balance and history are only stored in a central database.</string>
     <string name="serial_only_card_description_locked">This card is locked, and only serial number can be read. Its balance and history might be stored on it, but are not accessible.</string>
     <string name="serial_only_card_description_more_research">Support for this card is in development, and currently only serial number can be read.</string>
+    <string name="location_tartu">Tartu, Estonia</string>
+    <string name="long_number">Long number</string>
 </resources>
