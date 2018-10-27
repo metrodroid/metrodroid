@@ -39,6 +39,7 @@ import au.id.micolous.metrodroid.card.CardType;
 import au.id.micolous.metrodroid.card.calypso.CalypsoApplication;
 import au.id.micolous.metrodroid.card.classic.ClassicCard;
 import au.id.micolous.metrodroid.card.desfire.DesfireCard;
+import au.id.micolous.metrodroid.card.felica.FelicaCard;
 import au.id.micolous.metrodroid.transit.adelaide.AdelaideMetrocardTransitData;
 import au.id.micolous.metrodroid.transit.bilhete_unico.BilheteUnicoSPTransitData;
 import au.id.micolous.metrodroid.transit.charlie.CharlieCardTransitData;
@@ -104,6 +105,7 @@ public class CardInfo {
         allFactories.addAll(ClassicCard.getAllFactories());
         allFactories.addAll(CalypsoApplication.getAllFactories());
         allFactories.addAll(DesfireCard.getAllFactories());
+        allFactories.addAll(FelicaCard.getAllFactories());
         for (CardTransitFactory factory : allFactories) {
             List<CardInfo> ac = factory.getAllCards();
             if (ac != null)
