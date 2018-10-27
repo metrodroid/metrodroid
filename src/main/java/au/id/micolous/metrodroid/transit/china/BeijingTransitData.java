@@ -21,10 +21,15 @@ package au.id.micolous.metrodroid.transit.china;
 
 import android.os.Parcel;
 
+import java.util.Arrays;
+import java.util.List;
+
 import au.id.micolous.farebot.R;
 import au.id.micolous.metrodroid.card.CardType;
 import au.id.micolous.metrodroid.card.china.ChinaCard;
+import au.id.micolous.metrodroid.card.china.ChinaCardTransitFactory;
 import au.id.micolous.metrodroid.transit.CardInfo;
+import au.id.micolous.metrodroid.transit.TransitData;
 import au.id.micolous.metrodroid.transit.TransitIdentity;
 import au.id.micolous.metrodroid.util.Utils;
 
@@ -85,9 +90,30 @@ public class BeijingTransitData extends ChinaTransitData {
         mSerial = parcel.readString();
     }
 
-    public static TransitIdentity parseTransitIdentity(ChinaCard card) {
-        return new TransitIdentity(Utils.localizeString(R.string.card_name_beijing), parseSerial(card));
-    }
+    public final static ChinaCardTransitFactory FACTORY = new ChinaCardTransitFactory() {
+        @Override
+        public List<byte[]> getAppNames() {
+            return Arrays.asList(
+                    Utils.stringToByteArray("OC"),
+                    Utils.stringToByteArray("PBOC")
+            );
+        }
+
+        @Override
+        public TransitIdentity parseTransitIdentity(ChinaCard card) {
+            return new TransitIdentity(Utils.localizeString(R.string.card_name_beijing), parseSerial(card));
+        }
+
+        @Override
+        public TransitData parseTransitData(ChinaCard chinaCard) {
+            return new BeijingTransitData(chinaCard);
+        }
+
+        @Override
+        public CardInfo getCardInfo() {
+            return CARD_INFO;
+        }
+    };
 
     private static String parseSerial(ChinaCard card) {
         byte []info = getFile(card, FILE_INFO).getBinaryData();

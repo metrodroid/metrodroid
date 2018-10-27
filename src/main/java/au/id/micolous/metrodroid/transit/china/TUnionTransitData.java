@@ -22,13 +22,18 @@ package au.id.micolous.metrodroid.transit.china;
 import android.os.Parcel;
 import android.support.annotation.Nullable;
 
+import java.util.Collections;
+import java.util.List;
+
 import au.id.micolous.farebot.R;
 import au.id.micolous.metrodroid.card.CardType;
 import au.id.micolous.metrodroid.card.china.ChinaCard;
+import au.id.micolous.metrodroid.card.china.ChinaCardTransitFactory;
 import au.id.micolous.metrodroid.transit.CardInfo;
 import au.id.micolous.metrodroid.transit.TransitBalance;
 import au.id.micolous.metrodroid.transit.TransitBalanceStored;
 import au.id.micolous.metrodroid.transit.TransitCurrency;
+import au.id.micolous.metrodroid.transit.TransitData;
 import au.id.micolous.metrodroid.transit.TransitIdentity;
 import au.id.micolous.metrodroid.util.Utils;
 
@@ -92,9 +97,27 @@ public class TUnionTransitData extends ChinaTransitData {
         mNegativeBalance = parcel.readInt();
     }
 
-    public static TransitIdentity parseTransitIdentity(ChinaCard card) {
-        return new TransitIdentity(Utils.localizeString(R.string.card_name_tunion), parseSerial(card));
-    }
+    public final static ChinaCardTransitFactory FACTORY = new ChinaCardTransitFactory() {
+        @Override
+        public List<byte[]> getAppNames() {
+            return Collections.singletonList(Utils.hexStringToByteArray("A000000632010105"));
+        }
+
+        @Override
+        public TransitIdentity parseTransitIdentity(ChinaCard card) {
+            return new TransitIdentity(Utils.localizeString(R.string.card_name_tunion), parseSerial(card));
+        }
+
+        @Override
+        public TransitData parseTransitData(ChinaCard chinaCard) {
+            return new TUnionTransitData(chinaCard);
+        }
+
+        @Override
+        public CardInfo getCardInfo() {
+            return CARD_INFO;
+        }
+    };
 
     private static String parseSerial(ChinaCard card) {
         byte[] file15 = getFile(card, 0x15).getBinaryData();

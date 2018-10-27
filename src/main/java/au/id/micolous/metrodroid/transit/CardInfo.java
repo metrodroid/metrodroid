@@ -37,6 +37,7 @@ import java.util.Locale;
 
 import au.id.micolous.metrodroid.card.CardType;
 import au.id.micolous.metrodroid.card.calypso.CalypsoApplication;
+import au.id.micolous.metrodroid.card.china.ChinaCard;
 import au.id.micolous.metrodroid.card.classic.ClassicCard;
 import au.id.micolous.metrodroid.card.desfire.DesfireCard;
 import au.id.micolous.metrodroid.card.felica.FelicaCard;
@@ -93,7 +94,6 @@ public class CardInfo {
     private static final CardInfo[] LEGACY_LIST = {
             EZLinkTransitData.EZ_LINK_CARD_INFO,
             EZLinkTransitData.NETS_FLASHPAY_CARD_INFO,
-            NewShenzhenTransitData.CARD_INFO, // Shenzhen Tong
             TMoneyTransitData.CARD_INFO, // T-Money
     };
 
@@ -106,6 +106,7 @@ public class CardInfo {
         allFactories.addAll(DesfireCard.getAllFactories());
         allFactories.addAll(FelicaCard.getAllFactories());
         allFactories.addAll(UltralightCard.getAllFactories());
+        allFactories.addAll(ChinaCard.getAllFactories());
         for (CardTransitFactory factory : allFactories) {
             List<CardInfo> ac = factory.getAllCards();
             if (ac != null)
