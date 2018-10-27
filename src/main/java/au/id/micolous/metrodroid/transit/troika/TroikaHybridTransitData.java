@@ -21,16 +21,21 @@ package au.id.micolous.metrodroid.transit.troika;
 
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.support.annotation.NonNull;
 
 import au.id.micolous.farebot.R;
+import au.id.micolous.metrodroid.card.UnauthorizedException;
 import au.id.micolous.metrodroid.card.classic.ClassicCard;
+import au.id.micolous.metrodroid.card.classic.ClassicCardTransitFactory;
+import au.id.micolous.metrodroid.card.classic.ClassicSector;
+import au.id.micolous.metrodroid.transit.CardInfo;
 import au.id.micolous.metrodroid.transit.Subscription;
 import au.id.micolous.metrodroid.transit.TransitBalance;
 import au.id.micolous.metrodroid.transit.TransitData;
 import au.id.micolous.metrodroid.transit.TransitIdentity;
 import au.id.micolous.metrodroid.transit.Trip;
 import au.id.micolous.metrodroid.transit.podorozhnik.PodorozhnikTransitData;
-import au.id.micolous.metrodroid.transit.strelka.StrelkaTransitData;
+import au.id.micolous.metrodroid.transit.serialonly.StrelkaTransitData;
 import au.id.micolous.metrodroid.ui.HeaderListItem;
 import au.id.micolous.metrodroid.ui.ListItem;
 import au.id.micolous.metrodroid.util.Utils;
@@ -97,7 +102,7 @@ public class TroikaHybridTransitData extends TransitData {
             // and printed in larger letters.
             items.add(new ListItem(R.string.card_number, mStrelka.getSerialNumber()));
 
-            List<ListItem> sItems = mStrelka.getInfo();
+            List<ListItem> sItems = mStrelka.getExtraInfo();
             if (sItems != null && !sItems.isEmpty()) {
                 items.addAll(sItems);
             }
@@ -147,23 +152,55 @@ public class TroikaHybridTransitData extends TransitData {
             mStrelka = null;
     }
 
-    public static TransitIdentity parseTransitIdentity(ClassicCard card) {
-        int nameRes = R.string.card_name_troika;
-        if (StrelkaTransitData.check(card))
-            nameRes = R.string.card_name_troika_strelka_hybrid;
-        if (PodorozhnikTransitData.check(card))
-            nameRes = R.string.card_name_troika_podorozhnik_hybrid;
-        return new TransitIdentity(Utils.localizeString(nameRes),
-				   TroikaBlock.formatSerial(TroikaBlock.getSerial(card.getSector(8).getBlock(0).getData())));
-    }
+    public static final ClassicCardTransitFactory FACTORY = new ClassicCardTransitFactory() {
+        @Override
+        public TransitIdentity parseTransitIdentity(@NonNull ClassicCard card) {
+            int nameRes = R.string.card_name_troika;
+            if (StrelkaTransitData.FACTORY.check(card))
+                nameRes = R.string.card_name_troika_strelka_hybrid;
+            if (PodorozhnikTransitData.FACTORY.check(card))
+                nameRes = R.string.card_name_troika_podorozhnik_hybrid;
+            return new TransitIdentity(Utils.localizeString(nameRes),
+                    TroikaBlock.formatSerial(TroikaBlock.getSerial(card.getSector(8).getBlock(0).getData())));
+        }
+
+        @Override
+        public TransitData parseTransitData(@NonNull ClassicCard classicCard) {
+            return new TroikaHybridTransitData(classicCard);
+        }
+
+        @Override
+        public boolean check(@NonNull ClassicCard card) {
+            try {
+                return TroikaBlock.check(card.getSector(8).getBlock(0).getData());
+            } catch (IndexOutOfBoundsException|UnauthorizedException ignored) {
+                // If that sector number is too high, then it's not for us.
+                // If we can't read we can't do anything
+            }
+            return false;
+        }
+
+        @Override
+        public int earlySectors() {
+            return 2;
+        }
+
+        @Override
+        public CardInfo earlyCardInfo(List<ClassicSector> sectors) {
+            if (Utils.checkKeyHash(sectors.get(1).getKey(), "troika",
+                    "0045ccfe4749673d77273162e8d53015") >= 0)
+                return TroikaTransitData.CARD_INFO;
+            return null;
+        }
+    };
 
     public TroikaHybridTransitData(ClassicCard card) {
         mTroika = new TroikaTransitData(card);
-        if (PodorozhnikTransitData.check(card))
+        if (PodorozhnikTransitData.FACTORY.check(card))
             mPodorozhnik = new PodorozhnikTransitData(card);
         else
             mPodorozhnik = null;
-        if (StrelkaTransitData.check(card))
+        if (StrelkaTransitData.FACTORY.check(card))
             mStrelka = new StrelkaTransitData(card);
         else
             mStrelka = null;

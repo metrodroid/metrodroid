@@ -510,7 +510,7 @@
 
     <string name="compass_product_type">Produkttype</string>
     <string name="compass_machine_code">Maskinkode</string>
-    <string name="compass_ticket_type">Billettkode</string>
+    <string name="ticket_type">Billettkode</string>
     <string name="compass_ticket_type_concession">Honør</string>
     <string name="compass_ticket_type_regular">Vanlig</string>
     <string name="expiry_date">Utløpsdato</string>
@@ -774,4 +774,46 @@
     <string name="location_portland">Portland, OR, USA</string>
     <string name="location_sophia_antipolis">Sophia Antipolis, Frankrike</string>
     <string name="lisboaviva_unknown_period">Ukjent gyldighet %x/%x</string>
-    </resources>
+    <string name="subscription_cost">Kostnad</string>
+    <string name="location_montpellier">Montpellier, Frankrike</string>
+    <string name="maps">Kart</string>
+<plurals name="trips_remaining_total">
+	<item quantity="one">Én av %d turer gjenstår</item>
+	<item quantity="other">%d av %d turer gjenstår</item>
+</plurals>
+    <string name="location_toulouse">Toulouse, Frankrike</string>
+    <string name="location_houston">Houston, TX, USA</string>
+    <string name="metroq_fare_card">Klippekort</string>
+    <string name="metroq_day_pass">Dagspass</string>
+
+    <string name="free_transfers_until">Gratis overganger til</string>
+    <string name="clipper_ticket_type_adult">Voksen</string>
+    <string name="clipper_ticket_type_senior">Honnør</string>
+    <string name="clipper_ticket_type_youth">Barn</string>
+
+    <string name="clipper_single">Enkelttur (<xliff:g id="ticket_class" example="Adult">%1$s</xliff:g>)</string>
+    <string name="clipper_return">Retur (<xliff:g id="ticket_class" example="Adult">%1$s</xliff:g>)</string>
+    <string name="card_note_clipper">Støtter både plastikk- (oppladbart) og papir- (enkeltturskort utstedt av Golden Gate-fergen og Muni) Clipper-kort.</string>
+
+    <string name="passenger_class">Klasse</string>
+    <string name="without_receipt">Uten kvittering</string>
+    <string name="with_receipt">Med kvittering</string>
+
+    <string name="location_beijing">Beijing, Kina</string>
+    <string name="location_china_mainland">Fastlandskina</string>
+    <string name="location_kiev">Kiev, Ukraina</string>
+    <string name="location_wuhan">Wuhan, Kina</string>
+    
+    <string name="card_name_beijing">Beijing Municipal-kort</string>
+    <string name="card_name_wuhantong">Wuhan Tong</string>
+    <string name="card_name_cityunion">City Union</string>
+    <string name="card_name_tunion">T-Union</string>
+    <string name="card_note_kiev">Kun kort fra før 2016. Kun turlogg kan leses</string>
+    <string name="card_name_kiev">Kiev Metro</string>
+<string name="city_union_city">City</string>
+
+    <string name="transfer">Overgang</string>
+<string name="rejected">Avslått</string>
+    <string name="location_adelaide">Adelaide, Australia</string>
+    <string name="copy_card_number">Kopier kortnummer</string>
+</resources>

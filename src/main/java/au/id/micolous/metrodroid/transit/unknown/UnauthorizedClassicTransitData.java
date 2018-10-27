@@ -19,12 +19,15 @@
 package au.id.micolous.metrodroid.transit.unknown;
 
 import android.os.Parcel;
+import android.support.annotation.NonNull;
 
 import au.id.micolous.farebot.R;
 import au.id.micolous.metrodroid.card.Card;
 import au.id.micolous.metrodroid.card.classic.ClassicCard;
+import au.id.micolous.metrodroid.card.classic.ClassicCardTransitFactory;
 import au.id.micolous.metrodroid.card.classic.ClassicSector;
 import au.id.micolous.metrodroid.card.classic.UnauthorizedClassicSector;
+import au.id.micolous.metrodroid.transit.TransitData;
 import au.id.micolous.metrodroid.transit.TransitIdentity;
 import au.id.micolous.metrodroid.util.Utils;
 
@@ -42,31 +45,40 @@ public class UnauthorizedClassicTransitData extends UnauthorizedTransitData {
         }
     };
 
-    public UnauthorizedClassicTransitData() {
+    private UnauthorizedClassicTransitData() {
     }
 
-    /**
-     * This should be the last executed MIFARE Classic check, after all the other checks are done.
-     * <p>
-     * This is because it will catch others' cards.
-     *
-     * @param card Card to read.
-     * @return true if all sectors on the card are locked.
-     */
-    public static boolean check(ClassicCard card) {
-        // check to see if all sectors are blocked
-        for (ClassicSector s : card.getSectors()) {
-            if (!(s instanceof UnauthorizedClassicSector)) {
-                // At least one sector is "open", this is not for us
-                return false;
+    public static final ClassicCardTransitFactory FACTORY = new ClassicCardTransitFactory() {
+        /**
+         * This should be the last executed MIFARE Classic check, after all the other checks are done.
+         * <p>
+         * This is because it will catch others' cards.
+         *
+         * @param card Card to read.
+         * @return true if all sectors on the card are locked.
+         */
+        @Override
+        public boolean check(@NonNull ClassicCard card) {
+            // check to see if all sectors are blocked
+            for (ClassicSector s : card.getSectors()) {
+                if (!(s instanceof UnauthorizedClassicSector)) {
+                    // At least one sector is "open", this is not for us
+                    return false;
+                }
             }
+            return true;
         }
-        return true;
-    }
 
-    public static TransitIdentity parseTransitIdentity(Card card) {
-        return new TransitIdentity(Utils.localizeString(R.string.locked_mfc_card), null);
-    }
+        @Override
+        public TransitIdentity parseTransitIdentity(@NonNull ClassicCard card) {
+            return new TransitIdentity(Utils.localizeString(R.string.locked_mfc_card), null);
+        }
+
+        @Override
+        public TransitData parseTransitData(@NonNull ClassicCard classicCard) {
+            return new UnauthorizedClassicTransitData();
+        }
+    };
 
     @Override
     public String getCardName() {

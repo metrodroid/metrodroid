@@ -153,6 +153,16 @@ public class TransactionTrip extends Trip implements Parcelable {
         return getAny().getFare();
     }
 
+    @Override
+    public boolean isTransfer() {
+        return getAny().isTransfer();
+    }
+
+    @Override
+    public boolean isRejected() {
+        return getAny().isRejected();
+    }
+
     public interface TransactionTripFactory {
         TransactionTrip createTrip(Transaction el);
     }

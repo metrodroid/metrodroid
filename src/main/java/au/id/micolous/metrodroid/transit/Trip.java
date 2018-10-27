@@ -354,6 +354,35 @@ public abstract class Trip implements Parcelable {
                 (endStation != null && endStation.hasLocation());
     }
 
+    /**
+     * If the trip is a transfer from another service, return true.
+     *
+     * If this is not a transfer, or this is unknown, return false. By default, this method returns
+     * false.
+     *
+     * The typical use of this is if an agency allows you to transfer to other services within a
+     * time window.  eg: The first trip is $2, but other trips within the next two hours are free.
+     *
+     * This may still return true even if {@link #getFare()} is non-null and non-zero -- this
+     * can indicate a discounted (rather than free) transfer. eg: The trips are $2.50, but other
+     * trips within the next two hours have a $2 discount, making the second trip cost $0.50.
+     */
+    public boolean isTransfer() {
+        return false;
+    }
+
+    /**
+     * If the tap-on event was rejected for the trip, return true.
+     *
+     * This should be used for where a record is added to the card in the case of insufficient
+     * funds to pay for the journey.
+     *
+     * Otherwise, return false.  The default is to return false.
+     */
+    public boolean isRejected() {
+        return false;
+    }
+
     public enum Mode {
         BUS(0, R.string.mode_bus),
         /** Used for non-metro (rapid transit) trains */

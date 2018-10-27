@@ -19,12 +19,14 @@
 package au.id.micolous.metrodroid.transit.unknown;
 
 import android.os.Parcel;
+import android.support.annotation.NonNull;
 
 import java.util.List;
 
 import au.id.micolous.farebot.R;
 import au.id.micolous.metrodroid.card.classic.ClassicBlock;
 import au.id.micolous.metrodroid.card.classic.ClassicCard;
+import au.id.micolous.metrodroid.card.classic.ClassicCardTransitFactory;
 import au.id.micolous.metrodroid.card.classic.ClassicSector;
 import au.id.micolous.metrodroid.card.classic.InvalidClassicSector;
 import au.id.micolous.metrodroid.card.classic.UnauthorizedClassicSector;
@@ -46,47 +48,55 @@ public class BlankClassicTransitData extends TransitData {
         }
     };
 
-    public BlankClassicTransitData() {
+    private BlankClassicTransitData() {
 
     }
 
-    /**
-     *
-     * @param card Card to read.
-     * @return true if all sectors on the card are blank.
-     */
-    public static boolean check(ClassicCard card) {
-        List<ClassicSector> sectors = card.getSectors();
-	boolean allZero = true, allFF = true;
-        // check to see if all sectors are blocked
-        for (ClassicSector s : sectors) {
-            if ((s instanceof UnauthorizedClassicSector) || (s instanceof InvalidClassicSector))
-                return false;
+    public static final ClassicCardTransitFactory FACTORY = new ClassicCardTransitFactory() {
+        /**
+         * @param card Card to read.
+         * @return true if all sectors on the card are blank.
+         */
+        @Override
+        public boolean check(@NonNull ClassicCard card) {
+            List<ClassicSector> sectors = card.getSectors();
+            boolean allZero = true, allFF = true;
+            // check to see if all sectors are blocked
+            for (ClassicSector s : sectors) {
+                if ((s instanceof UnauthorizedClassicSector) || (s instanceof InvalidClassicSector))
+                    return false;
 
-            int numBlocks = s.getBlocks().size();
+                int numBlocks = s.getBlocks().size();
 
-            for (ClassicBlock bl : s.getBlocks()) {
-                // Manufacturer data
-                if (s.getIndex() == 0 && bl.getIndex() == 0)
-                    continue;
-                if (bl.getIndex() == numBlocks - 1)
-                    continue;
-                for (byte b : bl.getData()) {
-                    if (b != 0)
-                        allZero = false;
-		    if (b != -1)
-                        allFF = false;
-		    if (!allZero && !allFF)
-			return false;
-		}
+                for (ClassicBlock bl : s.getBlocks()) {
+                    // Manufacturer data
+                    if (s.getIndex() == 0 && bl.getIndex() == 0)
+                        continue;
+                    if (bl.getIndex() == numBlocks - 1)
+                        continue;
+                    for (byte b : bl.getData()) {
+                        if (b != 0)
+                            allZero = false;
+                        if (b != -1)
+                            allFF = false;
+                        if (!allZero && !allFF)
+                            return false;
+                    }
+                }
             }
+            return true;
         }
-        return true;
-    }
 
-    public static TransitIdentity parseTransitIdentity(ClassicCard card) {
-        return new TransitIdentity(Utils.localizeString(R.string.blank_mfc_card), null);
-    }
+        @Override
+        public TransitIdentity parseTransitIdentity(@NonNull ClassicCard card) {
+            return new TransitIdentity(Utils.localizeString(R.string.blank_mfc_card), null);
+        }
+
+        @Override
+        public TransitData parseTransitData(@NonNull ClassicCard classicCard) {
+            return new BlankClassicTransitData();
+        }
+    };
 
     @Override
     public String getSerialNumber() {

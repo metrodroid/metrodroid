@@ -26,16 +26,13 @@ import android.os.Parcelable;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.annotation.StringRes;
-import android.util.Log;
 
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
-import java.util.Locale;
 
 import au.id.micolous.farebot.R;
 import au.id.micolous.metrodroid.MetrodroidApplication;
-import au.id.micolous.metrodroid.ui.HeaderListItem;
 import au.id.micolous.metrodroid.ui.ListItem;
 import au.id.micolous.metrodroid.util.TripObfuscator;
 import au.id.micolous.metrodroid.util.Utils;
@@ -86,7 +83,7 @@ public abstract class Subscription implements Parcelable {
      * For example, a 7 day travel pass may be loaded on the card as "available", but the travel
      * pass has never been used, so it will begin on the date that it is first used.
      *
-     * @return Calendar representing the subcription date, or null if the subscription has no end
+     * @return Calendar representing the subscription date, or null if the subscription has no end
      *         date.
      * @see #getSubscriptionState()
      */
@@ -299,6 +296,16 @@ public abstract class Subscription implements Parcelable {
     }
 
     /**
+     * The total number of trips in this subscription.
+     *
+     * If unknown or there is no limit to the number of trips, return null (default).
+     */
+    @Nullable
+    public Integer getTotalTripCount() {
+        return null;
+    }
+
+    /**
      * The total number of remaining days that this subscription can be used on.
      *
      * This is distinct to {@link #getValidTo()} -- this is for subscriptions where it can be used
@@ -333,6 +340,21 @@ public abstract class Subscription implements Parcelable {
      */
     @Nullable
     public int[] getZones() {
+        return null;
+    }
+
+    /**
+     * For networks that allow transfers (ie: multiple vehicles may be used as part of a single trip
+     * and charged at a flat rate), this shows the latest time that transfers may be made.
+     *
+     * For example, a subscription may allow 2 trips per day, but allow a 2 hour transfer window. So
+     * a passenger who boards their first vehicle at 10:00, then leaves the vehicle at 10:30, could
+     * then board a second vehicle at 10:45 and still have it counted as the first "trip".
+     *
+     * Returns null if there is no such functionality, or the restrictions are unknown (default).
+     */
+    @Nullable
+    public Calendar getTransferEndTimestamp() {
         return null;
     }
 
@@ -375,7 +397,7 @@ public abstract class Subscription implements Parcelable {
 
             items.add(new ListItem(R.string.purchase_date, purchaseTimestampHasTime() ?
                     Utils.dateTimeFormat(purchaseTS) :
-                    Utils.dateFormat(purchaseTS)));
+                    Utils.longDateFormat(purchaseTS)));
         }
 
         Calendar lastUseTS = getLastUseTimestamp();
@@ -384,7 +406,13 @@ public abstract class Subscription implements Parcelable {
 
             items.add(new ListItem(R.string.last_used_on, lastUseTimestampHasTime() ?
                     Utils.dateTimeFormat(lastUseTS) :
-                    Utils.dateFormat(lastUseTS)));
+                    Utils.longDateFormat(lastUseTS)));
+        }
+
+        TransitCurrency cost = cost();
+        if (cost != null) {
+            items.add(new ListItem(R.string.subscription_cost,
+                    cost.maybeObfuscateFare().formatCurrencyString(true)));
         }
 
         if (getPaymentMethod() != PaymentMethod.UNKNOWN) {
@@ -392,9 +420,12 @@ public abstract class Subscription implements Parcelable {
             items.add(new ListItem(R.string.payment_method, getPaymentMethod().getDescription()));
         }
 
-        if (getRemainingTripCount() != null) {
-            items.add(new ListItem(R.string.remaining_trip_count,
-                    Integer.toString(getRemainingTripCount())));
+        Calendar transferEndTimestamp = getTransferEndTimestamp();
+        if (transferEndTimestamp != null && lastUseTS != null) {
+            transferEndTimestamp = TripObfuscator.maybeObfuscateTS(transferEndTimestamp);
+
+            items.add(new ListItem(R.string.free_transfers_until,
+                    Utils.dateTimeFormat(transferEndTimestamp)));
         }
 
         if (getRemainingTripsInDayCount() != null && lastUseTS != null) {
@@ -412,11 +443,13 @@ public abstract class Subscription implements Parcelable {
         if (zones != null && zones.length > 0) {
             StringBuilder zones_list = new StringBuilder();
             for (int z : zones) {
+                if (zones_list.length() != 0)
+                    zones_list.append(", ");
                 zones_list.append(Integer.toString(z));
             }
 
             items.add(new ListItem(Utils.localizePlural(R.plurals.travel_zones,
-                    zones.length, zones_list)));
+                    zones.length), zones_list.toString()));
         }
 
         return items.size() > 0 ? items : null;

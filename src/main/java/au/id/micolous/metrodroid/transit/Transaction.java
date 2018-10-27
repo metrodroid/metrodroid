@@ -57,4 +57,12 @@ public abstract class Transaction implements Parcelable {
     protected abstract boolean isSameTrip(Transaction other);
 
     protected abstract boolean isTapOn();
+
+    protected boolean isTransfer() {
+        return false;
+    }
+
+    protected boolean isRejected() {
+        return false;
+    }
 }

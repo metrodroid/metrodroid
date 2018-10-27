@@ -30,6 +30,7 @@ import android.os.Bundle;
 import android.os.IBinder;
 import android.os.Parcel;
 import android.preference.PreferenceManager;
+import android.support.annotation.NonNull;
 import android.util.Log;
 
 import au.id.micolous.metrodroid.transit.easycard.EasyCardTransitFactory;
@@ -54,22 +55,26 @@ import au.id.micolous.metrodroid.card.TagReaderFeedbackInterface;
 import au.id.micolous.metrodroid.key.CardKeys;
 import au.id.micolous.metrodroid.key.ClassicCardKeys;
 import au.id.micolous.metrodroid.key.ClassicSectorKey;
+import au.id.micolous.metrodroid.transit.CardInfo;
 import au.id.micolous.metrodroid.transit.TransitData;
 import au.id.micolous.metrodroid.transit.TransitIdentity;
 import au.id.micolous.metrodroid.transit.bilhete_unico.BilheteUnicoSPTransitData;
 import au.id.micolous.metrodroid.transit.charlie.CharlieCardTransitData;
 import au.id.micolous.metrodroid.transit.chc_metrocard.ChcMetrocardTransitData;
 import au.id.micolous.metrodroid.transit.erg.ErgTransitData;
+import au.id.micolous.metrodroid.transit.kiev.KievTransitData;
 import au.id.micolous.metrodroid.transit.lax_tap.LaxTapTransitData;
 import au.id.micolous.metrodroid.transit.manly_fast_ferry.ManlyFastFerryTransitData;
+import au.id.micolous.metrodroid.transit.metroq.MetroQTransitData;
 import au.id.micolous.metrodroid.transit.msp_goto.MspGotoTransitData;
 import au.id.micolous.metrodroid.transit.nextfare.NextfareTransitData;
 import au.id.micolous.metrodroid.transit.ovc.OVChipTransitData;
 import au.id.micolous.metrodroid.transit.podorozhnik.PodorozhnikTransitData;
 import au.id.micolous.metrodroid.transit.ricaricami.RicaricaMiTransitData;
 import au.id.micolous.metrodroid.transit.seq_go.SeqGoTransitData;
+import au.id.micolous.metrodroid.transit.serialonly.TartuTransitFactory;
 import au.id.micolous.metrodroid.transit.smartrider.SmartRiderTransitData;
-import au.id.micolous.metrodroid.transit.strelka.StrelkaTransitData;
+import au.id.micolous.metrodroid.transit.serialonly.StrelkaTransitData;
 import au.id.micolous.metrodroid.transit.troika.TroikaHybridTransitData;
 import au.id.micolous.metrodroid.transit.troika.TroikaTransitData;
 import au.id.micolous.metrodroid.transit.unknown.BlankClassicTransitData;
@@ -190,6 +195,7 @@ public class ClassicCard extends Card {
             int sectorCount = tech.getSectorCount();
             List<ClassicSector> sectors = new ArrayList<>();
             final int maxProgress = tech.getSectorCount() * 5;
+            boolean gotType = false;
 
             for (int sectorIndex = 0; sectorIndex < sectorCount; sectorIndex++) {
                 try {
@@ -283,6 +289,9 @@ public class ClassicCard extends Card {
                         sectors.add(new ClassicSector(sectorIndex,
                                 blocks.toArray(new ClassicBlock[0]),
                                 correctKey));
+
+                        if (!gotType)
+                            gotType = earlyCheck(sectors, feedbackInterface);
 
                         feedbackInterface.updateProgressBar((sectorIndex * 5) + 4, maxProgress);
                     } else {
@@ -394,72 +403,69 @@ public class ClassicCard extends Card {
         return prefs.getString(MetrodroidApplication.PREF_MFC_FALLBACK, "null").toLowerCase(Locale.US);
     }
 
-    @Override
-    public TransitIdentity parseTransitIdentity() {
-        // All .check() methods should work without a key, and throw an UnauthorizedException
-        // Otherwise UnauthorizedClassicTransitData will not trigger
-        if (OVChipTransitData.check(this)) {
-            return OVChipTransitData.parseTransitIdentity(this);
-        } else if (ErgTransitData.check(this)) {
+    private static final ClassicCardTransitFactory FACTORIES[] = {
+            OVChipTransitData.FACTORY,
             // Search through ERG on MIFARE Classic compatibles.
-            if (ManlyFastFerryTransitData.check(this)) {
-                return ManlyFastFerryTransitData.parseTransitIdentity(this);
-            } else if (ChcMetrocardTransitData.check(this)) {
-                return ChcMetrocardTransitData.parseTransitIdentity(this);
-            } else {
-                // Fallback
-                return ErgTransitData.parseTransitIdentity(this);
-            }
-        } else if (NextfareTransitData.check(this)) {
-            // Search through Nextfare on MIFARE Classic compatibles.
-            if (SeqGoTransitData.check(this)) {
-                return SeqGoTransitData.parseTransitIdentity(this);
-            } else if (LaxTapTransitData.check(this)) {
-                return LaxTapTransitData.parseTransitIdentity(this);
-            } else if (MspGotoTransitData.check(this)) {
-                return MspGotoTransitData.parseTransitIdentity(this);
-            } else {
-                // Fallback
-                return NextfareTransitData.parseTransitIdentity(this);
-            }
-        } else if (SmartRiderTransitData.check(this)) {
-            return SmartRiderTransitData.parseTransitIdentity(this);
-        } else if (TroikaTransitData.check(this)) {
-            return TroikaHybridTransitData.parseTransitIdentity(this);
-        } else if (PodorozhnikTransitData.check(this)) {
-            return PodorozhnikTransitData.parseTransitIdentity(this);
-        } else if (StrelkaTransitData.check(this)) {
-            return StrelkaTransitData.parseTransitIdentity(this);
-        } else if (CharlieCardTransitData.check(this)) {
-            return CharlieCardTransitData.parseTransitIdentity(this);
-        } else if (RicaricaMiTransitData.check(this)) {
-            return RicaricaMiTransitData.parseTransitIdentity(this);
-        } else if (BilheteUnicoSPTransitData.check(this)) {
-            return BilheteUnicoSPTransitData.parseTransitIdentity(this);
-        } else if ((new EasyCardTransitFactory()).check(this)) {
-            return (new EasyCardTransitFactory()).parseIdentity(this);
-        } else if (UnauthorizedClassicTransitData.check(this)) {
+            ManlyFastFerryTransitData.FACTORY,
+            ChcMetrocardTransitData.FACTORY,
+            // Fallback
+            ErgTransitData.FALLBACK_FACTORY,
+            // Nextfare
+            SeqGoTransitData.FACTORY,
+            LaxTapTransitData.FACTORY,
+            MspGotoTransitData.FACTORY,
+            // Fallback
+            NextfareTransitData.FALLBACK_FACTORY,
+            SmartRiderTransitData.FACTORY,
+            TroikaHybridTransitData.FACTORY,
+            PodorozhnikTransitData.FACTORY,
+            StrelkaTransitData.FACTORY,
+            CharlieCardTransitData.FACTORY,
+            RicaricaMiTransitData.FACTORY,
+            BilheteUnicoSPTransitData.FACTORY,
+            KievTransitData.FACTORY,
+            MetroQTransitData.FACTORY,
+            new TartuTransitFactory(),
+	    new EasyCardTransitFactory(),
             // This check must be THIRD TO LAST.
             //
             // This is to throw up a warning whenever there is a card with all locked sectors
-            return UnauthorizedClassicTransitData.parseTransitIdentity(this);
-        } else if (BlankClassicTransitData.check(this)) {
+            UnauthorizedClassicTransitData.FACTORY,
             // This check must be SECOND TO LAST.
             //
             // This is to throw up a warning whenever there is a card with all empty sectors
-            return BlankClassicTransitData.parseTransitIdentity(this);
-        } else {
+            BlankClassicTransitData.FACTORY,
             // This check must be LAST.
             //
             // This is for agencies who don't have identifying "magic" in their card.
-            String fallback = getFallbackReader();
-            if (fallback.equals("myway") || fallback.equals("smartrider")) {
-                // This has a proper check now, but is included for legacy reasons.
-                //
-                // Before the introduction of key-based detection for these cards, Metrodroid did
-                // not record the key inside the ClassicCard XML structure.
-                return SmartRiderTransitData.parseTransitIdentity(this);
+            new FallbackFactory()
+        };
+
+    private static boolean earlyCheck(List<ClassicSector> sectors, TagReaderFeedbackInterface feedbackInterface) {
+        int secnum = sectors.size();
+        for (ClassicCardTransitFactory factory : FACTORIES) {
+            if (factory.earlySectors() == secnum) {
+                CardInfo ci;
+                try {
+                    ci = factory.earlyCardInfo(sectors);
+                } catch (Exception e) {
+                    ci = null;
+                }
+                if (ci != null) {
+                    feedbackInterface.showCardType(ci);
+                    feedbackInterface.updateStatusText(Utils.localizeString(R.string.card_reading_type, ci.getName()));
+                    return true;
+                }
             }
+        }
+        return false;
+    }
+
+    @Override
+    public TransitIdentity parseTransitIdentity() {
+        for (ClassicCardTransitFactory factory : FACTORIES) {
+            if (factory.check(this))
+                return factory.parseTransitIdentity(this);
         }
 
         // The card could not be identified, but has some open sectors.
@@ -468,66 +474,9 @@ public class ClassicCard extends Card {
 
     @Override
     public TransitData parseTransitData() {
-        if (OVChipTransitData.check(this)) {
-            return new OVChipTransitData(this);
-        } else if (ErgTransitData.check(this)) {
-            // Search through ERG on MIFARE Classic compatibles.
-            if (ManlyFastFerryTransitData.check(this)) {
-                return new ManlyFastFerryTransitData(this);
-            } else if (ChcMetrocardTransitData.check(this)) {
-                return new ChcMetrocardTransitData(this);
-            } else {
-                // Fallback
-                return new ErgTransitData(this);
-            }
-        } else if (NextfareTransitData.check(this)) {
-            // Search through Nextfare on MIFARE Classic compatibles.
-            if (SeqGoTransitData.check(this)) {
-                return new SeqGoTransitData(this);
-            } else if (LaxTapTransitData.check(this)) {
-                return new LaxTapTransitData(this);
-            } else if (MspGotoTransitData.check(this)) {
-                return new MspGotoTransitData(this);
-            } else {
-                // Fallback
-                return new NextfareTransitData(this);
-            }
-        } else if (SmartRiderTransitData.check(this)) {
-            return new SmartRiderTransitData(this);
-        } else if (TroikaTransitData.check(this)) {
-            // This class will figure out details
-            return new TroikaHybridTransitData(this);
-        } else if (PodorozhnikTransitData.check(this)) {
-            return new PodorozhnikTransitData(this);
-        } else if (StrelkaTransitData.check(this)) {
-            return new StrelkaTransitData(this);
-        } else if (CharlieCardTransitData.check(this)) {
-            return new CharlieCardTransitData(this);
-        } else if (RicaricaMiTransitData.check(this)) {
-            return new RicaricaMiTransitData(this);
-        } else if (BilheteUnicoSPTransitData.check(this)) {
-            return new BilheteUnicoSPTransitData(this);
-        } else if ((new EasyCardTransitFactory()).check(this)) {
-            return (new EasyCardTransitFactory()).parseInfo(this);
-        } else if (UnauthorizedClassicTransitData.check(this)) {
-            // This check must be THIRD TO LAST.
-            //
-            // This is to throw up a warning whenever there is a card with all locked sectors
-            return new UnauthorizedClassicTransitData();
-        } else if (BlankClassicTransitData.check(this)) {
-            // This check must be SECOND TO LAST.
-            //
-            // This is to throw up a warning whenever there is a card with all empty sectors
-            return new BlankClassicTransitData();
-        } else {
-            // This check must be LAST.
-            //
-            // This is for agencies who don't have identifying "magic" in their card.
-            String fallback = getFallbackReader();
-            if (fallback.equals("myway")) {
-                // TODO: Replace this with a proper check, and take out of fallback mode.
-                return new SmartRiderTransitData(this);
-            }
+        for (ClassicCardTransitFactory factory : FACTORIES) {
+            if (factory.check(this))
+                return factory.parseTransitData(this);
         }
 
         // The card could not be identified, but has some open sectors.
@@ -585,5 +534,46 @@ public class ClassicCard extends Card {
             }
         }
         return li;
+    }
+
+    private static class FallbackFactory extends ClassicCardTransitFactory {
+        @Override
+        public boolean check(@NonNull ClassicCard classicCard) {
+            String fallback = getFallbackReader();
+            if (fallback.equals("myway") || fallback.equals("smartrider")) {
+                // This has a proper check now, but is included for legacy reasons.
+                //
+                // Before the introduction of key-based detection for these cards, Metrodroid did
+                // not record the key inside the ClassicCard XML structure.
+                return true;
+            }
+            return false;
+        }
+
+        @Override
+        public TransitIdentity parseTransitIdentity(@NonNull ClassicCard classicCard) {
+            String fallback = getFallbackReader();
+            if (fallback.equals("myway") || fallback.equals("smartrider")) {
+                // This has a proper check now, but is included for legacy reasons.
+                //
+                // Before the introduction of key-based detection for these cards, Metrodroid did
+                // not record the key inside the ClassicCard XML structure.
+                return SmartRiderTransitData.FACTORY.parseTransitIdentity(classicCard);
+            }
+            return null;
+        }
+
+        @Override
+        public TransitData parseTransitData(@NonNull ClassicCard classicCard) {
+            String fallback = getFallbackReader();
+            if (fallback.equals("myway") || fallback.equals("smartrider")) {
+                // This has a proper check now, but is included for legacy reasons.
+                //
+                // Before the introduction of key-based detection for these cards, Metrodroid did
+                // not record the key inside the ClassicCard XML structure.
+                return SmartRiderTransitData.FACTORY.parseTransitData(classicCard);
+            }
+            return null;
+        }
     }
 }
