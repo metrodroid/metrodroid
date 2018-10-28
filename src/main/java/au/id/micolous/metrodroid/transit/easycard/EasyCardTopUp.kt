@@ -22,6 +22,7 @@
  */
 package au.id.micolous.metrodroid.transit.easycard
 
+import android.support.annotation.VisibleForTesting
 import au.id.micolous.metrodroid.card.classic.ClassicCard
 import au.id.micolous.metrodroid.transit.Station
 import au.id.micolous.metrodroid.transit.TransitCurrency
@@ -37,6 +38,13 @@ data class EasyCardTopUp(
         private val amount: Int,
         private val location: Int
 ) : Trip() {
+    @VisibleForTesting
+    constructor(data: ByteArray) : this(
+            Utils.byteArrayToLongReversed(data, 1, 4),
+            Utils.byteArrayToIntReversed(data, 6, 2),
+            data[11].toInt()
+    )
+
     override fun getFare(): TransitCurrency? = TransitCurrency.TWD(-amount)
 
     override fun getStartTimestamp(): Calendar? = EasyCardTransitData.parseTimestamp(timestamp)
@@ -51,12 +59,7 @@ data class EasyCardTopUp(
     companion object {
         fun parse(card: ClassicCard): EasyCardTopUp {
             val data = (card.getSector(2))?.getBlock(2)?.data!!
-
-            val id = data[11].toInt()
-            val date = Utils.byteArrayToLongReversed(data, 1, 4)
-            val amount = Utils.byteArrayToIntReversed(data, 6, 2)
-
-            return EasyCardTopUp(date, amount, id)
+            return EasyCardTopUp(data)
         }
     }
 }

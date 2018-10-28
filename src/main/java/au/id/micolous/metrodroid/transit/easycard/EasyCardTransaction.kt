@@ -22,6 +22,7 @@
  */
 package au.id.micolous.metrodroid.transit.easycard
 
+import android.support.annotation.VisibleForTesting
 import au.id.micolous.metrodroid.card.classic.ClassicCard
 import au.id.micolous.metrodroid.card.classic.ClassicSector
 import au.id.micolous.metrodroid.transit.Station
@@ -34,7 +35,7 @@ import kotlinx.android.parcel.Parcelize
 import java.util.*
 
 @Parcelize
-data class EasyCardTransaction(
+data class EasyCardTransaction internal constructor(
         internal val timestamp: Long,
         private var fare: Int,
         private val location: Int,
@@ -42,6 +43,14 @@ data class EasyCardTransaction(
         private var exitTimestamp: Long? = null,
         private var exitLocation: Int? = null
 ) : Trip() {
+    @VisibleForTesting
+    constructor(data: ByteArray) : this(
+            Utils.byteArrayToLongReversed(data, 1, 4),
+            Utils.byteArrayToIntReversed(data, 6, 2),
+            data[11].toInt(),
+            data[5] == 0x11.toByte()
+    )
+
     override fun getFare(): TransitCurrency? = TransitCurrency.TWD(fare)
 
     override fun getStartTimestamp(): Calendar? = EasyCardTransitData.parseTimestamp(timestamp)
@@ -99,12 +108,7 @@ data class EasyCardTransaction(
                     .filter { !it.data.all { it == 0x0.toByte() } }
 
             var trips = blocks.map { block ->
-                val data = block.data
-                val timestamp = Utils.byteArrayToLongReversed(data, 1, 4)
-                val fare = Utils.byteArrayToIntReversed(data, 6, 2)
-                val transactionType = data[11].toInt()
-                EasyCardTransaction(timestamp, fare, transactionType,
-                        data[5] == 0x11.toByte())
+                EasyCardTransaction(block.data)
             }.distinctBy { it.timestamp }
 
             Collections.sort(trips, Trip.Comparator())
