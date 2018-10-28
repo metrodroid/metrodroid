@@ -55,6 +55,7 @@ class EasyCardTest : InstrumentationTestCase() {
         assertEquals(TransitCurrency.TWD(15), trip.fare)
         assertEquals(Trip.Mode.BUS, trip.mode)
         assertNull(trip.startStation)
+        assertEquals("0x1233a4", trip.machineID)
 
         val refill = c.trips[1]
         assertEquals("2013-07-27 08:58",
@@ -64,6 +65,7 @@ class EasyCardTest : InstrumentationTestCase() {
         assertNotNull(refill.startStation)
         assertEquals("Yongan Market", refill.startStation!!.stationName)
         assertNull(refill.routeName)
+        assertEquals("0x31c046", refill.machineID)
     }
 
     fun testdeadbeefChineseTraditional() {

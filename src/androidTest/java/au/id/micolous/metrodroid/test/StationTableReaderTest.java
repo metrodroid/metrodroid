@@ -101,6 +101,7 @@ public class StationTableReaderTest extends AndroidTestCase {
                 10,
                 startStation,
                 false,
+                0x6789L,
                 0x2345L,
                 endStation
         );

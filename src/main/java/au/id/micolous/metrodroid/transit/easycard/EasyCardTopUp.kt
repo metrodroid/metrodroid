@@ -1,5 +1,5 @@
 /*
- * EasyCardTransitData.kt
+ * EasyCardTopUp.kt
  *
  * Copyright 2017 Eric Butler <eric@codebutler.com>
  *
@@ -36,13 +36,15 @@ import java.util.*
 data class EasyCardTopUp(
         internal val timestamp: Long,
         private val amount: Int,
-        private val location: Int
+        private val location: Int,
+        private val machineId: Long
 ) : Trip() {
     @VisibleForTesting
     constructor(data: ByteArray) : this(
             Utils.byteArrayToLongReversed(data, 1, 4),
             Utils.byteArrayToIntReversed(data, 6, 2),
-            data[11].toInt()
+            data[11].toInt(),
+            Utils.byteArrayToLongReversed(data, 12, 4)
     )
 
     override fun getFare(): TransitCurrency? = TransitCurrency.TWD(-amount)
@@ -55,6 +57,8 @@ data class EasyCardTopUp(
     override fun getMode(): Mode = Mode.TICKET_MACHINE
 
     override fun getRouteName(): String? = null
+
+    override fun getMachineID(): String? = "0x" + machineId.toString(16)
 
     companion object {
         fun parse(card: ClassicCard): EasyCardTopUp {

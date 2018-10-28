@@ -40,6 +40,7 @@ data class EasyCardTransaction internal constructor(
         private var fare: Int,
         private val location: Int,
         private val isTapOff: Boolean,
+        private val machineId: Long,
         private var exitTimestamp: Long? = null,
         private var exitLocation: Int? = null
 ) : Trip() {
@@ -48,7 +49,8 @@ data class EasyCardTransaction internal constructor(
             Utils.byteArrayToLongReversed(data, 1, 4),
             Utils.byteArrayToIntReversed(data, 6, 2),
             data[11].toInt(),
-            data[5] == 0x11.toByte()
+            data[5] == 0x11.toByte(),
+            Utils.byteArrayToLongReversed(data, 12, 4)
     )
 
     override fun getFare(): TransitCurrency? = TransitCurrency.TWD(fare)
@@ -74,6 +76,8 @@ data class EasyCardTransaction internal constructor(
             else -> Mode.METRO
         }
     }
+
+    override fun getMachineID(): String? = "0x" + machineId.toString(16)
 
     fun shouldBeMerged(trip: EasyCardTransaction): Boolean {
         if (location == POS || location == BUS
