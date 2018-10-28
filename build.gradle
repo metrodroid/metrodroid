@@ -127,6 +127,9 @@ android {
                 'nl',
                 'ru',
                 'tr',
+                'zh-rCN',
+                'zh-rHK',
+                'zh-rSG',
                 'zh-rTW',
 
                 // UI mode
