@@ -22,21 +22,21 @@ import android.test.InstrumentationTestCase
 import au.id.micolous.metrodroid.card.classic.ClassicCard
 import au.id.micolous.metrodroid.transit.TransitCurrency
 import au.id.micolous.metrodroid.transit.Trip
-import au.id.micolous.metrodroid.transit.easycard.EasyCardTransitFactory
+import au.id.micolous.metrodroid.transit.easycard.EasyCardTransitData
 import au.id.micolous.metrodroid.util.Utils
 
 /**
  * This test uses a EasyCard dump from: http://www.fuzzysecurity.com/tutorials/rfid/4.html
  */
 class EasyCardTest : InstrumentationTestCase() {
-    private fun parseCard(c: ClassicCard): EasyCardTransitFactory.EasyCardTransitData {
+    private fun parseCard(c: ClassicCard): EasyCardTransitData {
         val d = c.parseTransitData()
         assertNotNull("Transit data not parsed", d)
-        assertTrue(d is EasyCardTransitFactory.EasyCardTransitData)
-        return d as EasyCardTransitFactory.EasyCardTransitData
+        assertTrue(d is EasyCardTransitData)
+        return d as EasyCardTransitData
     }
 
-    private fun loadCard(path: String): EasyCardTransitFactory.EasyCardTransitData {
+    private fun loadCard(path: String): EasyCardTransitData {
         return parseCard(TestUtils.loadMifareClassic1KFromAssets(instrumentation.context, path))
     }
 

@@ -3,7 +3,7 @@ package au.id.micolous.metrodroid.test;
 import android.test.AndroidTestCase;
 
 import au.id.micolous.metrodroid.transit.Station;
-import au.id.micolous.metrodroid.transit.easycard.EasyCardTransitFactory;
+import au.id.micolous.metrodroid.transit.easycard.EasyCardTransaction;
 import au.id.micolous.metrodroid.transit.seq_go.SeqGoData;
 import au.id.micolous.metrodroid.transit.seq_go.SeqGoTrip;
 import au.id.micolous.metrodroid.transit.suica.SuicaDBUtil;
@@ -95,12 +95,11 @@ public class StationTableReaderTest extends AndroidTestCase {
     private final int EASYCARD_BL23_BR24 = 0x1f;
     private final int EASYCARD_BL12_R10 = 0x33;
 
-    private EasyCardTransitFactory.EasyCardTrip createEasyCardTrip(int startStation, int endStation) {
-        return new EasyCardTransitFactory.EasyCardTrip(
+    private EasyCardTransaction createEasyCardTrip(int startStation, int endStation) {
+        return new EasyCardTransaction(
                 0x1234L,
                 10,
                 startStation,
-                false,
                 false,
                 0x2345L,
                 endStation
@@ -112,7 +111,7 @@ public class StationTableReaderTest extends AndroidTestCase {
         TestUtils.showRawStationIds(false);
         TestUtils.showLocalAndEnglish(false);
 
-        EasyCardTransitFactory.EasyCardTrip trip;
+        EasyCardTransaction trip;
 
         trip = createEasyCardTrip(EASYCARD_BR02, EASYCARD_BR19);
         assertEquals("Brown", trip.getRouteName());

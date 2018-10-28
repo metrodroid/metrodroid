@@ -25,6 +25,7 @@
 package au.id.micolous.metrodroid.transit.orca;
 
 import android.os.Parcel;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
 import au.id.micolous.farebot.R;
@@ -116,6 +117,7 @@ public class OrcaTransaction extends Transaction {
         return !mIsTopup && mTransType == TRANS_TYPE_CANCEL_TRIP;
     }
 
+    @NonNull
     @Override
     public List<String> getRouteNames() {
         if (mIsTopup) {
