@@ -3,6 +3,7 @@ package au.id.micolous.metrodroid.test;
 import android.test.AndroidTestCase;
 
 import au.id.micolous.metrodroid.transit.Station;
+import au.id.micolous.metrodroid.transit.easycard.EasyCardTransitFactory;
 import au.id.micolous.metrodroid.transit.seq_go.SeqGoData;
 import au.id.micolous.metrodroid.transit.seq_go.SeqGoTrip;
 import au.id.micolous.metrodroid.transit.suica.SuicaDBUtil;
@@ -87,5 +88,45 @@ public class StationTableReaderTest extends AndroidTestCase {
         s = SuicaDBUtil.getRailStation(SHINJUKU_REGION_CODE, SHINJUKU_LINE_CODE, SHINJUKU_STATION_CODE);
         assertNotNull(s);
         assertEquals("新宿 (Shinjuku)", s.getStationName());
+    }
+
+    private final int EASYCARD_BR02 = 0x12;
+    private final int EASYCARD_BR19 = 0x1a;
+    private final int EASYCARD_BL23_BR24 = 0x1f;
+    private final int EASYCARD_BL12_R10 = 0x33;
+
+    private EasyCardTransitFactory.EasyCardTrip createEasyCardTrip(int startStation, int endStation) {
+        return new EasyCardTransitFactory.EasyCardTrip(
+                0x1234L,
+                10,
+                startStation,
+                false,
+                false,
+                0x2345L,
+                endStation
+        );
+    }
+
+    public void testEasyCardLineSelection() {
+        TestUtils.setLocale(getContext(), "en-US");
+        TestUtils.showRawStationIds(false);
+        TestUtils.showLocalAndEnglish(false);
+
+        EasyCardTransitFactory.EasyCardTrip trip;
+
+        trip = createEasyCardTrip(EASYCARD_BR02, EASYCARD_BR19);
+        assertEquals("Brown", trip.getRouteName());
+
+        trip = createEasyCardTrip(EASYCARD_BR02, EASYCARD_BL23_BR24);
+        assertEquals("Brown", trip.getRouteName());
+
+        trip = createEasyCardTrip(EASYCARD_BL23_BR24, EASYCARD_BR19);
+        assertEquals("Brown", trip.getRouteName());
+
+        trip = createEasyCardTrip(EASYCARD_BL23_BR24, EASYCARD_BL12_R10);
+        assertEquals("Blue", trip.getRouteName());
+
+        trip = createEasyCardTrip(EASYCARD_BR02, EASYCARD_BL12_R10);
+        assertEquals("Brown", trip.getRouteName());
     }
 }
