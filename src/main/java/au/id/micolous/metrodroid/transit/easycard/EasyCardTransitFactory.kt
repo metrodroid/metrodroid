@@ -205,14 +205,8 @@ class EasyCardTransitFactory : ClassicCardTransitFactory() {
             return when (location) {
                 BUS -> Mode.BUS
                 POS -> Mode.POS
-                else -> Mode.TRAIN
+                else -> Mode.METRO
             }
-        }
-
-        override fun getAgencyName(isShort: Boolean): String = when (location) {
-            BUS -> "Bus"
-            POS -> "POS"
-            else -> "Metro"
         }
 
         fun shouldBeMerged(trip: EasyCardTrip): Boolean {
@@ -228,6 +222,12 @@ class EasyCardTransitFactory : ClassicCardTransitFactory() {
             fare += trip.fare
             exitLocation = trip.location
             exitTimestamp = trip.timestamp
+        }
+
+        override fun getRouteName(): String?  = when (mode) {
+            Mode.METRO -> super.getRouteName()
+            // Ticket machines would otherwise inherit a line from the Station.
+            else -> null
         }
     }
 }
