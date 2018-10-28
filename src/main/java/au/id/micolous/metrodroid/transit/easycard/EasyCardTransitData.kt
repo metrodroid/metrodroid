@@ -89,6 +89,12 @@ data class EasyCardTransitData internal constructor(
             return Utils.byteArrayToIntReversed(data, 0, 4)
         }
 
+        internal fun parseTimestamp(ts: Long?): Calendar? {
+            val g = GregorianCalendar(TZ)
+            g.timeInMillis = (ts ?: return null) * 1000
+            return g
+        }
+
         val FACTORY = object: ClassicCardTransitFactory() {
             override fun check(card: ClassicCard): Boolean {
                 val data: ByteArray? = try {

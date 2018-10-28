@@ -39,11 +39,7 @@ data class EasyCardTopUp(
 ) : Trip() {
     override fun getFare(): TransitCurrency? = TransitCurrency.TWD(-amount)
 
-    override fun getStartTimestamp(): Calendar {
-        val g = GregorianCalendar(EasyCardTransitData.TZ)
-        g.timeInMillis = timestamp * 1000
-        return g
-    }
+    override fun getStartTimestamp(): Calendar? = EasyCardTransitData.parseTimestamp(timestamp)
 
     override fun getStartStation(): Station? =
             StationTableReader.getStation(EasyCardTransitData.EASYCARD_STR, location)

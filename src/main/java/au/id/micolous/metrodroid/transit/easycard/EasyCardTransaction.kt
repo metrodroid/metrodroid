@@ -28,7 +28,6 @@ import au.id.micolous.metrodroid.transit.Station
 import au.id.micolous.metrodroid.transit.TransitCurrency
 import au.id.micolous.metrodroid.transit.Trip
 import au.id.micolous.metrodroid.transit.easycard.EasyCardTransitData.Companion.EASYCARD_STR
-import au.id.micolous.metrodroid.transit.easycard.EasyCardTransitData.Companion.TZ
 import au.id.micolous.metrodroid.util.StationTableReader
 import au.id.micolous.metrodroid.util.Utils
 import kotlinx.android.parcel.Parcelize
@@ -45,17 +44,9 @@ data class EasyCardTransaction(
 ) : Trip() {
     override fun getFare(): TransitCurrency? = TransitCurrency.TWD(fare)
 
-    override fun getStartTimestamp(): Calendar {
-        val g = GregorianCalendar(TZ)
-        g.timeInMillis = timestamp * 1000
-        return g
-    }
+    override fun getStartTimestamp(): Calendar? = EasyCardTransitData.parseTimestamp(timestamp)
 
-    override fun getEndTimestamp(): Calendar? {
-        val g = GregorianCalendar(TZ)
-        g.timeInMillis = (exitTimestamp ?: return null) * 1000
-        return g
-    }
+    override fun getEndTimestamp(): Calendar? = EasyCardTransitData.parseTimestamp(exitTimestamp)
 
     override fun getStartStation(): Station? = when (location) {
         BUS -> null
