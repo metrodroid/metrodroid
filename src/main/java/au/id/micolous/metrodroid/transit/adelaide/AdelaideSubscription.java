@@ -29,38 +29,35 @@ import java.util.List;
 
 import au.id.micolous.metrodroid.transit.en1545.En1545Bitmap;
 import au.id.micolous.metrodroid.transit.en1545.En1545Container;
+import au.id.micolous.metrodroid.transit.en1545.En1545Field;
 import au.id.micolous.metrodroid.transit.en1545.En1545FixedHex;
 import au.id.micolous.metrodroid.transit.en1545.En1545FixedInteger;
 import au.id.micolous.metrodroid.transit.en1545.En1545Lookup;
 import au.id.micolous.metrodroid.transit.en1545.En1545Subscription;
+import au.id.micolous.metrodroid.transit.intercode.IntercodeSubscription;
 import au.id.micolous.metrodroid.ui.ListItem;
 
 public class AdelaideSubscription extends En1545Subscription {
 
     // Basically Intercode but with Extra
-    private static final En1545Bitmap SUB_FIELDS = new En1545Bitmap(
-                    new En1545FixedInteger(CONTRACT_PROVIDER, 8),
-                    new En1545FixedInteger(CONTRACT_TARIFF, 16),
-                    new En1545FixedInteger(CONTRACT_SERIAL_NUMBER, 32),
-                    new En1545FixedInteger(CONTRACT_PASSENGER_CLASS, 8),
-                    new En1545Bitmap(
-                            En1545FixedInteger.date(CONTRACT_START),
-                            En1545FixedInteger.date(CONTRACT_END)
-                    ),
-                    new En1545FixedInteger(CONTRACT_STATUS, 8),
+    private static final En1545Field SUB_FIELDS = IntercodeSubscription.commonFormat(
                     new En1545Container(
                             new En1545FixedHex("BitmaskExtra0", 13), // 0800
                             new En1545Bitmap(
+                                    // Unconfirmed
                                     new En1545Container(
                                             new En1545FixedInteger("ContractOrigin1", 16),
                                             new En1545FixedInteger("ContractVia1", 16),
                                             new En1545FixedInteger("ContractDestination1", 16)
                                     ),
+                                    // Unconfirmed
                                     new En1545Container(
                                             new En1545FixedInteger("ContractOrigin2", 16),
                                             new En1545FixedInteger("ContractDestination2", 16)
                                     ),
+                                    // Unconfirmed
                                     new En1545FixedInteger(CONTRACT_ZONES, 16),
+                                    // Confirmed
                                     new En1545Container(
                                             En1545FixedInteger.date(CONTRACT_SALE),
                                             new En1545FixedInteger(CONTRACT_SALE_DEVICE, 16),
