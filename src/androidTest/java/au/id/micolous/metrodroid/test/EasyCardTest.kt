@@ -25,24 +25,21 @@ import au.id.micolous.metrodroid.transit.Trip
 import au.id.micolous.metrodroid.transit.easycard.EasyCardTransitFactory
 import au.id.micolous.metrodroid.util.Utils
 
+/**
+ * This test uses a EasyCard dump from: http://www.fuzzysecurity.com/tutorials/rfid/4.html
+ */
 class EasyCardTest : InstrumentationTestCase() {
     private fun parseCard(c: ClassicCard): EasyCardTransitFactory.EasyCardTransitData {
-        // FIXME
-        /* val d = c.parseTransitData()
+        val d = c.parseTransitData()
         assertNotNull("Transit data not parsed", d)
         assertTrue(d is EasyCardTransitFactory.EasyCardTransitData)
-        return d as EasyCardTransitFactory.EasyCardTransitData */
-
-        return EasyCardTransitFactory().parseTransitData(c) as EasyCardTransitFactory.EasyCardTransitData
+        return d as EasyCardTransitFactory.EasyCardTransitData
     }
 
     private fun loadCard(path: String): EasyCardTransitFactory.EasyCardTransitData {
         return parseCard(TestUtils.loadMifareClassic1KFromAssets(instrumentation.context, path))
     }
 
-    /**
-     * This test uses a EasyCard dump from: http://www.fuzzysecurity.com/tutorials/rfid/4.html
-     */
     fun testdeadbeefEnglish() {
         TestUtils.setLocale(instrumentation.context, "en-US")
         TestUtils.showRawStationIds(false)
@@ -66,7 +63,7 @@ class EasyCardTest : InstrumentationTestCase() {
         assertEquals(Trip.Mode.TICKET_MACHINE, refill.mode)
         assertNotNull(refill.startStation)
         assertEquals("Yongan Market", refill.startStation!!.stationName)
-        assertEquals("Orange", refill.routeName)
+        assertNull(refill.routeName)
     }
 
     fun testdeadbeefChineseTraditional() {
@@ -78,7 +75,6 @@ class EasyCardTest : InstrumentationTestCase() {
         val refill = c.trips[1]
         // Yongan Market
         assertEquals("永安市場", refill.startStation!!.stationName)
-        // Zhonghe–Xinlu
-        assertEquals("中和新蘆線", refill.routeName)
+        assertNull(refill.routeName)
     }
 }
