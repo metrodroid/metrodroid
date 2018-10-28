@@ -39,9 +39,9 @@ public abstract class En1545LookupSTR implements En1545Lookup {
         if (transport == null)
             transport = 0;
         int routeId = (routeNumber) | (agency << 16) | (transport << 24);
-        String routeReadable = Integer.toString(routeNumber);
+        String routeReadable = "0x" + Integer.toHexString(routeNumber);
         if (routeVariant != null) {
-            routeReadable += "/" + routeVariant;
+            routeReadable += "/0x" + Integer.toHexString(routeVariant);
         }
         return StationTableReader.getLineName(mStr, routeId, routeReadable);
     }

@@ -33,7 +33,7 @@ def delimited_value(msg):
   return d + o
 
 class MdstWriter(object):
-  def __init__(self, fh, version, local_languages=None, operators=None, lines=None, tts_hint_language=None):
+  def __init__(self, fh, version, local_languages=None, operators=None, lines=None, tts_hint_language=None, license_notice_f=None):
     """
     Creates a new MdST database.
     
@@ -45,6 +45,7 @@ class MdstWriter(object):
     operators: optional, dict of [int](Operator) declaring a mapping of operators.
     lines: optional, dict of [int](Line) declaring a mapping of lines.
     tts_hint_language: optional, str of LocaleSpan hint for station names.
+    license_notice_f: optional, file-like object containing a license notice.
     
     
     """
@@ -84,6 +85,9 @@ class MdstWriter(object):
           sdb.lines[k].name.english = v[0]
         if len(v) > 1 and v[1] != None:
           sdb.lines[k].name.local = v[1]
+
+    if license_notice_f:
+      sdb.license_notice = license_notice_f.read().strip()
 
     # Write out the header
     fh.write(b'MdST')

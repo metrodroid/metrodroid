@@ -1,0 +1,25 @@
+The following notices apply to Metrodroid's Clipper card stop database:
+
+1. Bay Area Rapid Transit (BART) station names and locations are derived from BART's GTFS feed, made available under the Developer License Agreement by BART.
+
+You can obtain a copy of the raw data and its license at:
+
+   http://www.bart.gov/schedules/developers/developer-license-agreement
+
+   http://www.bart.gov/schedules/developers/gtfs
+
+2. San Francisco Municipal Railway (Muni) station/stop names and locations are derived from San Francisco Municipal Transportation Agency's (SFMTA) GTFS feed, made under available under the SFMTA Transit Data License Agreement.
+
+You can obtain a copy of the raw data and its license at:
+
+   https://www.sfmta.com/reports/gtfs-transit-data
+
+3. Santa Clara Valley Transportation Authority (VTA) station locations are derived from VTA's GTFS feed, made available under the Developer License Agreement by VTA.
+
+You can obtain a copy of the raw data and its license at:
+
+   http://www.vta.org/getting-around/gtfs-info/dev-terms-of-use
+
+   http://www.vta.org/getting-around/gtfs-info/data-file
+
+4. Station, stop and agency ID mappings for Clipper card are not provided by the aforementioned agencies. This information is available in Metrodroid's source repository, and is subject to the same license terms as Metrodroid.

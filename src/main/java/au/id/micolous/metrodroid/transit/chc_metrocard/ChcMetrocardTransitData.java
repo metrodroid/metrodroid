@@ -19,14 +19,19 @@
 package au.id.micolous.metrodroid.transit.chc_metrocard;
 
 import android.os.Parcel;
+import android.support.annotation.NonNull;
 
 import java.util.GregorianCalendar;
+import java.util.List;
 import java.util.TimeZone;
 
 import au.id.micolous.farebot.R;
 import au.id.micolous.metrodroid.card.CardType;
 import au.id.micolous.metrodroid.card.classic.ClassicCard;
+import au.id.micolous.metrodroid.card.classic.ClassicCardTransitFactory;
+import au.id.micolous.metrodroid.card.classic.ClassicSector;
 import au.id.micolous.metrodroid.transit.CardInfo;
+import au.id.micolous.metrodroid.transit.TransitData;
 import au.id.micolous.metrodroid.transit.TransitIdentity;
 import au.id.micolous.metrodroid.transit.erg.ErgTransitData;
 import au.id.micolous.metrodroid.transit.erg.ErgTrip;
@@ -77,20 +82,52 @@ public class ChcMetrocardTransitData extends ErgTransitData {
         super(card, CURRENCY);
     }
 
-    public static boolean check(ClassicCard card) {
-        if (!ErgTransitData.check(card)) {
-            return false;
+    public static final ClassicCardTransitFactory FACTORY = new ErgTransitFactory() {
+        @Override
+        public boolean check(@NonNull ClassicCard card) {
+            if (!super.check(card)) {
+                return false;
+            }
+
+            ErgMetadataRecord metadataRecord = ErgTransitData.getMetadataRecord(card);
+            return metadataRecord != null && metadataRecord.getAgency() == AGENCY_ID;
         }
 
-        ErgMetadataRecord metadataRecord = ErgTransitData.getMetadataRecord(card);
-        return metadataRecord != null && metadataRecord.getAgency() == AGENCY_ID;
-    }
+        @Override
+        public boolean check(ClassicSector sector0) {
+            if (!super.check(sector0)) {
+                return false;
+            }
 
-    public static TransitIdentity parseTransitIdentity(ClassicCard card) {
-        byte[] file2 = card.getSector(0).getBlock(2).getData();
-        ErgMetadataRecord metadata = ErgMetadataRecord.recordFromBytes(file2);
-        return new TransitIdentity(NAME, Integer.toString(metadata.getCardSerialDec()));
-    }
+            byte[] file2 = sector0.getBlock(2).getData();
+            ErgMetadataRecord metadataRecord = ErgMetadataRecord.recordFromBytes(file2);
+            return metadataRecord != null && metadataRecord.getAgency() == AGENCY_ID;
+        }
+
+        @Override
+        public TransitIdentity parseTransitIdentity(@NonNull ClassicCard card) {
+            byte[] file2 = card.getSector(0).getBlock(2).getData();
+            ErgMetadataRecord metadata = ErgMetadataRecord.recordFromBytes(file2);
+            return new TransitIdentity(NAME, metadata.getCardSerialHex());
+        }
+
+        @Override
+        public TransitData parseTransitData(@NonNull ClassicCard classicCard) {
+            return new ChcMetrocardTransitData(classicCard);
+        }
+
+        @Override
+        public CardInfo earlyCardInfo(List<ClassicSector> sectors) {
+            if (check(sectors.get(0)))
+                return CARD_INFO;
+            return null;
+        }
+
+        @Override
+        public int earlySectors() {
+            return 1;
+        }
+    };
 
     @Override
     protected ErgTrip newTrip(ErgPurseRecord purse, GregorianCalendar epoch) {

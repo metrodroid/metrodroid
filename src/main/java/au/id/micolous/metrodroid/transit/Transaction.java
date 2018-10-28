@@ -31,22 +31,17 @@ public abstract class Transaction implements Parcelable {
     protected abstract boolean isTapOff();
 
     /**
-     * External callers: use {@link #getRouteName()} instead.
+     * This method may be overridden to provide candidate line names associated with the
+     * transaction. This is useful if there is a separate field on the card which encodes the route
+     * or line taken, and that knowledge of the station alone is not generally sufficient to
+     * determine the correct route.
+     *
+     * By default, this gets candidate route names from the Station.
      */
-    @Nullable
-    protected String getRouteName() {
-        return null;
-    }
-
     @NonNull
     public List<String> getRouteNames() {
-        // This is a compatibility wrapper that calls getRouteName()
-        String routeName = getRouteName();
-        if (routeName == null) {
-            return Collections.emptyList();
-        }
-
-        return Collections.singletonList(routeName);
+        Station s = getStation();
+        return s != null ? s.getLineNames() : Collections.emptyList();
     }
 
     public String getVehicleID() {
@@ -78,4 +73,12 @@ public abstract class Transaction implements Parcelable {
     protected abstract boolean isSameTrip(Transaction other);
 
     protected abstract boolean isTapOn();
+
+    protected boolean isTransfer() {
+        return false;
+    }
+
+    protected boolean isRejected() {
+        return false;
+    }
 }

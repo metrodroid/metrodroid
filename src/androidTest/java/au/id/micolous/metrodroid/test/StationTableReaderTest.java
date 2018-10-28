@@ -29,6 +29,12 @@ public class StationTableReaderTest extends AndroidTestCase {
         TestUtils.showRawStationIds(false);
     }
 
+    public void testLicenseNotice() {
+        String notice = StationTableReader.getNotice(SeqGoData.SEQ_GO_STR);
+        assertNotNull(notice);
+        assertTrue(notice.contains("Translink"));
+    }
+
     private final int SHINJUKU_REGION_CODE = 0;
     private final int SHINJUKU_LINE_CODE = 37;
     private final int SHINJUKU_STATION_CODE = 10;
@@ -44,9 +50,10 @@ public class StationTableReaderTest extends AndroidTestCase {
         assertNotNull(s);
         assertEquals("JR East", s.getCompanyName());
         assertEquals("Shinjuku", s.getStationName());
+        assertEquals(1, s.getLineNames().size());
         // FIXME: We currently have incorrect romanisation for the Yamanote line (Yamate), so just
         // check that this is not the Japanese name.
-        assertFalse(s.getLineName().equalsIgnoreCase("山手"));
+        assertFalse(s.getLineNames().get(0).equalsIgnoreCase("山手"));
 
         // Test in Japanese
         TestUtils.setLocale(getContext(), "ja-JP");
@@ -54,7 +61,8 @@ public class StationTableReaderTest extends AndroidTestCase {
         assertNotNull(s);
         assertEquals("東日本旅客鉄道", s.getCompanyName());
         assertEquals("新宿", s.getStationName());
-        assertEquals("山手", s.getLineName());
+        assertEquals(1, s.getLineNames().size());
+        assertEquals("山手", s.getLineNames().get(0));
 
         // Test in another supported language. We should fall back to English here.
         TestUtils.setLocale(getContext(), "fr-FR");
@@ -64,7 +72,8 @@ public class StationTableReaderTest extends AndroidTestCase {
         assertEquals("Shinjuku", s.getStationName());
         // FIXME: We currently have incorrect romanisation for the Yamanote line (Yamate), so just
         // check that this is not the Japanese name.
-        assertFalse(s.getLineName().equalsIgnoreCase("山手"));
+        assertEquals(1, s.getLineNames().size());
+        assertFalse(s.getLineNames().get(0).equalsIgnoreCase("山手"));
 
         // Test showing both English and Japanese strings
         TestUtils.setLocale(getContext(), "en-US");

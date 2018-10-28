@@ -130,6 +130,10 @@ public class ISO7816Application {
 
             return null;
         }
+
+        public byte[] getAppName() {
+            return mApplicationName;
+        }
     }
 
     public List<ISO7816File> getFiles() {

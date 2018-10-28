@@ -18,6 +18,7 @@
  */
 package au.id.micolous.metrodroid.test;
 
+import au.id.micolous.metrodroid.transit.nextfare.record.NextfareBalanceRecord;
 import au.id.micolous.metrodroid.transit.nextfare.record.NextfareConfigRecord;
 import au.id.micolous.metrodroid.transit.nextfare.record.NextfareTransactionRecord;
 import au.id.micolous.metrodroid.util.Utils;
@@ -71,5 +72,30 @@ public class NextfareTest extends TestCase {
         NextfareTransactionRecord r;
         r = NextfareTransactionRecord.recordFromBytes(rnull, UTC);
         assertNull(r);
+    }
+
+    public void testBalanceRecord() {
+        // This tests the offset negative flag in seq_go.
+        // NOTE: These records are synthetic and incomplete, but representative for the tests.
+        // Checksums are wrong.
+        NextfareBalanceRecord r;
+
+        // SEQ: $12.34, sequence 0x12
+        r = NextfareBalanceRecord.recordFromBytes(Utils.hexStringToByteArray(
+                "0128d20400000000000000000012ffff"));
+        assertEquals(0x12, r.getVersion());
+        assertEquals(1234, r.getBalance());
+
+        // SEQ: -$10.00, sequence 0x23
+        r = NextfareBalanceRecord.recordFromBytes(Utils.hexStringToByteArray(
+                "01a8e80300000000000000000023ffff"));
+        assertEquals(0x23, r.getVersion());
+        assertEquals(-1000, r.getBalance());
+
+        // SEQ: -$10.00, sequence 0x34
+        r = NextfareBalanceRecord.recordFromBytes(Utils.hexStringToByteArray(
+                "01a0e80300000000000000000034ffff"));
+        assertEquals(0x34, r.getVersion());
+        assertEquals(-1000, r.getBalance());
     }
 }

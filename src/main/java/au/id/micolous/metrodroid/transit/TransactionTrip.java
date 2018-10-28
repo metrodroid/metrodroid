@@ -85,6 +85,19 @@ public class TransactionTrip extends Trip implements Parcelable {
         return mStart == null ? mEnd : mStart;
     }
 
+    @Nullable
+    @Override
+    public String getRouteName() {
+        // Try to get the route from the nested transactions.
+        // This automatically falls back to using the MdST.
+        @NonNull List<String> startLines =
+                mStart != null ? mStart.getRouteNames() : Collections.emptyList();
+        @NonNull List<String> endLines =
+                mEnd != null ? mEnd.getRouteNames() : Collections.emptyList();
+
+        return Trip.getRouteName(startLines, endLines);
+    }
+
     @Override
     public int getPassengerCount() {
         return getAny().getPassengerCount();
@@ -145,6 +158,16 @@ public class TransactionTrip extends Trip implements Parcelable {
         }
 
         return getAny().getFare();
+    }
+
+    @Override
+    public boolean isTransfer() {
+        return getAny().isTransfer();
+    }
+
+    @Override
+    public boolean isRejected() {
+        return getAny().isRejected();
     }
 
     public interface TransactionTripFactory {

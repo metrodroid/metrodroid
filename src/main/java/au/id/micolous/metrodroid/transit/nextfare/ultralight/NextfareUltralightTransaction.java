@@ -20,8 +20,11 @@
 package au.id.micolous.metrodroid.transit.nextfare.ultralight;
 
 import android.os.Parcel;
+import android.support.annotation.NonNull;
 
 import java.util.Calendar;
+import java.util.Collections;
+import java.util.List;
 import java.util.TimeZone;
 
 import au.id.micolous.metrodroid.card.ultralight.UltralightCard;
@@ -94,8 +97,10 @@ public abstract class NextfareUltralightTransaction extends Transaction {
         dest.writeInt(mBalance);
     }
 
-    public String getRouteName() {
-        return Integer.toHexString(mRoute);
+    @NonNull
+    @Override
+    public List<String> getRouteNames() {
+        return Collections.singletonList(Integer.toHexString(mRoute));
     }
 
     public Station getStation() {

@@ -46,7 +46,11 @@ public class NextfareBalanceRecord extends NextfareRecord implements Comparable<
 
         // Negative balance
         if ((record.mBalance & 0x8000) == 0x8000) {
+            // TODO: document which nextfares use a sign flag like this.
             record.mBalance &= 0x7fff;
+            record.mBalance *= -1;
+        } else if ((input[1] & 0x80) == 0x80) {
+            // seq_go uses a sign flag in an adjacent byte
             record.mBalance *= -1;
         }
 
