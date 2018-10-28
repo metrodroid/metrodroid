@@ -827,4 +827,5 @@
     <string name="serial_only_card_description_locked">Deze kaart is versleuteld; alleen het serienummer kan worden gelezen. Het saldo and de reisgeschiedenis zijn mogelijk op de kaart opgeslagen, maar onleesbaar.</string>
     <string name="serial_only_card_description_more_research">Ondersteuning voor deze kaart is experimenteel; momenteel kan alleen het serienummer worden uitgelezen.</string>
     <string name="full_serial_number">Volledig serienummer</string>
-</resources>
+<string name="location_taipei">Taipei</string>
+    </resources>
