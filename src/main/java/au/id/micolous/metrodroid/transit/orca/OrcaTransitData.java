@@ -167,7 +167,7 @@ public class OrcaTransitData extends TransitData {
         for (int i = 0; i < useLog.length; i++) {
             useLog[i] = new OrcaTransaction(recordFile.getRecords().get(i), isTopup);
         }
-        return TransactionTrip.merge(Arrays.asList(useLog));
+        return TransactionTrip.merge(useLog);
     }
 
     public void writeToParcel(Parcel parcel, int flags) {
