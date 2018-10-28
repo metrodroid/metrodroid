@@ -35,7 +35,7 @@ import java.util.*
 data class EasyCardTransitData internal constructor(
         private val serialNumber: String,
         private val balance: Int,
-        private val trips: List<EasyCardTransaction>,
+        private val trips: List<Trip>,
         private val refill: EasyCardTopUp
 ) : TransitData() {
     constructor(card: ClassicCard) : this(
@@ -103,7 +103,7 @@ data class EasyCardTransitData internal constructor(
                     null
                 }
 
-                val x = data != null && Arrays.equals(data, EasyCardTransitData.MAGIC)
+                val x = data != null && Arrays.equals(data, MAGIC)
                 return x
             }
 
@@ -113,7 +113,7 @@ data class EasyCardTransitData internal constructor(
 
             override fun parseTransitIdentity(card: ClassicCard): TransitIdentity {
                 val uid = EasyCardTransitData.parseSerialNumber(card)
-                return TransitIdentity(EasyCardTransitData.NAME, uid)
+                return TransitIdentity(NAME, uid)
             }
 
             override fun parseTransitData(card: ClassicCard): TransitData {

@@ -26,7 +26,8 @@ import au.id.micolous.metrodroid.transit.easycard.EasyCardTransitData
 import au.id.micolous.metrodroid.util.Utils
 
 /**
- * This test uses a EasyCard dump from: http://www.fuzzysecurity.com/tutorials/rfid/4.html
+ * This test uses a EasyCard dump based on the one shown at:
+ * http://www.fuzzysecurity.com/tutorials/rfid/4.html
  */
 class EasyCardTest : InstrumentationTestCase() {
     private fun parseCard(c: ClassicCard): EasyCardTransitData {
@@ -47,17 +48,32 @@ class EasyCardTest : InstrumentationTestCase() {
 
         val c = loadCard("easycard/deadbeef.mfc")
         assertEquals(TransitCurrency.TWD(245), c.balances!![0].balance)
-        assertEquals(2, c.trips.size)
+        assertEquals(3, c.trips.size)
 
-        val trip = c.trips[0]
+        val busTrip = c.trips[0]
+        assertEquals("2013-10-28 20:33",
+                Utils.isoDateTimeFormat(busTrip.startTimestamp))
+        assertEquals(TransitCurrency.TWD(10), busTrip.fare)
+        assertEquals(Trip.Mode.BUS, busTrip.mode)
+        assertNull(busTrip.startStation)
+        assertEquals("0x332211", busTrip.machineID)
+
+        val trainTrip = c.trips[1]
         assertEquals("2013-10-28 20:41",
-                Utils.isoDateTimeFormat(trip.startTimestamp))
-        assertEquals(TransitCurrency.TWD(15), trip.fare)
-        assertEquals(Trip.Mode.BUS, trip.mode)
-        assertNull(trip.startStation)
-        assertEquals("0x1233a4", trip.machineID)
+                Utils.isoDateTimeFormat(trainTrip.startTimestamp))
+        assertEquals("2013-10-28 20:46",
+                Utils.isoDateTimeFormat(trainTrip.endTimestamp))
+        assertEquals(TransitCurrency.TWD(15), trainTrip.fare)
+        assertEquals(Trip.Mode.METRO, trainTrip.mode)
+        assertNotNull(trainTrip.startStation)
+        assertEquals("Taipei Main Station", trainTrip.startStation!!.stationName)
+        assertNotNull(trainTrip.endStation)
+        assertEquals("NTU Hospital", trainTrip.endStation!!.stationName)
+        assertNotNull(trainTrip.routeName)
+        assertEquals("Red", trainTrip.routeName)
+        assertEquals("0xccbbaa", trainTrip.machineID)
 
-        val refill = c.trips[1]
+        val refill = c.trips[2]
         assertEquals("2013-07-27 08:58",
                 Utils.isoDateTimeFormat(refill.startTimestamp))
         assertEquals(TransitCurrency.TWD(-100), refill.fare)
@@ -74,7 +90,7 @@ class EasyCardTest : InstrumentationTestCase() {
         TestUtils.showLocalAndEnglish(false)
 
         val c = loadCard("easycard/deadbeef.mfc")
-        val refill = c.trips[1]
+        val refill = c.trips.last()
         // Yongan Market
         assertEquals("永安市場", refill.startStation!!.stationName)
         assertNull(refill.routeName)

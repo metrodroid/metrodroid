@@ -2,7 +2,13 @@ package au.id.micolous.metrodroid.test;
 
 import android.test.AndroidTestCase;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 import au.id.micolous.metrodroid.transit.Station;
+import au.id.micolous.metrodroid.transit.TransactionTrip;
+import au.id.micolous.metrodroid.transit.Trip;
 import au.id.micolous.metrodroid.transit.easycard.EasyCardTransaction;
 import au.id.micolous.metrodroid.transit.seq_go.SeqGoData;
 import au.id.micolous.metrodroid.transit.seq_go.SeqGoTrip;
@@ -95,16 +101,26 @@ public class StationTableReaderTest extends AndroidTestCase {
     private final int EASYCARD_BL23_BR24 = 0x1f;
     private final int EASYCARD_BL12_R10 = 0x33;
 
-    private EasyCardTransaction createEasyCardTrip(int startStation, int endStation) {
-        return new EasyCardTransaction(
+    private Trip createEasyCardTrip(int startStation, int endStation) {
+        EasyCardTransaction start = new EasyCardTransaction(
                 0x1234L,
-                10,
+                0,
                 startStation,
                 false,
-                0x6789L,
-                0x2345L,
-                endStation
+                0x6789L
         );
+
+        EasyCardTransaction end = new EasyCardTransaction(
+                0x2345L,
+                10,
+                endStation,
+                true,
+                0xabcd
+        );
+
+        List<TransactionTrip> trips = TransactionTrip.merge(Arrays.asList(start, end));
+        assertEquals(1, trips.size());
+        return trips.get(0);
     }
 
     public void testEasyCardLineSelection() {
@@ -112,7 +128,7 @@ public class StationTableReaderTest extends AndroidTestCase {
         TestUtils.showRawStationIds(false);
         TestUtils.showLocalAndEnglish(false);
 
-        EasyCardTransaction trip;
+        Trip trip;
 
         trip = createEasyCardTrip(EASYCARD_BR02, EASYCARD_BR19);
         assertEquals("Brown", trip.getRouteName());
