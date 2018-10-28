@@ -826,4 +826,5 @@
     <string name="serial_only_card_description_locked">Dette kortet er låst, og kun serienummeret kan leses. Dets saldo og historikk kan være lagret på det, men er ikke tilgjengelig.</string>
     <string name="serial_only_card_description_more_research">Støtte dette kortet er i utvikling, og foreløpig kan kun serienummeret leses.</string>
     <string name="full_serial_number">Fullt serienummer</string>
-</resources>
+<string name="location_taipei">Taipei</string>
+    </resources>
