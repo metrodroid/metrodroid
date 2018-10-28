@@ -27,8 +27,6 @@ import android.text.SpannableString;
 import android.text.Spanned;
 import android.text.style.TtsSpan;
 
-import org.jetbrains.annotations.NotNull;
-
 import java.security.SecureRandom;
 import java.text.NumberFormat;
 import java.util.Currency;

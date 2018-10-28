@@ -221,6 +221,7 @@ public class CardInfo {
         public Builder() {
         }
 
+        @NonNull
         public CardInfo build() {
             return new CardInfo(mImageId, mName, mLocationId, mCardType, mKeysRequired, mPreview, mResourceExtraNote, mImageAlphaId);
         }
