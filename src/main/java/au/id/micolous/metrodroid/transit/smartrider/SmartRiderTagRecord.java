@@ -33,7 +33,9 @@ import org.apache.commons.lang3.ArrayUtils;
 
 import java.util.Arrays;
 import java.util.Calendar;
+import java.util.Collections;
 import java.util.GregorianCalendar;
+import java.util.List;
 import java.util.Locale;
 import java.util.TimeZone;
 
@@ -174,9 +176,10 @@ public class SmartRiderTagRecord extends Transaction {
         return mCost;
     }
 
+    @NonNull
     @Override
-    public String getRouteName() {
-        return mRoute;
+    public List<String> getRouteNames() {
+        return Collections.singletonList(mRoute);
     }
 
 
@@ -227,7 +230,8 @@ public class SmartRiderTagRecord extends Transaction {
 
     @Override
     protected boolean isSameTrip(Transaction other) {
-        return getRouteName().equals(other.getRouteName());
+        // SmartRider only ever records route names.
+        return getRouteNames().get(0).equals(other.getRouteNames().get(0));
     }
 
     @Override

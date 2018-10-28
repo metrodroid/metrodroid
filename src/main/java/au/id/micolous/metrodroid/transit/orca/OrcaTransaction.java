@@ -1,5 +1,5 @@
 /*
- * OrcaTrip.java
+ * OrcaTransaction.java
  *
  * Copyright 2011-2013 Eric Butler <eric@codebutler.com>
  * Copyright 2014 Kramer Campbell
@@ -37,17 +37,19 @@ import au.id.micolous.metrodroid.util.StationTableReader;
 import au.id.micolous.metrodroid.util.Utils;
 
 import java.util.Calendar;
+import java.util.Collections;
 import java.util.GregorianCalendar;
+import java.util.List;
 import java.util.TimeZone;
 
-public class OrcaTrip extends Transaction {
-    public static final Creator<OrcaTrip> CREATOR = new Creator<OrcaTrip>() {
-        public OrcaTrip createFromParcel(Parcel parcel) {
-            return new OrcaTrip(parcel);
+public class OrcaTransaction extends Transaction {
+    public static final Creator<OrcaTransaction> CREATOR = new Creator<OrcaTransaction>() {
+        public OrcaTransaction createFromParcel(Parcel parcel) {
+            return new OrcaTransaction(parcel);
         }
 
-        public OrcaTrip[] newArray(int size) {
-            return new OrcaTrip[size];
+        public OrcaTransaction[] newArray(int size) {
+            return new OrcaTransaction[size];
         }
     };
     private static final TimeZone TZ = TimeZone.getTimeZone("America/Los_Angeles");
@@ -68,7 +70,7 @@ public class OrcaTrip extends Transaction {
     static final int TRANS_TYPE_PASS_USE = 0x60;
 
 
-    public OrcaTrip(DesfireRecord record, boolean isTopup) {
+    public OrcaTransaction(DesfireRecord record, boolean isTopup) {
         byte[] useData = record.getData();
 
         mIsTopup = isTopup;
@@ -80,7 +82,7 @@ public class OrcaTrip extends Transaction {
         mNewBalance = Utils.getBitsFromBuffer(useData, 272, 16);
     }
 
-    OrcaTrip(Parcel parcel) {
+    OrcaTransaction(Parcel parcel) {
         mTimestamp = parcel.readLong();
         mCoachNum = parcel.readInt();
         mFare = parcel.readInt();
@@ -115,21 +117,21 @@ public class OrcaTrip extends Transaction {
     }
 
     @Override
-    public String getRouteName() {
-        if (mIsTopup)
-            return Utils.localizeString(R.string.orca_topup);
-        if (isLink()) {
-            return "Link Light Rail";
+    public List<String> getRouteNames() {
+        if (mIsTopup) {
+            return Collections.singletonList(Utils.localizeString(R.string.orca_topup));
+        } else if (isLink()) {
+            return Collections.singletonList("Link Light Rail");
         } else if (isSounder()) {
-            return "Sounder Train";
+            return Collections.singletonList("Sounder Train");
         } else {
             // FIXME: Need to find bus route #s
             if (mAgency == OrcaTransitData.AGENCY_ST) {
-                return "Express Bus";
+                return Collections.singletonList("Express Bus");
             } else if (mAgency == OrcaTransitData.AGENCY_KCM) {
-                return "Bus";
+                return Collections.singletonList("Bus");
             }
-            return null;
+            return Collections.emptyList();
         }
     }
 
@@ -187,7 +189,7 @@ public class OrcaTrip extends Transaction {
 
     @Override
     protected boolean isSameTrip(Transaction other) {
-        return other instanceof OrcaTrip && mAgency == ((OrcaTrip) other).mAgency;
+        return other instanceof OrcaTransaction && mAgency == ((OrcaTransaction) other).mAgency;
     }
 
     @Override

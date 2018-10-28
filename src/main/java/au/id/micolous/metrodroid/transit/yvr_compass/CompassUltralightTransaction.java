@@ -50,10 +50,6 @@ public class CompassUltralightTransaction extends NextfareUltralightTransaction 
         super(parcel);
     }
 
-    public String getRouteName() {
-        return Integer.toHexString(mRoute);
-    }
-
     public Station getStation() {
         if (mLocation == 0)
             return null;

@@ -21,7 +21,10 @@ package au.id.micolous.metrodroid.transit.nextfare.ultralight;
 
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.support.annotation.NonNull;
 
+import java.util.Collections;
+import java.util.List;
 import java.util.TimeZone;
 
 import au.id.micolous.metrodroid.card.ultralight.UltralightCard;
@@ -47,8 +50,9 @@ public class NextfareUnknownUltralightTransaction extends NextfareUltralightTran
         super(parcel);
     }
 
-    public String getRouteName() {
-        return Integer.toHexString(mRoute);
+    @NonNull
+    public List<String> getRouteNames() {
+        return Collections.singletonList(Integer.toHexString(mRoute));
     }
 
     public Station getStation() {

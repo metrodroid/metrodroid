@@ -20,19 +20,17 @@
 package au.id.micolous.metrodroid.transit.en1545;
 
 import android.os.Parcel;
-import android.os.Parcelable;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.text.TextUtils;
 
-import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collections;
+import java.util.List;
 
-import au.id.micolous.farebot.R;
 import au.id.micolous.metrodroid.transit.Station;
 import au.id.micolous.metrodroid.transit.Transaction;
 import au.id.micolous.metrodroid.transit.TransitCurrency;
 import au.id.micolous.metrodroid.transit.Trip;
-import au.id.micolous.metrodroid.util.Utils;
 
 public abstract class En1545Transaction extends Transaction {
     protected static final String EVENT_ROUTE_NUMBER = "EventRouteNumber";
@@ -80,6 +78,8 @@ public abstract class En1545Transaction extends Transaction {
     private static final int TRANSPORT_TAXI = 9;
     private static final int TRANSPORT_TOPUP = 11;
 
+    private static final String TAG = En1545Transaction.class.getSimpleName();
+
     public En1545Transaction(byte[] data, En1545Field fields) {
         mParsed = En1545Parser.parse(data, fields);
     }
@@ -93,17 +93,24 @@ public abstract class En1545Transaction extends Transaction {
         mParsed.writeToParcel(dest, flags);
     }
 
-    public String getRouteName() {
+    @NonNull
+    @Override
+    public List<String> getRouteNames() {
         String route = getLookup().getRouteName(
                 mParsed.getInt(EVENT_ROUTE_NUMBER),
                 mParsed.getInt(EVENT_ROUTE_VARIANT),
                 getAgency(), getTransport());
-        if (route != null)
-            return route;
+        if (route != null) {
+            return Collections.singletonList(route);
+        }
+
+        // Get the line name from the station.
         Station st = getStation();
-        if (st == null)
-            return null;
-        return st.getLineName();
+        if (st == null) {
+            return Collections.emptyList();
+        }
+
+        return st.getLineNames();
     }
 
     public int getPassengerCount() {

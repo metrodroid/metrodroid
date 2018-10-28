@@ -35,8 +35,11 @@ import java.io.DataInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.charset.Charset;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Locale;
 import java.util.Map;
 import java.util.zip.Inflater;
@@ -332,10 +335,17 @@ public class StationTableReader {
     private Station getStationById(int id, String humanReadableID) throws IOException {
         Stations.Station ps = getProtoStationById(id);
         if (ps == null) return null;
+        ArrayList<Stations.Line> lines = new ArrayList<>();
+        for (int lineId : ps.getLineIdList()) {
+            Stations.Line l = mStationDb.getLinesOrDefault(lineId, null);
+            if (l != null) {
+                lines.add(l);
+            }
+        }
 
         return Station.fromProto(humanReadableID, ps,
                 mStationDb.getOperatorsOrDefault(ps.getOperatorId(), null),
-                mStationDb.getLinesOrDefault(ps.getLineId(), null),
+                lines,
                 mStationDb.getTtsHintLanguage(), this);
     }
 
