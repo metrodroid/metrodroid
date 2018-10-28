@@ -79,10 +79,9 @@ def dump2csv(database, output_fn):
       d['oper_en'] = oper.name.english
       d['oper'] = oper.name.local
     if rec.line_id:
-      d['line_id'] = rec.line_id
-      line = header.lines[rec.line_id]
-      d['line_en'] = line.name.english
-      d['line'] = line.name.local
+      d['line_id'] = ','.join([str(l) for l in rec.line_id])
+      d['line_en'] = ','.join([header.lines[l].name.english for l in rec.line_id])
+      d['line'] = ','.join([header.lines[l].name.local for l in rec.line_id])
     writer.writerow(d)
 
   output_fh.close()

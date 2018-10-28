@@ -32,6 +32,7 @@ import au.id.micolous.metrodroid.card.classic.ClassicCard;
 import au.id.micolous.metrodroid.card.classic.ClassicSector;
 import au.id.micolous.metrodroid.key.ClassicSectorKey;
 import au.id.micolous.metrodroid.util.ImmutableMapBuilder;
+import au.id.micolous.metrodroid.util.StationTableReader;
 
 import static au.id.micolous.metrodroid.MetrodroidApplication.getInstance;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -52,6 +53,8 @@ final class TestUtils {
             .put("fr-FR", Locale.FRANCE)
             .put("ja", Locale.JAPANESE)
             .put("ja-JP", Locale.JAPAN)
+            .put("zh-CN", Locale.SIMPLIFIED_CHINESE)
+            .put("zh-TW", Locale.TRADITIONAL_CHINESE)
             .build();
 
     static void assertSpannedEquals(String expected, Spanned actual) {
@@ -137,6 +140,7 @@ final class TestUtils {
      * @return Parsed ClassicCard from the file.
      * @throws IOException If the file does not exist, or there was some other problem reading it.
      */
+    @NonNull
     static ClassicCard loadMifareClassic1KFromAssets(Context ctx, String path) throws IOException {
         InputStream i = ctx.getAssets().open(path, AssetManager.ACCESS_RANDOM);
         DataInputStream card = new DataInputStream(i);

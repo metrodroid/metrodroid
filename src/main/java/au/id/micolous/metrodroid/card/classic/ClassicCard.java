@@ -63,6 +63,7 @@ import au.id.micolous.metrodroid.transit.TransitIdentity;
 import au.id.micolous.metrodroid.transit.bilhete_unico.BilheteUnicoSPTransitData;
 import au.id.micolous.metrodroid.transit.charlie.CharlieCardTransitData;
 import au.id.micolous.metrodroid.transit.chc_metrocard.ChcMetrocardTransitData;
+import au.id.micolous.metrodroid.transit.easycard.EasyCardTransitData;
 import au.id.micolous.metrodroid.transit.erg.ErgTransitData;
 import au.id.micolous.metrodroid.transit.kiev.KievTransitData;
 import au.id.micolous.metrodroid.transit.lax_tap.LaxTapTransitData;
@@ -74,11 +75,10 @@ import au.id.micolous.metrodroid.transit.ovc.OVChipTransitData;
 import au.id.micolous.metrodroid.transit.podorozhnik.PodorozhnikTransitData;
 import au.id.micolous.metrodroid.transit.ricaricami.RicaricaMiTransitData;
 import au.id.micolous.metrodroid.transit.seq_go.SeqGoTransitData;
+import au.id.micolous.metrodroid.transit.serialonly.StrelkaTransitData;
 import au.id.micolous.metrodroid.transit.serialonly.TartuTransitFactory;
 import au.id.micolous.metrodroid.transit.smartrider.SmartRiderTransitData;
-import au.id.micolous.metrodroid.transit.serialonly.StrelkaTransitData;
 import au.id.micolous.metrodroid.transit.troika.TroikaHybridTransitData;
-import au.id.micolous.metrodroid.transit.troika.TroikaTransitData;
 import au.id.micolous.metrodroid.transit.unknown.BlankClassicTransitData;
 import au.id.micolous.metrodroid.transit.unknown.UnauthorizedClassicTransitData;
 import au.id.micolous.metrodroid.ui.ListItem;
@@ -427,6 +427,7 @@ public class ClassicCard extends Card {
             BilheteUnicoSPTransitData.FACTORY,
             KievTransitData.FACTORY,
             MetroQTransitData.FACTORY,
+            EasyCardTransitData.Companion.getFACTORY(),
             new TartuTransitFactory(),
             // This check must be THIRD TO LAST.
             //

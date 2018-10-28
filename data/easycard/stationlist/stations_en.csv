@@ -1,0 +1,109 @@
+reader_id,name,ref
+0x7,Songshan Airport,BR13
+0x8,Zhongshan Junior High School,BR12
+0x9,Nanjing Fuxing,"G16,BR11"
+0xa,Zhongxiao Fuxing,"BL15,BR10"
+0xb,Daan,"R05,BR09"
+0xc,Technology Building,BR08
+0xd,Liuzhangli,BR07
+0xe,Linguang,BR06
+0xf,Xinhai,BR05
+0x10,Wanfang Hospital,BR04
+0x11,Wanfang Community,BR03
+0x12,Muzha,BR02
+0x13,Taipei Zoo,BR01
+0x15,Dazhi,BR14
+0x16,Jiannan Rd.,BR15
+0x17,Xihu,BR16
+0x18,Gangqian,BR17
+0x19,Wende,BR18
+0x1a,Neihu,BR19
+0x1b,Dahu Park,BR20
+0x1c,Huzhou,BR21
+0x1d,Donghu,BR22
+0x1e,Nangang Software Park,BR23
+0x1f,Taipei Nangang Exhibition Center,"BL23,BR24"
+0x20,Xiaobitan,G03A
+0x21,Xindian,G01
+0x22,Xindian District Office,G02
+0x23,Qizhang,G03
+0x24,Dapinglin,G04
+0x25,Jingmei,G05
+0x26,Wanlong,G06
+0x27,Gongguan,G07
+0x28,Taipower Building,G08
+0x29,Guting,"G09,O05"
+0x2a,C.K.S. Memorial Hall,"G10,R08"
+0x2b,Xiaonanmen,G11
+0x2d,Dingxi,O04
+0x2e,Yongan Market,O03
+0x2f,Jingan,O02
+0x30,Nanshijiao,O01
+0x32,NTU Hospital,R09
+0x33,Taipei Main Station,"BL12,R10"
+0x35,Zhongshan,"G14,R11"
+0x36,Shuanglian,R12
+0x37,Minquan W. Rd.,"O11,R13"
+0x38,Yuanshan,R14
+0x39,Jiantan,R15
+0x3a,Shilin,R16
+0x3b,Zhishan,R17
+0x3c,Mingde,R18
+0x3d,Shipai,R19
+0x3e,Qilian,R20
+0x3f,Qiyan,R21
+0x40,Beitou,R22
+0x41,Xinbeitou,R22A
+0x42,Fuxinggang,R23
+0x43,Zhongyi,R24
+0x44,Guandu,R25
+0x45,Zhuwei,R26
+0x46,Hongshulin,R27
+0x47,Tamsui,R28
+0x4c,Dingpu,BL01
+0x4d,Yongning,BL02
+0x4e,Tucheng,BL03
+0x4f,Haishan,BL04
+0x50,Far Eastern Hospital,BL05
+0x51,Fuzhong,BL06
+0x52,Banqiao,BL07
+0x53,Xinpu,BL08
+0x54,Jiangzicui,BL09
+0x55,Longshan Temple,BL10
+0x56,Ximen,"BL11,G12"
+0x58,Shandao Temple,BL13
+0x59,Zhongxiao Xinsheng,"BL14,O07"
+0x5b,Zhongxiao Dunhua,BL16
+0x5c,S.Y.S. Memorial Hall,BL17
+0x5d,Taipei City Hall,BL18
+0x5e,Yongchun,BL19
+0x5f,Houshanpi,BL20
+0x60,Kunyang,BL21
+0x61,Nangang,BL22
+0x63,Xiangshan,R02
+0x64,Taipei 101/World Trade Center,R03
+0x65,Xinyi Anhe,R04
+0x67,Daan Park,R06
+0x69,Beimen,G13
+0x6d,Taipei Arena,G17
+0x6e,Nanjing Sanmin,G18
+0x6f,Songshan,G19
+0x79,Fu Jen University,O19
+0x7a,Xinzhuang,O18
+0x7b,Touqianzhuang,O17
+0x7c,Xianse Temple,O16
+0x7d,Sanchong,O15
+0x7e,Cailiao,O14
+0x7f,Taipei Bridge,O13
+0x80,Daqiaotou,O12
+0x82,Zhongshan Elementary School,O10
+0x83,Xingtian Temple,O09
+0x84,Songjiang Nanjing,"G15,O08"
+0x86,Dongmen,"R07,O06"
+0xae,Luzhou,O54
+0xaf,Sanmin Senior High School,O53
+0xb0,St. Ignatius High School,O52
+0xb1,Sanhe Junior High School,O51
+0xb2,Sanchong Elementary School,O50
+0xb3,Huilong,O21
+0xb4,Danfeng,O20

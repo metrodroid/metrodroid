@@ -46,27 +46,21 @@ import au.id.micolous.metrodroid.transit.adelaide.AdelaideMetrocardTransitData;
 import au.id.micolous.metrodroid.transit.bilhete_unico.BilheteUnicoSPTransitData;
 import au.id.micolous.metrodroid.transit.charlie.CharlieCardTransitData;
 import au.id.micolous.metrodroid.transit.chc_metrocard.ChcMetrocardTransitData;
+import au.id.micolous.metrodroid.transit.china.NewShenzhenTransitData;
 import au.id.micolous.metrodroid.transit.clipper.ClipperTransitData;
+import au.id.micolous.metrodroid.transit.easycard.EasyCardTransitData;
 import au.id.micolous.metrodroid.transit.edy.EdyTransitData;
 import au.id.micolous.metrodroid.transit.ezlink.EZLinkTransitData;
 import au.id.micolous.metrodroid.transit.hsl.HSLTransitData;
-import au.id.micolous.metrodroid.transit.serialonly.IstanbulKartTransitData;
-import au.id.micolous.metrodroid.transit.kiev.KievTransitData;
-import au.id.micolous.metrodroid.transit.lisboaviva.LisboaVivaTransitData;
-import au.id.micolous.metrodroid.transit.metroq.MetroQTransitData;
-import au.id.micolous.metrodroid.transit.serialonly.StrelkaTransitData;
 import au.id.micolous.metrodroid.transit.intercode.IntercodeTransitData;
-import au.id.micolous.metrodroid.transit.ricaricami.RicaricaMiTransitData;
-import au.id.micolous.metrodroid.transit.msp_goto.MspGotoTransitData;
-import au.id.micolous.metrodroid.transit.ventra.VentraUltralightTransitData;
-import au.id.micolous.metrodroid.transit.serialonly.TrimetHopTransitData;
-import au.id.micolous.metrodroid.transit.yvr_compass.CompassUltralightTransitData;
+import au.id.micolous.metrodroid.transit.kiev.KievTransitData;
 import au.id.micolous.metrodroid.transit.kmt.KMTTransitData;
 import au.id.micolous.metrodroid.transit.lax_tap.LaxTapTransitData;
+import au.id.micolous.metrodroid.transit.lisboaviva.LisboaVivaTransitData;
 import au.id.micolous.metrodroid.transit.manly_fast_ferry.ManlyFastFerryTransitData;
+import au.id.micolous.metrodroid.transit.metroq.MetroQTransitData;
 import au.id.micolous.metrodroid.transit.mobib.MobibTransitData;
-import au.id.micolous.metrodroid.transit.serialonly.MykiTransitData;
-import au.id.micolous.metrodroid.transit.china.NewShenzhenTransitData;
+import au.id.micolous.metrodroid.transit.msp_goto.MspGotoTransitData;
 import au.id.micolous.metrodroid.transit.octopus.OctopusTransitData;
 import au.id.micolous.metrodroid.transit.opal.OpalTransitData;
 import au.id.micolous.metrodroid.transit.opus.OpusTransitData;
@@ -74,12 +68,19 @@ import au.id.micolous.metrodroid.transit.orca.OrcaTransitData;
 import au.id.micolous.metrodroid.transit.ovc.OVChipTransitData;
 import au.id.micolous.metrodroid.transit.podorozhnik.PodorozhnikTransitData;
 import au.id.micolous.metrodroid.transit.ravkav.RavKavTransitData;
+import au.id.micolous.metrodroid.transit.ricaricami.RicaricaMiTransitData;
 import au.id.micolous.metrodroid.transit.seq_go.SeqGoTransitData;
+import au.id.micolous.metrodroid.transit.serialonly.IstanbulKartTransitData;
+import au.id.micolous.metrodroid.transit.serialonly.MykiTransitData;
+import au.id.micolous.metrodroid.transit.serialonly.StrelkaTransitData;
+import au.id.micolous.metrodroid.transit.serialonly.TrimetHopTransitData;
 import au.id.micolous.metrodroid.transit.smartrider.SmartRiderTransitData;
 import au.id.micolous.metrodroid.transit.suica.SuicaTransitData;
 import au.id.micolous.metrodroid.transit.tfi_leap.LeapTransitData;
 import au.id.micolous.metrodroid.transit.tmoney.TMoneyTransitData;
 import au.id.micolous.metrodroid.transit.troika.TroikaTransitData;
+import au.id.micolous.metrodroid.transit.ventra.VentraUltralightTransitData;
+import au.id.micolous.metrodroid.transit.yvr_compass.CompassUltralightTransitData;
 import au.id.micolous.metrodroid.util.Utils;
 
 /**
@@ -196,6 +197,7 @@ public class CardInfo {
         public Builder() {
         }
 
+        @NonNull
         public CardInfo build() {
             return new CardInfo(mImageId, mName, mLocationId, mCardType, mKeysRequired, mPreview, mResourceExtraNote, mImageAlphaId);
         }

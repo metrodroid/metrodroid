@@ -20,23 +20,44 @@
 package au.id.micolous.metrodroid.transit;
 
 import android.os.Parcelable;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 
 import java.util.Calendar;
+import java.util.Collections;
+import java.util.List;
 
 public abstract class Transaction implements Parcelable {
     protected abstract boolean isTapOff();
 
-    public abstract String getRouteName();
+    /**
+     * This method may be overridden to provide candidate line names associated with the
+     * transaction. This is useful if there is a separate field on the card which encodes the route
+     * or line taken, and that knowledge of the station alone is not generally sufficient to
+     * determine the correct route.
+     *
+     * By default, this gets candidate route names from the Station.
+     */
+    @NonNull
+    public List<String> getRouteNames() {
+        Station s = getStation();
+        return s != null ? s.getLineNames() : Collections.emptyList();
+    }
 
     public String getVehicleID() {
         return null;
     }
 
+    public String getMachineID() { return null; }
+
     public int getPassengerCount() {
         return -1;
     }
 
-    public abstract String getAgencyName(boolean isShort);
+    @Nullable
+    public String getAgencyName(boolean isShort) {
+        return null;
+    }
 
     public abstract Station getStation();
 
@@ -54,7 +75,7 @@ public abstract class Transaction implements Parcelable {
         return false;
     }
 
-    protected abstract boolean isSameTrip(Transaction other);
+    protected abstract boolean isSameTrip(@NonNull Transaction other);
 
     protected abstract boolean isTapOn();
 

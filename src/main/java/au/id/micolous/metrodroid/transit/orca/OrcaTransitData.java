@@ -47,7 +47,6 @@ import org.apache.commons.lang3.ArrayUtils;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 
 public class OrcaTransitData extends TransitData {
@@ -84,7 +83,7 @@ public class OrcaTransitData extends TransitData {
         mBalance = parcel.readInt();
 
         mTrips = new ArrayList<>();
-        parcel.readList(mTrips, OrcaTrip.class.getClassLoader());
+        parcel.readList(mTrips, OrcaTransaction.class.getClassLoader());
     }
 
     public OrcaTransitData(Card card) {
@@ -175,11 +174,11 @@ public class OrcaTransitData extends TransitData {
 
         RecordDesfireFile recordFile = (RecordDesfireFile) card.getApplication(APP_ID).getFile(fileId);
 
-        OrcaTrip[] useLog = new OrcaTrip[recordFile.getRecords().size()];
+        OrcaTransaction[] useLog = new OrcaTransaction[recordFile.getRecords().size()];
         for (int i = 0; i < useLog.length; i++) {
-            useLog[i] = new OrcaTrip(recordFile.getRecords().get(i), isTopup);
+            useLog[i] = new OrcaTransaction(recordFile.getRecords().get(i), isTopup);
         }
-        return TransactionTrip.merge(Arrays.asList(useLog));
+        return TransactionTrip.merge(useLog);
     }
 
     public void writeToParcel(Parcel parcel, int flags) {

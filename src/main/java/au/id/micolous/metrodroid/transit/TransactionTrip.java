@@ -25,12 +25,10 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
-
-import au.id.micolous.metrodroid.transit.smartrider.SmartRiderTagRecord;
 
 public class TransactionTrip extends Trip implements Parcelable {
     protected Transaction mStart;
@@ -88,7 +86,14 @@ public class TransactionTrip extends Trip implements Parcelable {
     @Nullable
     @Override
     public String getRouteName() {
-        return getAny().getRouteName();
+        // Try to get the route from the nested transactions.
+        // This automatically falls back to using the MdST.
+        @NonNull List<String> startLines =
+                mStart != null ? mStart.getRouteNames() : Collections.emptyList();
+        @NonNull List<String> endLines =
+                mEnd != null ? mEnd.getRouteNames() : Collections.emptyList();
+
+        return Trip.getRouteName(startLines, endLines);
     }
 
     @Override
@@ -100,6 +105,12 @@ public class TransactionTrip extends Trip implements Parcelable {
     @Override
     public String getVehicleID() {
         return getAny().getVehicleID();
+    }
+
+    @Nullable
+    @Override
+    public String getMachineID() {
+        return getAny().getMachineID();
     }
 
     @Override
@@ -187,5 +198,9 @@ public class TransactionTrip extends Trip implements Parcelable {
 
     public static List<TransactionTrip> merge(List<? extends Transaction> transactions) {
         return merge(transactions, TransactionTrip::new);
+    }
+
+    public static List<TransactionTrip> merge(Transaction... transactions) {
+        return merge(Arrays.asList(transactions));
     }
 }

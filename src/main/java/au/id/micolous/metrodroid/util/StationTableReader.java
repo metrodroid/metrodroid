@@ -25,23 +25,17 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.util.Log;
 
-import com.google.protobuf.ByteString;
-
-import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang3.concurrent.ConcurrentException;
 import org.apache.commons.lang3.concurrent.LazyInitializer;
 
 import java.io.DataInputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.nio.charset.Charset;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
-import java.util.zip.Inflater;
-import java.util.zip.InflaterInputStream;
-import java.util.zip.InflaterOutputStream;
 
 import au.id.micolous.farebot.R;
 import au.id.micolous.metrodroid.MetrodroidApplication;
@@ -332,10 +326,17 @@ public class StationTableReader {
     private Station getStationById(int id, String humanReadableID) throws IOException {
         Stations.Station ps = getProtoStationById(id);
         if (ps == null) return null;
+        ArrayList<Stations.Line> lines = new ArrayList<>();
+        for (int lineId : ps.getLineIdList()) {
+            Stations.Line l = mStationDb.getLinesOrDefault(lineId, null);
+            if (l != null) {
+                lines.add(l);
+            }
+        }
 
         return Station.fromProto(humanReadableID, ps,
                 mStationDb.getOperatorsOrDefault(ps.getOperatorId(), null),
-                mStationDb.getLinesOrDefault(ps.getLineId(), null),
+                lines,
                 mStationDb.getTtsHintLanguage(), this);
     }
 
