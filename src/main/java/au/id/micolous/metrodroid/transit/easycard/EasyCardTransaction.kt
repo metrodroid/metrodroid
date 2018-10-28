@@ -2,6 +2,7 @@
  * EasyCardTransaction.kt
  *
  * Copyright 2017 Eric Butler <eric@codebutler.com>
+ * Copyright 2018 Michael Farrell <micolous+git@gmail.com>
  *
  * Based on code from:
  * - http://www.fuzzysecurity.com/tutorials/rfid/4.html
@@ -24,9 +25,7 @@ package au.id.micolous.metrodroid.transit.easycard
 
 import android.support.annotation.VisibleForTesting
 import au.id.micolous.metrodroid.card.classic.ClassicCard
-import au.id.micolous.metrodroid.card.classic.ClassicSector
 import au.id.micolous.metrodroid.transit.*
-import au.id.micolous.metrodroid.transit.easycard.EasyCardTransitData.Companion.EASYCARD_STR
 import au.id.micolous.metrodroid.util.StationTableReader
 import au.id.micolous.metrodroid.util.Utils
 import kotlinx.android.parcel.Parcelize
@@ -56,7 +55,7 @@ data class EasyCardTransaction internal constructor(
     override fun getStation(): Station? = when (location) {
         BUS -> null
         POS -> null
-        else -> StationTableReader.getStation(EASYCARD_STR, location)
+        else -> StationTableReader.getStation(EasyCardTransitData.EASYCARD_STR, location)
     }
 
     override fun getMode(): Trip.Mode {
@@ -69,7 +68,7 @@ data class EasyCardTransaction internal constructor(
 
     override fun getMachineID(): String? = "0x" + machineId.toString(16)
 
-    override fun isSameTrip(trip: Transaction?): Boolean {
+    override fun isSameTrip(trip: Transaction): Boolean {
         if (trip !is EasyCardTransaction) {
             return false
         }
@@ -97,9 +96,9 @@ data class EasyCardTransaction internal constructor(
 
         internal fun parseTrips(card: ClassicCard): List<Trip> {
             val blocks = (
-                    (card.getSector(3) as ClassicSector).blocks.subList(1, 3) +
-                            (card.getSector(4) as ClassicSector).blocks.subList(0, 3) +
-                            (card.getSector(5) as ClassicSector).blocks.subList(0, 3))
+                    card.getSector(3).blocks.subList(1, 3) +
+                            card.getSector(4).blocks.subList(0, 3) +
+                            card.getSector(5).blocks.subList(0, 3))
                     .filter { !it.data.all { it == 0x0.toByte() } }
 
             val trips = blocks.map { block ->

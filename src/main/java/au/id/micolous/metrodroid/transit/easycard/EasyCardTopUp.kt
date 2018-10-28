@@ -2,6 +2,7 @@
  * EasyCardTopUp.kt
  *
  * Copyright 2017 Eric Butler <eric@codebutler.com>
+ * Copyright 2018 Michael Farrell <micolous+git@gmail.com>
  *
  * Based on code from:
  * - http://www.fuzzysecurity.com/tutorials/rfid/4.html
