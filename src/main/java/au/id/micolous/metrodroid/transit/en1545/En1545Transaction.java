@@ -227,7 +227,7 @@ public abstract class En1545Transaction extends Transaction {
     }
 
     @Override
-    protected boolean isSameTrip(Transaction otherx) {
+    protected boolean isSameTrip(@NonNull Transaction otherx) {
         if (!(otherx instanceof En1545Transaction))
             return false;
         En1545Transaction other = (En1545Transaction) otherx;

@@ -190,7 +190,7 @@ public class OrcaTransaction extends Transaction {
     }
 
     @Override
-    protected boolean isSameTrip(Transaction other) {
+    protected boolean isSameTrip(@NonNull Transaction other) {
         return other instanceof OrcaTransaction && mAgency == ((OrcaTransaction) other).mAgency;
     }
 

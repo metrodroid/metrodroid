@@ -229,7 +229,7 @@ public class SmartRiderTagRecord extends Transaction {
     }
 
     @Override
-    protected boolean isSameTrip(Transaction other) {
+    protected boolean isSameTrip(@NonNull Transaction other) {
         // SmartRider only ever records route names.
         return getRouteNames().get(0).equals(other.getRouteNames().get(0));
     }

@@ -123,7 +123,7 @@ public abstract class NextfareUltralightTransaction extends Transaction {
     }
 
     @Override
-    protected boolean isSameTrip(Transaction other) {
+    protected boolean isSameTrip(@NonNull Transaction other) {
         return (other instanceof NextfareUltralightTransaction)
                 && !isBus() && !((NextfareUltralightTransaction) other).isBus()
                 && mRoute == ((NextfareUltralightTransaction) other).mRoute;
