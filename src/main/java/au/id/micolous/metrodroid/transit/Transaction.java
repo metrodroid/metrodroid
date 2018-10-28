@@ -48,11 +48,16 @@ public abstract class Transaction implements Parcelable {
         return null;
     }
 
+    public String getMachineID() { return null; }
+
     public int getPassengerCount() {
         return -1;
     }
 
-    public abstract String getAgencyName(boolean isShort);
+    @Nullable
+    public String getAgencyName(boolean isShort) {
+        return null;
+    }
 
     public abstract Station getStation();
 
