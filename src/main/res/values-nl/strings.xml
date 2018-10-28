@@ -814,4 +814,17 @@
     <string name="card_note_kiev">Geldt alleen voor kaarten van vóór 2016; alleen het reislogboek kan worden ingezien</string>
     <string name="card_name_kiev">Kiev Metro</string>
 <string name="transfer">Overstap</string>
+<string name="rejected">Afgewezen</string>
+    <string name="location_adelaide">Adelaide, Australië</string>
+    <string name="location_tartu">Tartu, Estland</string>
+    <string name="card_note_adelaide">Alleen het serienummer, de reizen en abonnementen kunnen worden uitgelezen</string>
+    <string name="purse_serial_number">Serienummer</string>
+
+    <string name="copy_card_number">Kaartnummer kopiëren</string>
+    <string name="card_serial_number">Serienummer</string>
+    <string name="serial_only_card_header">Kaart met alleen serienummer</string>
+    <string name="serial_only_card_description_not_stored">Deze kaart bevat, buiten het serienummer, geen gegevens. Het saldo en de reisgeschiedenis worden opgeslagen in een centrale databank.</string>
+    <string name="serial_only_card_description_locked">Deze kaart is versleuteld; alleen het serienummer kan worden gelezen. Het saldo and de reisgeschiedenis zijn mogelijk op de kaart opgeslagen, maar onleesbaar.</string>
+    <string name="serial_only_card_description_more_research">Ondersteuning voor deze kaart is experimenteel; momenteel kan alleen het serienummer worden uitgelezen.</string>
+    <string name="full_serial_number">Volledig serienummer</string>
 </resources>
