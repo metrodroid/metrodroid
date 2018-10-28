@@ -88,18 +88,8 @@ import au.id.micolous.metrodroid.util.Utils;
 
 @SuppressWarnings("WeakerAccess")
 public class CardInfo {
-    /**
-     * A list of all cards in alphabetical order of their name.
-     */
-    private static final CardInfo[] LEGACY_LIST = {
-            EZLinkTransitData.EZ_LINK_CARD_INFO,
-            EZLinkTransitData.NETS_FLASHPAY_CARD_INFO,
-            TMoneyTransitData.CARD_INFO, // T-Money
-    };
-
     public static List<CardInfo> getAllCardsAlphabetical() {
         List<CardInfo> ret = new ArrayList<>();
-        ret.addAll(Arrays.asList(LEGACY_LIST));
         List<CardTransitFactory> allFactories = new ArrayList<>();
         allFactories.addAll(ClassicCard.getAllFactories());
         allFactories.addAll(CalypsoApplication.getAllFactories());
@@ -112,6 +102,8 @@ public class CardInfo {
             if (ac != null)
                 ret.addAll(ac);
         }
+        ret.add(TMoneyTransitData.CARD_INFO);
+        ret.addAll(Arrays.asList(EZLinkTransitData.ALL_CARD_INFOS));
         Collections.sort(ret, (a, b) -> a.getName().compareToIgnoreCase(b.getName()));
         return ret;
     }
