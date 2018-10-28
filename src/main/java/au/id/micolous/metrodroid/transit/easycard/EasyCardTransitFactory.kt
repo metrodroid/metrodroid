@@ -33,24 +33,31 @@ import kotlinx.android.parcel.Parcelize
 import java.util.*
 import au.id.micolous.farebot.R
 import au.id.micolous.metrodroid.card.CardType
+import au.id.micolous.metrodroid.card.classic.ClassicCardTransitFactory
 import au.id.micolous.metrodroid.transit.*
 
-class EasyCardTransitFactory {
-    fun check(card: ClassicCard): Boolean {
+class EasyCardTransitFactory : ClassicCardTransitFactory() {
+    override fun check(card: ClassicCard): Boolean {
         val data: ByteArray? = try {
             (card.getSector(0))?.getBlock(1)?.data
         } catch (e: Exception) {
             null
         }
-        return data != null && Arrays.equals(data, MAGIC);
+
+        val x = data != null && Arrays.equals(data, MAGIC)
+        return x
     }
 
-    fun parseIdentity(card: ClassicCard): TransitIdentity {
+    override fun earlySectors(): Int {
+        return 0
+    }
+
+    override fun parseTransitIdentity(card: ClassicCard): TransitIdentity {
         val uid = parseSerialNumber(card)
         return TransitIdentity(NAME, uid)
     }
 
-    fun parseInfo(card: ClassicCard): EasyCardTransitData {
+    override fun parseTransitData(card: ClassicCard): TransitData {
         return EasyCardTransitData(
                 parseSerialNumber(card),
                 parseBalance(card),
@@ -116,7 +123,7 @@ class EasyCardTransitFactory {
 
     companion object {
         private val TZ: TimeZone = TimeZone.getTimeZone("Asia/Taipei")
-        const private val NAME = "EasyCard"
+        private const val NAME = "EasyCard"
         val CARD_INFO = CardInfo.Builder()
                 .setImageId(R.drawable.easycard)
                 .setName(NAME)
@@ -125,15 +132,16 @@ class EasyCardTransitFactory {
                 .setKeysRequired()
                 .setPreview()
                 .build()
+
         private val MAGIC = byteArrayOf(
                 0x0e, 0x14, 0x00, 0x01,
                 0x07, 0x02, 0x08, 0x03,
                 0x09, 0x04, 0x08, 0x10,
                 0x00, 0x00, 0x00, 0x00)
 
-        const private val EASYCARD_STR: String = "easycard"
-        const private val POS = 1
-        const private val BUS = 5
+        private const val EASYCARD_STR: String = "easycard"
+        private const val POS = 1
+        private const val BUS = 5
     }
 
     @Parcelize

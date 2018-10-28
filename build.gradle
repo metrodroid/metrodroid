@@ -6,7 +6,7 @@ allprojects {
 }
 
 buildscript {
-    ext.kotlin_version = '1.2.61'
+    ext.kotlin_version = '1.2.71'
     repositories {
         google()
         jcenter()
@@ -127,6 +127,7 @@ android {
                 'nl',
                 'ru',
                 'tr',
+                'zh-rTW',
 
                 // UI mode
 
@@ -193,6 +194,7 @@ android {
     }
 }
 androidExtensions {
+    // Needed for kotlinx.android.parcel.Parcelize
     experimental = true
 }
 repositories {
