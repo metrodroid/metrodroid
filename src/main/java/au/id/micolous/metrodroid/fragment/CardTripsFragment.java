@@ -82,8 +82,8 @@ public class CardTripsFragment extends ListFragment {
         View view = inflater.inflate(R.layout.fragment_card_trips, null);
 
         List<Trip> trips = new ArrayList<>();
-        if (mTransitData.getTrips() != null && mTransitData.getTrips().length > 0) {
-            trips.addAll(Arrays.asList(mTransitData.getTrips()));
+        if (mTransitData.getTrips() != null && !mTransitData.getTrips().isEmpty()) {
+            trips.addAll(mTransitData.getTrips());
         }
 
         // Explicitly sort these events

@@ -24,7 +24,6 @@ import android.support.annotation.Nullable;
 
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Collections;
 import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.TimeZone;
@@ -115,7 +114,7 @@ public abstract class ChinaTransitData extends TransitData {
     }
 
     @Override
-    public Trip[] getTrips() {
-        return mTrips.toArray(new ChinaTrip[0]);
+    public List<ChinaTrip> getTrips() {
+        return mTrips;
     }
 }

@@ -28,7 +28,6 @@ import android.support.annotation.Nullable;
 import android.text.SpannableString;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
@@ -165,8 +164,8 @@ public class BilheteUnicoSPTransitData extends TransitData {
     }
 
     @Override
-    public Trip[] getTrips() {
-        return mTrips.toArray(new Trip[0]);
+    public List<Trip> getTrips() {
+        return mTrips;
     }
 
     @Override

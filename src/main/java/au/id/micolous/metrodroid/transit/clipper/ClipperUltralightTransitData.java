@@ -22,10 +22,10 @@ import android.os.Parcel;
 import android.os.Parcelable;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import au.id.micolous.farebot.R;
-import au.id.micolous.metrodroid.card.CardType;
 import au.id.micolous.metrodroid.card.UnauthorizedException;
 import au.id.micolous.metrodroid.card.ultralight.UltralightCard;
 import au.id.micolous.metrodroid.card.ultralight.UltralightCardTransitFactory;
@@ -149,8 +149,8 @@ public class ClipperUltralightTransitData extends TransitData {
     }
 
     @Override
-    public Trip[] getTrips() {
-        return mTrips.toArray(new Trip[0]);
+    public List<ClipperUltralightTrip> getTrips() {
+        return mTrips;
     }
 
     private static long getSerial(UltralightCard card) {
@@ -159,8 +159,8 @@ public class ClipperUltralightTransitData extends TransitData {
     }
 
     @Override
-    public Subscription[] getSubscriptions() {
-        return new Subscription[]{mSub};
+    public List<Subscription> getSubscriptions() {
+        return Collections.singletonList(mSub);
     }
 
     @Override

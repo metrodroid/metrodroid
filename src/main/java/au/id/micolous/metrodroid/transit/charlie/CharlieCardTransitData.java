@@ -155,8 +155,8 @@ public class CharlieCardTransitData extends TransitData {
     }
 
     @Override
-    public Trip[] getTrips() {
-        return mTrips.toArray(new Trip[0]);
+    public List<CharlieCardTrip> getTrips() {
+        return mTrips;
     }
 
     @Override

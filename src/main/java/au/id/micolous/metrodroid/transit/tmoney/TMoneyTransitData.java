@@ -106,8 +106,8 @@ public class TMoneyTransitData extends TransitData {
     }
 
     @Override
-    public Trip[] getTrips() {
-        return mTrips.toArray(new Trip[0]);
+    public List<TMoneyTrip> getTrips() {
+        return mTrips;
     }
 
     @SuppressWarnings("UnusedDeclaration")

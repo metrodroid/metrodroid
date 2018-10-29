@@ -170,13 +170,13 @@ public class RicaricaMiTransitData extends En1545TransitData {
     }
 
     @Override
-    public Trip[] getTrips() {
-        return mTrips.toArray(new Trip[0]);
+    public List<TransactionTrip> getTrips() {
+        return mTrips;
     }
 
     @Override
-    public Subscription[] getSubscriptions() {
-        return mSubscriptions.toArray(new Subscription[0]);
+    public List<En1545Subscription> getSubscriptions() {
+        return mSubscriptions;
     }
 
     public static final Creator<RicaricaMiTransitData> CREATOR = new Creator<RicaricaMiTransitData>() {

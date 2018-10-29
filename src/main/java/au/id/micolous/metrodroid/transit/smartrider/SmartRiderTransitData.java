@@ -25,7 +25,6 @@ import android.util.Log;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 
 import au.id.micolous.farebot.R;
@@ -227,8 +226,8 @@ public class SmartRiderTransitData extends TransitData {
     }
 
     @Override
-    public Trip[] getTrips() {
-        return mTrips.toArray(new Trip[0]);
+    public List<TransactionTrip> getTrips() {
+        return mTrips;
     }
 
     @Override

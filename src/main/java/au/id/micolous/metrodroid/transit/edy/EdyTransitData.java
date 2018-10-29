@@ -72,14 +72,14 @@ public class EdyTransitData extends TransitData {
             return new EdyTransitData[size];
         }
     };
-    private EdyTrip[] mTrips;
+    private List<EdyTrip> mTrips;
     // private data
     private byte[] mSerialNumber = new byte[8];
     private int mCurrentBalance;
 
     public EdyTransitData(Parcel parcel) {
-        mTrips = new EdyTrip[parcel.readInt()];
-        parcel.readTypedArray(mTrips, EdyTrip.CREATOR);
+        mTrips = new ArrayList<>();
+        parcel.readTypedList(mTrips, EdyTrip.CREATOR);
     }
 
     public EdyTransitData(FelicaCard card) {
@@ -109,7 +109,7 @@ public class EdyTransitData extends TransitData {
             trips.add(trip);
         }
 
-        mTrips = trips.toArray(new EdyTrip[0]);
+        mTrips = trips;
     }
 
     public final static FelicaCardTransitFactory FACTORY = new FelicaCardTransitFactory() {
@@ -153,7 +153,7 @@ public class EdyTransitData extends TransitData {
     }
 
     @Override
-    public Trip[] getTrips() {
+    public List<EdyTrip> getTrips() {
         return mTrips;
     }
 
@@ -163,8 +163,7 @@ public class EdyTransitData extends TransitData {
     }
 
     public void writeToParcel(Parcel parcel, int flags) {
-        parcel.writeInt(mTrips.length);
-        parcel.writeTypedArray(mTrips, flags);
+        parcel.writeTypedList(mTrips);
     }
 }
 

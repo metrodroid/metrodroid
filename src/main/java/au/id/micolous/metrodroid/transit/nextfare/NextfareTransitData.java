@@ -83,18 +83,18 @@ public class NextfareTransitData extends TransitData {
     byte[] mSystemCode;
     byte[] mBlock2;
     int mBalance;
-    NextfareTrip[] mTrips;
-    NextfareSubscription[] mSubscriptions;
+    List<NextfareTrip> mTrips;
+    List<NextfareSubscription> mSubscriptions;
     @NonNull
     String mCurrency;
 
     public NextfareTransitData(Parcel parcel, @NonNull String currency) {
         mSerialNumber = parcel.readLong();
         mBalance = parcel.readInt();
-        mTrips = new NextfareTrip[parcel.readInt()];
-        parcel.readTypedArray(mTrips, NextfareTrip.CREATOR);
-        mSubscriptions = new NextfareSubscription[parcel.readInt()];
-        parcel.readTypedArray(mSubscriptions, NextfareSubscription.CREATOR);
+        mTrips = new ArrayList<>();
+        parcel.readTypedList(mTrips, NextfareTrip.CREATOR);
+        mSubscriptions = new ArrayList<>();
+        parcel.readTypedList(mSubscriptions, NextfareSubscription.CREATOR);
         parcel.readByteArray(mSystemCode);
         parcel.readByteArray(mBlock2);
         mCurrency = currency;
@@ -260,8 +260,8 @@ public class NextfareTransitData extends TransitData {
             subscriptions.add(newSubscription(passes.get(0)));
         }
 
-        mSubscriptions = subscriptions.toArray(new NextfareSubscription[0]);
-        mTrips = trips.toArray(new NextfareTrip[0]);
+        mSubscriptions = subscriptions;
+        mTrips = trips;
     }
 
     protected static class NextFareTransitFactory extends ClassicCardTransitFactory {
@@ -316,10 +316,8 @@ public class NextfareTransitData extends TransitData {
     public void writeToParcel(Parcel parcel, int i) {
         parcel.writeLong(mSerialNumber);
         parcel.writeInt(mBalance);
-        parcel.writeInt(mTrips.length);
-        parcel.writeTypedArray(mTrips, i);
-        parcel.writeInt(mSubscriptions.length);
-        parcel.writeTypedArray(mSubscriptions, i);
+        parcel.writeTypedList(mTrips);
+        parcel.writeTypedList(mSubscriptions);
         parcel.writeByteArray(mSystemCode);
         parcel.writeByteArray(mBlock2);
         mConfig.writeToParcel(parcel, i);
@@ -412,7 +410,7 @@ public class NextfareTransitData extends TransitData {
     }
 
     @Override
-    public Trip[] getTrips() {
+    public List<NextfareTrip> getTrips() {
         return mTrips;
     }
 
@@ -433,7 +431,7 @@ public class NextfareTransitData extends TransitData {
     }
 
     @Override
-    public Subscription[] getSubscriptions() {
+    public List<NextfareSubscription> getSubscriptions() {
         return mSubscriptions;
     }
 

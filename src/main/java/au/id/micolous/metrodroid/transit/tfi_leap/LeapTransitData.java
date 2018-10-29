@@ -35,7 +35,6 @@ import java.util.TimeZone;
 
 import au.id.micolous.farebot.R;
 import au.id.micolous.metrodroid.MetrodroidApplication;
-import au.id.micolous.metrodroid.card.Card;
 import au.id.micolous.metrodroid.card.CardType;
 import au.id.micolous.metrodroid.card.desfire.DesfireApplication;
 import au.id.micolous.metrodroid.card.desfire.DesfireCard;
@@ -91,7 +90,7 @@ public class LeapTransitData extends TransitData {
     private Calendar mExpiryDate;
     private AccumulatorBlock mDailyAccumulators;
     private AccumulatorBlock mWeeklyAccumulators;
-    private LeapTrip[] mTrips;
+    private List<LeapTrip> mTrips;
 
     static {
         GregorianCalendar g = new GregorianCalendar(TZ);
@@ -222,7 +221,7 @@ public class LeapTransitData extends TransitData {
     }
 
     @Override
-    public Trip[] getTrips() {
+    public List<LeapTrip> getTrips() {
         return mTrips;
     }
 
@@ -326,6 +325,7 @@ public class LeapTransitData extends TransitData {
         parcelCalendar(parcel, mInitDate);
         parcelCalendar(parcel, mExpiryDate);
         parcel.writeInt(mIssuerId);
+        parcel.writeTypedList(mTrips);
     }
 
     private static void parcelCalendar(Parcel parcel, Calendar cal) {
@@ -344,6 +344,8 @@ public class LeapTransitData extends TransitData {
         mInitDate = unParcelCalendar(parcel);
         mExpiryDate = unParcelCalendar(parcel);
         mIssuerId = parcel.readInt();
+        mTrips = new ArrayList<>();
+        parcel.readTypedList(mTrips, LeapTrip.CREATOR);
     }
 
     public static boolean earlyCheck(int appId) {

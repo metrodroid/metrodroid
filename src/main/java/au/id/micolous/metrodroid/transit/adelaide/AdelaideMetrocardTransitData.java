@@ -26,13 +26,11 @@ import org.apache.commons.lang3.ArrayUtils;
 
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
 
 import au.id.micolous.farebot.R;
 import au.id.micolous.metrodroid.card.CardType;
-import au.id.micolous.metrodroid.card.calypso.CalypsoCardTransitFactory;
 import au.id.micolous.metrodroid.card.desfire.DesfireApplication;
 import au.id.micolous.metrodroid.card.desfire.DesfireCard;
 import au.id.micolous.metrodroid.card.desfire.DesfireCardTransitFactory;
@@ -200,15 +198,15 @@ public class AdelaideMetrocardTransitData extends En1545TransitData {
     }
 
     @Override
-    public Trip[] getTrips() {
-        return mTrips.toArray(new Trip[0]);
+    public List<TransactionTrip> getTrips() {
+        return mTrips;
     }
 
     @Override
-    public Subscription[] getSubscriptions() {
+    public List<AdelaideSubscription> getSubscriptions() {
         if (mSubs.isEmpty())
             return null;
-        return mSubs.toArray(new Subscription[0]);
+        return mSubs;
     }
 
     @Override

@@ -90,16 +90,16 @@ public class TroikaUltralightTransitData extends TransitData {
     }
 
     @Override
-    public Trip[] getTrips() {
-        return mBlock.getTrips().toArray(new Trip[0]);
+    public List<Trip> getTrips() {
+        return mBlock.getTrips();
     }
 
     @Override
-    public Subscription[] getSubscriptions() {
+    public List<Subscription> getSubscriptions() {
         Subscription s = mBlock.getSubscription();
         if (s == null)
             return null;
-        return new Subscription[]{s};
+        return Collections.singletonList(s);
     }
 
     @Override

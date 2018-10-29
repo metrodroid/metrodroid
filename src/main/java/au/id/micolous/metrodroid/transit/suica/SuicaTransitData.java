@@ -89,11 +89,11 @@ public class SuicaTransitData extends TransitData {
     static final TimeZone TIME_ZONE = TimeZone.getTimeZone("Asia/Tokyo");
     static final String TAG = SuicaTransitData.class.getSimpleName();
 
-    private SuicaTrip[] mTrips;
+    private List<SuicaTrip> mTrips;
 
     public SuicaTransitData(Parcel parcel) {
-        mTrips = new SuicaTrip[parcel.readInt()];
-        parcel.readTypedArray(mTrips, SuicaTrip.CREATOR);
+        mTrips = new ArrayList<>();
+        parcel.readTypedList(mTrips, SuicaTrip.CREATOR);
     }
 
     public SuicaTransitData(FelicaCard card) {
@@ -223,7 +223,7 @@ public class SuicaTransitData extends TransitData {
         Log.d(TAG, String.format(Locale.ENGLISH, "Matched %d taps", matchedTaps.size()));
         */
 
-        mTrips = trips.toArray(new SuicaTrip[0]);
+        mTrips = trips;
     }
 
     public final static FelicaCardTransitFactory FACTORY = new FelicaCardTransitFactory() {
@@ -254,15 +254,15 @@ public class SuicaTransitData extends TransitData {
     @Nullable
     @Override
     public TransitBalance getBalance() {
-        if (mTrips.length > 0) {
-            Calendar expiry = mTrips[0].getEndTimestamp();
+        if (!mTrips.isEmpty()) {
+            Calendar expiry = mTrips.get(0).getEndTimestamp();
             if (expiry == null)
-                expiry = mTrips[0].getStartTimestamp();
+                expiry = mTrips.get(0).getStartTimestamp();
             if (expiry != null) {
                 expiry = (Calendar) expiry.clone();
                 expiry.add(Calendar.YEAR, 10);
             }
-            return new TransitBalanceStored(TransitCurrency.JPY(mTrips[0].getBalance()),
+            return new TransitBalanceStored(TransitCurrency.JPY(mTrips.get(0).getBalance()),
                     null, expiry);
         }
         return null;
@@ -275,7 +275,7 @@ public class SuicaTransitData extends TransitData {
     }
 
     @Override
-    public Trip[] getTrips() {
+    public List<SuicaTrip> getTrips() {
         return mTrips;
     }
 
@@ -285,7 +285,6 @@ public class SuicaTransitData extends TransitData {
     }
 
     public void writeToParcel(Parcel parcel, int flags) {
-        parcel.writeInt(mTrips.length);
-        parcel.writeTypedArray(mTrips, flags);
+        parcel.writeTypedList(mTrips);
     }
 }

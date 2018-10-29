@@ -51,7 +51,6 @@ import au.id.micolous.metrodroid.util.Utils;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
-import java.util.Collections;
 import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.TimeZone;
@@ -198,11 +197,13 @@ public class ClipperTransitData extends TransitData {
     }
 
     @Override
-    public Trip[] getTrips() {
+    public List<Trip> getTrips() {
         // This is done in a roundabout way, as the base type used is the first parameter. Adding it
         // to an empty Trip[] first, coerces types correctly from the start.
-        Trip[] t = new Trip[0];
-        return ArrayUtils.addAll(ArrayUtils.addAll(t, mTrips), mRefills);
+        List<Trip> t = new ArrayList<>();
+        t.addAll(Arrays.asList(mTrips));
+        t.addAll(Arrays.asList(mRefills));
+        return t;
     }
 
     private ClipperTrip[] parseTrips(DesfireCard card) {

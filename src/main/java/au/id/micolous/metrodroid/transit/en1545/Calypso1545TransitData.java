@@ -174,13 +174,13 @@ public abstract class Calypso1545TransitData extends En1545TransitData {
                                                              int recordNum, Integer counter);
 
     @Override
-    public Trip[] getTrips() {
-        return mTrips.toArray(new Trip[0]);
+    public List<Trip> getTrips() {
+        return mTrips;
     }
 
     @Override
-    public En1545Subscription[] getSubscriptions() {
-        return mSubscriptions.toArray(new En1545Subscription[0]);
+    public List<En1545Subscription> getSubscriptions() {
+        return mSubscriptions;
     }
 
     @SuppressWarnings("WeakerAccess")
