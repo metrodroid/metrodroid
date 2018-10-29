@@ -322,27 +322,17 @@ public class LeapTransitData extends TransitData {
     public void writeToParcel(Parcel parcel, int i) {
         parcel.writeString(mSerial);
         parcel.writeInt(mBalance);
-        parcelCalendar(parcel, mInitDate);
-        parcelCalendar(parcel, mExpiryDate);
+        Utils.parcelCalendar(parcel, mInitDate);
+        Utils.parcelCalendar(parcel, mExpiryDate);
         parcel.writeInt(mIssuerId);
         parcel.writeTypedList(mTrips);
-    }
-
-    private static void parcelCalendar(Parcel parcel, Calendar cal) {
-        parcel.writeLong(cal.getTimeInMillis());
-    }
-
-    private static Calendar unParcelCalendar(Parcel parcel) {
-        GregorianCalendar g = new GregorianCalendar(TZ);
-        g.setTimeInMillis(parcel.readLong());
-        return g;
     }
 
     private LeapTransitData(Parcel parcel) {
         mSerial = parcel.readString();
         mBalance = parcel.readInt();
-        mInitDate = unParcelCalendar(parcel);
-        mExpiryDate = unParcelCalendar(parcel);
+        mInitDate = Utils.unparcelCalendar(parcel);
+        mExpiryDate = Utils.unparcelCalendar(parcel);
         mIssuerId = parcel.readInt();
         mTrips = new ArrayList<>();
         parcel.readTypedList(mTrips, LeapTrip.CREATOR);
