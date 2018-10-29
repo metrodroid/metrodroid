@@ -22,41 +22,67 @@ import android.os.Parcel;
 
 import org.apache.commons.lang3.ArrayUtils;
 
-import java.util.Arrays;
+import java.util.Locale;
 
-import au.id.micolous.metrodroid.card.Card;
 import au.id.micolous.metrodroid.card.desfire.DesfireCard;
 import au.id.micolous.metrodroid.card.desfire.DesfireCardTransitFactory;
 import au.id.micolous.metrodroid.transit.CardInfo;
 import au.id.micolous.metrodroid.transit.TransitData;
 import au.id.micolous.metrodroid.transit.TransitIdentity;
+import au.id.micolous.metrodroid.transit.serialonly.SerialOnlyTransitData;
+import au.id.micolous.metrodroid.util.Utils;
 
 /**
  * Stub implementation for AT HOP (Auckland, NZ).
  * <p>
  * https://github.com/micolous/metrodroid/wiki/AT-HOP
  */
-public class AtHopStubTransitData extends StubTransitData {
+public class AtHopStubTransitData extends SerialOnlyTransitData {
+    private static final int APP_ID_SERIAL = 0xffffff;
+    private final int mSerial;
+
+    public AtHopStubTransitData(DesfireCard card) {
+        mSerial = getSerial(card);
+    }
+
+    protected AtHopStubTransitData(Parcel in) {
+        mSerial = in.readInt();
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeInt(mSerial);
+    }
+
     public static final Creator<AtHopStubTransitData> CREATOR = new Creator<AtHopStubTransitData>() {
-        public AtHopStubTransitData createFromParcel(Parcel parcel) {
-            return new AtHopStubTransitData(parcel);
+        @Override
+        public AtHopStubTransitData createFromParcel(Parcel in) {
+            return new AtHopStubTransitData(in);
         }
 
+        @Override
         public AtHopStubTransitData[] newArray(int size) {
             return new AtHopStubTransitData[size];
         }
     };
 
-    public AtHopStubTransitData(Card card) {
+    private static int getSerial(DesfireCard card) {
+        return Utils.getBitsFromBuffer(card.getApplication(APP_ID_SERIAL).getFile(8).getData(),
+                61, 32);
     }
 
-    public AtHopStubTransitData(Parcel parcel) {
+    private static String formatSerial(int serial) {
+        return String.format(Locale.ENGLISH, "7824 6702 %04d %04d %03d",
+                (serial / 10000000),
+                (serial / 1000) % 10000,
+                serial % 1000);
     }
 
+    private static final String NAME = "AT HOP";
     public final static DesfireCardTransitFactory FACTORY = new DesfireCardTransitFactory() {
         @Override
         public boolean earlyCheck(int[] appIds) {
-            return ArrayUtils.contains(appIds, 0x4055) && ArrayUtils.contains(appIds, 0xffffff);
+            return ArrayUtils.contains(appIds, 0x4055) && ArrayUtils.contains(appIds, APP_ID_SERIAL);
         }
 
         @Override
@@ -71,12 +97,22 @@ public class AtHopStubTransitData extends StubTransitData {
 
         @Override
         public TransitIdentity parseTransitIdentity(DesfireCard desfireCard) {
-            return new TransitIdentity("AT HOP", null);
+            return new TransitIdentity(NAME, formatSerial(getSerial(desfireCard)));
         }
     };
 
     @Override
+    public String getSerialNumber() {
+        return formatSerial(mSerial);
+    }
+
+    @Override
     public String getCardName() {
-        return "AT HOP";
+        return NAME;
+    }
+
+    @Override
+    protected Reason getReason() {
+        return Reason.LOCKED;
     }
 }
