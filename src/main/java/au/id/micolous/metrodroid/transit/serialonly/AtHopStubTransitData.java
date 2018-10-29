@@ -16,7 +16,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package au.id.micolous.metrodroid.transit.stub;
+package au.id.micolous.metrodroid.transit.serialonly;
 
 import android.os.Parcel;
 
@@ -29,7 +29,6 @@ import au.id.micolous.metrodroid.card.desfire.DesfireCardTransitFactory;
 import au.id.micolous.metrodroid.transit.CardInfo;
 import au.id.micolous.metrodroid.transit.TransitData;
 import au.id.micolous.metrodroid.transit.TransitIdentity;
-import au.id.micolous.metrodroid.transit.serialonly.SerialOnlyTransitData;
 import au.id.micolous.metrodroid.util.Utils;
 
 /**
