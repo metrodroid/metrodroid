@@ -31,6 +31,7 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.InputSource;
 
+import java.io.OutputStream;
 import java.io.StringReader;
 import java.io.StringWriter;
 
@@ -56,32 +57,24 @@ public final class ExportHelper {
         Utils.copyTextToClipboard(context, "metrodroid card", xml);
     }
 
-    public static String exportCardsXml(Context context) throws Exception {
-        DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
-
-        // http://code.google.com/p/android/issues/detail?id=2735
-        factory.setNamespaceAware(true);
-
-        DocumentBuilder builder = factory.newDocumentBuilder();
-
-        Document exportDoc = builder.newDocument();
-        Element cardsElement = exportDoc.createElement("cards");
-        exportDoc.appendChild(cardsElement);
+    public static void exportCardsXml(OutputStream os, Context context) throws Exception {
+        os.write(Utils.stringToByteArray("<?xml version=\"1.0\" encoding=\"UTF-8\"?><cards>\n"));
 
         Cursor cursor = CardDBHelper.createCursor(context);
 
         while (cursor.moveToNext()) {
-            int type = cursor.getInt(cursor.getColumnIndex(CardsTableColumns.TYPE));
-            String serial = cursor.getString(cursor.getColumnIndex(CardsTableColumns.TAG_SERIAL));
             String data = cursor.getString(cursor.getColumnIndex(CardsTableColumns.DATA));
-
-            Document doc = builder.parse(new InputSource(new StringReader(data)));
-            Element rootElement = doc.getDocumentElement();
-
-            cardsElement.appendChild(exportDoc.adoptNode(rootElement.cloneNode(true)));
+            os.write(Utils.stringToUtf8(cutXmlDef(data)));
+            os.write(Utils.stringToByteArray("\n"));
         }
 
-        return xmlNodeToString(exportDoc);
+        os.write(Utils.stringToByteArray("</cards>\n"));
+    }
+
+    private static String cutXmlDef(String data) {
+        if (!data.startsWith("<?"))
+            return data;
+        return data.substring(data.indexOf("?>")+2);
     }
 
     public static Uri[] importCardsXml(Context context, String xml) throws Exception {
