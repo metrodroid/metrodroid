@@ -66,10 +66,12 @@ import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.IOUtils;
 import org.simpleframework.xml.Serializer;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.io.StringWriter;
 import java.lang.ref.WeakReference;
 import java.nio.charset.Charset;
 import java.util.ArrayList;
@@ -248,9 +250,12 @@ public class CardsFragment extends ExpandableListFragment {
                     }
                     return true;
 
-                case R.id.copy_xml:
-                    ExportHelper.copyXmlToClipboard(getActivity(), ExportHelper.exportCardsXml(getActivity()));
+                case R.id.copy_xml: {
+                    ByteArrayOutputStream bos = new ByteArrayOutputStream();
+                    ExportHelper.exportCardsXml(bos, getActivity());
+                    ExportHelper.copyXmlToClipboard(getActivity(), bos.toString("UTF-8"));
                     return true;
+                }
 
                 case R.id.share_xml:
                     new ShareTask().execute();
@@ -264,9 +269,8 @@ public class CardsFragment extends ExpandableListFragment {
                         i.putExtra(Intent.EXTRA_TITLE, STD_EXPORT_FILENAME);
                         startActivityForResult(Intent.createChooser(i, Utils.localizeString(R.string.export_filename)), REQUEST_SAVE_FILE);
                     } else {
-                        xml = ExportHelper.exportCardsXml(getActivity());
                         File file = new File(SD_EXPORT_PATH);
-                        FileUtils.writeStringToFile(file, xml, "UTF-8");
+                        ExportHelper.exportCardsXml(FileUtils.openOutputStream(file), getActivity());
                         Toast.makeText(getActivity(), R.string.saved_xml, Toast.LENGTH_SHORT).show();
                     }
                     return true;
@@ -287,8 +291,7 @@ public class CardsFragment extends ExpandableListFragment {
                 File tf = File.createTempFile("cards", ".xml",
                         folder);
                 OutputStream os = new FileOutputStream(tf);
-                String xml = ExportHelper.exportCardsXml(MetrodroidApplication.getInstance());
-                IOUtils.write(xml, os, Charset.defaultCharset());
+                ExportHelper.exportCardsXml(os, MetrodroidApplication.getInstance());
                 os.close();
                 return new Pair<>(null, tf);
             } catch (Exception ex) {
@@ -328,8 +331,7 @@ public class CardsFragment extends ExpandableListFragment {
                 OutputStream os = MetrodroidApplication.getInstance().getContentResolver().openOutputStream(uris[0]);
                 if (os == null)
                     return "openOutputStream failed";
-                String xml = ExportHelper.exportCardsXml(MetrodroidApplication.getInstance());
-                IOUtils.write(xml, os, Charset.defaultCharset());
+                ExportHelper.exportCardsXml(os, MetrodroidApplication.getInstance());
                 os.close();
                 return null;
             } catch (Exception ex) {
