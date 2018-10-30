@@ -72,7 +72,7 @@ class JsonKeys(KeyBase):
 
   def make_sector(self, sector_no, blocks, key):
     d = {
-      'type': 'KeyA',
+      'keytype': 'KeyA',
       'key': b16encode(key).decode('ascii').lower(),
     }
     if self.format == 'json-static-keys':
@@ -160,7 +160,7 @@ class MetrodroidXml:
     if self.format != 'farebot':
       sector.attrib['key'] = b64encode(key).decode('ascii')
     if self.format == 'md34':
-      sector.attrib['type'] = 'KeyA'
+      sector.attrib['keytype'] = 'KeyA'
 
     return sector
   
