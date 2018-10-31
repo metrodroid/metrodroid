@@ -84,7 +84,7 @@ public class OpalTest extends TestCase {
         OpalTransitData o = (OpalTransitData)d;
         assertEquals("3085220012345670", o.getSerialNumber());
         assertTrue(o.getBalance().equals(TransitCurrency.AUD(336)));
-        assertEquals(0, o.getSubscriptions().length);
+        assertEquals(0, o.getSubscriptions().size());
         // 2015-10-05 09:06 UTC+11
         assertEquals("2015-10-04 22:06", Utils.isoDateTimeFormat(o.getLastTransactionTime()));
         assertEquals(OpalData.MODE_BUS, o.getLastTransactionMode());
