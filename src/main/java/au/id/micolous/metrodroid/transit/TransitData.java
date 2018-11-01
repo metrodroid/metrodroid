@@ -127,7 +127,7 @@ public abstract class TransitData implements Parcelable {
         return false;
     }
 
-    public final int describeContents() {
+    public int describeContents() {
         return 0;
     }
 
