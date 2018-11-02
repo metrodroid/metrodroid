@@ -27,6 +27,8 @@ import android.text.SpannableString;
 import android.text.Spanned;
 import android.text.style.TtsSpan;
 
+import org.jetbrains.annotations.Nullable;
+
 import java.security.SecureRandom;
 import java.text.NumberFormat;
 import java.util.Currency;
@@ -256,5 +258,15 @@ public class TransitCurrency extends TransitBalance implements Parcelable {
                 getClass().getSimpleName(),
                 mCurrencyCode,
                 mCurrency);
+    }
+
+    @Nullable
+    public static TransitCurrency sum(@Nullable TransitCurrency a, @Nullable TransitCurrency b) {
+        if (a == null)
+            return b;
+        if (b == null)
+            return a;
+
+        return new TransitCurrency(a.mCurrency + b.mCurrency, a.mCurrencyCode, a.mDivisor);
     }
 }
