@@ -81,7 +81,11 @@ public abstract class En1545Transaction extends Transaction {
     private static final String TAG = En1545Transaction.class.getSimpleName();
 
     public En1545Transaction(byte[] data, En1545Field fields) {
-        mParsed = En1545Parser.parse(data, fields);
+        this(En1545Parser.parse(data, fields));
+    }
+
+    public En1545Transaction(En1545Parsed parsed) {
+        mParsed = parsed;
     }
 
     public En1545Transaction(Parcel parcel) {
