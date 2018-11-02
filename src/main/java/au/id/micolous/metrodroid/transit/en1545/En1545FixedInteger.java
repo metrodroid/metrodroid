@@ -75,6 +75,19 @@ public class En1545FixedInteger implements En1545Field {
     }
 
     @Nullable
+    private static Calendar parseTimePacked16(long epoch, int d, int t, TimeZone tz) {
+        if (d == 0 && t == 0)
+            return null;
+        GregorianCalendar g = new GregorianCalendar(tz);
+        g.setTimeInMillis(epoch);
+        g.add(Calendar.DAY_OF_YEAR, d);
+        g.add(Calendar.HOUR, t >> 11);
+        g.add(Calendar.MINUTE, (t >> 5) & 0x3f);
+        g.add(Calendar.SECOND, (t & 0x1f) * 2);
+        return g;
+    }
+
+    @Nullable
     public static Calendar parseTime(int d, int t, TimeZone tz) {
         return parseTime(UTC_EPOCH, d, t, tz);
     }
@@ -82,6 +95,11 @@ public class En1545FixedInteger implements En1545Field {
     @Nullable
     public static Calendar parseTimeLocal(int d, int t, TimeZone tz) {
         return parseTime(getEpoch(tz), d, t, tz);
+    }
+
+    @Nullable
+    public static Calendar parseTimePacked16(int d, int t, TimeZone tz) {
+        return parseTimePacked16(UTC_EPOCH, d, t, tz);
     }
 
     @Nullable
@@ -114,6 +132,10 @@ public class En1545FixedInteger implements En1545Field {
 
     public static En1545FixedInteger time(String name) {
         return new En1545FixedInteger(name + "Time", 11);
+    }
+
+    public static En1545FixedInteger timePacked16(String name) {
+        return new En1545FixedInteger(name + "TimePacked16", 16);
     }
 
     public static En1545FixedInteger BCDdate(String name) {
