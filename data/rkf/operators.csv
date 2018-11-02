@@ -1,0 +1,8 @@
+id,name,short_name,mode
+1002,Norges Statsbaner,Norges Statsbaner,TRAM
+2000,Rejsekort,Rejsekort,OTHER
+2001,Hovedstadens Udviklingsråd,HUR,BUS
+2002,DSB,DSB,TRAIN
+2003,ØSS/Metro,ØSS/Metro,METRO
+2004,STS,STS,BUS
+2005,VT,VT,BUS
