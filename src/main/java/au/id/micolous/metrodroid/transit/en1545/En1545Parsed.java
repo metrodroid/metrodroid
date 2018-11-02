@@ -164,6 +164,9 @@ public class En1545Parsed implements Parcelable {
         if (contains(name + "TimeLocal") && contains(name + "Date"))
             return Pair.create(En1545FixedInteger.parseTimeLocal(getIntOrZero(name + "Date"), getIntOrZero(name + "TimeLocal"), tz),
                     3);
+        if (contains(name + "TimePacked16") && contains(name + "Date"))
+            return Pair.create(En1545FixedInteger.parseTimePacked16(getIntOrZero(name + "Date"), getIntOrZero(name + "TimePacked16"), tz),
+                    3);
         if (contains(name + "Date"))
             return Pair.create(En1545FixedInteger.parseDate(getIntOrZero(name + "Date"), tz), 2);
         if (contains(name + "TimeLocal"))
