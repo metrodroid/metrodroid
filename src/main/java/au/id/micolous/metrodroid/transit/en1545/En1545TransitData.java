@@ -65,6 +65,10 @@ abstract public class En1545TransitData extends TransitData {
         mTicketEnvParsed = new En1545Parsed();
     }
 
+    protected En1545TransitData(En1545Parsed parsed) {
+        mTicketEnvParsed = parsed;
+    }
+
     @Override
     public List<ListItem> getInfo() {
         ArrayList<ListItem> li = new ArrayList<>();
