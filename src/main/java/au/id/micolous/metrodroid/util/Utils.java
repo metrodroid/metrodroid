@@ -492,6 +492,29 @@ public class Utils {
         }
     }
 
+    public static int getBitsFromBufferLeBits(byte[] buffer, int iStartBit, int iLength) {
+        // Note: Assumes little-endian bit-order
+        int iEndBit = iStartBit + iLength - 1;
+        int iSByte = iStartBit / 8;
+        int iSBit = iStartBit % 8;
+        int iEByte = iEndBit / 8;
+        int iEBit = iEndBit % 8;
+
+        if (iSByte == iEByte) {
+            return (buffer[iEByte] >> iSBit) & (0xFF >> (8 - iLength));
+        } else {
+            int uRet = (buffer[iSByte] >> iSBit) & (0xFF >> iSBit);
+
+            for (int i = iSByte + 1; i < iEByte; i++) {
+                uRet |= ((buffer[i] & 0xFF) << (((i - iSByte) * 8) - iSBit));
+            }
+
+            uRet |= (buffer[iEByte] & ((1 << (iEBit + 1)) - 1)) << (((iEByte - iSByte) * 8) - iSBit);
+
+            return uRet;
+        }
+    }
+
     public static String formatDurationMinutes(int mins)
     {
         int hours, days;
