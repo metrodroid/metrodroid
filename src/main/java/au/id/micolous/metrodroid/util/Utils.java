@@ -257,11 +257,7 @@ public class Utils {
     */
 
     public static int byteArrayToInt(byte[] b) {
-        return byteArrayToInt(b, 0);
-    }
-
-    public static int byteArrayToInt(byte[] b, int offset) {
-        return byteArrayToInt(b, offset, b.length);
+        return byteArrayToInt(b, 0, b.length);
     }
 
     public static int byteArrayToInt(byte[] b, int offset, int length) {
