@@ -41,6 +41,18 @@ public class ChinaTrip extends Trip {
         mStation = parcel.readLong();
     }
 
+    public static final Creator<ChinaTrip> CREATOR = new Creator<ChinaTrip>() {
+        @Override
+        public ChinaTrip createFromParcel(Parcel in) {
+            return new ChinaTrip(in);
+        }
+
+        @Override
+        public ChinaTrip[] newArray(int size) {
+            return new ChinaTrip[size];
+        }
+    };
+
     @Override
     public int describeContents() {
         return 0;
