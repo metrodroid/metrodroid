@@ -159,8 +159,8 @@ public class PodorozhnikTransitData extends TransitData {
                 Utils.byteArrayToLongReversed(uid, 0, 7));
         sn += Utils.calculateLuhn(sn);// last digit is luhn
         for (int i = 0; i < 6; i++)
-            pretty.append(sn.substring(i * 4, i * 4 + 4)).append(" ");
-        pretty.append(sn.substring(24, 26));
+            pretty.append(sn, i * 4, i * 4 + 4).append(" ");
+        pretty.append(sn, 24, 26);
         return pretty.toString();
     }
 
