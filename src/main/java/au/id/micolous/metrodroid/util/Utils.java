@@ -506,6 +506,7 @@ public class Utils {
      * @param formatArgs     Formatting arguments to pass
      * @return Localized string
      */
+    @NonNull
     public static String localizeString(@StringRes int stringResource, Object... formatArgs) {
         Resources res = MetrodroidApplication.getInstance().getResources();
         return res.getString(stringResource, formatArgs);
