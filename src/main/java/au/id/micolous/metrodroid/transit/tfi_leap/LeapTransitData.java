@@ -253,8 +253,9 @@ public class LeapTransitData extends TransitData {
         Calendar initDate = parseDate(app.getFile(6).getData(), 1);
         // luhn checksum of number without date is always 6
         int checkDigit = (Utils.calculateLuhn(Integer.toString(serial)) + 6) % 10;
-        return String.format(Locale.ENGLISH, "%05d %04d%d %02d%02d",
-                serial / 10000, serial % 10000, checkDigit, initDate.get(Calendar.MONTH) + 1,
+        return Utils.formatNumber(serial, " ", 5 , 4) + checkDigit + " "
+                + String.format(Locale.ENGLISH, "%02d%02d",
+                initDate.get(Calendar.MONTH) + 1,
                 initDate.get(Calendar.YEAR) % 100);
     }
 
