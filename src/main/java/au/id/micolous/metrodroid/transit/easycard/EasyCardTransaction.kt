@@ -99,7 +99,7 @@ data class EasyCardTransaction internal constructor(
                     card.getSector(3).blocks.subList(1, 3) +
                             card.getSector(4).blocks.subList(0, 3) +
                             card.getSector(5).blocks.subList(0, 3))
-                    .filter { !it.data.all { it == 0x0.toByte() } }
+                    .filter { !Utils.isAllZero(it.data) }
 
             val trips = blocks.map { block ->
                 EasyCardTransaction(block.data)
