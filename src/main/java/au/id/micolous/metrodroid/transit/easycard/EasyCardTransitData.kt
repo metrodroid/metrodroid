@@ -34,13 +34,11 @@ import java.util.*
 
 @Parcelize
 data class EasyCardTransitData internal constructor(
-        private val serialNumber: String,
         private val balance: Int,
         private val trips: List<Trip>,
         private val refill: EasyCardTopUp
 ) : TransitData() {
     constructor(card: ClassicCard) : this(
-            parseSerialNumber(card),
             parseBalance(card),
             EasyCardTransaction.parseTrips(card),
             EasyCardTopUp.parse(card)
@@ -50,7 +48,7 @@ data class EasyCardTransitData internal constructor(
 
     override fun getCardName(): String = NAME
 
-    override fun getSerialNumber(): String? = serialNumber
+    override fun getSerialNumber(): String? = null
 
     override fun getTrips(): Array<out Trip> {
         val ret: ArrayList<Trip> = ArrayList()
@@ -80,11 +78,6 @@ data class EasyCardTransitData internal constructor(
 
         internal const val EASYCARD_STR: String = "easycard"
 
-        private fun parseSerialNumber(card: ClassicCard): String {
-            val data = (card.getSector(0))?.getBlock(0)?.data!!
-            return Utils.getHexString(data, 0, 4)
-        }
-
         private fun parseBalance(card: ClassicCard): Int {
             val data = (card.getSector(2))?.getBlock(0)?.data
             return Utils.byteArrayToIntReversed(data, 0, 4)
@@ -113,8 +106,7 @@ data class EasyCardTransitData internal constructor(
             }
 
             override fun parseTransitIdentity(card: ClassicCard): TransitIdentity {
-                val uid = EasyCardTransitData.parseSerialNumber(card)
-                return TransitIdentity(NAME, uid)
+                return TransitIdentity(NAME, null)
             }
 
             override fun parseTransitData(card: ClassicCard): TransitData {
