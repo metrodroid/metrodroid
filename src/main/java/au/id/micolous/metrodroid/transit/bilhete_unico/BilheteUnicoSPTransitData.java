@@ -28,6 +28,8 @@ import android.support.annotation.Nullable;
 import android.text.SpannableString;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
 
@@ -235,6 +237,11 @@ public class BilheteUnicoSPTransitData extends TransitData {
                     && !Utils.isAllZero(sectors.get(3).getBlock(0).getData()))
                 return CARD_INFO;
             return null;
+        }
+
+        @Override
+        public List<CardInfo> getAllCards() {
+            return Collections.singletonList(CARD_INFO);
         }
     };
 }

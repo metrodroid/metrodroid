@@ -21,6 +21,7 @@ package au.id.micolous.metrodroid.transit.chc_metrocard;
 import android.os.Parcel;
 import android.support.annotation.NonNull;
 
+import java.util.Collections;
 import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.TimeZone;
@@ -126,6 +127,11 @@ public class ChcMetrocardTransitData extends ErgTransitData {
         @Override
         public int earlySectors() {
             return 1;
+        }
+
+        @Override
+        public List<CardInfo> getAllCards() {
+            return Collections.singletonList(CARD_INFO);
         }
     };
 

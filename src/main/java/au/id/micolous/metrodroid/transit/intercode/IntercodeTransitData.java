@@ -25,6 +25,7 @@ import android.support.annotation.Nullable;
 import android.util.Pair;
 import android.util.SparseArray;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
@@ -32,6 +33,7 @@ import java.util.List;
 import au.id.micolous.farebot.R;
 import au.id.micolous.metrodroid.card.CardType;
 import au.id.micolous.metrodroid.card.calypso.CalypsoApplication;
+import au.id.micolous.metrodroid.card.calypso.CalypsoCardTransitFactory;
 import au.id.micolous.metrodroid.card.iso7816.ISO7816File;
 import au.id.micolous.metrodroid.card.iso7816.ISO7816Record;
 import au.id.micolous.metrodroid.card.iso7816.ISO7816Selector;
@@ -217,12 +219,6 @@ public class IntercodeTransitData extends Calypso1545TransitData {
         return "Intercode-" + Integer.toHexString(networkId);
     }
 
-    @NonNull
-    public static TransitIdentity parseTransitIdentity(CalypsoApplication card) {
-        int netId = getNetId(card);
-        return new TransitIdentity(getCardName(netId), getSerial(netId, card));
-    }
-
     private static int getNetId(CalypsoApplication card) {
         return Utils.getBitsFromBuffer(card.getFile(CalypsoApplication.File.TICKETING_ENVIRONMENT).getRecord(1).getData(),
                 13, 24);
@@ -255,20 +251,47 @@ public class IntercodeTransitData extends Calypso1545TransitData {
         return null;
     }
 
-
-    public static boolean check(byte[] ticketEnv) {
-        try {
-            int netId = Utils.getBitsFromBuffer(ticketEnv, 13, 24);
-            return NETWORKS.get(netId) != null || COUNTRY_ID_FRANCE == (netId >> 12);
-        } catch (Exception e) {
-            return false;
+    public final static CalypsoCardTransitFactory FACTORY = new CalypsoCardTransitFactory() {
+        @Override
+        public List<CardInfo> getAllCards() {
+            List<CardInfo> li = new ArrayList<>();
+            for(int i = 0, nsize = NETWORKS.size(); i < nsize; i++) {
+                li.add(NETWORKS.valueAt(i).first);
+            }
+            return li;
         }
-    }
 
-    @NonNull
-    public static IntercodeTransitData parseTransitData(CalypsoApplication card) {
-        return new IntercodeTransitData(card);
-    }
+        @NonNull
+        @Override
+        public TransitIdentity parseTransitIdentity(CalypsoApplication card) {
+            int netId = getNetId(card);
+            return new TransitIdentity(getCardName(netId), getSerial(netId, card));
+        }
+
+        @Override
+        public boolean check(byte[] ticketEnv) {
+            try {
+                int netId = Utils.getBitsFromBuffer(ticketEnv, 13, 24);
+                return NETWORKS.get(netId) != null || COUNTRY_ID_FRANCE == (netId >> 12);
+            } catch (Exception e) {
+                return false;
+            }
+        }
+
+        @NonNull
+        @Override
+        public IntercodeTransitData parseTransitData(CalypsoApplication card) {
+            return new IntercodeTransitData(card);
+        }
+
+        @Override
+        public CardInfo getCardInfo(byte[] ticketEnv) {
+            int netId = Utils.getBitsFromBuffer(ticketEnv, 13, 24);
+            if (NETWORKS.get(netId) != null)
+                return NETWORKS.get(netId).first;
+            return null;
+        }
+    };
 
     @Override
     public String getCardName() {
@@ -277,13 +300,6 @@ public class IntercodeTransitData extends Calypso1545TransitData {
 
     private IntercodeTransitData(Parcel parcel) {
         super(parcel);
-    }
-
-    public static CardInfo getCardInfo(byte[] ticketEnv) {
-        int netId = Utils.getBitsFromBuffer(ticketEnv, 13, 24);
-        if (NETWORKS.get(netId) != null)
-            return NETWORKS.get(netId).first;
-        return null;
     }
 
     @Override

@@ -27,6 +27,7 @@ import org.simpleframework.xml.ElementList;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.List;
 
 import au.id.micolous.farebot.R;
@@ -35,6 +36,7 @@ import au.id.micolous.metrodroid.card.iso7816.ISO7816Application;
 import au.id.micolous.metrodroid.card.iso7816.ISO7816Protocol;
 import au.id.micolous.metrodroid.card.iso7816.ISO7816Selector;
 import au.id.micolous.metrodroid.transit.CardInfo;
+import au.id.micolous.metrodroid.transit.CardTransitFactory;
 import au.id.micolous.metrodroid.transit.TransitData;
 import au.id.micolous.metrodroid.transit.TransitIdentity;
 import au.id.micolous.metrodroid.transit.china.BeijingTransitData;
@@ -52,28 +54,29 @@ public class ChinaCard extends ISO7816Application {
     public final static String TYPE = "china";
     public final static String OLD_TYPE = "shenzhentong";
 
-    private static final byte[] SZT_APP_NAME = Utils.stringToByteArray("PAY.SZT");
-    private static final byte[][] BEIJING_APP_NAMES = {
-            Utils.stringToByteArray("OC"),
-            Utils.stringToByteArray("PBOC")
-    };
-    private static final byte[] WUHANTONG_APP_NAME = Utils.stringToByteArray("AP1.WHCTC");
-    private static final byte[] CITYUNION_APP_NAME = Utils.hexStringToByteArray("A00000000386980701");
-    private static final byte[] TUNION_APP_NAME = Utils.hexStringToByteArray("A000000632010105");
-    public static final byte[][] APP_NAMES = {
-            SZT_APP_NAME,
-            BEIJING_APP_NAMES[0],
-            BEIJING_APP_NAMES[1],
-            WUHANTONG_APP_NAME,
-            CITYUNION_APP_NAME,
-            TUNION_APP_NAME
-    };
 
     private static final byte INS_GET_BALANCE = 0x5c;
     private static final byte BALANCE_RESP_LEN = 4;
+    private static final ChinaCardTransitFactory[] FACTORIES = {
+            NewShenzhenTransitData.FACTORY,
+            BeijingTransitData.FACTORY,
+            WuhanTongTransitData.FACTORY,
+            CityUnionTransitData.FACTORY,
+            TUnionTransitData.FACTORY
+    };
+
+    public static final List<byte[]> APP_NAMES = new ArrayList<>();
+    static {
+        for (ChinaCardTransitFactory f : FACTORIES)
+            APP_NAMES.addAll(f.getAppNames());
+    };
 
     @ElementList(name = "balances", entry = "balance")
     private List<Balance> mBalances;
+
+    public static List<CardTransitFactory> getAllFactories() {
+        return Arrays.asList(FACTORIES);
+    }
 
     private static class Balance {
         @Attribute(name = "idx")
@@ -101,33 +104,21 @@ public class ChinaCard extends ISO7816Application {
 
     @Override
     public TransitIdentity parseTransitIdentity() {
-        if (Arrays.equals(getAppName(), SZT_APP_NAME))
-            return NewShenzhenTransitData.parseTransitIdentity(this);
-        if (Arrays.equals(getAppName(), BEIJING_APP_NAMES[0])
-                || Arrays.equals(getAppName(), BEIJING_APP_NAMES[1]))
-            return BeijingTransitData.parseTransitIdentity(this);
-        if (Arrays.equals(getAppName(), WUHANTONG_APP_NAME))
-            return WuhanTongTransitData.parseTransitIdentity(this);
-        if (Arrays.equals(getAppName(), CITYUNION_APP_NAME))
-            return CityUnionTransitData.parseTransitIdentity(this);
-        if (Arrays.equals(getAppName(), TUNION_APP_NAME))
-            return TUnionTransitData.parseTransitIdentity(this);
+        for (ChinaCardTransitFactory f : FACTORIES) {
+            for (byte[] transitAppName : f.getAppNames())
+                if (Arrays.equals(getAppName(), transitAppName))
+                    return f.parseTransitIdentity(this);
+        }
         return null;
     }
 
     @Override
     public TransitData parseTransitData() {
-        if (Arrays.equals(getAppName(), SZT_APP_NAME))
-            return new NewShenzhenTransitData(this);
-        if (Arrays.equals(getAppName(), BEIJING_APP_NAMES[0])
-                || Arrays.equals(getAppName(), BEIJING_APP_NAMES[1]))
-            return new BeijingTransitData(this);
-        if (Arrays.equals(getAppName(), WUHANTONG_APP_NAME))
-            return new WuhanTongTransitData(this);
-        if (Arrays.equals(getAppName(), CITYUNION_APP_NAME))
-            return new CityUnionTransitData(this);
-        if (Arrays.equals(getAppName(), TUNION_APP_NAME))
-            return new TUnionTransitData(this);
+        for (ChinaCardTransitFactory f : FACTORIES) {
+            for (byte[] transitAppName : f.getAppNames())
+                if (Arrays.equals(getAppName(), transitAppName))
+                    return f.parseTransitData(this);
+        }
         return null;
     }
 
@@ -153,17 +144,15 @@ public class ChinaCard extends ISO7816Application {
         try {
             feedbackInterface.updateProgressBar(0, 6);
             CardInfo ci = null;
-            if (Arrays.equals(app.getAppName(), SZT_APP_NAME))
-                ci = NewShenzhenTransitData.CARD_INFO;
-            if (Arrays.equals(app.getAppName(), BEIJING_APP_NAMES[0])
-                    || Arrays.equals(app.getAppName(), BEIJING_APP_NAMES[1]))
-                ci = BeijingTransitData.CARD_INFO;
-            if (Arrays.equals(app.getAppName(), WUHANTONG_APP_NAME))
-                ci = WuhanTongTransitData.CARD_INFO;
-            if (Arrays.equals(app.getAppName(), CITYUNION_APP_NAME))
-                ci = CityUnionTransitData.CARD_INFO;
-            if (Arrays.equals(app.getAppName(), TUNION_APP_NAME))
-                ci = TUnionTransitData.CARD_INFO;
+            for (ChinaCardTransitFactory f : FACTORIES) {
+                for (byte[] transitAppName : f.getAppNames())
+                    if (Arrays.equals(app.getAppName(), transitAppName)) {
+                        ci = f.getCardInfo();
+                        break;
+                    }
+                if (ci != null)
+                    break;
+            }
             if (ci != null) {
                 feedbackInterface.updateStatusText(Utils.localizeString(R.string.card_reading_type,
                         ci.getName()));

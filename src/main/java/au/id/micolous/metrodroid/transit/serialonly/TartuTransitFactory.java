@@ -95,6 +95,11 @@ public class TartuTransitFactory extends ClassicCardTransitFactory {
         return new TartuTransitData(classicCard);
     }
 
+    @Override
+    public List<CardInfo> getAllCards() {
+        return Collections.singletonList(CARD_INFO);
+    }
+
     private static class TartuTransitData extends SerialOnlyTransitData {
         private String mSerial;
         public TartuTransitData(ClassicCard card) {

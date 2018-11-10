@@ -36,6 +36,7 @@ import au.id.micolous.metrodroid.card.desfire.settings.DesfireFileSettings;
 import au.id.micolous.metrodroid.card.desfire.settings.StandardDesfireFileSettings;
 import au.id.micolous.metrodroid.card.desfire.settings.ValueDesfireFileSettings;
 import au.id.micolous.metrodroid.transit.CardInfo;
+import au.id.micolous.metrodroid.transit.CardTransitFactory;
 import au.id.micolous.metrodroid.transit.TransitData;
 import au.id.micolous.metrodroid.transit.TransitIdentity;
 import au.id.micolous.metrodroid.transit.clipper.ClipperTransitData;
@@ -64,6 +65,7 @@ import java.security.AccessControlException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
+import java.util.Collection;
 import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.Locale;
@@ -71,6 +73,19 @@ import java.util.Locale;
 @Root(name = "card")
 public class DesfireCard extends Card {
     private static final String TAG = "DesfireCard";
+    private static final DesfireCardTransitFactory[] FACTORIES = {
+            OrcaTransitData.FACTORY,
+            ClipperTransitData.FACTORY,
+            HSLTransitData.FACTORY,
+            OpalTransitData.FACTORY,
+            MykiTransitData.FACTORY,
+            IstanbulKartTransitData.FACTORY,
+            LeapTransitData.FACTORY,
+            TrimetHopTransitData.FACTORY,
+            AdelaideMetrocardTransitData.FACTORY,
+            AtHopStubTransitData.FACTORY,
+            UnauthorizedDesfireTransitData.FACTORY
+    };
 
     @Element(name = "manufacturing-data")
     private DesfireManufacturingData mManfData;
@@ -208,85 +223,31 @@ public class DesfireCard extends Card {
      * @return A CardInfo about the card, or null if we have no idea.
      */
     static CardInfo parseEarlyCardInfo(int[] appIds) {
-        if (OrcaTransitData.earlyCheck(appIds))
-            return OrcaTransitData.CARD_INFO;
-        if (ClipperTransitData.earlyCheck(appIds))
-            return ClipperTransitData.CARD_INFO;
-        if (HSLTransitData.earlyCheck(appIds))
-            return HSLTransitData.CARD_INFO;
-        if (OpalTransitData.earlyCheck(appIds))
-            return OpalTransitData.CARD_INFO;
-        if (MykiTransitData.earlyCheck(appIds))
-            return MykiTransitData.CARD_INFO;
-        if (IstanbulKartTransitData.earlyCheck(appIds))
-            return IstanbulKartTransitData.CARD_INFO;
-        if (LeapTransitData.earlyCheck(appIds))
-            return LeapTransitData.CARD_INFO;
-        if (TrimetHopTransitData.earlyCheck(appIds))
-            return TrimetHopTransitData.CARD_INFO;
-        if (AdelaideMetrocardTransitData.earlyCheck(appIds))
-            return AdelaideMetrocardTransitData.CARD_INFO;
+        for (DesfireCardTransitFactory f : FACTORIES)
+            if (f.earlyCheck(appIds))
+                return f.getCardInfo(appIds);
 
         return null;
     }
 
+    public static List<CardTransitFactory> getAllFactories() {
+        return Arrays.asList(FACTORIES);
+    }
+
     @Override
     public TransitIdentity parseTransitIdentity() {
-        if (OrcaTransitData.check(this))
-            return OrcaTransitData.parseTransitIdentity(this);
-        if (ClipperTransitData.check(this))
-            return ClipperTransitData.parseTransitIdentity(this);
-        if (HSLTransitData.check(this))
-            return HSLTransitData.parseTransitIdentity(this);
-        if (OpalTransitData.check(this))
-            return OpalTransitData.parseTransitIdentity(this);
-        if (MykiTransitData.check(this))
-            return MykiTransitData.parseTransitIdentity(this);
-        if (LeapTransitData.check(this))
-            return LeapTransitData.parseTransitIdentity(this);
-        if (AdelaideMetrocardTransitData.check(this))
-            return AdelaideMetrocardTransitData.parseTransitIdentity(this);
+        for (DesfireCardTransitFactory f : FACTORIES)
+            if (f.check(this))
+                return f.parseTransitIdentity(this);
 
-        // Stub card types go last
-        if (AtHopStubTransitData.check(this))
-            return AtHopStubTransitData.parseTransitIdentity(this);
-        if (IstanbulKartTransitData.check(this))
-            return IstanbulKartTransitData.parseTransitIdentity(this);
-        if (TrimetHopTransitData.check(this))
-            return TrimetHopTransitData.parseTransitIdentity(this);
-
-        if (UnauthorizedDesfireTransitData.check(this))
-            return UnauthorizedDesfireTransitData.parseTransitIdentity(this);
         return null;
     }
 
     @Override
     public TransitData parseTransitData() {
-        if (OrcaTransitData.check(this))
-            return new OrcaTransitData(this);
-        if (ClipperTransitData.check(this))
-            return new ClipperTransitData(this);
-        if (HSLTransitData.check(this))
-            return new HSLTransitData(this);
-        if (OpalTransitData.check(this))
-            return new OpalTransitData(this);
-        if (MykiTransitData.check(this))
-            return new MykiTransitData(this);
-        if (LeapTransitData.check(this))
-            return new LeapTransitData(this);
-        if (AdelaideMetrocardTransitData.check(this))
-            return new AdelaideMetrocardTransitData(this);
-
-        // Stub card types go last
-        if (IstanbulKartTransitData.check(this))
-            return new IstanbulKartTransitData(this);
-        if (TrimetHopTransitData.check(this))
-            return new TrimetHopTransitData(this);
-        if (AtHopStubTransitData.check(this))
-            return new AtHopStubTransitData(this);
-
-        if (UnauthorizedDesfireTransitData.check(this))
-            return new UnauthorizedDesfireTransitData(this);
+        for (DesfireCardTransitFactory f : FACTORIES)
+            if (f.check(this))
+                return f.parseTransitData(this);
         return null;
     }
 

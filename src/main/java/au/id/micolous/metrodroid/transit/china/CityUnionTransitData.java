@@ -27,7 +27,9 @@ import java.util.List;
 import au.id.micolous.farebot.R;
 import au.id.micolous.metrodroid.card.CardType;
 import au.id.micolous.metrodroid.card.china.ChinaCard;
+import au.id.micolous.metrodroid.card.china.ChinaCardTransitFactory;
 import au.id.micolous.metrodroid.transit.CardInfo;
+import au.id.micolous.metrodroid.transit.TransitData;
 import au.id.micolous.metrodroid.transit.TransitIdentity;
 import au.id.micolous.metrodroid.ui.ListItem;
 import au.id.micolous.metrodroid.util.Utils;
@@ -92,9 +94,27 @@ public class CityUnionTransitData extends ChinaTransitData {
         mCity = parcel.readInt();
     }
 
-    public static TransitIdentity parseTransitIdentity(ChinaCard card) {
-        return new TransitIdentity(Utils.localizeString(R.string.card_name_cityunion), Integer.toString(parseSerial(card)));
-    }
+    public final static ChinaCardTransitFactory FACTORY = new ChinaCardTransitFactory() {
+        @Override
+        public List<byte[]> getAppNames() {
+            return Collections.singletonList(Utils.hexStringToByteArray("A00000000386980701"));
+        }
+
+        @Override
+        public TransitIdentity parseTransitIdentity(ChinaCard card) {
+            return new TransitIdentity(Utils.localizeString(R.string.card_name_cityunion), Integer.toString(parseSerial(card)));
+        }
+
+        @Override
+        public TransitData parseTransitData(ChinaCard chinaCard) {
+            return new CityUnionTransitData(chinaCard);
+        }
+
+        @Override
+        public CardInfo getCardInfo() {
+            return CARD_INFO;
+        }
+    };
 
     private static int parseSerial(ChinaCard card) {
         byte[] file15 = getFile(card, 0x15).getBinaryData();

@@ -39,6 +39,7 @@ import au.id.micolous.metrodroid.util.StationTableReader;
 import au.id.micolous.metrodroid.util.Utils;
 
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.TimeZone;
 
@@ -142,6 +143,11 @@ public class SeqGoTransitData extends NextfareTransitData {
         @Override
         public TransitData parseTransitData(@NonNull ClassicCard classicCard) {
             return new SeqGoTransitData(classicCard);
+        }
+
+        @Override
+        public List<CardInfo> getAllCards() {
+            return Collections.singletonList(CARD_INFO);
         }
 
         @Override

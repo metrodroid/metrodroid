@@ -29,6 +29,7 @@ import android.support.v4.util.ArraySet;
 import org.apache.commons.lang3.ArrayUtils;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.List;
 import java.util.TimeZone;
@@ -37,6 +38,7 @@ import au.id.micolous.farebot.R;
 import au.id.micolous.metrodroid.card.CardType;
 import au.id.micolous.metrodroid.card.felica.FelicaBlock;
 import au.id.micolous.metrodroid.card.felica.FelicaCard;
+import au.id.micolous.metrodroid.card.felica.FelicaCardTransitFactory;
 import au.id.micolous.metrodroid.card.felica.FelicaService;
 import au.id.micolous.metrodroid.transit.CardInfo;
 import au.id.micolous.metrodroid.transit.TransitBalance;
@@ -224,17 +226,30 @@ public class SuicaTransitData extends TransitData {
         mTrips = trips.toArray(new SuicaTrip[0]);
     }
 
-    public static boolean check(FelicaCard card) {
-        return (card.getSystem(SYSTEMCODE_SUICA) != null);
-    }
+    public final static FelicaCardTransitFactory FACTORY = new FelicaCardTransitFactory() {
+        public boolean earlyCheck(int[] systemCodes) {
+            return ArrayUtils.contains(systemCodes, SYSTEMCODE_SUICA);
+        }
 
-    public static boolean earlyCheck(int[] systemCodes) {
-        return ArrayUtils.contains(systemCodes, SYSTEMCODE_SUICA);
-    }
+        @Override
+        protected CardInfo getCardInfo() {
+            return SUICA_CARD_INFO;
+        }
 
-    public static TransitIdentity parseTransitIdentity(FelicaCard card) {
-        return new TransitIdentity(Utils.localizeString(R.string.card_name_suica), null); // FIXME: Could be ICOCA, etc.
-    }
+        @Override
+        public List<CardInfo> getAllCards() {
+            return Arrays.asList(SUICA_CARD_INFO, ICOCA_CARD_INFO, PASMO_CARD_INFO);
+        }
+
+        @Override
+        public TransitData parseTransitData(FelicaCard felicaCard) {
+            return new SuicaTransitData(felicaCard);
+        }
+
+        public TransitIdentity parseTransitIdentity(FelicaCard card) {
+            return new TransitIdentity(Utils.localizeString(R.string.card_name_suica), null); // FIXME: Could be ICOCA, etc.
+        }
+    };
 
     @Nullable
     @Override

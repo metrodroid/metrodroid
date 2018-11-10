@@ -38,6 +38,7 @@ import au.id.micolous.metrodroid.util.StationTableReader;
 import au.id.micolous.metrodroid.util.Utils;
 
 import java.util.Calendar;
+import java.util.Collection;
 import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.TimeZone;
@@ -51,6 +52,10 @@ public class EZLinkTransitData extends TransitData {
         public EZLinkTransitData[] newArray(int size) {
             return new EZLinkTransitData[size];
         }
+    };
+    public static final CardInfo[] ALL_CARD_INFOS = {
+            EZLinkTransitData.EZ_LINK_CARD_INFO,
+            EZLinkTransitData.NETS_FLASHPAY_CARD_INFO,
     };
     private static final String EZLINK_STR = "ezlink";
 

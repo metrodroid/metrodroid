@@ -22,12 +22,17 @@ package au.id.micolous.metrodroid.transit.china;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import java.util.Collections;
+import java.util.List;
+
 import au.id.micolous.farebot.R;
 import au.id.micolous.metrodroid.card.CardType;
+import au.id.micolous.metrodroid.card.china.ChinaCardTransitFactory;
 import au.id.micolous.metrodroid.card.iso7816.ISO7816Application;
 import au.id.micolous.metrodroid.card.iso7816.ISO7816File;
 import au.id.micolous.metrodroid.card.china.ChinaCard;
 import au.id.micolous.metrodroid.transit.CardInfo;
+import au.id.micolous.metrodroid.transit.TransitData;
 import au.id.micolous.metrodroid.transit.TransitIdentity;
 import au.id.micolous.metrodroid.util.Utils;
 
@@ -88,9 +93,27 @@ public class NewShenzhenTransitData extends ChinaTransitData {
         mSerial = parcel.readInt();
     }
 
-    public static TransitIdentity parseTransitIdentity(ChinaCard card) {
-        return new TransitIdentity(Utils.localizeString(R.string.card_name_szt), formatSerial(parseSerial(card)));
-    }
+    public final static ChinaCardTransitFactory FACTORY = new ChinaCardTransitFactory() {
+        @Override
+        public List<byte[]> getAppNames() {
+            return Collections.singletonList(Utils.stringToByteArray("PAY.SZT"));
+        }
+
+        @Override
+        public TransitIdentity parseTransitIdentity(ChinaCard card) {
+            return new TransitIdentity(Utils.localizeString(R.string.card_name_szt), formatSerial(parseSerial(card)));
+        }
+
+        @Override
+        public TransitData parseTransitData(ChinaCard chinaCard) {
+            return new NewShenzhenTransitData(chinaCard);
+        }
+
+        @Override
+        public CardInfo getCardInfo() {
+            return CARD_INFO;
+        }
+    };
 
     private static String formatSerial(int sn) {
         int dig = sn;

@@ -28,6 +28,7 @@ import au.id.micolous.farebot.R;
 import au.id.micolous.metrodroid.card.CardType;
 import au.id.micolous.metrodroid.card.UnauthorizedException;
 import au.id.micolous.metrodroid.card.ultralight.UltralightCard;
+import au.id.micolous.metrodroid.card.ultralight.UltralightCardTransitFactory;
 import au.id.micolous.metrodroid.transit.CardInfo;
 import au.id.micolous.metrodroid.transit.Subscription;
 import au.id.micolous.metrodroid.transit.TransitData;
@@ -56,15 +57,34 @@ public class ClipperUltralightTransitData extends TransitData {
     private final int mType;
     private final ClipperUltralightSubscription mSub;
 
-    public static boolean check(UltralightCard card) {
-        try {
-            byte[] head = card.getPage(4).getData();
-            return head[0] == 0x13;
-        } catch (IndexOutOfBoundsException | UnauthorizedException ignored) {
-            // If that sector number is too high, then it's not for us.
-            return false;
+    public final static UltralightCardTransitFactory FACTORY = new UltralightCardTransitFactory() {
+        @Override
+        public List<CardInfo> getAllCards() {
+            // Desfire variant already adds it to supported cards
+            return null;
         }
-    }
+
+        @Override
+        public boolean check(UltralightCard card) {
+            try {
+                byte[] head = card.getPage(4).getData();
+                return head[0] == 0x13;
+            } catch (IndexOutOfBoundsException | UnauthorizedException ignored) {
+                // If that sector number is too high, then it's not for us.
+                return false;
+            }
+        }
+
+        @Override
+        public TransitData parseTransitData(UltralightCard ultralightCard) {
+            return new ClipperUltralightTransitData(ultralightCard);
+        }
+
+        @Override
+        public TransitIdentity parseTransitIdentity(UltralightCard card) {
+            return new TransitIdentity(NAME, Long.toString(getSerial(card)));
+        }
+    };
 
     @Override
     public String getSerialNumber() {
@@ -136,10 +156,6 @@ public class ClipperUltralightTransitData extends TransitData {
     private static long getSerial(UltralightCard card) {
 	    byte []otp = card.getPage(3).getData();
         return Utils.byteArrayToLong(otp, 0, 4);
-    }
-
-    public static TransitIdentity parseTransitIdentity(UltralightCard card) {
-        return new TransitIdentity(NAME, Long.toString(getSerial(card)));
     }
 
     @Override

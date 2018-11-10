@@ -35,6 +35,7 @@ import au.id.micolous.metrodroid.card.Card;
 import au.id.micolous.metrodroid.card.CardType;
 import au.id.micolous.metrodroid.card.TagReaderFeedbackInterface;
 import au.id.micolous.metrodroid.transit.CardInfo;
+import au.id.micolous.metrodroid.transit.CardTransitFactory;
 import au.id.micolous.metrodroid.transit.TransitData;
 import au.id.micolous.metrodroid.transit.TransitIdentity;
 import au.id.micolous.metrodroid.transit.edy.EdyTransitData;
@@ -59,6 +60,7 @@ import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
+import java.util.Collection;
 import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.Locale;
@@ -68,6 +70,12 @@ public class FelicaCard extends Card {
     private static final String TAG = "FelicaCard";
     /** used for calculating response times, value is in milliseconds */
     private static final double T = 256.0 * 16.0 / 13560.0;
+    private static final FelicaCardTransitFactory[] FACTORIES = {
+            SuicaTransitData.FACTORY,
+            EdyTransitData.FACTORY,
+            KMTTransitData.FACTORY,
+            OctopusTransitData.FACTORY
+    };
 
     @Element(name = "idm")
     private FeliCaLib.IDm mIDm;
@@ -225,6 +233,10 @@ public class FelicaCard extends Card {
         return new FelicaCard(tagId, GregorianCalendar.getInstance(), partialRead, idm, pmm, systemsArray);
     }
 
+    public static List<CardTransitFactory> getAllFactories() {
+        return Arrays.asList(FACTORIES);
+    }
+
     /**
      * Gets the Manufacturing ID (IDm) of the card.
      *
@@ -372,40 +384,28 @@ public class FelicaCard extends Card {
      * @return A CardInfo about the card, or null if we have no idea.
      */
     static CardInfo parseEarlyCardInfo(int[] systemCodes) {
-        if (SuicaTransitData.earlyCheck(systemCodes))
-            return SuicaTransitData.SUICA_CARD_INFO;
-        if (EdyTransitData.earlyCheck(systemCodes))
-            return EdyTransitData.CARD_INFO;
-        if (KMTTransitData.earlyCheck(systemCodes))
-            return KMTTransitData.CARD_INFO;
-
-        // Do Octopus last -- it returns null if it's not a supported Octopus derivative.
-        return OctopusTransitData.earlyCheck(systemCodes);
+        for (FelicaCardTransitFactory f : FACTORIES) {
+            if (f.earlyCheck(systemCodes))
+                return f.getCardInfo(systemCodes);
+        }
+        return null;
     }
 
     @Override
     public TransitIdentity parseTransitIdentity() {
-        if (SuicaTransitData.check(this))
-            return SuicaTransitData.parseTransitIdentity(this);
-        else if (EdyTransitData.check(this))
-            return EdyTransitData.parseTransitIdentity(this);
-        else if (OctopusTransitData.check(this))
-            return OctopusTransitData.parseTransitIdentity(this);
-        else if (KMTTransitData.check(this))
-            return KMTTransitData.parseTransitIdentity(this);
+        for (FelicaCardTransitFactory f : FACTORIES) {
+            if (f.check(this))
+                return f.parseTransitIdentity(this);
+        }
         return null;
     }
 
     @Override
     public TransitData parseTransitData() {
-        if (SuicaTransitData.check(this))
-            return new SuicaTransitData(this);
-        else if (EdyTransitData.check(this))
-            return new EdyTransitData(this);
-        else if (OctopusTransitData.check(this))
-            return new OctopusTransitData(this);
-        else if (KMTTransitData.check(this))
-            return new KMTTransitData(this);
+        for (FelicaCardTransitFactory f : FACTORIES) {
+            if (f.check(this))
+                return f.parseTransitData(this);
+        }
         return null;
     }
 

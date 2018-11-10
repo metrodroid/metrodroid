@@ -25,7 +25,9 @@ import com.neovisionaries.i18n.CountryCode;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
+import java.util.Collection;
 import java.util.GregorianCalendar;
 import java.util.HashMap;
 import java.util.List;
@@ -41,6 +43,7 @@ import au.id.micolous.metrodroid.card.iso7816.ISO7816Protocol;
 import au.id.micolous.metrodroid.card.iso7816.ISO7816Record;
 import au.id.micolous.metrodroid.card.iso7816.ISO7816Selector;
 import au.id.micolous.metrodroid.transit.CardInfo;
+import au.id.micolous.metrodroid.transit.CardTransitFactory;
 import au.id.micolous.metrodroid.transit.TransitData;
 import au.id.micolous.metrodroid.transit.TransitIdentity;
 import au.id.micolous.metrodroid.transit.intercode.IntercodeTransitData;
@@ -74,6 +77,13 @@ public class CalypsoApplication extends ISO7816Application {
     private static final String TAG = CalypsoApplication.class.getName();
     public static final String TYPE = "calypso";
     private static final Map<String, String> NAME_MAP = new HashMap<>();
+    private static final CalypsoCardTransitFactory[] FACTORIES = {
+            RavKavTransitData.FACTORY,
+            OpusTransitData.FACTORY,
+            MobibTransitData.FACTORY,
+            IntercodeTransitData.FACTORY,
+            LisboaVivaTransitData.FACTORY
+    };
 
     private CalypsoApplication(ISO7816Application.ISO7816Info appData, boolean partialRead) {
         super(appData);
@@ -122,22 +132,22 @@ public class CalypsoApplication extends ISO7816Application {
         }
 
         CardInfo ci = null;
-        if (RavKavTransitData.check(tenv))
-            ci = RavKavTransitData.CARD_INFO;
-        if (OpusTransitData.check(tenv))
-            ci = OpusTransitData.CARD_INFO;
-        if (MobibTransitData.check(tenv))
-            ci = MobibTransitData.CARD_INFO;
-        if (IntercodeTransitData.check(tenv))
-            ci = IntercodeTransitData.getCardInfo(tenv);
-        if (LisboaVivaTransitData.check(tenv))
-            ci = LisboaVivaTransitData.CARD_INFO;
+        for (CalypsoCardTransitFactory f : FACTORIES) {
+            if (f.check(tenv))
+                ci = f.getCardInfo(tenv);
+            if (ci != null)
+                break;
+        }
 
         if (ci != null) {
             feedbackInterface.updateStatusText(Utils.localizeString(R.string.card_reading_type,
                     ci.getName()));
             feedbackInterface.showCardType(ci);
         }
+    }
+
+    public static List<CardTransitFactory> getAllFactories() {
+        return Arrays.asList(FACTORIES);
     }
 
     private byte[] getTicketEnv() {
@@ -156,16 +166,10 @@ public class CalypsoApplication extends ISO7816Application {
         byte[] tenv = getTicketEnv();
         if (tenv == null)
             return null;
-        if (RavKavTransitData.check(tenv))
-            return RavKavTransitData.parseTransitData(this);
-        if (OpusTransitData.check(tenv))
-            return OpusTransitData.parseTransitData(this);
-        if (MobibTransitData.check(tenv))
-            return MobibTransitData.parseTransitData(this);
-	    if (IntercodeTransitData.check(tenv))
-            return IntercodeTransitData.parseTransitData(this);
-        if (LisboaVivaTransitData.check(tenv))
-            return LisboaVivaTransitData.parseTransitData(this);
+        for (CalypsoCardTransitFactory f : FACTORIES) {
+            if (f.check(tenv))
+                return f.parseTransitData(this);
+        }
         return null;
     }
 
@@ -174,18 +178,10 @@ public class CalypsoApplication extends ISO7816Application {
         byte[] tenv = getTicketEnv();
         if (tenv == null)
             return null;
-        if (RavKavTransitData.check(tenv))
-            return RavKavTransitData.parseTransitIdentity(this);
-        if (MobibTransitData.check(tenv))
-            return MobibTransitData.parseTransitIdentity(this);
-        if (OpusTransitData.check(tenv))
-            return OpusTransitData.parseTransitIdentity(this);
-        if (MobibTransitData.check(tenv))
-            return MobibTransitData.parseTransitIdentity(this);
-        if (IntercodeTransitData.check(tenv))
-            return IntercodeTransitData.parseTransitIdentity(this);
-        if (LisboaVivaTransitData.check(tenv))
-            return LisboaVivaTransitData.parseTransitIdentity(this);
+        for (CalypsoCardTransitFactory f : FACTORIES) {
+            if (f.check(tenv))
+                return f.parseTransitIdentity(this);
+        }
         return null;
     }
 

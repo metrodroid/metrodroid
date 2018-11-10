@@ -34,8 +34,10 @@ import au.id.micolous.farebot.R;
 import au.id.micolous.metrodroid.card.CardType;
 import au.id.micolous.metrodroid.card.desfire.DesfireApplication;
 import au.id.micolous.metrodroid.card.desfire.DesfireCard;
+import au.id.micolous.metrodroid.card.desfire.DesfireCardTransitFactory;
 import au.id.micolous.metrodroid.card.desfire.files.DesfireFile;
 import au.id.micolous.metrodroid.transit.CardInfo;
+import au.id.micolous.metrodroid.transit.TransitData;
 import au.id.micolous.metrodroid.transit.TransitIdentity;
 import au.id.micolous.metrodroid.transit.stub.StubTransitData;
 import au.id.micolous.metrodroid.ui.ListItem;
@@ -91,16 +93,6 @@ public class IstanbulKartTransitData extends SerialOnlyTransitData {
         }
     }
 
-    public static boolean check(@NonNull DesfireCard card) {
-        DesfireApplication app = card.getApplication(APP_ID);
-        if (app == null) {
-            return false;
-        }
-
-        DesfireFile file = app.getFile(2);
-        return file != null && (file.getData() != null);
-    }
-
     /**
      * Parses a serial number in 0x42201 file 0x2
      * @param file content of the serial file
@@ -113,14 +105,28 @@ public class IstanbulKartTransitData extends SerialOnlyTransitData {
                 + Utils.getHexString(file, 6, 2);
     }
 
-    public static boolean earlyCheck(int[] appIds) {
-        return ArrayUtils.contains(appIds, APP_ID);
-    }
+    public final static DesfireCardTransitFactory FACTORY = new DesfireCardTransitFactory() {
+        @Override
+        public boolean earlyCheck(int[] appIds) {
+            return ArrayUtils.contains(appIds, APP_ID);
+        }
 
-    public static TransitIdentity parseTransitIdentity(DesfireCard card) {
-        byte[] data = card.getApplication(APP_ID).getFile(2).getData();
-        return new TransitIdentity(NAME, parseSerial(data));
-    }
+        @Override
+        protected CardInfo getCardInfo() {
+            return CARD_INFO;
+        }
+
+        @Override
+        public TransitData parseTransitData(DesfireCard desfireCard) {
+            return new IstanbulKartTransitData(desfireCard);
+        }
+
+        @Override
+        public TransitIdentity parseTransitIdentity(DesfireCard card) {
+            byte[] data = card.getApplication(APP_ID).getFile(2).getData();
+            return new TransitIdentity(NAME, parseSerial(data));
+        }
+    };
 
     @Override
     public String getCardName() {

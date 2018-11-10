@@ -29,48 +29,21 @@ import android.support.annotation.StringRes;
 import android.support.v7.content.res.AppCompatResources;
 import android.util.Log;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
 import java.util.Locale;
 
 import au.id.micolous.metrodroid.card.CardType;
-import au.id.micolous.metrodroid.transit.adelaide.AdelaideMetrocardTransitData;
-import au.id.micolous.metrodroid.transit.bilhete_unico.BilheteUnicoSPTransitData;
-import au.id.micolous.metrodroid.transit.charlie.CharlieCardTransitData;
-import au.id.micolous.metrodroid.transit.chc_metrocard.ChcMetrocardTransitData;
-import au.id.micolous.metrodroid.transit.china.NewShenzhenTransitData;
-import au.id.micolous.metrodroid.transit.clipper.ClipperTransitData;
-import au.id.micolous.metrodroid.transit.easycard.EasyCardTransitData;
-import au.id.micolous.metrodroid.transit.edy.EdyTransitData;
+import au.id.micolous.metrodroid.card.calypso.CalypsoApplication;
+import au.id.micolous.metrodroid.card.china.ChinaCard;
+import au.id.micolous.metrodroid.card.classic.ClassicCard;
+import au.id.micolous.metrodroid.card.desfire.DesfireCard;
+import au.id.micolous.metrodroid.card.felica.FelicaCard;
+import au.id.micolous.metrodroid.card.ultralight.UltralightCard;
 import au.id.micolous.metrodroid.transit.ezlink.EZLinkTransitData;
-import au.id.micolous.metrodroid.transit.hsl.HSLTransitData;
-import au.id.micolous.metrodroid.transit.intercode.IntercodeTransitData;
-import au.id.micolous.metrodroid.transit.kiev.KievTransitData;
-import au.id.micolous.metrodroid.transit.kmt.KMTTransitData;
-import au.id.micolous.metrodroid.transit.lax_tap.LaxTapTransitData;
-import au.id.micolous.metrodroid.transit.lisboaviva.LisboaVivaTransitData;
-import au.id.micolous.metrodroid.transit.manly_fast_ferry.ManlyFastFerryTransitData;
-import au.id.micolous.metrodroid.transit.metroq.MetroQTransitData;
-import au.id.micolous.metrodroid.transit.mobib.MobibTransitData;
-import au.id.micolous.metrodroid.transit.msp_goto.MspGotoTransitData;
-import au.id.micolous.metrodroid.transit.octopus.OctopusTransitData;
-import au.id.micolous.metrodroid.transit.opal.OpalTransitData;
-import au.id.micolous.metrodroid.transit.opus.OpusTransitData;
-import au.id.micolous.metrodroid.transit.orca.OrcaTransitData;
-import au.id.micolous.metrodroid.transit.ovc.OVChipTransitData;
-import au.id.micolous.metrodroid.transit.podorozhnik.PodorozhnikTransitData;
-import au.id.micolous.metrodroid.transit.ravkav.RavKavTransitData;
-import au.id.micolous.metrodroid.transit.ricaricami.RicaricaMiTransitData;
-import au.id.micolous.metrodroid.transit.seq_go.SeqGoTransitData;
-import au.id.micolous.metrodroid.transit.serialonly.IstanbulKartTransitData;
-import au.id.micolous.metrodroid.transit.serialonly.MykiTransitData;
-import au.id.micolous.metrodroid.transit.serialonly.StrelkaTransitData;
-import au.id.micolous.metrodroid.transit.serialonly.TrimetHopTransitData;
-import au.id.micolous.metrodroid.transit.smartrider.SmartRiderTransitData;
-import au.id.micolous.metrodroid.transit.suica.SuicaTransitData;
-import au.id.micolous.metrodroid.transit.tfi_leap.LeapTransitData;
 import au.id.micolous.metrodroid.transit.tmoney.TMoneyTransitData;
-import au.id.micolous.metrodroid.transit.troika.TroikaTransitData;
-import au.id.micolous.metrodroid.transit.ventra.VentraUltralightTransitData;
-import au.id.micolous.metrodroid.transit.yvr_compass.CompassUltralightTransitData;
 import au.id.micolous.metrodroid.util.Utils;
 
 /**
@@ -79,59 +52,25 @@ import au.id.micolous.metrodroid.util.Utils;
 
 @SuppressWarnings("WeakerAccess")
 public class CardInfo {
-    /**
-     * A list of all cards in alphabetical order of their name.
-     */
-    public static final CardInfo[] ALL_CARDS_ALPHABETICAL = {
-            BilheteUnicoSPTransitData.CARD_INFO,
-            CharlieCardTransitData.CARD_INFO,
-            ClipperTransitData.CARD_INFO,
-            CompassUltralightTransitData.CARD_INFO,
-            EasyCardTransitData.Companion.getCARD_INFO(),
-            EdyTransitData.CARD_INFO,
-            IntercodeTransitData.ENVIBUS_CARD_INFO,
-            EZLinkTransitData.EZ_LINK_CARD_INFO,
-            SeqGoTransitData.CARD_INFO, // Go card
-            MspGotoTransitData.CARD_INFO, // Go-to card
-            TrimetHopTransitData.CARD_INFO, // Hop
-            HSLTransitData.CARD_INFO,
-            IstanbulKartTransitData.CARD_INFO,
-            SuicaTransitData.ICOCA_CARD_INFO,
-            KievTransitData.CARD_INFO,
-            KMTTransitData.CARD_INFO,
-            LeapTransitData.CARD_INFO,
-            LisboaVivaTransitData.CARD_INFO,
-            ManlyFastFerryTransitData.CARD_INFO,
-            AdelaideMetrocardTransitData.CARD_INFO,  // Metrocard
-            ChcMetrocardTransitData.CARD_INFO, // Metrocard
-            MetroQTransitData.CARD_INFO,
-            MobibTransitData.CARD_INFO,
-            MykiTransitData.CARD_INFO,
-            SmartRiderTransitData.MYWAY_CARD_INFO,
-            IntercodeTransitData.NAVIGO_CARD_INFO,
-            EZLinkTransitData.NETS_FLASHPAY_CARD_INFO,
-            OctopusTransitData.CARD_INFO,
-            OpalTransitData.CARD_INFO,
-            OpusTransitData.CARD_INFO,
-            OrcaTransitData.CARD_INFO,
-            IntercodeTransitData.OURA_CARD_INFO,
-            OVChipTransitData.CARD_INFO,
-            IntercodeTransitData.TISSEO_CARD_INFO, // Pastel
-            SuicaTransitData.PASMO_CARD_INFO,
-            PodorozhnikTransitData.CARD_INFO,
-            RavKavTransitData.CARD_INFO,
-            RicaricaMiTransitData.CARD_INFO,
-            NewShenzhenTransitData.CARD_INFO, // Shenzhen Tong
-            SmartRiderTransitData.SMARTRIDER_CARD_INFO,
-            StrelkaTransitData.CARD_INFO,
-            SuicaTransitData.SUICA_CARD_INFO,
-            IntercodeTransitData.TAM_MONTPELLIER_CARD_INFO,
-            TMoneyTransitData.CARD_INFO, // T-Money
-            IntercodeTransitData.TRANSGIRONDE_CARD_INFO, // TransGironde
-            LaxTapTransitData.CARD_INFO, // Transit Access Pass
-            TroikaTransitData.CARD_INFO,
-            VentraUltralightTransitData.CARD_INFO
-    };
+    public static List<CardInfo> getAllCardsAlphabetical() {
+        List<CardInfo> ret = new ArrayList<>();
+        List<CardTransitFactory> allFactories = new ArrayList<>();
+        allFactories.addAll(ClassicCard.getAllFactories());
+        allFactories.addAll(CalypsoApplication.getAllFactories());
+        allFactories.addAll(DesfireCard.getAllFactories());
+        allFactories.addAll(FelicaCard.getAllFactories());
+        allFactories.addAll(UltralightCard.getAllFactories());
+        allFactories.addAll(ChinaCard.getAllFactories());
+        for (CardTransitFactory factory : allFactories) {
+            List<CardInfo> ac = factory.getAllCards();
+            if (ac != null)
+                ret.addAll(ac);
+        }
+        ret.add(TMoneyTransitData.CARD_INFO);
+        ret.addAll(Arrays.asList(EZLinkTransitData.ALL_CARD_INFOS));
+        Collections.sort(ret, (a, b) -> a.getName().compareToIgnoreCase(b.getName()));
+        return ret;
+    }
 
     @DrawableRes
     private final int mImageId;

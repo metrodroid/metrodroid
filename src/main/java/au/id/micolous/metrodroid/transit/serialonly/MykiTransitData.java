@@ -29,9 +29,11 @@ import au.id.micolous.farebot.R;
 import au.id.micolous.metrodroid.card.Card;
 import au.id.micolous.metrodroid.card.CardType;
 import au.id.micolous.metrodroid.card.desfire.DesfireCard;
+import au.id.micolous.metrodroid.card.desfire.DesfireCardTransitFactory;
 import au.id.micolous.metrodroid.transit.CardInfo;
 import au.id.micolous.metrodroid.card.desfire.DesfireApplication;
 import au.id.micolous.metrodroid.card.desfire.files.DesfireFile;
+import au.id.micolous.metrodroid.transit.TransitData;
 import au.id.micolous.metrodroid.transit.TransitIdentity;
 import au.id.micolous.metrodroid.util.Utils;
 
@@ -80,8 +82,7 @@ public class MykiTransitData extends SerialOnlyTransitData {
         mSerial = parcel.readString();
     }
 
-    public MykiTransitData(Card card) {
-        DesfireCard desfireCard = (DesfireCard) card;
+    public MykiTransitData(DesfireCard desfireCard) {
         byte[] metadata = desfireCard.getApplication(APP_ID_1).getFile(15).getData();
 
         try {
@@ -94,26 +95,50 @@ public class MykiTransitData extends SerialOnlyTransitData {
         }
     }
 
-    public static boolean check(@NonNull DesfireCard card) {
-        DesfireApplication app1 = card.getApplication(APP_ID_1);
-        if (app1 == null || card.getApplication(APP_ID_2) == null) {
-            return false;
+    public final static DesfireCardTransitFactory FACTORY = new DesfireCardTransitFactory() {
+        @Override
+        public boolean check(@NonNull DesfireCard card) {
+            DesfireApplication app1 = card.getApplication(APP_ID_1);
+            if (app1 == null || card.getApplication(APP_ID_2) == null) {
+                return false;
+            }
+
+            DesfireFile file = app1.getFile(15);
+            if (file == null) {
+                return false;
+            }
+
+            byte[] data = file.getData();
+            if (data == null) {
+                return false;
+            }
+
+            // Check that we have the correct serial prefix (308425)
+            return Arrays.equals(Arrays.copyOfRange(data, 0, 4),
+                    MYKI_HEADER);
         }
 
-        DesfireFile file = app1.getFile(15);
-        if (file == null) {
-            return false;
+        @Override
+        public TransitData parseTransitData(DesfireCard desfireCard) {
+            return new MykiTransitData(desfireCard);
         }
 
-        byte[] data = file.getData();
-        if (data == null) {
-            return false;
+        @Override
+        public boolean earlyCheck(int[] appIds) {
+            return ArrayUtils.contains(appIds, APP_ID_1) && ArrayUtils.contains(appIds, APP_ID_2);
         }
 
-        // Check that we have the correct serial prefix (308425)
-        return Arrays.equals(Arrays.copyOfRange(data, 0, 4),
-                MYKI_HEADER);
-    }
+        @Override
+        protected CardInfo getCardInfo() {
+            return CARD_INFO;
+        }
+
+        @Override
+        public TransitIdentity parseTransitIdentity(DesfireCard desfireCard) {
+            byte[] data = desfireCard.getApplication(APP_ID_1).getFile(15).getData();
+            return new TransitIdentity(NAME, parseSerial(data));
+        }
+    };
 
     /**
      * Parses a serial number in 0x11f2 file 0xf
@@ -133,16 +158,6 @@ public class MykiTransitData extends SerialOnlyTransitData {
 
         String formattedSerial = String.format(Locale.ENGLISH, "%06d%08d", serial1, serial2);
         return formattedSerial + Utils.calculateLuhn(formattedSerial);
-    }
-
-    public static boolean earlyCheck(int[] appIds) {
-        return ArrayUtils.contains(appIds, APP_ID_1) && ArrayUtils.contains(appIds, APP_ID_2);
-    }
-
-    public static TransitIdentity parseTransitIdentity(Card card) {
-        DesfireCard desfireCard = (DesfireCard) card;
-        byte[] data = desfireCard.getApplication(APP_ID_1).getFile(15).getData();
-        return new TransitIdentity(NAME, parseSerial(data));
     }
 
     @Override

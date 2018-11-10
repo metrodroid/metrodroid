@@ -24,6 +24,7 @@ import android.support.annotation.NonNull;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
@@ -33,6 +34,7 @@ import au.id.micolous.farebot.R;
 import au.id.micolous.metrodroid.MetrodroidApplication;
 import au.id.micolous.metrodroid.card.CardType;
 import au.id.micolous.metrodroid.card.calypso.CalypsoApplication;
+import au.id.micolous.metrodroid.card.calypso.CalypsoCardTransitFactory;
 import au.id.micolous.metrodroid.card.iso7816.ISO7816File;
 import au.id.micolous.metrodroid.card.iso7816.ISO7816Record;
 import au.id.micolous.metrodroid.transit.CardInfo;
@@ -196,24 +198,39 @@ public class MobibTransitData extends Calypso1545TransitData {
                 Utils.convertBCDtoInteger(Utils.getBitsFromBuffer(holder, 90, 4)));
     }
 
-    @NonNull
-    public static TransitIdentity parseTransitIdentity(CalypsoApplication card) {
-        return new TransitIdentity(NAME, getSerial(card));
-    }
-
-    public static boolean check(byte[] ticketEnv) {
-        try {
-            int networkID = Utils.getBitsFromBuffer(ticketEnv, 13, 24);
-            return MOBIB_NETWORK_ID == networkID;
-        } catch (Exception e) {
-            return false;
+    public final static CalypsoCardTransitFactory FACTORY = new CalypsoCardTransitFactory() {
+        @Override
+        public List<CardInfo> getAllCards() {
+            return Collections.singletonList(CARD_INFO);
         }
-    }
 
-    @NonNull
-    public static MobibTransitData parseTransitData(CalypsoApplication card) {
-        return new MobibTransitData(card);
-    }
+        @NonNull
+        @Override
+        public TransitIdentity parseTransitIdentity(CalypsoApplication card) {
+            return new TransitIdentity(NAME, getSerial(card));
+        }
+
+        @Override
+        public boolean check(byte[] ticketEnv) {
+            try {
+                int networkID = Utils.getBitsFromBuffer(ticketEnv, 13, 24);
+                return MOBIB_NETWORK_ID == networkID;
+            } catch (Exception e) {
+                return false;
+            }
+        }
+
+        @Override
+        public CardInfo getCardInfo(byte[] tenv) {
+            return CARD_INFO;
+        }
+
+        @NonNull
+        @Override
+        public MobibTransitData parseTransitData(CalypsoApplication card) {
+            return new MobibTransitData(card);
+        }
+    };
 
     @Override
     protected En1545Subscription createSubscription(byte[] data, En1545Parsed contractList,

@@ -73,7 +73,7 @@ public class SupportedCardsActivity extends MetrodroidActivity {
 
         CardsAdapter(Context context) {
             super(context, 0, new ArrayList<>());
-            addAll(CardInfo.ALL_CARDS_ALPHABETICAL);
+            addAll(CardInfo.getAllCardsAlphabetical());
             mLayoutInflater = (LayoutInflater) context.getSystemService(
                     Context.LAYOUT_INFLATER_SERVICE);
         }

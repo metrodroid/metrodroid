@@ -24,6 +24,8 @@ import android.support.annotation.Nullable;
 import android.util.Log;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 import au.id.micolous.farebot.R;
@@ -154,6 +156,10 @@ public class SmartRiderTransitData extends TransitData {
             return new TransitIdentity(detectKeyType(card).getFriendlyName(), getSerialData(card));
         }
 
+        @Override
+        public List<CardInfo> getAllCards() {
+            return Arrays.asList(MYWAY_CARD_INFO, SMARTRIDER_CARD_INFO);
+        }
 
         @Override
         public TransitData parseTransitData(@NonNull ClassicCard classicCard) {

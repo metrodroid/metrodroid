@@ -21,11 +21,15 @@ package au.id.micolous.metrodroid.transit.nextfare.ultralight;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import java.util.List;
 import java.util.TimeZone;
 
 import au.id.micolous.metrodroid.card.UnauthorizedException;
 import au.id.micolous.metrodroid.card.ultralight.UltralightCard;
+import au.id.micolous.metrodroid.card.ultralight.UltralightCardTransitFactory;
+import au.id.micolous.metrodroid.transit.CardInfo;
 import au.id.micolous.metrodroid.transit.TransitCurrency;
+import au.id.micolous.metrodroid.transit.TransitData;
 import au.id.micolous.metrodroid.transit.TransitIdentity;
 import au.id.micolous.metrodroid.transit.nextfare.ultralight.NextfareUltralightTransaction;
 import au.id.micolous.metrodroid.transit.nextfare.ultralight.NextfareUltralightTransitData;
@@ -47,15 +51,33 @@ public class NextfareUnknownUltralightTransitData extends NextfareUltralightTran
 
     static final TimeZone TZ = TimeZone.getTimeZone("UTC");
 
-    public static boolean check(UltralightCard card) {
-        try {
-            int head = Utils.byteArrayToInt(card.getPage(4).getData(), 0, 3);
-            return head == 0x0a0400 || head == 0x0a0800;
-        } catch (IndexOutOfBoundsException | UnauthorizedException ignored) {
-            // If that sector number is too high, then it's not for us.
-            return false;
+    public final static UltralightCardTransitFactory FACTORY = new UltralightCardTransitFactory() {
+        @Override
+        public List<CardInfo> getAllCards() {
+            return null;
         }
-    }
+
+        @Override
+        public boolean check(UltralightCard card) {
+            try {
+                int head = Utils.byteArrayToInt(card.getPage(4).getData(), 0, 3);
+                return head == 0x0a0400 || head == 0x0a0800;
+            } catch (IndexOutOfBoundsException | UnauthorizedException ignored) {
+                // If that sector number is too high, then it's not for us.
+                return false;
+            }
+        }
+
+        @Override
+        public TransitData parseTransitData(UltralightCard ultralightCard) {
+            return new NextfareUnknownUltralightTransitData(ultralightCard);
+        }
+
+        @Override
+        public TransitIdentity parseTransitIdentity(UltralightCard card) {
+            return new TransitIdentity(NAME, formatSerial(getSerial(card)));
+        }
+    };
 
     @Override
     protected TransitCurrency makeCurrency(int val) {
@@ -83,10 +105,6 @@ public class NextfareUnknownUltralightTransitData extends NextfareUltralightTran
     @Override
     protected NextfareUltralightTransaction makeTransaction(UltralightCard card, int startPage, int baseDate) {
         return new NextfareUnknownUltralightTransaction(card, startPage, baseDate);
-    }
-
-    public static TransitIdentity parseTransitIdentity(UltralightCard card) {
-        return new TransitIdentity(NAME, formatSerial(getSerial(card)));
     }
 
     @Override

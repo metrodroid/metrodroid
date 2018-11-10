@@ -27,11 +27,13 @@ import org.apache.commons.lang3.ArrayUtils;
 import au.id.micolous.metrodroid.card.Card;
 import au.id.micolous.metrodroid.card.CardType;
 import au.id.micolous.metrodroid.card.desfire.DesfireCard;
+import au.id.micolous.metrodroid.card.desfire.DesfireCardTransitFactory;
 import au.id.micolous.metrodroid.transit.CardInfo;
 import au.id.micolous.metrodroid.transit.Subscription;
 import au.id.micolous.metrodroid.transit.TransitCurrency;
 import au.id.micolous.metrodroid.transit.TransitData;
 import au.id.micolous.metrodroid.transit.TransitIdentity;
+import au.id.micolous.metrodroid.transit.ovc.OVChipTransitData;
 import au.id.micolous.metrodroid.ui.HeaderListItem;
 import au.id.micolous.metrodroid.ui.ListItem;
 import au.id.micolous.metrodroid.util.TripObfuscator;
@@ -39,6 +41,7 @@ import au.id.micolous.metrodroid.util.Utils;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collections;
 import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.Locale;
@@ -144,27 +147,36 @@ public class OpalTransitData extends TransitData {
         }
     }
 
-    public static boolean check(Card card) {
-        return (card instanceof DesfireCard) && (((DesfireCard) card).getApplication(0x314553) != null);
-    }
-
-    public static boolean earlyCheck(int[] appIds) {
-        return ArrayUtils.contains(appIds, APP_ID);
-    }
-
     private static String formatSerialNumber(int serialNumber, int lastDigit) {
         return String.format(Locale.ENGLISH, "308522%09d%01d", serialNumber, lastDigit);
     }
 
-    public static TransitIdentity parseTransitIdentity(Card card) {
-        DesfireCard desfireCard = (DesfireCard) card;
-        byte[] data = desfireCard.getApplication(APP_ID).getFile(FILE_ID).getData();
-        data = Utils.reverseBuffer(data, 0, 5);
+    public final static DesfireCardTransitFactory FACTORY = new DesfireCardTransitFactory() {
+        @Override
+        public boolean earlyCheck(int[] appIds) {
+            return ArrayUtils.contains(appIds, APP_ID);
+        }
 
-        int lastDigit = Utils.getBitsFromBuffer(data, 4, 4);
-        int serialNumber = Utils.getBitsFromBuffer(data, 8, 32);
-        return new TransitIdentity(NAME, formatSerialNumber(serialNumber, lastDigit));
-    }
+        @Override
+        public CardInfo getCardInfo() {
+            return CARD_INFO;
+        }
+
+        @Override
+        public TransitData parseTransitData(DesfireCard desfireCard) {
+            return new OpalTransitData(desfireCard);
+        }
+
+        @Override
+        public TransitIdentity parseTransitIdentity(DesfireCard desfireCard) {
+            byte[] data = desfireCard.getApplication(APP_ID).getFile(FILE_ID).getData();
+            data = Utils.reverseBuffer(data, 0, 5);
+
+            int lastDigit = Utils.getBitsFromBuffer(data, 4, 4);
+            int serialNumber = Utils.getBitsFromBuffer(data, 8, 32);
+            return new TransitIdentity(NAME, formatSerialNumber(serialNumber, lastDigit));
+        }
+    };
 
     @Override
     public String getCardName() {

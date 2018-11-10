@@ -29,6 +29,7 @@ import au.id.micolous.metrodroid.card.Card;
 import au.id.micolous.metrodroid.card.CardType;
 import au.id.micolous.metrodroid.card.TagReaderFeedbackInterface;
 import au.id.micolous.metrodroid.card.UnsupportedTagException;
+import au.id.micolous.metrodroid.transit.CardTransitFactory;
 import au.id.micolous.metrodroid.transit.TransitData;
 import au.id.micolous.metrodroid.transit.TransitIdentity;
 import au.id.micolous.metrodroid.transit.clipper.ClipperUltralightTransitData;
@@ -50,6 +51,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
+import java.util.Collection;
 import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.Locale;
@@ -60,6 +62,19 @@ import java.util.Locale;
 @Root(name = "card")
 public class UltralightCard extends Card {
     private static final String TAG = "UltralightCard";
+    private static final UltralightCardTransitFactory[] FACTORIES = {
+            TroikaUltralightTransitData.FACTORY,
+            CompassUltralightTransitData.FACTORY,
+            VentraUltralightTransitData.FACTORY,
+            // This must be after the checks for known Nextfare MFU deployments.
+            NextfareUnknownUltralightTransitData.FACTORY,
+            ClipperUltralightTransitData.FACTORY,
+            BlankUltralightTransitData.FACTORY,
+            // This check must be LAST.
+            //
+            // This is to throw up a warning whenever there is a card with all locked sectors
+            UnauthorizedUltralightTransitData.FACTORY,
+    };
 
     @ElementList(name = "pages")
     private List<UltralightPage> mPages;
@@ -199,35 +214,15 @@ public class UltralightCard extends Card {
         }
     }
 
+    public static List<CardTransitFactory> getAllFactories() {
+        return Arrays.asList(FACTORIES);
+    }
+
     @Override
     public TransitIdentity parseTransitIdentity() {
-        if (TroikaUltralightTransitData.check(this)) {
-            return TroikaUltralightTransitData.parseTransitIdentity(this);
-        }
-        if (CompassUltralightTransitData.check(this)) {
-            return CompassUltralightTransitData.parseTransitIdentity(this);
-        }
-        if (VentraUltralightTransitData.check(this)) {
-            return VentraUltralightTransitData.parseTransitIdentity(this);
-        }
-        // This must be after the checks for known Nextfare MFU deployments.
-        if (NextfareUnknownUltralightTransitData.check(this)) {
-            return NextfareUnknownUltralightTransitData.parseTransitIdentity(this);
-        }
-        if (ClipperUltralightTransitData.check(this)) {
-            return ClipperUltralightTransitData.parseTransitIdentity(this);
-        }
-
-        if (BlankUltralightTransitData.check(this)) {
-            return BlankUltralightTransitData.parseTransitIdentity(this);
-        }
-
-        if (UnauthorizedUltralightTransitData.check(this)) {
-            // This check must be LAST.
-            //
-            // This is to throw up a warning whenever there is a card with all locked sectors
-            return UnauthorizedUltralightTransitData.parseTransitIdentity(this);
-        }
+        for (UltralightCardTransitFactory f : FACTORIES)
+            if (f.check(this))
+                return f.parseTransitIdentity(this);
 
         // The card could not be identified.
         return null;
@@ -235,36 +230,9 @@ public class UltralightCard extends Card {
 
     @Override
     public TransitData parseTransitData() {
-        if (TroikaUltralightTransitData.check(this)) {
-            return new TroikaUltralightTransitData(this);
-        }
-        if (CompassUltralightTransitData.check(this)) {
-            return new CompassUltralightTransitData(this);
-        }
-        if (VentraUltralightTransitData.check(this)) {
-            return new VentraUltralightTransitData(this);
-        }
-        // This must be after the checks for known Nextfare MFU deployments.
-        if (NextfareUnknownUltralightTransitData.check(this)) {
-            return new NextfareUnknownUltralightTransitData(this);
-        }
-        if (ClipperUltralightTransitData.check(this)) {
-            return new ClipperUltralightTransitData(this);
-        }
-
-        if (BlankUltralightTransitData.check(this)) {
-            // This check must be second to last.
-            //
-            // This is to throw up a warning if we get a blank card.
-            return new BlankUltralightTransitData();
-        }
-
-        if (UnauthorizedUltralightTransitData.check(this)) {
-            // This check must be LAST.
-            //
-            // This is to throw up a warning whenever there is a card with all locked sectors
-            return new UnauthorizedUltralightTransitData();
-        }
+        for (UltralightCardTransitFactory f : FACTORIES)
+            if (f.check(this))
+                return f.parseTransitData(this);
 
         // The card could not be identified.
         return null;

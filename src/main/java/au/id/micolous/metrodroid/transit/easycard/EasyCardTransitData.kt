@@ -120,6 +120,8 @@ data class EasyCardTransitData internal constructor(
             override fun parseTransitData(card: ClassicCard): TransitData {
                 return EasyCardTransitData(card)
             }
+
+            override fun getAllCards(): MutableList<CardInfo> = Collections.singletonList(CARD_INFO)
         }
     }
 }

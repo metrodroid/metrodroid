@@ -22,11 +22,13 @@ package au.id.micolous.metrodroid.transit.opus;
 
 import android.os.Parcel;
 
+import java.util.Collections;
 import java.util.List;
 
 import au.id.micolous.farebot.R;
 import au.id.micolous.metrodroid.card.CardType;
 import au.id.micolous.metrodroid.card.calypso.CalypsoApplication;
+import au.id.micolous.metrodroid.card.calypso.CalypsoCardTransitFactory;
 import au.id.micolous.metrodroid.card.iso7816.ISO7816File;
 import au.id.micolous.metrodroid.card.iso7816.ISO7816Record;
 import au.id.micolous.metrodroid.card.iso7816.ISO7816Selector;
@@ -101,22 +103,37 @@ public class OpusTransitData extends Calypso1545TransitData {
         return OpusLookup.getInstance();
     }
 
-    public static TransitIdentity parseTransitIdentity(CalypsoApplication card) {
-        return new TransitIdentity(NAME, getSerial(card));
-    }
-
-    public static boolean check(byte[] ticketEnv) {
-        try {
-            int networkID = Utils.getBitsFromBuffer(ticketEnv, 13, 24);
-            return OPUS_NETWORK_ID == networkID;
-        } catch (Exception e) {
-            return false;
+    public final static CalypsoCardTransitFactory FACTORY = new CalypsoCardTransitFactory() {
+        @Override
+        public TransitIdentity parseTransitIdentity(CalypsoApplication card) {
+            return new TransitIdentity(NAME, getSerial(card));
         }
-    }
 
-    public static OpusTransitData parseTransitData(CalypsoApplication card) {
-        return new OpusTransitData(card);
-    }
+        @Override
+        public boolean check(byte[] ticketEnv) {
+            try {
+                int networkID = Utils.getBitsFromBuffer(ticketEnv, 13, 24);
+                return OPUS_NETWORK_ID == networkID;
+            } catch (Exception e) {
+                return false;
+            }
+        }
+
+        @Override
+        public OpusTransitData parseTransitData(CalypsoApplication card) {
+            return new OpusTransitData(card);
+        }
+
+        @Override
+        public List<CardInfo> getAllCards() {
+            return Collections.singletonList(CARD_INFO);
+        }
+
+        @Override
+        public CardInfo getCardInfo(byte[] tenv) {
+            return CARD_INFO;
+        }
+    };
 
     @Override
     protected List<ISO7816Record> getContracts(CalypsoApplication card) {
