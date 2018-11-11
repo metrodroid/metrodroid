@@ -33,8 +33,7 @@ class RkfTest : InstrumentationTestCase() {
 
         val c = loadCard("anonymt_dump-20120814.mfd")
         assertEquals("308430 000 027 859 5", c.serialNumber)
-        // FIXME: Balance is incorrect
-        //assertEquals(TransitCurrency.DKK(80), c.balances[0].balance)
+        assertEquals(TransitCurrency.DKK(100 * 100), c.balances[0].balance)
 
     }
 }
