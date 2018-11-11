@@ -46,7 +46,7 @@ public class ISO7816Protocol {
     /**
      * If true, this turns on debug logs that show ISO7816 communication.
      */
-    private static final boolean ENABLE_TRACING = true;
+    private static final boolean ENABLE_TRACING = false;
 
     private static final String TAG = ISO7816Protocol.class.getName();
     private static final byte CLASS_ISO7816 = (byte) 0x00;
