@@ -104,8 +104,7 @@ data class EasyCardTransitData internal constructor(
                     null
                 }
 
-                val x = data != null && Arrays.equals(data, MAGIC)
-                return x
+                return data != null && Arrays.equals(data, MAGIC)
             }
 
             override fun earlySectors(): Int {

@@ -275,11 +275,7 @@ public class Utils {
     */
 
     public static int byteArrayToInt(byte[] b) {
-        return byteArrayToInt(b, 0);
-    }
-
-    public static int byteArrayToInt(byte[] b, int offset) {
-        return byteArrayToInt(b, offset, b.length);
+        return byteArrayToInt(b, 0, b.length);
     }
 
     public static int byteArrayToInt(byte[] b, int offset, int length) {
@@ -524,6 +520,7 @@ public class Utils {
      * @param formatArgs     Formatting arguments to pass
      * @return Localized string
      */
+    @NonNull
     public static String localizeString(@StringRes int stringResource, Object... formatArgs) {
         Resources res = MetrodroidApplication.getInstance().getResources();
         return res.getString(stringResource, formatArgs);

@@ -178,6 +178,7 @@ public class TransactionTrip extends Trip implements Parcelable {
         TransactionTrip createTrip(Transaction el);
     }
 
+    @NonNull
     public static List<TransactionTrip> merge(List<? extends Transaction> transactions,
                                               TransactionTripFactory factory) {
         Collections.sort(transactions, (a, b) -> a.getTimestamp().compareTo(b.getTimestamp()));
@@ -196,10 +197,12 @@ public class TransactionTrip extends Trip implements Parcelable {
         return trips;
     }
 
+    @NonNull
     public static List<TransactionTrip> merge(List<? extends Transaction> transactions) {
         return merge(transactions, TransactionTrip::new);
     }
 
+    @NonNull
     public static List<TransactionTrip> merge(Transaction... transactions) {
         return merge(Arrays.asList(transactions));
     }
