@@ -10,7 +10,7 @@ class CardInfoValidator : Detector(), Detector.UastScanner {
     private var mHasImage = false
     private var mHasCardType = false
 
-    fun reset() {
+    private fun reset() {
         mHasCardType = false
         mHasImage = false
         mHasLocation = false
