@@ -38,8 +38,8 @@ internal data class RkfSerial(val mCompany: Int, val mCustomerNumber: Long, val 
     val formatted: String
         get() = when (mCompany) {
             RkfLookup.REJSEKORT -> {
-                val main = "30843" + Utils.formatNumber(mCustomerNumber, " ", 1, 3, 3, 2)
-                main + Utils.calculateLuhn(main.replace(" ", ""))
+                val main = "30843" + Utils.formatNumber(mCustomerNumber, " ", 1, 3, 3, 3)
+                main + " " + Utils.calculateLuhn(main.replace(" ", ""))
             }
             RkfLookup.SLACCESS -> {
                 Utils.formatNumber(mHwSerial, " ", 5, 5)
