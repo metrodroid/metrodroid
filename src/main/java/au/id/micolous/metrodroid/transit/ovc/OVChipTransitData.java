@@ -36,7 +36,6 @@ import java.util.TimeZone;
 
 import au.id.micolous.farebot.R;
 import au.id.micolous.metrodroid.MetrodroidApplication;
-import au.id.micolous.metrodroid.card.Card;
 import au.id.micolous.metrodroid.card.CardType;
 import au.id.micolous.metrodroid.card.classic.ClassicCard;
 import au.id.micolous.metrodroid.card.classic.ClassicCardTransitFactory;
@@ -44,13 +43,11 @@ import au.id.micolous.metrodroid.card.classic.ClassicSector;
 import au.id.micolous.metrodroid.card.classic.InvalidClassicSector;
 import au.id.micolous.metrodroid.card.classic.UnauthorizedClassicSector;
 import au.id.micolous.metrodroid.transit.CardInfo;
-import au.id.micolous.metrodroid.transit.Subscription;
 import au.id.micolous.metrodroid.transit.TransitBalance;
 import au.id.micolous.metrodroid.transit.TransitBalanceStored;
 import au.id.micolous.metrodroid.transit.TransitCurrency;
 import au.id.micolous.metrodroid.transit.TransitData;
 import au.id.micolous.metrodroid.transit.TransitIdentity;
-import au.id.micolous.metrodroid.transit.Trip;
 import au.id.micolous.metrodroid.ui.HeaderListItem;
 import au.id.micolous.metrodroid.ui.ListItem;
 import au.id.micolous.metrodroid.util.ImmutableMapBuilder;
@@ -149,15 +146,15 @@ public class OVChipTransitData extends TransitData {
     private final OVChipPreamble mPreamble;
     private final OVChipInfo mInfo;
     private final OVChipCredit mCredit;
-    private final OVChipTrip[] mTrips;
-    private final OVChipSubscription[] mSubscriptions;
+    private final List<OVChipTrip> mTrips;
+    private final List<OVChipSubscription> mSubscriptions;
 
     public OVChipTransitData(Parcel parcel) {
-        mTrips = new OVChipTrip[parcel.readInt()];
-        parcel.readTypedArray(mTrips, OVChipTrip.CREATOR);
+        mTrips = new ArrayList<>();
+        parcel.readTypedList(mTrips, OVChipTrip.CREATOR);
 
-        mSubscriptions = new OVChipSubscription[parcel.readInt()];
-        parcel.readTypedArray(mSubscriptions, OVChipSubscription.CREATOR);
+        mSubscriptions = new ArrayList<>();
+        parcel.readTypedList(mSubscriptions, OVChipSubscription.CREATOR);
 
         mIndex = parcel.readParcelable(OVChipIndex.class.getClassLoader());
         mPreamble = parcel.readParcelable(OVChipPreamble.class.getClassLoader());
@@ -206,12 +203,12 @@ public class OVChipTransitData extends TransitData {
         }
 
         Collections.sort(trips, OVChipTrip.ID_ORDER);
-        mTrips = trips.toArray(new OVChipTrip[0]);
+        mTrips = trips;
 
         List<OVChipSubscription> subs = new ArrayList<>(Arrays.asList(parser.getSubscriptions()));
         Collections.sort(subs, (s1, s2) -> Integer.valueOf(s1.getId()).compareTo(s2.getId()));
 
-        mSubscriptions = subs.toArray(new OVChipSubscription[0]);
+        mSubscriptions = subs;
     }
 
     public static final ClassicCardTransitFactory FACTORY = new ClassicCardTransitFactory() {
@@ -304,10 +301,8 @@ public class OVChipTransitData extends TransitData {
 
     @Override
     public void writeToParcel(Parcel parcel, int flags) {
-        parcel.writeInt(mTrips.length);
-        parcel.writeTypedArray(mTrips, flags);
-        parcel.writeInt(mSubscriptions.length);
-        parcel.writeTypedArray(mSubscriptions, flags);
+        parcel.writeTypedList(mTrips);
+        parcel.writeTypedList(mSubscriptions);
         parcel.writeParcelable(mIndex, flags);
         parcel.writeParcelable(mPreamble, flags);
         parcel.writeParcelable(mInfo, flags);
@@ -328,11 +323,11 @@ public class OVChipTransitData extends TransitData {
     }
 
     @Override
-    public Trip[] getTrips() {
+    public List<OVChipTrip> getTrips() {
         return mTrips;
     }
 
-    public Subscription[] getSubscriptions() {
+    public List<OVChipSubscription> getSubscriptions() {
         return mSubscriptions;
     }
 

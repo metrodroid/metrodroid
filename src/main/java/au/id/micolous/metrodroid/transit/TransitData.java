@@ -82,11 +82,11 @@ public abstract class TransitData implements Parcelable {
      *
      * @return Array of Trip[], or null if not supported.
      */
-    public Trip[] getTrips() {
+    public List<? extends Trip> getTrips() {
         return null;
     }
 
-    public Subscription[] getSubscriptions() {
+    public List<? extends Subscription> getSubscriptions() {
         return null;
     }
 

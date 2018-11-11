@@ -52,11 +52,11 @@ data class EasyCardTransitData internal constructor(
 
     override fun getSerialNumber(): String? = serialNumber
 
-    override fun getTrips(): Array<out Trip> {
+    override fun getTrips(): MutableList<Trip>? {
         val ret: ArrayList<Trip> = ArrayList()
         ret.addAll(trips)
         ret.add(refill)
-        return ret.toArray(arrayOf())
+        return ret
     }
 
     companion object {

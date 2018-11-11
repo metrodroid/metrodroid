@@ -174,8 +174,8 @@ public abstract class NextfareUltralightTransitData extends TransitData {
     protected abstract String getProductName(int productCode);
 
     @Override
-    public Trip[] getTrips() {
-        return mTrips.toArray(new TransactionTrip[0]);
+    public List<TransactionTrip> getTrips() {
+        return mTrips;
     }
 
     public static Calendar parseDateTime(TimeZone tz, int baseDate, int date, int time) {

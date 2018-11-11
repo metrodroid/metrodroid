@@ -46,7 +46,6 @@ import au.id.micolous.metrodroid.util.Utils;
 import org.apache.commons.lang3.ArrayUtils;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 public class OrcaTransitData extends TransitData {
@@ -158,13 +157,8 @@ public class OrcaTransitData extends TransitData {
     }
 
     @Override
-    public Trip[] getTrips() {
-        return mTrips.toArray(new Trip[0]);
-    }
-
-    @Override
-    public Subscription[] getSubscriptions() {
-        return null;
+    public List<Trip> getTrips() {
+        return mTrips;
     }
 
     private List <TransactionTrip> parseTrips(DesfireCard card, int fileId, boolean isTopup) {

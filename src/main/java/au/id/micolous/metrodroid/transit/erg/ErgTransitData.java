@@ -65,7 +65,7 @@ public class ErgTransitData extends TransitData {
     private GregorianCalendar mEpochDate;
     private int mAgencyID;
     private int mBalance;
-    private Trip[] mTrips;
+    private List<ErgTrip> mTrips;
 
     // Parcel
     public static final Creator<ErgTransitData> CREATOR = new Creator<ErgTransitData>() {
@@ -86,7 +86,7 @@ public class ErgTransitData extends TransitData {
         mSerialNumber = parcel.readString();
         mEpochDate = new GregorianCalendar();
         mEpochDate.setTimeInMillis(parcel.readLong());
-        mTrips = parcel.createTypedArray(ManlyFastFerryTrip.CREATOR);
+        mTrips = parcel.readArrayList(getClass().getClassLoader());
         mCurrency = currency;
     }
 
@@ -142,7 +142,7 @@ public class ErgTransitData extends TransitData {
         // "tap off").
         //
         // These need the Epoch to be known first.
-        ArrayList<Trip> trips = new ArrayList<>();
+        List<ErgTrip> trips = new ArrayList<>();
 
         for (ErgRecord record : records) {
             if (record instanceof ErgPurseRecord) {
@@ -152,7 +152,7 @@ public class ErgTransitData extends TransitData {
         }
 
         Collections.sort(trips, new Trip.Comparator());
-        mTrips = trips.toArray(new Trip[0]);
+        mTrips = trips;
     }
 
     protected static class ErgTransitFactory extends ClassicCardTransitFactory {
@@ -238,7 +238,7 @@ public class ErgTransitData extends TransitData {
     public void writeToParcel(Parcel parcel, int flags) {
         parcel.writeString(mSerialNumber);
         parcel.writeLong(mEpochDate.getTimeInMillis());
-        parcel.writeTypedArray(mTrips, flags);
+        parcel.writeList(mTrips);
     }
 
     @Override
@@ -254,7 +254,7 @@ public class ErgTransitData extends TransitData {
     }
 
     @Override
-    public Trip[] getTrips() {
+    public List<ErgTrip> getTrips() {
         return mTrips;
     }
 

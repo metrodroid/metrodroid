@@ -277,12 +277,12 @@ public class OpalTransitData extends TransitData {
     }
 
     @Override
-    public Subscription[] getSubscriptions() {
+    public List<Subscription> getSubscriptions() {
         // Opal has no concept of "subscriptions" (travel pass), only automatic top up.
         if (mAutoTopup) {
-            return new Subscription[]{ OpalSubscription.getInstance() };
+            return Collections.singletonList(OpalSubscription.getInstance());
         }
-        return new Subscription[]{};
+        return Collections.emptyList();
     }
 
     @Override

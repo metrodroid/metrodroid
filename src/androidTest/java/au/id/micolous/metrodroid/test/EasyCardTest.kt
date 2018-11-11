@@ -48,9 +48,9 @@ class EasyCardTest : InstrumentationTestCase() {
 
         val c = loadCard("easycard/deadbeef.mfc")
         assertEquals(TransitCurrency.TWD(245), c.balances!![0].balance)
-        assertEquals(3, c.trips.size)
+        assertEquals(3, c.trips!!.size)
 
-        val busTrip = c.trips[0]
+        val busTrip = c.trips!![0]
         assertEquals("2013-10-28 20:33",
                 Utils.isoDateTimeFormat(busTrip.startTimestamp))
         assertEquals(TransitCurrency.TWD(10), busTrip.fare)
@@ -58,7 +58,7 @@ class EasyCardTest : InstrumentationTestCase() {
         assertNull(busTrip.startStation)
         assertEquals("0x332211", busTrip.machineID)
 
-        val trainTrip = c.trips[1]
+        val trainTrip = c.trips!![1]
         assertEquals("2013-10-28 20:41",
                 Utils.isoDateTimeFormat(trainTrip.startTimestamp))
         assertEquals("2013-10-28 20:46",
@@ -73,7 +73,7 @@ class EasyCardTest : InstrumentationTestCase() {
         assertEquals("Red", trainTrip.routeName)
         assertEquals("0xccbbaa", trainTrip.machineID)
 
-        val refill = c.trips[2]
+        val refill = c.trips!![2]
         assertEquals("2013-07-27 08:58",
                 Utils.isoDateTimeFormat(refill.startTimestamp))
         assertEquals(TransitCurrency.TWD(-100), refill.fare)
@@ -90,7 +90,7 @@ class EasyCardTest : InstrumentationTestCase() {
         TestUtils.showLocalAndEnglish(false)
 
         val c = loadCard("easycard/deadbeef.mfc")
-        val refill = c.trips.last()
+        val refill = c.trips!!.last()
         // Yongan Market
         assertEquals("永安市場", refill.startStation!!.stationName)
         assertNull(refill.routeName)

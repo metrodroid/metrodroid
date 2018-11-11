@@ -69,9 +69,9 @@ public class CardBalanceFragment extends ListFragment {
         List<TransitBalance> balances = mTransitData.getBalances();
         if (balances != null)
             combined.addAll(balances);
-        Subscription[] subscriptions = mTransitData.getSubscriptions();
+        List<? extends Subscription> subscriptions = mTransitData.getSubscriptions();
         if (subscriptions != null)
-            combined.addAll(Arrays.asList(subscriptions));
+            combined.addAll(subscriptions);
         setListAdapter(new BalancesAdapter(getActivity(), combined));
     }
 

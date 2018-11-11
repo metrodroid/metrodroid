@@ -212,13 +212,13 @@ public class TroikaHybridTransitData extends TransitData {
             mStrelka = null;
     }
 
-    public Trip[] getTrips() {
+    public List<Trip> getTrips() {
         List<Trip> t = new ArrayList<>();
         if (mPodorozhnik != null) {
-            t.addAll(Arrays.asList(mPodorozhnik.getTrips()));
+            t.addAll(mPodorozhnik.getTrips());
         }
-        t.addAll(Arrays.asList(mTroika.getTrips()));
-        return t.toArray(new Trip[0]);
+        t.addAll(mTroika.getTrips());
+        return t;
     }
 
     @Override
@@ -232,7 +232,7 @@ public class TroikaHybridTransitData extends TransitData {
     }
 
     @Override
-    public Subscription[] getSubscriptions() {
+    public List<Subscription> getSubscriptions() {
         return mTroika.getSubscriptions();
     }
 

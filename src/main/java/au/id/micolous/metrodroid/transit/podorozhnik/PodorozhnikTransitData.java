@@ -230,7 +230,7 @@ public class PodorozhnikTransitData extends TransitData {
     }
 
     @Override
-    public Trip[] getTrips() {
+    public List<Trip> getTrips() {
         ArrayList<Trip> items = new ArrayList<>();
         if (mLastTopupTime != 0) {
             items.add(new PodorozhnikTopup(mLastTopupTime, mLastTopup,
@@ -242,7 +242,7 @@ public class PodorozhnikTransitData extends TransitData {
                 items.add (new PodorozhnikDetachedTrip(timestamp));
             }
         }
-        return items.toArray(new Trip[0]);
+        return items;
     }
 
     @Override

@@ -35,7 +35,6 @@ import java.util.TimeZone;
 
 import au.id.micolous.farebot.R;
 import au.id.micolous.metrodroid.MetrodroidApplication;
-import au.id.micolous.metrodroid.card.Card;
 import au.id.micolous.metrodroid.card.CardType;
 import au.id.micolous.metrodroid.card.desfire.DesfireApplication;
 import au.id.micolous.metrodroid.card.desfire.DesfireCard;
@@ -91,7 +90,7 @@ public class LeapTransitData extends TransitData {
     private Calendar mExpiryDate;
     private AccumulatorBlock mDailyAccumulators;
     private AccumulatorBlock mWeeklyAccumulators;
-    private LeapTrip[] mTrips;
+    private List<LeapTrip> mTrips;
 
     static {
         GregorianCalendar g = new GregorianCalendar(TZ);
@@ -222,7 +221,7 @@ public class LeapTransitData extends TransitData {
     }
 
     @Override
-    public Trip[] getTrips() {
+    public List<LeapTrip> getTrips() {
         return mTrips;
     }
 
@@ -323,27 +322,20 @@ public class LeapTransitData extends TransitData {
     public void writeToParcel(Parcel parcel, int i) {
         parcel.writeString(mSerial);
         parcel.writeInt(mBalance);
-        parcelCalendar(parcel, mInitDate);
-        parcelCalendar(parcel, mExpiryDate);
+        Utils.parcelCalendar(parcel, mInitDate);
+        Utils.parcelCalendar(parcel, mExpiryDate);
         parcel.writeInt(mIssuerId);
-    }
-
-    private static void parcelCalendar(Parcel parcel, Calendar cal) {
-        parcel.writeLong(cal.getTimeInMillis());
-    }
-
-    private static Calendar unParcelCalendar(Parcel parcel) {
-        GregorianCalendar g = new GregorianCalendar(TZ);
-        g.setTimeInMillis(parcel.readLong());
-        return g;
+        parcel.writeTypedList(mTrips);
     }
 
     private LeapTransitData(Parcel parcel) {
         mSerial = parcel.readString();
         mBalance = parcel.readInt();
-        mInitDate = unParcelCalendar(parcel);
-        mExpiryDate = unParcelCalendar(parcel);
+        mInitDate = Utils.unparcelCalendar(parcel);
+        mExpiryDate = Utils.unparcelCalendar(parcel);
         mIssuerId = parcel.readInt();
+        mTrips = new ArrayList<>();
+        parcel.readTypedList(mTrips, LeapTrip.CREATOR);
     }
 
     public static boolean earlyCheck(int appId) {

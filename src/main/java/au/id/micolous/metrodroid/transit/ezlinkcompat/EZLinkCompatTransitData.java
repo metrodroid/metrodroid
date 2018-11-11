@@ -25,6 +25,8 @@ package au.id.micolous.metrodroid.transit.ezlinkcompat;
 import android.os.Parcel;
 import android.support.annotation.Nullable;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import au.id.micolous.metrodroid.card.cepascompat.CEPASCard;
@@ -50,14 +52,14 @@ public class EZLinkCompatTransitData extends TransitData {
 
     private final String mSerialNumber;
     private final int mBalance;
-    private final EZLinkCompatTrip[] mTrips;
+    private final List<EZLinkCompatTrip> mTrips;
 
     public EZLinkCompatTransitData(Parcel parcel) {
         mSerialNumber = parcel.readString();
         mBalance = parcel.readInt();
 
-        mTrips = new EZLinkCompatTrip[parcel.readInt()];
-        parcel.readTypedArray(mTrips, EZLinkCompatTrip.CREATOR);
+        mTrips = new ArrayList<>();
+        parcel.readTypedList(mTrips, EZLinkCompatTrip.CREATOR);
     }
 
     public EZLinkCompatTransitData(CEPASCard cepasCard) {
@@ -90,29 +92,28 @@ public class EZLinkCompatTransitData extends TransitData {
     }
 
     @Override
-    public Trip[] getTrips() {
+    public List<EZLinkCompatTrip> getTrips() {
         return mTrips;
     }
 
-    private EZLinkCompatTrip[] parseTrips(CEPASCard card) {
+    private List<EZLinkCompatTrip> parseTrips(CEPASCard card) {
         List<CEPASCompatTransaction> transactions = card.getHistory(3).getTransactions();
         if (transactions != null) {
-            EZLinkCompatTrip[] trips = new EZLinkCompatTrip[transactions.size()];
+            List<EZLinkCompatTrip> trips = new ArrayList<>();
 
-            for (int i = 0; i < trips.length; i++)
-                trips[i] = new EZLinkCompatTrip(transactions.get(i), getCardName());
+            for (CEPASCompatTransaction transaction : transactions)
+                trips.add(new EZLinkCompatTrip(transaction, getCardName()));
 
             return trips;
         }
-        return new EZLinkCompatTrip[0];
+        return Collections.emptyList();
     }
 
     public void writeToParcel(Parcel parcel, int flags) {
         parcel.writeString(mSerialNumber);
         parcel.writeInt(mBalance);
 
-        parcel.writeInt(mTrips.length);
-        parcel.writeTypedArray(mTrips, flags);
+        parcel.writeTypedList(mTrips);
     }
 
 }
