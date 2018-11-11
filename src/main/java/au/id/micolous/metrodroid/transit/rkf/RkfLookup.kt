@@ -40,7 +40,7 @@ data class RkfLookup (val mCurrencyCode : Int, val mCompany : Int) : En1545Looku
             else -> 1
         }
         return when (mCurrencyCode and 0xfff) {
-            0x208 -> TransitCurrency((price * 100) / intendedDivisor, "DKK")
+            0x208 -> TransitCurrency.DKK((price * 100) / intendedDivisor)
             0x578 -> TransitCurrency((price * 100) / intendedDivisor, "NOK")
             0x752 -> TransitCurrency((price * 100) / intendedDivisor, "SEK")
             0x978 -> TransitCurrency.EUR((price * 100) / intendedDivisor)

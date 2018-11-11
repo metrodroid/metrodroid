@@ -92,8 +92,8 @@ public class TransitCurrency extends TransitBalance implements Parcelable {
         return new TransitCurrency(fen, "CNY");
     }
 
-    public static TransitCurrency DKK(int kroner) {
-        return new TransitCurrency(kroner, "DKK", 1.);
+    public static TransitCurrency DKK(int ore) {
+        return new TransitCurrency(ore, "DKK");
     }
 
     public static TransitCurrency EUR(int cents) {
