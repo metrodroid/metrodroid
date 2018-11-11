@@ -246,6 +246,24 @@ public class Utils {
         }
     }
 
+    /**
+     * Converts a string to a byte array. Assumes the string is US-ASCII. Intended for internal
+     * card communication usage.
+     * @param s String to convert.
+     * @return byte array with string as US-ASCII
+     */
+    public static byte[] stringToUtf8(String s) {
+        return s.getBytes(getUTF8());
+    }
+
+    public static Charset getUTF8() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            return StandardCharsets.UTF_8;
+        } else {
+            return Charset.forName("UTF-8");
+        }
+    }
+
     /*
     public static byte[] intToByteArray(int value) {
         return new byte[] {
