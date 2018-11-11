@@ -23,15 +23,20 @@
 package au.id.micolous.metrodroid.activity;
 
 import android.app.ActionBar;
+import android.app.Activity;
 import android.app.PendingIntent;
 import android.content.Intent;
 import android.nfc.NfcAdapter;
+import android.nfc.Tag;
 import android.nfc.tech.IsoDep;
 import android.nfc.tech.MifareClassic;
 import android.nfc.tech.MifareUltralight;
 import android.nfc.tech.NfcA;
 import android.nfc.tech.NfcF;
+import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.RequiresApi;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -52,6 +57,23 @@ public class MainActivity extends MetrodroidActivity {
             new String[]{NfcA.class.getName()},
             new String[]{NfcF.class.getName()},
     };
+
+    static final boolean READER_SUPPORTED = Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT;
+    static final int FLAG_READER;
+
+    static {
+        if (READER_SUPPORTED) {
+            FLAG_READER = NfcAdapter.FLAG_READER_NFC_A |
+                    NfcAdapter.FLAG_READER_NFC_B |
+                    NfcAdapter.FLAG_READER_NFC_F |
+                    NfcAdapter.FLAG_READER_SKIP_NDEF_CHECK |
+                    NfcAdapter.FLAG_READER_NO_PLATFORM_SOUNDS;
+
+        } else {
+            FLAG_READER = 0;
+        }
+    }
+
 
     @Override
     protected Integer getThemeVariant() {
@@ -85,7 +107,22 @@ public class MainActivity extends MetrodroidActivity {
 
         updateObfuscationNotice(mNfcAdapter != null);
         if (mNfcAdapter != null) {
-            mNfcAdapter.enableForegroundDispatch(this, mPendingIntent, null, mTechLists);
+            if (READER_SUPPORTED) {
+                mNfcAdapter.enableReaderMode(this, tag -> {
+                    Intent i = new Intent();
+                    i.putExtra(NfcAdapter.EXTRA_TAG, tag);
+                    i.putExtra(NfcAdapter.EXTRA_ID, tag.getId());
+                    i.setAction(NfcAdapter.ACTION_TAG_DISCOVERED);
+
+                    try {
+                        mPendingIntent.send(getApplicationContext(), Activity.RESULT_OK, i);
+                    } catch (PendingIntent.CanceledException e) {
+                        Log.e("mainactivity", "oops cancelled", e);
+                    }
+                }, FLAG_READER, null);
+            } else {
+                mNfcAdapter.enableForegroundDispatch(this, mPendingIntent, null, mTechLists);
+            }
         }
     }
 
@@ -121,7 +158,9 @@ public class MainActivity extends MetrodroidActivity {
     protected void onPause() {
         super.onPause();
         if (mNfcAdapter != null) {
-            mNfcAdapter.disableForegroundDispatch(this);
+            if (!READER_SUPPORTED) {
+                mNfcAdapter.disableForegroundDispatch(this);
+            }
         }
     }
 

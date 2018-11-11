@@ -142,9 +142,11 @@ public class ReadingTagActivity extends MetrodroidActivity implements TagReaderF
         resolveIntent(intent);
     }
 
+    private NfcAdapter mNfcAdapter;
+
     private void resolveIntent(Intent intent) {
         try {
-            final Tag tag = intent.getParcelableExtra("android.nfc.extra.TAG");
+            final Tag tag = intent.getParcelableExtra(NfcAdapter.EXTRA_TAG);
             final byte[] tagId = intent.getByteArrayExtra(NfcAdapter.EXTRA_ID);
 
             SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
@@ -158,15 +160,30 @@ public class ReadingTagActivity extends MetrodroidActivity implements TagReaderF
                 finish();
                 return;
             }
-
-            ReadingTagTask t = new ReadingTagTask();
-            ReadingTagTaskEventArgs a = new ReadingTagTaskEventArgs(tagId, tag);
-            t.execute(a);
-
-
+            if (MainActivity.READER_SUPPORTED) {
+                mNfcAdapter = NfcAdapter.getDefaultAdapter(this);
+                mNfcAdapter.enableReaderMode(this,
+                        tag1 -> startReadingTag(tag1.getId(), tag1),
+                        MainActivity.FLAG_READER, null);
+            } else {
+                startReadingTag(tagId, tag);
+            }
         } catch (Exception ex) {
             Utils.showErrorAndFinish(this, ex);
         }
+    }
+
+    private boolean mReadInProgress = false;
+
+    private void startReadingTag(byte[] tagId, Tag tag) {
+        if (mReadInProgress) {
+            Log.d(TAG, "a read is already happening...?");
+            return;
+        }
+        mReadInProgress = true;
+        ReadingTagTask t = new ReadingTagTask();
+        ReadingTagTaskEventArgs a = new ReadingTagTaskEventArgs(tagId, tag);
+        t.execute(a);
     }
 
     class ReadingTagTaskEventArgs {
@@ -239,6 +256,11 @@ public class ReadingTagActivity extends MetrodroidActivity implements TagReaderF
 
         @Override
         protected void onPostExecute(Uri cardUri) {
+            // End reader mode
+            if (mNfcAdapter != null && MainActivity.READER_SUPPORTED) {
+                mNfcAdapter.disableReaderMode(ReadingTagActivity.this);
+            }
+
             if (mPartialRead) {
                 new AlertDialog.Builder(ReadingTagActivity.this)
                         .setTitle(R.string.card_partial_read_title)
