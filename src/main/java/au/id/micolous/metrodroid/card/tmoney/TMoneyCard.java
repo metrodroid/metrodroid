@@ -109,6 +109,11 @@ public class TMoneyCard extends ISO7816Application {
                 }
                 feedbackInterface.updateProgressBar(1+i, 6);
             }
+            try {
+                app.dumpFile(iso7816Tag, ISO7816Selector.makeSelector(0xdf00), 0);
+            } catch (Exception e) {
+                Log.w(TAG, "Caught exception on file df00: " + e);
+            }
         } catch (Exception e) {
             Log.w(TAG, "Got exception " + e);
             return null;
