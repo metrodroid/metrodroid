@@ -206,14 +206,19 @@ public class ClassicCard extends Card {
 
                     if (keys != null) {
                         feedbackInterface.updateStatusText(Utils.localizeString(R.string.mfc_have_key, sectorIndex));
-                        // Try to authenticate with the sector multiple times, in case we have
-                        // impaired communications with the card.
-                        retriesLeft = retryLimit;
+                    } else {
+                        feedbackInterface.updateStatusText(Utils.localizeString(R.string.mfc_default_key, sectorIndex));
+                    }
 
-                        while (correctKey == null && retriesLeft-- > 0) {
-                            // If we have a known key for the sector on the card, try this first.
-                            Log.d(TAG, "Attempting authentication on sector " + sectorIndex + ", " + retriesLeft + " tries remain...");
-                            List <? extends ClassicSectorKey> candidates = keys.getCandidates(sectorIndex);
+                    // Try to authenticate with the sector multiple times, in case we have
+                    // impaired communications with the card.
+                    retriesLeft = retryLimit;
+
+                    while (correctKey == null && retriesLeft-- > 0) {
+                        // If we have a known key for the sector on the card, try this first.
+                        Log.d(TAG, "Attempting authentication on sector " + sectorIndex + ", " + retriesLeft + " tries remain...");
+                        if (keys != null) {
+                            List<? extends ClassicSectorKey> candidates = keys.getCandidates(sectorIndex);
 
                             for (ClassicSectorKey sectorKey : candidates) {
                                 correctKey = tryAuthenticateWithKey(tech, sectorIndex, sectorKey);
@@ -221,13 +226,21 @@ public class ClassicCard extends Card {
                                     break;
                             }
                         }
+
+                        if (correctKey != null)
+                            break;
+                        for (ClassicSectorKey wkKey : WELL_KNOWN_KEYS) {
+                            correctKey = tryAuthenticateWithKey(tech, sectorIndex, wkKey);
+                            if (correctKey != null)
+                                break;
+                        }
                     }
 
                     // Try with the other keys
                     retriesLeft = retryLimit;
 
                     if (correctKey == null) {
-                        feedbackInterface.updateProgressBar((sectorIndex * 5) + 1, maxProgress);
+                        feedbackInterface.updateProgressBar((sectorIndex * 5) + 2, maxProgress);
 
                         while (correctKey == null && (retriesLeft-- > 0)) {
                             Log.d(TAG, "Attempting authentication with other keys on sector " + sectorIndex + ", " + retriesLeft + " tries remain...");
@@ -251,19 +264,6 @@ public class ClassicCard extends Card {
                                     }
                                 }
                             }
-
-                            // Try the default keys last.  If these are the only keys we have, the other steps will be skipped.
-                            if (correctKey == null) {
-                                feedbackInterface.updateProgressBar((sectorIndex * 5) + 2, maxProgress);
-
-                                feedbackInterface.updateStatusText(Utils.localizeString(R.string.mfc_default_key, sectorIndex));
-                                for (ClassicSectorKey wkKey : WELL_KNOWN_KEYS) {
-                                    correctKey = tryAuthenticateWithKey(tech, sectorIndex, wkKey);
-                                    if (correctKey != null)
-                                        break;
-                                }
-                            }
-
                         }
                     }
 
