@@ -143,15 +143,7 @@ public abstract class NextfareUltralightTransitData extends TransitData {
     }
 
     protected static String formatSerial(long serial) {
-        StringBuilder res = new StringBuilder();
-        long val = serial;
-        for (int i = 0; i < 5; i++) {
-            if (res.length() != 0)
-                res.insert(0, " ");
-            res.insert(0, String.format(Locale.ENGLISH, "%04d", val % 10000));
-            val /= 10000;
-        }
-        return res.toString();
+        return Utils.formatNumber(serial, " ", 4, 4, 4, 4, 4);
     }
 
     @Override

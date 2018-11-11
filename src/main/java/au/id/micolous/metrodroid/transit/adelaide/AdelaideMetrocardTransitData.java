@@ -165,11 +165,7 @@ public class AdelaideMetrocardTransitData extends En1545TransitData {
     };
 
     private static String formatSerial(long serial) {
-        return String.format(Locale.ENGLISH, "01-%03d %04d %04d %04d",
-                (serial / 1000000000000L) % 1000L,
-                (serial / 100000000L) % 10000L,
-                (serial / 10000L) % 10000L,
-                serial % 10000L);
+        return "01-" + Utils.formatNumber(serial, " ", 3, 4, 4, 4);
     }
 
     private static long getSerial(byte[] tagId) {

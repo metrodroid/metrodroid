@@ -71,6 +71,7 @@ import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.text.SimpleDateFormat;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.List;
@@ -1026,6 +1027,22 @@ public class Utils {
         }
 
         return -1;
+    }
+
+    public static String formatNumber(long value, String separator, int... groups) {
+        int minDigit = 0;
+        for (int g : groups)
+            minDigit += g;
+        String unformatted = String.format(Locale.ENGLISH, "%0" + minDigit + "d", value);
+        int numDigit = unformatted.length();
+        int last = numDigit - minDigit;
+        StringBuilder ret = new StringBuilder();
+        ret.append(unformatted, 0, last);
+        for (int g : groups) {
+            ret.append(unformatted, last, last + g).append(separator);
+            last += g;
+        }
+        return ret.substring(0, ret.length() - 1);
     }
 
     /**
