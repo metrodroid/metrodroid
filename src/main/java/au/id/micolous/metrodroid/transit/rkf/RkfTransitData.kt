@@ -65,7 +65,7 @@ data class RkfTransitData internal constructor (
 
     override fun getSerialNumber() = mSerial.formatted
 
-    override fun getTrips() = mTrips.toTypedArray()
+    override fun getTrips() = mTrips
 
     // Filter out ghost purse on Rejsekort unless it was ever used (is it ever?)
     override fun getBalances() = mBalances.withIndex().filter { (idx, bal) -> AID != RkfLookup.REJSEKORT
@@ -123,6 +123,8 @@ data class RkfTransitData internal constructor (
                 // If that sector number is too high, then it's not for us.
                 false
             }
+
+            override fun getAllCards() = ArrayList(issuerMap.values)
 
             override fun parseTransitIdentity(card: ClassicCard): TransitIdentity {
                 val serial = getSerial(card)
