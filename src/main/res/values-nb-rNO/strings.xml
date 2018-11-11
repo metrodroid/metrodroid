@@ -827,4 +827,6 @@
     <string name="serial_only_card_description_more_research">Støtte dette kortet er i utvikling, og foreløpig kan kun serienummeret leses.</string>
     <string name="full_serial_number">Fullt serienummer</string>
 <string name="location_taipei">Taipei</string>
+    <string name="location_france">Frankrike</string>
+    <string name="location_orlando">Orlando, FL, USA</string>
     </resources>
