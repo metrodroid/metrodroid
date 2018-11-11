@@ -38,9 +38,8 @@ internal data class RkfSerial(val mCompany: Int, val mCustomerNumber: Long, val 
     val formatted: String
         get() = when (mCompany) {
             RkfLookup.REJSEKORT -> {
-                val main = "30843%010d".format(Locale.ENGLISH, mCustomerNumber)
-                val full = main + Utils.calculateLuhn(main)
-                Utils.groupString(full, " ", 6, 3, 3, 3)
+                val main = "30843" + Utils.formatNumber(mCustomerNumber, " ", 1, 3, 3, 2)
+                main + Utils.calculateLuhn(main.replace(" ", ""))
             }
             RkfLookup.SLACCESS -> {
                 Utils.formatNumber(mHwSerial, " ", 5, 5)
@@ -143,12 +142,12 @@ data class RkfTransitData internal constructor (
                 val balances = mutableListOf<RkfPurse>()
                 val tccps = mutableListOf<En1545Parsed>()
                 val unfilteredTrips = mutableListOf<RkfTCSTTrip>()
-                for (record in getRecords(card))
+                recordloop@ for (record in getRecords(card))
                     when (record[0].toInt() and 0xff) {
-                        0x84 -> transactions += RkfTransaction.parseTransaction(record, lookup, tripVersion)
+                        0x84 -> transactions += RkfTransaction.parseTransaction(record, lookup, tripVersion) ?: continue@recordloop
                         0x85 -> balances += RkfPurse.parse(record, lookup)
                         0xa2 -> tccps += En1545Parser.parseLeBits(record, TCCP_FIELDS)
-                        0xa3 -> unfilteredTrips += RkfTCSTTrip.parse(record, lookup)
+                        0xa3 -> unfilteredTrips += RkfTCSTTrip.parse(record, lookup) ?: continue@recordloop
                     }
                 transactions.sortBy { it.timestamp.timeInMillis }
                 unfilteredTrips.sortBy { it.startTimestamp.timeInMillis }
@@ -200,13 +199,24 @@ data class RkfTransitData internal constructor (
                 // FIXME: we should also check TCDI entry but TCDI doesn't match the spec apparently,
                 // so for now just use id byte
                 val type = Utils.getBitsFromBufferLeBits(card.sectors[sector].getBlock(block).data, 0, 8)
+                if (type == 0) {
+                    sector++
+                    block = 0
+                    continue
+                }
                 var first = true
                 val oldSector = sector
+                var oldBlockCount = -1
 
                 while (sector < card.sectors.size && (first || block != 0)) {
                     first = false
                     val blockData = card.sectors[sector].getBlock(block).data
                     val newType = Utils.getBitsFromBufferLeBits(blockData, 0, 8)
+                    // Some Rejsekort skip slot in the middle of the sector
+                    if (newType == 0 && block + oldBlockCount < card.getSector(sector).blocks.size - 1) {
+                        block += oldBlockCount
+                        continue
+                    }
                     if (newType != type)
                         break
                     val version = Utils.getBitsFromBufferLeBits(blockData, 8, 6)
@@ -214,6 +224,7 @@ data class RkfTransitData internal constructor (
                     if (blockCount == -1) {
                         break
                     }
+                    oldBlockCount = blockCount
                     var dat = ByteArray(0)
 
                     repeat(blockCount) {
@@ -246,8 +257,9 @@ data class RkfTransitData internal constructor (
                 0xa2 -> 2
                 0xa3 -> when (version) {
                     // Only 2 is tested
-                    1, 2, 3, 4 -> 3
+                    1, 2 -> 3
                     // Only 5 is tested
+                    // 3 seems already have size 6
                     else -> 6
                 }
                 else -> -1

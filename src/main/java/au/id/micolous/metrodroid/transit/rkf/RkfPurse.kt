@@ -47,6 +47,7 @@ data class RkfPurse (private val mStatic: En1545Parsed,
         get() = mDynamic.getIntOrZero(TRANSACTION_NUMBER)
 
     companion object {
+        private const val TAG = "RkfPurse"
         private const val VALUE = "Value"
         private const val START = "Start"
         private const val END = "End"
@@ -60,46 +61,43 @@ data class RkfPurse (private val mStatic: En1545Parsed,
                 En1545FixedInteger("AutoLoadValue", 24)
                 // v6 has more fields but whatever
         )
-        private val TCPU_DYNAMIC_FIELDS_V3 = En1545Container(
-                En1545FixedInteger(TRANSACTION_NUMBER, 16),
-                En1545FixedInteger.date(END),
-                En1545FixedInteger(VALUE, 24),
-                RkfTransitData.STATUS_FIELD
-                // Rest unknown
-        )
-        private val TCPU_DYNAMIC_FIELDS_V6 = En1545Container(
-                En1545FixedInteger(TRANSACTION_NUMBER, 16),
-                En1545FixedInteger(VALUE, 24),
-                RkfTransitData.STATUS_FIELD
-                // Rest unknown
+        private val TCPU_DYNAMIC_FIELDS = hashMapOf(
+                3 to En1545Container(
+                        En1545FixedInteger(TRANSACTION_NUMBER, 16),
+                        En1545FixedInteger.date(END),
+                        En1545FixedInteger(VALUE, 24),
+                        RkfTransitData.STATUS_FIELD
+                        // Rest unknown
+                ),
+                4 to En1545Container(
+                        En1545FixedInteger(TRANSACTION_NUMBER, 16),
+                        En1545FixedInteger(VALUE, 24)
+                        // Rest unknown
+                ),
+                6 to En1545Container(
+                        En1545FixedInteger(TRANSACTION_NUMBER, 16),
+                        En1545FixedInteger(VALUE, 24),
+                        RkfTransitData.STATUS_FIELD
+                        // Rest unknown
+                )
         )
 
         fun parse(record : ByteArray, lookup : RkfLookup) : RkfPurse {
-            val version = Utils.getBitsFromBufferLeBits(record, 8, 6)
-            when (version) {
-                // Only 3 is tested
-                1, 2, 3, 4, 5 -> {
-                    val static = En1545Parser.parseLeBits(record.copyOfRange(0, 15), TCPU_STATIC_FIELDS)
-                    val blockA = record.copyOfRange(16, 31)
-                    val blockB = record.copyOfRange(32, 47)
-                    val block = if (Utils.getBitsFromBufferLeBits(blockA, 0, 16)
-                            > Utils.getBitsFromBufferLeBits(blockB, 0, 16)) blockA else blockB
-                    val dynamic = En1545Parser.parseLeBits(block, TCPU_DYNAMIC_FIELDS_V3)
-                    Log.d("RKF", "static = $static, dynamic = $dynamic")
-                    return RkfPurse(mStatic = static, mDynamic = dynamic, mLookup = lookup)
-                }
-                // Only 6 is tested
-                else -> {
-                    val static = En1545Parser.parseLeBits(record.copyOfRange(0, 31), TCPU_STATIC_FIELDS)
-                    val blockA = record.copyOfRange(32, 63)
-                    val blockB = record.copyOfRange(64, 95)
-                    val block = if (Utils.getBitsFromBufferLeBits(blockA, 0, 16)
-                            > Utils.getBitsFromBufferLeBits(blockB, 0, 16)) blockA else blockB
-                    val dynamic = En1545Parser.parseLeBits(block, TCPU_DYNAMIC_FIELDS_V6)
-                    Log.d("RKF", "static = $static, dynamic = $dynamic")
-                    return RkfPurse(mStatic = static, mDynamic = dynamic, mLookup = lookup)
-                }
-            }
+            var version = Utils.getBitsFromBufferLeBits(record, 8, 6)
+            val blockSize = if (version >= 6) 32 else 16
+            val static = En1545Parser.parseLeBits(record.copyOfRange(0, blockSize - 1), TCPU_STATIC_FIELDS)
+            val blockA = record.copyOfRange(blockSize, blockSize * 2 - 1)
+            val blockB = record.copyOfRange(blockSize * 2, blockSize * 3 - 1)
+            val block = if (Utils.getBitsFromBufferLeBits(blockA, 0, 16)
+                    > Utils.getBitsFromBufferLeBits(blockB, 0, 16)) blockA else blockB
+            // Try something that might be close enough
+            if (version < 3)
+                version = 3
+            if (version > 6 || version == 5)
+                version = 6
+            val dynamic = En1545Parser.parseLeBits(block, TCPU_DYNAMIC_FIELDS[version])
+            Log.d(TAG, "static = $static, dynamic = $dynamic")
+            return RkfPurse(mStatic = static, mDynamic = dynamic, mLookup = lookup)
         }
     }
 }

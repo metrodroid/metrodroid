@@ -279,7 +279,11 @@ data class RkfTCSTTrip (private val mParsed : En1545Parsed,
                 )
         )
 
-        fun parse(record: ByteArray, lookup: RkfLookup): RkfTCSTTrip {
+        fun parse(record: ByteArray, lookup: RkfLookup): RkfTCSTTrip? {
+            val aid = Utils.getBitsFromBufferLeBits(record, 14, 12)
+            if (aid == 0)
+                return null
+
             var version = Utils.getBitsFromBufferLeBits(record, 8, 6)
             if (version < 1)
                 version = 1
