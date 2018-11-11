@@ -51,7 +51,7 @@ import au.id.micolous.metrodroid.util.Utils;
  */
 
 @SuppressWarnings("WeakerAccess")
-public class CardInfo {
+public final class CardInfo {
     public static List<CardInfo> getAllCardsAlphabetical() {
         List<CardInfo> ret = new ArrayList<>();
         List<CardTransitFactory> allFactories = new ArrayList<>();
@@ -143,7 +143,8 @@ public class CardInfo {
         return mResourceExtraNote;
     }
 
-    public static class Builder {
+
+    public static final class Builder {
         @DrawableRes
         private int mImageId;
         @DrawableRes
