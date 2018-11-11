@@ -46,7 +46,7 @@ public class ISO7816Protocol {
     /**
      * If true, this turns on debug logs that show ISO7816 communication.
      */
-    private static final boolean ENABLE_TRACING = false;
+    private static final boolean ENABLE_TRACING = true;
 
     private static final String TAG = ISO7816Protocol.class.getName();
     private static final byte CLASS_ISO7816 = (byte) 0x00;
@@ -113,18 +113,32 @@ public class ISO7816Protocol {
             Log.d(TAG, "<<< " + Utils.getHexString(recvBuffer));
         }
 
+        if (recvBuffer.length == 1) {
+            // Android HCE does this for some commands ?
+            throw new ISO7816Exception("Got 1-byte result: " + Utils.getHexString(recvBuffer));
+        }
+
         byte sw1 = recvBuffer[recvBuffer.length - 2];
         byte sw2 = recvBuffer[recvBuffer.length - 1];
 
         if (sw1 != (byte) 0x90) {
             switch (sw1) {
-                case (byte) 0x6A:
+                case (byte) 0x69: // Command not allowed
+                    switch (sw2) {
+                        case (byte) 0x86: // Command not allowed (no current EF)
+                            // Emitted by Android HCE when doing a CEPAS probe
+                            throw new IllegalStateException();
+                    }
+                    break;
+
+                case (byte) 0x6A: // Wrong Parameters P1 - P2
                     switch (sw2) {
                         case (byte) 0x82: // File not found
                             throw new FileNotFoundException();
                         case (byte) 0x83: // Record not found
                             throw new EOFException();
                     }
+                    break;
             }
 
             // we get error?

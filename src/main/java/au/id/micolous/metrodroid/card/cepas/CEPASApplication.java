@@ -102,8 +102,10 @@ public class CEPASApplication extends ISO7816Application {
 
         try {
             iso7816Tag.selectById(0x4000);
-        } catch (FileNotFoundException e) {
-            Log.d(TAG, "CEPAS file not found -- this is expected for non-CEPAS ISO7816 cards", e);
+        } catch (FileNotFoundException | IllegalStateException e) {
+            Log.d(TAG, String.format(Locale.ENGLISH,
+                    "CEPAS file not found [%s] -- this is expected for non-CEPAS ISO7816 cards",
+                    e.getClass().getSimpleName()));
             return null;
         }
 
