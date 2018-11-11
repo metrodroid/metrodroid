@@ -22,6 +22,7 @@ import android.net.Uri;
 import android.os.Parcel;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.annotation.VisibleForTesting;
 
 import au.id.micolous.farebot.R;
 import au.id.micolous.metrodroid.card.CardType;
@@ -72,16 +73,13 @@ public class SeqGoTransitData extends NextfareTransitData {
             .setExtraNote(R.string.card_note_seqgo)
             .build();
 
-    static final byte[] MANUFACTURER = {
-            0x16, 0x18, 0x1A, 0x1B,
-            0x1C, 0x1D, 0x1E, 0x1F
-    };
-
-    static final byte[] SYSTEM_CODE1 = {
+    @VisibleForTesting
+    public static final byte[] SYSTEM_CODE1 = {
             0x5A, 0x5B, 0x20, 0x21, 0x22, 0x23
     };
 
-    static final byte[] SYSTEM_CODE2 = {
+    @VisibleForTesting
+    public static final byte[] SYSTEM_CODE2 = {
             0x20, 0x21, 0x22, 0x23, 0x01, 0x01
     };
 

@@ -22,6 +22,7 @@ import android.net.Uri;
 import android.os.Parcel;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.annotation.VisibleForTesting;
 
 import au.id.micolous.farebot.R;
 import au.id.micolous.metrodroid.card.CardType;
@@ -66,7 +67,8 @@ public class LaxTapTransitData extends NextfareTransitData {
             0x01, 0x01, 0x01, 0x01,
             0x01, 0x01
     };
-    private static final byte[] BLOCK2 = {
+    @VisibleForTesting
+    public static final byte[] BLOCK2 = {
             0x00, 0x00, 0x00, 0x00
     };
 

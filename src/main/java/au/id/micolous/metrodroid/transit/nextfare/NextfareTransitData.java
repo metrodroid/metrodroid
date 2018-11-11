@@ -20,6 +20,7 @@ package au.id.micolous.metrodroid.transit.nextfare;
 
 import android.os.Parcel;
 import android.support.annotation.NonNull;
+import android.support.annotation.VisibleForTesting;
 import android.text.SpannableString;
 import android.util.Log;
 
@@ -72,7 +73,8 @@ public class NextfareTransitData extends TransitData {
         }
     };
     public static final ClassicCardTransitFactory FALLBACK_FACTORY = new NextFareTransitFactory();
-    static final byte[] MANUFACTURER = {
+    @VisibleForTesting
+    public static final byte[] MANUFACTURER = {
             0x16, 0x18, 0x1A, 0x1B,
             0x1C, 0x1D, 0x1E, 0x1F
     };
