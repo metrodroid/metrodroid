@@ -34,7 +34,7 @@ import java.util.*
 @Parcelize
 data class EasyCardTransaction internal constructor(
         internal val timestamp: Long,
-        private var fare: Int,
+        private val fare: Int,
         private val location: Int,
         private val isEndTap: Boolean,
         private val machineId: Long
@@ -48,9 +48,9 @@ data class EasyCardTransaction internal constructor(
             Utils.byteArrayToLongReversed(data, 12, 4)
     )
 
-    override fun getFare(): TransitCurrency? = TransitCurrency.TWD(fare)
+    override fun getFare() = TransitCurrency.TWD(fare)
 
-    override fun getTimestamp(): Calendar? = EasyCardTransitData.parseTimestamp(timestamp)
+    override fun getTimestamp() = EasyCardTransitData.parseTimestamp(timestamp)
 
     override fun getStation(): Station? = when (location) {
         BUS -> null
@@ -58,15 +58,13 @@ data class EasyCardTransaction internal constructor(
         else -> StationTableReader.getStation(EasyCardTransitData.EASYCARD_STR, location)
     }
 
-    override fun getMode(): Trip.Mode {
-        return when (location) {
-            BUS -> Trip.Mode.BUS
-            POS -> Trip.Mode.POS
-            else -> Trip.Mode.METRO
-        }
+    override fun getMode() = when (location) {
+        BUS -> Trip.Mode.BUS
+        POS -> Trip.Mode.POS
+        else -> Trip.Mode.METRO
     }
 
-    override fun getMachineID(): String? = "0x" + machineId.toString(16)
+    override fun getMachineID() = "0x${machineId.toString(16)}"
 
     override fun isSameTrip(trip: Transaction): Boolean {
         if (trip !is EasyCardTransaction) {
@@ -81,11 +79,11 @@ data class EasyCardTransaction internal constructor(
         return (!isEndTap && trip.isEndTap)
     }
 
-    override fun isTapOff(): Boolean = isEndTap
+    override fun isTapOff() = isEndTap
 
-    override fun isTapOn(): Boolean = !isEndTap
+    override fun isTapOn() = !isEndTap
 
-    override fun getRouteNames(): MutableList<String> = when (mode) {
+    override fun getRouteNames(): List<String> = when (mode) {
         Trip.Mode.METRO -> super.getRouteNames()
         else -> Collections.emptyList()
     }
@@ -99,7 +97,7 @@ data class EasyCardTransaction internal constructor(
                     card.getSector(3).blocks.subList(1, 3) +
                             card.getSector(4).blocks.subList(0, 3) +
                             card.getSector(5).blocks.subList(0, 3))
-                    .filter { !it.data.all { it == 0x0.toByte() } }
+                    .filter { !Utils.isAllZero(it.data) }
 
             val trips = blocks.map { block ->
                 EasyCardTransaction(block.data)

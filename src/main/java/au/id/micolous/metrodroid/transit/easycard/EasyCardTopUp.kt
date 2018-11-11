@@ -48,23 +48,20 @@ data class EasyCardTopUp(
             Utils.byteArrayToLongReversed(data, 12, 4)
     )
 
-    override fun getFare(): TransitCurrency? = TransitCurrency.TWD(-amount)
+    override fun getFare() = TransitCurrency.TWD(-amount)
 
-    override fun getStartTimestamp(): Calendar? = EasyCardTransitData.parseTimestamp(timestamp)
+    override fun getStartTimestamp() = EasyCardTransitData.parseTimestamp(timestamp)
 
     override fun getStartStation(): Station? =
             StationTableReader.getStation(EasyCardTransitData.EASYCARD_STR, location)
 
-    override fun getMode(): Mode = Mode.TICKET_MACHINE
+    override fun getMode() = Mode.TICKET_MACHINE
 
     override fun getRouteName(): String? = null
 
-    override fun getMachineID(): String? = "0x" + machineId.toString(16)
+    override fun getMachineID() = "0x${machineId.toString(16)}"
 
     companion object {
-        fun parse(card: ClassicCard): EasyCardTopUp {
-            val data = (card.getSector(2))?.getBlock(2)?.data!!
-            return EasyCardTopUp(data)
-        }
+        fun parse(card: ClassicCard) = EasyCardTopUp((card.getSector(2))?.getBlock(2)?.data!!)
     }
 }

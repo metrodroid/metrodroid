@@ -34,23 +34,21 @@ import java.util.*
 
 @Parcelize
 data class EasyCardTransitData internal constructor(
-        private val serialNumber: String,
         private val balance: Int,
         private val trips: List<Trip>,
         private val refill: EasyCardTopUp
 ) : TransitData() {
     constructor(card: ClassicCard) : this(
-            parseSerialNumber(card),
             parseBalance(card),
             EasyCardTransaction.parseTrips(card),
             EasyCardTopUp.parse(card)
     )
 
-    override fun getBalance(): TransitCurrency = TransitCurrency.TWD(balance)
+    override fun getBalance() = TransitCurrency.TWD(balance)
 
-    override fun getCardName(): String = NAME
+    override fun getCardName() = NAME
 
-    override fun getSerialNumber(): String? = serialNumber
+    override fun getSerialNumber(): String? = null
 
     override fun getTrips(): MutableList<Trip>? {
         val ret: ArrayList<Trip> = ArrayList()
@@ -60,7 +58,7 @@ data class EasyCardTransitData internal constructor(
     }
 
     companion object {
-        private val TZ: TimeZone = TimeZone.getTimeZone("Asia/Taipei")
+        private val TZ = TimeZone.getTimeZone("Asia/Taipei")
 
         internal const val NAME = "EasyCard"
         val CARD_INFO = CardInfo.Builder()
@@ -78,12 +76,7 @@ data class EasyCardTransitData internal constructor(
                 0x09, 0x04, 0x08, 0x10,
                 0x00, 0x00, 0x00, 0x00)
 
-        internal const val EASYCARD_STR: String = "easycard"
-
-        private fun parseSerialNumber(card: ClassicCard): String {
-            val data = (card.getSector(0))?.getBlock(0)?.data!!
-            return Utils.getHexString(data, 0, 4)
-        }
+        internal const val EASYCARD_STR = "easycard"
 
         private fun parseBalance(card: ClassicCard): Int {
             val data = (card.getSector(2))?.getBlock(0)?.data
@@ -107,18 +100,11 @@ data class EasyCardTransitData internal constructor(
                 return data != null && Arrays.equals(data, MAGIC)
             }
 
-            override fun earlySectors(): Int {
-                return 0
-            }
+            override fun earlySectors() = 0
 
-            override fun parseTransitIdentity(card: ClassicCard): TransitIdentity {
-                val uid = EasyCardTransitData.parseSerialNumber(card)
-                return TransitIdentity(NAME, uid)
-            }
+            override fun parseTransitIdentity(card: ClassicCard) = TransitIdentity(NAME, null)
 
-            override fun parseTransitData(card: ClassicCard): TransitData {
-                return EasyCardTransitData(card)
-            }
+            override fun parseTransitData(card: ClassicCard) = EasyCardTransitData(card)
 
             override fun getAllCards(): MutableList<CardInfo> = Collections.singletonList(CARD_INFO)
         }
