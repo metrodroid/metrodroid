@@ -42,7 +42,7 @@ public class BilheteUnicoTest extends InstrumentationTestCase {
 
     @NonNull
     private BilheteUnicoSPTransitData loadCard(String path) throws IOException {
-        return parseCard(TestUtils.loadMifareClassic1KFromAssets(getInstrumentation().getContext(), path));
+        return parseCard(TestUtils.loadMifareClassic4KFromAssets(getInstrumentation().getContext(), path));
     }
 
     private void balanceTest(String path, TransitCurrency expectedBalance) throws IOException {
