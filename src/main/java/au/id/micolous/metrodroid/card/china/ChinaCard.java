@@ -69,7 +69,7 @@ public class ChinaCard extends ISO7816Application {
     static {
         for (ChinaCardTransitFactory f : FACTORIES)
             APP_NAMES.addAll(f.getAppNames());
-    };
+    }
 
     @ElementList(name = "balances", entry = "balance")
     private List<Balance> mBalances;
