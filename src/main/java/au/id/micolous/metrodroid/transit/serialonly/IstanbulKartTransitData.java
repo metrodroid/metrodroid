@@ -98,10 +98,7 @@ public class IstanbulKartTransitData extends SerialOnlyTransitData {
      * @return String with the complete serial number, or null on error
      */
     private static String parseSerial(byte[] file) {
-        return Utils.getHexString(file, 0, 2) + " "
-                + Utils.getHexString(file, 2, 2) + " "
-                + Utils.getHexString(file, 4, 2) + " "
-                + Utils.getHexString(file, 6, 2);
+        return Utils.getHexString(file, 0, 8);
     }
 
     public final static DesfireCardTransitFactory FACTORY = new DesfireCardTransitFactory() {
@@ -123,7 +120,7 @@ public class IstanbulKartTransitData extends SerialOnlyTransitData {
         @Override
         public TransitIdentity parseTransitIdentity(DesfireCard card) {
             byte[] data = card.getApplication(APP_ID).getFile(2).getData();
-            return new TransitIdentity(NAME, parseSerial(data));
+            return new TransitIdentity(NAME, formatSerial(parseSerial(data)));
         }
     };
 
@@ -134,7 +131,11 @@ public class IstanbulKartTransitData extends SerialOnlyTransitData {
 
     @Override
     public String getSerialNumber() {
-        return mSerial;
+        return formatSerial(mSerial);
+    }
+
+    private static String formatSerial(String serial) {
+        return Utils.groupString(serial, " ", 4, 4, 4);
     }
 
     public void writeToParcel(Parcel parcel, int flags) {

@@ -67,7 +67,7 @@ public class StrelkaTransitData extends SerialOnlyTransitData {
     private final String mSerial;
 
     private static String formatShortSerial(String serial) {
-        return serial.substring(8, 12) + " " + serial.substring(12,16) + " " + serial.substring(16);
+        return Utils.groupString(serial.substring(8), " ", 4, 4);
     }
 
     @Override
