@@ -26,6 +26,7 @@ import android.util.Log;
 import java.io.EOFException;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.Locale;
 
 import au.id.micolous.metrodroid.util.Utils;
 
@@ -43,11 +44,6 @@ import au.id.micolous.metrodroid.util.Utils;
  * - https://en.wikipedia.org/wiki/Smart_card_application_protocol_data_unit
  */
 public class ISO7816Protocol {
-    /**
-     * If true, this turns on debug logs that show ISO7816 communication.
-     */
-    private static final boolean ENABLE_TRACING = false;
-
     private static final String TAG = ISO7816Protocol.class.getName();
     private static final byte CLASS_ISO7816 = (byte) 0x00;
     public static final byte CLASS_80 = (byte) 0x80;
@@ -104,12 +100,13 @@ public class ISO7816Protocol {
      * @return A wrapped command.
      */
     public byte[] sendRequest(byte cla, byte ins, byte p1, byte p2, byte length, byte... parameters) throws IOException, ISO7816Exception {
+        final boolean enableTracing = Utils.enableTracing();
         byte[] sendBuffer = wrapMessage(cla, ins, p1, p2, length, parameters);
-        if (ENABLE_TRACING) {
+        if (enableTracing) {
             Log.d(TAG, ">>> " + Utils.getHexString(sendBuffer));
         }
         byte[] recvBuffer = mTagTech.transceive(sendBuffer);
-        if (ENABLE_TRACING) {
+        if (enableTracing) {
             Log.d(TAG, "<<< " + Utils.getHexString(recvBuffer));
         }
 
@@ -148,6 +145,10 @@ public class ISO7816Protocol {
         return Utils.byteArraySlice(recvBuffer, 0, recvBuffer.length - 2);
     }
 
+    public byte[] selectByName(byte[] name) throws IOException {
+        return selectByName(name, false);
+    }
+
     public byte[] selectByName(byte[] name, boolean nextOccurrence) throws IOException {
         byte[] reply;
         Log.d(TAG, "Select by name " + Utils.getHexString(name));
@@ -157,7 +158,9 @@ public class ISO7816Protocol {
                     (byte) 0x04 /* byName */, nextOccurrence ? (byte) 0x02 : (byte) 0x00, (byte) 0,
                     name);
         } catch (ISO7816Exception | FileNotFoundException e) {
-            Log.e(TAG, "couldn't select application", e);
+            Log.e(TAG, String.format(
+                    Locale.ENGLISH, "Couldn't select name %s [%s: %s]",
+                    Utils.getHexString(name), e.getClass().getSimpleName(), e.getMessage()));
             return null;
         }
         return reply;
@@ -169,7 +172,9 @@ public class ISO7816Protocol {
             sendRequest(CLASS_ISO7816, INSTRUCTION_ISO7816_SELECT,
                     (byte) 0, (byte) 0, (byte) 0);
         } catch (ISO7816Exception e) {
-            Log.e(TAG, "couldn't unselect file", e);
+            Log.e(TAG, String.format(
+                    Locale.ENGLISH, "Couldn't unselect [%s: %s]",
+                    e.getClass().getSimpleName(), e.getMessage()));
         }
     }
 
@@ -181,7 +186,9 @@ public class ISO7816Protocol {
                     (byte) 0, (byte) 0, (byte) 0,
                     file);
         } catch (ISO7816Exception e) {
-            Log.e(TAG, "couldn't select file", e);
+            Log.e(TAG, String.format(
+                    Locale.ENGLISH, "Couldn't select ID %d [%s: %s]",
+                    fileId, e.getClass().getSimpleName(), e.getMessage()));
         }
         return null;
     }
@@ -192,12 +199,11 @@ public class ISO7816Protocol {
         try {
             ret = sendRequest(CLASS_ISO7816, INSTRUCTION_ISO7816_READ_RECORD,
                     recordNumber, (byte) 0x4 /* p1 is record number */, length);
-
-
-
             return ret;
         } catch (ISO7816Exception e) {
-            Log.e(TAG, "couldn't read record", e);
+            Log.e(TAG, String.format(
+                    Locale.ENGLISH, "Couldn't read record %d (len=%d) [%s: %s]",
+                    recordNumber, length, e.getClass().getSimpleName(), e.getMessage()));
             return null;
         }
     }
@@ -210,7 +216,9 @@ public class ISO7816Protocol {
 
             return ret;
         } catch (ISO7816Exception e) {
-            Log.e(TAG, "couldn't read record", e);
+            Log.e(TAG, String.format(
+                    Locale.ENGLISH, "Couldn't read binary [%s: %s]",
+                    e.getClass().getSimpleName(), e.getMessage()));
             return null;
         }
     }

@@ -26,6 +26,7 @@ import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.res.Resources;
@@ -401,6 +402,41 @@ public class Utils {
         } catch (PackageManager.NameNotFoundException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    private static Boolean DEBUG_BUILD = null;
+
+    public static boolean isDebugBuild() {
+        return isDebugBuild(null);
+    }
+
+    /**
+     * Has this version of Metrodroid been built with debug symbols?
+     */
+    public static boolean isDebugBuild(@Nullable Context ctx) {
+        if (DEBUG_BUILD != null) {
+            return DEBUG_BUILD;
+        }
+
+        if (ctx == null) {
+            ctx = MetrodroidApplication.getInstance();
+        }
+
+        try {
+            ApplicationInfo info = ctx.getPackageManager().getApplicationInfo(
+                    ctx.getPackageName(), 0);
+            DEBUG_BUILD = (info.flags & ApplicationInfo.FLAG_DEBUGGABLE) != 0;
+        } catch (PackageManager.NameNotFoundException e) {
+            // Say no, but don't store the result.
+            return false;
+        }
+
+        return DEBUG_BUILD;
+    }
+
+    public static boolean enableTracing() {
+        // TODO: Make this easy to modify independent of debug status.
+        return isDebugBuild();
     }
 
     public static <T> T findInList(List<T> list, Matcher<T> matcher) {
