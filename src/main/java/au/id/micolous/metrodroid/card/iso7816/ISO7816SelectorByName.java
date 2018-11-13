@@ -36,7 +36,7 @@ class ISO7816SelectorByName extends ISO7816SelectorElement {
 
     @Override
     byte[] select(ISO7816Protocol tag) throws IOException {
-        return tag.selectByName(mName.getData(), false);
+        return tag.selectByName(mName.getData());
     }
 
     @Override

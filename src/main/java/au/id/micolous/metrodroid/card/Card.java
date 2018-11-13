@@ -98,7 +98,7 @@ public abstract class Card {
                 return d;
             }
 
-            ISO7816Card isoCard = ISO7816Card.dumpTag(tag, feedbackInterface);
+            Card isoCard = ISO7816Card.dumpTag(tag, feedbackInterface);
             if (isoCard != null) {
                 return isoCard;
             }

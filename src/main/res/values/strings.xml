@@ -279,6 +279,7 @@
 
     <string name="iso7816_probing">Probing ISO7816 card…</string>
     <string name="calypso_reading">Reading Calypso card…</string>
+    <string name="android_hce_reading">Reading from emulated Android card…</string>
 
     <string name="card_partial_read_title">Card partially read!</string>
     <string name="card_partial_read_desc">

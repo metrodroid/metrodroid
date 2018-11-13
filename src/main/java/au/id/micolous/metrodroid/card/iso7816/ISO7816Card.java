@@ -38,6 +38,7 @@ import au.id.micolous.farebot.R;
 import au.id.micolous.metrodroid.card.Card;
 import au.id.micolous.metrodroid.card.CardType;
 import au.id.micolous.metrodroid.card.TagReaderFeedbackInterface;
+import au.id.micolous.metrodroid.card.androidhce.AndroidHCEApplication;
 import au.id.micolous.metrodroid.card.calypso.CalypsoApplication;
 import au.id.micolous.metrodroid.card.cepas.CEPASApplication;
 import au.id.micolous.metrodroid.card.china.ChinaCard;
@@ -75,7 +76,7 @@ public class ISO7816Card extends Card {
      * @throws Exception On communication errors.
      */
     @Nullable
-    public static ISO7816Card dumpTag(Tag tag, TagReaderFeedbackInterface feedbackInterface) throws Exception {
+    public static Card dumpTag(Tag tag, TagReaderFeedbackInterface feedbackInterface) throws Exception {
         IsoDep tech = IsoDep.get(tag);
         tech.connect();
         boolean partialRead = false;
@@ -93,7 +94,6 @@ public class ISO7816Card extends Card {
             /*
              * It's tempting to try to iterate over the apps on the card.
              * Unfortunately many cards don't reply to iterating requests
-             *
              */
 
             // FIXME: At some point we want to make this an iteration over supported apps
@@ -110,8 +110,22 @@ public class ISO7816Card extends Card {
             if (cepas != null)
                 apps.add(cepas);
 
+            // Try to detect Android HCE
+            // ie: the user has held their phone to another Android device
+            appData = iso7816Tag.selectByName(AndroidHCEApplication.Companion.getANDROID_HCE_AID());
+            if (appData != null) {
+                Log.d(TAG, "Detected Android HCE");
+                apps.add(AndroidHCEApplication.Companion.dumpTag(
+                        new ISO7816Application.ISO7816Info(appData,
+                                AndroidHCEApplication.Companion.getANDROID_HCE_AID(), tagId, AndroidHCEApplication.Companion.getTYPE()),
+                        feedbackInterface));
+
+                // TODO: Implement Android HCE stuff here.
+                // We need to only probe stuff that is known good.
+            }
+
             for (byte[] calypsoFilename : CalypsoApplication.CALYPSO_FILENAMES) {
-                appData = iso7816Tag.selectByName(calypsoFilename, false);
+                appData = iso7816Tag.selectByName(calypsoFilename);
                 if (appData != null) {
                     apps.add(CalypsoApplication.dumpTag(iso7816Tag,
                             new ISO7816Application.ISO7816Info(appData, calypsoFilename,
@@ -121,13 +135,13 @@ public class ISO7816Card extends Card {
                 }
             }
 
-            appData = iso7816Tag.selectByName(TMoneyCard.APP_NAME, false);
+            appData = iso7816Tag.selectByName(TMoneyCard.APP_NAME);
             if (appData != null)
                 apps.add(TMoneyCard.dumpTag(iso7816Tag, new ISO7816Application.ISO7816Info(appData, TMoneyCard.APP_NAME,
                                 tag.getId(), TMoneyCard.TYPE),
 					    feedbackInterface));
             for (byte[] appName : ChinaCard.APP_NAMES) {
-                appData = iso7816Tag.selectByName(appName, false);
+                appData = iso7816Tag.selectByName(appName);
                 if (appData != null)
                     apps.add(ChinaCard.dumpTag(iso7816Tag,
                             new ISO7816Application.ISO7816Info(appData, appName,

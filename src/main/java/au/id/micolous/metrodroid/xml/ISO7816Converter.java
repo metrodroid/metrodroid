@@ -25,6 +25,7 @@ import org.simpleframework.xml.convert.Converter;
 import org.simpleframework.xml.stream.InputNode;
 import org.simpleframework.xml.stream.OutputNode;
 
+import au.id.micolous.metrodroid.card.androidhce.AndroidHCEApplication;
 import au.id.micolous.metrodroid.card.calypso.CalypsoApplication;
 import au.id.micolous.metrodroid.card.cepas.CEPASApplication;
 import au.id.micolous.metrodroid.card.iso7816.ISO7816Application;
@@ -52,6 +53,9 @@ public class ISO7816Converter implements Converter<ISO7816Application> {
         }
         if (CEPASApplication.TYPE.equals(appType)) {
             return mSerializer.read(CEPASApplication.class, node);
+        }
+        if (AndroidHCEApplication.Companion.getTYPE().equals(appType)) {
+            return mSerializer.read(AndroidHCEApplication.class, node);
         }
         throw new SkippableRegistryStrategy.SkipException();
     }
