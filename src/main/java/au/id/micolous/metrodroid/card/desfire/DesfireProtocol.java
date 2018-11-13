@@ -21,6 +21,8 @@
 package au.id.micolous.metrodroid.card.desfire;
 
 import android.nfc.tech.IsoDep;
+import android.support.annotation.NonNull;
+import android.util.Log;
 
 import au.id.micolous.metrodroid.card.desfire.settings.DesfireFileSettings;
 import au.id.micolous.metrodroid.util.Utils;
@@ -28,6 +30,7 @@ import au.id.micolous.metrodroid.util.Utils;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.security.AccessControlException;
+import java.util.Locale;
 
 /**
  * Implements communication with MIFARE DESFire cards.
@@ -43,7 +46,7 @@ import java.security.AccessControlException;
  * https://ridrix.wordpress.com/2009/09/19/mifare-desfire-communication-example/
  */
 public class DesfireProtocol {
-    static final String TAG = "DesfireProtocol";
+    private static final String TAG = "DesfireProtocol";
 
     // Commands
     static public final byte UNLOCK = (byte) 0x0A;
@@ -150,13 +153,40 @@ public class DesfireProtocol {
         return sendRequest(UNLOCK, false, (byte) keyNum);
     }
 
+    /**
+     * Sends a DESFire command to the card, but wrapped in a ISO7816 APDU.
+     *
+     * @param command Command to send.
+     * @param getAdditionalFrame If true, this will automatically request additional frames from
+     *                           the card, if the card returns {@link #ADDITIONAL_FRAME}, and append
+     *                           these frames to the final output.
+     * @param parameters (optional) parameters to the DESFire command.
+     * @return The response(s) from the card.
+     * @throws IllegalArgumentException If the response was invalid.
+     * @throws IllegalStateException If the status code was unknown / unhandled.
+     * @throws AccessControlException If permission was denied or there was some authentication
+     *                                problem.
+     * @throws IOException If communication with the card failed.
+     */
+    @NonNull
     private byte[] sendRequest(byte command, boolean getAdditionalFrame, byte... parameters) throws IllegalArgumentException, IllegalStateException, AccessControlException, IOException {
         ByteArrayOutputStream output = new ByteArrayOutputStream();
+        final boolean enableTracing = Utils.enableTracing();
+
+        if (enableTracing) {
+            Log.d(TAG, String.format(Locale.ENGLISH, ">>> cmd=%x, params=%s", command, Utils.getHexString(parameters)));
+        }
 
         byte[] sendBuffer = wrapMessage(command, parameters);
-        //Log.d(TAG, "Send: " + Utils.getHexString(sendBuffer));
+
+        if (enableTracing) {
+            Log.d(TAG, ">>> " + Utils.getHexString(sendBuffer));
+        }
+
         byte[] recvBuffer = mTagTech.transceive(sendBuffer);
-        //Log.d(TAG, "Recv: " + Utils.getHexString(recvBuffer));
+        if (enableTracing) {
+            Log.d(TAG, "<<< " + Utils.getHexString(recvBuffer));
+        }
 
         while (true) {
             if (recvBuffer[recvBuffer.length - 2] != (byte) 0x91) {
@@ -171,8 +201,16 @@ public class DesfireProtocol {
             } else if (status == ADDITIONAL_FRAME) {
                 if (!getAdditionalFrame)
                     break;
+
+                if (enableTracing) {
+                    Log.d(TAG, ">>> (requesting additional frame)");
+                }
+
                 recvBuffer = mTagTech.transceive(wrapMessage(GET_ADDITIONAL_FRAME));
-                //Log.d(TAG, "Recv: (additional) " + Utils.getHexString(recvBuffer));
+
+                if (enableTracing) {
+                    Log.d(TAG, "<<< " + Utils.getHexString(recvBuffer));
+                }
             } else if (status == PERMISSION_DENIED) {
                 throw new AccessControlException("Permission denied");
             } else if (status == AUTHENTICATION_ERROR) {
