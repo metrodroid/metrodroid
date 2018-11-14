@@ -19,19 +19,53 @@
 package au.id.micolous.metrodroid.fragment;
 
 
+import android.app.AlertDialog;
 import android.app.Fragment;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import au.id.micolous.farebot.R;
+import au.id.micolous.metrodroid.activity.CardInfoActivity;
+import au.id.micolous.metrodroid.transit.TransitData;
+import au.id.micolous.metrodroid.transit.unknown.UnauthorizedClassicTransitData;
 
 
 public class UnauthorizedCardFragment extends Fragment {
 
+    private boolean isUnlockable;
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        TransitData transitData = getArguments().getParcelable(CardInfoActivity.EXTRA_TRANSIT_DATA);
+        isUnlockable = (transitData instanceof UnauthorizedClassicTransitData);
+    }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         return inflater.inflate(R.layout.fragment_unauthorized_card, container, false);
+    }
+
+    @Override
+    public void onViewCreated(View view, Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        TextView tv = view.findViewById(R.id.textView2);
+        View ucView = view.findViewById(R.id.unauthorized_card);
+        View loadKeysView = view.findViewById(R.id.load_keys);
+        if (isUnlockable) {
+            tv.setText(R.string.fully_locked_desc_unlockable);
+            ucView.setVisibility(View.VISIBLE);
+            loadKeysView.setOnClickListener(subview -> new AlertDialog.Builder(getActivity())
+                    .setMessage(R.string.add_key_directions)
+                    .setPositiveButton(android.R.string.ok, null)
+                    .show());
+        } else {
+            tv.setText(R.string.fully_locked_desc);
+            ucView.setVisibility(View.GONE);
+        }
     }
 }
