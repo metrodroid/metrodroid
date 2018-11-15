@@ -83,6 +83,7 @@ import au.id.micolous.metrodroid.transit.smartrider.SmartRiderTransitData;
 import au.id.micolous.metrodroid.transit.troika.TroikaHybridTransitData;
 import au.id.micolous.metrodroid.transit.unknown.BlankClassicTransitData;
 import au.id.micolous.metrodroid.transit.unknown.UnauthorizedClassicTransitData;
+import au.id.micolous.metrodroid.transit.zolotayakorona.ZolotayaKoronaTransitData;
 import au.id.micolous.metrodroid.ui.ListItem;
 import au.id.micolous.metrodroid.ui.ListItemRecursive;
 import au.id.micolous.metrodroid.util.Utils;
@@ -433,6 +434,7 @@ public class ClassicCard extends Card {
             new TartuTransitFactory(),
             SelectaFranceTransitData.Companion.getFACTORY(),
             SunCardTransitData.Companion.getFACTORY(),
+            ZolotayaKoronaTransitData.Companion.getFACTORY(),
             // This check must be THIRD TO LAST.
             //
             // This is to throw up a warning whenever there is a card with all locked sectors
