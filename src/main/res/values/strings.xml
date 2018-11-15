@@ -1420,4 +1420,5 @@
     <!-- Translators: some card serial numbers are very long, this is shown as a list item for
     the full version of the card's serial number -->
     <string name="full_serial_number">Full serial number</string>
+    <string name="import_mct_file">Import from MCT file</string>
 </resources>
