@@ -76,54 +76,67 @@ public class TransitCurrency extends TransitBalance implements Parcelable {
         mDivisor = divisor;
     }
 
+    @NonNull
     public static TransitCurrency AUD(int cents) {
         return new TransitCurrency(cents, "AUD");
     }
 
+    @NonNull
     public static TransitCurrency BRL(int centavos) {
         return new TransitCurrency(centavos, "BRL");
     }
 
+    @NonNull
     public static TransitCurrency CAD(int cents) {
         return new TransitCurrency(cents, "CAD");
     }
 
+    @NonNull
     public static TransitCurrency CNY(int fen) {
         return new TransitCurrency(fen, "CNY");
     }
 
+    @NonNull
     public static TransitCurrency EUR(int cents) {
         return new TransitCurrency(cents, "EUR");
     }
 
+    @NonNull
     public static TransitCurrency HKD(int cents) {
         return new TransitCurrency(cents, "HKD");
     }
 
+    @NonNull
     public static TransitCurrency IDR(int cents) {
         return new TransitCurrency(cents, "IDR", 1.);
     }
 
+    @NonNull
     public static TransitCurrency ILS(int agorot) {
         return new TransitCurrency(agorot, "ILS");
     }
 
+    @NonNull
     public static TransitCurrency JPY(int yen) {
         return new TransitCurrency(yen, "JPY", 1.);
     }
 
+    @NonNull
     public static TransitCurrency KRW(int won) {
         return new TransitCurrency(won, "KRW", 1.);
     }
 
+    @NonNull
     public static TransitCurrency RUB(int kopeyka) {
         return new TransitCurrency(kopeyka, "RUB");
     }
 
+    @NonNull
     public static TransitCurrency SGD(int cents) {
         return new TransitCurrency(cents, "SGD");
     }
 
+    @NonNull
     public static TransitCurrency USD(int cents) {
         return new TransitCurrency(cents, "USD");
     }
