@@ -77,6 +77,13 @@ data class RkfTransitData internal constructor (
                 mTcci.getTimeStampString(En1545TransitData.ENV_APPLICATION_VALIDITY_END, mLookup.timeZone)))
         li.add(ListItem(R.string.card_issuer,
                 mLookup.getAgencyName(mTcci.getIntOrZero(En1545TransitData.ENV_APPLICATION_ISSUER_ID), false)))
+        when (mTcci.getIntOrZero(STATUS)) {
+            0x01 -> li.add(ListItem("Card status", "OK"))
+            0x21 -> li.add(ListItem("Card status", "Disabled/Suspended but action pending"))
+            0x3f -> li.add(ListItem("Card status", "Temporarily disabled/suspended"))
+            0x58 -> li.add(ListItem("Card status", "Not OK, disabled/suspended"))
+            else -> li.add(ListItem("Card status", mTcci.getIntOrZero(STATUS).toString()))
+        }
         return li
     }
 
@@ -288,13 +295,14 @@ data class RkfTransitData internal constructor (
         private fun getIssuer(sector0: ClassicSector) = Utils.getBitsFromBufferLeBits(sector0.getBlock(1).data, 22, 12)
 
         internal const val COMPANY = "Company"
+        internal const val STATUS = "Status"
         internal val HEADER = En1545Container(
                 En1545FixedInteger("Identifier", 8),
                 En1545FixedInteger("Version", 6),
                 En1545FixedInteger(COMPANY, 12)
         )
 
-        internal val STATUS_FIELD = En1545FixedInteger("Status", 8)
+        internal val STATUS_FIELD = En1545FixedInteger(STATUS, 8)
         internal val MAC = En1545Container(
                 En1545FixedInteger("MACAlgorithmIdentifier", 2),
                 En1545FixedInteger("MACKeyIdentifier", 6),
