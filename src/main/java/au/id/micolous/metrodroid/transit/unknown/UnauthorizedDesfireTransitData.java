@@ -96,7 +96,7 @@ public class UnauthorizedDesfireTransitData extends UnauthorizedTransitData {
         TYPES.add(Pair.create(0x31594f, "Oyster"));
         TYPES.add(Pair.create(0x425301, "Thailand BEM"));
         TYPES.add(Pair.create(0x5011f2, "Lítačka"));
-    };
+    }
 
     private static String getName(DesfireCard card) {
         for (Pair<Integer, String> type : TYPES) {
