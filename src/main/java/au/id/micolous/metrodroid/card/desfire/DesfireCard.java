@@ -22,6 +22,7 @@ package au.id.micolous.metrodroid.card.desfire;
 
 import android.nfc.Tag;
 import android.nfc.tech.IsoDep;
+import android.support.annotation.Nullable;
 import android.util.Log;
 
 import au.id.micolous.farebot.R;
@@ -101,112 +102,133 @@ public class DesfireCard extends Card {
 
     /**
      * Dumps a DESFire tag in the field.
-     * @param tag Tag to dump.
+     * @param tag Tag to dump. An IsoDep tech will be automatically created, and closed when done.
      * @return DesfireCard of the card contents. Returns null if an unsupported card is in the
      *         field.
      * @throws Exception On communication errors.
      */
     public static DesfireCard dumpTag(Tag tag, TagReaderFeedbackInterface feedbackInterface) throws Exception {
-        List<DesfireApplication> apps = new ArrayList<>();
-
         IsoDep tech = IsoDep.get(tag);
 
         tech.connect();
+        try {
+            return dumpTag(tech, tag.getId(), null, feedbackInterface);
+        } finally {
+            if (tech.isConnected()) {
+                tech.close();
+            }
+        }
+    }
 
+    /**
+     * Dumps a DESFire tag in the field.
+     *
+     * This mode is used when you already have an open technology from the card -- generally for
+     * handing off emulated cards from {@link au.id.micolous.metrodroid.card.iso7816.ISO7816Card}.
+     *
+     * @param tech An open IsoDep to communicate with the card. This IsoDep is not closed by this
+     *             method.
+     * @param tagId The UID of the tag.
+     * @param appIds If non-null, then probing for the Application Directory is skipped, and we
+     *               presume to have this list of apps available.
+     * @return DesfireCard of the card contents. Returns null if an unsupported card is in the
+     *         field.
+     * @throws Exception On communication errors.
+     */
+    public static DesfireCard dumpTag(IsoDep tech, byte[] tagId, @Nullable int[] appIds, TagReaderFeedbackInterface feedbackInterface) throws Exception {
+        List<DesfireApplication> apps = new ArrayList<>();
         DesfireManufacturingData manufData;
         DesfireApplication[] appsArray;
 
+        DesfireProtocol desfireTag = new DesfireProtocol(tech);
+
         try {
-            DesfireProtocol desfireTag = new DesfireProtocol(tech);
-
-            try {
-                manufData = desfireTag.getManufacturingData();
-            } catch (IllegalArgumentException e) {
-                // Credit cards tend to fail at this point.
-                Log.w(TAG, "Card responded with invalid response, may not be DESFire?", e);
-                return null;
-            }
-
-            feedbackInterface.updateStatusText(Utils.localizeString(R.string.mfd_reading));
-            feedbackInterface.updateProgressBar(0, 1);
-
-            int[] appIds = desfireTag.getAppList();
-            int maxProgress = appIds.length;
-            int progress = 0;
-
-            CardInfo i = parseEarlyCardInfo(appIds);
-            if (i != null) {
-                Log.d(TAG, String.format(Locale.ENGLISH, "Early Card Info: %s", i.getName()));
-                feedbackInterface.updateStatusText(Utils.localizeString(R.string.card_reading_type, i.getName()));
-                feedbackInterface.showCardType(i);
-            }
-
-            // Uncomment this to test the card type display.
-            //Thread.sleep(5000);
-
-            for (int appId : appIds) {
-                feedbackInterface.updateProgressBar(progress, maxProgress);
-                desfireTag.selectApp(appId);
-                progress++;
-
-                List<DesfireFile> files = new ArrayList<>();
-
-                DesfireUnlocker unlocker = null;
-                if(LeapTransitData.earlyCheck(appId))
-                    unlocker = LeapUnlocker.createUnlocker(appId, manufData);
-                int[] fileIds = desfireTag.getFileList();
-                if (unlocker != null) {
-                    fileIds = unlocker.getOrder(desfireTag, fileIds);
-                }
-                maxProgress += fileIds.length * (unlocker == null ? 1 : 2);
-                List<DesfireAuthLog> authLog = new ArrayList<>();
-                for (int fileId : fileIds) {
-                    feedbackInterface.updateProgressBar(progress, maxProgress);
-                    if (unlocker != null) {
-                        if (i != null) {
-                            feedbackInterface.updateStatusText(
-                                    Utils.localizeString(R.string.mfd_unlocking, i.getName()));
-                        }
-                        unlocker.unlock(desfireTag, files, fileId, authLog);
-                        feedbackInterface.updateProgressBar(++progress, maxProgress);
-                    }
-
-                    DesfireFileSettings settings = null;
-                    try {
-                        settings = desfireTag.getFileSettings(fileId);
-                        byte[] data;
-                        if (settings instanceof StandardDesfireFileSettings) {
-                            data = desfireTag.readFile(fileId);
-                        } else if (settings instanceof ValueDesfireFileSettings) {
-                            data = desfireTag.getValue(fileId);
-                        } else {
-                            data = desfireTag.readRecord(fileId);
-                        }
-                        files.add(DesfireFile.create(fileId, settings, data));
-                    } catch (AccessControlException ex) {
-                        files.add(new UnauthorizedDesfireFile(fileId, ex.getMessage(), settings));
-                    } catch (IOException ex) {
-                        throw ex;
-                    } catch (Exception ex) {
-                        files.add(new InvalidDesfireFile(fileId, ex.toString(), settings));
-                    }
-                    progress++;
-                }
-
-                DesfireFile[] filesArray = new DesfireFile[files.size()];
-                files.toArray(filesArray);
-
-                apps.add(new DesfireApplication(appId, filesArray, authLog));
-            }
-
-            appsArray = new DesfireApplication[apps.size()];
-            apps.toArray(appsArray);
-        } finally {
-            if (tech.isConnected())
-                tech.close();
+            manufData = desfireTag.getManufacturingData();
+        } catch (IllegalArgumentException e) {
+            // Credit cards tend to fail at this point.
+            Log.w(TAG, "Card responded with invalid response, may not be DESFire?", e);
+            return null;
         }
 
-        return new DesfireCard(tag.getId(), GregorianCalendar.getInstance(), manufData, appsArray);
+        feedbackInterface.updateStatusText(Utils.localizeString(R.string.mfd_reading));
+        feedbackInterface.updateProgressBar(0, 1);
+
+        if (appIds == null) {
+            appIds = desfireTag.getAppList();
+        }
+
+        int maxProgress = appIds.length;
+        int progress = 0;
+
+        CardInfo i = parseEarlyCardInfo(appIds);
+        if (i != null) {
+            Log.d(TAG, String.format(Locale.ENGLISH, "Early Card Info: %s", i.getName()));
+            feedbackInterface.updateStatusText(Utils.localizeString(R.string.card_reading_type, i.getName()));
+            feedbackInterface.showCardType(i);
+        }
+
+        // Uncomment this to test the card type display.
+        //Thread.sleep(5000);
+
+        for (int appId : appIds) {
+            feedbackInterface.updateProgressBar(progress, maxProgress);
+            desfireTag.selectApp(appId);
+            progress++;
+
+            List<DesfireFile> files = new ArrayList<>();
+
+            DesfireUnlocker unlocker = null;
+            if (LeapTransitData.earlyCheck(appId))
+                unlocker = LeapUnlocker.createUnlocker(appId, manufData);
+            int[] fileIds = desfireTag.getFileList();
+            if (unlocker != null) {
+                fileIds = unlocker.getOrder(desfireTag, fileIds);
+            }
+            maxProgress += fileIds.length * (unlocker == null ? 1 : 2);
+            List<DesfireAuthLog> authLog = new ArrayList<>();
+            for (int fileId : fileIds) {
+                feedbackInterface.updateProgressBar(progress, maxProgress);
+                if (unlocker != null) {
+                    if (i != null) {
+                        feedbackInterface.updateStatusText(
+                                Utils.localizeString(R.string.mfd_unlocking, i.getName()));
+                    }
+                    unlocker.unlock(desfireTag, files, fileId, authLog);
+                    feedbackInterface.updateProgressBar(++progress, maxProgress);
+                }
+
+                DesfireFileSettings settings = null;
+                try {
+                    settings = desfireTag.getFileSettings(fileId);
+                    byte[] data;
+                    if (settings instanceof StandardDesfireFileSettings) {
+                        data = desfireTag.readFile(fileId);
+                    } else if (settings instanceof ValueDesfireFileSettings) {
+                        data = desfireTag.getValue(fileId);
+                    } else {
+                        data = desfireTag.readRecord(fileId);
+                    }
+                    files.add(DesfireFile.create(fileId, settings, data));
+                } catch (AccessControlException ex) {
+                    files.add(new UnauthorizedDesfireFile(fileId, ex.getMessage(), settings));
+                } catch (IOException ex) {
+                    throw ex;
+                } catch (Exception ex) {
+                    files.add(new InvalidDesfireFile(fileId, ex.toString(), settings));
+                }
+                progress++;
+            }
+
+            DesfireFile[] filesArray = new DesfireFile[files.size()];
+            files.toArray(filesArray);
+
+            apps.add(new DesfireApplication(appId, filesArray, authLog));
+        }
+
+        appsArray = new DesfireApplication[apps.size()];
+        apps.toArray(appsArray);
+
+        return new DesfireCard(tagId, GregorianCalendar.getInstance(), manufData, appsArray);
     }
 
     /**
