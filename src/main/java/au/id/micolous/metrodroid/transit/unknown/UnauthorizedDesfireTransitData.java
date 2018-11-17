@@ -1,6 +1,8 @@
 package au.id.micolous.metrodroid.transit.unknown;
 
 import android.os.Parcel;
+import android.support.annotation.NonNull;
+import android.support.annotation.StringRes;
 import android.util.Pair;
 
 import java.util.ArrayList;
@@ -8,6 +10,7 @@ import java.util.List;
 
 import au.id.micolous.farebot.R;
 import au.id.micolous.metrodroid.card.Card;
+import au.id.micolous.metrodroid.card.CardType;
 import au.id.micolous.metrodroid.card.desfire.DesfireApplication;
 import au.id.micolous.metrodroid.card.desfire.DesfireCard;
 import au.id.micolous.metrodroid.card.desfire.DesfireCardTransitFactory;
@@ -32,19 +35,31 @@ public class UnauthorizedDesfireTransitData extends UnauthorizedTransitData {
             return new UnauthorizedDesfireTransitData[size];
         }
     };
-    private final String mName;
+
+    public static final CardInfo CARD_INFO = buildLockedCardInfo(R.string.locked_mfd_card);
+
+    private static CardInfo buildLockedCardInfo(@StringRes int name) {
+        return new CardInfo.Builder()
+                .setName(name)
+                .setCardType(CardType.MifareDesfire)
+                .setKeysRequired()
+                .hide()
+                .build();
+    }
+
+    private final CardInfo mCardInfo;
 
     public UnauthorizedDesfireTransitData(DesfireCard card) {
-        mName = getName(card);
+        mCardInfo = getCardInfo(card);
     }
 
     private UnauthorizedDesfireTransitData(Parcel parcel) {
-        mName = parcel.readString();
+        mCardInfo = buildLockedCardInfo(parcel.readInt());
     }
 
     @Override
     public void writeToParcel(Parcel parcel, int i) {
-        parcel.writeString(mName);
+        parcel.writeInt(mCardInfo.getNameId());
     }
 
     public final static DesfireCardTransitFactory FACTORY = new DesfireCardTransitFactory() {
@@ -87,28 +102,30 @@ public class UnauthorizedDesfireTransitData extends UnauthorizedTransitData {
 
         @Override
         public TransitIdentity parseTransitIdentity(DesfireCard card) {
-            return new TransitIdentity(getName(card), null);
+            return new TransitIdentity(
+                    UnauthorizedDesfireTransitData.getCardInfo(card).getNameId(),
+                    null);
         }
     };
 
-    private static final List<Pair<Integer, String>> TYPES = new ArrayList<>();
+    private static final List<Pair<Integer, Integer>> TYPES = new ArrayList<>();
     static {
-        TYPES.add(Pair.create(0x31594f, "Oyster"));
-        TYPES.add(Pair.create(0x425301, "Thailand BEM"));
-        TYPES.add(Pair.create(0x5011f2, "Lítačka"));
+        TYPES.add(Pair.create(0x31594f, R.string.card_name_lhr_oyster));
+        TYPES.add(Pair.create(0x425301, R.string.card_name_bkk_mrt));
+        TYPES.add(Pair.create(0x5011f2, R.string.card_name_prg_litacka));
     }
 
-    private static String getName(DesfireCard card) {
-        for (Pair<Integer, String> type : TYPES) {
+    private static CardInfo getCardInfo(DesfireCard card) {
+        for (Pair<Integer, Integer> type : TYPES) {
             if (card.getApplication(type.first) != null)
-                return type.second;
+                return buildLockedCardInfo(type.second);
         }
-        return Utils.localizeString(R.string.locked_mfd_card);
+        return CARD_INFO;
     }
 
+    @NonNull
     @Override
-    public String getCardName() {
-        return mName;
+    public CardInfo getCardInfo() {
+        return mCardInfo;
     }
-
 }

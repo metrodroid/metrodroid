@@ -119,7 +119,6 @@ public class UltralightCard extends Card {
             }
 
             feedbackInterface.updateStatusText(Utils.localizeString(R.string.mfu_reading));
-            feedbackInterface.showCardType(null);
 
             // Now iterate through the pages and grab all the datas
             int pageNumber = 0;
@@ -174,7 +173,6 @@ public class UltralightCard extends Card {
             feedbackInterface.updateProgressBar(0, 1);
 
             feedbackInterface.updateStatusText(Utils.localizeString(R.string.mfu_reading));
-            feedbackInterface.showCardType(null);
 
             // Now iterate through the pages and grab all the datas
             byte[] pageBuffer = new byte[0];

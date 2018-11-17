@@ -613,6 +613,7 @@
     <!-- Locations -->
     <string name="location_act_australia">Australian Capital Territory, Australia</string>
     <string name="location_adelaide">Adelaide, Australia</string>
+    <string name="location_auckland_nz">Auckland, New Zealand</string>
     <string name="location_beijing">Beijing, China</string>
     <!--
       Translators:
@@ -685,7 +686,67 @@
     <string name="location_victoria_australia">Victoria, Australia</string>
     <string name="location_wa_australia">Western Australia, Australia</string>
     <string name="location_wuhan">Wuhan, China</string>
-    
+    <string name="location_many">Many locations</string>
+
+    <!--
+    Card names, may be transliterated per agency rules.
+    These use the airport code for the city, or the country in the case of national systems.
+    -->
+
+    <string name="card_name_adl_metrocard">Metrocard (Adelaide)</string>
+    <string name="card_name_akl_athop">AT HOP</string>
+    <string name="card_name_arn_slaccess">SLaccess</string>
+    <string name="card_name_bne_go">Go card</string>
+    <string name="card_name_bod_transgironde">TransGironde</string>
+    <string name="card_name_bos_charliecard">CharlieCard</string>
+    <string name="card_name_bru_mobib">Mobib</string>
+    <string name="card_name_bkk_mrt">Bangkok BEM</string>
+    <string name="card_name_cbr_myway">MyWay</string>
+    <string name="card_name_chc_metrocard">Metrocard (Christchurch)</string>
+    <string name="card_name_chi_ventra">Ventra</string>
+    <string name="card_name_gnb_oura">OùRA</string>
+    <string name="card_name_gru_bu">Bilhete Único</string>
+    <string name="card_name_hel_hsl">HSL</string>
+    <string name="card_name_hnd_edy">Edy</string>
+    <string name="card_name_iah_metroq">Metro Q</string>
+    <string name="card_name_ist_kart">IstanbulKart</string>
+    <string name="card_name_lax_tap">Transit Access Pass</string>
+    <string name="card_name_lhr_oyster">Oyster</string>
+    <string name="card_name_mel_myki">Myki</string>
+    <string name="card_name_mco_suncard">SunRail SunCard</string>
+    <!-- Transports de l'agglomération de Montpellier -->
+    <string name="card_name_mpl_tam">TaM</string>
+    <string name="card_name_msp_goto">Go-To card</string>
+    <string name="card_name_mxp_ricaricami">RicaricaMi</string>
+    <string name="card_name_pdx_hop">Hop Fastpass</string>
+    <string name="card_name_per_smartrider">SmartRider</string>
+    <string name="card_name_prg_litacka">Lítačka</string>
+    <string name="card_name_sin_cepas">CEPAS</string>
+    <string name="card_name_sin_ezlink">EZ-Link</string>
+    <string name="card_name_sin_nets_flashpay">NETS FlashPay</string>
+    <string name="card_name_sfo_clipper">Clipper</string>
+    <string name="card_name_syd_manly">Manly Fast Ferry</string>
+    <string name="card_name_syd_opal">Opal</string>
+    <string name="card_name_sea_orca">ORCA</string>
+    <string name="card_name_tpe_easycard">EasyCard</string>
+    <string name="card_name_tls_pastel">Pastel</string>
+    <string name="card_name_cdg_navigo">Navigo</string>
+    <string name="card_name_sxd_envibus">Envibus</string>
+    <string name="card_name_cgk_kmt">Kartu Multi Trip</string>
+    <string name="card_name_tay_bus">Tartu Bus</string>
+    <string name="card_name_lis_viva">Lisboa Viva</string>
+    <string name="card_name_yvr_compass">Compass</string>
+
+    <string name="card_name_au_erg">ERG</string>
+    <string name="card_name_ca_opus">Opus</string>
+    <string name="card_name_dk_rejsekort">Rejsekort</string>
+    <string name="card_name_fr_intercode">Intercode</string>
+    <string name="card_name_fr_selecta">Selecta</string>
+    <string name="card_name_ie_leap">Leap</string>
+    <string name="card_name_nl_ovc">OV-chipkaart</string>
+    <!-- Resekortsföreningen -->
+    <string name="card_name_se_rkf">RKF</string>
+
     <!--
     These strings are used for content descriptions (accessibility), for modes of transport.
     Using them for custom pages on individual operators is discouraged (eg: Opal), as strings and
@@ -1032,7 +1093,7 @@
         These are deliberately separated, but are used for generic fields across many systems.
     -->
     <!-- TRANSLATORS: "Cubic Nextfare" is the name of a ticketing system product, and should not be literally translated. -->
-    <string name="nextfare">Cubic Nextfare</string>
+    <string name="card_name_us_nextfare">Cubic Nextfare</string>
     <!-- Translators: This is a code used on the card which identifies which city's transit network it is associated with -->
     <string name="nextfare_system_code">System code</string>
     <string name="nextfare_ticket_class">Ticket class code %d</string>

@@ -23,6 +23,7 @@
 package au.id.micolous.metrodroid.transit.ezlinkcompat;
 
 import android.os.Parcel;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
 import java.util.ArrayList;
@@ -31,6 +32,7 @@ import java.util.List;
 
 import au.id.micolous.metrodroid.card.cepascompat.CEPASCard;
 import au.id.micolous.metrodroid.card.cepascompat.CEPASCompatTransaction;
+import au.id.micolous.metrodroid.transit.CardInfo;
 import au.id.micolous.metrodroid.transit.TransitCurrency;
 import au.id.micolous.metrodroid.transit.TransitData;
 import au.id.micolous.metrodroid.transit.TransitIdentity;
@@ -70,11 +72,12 @@ public class EZLinkCompatTransitData extends TransitData {
 
     public static TransitIdentity parseTransitIdentity(CEPASCard card) {
         String canNo = Utils.getHexString(card.getPurse(3).getCAN(), "<Error>");
-        return new TransitIdentity(EZLinkTransitData.getCardIssuer(canNo), canNo);
+        return new TransitIdentity(EZLinkTransitData.getCardIssuer(canNo).getNameId(), canNo);
     }
 
+    @NonNull
     @Override
-    public String getCardName() {
+    public CardInfo getCardInfo() {
         return EZLinkTransitData.getCardIssuer(mSerialNumber);
     }
 

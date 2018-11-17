@@ -20,6 +20,7 @@ package au.id.micolous.metrodroid.transit.opal;
 
 import android.net.Uri;
 import android.os.Parcel;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
 import org.apache.commons.lang3.ArrayUtils;
@@ -58,13 +59,12 @@ import au.id.micolous.metrodroid.MetrodroidApplication;
  * Documentation of format: https://github.com/micolous/metrodroid/wiki/Opal
  */
 public class OpalTransitData extends TransitData {
-    public static final String NAME = "Opal";
     public static final int APP_ID = 0x314553;
     public static final int FILE_ID = 0x7;
 
     public static final CardInfo CARD_INFO = new CardInfo.Builder()
             .setImageId(R.drawable.opal_card)
-            .setName(OpalTransitData.NAME)
+            .setName(R.string.card_name_syd_opal)
             .setLocation(R.string.location_sydney_australia)
             .setCardType(CardType.MifareDesfire)
             .setExtraNote(R.string.card_note_opal)
@@ -174,13 +174,14 @@ public class OpalTransitData extends TransitData {
 
             int lastDigit = Utils.getBitsFromBuffer(data, 4, 4);
             int serialNumber = Utils.getBitsFromBuffer(data, 8, 32);
-            return new TransitIdentity(NAME, formatSerialNumber(serialNumber, lastDigit));
+            return new TransitIdentity(R.string.card_name_syd_opal, formatSerialNumber(serialNumber, lastDigit));
         }
     };
 
+    @NonNull
     @Override
-    public String getCardName() {
-        return NAME;
+    public CardInfo getCardInfo() {
+        return CARD_INFO;
     }
 
     @Nullable

@@ -27,6 +27,7 @@
 package au.id.micolous.metrodroid.transit.clipper;
 
 import android.os.Parcel;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.annotation.VisibleForTesting;
 
@@ -84,7 +85,7 @@ public class ClipperTransitData extends TransitData {
 
     public static final CardInfo CARD_INFO = new CardInfo.Builder()
             .setImageId(R.drawable.clipper_card)
-            .setName("Clipper")
+            .setName(R.string.card_name_sfo_clipper)
             .setLocation(R.string.location_san_francisco)
             .setCardType(CardType.MifareDesfire)
             .setExtraNote(R.string.card_note_clipper)
@@ -172,16 +173,17 @@ public class ClipperTransitData extends TransitData {
         public TransitIdentity parseTransitIdentity(DesfireCard card) {
             try {
                 byte[] data = card.getApplication(APP_ID).getFile(0x08).getData();
-                return new TransitIdentity("Clipper", String.valueOf(Utils.byteArrayToLong(data, 1, 4)));
+                return new TransitIdentity(R.string.card_name_sfo_clipper, String.valueOf(Utils.byteArrayToLong(data, 1, 4)));
             } catch (Exception ex) {
                 throw new RuntimeException("Error parsing Clipper serial", ex);
             }
         }
     };
 
+    @NonNull
     @Override
-    public String getCardName() {
-        return "Clipper";
+    public CardInfo getCardInfo() {
+        return CARD_INFO;
     }
 
     @Nullable

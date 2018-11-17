@@ -25,6 +25,7 @@ import java.util.List;
 
 import au.id.micolous.farebot.R;
 import au.id.micolous.metrodroid.card.Card;
+import au.id.micolous.metrodroid.card.CardType;
 import au.id.micolous.metrodroid.card.classic.ClassicCard;
 import au.id.micolous.metrodroid.card.classic.ClassicCardTransitFactory;
 import au.id.micolous.metrodroid.card.classic.ClassicSector;
@@ -47,6 +48,14 @@ public class UnauthorizedClassicTransitData extends UnauthorizedTransitData {
             return new UnauthorizedClassicTransitData[size];
         }
     };
+
+    public static final CardInfo CARD_INFO = new CardInfo.Builder()
+            .setName(R.string.locked_mfc_card)
+            .setLocation(R.string.location_many)
+            .setCardType(CardType.MifareClassic)
+            .setKeysRequired()
+            .hide()
+            .build();
 
     private UnauthorizedClassicTransitData() {
     }
@@ -79,7 +88,7 @@ public class UnauthorizedClassicTransitData extends UnauthorizedTransitData {
 
         @Override
         public TransitIdentity parseTransitIdentity(@NonNull ClassicCard card) {
-            return new TransitIdentity(Utils.localizeString(R.string.locked_mfc_card), null);
+            return new TransitIdentity(R.string.locked_mfc_card, null);
         }
 
         @Override
@@ -88,8 +97,9 @@ public class UnauthorizedClassicTransitData extends UnauthorizedTransitData {
         }
     };
 
+    @NonNull
     @Override
-    public String getCardName() {
-        return Utils.localizeString(R.string.locked_mfc_card);
+    public CardInfo getCardInfo() {
+        return CARD_INFO;
     }
 }

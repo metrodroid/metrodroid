@@ -20,6 +20,7 @@ package au.id.micolous.metrodroid.transit.troika;
 
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
 import java.util.Collections;
@@ -107,9 +108,10 @@ public class TroikaUltralightTransitData extends TransitData {
         return mBlock.getSerialNumber();
     }
 
+    @NonNull
     @Override
-    public String getCardName() {
-        return mBlock.getCardName();
+    public CardInfo getCardInfo() {
+        return mBlock.getCardInfo();
     }
 
     @Override

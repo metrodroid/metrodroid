@@ -50,13 +50,12 @@ import au.id.micolous.metrodroid.util.Utils;
 
 public class RicaricaMiTransitData extends En1545TransitData {
     private static final int RICARICA_MI_ID = 0x0221;
-    private static final String NAME = "RicaricaMi";
     private final String mSerial;
     private final List<TransactionTrip> mTrips;
     private final List<En1545Subscription> mSubscriptions;
 
     public static final CardInfo CARD_INFO = new CardInfo.Builder()
-            .setName(NAME)
+            .setName(R.string.card_name_mxp_ricaricami)
             .setLocation(R.string.location_milan)
             .setCardType(CardType.MifareClassic)
             .setKeysRequired()
@@ -225,7 +224,7 @@ public class RicaricaMiTransitData extends En1545TransitData {
 
         @Override
         public TransitIdentity parseTransitIdentity(@NonNull ClassicCard card) {
-            return new TransitIdentity(NAME, getSerial(card));
+            return new TransitIdentity(R.string.card_name_mxp_ricaricami, getSerial(card));
         }
 
         @Override
@@ -264,8 +263,9 @@ public class RicaricaMiTransitData extends En1545TransitData {
         return mSerial;
     }
 
+    @NonNull
     @Override
-    public String getCardName() {
-        return NAME;
+    public CardInfo getCardInfo() {
+        return CARD_INFO;
     }
 }

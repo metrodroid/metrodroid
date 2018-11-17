@@ -21,6 +21,7 @@ package au.id.micolous.metrodroid.transit.adelaide;
 
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.support.annotation.NonNull;
 
 import org.apache.commons.lang3.ArrayUtils;
 
@@ -60,13 +61,12 @@ public class AdelaideMetrocardTransitData extends En1545TransitData {
     };
 
     private static final int APP_ID = 0xb006f2;
-    private static final String NAME = "Metrocard (Adelaide)";
     private final List<TransactionTrip> mTrips;
     private final List<AdelaideSubscription> mSubs;
     private final AdelaideSubscription mPurse;
 
     public static final CardInfo CARD_INFO = new CardInfo.Builder()
-            .setName(NAME)
+            .setName(R.string.card_name_adl_metrocard)
             .setLocation(R.string.location_adelaide)
             .setCardType(CardType.MifareDesfire)
             .setExtraNote(R.string.card_note_adelaide)
@@ -145,7 +145,8 @@ public class AdelaideMetrocardTransitData extends En1545TransitData {
     public final static DesfireCardTransitFactory FACTORY = new DesfireCardTransitFactory() {
         @Override
         public TransitIdentity parseTransitIdentity(DesfireCard card) {
-            return new TransitIdentity(NAME, formatSerial(getSerial(card.getTagId())));
+            return new TransitIdentity(R.string.card_name_adl_metrocard,
+                    formatSerial(getSerial(card.getTagId())));
         }
 
         @Override
@@ -177,9 +178,10 @@ public class AdelaideMetrocardTransitData extends En1545TransitData {
         return formatSerial(mSerial);
     }
 
+    @NonNull
     @Override
-    public String getCardName() {
-        return NAME;
+    public CardInfo getCardInfo() {
+        return CARD_INFO;
     }
 
     @Override

@@ -23,6 +23,7 @@ import android.test.AndroidTestCase;
 import java.util.Calendar;
 import java.util.List;
 
+import au.id.micolous.farebot.R;
 import au.id.micolous.metrodroid.card.desfire.DesfireApplication;
 import au.id.micolous.metrodroid.card.desfire.DesfireCard;
 import au.id.micolous.metrodroid.card.desfire.files.DesfireFile;
@@ -77,7 +78,7 @@ public class ClipperTest extends AndroidTestCase {
 
         // Test TransitIdentity
         TransitIdentity i = c.parseTransitIdentity();
-        assertEquals("Clipper", i.getName());
+        assertEquals(R.string.card_name_sfo_clipper, i.getNameId());
         assertEquals("572691763", i.getSerialNumber());
 
         TransitData d = c.parseTransitData();

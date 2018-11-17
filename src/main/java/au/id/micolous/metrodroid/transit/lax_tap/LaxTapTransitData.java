@@ -75,7 +75,7 @@ public class LaxTapTransitData extends NextfareTransitData {
     public static final CardInfo CARD_INFO = new CardInfo.Builder()
             .setImageId(R.drawable.laxtap_card)
             // Using the short name (TAP) may be ambiguous
-            .setName(LaxTapTransitData.LONG_NAME)
+            .setName(R.string.card_name_lax_tap)
             .setLocation(R.string.location_los_angeles)
             .setCardType(CardType.MifareClassic)
             .setKeysRequired()
@@ -95,7 +95,7 @@ public class LaxTapTransitData extends NextfareTransitData {
     public static final ClassicCardTransitFactory FACTORY = new NextFareTransitFactory() {
         @Override
         public TransitIdentity parseTransitIdentity(@NonNull ClassicCard card) {
-            return super.parseTransitIdentity(card, NAME);
+            return super.parseTransitIdentity(card, R.string.card_name_lax_tap);
         }
 
         private boolean check(ClassicSector sector0) {
@@ -164,9 +164,10 @@ public class LaxTapTransitData extends NextfareTransitData {
         return false;
     }
 
+    @NonNull
     @Override
-    public String getCardName() {
-        return NAME;
+    public CardInfo getCardInfo() {
+        return CARD_INFO;
     }
 
     /*

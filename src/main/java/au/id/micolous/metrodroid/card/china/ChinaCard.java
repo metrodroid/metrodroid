@@ -154,9 +154,7 @@ public class ChinaCard extends ISO7816Application {
                     break;
             }
             if (ci != null) {
-                feedbackInterface.updateStatusText(Utils.localizeString(R.string.card_reading_type,
-                        ci.getName()));
-                feedbackInterface.showCardType(ci);
+                feedbackInterface.announceCardType(ci);
             }
 
             feedbackInterface.updateProgressBar(0, 5);

@@ -73,6 +73,8 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Formattable;
+import java.util.Formatter;
 import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.Locale;
@@ -561,6 +563,21 @@ public class Utils {
     public static String localizePlural(@PluralsRes int pluralResource, int quantity, Object... formatArgs) {
         Resources res = MetrodroidApplication.getInstance().getResources();
         return res.getQuantityString(pluralResource, quantity, formatArgs);
+    }
+
+    /**
+     * Wraps a string resource for inclusion in a format string. This allows
+     * {@link #localizeString(int, Object...)}, {@link String#format(String, Object...)} and similar
+     * methods to take string resource arguments.
+     *
+     * @param stringResource R.string to localise
+     * @return A formatter which emits the localised string.
+     */
+    public static Formattable formattableString(@StringRes final int stringResource) {
+        return (formatter, flags, width, precision) -> {
+            final String s = localizeString(stringResource);
+            formatter.format("%s", s);
+        };
     }
 
     private static String formatCalendar(java.text.DateFormat df, Calendar c) {

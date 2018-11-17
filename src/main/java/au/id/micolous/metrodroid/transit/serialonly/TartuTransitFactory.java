@@ -49,10 +49,9 @@ import au.id.micolous.metrodroid.util.Utils;
  * Documentation of format: https://github.com/micolous/metrodroid/wiki/TartuBus
  */
 public class TartuTransitFactory extends ClassicCardTransitFactory {
-    public static final String NAME = "Tartu Bus";
 
     public static final CardInfo CARD_INFO = new CardInfo.Builder()
-            .setName(NAME)
+            .setName(R.string.card_name_tay_bus)
             .setCardType(CardType.MifareClassic)
             .setLocation(R.string.location_tartu)
             .setExtraNote(R.string.card_note_card_number_only)
@@ -87,7 +86,7 @@ public class TartuTransitFactory extends ClassicCardTransitFactory {
 
     @Override
     public TransitIdentity parseTransitIdentity(@NonNull ClassicCard classicCard) {
-        return new TransitIdentity(NAME, parseSerial(classicCard).substring(8));
+        return new TransitIdentity(R.string.card_name_tay_bus, parseSerial(classicCard).substring(8));
     }
 
     @Override
@@ -132,9 +131,10 @@ public class TartuTransitFactory extends ClassicCardTransitFactory {
             return mSerial.substring(8);
         }
 
+        @NonNull
         @Override
-        public String getCardName() {
-            return NAME;
+        public CardInfo getCardInfo() {
+            return CARD_INFO;
         }
 
         @Override

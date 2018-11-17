@@ -21,6 +21,7 @@ package au.id.micolous.metrodroid.transit.troika;
 
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.support.annotation.StringRes;
 
 import au.id.micolous.farebot.R;
 import au.id.micolous.metrodroid.card.CardType;
@@ -54,16 +55,20 @@ public class TroikaTransitData implements Parcelable {
         }
     };
 
-    public static final CardInfo CARD_INFO = new CardInfo.Builder()
-            // seqgo_card_alpha has identical geometry
-            .setImageId(R.drawable.troika_card, R.drawable.seqgo_card_alpha)
-            .setName(Utils.localizeString(R.string.card_name_troika))
-            .setLocation(R.string.location_moscow)
-            .setCardType(CardType.MifareClassic)
-            .setExtraNote(R.string.card_note_russia)
-            .setKeysRequired()
-            .setPreview()
-            .build();
+    public static final CardInfo CARD_INFO = buildCardInfo(R.string.card_name_troika);
+
+    static CardInfo buildCardInfo(@StringRes int cardName) {
+        return new CardInfo.Builder()
+                // seqgo_card_alpha has identical geometry
+                .setImageId(R.drawable.troika_card, R.drawable.seqgo_card_alpha)
+                .setName(cardName)
+                .setLocation(R.string.location_moscow)
+                .setCardType(CardType.MifareClassic)
+                .setExtraNote(R.string.card_note_russia)
+                .setKeysRequired()
+                .setPreview()
+                .build();
+    }
 
     private final TroikaBlock mBlock4;
     private final TroikaBlock mBlock7;

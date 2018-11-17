@@ -219,7 +219,7 @@
 
     <string name="card_note_card_number_only">Alleen het kaartnummer kan worden uitgelezen.</string>
 
-    <string name="nextfare">Cubic Nextfare</string>
+    <string name="card_name_us_nextfare">Cubic Nextfare</string>
     <string name="nextfare_system_code">Systeemcode</string>
     <string name="nextfare_ticket_class">Ticketklassificatie %d</string>
 

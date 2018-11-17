@@ -23,6 +23,7 @@
 package au.id.micolous.metrodroid.transit.edy;
 
 import android.os.Parcel;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
 import org.apache.commons.lang3.ArrayUtils;
@@ -51,7 +52,7 @@ public class EdyTransitData extends TransitData {
 
     public static final CardInfo CARD_INFO = new CardInfo.Builder()
             .setImageId(R.drawable.edy_card)
-            .setName("Edy")
+            .setName(R.string.card_name_hnd_edy)
             .setLocation(R.string.location_tokyo)
             .setCardType(CardType.FeliCa)
             .build();
@@ -131,7 +132,7 @@ public class EdyTransitData extends TransitData {
 
         @Override
         public TransitIdentity parseTransitIdentity(FelicaCard card) {
-            return new TransitIdentity("Edy", null);
+            return new TransitIdentity(R.string.card_name_hnd_edy, null);
         }
     };
 
@@ -152,9 +153,10 @@ public class EdyTransitData extends TransitData {
         return mTrips;
     }
 
+    @NonNull
     @Override
-    public String getCardName() {
-        return "Edy";
+    public CardInfo getCardInfo() {
+        return CARD_INFO;
     }
 
     public void writeToParcel(Parcel parcel, int flags) {

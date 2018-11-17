@@ -47,7 +47,7 @@ public class KievTransitData extends TransitData {
     // It doesn't really have a name and is just called
     // "Ticket for Kiev Metro".
     public static final CardInfo CARD_INFO = new CardInfo.Builder()
-            .setName(Utils.localizeString(R.string.card_name_kiev))
+            .setName(R.string.card_name_kiev)
             .setLocation(R.string.location_kiev)
             .setCardType(CardType.MifareClassic)
             .setExtraNote(R.string.card_note_kiev)
@@ -107,9 +107,10 @@ public class KievTransitData extends TransitData {
         return Utils.groupString(serial, " ", 4, 4, 4);
     }
 
+    @NonNull
     @Override
-    public String getCardName() {
-        return Utils.localizeString(R.string.card_name_kiev);
+    public CardInfo getCardInfo() {
+        return CARD_INFO;
     }
 
     public static final ClassicCardTransitFactory FACTORY = new ClassicCardTransitFactory() {
@@ -136,7 +137,7 @@ public class KievTransitData extends TransitData {
 
         @Override
         public TransitIdentity parseTransitIdentity(@NonNull ClassicCard card) {
-            return new TransitIdentity(Utils.localizeString(R.string.card_name_kiev), formatSerial(getSerial(card)));
+            return new TransitIdentity(R.string.card_name_kiev, formatSerial(getSerial(card)));
         }
 
         @Override

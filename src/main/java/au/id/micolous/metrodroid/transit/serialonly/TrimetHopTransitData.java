@@ -55,7 +55,6 @@ import au.id.micolous.metrodroid.util.Utils;
  * Documentation of format: https://github.com/micolous/metrodroid/wiki/TrimetHopFastPass
  */
 public class TrimetHopTransitData extends SerialOnlyTransitData {
-    public static final String NAME = "Hop Fastpass";
     public static final int APP_ID = 0xe010f2;
 
     private int mSerial;
@@ -64,7 +63,7 @@ public class TrimetHopTransitData extends SerialOnlyTransitData {
     private static final TimeZone TZ = TimeZone.getTimeZone("America/Los_Angeles");
 
     public static final CardInfo CARD_INFO = new CardInfo.Builder()
-            .setName(NAME)
+            .setName(R.string.card_name_pdx_hop)
             .setCardType(CardType.MifareDesfire)
             .setImageId(R.drawable.trimethop_card)
             .setLocation(R.string.location_portland)
@@ -121,13 +120,14 @@ public class TrimetHopTransitData extends SerialOnlyTransitData {
         @Override
         public TransitIdentity parseTransitIdentity(DesfireCard card) {
             DesfireApplication app = card.getApplication(APP_ID);
-            return new TransitIdentity(NAME, formatSerial(parseSerial(app)));
+            return new TransitIdentity(R.string.card_name_pdx_hop, formatSerial(parseSerial(app)));
         }
     };
 
+    @NonNull
     @Override
-    public String getCardName() {
-        return NAME;
+    public CardInfo getCardInfo() {
+        return CARD_INFO;
     }
 
     private static String formatSerial(int ser) {

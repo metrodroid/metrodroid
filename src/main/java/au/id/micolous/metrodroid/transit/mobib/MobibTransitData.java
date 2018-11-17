@@ -61,14 +61,13 @@ import au.id.micolous.metrodroid.util.Utils;
 public class MobibTransitData extends Calypso1545TransitData {
     // 56 = Belgium
     private static final int MOBIB_NETWORK_ID = 0x56001;
-    private static final String NAME = "Mobib";
     private static final String EXT_HOLDER_NAME = "ExtHolderName";
     private final En1545Parsed mExtHolderParsed;
     private final int mPurchase;
     private final int mTotalTrips;
 
     public static final CardInfo CARD_INFO = new CardInfo.Builder()
-            .setName(MobibTransitData.NAME)
+            .setName(R.string.card_name_bru_mobib)
             .setCardType(CardType.ISO7816)
             .setImageId(R.drawable.mobib_card, R.drawable.iso7810_id1_alpha)
             .setLocation(R.string.location_brussels)
@@ -207,7 +206,7 @@ public class MobibTransitData extends Calypso1545TransitData {
         @NonNull
         @Override
         public TransitIdentity parseTransitIdentity(CalypsoApplication card) {
-            return new TransitIdentity(NAME, getSerial(card));
+            return new TransitIdentity(R.string.card_name_bru_mobib, getSerial(card));
         }
 
         @Override
@@ -243,9 +242,10 @@ public class MobibTransitData extends Calypso1545TransitData {
         return new MobibTransaction(data);
     }
 
+    @NonNull
     @Override
-    public String getCardName() {
-        return NAME;
+    public CardInfo getCardInfo() {
+        return CARD_INFO;
     }
 
     @Override

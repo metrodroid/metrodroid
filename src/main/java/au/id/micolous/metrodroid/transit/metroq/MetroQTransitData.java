@@ -58,7 +58,7 @@ public class MetroQTransitData extends TransitData {
     private static final TimeZone TZ = TimeZone.getTimeZone("America/Houston");
     private final long mSerial;
     public static final CardInfo CARD_INFO = new CardInfo.Builder()
-            .setName(NAME)
+            .setName(R.string.card_name_iah_metroq)
             .setLocation(R.string.location_houston)
             .setCardType(CardType.MifareClassic)
             .setKeysRequired()
@@ -150,7 +150,7 @@ public class MetroQTransitData extends TransitData {
 
         @Override
         public TransitIdentity parseTransitIdentity(@NonNull ClassicCard card) {
-            return new TransitIdentity(NAME, formatSerial(getSerial(card)));
+            return new TransitIdentity(R.string.card_name_iah_metroq, formatSerial(getSerial(card)));
         }
 
         @Override
@@ -198,9 +198,10 @@ public class MetroQTransitData extends TransitData {
         return String.format(Locale.ENGLISH, "%08d", serial);
     }
 
+    @NonNull
     @Override
-    public String getCardName() {
-        return NAME;
+    public CardInfo getCardInfo() {
+        return CARD_INFO;
     }
 
     @Nullable

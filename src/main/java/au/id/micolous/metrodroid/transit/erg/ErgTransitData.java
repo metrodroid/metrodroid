@@ -22,6 +22,7 @@ import android.os.Parcel;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
+import au.id.micolous.metrodroid.card.CardType;
 import au.id.micolous.metrodroid.card.UnauthorizedException;
 import au.id.micolous.metrodroid.card.classic.ClassicBlock;
 import au.id.micolous.metrodroid.card.classic.ClassicCard;
@@ -57,7 +58,14 @@ import au.id.micolous.farebot.R;
  * Wiki: https://github.com/micolous/metrodroid/wiki/ERG-MFC
  */
 public class ErgTransitData extends TransitData {
-    public static final String NAME = "ERG";
+    public static final CardInfo CARD_INFO = new CardInfo.Builder()
+            .setName(R.string.card_name_au_erg)
+            .setLocation(R.string.location_many)
+            .setCardType(CardType.MifareClassic)
+            .setKeysRequired()
+            .hide()
+            .build();
+
     public static final byte[] SIGNATURE = {
             0x32, 0x32, 0x00, 0x00, 0x00, 0x01, 0x01
     };
@@ -206,7 +214,7 @@ public class ErgTransitData extends TransitData {
             if (metadata == null) {
                 return null;
             }
-            return new TransitIdentity(NAME, metadata.getCardSerialHex());
+            return new TransitIdentity(R.string.card_name_au_erg, metadata.getCardSerialHex());
         }
 
         @Override
@@ -269,9 +277,10 @@ public class ErgTransitData extends TransitData {
         return items;
     }
 
+    @NonNull
     @Override
-    public String getCardName() {
-        return NAME;
+    public CardInfo getCardInfo() {
+        return CARD_INFO;
     }
 
     /**

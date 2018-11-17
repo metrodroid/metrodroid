@@ -23,6 +23,7 @@
 package au.id.micolous.metrodroid.transit.ezlink;
 
 import android.os.Parcel;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
 import org.apache.commons.lang3.ArrayUtils;
@@ -58,16 +59,23 @@ public class EZLinkTransitData extends TransitData {
     };
     private static final String EZLINK_STR = "ezlink";
 
+    private static final CardInfo CEPAS_CARD_INFO = new CardInfo.Builder()
+            .setName(R.string.card_name_sin_cepas)
+            .setLocation(R.string.location_singapore)
+            .setCardType(CardType.CEPAS)
+            .hide()
+            .build();
+
     public static final CardInfo EZ_LINK_CARD_INFO = new CardInfo.Builder()
             .setImageId(R.drawable.ezlink_card)
-            .setName("EZ-Link")
+            .setName(R.string.card_name_sin_ezlink)
             .setLocation(R.string.location_singapore)
             .setCardType(CardType.CEPAS)
             .build();
 
     public static final CardInfo NETS_FLASHPAY_CARD_INFO = new CardInfo.Builder()
             .setImageId(R.drawable.nets_card)
-            .setName("NETS FlashPay")
+            .setName(R.string.card_name_sin_nets_flashpay)
             .setLocation(R.string.location_singapore)
             .setCardType(CardType.CEPAS)
             .build();
@@ -119,15 +127,16 @@ public class EZLinkTransitData extends TransitData {
         mTrips = parseTrips(cepasCard);
     }
 
-    public static String getCardIssuer(String canNo) {
+    @NonNull
+    public static CardInfo getCardIssuer(String canNo) {
         int issuerId = Integer.parseInt(canNo.substring(0, 3));
         switch (issuerId) {
             case 100:
-                return "EZ-Link";
+                return EZ_LINK_CARD_INFO;
             case 111:
-                return "NETS";
+                return NETS_FLASHPAY_CARD_INFO;
             default:
-                return "CEPAS";
+                return CEPAS_CARD_INFO;
         }
     }
 
@@ -145,11 +154,12 @@ public class EZLinkTransitData extends TransitData {
     public static TransitIdentity parseTransitIdentity(CEPASApplication card) {
         CEPASPurse purse = new CEPASPurse(card.getPurse(3));
         String canNo = Utils.getHexString(purse.getCAN(), "<Error>");
-        return new TransitIdentity(getCardIssuer(canNo), canNo);
+        return new TransitIdentity(getCardIssuer(canNo).getNameId(), canNo);
     }
 
+    @NonNull
     @Override
-    public String getCardName() {
+    public CardInfo getCardInfo() {
         return getCardIssuer(mSerialNumber);
     }
 
@@ -177,7 +187,7 @@ public class EZLinkTransitData extends TransitData {
             List<EZLinkTrip> trips = new ArrayList<>();
 
             for (CEPASTransaction transaction : transactions)
-                trips.add(new EZLinkTrip(transaction, getCardName()));
+                trips.add(new EZLinkTrip(transaction));
 
             return trips;
         }

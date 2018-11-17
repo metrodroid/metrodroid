@@ -46,8 +46,6 @@ import au.id.micolous.metrodroid.util.Utils;
  */
 
 public class SmartRiderTransitData extends TransitData {
-    private static final String SMARTRIDER_NAME = "SmartRider";
-    private static final String MYWAY_NAME = "MyWay";
     public static final Creator<SmartRiderTransitData> CREATOR = new Creator<SmartRiderTransitData>() {
         @Override
         public SmartRiderTransitData createFromParcel(Parcel in) {
@@ -61,18 +59,18 @@ public class SmartRiderTransitData extends TransitData {
     };
     private static final String TAG = SmartRiderTransitData.class.getSimpleName();
 
-    public static final CardInfo SMARTRIDER_CARD_INFO = new CardInfo.Builder()
+    private static final CardInfo SMARTRIDER_CARD_INFO = new CardInfo.Builder()
             .setImageId(R.drawable.smartrider_card)
-            .setName(SmartRiderTransitData.SMARTRIDER_NAME)
+            .setName(R.string.card_name_per_smartrider)
             .setLocation(R.string.location_wa_australia)
             .setCardType(au.id.micolous.metrodroid.card.CardType.MifareClassic)
             .setKeysRequired()
             .setPreview() // We don't know about ferries.
             .build();
 
-    public static final CardInfo MYWAY_CARD_INFO = new CardInfo.Builder()
+    private static final CardInfo MYWAY_CARD_INFO = new CardInfo.Builder()
             .setImageId(R.drawable.myway_card)
-            .setName(SmartRiderTransitData.MYWAY_NAME)
+            .setName(R.string.card_name_cbr_myway)
             .setLocation(R.string.location_act_australia)
             .setCardType(au.id.micolous.metrodroid.card.CardType.MifareClassic)
             .setKeysRequired()
@@ -101,18 +99,18 @@ public class SmartRiderTransitData extends TransitData {
 
 
     public enum CardType {
-        UNKNOWN("Unknown SmartRider"),
-        SMARTRIDER(SMARTRIDER_NAME),
-        MYWAY(MYWAY_NAME);
+        UNKNOWN(null),
+        SMARTRIDER(SMARTRIDER_CARD_INFO),
+        MYWAY(MYWAY_CARD_INFO);
 
-        String mFriendlyName;
+        CardInfo mCardInfo;
 
-        CardType(String friendlyString) {
-            mFriendlyName = friendlyString;
+        CardType(CardInfo cardInfo) {
+            mCardInfo = cardInfo;
         }
 
-        public String getFriendlyName() {
-            return mFriendlyName;
+        public CardInfo getCardInfo() {
+            return mCardInfo;
         }
     }
 
@@ -152,7 +150,10 @@ public class SmartRiderTransitData extends TransitData {
 
         @Override
         public TransitIdentity parseTransitIdentity(@NonNull ClassicCard card) {
-            return new TransitIdentity(detectKeyType(card).getFriendlyName(), getSerialData(card));
+            final CardInfo c = detectKeyType(card).getCardInfo();
+            return new TransitIdentity(
+                    c == null ? R.string.card_name_per_smartrider : c.getNameId(),
+                    getSerialData(card));
         }
 
         @Override
@@ -230,9 +231,14 @@ public class SmartRiderTransitData extends TransitData {
         return mTrips;
     }
 
+    @NonNull
     @Override
-    public String getCardName() {
-        return mCardType.getFriendlyName();
+    public CardInfo getCardInfo() {
+        if (mCardType.getCardInfo() != null) {
+            return mCardType.getCardInfo();
+        }
+
+        return SMARTRIDER_CARD_INFO;
     }
 
     @Override

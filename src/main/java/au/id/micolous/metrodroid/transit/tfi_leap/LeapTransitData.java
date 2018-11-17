@@ -21,6 +21,7 @@ package au.id.micolous.metrodroid.transit.tfi_leap;
 
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.text.SpannableString;
 
@@ -69,7 +70,7 @@ public class LeapTransitData extends TransitData {
     };
 
     public static final CardInfo CARD_INFO = new CardInfo.Builder()
-            .setName(LeapTransitData.NAME)
+            .setName(R.string.card_name_ie_leap)
             .setLocation(R.string.location_ireland)
             .setCardType(CardType.MifareDesfire)
             .setImageId(R.drawable.leap_card, R.drawable.iso7810_id1_alpha)
@@ -77,7 +78,6 @@ public class LeapTransitData extends TransitData {
             .setPreview()
             .build();
 
-    private static final String NAME = "Leap";
     private static final int BLOCK_SIZE = 0x180;
     private static final long LEAP_EPOCH;
     static final String LEAP_STR = "tfi_leap";
@@ -269,10 +269,10 @@ public class LeapTransitData extends TransitData {
         @Override
         public TransitIdentity parseTransitIdentity(DesfireCard card) {
             try {
-                return new TransitIdentity(NAME, getSerial(card));
+                return new TransitIdentity(R.string.card_name_ie_leap, getSerial(card));
             } catch (Exception e) {
                 return new TransitIdentity(
-                        Utils.localizeString(R.string.locked_leap), null);
+                        R.string.locked_leap, null);
             }
         }
     };
@@ -314,9 +314,10 @@ public class LeapTransitData extends TransitData {
         return mSerial;
     }
 
+    @NonNull
     @Override
-    public String getCardName() {
-        return NAME;
+    public CardInfo getCardInfo() {
+        return CARD_INFO;
     }
 
     @Override

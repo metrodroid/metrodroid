@@ -207,7 +207,7 @@
     <string name="seqgo_ticket_type_child">子供</string>
     <string name="seqgo_ticket_type_senior">シニア</string>
 
-    <string name="nextfare">Cubic Nextfare</string>
+    <string name="card_name_us_nextfare">Cubic Nextfare</string>
     <string name="nextfare_system_code">システム コード</string>
     <string name="nextfare_ticket_class">チケット クラス コード</string>
 

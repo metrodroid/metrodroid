@@ -51,14 +51,13 @@ import au.id.micolous.metrodroid.util.Utils;
  * Documentation of format: https://github.com/micolous/metrodroid/wiki/IstanbulKart
  */
 public class IstanbulKartTransitData extends SerialOnlyTransitData {
-    public static final String NAME = "IstanbulKart";
     public static final int APP_ID = 0x422201;
 
     private String mSerial;
     private String mSerial2;
 
     public static final CardInfo CARD_INFO = new CardInfo.Builder()
-            .setName(NAME)
+            .setName(R.string.card_name_ist_kart)
             .setCardType(CardType.MifareDesfire)
             .setLocation(R.string.location_istanbul)
             .setExtraNote(R.string.card_note_card_number_only)
@@ -120,13 +119,14 @@ public class IstanbulKartTransitData extends SerialOnlyTransitData {
         @Override
         public TransitIdentity parseTransitIdentity(DesfireCard card) {
             byte[] data = card.getApplication(APP_ID).getFile(2).getData();
-            return new TransitIdentity(NAME, formatSerial(parseSerial(data)));
+            return new TransitIdentity(R.string.card_name_ist_kart, formatSerial(parseSerial(data)));
         }
     };
 
+    @NonNull
     @Override
-    public String getCardName() {
-        return NAME;
+    public CardInfo getCardInfo() {
+        return CARD_INFO;
     }
 
     @Override

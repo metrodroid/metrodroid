@@ -45,16 +45,13 @@ public class EZLinkTrip extends Trip {
         }
     };
     private final CEPASTransaction mTransaction;
-    private final String mCardName;
 
-    public EZLinkTrip(CEPASTransaction transaction, String cardName) {
+    public EZLinkTrip(CEPASTransaction transaction) {
         mTransaction = transaction;
-        mCardName = cardName;
     }
 
     EZLinkTrip(Parcel parcel) {
         mTransaction = parcel.readParcelable(CEPASTransaction.class.getClassLoader());
-        mCardName = parcel.readString();
     }
 
     @Override
@@ -64,7 +61,7 @@ public class EZLinkTrip extends Trip {
 
     @Override
     public String getAgencyName(boolean isShort) {
-        return getAgencyName(mTransaction.getType(), mCardName, isShort);
+        return getAgencyName(mTransaction.getType());
     }
 
     @Override
@@ -153,7 +150,8 @@ public class EZLinkTrip extends Trip {
         return 0;
     }
 
-    public static String getAgencyName(CEPASTransaction.TransactionType type, String cardName, boolean isShort) {
+    public static String getAgencyName(CEPASTransaction.TransactionType type) {
+        // FIXME: these aren't agency names
         if (type == CEPASTransaction.TransactionType.BUS
                 || type == CEPASTransaction.TransactionType.BUS_REFUND) {
             return "BUS";
@@ -161,8 +159,7 @@ public class EZLinkTrip extends Trip {
         if (type == CEPASTransaction.TransactionType.CREATION
                 || type == CEPASTransaction.TransactionType.TOP_UP
                 || type == CEPASTransaction.TransactionType.SERVICE) {
-            if (isShort && cardName.equals("EZ-Link")) return "EZ";
-            return cardName;
+            return null;
         }
         if (type == CEPASTransaction.TransactionType.RETAIL) {
             return "POS";

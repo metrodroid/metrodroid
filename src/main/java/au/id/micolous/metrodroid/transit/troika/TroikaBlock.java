@@ -12,6 +12,7 @@ import java.util.Locale;
 import java.util.TimeZone;
 
 import au.id.micolous.farebot.R;
+import au.id.micolous.metrodroid.transit.CardInfo;
 import au.id.micolous.metrodroid.transit.Subscription;
 import au.id.micolous.metrodroid.transit.TransitBalance;
 import au.id.micolous.metrodroid.transit.TransitIdentity;
@@ -155,7 +156,7 @@ public abstract class TroikaBlock implements Parcelable {
     }
 
     public static TransitIdentity parseTransitIdentity(byte[]rawData) {
-        return new TransitIdentity(Utils.localizeString(R.string.card_name_troika),
+        return new TransitIdentity(R.string.card_name_troika,
                 formatSerial(getSerial(rawData)));
     }
 
@@ -228,8 +229,8 @@ public abstract class TroikaBlock implements Parcelable {
             ||  Utils.getBitsFromBuffer(rawData, 0, 10) == 0x108;
     }
 
-    public String getCardName() {
-        return Utils.localizeString(R.string.card_name_troika);
+    public CardInfo getCardInfo() {
+        return TroikaTransitData.CARD_INFO;
     }
 
     public static TroikaBlock parseBlock(byte[] rawData) {

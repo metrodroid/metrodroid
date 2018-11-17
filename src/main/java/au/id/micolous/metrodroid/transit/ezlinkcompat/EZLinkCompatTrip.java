@@ -66,7 +66,7 @@ public class EZLinkCompatTrip extends Trip {
 
     @Override
     public String getAgencyName(boolean isShort) {
-        return EZLinkTrip.getAgencyName(getType(), mCardName, isShort);
+        return EZLinkTrip.getAgencyName(getType());
     }
 
     @Override

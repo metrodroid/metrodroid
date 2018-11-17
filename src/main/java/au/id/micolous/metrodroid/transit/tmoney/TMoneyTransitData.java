@@ -21,6 +21,7 @@ package au.id.micolous.metrodroid.transit.tmoney;
 
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
 import java.util.ArrayList;
@@ -54,7 +55,7 @@ public class TMoneyTransitData extends TransitData {
 
     public static final CardInfo CARD_INFO = new CardInfo.Builder()
             .setImageId(R.drawable.tmoney_card)
-            .setName(Utils.localizeString(R.string.card_name_tmoney))
+            .setName(R.string.card_name_tmoney)
             .setLocation(R.string.location_seoul)
             .setCardType(CardType.ISO7816)
             .setPreview()
@@ -91,9 +92,10 @@ public class TMoneyTransitData extends TransitData {
         return mSerialNumber;
     }
 
+    @NonNull
     @Override
-    public String getCardName() {
-        return Utils.localizeString(R.string.card_name_tmoney);
+    public CardInfo getCardInfo() {
+        return CARD_INFO;
     }
 
     @Override
@@ -127,7 +129,7 @@ public class TMoneyTransitData extends TransitData {
     }
 
     public static TransitIdentity parseTransitIdentity(TMoneyCard card) {
-        return new TransitIdentity(Utils.localizeString(R.string.card_name_tmoney), parseSerial(card));
+        return new TransitIdentity(R.string.card_name_tmoney, parseSerial(card));
     }
 
     private static byte[] getSerialTag(TMoneyCard card) {

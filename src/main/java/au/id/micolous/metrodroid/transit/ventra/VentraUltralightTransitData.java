@@ -20,6 +20,7 @@ package au.id.micolous.metrodroid.transit.ventra;
 
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.support.annotation.NonNull;
 
 import java.util.Collections;
 import java.util.List;
@@ -51,13 +52,11 @@ public class VentraUltralightTransitData extends NextfareUltralightTransitData {
     };
 
     public static final CardInfo CARD_INFO = new CardInfo.Builder()
-            .setName(VentraUltralightTransitData.NAME)
+            .setName(R.string.card_name_chi_ventra)
             .setLocation(R.string.location_chicago)
             .setCardType(CardType.MifareUltralight)
             .setExtraNote(R.string.compass_note)
             .build();
-
-    private static final String NAME = "Ventra";
 
     static final TimeZone TZ = TimeZone.getTimeZone("America/Chicago");
 
@@ -91,7 +90,7 @@ public class VentraUltralightTransitData extends NextfareUltralightTransitData {
 
         @Override
         public TransitIdentity parseTransitIdentity(UltralightCard card) {
-            return new TransitIdentity(NAME, formatSerial(getSerial(card)));
+            return new TransitIdentity(R.string.card_name_chi_ventra, formatSerial(getSerial(card)));
         }
     };
 
@@ -105,9 +104,10 @@ public class VentraUltralightTransitData extends NextfareUltralightTransitData {
         return TZ;
     }
 
+    @NonNull
     @Override
-    public String getCardName() {
-        return NAME;
+    public CardInfo getCardInfo() {
+        return CARD_INFO;
     }
 
     private VentraUltralightTransitData(Parcel p) {

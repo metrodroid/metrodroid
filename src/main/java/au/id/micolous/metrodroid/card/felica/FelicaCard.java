@@ -135,7 +135,6 @@ public class FelicaCard extends Card {
                     // respond to the normal system code listing.
                     codes.add(new FeliCaLib.SystemCode(OctopusTransitData.SYSTEMCODE_OCTOPUS));
                     octopusMagic = true;
-                    feedbackInterface.showCardType(OctopusTransitData.CARD_INFO);
                 }
 
                 FeliCaLib.IDm sztSystem = ft.pollingAndGetIDm(OctopusTransitData.SYSTEMCODE_SZT);
@@ -145,7 +144,6 @@ public class FelicaCard extends Card {
                     // case they have the same bugs with system code listing.
                     codes.add(new FeliCaLib.SystemCode(OctopusTransitData.SYSTEMCODE_SZT));
                     sztMagic = true;
-                    feedbackInterface.showCardType(NewShenzhenTransitData.CARD_INFO);
                 }
             }
 
@@ -159,8 +157,7 @@ public class FelicaCard extends Card {
             CardInfo i = parseEarlyCardInfo(systemCodes);
             if (i != null) {
                 Log.d(TAG, String.format(Locale.ENGLISH, "Early Card Info: %s", i.getName()));
-                feedbackInterface.updateStatusText(Utils.localizeString(R.string.card_reading_type, i.getName()));
-                feedbackInterface.showCardType(i);
+                feedbackInterface.announceCardType(i);
             }
 
             for (FeliCaLib.SystemCode code : codes) {

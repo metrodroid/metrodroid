@@ -23,6 +23,7 @@
 package au.id.micolous.metrodroid.transit.suica;
 
 import android.os.Parcel;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.util.ArraySet;
 
@@ -62,21 +63,21 @@ public class SuicaTransitData extends TransitData {
 
     public static final CardInfo ICOCA_CARD_INFO = new CardInfo.Builder()
             .setImageId(R.drawable.icoca_card)
-            .setName(Utils.localizeString(R.string.card_name_icoca))
+            .setName(R.string.card_name_icoca)
             .setLocation(R.string.location_kansai)
             .setCardType(CardType.FeliCa)
             .build();
 
     public static final CardInfo SUICA_CARD_INFO = new CardInfo.Builder()
             .setImageId(R.drawable.suica_card)
-            .setName(Utils.localizeString(R.string.card_name_suica))
+            .setName(R.string.card_name_suica)
             .setLocation(R.string.location_tokyo)
             .setCardType(CardType.FeliCa)
             .build();
 
     public static final CardInfo PASMO_CARD_INFO = new CardInfo.Builder()
             .setImageId(R.drawable.pasmo_card)
-            .setName(Utils.localizeString(R.string.card_name_pasmo))
+            .setName(R.string.card_name_pasmo)
             .setLocation(R.string.location_tokyo)
             .setCardType(CardType.FeliCa)
             .build();
@@ -247,7 +248,8 @@ public class SuicaTransitData extends TransitData {
         }
 
         public TransitIdentity parseTransitIdentity(FelicaCard card) {
-            return new TransitIdentity(Utils.localizeString(R.string.card_name_suica), null); // FIXME: Could be ICOCA, etc.
+            // FIXME: Could be ICOCA, etc.
+            return new TransitIdentity(R.string.card_name_suica, null);
         }
     };
 
@@ -279,9 +281,11 @@ public class SuicaTransitData extends TransitData {
         return mTrips;
     }
 
+    @NonNull
     @Override
-    public String getCardName() {
-        return Utils.localizeString(R.string.card_name_suica); // FIXME: Could be ICOCA, etc.
+    public CardInfo getCardInfo() {
+        // FIXME: Could be ICOCA, etc.
+        return SUICA_CARD_INFO;
     }
 
     public void writeToParcel(Parcel parcel, int flags) {

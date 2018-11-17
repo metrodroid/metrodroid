@@ -53,7 +53,6 @@ import java.util.TimeZone;
  */
 public class SeqGoTransitData extends NextfareTransitData {
 
-    public static final String NAME = "Go card";
     public static final Creator<SeqGoTransitData> CREATOR = new Creator<SeqGoTransitData>() {
         public SeqGoTransitData createFromParcel(Parcel parcel) {
             return new SeqGoTransitData(parcel);
@@ -66,7 +65,7 @@ public class SeqGoTransitData extends NextfareTransitData {
 
     public static final CardInfo CARD_INFO = new CardInfo.Builder()
             .setImageId(R.drawable.seqgo_card, R.drawable.seqgo_card_alpha)
-            .setName(SeqGoTransitData.NAME)
+            .setName(R.string.card_name_bne_go)
             .setLocation(R.string.location_brisbane_seq_australia)
             .setCardType(CardType.MifareClassic)
             .setKeysRequired()
@@ -103,7 +102,7 @@ public class SeqGoTransitData extends NextfareTransitData {
     public static final ClassicCardTransitFactory FACTORY = new NextFareTransitFactory() {
         @Override
         public TransitIdentity parseTransitIdentity(@NonNull ClassicCard card) {
-            return super.parseTransitIdentity(card, NAME);
+            return super.parseTransitIdentity(card, R.string.card_name_bne_go);
         }
 
         private boolean check(ClassicSector sector0) {
@@ -177,9 +176,10 @@ public class SeqGoTransitData extends NextfareTransitData {
         return new SeqGoRefill(record);
     }
 
+    @NonNull
     @Override
-    public String getCardName() {
-        return NAME;
+    public CardInfo getCardInfo() {
+        return CARD_INFO;
     }
 
     @Override

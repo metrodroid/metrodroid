@@ -84,13 +84,6 @@ public class CEPASApplication extends ISO7816Application {
 
     private CEPASApplication() { /* For XML Serializer */ }
 
-    private static void setProgress(TagReaderFeedbackInterface feedbackInterface, int val) {
-        feedbackInterface.updateStatusText(Utils.localizeString(R.string.card_reading_type,
-                EZLinkTransitData.EZ_LINK_CARD_INFO.getName()));
-        feedbackInterface.updateProgressBar(val, 64);
-        feedbackInterface.showCardType(EZLinkTransitData.EZ_LINK_CARD_INFO);
-    }
-
     public static CEPASApplication dumpTag(ISO7816Protocol iso7816Tag, ISO7816Application.ISO7816Info app,
                                            TagReaderFeedbackInterface feedbackInterface) throws Exception {
         Map<Integer, Base64String> cepasPurses = new HashMap<>();
@@ -116,11 +109,14 @@ public class CEPASApplication extends ISO7816Application {
                 isValid = true;
             }
             if (isValid)
-                setProgress(feedbackInterface, purseId);
+                feedbackInterface.updateProgressBar(purseId, 64);
         }
 
         if (!isValid)
             return null;
+
+        // By this point we're confident we have a CEPAS
+        feedbackInterface.announceCardType(EZLinkTransitData.EZ_LINK_CARD_INFO);
 
         for (int historyId = 0; historyId < numPurses; historyId++) {
             byte[] history = null;
@@ -129,7 +125,8 @@ public class CEPASApplication extends ISO7816Application {
             }
             if (history != null)
                 cepasHistories.put(historyId, new Base64String(history));
-            setProgress(feedbackInterface, historyId + numPurses);
+
+            feedbackInterface.updateProgressBar(historyId + numPurses, 64);
         }
 
         for (int i = 0x0; i < 0x20;i++) {
@@ -138,7 +135,8 @@ public class CEPASApplication extends ISO7816Application {
             } catch (Exception ex) {
                 Log.d(TAG, "Couldn't read :3f00:4000:" + Integer.toHexString(i));
             }
-            setProgress(feedbackInterface, i + 2 * numPurses);
+
+            feedbackInterface.updateProgressBar(i + 2 * numPurses, 64);
         }
         return new CEPASApplication(app, cepasPurses, cepasHistories);
     }

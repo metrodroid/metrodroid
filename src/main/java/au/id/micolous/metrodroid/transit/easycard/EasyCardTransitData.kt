@@ -46,7 +46,7 @@ data class EasyCardTransitData internal constructor(
 
     override fun getBalance() = TransitCurrency.TWD(balance)
 
-    override fun getCardName() = NAME
+    override fun getCardInfo() = CARD_INFO
 
     override fun getSerialNumber(): String? = null
 
@@ -60,10 +60,9 @@ data class EasyCardTransitData internal constructor(
     companion object {
         private val TZ = TimeZone.getTimeZone("Asia/Taipei")
 
-        internal const val NAME = "EasyCard"
         val CARD_INFO = CardInfo.Builder()
                 .setImageId(R.drawable.tpe_easy_card, R.drawable.iso7810_id1_alpha)
-                .setName(NAME)
+                .setName(R.string.card_name_tpe_easycard)
                 .setLocation(R.string.location_taipei)
                 .setCardType(CardType.MifareClassic)
                 .setKeysRequired()
@@ -102,7 +101,8 @@ data class EasyCardTransitData internal constructor(
 
             override fun earlySectors() = 0
 
-            override fun parseTransitIdentity(card: ClassicCard) = TransitIdentity(NAME, null)
+            override fun parseTransitIdentity(card: ClassicCard) =
+                    TransitIdentity(R.string.card_name_tpe_easycard, null)
 
             override fun parseTransitData(card: ClassicCard) = EasyCardTransitData(card)
 

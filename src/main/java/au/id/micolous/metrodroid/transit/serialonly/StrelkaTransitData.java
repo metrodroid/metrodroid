@@ -55,7 +55,7 @@ public class StrelkaTransitData extends SerialOnlyTransitData {
     };
 
     public static final CardInfo CARD_INFO = new CardInfo.Builder()
-            .setName(Utils.localizeString(R.string.card_name_strelka))
+            .setName(R.string.card_name_strelka)
             .setLocation(R.string.location_moscow)
             .setCardType(CardType.MifareClassic)
             .setExtraNote(R.string.card_note_card_number_only)
@@ -84,9 +84,10 @@ public class StrelkaTransitData extends SerialOnlyTransitData {
         return Reason.MORE_RESEARCH_NEEDED;
     }
 
+    @NonNull
     @Override
-    public String getCardName() {
-        return Utils.localizeString(R.string.card_name_strelka);
+    public CardInfo getCardInfo() {
+        return CARD_INFO;
     }
 
     @Override
@@ -110,7 +111,7 @@ public class StrelkaTransitData extends SerialOnlyTransitData {
     public static final ClassicCardTransitFactory FACTORY = new ClassicCardTransitFactory() {
         @Override
         public  TransitIdentity parseTransitIdentity(@NonNull ClassicCard card) {
-            return new TransitIdentity(Utils.localizeString(R.string.card_name_strelka),
+            return new TransitIdentity(R.string.card_name_strelka,
                     formatShortSerial(getSerial(card)));
         }
 

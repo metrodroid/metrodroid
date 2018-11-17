@@ -177,7 +177,6 @@ public class ClassicCard extends Card {
 
     public static ClassicCard dumpTag(byte[] tagId, Tag tag, TagReaderFeedbackInterface feedbackInterface) throws Exception {
         feedbackInterface.updateStatusText(Utils.localizeString(R.string.mfc_reading));
-        feedbackInterface.showCardType(null);
 
         MifareClassic tech = null;
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(MetrodroidApplication.getInstance());
@@ -462,8 +461,7 @@ public class ClassicCard extends Card {
                     ci = null;
                 }
                 if (ci != null) {
-                    feedbackInterface.showCardType(ci);
-                    feedbackInterface.updateStatusText(Utils.localizeString(R.string.card_reading_type, ci.getName()));
+                    feedbackInterface.announceCardType(ci);
                     return true;
                 }
             }

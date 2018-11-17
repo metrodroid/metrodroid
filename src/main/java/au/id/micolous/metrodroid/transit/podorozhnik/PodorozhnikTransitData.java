@@ -74,7 +74,7 @@ public class PodorozhnikTransitData extends TransitData {
     public static final CardInfo CARD_INFO = new CardInfo.Builder()
             // seqgo_card_alpha has identical geometry
             .setImageId(R.drawable.podorozhnik_card, R.drawable.seqgo_card_alpha)
-            .setName(Utils.localizeString(R.string.card_name_podorozhnik))
+            .setName(R.string.card_name_podorozhnik)
             .setLocation(R.string.location_saint_petersburg)
             .setCardType(CardType.MifareClassic)
             .setExtraNote(R.string.card_note_russia)
@@ -115,9 +115,10 @@ public class PodorozhnikTransitData extends TransitData {
         return mSerial;
     }
 
+    @NonNull
     @Override
-    public String getCardName() {
-        return Utils.localizeString(R.string.card_name_podorozhnik);
+    public CardInfo getCardInfo() {
+        return CARD_INFO;
     }
 
     @Override
@@ -287,7 +288,7 @@ public class PodorozhnikTransitData extends TransitData {
 
         @Override
         public TransitIdentity parseTransitIdentity(@NonNull ClassicCard card) {
-            return new TransitIdentity(Utils.localizeString(R.string.card_name_podorozhnik),
+            return new TransitIdentity(R.string.card_name_podorozhnik,
                     getSerial(card.getTagId()));
         }
 

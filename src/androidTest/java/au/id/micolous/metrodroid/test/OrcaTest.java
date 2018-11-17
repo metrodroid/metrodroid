@@ -25,6 +25,7 @@ import java.util.Calendar;
 import java.util.Collections;
 import java.util.List;
 
+import au.id.micolous.farebot.R;
 import au.id.micolous.metrodroid.card.desfire.DesfireApplication;
 import au.id.micolous.metrodroid.card.desfire.DesfireCard;
 import au.id.micolous.metrodroid.card.desfire.files.DesfireFile;
@@ -85,7 +86,7 @@ public class OrcaTest extends AndroidTestCase {
 
         // Test TransitIdentity
         TransitIdentity i = c.parseTransitIdentity();
-        assertEquals("ORCA", i.getName());
+        assertEquals(R.string.card_name_sea_orca, i.getNameId());
         assertEquals("12030625", i.getSerialNumber());
 
         TransitData d = c.parseTransitData();
@@ -93,7 +94,7 @@ public class OrcaTest extends AndroidTestCase {
 
         OrcaTransitData o = (OrcaTransitData)d;
         assertEquals("12030625", o.getSerialNumber());
-        assertEquals("ORCA", o.getCardName());
+        assertEquals(R.string.card_name_sea_orca, o.getCardInfo().getNameId());
         assertTrue(o.getBalance().equals(TransitCurrency.USD(23432)));
         assertEquals(null, o.getSubscriptions());
 

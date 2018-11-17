@@ -115,14 +115,15 @@ public class TroikaHybridTransitData extends TransitData {
         return items;
     }
 
+    @NonNull
     @Override
-    public String getCardName() {
+    public CardInfo getCardInfo() {
         int nameRes = R.string.card_name_troika;
         if (mStrelka != null)
             nameRes = R.string.card_name_troika_strelka_hybrid;
         if (mPodorozhnik != null)
             nameRes = R.string.card_name_troika_podorozhnik_hybrid;
-        return Utils.localizeString(nameRes);
+        return TroikaTransitData.buildCardInfo(nameRes);
     }
 
     @Override
@@ -161,7 +162,7 @@ public class TroikaHybridTransitData extends TransitData {
                 nameRes = R.string.card_name_troika_strelka_hybrid;
             if (PodorozhnikTransitData.FACTORY.check(card))
                 nameRes = R.string.card_name_troika_podorozhnik_hybrid;
-            return new TransitIdentity(Utils.localizeString(nameRes),
+            return new TransitIdentity(nameRes,
                     TroikaBlock.formatSerial(TroikaBlock.getSerial(card.getSector(8).getBlock(0).getData())));
         }
 
