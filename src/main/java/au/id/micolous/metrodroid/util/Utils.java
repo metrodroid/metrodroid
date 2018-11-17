@@ -95,7 +95,7 @@ public class Utils {
     private static final SimpleDateFormat ISO_DATETIME_FORMAT_FILENAME;
     /** Formatter which returns ISO8601 datetime in UTC. */
     private static final SimpleDateFormat ISO_DATETIME_FORMAT;
-    /** Formatter which returns ISO8601 date in UTC. */
+    /** Formatter which returns ISO8601 date in local time. */
     private static final SimpleDateFormat ISO_DATE_FORMAT;
     /** Reference to UTC timezone. */
     public static final TimeZone UTC = TimeZone.getTimeZone("Etc/UTC");
@@ -110,7 +110,6 @@ public class Utils {
         ISO_DATETIME_FORMAT.setTimeZone(UTC);
 
         ISO_DATE_FORMAT = new SimpleDateFormat("yyyy-MM-dd", Locale.US);
-        ISO_DATE_FORMAT.setTimeZone(UTC);
     }
 
     private Utils() {
@@ -674,8 +673,8 @@ public class Utils {
     }
 
     /**
-     * Formats a GregorianCalendar into ISO8601 date and time format, but with only characters that
-     * can be used in filenames on most filesystems.
+     * Formats a GregorianCalendar in to ISO8601 date and time format in UTC, but with only
+     * characters that can be used in filenames on most filesystems.
      *
      * @param calendar Date/time to format
      * @return String representing the date and time in ISO8601 format.
@@ -686,8 +685,8 @@ public class Utils {
 
 
     /**
-     * Formats a GregorianCalendar into ISO8601 date and time format. This should only be used for debugging
-     * logs, in order to ensure consistent information.
+     * Formats a GregorianCalendar in to ISO8601 date and time format in UTC. This should only be
+     * used for debugging logs, in order to ensure consistent information.
      *
      * @param calendar Date/time to format
      * @return String representing the date and time in ISO8601 format.
@@ -697,8 +696,12 @@ public class Utils {
     }
 
     /**
-     * Formats a GregorianCalendar into ISO8601 date format. This should only be used for debugging
-     * logs, in order to ensure consistent information.
+     * Formats a GregorianCalendar in to ISO8601 date format in local time (ie: without any timezone
+     * conversion).  This is designed for {@link Calendar} values which only have a valid date
+     * component.
+     *
+     * This should only be used for debugging logs, in order to ensure consistent
+     * information.
      *
      * @param calendar Date to format
      * @return String representing the date in ISO8601 format.
