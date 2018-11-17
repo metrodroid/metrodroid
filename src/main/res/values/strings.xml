@@ -639,6 +639,7 @@
     <string name="location_china_mainland">Mainland China</string>
     <string name="location_christchurch_nz">Christchurch, New Zealand</string>
     <string name="location_france">France</string>
+    <string name="location_denmark">Denmark</string>
     <string name="location_gironde">Gironde, France</string>
     <string name="location_grenoble">Grenoble, France</string>
     <string name="location_helsinki_finland">Helsinki, Finland</string>
@@ -672,6 +673,7 @@
     <string name="location_seoul">Seoul, Korea</string>
     <string name="location_shenzhen">Shenzhen, China</string>
     <string name="location_singapore">Singapore</string>
+    <string name="location_stockholm">Stockholm, Sweden</string>
     <string name="location_sophia_antipolis">Sophia Antipolis, France</string>
     <string name="location_sydney_australia">Sydney, Australia</string>
     <string name="location_taipei">Taipei</string>
@@ -1431,4 +1433,14 @@
     <string name="location_iaroslavl">Iaroslavl</string>
     <string name="card_name_krasnodar_etk">ETK Krasnodar</string>
     <string name="location_krasnodar">Krasnodar</string>
+    <!-- Rkf specific strings -->
+    <string name="rkf_card_status">Card status</string>
+    <!-- Translators: describes the status of a card or transaction -->
+    <string name="rkf_status_ok">OK, enabled</string>
+    <!-- Translators: describes the status of a card or transaction -->
+    <string name="rkf_status_action_pending">Action pending</string>
+    <!-- Translators: describes the status of a card or transaction -->
+    <string name="rkf_status_temp_disabled">Temporarily disabled or suspended</string>
+    <!-- Translators: describes the status of a card or transaction -->
+    <string name="rkf_status_not_ok">Permanently disabled</string>
 </resources>

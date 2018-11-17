@@ -72,7 +72,6 @@ import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.text.SimpleDateFormat;
-import java.util.Arrays;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.List;
@@ -96,7 +95,7 @@ public class Utils {
     private static final SimpleDateFormat ISO_DATETIME_FORMAT_FILENAME;
     /** Formatter which returns ISO8601 datetime in UTC. */
     private static final SimpleDateFormat ISO_DATETIME_FORMAT;
-    /** Formatter which returns ISO8601 date in UTC. */
+    /** Formatter which returns ISO8601 date in local time. */
     private static final SimpleDateFormat ISO_DATE_FORMAT;
     /** Reference to UTC timezone. */
     public static final TimeZone UTC = TimeZone.getTimeZone("Etc/UTC");
@@ -111,7 +110,6 @@ public class Utils {
         ISO_DATETIME_FORMAT.setTimeZone(UTC);
 
         ISO_DATE_FORMAT = new SimpleDateFormat("yyyy-MM-dd", Locale.US);
-        ISO_DATE_FORMAT.setTimeZone(UTC);
     }
 
     private Utils() {
@@ -493,6 +491,29 @@ public class Utils {
         }
     }
 
+    public static int getBitsFromBufferLeBits(byte[] buffer, int iStartBit, int iLength) {
+        // Note: Assumes little-endian bit-order
+        int iEndBit = iStartBit + iLength - 1;
+        int iSByte = iStartBit / 8;
+        int iSBit = iStartBit % 8;
+        int iEByte = iEndBit / 8;
+        int iEBit = iEndBit % 8;
+
+        if (iSByte == iEByte) {
+            return (buffer[iEByte] >> iSBit) & (0xFF >> (8 - iLength));
+        } else {
+            int uRet = (buffer[iSByte] >> iSBit) & (0xFF >> iSBit);
+
+            for (int i = iSByte + 1; i < iEByte; i++) {
+                uRet |= ((buffer[i] & 0xFF) << (((i - iSByte) * 8) - iSBit));
+            }
+
+            uRet |= (buffer[iEByte] & ((1 << (iEBit + 1)) - 1)) << (((iEByte - iSByte) * 8) - iSBit);
+
+            return uRet;
+        }
+    }
+
     public static String formatDurationMinutes(int mins)
     {
         int hours, days;
@@ -652,8 +673,8 @@ public class Utils {
     }
 
     /**
-     * Formats a GregorianCalendar into ISO8601 date and time format, but with only characters that
-     * can be used in filenames on most filesystems.
+     * Formats a GregorianCalendar in to ISO8601 date and time format in UTC, but with only
+     * characters that can be used in filenames on most filesystems.
      *
      * @param calendar Date/time to format
      * @return String representing the date and time in ISO8601 format.
@@ -664,8 +685,8 @@ public class Utils {
 
 
     /**
-     * Formats a GregorianCalendar into ISO8601 date and time format. This should only be used for debugging
-     * logs, in order to ensure consistent information.
+     * Formats a GregorianCalendar in to ISO8601 date and time format in UTC. This should only be
+     * used for debugging logs, in order to ensure consistent information.
      *
      * @param calendar Date/time to format
      * @return String representing the date and time in ISO8601 format.
@@ -675,8 +696,12 @@ public class Utils {
     }
 
     /**
-     * Formats a GregorianCalendar into ISO8601 date format. This should only be used for debugging
-     * logs, in order to ensure consistent information.
+     * Formats a GregorianCalendar in to ISO8601 date format in local time (ie: without any timezone
+     * conversion).  This is designed for {@link Calendar} values which only have a valid date
+     * component.
+     *
+     * This should only be used for debugging logs, in order to ensure consistent
+     * information.
      *
      * @param calendar Date to format
      * @return String representing the date in ISO8601 format.
@@ -1084,5 +1109,4 @@ public class Utils {
         clipboard.setPrimaryClip(data);
         Toast.makeText(context, R.string.copied_to_clipboard, Toast.LENGTH_SHORT).show();
     }
-
 }

@@ -23,9 +23,14 @@ import android.os.Build;
 import android.os.Parcel;
 import android.os.Parcelable;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
+import android.support.annotation.VisibleForTesting;
 import android.text.SpannableString;
 import android.text.Spanned;
 import android.text.style.TtsSpan;
+import android.util.Log;
+
+import com.neovisionaries.i18n.CurrencyCode;
 
 import java.security.SecureRandom;
 import java.text.NumberFormat;
@@ -47,10 +52,16 @@ public class TransitCurrency extends TransitBalance implements Parcelable {
         }
     };
 
+    /**
+     * Invalid or no currency information, per ISO 4217.
+     */
+    private static final String UNKNOWN_CURRENCY_CODE = "XXX";
+    private static final double DEFAULT_DIVISOR = 100.;
+
     private final int mCurrency;
 
     /**
-     * 3 character currency code (eg: AUD)
+     * 3 character currency code (eg: AUD) per ISO 4217.
      */
     @NonNull
     private final String mCurrencyCode;
@@ -66,14 +77,126 @@ public class TransitCurrency extends TransitBalance implements Parcelable {
 
     private static final SecureRandom mRNG = new SecureRandom();
 
+    /**
+     * Builds a new TransitCurrency, used to represent a monetary value on a transit card.
+     *
+     * For the {@link #TransitCurrency(int, String)} constructor, the default {@param divisor}
+     * parameter is {@link #DEFAULT_DIVISOR} (100).
+     *
+     * For <em>all other</em> constructors without a {@param divisor} parameter, this is looked up
+     * dynamically using {@link Currency#getDefaultFractionDigits()}. If the currency is unknown,
+     * then {@link #DEFAULT_DIVISOR} (100) is used instead.
+     *
+     * The {@link #TransitCurrency(int, String)} and {@link #TransitCurrency(int, String, double)}
+     * constructors do not perform additional lookups at constructor call time.
+     *
+     * Constructors taking a numeric ISO 4217 {@param currencyCode} will accept unknown currency
+     * codes, replacing them with {@link #UNKNOWN_CURRENCY_CODE} (XXX).
+     *
+     * Constructors taking a {@link Currency} or {@link CurrencyCode} parameter are intended for
+     * internal (to {@link TransitCurrency}) use. Do not use them outside of this class.
+     *
+     * Style note: If the {@link TransitData} only ever supports a single currency, prefer to use
+     * one of the static methods of {@link TransitCurrency} (eg: {@link #AUD(int)}) to build values,
+     * rather than calling this constructor with a constant {@param currencyCode} string.
+     *
+     * @param currency The amount of currency
+     * @param currencyCode An ISO 4217 textual currency code, eg: "AUD".
+     * @throws IllegalArgumentException On invalid {@param currencyCode} passed as a string.
+     */
+    @SuppressWarnings("JavaDoc")
     public TransitCurrency(int currency, @NonNull String currencyCode) {
-        this(currency, currencyCode, 100.);
+        this(currency, currencyCode, DEFAULT_DIVISOR);
     }
 
-    private TransitCurrency(int currency, @NonNull String currencyCode, double divisor) {
+    /**
+     * @inheritDoc
+     *
+     * @param divisor Value to divide by to get that currency's value in non-fractional parts.
+     *                {@see #mDivisor}
+     */
+    @VisibleForTesting
+    public TransitCurrency(int currency, @NonNull String currencyCode, double divisor) {
+        if (currencyCode.length() != 3) {
+            throw new IllegalArgumentException("currencyCode must be 3-character ISO4217 code");
+        }
+
+        currencyCode = currencyCode.toUpperCase(Locale.ENGLISH);
+        for (int x = 0; x < currencyCode.length(); x++) {
+            final char c = currencyCode.charAt(x);
+            if (c < 'A' || c > 'Z') {
+                throw new IllegalArgumentException("currencyCode must only contain letters A-Z");
+            }
+        }
+
         mCurrency = currency;
         mCurrencyCode = currencyCode;
         mDivisor = divisor;
+    }
+
+    /**
+     * @inheritDoc
+     *
+     * @param currencyCode An ISO 4217 numeric currency code
+     */
+    public TransitCurrency(int currency, int currencyCode) {
+       this(currency, CurrencyCode.getByCode(currencyCode));
+    }
+
+    /**
+     * @inheritDoc
+     *
+     * @param currencyCode An ISO 4217 numeric currency code
+     */
+    public TransitCurrency(int currency, int currencyCode, double divisor) {
+        this(currency, CurrencyCode.getByCode(currencyCode), divisor);
+    }
+
+    /**
+     * @inheritDoc
+     *
+     * @param currencyCode A {@link CurrencyCode} instance for the currency code.
+     */
+    private TransitCurrency(int currency, @Nullable CurrencyCode currencyCode) {
+        this(currency, (currencyCode == null ? null : currencyCode.getCurrency()));
+    }
+
+    /**
+     * @inheritDoc
+     *
+     * @param currencyCode A {@link CurrencyCode} instance for the currency code.
+     */
+    private TransitCurrency(int currency, @Nullable CurrencyCode currencyCode, double divisor) {
+        this(currency, (currencyCode == null ? null : currencyCode.getCurrency()), divisor);
+    }
+
+    /**
+     * @inheritDoc
+     *
+     * @param currencyCode A {@link Currency} instance for the currency code.
+     */
+    private TransitCurrency(int currency, @Nullable Currency currencyCode) {
+        this(currency, currencyCode, getDivisorForCurrency(currencyCode));
+    }
+
+    /**
+     * @inheritDoc
+     *
+     * @param currencyCode A {@link Currency} instance for the currency code.
+     */
+    private TransitCurrency(int currency, @Nullable Currency currencyCode, double divisor) {
+        this(currency,
+                (currencyCode == null ? UNKNOWN_CURRENCY_CODE :
+                        currencyCode.getCurrencyCode()),
+                divisor);
+    }
+
+    private static double getDivisorForCurrency(@Nullable Currency currency) {
+        if (currency == null) {
+            return DEFAULT_DIVISOR;
+        } else {
+            return Math.pow(10, currency.getDefaultFractionDigits());
+        }
     }
 
     @NonNull
@@ -94,6 +217,11 @@ public class TransitCurrency extends TransitBalance implements Parcelable {
     @NonNull
     public static TransitCurrency CNY(int fen) {
         return new TransitCurrency(fen, "CNY");
+    }
+
+    @NonNull
+    public static TransitCurrency DKK(int ore) {
+        return new TransitCurrency(ore, "DKK");
     }
 
     @NonNull
@@ -141,12 +269,36 @@ public class TransitCurrency extends TransitBalance implements Parcelable {
         return new TransitCurrency(cents, "USD");
     }
 
+    /**
+     * Constructor for use with unknown currencies.
+     */
+    @NonNull
+    public static TransitCurrency XXX(int cents) {
+        return new TransitCurrency(cents, UNKNOWN_CURRENCY_CODE);
+    }
+
+    @NonNull
+    public static TransitCurrency XXX(int cents, double divisor) {
+        return new TransitCurrency(cents, UNKNOWN_CURRENCY_CODE, divisor);
+    }
+
+
     @Override
     public boolean equals(Object obj) {
         if (!(obj instanceof TransitCurrency))
             return false;
         TransitCurrency other = (TransitCurrency) obj;
-        return mCurrencyCode.equals(other.mCurrencyCode) && mCurrency == other.mCurrency;
+
+        if (!mCurrencyCode.equals(other.mCurrencyCode)) {
+            return false;
+        }
+
+        if (mDivisor == other.mDivisor) {
+            return mCurrency == other.mCurrency;
+        } else {
+            // Divisors don't match -- coerce to a common denominator
+            return (mCurrency * other.mDivisor) == (other.mCurrency * mDivisor);
+        }
     }
     
     static public TransitCurrency TWD(int cents) {
@@ -181,32 +333,60 @@ public class TransitCurrency extends TransitBalance implements Parcelable {
      * @return Formatted currency string
      */
     public Spanned formatCurrencyString(boolean isBalance) {
-        Currency c = Currency.getInstance(mCurrencyCode);
-        NumberFormat numberFormat = NumberFormat.getCurrencyInstance();
-        numberFormat.setCurrency(Currency.getInstance(mCurrencyCode));
+        Currency c = null;
 
-        // https://github.com/micolous/metrodroid/issues/34
-        // Java's NumberFormat returns too many, or too few fractional amounts
-        // in currencies, depending on the system locale.
-        // In Japanese, AUD is formatted as "A$1" instead of "A$1.23".
-        // In English, JPY is formatted as "¥123.00" instead of "¥123"
-        numberFormat.setMinimumFractionDigits(c.getDefaultFractionDigits());
+        // numberFormatter is only used for TtsSpan, so needs to give a consistent result.
+        final NumberFormat numberFormatter = NumberFormat.getNumberInstance(Locale.ENGLISH);
+        numberFormatter.setGroupingUsed(false);
+
+        final NumberFormat currencyFormatter;
+
+        if (!UNKNOWN_CURRENCY_CODE.equals(mCurrencyCode)) {
+            c = Currency.getInstance(mCurrencyCode);
+        }
+
+        if (c != null) {
+            // We have formatting information.
+            currencyFormatter = NumberFormat.getCurrencyInstance();
+            currencyFormatter.setCurrency(c);
+
+            // https://github.com/micolous/metrodroid/issues/34
+            // Java's NumberFormat returns too many, or too few fractional amounts
+            // in currencies, depending on the system locale.
+            // In Japanese, AUD is formatted as "A$1" instead of "A$1.23".
+            // In English, JPY is formatted as "¥123.00" instead of "¥123"
+            currencyFormatter.setMinimumFractionDigits(c.getDefaultFractionDigits());
+            numberFormatter.setMinimumFractionDigits(c.getDefaultFractionDigits());
+        } else {
+            // No formatting information is available.
+            currencyFormatter = NumberFormat.getNumberInstance();
+
+            // Infer number of decimal places we should add based on the divisor
+            numberFormatter.setMinimumFractionDigits((int) Math.floor(Math.log(mDivisor)));
+        }
 
         SpannableString s;
+        int numberOffset = 0;
+        double amount;
 
         if (!isBalance && mCurrency < 0) {
-            s = new SpannableString("+ " + numberFormat.format(Math.abs(((double) mCurrency) / mDivisor)));
-
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                s.setSpan(new TtsSpan.MoneyBuilder().setQuantity(Integer.toString(Math.abs(mCurrency))).setCurrency(mCurrencyCode).build(), 2, s.length(), 0);
-            }
+            // Top-ups and refunds get an explicit "positive" marker added, as this list shows
+            // debits.
+            amount = Math.abs(((double) mCurrency) / mDivisor);
+            s = new SpannableString("+ " + currencyFormatter.format(amount));
+            numberOffset = 2;
         } else {
-            s = new SpannableString(numberFormat.format(((double) mCurrency) / mDivisor));
-
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                s.setSpan(new TtsSpan.MoneyBuilder().setQuantity(Integer.toString(mCurrency)).setCurrency(mCurrencyCode).build(), 0, s.length(), 0);
-            }
+            amount = ((double) mCurrency) / mDivisor;
+            s = new SpannableString(currencyFormatter.format(amount));
         }
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP && c != null) {
+            s.setSpan(new TtsSpan.MoneyBuilder()
+                    .setIntegerPart(numberFormatter.format(amount))
+                    .setCurrency(c.getCurrencyCode())
+                    .build(), numberOffset, s.length(), 0);
+        }
+
         return s;
     }
 
@@ -265,9 +445,10 @@ public class TransitCurrency extends TransitBalance implements Parcelable {
     @Override
     public String toString() {
         return String.format(Locale.ENGLISH,
-                "%s.%s(%d)",
+                "%s.%s(%d, %f)",
                 getClass().getSimpleName(),
                 mCurrencyCode,
-                mCurrency);
+                mCurrency,
+                mDivisor);
     }
 }

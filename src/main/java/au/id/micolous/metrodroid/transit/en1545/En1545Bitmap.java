@@ -38,17 +38,17 @@ public class En1545Bitmap implements En1545Field {
     }
 
     @Override
-    public int parseField(byte[] b, int off, String path, En1545Parsed holder) {
+    public int parseField(byte[] b, int off, String path, En1545Parsed holder, En1545Bits bitParser) {
         int bitmask;
         try {
-            bitmask = Utils.getBitsFromBuffer(b, off, mFields.size());
+            bitmask = bitParser.getBitsFromBuffer(b, off, mFields.size());
         } catch (Exception e) {
             return off + mFields.size();
         }
         off += mFields.size();
         for (En1545Field el : mFields) {
             if ((bitmask & 1) != 0)
-                off = el.parseField(b, off, path, holder);
+                off = el.parseField(b, off, path, holder, bitParser);
             bitmask >>= 1;
         }
         return off;

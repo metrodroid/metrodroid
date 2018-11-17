@@ -164,6 +164,9 @@ public class En1545Parsed implements Parcelable {
         if (contains(name + "TimeLocal") && contains(name + "Date"))
             return Pair.create(En1545FixedInteger.parseTimeLocal(getIntOrZero(name + "Date"), getIntOrZero(name + "TimeLocal"), tz),
                     3);
+        if (contains(name + "TimePacked16") && contains(name + "Date"))
+            return Pair.create(En1545FixedInteger.parseTimePacked16(getIntOrZero(name + "Date"), getIntOrZero(name + "TimePacked16"), tz),
+                    3);
         if (contains(name + "Date"))
             return Pair.create(En1545FixedInteger.parseDate(getIntOrZero(name + "Date"), tz), 2);
         if (contains(name + "TimeLocal"))
@@ -235,12 +238,20 @@ public class En1545Parsed implements Parcelable {
     }
 
     public En1545Parsed append(byte[] data, int off, En1545Field field) {
-        field.parseField(data, off, "", this);
+        field.parseField(data, off, "", this, Utils::getBitsFromBuffer);
+        return this;
+    }
+
+    public En1545Parsed appendLeBits(byte[] data, int off, En1545Field field) {
+        field.parseField(data, off, "", this, Utils::getBitsFromBufferLeBits);
         return this;
     }
 
     public En1545Parsed append(byte[] data, En1545Field field) {
-        field.parseField(data, 0, "", this);
-        return this;
+        return append(data, 0, field);
+    }
+
+    public En1545Parsed appendLeBits(byte[] data, En1545Field field) {
+        return appendLeBits(data, 0, field);
     }
 }
