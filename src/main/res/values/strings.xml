@@ -693,58 +693,115 @@
     These use the airport code for the city, or the country in the case of national systems.
     -->
 
+    <!-- Translators: name of a transit card, may be transliterated -->
     <string name="card_name_adl_metrocard">Metrocard (Adelaide)</string>
+    <!--
+    Translators: name of a transit card, may be transliterated
+    AT = Auckland Transport
+    HOP = brand name used by operator
+    -->
     <string name="card_name_akl_athop">AT HOP</string>
+    <!-- Translators: name of a transit card, may be transliterated -->
     <string name="card_name_arn_slaccess">SLaccess</string>
+    <!-- Translators: name of a transit card, may be transliterated -->
     <string name="card_name_bne_go">Go card</string>
+    <!-- Translators: name of a transit card, may be transliterated -->
     <string name="card_name_bod_transgironde">TransGironde</string>
+    <!-- Translators: name of a transit card, may be transliterated -->
     <string name="card_name_bos_charliecard">CharlieCard</string>
+    <!-- Translators: name of a transit card, may be transliterated -->
     <string name="card_name_bru_mobib">Mobib</string>
+    <!--
+    Translators: name of a transit card, may be transliterated
+    BEM = Bangkok Expressway and Metro plc.
+    -->
     <string name="card_name_bkk_mrt">Bangkok BEM</string>
+    <!-- Translators: name of a transit card, may be transliterated -->
     <string name="card_name_cbr_myway">MyWay</string>
+    <!-- Translators: name of a transit card, may be transliterated -->
     <string name="card_name_chc_metrocard">Metrocard (Christchurch)</string>
+    <!-- Translators: name of a transit card, may be transliterated -->
     <string name="card_name_chi_ventra">Ventra</string>
+    <!-- Translators: name of a transit card, may be transliterated -->
     <string name="card_name_gnb_oura">OùRA</string>
+    <!-- Translators: name of a transit card, may be transliterated -->
     <string name="card_name_gru_bu">Bilhete Único</string>
+    <!-- Translators: name of a transit card, may be transliterated -->
     <string name="card_name_hel_hsl">HSL</string>
+    <!-- Translators: name of a transit card, may be transliterated -->
     <string name="card_name_hnd_edy">Edy</string>
+    <!-- Translators: name of a transit card, may be transliterated -->
     <string name="card_name_iah_metroq">Metro Q</string>
+    <!-- Translators: name of a transit card, may be transliterated -->
     <string name="card_name_ist_kart">IstanbulKart</string>
+    <!-- Translators: name of a transit card, may be transliterated -->
     <string name="card_name_lax_tap">Transit Access Pass</string>
+    <!-- Translators: name of a transit card, may be transliterated -->
     <string name="card_name_lhr_oyster">Oyster</string>
+    <!-- Translators: name of a transit card, may be transliterated -->
     <string name="card_name_mel_myki">Myki</string>
+    <!-- Translators: name of a transit card, may be transliterated -->
     <string name="card_name_mco_suncard">SunRail SunCard</string>
-    <!-- Transports de l'agglomération de Montpellier -->
+    <!-- 
+    Translators: name of a transit card, may be transliterated
+    TaM = Transports de l'agglomération de Montpellier -->
     <string name="card_name_mpl_tam">TaM</string>
+    <!-- Translators: name of a transit card, may be transliterated -->
     <string name="card_name_msp_goto">Go-To card</string>
+    <!-- Translators: name of a transit card, may be transliterated -->
     <string name="card_name_mxp_ricaricami">RicaricaMi</string>
+    <!-- Translators: name of a transit card, may be transliterated -->
     <string name="card_name_pdx_hop">Hop Fastpass</string>
+    <!-- Translators: name of a transit card, may be transliterated -->
     <string name="card_name_per_smartrider">SmartRider</string>
+    <!-- Translators: name of a transit card, may be transliterated -->
     <string name="card_name_prg_litacka">Lítačka</string>
+    <!-- Translators: name of a transit card, may be transliterated -->
     <string name="card_name_sin_cepas">CEPAS</string>
+    <!-- Translators: name of a transit card, may be transliterated -->
     <string name="card_name_sin_ezlink">EZ-Link</string>
+    <!-- Translators: name of a transit card, may be transliterated -->
     <string name="card_name_sin_nets_flashpay">NETS FlashPay</string>
+    <!-- Translators: name of a transit card, may be transliterated -->
     <string name="card_name_sfo_clipper">Clipper</string>
+    <!-- Translators: name of a transit card, may be transliterated -->
     <string name="card_name_syd_manly">Manly Fast Ferry</string>
+    <!-- Translators: name of a transit card, may be transliterated -->
     <string name="card_name_syd_opal">Opal</string>
+    <!-- Translators: name of a transit card, may be transliterated -->
     <string name="card_name_sea_orca">ORCA</string>
+    <!-- Translators: name of a transit card, may be transliterated -->
     <string name="card_name_tpe_easycard">EasyCard</string>
+    <!-- Translators: name of a transit card, may be transliterated -->
     <string name="card_name_tls_pastel">Pastel</string>
+    <!-- Translators: name of a transit card, may be transliterated -->
     <string name="card_name_cdg_navigo">Navigo</string>
+    <!-- Translators: name of a transit card, may be transliterated -->
     <string name="card_name_sxd_envibus">Envibus</string>
+    <!-- Translators: name of a transit card, may be transliterated -->
     <string name="card_name_cgk_kmt">Kartu Multi Trip</string>
+    <!-- Translators: name of a transit card, may be transliterated -->
     <string name="card_name_tay_bus">Tartu Bus</string>
+    <!-- Translators: name of a transit card, may be transliterated -->
     <string name="card_name_lis_viva">Lisboa Viva</string>
+    <!-- Translators: name of a transit card, may be transliterated -->
     <string name="card_name_yvr_compass">Compass</string>
-
+    <!-- Translators: name of a transit card system, may be transliterated -->
     <string name="card_name_au_erg">ERG</string>
+    <!-- Translators: name of a transit card, may be transliterated -->
     <string name="card_name_ca_opus">Opus</string>
+    <!-- Translators: name of a transit card, may be transliterated -->
     <string name="card_name_dk_rejsekort">Rejsekort</string>
+    <!-- Translators: name of a transit card, may be transliterated -->
     <string name="card_name_fr_intercode">Intercode</string>
+    <!-- Translators: name of a transit card, may be transliterated -->
     <string name="card_name_fr_selecta">Selecta</string>
+    <!-- Translators: name of a transit card, may be transliterated -->
     <string name="card_name_ie_leap">Leap</string>
+    <!-- Translators: name of a transit card, may be transliterated -->
     <string name="card_name_nl_ovc">OV-chipkaart</string>
-    <!-- Resekortsföreningen -->
+    <!-- Translators: name of a transit card system, may be transliterated
+    RKF = Resekortsföreningen -->
     <string name="card_name_se_rkf">RKF</string>
 
     <!--
