@@ -1424,4 +1424,11 @@
     <!-- Translators: some card serial numbers are very long, this is shown as a list item for
     the full version of the card's serial number -->
     <string name="full_serial_number">Full serial number</string>
+    <string name="card_name_zolotaya_korona">Zolotaya Korona</string>
+    <string name="location_russia">Russia</string>
+    <string name="zolotaya_korona_region">Region</string>
+    <string name="card_name_iaroslavl_etk">ETK Iaroslavl</string>
+    <string name="location_iaroslavl">Iaroslavl</string>
+    <string name="card_name_krasnodar_etk">ETK Krasnodar</string>
+    <string name="location_krasnodar">Krasnodar</string>
 </resources>
