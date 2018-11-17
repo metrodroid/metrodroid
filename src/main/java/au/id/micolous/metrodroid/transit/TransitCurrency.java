@@ -26,6 +26,9 @@ import android.support.annotation.NonNull;
 import android.text.SpannableString;
 import android.text.Spanned;
 import android.text.style.TtsSpan;
+import android.util.Log;
+
+import com.neovisionaries.i18n.CurrencyCode;
 
 import java.security.SecureRandom;
 import java.text.NumberFormat;
@@ -47,10 +50,15 @@ public class TransitCurrency extends TransitBalance implements Parcelable {
         }
     };
 
+    /**
+     * Invalid or no currency information, per ISO 4217.
+     */
+    private static final String UNKNOWN_CURRENCY_CODE = "XXX";
+
     private final int mCurrency;
 
     /**
-     * 3 character currency code (eg: AUD)
+     * 3 character currency code (eg: AUD) per ISO 4217.
      */
     @NonNull
     private final String mCurrencyCode;
@@ -66,14 +74,52 @@ public class TransitCurrency extends TransitBalance implements Parcelable {
 
     private static final SecureRandom mRNG = new SecureRandom();
 
+    /**
+     * Builds a new TransitCurrency, used to represent a monetary value on a transit card.
+     *
+     * Style note: If the {@link TransitData} only ever supports a single currency, prefer to use
+     * one of the static methods of {@link TransitCurrency} (eg: {@link #AUD(int)}) to build values,
+     * rather than calling this constructor with a constant {@param currencyCode}.
+     *
+     * @param currency The amount of currency
+     * @param currencyCode An ISO 4217 textual currency code, eg: "AUD"
+     */
     public TransitCurrency(int currency, @NonNull String currencyCode) {
         this(currency, currencyCode, 100.);
     }
 
+    /**
+     * @inheritDoc
+     *
+     * @param divisor Value to divide by to get that currency's value in non-fractional parts.
+     *                {@see #mDivisor}
+     */
     private TransitCurrency(int currency, @NonNull String currencyCode, double divisor) {
         mCurrency = currency;
         mCurrencyCode = currencyCode;
         mDivisor = divisor;
+    }
+
+    /**
+     * @inheritDoc
+     *
+     * @param currencyCode An ISO 4217 numeric currency code
+     */
+    public TransitCurrency(int currency, int currencyCode, double divisor) {
+        mCurrency = currency;
+        mDivisor = divisor;
+
+        final CurrencyCode cc = CurrencyCode.getByCode(currencyCode);
+        Currency c = null;
+        if (cc != null) {
+            c = cc.getCurrency();
+        }
+
+        if (c != null) {
+            mCurrencyCode = c.getCurrencyCode();
+        } else {
+            mCurrencyCode = UNKNOWN_CURRENCY_CODE;
+        }
     }
 
     @NonNull
@@ -186,32 +232,58 @@ public class TransitCurrency extends TransitBalance implements Parcelable {
      * @return Formatted currency string
      */
     public Spanned formatCurrencyString(boolean isBalance) {
-        Currency c = Currency.getInstance(mCurrencyCode);
-        NumberFormat numberFormat = NumberFormat.getCurrencyInstance();
-        numberFormat.setCurrency(Currency.getInstance(mCurrencyCode));
+        Currency c = null;
 
-        // https://github.com/micolous/metrodroid/issues/34
-        // Java's NumberFormat returns too many, or too few fractional amounts
-        // in currencies, depending on the system locale.
-        // In Japanese, AUD is formatted as "A$1" instead of "A$1.23".
-        // In English, JPY is formatted as "¥123.00" instead of "¥123"
-        numberFormat.setMinimumFractionDigits(c.getDefaultFractionDigits());
+        // numberFormatter is only used for TtsSpan, so needs to give a consistent result.
+        final NumberFormat numberFormatter = NumberFormat.getNumberInstance(Locale.ENGLISH);
+        numberFormatter.setGroupingUsed(false);
+
+        final NumberFormat currencyFormatter;
+
+        if (!UNKNOWN_CURRENCY_CODE.equals(mCurrencyCode)) {
+            c = Currency.getInstance(mCurrencyCode);
+        }
+
+        if (c != null) {
+            currencyFormatter = NumberFormat.getCurrencyInstance();
+            currencyFormatter.setCurrency(c);
+
+            // https://github.com/micolous/metrodroid/issues/34
+            // Java's NumberFormat returns too many, or too few fractional amounts
+            // in currencies, depending on the system locale.
+            // In Japanese, AUD is formatted as "A$1" instead of "A$1.23".
+            // In English, JPY is formatted as "¥123.00" instead of "¥123"
+            currencyFormatter.setMinimumFractionDigits(c.getDefaultFractionDigits());
+            numberFormatter.setMinimumFractionDigits(c.getDefaultFractionDigits());
+        } else {
+            currencyFormatter = NumberFormat.getNumberInstance();
+
+            // Infer number of decimal places we should add based on the divisor
+            numberFormatter.setMinimumFractionDigits((int) Math.floor(Math.log(mDivisor)));
+        }
 
         SpannableString s;
+        int numberOffset = 0;
+        double amount;
 
         if (!isBalance && mCurrency < 0) {
-            s = new SpannableString("+ " + numberFormat.format(Math.abs(((double) mCurrency) / mDivisor)));
-
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                s.setSpan(new TtsSpan.MoneyBuilder().setQuantity(Integer.toString(Math.abs(mCurrency))).setCurrency(mCurrencyCode).build(), 2, s.length(), 0);
-            }
+            // Top-ups and refunds get an explicit "positive" marker added, as this list shows
+            // debits.
+            amount = Math.abs(((double) mCurrency) / mDivisor);
+            s = new SpannableString("+ " + currencyFormatter.format(amount));
+            numberOffset = 2;
         } else {
-            s = new SpannableString(numberFormat.format(((double) mCurrency) / mDivisor));
-
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                s.setSpan(new TtsSpan.MoneyBuilder().setQuantity(Integer.toString(mCurrency)).setCurrency(mCurrencyCode).build(), 0, s.length(), 0);
-            }
+            amount = ((double) mCurrency) / mDivisor;
+            s = new SpannableString(currencyFormatter.format(amount));
         }
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP && c != null) {
+            s.setSpan(new TtsSpan.MoneyBuilder()
+                    .setIntegerPart(numberFormatter.format(amount))
+                    .setCurrency(c.getCurrencyCode())
+                    .build(), numberOffset, s.length(), 0);
+        }
+
         return s;
     }
 

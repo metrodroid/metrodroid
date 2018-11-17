@@ -18,8 +18,11 @@
  */
 package au.id.micolous.metrodroid.test;
 
+import android.os.Build;
+import android.os.PersistableBundle;
 import android.test.AndroidTestCase;
 import android.text.Spanned;
+import android.text.style.TtsSpan;
 
 import org.hamcrest.Matchers;
 
@@ -33,6 +36,21 @@ import static au.id.micolous.metrodroid.test.TestUtils.assertSpannedThat;
  */
 public class CurrencyFormatterTest extends AndroidTestCase {
 
+    private void assertTtsMarkers(String currencyCode, String value, Spanned span) {
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
+            return;
+        }
+
+        TtsSpan[] ttsSpans = span.getSpans(0, span.length(), TtsSpan.class);
+        assertEquals(1, ttsSpans.length);
+
+
+        assertEquals(TtsSpan.TYPE_MONEY, ttsSpans[0].getType());
+        final PersistableBundle bundle = ttsSpans[0].getArgs();
+        assertEquals(currencyCode, bundle.getString(TtsSpan.ARG_CURRENCY));
+        assertEquals(value, bundle.getString(TtsSpan.ARG_INTEGER_PART));
+    }
+
     /**
      * In Australian English, AUD should come out as a bare "$", and USD should come out with some
      * different prefix.
@@ -44,12 +62,16 @@ public class CurrencyFormatterTest extends AndroidTestCase {
         // https://unicode.org/cldr/trac/ticket/10217
         // Only check to make sure AUD comes out correctly in en_AU.
         TestUtils.setLocale(getContext(), "en-AU");
-        assertSpannedEquals("$12.34", TransitCurrency.AUD(1234).formatCurrencyString(true));
+
+        final Spanned aud = TransitCurrency.AUD(1234).formatCurrencyString(true);
+        assertSpannedEquals("$12.34", aud);
+        assertTtsMarkers("AUD", "12.34", aud);
 
         // May be "USD12.34", "U$12.34" or "US$12.34".
-        Spanned usd = TransitCurrency.USD(1234).formatCurrencyString(true);
+        final Spanned usd = TransitCurrency.USD(1234).formatCurrencyString(true);
         assertSpannedThat(usd, Matchers.startsWith("U"));
         assertSpannedThat(usd, Matchers.endsWith("12.34"));
+        assertTtsMarkers("USD", "12.34", usd);
     }
 
     /**
@@ -59,18 +81,26 @@ public class CurrencyFormatterTest extends AndroidTestCase {
      */
     public void testEnglishGB() {
         TestUtils.setLocale(getContext(), "en-GB");
+
         // May be "$12.34", "U$12.34" or "US$12.34".
-        assertSpannedThat(TransitCurrency.USD(1234).formatCurrencyString(true), Matchers.endsWith("$12.34"));
+        final Spanned usd = TransitCurrency.USD(1234).formatCurrencyString(true);
+        assertSpannedThat(usd, Matchers.endsWith("$12.34"));
+        assertTtsMarkers("USD", "12.34", usd);
 
         // May be "A$12.34" or "AU$12.34".
-        Spanned aud = TransitCurrency.AUD(1234).formatCurrencyString(true);
+        final Spanned aud = TransitCurrency.AUD(1234).formatCurrencyString(true);
         assertSpannedThat(aud, Matchers.startsWith("A"));
         assertSpannedThat(aud, Matchers.endsWith("$12.34"));
+        assertTtsMarkers("AUD", "12.34", aud);
 
-        assertSpannedEquals("£12.34", new TransitCurrency(1234, "GBP").formatCurrencyString(true));
+        final Spanned gbp = new TransitCurrency(1234, "GBP").formatCurrencyString(true);
+        assertSpannedEquals("£12.34", gbp);
+        assertTtsMarkers("GBP", "12.34", gbp);
 
         // May be "¥1,234" or "JP¥1,234".
-        assertSpannedThat(TransitCurrency.JPY(1234).formatCurrencyString(true), Matchers.endsWith("¥1,234"));
+        final Spanned jpy = TransitCurrency.JPY(1234).formatCurrencyString(true);
+        assertSpannedThat(jpy, Matchers.endsWith("¥1,234"));
+        assertTtsMarkers("JPY", "1234", jpy);
     }
 
     /**
@@ -80,17 +110,20 @@ public class CurrencyFormatterTest extends AndroidTestCase {
     public void testEnglishUS() {
         TestUtils.setLocale(getContext(), "en-US");
 
-        assertSpannedEquals("$12.34", TransitCurrency.USD(1234).formatCurrencyString(true));
+        final Spanned usd = TransitCurrency.USD(1234).formatCurrencyString(true);
+        assertSpannedEquals("$12.34", usd);
 
         // May be "A$12.34" or "AU$12.34".
-        Spanned aud = TransitCurrency.AUD(1234).formatCurrencyString(true);
+        final Spanned aud = TransitCurrency.AUD(1234).formatCurrencyString(true);
         assertSpannedThat(aud, Matchers.startsWith("A"));
         assertSpannedThat(aud, Matchers.endsWith("$12.34"));
 
-        assertSpannedEquals("£12.34", new TransitCurrency(1234, "GBP").formatCurrencyString(true));
+        final Spanned gbp = new TransitCurrency(1234, "GBP").formatCurrencyString(true);
+        assertSpannedEquals("£12.34", gbp);
 
         // May be "¥1,234" or "JP¥1,234".
-        assertSpannedThat(TransitCurrency.JPY(1234).formatCurrencyString(true), Matchers.endsWith("¥1,234"));
+        final Spanned jpy = TransitCurrency.JPY(1234).formatCurrencyString(true);
+        assertSpannedThat(jpy, Matchers.endsWith("¥1,234"));
     }
 
     /**
@@ -103,17 +136,25 @@ public class CurrencyFormatterTest extends AndroidTestCase {
         TestUtils.setLocale(getContext(), "ja-JP");
 
         // May be "$12.34", "U$12.34" or "US$12.34".
-        assertSpannedThat(TransitCurrency.USD(1234).formatCurrencyString(true), Matchers.endsWith("$12.34"));
+        final Spanned usd = TransitCurrency.USD(1234).formatCurrencyString(true);
+        assertSpannedThat(usd, Matchers.endsWith("$12.34"));
+        assertTtsMarkers("USD", "12.34", usd);
 
         // May be "A$12.34" or "AU$12.34".
-        Spanned aud = TransitCurrency.AUD(1234).formatCurrencyString(true);
+        final Spanned aud = TransitCurrency.AUD(1234).formatCurrencyString(true);
         assertSpannedThat(aud, Matchers.startsWith("A"));
         assertSpannedThat(aud, Matchers.endsWith("$12.34"));
+        assertTtsMarkers("AUD", "12.34", aud);
 
-        assertSpannedEquals("£12.34", new TransitCurrency(1234, "GBP").formatCurrencyString(true));
+        final Spanned gbp = new TransitCurrency(1234, "GBP").formatCurrencyString(true);
+        assertSpannedEquals("£12.34", gbp);
+        assertTtsMarkers("GBP", "12.34", gbp);
+
 
         // Note: this is the full-width yen character
-        assertSpannedEquals("￥1,234", TransitCurrency.JPY(1234).formatCurrencyString(true));
+        final Spanned jpy = TransitCurrency.JPY(1234).formatCurrencyString(true);
+        assertSpannedEquals("￥1,234", jpy);
+        assertTtsMarkers("JPY", "1234", jpy);
     }
 
 }
