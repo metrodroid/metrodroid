@@ -71,10 +71,7 @@ public class AtHopStubTransitData extends SerialOnlyTransitData {
     }
 
     private static String formatSerial(int serial) {
-        return String.format(Locale.ENGLISH, "7824 6702 %04d %04d %03d",
-                (serial / 10000000),
-                (serial / 1000) % 10000,
-                serial % 1000);
+        return "7824 6702 " + Utils.formatNumber(serial, " ", 4, 4, 3);
     }
 
     private static final String NAME = "AT HOP";

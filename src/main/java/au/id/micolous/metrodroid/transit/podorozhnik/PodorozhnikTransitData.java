@@ -155,14 +155,11 @@ public class PodorozhnikTransitData extends TransitData {
     }
 
     private static String getSerial(byte []uid) {
-        String sn;StringBuilder pretty = new StringBuilder();
-        sn = String.format(Locale.ENGLISH, "96433078%017d",
-                Utils.byteArrayToLongReversed(uid, 0, 7));
-        sn += Utils.calculateLuhn(sn);// last digit is luhn
-        for (int i = 0; i < 6; i++)
-            pretty.append(sn, i * 4, i * 4 + 4).append(" ");
-        pretty.append(sn, 24, 26);
-        return pretty.toString();
+        String sn;
+        sn = "9643 3078 " + Utils.formatNumber(Utils.byteArrayToLongReversed(uid, 0, 7),
+                " ", 4, 4, 4);
+        sn += Utils.calculateLuhn (sn.replaceAll(" ", ""));// last digit is luhn
+        return sn;
     }
 
     private void decodeSector4(ClassicCard card) {

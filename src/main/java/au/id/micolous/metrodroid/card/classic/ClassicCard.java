@@ -550,14 +550,7 @@ public class ClassicCard extends Card {
         @Override
         public boolean check(@NonNull ClassicCard classicCard) {
             String fallback = getFallbackReader();
-            if (fallback.equals("myway") || fallback.equals("smartrider")) {
-                // This has a proper check now, but is included for legacy reasons.
-                //
-                // Before the introduction of key-based detection for these cards, Metrodroid did
-                // not record the key inside the ClassicCard XML structure.
-                return true;
-            }
-            return false;
+            return fallback.equals("myway") || fallback.equals("smartrider");
         }
 
         @Override

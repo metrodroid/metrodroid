@@ -60,6 +60,7 @@ import android.view.WindowManager;
 import android.widget.Toast;
 
 import org.apache.commons.io.IOUtils;
+import org.jetbrains.annotations.NotNull;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -900,6 +901,18 @@ public class Utils {
     public static int getBitsFromBufferSigned(byte[] data, int startBit, int bitLength) {
         int val = getBitsFromBuffer(data, startBit, bitLength);
         return unsignedToTwoComplement(val, bitLength - 1);
+    }
+
+    @NotNull
+    public static String groupString(@NotNull String val, @NotNull String separator, int... groups) {
+        StringBuilder ret = new StringBuilder();
+        int ptr = 0;
+        for (int g : groups) {
+            ret.append(val, ptr, ptr + g).append(separator);
+            ptr += g;
+        }
+        ret.append(val, ptr, val.length());
+        return ret.toString();
     }
 
     public interface Matcher<T> {

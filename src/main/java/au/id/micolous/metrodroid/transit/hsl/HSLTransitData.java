@@ -257,7 +257,6 @@ public class HSLTransitData extends TransitData implements Parcelable {
                 mKausiPrevStart = temp;
                 mKausiPrevEnd = temp2;
             }
-            boolean mHasKausi = mKausiEnd > (System.currentTimeMillis() / 1000.0);
             Calendar mKausiPurchase = cardDateToCalendar(
                     Utils.getBitsFromBuffer(data, 110, 14),
                     Utils.getBitsFromBuffer(data, 124, 11));

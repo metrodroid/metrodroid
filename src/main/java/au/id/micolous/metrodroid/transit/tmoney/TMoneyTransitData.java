@@ -135,11 +135,7 @@ public class TMoneyTransitData extends TransitData {
     }
 
     private static String parseSerial(TMoneyCard card) {
-        byte []tmoneytag = getSerialTag(card);
-        StringBuilder res = new StringBuilder();
-        for (int i = 0; i < 4; i++)
-            res.append(" ").append(Utils.getHexString(tmoneytag, 4 + 2 * i, 2));
-        return res.substring(1);
+        return Utils.groupString(Utils.getHexString(getSerialTag(card), 4, 8), " ", 4, 4, 4);
     }
 
     private static String parseDate(TMoneyCard card) {
