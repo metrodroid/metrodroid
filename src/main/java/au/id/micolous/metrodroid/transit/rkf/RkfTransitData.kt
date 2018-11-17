@@ -20,6 +20,8 @@
 package au.id.micolous.metrodroid.transit.rkf
 
 import android.os.Parcelable
+import android.support.annotation.StringRes
+import android.support.annotation.VisibleForTesting
 import au.id.micolous.metrodroid.card.classic.ClassicCard
 import au.id.micolous.metrodroid.card.classic.ClassicCardTransitFactory
 import au.id.micolous.metrodroid.util.Utils
@@ -31,6 +33,7 @@ import au.id.micolous.metrodroid.transit.en1545.*
 import au.id.micolous.metrodroid.ui.ListItem
 import kotlinx.android.parcel.Parcelize
 import au.id.micolous.metrodroid.transit.en1545.En1545FixedInteger
+import au.id.micolous.metrodroid.util.TripObfuscator
 import java.util.*
 
 @Parcelize
@@ -71,21 +74,39 @@ data class RkfTransitData internal constructor (
             || idx != 1 || bal.transactionNumber != 0  }
             .map { (idx, bal) -> bal.balance }
 
-    override fun getInfo(): List<ListItem> {
-        val li = mutableListOf<ListItem>()
-        li.add(ListItem(R.string.expiry_date,
-                mTcci.getTimeStampString(En1545TransitData.ENV_APPLICATION_VALIDITY_END, mLookup.timeZone)))
-        li.add(ListItem(R.string.card_issuer,
-                mLookup.getAgencyName(mTcci.getIntOrZero(En1545TransitData.ENV_APPLICATION_ISSUER_ID), false)))
+    @VisibleForTesting
+    val issuer: String
+        get() = mLookup.getAgencyName(mTcci.getIntOrZero(En1545TransitData.ENV_APPLICATION_ISSUER_ID), false)
 
-        val status = mTcci.getIntOrZero(STATUS)
-        li.add(ListItem(R.string.rkf_card_status, Utils.localizeString(when (status) {
+    @VisibleForTesting
+    val expiryDate: Calendar?
+        get() = mTcci.getTimeStamp(En1545TransitData.ENV_APPLICATION_VALIDITY_END, mLookup.timeZone)
+
+    @VisibleForTesting
+    val cardStatus
+        @StringRes
+        get() = when (mTcci.getIntOrZero(STATUS)) {
             0x01 -> R.string.rkf_status_ok
             0x21 -> R.string.rkf_status_action_pending
             0x3f -> R.string.rkf_status_temp_disabled
             0x58 -> R.string.rkf_status_not_ok
             else -> R.string.unknown_format
-        }, "0x" + status.toString(16))))
+        }
+
+    override fun getInfo(): List<ListItem> {
+        val li = mutableListOf<ListItem>()
+        li.add(ListItem(R.string.expiry_date,
+                Utils.longDateFormat(TripObfuscator.maybeObfuscateTS(expiryDate))))
+        li.add(ListItem(R.string.card_issuer, issuer))
+
+        li.add(if (cardStatus == R.string.unknown_format) {
+            ListItem(R.string.rkf_card_status, Utils.localizeString(R.string.unknown_format,
+                    "0x" + mTcci.getIntOrZero(STATUS).toString(16)))
+        } else {
+            ListItem(R.string.rkf_card_status, cardStatus)
+        })
+
+
         return li
     }
 
