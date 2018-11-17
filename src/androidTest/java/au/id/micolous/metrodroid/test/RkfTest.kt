@@ -4,6 +4,7 @@ import android.test.InstrumentationTestCase
 import au.id.micolous.metrodroid.card.classic.ClassicCard
 import au.id.micolous.metrodroid.transit.TransitCurrency
 import au.id.micolous.metrodroid.transit.rkf.RkfTransitData
+import java.util.*
 
 class RkfTest : InstrumentationTestCase() {
     private fun parseCard(c: ClassicCard): RkfTransitData {
@@ -34,6 +35,7 @@ class RkfTest : InstrumentationTestCase() {
         val c = loadCard("anonymt_dump-20120814.mfd")
         assertEquals("308430 000 027 859 5", c.serialNumber)
         assertEquals(TransitCurrency.DKK(100 * 100), c.balances[0].balance)
+        assertEquals(TimeZone.getTimeZone("Europe/Copenhagen"), c.trips[0].startTimestamp.timeZone)
 
     }
 }

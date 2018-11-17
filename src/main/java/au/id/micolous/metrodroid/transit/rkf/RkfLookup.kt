@@ -23,9 +23,10 @@ import android.os.Parcelable
 import au.id.micolous.metrodroid.transit.Station
 import au.id.micolous.metrodroid.transit.TransitCurrency
 import au.id.micolous.metrodroid.transit.en1545.En1545LookupSTR
+import au.id.micolous.metrodroid.util.StationTableReader
+import au.id.micolous.metrodroid.util.Utils
 import kotlinx.android.parcel.Parcelize
 import java.util.*
-import au.id.micolous.metrodroid.util.StationTableReader
 
 const val STR = "rkf"
 
@@ -33,28 +34,39 @@ const val STR = "rkf"
 data class RkfLookup (val mCurrencyCode : Int, val mCompany : Int) : En1545LookupSTR(STR), Parcelable {
     override fun parseCurrency(price: Int) : TransitCurrency {
         val intendedDivisor = when (mCurrencyCode shr 12) {
-            0 -> 1
-            1 -> 10
-            2 -> 100
-            9 -> 2
-            else -> 1
+            0 -> 1.0
+            1 -> 10.0
+            2 -> 100.0
+            9 -> 2.0
+            else -> 1.0
         }
-        return when (mCurrencyCode and 0xfff) {
-            0x208 -> TransitCurrency.DKK((price * 100) / intendedDivisor)
-            0x578 -> TransitCurrency((price * 100) / intendedDivisor, "NOK")
-            0x752 -> TransitCurrency((price * 100) / intendedDivisor, "SEK")
-            0x978 -> TransitCurrency.EUR((price * 100) / intendedDivisor)
-            // Fallback
-            else -> TransitCurrency.USD((price * 100) / intendedDivisor)
-        }
+
+        return TransitCurrency(price,
+                Utils.convertBCDtoInteger(mCurrencyCode and 0xfff),
+                intendedDivisor)
     }
-    override fun getTimeZone() : TimeZone = when (mCompany / 1000) {
-        0 -> TimeZone.getTimeZone("Europe/Stockholm")
-        1 -> TimeZone.getTimeZone("Europe/Oslo")
-        2 -> TimeZone.getTimeZone("Europe/Copenhagen")
+
+    override fun getTimeZone() : TimeZone = TimeZone.getTimeZone(when (mCompany / 1000) {
+        // FIXME: mCompany is an AID from the TCCI, and these are special values that aren't used?
+        0 -> "Europe/Stockholm"
+        1 -> "Europe/Oslo"
+        2 -> "Europe/Copenhagen"
+
+        // Per RKF-0019 "Table of Existing Application Identifiers"
+        // 064 - 1f3: Swedish public transport authorisations acting on county or municipal levels
+        // 1f4 - 3e7: Swedish public transport authorisations acting on national or regional levels
+        //            and other operators
+        in 0x64..0x3e7 -> "Europe/Stockholm"
+
+        // Norwegian public transport authorisations or other operators
+        in 0x3e8..0x7cf -> "Europe/Oslo"
+
+        // Danish public transport authorisations or other operators
+        in 0x7d0..0xbb7 -> "Europe/Copenhagen"
+
         // Fallback
-        else -> TimeZone.getTimeZone("Europe/Stockholm")
-    }
+        else -> "Europe/Stockholm"
+    })
 
     override fun getRouteName(routeNumber: Int?, routeVariant: Int?, agency: Int?, transport: Int?): String? {
         if (routeNumber == null)
