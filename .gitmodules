@@ -14,3 +14,6 @@
 [submodule "third_party/ovc-tools"]
 	path = third_party/ovc-tools
 	url = https://github.com/wandcode/ovc-tools
+[submodule "third_party/RejsekortReader"]
+	path = third_party/RejsekortReader
+	url = https://github.com/mchro/RejsekortReader.git

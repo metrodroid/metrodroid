@@ -75,6 +75,7 @@ import au.id.micolous.metrodroid.transit.ovc.OVChipTransitData;
 import au.id.micolous.metrodroid.transit.podorozhnik.PodorozhnikTransitData;
 import au.id.micolous.metrodroid.transit.ricaricami.RicaricaMiTransitData;
 import au.id.micolous.metrodroid.transit.selecta.SelectaFranceTransitData;
+import au.id.micolous.metrodroid.transit.rkf.RkfTransitData;
 import au.id.micolous.metrodroid.transit.seq_go.SeqGoTransitData;
 import au.id.micolous.metrodroid.transit.serialonly.StrelkaTransitData;
 import au.id.micolous.metrodroid.transit.serialonly.SunCardTransitData;
@@ -435,6 +436,7 @@ public class ClassicCard extends Card {
             SelectaFranceTransitData.Companion.getFACTORY(),
             SunCardTransitData.Companion.getFACTORY(),
             ZolotayaKoronaTransitData.Companion.getFACTORY(),
+            RkfTransitData.Companion.getFACTORY(),
             // This check must be THIRD TO LAST.
             //
             // This is to throw up a warning whenever there is a card with all locked sectors

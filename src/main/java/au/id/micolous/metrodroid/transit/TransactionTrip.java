@@ -161,7 +161,10 @@ public class TransactionTrip extends Trip implements Parcelable {
             return null;
         }
 
-        return getAny().getFare();
+        if (mEnd != null)
+            return mEnd.getFare();
+
+        return mStart.getFare();
     }
 
     @Override

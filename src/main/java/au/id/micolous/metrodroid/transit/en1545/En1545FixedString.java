@@ -31,18 +31,18 @@ public class En1545FixedString implements En1545Field {
     }
 
     @Override
-    public int parseField(byte[] b, int off, String path, En1545Parsed holder) {
-        holder.insertString(mName, path, parseString(b, off, mLen));
+    public int parseField(byte[] b, int off, String path, En1545Parsed holder, En1545Bits bitParser) {
+        holder.insertString(mName, path, parseString(b, off, mLen, bitParser));
         return off + mLen;
     }
 
-    private static String parseString(byte[] bin, int start, int length) {
+    private static String parseString(byte[] bin, int start, int length, En1545Bits bitParser) {
         int i, j = 0, lastNonSpace = 0;
         StringBuilder ret = new StringBuilder();
         for (i = start; i + 4 < start + length && i + 4 < bin.length * 8; i += 5) {
             int bl;
             try {
-                bl = Utils.getBitsFromBuffer(bin, i, 5);
+                bl = bitParser.getBitsFromBuffer(bin, i, 5);
             } catch (Exception e) {
                 e.printStackTrace();
                 return null;

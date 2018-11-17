@@ -97,6 +97,11 @@ public class TransitCurrency extends TransitBalance implements Parcelable {
     }
 
     @NonNull
+    public static TransitCurrency DKK(int ore) {
+        return new TransitCurrency(ore, "DKK");
+    }
+
+    @NonNull
     public static TransitCurrency EUR(int cents) {
         return new TransitCurrency(cents, "EUR");
     }

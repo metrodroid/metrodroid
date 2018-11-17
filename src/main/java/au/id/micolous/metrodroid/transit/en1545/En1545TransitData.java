@@ -37,8 +37,8 @@ abstract public class En1545TransitData extends TransitData {
     protected final static String ENV_NETWORK_ID = "EnvNetworkId";
     protected final static String ENV_VERSION_NUMBER = "EnvVersionNumber";
     protected static final String HOLDER_BIRTH_DATE = "HolderBirthDate";
-    protected static final String ENV_APPLICATION_VALIDITY_END = "EnvApplicationValidityEnd";
-    protected static final String ENV_APPLICATION_ISSUER_ID = "EnvApplicationIssuerId";
+    public static final String ENV_APPLICATION_VALIDITY_END = "EnvApplicationValidityEnd";
+    public static final String ENV_APPLICATION_ISSUER_ID = "EnvApplicationIssuerId";
     protected static final String ENV_APPLICATION_ISSUE = "EnvApplicationIssue";
     protected static final String HOLDER_PROFILE = "HolderProfile";
     protected static final String HOLDER_POSTAL_CODE = "HolderPostalCode";
@@ -63,6 +63,10 @@ abstract public class En1545TransitData extends TransitData {
 
     protected En1545TransitData() {
         mTicketEnvParsed = new En1545Parsed();
+    }
+
+    protected En1545TransitData(En1545Parsed parsed) {
+        mTicketEnvParsed = parsed;
     }
 
     @Override

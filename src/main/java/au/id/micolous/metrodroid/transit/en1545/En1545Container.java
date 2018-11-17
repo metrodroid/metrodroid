@@ -34,9 +34,9 @@ public class En1545Container implements En1545Field {
     }
 
     @Override
-    public int parseField(byte[] b, int off, String path, En1545Parsed holder) {
+    public int parseField(byte[] b, int off, String path, En1545Parsed holder, En1545Bits bitParser) {
         for (En1545Field el : mFields) {
-                off = el.parseField(b, off, path, holder);
+                off = el.parseField(b, off, path, holder, bitParser);
         }
         return off;
     }

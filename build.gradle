@@ -182,6 +182,7 @@ android {
     sourceSets {
         androidTest.assets.srcDirs += [
                 'third_party/vpereira_bilhete/',
+                'third_party/RejsekortReader/dumps/'
         ]
         main.assets.srcDirs += ['build/assets']
     }
