@@ -122,4 +122,17 @@
 \n
 \nFlere detaljer: https://github.com/micolous/metrodroid/wiki/Changelog</string>
 
+    <string name="market_changelog_generic">Feilrettinger, nye funksjoner og data.
+\n
+\nFlere detaljer (på engelsk): https://github.com/micolous/metrodroid/wiki/Changelog</string>
+
+    <string name="market_changelog_36">* Støtte for CharlieCard, Go-to (Minneapolis), Hop Fastpass, Intercode (Frankrike), IstanbulKart-, Mobib-, Leap-, RicaciraMi- og Strelka -kort.
+\n* HSL-leseren virker.
+\n* Nye stoppesteder for Clipper og Kartu Multi Trip.
+\n* Suica viser nå tidspunkt for de to nyligste turene.
+\n* Forbedret MIFARE Classic-nøkkelbehandling.
+\n* Mange usynlige endringer.
+\n
+\nFlere detaljer: https://github.com/micolous/metrodroid/wiki/Changelog</string>
+
     </resources>

@@ -24,9 +24,10 @@ import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.nfc.NfcAdapter;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
+import android.support.annotation.NonNull;
 import android.support.v7.content.res.AppCompatResources;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
@@ -69,22 +70,35 @@ public class SupportedCardsActivity extends MetrodroidActivity {
     }
 
     private class CardsAdapter extends ArrayAdapter<CardInfo> {
-        public CardsAdapter(Context context) {
+        private LayoutInflater mLayoutInflater;
+
+        CardsAdapter(Context context) {
             super(context, 0, new ArrayList<>());
-            addAll(CardInfo.ALL_CARDS_ALPHABETICAL);
+            addAll(CardInfo.getAllCardsAlphabetical());
+            mLayoutInflater = (LayoutInflater) context.getSystemService(
+                    Context.LAYOUT_INFLATER_SERVICE);
         }
 
+        @NonNull
         @Override
-        public View getView(int position, View convertView, ViewGroup group) {
+        public View getView(int position, View convertView, @NonNull ViewGroup group) {
             if (convertView == null) {
-                convertView = getLayoutInflater().inflate(R.layout.supported_card, null);
+                convertView = mLayoutInflater.inflate(R.layout.supported_card, null);
             }
 
             CardInfo info = getItem(position);
-            Objects.requireNonNull(info);
+            if (info == null) {
+                Log.e(getClass().getSimpleName(), "got a null card record at #" + position);
+                return convertView;
+            }
 
             ((TextView) convertView.findViewById(R.id.card_name)).setText(info.getName());
-            ((TextView) convertView.findViewById(R.id.card_location)).setText(getString(info.getLocationId()));
+            TextView locationTextView = convertView.findViewById(R.id.card_location);
+            if (info.getLocationId() != 0) {
+                locationTextView.setText(getString(info.getLocationId()));
+                locationTextView.setVisibility(View.VISIBLE);
+            } else
+                locationTextView.setVisibility(View.GONE);
 
             ImageView image = convertView.findViewById(R.id.card_image);
             Drawable d = null;

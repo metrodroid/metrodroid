@@ -33,7 +33,7 @@
     <string name="nfc_unavailable">NFC недоступен</string>
     <string name="date">Дата</string>
     <string name="time">Время</string>
-    <string name="card_type">Тип карты</string>
+    <string name="card_format">Тип карты</string>
     <string name="obfuscation_card_numbers">Спрятать номера карт</string>
     <string name="obfuscation_card_numbers_desc">Нигде не показывать номера карт</string>
 
@@ -71,14 +71,11 @@
     <string name="disabled">Выключено</string>
 
     <string name="card_name_ravkav">Рав Кав</string>
-    <string name="ravkav_agency_egged">Эгед</string>
-    <string name="ravkav_agency_dan">Дан</string>
-    <string name="ravkav_agency_city_pass">Сити Пасс</string>
     <string name="ravkav_agency_topup_app">Пополнение в приложении Рав Кав</string>
 
     <string name="trip_description">(Из )%1$s [→] (в )%2$s</string>
     <string name="trip_description_unknown_start">До %s</string>
-    <string name="time_from_to">%s → %s</string>
+    <string name="time_from_to">%1$s → %2$s</string>
     <string name="time_from_unknown_to">\?:?? → %s</string>
 
 
@@ -145,7 +142,7 @@
     <string name="nfc_not_available">NFC: не доступно</string>
     <string name="balances_and_subscriptions">Билеты</string>
 <string name="scanned_at_format">Прочитано %2$s в %1$s</string>
-    <string name="machine_id">Автомат %s</string>
+    <string name="machine_id_format">Автомат %s</string>
 
     <string name="advanced_info">Расширенная информация</string>
     <string name="hw_detail">Информация о производителе</string>
@@ -324,12 +321,11 @@
 
     <string name="compass_product_type">Тип продукта</string>
     <string name="compass_machine_code">Код автомата</string>
-    <string name="compass_ticket_type">Тип билета</string>
+    <string name="ticket_type">Тип билета</string>
     <string name="compass_ticket_type_concession">Льготный</string>
     <string name="compass_ticket_type_regular">Обычный</string>
     <string name="compass_note">Только одноразовые билеты</string>
 
-    <string name="opus_subscription">Проездной</string>
     <string name="podorozhnik_gate">турникет %s</string>
     <string name="podorozhnik_tvm">Автомат %d</string>
 
@@ -340,8 +336,8 @@
 
     <string name="location_seoul">Сеул, Южная Корея</string>
     <string name="app_version">Версия: %s</string>
-    <string name="device_model">Модель: %s (%s)</string>
-    <string name="device_manufacturer">Производитель: %s (%s)</string>
+    <string name="device_model">Модель: %1$s (%2$s)</string>
+    <string name="device_manufacturer">Производитель: %1$s (%2$s)</string>
     <string name="mfc_supported">MIFARE Classic: поддерживается</string>
     <string name="mfc_not_supported">MIFARE Classic: не поддерживается</string>
     <string name="card_number">Номер карты</string>

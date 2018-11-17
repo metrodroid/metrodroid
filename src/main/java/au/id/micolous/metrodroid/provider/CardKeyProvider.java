@@ -61,12 +61,22 @@ public class CardKeyProvider extends BetterContentProvider {
         return matcher;
     }
 
+    private String sanitize(String val) {
+        StringBuilder ret = new StringBuilder();
+        for (int i = 0; i < val.length(); i++) {
+            char c = val.charAt(i);
+            if ((c >= '0' && c <= '9') || (c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z'))
+                ret.append(c);
+        }
+        return ret.toString();
+    }
+
     @Override
     protected void appendWheres(SQLiteQueryBuilder builder, UriMatcher matcher, Uri uri) {
         switch (matcher.match(uri)) {
             case KEY_BY_UID:
-                // FIXME: Prevent sql injection.
-                builder.appendWhere(KeysTableColumns.CARD_ID + "= \"" + uri.getPathSegments().get(1) + "\"");
+                builder.appendWhere(KeysTableColumns.CARD_ID + "= \""
+                        + sanitize(uri.getPathSegments().get(2)) + "\"");
                 break;
             default:
                 super.appendWheres(builder, matcher, uri);

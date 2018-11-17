@@ -82,11 +82,11 @@ public abstract class TransitData implements Parcelable {
      *
      * @return Array of Trip[], or null if not supported.
      */
-    public Trip[] getTrips() {
+    public List<? extends Trip> getTrips() {
         return null;
     }
 
-    public Subscription[] getSubscriptions() {
+    public List<? extends Subscription> getSubscriptions() {
         return null;
     }
 
@@ -127,14 +127,14 @@ public abstract class TransitData implements Parcelable {
         return false;
     }
 
-    public final int describeContents() {
+    public int describeContents() {
         return 0;
     }
 
     /**
      * You can optionally add a link to an FAQ page for the card.  This will be shown in the ...
      * drop down menu for cards that are supported, and on the main page for subclasses of
-     * {@link au.id.micolous.metrodroid.transit.stub.StubTransitData}.
+     * {@link au.id.micolous.metrodroid.transit.serialonly.SerialOnlyTransitData}.
      *
      * @return Uri pointing to an FAQ page, or null if no page is to be supplied.
      */

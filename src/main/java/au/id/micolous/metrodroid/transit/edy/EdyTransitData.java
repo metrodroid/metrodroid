@@ -29,12 +29,14 @@ import org.apache.commons.lang3.ArrayUtils;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 import java.util.TimeZone;
 
 import au.id.micolous.farebot.R;
 import au.id.micolous.metrodroid.card.CardType;
 import au.id.micolous.metrodroid.card.felica.FelicaBlock;
 import au.id.micolous.metrodroid.card.felica.FelicaCard;
+import au.id.micolous.metrodroid.card.felica.FelicaCardTransitFactory;
 import au.id.micolous.metrodroid.card.felica.FelicaService;
 import au.id.micolous.metrodroid.transit.CardInfo;
 import au.id.micolous.metrodroid.transit.TransitCurrency;
@@ -71,14 +73,14 @@ public class EdyTransitData extends TransitData {
             return new EdyTransitData[size];
         }
     };
-    private EdyTrip[] mTrips;
+    private List<EdyTrip> mTrips;
     // private data
     private byte[] mSerialNumber = new byte[8];
     private int mCurrentBalance;
 
     public EdyTransitData(Parcel parcel) {
-        mTrips = new EdyTrip[parcel.readInt()];
-        parcel.readTypedArray(mTrips, EdyTrip.CREATOR);
+        mTrips = new ArrayList<>();
+        parcel.readTypedList(mTrips, EdyTrip.CREATOR);
     }
 
     public EdyTransitData(FelicaCard card) {
@@ -108,20 +110,30 @@ public class EdyTransitData extends TransitData {
             trips.add(trip);
         }
 
-        mTrips = trips.toArray(new EdyTrip[trips.size()]);
+        mTrips = trips;
     }
 
-    public static boolean check(FelicaCard card) {
-        return (card.getSystem(SYSTEMCODE_EDY) != null);
-    }
+    public final static FelicaCardTransitFactory FACTORY = new FelicaCardTransitFactory() {
+        @Override
+        public boolean earlyCheck(int[] systemCodes) {
+            return ArrayUtils.contains(systemCodes, SYSTEMCODE_EDY);
+        }
 
-    public static boolean earlyCheck(int[] systemCodes) {
-        return ArrayUtils.contains(systemCodes, SYSTEMCODE_EDY);
-    }
+        @Override
+        protected CardInfo getCardInfo() {
+            return CARD_INFO;
+        }
 
-    public static TransitIdentity parseTransitIdentity(FelicaCard card) {
-        return new TransitIdentity("Edy", null);
-    }
+        @Override
+        public TransitData parseTransitData(FelicaCard felicaCard) {
+            return new EdyTransitData(felicaCard);
+        }
+
+        @Override
+        public TransitIdentity parseTransitIdentity(FelicaCard card) {
+            return new TransitIdentity("Edy", null);
+        }
+    };
 
     @Override
     @Nullable
@@ -131,18 +143,12 @@ public class EdyTransitData extends TransitData {
 
     @Override
     public String getSerialNumber() {
-        StringBuilder str = new StringBuilder(20);
-        for (int i = 0; i < 8; i += 2) {
-            str.append(String.format("%02X", mSerialNumber[i]));
-            str.append(String.format("%02X", mSerialNumber[i + 1]));
-            if (i < 6)
-                str.append(" ");
-        }
-        return str.toString();
+        return Utils.groupString(Utils.getHexString(mSerialNumber).toUpperCase(Locale.ENGLISH),
+                " ", 4, 4, 4);
     }
 
     @Override
-    public Trip[] getTrips() {
+    public List<EdyTrip> getTrips() {
         return mTrips;
     }
 
@@ -152,8 +158,7 @@ public class EdyTransitData extends TransitData {
     }
 
     public void writeToParcel(Parcel parcel, int flags) {
-        parcel.writeInt(mTrips.length);
-        parcel.writeTypedArray(mTrips, flags);
+        parcel.writeTypedList(mTrips);
     }
 }
 

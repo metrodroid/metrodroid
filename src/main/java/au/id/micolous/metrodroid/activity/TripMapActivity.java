@@ -1,10 +1,11 @@
 /*
  * TripMapActivity.java
  *
- * Copyright (C) 2011 Eric Butler
+ * Copyright 2011-2015 Eric Butler <eric@codebutler.com>
+ * Copyright 2015-2018 Michael Farrell <micolous@gmail.com>
+ * Copyright 2018 Google Inc.
  *
- * Authors:
- * Eric Butler <eric@codebutler.com>
+ * Authors: Eric Butler, Michael Farrell, Vladimir Serbinenko
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -47,7 +48,7 @@ import au.id.micolous.metrodroid.util.Utils;
 @RequiresApi(17)
 public class TripMapActivity extends MetrodroidActivity {
     public static final String TRIP_EXTRA = "trip";
-    private static final String TAG = "TripMapActivity";
+    private static final String TAG = TripMapActivity.class.getSimpleName();
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -93,12 +94,14 @@ public class TripMapActivity extends MetrodroidActivity {
         settings.setUserAgentString(settings.getUserAgentString() + " metrodroid/" + BuildConfig.VERSION_NAME);
 
         ActionBar actionBar = getSupportActionBar();
+
         if (actionBar != null) {
             actionBar.setDisplayHomeAsUpEnabled(true);
             actionBar.setTitle(Trip.formatStationNames(trip));
             actionBar.setSubtitle((trip.getRouteName() == null) ? trip.getAgencyName(false)
                     : String.format("%s %s", trip.getAgencyName(false), trip.getRouteName()));
         }
+
         //int startMarkerId = R.drawable.marker_start;
         //int endMarkerId = R.drawable.marker_end;
 
@@ -138,7 +141,7 @@ public class TripMapActivity extends MetrodroidActivity {
             points.add(new Marker(trip.getEndStation(), "end-marker"));
         }
 
-        TripMapShim shim = new TripMapShim(points.toArray(new Marker[points.size()]), tileURL, subdomains);
+        TripMapShim shim = new TripMapShim(points.toArray(new Marker[0]), tileURL, subdomains);
 
         webView.addJavascriptInterface(shim, "TripMapShim");
 

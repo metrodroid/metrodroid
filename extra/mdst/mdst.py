@@ -33,7 +33,7 @@ def delimited_value(msg):
   return d + o
 
 class MdstWriter(object):
-  def __init__(self, fh, version, local_languages=None, operators=None, lines=None, tts_hint_language=None):
+  def __init__(self, fh, version, local_languages=None, operators=None, lines=None, tts_hint_language=None, license_notice_f=None):
     """
     Creates a new MdST database.
     
@@ -45,6 +45,7 @@ class MdstWriter(object):
     operators: optional, dict of [int](Operator) declaring a mapping of operators.
     lines: optional, dict of [int](Line) declaring a mapping of lines.
     tts_hint_language: optional, str of LocaleSpan hint for station names.
+    license_notice_f: optional, file-like object containing a license notice.
     
     
     """
@@ -84,6 +85,9 @@ class MdstWriter(object):
           sdb.lines[k].name.english = v[0]
         if len(v) > 1 and v[1] != None:
           sdb.lines[k].name.local = v[1]
+
+    if license_notice_f:
+      sdb.license_notice = license_notice_f.read().strip()
 
     # Write out the header
     fh.write(b'MdST')
@@ -137,6 +141,8 @@ def read_stops_from_csv(db, csv_f):
       s.name.english_short = stop['short_name']
     if 'operator_id' in stop and stop['operator_id']:
       s.operator_id = int(stop['operator_id'])
+    if 'line_id' in stop and stop['line_id']:
+      s.line_id.extend([int(x.strip()) for x in stop['line_id'].split(',')])
     y = stop.get('stop_lat', '').strip()
     x = stop.get('stop_lon', '').strip()
     if y and x:
@@ -157,6 +163,8 @@ def read_operators_from_csv(csv_f):
       oppb.name.english_short = op['short_name']
     if 'local_name' in op and op['local_name']:
       oppb.name.local = op['local_name']
+    if 'local_short_name' in op and op['local_short_name']:
+      oppb.name.local_short = op['local_short_name']
     if 'mode' in op and op['mode']:
       oppb.default_transport = TransportType.Value(op['mode'])
     operators[int(op['id'], 0)] = oppb

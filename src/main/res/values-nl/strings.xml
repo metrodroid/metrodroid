@@ -34,20 +34,18 @@
     <string name="scanned_at_format">Gescand op %1$s op %2$s</string>
     <string name="supported_cards">Ondersteunde kaarten</string>
     <string name="pass_or_transfer">Pas/Overstap</string>
-    <string name="fully_locked_desc">Geen enkel onderdeel van deze kaart is leesbaar zonder sleutel en je hebt geen geldige geïnstalleerde sleutels voor deze kaart.
+    <string name="fully_locked_desc">Geen enkel onderdeel van deze kaart is leesbaar zonder sleutel en is momenteel geen manier om dit te omzeilen.
 \n 
-\nAls de kaart momenteel ondersteund wordt door Metrodroid, dan zal hij gaan werken zodra je de benodigde sleutels installeert. Meer informatie over het verkrijgen van sleutels is te vinden in de documentatie. 
+\nJe kaart wordt niet ondersteund door Metrodroid, en zal dat waarschijnlijk ook nooit mogelijk zijn, tenzij de sleutel gekraakt wordt. 
 \n 
-\nAls je kaart niet wordt ondersteund door Metrodroid, dan zal dat waarschijnlijk ook nooit mogelijk zijn, tenzij de sleutel gekraakt wordt. 
-\n 
-\nNeem contact op met je vervoerder en vraag of open toegang tot de gegevens van de verschafte kaarten mogelijk wordt gemaakt. Het is mogelijk om veilige, alleen-lezen toegang te geven met moderne smartcard-technologie. Sommige vervoerders bieden zelfs openbare documentatie aan over de gegevensopmaak!</string>
+\nNeem contact op met de uitgever van de kaart en vraag of open toegang tot de gegevens van de verschafte kaarten mogelijk wordt gemaakt. Het is mogelijk om veilige, alleen-lezen toegang te geven met moderne smartcard-technologie. Sommige vervoerders bieden zelfs openbare documentatie aan over de gegevensopmaak!</string>
     <string name="fully_locked_title">Volledig vergrendelde kaart.</string>
     <string name="nfc_off_error">NFC is uitgeschakeld</string>
     <string name="turn_on_nfc">Schakel NFC in om de kaartinformatie uit te kunnen lezen.</string>
     <string name="wireless_settings">Draadloze instellingen</string>
 
-    <string name="unknown_card_header">Onbekend kaartformaat</string>
-    <string name="unknown_card_description">Deze kaart wordt nog niet ondersteund door Metrodroid. Alleen onbewerkte gegevens kunnen worden weergegeven.</string>
+    <string name="unknown_card_header">Niet-ondersteund kaartformaat</string>
+    <string name="unknown_card_description">Deze kaart wordt nog niet ondersteund door Metrodroid; er kunnen alleen onbewerkte gegevens worden getoond.</string>
 
     <string name="unknown_more_info">Meer informatie</string>
     <string name="unknown_more_info_desc">Raak aan om meer informatie te krijgen over Metrodroid\'s ondersteuning voor deze kaart.</string>
@@ -92,7 +90,7 @@
     <string name="card_preview_reader">Bètaversie van de kaartlezer.</string>
     <string name="visit_website">Website bezoeken</string>
     <string name="title_activity_about">Over</string>
-    <string name="card_type">Kaarttype</string>
+    <string name="card_format">Kaarttype</string>
     <string name="select_file">Bestand selecteren</string>
     <string name="copied_to_clipboard">Gekopieerd naar klembord</string>
     <string name="saved_xml">Metrodroid-Export.xml weggeschreven naar USB-opslag.</string>
@@ -135,7 +133,7 @@
     <string name="location_brisbane_seq_australia">Brisbane &amp; ZO QLD, Australië</string>
     <string name="location_victoria_australia">Victoria, Australië</string>
     <string name="location_hong_kong">Hongkong</string>
-    <string name="location_shenzhen">Shenzhen, Guangdong-provincie, China</string>
+    <string name="location_shenzhen">Shenzhen, China</string>
     <string name="location_los_angeles">Los Angeles, CA, VS</string>
     <string name="location_act_australia">Australian Capital Territory, Australië</string>
 
@@ -329,7 +327,7 @@
     <string name="cepas_issuer_data">Uitgever-specifieke gegevens</string>
     <string name="cepas_purse_info">Portemonnee-informatie</string>
 
-    <string name="trip_description">(Van )%1$s [→] (naar )%2$s</string>
+    <string name="trip_description">(Van )<xliff:g id="start_station" example="Tokyo">%1$s</xliff:g> [→] (naar )<xliff:g id="end_station" example="Osaka">%2$s</xliff:g></string>
 
     <string name="mode_bus">Bus</string>
     <string name="mode_train">Trein</string>
@@ -370,7 +368,7 @@
     <string name="felica_idm">Productie-ID (IDm)</string>
     <string name="felica_pmm">Productieparameter (PMm)</string>
 
-    <string name="machine_id">Automaat-ID %s</string>
+    <string name="machine_id_format">Automaat-ID %s</string>
 
     <string name="localise_places_longdesc">Tekst-naar-spraak werkt normaal gesproken alleen goed voor één taal. 
 \n 
@@ -491,7 +489,7 @@
     <string name="card_name_pasmo">PASMO</string>
 
     <string name="felica_terminal_view_altte">VIEW ALTTE</string>
-    <string name="hsl_line_vehicle">Lijn %s, voertuig %s</string>
+    <string name="hsl_line_vehicle">Lijn %1$s, Voertuig %2$s</string>
 
     <string name="orca_coach_number">#%s klas</string>
 
@@ -503,17 +501,17 @@
 
     <string name="no_data_in_clipboard">Geen gegevens op het klembord.</string>
     <string name="app_version">Versie: %s</string>
-    <string name="device_model">Model: %s (%s)</string>
-    <string name="device_manufacturer">Fabrikant: %s (%s)</string>
-    <string name="android_os">Android-versie: %s (%s)</string>
+    <string name="device_model">Model: <xliff:g id="model_name" example="Pixel 2">%1$s</xliff:g><xliff:g id="model_codename" example="walleye">(%2$s)</xliff:g></string>
+    <string name="device_manufacturer">Fabrikant: <xliff:g id="manufacturer" example="HTC">%1$s</xliff:g> <xliff:g id="brand" example="Google">(%2$s)</xliff:g></string>
+    <string name="android_os">Android-versie: <xliff:g id="version" example="9.0">%1$s</xliff:g> <xliff:g id="build_id" example="PPR2.180905.006">(%2$s)</xliff:g></string>
     <string name="nfc_enabled">NFC: ingeschakeld</string>
     <string name="nfc_disabled">NFC: uitgeschakeld</string>
     <string name="nfc_not_available">NFC: niet beschikbaar</string>
     <string name="mfc_supported">MIFARE Classic: ondersteund</string>
     <string name="mfc_not_supported">MIFARE Classic: niet ondersteund</string>
 <string name="trip_description_unknown_start">naar %s</string>
-    <string name="time_from_to">%s → %s</string>
-    <string name="time_from_unknown_to">\??:?? → %s</string>
+    <string name="time_from_to"><xliff:g id="start_time" example="12:35">%1$s</xliff:g> → <xliff:g id="end_time" example="12:51">%2$s</xliff:g></string>
+    <string name="time_from_unknown_to">\??:?? → <xliff:g id="end_time" example="12:51">%s</xliff:g></string>
 
 
     <string name="pref_show_local_and_english_title">Stationsnamen tonen in lokale taal en het Engels</string>
@@ -541,9 +539,6 @@
 </plurals>
 
     <string name="card_name_ravkav">Rav-Kav</string>
-    <string name="ravkav_agency_egged">Egged</string>
-    <string name="ravkav_agency_dan">Dan</string>
-    <string name="ravkav_agency_city_pass">City Pass</string>
     <string name="ravkav_agency_topup_app">RavKav oplaadapp</string>
 
     <string name="location_israel">Israël</string>
@@ -575,9 +570,10 @@
 
     <string name="compass_product_type">Productsoort</string>
     <string name="compass_machine_code">Automaatcode</string>
-    <string name="compass_ticket_type">Kaartsoort</string>
+    <string name="ticket_type">Kaartsoort</string>
     <string name="compass_ticket_type_concession">Concessie</string>
     <string name="compass_ticket_type_regular">Regulier</string>
+    <string name="expiry_date">Vervaldatum</string>
     <string name="compass_note">Alleen voor enkele reizen</string>
 
     <string name="location_seoul">Seoel, Zuid-Korea</string>
@@ -588,11 +584,6 @@
     <string name="pref_show_raw_station_ids">Stationsverkortingen tonen</string>
     <string name="pref_show_raw_station_ids_desc">Als dit wordt ingeschakeld, dan worden ook de verkortingen vermeld bij de stationsnaam</string>
 <string name="location_quebec">Quebec, Canada</string>
-
-    <string name="opus_subscription">Abonnement</string>
-    <string name="opus_card_expiry_date">Kaart vervalt op</string>
-    <string name="opus_single_trips">Enkele reis</string>
-
     <string name="podorozhnik_gate">poortje %s</string>
     <string name="podorozhnik_tvm">Kaartautomaat %d</string>
 
@@ -656,8 +647,7 @@
     <string name="initialisation_date">Initialisatiedatum</string>
     <string name="issue_date">Uitgavedatum</string>
 
-    <string name="leap_issuer_id">Uitgave-ID</string>
-    <string name="leap_locked_warning">Deze kaart is niet ontgrendeld; schakel ophalen van Leap-sleutels in in de instellingen</string>
+    <string name="leap_locked_warning">Deze kaart is niet ontgrendeld; schakel ophalen van Leap-sleutels in in de NFC-instellingen.</string>
 <string name="location_minneapolis">Minneapolis, MN, VS</string>
     <string name="invalid_json_key_type">Ongeldige JSON: sleuteltype ontbreekt</string>
     <string name="invalid_json">Ongeldige JSON</string>
@@ -699,4 +689,155 @@
 
     <string name="card_id">Kaart-ID</string>
 <string name="vehicle_number">Voertuig %s</string>
-    </resources>
+    <string name="card_note_leap">Vereist het ophalen van sleutel van TFI, wat moet worden ingeschakeld in de NFC-instellingen.</string>
+
+    <string name="machine_id">Automaat-ID</string>
+
+    <string name="valid_from_format">Geldig vanaf %1$s</string>
+    <string name="valid_not_used">Nog niet in gebruik</string>
+
+    <string name="location_brussels">Brussel, België</string>
+    <string name="location_gironde">Gironde, Frankrijk</string>
+    <string name="location_grenoble">Grenoble, Frankrijk</string>
+    <string name="location_lisbon">Lissabon, Portugal</string>
+    <string name="location_milan">Milaan, Italië</string>
+    <string name="location_paris">Parijs, Frankrijk</string>
+    <string name="mode_trolleybus">Trolleybus</string>
+    <string name="opal_agency_tfnsw">Transport for NSW</string>
+    <string name="gender">Geslacht</string>
+    <string name="gender_female">Vrouw</string>
+    <string name="gender_male">Man</string>
+
+    <string name="seller_agency">Verkoopmaatschappij</string>
+    <string name="remaining_trip_count">Resterende reizen</string>
+    <plurals name="remaining_trips_total">
+	<item quantity="one">Geen resterende reizen</item>
+	<item quantity="other">%1$d resterende reis</item>
+</plurals>
+
+    <plurals name="remaining_trip_on_day">
+	<item quantity="one">%1$d resterende reis op %2$s</item>
+	<item quantity="other">%1$d resterende reizen op %2$s</item>
+</plurals>
+    <string name="remaining_day_count">Resterende dagen</string>
+    <plurals name="travel_zones">
+	<item quantity="one">Reisgebied</item>
+	<item quantity="other">Reisgebieden</item>
+</plurals>
+
+    <string name="en1545_network_id">Netwerk-ID</string>
+    <string name="card_issuer">Uitgever</string>
+
+    <string name="purchase_date">Aanschafdatum</string>
+    <string name="single_trips">Enkele reizen</string>
+    <string name="monthly_subscription">Maandabonnement</string>
+    <string name="weekly_subscription">Weekabonnement</string>
+    <string name="en1545_card_expiry_date_profile">Profiel-vervaldatum</string>
+    <string name="daily_subscription">Dagkaart</string>
+
+    <string name="subscription_inactive">Inactief</string>
+    <string name="subscription_unused">Ongebruikt</string>
+    <string name="subscription_started">Ingegaan</string>
+    <string name="subscription_used">Gebruikt</string>
+    <string name="subscription_expired">Verlopen</string>
+
+    <string name="last_used_on">Laatst gebruikt</string>
+    <string name="payment_method">Betaalmethode</string>
+    <string name="payment_method_cash">Contant</string>
+    <string name="payment_method_credit_card">Creditcard</string>
+    <string name="payment_method_debit_card">Bankpas</string>
+    <string name="payment_method_transit_card">Vervoerskaart</string>
+    <string name="payment_method_cheque">Cheque</string>
+    <string name="payment_method_free">Gratis</string>
+
+    <string name="card_holders_name">Naam van kaarthouder</string>
+
+    <string name="card_type">Kaartsoort</string>
+
+    <string name="card_type_anonymous">Anoniem</string>
+    <string name="card_type_personal">Persoonlijk</string>
+
+    <string name="postal_code">Postcode</string>
+
+    <string name="tap_for_more_info">Druk voor meer informatie…</string>
+<string name="location_chicago">Chicago, IL, VS</string>
+    <plurals name="lisboaviva_valid_days">
+	<item quantity="one">%d dag geldig</item>
+	<item quantity="other">%d dagen geldig</item>
+</plurals>
+    <plurals name="lisboaviva_valid_months">
+	<item quantity="one">%d maand geldig</item>
+	<item quantity="other">%d maanden geldig</item>
+</plurals>
+
+    <string name="location_sophia_antipolis">Sophia Antipolis, Frankrijk</string>
+    <string name="lisboaviva_unknown_period">Onbekende geldigheidsduur %x/%x</string>
+    <string name="location_portland">Portland, OR, VS</string>
+    <string name="location_montpellier">Montpellier, Frankrijk</string>
+    <string name="maps">Kaarten</string>
+<string name="subscription_cost">Kosten</string>
+    <plurals name="trips_remaining_total">
+	<item quantity="one">%d van %d reis resterend</item>
+	<item quantity="other">%d van %d reizen resterend</item>
+</plurals>
+    <string name="location_houston">Houston, TX, VS</string>
+    <string name="location_toulouse">Toulouse, Frankrijk</string>
+    <string name="metroq_fare_card">Kaart op saldo</string>
+    <string name="metroq_day_pass">Dagkaart</string>
+
+    <string name="free_transfers_until">Gratis overstappen tot</string>
+    <string name="clipper_ticket_type_adult">Volwassene</string>
+    <string name="clipper_ticket_type_senior">Oudere</string>
+    <string name="clipper_ticket_type_youth">Jongere</string>
+
+    <string name="clipper_single">Enkele reis (<xliff:g id="ticket_class" example="Adult">%1$s</xliff:g>)</string>
+    <string name="clipper_return">Retour (<xliff:g id="ticket_class" example="Adult">%1$s</xliff:g>)</string>
+    <string name="card_note_clipper">Ondersteuning voor zowel plastic (herbruikbaar) als papieren (enkele reizen, uitgegeven door Golden Gate Ferry and Muni) Clipper-kaarten.</string>
+
+    <string name="passenger_class">klas</string>
+    <string name="without_receipt">Zonder bonnetje</string>
+    <string name="with_receipt">Met bonnetje</string>
+
+    <string name="location_beijing">Peking, China</string>
+    <string name="location_china_mainland">Continentaal China</string>
+    <string name="location_kiev">Kiev, Oekraïne</string>
+    <string name="location_wuhan">Wuhan, China</string>
+    
+    <string name="card_name_beijing">Beijing Municipal Card</string>
+    <string name="card_name_wuhantong">Wuhan Tong</string>
+    <string name="card_name_cityunion">City Union</string>
+    <string name="card_name_tunion">T-Union</string>
+    <string name="city_union_city">Stad</string>
+
+    <string name="card_note_kiev">Geldt alleen voor kaarten van vóór 2016; alleen het reislogboek kan worden ingezien</string>
+    <string name="card_name_kiev">Kiev Metro</string>
+<string name="transfer">Overstap</string>
+<string name="rejected">Afgewezen</string>
+    <string name="location_adelaide">Adelaide, Australië</string>
+    <string name="location_tartu">Tartu, Estland</string>
+    <string name="card_note_adelaide">Alleen het serienummer, de reizen en abonnementen kunnen worden uitgelezen</string>
+    <string name="purse_serial_number">Serienummer</string>
+
+    <string name="copy_card_number">Kaartnummer kopiëren</string>
+    <string name="card_serial_number">Serienummer</string>
+    <string name="serial_only_card_header">Kaart met alleen serienummer</string>
+    <string name="serial_only_card_description_not_stored">Deze kaart bevat, buiten het serienummer, geen gegevens. Het saldo en de reisgeschiedenis worden opgeslagen in een centrale databank.</string>
+    <string name="serial_only_card_description_locked">Deze kaart is versleuteld; alleen het serienummer kan worden gelezen. Het saldo and de reisgeschiedenis zijn mogelijk op de kaart opgeslagen, maar onleesbaar.</string>
+    <string name="serial_only_card_description_more_research">Ondersteuning voor deze kaart is experimenteel; momenteel kan alleen het serienummer worden uitgelezen.</string>
+    <string name="full_serial_number">Volledig serienummer</string>
+<string name="location_taipei">Taipei</string>
+    <string name="location_france">Frankrijk</string>
+    <string name="location_orlando">Orlando, FL, VS</string>
+    <string name="fully_locked_desc_unlockable">Geen enkel onderdeel van deze kaart is leesbaar zonder sleutel en je hebt momenteel geen geldige sleutels geïnstalleerd.
+\n 
+\nDeze kaart werkt zodra de juiste sleutels ervoor zijn geïnstalleerd; deze verschillen meestal per kaart. Meer informatie over het ophalen en installeren van sleutels kan worden gevonden in de documentatie.
+\n 
+\nNeem contact op met de uitgever van de kaart en vraag of open toegang tot de gegevens van de verschafte kaarten mogelijk wordt gemaakt. Het is mogelijk om veilige, alleen-lezen toegang te geven met moderne smartcard-technologie. Sommige vervoerders bieden zelfs openbare documentatie aan over de gegevensopmaak!</string>
+    <string name="card_name_zolotaya_korona">Zolotaya Korona</string>
+    <string name="location_russia">Rusland</string>
+    <string name="zolotaya_korona_region">Regio</string>
+    <string name="card_name_iaroslavl_etk">ETK Iaroslavl</string>
+    <string name="location_iaroslavl">Iaroslavl</string>
+    <string name="card_name_krasnodar_etk">ETK Krasnodar</string>
+    <string name="location_krasnodar">Krasnodar</string>
+</resources>

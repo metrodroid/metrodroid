@@ -27,7 +27,7 @@ import au.id.micolous.metrodroid.card.desfire.DesfireCard;
 import au.id.micolous.metrodroid.card.desfire.files.DesfireFile;
 import au.id.micolous.metrodroid.transit.TransitData;
 import au.id.micolous.metrodroid.transit.TransitIdentity;
-import au.id.micolous.metrodroid.transit.myki.MykiTransitData;
+import au.id.micolous.metrodroid.transit.serialonly.MykiTransitData;
 import au.id.micolous.metrodroid.util.Utils;
 
 public class MykiTest extends TestCase {

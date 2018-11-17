@@ -25,99 +25,52 @@
 package au.id.micolous.metrodroid.transit.ezlink;
 
 import au.id.micolous.metrodroid.util.Utils;
-import au.id.micolous.metrodroid.xml.HexString;
 
 import java.util.Calendar;
 
 public class CEPASPurse {
-    private int mAutoLoadAmount;
-    private HexString mCAN;
-    private byte mCepasVersion;
-    private HexString mCSN;
-    private String mErrorMessage;
-    private int mIssuerDataLength;
-    private HexString mIssuerSpecificData;
-    private HexString mLastCreditTransactionHeader;
-    private int mLastCreditTransactionTRP;
-    private byte mLastTransactionDebitOptionsByte;
-    private int mLastTransactionTRP;
-    private byte mLogfileRecordCount;
-    private int mPurseBalance;
-    private Calendar mPurseExpiryDate;
-    private byte mPurseStatus;
-    private Calendar mPurseCreationDate;
-    private boolean mIsValid;
-    private CEPASTransaction mLastTransactionRecord;
+    private final int mAutoLoadAmount;
+    private final byte[] mCAN;
+    private final byte mCepasVersion;
+    private final byte[] mCSN;
+    private final int mIssuerDataLength;
+    private final byte[] mIssuerSpecificData;
+    private final byte[] mLastCreditTransactionHeader;
+    private final int mLastCreditTransactionTRP;
+    private final byte mLastTransactionDebitOptionsByte;
+    private final int mLastTransactionTRP;
+    private final byte mLogfileRecordCount;
+    private final int mPurseBalance;
+    private final Calendar mPurseExpiryDate;
+    private final byte mPurseStatus;
+    private final Calendar mPurseCreationDate;
+    private final boolean mIsValid;
+    private final CEPASTransaction mLastTransactionRecord;
 
     public CEPASPurse(byte[] purseData) {
-        int tmp;
         if (purseData == null) {
             purseData = new byte[128];
             mIsValid = false;
-            mErrorMessage = "";
         } else {
             mIsValid = true;
-            mErrorMessage = "";
         }
 
         mCepasVersion = purseData[0];
         mPurseStatus = purseData[1];
-
-        tmp = (0x00ff0000 & ((purseData[2])) << 16) | (0x0000ff00 & (purseData[3] << 8)) | (0x000000ff & (purseData[4]));
-        /* Sign-extend the value */
-        if (0 != (purseData[2] & 0x80))
-            tmp |= 0xff000000;
-        mPurseBalance = tmp;
-
-        tmp = (0x00ff0000 & ((purseData[5])) << 16) | (0x0000ff00 & (purseData[6] << 8)) | (0x000000ff & (purseData[7]));
-        /* Sign-extend the value */
-        if (0 != (purseData[5] & 0x80))
-            tmp |= 0xff000000;
-        mAutoLoadAmount = tmp;
-
-        byte[] can = new byte[8];
-        System.arraycopy(purseData, 8, can, 0, can.length);
-
-        mCAN = new HexString(can);
-
-        byte[] csn = new byte[8];
-        System.arraycopy(purseData, 16, csn, 0, csn.length);
-
-        mCSN = new HexString(csn);
-
+        mPurseBalance = Utils.getBitsFromBufferSigned(purseData, 16, 24);
+        mAutoLoadAmount = Utils.getBitsFromBufferSigned(purseData, 40, 24);
+        mCAN = Utils.byteArraySlice(purseData, 8, 8);
+        mCSN = Utils.byteArraySlice(purseData, 16, 8);
         mPurseExpiryDate = EZLinkTransitData.daysToCalendar(Utils.byteArrayToInt(purseData, 24, 2));
         mPurseCreationDate = EZLinkTransitData.daysToCalendar(Utils.byteArrayToInt(purseData, 26, 2));
         mLastCreditTransactionTRP = Utils.byteArrayToInt(purseData, 28, 4);
-
-        byte[] lastCreditTransactionHeader = new byte[8];
-
-        System.arraycopy(purseData, 32, lastCreditTransactionHeader, 0, 8);
-
-        mLastCreditTransactionHeader = new HexString(lastCreditTransactionHeader);
-
+        mLastCreditTransactionHeader = Utils.byteArraySlice(purseData, 32, 8);
         mLogfileRecordCount = purseData[40];
-
         mIssuerDataLength = 0x00ff & purseData[41];
-
         mLastTransactionTRP = Utils.byteArrayToInt(purseData, 42, 4);
-
-        {
-            byte[] tmpTransaction = new byte[16];
-            System.arraycopy(purseData, 46, tmpTransaction, 0, tmpTransaction.length);
-            mLastTransactionRecord = new CEPASTransaction(tmpTransaction);
-        }
-
-        byte[] issuerSpecificData = new byte[mIssuerDataLength];
-        System.arraycopy(purseData, 62, issuerSpecificData, 0, issuerSpecificData.length);
-        mIssuerSpecificData = new HexString(issuerSpecificData);
-
+        mLastTransactionRecord = new CEPASTransaction(Utils.byteArraySlice(purseData, 46, 16));
+        mIssuerSpecificData = Utils.byteArraySlice(purseData, 62, mIssuerDataLength);
         mLastTransactionDebitOptionsByte = purseData[62 + mIssuerDataLength];
-    }
-
-    private CEPASPurse() { /* For XML Serializer */ }
-
-    public static CEPASPurse create(byte[] purseData) {
-        return new CEPASPurse(purseData);
     }
 
     public byte getCepasVersion() {
@@ -137,17 +90,11 @@ public class CEPASPurse {
     }
 
     public byte[] getCAN() {
-        if (mCAN == null) {
-            return null;
-        }
-        return mCAN.getData();
+        return mCAN;
     }
 
     public byte[] getCSN() {
-        if (mCSN == null) {
-            return null;
-        }
-        return mCSN.getData();
+        return mCSN;
     }
 
     public Calendar getPurseExpiryDate() {
@@ -163,7 +110,7 @@ public class CEPASPurse {
     }
 
     public byte[] getLastCreditTransactionHeader() {
-        return mLastCreditTransactionHeader.getData();
+        return mLastCreditTransactionHeader;
     }
 
     public byte getLogfileRecordCount() {
@@ -183,7 +130,7 @@ public class CEPASPurse {
     }
 
     public byte[] getIssuerSpecificData() {
-        return mIssuerSpecificData.getData();
+        return mIssuerSpecificData;
     }
 
     public byte getLastTransactionDebitOptionsByte() {
@@ -192,9 +139,5 @@ public class CEPASPurse {
 
     public boolean isValid() {
         return mIsValid;
-    }
-
-    public String getErrorMessage() {
-        return mErrorMessage;
     }
 }

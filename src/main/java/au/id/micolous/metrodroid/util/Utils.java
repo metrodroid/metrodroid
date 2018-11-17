@@ -22,6 +22,8 @@ package au.id.micolous.metrodroid.util;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.content.ClipData;
+import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageInfo;
@@ -55,8 +57,10 @@ import android.text.style.TtsSpan;
 import android.text.style.TypefaceSpan;
 import android.util.Log;
 import android.view.WindowManager;
+import android.widget.Toast;
 
 import org.apache.commons.io.IOUtils;
+import org.jetbrains.annotations.NotNull;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -79,6 +83,8 @@ import au.id.micolous.metrodroid.MetrodroidApplication;
 import au.id.micolous.metrodroid.key.ClassicCardKeys;
 import au.id.micolous.metrodroid.key.ClassicSectorKey;
 
+import static android.content.Context.CLIPBOARD_SERVICE;
+
 public class Utils {
     private static final String TAG = "Utils";
 
@@ -89,7 +95,7 @@ public class Utils {
     private static final SimpleDateFormat ISO_DATETIME_FORMAT_FILENAME;
     /** Formatter which returns ISO8601 datetime in UTC. */
     private static final SimpleDateFormat ISO_DATETIME_FORMAT;
-    /** Formatter which returns ISO8601 date in UTC. */
+    /** Formatter which returns ISO8601 date in local time. */
     private static final SimpleDateFormat ISO_DATE_FORMAT;
     /** Reference to UTC timezone. */
     public static final TimeZone UTC = TimeZone.getTimeZone("Etc/UTC");
@@ -104,7 +110,6 @@ public class Utils {
         ISO_DATETIME_FORMAT.setTimeZone(UTC);
 
         ISO_DATE_FORMAT = new SimpleDateFormat("yyyy-MM-dd", Locale.US);
-        ISO_DATE_FORMAT.setTimeZone(UTC);
     }
 
     private Utils() {
@@ -241,6 +246,24 @@ public class Utils {
         }
     }
 
+    /**
+     * Converts a string to a byte array. Assumes the string is US-ASCII. Intended for internal
+     * card communication usage.
+     * @param s String to convert.
+     * @return byte array with string as US-ASCII
+     */
+    public static byte[] stringToUtf8(String s) {
+        return s.getBytes(getUTF8());
+    }
+
+    public static Charset getUTF8() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            return StandardCharsets.UTF_8;
+        } else {
+            return Charset.forName("UTF-8");
+        }
+    }
+
     /*
     public static byte[] intToByteArray(int value) {
         return new byte[] {
@@ -252,11 +275,7 @@ public class Utils {
     */
 
     public static int byteArrayToInt(byte[] b) {
-        return byteArrayToInt(b, 0);
-    }
-
-    public static int byteArrayToInt(byte[] b, int offset) {
-        return byteArrayToInt(b, offset, b.length);
+        return byteArrayToInt(b, 0, b.length);
     }
 
     public static int byteArrayToInt(byte[] b, int offset, int length) {
@@ -431,9 +450,7 @@ public class Utils {
      */
     public static int unsignedToTwoComplement(int input, int highestBit) {
         if (getBitsFromInteger(input, highestBit, 1) == 1) {
-            // inverse all bits
-            input ^= (2 << highestBit) - 1;
-            return -(1 + input);
+            return input - (2 << highestBit);
         }
 
         return input;
@@ -474,6 +491,29 @@ public class Utils {
         }
     }
 
+    public static int getBitsFromBufferLeBits(byte[] buffer, int iStartBit, int iLength) {
+        // Note: Assumes little-endian bit-order
+        int iEndBit = iStartBit + iLength - 1;
+        int iSByte = iStartBit / 8;
+        int iSBit = iStartBit % 8;
+        int iEByte = iEndBit / 8;
+        int iEBit = iEndBit % 8;
+
+        if (iSByte == iEByte) {
+            return (buffer[iEByte] >> iSBit) & (0xFF >> (8 - iLength));
+        } else {
+            int uRet = (buffer[iSByte] >> iSBit) & (0xFF >> iSBit);
+
+            for (int i = iSByte + 1; i < iEByte; i++) {
+                uRet |= ((buffer[i] & 0xFF) << (((i - iSByte) * 8) - iSBit));
+            }
+
+            uRet |= (buffer[iEByte] & ((1 << (iEBit + 1)) - 1)) << (((iEByte - iSByte) * 8) - iSBit);
+
+            return uRet;
+        }
+    }
+
     public static String formatDurationMinutes(int mins)
     {
         int hours, days;
@@ -503,6 +543,7 @@ public class Utils {
      * @param formatArgs     Formatting arguments to pass
      * @return Localized string
      */
+    @NonNull
     public static String localizeString(@StringRes int stringResource, Object... formatArgs) {
         Resources res = MetrodroidApplication.getInstance().getResources();
         return res.getString(stringResource, formatArgs);
@@ -632,36 +673,40 @@ public class Utils {
     }
 
     /**
-     * Formats a GregorianCalendar into ISO8601 date and time format, but with only characters that
-     * can be used in filenames on most filesystems.
+     * Formats a GregorianCalendar in to ISO8601 date and time format in UTC, but with only
+     * characters that can be used in filenames on most filesystems.
      *
      * @param calendar Date/time to format
      * @return String representing the date and time in ISO8601 format.
      */
-    public static String isoDateTimeFilenameFormat(Calendar calendar) {
+    public static String isoDateTimeFilenameFormat(@NonNull Calendar calendar) {
         return ISO_DATETIME_FORMAT_FILENAME.format(calendar.getTime());
     }
 
 
     /**
-     * Formats a GregorianCalendar into ISO8601 date and time format. This should only be used for debugging
-     * logs, in order to ensure consistent information.
+     * Formats a GregorianCalendar in to ISO8601 date and time format in UTC. This should only be
+     * used for debugging logs, in order to ensure consistent information.
      *
      * @param calendar Date/time to format
      * @return String representing the date and time in ISO8601 format.
      */
-    public static String isoDateTimeFormat(Calendar calendar) {
+    public static String isoDateTimeFormat(@NonNull Calendar calendar) {
         return ISO_DATETIME_FORMAT.format(calendar.getTime());
     }
 
     /**
-     * Formats a GregorianCalendar into ISO8601 date format. This should only be used for debugging
-     * logs, in order to ensure consistent information.
+     * Formats a GregorianCalendar in to ISO8601 date format in local time (ie: without any timezone
+     * conversion).  This is designed for {@link Calendar} values which only have a valid date
+     * component.
+     *
+     * This should only be used for debugging logs, in order to ensure consistent
+     * information.
      *
      * @param calendar Date to format
      * @return String representing the date in ISO8601 format.
      */
-    public static String isoDateFormat(Calendar calendar) {
+    public static String isoDateFormat(@NonNull Calendar calendar) {
         return ISO_DATE_FORMAT.format(calendar.getTime());
     }
 
@@ -791,6 +836,13 @@ public class Utils {
         return true;
     }
 
+    public static boolean isAllZero(byte[] data) {
+        for (byte b : data)
+            if (b != 0)
+                return false;
+        return true;
+    }
+
     private static boolean isRawMifareClassicKeyFileLength(int length) {
         return length > 0 &&
                 length % MIFARE_KEY_LENGTH == 0 &&
@@ -869,6 +921,23 @@ public class Utils {
 
         // Couldn't parse as JSON -- fallback
         return isRawMifareClassicKeyFileLength(data.length) ? KeyFormat.RAW_MFC : KeyFormat.UNKNOWN;
+    }
+
+    public static int getBitsFromBufferSigned(byte[] data, int startBit, int bitLength) {
+        int val = getBitsFromBuffer(data, startBit, bitLength);
+        return unsignedToTwoComplement(val, bitLength - 1);
+    }
+
+    @NotNull
+    public static String groupString(@NotNull String val, @NotNull String separator, int... groups) {
+        StringBuilder ret = new StringBuilder();
+        int ptr = 0;
+        for (int g : groups) {
+            ret.append(val, ptr, ptr + g).append(separator);
+            ptr += g;
+        }
+        ret.append(val, ptr, val.length());
+        return ret.toString();
     }
 
     public interface Matcher<T> {
@@ -998,7 +1067,46 @@ public class Utils {
         return -1;
     }
 
-    public static int checkKeyHash(@NonNull ClassicSectorKey key, @NonNull String salt, String... expectedHashes) {
+    public static String formatNumber(long value, String separator, int... groups) {
+        int minDigit = 0;
+        for (int g : groups)
+            minDigit += g;
+        String unformatted = String.format(Locale.ENGLISH, "%0" + minDigit + "d", value);
+        int numDigit = unformatted.length();
+        int last = numDigit - minDigit;
+        StringBuilder ret = new StringBuilder();
+        ret.append(unformatted, 0, last);
+        for (int g : groups) {
+            ret.append(unformatted, last, last + g).append(separator);
+            last += g;
+        }
+        return ret.substring(0, ret.length() - 1);
+    }
+
+    /**
+     * Checks a keyhash with a {@link ClassicSectorKey}.
+     *
+     * See {@link #checkKeyHash(byte[], String, String...)} for further information.
+     *
+     * @param key The key to check. If this is null, then this will always return a value less than
+     *            0 (ie: error).
+     */
+    public static int checkKeyHash(@Nullable ClassicSectorKey key, @NonNull String salt, String... expectedHashes) {
+        if (key == null)
+            return -1;
         return checkKeyHash(key.getKey(), salt, expectedHashes);
+    }
+
+    public static void copyTextToClipboard(Context context, String label, String text) {
+        ClipData data = ClipData.newPlainText(label, text);
+
+        ClipboardManager clipboard = (ClipboardManager) context.getSystemService(CLIPBOARD_SERVICE);
+        if (clipboard == null) {
+            Log.w(TAG, "Unable to access ClipboardManager.");
+            Toast.makeText(context, R.string.clipboard_error, Toast.LENGTH_SHORT).show();
+            return;
+        }
+        clipboard.setPrimaryClip(data);
+        Toast.makeText(context, R.string.copied_to_clipboard, Toast.LENGTH_SHORT).show();
     }
 }

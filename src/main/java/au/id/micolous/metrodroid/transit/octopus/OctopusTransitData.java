@@ -26,6 +26,7 @@ import android.support.annotation.Nullable;
 
 import au.id.micolous.metrodroid.card.CardType;
 import au.id.micolous.metrodroid.card.felica.FelicaCard;
+import au.id.micolous.metrodroid.card.felica.FelicaCardTransitFactory;
 import au.id.micolous.metrodroid.card.felica.FelicaService;
 import au.id.micolous.metrodroid.transit.TransitBalance;
 import au.id.micolous.metrodroid.transit.TransitBalanceStored;
@@ -33,12 +34,14 @@ import au.id.micolous.metrodroid.transit.CardInfo;
 import au.id.micolous.metrodroid.transit.TransitCurrency;
 import au.id.micolous.metrodroid.transit.TransitData;
 import au.id.micolous.metrodroid.transit.TransitIdentity;
-import au.id.micolous.metrodroid.transit.newshenzhen.NewShenzhenTransitData;
+import au.id.micolous.metrodroid.transit.china.NewShenzhenTransitData;
 import au.id.micolous.metrodroid.util.Utils;
 
 import org.apache.commons.lang3.ArrayUtils;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 import au.id.micolous.farebot.R;
 
@@ -110,36 +113,52 @@ public class OctopusTransitData extends TransitData {
         mHasShenzhen = parcel.readInt() == 1;
     }
 
-    public static boolean check(FelicaCard card) {
-        return (card.getSystem(SYSTEMCODE_OCTOPUS) != null) || (card.getSystem(SYSTEMCODE_SZT) != null);
-    }
-
-    public static CardInfo earlyCheck(int[] systemCodes) {
-        // OctopusTransitData is special, because it handles two types of cards.  So we can just
-        // directly say which cardInfo matches.
-        if (ArrayUtils.contains(systemCodes, SYSTEMCODE_OCTOPUS))
-            return CARD_INFO; // also dual-mode cards.
-
-        if (ArrayUtils.contains(systemCodes, SYSTEMCODE_SZT))
-            return NewShenzhenTransitData.CARD_INFO;
-
-        return null;
-    }
-
-    public static TransitIdentity parseTransitIdentity(FelicaCard card) {
-        if (card.getSystem(SYSTEMCODE_SZT) != null) {
-            if (card.getSystem(SYSTEMCODE_OCTOPUS) != null) {
-                // Dual-mode card.
-                return new TransitIdentity(Utils.localizeString(R.string.card_name_octopus_szt_dual), null);
-            } else {
-                // SZT-only card.
-                return new TransitIdentity(Utils.localizeString(R.string.card_name_szt), null);
-            }
-        } else {
-            // Octopus-only card.
-            return new TransitIdentity(Utils.localizeString(R.string.card_name_octopus), null);
+    public final static FelicaCardTransitFactory FACTORY = new FelicaCardTransitFactory() {
+        @Override
+        public boolean earlyCheck(int[] systemCodes) {
+            return ArrayUtils.contains(systemCodes, SYSTEMCODE_OCTOPUS) || ArrayUtils.contains(systemCodes, SYSTEMCODE_SZT);
         }
-    }
+
+        @Override
+        public CardInfo getCardInfo(int[] systemCodes) {
+            // OctopusTransitData is special, because it handles two types of cards.  So we can just
+            // directly say which cardInfo matches.
+            if (ArrayUtils.contains(systemCodes, SYSTEMCODE_OCTOPUS))
+                return CARD_INFO; // also dual-mode cards.
+
+            if (ArrayUtils.contains(systemCodes, SYSTEMCODE_SZT))
+                return NewShenzhenTransitData.CARD_INFO;
+
+            return null;
+        }
+
+        // Shenzhen Tong is added to supported list by new Shenzhen Tong code.
+        @Override
+        protected CardInfo getCardInfo() {
+            return CARD_INFO;
+        }
+
+        @Override
+        public TransitData parseTransitData(FelicaCard felicaCard) {
+            return new OctopusTransitData(felicaCard);
+        }
+
+        @Override
+        public TransitIdentity parseTransitIdentity(FelicaCard card) {
+            if (card.getSystem(SYSTEMCODE_SZT) != null) {
+                if (card.getSystem(SYSTEMCODE_OCTOPUS) != null) {
+                    // Dual-mode card.
+                    return new TransitIdentity(Utils.localizeString(R.string.card_name_octopus_szt_dual), null);
+                } else {
+                    // SZT-only card.
+                    return new TransitIdentity(Utils.localizeString(R.string.card_name_szt), null);
+                }
+            } else {
+                // Octopus-only card.
+                return new TransitIdentity(Utils.localizeString(R.string.card_name_octopus), null);
+            }
+        }
+    };
 
     @Override
     @Nullable

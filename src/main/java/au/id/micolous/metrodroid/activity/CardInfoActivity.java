@@ -32,11 +32,9 @@ import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.speech.tts.TextToSpeech;
 import android.speech.tts.TextToSpeech.OnInitListener;
-import android.support.annotation.NonNull;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
 import android.support.v7.graphics.Palette;
-import android.support.v7.widget.Toolbar;
 import android.text.Spanned;
 import android.util.Log;
 import android.view.Menu;
@@ -77,6 +75,8 @@ public class CardInfoActivity extends MetrodroidActivity {
     private TabPagerAdapter mTabsAdapter;
     private TextToSpeech mTTS;
 
+    private String mCardSerial;
+    private boolean mShowCopyCardNumber = true;
     private boolean mShowOnlineServices = false;
     private boolean mShowMoreInfo = false;
     private Menu mMenu = null;
@@ -170,13 +170,15 @@ public class CardInfoActivity extends MetrodroidActivity {
                         });
                     }
 
-                    String titleSerial = "";
-                    if (!MetrodroidApplication.hideCardNumbers()) {
-                        titleSerial = (mTransitData.getSerialNumber() != null) ? mTransitData.getSerialNumber()
+                    mShowCopyCardNumber = !MetrodroidApplication.hideCardNumbers();
+                    if (mShowCopyCardNumber) {
+                        mCardSerial = (mTransitData.getSerialNumber() != null) ? mTransitData.getSerialNumber()
                                 : Utils.getHexString(mCard.getTagId(), "");
+                    } else {
+                        mCardSerial = "";
                     }
                     actionBar.setTitle(mTransitData.getCardName());
-                    actionBar.setSubtitle(titleSerial);
+                    actionBar.setSubtitle(mCardSerial);
 
                     Bundle args = new Bundle();
                     args.putString(AdvancedCardInfoActivity.EXTRA_CARD,
@@ -268,6 +270,7 @@ public class CardInfoActivity extends MetrodroidActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.card_info_menu, menu);
+        menu.findItem(R.id.copy_card_number).setVisible(mShowCopyCardNumber);
         menu.findItem(R.id.online_services).setVisible(mShowOnlineServices);
         menu.findItem(R.id.more_info).setVisible(mShowMoreInfo);
         mMenu = menu;
@@ -281,6 +284,12 @@ public class CardInfoActivity extends MetrodroidActivity {
                 Intent intent = new Intent(this, CardsActivity.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(intent);
+                return true;
+
+            case R.id.copy_card_number:
+                if (mShowCopyCardNumber && mCardSerial != null) {
+                    Utils.copyTextToClipboard(this, "Card number", mCardSerial);
+                }
                 return true;
 
             case R.id.advanced_info:

@@ -25,7 +25,9 @@ import com.neovisionaries.i18n.CountryCode;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
+import java.util.Collection;
 import java.util.GregorianCalendar;
 import java.util.HashMap;
 import java.util.List;
@@ -40,8 +42,13 @@ import au.id.micolous.metrodroid.card.iso7816.ISO7816File;
 import au.id.micolous.metrodroid.card.iso7816.ISO7816Protocol;
 import au.id.micolous.metrodroid.card.iso7816.ISO7816Record;
 import au.id.micolous.metrodroid.card.iso7816.ISO7816Selector;
+import au.id.micolous.metrodroid.transit.CardInfo;
+import au.id.micolous.metrodroid.transit.CardTransitFactory;
 import au.id.micolous.metrodroid.transit.TransitData;
 import au.id.micolous.metrodroid.transit.TransitIdentity;
+import au.id.micolous.metrodroid.transit.intercode.IntercodeTransitData;
+import au.id.micolous.metrodroid.transit.lisboaviva.LisboaVivaTransitData;
+import au.id.micolous.metrodroid.transit.mobib.MobibTransitData;
 import au.id.micolous.metrodroid.transit.opus.OpusTransitData;
 import au.id.micolous.metrodroid.transit.ravkav.RavKavTransitData;
 import au.id.micolous.metrodroid.ui.HeaderListItem;
@@ -61,11 +68,22 @@ import au.id.micolous.metrodroid.util.Utils;
  * - https://github.com/nfc-tools/libnfc/blob/master/examples/pn53x-tamashell-scripts/ReadNavigo.sh
  */
 public class CalypsoApplication extends ISO7816Application {
-    public static final byte[] CALYPSO_FILENAME = Utils.stringToByteArray("1TIC.ICA");
+    public static final byte[][] CALYPSO_FILENAMES =
+            {
+                    Utils.stringToByteArray("1TIC.ICA"),
+                    Utils.stringToByteArray("3MTR.ICA")
+            };
 
     private static final String TAG = CalypsoApplication.class.getName();
     public static final String TYPE = "calypso";
     private static final Map<String, String> NAME_MAP = new HashMap<>();
+    private static final CalypsoCardTransitFactory[] FACTORIES = {
+            RavKavTransitData.FACTORY,
+            OpusTransitData.FACTORY,
+            MobibTransitData.FACTORY,
+            IntercodeTransitData.FACTORY,
+            LisboaVivaTransitData.FACTORY
+    };
 
     private CalypsoApplication(ISO7816Application.ISO7816Info appData, boolean partialRead) {
         super(appData);
@@ -84,37 +102,86 @@ public class CalypsoApplication extends ISO7816Application {
         int counter = 0;
         boolean partialRead = false;
 
-            for (File f : File.getAll()) {
-                feedbackInterface.updateProgressBar(counter++, File.getAll().length);
-                try {
-                    appData.dumpFile(protocol, f.getSelector(), 0x1d);
-                } catch (TagLostException e) {
-                    Log.w(TAG, "tag lost", e);
-                    partialRead = true;
-                    break;
-                } catch (IOException e) {
-                    Log.e(TAG, "couldn't select file", e);
-                }
+        for (File f : File.getAll()) {
+            feedbackInterface.updateProgressBar(counter++, File.getAll().length);
+            try {
+                appData.dumpFile(protocol, f.getSelector(), 0x1d);
+                if (f == File.TICKETING_ENVIRONMENT)
+                    showCardType(appData, feedbackInterface);
+            } catch (TagLostException e) {
+                Log.w(TAG, "tag lost", e);
+                partialRead = true;
+                break;
+            } catch (IOException e) {
+                Log.e(TAG, "couldn't select file", e);
             }
+        }
 
         return new CalypsoApplication(appData, partialRead);
     }
 
+    private static void showCardType(ISO7816Application.ISO7816Info appData, TagReaderFeedbackInterface feedbackInterface) {
+        byte[] tenv;
+        try {
+            ISO7816File tenvf = appData.getFile(File.TICKETING_ENVIRONMENT.getSelector());
+            if (tenvf == null)
+                return;
+            tenv = tenvf.getRecord(1).getData();
+        } catch (Exception e) {
+            return;
+        }
+
+        CardInfo ci = null;
+        for (CalypsoCardTransitFactory f : FACTORIES) {
+            if (f.check(tenv))
+                ci = f.getCardInfo(tenv);
+            if (ci != null)
+                break;
+        }
+
+        if (ci != null) {
+            feedbackInterface.updateStatusText(Utils.localizeString(R.string.card_reading_type,
+                    ci.getName()));
+            feedbackInterface.showCardType(ci);
+        }
+    }
+
+    public static List<CardTransitFactory> getAllFactories() {
+        return Arrays.asList(FACTORIES);
+    }
+
+    private byte[] getTicketEnv() {
+        try {
+            ISO7816File tenvf = getFile(File.TICKETING_ENVIRONMENT);
+            if (tenvf == null)
+                return null;
+            return tenvf.getRecord(1).getData();
+        } catch (Exception e) {
+            return null;
+        }
+    }
+
     @Override
     public TransitData parseTransitData() {
-        if (RavKavTransitData.check(this))
-            return RavKavTransitData.parseTransitData(this);
-        if (OpusTransitData.check(this))
-            return OpusTransitData.parseTransitData(this);
+        byte[] tenv = getTicketEnv();
+        if (tenv == null)
+            return null;
+        for (CalypsoCardTransitFactory f : FACTORIES) {
+            if (f.check(tenv))
+                return f.parseTransitData(this);
+        }
         return null;
     }
 
     @Override
     public TransitIdentity parseTransitIdentity() {
-        if (RavKavTransitData.check(this))
-            return RavKavTransitData.parseTransitIdentity(this);
-        if (OpusTransitData.check(this))
-            return OpusTransitData.parseTransitIdentity(this);
+        byte[] tenv = getTicketEnv();
+        if (tenv == null)
+            return null;
+        for (CalypsoCardTransitFactory f : FACTORIES) {
+            if (f.check(tenv))
+                return f.parseTransitIdentity(this);
+        }
         return null;
     }
 
@@ -145,8 +212,12 @@ public class CalypsoApplication extends ISO7816Application {
 
             // This shows a country name if it's known, or "unknown (number)" if not.
             String countryName;
+            CountryCode cc = null;
             if (countryCode > 0) {
-                countryName = CountryCode.getByCode(countryCode).toLocale().getDisplayCountry();
+                cc = CountryCode.getByCode(countryCode);
+            }
+            if (cc != null) {
+                countryName = cc.toLocale().getDisplayCountry();
             } else {
                 countryName = Utils.localizeString(R.string.unknown_format, countryCode);
             }
@@ -187,13 +258,15 @@ public class CalypsoApplication extends ISO7816Application {
     }
 
     public enum File {
+        // Put this first to be able to show card image as soon as possible
+        TICKETING_ENVIRONMENT(0x2000, 0x2001),
+
         AID(0x3F04),
         ICC(0x0002),
         ID(0x0003),
         HOLDER_EXTENDED(0x3F1C),
         DISPLAY(0x2F10),
 
-        TICKETING_ENVIRONMENT(0x2000, 0x2001),
         TICKETING_HOLDER(0x2000, 0x2002),
         TICKETING_AID(0x2000, 0x2004),
         TICKETING_LOG(0x2000, 0x2010),

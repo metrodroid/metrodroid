@@ -1,4 +1,4 @@
-reader_id,stop_id,stop_code,short_name
+reader_id,stop_id,stop_code,short_name,comment
 0x040001,COLM,,
 0x040002,DALY,,
 0x040003,BALB,,
@@ -14,11 +14,13 @@ reader_id,stop_id,stop_code,short_name
 0x04000d,19TH,,
 0x04000e,MCAR,,
 0x04000f,ROCK,,
+0x040010,ORIN,,,unconfirmed
 0x040011,LAFY,,
 0x040012,WCRK,,
 0x040013,PHIL,,Pleasant Hill
 0x040014,CONC,,
 0x040015,NCON,,N. Concord/Martinez
+0x040016,PITT,,,unconfirmed
 0x040017,ASHB,,
 0x040018,DBRK,,Berkeley
 0x040019,NBRK,,
@@ -28,13 +30,13 @@ reader_id,stop_id,stop_code,short_name
 0x04001d,LAKE,,
 0x04001e,FTVL,,
 0x04001f,COLS,,
-0x040020,COLS,,
-0x040021,SANL,,
+0x040020,SANL,,
+0x040021,BAYF,,
 0x040022,HAYW,,
 0x040023,SHAY,,
 0x040024,UCTY,,
 0x040025,FRMT,,
-0x040026,DALY,,
+0x040026,CAST,,
 0x040027,DUBL,,
 0x040028,SSAN,,South SF
 0x040029,SBRN,,
@@ -42,3 +44,6 @@ reader_id,stop_id,stop_code,short_name
 0x04002b,MLBR,,
 0x04002c,WDUB,,W. Dublin/Pleasanton
 0x04002d,OAKL,,OAK Airport
+0x04002e,WARM,,,unconfirmed
+0x04002f,PCTR,,,unconfirmed
+0x040030,ANTC,,,unconfirmed

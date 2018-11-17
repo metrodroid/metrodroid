@@ -62,11 +62,20 @@
     <string name="scanned_at_format">Scanned at %1$s on %2$s</string>
     <string name="supported_cards">Supported Cards</string>
     <string name="pass_or_transfer">Pass/Xfer</string>
+    <!--
+    Translators: This is used for a total number of transactions that have been performed on the
+    card. This is slightly different to a "trip counter", as many tickets count both the tap-on
+    (entry) and tap-off (exit), as well as top-ups as different transactions.
+    -->
     <string name="transaction_counter">Transaction counter</string>
     <string name="fully_locked_desc">
+        No part of this card is freely readable without a key and currently this format has no practical vulnerabilities.\n\n
+        Your card is not supported by Metrodroid and it is unlikely it will ever be, unless the key for it is deciphered.\n\n
+        Please lobby the card issuer to allow open data access on issued cards. It is safe to permit open, read-only access to data with modern smartcard technology. Some agencies even provide open documentation about the data format!
+    </string>
+    <string name="fully_locked_desc_unlockable">
         No part of this card is freely readable without a key. You have no valid keys installed for it.\n\n
-        If supported by Metrodroid, the card will work once keys are installed for it. These are generally different for each card. More info about acquiring and installing keys can be found in the documentation.\n\n
-        If your card is not supported by Metrodroid, it is unlikely it will ever be, unless the key for it is deciphered.\n\n
+        The card will work once keys are installed for it. These are generally different for each card. More info about acquiring and installing keys can be found in the documentation.\n\n
         Please lobby the card issuer to allow open data access on issued cards. It is safe to permit open, read-only access to data with modern smartcard technology. Some agencies even provide open documentation about the data format!
     </string>
     <string name="fully_locked_title">Fully locked card.</string>
@@ -74,9 +83,11 @@
     <string name="turn_on_nfc">Please enable NFC to read card info.</string>
     <string name="wireless_settings">Wireless Settings</string>
     <!-- Translators: "Machine ID" is arbitrary. It could be a decimal number, or hexadecimal… -->
-    <string name="machine_id">Machine ID %s</string>
+    <string name="machine_id_format">Machine ID %s</string>
+    <!-- Translators: "Machine ID" is arbitrary. It could be a decimal number, or hexadecimal… -->
+    <string name="machine_id">Machine ID</string>
 
-    <string name="unknown_card_header">Unknown card format</string>
+    <string name="unknown_card_header">Unsupported card format</string>
     <string name="unknown_card_description">This card is not yet supported by Metrodroid. Only raw data can be displayed.</string>
 
     <string name="unknown_more_info">More info</string>
@@ -115,6 +126,11 @@
     <!-- Translators: This is an end date, eg: "Valid until 3/3/2018". Dates are formatted according
      to user preferences. -->
     <string name="valid_to_format">Valid until %1$s</string>
+    <!-- Translators: This is a start date, eg: "Valid from 3/12/2017". Dates are formatted according
+     to user preferences. -->
+    <string name="valid_from_format">Valid from %1$s</string>
+    <string name="subscription_cost">Cost</string>
+    <string name="valid_not_used">Not yet used</string>
     <string name="unknown_format">Unknown (%s)</string>
     <string name="unknown">Unknown</string>
     <string name="keys_required">Encryption keys are required to read this card.</string>
@@ -125,6 +141,8 @@
     <string name="keys">Keys</string>
     <string name="delete">Delete</string>
     <string name="delete_key_confirm_title">Really delete key?</string>
+    <!-- Translators: shown when a trip attempt was denied (mainly due to insufficient funds.) -->
+    <string name="rejected">Rejected</string>
     <!--
     Translators:
     %1$s is a user supplied name for an encryption key.
@@ -153,7 +171,9 @@
     <string name="card_preview_reader">Beta version of card reader.</string>
     <string name="visit_website">Visit Website</string>
     <string name="title_activity_about">About</string>
-    <string name="card_type">Card type</string>
+    <!-- Translators: This is used to label a card's product name. For example, "Opal". -->
+    <string name="card_format">Card format</string>
+
     <string name="select_file">Select file</string>
     <string name="copied_to_clipboard">Copied to clipboard</string>
     <string name="saved_xml">Wrote Metrodroid-Export.xml to USB Storage.</string>
@@ -419,9 +439,21 @@
         <item quantity="one">%d trip remaining</item>
         <item quantity="other">%d trips remaining</item>
     </plurals>
+    <plurals name="trips_remaining_total">
+        <item quantity="one">%d trip remaining out of %d</item>
+        <item quantity="other">%d trips remaining out of %d</item>
+    </plurals>
     <plurals name="troika_rides">
         <item quantity="one">Single-ride</item>
         <item quantity="other">%d-ride</item>
+    </plurals>
+    <plurals name="lisboaviva_valid_days">
+        <item quantity="one">Valid for %d day</item>
+        <item quantity="other">Valid for %d days</item>
+    </plurals>
+    <plurals name="lisboaviva_valid_months">
+        <item quantity="one">Valid for %d month</item>
+        <item quantity="other">Valid for %d months</item>
     </plurals>
 
     <!-- Type: Value file, Range: 0 - 2300, Limited credit: 400 (Enabled) -->
@@ -482,19 +514,6 @@
     <string name="felica_response_time_write">Write command (1 block)</string>
     <!-- Translators: "Issuance" is the name of group of FeliCa commands -->
     <string name="felica_response_time_other">Issuance commands</string>
-
-    <!-- Translators: this is a ticketing system in Israel. (Hebrew: רב-קו‎)
-     May be transliterated. -->
-    <string name="card_name_ravkav">Rav-Kav</string>
-    <!-- Translators: This is Israeli intercity bus operator. (Hebrew:אֶגֶד )  -->
-    <string name="ravkav_agency_egged">Egged</string>
-    <!-- Translators: Bus operator in Tel-Aviv: Dan Bus Company (Hebrew: דן חברה לתחבורה ציבורית‎) -->
-    <string name="ravkav_agency_dan">Dan</string>
-    <!-- Translators: Tram operator in Jerusalem: City pass (Hebrew: 	סיטיפס )
-     May be transliterated.-->
-    <string name="ravkav_agency_city_pass">City Pass</string>
-    <!-- Translators: appears as an agency if user used official top-up app. -->
-    <string name="ravkav_agency_topup_app">RavKav Top-up app</string>
 
     <!-- Calypso hardware information -->
     <string name="calypso_serial_number">Serial number</string>
@@ -576,18 +595,25 @@
       Written: "Tokyo → Osaka"
       Spoken: "From Tokyo  to Osaka"
     -->
-    <string name="trip_description">(From )%1$s [→] (to )%2$s</string>
+    <string name="trip_description">(From )<xliff:g id="start_station" example="Tokyo">%1$s</xliff:g> [→] (to )<xliff:g id="end_station" example="Osaka">%2$s</xliff:g></string>
     <!-- Translators: it's used when departure point isn't known, eg: "to Central Station" -->
     <string name="trip_description_unknown_start">to %s</string>
-    <!-- Translators: it's used to show time in trip listing e.g. 12:35 - 12:51 -->
-    <string name="time_from_to">%s → %s</string>
-    <!-- Translators: it's used when departure time isn't known. If "?" is the first character, it must be prefixed with "\". -->
-    <string name="time_from_unknown_to">\??:?? → %s</string>
+    <!--
+    Translators: it's used to show time in trip listing e.g. 12:35 - 12:51.
+    The time will be formatted according to user preferences.
+    -->
+    <string name="time_from_to"><xliff:g id="start_time" example="12:35">%1$s</xliff:g> → <xliff:g id="end_time" example="12:51">%2$s</xliff:g></string>
+    <!--
+    Translators: it's used when departure time isn't known.
+    If "?" is the first character, it must be prefixed with "\".
+    -->
+    <string name="time_from_unknown_to">\??:?? → <xliff:g id="end_time" example="12:51">%s</xliff:g></string>
 
 
     <!-- Locations -->
-
     <string name="location_act_australia">Australian Capital Territory, Australia</string>
+    <string name="location_adelaide">Adelaide, Australia</string>
+    <string name="location_beijing">Beijing, China</string>
     <!--
       Translators:
 
@@ -599,10 +625,26 @@
       "Brisbane, Australia" instead.
     -->
     <string name="location_brisbane_seq_australia">Brisbane &amp; SE QLD, Australia</string>
+    <string name="location_brussels">Brussels, Belgium</string>
     <string name="location_boston">Boston, MA, USA</string>
+    <string name="location_chicago">Chicago, IL, USA</string>
+    <!--
+    Translators:
+
+    This refers to the mainland area of the People's Republic of China, excluding the special
+    administrative regions of Hong Kong and Macau.
+
+    https://en.wikipedia.org/wiki/Mainland_China
+    -->
+    <string name="location_china_mainland">Mainland China</string>
     <string name="location_christchurch_nz">Christchurch, New Zealand</string>
+    <string name="location_france">France</string>
+    <string name="location_denmark">Denmark</string>
+    <string name="location_gironde">Gironde, France</string>
+    <string name="location_grenoble">Grenoble, France</string>
     <string name="location_helsinki_finland">Helsinki, Finland</string>
     <string name="location_hong_kong">Hong Kong</string>
+    <string name="location_houston">Houston, TX, USA</string>
     <string name="location_ireland">Ireland</string>
     <string name="location_israel">Israel</string>
     <string name="location_istanbul">Istanbul, Turkey</string>
@@ -612,10 +654,16 @@
     This is not a city or prefecture.
     -->
     <string name="location_kansai">Kansai, Japan</string>
+    <string name="location_kiev">Kiev, Ukraine</string>
+    <string name="location_lisbon">Lisbon, Portugal</string>
     <string name="location_los_angeles">Los Angeles, CA, USA</string>
+    <string name="location_milan">Milan, Italy</string>
     <string name="location_minneapolis">Minneapolis, MN, USA</string>
+    <string name="location_montpellier">Montpellier, France</string>
     <string name="location_moscow">Moscow, Russia</string>
-    <string name="location_the_netherlands">The Netherlands</string>
+    <string name="location_orlando">Orlando, FL, USA</string>
+    <string name="location_paris">Paris, France</string>
+    <string name="location_portland">Portland, OR, USA</string>
     <!-- Translators: This refers to the province of Québec (not Québec City) -->
     <string name="location_quebec">Québec, Canada</string>
     <string name="location_saint_petersburg">Saint Petersburg, Russia</string>
@@ -623,14 +671,21 @@
     <string name="location_sao_paulo">São Paulo, Brazil</string>
     <string name="location_seattle">Seattle, WA, USA</string>
     <string name="location_seoul">Seoul, Korea</string>
-    <string name="location_shenzhen">Shenzhen, Guangdong Province, China</string>
+    <string name="location_shenzhen">Shenzhen, China</string>
     <string name="location_singapore">Singapore</string>
+    <string name="location_stockholm">Stockholm, Sweden</string>
+    <string name="location_sophia_antipolis">Sophia Antipolis, France</string>
     <string name="location_sydney_australia">Sydney, Australia</string>
+    <string name="location_taipei">Taipei</string>
+    <string name="location_tartu">Tartu, Estonia</string>
+    <string name="location_the_netherlands">The Netherlands</string>
     <string name="location_tokyo">Tokyo, Japan</string>
+    <string name="location_toulouse">Toulouse, France</string>
     <string name="location_vancouver">Vancouver, BC, Canada</string>
     <string name="location_victoria_australia">Victoria, Australia</string>
     <string name="location_wa_australia">Western Australia, Australia</string>
-
+    <string name="location_wuhan">Wuhan, China</string>
+    
     <!--
     These strings are used for content descriptions (accessibility), for modes of transport.
     Using them for custom pages on individual operators is discouraged (eg: Opal), as strings and
@@ -655,11 +710,100 @@
     <string name="mode_pos">Point of Sale</string>
     <!-- Used as descriptive text for the banned icon. -->
     <string name="mode_banned">Banned</string>
+    <!-- Used as descriptive text for the trolleybus icon. -->
+    <string name="mode_trolleybus">Trolleybus</string>
     <!-- Used as descriptive text for the unknown transit mode icon. -->
     <string name="mode_unknown">Unknown</string>
 
     <string name="clipper_end_of_line">(End of line)</string>
     <string name="clipper_zone_number">Zone #%s</string>
+    <!--
+    Translators:
+
+    This is shown as a list item, the value is a date and time.
+
+    For networks that allow transfers (ie: multiple vehicles may be used as part of a single trip
+    and charged at a flat rate), this shows the latest time that transfers may be made.
+
+    For example, a subscription may allow 2 trips per day, but allow a 2 hour transfer window. So
+    a passenger who boards their first vehicle at 10:00, then leaves the vehicle at 10:30, could
+    then board a second vehicle at 10:45 and still have it counted as the first "trip".
+    -->
+    <string name="free_transfers_until">Free transfers until</string>
+    <!--
+    Translators:
+
+    This is the "default" type of Clipper card, for people who do not qualify for any discounts.
+    -->
+    <string name="clipper_ticket_type_adult">Adult</string>
+    <!--
+    Translators:
+
+    This is a type of Clipper card that is available for people 65 years of age and over.
+
+    Clipper translates the name as:
+    - Spanish: "Adulto Major"
+    - Chinese: "長者"
+
+    English: https://www.clippercard.com/ClipperWeb/discounts/senior.do
+    Spanish: https://docs.clippercard.com/brochures/es/clipper_seniormailinapp_SPANISH_01-11-16.pdf
+    Chinese: https://docs.clippercard.com/brochures/zh/clipper_seniorapp_mailin_01-11-16_Trad%20Chinese.pdf
+    -->
+    <string name="clipper_ticket_type_senior">Senior</string>
+    <!--
+    Translators:
+
+    "RTC" = "Regional Transit Connection". This is a type of Clipper card that is available for
+    people under 65 years of age with "qualifying disabilities".
+
+    Clipper always uses the English acronym "RTC", regardless of the language.
+
+    English: https://www.clippercard.com/ClipperWeb/discounts/rtc.do
+    Spanish: https://docs.clippercard.com/brochures/es/ClipperRTC_booklet_SMART%2006_2017_Spanish.pdf
+    Chinese: https://docs.clippercard.com/brochures/zh/ClipperRTC_booklet_SMART%20Chinese_06_2017_TCH_Updated.pdf
+    -->
+    <string name="clipper_ticket_type_rtc" translatable="false">RTC</string>
+    <!--
+    Translators:
+
+    This is a type of Clipper card that is available for children.
+
+    Clipper translates the name as:
+    - Spanish: "Joven"
+    - Chinese: "青少年"
+
+    English: https://www.clippercard.com/ClipperWeb/discounts/youth.do
+    Spanish: https://docs.clippercard.com/brochures/es/clipper_youthmailinapp_noACT_SPANISH_01-11-16.pdf
+    Chinese: https://docs.clippercard.com/brochures/zh/clipper_youthapp_mailin_01-11-16_Chin.pdf
+    -->
+    <string name="clipper_ticket_type_youth">Youth</string>
+
+    <!--
+    Translators: the "ticket class" is one of: clipper_ticket_type_adult, clipper_ticket_type_senior,
+    clipper_ticket_type_rtc, clipper_ticket_type_youth.
+
+    eg: "Single-ride (Adult)"
+
+    This is used for one-way tickets (A -> B).
+    -->
+    <string name="clipper_single">Single-ride (<xliff:g id="ticket_class" example="Adult">%1$s</xliff:g>)</string>
+    <!--
+    Translators: the "ticket class" is one of: clipper_ticket_type_adult, clipper_ticket_type_senior,
+    clipper_ticket_type_rtc, clipper_ticket_type_youth.
+
+    eg: "Return (Adult)"
+
+    This is used for return tickets (A -> B -> A).
+    -->
+    <string name="clipper_return">Return (<xliff:g id="ticket_class" example="Adult">%1$s</xliff:g>)</string>
+    <!--
+    Translators:
+    Clipper card is the transit card for the San Francisco Bay Area.
+
+    Clipper card has been available as a plastic, reloadable value card for a long time. Two
+    operators have introduced single-use paper Clipper cards: Golden Gate Ferry, and Muni.
+    -->
+    <string name="card_note_clipper">Supports both plastic (reloadable) and paper (single-use cards issued by Golden Gate Ferry and Muni) Clipper cards.</string>
 
     <string name="ez_bus_number">Bus #%s</string>
     <string name="ez_bus_refund">Bus Refund</string>
@@ -812,7 +956,10 @@
     <string name="hsl_person_format">%s person</string>
     <!-- Translators: This is the short form of "minutes" -->
     <string name="hsl_mins_format">%s mins</string>
-    <string name="hsl_line_vehicle">Line %s, Vehicle %s</string>
+    <string name="hsl_line_vehicle">Line %1$s, Vehicle %2$s</string>
+
+    <string name="metroq_fare_card">Fare card</string>
+    <string name="metroq_day_pass">Day pass</string>
 
     <!--
         Opal (Sydney, AU).
@@ -836,11 +983,22 @@
     <string name="opal_action_journey_completed_auto_on">Journey completed (failure to tap on)</string>
     <string name="opal_action_tap_on_reversal">Tap on reversal</string>
     <string name="opal_action_tap_on_rejected">Tap on rejected</string>
+    <!--
+    Translators: This is the name of the public transport authority in Sydney.
+    Full name: "Transport for New South Wales"
+    -->
+    <string name="opal_agency_tfnsw">Transport for NSW</string>
     <string name="card_note_opal">Free travel passes and single trip tickets are not supported.</string>
 
     <string name="orca_coach_number">Coach #%s</string>
     <string name="orca_topup_machine">Machine #%s</string>
     <string name="orca_topup">Top-up</string>
+
+    <!--
+	Adelaide Metro Card
+    -->
+    <string name="card_note_adelaide">Only serial, trips and subscriptions can be read</string>
+    <string name="purse_serial_number">Purse serial number</string>
 
     <!--
         Go Card (South East Queensland/Brisbane, AU)
@@ -889,6 +1047,22 @@
     <string name="szt_bus">Shenzhen Bus</string>
     <string name="szt_station_gate">gate %s</string>
 
+    <string name="card_name_beijing">Beijing Municipal Card</string>
+    <string name="card_name_wuhantong">Wuhan Tong</string>
+    <!--
+    Translators: Name of an interoperable transit card system used in China. May be transliterated.
+
+    Does not have a Chinese-language name.
+    -->
+    <string name="card_name_cityunion">City Union</string>
+    <!--
+    Translators: Name of an interoperable transit card system used in China. May be transliterated.
+
+    Chinese: 交通联合
+    -->
+    <string name="card_name_tunion">T-Union</string>
+    <string name="city_union_city">City</string>
+
     <!--
         Bilhete Único
     -->
@@ -916,14 +1090,126 @@
 
     <string name="compass_product_type">Product type</string>
     <string name="compass_machine_code">Machine code</string>
-    <string name="compass_ticket_type">Ticket type</string>
+    <string name="ticket_type">Ticket type</string>
     <string name="compass_ticket_type_concession">Concession</string>
     <string name="compass_ticket_type_regular">Regular</string>
     <string name="compass_note">Single ride tickets only</string>
+    <string name="expiry_date">Expiry date</string>
 
-    <string name="opus_subscription">Subscription</string>
-    <string name="opus_card_expiry_date">Card Expiry</string>
-    <string name="opus_single_trips">Single trips</string>
+    <!--
+    Translators: Some cards record the cardholder's gender, this is used to label the field.
+    -->
+    <string name="gender">Gender</string>
+    <string name="gender_female">Female</string>
+    <string name="gender_male">Male</string>
+
+    <!-- En1545 and related cards -->
+
+    <!--
+    Translators: This refers to the travel class of the ticket (ie: "1st Class", "2nd Class").
+    https://en.wikipedia.org/wiki/Travel_class
+    -->
+    <string name="passenger_class">Class</string>
+    <string name="without_receipt">Without receipt</string>
+    <string name="with_receipt">With receipt</string>
+
+    <!-- Translators: The name of the transit agency who sold a subscription -->
+    <string name="seller_agency">Seller agency</string>
+    <!-- Translators: Attribute to describe the number of remaining trips on the card or subscription. -->
+    <string name="remaining_trip_count">Trips remaining</string>
+    <plurals name="remaining_trips_total">
+        <item quantity="zero">No trips remain</item>
+        <item quantity="one">%1$d trip remains</item>
+        <item quantity="other">%1$d trips remaining</item>
+    </plurals>
+
+    <plurals name="remaining_trip_on_day">
+        <item quantity="one">%1$d trip remains on %2$s</item>
+        <item quantity="other">%1$d trips remaining on %2$s</item>
+    </plurals>
+    <string name="remaining_day_count">Days remaining</string>
+    <plurals name="travel_zones">
+        <item quantity="one">Travel zone</item>
+        <item quantity="other">Travel zones</item>
+    </plurals>
+
+    <string name="en1545_network_id">Network ID</string>
+    <string name="card_issuer">Issuer</string>
+
+    <string name="purchase_date">Date purchased</string>
+    <!-- Translators: Used to describe a subscription (travel pass) made of single trips. -->
+    <string name="single_trips">Single trips</string>
+    <!-- Translators: Used to describe a subscription (travel pass) lasting for a month. -->
+    <string name="monthly_subscription">Monthly subscription</string>
+    <!-- Translators: Used to describe a subscription (travel pass) lasting for a week. -->
+    <string name="weekly_subscription">Weekly subscription</string>
+    <string name="en1545_card_expiry_date_profile">Profile expiry date</string>
+    <!-- Translators: Used to describe a subscription (travel pass) lasting for a day. -->
+    <string name="daily_subscription">Daily subscription</string>
+
+    <!-- Translators:
+    The subscription is present on the card, but currently disabled.
+    -->
+    <string name="subscription_inactive">Inactive</string>
+    <!-- Translators:
+    The subscription has been purchased, but never used.
+    -->
+    <string name="subscription_unused">Unused</string>
+    <!-- Translators:
+    The subscription has been purchased, and has started.
+    -->
+    <string name="subscription_started">Started</string>
+    <!-- Translators:
+    The subscription has been "used up".
+
+    This is the "final" state when there are a fixed number of trips associated with a
+    subscription, eg: the card holder bought 10 trips, and has taken 10 trips.
+    -->
+    <string name="subscription_used">Used</string>
+    <!-- Translators:
+    The subscription has expired.
+
+    This is the "final" state when the card has been scanned after the end date/time of the
+    subscription.
+    -->
+    <string name="subscription_expired">Expired</string>
+
+    <!-- Translators "Last used" is a date, time or date+time attribute -->
+    <string name="last_used_on">Last used</string>
+    <string name="payment_method">Payment method</string>
+    <string name="payment_method_cash">Cash</string>
+    <string name="payment_method_credit_card">Credit card</string>
+    <string name="payment_method_debit_card">Debit card</string>
+    <string name="payment_method_transit_card">Transit card</string>
+    <string name="payment_method_cheque">Cheque</string>
+    <!-- Translators: Free as in "gratis" (costing no money) -->
+    <string name="payment_method_free">Free</string>
+
+    <!-- Translators: This refers to a person's name. -->
+    <string name="card_holders_name">Cardholder\'s name</string>
+
+    <!--
+    Translators: This is used to describe whether a card is personalised (registered to an
+    individual) or anonymous (not registered).
+     -->
+    <string name="card_type">Card type</string>
+
+    <!-- Translators: Used to describe a card that is not registered to any individual. -->
+    <string name="card_type_anonymous">Anonymous</string>
+    <!-- Translators: Used to describe a card that has been registered in an individual's name. -->
+    <string name="card_type_personal">Personal</string>
+
+    <!--
+    Translators: This should never be translated as "ZIP code".
+    This string should not be used for ticketing systems in USA.
+    -->
+    <string name="postal_code">Postal code</string>
+
+    <!-- Translators: this is a ticketing system in Israel. (Hebrew: רב-קו‎)
+ May be transliterated. -->
+    <string name="card_name_ravkav">Rav-Kav</string>
+    <!-- Translators: appears as an agency if user used official top-up app. -->
+    <string name="ravkav_agency_topup_app">RavKav Top-up app</string>
 
     <!-- Troika / Тройка, Podorozhnik / Подорожник (Russia) -->
 
@@ -1001,9 +1287,9 @@
 
     <string name="no_data_in_clipboard">No data in clipboard.</string>
     <string name="app_version">Version: %s</string>
-    <string name="device_model">Model: %s (%s)</string>
-    <string name="device_manufacturer">Manufacturer: %s (%s)</string>
-    <string name="android_os">Android OS: %s (%s)</string>
+    <string name="device_model">Model: <xliff:g id="model_name" example="Pixel 2">%1$s</xliff:g> (<xliff:g id="model_codename" example="walleye">%2$s</xliff:g>)</string>
+    <string name="device_manufacturer">Manufacturer: <xliff:g id="manufacturer" example="HTC">%1$s</xliff:g> (<xliff:g id="brand" example="Google">%2$s</xliff:g>)</string>
+    <string name="android_os">Android OS: <xliff:g id="version" example="9.0">%1$s</xliff:g> (<xliff:g id="build_id" example="PPR2.180905.006">%2$s</xliff:g>)</string>
     <string name="nfc_enabled">NFC: enabled</string>
     <string name="nfc_disabled">NFC: disabled</string>
     <string name="nfc_not_available">NFC: not available</string>
@@ -1072,7 +1358,6 @@
     <string name="initialisation_date">Initialisation date</string>
     <string name="issue_date">Date of issue</string>
 
-    <string name="leap_issuer_id">Issuer ID</string>
     <!--
     Translators:
     keys = encryption keys
@@ -1089,6 +1374,7 @@
     -->
     <string name="card_note_leap">Requires retrieving keys from TFI, which must be enabled in the NFC Preferences screen.</string>
 
+    <string name="lisboaviva_unknown_period">Unknown validity %x/%x</string>
     <!--
     Translators: This button will open a web page with technical descriptions of the file formats,
     written in English.
@@ -1123,4 +1409,38 @@
     -->
     <string name="vehicle_number">Vehicle %s</string>
     <string name="card_id">Card ID</string>
+    <string name="tap_for_more_info">Tap for more information…</string>
+    <!-- Translators: used as a preference category label, for settings related to the display of maps -->
+    <string name="maps">Maps</string>
+    <string name="card_note_kiev">Only pre-2016 cards. Only trip log can be read</string>
+    <string name="card_name_kiev">Kiev Metro</string>
+    <!-- Translators: Used to indicate a reduced second fare, as a result of taking multiple trips
+    within a time period. -->
+    <string name="transfer">Transfer</string>
+    <string name="copy_card_number">Copy card number</string>
+    <string name="card_serial_number">Serial number</string>
+    <string name="serial_only_card_header">Serial-only card</string>
+    <string name="serial_only_card_description_not_stored">This card contains no data other than its serial number. Its balance and history are only stored in a central database.</string>
+    <string name="serial_only_card_description_locked">This card is locked, and only serial number can be read. Its balance and history might be stored on it, but are not accessible.</string>
+    <string name="serial_only_card_description_more_research">Support for this card is in development, and currently only serial number can be read.</string>
+    <!-- Translators: some card serial numbers are very long, this is shown as a list item for
+    the full version of the card's serial number -->
+    <string name="full_serial_number">Full serial number</string>
+    <string name="card_name_zolotaya_korona">Zolotaya Korona</string>
+    <string name="location_russia">Russia</string>
+    <string name="zolotaya_korona_region">Region</string>
+    <string name="card_name_iaroslavl_etk">ETK Iaroslavl</string>
+    <string name="location_iaroslavl">Iaroslavl</string>
+    <string name="card_name_krasnodar_etk">ETK Krasnodar</string>
+    <string name="location_krasnodar">Krasnodar</string>
+    <!-- Rkf specific strings -->
+    <string name="rkf_card_status">Card status</string>
+    <!-- Translators: describes the status of a card or transaction -->
+    <string name="rkf_status_ok">OK, enabled</string>
+    <!-- Translators: describes the status of a card or transaction -->
+    <string name="rkf_status_action_pending">Action pending</string>
+    <!-- Translators: describes the status of a card or transaction -->
+    <string name="rkf_status_temp_disabled">Temporarily disabled or suspended</string>
+    <!-- Translators: describes the status of a card or transaction -->
+    <string name="rkf_status_not_ok">Permanently disabled</string>
 </resources>

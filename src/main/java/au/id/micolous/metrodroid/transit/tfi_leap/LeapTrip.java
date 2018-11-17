@@ -10,6 +10,8 @@ import org.apache.commons.lang3.ArrayUtils;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
+import java.util.Collections;
+import java.util.List;
 
 import au.id.micolous.metrodroid.transit.Station;
 import au.id.micolous.metrodroid.transit.TransitCurrency;
@@ -363,30 +365,24 @@ public class LeapTrip extends Trip implements Comparable<LeapTrip> {
         return new LeapTrip(agency, mode, start, end);
     }
 
-    public static LeapTrip[] postprocess(ArrayList<LeapTrip> trips) {
-        int nonnulls = 0;
-        int ctr = 0;
+    public static List<LeapTrip> postprocess(ArrayList<LeapTrip> trips) {
+        List<LeapTrip> srt = new ArrayList<>();
         for (LeapTrip trip : trips)
             if (trip != null)
-                nonnulls++;
-        LeapTrip []srt = new LeapTrip[nonnulls];
-        for (LeapTrip trip : trips)
-            if (trip != null)
-                srt[ctr++] = trip;
-        Arrays.sort(srt);
-        LeapTrip []merged = new LeapTrip[srt.length];
-        ctr = 0;
+                srt.add(trip);
+        Collections.sort(srt);
+        List<LeapTrip> merged = new ArrayList<>();
         for (LeapTrip trip : srt) {
-            if (ctr == 0) {
-                merged[ctr++] = trip;
+            if (merged.isEmpty()) {
+                merged.add(trip);
                 continue;
             }
-            if (merged[ctr-1].isMergeable(trip)) {
-                merged[ctr-1].merge(trip);
+            if (merged.get(merged.size() - 1).isMergeable(trip)) {
+                merged.get(merged.size() - 1).merge(trip);
                 continue;
             }
-            merged[ctr++] = trip;
+            merged.add(trip);
         }
-        return Arrays.copyOfRange(merged, 0, ctr);
+        return merged;
     }
 }

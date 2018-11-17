@@ -24,6 +24,9 @@ message StationDb {
     // Provides a hint for LocaleSpan about which language to mark up the
     // names with, to improve pronunciation.
     string tts_hint_language = 5;
+
+    // Licensing notice for the file.
+    string license_notice = 6;
 }
 
 enum TransportType {
@@ -38,6 +41,7 @@ enum TransportType {
     POS = 8;
     OTHER = 9;
     BANNED = 10;
+    TROLLEYBUS = 11;
 }
 
 message Names {
@@ -96,7 +100,7 @@ message Station {
     // The ID of the operator (from StationDb.operators).
     uint32 operator_id = 6;
     // The ID of the line (from StationDb.lines).
-    uint32 line_id = 7;
+    repeated uint32 line_id = 7;
 
     reserved 2, 3;
 }

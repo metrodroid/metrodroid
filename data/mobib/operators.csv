@@ -1,0 +1,5 @@
+id,name,mode
+0x0,Metro,METRO
+0x6,Tramway,TRAM
+0x7,Premetro,METRO
+0xf,Bus,BUS

@@ -171,7 +171,7 @@ def zipify(input_xml, output_zipf, mfcdump, mobib):
                 output_zip.writestr(join(card_dir, application_id, file_id, "data"), base64.b64decode(datanode.text))
 
             fcinode = f.find('fci')
-            if fcinode is not None:
+            if fcinode is not None and fcinode.text is not None:
                 output_zip.writestr(join(card_dir, application_id, file_id, "fci"), base64.b64decode(fcinode.text))
 
             for rec in f.find('records').findall('record'):
@@ -208,6 +208,8 @@ def zipify(input_xml, output_zipf, mfcdump, mobib):
       # MIFARE Ultralight
       for page in pages.findall('page'):
         page_id = page.get('index')
+        if page.find('data') is None:
+            continue
         data = base64.b64decode(page.find('data').text)
         output_zip.writestr(join(card_dir, page_id), data)
       

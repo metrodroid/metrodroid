@@ -25,9 +25,13 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.util.Log;
 
+import org.apache.commons.lang3.concurrent.ConcurrentException;
+import org.apache.commons.lang3.concurrent.LazyInitializer;
+
 import java.io.DataInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Locale;
@@ -51,8 +55,9 @@ public class StationTableReader {
     private static final String TAG = "StationTableReader";
 
     private Stations.StationDb mStationDb;
-    private Stations.StationIndex mStationIndex;
+    private LazyInitializer<Stations.StationIndex> mStationIndex;
     private DataInputStream mTable;
+    private final int mStationsLength;
 
     private static final Map<String,StationTableReader> mSTRs = new HashMap<>();
 
@@ -112,6 +117,10 @@ public class StationTableReader {
         return Utils.localizeString(R.string.unknown_format, "0x" + Integer.toHexString(id));
     }
 
+    private static String fallbackName(String humanReadableId) {
+        return Utils.localizeString(R.string.unknown_format, humanReadableId);
+    }
+
     public static Trip.Mode getOperatorDefaultMode(@Nullable String reader, int id) {
         if (reader == null)
             return Trip.Mode.OTHER;
@@ -139,7 +148,10 @@ public class StationTableReader {
 
         // Read the Magic, and validate it.
         byte[] header = new byte[4];
-        mTable.read(header);
+        if (mTable.read(header) != 4) {
+            throw new InvalidHeaderException();
+        }
+
         if (!Arrays.equals(header, MAGIC)) {
             throw new InvalidHeaderException();
         }
@@ -150,7 +162,7 @@ public class StationTableReader {
             throw new InvalidHeaderException();
         }
 
-        int stationsLength = mTable.readInt();
+        mStationsLength = mTable.readInt();
 
         // Read out the header
         mStationDb = Stations.StationDb.parseDelimitedFrom(mTable);
@@ -159,14 +171,25 @@ public class StationTableReader {
         // AssetInputStream allows unlimited seeking, no need to specify a readlimit.
         mTable.mark(0);
 
-        // Skip over the station list
-        mTable.skipBytes(stationsLength);
+        // Defer reading the index until actually needed.
+        mStationIndex = new LazyInitializer<Stations.StationIndex>() {
+            @Override
+            protected Stations.StationIndex initialize() {
+                try {
+                    // Reset back to the start of the station list.
+                    mTable.reset();
 
-        // Read out the index
-        mStationIndex = Stations.StationIndex.parseDelimitedFrom(mTable);
+                    // Skip over the station list
+                    mTable.skipBytes(mStationsLength);
 
-        // Reset back to the start of the station list.
-        mTable.reset();
+                    // Read out the index
+                    return Stations.StationIndex.parseDelimitedFrom(mTable);
+                } catch (IOException e) {
+                    Log.e(TAG, "error reading index", e);
+                    return null;
+                }
+            }
+        };
     }
 
     private boolean useEnglishName() {
@@ -233,27 +256,33 @@ public class StationTableReader {
      * @throws IOException on read errors
      */
     private Stations.Station getProtoStationById(int id) throws IOException {
-        mTable.reset();
-
         int offset;
         try {
-            offset = mStationIndex.getStationMapOrThrow(id);
-        } catch (IllegalArgumentException e) {
-            Log.d(TAG, String.format(Locale.ENGLISH, "Unknown station %d", id), e);
+            offset = mStationIndex.get().getStationMapOrThrow(id);
+        } catch (ConcurrentException | IllegalArgumentException e) {
+            Log.d(TAG, String.format(Locale.ENGLISH, "Unknown station %d", id) /*, e */);
             return null;
         }
 
+        mTable.reset();
         mTable.skipBytes(offset);
         return Stations.Station.parseDelimitedFrom(mTable);
     }
 
     public static String getLineName(@Nullable String reader, int id) {
+        return getLineName(reader, id, "0x" + Integer.toHexString(id));
+    }
+
+    public static String getLineName(@Nullable String reader, int id, String humanReadableId) {
+        if (reader == null)
+            return fallbackName(humanReadableId);
+
         StationTableReader str = getSTR(reader);
         if (str == null)
-            return fallbackName(id);
+            return fallbackName(humanReadableId);
         Stations.Line pl = str.mStationDb.getLinesOrDefault(id, null);
         if (pl == null)
-            return fallbackName(id);
+            return fallbackName(humanReadableId);
         return str.selectBestName(pl.getName(), false);
     }
 
@@ -297,11 +326,41 @@ public class StationTableReader {
     private Station getStationById(int id, String humanReadableID) throws IOException {
         Stations.Station ps = getProtoStationById(id);
         if (ps == null) return null;
+        ArrayList<Stations.Line> lines = new ArrayList<>();
+        for (int lineId : ps.getLineIdList()) {
+            Stations.Line l = mStationDb.getLinesOrDefault(lineId, null);
+            if (l != null) {
+                lines.add(l);
+            }
+        }
 
         return Station.fromProto(humanReadableID, ps,
                 mStationDb.getOperatorsOrDefault(ps.getOperatorId(), null),
-                mStationDb.getLinesOrDefault(ps.getLineId(), null),
+                lines,
                 mStationDb.getTtsHintLanguage(), this);
     }
 
+    /**
+     * Gets a licensing notice that applies to a particular MdST file.
+     * @param reader Station database to read from.
+     * @return String containing license notice, or null if not available.
+     */
+    @Nullable
+    public static String getNotice(@Nullable String reader) {
+        StationTableReader str = StationTableReader.getSTR(reader);
+        if (str == null)
+            return null;
+
+        return str.getNotice();
+    }
+
+    @Nullable
+    public String getNotice() {
+        if (mStationDb.getLicenseNotice().isEmpty()) {
+            Log.d(TAG, "Notice does not exist");
+            return null;
+        }
+
+        return mStationDb.getLicenseNotice();
+    }
 }

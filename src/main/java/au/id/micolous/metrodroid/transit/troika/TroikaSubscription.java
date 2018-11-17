@@ -107,11 +107,6 @@ class TroikaSubscription extends Subscription {
     };
 
     @Override
-    public int getId() {
-        return 0;
-    }
-
-    @Override
     public Calendar getValidFrom() {
         return mValidityStart;
     }
@@ -122,13 +117,13 @@ class TroikaSubscription extends Subscription {
     }
 
     @Override
-    public String getAgencyName(boolean isShort) {
-        return Utils.localizeString(R.string.card_name_troika);
+    public boolean validToHasTime() {
+        return mValidityLengthMinutes != null && mValidityLengthMinutes >= 60 * 24;
     }
 
     @Override
-    public int getMachineId() {
-        return 0;
+    public String getAgencyName(boolean isShort) {
+        return Utils.localizeString(R.string.card_name_troika);
     }
 
     @Override
@@ -137,15 +132,7 @@ class TroikaSubscription extends Subscription {
     }
 
     @Override
-    public String getActivation() {
-        String ret = "";
-        if (mValidityLengthMinutes != null)
-            ret += Utils.localizeString(R.string.validity_length, Utils.formatDurationMinutes(mValidityLengthMinutes)) + "\n";
-
-        if (mRemainingTrips != null)
-            ret += Utils.localizePlural(R.plurals.trips_remaining, mRemainingTrips, mRemainingTrips) + "\n";
-        if (ret.equals(""))
-            return null;
-        return ret.substring(0,ret.length()-1);
+    public Integer getRemainingTripCount() {
+        return mRemainingTrips;
     }
 }

@@ -36,6 +36,7 @@ import au.id.micolous.farebot.R;
 import au.id.micolous.metrodroid.card.Card;
 import au.id.micolous.metrodroid.card.CardType;
 import au.id.micolous.metrodroid.card.desfire.DesfireCard;
+import au.id.micolous.metrodroid.card.desfire.DesfireCardTransitFactory;
 import au.id.micolous.metrodroid.card.desfire.files.DesfireFile;
 import au.id.micolous.metrodroid.transit.CardInfo;
 import au.id.micolous.metrodroid.transit.TransitBalance;
@@ -44,6 +45,7 @@ import au.id.micolous.metrodroid.transit.TransitCurrency;
 import au.id.micolous.metrodroid.transit.TransitData;
 import au.id.micolous.metrodroid.transit.TransitIdentity;
 import au.id.micolous.metrodroid.transit.Trip;
+import au.id.micolous.metrodroid.util.StationTableReader;
 import au.id.micolous.metrodroid.util.Utils;
 
 import java.util.ArrayList;
@@ -85,6 +87,7 @@ public class ClipperTransitData extends TransitData {
             .setName("Clipper")
             .setLocation(R.string.location_san_francisco)
             .setCardType(CardType.MifareDesfire)
+            .setExtraNote(R.string.card_note_clipper)
             .build();
 
     @VisibleForTesting
@@ -149,22 +152,32 @@ public class ClipperTransitData extends TransitData {
         }
     }
 
-    public static boolean check(Card card) {
-        return (card instanceof DesfireCard) && (((DesfireCard) card).getApplication(APP_ID) != null);
-    }
-
-    public static boolean earlyCheck(int[] appIds) {
-        return ArrayUtils.contains(appIds, APP_ID);
-    }
-
-    public static TransitIdentity parseTransitIdentity(Card card) {
-        try {
-            byte[] data = ((DesfireCard) card).getApplication(APP_ID).getFile(0x08).getData();
-            return new TransitIdentity("Clipper", String.valueOf(Utils.byteArrayToLong(data, 1, 4)));
-        } catch (Exception ex) {
-            throw new RuntimeException("Error parsing Clipper serial", ex);
+    public final static DesfireCardTransitFactory FACTORY = new DesfireCardTransitFactory() {
+        @Override
+        public boolean earlyCheck(int[] appIds) {
+            return ArrayUtils.contains(appIds, APP_ID);
         }
-    }
+
+        @Override
+        public CardInfo getCardInfo() {
+            return CARD_INFO;
+        }
+
+        @Override
+        public TransitData parseTransitData(DesfireCard desfireCard) {
+            return new ClipperTransitData(desfireCard);
+        }
+
+        @Override
+        public TransitIdentity parseTransitIdentity(DesfireCard card) {
+            try {
+                byte[] data = card.getApplication(APP_ID).getFile(0x08).getData();
+                return new TransitIdentity("Clipper", String.valueOf(Utils.byteArrayToLong(data, 1, 4)));
+            } catch (Exception ex) {
+                throw new RuntimeException("Error parsing Clipper serial", ex);
+            }
+        }
+    };
 
     @Override
     public String getCardName() {
@@ -184,11 +197,13 @@ public class ClipperTransitData extends TransitData {
     }
 
     @Override
-    public Trip[] getTrips() {
+    public List<Trip> getTrips() {
         // This is done in a roundabout way, as the base type used is the first parameter. Adding it
         // to an empty Trip[] first, coerces types correctly from the start.
-        Trip[] t = new Trip[0];
-        return ArrayUtils.addAll(ArrayUtils.addAll(t, mTrips), mRefills);
+        List<Trip> t = new ArrayList<>();
+        t.addAll(Arrays.asList(mTrips));
+        t.addAll(Arrays.asList(mRefills));
+        return t;
     }
 
     private ClipperTrip[] parseTrips(DesfireCard card) {
@@ -288,5 +303,10 @@ public class ClipperTransitData extends TransitData {
         //Log.d("clipperts", Long.toString(timestamp) + " " + Long.toHexString(timestamp));
         c.setTimeInMillis(CLIPPER_EPOCH.getTimeInMillis() + (timestamp * 1000));
         return c;
+    }
+
+    @Nullable
+    public static String getNotice() {
+        return StationTableReader.getNotice(ClipperData.CLIPPER_STR);
     }
 }

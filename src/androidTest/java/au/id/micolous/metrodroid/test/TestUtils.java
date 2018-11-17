@@ -6,10 +6,12 @@ import android.content.res.AssetManager;
 import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.os.Build;
+import android.os.PersistableBundle;
 import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.test.InstrumentationTestCase;
 import android.text.Spanned;
+import android.text.style.TtsSpan;
 
 import junit.framework.Assert;
 
@@ -32,6 +34,7 @@ import au.id.micolous.metrodroid.card.classic.ClassicCard;
 import au.id.micolous.metrodroid.card.classic.ClassicSector;
 import au.id.micolous.metrodroid.key.ClassicSectorKey;
 import au.id.micolous.metrodroid.util.ImmutableMapBuilder;
+import au.id.micolous.metrodroid.util.StationTableReader;
 
 import static au.id.micolous.metrodroid.MetrodroidApplication.getInstance;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -52,14 +55,37 @@ final class TestUtils {
             .put("fr-FR", Locale.FRANCE)
             .put("ja", Locale.JAPANESE)
             .put("ja-JP", Locale.JAPAN)
+            .put("zh-CN", Locale.SIMPLIFIED_CHINESE)
+            .put("zh-TW", Locale.TRADITIONAL_CHINESE)
             .build();
 
     static void assertSpannedEquals(String expected, Spanned actual) {
-        Assert.assertEquals(expected, actual.toString());
+        String actualString = actual.toString();
+        // nbsp -> sp
+        actualString = actualString.replace(' ', ' ');
+        Assert.assertEquals(expected, actualString);
     }
 
     static void assertSpannedThat(Spanned actual, Matcher<? super String> matcher) {
-        assertThat(actual.toString(), matcher);
+        String actualString = actual.toString();
+        // nbsp -> sp
+        actualString = actualString.replace(' ', ' ');
+        assertThat(actualString, matcher);
+    }
+
+    static void assertTtsMarkers(String currencyCode, String value, Spanned span) {
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
+            return;
+        }
+
+        TtsSpan[] ttsSpans = span.getSpans(0, span.length(), TtsSpan.class);
+        Assert.assertEquals(1, ttsSpans.length);
+
+
+        Assert.assertEquals(TtsSpan.TYPE_MONEY, ttsSpans[0].getType());
+        final PersistableBundle bundle = ttsSpans[0].getArgs();
+        Assert.assertEquals(currencyCode, bundle.getString(TtsSpan.ARG_CURRENCY));
+        Assert.assertEquals(value, bundle.getString(TtsSpan.ARG_INTEGER_PART));
     }
 
     @NonNull
@@ -111,11 +137,16 @@ final class TestUtils {
         setBooleanPref(MetrodroidApplication.PREF_SHOW_LOCAL_AND_ENGLISH, state);
     }
 
+    private enum CardType {
+        MFC1K,
+        MFC4K
+    }
+
     /**
-     * Loads a raw (MFC/MFD) MIFARE Classic 1K dump from assets.
+     * Loads a raw (MFC/MFD) MIFARE Classic dump from assets.
      *
-     * This presumes the files to be MIFARE Classic 1K, and will stop reading at 1K. If a 4K (or
-     * other longer dump) is passed, then the remaining sectors are ignored.
+     * This file must have exactly enough bytes for {@param cardType}. If another dump is passed,
+     * then {@link IllegalArgumentException} will be thrown.
      *
      * The non-tests versions of Metrodroid should not contain any of this sort of data. It is only
      * useful for validating publicly published dump files.
@@ -134,21 +165,39 @@ final class TestUtils {
      *            {@link InstrumentationTestCase}, use
      *            <code>getInstrumentation().getContext()</code>.
      * @param path Path to the MFD dump, relative to <code>/assets/</code>
+     * @param cardType Card type to read.
      * @return Parsed ClassicCard from the file.
      * @throws IOException If the file does not exist, or there was some other problem reading it.
      */
-    static ClassicCard loadMifareClassic1KFromAssets(Context ctx, String path) throws IOException {
+    @NonNull
+    private static ClassicCard loadMifareClassicFromAssets(@NonNull Context ctx, @NonNull String path, @NonNull CardType cardType) throws IOException {
         InputStream i = ctx.getAssets().open(path, AssetManager.ACCESS_RANDOM);
         DataInputStream card = new DataInputStream(i);
         byte[] uid = null;
 
+        int sectorCount = 0;
+        switch (cardType) {
+            case MFC1K:
+                sectorCount = 16;
+                break;
+
+            case MFC4K:
+                sectorCount = 40;
+                break;
+        }
+
         // Read the blocks of the card.
         ArrayList<ClassicSector> sectors = new ArrayList<>();
-        for (int sectorNum=0; sectorNum<16; sectorNum++) {
+        for (int sectorNum=0; sectorNum<sectorCount; sectorNum++) {
             ArrayList<ClassicBlock> blocks = new ArrayList<>();
             byte[] key = null;
 
-            for (int blockNum=0; blockNum<4; blockNum++) {
+            int blockCount = 4;
+            if (sectorNum >= 32) {
+                blockCount = 16;
+            }
+
+            for (int blockNum=0; blockNum<blockCount; blockNum++) {
                 byte[] blockData = new byte[16];
                 int r = card.read(blockData);
                 if (r != blockData.length) {
@@ -161,7 +210,7 @@ final class TestUtils {
                     // Manufacturer data
                     uid = ArrayUtils.subarray(blockData, 0, 4);
                     blocks.add(new ClassicBlock(blockNum, ClassicBlock.TYPE_MANUFACTURER, blockData));
-                } else if (blockNum == 3) {
+                } else if (blockNum == blockCount - 1) {
                     key = ArrayUtils.subarray(blockData, 0, 6);
                     blocks.add(new ClassicBlock(blockNum, ClassicBlock.TYPE_TRAILER, blockData));
                 } else {
@@ -173,8 +222,23 @@ final class TestUtils {
             sectors.add(new ClassicSector(sectorNum, blocks.toArray(new ClassicBlock[0]), ClassicSectorKey.wellKnown(key)));
         }
 
+        // Now make sure there is no extra data.
+        if (card.read() != -1) {
+            throw new IllegalArgumentException("There is extra data in this file: " + path);
+        }
+
         Calendar d = new GregorianCalendar(2010, 1, 1, 0, 0, 0);
         d.setTimeZone(TimeZone.getTimeZone("GMT"));
         return new ClassicCard(uid, d, sectors.toArray(new ClassicSector[0]));
+    }
+
+    @NonNull
+    static ClassicCard loadMifareClassic1KFromAssets(@NonNull Context ctx, @NonNull String path) throws IOException {
+        return loadMifareClassicFromAssets(ctx, path, CardType.MFC1K);
+    }
+
+    @NonNull
+    static ClassicCard loadMifareClassic4KFromAssets(@NonNull Context ctx, @NonNull String path) throws IOException {
+        return loadMifareClassicFromAssets(ctx, path, CardType.MFC4K);
     }
 }

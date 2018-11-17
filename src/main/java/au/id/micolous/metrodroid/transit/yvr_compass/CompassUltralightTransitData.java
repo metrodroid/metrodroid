@@ -20,34 +20,27 @@ package au.id.micolous.metrodroid.transit.yvr_compass;
 
 import android.os.Parcel;
 import android.os.Parcelable;
-import android.support.annotation.Nullable;
+import android.util.SparseArray;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Calendar;
-import java.util.GregorianCalendar;
-import java.util.HashMap;
+import java.util.Collections;
 import java.util.List;
-import java.util.Locale;
-import java.util.Map;
 import java.util.TimeZone;
 
 import au.id.micolous.farebot.R;
 import au.id.micolous.metrodroid.card.CardType;
 import au.id.micolous.metrodroid.card.UnauthorizedException;
 import au.id.micolous.metrodroid.card.ultralight.UltralightCard;
+import au.id.micolous.metrodroid.card.ultralight.UltralightCardTransitFactory;
 import au.id.micolous.metrodroid.transit.CardInfo;
-import au.id.micolous.metrodroid.transit.TransitBalance;
-import au.id.micolous.metrodroid.transit.TransitBalanceStored;
 import au.id.micolous.metrodroid.transit.TransitCurrency;
 import au.id.micolous.metrodroid.transit.TransitData;
 import au.id.micolous.metrodroid.transit.TransitIdentity;
-import au.id.micolous.metrodroid.transit.Trip;
-import au.id.micolous.metrodroid.ui.ListItem;
+import au.id.micolous.metrodroid.transit.nextfare.ultralight.NextfareUltralightTransaction;
+import au.id.micolous.metrodroid.transit.nextfare.ultralight.NextfareUltralightTransitData;
 import au.id.micolous.metrodroid.util.Utils;
 
 /* Based on reference at http://www.lenrek.net/experiments/compass-tickets/. */
-public class CompassUltralightTransitData extends TransitData {
+public class CompassUltralightTransitData extends NextfareUltralightTransitData {
 
     public static final Parcelable.Creator<CompassUltralightTransitData> CREATOR = new Parcelable.Creator<CompassUltralightTransitData>() {
         public CompassUltralightTransitData createFromParcel(Parcel parcel) {
@@ -67,39 +60,52 @@ public class CompassUltralightTransitData extends TransitData {
             .setExtraNote(R.string.compass_note)
             .build();
 
-    public static final String NAME = "Compass";
-    private final int mProductCode;
-    private final long mSerial;
-    private final byte mType;
-    private final int mBaseDate;
-    private final int mMachineCode;
-    private final List<CompassUltralightTrip> mTrips;
-    private final int mExpiry;
-    private final int mBalance;
+    private static final String NAME = "Compass";
 
-    private static final TimeZone TZ = TimeZone.getTimeZone("America/Vancouver");
+    static final TimeZone TZ = TimeZone.getTimeZone("America/Vancouver");
 
-    public static boolean check(UltralightCard card) {
-        try {
-            int head = Utils.byteArrayToInt(card.getPage(4).getData(), 0, 3);
-            return head == 0x0a0400 || head == 0x0a0800;
-        } catch (IndexOutOfBoundsException | UnauthorizedException ignored) {
-            // If that sector number is too high, then it's not for us.
-            return false;
+    public final static UltralightCardTransitFactory FACTORY = new UltralightCardTransitFactory() {
+        @Override
+        public List<CardInfo> getAllCards() {
+            return Collections.singletonList(CARD_INFO);
         }
+
+        @Override
+        public boolean check(UltralightCard card) {
+            try {
+                int head = Utils.byteArrayToInt(card.getPage(4).getData(), 0, 3);
+                if (head != 0x0a0400 && head != 0x0a0800)
+                    return false;
+                byte[] page1 = card.getPage(5).getData();
+                if (page1[1] != 1 || ((page1[2] & 0x80) != 0x80) || page1[3] != 0)
+                    return false;
+                byte[] page2 = card.getPage(6).getData();
+                return Utils.byteArrayToInt(page2, 0, 3) == 0;
+            } catch (IndexOutOfBoundsException | UnauthorizedException ignored) {
+                // If that sector number is too high, then it's not for us.
+                return false;
+            }
+        }
+
+        @Override
+        public TransitData parseTransitData(UltralightCard ultralightCard) {
+            return new CompassUltralightTransitData(ultralightCard);
+        }
+
+        @Override
+        public TransitIdentity parseTransitIdentity(UltralightCard card) {
+            return new TransitIdentity(NAME, formatSerial(getSerial(card)));
+        }
+    };
+
+    @Override
+    protected TransitCurrency makeCurrency(int val) {
+        return TransitCurrency.CAD(val);
     }
 
-    @Nullable
     @Override
-    public TransitBalance getBalance() {
-        return new TransitBalanceStored(
-                TransitCurrency.CAD(mBalance),
-                parseDateTime(mBaseDate, mExpiry, 0));
-    }
-
-    @Override
-    public String getSerialNumber() {
-        return formatSerial(mSerial);
+    protected TimeZone getTimeZone() {
+        return TZ;
     }
 
     @Override
@@ -107,93 +113,20 @@ public class CompassUltralightTransitData extends TransitData {
         return NAME;
     }
 
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        dest.writeLong(mSerial);
-        dest.writeByte(mType);
-        dest.writeInt(mBaseDate);
-        dest.writeInt(mProductCode);
-        dest.writeInt(mMachineCode);
-        dest.writeInt(mBalance);
-        dest.writeInt(mExpiry);
-        dest.writeParcelableArray(mTrips.toArray(new CompassUltralightTrip[0]), flags);
-    }
-
     private CompassUltralightTransitData(Parcel p) {
-        mSerial = p.readLong();
-        mType = p.readByte();
-        mBaseDate = p.readInt();
-        mProductCode = p.readInt();
-        mMachineCode = p.readInt();
-        mBalance = p.readInt();
-        mExpiry = p.readInt();
-        mTrips = Arrays.asList((CompassUltralightTrip[]) p.readParcelableArray(CompassUltralightTrip.class.getClassLoader()));
+        super(p);
     }
 
     public CompassUltralightTransitData(UltralightCard card) {
-        mSerial = getSerial(card);
-        byte []page0 = card.getPage(4).getData();
-        byte []page1 = card.getPage(5).getData();
-        byte []page3 = card.getPage(7).getData();
-        mType = page0[1];
-        int lowerBaseDate = page0[3] & 0xff;
-        int upperBaseDate = page1[0] & 0xff;
-        mBaseDate = (upperBaseDate << 8) | lowerBaseDate;
-        mProductCode = page1[2] & 0x7f;
-        mMachineCode = Utils.byteArrayToIntReversed(page3, 0, 2);
-        mTrips = new ArrayList<>();
-        CompassUltralightTransaction trA = new CompassUltralightTransaction(card, 8, mBaseDate);
-        CompassUltralightTransaction trB = new CompassUltralightTransaction(card, 12, mBaseDate);
-        CompassUltralightTransaction trLater;
-        if (trA.isSeqNoGreater(trB))
-            trLater = trA;
-        else
-            trLater = trB;
-        mExpiry = trLater.getExpiry();
-        mBalance = trLater.getBalance();
-        if (trA.isSameTripTapOut(trB))
-            mTrips.add(new CompassUltralightTrip(trB, trA));
-        else if (trB.isSameTripTapOut(trA))
-            mTrips.add(new CompassUltralightTrip(trA, trB));
-        else {
-            if (trA.isTapOut())
-                mTrips.add(new CompassUltralightTrip(null, trA));
-            else
-                mTrips.add(new CompassUltralightTrip(trA, null));
-            if (trB.isTapOut())
-                mTrips.add(new CompassUltralightTrip(null, trB));
-            else
-                mTrips.add(new CompassUltralightTrip(trB, null));
-        }
+        super(card);
     }
 
-    private static long getSerial(UltralightCard card) {
-        byte []manufData0 = card.getPage(0). getData();
-        byte []manufData1 = card.getPage(1). getData();
-        long uid = (Utils.byteArrayToLong(manufData0, 1, 2) << 32)
-                | (Utils.byteArrayToLong(manufData1, 0, 4));
-        long serial = uid + 1000000000000000L;
-        int luhn = Utils.calculateLuhn(Long.toString(serial));
-        return serial * 10 + luhn;
+    @Override
+    protected NextfareUltralightTransaction makeTransaction(UltralightCard card, int startPage, int baseDate) {
+        return new CompassUltralightTransaction(card, startPage, baseDate);
     }
 
-    public static TransitIdentity parseTransitIdentity(UltralightCard card) {
-        return new TransitIdentity(NAME, formatSerial(getSerial(card)));
-    }
-
-    private static String formatSerial(long serial) {
-        StringBuilder res = new StringBuilder();
-        long val = serial;
-        for (int i = 0; i < 5; i++) {
-            if (res.length() != 0)
-                res.insert(0, " ");
-            res.insert(0, String.format(Locale.ENGLISH, "%04d", val % 10000));
-            val /= 10000;
-        }
-        return res.toString();
-    }
-
-    private static final Map<Integer, String> productCodes = new HashMap<>();
+    private static final SparseArray<String> productCodes = new SparseArray<>();
 
     static {
         // TODO: i18n
@@ -219,33 +152,7 @@ public class CompassUltralightTransitData extends TransitData {
     }
 
     @Override
-    public List<ListItem> getInfo() {
-        ArrayList<ListItem> items = new ArrayList<>();
-        if (mType == 8)
-            items.add(new ListItem(R.string.compass_ticket_type, R.string.compass_ticket_type_concession));
-        else
-            items.add(new ListItem(R.string.compass_ticket_type, R.string.compass_ticket_type_regular));
-
-        if (productCodes.containsKey(mProductCode))
-            items.add(new ListItem(R.string.compass_product_type, productCodes.get(mProductCode)));
-        else
-            items.add(new ListItem(R.string.compass_product_type, Integer.toHexString(mProductCode)));
-        items.add(new ListItem(R.string.compass_machine_code, Integer.toHexString(mMachineCode)));
-        return items;
-    }
-
-    @Override
-    public Trip[] getTrips() {
-        return mTrips.toArray(new CompassUltralightTrip[0]);
-    }
-
-    public static Calendar parseDateTime(int baseDate, int date, int time) {
-        GregorianCalendar g = new GregorianCalendar(TZ);
-        g.set((baseDate >> 9) + 2000,
-                ((baseDate >> 5) & 0xf) - 1,
-                baseDate & 0x1f, 0, 0, 0);
-        g.add(Calendar.DAY_OF_YEAR, -date);
-        g.add(Calendar.MINUTE, time);
-        return g;
+    protected String getProductName(int productCode) {
+        return productCodes.get(productCode);
     }
 }

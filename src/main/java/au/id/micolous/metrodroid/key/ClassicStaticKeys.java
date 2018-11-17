@@ -30,6 +30,7 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 
@@ -105,6 +106,7 @@ public class ClassicStaticKeys extends ClassicCardKeys {
         json.put(KEYS, keysJson);
         if (mDescription != null)
             json.put(JSON_TAG_ID_DESC, mDescription);
+        json.put(JSON_KEY_TYPE_KEY, CardKeys.TYPE_MFC_STATIC);
         return json;
     }
 
@@ -130,20 +132,24 @@ public class ClassicStaticKeys extends ClassicCardKeys {
 
     @Override
     @NonNull
-    public List<ClassicSectorKey> getCandidates(int sectorIndex) {
+    public List<? extends ClassicSectorKey> getCandidates(int sectorIndex) {
         if (!mKeys.containsKey(sectorIndex))
             return Collections.emptyList();
-        return (List<ClassicSectorKey>)(List<?>)mKeys.get(sectorIndex);
+        return mKeys.get(sectorIndex);
     }
 
     @NonNull
     @Override
     public List<ClassicSectorKey> keys() {
-        List<ClassicSectorKey> allKeys = new ArrayList<>();
+        HashSet<String> allKeys = new HashSet<>();
         for (List<ClassicSectorKeyWrapper> keys : mKeys.values()) {
-            allKeys.addAll(keys);
+            for (ClassicSectorKeyWrapper key : keys)
+                allKeys.add(Utils.getHexString(key.getKey()));
         }
-        return allKeys;
+        ArrayList<ClassicSectorKey> uniqueKeys = new ArrayList<>();
+        for (String key : allKeys)
+            uniqueKeys.add(ClassicSectorKey.wellKnown(Utils.hexStringToByteArray(key)));
+        return uniqueKeys;
     }
 
     @Override
@@ -158,10 +164,12 @@ public class ClassicStaticKeys extends ClassicCardKeys {
     }
 
     public String getFileType() {
-        int keyCount = 0;
+        HashSet<String> allKeys = new HashSet<>();
         for (List<ClassicSectorKeyWrapper> keys : mKeys.values()) {
-            keyCount += keys.size();
+            for (ClassicSectorKeyWrapper key : keys)
+                allKeys.add(Utils.getHexString(key.getKey()));
         }
+        int keyCount = allKeys.size();
 
         return Utils.localizePlural(R.plurals.keytype_mfc_static, keyCount, keyCount);
     }

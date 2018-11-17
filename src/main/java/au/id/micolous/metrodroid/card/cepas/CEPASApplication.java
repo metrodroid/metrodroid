@@ -27,6 +27,7 @@ import android.util.Log;
 import org.simpleframework.xml.ElementMap;
 import org.simpleframework.xml.Root;
 
+import java.io.FileNotFoundException;
 import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -99,7 +100,14 @@ public class CEPASApplication extends ISO7816Application {
 
         CEPASProtocol cepasTag = new CEPASProtocol(iso7816Tag);
 
-        iso7816Tag.selectById(0x4000);
+        try {
+            iso7816Tag.selectById(0x4000);
+        } catch (FileNotFoundException | IllegalStateException e) {
+            Log.d(TAG, String.format(Locale.ENGLISH,
+                    "CEPAS file not found [%s] -- this is expected for non-CEPAS ISO7816 cards",
+                    e.getClass().getSimpleName()));
+            return null;
+        }
 
         for (int purseId = 0; purseId < numPurses; purseId++) {
             byte[] purse = cepasTag.getPurse(purseId);
@@ -162,20 +170,16 @@ public class CEPASApplication extends ISO7816Application {
         items.add(new HeaderListItem(R.string.cepas_purse_info));
 
         if (purse == null || !purse.isValid()) {
-            if (purse != null && purse.getErrorMessage() != null && !purse.getErrorMessage().equals("")) {
-                items.add(new ListItem(R.string.error, purse.getErrorMessage()));
-            } else {
-                items.add(new ListItem(R.string.error, R.string.unknown));
-            }
+            items.add(new ListItem(R.string.error, R.string.unknown));
         } else {
             items.add(new ListItem(R.string.cepas_version, Byte.toString(purse.getCepasVersion())));
             items.add(new ListItem(R.string.cepas_purse_id, "3"));
             items.add(new ListItem(R.string.cepas_purse_status, Byte.toString(purse.getPurseStatus())));
-            items.add(new ListItem(R.string.cepas_purse_balance, NumberFormat.getCurrencyInstance(Locale.US).format(purse.getPurseBalance() / 100.0)));
+            items.add(new ListItem(R.string.cepas_purse_balance, purse.getPurseBalance()));
 
             items.add(new ListItem(R.string.cepas_purse_creation_date,
                     Utils.longDateFormat(TripObfuscator.maybeObfuscateTS(purse.getPurseCreationDate()))));
-            items.add(new ListItem(R.string.cepas_expiry_date,
+            items.add(new ListItem(R.string.expiry_date,
                     Utils.longDateFormat(TripObfuscator.maybeObfuscateTS(purse.getPurseExpiryDate()))));
             items.add(new ListItem(R.string.cepas_autoload_amount, Integer.toString(purse.getAutoLoadAmount())));
             items.add(new ListItem(new SpannableString("CAN"), Utils.getHexDump(purse.getCAN(), "<Error>")));

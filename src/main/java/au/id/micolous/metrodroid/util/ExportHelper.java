@@ -20,19 +20,10 @@
 
 package au.id.micolous.metrodroid.util;
 
-import android.content.ClipData;
-import android.content.ClipboardManager;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.net.Uri;
-import android.util.Log;
-import android.widget.Toast;
-
-import au.id.micolous.farebot.R;
-import au.id.micolous.metrodroid.provider.CardDBHelper;
-import au.id.micolous.metrodroid.provider.CardProvider;
-import au.id.micolous.metrodroid.provider.CardsTableColumns;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -40,6 +31,7 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.InputSource;
 
+import java.io.OutputStream;
 import java.io.StringReader;
 import java.io.StringWriter;
 
@@ -53,53 +45,36 @@ import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 
-import static android.content.Context.CLIPBOARD_SERVICE;
+import au.id.micolous.metrodroid.provider.CardDBHelper;
+import au.id.micolous.metrodroid.provider.CardProvider;
+import au.id.micolous.metrodroid.provider.CardsTableColumns;
 
-public class ExportHelper {
-    private static final String TAG = ExportHelper.class.getName();
-
+public final class ExportHelper {
     private ExportHelper() {
     }
 
     public static void copyXmlToClipboard(Context context, String xml) {
-        ClipData data = ClipData.newPlainText("metrodroid card", xml);
-
-        ClipboardManager clipboard = (ClipboardManager) context.getSystemService(CLIPBOARD_SERVICE);
-        if (clipboard == null) {
-            Log.w(TAG, "Unable to access ClipboardManager.");
-            Toast.makeText(context, R.string.clipboard_error, Toast.LENGTH_SHORT).show();
-            return;
-        }
-        clipboard.setPrimaryClip(data);
-        Toast.makeText(context, R.string.copied_to_clipboard, Toast.LENGTH_SHORT).show();
+        Utils.copyTextToClipboard(context, "metrodroid card", xml);
     }
 
-    public static String exportCardsXml(Context context) throws Exception {
-        DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
-
-        // http://code.google.com/p/android/issues/detail?id=2735
-        factory.setNamespaceAware(true);
-
-        DocumentBuilder builder = factory.newDocumentBuilder();
-
-        Document exportDoc = builder.newDocument();
-        Element cardsElement = exportDoc.createElement("cards");
-        exportDoc.appendChild(cardsElement);
+    public static void exportCardsXml(OutputStream os, Context context) throws Exception {
+        os.write(Utils.stringToByteArray("<?xml version=\"1.0\" encoding=\"UTF-8\"?><cards>\n"));
 
         Cursor cursor = CardDBHelper.createCursor(context);
 
         while (cursor.moveToNext()) {
-            int type = cursor.getInt(cursor.getColumnIndex(CardsTableColumns.TYPE));
-            String serial = cursor.getString(cursor.getColumnIndex(CardsTableColumns.TAG_SERIAL));
             String data = cursor.getString(cursor.getColumnIndex(CardsTableColumns.DATA));
-
-            Document doc = builder.parse(new InputSource(new StringReader(data)));
-            Element rootElement = doc.getDocumentElement();
-
-            cardsElement.appendChild(exportDoc.adoptNode(rootElement.cloneNode(true)));
+            os.write(Utils.stringToUtf8(cutXmlDef(data)));
+            os.write(Utils.stringToByteArray("\n"));
         }
 
-        return xmlNodeToString(exportDoc);
+        os.write(Utils.stringToByteArray("</cards>\n"));
+    }
+
+    private static String cutXmlDef(String data) {
+        if (!data.startsWith("<?"))
+            return data;
+        return data.substring(data.indexOf("?>")+2);
     }
 
     public static Uri[] importCardsXml(Context context, String xml) throws Exception {

@@ -120,6 +120,20 @@ public class ISO7816Application {
             }
             mFiles.add(new ISO7816File(sel, records, data, fci));
         }
+
+        public ISO7816File getFile(ISO7816Selector sel) {
+            for (ISO7816File f : mFiles) {
+                if (f.getSelector().equals(sel)) {
+                    return f;
+                }
+            }
+
+            return null;
+        }
+
+        public byte[] getAppName() {
+            return mApplicationName;
+        }
     }
 
     public List<ISO7816File> getFiles() {

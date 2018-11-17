@@ -26,6 +26,7 @@ import org.simpleframework.xml.Element;
 import org.simpleframework.xml.ElementList;
 import org.simpleframework.xml.Root;
 
+import java.util.Collections;
 import java.util.List;
 
 import au.id.micolous.metrodroid.xml.Base64String;
@@ -63,6 +64,7 @@ public class ISO7816File {
     }
 
     public List<ISO7816Record> getRecords() {
+        Collections.sort(mRecords, (a, b) -> a.getIndex() - b.getIndex());
         return mRecords;
     }
 

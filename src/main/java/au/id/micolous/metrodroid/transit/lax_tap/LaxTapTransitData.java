@@ -20,18 +20,27 @@ package au.id.micolous.metrodroid.transit.lax_tap;
 
 import android.net.Uri;
 import android.os.Parcel;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
+import android.support.annotation.VisibleForTesting;
 
 import au.id.micolous.farebot.R;
 import au.id.micolous.metrodroid.card.CardType;
 import au.id.micolous.metrodroid.card.UnauthorizedException;
 import au.id.micolous.metrodroid.card.classic.ClassicCard;
+import au.id.micolous.metrodroid.card.classic.ClassicCardTransitFactory;
+import au.id.micolous.metrodroid.card.classic.ClassicSector;
 import au.id.micolous.metrodroid.transit.CardInfo;
+import au.id.micolous.metrodroid.transit.TransitData;
 import au.id.micolous.metrodroid.transit.TransitIdentity;
 import au.id.micolous.metrodroid.transit.nextfare.NextfareTransitData;
 import au.id.micolous.metrodroid.transit.nextfare.NextfareTrip;
 import au.id.micolous.metrodroid.transit.nextfare.record.NextfareTransactionRecord;
+import au.id.micolous.metrodroid.util.StationTableReader;
 
 import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
 import java.util.TimeZone;
 
 /**
@@ -52,13 +61,14 @@ public class LaxTapTransitData extends NextfareTransitData {
             return new LaxTapTransitData[size];
         }
     };
-    static final byte[] BLOCK1 = {
+    private static final byte[] BLOCK1 = {
             0x16, 0x18, 0x1A, 0x1B,
             0x1C, 0x1D, 0x1E, 0x1F,
             0x01, 0x01, 0x01, 0x01,
             0x01, 0x01
     };
-    static final byte[] BLOCK2 = {
+    @VisibleForTesting
+    public static final byte[] BLOCK2 = {
             0x00, 0x00, 0x00, 0x00
     };
 
@@ -72,37 +82,75 @@ public class LaxTapTransitData extends NextfareTransitData {
             .setPreview()
             .build();
 
-    static final TimeZone TIME_ZONE = TimeZone.getTimeZone("America/Los_Angeles");
+    private static final TimeZone TIME_ZONE = TimeZone.getTimeZone("America/Los_Angeles");
 
-    public LaxTapTransitData(Parcel parcel) {
+    private LaxTapTransitData(Parcel parcel) {
         super(parcel, "USD");
     }
 
-    public LaxTapTransitData(ClassicCard card) {
+    private LaxTapTransitData(ClassicCard card) {
         super(card);
     }
 
-    public static TransitIdentity parseTransitIdentity(ClassicCard card) {
-        return NextfareTransitData.parseTransitIdentity(card, NAME);
-    }
+    public static final ClassicCardTransitFactory FACTORY = new NextFareTransitFactory() {
+        @Override
+        public TransitIdentity parseTransitIdentity(@NonNull ClassicCard card) {
+            return super.parseTransitIdentity(card, NAME);
+        }
 
-    public static boolean check(ClassicCard card) {
-        try {
-            byte[] block1 = card.getSector(0).getBlock(1).getData();
-            if (!Arrays.equals(Arrays.copyOfRange(block1, 1, 15), BLOCK1)) {
+        private boolean check(ClassicSector sector0) {
+            try {
+                byte[] block1 = sector0.getBlock(1).getData();
+                if (!Arrays.equals(Arrays.copyOfRange(block1, 1, 15), BLOCK1)) {
+                    return false;
+                }
+
+                byte[] block2 = sector0.getBlock(2).getData();
+                return Arrays.equals(Arrays.copyOfRange(block2, 0, 4), BLOCK2);
+            } catch (UnauthorizedException ex) {
+                // It is not possible to identify the card without a key
+                return false;
+            } catch (IndexOutOfBoundsException ignored) {
+                // If the sector/block number is too high, it's not for us
                 return false;
             }
-
-            byte[] block2 = card.getSector(0).getBlock(2).getData();
-            return Arrays.equals(Arrays.copyOfRange(block2, 0, 4), BLOCK2);
-        } catch (UnauthorizedException ex) {
-            // It is not possible to identify the card without a key
-            return false;
-        } catch (IndexOutOfBoundsException ignored) {
-            // If the sector/block number is too high, it's not for us
-            return false;
         }
-    }
+
+        @Override
+        public boolean check(@NonNull ClassicCard card) {
+            try {
+                return check(card.getSector(0));
+            } catch (UnauthorizedException ex) {
+                // It is not possible to identify the card without a key
+                return false;
+            } catch (IndexOutOfBoundsException ignored) {
+                // If the sector/block number is too high, it's not for us
+                return false;
+            }
+        }
+
+        @Override
+        public TransitData parseTransitData(@NonNull ClassicCard classicCard) {
+            return new LaxTapTransitData(classicCard);
+        }
+
+        @Override
+        public CardInfo earlyCardInfo(List<ClassicSector> sectors) {
+            if (check(sectors.get(0)))
+                return CARD_INFO;
+            return null;
+        }
+
+        @Override
+        public List<CardInfo> getAllCards() {
+            return Collections.singletonList(CARD_INFO);
+        }
+
+        @Override
+        public int earlySectors() {
+            return 1;
+        }
+    };
 
     @Override
     protected NextfareTrip newTrip() {
@@ -136,5 +184,10 @@ public class LaxTapTransitData extends NextfareTransitData {
     @Override
     protected TimeZone getTimezone() {
         return TIME_ZONE;
+    }
+
+    @Nullable
+    public static String getNotice() {
+        return StationTableReader.getNotice(LaxTapData.LAX_TAP_STR);
     }
 }

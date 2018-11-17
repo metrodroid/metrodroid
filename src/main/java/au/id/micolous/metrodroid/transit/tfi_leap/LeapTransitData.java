@@ -35,10 +35,10 @@ import java.util.TimeZone;
 
 import au.id.micolous.farebot.R;
 import au.id.micolous.metrodroid.MetrodroidApplication;
-import au.id.micolous.metrodroid.card.Card;
 import au.id.micolous.metrodroid.card.CardType;
 import au.id.micolous.metrodroid.card.desfire.DesfireApplication;
 import au.id.micolous.metrodroid.card.desfire.DesfireCard;
+import au.id.micolous.metrodroid.card.desfire.DesfireCardTransitFactory;
 import au.id.micolous.metrodroid.card.desfire.files.UnauthorizedDesfireFile;
 import au.id.micolous.metrodroid.transit.CardInfo;
 import au.id.micolous.metrodroid.transit.TransitBalance;
@@ -90,7 +90,7 @@ public class LeapTransitData extends TransitData {
     private Calendar mExpiryDate;
     private AccumulatorBlock mDailyAccumulators;
     private AccumulatorBlock mWeeklyAccumulators;
-    private LeapTrip[] mTrips;
+    private List<LeapTrip> mTrips;
 
     static {
         GregorianCalendar g = new GregorianCalendar(TZ);
@@ -221,16 +221,12 @@ public class LeapTransitData extends TransitData {
     }
 
     @Override
-    public Trip[] getTrips() {
+    public List<LeapTrip> getTrips() {
         return mTrips;
     }
 
     public static int parseBalance(byte[] file, int offset) {
-        int balance = Utils.byteArrayToInt(file, offset, 3);
-        if ((balance & 0x800000) != 0) {
-            balance = balance - 0x1000000;
-        }
-        return balance;
+        return Utils.getBitsFromBufferSigned(file, offset * 8, 24);
     }
 
     public static Calendar parseDate(byte[] file, int offset) {
@@ -242,34 +238,44 @@ public class LeapTransitData extends TransitData {
         return g;
     }
 
-    public static boolean check(Card card) {
-        return (card instanceof DesfireCard)
-                && (((DesfireCard) card).getApplication(APP_ID) != null);
-    }
-
-    public static boolean earlyCheck(int[] appIds) {
-        return ArrayUtils.contains(appIds, APP_ID);
-    }
-
     private static String getSerial(DesfireCard card) {
         DesfireApplication app = card.getApplication(APP_ID);
         int serial = Utils.byteArrayToInt(app.getFile(2).getData(),0x25, 4);
         Calendar initDate = parseDate(app.getFile(6).getData(), 1);
         // luhn checksum of number without date is always 6
         int checkDigit = (Utils.calculateLuhn(Integer.toString(serial)) + 6) % 10;
-        return String.format(Locale.ENGLISH, "%05d %04d%d %02d%02d",
-                serial / 10000, serial % 10000, checkDigit, initDate.get(Calendar.MONTH) + 1,
+        return Utils.formatNumber(serial, " ", 5 , 4) + checkDigit + " "
+                + String.format(Locale.ENGLISH, "%02d%02d",
+                initDate.get(Calendar.MONTH) + 1,
                 initDate.get(Calendar.YEAR) % 100);
     }
 
-    public static TransitIdentity parseTransitIdentity(DesfireCard card) {
-        try {
-            return new TransitIdentity(NAME, getSerial(card));
-        } catch (Exception e) {
-            return new TransitIdentity(
-                    Utils.localizeString(R.string.locked_leap), null);
+    public final static DesfireCardTransitFactory FACTORY = new DesfireCardTransitFactory() {
+        @Override
+        public boolean earlyCheck(int[] appIds) {
+            return ArrayUtils.contains(appIds, APP_ID);
         }
-    }
+
+        @Override
+        protected CardInfo getCardInfo() {
+            return CARD_INFO;
+        }
+
+        @Override
+        public TransitData parseTransitData(DesfireCard desfireCard) {
+            return new LeapTransitData(desfireCard);
+        }
+
+        @Override
+        public TransitIdentity parseTransitIdentity(DesfireCard card) {
+            try {
+                return new TransitIdentity(NAME, getSerial(card));
+            } catch (Exception e) {
+                return new TransitIdentity(
+                        Utils.localizeString(R.string.locked_leap), null);
+            }
+        }
+    };
 
     @Nullable
     @Override
@@ -292,7 +298,7 @@ public class LeapTransitData extends TransitData {
         items.add(new ListItem(R.string.issue_date,
                 Utils.dateTimeFormat(TripObfuscator.maybeObfuscateTS(mIssueDate))));
         if (MetrodroidApplication.hideCardNumbers()) {
-            items.add(new ListItem(R.string.leap_issuer_id, Integer.toString(mIssuerId)));
+            items.add(new ListItem(R.string.card_issuer, Integer.toString(mIssuerId)));
         }
         items.add(new HeaderListItem(R.string.leap_daily_accumulators));
         items.addAll(mDailyAccumulators.getInfo());
@@ -317,30 +323,28 @@ public class LeapTransitData extends TransitData {
     public void writeToParcel(Parcel parcel, int i) {
         parcel.writeString(mSerial);
         parcel.writeInt(mBalance);
-        parcelCalendar(parcel, mInitDate);
-        parcelCalendar(parcel, mExpiryDate);
+        Utils.parcelCalendar(parcel, mInitDate);
+        Utils.parcelCalendar(parcel, mExpiryDate);
         parcel.writeInt(mIssuerId);
-    }
-
-    private static void parcelCalendar(Parcel parcel, Calendar cal) {
-        parcel.writeLong(cal.getTimeInMillis());
-    }
-
-    private static Calendar unParcelCalendar(Parcel parcel) {
-        GregorianCalendar g = new GregorianCalendar(TZ);
-        g.setTimeInMillis(parcel.readLong());
-        return g;
+        parcel.writeTypedList(mTrips);
     }
 
     private LeapTransitData(Parcel parcel) {
         mSerial = parcel.readString();
         mBalance = parcel.readInt();
-        mInitDate = unParcelCalendar(parcel);
-        mExpiryDate = unParcelCalendar(parcel);
+        mInitDate = Utils.unparcelCalendar(parcel);
+        mExpiryDate = Utils.unparcelCalendar(parcel);
         mIssuerId = parcel.readInt();
+        mTrips = new ArrayList<>();
+        parcel.readTypedList(mTrips, LeapTrip.CREATOR);
     }
 
     public static boolean earlyCheck(int appId) {
         return appId == APP_ID;
+    }
+
+    @Nullable
+    public static String getNotice() {
+        return StationTableReader.getNotice(LEAP_STR);
     }
 }

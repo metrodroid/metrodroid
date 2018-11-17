@@ -1,6 +1,7 @@
 [submodule "third_party/nfc-felica-lib"]
 	path = third_party/nfc-felica-lib
 	url = https://github.com/metrodroid/nfc-felica-lib.git
+	branch = metrodroid-master
 [submodule "third_party/gtfs_lacmta_rail"]
 	path = third_party/gtfs_lacmta_rail
 	url = https://gitlab.com/LACMTA/gtfs_rail.git
@@ -13,3 +14,6 @@
 [submodule "third_party/ovc-tools"]
 	path = third_party/ovc-tools
 	url = https://github.com/wandcode/ovc-tools
+[submodule "third_party/RejsekortReader"]
+	path = third_party/RejsekortReader
+	url = https://github.com/mchro/RejsekortReader.git

@@ -25,6 +25,8 @@ package au.id.micolous.metrodroid.transit.ezlink;
 import android.os.Parcel;
 import android.support.annotation.Nullable;
 
+import org.apache.commons.lang3.ArrayUtils;
+
 import au.id.micolous.farebot.R;
 import au.id.micolous.metrodroid.card.CardType;
 import au.id.micolous.metrodroid.card.cepas.CEPASApplication;
@@ -37,7 +39,9 @@ import au.id.micolous.metrodroid.transit.Trip;
 import au.id.micolous.metrodroid.util.StationTableReader;
 import au.id.micolous.metrodroid.util.Utils;
 
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collections;
 import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.TimeZone;
@@ -67,6 +71,10 @@ public class EZLinkTransitData extends TransitData {
             .setLocation(R.string.location_singapore)
             .setCardType(CardType.CEPAS)
             .build();
+    public static final CardInfo[] ALL_CARD_INFOS = {
+            EZLinkTransitData.EZ_LINK_CARD_INFO,
+            EZLinkTransitData.NETS_FLASHPAY_CARD_INFO,
+    };
 
     public static final TimeZone TZ = TimeZone.getTimeZone("Asia/Singapore");
     private static final long EPOCH;
@@ -94,14 +102,14 @@ public class EZLinkTransitData extends TransitData {
 
     private final String mSerialNumber;
     private final int mBalance;
-    private final EZLinkTrip[] mTrips;
+    private final List<EZLinkTrip> mTrips;
 
     public EZLinkTransitData(Parcel parcel) {
         mSerialNumber = parcel.readString();
         mBalance = parcel.readInt();
 
-        mTrips = new EZLinkTrip[parcel.readInt()];
-        parcel.readTypedArray(mTrips, EZLinkTrip.CREATOR);
+        mTrips = new ArrayList<>();
+        parcel.readTypedList(mTrips, EZLinkTrip.CREATOR);
     }
 
     public EZLinkTransitData(CEPASApplication cepasCard) {
@@ -158,30 +166,33 @@ public class EZLinkTransitData extends TransitData {
     }
 
     @Override
-    public Trip[] getTrips() {
+    public List<EZLinkTrip> getTrips() {
         return mTrips;
     }
 
-    private EZLinkTrip[] parseTrips(CEPASApplication card) {
+    private List<EZLinkTrip> parseTrips(CEPASApplication card) {
         CEPASHistory history = new CEPASHistory(card.getHistory(3));
         List<CEPASTransaction> transactions = history.getTransactions();
         if (transactions != null) {
-            EZLinkTrip[] trips = new EZLinkTrip[transactions.size()];
+            List<EZLinkTrip> trips = new ArrayList<>();
 
-            for (int i = 0; i < trips.length; i++)
-                trips[i] = new EZLinkTrip(transactions.get(i), getCardName());
+            for (CEPASTransaction transaction : transactions)
+                trips.add(new EZLinkTrip(transaction, getCardName()));
 
             return trips;
         }
-        return new EZLinkTrip[0];
+        return Collections.emptyList();
     }
 
     public void writeToParcel(Parcel parcel, int flags) {
         parcel.writeString(mSerialNumber);
         parcel.writeInt(mBalance);
 
-        parcel.writeInt(mTrips.length);
-        parcel.writeTypedArray(mTrips, flags);
+        parcel.writeTypedList(mTrips);
     }
 
+    @Nullable
+    public static String getNotice() {
+        return StationTableReader.getNotice(EZLINK_STR);
+    }
 }

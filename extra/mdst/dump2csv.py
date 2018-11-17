@@ -48,6 +48,10 @@ def dump2csv(database, output_fn):
   # Read in the header blob
   header = read_delimited_message(StationDb, f)
   print('file version = %d, local languages = %r, tts_hint_language = %s' % (header.version, list(header.local_languages), header.tts_hint_language))
+  if header.license_notice:
+    print('== START OF LICENSE NOTICE (%d bytes) ==' % len(header.license_notice))
+    print(header.license_notice)
+    print('== END OF LICENSE NOTICE ==')
   #print(MessageToString(header, as_utf8=True))
 
   output_fh = open(output_fn, mode='w', encoding='utf-8')
@@ -75,10 +79,9 @@ def dump2csv(database, output_fn):
       d['oper_en'] = oper.name.english
       d['oper'] = oper.name.local
     if rec.line_id:
-      d['line_id'] = rec.line_id
-      line = header.lines[rec.line_id]
-      d['line_en'] = line.name.english
-      d['line'] = line.name.local
+      d['line_id'] = ','.join([str(l) for l in rec.line_id])
+      d['line_en'] = ','.join([header.lines[l].name.english for l in rec.line_id])
+      d['line'] = ','.join([header.lines[l].name.local for l in rec.line_id])
     writer.writerow(d)
 
   output_fh.close()

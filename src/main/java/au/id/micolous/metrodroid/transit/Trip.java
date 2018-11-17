@@ -22,6 +22,7 @@ package au.id.micolous.metrodroid.transit;
 
 import android.os.Build;
 import android.os.Parcelable;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.annotation.StringRes;
 import android.text.Spannable;
@@ -31,7 +32,11 @@ import android.text.style.TtsSpan;
 import android.util.Log;
 
 import java.util.Calendar;
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.List;
 import java.util.Locale;
+import java.util.Set;
 
 import au.id.micolous.farebot.R;
 import au.id.micolous.metrodroid.MetrodroidApplication;
@@ -219,9 +224,69 @@ public abstract class Trip implements Parcelable {
     /**
      * Route name for the trip. This could be a bus line, a tram line, a rail line, etc.
      * If this is not known, then return null.
+     *
+     * The default implementation attempts to get the route name based on the
+     * {@link #getStartStation()} and {@link #getEndStation()}, using the
+     * {@link Station#getLineNames()} method.
+     *
+     * It does this by attempting to find a common set of Line Names between the Start and End
+     * stations.
+     *
+     * If there is no start or end station data available, or {@link Station#getLineNames()} returns
+     * null, then this also returns null.
      */
+    @Nullable
     public String getRouteName() {
-        return null;
+        Station startStation = getStartStation();
+        Station endStation = getEndStation();
+
+        @NonNull List<String> startLines = startStation != null ?
+                startStation.getLineNames() : Collections.emptyList();
+        @NonNull List<String> endLines = endStation != null ?
+                endStation.getLineNames() : Collections.emptyList();
+
+        return getRouteName(startLines, endLines);
+    }
+
+    @Nullable
+    public static String getRouteName(@NonNull List<String> startLines,
+                                      @NonNull List<String> endLines) {
+        if (startLines.isEmpty() && endLines.isEmpty()) {
+            return null;
+        }
+
+        // Method 1: if only the start is set, use the first start line.
+        if (endLines.isEmpty()) {
+            return startLines.get(0);
+        }
+
+        // Method 2: if only the end is set, use the first end line.
+        if (startLines.isEmpty()) {
+            return endLines.get(0);
+        }
+
+        // Now there is at least 1 candidate line from each group.
+
+        // Method 3: get the intersection of the two list of candidate stations
+        HashSet<String> lines = new HashSet<>(startLines);
+        lines.retainAll(endLines);
+        if (!lines.isEmpty()) {
+            // There is exactly 1 common line -- return it
+            if (lines.size() == 1) {
+                return lines.iterator().next();
+            }
+
+            // There are more than one common line. Return the first one that appears in the order
+            // of the starting line stations.
+            for (String candidateLine : startLines) {
+                if (lines.contains(candidateLine)) {
+                    return candidateLine;
+                }
+            }
+        }
+
+        // There are no overlapping lines. Return the first associated with the start station.
+        return startLines.get(0);
     }
 
     /**
@@ -343,6 +408,45 @@ public abstract class Trip implements Parcelable {
 	return true;
     }
 
+    /**
+     * Is there geographic data associated with this trip?
+     */
+    public boolean hasLocation() {
+        final Station startStation = getStartStation();
+        final Station endStation = getEndStation();
+        return (startStation != null && startStation.hasLocation()) ||
+                (endStation != null && endStation.hasLocation());
+    }
+
+    /**
+     * If the trip is a transfer from another service, return true.
+     *
+     * If this is not a transfer, or this is unknown, return false. By default, this method returns
+     * false.
+     *
+     * The typical use of this is if an agency allows you to transfer to other services within a
+     * time window.  eg: The first trip is $2, but other trips within the next two hours are free.
+     *
+     * This may still return true even if {@link #getFare()} is non-null and non-zero -- this
+     * can indicate a discounted (rather than free) transfer. eg: The trips are $2.50, but other
+     * trips within the next two hours have a $2 discount, making the second trip cost $0.50.
+     */
+    public boolean isTransfer() {
+        return false;
+    }
+
+    /**
+     * If the tap-on event was rejected for the trip, return true.
+     *
+     * This should be used for where a record is added to the card in the case of insufficient
+     * funds to pay for the journey.
+     *
+     * Otherwise, return false.  The default is to return false.
+     */
+    public boolean isRejected() {
+        return false;
+    }
+
     public enum Mode {
         BUS(0, R.string.mode_bus),
         /** Used for non-metro (rapid transit) trains */
@@ -357,7 +461,8 @@ public abstract class Trip implements Parcelable {
         /** Used for transactions at a store, buying something other than travel. */
         POS(7, R.string.mode_pos),
         OTHER(8, R.string.mode_unknown),
-        BANNED(9, R.string.mode_banned);
+        BANNED(9, R.string.mode_banned),
+        TROLLEYBUS(10, R.string.mode_trolleybus);
 
         final int mImageResourceIdx;
         @StringRes
@@ -380,10 +485,12 @@ public abstract class Trip implements Parcelable {
 
     public static class Comparator implements java.util.Comparator<Trip> {
         @Override
-        public int compare(Trip trip, Trip trip1) {
-            if (trip1.getStartTimestamp() != null && trip.getStartTimestamp() != null) {
-                return trip1.getStartTimestamp().compareTo(trip.getStartTimestamp());
-            } else if (trip1.getStartTimestamp() != null) {
+        public int compare(Trip trip1, Trip trip2) {
+            Calendar t1 = trip1.getStartTimestamp() != null ? trip1.getStartTimestamp() : trip1.getEndTimestamp();
+            Calendar t2 = trip2.getStartTimestamp() != null ? trip2.getStartTimestamp() : trip2.getEndTimestamp();
+            if (t2 != null && t1 != null) {
+                return t2.compareTo(t1);
+            } else if (t2 != null) {
                 return 1;
             } else {
                 return 0;

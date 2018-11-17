@@ -1,7 +1,7 @@
 /*
  * OpalSubscription.java
  *
- * Copyright 2015 Michael Farrell <micolous+git@gmail.com>
+ * Copyright 2015-2018 Michael Farrell <micolous+git@gmail.com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -19,6 +19,7 @@
 package au.id.micolous.metrodroid.transit.opal;
 
 import android.os.Parcel;
+import android.support.annotation.NonNull;
 
 import au.id.micolous.metrodroid.transit.Subscription;
 import au.id.micolous.metrodroid.util.Utils;
@@ -39,7 +40,7 @@ import au.id.micolous.farebot.R;
 class OpalSubscription extends Subscription {
     public static final Creator<OpalSubscription> CREATOR = new Creator<OpalSubscription>() {
         public OpalSubscription createFromParcel(Parcel parcel) {
-            return new OpalSubscription(parcel);
+            return OpalSubscription.getInstance();
         }
 
         public OpalSubscription[] newArray(int size) {
@@ -47,16 +48,13 @@ class OpalSubscription extends Subscription {
         }
     };
 
-    public OpalSubscription(Parcel parcel) {
+    private static final OpalSubscription OPAL_SUBSCRIPTION = new OpalSubscription();
+
+    public static OpalSubscription getInstance() {
+        return OPAL_SUBSCRIPTION;
     }
 
-    public OpalSubscription() {
-    }
-
-
-    @Override
-    public int getId() {
-        return 0;
+    private OpalSubscription() {
     }
 
     @Override
@@ -73,12 +71,7 @@ class OpalSubscription extends Subscription {
 
     @Override
     public String getAgencyName(boolean isShort) {
-        return "Opal";
-    }
-
-    @Override
-    public int getMachineId() {
-        return 0;
+        return Utils.localizeString(R.string.opal_agency_tfnsw);
     }
 
     @Override
@@ -86,9 +79,10 @@ class OpalSubscription extends Subscription {
         return Utils.localizeString(R.string.opal_automatic_top_up);
     }
 
+    @NonNull
     @Override
-    public String getActivation() {
-        return null;
+    public PaymentMethod getPaymentMethod() {
+        return PaymentMethod.CREDIT_CARD;
     }
 
     @Override

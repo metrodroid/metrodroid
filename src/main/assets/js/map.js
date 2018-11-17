@@ -28,6 +28,7 @@ for (var i=0; i<TripMapShim.getMarkerCount(); i++) {
     var icon = L.icon({
         iconUrl: 'img/' + m.getIcon() + '.png',
         iconRetinaUrl: 'img/' + m.getIcon() + '-2x.png',
+        shadowUrl: 'third_party/leaflet/images/marker-shadow.png',
         iconSize:    [25, 41],
 		iconAnchor:  [12, 41],
 		popupAnchor: [1, -34],

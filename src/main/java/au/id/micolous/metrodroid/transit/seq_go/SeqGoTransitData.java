@@ -20,19 +20,28 @@ package au.id.micolous.metrodroid.transit.seq_go;
 
 import android.net.Uri;
 import android.os.Parcel;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
+import android.support.annotation.VisibleForTesting;
 
 import au.id.micolous.farebot.R;
 import au.id.micolous.metrodroid.card.CardType;
 import au.id.micolous.metrodroid.card.UnauthorizedException;
 import au.id.micolous.metrodroid.card.classic.ClassicCard;
+import au.id.micolous.metrodroid.card.classic.ClassicCardTransitFactory;
+import au.id.micolous.metrodroid.card.classic.ClassicSector;
 import au.id.micolous.metrodroid.transit.CardInfo;
+import au.id.micolous.metrodroid.transit.TransitData;
 import au.id.micolous.metrodroid.transit.TransitIdentity;
 import au.id.micolous.metrodroid.transit.nextfare.NextfareTransitData;
 import au.id.micolous.metrodroid.transit.nextfare.NextfareTrip;
 import au.id.micolous.metrodroid.transit.nextfare.record.NextfareTopupRecord;
+import au.id.micolous.metrodroid.util.StationTableReader;
 import au.id.micolous.metrodroid.util.Utils;
 
 import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
 import java.util.TimeZone;
 
 /**
@@ -64,58 +73,93 @@ public class SeqGoTransitData extends NextfareTransitData {
             .setExtraNote(R.string.card_note_seqgo)
             .build();
 
-    static final byte[] MANUFACTURER = {
-            0x16, 0x18, 0x1A, 0x1B,
-            0x1C, 0x1D, 0x1E, 0x1F
-    };
-
-    static final byte[] SYSTEM_CODE1 = {
+    @VisibleForTesting
+    public static final byte[] SYSTEM_CODE1 = {
             0x5A, 0x5B, 0x20, 0x21, 0x22, 0x23
     };
 
-    static final byte[] SYSTEM_CODE2 = {
+    @VisibleForTesting
+    public static final byte[] SYSTEM_CODE2 = {
             0x20, 0x21, 0x22, 0x23, 0x01, 0x01
     };
 
-    static final TimeZone TIME_ZONE = TimeZone.getTimeZone("Australia/Brisbane");
+    private static final TimeZone TIME_ZONE = TimeZone.getTimeZone("Australia/Brisbane");
 
     private static final String TAG = "SeqGoTransitData";
     private SeqGoTicketType mTicketType;
 
-    public SeqGoTransitData(Parcel parcel) {
+    private SeqGoTransitData(Parcel parcel) {
         super(parcel, "AUD");
         mTicketType = (SeqGoTicketType) parcel.readSerializable();
     }
 
-    public SeqGoTransitData(ClassicCard card) {
+    private SeqGoTransitData(ClassicCard card) {
         super(card, "AUD");
         if (mConfig != null) {
             mTicketType = SeqGoData.TICKET_TYPE_MAP.get(mConfig.getTicketType(), SeqGoTicketType.UNKNOWN);
         }
     }
 
-    public static TransitIdentity parseTransitIdentity(ClassicCard card) {
-        return NextfareTransitData.parseTransitIdentity(card, NAME);
-    }
+    public static final ClassicCardTransitFactory FACTORY = new NextFareTransitFactory() {
+        @Override
+        public TransitIdentity parseTransitIdentity(@NonNull ClassicCard card) {
+            return super.parseTransitIdentity(card, NAME);
+        }
 
-    public static boolean check(ClassicCard card) {
-        try {
-            byte[] blockData = card.getSector(0).getBlock(1).getData();
-            if (!Arrays.equals(Arrays.copyOfRange(blockData, 1, 9), MANUFACTURER)) {
+        private boolean check(ClassicSector sector0) {
+            try {
+                byte[] blockData = sector0.getBlock(1).getData();
+                if (!Arrays.equals(Arrays.copyOfRange(blockData, 1, 9), MANUFACTURER)) {
+                    return false;
+                }
+
+                byte[] systemCode = Arrays.copyOfRange(blockData, 9, 15);
+                //Log.d(TAG, "SystemCode = " + Utils.getHexString(systemCode));
+                return Arrays.equals(systemCode, SYSTEM_CODE1) || Arrays.equals(systemCode, SYSTEM_CODE2);
+            } catch (UnauthorizedException ex) {
+                // It is not possible to identify the card without a key
+                return false;
+            } catch (IndexOutOfBoundsException ignored) {
+                // If the sector/block number is too high, it's not for us
                 return false;
             }
-
-            byte[] systemCode = Arrays.copyOfRange(blockData, 9, 15);
-            //Log.d(TAG, "SystemCode = " + Utils.getHexString(systemCode));
-            return Arrays.equals(systemCode, SYSTEM_CODE1) || Arrays.equals(systemCode, SYSTEM_CODE2);
-        } catch (UnauthorizedException ex) {
-            // It is not possible to identify the card without a key
-            return false;
-        } catch (IndexOutOfBoundsException ignored) {
-            // If the sector/block number is too high, it's not for us
-            return false;
         }
-    }
+
+        @Override
+        public boolean check(@NonNull ClassicCard card) {
+            try {
+                return check(card.getSector(0));
+            } catch (UnauthorizedException ex) {
+                // It is not possible to identify the card without a key
+                return false;
+            } catch (IndexOutOfBoundsException ignored) {
+                // If the sector/block number is too high, it's not for us
+                return false;
+            }
+        }
+
+        @Override
+        public TransitData parseTransitData(@NonNull ClassicCard classicCard) {
+            return new SeqGoTransitData(classicCard);
+        }
+
+        @Override
+        public List<CardInfo> getAllCards() {
+            return Collections.singletonList(CARD_INFO);
+        }
+
+        @Override
+        public int earlySectors() {
+            return 1;
+        }
+
+        @Override
+        public CardInfo earlyCardInfo(List<ClassicSector> sectors) {
+            if (check(sectors.get(0)))
+                return CARD_INFO;
+            return null;
+        }
+    };
 
     @Override
     public void writeToParcel(Parcel parcel, int i) {
@@ -167,5 +211,10 @@ public class SeqGoTransitData extends NextfareTransitData {
     @Override
     protected TimeZone getTimezone() {
         return TIME_ZONE;
+    }
+
+    @Nullable
+    public static String getNotice() {
+        return StationTableReader.getNotice(SeqGoData.SEQ_GO_STR);
     }
 }

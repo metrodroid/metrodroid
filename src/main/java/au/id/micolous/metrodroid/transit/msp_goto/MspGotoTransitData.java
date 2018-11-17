@@ -1,15 +1,22 @@
 package au.id.micolous.metrodroid.transit.msp_goto;
 
 import android.os.Parcel;
+import android.support.annotation.NonNull;
+import android.support.annotation.VisibleForTesting;
 
 import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
 import java.util.TimeZone;
 
 import au.id.micolous.farebot.R;
 import au.id.micolous.metrodroid.card.CardType;
 import au.id.micolous.metrodroid.card.UnauthorizedException;
 import au.id.micolous.metrodroid.card.classic.ClassicCard;
+import au.id.micolous.metrodroid.card.classic.ClassicCardTransitFactory;
+import au.id.micolous.metrodroid.card.classic.ClassicSector;
 import au.id.micolous.metrodroid.transit.CardInfo;
+import au.id.micolous.metrodroid.transit.TransitData;
 import au.id.micolous.metrodroid.transit.TransitIdentity;
 import au.id.micolous.metrodroid.transit.nextfare.NextfareTransitData;
 import au.id.micolous.metrodroid.transit.nextfare.NextfareTrip;
@@ -26,13 +33,14 @@ public class MspGotoTransitData extends NextfareTransitData {
             return new MspGotoTransitData[size];
         }
     };
-    static final byte[] BLOCK1 = {
+    private static final byte[] BLOCK1 = {
             0x16, 0x18, 0x1A, 0x1B,
             0x1C, 0x1D, 0x1E, 0x1F,
             0x01, 0x01, 0x01, 0x01,
             0x01, 0x01
     };
-    static final byte[] BLOCK2 = {
+    @VisibleForTesting
+    public static final byte[] BLOCK2 = {
             0x3f, 0x33, 0x22, 0x11,
             -0x40, -0x34, -0x23, -0x12,
             0x3f, 0x33, 0x22, 0x11,
@@ -49,37 +57,75 @@ public class MspGotoTransitData extends NextfareTransitData {
             .setPreview()
             .build();
 
-    static final TimeZone TIME_ZONE = TimeZone.getTimeZone("America/Chicago");
+    private static final TimeZone TIME_ZONE = TimeZone.getTimeZone("America/Chicago");
 
-    public MspGotoTransitData(Parcel parcel) {
+    private MspGotoTransitData(Parcel parcel) {
         super(parcel, "USD");
     }
 
-    public MspGotoTransitData(ClassicCard card) {
+    private MspGotoTransitData(ClassicCard card) {
         super(card);
     }
 
-    public static TransitIdentity parseTransitIdentity(ClassicCard card) {
-        return NextfareTransitData.parseTransitIdentity(card, NAME);
-    }
+    public static final ClassicCardTransitFactory FACTORY = new NextFareTransitFactory() {
+        @Override
+        public TransitIdentity parseTransitIdentity(@NonNull ClassicCard card) {
+            return super.parseTransitIdentity(card, NAME);
+        }
 
-    public static boolean check(ClassicCard card) {
-        try {
-            byte[] block1 = card.getSector(0).getBlock(1).getData();
-            if (!Arrays.equals(Arrays.copyOfRange(block1, 1, 15), BLOCK1)) {
+        private boolean check(ClassicSector sector0) {
+            try {
+                byte[] block1 = sector0.getBlock(1).getData();
+                if (!Arrays.equals(Arrays.copyOfRange(block1, 1, 15), BLOCK1)) {
+                    return false;
+                }
+
+                byte[] block2 = sector0.getBlock(2).getData();
+                return Arrays.equals(block2, BLOCK2);
+            } catch (UnauthorizedException ex) {
+                // It is not possible to identify the card without a key
+                return false;
+            } catch (IndexOutOfBoundsException ignored) {
+                // If the sector/block number is too high, it's not for us
                 return false;
             }
-
-            byte[] block2 = card.getSector(0).getBlock(2).getData();
-            return Arrays.equals(block2, BLOCK2);
-        } catch (UnauthorizedException ex) {
-            // It is not possible to identify the card without a key
-            return false;
-        } catch (IndexOutOfBoundsException ignored) {
-            // If the sector/block number is too high, it's not for us
-            return false;
         }
-    }
+
+        @Override
+        public boolean check(@NonNull ClassicCard card) {
+            try {
+                return check(card.getSector(0));
+            } catch (UnauthorizedException ex) {
+                // It is not possible to identify the card without a key
+                return false;
+            } catch (IndexOutOfBoundsException ignored) {
+                // If the sector/block number is too high, it's not for us
+                return false;
+            }
+        }
+
+        @Override
+        public TransitData parseTransitData(@NonNull ClassicCard classicCard) {
+            return new MspGotoTransitData(classicCard);
+        }
+
+        @Override
+        public CardInfo earlyCardInfo(List<ClassicSector> sectors) {
+            if (check(sectors.get(0)))
+                return CARD_INFO;
+            return null;
+        }
+
+        @Override
+        public List<CardInfo> getAllCards() {
+            return Collections.singletonList(CARD_INFO);
+        }
+
+        @Override
+        public int earlySectors() {
+            return 1;
+        }
+    };
 
     @Override
     protected NextfareTrip newTrip() {

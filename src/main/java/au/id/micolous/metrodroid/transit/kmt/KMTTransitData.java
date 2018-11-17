@@ -34,6 +34,7 @@ import au.id.micolous.metrodroid.MetrodroidApplication;
 import au.id.micolous.metrodroid.card.CardType;
 import au.id.micolous.metrodroid.card.felica.FelicaBlock;
 import au.id.micolous.metrodroid.card.felica.FelicaCard;
+import au.id.micolous.metrodroid.card.felica.FelicaCardTransitFactory;
 import au.id.micolous.metrodroid.card.felica.FelicaService;
 import au.id.micolous.metrodroid.transit.CardInfo;
 import au.id.micolous.metrodroid.transit.TransitCurrency;
@@ -77,15 +78,15 @@ public class KMTTransitData extends TransitData {
             return new KMTTransitData[size];
         }
     };
-    private KMTTrip[] mTrips;
+    private List<KMTTrip> mTrips;
     private String mSerialNumber;
     private int mCurrentBalance;
     private int mTransactionCounter;
     private int mLastTransAmount;
 
     private KMTTransitData(Parcel parcel) {
-        mTrips = new KMTTrip[parcel.readInt()];
-        parcel.readTypedArray(mTrips, KMTTrip.CREATOR);
+        mTrips = new ArrayList<>();
+        parcel.readTypedList(mTrips, KMTTrip.CREATOR);
         mCurrentBalance = parcel.readInt();
         mSerialNumber = parcel.readString();
         mTransactionCounter = parcel.readInt();
@@ -119,25 +120,35 @@ public class KMTTransitData extends TransitData {
                 trips.add(trip);
             }
         }
-        mTrips = trips.toArray(new KMTTrip[trips.size()]);
+        mTrips = trips;
     }
 
-    public static boolean check(FelicaCard card) {
-        return (card.getSystem(SYSTEMCODE_KMT) != null);
-    }
-
-    public static boolean earlyCheck(int[] systemCodes) {
-        return ArrayUtils.contains(systemCodes, SYSTEMCODE_KMT);
-    }
-
-    public static TransitIdentity parseTransitIdentity(FelicaCard card) {
-        FelicaService serviceID = card.getSystem(SYSTEMCODE_KMT).getService(FELICA_SERVICE_KMT_ID);
-        String serialNumber = "-";
-        if (serviceID != null) {
-            serialNumber = new String(serviceID.getBlocks().get(0).getData());
+    public final static FelicaCardTransitFactory FACTORY = new FelicaCardTransitFactory() {
+        @Override
+        public boolean earlyCheck(int[] systemCodes) {
+            return ArrayUtils.contains(systemCodes, SYSTEMCODE_KMT);
         }
-        return new TransitIdentity(NAME, serialNumber);
-    }
+
+        @Override
+        protected CardInfo getCardInfo() {
+            return CARD_INFO;
+        }
+
+        @Override
+        public TransitData parseTransitData(FelicaCard felicaCard) {
+            return new KMTTransitData(felicaCard);
+        }
+
+        @Override
+        public TransitIdentity parseTransitIdentity(FelicaCard card) {
+            FelicaService serviceID = card.getSystem(SYSTEMCODE_KMT).getService(FELICA_SERVICE_KMT_ID);
+            String serialNumber = "-";
+            if (serviceID != null) {
+                serialNumber = new String(serviceID.getBlocks().get(0).getData());
+            }
+            return new TransitIdentity(NAME, serialNumber);
+        }
+    };
 
     @Override
     @Nullable
@@ -151,7 +162,7 @@ public class KMTTransitData extends TransitData {
     }
 
     @Override
-    public Trip[] getTrips() {
+    public List<KMTTrip> getTrips() {
         return mTrips;
     }
 
@@ -161,8 +172,7 @@ public class KMTTransitData extends TransitData {
     }
 
     public void writeToParcel(Parcel parcel, int flags) {
-        parcel.writeInt(mTrips.length);
-        parcel.writeTypedArray(mTrips, flags);
+        parcel.writeTypedList(mTrips);
         parcel.writeInt(mCurrentBalance);
         parcel.writeString(mSerialNumber);
         parcel.writeInt(mTransactionCounter);

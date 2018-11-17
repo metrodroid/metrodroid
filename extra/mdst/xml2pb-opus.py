@@ -74,7 +74,7 @@ for operator in root.iter('operator'):
     if line_name.startswith('METRO '):
       line_pb.transport = stations_pb2.METRO
 
-    lines[(operator_id << 9)|int(line_id)] = line_pb
+    lines[(operator_id << 16)|int(line_id)] = line_pb
 
 db = MdstWriter(
   fh=open(OUTPUT, 'wb'),

@@ -21,6 +21,7 @@ package au.id.micolous.metrodroid.test;
 import android.test.AndroidTestCase;
 
 import java.util.Calendar;
+import java.util.List;
 
 import au.id.micolous.metrodroid.card.desfire.DesfireApplication;
 import au.id.micolous.metrodroid.card.desfire.DesfireCard;
@@ -88,35 +89,35 @@ public class ClipperTest extends AndroidTestCase {
         assertTrue(o.getBalance().getBalance().equals(TransitCurrency.USD(30583)));
         assertEquals(null, o.getSubscriptions());
 
-        Trip []trips = o.getTrips();
+        List<Trip> trips = o.getTrips();
         assertNotNull(trips);
-        assertEquals("Whole Foods", trips[1].getAgencyName(false));
-        assertEquals("Whole Foods", trips[1].getAgencyName(true));
-        assertEquals(1520009600000L, trips[1].getStartTimestamp().getTimeInMillis());
-        assertTrue(trips[1].getFare().equals(TransitCurrency.USD(-5000)));
-        assertNull(trips[1].getRouteName());
-        assertTrue(trips[1].hasTime());
-        assertEquals(Trip.Mode.TICKET_MACHINE, trips[1].getMode());
-        assertNull(trips[1].getStartStation());
-        assertNull(trips[1].getEndStation());
-        assertEquals("78123456", trips[1].getVehicleID());
+        assertEquals("Whole Foods", trips.get(1).getAgencyName(false));
+        assertEquals("Whole Foods", trips.get(1).getAgencyName(true));
+        assertEquals(1520009600000L, trips.get(1).getStartTimestamp().getTimeInMillis());
+        assertTrue(trips.get(1).getFare().equals(TransitCurrency.USD(-5000)));
+        assertNull(trips.get(1).getRouteName());
+        assertTrue(trips.get(1).hasTime());
+        assertEquals(Trip.Mode.TICKET_MACHINE, trips.get(1).getMode());
+        assertNull(trips.get(1).getStartStation());
+        assertNull(trips.get(1).getEndStation());
+        assertEquals("78123456", trips.get(1).getVehicleID());
 
-        assertEquals("Bay Area Rapid Transit", trips[0].getAgencyName(false));
-        assertEquals("BART", trips[0].getAgencyName(true));
-        assertEquals(1521320320000L, trips[0].getStartTimestamp().getTimeInMillis());
-        assertTrue(trips[0].getFare().equals(TransitCurrency.USD(630)));
-        assertNull(trips[0].getRouteName());
-        assertTrue(trips[0].hasTime());
-        assertEquals(Trip.Mode.METRO, trips[0].getMode());
-        assertNotNull(trips[0].getStartStation());
-        assertEquals("Powell St.", trips[0].getStartStation().getStationName());
-        assertEquals("Powell St.", trips[0].getStartStation().getShortStationName());
-        assertEquals(37.78447, Float.parseFloat(trips[0].getStartStation().getLatitude()), 0.00001);
-        assertEquals(-122.40797, Float.parseFloat(trips[0].getStartStation().getLongitude()), 0.00001);
-        assertNotNull(trips[0].getEndStation());
-        assertEquals("Dublin/Pleasanton", trips[0].getEndStation().getStationName());
-        assertEquals("Dublin/Pleasanton", trips[0].getEndStation().getShortStationName());
-        assertEquals(37.70169, Float.parseFloat(trips[0].getEndStation().getLatitude()), 0.00001);
-        assertEquals(-121.89918, Float.parseFloat(trips[0].getEndStation().getLongitude()), 0.00001);
+        assertEquals("Bay Area Rapid Transit", trips.get(0).getAgencyName(false));
+        assertEquals("BART", trips.get(0).getAgencyName(true));
+        assertEquals(1521320320000L, trips.get(0).getStartTimestamp().getTimeInMillis());
+        assertTrue(trips.get(0).getFare().equals(TransitCurrency.USD(630)));
+        assertNull(trips.get(0).getRouteName());
+        assertTrue(trips.get(0).hasTime());
+        assertEquals(Trip.Mode.METRO, trips.get(0).getMode());
+        assertNotNull(trips.get(0).getStartStation());
+        assertEquals("Powell St.", trips.get(0).getStartStation().getStationName());
+        assertEquals("Powell St.", trips.get(0).getStartStation().getShortStationName());
+        assertEquals(37.78447, Float.parseFloat(trips.get(0).getStartStation().getLatitude()), 0.00001);
+        assertEquals(-122.40797, Float.parseFloat(trips.get(0).getStartStation().getLongitude()), 0.00001);
+        assertNotNull(trips.get(0).getEndStation());
+        assertEquals("Dublin/Pleasanton", trips.get(0).getEndStation().getStationName());
+        assertEquals("Dublin/Pleasanton", trips.get(0).getEndStation().getShortStationName());
+        assertEquals(37.70169, Float.parseFloat(trips.get(0).getEndStation().getLatitude()), 0.00001);
+        assertEquals(-121.89918, Float.parseFloat(trips.get(0).getEndStation().getLongitude()), 0.00001);
     }
 }

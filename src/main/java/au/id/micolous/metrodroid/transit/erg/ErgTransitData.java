@@ -19,12 +19,15 @@
 package au.id.micolous.metrodroid.transit.erg;
 
 import android.os.Parcel;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
 import au.id.micolous.metrodroid.card.UnauthorizedException;
 import au.id.micolous.metrodroid.card.classic.ClassicBlock;
 import au.id.micolous.metrodroid.card.classic.ClassicCard;
+import au.id.micolous.metrodroid.card.classic.ClassicCardTransitFactory;
 import au.id.micolous.metrodroid.card.classic.ClassicSector;
+import au.id.micolous.metrodroid.transit.CardInfo;
 import au.id.micolous.metrodroid.transit.TransitCurrency;
 import au.id.micolous.metrodroid.transit.TransitData;
 import au.id.micolous.metrodroid.transit.TransitIdentity;
@@ -62,7 +65,7 @@ public class ErgTransitData extends TransitData {
     private GregorianCalendar mEpochDate;
     private int mAgencyID;
     private int mBalance;
-    private Trip[] mTrips;
+    private List<ErgTrip> mTrips;
 
     // Parcel
     public static final Creator<ErgTransitData> CREATOR = new Creator<ErgTransitData>() {
@@ -83,7 +86,7 @@ public class ErgTransitData extends TransitData {
         mSerialNumber = parcel.readString();
         mEpochDate = new GregorianCalendar();
         mEpochDate.setTimeInMillis(parcel.readLong());
-        mTrips = parcel.createTypedArray(ManlyFastFerryTrip.CREATOR);
+        mTrips = parcel.readArrayList(getClass().getClassLoader());
         mCurrency = currency;
     }
 
@@ -139,7 +142,7 @@ public class ErgTransitData extends TransitData {
         // "tap off").
         //
         // These need the Epoch to be known first.
-        ArrayList<Trip> trips = new ArrayList<>();
+        List<ErgTrip> trips = new ArrayList<>();
 
         for (ErgRecord record : records) {
             if (record instanceof ErgPurseRecord) {
@@ -149,37 +152,76 @@ public class ErgTransitData extends TransitData {
         }
 
         Collections.sort(trips, new Trip.Comparator());
-        mTrips = trips.toArray(new Trip[trips.size()]);
+        mTrips = trips;
     }
 
-    /**
-     * ERG cards have two identifying marks:
-     *
-     * 1. A signature in Sector 0, Block 1
-     * 2. The agency ID in Sector 0, Block 2 (Readable with ErgMetadataRecord)
-     *
-     * This check only determines if there is a signature -- subclasses should call this and then
-     * perform their own check of the agency ID.
-     * @param card MIFARE Classic card data.
-     * @return True if this is an ERG card, false otherwise.
-     */
-    public static boolean check(ClassicCard card) {
-        byte[] file1;
-
-        try {
-            file1 = card.getSector(0).getBlock(1).getData();
-        } catch (UnauthorizedException ignored) {
-            // These blocks of the card are not protected.
-            // This must not be a ERG smartcard.
-            return false;
-        } catch (IndexOutOfBoundsException ignored) {
-            // If that's too high for us, then this isn't an ERG smartcard.
-            return false;
+    protected static class ErgTransitFactory extends ClassicCardTransitFactory {
+        /**
+         * ERG cards have two identifying marks:
+         * <p>
+         * 1. A signature in Sector 0, Block 1
+         * 2. The agency ID in Sector 0, Block 2 (Readable with ErgMetadataRecord)
+         * <p>
+         * This check only determines if there is a signature -- subclasses should call this and then
+         * perform their own check of the agency ID.
+         *
+         * @param card MIFARE Classic card data.
+         * @return True if this is an ERG card, false otherwise.
+         */
+        @Override
+        public boolean check(@NonNull ClassicCard card) {
+            try {
+                return check(card.getSector(0));
+            } catch (UnauthorizedException ignored) {
+                // These blocks of the card are not protected.
+                // This must not be a ERG smartcard.
+                return false;
+            } catch (IndexOutOfBoundsException ignored) {
+                // If that's too high for us, then this isn't an ERG smartcard.
+                return false;
+            }
         }
 
-        // Check for signature
-        return Arrays.equals(Arrays.copyOfRange(file1, 0, SIGNATURE.length), SIGNATURE);
+        protected boolean check(ClassicSector sector0) {
+            byte[] file1;
+
+            try {
+                file1 = sector0.getBlock(1).getData();
+            } catch (UnauthorizedException ignored) {
+                // These blocks of the card are not protected.
+                // This must not be a ERG smartcard.
+                return false;
+            } catch (IndexOutOfBoundsException ignored) {
+                // If that's too high for us, then this isn't an ERG smartcard.
+                return false;
+            }
+
+            // Check for signature
+            return Arrays.equals(Arrays.copyOfRange(file1, 0, SIGNATURE.length), SIGNATURE);
+        }
+
+        @Override
+        public TransitIdentity parseTransitIdentity(@NonNull ClassicCard card) {
+            ErgMetadataRecord metadata = getMetadataRecord(card);
+            if (metadata == null) {
+                return null;
+            }
+            return new TransitIdentity(NAME, metadata.getCardSerialHex());
+        }
+
+        @Override
+        public TransitData parseTransitData(@NonNull ClassicCard classicCard) {
+            return new ErgTransitData(classicCard);
+        }
+
+        // Specific readers add their CardInfo
+        @Override
+        public List<CardInfo> getAllCards() {
+            return null;
+        }
     }
+
+    public static final ClassicCardTransitFactory FALLBACK_FACTORY = new ErgTransitFactory();
 
     protected static ErgMetadataRecord getMetadataRecord(ClassicCard card) {
         byte[] file2;
@@ -193,18 +235,10 @@ public class ErgTransitData extends TransitData {
         return ErgMetadataRecord.recordFromBytes(file2);
     }
 
-    public static TransitIdentity parseTransitIdentity(ClassicCard card) {
-        ErgMetadataRecord metadata = getMetadataRecord(card);
-        if (metadata == null) {
-            return null;
-        }
-        return new TransitIdentity(NAME, metadata.getCardSerialHex());
-    }
-
     public void writeToParcel(Parcel parcel, int flags) {
         parcel.writeString(mSerialNumber);
         parcel.writeLong(mEpochDate.getTimeInMillis());
-        parcel.writeTypedArray(mTrips, flags);
+        parcel.writeList(mTrips);
     }
 
     @Override
@@ -220,7 +254,7 @@ public class ErgTransitData extends TransitData {
     }
 
     @Override
-    public Trip[] getTrips() {
+    public List<ErgTrip> getTrips() {
         return mTrips;
     }
 

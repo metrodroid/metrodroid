@@ -37,6 +37,7 @@ import au.id.micolous.farebot.R;
 import au.id.micolous.metrodroid.card.Card;
 import au.id.micolous.metrodroid.card.CardType;
 import au.id.micolous.metrodroid.card.desfire.DesfireCard;
+import au.id.micolous.metrodroid.card.desfire.DesfireCardTransitFactory;
 import au.id.micolous.metrodroid.card.desfire.files.DesfireFile;
 import au.id.micolous.metrodroid.card.desfire.files.RecordDesfireFile;
 import au.id.micolous.metrodroid.transit.CardInfo;
@@ -256,7 +257,6 @@ public class HSLTransitData extends TransitData implements Parcelable {
                 mKausiPrevStart = temp;
                 mKausiPrevEnd = temp2;
             }
-            boolean mHasKausi = mKausiEnd > (System.currentTimeMillis() / 1000.0);
             Calendar mKausiPurchase = cardDateToCalendar(
                     Utils.getBitsFromBuffer(data, 110, 14),
                     Utils.getBitsFromBuffer(data, 124, 11));
@@ -306,22 +306,32 @@ public class HSLTransitData extends TransitData implements Parcelable {
         }
     };
 
-    public static boolean check(Card card) {
-        return (card instanceof DesfireCard) && (((DesfireCard) card).getApplication(APP_ID) != null);
-    }
-
-    public static boolean earlyCheck(int[] appIds) {
-        return ArrayUtils.contains(appIds, APP_ID);
-    }
-
-    public static TransitIdentity parseTransitIdentity(Card card) {
-        try {
-            byte[] data = ((DesfireCard) card).getApplication(APP_ID).getFile(0x08).getData();
-            return new TransitIdentity("HSL", Utils.getHexString(data).substring(2, 20));
-        } catch (Exception ex) {
-            throw new RuntimeException("Error parsing HSL serial", ex);
+    public final static DesfireCardTransitFactory FACTORY = new DesfireCardTransitFactory() {
+        @Override
+        public boolean earlyCheck(int[] appIds) {
+            return ArrayUtils.contains(appIds, APP_ID);
         }
-    }
+
+        @Override
+        public CardInfo getCardInfo() {
+            return CARD_INFO;
+        }
+
+        @Override
+        public TransitData parseTransitData(DesfireCard desfireCard) {
+            return new HSLTransitData(desfireCard);
+        }
+
+        @Override
+        public TransitIdentity parseTransitIdentity(DesfireCard card) {
+            try {
+                byte[] data = card.getApplication(APP_ID).getFile(0x08).getData();
+                return new TransitIdentity("HSL", Utils.getHexString(data).substring(2, 20));
+            } catch (Exception ex) {
+                throw new RuntimeException("Error parsing HSL serial", ex);
+            }
+        }
+    };
 
     static Calendar cardDateToCalendar(long day, long minute) {
         GregorianCalendar c = new GregorianCalendar(TZ);
@@ -422,12 +432,12 @@ public class HSLTransitData extends TransitData implements Parcelable {
     }
 
     @Override
-    public Trip[] getTrips() {
+    public List<Trip> getTrips() {
         List<Trip> trips = new ArrayList<>(mTrips);
         trips.add(mLastRefill);
         Collections.sort(trips, new Trip.Comparator());
 
-        return trips.toArray(new Trip[trips.size()]);
+        return trips;
     }
 
     private List<HSLTrip> parseTrips(DesfireCard card) {

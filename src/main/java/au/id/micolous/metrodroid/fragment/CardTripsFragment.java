@@ -64,7 +64,6 @@ import au.id.micolous.metrodroid.activity.TripMapActivity;
 import au.id.micolous.metrodroid.transit.TransitCurrency;
 import au.id.micolous.metrodroid.transit.TransitData;
 import au.id.micolous.metrodroid.transit.Trip;
-import au.id.micolous.metrodroid.transit.orca.OrcaTrip;
 import au.id.micolous.metrodroid.util.TripObfuscator;
 import au.id.micolous.metrodroid.util.Utils;
 
@@ -83,8 +82,8 @@ public class CardTripsFragment extends ListFragment {
         View view = inflater.inflate(R.layout.fragment_card_trips, null);
 
         List<Trip> trips = new ArrayList<>();
-        if (mTransitData.getTrips() != null && mTransitData.getTrips().length > 0) {
-            trips.addAll(Arrays.asList(mTransitData.getTrips()));
+        if (mTransitData.getTrips() != null && !mTransitData.getTrips().isEmpty()) {
+            trips.addAll(mTransitData.getTrips());
         }
 
         // Explicitly sort these events
@@ -100,7 +99,7 @@ public class CardTripsFragment extends ListFragment {
                         MetrodroidApplication.obfuscateTripFares());
                 Collections.sort(trips, new Trip.Comparator());
             }
-            setListAdapter(new UseLogListAdapter(getActivity(), trips.toArray(new Trip[trips.size()]), mTransitData));
+            setListAdapter(new UseLogListAdapter(getActivity(), trips.toArray(new Trip[0]), mTransitData));
         } else {
             view.findViewById(android.R.id.list).setVisibility(View.GONE);
             view.findViewById(R.id.error_text).setVisibility(View.VISIBLE);
@@ -111,21 +110,20 @@ public class CardTripsFragment extends ListFragment {
 
     @Override
     public void onListItemClick(ListView l, View v, int position, long id) {
+        if (Build.VERSION.SDK_INT < 17) {
+            return;
+        }
+
         Trip trip = (Trip) getListAdapter().getItem(position);
-        if (trip == null || !(
-                (trip.getStartStation() != null && trip.getStartStation().hasLocation())
-                        || (trip.getEndStation() != null && trip.getEndStation().hasLocation()))
-                || Build.VERSION.SDK_INT < 17) {
+        if (trip == null || !trip.hasLocation()) {
             Log.d(TAG, "Oops, couldn't display the trip, despite advertising we could");
             return;
         }
 
         // Make linter happy with explicit if, even though previous if is sufficient
-        if (Build.VERSION.SDK_INT >= 17) {
-            Intent intent = new Intent(getActivity(), TripMapActivity.class);
-            intent.putExtra(TripMapActivity.TRIP_EXTRA, trip);
-            startActivity(intent);
-        }
+        Intent intent = new Intent(getActivity(), TripMapActivity.class);
+        intent.putExtra(TripMapActivity.TRIP_EXTRA, trip);
+        startActivity(intent);
     }
 
     private static class UseLogListAdapter extends ArrayAdapter<Trip> {
@@ -189,6 +187,8 @@ public class CardTripsFragment extends ListFragment {
             ImageView iconImageView = convertView.findViewById(R.id.icon_image_view);
             TextView timeTextView = convertView.findViewById(R.id.time_text_view);
             TextView routeTextView = convertView.findViewById(R.id.route_text_view);
+            ImageView xferIcon = convertView.findViewById(R.id.xfer_icon);
+            ImageView rejectedIcon = convertView.findViewById(R.id.rejected_icon);
             TextView fareTextView = convertView.findViewById(R.id.fare_text_view);
             TextView stationTextView = convertView.findViewById(R.id.station_text_view);
             LinearLayout paxLayout = convertView.findViewById(R.id.pax_layout);
@@ -296,15 +296,19 @@ public class CardTripsFragment extends ListFragment {
                 routeTextView.setVisibility(View.INVISIBLE);
             }
 
+            xferIcon.setVisibility(trip.isTransfer() ? View.VISIBLE : View.GONE);
+            rejectedIcon.setVisibility(trip.isRejected() ? View.VISIBLE : View.GONE);
+
             fareTextView.setVisibility(View.VISIBLE);
             TransitCurrency fare = trip.getFare();
             if (fare != null) {
                 fareTextView.setText(fare.formatCurrencyString(false));
-            } else if (trip instanceof OrcaTrip) {
-                fareTextView.setText(R.string.pass_or_transfer);
+            } else if (trip.isRejected()) {
+                // If no other fare has been displayed, then display the "rejected" text.
+                fareTextView.setText(R.string.rejected);
             } else {
                 // Hide the text "Fare" for getFare == null
-                fareTextView.setVisibility(View.INVISIBLE);
+                fareTextView.setVisibility(View.GONE);
             }
 
             Spannable stationText = Trip.formatStationNames(trip);
@@ -336,7 +340,7 @@ public class CardTripsFragment extends ListFragment {
                 machineIdTextView.setText(Utils.localizeString(R.string.vehicle_number, trip.getVehicleID()));
                 machineIdTextView.setVisibility(View.VISIBLE);
             } else if (trip.getMachineID() != null) {
-                machineIdTextView.setText(Utils.localizeString(R.string.machine_id, trip.getMachineID()));
+                machineIdTextView.setText(Utils.localizeString(R.string.machine_id_format, trip.getMachineID()));
                 machineIdTextView.setVisibility(View.VISIBLE);
             } else {
                 machineIdTextView.setVisibility(View.GONE);
@@ -354,8 +358,7 @@ public class CardTripsFragment extends ListFragment {
                 return false;
             }
 
-            return (trip.getStartStation() != null && trip.getStartStation().hasLocation())
-                    || (trip.getEndStation() != null && trip.getEndStation().hasLocation());
+            return trip.hasLocation();
         }
 
         private boolean isFirstInSection(int position) {

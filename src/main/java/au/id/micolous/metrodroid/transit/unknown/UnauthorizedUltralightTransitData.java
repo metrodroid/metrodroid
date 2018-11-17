@@ -20,11 +20,16 @@ package au.id.micolous.metrodroid.transit.unknown;
 
 import android.os.Parcel;
 
+import java.util.List;
+
 import au.id.micolous.farebot.R;
 import au.id.micolous.metrodroid.card.Card;
 import au.id.micolous.metrodroid.card.ultralight.UltralightCard;
+import au.id.micolous.metrodroid.card.ultralight.UltralightCardTransitFactory;
 import au.id.micolous.metrodroid.card.ultralight.UltralightPage;
 import au.id.micolous.metrodroid.card.ultralight.UnauthorizedUltralightPage;
+import au.id.micolous.metrodroid.transit.CardInfo;
+import au.id.micolous.metrodroid.transit.TransitData;
 import au.id.micolous.metrodroid.transit.TransitIdentity;
 import au.id.micolous.metrodroid.util.Utils;
 
@@ -45,31 +50,45 @@ public class UnauthorizedUltralightTransitData extends UnauthorizedTransitData {
     public UnauthorizedUltralightTransitData() {
     }
 
-    /**
-     * This should be the last executed MIFARE Ultralight check, after all the other checks are done.
-     * <p>
-     * This is because it will catch others' cards.
-     *
-     * @param card Card to read.
-     * @return true if all sectors on the card are locked.
-     */
-    public static boolean check(UltralightCard card) {
-        // check to see if all sectors are blocked
-        for (UltralightPage p : card.getPages()) {
-            if (p.getIndex() >= 4) {
-                // User memory is page 4 and above
-                if (!(p instanceof UnauthorizedUltralightPage)) {
-                    // At least one page is "open", this is not for us
-                    return false;
+    public final static UltralightCardTransitFactory FACTORY = new UltralightCardTransitFactory() {
+        @Override
+        public List<CardInfo> getAllCards() {
+            return null;
+        }
+
+        /**
+         * This should be the last executed MIFARE Ultralight check, after all the other checks are done.
+         * <p>
+         * This is because it will catch others' cards.
+         *
+         * @param card Card to read.
+         * @return true if all sectors on the card are locked.
+         */
+        @Override
+        public boolean check(UltralightCard card) {
+            // check to see if all sectors are blocked
+            for (UltralightPage p : card.getPages()) {
+                if (p.getIndex() >= 4) {
+                    // User memory is page 4 and above
+                    if (!(p instanceof UnauthorizedUltralightPage)) {
+                        // At least one page is "open", this is not for us
+                        return false;
+                    }
                 }
             }
+            return true;
         }
-        return true;
-    }
 
-    public static TransitIdentity parseTransitIdentity(Card card) {
-        return new TransitIdentity(Utils.localizeString(R.string.locked_mfu_card), null);
-    }
+        @Override
+        public TransitData parseTransitData(UltralightCard ultralightCard) {
+            return new UnauthorizedUltralightTransitData();
+        }
+
+        @Override
+        public TransitIdentity parseTransitIdentity(UltralightCard card) {
+            return new TransitIdentity(Utils.localizeString(R.string.locked_mfu_card), null);
+        }
+    };
 
     @Override
     public String getCardName() {

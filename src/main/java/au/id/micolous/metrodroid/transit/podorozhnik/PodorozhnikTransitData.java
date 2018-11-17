@@ -21,10 +21,12 @@ package au.id.micolous.metrodroid.transit.podorozhnik;
 
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.support.annotation.NonNull;
 import android.util.Log;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collections;
 import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.Locale;
@@ -33,6 +35,7 @@ import java.util.TimeZone;
 import au.id.micolous.farebot.R;
 import au.id.micolous.metrodroid.card.CardType;
 import au.id.micolous.metrodroid.card.classic.ClassicCard;
+import au.id.micolous.metrodroid.card.classic.ClassicCardTransitFactory;
 import au.id.micolous.metrodroid.card.classic.ClassicSector;
 import au.id.micolous.metrodroid.card.classic.UnauthorizedClassicSector;
 import au.id.micolous.metrodroid.key.ClassicSectorKey;
@@ -152,19 +155,11 @@ public class PodorozhnikTransitData extends TransitData {
     }
 
     private static String getSerial(byte []uid) {
-        String sn;StringBuilder pretty = new StringBuilder();
-        sn = String.format(Locale.ENGLISH, "96433078%017d",
-                Utils.byteArrayToLongReversed(uid, 0, 7));
-        sn += Utils.calculateLuhn(sn);// last digit is luhn
-        for (int i = 0; i < 6; i++)
-            pretty.append(sn.substring(i * 4, i * 4 + 4)).append(" ");
-        pretty.append(sn.substring(24, 26));
-        return pretty.toString();
-    }
-
-    public static TransitIdentity parseTransitIdentity(ClassicCard card) {
-        return new TransitIdentity(Utils.localizeString(R.string.card_name_podorozhnik),
-                getSerial(card.getTagId()));
+        String sn;
+        sn = "9643 3078 " + Utils.formatNumber(Utils.byteArrayToLongReversed(uid, 0, 7),
+                " ", 4, 4, 4);
+        sn += Utils.calculateLuhn (sn.replaceAll(" ", ""));// last digit is luhn
+        return sn;
     }
 
     private void decodeSector4(ClassicCard card) {
@@ -232,7 +227,7 @@ public class PodorozhnikTransitData extends TransitData {
     }
 
     @Override
-    public Trip[] getTrips() {
+    public List<Trip> getTrips() {
         ArrayList<Trip> items = new ArrayList<>();
         if (mLastTopupTime != 0) {
             items.add(new PodorozhnikTopup(mLastTopupTime, mLastTopup,
@@ -244,7 +239,7 @@ public class PodorozhnikTransitData extends TransitData {
                 items.add (new PodorozhnikDetachedTrip(timestamp));
             }
         }
-        return items.toArray(new Trip[0]);
+        return items;
     }
 
     @Override
@@ -267,19 +262,55 @@ public class PodorozhnikTransitData extends TransitData {
                 Utils.localizeString(R.string.card_name_podorozhnik), null);
     }
 
-    public static boolean check(ClassicCard card) {
-        try {
-            ClassicSectorKey key = card.getSector(4).getKey();
-            if (key == null) {
-                // We don't have key data, bail out.
-                return false;
+    public static final ClassicCardTransitFactory FACTORY = new ClassicCardTransitFactory() {
+        @Override
+        public boolean check(@NonNull ClassicCard card) {
+            try {
+                return check(card.getSector(4));
+            } catch (IndexOutOfBoundsException ignored) {
+                // If that sector number is too high, then it's not for us.
             }
-
-            Log.d(TAG, "Checking for Podorozhnik key...");
-            return Utils.checkKeyHash(key, KEY_SALT, KEY_DIGEST_A, KEY_DIGEST_B) >= 0;
-        } catch (IndexOutOfBoundsException ignored) {
-            // If that sector number is too high, then it's not for us.
+            return false;
         }
-        return false;
-    }
+
+        private boolean check(ClassicSector sector4) {
+            try {
+                ClassicSectorKey key = sector4.getKey();
+
+                Log.d(TAG, "Checking for Podorozhnik key...");
+                return Utils.checkKeyHash(key, KEY_SALT, KEY_DIGEST_A, KEY_DIGEST_B) >= 0;
+            } catch (IndexOutOfBoundsException ignored) {
+                // If that sector number is too high, then it's not for us.
+            }
+            return false;
+        }
+
+        @Override
+        public TransitIdentity parseTransitIdentity(@NonNull ClassicCard card) {
+            return new TransitIdentity(Utils.localizeString(R.string.card_name_podorozhnik),
+                    getSerial(card.getTagId()));
+        }
+
+        @Override
+        public TransitData parseTransitData(@NonNull ClassicCard classicCard) {
+            return new PodorozhnikTransitData(classicCard);
+        }
+
+        @Override
+        public int earlySectors() {
+            return 5;
+        }
+
+        @Override
+        public List<CardInfo> getAllCards() {
+            return Collections.singletonList(CARD_INFO);
+        }
+
+        @Override
+        public CardInfo earlyCardInfo(List<ClassicSector> sectors) {
+            if (check(sectors.get(4)))
+                return CARD_INFO;
+            return null;
+        }
+    };
 }

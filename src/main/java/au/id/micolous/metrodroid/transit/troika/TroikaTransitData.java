@@ -156,7 +156,7 @@ public class TroikaTransitData implements Parcelable {
         mBlock4 = decodeSector(card, 4);
     }
 
-    public Trip[] getTrips() {
+    public List<Trip> getTrips() {
         List <Trip> t = new ArrayList<>();
         if (mBlock7 != null)
             t.addAll(mBlock7.getTrips());
@@ -164,10 +164,10 @@ public class TroikaTransitData implements Parcelable {
             t.addAll(mBlock8.getTrips());
         if (mBlock4 != null)
             t.addAll(mBlock4.getTrips());
-        return t.toArray(new Trip[0]);
+        return t;
     }
 
-    public Subscription[] getSubscriptions() {
+    public List<Subscription> getSubscriptions() {
         Subscription s4 = mBlock4 == null ? null : mBlock4.getSubscription();
         Subscription s7 = mBlock7 == null ? null : mBlock7.getSubscription();
         Subscription s8 = mBlock8 == null ? null : mBlock8.getSubscription();
@@ -178,16 +178,6 @@ public class TroikaTransitData implements Parcelable {
             s.add(s8);
         if (s4 != null)
             s.add(s4);
-        return s.toArray(new Subscription[0]);
-    }
-
-    public static boolean check(ClassicCard card) {
-        try {
-            return TroikaBlock.check(card.getSector(8).getBlock(0).getData());
-        } catch (IndexOutOfBoundsException|UnauthorizedException ignored) {
-            // If that sector number is too high, then it's not for us.
-            // If we can't read we can't do anything
-        }
-        return false;
+        return s;
     }
 }

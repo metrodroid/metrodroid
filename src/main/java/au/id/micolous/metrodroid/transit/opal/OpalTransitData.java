@@ -27,11 +27,13 @@ import org.apache.commons.lang3.ArrayUtils;
 import au.id.micolous.metrodroid.card.Card;
 import au.id.micolous.metrodroid.card.CardType;
 import au.id.micolous.metrodroid.card.desfire.DesfireCard;
+import au.id.micolous.metrodroid.card.desfire.DesfireCardTransitFactory;
 import au.id.micolous.metrodroid.transit.CardInfo;
 import au.id.micolous.metrodroid.transit.Subscription;
 import au.id.micolous.metrodroid.transit.TransitCurrency;
 import au.id.micolous.metrodroid.transit.TransitData;
 import au.id.micolous.metrodroid.transit.TransitIdentity;
+import au.id.micolous.metrodroid.transit.ovc.OVChipTransitData;
 import au.id.micolous.metrodroid.ui.HeaderListItem;
 import au.id.micolous.metrodroid.ui.ListItem;
 import au.id.micolous.metrodroid.util.TripObfuscator;
@@ -39,6 +41,7 @@ import au.id.micolous.metrodroid.util.Utils;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collections;
 import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.Locale;
@@ -97,7 +100,6 @@ public class OpalTransitData extends TransitData {
         OPAL_EPOCH = epoch;
     }
 
-    private static final OpalSubscription OPAL_AUTOMATIC_TOP_UP = new OpalSubscription();
     private int mSerialNumber;
     private int mBalance; // cents
     private int mChecksum;
@@ -128,7 +130,6 @@ public class OpalTransitData extends TransitData {
     public OpalTransitData(Card card) {
         DesfireCard desfireCard = (DesfireCard) card;
         byte[] data = desfireCard.getApplication(APP_ID).getFile(FILE_ID).getData();
-        int iRawBalance;
 
         data = Utils.reverseBuffer(data, 0, 16);
 
@@ -140,7 +141,7 @@ public class OpalTransitData extends TransitData {
             mMode = Utils.getBitsFromBuffer(data, 25, 3);
             mMinute = Utils.getBitsFromBuffer(data, 28, 11);
             mDay = Utils.getBitsFromBuffer(data, 39, 15);
-            iRawBalance = Utils.getBitsFromBuffer(data, 54, 21);
+            mBalance = Utils.getBitsFromBufferSigned(data, 54, 21);
             mTransactionNumber = Utils.getBitsFromBuffer(data, 75, 16);
             // Skip bit here
             mLastDigit = Utils.getBitsFromBuffer(data, 92, 4);
@@ -148,31 +149,38 @@ public class OpalTransitData extends TransitData {
         } catch (Exception ex) {
             throw new RuntimeException("Error parsing Opal data", ex);
         }
-
-        mBalance = Utils.unsignedToTwoComplement(iRawBalance, 20);
-    }
-
-    public static boolean check(Card card) {
-        return (card instanceof DesfireCard) && (((DesfireCard) card).getApplication(0x314553) != null);
-    }
-
-    public static boolean earlyCheck(int[] appIds) {
-        return ArrayUtils.contains(appIds, APP_ID);
     }
 
     private static String formatSerialNumber(int serialNumber, int lastDigit) {
         return String.format(Locale.ENGLISH, "308522%09d%01d", serialNumber, lastDigit);
     }
 
-    public static TransitIdentity parseTransitIdentity(Card card) {
-        DesfireCard desfireCard = (DesfireCard) card;
-        byte[] data = desfireCard.getApplication(APP_ID).getFile(FILE_ID).getData();
-        data = Utils.reverseBuffer(data, 0, 5);
+    public final static DesfireCardTransitFactory FACTORY = new DesfireCardTransitFactory() {
+        @Override
+        public boolean earlyCheck(int[] appIds) {
+            return ArrayUtils.contains(appIds, APP_ID);
+        }
 
-        int lastDigit = Utils.getBitsFromBuffer(data, 4, 4);
-        int serialNumber = Utils.getBitsFromBuffer(data, 8, 32);
-        return new TransitIdentity(NAME, formatSerialNumber(serialNumber, lastDigit));
-    }
+        @Override
+        public CardInfo getCardInfo() {
+            return CARD_INFO;
+        }
+
+        @Override
+        public TransitData parseTransitData(DesfireCard desfireCard) {
+            return new OpalTransitData(desfireCard);
+        }
+
+        @Override
+        public TransitIdentity parseTransitIdentity(DesfireCard desfireCard) {
+            byte[] data = desfireCard.getApplication(APP_ID).getFile(FILE_ID).getData();
+            data = Utils.reverseBuffer(data, 0, 5);
+
+            int lastDigit = Utils.getBitsFromBuffer(data, 4, 4);
+            int serialNumber = Utils.getBitsFromBuffer(data, 8, 32);
+            return new TransitIdentity(NAME, formatSerialNumber(serialNumber, lastDigit));
+        }
+    };
 
     @Override
     public String getCardName() {
@@ -273,12 +281,12 @@ public class OpalTransitData extends TransitData {
     }
 
     @Override
-    public Subscription[] getSubscriptions() {
+    public List<Subscription> getSubscriptions() {
         // Opal has no concept of "subscriptions" (travel pass), only automatic top up.
         if (mAutoTopup) {
-            return new Subscription[]{OPAL_AUTOMATIC_TOP_UP};
+            return Collections.singletonList(OpalSubscription.getInstance());
         }
-        return new Subscription[]{};
+        return Collections.emptyList();
     }
 
     @Override

@@ -20,6 +20,7 @@ package au.id.micolous.metrodroid.transit.nextfare;
 
 import android.os.Parcel;
 import android.support.annotation.NonNull;
+import android.support.annotation.VisibleForTesting;
 import android.text.SpannableString;
 import android.util.Log;
 
@@ -33,7 +34,9 @@ import au.id.micolous.farebot.R;
 import au.id.micolous.metrodroid.card.UnauthorizedException;
 import au.id.micolous.metrodroid.card.classic.ClassicBlock;
 import au.id.micolous.metrodroid.card.classic.ClassicCard;
+import au.id.micolous.metrodroid.card.classic.ClassicCardTransitFactory;
 import au.id.micolous.metrodroid.card.classic.ClassicSector;
+import au.id.micolous.metrodroid.transit.CardInfo;
 import au.id.micolous.metrodroid.transit.TransitBalance;
 import au.id.micolous.metrodroid.transit.TransitBalanceStored;
 import au.id.micolous.metrodroid.transit.Subscription;
@@ -69,7 +72,9 @@ public class NextfareTransitData extends TransitData {
             return new NextfareTransitData[size];
         }
     };
-    static final byte[] MANUFACTURER = {
+    public static final ClassicCardTransitFactory FALLBACK_FACTORY = new NextFareTransitFactory();
+    @VisibleForTesting
+    public static final byte[] MANUFACTURER = {
             0x16, 0x18, 0x1A, 0x1B,
             0x1C, 0x1D, 0x1E, 0x1F
     };
@@ -80,18 +85,18 @@ public class NextfareTransitData extends TransitData {
     byte[] mSystemCode;
     byte[] mBlock2;
     int mBalance;
-    NextfareTrip[] mTrips;
-    NextfareSubscription[] mSubscriptions;
+    List<NextfareTrip> mTrips;
+    List<NextfareSubscription> mSubscriptions;
     @NonNull
     String mCurrency;
 
     public NextfareTransitData(Parcel parcel, @NonNull String currency) {
         mSerialNumber = parcel.readLong();
         mBalance = parcel.readInt();
-        mTrips = new NextfareTrip[parcel.readInt()];
-        parcel.readTypedArray(mTrips, NextfareTrip.CREATOR);
-        mSubscriptions = new NextfareSubscription[parcel.readInt()];
-        parcel.readTypedArray(mSubscriptions, NextfareSubscription.CREATOR);
+        mTrips = new ArrayList<>();
+        parcel.readTypedList(mTrips, NextfareTrip.CREATOR);
+        mSubscriptions = new ArrayList<>();
+        parcel.readTypedList(mSubscriptions, NextfareSubscription.CREATOR);
         parcel.readByteArray(mSystemCode);
         parcel.readByteArray(mBlock2);
         mCurrency = currency;
@@ -257,52 +262,59 @@ public class NextfareTransitData extends TransitData {
             subscriptions.add(newSubscription(passes.get(0)));
         }
 
-        mSubscriptions = subscriptions.toArray(new NextfareSubscription[subscriptions.size()]);
-        mTrips = trips.toArray(new NextfareTrip[trips.size()]);
+        mSubscriptions = subscriptions;
+        mTrips = trips;
     }
 
-    public static boolean check(ClassicCard card) {
-        try {
-            byte[] blockData = card.getSector(0).getBlock(1).getData();
-            return Arrays.equals(Arrays.copyOfRange(blockData, 1, 9), MANUFACTURER);
-        } catch (UnauthorizedException ex) {
-            // It is not possible to identify the card without a key
-            return false;
-        } catch (IndexOutOfBoundsException ignored) {
-            // If the sector/block number is too high, it's not for us
-            return false;
+    protected static class NextFareTransitFactory extends ClassicCardTransitFactory {
+        @Override
+        public boolean check(@NonNull ClassicCard card) {
+            try {
+                byte[] blockData = card.getSector(0).getBlock(1).getData();
+                return Arrays.equals(Arrays.copyOfRange(blockData, 1, 9), MANUFACTURER);
+            } catch (UnauthorizedException ex) {
+                // It is not possible to identify the card without a key
+                return false;
+            } catch (IndexOutOfBoundsException ignored) {
+                // If the sector/block number is too high, it's not for us
+                return false;
+            }
         }
-    }
 
-    public static TransitIdentity parseTransitIdentity(ClassicCard card) {
-        return NextfareTransitData.parseTransitIdentity(card, NAME);
-    }
+        @Override
+        public TransitIdentity parseTransitIdentity(@NonNull ClassicCard card) {
+            return parseTransitIdentity(card, NAME);
+        }
 
-    protected static TransitIdentity parseTransitIdentity(ClassicCard card, String name) {
-        byte[] serialData = card.getSector(0).getBlock(0).getData();
-        long serialNumber = Utils.byteArrayToLongReversed(serialData, 0, 4);
-        return new TransitIdentity(name, formatSerialNumber(serialNumber));
+        protected TransitIdentity parseTransitIdentity(ClassicCard card, String name) {
+            byte[] serialData = card.getSector(0).getBlock(0).getData();
+            long serialNumber = Utils.byteArrayToLongReversed(serialData, 0, 4);
+            return new TransitIdentity(name, formatSerialNumber(serialNumber));
+        }
+
+        @Override
+        public TransitData parseTransitData(@NonNull ClassicCard classicCard) {
+            return new NextfareTransitData(classicCard);
+        }
+
+        @Override
+        public List<CardInfo> getAllCards() {
+            return null;
+        }
     }
 
     protected static String formatSerialNumber(long serialNumber) {
-        StringBuilder serial = new StringBuilder(Long.toString(serialNumber));
-        while (serial.length() < 12) {
-            serial.insert(0, "0");
-        }
-
-        serial.insert(0, "016");
-        serial.append(Utils.calculateLuhn(serial.toString()));
-        return serial.toString();
+        String s = "0160 " + Utils.formatNumber(serialNumber, " ", 4, 4, 3);
+        s += Utils.calculateLuhn(s.replaceAll(" ", ""));
+        return s;
     }
 
     @Override
     public void writeToParcel(Parcel parcel, int i) {
         parcel.writeLong(mSerialNumber);
         parcel.writeInt(mBalance);
-        parcel.writeInt(mTrips.length);
-        parcel.writeTypedArray(mTrips, i);
-        parcel.writeInt(mSubscriptions.length);
-        parcel.writeTypedArray(mSubscriptions, i);
+        parcel.writeTypedList(mTrips);
+        parcel.writeTypedList(mSubscriptions);
         parcel.writeByteArray(mSystemCode);
         parcel.writeByteArray(mBlock2);
         mConfig.writeToParcel(parcel, i);
@@ -395,7 +407,7 @@ public class NextfareTransitData extends TransitData {
     }
 
     @Override
-    public Trip[] getTrips() {
+    public List<NextfareTrip> getTrips() {
         return mTrips;
     }
 
@@ -416,7 +428,7 @@ public class NextfareTransitData extends TransitData {
     }
 
     @Override
-    public Subscription[] getSubscriptions() {
+    public List<NextfareSubscription> getSubscriptions() {
         return mSubscriptions;
     }
 

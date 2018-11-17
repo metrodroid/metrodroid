@@ -21,6 +21,8 @@ Some vector glyphs used in Metrodroid are derived from [Noto Emoji][0]:
 
 * `tram`: https://github.com/googlei18n/noto-emoji/blob/master/svg/emoji_u1f68a.svg
 
+* `trolleybus`: https://github.com/googlei18n/noto-emoji/blob/master/svg/emoji_u1f68e.svg
+
 They have been imported with Android Studio's Asset Studio, at 40x40dp.
 
 These vectors are used under the [Apache license, version 2.0][1].

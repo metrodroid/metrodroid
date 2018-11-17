@@ -1,7 +1,6 @@
 /*
- * OpalSubscription.java
+ * OpusSubscription.java
  *
- * Copyright 2018 Etienne Dubeau
  * Copyright 2018 Google
  *
  * This program is free software: you can redistribute it and/or modify
@@ -21,14 +20,16 @@ package au.id.micolous.metrodroid.transit.opus;
 
 import android.os.Parcel;
 
-import java.util.Calendar;
-
-import au.id.micolous.farebot.R;
-import au.id.micolous.metrodroid.transit.Subscription;
-import au.id.micolous.metrodroid.util.StationTableReader;
+import au.id.micolous.metrodroid.transit.en1545.En1545Bitmap;
+import au.id.micolous.metrodroid.transit.en1545.En1545Container;
+import au.id.micolous.metrodroid.transit.en1545.En1545Field;
+import au.id.micolous.metrodroid.transit.en1545.En1545FixedHex;
+import au.id.micolous.metrodroid.transit.en1545.En1545FixedInteger;
+import au.id.micolous.metrodroid.transit.en1545.En1545Lookup;
+import au.id.micolous.metrodroid.transit.en1545.En1545Subscription;
 import au.id.micolous.metrodroid.util.Utils;
 
-class OpusSubscription extends Subscription {
+class OpusSubscription extends En1545Subscription {
 
     public static final Creator<OpusSubscription> CREATOR = new Creator<OpusSubscription>() {
         public OpusSubscription createFromParcel(Parcel parcel) {
@@ -39,87 +40,41 @@ class OpusSubscription extends Subscription {
             return new OpusSubscription[size];
         }
     };
+    private static final En1545Field FIELDS = new En1545Container(
+            new En1545FixedInteger(CONTRACT_UNKNOWN_A, 3),
+            new En1545Bitmap(
+                    new En1545FixedInteger(CONTRACT_PROVIDER, 8),
+                    new En1545FixedInteger(CONTRACT_TARIFF, 16),
+                    new En1545Bitmap(
+                            En1545FixedInteger.date(CONTRACT_START),
+                            En1545FixedInteger.date(CONTRACT_END)
+                    ),
+                    new En1545Container(
+                            new En1545FixedInteger(CONTRACT_UNKNOWN_B, 17),
+                            En1545FixedInteger.date(CONTRACT_SALE),
+			                En1545FixedInteger.timeLocal(CONTRACT_SALE),
+                            new En1545FixedHex(CONTRACT_UNKNOWN_C, 36),
+                            new En1545FixedInteger(CONTRACT_STATUS, 8),
+                            new En1545FixedHex(CONTRACT_UNKNOWN_D, 36)
+                    )
+            )
+    );
 
-    private final int mAgency;
-    private final int mExpiry;
-    private final int mTicketsRemaining;
-    private final boolean mIsSubscription;
-    private final int mId;
-
-    public OpusSubscription(byte[] dataSub, byte[] dataCtr, int num) {
-        // Copied from LecteurOpus
-        mAgency = Utils.getBitsFromBuffer(dataSub, 9, 8);
-        if(Utils.getBitsFromBuffer(dataSub, 40, 16) == 0){
-            // Ticket
-            mIsSubscription = false;
-            mExpiry = 0;
-            mTicketsRemaining = Utils.getBitsFromBuffer(dataCtr, 16, 8);
-        } else {
-            // Subscription
-            mIsSubscription = true;
-            mExpiry = Utils.getBitsFromBuffer(dataSub, 47, 14);
-            mTicketsRemaining = 0;
-        }
-        // end of copy
-        mId = num;
+    public OpusSubscription(byte[] dataSub, Integer ctr) {
+        super(dataSub, FIELDS, ctr);
     }
 
     @Override
-    public int getId() {
-        return mId;
+    protected En1545Lookup getLookup() {
+        return OpusLookup.getInstance();
     }
 
     @Override
-    public Calendar getValidFrom() {
-        return null;
+    public Integer getRemainingTripCount() {
+        return mParsed.getIntOrZero(CONTRACT_END + "Date") == 0 ? mCounter : null;
     }
 
-    @Override
-    public Calendar getValidTo() {
-        if (mIsSubscription) {
-            return OpusTransitData.parseTime(mExpiry, 0);
-        }
-        return null;
-    }
-
-    @Override
-    public String getAgencyName(boolean isShort) {
-        return StationTableReader.getOperatorName(OpusTrip.OPUS_STR, mAgency, isShort);
-    }
-
-    @Override
-    public int getMachineId() {
-        return 0;
-    }
-
-    @Override
-    public String getSubscriptionName() {
-        if (mIsSubscription)
-            return Utils.localizeString(R.string.opus_subscription);
-        return Utils.localizeString(R.string.opus_single_trips);
-    }
-
-    @Override
-    public String getActivation() {
-        if (mIsSubscription)
-            return null;
-        return Utils.localizePlural(R.plurals.trips_remaining, mTicketsRemaining, mTicketsRemaining);
-    }
-
-    @Override
-    public void writeToParcel(Parcel parcel, int i) {
-        parcel.writeInt(mAgency);
-        parcel.writeInt(mExpiry);
-        parcel.writeInt(mTicketsRemaining);
-        parcel.writeInt(mIsSubscription ? 1 : 0);
-        parcel.writeInt(mId);
-    }
-
-    public OpusSubscription(Parcel parcel) {
-        mAgency = parcel.readInt();
-        mExpiry = parcel.readInt();
-        mTicketsRemaining = parcel.readInt();
-        mIsSubscription = parcel.readInt() == 1;
-        mId = parcel.readInt();
+    private OpusSubscription(Parcel parcel) {
+        super(parcel);
     }
 }

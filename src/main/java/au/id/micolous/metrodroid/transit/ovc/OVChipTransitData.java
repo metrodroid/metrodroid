@@ -22,6 +22,7 @@
 package au.id.micolous.metrodroid.transit.ovc;
 
 import android.os.Parcel;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
 import java.util.ArrayList;
@@ -35,17 +36,18 @@ import java.util.TimeZone;
 
 import au.id.micolous.farebot.R;
 import au.id.micolous.metrodroid.MetrodroidApplication;
-import au.id.micolous.metrodroid.card.Card;
 import au.id.micolous.metrodroid.card.CardType;
 import au.id.micolous.metrodroid.card.classic.ClassicCard;
+import au.id.micolous.metrodroid.card.classic.ClassicCardTransitFactory;
+import au.id.micolous.metrodroid.card.classic.ClassicSector;
+import au.id.micolous.metrodroid.card.classic.InvalidClassicSector;
+import au.id.micolous.metrodroid.card.classic.UnauthorizedClassicSector;
 import au.id.micolous.metrodroid.transit.CardInfo;
-import au.id.micolous.metrodroid.transit.Subscription;
 import au.id.micolous.metrodroid.transit.TransitBalance;
 import au.id.micolous.metrodroid.transit.TransitBalanceStored;
 import au.id.micolous.metrodroid.transit.TransitCurrency;
 import au.id.micolous.metrodroid.transit.TransitData;
 import au.id.micolous.metrodroid.transit.TransitIdentity;
-import au.id.micolous.metrodroid.transit.Trip;
 import au.id.micolous.metrodroid.ui.HeaderListItem;
 import au.id.micolous.metrodroid.ui.ListItem;
 import au.id.micolous.metrodroid.util.ImmutableMapBuilder;
@@ -144,15 +146,15 @@ public class OVChipTransitData extends TransitData {
     private final OVChipPreamble mPreamble;
     private final OVChipInfo mInfo;
     private final OVChipCredit mCredit;
-    private final OVChipTrip[] mTrips;
-    private final OVChipSubscription[] mSubscriptions;
+    private final List<OVChipTrip> mTrips;
+    private final List<OVChipSubscription> mSubscriptions;
 
     public OVChipTransitData(Parcel parcel) {
-        mTrips = new OVChipTrip[parcel.readInt()];
-        parcel.readTypedArray(mTrips, OVChipTrip.CREATOR);
+        mTrips = new ArrayList<>();
+        parcel.readTypedList(mTrips, OVChipTrip.CREATOR);
 
-        mSubscriptions = new OVChipSubscription[parcel.readInt()];
-        parcel.readTypedArray(mSubscriptions, OVChipSubscription.CREATOR);
+        mSubscriptions = new ArrayList<>();
+        parcel.readTypedList(mSubscriptions, OVChipSubscription.CREATOR);
 
         mIndex = parcel.readParcelable(OVChipIndex.class.getClassLoader());
         mPreamble = parcel.readParcelable(OVChipPreamble.class.getClassLoader());
@@ -201,34 +203,65 @@ public class OVChipTransitData extends TransitData {
         }
 
         Collections.sort(trips, OVChipTrip.ID_ORDER);
-        mTrips = trips.toArray(new OVChipTrip[trips.size()]);
+        mTrips = trips;
 
         List<OVChipSubscription> subs = new ArrayList<>(Arrays.asList(parser.getSubscriptions()));
         Collections.sort(subs, (s1, s2) -> Integer.valueOf(s1.getId()).compareTo(s2.getId()));
 
-        mSubscriptions = subs.toArray(new OVChipSubscription[subs.size()]);
+        mSubscriptions = subs;
     }
 
-    public static boolean check(Card card) {
-        if (!(card instanceof ClassicCard))
-            return false;
+    public static final ClassicCardTransitFactory FACTORY = new ClassicCardTransitFactory() {
+        @Override
+        public boolean check(@NonNull ClassicCard classicCard) {
+            if (classicCard.getSectors().size() != 40)
+                return false;
 
-        ClassicCard classicCard = (ClassicCard) card;
+            ClassicSector sector = classicCard.getSector(0);
 
-        if (classicCard.getSectors().size() != 40)
-            return false;
+            if (sector instanceof UnauthorizedClassicSector || sector instanceof InvalidClassicSector)
+                return false;
 
-        // Starting at 0×010, 8400 0000 0603 a000 13ae e401 xxxx 0e80 80e8 seems to exist on all OVC's (with xxxx different).
-        // http://www.ov-chipkaart.de/back-up/3-8-11/www.ov-chipkaart.me/blog/index7e09.html?page_id=132
-        byte[] blockData = classicCard.getSector(0).readBlocks(1, 1);
-        return Arrays.equals(Arrays.copyOfRange(blockData, 0, 11), OVC_HEADER);
-    }
+            // Starting at 0×010, 8400 0000 0603 a000 13ae e401 xxxx 0e80 80e8 seems to exist on all OVC's (with xxxx different).
+            // http://www.ov-chipkaart.de/back-up/3-8-11/www.ov-chipkaart.me/blog/index7e09.html?page_id=132
+            byte[] blockData = sector.readBlocks(1, 1);
+            return Arrays.equals(Arrays.copyOfRange(blockData, 0, 11), OVC_HEADER);
+        }
 
-    public static TransitIdentity parseTransitIdentity(Card card) {
-        String hex = Utils.getHexString(((ClassicCard) card).getSector(0).getBlock(0).getData(), null);
-        String id = hex.substring(0, 8);
-        return new TransitIdentity("OV-chipkaart", id);
-    }
+        @Override
+        public TransitIdentity parseTransitIdentity(@NonNull ClassicCard card) {
+            String hex = Utils.getHexString(card.getSector(0).getBlock(0).getData(), null);
+            String id = hex.substring(0, 8);
+            return new TransitIdentity("OV-chipkaart", id);
+        }
+
+        @Override
+        public TransitData parseTransitData(@NonNull ClassicCard classicCard) {
+            return new OVChipTransitData(classicCard);
+        }
+
+        @Override
+        public int earlySectors() {
+            return 1;
+        }
+
+        @Override
+        public List<CardInfo> getAllCards() {
+            return Collections.singletonList(CARD_INFO);
+        }
+
+        @Override
+        public CardInfo earlyCardInfo(List<ClassicSector> sectors) {
+            ClassicSector sector = sectors.get(0);
+
+            // Starting at 0×010, 8400 0000 0603 a000 13ae e401 xxxx 0e80 80e8 seems to exist on all OVC's (with xxxx different).
+            // http://www.ov-chipkaart.de/back-up/3-8-11/www.ov-chipkaart.me/blog/index7e09.html?page_id=132
+            byte[] blockData = sector.readBlocks(1, 1);
+            if (Arrays.equals(Arrays.copyOfRange(blockData, 0, 11), OVC_HEADER))
+                return CARD_INFO;
+            return null;
+        }
+    };
 
     public static Calendar convertDate(int date) {
         return convertDate(date, 0);
@@ -268,10 +301,8 @@ public class OVChipTransitData extends TransitData {
 
     @Override
     public void writeToParcel(Parcel parcel, int flags) {
-        parcel.writeInt(mTrips.length);
-        parcel.writeTypedArray(mTrips, flags);
-        parcel.writeInt(mSubscriptions.length);
-        parcel.writeTypedArray(mSubscriptions, flags);
+        parcel.writeTypedList(mTrips);
+        parcel.writeTypedList(mSubscriptions);
         parcel.writeParcelable(mIndex, flags);
         parcel.writeParcelable(mPreamble, flags);
         parcel.writeParcelable(mInfo, flags);
@@ -292,11 +323,11 @@ public class OVChipTransitData extends TransitData {
     }
 
     @Override
-    public Trip[] getTrips() {
+    public List<OVChipTrip> getTrips() {
         return mTrips;
     }
 
-    public Subscription[] getSubscriptions() {
+    public List<OVChipSubscription> getSubscriptions() {
         return mSubscriptions;
     }
 

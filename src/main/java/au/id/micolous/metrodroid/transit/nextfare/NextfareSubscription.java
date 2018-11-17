@@ -62,37 +62,12 @@ public class NextfareSubscription extends Subscription implements Parcelable {
     }
 
     @Override
-    public int getId() {
-        return 0;
-    }
-
-    @Override
-    public Calendar getValidFrom() {
-        return null;
-    }
-
-    @Override
     public Calendar getValidTo() {
         return mValidTo;
     }
 
     @Override
-    public String getAgencyName(boolean isShort) {
-        return "Nextfare";
-    }
-
-    @Override
-    public int getMachineId() {
-        return 0;
-    }
-
-    @Override
     public String getSubscriptionName() {
-        return null;
-    }
-
-    @Override
-    public String getActivation() {
         return null;
     }
 

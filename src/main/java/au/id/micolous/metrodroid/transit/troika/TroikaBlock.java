@@ -135,7 +135,7 @@ public abstract class TroikaBlock implements Parcelable {
     }
 
     public static String formatSerial(long sn) {
-        return String.format(Locale.ENGLISH,"%04d %03d %03d", (sn/1000000), ((sn/1000)%1000), (sn%1000));
+        return Utils.formatNumber(sn, " ", 4, 3, 3);
     }
 
     public String getSerialNumber() {
