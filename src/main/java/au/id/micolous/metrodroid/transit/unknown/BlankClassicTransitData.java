@@ -56,7 +56,7 @@ public class BlankClassicTransitData extends TransitData {
 
     public static final ClassicCardTransitFactory FACTORY = new ClassicCardTransitFactory() {
         @Override
-        public List<CardInfo> getAllCards() {
+        public CardInfo getCardInfo() {
             return null;
         }
 
@@ -102,6 +102,16 @@ public class BlankClassicTransitData extends TransitData {
         @Override
         public TransitData parseTransitData(@NonNull ClassicCard classicCard) {
             return new BlankClassicTransitData();
+        }
+
+        @Override
+        public int earlySectors() {
+            return -1;
+        }
+
+        @Override
+        public boolean earlyCheck(@NonNull List<ClassicSector> sectors) {
+            return false;
         }
     };
 

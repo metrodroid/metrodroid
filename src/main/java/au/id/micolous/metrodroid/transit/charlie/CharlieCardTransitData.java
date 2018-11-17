@@ -199,23 +199,20 @@ public class CharlieCardTransitData extends TransitData {
     }
 
     public static final ClassicCardTransitFactory FACTORY = new ClassicCardTransitFactory() {
-        private boolean check(@NonNull ClassicSector sector0) {
-            byte[] b = sector0.getBlock(1).getData();
-            return Arrays.equals(Utils.byteArraySlice(b, 2, 14), new byte[] {
-                    0x04, 0x10, 0x04, 0x10, 0x04, 0x10,
-                    0x04, 0x10, 0x04, 0x10, 0x04, 0x10, 0x04, 0x10
-		});
-        }
-
         @Override
-        public boolean check(@NonNull ClassicCard card) {
+        public boolean earlyCheck(@NonNull List<ClassicSector> sectors) {
             try {
-                if (!check(card.getSector(0)))
+                ClassicSector sector0 = sectors.get(0);
+                byte[] b = sector0.getBlock(1).getData();
+                if (!Arrays.equals(Utils.byteArraySlice(b, 2, 14), new byte[] {
+                        0x04, 0x10, 0x04, 0x10, 0x04, 0x10,
+                        0x04, 0x10, 0x04, 0x10, 0x04, 0x10, 0x04, 0x10
+                }))
                     return false;
-                ClassicSector sector1 = card.getSector(1);
+                ClassicSector sector1 = sectors.get(1);
                 if (sector1 instanceof UnauthorizedClassicSector)
                     return true;
-                byte[] b = sector1.getBlock(0).getData();
+                b = sector1.getBlock(0).getData();
                 return Arrays.equals(Utils.byteArraySlice(b, 0, 6), new byte[]{
                         0x04, 0x10, 0x23, 0x45, 0x66, 0x77
                 });
@@ -237,19 +234,12 @@ public class CharlieCardTransitData extends TransitData {
 
         @Override
         public int earlySectors() {
-            return 1;
+            return 2;
         }
 
         @Override
-        public CardInfo earlyCardInfo(List<ClassicSector> sectors) {
-            if (check(sectors.get(0)))
-                return CARD_INFO;
-            return null;
-        }
-
-        @Override
-        public List<CardInfo> getAllCards() {
-            return Collections.singletonList(CARD_INFO);
+        public CardInfo getCardInfo() {
+            return CARD_INFO;
         }
     };
 

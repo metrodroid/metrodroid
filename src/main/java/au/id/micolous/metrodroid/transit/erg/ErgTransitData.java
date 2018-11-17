@@ -169,24 +169,11 @@ public class ErgTransitData extends TransitData {
          * @return True if this is an ERG card, false otherwise.
          */
         @Override
-        public boolean check(@NonNull ClassicCard card) {
-            try {
-                return check(card.getSector(0));
-            } catch (UnauthorizedException ignored) {
-                // These blocks of the card are not protected.
-                // This must not be a ERG smartcard.
-                return false;
-            } catch (IndexOutOfBoundsException ignored) {
-                // If that's too high for us, then this isn't an ERG smartcard.
-                return false;
-            }
-        }
-
-        protected boolean check(ClassicSector sector0) {
+        public boolean earlyCheck(@NonNull List<ClassicSector> sectors) {
             byte[] file1;
 
             try {
-                file1 = sector0.getBlock(1).getData();
+                file1 = sectors.get(0).getBlock(1).getData();
             } catch (UnauthorizedException ignored) {
                 // These blocks of the card are not protected.
                 // This must not be a ERG smartcard.
@@ -216,8 +203,13 @@ public class ErgTransitData extends TransitData {
 
         // Specific readers add their CardInfo
         @Override
-        public List<CardInfo> getAllCards() {
+        public CardInfo getCardInfo() {
             return null;
+        }
+
+        @Override
+        public int earlySectors() {
+            return 1;
         }
     }
 

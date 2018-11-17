@@ -268,9 +268,9 @@ public class NextfareTransitData extends TransitData {
 
     protected static class NextFareTransitFactory extends ClassicCardTransitFactory {
         @Override
-        public boolean check(@NonNull ClassicCard card) {
+        public boolean earlyCheck(@NonNull List<ClassicSector> sectors) {
             try {
-                byte[] blockData = card.getSector(0).getBlock(1).getData();
+                byte[] blockData = sectors.get(0).getBlock(1).getData();
                 return Arrays.equals(Arrays.copyOfRange(blockData, 1, 9), MANUFACTURER);
             } catch (UnauthorizedException ex) {
                 // It is not possible to identify the card without a key
@@ -298,8 +298,13 @@ public class NextfareTransitData extends TransitData {
         }
 
         @Override
-        public List<CardInfo> getAllCards() {
+        public CardInfo getCardInfo() {
             return null;
+        }
+
+        @Override
+        public int earlySectors() {
+            return 1;
         }
     }
 

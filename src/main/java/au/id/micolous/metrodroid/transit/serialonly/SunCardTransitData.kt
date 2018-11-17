@@ -24,6 +24,7 @@ import au.id.micolous.metrodroid.card.CardType
 import au.id.micolous.metrodroid.card.UnauthorizedException
 import au.id.micolous.metrodroid.card.classic.ClassicCard
 import au.id.micolous.metrodroid.card.classic.ClassicCardTransitFactory
+import au.id.micolous.metrodroid.card.classic.ClassicSector
 import au.id.micolous.metrodroid.transit.CardInfo
 import au.id.micolous.metrodroid.transit.TransitIdentity
 import au.id.micolous.metrodroid.ui.ListItem
@@ -76,10 +77,10 @@ data class SunCardTransitData (private val mSerial: Int = 0): SerialOnlyTransitD
 
             override fun parseTransitData(classicCard: ClassicCard) = SunCardTransitData(classicCard)
 
-            override fun check(card: ClassicCard) = try {
+            override fun earlyCheck(sectors: MutableList<ClassicSector>) = try {
                 // I hope it is magic as other than zeros, ff's and serial there is nothing
                 // on the card
-                Utils.byteArrayToInt(card.getSector(0).getBlock(1).data, 7, 4) == 0x070515ff
+                Utils.byteArrayToInt(sectors[0].getBlock(1).data, 7, 4) == 0x070515ff
             } catch (ignored: IndexOutOfBoundsException) {
                 // If that sector number is too high, then it's not for us.
                 // If we can't read we can't do anything
@@ -88,7 +89,9 @@ data class SunCardTransitData (private val mSerial: Int = 0): SerialOnlyTransitD
                 false
             }
 
-            override fun getAllCards(): MutableList<CardInfo> = Collections.singletonList(CARD_INFO)
+            override fun earlySectors() = 1
+
+            override fun getCardInfo() = CARD_INFO
         }
     }
 }

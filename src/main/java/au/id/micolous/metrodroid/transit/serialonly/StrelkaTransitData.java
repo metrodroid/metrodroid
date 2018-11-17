@@ -119,20 +119,11 @@ public class StrelkaTransitData extends SerialOnlyTransitData {
             return new StrelkaTransitData(classicCard);
         }
 
-        @Override
-        public boolean check(@NonNull ClassicCard card) {
-            try {
-                return check(card.getSector(0));
-            } catch (IndexOutOfBoundsException | UnauthorizedException ignored) {
-                // If that sector number is too high, then it's not for us.
-                // If we can't read we can't do anything
-            }
-            return false;
-        }
 
-        private boolean check(ClassicSector sector0) {
+        @Override
+        public boolean earlyCheck(@NonNull List<ClassicSector> sectors) {
             try {
-                byte[] toc = sector0.getBlock(2).getData();
+                byte[] toc = sectors.get(0).getBlock(2).getData();
                 // Check toc entries for sectors 10,12,13,14 and 15
                 return Utils.byteArrayToInt(toc, 4, 2) == 0x18f0
                         && Utils.byteArrayToInt(toc, 8, 2) == 5
@@ -152,15 +143,8 @@ public class StrelkaTransitData extends SerialOnlyTransitData {
         }
 
         @Override
-        public CardInfo earlyCardInfo(List<ClassicSector> sectors) {
-            if (check(sectors.get(0)))
-                return CARD_INFO;
-            return null;
-        }
-
-        @Override
-        public List<CardInfo> getAllCards() {
-            return Collections.singletonList(CARD_INFO);
+        public CardInfo getCardInfo() {
+            return CARD_INFO;
         }
     };
 }

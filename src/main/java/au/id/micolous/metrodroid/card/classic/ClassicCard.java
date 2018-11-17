@@ -455,9 +455,10 @@ public class ClassicCard extends Card {
         int secnum = sectors.size();
         for (ClassicCardTransitFactory factory : FACTORIES) {
             if (factory.earlySectors() == secnum) {
-                CardInfo ci;
+                CardInfo ci = null;
                 try {
-                    ci = factory.earlyCardInfo(sectors);
+                    if (factory.earlyCheck(sectors))
+                        ci = factory.earlyCardInfo(sectors);
                 } catch (Exception e) {
                     ci = null;
                 }
@@ -552,6 +553,11 @@ public class ClassicCard extends Card {
 
     private static class FallbackFactory extends ClassicCardTransitFactory {
         @Override
+        public boolean earlyCheck(@NonNull List<ClassicSector> sectors) {
+            return false;
+        }
+
+        @Override
         public boolean check(@NonNull ClassicCard classicCard) {
             String fallback = getFallbackReader();
             return fallback.equals("myway") || fallback.equals("smartrider");
@@ -584,7 +590,12 @@ public class ClassicCard extends Card {
         }
 
         @Override
-        public List<CardInfo> getAllCards() {
+        public int earlySectors() {
+            return -1;
+        }
+
+        @Override
+        public CardInfo getCardInfo() {
             return null;
         }
     }
