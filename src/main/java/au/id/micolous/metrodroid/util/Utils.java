@@ -72,7 +72,6 @@ import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.text.SimpleDateFormat;
-import java.util.Arrays;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.List;
@@ -1107,5 +1106,4 @@ public class Utils {
         clipboard.setPrimaryClip(data);
         Toast.makeText(context, R.string.copied_to_clipboard, Toast.LENGTH_SHORT).show();
     }
-
 }
