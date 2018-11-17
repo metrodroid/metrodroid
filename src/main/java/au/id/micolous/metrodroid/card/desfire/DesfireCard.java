@@ -137,8 +137,7 @@ public class DesfireCard extends Card {
             CardInfo i = parseEarlyCardInfo(appIds);
             if (i != null) {
                 Log.d(TAG, String.format(Locale.ENGLISH, "Early Card Info: %s", i.getName()));
-                feedbackInterface.updateStatusText(Utils.localizeString(R.string.card_reading_type, i.getName()));
-                feedbackInterface.showCardType(i);
+                feedbackInterface.announceCardType(i);
             }
 
             // Uncomment this to test the card type display.

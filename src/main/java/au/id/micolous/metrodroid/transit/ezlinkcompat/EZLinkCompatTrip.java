@@ -47,16 +47,13 @@ public class EZLinkCompatTrip extends Trip {
         }
     };
     private final CEPASCompatTransaction mTransaction;
-    private final String mCardName;
 
-    public EZLinkCompatTrip(CEPASCompatTransaction transaction, String cardName) {
+    public EZLinkCompatTrip(CEPASCompatTransaction transaction) {
         mTransaction = transaction;
-        mCardName = cardName;
     }
 
     EZLinkCompatTrip(Parcel parcel) {
         mTransaction = parcel.readParcelable(CEPASCompatTransaction.class.getClassLoader());
-        mCardName = parcel.readString();
     }
 
     @Override
@@ -66,7 +63,7 @@ public class EZLinkCompatTrip extends Trip {
 
     @Override
     public String getAgencyName(boolean isShort) {
-        return EZLinkTrip.getAgencyName(getType(), mCardName, isShort);
+        return EZLinkTrip.getAgencyName(getType());
     }
 
     @Override

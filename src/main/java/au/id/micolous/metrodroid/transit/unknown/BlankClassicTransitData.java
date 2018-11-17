@@ -25,6 +25,7 @@ import java.util.Collections;
 import java.util.List;
 
 import au.id.micolous.farebot.R;
+import au.id.micolous.metrodroid.card.CardType;
 import au.id.micolous.metrodroid.card.classic.ClassicBlock;
 import au.id.micolous.metrodroid.card.classic.ClassicCard;
 import au.id.micolous.metrodroid.card.classic.ClassicCardTransitFactory;
@@ -50,8 +51,14 @@ public class BlankClassicTransitData extends TransitData {
         }
     };
 
-    private BlankClassicTransitData() {
+    public static final CardInfo CARD_INFO = new CardInfo.Builder()
+            .setName(R.string.blank_mfc_card)
+            .setLocation(R.string.location_many)
+            .setCardType(CardType.MifareClassic)
+            .hide()
+            .build();
 
+    private BlankClassicTransitData() {
     }
 
     public static final ClassicCardTransitFactory FACTORY = new ClassicCardTransitFactory() {
@@ -96,7 +103,7 @@ public class BlankClassicTransitData extends TransitData {
 
         @Override
         public TransitIdentity parseTransitIdentity(@NonNull ClassicCard card) {
-            return new TransitIdentity(Utils.localizeString(R.string.blank_mfc_card), null);
+            return new TransitIdentity(R.string.blank_mfc_card, null);
         }
 
         @Override
@@ -110,16 +117,16 @@ public class BlankClassicTransitData extends TransitData {
         return null;
     }
 
+    @NonNull
     @Override
-    public String getCardName() {
-        return Utils.localizeString(R.string.blank_mfc_card);
+    public CardInfo getCardInfo() {
+        return CARD_INFO;
     }
-
 
     @Override
     public void writeToParcel(Parcel dest, int i) {
     }
 
-    public BlankClassicTransitData(Parcel p) {
+    private BlankClassicTransitData(Parcel p) {
     }
 }

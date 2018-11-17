@@ -21,6 +21,7 @@
 package au.id.micolous.metrodroid.transit.opus;
 
 import android.os.Parcel;
+import android.support.annotation.NonNull;
 
 import java.util.Collections;
 import java.util.List;
@@ -50,7 +51,6 @@ import au.id.micolous.metrodroid.util.Utils;
 public class OpusTransitData extends Calypso1545TransitData {
     // 124 = Canada
     private static final int OPUS_NETWORK_ID = 0x124001;
-    private static final String NAME = "Opus";
 
     private static final En1545Field contractListFields = new En1545Repeat(4,
             new En1545Bitmap(
@@ -63,7 +63,7 @@ public class OpusTransitData extends Calypso1545TransitData {
 
     public static final CardInfo CARD_INFO = new CardInfo.Builder()
             .setImageId(R.drawable.opus_card)
-            .setName(OpusTransitData.NAME)
+            .setName(R.string.card_name_ca_opus)
             .setLocation(R.string.location_quebec)
             .setCardType(CardType.ISO7816)
             .setPreview()
@@ -106,7 +106,7 @@ public class OpusTransitData extends Calypso1545TransitData {
     public final static CalypsoCardTransitFactory FACTORY = new CalypsoCardTransitFactory() {
         @Override
         public TransitIdentity parseTransitIdentity(CalypsoApplication card) {
-            return new TransitIdentity(NAME, getSerial(card));
+            return new TransitIdentity(R.string.card_name_ca_opus, getSerial(card));
         }
 
         @Override
@@ -154,9 +154,10 @@ public class OpusTransitData extends Calypso1545TransitData {
         return new OpusTransaction(data);
     }
 
+    @NonNull
     @Override
-    public String getCardName() {
-        return NAME;
+    public CardInfo getCardInfo() {
+        return CARD_INFO;
     }
 
     private OpusTransitData(Parcel parcel) {

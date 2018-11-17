@@ -20,6 +20,7 @@ package au.id.micolous.metrodroid.test;
 
 import android.os.Build;
 
+import au.id.micolous.farebot.R;
 import au.id.micolous.metrodroid.card.desfire.DesfireApplication;
 import au.id.micolous.metrodroid.card.desfire.DesfireCard;
 import au.id.micolous.metrodroid.card.desfire.files.DesfireFile;
@@ -74,7 +75,7 @@ public class OpalTest extends TestCase {
 
         // Test TransitIdentity
         TransitIdentity i = c.parseTransitIdentity();
-        assertEquals(OpalTransitData.NAME, i.getName());
+        assertEquals(R.string.card_name_syd_opal, i.getNameId());
         assertEquals("3085220012345670", i.getSerialNumber());
 
         // Test TransitData

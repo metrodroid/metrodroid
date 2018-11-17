@@ -1,6 +1,9 @@
 
 package au.id.micolous.metrodroid.card;
 
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
+
 import au.id.micolous.metrodroid.transit.CardInfo;
 
 /**
@@ -15,7 +18,7 @@ public interface TagReaderFeedbackInterface {
      * This value should be localised by the caller.
      * @param msg Localised message to display to the user.
      */
-    void updateStatusText(final String msg);
+    void updateStatusText(@NonNull final String msg);
 
     /**
      * Signal to update the progress bar drawn on screen.
@@ -42,5 +45,5 @@ public interface TagReaderFeedbackInterface {
      * then sending a 'null' CardInfo will also trigger those accessibility features.
      * @param cardInfo Card information to display.
      */
-    void showCardType(final CardInfo cardInfo);
+    void announceCardType(@Nullable final CardInfo cardInfo);
 }

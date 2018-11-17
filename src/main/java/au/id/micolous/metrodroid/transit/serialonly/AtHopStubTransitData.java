@@ -19,11 +19,14 @@
 package au.id.micolous.metrodroid.transit.serialonly;
 
 import android.os.Parcel;
+import android.support.annotation.NonNull;
 
 import org.apache.commons.lang3.ArrayUtils;
 
 import java.util.Locale;
 
+import au.id.micolous.farebot.R;
+import au.id.micolous.metrodroid.card.CardType;
 import au.id.micolous.metrodroid.card.desfire.DesfireCard;
 import au.id.micolous.metrodroid.card.desfire.DesfireCardTransitFactory;
 import au.id.micolous.metrodroid.transit.CardInfo;
@@ -39,6 +42,15 @@ import au.id.micolous.metrodroid.util.Utils;
 public class AtHopStubTransitData extends SerialOnlyTransitData {
     private static final int APP_ID_SERIAL = 0xffffff;
     private final int mSerial;
+
+    public static final CardInfo CARD_INFO = new CardInfo.Builder()
+            .setName(R.string.card_name_akl_athop)
+            .setCardType(CardType.MifareDesfire)
+            .setImageId(R.drawable.trimethop_card)
+            .setLocation(R.string.location_auckland_nz)
+            .setExtraNote(R.string.card_note_card_number_only)
+            .build();
+
 
     public AtHopStubTransitData(DesfireCard card) {
         mSerial = getSerial(card);
@@ -74,7 +86,6 @@ public class AtHopStubTransitData extends SerialOnlyTransitData {
         return "7824 6702 " + Utils.formatNumber(serial, " ", 4, 4, 3);
     }
 
-    private static final String NAME = "AT HOP";
     public final static DesfireCardTransitFactory FACTORY = new DesfireCardTransitFactory() {
         @Override
         public boolean earlyCheck(int[] appIds) {
@@ -83,7 +94,7 @@ public class AtHopStubTransitData extends SerialOnlyTransitData {
 
         @Override
         protected CardInfo getCardInfo() {
-            return null;
+            return CARD_INFO;
         }
 
         @Override
@@ -93,7 +104,7 @@ public class AtHopStubTransitData extends SerialOnlyTransitData {
 
         @Override
         public TransitIdentity parseTransitIdentity(DesfireCard desfireCard) {
-            return new TransitIdentity(NAME, formatSerial(getSerial(desfireCard)));
+            return new TransitIdentity(R.string.card_name_akl_athop, formatSerial(getSerial(desfireCard)));
         }
     };
 
@@ -102,9 +113,10 @@ public class AtHopStubTransitData extends SerialOnlyTransitData {
         return formatSerial(mSerial);
     }
 
+    @NonNull
     @Override
-    public String getCardName() {
-        return NAME;
+    public CardInfo getCardInfo() {
+        return CARD_INFO;
     }
 
     @Override

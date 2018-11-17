@@ -42,7 +42,7 @@ data class SunCardTransitData (private val mSerial: Int = 0): SerialOnlyTransitD
 
     override fun getReason() = SerialOnlyTransitData.Reason.NOT_STORED
 
-    override fun getCardName() = NAME
+    override fun getCardInfo() = CARD_INFO
 
     override fun getExtraInfo() = listOf(
             ListItem(R.string.full_serial_number, formatLongSerial(mSerial)),
@@ -53,7 +53,7 @@ data class SunCardTransitData (private val mSerial: Int = 0): SerialOnlyTransitD
     companion object {
         private const val NAME = "SunRail SunCard"
         val CARD_INFO = CardInfo.Builder()
-                .setName(NAME)
+                .setName(R.string.card_name_mco_suncard)
                 .setLocation(R.string.location_orlando)
                 .setCardType(CardType.MifareClassic)
                 .setExtraNote(R.string.card_note_card_number_only)
@@ -71,8 +71,8 @@ data class SunCardTransitData (private val mSerial: Int = 0): SerialOnlyTransitD
                     .getBlock(1).data, 3, 4)
 
         val FACTORY: ClassicCardTransitFactory = object : ClassicCardTransitFactory() {
-            override fun parseTransitIdentity(card: ClassicCard) = TransitIdentity(NAME,
-                        formatSerial(getSerial(card)))
+            override fun parseTransitIdentity(card: ClassicCard) =
+                    TransitIdentity(R.string.card_name_mco_suncard, formatSerial(getSerial(card)))
 
             override fun parseTransitData(classicCard: ClassicCard) = SunCardTransitData(classicCard)
 

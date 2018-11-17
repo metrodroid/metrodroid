@@ -22,6 +22,7 @@ package au.id.micolous.metrodroid.transit.hsl;
 
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
 import org.apache.commons.lang3.ArrayUtils;
@@ -73,7 +74,7 @@ public class HSLTransitData extends TransitData implements Parcelable {
 
     public static final CardInfo CARD_INFO = new CardInfo.Builder()
             .setImageId(R.drawable.hsl_card)
-            .setName("HSL")
+            .setName(R.string.card_name_hel_hsl)
             .setLocation(R.string.location_helsinki_finland)
             .setCardType(CardType.MifareDesfire)
             .build();
@@ -326,7 +327,8 @@ public class HSLTransitData extends TransitData implements Parcelable {
         public TransitIdentity parseTransitIdentity(DesfireCard card) {
             try {
                 byte[] data = card.getApplication(APP_ID).getFile(0x08).getData();
-                return new TransitIdentity("HSL", Utils.getHexString(data).substring(2, 20));
+                return new TransitIdentity(R.string.card_name_hel_hsl,
+                        Utils.getHexString(data).substring(2, 20));
             } catch (Exception ex) {
                 throw new RuntimeException("Error parsing HSL serial", ex);
             }
@@ -345,9 +347,10 @@ public class HSLTransitData extends TransitData implements Parcelable {
         return (EPOCH) + day * (60 * 60 * 24) + minute * 60;
     }
 
+    @NonNull
     @Override
-    public String getCardName() {
-        return "HSL";
+    public CardInfo getCardInfo() {
+        return CARD_INFO;
     }
 
     /*

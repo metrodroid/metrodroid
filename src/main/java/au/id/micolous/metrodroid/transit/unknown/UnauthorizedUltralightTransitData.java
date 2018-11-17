@@ -19,11 +19,13 @@
 package au.id.micolous.metrodroid.transit.unknown;
 
 import android.os.Parcel;
+import android.support.annotation.NonNull;
 
 import java.util.List;
 
 import au.id.micolous.farebot.R;
 import au.id.micolous.metrodroid.card.Card;
+import au.id.micolous.metrodroid.card.CardType;
 import au.id.micolous.metrodroid.card.ultralight.UltralightCard;
 import au.id.micolous.metrodroid.card.ultralight.UltralightCardTransitFactory;
 import au.id.micolous.metrodroid.card.ultralight.UltralightPage;
@@ -46,6 +48,14 @@ public class UnauthorizedUltralightTransitData extends UnauthorizedTransitData {
             return new UnauthorizedUltralightTransitData[size];
         }
     };
+
+    public static final CardInfo CARD_INFO = new CardInfo.Builder()
+            .setName(R.string.locked_mfc_card)
+            .setLocation(R.string.location_many)
+            .setCardType(CardType.MifareUltralight)
+            .setKeysRequired()
+            .hide()
+            .build();
 
     public UnauthorizedUltralightTransitData() {
     }
@@ -86,12 +96,13 @@ public class UnauthorizedUltralightTransitData extends UnauthorizedTransitData {
 
         @Override
         public TransitIdentity parseTransitIdentity(UltralightCard card) {
-            return new TransitIdentity(Utils.localizeString(R.string.locked_mfu_card), null);
+            return new TransitIdentity(R.string.locked_mfu_card, null);
         }
     };
 
+    @NonNull
     @Override
-    public String getCardName() {
-        return Utils.localizeString(R.string.locked_mfu_card);
+    public CardInfo getCardInfo() {
+        return CARD_INFO;
     }
 }

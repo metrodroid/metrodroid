@@ -22,6 +22,7 @@ package au.id.micolous.metrodroid.transit;
 
 import android.net.Uri;
 import android.os.Parcelable;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
 import java.util.Collections;
@@ -29,6 +30,7 @@ import java.util.List;
 
 import au.id.micolous.metrodroid.MetrodroidApplication;
 import au.id.micolous.metrodroid.ui.ListItem;
+import au.id.micolous.metrodroid.util.Utils;
 
 public abstract class TransitData implements Parcelable {
 
@@ -115,7 +117,8 @@ public abstract class TransitData implements Parcelable {
         return null;
     }
 
-    public abstract String getCardName();
+    @NonNull
+    public abstract CardInfo getCardInfo();
 
     /**
      * If a {@link TransitData} provider doesn't know some of the stops / stations on a user's card,

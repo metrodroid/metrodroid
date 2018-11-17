@@ -45,7 +45,7 @@ data class SelectaFranceTransitData (private var mBalance: Int = 0,
 
     override fun getSerialNumber() = mSerial.toString()
 
-    override fun getCardName(): String = NAME
+    override fun getCardInfo() = CARD_INFO
 
     constructor(card: ClassicCard) : this(
             mSerial = getSerial(card),
@@ -54,10 +54,8 @@ data class SelectaFranceTransitData (private var mBalance: Int = 0,
     public override fun getBalance(): TransitBalance? = TransitCurrency.EUR(mBalance)
 
     companion object {
-        private const val NAME = "Selecta France"
-
         private val CARD_INFO = CardInfo.Builder()
-                .setName(NAME)
+                .setName(R.string.card_name_fr_selecta)
                 .setLocation(R.string.location_france)
                 .setCardType(CardType.MifareClassic)
                 .setPreview()
@@ -90,13 +88,16 @@ data class SelectaFranceTransitData (private var mBalance: Int = 0,
                 return false
             }
 
-            override fun parseTransitIdentity(card: ClassicCard): TransitIdentity = TransitIdentity(NAME, Integer.toString(getSerial(card)))
+            override fun parseTransitIdentity(card: ClassicCard): TransitIdentity =
+                    TransitIdentity(R.string.card_name_fr_selecta, Integer.toString(getSerial(card)))
 
-            override fun parseTransitData(classicCard: ClassicCard): TransitData = SelectaFranceTransitData(classicCard)
+            override fun parseTransitData(classicCard: ClassicCard): TransitData =
+                    SelectaFranceTransitData(classicCard)
 
             override fun earlySectors(): Int = 1
             
-            override fun earlyCardInfo(sectors: List<ClassicSector>): CardInfo? = if (check(sectors[0])) CARD_INFO else null
+            override fun earlyCardInfo(sectors: List<ClassicSector>): CardInfo? =
+                    if (check(sectors[0])) CARD_INFO else null
 
             override fun getAllCards(): MutableList<CardInfo> = Collections.singletonList(CARD_INFO)
         }

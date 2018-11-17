@@ -51,14 +51,13 @@ import au.id.micolous.metrodroid.transit.erg.record.ErgPurseRecord;
  */
 
 public class ManlyFastFerryTransitData extends ErgTransitData {
-    public static final String NAME = "Manly Fast Ferry";
     private static final int AGENCY_ID = 0x0227;
     private static final TimeZone TIME_ZONE = TimeZone.getTimeZone("Australia/Sydney");
     static final String CURRENCY = "AUD";
 
     public static final CardInfo CARD_INFO = new CardInfo.Builder()
             .setImageId(R.drawable.manly_fast_ferry_card)
-            .setName(ManlyFastFerryTransitData.NAME)
+            .setName(R.string.card_name_syd_manly)
             .setLocation(R.string.location_sydney_australia)
             .setCardType(CardType.MifareClassic)
             .setKeysRequired()
@@ -111,7 +110,7 @@ public class ManlyFastFerryTransitData extends ErgTransitData {
         public TransitIdentity parseTransitIdentity(@NonNull ClassicCard card) {
             byte[] file2 = card.getSector(0).getBlock(2).getData();
             ErgMetadataRecord metadata = ErgMetadataRecord.recordFromBytes(file2);
-            return new TransitIdentity(NAME, metadata.getCardSerialHex());
+            return new TransitIdentity(R.string.card_name_syd_manly, metadata.getCardSerialHex());
         }
 
         @Override
@@ -142,9 +141,10 @@ public class ManlyFastFerryTransitData extends ErgTransitData {
         return new ManlyFastFerryTrip(purse, epoch);
     }
 
+    @NonNull
     @Override
-    public String getCardName() {
-        return NAME;
+    public CardInfo getCardInfo() {
+        return CARD_INFO;
     }
 
     @Override

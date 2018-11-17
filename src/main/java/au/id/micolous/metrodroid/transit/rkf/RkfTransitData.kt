@@ -33,6 +33,7 @@ import au.id.micolous.metrodroid.transit.en1545.*
 import au.id.micolous.metrodroid.ui.ListItem
 import kotlinx.android.parcel.Parcelize
 import au.id.micolous.metrodroid.transit.en1545.En1545FixedInteger
+import au.id.micolous.metrodroid.transit.rkf.RkfLookup.Companion.UNKNOWN
 import au.id.micolous.metrodroid.util.TripObfuscator
 import java.util.*
 
@@ -60,7 +61,8 @@ data class RkfTransitData internal constructor (
         private val mLookup: RkfLookup,
         private val mTccps: List<En1545Parsed>,
         private val mSerial: RkfSerial) : TransitData() {
-    override fun getCardName(): String = issuerMap[AID]?.name ?: "RKF"
+
+    override fun getCardInfo(): CardInfo = issuerMap[AID] ?: issuerMap[UNKNOWN]!!
 
     private val AID
         get() = mTcci.getIntOrZero(En1545TransitData.ENV_APPLICATION_ISSUER_ID)
@@ -112,15 +114,21 @@ data class RkfTransitData internal constructor (
 
     companion object {
         private val issuerMap = hashMapOf(
+                RkfLookup.UNKNOWN to CardInfo.Builder()
+                        .setName(R.string.card_name_se_rkf)
+                        .setCardType(CardType.MifareClassic)
+                        .setKeysRequired()
+                        .hide()
+                        .build(),
                 RkfLookup.SLACCESS to CardInfo.Builder()
-                        .setName("SLaccess")
+                        .setName(R.string.card_name_arn_slaccess)
                         .setLocation(R.string.location_stockholm)
                         .setCardType(CardType.MifareClassic)
                         .setKeysRequired()
                         .setPreview()
                         .build(),
                 RkfLookup.REJSEKORT to CardInfo.Builder()
-                        .setName("Rejsekort")
+                        .setName(R.string.card_name_dk_rejsekort)
                         .setLocation(R.string.location_denmark)
                         .setCardType(CardType.MifareClassic)
                         .setKeysRequired()
@@ -161,7 +169,7 @@ data class RkfTransitData internal constructor (
 
             override fun parseTransitIdentity(card: ClassicCard): TransitIdentity {
                 val serial = getSerial(card)
-                val issuerName = issuerMap[serial.mCompany]?.name ?: "RKF"
+                val issuerName = issuerMap[serial.mCompany]?.nameId ?: R.string.card_name_se_rkf
                 return TransitIdentity(issuerName, serial.formatted)
             }
 

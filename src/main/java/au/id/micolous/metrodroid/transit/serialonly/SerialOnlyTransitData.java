@@ -34,7 +34,7 @@ abstract public class SerialOnlyTransitData extends TransitData {
     @Override
     public final List<ListItem> getInfo() {
         List<ListItem> li = new ArrayList<>();
-        li.add(new ListItem(R.string.card_format, getCardName()));
+        li.add(new ListItem(R.string.card_format, getCardInfo().getNameId()));
         li.add(new ListItem(R.string.card_serial_number, getSerialNumber()));
         List<ListItem> extra = getExtraInfo();
         if (extra != null)

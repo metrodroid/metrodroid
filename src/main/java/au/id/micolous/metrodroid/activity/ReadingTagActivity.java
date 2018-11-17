@@ -33,6 +33,8 @@ import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.util.Log;
 import android.view.accessibility.AccessibilityEvent;
 import android.view.accessibility.AccessibilityManager;
@@ -59,7 +61,7 @@ public class ReadingTagActivity extends MetrodroidActivity implements TagReaderF
     int mMaximum = 0;
 
     @Override
-    public void updateStatusText(final String msg) {
+    public void updateStatusText(@NonNull final String msg) {
         //Log.d(TAG, "Status: " + msg);
         runOnUiThread(() -> {
             TextView t = findViewById(R.id.status_text);
@@ -98,8 +100,10 @@ public class ReadingTagActivity extends MetrodroidActivity implements TagReaderF
         });
     }
 
+    private boolean mAnnounced = false;
+
     @Override
-    public void showCardType(final CardInfo cardInfo) {
+    public void announceCardType(@Nullable final CardInfo cardInfo) {
         runOnUiThread(() -> {
             ImageView i = findViewById(R.id.card_image);
 
@@ -107,15 +111,17 @@ public class ReadingTagActivity extends MetrodroidActivity implements TagReaderF
                 if (cardInfo.hasBitmap()) {
                     i.setImageDrawable(cardInfo.getDrawable(this));
                 }
-                i.setContentDescription(cardInfo.getName());
+                i.setContentDescription(Utils.localizeString(cardInfo.getNameId()));
                 i.invalidate();
+                updateStatusText(Utils.localizeString(R.string.card_reading_type, cardInfo));
             } else {
                 i.setImageResource(R.drawable.ic_logo_glyph);
                 i.setContentDescription("");
                 i.invalidate();
             }
 
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN && !mAnnounced) {
+                mAnnounced = true;
                 TextView t = findViewById(R.id.status_text);
                 AccessibilityManager man = (AccessibilityManager) getSystemService(Context.ACCESSIBILITY_SERVICE);
                 if (man != null && man.isEnabled()) {

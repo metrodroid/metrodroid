@@ -22,6 +22,7 @@
 package au.id.micolous.metrodroid.transit.octopus;
 
 import android.os.Parcel;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
 import au.id.micolous.metrodroid.card.CardType;
@@ -66,7 +67,7 @@ public class OctopusTransitData extends TransitData {
 
     public static final CardInfo CARD_INFO = new CardInfo.Builder()
             .setImageId(R.drawable.octopus_card, R.drawable.octopus_card_alpha)
-            .setName(Utils.localizeString(R.string.card_name_octopus))
+            .setName(R.string.card_name_octopus)
             .setLocation(R.string.location_hong_kong)
             .setCardType(CardType.FeliCa)
             .build();
@@ -148,14 +149,14 @@ public class OctopusTransitData extends TransitData {
             if (card.getSystem(SYSTEMCODE_SZT) != null) {
                 if (card.getSystem(SYSTEMCODE_OCTOPUS) != null) {
                     // Dual-mode card.
-                    return new TransitIdentity(Utils.localizeString(R.string.card_name_octopus_szt_dual), null);
+                    return new TransitIdentity(R.string.card_name_octopus_szt_dual, null);
                 } else {
                     // SZT-only card.
-                    return new TransitIdentity(Utils.localizeString(R.string.card_name_szt), null);
+                    return new TransitIdentity(R.string.card_name_szt, null);
                 }
             } else {
                 // Octopus-only card.
-                return new TransitIdentity(Utils.localizeString(R.string.card_name_octopus), null);
+                return new TransitIdentity(R.string.card_name_octopus, null);
             }
         }
     };
@@ -189,16 +190,13 @@ public class OctopusTransitData extends TransitData {
         parcel.writeInt(mHasShenzhen ? 1 : 0);
     }
 
+    @NonNull
     @Override
-    public String getCardName() {
-        if (mHasShenzhen) {
-            if (mHasOctopus) {
-                return Utils.localizeString(R.string.card_name_octopus_szt_dual);
-            } else {
-                return Utils.localizeString(R.string.card_name_szt);
-            }
-        } else {
-            return Utils.localizeString(R.string.card_name_octopus);
+    public CardInfo getCardInfo() {
+        if (mHasOctopus || !mHasShenzhen) {
+            return CARD_INFO;
+        } else  {
+            return NewShenzhenTransitData.CARD_INFO;
         }
     }
 }

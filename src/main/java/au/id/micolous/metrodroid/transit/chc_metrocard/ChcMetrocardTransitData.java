@@ -55,7 +55,7 @@ public class ChcMetrocardTransitData extends ErgTransitData {
 
     public static final CardInfo CARD_INFO = new CardInfo.Builder()
             .setImageId(R.drawable.chc_metrocard)
-            .setName(ChcMetrocardTransitData.NAME)
+            .setName(R.string.card_name_chc_metrocard)
             .setLocation(R.string.location_christchurch_nz)
             .setCardType(CardType.MifareClassic)
             .setKeysRequired()
@@ -109,7 +109,7 @@ public class ChcMetrocardTransitData extends ErgTransitData {
         public TransitIdentity parseTransitIdentity(@NonNull ClassicCard card) {
             byte[] file2 = card.getSector(0).getBlock(2).getData();
             ErgMetadataRecord metadata = ErgMetadataRecord.recordFromBytes(file2);
-            return new TransitIdentity(NAME, metadata.getCardSerialHex());
+            return new TransitIdentity(R.string.card_name_chc_metrocard, metadata.getCardSerialHex());
         }
 
         @Override
@@ -140,9 +140,10 @@ public class ChcMetrocardTransitData extends ErgTransitData {
         return new ChcMetrocardTrip(purse, epoch);
     }
 
+    @NonNull
     @Override
-    public String getCardName() {
-        return NAME;
+    public CardInfo getCardInfo() {
+        return CARD_INFO;
     }
 
     @Override

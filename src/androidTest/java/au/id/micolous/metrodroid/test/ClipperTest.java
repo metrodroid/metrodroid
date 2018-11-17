@@ -23,6 +23,7 @@ import android.test.AndroidTestCase;
 import java.util.Calendar;
 import java.util.List;
 
+import au.id.micolous.farebot.R;
 import au.id.micolous.metrodroid.card.desfire.DesfireApplication;
 import au.id.micolous.metrodroid.card.desfire.DesfireCard;
 import au.id.micolous.metrodroid.card.desfire.files.DesfireFile;
@@ -77,7 +78,7 @@ public class ClipperTest extends AndroidTestCase {
 
         // Test TransitIdentity
         TransitIdentity i = c.parseTransitIdentity();
-        assertEquals("Clipper", i.getName());
+        assertEquals(R.string.card_name_sfo_clipper, i.getNameId());
         assertEquals("572691763", i.getSerialNumber());
 
         TransitData d = c.parseTransitData();
@@ -85,16 +86,16 @@ public class ClipperTest extends AndroidTestCase {
 
         ClipperTransitData o = (ClipperTransitData)d;
         assertEquals("572691763", o.getSerialNumber());
-        assertEquals("Clipper", o.getCardName());
-        assertTrue(o.getBalance().getBalance().equals(TransitCurrency.USD(30583)));
-        assertEquals(null, o.getSubscriptions());
+        assertEquals(R.string.card_name_sfo_clipper, o.getCardInfo().getNameId());
+        assertEquals(TransitCurrency.USD(30583), o.getBalance().getBalance());
+        assertNull(o.getSubscriptions());
 
         List<Trip> trips = o.getTrips();
         assertNotNull(trips);
         assertEquals("Whole Foods", trips.get(1).getAgencyName(false));
         assertEquals("Whole Foods", trips.get(1).getAgencyName(true));
         assertEquals(1520009600000L, trips.get(1).getStartTimestamp().getTimeInMillis());
-        assertTrue(trips.get(1).getFare().equals(TransitCurrency.USD(-5000)));
+        assertEquals(TransitCurrency.USD(-5000), trips.get(1).getFare());
         assertNull(trips.get(1).getRouteName());
         assertTrue(trips.get(1).hasTime());
         assertEquals(Trip.Mode.TICKET_MACHINE, trips.get(1).getMode());
@@ -105,7 +106,7 @@ public class ClipperTest extends AndroidTestCase {
         assertEquals("Bay Area Rapid Transit", trips.get(0).getAgencyName(false));
         assertEquals("BART", trips.get(0).getAgencyName(true));
         assertEquals(1521320320000L, trips.get(0).getStartTimestamp().getTimeInMillis());
-        assertTrue(trips.get(0).getFare().equals(TransitCurrency.USD(630)));
+        assertEquals(TransitCurrency.USD(630), trips.get(0).getFare());
         assertNull(trips.get(0).getRouteName());
         assertTrue(trips.get(0).hasTime());
         assertEquals(Trip.Mode.METRO, trips.get(0).getMode());

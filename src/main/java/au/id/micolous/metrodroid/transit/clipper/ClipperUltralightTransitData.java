@@ -20,6 +20,7 @@ package au.id.micolous.metrodroid.transit.clipper;
 
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.support.annotation.NonNull;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -48,8 +49,6 @@ public class ClipperUltralightTransitData extends TransitData {
             return new ClipperUltralightTransitData[size];
         }
     };
-
-    private static final String NAME = "Clipper Ultralight";
 
     private final long mSerial;
     private final int mBaseDate;
@@ -82,7 +81,7 @@ public class ClipperUltralightTransitData extends TransitData {
 
         @Override
         public TransitIdentity parseTransitIdentity(UltralightCard card) {
-            return new TransitIdentity(NAME, Long.toString(getSerial(card)));
+            return new TransitIdentity(R.string.card_name_sfo_clipper, Long.toString(getSerial(card)));
         }
     };
 
@@ -91,9 +90,10 @@ public class ClipperUltralightTransitData extends TransitData {
         return Long.toString(mSerial);
     }
 
+    @NonNull
     @Override
-    public String getCardName() {
-        return NAME;
+    public CardInfo getCardInfo() {
+        return ClipperTransitData.CARD_INFO;
     }
 
     @Override

@@ -22,6 +22,7 @@ package au.id.micolous.metrodroid.transit.lisboaviva;
 import android.os.Build;
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.support.annotation.NonNull;
 
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
@@ -61,7 +62,7 @@ public class LisboaVivaTransitData extends Calypso1545TransitData {
     private final String mHolderName;
 
     public static final CardInfo CARD_INFO = new CardInfo.Builder()
-            .setName("Lisboa Viva") // The card is literally branded like this.
+            .setName(R.string.card_name_lis_viva) // The card is literally branded like this.
             .setLocation(R.string.location_lisbon)
             .setCardType(CardType.ISO7816)
             .setPreview()
@@ -129,7 +130,7 @@ public class LisboaVivaTransitData extends Calypso1545TransitData {
 
         @Override
         public TransitIdentity parseTransitIdentity(CalypsoApplication card) {
-            return new TransitIdentity(NAME, getSerial(card));
+            return new TransitIdentity(R.string.card_name_lis_viva, getSerial(card));
         }
 
         @Override
@@ -163,9 +164,10 @@ public class LisboaVivaTransitData extends Calypso1545TransitData {
         return new LisboaVivaTransaction(data);
     }
 
+    @NonNull
     @Override
-    public String getCardName() {
-        return NAME;
+    public CardInfo getCardInfo() {
+        return CARD_INFO;
     }
 
     @Override

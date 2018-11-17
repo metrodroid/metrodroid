@@ -20,6 +20,7 @@ package au.id.micolous.metrodroid.transit.nextfare;
 
 import android.os.Parcel;
 import android.support.annotation.NonNull;
+import android.support.annotation.StringRes;
 import android.support.annotation.VisibleForTesting;
 import android.text.SpannableString;
 import android.util.Log;
@@ -31,6 +32,7 @@ import java.util.List;
 import java.util.TimeZone;
 
 import au.id.micolous.farebot.R;
+import au.id.micolous.metrodroid.card.CardType;
 import au.id.micolous.metrodroid.card.UnauthorizedException;
 import au.id.micolous.metrodroid.card.classic.ClassicBlock;
 import au.id.micolous.metrodroid.card.classic.ClassicCard;
@@ -39,7 +41,6 @@ import au.id.micolous.metrodroid.card.classic.ClassicSector;
 import au.id.micolous.metrodroid.transit.CardInfo;
 import au.id.micolous.metrodroid.transit.TransitBalance;
 import au.id.micolous.metrodroid.transit.TransitBalanceStored;
-import au.id.micolous.metrodroid.transit.Subscription;
 import au.id.micolous.metrodroid.transit.TransitCurrency;
 import au.id.micolous.metrodroid.transit.TransitData;
 import au.id.micolous.metrodroid.transit.TransitIdentity;
@@ -61,11 +62,17 @@ import au.id.micolous.metrodroid.util.Utils;
  * @author Michael Farrell
  */
 public class NextfareTransitData extends TransitData {
+    public static final CardInfo CARD_INFO = new CardInfo.Builder()
+            .setName(R.string.card_name_us_nextfare)
+            .setLocation(R.string.location_many)
+            .setCardType(CardType.MifareClassic)
+            .setKeysRequired()
+            .hide()
+            .build();
 
-    public static final String NAME = "Nextfare";
     public static final Creator<NextfareTransitData> CREATOR = new Creator<NextfareTransitData>() {
         public NextfareTransitData createFromParcel(Parcel parcel) {
-            return new NextfareTransitData(parcel, "USD");
+            return new NextfareTransitData(parcel, "XXX");
         }
 
         public NextfareTransitData[] newArray(int size) {
@@ -105,7 +112,7 @@ public class NextfareTransitData extends TransitData {
     }
 
     public NextfareTransitData(ClassicCard card) {
-        this(card, "USD");
+        this(card, "XXX");
     }
 
     public NextfareTransitData(ClassicCard card, @NonNull String currency) {
@@ -283,10 +290,10 @@ public class NextfareTransitData extends TransitData {
 
         @Override
         public TransitIdentity parseTransitIdentity(@NonNull ClassicCard card) {
-            return parseTransitIdentity(card, NAME);
+            return parseTransitIdentity(card, R.string.card_name_us_nextfare);
         }
 
-        protected TransitIdentity parseTransitIdentity(ClassicCard card, String name) {
+        protected TransitIdentity parseTransitIdentity(ClassicCard card, @StringRes int name) {
             byte[] serialData = card.getSector(0).getBlock(0).getData();
             long serialNumber = Utils.byteArrayToLongReversed(serialData, 0, 4);
             return new TransitIdentity(name, formatSerialNumber(serialNumber));
@@ -432,9 +439,10 @@ public class NextfareTransitData extends TransitData {
         return mSubscriptions;
     }
 
+    @NonNull
     @Override
-    public String getCardName() {
-        return NAME;
+    public CardInfo getCardInfo() {
+        return CARD_INFO;
     }
 
     /**
@@ -454,7 +462,7 @@ public class NextfareTransitData extends TransitData {
     public List<ListItem> getInfo() {
         ArrayList<ListItem> items = new ArrayList<>();
 
-        items.add(new HeaderListItem(R.string.nextfare));
+        items.add(new HeaderListItem(R.string.card_name_us_nextfare));
         items.add(new ListItem(R.string.nextfare_system_code, Utils.getHexDump(mSystemCode)));
 
         // The Los Angeles Tap and Minneapolis Go-To cards have the same system code, but different

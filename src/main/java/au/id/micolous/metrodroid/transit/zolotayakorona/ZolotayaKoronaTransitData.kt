@@ -19,6 +19,7 @@
 
 package au.id.micolous.metrodroid.transit.zolotayakorona
 
+import android.support.annotation.StringRes
 import java.util.ArrayList
 import java.util.Calendar
 import java.util.GregorianCalendar
@@ -47,11 +48,11 @@ data class ZolotayaKoronaTransitData internal constructor(
         private val mTrip: ZolotayaKoronaTrip?,
         private val mRefill: ZolotayaKoronaRefill?,
         private val mCardType: Int) : TransitData() {
-    private val estimatedBalance : Int
+    private val estimatedBalance: Int
         get() {
             // a trip followed by refill. Assume only one refill.
-            if (mRefill != null && mTrip != null &&  mRefill.mTime > mTrip.mTime)
-              return mTrip.estimatedBalance + mRefill.mAmount
+            if (mRefill != null && mTrip != null && mRefill.mTime > mTrip.mTime)
+                return mTrip.estimatedBalance + mRefill.mAmount
             // Last transaction was a trip
             if (mTrip != null)
                 return mTrip.estimatedBalance
@@ -61,11 +62,12 @@ data class ZolotayaKoronaTransitData internal constructor(
             // Card was never used or refilled
             return 0
         }
+
     override fun getBalance() = if (mBalance == null) TransitCurrency.RUB(estimatedBalance) else TransitCurrency.RUB(mBalance)
 
     override fun getSerialNumber() = formatSerial(mSerial)
 
-    override fun getCardName() = nameCard(mCardType)
+    override fun getCardInfo(): CardInfo = cardInfo(mCardType)
 
     override fun getInfo(): List<ListItem>? {
         val li = ArrayList<ListItem>()
@@ -73,7 +75,7 @@ data class ZolotayaKoronaTransitData internal constructor(
         val cardInfo = CARDS[mCardType]
         val regionRsrcIdx = cardInfo?.locationId
         val regionName = (
-                if(regionRsrcIdx != null)
+                if (regionRsrcIdx != null)
                     Utils.localizeString(regionRsrcIdx)
                 else
                     (REGIONS[regionNum]?.first ?: Integer.toHexString(regionNum))
@@ -82,7 +84,7 @@ data class ZolotayaKoronaTransitData internal constructor(
         li.add(ListItem(R.string.card_type, cardInfo?.name ?: mCardType.toString(16)))
         // Printed in hex on the receipt
         li.add(ListItem(R.string.card_serial_number, mCardSerial.toUpperCase()))
-        li.add(ListItem(R.string.refill_counter, mRefill?.mCounter?.toString()?:"0"))
+        li.add(ListItem(R.string.refill_counter, mRefill?.mCounter?.toString() ?: "0"))
         return li
     }
 
@@ -140,24 +142,31 @@ data class ZolotayaKoronaTransitData internal constructor(
 
         private val CARDS = hashMapOf(
                 0x760500 to CardInfo.Builder()
-                        .setName(Utils.localizeString(R.string.card_name_iaroslavl_etk))
+                        .setName(R.string.card_name_iaroslavl_etk)
                         .setLocation(R.string.location_iaroslavl)
                         .setCardType(CardType.MifareClassic)
                         .setKeysRequired()
                         .setPreview()
                         .build(),
                 0x230100 to CardInfo.Builder()
-                        .setName(Utils.localizeString(R.string.card_name_krasnodar_etk))
+                        .setName(R.string.card_name_krasnodar_etk)
                         .setLocation(R.string.location_krasnodar)
                         .setCardType(CardType.MifareClassic)
                         .setKeysRequired()
                         .setPreview()
                         .build()
         )
-        private fun nameCard(type : Int) = CARDS[type]?.name ?: (Utils.localizeString(R.string.card_name_zolotaya_korona)
-                + " " + type.toString(16))
+
+        private fun cardInfo(type: Int) = CARDS[type] ?: FALLBACK_CARD_INFO
+
+        @StringRes
+        private fun nameCard(type: Int) = CARDS[type]?.nameId ?: 0
+
+        private fun placeholderNameCard(type: Int) =
+                (Utils.localizeString(R.string.card_name_zolotaya_korona) + " " + type.toString(16))
+
         private val FALLBACK_CARD_INFO = CardInfo.Builder()
-                .setName(Utils.localizeString(R.string.card_name_zolotaya_korona))
+                .setName(R.string.card_name_zolotaya_korona)
                 .setLocation(R.string.location_russia)
                 .setCardType(CardType.MifareClassic)
                 .setKeysRequired()
@@ -178,7 +187,7 @@ data class ZolotayaKoronaTransitData internal constructor(
         }
 
         private fun getSerial(card: ClassicCard) = Utils.getHexString(card.getSector(15)
-                    .getBlock(2).data, 4, 10).substring(0, 19)
+                .getBlock(2).data, 4, 10).substring(0, 19)
 
         private fun getCardType(card: ClassicCard) = Utils.byteArrayToInt(card.getSector(15)
                 .getBlock(1).data, 10, 3)
@@ -188,9 +197,17 @@ data class ZolotayaKoronaTransitData internal constructor(
         val FACTORY: ClassicCardTransitFactory = object : ClassicCardTransitFactory() {
             override fun getAllCards() = listOf(FALLBACK_CARD_INFO) + CARDS.values
 
-            override fun parseTransitIdentity(card: ClassicCard) = TransitIdentity(
-                    nameCard(getCardType(card)),
-                    formatSerial(getSerial(card)))
+            override fun parseTransitIdentity(card: ClassicCard): TransitIdentity {
+                val type = getCardType(card)
+                val name = nameCard(type)
+                val serial = formatSerial(getSerial(card))
+
+                return if (name != 0) {
+                    TransitIdentity(name, serial)
+                } else {
+                    TransitIdentity(placeholderNameCard(type), serial)
+                }
+            }
 
             override fun parseTransitData(classicCard: ClassicCard): TransitData {
                 val cardType = getCardType(classicCard)

@@ -95,6 +95,7 @@ data class RkfLookup (val mCurrencyCode : Int, val mCompany : Int) : En1545Looku
             "0x${contractTariff.toString(16)}" else "none")
 
     companion object {
+        const val UNKNOWN = 0
         const val SLACCESS = 101
         const val REJSEKORT = 2000
     }

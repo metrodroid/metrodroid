@@ -140,9 +140,7 @@ public class CalypsoApplication extends ISO7816Application {
         }
 
         if (ci != null) {
-            feedbackInterface.updateStatusText(Utils.localizeString(R.string.card_reading_type,
-                    ci.getName()));
-            feedbackInterface.showCardType(ci);
+            feedbackInterface.announceCardType(ci);
         }
     }
 

@@ -61,7 +61,7 @@ public class CharlieCardTransitData extends TransitData {
     private static final long CHARLIE_EPOCH;
     private static final TimeZone TZ = TimeZone.getTimeZone("America/Boston");
     public static final CardInfo CARD_INFO = new CardInfo.Builder()
-            .setName(NAME)
+            .setName(R.string.card_name_bos_charliecard)
             .setLocation(R.string.location_boston)
             .setCardType(CardType.MifareClassic)
             .setImageId(R.drawable.charlie_card, R.drawable.iso7810_id1_alpha)
@@ -193,9 +193,10 @@ public class CharlieCardTransitData extends TransitData {
         return "5-" + Long.toString(serial);
     }
 
+    @NonNull
     @Override
-    public String getCardName() {
-        return NAME;
+    public CardInfo getCardInfo() {
+        return CARD_INFO;
     }
 
     public static final ClassicCardTransitFactory FACTORY = new ClassicCardTransitFactory() {
@@ -227,7 +228,7 @@ public class CharlieCardTransitData extends TransitData {
 
         @Override
         public TransitIdentity parseTransitIdentity(@NonNull ClassicCard card) {
-            return new TransitIdentity(NAME, formatSerial(getSerial(card)));
+            return new TransitIdentity(R.string.card_name_bos_charliecard, formatSerial(getSerial(card)));
         }
 
         @Override

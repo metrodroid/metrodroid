@@ -20,10 +20,12 @@ package au.id.micolous.metrodroid.transit.nextfare.ultralight;
 
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.support.annotation.NonNull;
 
 import java.util.List;
 import java.util.TimeZone;
 
+import au.id.micolous.farebot.R;
 import au.id.micolous.metrodroid.card.UnauthorizedException;
 import au.id.micolous.metrodroid.card.ultralight.UltralightCard;
 import au.id.micolous.metrodroid.card.ultralight.UltralightCardTransitFactory;
@@ -31,8 +33,7 @@ import au.id.micolous.metrodroid.transit.CardInfo;
 import au.id.micolous.metrodroid.transit.TransitCurrency;
 import au.id.micolous.metrodroid.transit.TransitData;
 import au.id.micolous.metrodroid.transit.TransitIdentity;
-import au.id.micolous.metrodroid.transit.nextfare.ultralight.NextfareUltralightTransaction;
-import au.id.micolous.metrodroid.transit.nextfare.ultralight.NextfareUltralightTransitData;
+import au.id.micolous.metrodroid.transit.nextfare.NextfareTransitData;
 import au.id.micolous.metrodroid.util.Utils;
 
 public class NextfareUnknownUltralightTransitData extends NextfareUltralightTransitData {
@@ -46,8 +47,6 @@ public class NextfareUnknownUltralightTransitData extends NextfareUltralightTran
             return new NextfareUnknownUltralightTransitData[size];
         }
     };
-
-    private static final String NAME = "Nextfare Ultralight";
 
     static final TimeZone TZ = TimeZone.getTimeZone("UTC");
 
@@ -75,7 +74,7 @@ public class NextfareUnknownUltralightTransitData extends NextfareUltralightTran
 
         @Override
         public TransitIdentity parseTransitIdentity(UltralightCard card) {
-            return new TransitIdentity(NAME, formatSerial(getSerial(card)));
+            return new TransitIdentity(R.string.card_name_us_nextfare, formatSerial(getSerial(card)));
         }
     };
 
@@ -89,9 +88,10 @@ public class NextfareUnknownUltralightTransitData extends NextfareUltralightTran
         return TZ;
     }
 
+    @NonNull
     @Override
-    public String getCardName() {
-        return NAME;
+    public CardInfo getCardInfo() {
+        return NextfareTransitData.CARD_INFO;
     }
 
     private NextfareUnknownUltralightTransitData(Parcel p) {

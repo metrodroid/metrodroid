@@ -92,7 +92,7 @@ public class SupportedCardsActivity extends MetrodroidActivity {
                 return convertView;
             }
 
-            ((TextView) convertView.findViewById(R.id.card_name)).setText(info.getName());
+            ((TextView) convertView.findViewById(R.id.card_name)).setText(info.getNameId());
             TextView locationTextView = convertView.findViewById(R.id.card_location);
             if (info.getLocationId() != 0) {
                 locationTextView.setText(getString(info.getLocationId()));

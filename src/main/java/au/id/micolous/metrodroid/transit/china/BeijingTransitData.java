@@ -20,6 +20,7 @@
 package au.id.micolous.metrodroid.transit.china;
 
 import android.os.Parcel;
+import android.support.annotation.NonNull;
 
 import java.util.Arrays;
 import java.util.List;
@@ -39,7 +40,7 @@ public class BeijingTransitData extends ChinaTransitData {
     private final String mSerial;
 
    public static final CardInfo CARD_INFO = new CardInfo.Builder()
-            .setName(Utils.localizeString(R.string.card_name_beijing))
+            .setName(R.string.card_name_beijing)
             .setLocation(R.string.location_beijing)
             .setCardType(CardType.ISO7816)
             .setPreview()
@@ -74,9 +75,11 @@ public class BeijingTransitData extends ChinaTransitData {
         return mSerial;
     }
 
+
+    @NonNull
     @Override
-    public String getCardName() {
-        return Utils.localizeString(R.string.card_name_beijing);
+    public CardInfo getCardInfo() {
+        return CARD_INFO;
     }
 
     @Override
@@ -101,7 +104,7 @@ public class BeijingTransitData extends ChinaTransitData {
 
         @Override
         public TransitIdentity parseTransitIdentity(ChinaCard card) {
-            return new TransitIdentity(Utils.localizeString(R.string.card_name_beijing), parseSerial(card));
+            return new TransitIdentity(R.string.card_name_beijing, parseSerial(card));
         }
 
         @Override

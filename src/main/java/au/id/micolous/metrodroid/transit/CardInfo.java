@@ -36,6 +36,8 @@ import android.util.Log;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.Formattable;
+import java.util.Formatter;
 import java.util.List;
 import java.util.Locale;
 
@@ -63,7 +65,7 @@ import au.id.micolous.metrodroid.util.Utils;
  */
 
 @SuppressWarnings("WeakerAccess")
-public final class CardInfo {
+public final class CardInfo implements Formattable {
     public static List<CardInfo> getAllCardsAlphabetical() {
         List<CardInfo> ret = new ArrayList<>();
         List<CardTransitFactory> allFactories = new ArrayList<>();
@@ -113,7 +115,8 @@ public final class CardInfo {
     private final int mImageId;
     @DrawableRes
     private final int mImageAlphaId;
-    private final String mName;
+    @StringRes
+    private final int mNameId;
     @StringRes
     private final int mLocationId;
     private final CardType mCardType;
@@ -121,16 +124,26 @@ public final class CardInfo {
     private final boolean mPreview;
     @StringRes
     private final int mResourceExtraNote;
+    private final boolean mHidden;
 
-    private CardInfo(@DrawableRes int imageId, String name, @StringRes int locationId, CardType cardType, boolean keysRequired, boolean preview, @StringRes int resourceExtraNote,  @DrawableRes int imageAlphaId) {
+    private CardInfo(@DrawableRes int imageId,
+                     @StringRes int nameId,
+                     @StringRes int locationId,
+                     CardType cardType,
+                     boolean keysRequired,
+                     boolean preview,
+                     @StringRes int resourceExtraNote,
+                     @DrawableRes int imageAlphaId,
+                     boolean hidden) {
         mImageId = imageId;
         mImageAlphaId = imageAlphaId;
-        mName = name;
+        mNameId = nameId;
         mLocationId = locationId;
         mCardType = cardType;
         mKeysRequired = keysRequired;
         mPreview = preview;
         mResourceExtraNote = resourceExtraNote;
+        mHidden = hidden;
     }
 
     public boolean hasBitmap() {
@@ -147,9 +160,15 @@ public final class CardInfo {
         }
     }
 
+    @StringRes
+    public int getNameId() {
+        return mNameId;
+    }
+
+    @Deprecated
     @NonNull
     public String getName() {
-        return mName;
+        return Utils.localizeString(mNameId);
     }
 
     @StringRes
@@ -207,12 +226,27 @@ public final class CardInfo {
         Palette.from(toBitmap(ctx)).generate(listener);
     }
 
+    public boolean isHidden() {
+        return mHidden;
+    }
+
+    /**
+     * Implementation of {@link Formattable}, which makes any {@link CardInfo} passed to a formatter
+     * like {@link Utils#localizeString(int, Object...)} return the localised card name.
+     */
+    @Override
+    public void formatTo(Formatter formatter, int flags, int width, int precision) {
+        final String s = Utils.localizeString(mNameId);
+        formatter.format("%s", s);
+    }
+
     public static final class Builder {
         @DrawableRes
         private int mImageId;
         @DrawableRes
         private int mImageAlphaId;
-        private String mName;
+        @StringRes
+        private int mNameId;
         @StringRes
         private int mLocationId;
         private CardType mCardType;
@@ -220,13 +254,22 @@ public final class CardInfo {
         private boolean mPreview;
         @StringRes
         private int mResourceExtraNote;
+        private boolean mHidden;
 
         public Builder() {
         }
 
         @NonNull
         public CardInfo build() {
-            return new CardInfo(mImageId, mName, mLocationId, mCardType, mKeysRequired, mPreview, mResourceExtraNote, mImageAlphaId);
+            return new CardInfo(mImageId,
+                    mNameId,
+                    mLocationId,
+                    mCardType,
+                    mKeysRequired,
+                    mPreview,
+                    mResourceExtraNote,
+                    mImageAlphaId,
+                    mHidden);
         }
 
         public Builder setImageId(@DrawableRes int id) {
@@ -239,8 +282,14 @@ public final class CardInfo {
             return this;
         }
 
+        public Builder setName(@StringRes int nameId) {
+            mNameId = nameId;
+            return this;
+        }
+
+        @Deprecated
         public Builder setName(String name) {
-            mName = name;
+            //mName = name;
             return this;
         }
 
@@ -269,5 +318,9 @@ public final class CardInfo {
             return this;
         }
 
+        public Builder hide() {
+            mHidden = true;
+            return this;
+        }
     }
 }

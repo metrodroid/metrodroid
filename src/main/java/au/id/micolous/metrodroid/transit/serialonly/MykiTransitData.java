@@ -49,7 +49,6 @@ import java.util.Locale;
  * Documentation of format: https://github.com/micolous/metrodroid/wiki/Myki
  */
 public class MykiTransitData extends SerialOnlyTransitData {
-    public static final String NAME = "Myki";
     public static final int APP_ID_1 = 0x11f2;
     public static final int APP_ID_2 = 0xf010f2;
 
@@ -61,7 +60,7 @@ public class MykiTransitData extends SerialOnlyTransitData {
 
     public static final CardInfo CARD_INFO = new CardInfo.Builder()
             .setImageId(R.drawable.myki_card)
-            .setName(MykiTransitData.NAME)
+            .setName(R.string.card_name_mel_myki)
             .setCardType(CardType.MifareDesfire)
             .setLocation(R.string.location_victoria_australia)
             .setExtraNote(R.string.card_note_card_number_only)
@@ -136,7 +135,7 @@ public class MykiTransitData extends SerialOnlyTransitData {
         @Override
         public TransitIdentity parseTransitIdentity(DesfireCard desfireCard) {
             byte[] data = desfireCard.getApplication(APP_ID_1).getFile(15).getData();
-            return new TransitIdentity(NAME, parseSerial(data));
+            return new TransitIdentity(R.string.card_name_mel_myki, parseSerial(data));
         }
     };
 
@@ -160,9 +159,10 @@ public class MykiTransitData extends SerialOnlyTransitData {
         return formattedSerial + Utils.calculateLuhn(formattedSerial);
     }
 
+    @NonNull
     @Override
-    public String getCardName() {
-        return NAME;
+    public CardInfo getCardInfo() {
+        return CARD_INFO;
     }
 
     @Override

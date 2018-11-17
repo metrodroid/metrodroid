@@ -25,6 +25,7 @@
 package au.id.micolous.metrodroid.transit.orca;
 
 import android.os.Parcel;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
 import au.id.micolous.farebot.R;
@@ -57,7 +58,7 @@ public class OrcaTransitData extends TransitData {
 
     public static final CardInfo CARD_INFO = new CardInfo.Builder()
             .setImageId(R.drawable.orca_card)
-            .setName("ORCA")
+            .setName(R.string.card_name_sea_orca)
             .setLocation(R.string.location_seattle)
             .setCardType(CardType.MifareDesfire)
             .build();
@@ -133,16 +134,17 @@ public class OrcaTransitData extends TransitData {
         public TransitIdentity parseTransitIdentity(DesfireCard card) {
             try {
                 byte[] data = card.getApplication(0xffffff).getFile(0x0f).getData();
-                return new TransitIdentity("ORCA", String.valueOf(Utils.byteArrayToInt(data, 4, 4)));
+                return new TransitIdentity(R.string.card_name_sea_orca, String.valueOf(Utils.byteArrayToInt(data, 4, 4)));
             } catch (Exception ex) {
                 throw new RuntimeException("Error parsing ORCA serial", ex);
             }
         }
     };
 
+    @NonNull
     @Override
-    public String getCardName() {
-        return "ORCA";
+    public CardInfo getCardInfo() {
+        return CARD_INFO;
     }
 
     @Override

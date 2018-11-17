@@ -19,19 +19,52 @@
 
 package au.id.micolous.metrodroid.transit;
 
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
+import android.support.annotation.StringRes;
+
+import au.id.micolous.metrodroid.util.Utils;
+
 public class TransitIdentity {
+
+    @StringRes
+    private final int mNameId;
+    @Nullable
     private final String mName;
+    @Nullable
     private final String mSerialNumber;
 
-    public TransitIdentity(String name, String serialNumber) {
+    public TransitIdentity(@StringRes int nameId, @Nullable String serialNumber) {
+        mNameId = nameId;
+        mName = null;
+        mSerialNumber = serialNumber;
+    }
+
+    @Deprecated
+    public TransitIdentity(@NonNull String name, @Nullable String serialNumber) {
+        mNameId = 0;
         mName = name;
         mSerialNumber = serialNumber;
     }
 
-    public String getName() {
-        return mName;
+    @StringRes
+    public int getNameId() {
+        // Note: doesn't always work
+        return mNameId;
     }
 
+    @Deprecated
+    @NonNull
+    public String getName() {
+        // TODO: Once all card names are localised, replace with StringRes.
+        if (mName == null) {
+            return Utils.localizeString(mNameId);
+        } else {
+            return mName;
+        }
+    }
+
+    @Nullable
     public String getSerialNumber() {
         return mSerialNumber;
     }

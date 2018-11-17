@@ -57,41 +57,49 @@ public class IntercodeTransitData extends Calypso1545TransitData {
     // NOTE: Many French smart-cards don't have a brand name, and are simply referred to as a "titre
     // de transport" (ticket). Here they take the name of the transit agency.
 
+    public static final CardInfo INTERCODE_CARD_INFO = new CardInfo.Builder()
+            .setName(R.string.card_name_fr_intercode)
+            .setLocation(R.string.location_many)
+            .setCardType(CardType.ISO7816)
+            .setPreview()
+            .hide()
+            .build();
+
     // https://www.tisseo.fr/les-tarifs/obtenir-une-carte-pastel
     public static final CardInfo TISSEO_CARD_INFO = new CardInfo.Builder()
-            .setName("Pastel")
+            .setName(R.string.card_name_tls_pastel)
             .setLocation(R.string.location_toulouse)
             .setCardType(CardType.ISO7816)
             .setPreview()
             .build();
 
     public static final CardInfo TRANSGIRONDE_CARD_INFO = new CardInfo.Builder()
-            .setName("TransGironde")
+            .setName(R.string.card_name_bod_transgironde)
             .setLocation(R.string.location_gironde)
             .setCardType(CardType.ISO7816)
             .setPreview()
             .build();
 
     public static final CardInfo OURA_CARD_INFO = new CardInfo.Builder()
-            .setName("OùRA")
+            .setName(R.string.card_name_gnb_oura)
             .setLocation(R.string.location_grenoble)
             .setCardType(CardType.ISO7816)
             .build();
 
     public static final CardInfo NAVIGO_CARD_INFO = new CardInfo.Builder()
-            .setName("Navigo")
+            .setName(R.string.card_name_cdg_navigo)
             .setLocation(R.string.location_paris)
             .setCardType(CardType.ISO7816)
             .build();
 
     public static final CardInfo ENVIBUS_CARD_INFO = new CardInfo.Builder()
-            .setName("Envibus")
+            .setName(R.string.card_name_sxd_envibus)
             .setLocation(R.string.location_sophia_antipolis)
             .setCardType(CardType.ISO7816)
             .build();
 
     public static final CardInfo TAM_MONTPELLIER_CARD_INFO = new CardInfo.Builder()
-            .setName("TaM") // Transports de l'agglomération de Montpellier
+            .setName(R.string.card_name_mpl_tam)
             .setLocation(R.string.location_montpellier)
             .setCardType(CardType.ISO7816)
             .build();
@@ -219,8 +227,18 @@ public class IntercodeTransitData extends Calypso1545TransitData {
         return "Intercode-" + Integer.toHexString(networkId);
     }
 
+    private static CardInfo getCardInfo(int networkId) {
+        if (NETWORKS.get(networkId) != null) {
+            return NETWORKS.get(networkId).first;
+        }
+
+        return INTERCODE_CARD_INFO;
+    }
+
     private static int getNetId(CalypsoApplication card) {
-        return Utils.getBitsFromBuffer(card.getFile(CalypsoApplication.File.TICKETING_ENVIRONMENT).getRecord(1).getData(),
+        return Utils.getBitsFromBuffer(card.getFile(
+                CalypsoApplication.File.TICKETING_ENVIRONMENT)
+                        .getRecord(1).getData(),
                 13, 24);
     }
 
@@ -265,7 +283,13 @@ public class IntercodeTransitData extends Calypso1545TransitData {
         @Override
         public TransitIdentity parseTransitIdentity(CalypsoApplication card) {
             int netId = getNetId(card);
-            return new TransitIdentity(getCardName(netId), getSerial(netId, card));
+            final CardInfo i = IntercodeTransitData.getCardInfo(netId);
+            if (i == INTERCODE_CARD_INFO) {
+                return new TransitIdentity(getCardName(netId), getSerial(netId, card));
+            } else {
+                return new TransitIdentity(IntercodeTransitData.getCardInfo(netId).getNameId(),
+                        getSerial(netId, card));
+            }
         }
 
         @Override
@@ -287,15 +311,14 @@ public class IntercodeTransitData extends Calypso1545TransitData {
         @Override
         public CardInfo getCardInfo(byte[] ticketEnv) {
             int netId = Utils.getBitsFromBuffer(ticketEnv, 13, 24);
-            if (NETWORKS.get(netId) != null)
-                return NETWORKS.get(netId).first;
-            return null;
+            return IntercodeTransitData.getCardInfo(netId);
         }
     };
 
+    @NonNull
     @Override
-    public String getCardName() {
-        return getCardName(mNetworkId);
+    public CardInfo getCardInfo() {
+        return getCardInfo(mNetworkId);
     }
 
     private IntercodeTransitData(Parcel parcel) {

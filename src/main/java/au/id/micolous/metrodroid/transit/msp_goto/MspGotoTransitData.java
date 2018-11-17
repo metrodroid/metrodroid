@@ -23,7 +23,6 @@ import au.id.micolous.metrodroid.transit.nextfare.NextfareTrip;
 import au.id.micolous.metrodroid.transit.nextfare.record.NextfareTransactionRecord;
 
 public class MspGotoTransitData extends NextfareTransitData {
-    public static final String NAME = "Go-To card";
     public static final Creator<MspGotoTransitData> CREATOR = new Creator<MspGotoTransitData>() {
         public MspGotoTransitData createFromParcel(Parcel parcel) {
             return new MspGotoTransitData(parcel);
@@ -49,7 +48,7 @@ public class MspGotoTransitData extends NextfareTransitData {
 
     public static final CardInfo CARD_INFO = new CardInfo.Builder()
             // Using the short name (Goto) may be ambiguous
-            .setName(NAME)
+            .setName(R.string.card_name_msp_goto)
             .setLocation(R.string.location_minneapolis)
             .setCardType(CardType.MifareClassic)
             .setImageId(R.drawable.msp_goto_card, R.drawable.iso7810_id1_alpha)
@@ -70,7 +69,7 @@ public class MspGotoTransitData extends NextfareTransitData {
     public static final ClassicCardTransitFactory FACTORY = new NextFareTransitFactory() {
         @Override
         public TransitIdentity parseTransitIdentity(@NonNull ClassicCard card) {
-            return super.parseTransitIdentity(card, NAME);
+            return super.parseTransitIdentity(card, R.string.card_name_msp_goto);
         }
 
         private boolean check(ClassicSector sector0) {
@@ -139,9 +138,10 @@ public class MspGotoTransitData extends NextfareTransitData {
         return false;
     }
 
+    @NonNull
     @Override
-    public String getCardName() {
-        return NAME;
+    public CardInfo getCardInfo() {
+        return CARD_INFO;
     }
 
     @Override

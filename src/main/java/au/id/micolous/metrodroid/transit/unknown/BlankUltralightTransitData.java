@@ -20,11 +20,13 @@ package au.id.micolous.metrodroid.transit.unknown;
 
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.support.annotation.NonNull;
 
 import java.util.Arrays;
 import java.util.List;
 
 import au.id.micolous.farebot.R;
+import au.id.micolous.metrodroid.card.CardType;
 import au.id.micolous.metrodroid.card.ultralight.UltralightCard;
 import au.id.micolous.metrodroid.card.ultralight.UltralightCardTransitFactory;
 import au.id.micolous.metrodroid.card.ultralight.UltralightPage;
@@ -48,8 +50,14 @@ public class BlankUltralightTransitData extends TransitData {
         }
     };
 
-    public BlankUltralightTransitData() {
+    public static final CardInfo CARD_INFO = new CardInfo.Builder()
+            .setName(R.string.blank_mfu_card)
+            .setLocation(R.string.location_many)
+            .setCardType(CardType.MifareUltralight)
+            .hide()
+            .build();
 
+    public BlankUltralightTransitData() {
     }
 
     public final static UltralightCardTransitFactory FACTORY = new UltralightCardTransitFactory() {
@@ -164,7 +172,7 @@ public class BlankUltralightTransitData extends TransitData {
 
         @Override
         public TransitIdentity parseTransitIdentity(UltralightCard card) {
-            return new TransitIdentity(Utils.localizeString(R.string.blank_mfu_card), null);
+            return new TransitIdentity(R.string.blank_mfu_card, null);
         }
     };
 
@@ -173,11 +181,11 @@ public class BlankUltralightTransitData extends TransitData {
         return null;
     }
 
+    @NonNull
     @Override
-    public String getCardName() {
-        return Utils.localizeString(R.string.blank_mfu_card);
+    public CardInfo getCardInfo() {
+        return CARD_INFO;
     }
-
 
     @Override
     public void writeToParcel(Parcel dest, int i) {

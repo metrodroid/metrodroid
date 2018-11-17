@@ -20,6 +20,7 @@ package au.id.micolous.metrodroid.transit.yvr_compass;
 
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.support.annotation.NonNull;
 import android.util.SparseArray;
 
 import java.util.Collections;
@@ -54,13 +55,11 @@ public class CompassUltralightTransitData extends NextfareUltralightTransitData 
 
     public static final CardInfo CARD_INFO = new CardInfo.Builder()
             .setImageId(R.drawable.yvr_compass_card)
-            .setName(CompassUltralightTransitData.NAME)
+            .setName(R.string.card_name_yvr_compass)
             .setLocation(R.string.location_vancouver)
             .setCardType(CardType.MifareUltralight)
             .setExtraNote(R.string.compass_note)
             .build();
-
-    private static final String NAME = "Compass";
 
     static final TimeZone TZ = TimeZone.getTimeZone("America/Vancouver");
 
@@ -94,7 +93,7 @@ public class CompassUltralightTransitData extends NextfareUltralightTransitData 
 
         @Override
         public TransitIdentity parseTransitIdentity(UltralightCard card) {
-            return new TransitIdentity(NAME, formatSerial(getSerial(card)));
+            return new TransitIdentity(R.string.card_name_yvr_compass, formatSerial(getSerial(card)));
         }
     };
 
@@ -108,9 +107,10 @@ public class CompassUltralightTransitData extends NextfareUltralightTransitData 
         return TZ;
     }
 
+    @NonNull
     @Override
-    public String getCardName() {
-        return NAME;
+    public CardInfo getCardInfo() {
+        return CARD_INFO;
     }
 
     private CompassUltralightTransitData(Parcel p) {

@@ -201,7 +201,7 @@
 
     <string name="card_note_card_number_only">Kun kortnummeret kan leses.</string>
 
-    <string name="nextfare">Cubic Nextfare</string>
+    <string name="card_name_us_nextfare">Cubic Nextfare</string>
     <string name="nextfare_ticket_class">Billettypekode %d</string>
     <string name="locked_mfc_card">Låst MIFARE Classic-kort</string>
     <string name="locked_mfu_card">Låst MIFARE Ultralight-kort</string>

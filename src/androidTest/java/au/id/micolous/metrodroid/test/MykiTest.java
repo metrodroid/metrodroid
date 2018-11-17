@@ -22,6 +22,7 @@ import junit.framework.TestCase;
 
 import java.util.Calendar;
 
+import au.id.micolous.farebot.R;
 import au.id.micolous.metrodroid.card.desfire.DesfireApplication;
 import au.id.micolous.metrodroid.card.desfire.DesfireCard;
 import au.id.micolous.metrodroid.card.desfire.files.DesfireFile;
@@ -50,7 +51,7 @@ public class MykiTest extends TestCase {
 
         // Test TransitIdentity
         TransitIdentity i = c.parseTransitIdentity();
-        assertEquals(MykiTransitData.NAME, i.getName());
+        assertEquals(R.string.card_name_mel_myki, i.getNameId());
         assertEquals("308425123456780", i.getSerialNumber());
 
         // Test TransitData

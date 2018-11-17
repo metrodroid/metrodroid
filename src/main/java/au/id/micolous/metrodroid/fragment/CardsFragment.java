@@ -2,7 +2,7 @@
  * CardsFragment.java
  *
  * Copyright 2012-2014 Eric Butler <eric@codebutler.com>
- * Copyright 2015-2016 Michael Farrell <micolous+git@gmail.com>
+ * Copyright 2015-2018 Michael Farrell <micolous+git@gmail.com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -36,6 +36,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.content.ClipboardManager;
+import android.support.annotation.Nullable;
 import android.support.v4.content.FileProvider;
 import android.util.Log;
 import android.util.Pair;
@@ -99,7 +100,10 @@ public class CardsFragment extends ExpandableListFragment {
         private final int mType;
         private final String mSerial;
         private final String mData;
+        @Nullable
         private TransitIdentity mTransitIdentity;
+        @Nullable
+        private String mErrorMessage = null;
         private final int mId;
 
         public Scan(Cursor cursor) {
@@ -109,6 +113,42 @@ public class CardsFragment extends ExpandableListFragment {
             mScannedAt = cursor.getLong(cursor.getColumnIndex(CardsTableColumns.SCANNED_AT));
             mLabel = cursor.getString(cursor.getColumnIndex(CardsTableColumns.LABEL));
             mData = cursor.getString(cursor.getColumnIndex(CardsTableColumns.DATA));
+        }
+
+        private void parseTransitIdentity() {
+            if (mTransitIdentity != null || mErrorMessage != null) {
+                return;
+            }
+
+            try {
+                final Serializer serializer = MetrodroidApplication.getInstance().getSerializer();
+                mTransitIdentity = Card.fromXml(serializer, mData).parseTransitIdentity();
+            } catch (Exception ex) {
+                // TODO: i18n
+                mErrorMessage = String.format("Error: %s", Utils.getErrorMessage(ex));
+            }
+        }
+
+        @Nullable
+        public TransitIdentity getTransitIdentity() {
+            parseTransitIdentity();
+
+            if (mTransitIdentity != null) {
+                return mTransitIdentity;
+            }
+
+            return null;
+        }
+
+        @Nullable
+        public String getErrorMessage() {
+            parseTransitIdentity();
+
+            if (mTransitIdentity != null) {
+                return null;
+            }
+
+            return mErrorMessage;
         }
     }
 
@@ -487,23 +527,21 @@ public class CardsFragment extends ExpandableListFragment {
             String serial = scan.mSerial;
             String label = scan.mLabel;
 
-            if (scan.mTransitIdentity == null) {
-                try {
-                    Serializer serializer = MetrodroidApplication.getInstance().getSerializer();
-                    scan.mTransitIdentity = Card.fromXml(serializer, scan.mData).parseTransitIdentity();
-                } catch (Exception ex) {
-                    String error = String.format("Error: %s", Utils.getErrorMessage(ex));
-                    scan.mTransitIdentity = new TransitIdentity(error, null);
-                }
-            }
-
-            TransitIdentity identity = scan.mTransitIdentity;
+            @Nullable
+            final TransitIdentity identity = scan.getTransitIdentity();
+            @Nullable
+            final String error = scan.getErrorMessage();
 
             TextView textView1 = convertView.findViewById(android.R.id.text1);
             TextView textView2 = convertView.findViewById(android.R.id.text2);
 
             if (identity != null) {
-                textView1.setText(identity.getName());
+                if (identity.getNameId() != 0) {
+                    textView1.setText(identity.getNameId());
+                } else {
+                    textView1.setText(identity.getName());
+                }
+
                 if (label != null && !label.equals("")) {
                     // This is used for imported cards from mfcdump_to_farebotxml.py
                     // Used for development and testing. We should always show this.
@@ -520,6 +558,9 @@ public class CardsFragment extends ExpandableListFragment {
                         textView2.setText(serial);
                     }
                 }
+            } else if (error != null) {
+                textView1.setText(R.string.error);
+                textView2.setText(error);
             } else {
                 textView1.setText(R.string.unknown_card);
                 if (MetrodroidApplication.hideCardNumbers()) {

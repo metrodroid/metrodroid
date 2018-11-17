@@ -80,7 +80,7 @@ public class OVChipTransitData extends TransitData {
 
     public static final CardInfo CARD_INFO = new CardInfo.Builder()
             .setImageId(R.drawable.ovchip_card)
-            .setName(OVChipTransitData.NAME)
+            .setName(R.string.card_name_nl_ovc)
             .setLocation(R.string.location_the_netherlands)
             .setCardType(CardType.MifareClassic)
             .setKeysRequired()
@@ -99,7 +99,6 @@ public class OVChipTransitData extends TransitData {
     };
     private static final byte[] OVC_MANUFACTURER = {(byte) 0x98, (byte) 0x02, (byte) 0x00 /*, (byte) 0x64, (byte) 0x8E */};
     private static final byte[] OVC_HEADER = new byte[11];
-    public static final String NAME = "OV-chipkaart";
     private static Map<Integer, String> sAgencies = new ImmutableMapBuilder<Integer, String>()
             .put(AGENCY_TLS, "Trans Link Systems")
             .put(AGENCY_CONNEXXION, "Connexxion")
@@ -232,7 +231,7 @@ public class OVChipTransitData extends TransitData {
         public TransitIdentity parseTransitIdentity(@NonNull ClassicCard card) {
             String hex = Utils.getHexString(card.getSector(0).getBlock(0).getData(), null);
             String id = hex.substring(0, 8);
-            return new TransitIdentity("OV-chipkaart", id);
+            return new TransitIdentity(R.string.card_name_nl_ovc, id);
         }
 
         @Override
@@ -294,9 +293,10 @@ public class OVChipTransitData extends TransitData {
         return MetrodroidApplication.getInstance().getString(R.string.unknown_format, "0x" + Long.toString(agency, 16));
     }
 
+    @NonNull
     @Override
-    public String getCardName() {
-        return "OV-Chipkaart";
+    public CardInfo getCardInfo() {
+        return CARD_INFO;
     }
 
     @Override

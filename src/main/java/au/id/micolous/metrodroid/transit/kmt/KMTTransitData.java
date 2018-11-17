@@ -20,6 +20,7 @@
 package au.id.micolous.metrodroid.transit.kmt;
 
 import android.os.Parcel;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
 import org.apache.commons.lang3.ArrayUtils;
@@ -57,7 +58,7 @@ public class KMTTransitData extends TransitData {
 
     public static final CardInfo CARD_INFO = new CardInfo.Builder()
             .setImageId(R.drawable.kmt_card)
-            .setName(KMTTransitData.NAME)
+            .setName(R.string.card_name_cgk_kmt)
             .setLocation(R.string.location_jakarta)
             .setCardType(CardType.FeliCa)
             .setExtraNote(R.string.kmt_extra_note)
@@ -146,7 +147,7 @@ public class KMTTransitData extends TransitData {
             if (serviceID != null) {
                 serialNumber = new String(serviceID.getBlocks().get(0).getData());
             }
-            return new TransitIdentity(NAME, serialNumber);
+            return new TransitIdentity(R.string.card_name_cgk_kmt, serialNumber);
         }
     };
 
@@ -166,9 +167,10 @@ public class KMTTransitData extends TransitData {
         return mTrips;
     }
 
+    @NonNull
     @Override
-    public String getCardName() {
-        return NAME;
+    public CardInfo getCardInfo() {
+        return CARD_INFO;
     }
 
     public void writeToParcel(Parcel parcel, int flags) {
