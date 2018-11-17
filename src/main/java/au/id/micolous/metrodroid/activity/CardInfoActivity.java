@@ -157,7 +157,7 @@ public class CardInfoActivity extends MetrodroidActivity {
                     } else {
                         mCardSerial = "";
                     }
-                    actionBar.setTitle(mTransitData.getCardName());
+                    actionBar.setTitle(mTransitData.getCardInfo().getNameId());
                     actionBar.setSubtitle(mCardSerial);
 
                     Bundle args = new Bundle();

@@ -120,11 +120,6 @@ public abstract class TransitData implements Parcelable {
     @NonNull
     public abstract CardInfo getCardInfo();
 
-    @Deprecated
-    public String getCardName() {
-        return Utils.localizeString(getCardInfo().getNameId());
-    }
-
     /**
      * If a {@link TransitData} provider doesn't know some of the stops / stations on a user's card,
      * then it may raise a signal to the user to submit the unknown stations to our web service.
