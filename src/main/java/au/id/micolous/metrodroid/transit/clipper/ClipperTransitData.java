@@ -186,7 +186,7 @@ public class ClipperTransitData extends TransitData {
         return CARD_INFO;
     }
 
-    @Nullable
+    @NonNull
     @Override
     public TransitBalance getBalance() {
         return new TransitBalanceStored(TransitCurrency.USD(mBalance),
