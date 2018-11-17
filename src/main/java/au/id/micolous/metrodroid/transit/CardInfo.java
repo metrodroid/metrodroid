@@ -28,6 +28,7 @@ import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.support.annotation.DrawableRes;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.annotation.StringRes;
 import android.support.v7.content.res.AppCompatResources;
 import android.support.v7.graphics.Palette;
@@ -147,10 +148,15 @@ public final class CardInfo implements Formattable {
     }
 
     public boolean hasBitmap() {
-        return mImageAlphaId != 0 || mImageId != 0;
+        return mImageId != 0;
     }
 
-    public Drawable getDrawable(Context ctxt) {
+    @Nullable
+    public Drawable getDrawable(@NonNull Context ctxt) {
+        if (!hasBitmap()) {
+            return null;
+        }
+
         if (mImageAlphaId != 0) {
             Log.d("CardInfo", String.format(Locale.ENGLISH, "masked bitmap %x / %x", mImageId, mImageAlphaId));
             Resources res = ctxt.getResources();
@@ -199,9 +205,13 @@ public final class CardInfo implements Formattable {
         return mResourceExtraNote;
     }
 
-    private Bitmap toBitmap(Context ctx) {
-        Bitmap bitmap = null;
+    @Nullable
+    private Bitmap toBitmap(@NonNull Context ctx) {
+        Bitmap bitmap;
         Drawable drawable = getDrawable(ctx);
+        if (drawable == null) {
+            return null;
+        }
 
         if (drawable instanceof BitmapDrawable) {
             BitmapDrawable bitmapDrawable = (BitmapDrawable) drawable;
@@ -211,7 +221,8 @@ public final class CardInfo implements Formattable {
         }
 
         if(drawable.getIntrinsicWidth() <= 0 || drawable.getIntrinsicHeight() <= 0) {
-            bitmap = Bitmap.createBitmap(1, 1, Bitmap.Config.ARGB_8888); // Single color bitmap will be created of 1x1 pixel
+            // Single color bitmap will be created of 1x1 pixel
+            bitmap = Bitmap.createBitmap(16, 16, Bitmap.Config.ARGB_8888);
         } else {
             bitmap = Bitmap.createBitmap(drawable.getIntrinsicWidth(), drawable.getIntrinsicHeight(), Bitmap.Config.ARGB_8888);
         }
@@ -222,8 +233,11 @@ public final class CardInfo implements Formattable {
         return bitmap;
     }
 
-    public void buildPaletteAsync(Context ctx, Palette.PaletteAsyncListener listener) {
-        Palette.from(toBitmap(ctx)).generate(listener);
+    public void buildPaletteAsync(@NonNull Context ctx, Palette.PaletteAsyncListener listener) {
+        final Bitmap b = toBitmap(ctx);
+        if (b != null) {
+            Palette.from(b).generate(listener);
+        }
     }
 
     public boolean isHidden() {

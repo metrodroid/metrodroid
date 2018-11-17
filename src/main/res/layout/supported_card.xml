@@ -79,7 +79,7 @@
                 android:layout_gravity="center"
                 android:layout_marginStart="16dp"
                 android:contentDescription="@string/card_not_supported_on_device"
-                android:src="@drawable/banned"
+                app:srcCompat="@drawable/banned"
                 android:layout_marginLeft="16dp"
                 android:scaleType="fitXY"/>
         </LinearLayout>
@@ -91,7 +91,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:src="@drawable/orca_card"
+                tools:src="@drawable/orca_card"
                 android:layout_marginTop="40dp"
                 android:layout_marginBottom="40dp"/>
             <TextView

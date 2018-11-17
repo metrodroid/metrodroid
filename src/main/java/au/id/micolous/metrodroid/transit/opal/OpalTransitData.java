@@ -70,10 +70,6 @@ public class OpalTransitData extends TransitData {
             .setExtraNote(R.string.card_note_opal)
             .build();
 
-    public CardInfo getCardInfo() {
-        return CARD_INFO;
-    }
-
     public static final TimeZone TIME_ZONE = TimeZone.getTimeZone("Australia/Sydney");
     private static final GregorianCalendar OPAL_EPOCH;
 

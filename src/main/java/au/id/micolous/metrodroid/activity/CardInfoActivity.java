@@ -155,18 +155,21 @@ public class CardInfoActivity extends MetrodroidActivity {
 
                 try {
                     // Setup a theme
-                    if (mTransitData instanceof OpalTransitData) {
-                        ((OpalTransitData)mTransitData).getCardInfo().buildPaletteAsync(getBaseContext(), palette -> {
-                            Log.d("Opal", "palette");
-                            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                                Palette.Swatch vibrant = palette.getDominantSwatch();
-                                if (vibrant != null) {
-                                    getWindow().setStatusBarColor(vibrant.getRgb());
-                                    actionBar.setBackgroundDrawable(new ColorDrawable(vibrant.getRgb()));
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                        mTransitData.getCardInfo().buildPaletteAsync(getBaseContext(), palette -> {
+                            final Palette.Swatch bgcolour =
+                                    MetrodroidApplication.useLighterColours() ?
+                                            palette.getLightVibrantSwatch() :
+                                            palette.getDarkVibrantSwatch();
 
-                                }
-
+                            if (bgcolour != null) {
+                                getWindow().setStatusBarColor(bgcolour.getRgb());
+                                actionBar.setBackgroundDrawable(
+                                        new ColorDrawable(bgcolour.getRgb()));
+                                actionBar.setStackedBackgroundDrawable(
+                                        new ColorDrawable(bgcolour.getRgb()));
                             }
+
                         });
                     }
 

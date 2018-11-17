@@ -21,11 +21,15 @@ package au.id.micolous.metrodroid.activity;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.nfc.NfcAdapter;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.content.res.AppCompatResources;
+import android.support.v7.graphics.Palette;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
@@ -86,11 +90,14 @@ public class SupportedCardsActivity extends MetrodroidActivity {
                 convertView = mLayoutInflater.inflate(R.layout.supported_card, null);
             }
 
+
             CardInfo info = getItem(position);
             if (info == null) {
                 Log.e(getClass().getSimpleName(), "got a null card record at #" + position);
                 return convertView;
             }
+
+            final View v = convertView;
 
             ((TextView) convertView.findViewById(R.id.card_name)).setText(info.getNameId());
             TextView locationTextView = convertView.findViewById(R.id.card_location);
@@ -102,8 +109,31 @@ public class SupportedCardsActivity extends MetrodroidActivity {
 
             ImageView image = convertView.findViewById(R.id.card_image);
             Drawable d = null;
-            if (info.hasBitmap())
+            if (info.hasBitmap()) {
                 d = info.getDrawable(getContext());
+                // Setup a theme
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                    info.buildPaletteAsync(getBaseContext(), palette -> {
+                        final Palette.Swatch bgcolour =
+                                MetrodroidApplication.useLighterColours() ?
+                                        palette.getLightMutedSwatch() :
+                                        palette.getDarkMutedSwatch();
+
+                        if (bgcolour != null) {
+                            v.setBackgroundColor(bgcolour.getRgb());
+                            /* getWindow().setStatusBarColor(bgcolour.getRgb());
+                            actionBar.setBackgroundDrawable(
+                                    new ColorDrawable(bgcolour.getRgb()));
+                            actionBar.setStackedBackgroundDrawable(
+                                    new ColorDrawable(bgcolour.getRgb())); */
+                        }
+
+                    });
+                }
+            } else {
+                v.setBackgroundColor(Color.BLACK);
+            }
+
             if (d == null)
                 d = AppCompatResources.getDrawable(getContext(), R.drawable.ic_logo_glyph);
             image.setImageDrawable(d);

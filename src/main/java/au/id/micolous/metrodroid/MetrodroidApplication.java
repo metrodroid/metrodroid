@@ -25,6 +25,7 @@ import android.content.SharedPreferences;
 import android.nfc.NfcAdapter;
 import android.os.StrictMode;
 import android.preference.PreferenceManager;
+import android.support.annotation.StyleRes;
 import android.support.v7.app.AppCompatDelegate;
 import android.util.Log;
 
@@ -262,6 +263,7 @@ public class MetrodroidApplication extends Application {
         return prefs.getString(MetrodroidApplication.PREF_THEME, "dark");
     }
 
+    @StyleRes
     public static int chooseTheme() {
         String theme = getThemePreference();
         if (theme.equals("light"))
@@ -269,6 +271,17 @@ public class MetrodroidApplication extends Application {
         if (theme.equals("farebot"))
             return R.style.FareBot_Theme_Common;
         return R.style.Metrodroid_Dark;
+    }
+
+    public static boolean useLighterColours() {
+        switch (chooseTheme()) {
+            case R.style.FareBot_Theme_Common:
+            case R.style.Metrodroid_Light:
+                return true;
+
+            default:
+                return false;
+        }
     }
 
     public static boolean showRawStationIds() {
