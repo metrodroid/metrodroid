@@ -1,5 +1,5 @@
 /*
- * CurrencyFormatterTest.java
+ * TransitCurrencyTest.java
  *
  * Copyright 2017 Michael Farrell <micolous+git@gmail.com>
  *
@@ -18,11 +18,8 @@
  */
 package au.id.micolous.metrodroid.test;
 
-import android.os.Build;
-import android.os.PersistableBundle;
 import android.test.AndroidTestCase;
 import android.text.Spanned;
-import android.text.style.TtsSpan;
 
 import org.hamcrest.Matchers;
 
@@ -30,26 +27,12 @@ import au.id.micolous.metrodroid.transit.TransitCurrency;
 
 import static au.id.micolous.metrodroid.test.TestUtils.assertSpannedEquals;
 import static au.id.micolous.metrodroid.test.TestUtils.assertSpannedThat;
+import static au.id.micolous.metrodroid.test.TestUtils.assertTtsMarkers;
 
 /**
  * Tests the currency formatter.
  */
-public class CurrencyFormatterTest extends AndroidTestCase {
-
-    private void assertTtsMarkers(String currencyCode, String value, Spanned span) {
-        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
-            return;
-        }
-
-        TtsSpan[] ttsSpans = span.getSpans(0, span.length(), TtsSpan.class);
-        assertEquals(1, ttsSpans.length);
-
-
-        assertEquals(TtsSpan.TYPE_MONEY, ttsSpans[0].getType());
-        final PersistableBundle bundle = ttsSpans[0].getArgs();
-        assertEquals(currencyCode, bundle.getString(TtsSpan.ARG_CURRENCY));
-        assertEquals(value, bundle.getString(TtsSpan.ARG_INTEGER_PART));
-    }
+public class TransitCurrencyTest extends AndroidTestCase {
 
     /**
      * In Australian English, AUD should come out as a bare "$", and USD should come out with some
@@ -112,18 +95,22 @@ public class CurrencyFormatterTest extends AndroidTestCase {
 
         final Spanned usd = TransitCurrency.USD(1234).formatCurrencyString(true);
         assertSpannedEquals("$12.34", usd);
+        assertTtsMarkers("USD", "12.34", usd);
 
         // May be "A$12.34" or "AU$12.34".
         final Spanned aud = TransitCurrency.AUD(1234).formatCurrencyString(true);
         assertSpannedThat(aud, Matchers.startsWith("A"));
         assertSpannedThat(aud, Matchers.endsWith("$12.34"));
+        assertTtsMarkers("AUD", "12.34", aud);
 
         final Spanned gbp = new TransitCurrency(1234, "GBP").formatCurrencyString(true);
         assertSpannedEquals("£12.34", gbp);
+        assertTtsMarkers("GBP", "12.34", gbp);
 
         // May be "¥1,234" or "JP¥1,234".
         final Spanned jpy = TransitCurrency.JPY(1234).formatCurrencyString(true);
         assertSpannedThat(jpy, Matchers.endsWith("¥1,234"));
+        assertTtsMarkers("JPY", "1234", jpy);
     }
 
     /**
@@ -157,4 +144,64 @@ public class CurrencyFormatterTest extends AndroidTestCase {
         assertTtsMarkers("JPY", "1234", jpy);
     }
 
+    /**
+     * In French, comma is used as a decimal separator, spaces are used for grouping, and currency
+     * symbols are after the amount. TTS data must have an English formatting style.
+     */
+    public void testFrench() {
+        TestUtils.setLocale(getContext(), "fr-FR");
+
+        final Spanned usd = TransitCurrency.USD(1234).formatCurrencyString(true);
+        assertSpannedEquals("12,34 $US", usd);
+        assertTtsMarkers("USD", "12.34", usd);
+
+        final Spanned aud = TransitCurrency.AUD(1234).formatCurrencyString(true);
+        assertSpannedEquals("12,34 $AU", aud);
+        assertTtsMarkers("AUD", "12.34", aud);
+
+        // Allow not qualifying the country code.
+        final Spanned gbp = new TransitCurrency(1234, "GBP").formatCurrencyString(true);
+        assertSpannedThat(gbp, Matchers.startsWith("12,34 £"));
+        assertTtsMarkers("GBP", "12.34", gbp);
+
+        // This may not have a proper symbol
+        final Spanned jpy = TransitCurrency.JPY(1234).formatCurrencyString(true);
+        assertSpannedThat(jpy, Matchers.startsWith("1 234"));
+
+        final Spanned eur = new TransitCurrency(1234, "EUR").formatCurrencyString(true);
+        assertSpannedEquals("12,34 €", eur);
+        assertTtsMarkers("EUR", "12.34", eur);
+    }
+
+    public void testNumericLookup() {
+        TestUtils.setLocale(getContext(), "en-US");
+
+        TransitCurrency c = new TransitCurrency(1234, 36, 100.);
+        assertEquals(TransitCurrency.AUD(1234), c);
+
+        // Test with an invalid code
+        c = new TransitCurrency(1234, 9999);
+        assertEquals(TransitCurrency.XXX(1234), c);
+
+    }
+    public void testDivisor() {
+        TestUtils.setLocale(getContext(), "en-US");
+
+        // Test with no divisor -- this should infer the divisor
+        TransitCurrency c = new TransitCurrency(1234, 36);
+        assertEquals(TransitCurrency.AUD(1234), c);
+
+        // Test with no divisor -- a string currencyCode should NOT infer the divisor
+        c = new TransitCurrency(1234, "JPY");
+        assertSpannedThat(c.formatCurrencyString(true), Matchers.endsWith("¥12.34"));
+        assertSpannedThat(c.formatCurrencyString(false), Matchers.endsWith("¥12.34"));
+
+        // Test with different divisors for equality
+        c = new TransitCurrency(12340, "AUD", 1000.);
+        assertEquals(TransitCurrency.AUD(1234), c);
+
+        // Test overriding the divisor in a currency code.
+        c = new TransitCurrency(12340, 36, 1000.);
+        assertEquals(TransitCurrency.AUD(1234), c);
+    }
 }

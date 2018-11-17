@@ -6,10 +6,12 @@ import android.content.res.AssetManager;
 import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.os.Build;
+import android.os.PersistableBundle;
 import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.test.InstrumentationTestCase;
 import android.text.Spanned;
+import android.text.style.TtsSpan;
 
 import junit.framework.Assert;
 
@@ -58,11 +60,32 @@ final class TestUtils {
             .build();
 
     static void assertSpannedEquals(String expected, Spanned actual) {
-        Assert.assertEquals(expected, actual.toString());
+        String actualString = actual.toString();
+        // nbsp -> sp
+        actualString = actualString.replace(' ', ' ');
+        Assert.assertEquals(expected, actualString);
     }
 
     static void assertSpannedThat(Spanned actual, Matcher<? super String> matcher) {
-        assertThat(actual.toString(), matcher);
+        String actualString = actual.toString();
+        // nbsp -> sp
+        actualString = actualString.replace(' ', ' ');
+        assertThat(actualString, matcher);
+    }
+
+    static void assertTtsMarkers(String currencyCode, String value, Spanned span) {
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
+            return;
+        }
+
+        TtsSpan[] ttsSpans = span.getSpans(0, span.length(), TtsSpan.class);
+        Assert.assertEquals(1, ttsSpans.length);
+
+
+        Assert.assertEquals(TtsSpan.TYPE_MONEY, ttsSpans[0].getType());
+        final PersistableBundle bundle = ttsSpans[0].getArgs();
+        Assert.assertEquals(currencyCode, bundle.getString(TtsSpan.ARG_CURRENCY));
+        Assert.assertEquals(value, bundle.getString(TtsSpan.ARG_INTEGER_PART));
     }
 
     @NonNull
