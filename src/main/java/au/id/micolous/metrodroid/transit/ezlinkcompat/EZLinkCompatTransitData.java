@@ -105,7 +105,7 @@ public class EZLinkCompatTransitData extends TransitData {
             List<EZLinkCompatTrip> trips = new ArrayList<>();
 
             for (CEPASCompatTransaction transaction : transactions)
-                trips.add(new EZLinkCompatTrip(transaction, getCardName()));
+                trips.add(new EZLinkCompatTrip(transaction));
 
             return trips;
         }
