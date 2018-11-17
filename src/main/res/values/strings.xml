@@ -1433,4 +1433,14 @@
     <string name="location_iaroslavl">Iaroslavl</string>
     <string name="card_name_krasnodar_etk">ETK Krasnodar</string>
     <string name="location_krasnodar">Krasnodar</string>
+    <!-- Rkf specific strings -->
+    <string name="rkf_card_status">Card status</string>
+    <!-- Translators: describes the status of a card or transaction -->
+    <string name="rkf_status_ok">OK, enabled</string>
+    <!-- Translators: describes the status of a card or transaction -->
+    <string name="rkf_status_action_pending">Action pending</string>
+    <!-- Translators: describes the status of a card or transaction -->
+    <string name="rkf_status_temp_disabled">Temporarily disabled or suspended</string>
+    <!-- Translators: describes the status of a card or transaction -->
+    <string name="rkf_status_not_ok">Permanently disabled</string>
 </resources>

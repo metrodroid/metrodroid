@@ -77,13 +77,15 @@ data class RkfTransitData internal constructor (
                 mTcci.getTimeStampString(En1545TransitData.ENV_APPLICATION_VALIDITY_END, mLookup.timeZone)))
         li.add(ListItem(R.string.card_issuer,
                 mLookup.getAgencyName(mTcci.getIntOrZero(En1545TransitData.ENV_APPLICATION_ISSUER_ID), false)))
-        when (mTcci.getIntOrZero(STATUS)) {
-            0x01 -> li.add(ListItem("Card status", "OK"))
-            0x21 -> li.add(ListItem("Card status", "Disabled/Suspended but action pending"))
-            0x3f -> li.add(ListItem("Card status", "Temporarily disabled/suspended"))
-            0x58 -> li.add(ListItem("Card status", "Not OK, disabled/suspended"))
-            else -> li.add(ListItem("Card status", mTcci.getIntOrZero(STATUS).toString()))
-        }
+
+        val status = mTcci.getIntOrZero(STATUS)
+        li.add(ListItem(R.string.rkf_card_status, Utils.localizeString(when (status) {
+            0x01 -> R.string.rkf_status_ok
+            0x21 -> R.string.rkf_status_action_pending
+            0x3f -> R.string.rkf_status_temp_disabled
+            0x58 -> R.string.rkf_status_not_ok
+            else -> R.string.unknown_format
+        }, "0x" + status.toString(16))))
         return li
     }
 
