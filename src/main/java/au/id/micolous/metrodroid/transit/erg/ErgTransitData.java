@@ -79,7 +79,7 @@ public class ErgTransitData extends TransitData {
     public static final Creator<ErgTransitData> CREATOR = new Creator<ErgTransitData>() {
         @Override
         public ErgTransitData createFromParcel(Parcel in) {
-            return new ErgTransitData(in, "AUD");
+            return new ErgTransitData(in, "XXX");
         }
 
         @Override
@@ -99,7 +99,7 @@ public class ErgTransitData extends TransitData {
     }
 
     public ErgTransitData(ClassicCard card) {
-        this(card, "AUD");
+        this(card, "XXX");
     }
 
     // Decoder
