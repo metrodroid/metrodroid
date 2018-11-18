@@ -46,7 +46,6 @@ public class AtHopStubTransitData extends SerialOnlyTransitData {
     public static final CardInfo CARD_INFO = new CardInfo.Builder()
             .setName(R.string.card_name_akl_athop)
             .setCardType(CardType.MifareDesfire)
-            .setImageId(R.drawable.trimethop_card)
             .setLocation(R.string.location_auckland_nz)
             .setExtraNote(R.string.card_note_card_number_only)
             .build();
