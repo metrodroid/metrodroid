@@ -26,12 +26,14 @@ import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
+import android.os.Build;
 import android.support.annotation.DrawableRes;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.annotation.StringRes;
 import android.support.v7.content.res.AppCompatResources;
 import android.support.v7.graphics.Palette;
+import android.support.v7.graphics.Target;
 import android.util.Log;
 
 import java.util.ArrayList;
@@ -41,6 +43,7 @@ import java.util.Formattable;
 import java.util.Formatter;
 import java.util.List;
 import java.util.Locale;
+import java.util.function.Predicate;
 
 import au.id.micolous.metrodroid.card.CardType;
 import au.id.micolous.metrodroid.card.calypso.CalypsoApplication;
@@ -83,6 +86,9 @@ public final class CardInfo implements Formattable {
         }
         ret.add(TMoneyTransitData.CARD_INFO);
         ret.addAll(Arrays.asList(EZLinkTransitData.ALL_CARD_INFOS));
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            ret.removeIf(CardInfo::isHidden);
+        }
         Collections.sort(ret, (a, b) -> a.getName().compareToIgnoreCase(b.getName()));
         return ret;
     }

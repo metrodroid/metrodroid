@@ -35,6 +35,7 @@ import android.speech.tts.TextToSpeech.OnInitListener;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
 import android.support.v7.graphics.Palette;
+import android.support.v7.widget.Toolbar;
 import android.text.Spanned;
 import android.util.Log;
 import android.view.Menu;
@@ -54,7 +55,6 @@ import au.id.micolous.metrodroid.fragment.UnauthorizedCardFragment;
 import au.id.micolous.metrodroid.provider.CardsTableColumns;
 import au.id.micolous.metrodroid.transit.TransitBalance;
 import au.id.micolous.metrodroid.transit.TransitData;
-import au.id.micolous.metrodroid.transit.opal.OpalTransitData;
 import au.id.micolous.metrodroid.transit.unknown.BlankClassicTransitData;
 import au.id.micolous.metrodroid.transit.unknown.BlankUltralightTransitData;
 import au.id.micolous.metrodroid.transit.unknown.UnauthorizedTransitData;
@@ -105,6 +105,8 @@ public class CardInfoActivity extends MetrodroidActivity {
         final ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
         actionBar.setTitle(R.string.loading);
+
+        final Toolbar toolBar = findViewById(R.id.action_bar);
 
         new AsyncTask<Void, Void, Void>() {
             public boolean mSpeakBalanceEnabled;
@@ -157,17 +159,19 @@ public class CardInfoActivity extends MetrodroidActivity {
                     // Setup a theme
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
                         mTransitData.getCardInfo().buildPaletteAsync(getBaseContext(), palette -> {
-                            final Palette.Swatch bgcolour =
-                                    MetrodroidApplication.useLighterColours() ?
-                                            palette.getLightVibrantSwatch() :
-                                            palette.getDarkVibrantSwatch();
+                            final Palette.Swatch swatch = palette.getDominantSwatch();
+//                                    MetrodroidApplication.useLighterColours() ?
+//                                            palette.getLightVibrantSwatch() :
+//                                            palette.getVibrantSwatch();
 
-                            if (bgcolour != null) {
-                                getWindow().setStatusBarColor(bgcolour.getRgb());
+                            if (swatch != null) {
+                                getWindow().setStatusBarColor(swatch.getRgb());
                                 actionBar.setBackgroundDrawable(
-                                        new ColorDrawable(bgcolour.getRgb()));
+                                        new ColorDrawable(swatch.getRgb()));
                                 actionBar.setStackedBackgroundDrawable(
-                                        new ColorDrawable(bgcolour.getRgb()));
+                                        new ColorDrawable(swatch.getRgb()));
+                                toolBar.setTitleTextColor(swatch.getTitleTextColor() | 0xff000000);
+                                toolBar.setSubtitleTextColor(swatch.getBodyTextColor() | 0xff000000);
                             }
 
                         });

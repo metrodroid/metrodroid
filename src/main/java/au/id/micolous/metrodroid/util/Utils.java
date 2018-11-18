@@ -56,6 +56,8 @@ import android.text.style.LocaleSpan;
 import android.text.style.TtsSpan;
 import android.text.style.TypefaceSpan;
 import android.util.Log;
+import android.view.View;
+import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.Toast;
 
@@ -79,6 +81,7 @@ import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.Locale;
 import java.util.TimeZone;
+import java.util.function.Predicate;
 
 import au.id.micolous.farebot.R;
 import au.id.micolous.metrodroid.MetrodroidApplication;
@@ -1125,5 +1128,23 @@ public class Utils {
         }
         clipboard.setPrimaryClip(data);
         Toast.makeText(context, R.string.copied_to_clipboard, Toast.LENGTH_SHORT).show();
+    }
+
+    public interface ViewIterator {
+        boolean each(View v);
+    }
+
+    public static void forEachViewChild(ViewGroup vg, ViewIterator vi) {
+        for (int i=0; i < vg.getChildCount(); i++) {
+            final View v = vg.getChildAt(i);
+
+            if (!vi.each(v)) {
+                break;
+            }
+
+            if (v instanceof ViewGroup) {
+                forEachViewChild((ViewGroup) v, vi);
+            }
+        }
     }
 }

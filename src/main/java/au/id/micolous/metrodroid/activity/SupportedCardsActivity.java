@@ -30,6 +30,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.content.res.AppCompatResources;
 import android.support.v7.graphics.Palette;
+import android.support.v7.widget.CardView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
@@ -89,49 +90,66 @@ public class SupportedCardsActivity extends MetrodroidActivity {
             if (convertView == null) {
                 convertView = mLayoutInflater.inflate(R.layout.supported_card, null);
             }
-
+            final CardView v = (CardView)convertView;
 
             CardInfo info = getItem(position);
             if (info == null) {
                 Log.e(getClass().getSimpleName(), "got a null card record at #" + position);
-                return convertView;
+                return v;
             }
 
-            final View v = convertView;
 
-            ((TextView) convertView.findViewById(R.id.card_name)).setText(info.getNameId());
-            TextView locationTextView = convertView.findViewById(R.id.card_location);
+            ((TextView) v.findViewById(R.id.card_name)).setText(info.getNameId());
+            TextView locationTextView = v.findViewById(R.id.card_location);
             if (info.getLocationId() != 0) {
                 locationTextView.setText(getString(info.getLocationId()));
                 locationTextView.setVisibility(View.VISIBLE);
             } else
                 locationTextView.setVisibility(View.GONE);
 
-            ImageView image = convertView.findViewById(R.id.card_image);
+            ImageView image = v.findViewById(R.id.card_image);
             Drawable d = null;
             if (info.hasBitmap()) {
                 d = info.getDrawable(getContext());
                 // Setup a theme
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
                     info.buildPaletteAsync(getBaseContext(), palette -> {
-                        final Palette.Swatch bgcolour =
-                                MetrodroidApplication.useLighterColours() ?
-                                        palette.getLightMutedSwatch() :
-                                        palette.getDarkMutedSwatch();
+                        final Palette.Swatch swatch = palette.getDominantSwatch();
+//                                MetrodroidApplication.useLighterColours() ?
+//                                        palette.getLightMutedSwatch() :
+//                                        palette.getDarkMutedSwatch();
 
-                        if (bgcolour != null) {
-                            v.setBackgroundColor(bgcolour.getRgb());
-                            /* getWindow().setStatusBarColor(bgcolour.getRgb());
+                        if (swatch != null) {
+                            v.setCardBackgroundColor(swatch.getRgb());
+
+                            final int textColour = swatch.getTitleTextColor() | 0xff000000;
+                            Utils.forEachViewChild(v, v1 -> {
+                                if (v1 instanceof TextView) {
+                                    if (v1.getId() != R.id.card_not_supported) {
+                                        ((TextView) v1).setTextColor(textColour);
+                                    }
+                                }
+                                return true;
+                            });
+                            /* getWindow().setStatusBarColor(swatch.getRgb());
                             actionBar.setBackgroundDrawable(
-                                    new ColorDrawable(bgcolour.getRgb()));
+                                    new ColorDrawable(swatch.getRgb()));
                             actionBar.setStackedBackgroundDrawable(
-                                    new ColorDrawable(bgcolour.getRgb())); */
+                                    new ColorDrawable(swatch.getRgb())); */
                         }
 
                     });
                 }
             } else {
-                v.setBackgroundColor(Color.BLACK);
+                v.setCardBackgroundColor(Color.BLACK);
+                Utils.forEachViewChild(v, v1 -> {
+                    if (v1 instanceof TextView) {
+                        if (v1.getId() != R.id.card_not_supported) {
+                            ((TextView) v1).setTextColor(Color.WHITE);
+                        }
+                    }
+                    return true;
+                });
             }
 
             if (d == null)
@@ -148,24 +166,24 @@ public class SupportedCardsActivity extends MetrodroidActivity {
             if (nfcAvailable) {
                 if (info.getCardType() == CardType.MifareClassic && !app.getMifareClassicSupport()) {
                     // MIFARE Classic is not supported by this device.
-                    convertView.findViewById(R.id.card_not_supported).setVisibility(View.VISIBLE);
-                    convertView.findViewById(R.id.card_not_supported_icon).setVisibility(View.VISIBLE);
+                    v.findViewById(R.id.card_not_supported).setVisibility(View.VISIBLE);
+                    v.findViewById(R.id.card_not_supported_icon).setVisibility(View.VISIBLE);
                 } else {
-                    convertView.findViewById(R.id.card_not_supported).setVisibility(View.GONE);
-                    convertView.findViewById(R.id.card_not_supported_icon).setVisibility(View.GONE);
+                    v.findViewById(R.id.card_not_supported).setVisibility(View.GONE);
+                    v.findViewById(R.id.card_not_supported_icon).setVisibility(View.GONE);
                 }
             } else {
                 // This device does not support NFC, so all cards are not supported.
-                convertView.findViewById(R.id.card_not_supported).setVisibility(View.VISIBLE);
-                convertView.findViewById(R.id.card_not_supported_icon).setVisibility(View.VISIBLE);
+                v.findViewById(R.id.card_not_supported).setVisibility(View.VISIBLE);
+                v.findViewById(R.id.card_not_supported_icon).setVisibility(View.VISIBLE);
             }
 
             // Keys being required is secondary to the card not being supported.
             if (info.getKeysRequired()) {
                 notes += Utils.localizeString(R.string.keys_required) + " ";
-                convertView.findViewById(R.id.card_locked).setVisibility(View.VISIBLE);
+                v.findViewById(R.id.card_locked).setVisibility(View.VISIBLE);
             } else
-                convertView.findViewById(R.id.card_locked).setVisibility(View.GONE);
+                v.findViewById(R.id.card_locked).setVisibility(View.GONE);
 
             if (info.getPreview()) {
                 notes += Utils.localizeString(R.string.card_preview_reader) + " ";
@@ -175,14 +193,14 @@ public class SupportedCardsActivity extends MetrodroidActivity {
                 notes += Utils.localizeString(info.getResourceExtraNote()) + " ";
             }
 
-            TextView note = convertView.findViewById(R.id.card_note);
+            TextView note = v.findViewById(R.id.card_note);
             note.setText(notes);
             if (notes.equals(""))
                 note.setVisibility(View.GONE);
             else
                 note.setVisibility(View.VISIBLE);
 
-            return convertView;
+            return v;
         }
     }
 }
