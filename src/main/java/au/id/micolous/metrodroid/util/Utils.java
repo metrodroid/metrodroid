@@ -96,8 +96,6 @@ import au.id.micolous.metrodroid.MetrodroidApplication;
 import au.id.micolous.metrodroid.key.ClassicCardKeys;
 import au.id.micolous.metrodroid.key.ClassicSectorKey;
 
-import static android.content.Context.CLIPBOARD_SERVICE;
-
 public class Utils {
     private static final String TAG = "Utils";
 
@@ -1133,7 +1131,7 @@ public class Utils {
     public static void copyTextToClipboard(Context context, String label, String text) {
         ClipData data = ClipData.newPlainText(label, text);
 
-        ClipboardManager clipboard = (ClipboardManager) context.getSystemService(CLIPBOARD_SERVICE);
+        ClipboardManager clipboard = (ClipboardManager) context.getSystemService(Context.CLIPBOARD_SERVICE);
         if (clipboard == null) {
             Log.w(TAG, "Unable to access ClipboardManager.");
             Toast.makeText(context, R.string.clipboard_error, Toast.LENGTH_SHORT).show();

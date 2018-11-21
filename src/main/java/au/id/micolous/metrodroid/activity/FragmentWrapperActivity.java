@@ -32,8 +32,6 @@ import android.widget.LinearLayout;
 
 import au.id.micolous.farebot.R;
 
-import static android.view.ViewGroup.LayoutParams.MATCH_PARENT;
-
 public abstract class FragmentWrapperActivity extends MetrodroidActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,7 +39,8 @@ public abstract class FragmentWrapperActivity extends MetrodroidActivity {
         getActionBar().setDisplayHomeAsUpEnabled(true);
 
         FrameLayout container = new FrameLayout(this);
-        container.setLayoutParams(new LinearLayout.LayoutParams(MATCH_PARENT, MATCH_PARENT));
+        container.setLayoutParams(new LinearLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT,
+                FrameLayout.LayoutParams.MATCH_PARENT));
         container.setId(R.id.content);
         setContentView(container);
 
