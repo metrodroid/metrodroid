@@ -23,7 +23,6 @@
 package au.id.micolous.metrodroid.transit.serialonly;
 
 import android.os.Parcel;
-import android.support.annotation.NonNull;
 
 import org.apache.commons.lang3.ArrayUtils;
 
@@ -32,10 +31,8 @@ import java.util.List;
 
 import au.id.micolous.farebot.R;
 import au.id.micolous.metrodroid.card.CardType;
-import au.id.micolous.metrodroid.card.desfire.DesfireApplication;
 import au.id.micolous.metrodroid.card.desfire.DesfireCard;
 import au.id.micolous.metrodroid.card.desfire.DesfireCardTransitFactory;
-import au.id.micolous.metrodroid.card.desfire.files.DesfireFile;
 import au.id.micolous.metrodroid.transit.CardInfo;
 import au.id.micolous.metrodroid.transit.TransitData;
 import au.id.micolous.metrodroid.transit.TransitIdentity;

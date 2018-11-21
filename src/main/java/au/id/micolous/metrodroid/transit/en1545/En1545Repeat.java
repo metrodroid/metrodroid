@@ -18,8 +18,6 @@
  */
 package au.id.micolous.metrodroid.transit.en1545;
 
-import au.id.micolous.metrodroid.util.Utils;
-
 /**
  * EN1545 Repeated Fields
  *

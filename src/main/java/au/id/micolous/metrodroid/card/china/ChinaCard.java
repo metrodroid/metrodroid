@@ -27,7 +27,6 @@ import org.simpleframework.xml.ElementList;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collection;
 import java.util.List;
 
 import au.id.micolous.farebot.R;

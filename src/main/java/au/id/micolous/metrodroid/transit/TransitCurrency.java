@@ -28,7 +28,6 @@ import android.support.annotation.VisibleForTesting;
 import android.text.SpannableString;
 import android.text.Spanned;
 import android.text.style.TtsSpan;
-import android.util.Log;
 
 import com.neovisionaries.i18n.CurrencyCode;
 

@@ -21,20 +21,13 @@ package au.id.micolous.metrodroid.transit.en1545;
 
 import android.os.Parcel;
 import android.support.annotation.Nullable;
-import android.support.annotation.StringRes;
 import android.util.Log;
-import android.util.Pair;
-import android.util.SparseArray;
-import android.util.SparseIntArray;
 
 import org.apache.commons.lang3.ArrayUtils;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Calendar;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 import au.id.micolous.farebot.R;
 import au.id.micolous.metrodroid.transit.Subscription;

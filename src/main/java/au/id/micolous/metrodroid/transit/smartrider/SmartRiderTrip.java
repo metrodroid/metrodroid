@@ -1,7 +1,6 @@
 package au.id.micolous.metrodroid.transit.smartrider;
 
 import android.os.Parcel;
-import android.os.Parcelable;
 import android.support.annotation.Nullable;
 
 import au.id.micolous.metrodroid.transit.Transaction;

@@ -19,8 +19,6 @@
 
 package au.id.micolous.metrodroid.transit.en1545;
 
-import au.id.micolous.metrodroid.util.Utils;
-
 public class En1545FixedString implements En1545Field {
     private final int mLen;
     private final String mName;

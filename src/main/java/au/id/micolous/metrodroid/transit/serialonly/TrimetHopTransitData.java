@@ -23,7 +23,6 @@
 package au.id.micolous.metrodroid.transit.serialonly;
 
 import android.os.Parcel;
-import android.support.annotation.NonNull;
 
 import org.apache.commons.lang3.ArrayUtils;
 

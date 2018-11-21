@@ -23,10 +23,6 @@ import android.support.annotation.NonNull;
 
 import org.apache.commons.lang3.ArrayUtils;
 
-import java.util.Collections;
-import java.util.List;
-import java.util.Locale;
-
 import au.id.micolous.metrodroid.card.desfire.DesfireCard;
 import au.id.micolous.metrodroid.card.desfire.DesfireCardTransitFactory;
 import au.id.micolous.metrodroid.transit.CardInfo;

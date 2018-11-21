@@ -26,7 +26,6 @@ import android.support.annotation.NonNull;
 import org.apache.commons.lang3.ArrayUtils;
 
 import au.id.micolous.farebot.R;
-import au.id.micolous.metrodroid.card.Card;
 import au.id.micolous.metrodroid.card.CardType;
 import au.id.micolous.metrodroid.card.desfire.DesfireCard;
 import au.id.micolous.metrodroid.card.desfire.DesfireCardTransitFactory;

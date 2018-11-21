@@ -60,7 +60,6 @@ import android.view.WindowManager;
 import android.widget.Toast;
 
 import org.apache.commons.io.IOUtils;
-import org.jetbrains.annotations.NotNull;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.w3c.dom.Node;

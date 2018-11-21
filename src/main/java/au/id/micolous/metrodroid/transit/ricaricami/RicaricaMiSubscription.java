@@ -21,11 +21,8 @@ package au.id.micolous.metrodroid.transit.ricaricami;
 
 import android.os.Parcel;
 
-import java.util.Arrays;
 import java.util.Calendar;
-import java.util.Set;
 
-import au.id.micolous.farebot.R;
 import au.id.micolous.metrodroid.transit.en1545.En1545Container;
 import au.id.micolous.metrodroid.transit.en1545.En1545Field;
 import au.id.micolous.metrodroid.transit.en1545.En1545FixedHex;
