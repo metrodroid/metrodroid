@@ -81,7 +81,7 @@ public class En1545Parsed implements Parcelable {
     }
 
     private static String makeFullName(String name, String path) {
-        if (path == null || path.equals("") || path.equals(""))
+        if (path == null || path.equals(""))
             return name;
         return path + "/" + name;
     }
