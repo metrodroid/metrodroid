@@ -142,6 +142,7 @@ public class PodorozhnikTransitData extends TransitData {
     	mLastTopup = p.readInt();
 	    mLastTopupTime = p.readInt();
 	    mLastFare = p.readInt();
+        //noinspection unchecked
 	    mExtraTripTimes = p.readArrayList(PodorozhnikTransitData.class.getClassLoader());
 	    mLastTripTime = p.readInt();
 	    mLastValidator = p.readInt();

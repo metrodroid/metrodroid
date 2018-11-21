@@ -114,6 +114,7 @@ public class TMoneyTransitData extends TransitData {
         mSerialNumber = p.readString();
         mBalance = p.readInt();
         mDate = p.readString();
+        //noinspection unchecked
         mTrips = p.readArrayList(TMoneyTrip.class.getClassLoader());
     }
 

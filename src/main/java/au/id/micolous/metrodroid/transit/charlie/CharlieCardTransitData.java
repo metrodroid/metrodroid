@@ -110,6 +110,7 @@ public class CharlieCardTransitData extends TransitData {
         mSecondSerial = in.readLong();
         mBalance = in.readInt();
         mStartDate = in.readInt();
+        //noinspection unchecked
         mTrips = in.readArrayList(CharlieCardTrip.class.getClassLoader());
     }
 

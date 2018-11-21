@@ -141,6 +141,7 @@ public class SmartRiderTransitData extends TransitData {
         mCardType = CardType.valueOf(p.readString());
         mSerialNumber = p.readString();
         mBalance = p.readInt();
+        //noinspection unchecked
         mTrips = p.readArrayList(TransactionTrip.class.getClassLoader());
     }
 

@@ -80,11 +80,11 @@ public class ErgTransitData extends TransitData {
     };
     private String mCurrency;
 
-    @SuppressWarnings("UnusedDeclaration")
     public ErgTransitData(Parcel parcel, String currency) {
         mSerialNumber = parcel.readString();
         mEpochDate = new GregorianCalendar();
         mEpochDate.setTimeInMillis(parcel.readLong());
+        //noinspection unchecked
         mTrips = parcel.readArrayList(getClass().getClassLoader());
         mCurrency = currency;
     }

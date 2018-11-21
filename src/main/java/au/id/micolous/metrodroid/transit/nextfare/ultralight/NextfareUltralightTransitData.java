@@ -85,6 +85,7 @@ public abstract class NextfareUltralightTransitData extends TransitData {
         mMachineCode = p.readInt();
         mBalance = p.readInt();
         mExpiry = p.readInt();
+        //noinspection unchecked
         mTrips = p.readArrayList(NextfareUltralightTransaction.class.getClassLoader());
     }
 
