@@ -142,6 +142,7 @@ class TroikaTrip extends Trip {
             return 0;
         }
 
+        @SuppressWarnings("InnerClassFieldHidesOuterClassField")
         public static final Creator<TroikaFare> CREATOR = new Creator<TroikaFare>() {
             @Override
             public TroikaFare createFromParcel(Parcel in) {

@@ -61,6 +61,7 @@ public class LeapTrip extends Trip implements Comparable<LeapTrip> {
             return 0;
         }
 
+        @SuppressWarnings("InnerClassFieldHidesOuterClassField")
         public static final Creator<LeapTripPoint> CREATOR = new Creator<LeapTripPoint>() {
             @Override
             public LeapTripPoint createFromParcel(Parcel in) {
