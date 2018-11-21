@@ -53,7 +53,7 @@ internal data class RkfSerial(val mCompany: Int, val mCustomerNumber: Long, val 
 
 // Specification: https://github.com/mchro/RejsekortReader/tree/master/resekortsforeningen
 @Parcelize
-data class RkfTransitData internal constructor (
+data class RkfTransitData internal constructor(
         private val mTcci: En1545Parsed,
         private val mTrips: List<Trip>,
         private val mBalances: List<RkfPurse>,
@@ -70,8 +70,10 @@ data class RkfTransitData internal constructor (
     override fun getTrips() = mTrips
 
     // Filter out ghost purse on Rejsekort unless it was ever used (is it ever?)
-    override fun getBalances() = mBalances.withIndex().filter { (idx, bal) -> AID != RkfLookup.REJSEKORT
-            || idx != 1 || bal.transactionNumber != 0  }
+    override fun getBalances() = mBalances.withIndex().filter { (idx, bal) ->
+        AID != RkfLookup.REJSEKORT
+                || idx != 1 || bal.transactionNumber != 0
+    }
             .map { (idx, bal) -> bal.balance }
 
     @VisibleForTesting
@@ -212,7 +214,7 @@ data class RkfTransitData internal constructor (
 
         internal fun clearSeconds(timeInMillis: Long) = timeInMillis / 60000 * 60000
 
-        private fun getRecords(card : ClassicCard): List<ByteArray> {
+        private fun getRecords(card: ClassicCard): List<ByteArray> {
             val records = mutableListOf<ByteArray>()
             var sector = 3
             var block = 0

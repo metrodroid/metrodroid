@@ -27,13 +27,13 @@ import kotlinx.android.parcel.Parcelize
 private const val DEFAULT_FARE = 1300
 
 @Parcelize
-internal data class ZolotayaKoronaTrip (private val mValidator: String,
-                                        internal val mTime: Int,
-                                        private val mCardType : Int,
-                                        // sequential number of round trips that bus makes
-                                        private val mTrackNumber: Int,
-                                        private val mPreviousBalance: Int,
-                                        private val mNextBalance: Int?): Trip() {
+internal data class ZolotayaKoronaTrip(private val mValidator: String,
+                                       internal val mTime: Int,
+                                       private val mCardType: Int,
+        // sequential number of round trips that bus makes
+                                       private val mTrackNumber: Int,
+                                       private val mPreviousBalance: Int,
+                                       private val mNextBalance: Int?) : Trip() {
     private val estimatedFare
         get() = when (mCardType) {
             0x760500 -> 1150
@@ -41,7 +41,7 @@ internal data class ZolotayaKoronaTrip (private val mValidator: String,
             else -> null
         }
     internal val estimatedBalance
-        get() = mPreviousBalance - (estimatedFare?:DEFAULT_FARE)
+        get() = mPreviousBalance - (estimatedFare ?: DEFAULT_FARE)
 
     override fun getStartTimestamp() = ZolotayaKoronaTransitData.parseTime(mTime, mCardType)
 
@@ -50,7 +50,7 @@ internal data class ZolotayaKoronaTrip (private val mValidator: String,
     override fun getFare(): TransitCurrency? {
         if (mNextBalance != null) {
             // Happens if one trip is followed by more than one refill
-            if (mPreviousBalance-mNextBalance < -500)
+            if (mPreviousBalance - mNextBalance < -500)
                 return null
             return TransitCurrency.RUB(mPreviousBalance - mNextBalance)
         }
@@ -64,7 +64,7 @@ internal data class ZolotayaKoronaTrip (private val mValidator: String,
             if (Utils.isAllZero(block))
                 return null
             val time = Utils.byteArrayToIntReversed(block, 6, 4)
-            var balanceAfter : Int? = null
+            var balanceAfter: Int? = null
             if (balance != null) {
                 balanceAfter = balance
                 if (refill != null && refill.mTime > time)

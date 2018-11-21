@@ -37,7 +37,7 @@ import java.util.*
  */
 
 @Parcelize
-data class SunCardTransitData (private val mSerial: Int = 0): SerialOnlyTransitData() {
+data class SunCardTransitData(private val mSerial: Int = 0) : SerialOnlyTransitData() {
 
     override fun getSerialNumber() = formatSerial(mSerial)
 
@@ -69,11 +69,11 @@ data class SunCardTransitData (private val mSerial: Int = 0): SerialOnlyTransitD
         private fun formatBarcodeSerial(serial: Int) = "799366314176000637426%010d".format(Locale.ENGLISH, serial)
 
         private fun getSerial(card: ClassicCard) = Utils.byteArrayToInt(card.getSector(0)
-                    .getBlock(1).data, 3, 4)
+                .getBlock(1).data, 3, 4)
 
         val FACTORY: ClassicCardTransitFactory = object : ClassicCardTransitFactory {
             override fun parseTransitIdentity(card: ClassicCard) = TransitIdentity(NAME,
-                        formatSerial(getSerial(card)))
+                    formatSerial(getSerial(card)))
 
             override fun parseTransitData(classicCard: ClassicCard) = SunCardTransitData(classicCard)
 

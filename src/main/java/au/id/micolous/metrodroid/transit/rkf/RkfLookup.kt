@@ -31,8 +31,8 @@ import java.util.*
 const val STR = "rkf"
 
 @Parcelize
-data class RkfLookup (val mCurrencyCode : Int, val mCompany : Int) : En1545LookupSTR(STR), Parcelable {
-    override fun parseCurrency(price: Int) : TransitCurrency {
+data class RkfLookup(val mCurrencyCode: Int, val mCompany: Int) : En1545LookupSTR(STR), Parcelable {
+    override fun parseCurrency(price: Int): TransitCurrency {
         val intendedDivisor = when (mCurrencyCode shr 12) {
             0 -> 1.0
             1 -> 10.0
@@ -46,7 +46,7 @@ data class RkfLookup (val mCurrencyCode : Int, val mCompany : Int) : En1545Looku
                 intendedDivisor)
     }
 
-    override fun getTimeZone() : TimeZone = TimeZone.getTimeZone(when (mCompany / 1000) {
+    override fun getTimeZone(): TimeZone = TimeZone.getTimeZone(when (mCompany / 1000) {
         // FIXME: mCompany is an AID from the TCCI, and these are special values that aren't used?
         0 -> "Europe/Stockholm"
         1 -> "Europe/Oslo"
@@ -86,13 +86,13 @@ data class RkfLookup (val mCurrencyCode : Int, val mCompany : Int) : En1545Looku
                 STR,
                 station or ((agency ?: 0) shl 16),
                 (if (agency != null) "0x${agency.toString(16)}/" else "") +
-                "0x${station.toString(16)}")
+                        "0x${station.toString(16)}")
 
     }
 
     override fun getSubscriptionName(agency: Int?, contractTariff: Int?) = (
             if (contractTariff != null)
-            "0x${contractTariff.toString(16)}" else "none")
+                "0x${contractTariff.toString(16)}" else "none")
 
     companion object {
         const val SLACCESS = 101

@@ -31,19 +31,19 @@ import au.id.micolous.metrodroid.util.Utils
 import kotlinx.android.parcel.Parcelize
 
 @Parcelize
-data class RkfPurse (private val mStatic: En1545Parsed,
-                     private val mDynamic: En1545Parsed,
-                     private val mLookup : RkfLookup) : Parcelable {
-    val balance : TransitBalance
+data class RkfPurse(private val mStatic: En1545Parsed,
+                    private val mDynamic: En1545Parsed,
+                    private val mLookup: RkfLookup) : Parcelable {
+    val balance: TransitBalance
         get() {
             val balance = mLookup.parseCurrency(mDynamic.getIntOrZero(VALUE))
             val name = mLookup.getAgencyName(mStatic.getIntOrZero(RkfTransitData.COMPANY), true)
 
             return TransitBalanceStored(balance, name, mStatic.getTimeStamp(START, mLookup.timeZone),
-                  mDynamic.getTimeStamp(END, mLookup.timeZone))
+                    mDynamic.getTimeStamp(END, mLookup.timeZone))
         }
 
-    val transactionNumber : Int
+    val transactionNumber: Int
         get() = mDynamic.getIntOrZero(TRANSACTION_NUMBER)
 
     companion object {
@@ -82,7 +82,7 @@ data class RkfPurse (private val mStatic: En1545Parsed,
                 )
         )
 
-        fun parse(record : ByteArray, lookup : RkfLookup) : RkfPurse {
+        fun parse(record: ByteArray, lookup: RkfLookup): RkfPurse {
             var version = Utils.getBitsFromBufferLeBits(record, 8, 6)
             val blockSize = if (version >= 6) 32 else 16
             val static = En1545Parser.parseLeBits(record.copyOfRange(0, blockSize - 1), TCPU_STATIC_FIELDS)
