@@ -228,7 +228,7 @@ public class PodorozhnikTransitData extends TransitData {
 
     @Override
     public List<Trip> getTrips() {
-        ArrayList<Trip> items = new ArrayList<>();
+        List<Trip> items = new ArrayList<>();
         if (mLastTopupTime != 0) {
             items.add(new PodorozhnikTopup(mLastTopupTime, mLastTopup,
                     mLastTopupAgency, mLastTopupMachine));
@@ -244,7 +244,7 @@ public class PodorozhnikTransitData extends TransitData {
 
     @Override
     public List<ListItem> getInfo() {
-        ArrayList<ListItem> items = new ArrayList<>();
+        List<ListItem> items = new ArrayList<>();
 
 	    if (mCountersValid) {
             items.add(new ListItem(R.string.ground_trips,

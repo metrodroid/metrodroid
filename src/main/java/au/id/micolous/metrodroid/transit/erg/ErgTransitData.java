@@ -96,7 +96,7 @@ public class ErgTransitData extends TransitData {
 
     // Decoder
     public ErgTransitData(ClassicCard card, String currency) {
-        ArrayList<ErgRecord> records = new ArrayList<>();
+        List<ErgRecord> records = new ArrayList<>();
 
         mCurrency = currency;
 
@@ -120,7 +120,7 @@ public class ErgTransitData extends TransitData {
         }
 
         // Now do a first pass for metadata and balance information.
-        ArrayList<ErgBalanceRecord> balances = new ArrayList<>();
+        List<ErgBalanceRecord> balances = new ArrayList<>();
 
         for (ErgRecord record : records) {
             if (record instanceof ErgMetadataRecord) {
@@ -283,7 +283,7 @@ public class ErgTransitData extends TransitData {
 
     @Override
     public List<ListItem> getInfo() {
-        ArrayList<ListItem> items = new ArrayList<>();
+        List<ListItem> items = new ArrayList<>();
         items.add(new HeaderListItem(R.string.general));
         items.add(new ListItem(R.string.card_epoch,
                 Utils.longDateFormat(TripObfuscator.maybeObfuscateTS(mEpochDate))));

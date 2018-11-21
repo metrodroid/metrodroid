@@ -120,7 +120,7 @@ public class NextfareTransitData extends TransitData {
         mBlock2 = card.getSector(0).getBlock(2).getData();
         Log.d(TAG, "Block2 = " + Utils.getHexString(mBlock2));
 
-        ArrayList<NextfareRecord> records = new ArrayList<>();
+        List<NextfareRecord> records = new ArrayList<>();
 
         for (ClassicSector sector : card.getSectors()) {
             for (ClassicBlock block : sector.getBlocks()) {
@@ -140,11 +140,11 @@ public class NextfareTransitData extends TransitData {
         }
 
         // Now do a first pass for metadata and balance information.
-        ArrayList<NextfareBalanceRecord> balances = new ArrayList<>();
-        ArrayList<NextfareTrip> trips = new ArrayList<>();
-        ArrayList<NextfareSubscription> subscriptions = new ArrayList<>();
-        ArrayList<NextfareTransactionRecord> taps = new ArrayList<>();
-        ArrayList<NextfareTravelPassRecord> passes = new ArrayList<>();
+        List<NextfareBalanceRecord> balances = new ArrayList<>();
+        List<NextfareTrip> trips = new ArrayList<>();
+        List<NextfareSubscription> subscriptions = new ArrayList<>();
+        List<NextfareTransactionRecord> taps = new ArrayList<>();
+        List<NextfareTravelPassRecord> passes = new ArrayList<>();
 
         for (NextfareRecord record : records) {
             if (record instanceof NextfareBalanceRecord) {
@@ -458,7 +458,7 @@ public class NextfareTransitData extends TransitData {
 
     @Override
     public List<ListItem> getInfo() {
-        ArrayList<ListItem> items = new ArrayList<>();
+        List<ListItem> items = new ArrayList<>();
 
         items.add(new HeaderListItem(R.string.nextfare));
         items.add(new ListItem(R.string.nextfare_system_code, Utils.getHexDump(mSystemCode)));

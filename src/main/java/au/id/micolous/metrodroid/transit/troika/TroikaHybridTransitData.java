@@ -72,7 +72,7 @@ public class TroikaHybridTransitData extends TransitData {
 
     @Override
     public List<ListItem> getInfo() {
-        ArrayList<ListItem> items = new ArrayList<>();
+        List<ListItem> items = new ArrayList<>();
 
         List<ListItem> troikaItems = mTroika.getInfo();
 

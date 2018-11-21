@@ -365,7 +365,7 @@ public class LeapTrip extends Trip implements Comparable<LeapTrip> {
         return new LeapTrip(agency, mode, start, end);
     }
 
-    public static List<LeapTrip> postprocess(ArrayList<LeapTrip> trips) {
+    public static List<LeapTrip> postprocess(Iterable<LeapTrip> trips) {
         List<LeapTrip> srt = new ArrayList<>();
         for (LeapTrip trip : trips)
             if (trip != null)

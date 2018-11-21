@@ -190,7 +190,7 @@ public class SmartRiderTransitData extends TransitData {
         mSerialNumber = getSerialData(card);
 
         // Read trips.
-        ArrayList<SmartRiderTagRecord> tagRecords = new ArrayList<>();
+        List<SmartRiderTagRecord> tagRecords = new ArrayList<>();
 
         for (int s = 10; s <= 13; s++) {
             for (int b = 0; b <= 2; b++) {

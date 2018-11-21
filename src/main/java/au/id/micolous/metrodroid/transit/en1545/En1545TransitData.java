@@ -71,7 +71,7 @@ abstract public class En1545TransitData extends TransitData {
 
     @Override
     public List<ListItem> getInfo() {
-        ArrayList<ListItem> li = new ArrayList<>();
+        List<ListItem> li = new ArrayList<>();
         TimeZone tz = getLookup().getTimeZone();
         if (mTicketEnvParsed.contains(ENV_NETWORK_ID))
             li.add(new ListItem(R.string.en1545_network_id,

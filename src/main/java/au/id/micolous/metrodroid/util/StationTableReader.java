@@ -37,6 +37,7 @@ import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
@@ -331,7 +332,7 @@ public class StationTableReader {
     private Station getStationById(int id, String humanReadableID) throws IOException {
         Stations.Station ps = getProtoStationById(id);
         if (ps == null) return null;
-        ArrayList<Stations.Line> lines = new ArrayList<>();
+        List<Stations.Line> lines = new ArrayList<>();
         for (int lineId : ps.getLineIdList()) {
             Stations.Line l = mStationDb.getLinesOrDefault(lineId, null);
             if (l != null) {

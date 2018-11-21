@@ -29,6 +29,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import au.id.micolous.farebot.R;
 import au.id.micolous.metrodroid.card.CardType;
@@ -306,7 +307,7 @@ public class IntercodeTransitData extends Calypso1545TransitData {
     @Override
     public List<ListItem> getInfo() {
         List <ListItem> items =  super.getInfo();
-        HashSet<String> handled = new HashSet<>(Arrays.asList(
+        Set<String> handled = new HashSet<>(Arrays.asList(
                 ENV_NETWORK_ID,
                 ENV_APPLICATION_ISSUE + "Date",
                 ENV_APPLICATION_ISSUER_ID,

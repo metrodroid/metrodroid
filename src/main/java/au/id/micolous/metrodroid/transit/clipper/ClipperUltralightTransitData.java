@@ -167,7 +167,7 @@ public class ClipperUltralightTransitData extends TransitData {
 
     @Override
     public List<ListItem> getInfo() {
-        ArrayList<ListItem> items = new ArrayList<>();
+        List<ListItem> items = new ArrayList<>();
         switch (mType) {
             case 0x04:
                 items.add(new ListItem(R.string.ticket_type, R.string.clipper_ticket_type_adult));

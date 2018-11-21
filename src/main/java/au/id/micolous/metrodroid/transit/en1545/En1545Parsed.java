@@ -87,7 +87,7 @@ public class En1545Parsed implements Parcelable {
     }
 
     public List<ListItem> getInfo(Set<String> skipSet) {
-        ArrayList<ListItem> li = new ArrayList<>();
+        List<ListItem> li = new ArrayList<>();
         for (Map.Entry<String, Object> kv: mMap.entrySet()) {
             if (skipSet.contains(getBaseName(kv.getKey())))
                 continue;

@@ -148,7 +148,7 @@ public class MobibTransitData extends Calypso1545TransitData {
 
     @Override
     public List<ListItem> getInfo() {
-        ArrayList <ListItem> li = new ArrayList<>();
+        List<ListItem> li = new ArrayList<>();
         if (mPurchase != 0)
             li.add(new ListItem(R.string.purchase_date,
                     Utils.longDateFormat(En1545FixedInteger.parseDate(mPurchase, TZ))));

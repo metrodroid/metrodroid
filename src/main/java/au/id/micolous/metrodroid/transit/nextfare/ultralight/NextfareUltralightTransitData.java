@@ -148,7 +148,7 @@ public abstract class NextfareUltralightTransitData extends TransitData {
 
     @Override
     public List<ListItem> getInfo() {
-        ArrayList<ListItem> items = new ArrayList<>();
+        List<ListItem> items = new ArrayList<>();
         if (mType == 8)
             items.add(new ListItem(R.string.ticket_type, R.string.compass_ticket_type_concession));
         else

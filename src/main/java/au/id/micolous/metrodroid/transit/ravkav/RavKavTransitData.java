@@ -144,7 +144,7 @@ public class RavKavTransitData extends Calypso1545TransitData {
 
     @Override
     public List<ListItem> getInfo() {
-        ArrayList<ListItem> li = new ArrayList<>();
+        List<ListItem> li = new ArrayList<>();
         if (mTicketEnvParsed.getIntOrZero(HOLDER_ID_NUMBER) == 0) {
             li.add(new ListItem(R.string.card_type, R.string.card_type_anonymous));
         } else {

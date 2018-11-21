@@ -268,7 +268,7 @@ public abstract class Trip implements Parcelable {
         // Now there is at least 1 candidate line from each group.
 
         // Method 3: get the intersection of the two list of candidate stations
-        HashSet<String> lines = new HashSet<>(startLines);
+        Set<String> lines = new HashSet<>(startLines);
         lines.retainAll(endLines);
         if (!lines.isEmpty()) {
             // There is exactly 1 common line -- return it

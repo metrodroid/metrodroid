@@ -184,7 +184,7 @@ public class KMTTransitData extends TransitData {
 
     @Override
     public List<ListItem> getInfo() {
-        ArrayList<ListItem> items = new ArrayList<>();
+        List<ListItem> items = new ArrayList<>();
         items.add(new HeaderListItem(R.string.kmt_other_data));
         if (!MetrodroidApplication.hideCardNumbers()) {
             items.add(new ListItem(R.string.transaction_counter, Integer.toString(mTransactionCounter)));

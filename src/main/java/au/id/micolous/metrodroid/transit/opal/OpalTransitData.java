@@ -243,7 +243,7 @@ public class OpalTransitData extends TransitData {
 
     @Override
     public List<ListItem> getInfo() {
-        ArrayList<ListItem> items = new ArrayList<>();
+        List<ListItem> items = new ArrayList<>();
 
         items.add(new HeaderListItem(R.string.general));
         items.add(new ListItem(R.string.opal_weekly_trips, Integer.toString(getWeeklyTrips())));

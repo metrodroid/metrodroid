@@ -98,7 +98,7 @@ public class TMoneyTransitData extends TransitData {
 
     @Override
     public List<ListItem> getInfo() {
-        ArrayList<ListItem> items = new ArrayList<>();
+        List<ListItem> items = new ArrayList<>();
 
         items.add(new ListItem(R.string.tmoney_date, mDate));
 

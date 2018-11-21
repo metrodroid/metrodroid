@@ -14,7 +14,7 @@ class TroikaUnknownBlock extends TroikaBlock {
 
     @Override
     public List<ListItem> getInfo() {
-        ArrayList<ListItem> items = new ArrayList<>();
+        List<ListItem> items = new ArrayList<>();
         items.add(new HeaderListItem(getHeader(mTicketType)));
         items.add(new ListItem(R.string.troika_layout, Integer.toHexString(mLayout)));
         return items;

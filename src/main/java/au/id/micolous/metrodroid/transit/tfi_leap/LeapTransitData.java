@@ -132,7 +132,7 @@ public class LeapTransitData extends TransitData {
             // - All-operator spend (which applies to the sum of all fares)
             //
             // Certair services are excluded from the caps.
-            ArrayList<ListItem> items = new ArrayList<>();
+            List<ListItem> items = new ArrayList<>();
 
             items.add(new ListItem(
                     R.string.leap_period_start,
@@ -291,7 +291,7 @@ public class LeapTransitData extends TransitData {
 
     @Override
     public List<ListItem> getInfo() {
-        ArrayList<ListItem> items = new ArrayList<>();
+        List<ListItem> items = new ArrayList<>();
         if (mLocked) {
             items.add(new ListItem(R.string.leap_locked_warning, ""));
             return items;
