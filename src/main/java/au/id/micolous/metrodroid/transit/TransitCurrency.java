@@ -265,6 +265,11 @@ public class TransitCurrency extends TransitBalance implements Parcelable {
     }
 
     @NonNull
+    static public TransitCurrency TWD(int cents) {
+        return new TransitCurrency(cents, "TWD", 1.);
+    }
+
+    @NonNull
     public static TransitCurrency USD(int cents) {
         return new TransitCurrency(cents, "USD");
     }
@@ -300,11 +305,6 @@ public class TransitCurrency extends TransitBalance implements Parcelable {
             return (mCurrency * other.mDivisor) == (other.mCurrency * mDivisor);
         }
     }
-    
-    static public TransitCurrency TWD(int cents) {
-        return new TransitCurrency(cents, "TWD", 1.);
-    }
-
 
     public TransitCurrency obfuscate(int fareOffset, double fareMultiplier) {
         int cur = (int) ((mCurrency + fareOffset) * fareMultiplier);
