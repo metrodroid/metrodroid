@@ -31,7 +31,6 @@ import au.id.micolous.metrodroid.transit.Trip
 import au.id.micolous.metrodroid.util.StationTableReader
 import au.id.micolous.metrodroid.util.Utils
 import kotlinx.android.parcel.Parcelize
-import java.util.*
 
 @Parcelize
 data class EasyCardTopUp(
