@@ -28,6 +28,7 @@ import org.apache.commons.lang3.ArrayUtils;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.Locale;
 
 import au.id.micolous.farebot.R;
 import au.id.micolous.metrodroid.card.CardType;
@@ -83,7 +84,7 @@ public class IstanbulKartTransitData extends SerialOnlyTransitData {
 
         try {
             mSerial = parseSerial(metadata);
-            mSerial2 = Utils.getHexString(card.getTagId()).toUpperCase();
+            mSerial2 = Utils.getHexString(card.getTagId()).toUpperCase(Locale.ENGLISH);
         } catch (Exception ex) {
             throw new RuntimeException("Error parsing IstanbulKart data", ex);
         }
