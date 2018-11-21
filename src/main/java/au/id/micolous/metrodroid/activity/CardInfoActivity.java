@@ -175,11 +175,6 @@ public class CardInfoActivity extends MetrodroidActivity {
                         return;
                     }
 
-                    if (mTransitData instanceof BlankUltralightTransitData) {
-                        mTabsAdapter.addTab(actionBar.newTab(), BlankCardFragment.class, args);
-                        return;
-                    }
-
                     if (mTransitData.getBalances() != null || mTransitData.getSubscriptions() != null) {
                         mTabsAdapter.addTab(actionBar.newTab().setText(R.string.balances_and_subscriptions),
                                 CardBalanceFragment.class, args);
