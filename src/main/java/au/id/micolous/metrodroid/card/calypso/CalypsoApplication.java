@@ -256,6 +256,7 @@ public class CalypsoApplication extends ISO7816Application {
         return null;
     }
 
+    @SuppressWarnings("unused")
     public enum File {
         // Put this first to be able to show card image as soon as possible
         TICKETING_ENVIRONMENT(0x2000, 0x2001),

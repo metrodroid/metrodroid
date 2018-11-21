@@ -105,6 +105,7 @@ public class CardProvider extends ContentProvider {
         return cardUri;
     }
 
+    @SuppressWarnings("MagicCharacter")
     @Override
     public int delete(Uri uri, String selection, String[] selectionArgs) {
         SQLiteDatabase db = mDbHelper.getWritableDatabase();
