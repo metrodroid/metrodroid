@@ -99,7 +99,7 @@ public class CardsFragment extends ExpandableListFragment {
     private static final String STD_IMPORT_FILENAME = "Metrodroid-Import.xml";
     private static final String SD_IMPORT_PATH = Environment.getExternalStorageDirectory() + "/" + STD_IMPORT_FILENAME;
 
-    private class Scan {
+    private static class Scan {
         private final long mScannedAt;
         private final String mLabel;
         private final int mType;

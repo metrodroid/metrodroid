@@ -215,7 +215,7 @@ public class ISO7816Protocol {
         }
     }
 
-    class ReadLengthFieldResult {
+    static class ReadLengthFieldResult {
         /** value of the length field */
         final int length;
         /** the number of bytes it took to encode this length value */

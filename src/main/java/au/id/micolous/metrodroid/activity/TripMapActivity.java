@@ -170,7 +170,7 @@ public class TripMapActivity extends MetrodroidActivity {
             return pos;
         }
     */
-    public class TripMapShim {
+    public static class TripMapShim {
         private static final String TAG = "TripMapShim";
         private Marker[] mMarkers;
         private String mTileUrl;

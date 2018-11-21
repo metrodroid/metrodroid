@@ -139,7 +139,7 @@ public class StationTableReader {
         return m;
     }
 
-    public class InvalidHeaderException extends Exception {}
+    public static class InvalidHeaderException extends Exception {}
 
     /**
      * Initialises a "connection" to a Metrodroid Station Table kept in the `assets/` directory.
