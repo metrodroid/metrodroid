@@ -135,6 +135,7 @@ public class CEPASApplication extends ISO7816Application {
             try {
                 app.dumpFile(iso7816Tag, ISO7816Selector.makeSelector(0x3f00, 0x4000, i), 0);
             } catch (Exception ex) {
+                //noinspection StringConcatenation
                 Log.d(TAG, "Couldn't read :3f00:4000:" + Integer.toHexString(i));
             }
             setProgress(feedbackInterface, i + 2 * numPurses);

@@ -96,6 +96,7 @@ class PodorozhnikTrip extends Trip {
             return StationTableReader.getStation(PODOROZHNIK_STR, stationId, Integer.toString(mLastValidator >> 6)).addAttribute(Utils.localizeString(R.string.podorozhnik_gate, gate));
         }
         // TODO: handle other transports better.
+        //noinspection StringConcatenation
         return StationTableReader.getStation(PODOROZHNIK_STR, stationId,
                 Integer.toString(mLastTransport)+ "/" + Integer.toString(mLastValidator));
     }

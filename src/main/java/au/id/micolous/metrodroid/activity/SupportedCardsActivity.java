@@ -87,6 +87,7 @@ public class SupportedCardsActivity extends MetrodroidActivity {
 
             CardInfo info = getItem(position);
             if (info == null) {
+                //noinspection StringConcatenation
                 Log.e(getClass().getSimpleName(), "got a null card record at #" + position);
                 return convertView;
             }

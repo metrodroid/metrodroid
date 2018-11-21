@@ -28,6 +28,7 @@ import android.util.Log;
 
 import org.apache.commons.lang3.concurrent.ConcurrentException;
 import org.apache.commons.lang3.concurrent.LazyInitializer;
+import org.jetbrains.annotations.NonNls;
 
 import java.io.Closeable;
 import java.io.DataInputStream;
@@ -66,7 +67,7 @@ public class StationTableReader {
     private static final Map<String,StationTableReader> mSTRs = new HashMap<>();
 
     @Nullable
-    private static StationTableReader getSTR(@Nullable String name) {
+    private static StationTableReader getSTR(@NonNls @Nullable String name) {
         if (name == null) {
             return null;
         }
@@ -103,7 +104,7 @@ public class StationTableReader {
 
     @Nullable
     public static Station getStationNoFallback(@Nullable String reader, int id) {
-        return getStationNoFallback(reader, id, "0x" + Integer.toHexString(id));
+        return getStationNoFallback(reader, id, Utils.intToHex(id));
     }
 
     @NonNull
@@ -116,11 +117,11 @@ public class StationTableReader {
 
     @NonNull
     public static Station getStation(@Nullable String reader, int id) {
-        return getStation(reader, id, "0x" + Integer.toHexString(id));
+        return getStation(reader, id, Utils.intToHex(id));
     }
 
     private static String fallbackName(int id) {
-        return Utils.localizeString(R.string.unknown_format, "0x" + Integer.toHexString(id));
+        return Utils.localizeString(R.string.unknown_format, Utils.intToHex(id));
     }
 
     private static String fallbackName(String humanReadableId) {
@@ -276,7 +277,7 @@ public class StationTableReader {
     }
 
     public static String getLineName(@Nullable String reader, int id) {
-        return getLineName(reader, id, "0x" + Integer.toHexString(id));
+        return getLineName(reader, id, Utils.intToHex(id));
     }
 
     public static String getLineName(@Nullable String reader, int id, String humanReadableId) {

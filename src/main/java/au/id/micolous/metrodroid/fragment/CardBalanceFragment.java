@@ -282,6 +282,7 @@ public class CardBalanceFragment extends ListFragment {
 
     @Override
     public void onListItemClick(ListView l, View v, int position, long id) {
+        //noinspection StringConcatenation
         Log.d(TAG, "Clicked " + id + " " + position );
         Object item = getListAdapter().getItem(position);
         if (item == null) {

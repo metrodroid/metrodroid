@@ -66,12 +66,15 @@ public class LeapUnlocker implements DesfireUnlocker {
         conn.setDoInput(true);
         conn.setDoOutput(true);
         conn.setRequestProperty("Content-Type", null);
+        //noinspection StringConcatenation
         conn.setRequestProperty("User-Agent", "Metrodroid/" + BuildConfig.VERSION_NAME);
         OutputStream send = conn.getOutputStream();
+        //noinspection StringConcatenation
         Log.d(TAG, "Sending " + in.toString());
         in.writeTo(send);
         InputStream recv = conn.getInputStream();
         Leap.LeapMessage reply = Leap.LeapMessage.parseFrom(recv);
+        //noinspection StringConcatenation
         Log.d(TAG, "Received " + reply.toString());
         conn.disconnect();
         return reply;

@@ -24,6 +24,7 @@ import android.os.Parcel;
 import android.support.annotation.NonNull;
 
 import org.apache.commons.lang3.ArrayUtils;
+import org.jetbrains.annotations.NonNls;
 
 import au.id.micolous.farebot.R;
 import au.id.micolous.metrodroid.card.CardType;
@@ -158,7 +159,7 @@ public class MykiTransitData extends SerialOnlyTransitData {
             return null;
         }
 
-        String formattedSerial = String.format(Locale.ENGLISH, "%06d%08d", serial1, serial2);
+        @NonNls String formattedSerial = String.format(Locale.ENGLISH, "%06d%08d", serial1, serial2);
         return formattedSerial + Utils.calculateLuhn(formattedSerial);
     }
 

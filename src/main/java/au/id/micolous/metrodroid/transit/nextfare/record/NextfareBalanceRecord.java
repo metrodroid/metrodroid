@@ -58,6 +58,7 @@ public class NextfareBalanceRecord extends NextfareRecord implements Comparable<
             record.mHasTravelPassAvailable = true;
         }
 
+        //noinspection StringConcatenation
         Log.d(TAG, "Balance " + record.mBalance + ", version " + record.mVersion + ", travel pass " + Boolean.toString(record.mHasTravelPassAvailable));
         return record;
     }

@@ -55,6 +55,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import org.apache.commons.io.FileUtils;
+import org.jetbrains.annotations.NonNls;
+import org.simpleframework.xml.Serializer;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -94,8 +96,10 @@ public class CardsFragment extends ExpandableListFragment {
     private static final int REQUEST_SELECT_FILE = 1;
     private static final int REQUEST_SAVE_FILE = 2;
     private static final int REQUEST_SELECT_FILE_MCT = 3;
+    @NonNls
     private static final String STD_EXPORT_FILENAME = "Metrodroid-Export.xml";
     private static final String SD_EXPORT_PATH = Environment.getExternalStorageDirectory() + "/" + STD_EXPORT_FILENAME;
+    @NonNls
     private static final String STD_IMPORT_FILENAME = "Metrodroid-Import.xml";
     private static final String SD_IMPORT_PATH = Environment.getExternalStorageDirectory() + "/" + STD_IMPORT_FILENAME;
 

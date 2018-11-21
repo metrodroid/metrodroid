@@ -306,7 +306,7 @@ public class DesfireCard extends Card {
             List<ListItem> ali = app.getRawData();
             li.add(new ListItemRecursive(
                     Utils.localizeString(R.string.application_title_format,
-                            "0x" + Integer.toHexString(app.getId())),
+                            Utils.intToHex(app.getId())),
                     null, ali));
         }
         return li;

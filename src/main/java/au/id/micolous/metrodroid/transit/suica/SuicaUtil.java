@@ -121,7 +121,7 @@ final class SuicaUtil {
             case 0xc8:
                 return app.getString(R.string.felica_terminal_vending);   // sales
             default:
-                return Utils.localizeString(R.string.unknown_format, "0x" + Integer.toHexString(cType));
+                return Utils.localizeString(R.string.unknown_format, Utils.intToHex(cType));
         }
     }
 
@@ -186,7 +186,7 @@ final class SuicaUtil {
             case 0x85:
                 return app.getString(R.string.felica_process_admission_thirdparty);
             default:
-                return Utils.localizeString(R.string.unknown_format, "0x" + Integer.toHexString(proc));
+                return Utils.localizeString(R.string.unknown_format, Utils.intToHex(proc));
         }
     }
 }

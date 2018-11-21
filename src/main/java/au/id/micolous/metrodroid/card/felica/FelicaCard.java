@@ -95,6 +95,7 @@ public class FelicaCard extends Card {
     // https://github.com/tmurakam/felica2money/blob/master/src/card/Suica.cs
     public static FelicaCard dumpTag(byte[] tagId, Tag tag, TagReaderFeedbackInterface feedbackInterface) throws Exception {
         NfcF nfcF = NfcF.get(tag);
+        //noinspection StringConcatenation
         Log.d(TAG, "Default system code: " + Utils.getHexString(nfcF.getSystemCode()));
 
         boolean octopusMagic = false;
@@ -128,6 +129,7 @@ public class FelicaCard extends Card {
             if (codes.size() == 0) {
                 // Lite has no system code list
                 byte[] liteSystem = ft.pollingAndGetIDm(FeliCaLib.SYSTEMCODE_FELICA_LITE);
+                //noinspection StringConcatenation
                 Log.d(TAG, "Lite = " + liteSystem);
                 if (liteSystem != null) {
                     Log.d(TAG, "Detected Felica Lite card");
@@ -167,12 +169,14 @@ public class FelicaCard extends Card {
 
             CardInfo i = parseEarlyCardInfo(systemCodes);
             if (i != null) {
+                //noinspection StringConcatenation
                 Log.d(TAG, String.format(Locale.ENGLISH, "Early Card Info: %s", i.getName()));
                 feedbackInterface.updateStatusText(Utils.localizeString(R.string.card_reading_type, i.getName()));
                 feedbackInterface.showCardType(i);
             }
 
             for (FeliCaLib.SystemCode code : codes) {
+                //noinspection StringConcatenation
                 Log.d(TAG, "Got system code: " + Utils.getHexString(code.getBytes()));
 
                 int systemCode = code.getCode();
@@ -180,9 +184,11 @@ public class FelicaCard extends Card {
 
                 byte[] thisIdm = ft.pollingAndGetIDm(systemCode);
 
+                //noinspection StringConcatenation
                 Log.d(TAG, " - Got IDm: " + Utils.getHexString(thisIdm) + "  compare: "
                         + Utils.getHexString(idm));
 
+                //noinspection StringConcatenation
                 Log.d(TAG, " - Got PMm: " + Utils.getHexString(ft.getPMm()) + "  compare: "
                         + Utils.getHexString(pmm));
 
@@ -235,6 +241,7 @@ public class FelicaCard extends Card {
                     if (blocks.size() > 0) { // Most service codes appear to be empty...
                         FelicaBlock[] blocksArray = blocks.toArray(new FelicaBlock[0]);
                         services.add(new FelicaService(serviceCodeInt, blocksArray));
+                        //noinspection StringConcatenation
                         Log.d(TAG, "- Service code " + serviceCodeInt + " had " + blocks.size() + " blocks");
                     }
                     if (partialRead)
@@ -436,7 +443,7 @@ public class FelicaCard extends Card {
         List<ListItem> items = new ArrayList<>();
 
         items.add(new HeaderListItem(R.string.felica_idm));
-        items.add(new ListItem(R.string.felica_manufacturer_code, "0x" + Integer.toHexString(getManufacturerCode())));
+        items.add(new ListItem(R.string.felica_manufacturer_code, Utils.intToHex(getManufacturerCode())));
 
         if (!MetrodroidApplication.hideCardNumbers()) {
             items.add(new ListItem(R.string.felica_card_identification_number, Long.toString(getCardIdentificationNumber())));

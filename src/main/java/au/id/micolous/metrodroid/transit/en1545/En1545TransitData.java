@@ -21,6 +21,8 @@ package au.id.micolous.metrodroid.transit.en1545;
 
 import android.os.Parcel;
 
+import org.jetbrains.annotations.NonNls;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.TimeZone;
@@ -34,9 +36,12 @@ abstract public class En1545TransitData extends TransitData {
     protected final static String ENV_NETWORK_ID = "EnvNetworkId";
     protected final static String ENV_VERSION_NUMBER = "EnvVersionNumber";
     protected static final String HOLDER_BIRTH_DATE = "HolderBirthDate";
+    @NonNls
     public static final String ENV_APPLICATION_VALIDITY_END = "EnvApplicationValidityEnd";
     public static final String ENV_APPLICATION_ISSUER_ID = "EnvApplicationIssuerId";
+    @NonNls
     protected static final String ENV_APPLICATION_ISSUE = "EnvApplicationIssue";
+    @NonNls
     protected static final String HOLDER_PROFILE = "HolderProfile";
     protected static final String HOLDER_POSTAL_CODE = "HolderPostalCode";
     protected static final String ENV_AUTHENTICATOR = "EnvAuthenticator";

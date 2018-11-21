@@ -248,9 +248,9 @@ public class PodorozhnikTransitData extends TransitData {
 
 	    if (mCountersValid) {
             items.add(new ListItem(R.string.ground_trips,
-                    "" + mGroundCounter));
+                    Integer.toString(mGroundCounter)));
             items.add(new ListItem(R.string.subway_trips,
-                    "" + mSubwayCounter));
+                    Integer.toString(mSubwayCounter)));
         }
 
         return items;

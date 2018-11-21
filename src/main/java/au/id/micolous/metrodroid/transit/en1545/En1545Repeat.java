@@ -18,6 +18,8 @@
  */
 package au.id.micolous.metrodroid.transit.en1545;
 
+import org.jetbrains.annotations.NonNls;
+
 /**
  * EN1545 Repeated Fields
  *
@@ -36,7 +38,7 @@ public class En1545Repeat implements En1545Field {
     }
 
     @Override
-    public int parseField(byte[] b, int off, String path, En1545Parsed holder, En1545Bits bitParser) {
+    public int parseField(byte[] b, int off, @NonNls String path, En1545Parsed holder, En1545Bits bitParser) {
         int ctr;
         try {
             ctr = bitParser.getBitsFromBuffer(b, off, mCtrLen);

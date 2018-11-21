@@ -217,6 +217,7 @@ public class ClassicCard extends Card {
 
                     while (correctKey == null && retriesLeft-- > 0) {
                         // If we have a known key for the sector on the card, try this first.
+                        //noinspection StringConcatenation
                         Log.d(TAG, "Attempting authentication on sector " + sectorIndex + ", " + retriesLeft + " tries remain...");
                         if (keys != null) {
                             List<? extends ClassicSectorKey> candidates = keys.getCandidates(sectorIndex);
@@ -244,6 +245,7 @@ public class ClassicCard extends Card {
                         feedbackInterface.updateProgressBar((sectorIndex * 5) + 2, maxProgress);
 
                         while (correctKey == null && (retriesLeft-- > 0)) {
+                            //noinspection StringConcatenation
                             Log.d(TAG, "Attempting authentication with other keys on sector " + sectorIndex + ", " + retriesLeft + " tries remain...");
 
                             // Attempt authentication with alternate keys
@@ -259,6 +261,7 @@ public class ClassicCard extends Card {
 
                                     if (correctKey != null) {
                                         // Jump out if we have the key
+                                        //noinspection StringConcatenation
                                         Log.d(TAG, String.format("Authenticated successfully to sector %d with other key. "
                                                 + "Fix the key file to speed up authentication", sectorIndex));
                                         break;
@@ -272,6 +275,7 @@ public class ClassicCard extends Card {
 
                     // Hopefully we have a key by now...
                     if (correctKey != null) {
+                        //noinspection StringConcatenation
                         Log.d(TAG, "Authenticated successfully for sector " + sectorIndex);
                         feedbackInterface.updateStatusText(Utils.localizeString(R.string.mfc_reading_blocks, sectorIndex));
                         List<ClassicBlock> blocks = new ArrayList<>();
@@ -298,6 +302,7 @@ public class ClassicCard extends Card {
 
                         feedbackInterface.updateProgressBar((sectorIndex * 5) + 4, maxProgress);
                     } else {
+                        //noinspection StringConcatenation
                         Log.d(TAG, "Authentication unsuccessful for sector " + sectorIndex + ", giving up");
                         sectors.add(new UnauthorizedClassicSector(sectorIndex));
                     }

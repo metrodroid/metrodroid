@@ -24,6 +24,8 @@ import android.support.annotation.VisibleForTesting;
 import android.text.SpannableString;
 import android.util.Log;
 
+import org.jetbrains.annotations.NonNls;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -115,8 +117,10 @@ public class NextfareTransitData extends TransitData {
 
         byte[] magicData = card.getSector(0).getBlock(1).getData();
         mSystemCode = Arrays.copyOfRange(magicData, 9, 15);
+        //noinspection StringConcatenation
         Log.d(TAG, "SystemCode = " + Utils.getHexString(mSystemCode));
         mBlock2 = card.getSector(0).getBlock(2).getData();
+        //noinspection StringConcatenation
         Log.d(TAG, "Block2 = " + Utils.getHexString(mBlock2));
 
         List<NextfareRecord> records = new ArrayList<>();
@@ -128,6 +132,7 @@ public class NextfareTransitData extends TransitData {
                     continue;
                 }
 
+                //noinspection StringConcatenation
                 Log.d(TAG, "Sector " + sector.getIndex() + " / Block " + block.getIndex());
                 NextfareRecord record = NextfareRecord.recordFromBytes(
                         block.getData(), sector.getIndex(), block.getIndex(), getTimezone());
@@ -308,6 +313,7 @@ public class NextfareTransitData extends TransitData {
         }
     }
 
+    @NonNls
     protected static String formatSerialNumber(long serialNumber) {
         String s = "0160 " + Utils.formatNumber(serialNumber, " ", 4, 4, 3);
         s += Utils.calculateLuhn(s.replaceAll(" ", ""));

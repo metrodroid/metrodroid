@@ -35,6 +35,8 @@ import android.net.Uri;
 import android.provider.BaseColumns;
 import android.text.TextUtils;
 
+import org.jetbrains.annotations.NonNls;
+
 public abstract class BetterContentProvider extends ContentProvider {
     protected static final int CODE_COLLECTION = 100;
     protected static final int CODE_SINGLE = 101;
@@ -112,7 +114,7 @@ public abstract class BetterContentProvider extends ContentProvider {
 
     @Override
     public int delete(Uri uri, String selection, String[] selectionArgs) {
-        SQLiteDatabase db = mHelper.getWritableDatabase();
+        @NonNls SQLiteDatabase db = mHelper.getWritableDatabase();
         int count = 0;
         switch (mUriMatcher.match(uri)) {
             case CODE_SINGLE:
@@ -134,7 +136,7 @@ public abstract class BetterContentProvider extends ContentProvider {
     }
 
     @Override
-    public int update(Uri uri, ContentValues values, String selection, String[] selectionArgs) {
+    public int update(Uri uri, ContentValues values, @NonNls String selection, String[] selectionArgs) {
         SQLiteDatabase db = mHelper.getWritableDatabase();
         int count;
         switch (mUriMatcher.match(uri)) {

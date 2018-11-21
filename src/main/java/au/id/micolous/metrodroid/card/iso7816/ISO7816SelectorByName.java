@@ -19,6 +19,7 @@
 
 package au.id.micolous.metrodroid.card.iso7816;
 
+import org.jetbrains.annotations.NonNls;
 import org.simpleframework.xml.Element;
 
 import java.io.IOException;
@@ -28,6 +29,7 @@ import au.id.micolous.metrodroid.xml.Base64String;
 
 class ISO7816SelectorByName extends ISO7816SelectorElement {
     @Element(name="name")
+    @NonNls
     private Base64String mName;
 
     public static final String KIND = "name";
@@ -40,6 +42,7 @@ class ISO7816SelectorByName extends ISO7816SelectorElement {
     }
 
     @Override
+    @NonNls
     public String formatString() {
         return "#" + Utils.getHexString(mName.getData());
     }

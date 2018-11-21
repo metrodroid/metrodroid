@@ -103,7 +103,7 @@ data class RkfTransitData internal constructor(
 
         li.add(if (cardStatus == R.string.unknown_format) {
             ListItem(R.string.rkf_card_status, Utils.localizeString(R.string.unknown_format,
-                    "0x" + mTcci.getIntOrZero(STATUS).toString(16)))
+                    Utils.intToHex(mTcci.getIntOrZero(STATUS))))
         } else {
             ListItem(R.string.rkf_card_status, cardStatus)
         })

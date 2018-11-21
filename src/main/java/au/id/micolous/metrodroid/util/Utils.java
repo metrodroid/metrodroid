@@ -60,6 +60,7 @@ import android.view.WindowManager;
 import android.widget.Toast;
 
 import org.apache.commons.io.IOUtils;
+import org.jetbrains.annotations.NonNls;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.w3c.dom.Node;
@@ -199,6 +200,7 @@ public class Utils {
     }
 
     @NonNull
+    @SuppressWarnings({"StringConcatenation", "MagicCharacter"})
     public static SpannableString getHexDump(byte[] b, int offset, int length) {
         StringBuilder result = new StringBuilder();
         int alen;
@@ -888,6 +890,7 @@ public class Utils {
             try {
                 s = new String(new byte[]{data[i]});
             } catch (Exception ex) {
+                //noinspection StringConcatenation
                 Log.d(TAG, "unsupported encoding at byte " + i, ex);
                 // Unlikely to be JSON
                 return isRawMifareClassicKeyFileLength(data.length) ? KeyFormat.RAW_MFC : KeyFormat.UNKNOWN;
@@ -1098,10 +1101,12 @@ public class Utils {
     }
 
     @NonNull
+    @NonNls
     public static String formatNumber(long value, @NonNull String separator, int... groups) {
         int minDigit = 0;
         for (int g : groups)
             minDigit += g;
+        //noinspection StringConcatenation
         String unformatted = String.format(Locale.ENGLISH, "%0" + minDigit + "d", value);
         int numDigit = unformatted.length();
         int last = numDigit - minDigit;

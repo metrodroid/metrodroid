@@ -24,6 +24,7 @@ import android.support.annotation.Nullable;
 import android.util.Log;
 
 import org.apache.commons.lang3.ArrayUtils;
+import org.jetbrains.annotations.NonNls;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -39,6 +40,7 @@ import au.id.micolous.metrodroid.util.Utils;
 public abstract class En1545Subscription extends Subscription {
     private static final String TAG = En1545Subscription.class.getSimpleName();
     public static final String CONTRACT_ZONES = "ContractZones";
+    @NonNls
     public static final String CONTRACT_SALE = "ContractSale";
     public static final String CONTRACT_PRICE_AMOUNT = "ContractPriceAmount";
     public static final String CONTRACT_PAY_METHOD = "ContractPayMethod";
@@ -46,7 +48,9 @@ public abstract class En1545Subscription extends Subscription {
     public static final String CONTRACT_STATUS = "ContractStatus";
     public static final String CONTRACT_SALE_AGENT = "ContractSaleAgent";
     public static final String CONTRACT_PASSENGER_TOTAL = "ContractPassengerTotal";
+    @NonNls
     public static final String CONTRACT_START = "ContractStart";
+    @NonNls
     public static final String CONTRACT_END = "ContractEnd";
     public static final String CONTRACT_PROVIDER = "ContractProvider";
     public static final String CONTRACT_TARIFF = "ContractTariff";
@@ -163,7 +167,8 @@ public abstract class En1545Subscription extends Subscription {
             case 0xFF: return SubscriptionState.EXPIRED;
         }
 
-        Log.d(TAG, "Unknown subscription state: 0x" + Integer.toHexString(status));
+        //noinspection StringConcatenation
+        Log.d(TAG, "Unknown subscription state: "  + Utils.intToHex(status));
         return SubscriptionState.UNKNOWN;
     }
 

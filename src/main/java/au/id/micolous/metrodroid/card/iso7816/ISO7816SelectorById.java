@@ -19,12 +19,14 @@
 
 package au.id.micolous.metrodroid.card.iso7816;
 
+import org.jetbrains.annotations.NonNls;
 import org.simpleframework.xml.Element;
 
 import java.io.IOException;
 
 class ISO7816SelectorById extends ISO7816SelectorElement {
     @Element(name="id")
+    @NonNls
     private int mId;
 
     public static final String KIND = "id";
@@ -35,6 +37,7 @@ class ISO7816SelectorById extends ISO7816SelectorElement {
     }
 
     @Override
+    @NonNls
     public String formatString() {
         return ":" + Integer.toHexString(mId);
     }

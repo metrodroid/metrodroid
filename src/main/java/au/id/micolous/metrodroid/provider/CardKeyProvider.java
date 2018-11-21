@@ -58,7 +58,7 @@ public class CardKeyProvider extends BetterContentProvider {
     }
 
     @Override
-    protected UriMatcher createUriMatcher(Uri contentUri, String basePath) {
+    protected UriMatcher createUriMatcher(Uri contentUri, @NonNls String basePath) {
         UriMatcher matcher = super.createUriMatcher(contentUri, basePath);
         matcher.addURI(contentUri.getAuthority(), basePath + "/by-uid/*", KEY_BY_UID);
         return matcher;

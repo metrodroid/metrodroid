@@ -19,9 +19,12 @@
 
 package au.id.micolous.metrodroid.transit.en1545;
 
+import org.jetbrains.annotations.NonNls;
+
 import au.id.micolous.metrodroid.transit.Station;
 import au.id.micolous.metrodroid.transit.Trip;
 import au.id.micolous.metrodroid.util.StationTableReader;
+import au.id.micolous.metrodroid.util.Utils;
 
 public abstract class En1545LookupSTR implements En1545Lookup {
     private final String mStr;
@@ -39,9 +42,9 @@ public abstract class En1545LookupSTR implements En1545Lookup {
         if (transport == null)
             transport = 0;
         int routeId = (routeNumber) | (agency << 16) | (transport << 24);
-        String routeReadable = "0x" + Integer.toHexString(routeNumber);
+        @NonNls String routeReadable = Utils.intToHex(routeNumber);
         if (routeVariant != null) {
-            routeReadable += "/0x" + Integer.toHexString(routeVariant);
+            routeReadable += "/" + Utils.intToHex(routeVariant);
         }
         return StationTableReader.getLineName(mStr, routeId, routeReadable);
     }
@@ -64,7 +67,7 @@ public abstract class En1545LookupSTR implements En1545Lookup {
         return StationTableReader.getStation(
                 mStr,
                 station | (agency << 16) | (transport << 24),
-                "0x" + Integer.toHexString(station));
+                Utils.intToHex(station));
 
     }
 

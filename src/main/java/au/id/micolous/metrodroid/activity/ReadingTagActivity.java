@@ -202,6 +202,7 @@ public class ReadingTagActivity extends MetrodroidActivity implements TagReaderF
                         Log.i(TAG, "Dumped card successfully!");
                     }
                     for (String line : cardXml.split("\n")) {
+                        //noinspection StringConcatenation
                         Log.d(TAG, "XML: " + line);
                     }
                 }

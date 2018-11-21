@@ -47,6 +47,7 @@ public class CEPASProtocol {
                 return null;
             }
         } catch (ISO7816Exception | FileNotFoundException ex) {
+            //noinspection StringConcatenation
             Log.w(TAG, "Error reading purse " + purseId, ex);
             return null;
         }
@@ -69,12 +70,14 @@ public class CEPASProtocol {
                                 (byte) (historyBuff.length / 16));
                         historyBuff = Utils.concatByteArrays(historyBuff, historyBuff2);
                     } catch (ISO7816Exception ex) {
+                        //noinspection StringConcatenation
                         Log.w(TAG, "Error reading 2nd purse history " + purseId, ex);
                     }
             }
 
             return historyBuff;
         } catch (ISO7816Exception ex) {
+            //noinspection StringConcatenation
             Log.w(TAG, "Error reading purse history " + purseId, ex);
             return null;
         }

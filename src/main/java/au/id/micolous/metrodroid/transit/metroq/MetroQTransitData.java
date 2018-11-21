@@ -195,7 +195,7 @@ public class MetroQTransitData extends TransitData {
                 name = Utils.localizeString(R.string.metroq_day_pass);
                 break;
             default:
-                name = "" + mProduct;
+                name = Integer.toString(mProduct);
                 break;
         }
         return new TransitBalanceStored(TransitCurrency.USD(mBalance), name, mExpiry);

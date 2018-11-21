@@ -188,7 +188,7 @@ public class Station implements Parcelable {
     }
 
     public static Station unknown(Integer id) {
-        return unknown("0x" + Integer.toHexString(id));
+        return unknown(Utils.intToHex(id));
     }
 
     public static Station nameOnly(String name) {

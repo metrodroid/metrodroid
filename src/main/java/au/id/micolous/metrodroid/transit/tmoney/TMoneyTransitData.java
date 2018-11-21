@@ -23,6 +23,8 @@ import android.os.Parcel;
 import android.os.Parcelable;
 import android.support.annotation.Nullable;
 
+import org.jetbrains.annotations.NonNls;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -138,6 +140,7 @@ public class TMoneyTransitData extends TransitData {
         return Utils.groupString(Utils.getHexString(getSerialTag(card), 4, 8), " ", 4, 4, 4);
     }
 
+    @NonNls
     private static String parseDate(TMoneyCard card) {
         byte []tmoneytag = getSerialTag(card);
         return Utils.getHexString(tmoneytag, 17, 2) + "/"

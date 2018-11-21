@@ -106,10 +106,12 @@ public class ISO7816Protocol {
     public byte[] sendRequest(byte cla, byte ins, byte p1, byte p2, byte length, byte... parameters) throws IOException, ISO7816Exception {
         byte[] sendBuffer = wrapMessage(cla, ins, p1, p2, length, parameters);
         if (ENABLE_TRACING) {
+            //noinspection StringConcatenation
             Log.d(TAG, ">>> " + Utils.getHexString(sendBuffer));
         }
         byte[] recvBuffer = mTagTech.transceive(sendBuffer);
         if (ENABLE_TRACING) {
+            //noinspection StringConcatenation
             Log.d(TAG, "<<< " + Utils.getHexString(recvBuffer));
         }
 
@@ -150,6 +152,7 @@ public class ISO7816Protocol {
 
     public byte[] selectByName(byte[] name, boolean nextOccurrence) throws IOException {
         byte[] reply;
+        //noinspection StringConcatenation
         Log.d(TAG, "Select by name " + Utils.getHexString(name));
         // Select an application by file name
         try {
@@ -175,6 +178,7 @@ public class ISO7816Protocol {
 
     public byte[] selectById(int fileId) throws IOException {
         byte[] file = Utils.integerToByteArray(fileId, 2);
+        //noinspection StringConcatenation
         Log.d(TAG, "Select file " + Utils.getHexString(file));
         try {
             return sendRequest(CLASS_ISO7816, INSTRUCTION_ISO7816_SELECT,
@@ -188,6 +192,7 @@ public class ISO7816Protocol {
 
     public byte[] readRecord(byte recordNumber, byte length) throws IOException {
         byte[] ret;
+        //noinspection StringConcatenation
         Log.d(TAG, "Read record " + recordNumber);
         try {
             ret = sendRequest(CLASS_ISO7816, INSTRUCTION_ISO7816_READ_RECORD,

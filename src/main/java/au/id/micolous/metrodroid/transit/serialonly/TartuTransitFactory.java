@@ -24,6 +24,8 @@ package au.id.micolous.metrodroid.transit.serialonly;
 import android.os.Parcel;
 import android.support.annotation.NonNull;
 
+import org.jetbrains.annotations.NonNls;
+
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
@@ -58,6 +60,7 @@ public class TartuTransitFactory implements ClassicCardTransitFactory {
             .setExtraNote(R.string.card_note_card_number_only)
             .build();
 
+    @NonNls
     private static String parseSerial(ClassicCard card) {
         ClassicSector sector2 = card.getSector(2);
         return new String(Utils.byteArraySlice(sector2.getBlock(0).getData(), 7, 9))

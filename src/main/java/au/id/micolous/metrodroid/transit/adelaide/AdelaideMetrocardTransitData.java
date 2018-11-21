@@ -24,6 +24,7 @@ import android.os.Parcelable;
 import android.support.annotation.NonNull;
 
 import org.apache.commons.lang3.ArrayUtils;
+import org.jetbrains.annotations.NonNls;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -165,6 +166,7 @@ public class AdelaideMetrocardTransitData extends En1545TransitData {
         }
     };
 
+    @NonNls
     private static String formatSerial(long serial) {
         return "01-" + Utils.formatNumber(serial, " ", 3, 4, 4, 4);
     }

@@ -84,7 +84,7 @@ public final class OpalData {
         if (MODES.containsKey(mode)) {
             return Utils.localizeString(MODES.get(mode));
         }
-        return Utils.localizeString(R.string.unknown_format, "0x" + Long.toString(mode, 16));
+        return Utils.localizeString(R.string.unknown_format, Utils.longToHex(mode));
     }
 
     static String getLocalisedAction(int action) {
@@ -92,6 +92,6 @@ public final class OpalData {
             return Utils.localizeString(ACTIONS.get(action));
         }
 
-        return Utils.localizeString(R.string.unknown_format, "0x" + Long.toString(action, 16));
+        return Utils.localizeString(R.string.unknown_format, Utils.longToHex(action));
     }
 }

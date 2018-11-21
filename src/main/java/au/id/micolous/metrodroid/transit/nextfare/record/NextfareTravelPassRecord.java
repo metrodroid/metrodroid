@@ -74,6 +74,7 @@ public class NextfareTravelPassRecord extends NextfareRecord implements Parcelab
         record.mExpiry = NextfareUtil.unpackDate(input, 2, timeZone);
         record.mChecksum = Utils.byteArrayToIntReversed(input, 14, 2);
 
+        //noinspection StringConcatenation
         Log.d(TAG, "@" + Utils.isoDateTimeFormat(record.mExpiry) + ": version " + record.mVersion);
 
         if (record.mVersion == 0) {

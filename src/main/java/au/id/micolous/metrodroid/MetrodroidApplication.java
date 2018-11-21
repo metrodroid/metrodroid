@@ -267,6 +267,7 @@ public class MetrodroidApplication extends Application {
 
         // Fallback: Look for com.nxp.mifare feature.
         mMifareClassicSupport = this.getPackageManager().hasSystemFeature("com.nxp.mifare");
+        //noinspection StringConcatenation
         Log.d(TAG, "Falling back to com.nxp.mifare feature detection "
                 + (mMifareClassicSupport ? "(found)" : "(missing)"));
     }

@@ -23,6 +23,8 @@ import android.util.Log;
 
 import com.neovisionaries.i18n.CountryCode;
 
+import org.jetbrains.annotations.NonNls;
+
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -222,7 +224,7 @@ public class CalypsoApplication extends ISO7816Application {
             }
 
             CalypsoData.Manufacturer manufacturer = CalypsoData.Manufacturer.get(data[22]);
-            String manufacturerHex = "0x" + Integer.toHexString((int) data[22] & 0xff);
+            String manufacturerHex = Utils.intToHex((int) data[22] & 0xff);
             String manufacturerName;
             if (manufacturer != null) {
                 manufacturerName = String.format(Locale.ENGLISH, "%s (%s)",

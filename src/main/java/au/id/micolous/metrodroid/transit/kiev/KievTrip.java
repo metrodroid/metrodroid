@@ -22,6 +22,8 @@ package au.id.micolous.metrodroid.transit.kiev;
 import android.os.Parcel;
 import android.support.annotation.Nullable;
 
+import org.jetbrains.annotations.NonNls;
+
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.TimeZone;
@@ -34,6 +36,7 @@ import au.id.micolous.metrodroid.util.Utils;
 
 public class KievTrip extends Trip {
     private final Calendar mTimestamp;
+    @NonNls
     private final String mTransactionType;
     private final int mCounter1;
     private final int mCounter2;

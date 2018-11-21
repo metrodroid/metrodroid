@@ -24,12 +24,17 @@ package au.id.micolous.metrodroid.provider;
 
 import android.provider.BaseColumns;
 
+import org.jetbrains.annotations.NonNls;
+
 public class KeysTableColumns implements BaseColumns {
 
     public static final String TABLE_NAME = "keys";
+    @NonNls
     public static final String CARD_ID = "card_id";
+    @NonNls
     public static final String CARD_TYPE = "card_type";
     public static final String KEY_DATA = "key_data";
+    @NonNls
     public static final String CREATED_AT = "created_at";
 
     private KeysTableColumns() {

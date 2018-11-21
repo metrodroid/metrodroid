@@ -256,10 +256,12 @@ public class KeysFragment extends ListFragment implements AdapterView.OnItemLong
                     case REQUEST_SELECT_FILE: {
                         uri = data.getData();
                         String type = getActivity().getContentResolver().getType(uri);
+                        //noinspection StringConcatenation
                         Log.d(TAG, "REQUEST_SELECT_FILE content_type = " + type);
 
                         KeyFormat f;
                         f = Utils.detectKeyFormat(getActivity(), uri);
+                        //noinspection StringConcatenation
                         Log.d(TAG, "Detected file format: " + f.name());
 
                         switch (f) {

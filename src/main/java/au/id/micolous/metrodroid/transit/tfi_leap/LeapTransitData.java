@@ -26,6 +26,7 @@ import android.support.annotation.Nullable;
 import android.text.SpannableString;
 
 import org.apache.commons.lang3.ArrayUtils;
+import org.jetbrains.annotations.NonNls;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -239,6 +240,7 @@ public class LeapTransitData extends TransitData {
         return g;
     }
 
+    @NonNls
     private static String getSerial(DesfireCard card) {
         DesfireApplication app = card.getApplication(APP_ID);
         int serial = Utils.byteArrayToInt(app.getFile(2).getData(),0x25, 4);
