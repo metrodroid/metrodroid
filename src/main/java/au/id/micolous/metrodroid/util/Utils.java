@@ -942,8 +942,8 @@ public class Utils {
         return unsignedToTwoComplement(val, bitLength - 1);
     }
 
-    @NotNull
-    public static String groupString(@NotNull String val, @NotNull String separator, int... groups) {
+    @NonNull
+    public static String groupString(@NonNull String val, @NonNull String separator, int... groups) {
         StringBuilder ret = new StringBuilder();
         int ptr = 0;
         for (int g : groups) {
@@ -1100,7 +1100,8 @@ public class Utils {
         return -1;
     }
 
-    public static String formatNumber(long value, String separator, int... groups) {
+    @NonNull
+    public static String formatNumber(long value, @NonNull String separator, int... groups) {
         int minDigit = 0;
         for (int g : groups)
             minDigit += g;
