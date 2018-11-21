@@ -114,7 +114,7 @@ public class TMoneyTransitData extends TransitData {
         mSerialNumber = p.readString();
         mBalance = p.readInt();
         mDate = p.readString();
-        mTrips = Arrays.asList((TMoneyTrip[]) p.readParcelableArray(TMoneyTrip.class.getClassLoader()));
+        mTrips = p.readArrayList(TMoneyTrip.class.getClassLoader());
     }
 
     @Override
@@ -122,7 +122,7 @@ public class TMoneyTransitData extends TransitData {
         dest.writeString(mSerialNumber);
         dest.writeInt(mBalance);
         dest.writeString(mDate);
-        dest.writeParcelableArray(mTrips.toArray(new TMoneyTrip[0]), flags);
+        dest.writeList(mTrips);
     }
 
     public static TransitIdentity parseTransitIdentity(TMoneyCard card) {
