@@ -27,11 +27,14 @@ import android.content.UriMatcher;
 import android.database.sqlite.SQLiteQueryBuilder;
 import android.net.Uri;
 
+import org.jetbrains.annotations.NonNls;
+
 import java.util.GregorianCalendar;
 
 import au.id.micolous.farebot.BuildConfig;
 
 public class CardKeyProvider extends BetterContentProvider {
+    @NonNls
     public static final String AUTHORITY = BuildConfig.APPLICATION_ID + ".keyprovider";
     public static final Uri CONTENT_URI = Uri.parse("content://" + AUTHORITY + "/keys");
     public static final Uri CONTENT_BY_UID_URI = Uri.withAppendedPath(CONTENT_URI, "/by-uid");
