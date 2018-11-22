@@ -80,28 +80,28 @@ public class HSLTransitData extends TransitData implements Parcelable {
             .build();
 
     private static final int APP_ID = 0x1120ef;
-    private String mSerialNumber;
-    private int mBalance;
-    private List<HSLTrip> mTrips;
+    private final String mSerialNumber;
+    private final int mBalance;
+    private final List<HSLTrip> mTrips;
     private HSLRefill mLastRefill;
-    private long mArvoExit;
-    private int mArvoPax;
-    private int mArvoPurchasePrice;
-    private long mArvoXfer;
-    private long mArvoDiscoGroup;
-    private long mArvoMystery1;
-    private long mArvoDuration;
-    private long mArvoRegional;
-    private long mArvoJOREExt;
-    private int mArvoVehicleNumber;
-    private long mArvoUnknown;
-    private long mArvoLineJORE;
-    private int mKausiVehicleNumber;
-    private long mKausiUnknown;
-    private long mKausiLineJORE;
-    private long mKausiJOREExt;
-    private long mArvoDirection;
-    private long mKausiDirection;
+    private final long mArvoExit;
+    private final int mArvoPax;
+    private final int mArvoPurchasePrice;
+    private final long mArvoXfer;
+    private final long mArvoDiscoGroup;
+    private final long mArvoMystery1;
+    private final long mArvoDuration;
+    private final long mArvoRegional;
+    private final long mArvoJOREExt;
+    private final int mArvoVehicleNumber;
+    private final long mArvoUnknown;
+    private final long mArvoLineJORE;
+    private final int mKausiVehicleNumber;
+    private final long mKausiUnknown;
+    private final long mKausiLineJORE;
+    private final long mKausiJOREExt;
+    private final long mArvoDirection;
+    private final long mKausiDirection;
     /*
     private static final String[] regionNames = {
         "N/A", "Helsinki", "Espoo", "Vantaa", "Koko alue", "Seutu", "", "", "", "",  // 0-9

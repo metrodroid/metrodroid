@@ -77,7 +77,7 @@ public class CardInfoActivity extends MetrodroidActivity {
     private boolean mShowMoreInfo = false;
     private Menu mMenu = null;
 
-    private OnInitListener mTTSInitListener = new OnInitListener() {
+    private final OnInitListener mTTSInitListener = new OnInitListener() {
         public void onInit(int status) {
             if (status == TextToSpeech.SUCCESS && mTransitData.getBalances() != null) {
                 for (TransitBalance balanceVal : mTransitData.getBalances()) {

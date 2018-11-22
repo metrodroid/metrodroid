@@ -64,7 +64,7 @@ public class ErgTransitData extends TransitData {
     private GregorianCalendar mEpochDate;
     private int mAgencyID;
     private int mBalance;
-    private List<ErgTrip> mTrips;
+    private final List<ErgTrip> mTrips;
 
     // Parcel
     public static final Creator<ErgTransitData> CREATOR = new Creator<ErgTransitData>() {
@@ -78,7 +78,7 @@ public class ErgTransitData extends TransitData {
             return new ErgTransitData[size];
         }
     };
-    private String mCurrency;
+    private final String mCurrency;
 
     public ErgTransitData(Parcel parcel, String currency) {
         mSerialNumber = parcel.readString();

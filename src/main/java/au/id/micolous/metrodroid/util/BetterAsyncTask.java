@@ -34,7 +34,7 @@ public abstract class BetterAsyncTask<Result> extends AsyncTask<Void, ProgressBa
 
     private ProgressDialog mProgressDialog;
     protected Activity mActivity;
-    private boolean mFinishOnError;
+    private final boolean mFinishOnError;
 
     public BetterAsyncTask(Activity activity) {
         this(activity, true);

@@ -41,12 +41,12 @@ public abstract class BetterContentProvider extends ContentProvider {
     protected static final int CODE_COLLECTION = 100;
     protected static final int CODE_SINGLE = 101;
     private SQLiteOpenHelper mHelper;
-    private Class<? extends SQLiteOpenHelper> mHelperClass;
-    private String mItemType;
-    private Uri mContentUri;
-    private String mDirType;
-    private String mTableName;
-    private UriMatcher mUriMatcher;
+    private final Class<? extends SQLiteOpenHelper> mHelperClass;
+    private final String mItemType;
+    private final Uri mContentUri;
+    private final String mDirType;
+    private final String mTableName;
+    private final UriMatcher mUriMatcher;
 
     public BetterContentProvider(Class<? extends SQLiteOpenHelper> helperClass, String dirType, String itemType,
                                  String tableName, Uri contentUri) {

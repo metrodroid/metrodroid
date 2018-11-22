@@ -98,13 +98,13 @@ public class PodorozhnikTransitData extends TransitData {
     private int mLastTopup;
     private int mLastTopupTime;
     private int mLastFare;
-    private List<Integer> mExtraTripTimes;
+    private final List<Integer> mExtraTripTimes;
     private int mLastValidator;
     private int mLastTripTime;
     private int mGroundCounter;
     private int mSubwayCounter;
     private int mLastTransport;
-    private String mSerial;
+    private final String mSerial;
     private int mLastTopupMachine;
     private int mLastTopupAgency;
     private boolean mCountersValid;

@@ -126,7 +126,7 @@ public class CardTripsFragment extends ListFragment {
     }
 
     private static class UseLogListAdapter extends ArrayAdapter<Trip> {
-        private TransitData mTransitData;
+        private final TransitData mTransitData;
         /**
          * Used when localisePlaces=true to ensure route and line numbers are still read out in the
          * user's language.

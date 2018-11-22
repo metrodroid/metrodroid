@@ -43,7 +43,7 @@ public class SeqGoRefill extends NextfareTrip {
         }
     };
 
-    private boolean mAutomatic;
+    private final boolean mAutomatic;
 
     public SeqGoRefill(NextfareTopupRecord topup) {
         super(topup, "AUD", SeqGoData.SEQ_GO_STR);

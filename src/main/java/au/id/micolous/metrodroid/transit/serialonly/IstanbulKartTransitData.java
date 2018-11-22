@@ -52,8 +52,8 @@ public class IstanbulKartTransitData extends SerialOnlyTransitData {
     public static final String NAME = "IstanbulKart";
     public static final int APP_ID = 0x422201;
 
-    private String mSerial;
-    private String mSerial2;
+    private final String mSerial;
+    private final String mSerial2;
 
     public static final CardInfo CARD_INFO = new CardInfo.Builder()
             .setName(NAME)

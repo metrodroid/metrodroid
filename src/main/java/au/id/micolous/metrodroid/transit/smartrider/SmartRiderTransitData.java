@@ -78,10 +78,10 @@ public class SmartRiderTransitData extends TransitData {
             .setKeysRequired()
             .build();
 
-    private String mSerialNumber;
-    private int mBalance;
-    private List<TransactionTrip> mTrips;
-    private CardType mCardType;
+    private final String mSerialNumber;
+    private final int mBalance;
+    private final List<TransactionTrip> mTrips;
+    private final CardType mCardType;
 
     // Unfortunately, there's no way to reliably identify these cards except for the "standard" keys
     // which are used for some empty sectors.  It is not enough to read the whole card (most data is

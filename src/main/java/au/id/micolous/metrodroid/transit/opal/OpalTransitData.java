@@ -96,17 +96,17 @@ public class OpalTransitData extends TransitData {
         OPAL_EPOCH = epoch;
     }
 
-    private int mSerialNumber;
-    private int mBalance; // cents
-    private int mChecksum;
-    private int mWeeklyTrips;
-    private boolean mAutoTopup;
-    private int mAction;
-    private int mMode;
-    private int mMinute;
-    private int mDay;
-    private int mTransactionNumber;
-    private int mLastDigit;
+    private final int mSerialNumber;
+    private final int mBalance; // cents
+    private final int mChecksum;
+    private final int mWeeklyTrips;
+    private final boolean mAutoTopup;
+    private final int mAction;
+    private final int mMode;
+    private final int mMinute;
+    private final int mDay;
+    private final int mTransactionNumber;
+    private final int mLastDigit;
 
     @SuppressWarnings("UnusedDeclaration")
     public OpalTransitData(Parcel parcel) {

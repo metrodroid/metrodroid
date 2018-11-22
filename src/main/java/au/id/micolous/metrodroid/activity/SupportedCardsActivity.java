@@ -69,7 +69,7 @@ public class SupportedCardsActivity extends MetrodroidActivity {
     }
 
     private class CardsAdapter extends ArrayAdapter<CardInfo> {
-        private LayoutInflater mLayoutInflater;
+        private final LayoutInflater mLayoutInflater;
 
         CardsAdapter(Context context) {
             super(context, 0, new ArrayList<>());

@@ -89,7 +89,7 @@ public class SuicaTransitData extends TransitData {
     static final TimeZone TIME_ZONE = TimeZone.getTimeZone("Asia/Tokyo");
     static final String TAG = SuicaTransitData.class.getSimpleName();
 
-    private List<SuicaTrip> mTrips;
+    private final List<SuicaTrip> mTrips;
 
     public SuicaTransitData(Parcel parcel) {
         mTrips = new ArrayList<>();

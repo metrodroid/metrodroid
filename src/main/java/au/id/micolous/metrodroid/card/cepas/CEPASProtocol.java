@@ -32,7 +32,7 @@ import au.id.micolous.metrodroid.util.Utils;
 
 public class CEPASProtocol {
     private static final String TAG = "CEPASProtocol";
-    private ISO7816Protocol mTagTech;
+    private final ISO7816Protocol mTagTech;
 
     public CEPASProtocol(ISO7816Protocol tagTech) {
         mTagTech = tagTech;

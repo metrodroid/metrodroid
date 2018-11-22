@@ -53,7 +53,7 @@ public class ClassicStaticKeys extends ClassicCardKeys {
 
     // Sparse Arrays are annoying to iterate through
     @SuppressLint("UseSparseArrays")
-    private Map<Integer, List<ClassicSectorKeyWrapper>> mKeys = new HashMap<>();
+    private final Map<Integer, List<ClassicSectorKeyWrapper>> mKeys = new HashMap<>();
     private String mDescription;
 
     public void mergeJSON(JSONObject string) throws JSONException {

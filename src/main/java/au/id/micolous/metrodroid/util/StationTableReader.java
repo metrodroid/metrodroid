@@ -59,9 +59,9 @@ public class StationTableReader {
     private static final int VERSION = 1;
     private static final String TAG = "StationTableReader";
 
-    private Stations.StationDb mStationDb;
-    private LazyInitializer<Stations.StationIndex> mStationIndex;
-    private DataInputStream mTable;
+    private final Stations.StationDb mStationDb;
+    private final LazyInitializer<Stations.StationIndex> mStationIndex;
+    private final DataInputStream mTable;
     private final int mStationsLength;
 
     private static final Map<String,StationTableReader> mSTRs = new HashMap<>();

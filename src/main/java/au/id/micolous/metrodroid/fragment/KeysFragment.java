@@ -80,7 +80,7 @@ public class KeysFragment extends ListFragment implements AdapterView.OnItemLong
 
     private static final String TAG = "KeysFragment";
 
-    private android.view.ActionMode.Callback mActionModeCallback = new ActionMode.Callback() {
+    private final android.view.ActionMode.Callback mActionModeCallback = new ActionMode.Callback() {
         @Override
         public boolean onCreateActionMode(ActionMode mode, Menu menu) {
             MenuInflater inflater = mode.getMenuInflater();
@@ -168,7 +168,7 @@ public class KeysFragment extends ListFragment implements AdapterView.OnItemLong
         }
     };
 
-    private LoaderManager.LoaderCallbacks<Cursor> mLoaderCallbacks = new LoaderManager.LoaderCallbacks<android.database.Cursor>() {
+    private final LoaderManager.LoaderCallbacks<Cursor> mLoaderCallbacks = new LoaderManager.LoaderCallbacks<android.database.Cursor>() {
         @Override
         public Loader<Cursor> onCreateLoader(int i, Bundle bundle) {
             return new CursorLoader(getActivity(), CardKeyProvider.CONTENT_URI,

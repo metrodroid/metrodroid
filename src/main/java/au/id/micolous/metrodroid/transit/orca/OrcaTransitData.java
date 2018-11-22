@@ -63,9 +63,9 @@ public class OrcaTransitData extends TransitData {
             .setCardType(CardType.MifareDesfire)
             .build();
 
-    private int mSerialNumber;
-    private int mBalance;
-    private List<Trip> mTrips;
+    private final int mSerialNumber;
+    private final int mBalance;
+    private final List<Trip> mTrips;
 
     public static final Creator<OrcaTransitData> CREATOR = new Creator<OrcaTransitData>() {
         public OrcaTransitData createFromParcel(Parcel parcel) {

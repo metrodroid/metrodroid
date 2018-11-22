@@ -76,7 +76,7 @@ class UltralightProtocol {
     // Status codes
     static final byte AUTH_ANSWER = (byte) 0xAF;
 
-    private MifareUltralight mTagTech;
+    private final MifareUltralight mTagTech;
 
     UltralightProtocol(MifareUltralight tagTech) {
         mTagTech = tagTech;

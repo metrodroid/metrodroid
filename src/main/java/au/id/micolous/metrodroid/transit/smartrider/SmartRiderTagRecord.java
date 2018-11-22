@@ -45,10 +45,10 @@ import java.util.TimeZone;
 
 public class SmartRiderTagRecord extends Transaction {
     private static final String TAG = SmartRiderTagRecord.class.getSimpleName();
-    private long mTimestamp;
-    private boolean mTagOn;
+    private final long mTimestamp;
+    private final boolean mTagOn;
     private @NonNls String mRoute;
-    private int mCost;
+    private final int mCost;
     private SmartRiderTransitData.CardType mCardType;
 
     public SmartRiderTagRecord(SmartRiderTransitData.CardType cardType, byte[] record) {

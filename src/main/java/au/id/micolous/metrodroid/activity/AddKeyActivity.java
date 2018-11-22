@@ -66,7 +66,7 @@ public class AddKeyActivity extends MetrodroidActivity {
     private static final String TAG = AddKeyActivity.class.getSimpleName();
     private NfcAdapter mNfcAdapter;
     private PendingIntent mPendingIntent;
-    private String[][] mTechLists = new String[][]{
+    private final String[][] mTechLists = new String[][]{
             new String[]{IsoDep.class.getName()},
             new String[]{MifareClassic.class.getName()},
             new String[]{MifareUltralight.class.getName()},

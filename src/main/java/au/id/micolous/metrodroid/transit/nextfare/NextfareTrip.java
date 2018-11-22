@@ -56,7 +56,7 @@ public class NextfareTrip extends Trip implements Comparable<NextfareTrip> {
     protected int mEndStation;
     protected boolean mContinuation;
     protected int mCost;
-    private String mCurrency;
+    private final String mCurrency;
     @NonNls
     private String mSTR;
 

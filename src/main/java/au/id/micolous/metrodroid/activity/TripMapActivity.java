@@ -175,9 +175,9 @@ public class TripMapActivity extends MetrodroidActivity {
     */
     public static class TripMapShim {
         private static final String TAG = "TripMapShim";
-        private Marker[] mMarkers;
-        private String mTileUrl;
-        private String mSubdomains;
+        private final Marker[] mMarkers;
+        private final String mTileUrl;
+        private final String mSubdomains;
 
         TripMapShim(Marker[] markers, String tileUrl, String subdomains) {
             this.mMarkers = markers;

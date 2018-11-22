@@ -79,8 +79,8 @@ public class KMTTransitData extends TransitData {
             return new KMTTransitData[size];
         }
     };
-    private List<KMTTrip> mTrips;
-    private String mSerialNumber;
+    private final List<KMTTrip> mTrips;
+    private final String mSerialNumber;
     private int mCurrentBalance;
     private int mTransactionCounter;
     private int mLastTransAmount;

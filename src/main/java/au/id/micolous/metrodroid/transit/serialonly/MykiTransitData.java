@@ -59,7 +59,7 @@ public class MykiTransitData extends SerialOnlyTransitData {
     private static final byte[] MYKI_HEADER = {(byte)0xc9, (byte)0xb4, 0x04, 0x00};
     private static final long MYKI_PREFIX = 308425;
 
-    private String mSerial;
+    private final String mSerial;
 
     public static final CardInfo CARD_INFO = new CardInfo.Builder()
             .setImageId(R.drawable.myki_card)

@@ -89,7 +89,7 @@ public class NextfareTransitData extends TransitData {
     List<NextfareTrip> mTrips;
     List<NextfareSubscription> mSubscriptions;
     @NonNull
-    private String mCurrency;
+    private final String mCurrency;
 
     public NextfareTransitData(Parcel parcel, @NonNull String currency) {
         mSerialNumber = parcel.readLong();
