@@ -109,8 +109,8 @@ public class TartuTransitFactory implements ClassicCardTransitFactory {
         return Collections.singletonList(CARD_INFO);
     }
 
-    private static class TartuTransitData extends SerialOnlyTransitData {
-        private String mSerial;
+    private static final class TartuTransitData extends SerialOnlyTransitData {
+        private final String mSerial;
         private TartuTransitData(ClassicCard card) {
             mSerial = parseSerial(card);
         }
