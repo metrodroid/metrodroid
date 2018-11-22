@@ -66,6 +66,7 @@ public class KievTransitData extends TransitData {
 
     private KievTransitData(Parcel in) {
         mSerial = in.readString();
+        //noinspection unchecked
         mTrips = in.readArrayList(KievTrip.class.getClassLoader());
     }
 

@@ -109,6 +109,7 @@ public abstract class ChinaTransitData extends TransitData {
         mBalance = parcel.readInt();
         mValidityStart = parcel.readInt();
         mValidityEnd = parcel.readInt();
+        //noinspection unchecked
         mTrips = parcel.readArrayList(ChinaTrip.class.getClassLoader());
     }
 
