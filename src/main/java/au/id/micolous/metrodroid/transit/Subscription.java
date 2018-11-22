@@ -179,7 +179,7 @@ public abstract class Subscription implements Parcelable {
          */
         EXPIRED(R.string.subscription_expired);
 
-        @StringRes int mDescription;
+        @StringRes final int mDescription;
         SubscriptionState(@StringRes int description) {
             mDescription = description;
         }
@@ -265,7 +265,7 @@ public abstract class Subscription implements Parcelable {
         /** The subscription costs nothing (gratis) */
         FREE(R.string.payment_method_free);
 
-        @StringRes int mDescription;
+        @StringRes final int mDescription;
         PaymentMethod(@StringRes int description) {
             mDescription = description;
         }
