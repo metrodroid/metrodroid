@@ -208,8 +208,8 @@ public class StationTableReader {
         String englishFull = name.getEnglish();
         String englishShort = name.getEnglishShort();
         String english;
-        boolean hasEnglishFull = englishFull != null && englishFull.length() != 0;
-        boolean hasEnglishShort = englishShort != null && englishShort.length() != 0;
+        boolean hasEnglishFull = englishFull != null && !englishFull.isEmpty();
+        boolean hasEnglishShort = englishShort != null && !englishShort.isEmpty();
 
         if (hasEnglishFull && !hasEnglishShort)
             english = englishFull;

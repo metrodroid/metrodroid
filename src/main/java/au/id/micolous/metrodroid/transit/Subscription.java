@@ -452,6 +452,6 @@ public abstract class Subscription implements Parcelable {
                     zones.length), zones_list.toString()));
         }
 
-        return items.size() > 0 ? items : null;
+        return !items.isEmpty() ? items : null;
     }
 }

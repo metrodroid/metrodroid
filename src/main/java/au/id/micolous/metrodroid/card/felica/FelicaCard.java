@@ -126,7 +126,7 @@ public class FelicaCard extends Card {
             List<FeliCaLib.SystemCode> codes = ft.getSystemCodeList();
 
             // Check if we failed to get a System Code
-            if (codes.size() == 0) {
+            if (codes.isEmpty()) {
                 // Lite has no system code list
                 byte[] liteSystem = ft.pollingAndGetIDm(FeliCaLib.SYSTEMCODE_FELICA_LITE);
                 //noinspection StringConcatenation
@@ -238,7 +238,7 @@ public class FelicaCard extends Card {
                         partialRead = true;
                     }
 
-                    if (blocks.size() > 0) { // Most service codes appear to be empty...
+                    if (!blocks.isEmpty()) { // Most service codes appear to be empty...
                         FelicaBlock[] blocksArray = blocks.toArray(new FelicaBlock[0]);
                         services.add(new FelicaService(serviceCodeInt, blocksArray));
                         //noinspection StringConcatenation

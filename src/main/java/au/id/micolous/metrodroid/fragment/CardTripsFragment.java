@@ -88,7 +88,7 @@ public class CardTripsFragment extends ListFragment {
         // Explicitly sort these events
         Collections.sort(trips, new Trip.Comparator());
 
-        if (trips.size() > 0) {
+        if (!trips.isEmpty()) {
             if (MetrodroidApplication.obfuscateTripDates() ||
                     MetrodroidApplication.obfuscateTripTimes() ||
                     MetrodroidApplication.obfuscateTripFares()) {

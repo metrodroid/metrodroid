@@ -199,7 +199,7 @@ public class CardInfoActivity extends MetrodroidActivity {
                         String txt = "";
                         if (hasUnknownStation)
                             txt = getString(R.string.need_stations);
-                        if (w != null && txt.length() > 0)
+                        if (w != null && !txt.isEmpty())
                             txt += "\n";
                         if (w != null)
                             txt += w;

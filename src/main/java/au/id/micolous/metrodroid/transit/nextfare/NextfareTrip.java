@@ -70,7 +70,7 @@ public class NextfareTrip extends Trip implements Comparable<NextfareTrip> {
         mModeInt = parcel.readInt();
         mCurrency = parcel.readString();
         mSTR = parcel.readString();
-        if (mSTR.equals(""))
+        if (mSTR.isEmpty())
             mSTR = null;
     }
 

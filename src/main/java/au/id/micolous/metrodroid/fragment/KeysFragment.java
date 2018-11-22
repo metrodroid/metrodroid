@@ -334,7 +334,7 @@ public class KeysFragment extends ListFragment implements AdapterView.OnItemLong
 
             // Test that we can deserialise this
             ClassicStaticKeys k = ClassicStaticKeys.fromJSON(json);
-            if (k.keys().size() == 0) {
+            if (k.keys().isEmpty()) {
                 return R.string.key_file_empty;
             }
 
