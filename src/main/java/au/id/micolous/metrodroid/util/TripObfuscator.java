@@ -54,6 +54,9 @@ public final class TripObfuscator {
         Collections.shuffle(mCalendarMapping);
     }
 
+    private TripObfuscator() {
+    }
+
     /**
      * Maybe obfuscates a timestamp
      *
