@@ -31,7 +31,7 @@ import au.id.micolous.metrodroid.transit.TransitCurrency;
 import au.id.micolous.metrodroid.transit.Trip;
 import au.id.micolous.metrodroid.util.Utils;
 
-public class ClipperRefill extends Trip implements Comparable {
+public class ClipperRefill extends Trip implements Comparable<ClipperRefill> {
     public static final Creator<ClipperRefill> CREATOR = new Creator<ClipperRefill>() {
         public ClipperRefill createFromParcel(Parcel parcel) {
             return new ClipperRefill(parcel);
@@ -101,11 +101,7 @@ public class ClipperRefill extends Trip implements Comparable {
     }
 
     @Override
-    public int compareTo(Object other) {
-	if (other == null)
-	    return 0;
-	if (!(other instanceof ClipperRefill))
-	    return 0;
-        return this.mTimestamp.compareTo(((ClipperRefill) other).mTimestamp);
+    public int compareTo(ClipperRefill other) {
+        return this.mTimestamp.compareTo(other.mTimestamp);
     }
 }
