@@ -19,6 +19,7 @@
 
 package au.id.micolous.metrodroid.card.iso7816;
 
+import org.jetbrains.annotations.NonNls;
 import org.simpleframework.xml.Attribute;
 import org.simpleframework.xml.Serializer;
 import org.simpleframework.xml.convert.Converter;
@@ -46,7 +47,7 @@ abstract public class ISO7816SelectorElement {
 
         @Override
         public ISO7816SelectorElement read(InputNode node) throws Exception {
-            String kind = node.getAttribute("kind").getValue();
+            @NonNls String kind = node.getAttribute("kind").getValue();
             if (ISO7816SelectorByName.KIND.equals(kind)) {
                 return mSerializer.read(ISO7816SelectorByName.class, node);
             }

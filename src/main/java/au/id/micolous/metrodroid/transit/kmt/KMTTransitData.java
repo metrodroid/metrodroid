@@ -95,12 +95,7 @@ public class KMTTransitData extends TransitData {
     }
 
     public KMTTransitData(FelicaCard card) {
-        FelicaService serviceID = card.getSystem(SYSTEMCODE_KMT).getService(FELICA_SERVICE_KMT_ID);
-        List<FelicaBlock> blocksID = serviceID.getBlocks();
-        FelicaBlock blockID = blocksID.get(0);
-        byte[] dataID = blockID.getData();
-        mSerialNumber = new String(dataID);
-
+        mSerialNumber = getSerial(card);
         FelicaService serviceBalance = card.getSystem(SYSTEMCODE_KMT).getService(FELICA_SERVICE_KMT_BALANCE);
         if (serviceBalance != null) {
             List<FelicaBlock> blocksBalance = serviceBalance.getBlocks();
@@ -122,6 +117,19 @@ public class KMTTransitData extends TransitData {
             }
         }
         mTrips = trips;
+    }
+
+    private static String getSerial(FelicaCard card) {
+        FelicaService serviceID = card.getSystem(SYSTEMCODE_KMT).getService(FELICA_SERVICE_KMT_ID);
+        if (serviceID == null)
+            return "-";
+        List<FelicaBlock> blocksID = serviceID.getBlocks();
+        byte[] dataID = blocksID.get(0).getData();
+        try {
+            return new String(dataID, Utils.getASCII());
+        } catch (Exception e) {
+            return Utils.getHexString(dataID);
+        }
     }
 
     public final static FelicaCardTransitFactory FACTORY = new FelicaCardTransitFactory() {

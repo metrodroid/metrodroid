@@ -149,6 +149,7 @@ public class CardsFragment extends ExpandableListFragment {
                 }
                 scans.get(id).add(new Scan(cursor));
             }
+            //noinspection StringConcatenation
             Log.d(TAG, "creating adapter " + cards.size());
             setListAdapter(new CardsAdapter(getActivity(), scans, cards));
             setListShown(true);
@@ -178,6 +179,7 @@ public class CardsFragment extends ExpandableListFragment {
 
     @Override
     public boolean onListChildClick(ExpandableListView parent, View v, int groupPosition, int childPosition, long id) {
+        //noinspection StringConcatenation
         Log.d(TAG, "Clicked " + id + " " + groupPosition + " " + childPosition);
         Uri uri = ContentUris.withAppendedId(CardProvider.CONTENT_URI_CARD, id);
         Intent intent = new Intent(getActivity(), CardInfoActivity.class);
@@ -349,7 +351,7 @@ public class CardsFragment extends ExpandableListFragment {
             }
 
             Intent i = new Intent(Intent.ACTION_SEND);
-            Uri apkURI = FileProvider.getUriForFile(
+            @SuppressWarnings("StringConcatenation") Uri apkURI = FileProvider.getUriForFile(
                     MetrodroidApplication.getInstance(),
                     MetrodroidApplication.getInstance().getPackageName() + ".provider", tf);
             i.setType("text/xml");
@@ -498,6 +500,7 @@ public class CardsFragment extends ExpandableListFragment {
 
         private CardsAdapter(Context ctxt,
                             Map<Pair<Integer,String>, List<Scan>> scans, List<Pair<Integer,String>> cards) {
+            //noinspection StringConcatenation
             Log.d(TAG, "Cards adapter " + cards.size());
             mLayoutInflater = LayoutInflater.from(ctxt);
             mScans = scans;
@@ -506,6 +509,7 @@ public class CardsFragment extends ExpandableListFragment {
 
         @Override
         public int getGroupCount() {
+            //noinspection StringConcatenation
             Log.d(TAG, "getgroupcount " + mCards.size());
             return mCards.size();
         }
@@ -517,6 +521,7 @@ public class CardsFragment extends ExpandableListFragment {
 
         @Override
         public Object getGroup(int i) {
+            //noinspection StringConcatenation
             Log.d(TAG, "getgroup " + i);
             return mScans.get(mCards.get(i));
         }
@@ -567,7 +572,7 @@ public class CardsFragment extends ExpandableListFragment {
 
             if (identity != null) {
                 textView1.setText(identity.getName());
-                if (label != null && !label.equals("")) {
+                if (label != null && !label.isEmpty()) {
                     // This is used for imported cards from mfcdump_to_farebotxml.py
                     // Used for development and testing. We should always show this.
                     textView2.setText(label);

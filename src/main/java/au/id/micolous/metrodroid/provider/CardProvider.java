@@ -111,7 +111,7 @@ public class CardProvider extends ContentProvider {
     @SuppressWarnings("MagicCharacter")
     @Override
     public int delete(Uri uri, String selection, String[] selectionArgs) {
-        SQLiteDatabase db = mDbHelper.getWritableDatabase();
+        @NonNls SQLiteDatabase db = mDbHelper.getWritableDatabase();
         int count = 0;
         switch (sUriMatcher.match(uri)) {
             case CardDBHelper.CARD_COLLECTION_URI_INDICATOR:

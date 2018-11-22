@@ -63,8 +63,8 @@ public class TartuTransitFactory implements ClassicCardTransitFactory {
     @NonNls
     private static String parseSerial(ClassicCard card) {
         ClassicSector sector2 = card.getSector(2);
-        return new String(Utils.byteArraySlice(sector2.getBlock(0).getData(), 7, 9))
-                +new String(Utils.byteArraySlice(sector2.getBlock(1).getData(), 0, 10));
+        return new String(Utils.byteArraySlice(sector2.getBlock(0).getData(), 7, 9), Utils.getASCII())
+                +new String(Utils.byteArraySlice(sector2.getBlock(1).getData(), 0, 10), Utils.getASCII());
     }
 
     @Override

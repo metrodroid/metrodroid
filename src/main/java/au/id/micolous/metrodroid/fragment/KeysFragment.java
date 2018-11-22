@@ -329,7 +329,7 @@ public class KeysFragment extends ListFragment implements AdapterView.OnItemLong
         byte[] keyData = IOUtils.toByteArray(stream);
 
         try {
-            JSONObject json = new JSONObject(new String(keyData));
+            JSONObject json = new JSONObject(new String(keyData, Utils.getUTF8()));
             Log.d(TAG, "inserting key");
 
             // Test that we can deserialise this

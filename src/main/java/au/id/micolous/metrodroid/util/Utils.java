@@ -64,6 +64,7 @@ import org.jetbrains.annotations.NonNls;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.w3c.dom.Node;
+import org.simpleframework.xml.stream.InputNode;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -175,10 +176,12 @@ public class Utils {
         }
     }
 
+    @NonNls
     public static String getHexString(byte[] b) {
         return getHexString(b, 0, b.length);
     }
 
+    @NonNls
     public static String getHexString(byte[] b, int offset, int length) {
         StringBuilder result = new StringBuilder();
         for (int i = offset; i < offset + length; i++) {
@@ -187,6 +190,7 @@ public class Utils {
         return result.toString();
     }
 
+    @NonNls
     public static String getHexString(byte[] b, String defaultResult) {
         try {
             return getHexString(b);
@@ -210,6 +214,7 @@ public class Utils {
             for (alen = 2; (1 << (4 * alen)) < length; alen += 2);
         for (int i = 0; i < length; i++) {
             if ((i & 0xf) == 0 && alen != 0)
+                //noinspection StringConcatenation,StringConcatenationInFormatCall
                 result.append(String.format(Locale.ENGLISH, "%0" + alen + "x: ", i));
             result.append(Integer.toString((b[i+offset] & 0xff) + 0x100, 16).substring(1));
             if (((i & 0xf) == 0xf))
@@ -252,11 +257,7 @@ public class Utils {
      * @return byte array with string as US-ASCII
      */
     public static byte[] stringToByteArray(String s) {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-            return s.getBytes(StandardCharsets.US_ASCII);
-        } else {
-            return s.getBytes(Charset.forName("US-ASCII"));
-        }
+        return s.getBytes(getASCII());
     }
 
     /**
@@ -274,6 +275,14 @@ public class Utils {
             return StandardCharsets.UTF_8;
         } else {
             return Charset.forName("UTF-8");
+        }
+    }
+
+    public static Charset getASCII() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            return StandardCharsets.US_ASCII;
+        } else {
+            return Charset.forName("US-ASCII");
         }
     }
 
@@ -787,6 +796,7 @@ public class Utils {
      * @return Final digit for card number.
      */
     public static int calculateLuhn(String partialCardNumber) {
+        //noinspection StringConcatenation
         int checkDigit = luhnChecksum(partialCardNumber + "0");
         return checkDigit == 0 ? 0 : 10 - checkDigit;
     }
@@ -888,7 +898,7 @@ public class Utils {
         for (int i=data.length-1; i>0; i--) {
             String s;
             try {
-                s = new String(new byte[]{data[i]});
+                s = new String(new byte[]{data[i]}, getUTF8());
             } catch (Exception ex) {
                 //noinspection StringConcatenation
                 Log.d(TAG, "unsupported encoding at byte " + i, ex);
@@ -911,7 +921,7 @@ public class Utils {
 
         // Now see if it actually parses.
         try {
-            JSONObject o = new JSONObject(new String(data));
+            JSONObject o = new JSONObject(new String(data, getUTF8()));
             String type = o.optString(ClassicCardKeys.JSON_KEY_TYPE_KEY);
             switch (type) {
                 case ClassicCardKeys.TYPE_MFC:
@@ -1084,11 +1094,12 @@ public class Utils {
             return -2;
         }
 
-        md5.update(salt.getBytes());
+        md5.update(salt.getBytes(getASCII()));
         md5.update(key);
-        md5.update(salt.getBytes());
+        md5.update(salt.getBytes(getASCII()));
 
         digest = getHexString(md5.digest());
+        //noinspection StringConcatenation
         Log.d(TAG, "Key digest: " + digest);
 
         for (int i=0; i<expectedHashes.length; i++) {
@@ -1106,7 +1117,7 @@ public class Utils {
         int minDigit = 0;
         for (int g : groups)
             minDigit += g;
-        //noinspection StringConcatenation
+        //noinspection StringConcatenation,StringConcatenationInFormatCall
         String unformatted = String.format(Locale.ENGLISH, "%0" + minDigit + "d", value);
         int numDigit = unformatted.length();
         int last = numDigit - minDigit;
@@ -1198,5 +1209,13 @@ public class Utils {
             // Other characters invalid.
         }
         return o.toString();
+    }
+
+    public static boolean getBooleanAttr(InputNode node, @NonNls String name) throws Exception {
+        InputNode attr = node.getAttribute(name);
+        if (attr == null)
+            return false;
+        @NonNls String value = attr.getValue();
+        return value.equals("true");
     }
 }

@@ -26,11 +26,16 @@ import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
+import org.jetbrains.annotations.NonNls;
+
 import au.id.micolous.farebot.BuildConfig;
 
 public class KeysDBHelper extends SQLiteOpenHelper {
+    @NonNls
     public static final String KEY_DIR_TYPE = "vnd.android.cursor.dir/" + BuildConfig.APPLICATION_ID + ".key";
+    @NonNls
     public static final String KEY_ITEM_TYPE = "vnd.android.cursor.item/" + BuildConfig.APPLICATION_ID + ".key";
+    @NonNls
     private static final String DATABASE_NAME = "keys.db";
     private static final int DATABASE_VERSION = 3;
 

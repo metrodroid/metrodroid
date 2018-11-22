@@ -185,7 +185,7 @@ public class LisboaVivaTransitData extends Calypso1545TransitData {
     @Override
     public List<ListItem> getInfo() {
         List<ListItem> li = new ArrayList<>(super.getInfo());
-        if (!mHolderName.equals("") && !MetrodroidApplication.hideCardNumbers())
+        if (!mHolderName.isEmpty() && !MetrodroidApplication.hideCardNumbers())
             li.add(new ListItem(R.string.card_holders_name, mHolderName));
         return li;
     }

@@ -82,7 +82,7 @@ public class En1545Parsed implements Parcelable {
         mMap.put(makeFullName(name, path), value);
     }
 
-    private static String makeFullName(@NonNls String name, String path) {
+    private static String makeFullName(@NonNls String name, @NonNls String path) {
         if (path == null || path.equals(""))
             return name;
         return path + "/" + name;
@@ -103,7 +103,7 @@ public class En1545Parsed implements Parcelable {
         return li;
     }
 
-    private String getBaseName(String name) {
+    private String getBaseName(@NonNls String name) {
         return name.substring(name.lastIndexOf('/') + 1);
     }
 

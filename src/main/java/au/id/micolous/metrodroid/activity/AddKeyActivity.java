@@ -132,7 +132,7 @@ public class AddKeyActivity extends MetrodroidActivity {
             if (mKeyFormat.isJSON()) {
                 JSONObject o;
                 try {
-                    o = new JSONObject(new String(keyData));
+                    o = new JSONObject(new String(keyData, Utils.getUTF8()));
                 } catch (JSONException e) {
                     // Shouldn't get this here, but ok...
                     Utils.showErrorAndFinish(this, e);

@@ -190,7 +190,7 @@ public class ISO7816Card extends Card {
             if (appName == null)
                 appTitle = app.getClass().getSimpleName();
             else if (Utils.isASCII(appName))
-                appTitle = new String(appName);
+                appTitle = new String(appName, Utils.getASCII());
             else
                 appTitle = Utils.getHexString(appName);
             List<ListItem> rawAppData = new ArrayList<>();

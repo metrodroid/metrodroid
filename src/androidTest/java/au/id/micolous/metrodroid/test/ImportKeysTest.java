@@ -48,7 +48,7 @@ public class ImportKeysTest extends BaseInstrumentedTest {
         if (expectedFormat != null) {
             assertEquals(expectedFormat, f);
         }
-        return new Pair<>(new JSONObject(new String(d)), f);
+        return new Pair<>(new JSONObject(new String(d, Utils.getASCII())), f);
     }
 
     private ClassicCardKeys loadClassicCardRawKeys(String path) {

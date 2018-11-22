@@ -44,6 +44,7 @@ import au.id.micolous.metrodroid.ui.ListItem;
 import au.id.micolous.metrodroid.ui.ListItemRecursive;
 import au.id.micolous.metrodroid.util.Utils;
 
+import org.jetbrains.annotations.NonNls;
 import org.simpleframework.xml.Attribute;
 import org.simpleframework.xml.ElementList;
 import org.simpleframework.xml.Root;
@@ -93,6 +94,7 @@ public class UltralightCard extends Card {
     private int mDeprecatedUltralightType;
 
     @Attribute(name = "cardModel", required = false)
+    @NonNls
     private String mCardModel;
 
     private UltralightCard() { /* For XML Serializer */ }
@@ -252,6 +254,7 @@ public class UltralightCard extends Card {
      *
      * @return Model of Ultralight card this is.
      */
+    @NonNls
     public String getCardModel() {
         return mCardModel;
     }

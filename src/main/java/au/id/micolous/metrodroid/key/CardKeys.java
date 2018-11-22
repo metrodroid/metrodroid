@@ -31,6 +31,7 @@ import au.id.micolous.metrodroid.provider.KeysTableColumns;
 import au.id.micolous.metrodroid.util.KeyFormat;
 import au.id.micolous.metrodroid.util.Utils;
 
+import org.jetbrains.annotations.NonNls;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -39,6 +40,7 @@ import au.id.micolous.metrodroid.MetrodroidApplication;
 public abstract class CardKeys {
     public static final String JSON_KEY_TYPE_KEY = "KeyType";
     public static final String TYPE_MFC = "MifareClassic";
+    @NonNls
     public static final String TYPE_MFC_STATIC = "MifareClassicStatic";
     public static final String JSON_TAG_ID_KEY = "TagId";
 
@@ -89,8 +91,8 @@ public abstract class CardKeys {
     }
 
     private static ClassicCardKeys fromCursor(Cursor cursor) throws JSONException {
-        String cardType = cursor.getString(cursor.getColumnIndex(KeysTableColumns.CARD_TYPE));
-        String keyData = cursor.getString(cursor.getColumnIndex(KeysTableColumns.KEY_DATA));
+        @NonNls String cardType = cursor.getString(cursor.getColumnIndex(KeysTableColumns.CARD_TYPE));
+        @NonNls String keyData = cursor.getString(cursor.getColumnIndex(KeysTableColumns.KEY_DATA));
 
         JSONObject keyJSON = new JSONObject(keyData);
 

@@ -20,6 +20,7 @@
  */
 package au.id.micolous.metrodroid.xml;
 
+import org.jetbrains.annotations.NonNls;
 import org.simpleframework.xml.Serializer;
 import org.simpleframework.xml.convert.Converter;
 import org.simpleframework.xml.stream.InputNode;
@@ -40,7 +41,7 @@ public class ISO7816Converter implements Converter<ISO7816Application> {
 
     @Override
     public ISO7816Application read(InputNode node) throws Exception {
-        String appType = node.getAttribute("type").getValue();
+        @NonNls String appType = node.getAttribute("type").getValue();
         if (CalypsoApplication.TYPE.equals(appType)) {
             return mSerializer.read(CalypsoApplication.class, node);
         }

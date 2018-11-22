@@ -147,7 +147,7 @@ public class SupportedCardsActivity extends MetrodroidActivity {
 
             TextView note = convertView.findViewById(R.id.card_note);
             note.setText(notes);
-            if (notes.equals(""))
+            if (notes.isEmpty())
                 note.setVisibility(View.GONE);
             else
                 note.setVisibility(View.VISIBLE);

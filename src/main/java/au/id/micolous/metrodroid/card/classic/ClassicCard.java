@@ -35,6 +35,7 @@ import android.util.Log;
 
 import au.id.micolous.metrodroid.transit.CardTransitFactory;
 
+import org.jetbrains.annotations.NonNls;
 import org.simpleframework.xml.ElementList;
 import org.simpleframework.xml.Root;
 
@@ -346,7 +347,7 @@ public class ClassicCard extends Card {
             return null;
         }
 
-        String[] sTechList = tag.getTechList();
+        @NonNls String[] sTechList = tag.getTechList();
         Parcel oldParcel;
         Parcel newParcel;
         oldParcel = Parcel.obtain();
@@ -556,13 +557,13 @@ public class ClassicCard extends Card {
 
         @Override
         public boolean check(@NonNull ClassicCard classicCard) {
-            String fallback = MetrodroidApplication.getMfcFallbackReader();
+            @NonNls String fallback = MetrodroidApplication.getMfcFallbackReader();
             return fallback.equals("myway") || fallback.equals("smartrider");
         }
 
         @Override
         public TransitIdentity parseTransitIdentity(@NonNull ClassicCard classicCard) {
-            String fallback = MetrodroidApplication.getMfcFallbackReader();
+            @NonNls String fallback = MetrodroidApplication.getMfcFallbackReader();
             if (fallback.equals("myway") || fallback.equals("smartrider")) {
                 // This has a proper check now, but is included for legacy reasons.
                 //
@@ -575,7 +576,7 @@ public class ClassicCard extends Card {
 
         @Override
         public TransitData parseTransitData(@NonNull ClassicCard classicCard) {
-            String fallback = MetrodroidApplication.getMfcFallbackReader();
+            @NonNls String fallback = MetrodroidApplication.getMfcFallbackReader();
             if (fallback.equals("myway") || fallback.equals("smartrider")) {
                 // This has a proper check now, but is included for legacy reasons.
                 //

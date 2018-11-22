@@ -31,6 +31,8 @@ import android.text.style.TtsSpan;
 
 import com.neovisionaries.i18n.CurrencyCode;
 
+import org.jetbrains.annotations.NonNls;
+
 import java.security.SecureRandom;
 import java.text.NumberFormat;
 import java.util.Currency;
@@ -63,6 +65,7 @@ public class TransitCurrency extends TransitBalance implements Parcelable {
      * 3 character currency code (eg: AUD) per ISO 4217.
      */
     @NonNull
+    @NonNls
     private final String mCurrencyCode;
 
     /**

@@ -221,8 +221,8 @@ public class StationTableReader {
         String localFull = name.getLocal();
         String localShort = name.getLocalShort();
         String local;
-        boolean hasLocalFull = localFull != null && localFull.length() != 0;
-        boolean hasLocalShort = localShort != null && localShort.length() != 0;
+        boolean hasLocalFull = localFull != null && !localFull.isEmpty();
+        boolean hasLocalShort = localShort != null && !localShort.isEmpty();
 
         if (hasLocalFull && !hasLocalShort)
             local = localFull;
@@ -231,19 +231,19 @@ public class StationTableReader {
         else
             local = isShort ? localShort : localFull;
 
-        if (showBoth() && english != null && !english.equals("")
-                && local != null && !local.equals("")) {
+        if (showBoth() && english != null && !english.isEmpty()
+                && local != null && !local.isEmpty()) {
             if (english.equals(local))
                 return local;
             if (useEnglishName())
                 return english + " (" + local + ")";
             return local + " (" + english + ")";
         }
-        if (useEnglishName() && english != null && !english.equals("")) {
+        if (useEnglishName() && english != null && !english.isEmpty()) {
             return english;
         }
 
-        if (local != null && !local.equals("")) {
+        if (local != null && !local.isEmpty()) {
             // Local preferred, or English not available
             return local;
         } else {

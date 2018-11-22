@@ -137,7 +137,7 @@ public abstract class BetterContentProvider extends ContentProvider {
 
     @Override
     public int update(Uri uri, ContentValues values, @NonNls String selection, String[] selectionArgs) {
-        SQLiteDatabase db = mHelper.getWritableDatabase();
+        @NonNls SQLiteDatabase db = mHelper.getWritableDatabase();
         int count;
         switch (mUriMatcher.match(uri)) {
             case CODE_COLLECTION:
@@ -160,7 +160,7 @@ public abstract class BetterContentProvider extends ContentProvider {
         return count;
     }
 
-    protected UriMatcher createUriMatcher(Uri contentUri, String basePath) {
+    protected UriMatcher createUriMatcher(Uri contentUri, @NonNls String basePath) {
         UriMatcher matcher = new UriMatcher(UriMatcher.NO_MATCH);
         matcher.addURI(contentUri.getAuthority(), basePath, CODE_COLLECTION);
         matcher.addURI(contentUri.getAuthority(), basePath + "/#", CODE_SINGLE);
