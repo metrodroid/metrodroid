@@ -169,12 +169,12 @@ public class NumberPickerPreference extends DialogPreference {
                 };
         int value;
 
-        public SavedState(Parcel source) {
+        SavedState(Parcel source) {
             super(source);
             value = source.readInt();
         }
 
-        public SavedState(Parcelable superState) {
+        SavedState(Parcelable superState) {
             super(superState);
         }
 

@@ -66,7 +66,7 @@ class OpusTransaction extends En1545Transaction {
             )
     );
 
-    public OpusTransaction(byte[] data) {
+    OpusTransaction(byte[] data) {
         super(data, tripFields);
     }
 

@@ -347,7 +347,7 @@ public class KeysFragment extends ListFragment implements AdapterView.OnItemLong
     }
 
     private class KeysAdapter extends ResourceCursorAdapter {
-        public KeysAdapter() {
+        KeysAdapter() {
             super(getActivity(), android.R.layout.simple_list_item_2, null, false);
         }
 

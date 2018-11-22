@@ -77,7 +77,7 @@ class LisboaVivaTransaction extends En1545Transaction {
         return transition == 4;
     }
 
-    public LisboaVivaTransaction(byte[] data) {
+    LisboaVivaTransaction(byte[] data) {
         super(data, tripFields);
     }
 

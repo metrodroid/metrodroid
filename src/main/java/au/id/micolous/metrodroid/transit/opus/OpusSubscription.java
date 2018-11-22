@@ -59,7 +59,7 @@ class OpusSubscription extends En1545Subscription {
             )
     );
 
-    public OpusSubscription(byte[] dataSub, Integer ctr) {
+    OpusSubscription(byte[] dataSub, Integer ctr) {
         super(dataSub, FIELDS, ctr);
     }
 

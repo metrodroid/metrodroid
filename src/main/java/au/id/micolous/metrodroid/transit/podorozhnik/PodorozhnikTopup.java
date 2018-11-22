@@ -28,7 +28,7 @@ class PodorozhnikTopup extends Trip {
         }
     };
 
-    public PodorozhnikTopup(int timestamp, int fare, int agency, int topupMachine) {
+    PodorozhnikTopup(int timestamp, int fare, int agency, int topupMachine) {
         mTimestamp = timestamp;
         mFare = fare;
         mAgency = agency;

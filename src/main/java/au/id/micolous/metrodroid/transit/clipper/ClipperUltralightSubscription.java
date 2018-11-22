@@ -34,14 +34,14 @@ class ClipperUltralightSubscription extends Subscription {
     private final int mTransferExpiry;
     private final int mBaseDate;
 
-    public ClipperUltralightSubscription(int product, int tripsRemaining, int transferExpiry, int baseDate) {
+    ClipperUltralightSubscription(int product, int tripsRemaining, int transferExpiry, int baseDate) {
         mProduct = product;
         mTripsRemaining = tripsRemaining;
         mTransferExpiry = transferExpiry;
         mBaseDate = baseDate;
     }
 
-    public ClipperUltralightSubscription(Parcel in) {
+    ClipperUltralightSubscription(Parcel in) {
         mProduct = in.readInt();
         mTripsRemaining = in.readInt();
         mTransferExpiry = in.readInt();

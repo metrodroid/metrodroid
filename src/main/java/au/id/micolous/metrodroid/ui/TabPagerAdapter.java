@@ -147,7 +147,7 @@ public class TabPagerAdapter extends PagerAdapter implements ActionBar.TabListen
         private final Class<?> mClass;
         private final Bundle mArgs;
 
-        public TabInfo(Class<?> klass, Bundle args) {
+        TabInfo(Class<?> klass, Bundle args) {
             mClass = klass;
             mArgs = args;
         }

@@ -6,7 +6,7 @@ import au.id.micolous.metrodroid.util.Utils;
 class TroikaLayoutE extends TroikaBlock {
     private final int mTransportCode;
 
-    public TroikaLayoutE(byte[] rawData) {
+    TroikaLayoutE(byte[] rawData) {
         super(rawData);
         // 10 bits zero
         mExpiryDate = convertDateTime1992(Utils.getBitsFromBuffer(rawData, 71, 16), 0);

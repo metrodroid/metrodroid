@@ -8,7 +8,7 @@ import au.id.micolous.metrodroid.ui.HeaderListItem;
 import au.id.micolous.metrodroid.ui.ListItem;
 
 class TroikaUnknownBlock extends TroikaBlock {
-    public TroikaUnknownBlock(byte[] rawData) {
+    TroikaUnknownBlock(byte[] rawData) {
         super(rawData);
     }
 

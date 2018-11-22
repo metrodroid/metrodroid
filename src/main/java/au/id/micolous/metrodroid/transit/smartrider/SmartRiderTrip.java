@@ -8,7 +8,7 @@ import au.id.micolous.metrodroid.transit.TransactionTrip;
 import au.id.micolous.metrodroid.transit.TransitCurrency;
 
 class SmartRiderTrip extends TransactionTrip {
-    public SmartRiderTrip(Transaction el) {
+    SmartRiderTrip(Transaction el) {
         super(el);
     }
 

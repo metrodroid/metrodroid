@@ -87,7 +87,7 @@ class IntercodeTransaction extends En1545Transaction {
             )
     );
 
-    public IntercodeTransaction(byte[] data, int networkId) {
+    IntercodeTransaction(byte[] data, int networkId) {
         super(data, tripFields);
 
         Integer nid = mParsed.getInt(EVENT_NETWORK_ID);

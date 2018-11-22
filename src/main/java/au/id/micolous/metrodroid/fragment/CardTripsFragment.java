@@ -138,7 +138,7 @@ public class CardTripsFragment extends ListFragment {
          */
         private static final Pattern LINE_NUMBER = Pattern.compile("(#?\\d+)?(\\D.+)");
 
-        public UseLogListAdapter(Context context, Trip[] items, TransitData transitData) {
+        UseLogListAdapter(Context context, Trip[] items, TransitData transitData) {
             super(context, 0, items);
             mTransitData = transitData;
         }

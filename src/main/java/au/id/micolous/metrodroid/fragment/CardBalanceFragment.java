@@ -77,7 +77,7 @@ public class CardBalanceFragment extends ListFragment {
     }
 
     private class BalancesAdapter extends ArrayAdapter<Object> {
-        public BalancesAdapter(Context context, List<Object> balances) {
+        BalancesAdapter(Context context, List<Object> balances) {
             super(context, 0, balances);
         }
 

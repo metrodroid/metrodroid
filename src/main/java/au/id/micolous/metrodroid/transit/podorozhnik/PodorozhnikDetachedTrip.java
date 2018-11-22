@@ -38,7 +38,7 @@ class PodorozhnikDetachedTrip extends Trip {
         }
     };
 
-    public PodorozhnikDetachedTrip(int timestamp) {
+    PodorozhnikDetachedTrip(int timestamp) {
         mTimestamp = timestamp;
     }
 

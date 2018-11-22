@@ -111,11 +111,11 @@ public class TartuTransitFactory implements ClassicCardTransitFactory {
 
     private static class TartuTransitData extends SerialOnlyTransitData {
         private String mSerial;
-        public TartuTransitData(ClassicCard card) {
+        private TartuTransitData(ClassicCard card) {
             mSerial = parseSerial(card);
         }
 
-        protected TartuTransitData(Parcel in) {
+        private TartuTransitData(Parcel in) {
             mSerial = in.readString();
         }
 

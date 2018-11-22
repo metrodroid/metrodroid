@@ -35,7 +35,7 @@ class PodorozhnikTrip extends Trip {
         }
     };
 
-    public PodorozhnikTrip(int timestamp, Integer fare, int lastTransport, Integer lastValidator) {
+    PodorozhnikTrip(int timestamp, Integer fare, int lastTransport, Integer lastValidator) {
         mTimestamp = timestamp;
         mFare = fare;
         mLastTransport = lastTransport;

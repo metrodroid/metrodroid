@@ -112,7 +112,7 @@ public class CardsFragment extends ExpandableListFragment {
         private TransitIdentity mTransitIdentity;
         private final int mId;
 
-        public Scan(Cursor cursor) {
+        Scan(Cursor cursor) {
             mId = cursor.getInt(cursor.getColumnIndex(CardsTableColumns._ID));
             mType = cursor.getInt(cursor.getColumnIndex(CardsTableColumns.TYPE));
             mSerial = cursor.getString(cursor.getColumnIndex(CardsTableColumns.TAG_SERIAL));
