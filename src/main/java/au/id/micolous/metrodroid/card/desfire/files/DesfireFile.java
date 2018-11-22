@@ -66,7 +66,7 @@ public class DesfireFile {
         return mId;
     }
 
-    public final byte[] getData() {
+    public byte[] getData() {
         return mData.getData();
     }
 }

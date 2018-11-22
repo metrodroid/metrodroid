@@ -1218,4 +1218,15 @@ public class Utils {
         @NonNls String value = attr.getValue();
         return value.equals("true");
     }
+
+    public static String intToHex(int v) {
+        //noinspection StringConcatenation
+        return "0x" + Integer.toHexString(v);
+    }
+
+    @NonNull
+    public static String longToHex(long v) {
+        //noinspection StringConcatenation
+        return "0x" + Long.toHexString(v);
+    }
 }

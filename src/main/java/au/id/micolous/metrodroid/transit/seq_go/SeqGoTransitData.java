@@ -97,7 +97,8 @@ public class SeqGoTransitData extends NextfareTransitData {
         super(card, "AUD");
         if (mConfig != null) {
             mTicketType = SeqGoData.TICKET_TYPE_MAP.get(mConfig.getTicketType(), SeqGoTicketType.UNKNOWN);
-        }
+        } else
+            mTicketType = SeqGoTicketType.UNKNOWN;
     }
 
     public static final ClassicCardTransitFactory FACTORY = new NextFareTransitFactory() {
