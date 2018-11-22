@@ -42,10 +42,9 @@ public class CardProvider extends ContentProvider {
 
     public static final Uri CONTENT_URI_CARD = Uri.parse("content://" + AUTHORITY + "/cards");
 
-    private static UriMatcher sUriMatcher;
+    private static final UriMatcher sUriMatcher = new UriMatcher(UriMatcher.NO_MATCH);
 
     static {
-        sUriMatcher = new UriMatcher(UriMatcher.NO_MATCH);
         sUriMatcher.addURI(AUTHORITY, "cards", CardDBHelper.CARD_COLLECTION_URI_INDICATOR);
         sUriMatcher.addURI(AUTHORITY, "cards/#", CardDBHelper.SINGLE_CARD_URI_INDICATOR);
     }

@@ -28,18 +28,19 @@ import au.id.micolous.metrodroid.util.Utils;
  */
 public class NextfareBalanceRecord extends NextfareRecord implements Comparable<NextfareBalanceRecord> {
     private static final String TAG = "NextfareBalanceRecord";
-    private int mVersion;
+    private final int mVersion;
     private int mBalance;
     private boolean mHasTravelPassAvailable = false;
 
-    protected NextfareBalanceRecord() {
+    protected NextfareBalanceRecord(int version) {
+        mVersion = version;
     }
 
     public static NextfareBalanceRecord recordFromBytes(byte[] input) {
         //if (input[0] != 0x01) throw new AssertionError();
 
-        NextfareBalanceRecord record = new NextfareBalanceRecord();
-        record.mVersion = Utils.byteArrayToInt(input, 13, 1);
+        NextfareBalanceRecord record = new NextfareBalanceRecord(
+                Utils.byteArrayToInt(input, 13, 1));
 
         // Do some flipping for the balance
         record.mBalance = Utils.byteArrayToIntReversed(input, 2, 2);

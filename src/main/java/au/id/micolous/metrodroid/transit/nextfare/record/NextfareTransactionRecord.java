@@ -47,15 +47,23 @@ public class NextfareTransactionRecord extends NextfareRecord implements Parcela
         }
     };
     private static final String TAG = "NextfareTxnRecord";
-    private Calendar mTimestamp;
-    private int mMode;
-    private int mJourney;
-    private int mStation;
-    private int mValue;
-    private int mChecksum;
-    private boolean mContinuation;
+    private final Calendar mTimestamp;
+    private final int mMode;
+    private final int mJourney;
+    private final int mStation;
+    private final int mValue;
+    private final int mChecksum;
+    private final boolean mContinuation;
 
-    protected NextfareTransactionRecord() {
+    protected NextfareTransactionRecord(Calendar timestamp, int mode, int journey,
+                                        int station, int value, int checksum, boolean continuation) {
+        mTimestamp = timestamp;
+        mMode = mode;
+        mJourney = journey;
+        mStation = station;
+        mValue = value;
+        mChecksum = checksum;
+        mContinuation = continuation;
     }
 
     public NextfareTransactionRecord(Parcel parcel) {
@@ -90,21 +98,24 @@ public class NextfareTransactionRecord extends NextfareRecord implements Parcela
             return null;
         }
 
-        NextfareTransactionRecord record = new NextfareTransactionRecord();
 
-        record.mMode = Utils.byteArrayToInt(input, 1, 1);
+        int mode = Utils.byteArrayToInt(input, 1, 1);
 
-        record.mTimestamp = NextfareUtil.unpackDate(input, 2, timeZone);
-        record.mJourney = Utils.byteArrayToIntReversed(input, 5, 2) >> 5;
-        record.mContinuation = (Utils.byteArrayToIntReversed(input, 5, 2) & 0x10) > 1;
+        Calendar timestamp = NextfareUtil.unpackDate(input, 2, timeZone);
+        int journey = Utils.byteArrayToIntReversed(input, 5, 2) >> 5;
 
-        record.mValue = Utils.byteArrayToIntReversed(input, 7 ,2);
-        if (record.mValue > 0x8000) {
-            record.mValue = -(record.mValue & 0x7fff);
+        boolean continuation = (Utils.byteArrayToIntReversed(input, 5, 2) & 0x10) > 1;
+
+        int value = Utils.byteArrayToIntReversed(input, 7 ,2);
+        if (value > 0x8000) {
+            value = -(value & 0x7fff);
         }
 
-        record.mStation = Utils.byteArrayToIntReversed(input, 12, 2);
-        record.mChecksum = Utils.byteArrayToIntReversed(input, 14, 2);
+        int station = Utils.byteArrayToIntReversed(input, 12, 2);
+        int checksum = Utils.byteArrayToIntReversed(input, 14, 2);
+
+        NextfareTransactionRecord record = new NextfareTransactionRecord(
+                timestamp, mode, journey, station, value, checksum, continuation);
 
         Log.d(TAG, String.format("@%s: mode %d, station %d, value %d, journey %d, %s",
                 Utils.isoDateTimeFormat(record.mTimestamp), record.mMode, record.mStation, record.mValue,

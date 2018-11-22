@@ -318,7 +318,7 @@ public class CalypsoApplication extends ISO7816Application {
         ETICKET_EVENT_LOGS(0x8000, 0x8010),
         ETICKET_PRESELECTION(0x8000, 0x8030);
 
-        private ISO7816Selector mSelector;
+        private final ISO7816Selector mSelector;
 
         File(int file) {
             mSelector = ISO7816Selector.makeSelector(file);

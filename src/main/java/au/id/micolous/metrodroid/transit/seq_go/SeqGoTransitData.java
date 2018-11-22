@@ -86,7 +86,7 @@ public class SeqGoTransitData extends NextfareTransitData {
     private static final TimeZone TIME_ZONE = TimeZone.getTimeZone("Australia/Brisbane");
 
     private static final String TAG = "SeqGoTransitData";
-    private SeqGoTicketType mTicketType;
+    private final SeqGoTicketType mTicketType;
 
     private SeqGoTransitData(Parcel parcel) {
         super(parcel, "AUD");

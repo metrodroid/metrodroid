@@ -61,7 +61,7 @@ class UltralightProtocol {
         NTAG216(231);
 
         /** Number of pages of memory that the card supports. */
-        int pageCount;
+        final int pageCount;
 
         UltralightType(int pageCount) {
             this.pageCount = pageCount;
