@@ -84,6 +84,6 @@ public class NextfareBalanceRecord extends NextfareRecord implements Comparable<
     @Override
     public int compareTo(NextfareBalanceRecord rhs) {
         // So sorting works, we reverse the order so highest number is first.
-        return Integer.valueOf(rhs.mVersion).compareTo(this.mVersion);
+        return Integer.compare(rhs.mVersion, this.mVersion);
     }
 }

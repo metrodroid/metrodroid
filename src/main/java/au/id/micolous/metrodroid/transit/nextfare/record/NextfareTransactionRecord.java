@@ -174,9 +174,9 @@ public class NextfareTransactionRecord extends NextfareRecord implements Parcela
         // First trip in a journey goes first, and should (generally) be in pairs.
 
         if (rhs.mJourney == this.mJourney) {
-            return Long.valueOf(this.mTimestamp.getTimeInMillis()).compareTo(rhs.mTimestamp.getTimeInMillis());
+            return Long.compare(this.mTimestamp.getTimeInMillis(), rhs.mTimestamp.getTimeInMillis());
         } else {
-            return (Integer.valueOf(this.mJourney)).compareTo(rhs.mJourney);
+            return Integer.compare(this.mJourney, rhs.mJourney);
         }
 
     }

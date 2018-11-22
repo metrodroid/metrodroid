@@ -112,6 +112,6 @@ public class NextfareTravelPassRecord extends NextfareRecord implements Parcelab
     @Override
     public int compareTo(@NonNull NextfareTravelPassRecord rhs) {
         // So sorting works, we reverse the order so highest number is first.
-        return Integer.valueOf(rhs.mVersion).compareTo(this.mVersion);
+        return Integer.compare(rhs.mVersion, this.mVersion);
     }
 }
