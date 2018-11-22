@@ -98,8 +98,8 @@ public class NextfareTransitData extends TransitData {
         parcel.readTypedList(mTrips, NextfareTrip.CREATOR);
         mSubscriptions = new ArrayList<>();
         parcel.readTypedList(mSubscriptions, NextfareSubscription.CREATOR);
-        parcel.readByteArray(mSystemCode);
-        parcel.readByteArray(mBlock2);
+        mSystemCode = parcel.createByteArray();
+        mBlock2 = parcel.createByteArray();
         mCurrency = currency;
 
         mConfig = new NextfareConfigRecord(parcel);
