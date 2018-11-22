@@ -299,7 +299,7 @@ public final class FeliCaLib {
 
             this.statusFlag1 = this.data[0];
             this.statusFlag2 = this.data[1];
-            if (this.getStatusFlag1() == 0) {
+            if (this.statusFlag1 == 0) {
                 this.blockCount = this.data[2];
                 this.blockData = Arrays.copyOfRange(this.data, 3, data.length);
             } else {
@@ -313,7 +313,7 @@ public final class FeliCaLib {
          *
          * @return int statusFlag1が戻ります
          */
-        public int getStatusFlag1() {
+        public final int getStatusFlag1() {
             return this.statusFlag1;
         }
 

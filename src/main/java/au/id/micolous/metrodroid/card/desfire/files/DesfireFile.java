@@ -62,11 +62,11 @@ public class DesfireFile {
         return mSettings;
     }
 
-    public int getId() {
+    public final int getId() {
         return mId;
     }
 
-    public byte[] getData() {
+    public final byte[] getData() {
         return mData.getData();
     }
 }
