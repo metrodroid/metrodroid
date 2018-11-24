@@ -157,7 +157,7 @@ public class PodorozhnikTransitData extends TransitData {
     private static String getSerial(byte []uid) {
         String sn;
         sn = "9643 3078 " + Utils.formatNumber(Utils.byteArrayToLongReversed(uid, 0, 7),
-                " ", 4, 4, 4);
+                " ", 4, 4, 4, 4, 1);
         sn += Utils.calculateLuhn (sn.replaceAll(" ", ""));// last digit is luhn
         return sn;
     }
