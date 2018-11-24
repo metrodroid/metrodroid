@@ -840,4 +840,11 @@
     <string name="location_iaroslavl">Iaroslavl</string>
     <string name="card_name_krasnodar_etk">ETK Krasnodar</string>
     <string name="location_krasnodar">Krasnodar</string>
+<string name="location_denmark">Denemarken</string>
+    <string name="location_stockholm">Stockholm, Zweden</string>
+    <string name="rkf_card_status">Kaartstatus</string>
+    <string name="rkf_status_ok">Oké; ingeschakeld</string>
+    <string name="rkf_status_action_pending">Bezig met actie</string>
+    <string name="rkf_status_temp_disabled">Tijdelijk uitgeschakeld of geschorst</string>
+    <string name="rkf_status_not_ok">Permanent uitgeschakeld</string>
 </resources>
