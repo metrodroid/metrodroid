@@ -829,4 +829,8 @@
 <string name="location_taipei">Taipei</string>
     <string name="location_france">Frankrike</string>
     <string name="location_orlando">Orlando, FL, USA</string>
-    </resources>
+    <string name="location_denmark">Danmark</string>
+    <string name="location_stockholm">Stockholm, Sverige</string>
+    <string name="rkf_status_ok">OK, påskrudd</string>
+    <string name="rkf_status_not_ok">Avskrudd for godt</string>
+</resources>
