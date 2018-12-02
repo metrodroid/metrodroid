@@ -98,6 +98,7 @@ public class MetrodroidApplication extends Application {
 
     static {
         devicesMifareWorks.add("Pixel 2");
+        devicesMifareWorks.add("Find7");
     }
 
     private static MetrodroidApplication sInstance;
