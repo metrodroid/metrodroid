@@ -126,7 +126,7 @@ public class ClassicCard extends Card {
         this(tagId, scannedAt, sectors, false);
     }
 
-    private ClassicCard(byte[] tagId, Calendar scannedAt, ClassicSector[] sectors, boolean partialRead) {
+    public ClassicCard(byte[] tagId, Calendar scannedAt, ClassicSector[] sectors, boolean partialRead) {
         super(CardType.MifareClassic, tagId, scannedAt, null, partialRead);
         mSectors = Arrays.asList(sectors);
     }

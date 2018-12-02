@@ -54,6 +54,11 @@ import android.widget.Toast;
 import au.id.micolous.metrodroid.activity.CardInfoActivity;
 import au.id.micolous.metrodroid.card.Card;
 import au.id.micolous.metrodroid.card.CardType;
+import au.id.micolous.metrodroid.card.classic.ClassicBlock;
+import au.id.micolous.metrodroid.card.classic.ClassicCard;
+import au.id.micolous.metrodroid.card.classic.ClassicSector;
+import au.id.micolous.metrodroid.card.classic.UnauthorizedClassicSector;
+import au.id.micolous.metrodroid.key.ClassicSectorKey;
 import au.id.micolous.metrodroid.provider.CardDBHelper;
 import au.id.micolous.metrodroid.provider.CardProvider;
 import au.id.micolous.metrodroid.provider.CardsTableColumns;
@@ -75,11 +80,15 @@ import java.io.StringWriter;
 import java.lang.ref.WeakReference;
 import java.nio.charset.Charset;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
+import java.util.Collections;
 import java.util.GregorianCalendar;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import au.id.micolous.farebot.R;
 import au.id.micolous.metrodroid.MetrodroidApplication;
@@ -88,6 +97,7 @@ public class CardsFragment extends ExpandableListFragment {
     private static final String TAG = "CardsFragment";
     private static final int REQUEST_SELECT_FILE = 1;
     private static final int REQUEST_SAVE_FILE = 2;
+    private static final int REQUEST_SELECT_FILE_MCT = 3;
     private static final String STD_EXPORT_FILENAME = "Metrodroid-Export.xml";
     private static final String SD_EXPORT_PATH = Environment.getExternalStorageDirectory() + "/" + STD_EXPORT_FILENAME;
     private static final String STD_IMPORT_FILENAME = "Metrodroid-Import.xml";
@@ -180,6 +190,11 @@ public class CardsFragment extends ExpandableListFragment {
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         inflater.inflate(R.menu.cards_menu, menu);
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.KITKAT) {
+            MenuItem item = menu.findItem(R.id.import_mct_file);
+            if (item != null)
+                item.setVisible(false);
+        }
     }
 
     @Override
@@ -225,6 +240,24 @@ public class CardsFragment extends ExpandableListFragment {
                         onCardsImported(getActivity(), uris);
                     }
                 } return true;
+
+                case R.id.import_mct_file:
+                    if (Build.VERSION.SDK_INT < Build.VERSION_CODES.KITKAT) {
+                        return true;
+                    }
+                    uri = Uri.fromFile(Environment.getExternalStorageDirectory());
+                    i = new Intent(Intent.ACTION_GET_CONTENT);
+                    i.putExtra(Intent.EXTRA_STREAM, uri);
+                    i.setType("*/*");
+                    String[] mctMimetypes = {
+                            "text/plain",
+                            // Fallback for cases where we didn't get a good mime type from the
+                            // OS, this allows most "other" files to be selected.
+                            "application/octet-stream",
+                    };
+                    i.putExtra(Intent.EXTRA_MIME_TYPES, mctMimetypes);
+                    startActivityForResult(Intent.createChooser(i, Utils.localizeString(R.string.select_file)), REQUEST_SELECT_FILE_MCT);
+                    return true;
 
                 case R.id.import_file:
                     // Some files are text/xml, some are application/xml.
@@ -352,10 +385,10 @@ public class CardsFragment extends ExpandableListFragment {
         }
     }
 
-    private static class ReadTask extends AsyncTask<Uri, Integer, Pair<String, Uri[]>> {
+    private abstract static class CommonReadTask extends AsyncTask<Uri, Integer, Pair<String, Uri[]>> {
         private final WeakReference<CardsFragment> mCardsFragment;
 
-        private ReadTask(CardsFragment cardsFragment) {
+        private CommonReadTask(CardsFragment cardsFragment) {
             mCardsFragment = new WeakReference<>(cardsFragment);
         }
 
@@ -364,14 +397,15 @@ public class CardsFragment extends ExpandableListFragment {
             try {
                 Log.d(TAG, "REQUEST_SELECT_FILE content_type = " + MetrodroidApplication.getInstance().getContentResolver().getType(uris[0]));
                 InputStream stream = MetrodroidApplication.getInstance().getContentResolver().openInputStream(uris[0]);
-                String xml = org.apache.commons.io.IOUtils.toString(stream, Charset.defaultCharset());
-                Uri[] iuri = ExportHelper.importCardsXml(MetrodroidApplication.getInstance(), xml);
+                Uri[] iuri = importStream(stream);
                 return new Pair<>(null, iuri);
             } catch (Exception ex) {
                 Log.e(TAG, ex.getMessage(), ex);
                 return new Pair<>(Utils.getErrorMessage(ex), null);
             }
         }
+
+        protected abstract Uri[] importStream(InputStream stream) throws Exception;
 
         @Override
         protected void onPostExecute(Pair<String, Uri[]> res) {
@@ -393,6 +427,93 @@ public class CardsFragment extends ExpandableListFragment {
         }
     }
 
+    private static class ReadTask extends CommonReadTask {
+        private ReadTask(CardsFragment cardsFragment) {
+            super(cardsFragment);
+        }
+
+        @Override
+        protected Uri[] importStream(InputStream stream) throws Exception {
+            String xml = org.apache.commons.io.IOUtils.toString(stream, Charset.defaultCharset());
+            return ExportHelper.importCardsXml(MetrodroidApplication.getInstance(), xml);
+        }
+    }
+
+    private static class MCTReadTask extends CommonReadTask {
+        private MCTReadTask(CardsFragment cardsFragment) {
+            super(cardsFragment);
+        }
+
+        @Override
+        protected Uri[] importStream(InputStream stream) throws Exception {
+            String mct = org.apache.commons.io.IOUtils.toString(stream, Charset.defaultCharset());
+            List<ClassicSector> sectors = new ArrayList<>();
+            int curSector = -1;
+            int maxSector = -1;
+            int blockNumber = 0;
+            List <ClassicBlock> curBlocks = null;
+            String lastBlock = null;
+            for (String line : mct.split("\n")) {
+                if (line.startsWith("+Sector:")) {
+                    flushSector(sectors, curSector, curBlocks, lastBlock);
+                    curBlocks = new ArrayList<>();
+                    curSector = Integer.valueOf(line.substring(8).trim());
+                    if (curSector > maxSector)
+                        maxSector = curSector;
+                    blockNumber = 0;
+                    continue;
+                }
+                if (curBlocks == null || curSector < 0)
+                    continue;
+                lastBlock = line;
+                curBlocks.add(new ClassicBlock(blockNumber, ClassicBlock.TYPE_DATA,
+                        Utils.hexStringToByteArray(line.replaceAll("-", "0"))));
+                blockNumber++;
+            }
+            flushSector(sectors, curSector, curBlocks, lastBlock);
+            byte[] uid;
+            if (sectors.get(0) != null) {
+                byte[] block0 = sectors.get(0).getBlock(0).getData();
+                if (block0[0] == 4)
+                    uid = Arrays.copyOfRange(block0, 0, 7);
+                else
+                    uid = Arrays.copyOfRange(block0, 0, 4);
+            } else
+                uid = Utils.stringToByteArray("fake");
+            if (maxSector <= 15)
+                maxSector = 15; // 1K
+            else if (maxSector <= 31)
+                maxSector = 31; // 2K
+            else if (maxSector <= 39)
+                maxSector = 39; // 4K
+            Set<Integer> s = new HashSet<>();
+            for (ClassicSector sec : sectors)
+                s.add(sec.getIndex());
+            for (int i = 0; i <= maxSector; i++)
+                if (!s.contains(i))
+                    sectors.add(new UnauthorizedClassicSector(i));
+            Collections.sort(sectors, (a, b) -> Integer.compare(a.getIndex(), b.getIndex()));
+            ClassicCard card = new ClassicCard(uid,
+                    GregorianCalendar.getInstance(), sectors.toArray(new ClassicSector[0]), false);
+            String xml = card.toXml(MetrodroidApplication.getInstance().getSerializer());
+            return ExportHelper.importCardsXml(MetrodroidApplication.getInstance(), xml);
+        }
+
+        private void flushSector(List<ClassicSector> sectors, int curSector, List<ClassicBlock> curBlocks, String lastBlock) {
+            if (curSector < 0 || curBlocks == null)
+                return;
+            ClassicSectorKey key;
+            if (! lastBlock.startsWith("-")) {
+                key = ClassicSectorKey.fromDump(Utils.hexStringToByteArray(lastBlock.substring(0, 12)));
+                key.setType(ClassicSectorKey.KeyType.A);
+            } else {
+                key = ClassicSectorKey.fromDump(Utils.hexStringToByteArray(lastBlock.substring(20, 32)));
+                key.setType(ClassicSectorKey.KeyType.B);
+            }
+            sectors.add(new ClassicSector(curSector, curBlocks.toArray(new ClassicBlock[0]), key));
+        }
+    }
+
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         Uri uri;
@@ -402,6 +523,11 @@ public class CardsFragment extends ExpandableListFragment {
                     case REQUEST_SELECT_FILE:
                         uri = data.getData();
                         new ReadTask(this).execute(uri);
+                        break;
+
+                    case REQUEST_SELECT_FILE_MCT:
+                        uri = data.getData();
+                        new MCTReadTask(this).execute(uri);
                         break;
 
                     case REQUEST_SAVE_FILE:

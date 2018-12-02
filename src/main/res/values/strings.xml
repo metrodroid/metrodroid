@@ -1442,4 +1442,5 @@
     <string name="rkf_status_temp_disabled">Temporarily disabled or suspended</string>
     <!-- Translators: describes the status of a card or transaction -->
     <string name="rkf_status_not_ok">Permanently disabled</string>
+    <string name="import_mct_file">Import from MCT file</string>
 </resources>
