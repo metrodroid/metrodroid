@@ -128,41 +128,6 @@ public final class ExportHelper {
         return context.getContentResolver().insert(CardProvider.CONTENT_URI_CARD, cv);
     }
 
-/*
-
-    public static Uri[] importCardsXml(Context context, String xml) throws Exception {
-        DocumentBuilder builder = DocumentBuilderFactory.newInstance().newDocumentBuilder();
-        Document doc = builder.parse(new InputSource(new StringReader(xml)));
-
-        Element rootElement = doc.getDocumentElement();
-
-        if (rootElement.getNodeName().equals("card"))
-            return new Uri[]{importCard(context, rootElement)};
-
-        NodeList cardNodes = rootElement.getElementsByTagName("card");
-        Uri[] results = new Uri[cardNodes.getLength()];
-        for (int i = 0; i < cardNodes.getLength(); i++) {
-            results[i] = importCard(context, (Element) cardNodes.item(i));
-        }
-        return results;
-    }
-
-    private static Uri importCard(Context context, Element cardElement) throws Exception {
-        String xml = Utils.xmlNodeToString(cardElement);
-
-        ContentValues values = new ContentValues();
-        values.put(CardsTableColumns.TYPE, cardElement.getAttribute("type"));
-        values.put(CardsTableColumns.TAG_SERIAL, cardElement.getAttribute("id"));
-        values.put(CardsTableColumns.DATA, xml);
-        values.put(CardsTableColumns.SCANNED_AT, cardElement.getAttribute("scanned_at"));
-        if (cardElement.hasAttribute("label")) {
-            values.put(CardsTableColumns.LABEL, cardElement.getAttribute("label"));
-        }
-
-        return context.getContentResolver().insert(CardProvider.CONTENT_URI_CARD, values);
-    }
-    */
-
     public static String readCardDataFromCursor(Cursor cursor) {
         return cursor.getString(cursor.getColumnIndex(CardsTableColumns.DATA));
     }

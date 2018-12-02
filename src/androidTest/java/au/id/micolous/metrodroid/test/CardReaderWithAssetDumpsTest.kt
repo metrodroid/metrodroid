@@ -1,17 +1,12 @@
 package au.id.micolous.metrodroid.test
 
-import android.content.res.AssetManager
-import androidx.test.platform.app.InstrumentationRegistry
 import androidx.test.runner.AndroidJUnit4
 import au.id.micolous.metrodroid.card.Card
 import au.id.micolous.metrodroid.card.CardImporter
-import au.id.micolous.metrodroid.card.classic.MfcCardImporter
 import au.id.micolous.metrodroid.transit.TransitData
-import au.id.micolous.metrodroid.transit.bilhete_unico.BilheteUnicoSPTransitData
 import junit.framework.TestCase.assertNotNull
 import junit.framework.TestCase.assertTrue
 import org.junit.runner.RunWith
-import java.io.DataInputStream
 
 /**
  * Base class for building tests that need Assets data:
