@@ -64,14 +64,16 @@ public class RicaricaMiTransitData extends En1545TransitData {
             .build();
 
     private static final En1545Field BLOCK_1_0_FIELDS = new En1545Container(
-            new En1545FixedHex(ENV_UNKNOWN_A, 88),
+            new En1545FixedInteger(ENV_UNKNOWN_A, 9),
+            En1545FixedInteger.BCDdate(HOLDER_BIRTH_DATE),
+            new En1545FixedHex(ENV_UNKNOWN_B, 47),
             En1545FixedInteger.date(ENV_APPLICATION_VALIDITY_END),
-            new En1545FixedHex(ENV_UNKNOWN_B, 26)
+            new En1545FixedInteger(ENV_UNKNOWN_C, 26)
     );
     private static final En1545Field BLOCK_1_1_FIELDS = new En1545Container(
-            new En1545FixedHex(ENV_UNKNOWN_C, 64),
+            new En1545FixedHex(ENV_UNKNOWN_D, 64),
             En1545FixedInteger.date(ENV_APPLICATION_ISSUE),
-            new En1545FixedHex(ENV_UNKNOWN_D, 49)
+            new En1545FixedHex(ENV_UNKNOWN_E, 49)
     );
 
     private RicaricaMiTransitData(ClassicCard card) {
