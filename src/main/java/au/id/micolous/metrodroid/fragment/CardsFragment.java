@@ -24,6 +24,7 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.LoaderManager;
 import android.content.ClipData;
+import android.content.ContentResolver;
 import android.content.ContentUris;
 import android.content.Context;
 import android.content.CursorLoader;
@@ -36,6 +37,8 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.content.ClipboardManager;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v4.content.FileProvider;
 import android.util.Log;
 import android.util.Pair;
@@ -53,10 +56,13 @@ import android.widget.Toast;
 
 import au.id.micolous.metrodroid.activity.CardInfoActivity;
 import au.id.micolous.metrodroid.card.Card;
+import au.id.micolous.metrodroid.card.CardImporter;
 import au.id.micolous.metrodroid.card.CardType;
+import au.id.micolous.metrodroid.card.XmlCardFormat;
 import au.id.micolous.metrodroid.card.classic.ClassicBlock;
 import au.id.micolous.metrodroid.card.classic.ClassicCard;
 import au.id.micolous.metrodroid.card.classic.ClassicSector;
+import au.id.micolous.metrodroid.card.classic.MctCardImporter;
 import au.id.micolous.metrodroid.card.classic.UnauthorizedClassicSector;
 import au.id.micolous.metrodroid.key.ClassicSectorKey;
 import au.id.micolous.metrodroid.provider.CardDBHelper;
@@ -82,13 +88,17 @@ import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.GregorianCalendar;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+
+import javax.xml.parsers.ParserConfigurationException;
 
 import au.id.micolous.farebot.R;
 import au.id.micolous.metrodroid.MetrodroidApplication;
@@ -235,9 +245,12 @@ public class CardsFragment extends ExpandableListFragment {
                     } else {
                         ClipData.Item ci = d.getItemAt(0);
                         xml = ci.coerceToText(getActivity()).toString();
-                        Uri [] uris = ExportHelper.importCardsXml(getActivity(), xml);
+
+                        Collection<Uri> uris = ExportHelper.importCards(xml, new XmlCardFormat(), getActivity());
+
                         updateListView();
-                        onCardsImported(getActivity(), uris);
+                        Iterator<Uri> it = uris.iterator();
+                        onCardsImported(getActivity(), uris.size(), it.hasNext() ? it.next() : null);
                     }
                 } return true;
 
@@ -385,19 +398,28 @@ public class CardsFragment extends ExpandableListFragment {
         }
     }
 
-    private abstract static class CommonReadTask extends AsyncTask<Uri, Integer, Pair<String, Uri[]>> {
+    private abstract static class CommonReadTask extends AsyncTask<Uri, Integer, Pair<String, Collection<Uri>>> {
         private final WeakReference<CardsFragment> mCardsFragment;
+        private final CardImporter<? extends Card> mCardImporter;
 
-        private CommonReadTask(CardsFragment cardsFragment) {
+        private CommonReadTask(CardsFragment cardsFragment,
+                               @NonNull CardImporter<? extends Card> cardImporter) {
             mCardsFragment = new WeakReference<>(cardsFragment);
+            mCardImporter = cardImporter;
         }
 
         @Override
-        protected Pair<String, Uri[]> doInBackground(Uri... uris) {
+        protected Pair<String, Collection<Uri>> doInBackground(Uri... uris) {
             try {
-                Log.d(TAG, "REQUEST_SELECT_FILE content_type = " + MetrodroidApplication.getInstance().getContentResolver().getType(uris[0]));
-                InputStream stream = MetrodroidApplication.getInstance().getContentResolver().openInputStream(uris[0]);
-                Uri[] iuri = importStream(stream);
+                final ContentResolver cr = MetrodroidApplication.getInstance().getContentResolver();
+
+                Log.d(TAG, "REQUEST_SELECT_FILE content_type = " + cr.getType(uris[0]));
+                InputStream stream = cr.openInputStream(uris[0]);
+                assert stream != null; // Will be handled by exception handler below...
+
+                Collection<Uri> iuri = ExportHelper.importCards(
+                        stream, mCardImporter, MetrodroidApplication.getInstance());
+
                 return new Pair<>(null, iuri);
             } catch (Exception ex) {
                 Log.e(TAG, ex.getMessage(), ex);
@@ -405,12 +427,10 @@ public class CardsFragment extends ExpandableListFragment {
             }
         }
 
-        protected abstract Uri[] importStream(InputStream stream) throws Exception;
-
         @Override
-        protected void onPostExecute(Pair<String, Uri[]> res) {
+        protected void onPostExecute(Pair<String, Collection<Uri>> res) {
             String err = res.first;
-            Uri []uris = res.second;
+            Collection<Uri> uris = res.second;
             CardsFragment cf = mCardsFragment.get();
 
             if (cf == null)
@@ -418,7 +438,8 @@ public class CardsFragment extends ExpandableListFragment {
 
             if (err == null) {
                 cf.updateListView();
-                onCardsImported(cf.getActivity(), uris);
+                Iterator<Uri> it = uris.iterator();
+                onCardsImported(cf.getActivity(), uris.size(), it.hasNext() ? it.next() : null);
                 return;
             }
             new AlertDialog.Builder(cf.getActivity())
@@ -427,90 +448,16 @@ public class CardsFragment extends ExpandableListFragment {
         }
     }
 
-    private static class ReadTask extends CommonReadTask {
-        private ReadTask(CardsFragment cardsFragment) {
-            super(cardsFragment);
-        }
 
-        @Override
-        protected Uri[] importStream(InputStream stream) throws Exception {
-            String xml = org.apache.commons.io.IOUtils.toString(stream, Charset.defaultCharset());
-            return ExportHelper.importCardsXml(MetrodroidApplication.getInstance(), xml);
+    private static class ReadTask extends CommonReadTask {
+        private ReadTask(CardsFragment cardsFragment) throws ParserConfigurationException {
+            super(cardsFragment, new XmlCardFormat());
         }
     }
 
     private static class MCTReadTask extends CommonReadTask {
         private MCTReadTask(CardsFragment cardsFragment) {
-            super(cardsFragment);
-        }
-
-        @Override
-        protected Uri[] importStream(InputStream stream) throws Exception {
-            String mct = org.apache.commons.io.IOUtils.toString(stream, Charset.defaultCharset());
-            List<ClassicSector> sectors = new ArrayList<>();
-            int curSector = -1;
-            int maxSector = -1;
-            int blockNumber = 0;
-            List <ClassicBlock> curBlocks = null;
-            String lastBlock = null;
-            for (String line : mct.split("\n")) {
-                if (line.startsWith("+Sector:")) {
-                    flushSector(sectors, curSector, curBlocks, lastBlock);
-                    curBlocks = new ArrayList<>();
-                    curSector = Integer.valueOf(line.substring(8).trim());
-                    if (curSector > maxSector)
-                        maxSector = curSector;
-                    blockNumber = 0;
-                    continue;
-                }
-                if (curBlocks == null || curSector < 0)
-                    continue;
-                lastBlock = line;
-                curBlocks.add(new ClassicBlock(blockNumber, ClassicBlock.TYPE_DATA,
-                        Utils.hexStringToByteArray(line.replaceAll("-", "0"))));
-                blockNumber++;
-            }
-            flushSector(sectors, curSector, curBlocks, lastBlock);
-            byte[] uid;
-            if (sectors.get(0) != null) {
-                byte[] block0 = sectors.get(0).getBlock(0).getData();
-                if (block0[0] == 4)
-                    uid = Arrays.copyOfRange(block0, 0, 7);
-                else
-                    uid = Arrays.copyOfRange(block0, 0, 4);
-            } else
-                uid = Utils.stringToByteArray("fake");
-            if (maxSector <= 15)
-                maxSector = 15; // 1K
-            else if (maxSector <= 31)
-                maxSector = 31; // 2K
-            else if (maxSector <= 39)
-                maxSector = 39; // 4K
-            Set<Integer> s = new HashSet<>();
-            for (ClassicSector sec : sectors)
-                s.add(sec.getIndex());
-            for (int i = 0; i <= maxSector; i++)
-                if (!s.contains(i))
-                    sectors.add(new UnauthorizedClassicSector(i));
-            Collections.sort(sectors, (a, b) -> Integer.compare(a.getIndex(), b.getIndex()));
-            ClassicCard card = new ClassicCard(uid,
-                    GregorianCalendar.getInstance(), sectors.toArray(new ClassicSector[0]), false);
-            String xml = card.toXml(MetrodroidApplication.getInstance().getSerializer());
-            return ExportHelper.importCardsXml(MetrodroidApplication.getInstance(), xml);
-        }
-
-        private void flushSector(List<ClassicSector> sectors, int curSector, List<ClassicBlock> curBlocks, String lastBlock) {
-            if (curSector < 0 || curBlocks == null)
-                return;
-            ClassicSectorKey key;
-            if (! lastBlock.startsWith("-")) {
-                key = ClassicSectorKey.fromDump(Utils.hexStringToByteArray(lastBlock.substring(0, 12)));
-                key.setType(ClassicSectorKey.KeyType.A);
-            } else {
-                key = ClassicSectorKey.fromDump(Utils.hexStringToByteArray(lastBlock.substring(20, 32)));
-                key.setType(ClassicSectorKey.KeyType.B);
-            }
-            sectors.add(new ClassicSector(curSector, curBlocks.toArray(new ClassicBlock[0]), key));
+            super(cardsFragment, new MctCardImporter());
         }
     }
 
@@ -542,10 +489,11 @@ public class CardsFragment extends ExpandableListFragment {
         }
     }
 
-    private static void onCardsImported(Context ctx, Uri[] uris) {
-        Toast.makeText(ctx, Utils.localizePlural(R.plurals.cards_imported, uris.length, uris.length), Toast.LENGTH_SHORT).show();
-        if (uris.length == 1) {
-            ctx.startActivity(new Intent(Intent.ACTION_VIEW, uris[0]));
+    private static void onCardsImported(Context ctx, int uriCount, @Nullable Uri firstUri) {
+        Toast.makeText(ctx, Utils.localizePlural(
+                R.plurals.cards_imported, uriCount, uriCount), Toast.LENGTH_SHORT).show();
+        if (uriCount == 1 && firstUri != null) {
+            ctx.startActivity(new Intent(Intent.ACTION_VIEW, firstUri));
         }
     }
 
@@ -615,8 +563,7 @@ public class CardsFragment extends ExpandableListFragment {
 
             if (scan.mTransitIdentity == null) {
                 try {
-                    Serializer serializer = MetrodroidApplication.getInstance().getSerializer();
-                    scan.mTransitIdentity = Card.fromXml(serializer, scan.mData).parseTransitIdentity();
+                    scan.mTransitIdentity = Card.fromXml(scan.mData).parseTransitIdentity();
                 } catch (Exception ex) {
                     String error = String.format("Error: %s", Utils.getErrorMessage(ex));
                     scan.mTransitIdentity = new TransitIdentity(error, null);

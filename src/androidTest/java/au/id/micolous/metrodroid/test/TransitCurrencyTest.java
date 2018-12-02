@@ -1,7 +1,7 @@
 /*
  * TransitCurrencyTest.java
  *
- * Copyright 2017 Michael Farrell <micolous+git@gmail.com>
+ * Copyright 2017-2018 Michael Farrell <micolous+git@gmail.com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,33 +18,35 @@
  */
 package au.id.micolous.metrodroid.test;
 
-import android.test.AndroidTestCase;
 import android.text.Spanned;
 
 import org.hamcrest.Matchers;
+import org.junit.Test;
 
 import au.id.micolous.metrodroid.transit.TransitCurrency;
 
 import static au.id.micolous.metrodroid.test.TestUtils.assertSpannedEquals;
 import static au.id.micolous.metrodroid.test.TestUtils.assertSpannedThat;
 import static au.id.micolous.metrodroid.test.TestUtils.assertTtsMarkers;
+import static junit.framework.TestCase.assertEquals;
 
 /**
  * Tests the currency formatter.
  */
-public class TransitCurrencyTest extends AndroidTestCase {
+public class TransitCurrencyTest extends BaseInstrumentedTest {
 
     /**
      * In Australian English, AUD should come out as a bare "$", and USD should come out with some
      * different prefix.
      */
+    @Test
     public void testEnglishAU() {
         // Note: en_AU data in Unicode CLDR currency data was broken in release
         // 28, Android 7.0+:
         // https://unicode.org/cldr/trac/changeset/11798/trunk/common/main/en_AU.xml
         // https://unicode.org/cldr/trac/ticket/10217
         // Only check to make sure AUD comes out correctly in en_AU.
-        TestUtils.setLocale(getContext(), "en-AU");
+        setLocale("en-AU");
 
         final Spanned aud = TransitCurrency.AUD(1234).formatCurrencyString(true);
         assertSpannedEquals("$12.34", aud);
@@ -62,8 +64,9 @@ public class TransitCurrencyTest extends AndroidTestCase {
      *
      * It might clarify USD (US$ vs. $). but that isn't very important.
      */
+    @Test
     public void testEnglishGB() {
-        TestUtils.setLocale(getContext(), "en-GB");
+        setLocale("en-GB");
 
         // May be "$12.34", "U$12.34" or "US$12.34".
         final Spanned usd = TransitCurrency.USD(1234).formatCurrencyString(true);
@@ -90,8 +93,9 @@ public class TransitCurrencyTest extends AndroidTestCase {
      * In American English, USD should come out as a bare "$", and AUD should come out with some
      * different prefix.
      */
+    @Test
     public void testEnglishUS() {
-        TestUtils.setLocale(getContext(), "en-US");
+        setLocale("en-US");
 
         final Spanned usd = TransitCurrency.USD(1234).formatCurrencyString(true);
         assertSpannedEquals("$12.34", usd);
@@ -119,8 +123,9 @@ public class TransitCurrencyTest extends AndroidTestCase {
      *
      * It might clarify USD (US$ vs. $). but that isn't very important.
      */
+    @Test
     public void testJapanese() {
-        TestUtils.setLocale(getContext(), "ja-JP");
+        setLocale("ja-JP");
 
         // May be "$12.34", "U$12.34" or "US$12.34".
         final Spanned usd = TransitCurrency.USD(1234).formatCurrencyString(true);
@@ -148,8 +153,9 @@ public class TransitCurrencyTest extends AndroidTestCase {
      * In French, comma is used as a decimal separator, spaces are used for grouping, and currency
      * symbols are after the amount. TTS data must have an English formatting style.
      */
+    @Test
     public void testFrench() {
-        TestUtils.setLocale(getContext(), "fr-FR");
+        setLocale("fr-FR");
 
         final Spanned usd = TransitCurrency.USD(1234).formatCurrencyString(true);
         assertSpannedEquals("12,34 $US", usd);
@@ -173,8 +179,9 @@ public class TransitCurrencyTest extends AndroidTestCase {
         assertTtsMarkers("EUR", "12.34", eur);
     }
 
+    @Test
     public void testNumericLookup() {
-        TestUtils.setLocale(getContext(), "en-US");
+        setLocale("en-US");
 
         TransitCurrency c = new TransitCurrency(1234, 36, 100.);
         assertEquals(TransitCurrency.AUD(1234), c);
@@ -184,8 +191,10 @@ public class TransitCurrencyTest extends AndroidTestCase {
         assertEquals(TransitCurrency.XXX(1234), c);
 
     }
+
+    @Test
     public void testDivisor() {
-        TestUtils.setLocale(getContext(), "en-US");
+        setLocale("en-US");
 
         // Test with no divisor -- this should infer the divisor
         TransitCurrency c = new TransitCurrency(1234, 36);

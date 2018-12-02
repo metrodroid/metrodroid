@@ -21,15 +21,19 @@
 package au.id.micolous.metrodroid;
 
 import android.app.Application;
+import android.content.Context;
 import android.content.SharedPreferences;
 import android.nfc.NfcAdapter;
 import android.os.StrictMode;
 import android.preference.PreferenceManager;
+import android.support.annotation.Nullable;
+import android.support.annotation.VisibleForTesting;
 import android.support.v7.app.AppCompatDelegate;
 import android.util.Log;
 
 import net.kazzz.felica.FeliCaLib;
 
+import android.support.annotation.NonNull;
 import org.simpleframework.xml.Serializer;
 import org.simpleframework.xml.convert.Registry;
 import org.simpleframework.xml.core.Persister;
@@ -44,6 +48,7 @@ import org.simpleframework.xml.transform.RegistryMatcher;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.HashSet;
+import java.util.Locale;
 import java.util.Set;
 
 import au.id.micolous.farebot.R;
@@ -76,25 +81,27 @@ public class MetrodroidApplication extends Application {
     private static final String TAG = "MetrodroidApplication";
     public static final String PREF_LAST_READ_ID = "last_read_id";
     public static final String PREF_LAST_READ_AT = "last_read_at";
-    public static final String PREF_MFC_AUTHRETRY = "pref_mfc_authretry";
-    public static final String PREF_MFC_FALLBACK = "pref_mfc_fallback";
-    public static final String PREF_RETRIEVE_LEAP_KEYS = "pref_retrieve_leap_keys";
+    private static final String PREF_MFC_AUTHRETRY = "pref_mfc_authretry";
+    private static final String PREF_MFC_FALLBACK = "pref_mfc_fallback";
+    private static final String PREF_RETRIEVE_LEAP_KEYS = "pref_retrieve_leap_keys";
 
-    public static final String PREF_HIDE_CARD_NUMBERS = "pref_hide_card_numbers";
-    public static final String PREF_OBFUSCATE_TRIP_DATES = "pref_obfuscate_trip_dates";
-    public static final String PREF_OBFUSCATE_TRIP_TIMES = "pref_obfuscate_trip_times";
-    public static final String PREF_OBFUSCATE_TRIP_FARES = "pref_obfuscate_trip_fares";
-    public static final String PREF_OBFUSCATE_BALANCE = "pref_obfuscate_balance";
+    private static final String PREF_HIDE_CARD_NUMBERS = "pref_hide_card_numbers";
+    private static final String PREF_OBFUSCATE_TRIP_DATES = "pref_obfuscate_trip_dates";
+    private static final String PREF_OBFUSCATE_TRIP_TIMES = "pref_obfuscate_trip_times";
+    private static final String PREF_OBFUSCATE_TRIP_FARES = "pref_obfuscate_trip_fares";
+    private static final String PREF_OBFUSCATE_BALANCE = "pref_obfuscate_balance";
 
     public static final String PREF_LOCALISE_PLACES = "pref_localise_places";
     public static final String PREF_LOCALISE_PLACES_HELP = "pref_localise_places_help";
-    public static final String PREF_CONVERT_TIMEZONES = "pref_convert_timezones";
+    private static final String PREF_CONVERT_TIMEZONES = "pref_convert_timezones";
     public static final String PREF_THEME = "pref_theme";
+    @VisibleForTesting
     public static final String PREF_SHOW_LOCAL_AND_ENGLISH = "pref_show_local_and_english";
+    @VisibleForTesting
+    public static final String PREF_SHOW_RAW_IDS = "pref_show_raw_ids";
 
     private static final Set<String> devicesMifareWorks = new HashSet<>();
     private static final Set<String> devicesMifareNotWorks = new HashSet<>();
-    public static final String PREF_SHOW_RAW_IDS = "pref_show_raw_ids";
 
     static {
         devicesMifareWorks.add("Pixel 2");
@@ -103,7 +110,9 @@ public class MetrodroidApplication extends Application {
 
     private static MetrodroidApplication sInstance;
 
+    @NonNull
     private final Serializer mSerializer;
+
     private boolean mMifareClassicSupport = false;
 
     public MetrodroidApplication() {
@@ -154,9 +163,21 @@ public class MetrodroidApplication extends Application {
         return sInstance;
     }
 
+    @NonNull
+    protected SharedPreferences getPreferences() {
+        return PreferenceManager.getDefaultSharedPreferences(this);
+    }
+
+    @VisibleForTesting
+    @NonNull
+    public static SharedPreferences getSharedPreferences() {
+        return getInstance().getPreferences();
+    }
+
+
+
     protected static boolean getBooleanPref(String preference, boolean default_setting) {
-        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getInstance());
-        return prefs.getBoolean(preference, default_setting);
+        return getSharedPreferences().getBoolean(preference, default_setting);
     }
 
     /**
@@ -196,6 +217,11 @@ public class MetrodroidApplication extends Application {
         return getBooleanPref(PREF_SHOW_LOCAL_AND_ENGLISH, false);
     }
 
+    public static boolean retrieveLeapKeys() {
+        return getBooleanPref(PREF_RETRIEVE_LEAP_KEYS, false);
+    }
+
+    @NonNull
     public Serializer getSerializer() {
         return mSerializer;
     }
@@ -253,9 +279,25 @@ public class MetrodroidApplication extends Application {
                 + (mMifareClassicSupport ? "(found)" : "(missing)"));
     }
 
+    @NonNull
+    protected static String getStringPreference(@NonNull String preference, @NonNull String defaultValue) {
+        return getSharedPreferences().getString(preference, defaultValue);
+    }
+
+    protected static int getIntPreference(@NonNull String preference, int defaultValue) {
+        return getSharedPreferences().getInt(preference, defaultValue);
+    }
+
+    public static int getMfcAuthRetry() {
+        return getIntPreference(PREF_MFC_AUTHRETRY, 5);
+    }
+
     public static String getThemePreference() {
-        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(MetrodroidApplication.getInstance());
-        return prefs.getString(MetrodroidApplication.PREF_THEME, "dark");
+        return getStringPreference(PREF_THEME, "dark");
+    }
+
+    public static String getMfcFallbackReader() {
+        return getStringPreference(PREF_MFC_FALLBACK, "null").toLowerCase(Locale.US);
     }
 
     public static int chooseTheme() {
@@ -268,7 +310,6 @@ public class MetrodroidApplication extends Application {
     }
 
     public static boolean showRawStationIds() {
-        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(MetrodroidApplication.getInstance());
-        return prefs.getBoolean(MetrodroidApplication.PREF_SHOW_RAW_IDS, false);
+        return getBooleanPref(MetrodroidApplication.PREF_SHOW_RAW_IDS, false);
     }
 }

@@ -180,8 +180,7 @@ public class ClassicCard extends Card {
         feedbackInterface.showCardType(null);
 
         MifareClassic tech = null;
-        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(MetrodroidApplication.getInstance());
-        final int retryLimit = prefs.getInt(MetrodroidApplication.PREF_MFC_AUTHRETRY, 5);
+        final int retryLimit = MetrodroidApplication.getMfcAuthRetry();
         int retriesLeft;
         boolean partialRead = false;
 
@@ -404,11 +403,6 @@ public class ClassicCard extends Card {
         return newTag;
     }
 
-    public static String getFallbackReader() {
-        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(MetrodroidApplication.getInstance());
-        return prefs.getString(MetrodroidApplication.PREF_MFC_FALLBACK, "null").toLowerCase(Locale.US);
-    }
-
     private static final ClassicCardTransitFactory FACTORIES[] = {
             OVChipTransitData.FACTORY,
             // Search through ERG on MIFARE Classic compatibles.
@@ -553,13 +547,13 @@ public class ClassicCard extends Card {
     private static class FallbackFactory extends ClassicCardTransitFactory {
         @Override
         public boolean check(@NonNull ClassicCard classicCard) {
-            String fallback = getFallbackReader();
+            String fallback = MetrodroidApplication.getMfcFallbackReader();
             return fallback.equals("myway") || fallback.equals("smartrider");
         }
 
         @Override
         public TransitIdentity parseTransitIdentity(@NonNull ClassicCard classicCard) {
-            String fallback = getFallbackReader();
+            String fallback = MetrodroidApplication.getMfcFallbackReader();
             if (fallback.equals("myway") || fallback.equals("smartrider")) {
                 // This has a proper check now, but is included for legacy reasons.
                 //
@@ -572,7 +566,7 @@ public class ClassicCard extends Card {
 
         @Override
         public TransitData parseTransitData(@NonNull ClassicCard classicCard) {
-            String fallback = getFallbackReader();
+            String fallback = MetrodroidApplication.getMfcFallbackReader();
             if (fallback.equals("myway") || fallback.equals("smartrider")) {
                 // This has a proper check now, but is included for legacy reasons.
                 //

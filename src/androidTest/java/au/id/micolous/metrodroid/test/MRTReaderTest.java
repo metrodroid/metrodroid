@@ -19,20 +19,23 @@
 
 package au.id.micolous.metrodroid.test;
 
-import android.test.AndroidTestCase;
+import org.junit.Test;
 
 import au.id.micolous.metrodroid.transit.Station;
 import au.id.micolous.metrodroid.transit.ezlink.EZLinkTransitData;
+
+import static junit.framework.TestCase.assertEquals;
 
 /**
  * Tests StationTableReader (MdST). This uses the ezlink stop database.
  */
 
-public class MRTReaderTest extends AndroidTestCase {
+public class MRTReaderTest extends BaseInstrumentedTest {
+    @Test
     public void testGetStation() {
-        TestUtils.setLocale(getContext(), "en-US");
-        TestUtils.showRawStationIds(false);
-        TestUtils.showLocalAndEnglish(false);
+        setLocale("en-US");
+        showRawStationIds(false);
+        showLocalAndEnglish(false);
 
         Station s = EZLinkTransitData.getStation("CGA");
         assertEquals("Changi Airport", s.getStationName());

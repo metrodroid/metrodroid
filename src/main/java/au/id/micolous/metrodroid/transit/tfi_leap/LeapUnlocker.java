@@ -78,8 +78,7 @@ public class LeapUnlocker implements DesfireUnlocker {
     }
 
     public static LeapUnlocker createUnlocker(int applicationId, DesfireManufacturingData manufData) {
-        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(MetrodroidApplication.getInstance());
-        final boolean retrieveKeys = prefs.getBoolean(MetrodroidApplication.PREF_RETRIEVE_LEAP_KEYS, false);
+        final boolean retrieveKeys = MetrodroidApplication.retrieveLeapKeys();
         if (!retrieveKeys) {
             Log.d(TAG, "Retrieving Leap keys not enabled");
             return null;

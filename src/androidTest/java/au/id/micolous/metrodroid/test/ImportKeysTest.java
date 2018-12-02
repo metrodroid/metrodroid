@@ -18,18 +18,12 @@
  */
 package au.id.micolous.metrodroid.test;
 
-import android.content.Context;
-import android.content.res.AssetManager;
 import android.support.annotation.Nullable;
-import android.test.InstrumentationTestCase;
 import android.util.Pair;
 
-import org.apache.commons.lang3.ArrayUtils;
 import org.json.JSONException;
 import org.json.JSONObject;
-
-import java.io.IOException;
-import java.io.InputStream;
+import org.junit.Test;
 
 import au.id.micolous.metrodroid.key.ClassicCardKeys;
 import au.id.micolous.metrodroid.key.ClassicSectorKey;
@@ -38,24 +32,17 @@ import au.id.micolous.metrodroid.util.KeyFormat;
 import au.id.micolous.metrodroid.util.Utils;
 
 import static au.id.micolous.metrodroid.key.CardKeys.CLASSIC_STATIC_TAG_ID;
+import static junit.framework.Assert.fail;
+import static junit.framework.TestCase.assertEquals;
+import static junit.framework.TestCase.assertNotNull;
+import static junit.framework.TestCase.assertTrue;
 
-public class ImportKeysTest extends InstrumentationTestCase {
-    private byte[] loadTestFile(String path) throws IOException {
-        Context ctx = getInstrumentation().getContext();
-        InputStream i = ctx.getAssets().open("keyTests/" + path, AssetManager.ACCESS_RANDOM);
-        int length = i.available();
-        if (length > 10240 || length <= 0) {
-            throw new IOException("Expected 0 - 10240 bytes");
-        }
-
-        byte[] out = new byte[length];
-        int realLen = i.read(out);
-
-        // Return truncated buffer
-        return ArrayUtils.subarray(out, 0, realLen);
+public class ImportKeysTest extends BaseInstrumentedTest {
+    private byte[] loadTestFile(String path) {
+        return loadSmallAssetBytes("keyTests/" + path);
     }
 
-    private Pair<JSONObject, KeyFormat> loadTestJSON(String path, @Nullable KeyFormat expectedFormat) throws IOException, JSONException {
+    private Pair<JSONObject, KeyFormat> loadTestJSON(String path, @Nullable KeyFormat expectedFormat) throws JSONException {
         byte[] d = loadTestFile(path);
         KeyFormat f = Utils.detectKeyFormat(d);
         if (expectedFormat != null) {
@@ -64,13 +51,13 @@ public class ImportKeysTest extends InstrumentationTestCase {
         return new Pair<>(new JSONObject(new String(d)), f);
     }
 
-    private ClassicCardKeys loadClassicCardRawKeys(String path) throws IOException {
+    private ClassicCardKeys loadClassicCardRawKeys(String path) {
         byte[] d = loadTestFile(path);
         assertEquals(KeyFormat.RAW_MFC, Utils.detectKeyFormat(d));
         return ClassicCardKeys.fromDump(d, ClassicSectorKey.KeyType.A);
     }
 
-    private ClassicCardKeys loadClassicCardKeys(String path, @Nullable String expectedID, @Nullable KeyFormat expectedFormat) throws IOException, JSONException {
+    private ClassicCardKeys loadClassicCardKeys(String path, @Nullable String expectedID, @Nullable KeyFormat expectedFormat) throws JSONException {
         Pair<JSONObject, KeyFormat> json = loadTestJSON(path, expectedFormat);
         ClassicCardKeys k = ClassicCardKeys.fromJSON(json.first, json.second);
 
@@ -80,7 +67,7 @@ public class ImportKeysTest extends InstrumentationTestCase {
         return k;
     }
 
-    private ClassicStaticKeys loadClassicStaticCardKeys(String path) throws IOException, JSONException {
+    private ClassicStaticKeys loadClassicStaticCardKeys(String path) throws JSONException {
         Pair<JSONObject, KeyFormat> json = loadTestJSON(path, KeyFormat.JSON_MFC_STATIC);
         ClassicCardKeys k = ClassicCardKeys.fromJSON(json.first, json.second);
         assertTrue(k instanceof ClassicStaticKeys);
@@ -88,7 +75,8 @@ public class ImportKeysTest extends InstrumentationTestCase {
         return (ClassicStaticKeys)k;
     }
 
-    public void testClassicKeys() throws IOException, JSONException {
+    @Test
+    public void testClassicKeys() throws JSONException {
         ClassicCardKeys mifare1 = loadClassicCardKeys("mifare1.json", "12345678", KeyFormat.JSON_MFC);
 
         assertEquals(1, mifare1.getCandidates(0).size());
@@ -122,6 +110,7 @@ public class ImportKeysTest extends InstrumentationTestCase {
         assertTrue("102030405060 must be in j", j.contains("102030405060"));
     }
 
+    @Test
     public void testSectorKeySerialiser() throws JSONException {
         ClassicSectorKey k0 = ClassicSectorKey.fromJSON(new JSONObject("{\"type\": \"KeyA\", \"key\": \"010203040506\"}"));
         ClassicSectorKey k1 = ClassicSectorKey.fromJSON(new JSONObject("{\"type\": \"KeyB\", \"key\": \"102030405060\"}"));
@@ -154,7 +143,8 @@ public class ImportKeysTest extends InstrumentationTestCase {
         assertEquals(ClassicSectorKey.KeyType.B, k1s.getType());
     }
 
-    public void testClassicStaticKeys() throws IOException, JSONException {
+    @Test
+    public void testClassicStaticKeys() throws JSONException {
         ClassicStaticKeys mifareStatic1 = loadClassicStaticCardKeys("mifareStatic1.json");
 
         assertEquals("Example transit agency", mifareStatic1.getDescription());
@@ -192,7 +182,8 @@ public class ImportKeysTest extends InstrumentationTestCase {
         assertTrue("sector 10 must be in j", j.contains("\"sector\":10"));
     }
 
-    public void testInvalidJSON() throws IOException {
+    @Test
+    public void testInvalidJSON() {
         try {
             ClassicCardKeys card = loadClassicCardKeys("invalidMifare1.json", "12345678", KeyFormat.UNKNOWN);
         } catch (JSONException e) {
@@ -200,10 +191,11 @@ public class ImportKeysTest extends InstrumentationTestCase {
             return;
         }
 
-        assertTrue("Expected JSONException", false);
+        fail("Expected JSONException");
     }
 
-    public void testRawKeys() throws IOException {
+    @Test
+    public void testRawKeys() {
         ClassicCardKeys k = loadClassicCardRawKeys("testkeys.farebotkeys");
         assertEquals(4, k.keys().size());
         for (int i=0; i<4; i++) {
@@ -225,7 +217,8 @@ public class ImportKeysTest extends InstrumentationTestCase {
         assertEquals("d3f7d3f7d3f7", Utils.getHexString(k3.getKey()));
     }
 
-    public void testKeyWithBraces() throws IOException {
+    @Test
+    public void testKeyWithBraces() {
         ClassicCardKeys k = loadClassicCardRawKeys("keyWithBraces.farebotkeys");
         assertEquals(1, k.keys().size());
         assertEquals(1, k.getCandidates(0).size());
@@ -236,14 +229,17 @@ public class ImportKeysTest extends InstrumentationTestCase {
         assertEquals("7b007d204020", Utils.getHexString(k0.getKey()));
     }
 
+    @Test
     public void testEmptyUID() throws Exception {
         loadClassicCardKeys("mifareEmptyUID.json", null, KeyFormat.JSON_MFC_NO_UID);
     }
 
+    @Test
     public void testNoUID() throws Exception {
         loadClassicCardKeys("mifareNoUID.json", null, KeyFormat.JSON_MFC_NO_UID);
     }
 
+    @Test
     public void testNullUID() throws Exception {
         loadClassicCardKeys("mifareNullUID.json", null, KeyFormat.JSON_MFC_NO_UID);
     }

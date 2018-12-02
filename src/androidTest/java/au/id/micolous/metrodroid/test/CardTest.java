@@ -53,7 +53,6 @@ import au.id.micolous.metrodroid.MetrodroidApplication;
 
 public class CardTest extends TestCase {
     public void testXmlSerialiser() {
-        Serializer s = MetrodroidApplication.getInstance().getSerializer();
         Calendar d = new GregorianCalendar(2010, 1, 1, 0, 0, 0);
         d.setTimeZone(TimeZone.getTimeZone("GMT"));
 
@@ -61,12 +60,12 @@ public class CardTest extends TestCase {
                 d,
                 new ClassicSector[] {});
 
-        String xml = c1.toXml(s);
+        String xml = c1.toXml();
 
         assertTrue(xml.contains("scanned_at=\"1264982400000\""));
         assertTrue(xml.contains("id=\"00123456\""));
 
-        Card c2 = Card.fromXml(s, xml);
+        Card c2 = Card.fromXml(xml);
 
         assertEquals(d.getTimeInMillis(), c1.getScannedAt().getTimeInMillis());
         assertEquals(c1.getScannedAt().getTimeInMillis(), c2.getScannedAt().getTimeInMillis());

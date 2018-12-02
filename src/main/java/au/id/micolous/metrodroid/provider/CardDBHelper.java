@@ -24,8 +24,16 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.support.annotation.VisibleForTesting;
+
+import com.google.common.collect.Iterators;
+
+import java.util.Iterator;
+import java.util.function.Function;
 
 import au.id.micolous.farebot.BuildConfig;
+import au.id.micolous.metrodroid.card.Card;
+import au.id.micolous.metrodroid.util.CursorIterator;
 
 public class CardDBHelper extends SQLiteOpenHelper {
     public static final String DATABASE_NAME = "cards.db";
@@ -105,4 +113,5 @@ public class CardDBHelper extends SQLiteOpenHelper {
             throw new UnsupportedOperationException("Not yet implemented");
         }
     }
+
 }

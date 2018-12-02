@@ -24,27 +24,22 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.net.Uri;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 
-import org.w3c.dom.Document;
-import org.w3c.dom.Element;
-import org.w3c.dom.Node;
-import org.w3c.dom.NodeList;
-import org.xml.sax.InputSource;
+import com.google.common.collect.Iterators;
 
+import java.io.InputStream;
 import java.io.OutputStream;
-import java.io.StringReader;
-import java.io.StringWriter;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.Iterator;
 
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.transform.OutputKeys;
-import javax.xml.transform.Result;
-import javax.xml.transform.Source;
-import javax.xml.transform.Transformer;
-import javax.xml.transform.TransformerFactory;
-import javax.xml.transform.dom.DOMSource;
-import javax.xml.transform.stream.StreamResult;
-
+import au.id.micolous.metrodroid.card.Card;
+import au.id.micolous.metrodroid.card.CardImporter;
+import au.id.micolous.metrodroid.card.CardsExporter;
+import au.id.micolous.metrodroid.card.XmlCardFormat;
 import au.id.micolous.metrodroid.provider.CardDBHelper;
 import au.id.micolous.metrodroid.provider.CardProvider;
 import au.id.micolous.metrodroid.provider.CardsTableColumns;
@@ -57,25 +52,83 @@ public final class ExportHelper {
         Utils.copyTextToClipboard(context, "metrodroid card", xml);
     }
 
+    public static void exportCards(@NonNull final OutputStream os,
+                                   @NonNull final CardsExporter<Card> exporter,
+                                   @NonNull final Context context) throws Exception {
+        final Cursor cursor = CardDBHelper.createCursor(context);
+        exporter.writeCards(os, readCards(cursor));
+    }
+
     public static void exportCardsXml(OutputStream os, Context context) throws Exception {
-        os.write(Utils.stringToByteArray("<?xml version=\"1.0\" encoding=\"UTF-8\"?><cards>\n"));
-
+        XmlCardFormat f = new XmlCardFormat();
         Cursor cursor = CardDBHelper.createCursor(context);
+        f.writeCardsFromString(os, readCardsXml(cursor));
+    }
 
-        while (cursor.moveToNext()) {
-            String data = cursor.getString(cursor.getColumnIndex(CardsTableColumns.DATA));
-            os.write(Utils.stringToUtf8(cutXmlDef(data)));
-            os.write(Utils.stringToByteArray("\n"));
+    @NonNull
+    public static Collection<Uri> importCards(@NonNull final InputStream is,
+                                              @NonNull final CardImporter<? extends Card> importer,
+                                              @NonNull final Context context) throws Exception {
+
+        Iterator<? extends Card> it = importer.readCards(is);
+        if (it == null) {
+            return Collections.emptyList();
         }
 
-        os.write(Utils.stringToByteArray("</cards>\n"));
+        return importCards(it, context);
     }
 
-    private static String cutXmlDef(String data) {
-        if (!data.startsWith("<?"))
-            return data;
-        return data.substring(data.indexOf("?>")+2);
+    @NonNull
+    public static Collection<Uri> importCards(@NonNull final String s,
+                                              @NonNull final CardImporter<? extends Card> importer,
+                                              @NonNull final Context context) throws Exception {
+        Iterator<? extends Card> it = importer.readCards(s);
+        if (it == null) {
+            return Collections.emptyList();
+        }
+
+        return importCards(it, context);
     }
+
+    @Nullable
+    public static Uri importCard(@NonNull final InputStream is,
+                                 @NonNull final CardImporter<? extends Card> importer,
+                                 @NonNull final Context context) throws Exception {
+        Card c = importer.readCard(is);
+        if (c == null) {
+            return null;
+        }
+
+        return importCard(c, context);
+    }
+
+    private static Collection<Uri> importCards(@NonNull final Iterator<? extends Card> it,
+                                               @NonNull final Context context) {
+        final ArrayList<Uri> results = new ArrayList<>();
+
+        while (it.hasNext()) {
+            Card c = it.next();
+            results.add(importCard(c, context));
+        }
+
+        return results;
+    }
+
+    private static Uri importCard(@NonNull final Card c,
+                                  @NonNull final Context context) {
+        ContentValues cv = new ContentValues();
+        cv.put(CardsTableColumns.TYPE, c.getCardType().toString());
+        cv.put(CardsTableColumns.TAG_SERIAL, Utils.getHexString(c.getTagId()));
+        cv.put(CardsTableColumns.DATA, c.toXml());
+        cv.put(CardsTableColumns.SCANNED_AT, c.getScannedAt().getTimeInMillis());
+        if (c.getLabel() != null) {
+            cv.put(CardsTableColumns.LABEL, c.getLabel());
+        }
+
+        return context.getContentResolver().insert(CardProvider.CONTENT_URI_CARD, cv);
+    }
+
+/*
 
     public static Uri[] importCardsXml(Context context, String xml) throws Exception {
         DocumentBuilder builder = DocumentBuilderFactory.newInstance().newDocumentBuilder();
@@ -95,7 +148,7 @@ public final class ExportHelper {
     }
 
     private static Uri importCard(Context context, Element cardElement) throws Exception {
-        String xml = xmlNodeToString(cardElement);
+        String xml = Utils.xmlNodeToString(cardElement);
 
         ContentValues values = new ContentValues();
         values.put(CardsTableColumns.TYPE, cardElement.getAttribute("type"));
@@ -108,18 +161,18 @@ public final class ExportHelper {
 
         return context.getContentResolver().insert(CardProvider.CONTENT_URI_CARD, values);
     }
+    */
 
-    private static String xmlNodeToString(Node node) throws Exception {
-        // The amount of code required to do simple things in Java is incredible.
-        Source source = new DOMSource(node);
-        StringWriter stringWriter = new StringWriter();
-        Result result = new StreamResult(stringWriter);
-        TransformerFactory factory = TransformerFactory.newInstance();
-        Transformer transformer = factory.newTransformer();
-        transformer.setOutputProperty(OutputKeys.INDENT, "yes");
-        transformer.setOutputProperty("{http://xml.apache.org/xslt}indent-amount", "2");
-        transformer.setURIResolver(null);
-        transformer.transform(source, result);
-        return stringWriter.getBuffer().toString();
+    public static String readCardDataFromCursor(Cursor cursor) {
+        return cursor.getString(cursor.getColumnIndex(CardsTableColumns.DATA));
+    }
+
+    public static Iterator<String> readCardsXml(Cursor cursor) {
+        return Iterators.transform(new CursorIterator(cursor),
+                ExportHelper::readCardDataFromCursor);
+    }
+
+    public static Iterator<Card> readCards(Cursor cursor) {
+        return Iterators.transform(readCardsXml(cursor), Card::fromXml);
     }
 }

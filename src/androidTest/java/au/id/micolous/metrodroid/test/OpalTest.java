@@ -1,7 +1,7 @@
 /*
  * OpalTest.java
  *
- * Copyright 2017 Michael Farrell <micolous+git@gmail.com>
+ * Copyright 2017-2018 Michael Farrell <micolous+git@gmail.com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -20,6 +20,16 @@ package au.id.micolous.metrodroid.test;
 
 import android.os.Build;
 
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.junit.runners.JUnit4;
+
+import java.time.ZoneOffset;
+import java.util.Calendar;
+import java.util.TimeZone;
+
 import au.id.micolous.metrodroid.card.desfire.DesfireApplication;
 import au.id.micolous.metrodroid.card.desfire.DesfireCard;
 import au.id.micolous.metrodroid.card.desfire.files.DesfireFile;
@@ -30,29 +40,24 @@ import au.id.micolous.metrodroid.transit.opal.OpalData;
 import au.id.micolous.metrodroid.transit.opal.OpalTransitData;
 import au.id.micolous.metrodroid.util.Utils;
 
-import junit.framework.TestCase;
-
-import java.time.ZoneOffset;
-import java.util.Calendar;
-import java.util.TimeZone;
+import static junit.framework.TestCase.assertEquals;
+import static junit.framework.TestCase.assertTrue;
 
 /**
  * Tests for Opal card
  */
-
-public class OpalTest extends TestCase {
+@RunWith(JUnit4.class)
+public class OpalTest {
     private TimeZone originalTz;
 
-    @Override
-    protected void setUp() throws Exception {
-        super.setUp();
+    @Before
+    public void setUp() {
         originalTz = TimeZone.getDefault();
         TimeZone.setDefault(OpalTransitData.TIME_ZONE);
     }
 
-    @Override
-    protected void tearDown() throws Exception {
-        super.tearDown();
+    @After
+    public void tearDown() {
         TimeZone.setDefault(originalTz);
     }
 
@@ -68,6 +73,7 @@ public class OpalTest extends TestCase {
                 new DesfireApplication[] { a });
     }
 
+    @Test
     public void testDemoCard() {
         // This is mocked-up data, probably has a wrong checksum.
         DesfireCard c = constructOpalCardFromHexString("87d61200e004002a0014cc44a4133930");
@@ -83,7 +89,7 @@ public class OpalTest extends TestCase {
 
         OpalTransitData o = (OpalTransitData)d;
         assertEquals("3085220012345670", o.getSerialNumber());
-        assertTrue(o.getBalance().equals(TransitCurrency.AUD(336)));
+        assertEquals(TransitCurrency.AUD(336), o.getBalance());
         assertEquals(0, o.getSubscriptions().size());
         // 2015-10-05 09:06 UTC+11
         assertEquals("2015-10-04 22:06", Utils.isoDateTimeFormat(o.getLastTransactionTime()));
@@ -93,7 +99,7 @@ public class OpalTest extends TestCase {
         assertEquals(1, o.getWeeklyTrips());
     }
 
-
+    @Test
     public void testDaylightSavings() {
         // This is all mocked-up data, probably has a wrong checksum.
 

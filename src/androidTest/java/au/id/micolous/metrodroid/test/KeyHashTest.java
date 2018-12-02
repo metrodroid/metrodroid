@@ -19,10 +19,14 @@
 
 package au.id.micolous.metrodroid.test;
 
-import junit.framework.TestCase;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.junit.runners.JUnit4;
 
 import au.id.micolous.metrodroid.key.ClassicSectorKey;
 import au.id.micolous.metrodroid.util.Utils;
+
+import static junit.framework.TestCase.assertEquals;
 
 /**
  * This test validates {@link Utils#checkKeyHash(byte[], String, String...)} such that:
@@ -34,7 +38,8 @@ import au.id.micolous.metrodroid.util.Utils;
  * Please do not change this implementation, as this will break other card readers that depend on
  * it. This test is intended to make it easy
  */
-public class KeyHashTest extends TestCase {
+@RunWith(JUnit4.class)
+public class KeyHashTest {
     private static final byte[] MAD_KEY = Utils.hexStringToByteArray("A0A1A2A3A4A5");
     private static final byte[] DEFAULT_KEY = Utils.hexStringToByteArray("FFFFFFFFFFFF");
     private static final ClassicSectorKey MAD_SECTOR_KEY = ClassicSectorKey.wellKnown(MAD_KEY);
@@ -52,7 +57,7 @@ public class KeyHashTest extends TestCase {
     private static final String MAD_HASH2 = "42451d2b7c8338b7d4f60313c5f4e3f3";
     private static final String DEFAULT_HASH2 = "dfc7fcfdcff15daf0b71226cbf87cb32";
 
-
+    @Test
     public void testIncorrectKeyHash() {
         // Test with just 1 possible answer
         assertEquals(-1, Utils.checkKeyHash(MAD_KEY, SALT0, MAD_HASH1));
@@ -79,6 +84,7 @@ public class KeyHashTest extends TestCase {
                 DEFAULT_HASH0, DEFAULT_HASH1));
     }
 
+    @Test
     public void test1CorrectKeyHash() {
         // Checking when there is one right answer.
         // This is to validate that the algorithm is giving diverse-enough results.
@@ -91,6 +97,7 @@ public class KeyHashTest extends TestCase {
         assertEquals(0, Utils.checkKeyHash(DEFAULT_KEY, SALT2, DEFAULT_HASH2));
     }
 
+    @Test
     public void testOffsetCorrectKeyHash() {
         assertEquals(1, Utils.checkKeyHash(MAD_KEY, SALT1,
                 MAD_HASH0, MAD_HASH1));
@@ -101,6 +108,7 @@ public class KeyHashTest extends TestCase {
                 MAD_HASH0, MAD_HASH1, MAD_HASH2));
     }
 
+    @Test
     public void testRepeatedCorrectKeyHash() {
         assertEquals(0, Utils.checkKeyHash(DEFAULT_KEY, SALT0,
                 DEFAULT_HASH0, DEFAULT_HASH0, DEFAULT_HASH1));
@@ -114,6 +122,7 @@ public class KeyHashTest extends TestCase {
 
     }
 
+    @Test
     public void testWrappedKeyHash() {
         assertEquals(0, Utils.checkKeyHash(MAD_SECTOR_KEY, SALT0, MAD_HASH0));
         assertEquals(0, Utils.checkKeyHash(MAD_SECTOR_KEY, SALT1, MAD_HASH1));

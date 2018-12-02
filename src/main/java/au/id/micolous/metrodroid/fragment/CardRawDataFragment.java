@@ -12,8 +12,7 @@ import au.id.micolous.metrodroid.ui.ListItem;
 public class CardRawDataFragment extends TreeListFragment {
     @Override
     protected List<ListItem> getItems() {
-        Serializer serializer = MetrodroidApplication.getInstance().getSerializer();
-        Card card = Card.fromXml(serializer, getArguments().getString(AdvancedCardInfoActivity.EXTRA_CARD));
+        Card card = Card.fromXml(getArguments().getString(AdvancedCardInfoActivity.EXTRA_CARD));
         return card.getRawData();
     }
 }

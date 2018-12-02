@@ -21,7 +21,9 @@
 package au.id.micolous.metrodroid.card;
 
 import android.nfc.Tag;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.annotation.VisibleForTesting;
 import android.util.Log;
 
 import au.id.micolous.farebot.R;
@@ -39,11 +41,16 @@ import au.id.micolous.metrodroid.xml.HexString;
 import org.apache.commons.lang3.ArrayUtils;
 import org.simpleframework.xml.Attribute;
 import org.simpleframework.xml.Serializer;
+import org.xmlpull.v1.XmlSerializer;
 
+import java.io.InputStream;
+import java.io.StringReader;
 import java.io.StringWriter;
 import java.util.Calendar;
 import java.util.List;
 import java.util.Locale;
+
+import javax.xml.parsers.ParserConfigurationException;
 
 public abstract class Card {
     private static String TAG = Card.class.getName();
@@ -128,17 +135,59 @@ public abstract class Card {
         throw new UnsupportedTagException(techs, Utils.getHexString(tag.getId()));
     }
 
-    public static Card fromXml(Serializer serializer, String xml) {
+    private static XmlCardFormat sXmlCardFormat = null;
+
+    private static void ensureXml() throws ParserConfigurationException {
+        if (sXmlCardFormat == null) {
+            sXmlCardFormat = new XmlCardFormat();
+        }
+    }
+
+    public static Card load(CardImporter<? extends Card> importer, InputStream stream) throws RuntimeException {
         try {
-            return serializer.read(Card.class, xml);
+            return importer.readCard(stream);
         } catch (Exception ex) {
             Log.e("Card", "Failed to deserialize", ex);
             throw new RuntimeException(ex);
         }
     }
 
+    @VisibleForTesting
+    public static Card fromXml(@NonNull Serializer serializer, String xml) {
+        try {
+            final XmlCardFormat s = new XmlCardFormat(serializer);
+            return s.readCard(xml);
+        } catch (Exception ex) {
+            Log.e("Card", "Failed to deserialize", ex);
+            throw new RuntimeException(ex);
+        }
+    }
+
+    public static Card fromXml(String xml) {
+        try {
+            ensureXml();
+            return sXmlCardFormat.readCard(xml);
+        } catch (Exception ex) {
+            Log.e("Card", "Failed to deserialize", ex);
+            throw new RuntimeException(ex);
+        }
+    }
+
+    public String toXml() {
+        try {
+            ensureXml();
+            return sXmlCardFormat.writeCard(this);
+        } catch (Exception ex) {
+            Log.e("Card", "Failed to serialize", ex);
+            throw new RuntimeException(ex);
+        }
+    }
+
+
     public String toXml(Serializer serializer) {
         try {
+            ensureXml();
+
             StringWriter writer = new StringWriter();
             serializer.write(this, writer);
             return writer.toString();

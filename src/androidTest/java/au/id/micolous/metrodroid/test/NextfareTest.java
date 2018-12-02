@@ -1,7 +1,7 @@
 /*
  * NextfareTest.java
  *
- * Copyright 2016-2017 Michael Farrell <micolous+git@gmail.com>
+ * Copyright 2016-2018 Michael Farrell <micolous+git@gmail.com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -22,11 +22,19 @@ import android.nfc.tech.MifareClassic;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.junit.runners.JUnit4;
+
+import java.util.Calendar;
+import java.util.TimeZone;
+
 import au.id.micolous.metrodroid.card.classic.ClassicBlock;
 import au.id.micolous.metrodroid.card.classic.ClassicCard;
 import au.id.micolous.metrodroid.card.classic.ClassicSector;
 import au.id.micolous.metrodroid.key.ClassicSectorKey;
-import au.id.micolous.metrodroid.transit.TransitData;
 import au.id.micolous.metrodroid.transit.lax_tap.LaxTapTransitData;
 import au.id.micolous.metrodroid.transit.msp_goto.MspGotoTransitData;
 import au.id.micolous.metrodroid.transit.nextfare.NextfareTransitData;
@@ -36,35 +44,30 @@ import au.id.micolous.metrodroid.transit.nextfare.record.NextfareTransactionReco
 import au.id.micolous.metrodroid.transit.seq_go.SeqGoTransitData;
 import au.id.micolous.metrodroid.util.Utils;
 
-import junit.framework.TestCase;
-
-import org.apache.commons.lang3.ArrayUtils;
-
-import java.util.Calendar;
-import java.util.TimeZone;
-
 import static au.id.micolous.metrodroid.util.Utils.UTC;
+import static junit.framework.TestCase.assertEquals;
+import static junit.framework.TestCase.assertNull;
+import static junit.framework.TestCase.assertTrue;
 
 /**
  * Tests relating to Cubic Nextfare reader.
  */
-
-public class NextfareTest extends TestCase {
+@RunWith(JUnit4.class)
+public class NextfareTest {
     private TimeZone originalTz;
 
-    @Override
-    protected void setUp() throws Exception {
-        super.setUp();
+    @Before
+    public void setUp() {
         originalTz = TimeZone.getDefault();
         TimeZone.setDefault(UTC);
     }
 
-    @Override
-    protected void tearDown() throws Exception {
-        super.tearDown();
+    @After
+    public void tearDown() {
         TimeZone.setDefault(originalTz);
     }
 
+    @Test
     public void testExpiryDate() {
         byte[] r20250602 = Utils.hexStringToByteArray("01030000c2320000010200000000bf0c");
         byte[] r20240925 = Utils.hexStringToByteArray("0103000039310000010200000000924a");
@@ -82,6 +85,7 @@ public class NextfareTest extends TestCase {
         assertEquals("2018-08-15 00:00", Utils.isoDateTimeFormat(r.getExpiry()));
     }
 
+    @Test
     public void testTransactionRecord() {
         byte[] rnull = Utils.hexStringToByteArray("01000000000000000000000000007f28");
 
@@ -90,6 +94,7 @@ public class NextfareTest extends TestCase {
         assertNull(r);
     }
 
+    @Test
     public void testBalanceRecord() {
         // This tests the offset negative flag in seq_go.
         // NOTE: These records are synthetic and incomplete, but representative for the tests.
@@ -159,6 +164,7 @@ public class NextfareTest extends TestCase {
         return new ClassicCard(uid, Calendar.getInstance(), sectors);
     }
 
+    @Test
     public void testSeqGo() {
         // 0160 0012 3456 7893
         // This is a fake card number.
@@ -177,6 +183,7 @@ public class NextfareTest extends TestCase {
         assertEquals("0160 0098 7654 3213", d.getSerialNumber());
     }
 
+    @Test
     public void testLaxTap() {
         // 0160 0323 4663 8769
         // This is a fake card number (323.GO.METRO)
@@ -187,6 +194,7 @@ public class NextfareTest extends TestCase {
         assertEquals("0160 0323 4663 8769", d.getSerialNumber());
     }
 
+    @Test
     public void testMspGoTo() {
         // 0160 0112 3581 3212
         // This is a fake card number
