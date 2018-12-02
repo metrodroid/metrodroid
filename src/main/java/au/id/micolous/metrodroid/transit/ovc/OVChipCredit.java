@@ -64,7 +64,8 @@ public class OVChipCredit implements Parcelable {
         banbits = Utils.getBitsFromBuffer(data, 0, 9);
         id = Utils.getBitsFromBuffer(data, 9, 12);
         creditId = Utils.getBitsFromBuffer(data, 56, 12);
-        credit = Utils.getBitsFromBufferSigned(data, 77, 16);
+        // Sign bit is inverted. Xoring is to compensate
+        credit = Utils.getBitsFromBufferSigned(data, 77, 16) ^ ~0x7fff;
 
         mId = id;
         mCreditId = creditId;
