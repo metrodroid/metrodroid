@@ -23,6 +23,7 @@ import android.os.Parcelable;
 import android.support.annotation.NonNull;
 
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 import au.id.micolous.farebot.R;
@@ -57,7 +58,7 @@ public class BlankUltralightTransitData extends TransitData {
         @NonNull
         @Override
         public List<CardInfo> getAllCards() {
-            return null;
+            return Collections.emptyList();
         }
 
         /**

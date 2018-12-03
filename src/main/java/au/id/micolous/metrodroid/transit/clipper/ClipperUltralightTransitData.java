@@ -63,7 +63,7 @@ public class ClipperUltralightTransitData extends TransitData {
         @Override
         public List<CardInfo> getAllCards() {
             // Desfire variant already adds it to supported cards
-            return null;
+            return Collections.emptyList();
         }
 
         @Override

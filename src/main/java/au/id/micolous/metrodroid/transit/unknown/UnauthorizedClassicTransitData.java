@@ -21,6 +21,7 @@ package au.id.micolous.metrodroid.transit.unknown;
 import android.os.Parcel;
 import android.support.annotation.NonNull;
 
+import java.util.Collections;
 import java.util.List;
 
 import au.id.micolous.farebot.R;
@@ -55,7 +56,7 @@ public class UnauthorizedClassicTransitData extends UnauthorizedTransitData {
         @NonNull
         @Override
         public List<CardInfo> getAllCards() {
-            return null;
+            return Collections.emptyList();
         }
 
         /**

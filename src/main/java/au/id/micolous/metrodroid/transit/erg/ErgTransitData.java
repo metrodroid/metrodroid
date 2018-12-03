@@ -218,7 +218,7 @@ public class ErgTransitData extends TransitData {
         @NonNull
         @Override
         public List<CardInfo> getAllCards() {
-            return null;
+            return Collections.emptyList();
         }
     }
 

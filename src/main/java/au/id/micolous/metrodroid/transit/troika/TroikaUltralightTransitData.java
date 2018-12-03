@@ -57,7 +57,7 @@ public class TroikaUltralightTransitData extends TransitData {
         @Override
         public List<CardInfo> getAllCards() {
             // Already added by Classic variant
-            return null;
+            return Collections.emptyList();
         }
 
         @Override

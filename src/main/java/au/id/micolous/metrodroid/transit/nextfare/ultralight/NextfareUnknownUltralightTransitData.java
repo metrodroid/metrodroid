@@ -22,6 +22,7 @@ import android.os.Parcel;
 import android.os.Parcelable;
 import android.support.annotation.NonNull;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.TimeZone;
 
@@ -56,7 +57,7 @@ public class NextfareUnknownUltralightTransitData extends NextfareUltralightTran
         @NonNull
         @Override
         public List<CardInfo> getAllCards() {
-            return null;
+            return Collections.emptyList();
         }
 
         @Override
