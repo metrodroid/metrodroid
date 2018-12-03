@@ -3,8 +3,6 @@ package au.id.micolous.metrodroid.card;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
-import com.google.common.collect.Iterators;
-
 import org.apache.commons.io.IOUtils;
 
 import java.io.InputStream;
@@ -13,6 +11,8 @@ import java.io.Reader;
 import java.io.StringReader;
 import java.nio.charset.Charset;
 import java.util.Iterator;
+
+import au.id.micolous.metrodroid.util.Utils;
 
 /**
  * Interface for writing card data importers.
@@ -43,7 +43,7 @@ public interface CardImporter<T extends Card> {
         if (card == null) {
             return null;
         } else {
-            return Iterators.singletonIterator(card);
+            return Utils.singletonIterator(card);
         }
     }
 
@@ -94,7 +94,7 @@ public interface CardImporter<T extends Card> {
             if (card == null) {
                 return null;
             } else {
-                return Iterators.singletonIterator(card);
+                return Utils.singletonIterator(card);
             }
         }
 

@@ -23,16 +23,17 @@ import android.database.Cursor
 import java.io.Closeable
 import java.util.NoSuchElementException
 
+/**
+ * CursorIterator gives [Iterator] semantics to [Cursor].
+ *
+ * Note: This doesn't guard calling [Cursor.moveToNext] or other similar methods that move the
+ * [Cursor] position.
+ */
 class CursorIterator(private val mCursor: Cursor) : Iterator<Cursor>, Closeable {
     private val mMovedToNext: Boolean = false
 
-    override fun close() {
-        mCursor.close()
-    }
-
-    override fun hasNext(): Boolean {
-        return !mCursor.isLast
-    }
+    override fun close() = mCursor.close()
+    override fun hasNext() = !mCursor.isLast
 
     override fun next(): Cursor {
         return if (mCursor.moveToNext()) {

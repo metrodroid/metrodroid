@@ -75,9 +75,12 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Collections;
 import java.util.GregorianCalendar;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
+import java.util.Set;
 import java.util.TimeZone;
 
 import javax.xml.transform.OutputKeys;
@@ -1138,5 +1141,20 @@ public class Utils {
         }
         clipboard.setPrimaryClip(data);
         Toast.makeText(context, R.string.copied_to_clipboard, Toast.LENGTH_SHORT).show();
+    }
+
+    /**
+     * Returns an Iterator which emits a single element. This defers implementation to
+     * {@link Collections#singleton(Object)} implementation of {@link Set#iterator()}.
+     *
+     * This is similar to Guice's Iterators.singletonIterator method.
+     *
+     * @param singleton The single element to return.
+     * @param <T> The type of the singleton.
+     * @return An iterator that returns singleton once.
+     */
+    @NonNull
+    public static <T> Iterator<T> singletonIterator(@NonNull T singleton) {
+        return Collections.singleton(singleton).iterator();
     }
 }

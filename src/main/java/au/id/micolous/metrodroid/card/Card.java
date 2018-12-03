@@ -26,31 +26,27 @@ import android.support.annotation.Nullable;
 import android.support.annotation.VisibleForTesting;
 import android.util.Log;
 
+import org.apache.commons.lang3.ArrayUtils;
+import org.simpleframework.xml.Attribute;
+import org.simpleframework.xml.Serializer;
+
+import java.io.InputStream;
+import java.io.StringWriter;
+import java.util.Calendar;
+import java.util.List;
+import java.util.Locale;
+
 import au.id.micolous.farebot.R;
-import au.id.micolous.metrodroid.card.iso7816.ISO7816Card;
 import au.id.micolous.metrodroid.card.classic.ClassicCard;
 import au.id.micolous.metrodroid.card.desfire.DesfireCard;
 import au.id.micolous.metrodroid.card.felica.FelicaCard;
+import au.id.micolous.metrodroid.card.iso7816.ISO7816Card;
 import au.id.micolous.metrodroid.card.ultralight.UltralightCard;
 import au.id.micolous.metrodroid.transit.TransitData;
 import au.id.micolous.metrodroid.transit.TransitIdentity;
 import au.id.micolous.metrodroid.ui.ListItem;
 import au.id.micolous.metrodroid.util.Utils;
 import au.id.micolous.metrodroid.xml.HexString;
-
-import org.apache.commons.lang3.ArrayUtils;
-import org.simpleframework.xml.Attribute;
-import org.simpleframework.xml.Serializer;
-import org.xmlpull.v1.XmlSerializer;
-
-import java.io.InputStream;
-import java.io.StringReader;
-import java.io.StringWriter;
-import java.util.Calendar;
-import java.util.List;
-import java.util.Locale;
-
-import javax.xml.parsers.ParserConfigurationException;
 
 public abstract class Card {
     private static String TAG = Card.class.getName();
@@ -137,7 +133,7 @@ public abstract class Card {
 
     private static XmlCardFormat sXmlCardFormat = null;
 
-    private static void ensureXml() throws ParserConfigurationException {
+    private static void ensureXml() {
         if (sXmlCardFormat == null) {
             sXmlCardFormat = new XmlCardFormat();
         }
