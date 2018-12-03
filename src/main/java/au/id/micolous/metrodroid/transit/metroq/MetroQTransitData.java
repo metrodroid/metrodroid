@@ -158,6 +158,7 @@ public class MetroQTransitData extends TransitData {
             return new MetroQTransitData(classicCard);
         }
 
+        @NonNull
         @Override
         public List<CardInfo> getAllCards() {
             return Collections.singletonList(CARD_INFO);

@@ -1,16 +1,18 @@
 package au.id.micolous.metrodroid.card.calypso;
 
+import android.support.annotation.NonNull;
+
 import au.id.micolous.metrodroid.transit.CardInfo;
 import au.id.micolous.metrodroid.transit.CardTransitFactory;
-import au.id.micolous.metrodroid.transit.TransitData;
-import au.id.micolous.metrodroid.transit.TransitIdentity;
 
-public abstract class CalypsoCardTransitFactory extends CardTransitFactory {
-    public abstract boolean check(byte[] tenv);
+public interface CalypsoCardTransitFactory extends CardTransitFactory<CalypsoApplication> {
+    @Override
+    default boolean check(@NonNull CalypsoApplication card) {
+        final byte[] tenv = card.getTicketEnv();
+        return check(tenv);
+    }
 
-    public abstract CardInfo getCardInfo(byte[] tenv);
+    boolean check(byte[] tenv);
 
-    public abstract TransitData parseTransitData(CalypsoApplication calypsoApplication);
-
-    public abstract TransitIdentity parseTransitIdentity(CalypsoApplication calypsoApplication);
+    CardInfo getCardInfo(byte[] tenv);
 }

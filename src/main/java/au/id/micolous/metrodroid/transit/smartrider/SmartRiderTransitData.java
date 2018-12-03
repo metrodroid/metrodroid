@@ -155,6 +155,7 @@ public class SmartRiderTransitData extends TransitData {
             return new TransitIdentity(detectKeyType(card).getFriendlyName(), getSerialData(card));
         }
 
+        @NonNull
         @Override
         public List<CardInfo> getAllCards() {
             return Arrays.asList(MYWAY_CARD_INFO, SMARTRIDER_CARD_INFO);

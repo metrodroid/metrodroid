@@ -1,15 +1,14 @@
 package au.id.micolous.metrodroid.card.felica;
 
-import java.util.Collections;
+import android.support.annotation.NonNull;
+
 import java.util.List;
 
 import au.id.micolous.metrodroid.transit.CardInfo;
 import au.id.micolous.metrodroid.transit.CardTransitFactory;
-import au.id.micolous.metrodroid.transit.TransitData;
-import au.id.micolous.metrodroid.transit.TransitIdentity;
 
-abstract public class FelicaCardTransitFactory extends CardTransitFactory {
-    public boolean check(FelicaCard felicaCard) {
+public interface FelicaCardTransitFactory extends CardTransitFactory<FelicaCard> {
+    default boolean check(@NonNull FelicaCard felicaCard) {
         List<FelicaSystem> systems = felicaCard.getSystems();
         int syslen = systems.size();
         int[] appIds = new int[syslen];
@@ -19,23 +18,9 @@ abstract public class FelicaCardTransitFactory extends CardTransitFactory {
         return earlyCheck(appIds);
     }
 
-    public abstract TransitData parseTransitData(FelicaCard felicaCard);
+    boolean earlyCheck(int[] systemCodes);
 
-    public abstract TransitIdentity parseTransitIdentity(FelicaCard felicaCard);
-
-    public abstract boolean earlyCheck(int[] systemCodes);
-
-    public CardInfo getCardInfo(int[] systemCodes) {
-        return getCardInfo();
+    default CardInfo getCardInfo(int[] systemCodes) {
+        return getAllCards().get(0);
     }
-
-    @Override
-    public List<CardInfo> getAllCards() {
-        CardInfo ci = getCardInfo();
-        if (ci == null)
-            return null;
-        return Collections.singletonList(ci);
-    }
-
-    protected abstract CardInfo getCardInfo();
 }

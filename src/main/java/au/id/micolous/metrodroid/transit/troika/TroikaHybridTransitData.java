@@ -194,6 +194,7 @@ public class TroikaHybridTransitData extends TransitData {
             return null;
         }
 
+        @NonNull
         @Override
         public List<CardInfo> getAllCards() {
             return Collections.singletonList(TroikaTransitData.CARD_INFO);

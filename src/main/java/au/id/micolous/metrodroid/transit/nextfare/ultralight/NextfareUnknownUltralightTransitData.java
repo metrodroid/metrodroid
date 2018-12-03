@@ -20,6 +20,7 @@ package au.id.micolous.metrodroid.transit.nextfare.ultralight;
 
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.support.annotation.NonNull;
 
 import java.util.List;
 import java.util.TimeZone;
@@ -52,13 +53,14 @@ public class NextfareUnknownUltralightTransitData extends NextfareUltralightTran
     static final TimeZone TZ = TimeZone.getTimeZone("UTC");
 
     public final static UltralightCardTransitFactory FACTORY = new UltralightCardTransitFactory() {
+        @NonNull
         @Override
         public List<CardInfo> getAllCards() {
             return null;
         }
 
         @Override
-        public boolean check(UltralightCard card) {
+        public boolean check(@NonNull UltralightCard card) {
             try {
                 int head = Utils.byteArrayToInt(card.getPage(4).getData(), 0, 3);
                 return head == 0x0a0400 || head == 0x0a0800;
@@ -69,12 +71,12 @@ public class NextfareUnknownUltralightTransitData extends NextfareUltralightTran
         }
 
         @Override
-        public TransitData parseTransitData(UltralightCard ultralightCard) {
+        public TransitData parseTransitData(@NonNull UltralightCard ultralightCard) {
             return new NextfareUnknownUltralightTransitData(ultralightCard);
         }
 
         @Override
-        public TransitIdentity parseTransitIdentity(UltralightCard card) {
+        public TransitIdentity parseTransitIdentity(@NonNull UltralightCard card) {
             return new TransitIdentity(NAME, formatSerial(getSerial(card)));
         }
     };

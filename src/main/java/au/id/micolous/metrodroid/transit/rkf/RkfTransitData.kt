@@ -128,7 +128,7 @@ data class RkfTransitData internal constructor (
                         .build()
         )
 
-        val FACTORY = object : ClassicCardTransitFactory() {
+        val FACTORY = object : ClassicCardTransitFactory {
             override fun earlyCardInfo(sectors: MutableList<ClassicSector>): CardInfo? {
                 val sector0 = sectors[0]
                 if (!check(sector0))

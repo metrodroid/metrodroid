@@ -149,6 +149,7 @@ public class KievTransitData extends TransitData {
             return 2;
         }
 
+        @NonNull
         @Override
         public List<CardInfo> getAllCards() {
             return Collections.singletonList(CARD_INFO);

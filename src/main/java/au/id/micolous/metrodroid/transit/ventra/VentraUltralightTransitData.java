@@ -20,6 +20,7 @@ package au.id.micolous.metrodroid.transit.ventra;
 
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.support.annotation.NonNull;
 
 import java.util.Collections;
 import java.util.List;
@@ -62,13 +63,14 @@ public class VentraUltralightTransitData extends NextfareUltralightTransitData {
     static final TimeZone TZ = TimeZone.getTimeZone("America/Chicago");
 
     public final static UltralightCardTransitFactory FACTORY = new UltralightCardTransitFactory() {
+        @NonNull
         @Override
         public List<CardInfo> getAllCards() {
             return Collections.singletonList(CARD_INFO);
         }
 
         @Override
-        public boolean check(UltralightCard card) {
+        public boolean check(@NonNull UltralightCard card) {
             try {
                 int head = Utils.byteArrayToInt(card.getPage(4).getData(), 0, 3);
                 if (head != 0x0a0400 && head != 0x0a0800)
@@ -85,12 +87,12 @@ public class VentraUltralightTransitData extends NextfareUltralightTransitData {
         }
 
         @Override
-        public TransitData parseTransitData(UltralightCard ultralightCard) {
+        public TransitData parseTransitData(@NonNull UltralightCard ultralightCard) {
             return new VentraUltralightTransitData(ultralightCard);
         }
 
         @Override
-        public TransitIdentity parseTransitIdentity(UltralightCard card) {
+        public TransitIdentity parseTransitIdentity(@NonNull UltralightCard card) {
             return new TransitIdentity(NAME, formatSerial(getSerial(card)));
         }
     };

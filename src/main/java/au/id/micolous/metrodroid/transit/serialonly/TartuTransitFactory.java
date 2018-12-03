@@ -48,7 +48,7 @@ import au.id.micolous.metrodroid.util.Utils;
  * <p>
  * Documentation of format: https://github.com/micolous/metrodroid/wiki/TartuBus
  */
-public class TartuTransitFactory extends ClassicCardTransitFactory {
+public class TartuTransitFactory implements ClassicCardTransitFactory {
     public static final String NAME = "Tartu Bus";
 
     public static final CardInfo CARD_INFO = new CardInfo.Builder()
@@ -95,6 +95,7 @@ public class TartuTransitFactory extends ClassicCardTransitFactory {
         return new TartuTransitData(classicCard);
     }
 
+    @NonNull
     @Override
     public List<CardInfo> getAllCards() {
         return Collections.singletonList(CARD_INFO);

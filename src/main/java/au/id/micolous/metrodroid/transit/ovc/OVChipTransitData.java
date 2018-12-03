@@ -245,6 +245,7 @@ public class OVChipTransitData extends TransitData {
             return 1;
         }
 
+        @NonNull
         @Override
         public List<CardInfo> getAllCards() {
             return Collections.singletonList(CARD_INFO);

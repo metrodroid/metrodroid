@@ -266,7 +266,7 @@ public class NextfareTransitData extends TransitData {
         mTrips = trips;
     }
 
-    protected static class NextFareTransitFactory extends ClassicCardTransitFactory {
+    protected static class NextFareTransitFactory implements ClassicCardTransitFactory {
         @Override
         public boolean check(@NonNull ClassicCard card) {
             try {
@@ -297,6 +297,7 @@ public class NextfareTransitData extends TransitData {
             return new NextfareTransitData(classicCard);
         }
 
+        @NonNull
         @Override
         public List<CardInfo> getAllCards() {
             return null;

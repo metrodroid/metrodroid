@@ -107,18 +107,19 @@ public class IstanbulKartTransitData extends SerialOnlyTransitData {
             return ArrayUtils.contains(appIds, APP_ID);
         }
 
+        @NonNull
         @Override
-        protected CardInfo getCardInfo() {
-            return CARD_INFO;
+        public List<CardInfo> getAllCards() {
+            return Collections.singletonList(CARD_INFO);
         }
 
         @Override
-        public TransitData parseTransitData(DesfireCard desfireCard) {
+        public TransitData parseTransitData(@NonNull DesfireCard desfireCard) {
             return new IstanbulKartTransitData(desfireCard);
         }
 
         @Override
-        public TransitIdentity parseTransitIdentity(DesfireCard card) {
+        public TransitIdentity parseTransitIdentity(@NonNull DesfireCard card) {
             byte[] data = card.getApplication(APP_ID).getFile(2).getData();
             return new TransitIdentity(NAME, formatSerial(parseSerial(data)));
         }

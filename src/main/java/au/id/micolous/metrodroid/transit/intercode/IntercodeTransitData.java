@@ -252,6 +252,7 @@ public class IntercodeTransitData extends Calypso1545TransitData {
     }
 
     public final static CalypsoCardTransitFactory FACTORY = new CalypsoCardTransitFactory() {
+        @NonNull
         @Override
         public List<CardInfo> getAllCards() {
             List<CardInfo> li = new ArrayList<>();

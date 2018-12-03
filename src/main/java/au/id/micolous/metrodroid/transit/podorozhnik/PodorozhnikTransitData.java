@@ -301,6 +301,7 @@ public class PodorozhnikTransitData extends TransitData {
             return 5;
         }
 
+        @NonNull
         @Override
         public List<CardInfo> getAllCards() {
             return Collections.singletonList(CARD_INFO);

@@ -155,7 +155,7 @@ public class ErgTransitData extends TransitData {
         mTrips = trips;
     }
 
-    protected static class ErgTransitFactory extends ClassicCardTransitFactory {
+    protected static class ErgTransitFactory implements ClassicCardTransitFactory {
         /**
          * ERG cards have two identifying marks:
          * <p>
@@ -215,6 +215,7 @@ public class ErgTransitData extends TransitData {
         }
 
         // Specific readers add their CardInfo
+        @NonNull
         @Override
         public List<CardInfo> getAllCards() {
             return null;

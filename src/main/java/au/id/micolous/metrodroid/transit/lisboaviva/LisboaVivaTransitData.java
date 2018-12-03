@@ -22,6 +22,7 @@ package au.id.micolous.metrodroid.transit.lisboaviva;
 import android.os.Build;
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.support.annotation.NonNull;
 
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
@@ -122,13 +123,14 @@ public class LisboaVivaTransitData extends Calypso1545TransitData {
     }
 
     public final static CalypsoCardTransitFactory FACTORY = new CalypsoCardTransitFactory() {
+        @NonNull
         @Override
         public List<CardInfo> getAllCards() {
             return Collections.singletonList(CARD_INFO);
         }
 
         @Override
-        public TransitIdentity parseTransitIdentity(CalypsoApplication card) {
+        public TransitIdentity parseTransitIdentity(@NonNull CalypsoApplication card) {
             return new TransitIdentity(NAME, getSerial(card));
         }
 
@@ -147,7 +149,7 @@ public class LisboaVivaTransitData extends Calypso1545TransitData {
         }
 
         @Override
-        public LisboaVivaTransitData parseTransitData(CalypsoApplication card) {
+        public LisboaVivaTransitData parseTransitData(@NonNull CalypsoApplication card) {
             return new LisboaVivaTransitData(card);
         }
     };

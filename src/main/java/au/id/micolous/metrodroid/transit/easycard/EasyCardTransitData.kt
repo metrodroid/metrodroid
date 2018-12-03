@@ -89,7 +89,7 @@ data class EasyCardTransitData internal constructor(
             return g
         }
 
-        val FACTORY = object: ClassicCardTransitFactory() {
+        val FACTORY = object: ClassicCardTransitFactory {
             override fun check(card: ClassicCard): Boolean {
                 val data: ByteArray? = try {
                     (card.getSector(0))?.getBlock(1)?.data

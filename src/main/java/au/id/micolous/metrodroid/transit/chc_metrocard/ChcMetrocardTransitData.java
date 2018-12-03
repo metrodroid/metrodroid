@@ -129,6 +129,7 @@ public class ChcMetrocardTransitData extends ErgTransitData {
             return 1;
         }
 
+        @NonNull
         @Override
         public List<CardInfo> getAllCards() {
             return Collections.singletonList(CARD_INFO);

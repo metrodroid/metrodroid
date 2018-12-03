@@ -25,6 +25,7 @@
 package au.id.micolous.metrodroid.transit.orca;
 
 import android.os.Parcel;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
 import au.id.micolous.farebot.R;
@@ -46,6 +47,7 @@ import au.id.micolous.metrodroid.util.Utils;
 import org.apache.commons.lang3.ArrayUtils;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class OrcaTransitData extends TransitData {
@@ -119,18 +121,19 @@ public class OrcaTransitData extends TransitData {
             return ArrayUtils.contains(appIds, APP_ID);
         }
 
+        @NonNull
         @Override
-        public CardInfo getCardInfo() {
-            return CARD_INFO;
+        public List<CardInfo> getAllCards() {
+            return Collections.singletonList(CARD_INFO);
         }
 
         @Override
-        public TransitData parseTransitData(DesfireCard desfireCard) {
+        public TransitData parseTransitData(@NonNull DesfireCard desfireCard) {
             return new OrcaTransitData(desfireCard);
         }
 
         @Override
-        public TransitIdentity parseTransitIdentity(DesfireCard card) {
+        public TransitIdentity parseTransitIdentity(@NonNull DesfireCard card) {
             try {
                 byte[] data = card.getApplication(0xffffff).getFile(0x0f).getData();
                 return new TransitIdentity("ORCA", String.valueOf(Utils.byteArrayToInt(data, 4, 4)));

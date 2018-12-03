@@ -126,6 +126,7 @@ public class ManlyFastFerryTransitData extends ErgTransitData {
             return null;
         }
 
+        @NonNull
         @Override
         public List<CardInfo> getAllCards() {
             return Collections.singletonList(CARD_INFO);

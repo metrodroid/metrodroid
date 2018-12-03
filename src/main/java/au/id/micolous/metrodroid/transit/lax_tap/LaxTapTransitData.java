@@ -141,6 +141,7 @@ public class LaxTapTransitData extends NextfareTransitData {
             return null;
         }
 
+        @NonNull
         @Override
         public List<CardInfo> getAllCards() {
             return Collections.singletonList(CARD_INFO);

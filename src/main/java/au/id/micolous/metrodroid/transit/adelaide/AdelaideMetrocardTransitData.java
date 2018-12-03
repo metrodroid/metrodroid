@@ -21,11 +21,13 @@ package au.id.micolous.metrodroid.transit.adelaide;
 
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.support.annotation.NonNull;
 
 import org.apache.commons.lang3.ArrayUtils;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
 
@@ -144,7 +146,7 @@ public class AdelaideMetrocardTransitData extends En1545TransitData {
 
     public final static DesfireCardTransitFactory FACTORY = new DesfireCardTransitFactory() {
         @Override
-        public TransitIdentity parseTransitIdentity(DesfireCard card) {
+        public TransitIdentity parseTransitIdentity(@NonNull DesfireCard card) {
             return new TransitIdentity(NAME, formatSerial(getSerial(card.getTagId())));
         }
 
@@ -153,13 +155,15 @@ public class AdelaideMetrocardTransitData extends En1545TransitData {
             return ArrayUtils.contains(appIds, APP_ID);
         }
 
+
+        @NonNull
         @Override
-        public CardInfo getCardInfo() {
-            return CARD_INFO;
+        public List<CardInfo> getAllCards() {
+            return Collections.singletonList(CARD_INFO);
         }
 
         @Override
-        public TransitData parseTransitData(DesfireCard desfireCard) {
+        public TransitData parseTransitData(@NonNull DesfireCard desfireCard) {
             return new AdelaideMetrocardTransitData(desfireCard);
         }
     };

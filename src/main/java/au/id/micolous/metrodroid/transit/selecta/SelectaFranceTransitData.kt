@@ -65,7 +65,7 @@ data class SelectaFranceTransitData (private var mBalance: Int = 0,
 
         private fun getSerial(card: ClassicCard): Int = Utils.byteArrayToInt(card.getSector(1).getBlock(0).data, 13, 3)
 
-        val FACTORY: ClassicCardTransitFactory = object : ClassicCardTransitFactory() {
+        val FACTORY: ClassicCardTransitFactory = object : ClassicCardTransitFactory {
             override fun check(card: ClassicCard): Boolean = try {
                     check(card.getSector(0))
                 } catch (ignored: IndexOutOfBoundsException) {

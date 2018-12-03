@@ -544,7 +544,7 @@ public class ClassicCard extends Card {
         return li;
     }
 
-    private static class FallbackFactory extends ClassicCardTransitFactory {
+    private static class FallbackFactory implements ClassicCardTransitFactory {
         @Override
         public boolean check(@NonNull ClassicCard classicCard) {
             String fallback = MetrodroidApplication.getMfcFallbackReader();
@@ -577,6 +577,7 @@ public class ClassicCard extends Card {
             return null;
         }
 
+        @NonNull
         @Override
         public List<CardInfo> getAllCards() {
             return null;

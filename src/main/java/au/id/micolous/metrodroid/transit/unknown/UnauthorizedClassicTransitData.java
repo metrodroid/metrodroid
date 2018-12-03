@@ -52,6 +52,7 @@ public class UnauthorizedClassicTransitData extends UnauthorizedTransitData {
     }
 
     public static final ClassicCardTransitFactory FACTORY = new ClassicCardTransitFactory() {
+        @NonNull
         @Override
         public List<CardInfo> getAllCards() {
             return null;

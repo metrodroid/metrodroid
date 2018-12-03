@@ -21,6 +21,7 @@ package au.id.micolous.metrodroid.transit.ravkav;
 
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.support.annotation.NonNull;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -90,13 +91,14 @@ public class RavKavTransitData extends Calypso1545TransitData {
     }
 
     public final static CalypsoCardTransitFactory FACTORY = new CalypsoCardTransitFactory() {
+        @NonNull
         @Override
         public List<CardInfo> getAllCards() {
             return Collections.singletonList(CARD_INFO);
         }
 
         @Override
-        public TransitIdentity parseTransitIdentity(CalypsoApplication card) {
+        public TransitIdentity parseTransitIdentity(@NonNull CalypsoApplication card) {
             return new TransitIdentity(Utils.localizeString(R.string.card_name_ravkav), getSerial(card));
         }
 
@@ -116,7 +118,7 @@ public class RavKavTransitData extends Calypso1545TransitData {
         }
 
         @Override
-        public RavKavTransitData parseTransitData(CalypsoApplication card) {
+        public RavKavTransitData parseTransitData(@NonNull CalypsoApplication card) {
             return new RavKavTransitData(card);
         }
     };

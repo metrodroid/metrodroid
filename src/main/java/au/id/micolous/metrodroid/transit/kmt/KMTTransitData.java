@@ -20,11 +20,13 @@
 package au.id.micolous.metrodroid.transit.kmt;
 
 import android.os.Parcel;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
 import org.apache.commons.lang3.ArrayUtils;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.TimeZone;
@@ -129,18 +131,19 @@ public class KMTTransitData extends TransitData {
             return ArrayUtils.contains(systemCodes, SYSTEMCODE_KMT);
         }
 
+        @NonNull
         @Override
-        protected CardInfo getCardInfo() {
-            return CARD_INFO;
+        public List<CardInfo> getAllCards() {
+            return Collections.singletonList(CARD_INFO);
         }
 
         @Override
-        public TransitData parseTransitData(FelicaCard felicaCard) {
+        public TransitData parseTransitData(@NonNull FelicaCard felicaCard) {
             return new KMTTransitData(felicaCard);
         }
 
         @Override
-        public TransitIdentity parseTransitIdentity(FelicaCard card) {
+        public TransitIdentity parseTransitIdentity(@NonNull FelicaCard card) {
             FelicaService serviceID = card.getSystem(SYSTEMCODE_KMT).getService(FELICA_SERVICE_KMT_ID);
             String serialNumber = "-";
             if (serviceID != null) {
