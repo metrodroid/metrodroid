@@ -25,9 +25,6 @@ import org.junit.Test;
 
 import au.id.micolous.metrodroid.transit.TransitCurrency;
 
-import static au.id.micolous.metrodroid.test.TestUtils.assertSpannedEquals;
-import static au.id.micolous.metrodroid.test.TestUtils.assertSpannedThat;
-import static au.id.micolous.metrodroid.test.TestUtils.assertTtsMarkers;
 import static junit.framework.TestCase.assertEquals;
 
 /**

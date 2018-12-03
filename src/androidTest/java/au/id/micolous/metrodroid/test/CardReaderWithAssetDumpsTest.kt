@@ -1,12 +1,10 @@
 package au.id.micolous.metrodroid.test
 
-import androidx.test.runner.AndroidJUnit4
 import au.id.micolous.metrodroid.card.Card
 import au.id.micolous.metrodroid.card.CardImporter
 import au.id.micolous.metrodroid.transit.TransitData
 import junit.framework.TestCase.assertNotNull
 import junit.framework.TestCase.assertTrue
-import org.junit.runner.RunWith
 
 /**
  * Base class for building tests that need Assets data:
@@ -21,8 +19,6 @@ import org.junit.runner.RunWith
  * @param transitDataClass A reference to the [TransitData] implementation, to survive type erasure.
  * @param importer A reference to a [CardImporter] which produces [C].
  */
-@RunWith(AndroidJUnit4::class)
-
 abstract class CardReaderWithAssetDumpsTest<TD : TransitData, C : Card>(
         private val transitDataClass: Class<TD>,
         private val importer: CardImporter<C>

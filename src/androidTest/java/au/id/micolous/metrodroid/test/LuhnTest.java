@@ -19,6 +19,8 @@
 package au.id.micolous.metrodroid.test;
 
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.junit.runners.JUnit4;
 
 import static au.id.micolous.metrodroid.util.Utils.calculateLuhn;
 import static au.id.micolous.metrodroid.util.Utils.validateLuhn;
@@ -27,6 +29,7 @@ import static junit.framework.TestCase.*;
 /**
  * Testing the Luhn checksum calculator
  */
+@RunWith(JUnit4.class)
 public class LuhnTest {
     @Test
     public void testValidation() {

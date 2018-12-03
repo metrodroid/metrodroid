@@ -3,11 +3,16 @@ package au.id.micolous.metrodroid.test
 import android.content.Context
 import android.content.res.AssetManager
 import android.os.Build
+import android.text.Spanned
+import android.text.style.TtsSpan
+import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.platform.app.InstrumentationRegistry
-import androidx.test.runner.AndroidJUnit4
 import au.id.micolous.metrodroid.MetrodroidApplication
 import au.id.micolous.metrodroid.util.ImmutableMapBuilder
+import junit.framework.TestCase.assertEquals
 import org.apache.commons.lang3.ArrayUtils
+import org.hamcrest.Matcher
+import org.hamcrest.MatcherAssert.assertThat
 import org.junit.runner.RunWith
 import java.io.DataInputStream
 import java.io.IOException
@@ -16,9 +21,8 @@ import java.util.*
 
 @RunWith(AndroidJUnit4::class)
 abstract class BaseInstrumentedTest {
-    fun getContext() : Context {
-        return InstrumentationRegistry.getInstrumentation().context
-    }
+    val context : Context
+            get() = InstrumentationRegistry.getInstrumentation().context
 
     /**
      * Sets the Android and Java locales to a different language
@@ -30,7 +34,7 @@ abstract class BaseInstrumentedTest {
     fun setLocale(languageTag: String) {
         val l = compatLocaleForLanguageTag(languageTag)
         Locale.setDefault(l)
-        val r = getContext().resources
+        val r = context.resources
         val c = r.configuration
         c.setLocale(l)
         r.updateConfiguration(c, r.displayMetrics)
@@ -57,7 +61,7 @@ abstract class BaseInstrumentedTest {
     }
 
     fun loadAsset(path: String) : InputStream {
-        return DataInputStream(getContext().assets.open(path, AssetManager.ACCESS_RANDOM))
+        return DataInputStream(context.assets.open(path, AssetManager.ACCESS_RANDOM))
     }
 
     fun loadSmallAssetBytes(path: String): ByteArray {
@@ -72,6 +76,32 @@ abstract class BaseInstrumentedTest {
 
         // Return truncated buffer
         return ArrayUtils.subarray(out, 0, realLen)
+    }
+
+    fun assertSpannedEquals(expected: String, actual: Spanned) {
+        // nbsp -> sp
+        val actualString = actual.toString().replace(' ', ' ')
+        assertEquals(expected, actualString)
+    }
+
+    fun assertSpannedThat(actual: Spanned, matcher: Matcher<in String>) {
+        // nbsp -> sp
+        val actualString = actual.toString().replace(' ', ' ')
+        assertThat<String>(actualString, matcher)
+    }
+
+    fun assertTtsMarkers(currencyCode: String, value: String, span: Spanned) {
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
+            return
+        }
+
+        val ttsSpans = span.getSpans(0, span.length, TtsSpan::class.java)
+        assertEquals(1, ttsSpans.size)
+
+        assertEquals(TtsSpan.TYPE_MONEY, ttsSpans[0].type)
+        val bundle = ttsSpans[0].args
+        assertEquals(currencyCode, bundle.getString(TtsSpan.ARG_CURRENCY))
+        assertEquals(value, bundle.getString(TtsSpan.ARG_INTEGER_PART))
     }
 
     companion object {

@@ -18,6 +18,14 @@
  */
 package au.id.micolous.metrodroid.test;
 
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.junit.runners.JUnit4;
+
+import java.util.Calendar;
+import java.util.GregorianCalendar;
+import java.util.TimeZone;
+
 import au.id.micolous.metrodroid.card.Card;
 import au.id.micolous.metrodroid.card.classic.ClassicBlock;
 import au.id.micolous.metrodroid.card.classic.ClassicCard;
@@ -37,21 +45,17 @@ import au.id.micolous.metrodroid.transit.unknown.UnauthorizedDesfireTransitData;
 import au.id.micolous.metrodroid.transit.unknown.UnauthorizedUltralightTransitData;
 import au.id.micolous.metrodroid.util.Utils;
 
-import junit.framework.TestCase;
+import static junit.framework.TestCase.assertEquals;
+import static junit.framework.TestCase.assertFalse;
+import static junit.framework.TestCase.assertTrue;
 
-import org.simpleframework.xml.Serializer;
-
-import java.util.Calendar;
-import java.util.GregorianCalendar;
-import java.util.TimeZone;
-
-import au.id.micolous.metrodroid.MetrodroidApplication;
 
 /**
  * Generic card tests
  */
-
-public class CardTest extends TestCase {
+@RunWith(JUnit4.class)
+public class CardTest {
+    @Test
     public void testXmlSerialiser() {
         Calendar d = new GregorianCalendar(2010, 1, 1, 0, 0, 0);
         d.setTimeZone(TimeZone.getTimeZone("GMT"));
@@ -72,6 +76,7 @@ public class CardTest extends TestCase {
 
     }
 
+    @Test
     public void testUnauthorizedUltralight() {
         Calendar d = new GregorianCalendar(2010, 1, 1, 0, 0, 0);
         d.setTimeZone(TimeZone.getTimeZone("GMT"));
@@ -129,6 +134,7 @@ public class CardTest extends TestCase {
         assertTrue(c1.parseTransitData() instanceof UnauthorizedUltralightTransitData);
     }
 
+    @Test
     public void testUnauthorizedClassic() {
         byte[] e = new byte[] { (byte) 0x6d, (byte) 0x65, (byte) 0x74, (byte) 0x72, (byte) 0x6f,
                                 (byte) 0x64, (byte) 0x72, (byte) 0x6f, (byte) 0x69, (byte) 0x64,
@@ -169,6 +175,7 @@ public class CardTest extends TestCase {
         assertFalse(c3.parseTransitData() instanceof UnauthorizedClassicTransitData);
     }
 
+    @Test
     public void testBlankMifareClassic() {
         byte[] all00Bytes = new byte[] { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
         byte[] allFFBytes = new byte[] {
@@ -216,6 +223,7 @@ public class CardTest extends TestCase {
                 otherCard.parseTransitData() instanceof BlankClassicTransitData);
     }
 
+    @Test
     public void testUnauthorizedDesfire() {
         Calendar d = new GregorianCalendar(2010, 1, 1, 0, 0, 0);
         d.setTimeZone(TimeZone.getTimeZone("GMT"));
