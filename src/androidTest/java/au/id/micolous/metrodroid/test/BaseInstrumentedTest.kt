@@ -36,7 +36,11 @@ abstract class BaseInstrumentedTest {
         Locale.setDefault(l)
         val r = context.resources
         val c = r.configuration
-        c.setLocale(l)
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
+            c.setLocale(l)
+        } else {
+            c.locale = l
+        }
         r.updateConfiguration(c, r.displayMetrics)
     }
 
