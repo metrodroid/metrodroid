@@ -87,6 +87,11 @@ public abstract class En1545Subscription extends Subscription {
         mCounter = counter;
     }
 
+    public En1545Subscription(En1545Parsed parsed, Integer counter) {
+        mParsed = parsed;
+        mCounter = counter;
+    }
+
     @Override
     public int[] getZones() {
         Integer zonecode = mParsed.getInt(CONTRACT_ZONES);
