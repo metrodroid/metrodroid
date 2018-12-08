@@ -105,12 +105,12 @@ db = MdstWriter(
 )
 
 print('Writing stations...')
+station_count = 0
 # Now write out all the stations, and store their offset.
 #cur.execute('SELECT company, ovcid, city, name, lat, lon FROM stations ORDER BY company, ovcid')
 for tsvname in os.listdir(TSV_DIR):
   if not tsvname.startswith('data_') or not tsvname.endswith('.tsv'):
     continue
-  station_count = 0
   for row in tsv_reader(tsvname):
     # Many records that are unknown... they look like "?" or "1234?"
     if row['name'] is None or row['name'].endswith('?'):
