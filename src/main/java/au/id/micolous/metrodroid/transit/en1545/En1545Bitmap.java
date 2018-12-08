@@ -21,8 +21,6 @@ package au.id.micolous.metrodroid.transit.en1545;
 import java.util.Arrays;
 import java.util.List;
 
-import au.id.micolous.metrodroid.util.Utils;
-
 /**
  * EN1545 Bitmaps
  *
@@ -32,9 +30,20 @@ import au.id.micolous.metrodroid.util.Utils;
  */
 public class En1545Bitmap implements En1545Field {
     private final List<En1545Field> mFields;
+    private final En1545Field mInfix;
 
     public En1545Bitmap(En1545Field... fields) {
+        this.mInfix = null;
         this.mFields = Arrays.asList(fields);
+    }
+
+    private En1545Bitmap(En1545Field infix, List<En1545Field> fields) {
+        this.mInfix = infix;
+        this.mFields = fields;
+    }
+
+    public static En1545Field infixBitmap(En1545Container infix, En1545Field... fields) {
+        return new En1545Bitmap(infix, Arrays.asList(fields));
     }
 
     @Override
@@ -46,6 +55,8 @@ public class En1545Bitmap implements En1545Field {
             return off + mFields.size();
         }
         off += mFields.size();
+        if (mInfix != null)
+            off = mInfix.parseField(b, off, path, holder, bitParser);
         for (En1545Field el : mFields) {
             if ((bitmask & 1) != 0)
                 off = el.parseField(b, off, path, holder, bitParser);
