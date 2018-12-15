@@ -19,9 +19,12 @@
 package au.id.micolous.metrodroid.transit.serialonly;
 
 import android.os.Parcel;
+import android.support.annotation.NonNull;
 
 import org.apache.commons.lang3.ArrayUtils;
 
+import java.util.Collections;
+import java.util.List;
 import java.util.Locale;
 
 import au.id.micolous.metrodroid.card.desfire.DesfireCard;
@@ -81,18 +84,19 @@ public class AtHopStubTransitData extends SerialOnlyTransitData {
             return ArrayUtils.contains(appIds, 0x4055) && ArrayUtils.contains(appIds, APP_ID_SERIAL);
         }
 
+        @NonNull
         @Override
-        protected CardInfo getCardInfo() {
-            return null;
+        public List<CardInfo> getAllCards() {
+            return Collections.emptyList();
         }
 
         @Override
-        public TransitData parseTransitData(DesfireCard desfireCard) {
+        public TransitData parseTransitData(@NonNull DesfireCard desfireCard) {
             return new AtHopStubTransitData(desfireCard);
         }
 
         @Override
-        public TransitIdentity parseTransitIdentity(DesfireCard desfireCard) {
+        public TransitIdentity parseTransitIdentity(@NonNull DesfireCard desfireCard) {
             return new TransitIdentity(NAME, formatSerial(getSerial(desfireCard)));
         }
     };

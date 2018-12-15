@@ -23,6 +23,7 @@
 package au.id.micolous.metrodroid.transit.suica;
 
 import android.os.Parcel;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.util.ArraySet;
 
@@ -231,22 +232,18 @@ public class SuicaTransitData extends TransitData {
             return ArrayUtils.contains(systemCodes, SYSTEMCODE_SUICA);
         }
 
-        @Override
-        protected CardInfo getCardInfo() {
-            return SUICA_CARD_INFO;
-        }
-
+        @NonNull
         @Override
         public List<CardInfo> getAllCards() {
             return Arrays.asList(SUICA_CARD_INFO, ICOCA_CARD_INFO, PASMO_CARD_INFO);
         }
 
         @Override
-        public TransitData parseTransitData(FelicaCard felicaCard) {
+        public TransitData parseTransitData(@NonNull FelicaCard felicaCard) {
             return new SuicaTransitData(felicaCard);
         }
 
-        public TransitIdentity parseTransitIdentity(FelicaCard card) {
+        public TransitIdentity parseTransitIdentity(@NonNull FelicaCard card) {
             return new TransitIdentity(Utils.localizeString(R.string.card_name_suica), null); // FIXME: Could be ICOCA, etc.
         }
     };

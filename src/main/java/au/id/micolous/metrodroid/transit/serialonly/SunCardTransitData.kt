@@ -24,6 +24,7 @@ import au.id.micolous.metrodroid.card.CardType
 import au.id.micolous.metrodroid.card.UnauthorizedException
 import au.id.micolous.metrodroid.card.classic.ClassicCard
 import au.id.micolous.metrodroid.card.classic.ClassicCardTransitFactory
+import au.id.micolous.metrodroid.card.classic.ClassicSector
 import au.id.micolous.metrodroid.transit.CardInfo
 import au.id.micolous.metrodroid.transit.TransitIdentity
 import au.id.micolous.metrodroid.ui.ListItem
@@ -70,16 +71,16 @@ data class SunCardTransitData (private val mSerial: Int = 0): SerialOnlyTransitD
         private fun getSerial(card: ClassicCard) = Utils.byteArrayToInt(card.getSector(0)
                     .getBlock(1).data, 3, 4)
 
-        val FACTORY: ClassicCardTransitFactory = object : ClassicCardTransitFactory() {
+        val FACTORY: ClassicCardTransitFactory = object : ClassicCardTransitFactory {
             override fun parseTransitIdentity(card: ClassicCard) = TransitIdentity(NAME,
                         formatSerial(getSerial(card)))
 
             override fun parseTransitData(classicCard: ClassicCard) = SunCardTransitData(classicCard)
 
-            override fun check(card: ClassicCard) = try {
+            override fun earlyCheck(sectors: MutableList<ClassicSector>) = try {
                 // I hope it is magic as other than zeros, ff's and serial there is nothing
                 // on the card
-                Utils.byteArrayToInt(card.getSector(0).getBlock(1).data, 7, 4) == 0x070515ff
+                Utils.byteArrayToInt(sectors[0].getBlock(1).data, 7, 4) == 0x070515ff
             } catch (ignored: IndexOutOfBoundsException) {
                 // If that sector number is too high, then it's not for us.
                 // If we can't read we can't do anything
@@ -87,6 +88,8 @@ data class SunCardTransitData (private val mSerial: Int = 0): SerialOnlyTransitD
             } catch (ignored: UnauthorizedException) {
                 false
             }
+
+            override fun earlySectors() = 1
 
             override fun getAllCards(): MutableList<CardInfo> = Collections.singletonList(CARD_INFO)
         }

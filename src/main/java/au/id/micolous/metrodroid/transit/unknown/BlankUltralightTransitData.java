@@ -20,8 +20,10 @@ package au.id.micolous.metrodroid.transit.unknown;
 
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.support.annotation.NonNull;
 
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 import au.id.micolous.farebot.R;
@@ -53,9 +55,10 @@ public class BlankUltralightTransitData extends TransitData {
     }
 
     public final static UltralightCardTransitFactory FACTORY = new UltralightCardTransitFactory() {
+        @NonNull
         @Override
         public List<CardInfo> getAllCards() {
-            return null;
+            return Collections.emptyList();
         }
 
         /**
@@ -63,7 +66,7 @@ public class BlankUltralightTransitData extends TransitData {
          * @return true if all sectors on the card are blank.
          */
         @Override
-        public boolean check(UltralightCard card) {
+        public boolean check(@NonNull UltralightCard card) {
             UltralightPage[] pages = card.getPages();
             // check to see if all sectors are blocked
             for (UltralightPage p : pages) {
@@ -158,12 +161,12 @@ public class BlankUltralightTransitData extends TransitData {
         }
 
         @Override
-        public TransitData parseTransitData(UltralightCard ultralightCard) {
+        public TransitData parseTransitData(@NonNull UltralightCard ultralightCard) {
             return new BlankUltralightTransitData();
         }
 
         @Override
-        public TransitIdentity parseTransitIdentity(UltralightCard card) {
+        public TransitIdentity parseTransitIdentity(@NonNull UltralightCard card) {
             return new TransitIdentity(Utils.localizeString(R.string.blank_mfu_card), null);
         }
     };

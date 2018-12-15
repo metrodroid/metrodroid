@@ -1,27 +1,24 @@
 package au.id.micolous.metrodroid.card.china;
 
-import java.util.Collections;
+import android.support.annotation.NonNull;
+
+import java.util.Arrays;
 import java.util.List;
 
-import au.id.micolous.metrodroid.transit.CardInfo;
 import au.id.micolous.metrodroid.transit.CardTransitFactory;
-import au.id.micolous.metrodroid.transit.TransitData;
-import au.id.micolous.metrodroid.transit.TransitIdentity;
 
-public abstract class ChinaCardTransitFactory extends CardTransitFactory {
-    public abstract List<byte[]> getAppNames();
-
-    public abstract TransitIdentity parseTransitIdentity(ChinaCard chinaCard);
-
-    public abstract TransitData parseTransitData(ChinaCard chinaCard);
-
-    public abstract CardInfo getCardInfo();
-
+public interface ChinaCardTransitFactory extends CardTransitFactory<ChinaCard> {
     @Override
-    public List<CardInfo> getAllCards() {
-        CardInfo ci = getCardInfo();
-        if (ci == null)
-            return null;
-        return Collections.singletonList(ci);
+    default boolean check(@NonNull ChinaCard card) {
+        final byte[] appName = card.getAppName();
+        for (byte[] b : getAppNames()) {
+            if (Arrays.equals(b, appName)) {
+                return true;
+            }
+        }
+
+        return false;
     }
+
+    List<byte[]> getAppNames();
 }

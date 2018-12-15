@@ -37,8 +37,7 @@ public class CardHWDetailFragment extends ListFragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        Serializer serializer = MetrodroidApplication.getInstance().getSerializer();
-        Card card = Card.fromXml(serializer, getArguments().getString(AdvancedCardInfoActivity.EXTRA_CARD));
+        Card card = Card.fromXml(getArguments().getString(AdvancedCardInfoActivity.EXTRA_CARD));
 
         List<ListItem> items = card.getManufacturingInfo();
 

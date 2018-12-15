@@ -19,7 +19,9 @@
 package au.id.micolous.metrodroid.transit.unknown;
 
 import android.os.Parcel;
+import android.support.annotation.NonNull;
 
+import java.util.Collections;
 import java.util.List;
 
 import au.id.micolous.farebot.R;
@@ -51,9 +53,10 @@ public class UnauthorizedUltralightTransitData extends UnauthorizedTransitData {
     }
 
     public final static UltralightCardTransitFactory FACTORY = new UltralightCardTransitFactory() {
+        @NonNull
         @Override
         public List<CardInfo> getAllCards() {
-            return null;
+            return Collections.emptyList();
         }
 
         /**
@@ -65,7 +68,7 @@ public class UnauthorizedUltralightTransitData extends UnauthorizedTransitData {
          * @return true if all sectors on the card are locked.
          */
         @Override
-        public boolean check(UltralightCard card) {
+        public boolean check(@NonNull UltralightCard card) {
             // check to see if all sectors are blocked
             for (UltralightPage p : card.getPages()) {
                 if (p.getIndex() >= 4) {
@@ -80,12 +83,12 @@ public class UnauthorizedUltralightTransitData extends UnauthorizedTransitData {
         }
 
         @Override
-        public TransitData parseTransitData(UltralightCard ultralightCard) {
+        public TransitData parseTransitData(@NonNull UltralightCard ultralightCard) {
             return new UnauthorizedUltralightTransitData();
         }
 
         @Override
-        public TransitIdentity parseTransitIdentity(UltralightCard card) {
+        public TransitIdentity parseTransitIdentity(@NonNull UltralightCard card) {
             return new TransitIdentity(Utils.localizeString(R.string.locked_mfu_card), null);
         }
     };

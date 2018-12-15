@@ -187,13 +187,12 @@ public class TroikaHybridTransitData extends TransitData {
         }
 
         @Override
-        public CardInfo earlyCardInfo(List<ClassicSector> sectors) {
-            if (Utils.checkKeyHash(sectors.get(1).getKey(), "troika",
-                    "0045ccfe4749673d77273162e8d53015") >= 0)
-                return TroikaTransitData.CARD_INFO;
-            return null;
+        public boolean earlyCheck(@NonNull List<ClassicSector> sectors) {
+            return (Utils.checkKeyHash(sectors.get(1).getKey(), "troika",
+                    "0045ccfe4749673d77273162e8d53015") >= 0);
         }
 
+        @NonNull
         @Override
         public List<CardInfo> getAllCards() {
             return Collections.singletonList(TroikaTransitData.CARD_INFO);

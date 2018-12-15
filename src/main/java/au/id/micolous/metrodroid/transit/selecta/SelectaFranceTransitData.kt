@@ -65,38 +65,24 @@ data class SelectaFranceTransitData (private var mBalance: Int = 0,
 
         private fun getSerial(card: ClassicCard): Int = Utils.byteArrayToInt(card.getSector(1).getBlock(0).data, 13, 3)
 
-        val FACTORY: ClassicCardTransitFactory = object : ClassicCardTransitFactory() {
-            override fun check(card: ClassicCard): Boolean = try {
-                    check(card.getSector(0))
-                } catch (ignored: IndexOutOfBoundsException) {
-                    // If that sector number is too high, then it's not for us.
-                    // If we can't read we can't do anything
-                    false
-                } catch (ignored: UnauthorizedException) {
-                    false
-                }
-
-            private fun check(sector0: ClassicSector): Boolean {
-                try {
-                    val toc = sector0.getBlock(1).data
-                    // Check toc entries for sectors 10,12,13,14 and 15
-                    return Utils.byteArrayToInt(toc, 2, 2) == 0x0938
-                } catch (ignored: IndexOutOfBoundsException) {
-                    // If that sector number is too high, then it's not for us.
-                    // If we can't read we can't do anything
-                } catch (ignored: UnauthorizedException) {
-                }
-
-                return false
+        val FACTORY: ClassicCardTransitFactory = object : ClassicCardTransitFactory {
+            override fun earlyCheck(sectors: MutableList<ClassicSector>) = try {
+                val toc = sectors[0].getBlock(1).data
+                // Check toc entries for sectors 10,12,13,14 and 15
+                Utils.byteArrayToInt(toc, 2, 2) == 0x0938
+            } catch (ignored: IndexOutOfBoundsException) {
+                // If that sector number is too high, then it's not for us.
+                // If we can't read we can't do anything
+                false
+            } catch (ignored: UnauthorizedException) {
+                false
             }
 
             override fun parseTransitIdentity(card: ClassicCard): TransitIdentity = TransitIdentity(NAME, Integer.toString(getSerial(card)))
 
             override fun parseTransitData(classicCard: ClassicCard): TransitData = SelectaFranceTransitData(classicCard)
 
-            override fun earlySectors(): Int = 1
-            
-            override fun earlyCardInfo(sectors: List<ClassicSector>): CardInfo? = if (check(sectors[0])) CARD_INFO else null
+            override fun earlySectors() = 1
 
             override fun getAllCards(): MutableList<CardInfo> = Collections.singletonList(CARD_INFO)
         }

@@ -185,7 +185,7 @@ data class ZolotayaKoronaTransitData internal constructor(
 
         private fun formatSerial(serial: String) = Utils.groupString(serial, " ", 4, 5, 5)
 
-        val FACTORY: ClassicCardTransitFactory = object : ClassicCardTransitFactory() {
+        val FACTORY: ClassicCardTransitFactory = object : ClassicCardTransitFactory {
             override fun getAllCards() = listOf(FALLBACK_CARD_INFO) + CARDS.values
 
             override fun parseTransitIdentity(card: ClassicCard) = TransitIdentity(
@@ -213,19 +213,9 @@ data class ZolotayaKoronaTransitData internal constructor(
                 )
             }
 
-            override fun check(card: ClassicCard) = try {
-                check(card.getSector(0))
-            } catch (ignored: IndexOutOfBoundsException) {
-                // If that sector number is too high, then it's not for us.
-                // If we can't read we can't do anything
-                false
-            } catch (ignored: UnauthorizedException) {
-                false
-            }
-
-            private fun check(sector0: ClassicSector): Boolean {
+            override fun earlyCheck(sectors: MutableList<ClassicSector>): Boolean {
                 try {
-                    val toc = sector0.getBlock(1).data
+                    val toc = sectors[0].getBlock(1).data
                     // Check toc entries for sectors 10,12,13,14 and 15
                     return Utils.byteArrayToInt(toc, 8, 2) == 0x18ee && Utils.byteArrayToInt(toc, 12, 2) == 0x18ee
                 } catch (ignored: IndexOutOfBoundsException) {
@@ -240,7 +230,8 @@ data class ZolotayaKoronaTransitData internal constructor(
             override fun earlySectors() = 1
 
             // Determining exact card requires last sector, so just put it as Zolotaya Korona
-            override fun earlyCardInfo(sectors: List<ClassicSector>) = if (check(sectors[0])) FALLBACK_CARD_INFO else null
+            override fun earlyCardInfo(sectors: MutableList<ClassicSector>): CardInfo? =
+                    if (earlyCheck(sectors)) FALLBACK_CARD_INFO else null
         }
     }
 }

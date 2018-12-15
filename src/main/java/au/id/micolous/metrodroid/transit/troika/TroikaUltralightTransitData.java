@@ -20,6 +20,7 @@ package au.id.micolous.metrodroid.transit.troika;
 
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
 import java.util.Collections;
@@ -52,14 +53,15 @@ public class TroikaUltralightTransitData extends TransitData {
     };
 
     public final static UltralightCardTransitFactory FACTORY = new UltralightCardTransitFactory() {
+        @NonNull
         @Override
         public List<CardInfo> getAllCards() {
             // Already added by Classic variant
-            return null;
+            return Collections.emptyList();
         }
 
         @Override
-        public boolean check(UltralightCard card) {
+        public boolean check(@NonNull UltralightCard card) {
             try {
                 return TroikaBlock.check(card.getPage(4).getData());
             } catch (IndexOutOfBoundsException | UnauthorizedException ignored) {
@@ -69,13 +71,13 @@ public class TroikaUltralightTransitData extends TransitData {
         }
 
         @Override
-        public TransitIdentity parseTransitIdentity(UltralightCard card) {
+        public TransitIdentity parseTransitIdentity(@NonNull UltralightCard card) {
             return TroikaBlock.parseTransitIdentity(Utils.concatByteArrays(card.getPage(4).getData(),
                     card.getPage(5).getData()));
         }
 
         @Override
-        public TransitData parseTransitData(UltralightCard ultralightCard) {
+        public TransitData parseTransitData(@NonNull UltralightCard ultralightCard) {
             return new TroikaUltralightTransitData(ultralightCard);
         }
     };

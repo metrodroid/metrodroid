@@ -18,36 +18,27 @@
  */
 package au.id.micolous.metrodroid.test;
 
-import android.support.annotation.NonNull;
-import android.test.InstrumentationTestCase;
-
-import java.io.IOException;
+import org.junit.Test;
 
 import au.id.micolous.metrodroid.card.classic.ClassicCard;
+import au.id.micolous.metrodroid.card.classic.MfcCardImporter;
 import au.id.micolous.metrodroid.transit.TransitCurrency;
-import au.id.micolous.metrodroid.transit.TransitData;
 import au.id.micolous.metrodroid.transit.bilhete_unico.BilheteUnicoSPTransitData;
+
+import static junit.framework.TestCase.assertEquals;
+import static junit.framework.TestCase.assertNotNull;
 
 /**
  * Tests for Bilhete Unico.
  */
-public class BilheteUnicoTest extends InstrumentationTestCase {
-    @NonNull
-    private BilheteUnicoSPTransitData parseCard(ClassicCard c) {
-        TransitData d = c.parseTransitData();
-        assertNotNull("Transit data not parsed", d);
-        assertTrue(d instanceof BilheteUnicoSPTransitData);
-        return (BilheteUnicoSPTransitData)d;
+public class BilheteUnicoTest extends CardReaderWithAssetDumpsTest<BilheteUnicoSPTransitData, ClassicCard> {
+    public BilheteUnicoTest() {
+        super(BilheteUnicoSPTransitData.class, new MfcCardImporter());
     }
 
-    @NonNull
-    private BilheteUnicoSPTransitData loadCard(String path) throws IOException {
-        return parseCard(TestUtils.loadMifareClassic4KFromAssets(getInstrumentation().getContext(), path));
-    }
-
-    private void balanceTest(String path, TransitCurrency expectedBalance) throws IOException {
+    private void balanceTest(String path, TransitCurrency expectedBalance) {
         // We don't have much info on these cards. Most of these tests are the same.
-        TransitCurrency actualBalance = loadCard(path).getBalance();
+        TransitCurrency actualBalance = loadAndParseCard(path).getBalance();
         assertNotNull(actualBalance);
         assertEquals(expectedBalance, actualBalance);
     }
@@ -59,14 +50,16 @@ public class BilheteUnicoTest extends InstrumentationTestCase {
     //
     // TODO: Add some more checks around these files, as we learn more about BU.
 
-    public void test7eb2258a() throws IOException {
+    @Test
+    public void test7eb2258a() {
         balanceTest("7eb2258a.mfd", TransitCurrency.BRL(2400));
         balanceTest("7eb2258a/201111242210.dump", TransitCurrency.BRL(2400));
         balanceTest("7eb2258a/201111272000.dump", TransitCurrency.BRL(1800));
         balanceTest("7eb2258a/201111282115.dump", TransitCurrency.BRL(1200));
     }
 
-    public void test9e4937b0() throws IOException {
+    @Test
+    public void test9e4937b0() {
         balanceTest("9e4937b0.mfd", TransitCurrency.BRL(592));
         balanceTest("9e4937b0/201111241013.dump", TransitCurrency.BRL(592));
         balanceTest("9e4937b0/201111281500.dump", TransitCurrency.BRL(292));
@@ -77,7 +70,8 @@ public class BilheteUnicoTest extends InstrumentationTestCase {
         balanceTest("9e4937b0/201112191036.dump", TransitCurrency.BRL(402));
     }
 
-    public void testfcd4cf1f() throws IOException {
+    @Test
+    public void testfcd4cf1f() {
         balanceTest("fcd4cf1f.mfd", TransitCurrency.BRL(1000));
         balanceTest("fcd4cf1f/201111241013.dump", TransitCurrency.BRL(1000));
         balanceTest("fcd4cf1f/201112011030.dump", TransitCurrency.BRL(215));

@@ -264,18 +264,9 @@ public class PodorozhnikTransitData extends TransitData {
 
     public static final ClassicCardTransitFactory FACTORY = new ClassicCardTransitFactory() {
         @Override
-        public boolean check(@NonNull ClassicCard card) {
+        public boolean earlyCheck(@NonNull List<ClassicSector> sectors) {
             try {
-                return check(card.getSector(4));
-            } catch (IndexOutOfBoundsException ignored) {
-                // If that sector number is too high, then it's not for us.
-            }
-            return false;
-        }
-
-        private boolean check(ClassicSector sector4) {
-            try {
-                ClassicSectorKey key = sector4.getKey();
+                ClassicSectorKey key = sectors.get(4).getKey();
 
                 Log.d(TAG, "Checking for Podorozhnik key...");
                 return Utils.checkKeyHash(key, KEY_SALT, KEY_DIGEST_A, KEY_DIGEST_B) >= 0;
@@ -301,16 +292,10 @@ public class PodorozhnikTransitData extends TransitData {
             return 5;
         }
 
+        @NonNull
         @Override
         public List<CardInfo> getAllCards() {
             return Collections.singletonList(CARD_INFO);
-        }
-
-        @Override
-        public CardInfo earlyCardInfo(List<ClassicSector> sectors) {
-            if (check(sectors.get(4)))
-                return CARD_INFO;
-            return null;
         }
     };
 }

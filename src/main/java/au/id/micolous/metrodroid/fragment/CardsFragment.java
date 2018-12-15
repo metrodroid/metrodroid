@@ -2,7 +2,7 @@
  * CardsFragment.java
  *
  * Copyright 2012-2014 Eric Butler <eric@codebutler.com>
- * Copyright 2015-2016 Michael Farrell <micolous+git@gmail.com>
+ * Copyright 2015-2018 Michael Farrell <micolous+git@gmail.com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -24,6 +24,8 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.LoaderManager;
 import android.content.ClipData;
+import android.content.ClipboardManager;
+import android.content.ContentResolver;
 import android.content.ContentUris;
 import android.content.Context;
 import android.content.CursorLoader;
@@ -35,7 +37,8 @@ import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
-import android.content.ClipboardManager;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v4.content.FileProvider;
 import android.util.Log;
 import android.util.Pair;
@@ -51,9 +54,33 @@ import android.widget.ExpandableListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import org.apache.commons.io.FileUtils;
+
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.lang.ref.WeakReference;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Collection;
+import java.util.GregorianCalendar;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
+
+import javax.xml.parsers.ParserConfigurationException;
+
+import au.id.micolous.farebot.R;
+import au.id.micolous.metrodroid.MetrodroidApplication;
 import au.id.micolous.metrodroid.activity.CardInfoActivity;
 import au.id.micolous.metrodroid.card.Card;
+import au.id.micolous.metrodroid.card.CardImporter;
 import au.id.micolous.metrodroid.card.CardType;
+import au.id.micolous.metrodroid.card.XmlCardFormat;
+import au.id.micolous.metrodroid.card.classic.MctCardImporter;
 import au.id.micolous.metrodroid.provider.CardDBHelper;
 import au.id.micolous.metrodroid.provider.CardProvider;
 import au.id.micolous.metrodroid.provider.CardsTableColumns;
@@ -62,32 +89,11 @@ import au.id.micolous.metrodroid.util.ExportHelper;
 import au.id.micolous.metrodroid.util.TripObfuscator;
 import au.id.micolous.metrodroid.util.Utils;
 
-import org.apache.commons.io.FileUtils;
-import org.apache.commons.io.IOUtils;
-import org.simpleframework.xml.Serializer;
-
-import java.io.ByteArrayOutputStream;
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.io.StringWriter;
-import java.lang.ref.WeakReference;
-import java.nio.charset.Charset;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.GregorianCalendar;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
-import au.id.micolous.farebot.R;
-import au.id.micolous.metrodroid.MetrodroidApplication;
-
 public class CardsFragment extends ExpandableListFragment {
     private static final String TAG = "CardsFragment";
     private static final int REQUEST_SELECT_FILE = 1;
     private static final int REQUEST_SAVE_FILE = 2;
+    private static final int REQUEST_SELECT_FILE_MCT = 3;
     private static final String STD_EXPORT_FILENAME = "Metrodroid-Export.xml";
     private static final String SD_EXPORT_PATH = Environment.getExternalStorageDirectory() + "/" + STD_EXPORT_FILENAME;
     private static final String STD_IMPORT_FILENAME = "Metrodroid-Import.xml";
@@ -180,6 +186,11 @@ public class CardsFragment extends ExpandableListFragment {
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         inflater.inflate(R.menu.cards_menu, menu);
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.KITKAT) {
+            MenuItem item = menu.findItem(R.id.import_mct_file);
+            if (item != null)
+                item.setVisible(false);
+        }
     }
 
     @Override
@@ -220,11 +231,32 @@ public class CardsFragment extends ExpandableListFragment {
                     } else {
                         ClipData.Item ci = d.getItemAt(0);
                         xml = ci.coerceToText(getActivity()).toString();
-                        Uri [] uris = ExportHelper.importCardsXml(getActivity(), xml);
+
+                        Collection<Uri> uris = ExportHelper.importCards(xml, new XmlCardFormat(), getActivity());
+
                         updateListView();
-                        onCardsImported(getActivity(), uris);
+                        Iterator<Uri> it = uris.iterator();
+                        onCardsImported(getActivity(), uris.size(), it.hasNext() ? it.next() : null);
                     }
                 } return true;
+
+                case R.id.import_mct_file:
+                    if (Build.VERSION.SDK_INT < Build.VERSION_CODES.KITKAT) {
+                        return true;
+                    }
+                    uri = Uri.fromFile(Environment.getExternalStorageDirectory());
+                    i = new Intent(Intent.ACTION_GET_CONTENT);
+                    i.putExtra(Intent.EXTRA_STREAM, uri);
+                    i.setType("*/*");
+                    String[] mctMimetypes = {
+                            "text/plain",
+                            // Fallback for cases where we didn't get a good mime type from the
+                            // OS, this allows most "other" files to be selected.
+                            "application/octet-stream",
+                    };
+                    i.putExtra(Intent.EXTRA_MIME_TYPES, mctMimetypes);
+                    startActivityForResult(Intent.createChooser(i, Utils.localizeString(R.string.select_file)), REQUEST_SELECT_FILE_MCT);
+                    return true;
 
                 case R.id.import_file:
                     // Some files are text/xml, some are application/xml.
@@ -352,20 +384,28 @@ public class CardsFragment extends ExpandableListFragment {
         }
     }
 
-    private static class ReadTask extends AsyncTask<Uri, Integer, Pair<String, Uri[]>> {
+    private abstract static class CommonReadTask extends AsyncTask<Uri, Integer, Pair<String, Collection<Uri>>> {
         private final WeakReference<CardsFragment> mCardsFragment;
+        private final CardImporter<? extends Card> mCardImporter;
 
-        private ReadTask(CardsFragment cardsFragment) {
+        private CommonReadTask(CardsFragment cardsFragment,
+                               @NonNull CardImporter<? extends Card> cardImporter) {
             mCardsFragment = new WeakReference<>(cardsFragment);
+            mCardImporter = cardImporter;
         }
 
         @Override
-        protected Pair<String, Uri[]> doInBackground(Uri... uris) {
+        protected Pair<String, Collection<Uri>> doInBackground(Uri... uris) {
             try {
-                Log.d(TAG, "REQUEST_SELECT_FILE content_type = " + MetrodroidApplication.getInstance().getContentResolver().getType(uris[0]));
-                InputStream stream = MetrodroidApplication.getInstance().getContentResolver().openInputStream(uris[0]);
-                String xml = org.apache.commons.io.IOUtils.toString(stream, Charset.defaultCharset());
-                Uri[] iuri = ExportHelper.importCardsXml(MetrodroidApplication.getInstance(), xml);
+                final ContentResolver cr = MetrodroidApplication.getInstance().getContentResolver();
+
+                Log.d(TAG, "REQUEST_SELECT_FILE content_type = " + cr.getType(uris[0]));
+                InputStream stream = cr.openInputStream(uris[0]);
+                assert stream != null; // Will be handled by exception handler below...
+
+                Collection<Uri> iuri = ExportHelper.importCards(
+                        stream, mCardImporter, MetrodroidApplication.getInstance());
+
                 return new Pair<>(null, iuri);
             } catch (Exception ex) {
                 Log.e(TAG, ex.getMessage(), ex);
@@ -374,9 +414,9 @@ public class CardsFragment extends ExpandableListFragment {
         }
 
         @Override
-        protected void onPostExecute(Pair<String, Uri[]> res) {
+        protected void onPostExecute(Pair<String, Collection<Uri>> res) {
             String err = res.first;
-            Uri []uris = res.second;
+            Collection<Uri> uris = res.second;
             CardsFragment cf = mCardsFragment.get();
 
             if (cf == null)
@@ -384,12 +424,26 @@ public class CardsFragment extends ExpandableListFragment {
 
             if (err == null) {
                 cf.updateListView();
-                onCardsImported(cf.getActivity(), uris);
+                Iterator<Uri> it = uris.iterator();
+                onCardsImported(cf.getActivity(), uris.size(), it.hasNext() ? it.next() : null);
                 return;
             }
             new AlertDialog.Builder(cf.getActivity())
                     .setMessage(err)
                     .show();
+        }
+    }
+
+
+    private static class ReadTask extends CommonReadTask {
+        private ReadTask(CardsFragment cardsFragment) throws ParserConfigurationException {
+            super(cardsFragment, new XmlCardFormat());
+        }
+    }
+
+    private static class MCTReadTask extends CommonReadTask {
+        private MCTReadTask(CardsFragment cardsFragment) {
+            super(cardsFragment, new MctCardImporter());
         }
     }
 
@@ -404,6 +458,11 @@ public class CardsFragment extends ExpandableListFragment {
                         new ReadTask(this).execute(uri);
                         break;
 
+                    case REQUEST_SELECT_FILE_MCT:
+                        uri = data.getData();
+                        new MCTReadTask(this).execute(uri);
+                        break;
+
                     case REQUEST_SAVE_FILE:
                         uri = data.getData();
                         Log.d(TAG, "REQUEST_SAVE_FILE");
@@ -416,10 +475,11 @@ public class CardsFragment extends ExpandableListFragment {
         }
     }
 
-    private static void onCardsImported(Context ctx, Uri[] uris) {
-        Toast.makeText(ctx, Utils.localizePlural(R.plurals.cards_imported, uris.length, uris.length), Toast.LENGTH_SHORT).show();
-        if (uris.length == 1) {
-            ctx.startActivity(new Intent(Intent.ACTION_VIEW, uris[0]));
+    private static void onCardsImported(Context ctx, int uriCount, @Nullable Uri firstUri) {
+        Toast.makeText(ctx, Utils.localizePlural(
+                R.plurals.cards_imported, uriCount, uriCount), Toast.LENGTH_SHORT).show();
+        if (uriCount == 1 && firstUri != null) {
+            ctx.startActivity(new Intent(Intent.ACTION_VIEW, firstUri));
         }
     }
 
@@ -489,8 +549,7 @@ public class CardsFragment extends ExpandableListFragment {
 
             if (scan.mTransitIdentity == null) {
                 try {
-                    Serializer serializer = MetrodroidApplication.getInstance().getSerializer();
-                    scan.mTransitIdentity = Card.fromXml(serializer, scan.mData).parseTransitIdentity();
+                    scan.mTransitIdentity = Card.fromXml(scan.mData).parseTransitIdentity();
                 } catch (Exception ex) {
                     String error = String.format("Error: %s", Utils.getErrorMessage(ex));
                     scan.mTransitIdentity = new TransitIdentity(error, null);

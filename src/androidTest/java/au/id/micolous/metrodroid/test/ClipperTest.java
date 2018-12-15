@@ -1,7 +1,7 @@
 /*
- * OpalTest.java
+ * ClipperTest.java
  *
- * Copyright 2017 Michael Farrell <micolous+git@gmail.com>
+ * Copyright 2017-2018 Michael Farrell <micolous+git@gmail.com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,7 +18,7 @@
  */
 package au.id.micolous.metrodroid.test;
 
-import android.test.AndroidTestCase;
+import org.junit.Test;
 
 import java.util.Calendar;
 import java.util.List;
@@ -33,11 +33,15 @@ import au.id.micolous.metrodroid.transit.Trip;
 import au.id.micolous.metrodroid.transit.clipper.ClipperTransitData;
 import au.id.micolous.metrodroid.util.Utils;
 
-/**
- * Tests for Orca card
- */
+import static junit.framework.Assert.assertEquals;
+import static junit.framework.Assert.assertNull;
+import static junit.framework.TestCase.assertNotNull;
+import static junit.framework.TestCase.assertTrue;
 
-public class ClipperTest extends AndroidTestCase {
+/**
+ * Tests for Clipper card
+ */
+public class ClipperTest extends BaseInstrumentedTest {
 
     // mocked data
     static private final String refill = "000002cfde4400007812345600001388000000000000" +
@@ -66,9 +70,10 @@ public class ClipperTest extends AndroidTestCase {
                 new DesfireApplication[] { a });
     }
 
+    @Test
     public void testDemoCard() {
-        TestUtils.setLocale(getContext(), "en-US");
-        TestUtils.showRawStationIds(false);
+        setLocale("en-US");
+        showRawStationIds(false);
 
         assertEquals(32*2, refill.length());
 
@@ -86,15 +91,15 @@ public class ClipperTest extends AndroidTestCase {
         ClipperTransitData o = (ClipperTransitData)d;
         assertEquals("572691763", o.getSerialNumber());
         assertEquals("Clipper", o.getCardName());
-        assertTrue(o.getBalance().getBalance().equals(TransitCurrency.USD(30583)));
-        assertEquals(null, o.getSubscriptions());
+        assertEquals(TransitCurrency.USD(30583), o.getBalance().getBalance());
+        assertNull(o.getSubscriptions());
 
         List<Trip> trips = o.getTrips();
         assertNotNull(trips);
         assertEquals("Whole Foods", trips.get(1).getAgencyName(false));
         assertEquals("Whole Foods", trips.get(1).getAgencyName(true));
         assertEquals(1520009600000L, trips.get(1).getStartTimestamp().getTimeInMillis());
-        assertTrue(trips.get(1).getFare().equals(TransitCurrency.USD(-5000)));
+        assertEquals(TransitCurrency.USD(-5000), trips.get(1).getFare());
         assertNull(trips.get(1).getRouteName());
         assertTrue(trips.get(1).hasTime());
         assertEquals(Trip.Mode.TICKET_MACHINE, trips.get(1).getMode());
@@ -105,7 +110,7 @@ public class ClipperTest extends AndroidTestCase {
         assertEquals("Bay Area Rapid Transit", trips.get(0).getAgencyName(false));
         assertEquals("BART", trips.get(0).getAgencyName(true));
         assertEquals(1521320320000L, trips.get(0).getStartTimestamp().getTimeInMillis());
-        assertTrue(trips.get(0).getFare().equals(TransitCurrency.USD(630)));
+        assertEquals(TransitCurrency.USD(630), trips.get(0).getFare());
         assertNull(trips.get(0).getRouteName());
         assertTrue(trips.get(0).hasTime());
         assertEquals(Trip.Mode.METRO, trips.get(0).getMode());
@@ -120,4 +125,5 @@ public class ClipperTest extends AndroidTestCase {
         assertEquals(37.70169, Float.parseFloat(trips.get(0).getEndStation().getLatitude()), 0.00001);
         assertEquals(-121.89918, Float.parseFloat(trips.get(0).getEndStation().getLongitude()), 0.00001);
     }
+
 }

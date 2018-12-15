@@ -18,7 +18,9 @@
  */
 package au.id.micolous.metrodroid.test;
 
-import junit.framework.TestCase;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.junit.runners.JUnit4;
 
 import java.util.Calendar;
 
@@ -30,7 +32,11 @@ import au.id.micolous.metrodroid.transit.TransitIdentity;
 import au.id.micolous.metrodroid.transit.serialonly.MykiTransitData;
 import au.id.micolous.metrodroid.util.Utils;
 
-public class MykiTest extends TestCase {
+import static junit.framework.TestCase.assertEquals;
+import static junit.framework.TestCase.assertTrue;
+
+@RunWith(JUnit4.class)
+public class MykiTest  {
     private DesfireCard constructMykiCardFromHexString(String s) {
         byte[] demoData = Utils.hexStringToByteArray(s);
 
@@ -44,6 +50,7 @@ public class MykiTest extends TestCase {
                 new DesfireApplication[] { a, a2 });
     }
 
+    @Test
     public void testDemoCard() {
         // This is mocked-up, incomplete data.
         DesfireCard c = constructMykiCardFromHexString("C9B404004E61BC000000000000000000");

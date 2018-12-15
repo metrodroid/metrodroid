@@ -63,9 +63,11 @@ import org.apache.commons.io.IOUtils;
 import org.jetbrains.annotations.NotNull;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.w3c.dom.Node;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.StringWriter;
 import java.math.BigInteger;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
@@ -73,10 +75,22 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Collections;
 import java.util.GregorianCalendar;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
+import java.util.Set;
 import java.util.TimeZone;
+
+import javax.xml.transform.OutputKeys;
+import javax.xml.transform.Result;
+import javax.xml.transform.Source;
+import javax.xml.transform.Transformer;
+import javax.xml.transform.TransformerException;
+import javax.xml.transform.TransformerFactory;
+import javax.xml.transform.dom.DOMSource;
+import javax.xml.transform.stream.StreamResult;
 
 import au.id.micolous.farebot.R;
 import au.id.micolous.metrodroid.MetrodroidApplication;
@@ -940,6 +954,25 @@ public class Utils {
         return ret.toString();
     }
 
+    public static String xmlNodeToString(Node node) throws TransformerException {
+        return xmlNodeToString(node, true);
+    }
+
+    public static String xmlNodeToString(Node node, boolean indent) throws TransformerException {
+        Source source = new DOMSource(node);
+        StringWriter stringWriter = new StringWriter();
+        Result result = new StreamResult(stringWriter);
+        TransformerFactory factory = TransformerFactory.newInstance();
+        Transformer transformer = factory.newTransformer();
+        if (indent) {
+            transformer.setOutputProperty(OutputKeys.INDENT, "yes");
+            transformer.setOutputProperty("{http://xml.apache.org/xslt}indent-amount", "2");
+        }
+        transformer.setURIResolver(null);
+        transformer.transform(source, result);
+        return stringWriter.getBuffer().toString();
+    }
+
     public interface Matcher<T> {
         boolean matches(T t);
     }
@@ -1108,5 +1141,59 @@ public class Utils {
         }
         clipboard.setPrimaryClip(data);
         Toast.makeText(context, R.string.copied_to_clipboard, Toast.LENGTH_SHORT).show();
+    }
+
+    /**
+     * Returns an Iterator which emits a single element. This defers implementation to
+     * {@link Collections#singleton(Object)} implementation of {@link Set#iterator()}.
+     *
+     * This is similar to Guice's Iterators.singletonIterator method.
+     *
+     * @param singleton The single element to return.
+     * @param <T> The type of the singleton.
+     * @return An iterator that returns singleton once.
+     */
+    @NonNull
+    public static <T> Iterator<T> singletonIterator(@NonNull T singleton) {
+        return Collections.singleton(singleton).iterator();
+    }
+
+    /**
+     * There is some circumstance where the OLD CEPASTransaction could contain null bytes,
+     * which would then be serialized as <code>&amp;#0;</code>.
+     *
+     * From this Android commit, it is no longer possible to serialise a null byte:
+     * https://android.googlesource.com/platform/libcore/+/ff42219e3ea3d712f931ae7f26af236339b5cf23%5E%21/#F2
+     *
+     * However, these entities may still be deserialised. Importing an old file that
+     * contains a null byte in an attribute will trigger an error if we try to re-serialise
+     * it with kxml2.
+     *
+     * This runs a filter to drop characters that fail these rules:
+     * https://android.googlesource.com/platform/libcore/+/master/xml/src/main/java/com/android/org/kxml2/io/KXmlSerializer.java#155
+     *
+     * NOTE: This does not escape entities. This only removes things that can't be properly
+     * encoded.
+     *
+     * @param input Input data to strip characters from
+     * @return Data without characters that can't be encoded.
+     */
+    public static String filterBadXMLChars(String input) {
+        StringBuilder o = new StringBuilder();
+        for (int i = 0; i < input.length(); i++) {
+            final char c = input.charAt(i);
+
+            if (c == '\n' || c == '\r' || c == '\t' ||
+                    (c >= 0x20 && c <= 0xd7ff) ||
+                    (c >= 0xe000 && c <= 0xfffd)) {
+                o.append(c);
+            } else if (Character.isHighSurrogate(c) && i < input.length() - 1) {
+                o.append(c);
+                o.append(input.charAt(i++));
+            }
+
+            // Other characters invalid.
+        }
+        return o.toString();
     }
 }

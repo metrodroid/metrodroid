@@ -22,6 +22,7 @@
 package au.id.micolous.metrodroid.transit.octopus;
 
 import android.os.Parcel;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
 import au.id.micolous.metrodroid.card.CardType;
@@ -41,6 +42,7 @@ import org.apache.commons.lang3.ArrayUtils;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 import au.id.micolous.farebot.R;
@@ -133,18 +135,19 @@ public class OctopusTransitData extends TransitData {
         }
 
         // Shenzhen Tong is added to supported list by new Shenzhen Tong code.
+        @NonNull
         @Override
-        protected CardInfo getCardInfo() {
-            return CARD_INFO;
+        public List<CardInfo> getAllCards() {
+            return Collections.singletonList(CARD_INFO);
         }
 
         @Override
-        public TransitData parseTransitData(FelicaCard felicaCard) {
+        public TransitData parseTransitData(@NonNull FelicaCard felicaCard) {
             return new OctopusTransitData(felicaCard);
         }
 
         @Override
-        public TransitIdentity parseTransitIdentity(FelicaCard card) {
+        public TransitIdentity parseTransitIdentity(@NonNull FelicaCard card) {
             if (card.getSystem(SYSTEMCODE_SZT) != null) {
                 if (card.getSystem(SYSTEMCODE_OCTOPUS) != null) {
                     // Dual-mode card.

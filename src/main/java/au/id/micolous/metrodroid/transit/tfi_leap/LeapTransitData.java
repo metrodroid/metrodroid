@@ -21,6 +21,7 @@ package au.id.micolous.metrodroid.transit.tfi_leap;
 
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.text.SpannableString;
 
@@ -28,6 +29,7 @@ import org.apache.commons.lang3.ArrayUtils;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collections;
 import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.Locale;
@@ -256,18 +258,19 @@ public class LeapTransitData extends TransitData {
             return ArrayUtils.contains(appIds, APP_ID);
         }
 
+        @NonNull
         @Override
-        protected CardInfo getCardInfo() {
-            return CARD_INFO;
+        public List<CardInfo> getAllCards() {
+            return Collections.singletonList(CARD_INFO);
         }
 
         @Override
-        public TransitData parseTransitData(DesfireCard desfireCard) {
+        public TransitData parseTransitData(@NonNull DesfireCard desfireCard) {
             return new LeapTransitData(desfireCard);
         }
 
         @Override
-        public TransitIdentity parseTransitIdentity(DesfireCard card) {
+        public TransitIdentity parseTransitIdentity(@NonNull DesfireCard card) {
             try {
                 return new TransitIdentity(NAME, getSerial(card));
             } catch (Exception e) {

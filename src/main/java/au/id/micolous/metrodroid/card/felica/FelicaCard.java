@@ -61,6 +61,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.Locale;
@@ -101,6 +102,7 @@ public class FelicaCard extends Card {
 
         boolean octopusMagic = false;
         boolean sztMagic = false;
+        boolean liteMagic = false;
         boolean partialRead = false;
 
         FeliCaTag ft = new FeliCaTag(tag);
@@ -127,8 +129,18 @@ public class FelicaCard extends Card {
 
             // Check if we failed to get a System Code
             if (codes.size() == 0) {
+                // Lite has no system code list
+                FeliCaLib.IDm liteSystem = ft.pollingAndGetIDm(FeliCaLib.SYSTEMCODE_FELICA_LITE);
+                Log.d(TAG, "Lite = " + liteSystem);
+                if (liteSystem != null) {
+                    Log.d(TAG, "Detected Felica Lite card");
+                    codes.add(new FeliCaLib.SystemCode(FeliCaLib.SYSTEMCODE_FELICA_LITE));
+                    liteMagic = true;
+                }
+
                 // Lets try to ping for an Octopus anyway
-                FeliCaLib.IDm octopusSystem = ft.pollingAndGetIDm(OctopusTransitData.SYSTEMCODE_OCTOPUS);
+                // Don't do it on lite as it may respond to any code
+                FeliCaLib.IDm octopusSystem = liteMagic ? null : ft.pollingAndGetIDm(OctopusTransitData.SYSTEMCODE_OCTOPUS);
                 if (octopusSystem != null) {
                     Log.d(TAG, "Detected Octopus card");
                     // Octopus has a special knocking sequence to allow unprotected reads, and does not
@@ -138,7 +150,7 @@ public class FelicaCard extends Card {
                     feedbackInterface.showCardType(OctopusTransitData.CARD_INFO);
                 }
 
-                FeliCaLib.IDm sztSystem = ft.pollingAndGetIDm(OctopusTransitData.SYSTEMCODE_SZT);
+                FeliCaLib.IDm sztSystem = liteMagic ? null : ft.pollingAndGetIDm(OctopusTransitData.SYSTEMCODE_SZT);
                 if (sztSystem != null) {
                     Log.d(TAG, "Detected Shenzhen Tong card");
                     // Because Octopus and SZT are similar systems, use the same knocking sequence in
@@ -186,6 +198,9 @@ public class FelicaCard extends Card {
                 } else if (sztMagic && code.getCode() == OctopusTransitData.SYSTEMCODE_SZT) {
                     Log.d(TAG, "Stuffing in SZT magic service code");
                     serviceCodes = new FeliCaLib.ServiceCode[]{new FeliCaLib.ServiceCode(OctopusTransitData.SERVICE_SZT)};
+                } else if (liteMagic && code.getCode() == FeliCaLib.SYSTEMCODE_FELICA_LITE) {
+                    Log.d(TAG, "Stuffing in Felica Lite magic service code");
+                    serviceCodes = new FeliCaLib.ServiceCode[]{new FeliCaLib.ServiceCode(FeliCaLib.SERVICE_FELICA_LITE_READONLY)};
                 } else {
                     serviceCodes = ft.getServiceCodeList();
                 }
@@ -206,12 +221,18 @@ public class FelicaCard extends Card {
 
                     ft.polling(systemCode);
 
-                    byte addr = 0;
-                    FeliCaLib.ReadResponse result = ft.readWithoutEncryption(serviceCode, addr);
-                    while (result != null && result.getStatusFlag1() == 0) {
-                        blocks.add(new FelicaBlock(addr, result.getBlockData()));
-                        addr++;
-                        result = ft.readWithoutEncryption(serviceCode, addr);
+                    try {
+                        byte addr = 0;
+                        FeliCaLib.ReadResponse result = ft.readWithoutEncryption(serviceCode, addr);
+                        while (result != null && result.getStatusFlag1() == 0) {
+                            blocks.add(new FelicaBlock(addr, result.getBlockData()));
+                            addr++;
+                            if (addr >= 0x20 && liteMagic)
+                                break;
+                            result = ft.readWithoutEncryption(serviceCode, addr);
+                        }
+                    } catch (TagLostException tl) {
+                        partialRead = true;
                     }
 
                     if (blocks.size() > 0) { // Most service codes appear to be empty...
@@ -219,10 +240,14 @@ public class FelicaCard extends Card {
                         services.add(new FelicaService(serviceCodeInt, blocksArray));
                         Log.d(TAG, "- Service code " + serviceCodeInt + " had " + blocks.size() + " blocks");
                     }
+                    if (partialRead)
+                        break;
                 }
 
                 FelicaService[] servicesArray = services.toArray(new FelicaService[0]);
                 systems.add(new FelicaSystem(code.getCode(), servicesArray));
+                if (partialRead)
+                    break;
             }
 
         } catch (TagLostException e) {

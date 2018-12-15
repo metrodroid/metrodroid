@@ -116,7 +116,7 @@ public class CardInfoActivity extends MetrodroidActivity {
 
                     String data = cursor.getString(cursor.getColumnIndex(CardsTableColumns.DATA));
 
-                    mCard = Card.fromXml(MetrodroidApplication.getInstance().getSerializer(), data);
+                    mCard = Card.fromXml(data);
                     mTransitData = mCard.parseTransitData();
 
                     SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(CardInfoActivity.this);
@@ -161,8 +161,7 @@ public class CardInfoActivity extends MetrodroidActivity {
                     actionBar.setSubtitle(mCardSerial);
 
                     Bundle args = new Bundle();
-                    args.putString(AdvancedCardInfoActivity.EXTRA_CARD,
-                            mCard.toXml(MetrodroidApplication.getInstance().getSerializer()));
+                    args.putString(AdvancedCardInfoActivity.EXTRA_CARD, mCard.toXml());
                     args.putParcelable(EXTRA_TRANSIT_DATA, mTransitData);
 
                     if (mTransitData instanceof UnauthorizedTransitData) {
@@ -296,8 +295,7 @@ public class CardInfoActivity extends MetrodroidActivity {
 
     private void showAdvancedInfo(Exception ex) {
         Intent intent = new Intent(this, AdvancedCardInfoActivity.class);
-        intent.putExtra(AdvancedCardInfoActivity.EXTRA_CARD,
-                mCard.toXml(MetrodroidApplication.getInstance().getSerializer()));
+        intent.putExtra(AdvancedCardInfoActivity.EXTRA_CARD, mCard.toXml());
         if (ex != null) {
             intent.putExtra(AdvancedCardInfoActivity.EXTRA_ERROR, ex);
         }

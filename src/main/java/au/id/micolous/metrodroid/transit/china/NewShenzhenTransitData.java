@@ -21,6 +21,7 @@ package au.id.micolous.metrodroid.transit.china;
 
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.support.annotation.NonNull;
 
 import java.util.Collections;
 import java.util.List;
@@ -100,18 +101,19 @@ public class NewShenzhenTransitData extends ChinaTransitData {
         }
 
         @Override
-        public TransitIdentity parseTransitIdentity(ChinaCard card) {
+        public TransitIdentity parseTransitIdentity(@NonNull ChinaCard card) {
             return new TransitIdentity(Utils.localizeString(R.string.card_name_szt), formatSerial(parseSerial(card)));
         }
 
         @Override
-        public TransitData parseTransitData(ChinaCard chinaCard) {
+        public TransitData parseTransitData(@NonNull ChinaCard chinaCard) {
             return new NewShenzhenTransitData(chinaCard);
         }
 
+        @NonNull
         @Override
-        public CardInfo getCardInfo() {
-            return CARD_INFO;
+        public List<CardInfo> getAllCards() {
+            return Collections.singletonList(CARD_INFO);
         }
     };
 
