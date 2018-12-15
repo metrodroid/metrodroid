@@ -72,7 +72,7 @@ public class XmlPullParserIterator implements Iterator<String> {
         for (int i=0; i<mxpp.getAttributeCount(); i++) {
             mSerializer.attribute(mxpp.getAttributeNamespace(i),
                     mxpp.getAttributeName(i),
-                    mxpp.getAttributeValue(i));
+                    Utils.filterBadXMLChars(mxpp.getAttributeValue(i)));
         }
     }
 
@@ -81,7 +81,7 @@ public class XmlPullParserIterator implements Iterator<String> {
     }
 
     private void copyText() throws IOException {
-        mSerializer.text(mxpp.getText());
+        mSerializer.text(Utils.filterBadXMLChars(mxpp.getText()));
     }
 
 

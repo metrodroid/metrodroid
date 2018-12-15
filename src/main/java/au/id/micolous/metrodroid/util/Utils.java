@@ -1157,4 +1157,43 @@ public class Utils {
     public static <T> Iterator<T> singletonIterator(@NonNull T singleton) {
         return Collections.singleton(singleton).iterator();
     }
+
+    /**
+     * There is some circumstance where the OLD CEPASTransaction could contain null bytes,
+     * which would then be serialized as <code>&amp;#0;</code>.
+     *
+     * From this Android commit, it is no longer possible to serialise a null byte:
+     * https://android.googlesource.com/platform/libcore/+/ff42219e3ea3d712f931ae7f26af236339b5cf23%5E%21/#F2
+     *
+     * However, these entities may still be deserialised. Importing an old file that
+     * contains a null byte in an attribute will trigger an error if we try to re-serialise
+     * it with kxml2.
+     *
+     * This runs a filter to drop characters that fail these rules:
+     * https://android.googlesource.com/platform/libcore/+/master/xml/src/main/java/com/android/org/kxml2/io/KXmlSerializer.java#155
+     *
+     * NOTE: This does not escape entities. This only removes things that can't be properly
+     * encoded.
+     *
+     * @param input Input data to strip characters from
+     * @return Data without characters that can't be encoded.
+     */
+    public static String filterBadXMLChars(String input) {
+        StringBuilder o = new StringBuilder();
+        for (int i = 0; i < input.length(); i++) {
+            final char c = input.charAt(i);
+
+            if (c == '\n' || c == '\r' || c == '\t' ||
+                    (c >= 0x20 && c <= 0xd7ff) ||
+                    (c >= 0xe000 && c <= 0xfffd)) {
+                o.append(c);
+            } else if (Character.isHighSurrogate(c) && i < input.length() - 1) {
+                o.append(c);
+                o.append(input.charAt(i++));
+            }
+
+            // Other characters invalid.
+        }
+        return o.toString();
+    }
 }
