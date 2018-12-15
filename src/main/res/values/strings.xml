@@ -1442,5 +1442,6 @@
     <string name="rkf_status_temp_disabled">Temporarily disabled or suspended</string>
     <!-- Translators: describes the status of a card or transaction -->
     <string name="rkf_status_not_ok">Permanently disabled</string>
+    <!-- Translators: MCT = MIFARE Classic Tool - an Android MIFARE Classic card reader / writer -->
     <string name="import_mct_file">Import from MCT file</string>
 </resources>
