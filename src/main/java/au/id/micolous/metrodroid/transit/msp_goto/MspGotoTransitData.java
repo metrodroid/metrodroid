@@ -73,8 +73,10 @@ public class MspGotoTransitData extends NextfareTransitData {
             return super.parseTransitIdentity(card, NAME);
         }
 
-        private boolean check(ClassicSector sector0) {
+        @Override
+        public boolean earlyCheck(@NonNull List<ClassicSector> sectors) {
             try {
+                ClassicSector sector0 = sectors.get(0);
                 byte[] block1 = sector0.getBlock(1).getData();
                 if (!Arrays.equals(Arrays.copyOfRange(block1, 1, 15), BLOCK1)) {
                     return false;
@@ -92,39 +94,14 @@ public class MspGotoTransitData extends NextfareTransitData {
         }
 
         @Override
-        public boolean check(@NonNull ClassicCard card) {
-            try {
-                return check(card.getSector(0));
-            } catch (UnauthorizedException ex) {
-                // It is not possible to identify the card without a key
-                return false;
-            } catch (IndexOutOfBoundsException ignored) {
-                // If the sector/block number is too high, it's not for us
-                return false;
-            }
-        }
-
-        @Override
         public TransitData parseTransitData(@NonNull ClassicCard classicCard) {
             return new MspGotoTransitData(classicCard);
-        }
-
-        @Override
-        public CardInfo earlyCardInfo(List<ClassicSector> sectors) {
-            if (check(sectors.get(0)))
-                return CARD_INFO;
-            return null;
         }
 
         @NonNull
         @Override
         public List<CardInfo> getAllCards() {
             return Collections.singletonList(CARD_INFO);
-        }
-
-        @Override
-        public int earlySectors() {
-            return 1;
         }
     };
 

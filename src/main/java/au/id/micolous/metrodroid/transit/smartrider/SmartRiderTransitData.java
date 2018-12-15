@@ -30,6 +30,7 @@ import java.util.List;
 import au.id.micolous.farebot.R;
 import au.id.micolous.metrodroid.card.classic.ClassicCard;
 import au.id.micolous.metrodroid.card.classic.ClassicCardTransitFactory;
+import au.id.micolous.metrodroid.card.classic.ClassicSector;
 import au.id.micolous.metrodroid.key.ClassicSectorKey;
 import au.id.micolous.metrodroid.transit.CardInfo;
 import au.id.micolous.metrodroid.transit.TransactionTrip;
@@ -116,9 +117,9 @@ public class SmartRiderTransitData extends TransitData {
         }
     }
 
-    private static CardType detectKeyType(ClassicCard card) {
+    private static CardType detectKeyType(List<ClassicSector> sectors) {
         try {
-            ClassicSectorKey key = card.getSector(7).getKey();
+            ClassicSectorKey key = sectors.get(7).getKey();
 
             Log.d(TAG, "Checking for MyWay key...");
             if (Utils.checkKeyHash(key, MYWAY_KEY_SALT, MYWAY_KEY_DIGEST) >= 0) {
@@ -146,29 +147,46 @@ public class SmartRiderTransitData extends TransitData {
 
     public static final ClassicCardTransitFactory FACTORY = new ClassicCardTransitFactory() {
         @Override
-        public boolean check(@NonNull ClassicCard card) {
-            return detectKeyType(card) != CardType.UNKNOWN;
+        public boolean earlyCheck(@NonNull List<ClassicSector> sectors) {
+            return detectKeyType(sectors) != CardType.UNKNOWN;
         }
 
         @Override
         public TransitIdentity parseTransitIdentity(@NonNull ClassicCard card) {
-            return new TransitIdentity(detectKeyType(card).getFriendlyName(), getSerialData(card));
+            return new TransitIdentity(detectKeyType(card.getSectors()).getFriendlyName(), getSerialData(card));
+        }
+
+        @Override
+        public CardInfo earlyCardInfo(@NonNull List<ClassicSector> sectors) {
+            switch (detectKeyType(sectors)) {
+                case MYWAY:
+                    return MYWAY_CARD_INFO;
+                case SMARTRIDER:
+                    return SMARTRIDER_CARD_INFO;
+                default:
+                    return null;
+            }
         }
 
         @NonNull
         @Override
         public List<CardInfo> getAllCards() {
-            return Arrays.asList(MYWAY_CARD_INFO, SMARTRIDER_CARD_INFO);
+            return Arrays.asList(SMARTRIDER_CARD_INFO, MYWAY_CARD_INFO);
         }
 
         @Override
         public TransitData parseTransitData(@NonNull ClassicCard classicCard) {
             return new SmartRiderTransitData(classicCard);
         }
+
+        @Override
+        public int earlySectors() {
+            return 8;
+        }
     };
 
     private SmartRiderTransitData(ClassicCard card) {
-        mCardType = detectKeyType(card);
+        mCardType = detectKeyType(card.getSectors());
         mSerialNumber = getSerialData(card);
 
         // Read trips.

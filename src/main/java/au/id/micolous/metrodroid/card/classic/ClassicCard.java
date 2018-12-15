@@ -449,9 +449,10 @@ public class ClassicCard extends Card {
         int secnum = sectors.size();
         for (ClassicCardTransitFactory factory : FACTORIES) {
             if (factory.earlySectors() == secnum) {
-                CardInfo ci;
+                CardInfo ci = null;
                 try {
-                    ci = factory.earlyCardInfo(sectors);
+                    if (factory.earlyCheck(sectors))
+                        ci = factory.earlyCardInfo(sectors);
                 } catch (Exception e) {
                     ci = null;
                 }
@@ -545,6 +546,11 @@ public class ClassicCard extends Card {
     }
 
     private static class FallbackFactory implements ClassicCardTransitFactory {
+        @Override
+        public boolean earlyCheck(@NonNull List<ClassicSector> sectors) {
+            return false;
+        }
+
         @Override
         public boolean check(@NonNull ClassicCard classicCard) {
             String fallback = MetrodroidApplication.getMfcFallbackReader();

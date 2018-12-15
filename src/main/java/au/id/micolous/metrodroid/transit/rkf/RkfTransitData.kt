@@ -129,16 +129,10 @@ data class RkfTransitData internal constructor (
         )
 
         val FACTORY = object : ClassicCardTransitFactory {
-            override fun earlyCardInfo(sectors: MutableList<ClassicSector>): CardInfo? {
-                val sector0 = sectors[0]
-                if (!check(sector0))
-                    return null
-                val issuer = getIssuer(sector0)
-                return issuerMap[issuer]
-            }
+            override fun earlyCardInfo(sectors: MutableList<ClassicSector>) = issuerMap[getIssuer(sectors[0])]
 
-            private fun check(sector0: ClassicSector) = try {
-                Utils.checkKeyHash(sector0.key, "rkf",
+            override fun earlyCheck(sectors: MutableList<ClassicSector>) = try {
+                Utils.checkKeyHash(sectors[0].key, "rkf",
                         // Most cards
                         "b9ae9b2f6855aa199b4af7bdc130ba1c",
                         "2107bb612627fb1dfe57348fea8a8b58",
@@ -149,13 +143,7 @@ data class RkfTransitData internal constructor (
                 false
             }
 
-
-            override fun check(card: ClassicCard) = try {
-                check(card.getSector(0))
-            } catch (ignored: IndexOutOfBoundsException) {
-                // If that sector number is too high, then it's not for us.
-                false
-            }
+            override fun earlySectors() = 1
 
             override fun getAllCards() = ArrayList(issuerMap.values)
 

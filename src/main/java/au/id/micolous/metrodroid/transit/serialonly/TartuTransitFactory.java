@@ -65,13 +65,13 @@ public class TartuTransitFactory implements ClassicCardTransitFactory {
     }
 
     @Override
-    public boolean check(@NonNull ClassicCard card) {
+    public boolean earlyCheck(@NonNull List<ClassicSector> sectors) {
         try {
-            ClassicSector sector0 = card.getSector(0);
+            ClassicSector sector0 = sectors.get(0);
             byte[] b = sector0.getBlock(1).getData();
             if (Utils.byteArrayToInt(b, 2, 4) != 0x03e103e1)
                 return false;
-            ClassicSector sector1 = card.getSector(1);
+            ClassicSector sector1 = sectors.get(1);
             b = sector1.getBlock(0).getData();
             if (!Arrays.equals(Utils.byteArraySlice(b, 7, 9), Utils.stringToByteArray("pilet.ee:")))
                 return false;
@@ -83,6 +83,11 @@ public class TartuTransitFactory implements ClassicCardTransitFactory {
             // If that sector number is too high, then it's not for us.
         }
         return false;
+    }
+
+    @Override
+    public int earlySectors() {
+        return 2;
     }
 
     @Override

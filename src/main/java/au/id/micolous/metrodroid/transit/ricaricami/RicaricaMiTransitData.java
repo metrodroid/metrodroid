@@ -194,28 +194,16 @@ public class RicaricaMiTransitData extends En1545TransitData {
     };
 
     public static final ClassicCardTransitFactory FACTORY = new ClassicCardTransitFactory() {
-        private boolean check(ClassicSector sector0) {
+        @Override
+        public boolean earlyCheck(@NonNull List<ClassicSector> sectors) {
             try {
                 for (int i = 1; i < 3; i++) {
-                    byte[] block = sector0.getBlock(i).getData();
+                    byte[] block = sectors.get(0).getBlock(i).getData();
                     for (int j = (i == 1 ? 1 : 0); j < 8; j++)
                         if (Utils.byteArrayToInt(block, j * 2, 2) != RICARICA_MI_ID)
                             return false;
                 }
                 return true;
-            } catch (UnauthorizedException ex) {
-                // Not ours
-                return false;
-            } catch (IndexOutOfBoundsException ignored) {
-                // If the sector/block number is too high, it's not for us
-                return false;
-            }
-        }
-
-        @Override
-        public boolean check(@NonNull ClassicCard card) {
-            try {
-                return check(card.getSector(0));
             } catch (UnauthorizedException ex) {
                 // Not ours
                 return false;
@@ -238,13 +226,6 @@ public class RicaricaMiTransitData extends En1545TransitData {
         @Override
         public int earlySectors() {
             return 1;
-        }
-
-        @Override
-        public CardInfo earlyCardInfo(List<ClassicSector> sectors) {
-            if (check(sectors.get(0)))
-                return CARD_INFO;
-            return null;
         }
 
         @NonNull

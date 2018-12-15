@@ -192,16 +192,16 @@ public class BilheteUnicoSPTransitData extends TransitData {
 
     public static final ClassicCardTransitFactory FACTORY = new ClassicCardTransitFactory () {
         @Override
-        public boolean check (@NonNull ClassicCard card) {
+        public boolean earlyCheck(@NonNull List<ClassicSector> sectors) {
             try {
                 // Normally both sectors are identical but occasionally one of them might get corrupted,
                 // so tolerate one failure
-                if (!checkCRC16Sector(card.getSector(3))
-                        && !checkCRC16Sector(card.getSector(4)))
+                if (!checkCRC16Sector(sectors.get(3))
+                        && !checkCRC16Sector(sectors.get(4)))
                     return false;
                 for (int sectoridx = 5; sectoridx <= 8; sectoridx++) {
                     int addr = sectoridx * 4 + 1;
-                    ClassicSector sector = card.getSector(sectoridx);
+                    ClassicSector sector = sectors.get(sectoridx);
                     if (!checkValueBlock(sector.getBlock(1), addr))
                         return false;
                     if (!checkValueBlock(sector.getBlock(2), addr))
@@ -227,15 +227,7 @@ public class BilheteUnicoSPTransitData extends TransitData {
 
         @Override
         public int earlySectors() {
-            return 4;
-        }
-
-        @Override
-        public CardInfo earlyCardInfo(List<ClassicSector> sectors) {
-            if (checkCRC16Sector(sectors.get(3))
-                    && !Utils.isAllZero(sectors.get(3).getBlock(0).getData()))
-                return CARD_INFO;
-            return null;
+            return 9;
         }
 
         @NonNull

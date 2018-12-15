@@ -114,20 +114,11 @@ public class KievTransitData extends TransitData {
 
     public static final ClassicCardTransitFactory FACTORY = new ClassicCardTransitFactory() {
 
-        private boolean check(ClassicSector sector1) {
-            try {
-                return Utils.checkKeyHash(sector1.getKey(), "kiev",
-                        "902a69a9d68afa1ddac7b61a512f7d4f") >= 0;
-            } catch (IndexOutOfBoundsException | UnauthorizedException ignored) {
-                // If that sector number is too high, then it's not for us.
-            }
-            return false;
-        }
-
         @Override
-        public boolean check(@NonNull ClassicCard card) {
+        public boolean earlyCheck(@NonNull List<ClassicSector> sectors) {
             try {
-                return check(card.getSector(1));
+                return Utils.checkKeyHash(sectors.get(1).getKey(), "kiev",
+                        "902a69a9d68afa1ddac7b61a512f7d4f") >= 0;
             } catch (IndexOutOfBoundsException | UnauthorizedException ignored) {
                 // If that sector number is too high, then it's not for us.
             }
@@ -153,13 +144,6 @@ public class KievTransitData extends TransitData {
         @Override
         public List<CardInfo> getAllCards() {
             return Collections.singletonList(CARD_INFO);
-        }
-
-        @Override
-        public CardInfo earlyCardInfo(List<ClassicSector> sectors) {
-            if (check(sectors.get(1)))
-                return CARD_INFO;
-            return null;
         }
     };
 }

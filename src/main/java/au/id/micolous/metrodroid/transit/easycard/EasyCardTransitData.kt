@@ -27,6 +27,7 @@ import au.id.micolous.farebot.R
 import au.id.micolous.metrodroid.card.CardType
 import au.id.micolous.metrodroid.card.classic.ClassicCard
 import au.id.micolous.metrodroid.card.classic.ClassicCardTransitFactory
+import au.id.micolous.metrodroid.card.classic.ClassicSector
 import au.id.micolous.metrodroid.transit.*
 import au.id.micolous.metrodroid.util.Utils
 import kotlinx.android.parcel.Parcelize
@@ -90,9 +91,9 @@ data class EasyCardTransitData internal constructor(
         }
 
         val FACTORY = object: ClassicCardTransitFactory {
-            override fun check(card: ClassicCard): Boolean {
+            override fun earlyCheck(sectors: MutableList<ClassicSector>): Boolean {
                 val data: ByteArray? = try {
-                    (card.getSector(0))?.getBlock(1)?.data
+                    sectors[0].getBlock(1)?.data
                 } catch (e: Exception) {
                     null
                 }
@@ -100,7 +101,7 @@ data class EasyCardTransitData internal constructor(
                 return data != null && Arrays.equals(data, MAGIC)
             }
 
-            override fun earlySectors() = 0
+            override fun earlySectors() = 1
 
             override fun parseTransitIdentity(card: ClassicCard) = TransitIdentity(NAME, null)
 

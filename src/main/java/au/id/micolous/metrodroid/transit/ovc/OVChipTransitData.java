@@ -213,11 +213,8 @@ public class OVChipTransitData extends TransitData {
 
     public static final ClassicCardTransitFactory FACTORY = new ClassicCardTransitFactory() {
         @Override
-        public boolean check(@NonNull ClassicCard classicCard) {
-            if (classicCard.getSectors().size() != 40)
-                return false;
-
-            ClassicSector sector = classicCard.getSector(0);
+        public boolean earlyCheck(@NonNull List<ClassicSector> sectors) {
+            ClassicSector sector = sectors.get(0);
 
             if (sector instanceof UnauthorizedClassicSector || sector instanceof InvalidClassicSector)
                 return false;
@@ -249,18 +246,6 @@ public class OVChipTransitData extends TransitData {
         @Override
         public List<CardInfo> getAllCards() {
             return Collections.singletonList(CARD_INFO);
-        }
-
-        @Override
-        public CardInfo earlyCardInfo(List<ClassicSector> sectors) {
-            ClassicSector sector = sectors.get(0);
-
-            // Starting at 0×010, 8400 0000 0603 a000 13ae e401 xxxx 0e80 80e8 seems to exist on all OVC's (with xxxx different).
-            // http://www.ov-chipkaart.de/back-up/3-8-11/www.ov-chipkaart.me/blog/index7e09.html?page_id=132
-            byte[] blockData = sector.readBlocks(1, 1);
-            if (Arrays.equals(Arrays.copyOfRange(blockData, 0, 11), OVC_HEADER))
-                return CARD_INFO;
-            return null;
         }
     };
 

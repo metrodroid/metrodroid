@@ -85,43 +85,8 @@ public class ChcMetrocardTransitData extends ErgTransitData {
 
     public static final ClassicCardTransitFactory FACTORY = new ErgTransitFactory() {
         @Override
-        public boolean check(@NonNull ClassicCard card) {
-            if (!super.check(card)) {
-                return false;
-            }
-
-            ErgMetadataRecord metadataRecord = ErgTransitData.getMetadataRecord(card);
-            return metadataRecord != null && metadataRecord.getAgency() == AGENCY_ID;
-        }
-
-        @Override
-        public boolean check(ClassicSector sector0) {
-            if (!super.check(sector0)) {
-                return false;
-            }
-
-            byte[] file2 = sector0.getBlock(2).getData();
-            ErgMetadataRecord metadataRecord = ErgMetadataRecord.recordFromBytes(file2);
-            return metadataRecord != null && metadataRecord.getAgency() == AGENCY_ID;
-        }
-
-        @Override
-        public TransitIdentity parseTransitIdentity(@NonNull ClassicCard card) {
-            byte[] file2 = card.getSector(0).getBlock(2).getData();
-            ErgMetadataRecord metadata = ErgMetadataRecord.recordFromBytes(file2);
-            return new TransitIdentity(NAME, metadata.getCardSerialHex());
-        }
-
-        @Override
         public TransitData parseTransitData(@NonNull ClassicCard classicCard) {
             return new ChcMetrocardTransitData(classicCard);
-        }
-
-        @Override
-        public CardInfo earlyCardInfo(List<ClassicSector> sectors) {
-            if (check(sectors.get(0)))
-                return CARD_INFO;
-            return null;
         }
 
         @Override

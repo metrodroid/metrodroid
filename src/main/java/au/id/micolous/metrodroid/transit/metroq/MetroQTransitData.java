@@ -105,20 +105,9 @@ public class MetroQTransitData extends TransitData {
 
     public static final ClassicCardTransitFactory FACTORY = new ClassicCardTransitFactory() {
         @Override
-        public boolean check(@NonNull ClassicCard card) {
+        public boolean earlyCheck(@NonNull List<ClassicSector> sectors) {
             try {
-                return check(card.getSector(0));
-            } catch (UnauthorizedException ex) {
-                // Not ours
-                return false;
-            } catch (IndexOutOfBoundsException ignored) {
-                // If the sector/block number is too high, it's not for us
-                return false;
-            }
-        }
-
-        private boolean check(ClassicSector sector) {
-            try {
+                ClassicSector sector = sectors.get(0);
                 for (int i = 1; i < 3; i++) {
                     byte[] block = sector.getBlock(i).getData();
                     for (int j = (i == 1 ? 1 : 0); j < 8; j++)
@@ -139,13 +128,6 @@ public class MetroQTransitData extends TransitData {
         @Override
         public int earlySectors() {
             return 1;
-        }
-
-        @Override
-        public CardInfo earlyCardInfo(List<ClassicSector> sectors) {
-            if (check(sectors.get(0)))
-                return CARD_INFO;
-            return null;
         }
 
         @Override
