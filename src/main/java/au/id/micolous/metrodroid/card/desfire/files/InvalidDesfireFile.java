@@ -18,10 +18,13 @@
  */
 package au.id.micolous.metrodroid.card.desfire.files;
 
-import au.id.micolous.metrodroid.card.desfire.settings.DesfireFileSettings;
-
 import org.simpleframework.xml.Element;
 import org.simpleframework.xml.Root;
+
+import au.id.micolous.farebot.R;
+import au.id.micolous.metrodroid.card.desfire.settings.DesfireFileSettings;
+import au.id.micolous.metrodroid.ui.ListItem;
+import au.id.micolous.metrodroid.util.Utils;
 
 @Root(name = "file")
 public class InvalidDesfireFile extends DesfireFile {
@@ -42,5 +45,12 @@ public class InvalidDesfireFile extends DesfireFile {
     @Override
     public byte[] getData() {
         throw new IllegalStateException(String.format("Invalid file: %s", mErrorMessage));
+    }
+
+    @Override
+    public ListItem getRawData() {
+        return new ListItem(Utils.localizeString(R.string.invalid_file_title_format,
+                Utils.intToHex(getId()),
+                getErrorMessage()));
     }
 }

@@ -1196,4 +1196,16 @@ public class Utils {
         }
         return o.toString();
     }
+
+    @NonNull
+    public static String intToHex(int v) {
+        //noinspection StringConcatenation
+        return "0x" + Integer.toHexString(v);
+    }
+
+    @NonNull
+    public static String longToHex(long v) {
+        //noinspection StringConcatenation
+        return "0x" + Long.toHexString(v);
+    }
 }

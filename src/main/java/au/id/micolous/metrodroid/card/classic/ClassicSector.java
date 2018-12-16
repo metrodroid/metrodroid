@@ -21,17 +21,24 @@
 
 package au.id.micolous.metrodroid.card.classic;
 
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-
-import au.id.micolous.metrodroid.key.ClassicSectorKey;
-import au.id.micolous.metrodroid.xml.Base64String;
 
 import org.simpleframework.xml.Attribute;
 import org.simpleframework.xml.ElementList;
 import org.simpleframework.xml.Root;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
+
+import au.id.micolous.farebot.R;
+import au.id.micolous.metrodroid.key.ClassicSectorKey;
+import au.id.micolous.metrodroid.ui.ListItem;
+import au.id.micolous.metrodroid.ui.ListItemRecursive;
+import au.id.micolous.metrodroid.util.Utils;
+import au.id.micolous.metrodroid.xml.Base64String;
 
 @Root(name = "sector")
 public class ClassicSector {
@@ -86,6 +93,28 @@ public class ClassicSector {
         }
 
         return k;
+    }
+
+    @NonNull
+    public ListItem getRawData(@NonNull String sectorIndex, @Nullable String key) {
+        List<ListItem> bli = new ArrayList<>();
+        for (ClassicBlock block : getBlocks()) {
+            bli.add(new ListItemRecursive(
+                    Utils.localizeString(R.string.block_title_format,
+                            Integer.toString(block.getIndex())),
+                    block.getType(),
+                    Collections.singletonList(new ListItem(null, Utils.getHexDump(block.getData())))
+            ));
+        }
+        if (isEmpty()) {
+            return new ListItemRecursive(
+                    Utils.localizeString(R.string.sector_title_format_empty, sectorIndex),
+                    key, bli);
+        }
+
+        return new ListItemRecursive(
+                Utils.localizeString(R.string.sector_title_format, sectorIndex),
+                key, bli);
     }
 
     public byte[] readBlocks(int startBlock, int blockCount) throws IndexOutOfBoundsException {

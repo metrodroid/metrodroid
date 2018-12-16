@@ -20,12 +20,18 @@
 
 package au.id.micolous.metrodroid.card.classic;
 
-import au.id.micolous.metrodroid.card.UnauthorizedException;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 
 import org.simpleframework.xml.Attribute;
 import org.simpleframework.xml.Root;
 
 import java.util.List;
+
+import au.id.micolous.farebot.R;
+import au.id.micolous.metrodroid.card.UnauthorizedException;
+import au.id.micolous.metrodroid.ui.ListItem;
+import au.id.micolous.metrodroid.util.Utils;
 
 @Root(name = "sector")
 public class UnauthorizedClassicSector extends ClassicSector {
@@ -52,5 +58,11 @@ public class UnauthorizedClassicSector extends ClassicSector {
     @Override
     public ClassicBlock getBlock(int index) {
         throw new UnauthorizedException();
+    }
+
+    @NonNull
+    @Override
+    public ListItem getRawData(@NonNull String sectorIndex, @Nullable String key) {
+        return new ListItem(Utils.localizeString(R.string.unauthorized_sector_title_format, sectorIndex));
     }
 }

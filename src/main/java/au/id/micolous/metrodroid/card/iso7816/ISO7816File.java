@@ -26,9 +26,14 @@ import org.simpleframework.xml.Element;
 import org.simpleframework.xml.ElementList;
 import org.simpleframework.xml.Root;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import au.id.micolous.farebot.R;
+import au.id.micolous.metrodroid.ui.ListItem;
+import au.id.micolous.metrodroid.ui.ListItemRecursive;
+import au.id.micolous.metrodroid.util.Utils;
 import au.id.micolous.metrodroid.xml.Base64String;
 
 /**
@@ -103,5 +108,24 @@ public class ISO7816File {
 
     public ISO7816Selector getSelector() {
         return mSelector;
+    }
+
+    public ListItem showRawData(String selectorStr) {
+        List<ListItem> recList = new ArrayList<>();
+        byte[] binaryData = getBinaryData();
+        byte[] fciData = getFci();
+        if (binaryData != null)
+            recList.add(ListItemRecursive.collapsedValue(Utils.localizeString(R.string.binary_title_format),
+                    Utils.getHexDump(binaryData)));
+        if (fciData != null)
+            recList.add(ListItemRecursive.collapsedValue(Utils.localizeString(R.string.file_fci),
+                    Utils.getHexDump(fciData)));
+        List<ISO7816Record> records = getRecords();
+        for (ISO7816Record record : records)
+            recList.add(ListItemRecursive.collapsedValue(Utils.localizeString(R.string.record_title_format, record.getIndex()),
+                    Utils.getHexDump(record.getData())));
+        return new ListItemRecursive(Utils.localizeString(R.string.file_title_format, selectorStr),
+                Utils.localizePlural(R.plurals.record_count, records.size(), records.size()),
+                recList);
     }
 }

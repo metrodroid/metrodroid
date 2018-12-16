@@ -20,11 +20,18 @@
 
 package au.id.micolous.metrodroid.card.classic;
 
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
+
 import org.simpleframework.xml.Attribute;
 import org.simpleframework.xml.Root;
 
 import java.util.Collections;
 import java.util.List;
+
+import au.id.micolous.farebot.R;
+import au.id.micolous.metrodroid.ui.ListItem;
+import au.id.micolous.metrodroid.util.Utils;
 
 @Root(name = "sector")
 public class InvalidClassicSector extends ClassicSector {
@@ -56,5 +63,12 @@ public class InvalidClassicSector extends ClassicSector {
     @Override
     public ClassicBlock getBlock(int index) throws IndexOutOfBoundsException {
         throw new IndexOutOfBoundsException("InvalidClassicSector has no blocks");
+    }
+
+    @NonNull
+    @Override
+    public ListItem getRawData(@NonNull String sectorIndex, @Nullable String key) {
+        return new ListItem(Utils.localizeString(R.string.invalid_sector_title_format, sectorIndex,
+                getError()));
     }
 }
