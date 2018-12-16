@@ -78,7 +78,7 @@ City Union | :cn: Mainland China | :new:
 [Clipper][1] | :us: San Francisco, CA, USA
 [Compass][41] | :canada: Vancouver, BC, Canada | :new: `SINGLE`
 [Cubic Nextfare][33] | :earth_americas: _many locations_ | :new: :closed_lock_with_key: `MFC`
-[EasyCard][66] | :taiwan: Taipei, Taiwan | :new: :closed_lock_with_key: `MFC`
+[EasyCard][66] | :taiwan: Taipei, Taiwan | :closed_lock_with_key: `MFC`
 [Edy][12] | :jp: Japan
 [Envibus][46] | :fr: Sophia Antipolis, France | :new:
 [ERG][35] | :earth_asia: _many locations_ | :new: :closed_lock_with_key: `MFC`
