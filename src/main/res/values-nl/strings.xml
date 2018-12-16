@@ -836,10 +836,10 @@
     <string name="card_name_zolotaya_korona">Zolotaya Korona</string>
     <string name="location_russia">Rusland</string>
     <string name="zolotaya_korona_region">Regio</string>
-    <string name="card_name_yaroslavl_etk">ETK Iaroslavl</string>
+    <string name="card_name_yaroslavl_etk">Yaroslavl ETK</string>
     <string name="location_yaroslavl">Iaroslavl</string>
-    <string name="card_name_krasnodar_etk">ETK Krasnodar</string>
-    <string name="location_krasnodar">Krasnodar</string>
+    <string name="card_name_krasnodar_etk">Krasnodar ETK</string>
+    <string name="location_krasnodar">Krasnodar, Rusland</string>
 <string name="location_denmark">Denemarken</string>
     <string name="location_stockholm">Stockholm, Zweden</string>
     <string name="rkf_card_status">Kaartstatus</string>

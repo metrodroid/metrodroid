@@ -1,47 +1,77 @@
-<?xml version='1.0' encoding='UTF-8'?>
+<?xml version="1.0" encoding="utf-8"?>
 <resources><string name="market_title">Metrodroid (før Farebot M)</string>
 
     <string name="market_short_desc">Metrodroid leser informasjon fra noen NFC-smartkort for kollektivtransport.</string>
 
-    <string name="market_long_desc">Metrodroid, tidligere Farebot M, leser informasjon fra noen NFC-smartkort til bruk for offentlig transport.
-\n
-\nDette er en avgrening av Eric Butler\\\'s Farebot-prosjekt, med støtte for ytterligere kort og feilrettinger.
-\nStøttede kort:
-\n- Bilhete Único - São Paulo, Brasil [1] [2] [5]
+    <string name="market_long_desc">Metrodroid, leser informasjon fra noen NFC-smartkort til bruk for offentlig transport. 
+\n 
+\nDette er en avgrening av Eric Butler sitt Farebot-prosjekt, med støtte for ytterligere kort og feilrettinger. 
+\nStøttede kort: 
+\n- AT HOP - Auckland, Ny-Zealand [0] [4]
+\n- Beijing Municipal Card - Beijing, Kina [0]
+\n- Bilhete Único - São Paulo, Brasil [1] [2]
+\n- CharlieCard - Boston, MA, USA [0] [1] [2]
+\n- City Union, T-Union - Fastlandskina [0]
 \n- Clipper - San Francisco, CA, USA
-\n- EZ-Link - Singapore [3]
-\n- Go card - Brisbane og Sørøst-Queensland, Australia [0] [1] [2]
-\n- Manly hurtigferge - Sydney, NSW, Australia [0] [1] [2]
-\n- Matkakortti, HSL - Finland
-\n- Myki - Melbourne (og omegn), VIC, Australia [0] [4]
+\n- Compass (single-use tickets) - Vancouver, BC, Canada [0]
+\n- EasyCard - Taipei, Taiwan [1] [2]
+\n- EZ-Link, NETS Flashpay - Singapore [3]
+\n- Go card - Brisbane and South East Queensland, Australia [0] [1] [2]
+\n- Go-to Card - Minneapolis-St. Paul, MN, USA [0] [1] [2]
+\n- Hop Fastpass - Portland, OR, USA [0] [4]
+\n- HSL, Matkakortti - Finland
+\n- Intercode (Envibus, Navigo, OùRA, TaM, TransGironde) - Frankrike
+\n- IstanbulKart - Istanbul, Tyrkia [0] [4]
+\n- Kartu Multi Trip - Jakarta, Indonesia
+\n- Kiev Metro - Kiev, Ukraina [0] [1] [2]
+\n- Krasnodar ETK - Krasnodar, Russia [0] [1] [2]
+\n- Leap - Irland [0] [6]
+\n- Lisboa Viva - Lisboa, Portugal [0]
+\n- Manly Fast Ferry - Sydney, NSW, Australia [0] [1] [2]
+\n- Metrocard - Christchurch, Ny-Zealand [0] [1] [2]
+\n- Mobib - Brussels, Belgia [0]
+\n- Myki - Melbourne (and surrounds), VIC, Australia [0] [4]
 \n- MyWay - Australian Capital Territory, Australia [0] [1] [2]
-\n- NETS Flashpay - Singapore
 \n- Octopus - Hongkong [0]
 \n- Opal - Sydney (og omegn), NSW, Australia [0]
+\n- Opus - Québec, Canada [0]
 \n- ORCA - Seattle, WA, USA
 \n- OV-chipkaart - Nederland [1] [2]
-\n- Shenzhen Tong - Shenzong, Guangdong-provinsen, China [0]
-\n- SmartRider - Vest-Australia, Australia [0] [1] [2]
+\n- Podorozhnik - Sankt-Petersburg, Russland [0] [1] [2]
+\n- Rav-Kav - Israel [0]
+\n- Rejsekort - Norge [0] [1] [2]
+\n- RicaricaMi - Milan, Italia [0]
+\n- Shenzhen Tong - Shenzhen, Guangdong-provisen, Kina [0]
+\n- SLAccess - Stockholm, Sverige [0] [1] [2]
+\n- SmartRider - Western Australia, Australia [0] [1] [2]
+\n- Strelka - Moscow, Russland [0] [1] [4]
 \n- Suica, IOCOA, PASMO, Edy - Japan
+\n- SunCard - Orlando, FL, USA [0] [1] [2] [4]
+\n- Tartu Bus - Tartu, Estland [0] [1] [4]
+\n- T-Money - Sør-Korea [0]
 \n- Transit Access Pass - Los Angeles, CA, USA [0] [1] [2]
-\n
-\n[0]: Nytt i Metrodroid.
-\n[1]: Ikke kompatibel med alle enheter (MIFARE Classic).
-\n[2]: Krypteringsnøkler kreves for å lese dette kortet.
-\n[3]: Ikke kompatibelt med alle enheter (CEPAS).
-\n[4]: Kun kortnummeret kan leses.
-\n[5]: Tilbakefallsleser -- må skrus på manuelt i programmets innstillinger.
-\n
-\nEn NFC-kompatibel telefon kreves for å kunne lese kort.
-\n
-\nDu trenger et NXP NFC-brikkesett i enheten din for å kunne lese MIFARE Classic-kort. Noen telefoner har NFC-briker fra andre fabrikanter, som ikke kan lese MIFARE Classic-kort (f.eks. Nexus 4, Nexus 5, Samsung Galaxy S4). Sjekk Om-skjermen i programmet for å bestemme hvorvidt din enhet støtter MIFARE Classic.
-\n
-\nNoen agenturer har krypterte kort. Du må hente krypteringsnøkler for å kunne lese dem. Disse er generelt unike for hvert kort. Beklager, jeg kan ikke hjelpe deg med dette.
-\n
-\nFor noen agenturers kort kan det å bruke Cubic Nextfare på MIFARE Classic også fungere.
-\n
-\nFor mer informasjon om hvilke tilganger som behøves, les personvernspraksisen.
-\n
+\n- Troika - Moskva, Russland [0] [1] [2]
+\n- Ventra (single-use tickets) - Chicago, IL, USA [0]
+\n- Wuhan Tong - Wuhan, Hubei-provisnen, Kina [0]
+\n- Yaroslavl ETK - Yaroslavl, Russland [0] [1] [2]
+\n 
+\n[0]: Nytt i Metrodroid. 
+\n[1]: Ikke kompatibel med alle enheter (MIFARE Classic). 
+\n[2]: Krypteringsnøkler kreves for å lese dette kortet. 
+\n[3]: Ikke kompatibelt med alle enheter (CEPAS). 
+\n[4]: Kun kortnummeret kan leses. 
+\n[6]: Krypteringsnøkler lastes ned fra operatøren.
+\n 
+\nEn NFC-kompatibel telefon kreves for å kunne lese kort. 
+\n 
+\nDu trenger et NXP NFC-brikkesett i enheten din for å kunne lese MIFARE Classic-kort. Noen telefoner har NFC-briker fra andre fabrikanter, som ikke kan lese MIFARE Classic-kort (f.eks. Nexus 4, Nexus 5, Samsung Galaxy S4). Sjekk Om-skjermen i programmet for å bestemme hvorvidt din enhet støtter MIFARE Classic. 
+\n 
+\nNoen agenturer har krypterte kort. Du må hente krypteringsnøkler for å kunne lese dem. Disse er generelt unike for hvert kort. Beklager, jeg kan ikke hjelpe deg med dette. 
+\n 
+\nFor noen agenturers kort kan det å bruke Cubic Nextfare på MIFARE Classic også fungere. 
+\n 
+\nFor mer informasjon om hvilke tilganger som behøves, les personvernspraksisen. 
+\n 
 \nDenne programvaren er lisensiert GNU GPLv3+, kildekoden er å finne på https://github.com/micolous/metrodroid/</string>
 
     <string name="market_changelog_32">* Legger til obfuskerings-tilstand.
@@ -134,5 +164,10 @@
 \n* Mange usynlige endringer.
 \n
 \nFlere detaljer: https://github.com/micolous/metrodroid/wiki/Changelog</string>
-
-    </resources>
+    <string name="market_changelog_37">* Ny støtte for Adelaide Metrocard, mange kinesiske (i folkerepublikken) -kort, Clipper-enkeltbilletter, Kiev Metro, Orlando SunCard, Rejsekort, SLAccess, Selecta, Tartu Bus og flere Zolotaya Korona-baserte kort.
+\n* Fiks av OV-Chipkaart-leser.
+\n* Lesing av serienummer for AT-HOP.
+\n* Mange endringer man ikke ser noe til.
+\n
+\nFlere detaljer: https://github.com/micolous/metrodroid/wiki/Changelog</string>
+</resources>

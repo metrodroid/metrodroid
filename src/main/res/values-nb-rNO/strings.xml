@@ -1,4 +1,4 @@
-<?xml version='1.0' encoding='UTF-8'?>
+<?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2"><string name="app_name">Metrodroid</string>
 
     <string name="copyright">Kopirett 2015 - 2018 Michael Farrell</string>
@@ -848,4 +848,5 @@
     <string name="rkf_card_status">Kortstatus</string>
     <string name="rkf_status_action_pending">Handling venter</string>
     <string name="rkf_status_temp_disabled">Midlertidig avskrudd eller avstengt</string>
-    </resources>
+    <string name="import_mct_file">Importer fra MCT-fil</string>
+</resources>

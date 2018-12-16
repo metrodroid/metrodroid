@@ -1,5 +1,5 @@
-<?xml version='1.0' encoding='UTF-8'?>
-<resources><string name="market_title">Metrodroid (v. Farebot M)</string>
+<?xml version="1.0" encoding="utf-8"?>
+<resources><string name="market_title">Metrodroid</string>
 
     <string name="market_short_desc">Metrodroid leest informatie uit van sommige NFC-smartcards voor het OV.</string>
 
@@ -8,31 +8,54 @@
 \nDit is een fork van Eric Butler\\\'s Farebot-project, met ondersteuning voor meer kaarten en opgeloste fouten. 
 \n 
 \nOndersteunde kaarten: 
-\n- Bilhete Único - São Paulo, Brazilië [1] [2] [5] 
-\n- Clipper - San Francisco, CA, VS 
-\n- Compass (eenmalige kaartjes) - Vancouver, BC, Canada [0] 
-\n- EZ-Link - Singapore [3] 
-\n- Go card - Brisbane en South East Queensland, Australië [0] [1] [2] 
-\n- Kartu Multi Trip - Jakarta, Indonesië 
-\n- Manly Fast Ferry - Sydney, NSW, Australië [0] [1] [2] 
-\n- Matkakortti, HSL - Finland 
-\n- Myki - Melbourne (en omgeving), VIC, Australië [0] [4] 
-\n- Metrocard - Christchurch, Nieuw-Zeeland [0] [1] [2] 
-\n- MyWay - Australian Capital Territory, Australië [0] [1] [2] 
-\n- NETS Flashpay - Singapore 
-\n- Octopus - Hongkong [0] 
-\n- Opal - Sydney (en omgeving), NSW, Australië [0] 
-\n- Opus - Montréal, BC, Canada [0] 
-\n- ORCA - Seattle, WA, VS 
-\n- OV-chipkaart - Nederland [1] [2] 
-\n- Podorozhnik - Sint-Petersburg, Rusland [0] [1] [2] 
-\n- Rav-Kav - Israël 
-\n- Shenzhen Tong - Shenzhen, Guangdong-provincie, China [0] 
-\n- SmartRider - West-Australië, Australië [0] [1] [2] 
-\n- Suica, IOCOA, PASMO, Edy - Japan 
-\n- T-Money - Zuid-Korea 
-\n- Transit Access Pass - Los Angeles, CA, VS [0] [1] [2] 
-\n- Troika - Moskou, Rusland [0] [1] [2] 
+\n- AT HOP - Auckland, Nieuw-Zeeland [0] [4]
+\n- Beijing Municipal Card - Peking, China [0]
+\n- Bilhete Único - São Paulo, Brazilië [1] [2]
+\n- CharlieCard - Boston, MA, VS [0] [1] [2]
+\n- City Union, T-Union - Chinees Vasteland [0]
+\n- Clipper - San Francisco, CA, VS
+\n- Compass (single-use tickets) - Vancouver, BC, Canada [0]
+\n- EasyCard - Taipei, Taiwan [1] [2]
+\n- EZ-Link, NETS Flashpay - Singapore [3]
+\n- Go card - Brisbane en South East Queensland, Australië [0] [1] [2]
+\n- Go-to Card - Minneapolis-St. Paul, MN, VS [0] [1] [2]
+\n- Hop Fastpass - Portland, OR, VS [0] [4]
+\n- HSL, Matkakortti - Finland
+\n- Intercode (Envibus, Navigo, OùRA, TaM, TransGironde) - Frankrijk
+\n- IstanbulKart - Istanboel, Turkije [0] [4]
+\n- Kartu Multi Trip - Jakarta, Indonesië
+\n- Kiev Metro - Kiev, Ukraine [0] [1] [2]
+\n- Krasnodar ETK - Krasnodar, Rusland [0] [1] [2]
+\n- Leap - Ierland [0] [6]
+\n- Lisboa Viva - Lissabon, Portugal [0]
+\n- Manly Fast Ferry - Sydney, NZW, Australië [0] [1] [2]
+\n- Metrocard - Christchurch, Nieuw-Zeeland [0] [1] [2]
+\n- Mobib - Brussel, België [0]
+\n- Myki - Melbourne (en omgeving), VIC, Australië [0] [4]
+\n- MyWay - Australisch Hoofdstedelijk Territorium, Australië [0] [1] [2]
+\n- Octopus - Hongkong [0]
+\n- Opal - Sydney (en omgeving), NZW, Australië [0]
+\n- Opus - Québec, Canada [0]
+\n- ORCA - Seattle, WA, VS
+\n- OV-chipkaart - Nederland [1] [2]
+\n- Podorozhnik - Sint-Petersburg, Rusland [0] [1] [2]
+\n- Rav-Kav - Israël [0]
+\n- Rejsekort - Noorwegen [0] [1] [2]
+\n- RicaricaMi - Milaan, Italië [0]
+\n- Shenzhen Tong - Shenzhen, Guangdong-provincie, China [0]
+\n- SLAccess - Stockholm, Zweden [0] [1] [2]
+\n- SmartRider - West-Australië, Australië [0] [1] [2]
+\n- Strelka - Moskou, Rusland [0] [1] [4]
+\n- Suica, IOCOA, PASMO, Edy - Japan
+\n- SunCard - Orlando, FL, VS [0] [1] [2] [4]
+\n- Tartu Bus - Tartu, Estland [0] [1] [4]
+\n- T-Money - Zuid-Korea [0]
+\n- Transit Access Pass - Los Angeles, CA, VS [0] [1] [2]
+\n- Troika - Moskou, Rusland [0] [1] [2]
+\n- Ventra (single-use tickets) - Chicago, IL, VS [0]
+\n- Wuhan Tong - Wuhan, Hubei-provincie, China [0]
+\n- Yaroslavl ETK - Yaroslavl, Rusland [0] [1] [2]
+\n
 \n 
 \n[0]: Nieuw in Metrodroid. 
 \n[1]: Niet compatibel met alle apparaten (MIFARE Classic). 
@@ -143,5 +166,10 @@ Meer details: https://github.com/micolous/metrodroid/wiki/Changelog</string>
 \n* Vele wijzigingen onder de motorkap.
 \n
 \nMeer informatie (Engels): https://github.com/micolous/metrodroid/wiki/Changelog</string>
-
-    </resources>
+    <string name="market_changelog_37">* Ondersteuning toegevoegd voor Adelaide Metrocard, vele Chinese (PRC) kaarten, enkele reizen met Clipper, Kiev Metro, Orlando Suncard, Rejsekort, SLAccess, Selecta, Tartu Bus en meerdere op Zolotoya Korona gebaseerde kaarten.
+\n* OV-chipkaartlezer gerepareerd.
+\n* Serienummer van AT-HOP wordt uitgelezen.
+\n* Vele wijzigingen onder de motorkap.
+\n
+\nMeer informatie (Engels): https://github.com/micolous/metrodroid/wiki/Changelog</string>
+</resources>
