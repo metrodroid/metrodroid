@@ -1,4 +1,4 @@
-<?xml version='1.0' encoding='UTF-8'?>
+<?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2"><string name="app_name">Metrodroid</string>
 
     <string name="copyright">Copyright © 2015 – 2018 Michael Farrell</string>
@@ -847,4 +847,5 @@
     <string name="rkf_status_action_pending">Bezig met actie</string>
     <string name="rkf_status_temp_disabled">Tijdelijk uitgeschakeld of geschorst</string>
     <string name="rkf_status_not_ok">Permanent uitgeschakeld</string>
+    <string name="import_mct_file">Importeren uit MCT-bestand</string>
 </resources>
