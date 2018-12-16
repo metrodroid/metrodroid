@@ -1,6 +1,4 @@
 include ':lintchecks'
-include 'nfc-felica-lib'
-project(':nfc-felica-lib').projectDir = new File('third_party/nfc-felica-lib')
 include 'leaflet'
 project(':leaflet').projectDir = new File('third_party/leaflet')
 include 'material-design-icons'

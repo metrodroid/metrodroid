@@ -1,13 +1,36 @@
 /*
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- * http://www.apache.org/licenses/LICENSE-2.0
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
+ * FeliCaLib.java
+ *
+ * Copyright 2011 Kazzz
+ * Copyright 2016-2018 Michael Farrell <micolous+git@gmail.com>
+ * Copyright 2018 Google Inc
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ *
+ * This code was imported from nfc-felica-lib[0], formerly licensed under
+ * Apache License v2.0. The Apache Software Foundation considers the license
+ * to be compatible with the GPLv3+[1].
+ *
+ * As the upstream library[0] appears to be no longer maintained, and we're not
+ * aware of other users of Metrodroid's fork[2] of the library, this has been
+ * pulled into Metrodroid proper[3]. It has been relicensed as GPLv3+ to be
+ * consistent with the remainder of the project.
+ *
+ * [0]: https://github.com/Kazzz/nfc-felica-lib
+ * [1]: https://www.apache.org/licenses/GPL-compatibility.html
+ * [2]: https://github.com/metrodroid/nfc-felica-lib
+ * [3]: https://github.com/micolous/metrodroid/pull/255
  */
 package au.id.micolous.metrodroid.card.felica;
 
