@@ -49,7 +49,7 @@ import au.id.micolous.metrodroid.util.Utils;
  * be used to "top-up" or "refill" a card in the event a trip takes the balance below $0.
  */
 public abstract class Subscription implements Parcelable {
-    public final int describeContents() {
+    public int describeContents() {
         return 0;
     }
 
