@@ -33,20 +33,21 @@ OUTPUT = 'ovc.mdst'
 OVC_OPERATORS = {
   # We should count starting at 1, but TLS are the system operator, and don't
   # have any "stations".
-  0x00: 'TLS', # OVC operator
-  0x01: 'Connexxion',
-  0x02: 'GVB',
-  0x03: 'HTM',
-  0x04: 'NS',
-  0x05: 'RET',
+  # Nobody uses most of the long names
+  0x00: 'TLS', # OVC operator: Trans Link Systems
+  0x01: 'Connexxion', # or Breng, Hermes, GVU
+  0x02: 'GVB', # Gemeentelijk Vervoersbedrijf
+  0x03: 'HTM', # Haagsche Tramweg-Maatschappij
+  0x04: 'NS', # Nederlandse Spoorwegen
+  0x05: 'RET', # Rotterdamse Elektrische Tram
 
   0x07: 'Veolia',
-  0x08: 'Arriva',
+  0x08: 'Arriva', # or Aquabus
   0x09: 'Syntus',
   0x0A: 'Qbuzz',
 
-  0x0C: 'DUO',
-  0x19: 'Reseller',
+  0x0C: 'DUO', # Dienst Uitvoering Onderwijs
+  0x19: 'Reseller', # used by Albert Heijn, Primera and Hermes busses and maybe even more
   0x2C: 'DUO'
 }
 
@@ -104,12 +105,12 @@ db = MdstWriter(
 )
 
 print('Writing stations...')
+station_count = 0
 # Now write out all the stations, and store their offset.
 #cur.execute('SELECT company, ovcid, city, name, lat, lon FROM stations ORDER BY company, ovcid')
 for tsvname in os.listdir(TSV_DIR):
   if not tsvname.startswith('data_') or not tsvname.endswith('.tsv'):
     continue
-  station_count = 0
   for row in tsv_reader(tsvname):
     # Many records that are unknown... they look like "?" or "1234?"
     if row['name'] is None or row['name'].endswith('?'):

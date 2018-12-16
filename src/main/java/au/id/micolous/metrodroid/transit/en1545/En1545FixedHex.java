@@ -38,7 +38,7 @@ public class En1545FixedHex implements En1545Field {
         try {
             for (int i = mLen; i > 0; ) {
                 if (i >= 8) {
-                    res.insert(0, String.format(Locale.ENGLISH, "%04x",
+                    res.insert(0, String.format(Locale.ENGLISH, "%02x",
                             bitParser.getBitsFromBuffer(b, off + i - 8, 8)));
                     i -= 8;
                     continue;

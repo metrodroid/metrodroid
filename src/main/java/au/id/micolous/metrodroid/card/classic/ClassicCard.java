@@ -404,7 +404,7 @@ public class ClassicCard extends Card {
     }
 
     private static final ClassicCardTransitFactory FACTORIES[] = {
-            OVChipTransitData.FACTORY,
+            OVChipTransitData.Companion.getFACTORY(),
             // Search through ERG on MIFARE Classic compatibles.
             ManlyFastFerryTransitData.FACTORY,
             ChcMetrocardTransitData.FACTORY,
