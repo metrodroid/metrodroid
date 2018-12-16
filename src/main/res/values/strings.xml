@@ -283,6 +283,7 @@
     <string name="iso7816_probing">Probing ISO7816 card…</string>
     <string name="calypso_reading">Reading Calypso card…</string>
     <string name="android_hce_reading">Reading from emulated Android card…</string>
+    <string name="itso_reading">Reading ITSO card…</string>
 
     <string name="card_partial_read_title">Card partially read!</string>
     <string name="card_partial_read_desc">
@@ -684,6 +685,7 @@
     <string name="location_the_netherlands">The Netherlands</string>
     <string name="location_tokyo">Tokyo, Japan</string>
     <string name="location_toulouse">Toulouse, France</string>
+    <string name="location_united_kingdom">United Kingdom</string>
     <string name="location_vancouver">Vancouver, BC, Canada</string>
     <string name="location_victoria_australia">Victoria, Australia</string>
     <string name="location_wa_australia">Western Australia, Australia</string>

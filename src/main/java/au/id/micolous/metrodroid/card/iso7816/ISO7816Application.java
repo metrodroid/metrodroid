@@ -28,6 +28,7 @@ import org.simpleframework.xml.ElementList;
 import java.io.EOFException;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -97,27 +98,52 @@ public class ISO7816Application {
             mType = type;
         }
 
+        public void dumpBinaryWithImplicitEF(ISO7816Protocol protocol, ISO7816Selector sel, int ef) throws IOException {
+            dumpFile(protocol, sel, -1, ef);
+        }
+
         public void dumpFile(ISO7816Protocol protocol, ISO7816Selector sel, int recordLen) throws IOException {
+            dumpFile(protocol, sel, recordLen, -1);
+        }
+
+        private void dumpFile(ISO7816Protocol protocol, ISO7816Selector sel, int recordLen, int ef) throws IOException {
             // Start dumping...
             protocol.unselectFile();
             byte[] fci = sel.select(protocol);
-            byte [] data = protocol.readBinary();
-            LinkedList<ISO7816Record> records = new LinkedList<>();
 
-            for (int r = 1; r <= 255; r++) {
-                try {
-                    byte[] record = protocol.readRecord((byte) r, (byte) recordLen);
+            byte[] data;
+            if (ef < 0) {
+                data = protocol.readBinary();
+            } else {
+                data = protocol.readBinary((byte) ef);
+            }
 
-                    if (record == null) {
+            List<ISO7816Record> records;
+            if (recordLen < 0) {
+                records = Collections.emptyList();
+            } else {
+                records = new LinkedList<>();
+                for (int r = 1; r <= 255; r++) {
+                    try {
+                        byte[] record;
+                        if (ef < 0) {
+                            record = protocol.readRecord((byte) r, (byte) recordLen);
+                        } else {
+                            record = protocol.readRecord((byte) r, (byte) recordLen, (byte) ef);
+                        }
+
+                        if (record == null) {
+                            break;
+                        }
+
+                        records.add(new ISO7816Record(r, record));
+                    } catch (EOFException e) {
+                        // End of file, stop here.
                         break;
                     }
-
-                    records.add(new ISO7816Record(r, record));
-                } catch (EOFException e) {
-                    // End of file, stop here.
-                    break;
                 }
             }
+
             mFiles.add(new ISO7816File(sel, records, data, fci));
         }
 
@@ -140,6 +166,7 @@ public class ISO7816Application {
         return mFiles;
     }
 
+    @Nullable
     public ISO7816File getFile(ISO7816Selector sel) {
         for (ISO7816File f : mFiles) {
             if (f.getSelector().equals(sel)) {
@@ -197,10 +224,12 @@ public class ISO7816Application {
         return null;
     }
 
+    @Nullable
     public TransitIdentity parseTransitIdentity() {
         return null;
     }
 
+    @Nullable
     public TransitData parseTransitData() {
         return null;
     }

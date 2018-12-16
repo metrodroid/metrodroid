@@ -40,5 +40,4 @@ public class En1545Container implements En1545Field {
         }
         return off;
     }
-
 }

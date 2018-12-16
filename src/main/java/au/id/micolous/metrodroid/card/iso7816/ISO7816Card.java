@@ -42,6 +42,7 @@ import au.id.micolous.metrodroid.card.androidhce.AndroidHCEApplication;
 import au.id.micolous.metrodroid.card.calypso.CalypsoApplication;
 import au.id.micolous.metrodroid.card.cepas.CEPASApplication;
 import au.id.micolous.metrodroid.card.china.ChinaCard;
+import au.id.micolous.metrodroid.card.itso.ItsoApplication;
 import au.id.micolous.metrodroid.card.tmoney.TMoneyCard;
 import au.id.micolous.metrodroid.transit.TransitData;
 import au.id.micolous.metrodroid.transit.TransitIdentity;
@@ -122,6 +123,13 @@ public class ISO7816Card extends Card {
 
                 // TODO: Implement Android HCE stuff here.
                 // We need to only probe stuff that is known good.
+            }
+
+            appData = iso7816Tag.selectByName(ItsoApplication.Companion.getAPP_NAME());
+            if (appData != null) {
+                apps.add(ItsoApplication.Companion.dumpTag(iso7816Tag, new ISO7816Application.ISO7816Info(
+                        appData, ItsoApplication.Companion.getAPP_NAME(), tag.getId(), ItsoApplication.TYPE),
+                        feedbackInterface));
             }
 
             for (byte[] calypsoFilename : CalypsoApplication.CALYPSO_FILENAMES) {

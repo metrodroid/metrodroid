@@ -12,8 +12,10 @@ public interface CardTransitFactory<T> {
         return Collections.emptyList();
     }
 
+    @Nullable
     TransitIdentity parseTransitIdentity(@NonNull T card);
 
+    @Nullable
     TransitData parseTransitData(@NonNull T card);
 
     boolean check(@NonNull T card);

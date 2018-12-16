@@ -22,6 +22,8 @@
 
 package au.id.micolous.metrodroid.card.desfire;
 
+import android.support.annotation.Nullable;
+
 import au.id.micolous.farebot.R;
 import au.id.micolous.metrodroid.card.desfire.files.DesfireFile;
 import au.id.micolous.metrodroid.card.desfire.files.InvalidDesfireFile;
@@ -73,6 +75,7 @@ public class DesfireApplication {
         return mFiles;
     }
 
+    @Nullable
     public DesfireFile getFile(int fileId) {
         for (DesfireFile file : mFiles) {
             if (file.getId() == fileId)

@@ -75,6 +75,7 @@ import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.text.SimpleDateFormat;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Collections;
 import java.util.GregorianCalendar;
@@ -465,6 +466,15 @@ public class Utils {
         return (((data & (char) 0xF0) >> 4) * 10) + ((data & (char) 0x0F));
     }
 
+    public static int convertBCDtoInteger(byte[] data) {
+        int o = 0;
+        for (byte d : data) {
+            o *= 100;
+            o += convertBCDtoInteger(d) % 100;
+        }
+        return o;
+    }
+
     public static int getBitsFromInteger(int buffer, int iStartBit, int iLength) {
         return (buffer >> (iStartBit)) & ((1 << iLength) - 1);
     }
@@ -562,6 +572,27 @@ public class Utils {
 
             return uRet;
         }
+    }
+
+    public static byte[] getBitsFromBufferAsBytes(byte[] buffer, int iStartBit, int iLength) {
+        if (iLength < 0) {
+            return new byte[0];
+        }
+
+        if (iStartBit % 8 == 0 && iLength % 8 == 0) {
+            return Arrays.copyOfRange(buffer, iStartBit / 8, (iStartBit + iLength) / 8);
+        }
+
+        byte[] uret = new byte[(int) Math.ceil(iLength / 8.)];
+        for (int i = 0; i < iLength; i++) {
+            final int sboff = iStartBit + i;
+            final int soff = sboff / 8;
+            if ((buffer[soff] & (1 << (8 - (sboff % 8)))) != 0) {
+                final int boff = i / 8;
+                uret[boff] |= 1 << (8 - (i % 8));
+            }
+        }
+        return uret;
     }
 
     public static String formatDurationMinutes(int mins)

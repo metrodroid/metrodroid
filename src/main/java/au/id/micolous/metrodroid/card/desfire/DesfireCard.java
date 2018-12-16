@@ -43,6 +43,7 @@ import au.id.micolous.metrodroid.transit.TransitIdentity;
 import au.id.micolous.metrodroid.transit.clipper.ClipperTransitData;
 import au.id.micolous.metrodroid.transit.hsl.HSLTransitData;
 import au.id.micolous.metrodroid.transit.serialonly.IstanbulKartTransitData;
+import au.id.micolous.metrodroid.transit.itso.ItsoDesfireTransitData;
 import au.id.micolous.metrodroid.transit.serialonly.MykiTransitData;
 import au.id.micolous.metrodroid.transit.opal.OpalTransitData;
 import au.id.micolous.metrodroid.transit.orca.OrcaTransitData;
@@ -84,6 +85,7 @@ public class DesfireCard extends Card {
             TrimetHopTransitData.FACTORY,
             AdelaideMetrocardTransitData.FACTORY,
             AtHopStubTransitData.FACTORY,
+            ItsoDesfireTransitData.Companion.getFACTORY(),
             UnauthorizedDesfireTransitData.FACTORY
     };
 
@@ -309,6 +311,7 @@ public class DesfireCard extends Card {
         return mApplications;
     }
 
+    @Nullable
     public DesfireApplication getApplication(int appId) {
         for (DesfireApplication app : mApplications) {
             if (app.getId() == appId)

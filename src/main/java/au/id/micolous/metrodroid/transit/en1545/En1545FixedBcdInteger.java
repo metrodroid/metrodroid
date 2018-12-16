@@ -1,7 +1,7 @@
 /*
- * En1545Fixed.java
+ * En1545FixedBcdInteger.java
  *
- * Copyright 2018 Google
+ * Copyright 2018 Michael Farrell <micolous+git@gmail.com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,35 +18,25 @@
  */
 package au.id.micolous.metrodroid.transit.en1545;
 
-/**
- * EN1545 Repeated Fields
- *
- * A repeated field consists of a EN1545 Fixed Integer, containing the number of times that the
- * field value has been repeated.
- *
- * Then the field values.
- */
-public class En1545Repeat implements En1545Field {
-    private final En1545Field mField;
-    private final int mCtrLen;
+import au.id.micolous.metrodroid.util.Utils;
 
-    public En1545Repeat(int ctrLen, En1545Field field) {
-        mCtrLen = ctrLen;
-        mField = field;
+public class En1545FixedBcdInteger implements En1545Field {
+    private final int mLen;
+    private final String mName;
+
+    public En1545FixedBcdInteger(String name, int len) {
+        mName = name;
+        mLen = len;
     }
 
     @Override
     public int parseField(byte[] b, int off, String path, En1545Parsed holder, En1545Bits bitParser) {
-        int ctr;
         try {
-            ctr = bitParser.getBitsFromBuffer(b, off, mCtrLen);
+            holder.insertInt(mName, path,
+                    Utils.convertBCDtoInteger(Utils.getBitsFromBufferAsBytes(b, off, mLen)));
         } catch (Exception e) {
-            return off + mCtrLen;
         }
-        off += mCtrLen;
-        for (int i = 0; i < ctr; i++)
-            off = mField.parseField(b, off, path + "/" + Integer.toString(i), holder, bitParser);
-        return off;
+        return off + mLen;
     }
 
 }

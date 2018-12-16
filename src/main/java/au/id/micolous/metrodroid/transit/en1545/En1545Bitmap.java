@@ -64,4 +64,5 @@ public class En1545Bitmap implements En1545Field {
         }
         return off;
     }
+
 }

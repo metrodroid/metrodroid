@@ -19,6 +19,8 @@
 
 package au.id.micolous.metrodroid.card.iso7816;
 
+import android.support.annotation.NonNull;
+
 import org.simpleframework.xml.ElementList;
 import org.simpleframework.xml.Root;
 
@@ -40,6 +42,7 @@ public class ISO7816Selector {
         mFullPath = path;
     }
 
+    @NonNull
     public String formatString() {
         StringBuilder ret = new StringBuilder();
         for (ISO7816SelectorElement it : mFullPath) {
@@ -81,6 +84,7 @@ public class ISO7816Selector {
         }
     }
 
+    @NonNull
     public static ISO7816Selector makeSelector(int... path) {
         List<ISO7816SelectorElement> sels = new ArrayList<>();
         for (int el : path)

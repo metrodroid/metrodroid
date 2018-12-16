@@ -208,11 +208,53 @@ public class ISO7816Protocol {
         }
     }
 
+    public byte[] readRecord(byte recordNumber, byte length, byte ef) throws IOException {
+        byte[] ret;
+        Log.d(TAG, String.format(Locale.ENGLISH, "Read record [ef=%d, record=%d]",
+                ef, recordNumber));
+        try {
+            ret = sendRequest(CLASS_ISO7816, INSTRUCTION_ISO7816_READ_RECORD,
+                    recordNumber, (byte) 0x4 /* p1 is record number */, length);
+            return ret;
+        } catch (ISO7816Exception e) {
+            Log.e(TAG, String.format(
+                    Locale.ENGLISH, "Couldn't read ef %d record %d (len=%d) [%s: %s]",
+                    ef, recordNumber, length, e.getClass().getSimpleName(), e.getMessage()));
+            return null;
+        }
+    }
+
     public byte[] readBinary() throws IOException {
         byte[] ret;
         Log.d(TAG, "Read binary");
         try {
             ret = sendRequest(CLASS_ISO7816, INSTRUCTION_ISO7816_READ_BINARY, (byte) 0, (byte) 0, (byte) 0);
+
+            return ret;
+        } catch (ISO7816Exception e) {
+            Log.e(TAG, String.format(
+                    Locale.ENGLISH, "Couldn't read binary [%s: %s]",
+                    e.getClass().getSimpleName(), e.getMessage()));
+            return null;
+        }
+    }
+
+    public byte[] readBinary(byte ef) throws IOException {
+        return readBinary(ef, (byte)0);
+    }
+
+    public byte[] readBinary(byte ef, byte offset) throws IOException {
+        byte[] ret;
+
+        Log.d(TAG, String.format(Locale.ENGLISH, "Read binary [ef=%d, offset=%d]", ef, offset));
+
+        // s7.2.2 (short form EF + offset)
+        ef &= 0x1f; // Short form EF uses lower 5 bits only
+        ef |= 0x80; // Bit 8 of P1 set to 1, and bits 7 and 6 are set to 0.
+        offset &= 0xff; // offset is 0 - 255
+
+        try {
+            ret = sendRequest(CLASS_ISO7816, INSTRUCTION_ISO7816_READ_BINARY, ef, offset, (byte) 0);
 
             return ret;
         } catch (ISO7816Exception e) {

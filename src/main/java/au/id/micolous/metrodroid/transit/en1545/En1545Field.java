@@ -21,4 +21,12 @@ package au.id.micolous.metrodroid.transit.en1545;
 
 public interface En1545Field {
     int parseField(byte []b, int off, String path, En1545Parsed holder, En1545Bits bitParser);
+
+    default int parseField(byte[] b, int off, En1545Parsed holder, En1545Bits bitParser) {
+        return parseField(b, off, "", holder, bitParser);
+    }
+
+    default int parseField(byte[] b, En1545Parsed holder, En1545Bits bitParser) {
+        return parseField(b, 0, holder, bitParser);
+    }
 }
