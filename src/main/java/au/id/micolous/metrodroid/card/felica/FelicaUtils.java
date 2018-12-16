@@ -1,7 +1,5 @@
 package au.id.micolous.metrodroid.card.felica;
 
-import net.kazzz.felica.FeliCaLib;
-
 import au.id.micolous.metrodroid.transit.edy.EdyTransitData;
 import au.id.micolous.metrodroid.transit.octopus.OctopusTransitData;
 import au.id.micolous.metrodroid.transit.suica.SuicaTransitData;

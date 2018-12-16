@@ -21,19 +21,15 @@
 package au.id.micolous.metrodroid;
 
 import android.app.Application;
-import android.content.Context;
 import android.content.SharedPreferences;
 import android.nfc.NfcAdapter;
 import android.os.StrictMode;
 import android.preference.PreferenceManager;
-import android.support.annotation.Nullable;
+import android.support.annotation.NonNull;
 import android.support.annotation.VisibleForTesting;
 import android.support.v7.app.AppCompatDelegate;
 import android.util.Log;
 
-import net.kazzz.felica.FeliCaLib;
-
-import android.support.annotation.NonNull;
 import org.simpleframework.xml.Serializer;
 import org.simpleframework.xml.convert.Registry;
 import org.simpleframework.xml.core.Persister;
@@ -70,8 +66,6 @@ import au.id.micolous.metrodroid.xml.ClassicSectorConverter;
 import au.id.micolous.metrodroid.xml.DesfireFileConverter;
 import au.id.micolous.metrodroid.xml.DesfireFileSettingsConverter;
 import au.id.micolous.metrodroid.xml.EpochCalendarTransform;
-import au.id.micolous.metrodroid.xml.FelicaIDmTransform;
-import au.id.micolous.metrodroid.xml.FelicaPMmTransform;
 import au.id.micolous.metrodroid.xml.HexString;
 import au.id.micolous.metrodroid.xml.ISO7816Converter;
 import au.id.micolous.metrodroid.xml.SkippableRegistryStrategy;
@@ -149,8 +143,6 @@ public class MetrodroidApplication extends Application {
             matcher.bind(Base64String.class, Base64String.Transform.class);
             matcher.bind(Calendar.class, EpochCalendarTransform.class);
             matcher.bind(GregorianCalendar.class, EpochCalendarTransform.class);
-            matcher.bind(FeliCaLib.IDm.class, FelicaIDmTransform.class);
-            matcher.bind(FeliCaLib.PMm.class, FelicaPMmTransform.class);
             matcher.bind(CardType.class, CardTypeTransform.class);
             matcher.bind(ClassicSectorKey.KeyType.class, ClassicSectorKey.KeyType.Transform.class);
 
