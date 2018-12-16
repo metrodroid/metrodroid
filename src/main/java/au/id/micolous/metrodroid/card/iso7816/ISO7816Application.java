@@ -20,17 +20,22 @@
 package au.id.micolous.metrodroid.card.iso7816;
 
 import android.support.annotation.Nullable;
+import android.util.Log;
 
 import org.simpleframework.xml.Attribute;
 import org.simpleframework.xml.Element;
 import org.simpleframework.xml.ElementList;
+import org.simpleframework.xml.ElementMap;
 
 import java.io.EOFException;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 
+import au.id.micolous.metrodroid.card.TagReaderFeedbackInterface;
 import au.id.micolous.metrodroid.transit.TransitData;
 import au.id.micolous.metrodroid.transit.TransitIdentity;
 import au.id.micolous.metrodroid.ui.ListItem;
@@ -99,9 +104,20 @@ public class ISO7816Application {
 
         public void dumpFile(ISO7816Protocol protocol, ISO7816Selector sel, int recordLen) throws IOException {
             // Start dumping...
-            protocol.unselectFile();
-            byte[] fci = sel.select(protocol);
-            byte [] data = protocol.readBinary();
+            byte[] fci;
+            try {
+                protocol.unselectFile();
+            } catch (ISO7816Exception | FileNotFoundException e) {
+                Log.d(TAG, "Unselect failed, trying select nevertheless");
+            }
+            try {
+                fci = sel.select(protocol);
+            } catch (ISO7816Exception | FileNotFoundException e) {
+                Log.d(TAG, "Select failed, aborting");
+                return null;
+            }
+
+            byte[] data = protocol.readBinary();
             LinkedList<ISO7816Record> records = new LinkedList<>();
 
             for (int r = 1; r <= 255; r++) {

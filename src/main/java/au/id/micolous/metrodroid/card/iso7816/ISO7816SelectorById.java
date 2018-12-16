@@ -30,7 +30,7 @@ class ISO7816SelectorById extends ISO7816SelectorElement {
     public static final String KIND = "id";
 
     @Override
-    byte[] select(ISO7816Protocol tag) throws IOException {
+    byte[] select(ISO7816Protocol tag) throws IOException, ISO7816Exception {
         return tag.selectById(mId);
     }
 

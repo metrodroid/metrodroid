@@ -35,7 +35,7 @@ class ISO7816SelectorByName extends ISO7816SelectorElement {
     ISO7816SelectorByName() { /* for XML serializer. */ }
 
     @Override
-    byte[] select(ISO7816Protocol tag) throws IOException {
+    byte[] select(ISO7816Protocol tag) throws IOException, ISO7816Exception {
         return tag.selectByName(mName.getData(), false);
     }
 

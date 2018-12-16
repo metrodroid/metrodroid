@@ -33,7 +33,7 @@ abstract public class ISO7816SelectorElement {
     @Attribute(name = "kind")
     String mKind;
 
-    abstract byte[] select(ISO7816Protocol tag) throws IOException;
+    abstract byte[] select(ISO7816Protocol tag) throws IOException, ISO7816Exception;
 
     public abstract String formatString();
 
