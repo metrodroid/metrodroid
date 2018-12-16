@@ -654,6 +654,7 @@
     -->
     <string name="location_kansai">Kansai, Japan</string>
     <string name="location_kiev">Kiev, Ukraine</string>
+    <!-- Translators: "Krasnodar" (Краснодар) here refers to the city, rather than the krai (federal subject) -->
     <string name="location_krasnodar">Krasnodar, Russia</string>
     <string name="location_lisbon">Lisbon, Portugal</string>
     <string name="location_los_angeles">Los Angeles, CA, USA</string>
@@ -686,6 +687,7 @@
     <string name="location_victoria_australia">Victoria, Australia</string>
     <string name="location_wa_australia">Western Australia, Australia</string>
     <string name="location_wuhan">Wuhan, China</string>
+    <!-- Translators: "Yaroslavl" (Ярославль) here refers to the city, rather than the oblast (federal subject) -->
     <string name="location_yaroslavl">Yaroslavl, Russia</string>
 
     <!--
@@ -1432,8 +1434,10 @@
     payment system which operates ticketing systems in many cities in Russia. -->
     <string name="card_name_zolotaya_korona">Zolotaya Korona</string>
     <string name="zolotaya_korona_region">Region</string>
-    <string name="card_name_yaroslavl_etk">ETK Yaroslavl</string>
-    <string name="card_name_krasnodar_etk">ETK Krasnodar</string>
+    <!-- Translators: ETK = Electronic ticket, Yaroslavl (Ярославль) is a city in Russia -->
+    <string name="card_name_yaroslavl_etk">Yaroslavl ETK</string>
+    <!-- Translators: ETK = Electronic ticket, Krasnodar (Краснодар) is a city in Russia -->
+    <string name="card_name_krasnodar_etk">Krasnodar ETK</string>
     <!-- Rkf specific strings -->
     <string name="rkf_card_status">Card status</string>
     <!-- Translators: describes the status of a card or transaction -->
