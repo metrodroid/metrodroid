@@ -94,7 +94,7 @@ Krasnodar | :ru: Krasnodar, Russia | :new: :closed_lock_with_key: `MFC`
 [Leap][44] | :ireland: Ireland | :new: :unlock:
 [Lisboa Viva][49] | :portugal: Lisbon, Portugal
 [Manly Fast Ferry][19] | :australia: Sydney, NSW, Australia | :new: :closed_lock_with_key: `MFC`
-[Metrocard][59] : :australia: Adelaide, SA, Australia | :new:
+[Metrocard][59] | :australia: Adelaide, SA, Australia | :new:
 [Metrocard][34] | :new_zealand: Christchurch, New Zealand | :new: :closed_lock_with_key: `MFC`
 [Mobib][50] | :belgium: Brussels, Belgium | :new:
 [Myki][21] | :australia: Melbourne (and surrounds), VIC, Australia | :new: `123`
