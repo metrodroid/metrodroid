@@ -19,9 +19,12 @@
 package au.id.micolous.metrodroid.transit.serialonly;
 
 import android.os.Parcel;
+import android.support.annotation.NonNull;
 
 import org.apache.commons.lang3.ArrayUtils;
 
+import java.util.Collections;
+import java.util.List;
 import java.util.Locale;
 
 import au.id.micolous.metrodroid.card.desfire.DesfireCard;
@@ -71,10 +74,7 @@ public class AtHopStubTransitData extends SerialOnlyTransitData {
     }
 
     private static String formatSerial(int serial) {
-        return String.format(Locale.ENGLISH, "7824 6702 %04d %04d %03d",
-                (serial / 10000000),
-                (serial / 1000) % 10000,
-                serial % 1000);
+        return "7824 6702 " + Utils.formatNumber(serial, " ", 4, 4, 3);
     }
 
     private static final String NAME = "AT HOP";
@@ -84,18 +84,19 @@ public class AtHopStubTransitData extends SerialOnlyTransitData {
             return ArrayUtils.contains(appIds, 0x4055) && ArrayUtils.contains(appIds, APP_ID_SERIAL);
         }
 
+        @NonNull
         @Override
-        protected CardInfo getCardInfo() {
-            return null;
+        public List<CardInfo> getAllCards() {
+            return Collections.emptyList();
         }
 
         @Override
-        public TransitData parseTransitData(DesfireCard desfireCard) {
+        public TransitData parseTransitData(@NonNull DesfireCard desfireCard) {
             return new AtHopStubTransitData(desfireCard);
         }
 
         @Override
-        public TransitIdentity parseTransitIdentity(DesfireCard desfireCard) {
+        public TransitIdentity parseTransitIdentity(@NonNull DesfireCard desfireCard) {
             return new TransitIdentity(NAME, formatSerial(getSerial(desfireCard)));
         }
     };

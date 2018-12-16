@@ -1,31 +1,26 @@
 package au.id.micolous.metrodroid.card.desfire;
 
-import java.util.Collections;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
+
 import java.util.List;
 
 import au.id.micolous.metrodroid.transit.CardInfo;
 import au.id.micolous.metrodroid.transit.CardTransitFactory;
-import au.id.micolous.metrodroid.transit.TransitData;
-import au.id.micolous.metrodroid.transit.TransitIdentity;
 
-public abstract class DesfireCardTransitFactory extends CardTransitFactory {
-    public abstract boolean earlyCheck(int[] appIds);
+public interface DesfireCardTransitFactory extends CardTransitFactory<DesfireCard> {
+    boolean earlyCheck(int[] appIds);
 
-    public CardInfo getCardInfo(int[] appIds) {
-        return getCardInfo();
-    }
-
-    @Override
-    public List<CardInfo> getAllCards() {
-        CardInfo ci = getCardInfo();
-        if (ci == null)
+    @Nullable
+    default CardInfo getCardInfo(int[] appIds) {
+        final List<CardInfo> info = getAllCards();
+        if (info.isEmpty()) {
             return null;
-        return Collections.singletonList(ci);
+        }
+        return getAllCards().get(0);
     }
 
-    protected abstract CardInfo getCardInfo();
-
-    public boolean check(DesfireCard desfireCard) {
+    default boolean check(@NonNull DesfireCard desfireCard) {
         List<DesfireApplication> apps = desfireCard.getApplications();
         int appslen = apps.size();
         int[] appIds = new int[appslen];
@@ -34,8 +29,4 @@ public abstract class DesfireCardTransitFactory extends CardTransitFactory {
         }
         return earlyCheck(appIds);
     }
-
-    public abstract TransitData parseTransitData(DesfireCard desfireCard);
-
-    public abstract TransitIdentity parseTransitIdentity(DesfireCard desfireCard);
 }

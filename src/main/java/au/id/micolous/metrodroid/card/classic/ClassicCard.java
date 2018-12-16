@@ -75,6 +75,7 @@ import au.id.micolous.metrodroid.transit.ovc.OVChipTransitData;
 import au.id.micolous.metrodroid.transit.podorozhnik.PodorozhnikTransitData;
 import au.id.micolous.metrodroid.transit.ricaricami.RicaricaMiTransitData;
 import au.id.micolous.metrodroid.transit.selecta.SelectaFranceTransitData;
+import au.id.micolous.metrodroid.transit.rkf.RkfTransitData;
 import au.id.micolous.metrodroid.transit.seq_go.SeqGoTransitData;
 import au.id.micolous.metrodroid.transit.serialonly.StrelkaTransitData;
 import au.id.micolous.metrodroid.transit.serialonly.SunCardTransitData;
@@ -83,6 +84,7 @@ import au.id.micolous.metrodroid.transit.smartrider.SmartRiderTransitData;
 import au.id.micolous.metrodroid.transit.troika.TroikaHybridTransitData;
 import au.id.micolous.metrodroid.transit.unknown.BlankClassicTransitData;
 import au.id.micolous.metrodroid.transit.unknown.UnauthorizedClassicTransitData;
+import au.id.micolous.metrodroid.transit.zolotayakorona.ZolotayaKoronaTransitData;
 import au.id.micolous.metrodroid.ui.ListItem;
 import au.id.micolous.metrodroid.ui.ListItemRecursive;
 import au.id.micolous.metrodroid.util.Utils;
@@ -124,7 +126,7 @@ public class ClassicCard extends Card {
         this(tagId, scannedAt, sectors, false);
     }
 
-    private ClassicCard(byte[] tagId, Calendar scannedAt, ClassicSector[] sectors, boolean partialRead) {
+    public ClassicCard(byte[] tagId, Calendar scannedAt, ClassicSector[] sectors, boolean partialRead) {
         super(CardType.MifareClassic, tagId, scannedAt, null, partialRead);
         mSectors = Arrays.asList(sectors);
     }
@@ -178,8 +180,7 @@ public class ClassicCard extends Card {
         feedbackInterface.showCardType(null);
 
         MifareClassic tech = null;
-        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(MetrodroidApplication.getInstance());
-        final int retryLimit = prefs.getInt(MetrodroidApplication.PREF_MFC_AUTHRETRY, 5);
+        final int retryLimit = MetrodroidApplication.getMfcAuthRetry();
         int retriesLeft;
         boolean partialRead = false;
 
@@ -402,13 +403,8 @@ public class ClassicCard extends Card {
         return newTag;
     }
 
-    public static String getFallbackReader() {
-        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(MetrodroidApplication.getInstance());
-        return prefs.getString(MetrodroidApplication.PREF_MFC_FALLBACK, "null").toLowerCase(Locale.US);
-    }
-
     private static final ClassicCardTransitFactory FACTORIES[] = {
-            OVChipTransitData.FACTORY,
+            OVChipTransitData.Companion.getFACTORY(),
             // Search through ERG on MIFARE Classic compatibles.
             ManlyFastFerryTransitData.FACTORY,
             ChcMetrocardTransitData.FACTORY,
@@ -433,6 +429,8 @@ public class ClassicCard extends Card {
             new TartuTransitFactory(),
             SelectaFranceTransitData.Companion.getFACTORY(),
             SunCardTransitData.Companion.getFACTORY(),
+            ZolotayaKoronaTransitData.Companion.getFACTORY(),
+            RkfTransitData.Companion.getFACTORY(),
             // This check must be THIRD TO LAST.
             //
             // This is to throw up a warning whenever there is a card with all locked sectors
@@ -451,9 +449,10 @@ public class ClassicCard extends Card {
         int secnum = sectors.size();
         for (ClassicCardTransitFactory factory : FACTORIES) {
             if (factory.earlySectors() == secnum) {
-                CardInfo ci;
+                CardInfo ci = null;
                 try {
-                    ci = factory.earlyCardInfo(sectors);
+                    if (factory.earlyCheck(sectors))
+                        ci = factory.earlyCardInfo(sectors);
                 } catch (Exception e) {
                     ci = null;
                 }
@@ -546,23 +545,21 @@ public class ClassicCard extends Card {
         return li;
     }
 
-    private static class FallbackFactory extends ClassicCardTransitFactory {
+    private static class FallbackFactory implements ClassicCardTransitFactory {
         @Override
-        public boolean check(@NonNull ClassicCard classicCard) {
-            String fallback = getFallbackReader();
-            if (fallback.equals("myway") || fallback.equals("smartrider")) {
-                // This has a proper check now, but is included for legacy reasons.
-                //
-                // Before the introduction of key-based detection for these cards, Metrodroid did
-                // not record the key inside the ClassicCard XML structure.
-                return true;
-            }
+        public boolean earlyCheck(@NonNull List<ClassicSector> sectors) {
             return false;
         }
 
         @Override
+        public boolean check(@NonNull ClassicCard classicCard) {
+            String fallback = MetrodroidApplication.getMfcFallbackReader();
+            return fallback.equals("myway") || fallback.equals("smartrider");
+        }
+
+        @Override
         public TransitIdentity parseTransitIdentity(@NonNull ClassicCard classicCard) {
-            String fallback = getFallbackReader();
+            String fallback = MetrodroidApplication.getMfcFallbackReader();
             if (fallback.equals("myway") || fallback.equals("smartrider")) {
                 // This has a proper check now, but is included for legacy reasons.
                 //
@@ -575,7 +572,7 @@ public class ClassicCard extends Card {
 
         @Override
         public TransitData parseTransitData(@NonNull ClassicCard classicCard) {
-            String fallback = getFallbackReader();
+            String fallback = MetrodroidApplication.getMfcFallbackReader();
             if (fallback.equals("myway") || fallback.equals("smartrider")) {
                 // This has a proper check now, but is included for legacy reasons.
                 //
@@ -586,9 +583,10 @@ public class ClassicCard extends Card {
             return null;
         }
 
+        @NonNull
         @Override
         public List<CardInfo> getAllCards() {
-            return null;
+            return Collections.emptyList();
         }
     }
 }

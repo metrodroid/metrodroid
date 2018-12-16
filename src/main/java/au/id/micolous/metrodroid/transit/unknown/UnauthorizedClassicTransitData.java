@@ -21,15 +21,11 @@ package au.id.micolous.metrodroid.transit.unknown;
 import android.os.Parcel;
 import android.support.annotation.NonNull;
 
-import java.util.List;
-
 import au.id.micolous.farebot.R;
-import au.id.micolous.metrodroid.card.Card;
 import au.id.micolous.metrodroid.card.classic.ClassicCard;
 import au.id.micolous.metrodroid.card.classic.ClassicCardTransitFactory;
 import au.id.micolous.metrodroid.card.classic.ClassicSector;
 import au.id.micolous.metrodroid.card.classic.UnauthorizedClassicSector;
-import au.id.micolous.metrodroid.transit.CardInfo;
 import au.id.micolous.metrodroid.transit.TransitData;
 import au.id.micolous.metrodroid.transit.TransitIdentity;
 import au.id.micolous.metrodroid.util.Utils;
@@ -52,11 +48,6 @@ public class UnauthorizedClassicTransitData extends UnauthorizedTransitData {
     }
 
     public static final ClassicCardTransitFactory FACTORY = new ClassicCardTransitFactory() {
-        @Override
-        public List<CardInfo> getAllCards() {
-            return null;
-        }
-
         /**
          * This should be the last executed MIFARE Classic check, after all the other checks are done.
          * <p>

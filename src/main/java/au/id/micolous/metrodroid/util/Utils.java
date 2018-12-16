@@ -61,23 +61,37 @@ import android.view.WindowManager;
 import android.widget.Toast;
 
 import org.apache.commons.io.IOUtils;
+import org.jetbrains.annotations.NotNull;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.w3c.dom.Node;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.StringWriter;
 import java.math.BigInteger;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.text.SimpleDateFormat;
-import java.util.Arrays;
 import java.util.Calendar;
+import java.util.Collections;
 import java.util.GregorianCalendar;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
+import java.util.Set;
 import java.util.TimeZone;
+
+import javax.xml.transform.OutputKeys;
+import javax.xml.transform.Result;
+import javax.xml.transform.Source;
+import javax.xml.transform.Transformer;
+import javax.xml.transform.TransformerException;
+import javax.xml.transform.TransformerFactory;
+import javax.xml.transform.dom.DOMSource;
+import javax.xml.transform.stream.StreamResult;
 
 import au.id.micolous.farebot.R;
 import au.id.micolous.metrodroid.MetrodroidApplication;
@@ -96,7 +110,7 @@ public class Utils {
     private static final SimpleDateFormat ISO_DATETIME_FORMAT_FILENAME;
     /** Formatter which returns ISO8601 datetime in UTC. */
     private static final SimpleDateFormat ISO_DATETIME_FORMAT;
-    /** Formatter which returns ISO8601 date in UTC. */
+    /** Formatter which returns ISO8601 date in local time. */
     private static final SimpleDateFormat ISO_DATE_FORMAT;
     /** Reference to UTC timezone. */
     public static final TimeZone UTC = TimeZone.getTimeZone("Etc/UTC");
@@ -111,7 +125,6 @@ public class Utils {
         ISO_DATETIME_FORMAT.setTimeZone(UTC);
 
         ISO_DATE_FORMAT = new SimpleDateFormat("yyyy-MM-dd", Locale.US);
-        ISO_DATE_FORMAT.setTimeZone(UTC);
     }
 
     private Utils() {
@@ -528,6 +541,29 @@ public class Utils {
         }
     }
 
+    public static int getBitsFromBufferLeBits(byte[] buffer, int iStartBit, int iLength) {
+        // Note: Assumes little-endian bit-order
+        int iEndBit = iStartBit + iLength - 1;
+        int iSByte = iStartBit / 8;
+        int iSBit = iStartBit % 8;
+        int iEByte = iEndBit / 8;
+        int iEBit = iEndBit % 8;
+
+        if (iSByte == iEByte) {
+            return (buffer[iEByte] >> iSBit) & (0xFF >> (8 - iLength));
+        } else {
+            int uRet = (buffer[iSByte] >> iSBit) & (0xFF >> iSBit);
+
+            for (int i = iSByte + 1; i < iEByte; i++) {
+                uRet |= ((buffer[i] & 0xFF) << (((i - iSByte) * 8) - iSBit));
+            }
+
+            uRet |= (buffer[iEByte] & ((1 << (iEBit + 1)) - 1)) << (((iEByte - iSByte) * 8) - iSBit);
+
+            return uRet;
+        }
+    }
+
     public static String formatDurationMinutes(int mins)
     {
         int hours, days;
@@ -687,8 +723,8 @@ public class Utils {
     }
 
     /**
-     * Formats a GregorianCalendar into ISO8601 date and time format, but with only characters that
-     * can be used in filenames on most filesystems.
+     * Formats a GregorianCalendar in to ISO8601 date and time format in UTC, but with only
+     * characters that can be used in filenames on most filesystems.
      *
      * @param calendar Date/time to format
      * @return String representing the date and time in ISO8601 format.
@@ -699,8 +735,8 @@ public class Utils {
 
 
     /**
-     * Formats a GregorianCalendar into ISO8601 date and time format. This should only be used for debugging
-     * logs, in order to ensure consistent information.
+     * Formats a GregorianCalendar in to ISO8601 date and time format in UTC. This should only be
+     * used for debugging logs, in order to ensure consistent information.
      *
      * @param calendar Date/time to format
      * @return String representing the date and time in ISO8601 format.
@@ -710,8 +746,12 @@ public class Utils {
     }
 
     /**
-     * Formats a GregorianCalendar into ISO8601 date format. This should only be used for debugging
-     * logs, in order to ensure consistent information.
+     * Formats a GregorianCalendar in to ISO8601 date format in local time (ie: without any timezone
+     * conversion).  This is designed for {@link Calendar} values which only have a valid date
+     * component.
+     *
+     * This should only be used for debugging logs, in order to ensure consistent
+     * information.
      *
      * @param calendar Date to format
      * @return String representing the date in ISO8601 format.
@@ -938,6 +978,37 @@ public class Utils {
         return unsignedToTwoComplement(val, bitLength - 1);
     }
 
+    @NotNull
+    public static String groupString(@NotNull String val, @NotNull String separator, int... groups) {
+        StringBuilder ret = new StringBuilder();
+        int ptr = 0;
+        for (int g : groups) {
+            ret.append(val, ptr, ptr + g).append(separator);
+            ptr += g;
+        }
+        ret.append(val, ptr, val.length());
+        return ret.toString();
+    }
+
+    public static String xmlNodeToString(Node node) throws TransformerException {
+        return xmlNodeToString(node, true);
+    }
+
+    public static String xmlNodeToString(Node node, boolean indent) throws TransformerException {
+        Source source = new DOMSource(node);
+        StringWriter stringWriter = new StringWriter();
+        Result result = new StreamResult(stringWriter);
+        TransformerFactory factory = TransformerFactory.newInstance();
+        Transformer transformer = factory.newTransformer();
+        if (indent) {
+            transformer.setOutputProperty(OutputKeys.INDENT, "yes");
+            transformer.setOutputProperty("{http://xml.apache.org/xslt}indent-amount", "2");
+        }
+        transformer.setURIResolver(null);
+        transformer.transform(source, result);
+        return stringWriter.getBuffer().toString();
+    }
+
     public interface Matcher<T> {
         boolean matches(T t);
     }
@@ -1108,4 +1179,57 @@ public class Utils {
         Toast.makeText(context, R.string.copied_to_clipboard, Toast.LENGTH_SHORT).show();
     }
 
+    /**
+     * Returns an Iterator which emits a single element. This defers implementation to
+     * {@link Collections#singleton(Object)} implementation of {@link Set#iterator()}.
+     *
+     * This is similar to Guice's Iterators.singletonIterator method.
+     *
+     * @param singleton The single element to return.
+     * @param <T> The type of the singleton.
+     * @return An iterator that returns singleton once.
+     */
+    @NonNull
+    public static <T> Iterator<T> singletonIterator(@NonNull T singleton) {
+        return Collections.singleton(singleton).iterator();
+    }
+
+    /**
+     * There is some circumstance where the OLD CEPASTransaction could contain null bytes,
+     * which would then be serialized as <code>&amp;#0;</code>.
+     *
+     * From this Android commit, it is no longer possible to serialise a null byte:
+     * https://android.googlesource.com/platform/libcore/+/ff42219e3ea3d712f931ae7f26af236339b5cf23%5E%21/#F2
+     *
+     * However, these entities may still be deserialised. Importing an old file that
+     * contains a null byte in an attribute will trigger an error if we try to re-serialise
+     * it with kxml2.
+     *
+     * This runs a filter to drop characters that fail these rules:
+     * https://android.googlesource.com/platform/libcore/+/master/xml/src/main/java/com/android/org/kxml2/io/KXmlSerializer.java#155
+     *
+     * NOTE: This does not escape entities. This only removes things that can't be properly
+     * encoded.
+     *
+     * @param input Input data to strip characters from
+     * @return Data without characters that can't be encoded.
+     */
+    public static String filterBadXMLChars(String input) {
+        StringBuilder o = new StringBuilder();
+        for (int i = 0; i < input.length(); i++) {
+            final char c = input.charAt(i);
+
+            if (c == '\n' || c == '\r' || c == '\t' ||
+                    (c >= 0x20 && c <= 0xd7ff) ||
+                    (c >= 0xe000 && c <= 0xfffd)) {
+                o.append(c);
+            } else if (Character.isHighSurrogate(c) && i < input.length() - 1) {
+                o.append(c);
+                o.append(input.charAt(i++));
+            }
+
+            // Other characters invalid.
+        }
+        return o.toString();
+    }
 }

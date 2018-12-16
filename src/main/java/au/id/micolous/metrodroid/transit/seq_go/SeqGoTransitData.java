@@ -106,8 +106,10 @@ public class SeqGoTransitData extends NextfareTransitData {
             return super.parseTransitIdentity(card, NAME);
         }
 
-        private boolean check(ClassicSector sector0) {
+        @Override
+        public boolean earlyCheck(@NonNull List<ClassicSector> sectors) {
             try {
+                ClassicSector sector0 = sectors.get(0);
                 byte[] blockData = sector0.getBlock(1).getData();
                 if (!Arrays.equals(Arrays.copyOfRange(blockData, 1, 9), MANUFACTURER)) {
                     return false;
@@ -126,38 +128,8 @@ public class SeqGoTransitData extends NextfareTransitData {
         }
 
         @Override
-        public boolean check(@NonNull ClassicCard card) {
-            try {
-                return check(card.getSector(0));
-            } catch (UnauthorizedException ex) {
-                // It is not possible to identify the card without a key
-                return false;
-            } catch (IndexOutOfBoundsException ignored) {
-                // If the sector/block number is too high, it's not for us
-                return false;
-            }
-        }
-
-        @Override
         public TransitData parseTransitData(@NonNull ClassicCard classicCard) {
             return new SeqGoTransitData(classicCard);
-        }
-
-        @Override
-        public List<CardInfo> getAllCards() {
-            return Collections.singletonList(CARD_INFO);
-        }
-
-        @Override
-        public int earlySectors() {
-            return 1;
-        }
-
-        @Override
-        public CardInfo earlyCardInfo(List<ClassicSector> sectors) {
-            if (check(sectors.get(0)))
-                return CARD_INFO;
-            return null;
         }
     };
 

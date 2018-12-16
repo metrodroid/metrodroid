@@ -57,6 +57,10 @@ public class CardBalanceFragment extends ListFragment {
     private TransitData mTransitData;
     private static final String TAG = "CardBalanceFragment";
 
+    private static final String TAG_BALANCE_VIEW = "balanceView";
+    private static final String TAG_SUBSCRIPTION_VIEW = "subscriptionView";
+    private static final String TAG_ERROR_VIEW = "errorView";
+
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mTransitData = getArguments().getParcelable(CardInfoActivity.EXTRA_TRANSIT_DATA);
@@ -100,8 +104,9 @@ public class CardBalanceFragment extends ListFragment {
 
         private View getErrorView(View convertView, ViewGroup parent, String err) {
             View view = convertView;
-            if (view == null) {
+            if (view == null || view.getTag() != TAG_ERROR_VIEW) {
                 view = getActivity().getLayoutInflater().inflate(R.layout.balance_item, parent, false);
+                view.setTag(TAG_ERROR_VIEW);
             }
 
             ((TextView) view.findViewById(R.id.balance)).setText(err);
@@ -110,8 +115,9 @@ public class CardBalanceFragment extends ListFragment {
 
         public View getSubscriptionView(View convertView, ViewGroup parent, Subscription subscription) {
             View view = convertView;
-            if (view == null) {
+            if (view == null || view.getTag() != TAG_SUBSCRIPTION_VIEW) {
                 view = getActivity().getLayoutInflater().inflate(R.layout.subscription_item, parent, false);
+                view.setTag(TAG_SUBSCRIPTION_VIEW);
             }
 
             TextView validView = view.findViewById(R.id.valid);
@@ -219,8 +225,9 @@ public class CardBalanceFragment extends ListFragment {
         private View getBalanceView(View convertView,
                                     ViewGroup parent, TransitBalance balance) {
             View view = convertView;
-            if (view == null) {
+            if (view == null || view.getTag() != TAG_BALANCE_VIEW) {
                 view = getActivity().getLayoutInflater().inflate(R.layout.balance_item, parent, false);
+                view.setTag(TAG_BALANCE_VIEW);
             }
 
             TextView validView = view.findViewById(R.id.valid);

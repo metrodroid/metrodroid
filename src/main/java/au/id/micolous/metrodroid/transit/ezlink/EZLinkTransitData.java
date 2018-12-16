@@ -56,10 +56,6 @@ public class EZLinkTransitData extends TransitData {
             return new EZLinkTransitData[size];
         }
     };
-    public static final CardInfo[] ALL_CARD_INFOS = {
-            EZLinkTransitData.EZ_LINK_CARD_INFO,
-            EZLinkTransitData.NETS_FLASHPAY_CARD_INFO,
-    };
     private static final String EZLINK_STR = "ezlink";
 
     public static final CardInfo EZ_LINK_CARD_INFO = new CardInfo.Builder()
@@ -75,6 +71,10 @@ public class EZLinkTransitData extends TransitData {
             .setLocation(R.string.location_singapore)
             .setCardType(CardType.CEPAS)
             .build();
+    public static final CardInfo[] ALL_CARD_INFOS = {
+            EZLinkTransitData.EZ_LINK_CARD_INFO,
+            EZLinkTransitData.NETS_FLASHPAY_CARD_INFO,
+    };
 
     public static final TimeZone TZ = TimeZone.getTimeZone("Asia/Singapore");
     private static final long EPOCH;

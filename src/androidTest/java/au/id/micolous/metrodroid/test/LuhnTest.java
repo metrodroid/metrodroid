@@ -1,7 +1,7 @@
 /*
  * LuhnTest.java
  *
- * Copyright 2016 Michael Farrell <micolous+git@gmail.com>
+ * Copyright 2016-2018 Michael Farrell <micolous+git@gmail.com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,15 +18,20 @@
  */
 package au.id.micolous.metrodroid.test;
 
-import junit.framework.TestCase;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.junit.runners.JUnit4;
 
 import static au.id.micolous.metrodroid.util.Utils.calculateLuhn;
 import static au.id.micolous.metrodroid.util.Utils.validateLuhn;
+import static junit.framework.TestCase.*;
 
 /**
  * Testing the Luhn checksum calculator
  */
-public class LuhnTest extends TestCase {
+@RunWith(JUnit4.class)
+public class LuhnTest {
+    @Test
     public void testValidation() {
         assertTrue(validateLuhn("14455833625"));
         assertTrue(validateLuhn("2132023611"));
@@ -130,6 +135,7 @@ public class LuhnTest extends TestCase {
         assertTrue(validateLuhn("4531175455"));
     }
 
+    @Test
     public void testInvalidation() {
         assertFalse(validateLuhn("4139648926"));
         assertFalse(validateLuhn("1694387920"));
@@ -220,6 +226,7 @@ public class LuhnTest extends TestCase {
         assertFalse(validateLuhn("1308763876"));
     }
 
+    @Test
     public void testCalculation() {
         assertEquals(4, calculateLuhn("3524280191"));
         assertEquals(7, calculateLuhn("2162879206"));

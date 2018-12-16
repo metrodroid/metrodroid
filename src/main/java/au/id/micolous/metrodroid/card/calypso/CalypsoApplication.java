@@ -150,7 +150,7 @@ public class CalypsoApplication extends ISO7816Application {
         return Arrays.asList(FACTORIES);
     }
 
-    private byte[] getTicketEnv() {
+    byte[] getTicketEnv() {
         try {
             ISO7816File tenvf = getFile(File.TICKETING_ENVIRONMENT);
             if (tenvf == null)

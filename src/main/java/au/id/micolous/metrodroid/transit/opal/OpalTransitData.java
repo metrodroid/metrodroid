@@ -20,6 +20,7 @@ package au.id.micolous.metrodroid.transit.opal;
 
 import android.net.Uri;
 import android.os.Parcel;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
 import org.apache.commons.lang3.ArrayUtils;
@@ -157,18 +158,19 @@ public class OpalTransitData extends TransitData {
             return ArrayUtils.contains(appIds, APP_ID);
         }
 
+        @NonNull
         @Override
-        public CardInfo getCardInfo() {
-            return CARD_INFO;
+        public List<CardInfo> getAllCards() {
+            return Collections.singletonList(CARD_INFO);
         }
 
         @Override
-        public TransitData parseTransitData(DesfireCard desfireCard) {
+        public TransitData parseTransitData(@NonNull DesfireCard desfireCard) {
             return new OpalTransitData(desfireCard);
         }
 
         @Override
-        public TransitIdentity parseTransitIdentity(DesfireCard desfireCard) {
+        public TransitIdentity parseTransitIdentity(@NonNull DesfireCard desfireCard) {
             byte[] data = desfireCard.getApplication(APP_ID).getFile(FILE_ID).getData();
             data = Utils.reverseBuffer(data, 0, 5);
 

@@ -69,8 +69,7 @@ public class AdvancedCardInfoActivity extends MetrodroidActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_advanced_card_info);
 
-        Serializer serializer = MetrodroidApplication.getInstance().getSerializer();
-        mCard = Card.fromXml(serializer, getIntent().getStringExtra(AdvancedCardInfoActivity.EXTRA_CARD));
+        mCard = Card.fromXml(getIntent().getStringExtra(AdvancedCardInfoActivity.EXTRA_CARD));
 
         ViewPager viewPager = findViewById(R.id.pager);
         TabPagerAdapter tabsAdapter = new TabPagerAdapter(this, viewPager);
@@ -138,12 +137,12 @@ public class AdvancedCardInfoActivity extends MetrodroidActivity {
 
             switch (item.getItemId()) {
                 case R.id.copy_xml:
-                    xml = mCard.toXml(MetrodroidApplication.getInstance().getSerializer());
+                    xml = mCard.toXml();
                     ExportHelper.copyXmlToClipboard(this, xml);
                     return true;
 
                 case R.id.share_xml:
-                    xml = mCard.toXml(MetrodroidApplication.getInstance().getSerializer());
+                    xml = mCard.toXml();
                     i = new Intent(Intent.ACTION_SEND);
                     i.setType("text/xml");
                     i.putExtra(Intent.EXTRA_TEXT, xml);
@@ -190,7 +189,7 @@ public class AdvancedCardInfoActivity extends MetrodroidActivity {
                         uri = data.getData();
                         Log.d(TAG, "REQUEST_SAVE_FILE");
                         OutputStream os = getContentResolver().openOutputStream(uri);
-                        xml = mCard.toXml(MetrodroidApplication.getInstance().getSerializer());
+                        xml = mCard.toXml();
                         IOUtils.write(xml, os, Charset.defaultCharset());
                         os.close();
                         Toast.makeText(this, R.string.saved_xml_custom, Toast.LENGTH_SHORT).show();

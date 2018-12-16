@@ -23,14 +23,17 @@ import android.content.Context;
 import android.content.res.AssetManager;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.annotation.VisibleForTesting;
 import android.util.Log;
 
 import org.apache.commons.lang3.concurrent.ConcurrentException;
 import org.apache.commons.lang3.concurrent.LazyInitializer;
 
+import java.io.Closeable;
 import java.io.DataInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -61,17 +64,19 @@ public class StationTableReader {
 
     private static final Map<String,StationTableReader> mSTRs = new HashMap<>();
 
-    static private StationTableReader getSTR(@Nullable String name) {
-        if (name == null)
+    @Nullable
+    private static StationTableReader getSTR(@Nullable String name) {
+        if (name == null) {
             return null;
+        }
+
         synchronized (mSTRs) {
             if (mSTRs.containsKey(name))
                 return mSTRs.get(name);
         }
 
         try {
-            StationTableReader str = new StationTableReader(MetrodroidApplication.getInstance(),
-                    name + ".mdst");
+            StationTableReader str = new StationTableReader(name + ".mdst");
             synchronized (mSTRs) {
                 mSTRs.put(name, str);
             }
@@ -137,12 +142,12 @@ public class StationTableReader {
 
     /**
      * Initialises a "connection" to a Metrodroid Station Table kept in the `assets/` directory.
-     * @param context Application context to use for fetching Assets.
      * @param dbName MdST filename
      * @throws IOException On read errors
      * @throws InvalidHeaderException If the file is not a MdST file.
      */
-    private StationTableReader(Context context, String dbName) throws IOException, InvalidHeaderException {
+    private StationTableReader(String dbName) throws IOException, InvalidHeaderException {
+        final Context context = MetrodroidApplication.getInstance();
         InputStream i = context.getAssets().open(dbName, AssetManager.ACCESS_RANDOM);
         mTable = new DataInputStream(i);
 

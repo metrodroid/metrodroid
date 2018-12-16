@@ -155,14 +155,11 @@ public class PodorozhnikTransitData extends TransitData {
     }
 
     private static String getSerial(byte []uid) {
-        String sn;StringBuilder pretty = new StringBuilder();
-        sn = String.format(Locale.ENGLISH, "96433078%017d",
-                Utils.byteArrayToLongReversed(uid, 0, 7));
-        sn += Utils.calculateLuhn(sn);// last digit is luhn
-        for (int i = 0; i < 6; i++)
-            pretty.append(sn, i * 4, i * 4 + 4).append(" ");
-        pretty.append(sn, 24, 26);
-        return pretty.toString();
+        String sn;
+        sn = "9643 3078 " + Utils.formatNumber(Utils.byteArrayToLongReversed(uid, 0, 7),
+                " ", 4, 4, 4, 4, 1);
+        sn += Utils.calculateLuhn (sn.replaceAll(" ", ""));// last digit is luhn
+        return sn;
     }
 
     private void decodeSector4(ClassicCard card) {
@@ -267,18 +264,9 @@ public class PodorozhnikTransitData extends TransitData {
 
     public static final ClassicCardTransitFactory FACTORY = new ClassicCardTransitFactory() {
         @Override
-        public boolean check(@NonNull ClassicCard card) {
+        public boolean earlyCheck(@NonNull List<ClassicSector> sectors) {
             try {
-                return check(card.getSector(4));
-            } catch (IndexOutOfBoundsException ignored) {
-                // If that sector number is too high, then it's not for us.
-            }
-            return false;
-        }
-
-        private boolean check(ClassicSector sector4) {
-            try {
-                ClassicSectorKey key = sector4.getKey();
+                ClassicSectorKey key = sectors.get(4).getKey();
 
                 Log.d(TAG, "Checking for Podorozhnik key...");
                 return Utils.checkKeyHash(key, KEY_SALT, KEY_DIGEST_A, KEY_DIGEST_B) >= 0;
@@ -304,16 +292,10 @@ public class PodorozhnikTransitData extends TransitData {
             return 5;
         }
 
+        @NonNull
         @Override
         public List<CardInfo> getAllCards() {
             return Collections.singletonList(CARD_INFO);
-        }
-
-        @Override
-        public CardInfo earlyCardInfo(List<ClassicSector> sectors) {
-            if (check(sectors.get(4)))
-                return CARD_INFO;
-            return null;
         }
     };
 }

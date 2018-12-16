@@ -175,7 +175,7 @@ public class CEPASApplication extends ISO7816Application {
             items.add(new ListItem(R.string.cepas_version, Byte.toString(purse.getCepasVersion())));
             items.add(new ListItem(R.string.cepas_purse_id, "3"));
             items.add(new ListItem(R.string.cepas_purse_status, Byte.toString(purse.getPurseStatus())));
-            items.add(new ListItem(R.string.cepas_purse_balance, NumberFormat.getCurrencyInstance(Locale.US).format(purse.getPurseBalance() / 100.0)));
+            items.add(new ListItem(R.string.cepas_purse_balance, purse.getPurseBalance()));
 
             items.add(new ListItem(R.string.cepas_purse_creation_date,
                     Utils.longDateFormat(TripObfuscator.maybeObfuscateTS(purse.getPurseCreationDate()))));

@@ -70,6 +70,7 @@ public class CEPASCompatTransaction implements Parcelable {
     @Attribute(name = "date2", required = false)
     private Calendar mDate2;
 
+    // Note: Old dumps could contain null bytes!
     @Attribute(name = "user-data")
     private String mUserData;
 

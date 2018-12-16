@@ -42,7 +42,7 @@ import au.id.micolous.metrodroid.util.Utils;
 
 public class KievTransitData extends TransitData {
 
-    private final long mSerial;
+    private final String mSerial;
     private final List<KievTrip> mTrips;
     // It doesn't really have a name and is just called
     // "Ticket for Kiev Metro".
@@ -67,7 +67,7 @@ public class KievTransitData extends TransitData {
     }
 
     private KievTransitData(Parcel in) {
-        mSerial = in.readLong();
+        mSerial = in.readString();
         mTrips = in.readArrayList(KievTrip.class.getClassLoader());
     }
 
@@ -78,7 +78,7 @@ public class KievTransitData extends TransitData {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-        dest.writeLong(mSerial);
+        dest.writeString(mSerial);
         dest.writeList(mTrips);
     }
 
@@ -94,8 +94,8 @@ public class KievTransitData extends TransitData {
         }
     };
 
-    private static long getSerial(ClassicCard card) {
-        return Utils.byteArrayToLongReversed(card.getSector(1).getBlock(0).getData(), 6, 8);
+    private static String getSerial(ClassicCard card) {
+        return Utils.getHexString(Utils.reverseBuffer(card.getSector(1).getBlock(0).getData(), 6, 8));
     }
 
     @Override
@@ -103,10 +103,8 @@ public class KievTransitData extends TransitData {
         return formatSerial(mSerial);
     }
 
-    private static String formatSerial(long serial) {
-        return String.format(Locale.ENGLISH, "%04x %04x %04x %04x",
-                serial >> 48, (serial >> 32) & 0xffff, (serial >> 16) & 0xffff,
-                serial & 0xffff);
+    private static String formatSerial(String serial) {
+        return Utils.groupString(serial, " ", 4, 4, 4);
     }
 
     @Override
@@ -116,20 +114,11 @@ public class KievTransitData extends TransitData {
 
     public static final ClassicCardTransitFactory FACTORY = new ClassicCardTransitFactory() {
 
-        private boolean check(ClassicSector sector1) {
-            try {
-                return Utils.checkKeyHash(sector1.getKey(), "kiev",
-                        "902a69a9d68afa1ddac7b61a512f7d4f") >= 0;
-            } catch (IndexOutOfBoundsException | UnauthorizedException ignored) {
-                // If that sector number is too high, then it's not for us.
-            }
-            return false;
-        }
-
         @Override
-        public boolean check(@NonNull ClassicCard card) {
+        public boolean earlyCheck(@NonNull List<ClassicSector> sectors) {
             try {
-                return check(card.getSector(1));
+                return Utils.checkKeyHash(sectors.get(1).getKey(), "kiev",
+                        "902a69a9d68afa1ddac7b61a512f7d4f") >= 0;
             } catch (IndexOutOfBoundsException | UnauthorizedException ignored) {
                 // If that sector number is too high, then it's not for us.
             }
@@ -151,16 +140,10 @@ public class KievTransitData extends TransitData {
             return 2;
         }
 
+        @NonNull
         @Override
         public List<CardInfo> getAllCards() {
             return Collections.singletonList(CARD_INFO);
-        }
-
-        @Override
-        public CardInfo earlyCardInfo(List<ClassicSector> sectors) {
-            if (check(sectors.get(1)))
-                return CARD_INFO;
-            return null;
         }
     };
 }

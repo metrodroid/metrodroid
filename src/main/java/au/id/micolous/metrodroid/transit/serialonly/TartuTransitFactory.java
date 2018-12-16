@@ -48,7 +48,7 @@ import au.id.micolous.metrodroid.util.Utils;
  * <p>
  * Documentation of format: https://github.com/micolous/metrodroid/wiki/TartuBus
  */
-public class TartuTransitFactory extends ClassicCardTransitFactory {
+public class TartuTransitFactory implements ClassicCardTransitFactory {
     public static final String NAME = "Tartu Bus";
 
     public static final CardInfo CARD_INFO = new CardInfo.Builder()
@@ -65,13 +65,13 @@ public class TartuTransitFactory extends ClassicCardTransitFactory {
     }
 
     @Override
-    public boolean check(@NonNull ClassicCard card) {
+    public boolean earlyCheck(@NonNull List<ClassicSector> sectors) {
         try {
-            ClassicSector sector0 = card.getSector(0);
+            ClassicSector sector0 = sectors.get(0);
             byte[] b = sector0.getBlock(1).getData();
             if (Utils.byteArrayToInt(b, 2, 4) != 0x03e103e1)
                 return false;
-            ClassicSector sector1 = card.getSector(1);
+            ClassicSector sector1 = sectors.get(1);
             b = sector1.getBlock(0).getData();
             if (!Arrays.equals(Utils.byteArraySlice(b, 7, 9), Utils.stringToByteArray("pilet.ee:")))
                 return false;
@@ -86,6 +86,11 @@ public class TartuTransitFactory extends ClassicCardTransitFactory {
     }
 
     @Override
+    public int earlySectors() {
+        return 2;
+    }
+
+    @Override
     public TransitIdentity parseTransitIdentity(@NonNull ClassicCard classicCard) {
         return new TransitIdentity(NAME, parseSerial(classicCard).substring(8));
     }
@@ -95,6 +100,7 @@ public class TartuTransitFactory extends ClassicCardTransitFactory {
         return new TartuTransitData(classicCard);
     }
 
+    @NonNull
     @Override
     public List<CardInfo> getAllCards() {
         return Collections.singletonList(CARD_INFO);

@@ -1,9 +1,11 @@
 package au.id.micolous.metrodroid.transit.unknown;
 
 import android.os.Parcel;
+import android.support.annotation.NonNull;
 import android.util.Pair;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import au.id.micolous.farebot.R;
@@ -53,9 +55,10 @@ public class UnauthorizedDesfireTransitData extends UnauthorizedTransitData {
             return false;
         }
 
+        @NonNull
         @Override
-        protected CardInfo getCardInfo() {
-            return null;
+        public List<CardInfo> getAllCards() {
+            return Collections.emptyList();
         }
 
         /**
@@ -66,7 +69,7 @@ public class UnauthorizedDesfireTransitData extends UnauthorizedTransitData {
          * @param card Card to read.
          * @return true if all sectors on the card are locked.
          */
-        public boolean check(DesfireCard card) {
+        public boolean check(@NonNull DesfireCard card) {
             for (DesfireApplication app : card.getApplications()) {
                 for (DesfireFile f : app.getFiles()) {
                     if (!(f instanceof UnauthorizedDesfireFile)) {
@@ -81,12 +84,12 @@ public class UnauthorizedDesfireTransitData extends UnauthorizedTransitData {
         }
 
         @Override
-        public TransitData parseTransitData(DesfireCard desfireCard) {
+        public TransitData parseTransitData(@NonNull DesfireCard desfireCard) {
             return new UnauthorizedDesfireTransitData(desfireCard);
         }
 
         @Override
-        public TransitIdentity parseTransitIdentity(DesfireCard card) {
+        public TransitIdentity parseTransitIdentity(@NonNull DesfireCard card) {
             return new TransitIdentity(getName(card), null);
         }
     };
@@ -95,7 +98,8 @@ public class UnauthorizedDesfireTransitData extends UnauthorizedTransitData {
     static {
         TYPES.add(Pair.create(0x31594f, "Oyster"));
         TYPES.add(Pair.create(0x425301, "Thailand BEM"));
-    };
+        TYPES.add(Pair.create(0x5011f2, "Lítačka"));
+    }
 
     private static String getName(DesfireCard card) {
         for (Pair<Integer, String> type : TYPES) {

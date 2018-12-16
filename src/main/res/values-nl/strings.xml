@@ -1,4 +1,4 @@
-<?xml version='1.0' encoding='UTF-8'?>
+<?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2"><string name="app_name">Metrodroid</string>
 
     <string name="copyright">Copyright © 2015 – 2018 Michael Farrell</string>
@@ -34,20 +34,18 @@
     <string name="scanned_at_format">Gescand op %1$s op %2$s</string>
     <string name="supported_cards">Ondersteunde kaarten</string>
     <string name="pass_or_transfer">Pas/Overstap</string>
-    <string name="fully_locked_desc">Geen enkel onderdeel van deze kaart is leesbaar zonder sleutel en je hebt geen geldige geïnstalleerde sleutels voor deze kaart.
+    <string name="fully_locked_desc">Geen enkel onderdeel van deze kaart is leesbaar zonder sleutel en is momenteel geen manier om dit te omzeilen.
 \n 
-\nAls de kaart momenteel ondersteund wordt door Metrodroid, dan zal hij gaan werken zodra je de benodigde sleutels installeert. Meer informatie over het verkrijgen van sleutels is te vinden in de documentatie. 
+\nJe kaart wordt niet ondersteund door Metrodroid, en zal dat waarschijnlijk ook nooit mogelijk zijn, tenzij de sleutel gekraakt wordt. 
 \n 
-\nAls je kaart niet wordt ondersteund door Metrodroid, dan zal dat waarschijnlijk ook nooit mogelijk zijn, tenzij de sleutel gekraakt wordt. 
-\n 
-\nNeem contact op met je vervoerder en vraag of open toegang tot de gegevens van de verschafte kaarten mogelijk wordt gemaakt. Het is mogelijk om veilige, alleen-lezen toegang te geven met moderne smartcard-technologie. Sommige vervoerders bieden zelfs openbare documentatie aan over de gegevensopmaak!</string>
+\nNeem contact op met de uitgever van de kaart en vraag of open toegang tot de gegevens van de verschafte kaarten mogelijk wordt gemaakt. Het is mogelijk om veilige, alleen-lezen toegang te geven met moderne smartcard-technologie. Sommige vervoerders bieden zelfs openbare documentatie aan over de gegevensopmaak!</string>
     <string name="fully_locked_title">Volledig vergrendelde kaart.</string>
     <string name="nfc_off_error">NFC is uitgeschakeld</string>
     <string name="turn_on_nfc">Schakel NFC in om de kaartinformatie uit te kunnen lezen.</string>
     <string name="wireless_settings">Draadloze instellingen</string>
 
     <string name="unknown_card_header">Niet-ondersteund kaartformaat</string>
-    <string name="unknown_card_description">Deze kaart wordt nog niet ondersteund door Metrodroid. Alleen onbewerkte gegevens kunnen worden weergegeven.</string>
+    <string name="unknown_card_description">Deze kaart wordt nog niet ondersteund door Metrodroid; er kunnen alleen onbewerkte gegevens worden getoond.</string>
 
     <string name="unknown_more_info">Meer informatie</string>
     <string name="unknown_more_info_desc">Raak aan om meer informatie te krijgen over Metrodroid\'s ondersteuning voor deze kaart.</string>
@@ -693,7 +691,7 @@
 <string name="vehicle_number">Voertuig %s</string>
     <string name="card_note_leap">Vereist het ophalen van sleutel van TFI, wat moet worden ingeschakeld in de NFC-instellingen.</string>
 
-    <string name="machine_id">Machine-ID</string>
+    <string name="machine_id">Automaat-ID</string>
 
     <string name="valid_from_format">Geldig vanaf %1$s</string>
     <string name="valid_not_used">Nog niet in gebruik</string>
@@ -830,4 +828,24 @@
 <string name="location_taipei">Taipei</string>
     <string name="location_france">Frankrijk</string>
     <string name="location_orlando">Orlando, FL, VS</string>
-    </resources>
+    <string name="fully_locked_desc_unlockable">Geen enkel onderdeel van deze kaart is leesbaar zonder sleutel en je hebt momenteel geen geldige sleutels geïnstalleerd.
+\n 
+\nDeze kaart werkt zodra de juiste sleutels ervoor zijn geïnstalleerd; deze verschillen meestal per kaart. Meer informatie over het ophalen en installeren van sleutels kan worden gevonden in de documentatie.
+\n 
+\nNeem contact op met de uitgever van de kaart en vraag of open toegang tot de gegevens van de verschafte kaarten mogelijk wordt gemaakt. Het is mogelijk om veilige, alleen-lezen toegang te geven met moderne smartcard-technologie. Sommige vervoerders bieden zelfs openbare documentatie aan over de gegevensopmaak!</string>
+    <string name="card_name_zolotaya_korona">Zolotaya Korona</string>
+    <string name="location_russia">Rusland</string>
+    <string name="zolotaya_korona_region">Regio</string>
+    <string name="card_name_yaroslavl_etk">ETK Iaroslavl</string>
+    <string name="location_yaroslavl">Iaroslavl</string>
+    <string name="card_name_krasnodar_etk">ETK Krasnodar</string>
+    <string name="location_krasnodar">Krasnodar</string>
+<string name="location_denmark">Denemarken</string>
+    <string name="location_stockholm">Stockholm, Zweden</string>
+    <string name="rkf_card_status">Kaartstatus</string>
+    <string name="rkf_status_ok">Oké; ingeschakeld</string>
+    <string name="rkf_status_action_pending">Bezig met actie</string>
+    <string name="rkf_status_temp_disabled">Tijdelijk uitgeschakeld of geschorst</string>
+    <string name="rkf_status_not_ok">Permanent uitgeschakeld</string>
+    <string name="import_mct_file">Importeren uit MCT-bestand</string>
+</resources>

@@ -1,0 +1,45 @@
+<card partial_read="false" scanned_at="1" id="a1b2c3d4" type="3">
+    <histories>
+        <history error="" id="0" valid="false"/>
+        <history error="" id="1" valid="false"/>
+        <history error="" id="2" valid="false"/>
+        <history error="" id="3" valid="true">
+            <transaction amount="-169" date="0" date2="1262275200000" type="48" user-data="BFT-CGA &#0;"/>
+            <transaction amount="30" date="0" date2="1262361600000" type="118" user-data="BUS106 &#0;&#0;"/>
+            <transaction amount="-30" date="0" date2="1262361600000" type="49" user-data="BUS106 &#0;&#0;"/>
+            <transaction amount="65536" date="0" date2="1262188800000" type="-16" user-data="&#0;&#0;&#0;&#0;&#0;&#0;&#0;&#0;&#0;"/>
+        </history>
+        <history error="" id="4" valid="false"/>
+        <history error="" id="5" valid="false"/>
+        <history error="" id="6" valid="false"/>
+        <history error="" id="7" valid="false"/>
+        <history error="" id="8" valid="false"/>
+        <history error="" id="9" valid="false"/>
+        <history error="" id="10" valid="false"/>
+        <history error="" id="11" valid="false"/>
+        <history error="" id="12" valid="false"/>
+        <history error="" id="13" valid="false"/>
+        <history error="" id="14" valid="false"/>
+        <history error="" id="15" valid="false"/>
+    </histories>
+    <purses>
+        <purse auto-load-amount="0" cepas-version="0" error="File 0 was an invalid file." id="0" valid="false" issuer-data-length="0" last-credit-transaction-trp="0" last-transaction-debit-options="0" last-transaction-trp="0" logfile-record-count="0" purse-balance="0" purse-status="0"/>
+        <purse auto-load-amount="0" cepas-version="0" error="File 1 was an invalid file." id="1" valid="false" issuer-data-length="0" last-credit-transaction-trp="0" last-transaction-debit-options="0" last-transaction-trp="0" logfile-record-count="0" purse-balance="0" purse-status="0"/>
+        <purse auto-load-amount="0" cepas-version="0" error="File 2 was an invalid file." id="2" valid="false" issuer-data-length="0" last-credit-transaction-trp="0" last-transaction-debit-options="0" last-transaction-trp="0" logfile-record-count="0" purse-balance="0" purse-status="0"/>
+        <purse auto-load-amount="0" can="1123456789123456" csn="a1b2c3d4e5f60123" cepas-version="2" error="" id="3" valid="true" issuer-data-length="32" issuer-specific-data="0200000001000002020000000000000000000000000000000000000000000000" last-credit-transaction-header="0000000000000000" last-credit-transaction-trp="1" last-transaction-debit-options="0" last-transaction-trp="4" logfile-record-count="5" purse-balance="897" purse-creation-date="1262188800000000" purse-expiry-date="1893427200000" purse-status="1">
+            <transaction amount="-169" date="0" date2="1262275200000" type="48" user-data="BFT-CGA &#0;"/>
+        </purse>
+        <purse auto-load-amount="0" cepas-version="0" error="File 4 was an invalid file." id="4" valid="false" issuer-data-length="0" last-credit-transaction-trp="0" last-transaction-debit-options="0" last-transaction-trp="0" logfile-record-count="0" purse-balance="0" purse-status="0"/>
+        <purse auto-load-amount="0" cepas-version="0" error="File 5 was an invalid file." id="5" valid="false" issuer-data-length="0" last-credit-transaction-trp="0" last-transaction-debit-options="0" last-transaction-trp="0" logfile-record-count="0" purse-balance="0" purse-status="0"/>
+        <purse auto-load-amount="0" cepas-version="0" error="File 6 was an invalid file." id="6" valid="false" issuer-data-length="0" last-credit-transaction-trp="0" last-transaction-debit-options="0" last-transaction-trp="0" logfile-record-count="0" purse-balance="0" purse-status="0"/>
+        <purse auto-load-amount="0" cepas-version="0" error="File 7 was an invalid file." id="7" valid="false" issuer-data-length="0" last-credit-transaction-trp="0" last-transaction-debit-options="0" last-transaction-trp="0" logfile-record-count="0" purse-balance="0" purse-status="0"/>
+        <purse auto-load-amount="0" cepas-version="0" error="File 8 was an invalid file." id="8" valid="false" issuer-data-length="0" last-credit-transaction-trp="0" last-transaction-debit-options="0" last-transaction-trp="0" logfile-record-count="0" purse-balance="0" purse-status="0"/>
+        <purse auto-load-amount="0" cepas-version="0" error="File 9 was an invalid file." id="9" valid="false" issuer-data-length="0" last-credit-transaction-trp="0" last-transaction-debit-options="0" last-transaction-trp="0" logfile-record-count="0" purse-balance="0" purse-status="0"/>
+        <purse auto-load-amount="0" cepas-version="0" error="File 10 was an invalid file." id="10" valid="false" issuer-data-length="0" last-credit-transaction-trp="0" last-transaction-debit-options="0" last-transaction-trp="0" logfile-record-count="0" purse-balance="0" purse-status="0"/>
+        <purse auto-load-amount="0" cepas-version="0" error="File 11 was an invalid file." id="11" valid="false" issuer-data-length="0" last-credit-transaction-trp="0" last-transaction-debit-options="0" last-transaction-trp="0" logfile-record-count="0" purse-balance="0" purse-status="0"/>
+        <purse auto-load-amount="0" cepas-version="0" error="File 12 was an invalid file." id="12" valid="false" issuer-data-length="0" last-credit-transaction-trp="0" last-transaction-debit-options="0" last-transaction-trp="0" logfile-record-count="0" purse-balance="0" purse-status="0"/>
+        <purse auto-load-amount="0" cepas-version="0" error="File 13 was an invalid file." id="13" valid="false" issuer-data-length="0" last-credit-transaction-trp="0" last-transaction-debit-options="0" last-transaction-trp="0" logfile-record-count="0" purse-balance="0" purse-status="0"/>
+        <purse auto-load-amount="0" cepas-version="0" error="File 14 was an invalid file." id="14" valid="false" issuer-data-length="0" last-credit-transaction-trp="0" last-transaction-debit-options="0" last-transaction-trp="0" logfile-record-count="0" purse-balance="0" purse-status="0"/>
+        <purse auto-load-amount="0" cepas-version="0" error="File 15 was an invalid file." id="15" valid="false" issuer-data-length="0" last-credit-transaction-trp="0" last-transaction-debit-options="0" last-transaction-trp="0" logfile-record-count="0" purse-balance="0" purse-status="0"/>
+    </purses>
+</card>

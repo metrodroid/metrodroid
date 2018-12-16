@@ -210,7 +210,7 @@ public class ReadingTagActivity extends MetrodroidActivity implements TagReaderF
 
                 ReadingTagActivity.this.updateStatusText(Utils.localizeString(R.string.saving_card));
 
-                String cardXml = card.toXml(MetrodroidApplication.getInstance().getSerializer());
+                String cardXml = card.toXml();
 
                 if (BuildConfig.DEBUG) {
                     if (card.isPartialRead()) {

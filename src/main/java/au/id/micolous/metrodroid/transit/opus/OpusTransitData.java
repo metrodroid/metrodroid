@@ -21,6 +21,7 @@
 package au.id.micolous.metrodroid.transit.opus;
 
 import android.os.Parcel;
+import android.support.annotation.NonNull;
 
 import java.util.Collections;
 import java.util.List;
@@ -105,7 +106,7 @@ public class OpusTransitData extends Calypso1545TransitData {
 
     public final static CalypsoCardTransitFactory FACTORY = new CalypsoCardTransitFactory() {
         @Override
-        public TransitIdentity parseTransitIdentity(CalypsoApplication card) {
+        public TransitIdentity parseTransitIdentity(@NonNull CalypsoApplication card) {
             return new TransitIdentity(NAME, getSerial(card));
         }
 
@@ -120,10 +121,11 @@ public class OpusTransitData extends Calypso1545TransitData {
         }
 
         @Override
-        public OpusTransitData parseTransitData(CalypsoApplication card) {
+        public OpusTransitData parseTransitData(@NonNull CalypsoApplication card) {
             return new OpusTransitData(card);
         }
 
+        @NonNull
         @Override
         public List<CardInfo> getAllCards() {
             return Collections.singletonList(CARD_INFO);

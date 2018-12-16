@@ -55,11 +55,6 @@ public class BlankClassicTransitData extends TransitData {
     }
 
     public static final ClassicCardTransitFactory FACTORY = new ClassicCardTransitFactory() {
-        @Override
-        public List<CardInfo> getAllCards() {
-            return null;
-        }
-
         /**
          * @param card Card to read.
          * @return true if all sectors on the card are blank.

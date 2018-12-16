@@ -33,24 +33,24 @@ public class En1545FixedHex implements En1545Field {
     }
 
     @Override
-    public int parseField(byte[] b, int off, String path, En1545Parsed holder) {
+    public int parseField(byte[] b, int off, String path, En1545Parsed holder, En1545Bits bitParser) {
         StringBuilder res = new StringBuilder();
         try {
             for (int i = mLen; i > 0; ) {
-                if (i >= 16) {
-                    res.insert(0, String.format(Locale.ENGLISH, "%04x",
-                            Utils.getBitsFromBuffer(b, off + i - 16, 16)));
-                    i -= 16;
+                if (i >= 8) {
+                    res.insert(0, String.format(Locale.ENGLISH, "%02x",
+                            bitParser.getBitsFromBuffer(b, off + i - 8, 8)));
+                    i -= 8;
                     continue;
                 }
                 if (i >= 4){
                     res.insert(0, String.format(Locale.ENGLISH, "%01x",
-                            Utils.getBitsFromBuffer(b, off + i - 4, 4)));
+                            bitParser.getBitsFromBuffer(b, off + i - 4, 4)));
                     i -= 4;
                     continue;
                 }
                 res.insert(0, String.format(Locale.ENGLISH, "%x",
-                        Utils.getBitsFromBuffer(b, off, i)));
+                        bitParser.getBitsFromBuffer(b, off, i)));
                 break;
             }
             holder.insertString(mName, path, res.toString());

@@ -27,6 +27,7 @@
 package au.id.micolous.metrodroid.transit.clipper;
 
 import android.os.Parcel;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.annotation.VisibleForTesting;
 
@@ -51,6 +52,7 @@ import au.id.micolous.metrodroid.util.Utils;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
+import java.util.Collections;
 import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.TimeZone;
@@ -158,18 +160,19 @@ public class ClipperTransitData extends TransitData {
             return ArrayUtils.contains(appIds, APP_ID);
         }
 
+        @NonNull
         @Override
-        public CardInfo getCardInfo() {
-            return CARD_INFO;
+        public List<CardInfo> getAllCards() {
+            return Collections.singletonList(CARD_INFO);
         }
 
         @Override
-        public TransitData parseTransitData(DesfireCard desfireCard) {
+        public TransitData parseTransitData(@NonNull DesfireCard desfireCard) {
             return new ClipperTransitData(desfireCard);
         }
 
         @Override
-        public TransitIdentity parseTransitIdentity(DesfireCard card) {
+        public TransitIdentity parseTransitIdentity(@NonNull DesfireCard card) {
             try {
                 byte[] data = card.getApplication(APP_ID).getFile(0x08).getData();
                 return new TransitIdentity("Clipper", String.valueOf(Utils.byteArrayToLong(data, 1, 4)));

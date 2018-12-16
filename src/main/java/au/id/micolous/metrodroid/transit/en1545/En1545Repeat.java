@@ -38,16 +38,16 @@ public class En1545Repeat implements En1545Field {
     }
 
     @Override
-    public int parseField(byte[] b, int off, String path, En1545Parsed holder) {
+    public int parseField(byte[] b, int off, String path, En1545Parsed holder, En1545Bits bitParser) {
         int ctr;
         try {
-            ctr = Utils.getBitsFromBuffer(b, off, mCtrLen);
+            ctr = bitParser.getBitsFromBuffer(b, off, mCtrLen);
         } catch (Exception e) {
             return off + mCtrLen;
         }
         off += mCtrLen;
         for (int i = 0; i < ctr; i++)
-            off = mField.parseField(b, off, path + "/" + Integer.toString(i), holder);
+            off = mField.parseField(b, off, path + "/" + Integer.toString(i), holder, bitParser);
         return off;
     }
 }

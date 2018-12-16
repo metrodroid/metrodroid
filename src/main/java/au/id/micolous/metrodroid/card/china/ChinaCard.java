@@ -69,7 +69,7 @@ public class ChinaCard extends ISO7816Application {
     static {
         for (ChinaCardTransitFactory f : FACTORIES)
             APP_NAMES.addAll(f.getAppNames());
-    };
+    }
 
     @ElementList(name = "balances", entry = "balance")
     private List<Balance> mBalances;
@@ -105,9 +105,9 @@ public class ChinaCard extends ISO7816Application {
     @Override
     public TransitIdentity parseTransitIdentity() {
         for (ChinaCardTransitFactory f : FACTORIES) {
-            for (byte[] transitAppName : f.getAppNames())
-                if (Arrays.equals(getAppName(), transitAppName))
-                    return f.parseTransitIdentity(this);
+            if (f.check(this)) {
+                return f.parseTransitIdentity(this);
+            }
         }
         return null;
     }
@@ -115,9 +115,9 @@ public class ChinaCard extends ISO7816Application {
     @Override
     public TransitData parseTransitData() {
         for (ChinaCardTransitFactory f : FACTORIES) {
-            for (byte[] transitAppName : f.getAppNames())
-                if (Arrays.equals(getAppName(), transitAppName))
-                    return f.parseTransitData(this);
+            if (f.check(this)) {
+                return f.parseTransitData(this);
+            }
         }
         return null;
     }
@@ -143,20 +143,24 @@ public class ChinaCard extends ISO7816Application {
 
         try {
             feedbackInterface.updateProgressBar(0, 6);
-            CardInfo ci = null;
+
+        factories:
             for (ChinaCardTransitFactory f : FACTORIES) {
-                for (byte[] transitAppName : f.getAppNames())
+                for (byte[] transitAppName : f.getAppNames()) {
                     if (Arrays.equals(app.getAppName(), transitAppName)) {
-                        ci = f.getCardInfo();
-                        break;
+                        final List<CardInfo> cl = f.getAllCards();
+
+                        if (!cl.isEmpty()) {
+                            final CardInfo ci = cl.get(0);
+
+                            feedbackInterface.updateStatusText(Utils.localizeString(R.string.card_reading_type,
+                                    ci.getName()));
+                            feedbackInterface.showCardType(ci);
+                        }
+
+                        break factories;
                     }
-                if (ci != null)
-                    break;
-            }
-            if (ci != null) {
-                feedbackInterface.updateStatusText(Utils.localizeString(R.string.card_reading_type,
-                        ci.getName()));
-                feedbackInterface.showCardType(ci);
+                }
             }
 
             feedbackInterface.updateProgressBar(0, 5);

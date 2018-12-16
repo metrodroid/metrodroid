@@ -52,6 +52,7 @@ import au.id.micolous.metrodroid.util.Utils;
 
 @SuppressWarnings("WeakerAccess")
 public final class CardInfo {
+    @NonNull
     public static List<CardInfo> getAllCardsAlphabetical() {
         List<CardInfo> ret = new ArrayList<>();
         List<CardTransitFactory> allFactories = new ArrayList<>();
@@ -62,9 +63,9 @@ public final class CardInfo {
         allFactories.addAll(UltralightCard.getAllFactories());
         allFactories.addAll(ChinaCard.getAllFactories());
         for (CardTransitFactory factory : allFactories) {
-            List<CardInfo> ac = factory.getAllCards();
-            if (ac != null)
-                ret.addAll(ac);
+            // Not relevant, as getAllCards has no generic parameter or return
+            //noinspection unchecked
+            ret.addAll(factory.getAllCards());
         }
         ret.add(TMoneyTransitData.CARD_INFO);
         ret.addAll(Arrays.asList(EZLinkTransitData.ALL_CARD_INFOS));

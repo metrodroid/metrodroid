@@ -30,13 +30,10 @@ import au.id.micolous.farebot.R;
 import au.id.micolous.metrodroid.card.CardType;
 import au.id.micolous.metrodroid.card.classic.ClassicCard;
 import au.id.micolous.metrodroid.card.classic.ClassicCardTransitFactory;
-import au.id.micolous.metrodroid.card.classic.ClassicSector;
 import au.id.micolous.metrodroid.transit.CardInfo;
 import au.id.micolous.metrodroid.transit.TransitData;
-import au.id.micolous.metrodroid.transit.TransitIdentity;
 import au.id.micolous.metrodroid.transit.erg.ErgTransitData;
 import au.id.micolous.metrodroid.transit.erg.ErgTrip;
-import au.id.micolous.metrodroid.transit.erg.record.ErgMetadataRecord;
 import au.id.micolous.metrodroid.transit.erg.record.ErgPurseRecord;
 
 /**
@@ -87,31 +84,8 @@ public class ManlyFastFerryTransitData extends ErgTransitData {
 
     public static final ClassicCardTransitFactory FACTORY = new ErgTransitFactory() {
         @Override
-        public boolean check(@NonNull ClassicCard card) {
-            if (!super.check(card)) {
-                return false;
-            }
-
-            ErgMetadataRecord metadataRecord = ErgTransitData.getMetadataRecord(card);
-            return metadataRecord != null && metadataRecord.getAgency() == AGENCY_ID;
-        }
-
-        @Override
-        public boolean check(ClassicSector sector0) {
-            if (!super.check(sector0)) {
-                return false;
-            }
-
-            byte[] file2 = sector0.getBlock(2).getData();
-            ErgMetadataRecord metadataRecord = ErgMetadataRecord.recordFromBytes(file2);
-            return metadataRecord != null && metadataRecord.getAgency() == AGENCY_ID;
-        }
-
-        @Override
-        public TransitIdentity parseTransitIdentity(@NonNull ClassicCard card) {
-            byte[] file2 = card.getSector(0).getBlock(2).getData();
-            ErgMetadataRecord metadata = ErgMetadataRecord.recordFromBytes(file2);
-            return new TransitIdentity(NAME, metadata.getCardSerialHex());
+        protected int getErgAgencyID() {
+            return AGENCY_ID;
         }
 
         @Override
@@ -119,21 +93,10 @@ public class ManlyFastFerryTransitData extends ErgTransitData {
             return new ManlyFastFerryTransitData(classicCard);
         }
 
-        @Override
-        public CardInfo earlyCardInfo(List<ClassicSector> sectors) {
-            if (check(sectors.get(0)))
-                return CARD_INFO;
-            return null;
-        }
-
+        @NonNull
         @Override
         public List<CardInfo> getAllCards() {
             return Collections.singletonList(CARD_INFO);
-        }
-
-        @Override
-        public int earlySectors() {
-            return 1;
         }
     };
 

@@ -20,6 +20,7 @@ package au.id.micolous.metrodroid.transit.clipper;
 
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.support.annotation.NonNull;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -58,14 +59,15 @@ public class ClipperUltralightTransitData extends TransitData {
     private final ClipperUltralightSubscription mSub;
 
     public final static UltralightCardTransitFactory FACTORY = new UltralightCardTransitFactory() {
+        @NonNull
         @Override
         public List<CardInfo> getAllCards() {
             // Desfire variant already adds it to supported cards
-            return null;
+            return Collections.emptyList();
         }
 
         @Override
-        public boolean check(UltralightCard card) {
+        public boolean check(@NonNull UltralightCard card) {
             try {
                 byte[] head = card.getPage(4).getData();
                 return head[0] == 0x13;
@@ -76,12 +78,12 @@ public class ClipperUltralightTransitData extends TransitData {
         }
 
         @Override
-        public TransitData parseTransitData(UltralightCard ultralightCard) {
+        public TransitData parseTransitData(@NonNull UltralightCard ultralightCard) {
             return new ClipperUltralightTransitData(ultralightCard);
         }
 
         @Override
-        public TransitIdentity parseTransitIdentity(UltralightCard card) {
+        public TransitIdentity parseTransitIdentity(@NonNull UltralightCard card) {
             return new TransitIdentity(NAME, Long.toString(getSerial(card)));
         }
     };

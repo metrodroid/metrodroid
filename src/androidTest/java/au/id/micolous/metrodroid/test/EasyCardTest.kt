@@ -18,35 +18,29 @@
  */
 package au.id.micolous.metrodroid.test
 
-import android.test.InstrumentationTestCase
 import au.id.micolous.metrodroid.card.classic.ClassicCard
+import au.id.micolous.metrodroid.card.classic.MfcCardImporter
 import au.id.micolous.metrodroid.transit.TransitCurrency
 import au.id.micolous.metrodroid.transit.Trip
 import au.id.micolous.metrodroid.transit.easycard.EasyCardTransitData
 import au.id.micolous.metrodroid.util.Utils
+import junit.framework.TestCase.*
+import org.junit.Test
 
 /**
  * This test uses a EasyCard dump based on the one shown at:
  * http://www.fuzzysecurity.com/tutorials/rfid/4.html
  */
-class EasyCardTest : InstrumentationTestCase() {
-    private fun parseCard(c: ClassicCard): EasyCardTransitData {
-        val d = c.parseTransitData()
-        assertNotNull("Transit data not parsed", d)
-        assertTrue(d is EasyCardTransitData)
-        return d as EasyCardTransitData
-    }
+class EasyCardTest : CardReaderWithAssetDumpsTest<EasyCardTransitData, ClassicCard>(
+        EasyCardTransitData::class.java, MfcCardImporter()) {
 
-    private fun loadCard(path: String): EasyCardTransitData {
-        return parseCard(TestUtils.loadMifareClassic1KFromAssets(instrumentation.context, path))
-    }
-
+    @Test
     fun testdeadbeefEnglish() {
-        TestUtils.setLocale(instrumentation.context, "en-US")
-        TestUtils.showRawStationIds(false)
-        TestUtils.showLocalAndEnglish(false)
+        setLocale("en-US")
+        showRawStationIds(false)
+        showLocalAndEnglish(false)
 
-        val c = loadCard("easycard/deadbeef.mfc")
+        val c = loadAndParseCard("easycard/deadbeef.mfc")
         assertEquals(TransitCurrency.TWD(245), c.balances!![0].balance)
         assertEquals(3, c.trips!!.size)
 
@@ -84,12 +78,13 @@ class EasyCardTest : InstrumentationTestCase() {
         assertEquals("0x31c046", refill.machineID)
     }
 
+    @Test
     fun testdeadbeefChineseTraditional() {
-        TestUtils.setLocale(instrumentation.context, "zh-TW")
-        TestUtils.showRawStationIds(false)
-        TestUtils.showLocalAndEnglish(false)
+        setLocale("zh-TW")
+        showRawStationIds(false)
+        showLocalAndEnglish(false)
 
-        val c = loadCard("easycard/deadbeef.mfc")
+        val c = loadAndParseCard("easycard/deadbeef.mfc")
         val refill = c.trips!!.last()
         // Yongan Market
         assertEquals("永安市場", refill.startStation!!.stationName)

@@ -64,14 +64,16 @@ public class RicaricaMiTransitData extends En1545TransitData {
             .build();
 
     private static final En1545Field BLOCK_1_0_FIELDS = new En1545Container(
-            new En1545FixedHex(ENV_UNKNOWN_A, 88),
+            new En1545FixedInteger(ENV_UNKNOWN_A, 9),
+            En1545FixedInteger.BCDdate(HOLDER_BIRTH_DATE),
+            new En1545FixedHex(ENV_UNKNOWN_B, 47),
             En1545FixedInteger.date(ENV_APPLICATION_VALIDITY_END),
-            new En1545FixedHex(ENV_UNKNOWN_B, 26)
+            new En1545FixedInteger(ENV_UNKNOWN_C, 26)
     );
     private static final En1545Field BLOCK_1_1_FIELDS = new En1545Container(
-            new En1545FixedHex(ENV_UNKNOWN_C, 64),
+            new En1545FixedHex(ENV_UNKNOWN_D, 64),
             En1545FixedInteger.date(ENV_APPLICATION_ISSUE),
-            new En1545FixedHex(ENV_UNKNOWN_D, 49)
+            new En1545FixedHex(ENV_UNKNOWN_E, 49)
     );
 
     private RicaricaMiTransitData(ClassicCard card) {
@@ -192,28 +194,16 @@ public class RicaricaMiTransitData extends En1545TransitData {
     };
 
     public static final ClassicCardTransitFactory FACTORY = new ClassicCardTransitFactory() {
-        private boolean check(ClassicSector sector0) {
+        @Override
+        public boolean earlyCheck(@NonNull List<ClassicSector> sectors) {
             try {
                 for (int i = 1; i < 3; i++) {
-                    byte[] block = sector0.getBlock(i).getData();
+                    byte[] block = sectors.get(0).getBlock(i).getData();
                     for (int j = (i == 1 ? 1 : 0); j < 8; j++)
                         if (Utils.byteArrayToInt(block, j * 2, 2) != RICARICA_MI_ID)
                             return false;
                 }
                 return true;
-            } catch (UnauthorizedException ex) {
-                // Not ours
-                return false;
-            } catch (IndexOutOfBoundsException ignored) {
-                // If the sector/block number is too high, it's not for us
-                return false;
-            }
-        }
-
-        @Override
-        public boolean check(@NonNull ClassicCard card) {
-            try {
-                return check(card.getSector(0));
             } catch (UnauthorizedException ex) {
                 // Not ours
                 return false;
@@ -238,13 +228,7 @@ public class RicaricaMiTransitData extends En1545TransitData {
             return 1;
         }
 
-        @Override
-        public CardInfo earlyCardInfo(List<ClassicSector> sectors) {
-            if (check(sectors.get(0)))
-                return CARD_INFO;
-            return null;
-        }
-
+        @NonNull
         @Override
         public List<CardInfo> getAllCards() {
             return Collections.singletonList(CARD_INFO);

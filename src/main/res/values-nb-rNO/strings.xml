@@ -829,4 +829,23 @@
 <string name="location_taipei">Taipei</string>
     <string name="location_france">Frankrike</string>
     <string name="location_orlando">Orlando, FL, USA</string>
+    <string name="location_denmark">Danmark</string>
+    <string name="location_stockholm">Stockholm, Sverige</string>
+    <string name="rkf_status_ok">OK, påskrudd</string>
+    <string name="rkf_status_not_ok">Avskrudd for godt</string>
+<string name="fully_locked_desc_unlockable">Ingen del av dette kortet kan leses fritt uten en nøkkel. Du ha ingen gyldige nøkler installert til sådan bruk.
+\n
+\nKortet fungerer når nøkler er installert for det. Disse er vanligvis forskjellige for hvert kort. Mer info om henting og installasjon av nøkler er å finne i dokumentasjonen.
+\n
+\nTa kontakt med kortutstederen for å tillate åpen datatilgang for utstedte kort. Det er trygt å tillate lesetilgang til data med moderne smartkortteknologi. Noen byråer tilbyr tilogmed dokumentasjon om dataformatet.</string>
+    <string name="card_name_zolotaya_korona">Zolotaya Korona</string>
+    <string name="location_russia">Russland</string>
+    <string name="zolotaya_korona_region">Region</string>
+    <string name="card_name_yaroslavl_etk">ETK Iaroslavl</string>
+    <string name="location_yaroslavl">Iaroslavl</string>
+    <string name="card_name_krasnodar_etk">ETK Krasnodar</string>
+    <string name="location_krasnodar">Krasnodar</string>
+    <string name="rkf_card_status">Kortstatus</string>
+    <string name="rkf_status_action_pending">Handling venter</string>
+    <string name="rkf_status_temp_disabled">Midlertidig avskrudd eller avstengt</string>
     </resources>

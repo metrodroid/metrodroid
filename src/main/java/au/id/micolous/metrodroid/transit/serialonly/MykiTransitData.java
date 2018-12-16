@@ -38,6 +38,8 @@ import au.id.micolous.metrodroid.transit.TransitIdentity;
 import au.id.micolous.metrodroid.util.Utils;
 
 import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
 import java.util.Locale;
 
 /**
@@ -119,7 +121,7 @@ public class MykiTransitData extends SerialOnlyTransitData {
         }
 
         @Override
-        public TransitData parseTransitData(DesfireCard desfireCard) {
+        public TransitData parseTransitData(@NonNull DesfireCard desfireCard) {
             return new MykiTransitData(desfireCard);
         }
 
@@ -128,13 +130,14 @@ public class MykiTransitData extends SerialOnlyTransitData {
             return ArrayUtils.contains(appIds, APP_ID_1) && ArrayUtils.contains(appIds, APP_ID_2);
         }
 
+        @NonNull
         @Override
-        protected CardInfo getCardInfo() {
-            return CARD_INFO;
+        public List<CardInfo> getAllCards() {
+            return Collections.singletonList(CARD_INFO);
         }
 
         @Override
-        public TransitIdentity parseTransitIdentity(DesfireCard desfireCard) {
+        public TransitIdentity parseTransitIdentity(@NonNull DesfireCard desfireCard) {
             byte[] data = desfireCard.getApplication(APP_ID_1).getFile(15).getData();
             return new TransitIdentity(NAME, parseSerial(data));
         }

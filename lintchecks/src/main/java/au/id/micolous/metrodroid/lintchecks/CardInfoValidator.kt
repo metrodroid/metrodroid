@@ -22,8 +22,7 @@ class CardInfoValidator : Detector(), Detector.UastScanner {
     override fun getApplicableMethodNames() = METHODS
 
     override fun visitMethod(context: JavaContext, node: UCallExpression, method: PsiMethod) {
-        if (!context.evaluator.extendsClass(method.containingClass,
-                        "au.id.micolous.metrodroid.transit.CardInfo.Builder", false)) {
+        if (!context.evaluator.extendsClass(method.containingClass, BUILDER_CLS, false)) {
             return
         }
 

@@ -155,7 +155,7 @@ public class ErgTransitData extends TransitData {
         mTrips = trips;
     }
 
-    protected static class ErgTransitFactory extends ClassicCardTransitFactory {
+    protected static class ErgTransitFactory implements ClassicCardTransitFactory {
         /**
          * ERG cards have two identifying marks:
          * <p>
@@ -165,28 +165,15 @@ public class ErgTransitData extends TransitData {
          * This check only determines if there is a signature -- subclasses should call this and then
          * perform their own check of the agency ID.
          *
-         * @param card MIFARE Classic card data.
+         * @param sectors MIFARE classic card sectors
          * @return True if this is an ERG card, false otherwise.
          */
         @Override
-        public boolean check(@NonNull ClassicCard card) {
-            try {
-                return check(card.getSector(0));
-            } catch (UnauthorizedException ignored) {
-                // These blocks of the card are not protected.
-                // This must not be a ERG smartcard.
-                return false;
-            } catch (IndexOutOfBoundsException ignored) {
-                // If that's too high for us, then this isn't an ERG smartcard.
-                return false;
-            }
-        }
-
-        protected boolean check(ClassicSector sector0) {
+        public boolean earlyCheck(@NonNull List<ClassicSector> sectors) {
             byte[] file1;
 
             try {
-                file1 = sector0.getBlock(1).getData();
+                file1 = sectors.get(0).getBlock(1).getData();
             } catch (UnauthorizedException ignored) {
                 // These blocks of the card are not protected.
                 // This must not be a ERG smartcard.
@@ -197,16 +184,31 @@ public class ErgTransitData extends TransitData {
             }
 
             // Check for signature
-            return Arrays.equals(Arrays.copyOfRange(file1, 0, SIGNATURE.length), SIGNATURE);
+            if (!Arrays.equals(Arrays.copyOfRange(file1, 0, SIGNATURE.length), SIGNATURE)) {
+                return false;
+            }
+
+            int agencyID = getErgAgencyID();
+            if (agencyID == -1) {
+                return true;
+            } else {
+                ErgMetadataRecord metadataRecord = getMetadataRecord(sectors.get(0));
+                return metadataRecord != null && metadataRecord.getAgency() == agencyID;
+            }
         }
 
         @Override
         public TransitIdentity parseTransitIdentity(@NonNull ClassicCard card) {
+            return parseTransitIdentity(card, NAME);
+        }
+
+        protected TransitIdentity parseTransitIdentity(ClassicCard card, String name) {
             ErgMetadataRecord metadata = getMetadataRecord(card);
             if (metadata == null) {
                 return null;
             }
-            return new TransitIdentity(NAME, metadata.getCardSerialHex());
+
+            return new TransitIdentity(name, metadata.getCardSerialHex());
         }
 
         @Override
@@ -214,25 +216,46 @@ public class ErgTransitData extends TransitData {
             return new ErgTransitData(classicCard);
         }
 
-        // Specific readers add their CardInfo
         @Override
-        public List<CardInfo> getAllCards() {
-            return null;
+        public int earlySectors() {
+            return 1;
+        }
+
+        /**
+         * Used for checks on the ERG agency ID. Subclasses must implement this, and return
+         * a positive 16-bit integer value.
+         *
+         * @see #earlyCheck(List)
+         * @return An ERG agency ID for the card, or -1 to match any agency ID.
+         */
+        protected int getErgAgencyID() {
+            return -1;
         }
     }
 
     public static final ClassicCardTransitFactory FALLBACK_FACTORY = new ErgTransitFactory();
 
-    protected static ErgMetadataRecord getMetadataRecord(ClassicCard card) {
+    @Nullable
+    private static ErgMetadataRecord getMetadataRecord(ClassicSector sector0) {
         byte[] file2;
         try {
-            file2 = card.getSector(0).getBlock(2).getData();
+            file2 = sector0.getBlock(2).getData();
         } catch (UnauthorizedException ex) {
             // Can't be for us...
             return null;
         }
 
         return ErgMetadataRecord.recordFromBytes(file2);
+    }
+
+    @Nullable
+    protected static ErgMetadataRecord getMetadataRecord(ClassicCard card) {
+        try {
+            return getMetadataRecord(card.getSector(0));
+        } catch (UnauthorizedException ex) {
+            // Can't be for us...
+            return null;
+        }
     }
 
     public void writeToParcel(Parcel parcel, int flags) {

@@ -33,6 +33,7 @@ import au.id.micolous.metrodroid.transit.CardTransitFactory;
 import au.id.micolous.metrodroid.transit.TransitData;
 import au.id.micolous.metrodroid.transit.TransitIdentity;
 import au.id.micolous.metrodroid.transit.clipper.ClipperUltralightTransitData;
+import au.id.micolous.metrodroid.transit.ovc.OvcUltralightTransitFactory;
 import au.id.micolous.metrodroid.transit.nextfare.ultralight.NextfareUnknownUltralightTransitData;
 import au.id.micolous.metrodroid.transit.ventra.VentraUltralightTransitData;
 import au.id.micolous.metrodroid.transit.yvr_compass.CompassUltralightTransitData;
@@ -69,6 +70,7 @@ public class UltralightCard extends Card {
             // This must be after the checks for known Nextfare MFU deployments.
             NextfareUnknownUltralightTransitData.FACTORY,
             ClipperUltralightTransitData.FACTORY,
+            new OvcUltralightTransitFactory(),
             BlankUltralightTransitData.FACTORY,
             // This check must be LAST.
             //

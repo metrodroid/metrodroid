@@ -23,12 +23,15 @@
 package au.id.micolous.metrodroid.transit.edy;
 
 import android.os.Parcel;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
 import org.apache.commons.lang3.ArrayUtils;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
+import java.util.Locale;
 import java.util.TimeZone;
 
 import au.id.micolous.farebot.R;
@@ -118,18 +121,19 @@ public class EdyTransitData extends TransitData {
             return ArrayUtils.contains(systemCodes, SYSTEMCODE_EDY);
         }
 
+        @NonNull
         @Override
-        protected CardInfo getCardInfo() {
-            return CARD_INFO;
+        public List<CardInfo> getAllCards() {
+            return Collections.singletonList(CARD_INFO);
         }
 
         @Override
-        public TransitData parseTransitData(FelicaCard felicaCard) {
+        public TransitData parseTransitData(@NonNull FelicaCard felicaCard) {
             return new EdyTransitData(felicaCard);
         }
 
         @Override
-        public TransitIdentity parseTransitIdentity(FelicaCard card) {
+        public TransitIdentity parseTransitIdentity(@NonNull FelicaCard card) {
             return new TransitIdentity("Edy", null);
         }
     };
@@ -142,14 +146,8 @@ public class EdyTransitData extends TransitData {
 
     @Override
     public String getSerialNumber() {
-        StringBuilder str = new StringBuilder(20);
-        for (int i = 0; i < 8; i += 2) {
-            str.append(String.format("%02X", mSerialNumber[i]));
-            str.append(String.format("%02X", mSerialNumber[i + 1]));
-            if (i < 6)
-                str.append(" ");
-        }
-        return str.toString();
+        return Utils.groupString(Utils.getHexString(mSerialNumber).toUpperCase(Locale.ENGLISH),
+                " ", 4, 4, 4);
     }
 
     @Override
