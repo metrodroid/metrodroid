@@ -34,7 +34,7 @@ linux.conf.au 2018, in my talk, [Tap on to reverse engineering](https://youtu.be
 * [Steven Steiner](https://github.com/steets250) (LAX TAP)
 * [Rob O'Regan](http://www.robx1.net/nswtkt/private/manlyff/manlyff.htm) (Manly Fast Ferry card image)
 * [The Noun Project][15] (Various icons)
-* [Vladimir Serbinenko](https://github.com/phcoder) (Podorozhnik, Troika, Compass, Shenzhen Tong, Rav-Kav, T-money, Leap, CharlieCard, EN1545, Intercode, IstanbulKart, Lisboa Viva, Mobib, RicaricaMi)
+* [Vladimir Serbinenko](https://github.com/phcoder) (Podorozhnik, Troika, Compass, Shenzhen Tong, Rav-Kav, T-money, Leap, CharlieCard, EN1545, Intercode, IstanbulKart, Lisboa Viva, Mobib, RicaricaMi, Chinese cards, Adelaide Metrocard, Rejesekort)
 * [Toomas Losin](http://www.lenrek.net) (Compass)
 * [Sinpo Lib](https://github.com/sinpolib) (Shenzhen Tong)
 * Maria Komar (Podorozhnik database and dumps)
@@ -60,19 +60,25 @@ Thanks to those who have [helped to make Metrodroid available in languages other
 * [Calypso][36]
 * [CEPAS][2]
 * [FeliCa][8]
+* [FeliCa Lite][8]
 * [MIFARE Classic][23] (Not compatible with all devices)
 * [MIFARE DESFire][6]
 * [MIFARE Ultralight][24] (Not compatible with all devices)
+* [T-Money][43]
 
 ## Supported cards / agencies
 
 Card / Agency | Location | Notes
 ------------- | -------- | -----
+[AT HOP][67] | :new_zealand: Auckland, New Zealand | :new: `123`
+[Beijing Municipal Card][60] | :cn: Beijing, China | :new:
 [Bilhete Único][30] | :brazil: São Paulo, Brazil | :closed_lock_with_key: `MFC`
 [CharlieCard][45] | :us: Boston, MA, USA | :new: :closed_lock_with_key: `MFC`
+City Union | :cn: Mainland China | :new:
 [Clipper][1] | :us: San Francisco, CA, USA
 [Compass][41] | :canada: Vancouver, BC, Canada | :new: `SINGLE`
 [Cubic Nextfare][33] | :earth_americas: _many locations_ | :new: :closed_lock_with_key: `MFC`
+[EasyCard][66] | :taiwan: Taipei, Taiwan | :new: :closed_lock_with_key: `MFC`
 [Edy][12] | :jp: Japan
 [Envibus][46] | :fr: Sophia Antipolis, France | :new:
 [ERG][35] | :earth_asia: _many locations_ | :new: :closed_lock_with_key: `MFC`
@@ -83,9 +89,11 @@ Card / Agency | Location | Notes
 [HSL][17], [Matkakortti][16] | :finland: Finland |
 [IstanbulKart][48] | :tr: Istanbul, Turkey | :new: `123`
 [Kartu Multi Trip][39] | :indonesia: Jakarta, Indonesia | `KMT`
+Kiev Metro | :ukraine: Kiev, Ukraine | :new: :closed_lock_with_key: `MFC`
 [Leap][44] | :ireland: Ireland | :new: :unlock:
 [Lisboa Viva][49] | :portugal: Lisbon, Portugal
 [Manly Fast Ferry][19] | :australia: Sydney, NSW, Australia | :new: :closed_lock_with_key: `MFC`
+[Metrocard][59] : :australia: Adelaide, SA, Australia | :new:
 [Metrocard][34] | :new_zealand: Christchurch, New Zealand | :new: :closed_lock_with_key: `MFC`
 [Mobib][50] | :belgium: Brussels, Belgium | :new:
 [Myki][21] | :australia: Melbourne (and surrounds), VIC, Australia | :new: `123`
@@ -100,17 +108,25 @@ Card / Agency | Location | Notes
 [OV-chipkaart][32] | :netherlands: Netherlands | :closed_lock_with_key: `MFC`
 [Podorozhnik][37] | :ru: Saint Petersburg, Russia | :new: :closed_lock_with_key: `MFC`
 [Rav-Kav][42] | :israel: Israel | :new:
+[Rejsekort][62] | :norway: Norway | :new:
 [RicaricaMi][53] | :it: Milan, Italy | :new: :closed_lock_with_key: `MFC`
+Selecta | :fr: France | :new:
 [Shenzhen Tong][27] | :cn: Shenzhen, Guangdong Province, China | :new:
+[SLAccess][63] | :sweden: Stockholm, Sweden | :new:
 [SmartRider][29] | :australia: Western Australia, Australia | :new: :closed_lock_with_key: `MFC`
 [Strelka][54] | :ru: Moscow, Russia | :closed_lock_with_key: `123` `MFC`
 [Suica][9], [ICOCA][10], [PASMO][11] | :jp: Japan
+[SunCard][61] | :us: Orlando, FL, USA | :new: :closed_lock_with_key: `123` `MFC`
 [TaM][55] | :fr: Montpellier, France | :new:
+[Tartu Bus][64] | :estonia: Tartu, Estonia | :new: `123` `MFC`
 [T-Money][43] | :kr: South Korea | :new:
+T-Union | :cn: Mainland China | :new:
 [TransGironde][56] | :fr: Gironde, France | :new:
 [Transit Access Pass][26] | :us: Los Angeles, CA, USA | :new: :closed_lock_with_key: `MFC`
 [Troika][38] | :ru: Moscow, Russia | :new: :closed_lock_with_key: `MFC`
 [Ventra][57] | :us: Chicago, IL, USA | :new: `SINGLE`
+Wuhan Tong | :cn: Wuhan, Hubei Province, China | :new:
+[Zolotaya Korona][65] | :ru: Russia | :new:
 
 Note | Meaning
 ---- | -------
@@ -235,3 +251,12 @@ This software and it's authors are not associated with any public transit agency
 [56]: https://www.transgironde.fr/
 [57]: https://www.ventrachicago.com/
 [58]: https://myhopcard.com/
+[59]: https://adelaidemetro.com.au/Tickets-fares/metroCARD
+[60]: https://en.wikipedia.org/wiki/Yikatong
+[61]: https://sunrail.com/tickets-suncards/suncards/
+[62]: https://www.rejsekort.dk/
+[63]: https://sl.se/en/eng-info/fares/sl-access/
+[64]: https://www.tartu.ee/en/tartu-bus-card
+[65]: https://en.wikipedia.org/wiki/Zolotaya_Korona
+[66]: https://www.easycard.com.tw/en/
+[67]: https://at.govt.nz/bus-train-ferry/at-hop-card/
