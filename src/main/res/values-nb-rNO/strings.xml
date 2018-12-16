@@ -841,8 +841,8 @@
     <string name="card_name_zolotaya_korona">Zolotaya Korona</string>
     <string name="location_russia">Russland</string>
     <string name="zolotaya_korona_region">Region</string>
-    <string name="card_name_iaroslavl_etk">ETK Iaroslavl</string>
-    <string name="location_iaroslavl">Iaroslavl</string>
+    <string name="card_name_yaroslavl_etk">ETK Iaroslavl</string>
+    <string name="location_yaroslavl">Iaroslavl</string>
     <string name="card_name_krasnodar_etk">ETK Krasnodar</string>
     <string name="location_krasnodar">Krasnodar</string>
     <string name="rkf_card_status">Kortstatus</string>

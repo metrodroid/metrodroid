@@ -132,16 +132,16 @@ data class ZolotayaKoronaTransitData internal constructor(
                 // Kholmsk
                 0x65 to Pair("Sakhalin Oblast", "Asia/Sakhalin"),
                 0x74 to Pair("Chelyabinsk Oblast", "Asia/Yekaterinburg"),
-                // Iaroslavl
-                0x76 to Pair("Iaroslavl Oblast", "Europe/Moscow"),
+                // Yaroslavl
+                0x76 to Pair("Yaroslavl Oblast", "Europe/Moscow"),
                 // Birobidzhan
                 0x79 to Pair("Jewish Autonomous Oblast", "Asia/Vladivostok")
         )
 
         private val CARDS = hashMapOf(
                 0x760500 to CardInfo.Builder()
-                        .setName(Utils.localizeString(R.string.card_name_iaroslavl_etk))
-                        .setLocation(R.string.location_iaroslavl)
+                        .setName(Utils.localizeString(R.string.card_name_yaroslavl_etk))
+                        .setLocation(R.string.location_yaroslavl)
                         .setCardType(CardType.MifareClassic)
                         .setKeysRequired()
                         .setPreview()

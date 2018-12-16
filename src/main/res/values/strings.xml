@@ -654,6 +654,7 @@
     -->
     <string name="location_kansai">Kansai, Japan</string>
     <string name="location_kiev">Kiev, Ukraine</string>
+    <string name="location_krasnodar">Krasnodar, Russia</string>
     <string name="location_lisbon">Lisbon, Portugal</string>
     <string name="location_los_angeles">Los Angeles, CA, USA</string>
     <string name="location_milan">Milan, Italy</string>
@@ -665,6 +666,7 @@
     <string name="location_portland">Portland, OR, USA</string>
     <!-- Translators: This refers to the province of Québec (not Québec City) -->
     <string name="location_quebec">Québec, Canada</string>
+    <string name="location_russia">Russia</string>
     <string name="location_saint_petersburg">Saint Petersburg, Russia</string>
     <string name="location_san_francisco">San Francisco, CA, USA</string>
     <string name="location_sao_paulo">São Paulo, Brazil</string>
@@ -684,7 +686,8 @@
     <string name="location_victoria_australia">Victoria, Australia</string>
     <string name="location_wa_australia">Western Australia, Australia</string>
     <string name="location_wuhan">Wuhan, China</string>
-    
+    <string name="location_yaroslavl">Yaroslavl, Russia</string>
+
     <!--
     These strings are used for content descriptions (accessibility), for modes of transport.
     Using them for custom pages on individual operators is discouraged (eg: Opal), as strings and
@@ -1425,13 +1428,12 @@
     <!-- Translators: some card serial numbers are very long, this is shown as a list item for
     the full version of the card's serial number -->
     <string name="full_serial_number">Full serial number</string>
+    <!-- Translators: Zolotaya Korona (Russian: Золотая Корона, lit: Golden Crown) is a Russian
+    payment system which operates ticketing systems in many cities in Russia. -->
     <string name="card_name_zolotaya_korona">Zolotaya Korona</string>
-    <string name="location_russia">Russia</string>
     <string name="zolotaya_korona_region">Region</string>
-    <string name="card_name_iaroslavl_etk">ETK Iaroslavl</string>
-    <string name="location_iaroslavl">Iaroslavl</string>
+    <string name="card_name_yaroslavl_etk">ETK Yaroslavl</string>
     <string name="card_name_krasnodar_etk">ETK Krasnodar</string>
-    <string name="location_krasnodar">Krasnodar</string>
     <!-- Rkf specific strings -->
     <string name="rkf_card_status">Card status</string>
     <!-- Translators: describes the status of a card or transaction -->
