@@ -90,6 +90,7 @@ City Union | :cn: Mainland China | :new:
 [IstanbulKart][48] | :tr: Istanbul, Turkey | :new: `123`
 [Kartu Multi Trip][39] | :indonesia: Jakarta, Indonesia | `KMT`
 Kiev Metro | :ukraine: Kiev, Ukraine | :new: :closed_lock_with_key: `MFC`
+Krasnodar | :ru: Krasnodar, Russia | :new: :closed_lock_with_key: `MFC`
 [Leap][44] | :ireland: Ireland | :new: :unlock:
 [Lisboa Viva][49] | :portugal: Lisbon, Portugal
 [Manly Fast Ferry][19] | :australia: Sydney, NSW, Australia | :new: :closed_lock_with_key: `MFC`
@@ -108,11 +109,11 @@ Kiev Metro | :ukraine: Kiev, Ukraine | :new: :closed_lock_with_key: `MFC`
 [OV-chipkaart][32] | :netherlands: Netherlands | :closed_lock_with_key: `MFC`
 [Podorozhnik][37] | :ru: Saint Petersburg, Russia | :new: :closed_lock_with_key: `MFC`
 [Rav-Kav][42] | :israel: Israel | :new:
-[Rejsekort][62] | :norway: Norway | :new:
+[Rejsekort][62] | :norway: Norway | :new: :closed_lock_with_key: `MFC`
 [RicaricaMi][53] | :it: Milan, Italy | :new: :closed_lock_with_key: `MFC`
 Selecta | :fr: France | :new:
 [Shenzhen Tong][27] | :cn: Shenzhen, Guangdong Province, China | :new:
-[SLAccess][63] | :sweden: Stockholm, Sweden | :new:
+[SLAccess][63] | :sweden: Stockholm, Sweden | :new: :closed_lock_with_key: `MFC`
 [SmartRider][29] | :australia: Western Australia, Australia | :new: :closed_lock_with_key: `MFC`
 [Strelka][54] | :ru: Moscow, Russia | :closed_lock_with_key: `123` `MFC`
 [Suica][9], [ICOCA][10], [PASMO][11] | :jp: Japan
@@ -126,7 +127,8 @@ T-Union | :cn: Mainland China | :new:
 [Troika][38] | :ru: Moscow, Russia | :new: :closed_lock_with_key: `MFC`
 [Ventra][57] | :us: Chicago, IL, USA | :new: `SINGLE`
 Wuhan Tong | :cn: Wuhan, Hubei Province, China | :new:
-[Zolotaya Korona][65] | :ru: Russia | :new:
+Yaroslavl ETK | :ru: Yaroslavl, Russia | :new: :closed_lock_with_key: `MFC`
+[Zolotaya Korona][65] | :ru: _multiple cities in Russia_ | :new: :closed_lock_with_key: `MFC`
 
 Note | Meaning
 ---- | -------
