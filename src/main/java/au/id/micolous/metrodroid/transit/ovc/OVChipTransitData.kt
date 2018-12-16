@@ -199,8 +199,8 @@ data class OVChipTransitData(
             }.sortedWith(Comparator { s1, s2 -> (s1.id ?: 0).compareTo(s2.id ?: 0) })
         }
 
-        val FACTORY: ClassicCardTransitFactory = object : ClassicCardTransitFactory() {
-            fun earlyCheck(sectors: List<ClassicSector>): Boolean {
+        val FACTORY: ClassicCardTransitFactory = object : ClassicCardTransitFactory {
+            override fun earlyCheck(sectors: List<ClassicSector>): Boolean {
                 val sector = sectors[0]
 
                 if (sector is UnauthorizedClassicSector || sector is InvalidClassicSector)
@@ -219,8 +219,6 @@ data class OVChipTransitData(
             override fun earlySectors() = 1
 
             override fun getAllCards() = listOf(CARD_INFO)
-
-            override fun earlyCardInfo(sectors: List<ClassicSector>) = if (earlyCheck(sectors)) CARD_INFO else null
 
             override fun check(classicCard: ClassicCard) = classicCard.sectors.size == 40 && earlyCheck(classicCard.sectors)
         }

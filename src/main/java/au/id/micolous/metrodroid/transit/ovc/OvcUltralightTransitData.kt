@@ -24,8 +24,6 @@ import au.id.micolous.metrodroid.card.ultralight.UltralightCardTransitFactory
 import au.id.micolous.metrodroid.transit.TransactionTrip
 import au.id.micolous.metrodroid.transit.TransitData
 import au.id.micolous.metrodroid.transit.TransitIdentity
-import au.id.micolous.metrodroid.transit.en1545.*
-import au.id.micolous.metrodroid.util.Utils
 import kotlinx.android.parcel.Parcelize
 
 private const val NAME = "OVC Ultralight"
@@ -49,9 +47,8 @@ private fun parse(card: UltralightCard): OvcUltralightTransitData {
     return OvcUltralightTransitData(mTrips = trips)
 }
 
-class OvcUltralightTransitFactory : UltralightCardTransitFactory() {
-    // Classic already adds it to supported cards
-    override fun getAllCards() = null
+class OvcUltralightTransitFactory : UltralightCardTransitFactory {
+    // getAllCards not implemented -- Classic already adds it to supported cards
 
     override fun check(card: UltralightCard) = try {
         val head = card.getPage(4).data
