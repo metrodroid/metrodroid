@@ -38,6 +38,7 @@ import java.util.Currency;
 import java.util.Locale;
 
 import au.id.micolous.metrodroid.MetrodroidApplication;
+import au.id.micolous.metrodroid.util.Utils;
 
 public class TransitCurrency extends TransitBalance implements Parcelable {
     public static final Creator<TransitCurrency> CREATOR = new Creator<TransitCurrency>() {
@@ -56,7 +57,7 @@ public class TransitCurrency extends TransitBalance implements Parcelable {
      * Invalid or no currency information, per ISO 4217.
      */
     private static final String UNKNOWN_CURRENCY_CODE = "XXX";
-    private static final double DEFAULT_DIVISOR = 100.;
+    private static final int DEFAULT_DIVISOR = 100;
 
     private final int mCurrency;
 
@@ -73,7 +74,7 @@ public class TransitCurrency extends TransitBalance implements Parcelable {
      *
      * If the currency has no fractional part (eg: IDR, JPY, KRW), then the divisor should be 1,
      */
-    private final double mDivisor;
+    private final int mDivisor;
 
     private static final SecureRandom mRNG = new SecureRandom();
 
@@ -87,7 +88,7 @@ public class TransitCurrency extends TransitBalance implements Parcelable {
      * dynamically using {@link Currency#getDefaultFractionDigits()}. If the currency is unknown,
      * then {@link #DEFAULT_DIVISOR} (100) is used instead.
      *
-     * The {@link #TransitCurrency(int, String)} and {@link #TransitCurrency(int, String, double)}
+     * The {@link #TransitCurrency(int, String)} and {@link #TransitCurrency(int, String, int)}
      * constructors do not perform additional lookups at constructor call time.
      *
      * Constructors taking a numeric ISO 4217 {@param currencyCode} will accept unknown currency
@@ -116,7 +117,7 @@ public class TransitCurrency extends TransitBalance implements Parcelable {
      *                {@see #mDivisor}
      */
     @VisibleForTesting
-    public TransitCurrency(int currency, @NonNull String currencyCode, double divisor) {
+    public TransitCurrency(int currency, @NonNull String currencyCode, int divisor) {
         if (currencyCode.length() != 3) {
             throw new IllegalArgumentException("currencyCode must be 3-character ISO4217 code");
         }
@@ -148,7 +149,7 @@ public class TransitCurrency extends TransitBalance implements Parcelable {
      *
      * @param currencyCode An ISO 4217 numeric currency code
      */
-    public TransitCurrency(int currency, int currencyCode, double divisor) {
+    public TransitCurrency(int currency, int currencyCode, int divisor) {
         this(currency, CurrencyCode.getByCode(currencyCode), divisor);
     }
 
@@ -166,7 +167,7 @@ public class TransitCurrency extends TransitBalance implements Parcelable {
      *
      * @param currencyCode A {@link CurrencyCode} instance for the currency code.
      */
-    private TransitCurrency(int currency, @Nullable CurrencyCode currencyCode, double divisor) {
+    private TransitCurrency(int currency, @Nullable CurrencyCode currencyCode, int divisor) {
         this(currency, (currencyCode == null ? null : currencyCode.getCurrency()), divisor);
     }
 
@@ -184,18 +185,18 @@ public class TransitCurrency extends TransitBalance implements Parcelable {
      *
      * @param currencyCode A {@link Currency} instance for the currency code.
      */
-    private TransitCurrency(int currency, @Nullable Currency currencyCode, double divisor) {
+    private TransitCurrency(int currency, @Nullable Currency currencyCode, int divisor) {
         this(currency,
                 (currencyCode == null ? UNKNOWN_CURRENCY_CODE :
                         currencyCode.getCurrencyCode()),
                 divisor);
     }
 
-    private static double getDivisorForCurrency(@Nullable Currency currency) {
+    private static int getDivisorForCurrency(@Nullable Currency currency) {
         if (currency == null) {
             return DEFAULT_DIVISOR;
         } else {
-            return Math.pow(10, currency.getDefaultFractionDigits());
+            return (int) Utils.pow(10, currency.getDefaultFractionDigits());
         }
     }
 
@@ -236,7 +237,7 @@ public class TransitCurrency extends TransitBalance implements Parcelable {
 
     @NonNull
     public static TransitCurrency IDR(int cents) {
-        return new TransitCurrency(cents, "IDR", 1.);
+        return new TransitCurrency(cents, "IDR", 1);
     }
 
     @NonNull
@@ -246,12 +247,12 @@ public class TransitCurrency extends TransitBalance implements Parcelable {
 
     @NonNull
     public static TransitCurrency JPY(int yen) {
-        return new TransitCurrency(yen, "JPY", 1.);
+        return new TransitCurrency(yen, "JPY", 1);
     }
 
     @NonNull
     public static TransitCurrency KRW(int won) {
-        return new TransitCurrency(won, "KRW", 1.);
+        return new TransitCurrency(won, "KRW", 1);
     }
 
     @NonNull
@@ -278,7 +279,7 @@ public class TransitCurrency extends TransitBalance implements Parcelable {
     }
 
     @NonNull
-    public static TransitCurrency XXX(int cents, double divisor) {
+    public static TransitCurrency XXX(int cents, int divisor) {
         return new TransitCurrency(cents, UNKNOWN_CURRENCY_CODE, divisor);
     }
 
@@ -302,11 +303,11 @@ public class TransitCurrency extends TransitBalance implements Parcelable {
     }
     
     static public TransitCurrency TWD(int cents) {
-        return new TransitCurrency(cents, "TWD", 1.);
+        return new TransitCurrency(cents, "TWD", 1);
     }
 
 
-    public TransitCurrency obfuscate(int fareOffset, double fareMultiplier) {
+    private TransitCurrency obfuscate(int fareOffset, double fareMultiplier) {
         int cur = (int) ((mCurrency + fareOffset) * fareMultiplier);
 
         // Match the sign of the original fare
@@ -362,7 +363,7 @@ public class TransitCurrency extends TransitBalance implements Parcelable {
             currencyFormatter = NumberFormat.getNumberInstance();
 
             // Infer number of decimal places we should add based on the divisor
-            numberFormatter.setMinimumFractionDigits((int) Math.floor(Math.log(mDivisor)));
+            numberFormatter.setMinimumFractionDigits(Utils.log10floor(mDivisor));
         }
 
         SpannableString s;
@@ -419,13 +420,13 @@ public class TransitCurrency extends TransitBalance implements Parcelable {
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeInt(mCurrency);
         dest.writeString(mCurrencyCode);
-        dest.writeDouble(mDivisor);
+        dest.writeInt(mDivisor);
     }
 
     public TransitCurrency(Parcel parcel) {
         mCurrency = parcel.readInt();
         mCurrencyCode = parcel.readString();
-        mDivisor = parcel.readDouble();
+        mDivisor = parcel.readInt();
     }
 
     @NonNull
@@ -445,7 +446,7 @@ public class TransitCurrency extends TransitBalance implements Parcelable {
     @Override
     public String toString() {
         return String.format(Locale.ENGLISH,
-                "%s.%s(%d, %f)",
+                "%s.%s(%d, %d)",
                 getClass().getSimpleName(),
                 mCurrencyCode,
                 mCurrency,

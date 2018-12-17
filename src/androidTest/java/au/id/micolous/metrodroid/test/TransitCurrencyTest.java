@@ -180,7 +180,7 @@ public class TransitCurrencyTest extends BaseInstrumentedTest {
     public void testNumericLookup() {
         setLocale("en-US");
 
-        TransitCurrency c = new TransitCurrency(1234, 36, 100.);
+        TransitCurrency c = new TransitCurrency(1234, 36, 100);
         assertEquals(TransitCurrency.AUD(1234), c);
 
         // Test with an invalid code
@@ -203,11 +203,11 @@ public class TransitCurrencyTest extends BaseInstrumentedTest {
         assertSpannedThat(c.formatCurrencyString(false), Matchers.endsWith("¥12.34"));
 
         // Test with different divisors for equality
-        c = new TransitCurrency(12340, "AUD", 1000.);
+        c = new TransitCurrency(12340, "AUD", 1000);
         assertEquals(TransitCurrency.AUD(1234), c);
 
         // Test overriding the divisor in a currency code.
-        c = new TransitCurrency(12340, 36, 1000.);
+        c = new TransitCurrency(12340, 36, 1000);
         assertEquals(TransitCurrency.AUD(1234), c);
     }
 }

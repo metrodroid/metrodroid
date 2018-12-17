@@ -34,11 +34,11 @@ const val STR = "rkf"
 data class RkfLookup (val mCurrencyCode : Int, val mCompany : Int) : En1545LookupSTR(STR), Parcelable {
     override fun parseCurrency(price: Int) : TransitCurrency {
         val intendedDivisor = when (mCurrencyCode shr 12) {
-            0 -> 1.0
-            1 -> 10.0
-            2 -> 100.0
-            9 -> 2.0
-            else -> 1.0
+            0 -> 1
+            1 -> 10
+            2 -> 100
+            9 -> 2
+            else -> 1
         }
 
         return TransitCurrency(price,

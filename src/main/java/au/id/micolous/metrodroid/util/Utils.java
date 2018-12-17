@@ -954,6 +954,23 @@ public class Utils {
         return ret.toString();
     }
 
+    public static int log10floor(int val) {
+        int mul = 1;
+        int ctr = 0;
+        while (val >= 10 * mul) {
+            ctr++;
+            mul *= 10;
+        }
+        return ctr;
+    }
+
+    public static long pow(int a, int b) {
+        long ret = 1;
+        for (int i = 0 ; i < b; i++)
+            ret *= a;
+        return ret;
+    }
+
     public static String xmlNodeToString(Node node) throws TransformerException {
         return xmlNodeToString(node, true);
     }
