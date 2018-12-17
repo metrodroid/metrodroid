@@ -5,6 +5,8 @@ import au.id.micolous.metrodroid.card.classic.ClassicCard
 import au.id.micolous.metrodroid.card.classic.MfcCardImporter
 import au.id.micolous.metrodroid.transit.TransitCurrency
 import au.id.micolous.metrodroid.transit.rkf.RkfTransitData
+import junit.framework.TestCase.assertEquals
+import org.junit.Test
 import java.util.*
 
 class RkfTest : CardReaderWithAssetDumpsTest<RkfTransitData, ClassicCard>(
