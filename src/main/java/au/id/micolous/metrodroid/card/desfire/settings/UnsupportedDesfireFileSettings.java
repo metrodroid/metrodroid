@@ -20,11 +20,19 @@ package au.id.micolous.metrodroid.card.desfire.settings;
 
 import org.simpleframework.xml.Root;
 
+import au.id.micolous.farebot.R;
+import au.id.micolous.metrodroid.util.Utils;
+
 @Root(name = "settings")
 public class UnsupportedDesfireFileSettings extends DesfireFileSettings {
     private UnsupportedDesfireFileSettings() { /* For XML Serializer */ }
 
     public UnsupportedDesfireFileSettings(byte fileType) {
         super(fileType, Byte.MIN_VALUE, new byte[0]);
+    }
+
+    @Override
+    public String getSubtitle() {
+        return Utils.localizeString(R.string.desfire_unknown_file);
     }
 }

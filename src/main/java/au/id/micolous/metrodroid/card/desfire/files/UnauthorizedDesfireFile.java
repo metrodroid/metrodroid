@@ -18,10 +18,14 @@
  */
 package au.id.micolous.metrodroid.card.desfire.files;
 
-import au.id.micolous.metrodroid.card.desfire.settings.DesfireFileSettings;
-
 import org.simpleframework.xml.Attribute;
 import org.simpleframework.xml.Root;
+
+import au.id.micolous.farebot.R;
+import au.id.micolous.metrodroid.card.desfire.settings.DesfireFileSettings;
+import au.id.micolous.metrodroid.ui.ListItem;
+import au.id.micolous.metrodroid.ui.ListItemRecursive;
+import au.id.micolous.metrodroid.util.Utils;
 
 /**
  * Represents a DESFire file which could not be read due to
@@ -41,5 +45,14 @@ public class UnauthorizedDesfireFile extends InvalidDesfireFile {
     @Override
     public byte[] getData() {
         throw new IllegalStateException(String.format("Unauthorized access to file: %s", getErrorMessage()));
+    }
+
+    @Override
+    public ListItem getRawData() {
+        String title = Utils.localizeString(R.string.unauthorized_file_title_format,
+                    Utils.intToHex(getId()));
+        String subtitle = getFileSettings().getSubtitle();
+
+        return new ListItemRecursive(title, subtitle, null);
     }
 }

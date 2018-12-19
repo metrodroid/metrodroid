@@ -1236,6 +1236,7 @@ public class Utils {
         return value.equals("true");
     }
 
+    @NonNull
     public static String intToHex(int v) {
         //noinspection StringConcatenation
         return "0x" + Integer.toHexString(v);

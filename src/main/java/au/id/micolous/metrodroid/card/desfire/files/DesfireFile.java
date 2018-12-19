@@ -22,14 +22,20 @@
 
 package au.id.micolous.metrodroid.card.desfire.files;
 
-import au.id.micolous.metrodroid.card.desfire.settings.DesfireFileSettings;
-import au.id.micolous.metrodroid.card.desfire.settings.RecordDesfireFileSettings;
-import au.id.micolous.metrodroid.card.desfire.settings.ValueDesfireFileSettings;
-import au.id.micolous.metrodroid.xml.Base64String;
-
 import org.simpleframework.xml.Attribute;
 import org.simpleframework.xml.Element;
 import org.simpleframework.xml.Root;
+
+import java.util.Collections;
+
+import au.id.micolous.farebot.R;
+import au.id.micolous.metrodroid.card.desfire.settings.DesfireFileSettings;
+import au.id.micolous.metrodroid.card.desfire.settings.RecordDesfireFileSettings;
+import au.id.micolous.metrodroid.card.desfire.settings.ValueDesfireFileSettings;
+import au.id.micolous.metrodroid.ui.ListItem;
+import au.id.micolous.metrodroid.ui.ListItemRecursive;
+import au.id.micolous.metrodroid.util.Utils;
+import au.id.micolous.metrodroid.xml.Base64String;
 
 @Root(name = "file")
 public class DesfireFile {
@@ -68,5 +74,12 @@ public class DesfireFile {
 
     public byte[] getData() {
         return mData.getData();
+    }
+
+    public ListItem getRawData() {
+        return new ListItemRecursive(Utils.localizeString(R.string.file_title_format,
+                Utils.intToHex(getId())),
+                getFileSettings().getSubtitle(),
+                Collections.singletonList(new ListItem(null, Utils.getHexDump(getData()))));
     }
 }

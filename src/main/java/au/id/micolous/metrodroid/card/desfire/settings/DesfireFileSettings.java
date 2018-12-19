@@ -103,4 +103,6 @@ public abstract class DesfireFileSettings {
                 return R.string.desfire_unknown_file;
         }
     }
+
+    public abstract String getSubtitle();
 }

@@ -198,30 +198,7 @@ public class ISO7816Card extends Card {
             if (appData != null)
                 rawAppData.add(ListItemRecursive.collapsedValue(
                         R.string.app_fci, Utils.getHexDump(appData)));
-            List<ISO7816File> files = app.getFiles();
-            for (ISO7816File file : files) {
-                List<ListItem> recList = new ArrayList<>();
-                byte[] binaryData = file.getBinaryData();
-                byte[] fciData = file.getFci();
-                if (binaryData != null)
-                    recList.add(ListItemRecursive.collapsedValue(Utils.localizeString(R.string.binary_title_format),
-                            Utils.getHexDump(binaryData)));
-                if (fciData != null)
-                    recList.add(ListItemRecursive.collapsedValue(Utils.localizeString(R.string.file_fci),
-                            Utils.getHexDump(fciData)));
-                List<ISO7816Record> records = file.getRecords();
-                for (ISO7816Record record : records)
-                    recList.add(ListItemRecursive.collapsedValue(Utils.localizeString(R.string.record_title_format, record.getIndex()),
-                            Utils.getHexDump(record.getData())));
-                ISO7816Selector selector = file.getSelector();
-                String selectorStr = selector.formatString();
-                String fileDesc = app.nameFile(selector);
-                if (fileDesc != null)
-                    selectorStr = String.format(Locale.ENGLISH, "%s (%s)", selectorStr, fileDesc);
-                rawAppData.add(new ListItemRecursive(Utils.localizeString(R.string.file_title_format, selectorStr),
-                        Utils.localizePlural(R.plurals.record_count, records.size(), records.size()),
-                        recList));
-            }
+            rawAppData.addAll(app.getRawFiles());
             List<ListItem> extra = app.getRawData();
             if (extra != null)
                 rawAppData.addAll(extra);

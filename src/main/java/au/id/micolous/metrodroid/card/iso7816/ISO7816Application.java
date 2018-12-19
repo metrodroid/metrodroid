@@ -30,6 +30,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Locale;
 
 import au.id.micolous.metrodroid.transit.TransitData;
 import au.id.micolous.metrodroid.transit.TransitIdentity;
@@ -80,6 +81,19 @@ public class ISO7816Application {
 
     public String nameFile(ISO7816Selector selector) {
         return null;
+    }
+
+    public final List<ListItem> getRawFiles() {
+        List<ListItem> li = new ArrayList<>();
+        for (ISO7816File file : mFiles) {
+            ISO7816Selector selector = file.getSelector();
+            String selectorStr = selector.formatString();
+            String fileDesc = nameFile(selector);
+            if (fileDesc != null)
+                selectorStr = String.format(Locale.ENGLISH, "%s (%s)", selectorStr, fileDesc);
+            li.add(file.showRawData(selectorStr));
+        }
+        return li;
     }
 
     public static class ISO7816Info {

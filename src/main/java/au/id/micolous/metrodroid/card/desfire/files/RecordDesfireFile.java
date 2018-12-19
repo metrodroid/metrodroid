@@ -18,14 +18,19 @@
  */
 package au.id.micolous.metrodroid.card.desfire.files;
 
-import au.id.micolous.metrodroid.card.desfire.settings.DesfireFileSettings;
-import au.id.micolous.metrodroid.card.desfire.settings.RecordDesfireFileSettings;
-
 import org.apache.commons.lang3.ArrayUtils;
 import org.simpleframework.xml.Root;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+
+import au.id.micolous.farebot.R;
+import au.id.micolous.metrodroid.card.desfire.settings.DesfireFileSettings;
+import au.id.micolous.metrodroid.card.desfire.settings.RecordDesfireFileSettings;
+import au.id.micolous.metrodroid.ui.ListItem;
+import au.id.micolous.metrodroid.ui.ListItemRecursive;
+import au.id.micolous.metrodroid.util.Utils;
 
 @Root(name = "file")
 public class RecordDesfireFile extends DesfireFile {
@@ -48,5 +53,31 @@ public class RecordDesfireFile extends DesfireFile {
 
     public List<DesfireRecord> getRecords() {
         return mRecords;
+    }
+
+    @Override
+    public ListItem getRawData() {
+        RecordDesfireFileSettings fileSettings = (RecordDesfireFileSettings) getFileSettings();
+        int recSize = fileSettings.getRecordSize();
+        if (recSize == 0)
+            return super.getRawData();
+
+        String title = Utils.localizeString(R.string.file_title_format,
+                Utils.intToHex(getId()));
+        String subtitle = getFileSettings().getSubtitle();
+
+        List<ListItem> data;
+        byte[] fileData = getData();
+        int numRecs = (fileData.length + recSize - 1) / recSize;
+        data = new ArrayList<>();
+        for (int i = 0; i < numRecs; i++) {
+            int start = i * recSize;
+            int len = recSize;
+            if (start + len > fileData.length)
+                len = fileData.length - start;
+            data.add(ListItemRecursive.collapsedValue(Utils.localizeString(R.string.record_title_format, i), null,
+                    Utils.getHexDump(fileData, start, len)));
+        }
+        return new ListItemRecursive(title, subtitle, data);
     }
 }

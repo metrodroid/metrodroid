@@ -516,35 +516,7 @@ public class ClassicCard extends Card {
                 key = Utils.localizeString(k.getType().getFormatRes(), Utils.getHexString(k.getKey()));
             }
 
-            if (sector instanceof UnauthorizedClassicSector) {
-                li.add(new ListItem(Utils.localizeString(R.string.unauthorized_sector_title_format, sectorIndexString)));
-                continue;
-            }
-
-            if (sector instanceof InvalidClassicSector) {
-                li.add(new ListItem(Utils.localizeString(R.string.invalid_sector_title_format, sectorIndexString,
-                        ((InvalidClassicSector) sector).getError())));
-                continue;
-            }
-
-            List<ListItem> bli = new ArrayList<>();
-            for (ClassicBlock block : sector.getBlocks()) {
-                bli.add(new ListItemRecursive(
-                        Utils.localizeString(R.string.block_title_format,
-                                Integer.toString(block.getIndex())),
-                        block.getType(),
-                        Collections.singletonList(new ListItem(null, Utils.getHexDump(block.getData())))
-                ));
-            }
-            if (sector.isEmpty()) {
-                li.add(new ListItemRecursive(
-                        Utils.localizeString(R.string.sector_title_format_empty, sectorIndexString),
-                        key, bli));
-            } else {
-                li.add(new ListItemRecursive(
-                        Utils.localizeString(R.string.sector_title_format, sectorIndexString),
-                        key, bli));
-            }
+            li.add(sector.getRawData(sectorIndexString, key));
         }
         return li;
     }

@@ -18,6 +18,7 @@
  */
 package au.id.micolous.metrodroid.card.desfire.settings;
 
+import au.id.micolous.farebot.R;
 import au.id.micolous.metrodroid.util.Utils;
 
 import org.apache.commons.lang3.ArrayUtils;
@@ -94,4 +95,13 @@ public class ValueDesfireFileSettings extends DesfireFileSettings {
         return mLimitedCreditEnabled;
     }
 
+    @Override
+    public String getSubtitle() {
+        return Utils.localizeString(R.string.desfire_value_format,
+                Utils.localizeString(getFileTypeString()),
+                getLowerLimit(),
+                getUpperLimit(),
+                getLimitedCreditValue(),
+                Utils.localizeString(getLimitedCreditEnabled() ? R.string.enabled : R.string.disabled));
+    }
 }
