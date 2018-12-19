@@ -63,7 +63,7 @@ public class ISO7816File {
         mRecords = records;
         if (binaryData != null)
             mBinaryData = new Base64String(binaryData);
-        mReadableName = mSelector.formatString();
+        mReadableName = mSelector == null ? null : mSelector.formatString();
         if (fci != null)
             mFci = new Base64String(fci);
     }

@@ -56,7 +56,7 @@ public class ISO7816Selector {
         return new ISO7816Selector(Arrays.asList(new ISO7816SelectorByName(folder), new ISO7816SelectorById(file)));
     }
 
-    public byte[] select(ISO7816Protocol tag) throws IOException {
+    public byte[] select(ISO7816Protocol tag) throws IOException, ISO7816Exception {
         byte[] fci = null;
         for (ISO7816SelectorElement sel : mFullPath) {
             fci = sel.select(tag);

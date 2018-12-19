@@ -28,6 +28,8 @@ import org.simpleframework.xml.ElementMap;
 import org.simpleframework.xml.Root;
 
 import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -37,6 +39,7 @@ import java.util.Map;
 import au.id.micolous.farebot.R;
 import au.id.micolous.metrodroid.card.TagReaderFeedbackInterface;
 import au.id.micolous.metrodroid.card.iso7816.ISO7816Application;
+import au.id.micolous.metrodroid.card.iso7816.ISO7816Exception;
 import au.id.micolous.metrodroid.card.iso7816.ISO7816Protocol;
 import au.id.micolous.metrodroid.card.iso7816.ISO7816Selector;
 import au.id.micolous.metrodroid.transit.TransitData;
@@ -91,7 +94,7 @@ public class CEPASApplication extends ISO7816Application {
     }
 
     public static CEPASApplication dumpTag(ISO7816Protocol iso7816Tag, ISO7816Application.ISO7816Info app,
-                                           TagReaderFeedbackInterface feedbackInterface) throws Exception {
+                                           TagReaderFeedbackInterface feedbackInterface) throws IOException {
         Map<Integer, Base64String> cepasPurses = new HashMap<>();
         Map<Integer, Base64String> cepasHistories = new HashMap<>();
         boolean isValid = false;
@@ -101,7 +104,7 @@ public class CEPASApplication extends ISO7816Application {
 
         try {
             iso7816Tag.selectById(0x4000);
-        } catch (FileNotFoundException | IllegalStateException e) {
+        } catch (FileNotFoundException | IllegalStateException | ISO7816Exception e) {
             Log.d(TAG, String.format(Locale.ENGLISH,
                     "CEPAS file not found [%s] -- this is expected for non-CEPAS ISO7816 cards",
                     e.getClass().getSimpleName()));

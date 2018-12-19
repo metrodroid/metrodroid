@@ -20,18 +20,24 @@
 package au.id.micolous.metrodroid.card.iso7816;
 
 import android.support.annotation.Nullable;
+import android.util.Log;
 
 import org.simpleframework.xml.Attribute;
 import org.simpleframework.xml.Element;
 import org.simpleframework.xml.ElementList;
+import org.simpleframework.xml.ElementMap;
 
 import java.io.EOFException;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 
+import au.id.micolous.metrodroid.card.TagReaderFeedbackInterface;
 import au.id.micolous.metrodroid.transit.TransitData;
 import au.id.micolous.metrodroid.transit.TransitIdentity;
 import au.id.micolous.metrodroid.ui.ListItem;
@@ -48,8 +54,9 @@ public class ISO7816Application {
     private Base64String mTagId;
 
     @ElementList(name = "records", required = false, empty = false)
-
     private List<ISO7816File> mFiles;
+    @ElementMap(required = false, name = "sfi-files", entry = "sfi-file", attribute = true, key = "sfi")
+    private Map<Integer, ISO7816File> mSfiFiles;
 
     protected ISO7816Application() { /* For XML Serializer */ }
 
@@ -57,6 +64,7 @@ public class ISO7816Application {
         mApplicationData = info.mApplicationData == null ? null : new Base64String(info.mApplicationData);
         mApplicationName = info.mApplicationName == null ? null : new Base64String(info.mApplicationName);
         mFiles = info.mFiles;
+        mSfiFiles = info.mSfiFiles;
         mTagId = new Base64String(info.mTagId);
         mType = info.mType;
     }
@@ -82,6 +90,11 @@ public class ISO7816Application {
     public String nameFile(ISO7816Selector selector) {
         return null;
     }
+ 
+    @Nullable
+    protected String nameSfiFile(int sfi) {
+        return null;
+    }
 
     public final List<ListItem> getRawFiles() {
         List<ListItem> li = new ArrayList<>();
@@ -102,20 +115,78 @@ public class ISO7816Application {
         private final List<ISO7816File> mFiles;
         private final byte[] mTagId;
         private final String mType;
+        private final Map<Integer, ISO7816File> mSfiFiles;
 
         ISO7816Info(byte []applicationData, byte []applicationName, byte []tagId, String type) {
             mApplicationData = applicationData;
             mApplicationName = applicationName;
             mTagId = tagId;
             mFiles = new ArrayList<>();
+            mSfiFiles = new HashMap<>();
             mType = type;
         }
 
-        public void dumpFile(ISO7816Protocol protocol, ISO7816Selector sel, int recordLen) throws IOException {
+        @Nullable
+        public ISO7816File dumpFileSFI(ISO7816Protocol protocol, int sfi, int recordLen) {
+            byte[] data;
+            try {
+                data = protocol.readBinary((byte) sfi);
+            } catch (Exception e) {
+                data = null;
+            }
+            List<ISO7816Record> records;
+            try {
+                records = new LinkedList<>();
+
+                for (int r = 1; r <= 255; r++) {
+                    try {
+                        byte[] record = protocol.readRecord((byte) sfi, (byte) r, (byte) recordLen);
+
+                        if (record == null) {
+                            break;
+                        }
+
+                        records.add(new ISO7816Record(r, record));
+                    } catch (EOFException e) {
+                        // End of file, stop here.
+                        break;
+                    }
+                }
+            } catch (Exception e) {
+                records = null;
+            }
+            if (data == null && records == null)
+                return null;
+            ISO7816File f = new ISO7816File(null, records, data, null);
+            mSfiFiles.put(sfi, f);
+            return f;
+        }
+
+        public void dumpAllSfis(ISO7816Protocol protocol, TagReaderFeedbackInterface feedbackInterface, int start, int total) throws IOException {
+            int counter = start;
+            for (byte sfi = 1; sfi <= 31; sfi++) {
+                feedbackInterface.updateProgressBar(counter++, total);
+                dumpFileSFI(protocol, sfi, 0);
+            }
+        }
+
+        @Nullable
+        public ISO7816File dumpFile(ISO7816Protocol protocol, ISO7816Selector sel, int recordLen) throws IOException {
             // Start dumping...
-            protocol.unselectFile();
-            byte[] fci = sel.select(protocol);
-            byte [] data = protocol.readBinary();
+            byte[] fci;
+            try {
+                protocol.unselectFile();
+            } catch (ISO7816Exception | FileNotFoundException e) {
+                Log.d(TAG, "Unselect failed, trying select nevertheless");
+            }
+            try {
+                fci = sel.select(protocol);
+            } catch (ISO7816Exception | FileNotFoundException e) {
+                Log.d(TAG, "Select failed, aborting");
+                return null;
+            }
+
+            byte[] data = protocol.readBinary();
             LinkedList<ISO7816Record> records = new LinkedList<>();
 
             for (int r = 1; r <= 255; r++) {
@@ -132,7 +203,9 @@ public class ISO7816Application {
                     break;
                 }
             }
-            mFiles.add(new ISO7816File(sel, records, data, fci));
+            ISO7816File file = new ISO7816File(sel, records, data, fci);
+            mFiles.add(file);
+            return file;
         }
 
         public ISO7816File getFile(ISO7816Selector sel) {
@@ -162,6 +235,12 @@ public class ISO7816Application {
         }
 
         return null;
+    }
+
+    public ISO7816File getSfiFile(int sfi) {
+        if (mSfiFiles == null)
+            return null;
+        return mSfiFiles.get(sfi);
     }
 
     // return: <leadBits, id, idlen>
