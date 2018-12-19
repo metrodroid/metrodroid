@@ -86,7 +86,7 @@ public class SeqGoTransitData extends NextfareTransitData {
     private static final TimeZone TIME_ZONE = TimeZone.getTimeZone("Australia/Brisbane");
 
     private static final String TAG = "SeqGoTransitData";
-    private SeqGoTicketType mTicketType;
+    private final SeqGoTicketType mTicketType;
 
     private SeqGoTransitData(Parcel parcel) {
         super(parcel, "AUD");
@@ -97,7 +97,8 @@ public class SeqGoTransitData extends NextfareTransitData {
         super(card, "AUD");
         if (mConfig != null) {
             mTicketType = SeqGoData.TICKET_TYPE_MAP.get(mConfig.getTicketType(), SeqGoTicketType.UNKNOWN);
-        }
+        } else
+            mTicketType = SeqGoTicketType.UNKNOWN;
     }
 
     public static final ClassicCardTransitFactory FACTORY = new NextFareTransitFactory() {

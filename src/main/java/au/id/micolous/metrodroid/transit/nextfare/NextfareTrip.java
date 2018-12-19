@@ -22,6 +22,8 @@ import android.os.Parcel;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
+import org.jetbrains.annotations.NonNls;
+
 import au.id.micolous.metrodroid.transit.Station;
 import au.id.micolous.metrodroid.transit.TransitCurrency;
 import au.id.micolous.metrodroid.transit.Trip;
@@ -54,7 +56,8 @@ public class NextfareTrip extends Trip implements Comparable<NextfareTrip> {
     protected int mEndStation;
     protected boolean mContinuation;
     protected int mCost;
-    private String mCurrency;
+    private final String mCurrency;
+    @NonNls
     private String mSTR;
 
     public NextfareTrip(Parcel parcel) {
@@ -67,7 +70,7 @@ public class NextfareTrip extends Trip implements Comparable<NextfareTrip> {
         mModeInt = parcel.readInt();
         mCurrency = parcel.readString();
         mSTR = parcel.readString();
-        if (mSTR.equals(""))
+        if (mSTR.isEmpty())
             mSTR = null;
     }
 

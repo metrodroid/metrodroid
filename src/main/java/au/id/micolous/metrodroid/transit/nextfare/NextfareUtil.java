@@ -58,6 +58,7 @@ public final class NextfareUtil {
         int month = Utils.getBitsFromInteger(timestamp, 5, 4);
         int day = Utils.getBitsFromInteger(timestamp, 0, 5);
 
+        //noinspection StringConcatenation,MagicCharacter
         Log.i("nextfareutil", "unpackDate: " + minute + " minutes, " + year + '-' + month + '-' + day);
 
         if (minute > 1440)

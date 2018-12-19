@@ -22,6 +22,8 @@ package au.id.micolous.metrodroid.transit.hsl;
 import android.os.Parcel;
 import android.support.annotation.Nullable;
 
+import org.jetbrains.annotations.NonNls;
+
 import java.util.Calendar;
 
 import au.id.micolous.farebot.R;
@@ -41,7 +43,7 @@ public class HSLTrip extends Trip {
         }
     };
     private final int mNewBalance;
-    String mLine;
+    @NonNls String mLine;
     int mVehicleNumber;
     Calendar mTimestamp;
     int mFare;

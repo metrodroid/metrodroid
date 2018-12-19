@@ -6,7 +6,7 @@ import java.util.Map;
 
 public class ImmutableMapBuilder<K, V> {
 
-    private HashMap<K, V> mMap = new HashMap<>();
+    private final HashMap<K, V> mMap = new HashMap<>();
 
     public ImmutableMapBuilder<K, V> put(K key, V value) {
         mMap.put(key, value);

@@ -51,7 +51,7 @@ class MobibSubscription extends En1545Subscription {
 
     private final boolean mIsSubscription;
 
-    public MobibSubscription(byte[] dataSub, Integer ctr) {
+    MobibSubscription(byte[] dataSub, Integer ctr) {
         super(dataSub, FIELDS, ctr);
         if(ctr != 0x2f02){
             // Ticket

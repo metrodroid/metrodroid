@@ -169,11 +169,11 @@ public class ReadingTagActivity extends MetrodroidActivity implements TagReaderF
         }
     }
 
-    class ReadingTagTaskEventArgs {
+    static class ReadingTagTaskEventArgs {
         byte[] tagId;
         Tag tag;
 
-        public ReadingTagTaskEventArgs(byte[] tagId, Tag tag) {
+        ReadingTagTaskEventArgs(byte[] tagId, Tag tag) {
             this.tagId = tagId;
             this.tag = tag;
         }
@@ -202,6 +202,7 @@ public class ReadingTagActivity extends MetrodroidActivity implements TagReaderF
                         Log.i(TAG, "Dumped card successfully!");
                     }
                     for (String line : cardXml.split("\n")) {
+                        //noinspection StringConcatenation
                         Log.d(TAG, "XML: " + line);
                     }
                 }

@@ -27,10 +27,8 @@ import android.support.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
-import java.util.function.Function;
 
 import au.id.micolous.farebot.R;
 import au.id.micolous.metrodroid.MetrodroidApplication;
@@ -190,7 +188,7 @@ public class Station implements Parcelable {
     }
 
     public static Station unknown(Integer id) {
-        return unknown("0x" + Integer.toHexString(id));
+        return unknown(Utils.intToHex(id));
     }
 
     public static Station nameOnly(String name) {

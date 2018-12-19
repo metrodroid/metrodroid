@@ -25,6 +25,8 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.util.Pair;
 
+import org.jetbrains.annotations.NonNls;
+
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
@@ -80,28 +82,28 @@ public class En1545Parsed implements Parcelable {
         mMap.put(makeFullName(name, path), value);
     }
 
-    private static String makeFullName(String name, String path) {
-        if (path == null || path.equals("") || path.equals(""))
+    private static String makeFullName(@NonNls String name, @NonNls String path) {
+        if (path == null || path.isEmpty())
             return name;
         return path + "/" + name;
     }
 
     public List<ListItem> getInfo(Set<String> skipSet) {
-        ArrayList<ListItem> li = new ArrayList<>();
+        List<ListItem> li = new ArrayList<>();
         for (Map.Entry<String, Object> kv: mMap.entrySet()) {
             if (skipSet.contains(getBaseName(kv.getKey())))
                 continue;
             Object l = kv.getValue();
             String fullName = kv.getKey();
             if (l instanceof Integer)
-                li.add(new ListItem(fullName, "0x" + Integer.toHexString((Integer) l)));
+                li.add(new ListItem(fullName, Utils.intToHex((Integer) l)));
             if (l instanceof String)
                 li.add(new ListItem(fullName, (String) l));
         }
         return li;
     }
 
-    private String getBaseName(String name) {
+    private String getBaseName(@NonNls String name) {
         return name.substring(name.lastIndexOf('/') + 1);
     }
 
@@ -113,7 +115,7 @@ public class En1545Parsed implements Parcelable {
             ret.append(kv.getKey()).append(" = ");
             Object l = kv.getValue();
             if (l instanceof Integer)
-                ret.append("0x").append(Integer.toHexString((Integer) l));
+                ret.append(Utils.intToHex((Integer) l));
             if (l instanceof String)
                 ret.append("\"").append((String) l).append("\"");
             ret.append(separator);
@@ -122,6 +124,7 @@ public class En1545Parsed implements Parcelable {
     }
 
     @Override
+    @NonNls
     public String toString() {
         return "[" + makeString(", ", Collections.emptySet()) + "]";
     }
@@ -155,7 +158,7 @@ public class En1545Parsed implements Parcelable {
         return (String) mMap.get(makeFullName(name, path));
     }
 
-    private Pair<Calendar,Integer> getTimeStampFlags(@NonNull String name, TimeZone tz) {
+    private Pair<Calendar,Integer> getTimeStampFlags(@NonNull @NonNls String name, TimeZone tz) {
         if (contains(name + "DateTime"))
             return Pair.create(En1545FixedInteger.parseTimeSec(getIntOrZero(name + "DateTime"), tz), 3);
         if (contains(name + "Time") && contains(name + "Date"))
@@ -183,7 +186,7 @@ public class En1545Parsed implements Parcelable {
         return timeFlag.first;
     }
 
-    boolean getTimeStampContainsTime(@NonNull String name) {
+    boolean getTimeStampContainsTime(@NonNull @NonNls String name) {
         if (contains(name + "DateTime"))
             return true;
         if (contains(name + "Time") && contains(name + "Date"))

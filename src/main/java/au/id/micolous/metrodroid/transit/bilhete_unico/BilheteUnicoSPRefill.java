@@ -36,7 +36,7 @@ class BilheteUnicoSPRefill extends Trip {
         return false;
     }
 
-    public BilheteUnicoSPRefill(int day, int amount) {
+    BilheteUnicoSPRefill(int day, int amount) {
         mDay = day;
         mAmount = amount;
     }

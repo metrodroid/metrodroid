@@ -23,11 +23,12 @@ import android.util.Log;
 
 import com.neovisionaries.i18n.CountryCode;
 
+import org.jetbrains.annotations.NonNls;
+
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
-import java.util.Collection;
 import java.util.GregorianCalendar;
 import java.util.HashMap;
 import java.util.List;
@@ -223,7 +224,7 @@ public class CalypsoApplication extends ISO7816Application {
             }
 
             CalypsoData.Manufacturer manufacturer = CalypsoData.Manufacturer.get(data[22]);
-            String manufacturerHex = "0x" + Integer.toHexString((int) data[22] & 0xff);
+            String manufacturerHex = Utils.intToHex((int) data[22] & 0xff);
             String manufacturerName;
             if (manufacturer != null) {
                 manufacturerName = String.format(Locale.ENGLISH, "%s (%s)",
@@ -257,6 +258,7 @@ public class CalypsoApplication extends ISO7816Application {
         return null;
     }
 
+    @SuppressWarnings("unused")
     public enum File {
         // Put this first to be able to show card image as soon as possible
         TICKETING_ENVIRONMENT(0x2000, 0x2001),
@@ -316,7 +318,7 @@ public class CalypsoApplication extends ISO7816Application {
         ETICKET_EVENT_LOGS(0x8000, 0x8010),
         ETICKET_PRESELECTION(0x8000, 0x8030);
 
-        private ISO7816Selector mSelector;
+        private final ISO7816Selector mSelector;
 
         File(int file) {
             mSelector = ISO7816Selector.makeSelector(file);

@@ -22,7 +22,6 @@ package au.id.micolous.metrodroid.transit.adelaide;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-import au.id.micolous.metrodroid.transit.Trip;
 import au.id.micolous.metrodroid.transit.en1545.En1545Bitmap;
 import au.id.micolous.metrodroid.transit.en1545.En1545Container;
 import au.id.micolous.metrodroid.transit.en1545.En1545Field;

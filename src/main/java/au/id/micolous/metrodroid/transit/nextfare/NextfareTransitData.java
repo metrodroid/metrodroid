@@ -24,6 +24,8 @@ import android.support.annotation.VisibleForTesting;
 import android.text.SpannableString;
 import android.util.Log;
 
+import org.jetbrains.annotations.NonNls;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -39,7 +41,6 @@ import au.id.micolous.metrodroid.card.classic.ClassicSector;
 import au.id.micolous.metrodroid.transit.CardInfo;
 import au.id.micolous.metrodroid.transit.TransitBalance;
 import au.id.micolous.metrodroid.transit.TransitBalanceStored;
-import au.id.micolous.metrodroid.transit.Subscription;
 import au.id.micolous.metrodroid.transit.TransitCurrency;
 import au.id.micolous.metrodroid.transit.TransitData;
 import au.id.micolous.metrodroid.transit.TransitIdentity;
@@ -88,7 +89,7 @@ public class NextfareTransitData extends TransitData {
     List<NextfareTrip> mTrips;
     List<NextfareSubscription> mSubscriptions;
     @NonNull
-    String mCurrency;
+    private final String mCurrency;
 
     public NextfareTransitData(Parcel parcel, @NonNull String currency) {
         mSerialNumber = parcel.readLong();
@@ -97,8 +98,8 @@ public class NextfareTransitData extends TransitData {
         parcel.readTypedList(mTrips, NextfareTrip.CREATOR);
         mSubscriptions = new ArrayList<>();
         parcel.readTypedList(mSubscriptions, NextfareSubscription.CREATOR);
-        parcel.readByteArray(mSystemCode);
-        parcel.readByteArray(mBlock2);
+        mSystemCode = parcel.createByteArray();
+        mBlock2 = parcel.createByteArray();
         mCurrency = currency;
 
         mConfig = new NextfareConfigRecord(parcel);
@@ -116,11 +117,13 @@ public class NextfareTransitData extends TransitData {
 
         byte[] magicData = card.getSector(0).getBlock(1).getData();
         mSystemCode = Arrays.copyOfRange(magicData, 9, 15);
+        //noinspection StringConcatenation
         Log.d(TAG, "SystemCode = " + Utils.getHexString(mSystemCode));
         mBlock2 = card.getSector(0).getBlock(2).getData();
+        //noinspection StringConcatenation
         Log.d(TAG, "Block2 = " + Utils.getHexString(mBlock2));
 
-        ArrayList<NextfareRecord> records = new ArrayList<>();
+        List<NextfareRecord> records = new ArrayList<>();
 
         for (ClassicSector sector : card.getSectors()) {
             for (ClassicBlock block : sector.getBlocks()) {
@@ -129,6 +132,7 @@ public class NextfareTransitData extends TransitData {
                     continue;
                 }
 
+                //noinspection StringConcatenation
                 Log.d(TAG, "Sector " + sector.getIndex() + " / Block " + block.getIndex());
                 NextfareRecord record = NextfareRecord.recordFromBytes(
                         block.getData(), sector.getIndex(), block.getIndex(), getTimezone());
@@ -140,11 +144,11 @@ public class NextfareTransitData extends TransitData {
         }
 
         // Now do a first pass for metadata and balance information.
-        ArrayList<NextfareBalanceRecord> balances = new ArrayList<>();
-        ArrayList<NextfareTrip> trips = new ArrayList<>();
-        ArrayList<NextfareSubscription> subscriptions = new ArrayList<>();
-        ArrayList<NextfareTransactionRecord> taps = new ArrayList<>();
-        ArrayList<NextfareTravelPassRecord> passes = new ArrayList<>();
+        List<NextfareBalanceRecord> balances = new ArrayList<>();
+        List<NextfareTrip> trips = new ArrayList<>();
+        List<NextfareSubscription> subscriptions = new ArrayList<>();
+        List<NextfareTransactionRecord> taps = new ArrayList<>();
+        List<NextfareTravelPassRecord> passes = new ArrayList<>();
 
         for (NextfareRecord record : records) {
             if (record instanceof NextfareBalanceRecord) {
@@ -309,6 +313,7 @@ public class NextfareTransitData extends TransitData {
         }
     }
 
+    @NonNls
     protected static String formatSerialNumber(long serialNumber) {
         String s = "0160 " + Utils.formatNumber(serialNumber, " ", 4, 4, 3);
         s += Utils.calculateLuhn(s.replaceAll(" ", ""));
@@ -458,7 +463,7 @@ public class NextfareTransitData extends TransitData {
 
     @Override
     public List<ListItem> getInfo() {
-        ArrayList<ListItem> items = new ArrayList<>();
+        List<ListItem> items = new ArrayList<>();
 
         items.add(new HeaderListItem(R.string.nextfare));
         items.add(new ListItem(R.string.nextfare_system_code, Utils.getHexDump(mSystemCode)));

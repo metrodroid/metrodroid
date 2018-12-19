@@ -26,6 +26,8 @@ package au.id.micolous.metrodroid.transit.ezlink;
 import android.os.Parcel;
 import android.support.annotation.Nullable;
 
+import org.jetbrains.annotations.NonNls;
+
 import java.util.Calendar;
 
 import au.id.micolous.farebot.R;
@@ -45,7 +47,7 @@ public class EZLinkTrip extends Trip {
         }
     };
     private final CEPASTransaction mTransaction;
-    private final String mCardName;
+    private final @NonNls String mCardName;
 
     public EZLinkTrip(CEPASTransaction transaction, String cardName) {
         mTransaction = transaction;
@@ -153,7 +155,7 @@ public class EZLinkTrip extends Trip {
         return 0;
     }
 
-    public static String getAgencyName(CEPASTransaction.TransactionType type, String cardName, boolean isShort) {
+    public static String getAgencyName(CEPASTransaction.TransactionType type, @NonNls String cardName, boolean isShort) {
         if (type == CEPASTransaction.TransactionType.BUS
                 || type == CEPASTransaction.TransactionType.BUS_REFUND) {
             return "BUS";

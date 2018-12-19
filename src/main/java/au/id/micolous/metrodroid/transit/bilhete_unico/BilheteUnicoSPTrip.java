@@ -51,7 +51,7 @@ class BilheteUnicoSPTrip extends Trip {
         EPOCH = epoch.getTimeInMillis();
     }
 
-    public BilheteUnicoSPTrip(ClassicSector lastTripSector) {
+    BilheteUnicoSPTrip(ClassicSector lastTripSector) {
         byte[] block0 = lastTripSector.getBlock(0).getData();
         mTransport = Utils.getBitsFromBuffer(block0, 0, 8);
         mLocation = Utils.getBitsFromBuffer(block0, 8, 20);

@@ -22,6 +22,7 @@ package au.id.micolous.metrodroid.card.classic;
 
 import au.id.micolous.metrodroid.xml.Base64String;
 
+import org.jetbrains.annotations.NonNls;
 import org.simpleframework.xml.Attribute;
 import org.simpleframework.xml.Element;
 import org.simpleframework.xml.Root;
@@ -49,7 +50,7 @@ public class ClassicBlock {
         mData = new Base64String(data);
     }
 
-    public static ClassicBlock create(String type, int index, byte[] data) {
+    public static ClassicBlock create(@NonNls String type, int index, byte[] data) {
         if (type.equals(TYPE_DATA) || type.equals(TYPE_VALUE)) {
             return new ClassicBlock(index, type, data);
         }
@@ -73,7 +74,7 @@ public class ClassicBlock {
     private static final String ZERO_VB = "AAAAAP////8AAAAAAP8A/w==";
 
     public boolean isEmpty() {
-        String actual = mData.toBase64();
+        @NonNls String actual = mData.toBase64();
         return actual.equals(ZERO) || actual.equals(FF) || actual.equals(ZERO_VB);
     }
 }

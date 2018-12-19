@@ -25,7 +25,6 @@ import java.util.Collections;
 import java.util.List;
 
 import au.id.micolous.farebot.R;
-import au.id.micolous.metrodroid.card.Card;
 import au.id.micolous.metrodroid.card.ultralight.UltralightCard;
 import au.id.micolous.metrodroid.card.ultralight.UltralightCardTransitFactory;
 import au.id.micolous.metrodroid.card.ultralight.UltralightPage;

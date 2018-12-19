@@ -26,12 +26,6 @@ import au.id.micolous.metrodroid.util.Utils;
 
 import au.id.micolous.farebot.R;
 
-import static au.id.micolous.metrodroid.transit.lax_tap.LaxTapData.AGENCY_METRO;
-import static au.id.micolous.metrodroid.transit.lax_tap.LaxTapData.LAX_TAP_STR;
-import static au.id.micolous.metrodroid.transit.lax_tap.LaxTapData.METRO_BUS_ROUTES;
-import static au.id.micolous.metrodroid.transit.lax_tap.LaxTapData.METRO_BUS_START;
-import static au.id.micolous.metrodroid.transit.lax_tap.LaxTapData.METRO_LR_START;
-
 /**
  * Represents trip events on LAX TAP card.
  */
@@ -49,7 +43,7 @@ public class LaxTapTrip extends NextfareTrip {
     };
 
     public LaxTapTrip() {
-        super("USD", LAX_TAP_STR);
+        super("USD", LaxTapData.LAX_TAP_STR);
     }
 
     public LaxTapTrip(Parcel in) {
@@ -58,9 +52,9 @@ public class LaxTapTrip extends NextfareTrip {
 
     @Override
     public String getRouteName() {
-        if (mModeInt == AGENCY_METRO && mStartStation >= METRO_BUS_START) {
+        if (mModeInt == LaxTapData.AGENCY_METRO && mStartStation >= LaxTapData.METRO_BUS_START) {
             // Metro Bus uses the station_id for route numbers.
-            return METRO_BUS_ROUTES.get(mStartStation, Utils.localizeString(R.string.unknown_format, mStartStation));
+            return LaxTapData.METRO_BUS_ROUTES.get(mStartStation, Utils.localizeString(R.string.unknown_format, mStartStation));
         }
 
         // Normally not possible to guess what the route is.
@@ -74,7 +68,7 @@ public class LaxTapTrip extends NextfareTrip {
             return null;
         }
 
-        if (mModeInt == AGENCY_METRO && stationId >= METRO_BUS_START) {
+        if (mModeInt == LaxTapData.AGENCY_METRO && stationId >= LaxTapData.METRO_BUS_START) {
             // Metro uses this for route names.
             return null;
         }
@@ -84,10 +78,10 @@ public class LaxTapTrip extends NextfareTrip {
 
     @Override
     protected Mode lookupMode() {
-        if (mModeInt == AGENCY_METRO) {
-            if (mStartStation >= METRO_BUS_START) {
+        if (mModeInt == LaxTapData.AGENCY_METRO) {
+            if (mStartStation >= LaxTapData.METRO_BUS_START) {
                 return Mode.BUS;
-            } else if (mStartStation < METRO_LR_START && mStartStation != 61) {
+            } else if (mStartStation < LaxTapData.METRO_LR_START && mStartStation != 61) {
                 return Mode.METRO;
             } else {
                 return Mode.TRAM;

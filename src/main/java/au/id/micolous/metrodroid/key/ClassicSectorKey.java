@@ -27,6 +27,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.StringRes;
 
 import org.apache.commons.lang3.ArrayUtils;
+import org.jetbrains.annotations.NonNls;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -37,10 +38,14 @@ import au.id.micolous.farebot.R;
 import au.id.micolous.metrodroid.util.Utils;
 
 public class ClassicSectorKey implements Comparable<ClassicSectorKey>, Cloneable {
+    @NonNls
     private static final String TYPE_KEYA = "KeyA";
+    @NonNls
     private static final String TYPE_KEYB = "KeyB";
 
+    @NonNls
     private static final String KEY_TYPE = "type";
+    @NonNls
     private static final String KEY_VALUE = "key";
     static final int KEY_LEN = 6;
 
@@ -81,7 +86,7 @@ public class ClassicSectorKey implements Comparable<ClassicSectorKey>, Cloneable
             }
         }
 
-        public static KeyType fromString(String keyType) {
+        public static KeyType fromString(@NonNls String keyType) {
             if (keyType.equals(TYPE_KEYB)) {
                 return B;
             } else {
@@ -96,6 +101,7 @@ public class ClassicSectorKey implements Comparable<ClassicSectorKey>, Cloneable
             }
 
             @Override
+            @NonNls
             public String write(KeyType value) {
                 return value.toString();
             }

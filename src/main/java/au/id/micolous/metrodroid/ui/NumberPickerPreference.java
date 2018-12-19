@@ -38,7 +38,7 @@ import android.widget.NumberPicker;
 
 public class NumberPickerPreference extends DialogPreference {
     private static final String NPP_SCHEMA = "http://micolous.github.io/metrodroid/schemas/number-picker-preference";
-    private NumberPicker mNumberPicker;
+    private final NumberPicker mNumberPicker;
     private int mValue = 0;
     private boolean mValueSet;
 
@@ -169,12 +169,12 @@ public class NumberPickerPreference extends DialogPreference {
                 };
         int value;
 
-        public SavedState(Parcel source) {
+        SavedState(Parcel source) {
             super(source);
             value = source.readInt();
         }
 
-        public SavedState(Parcelable superState) {
+        SavedState(Parcelable superState) {
             super(superState);
         }
 

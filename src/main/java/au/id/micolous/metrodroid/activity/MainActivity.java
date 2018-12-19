@@ -45,7 +45,7 @@ import au.id.micolous.metrodroid.MetrodroidApplication;
 public class MainActivity extends MetrodroidActivity {
     private NfcAdapter mNfcAdapter;
     private PendingIntent mPendingIntent;
-    private String[][] mTechLists = new String[][]{
+    private final String[][] mTechLists = new String[][]{
             new String[]{IsoDep.class.getName()},
             new String[]{MifareClassic.class.getName()},
             new String[]{MifareUltralight.class.getName()},

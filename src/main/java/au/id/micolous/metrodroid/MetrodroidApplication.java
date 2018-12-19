@@ -30,6 +30,7 @@ import android.support.annotation.VisibleForTesting;
 import android.support.v7.app.AppCompatDelegate;
 import android.util.Log;
 
+import org.jetbrains.annotations.NonNls;
 import org.simpleframework.xml.Serializer;
 import org.simpleframework.xml.convert.Registry;
 import org.simpleframework.xml.core.Persister;
@@ -267,6 +268,7 @@ public class MetrodroidApplication extends Application {
 
         // Fallback: Look for com.nxp.mifare feature.
         mMifareClassicSupport = this.getPackageManager().hasSystemFeature("com.nxp.mifare");
+        //noinspection StringConcatenation
         Log.d(TAG, "Falling back to com.nxp.mifare feature detection "
                 + (mMifareClassicSupport ? "(found)" : "(missing)"));
     }
@@ -293,7 +295,7 @@ public class MetrodroidApplication extends Application {
     }
 
     public static int chooseTheme() {
-        String theme = getThemePreference();
+        @NonNls String theme = getThemePreference();
         if (theme.equals("light"))
             return R.style.Metrodroid_Light;
         if (theme.equals("farebot"))

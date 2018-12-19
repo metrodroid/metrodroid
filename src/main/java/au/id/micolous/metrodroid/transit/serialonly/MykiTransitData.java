@@ -24,9 +24,9 @@ import android.os.Parcel;
 import android.support.annotation.NonNull;
 
 import org.apache.commons.lang3.ArrayUtils;
+import org.jetbrains.annotations.NonNls;
 
 import au.id.micolous.farebot.R;
-import au.id.micolous.metrodroid.card.Card;
 import au.id.micolous.metrodroid.card.CardType;
 import au.id.micolous.metrodroid.card.desfire.DesfireCard;
 import au.id.micolous.metrodroid.card.desfire.DesfireCardTransitFactory;
@@ -59,7 +59,7 @@ public class MykiTransitData extends SerialOnlyTransitData {
     private static final byte[] MYKI_HEADER = {(byte)0xc9, (byte)0xb4, 0x04, 0x00};
     private static final long MYKI_PREFIX = 308425;
 
-    private String mSerial;
+    private final String mSerial;
 
     public static final CardInfo CARD_INFO = new CardInfo.Builder()
             .setImageId(R.drawable.myki_card)
@@ -159,7 +159,7 @@ public class MykiTransitData extends SerialOnlyTransitData {
             return null;
         }
 
-        String formattedSerial = String.format(Locale.ENGLISH, "%06d%08d", serial1, serial2);
+        @NonNls String formattedSerial = String.format(Locale.ENGLISH, "%06d%08d", serial1, serial2);
         return formattedSerial + Utils.calculateLuhn(formattedSerial);
     }
 

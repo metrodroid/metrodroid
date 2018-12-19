@@ -35,7 +35,7 @@ class PodorozhnikTrip extends Trip {
         }
     };
 
-    public PodorozhnikTrip(int timestamp, Integer fare, int lastTransport, Integer lastValidator) {
+    PodorozhnikTrip(int timestamp, Integer fare, int lastTransport, Integer lastValidator) {
         mTimestamp = timestamp;
         mFare = fare;
         mLastTransport = lastTransport;
@@ -96,6 +96,7 @@ class PodorozhnikTrip extends Trip {
             return StationTableReader.getStation(PODOROZHNIK_STR, stationId, Integer.toString(mLastValidator >> 6)).addAttribute(Utils.localizeString(R.string.podorozhnik_gate, gate));
         }
         // TODO: handle other transports better.
+        //noinspection StringConcatenation
         return StationTableReader.getStation(PODOROZHNIK_STR, stationId,
                 Integer.toString(mLastTransport)+ "/" + Integer.toString(mLastValidator));
     }

@@ -36,7 +36,6 @@ import au.id.micolous.metrodroid.card.desfire.DesfireCardTransitFactory;
 import au.id.micolous.metrodroid.card.desfire.files.DesfireFile;
 import au.id.micolous.metrodroid.card.desfire.files.RecordDesfireFile;
 import au.id.micolous.metrodroid.transit.CardInfo;
-import au.id.micolous.metrodroid.transit.Subscription;
 import au.id.micolous.metrodroid.transit.TransactionTrip;
 import au.id.micolous.metrodroid.transit.TransitCurrency;
 import au.id.micolous.metrodroid.transit.TransitData;
@@ -64,9 +63,9 @@ public class OrcaTransitData extends TransitData {
             .setCardType(CardType.MifareDesfire)
             .build();
 
-    private int mSerialNumber;
-    private int mBalance;
-    private List<Trip> mTrips;
+    private final int mSerialNumber;
+    private final int mBalance;
+    private final List<Trip> mTrips;
 
     public static final Creator<OrcaTransitData> CREATOR = new Creator<OrcaTransitData>() {
         public OrcaTransitData createFromParcel(Parcel parcel) {

@@ -42,7 +42,6 @@ import au.id.micolous.metrodroid.transit.CardInfo;
 import au.id.micolous.metrodroid.transit.TransitCurrency;
 import au.id.micolous.metrodroid.transit.TransitData;
 import au.id.micolous.metrodroid.transit.TransitIdentity;
-import au.id.micolous.metrodroid.transit.Trip;
 import au.id.micolous.metrodroid.ui.HeaderListItem;
 import au.id.micolous.metrodroid.ui.ListItem;
 import au.id.micolous.metrodroid.util.Utils;
@@ -80,8 +79,8 @@ public class KMTTransitData extends TransitData {
             return new KMTTransitData[size];
         }
     };
-    private List<KMTTrip> mTrips;
-    private String mSerialNumber;
+    private final List<KMTTrip> mTrips;
+    private final String mSerialNumber;
     private int mCurrentBalance;
     private int mTransactionCounter;
     private int mLastTransAmount;
@@ -96,12 +95,7 @@ public class KMTTransitData extends TransitData {
     }
 
     public KMTTransitData(FelicaCard card) {
-        FelicaService serviceID = card.getSystem(SYSTEMCODE_KMT).getService(FELICA_SERVICE_KMT_ID);
-        List<FelicaBlock> blocksID = serviceID.getBlocks();
-        FelicaBlock blockID = blocksID.get(0);
-        byte[] dataID = blockID.getData();
-        mSerialNumber = new String(dataID);
-
+        mSerialNumber = getSerial(card);
         FelicaService serviceBalance = card.getSystem(SYSTEMCODE_KMT).getService(FELICA_SERVICE_KMT_BALANCE);
         if (serviceBalance != null) {
             List<FelicaBlock> blocksBalance = serviceBalance.getBlocks();
@@ -123,6 +117,19 @@ public class KMTTransitData extends TransitData {
             }
         }
         mTrips = trips;
+    }
+
+    private static String getSerial(FelicaCard card) {
+        FelicaService serviceID = card.getSystem(SYSTEMCODE_KMT).getService(FELICA_SERVICE_KMT_ID);
+        if (serviceID == null)
+            return "-";
+        List<FelicaBlock> blocksID = serviceID.getBlocks();
+        byte[] dataID = blocksID.get(0).getData();
+        try {
+            return new String(dataID, Utils.getASCII());
+        } catch (Exception e) {
+            return Utils.getHexString(dataID);
+        }
     }
 
     public final static FelicaCardTransitFactory FACTORY = new FelicaCardTransitFactory() {
@@ -184,7 +191,7 @@ public class KMTTransitData extends TransitData {
 
     @Override
     public List<ListItem> getInfo() {
-        ArrayList<ListItem> items = new ArrayList<>();
+        List<ListItem> items = new ArrayList<>();
         items.add(new HeaderListItem(R.string.kmt_other_data));
         if (!MetrodroidApplication.hideCardNumbers()) {
             items.add(new ListItem(R.string.transaction_counter, Integer.toString(mTransactionCounter)));

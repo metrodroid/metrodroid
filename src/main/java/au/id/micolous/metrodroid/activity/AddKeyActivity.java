@@ -66,7 +66,7 @@ public class AddKeyActivity extends MetrodroidActivity {
     private static final String TAG = AddKeyActivity.class.getSimpleName();
     private NfcAdapter mNfcAdapter;
     private PendingIntent mPendingIntent;
-    private String[][] mTechLists = new String[][]{
+    private final String[][] mTechLists = new String[][]{
             new String[]{IsoDep.class.getName()},
             new String[]{MifareClassic.class.getName()},
             new String[]{MifareUltralight.class.getName()},
@@ -132,7 +132,7 @@ public class AddKeyActivity extends MetrodroidActivity {
             if (mKeyFormat.isJSON()) {
                 JSONObject o;
                 try {
-                    o = new JSONObject(new String(keyData));
+                    o = new JSONObject(new String(keyData, Utils.getUTF8()));
                 } catch (JSONException e) {
                     // Shouldn't get this here, but ok...
                     Utils.showErrorAndFinish(this, e);
@@ -235,7 +235,7 @@ public class AddKeyActivity extends MetrodroidActivity {
         String tagId = Utils.getHexString(tag.getId(), "");
 
         if (ArrayUtils.contains(tag.getTechList(), "android.nfc.tech.MifareClassic")
-                && !"".equals(tagId)) {
+                && tagId != null && !tagId.isEmpty()) {
             mKeyData.setUID(tagId);
             drawUI();
         } else {

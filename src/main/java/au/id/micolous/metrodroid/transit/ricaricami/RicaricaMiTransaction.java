@@ -22,7 +22,6 @@ package au.id.micolous.metrodroid.transit.ricaricami;
 import android.os.Parcel;
 import android.support.annotation.NonNull;
 
-import au.id.micolous.farebot.R;
 import au.id.micolous.metrodroid.transit.Transaction;
 import au.id.micolous.metrodroid.transit.Trip;
 import au.id.micolous.metrodroid.transit.en1545.En1545Container;
@@ -31,7 +30,6 @@ import au.id.micolous.metrodroid.transit.en1545.En1545FixedHex;
 import au.id.micolous.metrodroid.transit.en1545.En1545FixedInteger;
 import au.id.micolous.metrodroid.transit.en1545.En1545Lookup;
 import au.id.micolous.metrodroid.transit.en1545.En1545Transaction;
-import au.id.micolous.metrodroid.util.Utils;
 
 public class RicaricaMiTransaction extends En1545Transaction {
     private static final String TRANSPORT_TYPE = "TransportType";

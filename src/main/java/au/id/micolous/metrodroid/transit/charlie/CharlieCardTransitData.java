@@ -23,6 +23,8 @@ import android.os.Parcel;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
+import org.jetbrains.annotations.NonNls;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
@@ -46,7 +48,6 @@ import au.id.micolous.metrodroid.transit.TransitBalanceStored;
 import au.id.micolous.metrodroid.transit.TransitCurrency;
 import au.id.micolous.metrodroid.transit.TransitData;
 import au.id.micolous.metrodroid.transit.TransitIdentity;
-import au.id.micolous.metrodroid.transit.Trip;
 import au.id.micolous.metrodroid.ui.ListItem;
 import au.id.micolous.metrodroid.util.Utils;
 
@@ -111,6 +112,7 @@ public class CharlieCardTransitData extends TransitData {
         mSecondSerial = in.readLong();
         mBalance = in.readInt();
         mStartDate = in.readInt();
+        //noinspection unchecked
         mTrips = in.readArrayList(CharlieCardTrip.class.getClassLoader());
     }
 
@@ -189,6 +191,7 @@ public class CharlieCardTransitData extends TransitData {
         return formatSerial(mSerial);
     }
 
+    @NonNls
     private static String formatSerial(long serial) {
         return "5-" + Long.toString(serial);
     }

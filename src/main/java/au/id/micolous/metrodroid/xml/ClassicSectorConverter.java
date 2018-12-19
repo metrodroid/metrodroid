@@ -21,7 +21,10 @@ package au.id.micolous.metrodroid.xml;
 import au.id.micolous.metrodroid.card.classic.ClassicSector;
 import au.id.micolous.metrodroid.card.classic.InvalidClassicSector;
 import au.id.micolous.metrodroid.card.classic.UnauthorizedClassicSector;
+import au.id.micolous.metrodroid.util.Utils;
 
+import org.jetbrains.annotations.NonNls;
+import org.simpleframework.xml.Attribute;
 import org.simpleframework.xml.convert.Converter;
 import org.simpleframework.xml.stream.InputNode;
 import org.simpleframework.xml.stream.OutputNode;
@@ -31,11 +34,11 @@ public class ClassicSectorConverter implements Converter<ClassicSector> {
     public ClassicSector read(InputNode node) throws Exception {
         int sectorIndex = Integer.parseInt(node.getAttribute("index").getValue());
 
-        if (node.getAttribute("unauthorized") != null && node.getAttribute("unauthorized").getValue().equals("true")) {
+        if (Utils.getBooleanAttr(node, "unauthorized")) {
             return new UnauthorizedClassicSector(sectorIndex);
         }
 
-        if (node.getAttribute("invalid") != null && node.getAttribute("invalid").getValue().equals("true")) {
+        if (Utils.getBooleanAttr(node, "invalid")) {
             return new InvalidClassicSector(sectorIndex, node.getAttribute("error").getValue());
         }
 

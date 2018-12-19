@@ -58,8 +58,8 @@ public class TrimetHopTransitData extends SerialOnlyTransitData {
     public static final String NAME = "Hop Fastpass";
     public static final int APP_ID = 0xe010f2;
 
-    private int mSerial;
-    private int mIssueDate;
+    private final int mSerial;
+    private final int mIssueDate;
 
     private static final TimeZone TZ = TimeZone.getTimeZone("America/Los_Angeles");
 

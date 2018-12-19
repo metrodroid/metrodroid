@@ -70,7 +70,7 @@ class RavKavTransaction extends En1545Transaction {
             )
     );
 
-    public RavKavTransaction(byte[] data) {
+    RavKavTransaction(byte[] data) {
         super(data, tripFields);
     }
 

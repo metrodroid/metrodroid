@@ -69,7 +69,7 @@ class MobibTransaction extends En1545Transaction {
             new En1545FixedInteger(EVENT_UNKNOWN_G, 21)
     );
 
-    public MobibTransaction(byte[] data) {
+    MobibTransaction(byte[] data) {
         super(data, FIELDS);
     }
 

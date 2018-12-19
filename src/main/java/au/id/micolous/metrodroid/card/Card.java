@@ -49,7 +49,7 @@ import au.id.micolous.metrodroid.util.Utils;
 import au.id.micolous.metrodroid.xml.HexString;
 
 public abstract class Card {
-    private static String TAG = Card.class.getName();
+    private static final String TAG = Card.class.getName();
     // This must be protected, not private, as otherwise the XML deserialiser fails to read the
     // card.
     @SuppressWarnings("WeakerAccess")

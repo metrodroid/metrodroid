@@ -24,7 +24,7 @@ import android.net.Uri;
  * ListItem which supports directing to a website.
  */
 public class UriListItem extends ListItem {
-    private Uri mUri;
+    private final Uri mUri;
 
     public UriListItem(String name, String value, Uri uri) {
         super(name, value);

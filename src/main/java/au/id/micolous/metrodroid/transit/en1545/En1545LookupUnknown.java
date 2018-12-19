@@ -19,6 +19,8 @@
 
 package au.id.micolous.metrodroid.transit.en1545;
 
+import org.jetbrains.annotations.NonNls;
+
 import au.id.micolous.metrodroid.transit.Station;
 import au.id.micolous.metrodroid.transit.Trip;
 
@@ -28,7 +30,7 @@ public abstract class En1545LookupUnknown implements En1545Lookup {
     public String getRouteName(Integer routeNumber, Integer routeVariant, Integer agency, Integer transport) {
         if (routeNumber == null)
             return null;
-        String routeReadable = Integer.toString(routeNumber);
+        @NonNls String routeReadable = Integer.toString(routeNumber);
         if (routeVariant != null) {
             routeReadable += "/" + routeVariant;
         }

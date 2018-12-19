@@ -27,7 +27,6 @@ import org.simpleframework.xml.ElementList;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collection;
 import java.util.List;
 
 import au.id.micolous.farebot.R;
@@ -183,11 +182,13 @@ public class ChinaCard extends ISO7816Application {
                     try {
                         app.dumpFile(iso7816Tag, sel, 0);
                     } catch (Exception e) {
+                        //noinspection StringConcatenation
                         Log.w(TAG, "Caught exception on file "  + sel.formatString() + ": " + e);
                     }
                     feedbackInterface.updateProgressBar(progress++, 16);
                 }
         } catch (Exception e) {
+            //noinspection StringConcatenation
             Log.w(TAG, "Got exception " + e);
             return null;
         }

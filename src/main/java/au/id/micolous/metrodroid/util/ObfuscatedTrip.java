@@ -36,15 +36,15 @@ class ObfuscatedTrip extends Trip implements Parcelable {
     private Calendar mStartTimestamp;
     private Calendar mEndTimestamp;
 
-    private String mRouteName;
-    private String mAgencyName;
-    private String mShortAgencyName;
+    private final String mRouteName;
+    private final String mAgencyName;
+    private final String mShortAgencyName;
     private String mStartStationName;
     private Station mStartStation;
     private String mEndStationName;
     private Station mEndStation;
-    private boolean mHasTime;
-    private Mode mMode;
+    private final boolean mHasTime;
+    private final Mode mMode;
     private TransitCurrency mFare;
     private String mVehicleID;
     private Integer mPassengerCount;

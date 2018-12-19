@@ -28,9 +28,10 @@ import android.support.annotation.VisibleForTesting;
 import android.text.SpannableString;
 import android.text.Spanned;
 import android.text.style.TtsSpan;
-import android.util.Log;
 
 import com.neovisionaries.i18n.CurrencyCode;
+
+import org.jetbrains.annotations.NonNls;
 
 import java.security.SecureRandom;
 import java.text.NumberFormat;
@@ -65,6 +66,7 @@ public class TransitCurrency extends TransitBalance implements Parcelable {
      * 3 character currency code (eg: AUD) per ISO 4217.
      */
     @NonNull
+    @NonNls
     private final String mCurrencyCode;
 
     /**
@@ -266,6 +268,11 @@ public class TransitCurrency extends TransitBalance implements Parcelable {
     }
 
     @NonNull
+    static public TransitCurrency TWD(int cents) {
+        return new TransitCurrency(cents, "TWD", 1);
+    }
+
+    @NonNull
     public static TransitCurrency USD(int cents) {
         return new TransitCurrency(cents, "USD");
     }
@@ -301,11 +308,6 @@ public class TransitCurrency extends TransitBalance implements Parcelable {
             return (mCurrency * other.mDivisor) == (other.mCurrency * mDivisor);
         }
     }
-    
-    static public TransitCurrency TWD(int cents) {
-        return new TransitCurrency(cents, "TWD", 1);
-    }
-
 
     private TransitCurrency obfuscate(int fareOffset, double fareMultiplier) {
         int cur = (int) ((mCurrency + fareOffset) * fareMultiplier);

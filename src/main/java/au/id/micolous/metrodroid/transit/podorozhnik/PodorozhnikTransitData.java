@@ -29,7 +29,6 @@ import java.util.Calendar;
 import java.util.Collections;
 import java.util.GregorianCalendar;
 import java.util.List;
-import java.util.Locale;
 import java.util.TimeZone;
 
 import au.id.micolous.farebot.R;
@@ -99,13 +98,13 @@ public class PodorozhnikTransitData extends TransitData {
     private int mLastTopup;
     private int mLastTopupTime;
     private int mLastFare;
-    private List<Integer> mExtraTripTimes;
+    private final List<Integer> mExtraTripTimes;
     private int mLastValidator;
     private int mLastTripTime;
     private int mGroundCounter;
     private int mSubwayCounter;
     private int mLastTransport;
-    private String mSerial;
+    private final String mSerial;
     private int mLastTopupMachine;
     private int mLastTopupAgency;
     private boolean mCountersValid;
@@ -143,6 +142,7 @@ public class PodorozhnikTransitData extends TransitData {
     	mLastTopup = p.readInt();
 	    mLastTopupTime = p.readInt();
 	    mLastFare = p.readInt();
+        //noinspection unchecked
 	    mExtraTripTimes = p.readArrayList(PodorozhnikTransitData.class.getClassLoader());
 	    mLastTripTime = p.readInt();
 	    mLastValidator = p.readInt();
@@ -228,7 +228,7 @@ public class PodorozhnikTransitData extends TransitData {
 
     @Override
     public List<Trip> getTrips() {
-        ArrayList<Trip> items = new ArrayList<>();
+        List<Trip> items = new ArrayList<>();
         if (mLastTopupTime != 0) {
             items.add(new PodorozhnikTopup(mLastTopupTime, mLastTopup,
                     mLastTopupAgency, mLastTopupMachine));
@@ -244,13 +244,13 @@ public class PodorozhnikTransitData extends TransitData {
 
     @Override
     public List<ListItem> getInfo() {
-        ArrayList<ListItem> items = new ArrayList<>();
+        List<ListItem> items = new ArrayList<>();
 
 	    if (mCountersValid) {
             items.add(new ListItem(R.string.ground_trips,
-                    "" + mGroundCounter));
+                    Integer.toString(mGroundCounter)));
             items.add(new ListItem(R.string.subway_trips,
-                    "" + mSubwayCounter));
+                    Integer.toString(mSubwayCounter)));
         }
 
         return items;

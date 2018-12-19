@@ -2,6 +2,7 @@ package au.id.micolous.metrodroid.xml;
 
 import au.id.micolous.metrodroid.card.ultralight.UltralightPage;
 import au.id.micolous.metrodroid.card.ultralight.UnauthorizedUltralightPage;
+import au.id.micolous.metrodroid.util.Utils;
 
 import org.simpleframework.xml.convert.Converter;
 import org.simpleframework.xml.stream.InputNode;
@@ -16,7 +17,7 @@ public class UltralightPageConverter implements Converter<UltralightPage> {
     public UltralightPage read(InputNode node) throws Exception {
         int pageIndex = Integer.parseInt(node.getAttribute("index").getValue());
 
-        if (node.getAttribute("unauthorized") != null && node.getAttribute("unauthorized").getValue().equals("true")) {
+        if (Utils.getBooleanAttr(node, "unauthorized")) {
             return new UnauthorizedUltralightPage(pageIndex);
         }
 

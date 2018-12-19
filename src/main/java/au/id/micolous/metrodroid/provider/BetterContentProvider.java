@@ -35,16 +35,18 @@ import android.net.Uri;
 import android.provider.BaseColumns;
 import android.text.TextUtils;
 
+import org.jetbrains.annotations.NonNls;
+
 public abstract class BetterContentProvider extends ContentProvider {
     protected static final int CODE_COLLECTION = 100;
     protected static final int CODE_SINGLE = 101;
     private SQLiteOpenHelper mHelper;
-    private Class<? extends SQLiteOpenHelper> mHelperClass;
-    private String mItemType;
-    private Uri mContentUri;
-    private String mDirType;
-    private String mTableName;
-    private UriMatcher mUriMatcher;
+    private final Class<? extends SQLiteOpenHelper> mHelperClass;
+    private final String mItemType;
+    private final Uri mContentUri;
+    private final String mDirType;
+    private final String mTableName;
+    private final UriMatcher mUriMatcher;
 
     public BetterContentProvider(Class<? extends SQLiteOpenHelper> helperClass, String dirType, String itemType,
                                  String tableName, Uri contentUri) {
@@ -112,7 +114,7 @@ public abstract class BetterContentProvider extends ContentProvider {
 
     @Override
     public int delete(Uri uri, String selection, String[] selectionArgs) {
-        SQLiteDatabase db = mHelper.getWritableDatabase();
+        @NonNls SQLiteDatabase db = mHelper.getWritableDatabase();
         int count = 0;
         switch (mUriMatcher.match(uri)) {
             case CODE_SINGLE:
@@ -134,8 +136,8 @@ public abstract class BetterContentProvider extends ContentProvider {
     }
 
     @Override
-    public int update(Uri uri, ContentValues values, String selection, String[] selectionArgs) {
-        SQLiteDatabase db = mHelper.getWritableDatabase();
+    public int update(Uri uri, ContentValues values, @NonNls String selection, String[] selectionArgs) {
+        @NonNls SQLiteDatabase db = mHelper.getWritableDatabase();
         int count;
         switch (mUriMatcher.match(uri)) {
             case CODE_COLLECTION:
@@ -158,7 +160,7 @@ public abstract class BetterContentProvider extends ContentProvider {
         return count;
     }
 
-    protected UriMatcher createUriMatcher(Uri contentUri, String basePath) {
+    protected UriMatcher createUriMatcher(Uri contentUri, @NonNls String basePath) {
         UriMatcher matcher = new UriMatcher(UriMatcher.NO_MATCH);
         matcher.addURI(contentUri.getAuthority(), basePath, CODE_COLLECTION);
         matcher.addURI(contentUri.getAuthority(), basePath + "/#", CODE_SINGLE);

@@ -28,18 +28,19 @@ import au.id.micolous.metrodroid.util.Utils;
  */
 public class NextfareBalanceRecord extends NextfareRecord implements Comparable<NextfareBalanceRecord> {
     private static final String TAG = "NextfareBalanceRecord";
-    private int mVersion;
+    private final int mVersion;
     private int mBalance;
     private boolean mHasTravelPassAvailable = false;
 
-    protected NextfareBalanceRecord() {
+    protected NextfareBalanceRecord(int version) {
+        mVersion = version;
     }
 
     public static NextfareBalanceRecord recordFromBytes(byte[] input) {
         //if (input[0] != 0x01) throw new AssertionError();
 
-        NextfareBalanceRecord record = new NextfareBalanceRecord();
-        record.mVersion = Utils.byteArrayToInt(input, 13, 1);
+        NextfareBalanceRecord record = new NextfareBalanceRecord(
+                Utils.byteArrayToInt(input, 13, 1));
 
         // Do some flipping for the balance
         record.mBalance = Utils.byteArrayToIntReversed(input, 2, 2);
@@ -58,6 +59,7 @@ public class NextfareBalanceRecord extends NextfareRecord implements Comparable<
             record.mHasTravelPassAvailable = true;
         }
 
+        //noinspection StringConcatenation
         Log.d(TAG, "Balance " + record.mBalance + ", version " + record.mVersion + ", travel pass " + Boolean.toString(record.mHasTravelPassAvailable));
         return record;
     }
@@ -82,6 +84,6 @@ public class NextfareBalanceRecord extends NextfareRecord implements Comparable<
     @Override
     public int compareTo(NextfareBalanceRecord rhs) {
         // So sorting works, we reverse the order so highest number is first.
-        return Integer.valueOf(rhs.mVersion).compareTo(this.mVersion);
+        return Integer.compare(rhs.mVersion, this.mVersion);
     }
 }

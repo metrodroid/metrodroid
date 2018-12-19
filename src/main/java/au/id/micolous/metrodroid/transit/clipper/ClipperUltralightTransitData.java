@@ -34,7 +34,6 @@ import au.id.micolous.metrodroid.transit.CardInfo;
 import au.id.micolous.metrodroid.transit.Subscription;
 import au.id.micolous.metrodroid.transit.TransitData;
 import au.id.micolous.metrodroid.transit.TransitIdentity;
-import au.id.micolous.metrodroid.transit.Trip;
 import au.id.micolous.metrodroid.ui.ListItem;
 import au.id.micolous.metrodroid.util.Utils;
 
@@ -167,7 +166,7 @@ public class ClipperUltralightTransitData extends TransitData {
 
     @Override
     public List<ListItem> getInfo() {
-        ArrayList<ListItem> items = new ArrayList<>();
+        List<ListItem> items = new ArrayList<>();
         switch (mType) {
             case 0x04:
                 items.add(new ListItem(R.string.ticket_type, R.string.clipper_ticket_type_adult));

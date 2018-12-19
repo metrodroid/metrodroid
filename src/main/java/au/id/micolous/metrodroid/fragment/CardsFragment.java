@@ -55,6 +55,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import org.apache.commons.io.FileUtils;
+import org.jetbrains.annotations.NonNls;
+import org.simpleframework.xml.Serializer;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -94,12 +96,14 @@ public class CardsFragment extends ExpandableListFragment {
     private static final int REQUEST_SELECT_FILE = 1;
     private static final int REQUEST_SAVE_FILE = 2;
     private static final int REQUEST_SELECT_FILE_MCT = 3;
+    @NonNls
     private static final String STD_EXPORT_FILENAME = "Metrodroid-Export.xml";
     private static final String SD_EXPORT_PATH = Environment.getExternalStorageDirectory() + "/" + STD_EXPORT_FILENAME;
+    @NonNls
     private static final String STD_IMPORT_FILENAME = "Metrodroid-Import.xml";
     private static final String SD_IMPORT_PATH = Environment.getExternalStorageDirectory() + "/" + STD_IMPORT_FILENAME;
 
-    private class Scan {
+    private static class Scan {
         private final long mScannedAt;
         private final String mLabel;
         private final int mType;
@@ -108,7 +112,7 @@ public class CardsFragment extends ExpandableListFragment {
         private TransitIdentity mTransitIdentity;
         private final int mId;
 
-        public Scan(Cursor cursor) {
+        Scan(Cursor cursor) {
             mId = cursor.getInt(cursor.getColumnIndex(CardsTableColumns._ID));
             mType = cursor.getInt(cursor.getColumnIndex(CardsTableColumns.TYPE));
             mSerial = cursor.getString(cursor.getColumnIndex(CardsTableColumns.TAG_SERIAL));
@@ -145,6 +149,7 @@ public class CardsFragment extends ExpandableListFragment {
                 }
                 scans.get(id).add(new Scan(cursor));
             }
+            //noinspection StringConcatenation
             Log.d(TAG, "creating adapter " + cards.size());
             setListAdapter(new CardsAdapter(getActivity(), scans, cards));
             setListShown(true);
@@ -174,6 +179,7 @@ public class CardsFragment extends ExpandableListFragment {
 
     @Override
     public boolean onListChildClick(ExpandableListView parent, View v, int groupPosition, int childPosition, long id) {
+        //noinspection StringConcatenation
         Log.d(TAG, "Clicked " + id + " " + groupPosition + " " + childPosition);
         Uri uri = ContentUris.withAppendedId(CardProvider.CONTENT_URI_CARD, id);
         Intent intent = new Intent(getActivity(), CardInfoActivity.class);
@@ -345,7 +351,7 @@ public class CardsFragment extends ExpandableListFragment {
             }
 
             Intent i = new Intent(Intent.ACTION_SEND);
-            Uri apkURI = FileProvider.getUriForFile(
+            @SuppressWarnings("StringConcatenation") Uri apkURI = FileProvider.getUriForFile(
                     MetrodroidApplication.getInstance(),
                     MetrodroidApplication.getInstance().getPackageName() + ".provider", tf);
             i.setType("text/xml");
@@ -494,6 +500,7 @@ public class CardsFragment extends ExpandableListFragment {
 
         private CardsAdapter(Context ctxt,
                             Map<Pair<Integer,String>, List<Scan>> scans, List<Pair<Integer,String>> cards) {
+            //noinspection StringConcatenation
             Log.d(TAG, "Cards adapter " + cards.size());
             mLayoutInflater = LayoutInflater.from(ctxt);
             mScans = scans;
@@ -502,6 +509,7 @@ public class CardsFragment extends ExpandableListFragment {
 
         @Override
         public int getGroupCount() {
+            //noinspection StringConcatenation
             Log.d(TAG, "getgroupcount " + mCards.size());
             return mCards.size();
         }
@@ -513,6 +521,7 @@ public class CardsFragment extends ExpandableListFragment {
 
         @Override
         public Object getGroup(int i) {
+            //noinspection StringConcatenation
             Log.d(TAG, "getgroup " + i);
             return mScans.get(mCards.get(i));
         }
@@ -563,7 +572,7 @@ public class CardsFragment extends ExpandableListFragment {
 
             if (identity != null) {
                 textView1.setText(identity.getName());
-                if (label != null && !label.equals("")) {
+                if (label != null && !label.isEmpty()) {
                     // This is used for imported cards from mfcdump_to_farebotxml.py
                     // Used for development and testing. We should always show this.
                     textView2.setText(label);

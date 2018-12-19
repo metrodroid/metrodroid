@@ -32,17 +32,19 @@ import android.database.sqlite.SQLiteQueryBuilder;
 import android.net.Uri;
 import android.text.TextUtils;
 
+import org.jetbrains.annotations.NonNls;
+
 import au.id.micolous.farebot.BuildConfig;
 
 public class CardProvider extends ContentProvider {
+    @NonNls
     public static final String AUTHORITY = BuildConfig.APPLICATION_ID + ".cardprovider";
 
     public static final Uri CONTENT_URI_CARD = Uri.parse("content://" + AUTHORITY + "/cards");
 
-    private static UriMatcher sUriMatcher;
+    private static final UriMatcher sUriMatcher = new UriMatcher(UriMatcher.NO_MATCH);
 
     static {
-        sUriMatcher = new UriMatcher(UriMatcher.NO_MATCH);
         sUriMatcher.addURI(AUTHORITY, "cards", CardDBHelper.CARD_COLLECTION_URI_INDICATOR);
         sUriMatcher.addURI(AUTHORITY, "cards/#", CardDBHelper.SINGLE_CARD_URI_INDICATOR);
     }
@@ -57,7 +59,7 @@ public class CardProvider extends ContentProvider {
 
     @Override
     public Cursor query(Uri uri, String[] projection, String selection, String[] selectionArgs, String sortOrder) {
-        SQLiteQueryBuilder builder = new SQLiteQueryBuilder();
+        @NonNls SQLiteQueryBuilder builder = new SQLiteQueryBuilder();
         switch (sUriMatcher.match(uri)) {
             case CardDBHelper.CARD_COLLECTION_URI_INDICATOR:
                 builder.setTables(CardsTableColumns.TABLE_NAME);
@@ -105,9 +107,10 @@ public class CardProvider extends ContentProvider {
         return cardUri;
     }
 
+    @SuppressWarnings("MagicCharacter")
     @Override
     public int delete(Uri uri, String selection, String[] selectionArgs) {
-        SQLiteDatabase db = mDbHelper.getWritableDatabase();
+        @NonNls SQLiteDatabase db = mDbHelper.getWritableDatabase();
         int count = 0;
         switch (sUriMatcher.match(uri)) {
             case CardDBHelper.CARD_COLLECTION_URI_INDICATOR:
@@ -127,7 +130,7 @@ public class CardProvider extends ContentProvider {
 
     @Override
     public int update(Uri uri, ContentValues values, String selection, String[] selectionArgs) {
-        SQLiteDatabase db = mDbHelper.getWritableDatabase();
+        @NonNls SQLiteDatabase db = mDbHelper.getWritableDatabase();
         int count;
         switch (sUriMatcher.match(uri)) {
             case CardDBHelper.CARD_COLLECTION_URI_INDICATOR:

@@ -24,12 +24,12 @@ import android.os.Parcelable;
 import android.support.annotation.NonNull;
 
 import org.apache.commons.lang3.ArrayUtils;
+import org.jetbrains.annotations.NonNls;
 
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
 import java.util.List;
-import java.util.Locale;
 
 import au.id.micolous.farebot.R;
 import au.id.micolous.metrodroid.card.CardType;
@@ -37,12 +37,10 @@ import au.id.micolous.metrodroid.card.desfire.DesfireApplication;
 import au.id.micolous.metrodroid.card.desfire.DesfireCard;
 import au.id.micolous.metrodroid.card.desfire.DesfireCardTransitFactory;
 import au.id.micolous.metrodroid.transit.CardInfo;
-import au.id.micolous.metrodroid.transit.Subscription;
 import au.id.micolous.metrodroid.transit.Transaction;
 import au.id.micolous.metrodroid.transit.TransactionTrip;
 import au.id.micolous.metrodroid.transit.TransitData;
 import au.id.micolous.metrodroid.transit.TransitIdentity;
-import au.id.micolous.metrodroid.transit.Trip;
 import au.id.micolous.metrodroid.transit.en1545.En1545Lookup;
 import au.id.micolous.metrodroid.transit.en1545.En1545TransitData;
 import au.id.micolous.metrodroid.transit.intercode.IntercodeTransitData;
@@ -168,6 +166,7 @@ public class AdelaideMetrocardTransitData extends En1545TransitData {
         }
     };
 
+    @NonNls
     private static String formatSerial(long serial) {
         return "01-" + Utils.formatNumber(serial, " ", 3, 4, 4, 4);
     }

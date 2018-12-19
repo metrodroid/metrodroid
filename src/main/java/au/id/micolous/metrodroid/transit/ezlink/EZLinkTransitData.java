@@ -25,8 +25,6 @@ package au.id.micolous.metrodroid.transit.ezlink;
 import android.os.Parcel;
 import android.support.annotation.Nullable;
 
-import org.apache.commons.lang3.ArrayUtils;
-
 import au.id.micolous.farebot.R;
 import au.id.micolous.metrodroid.card.CardType;
 import au.id.micolous.metrodroid.card.cepas.CEPASApplication;
@@ -35,7 +33,6 @@ import au.id.micolous.metrodroid.transit.Station;
 import au.id.micolous.metrodroid.transit.TransitCurrency;
 import au.id.micolous.metrodroid.transit.TransitData;
 import au.id.micolous.metrodroid.transit.TransitIdentity;
-import au.id.micolous.metrodroid.transit.Trip;
 import au.id.micolous.metrodroid.util.StationTableReader;
 import au.id.micolous.metrodroid.util.Utils;
 

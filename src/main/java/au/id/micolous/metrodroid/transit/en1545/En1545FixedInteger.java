@@ -21,6 +21,8 @@ package au.id.micolous.metrodroid.transit.en1545;
 
 import android.support.annotation.Nullable;
 
+import org.jetbrains.annotations.NonNls;
+
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.TimeZone;
@@ -126,27 +128,27 @@ public class En1545FixedInteger implements En1545Field {
         return g;
     }
 
-    public static En1545FixedInteger date(String name) {
+    public static En1545FixedInteger date(@NonNls String name) {
         return new En1545FixedInteger(name + "Date", 14);
     }
 
-    public static En1545FixedInteger time(String name) {
+    public static En1545FixedInteger time(@NonNls String name) {
         return new En1545FixedInteger(name + "Time", 11);
     }
 
-    public static En1545FixedInteger timePacked16(String name) {
+    public static En1545FixedInteger timePacked16(@NonNls String name) {
         return new En1545FixedInteger(name + "TimePacked16", 16);
     }
 
-    public static En1545FixedInteger BCDdate(String name) {
+    public static En1545FixedInteger BCDdate(@NonNls String name) {
         return new En1545FixedInteger(name, 32);
     }
 
-    public static En1545Field dateTime(String name) {
+    public static En1545Field dateTime(@NonNls String name) {
         return new En1545FixedInteger(name + "DateTime", 30);
     }
 
-    public static En1545Field timeLocal(String name) {
+    public static En1545Field timeLocal(@NonNls String name) {
         return new En1545FixedInteger(name + "TimeLocal", 11);
     }
 }

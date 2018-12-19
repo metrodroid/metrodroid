@@ -28,6 +28,8 @@
  */
 package au.id.micolous.metrodroid.transit.clipper;
 
+import org.jetbrains.annotations.NonNls;
+
 import au.id.micolous.farebot.R;
 import au.id.micolous.metrodroid.transit.Station;
 import au.id.micolous.metrodroid.transit.Trip;
@@ -64,7 +66,7 @@ final class ClipperData {
 
 
     public static Station getStation(int agency, int stationId, boolean isEnd) {
-        String humanReadableId = "0x" + Integer.toHexString(agency) + "/0x" + Integer.toHexString(stationId);
+        @NonNls String humanReadableId = Utils.intToHex(agency) + "/" + Utils.intToHex(stationId);
         Station s = StationTableReader.getStationNoFallback(CLIPPER_STR,(agency << 16) | stationId,
                 humanReadableId);
         if (s != null)

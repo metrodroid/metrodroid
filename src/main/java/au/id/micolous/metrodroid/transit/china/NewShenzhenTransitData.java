@@ -23,6 +23,8 @@ import android.os.Parcel;
 import android.os.Parcelable;
 import android.support.annotation.NonNull;
 
+import org.jetbrains.annotations.NonNls;
+
 import java.util.Collections;
 import java.util.List;
 
@@ -117,6 +119,7 @@ public class NewShenzhenTransitData extends ChinaTransitData {
         }
     };
 
+    @NonNls
     private static String formatSerial(int sn) {
         int dig = sn;
         int digsum = 0;

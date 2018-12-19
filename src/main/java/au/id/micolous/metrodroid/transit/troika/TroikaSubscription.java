@@ -16,7 +16,7 @@ class TroikaSubscription extends Subscription {
     private final Integer mRemainingTrips;
     private final Integer mValidityLengthMinutes;//
     private final int mTicketType;
-    public TroikaSubscription(Calendar expiryDate, Calendar validityStart,
+    TroikaSubscription(Calendar expiryDate, Calendar validityStart,
                               Calendar validityEnd, Integer remainingTrips,
                               Integer validityLengthMinutes, int ticketType) {
         mExpiryDate = expiryDate;

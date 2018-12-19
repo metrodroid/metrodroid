@@ -44,7 +44,6 @@ import au.id.micolous.metrodroid.transit.CardInfo;
 import au.id.micolous.metrodroid.transit.TransitCurrency;
 import au.id.micolous.metrodroid.transit.TransitData;
 import au.id.micolous.metrodroid.transit.TransitIdentity;
-import au.id.micolous.metrodroid.transit.Trip;
 import au.id.micolous.metrodroid.util.Utils;
 
 public class EdyTransitData extends TransitData {
@@ -75,9 +74,9 @@ public class EdyTransitData extends TransitData {
             return new EdyTransitData[size];
         }
     };
-    private List<EdyTrip> mTrips;
+    private final List<EdyTrip> mTrips;
     // private data
-    private byte[] mSerialNumber = new byte[8];
+    private final byte[] mSerialNumber = new byte[8];
     private int mCurrentBalance;
 
     public EdyTransitData(Parcel parcel) {

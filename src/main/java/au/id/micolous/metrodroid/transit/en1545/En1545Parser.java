@@ -19,6 +19,9 @@
 package au.id.micolous.metrodroid.transit.en1545;
 
 public class En1545Parser {
+    private En1545Parser() {
+    }
+
     public static En1545Parsed parse(byte[] data, int off, En1545Field field) {
         return new En1545Parsed().append(data, off, field);
     }

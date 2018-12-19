@@ -17,7 +17,7 @@ class TroikaPurse extends TroikaBlock {
      */
     private final int mBalance;
 
-    public TroikaPurse(byte[] rawData) {
+    TroikaPurse(byte[] rawData) {
         super(rawData);
         mExpiryDate = convertDateTime1992(Utils.getBitsFromBuffer(rawData, 61, 16),0);
         // 10 bits unknown

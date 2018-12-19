@@ -28,6 +28,7 @@ import android.util.Log;
 
 import org.apache.commons.lang3.concurrent.ConcurrentException;
 import org.apache.commons.lang3.concurrent.LazyInitializer;
+import org.jetbrains.annotations.NonNls;
 
 import java.io.Closeable;
 import java.io.DataInputStream;
@@ -37,6 +38,7 @@ import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
@@ -57,15 +59,15 @@ public class StationTableReader {
     private static final int VERSION = 1;
     private static final String TAG = "StationTableReader";
 
-    private Stations.StationDb mStationDb;
-    private LazyInitializer<Stations.StationIndex> mStationIndex;
-    private DataInputStream mTable;
+    private final Stations.StationDb mStationDb;
+    private final LazyInitializer<Stations.StationIndex> mStationIndex;
+    private final DataInputStream mTable;
     private final int mStationsLength;
 
     private static final Map<String,StationTableReader> mSTRs = new HashMap<>();
 
     @Nullable
-    private static StationTableReader getSTR(@Nullable String name) {
+    private static StationTableReader getSTR(@NonNls @Nullable String name) {
         if (name == null) {
             return null;
         }
@@ -102,7 +104,7 @@ public class StationTableReader {
 
     @Nullable
     public static Station getStationNoFallback(@Nullable String reader, int id) {
-        return getStationNoFallback(reader, id, "0x" + Integer.toHexString(id));
+        return getStationNoFallback(reader, id, Utils.intToHex(id));
     }
 
     @NonNull
@@ -115,11 +117,11 @@ public class StationTableReader {
 
     @NonNull
     public static Station getStation(@Nullable String reader, int id) {
-        return getStation(reader, id, "0x" + Integer.toHexString(id));
+        return getStation(reader, id, Utils.intToHex(id));
     }
 
     private static String fallbackName(int id) {
-        return Utils.localizeString(R.string.unknown_format, "0x" + Integer.toHexString(id));
+        return Utils.localizeString(R.string.unknown_format, Utils.intToHex(id));
     }
 
     private static String fallbackName(String humanReadableId) {
@@ -138,7 +140,7 @@ public class StationTableReader {
         return m;
     }
 
-    public class InvalidHeaderException extends Exception {}
+    public static class InvalidHeaderException extends Exception {}
 
     /**
      * Initialises a "connection" to a Metrodroid Station Table kept in the `assets/` directory.
@@ -206,8 +208,8 @@ public class StationTableReader {
         String englishFull = name.getEnglish();
         String englishShort = name.getEnglishShort();
         String english;
-        boolean hasEnglishFull = englishFull != null && englishFull.length() != 0;
-        boolean hasEnglishShort = englishShort != null && englishShort.length() != 0;
+        boolean hasEnglishFull = englishFull != null && !englishFull.isEmpty();
+        boolean hasEnglishShort = englishShort != null && !englishShort.isEmpty();
 
         if (hasEnglishFull && !hasEnglishShort)
             english = englishFull;
@@ -219,8 +221,8 @@ public class StationTableReader {
         String localFull = name.getLocal();
         String localShort = name.getLocalShort();
         String local;
-        boolean hasLocalFull = localFull != null && localFull.length() != 0;
-        boolean hasLocalShort = localShort != null && localShort.length() != 0;
+        boolean hasLocalFull = localFull != null && !localFull.isEmpty();
+        boolean hasLocalShort = localShort != null && !localShort.isEmpty();
 
         if (hasLocalFull && !hasLocalShort)
             local = localFull;
@@ -229,19 +231,19 @@ public class StationTableReader {
         else
             local = isShort ? localShort : localFull;
 
-        if (showBoth() && english != null && !english.equals("")
-                && local != null && !local.equals("")) {
+        if (showBoth() && english != null && !english.isEmpty()
+                && local != null && !local.isEmpty()) {
             if (english.equals(local))
                 return local;
             if (useEnglishName())
                 return english + " (" + local + ")";
             return local + " (" + english + ")";
         }
-        if (useEnglishName() && english != null && !english.equals("")) {
+        if (useEnglishName() && english != null && !english.isEmpty()) {
             return english;
         }
 
-        if (local != null && !local.equals("")) {
+        if (local != null && !local.isEmpty()) {
             // Local preferred, or English not available
             return local;
         } else {
@@ -275,7 +277,7 @@ public class StationTableReader {
     }
 
     public static String getLineName(@Nullable String reader, int id) {
-        return getLineName(reader, id, "0x" + Integer.toHexString(id));
+        return getLineName(reader, id, Utils.intToHex(id));
     }
 
     public static String getLineName(@Nullable String reader, int id, String humanReadableId) {
@@ -331,7 +333,7 @@ public class StationTableReader {
     private Station getStationById(int id, String humanReadableID) throws IOException {
         Stations.Station ps = getProtoStationById(id);
         if (ps == null) return null;
-        ArrayList<Stations.Line> lines = new ArrayList<>();
+        List<Stations.Line> lines = new ArrayList<>();
         for (int lineId : ps.getLineIdList()) {
             Stations.Line l = mStationDb.getLinesOrDefault(lineId, null);
             if (l != null) {

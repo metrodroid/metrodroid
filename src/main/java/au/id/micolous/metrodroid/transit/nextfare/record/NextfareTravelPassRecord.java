@@ -47,18 +47,22 @@ public class NextfareTravelPassRecord extends NextfareRecord implements Parcelab
         }
     };
     private static final String TAG = "NextfareTravelPassRec";
-    private Calendar mExpiry;
-    private int mChecksum;
+    private final Calendar mExpiry;
+    private final int mChecksum;
     private boolean mAutomatic;
-    private int mVersion;
+    private final int mVersion;
 
-    protected NextfareTravelPassRecord() {
+    private NextfareTravelPassRecord(int version, Calendar expiry, int checksum) {
+        mVersion = version;
+        mExpiry = expiry;
+        mChecksum = checksum;
     }
 
-    public NextfareTravelPassRecord(Parcel parcel) {
+    private NextfareTravelPassRecord(Parcel parcel) {
         mExpiry = Utils.unparcelCalendar(parcel);
         mChecksum = parcel.readInt();
         mAutomatic = parcel.readInt() == 1;
+        mVersion = parcel.readInt();
     }
 
     public static NextfareTravelPassRecord recordFromBytes(byte[] input, TimeZone timeZone) {
@@ -68,12 +72,12 @@ public class NextfareTravelPassRecord extends NextfareRecord implements Parcelab
             return null;
         }
 
-        NextfareTravelPassRecord record = new NextfareTravelPassRecord();
-        record.mVersion = Utils.byteArrayToInt(input, 13, 1);
+        NextfareTravelPassRecord record = new NextfareTravelPassRecord(
+        Utils.byteArrayToInt(input, 13, 1),
+        NextfareUtil.unpackDate(input, 2, timeZone),
+        Utils.byteArrayToIntReversed(input, 14, 2));
 
-        record.mExpiry = NextfareUtil.unpackDate(input, 2, timeZone);
-        record.mChecksum = Utils.byteArrayToIntReversed(input, 14, 2);
-
+        //noinspection StringConcatenation
         Log.d(TAG, "@" + Utils.isoDateTimeFormat(record.mExpiry) + ": version " + record.mVersion);
 
         if (record.mVersion == 0) {
@@ -93,6 +97,7 @@ public class NextfareTravelPassRecord extends NextfareRecord implements Parcelab
         Utils.parcelCalendar(parcel, mExpiry);
         parcel.writeInt(mChecksum);
         parcel.writeInt(mAutomatic ? 1 : 0);
+        parcel.writeInt(mVersion);
     }
 
     public Calendar getTimestamp() {
@@ -111,6 +116,6 @@ public class NextfareTravelPassRecord extends NextfareRecord implements Parcelab
     @Override
     public int compareTo(@NonNull NextfareTravelPassRecord rhs) {
         // So sorting works, we reverse the order so highest number is first.
-        return Integer.valueOf(rhs.mVersion).compareTo(this.mVersion);
+        return Integer.compare(rhs.mVersion, this.mVersion);
     }
 }

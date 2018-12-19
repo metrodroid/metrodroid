@@ -32,7 +32,6 @@ import au.id.micolous.metrodroid.card.CardType;
 import au.id.micolous.metrodroid.card.calypso.CalypsoApplication;
 import au.id.micolous.metrodroid.card.calypso.CalypsoCardTransitFactory;
 import au.id.micolous.metrodroid.transit.CardInfo;
-import au.id.micolous.metrodroid.transit.TransitData;
 import au.id.micolous.metrodroid.transit.TransitIdentity;
 import au.id.micolous.metrodroid.transit.en1545.Calypso1545TransitData;
 import au.id.micolous.metrodroid.transit.en1545.En1545Container;
@@ -144,7 +143,7 @@ public class RavKavTransitData extends Calypso1545TransitData {
 
     @Override
     public List<ListItem> getInfo() {
-        ArrayList<ListItem> li = new ArrayList<>();
+        List<ListItem> li = new ArrayList<>();
         if (mTicketEnvParsed.getIntOrZero(HOLDER_ID_NUMBER) == 0) {
             li.add(new ListItem(R.string.card_type, R.string.card_type_anonymous));
         } else {

@@ -32,7 +32,7 @@ import au.id.micolous.metrodroid.util.Utils;
 
 public class CEPASProtocol {
     private static final String TAG = "CEPASProtocol";
-    private ISO7816Protocol mTagTech;
+    private final ISO7816Protocol mTagTech;
 
     public CEPASProtocol(ISO7816Protocol tagTech) {
         mTagTech = tagTech;
@@ -47,6 +47,7 @@ public class CEPASProtocol {
                 return null;
             }
         } catch (ISO7816Exception | FileNotFoundException ex) {
+            //noinspection StringConcatenation
             Log.w(TAG, "Error reading purse " + purseId, ex);
             return null;
         }
@@ -69,12 +70,14 @@ public class CEPASProtocol {
                                 (byte) (historyBuff.length / 16));
                         historyBuff = Utils.concatByteArrays(historyBuff, historyBuff2);
                     } catch (ISO7816Exception ex) {
+                        //noinspection StringConcatenation
                         Log.w(TAG, "Error reading 2nd purse history " + purseId, ex);
                     }
             }
 
             return historyBuff;
         } catch (ISO7816Exception ex) {
+            //noinspection StringConcatenation
             Log.w(TAG, "Error reading purse history " + purseId, ex);
             return null;
         }

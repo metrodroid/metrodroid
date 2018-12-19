@@ -27,9 +27,7 @@ import android.support.annotation.NonNull;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
 
@@ -40,10 +38,8 @@ import au.id.micolous.metrodroid.card.calypso.CalypsoApplication;
 import au.id.micolous.metrodroid.card.calypso.CalypsoCardTransitFactory;
 import au.id.micolous.metrodroid.card.iso7816.ISO7816File;
 import au.id.micolous.metrodroid.card.iso7816.ISO7816Record;
-import au.id.micolous.metrodroid.card.iso7816.ISO7816Selector;
 import au.id.micolous.metrodroid.transit.CardInfo;
 import au.id.micolous.metrodroid.transit.TransitIdentity;
-import au.id.micolous.metrodroid.transit.Trip;
 import au.id.micolous.metrodroid.transit.en1545.Calypso1545TransitData;
 import au.id.micolous.metrodroid.transit.en1545.En1545Container;
 import au.id.micolous.metrodroid.transit.en1545.En1545FixedHex;
@@ -189,7 +185,7 @@ public class LisboaVivaTransitData extends Calypso1545TransitData {
     @Override
     public List<ListItem> getInfo() {
         List<ListItem> li = new ArrayList<>(super.getInfo());
-        if (!mHolderName.equals("") && !MetrodroidApplication.hideCardNumbers())
+        if (!mHolderName.isEmpty() && !MetrodroidApplication.hideCardNumbers())
             li.add(new ListItem(R.string.card_holders_name, mHolderName));
         return li;
     }

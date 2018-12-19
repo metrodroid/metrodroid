@@ -47,7 +47,6 @@ import au.id.micolous.metrodroid.transit.TransitBalanceStored;
 import au.id.micolous.metrodroid.transit.TransitCurrency;
 import au.id.micolous.metrodroid.transit.TransitData;
 import au.id.micolous.metrodroid.transit.TransitIdentity;
-import au.id.micolous.metrodroid.transit.Trip;
 import au.id.micolous.metrodroid.util.Utils;
 
 public class SuicaTransitData extends TransitData {
@@ -90,7 +89,7 @@ public class SuicaTransitData extends TransitData {
     static final TimeZone TIME_ZONE = TimeZone.getTimeZone("Asia/Tokyo");
     static final String TAG = SuicaTransitData.class.getSimpleName();
 
-    private List<SuicaTrip> mTrips;
+    private final List<SuicaTrip> mTrips;
 
     public SuicaTransitData(Parcel parcel) {
         mTrips = new ArrayList<>();

@@ -60,10 +60,11 @@ import android.view.WindowManager;
 import android.widget.Toast;
 
 import org.apache.commons.io.IOUtils;
-import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.NonNls;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.w3c.dom.Node;
+import org.simpleframework.xml.stream.InputNode;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -96,8 +97,6 @@ import au.id.micolous.farebot.R;
 import au.id.micolous.metrodroid.MetrodroidApplication;
 import au.id.micolous.metrodroid.key.ClassicCardKeys;
 import au.id.micolous.metrodroid.key.ClassicSectorKey;
-
-import static android.content.Context.CLIPBOARD_SERVICE;
 
 public class Utils {
     private static final String TAG = "Utils";
@@ -177,10 +176,12 @@ public class Utils {
         }
     }
 
+    @NonNls
     public static String getHexString(byte[] b) {
         return getHexString(b, 0, b.length);
     }
 
+    @NonNls
     public static String getHexString(byte[] b, int offset, int length) {
         StringBuilder result = new StringBuilder();
         for (int i = offset; i < offset + length; i++) {
@@ -189,6 +190,7 @@ public class Utils {
         return result.toString();
     }
 
+    @NonNls
     public static String getHexString(byte[] b, String defaultResult) {
         try {
             return getHexString(b);
@@ -202,6 +204,7 @@ public class Utils {
     }
 
     @NonNull
+    @SuppressWarnings({"StringConcatenation", "MagicCharacter"})
     public static SpannableString getHexDump(byte[] b, int offset, int length) {
         StringBuilder result = new StringBuilder();
         int alen;
@@ -211,6 +214,7 @@ public class Utils {
             for (alen = 2; (1 << (4 * alen)) < length; alen += 2);
         for (int i = 0; i < length; i++) {
             if ((i & 0xf) == 0 && alen != 0)
+                //noinspection StringConcatenation,StringConcatenationInFormatCall
                 result.append(String.format(Locale.ENGLISH, "%0" + alen + "x: ", i));
             result.append(Integer.toString((b[i+offset] & 0xff) + 0x100, 16).substring(1));
             if (((i & 0xf) == 0xf))
@@ -253,11 +257,7 @@ public class Utils {
      * @return byte array with string as US-ASCII
      */
     public static byte[] stringToByteArray(String s) {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-            return s.getBytes(StandardCharsets.US_ASCII);
-        } else {
-            return s.getBytes(Charset.forName("US-ASCII"));
-        }
+        return s.getBytes(getASCII());
     }
 
     /**
@@ -275,6 +275,14 @@ public class Utils {
             return StandardCharsets.UTF_8;
         } else {
             return Charset.forName("UTF-8");
+        }
+    }
+
+    public static Charset getASCII() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            return StandardCharsets.US_ASCII;
+        } else {
+            return Charset.forName("US-ASCII");
         }
     }
 
@@ -788,6 +796,7 @@ public class Utils {
      * @return Final digit for card number.
      */
     public static int calculateLuhn(String partialCardNumber) {
+        //noinspection StringConcatenation
         int checkDigit = luhnChecksum(partialCardNumber + "0");
         return checkDigit == 0 ? 0 : 10 - checkDigit;
     }
@@ -889,8 +898,9 @@ public class Utils {
         for (int i=data.length-1; i>0; i--) {
             String s;
             try {
-                s = new String(new byte[]{data[i]});
+                s = new String(new byte[]{data[i]}, getUTF8());
             } catch (Exception ex) {
+                //noinspection StringConcatenation
                 Log.d(TAG, "unsupported encoding at byte " + i, ex);
                 // Unlikely to be JSON
                 return isRawMifareClassicKeyFileLength(data.length) ? KeyFormat.RAW_MFC : KeyFormat.UNKNOWN;
@@ -911,7 +921,7 @@ public class Utils {
 
         // Now see if it actually parses.
         try {
-            JSONObject o = new JSONObject(new String(data));
+            JSONObject o = new JSONObject(new String(data, getUTF8()));
             String type = o.optString(ClassicCardKeys.JSON_KEY_TYPE_KEY);
             switch (type) {
                 case ClassicCardKeys.TYPE_MFC:
@@ -942,8 +952,8 @@ public class Utils {
         return unsignedToTwoComplement(val, bitLength - 1);
     }
 
-    @NotNull
-    public static String groupString(@NotNull String val, @NotNull String separator, int... groups) {
+    @NonNull
+    public static String groupString(@NonNull String val, @NonNull String separator, int... groups) {
         StringBuilder ret = new StringBuilder();
         int ptr = 0;
         for (int g : groups) {
@@ -1101,11 +1111,12 @@ public class Utils {
             return -2;
         }
 
-        md5.update(salt.getBytes());
+        md5.update(salt.getBytes(getASCII()));
         md5.update(key);
-        md5.update(salt.getBytes());
+        md5.update(salt.getBytes(getASCII()));
 
         digest = getHexString(md5.digest());
+        //noinspection StringConcatenation
         Log.d(TAG, "Key digest: " + digest);
 
         for (int i=0; i<expectedHashes.length; i++) {
@@ -1117,10 +1128,13 @@ public class Utils {
         return -1;
     }
 
-    public static String formatNumber(long value, String separator, int... groups) {
+    @NonNull
+    @NonNls
+    public static String formatNumber(long value, @NonNull String separator, int... groups) {
         int minDigit = 0;
         for (int g : groups)
             minDigit += g;
+        //noinspection StringConcatenation,StringConcatenationInFormatCall
         String unformatted = String.format(Locale.ENGLISH, "%0" + minDigit + "d", value);
         int numDigit = unformatted.length();
         int last = numDigit - minDigit;
@@ -1150,7 +1164,7 @@ public class Utils {
     public static void copyTextToClipboard(Context context, String label, String text) {
         ClipData data = ClipData.newPlainText(label, text);
 
-        ClipboardManager clipboard = (ClipboardManager) context.getSystemService(CLIPBOARD_SERVICE);
+        ClipboardManager clipboard = (ClipboardManager) context.getSystemService(Context.CLIPBOARD_SERVICE);
         if (clipboard == null) {
             Log.w(TAG, "Unable to access ClipboardManager.");
             Toast.makeText(context, R.string.clipboard_error, Toast.LENGTH_SHORT).show();
@@ -1212,5 +1226,24 @@ public class Utils {
             // Other characters invalid.
         }
         return o.toString();
+    }
+
+    public static boolean getBooleanAttr(InputNode node, @NonNls String name) throws Exception {
+        InputNode attr = node.getAttribute(name);
+        if (attr == null)
+            return false;
+        @NonNls String value = attr.getValue();
+        return value.equals("true");
+    }
+
+    public static String intToHex(int v) {
+        //noinspection StringConcatenation
+        return "0x" + Integer.toHexString(v);
+    }
+
+    @NonNull
+    public static String longToHex(long v) {
+        //noinspection StringConcatenation
+        return "0x" + Long.toHexString(v);
     }
 }

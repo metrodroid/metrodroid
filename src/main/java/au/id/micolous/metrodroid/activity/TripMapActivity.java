@@ -83,7 +83,9 @@ public class TripMapActivity extends MetrodroidActivity {
                 .putString("pref_map_tile_subdomains", subdomains)
                 .apply();
 
+        //noinspection StringConcatenation
         Log.d(TAG, "TilesURL: " + tileURL);
+        //noinspection StringConcatenation
         Log.d(TAG, "Subdomains: " + subdomains);
 
         WebView webView = ((WebViewFragment) getFragmentManager().findFragmentById(R.id.map)).getWebView();
@@ -92,6 +94,7 @@ public class TripMapActivity extends MetrodroidActivity {
         WebSettings settings = webView.getSettings();
         settings.setJavaScriptEnabled(true);
         settings.setAllowUniversalAccessFromFileURLs(true);
+        //noinspection StringConcatenation
         settings.setUserAgentString(settings.getUserAgentString() + " metrodroid/" + BuildConfig.VERSION_NAME);
 
         ActionBar actionBar = getActionBar();
@@ -170,11 +173,11 @@ public class TripMapActivity extends MetrodroidActivity {
             return pos;
         }
     */
-    public class TripMapShim {
+    public static class TripMapShim {
         private static final String TAG = "TripMapShim";
-        private Marker[] mMarkers;
-        private String mTileUrl;
-        private String mSubdomains;
+        private final Marker[] mMarkers;
+        private final String mTileUrl;
+        private final String mSubdomains;
 
         TripMapShim(Marker[] markers, String tileUrl, String subdomains) {
             this.mMarkers = markers;

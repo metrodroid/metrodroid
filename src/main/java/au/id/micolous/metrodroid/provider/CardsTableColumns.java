@@ -22,12 +22,15 @@ package au.id.micolous.metrodroid.provider;
 
 import android.provider.BaseColumns;
 
+import org.jetbrains.annotations.NonNls;
+
 public class CardsTableColumns implements BaseColumns {
 
     public static final String TABLE_NAME = "cards";
     public static final String TYPE = "type";
     public static final String TAG_SERIAL = "serial";
     public static final String DATA = "data";
+    @NonNls
     public static final String SCANNED_AT = "scanned_at";
     public static final String LABEL = "label";
 

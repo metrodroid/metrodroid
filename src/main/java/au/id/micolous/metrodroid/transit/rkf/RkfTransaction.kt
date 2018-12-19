@@ -26,7 +26,7 @@ import au.id.micolous.metrodroid.util.Utils
 import kotlinx.android.parcel.Parcelize
 
 @Parcelize
-class RkfTransaction (val parsed : En1545Parsed, val mTransactionCode : Int, val mLookup : RkfLookup) : En1545Transaction(parsed) {
+class RkfTransaction(val parsed: En1545Parsed, val mTransactionCode: Int, val mLookup: RkfLookup) : En1545Transaction(parsed) {
     val debug: String
         get() = parsed.toString()
 
@@ -41,7 +41,7 @@ class RkfTransaction (val parsed : En1545Parsed, val mTransactionCode : Int, val
 
     fun isOther() = !isTapOn && !isTapOff
 
-    override fun getMode() : Trip.Mode = when (eventType) {
+    override fun getMode(): Trip.Mode = when (eventType) {
         8 -> Trip.Mode.TICKET_MACHINE
         else -> super.getMode()
     }
@@ -77,8 +77,8 @@ class RkfTransaction (val parsed : En1545Parsed, val mTransactionCode : Int, val
                 En1545FixedInteger("B", 7)
         )
         private val EVENT_DATA_A = En1545Container(
-            En1545FixedInteger("SectorPointer", 4),
-            En1545FixedInteger(EVENT_PRICE_AMOUNT, 20)
+                En1545FixedInteger("SectorPointer", 4),
+                En1545FixedInteger(EVENT_PRICE_AMOUNT, 20)
         )
 
         private val EVENT_DATA_B = En1545Container(
@@ -106,14 +106,15 @@ class RkfTransaction (val parsed : En1545Parsed, val mTransactionCode : Int, val
                 En1545FixedInteger(EVENT_PRICE_AMOUNT, 16),
                 En1545FixedInteger("D", 18)
         )
-        fun parseTransaction(b : ByteArray, lookup : RkfLookup, version : Int) = when (version) {
+
+        fun parseTransaction(b: ByteArray, lookup: RkfLookup, version: Int) = when (version) {
             1 -> parseTransactionV1(b, lookup)
             2 -> parseTransactionV2(b, lookup)
             // Rest not implemented
             else -> parseTransactionV2(b, lookup)
         }
 
-        private fun parseTransactionV1(b: ByteArray, lookup : RkfLookup): RkfTransaction? {
+        private fun parseTransactionV1(b: ByteArray, lookup: RkfLookup): RkfTransaction? {
             val parsed = En1545Parser.parseLeBits(b, FIELDS_V1)
             val rkfEventCode = Utils.getBitsFromBufferLeBits(b, 90, 6)
             when (rkfEventCode) {
@@ -121,16 +122,16 @@ class RkfTransaction (val parsed : En1545Parsed, val mTransactionCode : Int, val
                 // skip it. It uses type A
                 // Event code 0x17 is "Application object created". It's not trip or refill, skip it.
                 // It uses type C
-                0x16,0x17 -> return null
-                1,2,3,4,0x18,0x1a -> parsed.appendLeBits(b, 96, EVENT_DATA_A)
+                0x16, 0x17 -> return null
+                1, 2, 3, 4, 0x18, 0x1a -> parsed.appendLeBits(b, 96, EVENT_DATA_A)
                 5 -> parsed.appendLeBits(b, 96, EVENT_DATA_B)
-                6,7,9,0xa,0xb,0xc,0xd,0xe,0x19 -> parsed.appendLeBits(b, 96, EVENT_DATA_C)
-                8,0x1f -> parsed.appendLeBits(b, 96, EVENT_DATA_D_V1)
+                6, 7, 9, 0xa, 0xb, 0xc, 0xd, 0xe, 0x19 -> parsed.appendLeBits(b, 96, EVENT_DATA_C)
+                8, 0x1f -> parsed.appendLeBits(b, 96, EVENT_DATA_D_V1)
             }
             return RkfTransaction(parsed = parsed, mLookup = lookup, mTransactionCode = rkfEventCode)
         }
 
-        private fun parseTransactionV2(b: ByteArray, lookup : RkfLookup): RkfTransaction? {
+        private fun parseTransactionV2(b: ByteArray, lookup: RkfLookup): RkfTransaction? {
             val parsed = En1545Parser.parseLeBits(b, FIELDS_V2_HEADER)
             val rkfEventCode = Utils.getBitsFromBufferLeBits(b, 72, 6)
             if (rkfEventCode != 0xf)
@@ -140,11 +141,11 @@ class RkfTransaction (val parsed : En1545Parsed, val mTransactionCode : Int, val
                 // skip it. It uses type A
                 // Event code 0x17 is "Application object created". It's not trip or refill, skip it.
                 // It uses type C
-                0x16,0x17 -> return null
-                1,2,3,4,0x18,0x1a -> parsed.appendLeBits(b, 78, EVENT_DATA_A)
+                0x16, 0x17 -> return null
+                1, 2, 3, 4, 0x18, 0x1a -> parsed.appendLeBits(b, 78, EVENT_DATA_A)
                 5 -> parsed.appendLeBits(b, 78, EVENT_DATA_B)
-                6,7,9,0xa,0xb,0xc,0xd,0xe,0x19 -> parsed.appendLeBits(b, 78, EVENT_DATA_C)
-                8,0x1f -> parsed.appendLeBits(b, 78, EVENT_DATA_D_V2)
+                6, 7, 9, 0xa, 0xb, 0xc, 0xd, 0xe, 0x19 -> parsed.appendLeBits(b, 78, EVENT_DATA_C)
+                8, 0x1f -> parsed.appendLeBits(b, 78, EVENT_DATA_D_V2)
                 0xf -> {
                     parsed.appendLeBits(b, 38, FIELDS_V2_BLOCK1_TYPE_F)
                     parsed.appendLeBits(b, 78, EVENT_DATA_F)

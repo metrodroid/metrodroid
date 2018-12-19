@@ -31,6 +31,7 @@ import android.support.v4.view.ViewPager;
 import android.view.View;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import au.id.micolous.farebot.R;
 
@@ -38,7 +39,7 @@ public class TabPagerAdapter extends PagerAdapter implements ActionBar.TabListen
     private final Activity mActivity;
     private final ActionBar mActionBar;
     private final ViewPager mViewPager;
-    private final ArrayList<TabInfo> mTabs = new ArrayList<>();
+    private final List<TabInfo> mTabs = new ArrayList<>();
     private FragmentTransaction mCurTransaction = null;
 
     public TabPagerAdapter(Activity activity, ViewPager pager) {
@@ -146,7 +147,7 @@ public class TabPagerAdapter extends PagerAdapter implements ActionBar.TabListen
         private final Class<?> mClass;
         private final Bundle mArgs;
 
-        public TabInfo(Class<?> klass, Bundle args) {
+        TabInfo(Class<?> klass, Bundle args) {
             mClass = klass;
             mArgs = args;
         }

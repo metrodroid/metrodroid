@@ -26,9 +26,9 @@ import au.id.micolous.metrodroid.transit.en1545.*
 import au.id.micolous.metrodroid.util.Utils
 import java.util.*
 
-data class RkfTCSTTrip (private val mParsed : En1545Parsed,
-                        private val mLookup : RkfLookup,
-                        private val mTransactions : MutableList<RkfTransaction> = mutableListOf()) {
+data class RkfTCSTTrip(private val mParsed: En1545Parsed,
+                       private val mLookup: RkfLookup,
+                       private val mTransactions: MutableList<RkfTransaction> = mutableListOf()) {
     internal val checkoutCompleted
         get() = mParsed.getIntOrZero(VALIDATION_STATUS) == 2 && mParsed.getIntOrZero(VALIDATION_MODEL) == 1
     private val inProgress
@@ -37,7 +37,7 @@ data class RkfTCSTTrip (private val mParsed : En1545Parsed,
     private val passengerCount: Int
         get() = (1..3).sumBy { mParsed.getIntOrZero(passengerTotal(it)) }
 
-    val startTimestamp : Calendar
+    val startTimestamp: Calendar
         get() = parseDateTime(mParsed.getIntOrZero(START_TIME), mLookup.timeZone)
 
     val endTimestamp: Calendar
@@ -51,7 +51,7 @@ data class RkfTCSTTrip (private val mParsed : En1545Parsed,
     val mode: Trip.Mode
         get() = mLookup.getMode(mParsed.getIntOrZero(START_AID), 0)
 
-    fun getAgencyName(isShort: Boolean) : String? = mLookup.getAgencyName(mParsed.getIntOrZero(RkfTransitData.COMPANY), isShort)
+    fun getAgencyName(isShort: Boolean): String? = mLookup.getAgencyName(mParsed.getIntOrZero(RkfTransitData.COMPANY), isShort)
 
     private val startStation: Station?
         get() = mLookup.getStation(mParsed.getIntOrZero(START_PLACE), mParsed.getIntOrZero(START_AID), null)
@@ -66,7 +66,7 @@ data class RkfTCSTTrip (private val mParsed : En1545Parsed,
     val tripLegs: List<RkfTripLeg>
         get() {
             val legs = mutableListOf<RkfTripLeg>()
-            var checkout : RkfTransaction? = null
+            var checkout: RkfTransaction? = null
             for ((index, transaction) in mTransactions.withIndex()) {
                 // Case 1: if we got the checkin, skip it in this cycle and handle it in next
                 if (index == 0 && isCheckin(transaction))
@@ -77,7 +77,7 @@ data class RkfTCSTTrip (private val mParsed : En1545Parsed,
                     checkout = transaction
                     continue
                 }
-                val previous : RkfTransaction? = if (index == 0) null else mTransactions[index - 1]
+                val previous: RkfTransaction? = if (index == 0) null else mTransactions[index - 1]
                 // Case 3: transfer without checkin transaction. Happens if checkin went out of the log.
                 if (previous == null) {
                     legs.add(RkfTripLeg(mStartTimestamp = startTimestamp, mEndTimestamp = transaction.timestamp,
@@ -125,10 +125,10 @@ data class RkfTCSTTrip (private val mParsed : En1545Parsed,
 
     private fun isCheckOut(transaction: RkfTransaction) = (
             transaction.isTapOff && checkoutCompleted
-            && RkfTransitData.clearSeconds(transaction.timestamp.timeInMillis) == RkfTransitData.clearSeconds(endTimestamp.timeInMillis))
+                    && RkfTransitData.clearSeconds(transaction.timestamp.timeInMillis) == RkfTransitData.clearSeconds(endTimestamp.timeInMillis))
 
     private fun isCheckin(transaction: RkfTransaction) = (transaction.isTapOn
-                && RkfTransitData.clearSeconds(transaction.timestamp.timeInMillis) == RkfTransitData.clearSeconds(startTimestamp.timeInMillis))
+            && RkfTransitData.clearSeconds(transaction.timestamp.timeInMillis) == RkfTransitData.clearSeconds(startTimestamp.timeInMillis))
 
     companion object {
         private val EPOCH2000: Long = {

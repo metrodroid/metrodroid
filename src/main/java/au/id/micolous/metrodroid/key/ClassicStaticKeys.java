@@ -33,6 +33,7 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import au.id.micolous.farebot.R;
 import au.id.micolous.metrodroid.util.Utils;
@@ -52,7 +53,7 @@ public class ClassicStaticKeys extends ClassicCardKeys {
 
     // Sparse Arrays are annoying to iterate through
     @SuppressLint("UseSparseArrays")
-    private Map<Integer, List<ClassicSectorKeyWrapper>> mKeys = new HashMap<>();
+    private final Map<Integer, List<ClassicSectorKeyWrapper>> mKeys = new HashMap<>();
     private String mDescription;
 
     public void mergeJSON(JSONObject string) throws JSONException {
@@ -141,12 +142,12 @@ public class ClassicStaticKeys extends ClassicCardKeys {
     @NonNull
     @Override
     public List<ClassicSectorKey> keys() {
-        HashSet<String> allKeys = new HashSet<>();
+        Set<String> allKeys = new HashSet<>();
         for (List<ClassicSectorKeyWrapper> keys : mKeys.values()) {
             for (ClassicSectorKeyWrapper key : keys)
                 allKeys.add(Utils.getHexString(key.getKey()));
         }
-        ArrayList<ClassicSectorKey> uniqueKeys = new ArrayList<>();
+        List<ClassicSectorKey> uniqueKeys = new ArrayList<>();
         for (String key : allKeys)
             uniqueKeys.add(ClassicSectorKey.wellKnown(Utils.hexStringToByteArray(key)));
         return uniqueKeys;
@@ -164,7 +165,7 @@ public class ClassicStaticKeys extends ClassicCardKeys {
     }
 
     public String getFileType() {
-        HashSet<String> allKeys = new HashSet<>();
+        Set<String> allKeys = new HashSet<>();
         for (List<ClassicSectorKeyWrapper> keys : mKeys.values()) {
             for (ClassicSectorKeyWrapper key : keys)
                 allKeys.add(Utils.getHexString(key.getKey()));

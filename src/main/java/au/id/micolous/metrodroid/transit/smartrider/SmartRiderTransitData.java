@@ -37,7 +37,6 @@ import au.id.micolous.metrodroid.transit.TransactionTrip;
 import au.id.micolous.metrodroid.transit.TransitCurrency;
 import au.id.micolous.metrodroid.transit.TransitData;
 import au.id.micolous.metrodroid.transit.TransitIdentity;
-import au.id.micolous.metrodroid.transit.Trip;
 import au.id.micolous.metrodroid.util.Utils;
 
 /**
@@ -79,10 +78,10 @@ public class SmartRiderTransitData extends TransitData {
             .setKeysRequired()
             .build();
 
-    private String mSerialNumber;
-    private int mBalance;
-    private List<TransactionTrip> mTrips;
-    private CardType mCardType;
+    private final String mSerialNumber;
+    private final int mBalance;
+    private final List<TransactionTrip> mTrips;
+    private final CardType mCardType;
 
     // Unfortunately, there's no way to reliably identify these cards except for the "standard" keys
     // which are used for some empty sectors.  It is not enough to read the whole card (most data is
@@ -106,7 +105,7 @@ public class SmartRiderTransitData extends TransitData {
         SMARTRIDER(SMARTRIDER_NAME),
         MYWAY(MYWAY_NAME);
 
-        String mFriendlyName;
+        final String mFriendlyName;
 
         CardType(String friendlyString) {
             mFriendlyName = friendlyString;
@@ -142,6 +141,7 @@ public class SmartRiderTransitData extends TransitData {
         mCardType = CardType.valueOf(p.readString());
         mSerialNumber = p.readString();
         mBalance = p.readInt();
+        //noinspection unchecked
         mTrips = p.readArrayList(TransactionTrip.class.getClassLoader());
     }
 
@@ -190,7 +190,7 @@ public class SmartRiderTransitData extends TransitData {
         mSerialNumber = getSerialData(card);
 
         // Read trips.
-        ArrayList<SmartRiderTagRecord> tagRecords = new ArrayList<>();
+        List<SmartRiderTagRecord> tagRecords = new ArrayList<>();
 
         for (int s = 10; s <= 13; s++) {
             for (int b = 0; b <= 2; b++) {

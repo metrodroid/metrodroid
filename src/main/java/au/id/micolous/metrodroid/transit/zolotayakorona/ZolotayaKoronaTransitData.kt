@@ -47,11 +47,11 @@ data class ZolotayaKoronaTransitData internal constructor(
         private val mTrip: ZolotayaKoronaTrip?,
         private val mRefill: ZolotayaKoronaRefill?,
         private val mCardType: Int) : TransitData() {
-    private val estimatedBalance : Int
+    private val estimatedBalance: Int
         get() {
             // a trip followed by refill. Assume only one refill.
-            if (mRefill != null && mTrip != null &&  mRefill.mTime > mTrip.mTime)
-              return mTrip.estimatedBalance + mRefill.mAmount
+            if (mRefill != null && mTrip != null && mRefill.mTime > mTrip.mTime)
+                return mTrip.estimatedBalance + mRefill.mAmount
             // Last transaction was a trip
             if (mTrip != null)
                 return mTrip.estimatedBalance
@@ -61,6 +61,7 @@ data class ZolotayaKoronaTransitData internal constructor(
             // Card was never used or refilled
             return 0
         }
+
     override fun getBalance() = if (mBalance == null) TransitCurrency.RUB(estimatedBalance) else TransitCurrency.RUB(mBalance)
 
     override fun getSerialNumber() = formatSerial(mSerial)
@@ -73,7 +74,7 @@ data class ZolotayaKoronaTransitData internal constructor(
         val cardInfo = CARDS[mCardType]
         val regionRsrcIdx = cardInfo?.locationId
         val regionName = (
-                if(regionRsrcIdx != null)
+                if (regionRsrcIdx != null)
                     Utils.localizeString(regionRsrcIdx)
                 else
                     (REGIONS[regionNum]?.first ?: Integer.toHexString(regionNum))
@@ -82,7 +83,7 @@ data class ZolotayaKoronaTransitData internal constructor(
         li.add(ListItem(R.string.card_type, cardInfo?.name ?: mCardType.toString(16)))
         // Printed in hex on the receipt
         li.add(ListItem(R.string.card_serial_number, mCardSerial.toUpperCase()))
-        li.add(ListItem(R.string.refill_counter, mRefill?.mCounter?.toString()?:"0"))
+        li.add(ListItem(R.string.refill_counter, mRefill?.mCounter?.toString() ?: "0"))
         return li
     }
 
@@ -154,8 +155,11 @@ data class ZolotayaKoronaTransitData internal constructor(
                         .setPreview()
                         .build()
         )
-        private fun nameCard(type : Int) = CARDS[type]?.name ?: (Utils.localizeString(R.string.card_name_zolotaya_korona)
-                + " " + type.toString(16))
+
+        private fun nameCard(type: Int) = CARDS[type]?.name
+                ?: (Utils.localizeString(R.string.card_name_zolotaya_korona)
+                        + " " + type.toString(16))
+
         private val FALLBACK_CARD_INFO = CardInfo.Builder()
                 .setName(Utils.localizeString(R.string.card_name_zolotaya_korona))
                 .setLocation(R.string.location_russia)
@@ -178,7 +182,7 @@ data class ZolotayaKoronaTransitData internal constructor(
         }
 
         private fun getSerial(card: ClassicCard) = Utils.getHexString(card.getSector(15)
-                    .getBlock(2).data, 4, 10).substring(0, 19)
+                .getBlock(2).data, 4, 10).substring(0, 19)
 
         private fun getCardType(card: ClassicCard) = Utils.byteArrayToInt(card.getSector(15)
                 .getBlock(1).data, 10, 3)

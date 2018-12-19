@@ -41,7 +41,6 @@ import au.id.micolous.metrodroid.ui.ListItem;
 import au.id.micolous.metrodroid.util.Utils;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
@@ -72,7 +71,7 @@ public class TroikaHybridTransitData extends TransitData {
 
     @Override
     public List<ListItem> getInfo() {
-        ArrayList<ListItem> items = new ArrayList<>();
+        List<ListItem> items = new ArrayList<>();
 
         List<ListItem> troikaItems = mTroika.getInfo();
 

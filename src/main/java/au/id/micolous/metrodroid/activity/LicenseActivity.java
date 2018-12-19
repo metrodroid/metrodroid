@@ -93,6 +93,7 @@ public class LicenseActivity extends MetrodroidActivity {
                 lblLicenseText.append("\n");
             }
         } catch (IOException e) {
+            //noinspection StringConcatenation
             Log.w(TAG, "Error reading license: " + path, e);
             lblLicenseText.append("\n\n** Error reading license notice from " + path + "\n\n");
         } finally {

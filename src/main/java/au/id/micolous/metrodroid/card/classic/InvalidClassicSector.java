@@ -32,7 +32,7 @@ public class InvalidClassicSector extends ClassicSector {
     @Attribute(name = "invalid")
     public final boolean mInvalid = true;
     @Attribute(name = "error")
-    private String mError;
+    private final String mError;
 
     public InvalidClassicSector(int index, String error) {
         super(index, null, null);

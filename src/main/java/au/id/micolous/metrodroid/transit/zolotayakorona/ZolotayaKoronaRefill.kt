@@ -25,11 +25,11 @@ import au.id.micolous.metrodroid.util.Utils
 import kotlinx.android.parcel.Parcelize
 
 @Parcelize
-internal data class ZolotayaKoronaRefill (internal val mTime: Int,
-                                          internal val mAmount: Int,
-                                          internal val mCounter: Int,
-                                          private val mCardType: Int,
-                                          private val mVehicle: Int): Trip() {
+internal data class ZolotayaKoronaRefill(internal val mTime: Int,
+                                         internal val mAmount: Int,
+                                         internal val mCounter: Int,
+                                         private val mCardType: Int,
+                                         private val mVehicle: Int) : Trip() {
     override fun getStartTimestamp() = ZolotayaKoronaTransitData.parseTime(mTime, mCardType)
 
     override fun getVehicleID() = "J$mVehicle"
@@ -39,7 +39,7 @@ internal data class ZolotayaKoronaRefill (internal val mTime: Int,
     override fun getMode() = Trip.Mode.TICKET_MACHINE
 
     companion object {
-        fun parse(block: ByteArray, cardType: Int) : ZolotayaKoronaRefill? {
+        fun parse(block: ByteArray, cardType: Int): ZolotayaKoronaRefill? {
             if (Utils.isAllZero(block))
                 return null
             val region = Utils.convertBCDtoInteger(cardType shr 16)

@@ -80,7 +80,7 @@ public class KeysFragment extends ListFragment implements AdapterView.OnItemLong
 
     private static final String TAG = "KeysFragment";
 
-    private android.view.ActionMode.Callback mActionModeCallback = new ActionMode.Callback() {
+    private final android.view.ActionMode.Callback mActionModeCallback = new ActionMode.Callback() {
         @Override
         public boolean onCreateActionMode(ActionMode mode, Menu menu) {
             MenuInflater inflater = mode.getMenuInflater();
@@ -168,7 +168,7 @@ public class KeysFragment extends ListFragment implements AdapterView.OnItemLong
         }
     };
 
-    private LoaderManager.LoaderCallbacks<Cursor> mLoaderCallbacks = new LoaderManager.LoaderCallbacks<android.database.Cursor>() {
+    private final LoaderManager.LoaderCallbacks<Cursor> mLoaderCallbacks = new LoaderManager.LoaderCallbacks<android.database.Cursor>() {
         @Override
         public Loader<Cursor> onCreateLoader(int i, Bundle bundle) {
             return new CursorLoader(getActivity(), CardKeyProvider.CONTENT_URI,
@@ -256,10 +256,12 @@ public class KeysFragment extends ListFragment implements AdapterView.OnItemLong
                     case REQUEST_SELECT_FILE: {
                         uri = data.getData();
                         String type = getActivity().getContentResolver().getType(uri);
+                        //noinspection StringConcatenation
                         Log.d(TAG, "REQUEST_SELECT_FILE content_type = " + type);
 
                         KeyFormat f;
                         f = Utils.detectKeyFormat(getActivity(), uri);
+                        //noinspection StringConcatenation
                         Log.d(TAG, "Detected file format: " + f.name());
 
                         switch (f) {
@@ -327,12 +329,12 @@ public class KeysFragment extends ListFragment implements AdapterView.OnItemLong
         byte[] keyData = IOUtils.toByteArray(stream);
 
         try {
-            JSONObject json = new JSONObject(new String(keyData));
+            JSONObject json = new JSONObject(new String(keyData, Utils.getUTF8()));
             Log.d(TAG, "inserting key");
 
             // Test that we can deserialise this
             ClassicStaticKeys k = ClassicStaticKeys.fromJSON(json);
-            if (k.keys().size() == 0) {
+            if (k.keys().isEmpty()) {
                 return R.string.key_file_empty;
             }
 
@@ -345,7 +347,7 @@ public class KeysFragment extends ListFragment implements AdapterView.OnItemLong
     }
 
     private class KeysAdapter extends ResourceCursorAdapter {
-        public KeysAdapter() {
+        KeysAdapter() {
             super(getActivity(), android.R.layout.simple_list_item_2, null, false);
         }
 

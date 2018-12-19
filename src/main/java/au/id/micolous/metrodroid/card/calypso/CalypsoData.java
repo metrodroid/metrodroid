@@ -29,6 +29,9 @@ public final class CalypsoData {
         MANUFACTURE_EPOCH = epoch;
     }
 
+    private CalypsoData() {
+    }
+
     public enum Manufacturer {
         // Data from
         // https://github.com/zoobab/mobib-extractor/blob/23852af3ee2896c0299db034837ff5a0a6135857/MOBIB-Extractor.py#L47

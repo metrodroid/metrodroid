@@ -27,7 +27,6 @@ import au.id.micolous.metrodroid.transit.en1545.En1545FixedHex;
 import au.id.micolous.metrodroid.transit.en1545.En1545FixedInteger;
 import au.id.micolous.metrodroid.transit.en1545.En1545Lookup;
 import au.id.micolous.metrodroid.transit.en1545.En1545Subscription;
-import au.id.micolous.metrodroid.util.Utils;
 
 class OpusSubscription extends En1545Subscription {
 
@@ -60,7 +59,7 @@ class OpusSubscription extends En1545Subscription {
             )
     );
 
-    public OpusSubscription(byte[] dataSub, Integer ctr) {
+    OpusSubscription(byte[] dataSub, Integer ctr) {
         super(dataSub, FIELDS, ctr);
     }
 

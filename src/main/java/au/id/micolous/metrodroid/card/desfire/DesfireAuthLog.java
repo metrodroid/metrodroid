@@ -64,7 +64,7 @@ public class DesfireAuthLog {
             vals.add(ListItemRecursive.collapsedValue(R.string.desfire_confirmation, Utils.getHexDump(mConfirm.getData())));
 
         return new ListItemRecursive(R.string.desfire_keyex, Utils.localizeString(R.string.desfire_key_number,
-                "0x" + Integer.toHexString(mKeyId)),
+                Utils.intToHex(mKeyId)),
                 vals);
     }
 }

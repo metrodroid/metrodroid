@@ -49,9 +49,9 @@ public final class SuicaDBUtil {
 
         return StationTableReader.getStation(SUICA_BUS_STR, stationId,
                 Utils.localizeString(R.string.suica_bus_area_line_stop,
-                        "0x" + Integer.toHexString(regionCode),
-                        "0x" + Integer.toHexString(lineCode),
-                        "0x" + Integer.toHexString(stationCode)));
+                        Utils.intToHex(regionCode),
+                        Utils.intToHex(lineCode),
+                        Utils.intToHex(stationCode)));
     }
 
     /**
@@ -73,8 +73,8 @@ public final class SuicaDBUtil {
 
         return StationTableReader.getStation(SUICA_RAIL_STR, stationId,
                 Utils.localizeString(R.string.suica_area_line_station,
-                        "0x" + Integer.toHexString(regionCode),
-                        "0x" + Integer.toHexString(lineCode),
-                        "0x" + Integer.toHexString(stationCode)));
+                        Utils.intToHex(regionCode),
+                        Utils.intToHex(lineCode),
+                        Utils.intToHex(stationCode)));
     }
 }

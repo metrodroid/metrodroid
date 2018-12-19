@@ -24,7 +24,6 @@ import android.os.Parcelable;
 
 import au.id.micolous.farebot.R;
 import au.id.micolous.metrodroid.card.CardType;
-import au.id.micolous.metrodroid.card.UnauthorizedException;
 import au.id.micolous.metrodroid.card.classic.ClassicCard;
 import au.id.micolous.metrodroid.card.classic.ClassicSector;
 import au.id.micolous.metrodroid.card.classic.UnauthorizedClassicSector;
@@ -74,7 +73,7 @@ public class TroikaTransitData implements Parcelable {
     }
 
     public List<ListItem> getInfo() {
-        ArrayList<ListItem> items = new ArrayList<>();
+        List<ListItem> items = new ArrayList<>();
         List <ListItem> info4 = mBlock4 == null ? null : mBlock4.getInfo();
         List <ListItem> info7 = mBlock7 == null ? null : mBlock7.getInfo();
         List <ListItem> info8 = mBlock8 == null ? null : mBlock8.getInfo();
@@ -171,7 +170,7 @@ public class TroikaTransitData implements Parcelable {
         Subscription s4 = mBlock4 == null ? null : mBlock4.getSubscription();
         Subscription s7 = mBlock7 == null ? null : mBlock7.getSubscription();
         Subscription s8 = mBlock8 == null ? null : mBlock8.getSubscription();
-        ArrayList<Subscription> s = new ArrayList<>();
+        List<Subscription> s = new ArrayList<>();
         if (s7 != null)
             s.add(s7);
         if (s8 != null)

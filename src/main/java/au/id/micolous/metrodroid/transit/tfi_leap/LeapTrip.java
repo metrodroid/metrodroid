@@ -8,7 +8,6 @@ import android.support.annotation.Nullable;
 import org.apache.commons.lang3.ArrayUtils;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Collections;
 import java.util.List;
@@ -62,6 +61,7 @@ public class LeapTrip extends Trip implements Comparable<LeapTrip> {
             return 0;
         }
 
+        @SuppressWarnings("InnerClassFieldHidesOuterClassField")
         public static final Creator<LeapTripPoint> CREATOR = new Creator<LeapTripPoint>() {
             @Override
             public LeapTripPoint createFromParcel(Parcel in) {
@@ -365,7 +365,7 @@ public class LeapTrip extends Trip implements Comparable<LeapTrip> {
         return new LeapTrip(agency, mode, start, end);
     }
 
-    public static List<LeapTrip> postprocess(ArrayList<LeapTrip> trips) {
+    public static List<LeapTrip> postprocess(Iterable<LeapTrip> trips) {
         List<LeapTrip> srt = new ArrayList<>();
         for (LeapTrip trip : trips)
             if (trip != null)

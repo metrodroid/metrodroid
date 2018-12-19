@@ -23,13 +23,10 @@ import android.os.Parcelable;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 
-import au.id.micolous.farebot.R;
 import au.id.micolous.metrodroid.transit.en1545.En1545Bitmap;
 import au.id.micolous.metrodroid.transit.en1545.En1545Container;
 import au.id.micolous.metrodroid.transit.en1545.En1545Field;
@@ -37,7 +34,6 @@ import au.id.micolous.metrodroid.transit.en1545.En1545FixedInteger;
 import au.id.micolous.metrodroid.transit.en1545.En1545Lookup;
 import au.id.micolous.metrodroid.transit.en1545.En1545Subscription;
 import au.id.micolous.metrodroid.ui.ListItem;
-import au.id.micolous.metrodroid.util.Utils;
 
 public class IntercodeSubscription extends En1545Subscription {
     public static final Parcelable.Creator<IntercodeSubscription> CREATOR = new Parcelable.Creator<IntercodeSubscription>() {

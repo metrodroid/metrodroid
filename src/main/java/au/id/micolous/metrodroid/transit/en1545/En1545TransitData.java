@@ -21,25 +21,27 @@ package au.id.micolous.metrodroid.transit.en1545;
 
 import android.os.Parcel;
 
+import org.jetbrains.annotations.NonNls;
+
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashSet;
 import java.util.List;
 import java.util.TimeZone;
 
 import au.id.micolous.farebot.R;
 import au.id.micolous.metrodroid.transit.TransitData;
 import au.id.micolous.metrodroid.ui.ListItem;
-import au.id.micolous.metrodroid.util.TripObfuscator;
 import au.id.micolous.metrodroid.util.Utils;
 
 abstract public class En1545TransitData extends TransitData {
     protected final static String ENV_NETWORK_ID = "EnvNetworkId";
     protected final static String ENV_VERSION_NUMBER = "EnvVersionNumber";
     protected static final String HOLDER_BIRTH_DATE = "HolderBirthDate";
+    @NonNls
     public static final String ENV_APPLICATION_VALIDITY_END = "EnvApplicationValidityEnd";
     public static final String ENV_APPLICATION_ISSUER_ID = "EnvApplicationIssuerId";
+    @NonNls
     protected static final String ENV_APPLICATION_ISSUE = "EnvApplicationIssue";
+    @NonNls
     protected static final String HOLDER_PROFILE = "HolderProfile";
     protected static final String HOLDER_POSTAL_CODE = "HolderPostalCode";
     protected static final String ENV_AUTHENTICATOR = "EnvAuthenticator";
@@ -71,7 +73,7 @@ abstract public class En1545TransitData extends TransitData {
 
     @Override
     public List<ListItem> getInfo() {
-        ArrayList<ListItem> li = new ArrayList<>();
+        List<ListItem> li = new ArrayList<>();
         TimeZone tz = getLookup().getTimeZone();
         if (mTicketEnvParsed.contains(ENV_NETWORK_ID))
             li.add(new ListItem(R.string.en1545_network_id,

@@ -25,7 +25,6 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.List;
-import java.util.Locale;
 import java.util.TimeZone;
 
 import au.id.micolous.farebot.R;
@@ -35,7 +34,6 @@ import au.id.micolous.metrodroid.transit.TransitBalance;
 import au.id.micolous.metrodroid.transit.TransitBalanceStored;
 import au.id.micolous.metrodroid.transit.TransitCurrency;
 import au.id.micolous.metrodroid.transit.TransitData;
-import au.id.micolous.metrodroid.transit.Trip;
 import au.id.micolous.metrodroid.ui.ListItem;
 import au.id.micolous.metrodroid.util.Utils;
 
@@ -87,6 +85,7 @@ public abstract class NextfareUltralightTransitData extends TransitData {
         mMachineCode = p.readInt();
         mBalance = p.readInt();
         mExpiry = p.readInt();
+        //noinspection unchecked
         mTrips = p.readArrayList(NextfareUltralightTransaction.class.getClassLoader());
     }
 
@@ -148,7 +147,7 @@ public abstract class NextfareUltralightTransitData extends TransitData {
 
     @Override
     public List<ListItem> getInfo() {
-        ArrayList<ListItem> items = new ArrayList<>();
+        List<ListItem> items = new ArrayList<>();
         if (mType == 8)
             items.add(new ListItem(R.string.ticket_type, R.string.compass_ticket_type_concession));
         else

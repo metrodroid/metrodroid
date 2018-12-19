@@ -29,11 +29,14 @@ import au.id.micolous.metrodroid.util.Utils;
  * https://github.com/micolous/metrodroid/wiki/ERG-MFC#balance-records
  */
 public class ErgBalanceRecord extends ErgRecord implements Comparable<ErgBalanceRecord> {
-    private int mBalance;
-    private int mVersion;
-    private int mAgency;
+    private final int mBalance;
+    private final int mVersion;
+    private final int mAgency;
 
-    protected ErgBalanceRecord() {
+    private ErgBalanceRecord(int balance, int version, int agency) {
+        mBalance = balance;
+        mVersion = version;
+        mAgency = agency;
     }
 
     public static ErgBalanceRecord recordFromBytes(byte[] input) {
@@ -45,14 +48,11 @@ public class ErgBalanceRecord extends ErgRecord implements Comparable<ErgBalance
             return null;
         }
 
-        ErgBalanceRecord record = new ErgBalanceRecord();
-        record.mVersion = Utils.byteArrayToInt(input, 1, 2);
-        // Present on MFF, not CHC Metrocard
-        record.mAgency = Utils.byteArrayToInt(input, 5, 2);
-
-        record.mBalance = Utils.byteArrayToInt(input, 11, 4);
-
-        return record;
+        return new ErgBalanceRecord(
+                Utils.byteArrayToInt(input, 11, 4),
+                Utils.byteArrayToInt(input, 1, 2),
+                // Present on MFF, not CHC Metrocard
+                Utils.byteArrayToInt(input, 5, 2));
     }
 
     /**
@@ -71,7 +71,7 @@ public class ErgBalanceRecord extends ErgRecord implements Comparable<ErgBalance
     @Override
     public int compareTo(ErgBalanceRecord rhs) {
         // So sorting works, we reverse the order so highest number is first.
-        return Integer.valueOf(rhs.mVersion).compareTo(this.mVersion);
+        return Integer.compare(rhs.mVersion, this.mVersion);
     }
 
     @Override

@@ -87,18 +87,18 @@ public class DesfireApplication {
         for (DesfireFile file : getFiles()) {
             if ((file instanceof InvalidDesfireFile) && !(file instanceof UnauthorizedDesfireFile)) {
                 ali.add(new ListItem(Utils.localizeString(R.string.invalid_file_title_format,
-                        "0x" + Integer.toHexString(file.getId()),
+                        Utils.intToHex(file.getId()),
                         ((InvalidDesfireFile) file).getErrorMessage())));
                 continue;
             }
 
             String title = Utils.localizeString(R.string.file_title_format,
-                    "0x" + Integer.toHexString(file.getId()));
+                    Utils.intToHex(file.getId()));
             String subtitle;
 
             if (file instanceof UnauthorizedDesfireFile) {
                 title = Utils.localizeString(R.string.unauthorized_file_title_format,
-                        "0x" + Integer.toHexString(file.getId()));
+                        Utils.intToHex(file.getId()));
             }
 
             if (file.getFileSettings() instanceof StandardDesfireFileSettings) {

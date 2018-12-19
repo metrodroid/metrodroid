@@ -19,7 +19,6 @@
 package au.id.micolous.metrodroid.transit.smartrider;
 
 import android.os.Parcel;
-import android.os.Parcelable;
 import android.support.annotation.NonNull;
 import android.util.Log;
 
@@ -30,6 +29,7 @@ import au.id.micolous.metrodroid.transit.Trip;
 import au.id.micolous.metrodroid.util.Utils;
 
 import org.apache.commons.lang3.ArrayUtils;
+import org.jetbrains.annotations.NonNls;
 
 import java.util.Arrays;
 import java.util.Calendar;
@@ -45,10 +45,10 @@ import java.util.TimeZone;
 
 public class SmartRiderTagRecord extends Transaction {
     private static final String TAG = SmartRiderTagRecord.class.getSimpleName();
-    private long mTimestamp;
-    private boolean mTagOn;
-    private String mRoute;
-    private int mCost;
+    private final long mTimestamp;
+    private final boolean mTagOn;
+    private @NonNls String mRoute;
+    private final int mCost;
     private SmartRiderTransitData.CardType mCardType;
 
     public SmartRiderTagRecord(SmartRiderTransitData.CardType cardType, byte[] record) {
@@ -58,7 +58,11 @@ public class SmartRiderTagRecord extends Transaction {
 
         byte[] route = Arrays.copyOfRange(record, 8, 4 + 8);
         route = ArrayUtils.removeAllOccurences(route, (byte) 0x00);
-        mRoute = new String(route);
+        try {
+            mRoute = new String(route, Utils.getASCII());
+        } catch (Exception e) {
+            mRoute = Utils.getHexString(route);
+        }
 
         mCost = Utils.byteArrayToIntReversed(record, 13, 2);
 

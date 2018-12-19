@@ -28,7 +28,7 @@ public enum CardType {
     ISO7816(5),
     Unknown(65535);
 
-    private int mValue;
+    private final int mValue;
 
     CardType(int value) {
         mValue = value;

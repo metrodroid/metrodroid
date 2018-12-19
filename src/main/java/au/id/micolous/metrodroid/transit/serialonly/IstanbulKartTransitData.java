@@ -29,13 +29,12 @@ import org.apache.commons.lang3.ArrayUtils;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.Locale;
 
 import au.id.micolous.farebot.R;
 import au.id.micolous.metrodroid.card.CardType;
-import au.id.micolous.metrodroid.card.desfire.DesfireApplication;
 import au.id.micolous.metrodroid.card.desfire.DesfireCard;
 import au.id.micolous.metrodroid.card.desfire.DesfireCardTransitFactory;
-import au.id.micolous.metrodroid.card.desfire.files.DesfireFile;
 import au.id.micolous.metrodroid.transit.CardInfo;
 import au.id.micolous.metrodroid.transit.TransitData;
 import au.id.micolous.metrodroid.transit.TransitIdentity;
@@ -54,8 +53,8 @@ public class IstanbulKartTransitData extends SerialOnlyTransitData {
     public static final String NAME = "IstanbulKart";
     public static final int APP_ID = 0x422201;
 
-    private String mSerial;
-    private String mSerial2;
+    private final String mSerial;
+    private final String mSerial2;
 
     public static final CardInfo CARD_INFO = new CardInfo.Builder()
             .setName(NAME)
@@ -86,7 +85,7 @@ public class IstanbulKartTransitData extends SerialOnlyTransitData {
 
         try {
             mSerial = parseSerial(metadata);
-            mSerial2 = Utils.getHexString(card.getTagId()).toUpperCase();
+            mSerial2 = Utils.getHexString(card.getTagId()).toUpperCase(Locale.ENGLISH);
         } catch (Exception ex) {
             throw new RuntimeException("Error parsing IstanbulKart data", ex);
         }

@@ -49,7 +49,6 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Collections;
 import java.util.List;
@@ -89,7 +88,7 @@ public class CardTripsFragment extends ListFragment {
         // Explicitly sort these events
         Collections.sort(trips, new Trip.Comparator());
 
-        if (trips.size() > 0) {
+        if (!trips.isEmpty()) {
             if (MetrodroidApplication.obfuscateTripDates() ||
                     MetrodroidApplication.obfuscateTripTimes() ||
                     MetrodroidApplication.obfuscateTripFares()) {
@@ -127,7 +126,7 @@ public class CardTripsFragment extends ListFragment {
     }
 
     private static class UseLogListAdapter extends ArrayAdapter<Trip> {
-        private TransitData mTransitData;
+        private final TransitData mTransitData;
         /**
          * Used when localisePlaces=true to ensure route and line numbers are still read out in the
          * user's language.
@@ -139,7 +138,7 @@ public class CardTripsFragment extends ListFragment {
          */
         private static final Pattern LINE_NUMBER = Pattern.compile("(#?\\d+)?(\\D.+)");
 
-        public UseLogListAdapter(Context context, Trip[] items, TransitData transitData) {
+        UseLogListAdapter(Context context, Trip[] items, TransitData transitData) {
             super(context, 0, items);
             mTransitData = transitData;
         }

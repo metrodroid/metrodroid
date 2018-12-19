@@ -26,16 +26,16 @@ import kotlinx.android.parcel.Parcelize
 import java.util.*
 
 @Parcelize
-data class RkfTripLeg (private val mStartTimestamp: Calendar,
-                       private val mEndTimestamp: Calendar?,
-                       private val mStartStation: Station?,
-                       private val mEndStation: Station?,
-                       private val mFare: TransitCurrency?,
-                       private val mMode: Mode,
-                       private val mPassengerCount: Int,
-                       private val mShortAgencyName: String?,
-                       private val mTransfer : Boolean,
-                       private val mAgencyName: String?) : Trip() {
+data class RkfTripLeg(private val mStartTimestamp: Calendar,
+                      private val mEndTimestamp: Calendar?,
+                      private val mStartStation: Station?,
+                      private val mEndStation: Station?,
+                      private val mFare: TransitCurrency?,
+                      private val mMode: Mode,
+                      private val mPassengerCount: Int,
+                      private val mShortAgencyName: String?,
+                      private val mTransfer: Boolean,
+                      private val mAgencyName: String?) : Trip() {
     override fun getStartTimestamp() = mStartTimestamp
     override fun getEndTimestamp() = mEndTimestamp
     override fun getStartStation() = mStartStation

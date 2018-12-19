@@ -28,7 +28,7 @@ class PodorozhnikTopup extends Trip {
         }
     };
 
-    public PodorozhnikTopup(int timestamp, int fare, int agency, int topupMachine) {
+    PodorozhnikTopup(int timestamp, int fare, int agency, int topupMachine) {
         mTimestamp = timestamp;
         mFare = fare;
         mAgency = agency;
@@ -96,6 +96,7 @@ class PodorozhnikTopup extends Trip {
                     stationId, Integer.toString(station));
         }
         // TODO: handle other transports better.
+        //noinspection StringConcatenation
         return Station.unknown(Integer.toHexString(mAgency) + "/" + Integer.toHexString(mTopupMachine));
     }
 }

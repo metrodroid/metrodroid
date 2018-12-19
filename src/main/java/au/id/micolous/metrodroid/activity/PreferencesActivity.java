@@ -34,9 +34,6 @@ import android.view.MenuItem;
 import au.id.micolous.farebot.R;
 import au.id.micolous.metrodroid.MetrodroidApplication;
 
-import static android.content.pm.PackageManager.COMPONENT_ENABLED_STATE_DISABLED;
-import static android.content.pm.PackageManager.COMPONENT_ENABLED_STATE_ENABLED;
-
 public class PreferencesActivity extends PreferenceActivity implements Preference.OnPreferenceChangeListener {
 
     private CheckBoxPreference mPreferenceLaunchFromBackground;
@@ -98,13 +95,13 @@ public class PreferencesActivity extends PreferenceActivity implements Preferenc
         ComponentName componentName = new ComponentName(this, BackgroundTagActivity.class);
         PackageManager packageManager = getPackageManager();
         int componentEnabledSetting = packageManager.getComponentEnabledSetting(componentName);
-        return componentEnabledSetting == COMPONENT_ENABLED_STATE_ENABLED;
+        return componentEnabledSetting == PackageManager.COMPONENT_ENABLED_STATE_ENABLED;
     }
 
     private void setLaunchFromBgEnabled(boolean enabled) {
         ComponentName componentName = new ComponentName(this, BackgroundTagActivity.class);
         PackageManager packageManager = getPackageManager();
-        int newState = enabled ? COMPONENT_ENABLED_STATE_ENABLED : COMPONENT_ENABLED_STATE_DISABLED;
+        int newState = enabled ? PackageManager.COMPONENT_ENABLED_STATE_ENABLED : PackageManager.COMPONENT_ENABLED_STATE_DISABLED;
         packageManager.setComponentEnabledSetting(componentName, newState, PackageManager.DONT_KILL_APP);
     }
 }

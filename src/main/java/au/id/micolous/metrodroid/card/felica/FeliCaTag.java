@@ -54,7 +54,7 @@ import java.util.List;
 
 public final class FeliCaTag {
     private static final String TAG = "FeliCaTag";
-    private Tag nfcTag;
+    private final Tag nfcTag;
     private byte[] idm;
     private byte[] pmm;
 

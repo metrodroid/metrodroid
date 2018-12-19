@@ -36,7 +36,6 @@ import au.id.micolous.metrodroid.transit.erg.record.ErgBalanceRecord;
 import au.id.micolous.metrodroid.transit.erg.record.ErgMetadataRecord;
 import au.id.micolous.metrodroid.transit.erg.record.ErgPurseRecord;
 import au.id.micolous.metrodroid.transit.erg.record.ErgRecord;
-import au.id.micolous.metrodroid.transit.manly_fast_ferry.ManlyFastFerryTrip;
 import au.id.micolous.metrodroid.ui.HeaderListItem;
 import au.id.micolous.metrodroid.ui.ListItem;
 import au.id.micolous.metrodroid.util.TripObfuscator;
@@ -65,7 +64,7 @@ public class ErgTransitData extends TransitData {
     private GregorianCalendar mEpochDate;
     private int mAgencyID;
     private int mBalance;
-    private List<ErgTrip> mTrips;
+    private final List<ErgTrip> mTrips;
 
     // Parcel
     public static final Creator<ErgTransitData> CREATOR = new Creator<ErgTransitData>() {
@@ -79,13 +78,13 @@ public class ErgTransitData extends TransitData {
             return new ErgTransitData[size];
         }
     };
-    private String mCurrency;
+    private final String mCurrency;
 
-    @SuppressWarnings("UnusedDeclaration")
     public ErgTransitData(Parcel parcel, String currency) {
         mSerialNumber = parcel.readString();
         mEpochDate = new GregorianCalendar();
         mEpochDate.setTimeInMillis(parcel.readLong());
+        //noinspection unchecked
         mTrips = parcel.readArrayList(getClass().getClassLoader());
         mCurrency = currency;
     }
@@ -96,7 +95,7 @@ public class ErgTransitData extends TransitData {
 
     // Decoder
     public ErgTransitData(ClassicCard card, String currency) {
-        ArrayList<ErgRecord> records = new ArrayList<>();
+        List<ErgRecord> records = new ArrayList<>();
 
         mCurrency = currency;
 
@@ -120,7 +119,7 @@ public class ErgTransitData extends TransitData {
         }
 
         // Now do a first pass for metadata and balance information.
-        ArrayList<ErgBalanceRecord> balances = new ArrayList<>();
+        List<ErgBalanceRecord> balances = new ArrayList<>();
 
         for (ErgRecord record : records) {
             if (record instanceof ErgMetadataRecord) {
@@ -283,12 +282,12 @@ public class ErgTransitData extends TransitData {
 
     @Override
     public List<ListItem> getInfo() {
-        ArrayList<ListItem> items = new ArrayList<>();
+        List<ListItem> items = new ArrayList<>();
         items.add(new HeaderListItem(R.string.general));
         items.add(new ListItem(R.string.card_epoch,
                 Utils.longDateFormat(TripObfuscator.maybeObfuscateTS(mEpochDate))));
         items.add(new ListItem(R.string.erg_agency_id,
-                Utils.localizeString(R.string.unknown_format, "0x" + Long.toHexString(mAgencyID))));
+			       Utils.localizeString(R.string.unknown_format, Utils.longToHex(mAgencyID))));
         return items;
     }
 

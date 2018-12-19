@@ -25,6 +25,8 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
+import org.jetbrains.annotations.NonNls;
+
 import au.id.micolous.farebot.BuildConfig;
 
 public class CardDBHelper extends SQLiteOpenHelper {
@@ -34,7 +36,9 @@ public class CardDBHelper extends SQLiteOpenHelper {
     public static final int CARD_COLLECTION_URI_INDICATOR = 1;
     public static final int SINGLE_CARD_URI_INDICATOR = 2;
 
+    @NonNls
     public static final String CARD_DIR_TYPE = "vnd.android.cursor.dir/" + BuildConfig.APPLICATION_ID + ".card";
+    @NonNls
     public static final String CARD_ITEM_TYPE = "vnd.android.cursor.item/" + BuildConfig.APPLICATION_ID + ".card";
 
     public static final String[] PROJECTION = new String[]{
@@ -59,7 +63,7 @@ public class CardDBHelper extends SQLiteOpenHelper {
     }
 
     @Override
-    public void onCreate(SQLiteDatabase db) {
+    public void onCreate(@NonNls SQLiteDatabase db) {
         //noinspection SyntaxError
         db.execSQL("CREATE TABLE cards ("
                 + "_id        INTEGER PRIMARY KEY, "

@@ -46,7 +46,7 @@ import static junit.framework.TestCase.assertTrue;
 @RunWith(JUnit4.class)
 public class CompassTest {
     // Based on data from http://www.lenrek.net/experiments/compass-tickets/tickets-1.0.0.csv
-    private static String[][] LENREK_TEST_DATA = {
+    private static final String[][] LENREK_TEST_DATA = {
             // "Compass Number","Manufacturer's Data","Product Record","Transaction Record","Transaction Record","Ultralight EV1 Configuration"
             {"0001 0084 2851 9244 6735","0407AA216AE543814D48000000000000","0A04002F20018200000000D00000FADC","46A6020603000012010E0003D979C64E","C6A602060400001601931705039F14A3"},
             {"0001 0084 9509 0975 6177","0407B932EAE14381C948000000000000","0A08006D200183000000005000004F9A","465F02010300001B0141000921FF4637","466102010400002B01411605A2A721EE"},

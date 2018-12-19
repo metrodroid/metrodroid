@@ -77,7 +77,7 @@ public class CardInfoActivity extends MetrodroidActivity {
     private boolean mShowMoreInfo = false;
     private Menu mMenu = null;
 
-    private OnInitListener mTTSInitListener = new OnInitListener() {
+    private final OnInitListener mTTSInitListener = new OnInitListener() {
         public void onInit(int status) {
             if (status == TextToSpeech.SUCCESS && mTransitData.getBalances() != null) {
                 for (TransitBalance balanceVal : mTransitData.getBalances()) {
@@ -175,11 +175,6 @@ public class CardInfoActivity extends MetrodroidActivity {
                         return;
                     }
 
-                    if (mTransitData instanceof BlankUltralightTransitData) {
-                        mTabsAdapter.addTab(actionBar.newTab(), BlankCardFragment.class, args);
-                        return;
-                    }
-
                     if (mTransitData.getBalances() != null || mTransitData.getSubscriptions() != null) {
                         mTabsAdapter.addTab(actionBar.newTab().setText(R.string.balances_and_subscriptions),
                                 CardBalanceFragment.class, args);
@@ -204,7 +199,7 @@ public class CardInfoActivity extends MetrodroidActivity {
                         String txt = "";
                         if (hasUnknownStation)
                             txt = getString(R.string.need_stations);
-                        if (w != null && txt.length() > 0)
+                        if (w != null && !txt.isEmpty())
                             txt += "\n";
                         if (w != null)
                             txt += w;

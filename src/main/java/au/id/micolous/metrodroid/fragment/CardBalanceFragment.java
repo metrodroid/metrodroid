@@ -28,9 +28,7 @@ import android.text.Spanned;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Adapter;
 import android.widget.ArrayAdapter;
-import android.widget.ExpandableListView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListAdapter;
@@ -43,7 +41,6 @@ import au.id.micolous.metrodroid.transit.TransitBalance;
 import au.id.micolous.metrodroid.transit.TransitData;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
 
@@ -80,7 +77,7 @@ public class CardBalanceFragment extends ListFragment {
     }
 
     private class BalancesAdapter extends ArrayAdapter<Object> {
-        public BalancesAdapter(Context context, List<Object> balances) {
+        BalancesAdapter(Context context, List<Object> balances) {
             super(context, 0, balances);
         }
 
@@ -285,6 +282,7 @@ public class CardBalanceFragment extends ListFragment {
 
     @Override
     public void onListItemClick(ListView l, View v, int position, long id) {
+        //noinspection StringConcatenation
         Log.d(TAG, "Clicked " + id + " " + position );
         Object item = getListAdapter().getItem(position);
         if (item == null) {

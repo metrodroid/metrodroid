@@ -22,7 +22,7 @@ class TroikaTrip extends Trip {
     private final String mRawTransport;
     private final String mFareDesc;
 
-    public TroikaTrip(Calendar startTime, TroikaBlock.TroikaTransportType transportType, Integer validator,
+    TroikaTrip(Calendar startTime, TroikaBlock.TroikaTransportType transportType, Integer validator,
                       String rawTransport, String fareDesc) {
         mStartTime = startTime;
         mTransportType = transportType;
@@ -121,7 +121,7 @@ class TroikaTrip extends Trip {
     private static class TroikaFare extends TransitCurrency {
         private final String mDesc;
 
-        public TroikaFare(String desc) {
+        TroikaFare(String desc) {
             super(0, "RUB");
             mDesc = desc;
         }
@@ -142,6 +142,7 @@ class TroikaTrip extends Trip {
             return 0;
         }
 
+        @SuppressWarnings("InnerClassFieldHidesOuterClassField")
         public static final Creator<TroikaFare> CREATOR = new Creator<TroikaFare>() {
             @Override
             public TroikaFare createFromParcel(Parcel in) {

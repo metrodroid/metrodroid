@@ -29,6 +29,7 @@ import android.support.annotation.StringRes;
 import android.support.v7.content.res.AppCompatResources;
 import android.util.Log;
 
+import java.text.Collator;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -69,7 +70,8 @@ public final class CardInfo {
         }
         ret.add(TMoneyTransitData.CARD_INFO);
         ret.addAll(Arrays.asList(EZLinkTransitData.ALL_CARD_INFOS));
-        Collections.sort(ret, (a, b) -> a.getName().compareToIgnoreCase(b.getName()));
+        Collator collator = Collator.getInstance();
+        Collections.sort(ret, (a, b) -> collator.compare(a.getName(), b.getName()));
         return ret;
     }
 

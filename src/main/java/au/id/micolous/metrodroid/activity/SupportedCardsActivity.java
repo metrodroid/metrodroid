@@ -69,7 +69,7 @@ public class SupportedCardsActivity extends MetrodroidActivity {
     }
 
     private class CardsAdapter extends ArrayAdapter<CardInfo> {
-        private LayoutInflater mLayoutInflater;
+        private final LayoutInflater mLayoutInflater;
 
         CardsAdapter(Context context) {
             super(context, 0, new ArrayList<>());
@@ -87,6 +87,7 @@ public class SupportedCardsActivity extends MetrodroidActivity {
 
             CardInfo info = getItem(position);
             if (info == null) {
+                //noinspection StringConcatenation
                 Log.e(getClass().getSimpleName(), "got a null card record at #" + position);
                 return convertView;
             }
@@ -146,7 +147,7 @@ public class SupportedCardsActivity extends MetrodroidActivity {
 
             TextView note = convertView.findViewById(R.id.card_note);
             note.setText(notes);
-            if (notes.equals(""))
+            if (notes.isEmpty())
                 note.setVisibility(View.GONE);
             else
                 note.setVisibility(View.VISIBLE);

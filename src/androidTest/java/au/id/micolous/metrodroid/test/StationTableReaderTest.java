@@ -22,6 +22,7 @@ import static junit.framework.TestCase.assertTrue;
 /**
  * Tests StationTableReader (MdST). This uses the SEQ Go stop database.
  */
+@SuppressWarnings("FieldCanBeLocal")
 public class StationTableReaderTest extends BaseInstrumentedTest {
     @Test
     public void testSeqGoDatabase() {
@@ -47,9 +48,9 @@ public class StationTableReaderTest extends BaseInstrumentedTest {
         assertTrue(notice.contains("Translink"));
     }
 
-    private final int SHINJUKU_REGION_CODE = 0;
-    private final int SHINJUKU_LINE_CODE = 37;
-    private final int SHINJUKU_STATION_CODE = 10;
+    private static final int SHINJUKU_REGION_CODE = 0;
+    private static final int SHINJUKU_LINE_CODE = 37;
+    private static final int SHINJUKU_STATION_CODE = 10;
 
     @Test
     public void testSuicaDatabase() {

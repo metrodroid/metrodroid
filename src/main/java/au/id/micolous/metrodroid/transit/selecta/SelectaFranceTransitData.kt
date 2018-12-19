@@ -40,8 +40,8 @@ import java.util.*
  */
 
 @Parcelize
-data class SelectaFranceTransitData (private var mBalance: Int = 0,
-                                     private var mSerial: Int = 0) : TransitData() {
+data class SelectaFranceTransitData(private var mBalance: Int = 0,
+                                    private var mSerial: Int = 0) : TransitData() {
 
     override fun getSerialNumber() = mSerial.toString()
 

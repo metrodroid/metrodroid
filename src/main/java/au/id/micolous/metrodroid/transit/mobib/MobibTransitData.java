@@ -23,9 +23,7 @@ import android.os.Parcel;
 import android.support.annotation.NonNull;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
 import java.util.TimeZone;
@@ -148,7 +146,7 @@ public class MobibTransitData extends Calypso1545TransitData {
 
     @Override
     public List<ListItem> getInfo() {
-        ArrayList <ListItem> li = new ArrayList<>();
+        List<ListItem> li = new ArrayList<>();
         if (mPurchase != 0)
             li.add(new ListItem(R.string.purchase_date,
                     Utils.longDateFormat(En1545FixedInteger.parseDate(mPurchase, TZ))));

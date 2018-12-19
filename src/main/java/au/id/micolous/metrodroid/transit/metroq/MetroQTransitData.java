@@ -25,7 +25,6 @@ import android.support.annotation.Nullable;
 import android.text.SpannableString;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Collections;
 import java.util.GregorianCalendar;
@@ -46,8 +45,6 @@ import au.id.micolous.metrodroid.transit.TransitBalanceStored;
 import au.id.micolous.metrodroid.transit.TransitCurrency;
 import au.id.micolous.metrodroid.transit.TransitData;
 import au.id.micolous.metrodroid.transit.TransitIdentity;
-import au.id.micolous.metrodroid.transit.Trip;
-import au.id.micolous.metrodroid.transit.charlie.CharlieCardTrip;
 import au.id.micolous.metrodroid.ui.ListItem;
 import au.id.micolous.metrodroid.util.Utils;
 
@@ -198,7 +195,7 @@ public class MetroQTransitData extends TransitData {
                 name = Utils.localizeString(R.string.metroq_day_pass);
                 break;
             default:
-                name = "" + mProduct;
+                name = Integer.toString(mProduct);
                 break;
         }
         return new TransitBalanceStored(TransitCurrency.USD(mBalance), name, mExpiry);

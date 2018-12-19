@@ -19,7 +19,7 @@
 
 package au.id.micolous.metrodroid.transit.en1545;
 
-import au.id.micolous.metrodroid.util.Utils;
+import org.jetbrains.annotations.NonNls;
 
 public class En1545FixedString implements En1545Field {
     private final int mLen;
@@ -38,7 +38,7 @@ public class En1545FixedString implements En1545Field {
 
     private static String parseString(byte[] bin, int start, int length, En1545Bits bitParser) {
         int i, j = 0, lastNonSpace = 0;
-        StringBuilder ret = new StringBuilder();
+        @NonNls StringBuilder ret = new StringBuilder();
         for (i = start; i + 4 < start + length && i + 4 < bin.length * 8; i += 5) {
             int bl;
             try {

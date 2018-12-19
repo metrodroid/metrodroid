@@ -36,7 +36,6 @@ import au.id.micolous.metrodroid.transit.TransitBalance;
 import au.id.micolous.metrodroid.transit.TransitBalanceStored;
 import au.id.micolous.metrodroid.transit.TransitCurrency;
 import au.id.micolous.metrodroid.transit.TransitData;
-import au.id.micolous.metrodroid.transit.Trip;
 import au.id.micolous.metrodroid.util.Utils;
 
 public abstract class ChinaTransitData extends TransitData {
@@ -110,6 +109,7 @@ public abstract class ChinaTransitData extends TransitData {
         mBalance = parcel.readInt();
         mValidityStart = parcel.readInt();
         mValidityEnd = parcel.readInt();
+        //noinspection unchecked
         mTrips = parcel.readArrayList(ChinaTrip.class.getClassLoader());
     }
 

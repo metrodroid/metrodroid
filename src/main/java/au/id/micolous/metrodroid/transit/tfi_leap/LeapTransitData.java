@@ -26,6 +26,7 @@ import android.support.annotation.Nullable;
 import android.text.SpannableString;
 
 import org.apache.commons.lang3.ArrayUtils;
+import org.jetbrains.annotations.NonNls;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -48,7 +49,6 @@ import au.id.micolous.metrodroid.transit.TransitBalanceStored;
 import au.id.micolous.metrodroid.transit.TransitCurrency;
 import au.id.micolous.metrodroid.transit.TransitData;
 import au.id.micolous.metrodroid.transit.TransitIdentity;
-import au.id.micolous.metrodroid.transit.Trip;
 import au.id.micolous.metrodroid.ui.HeaderListItem;
 import au.id.micolous.metrodroid.ui.ListItem;
 import au.id.micolous.metrodroid.util.StationTableReader;
@@ -132,7 +132,7 @@ public class LeapTransitData extends TransitData {
             // - All-operator spend (which applies to the sum of all fares)
             //
             // Certair services are excluded from the caps.
-            ArrayList<ListItem> items = new ArrayList<>();
+            List<ListItem> items = new ArrayList<>();
 
             items.add(new ListItem(
                     R.string.leap_period_start,
@@ -240,6 +240,7 @@ public class LeapTransitData extends TransitData {
         return g;
     }
 
+    @NonNls
     private static String getSerial(DesfireCard card) {
         DesfireApplication app = card.getApplication(APP_ID);
         int serial = Utils.byteArrayToInt(app.getFile(2).getData(),0x25, 4);
@@ -291,7 +292,7 @@ public class LeapTransitData extends TransitData {
 
     @Override
     public List<ListItem> getInfo() {
-        ArrayList<ListItem> items = new ArrayList<>();
+        List<ListItem> items = new ArrayList<>();
         if (mLocked) {
             items.add(new ListItem(R.string.leap_locked_warning, ""));
             return items;

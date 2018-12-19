@@ -32,7 +32,7 @@ class BilheteUnicoSPFirstTap extends Trip {
     private final int mTime;
     private final int mLine;
 
-    public BilheteUnicoSPFirstTap(int day, int time, int line) {
+    BilheteUnicoSPFirstTap(int day, int time, int line) {
         mDay = day;
         mTime = time;
         mLine = line;

@@ -64,7 +64,7 @@ public class ISO7816File {
     }
 
     public List<ISO7816Record> getRecords() {
-        Collections.sort(mRecords, (a, b) -> a.getIndex() - b.getIndex());
+        Collections.sort(mRecords, (a, b) -> Integer.compare(a.getIndex(), b.getIndex()));
         return mRecords;
     }
 

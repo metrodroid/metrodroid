@@ -20,8 +20,8 @@
 package au.id.micolous.metrodroid.card;
 
 public class UnsupportedTagException extends Exception {
-    private String[] mTechList;
-    private String mTagId;
+    private final String[] mTechList;
+    private final String mTagId;
 
     public UnsupportedTagException(String[] techList, String tagId) {
         mTechList = techList;

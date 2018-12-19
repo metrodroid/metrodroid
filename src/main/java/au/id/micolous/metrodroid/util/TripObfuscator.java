@@ -43,7 +43,7 @@ public final class TripObfuscator {
     /**
      * Remaps days of the year to a different day of the year.
      */
-    private static List<Integer> mCalendarMapping = new ArrayList<>();
+    private static final List<Integer> mCalendarMapping = new ArrayList<>();
 
     static {
         // Generate list of ints from 0-366 (each day in year).
@@ -52,6 +52,9 @@ public final class TripObfuscator {
         }
 
         Collections.shuffle(mCalendarMapping);
+    }
+
+    private TripObfuscator() {
     }
 
     /**

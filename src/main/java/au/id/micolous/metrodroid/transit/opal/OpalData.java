@@ -25,6 +25,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import au.id.micolous.farebot.R;
+import au.id.micolous.metrodroid.util.ImmutableMapBuilder;
 import au.id.micolous.metrodroid.util.Utils;
 
 /**
@@ -52,30 +53,26 @@ public final class OpalData {
     public static final int ACTION_TAP_ON_REVERSAL = 0x0b;
     public static final int ACTION_TAP_ON_REJECTED = 0x0c;
 
+    static final Map<Integer, Integer> MODES = new ImmutableMapBuilder<Integer, Integer>()
+            .put(MODE_RAIL, R.string.opal_vehicle_rail)
+            .put(MODE_FERRY_LR, R.string.opal_vehicle_ferry_lr)
+            .put(MODE_BUS, R.string.opal_vehicle_bus).build();
 
-    @SuppressLint("UseSparseArrays")
-    static final Map<Integer, Integer> MODES = new HashMap<Integer, Integer>() {{
-        put(MODE_RAIL, R.string.opal_vehicle_rail);
-        put(MODE_FERRY_LR, R.string.opal_vehicle_ferry_lr);
-        put(MODE_BUS, R.string.opal_vehicle_bus);
-    }};
-
-    @SuppressLint("UseSparseArrays")
-    static final Map<Integer, Integer> ACTIONS = new HashMap<Integer, Integer>() {{
-        put(ACTION_NONE, R.string.opal_action_none);
-        put(ACTION_NEW_JOURNEY, R.string.opal_action_new_journey);
-        put(ACTION_TRANSFER_SAME_MODE, R.string.opal_action_transfer_same_mode);
-        put(ACTION_TRANSFER_DIFF_MODE, R.string.opal_action_transfer_diff_mode);
-        put(ACTION_MANLY_NEW_JOURNEY, R.string.opal_action_manly_new_journey);
-        put(ACTION_MANLY_TRANSFER_SAME_MODE, R.string.opal_action_manly_transfer_same_mode);
-        put(ACTION_MANLY_TRANSFER_DIFF_MODE, R.string.opal_action_manly_transfer_diff_mode);
-        put(ACTION_JOURNEY_COMPLETED_DISTANCE, R.string.opal_action_journey_completed_distance);
-        put(ACTION_JOURNEY_COMPLETED_FLAT_RATE, R.string.opal_action_journey_completed_flat_rate);
-        put(ACTION_JOURNEY_COMPLETED_AUTO_OFF, R.string.opal_action_journey_completed_auto_off);
-        put(ACTION_JOURNEY_COMPLETED_AUTO_ON, R.string.opal_action_journey_completed_auto_on);
-        put(ACTION_TAP_ON_REVERSAL, R.string.opal_action_tap_on_reversal);
-        put(ACTION_TAP_ON_REJECTED, R.string.opal_action_tap_on_rejected);
-    }};
+    static final Map<Integer, Integer> ACTIONS = new ImmutableMapBuilder<Integer, Integer>()
+            .put(ACTION_NONE, R.string.opal_action_none)
+            .put(ACTION_NEW_JOURNEY, R.string.opal_action_new_journey)
+            .put(ACTION_TRANSFER_SAME_MODE, R.string.opal_action_transfer_same_mode)
+            .put(ACTION_TRANSFER_DIFF_MODE, R.string.opal_action_transfer_diff_mode)
+            .put(ACTION_MANLY_NEW_JOURNEY, R.string.opal_action_manly_new_journey)
+            .put(ACTION_MANLY_TRANSFER_SAME_MODE, R.string.opal_action_manly_transfer_same_mode)
+            .put(ACTION_MANLY_TRANSFER_DIFF_MODE, R.string.opal_action_manly_transfer_diff_mode)
+            .put(ACTION_JOURNEY_COMPLETED_DISTANCE, R.string.opal_action_journey_completed_distance)
+            .put(ACTION_JOURNEY_COMPLETED_FLAT_RATE, R.string.opal_action_journey_completed_flat_rate)
+            .put(ACTION_JOURNEY_COMPLETED_AUTO_OFF, R.string.opal_action_journey_completed_auto_off)
+            .put(ACTION_JOURNEY_COMPLETED_AUTO_ON, R.string.opal_action_journey_completed_auto_on)
+            .put(ACTION_TAP_ON_REVERSAL, R.string.opal_action_tap_on_reversal)
+            .put(ACTION_TAP_ON_REJECTED, R.string.opal_action_tap_on_rejected)
+            .build();
 
     private OpalData() {
     }
@@ -84,7 +81,7 @@ public final class OpalData {
         if (MODES.containsKey(mode)) {
             return Utils.localizeString(MODES.get(mode));
         }
-        return Utils.localizeString(R.string.unknown_format, "0x" + Long.toString(mode, 16));
+        return Utils.localizeString(R.string.unknown_format, Utils.longToHex(mode));
     }
 
     static String getLocalisedAction(int action) {
@@ -92,6 +89,6 @@ public final class OpalData {
             return Utils.localizeString(ACTIONS.get(action));
         }
 
-        return Utils.localizeString(R.string.unknown_format, "0x" + Long.toString(action, 16));
+        return Utils.localizeString(R.string.unknown_format, Utils.longToHex(action));
     }
 }

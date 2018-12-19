@@ -22,10 +22,10 @@ import android.os.Parcel;
 import android.support.annotation.NonNull;
 
 import org.apache.commons.lang3.ArrayUtils;
+import org.jetbrains.annotations.NonNls;
 
 import java.util.Collections;
 import java.util.List;
-import java.util.Locale;
 
 import au.id.micolous.metrodroid.card.desfire.DesfireCard;
 import au.id.micolous.metrodroid.card.desfire.DesfireCardTransitFactory;
@@ -73,6 +73,7 @@ public class AtHopStubTransitData extends SerialOnlyTransitData {
                 61, 32);
     }
 
+    @NonNls
     private static String formatSerial(int serial) {
         return "7824 6702 " + Utils.formatNumber(serial, " ", 4, 4, 3);
     }

@@ -9,7 +9,6 @@ import java.util.Collections;
 import java.util.List;
 
 import au.id.micolous.farebot.R;
-import au.id.micolous.metrodroid.card.Card;
 import au.id.micolous.metrodroid.card.desfire.DesfireApplication;
 import au.id.micolous.metrodroid.card.desfire.DesfireCard;
 import au.id.micolous.metrodroid.card.desfire.DesfireCardTransitFactory;
