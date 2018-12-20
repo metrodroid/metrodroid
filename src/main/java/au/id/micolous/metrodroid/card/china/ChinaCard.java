@@ -19,6 +19,8 @@
 
 package au.id.micolous.metrodroid.card.china;
 
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.util.Log;
 
 import org.simpleframework.xml.Attribute;
@@ -27,11 +29,14 @@ import org.simpleframework.xml.ElementList;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 
 import au.id.micolous.farebot.R;
 import au.id.micolous.metrodroid.card.TagReaderFeedbackInterface;
 import au.id.micolous.metrodroid.card.iso7816.ISO7816Application;
+import au.id.micolous.metrodroid.card.iso7816.ISO7816ApplicationFactory;
 import au.id.micolous.metrodroid.card.iso7816.ISO7816Protocol;
 import au.id.micolous.metrodroid.card.iso7816.ISO7816Selector;
 import au.id.micolous.metrodroid.transit.CardInfo;
@@ -128,73 +133,94 @@ public class ChinaCard extends ISO7816Application {
         mBalances = balances;
     }
 
-    /**
-     * Dumps a Shenzhen Tong card in the field.
-     * @param iso7816Tag Tag to dump.
-     * @param app ISO7816 app interface
-     * @return Dump of the card contents. Returns null if an unsupported card is in the
-     *         field.
-     * @throws Exception On communication errors.
-     */
-    public static ChinaCard dumpTag(ISO7816Protocol iso7816Tag, ISO7816Application.ISO7816Info app,
-                                    TagReaderFeedbackInterface feedbackInterface) {
-        List <Balance> bals = new ArrayList<>();
-
-        try {
-            feedbackInterface.updateProgressBar(0, 6);
-
-        factories:
-            for (ChinaCardTransitFactory f : FACTORIES) {
-                for (byte[] transitAppName : f.getAppNames()) {
-                    if (Arrays.equals(app.getAppName(), transitAppName)) {
-                        final List<CardInfo> cl = f.getAllCards();
-
-                        if (!cl.isEmpty()) {
-                            final CardInfo ci = cl.get(0);
-
-                            feedbackInterface.updateStatusText(Utils.localizeString(R.string.card_reading_type,
-                                    ci.getName()));
-                            feedbackInterface.showCardType(ci);
-                        }
-
-                        break factories;
-                    }
-                }
-            }
-
-            feedbackInterface.updateProgressBar(0, 5);
-            for (int i = 0; i < 4; i++) {
-                try {
-                    byte[] balanceResponse;
-                    balanceResponse = iso7816Tag.sendRequest(ISO7816Protocol.CLASS_80, INS_GET_BALANCE,
-                            (byte) i, (byte) 2, BALANCE_RESP_LEN);
-                    bals.add(new Balance(i, balanceResponse));
-                } catch (Exception e) {
-
-                }
-            }
-            feedbackInterface.updateProgressBar(1, 16);
-            int progress = 2;
-
-            for (int j = 0; j < 2; j++)
-                for (int f : new int[]{4, 5, 8, 9, 10, 21, 24, 25}) {
-                    ISO7816Selector sel = j == 1 ? ISO7816Selector.makeSelector(0x1001, f) : ISO7816Selector.makeSelector(f);
-                    try {
-                        app.dumpFile(iso7816Tag, sel, 0);
-                    } catch (Exception e) {
-                        //noinspection StringConcatenation
-                        Log.w(TAG, "Caught exception on file "  + sel.formatString() + ": " + e);
-                    }
-                    feedbackInterface.updateProgressBar(progress++, 16);
-                }
-        } catch (Exception e) {
-            //noinspection StringConcatenation
-            Log.w(TAG, "Got exception " + e);
-            return null;
+    public static ISO7816ApplicationFactory FACTORY = new ISO7816ApplicationFactory() {
+        @NonNull
+        @Override
+        public Collection<byte[]> getApplicationNames() {
+            return APP_NAMES;
         }
 
-        return new ChinaCard(app, bals);
-    }
+        @NonNull
+        @Override
+        public String getType() {
+            return TYPE;
+        }
+
+        @Override
+        public boolean stopAfterFirstApp() {
+            // China cards can be hybrids.
+            return false;
+        }
+
+        /**
+         * Dumps a China card in the field.
+         * @param protocol Tag to dump.
+         * @param appData ISO7816 app interface
+         * @return Dump of the card contents. Returns null if an unsupported card is in the
+         *         field.
+         * @throws Exception On communication errors.
+         */
+        @Nullable
+        @Override
+        public ISO7816Application dumpTag(@NonNull ISO7816Protocol protocol, @NonNull ISO7816Info appData, @NonNull TagReaderFeedbackInterface feedbackInterface) {
+            List <Balance> bals = new ArrayList<>();
+
+            try {
+                feedbackInterface.updateProgressBar(0, 6);
+
+                factories:
+                for (ChinaCardTransitFactory f : FACTORIES) {
+                    for (byte[] transitAppName : f.getAppNames()) {
+                        if (Arrays.equals(appData.getAppName(), transitAppName)) {
+                            final List<CardInfo> cl = f.getAllCards();
+
+                            if (!cl.isEmpty()) {
+                                final CardInfo ci = cl.get(0);
+
+                                feedbackInterface.updateStatusText(Utils.localizeString(R.string.card_reading_type,
+                                        ci.getName()));
+                                feedbackInterface.showCardType(ci);
+                            }
+
+                            break factories;
+                        }
+                    }
+                }
+
+                feedbackInterface.updateProgressBar(0, 5);
+                for (int i = 0; i < 4; i++) {
+                    try {
+                        byte[] balanceResponse;
+                        balanceResponse = protocol.sendRequest(ISO7816Protocol.CLASS_80, INS_GET_BALANCE,
+                                (byte) i, (byte) 2, BALANCE_RESP_LEN);
+                        bals.add(new Balance(i, balanceResponse));
+                    } catch (Exception e) {
+
+                    }
+                }
+                feedbackInterface.updateProgressBar(1, 16);
+                int progress = 2;
+
+                for (int j = 0; j < 2; j++)
+                    for (int f : new int[]{4, 5, 8, 9, 10, 21, 24, 25}) {
+                        ISO7816Selector sel = j == 1 ? ISO7816Selector.makeSelector(0x1001, f) : ISO7816Selector.makeSelector(f);
+                        try {
+                            appData.dumpFile(protocol, sel, 0);
+                        } catch (Exception e) {
+                            //noinspection StringConcatenation
+                            Log.w(TAG, "Caught exception on file "  + sel.formatString() + ": " + e);
+                        }
+                        feedbackInterface.updateProgressBar(progress++, 16);
+                    }
+            } catch (Exception e) {
+                //noinspection StringConcatenation
+                Log.w(TAG, "Got exception " + e);
+                return null;
+            }
+
+            return new ChinaCard(appData, bals);
+        }
+    };
 
     public byte[] getBalance(int idx) {
         for (Balance bal : mBalances) {

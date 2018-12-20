@@ -19,17 +19,22 @@
 
 package au.id.micolous.metrodroid.card.tmoney;
 
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.text.SpannableString;
 import android.util.Log;
 
 import org.simpleframework.xml.Element;
 
+import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
+import java.util.Set;
 
 import au.id.micolous.farebot.R;
 import au.id.micolous.metrodroid.card.TagReaderFeedbackInterface;
 import au.id.micolous.metrodroid.card.iso7816.ISO7816Application;
+import au.id.micolous.metrodroid.card.iso7816.ISO7816ApplicationFactory;
 import au.id.micolous.metrodroid.card.iso7816.ISO7816Protocol;
 import au.id.micolous.metrodroid.card.iso7816.ISO7816Selector;
 import au.id.micolous.metrodroid.transit.TransitData;
@@ -42,10 +47,11 @@ import au.id.micolous.metrodroid.util.Utils;
 public class TMoneyCard extends ISO7816Application {
     private static final String TAG = "TMoneyCard";
 
-    public static final byte[] APP_NAME = {
+    private static final List<byte[]> APP_NAME = Collections.singletonList(new byte[] {
             (byte) 0xd4, 0x10, 0x00,
             0x00, 0x03, 0x00, 0x01
-    };
+    });
+
     public static final byte[] FILE_NAME = {
             (byte) 0xd4, 0x10, 0x00,
             0x00, 0x03, 0x00, 0x01
@@ -81,50 +87,64 @@ public class TMoneyCard extends ISO7816Application {
     }
 
 
-    /**
-     * Dumps a TMoney card in the field.
-     * @param app ISO7816 app info of the tag.
-     * @param iso7816Tag Tag to dump.
-     * @return TMoneyCard of the card contents. Returns null if an unsupported card is in the
-     *         field.
-     * @throws Exception On communication errors.
-     */
-    public static TMoneyCard dumpTag(ISO7816Protocol iso7816Tag, ISO7816Application.ISO7816Info app,
-                                     TagReaderFeedbackInterface feedbackInterface) {
-        byte[] balanceResponse;
-
-        try {
-            feedbackInterface.updateStatusText(Utils.localizeString(R.string.card_reading_type,
-                    TMoneyTransitData.CARD_INFO.getName()));
-            feedbackInterface.updateProgressBar(0, 6);
-            feedbackInterface.showCardType(TMoneyTransitData.CARD_INFO);
-            balanceResponse = iso7816Tag.sendRequest(ISO7816Protocol.CLASS_90, INS_GET_BALANCE,
-                        (byte) 0, (byte) 0, BALANCE_RESP_LEN);
-            feedbackInterface.updateProgressBar(1, 6);
-            for (int i = 1; i < 6; i++) {
-                try {
-                    app.dumpFile(iso7816Tag, ISO7816Selector.makeSelector(FILE_NAME, i), 0);
-                } catch (Exception e) {
-                    //noinspection StringConcatenation
-                    Log.w(TAG, "Caught exception on file 4200/"  + Integer.toHexString(i) + ": " + e);
-                }
-                feedbackInterface.updateProgressBar(1+i, 6);
-            }
-            try {
-                app.dumpFile(iso7816Tag, ISO7816Selector.makeSelector(0xdf00), 0);
-            } catch (Exception e) {
-                //noinspection StringConcatenation
-                Log.w(TAG, "Caught exception on file df00: " + e);
-            }
-        } catch (Exception e) {
-            //noinspection StringConcatenation
-            Log.w(TAG, "Got exception " + e);
-            return null;
+    public static ISO7816ApplicationFactory FACTORY = new ISO7816ApplicationFactory() {
+        @NonNull
+        @Override
+        public List<byte[]> getApplicationNames() {
+            return APP_NAME;
         }
 
-        return new TMoneyCard(app,
-                Utils.byteArrayToInt(balanceResponse, 0, BALANCE_RESP_LEN));
-    }
+        @NonNull
+        @Override
+        public String getType() {
+            return TYPE;
+        }
+
+        /**
+         * Dumps a TMoney card in the field.
+         * @param appData ISO7816 app info of the tag.
+         * @param protocol Tag to dump.
+         * @return TMoneyCard of the card contents. Returns null if an unsupported card is in the
+         *         field.
+         */
+        @Nullable
+        @Override
+        public ISO7816Application dumpTag(@NonNull ISO7816Protocol protocol, @NonNull ISO7816Info appData, @NonNull TagReaderFeedbackInterface feedbackInterface) {
+            byte[] balanceResponse;
+
+            try {
+                feedbackInterface.updateStatusText(Utils.localizeString(R.string.card_reading_type,
+                        TMoneyTransitData.CARD_INFO.getName()));
+                feedbackInterface.updateProgressBar(0, 6);
+                feedbackInterface.showCardType(TMoneyTransitData.CARD_INFO);
+                balanceResponse = protocol.sendRequest(ISO7816Protocol.CLASS_90, INS_GET_BALANCE,
+                        (byte) 0, (byte) 0, BALANCE_RESP_LEN);
+                feedbackInterface.updateProgressBar(1, 6);
+                for (int i = 1; i < 6; i++) {
+                    try {
+                        appData.dumpFile(protocol, ISO7816Selector.makeSelector(FILE_NAME, i), 0);
+                    } catch (Exception e) {
+                        //noinspection StringConcatenation
+                        Log.w(TAG, "Caught exception on file 4200/"  + Integer.toHexString(i) + ": " + e);
+                    }
+                    feedbackInterface.updateProgressBar(1+i, 6);
+                }
+                try {
+                    appData.dumpFile(protocol, ISO7816Selector.makeSelector(0xdf00), 0);
+                } catch (Exception e) {
+                    //noinspection StringConcatenation
+                    Log.w(TAG, "Caught exception on file df00: " + e);
+                }
+            } catch (Exception e) {
+                //noinspection StringConcatenation
+                Log.w(TAG, "Got exception " + e);
+                return null;
+            }
+
+            return new TMoneyCard(appData,
+                    Utils.byteArrayToInt(balanceResponse, 0, BALANCE_RESP_LEN));
+        }
+    };
 
     public int getBalance() {
         return mBalance;
