@@ -19,6 +19,8 @@
 package au.id.micolous.metrodroid.card.calypso;
 
 import android.nfc.TagLostException;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.util.Log;
 
 import com.neovisionaries.i18n.CountryCode;
@@ -29,6 +31,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
+import java.util.Collection;
 import java.util.GregorianCalendar;
 import java.util.HashMap;
 import java.util.List;
@@ -39,6 +42,7 @@ import au.id.micolous.farebot.R;
 import au.id.micolous.metrodroid.MetrodroidApplication;
 import au.id.micolous.metrodroid.card.TagReaderFeedbackInterface;
 import au.id.micolous.metrodroid.card.iso7816.ISO7816Application;
+import au.id.micolous.metrodroid.card.iso7816.ISO7816ApplicationFactory;
 import au.id.micolous.metrodroid.card.iso7816.ISO7816File;
 import au.id.micolous.metrodroid.card.iso7816.ISO7816Protocol;
 import au.id.micolous.metrodroid.card.iso7816.ISO7816Record;
@@ -69,11 +73,11 @@ import au.id.micolous.metrodroid.util.Utils;
  * - https://github.com/nfc-tools/libnfc/blob/master/examples/pn53x-tamashell-scripts/ReadNavigo.sh
  */
 public class CalypsoApplication extends ISO7816Application {
-    public static final byte[][] CALYPSO_FILENAMES =
-            {
+    public static final List<byte[]> CALYPSO_FILENAMES =
+            Arrays.asList(
                     Utils.stringToByteArray("1TIC.ICA"),
                     Utils.stringToByteArray("3MTR.ICA")
-            };
+            );
 
     private static final String TAG = CalypsoApplication.class.getName();
     public static final String TYPE = "calypso";
@@ -94,39 +98,54 @@ public class CalypsoApplication extends ISO7816Application {
         super(); /* For XML Serializer */
     }
 
-    public static CalypsoApplication dumpTag(ISO7816Protocol protocol, ISO7816Application.ISO7816Info appData,
-                                             TagReaderFeedbackInterface feedbackInterface) throws IOException {
-        // At this point, the connection is already open, we just need to dump the right things...
-
-        feedbackInterface.updateStatusText(Utils.localizeString(R.string.calypso_reading));
-        feedbackInterface.updateProgressBar(0, File.getAll().length);
-        int counter = 0;
-        boolean partialRead = false;
-
-        for (byte sfi = 1; sfi <= 31; sfi++) {
-            feedbackInterface.updateProgressBar(counter++, File.getAll().length + 31);
-            ISO7816File sfiFile = appData.dumpFileSFI(protocol, sfi, 0);
-            if (sfiFile != null && sfi == File.TICKETING_ENVIRONMENT.mSfi)
-                showCardType(sfiFile, feedbackInterface);
+    public static ISO7816ApplicationFactory FACTORY = new ISO7816ApplicationFactory() {
+        @NonNull
+        @Override
+        public List<byte[]> getApplicationNames() {
+            return CALYPSO_FILENAMES;
         }
 
-        for (File f : File.getAll()) {
-            feedbackInterface.updateProgressBar(counter++, File.getAll().length + 31);
-            try {
-                ISO7816File file = appData.dumpFile(protocol, f.getSelector(), 0x1d);
-                if (file != null && f == File.TICKETING_ENVIRONMENT)
-                    showCardType(file, feedbackInterface);
-            } catch (TagLostException e) {
-                Log.w(TAG, "tag lost", e);
-                partialRead = true;
-                break;
-            } catch (IOException e) {
-                Log.e(TAG, "couldn't select file", e);
+        @NonNull
+        @Override
+        public String getType() {
+            return TYPE;
+        }
+
+        @NonNull
+        @Override
+        public ISO7816Application dumpTag(@NonNull ISO7816Protocol protocol, @NonNull ISO7816Info appData, @NonNull TagReaderFeedbackInterface feedbackInterface) {
+            // At this point, the connection is already open, we just need to dump the right things...
+
+            feedbackInterface.updateStatusText(Utils.localizeString(R.string.calypso_reading));
+            feedbackInterface.updateProgressBar(0, File.getAll().length);
+            int counter = 0;
+            boolean partialRead = false;
+
+            for (byte sfi = 1; sfi <= 31; sfi++) {
+                feedbackInterface.updateProgressBar(counter++, File.getAll().length + 31);
+                ISO7816File sfiFile = appData.dumpFileSFI(protocol, sfi, 0);
+                if (sfiFile != null && sfi == File.TICKETING_ENVIRONMENT.mSfi)
+                    showCardType(sfiFile, feedbackInterface);
             }
-        }
 
-        return new CalypsoApplication(appData, partialRead);
-    }
+            for (File f : File.getAll()) {
+                feedbackInterface.updateProgressBar(counter++, File.getAll().length + 31);
+                try {
+                    ISO7816File file = appData.dumpFile(protocol, f.getSelector(), 0x1d);
+                    if (file != null && f == File.TICKETING_ENVIRONMENT)
+                        showCardType(file, feedbackInterface);
+                } catch (TagLostException e) {
+                    Log.w(TAG, "tag lost", e);
+                    partialRead = true;
+                    break;
+                } catch (IOException e) {
+                    Log.e(TAG, "couldn't select file", e);
+                }
+            }
+
+            return new CalypsoApplication(appData, partialRead);
+        }
+    };
 
     private static void showCardType(ISO7816File tenvf, TagReaderFeedbackInterface feedbackInterface) {
         byte[] tenv;

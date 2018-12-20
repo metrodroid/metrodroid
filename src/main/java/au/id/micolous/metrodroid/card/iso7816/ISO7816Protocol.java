@@ -102,6 +102,11 @@ public class ISO7816Protocol {
      * @param p2         Reference byte completing the INS.
      * @param length     Length of the expected return value, or 0 for no limit.
      * @param parameters Additional data to be send in a command.
+     * @throws FileNotFoundException If a requested file can not be found
+     * @throws EOFException If a requested record can not be found
+     * @throws IllegalStateException If an invalid command is issued
+     * @throws IOException If there is a communication error
+     * @throws ISO7816Exception If there is an unhandled error code
      * @return A wrapped command.
      */
     public byte[] sendRequest(byte cla, byte ins, byte p1, byte p2, byte length, byte... parameters) throws IOException, ISO7816Exception {
@@ -152,7 +157,7 @@ public class ISO7816Protocol {
     }
 
     @NonNull
-    public byte[] selectByName(@NonNull byte[] name, boolean nextOccurrence) throws IOException, ISO7816Exception, FileNotFoundException {
+    public byte[] selectByName(@NonNull byte[] name, boolean nextOccurrence) throws IOException, ISO7816Exception {
         byte[] reply;
         //noinspection StringConcatenation
         Log.d(TAG, "Select by name " + Utils.getHexString(name));
@@ -184,8 +189,6 @@ public class ISO7816Protocol {
         try {
             ret = sendRequest(CLASS_ISO7816, INSTRUCTION_ISO7816_READ_RECORD,
                     recordNumber, (byte) 0x4 /* p1 is record number */, length);
-
-
 
             return ret;
         } catch (ISO7816Exception e) {

@@ -28,6 +28,7 @@ import android.util.Log;
 import org.simpleframework.xml.ElementList;
 import org.simpleframework.xml.Root;
 
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
@@ -55,6 +56,11 @@ import au.id.micolous.metrodroid.util.Utils;
 @Root(name = "card")
 public class ISO7816Card extends Card {
     private static final String TAG = ISO7816Card.class.getSimpleName();
+    private static final ISO7816ApplicationFactory[] FACTORIES = {
+            CalypsoApplication.FACTORY,
+            TMoneyCard.FACTORY,
+            ChinaCard.FACTORY
+    };
 
     @ElementList(name = "applications", entry = "application")
     private List<ISO7816Application> mApplications;
@@ -110,29 +116,29 @@ public class ISO7816Card extends Card {
             if (cepas != null)
                 apps.add(cepas);
 
-            for (byte[] calypsoFilename : CalypsoApplication.CALYPSO_FILENAMES) {
-                appData = iso7816Tag.selectByName(calypsoFilename, false);
-                if (appData != null) {
-                    apps.add(CalypsoApplication.dumpTag(iso7816Tag,
-                            new ISO7816Application.ISO7816Info(appData, calypsoFilename,
-                                    tagId, CalypsoApplication.TYPE),
-                            feedbackInterface));
-                    break;
-                }
-            }
+            for (ISO7816ApplicationFactory factory : FACTORIES) {
+                final boolean stopAfterFirst = factory.stopAfterFirstApp();
+                for (byte[] appId : factory.getApplicationNames()) {
+                    appData = iso7816Tag.selectByNameOrNull(appId);
+                    if (appData == null) {
+                        continue;
+                    }
 
-            appData = iso7816Tag.selectByName(TMoneyCard.APP_NAME, false);
-            if (appData != null)
-                apps.add(TMoneyCard.dumpTag(iso7816Tag, new ISO7816Application.ISO7816Info(appData, TMoneyCard.APP_NAME,
-                                tag.getId(), TMoneyCard.TYPE),
-					    feedbackInterface));
-            for (byte[] appName : ChinaCard.APP_NAMES) {
-                appData = iso7816Tag.selectByName(appName, false);
-                if (appData != null)
-                    apps.add(ChinaCard.dumpTag(iso7816Tag,
-                            new ISO7816Application.ISO7816Info(appData, appName,
-                                    tag.getId(), ChinaCard.TYPE),
-                            feedbackInterface));
+                    ISO7816Application app = factory.dumpTag(
+                            iso7816Tag, new ISO7816Application.ISO7816Info(
+                                    appData, appId, tag.getId(), factory.getType()),
+                            feedbackInterface);
+
+                    if (app == null) {
+                        continue;
+                    }
+
+                    apps.add(app);
+
+                    if (stopAfterFirst) {
+                        break;
+                    }
+                }
             }
         } catch (TagLostException ex) {
             Log.w(TAG, "tag lost", ex);

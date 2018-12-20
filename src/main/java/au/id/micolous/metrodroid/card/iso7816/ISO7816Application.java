@@ -38,6 +38,7 @@ import java.util.Locale;
 import java.util.Map;
 
 import au.id.micolous.metrodroid.card.TagReaderFeedbackInterface;
+import au.id.micolous.metrodroid.card.tmoney.TMoneyCard;
 import au.id.micolous.metrodroid.transit.TransitData;
 import au.id.micolous.metrodroid.transit.TransitIdentity;
 import au.id.micolous.metrodroid.ui.ListItem;
@@ -50,6 +51,7 @@ import au.id.micolous.metrodroid.xml.Base64String;
  */
 public class ISO7816Application {
     private static final String TAG = ISO7816Application.class.getSimpleName();
+
     @Element(name = "tagid")
     private Base64String mTagId;
 
