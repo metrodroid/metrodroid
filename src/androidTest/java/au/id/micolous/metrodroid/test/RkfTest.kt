@@ -12,7 +12,10 @@ import java.util.*
 class RkfTest : CardReaderWithAssetDumpsTest<RkfTransitData, ClassicCard>(
         RkfTransitData::class.java, MfcCardImporter()) {
 
-    // This test is based on dumps from https://github.com/mchro/RejsekortReader
+    /*
+     * This test is based on dumps from https://github.com/mchro/RejsekortReader
+     * If this test fails to load the file, this is because the submodule is missing...
+     */
     @Test
     fun testAnonymtDump() {
         /*
