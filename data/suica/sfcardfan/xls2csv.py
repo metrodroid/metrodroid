@@ -26,8 +26,8 @@ from decimal import Decimal
 from xlrd import open_workbook
 
 XLS_CHARSET = 'cp932'
-STATION = '駅' # eki
-INSIDE_STATION = '駅構内'
+
+# Data normalisation
 ZERO = ('0', '0.0',)
 
 # Sheets that contain Suica mapping information
@@ -119,7 +119,7 @@ def extractor(input_xls_fn, output_csv_fn):
 def main():
   parser = ArgumentParser()
   parser.add_argument('input_xls', nargs=1)
-  parser.add_argument('-o', '--output')
+  parser.add_argument('-o', '--output', required=True)
   options = parser.parse_args()
   extractor(options.input_xls[0], options.output)
 
