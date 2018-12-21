@@ -42,7 +42,7 @@ public abstract class Calypso1545TransitData extends En1545TransitData {
     protected static final String CONTRACTS_UNKNOWN_A = "ContractsUnknownA";
     protected static final String CONTRACTS_UNKNOWN_B = "ContractsUnknownB";
     protected static final String CONTRACTS_NETWORK_ID = "ContractsNetworkId";
-    protected final int mNetworkId;
+    private final int mNetworkId;
     private final List<Trip> mTrips;
     private final List<En1545Subscription> mSubscriptions;
     private final String mSerial;
@@ -116,6 +116,10 @@ public abstract class Calypso1545TransitData extends En1545TransitData {
             insertSub(card, record.getData(), null,
                     null, idx);
         }
+    }
+
+    protected final int getNetworkId() {
+        return mNetworkId;
     }
 
     protected List<ISO7816Record> getContracts(CalypsoApplication card) {
