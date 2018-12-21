@@ -82,16 +82,16 @@ public class NextfareTransitData extends TransitData {
     private static final String TAG = "NextfareTransitData";
     protected NextfareConfigRecord mConfig = null;
     protected boolean mHasUnknownStations = false;
-    long mSerialNumber;
-    byte[] mSystemCode;
-    byte[] mBlock2;
-    int mBalance;
-    List<NextfareTrip> mTrips;
-    List<NextfareSubscription> mSubscriptions;
+    private long mSerialNumber;
+    private byte[] mSystemCode;
+    private final byte[] mBlock2;
+    private int mBalance;
+    private List<NextfareTrip> mTrips;
+    private List<NextfareSubscription> mSubscriptions;
     @NonNull
     private final String mCurrency;
 
-    public NextfareTransitData(Parcel parcel, @NonNull String currency) {
+    protected NextfareTransitData(Parcel parcel, @NonNull String currency) {
         mSerialNumber = parcel.readLong();
         mBalance = parcel.readInt();
         mTrips = new ArrayList<>();

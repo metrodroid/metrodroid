@@ -105,7 +105,7 @@ public class SmartRiderTransitData extends TransitData {
         SMARTRIDER(SMARTRIDER_NAME),
         MYWAY(MYWAY_NAME);
 
-        final String mFriendlyName;
+        private final String mFriendlyName;
 
         CardType(String friendlyString) {
             mFriendlyName = friendlyString;

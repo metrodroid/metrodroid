@@ -170,8 +170,8 @@ public class ReadingTagActivity extends MetrodroidActivity implements TagReaderF
     }
 
     static class ReadingTagTaskEventArgs {
-        byte[] tagId;
-        Tag tag;
+        private byte[] tagId;
+        private Tag tag;
 
         ReadingTagTaskEventArgs(byte[] tagId, Tag tag) {
             this.tagId = tagId;
