@@ -56,7 +56,7 @@ public interface CardImporter<T extends Card> {
      */
     @Nullable
     default Iterator<T> readCards(@NonNull String s) throws Exception {
-        return readCards(IOUtils.toInputStream(s, Charset.defaultCharset()));
+        return readCards(IOUtils.toInputStream(s, Utils.getUTF8()));
     }
 
     /**
@@ -71,7 +71,7 @@ public interface CardImporter<T extends Card> {
 
 
     default T readCard(@NonNull String s) throws Exception {
-        return readCard(IOUtils.toInputStream(s, Charset.defaultCharset()));
+        return readCard(IOUtils.toInputStream(s, Utils.getUTF8()));
     }
 
 
@@ -85,7 +85,7 @@ public interface CardImporter<T extends Card> {
         @Nullable
         @Override
         default Iterator<T> readCards(@NonNull InputStream stream) throws Exception {
-            return readCards(new InputStreamReader(stream));
+            return readCards(new InputStreamReader(stream, Utils.getUTF8()));
         }
 
         @Nullable
@@ -104,7 +104,7 @@ public interface CardImporter<T extends Card> {
 
         @Nullable
         default T readCard(@NonNull InputStream stream) throws Exception {
-            return readCard(new InputStreamReader(stream));
+            return readCard(new InputStreamReader(stream, Utils.getUTF8()));
         }
 
         @Nullable
