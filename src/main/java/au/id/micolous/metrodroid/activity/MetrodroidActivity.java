@@ -27,7 +27,7 @@ import android.support.annotation.Nullable;
 import au.id.micolous.metrodroid.MetrodroidApplication;
 
 public abstract class MetrodroidActivity extends Activity {
-    int mAppliedTheme;
+    private int mAppliedTheme;
 
     protected Integer getThemeVariant() {
         return null;

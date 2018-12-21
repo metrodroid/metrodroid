@@ -35,13 +35,13 @@ import au.id.micolous.metrodroid.xml.Base64String;
 @Root(name = "auth-exchange")
 public class DesfireAuthLog {
     @Element(name = "key-id")
-    int mKeyId;
+    private int mKeyId;
     @Element(name = "challenge")
-    Base64String mChallenge;
+    private Base64String mChallenge;
     @Element(name = "response")
-    Base64String mResponse;
+    private Base64String mResponse;
     @Element(name = "confirm")
-    Base64String mConfirm;
+    private Base64String mConfirm;
 
     public DesfireAuthLog(int keyId, byte[] challenge, byte[] response, byte[] confirmation) {
         mKeyId = keyId;

@@ -103,7 +103,7 @@ public class CardInfoActivity extends MetrodroidActivity {
         actionBar.setTitle(R.string.loading);
 
         new AsyncTask<Void, Void, Void>() {
-            public boolean mSpeakBalanceEnabled;
+            private boolean mSpeakBalanceEnabled;
             private Exception mException;
 
             @Override

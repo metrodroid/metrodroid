@@ -56,8 +56,8 @@ import au.id.micolous.metrodroid.MetrodroidApplication;
 
 public class ReadingTagActivity extends MetrodroidActivity implements TagReaderFeedbackInterface {
     private static final String TAG = ReadingTagActivity.class.getSimpleName();
-    boolean mIndeterminite = true;
-    int mMaximum = 0;
+    private boolean mIndeterminite = true;
+    private int mMaximum = 0;
 
     @Override
     public void updateStatusText(final String msg) {
