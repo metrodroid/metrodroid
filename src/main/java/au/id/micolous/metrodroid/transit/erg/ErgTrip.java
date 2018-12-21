@@ -29,6 +29,7 @@ import java.util.GregorianCalendar;
 import au.id.micolous.metrodroid.transit.TransitCurrency;
 import au.id.micolous.metrodroid.transit.Trip;
 import au.id.micolous.metrodroid.transit.erg.record.ErgPurseRecord;
+import au.id.micolous.metrodroid.util.Utils;
 
 /**
  * Represents a trip on an ERG MIFARE Classic card.
@@ -46,7 +47,7 @@ public class ErgTrip extends Trip {
         }
     };
 
-    protected GregorianCalendar mEpoch;
+    protected Calendar mEpoch;
     protected ErgPurseRecord mPurse;
     @NonNull
     protected String mCurrency;
@@ -57,10 +58,9 @@ public class ErgTrip extends Trip {
         mCurrency = currency;
     }
 
-    public ErgTrip(Parcel parcel) {
+    protected ErgTrip(Parcel parcel) {
         mPurse = new ErgPurseRecord(parcel);
-        mEpoch = new GregorianCalendar();
-        mEpoch.setTimeInMillis(parcel.readLong());
+        mEpoch = Utils.unparcelCalendar(parcel);
         mCurrency = parcel.readString();
     }
 
@@ -99,7 +99,7 @@ public class ErgTrip extends Trip {
     @Override
     public void writeToParcel(Parcel parcel, int i) {
         mPurse.writeToParcel(parcel, i);
-        parcel.writeLong(mEpoch.getTimeInMillis());
+        Utils.parcelCalendar(parcel, mEpoch);
         parcel.writeString(mCurrency);
     }
 
