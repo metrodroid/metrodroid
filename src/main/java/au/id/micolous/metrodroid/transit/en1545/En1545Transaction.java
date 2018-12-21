@@ -249,4 +249,12 @@ public abstract class En1545Transaction extends Transaction {
     public String toString() {
         return getClass().getSimpleName() + mParsed.toString();
     }
+
+
+    protected boolean isRejected() {
+        // 0x2: The tap-on was rejected (insufficient funds, Adelaide Metrocard).
+        // 0xb: The tap-on was rejected (outside of validity zone, RicaricaMi).
+        // Successful events don't set EVENT_RESULT or set it to 0.
+        return mParsed.getIntOrZero(EVENT_RESULT) != 0;
+    }
 }
