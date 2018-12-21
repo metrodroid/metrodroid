@@ -103,10 +103,10 @@ public class StationTableReaderTest extends BaseInstrumentedTest {
         assertEquals("新宿 (Shinjuku)", s.getStationName());
     }
 
-    private final int EASYCARD_BR02 = 0x12;
-    private final int EASYCARD_BR19 = 0x1a;
-    private final int EASYCARD_BL23_BR24 = 0x1f;
-    private final int EASYCARD_BL12_R10 = 0x33;
+    private static final int EASYCARD_BR02 = 0x12;
+    private static final int EASYCARD_BR19 = 0x1a;
+    private static final int EASYCARD_BL23_BR24 = 0x1f;
+    private static final int EASYCARD_BL12_R10 = 0x33;
 
     private Trip createEasyCardTrip(int startStation, int endStation) {
         EasyCardTransaction start = new EasyCardTransaction(
