@@ -144,7 +144,7 @@ public class ReadingTagActivity extends MetrodroidActivity implements TagReaderF
 
     private void resolveIntent(Intent intent) {
         try {
-            final Tag tag = intent.getParcelableExtra("android.nfc.extra.TAG");
+            final Tag tag = intent.getParcelableExtra(NfcAdapter.EXTRA_TAG);
             final byte[] tagId = intent.getByteArrayExtra(NfcAdapter.EXTRA_ID);
 
             SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
