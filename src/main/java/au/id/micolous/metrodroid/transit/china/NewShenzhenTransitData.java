@@ -22,6 +22,7 @@ package au.id.micolous.metrodroid.transit.china;
 import android.os.Parcel;
 import android.os.Parcelable;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 
 import org.jetbrains.annotations.NonNls;
 
@@ -133,15 +134,21 @@ public class NewShenzhenTransitData extends ChinaTransitData {
         return Integer.toString(sn) + "(" + Integer.toString(lastDigit) + ")";
     }
 
+    @Nullable
     private static byte[] getTagInfo(ChinaCard card) {
         ISO7816File file15 = getFile(card, 0x15);
         if (file15 != null)
             return file15.getBinaryData();
         byte []szttag = ISO7816Application.findBERTLV(card.getAppData(), 5,  5, true);
+        if (szttag == null)
+            return null;
         return ISO7816Application.findBERTLV(szttag, 4,  0xc, false);
     }
 
     private static int parseSerial(ChinaCard card) {
-        return Utils.byteArrayToIntReversed(getTagInfo(card), 16,4);
+        byte[] ti = getTagInfo(card);
+        if (ti == null)
+            return 0;
+        return Utils.byteArrayToIntReversed(ti, 16,4);
     }
 }

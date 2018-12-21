@@ -64,9 +64,10 @@ public class TUnionTransitData extends ChinaTransitData {
         super(card);
         mSerial = parseSerial(card);
         byte[] file15 = getFile(card, 0x15).getBinaryData();
-
-        mValidityStart = Utils.byteArrayToInt(file15, 20, 4);
-        mValidityEnd = Utils.byteArrayToInt(file15, 24, 4);
+        if (file15 != null) {
+            mValidityStart = Utils.byteArrayToInt(file15, 20, 4);
+            mValidityEnd = Utils.byteArrayToInt(file15, 24, 4);
+        }
         mNegativeBalance = Utils.getBitsFromBuffer(card.getBalance(1), 1, 31);
     }
 

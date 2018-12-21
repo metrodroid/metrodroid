@@ -66,14 +66,14 @@ public class RavKavSubscription extends En1545Subscription {
     @Nullable
     @Override
     public TransitBalance getBalance() {
-        if (getCtrUse() != 3)
+        if (getCtrUse() != 3 || mCounter == null)
             return null;
         return TransitCurrency.ILS(mCounter);
     }
 
     @Override
     public Integer getRemainingTripCount() {
-        if (getCtrUse() == 2)
+        if (getCtrUse() == 2 || mCounter == null)
             return mCounter;
         return null;
     }

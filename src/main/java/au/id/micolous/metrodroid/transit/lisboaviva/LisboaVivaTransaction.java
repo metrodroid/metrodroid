@@ -89,7 +89,9 @@ class LisboaVivaTransaction extends En1545Transaction {
     @NonNull
     @Override
     public List<String> getRouteNames() {
-        int routeNumber = mParsed.getInt(EVENT_ROUTE_NUMBER);
+        Integer routeNumber = mParsed.getInt(EVENT_ROUTE_NUMBER);
+        if (routeNumber == null)
+            return Collections.emptyList();
         if (getAgency() == LisboaVivaLookup.AGENCY_CP
                 && routeNumber == LisboaVivaLookup.ROUTE_CASCAIS_SADO) {
             if (getStationId() <= 54)
