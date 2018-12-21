@@ -141,25 +141,32 @@ public abstract class Calypso1545TransitData extends En1545TransitData {
             mSubscriptions.add(sub);
     }
 
-    private static final CalypsoApplication.File[] COUNTERS = new CalypsoApplication.File[]{
+    private static final CalypsoApplication.File[] COUNTERS = {
             CalypsoApplication.File.TICKETING_COUNTERS_1,
             CalypsoApplication.File.TICKETING_COUNTERS_2,
             CalypsoApplication.File.TICKETING_COUNTERS_3,
             CalypsoApplication.File.TICKETING_COUNTERS_4,
     };
 
-    private static Integer getCounter(CalypsoApplication card, int recordNum) {
-        if (recordNum > 4)
-            return null;
-        ISO7816File commonCtr = card.getFile(CalypsoApplication.File.TICKETING_COUNTERS_9);
+    private static Integer getCounter(CalypsoApplication card, int recordNum, boolean trySfi) {
+        ISO7816File commonCtr = card.getFile(CalypsoApplication.File.TICKETING_COUNTERS_9, trySfi);
         if (commonCtr != null && commonCtr.getRecord(1) != null) {
             return Utils.byteArrayToInt(commonCtr.getRecord(1).getData(), 3 * (recordNum - 1), 3);
         }
-        ISO7816File ownCtr = card.getFile(COUNTERS[recordNum - 1]);
+        ISO7816File ownCtr = card.getFile(COUNTERS[recordNum - 1], trySfi);
         if (ownCtr != null && ownCtr.getRecord(1) != null) {
             return Utils.byteArrayToInt(ownCtr.getRecord(1).getData(), 0, 3);
         }
         return null;
+    }
+
+    private static Integer getCounter(CalypsoApplication card, int recordNum) {
+        if (recordNum > 4)
+            return null;
+        Integer cnt = getCounter(card, recordNum, false);
+        if (cnt != null)
+            return cnt;
+        return getCounter(card, recordNum, true);
     }
 
     private void insertSub(CalypsoApplication card, byte[] data,
