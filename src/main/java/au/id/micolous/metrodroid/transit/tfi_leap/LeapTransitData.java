@@ -191,7 +191,7 @@ public class LeapTransitData extends TransitData {
         // offset: 0xc
 
         //offset 0x20
-        ArrayList<LeapTrip> trips = new ArrayList<>();
+        List<LeapTrip> trips = new ArrayList<>();
 
         trips.add(LeapTrip.parseTopup(file6, 0x20));
         trips.add(LeapTrip.parseTopup(file6, 0x35));
