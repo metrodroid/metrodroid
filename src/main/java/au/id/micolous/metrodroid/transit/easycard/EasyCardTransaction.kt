@@ -94,9 +94,9 @@ data class EasyCardTransaction internal constructor(
 
         internal fun parseTrips(card: ClassicCard): List<Trip> {
             val blocks = (
-                    card.getSector(3).blocks.subList(1, 3) +
-                            card.getSector(4).blocks.subList(0, 3) +
-                            card.getSector(5).blocks.subList(0, 3))
+                    card[3].blocks.subList(1, 3) +
+                            card[4].blocks.subList(0, 3) +
+                            card[5].blocks.subList(0, 3))
                     .filter { !Utils.isAllZero(it.data) }
 
             val trips = blocks.map { block ->

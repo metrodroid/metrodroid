@@ -504,6 +504,16 @@ public class ClassicCard extends Card {
         return mSectors.get(index);
     }
 
+    // For kotlin []
+    public ClassicSector get(int index) throws IndexOutOfBoundsException {
+        return getSector(index);
+    }
+
+    // For kotlin []
+    public ClassicBlock get(int secidx, int blockidx) throws IndexOutOfBoundsException {
+        return getSector(secidx).getBlock(blockidx);
+    }
+
     @Override
     public List<ListItem> getRawData() {
         List<ListItem> li = new ArrayList<>();

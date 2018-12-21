@@ -109,10 +109,10 @@ data class OVChipTransitData(
         private const val AUTOCHARGE_UNKNOWN = "AutochargeUnknown"
 
         fun parse(card: ClassicCard): OVChipTransitData {
-            val index = OVChipIndex.parse(card.getSector(39).readBlocks(11, 4))
-            val credit = card.getSector(39).readBlocks(if (index.recentCreditSlot) 10 else 9, 1)
+            val index = OVChipIndex.parse(card[39].readBlocks(11, 4))
+            val credit = card[39].readBlocks(if (index.recentCreditSlot) 10 else 9, 1)
             val mTicketEnvParsed = En1545Parser.parse(
-                    card.getSector(if (index.recentInfoSlot) 23 else 22).readBlocks(0, 3),
+                    card[if (index.recentInfoSlot) 23 else 22].readBlocks(0, 3),
                     En1545Container(
                             En1545FixedHex("EnvUnknown1", 48),
                             En1545FixedInteger(En1545TransitData.ENV_APPLICATION_ISSUER_ID, 5), // Could be 4 bits though
@@ -133,21 +133,21 @@ data class OVChipTransitData(
 
             return OVChipTransitData(parsed = mTicketEnvParsed, mIndex = index,
                     //byte 0-11:unknown const
-                    mExpdate = Utils.getBitsFromBuffer(card.getSector(0).getBlock(1).data, 88, 20),
+                    mExpdate = Utils.getBitsFromBuffer(card[0, 1].data, 88, 20),
                     // last bytes: unknown const
                     mBanbits = Utils.getBitsFromBuffer(credit, 0, 9),
                     mCreditSlotId = Utils.getBitsFromBuffer(credit, 9, 12),
                     mCreditId = Utils.getBitsFromBuffer(credit, 56, 12),
                     mCredit = Utils.getBitsFromBufferSigned(credit, 77, 16) xor 0x7fff.inv(),
                     // byte 0-2.5: unknown const
-                    mType = Utils.getBitsFromBuffer(card.getSector(0).getBlock(2).data, 20, 4),
+                    mType = Utils.getBitsFromBuffer(card[0, 2].data, 20, 4),
                     mTrips = getTrips(card),
                     mSubscriptions = getSubscriptions(card, index))
         }
 
         private fun getTrips(card: ClassicCard): List<TransactionTrip> {
             val transactions = (0..27).mapNotNull { transactionId ->
-                OVChipTransaction.parseClassic(card.getSector(35 + transactionId / 7)
+                OVChipTransaction.parseClassic(card[35 + transactionId / 7]
                         .readBlocks(transactionId % 7 * 2, 2))
             }.groupingBy { it.id }.reduce { _, transaction, nextTransaction ->
                 if (transaction.isTapOff)
@@ -162,7 +162,7 @@ data class OVChipTransitData(
         }
 
         fun getSubscriptions(card: ClassicCard, index: OVChipIndex): List<OVChipSubscription> {
-            val data = card.getSector(39).readBlocks(if (index.recentSubscriptionSlot) 3 else 1, 2)
+            val data = card[39].readBlocks(if (index.recentSubscriptionSlot) 3 else 1, 2)
 
             /*
          * TODO / FIXME
@@ -193,7 +193,7 @@ data class OVChipTransitData(
                 //val rest = Utils.getBitsFromInteger(bits, 4, 2)
                 val subscriptionIndexId = Utils.getBitsFromInteger(bits, 0, 4)
                 val subscriptionAddress = index.subscriptionIndex[subscriptionIndexId - 1]
-                val subData = card.getSector(32 + subscriptionAddress / 5).readBlocks(subscriptionAddress % 5 * 3, 3)
+                val subData = card[32 + subscriptionAddress / 5].readBlocks(subscriptionAddress % 5 * 3, 3)
 
                 OVChipSubscription.parse(subData, type1, used)
             }.sortedWith(Comparator { s1, s2 -> (s1.id ?: 0).compareTo(s2.id ?: 0) })

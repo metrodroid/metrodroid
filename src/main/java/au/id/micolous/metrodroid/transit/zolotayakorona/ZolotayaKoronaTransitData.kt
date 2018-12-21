@@ -181,11 +181,11 @@ data class ZolotayaKoronaTransitData internal constructor(
             return g
         }
 
-        private fun getSerial(card: ClassicCard) = Utils.getHexString(card.getSector(15)
-                .getBlock(2).data, 4, 10).substring(0, 19)
+        private fun getSerial(card: ClassicCard) = Utils.getHexString(card[15, 2].data,
+                4, 10).substring(0, 19)
 
-        private fun getCardType(card: ClassicCard) = Utils.byteArrayToInt(card.getSector(15)
-                .getBlock(1).data, 10, 3)
+        private fun getCardType(card: ClassicCard) = Utils.byteArrayToInt(card[15, 1].data,
+                10, 3)
 
         private fun formatSerial(serial: String) = Utils.groupString(serial, " ", 4, 5, 5)
 
@@ -199,17 +199,15 @@ data class ZolotayaKoronaTransitData internal constructor(
             override fun parseTransitData(classicCard: ClassicCard): TransitData {
                 val cardType = getCardType(classicCard)
 
-                val sector4 = classicCard.getSector(4)
-                val sector6 = classicCard.getSector(6)
-                val balance = if (sector6 is UnauthorizedClassicSector) null else
-                    Utils.byteArrayToIntReversed(sector6.getBlock(0).data, 0, 4)
+                val balance = if (classicCard[6] is UnauthorizedClassicSector) null else
+                    Utils.byteArrayToIntReversed(classicCard[6, 0].data, 0, 4)
 
-                val refill = ZolotayaKoronaRefill.parse(sector4.getBlock(1).data, cardType)
-                val trip = ZolotayaKoronaTrip.parse(sector4.getBlock(2).data, cardType, refill, balance)
+                val refill = ZolotayaKoronaRefill.parse(classicCard[4, 1].data, cardType)
+                val trip = ZolotayaKoronaTrip.parse(classicCard[4, 2].data, cardType, refill, balance)
 
                 return ZolotayaKoronaTransitData(
                         mSerial = getSerial(classicCard),
-                        mCardSerial = Utils.getHexString(classicCard.getSector(0).getBlock(0).data, 0, 4),
+                        mCardSerial = Utils.getHexString(classicCard[0, 0].data, 0, 4),
                         mCardType = cardType,
                         mBalance = balance,
                         mTrip = trip,
@@ -217,9 +215,9 @@ data class ZolotayaKoronaTransitData internal constructor(
                 )
             }
 
-            override fun earlyCheck(sectors: MutableList<ClassicSector>): Boolean {
+            override fun earlyCheck(sectors: List<ClassicSector>): Boolean {
                 try {
-                    val toc = sectors[0].getBlock(1).data
+                    val toc = sectors[0][1].data
                     // Check toc entries for sectors 10,12,13,14 and 15
                     return Utils.byteArrayToInt(toc, 8, 2) == 0x18ee && Utils.byteArrayToInt(toc, 12, 2) == 0x18ee
                 } catch (ignored: IndexOutOfBoundsException) {
