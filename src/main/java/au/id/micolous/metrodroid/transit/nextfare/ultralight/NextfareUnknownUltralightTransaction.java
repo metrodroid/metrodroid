@@ -50,17 +50,6 @@ public class NextfareUnknownUltralightTransaction extends NextfareUltralightTran
         super(parcel);
     }
 
-    @NonNull
-    public List<String> getRouteNames() {
-        return Collections.singletonList(Integer.toHexString(mRoute));
-    }
-
-    public Station getStation() {
-        if (mLocation == 0)
-            return null;
-        return Station.unknown(mLocation);
-    }
-
     @Override
     protected TimeZone getTimezone() {
         return NextfareUnknownUltralightTransitData.TZ;

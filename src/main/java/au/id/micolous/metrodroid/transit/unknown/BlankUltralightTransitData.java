@@ -55,12 +55,6 @@ public class BlankUltralightTransitData extends TransitData {
     }
 
     public final static UltralightCardTransitFactory FACTORY = new UltralightCardTransitFactory() {
-        @NonNull
-        @Override
-        public List<CardInfo> getAllCards() {
-            return Collections.emptyList();
-        }
-
         /**
          * @param card Card to read.
          * @return true if all sectors on the card are blank.

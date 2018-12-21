@@ -54,12 +54,6 @@ public class UnauthorizedDesfireTransitData extends UnauthorizedTransitData {
             return false;
         }
 
-        @NonNull
-        @Override
-        public List<CardInfo> getAllCards() {
-            return Collections.emptyList();
-        }
-
         /**
          * This should be the last executed MIFARE DESFire check, after all the other checks are done.
          * <p>

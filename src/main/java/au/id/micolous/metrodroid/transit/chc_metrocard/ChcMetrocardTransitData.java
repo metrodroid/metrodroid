@@ -89,11 +89,6 @@ public class ChcMetrocardTransitData extends ErgTransitData {
             return new ChcMetrocardTransitData(classicCard);
         }
 
-        @Override
-        public int earlySectors() {
-            return 1;
-        }
-
         @NonNull
         @Override
         public List<CardInfo> getAllCards() {
