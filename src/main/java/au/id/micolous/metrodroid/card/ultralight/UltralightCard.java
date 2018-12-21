@@ -249,6 +249,17 @@ public class UltralightCard extends Card {
         return mPages.get(index);
     }
 
+    public byte[] readPages(int startPage, int pageCount) throws IndexOutOfBoundsException {
+        int readBlocks = 0;
+        byte[] data = new byte[pageCount * 4];
+        for (int index = startPage; index < (startPage + pageCount); index++) {
+            byte[] blockData = getPage(index).getData();
+            System.arraycopy(blockData, 0, data, readBlocks * 4, blockData.length);
+            readBlocks++;
+        }
+        return data;
+    }
+
     /**
      * Get the model of Ultralight card this is.
      *

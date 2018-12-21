@@ -122,10 +122,7 @@ public abstract class NextfareUltralightTransitData extends TransitData {
     }
 
     private static boolean isTransactionValid(UltralightCard card, int startPage) {
-        for (int i = 0; i < 3; i++)
-            if (!Utils.isAllZero(card.getPage(startPage + i).getData()))
-                return true;
-        return false;
+        return !Utils.isAllZero(card.readPages(startPage, 3));
     }
 
     protected abstract NextfareUltralightTransaction makeTransaction(UltralightCard card,
