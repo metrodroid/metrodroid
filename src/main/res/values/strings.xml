@@ -1131,7 +1131,11 @@
         <item quantity="one">%1$d trip remains on %2$s</item>
         <item quantity="other">%1$d trips remaining on %2$s</item>
     </plurals>
-    <string name="remaining_day_count">Days remaining</string>
+    <plurals name="remaining_day_count">
+        <item quantity="zero">No days remain</item>
+        <item quantity="one">1 day remains</item>
+        <item quantity="other">%d days remaining</item>
+    </plurals>
     <plurals name="travel_zones">
         <item quantity="one">Travel zone</item>
         <item quantity="other">Travel zones</item>

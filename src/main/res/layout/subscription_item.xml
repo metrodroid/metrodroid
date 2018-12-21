@@ -142,15 +142,27 @@
             android:layout_marginTop="8dp"
             android:gravity="end"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/valid"
+            app:layout_constraintTop_toBottomOf="@id/valid"
             tools:text="Remaining 5 trips out of 6" />
+
+        <TextView
+            android:id="@+id/days"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:layout_marginRight="8dp"
+            android:layout_marginTop="8dp"
+            android:gravity="end"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/trips"
+            tools:text="Remaining 5 days" />
 
         <android.support.constraint.Barrier
             android:id="@+id/barrier"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:barrierDirection="bottom"
-            app:constraint_referenced_ids="used,valid,trips"
+            app:constraint_referenced_ids="used,valid,trips,days"
             app:layout_constraintTop_toBottomOf="@id/name"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"

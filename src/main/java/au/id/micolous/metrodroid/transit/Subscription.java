@@ -434,11 +434,6 @@ public abstract class Subscription implements Parcelable {
                     getRemainingTripsInDayCount(), Utils.longDateFormat(lastUseTS))));
         }
 
-        if (getRemainingDayCount() != null) {
-            items.add(new ListItem(R.string.remaining_day_count,
-                    Integer.toString(getRemainingDayCount())));
-        }
-
         int[] zones = getZones();
         if (zones != null && zones.length > 0) {
             StringBuilder zones_list = new StringBuilder();
