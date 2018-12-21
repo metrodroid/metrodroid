@@ -137,12 +137,10 @@ public class TroikaTransitData implements Parcelable {
             ClassicSector sector = card.getSector(idx);
             if (sector instanceof UnauthorizedClassicSector)
                 return null;
-            byte[] block0 = sector.getBlock(0).getData();
-            if (!TroikaBlock.check(block0))
+            byte[] block = sector.readBlocks(0, 3);
+            if (!TroikaBlock.check(block))
                 return null;
-            byte[] rawData = Utils.concatByteArrays(block0, sector.getBlock(1).getData());
-            rawData = Utils.concatByteArrays(rawData, sector.getBlock(2).getData());
-            return TroikaBlock.parseBlock(rawData);
+            return TroikaBlock.parseBlock(block);
         } catch (Exception e) {
             e.printStackTrace();
             return null;
