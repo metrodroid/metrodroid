@@ -144,6 +144,11 @@ public class TMoneyCard extends ISO7816Application {
             return new TMoneyCard(appData,
                     Utils.byteArrayToInt(balanceResponse, 0, BALANCE_RESP_LEN));
         }
+
+        @Override
+        public Class<? extends ISO7816Application> getCardClass(@NonNull String type) {
+            return TMoneyCard.class;
+        }
     };
 
     public int getBalance() {

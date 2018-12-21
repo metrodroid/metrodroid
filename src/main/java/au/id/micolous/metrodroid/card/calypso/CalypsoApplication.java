@@ -111,6 +111,11 @@ public class CalypsoApplication extends ISO7816Application {
             return TYPE;
         }
 
+        @Override
+        public Class<? extends ISO7816Application> getCardClass(@NonNull String type) {
+            return CalypsoApplication.class;
+        }
+
         @NonNull
         @Override
         public ISO7816Application dumpTag(@NonNull ISO7816Protocol protocol, @NonNull ISO7816Info appData, @NonNull TagReaderFeedbackInterface feedbackInterface) {

@@ -6,6 +6,8 @@ import android.support.annotation.Nullable;
 import org.jetbrains.annotations.NonNls;
 
 import java.util.Collection;
+import java.util.Collections;
+import java.util.List;
 
 import au.id.micolous.metrodroid.card.TagReaderFeedbackInterface;
 
@@ -32,4 +34,11 @@ public interface ISO7816ApplicationFactory {
     @NonNull
     String getType();
 
+    @NonNls
+    @NonNull
+    default List<String> getTypes() {
+        return Collections.singletonList(getType());
+    }
+
+    Class<? extends ISO7816Application> getCardClass(String appType);
 }

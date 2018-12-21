@@ -152,6 +152,20 @@ public class ChinaCard extends ISO7816Application {
             return false;
         }
 
+        @NonNull
+        @Override
+        public List<String> getTypes() {
+            return Arrays.asList(
+                    TYPE,
+                    // For compatibility with old dumps
+                    "shenzhentong");
+        }
+
+        @Override
+        public Class<? extends ISO7816Application> getCardClass(@NonNull String name) {
+            return ChinaCard.class;
+        }
+
         /**
          * Dumps a China card in the field.
          * @param protocol Tag to dump.
