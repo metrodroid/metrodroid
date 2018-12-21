@@ -470,7 +470,7 @@ public class ClassicCard extends Card {
         return false;
     }
 
-    public static List<CardTransitFactory> getAllFactories() {
+    public static List<CardTransitFactory<ClassicCard>> getAllFactories() {
         return Arrays.asList(FACTORIES);
     }
 

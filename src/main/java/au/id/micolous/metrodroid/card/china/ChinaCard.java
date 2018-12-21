@@ -78,7 +78,7 @@ public class ChinaCard extends ISO7816Application {
     @ElementList(name = "balances", entry = "balance")
     private List<Balance> mBalances;
 
-    public static List<CardTransitFactory> getAllFactories() {
+    public static List<CardTransitFactory<ChinaCard>> getAllFactories() {
         return Arrays.asList(FACTORIES);
     }
 
