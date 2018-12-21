@@ -102,9 +102,6 @@ public class ISO7816Card extends Card {
              *
              */
 
-            // FIXME: At some point we want to make this an iteration over supported apps
-            // rather than copy-paste.
-
             // CEPAS specification makes selection by AID optional. I couldn't find an AID that
             // works on my cards. But CEPAS needs to have CEPAS app implicitly selected,
             // so try selecting its main file
