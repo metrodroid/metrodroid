@@ -48,9 +48,10 @@ import au.id.micolous.metrodroid.ui.ListItem;
 import au.id.micolous.metrodroid.util.Utils;
 
 public class BilheteUnicoSPTransitData extends TransitData {
-    public static final CardInfo CARD_INFO = new CardInfo.Builder()
+    private static final String NAME = "Bilhete Único";
+    private static final CardInfo CARD_INFO = new CardInfo.Builder()
             .setImageId(R.drawable.bilheteunicosp_card, R.drawable.bilheteunicosp_card_alpha)
-            .setName("Bilhete Único")
+            .setName(NAME)
             .setLocation(R.string.location_sao_paulo)
             .setCardType(CardType.MifareClassic)
             .setKeysRequired()
@@ -66,7 +67,6 @@ public class BilheteUnicoSPTransitData extends TransitData {
             return new BilheteUnicoSPTransitData[size];
         }
     };
-    private static final String NAME = "Bilhete Único";
     private final int mCredit;
     private final int mTransactionCounter;
     private final int mRefillTransactionCounter;
