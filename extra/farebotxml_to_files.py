@@ -67,7 +67,7 @@ def zipify(input_xml, output_zipf, mfcdump, mobib):
   if mobib:
       output_zipf = codecs.getwriter('ascii')(output_zipf)
   elif not mfcdump:
-    output_zip = ZipFile(output_zipf, 'w')
+    output_zip = ZipFile(output_zipf, 'w', allowZip64 = True)
   xml = objectify.parse(input_xml)
   root = xml.getroot()
   if root.tag == 'cards':
