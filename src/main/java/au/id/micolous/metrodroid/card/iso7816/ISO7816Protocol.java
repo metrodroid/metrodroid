@@ -22,6 +22,7 @@ package au.id.micolous.metrodroid.card.iso7816;
 import android.nfc.tech.IsoDep;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.annotation.VisibleForTesting;
 import android.util.Log;
 
 import java.io.EOFException;
@@ -49,16 +50,35 @@ public class ISO7816Protocol {
     /**
      * If true, this turns on debug logs that show ISO7816 communication.
      */
-    private static final boolean ENABLE_TRACING = false;
+    private static final boolean ENABLE_TRACING = true;
 
-    private static final String TAG = ISO7816Protocol.class.getName();
-    private static final byte CLASS_ISO7816 = (byte) 0x00;
+    private static final String TAG = ISO7816Protocol.class.getSimpleName();
+    @VisibleForTesting
+    public static final byte CLASS_ISO7816 = (byte) 0x00;
     public static final byte CLASS_80 = (byte) 0x80;
     public static final byte CLASS_90 = (byte) 0x90;
 
-    private static final byte INSTRUCTION_ISO7816_SELECT = (byte) 0xA4;
-    private static final byte INSTRUCTION_ISO7816_READ_BINARY = (byte) 0xB0;
-    private static final byte INSTRUCTION_ISO7816_READ_RECORD = (byte) 0xB2;
+    @VisibleForTesting
+    public static final byte INSTRUCTION_ISO7816_SELECT = (byte) 0xA4;
+    @VisibleForTesting
+    public static final byte INSTRUCTION_ISO7816_READ_BINARY = (byte) 0xB0;
+    @VisibleForTesting
+    public static final byte INSTRUCTION_ISO7816_READ_RECORD = (byte) 0xB2;
+    @VisibleForTesting
+    public static final byte ERROR_COMMAND_NOT_ALLOWED = (byte) 0x69;
+    @VisibleForTesting
+    public static final byte ERROR_WRONG_PARAMETERS = (byte) 0x6A;
+    @VisibleForTesting
+    public static final byte CNA_NO_CURRENT_EF = (byte) 0x86;
+    @VisibleForTesting
+    public static final byte WP_FILE_NOT_FOUND = (byte) 0x82;
+    @VisibleForTesting
+    public static final byte WP_RECORD_NOT_FOUND = (byte) 0x83;
+    @VisibleForTesting
+    public static final byte SELECT_BY_NAME = (byte) 0x04;
+    @VisibleForTesting
+    public static final byte STATUS_OK = (byte) 0x90;
+
 
     private final CardTransceiver mTagTech;
 
@@ -131,21 +151,21 @@ public class ISO7816Protocol {
         byte sw1 = recvBuffer[recvBuffer.length - 2];
         byte sw2 = recvBuffer[recvBuffer.length - 1];
 
-        if (sw1 != (byte) 0x90) {
+        if (sw1 != STATUS_OK) {
             switch (sw1) {
-                case (byte) 0x69: // Command not allowed
+                case ERROR_COMMAND_NOT_ALLOWED: // Command not allowed
                     switch (sw2) {
-                        case (byte) 0x86: // Command not allowed (no current EF)
+                        case CNA_NO_CURRENT_EF: // Command not allowed (no current EF)
                             // Emitted by Android HCE when doing a CEPAS probe
                             throw new IllegalStateException();
                     }
                     break;
 
-                case (byte) 0x6A: // Wrong Parameters P1 - P2
+                case ERROR_WRONG_PARAMETERS: // Wrong Parameters P1 - P2
                     switch (sw2) {
-                        case (byte) 0x82: // File not found
+                        case WP_FILE_NOT_FOUND: // File not found
                             throw new FileNotFoundException();
-                        case (byte) 0x83: // Record not found
+                        case WP_RECORD_NOT_FOUND: // Record not found
                             throw new EOFException();
                     }
                     break;
@@ -163,7 +183,7 @@ public class ISO7816Protocol {
         Log.d(TAG, "Select by name " + Utils.getHexString(name));
         // Select an application by file name
         return sendRequest(CLASS_ISO7816, INSTRUCTION_ISO7816_SELECT,
-                    (byte) 0x04 /* byName */, nextOccurrence ? (byte) 0x02 : (byte) 0x00, (byte) 0,
+                SELECT_BY_NAME, nextOccurrence ? (byte) 0x02 : (byte) 0x00, (byte) 0,
                     name);
     }
 
@@ -181,6 +201,7 @@ public class ISO7816Protocol {
                     file);
     }
 
+    @Nullable
     public byte[] readRecord(byte recordNumber, byte length) throws IOException {
         byte[] ret;
         //noinspection StringConcatenation
@@ -196,6 +217,7 @@ public class ISO7816Protocol {
         }
     }
 
+    @Nullable
     public byte[] readBinary() throws IOException {
         byte[] ret;
         Log.d(TAG, "Read binary");
@@ -218,6 +240,7 @@ public class ISO7816Protocol {
         }
     }
 
+    @Nullable
     public byte[] readBinary(byte sfi) throws IOException {
         byte[] ret;
         Log.d(TAG, "Read binary");
@@ -230,6 +253,7 @@ public class ISO7816Protocol {
         }
     }
 
+    @Nullable
     public byte[] readRecord(byte sfi, byte recordNumber, byte length) throws IOException {
         byte[] ret;
         //noinspection StringConcatenation

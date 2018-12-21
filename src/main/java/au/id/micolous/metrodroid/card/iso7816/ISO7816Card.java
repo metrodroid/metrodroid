@@ -22,6 +22,7 @@ package au.id.micolous.metrodroid.card.iso7816;
 import android.nfc.Tag;
 import android.nfc.TagLostException;
 import android.nfc.tech.IsoDep;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.util.Log;
 
@@ -32,6 +33,7 @@ import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
+import java.util.Collections;
 import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.Locale;
@@ -74,7 +76,7 @@ public class ISO7816Card extends Card {
     
     protected ISO7816Card() { /* For XML Serializer */ }
 
-    public ISO7816Card(List<ISO7816Application> apps, ImmutableByteArray tagId, Calendar scannedAt, boolean partialRead) {
+    public ISO7816Card(@NonNull List<ISO7816Application> apps, ImmutableByteArray tagId, Calendar scannedAt, boolean partialRead) {
         super(CardType.ISO7816, tagId, scannedAt, partialRead);
         mApplications = apps;
     }
@@ -211,5 +213,9 @@ public class ISO7816Card extends Card {
                     appTitle), null, rawAppData));
         }
         return rawData;
+    }
+
+    public List<ISO7816Application> getApplications() {
+        return Collections.unmodifiableList(mApplications);
     }
 }

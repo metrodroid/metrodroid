@@ -90,4 +90,12 @@ public class ISO7816Selector {
             sels.add(new ISO7816SelectorById(el));
         return new ISO7816Selector(sels);
     }
+
+    public ISO7816Selector appendPath(int... path) {
+        List<ISO7816SelectorElement> sels = new ArrayList<>(mFullPath);
+        for (int el : path) {
+            sels.add(new ISO7816SelectorById(el));
+        }
+        return new ISO7816Selector(sels);
+    }
 }
