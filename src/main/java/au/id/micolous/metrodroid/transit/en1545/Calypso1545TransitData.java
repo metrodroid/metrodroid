@@ -54,7 +54,7 @@ public abstract class Calypso1545TransitData extends En1545TransitData {
 
     protected Calypso1545TransitData(CalypsoApplication card, En1545Container ticketEnvHolderFields, En1545Field contractListFields, String serial) {
         mSerial = serial;
-        byte ticketEnv[] = new byte[]{};
+        byte ticketEnv[] = {};
         for (ISO7816Record record : card.getFile(CalypsoApplication.File.TICKETING_ENVIRONMENT)
                 .getRecords()) {
             ticketEnv = Utils.concatByteArrays(ticketEnv, record.getData());

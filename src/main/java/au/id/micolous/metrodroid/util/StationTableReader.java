@@ -55,7 +55,7 @@ import au.id.micolous.metrodroid.transit.Trip;
  * repository.
  */
 public class StationTableReader {
-    private static final byte[] MAGIC = new byte[] { 0x4d, 0x64, 0x53, 0x54 };
+    private static final byte[] MAGIC = { 0x4d, 0x64, 0x53, 0x54 };
     private static final int VERSION = 1;
     private static final String TAG = "StationTableReader";
 

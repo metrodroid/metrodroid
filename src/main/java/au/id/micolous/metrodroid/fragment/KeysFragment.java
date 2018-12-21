@@ -229,7 +229,7 @@ public class KeysFragment extends ListFragment implements AdapterView.OnItemLong
             // In Android 4.4 and later, we can say the right thing!
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
                 i.setType("*/*");
-                String[] mimetypes = new String[]{"application/json", "application/octet-stream", "application/x-extension-bin"};
+                String[] mimetypes = {"application/json", "application/octet-stream", "application/x-extension-bin"};
                 i.putExtra(Intent.EXTRA_MIME_TYPES, mimetypes);
             } else {
                 // Failsafe, used in the emulator for local files
