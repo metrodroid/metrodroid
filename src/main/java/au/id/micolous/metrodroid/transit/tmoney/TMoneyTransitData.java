@@ -72,7 +72,7 @@ public class TMoneyTransitData extends TransitData {
         mBalance = tMoneyCard.getBalance();
         mDate = parseDate(tMoneyCard);
         mTrips = new ArrayList<>();
-        for (ISO7816Record record : tMoneyCard.getFile(ISO7816Selector.makeSelector(TMoneyCard.FILE_NAME, 4)).getRecords()) {
+        for (ISO7816Record record : tMoneyCard.getTransactionRecords()) {
             TMoneyTrip t = TMoneyTrip.parseTrip(record.getData());
             if (t == null)
                 continue;
