@@ -45,7 +45,7 @@ internal data class ZolotayaKoronaTrip(private val mValidator: String,
 
     override fun getStartTimestamp() = ZolotayaKoronaTransitData.parseTime(mTime, mCardType)
 
-    override fun getVehicleID() = "J$mValidator"
+    override fun getMachineID() = "J$mValidator"
 
     override fun getFare(): TransitCurrency? {
         if (mNextBalance != null) {

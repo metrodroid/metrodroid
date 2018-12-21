@@ -62,7 +62,7 @@ public class ClipperRefill extends Trip implements Comparable<ClipperRefill> {
     }
 
     @Override
-    public String getVehicleID() {
+    public String getMachineID() {
         return mMachineID;
     }
 

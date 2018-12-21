@@ -29,10 +29,10 @@ internal data class ZolotayaKoronaRefill(internal val mTime: Int,
                                          internal val mAmount: Int,
                                          internal val mCounter: Int,
                                          private val mCardType: Int,
-                                         private val mVehicle: Int) : Trip() {
+                                         private val mMachineID: Int) : Trip() {
     override fun getStartTimestamp() = ZolotayaKoronaTransitData.parseTime(mTime, mCardType)
 
-    override fun getVehicleID() = "J$mVehicle"
+    override fun getMachineID() = "J$mMachineID"
 
     override fun getFare() = TransitCurrency.RUB(-mAmount)
 
@@ -50,7 +50,7 @@ internal data class ZolotayaKoronaRefill(internal val mTime: Int,
             return ZolotayaKoronaRefill(
                     // Where are higher bits?
                     // We guess it but we don't know yet
-                    mVehicle = Utils.byteArrayToIntReversed(block, 1, 2)
+                    mMachineID = Utils.byteArrayToIntReversed(block, 1, 2)
                             or (guessedHighBits shl 16),
                     mTime = Utils.byteArrayToIntReversed(block, 3, 4),
                     mAmount = Utils.byteArrayToIntReversed(block, 7, 4),
