@@ -62,31 +62,31 @@ public class ExpandableListFragment extends Fragment implements OnCreateContextM
         ExpandableListView.OnChildClickListener, ExpandableListView.OnGroupCollapseListener,
         ExpandableListView.OnGroupExpandListener {
 
-    static final int INTERNAL_EMPTY_ID = 0x00ff0001;
+    private static final int INTERNAL_EMPTY_ID = 0x00ff0001;
 
     private final Handler mHandler = new Handler();
     private final AdapterView.OnItemClickListener mOnClickListener
             = (parent, v, position, id) -> onListItemClick((ListView) parent, v, position, id);
     private final ExpandableListView.OnChildClickListener mOnChildClickListener
             = this::onListChildClick;
-    ExpandableListAdapter mAdapter;
-    ExpandableListView mList;
+    private ExpandableListAdapter mAdapter;
+    private ExpandableListView mList;
     private final Runnable mRequestFocus = new Runnable() {
         public void run() {
             mList.focusableViewAvailable(mList);
         }
     };
-    View mEmptyView;
-    TextView mStandardEmptyView;
-    View mListContainer;
-    boolean mSetEmptyText;
-    boolean mListShown;
-    boolean mFinishedStart = false;
+    private View mEmptyView;
+    private TextView mStandardEmptyView;
+    private View mListContainer;
+    private boolean mSetEmptyText;
+    private boolean mListShown;
+    private boolean mFinishedStart = false;
 
     public ExpandableListFragment() {
     }
 
-    public View getListView() {
+    View getListView() {
         ensureList();
         return mList;
     }

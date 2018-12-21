@@ -46,10 +46,10 @@ public class ErgTrip extends Trip {
         }
     };
 
-    protected GregorianCalendar mEpoch;
-    protected ErgPurseRecord mPurse;
+    private final Calendar mEpoch;
+    private final ErgPurseRecord mPurse;
     @NonNull
-    protected String mCurrency;
+    private final String mCurrency;
 
     public ErgTrip(ErgPurseRecord purse, GregorianCalendar epoch, @NonNull String currency) {
         mPurse = purse;
