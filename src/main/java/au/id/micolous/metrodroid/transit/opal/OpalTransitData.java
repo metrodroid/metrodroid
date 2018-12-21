@@ -123,8 +123,7 @@ public class OpalTransitData extends TransitData {
         mLastDigit = parcel.readInt();
     }
 
-    public OpalTransitData(Card card) {
-        DesfireCard desfireCard = (DesfireCard) card;
+    private OpalTransitData(DesfireCard desfireCard) {
         byte[] data = desfireCard.getApplication(APP_ID).getFile(FILE_ID).getData();
 
         data = Utils.reverseBuffer(data, 0, 16);

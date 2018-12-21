@@ -113,9 +113,8 @@ public class ClipperTransitData extends TransitData {
         parcel.readTypedArray(mRefills, ClipperRefill.CREATOR);
     }
 
-    public ClipperTransitData(Card card) {
+    private ClipperTransitData(DesfireCard desfireCard) {
         int expiry;
-        DesfireCard desfireCard = (DesfireCard) card;
 
         byte[] data;
 

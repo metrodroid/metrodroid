@@ -141,9 +141,7 @@ public class HSLTransitData extends TransitData implements Parcelable {
         parcel.readTypedList(mTrips, HSLTrip.CREATOR);
     }
 
-    public HSLTransitData(Card card) {
-        DesfireCard desfireCard = (DesfireCard) card;
-
+    private HSLTransitData(DesfireCard desfireCard) {
         byte[] data;
 
         try {
