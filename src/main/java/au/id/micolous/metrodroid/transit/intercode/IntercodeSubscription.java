@@ -61,7 +61,7 @@ public class IntercodeSubscription extends En1545Subscription {
                     new En1545FixedInteger(CONTRACT_PASSENGER_CLASS, 8),
                     new En1545FixedInteger(CONTRACT_PASSENGER_TOTAL, 8)
             ),
-            new En1545FixedInteger("ContractVehiculeClassAllowed", 6),
+            new En1545FixedInteger(CONTRACT_VEHICULE_CLASS_ALLOWED, 6),
             new En1545FixedInteger("ContractPaymentPointer", 32),
             new En1545FixedInteger(CONTRACT_PAY_METHOD, 11),
             new En1545FixedInteger("ContractServices", 16),
@@ -72,7 +72,7 @@ public class IntercodeSubscription extends En1545Subscription {
                     En1545FixedInteger.time("ContractRestrictEnd"),
                     new En1545FixedInteger("ContractRestrictDay", 8),
                     new En1545FixedInteger("ContractRestrictTimeCode", 8),
-                    new En1545FixedInteger("ContractRestrictCode", 8),
+                    new En1545FixedInteger(CONTRACT_RESTRICT_CODE, 8),
                     new En1545FixedInteger("ContractRestrictProduct", 16),
                     new En1545FixedInteger("ContractRestrictLocation", 16)
             ),
@@ -81,7 +81,7 @@ public class IntercodeSubscription extends En1545Subscription {
                     En1545FixedInteger.time(CONTRACT_START),
                     En1545FixedInteger.date(CONTRACT_END),
                     En1545FixedInteger.time(CONTRACT_END),
-                    new En1545FixedInteger("ContractDuration", 8),
+                    new En1545FixedInteger(CONTRACT_DURATION, 8),
                     En1545FixedInteger.date("ContractLimit"),
                     new En1545FixedInteger(CONTRACT_ZONES, 8),
                     new En1545FixedInteger(CONTRACT_JOURNEYS, 16),
@@ -95,7 +95,7 @@ public class IntercodeSubscription extends En1545Subscription {
                     new En1545FixedInteger("ContractRun", 16),
                     new En1545FixedInteger("ContractVia", 16),
                     new En1545FixedInteger("ContractDistance", 16),
-                    new En1545FixedInteger("ContractInterchange", 8)
+                    new En1545FixedInteger(CONTRACT_INTERCHANGE, 8)
             ),
             new En1545Bitmap(
                     En1545FixedInteger.date(CONTRACT_SALE),
@@ -143,17 +143,17 @@ public class IntercodeSubscription extends En1545Subscription {
             new En1545FixedInteger("ContractEndPeriod", 14),
             new En1545FixedInteger("ContractSoldPeriod", 6)
     );
-    public static final En1545FixedInteger PASSENGER_COUNTER = new En1545FixedInteger(CONTRACT_PASSENGER_TOTAL, 6);
+    private static final En1545FixedInteger PASSENGER_COUNTER = new En1545FixedInteger(CONTRACT_PASSENGER_TOTAL, 6);
 
-    public static final En1545FixedInteger ZONE_MASK = new En1545FixedInteger(CONTRACT_ZONES, 16);
-    public static final En1545Container OVD1_CONTAINER = new En1545Container(
-            new En1545FixedInteger("ContractOrigin1", 16),
-            new En1545FixedInteger("ContractVia1", 16),
-            new En1545FixedInteger("ContractDestination1", 16)
+    private static final En1545FixedInteger ZONE_MASK = new En1545FixedInteger(CONTRACT_ZONES, 16);
+    private static final En1545Container OVD1_CONTAINER = new En1545Container(
+            new En1545FixedInteger(CONTRACT_ORIGIN_1, 16),
+            new En1545FixedInteger(CONTRACT_VIA_1, 16),
+            new En1545FixedInteger(CONTRACT_DESTINATION_1, 16)
     );
-    public static final En1545Container OD2_CONTAINER = new En1545Container(
-            new En1545FixedInteger("ContractOrigin2", 16),
-            new En1545FixedInteger("ContractDestination2", 16)
+    private static final En1545Container OD2_CONTAINER = new En1545Container(
+            new En1545FixedInteger(CONTRACT_ORIGIN_2, 16),
+            new En1545FixedInteger(CONTRACT_DESTINATION_2, 16)
     );
     private static final En1545Field subFieldsType20 = commonFormat(
             new En1545Bitmap(
@@ -165,8 +165,8 @@ public class IntercodeSubscription extends En1545Subscription {
                     PASSENGER_COUNTER,
                     PERIOD_CONTAINER,
                     SOLD_CONTAINER,
-                    new En1545FixedInteger("ContractVehiculeClassAllowed", 4),
-                    new En1545FixedInteger("LinkedContract", 5)
+                    new En1545FixedInteger(CONTRACT_VEHICULE_CLASS_ALLOWED, 4),
+                    new En1545FixedInteger(LINKED_CONTRACT, 5)
             )
     );
     private static final En1545Field subFieldsType46 = commonFormat(
@@ -179,8 +179,8 @@ public class IntercodeSubscription extends En1545Subscription {
                     PASSENGER_COUNTER,
                     PERIOD_CONTAINER,
                     SOLD_CONTAINER,
-                    new En1545FixedInteger("ContractVehiculeClassAllowed", 4),
-                    new En1545FixedInteger("LinkedContract", 5),
+                    new En1545FixedInteger(CONTRACT_VEHICULE_CLASS_ALLOWED, 4),
+                    new En1545FixedInteger(LINKED_CONTRACT, 5),
                     En1545FixedInteger.time(CONTRACT_START),
                     En1545FixedInteger.time(CONTRACT_END),
                     En1545FixedInteger.date("ContractDataEndInhibition"),

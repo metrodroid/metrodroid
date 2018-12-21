@@ -46,14 +46,14 @@ public class AdelaideSubscription extends En1545Subscription {
                             new En1545Bitmap(
                                     // Unconfirmed
                                     new En1545Container(
-                                            new En1545FixedInteger("ContractOrigin1", 16),
-                                            new En1545FixedInteger("ContractVia1", 16),
-                                            new En1545FixedInteger("ContractDestination1", 16)
+                                            new En1545FixedInteger(CONTRACT_ORIGIN_1, 16),
+                                            new En1545FixedInteger(CONTRACT_VIA_1, 16),
+                                            new En1545FixedInteger(CONTRACT_DESTINATION_1, 16)
                                     ),
                                     // Unconfirmed
                                     new En1545Container(
-                                            new En1545FixedInteger("ContractOrigin2", 16),
-                                            new En1545FixedInteger("ContractDestination2", 16)
+                                            new En1545FixedInteger(CONTRACT_ORIGIN_2, 16),
+                                            new En1545FixedInteger(CONTRACT_DESTINATION_2, 16)
                                     ),
                                     // Unconfirmed
                                     new En1545FixedInteger(CONTRACT_ZONES, 16),
