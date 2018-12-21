@@ -19,6 +19,7 @@
 
 package au.id.micolous.metrodroid.activity;
 
+import android.app.ActionBar;
 import android.app.Activity;
 import android.content.res.TypedArray;
 import android.os.Bundle;
@@ -50,6 +51,13 @@ public abstract class MetrodroidActivity extends Activity {
             theme = baseTheme;
         setTheme(theme);
         super.onCreate(savedInstanceState);
+    }
+
+    protected void setDisplayHomeAsUpEnabled(boolean b) {
+        ActionBar ab = getActionBar();
+        if (ab == null)
+            return;
+        ab.setDisplayHomeAsUpEnabled(b);
     }
 
     @Override

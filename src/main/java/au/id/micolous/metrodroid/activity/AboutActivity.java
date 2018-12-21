@@ -41,8 +41,7 @@ public class AboutActivity extends MetrodroidActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_about);
 
-        ActionBar actionBar = getActionBar();
-        actionBar.setDisplayHomeAsUpEnabled(true);
+        setDisplayHomeAsUpEnabled(true);
 
         ((TextView) this.findViewById(R.id.lblDebugText)).setText(Utils.getDeviceInfoString());
 
