@@ -77,6 +77,7 @@ public class ISO7816Protocol {
      * @param parameters Additional data to be send in a command.
      * @return A wrapped command.
      */
+    @NonNull
     private byte[] wrapMessage(byte cla, byte ins, byte p1, byte p2, byte length, byte... parameters) {
         byte[] output = new byte[5 + (parameters.length == 0 ? 0 : 1 + parameters.length)];
         output[0] = cla;
@@ -109,6 +110,7 @@ public class ISO7816Protocol {
      * @throws ISO7816Exception If there is an unhandled error code
      * @return A wrapped command.
      */
+    @NonNull
     public byte[] sendRequest(byte cla, byte ins, byte p1, byte p2, byte length, byte... parameters) throws IOException, ISO7816Exception {
         byte[] sendBuffer = wrapMessage(cla, ins, p1, p2, length, parameters);
         if (ENABLE_TRACING) {
@@ -210,6 +212,7 @@ public class ISO7816Protocol {
         }
     }
 
+    @Nullable
     public byte[] selectByNameOrNull(@NonNull byte[] name) {
         try {
             return selectByName(name, false);

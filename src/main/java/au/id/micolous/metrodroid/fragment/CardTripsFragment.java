@@ -30,6 +30,7 @@ import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.StringRes;
 import android.support.v7.content.res.AppCompatResources;
 import android.text.Spannable;
@@ -144,7 +145,8 @@ public class CardTripsFragment extends ListFragment {
         }
 
         @Override
-        public View getView(int position, View convertView, ViewGroup parent) {
+        @NonNull
+        public View getView(int position, View convertView, @NonNull ViewGroup parent) {
             Activity activity = (Activity) getContext();
             LayoutInflater inflater = activity.getLayoutInflater();
             boolean localisePlaces = MetrodroidApplication.localisePlaces();

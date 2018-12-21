@@ -264,7 +264,7 @@ public class IntercodeTransitData extends Calypso1545TransitData {
 
         @NonNull
         @Override
-        public TransitIdentity parseTransitIdentity(CalypsoApplication card) {
+        public TransitIdentity parseTransitIdentity(@NonNull CalypsoApplication card) {
             int netId = getNetId(card);
             return new TransitIdentity(getCardName(netId), getSerial(netId, card));
         }
@@ -281,7 +281,7 @@ public class IntercodeTransitData extends Calypso1545TransitData {
 
         @NonNull
         @Override
-        public IntercodeTransitData parseTransitData(CalypsoApplication card) {
+        public IntercodeTransitData parseTransitData(@NonNull CalypsoApplication card) {
             return new IntercodeTransitData(card);
         }
 

@@ -18,6 +18,7 @@
  */
 package au.id.micolous.metrodroid.transit.nextfare.record;
 
+import android.support.annotation.NonNull;
 import android.util.Log;
 
 import au.id.micolous.metrodroid.util.Utils;
@@ -82,7 +83,7 @@ public class NextfareBalanceRecord extends NextfareRecord implements Comparable<
     }
 
     @Override
-    public int compareTo(NextfareBalanceRecord rhs) {
+    public int compareTo(@NonNull NextfareBalanceRecord rhs) {
         // So sorting works, we reverse the order so highest number is first.
         return Integer.compare(rhs.mVersion, this.mVersion);
     }

@@ -205,7 +205,7 @@ public class MobibTransitData extends Calypso1545TransitData {
 
         @NonNull
         @Override
-        public TransitIdentity parseTransitIdentity(CalypsoApplication card) {
+        public TransitIdentity parseTransitIdentity(@NonNull CalypsoApplication card) {
             return new TransitIdentity(NAME, getSerial(card));
         }
 
@@ -226,7 +226,7 @@ public class MobibTransitData extends Calypso1545TransitData {
 
         @NonNull
         @Override
-        public MobibTransitData parseTransitData(CalypsoApplication card) {
+        public MobibTransitData parseTransitData(@NonNull CalypsoApplication card) {
             return new MobibTransitData(card);
         }
     };

@@ -21,6 +21,7 @@ package au.id.micolous.metrodroid.transit;
 
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.support.annotation.NonNull;
 
 import java.util.Calendar;
 
@@ -28,6 +29,7 @@ import au.id.micolous.metrodroid.util.Utils;
 
 public class TransitBalanceStored extends TransitBalance implements Parcelable {
     private final Calendar mValidityStart;
+    @NonNull
     private final TransitCurrency mBal;
     private final String mName;
     private final Calendar mExpiry;
@@ -44,14 +46,14 @@ public class TransitBalanceStored extends TransitBalance implements Parcelable {
         this(bal, name, null, expiry);
     }
 
-    public TransitBalanceStored(TransitCurrency bal, String name, Calendar validityStart, Calendar expiry) {
+    public TransitBalanceStored(@NonNull TransitCurrency bal, String name, Calendar validityStart, Calendar expiry) {
         mBal = bal;
         mName = name;
         mExpiry = expiry;
         mValidityStart = validityStart;
     }
 
-    protected TransitBalanceStored(Parcel in) {
+    private TransitBalanceStored(Parcel in) {
         mBal = in.readParcelable(TransitCurrency.class.getClassLoader());
         if (in.readInt() != 0) {
             mName = in.readString();
@@ -91,6 +93,7 @@ public class TransitBalanceStored extends TransitBalance implements Parcelable {
     };
 
     @Override
+    @NonNull
     public TransitCurrency getBalance() {
         return mBal;
     }

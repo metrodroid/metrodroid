@@ -80,7 +80,7 @@ data class EasyCardTransitData internal constructor(
         internal const val EASYCARD_STR = "easycard"
 
         private fun parseBalance(card: ClassicCard): Int {
-            val data = (card.getSector(2))?.getBlock(0)?.data
+            val data = (card.getSector(2))?.getBlock(0)?.data ?: return 0
             return Utils.byteArrayToIntReversed(data, 0, 4)
         }
 

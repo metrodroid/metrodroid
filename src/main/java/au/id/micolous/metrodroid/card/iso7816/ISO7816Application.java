@@ -19,6 +19,7 @@
  */
 package au.id.micolous.metrodroid.card.iso7816;
 
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.util.Log;
 
@@ -89,7 +90,8 @@ public class ISO7816Application {
         return null;
     }
 
-    public String nameFile(ISO7816Selector selector) {
+    @Nullable
+    protected String nameFile(ISO7816Selector selector) {
         return null;
     }
  
@@ -112,14 +114,16 @@ public class ISO7816Application {
     }
 
     public static class ISO7816Info {
+        @Nullable
         private final byte []mApplicationData;
+        @Nullable
         private final byte []mApplicationName;
         private final List<ISO7816File> mFiles;
         private final byte[] mTagId;
         private final String mType;
         private final Map<Integer, ISO7816File> mSfiFiles;
 
-        ISO7816Info(byte []applicationData, byte []applicationName, byte []tagId, String type) {
+        public ISO7816Info(@Nullable byte []applicationData, @Nullable byte []applicationName, byte []tagId, String type) {
             mApplicationData = applicationData;
             mApplicationName = applicationName;
             mTagId = tagId;
@@ -268,7 +272,8 @@ public class ISO7816Application {
                 Utils.byteArrayToInt(buf, p + 1, numfollowingbytes)};
     }
 
-    public static byte[] findBERTLV(byte[] buf, int targetLeadBits, int targetId, boolean keepHeader) {
+    @Nullable
+    public static byte[] findBERTLV(@NonNull byte[] buf, int targetLeadBits, int targetId, boolean keepHeader) {
         // Skip ID
         int p = decodeTLVID(buf, 0)[2];
         int[]lenfieldhead = decodeTLVLen(buf, p);

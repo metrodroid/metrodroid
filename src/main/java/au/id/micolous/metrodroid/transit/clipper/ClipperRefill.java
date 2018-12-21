@@ -21,6 +21,7 @@
 package au.id.micolous.metrodroid.transit.clipper;
 
 import android.os.Parcel;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.util.Log;
 
@@ -101,7 +102,7 @@ public class ClipperRefill extends Trip implements Comparable<ClipperRefill> {
     }
 
     @Override
-    public int compareTo(ClipperRefill other) {
+    public int compareTo(@NonNull ClipperRefill other) {
         return this.mTimestamp.compareTo(other.mTimestamp);
     }
 }

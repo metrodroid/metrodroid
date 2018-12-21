@@ -23,6 +23,7 @@ package au.id.micolous.metrodroid.fragment;
 import android.app.ListFragment;
 import android.content.Context;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v7.content.res.AppCompatResources;
 import android.text.Spanned;
 import android.util.Log;
@@ -82,7 +83,8 @@ public class CardBalanceFragment extends ListFragment {
         }
 
         @Override
-        public View getView(int position, View convertView, ViewGroup parent) {
+        @NonNull
+        public View getView(int position, View convertView, @NonNull ViewGroup parent) {
             Object item = getItem(position);
 
             if (item == null) {

@@ -177,12 +177,14 @@ public class Utils {
     }
 
     @NonNls
-    public static String getHexString(byte[] b) {
+    @NonNull
+    public static String getHexString(@NonNull byte[] b) {
         return getHexString(b, 0, b.length);
     }
 
     @NonNls
-    public static String getHexString(byte[] b, int offset, int length) {
+    @NonNull
+    public static String getHexString(@NonNull byte[] b, int offset, int length) {
         StringBuilder result = new StringBuilder();
         for (int i = offset; i < offset + length; i++) {
             result.append(Integer.toString((b[i] & 0xff) + 0x100, 16).substring(1));
@@ -191,7 +193,8 @@ public class Utils {
     }
 
     @NonNls
-    public static String getHexString(byte[] b, String defaultResult) {
+    @NonNull
+    public static String getHexString(@NonNull byte[] b, String defaultResult) {
         try {
             return getHexString(b);
         } catch (Exception ex) {
@@ -199,13 +202,14 @@ public class Utils {
         }
     }
 
-    public static SpannableString getHexDump(byte[] b) {
+    @NonNull
+    public static SpannableString getHexDump(@NonNull byte[] b) {
         return getHexDump(b, 0, b.length);
     }
 
     @NonNull
     @SuppressWarnings({"StringConcatenation", "MagicCharacter"})
-    public static SpannableString getHexDump(byte[] b, int offset, int length) {
+    public static SpannableString getHexDump(@NonNull byte[] b, int offset, int length) {
         StringBuilder result = new StringBuilder();
         int alen;
         if (length <= 16)
@@ -228,7 +232,8 @@ public class Utils {
         return s;
     }
 
-    public static SpannableString getHexDump(byte[] b, String defaultResult) {
+    @NonNull
+    public static SpannableString getHexDump(@NonNull byte[] b, String defaultResult) {
         try {
             return getHexDump(b);
         } catch (Exception ex) {
@@ -236,7 +241,8 @@ public class Utils {
         }
     }
 
-    public static byte[] hexStringToByteArray(String s) {
+    @NonNull
+    public static byte[] hexStringToByteArray(@NonNull String s) {
         if ((s.length() % 2) != 0) {
             throw new IllegalArgumentException("Bad input string: " + s);
         }
@@ -256,7 +262,8 @@ public class Utils {
      * @param s String to convert.
      * @return byte array with string as US-ASCII
      */
-    public static byte[] stringToByteArray(String s) {
+    @NonNull
+    public static byte[] stringToByteArray(@NonNull  String s) {
         return s.getBytes(getASCII());
     }
 
@@ -266,7 +273,8 @@ public class Utils {
      * @param s String to convert.
      * @return byte array with string as US-ASCII
      */
-    public static byte[] stringToUtf8(String s) {
+    @NonNull
+    public static byte[] stringToUtf8(@NonNull String s) {
         return s.getBytes(getUTF8());
     }
 
@@ -296,27 +304,27 @@ public class Utils {
     }
     */
 
-    public static int byteArrayToInt(byte[] b) {
+    public static int byteArrayToInt(@NonNull byte[] b) {
         return byteArrayToInt(b, 0, b.length);
     }
 
-    public static int byteArrayToInt(byte[] b, int offset, int length) {
+    public static int byteArrayToInt(@NonNull byte[] b, int offset, int length) {
         return (int) byteArrayToLong(b, offset, length);
     }
 
-    public static int byteArrayToIntReversed(byte[] b, int offset, int length) {
+    public static int byteArrayToIntReversed(@NonNull byte[] b, int offset, int length) {
         return (int) byteArrayToLong(reverseBuffer(b, offset, length));
     }
 
-    public static long byteArrayToLongReversed(byte[] b, int offset, int length) {
+    public static long byteArrayToLongReversed(@NonNull byte[] b, int offset, int length) {
         return byteArrayToLong(reverseBuffer(b, offset, length));
     }
 
-    public static long byteArrayToLong(byte[] b) {
+    public static long byteArrayToLong(@NonNull byte[] b) {
         return byteArrayToLong(b, 0, b.length);
     }
 
-    public static long byteArrayToLong(byte[] b, int offset, int length) {
+    public static long byteArrayToLong(@NonNull byte[] b, int offset, int length) {
         if (b.length < offset + length)
             throw new IllegalArgumentException("offset + length must be less than or equal to b.length");
 
@@ -340,12 +348,14 @@ public class Utils {
         return value;
     }
 
-    public static byte[] byteArraySlice(byte[] b, int offset, int length) {
+    @NonNull
+    public static byte[] byteArraySlice(@NonNull byte[] b, int offset, int length) {
         byte[] ret = new byte[length];
         System.arraycopy(b, offset, ret, 0, length);
         return ret;
     }
 
+    @NonNull
     public static byte[] integerToByteArray(int input, int length) {
         return integerToByteArray(Math.abs((long)input), length);
     }
@@ -356,6 +366,7 @@ public class Utils {
      * @param length Length, in bytes, of the byte array that the value should be stored in.
      * @return Byte array of size `length`.
      */
+    @NonNull
     public static byte[] integerToByteArray(long input, int length) {
         byte[] b = new byte[length];
         for (int i=length-1; i >= 0; i--) {

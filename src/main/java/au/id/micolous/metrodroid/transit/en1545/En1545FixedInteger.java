@@ -19,6 +19,7 @@
 
 package au.id.micolous.metrodroid.transit.en1545;
 
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
 import org.jetbrains.annotations.NonNls;
@@ -128,27 +129,33 @@ public class En1545FixedInteger implements En1545Field {
         return g;
     }
 
-    public static En1545FixedInteger date(@NonNls String name) {
+    @NonNull
+    public static En1545FixedInteger date(@NonNull @NonNls String name) {
         return new En1545FixedInteger(name + "Date", 14);
     }
 
-    public static En1545FixedInteger time(@NonNls String name) {
+    @NonNull
+    public static En1545FixedInteger time(@NonNull @NonNls String name) {
         return new En1545FixedInteger(name + "Time", 11);
     }
 
-    public static En1545FixedInteger timePacked16(@NonNls String name) {
+    @NonNull
+    public static En1545FixedInteger timePacked16(@NonNull @NonNls String name) {
         return new En1545FixedInteger(name + "TimePacked16", 16);
     }
 
-    public static En1545FixedInteger BCDdate(@NonNls String name) {
+    @NonNull
+    public static En1545FixedInteger BCDdate(@NonNls @NonNull String name) {
         return new En1545FixedInteger(name, 32);
     }
 
-    public static En1545Field dateTime(@NonNls String name) {
+    @NonNull
+    public static En1545Field dateTime(@NonNull @NonNls String name) {
         return new En1545FixedInteger(name + "DateTime", 30);
     }
 
-    public static En1545Field timeLocal(@NonNls String name) {
+    @NonNull
+    public static En1545Field timeLocal(@NonNull @NonNls String name) {
         return new En1545FixedInteger(name + "TimeLocal", 11);
     }
 }
