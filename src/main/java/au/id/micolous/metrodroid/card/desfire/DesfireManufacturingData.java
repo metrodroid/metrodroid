@@ -22,6 +22,10 @@
 
 package au.id.micolous.metrodroid.card.desfire;
 
+import au.id.micolous.farebot.R;
+import au.id.micolous.metrodroid.MetrodroidApplication;
+import au.id.micolous.metrodroid.ui.HeaderListItem;
+import au.id.micolous.metrodroid.ui.ListItem;
 import au.id.micolous.metrodroid.util.Utils;
 import au.id.micolous.metrodroid.xml.Base64String;
 
@@ -29,47 +33,49 @@ import org.simpleframework.xml.Element;
 import org.simpleframework.xml.Root;
 
 import java.io.ByteArrayInputStream;
+import java.util.ArrayList;
+import java.util.List;
 
 @Root(name = "manufacturing-data")
 public class DesfireManufacturingData {
     @Element(name = "hw-vendor-id")
-    public int hwVendorID;
+    private int hwVendorID;
     @Element(name = "hw-type")
-    public int hwType;
+    private int hwType;
     @Element(name = "hw-sub-type")
-    public int hwSubType;
+    private int hwSubType;
     @Element(name = "hw-major-version")
-    public int hwMajorVersion;
+    private int hwMajorVersion;
     @Element(name = "hw-minor-version")
-    public int hwMinorVersion;
+    private int hwMinorVersion;
     @Element(name = "hw-storage-size")
-    public int hwStorageSize;
+    private int hwStorageSize;
     @Element(name = "hw-protocol")
-    public int hwProtocol;
+    private int hwProtocol;
 
     @Element(name = "sw-vendor-id")
-    public int swVendorID;
+    private int swVendorID;
     @Element(name = "sw-type")
-    public int swType;
+    private int swType;
     @Element(name = "sw-sub-type")
-    public int swSubType;
+    private int swSubType;
     @Element(name = "sw-major-version")
-    public int swMajorVersion;
+    private int swMajorVersion;
     @Element(name = "sw-minor-version")
-    public int swMinorVersion;
+    private int swMinorVersion;
     @Element(name = "sw-storage-size")
-    public int swStorageSize;
+    private int swStorageSize;
     @Element(name = "sw-protocol")
-    public int swProtocol;
+    private int swProtocol;
 
     @Element(name = "uid")
-    public int uid;
+    private long uid;
     @Element(name = "batch-no")
-    public int batchNo;
+    private long batchNo;
     @Element(name = "week-prod")
-    public int weekProd;
+    private int weekProd;
     @Element(name = "year-prod")
-    public int yearProd;
+    private int yearProd;
     @Element(name = "raw", required = false)
     private Base64String mRaw;
 
@@ -78,38 +84,64 @@ public class DesfireManufacturingData {
     public DesfireManufacturingData(byte[] data) {
         mRaw = new Base64String(data);
         ByteArrayInputStream stream = new ByteArrayInputStream(data);
-        hwVendorID = stream.read();
-        hwType = stream.read();
-        hwSubType = stream.read();
-        hwMajorVersion = stream.read();
-        hwMinorVersion = stream.read();
-        hwStorageSize = stream.read();
-        hwProtocol = stream.read();
+        hwVendorID = data[0];
+        hwType = data[1];
+        hwSubType = data[2];
+        hwMajorVersion = data[3];
+        hwMinorVersion = data[4];
+        hwStorageSize = data[5];
+        hwProtocol = data[6];
 
-        swVendorID = stream.read();
-        swType = stream.read();
-        swSubType = stream.read();
-        swMajorVersion = stream.read();
-        swMinorVersion = stream.read();
-        swStorageSize = stream.read();
-        swProtocol = stream.read();
+        swVendorID = data[7];
+        swType = data[8];
+        swSubType = data[9];
+        swMajorVersion = data[10];
+        swMinorVersion = data[11];
+        swStorageSize = data[12];
+        swProtocol = data[13];
 
         // FIXME: This has fewer digits than what's contained in EXTRA_ID, why?
-        byte[] buf = new byte[7];
-        stream.read(buf, 0, buf.length);
-        uid = Utils.byteArrayToInt(buf);
-
+        uid = Utils.byteArrayToLong(data, 14, 7);
         // FIXME: This is returning a negative number. Probably is unsigned.
-        buf = new byte[5];
-        stream.read(buf, 0, buf.length);
-        batchNo = Utils.byteArrayToInt(buf);
+        batchNo = Utils.byteArrayToLong(data, 21, 5);
 
         // FIXME: These numbers aren't making sense.
-        weekProd = stream.read();
-        yearProd = stream.read();
+        weekProd = data[26];
+        yearProd = data[27];
     }
 
     public byte[] getRaw() {
         return mRaw.getData();
+    }
+
+    public List<ListItem> getInfo() {
+        List<ListItem> items = new ArrayList<>();
+        items.add(new HeaderListItem(R.string.hardware_information));
+        items.add(new ListItem("Vendor ID", Integer.toString(hwVendorID)));
+        items.add(new ListItem("Type", Integer.toString(hwType)));
+        items.add(new ListItem("Subtype", Integer.toString(hwSubType)));
+        items.add(new ListItem("Major Version", Integer.toString(hwMajorVersion)));
+        items.add(new ListItem("Minor Version", Integer.toString(hwMinorVersion)));
+        items.add(new ListItem("Storage Size", Integer.toString(hwStorageSize)));
+        items.add(new ListItem("Protocol", Integer.toString(hwProtocol)));
+
+        items.add(new HeaderListItem(R.string.software_information));
+        items.add(new ListItem("Vendor ID", Integer.toString(swVendorID)));
+        items.add(new ListItem("Type", Integer.toString(swType)));
+        items.add(new ListItem("Subtype", Integer.toString(swSubType)));
+        items.add(new ListItem("Major Version", Integer.toString(swMajorVersion)));
+        items.add(new ListItem("Minor Version", Integer.toString(swMinorVersion)));
+        items.add(new ListItem("Storage Size", Integer.toString(swStorageSize)));
+        items.add(new ListItem("Protocol", Integer.toString(swProtocol)));
+
+        if (!MetrodroidApplication.hideCardNumbers()) {
+            items.add(new HeaderListItem("General Information"));
+            items.add(new ListItem("Serial Number", Long.toHexString(uid)));
+            items.add(new ListItem("Batch Number", Long.toHexString(batchNo)));
+            items.add(new ListItem("Week of Production", Integer.toHexString(weekProd)));
+            items.add(new ListItem("Year of Production", Integer.toHexString(yearProd)));
+        }
+        
+        return items;
     }
 }

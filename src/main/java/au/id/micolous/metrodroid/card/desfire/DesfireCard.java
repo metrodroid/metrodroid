@@ -252,35 +252,8 @@ public class DesfireCard extends Card {
 
     @Override
     public List<ListItem> getManufacturingInfo() {
-        List<ListItem> items = new ArrayList<>();
         DesfireManufacturingData data = getManufacturingData();
-        items.add(new HeaderListItem(R.string.hardware_information));
-        items.add(new ListItem("Vendor ID", Integer.toString(data.hwVendorID)));
-        items.add(new ListItem("Type", Integer.toString(data.hwType)));
-        items.add(new ListItem("Subtype", Integer.toString(data.hwSubType)));
-        items.add(new ListItem("Major Version", Integer.toString(data.hwMajorVersion)));
-        items.add(new ListItem("Minor Version", Integer.toString(data.hwMinorVersion)));
-        items.add(new ListItem("Storage Size", Integer.toString(data.hwStorageSize)));
-        items.add(new ListItem("Protocol", Integer.toString(data.hwProtocol)));
-
-        items.add(new HeaderListItem(R.string.software_information));
-        items.add(new ListItem("Vendor ID", Integer.toString(data.swVendorID)));
-        items.add(new ListItem("Type", Integer.toString(data.swType)));
-        items.add(new ListItem("Subtype", Integer.toString(data.swSubType)));
-        items.add(new ListItem("Major Version", Integer.toString(data.swMajorVersion)));
-        items.add(new ListItem("Minor Version", Integer.toString(data.swMinorVersion)));
-        items.add(new ListItem("Storage Size", Integer.toString(data.swStorageSize)));
-        items.add(new ListItem("Protocol", Integer.toString(data.swProtocol)));
-
-        if (!MetrodroidApplication.hideCardNumbers()) {
-            items.add(new HeaderListItem("General Information"));
-            items.add(new ListItem("Serial Number", Integer.toHexString(data.uid)));
-            items.add(new ListItem("Batch Number", Integer.toHexString(data.batchNo)));
-            items.add(new ListItem("Week of Production", Integer.toHexString(data.weekProd)));
-            items.add(new ListItem("Year of Production", Integer.toHexString(data.yearProd)));
-        }
-
-        return items;
+        return data.getInfo();
     }
 
     public List<DesfireApplication> getApplications() {
