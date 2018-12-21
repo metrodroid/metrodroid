@@ -82,6 +82,7 @@ public class ClassicSector {
     }
 
     // For kotlin []
+    @NonNull
     public ClassicBlock get(int index) throws IndexOutOfBoundsException {
         return getBlock(index);
     }

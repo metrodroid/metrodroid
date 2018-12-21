@@ -500,16 +500,19 @@ public class ClassicCard extends Card {
         return mSectors;
     }
 
+    @NonNull
     public ClassicSector getSector(int index) throws IndexOutOfBoundsException {
         return mSectors.get(index);
     }
 
     // For kotlin []
+    @NonNull
     public ClassicSector get(int index) throws IndexOutOfBoundsException {
         return getSector(index);
     }
 
     // For kotlin []
+    @NonNull
     public ClassicBlock get(int secidx, int blockidx) throws IndexOutOfBoundsException {
         return getSector(secidx).getBlock(blockidx);
     }

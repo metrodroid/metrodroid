@@ -80,8 +80,7 @@ data class EasyCardTransitData internal constructor(
         internal const val EASYCARD_STR = "easycard"
 
         private fun parseBalance(card: ClassicCard): Int {
-            val data = card[2, 0].data
-            return Utils.byteArrayToIntReversed(data, 0, 4)
+            return Utils.byteArrayToIntReversed(card[2, 0].data, 0, 4)
         }
 
         internal fun parseTimestamp(ts: Long?): Calendar? {
@@ -93,7 +92,7 @@ data class EasyCardTransitData internal constructor(
         val FACTORY = object : ClassicCardTransitFactory {
             override fun earlyCheck(sectors: List<ClassicSector>): Boolean {
                 val data: ByteArray? = try {
-                    sectors[0][1]?.data
+                    sectors[0][1].data
                 } catch (e: Exception) {
                     null
                 }
