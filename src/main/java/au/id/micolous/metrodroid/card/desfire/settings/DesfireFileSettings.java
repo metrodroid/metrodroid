@@ -22,12 +22,11 @@ package au.id.micolous.metrodroid.card.desfire.settings;
 
 import android.support.annotation.StringRes;
 
-import au.id.micolous.farebot.R;
-import au.id.micolous.metrodroid.xml.HexString;
-
 import org.simpleframework.xml.Element;
 
-import java.io.ByteArrayInputStream;
+import au.id.micolous.farebot.R;
+import au.id.micolous.metrodroid.util.Utils;
+import au.id.micolous.metrodroid.xml.HexString;
 
 public abstract class DesfireFileSettings {
     /* DesfireFile Types */
@@ -45,13 +44,10 @@ public abstract class DesfireFileSettings {
 
     DesfireFileSettings() { /* For XML Serializer */ }
 
-    DesfireFileSettings(ByteArrayInputStream stream) {
-        mFileType = (byte) stream.read();
-        mCommSetting = (byte) stream.read();
-
-        byte[] accessRights = new byte[2];
-        stream.read(accessRights, 0, accessRights.length);
-        this.mAccessRights = new HexString(accessRights);
+    DesfireFileSettings(byte[] settings) {
+        mFileType = settings[0];
+        mCommSetting = settings[1];
+        this.mAccessRights = new HexString(Utils.getHexString(settings, 2, 2));
     }
 
     DesfireFileSettings(byte fileType, byte commSetting, byte[] accessRights) {
@@ -63,14 +59,12 @@ public abstract class DesfireFileSettings {
     public static DesfireFileSettings create(byte[] data) throws Exception {
         byte fileType = data[0];
 
-        ByteArrayInputStream stream = new ByteArrayInputStream(data);
-
         if (fileType == STANDARD_DATA_FILE || fileType == BACKUP_DATA_FILE)
-            return new StandardDesfireFileSettings(stream);
+            return new StandardDesfireFileSettings(data);
         else if (fileType == LINEAR_RECORD_FILE || fileType == CYCLIC_RECORD_FILE)
-            return new RecordDesfireFileSettings(stream);
+            return new RecordDesfireFileSettings(data);
         else if (fileType == VALUE_FILE)
-            return new ValueDesfireFileSettings(stream);
+            return new ValueDesfireFileSettings(data);
         else
             throw new Exception("Unknown file type: " + Integer.toHexString(fileType));
     }
