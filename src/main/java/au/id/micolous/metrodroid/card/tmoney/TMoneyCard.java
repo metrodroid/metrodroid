@@ -87,7 +87,7 @@ public class TMoneyCard extends ISO7816Application {
     }
 
 
-    public static ISO7816ApplicationFactory FACTORY = new ISO7816ApplicationFactory() {
+    public static final ISO7816ApplicationFactory FACTORY = new ISO7816ApplicationFactory() {
         @NonNull
         @Override
         public List<byte[]> getApplicationNames() {
