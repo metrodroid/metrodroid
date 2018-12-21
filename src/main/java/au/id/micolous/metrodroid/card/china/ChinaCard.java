@@ -146,12 +146,6 @@ public class ChinaCard extends ISO7816Application {
             return TYPE;
         }
 
-        @Override
-        public boolean stopAfterFirstApp() {
-            // China cards can be hybrids.
-            return false;
-        }
-
         /**
          * Dumps a China card in the field.
          * @param protocol Tag to dump.

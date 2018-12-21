@@ -99,6 +99,11 @@ public class CalypsoApplication extends ISO7816Application {
     }
 
     public static ISO7816ApplicationFactory FACTORY = new ISO7816ApplicationFactory() {
+        @Override
+        public boolean stopAfterFirstApp() {
+            return true;
+        }
+
         @NonNull
         @Override
         public List<byte[]> getApplicationNames() {
