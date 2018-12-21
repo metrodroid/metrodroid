@@ -65,6 +65,7 @@ public class CardInfoActivity extends MetrodroidActivity {
     public static final String SPEAK_BALANCE_EXTRA = "au.id.micolous.farebot.speak_balance";
 
     private static final String KEY_SELECTED_TAB = "selected_tab";
+    public static final String TAG = "CardInfoActivity";
 
     private Card mCard;
     private TransitData mTransitData;
@@ -136,7 +137,7 @@ public class CardInfoActivity extends MetrodroidActivity {
                     if (mCard == null) {
                         Utils.showErrorAndFinish(CardInfoActivity.this, mException);
                     } else {
-                        Log.e("CardInfoActivity", "Error parsing transit data", mException);
+                        Log.e(TAG, "Error parsing transit data", mException);
                         showAdvancedInfo(mException);
                         finish();
                     }
@@ -228,7 +229,7 @@ public class CardInfoActivity extends MetrodroidActivity {
                         viewPager.setCurrentItem(savedInstanceState.getInt(KEY_SELECTED_TAB, 0));
                     }
                 } catch (Exception e) {
-                    Log.e("CardInfoActivity", "Error parsing transit data", e);
+                    Log.e(TAG, "Error parsing transit data", e);
                     showAdvancedInfo(e);
                     finish();
                 }
