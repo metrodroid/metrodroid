@@ -767,7 +767,7 @@ public class Utils {
     public static int luhnChecksum(String cardNumber) {
         int[] digits = digitsOf(cardNumber);
         // even digits, counting from the last digit on the card
-        int[] evenDigits = new int[(int) Math.ceil(cardNumber.length() / 2.0)];
+        int[] evenDigits = new int[(cardNumber.length() + 1) / 2];
         int checksum = 0, p = 0;
         int q = cardNumber.length() - 1;
 

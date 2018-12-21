@@ -346,7 +346,7 @@ public class FelicaCard extends Card {
         int b = Utils.getBitsFromInteger(configurationByte, 2, 3) + 1;
         int a = Utils.getBitsFromInteger(configurationByte, 5, 3) + 1;
 
-        return T * (b * n + a) * Math.pow(4, e); // seconds
+        return T * (b * n + a) * (1 << (2 * e)); // seconds
     }
 
     public double getVariableResponseTime(int nodes) {
