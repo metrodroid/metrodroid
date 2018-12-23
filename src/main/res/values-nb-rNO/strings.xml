@@ -853,4 +853,7 @@
     <string name="adelaide_ticket_type_regular">Vanlig</string>
     <string name="adelaide_ticket_type_seniors">Senior</string>
     <string name="adelaide_ticket_type_student">Student</string>
+    <string name="requires_android_17">Krever Android 4.2 eller senere.</string>
+    <string name="convert_timezones_summary_off">Turtider vil vises i transportbråets lokale tidssone.</string>
+    <string name="convert_timezones_summary_on">Turtider vil konverteres til din nåværende tidssone.</string>
 </resources>
