@@ -30,6 +30,7 @@ import org.jetbrains.annotations.NonNls;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -90,7 +91,9 @@ public class En1545Parsed implements Parcelable {
 
     public List<ListItem> getInfo(Set<String> skipSet) {
         List<ListItem> li = new ArrayList<>();
-        for (Map.Entry<String, Object> kv: mMap.entrySet()) {
+        List<Map.Entry<String, Object>> entrySet = new ArrayList<>(mMap.entrySet());
+        Collections.sort(entrySet, (a, b) -> String.CASE_INSENSITIVE_ORDER.compare(a.getKey(), b.getKey()));
+        for (Map.Entry<String, Object> kv: entrySet) {
             if (skipSet.contains(getBaseName(kv.getKey())))
                 continue;
             Object l = kv.getValue();
