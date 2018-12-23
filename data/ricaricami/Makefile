@@ -1,11 +1,11 @@
 # -*- mode: makefile; indent-tabs-mode: tabs; tab-width: 2 -*-
 MDROOT = ../..
 
-AMAT_URL = "http://amat-mi.it/it/downloads/data/gtfs/current/Export_OpenDataTPL_Current.zip"
+AMAT_URL = "https://www.amat-mi.it/it/downloads/data/gtfs/current/Export_OpenDataTPL_Current.zip"
 
 all: ricaricami.mdst ricaricami.csv
 
-ricaricami.mdst: mapping.csv amat_gtfs.zip mdst_deps
+ricaricami.mdst: mapping.csv amat_gtfs.zip mdst
 	python3 $(MDST)/compile_stops_from_gtfs.py amat_gtfs.zip -m mapping.csv -l it-IT -o $@
 
 amat_gtfs.zip:

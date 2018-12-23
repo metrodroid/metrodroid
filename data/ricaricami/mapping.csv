@@ -1,8 +1,17 @@
-reader_id,stop_id,short_name,stop_code
-0x1000374,11649,Maciachini,
-0x100038a,11363,Affori centro,
-0x100039b,11490,Duomo,
-0x100039d,11490,Duomo,
-0x10003a0,11884,Centrale,
-0x10003b7,11639,Zara,
+reader_id,stop_id,short_name,plain_id,comment
+0x1000331,LAMPUGNANO,Lampugnano,817,
+0x1000364,CAIAZZO,Caiazzo,868,
+0x100036c,P.TA GENOVA F.S.,Porta Genova,876,Metro station
+0x1000374,MACIACHINI,Maciachini,884,
+0x100038a,AFFORI CENTRO,Affori centro,906,
+0x100039b,DUOMO M1,Duomo,923,M1 or M2?
+0x100039d,DUOMO M1,Duomo,925,M1 or M2?
+0x100039f,CENTRALE FS,Centrale,927,Metro station
+0x10003a0,CENTRALE FS,Centrale,927,Metro station
+0x10003a3,LORETO M1,Loreto,931,M1 or M2?
+0x10003b5,ISTRIA,Istria,949,
+0x10003b6,MARCHE,Marche,950,Unconfirmed
+0x10003b7,ZARA,Zara,951,
+0x900051a,GARIBALDI FS,Garibaldi FS,1306,Trenord station
+0x7000541,SESTO 1 MAGGIO FS,1345,Sesto 1o maggio FS
 
