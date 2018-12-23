@@ -69,6 +69,26 @@ public abstract class En1545Subscription extends Subscription {
     public static final String CONTRACT_DEBIT_SOLD = "ContractDebitSold";
     public static final String CONTRACT_JOURNEYS = "ContractJourneys";
     public static final String CONTRACT_RECEIPT_DELIVERED = "ContractReceiptDelivered";
+    @NonNls
+    public static final String CONTRACT_ORIGIN_1 = "ContractOrigin1";
+    @NonNls
+    public static final String CONTRACT_VIA_1 = "ContractVia1";
+    @NonNls
+    public static final String CONTRACT_DESTINATION_1 = "ContractDestination1";
+    @NonNls
+    public static final String CONTRACT_ORIGIN_2 = "ContractOrigin2";
+    @NonNls
+    public static final String CONTRACT_DESTINATION_2 = "ContractDestination2";
+    @NonNls
+    public static final String CONTRACT_VEHICULE_CLASS_ALLOWED = "ContractVehiculeClassAllowed";
+    @NonNls
+    public static final String CONTRACT_DURATION = "ContractDuration";
+    @NonNls
+    public static final String CONTRACT_INTERCHANGE = "ContractInterchange";
+    @NonNls
+    public static final String LINKED_CONTRACT = "LinkedContract";
+    @NonNls
+    public static final String CONTRACT_RESTRICT_CODE = "ContractRestrictCode";
     protected final En1545Parsed mParsed;
     protected final Integer mCounter;
 

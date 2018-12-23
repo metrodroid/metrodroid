@@ -23,6 +23,8 @@ import android.os.Parcel;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
+import org.jetbrains.annotations.NonNls;
+
 import java.util.Calendar;
 import java.util.Collections;
 import java.util.List;
@@ -59,6 +61,42 @@ public abstract class En1545Transaction extends Transaction {
     public static final String EVENT_FIRST_LOCATION_ID = "EventFirstLocationId";
     public static final String EVENT_DEVICE_ID = "EventDeviceId";
     public static final String EVENT_RESULT = "EventResult";
+    @NonNls
+    public static final String EVENT_DISPLAY_DATA = "EventDisplayData";
+    @NonNls
+    public static final String EVENT_NOT_OK_COUNTER = "EventNotOkCounter";
+    @NonNls
+    public static final String EVENT_DESTINATION = "EventDestination";
+    @NonNls
+    public static final String EVENT_LOCATION_GATE = "EventLocationGate";
+    @NonNls
+    public static final String EVENT_DEVICE = "EventDevice";
+    @NonNls
+    public static final String EVENT_JOURNEY_RUN = "EventJourneyRun";
+    @NonNls
+    public static final String EVENT_VEHICULE_CLASS = "EventVehiculeClass";
+    @NonNls
+    public static final String EVENT_LOCATION_TYPE = "EventLocationType";
+    @NonNls
+    public static final String EVENT_EMPLOYEE = "EventEmployee";
+    @NonNls
+    public static final String EVENT_LOCATION_REFERENCE = "EventLocationReference";
+    @NonNls
+    public static final String EVENT_JOURNEY_INTERCHANGES = "EventJourneyInterchanges";
+    @NonNls
+    public static final String EVENT_PERIOD_JOURNEYS = "EventPeriodJourneys";
+    @NonNls
+    public static final String EVENT_TOTAL_JOURNEYS = "EventTotalJourneys";
+    @NonNls
+    public static final String EVENT_JOURNEY_DISTANCE = "EventJourneyDistance";
+    @NonNls
+    public static final String EVENT_PRICE_UNIT = "EventPriceUnit";
+    @NonNls
+    public static final String EVENT_DATA_SIMULATION = "EventDataSimulation";
+    @NonNls
+    public static final String EVENT_DATA_TRIP = "EventDataTrip";
+    @NonNls
+    public static final String EVENT_DATA_ROUTE_DIRECTION = "EventDataRouteDirection";
     protected final En1545Parsed mParsed;
 
     private static final int EVENT_TYPE_BOARD = 1;

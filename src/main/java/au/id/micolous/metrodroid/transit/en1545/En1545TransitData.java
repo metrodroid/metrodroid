@@ -56,6 +56,12 @@ abstract public class En1545TransitData extends TransitData {
     protected static final String HOLDER_UNKNOWN_B = "HolderUnknownB";
     protected static final String HOLDER_UNKNOWN_C = "HolderUnknownC";
     protected static final String HOLDER_UNKNOWN_D = "HolderUnknownD";
+    protected static final String CONTRACTS_PROVIDER = "ContractsProvider";
+    protected static final String CONTRACTS_POINTER = "ContractsPointer";
+    protected static final String CONTRACTS_TARIFF = "ContractsTariff";
+    protected static final String CONTRACTS_UNKNOWN_A = "ContractsUnknownA";
+    protected static final String CONTRACTS_UNKNOWN_B = "ContractsUnknownB";
+    protected static final String CONTRACTS_NETWORK_ID = "ContractsNetworkId";
 
     protected final En1545Parsed mTicketEnvParsed;
 
