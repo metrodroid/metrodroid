@@ -61,6 +61,6 @@ data class EasyCardTopUp(
     override fun getMachineID() = "0x${machineId.toString(16)}"
 
     companion object {
-        fun parse(card: ClassicCard) = EasyCardTopUp((card.getSector(2))?.getBlock(2)?.data!!)
+        fun parse(card: ClassicCard) = EasyCardTopUp(card[2, 2].data)
     }
 }

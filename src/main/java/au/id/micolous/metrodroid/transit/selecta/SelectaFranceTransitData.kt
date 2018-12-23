@@ -49,7 +49,7 @@ data class SelectaFranceTransitData(private var mBalance: Int = 0,
 
     constructor(card: ClassicCard) : this(
             mSerial = getSerial(card),
-            mBalance = Utils.byteArrayToInt(card.getSector(1).getBlock(2).data, 0, 3))
+            mBalance = Utils.byteArrayToInt(card[1, 2].data, 0, 3))
 
     public override fun getBalance(): TransitBalance? = TransitCurrency.EUR(mBalance)
 
@@ -63,11 +63,11 @@ data class SelectaFranceTransitData(private var mBalance: Int = 0,
                 .setPreview()
                 .build()
 
-        private fun getSerial(card: ClassicCard): Int = Utils.byteArrayToInt(card.getSector(1).getBlock(0).data, 13, 3)
+        private fun getSerial(card: ClassicCard): Int = Utils.byteArrayToInt(card[1, 0].data, 13, 3)
 
         val FACTORY: ClassicCardTransitFactory = object : ClassicCardTransitFactory {
-            override fun earlyCheck(sectors: MutableList<ClassicSector>) = try {
-                val toc = sectors[0].getBlock(1).data
+            override fun earlyCheck(sectors: List<ClassicSector>) = try {
+                val toc = sectors[0][1].data
                 // Check toc entries for sectors 10,12,13,14 and 15
                 Utils.byteArrayToInt(toc, 2, 2) == 0x0938
             } catch (ignored: IndexOutOfBoundsException) {

@@ -68,8 +68,7 @@ data class SunCardTransitData(private val mSerial: Int = 0) : SerialOnlyTransitD
 
         private fun formatBarcodeSerial(serial: Int) = "799366314176000637426%010d".format(Locale.ENGLISH, serial)
 
-        private fun getSerial(card: ClassicCard) = Utils.byteArrayToInt(card.getSector(0)
-                .getBlock(1).data, 3, 4)
+        private fun getSerial(card: ClassicCard) = Utils.byteArrayToInt(card[0, 1].data, 3, 4)
 
         val FACTORY: ClassicCardTransitFactory = object : ClassicCardTransitFactory {
             override fun parseTransitIdentity(card: ClassicCard) = TransitIdentity(NAME,
@@ -77,10 +76,10 @@ data class SunCardTransitData(private val mSerial: Int = 0) : SerialOnlyTransitD
 
             override fun parseTransitData(classicCard: ClassicCard) = SunCardTransitData(classicCard)
 
-            override fun earlyCheck(sectors: MutableList<ClassicSector>) = try {
+            override fun earlyCheck(sectors: List<ClassicSector>) = try {
                 // I hope it is magic as other than zeros, ff's and serial there is nothing
                 // on the card
-                Utils.byteArrayToInt(sectors[0].getBlock(1).data, 7, 4) == 0x070515ff
+                Utils.byteArrayToInt(sectors[0][1].data, 7, 4) == 0x070515ff
             } catch (ignored: IndexOutOfBoundsException) {
                 // If that sector number is too high, then it's not for us.
                 // If we can't read we can't do anything

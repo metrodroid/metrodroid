@@ -81,6 +81,12 @@ public class ClassicSector {
         return mBlocks.get(index);
     }
 
+    // For kotlin []
+    @NonNull
+    public ClassicBlock get(int index) throws IndexOutOfBoundsException {
+        return getBlock(index);
+    }
+
     @Nullable
     public ClassicSectorKey getKey() {
         if (mKey == null) {

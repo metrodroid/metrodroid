@@ -156,7 +156,7 @@ data class RkfTransitData internal constructor(
             }
 
             override fun parseTransitData(card: ClassicCard): RkfTransitData {
-                val tcciRaw = card.getSector(0).getBlock(1).data
+                val tcciRaw = card[0, 1].data
                 val tcci = En1545Parser.parseLeBits(tcciRaw, 0, TCCI_FIELDS)
                 val tripVersion = tcci.getIntOrZero(EVENT_LOG_VERSION)
                 val currency = tcci.getIntOrZero(CURRENCY)
@@ -222,7 +222,7 @@ data class RkfTransitData internal constructor(
             while (sector < card.sectors.size) {
                 // FIXME: we should also check TCDI entry but TCDI doesn't match the spec apparently,
                 // so for now just use id byte
-                val type = Utils.getBitsFromBufferLeBits(card.sectors[sector].getBlock(block).data, 0, 8)
+                val type = Utils.getBitsFromBufferLeBits(card[sector, block].data, 0, 8)
                 if (type == 0) {
                     sector++
                     block = 0
@@ -234,10 +234,10 @@ data class RkfTransitData internal constructor(
 
                 while (sector < card.sectors.size && (first || block != 0)) {
                     first = false
-                    val blockData = card.sectors[sector].getBlock(block).data
+                    val blockData = card[sector, block].data
                     val newType = Utils.getBitsFromBufferLeBits(blockData, 0, 8)
                     // Some Rejsekort skip slot in the middle of the sector
-                    if (newType == 0 && block + oldBlockCount < card.getSector(sector).blocks.size - 1) {
+                    if (newType == 0 && block + oldBlockCount < card[sector].blocks.size - 1) {
                         block += oldBlockCount
                         continue
                     }
@@ -252,9 +252,9 @@ data class RkfTransitData internal constructor(
                     var dat = ByteArray(0)
 
                     repeat(blockCount) {
-                        dat += card.getSector(sector).getBlock(block).data
+                        dat += card[sector, block].data
                         block++
-                        if (block >= card.getSector(sector).blocks.size - 1) {
+                        if (block >= card[sector].blocks.size - 1) {
                             sector++
                             block = 0
                         }
@@ -291,10 +291,9 @@ data class RkfTransitData internal constructor(
         }
 
         private fun getSerial(card: ClassicCard): RkfSerial {
-            val sector0 = card.getSector(0)
-            val issuer = getIssuer(sector0)
+            val issuer = getIssuer(card[0])
 
-            val hwSerial = Utils.byteArrayToLongReversed(sector0.getBlock(0).data, 0, 4)
+            val hwSerial = Utils.byteArrayToLongReversed(card[0, 0].data, 0, 4)
 
             for (record in getRecords(card))
                 if ((record[0].toInt() and 0xff) == 0xa2) {
@@ -305,7 +304,7 @@ data class RkfTransitData internal constructor(
             return RkfSerial(mCompany = issuer, mHwSerial = hwSerial, mCustomerNumber = 0)
         }
 
-        private fun getIssuer(sector0: ClassicSector) = Utils.getBitsFromBufferLeBits(sector0.getBlock(1).data, 22, 12)
+        private fun getIssuer(sector0: ClassicSector) = Utils.getBitsFromBufferLeBits(sector0[1].data, 22, 12)
 
         internal const val COMPANY = "Company"
         internal const val STATUS = "Status"
