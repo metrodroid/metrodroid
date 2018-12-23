@@ -27,6 +27,8 @@ import org.jetbrains.annotations.NonNls;
 import java.util.Collections;
 import java.util.List;
 
+import au.id.micolous.farebot.R;
+import au.id.micolous.metrodroid.card.CardType;
 import au.id.micolous.metrodroid.card.desfire.DesfireCard;
 import au.id.micolous.metrodroid.card.desfire.DesfireCardTransitFactory;
 import au.id.micolous.metrodroid.transit.CardInfo;
@@ -41,6 +43,14 @@ import au.id.micolous.metrodroid.util.Utils;
  */
 public class AtHopStubTransitData extends SerialOnlyTransitData {
     private static final int APP_ID_SERIAL = 0xffffff;
+    private static final String NAME = "AT HOP";
+    private static final CardInfo CARD_INFO = new CardInfo.Builder()
+            .setName(NAME)
+            .setLocation(R.string.location_auckland)
+            .setCardType(CardType.MifareDesfire)
+            .setExtraNote(R.string.card_note_card_number_only)
+            .build();
+
     private final int mSerial;
 
     public AtHopStubTransitData(DesfireCard card) {
@@ -78,7 +88,6 @@ public class AtHopStubTransitData extends SerialOnlyTransitData {
         return "7824 6702 " + Utils.formatNumber(serial, " ", 4, 4, 3);
     }
 
-    private static final String NAME = "AT HOP";
     public final static DesfireCardTransitFactory FACTORY = new DesfireCardTransitFactory() {
         @Override
         public boolean earlyCheck(int[] appIds) {
@@ -93,6 +102,12 @@ public class AtHopStubTransitData extends SerialOnlyTransitData {
         @Override
         public TransitIdentity parseTransitIdentity(@NonNull DesfireCard desfireCard) {
             return new TransitIdentity(NAME, formatSerial(getSerial(desfireCard)));
+        }
+
+        @NonNull
+        @Override
+        public List<CardInfo> getAllCards() {
+            return Collections.singletonList(CARD_INFO);
         }
     };
 
