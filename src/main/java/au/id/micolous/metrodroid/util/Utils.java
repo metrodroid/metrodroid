@@ -963,6 +963,16 @@ public class Utils {
         return unsignedToTwoComplement(val, bitLength - 1);
     }
 
+    public static int getDigitSum(long value) {
+        long dig = value;
+        int digsum = 0;
+        while(dig > 0) {
+            digsum += dig % 10;
+            dig /= 10;
+        }
+        return digsum;
+    }
+
     @NonNull
     public static String groupString(@NonNull String val, @NonNull String separator, int... groups) {
         StringBuilder ret = new StringBuilder();

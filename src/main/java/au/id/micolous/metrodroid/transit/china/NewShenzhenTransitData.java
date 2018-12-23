@@ -122,15 +122,9 @@ public class NewShenzhenTransitData extends ChinaTransitData {
 
     @NonNls
     private static String formatSerial(int sn) {
-        int dig = sn;
-        int digsum = 0;
-        while(dig > 0) {
-            digsum += dig % 10;
-            dig /= 10;
-        }
-        digsum %= 10;
+        int digsum = Utils.getDigitSum(sn);
         // Sum of digits must be divisible by 10
-        int lastDigit = (10 - digsum) % 10;
+        int lastDigit = (10 - (digsum % 10)) % 10;
         return Integer.toString(sn) + "(" + Integer.toString(lastDigit) + ")";
     }
 
