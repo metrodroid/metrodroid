@@ -234,7 +234,7 @@ public class AddKeyActivity extends MetrodroidActivity {
         Tag tag = intent.getParcelableExtra(NfcAdapter.EXTRA_TAG);
         String tagId = Utils.getHexString(tag.getId(), "");
 
-        if (ArrayUtils.contains(tag.getTechList(), "android.nfc.tech.MifareClassic")
+        if (ArrayUtils.contains(tag.getTechList(), MifareClassic.class.getName())
                 && tagId != null && !tagId.isEmpty()) {
             mKeyData.setUID(tagId);
             drawUI();

@@ -21,6 +21,11 @@
 package au.id.micolous.metrodroid.card;
 
 import android.nfc.Tag;
+import android.nfc.tech.IsoDep;
+import android.nfc.tech.MifareClassic;
+import android.nfc.tech.MifareUltralight;
+import android.nfc.tech.NfcA;
+import android.nfc.tech.NfcF;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.annotation.VisibleForTesting;
@@ -91,7 +96,7 @@ public abstract class Card {
             Log.d(TAG, tech);
         }
 
-        if (ArrayUtils.contains(techs, "android.nfc.tech.IsoDep")) {
+        if (ArrayUtils.contains(techs, IsoDep.class.getName())) {
             feedbackInterface.updateStatusText(Utils.localizeString(R.string.iso14a_detect));
 
             // ISO 14443-4 card types
@@ -109,20 +114,20 @@ public abstract class Card {
             // Credit cards fall through here...
         }
 
-        if (ArrayUtils.contains(techs, "android.nfc.tech.NfcF")) {
+        if (ArrayUtils.contains(techs, NfcF.class.getName())) {
             return FelicaCard.dumpTag(tagId, tag, feedbackInterface);
         }
 
-        if (ArrayUtils.contains(techs, "android.nfc.tech.MifareClassic")) {
+        if (ArrayUtils.contains(techs, MifareClassic.class.getName())) {
             return ClassicCard.dumpTag(tagId, tag, feedbackInterface);
         }
 
 
-        if (ArrayUtils.contains(techs, "android.nfc.tech.MifareUltralight")) {
+        if (ArrayUtils.contains(techs, MifareUltralight.class.getName())) {
             return UltralightCard.dumpTag(tagId, tag, feedbackInterface);
         }
 
-        if (ArrayUtils.contains(techs, "android.nfc.tech.NfcA")) {
+        if (ArrayUtils.contains(techs, NfcA.class.getName())) {
             UltralightCard u = UltralightCard.dumpTagA(tagId, tag, feedbackInterface);
             if (u != null)
                 return u;
