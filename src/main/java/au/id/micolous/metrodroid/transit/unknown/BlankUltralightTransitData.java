@@ -62,6 +62,8 @@ public class BlankUltralightTransitData extends TransitData {
         @Override
         public boolean check(@NonNull UltralightCard card) {
             UltralightPage[] pages = card.getPages();
+            final String model = card.getCardModel();
+
             // check to see if all sectors are blocked
             for (UltralightPage p : pages) {
                 // Page 2 is serial, internal and lock bytes
@@ -82,9 +84,9 @@ public class BlankUltralightTransitData extends TransitData {
                     continue;
                 }
 
-                if (card.getCardModel().startsWith("NTAG21")) {
+                if (model != null && model.startsWith("NTAG21")) {
                     // Factory-set data on NTAG
-                    if (card.getCardModel().equals("NTAG213")) {
+                    if (model.equals("NTAG213")) {
                         if (idx == 0x03 && Arrays.equals(data, new byte[]{(byte) 0xE1, 0x10, 0x12, 0}))
                             continue;
                         if (idx == 0x04 && Arrays.equals(data, new byte[]{0x01, 0x03, (byte) 0xA0, 0x0C}))
@@ -93,7 +95,7 @@ public class BlankUltralightTransitData extends TransitData {
                             continue;
                     }
 
-                    if (card.getCardModel().equals("NTAG215")) {
+                    if (model.equals("NTAG215")) {
                         if (idx == 0x03 && Arrays.equals(data, new byte[]{(byte) 0xE1, 0x10, 0x3E, 0}))
                             continue;
                         if (idx == 0x04 && Arrays.equals(data, new byte[]{0x03, 0, (byte) 0xFE, 0}))
@@ -101,7 +103,7 @@ public class BlankUltralightTransitData extends TransitData {
                         // Page 5 is all null
                     }
 
-                    if (card.getCardModel().equals("NTAG215")) {
+                    if (model.equals("NTAG215")) {
                         if (idx == 0x03 && Arrays.equals(data, new byte[]{(byte) 0xE1, 0x10, 0x6D, 0}))
                             continue;
                         if (idx == 0x04 && Arrays.equals(data, new byte[]{0x03, 0, (byte) 0xFE, 0}))

@@ -56,7 +56,6 @@ import android.widget.Toast;
 
 import org.apache.commons.io.FileUtils;
 import org.jetbrains.annotations.NonNls;
-import org.simpleframework.xml.Serializer;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;

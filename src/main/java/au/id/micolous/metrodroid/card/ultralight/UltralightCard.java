@@ -22,6 +22,7 @@ import android.nfc.Tag;
 import android.nfc.tech.MifareUltralight;
 import android.nfc.tech.NfcA;
 import android.support.annotation.Keep;
+import android.support.annotation.Nullable;
 import android.util.Log;
 
 import au.id.micolous.farebot.R;
@@ -263,9 +264,12 @@ public class UltralightCard extends Card {
     /**
      * Get the model of Ultralight card this is.
      *
+     * Note: this is NULL on dumps from old versions of Metrodroid.
+     *
      * @return Model of Ultralight card this is.
      */
     @NonNls
+    @Nullable
     public String getCardModel() {
         return mCardModel;
     }
