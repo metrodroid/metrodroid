@@ -849,4 +849,8 @@
     <string name="rkf_status_action_pending">Handling venter</string>
     <string name="rkf_status_temp_disabled">Midlertidig avskrudd eller avstengt</string>
     <string name="import_mct_file">Importer fra MCT-fil</string>
+    <string name="adelaide_ticket_type_concession">Barn og honnør</string>
+    <string name="adelaide_ticket_type_regular">Vanlig</string>
+    <string name="adelaide_ticket_type_seniors">Senior</string>
+    <string name="adelaide_ticket_type_student">Student</string>
 </resources>
