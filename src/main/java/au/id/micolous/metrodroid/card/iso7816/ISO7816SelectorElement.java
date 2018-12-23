@@ -30,9 +30,17 @@ import java.io.IOException;
 
 import au.id.micolous.metrodroid.xml.SkippableRegistryStrategy;
 
-abstract public class ISO7816SelectorElement {
+public abstract class ISO7816SelectorElement {
     @Attribute(name = "kind")
-    String mKind;
+    private String mKind;
+
+    ISO7816SelectorElement() {
+        /* For XML serializer.  */
+    }
+
+    protected ISO7816SelectorElement(String kind) {
+        mKind = kind;
+    }
 
     abstract byte[] select(ISO7816Protocol tag) throws IOException, ISO7816Exception;
 

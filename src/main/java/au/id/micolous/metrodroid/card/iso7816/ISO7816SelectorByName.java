@@ -48,7 +48,7 @@ class ISO7816SelectorByName extends ISO7816SelectorElement {
     }
 
     ISO7816SelectorByName(byte[] name) {
-        mKind = KIND;
+        super(KIND);
         mName = new Base64String(name);
     }
 

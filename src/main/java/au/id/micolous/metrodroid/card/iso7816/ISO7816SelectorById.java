@@ -45,7 +45,7 @@ class ISO7816SelectorById extends ISO7816SelectorElement {
     ISO7816SelectorById() { /* for XML serializer. */ }
 
     ISO7816SelectorById(int id) {
-        mKind = KIND;
+        super(KIND);
         mId = id;
     }
 
