@@ -104,9 +104,8 @@ public class AdelaideSubscription extends En1545Subscription {
 
 
     public boolean isPurse () {
-        return getLookup().isPurseTariff(
-                mParsed.getInt(CONTRACT_PROVIDER),
-                mParsed.getInt(CONTRACT_TARIFF));
+        return getLookup().isPurseTariff(getContractProvider(),
+                getContractTariff());
     }
 
     AdelaideSubscription(byte[]data) {

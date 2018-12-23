@@ -135,11 +135,16 @@ public abstract class En1545Transaction extends Transaction {
         mParsed.writeToParcel(dest, flags);
     }
 
+    @Nullable
+    protected Integer getRouteNumber() {
+        return mParsed.getInt(EVENT_ROUTE_NUMBER);
+    }
+
     @NonNull
     @Override
     public List<String> getRouteNames() {
         String route = getLookup().getRouteName(
-                mParsed.getInt(EVENT_ROUTE_NUMBER),
+                getRouteNumber(),
                 mParsed.getInt(EVENT_ROUTE_VARIANT),
                 getAgency(), getTransport());
         if (route != null) {

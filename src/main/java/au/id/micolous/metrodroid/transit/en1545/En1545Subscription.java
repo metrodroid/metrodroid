@@ -227,14 +227,23 @@ public abstract class En1545Subscription extends Subscription {
 
     @Override
     public String getAgencyName(boolean isShort) {
-        return getLookup().getAgencyName(mParsed.getInt(CONTRACT_PROVIDER), false);
+        return getLookup().getAgencyName(getContractProvider(), false);
     }
 
     @Nullable
+    protected Integer getContractTariff() {
+        return mParsed.getInt(CONTRACT_TARIFF);
+    }
+
+    @Nullable
+    protected Integer getContractProvider() {
+        return mParsed.getInt(CONTRACT_PROVIDER);
+    }
+
     @Override
     public String getSubscriptionName() {
         return getLookup().getSubscriptionName(mParsed.getInt(CONTRACT_PROVIDER),
-                mParsed.getInt(CONTRACT_TARIFF));
+                getContractTariff());
     }
 
     protected abstract En1545Lookup getLookup();
