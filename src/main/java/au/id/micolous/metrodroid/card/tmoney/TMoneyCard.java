@@ -36,6 +36,7 @@ import au.id.micolous.metrodroid.card.TagReaderFeedbackInterface;
 import au.id.micolous.metrodroid.card.iso7816.ISO7816Application;
 import au.id.micolous.metrodroid.card.iso7816.ISO7816ApplicationFactory;
 import au.id.micolous.metrodroid.card.iso7816.ISO7816Protocol;
+import au.id.micolous.metrodroid.card.iso7816.ISO7816Record;
 import au.id.micolous.metrodroid.card.iso7816.ISO7816Selector;
 import au.id.micolous.metrodroid.transit.TransitData;
 import au.id.micolous.metrodroid.transit.TransitIdentity;
@@ -52,7 +53,7 @@ public class TMoneyCard extends ISO7816Application {
             0x00, 0x03, 0x00, 0x01
     });
 
-    public static final byte[] FILE_NAME = {
+    private static final byte[] FILE_NAME = {
             (byte) 0xd4, 0x10, 0x00,
             0x00, 0x03, 0x00, 0x01
     };
@@ -153,5 +154,9 @@ public class TMoneyCard extends ISO7816Application {
 
     public int getBalance() {
         return mBalance;
+    }
+
+    public List<ISO7816Record> getTransactionRecords() {
+        return getFile(ISO7816Selector.makeSelector(TMoneyCard.FILE_NAME, 4)).getRecords();
     }
 }
