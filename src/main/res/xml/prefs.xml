@@ -32,7 +32,8 @@
 
         <CheckBoxPreference
             android:title="@string/convert_timezones"
-            android:summary="@string/convert_timezones_summary"
+            android:summaryOff="@string/convert_timezones_summary_off"
+            android:summaryOn="@string/convert_timezones_summary_on"
             android:key="pref_convert_timezones"
             android:defaultValue="false"/>
 
