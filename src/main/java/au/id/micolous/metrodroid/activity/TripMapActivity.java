@@ -25,6 +25,7 @@ package au.id.micolous.metrodroid.activity;
 
 import android.app.ActionBar;
 import android.content.SharedPreferences;
+import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.annotation.RequiresApi;
@@ -36,6 +37,7 @@ import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewFragment;
 
+import au.id.micolous.metrodroid.MetrodroidApplication;
 import au.id.micolous.metrodroid.transit.Trip;
 import au.id.micolous.metrodroid.util.Marker;
 import au.id.micolous.metrodroid.util.Utils;
@@ -46,7 +48,7 @@ import java.util.List;
 import au.id.micolous.farebot.BuildConfig;
 import au.id.micolous.farebot.R;
 
-@RequiresApi(17)
+@RequiresApi(Build.VERSION_CODES.JELLY_BEAN_MR1)
 public class TripMapActivity extends MetrodroidActivity {
     public static final String TRIP_EXTRA = "trip";
     private static final String TAG = TripMapActivity.class.getSimpleName();
@@ -64,24 +66,8 @@ public class TripMapActivity extends MetrodroidActivity {
 
         setContentView(R.layout.activity_trip_map);
 
-        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(TripMapActivity.this);
-
-        String tileURL = prefs.getString("pref_map_tile_url", null);
-        String subdomains = prefs.getString("pref_map_tile_subdomains", null);
-
-        if (tileURL == null || tileURL.isEmpty()) {
-            tileURL = Utils.localizeString(R.string.default_map_tile_url);
-        }
-
-        if (subdomains == null || subdomains.isEmpty()) {
-            subdomains = Utils.localizeString(R.string.default_map_tile_subdomains);
-        }
-
-        // Overwrite map preferences again with defaults if it was missing
-        prefs.edit()
-                .putString("pref_map_tile_url", tileURL)
-                .putString("pref_map_tile_subdomains", subdomains)
-                .apply();
+        String tileURL = MetrodroidApplication.getMapTileUrl();
+        String subdomains = MetrodroidApplication.getMapTileSubdomains();
 
         //noinspection StringConcatenation
         Log.d(TAG, "TilesURL: " + tileURL);

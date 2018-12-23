@@ -60,6 +60,7 @@ import au.id.micolous.metrodroid.card.iso7816.ISO7816Application;
 import au.id.micolous.metrodroid.card.iso7816.ISO7816SelectorElement;
 import au.id.micolous.metrodroid.card.ultralight.UltralightPage;
 import au.id.micolous.metrodroid.key.ClassicSectorKey;
+import au.id.micolous.metrodroid.util.Utils;
 import au.id.micolous.metrodroid.xml.Base64String;
 import au.id.micolous.metrodroid.xml.CardConverter;
 import au.id.micolous.metrodroid.xml.CardTypeTransform;
@@ -94,6 +95,21 @@ public class MetrodroidApplication extends Application {
     public static final String PREF_SHOW_LOCAL_AND_ENGLISH = "pref_show_local_and_english";
     @VisibleForTesting
     public static final String PREF_SHOW_RAW_IDS = "pref_show_raw_ids";
+
+    private static final String PREF_MAP_TILE_URL = "pref_map_tile_url";
+    private static final String PREF_MAP_TILE_SUBDOMAINS = "pref_map_tile_subdomains";
+    private static final String PREF_MAP_TILELAYER_DOCS = "pref_map_tilelayer_docs";
+
+    public static final String[] PREFS_ANDROID_17 = {
+            PREF_MAP_TILE_SUBDOMAINS,
+            PREF_MAP_TILE_URL,
+            PREF_MAP_TILELAYER_DOCS,
+    };
+
+    public static final String[] PREFS_ANDROID_21 = {
+            PREF_LOCALISE_PLACES,
+            PREF_LOCALISE_PLACES_HELP,
+    };
 
     private static final Set<String> devicesMifareWorks = new HashSet<>();
     private static final Set<String> devicesMifareNotWorks = new HashSet<>();
@@ -215,6 +231,18 @@ public class MetrodroidApplication extends Application {
     }
 
     @NonNull
+    public static String getMapTileUrl() {
+        String def = Utils.localizeString(R.string.default_map_tile_url);
+        return getStringPreference(PREF_MAP_TILE_URL, def);
+    }
+
+    @NonNull
+    public static String getMapTileSubdomains() {
+        String def = Utils.localizeString(R.string.default_map_tile_subdomains);
+        return getStringPreference(PREF_MAP_TILE_SUBDOMAINS, def);
+    }
+
+    @NonNull
     public Serializer getSerializer() {
         return mSerializer;
     }
@@ -275,7 +303,24 @@ public class MetrodroidApplication extends Application {
 
     @NonNull
     protected static String getStringPreference(@NonNull String preference, @NonNull String defaultValue) {
-        return getSharedPreferences().getString(preference, defaultValue);
+        return getStringPreference(preference, defaultValue, true);
+    }
+
+    /**
+     * Gets a string preference.
+     *
+     * @param preference Preference key to fetch
+     * @param defaultValue Default value of the preference
+     * @param useDefaultForEmpty If True, when the preference contains an empty string, return
+     *                           defaultValue.
+     */
+    @NonNull
+    protected static String getStringPreference(@NonNull String preference, @NonNull String defaultValue, boolean useDefaultForEmpty) {
+        String v = getSharedPreferences().getString(preference, defaultValue);
+        if (useDefaultForEmpty && v.isEmpty()) {
+            return defaultValue;
+        }
+        return v;
     }
 
     protected static int getIntPreference(@NonNull String preference, int defaultValue) {

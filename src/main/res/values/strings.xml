@@ -197,6 +197,8 @@
 
     <string name="mfc_fallback_desc">Some agencies have no identifying magic on their card. To read them, you must select an agency explicitly.</string>
     <string name="mfc_fallback">Fallback reader</string>
+    <!-- Shown as a preference description when a feature needs Android 4.2 or later. -->
+    <string name="requires_android_17">Requires Android 4.2 or later.</string>
     <!-- Shown as a preference description when a feature needs Android 5.0 or later. -->
     <string name="requires_android_21">Requires Android 5.0 or later.</string>
 

@@ -110,7 +110,7 @@ public class CardTripsFragment extends ListFragment {
 
     @Override
     public void onListItemClick(ListView l, View v, int position, long id) {
-        if (Build.VERSION.SDK_INT < 17) {
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.JELLY_BEAN_MR1) {
             return;
         }
 

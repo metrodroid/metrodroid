@@ -54,10 +54,17 @@ public class PreferencesActivity extends PreferenceActivity implements Preferenc
         mPreferenceTheme = (ListPreference) getPreferenceManager().findPreference(MetrodroidApplication.PREF_THEME);
         mPreferenceTheme.setOnPreferenceChangeListener(this);
 
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.JELLY_BEAN_MR1) {
+            for (String prefKey : MetrodroidApplication.PREFS_ANDROID_17) {
+                Preference pref = getPreferenceManager().findPreference(prefKey);
+                if (pref == null) continue;
+                pref.setEnabled(false);
+                pref.setSummary(R.string.requires_android_17);
+            }
+        }
+
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
-            for (String prefKey : new String[]{
-                    MetrodroidApplication.PREF_LOCALISE_PLACES,
-                    MetrodroidApplication.PREF_LOCALISE_PLACES_HELP}) {
+            for (String prefKey : MetrodroidApplication.PREFS_ANDROID_21) {
                 Preference pref = getPreferenceManager().findPreference(prefKey);
                 if (pref == null) continue;
                 pref.setEnabled(false);
