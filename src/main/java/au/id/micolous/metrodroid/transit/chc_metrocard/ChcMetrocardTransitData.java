@@ -48,7 +48,7 @@ import au.id.micolous.metrodroid.transit.erg.record.ErgPurseRecord;
  */
 
 public class ChcMetrocardTransitData extends ErgTransitData {
-    public static final String NAME = "Metrocard";
+    private static final String NAME = "Metrocard";
     private static final int AGENCY_ID = 0x0136;
     private static final TimeZone TIME_ZONE = TimeZone.getTimeZone("Pacific/Auckland");
     static final String CURRENCY = "NZD";
@@ -87,6 +87,16 @@ public class ChcMetrocardTransitData extends ErgTransitData {
         @Override
         public TransitData parseTransitData(@NonNull ClassicCard classicCard) {
             return new ChcMetrocardTransitData(classicCard);
+        }
+
+        @Override
+        public TransitIdentity parseTransitIdentity(@NonNull ClassicCard card) {
+            return parseTransitIdentity(card, NAME);
+        }
+
+        @Override
+        protected int getErgAgencyID() {
+            return AGENCY_ID;
         }
 
         @NonNull
