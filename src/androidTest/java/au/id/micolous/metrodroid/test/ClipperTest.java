@@ -105,7 +105,7 @@ public class ClipperTest extends BaseInstrumentedTest {
         assertEquals(Trip.Mode.TICKET_MACHINE, trips.get(1).getMode());
         assertNull(trips.get(1).getStartStation());
         assertNull(trips.get(1).getEndStation());
-        assertEquals("78123456", trips.get(1).getVehicleID());
+        assertEquals("78123456", trips.get(1).getMachineID());
 
         assertEquals("Bay Area Rapid Transit", trips.get(0).getAgencyName(false));
         assertEquals("BART", trips.get(0).getAgencyName(true));
