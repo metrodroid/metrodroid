@@ -166,7 +166,7 @@ public class OrcaTransitData extends TransitData {
         if (!(file instanceof RecordDesfireFile))
             return new ArrayList<>();
 
-        RecordDesfireFile recordFile = (RecordDesfireFile) card.getApplication(APP_ID).getFile(fileId);
+        RecordDesfireFile recordFile = (RecordDesfireFile) file;
 
         OrcaTransaction[] useLog = new OrcaTransaction[recordFile.getRecords().size()];
         for (int i = 0; i < useLog.length; i++) {

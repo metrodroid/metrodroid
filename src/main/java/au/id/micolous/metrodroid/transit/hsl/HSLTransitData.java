@@ -444,7 +444,7 @@ public class HSLTransitData extends TransitData implements Parcelable {
         DesfireFile file = card.getApplication(APP_ID).getFile(0x04);
 
         if (file instanceof RecordDesfireFile) {
-            RecordDesfireFile recordFile = (RecordDesfireFile) card.getApplication(APP_ID).getFile(0x04);
+            RecordDesfireFile recordFile = (RecordDesfireFile) file;
 
             List<HSLTrip> useLog = new ArrayList<>();
             for (int i = 0; i < recordFile.getRecords().size(); i++) {
