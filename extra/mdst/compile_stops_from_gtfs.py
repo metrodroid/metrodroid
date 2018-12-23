@@ -125,11 +125,11 @@ def compile_stops_from_gtfs(input_gtfs_f, output_f, all_matching_f=None, version
       stop_ids = {}
       short_names = {}
       for match in matching:
-        if match['stop_code']:
+        if 'stop_code' in match and match['stop_code']:
           if match['stop_code'] not in stop_codes:
             stop_codes[match['stop_code']] = []
           stop_codes[match['stop_code']].append(match['reader_id'])
-        elif match['stop_id']:
+        elif 'stop_id' in match and match['stop_id']:
           if match['stop_id'] not in stop_ids:
             stop_ids[match['stop_id']] = []
           stop_ids[match['stop_id']].append(match['reader_id'])
