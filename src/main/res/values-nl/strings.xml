@@ -380,7 +380,7 @@
 \n 
 \nDit vereist toegankelijkheidssoftware die ondersteuning heeft voor de LocaleSpan-API (zoals bijv. Google TalkBack) en dat je de benodigde stemmen hebt geïnstalleerd.</string>
 
-    <string name="convert_timezones">Tijden aanpassen aan huidige tijdzone</string>
+    <string name="convert_timezones">Aanpassen aan tijdzones</string>
     <string name="convert_timezones_summary">Standaard laat Metrodroid reistijden zien zoals deze zijn in de tijdzone van de vervoerder. Als deze optie wordt ingeschakeld, dan zal Metrodroid de reistijden aanpassen aan de huidige tijdzone van uw apparaat.</string>
     <string name="record_title_format">Vermelding: %s</string>
     <string name="iso7816_probing">Bezig met verbinding leggen met ISO7816-kaart…</string>
@@ -848,4 +848,11 @@
     <string name="rkf_status_temp_disabled">Tijdelijk uitgeschakeld of geschorst</string>
     <string name="rkf_status_not_ok">Permanent uitgeschakeld</string>
     <string name="import_mct_file">Importeren uit MCT-bestand</string>
+    <string name="requires_android_17">Vereist Android 4.2 of hoger.</string>
+    <string name="convert_timezones_summary_off">Reistijden worden getoond in de tijdzone van de vervoerder in kwestie.</string>
+    <string name="convert_timezones_summary_on">Reistijden worden aangepast aan jouw huidige tijdzone.</string>
+    <string name="adelaide_ticket_type_concession">Gereduceerd tarief</string>
+    <string name="adelaide_ticket_type_regular">Normaal</string>
+    <string name="adelaide_ticket_type_seniors">Ouderen</string>
+    <string name="adelaide_ticket_type_student">Studenten</string>
 </resources>
