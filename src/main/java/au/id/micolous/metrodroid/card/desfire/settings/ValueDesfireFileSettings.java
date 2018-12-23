@@ -25,7 +25,8 @@ import org.apache.commons.lang3.ArrayUtils;
 import org.simpleframework.xml.Element;
 import org.simpleframework.xml.Root;
 
-import java.io.ByteArrayInputStream;
+import au.id.micolous.farebot.R;
+import au.id.micolous.metrodroid.util.Utils;
 
 /**
  * Contains FileSettings for Value file types.
@@ -56,27 +57,12 @@ public class ValueDesfireFileSettings extends DesfireFileSettings {
         this.mLimitedCreditEnabled = limitedCreditEnabled;
     }
 
-    public ValueDesfireFileSettings(ByteArrayInputStream stream) {
-        super(stream);
-
-        byte[] buf = new byte[4];
-        stream.read(buf, 0, buf.length);
-        ArrayUtils.reverse(buf);
-        mLowerLimit = Utils.byteArrayToInt(buf);
-
-        buf = new byte[4];
-        stream.read(buf, 0, buf.length);
-        ArrayUtils.reverse(buf);
-        mUpperLimit = Utils.byteArrayToInt(buf);
-
-        buf = new byte[4];
-        stream.read(buf, 0, buf.length);
-        ArrayUtils.reverse(buf);
-        mLimitedCreditValue = Utils.byteArrayToInt(buf);
-
-        buf = new byte[1];
-        stream.read(buf, 0, buf.length);
-        mLimitedCreditEnabled = buf[0] != 0x00;
+    public ValueDesfireFileSettings(byte[] buf) {
+        super(buf);
+        mLowerLimit = Utils.byteArrayToIntReversed(buf, 4, 4);
+        mUpperLimit = Utils.byteArrayToIntReversed(buf, 8, 4);
+        mLimitedCreditValue = Utils.byteArrayToIntReversed(buf, 12, 4);
+        mLimitedCreditEnabled = buf[16] != 0x00;
     }
 
     public int getLowerLimit() {

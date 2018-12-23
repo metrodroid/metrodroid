@@ -25,7 +25,8 @@ import org.apache.commons.lang3.ArrayUtils;
 import org.simpleframework.xml.Element;
 import org.simpleframework.xml.Root;
 
-import java.io.ByteArrayInputStream;
+import au.id.micolous.farebot.R;
+import au.id.micolous.metrodroid.util.Utils;
 
 @Root(name = "settings")
 public class StandardDesfireFileSettings extends DesfireFileSettings {
@@ -34,12 +35,9 @@ public class StandardDesfireFileSettings extends DesfireFileSettings {
 
     private StandardDesfireFileSettings() { /* For XML Serializer */ }
 
-    StandardDesfireFileSettings(ByteArrayInputStream stream) {
-        super(stream);
-        byte[] buf = new byte[3];
-        stream.read(buf, 0, buf.length);
-        ArrayUtils.reverse(buf);
-        mFileSize = Utils.byteArrayToInt(buf);
+    StandardDesfireFileSettings(byte[] buf) {
+        super(buf);
+        mFileSize = Utils.byteArrayToIntReversed(buf, 4, 3);
     }
 
     public StandardDesfireFileSettings(byte fileType, byte commSetting, byte[] accessRights, int fileSize) {

@@ -26,7 +26,8 @@ import org.apache.commons.lang3.ArrayUtils;
 import org.simpleframework.xml.Element;
 import org.simpleframework.xml.Root;
 
-import java.io.ByteArrayInputStream;
+import au.id.micolous.farebot.R;
+import au.id.micolous.metrodroid.util.Utils;
 
 @Root(name = "settings")
 public class RecordDesfireFileSettings extends DesfireFileSettings {
@@ -46,23 +47,12 @@ public class RecordDesfireFileSettings extends DesfireFileSettings {
         this.mCurRecords = curRecords;
     }
 
-    public RecordDesfireFileSettings(ByteArrayInputStream stream) {
-        super(stream);
+    public RecordDesfireFileSettings(byte[] buf) {
+        super(buf);
 
-        byte[] buf = new byte[3];
-        stream.read(buf, 0, buf.length);
-        ArrayUtils.reverse(buf);
-        mRecordSize = Utils.byteArrayToInt(buf);
-
-        buf = new byte[3];
-        stream.read(buf, 0, buf.length);
-        ArrayUtils.reverse(buf);
-        mMaxRecords = Utils.byteArrayToInt(buf);
-
-        buf = new byte[3];
-        stream.read(buf, 0, buf.length);
-        ArrayUtils.reverse(buf);
-        mCurRecords = Utils.byteArrayToInt(buf);
+        mRecordSize = Utils.byteArrayToIntReversed(buf, 4, 3);
+        mMaxRecords = Utils.byteArrayToIntReversed(buf, 7, 3);
+        mCurRecords = Utils.byteArrayToIntReversed(buf, 10, 3);
     }
 
     public int getRecordSize() {
