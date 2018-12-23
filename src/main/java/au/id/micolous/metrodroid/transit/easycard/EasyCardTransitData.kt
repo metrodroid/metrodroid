@@ -51,12 +51,7 @@ data class EasyCardTransitData internal constructor(
 
     override fun getSerialNumber(): String? = null
 
-    override fun getTrips(): MutableList<Trip>? {
-        val ret: ArrayList<Trip> = ArrayList()
-        ret.addAll(trips)
-        ret.add(refill)
-        return ret
-    }
+    override fun getTrips() = trips + listOf(refill)
 
     companion object {
         private val TZ = TimeZone.getTimeZone("Asia/Taipei")
@@ -106,7 +101,7 @@ data class EasyCardTransitData internal constructor(
 
             override fun parseTransitData(card: ClassicCard) = EasyCardTransitData(card)
 
-            override fun getAllCards(): MutableList<CardInfo> = Collections.singletonList(CARD_INFO)
+            override fun getAllCards() = listOf(CARD_INFO)
         }
     }
 }

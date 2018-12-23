@@ -95,22 +95,16 @@ data class RkfTransitData internal constructor(
             else -> R.string.unknown_format
         }
 
-    override fun getInfo(): List<ListItem> {
-        val li = mutableListOf<ListItem>()
-        li.add(ListItem(R.string.expiry_date,
-                Utils.longDateFormat(TripObfuscator.maybeObfuscateTS(expiryDate))))
-        li.add(ListItem(R.string.card_issuer, issuer))
-
-        li.add(if (cardStatus == R.string.unknown_format) {
-            ListItem(R.string.rkf_card_status, Utils.localizeString(R.string.unknown_format,
-                    Utils.intToHex(mTcci.getIntOrZero(STATUS))))
-        } else {
-            ListItem(R.string.rkf_card_status, cardStatus)
-        })
-
-
-        return li
-    }
+    override fun getInfo() = listOf(
+            ListItem(R.string.expiry_date,
+                    Utils.longDateFormat(TripObfuscator.maybeObfuscateTS(expiryDate))),
+            ListItem(R.string.card_issuer, issuer),
+            if (cardStatus == R.string.unknown_format) {
+                ListItem(R.string.rkf_card_status, Utils.localizeString(R.string.unknown_format,
+                        Utils.intToHex(mTcci.getIntOrZero(STATUS))))
+            } else {
+                ListItem(R.string.rkf_card_status, cardStatus)
+            })
 
     companion object {
         private val issuerMap = hashMapOf(
@@ -147,7 +141,7 @@ data class RkfTransitData internal constructor(
 
             override fun earlySectors() = 1
 
-            override fun getAllCards() = ArrayList(issuerMap.values)
+            override fun getAllCards() = issuerMap.values.toList()
 
             override fun parseTransitIdentity(card: ClassicCard): TransitIdentity {
                 val serial = getSerial(card)
@@ -270,24 +264,22 @@ data class RkfTransitData internal constructor(
             return records
         }
 
-        private fun getBlockCount(type: Int, version: Int): Int {
-            return when (type) {
-                0x84 -> 1
-                0x85 -> when (version) {
-                    // Only 3 is tested
-                    1, 2, 3, 4, 5 -> 3
-                    else -> 6
-                }
-                0xa2 -> 2
-                0xa3 -> when (version) {
-                    // Only 2 is tested
-                    1, 2 -> 3
-                    // Only 5 is tested
-                    // 3 seems already have size 6
-                    else -> 6
-                }
-                else -> -1
+        private fun getBlockCount(type: Int, version: Int) = when (type) {
+            0x84 -> 1
+            0x85 -> when (version) {
+                // Only 3 is tested
+                1, 2, 3, 4, 5 -> 3
+                else -> 6
             }
+            0xa2 -> 2
+            0xa3 -> when (version) {
+                // Only 2 is tested
+                1, 2 -> 3
+                // Only 5 is tested
+                // 3 seems already have size 6
+                else -> 6
+            }
+            else -> -1
         }
 
         private fun getSerial(card: ClassicCard): RkfSerial {

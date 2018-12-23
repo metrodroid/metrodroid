@@ -90,7 +90,7 @@ data class SunCardTransitData(private val mSerial: Int = 0) : SerialOnlyTransitD
 
             override fun earlySectors() = 1
 
-            override fun getAllCards(): MutableList<CardInfo> = Collections.singletonList(CARD_INFO)
+            override fun getAllCards() = listOf(CARD_INFO)
         }
     }
 }

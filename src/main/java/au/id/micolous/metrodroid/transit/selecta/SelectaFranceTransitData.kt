@@ -31,7 +31,6 @@ import au.id.micolous.metrodroid.transit.TransitData
 import au.id.micolous.metrodroid.transit.TransitIdentity
 import au.id.micolous.metrodroid.util.Utils
 import kotlinx.android.parcel.Parcelize
-import java.util.*
 
 /**
  * Selecta payment cards
@@ -84,7 +83,7 @@ data class SelectaFranceTransitData(private var mBalance: Int = 0,
 
             override fun earlySectors() = 1
 
-            override fun getAllCards(): MutableList<CardInfo> = Collections.singletonList(CARD_INFO)
+            override fun getAllCards() = listOf(CARD_INFO)
         }
     }
 }

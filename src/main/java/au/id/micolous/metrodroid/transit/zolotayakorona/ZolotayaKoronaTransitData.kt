@@ -19,7 +19,6 @@
 
 package au.id.micolous.metrodroid.transit.zolotayakorona
 
-import java.util.ArrayList
 import java.util.Calendar
 import java.util.GregorianCalendar
 import java.util.TimeZone
@@ -69,7 +68,6 @@ data class ZolotayaKoronaTransitData internal constructor(
     override fun getCardName() = nameCard(mCardType)
 
     override fun getInfo(): List<ListItem>? {
-        val li = ArrayList<ListItem>()
         val regionNum = mCardType shr 16
         val cardInfo = CARDS[mCardType]
         val regionRsrcIdx = cardInfo?.locationId
@@ -79,12 +77,12 @@ data class ZolotayaKoronaTransitData internal constructor(
                 else
                     (REGIONS[regionNum]?.first ?: Integer.toHexString(regionNum))
                 )
-        li.add(ListItem(R.string.zolotaya_korona_region, regionName))
-        li.add(ListItem(R.string.card_type, cardInfo?.name ?: mCardType.toString(16)))
-        // Printed in hex on the receipt
-        li.add(ListItem(R.string.card_serial_number, mCardSerial.toUpperCase()))
-        li.add(ListItem(R.string.refill_counter, mRefill?.mCounter?.toString() ?: "0"))
-        return li
+        return listOf(
+                ListItem(R.string.zolotaya_korona_region, regionName),
+                ListItem(R.string.card_type, cardInfo?.name ?: mCardType.toString(16)),
+                // Printed in hex on the receipt
+                ListItem(R.string.card_serial_number, mCardSerial.toUpperCase()),
+                ListItem(R.string.refill_counter, mRefill?.mCounter?.toString() ?: "0"))
     }
 
     override fun getTrips() = listOfNotNull(mTrip) + listOfNotNull(mRefill)
