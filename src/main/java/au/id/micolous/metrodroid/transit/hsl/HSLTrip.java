@@ -86,8 +86,13 @@ public class HSLTrip extends Trip {
     }
 
     public HSLTrip() {
-        mTimestamp = mExpireTimestamp = null;
-        mFare = mArvo = mPax = mNewBalance = mVehicleNumber = -1;
+        mTimestamp = null;
+        mExpireTimestamp = null;
+        mFare = -1;
+        mArvo = -1;
+        mPax = -1;
+        mNewBalance = -1;
+        mVehicleNumber = -1;
         mLine = null;
     }
 
