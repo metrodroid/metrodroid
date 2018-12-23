@@ -20,12 +20,12 @@ task copyLeaflet(type: Copy) {
 }
 
 android {
-    compileSdkVersion 27
-    buildToolsVersion '28.0.3'
+    compileSdkVersion android_sdk_version
+    buildToolsVersion build_version
 
     defaultConfig {
-        minSdkVersion 1
-        targetSdkVersion 27
+        minSdkVersion android_min_version
+        targetSdkVersion android_sdk_version
     }
 
     preBuild.dependsOn copyLeaflet
