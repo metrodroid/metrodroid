@@ -255,6 +255,8 @@ public class KeysFragment extends ListFragment implements AdapterView.OnItemLong
                 switch (requestCode) {
                     case REQUEST_SELECT_FILE: {
                         uri = data.getData();
+                        if (uri == null)
+                            break;
                         String type = getActivity().getContentResolver().getType(uri);
                         //noinspection StringConcatenation
                         Log.d(TAG, "REQUEST_SELECT_FILE content_type = " + type);
@@ -326,6 +328,8 @@ public class KeysFragment extends ListFragment implements AdapterView.OnItemLong
     @StringRes
     private static int importKeysFromStaticJSON(Activity activity, Uri uri) throws IOException {
         InputStream stream = activity.getContentResolver().openInputStream(uri);
+        if (stream == null)
+            return R.string.key_file_empty;
         byte[] keyData = IOUtils.toByteArray(stream);
 
         try {

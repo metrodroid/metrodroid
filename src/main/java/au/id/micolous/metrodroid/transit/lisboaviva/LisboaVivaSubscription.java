@@ -64,7 +64,7 @@ public class LisboaVivaSubscription extends En1545Subscription {
     @Nullable
     @Override
     public TransitBalance getBalance() {
-        if (!isZapping())
+        if (!isZapping() || mCounter == null)
             return null;
         return TransitCurrency.EUR(mCounter);
     }
