@@ -97,10 +97,4 @@ public class AdelaideTransaction extends En1545Transaction implements Parcelable
     protected En1545Lookup getLookup() {
         return AdelaideLookup.getInstance();
     }
-
-    protected boolean isRejected() {
-        // The tap-on was rejected (insufficient funds).
-        // Successful events don't set EVENT_RESULT.
-        return mParsed.getIntOrZero(EVENT_RESULT) == 2;
-    }
 }
