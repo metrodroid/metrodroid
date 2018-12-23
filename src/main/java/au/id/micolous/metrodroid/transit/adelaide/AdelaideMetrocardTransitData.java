@@ -60,7 +60,8 @@ public class AdelaideMetrocardTransitData extends En1545TransitData {
     };
 
     private static final int APP_ID = 0xb006f2;
-    private static final String NAME = "Metrocard (Adelaide)";
+    // Matches capitalisation used by agency (and on the card).
+    private static final String NAME = "metroCARD";
     private final List<TransactionTrip> mTrips;
     private final List<AdelaideSubscription> mSubs;
     private final AdelaideSubscription mPurse;
