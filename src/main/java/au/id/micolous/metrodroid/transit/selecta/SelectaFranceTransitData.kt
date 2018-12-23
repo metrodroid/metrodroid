@@ -39,8 +39,8 @@ import kotlinx.android.parcel.Parcelize
  */
 
 @Parcelize
-data class SelectaFranceTransitData(private var mBalance: Int = 0,
-                                    private var mSerial: Int = 0) : TransitData() {
+data class SelectaFranceTransitData(private val mBalance: Int = 0,
+                                    private val mSerial: Int = 0) : TransitData() {
 
     override fun getSerialNumber() = mSerial.toString()
 
