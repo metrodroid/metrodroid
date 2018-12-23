@@ -26,9 +26,9 @@ public interface ISO7816ApplicationFactory {
     }
 
     @Nullable
-    ISO7816Application dumpTag(@NonNull ISO7816Protocol protocol,
-                               @NonNull ISO7816Application.ISO7816Info appData,
-                               @NonNull TagReaderFeedbackInterface feedbackInterface);
+    List<ISO7816Application> dumpTag(@NonNull ISO7816Protocol protocol,
+                                     @NonNull ISO7816Application.ISO7816Info appData,
+                                     @NonNull TagReaderFeedbackInterface feedbackInterface);
 
     @NonNls
     @NonNull

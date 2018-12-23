@@ -31,6 +31,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
+import java.util.Collections;
 import java.util.Collection;
 import java.util.GregorianCalendar;
 import java.util.HashMap;
@@ -123,7 +124,7 @@ public class CalypsoApplication extends ISO7816Application {
 
         @NonNull
         @Override
-        public ISO7816Application dumpTag(@NonNull ISO7816Protocol protocol, @NonNull ISO7816Info appData, @NonNull TagReaderFeedbackInterface feedbackInterface) {
+        public List<ISO7816Application> dumpTag(@NonNull ISO7816Protocol protocol, @NonNull ISO7816Info appData, @NonNull TagReaderFeedbackInterface feedbackInterface) {
             // At this point, the connection is already open, we just need to dump the right things...
 
             feedbackInterface.updateStatusText(Utils.localizeString(R.string.calypso_reading));
@@ -153,7 +154,7 @@ public class CalypsoApplication extends ISO7816Application {
                 }
             }
 
-            return new CalypsoApplication(appData, partialRead);
+            return Collections.singletonList(new CalypsoApplication(appData, partialRead));
         }
     };
 

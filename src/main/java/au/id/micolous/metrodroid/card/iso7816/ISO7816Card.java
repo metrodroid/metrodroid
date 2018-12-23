@@ -126,7 +126,7 @@ public class ISO7816Card extends Card {
                         continue;
                     }
 
-                    ISO7816Application app = factory.dumpTag(
+                    List<ISO7816Application> app = factory.dumpTag(
                             iso7816Tag, new ISO7816Application.ISO7816Info(
                                     appData, appId, tag.getId(), factory.getType()),
                             feedbackInterface);
@@ -135,7 +135,7 @@ public class ISO7816Card extends Card {
                         continue;
                     }
 
-                    apps.add(app);
+                    apps.addAll(app);
 
                     if (stopAfterFirst) {
                         break;

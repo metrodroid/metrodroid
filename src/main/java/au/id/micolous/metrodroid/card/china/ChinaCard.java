@@ -166,7 +166,7 @@ public class ChinaCard extends ISO7816Application {
          */
         @Nullable
         @Override
-        public ISO7816Application dumpTag(@NonNull ISO7816Protocol protocol, @NonNull ISO7816Info appData, @NonNull TagReaderFeedbackInterface feedbackInterface) {
+        public List<ISO7816Application> dumpTag(@NonNull ISO7816Protocol protocol, @NonNull ISO7816Info appData, @NonNull TagReaderFeedbackInterface feedbackInterface) {
             List <Balance> bals = new ArrayList<>();
 
             try {
@@ -222,7 +222,7 @@ public class ChinaCard extends ISO7816Application {
                 return null;
             }
 
-            return new ChinaCard(appData, bals);
+            return Collections.singletonList(new ChinaCard(appData, bals));
         }
     };
 
