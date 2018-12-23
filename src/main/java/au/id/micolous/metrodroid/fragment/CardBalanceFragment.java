@@ -148,6 +148,7 @@ public class CardBalanceFragment extends ListFragment {
             }
 
             TextView tripsView = view.findViewById(R.id.trips);
+            TextView daysView = view.findViewById(R.id.days);
             Integer remainingTrips = subscription.getRemainingTripCount();
             Integer totalTrips = subscription.getTotalTripCount();
 
@@ -161,6 +162,15 @@ public class CardBalanceFragment extends ListFragment {
                 tripsView.setVisibility(View.VISIBLE);
             } else {
                 tripsView.setVisibility(View.GONE);
+            }
+
+            Integer remainingDays = subscription.getRemainingDayCount();
+            if (remainingDays != null) {
+                daysView.setText(Utils.localizePlural(R.plurals.remaining_day_count,
+                        remainingDays, remainingDays));
+                daysView.setVisibility(View.VISIBLE);
+            } else {
+                daysView.setVisibility(View.GONE);
             }
 
             TextView companyView = view.findViewById(R.id.company);
