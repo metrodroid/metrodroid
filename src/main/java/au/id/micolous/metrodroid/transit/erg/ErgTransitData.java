@@ -27,7 +27,6 @@ import au.id.micolous.metrodroid.card.classic.ClassicBlock;
 import au.id.micolous.metrodroid.card.classic.ClassicCard;
 import au.id.micolous.metrodroid.card.classic.ClassicCardTransitFactory;
 import au.id.micolous.metrodroid.card.classic.ClassicSector;
-import au.id.micolous.metrodroid.transit.CardInfo;
 import au.id.micolous.metrodroid.transit.TransitCurrency;
 import au.id.micolous.metrodroid.transit.TransitData;
 import au.id.micolous.metrodroid.transit.TransitIdentity;
@@ -70,7 +69,7 @@ public class ErgTransitData extends TransitData {
     public static final Creator<ErgTransitData> CREATOR = new Creator<ErgTransitData>() {
         @Override
         public ErgTransitData createFromParcel(Parcel in) {
-            return new ErgTransitData(in, "AUD");
+            return new ErgTransitData(in);
         }
 
         @Override
@@ -80,13 +79,13 @@ public class ErgTransitData extends TransitData {
     };
     private final String mCurrency;
 
-    public ErgTransitData(Parcel parcel, String currency) {
+    public ErgTransitData(Parcel parcel) {
         mSerialNumber = parcel.readString();
         mEpochDate = new GregorianCalendar();
         mEpochDate.setTimeInMillis(parcel.readLong());
         //noinspection unchecked
         mTrips = parcel.readArrayList(getClass().getClassLoader());
-        mCurrency = currency;
+        mCurrency = parcel.readString();
     }
 
     public ErgTransitData(ClassicCard card) {
@@ -261,6 +260,7 @@ public class ErgTransitData extends TransitData {
         parcel.writeString(mSerialNumber);
         parcel.writeLong(mEpochDate.getTimeInMillis());
         parcel.writeList(mTrips);
+        parcel.writeString(mCurrency);
     }
 
     @Override

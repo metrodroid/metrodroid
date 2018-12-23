@@ -30,7 +30,6 @@ import au.id.micolous.farebot.R;
 import au.id.micolous.metrodroid.card.CardType;
 import au.id.micolous.metrodroid.card.classic.ClassicCard;
 import au.id.micolous.metrodroid.card.classic.ClassicCardTransitFactory;
-import au.id.micolous.metrodroid.card.classic.ClassicSector;
 import au.id.micolous.metrodroid.transit.CardInfo;
 import au.id.micolous.metrodroid.transit.TransitData;
 import au.id.micolous.metrodroid.transit.TransitIdentity;
@@ -76,7 +75,7 @@ public class ChcMetrocardTransitData extends ErgTransitData {
     };
 
     public ChcMetrocardTransitData(Parcel parcel) {
-        super(parcel, CURRENCY);
+        super(parcel);
     }
 
     public ChcMetrocardTransitData(ClassicCard card) {

@@ -84,7 +84,7 @@ public class ErgTrip extends Trip {
             o *= -1;
         }
 
-        return TransitCurrency.AUD(o);
+        return new TransitCurrency(o, mCurrency);
     }
 
     @Override
