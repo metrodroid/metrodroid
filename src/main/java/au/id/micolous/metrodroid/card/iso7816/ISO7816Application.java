@@ -239,10 +239,6 @@ public class ISO7816Application {
         }
     }
 
-    public List<ISO7816File> getFiles() {
-        return mFiles;
-    }
-
     public ISO7816File getFile(ISO7816Selector sel) {
         for (ISO7816File f : mFiles) {
             if (f.getSelector().equals(sel)) {
