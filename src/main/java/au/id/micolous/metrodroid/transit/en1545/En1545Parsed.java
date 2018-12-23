@@ -164,6 +164,8 @@ public class En1545Parsed implements Parcelable {
     private Pair<Calendar,Integer> getTimeStampFlags(@NonNull @NonNls String name, TimeZone tz) {
         if (contains(name + "DateTime"))
             return Pair.create(En1545FixedInteger.parseTimeSec(getIntOrZero(name + "DateTime"), tz), 3);
+        if (contains(name + "DateTimeLocal"))
+            return Pair.create(En1545FixedInteger.parseTimeSecLocal(getIntOrZero(name + "DateTimeLocal"), tz), 3);
         if (contains(name + "Time") && contains(name + "Date"))
             return Pair.create(En1545FixedInteger.parseTime(getIntOrZero(name + "Date"), getIntOrZero(name + "Time"), tz),
                     3);

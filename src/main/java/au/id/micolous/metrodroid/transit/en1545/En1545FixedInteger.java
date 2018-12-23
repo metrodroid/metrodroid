@@ -120,6 +120,16 @@ public class En1545FixedInteger implements En1545Field {
         return g;
     }
 
+    @Nullable
+    public static Calendar parseTimeSecLocal(int val, TimeZone tz) {
+        if (val == 0)
+            return null;
+        GregorianCalendar g = new GregorianCalendar(tz);
+        g.setTimeInMillis(getEpoch(tz));
+        g.add(Calendar.SECOND, val);
+        return g;
+    }
+
     public static Calendar parseBCDDate(int date, TimeZone tz) {
         GregorianCalendar g = new GregorianCalendar(tz);
         g.set(Utils.convertBCDtoInteger(date >> 16),
@@ -152,6 +162,11 @@ public class En1545FixedInteger implements En1545Field {
     @NonNull
     public static En1545Field dateTime(@NonNull @NonNls String name) {
         return new En1545FixedInteger(name + "DateTime", 30);
+    }
+
+    @NonNull
+    public static En1545Field dateTimeLocal(@NonNls @NonNull String name) {
+        return new En1545FixedInteger(name + "DateTimeLocal", 30);
     }
 
     @NonNull
