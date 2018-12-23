@@ -41,12 +41,12 @@ public class Base64String {
 
     public static final class Transform implements org.simpleframework.xml.transform.Transform<Base64String> {
         @Override
-        public Base64String read(String value) throws Exception {
+        public Base64String read(String value) {
             return new Base64String(value);
         }
 
         @Override
-        public String write(Base64String value) throws Exception {
+        public String write(Base64String value) {
             return value.toBase64();
         }
     }

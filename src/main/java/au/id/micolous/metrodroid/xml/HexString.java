@@ -41,12 +41,12 @@ public class HexString {
 
     public static final class Transform implements org.simpleframework.xml.transform.Transform<HexString> {
         @Override
-        public HexString read(String value) throws Exception {
+        public HexString read(String value) {
             return new HexString(value);
         }
 
         @Override
-        public String write(HexString value) throws Exception {
+        public String write(HexString value) {
             return value.toHexString();
         }
     }
