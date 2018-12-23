@@ -175,13 +175,13 @@ public class IntercodeTransitData extends Calypso1545TransitData {
     }
 
     protected IntercodeTransaction createTrip(byte[] data) {
-        return new IntercodeTransaction(data, mNetworkId);
+        return new IntercodeTransaction(data, getNetworkId());
     }
 
     @Nullable
     @Override
     protected IntercodeTransaction createSpecialEvent(byte[] data) {
-        return new IntercodeTransaction(data, mNetworkId);
+        return new IntercodeTransaction(data, getNetworkId());
     }
 
     protected IntercodeSubscription createSubscription(byte[] data, En1545Parsed contractList, Integer listNum,
@@ -191,7 +191,7 @@ public class IntercodeTransitData extends Calypso1545TransitData {
         Integer tariff = contractList.getInt(CONTRACTS_TARIFF, listNum);
         if (tariff == null)
             return null;
-        return new IntercodeSubscription(data, (tariff >> 4) & 0xff, mNetworkId, counter);
+        return new IntercodeSubscription(data, (tariff >> 4) & 0xff, getNetworkId(), counter);
     }
 
     private static final SparseArray<Pair<CardInfo, En1545Lookup>> NETWORKS = new SparseArray<>();
@@ -224,7 +224,7 @@ public class IntercodeTransitData extends Calypso1545TransitData {
                 13, 24);
     }
 
-    protected static String getSerial(int netId, CalypsoApplication card) {
+    private static String getSerial(int netId, CalypsoApplication card) {
         ISO7816File iccFile = card.getFile(CalypsoApplication.File.ICC);
         if (iccFile == null) {
             return null;
@@ -296,7 +296,7 @@ public class IntercodeTransitData extends Calypso1545TransitData {
 
     @Override
     public String getCardName() {
-        return getCardName(mNetworkId);
+        return getCardName(getNetworkId());
     }
 
     private IntercodeTransitData(Parcel parcel) {
@@ -321,6 +321,6 @@ public class IntercodeTransitData extends Calypso1545TransitData {
 
     @Override
     protected En1545Lookup getLookup() {
-        return getLookup(mNetworkId);
+        return getLookup(getNetworkId());
     }
 }
