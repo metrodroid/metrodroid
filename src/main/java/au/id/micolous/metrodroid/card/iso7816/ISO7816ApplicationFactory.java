@@ -22,7 +22,7 @@ public interface ISO7816ApplicationFactory {
      * @return True to stop after the first app, False to dump all apps from this factory.
      */
     default boolean stopAfterFirstApp() {
-        return true;
+        return false;
     }
 
     @Nullable

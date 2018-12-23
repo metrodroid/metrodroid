@@ -146,12 +146,6 @@ public class ChinaCard extends ISO7816Application {
             return TYPE;
         }
 
-        @Override
-        public boolean stopAfterFirstApp() {
-            // China cards can be hybrids.
-            return false;
-        }
-
         @NonNull
         @Override
         public List<String> getTypes() {
