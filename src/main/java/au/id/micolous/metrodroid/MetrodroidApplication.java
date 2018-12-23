@@ -130,16 +130,7 @@ public class MetrodroidApplication extends Application {
         sInstance = this;
 
         try {
-            Visitor visitor = new Visitor() {
-                @Override
-                public void read(Type type, NodeMap<InputNode> node) throws Exception {
-                }
-
-                @Override
-                public void write(Type type, NodeMap<OutputNode> node) throws Exception {
-                    node.remove("class");
-                }
-            };
+            Visitor visitor = new ClassVisitor();
             Registry registry = new Registry();
             RegistryMatcher matcher = new RegistryMatcher();
             mSerializer = new Persister(new VisitorStrategy(visitor, new SkippableRegistryStrategy(registry)), matcher);
@@ -350,5 +341,16 @@ public class MetrodroidApplication extends Application {
 
     public static boolean showRawStationIds() {
         return getBooleanPref(MetrodroidApplication.PREF_SHOW_RAW_IDS, false);
+    }
+
+    private static class ClassVisitor implements Visitor {
+        @Override
+        public void read(Type type, NodeMap<InputNode> node) {
+        }
+
+        @Override
+        public void write(Type type, NodeMap<OutputNode> node) {
+            node.remove("class");
+        }
     }
 }
