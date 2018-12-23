@@ -42,11 +42,13 @@ public final class SeqGoData {
 
     private static final int TICKET_TYPE_CONCESSION_2016 = 0x08a5;
 
-    static final SparseArray<SeqGoTicketType> TICKET_TYPE_MAP = new SparseArray<SeqGoTicketType>() {{
-        put(TICKET_TYPE_REGULAR_2011, SeqGoTicketType.REGULAR);
-        put(TICKET_TYPE_REGULAR_2016, SeqGoTicketType.REGULAR);
-        put(TICKET_TYPE_CONCESSION_2016, SeqGoTicketType.CONCESSION);
-    }};
+    static final SparseArray<SeqGoTicketType> TICKET_TYPE_MAP = new SparseArray<>();
+
+    static {
+        TICKET_TYPE_MAP.put(TICKET_TYPE_REGULAR_2011, SeqGoTicketType.REGULAR);
+        TICKET_TYPE_MAP.put(TICKET_TYPE_REGULAR_2016, SeqGoTicketType.REGULAR);
+        TICKET_TYPE_MAP.put(TICKET_TYPE_CONCESSION_2016, SeqGoTicketType.CONCESSION);
+    };
 
     private SeqGoData() {
     }
