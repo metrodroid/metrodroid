@@ -30,6 +30,7 @@ import org.simpleframework.xml.Root;
 
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.List;
@@ -61,6 +62,10 @@ public class ISO7816Card extends Card {
             TMoneyCard.FACTORY,
             ChinaCard.FACTORY
     };
+
+    public static List<ISO7816ApplicationFactory> getFactories() {
+        return Arrays.asList(FACTORIES);
+    }
 
     @ElementList(name = "applications", entry = "application")
     private List<ISO7816Application> mApplications;

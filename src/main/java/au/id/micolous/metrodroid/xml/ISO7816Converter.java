@@ -26,11 +26,10 @@ import org.simpleframework.xml.convert.Converter;
 import org.simpleframework.xml.stream.InputNode;
 import org.simpleframework.xml.stream.OutputNode;
 
-import au.id.micolous.metrodroid.card.calypso.CalypsoApplication;
 import au.id.micolous.metrodroid.card.cepas.CEPASApplication;
 import au.id.micolous.metrodroid.card.iso7816.ISO7816Application;
-import au.id.micolous.metrodroid.card.china.ChinaCard;
-import au.id.micolous.metrodroid.card.tmoney.TMoneyCard;
+import au.id.micolous.metrodroid.card.iso7816.ISO7816ApplicationFactory;
+import au.id.micolous.metrodroid.card.iso7816.ISO7816Card;
 
 public class ISO7816Converter implements Converter<ISO7816Application> {
     private final Serializer mSerializer;
@@ -42,15 +41,9 @@ public class ISO7816Converter implements Converter<ISO7816Application> {
     @Override
     public ISO7816Application read(InputNode node) throws Exception {
         @NonNls String appType = node.getAttribute("type").getValue();
-        if (CalypsoApplication.TYPE.equals(appType)) {
-            return mSerializer.read(CalypsoApplication.class, node);
-        }
-        if (ChinaCard.TYPE.equals(appType) || ChinaCard.OLD_TYPE.equals(appType)) {
-            return mSerializer.read(ChinaCard.class, node);
-        }
-        if (TMoneyCard.TYPE.equals(appType)) {
-            return mSerializer.read(TMoneyCard.class, node);
-        }
+        for (ISO7816ApplicationFactory factory : ISO7816Card.getFactories())
+            if (factory.getTypes().contains(appType))
+                return mSerializer.read(factory.getCardClass(appType), node);
         if (CEPASApplication.TYPE.equals(appType)) {
             return mSerializer.read(CEPASApplication.class, node);
         }
