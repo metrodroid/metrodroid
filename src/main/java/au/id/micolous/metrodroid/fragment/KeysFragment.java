@@ -130,7 +130,7 @@ public class KeysFragment extends ListFragment implements AdapterView.OnItemLong
                         .setPositiveButton(R.string.delete, (dialog, which) -> {
                             new BetterAsyncTask<Void>(getActivity(), false, false) {
                                 @Override
-                                protected Void doInBackground() throws Exception {
+                                protected Void doInBackground() {
                                     Uri uri = ContentUris.withAppendedId(CardKeyProvider.CONTENT_URI, mActionKeyId);
                                     getActivity().getContentResolver().delete(uri, null, null);
                                     return null;

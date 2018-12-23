@@ -24,12 +24,12 @@ import org.simpleframework.xml.transform.Transform;
 
 public class CardTypeTransform implements Transform<CardType> {
     @Override
-    public CardType read(String value) throws Exception {
+    public CardType read(String value) {
         return CardType.class.getEnumConstants()[Integer.parseInt(value)];
     }
 
     @Override
-    public String write(CardType value) throws Exception {
+    public String write(CardType value) {
         return String.valueOf(value.toInteger());
     }
 }

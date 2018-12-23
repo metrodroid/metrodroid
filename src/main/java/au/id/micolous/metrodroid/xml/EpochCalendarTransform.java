@@ -12,7 +12,7 @@ import java.util.GregorianCalendar;
 public class EpochCalendarTransform implements Transform<Calendar> {
 
     @Override
-    public Calendar read(String value) throws Exception {
+    public Calendar read(String value) {
         long s = Long.valueOf(value);
         Calendar c = GregorianCalendar.getInstance();
         c.setTimeInMillis(s);
@@ -20,7 +20,7 @@ public class EpochCalendarTransform implements Transform<Calendar> {
     }
 
     @Override
-    public String write(Calendar value) throws Exception {
+    public String write(Calendar value) {
         return String.valueOf(value.getTimeInMillis());
     }
 }
