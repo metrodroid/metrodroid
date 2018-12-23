@@ -60,7 +60,6 @@
     <string name="loading">Loading…</string>
     <string name="scanned_at_format">Scanned at %1$s on %2$s</string>
     <string name="supported_cards">Supported Cards</string>
-    <string name="pass_or_transfer">Pass/Xfer</string>
     <!--
     Translators: This is used for a total number of transactions that have been performed on the
     card. This is slightly different to a "trip counter", as many tickets count both the tap-on
@@ -129,7 +128,6 @@
      to user preferences. -->
     <string name="valid_from_format">Valid from %1$s</string>
     <string name="subscription_cost">Cost</string>
-    <string name="valid_not_used">Not yet used</string>
     <string name="unknown_format">Unknown (%s)</string>
     <string name="unknown">Unknown</string>
     <string name="keys_required">Encryption keys are required to read this card.</string>
@@ -470,7 +468,6 @@
     <string name="cepas_purse_status">Purse Status</string>
     <string name="cepas_purse_balance">Purse Balance</string>
     <string name="cepas_purse_creation_date">Date of Purse Creation</string>
-    <string name="cepas_expiry_date">Purse Expiry Date</string>
     <string name="cepas_autoload_amount">Autoload Amount</string>
     <string name="cepas_last_txn_info">Info About Last Transaction</string>
     <string name="cepas_credit_header">Credit Header</string>
@@ -959,10 +956,8 @@
     <string name="hsl_balance_refill">Balance refill</string>
     <string name="hsl_balance_ticket">Value ticket</string>
     <string name="hsl_pass_ticket">Season ticket</string>
-    <string name="hsl_person_format">%s person</string>
     <!-- Translators: This is the short form of "minutes" -->
     <string name="hsl_mins_format">%s mins</string>
-    <string name="hsl_line_vehicle">Line %1$s, Vehicle %2$s</string>
 
     <string name="metroq_fare_card">Fare card</string>
     <string name="metroq_day_pass">Day pass</string>
@@ -996,8 +991,6 @@
     <string name="opal_agency_tfnsw">Transport for NSW</string>
     <string name="card_note_opal">Free travel passes and single trip tickets are not supported.</string>
 
-    <string name="orca_coach_number">Coach #%s</string>
-    <string name="orca_topup_machine">Machine #%s</string>
     <string name="orca_topup">Top-up</string>
 
     <!--
@@ -1085,8 +1078,6 @@
     <string name="ovc_autocharge">Autocharge</string>
 
 
-    <string name="general_information">General Info</string>
-    <string name="personal_information">Personal Info</string>
     <string name="date_of_birth">Date of birth</string>
     <string name="credit_information">Credit Info</string>
     <string name="software_information">Software Info</string>
@@ -1144,11 +1135,6 @@
     <string name="seller_agency">Seller agency</string>
     <!-- Translators: Attribute to describe the number of remaining trips on the card or subscription. -->
     <string name="remaining_trip_count">Trips remaining</string>
-    <plurals name="remaining_trips_total">
-        <item quantity="zero">No trips remain</item>
-        <item quantity="one">%1$d trip remains</item>
-        <item quantity="other">%1$d trips remaining</item>
-    </plurals>
 
     <plurals name="remaining_trip_on_day">
         <item quantity="one">%1$d trip remains on %2$s</item>
@@ -1262,8 +1248,6 @@
      (in Russian "Edinyj") and 90 minutes pass -->
     <string name="troika_fare_single">Single-ride</string>
     <string name="troika_fare_90mins">90 minutes</string>
-    <!-- Translators: %s is a duration. e.g. 5 days -->
-    <string name="validity_length">Valid for %s</string>
     <!-- Translators: this is shown to the user when impossible to read
     ticket due ro unknown layout code and followed by hexadecimal code.
     Feel free to skip translating this one.  -->
@@ -1290,7 +1274,6 @@
     Подорожник). May be transliterated. -->
     <string name="podorozhnik_topup">Podorozhnik top-up</string>
     <string name="podorozhnik_gate">gate %s</string>
-    <string name="podorozhnik_tvm">TVM %d</string>
 
     <string name="led_bus">Saint Petersburg Bus</string>
     <!-- Translators: The Saint Petersburg Metro (Russian: Петербу́ргский метрополитен) is the
@@ -1411,13 +1394,10 @@
     written in English.
     -->
     <string name="about_key_formats">About key formats…</string>
-    <string name="invalid_json_key_type">Invalid JSON: key type missing</string>
     <string name="invalid_json">Invalid JSON</string>
     <string name="invalid_key_file">Invalid key file</string>
     <!-- Translators: "key file" is a file containing encryption keys. -->
     <string name="key_file_empty">Key file is empty!</string>
-
-    <string name="static_imported">Imported: %s</string>
 
     <!-- Translators: Shown as a label for a group of keys that does not have any label or description. -->
     <string name="untitled_key_group">Untitled key group</string>
