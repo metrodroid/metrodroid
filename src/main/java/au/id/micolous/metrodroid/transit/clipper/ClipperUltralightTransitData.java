@@ -115,14 +115,7 @@ public class ClipperUltralightTransitData extends TransitData {
 	    mSub = new ClipperUltralightSubscription(p);
     }
 
-    private static byte[] getTransaction(UltralightCard card, int startPage) {
-        byte[] ret = new byte[]{};
-        for (int i = 0; i < 5; i++)
-            ret = Utils.concatByteArrays(ret, card.getPage(startPage + i).getData());
-        return ret;
-    }
-
-    public ClipperUltralightTransitData(UltralightCard card) {
+    private ClipperUltralightTransitData(UltralightCard card) {
         mSerial = getSerial(card);
         byte []page0 = card.getPage(4).getData();
 	    byte []page1 = card.getPage(5).getData();
@@ -132,7 +125,7 @@ public class ClipperUltralightTransitData extends TransitData {
 	    mTrips = new ArrayList<>();
         ClipperUltralightTrip trLast = null;
 	    for (int offset : new int[]{6,11}) {
-            byte[] trData = getTransaction(card, offset);
+            byte[] trData = card.readPages(offset, 5);
             if (Utils.isAllZero(trData))
                 continue;
             ClipperUltralightTrip tr = new ClipperUltralightTrip(trData, mBaseDate);

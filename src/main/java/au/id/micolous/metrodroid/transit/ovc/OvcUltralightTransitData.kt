@@ -28,9 +28,6 @@ import kotlinx.android.parcel.Parcelize
 
 private const val NAME = "OVC Ultralight"
 
-private fun getTransaction(card: UltralightCard, startPage: Int) =
-        (0..3).fold(byteArrayOf()) { acc, i -> acc + card.getPage(startPage + i).data }
-
 @Parcelize
 data class OvcUltralightTransitData(private val mTrips: List<OVChipTransaction>) : TransitData() {
     override fun getSerialNumber() = null
@@ -42,7 +39,8 @@ data class OvcUltralightTransitData(private val mTrips: List<OVChipTransaction>)
 
 private fun parse(card: UltralightCard): OvcUltralightTransitData {
     val trips = listOf(4, 8).mapNotNull lam@{ offset ->
-        OVChipTransaction.parseUltralight(getTransaction(card, offset))
+        OVChipTransaction.parseUltralight(
+                card.readPages(offset, 4))
     }
     return OvcUltralightTransitData(mTrips = trips)
 }

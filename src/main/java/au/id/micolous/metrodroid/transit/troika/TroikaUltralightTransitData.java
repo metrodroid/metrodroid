@@ -72,8 +72,7 @@ public class TroikaUltralightTransitData extends TransitData {
 
         @Override
         public TransitIdentity parseTransitIdentity(@NonNull UltralightCard card) {
-            return TroikaBlock.parseTransitIdentity(Utils.concatByteArrays(card.getPage(4).getData(),
-                    card.getPage(5).getData()));
+            return TroikaBlock.parseTransitIdentity(card.readPages(4, 2));
         }
 
         @Override
@@ -128,13 +127,7 @@ public class TroikaUltralightTransitData extends TransitData {
         return mBlock.getInfo();
     }
 
-    public TroikaUltralightTransitData(UltralightCard card) {
-        byte[] rawData = new byte[0];
-        int i;
-        // Concatenate all pages.
-        for (i = 0; i < 12; i++) {
-            rawData = Utils.concatByteArrays(rawData, card.getPage(i + 4).getData());
-        }
-        mBlock = TroikaBlock.parseBlock(rawData);
+    private TroikaUltralightTransitData(UltralightCard card) {
+        mBlock = TroikaBlock.parseBlock(card.readPages(4, 12));
     }
 }
