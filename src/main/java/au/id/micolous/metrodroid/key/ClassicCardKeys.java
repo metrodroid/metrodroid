@@ -243,6 +243,6 @@ public class ClassicCardKeys extends CardKeys {
             keyCount = mSectorKeys.length;
         }
 
-        return Utils.localizePlural(R.plurals.keytype_mfc_static, keyCount, keyCount);
+        return Utils.localizePlural(R.plurals.keytype_mfc, keyCount, keyCount);
     }
 }
