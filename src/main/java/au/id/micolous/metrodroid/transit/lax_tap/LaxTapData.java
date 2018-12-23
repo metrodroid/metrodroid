@@ -39,11 +39,13 @@ public final class LaxTapData {
      * as the card differentiates codes based on direction (GTFS does not), GTFS data merges several
      * routes together as one, and there aren't that many bus routes that Metro run.
      */
-    static final SparseArray<String> METRO_BUS_ROUTES = new SparseArray<String>() {{
-        put(32788, "733 East");
-        put(32952, "720 West");
-        put(33055, "733 West");
-    }};
+    static final SparseArray<String> METRO_BUS_ROUTES = new SparseArray<>() ;
+
+    static {
+        METRO_BUS_ROUTES.put(32788, "733 East");
+        METRO_BUS_ROUTES.put(32952, "720 West");
+        METRO_BUS_ROUTES.put(33055, "733 West");
+    }
 
     private LaxTapData() {
     }
