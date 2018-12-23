@@ -23,7 +23,7 @@ The vehicle types are per EN1545 specification:
 
 * [Adelaide Metro GTFS (current)](https://data.sa.gov.au/data/dataset/adelaide-metro-general-transit-feed)
 
-* [Adelaide Metro GTFS (historical)](https://github.com/gtfsdata/adelaidemetro-gtfs/) -- git repository containing historical GTFS data going back to 2013.
+* [Adelaide Metro GTFS (historical)](https://github.com/gtfsdata/adelaidemetro-gtfs/) -- git repository containing historical GTFS data going back to 2011.
 
   There may be a way to use the historical data to guess what the other route numbers are.  They appear to be assigned in chronological order.
 
