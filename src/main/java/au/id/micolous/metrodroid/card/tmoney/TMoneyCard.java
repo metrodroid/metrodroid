@@ -110,7 +110,7 @@ public class TMoneyCard extends ISO7816Application {
          */
         @Nullable
         @Override
-        public ISO7816Application dumpTag(@NonNull ISO7816Protocol protocol, @NonNull ISO7816Info appData, @NonNull TagReaderFeedbackInterface feedbackInterface) {
+        public List<ISO7816Application> dumpTag(@NonNull ISO7816Protocol protocol, @NonNull ISO7816Info appData, @NonNull TagReaderFeedbackInterface feedbackInterface) {
             byte[] balanceResponse;
 
             try {
@@ -142,8 +142,8 @@ public class TMoneyCard extends ISO7816Application {
                 return null;
             }
 
-            return new TMoneyCard(appData,
-                    Utils.byteArrayToInt(balanceResponse, 0, BALANCE_RESP_LEN));
+            return Collections.singletonList(new TMoneyCard(appData,
+                    Utils.byteArrayToInt(balanceResponse, 0, BALANCE_RESP_LEN)));
         }
 
         @Override
