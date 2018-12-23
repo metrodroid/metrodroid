@@ -89,11 +89,11 @@ public class MykiTransitData extends SerialOnlyTransitData {
 
         try {
             mSerial = parseSerial(metadata);
-            if (mSerial == null) {
-                throw new RuntimeException("Invalid Myki data (parseSerial = null)");
-            }
         } catch (Exception ex) {
             throw new RuntimeException("Error parsing Myki data", ex);
+        }
+        if (mSerial == null) {
+            throw new RuntimeException("Invalid Myki data (parseSerial = null)");
         }
     }
 
