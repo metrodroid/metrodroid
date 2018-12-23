@@ -117,7 +117,7 @@ public class UltralightCard extends Card {
             UltralightProtocol p = new UltralightProtocol(tech);
             UltralightProtocol.UltralightType t = p.getCardType();
 
-            if (t.pageCount <= 0) {
+            if (t.getPageCount() <= 0) {
                 throw new UnsupportedTagException(new String[]{"Ultralight"}, "Unknown Ultralight type");
             }
 
@@ -129,9 +129,9 @@ public class UltralightCard extends Card {
             byte[] pageBuffer = new byte[0];
             List<UltralightPage> pages = new ArrayList<>();
             boolean unauthorized = false;
-            while (pageNumber < t.pageCount) {
+            while (pageNumber < t.getPageCount()) {
                 if (pageNumber % 4 == 0) {
-                    feedbackInterface.updateProgressBar(pageNumber, t.pageCount);
+                    feedbackInterface.updateProgressBar(pageNumber, t.getPageCount());
                     // Lets make a new buffer of data. (16 bytes = 4 pages * 4 bytes)
                     try {
                         pageBuffer = tech.readPages(pageNumber);

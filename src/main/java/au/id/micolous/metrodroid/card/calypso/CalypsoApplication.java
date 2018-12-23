@@ -73,7 +73,7 @@ import au.id.micolous.metrodroid.util.Utils;
  * - https://github.com/nfc-tools/libnfc/blob/master/examples/pn53x-tamashell-scripts/ReadNavigo.sh
  */
 public class CalypsoApplication extends ISO7816Application {
-    public static final List<byte[]> CALYPSO_FILENAMES =
+    private static final List<byte[]> CALYPSO_FILENAMES =
             Arrays.asList(
                     Utils.stringToByteArray("1TIC.ICA"),
                     Utils.stringToByteArray("3MTR.ICA")
@@ -358,7 +358,7 @@ public class CalypsoApplication extends ISO7816Application {
          ETICKET_EVENT_LOGS(0x8000, 0x8010),
          ETICKET_PRESELECTION(0x8000, 0x8030);
 
-         private ISO7816Selector mSelector;
+         private final ISO7816Selector mSelector;
          private final int mSfi;
 
          File(int file) {

@@ -90,7 +90,7 @@ import au.id.micolous.metrodroid.util.Utils;
 
 @Root(name = "card")
 public class ClassicCard extends Card {
-    public static final byte[] PREAMBLE_KEY = {(byte) 0x00, (byte) 0x00, (byte) 0x00, (byte) 0x00, (byte) 0x00,
+    private static final byte[] PREAMBLE_KEY = {(byte) 0x00, (byte) 0x00, (byte) 0x00, (byte) 0x00, (byte) 0x00,
             (byte) 0x00};
 
     /**

@@ -464,9 +464,9 @@ public abstract class Trip implements Parcelable {
         BANNED(9, R.string.mode_banned),
         TROLLEYBUS(10, R.string.mode_trolleybus);
 
-        final int mImageResourceIdx;
+        private final int mImageResourceIdx;
         @StringRes
-        final int mDescription;
+        private final int mDescription;
 
         Mode(int imageResourceIdx, @StringRes int description) {
             mImageResourceIdx = imageResourceIdx;

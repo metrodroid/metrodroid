@@ -167,7 +167,7 @@ public class NumberPickerPreference extends DialogPreference {
                         return new SavedState[size];
                     }
                 };
-        int value;
+        private int value;
 
         SavedState(Parcel source) {
             super(source);

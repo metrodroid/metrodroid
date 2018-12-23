@@ -54,7 +54,7 @@ public abstract class Card {
     // card.
     @SuppressWarnings("WeakerAccess")
     @Attribute(name = "label", required = false)
-    protected String mLabel;
+    private String mLabel;
     @Attribute(name = "type")
     private CardType mType;
     @Attribute(name = "id")

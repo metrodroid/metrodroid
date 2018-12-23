@@ -146,7 +146,7 @@ public final class FeliCaLib {
      * @since Android API Level 9
      */
     public static class SystemCode {
-        final byte[] systemCode;
+        private final byte[] systemCode;
 
         /**
          * Create a new system code.
@@ -183,7 +183,7 @@ public final class FeliCaLib {
      * @since Android API Level 9
      */
     public static class ServiceCode {
-        final byte[] serviceCode;
+        private final byte[] serviceCode;
 
         /**
          * コンストラクタ
@@ -214,11 +214,11 @@ public final class FeliCaLib {
      * @since Android API Level 9
      */
     public static class CommandResponse {
-        protected final byte[] rawData;
-        protected final int length;      //全体のデータ長 (FeliCaには無い)
-        protected final byte responseCode;//コマンドレスポンスコード)
-        protected final byte[] idm;          //FeliCa IDm
-        protected final byte[] data;      //コマンドデータ
+        private final byte[] rawData;
+        private final int length;      //全体のデータ長 (FeliCaには無い)
+        private final byte responseCode;//コマンドレスポンスコード)
+        private final byte[] idm;          //FeliCa IDm
+        private final byte[] data;      //コマンドデータ
 
         /**
          * コンストラクタ
@@ -276,10 +276,10 @@ public final class FeliCaLib {
      */
 
     public static class ReadResponse extends CommandResponse {
-        final int statusFlag1;
-        final int statusFlag2;
-        final int blockCount;
-        final byte[] blockData;
+        private final int statusFlag1;
+        private final int statusFlag2;
+        private final int blockCount;
+        private final byte[] blockData;
 
         /**
          * コンストラクタ
@@ -288,7 +288,7 @@ public final class FeliCaLib {
          */
         ReadResponse(CommandResponse response) {
             super(response);
-            if (this.data == null) {
+            if (this.getData() == null) {
                 // Tried to read a block which doesn't exist
                 this.blockCount = 0;
                 this.blockData = null;
@@ -297,11 +297,12 @@ public final class FeliCaLib {
                 return;
             }
 
-            this.statusFlag1 = this.data[0];
-            this.statusFlag2 = this.data[1];
+            byte[] data = getData();
+            this.statusFlag1 = data[0];
+            this.statusFlag2 = data[1];
             if (this.statusFlag1 == 0) {
-                this.blockCount = this.data[2];
-                this.blockData = Arrays.copyOfRange(this.data, 3, data.length);
+                this.blockCount = data[2];
+                this.blockData = Arrays.copyOfRange(data, 3, data.length);
             } else {
                 this.blockCount = 0;
                 this.blockData = null;

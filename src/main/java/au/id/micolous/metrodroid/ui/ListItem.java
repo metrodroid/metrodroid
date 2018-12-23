@@ -32,8 +32,8 @@ import android.widget.TextView;
 import au.id.micolous.metrodroid.util.Utils;
 
 public class ListItem {
-    protected final Spanned mText1;
-    protected final Spanned mText2;
+    private final Spanned mText1;
+    private final Spanned mText2;
 
     protected ListItem(@StringRes int nameResource) {
         this(nameResource, (Spanned) null);

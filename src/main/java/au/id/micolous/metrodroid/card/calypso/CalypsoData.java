@@ -67,9 +67,9 @@ public final class CalypsoData {
         INNOVATRON((byte)0x21, R.string.calypso_manufacturer_innovatron),
         CALYPSO_3((byte)0x2E, R.string.calypso_manufacturer_calypso);
 
-        final byte mId;
+        private final byte mId;
         @StringRes
-        final int mCompanyName;
+        private final int mCompanyName;
         Manufacturer(byte id, @StringRes int companyName) {
             this.mId = id;
             this.mCompanyName = companyName;

@@ -56,20 +56,19 @@ public class OrcaTransaction extends Transaction {
     private static final TimeZone TZ = TimeZone.getTimeZone("America/Los_Angeles");
     private static final String ORCA_STR = "orca";
 
-    final long mTimestamp;
-    final int mCoachNum;
-    final int mFare;
-    final int mNewBalance;
-    final int mAgency;
-    final int mTransType;
-    final boolean mIsTopup;
+    private final long mTimestamp;
+    private final int mCoachNum;
+    private final int mFare;
+    private final int mNewBalance;
+    private final int mAgency;
+    private final int mTransType;
+    private final boolean mIsTopup;
 
-    static final int TRANS_TYPE_PURSE_USE = 0x0c;
-    static final int TRANS_TYPE_CANCEL_TRIP = 0x01;
-    static final int TRANS_TYPE_TAP_IN = 0x03;
-    static final int TRANS_TYPE_TAP_OUT = 0x07;
-    static final int TRANS_TYPE_PASS_USE = 0x60;
-
+    private static final int TRANS_TYPE_PURSE_USE = 0x0c;
+    private static final int TRANS_TYPE_CANCEL_TRIP = 0x01;
+    private static final int TRANS_TYPE_TAP_IN = 0x03;
+    private static final int TRANS_TYPE_TAP_OUT = 0x07;
+    private static final int TRANS_TYPE_PASS_USE = 0x60;
 
     public OrcaTransaction(DesfireRecord record, boolean isTopup) {
         byte[] useData = record.getData();

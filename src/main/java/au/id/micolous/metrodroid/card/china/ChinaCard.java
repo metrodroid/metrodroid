@@ -84,9 +84,9 @@ public class ChinaCard extends ISO7816Application {
 
     private static class Balance {
         @Attribute(name = "idx")
-        int mIdx;
+        private int mIdx;
         @Element(name="data")
-        HexString mData;
+        private HexString mData;
 
         @SuppressWarnings("unused")
         Balance() { /* For XML serializer */ }
@@ -133,7 +133,7 @@ public class ChinaCard extends ISO7816Application {
         mBalances = balances;
     }
 
-    public static ISO7816ApplicationFactory FACTORY = new ISO7816ApplicationFactory() {
+    public static final ISO7816ApplicationFactory FACTORY = new ISO7816ApplicationFactory() {
         @NonNull
         @Override
         public Collection<byte[]> getApplicationNames() {
