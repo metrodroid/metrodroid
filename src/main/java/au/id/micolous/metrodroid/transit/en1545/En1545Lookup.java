@@ -19,6 +19,8 @@
 
 package au.id.micolous.metrodroid.transit.en1545;
 
+import android.support.annotation.Nullable;
+
 import java.util.TimeZone;
 
 import au.id.micolous.metrodroid.transit.Station;
@@ -32,6 +34,7 @@ public interface En1545Lookup {
 
     Station getStation(int station, Integer agency, Integer transport);
 
+    @Nullable
     String getSubscriptionName(Integer agency, Integer contractTariff);
 
     TransitCurrency parseCurrency(int price);

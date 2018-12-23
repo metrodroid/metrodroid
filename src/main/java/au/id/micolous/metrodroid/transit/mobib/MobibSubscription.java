@@ -20,6 +20,7 @@ package au.id.micolous.metrodroid.transit.mobib;
 
 import android.os.Parcel;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 
 import au.id.micolous.farebot.R;
 import au.id.micolous.metrodroid.transit.en1545.En1545Container;
@@ -67,6 +68,7 @@ class MobibSubscription extends En1545Subscription {
         return mIsSubscription ? null : mCounter;
     }
 
+    @Nullable
     @Override
     public String getSubscriptionName() {
         if (mIsSubscription)
