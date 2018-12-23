@@ -110,6 +110,16 @@ public class ISO7816Application {
                 selectorStr = String.format(Locale.ENGLISH, "%s (%s)", selectorStr, fileDesc);
             li.add(file.showRawData(selectorStr));
         }
+        if (mSfiFiles != null)
+            for (Map.Entry<Integer, ISO7816File> sfiEntry : mSfiFiles.entrySet()) {
+                int sfi = sfiEntry.getKey();
+                String selectorStr = "SFI " + Integer.toHexString(sfi);
+                String fileDesc = nameSfiFile(sfi);
+                if (fileDesc != null)
+                    selectorStr = String.format(Locale.ENGLISH, "%s (%s)", selectorStr, fileDesc);
+                li.add(sfiEntry.getValue().showRawData(selectorStr));
+             }
+
         return li;
     }
 
