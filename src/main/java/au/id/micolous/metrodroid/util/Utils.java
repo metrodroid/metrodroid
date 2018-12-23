@@ -445,7 +445,7 @@ public class Utils {
     }
 
     public static int convertBCDtoInteger(byte data) {
-        return (((data & (char) 0xF0) >> 4) * 10) + ((data & (char) 0x0F));
+        return (((data & 0xF0) >> 4) * 10) + ((data & 0x0F));
     }
 
     public static int getBitsFromInteger(int buffer, int iStartBit, int iLength) {
@@ -510,15 +510,15 @@ public class Utils {
         int iEBit = iEndBit % 8;
 
         if (iSByte == iEByte) {
-            return ((char) buffer[iEByte] >> (7 - iEBit)) & ((char) 0xFF >> (8 - iLength));
+            return (buffer[iEByte] >> (7 - iEBit)) & (0xFF >> (8 - iLength));
         } else {
-            int uRet = (((char) buffer[iSByte] & (char) ((char) 0xFF >> iSBit)) << (((iEByte - iSByte - 1) * 8) + (iEBit + 1)));
+            int uRet = (buffer[iSByte] & (0xFF >> iSBit)) << (((iEByte - iSByte - 1) * 8) + (iEBit + 1));
 
             for (int i = iSByte + 1; i < iEByte; i++) {
-                uRet |= (((char) buffer[i] & (char) 0xFF) << (((iEByte - i - 1) * 8) + (iEBit + 1)));
+                uRet |= (buffer[i] & 0xFF) << (((iEByte - i - 1) * 8) + (iEBit + 1));
             }
 
-            uRet |= (((char) buffer[iEByte] & (char) 0xFF)) >> (7 - iEBit);
+            uRet |= (buffer[iEByte] & 0xFF) >> (7 - iEBit);
 
             return uRet;
         }
