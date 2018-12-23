@@ -32,7 +32,6 @@ import au.id.micolous.metrodroid.transit.en1545.En1545Container;
 import au.id.micolous.metrodroid.transit.en1545.En1545Field;
 import au.id.micolous.metrodroid.transit.en1545.En1545FixedHex;
 import au.id.micolous.metrodroid.transit.en1545.En1545FixedInteger;
-import au.id.micolous.metrodroid.transit.en1545.En1545Lookup;
 import au.id.micolous.metrodroid.transit.en1545.En1545Subscription;
 import au.id.micolous.metrodroid.transit.intercode.IntercodeSubscription;
 import au.id.micolous.metrodroid.ui.ListItem;
@@ -73,7 +72,7 @@ public class AdelaideSubscription extends En1545Subscription {
     }
 
     @Override
-    protected En1545Lookup getLookup() {
+    protected AdelaideLookup getLookup() {
         return AdelaideLookup.getInstance();
     }
 
@@ -103,9 +102,11 @@ public class AdelaideSubscription extends En1545Subscription {
         }
     };
 
+
     public boolean isPurse () {
-        return (mParsed.getIntOrZero(CONTRACT_TARIFF) == AdelaideLookup.CONTRACT_PURSE
-                && mParsed.getIntOrZero(CONTRACT_PROVIDER) == AdelaideLookup.AGENCY_ADL_METRO);
+        return getLookup().isPurseTariff(
+                mParsed.getInt(CONTRACT_PROVIDER),
+                mParsed.getInt(CONTRACT_TARIFF));
     }
 
     AdelaideSubscription(byte[]data) {

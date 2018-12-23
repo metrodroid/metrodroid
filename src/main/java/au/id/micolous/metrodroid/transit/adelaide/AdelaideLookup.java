@@ -18,15 +18,31 @@
  */
 package au.id.micolous.metrodroid.transit.adelaide;
 
+import android.support.annotation.Nullable;
+import android.support.annotation.StringRes;
+import android.util.SparseIntArray;
+
 import java.util.TimeZone;
 
+import au.id.micolous.farebot.R;
 import au.id.micolous.metrodroid.transit.TransitCurrency;
 import au.id.micolous.metrodroid.transit.en1545.En1545LookupSTR;
+import au.id.micolous.metrodroid.util.Utils;
 
 public class AdelaideLookup extends En1545LookupSTR {
     private static final TimeZone TZ = TimeZone.getTimeZone("Australia/Adelaide");
-    static final int AGENCY_ADL_METRO = 1;
-    static final int CONTRACT_PURSE = 0x804;
+    private static final int AGENCY_ADL_METRO = 1;
+
+    private static final SparseIntArray TARIFFS = new SparseIntArray();
+
+    static {
+        TARIFFS.put(0x804, R.string.adelaide_ticket_type_regular);
+        TARIFFS.put(0x808, R.string.adelaide_ticket_type_concession);
+        // TODO: handle other tickets
+
+        // TODO: handle monthly subscriptions
+    }
+
 
     @Override
     public TransitCurrency parseCurrency(int price) {
@@ -46,10 +62,25 @@ public class AdelaideLookup extends En1545LookupSTR {
         return sInstance;
     }
 
+    @Nullable
     @Override
     public String getSubscriptionName(Integer agency, Integer contractTariff) {
         if (contractTariff == null)
             return null;
-        return Integer.toString(contractTariff);
+        @StringRes int tariff = TARIFFS.get(contractTariff, 0);
+        if (tariff == 0) {
+            return Utils.intToHex(contractTariff);
+        } else {
+            return Utils.localizeString(tariff);
+        }
+    }
+
+    boolean isPurseTariff(@Nullable Integer agency, @Nullable Integer contractTariff) {
+        if (agency == null || agency != AGENCY_ADL_METRO || contractTariff == null) {
+            return false;
+        }
+
+        // TODO: Exclude monthly tickets when implemented
+        return TARIFFS.indexOfKey(contractTariff) >= 0;
     }
 }

@@ -1107,6 +1107,26 @@
     <string name="gender_female">Female</string>
     <string name="gender_male">Male</string>
 
+    <!-- Adelaide Metro -->
+    <!--
+    Discounted ticket
+    https://www.adelaidemetro.com.au/Tickets-fares/Concession-Cards
+    -->
+    <string name="adelaide_ticket_type_concession">Concession</string>
+    <!-- Regular ticket (no discounts) -->
+    <string name="adelaide_ticket_type_regular">Regular</string>
+    <!--
+    Seniors Card
+    https://www.adelaidemetro.com.au/Tickets-fares/Seniors
+    http://www.sa.gov.au/seniorscard
+    -->
+    <string name="adelaide_ticket_type_seniors">Seniors</string>
+    <!--
+    Student ticket (primary / secondary school)
+    https://www.adelaidemetro.com.au/Tickets-fares/Concession-Cards#student
+    -->
+    <string name="adelaide_ticket_type_student">Student</string>
+
     <!-- En1545 and related cards -->
 
     <!--

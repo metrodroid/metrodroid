@@ -138,7 +138,7 @@ public class AdelaideMetrocardTransitData extends En1545TransitData {
     }
 
     @Override
-    protected En1545Lookup getLookup() {
+    protected AdelaideLookup getLookup() {
         return AdelaideLookup.getInstance();
     }
 
@@ -212,6 +212,8 @@ public class AdelaideMetrocardTransitData extends En1545TransitData {
     public List<ListItem> getInfo() {
         List<ListItem> items = super.getInfo();
         if (mPurse != null) {
+            items.add(new ListItem(R.string.ticket_type, mPurse.getSubscriptionName()));
+
             if (mPurse.getMachineId() != null) {
                 items.add(new ListItem(R.string.machine_id,
                         Integer.toString(mPurse.getMachineId())));
