@@ -86,9 +86,7 @@ public class OrcaTransitData extends TransitData {
         parcel.readList(mTrips, OrcaTransaction.class.getClassLoader());
     }
 
-    public OrcaTransitData(Card card) {
-        DesfireCard desfireCard = (DesfireCard) card;
-
+    private OrcaTransitData(DesfireCard desfireCard) {
         byte[] data;
 
         try {
