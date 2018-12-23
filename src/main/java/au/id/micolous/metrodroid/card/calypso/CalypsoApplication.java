@@ -98,7 +98,7 @@ public class CalypsoApplication extends ISO7816Application {
         super(); /* For XML Serializer */
     }
 
-    public static ISO7816ApplicationFactory FACTORY = new ISO7816ApplicationFactory() {
+    public static final ISO7816ApplicationFactory FACTORY = new ISO7816ApplicationFactory() {
         @Override
         public boolean stopAfterFirstApp() {
             return true;
