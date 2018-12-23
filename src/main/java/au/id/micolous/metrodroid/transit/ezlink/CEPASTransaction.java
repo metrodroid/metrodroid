@@ -54,7 +54,7 @@ public class CEPASTransaction implements Parcelable {
         byte[] userData = new byte[9];
         System.arraycopy(rawData, 8, userData, 0, 8);
         userData[8] = '\0';
-        mUserData = new String(userData);
+        mUserData = new String(userData, Utils.getASCII());
     }
 
     private CEPASTransaction(Parcel source) {

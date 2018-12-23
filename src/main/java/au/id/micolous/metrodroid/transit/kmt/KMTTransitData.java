@@ -154,7 +154,7 @@ public class KMTTransitData extends TransitData {
             FelicaService serviceID = card.getSystem(SYSTEMCODE_KMT).getService(FELICA_SERVICE_KMT_ID);
             String serialNumber = "-";
             if (serviceID != null) {
-                serialNumber = new String(serviceID.getBlocks().get(0).getData());
+                serialNumber = new String(serviceID.getBlocks().get(0).getData(), Utils.getASCII());
             }
             return new TransitIdentity(NAME, serialNumber);
         }

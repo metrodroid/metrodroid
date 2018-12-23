@@ -190,7 +190,7 @@ public class AdvancedCardInfoActivity extends MetrodroidActivity {
                         Log.d(TAG, "REQUEST_SAVE_FILE");
                         OutputStream os = getContentResolver().openOutputStream(uri);
                         xml = mCard.toXml();
-                        IOUtils.write(xml, os, Charset.defaultCharset());
+                        IOUtils.write(xml, os, Utils.getUTF8());
                         os.close();
                         Toast.makeText(this, R.string.saved_xml_custom, Toast.LENGTH_SHORT).show();
                         break;

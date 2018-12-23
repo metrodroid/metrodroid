@@ -40,6 +40,7 @@ import au.id.micolous.metrodroid.transit.ezlink.EZLinkTransitData;
 import au.id.micolous.metrodroid.transit.lax_tap.LaxTapTransitData;
 import au.id.micolous.metrodroid.transit.seq_go.SeqGoTransitData;
 import au.id.micolous.metrodroid.transit.tfi_leap.LeapTransitData;
+import au.id.micolous.metrodroid.util.Utils;
 
 public class LicenseActivity extends MetrodroidActivity {
     private static final String TAG = LicenseActivity.class.getSimpleName();
@@ -86,7 +87,7 @@ public class LicenseActivity extends MetrodroidActivity {
         InputStream s = null;
         try {
             s = getAssets().open(path, AssetManager.ACCESS_RANDOM);
-            LineIterator i = IOUtils.lineIterator(s, Charset.defaultCharset());
+            LineIterator i = IOUtils.lineIterator(s, Utils.getUTF8());
 
             while (i.hasNext()) {
                 lblLicenseText.append(i.next());

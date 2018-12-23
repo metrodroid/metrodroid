@@ -302,7 +302,7 @@ public class KeysFragment extends ListFragment implements AdapterView.OnItemLong
                                 Objects.requireNonNull(keys);
                                 String json = keys.toJSON().toString(2);
 
-                                IOUtils.write(json, os, Charset.defaultCharset());
+                                IOUtils.write(json, os, Utils.getUTF8());
                                 os.close();
                                 return null;
 
