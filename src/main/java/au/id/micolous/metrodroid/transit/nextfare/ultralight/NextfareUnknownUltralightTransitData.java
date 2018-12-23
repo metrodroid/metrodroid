@@ -54,12 +54,6 @@ public class NextfareUnknownUltralightTransitData extends NextfareUltralightTran
     static final TimeZone TZ = TimeZone.getTimeZone("UTC");
 
     public final static UltralightCardTransitFactory FACTORY = new UltralightCardTransitFactory() {
-        @NonNull
-        @Override
-        public List<CardInfo> getAllCards() {
-            return Collections.emptyList();
-        }
-
         @Override
         public boolean check(@NonNull UltralightCard card) {
             try {

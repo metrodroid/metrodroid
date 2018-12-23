@@ -228,10 +228,6 @@ data class ZolotayaKoronaTransitData internal constructor(
             }
 
             override fun earlySectors() = 1
-
-            // Determining exact card requires last sector, so just put it as Zolotaya Korona
-            override fun earlyCardInfo(sectors: MutableList<ClassicSector>): CardInfo? =
-                    if (earlyCheck(sectors)) FALLBACK_CARD_INFO else null
         }
     }
 }

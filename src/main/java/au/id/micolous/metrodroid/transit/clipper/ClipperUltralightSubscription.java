@@ -140,19 +140,9 @@ class ClipperUltralightSubscription extends Subscription {
         return ClipperTransitData.clipperTimestampToCalendar(mBaseDate * 86400L);
     }
 
-    @Override
-    public boolean validToHasTime() {
-        return false;
-    }
-
     @Nullable
     @Override
     public Calendar getPurchaseTimestamp() {
         return ClipperTransitData.clipperTimestampToCalendar((mBaseDate - 89) * 86400L);
-    }
-
-    @Override
-    public boolean purchaseTimestampHasTime() {
-        return false;
     }
 }

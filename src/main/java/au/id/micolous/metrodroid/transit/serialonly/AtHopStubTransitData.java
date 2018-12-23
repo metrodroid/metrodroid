@@ -85,12 +85,6 @@ public class AtHopStubTransitData extends SerialOnlyTransitData {
             return ArrayUtils.contains(appIds, 0x4055) && ArrayUtils.contains(appIds, APP_ID_SERIAL);
         }
 
-        @NonNull
-        @Override
-        public List<CardInfo> getAllCards() {
-            return Collections.emptyList();
-        }
-
         @Override
         public TransitData parseTransitData(@NonNull DesfireCard desfireCard) {
             return new AtHopStubTransitData(desfireCard);

@@ -536,11 +536,6 @@ public class ClassicCard extends Card {
 
     private static class FallbackFactory implements ClassicCardTransitFactory {
         @Override
-        public boolean earlyCheck(@NonNull List<ClassicSector> sectors) {
-            return false;
-        }
-
-        @Override
         public boolean check(@NonNull ClassicCard classicCard) {
             @NonNls String fallback = MetrodroidApplication.getMfcFallbackReader();
             return fallback.equals("myway") || fallback.equals("smartrider");
@@ -570,12 +565,6 @@ public class ClassicCard extends Card {
                 return SmartRiderTransitData.FACTORY.parseTransitData(classicCard);
             }
             return null;
-        }
-
-        @NonNull
-        @Override
-        public List<CardInfo> getAllCards() {
-            return Collections.emptyList();
         }
     }
 }

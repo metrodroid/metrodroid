@@ -167,6 +167,4 @@ public abstract class NextfareUltralightTransaction extends Transaction {
     public TransitCurrency getFare() {
         return null;
     }
-
-    public abstract Trip.Mode getMode();
 }

@@ -53,13 +53,6 @@ public class TroikaUltralightTransitData extends TransitData {
     };
 
     public final static UltralightCardTransitFactory FACTORY = new UltralightCardTransitFactory() {
-        @NonNull
-        @Override
-        public List<CardInfo> getAllCards() {
-            // Already added by Classic variant
-            return Collections.emptyList();
-        }
-
         @Override
         public boolean check(@NonNull UltralightCard card) {
             try {

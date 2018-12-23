@@ -52,12 +52,6 @@ public class UnauthorizedUltralightTransitData extends UnauthorizedTransitData {
     }
 
     public final static UltralightCardTransitFactory FACTORY = new UltralightCardTransitFactory() {
-        @NonNull
-        @Override
-        public List<CardInfo> getAllCards() {
-            return Collections.emptyList();
-        }
-
         /**
          * This should be the last executed MIFARE Ultralight check, after all the other checks are done.
          * <p>

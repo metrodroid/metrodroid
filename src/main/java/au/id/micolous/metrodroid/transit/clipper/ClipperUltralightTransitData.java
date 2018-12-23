@@ -58,13 +58,6 @@ public class ClipperUltralightTransitData extends TransitData {
     private final ClipperUltralightSubscription mSub;
 
     public final static UltralightCardTransitFactory FACTORY = new UltralightCardTransitFactory() {
-        @NonNull
-        @Override
-        public List<CardInfo> getAllCards() {
-            // Desfire variant already adds it to supported cards
-            return Collections.emptyList();
-        }
-
         @Override
         public boolean check(@NonNull UltralightCard card) {
             try {
