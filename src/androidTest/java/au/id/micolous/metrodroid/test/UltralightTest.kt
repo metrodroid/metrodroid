@@ -29,6 +29,6 @@ class UltralightTest: CardReaderWithAssetDumpsTest<BlankUltralightTransitData, U
     @Test
     fun testOldFile() {
         val card = loadCard("mfu/blank_old.xml")
-        // FIXME: Make sure this emits BlankUltrasightTransitData in tests
+        // FIXME: Make sure this emits BlankUltralightTransitData in tests
     }
 }
