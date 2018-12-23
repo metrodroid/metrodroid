@@ -56,8 +56,6 @@ import au.id.micolous.metrodroid.xml.HexString;
 public class ChinaCard extends ISO7816Application {
     private static final String TAG = "ChinaCard";
     public final static String TYPE = "china";
-    public final static String OLD_TYPE = "shenzhentong";
-
 
     private static final byte INS_GET_BALANCE = 0x5c;
     private static final byte BALANCE_RESP_LEN = 4;
@@ -68,12 +66,6 @@ public class ChinaCard extends ISO7816Application {
             CityUnionTransitData.FACTORY,
             TUnionTransitData.FACTORY
     };
-
-    public static final List<byte[]> APP_NAMES = new ArrayList<>();
-    static {
-        for (ChinaCardTransitFactory f : FACTORIES)
-            APP_NAMES.addAll(f.getAppNames());
-    }
 
     @ElementList(name = "balances", entry = "balance")
     private List<Balance> mBalances;
@@ -137,7 +129,11 @@ public class ChinaCard extends ISO7816Application {
         @NonNull
         @Override
         public Collection<byte[]> getApplicationNames() {
-            return APP_NAMES;
+            List<byte[]> ret = new ArrayList<>();
+            for (ChinaCardTransitFactory f : FACTORIES)
+                ret.addAll(f.getAppNames());
+
+            return Collections.unmodifiableList(ret);
         }
 
         @NonNull
@@ -203,7 +199,7 @@ public class ChinaCard extends ISO7816Application {
                                 (byte) i, (byte) 2, BALANCE_RESP_LEN);
                         bals.add(new Balance(i, balanceResponse));
                     } catch (Exception e) {
-
+                        Log.w(TAG, "Caught exception on balance "  + i + ": " + e);
                     }
                 }
                 feedbackInterface.updateProgressBar(1, 16);
