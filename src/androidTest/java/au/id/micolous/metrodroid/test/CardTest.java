@@ -136,10 +136,10 @@ public class CardTest {
 
     @Test
     public void testUnauthorizedClassic() {
-        byte[] e = new byte[] { (byte) 0x6d, (byte) 0x65, (byte) 0x74, (byte) 0x72, (byte) 0x6f,
-                                (byte) 0x64, (byte) 0x72, (byte) 0x6f, (byte) 0x69, (byte) 0x64,
-                                (byte) 0x43, (byte) 0x6c, (byte) 0x61, (byte) 0x73, (byte) 0x73,
-                                (byte) 0x69 };
+        byte[] e = { (byte) 0x6d, (byte) 0x65, (byte) 0x74, (byte) 0x72, (byte) 0x6f,
+                (byte) 0x64, (byte) 0x72, (byte) 0x6f, (byte) 0x69, (byte) 0x64,
+                (byte) 0x43, (byte) 0x6c, (byte) 0x61, (byte) 0x73, (byte) 0x73,
+                (byte) 0x69};
         ClassicSectorKey k = ClassicSectorKey.wellKnown(new byte[] { 0, 0, 0, 0, 0, 0 });
         Calendar d = new GregorianCalendar(2010, 1, 1, 0, 0, 0);
         d.setTimeZone(TimeZone.getTimeZone("GMT"));
@@ -177,12 +177,12 @@ public class CardTest {
 
     @Test
     public void testBlankMifareClassic() {
-        byte[] all00Bytes = new byte[] { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
-        byte[] allFFBytes = new byte[] {
+        byte[] all00Bytes = { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
+        byte[] allFFBytes = {
                 (byte)0xff, (byte)0xff, (byte)0xff, (byte)0xff, (byte)0xff, (byte)0xff, (byte)0xff,
                 (byte)0xff, (byte)0xff, (byte)0xff, (byte)0xff, (byte)0xff, (byte)0xff, (byte)0xff,
                 (byte)0xff, (byte)0xff };
-        byte[] otherBytes = new byte[] { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16 };
+        byte[] otherBytes = { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16 };
 
         ClassicSectorKey k = ClassicSectorKey.wellKnown(new byte[] { 0, 0, 0, 0, 0, 0 });
         Calendar d = new GregorianCalendar(2010, 1, 1, 0, 0, 0);
