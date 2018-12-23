@@ -9,9 +9,12 @@ buildscript {
     ext {
         kotlin_version = '1.3.11'
         lint_version = '26.2.1'
-        support_version = '27.1.1'
+        support_version = '28.0.0'
         android_test_version = '1.1.0'
         hamcrest_version = '1.3'
+        build_version = '28.0.3'
+        android_sdk_version = 28
+        android_min_version = 16
     }
     repositories {
         google()
@@ -113,12 +116,12 @@ task copyThirdPartyNotices(type: Copy) {
 }
 
 android {
-    compileSdkVersion 27
-    buildToolsVersion '28.0.3'
+    compileSdkVersion android_sdk_version
+    buildToolsVersion build_version
 
     defaultConfig {
-        minSdkVersion 16
-        targetSdkVersion 27
+        minSdkVersion android_min_version
+        targetSdkVersion android_sdk_version
         testApplicationId "au.id.micolous.farebot.test"
         versionCode "git -C ${projectDir} rev-list --count HEAD".execute().text.trim().toInteger()
         versionName "git -C ${projectDir} describe --always --tags --dirty".execute().text.trim().replaceAll("^v", "")
@@ -127,6 +130,7 @@ android {
                 // Update this whenever new language translations become available in Weblate.
                 // Languages we support
                 'en', 'en-rAU', 'en-rCA', 'en-rGB', 'en-rIE', 'en-rIN',  'en-rNZ', 'en-rUS',
+                'de',
                 'fi',
                 'fr',
                 'ga',
