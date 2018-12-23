@@ -148,17 +148,6 @@ public abstract class Card {
         }
     }
 
-    @VisibleForTesting
-    public static Card fromXml(@NonNull Serializer serializer, String xml) {
-        try {
-            final XmlCardFormat s = new XmlCardFormat(serializer);
-            return s.readCard(xml);
-        } catch (Exception ex) {
-            Log.e("Card", "Failed to deserialize", ex);
-            throw new RuntimeException(ex);
-        }
-    }
-
     public static Card fromXml(String xml) {
         try {
             ensureXml();
