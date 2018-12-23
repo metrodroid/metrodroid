@@ -262,7 +262,7 @@ public class FelicaCard extends Card {
         return new FelicaCard(tagId, GregorianCalendar.getInstance(), partialRead, idm, pmm, systemsArray);
     }
 
-    public static List<CardTransitFactory> getAllFactories() {
+    public static List<CardTransitFactory<FelicaCard>> getAllFactories() {
         return Arrays.asList(FACTORIES);
     }
 

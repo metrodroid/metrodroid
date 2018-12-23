@@ -56,14 +56,14 @@ public final class CardInfo {
     @NonNull
     public static List<CardInfo> getAllCardsAlphabetical() {
         List<CardInfo> ret = new ArrayList<>();
-        List<CardTransitFactory> allFactories = new ArrayList<>();
+        List<CardTransitFactory<?>> allFactories = new ArrayList<>();
         allFactories.addAll(ClassicCard.getAllFactories());
         allFactories.addAll(CalypsoApplication.getAllFactories());
         allFactories.addAll(DesfireCard.getAllFactories());
         allFactories.addAll(FelicaCard.getAllFactories());
         allFactories.addAll(UltralightCard.getAllFactories());
         allFactories.addAll(ChinaCard.getAllFactories());
-        for (CardTransitFactory factory : allFactories) {
+        for (CardTransitFactory<?> factory : allFactories) {
             // Not relevant, as getAllCards has no generic parameter or return
             //noinspection unchecked
             ret.addAll(factory.getAllCards());

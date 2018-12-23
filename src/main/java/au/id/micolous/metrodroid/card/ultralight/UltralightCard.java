@@ -217,7 +217,7 @@ public class UltralightCard extends Card {
         }
     }
 
-    public static List<CardTransitFactory> getAllFactories() {
+    public static List<CardTransitFactory<UltralightCard>> getAllFactories() {
         return Arrays.asList(FACTORIES);
     }
 

@@ -229,7 +229,7 @@ public class DesfireCard extends Card {
         return null;
     }
 
-    public static List<CardTransitFactory> getAllFactories() {
+    public static List<CardTransitFactory<DesfireCard>> getAllFactories() {
         return Arrays.asList(FACTORIES);
     }
 

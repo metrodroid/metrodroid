@@ -175,7 +175,7 @@ public class CalypsoApplication extends ISO7816Application {
         }
     }
 
-    public static List<CardTransitFactory> getAllFactories() {
+    public static List<CardTransitFactory<CalypsoApplication>> getAllFactories() {
         return Arrays.asList(FACTORIES);
     }
 
