@@ -244,7 +244,7 @@
     <string name="location_seattle">Seattle, WA, USA</string>
     <string name="location_san_francisco">San Francisco, CA, USA</string>
     <string name="location_sao_paulo">São Paulo, Brasil</string>
-    <string name="location_shenzhen">Shenzhen, Guangdong-provinsen, Kina</string>
+    <string name="location_shenzhen">Shenzhen, Kina</string>
     <string name="location_los_angeles">Los Angeles, CA, USA</string>
     <string name="location_act_australia">Australian Capital Territory, Australia</string>
     <string name="location_wa_australia">Vest-Australia, Australia</string>
@@ -299,7 +299,7 @@
     <string name="date_of_birth">Fødselsdato</string>
     <string name="software_information">Programvareinformasjon</string>
     <string name="clipboard_error">Fikk ikke tilgang til utklippstavle</string>
-    <string name="convert_timezones">Konverter tider til gjeldende tidssone</string>
+    <string name="convert_timezones">Konverter tidssoner</string>
     <string name="convert_timezones_summary">Som forvalg viser Metrodroid reisetider i reisebyråets tidssone. Hvis dette valget er påskrudd, vil reisetider konverteres til din enhets nåværende tidssone.</string>
 <string name="felica_system_title_format">System: 0x%1$s (%2$s)</string>
     <string name="mfc_have_key">Prøver bruker-oppgitt nøkkel for sektoren %d…</string>
@@ -326,7 +326,7 @@
     <string name="felica_idm">Produksjons-ID (IDm)</string>
     <string name="felica_pmm">Produksjonsparameter (PMm)</string>
 
-    <string name="trip_description">(Fra )%1$s [→] (til )%2$s</string>
+    <string name="trip_description">(Fra)<xliff:g id="start_station" example="Tokyo">%1$s</xliff:g> [→] (til )<xliff:g id="end_station" example="Osaka">%2$s</xliff:g></string>
 
     <string name="felica_terminal_tvm_tokyo_monorail">Tokyo Monorail-billettsystem</string>
     <string name="felica_terminal_tvm_etc">Billettmaskin, osv.</string>
@@ -534,7 +534,7 @@
     <string name="no_data_in_clipboard">Ingen data i utklippstavle.</string>
     <string name="app_version">Versjon: %s</string>
     <string name="device_model">Modell: %s (%s)</string>
-    <string name="android_os">Android OS: %s (%s)</string>
+    <string name="android_os">Android OS: <xliff:g id="version" example="9.0">%1$s</xliff:g> (<xliff:g id="build_id" example="PPR2.180905.006">%2$s</xliff:g>)</string>
     <string name="nfc_enabled">NFC: Avskrudd</string>
     <string name="nfc_disabled">NFC: Avskrudd</string>
     <string name="nfc_not_available">NFC: Ikke støttet</string>
@@ -573,7 +573,7 @@
     <string name="kmt_other_data">Annen data</string>
     <string name="kmt_last_trx_amount">Siste overføringsmengde</string>
 
-    <string name="hsl_line_vehicle">Rute %s, kjøretøy %s</string>
+    <string name="hsl_line_vehicle">Rute %$s, kjøretøy %2$s</string>
 
     <string name="orca_coach_number">Vogn #%s</string>
     <string name="suica_area_line_station">Område %1$s rute %2$s stasjon %3$s</string>
@@ -606,7 +606,7 @@
     <string name="blank_mfc_card">Blankt MIFARE Classic-kort</string>
     <string name="charlie_2nd_card_number">Sekundært tall</string>
 
-    <string name="device_manufacturer">Fabrikant: %s (%s)</string>
+    <string name="device_manufacturer">Fabrikant: <xliff:g id="manufacturer" example="HTC">%1$s</xliff:g> (<xliff:g id="brand" example="Google">%2$s</xliff:g>)</string>
     <string name="pref_show_raw_station_ids_desc">Hvis sant, vil en rådatastasjons-ID vises i tillegg til stasjonsnavn</string>
     <string name="station_database">Stasjonsdatabase</string>
 
@@ -841,10 +841,10 @@
     <string name="card_name_zolotaya_korona">Zolotaya Korona</string>
     <string name="location_russia">Russland</string>
     <string name="zolotaya_korona_region">Region</string>
-    <string name="card_name_yaroslavl_etk">ETK Iaroslavl</string>
+    <string name="card_name_yaroslavl_etk">Jaroslavl ETK</string>
     <string name="location_yaroslavl">Iaroslavl</string>
-    <string name="card_name_krasnodar_etk">ETK Krasnodar</string>
-    <string name="location_krasnodar">Krasnodar</string>
+    <string name="card_name_krasnodar_etk">Krasnodar ETK</string>
+    <string name="location_krasnodar">Krasnodar, Russland</string>
     <string name="rkf_card_status">Kortstatus</string>
     <string name="rkf_status_action_pending">Handling venter</string>
     <string name="rkf_status_temp_disabled">Midlertidig avskrudd eller avstengt</string>
@@ -856,4 +856,5 @@
     <string name="requires_android_17">Krever Android 4.2 eller senere.</string>
     <string name="convert_timezones_summary_off">Turtider vil vises i transportbråets lokale tidssone.</string>
     <string name="convert_timezones_summary_on">Turtider vil konverteres til din nåværende tidssone.</string>
+    <string name="location_auckland">Auckland, Ny-Zealand</string>
 </resources>
