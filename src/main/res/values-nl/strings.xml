@@ -855,4 +855,5 @@
     <string name="adelaide_ticket_type_regular">Normaal</string>
     <string name="adelaide_ticket_type_seniors">Ouderen</string>
     <string name="adelaide_ticket_type_student">Studenten</string>
+    <string name="location_auckland">Auckland, Nieuw-Zeeland</string>
 </resources>
