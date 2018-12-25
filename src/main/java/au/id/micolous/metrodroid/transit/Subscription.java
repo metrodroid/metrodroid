@@ -415,6 +415,11 @@ public abstract class Subscription implements Parcelable {
                     cost.maybeObfuscateFare().formatCurrencyString(true)));
         }
 
+        Integer id = getId();
+        if (id != null) {
+            items.add(new ListItem(R.string.subscription_id, Integer.toString(id)));
+        }
+
         if (getPaymentMethod() != PaymentMethod.UNKNOWN) {
             // TODO: i18n
             items.add(new ListItem(R.string.payment_method, getPaymentMethod().getDescription()));
