@@ -22,6 +22,7 @@ package au.id.micolous.metrodroid.fragment;
 
 import android.app.Activity;
 import android.content.Context;
+import android.support.annotation.NonNull;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
@@ -50,8 +51,9 @@ public class ListItemAdapter extends ArrayAdapter<ListItem> {
         return 2;
     }
 
+    @NonNull
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
+    public View getView(int position, View convertView, @NonNull ViewGroup parent) {
         if (convertView == null) {
             int viewId = getItemViewType(position) == 0 ? R.layout.list_header : android.R.layout.simple_list_item_2;
             convertView = ((Activity) getContext()).getLayoutInflater().inflate(viewId, parent, false);
