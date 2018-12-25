@@ -26,6 +26,7 @@ package au.id.micolous.metrodroid.card.felica;
 import android.nfc.Tag;
 import android.nfc.TagLostException;
 import android.nfc.tech.NfcF;
+import android.support.annotation.NonNull;
 import android.text.SpannableString;
 import android.util.Log;
 
@@ -480,6 +481,7 @@ public class FelicaCard extends Card {
         return items;
     }
 
+    @NonNull
     @Override
     public List<ListItem> getRawData() {
         List<ListItem> li = new ArrayList<>();
