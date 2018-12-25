@@ -41,7 +41,7 @@ public class CardDBHelper extends SQLiteOpenHelper {
     @NonNls
     public static final String CARD_ITEM_TYPE = "vnd.android.cursor.item/" + BuildConfig.APPLICATION_ID + ".card";
 
-    public static final String[] PROJECTION = new String[]{
+    public static final String[] PROJECTION = {
             CardsTableColumns._ID,
             CardsTableColumns.TYPE,
             CardsTableColumns.TAG_SERIAL,
