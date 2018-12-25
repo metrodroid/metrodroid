@@ -128,12 +128,17 @@ public class ISO7816Application {
         private final byte []mApplicationData;
         @Nullable
         private final byte []mApplicationName;
+        @NonNull
         private final List<ISO7816File> mFiles;
+        @NonNull
         private final byte[] mTagId;
+        @NonNull
         private final String mType;
+        @NonNull
         private final Map<Integer, ISO7816File> mSfiFiles;
 
-        public ISO7816Info(@Nullable byte []applicationData, @Nullable byte []applicationName, byte []tagId, String type) {
+        public ISO7816Info(@Nullable byte []applicationData, @Nullable byte []applicationName,
+                           @NonNull byte []tagId, @NonNull String type) {
             mApplicationData = applicationData;
             mApplicationName = applicationName;
             mTagId = tagId;
@@ -234,8 +239,19 @@ public class ISO7816Application {
             return null;
         }
 
+        @Nullable
         public byte[] getAppName() {
             return mApplicationName;
+        }
+
+        @Nullable
+        public byte[] getFci() {
+            return mApplicationData;
+        }
+
+        @NonNull
+        public byte[] getTagId() {
+            return mTagId;
         }
     }
 
