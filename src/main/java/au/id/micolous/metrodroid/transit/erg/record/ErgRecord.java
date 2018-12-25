@@ -73,4 +73,9 @@ public class ErgRecord {
         return record;
     }
 
+    @Override
+    public String toString() {
+        return String.format(Locale.ENGLISH, "[%s]",
+                getClass().getSimpleName());
+    }
 }
