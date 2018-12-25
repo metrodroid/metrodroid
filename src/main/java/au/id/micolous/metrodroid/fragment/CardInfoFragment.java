@@ -19,19 +19,22 @@
 
 package au.id.micolous.metrodroid.fragment;
 
-import android.app.ListFragment;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.view.View;
-import android.widget.ListView;
+import android.util.Pair;
+
+import com.unnamed.b.atv.model.TreeNode;
+
+import java.util.List;
 
 import au.id.micolous.metrodroid.activity.CardInfoActivity;
 import au.id.micolous.metrodroid.transit.TransitData;
 import au.id.micolous.metrodroid.ui.ListItem;
 import au.id.micolous.metrodroid.ui.UriListItem;
 
-public class CardInfoFragment extends ListFragment {
+public class CardInfoFragment extends TreeListFragment {
+
     private TransitData mTransitData;
 
     public void onCreate(Bundle savedInstanceState) {
@@ -40,19 +43,16 @@ public class CardInfoFragment extends ListFragment {
     }
 
     @Override
-    public void onViewCreated(View view, Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-
-        setListAdapter(new ListItemAdapter(getActivity(), mTransitData.getInfo()));
+    protected List<ListItem> getItems() {
+        return mTransitData.getInfo();
     }
 
-
     @Override
-    public void onListItemClick(ListView parent, View v, int position, long id) {
-        ListItem listItem = (ListItem) getListAdapter().getItem(position);
-
-        if (listItem instanceof UriListItem) {
-            Uri uri = ((UriListItem) listItem).getUri();
+    public void onClick(TreeNode node, Object value) {
+        if (value instanceof Pair)
+            value = ((Pair<?, ?>) value).first;
+        if (value instanceof UriListItem) {
+            Uri uri = ((UriListItem) value).getUri();
             startActivity(new Intent(Intent.ACTION_VIEW, uri));
         }
     }
