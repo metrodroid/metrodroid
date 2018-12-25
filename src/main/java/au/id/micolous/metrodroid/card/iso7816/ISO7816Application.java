@@ -19,7 +19,6 @@
  */
 package au.id.micolous.metrodroid.card.iso7816;
 
-import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.util.Log;
 
@@ -39,11 +38,9 @@ import java.util.Locale;
 import java.util.Map;
 
 import au.id.micolous.metrodroid.card.TagReaderFeedbackInterface;
-import au.id.micolous.metrodroid.card.tmoney.TMoneyCard;
 import au.id.micolous.metrodroid.transit.TransitData;
 import au.id.micolous.metrodroid.transit.TransitIdentity;
 import au.id.micolous.metrodroid.ui.ListItem;
-import au.id.micolous.metrodroid.util.Utils;
 import au.id.micolous.metrodroid.xml.Base64String;
 
 /**
@@ -253,54 +250,6 @@ public class ISO7816Application {
         if (mSfiFiles == null)
             return null;
         return mSfiFiles.get(sfi);
-    }
-
-    // return: <leadBits, id, idlen>
-    private static int[] decodeTLVID(byte[] buf, int p) {
-        int headByte = buf[p] & 0xff;
-        int leadBits = headByte >> 5;
-        if ((headByte & 0x1f) != 0x1f)
-            return new int[]{leadBits, headByte & 0x1f, 1};
-        int val = 0, len = 1;
-        do
-            val = (val << 7) | (buf[p + len] & 0x7f);
-        while ((buf[len++] & 0x80) != 0);
-        return new int[]{leadBits, val, len};
-    }
-
-    // return lenlen, lenvalue
-    private static int[] decodeTLVLen(byte[] buf, int p) {
-        int headByte = buf[p] & 0xff;
-        if ((headByte >> 7) == 0)
-            return new int[]{1, headByte & 0x7f};
-        int numfollowingbytes = headByte & 0x7f;
-        return new int[]{1+numfollowingbytes,
-                Utils.byteArrayToInt(buf, p + 1, numfollowingbytes)};
-    }
-
-    @Nullable
-    public static byte[] findBERTLV(@NonNull byte[] buf, int targetLeadBits, int targetId, boolean keepHeader) {
-        // Skip ID
-        int p = decodeTLVID(buf, 0)[2];
-        int[]lenfieldhead = decodeTLVLen(buf, p);
-        p += lenfieldhead[0];
-        int fulllen = lenfieldhead[1];
-
-        while (p < fulllen) {
-            int []id = decodeTLVID(buf, p);
-            int idlen = id[2];
-            int []lenfield = decodeTLVLen(buf, p + idlen);
-            int lenlen = lenfield[0];
-            int datalen = lenfield[1];
-            if (id[0] == targetLeadBits && id[1] == targetId) {
-                if (keepHeader)
-                    return Utils.byteArraySlice(buf, p, idlen + lenlen + datalen);
-                return Utils.byteArraySlice(buf, p + idlen + lenlen, datalen);
-            }
-
-            p += idlen + lenlen + datalen;
-        }
-        return null;
     }
 
     public TransitIdentity parseTransitIdentity() {
