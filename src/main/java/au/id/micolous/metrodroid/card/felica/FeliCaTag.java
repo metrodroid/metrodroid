@@ -181,7 +181,7 @@ public final class FeliCaTag {
      * @return Response部分
      * @throws TagLostException if the tag went out of the field
      */
-    protected byte[] doSearchServiceCode(int index) throws IOException, TagLostException {
+    private byte[] doSearchServiceCode(int index) throws IOException, TagLostException {
         byte[] bytes = FeliCaLib.execute(this.nfcTag, FeliCaLib.COMMAND_SEARCH_SERVICECODE, idm
                 , (byte) (index & 0xff), (byte) (index >> 8));
         if (bytes == null || bytes.length <= 0 || bytes[1] != (byte) 0x0b) { // 正常応答かどうか
