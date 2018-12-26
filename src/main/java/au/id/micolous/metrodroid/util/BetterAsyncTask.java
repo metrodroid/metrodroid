@@ -33,7 +33,7 @@ public abstract class BetterAsyncTask<Result> extends AsyncTask<Void, ProgressBa
     private static final String TAG = "BetterAsyncTask";
 
     private ProgressDialog mProgressDialog;
-    protected Activity mActivity;
+    protected final Activity mActivity;
     private final boolean mFinishOnError;
 
     public BetterAsyncTask(Activity activity) {
