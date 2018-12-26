@@ -129,7 +129,7 @@ public final class FeliCaTag {
      * @return SystemCode[] 検出された SystemCodeの一覧を返します。
      * @throws TagLostException if the tag went out of the field
      */
-    public final List<FeliCaLib.SystemCode> getSystemCodeList() throws IOException, TagLostException {
+    public List<FeliCaLib.SystemCode> getSystemCodeList() throws IOException, TagLostException {
         //request systemCode 
         byte[] retBytes = FeliCaLib.execute(this.nfcTag, FeliCaLib.COMMAND_REQUEST_SYSTEMCODE, idm);
 
