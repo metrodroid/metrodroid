@@ -386,17 +386,6 @@ public class NextfareTransitData extends TransitData {
     }
 
     /**
-     * Allows you to override the mode of transport used on a trip.
-     *
-     * @param mode      Mode number read from card.
-     * @param stationId Station ID read from card.
-     * @return Generic mode class
-     */
-    protected Trip.Mode lookupMode(int mode, int stationId) {
-        return Trip.Mode.OTHER;
-    }
-
-    /**
      * Allows you to override the timezone used for all dates and times. Default timezone is the
      * current Android OS timezone.
      *
