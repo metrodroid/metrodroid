@@ -308,11 +308,11 @@ public class IntercodeTransitData extends Calypso1545TransitData {
         List <ListItem> items =  super.getInfo();
         Set<String> handled = new HashSet<>(Arrays.asList(
                 ENV_NETWORK_ID,
-                ENV_APPLICATION_ISSUE + "Date",
+                En1545FixedInteger.dateName(ENV_APPLICATION_ISSUE),
                 ENV_APPLICATION_ISSUER_ID,
-                ENV_APPLICATION_VALIDITY_END + "Date",
+                En1545FixedInteger.dateName(ENV_APPLICATION_VALIDITY_END),
                 ENV_AUTHENTICATOR,
-                HOLDER_PROFILE + "Date",
+                En1545FixedInteger.dateName(HOLDER_PROFILE),
                 HOLDER_BIRTH_DATE,
                 HOLDER_POSTAL_CODE));
         items.addAll(mTicketEnvParsed.getInfo(handled));

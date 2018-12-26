@@ -83,7 +83,7 @@ public class AdelaideSubscription extends En1545Subscription {
         if (li == null)
             li = new ArrayList<>();
         li.addAll(mParsed.getInfo(new HashSet<>(
-                Arrays.asList(CONTRACT_TARIFF, CONTRACT_SALE + "Date",
+                Arrays.asList(CONTRACT_TARIFF, En1545FixedInteger.dateName(CONTRACT_SALE),
                         CONTRACT_SALE_DEVICE, CONTRACT_PRICE_AMOUNT,
                         CONTRACT_SALE_AGENT, CONTRACT_PROVIDER, CONTRACT_STATUS)
         )));

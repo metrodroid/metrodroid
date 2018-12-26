@@ -29,10 +29,10 @@ import kotlinx.android.parcel.Parcelize
 @Parcelize
 data class OVChipTransaction(private val parsed: En1545Parsed) : En1545Transaction(parsed) {
     private val date: Int
-        get() = mParsed.getIntOrZero(En1545Transaction.EVENT + "Date")
+        get() = mParsed.getIntOrZero(En1545FixedInteger.dateName(En1545Transaction.EVENT))
 
     private val time: Int
-        get() = mParsed.getIntOrZero(En1545Transaction.EVENT + "TimeLocal")
+        get() = mParsed.getIntOrZero(En1545FixedInteger.timeLocalName(En1545Transaction.EVENT))
 
     private val transfer: Int
         get() = mParsed.getIntOrZero(TRANSFER)

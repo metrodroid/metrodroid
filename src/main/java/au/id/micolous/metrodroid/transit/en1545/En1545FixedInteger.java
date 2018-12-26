@@ -39,6 +39,42 @@ public class En1545FixedInteger implements En1545Field {
         mLen = len;
     }
 
+    @NonNull
+    @NonNls
+    public static String dateName(@NonNull @NonNls String base) {
+        return base + "Date";
+    }
+
+    @NonNull
+    @NonNls
+    public static String timeName(@NonNull @NonNls String base) {
+        return base + "Time";
+    }
+
+    @NonNull
+    @NonNls
+    public static String timePacked16Name(@NonNull @NonNls String base) {
+        return base + "TimePacked16";
+    }
+
+    @NonNull
+    @NonNls
+    public static String timeLocalName(@NonNull @NonNls String base) {
+        return base + "TimeLocal";
+    }
+
+    @NonNull
+    @NonNls
+    public static String dateTimeName(@NonNull @NonNls String base) {
+        return base + "DateTime";
+    }
+
+    @NonNull
+    @NonNls
+    public static String dateTimeLocalName(@NonNull @NonNls String base) {
+        return base + "DateTimeLocal";
+    }
+
     @Override
     public int parseField(byte[] b, int off, String path, En1545Parsed holder, En1545Bits bitParser) {
         try {
@@ -141,17 +177,17 @@ public class En1545FixedInteger implements En1545Field {
 
     @NonNull
     public static En1545FixedInteger date(@NonNull @NonNls String name) {
-        return new En1545FixedInteger(name + "Date", 14);
+        return new En1545FixedInteger(dateName(name), 14);
     }
 
     @NonNull
     public static En1545FixedInteger time(@NonNull @NonNls String name) {
-        return new En1545FixedInteger(name + "Time", 11);
+        return new En1545FixedInteger(timeName(name), 11);
     }
 
     @NonNull
     public static En1545FixedInteger timePacked16(@NonNull @NonNls String name) {
-        return new En1545FixedInteger(name + "TimePacked16", 16);
+        return new En1545FixedInteger(timePacked16Name(name), 16);
     }
 
     @NonNull
@@ -161,16 +197,16 @@ public class En1545FixedInteger implements En1545Field {
 
     @NonNull
     public static En1545Field dateTime(@NonNull @NonNls String name) {
-        return new En1545FixedInteger(name + "DateTime", 30);
+        return new En1545FixedInteger(dateTimeName(name), 30);
     }
 
     @NonNull
     public static En1545Field dateTimeLocal(@NonNls @NonNull String name) {
-        return new En1545FixedInteger(name + "DateTimeLocal", 30);
+        return new En1545FixedInteger(dateTimeLocalName(name), 30);
     }
 
     @NonNull
     public static En1545Field timeLocal(@NonNull @NonNls String name) {
-        return new En1545FixedInteger(name + "TimeLocal", 11);
+        return new En1545FixedInteger(timeLocalName(name), 11);
     }
 }

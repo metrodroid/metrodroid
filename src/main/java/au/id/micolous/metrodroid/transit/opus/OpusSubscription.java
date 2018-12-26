@@ -70,7 +70,7 @@ class OpusSubscription extends En1545Subscription {
 
     @Override
     public Integer getRemainingTripCount() {
-        return mParsed.getIntOrZero(CONTRACT_END + "Date") == 0 ? mCounter : null;
+        return mParsed.getIntOrZero(En1545FixedInteger.dateName(CONTRACT_END)) == 0 ? mCounter : null;
     }
 
     private OpusSubscription(Parcel parcel) {
