@@ -822,7 +822,6 @@ public class Utils {
         return luhnChecksum(cardNumber) == 0;
     }
 
-    // TODO: optimize this
     private static int calculateCRCReversed(byte[]data, int init, int[] table) {
         int cur = init;
         for (byte b : data) {
