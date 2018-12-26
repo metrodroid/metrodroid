@@ -85,7 +85,7 @@ public class FelicaCard extends Card {
     private FelicaCard() { /* For XML Serializer */ }
 
     public FelicaCard(byte[] tagId, Calendar scannedAt, boolean partialRead, byte[] idm, byte[] pmm, FelicaSystem[] systems) {
-        super(CardType.FeliCa, tagId, scannedAt, null, partialRead);
+        super(CardType.FeliCa, tagId, scannedAt, partialRead);
         mIDm = new Base64String(idm);
         mPMm = new Base64String(pmm);
         mSystems = Arrays.asList(systems);
