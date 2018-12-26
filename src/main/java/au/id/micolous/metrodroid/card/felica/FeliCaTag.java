@@ -59,20 +59,9 @@ public final class FeliCaTag {
     private byte[] pmm;
 
     public FeliCaTag(Tag nfcTag) {
-        this(nfcTag, null, null);
-    }
-
-    /**
-     * コンストラクタ
-     *
-     * @param nfcTag NFCTagへの参照をセット
-     * @param idm    FeliCa IDmをセット
-     * @param pmm    FeliCa PMmをセット
-     */
-    private FeliCaTag(Tag nfcTag, byte[] idm, byte[] pmm) {
         this.nfcTag = nfcTag;
-        this.idm = idm;
-        this.pmm = pmm;
+        this.idm = null;
+        this.pmm = null;
     }
 
     /**
