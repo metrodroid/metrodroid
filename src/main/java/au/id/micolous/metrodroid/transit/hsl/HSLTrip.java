@@ -145,19 +145,18 @@ public class HSLTrip extends Trip {
 
     @Override
     public Mode getMode() {
-        if (mLine != null) {
-            if (mLine.equals("1300"))
-                return Mode.METRO;
-            if (mLine.equals("1019"))
-                return Mode.FERRY;
-            if (mLine.startsWith("100") || mLine.equals("1010"))
-                return Mode.TRAM;
-            if (mLine.startsWith("3"))
-                return Mode.TRAIN;
+        if (mLine == null)
             return Mode.BUS;
-        } else {
-            return Mode.BUS;
-        }
+
+        if (mLine.equals("1300"))
+            return Mode.METRO;
+        if (mLine.equals("1019"))
+            return Mode.FERRY;
+        if (mLine.startsWith("100") || mLine.equals("1010"))
+            return Mode.TRAM;
+        if (mLine.startsWith("3"))
+            return Mode.TRAIN;
+        return Mode.BUS;
     }
 
     public void writeToParcel(Parcel parcel, int flags) {
