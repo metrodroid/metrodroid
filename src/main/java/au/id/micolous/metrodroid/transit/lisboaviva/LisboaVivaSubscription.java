@@ -106,18 +106,20 @@ public class LisboaVivaSubscription extends En1545Subscription {
         switch (units) {
             case 0x109:
                 return Utils.localizePlural(R.plurals.lisboaviva_valid_days,
-                        period, period) + "\n";
+                        period, period);
             case 0x10a:
                 return Utils.localizePlural(R.plurals.lisboaviva_valid_months,
-                        period, period) + "\n";
+                        period, period);
         }
-        return Utils.localizeString(R.string.lisboaviva_unknown_period, period, units)
-                + "\n";
+        return Utils.localizeString(R.string.lisboaviva_unknown_period, period, units);
     }
 
     @Override
     public Calendar getValidTo() {
-        Calendar res = (Calendar) getValidFrom().clone();
+        Calendar vf = getValidFrom();
+        if (vf == null)
+            return null;
+        Calendar res = (Calendar) vf.clone();
         int period = mParsed.getIntOrZero(CONTRACT_PERIOD);
         int units = mParsed.getIntOrZero(CONTRACT_PERIOD_UNITS);
         switch (units) {

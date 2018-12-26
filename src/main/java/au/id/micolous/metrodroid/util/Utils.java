@@ -888,6 +888,8 @@ public class Utils {
         byte[] data;
         try {
             InputStream stream = ctx.getContentResolver().openInputStream(uri);
+            if (stream == null)
+                return KeyFormat.UNKNOWN;
             data = IOUtils.toByteArray(stream);
         } catch (IOException e) {
             Log.w(TAG, "error detecting key format", e);
