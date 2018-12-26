@@ -23,6 +23,8 @@ package au.id.micolous.metrodroid.transit.ezlink;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import org.jetbrains.annotations.NonNls;
+
 import java.util.Calendar;
 
 import au.id.micolous.metrodroid.util.Utils;

@@ -59,7 +59,7 @@ public class CardProvider extends ContentProvider {
     }
 
     @Override
-    public Cursor query(@NonNull Uri uri, String[] projection, String selection, String[] selectionArgs, String sortOrder) {
+    public Cursor query(@NonNls @NonNull Uri uri, String[] projection, String selection, String[] selectionArgs, String sortOrder) {
         @NonNls SQLiteQueryBuilder builder = new SQLiteQueryBuilder();
         switch (sUriMatcher.match(uri)) {
             case CardDBHelper.CARD_COLLECTION_URI_INDICATOR:
@@ -82,7 +82,7 @@ public class CardProvider extends ContentProvider {
     }
 
     @Override
-    public String getType(@NonNull Uri uri) {
+    public String getType(@NonNls @NonNull Uri uri) {
         switch (sUriMatcher.match(uri)) {
             case CardDBHelper.CARD_COLLECTION_URI_INDICATOR:
                 return CardDBHelper.CARD_DIR_TYPE;
@@ -94,7 +94,7 @@ public class CardProvider extends ContentProvider {
     }
 
     @Override
-    public Uri insert(@NonNull Uri uri, ContentValues values) {
+    public Uri insert(@NonNls @NonNull Uri uri, ContentValues values) {
         if (sUriMatcher.match(uri) != CardDBHelper.CARD_COLLECTION_URI_INDICATOR) {
             throw new IllegalArgumentException("Incorrect URI: " + uri);
         }

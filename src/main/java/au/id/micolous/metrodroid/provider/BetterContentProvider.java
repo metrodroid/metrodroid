@@ -86,7 +86,7 @@ public abstract class BetterContentProvider extends ContentProvider {
     }
 
     @Override
-    public String getType(Uri uri) {
+    public String getType(@NonNls @NonNull Uri uri) {
         switch (mUriMatcher.match(uri)) {
             case CODE_COLLECTION:
                 return mDirType;
@@ -98,7 +98,7 @@ public abstract class BetterContentProvider extends ContentProvider {
     }
 
     @Override
-    public Uri insert(Uri uri, ContentValues values) {
+    public Uri insert(@NonNls @NonNull Uri uri, ContentValues values) {
         if (mUriMatcher.match(uri) != CODE_COLLECTION) {
             throw new IllegalArgumentException("Incorrect URI: " + uri);
         }
@@ -136,7 +136,7 @@ public abstract class BetterContentProvider extends ContentProvider {
     }
 
     @Override
-    public int update(Uri uri, ContentValues values, @NonNls String selection, String[] selectionArgs) {
+    public int update(@NonNls @NonNull Uri uri, ContentValues values, @NonNls String selection, String[] selectionArgs) {
         @NonNls SQLiteDatabase db = mHelper.getWritableDatabase();
         int count;
         switch (mUriMatcher.match(uri)) {

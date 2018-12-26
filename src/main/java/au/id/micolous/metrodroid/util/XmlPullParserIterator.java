@@ -3,6 +3,7 @@ package au.id.micolous.metrodroid.util;
 import android.support.annotation.NonNull;
 import android.util.Xml;
 
+import org.jetbrains.annotations.NonNls;
 import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserException;
 import org.xmlpull.v1.XmlSerializer;
@@ -18,6 +19,7 @@ public class XmlPullParserIterator implements Iterator<String> {
     @NonNull
     private final XmlPullParser mxpp;
 
+    @NonNls
     private String mRootTag = null;
     private XmlSerializer mSerializer = null;
 

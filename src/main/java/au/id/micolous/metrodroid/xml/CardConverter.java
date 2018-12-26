@@ -28,6 +28,7 @@ import au.id.micolous.metrodroid.card.desfire.DesfireCard;
 import au.id.micolous.metrodroid.card.felica.FelicaCard;
 import au.id.micolous.metrodroid.card.ultralight.UltralightCard;
 
+import org.jetbrains.annotations.NonNls;
 import org.simpleframework.xml.Serializer;
 import org.simpleframework.xml.convert.Converter;
 import org.simpleframework.xml.stream.InputNode;
@@ -42,7 +43,7 @@ public class CardConverter implements Converter<Card> {
 
     @Override
     public Card read(InputNode node) throws Exception {
-        CardType type = CardType.parseValue(node.getAttribute("type").getValue());
+        @NonNls CardType type = CardType.parseValue(node.getAttribute("type").getValue());
         switch (type) {
             case MifareDesfire:
                 return mSerializer.read(DesfireCard.class, node);

@@ -23,6 +23,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.util.Log;
 
+import org.jetbrains.annotations.NonNls;
 import org.simpleframework.xml.Attribute;
 import org.simpleframework.xml.Element;
 import org.simpleframework.xml.ElementList;
@@ -198,7 +199,7 @@ public class ChinaCard extends ISO7816Application {
                         balanceResponse = protocol.sendRequest(ISO7816Protocol.CLASS_80, INS_GET_BALANCE,
                                 (byte) i, (byte) 2, BALANCE_RESP_LEN);
                         bals.add(new Balance(i, balanceResponse));
-                    } catch (Exception e) {
+                    } catch (@NonNls Exception e) {
                         Log.w(TAG, "Caught exception on balance "  + i + ": " + e);
                     }
                 }
