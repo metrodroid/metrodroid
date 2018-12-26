@@ -21,6 +21,7 @@ package au.id.micolous.metrodroid.transit.en1545;
 
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.util.Log;
 
 import org.jetbrains.annotations.NonNls;
 
@@ -44,6 +45,8 @@ public class En1545FixedInteger implements En1545Field {
         try {
             holder.insertInt(mName, path, bitParser.getBitsFromBuffer(b, off, mLen));
         } catch (Exception e) {
+            Log.w(En1545FixedInteger.class.getName(), "Overflow when parsing en1545");
+            e.printStackTrace();
         }
         return off + mLen;
     }

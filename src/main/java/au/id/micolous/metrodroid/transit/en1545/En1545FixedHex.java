@@ -19,6 +19,8 @@
 
 package au.id.micolous.metrodroid.transit.en1545;
 
+import android.util.Log;
+
 import java.util.Locale;
 
 public class En1545FixedHex implements En1545Field {
@@ -54,6 +56,8 @@ public class En1545FixedHex implements En1545Field {
             }
             holder.insertString(mName, path, res.toString());
         } catch (Exception e) {
+            Log.w(En1545FixedHex.class.getName(), "Overflow when parsing en1545");
+            e.printStackTrace();
         }
         return off + mLen;
     }
