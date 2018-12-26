@@ -1212,7 +1212,7 @@ public class Utils {
 
     /**
      * There is some circumstance where the OLD CEPASTransaction could contain null bytes,
-     * which would then be serialized as <code>&amp;#0;</code>.
+     * which would then be serialized as {@code &#0;}.
      *
      * From this Android commit, it is no longer possible to serialise a null byte:
      * https://android.googlesource.com/platform/libcore/+/ff42219e3ea3d712f931ae7f26af236339b5cf23%5E%21/#F2
