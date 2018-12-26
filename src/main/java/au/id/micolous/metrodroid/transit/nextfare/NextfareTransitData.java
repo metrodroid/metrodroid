@@ -82,12 +82,12 @@ public class NextfareTransitData extends TransitData {
     private static final String TAG = "NextfareTransitData";
     protected NextfareConfigRecord mConfig = null;
     protected boolean mHasUnknownStations = false;
-    private long mSerialNumber;
-    private byte[] mSystemCode;
+    private final long mSerialNumber;
+    private final byte[] mSystemCode;
     private final byte[] mBlock2;
-    private int mBalance;
-    private List<NextfareTrip> mTrips;
-    private List<NextfareSubscription> mSubscriptions;
+    private final int mBalance;
+    private final List<NextfareTrip> mTrips;
+    private final List<NextfareSubscription> mSubscriptions;
     @NonNull
     private final String mCurrency;
 
@@ -182,7 +182,8 @@ public class NextfareTransitData extends TransitData {
             if (balance.hasTravelPassAvailable()) {
                 subscriptions.add(newSubscription(balance));
             }
-        }
+        } else
+            mBalance = 0;
 
         if (taps.size() >= 1) {
             Collections.sort(taps);
