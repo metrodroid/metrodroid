@@ -130,7 +130,7 @@ public final class ExportHelper {
         return cursor.getString(cursor.getColumnIndex(CardsTableColumns.DATA));
     }
 
-    public static Iterator<? extends String> readCardsXml(Cursor cursor) {
+    public static Iterator<String> readCardsXml(Cursor cursor) {
         return new IteratorTransformer<>(new CursorIterator(cursor),
                 ExportHelper::readCardDataFromCursor);
     }

@@ -90,7 +90,7 @@ public class XmlGenericCardFormat<T extends Card> extends CardsExporter<T> imple
     }
 
     public void writeCardsFromString(OutputStream os,
-                                     Iterator<? extends String> cards) throws IOException {
+                                     Iterator<String> cards) throws IOException {
         os.write(CARDS_HEADER);
 
         while (cards.hasNext()) {
