@@ -18,6 +18,7 @@
  */
 package au.id.micolous.metrodroid.test;
 
+import org.jetbrains.annotations.NonNls;
 import org.junit.Test;
 
 import java.util.Calendar;
@@ -48,20 +49,27 @@ import static junit.framework.TestCase.*;
 public class OrcaTest extends BaseInstrumentedTest {
 
     // mocked data
+    @NonNls
     static private final String record0 = "00000025a4aadc6000076260000000042c00000000000000000000000000" +
             "000000000000000000000000000000000000";
+    @NonNls
     static private final String record1 = "000000f5a4aacc6000076360000000024200000000000000000000000000" +
             "000000000000000000000000000000000000";
+    @NonNls
     static private final String record2 = "00000075a4aabc60000338d0000000016600000000000000000000000000" +
             "000000000000000000000000000000000000";
+    @NonNls
     static private final String record3 = "00000075a4aaac6000000030000000016400000000000000000000000000" +
             "000000000000000000000000000000000000";
+    @NonNls
     static private final String record4 = "00000085a4aa9c6000027750000000016200000000000000000000000000" +
             "000000000000000000000000000000000000";
     static private final String testFile0x2 = record0 + record1 + record2 + record3 + record4;
+    @NonNls
     static private final String testFile0x4 = "000000000000000000000000000000000000000000000000000000000000" +
             "0000000000000000000000" +
             "5b88" + "000000000000000000000000000000000000000000";
+    @NonNls
     static private final String testFile0xf = "0000000000b792a100";
 
     private DesfireCard constructOrcaCard() {

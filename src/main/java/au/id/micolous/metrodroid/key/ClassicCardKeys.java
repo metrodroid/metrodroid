@@ -24,6 +24,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.annotation.VisibleForTesting;
 
+import org.jetbrains.annotations.NonNls;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -89,7 +90,7 @@ public class ClassicCardKeys extends CardKeys {
     /**
      * Reads ClassicCardKeys from any JSON format.
      */
-    public static ClassicCardKeys fromJSON(JSONObject json, KeyFormat format) throws JSONException, IllegalArgumentException {
+    public static ClassicCardKeys fromJSON(JSONObject json, @NonNls KeyFormat format) throws JSONException, IllegalArgumentException {
         switch (format) {
             case JSON_MFC:
             case JSON_MFC_NO_UID:

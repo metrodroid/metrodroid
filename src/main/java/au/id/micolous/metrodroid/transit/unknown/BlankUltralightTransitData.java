@@ -22,6 +22,8 @@ import android.os.Parcel;
 import android.os.Parcelable;
 import android.support.annotation.NonNull;
 
+import org.jetbrains.annotations.NonNls;
+
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
@@ -62,7 +64,7 @@ public class BlankUltralightTransitData extends TransitData {
         @Override
         public boolean check(@NonNull UltralightCard card) {
             UltralightPage[] pages = card.getPages();
-            final String model = card.getCardModel();
+            @NonNls final String model = card.getCardModel();
 
             // check to see if all sectors are blocked
             for (UltralightPage p : pages) {

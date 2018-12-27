@@ -21,6 +21,7 @@ package au.id.micolous.metrodroid.test;
 import android.support.annotation.Nullable;
 import android.util.Pair;
 
+import org.jetbrains.annotations.NonNls;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.junit.Test;
@@ -38,7 +39,7 @@ import static junit.framework.TestCase.assertNotNull;
 import static junit.framework.TestCase.assertTrue;
 
 public class ImportKeysTest extends BaseInstrumentedTest {
-    private byte[] loadTestFile(String path) {
+    private byte[] loadTestFile(@NonNls String path) {
         return loadSmallAssetBytes("keyTests/" + path);
     }
 

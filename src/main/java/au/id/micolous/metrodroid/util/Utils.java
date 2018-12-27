@@ -908,7 +908,7 @@ public class Utils {
 
         // Scan for the } at the end of the file.
         for (int i=data.length-1; i>0; i--) {
-            String s;
+            @NonNls String s;
             try {
                 s = new String(new byte[]{data[i]}, getUTF8());
             } catch (Exception ex) {
@@ -1117,7 +1117,7 @@ public class Utils {
     @VisibleForTesting
     public static int checkKeyHash(@NonNull byte[] key, @NonNull String salt, String... expectedHashes) {
         MessageDigest md5;
-        String digest;
+        @NonNls String digest;
 
         // Validate input arguments.
         if (expectedHashes.length < 1) {
