@@ -32,9 +32,9 @@ import java.util.List;
 import au.id.micolous.farebot.R;
 import au.id.micolous.metrodroid.card.CardType;
 import au.id.micolous.metrodroid.card.china.ChinaCardTransitFactory;
-import au.id.micolous.metrodroid.card.iso7816.ISO7816Application;
 import au.id.micolous.metrodroid.card.iso7816.ISO7816File;
 import au.id.micolous.metrodroid.card.china.ChinaCard;
+import au.id.micolous.metrodroid.card.iso7816.ISO7816TLV;
 import au.id.micolous.metrodroid.transit.CardInfo;
 import au.id.micolous.metrodroid.transit.TransitData;
 import au.id.micolous.metrodroid.transit.TransitIdentity;
@@ -133,10 +133,10 @@ public class NewShenzhenTransitData extends ChinaTransitData {
         ISO7816File file15 = getFile(card, 0x15);
         if (file15 != null)
             return file15.getBinaryData();
-        byte []szttag = ISO7816Application.findBERTLV(card.getAppData(), 5,  5, true);
+        byte []szttag = ISO7816TLV.INSTANCE.findBERTLV(card.getAppData(), "a5", true);
         if (szttag == null)
             return null;
-        return ISO7816Application.findBERTLV(szttag, 4,  0xc, false);
+        return ISO7816TLV.INSTANCE.findBERTLV(szttag, "8c", false);
     }
 
     private static int parseSerial(ChinaCard card) {

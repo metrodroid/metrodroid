@@ -204,8 +204,8 @@ public class ISO7816Card extends Card {
             List<ListItem> rawAppData = new ArrayList<>();
             byte[] appData = app.getAppData();
             if (appData != null)
-                rawAppData.add(ListItemRecursive.collapsedValue(
-                        R.string.app_fci, Utils.getHexDump(appData)));
+                rawAppData.add(new ListItemRecursive(
+                        R.string.app_fci, null, ISO7816TLV.INSTANCE.infoWithRaw(appData)));
             rawAppData.addAll(app.getRawFiles());
             List<ListItem> extra = app.getRawData();
             if (extra != null)

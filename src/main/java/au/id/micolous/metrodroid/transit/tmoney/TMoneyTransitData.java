@@ -26,14 +26,12 @@ import android.support.annotation.Nullable;
 import org.jetbrains.annotations.NonNls;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import au.id.micolous.farebot.R;
 import au.id.micolous.metrodroid.card.CardType;
-import au.id.micolous.metrodroid.card.iso7816.ISO7816Application;
 import au.id.micolous.metrodroid.card.iso7816.ISO7816Record;
-import au.id.micolous.metrodroid.card.iso7816.ISO7816Selector;
+import au.id.micolous.metrodroid.card.iso7816.ISO7816TLV;
 import au.id.micolous.metrodroid.card.tmoney.TMoneyCard;
 import au.id.micolous.metrodroid.transit.CardInfo;
 import au.id.micolous.metrodroid.transit.TransitCurrency;
@@ -133,7 +131,7 @@ public class TMoneyTransitData extends TransitData {
     }
 
     private static byte[] getSerialTag(TMoneyCard card) {
-        return ISO7816Application.findBERTLV(card.getAppData(), 5, 0x10, false);
+        return ISO7816TLV.INSTANCE.findBERTLV(card.getAppData(), "b0", false);
     }
 
     private static String parseSerial(TMoneyCard card) {
