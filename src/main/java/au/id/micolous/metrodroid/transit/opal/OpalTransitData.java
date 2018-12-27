@@ -62,7 +62,7 @@ public class OpalTransitData extends TransitData {
     public static final int APP_ID = 0x314553;
     public static final int FILE_ID = 0x7;
 
-    public static final CardInfo CARD_INFO = new CardInfo.Builder()
+    private static final CardInfo CARD_INFO = new CardInfo.Builder()
             .setImageId(R.drawable.opal_card)
             .setName(OpalTransitData.NAME)
             .setLocation(R.string.location_sydney_australia)

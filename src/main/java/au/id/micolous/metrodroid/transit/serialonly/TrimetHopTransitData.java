@@ -63,7 +63,7 @@ public class TrimetHopTransitData extends SerialOnlyTransitData {
 
     private static final TimeZone TZ = TimeZone.getTimeZone("America/Los_Angeles");
 
-    public static final CardInfo CARD_INFO = new CardInfo.Builder()
+    private static final CardInfo CARD_INFO = new CardInfo.Builder()
             .setName(NAME)
             .setCardType(CardType.MifareDesfire)
             .setImageId(R.drawable.trimethop_card)

@@ -56,7 +56,7 @@ public class OrcaTransitData extends TransitData {
 
     public static final int APP_ID = 0x3010f2;
 
-    public static final CardInfo CARD_INFO = new CardInfo.Builder()
+    private static final CardInfo CARD_INFO = new CardInfo.Builder()
             .setImageId(R.drawable.orca_card)
             .setName("ORCA")
             .setLocation(R.string.location_seattle)

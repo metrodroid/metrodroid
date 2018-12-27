@@ -61,7 +61,7 @@ public class MykiTransitData extends SerialOnlyTransitData {
 
     private final String mSerial;
 
-    public static final CardInfo CARD_INFO = new CardInfo.Builder()
+    private static final CardInfo CARD_INFO = new CardInfo.Builder()
             .setImageId(R.drawable.myki_card)
             .setName(MykiTransitData.NAME)
             .setCardType(CardType.MifareDesfire)

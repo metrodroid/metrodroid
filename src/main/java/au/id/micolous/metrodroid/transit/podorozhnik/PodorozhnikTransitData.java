@@ -70,7 +70,7 @@ public class PodorozhnikTransitData extends TransitData {
         }
     };
 
-    public static final CardInfo CARD_INFO = new CardInfo.Builder()
+    private static final CardInfo CARD_INFO = new CardInfo.Builder()
             // seqgo_card_alpha has identical geometry
             .setImageId(R.drawable.podorozhnik_card, R.drawable.seqgo_card_alpha)
             .setName(Utils.localizeString(R.string.card_name_podorozhnik))

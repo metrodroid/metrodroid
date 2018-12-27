@@ -60,21 +60,21 @@ public class SuicaTransitData extends TransitData {
         }
     };
 
-    public static final CardInfo ICOCA_CARD_INFO = new CardInfo.Builder()
+    private static final CardInfo ICOCA_CARD_INFO = new CardInfo.Builder()
             .setImageId(R.drawable.icoca_card)
             .setName(Utils.localizeString(R.string.card_name_icoca))
             .setLocation(R.string.location_kansai)
             .setCardType(CardType.FeliCa)
             .build();
 
-    public static final CardInfo SUICA_CARD_INFO = new CardInfo.Builder()
+    private static final CardInfo SUICA_CARD_INFO = new CardInfo.Builder()
             .setImageId(R.drawable.suica_card)
             .setName(Utils.localizeString(R.string.card_name_suica))
             .setLocation(R.string.location_tokyo)
             .setCardType(CardType.FeliCa)
             .build();
 
-    public static final CardInfo PASMO_CARD_INFO = new CardInfo.Builder()
+    private static final CardInfo PASMO_CARD_INFO = new CardInfo.Builder()
             .setImageId(R.drawable.pasmo_card)
             .setName(Utils.localizeString(R.string.card_name_pasmo))
             .setLocation(R.string.location_tokyo)

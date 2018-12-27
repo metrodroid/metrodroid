@@ -57,7 +57,7 @@ data class EasyCardTransitData internal constructor(
         private val TZ = TimeZone.getTimeZone("Asia/Taipei")
 
         internal const val NAME = "EasyCard"
-        val CARD_INFO = CardInfo.Builder()
+        private val CARD_INFO = CardInfo.Builder()
                 .setImageId(R.drawable.tpe_easy_card, R.drawable.iso7810_id1_alpha)
                 .setName(NAME)
                 .setLocation(R.string.location_taipei)

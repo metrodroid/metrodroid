@@ -54,7 +54,7 @@ public class StrelkaTransitData extends SerialOnlyTransitData {
         }
     };
 
-    public static final CardInfo CARD_INFO = new CardInfo.Builder()
+    private static final CardInfo CARD_INFO = new CardInfo.Builder()
             .setName(Utils.localizeString(R.string.card_name_strelka))
             .setLocation(R.string.location_moscow)
             .setCardType(CardType.MifareClassic)

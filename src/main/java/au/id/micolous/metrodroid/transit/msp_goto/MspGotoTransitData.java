@@ -47,7 +47,7 @@ public class MspGotoTransitData extends NextfareTransitData {
             0x01, -2, 0x01, -2
     };
 
-    public static final CardInfo CARD_INFO = new CardInfo.Builder()
+    private static final CardInfo CARD_INFO = new CardInfo.Builder()
             // Using the short name (Goto) may be ambiguous
             .setName(NAME)
             .setLocation(R.string.location_minneapolis)

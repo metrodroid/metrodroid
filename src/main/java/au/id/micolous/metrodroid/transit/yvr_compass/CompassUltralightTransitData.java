@@ -53,7 +53,7 @@ public class CompassUltralightTransitData extends NextfareUltralightTransitData 
         }
     };
 
-    public static final CardInfo CARD_INFO = new CardInfo.Builder()
+    private static final CardInfo CARD_INFO = new CardInfo.Builder()
             .setImageId(R.drawable.yvr_compass_card)
             .setName(CompassUltralightTransitData.NAME)
             .setLocation(R.string.location_vancouver)

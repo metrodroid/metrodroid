@@ -72,7 +72,7 @@ public class HSLTransitData extends TransitData implements Parcelable {
         EPOCH = epoch.getTimeInMillis();
     }
 
-    public static final CardInfo CARD_INFO = new CardInfo.Builder()
+    private static final CardInfo CARD_INFO = new CardInfo.Builder()
             .setImageId(R.drawable.hsl_card)
             .setName("HSL")
             .setLocation(R.string.location_helsinki_finland)

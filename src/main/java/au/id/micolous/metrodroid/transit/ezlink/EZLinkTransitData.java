@@ -37,6 +37,7 @@ import au.id.micolous.metrodroid.util.StationTableReader;
 import au.id.micolous.metrodroid.util.Utils;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Collections;
 import java.util.GregorianCalendar;
@@ -62,16 +63,16 @@ public class EZLinkTransitData extends TransitData {
             .setCardType(CardType.CEPAS)
             .build();
 
-    public static final CardInfo NETS_FLASHPAY_CARD_INFO = new CardInfo.Builder()
+    private static final CardInfo NETS_FLASHPAY_CARD_INFO = new CardInfo.Builder()
             .setImageId(R.drawable.nets_card)
             .setName("NETS FlashPay")
             .setLocation(R.string.location_singapore)
             .setCardType(CardType.CEPAS)
             .build();
-    public static final CardInfo[] ALL_CARD_INFOS = {
+    public static final List<CardInfo> ALL_CARD_INFOS = Collections.unmodifiableList(Arrays.asList(
             EZLinkTransitData.EZ_LINK_CARD_INFO,
-            EZLinkTransitData.NETS_FLASHPAY_CARD_INFO,
-    };
+            EZLinkTransitData.NETS_FLASHPAY_CARD_INFO
+    ));
 
     public static final TimeZone TZ = TimeZone.getTimeZone("Asia/Singapore");
     private static final long EPOCH;

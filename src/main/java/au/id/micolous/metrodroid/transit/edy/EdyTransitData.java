@@ -50,7 +50,7 @@ public class EdyTransitData extends TransitData {
     // defines
     public static final int SYSTEMCODE_EDY = 0xfe00;         // Edy (=共通領域)
 
-    public static final CardInfo CARD_INFO = new CardInfo.Builder()
+    private static final CardInfo CARD_INFO = new CardInfo.Builder()
             .setImageId(R.drawable.edy_card)
             .setName("Edy")
             .setLocation(R.string.location_tokyo)

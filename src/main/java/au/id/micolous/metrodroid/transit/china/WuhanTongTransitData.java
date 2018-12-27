@@ -39,7 +39,7 @@ import au.id.micolous.metrodroid.util.Utils;
 public class WuhanTongTransitData extends ChinaTransitData {
     private final String mSerial;
 
-    public static final CardInfo CARD_INFO = new CardInfo.Builder()
+    private static final CardInfo CARD_INFO = new CardInfo.Builder()
             .setName(Utils.localizeString(R.string.card_name_wuhantong))
             .setLocation(R.string.location_wuhan)
             .setCardType(CardType.ISO7816)

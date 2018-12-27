@@ -58,39 +58,39 @@ public class IntercodeTransitData extends Calypso1545TransitData {
     // de transport" (ticket). Here they take the name of the transit agency.
 
     // https://www.tisseo.fr/les-tarifs/obtenir-une-carte-pastel
-    public static final CardInfo TISSEO_CARD_INFO = new CardInfo.Builder()
+    private static final CardInfo TISSEO_CARD_INFO = new CardInfo.Builder()
             .setName("Pastel")
             .setLocation(R.string.location_toulouse)
             .setCardType(CardType.ISO7816)
             .setPreview()
             .build();
 
-    public static final CardInfo TRANSGIRONDE_CARD_INFO = new CardInfo.Builder()
+    private static final CardInfo TRANSGIRONDE_CARD_INFO = new CardInfo.Builder()
             .setName("TransGironde")
             .setLocation(R.string.location_gironde)
             .setCardType(CardType.ISO7816)
             .setPreview()
             .build();
 
-    public static final CardInfo OURA_CARD_INFO = new CardInfo.Builder()
+    private static final CardInfo OURA_CARD_INFO = new CardInfo.Builder()
             .setName("OùRA")
             .setLocation(R.string.location_grenoble)
             .setCardType(CardType.ISO7816)
             .build();
 
-    public static final CardInfo NAVIGO_CARD_INFO = new CardInfo.Builder()
+    private static final CardInfo NAVIGO_CARD_INFO = new CardInfo.Builder()
             .setName("Navigo")
             .setLocation(R.string.location_paris)
             .setCardType(CardType.ISO7816)
             .build();
 
-    public static final CardInfo ENVIBUS_CARD_INFO = new CardInfo.Builder()
+    private static final CardInfo ENVIBUS_CARD_INFO = new CardInfo.Builder()
             .setName("Envibus")
             .setLocation(R.string.location_sophia_antipolis)
             .setCardType(CardType.ISO7816)
             .build();
 
-    public static final CardInfo TAM_MONTPELLIER_CARD_INFO = new CardInfo.Builder()
+    private static final CardInfo TAM_MONTPELLIER_CARD_INFO = new CardInfo.Builder()
             .setName("TaM") // Transports de l'agglomération de Montpellier
             .setLocation(R.string.location_montpellier)
             .setCardType(CardType.ISO7816)

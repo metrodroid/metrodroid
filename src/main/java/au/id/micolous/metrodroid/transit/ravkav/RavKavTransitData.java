@@ -51,7 +51,7 @@ public class RavKavTransitData extends Calypso1545TransitData {
     private static final int RAVKAV_NETWORK_ID_A = 0x37602;
     private static final int RAVKAV_NETWORK_ID_B = 0x37603;
 
-    public static final CardInfo CARD_INFO = new CardInfo.Builder()
+    private static final CardInfo CARD_INFO = new CardInfo.Builder()
             .setImageId(R.drawable.ravkav_card)
             .setName(Utils.localizeString(R.string.card_name_ravkav))
             .setLocation(R.string.location_israel)

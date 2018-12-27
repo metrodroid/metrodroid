@@ -61,7 +61,7 @@ public class SmartRiderTransitData extends TransitData {
     };
     private static final String TAG = SmartRiderTransitData.class.getSimpleName();
 
-    public static final CardInfo SMARTRIDER_CARD_INFO = new CardInfo.Builder()
+    private static final CardInfo SMARTRIDER_CARD_INFO = new CardInfo.Builder()
             .setImageId(R.drawable.smartrider_card)
             .setName(SmartRiderTransitData.SMARTRIDER_NAME)
             .setLocation(R.string.location_wa_australia)
@@ -70,7 +70,7 @@ public class SmartRiderTransitData extends TransitData {
             .setPreview() // We don't know about ferries.
             .build();
 
-    public static final CardInfo MYWAY_CARD_INFO = new CardInfo.Builder()
+    private static final CardInfo MYWAY_CARD_INFO = new CardInfo.Builder()
             .setImageId(R.drawable.myway_card)
             .setName(SmartRiderTransitData.MYWAY_NAME)
             .setLocation(R.string.location_act_australia)

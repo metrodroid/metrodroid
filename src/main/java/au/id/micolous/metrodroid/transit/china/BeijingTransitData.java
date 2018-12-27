@@ -40,7 +40,7 @@ public class BeijingTransitData extends ChinaTransitData {
     private static final int FILE_INFO = 0x4;
     private final String mSerial;
 
-   public static final CardInfo CARD_INFO = new CardInfo.Builder()
+   private static final CardInfo CARD_INFO = new CardInfo.Builder()
             .setName(Utils.localizeString(R.string.card_name_beijing))
             .setLocation(R.string.location_beijing)
             .setCardType(CardType.ISO7816)

@@ -56,7 +56,7 @@ public class KMTTransitData extends TransitData {
     static final TimeZone TIME_ZONE = TimeZone.getTimeZone("Asia/Jakarta");
     public static final long KMT_EPOCH;
 
-    public static final CardInfo CARD_INFO = new CardInfo.Builder()
+    private static final CardInfo CARD_INFO = new CardInfo.Builder()
             .setImageId(R.drawable.kmt_card)
             .setName(KMTTransitData.NAME)
             .setLocation(R.string.location_jakarta)

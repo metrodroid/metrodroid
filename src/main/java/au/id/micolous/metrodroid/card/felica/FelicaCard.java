@@ -144,7 +144,6 @@ public class FelicaCard extends Card {
                     // respond to the normal system code listing.
                     codes.add(new FeliCaLib.SystemCode(OctopusTransitData.SYSTEMCODE_OCTOPUS));
                     octopusMagic = true;
-                    feedbackInterface.showCardType(OctopusTransitData.CARD_INFO);
                 }
 
                 byte[] sztSystem = liteMagic ? null : ft.pollingAndGetIDm(OctopusTransitData.SYSTEMCODE_SZT);
@@ -154,7 +153,6 @@ public class FelicaCard extends Card {
                     // case they have the same bugs with system code listing.
                     codes.add(new FeliCaLib.SystemCode(OctopusTransitData.SYSTEMCODE_SZT));
                     sztMagic = true;
-                    feedbackInterface.showCardType(NewShenzhenTransitData.CARD_INFO);
                 }
             }
 

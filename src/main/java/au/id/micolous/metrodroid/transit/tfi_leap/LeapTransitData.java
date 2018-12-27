@@ -70,7 +70,7 @@ public class LeapTransitData extends TransitData {
         }
     };
 
-    public static final CardInfo CARD_INFO = new CardInfo.Builder()
+    private static final CardInfo CARD_INFO = new CardInfo.Builder()
             .setName(LeapTransitData.NAME)
             .setLocation(R.string.location_ireland)
             .setCardType(CardType.MifareDesfire)

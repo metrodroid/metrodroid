@@ -93,8 +93,8 @@ data class OVChipTransitData(
             ListItem("Credit Slot", if (mIndex.recentCreditSlot) "B" else "A"))
 
     companion object {
-        const val NAME = "OV-chipkaart"
-        val CARD_INFO = CardInfo.Builder()
+        private const val NAME = "OV-chipkaart"
+        private val CARD_INFO = CardInfo.Builder()
                 .setImageId(R.drawable.ovchip_card)
                 .setName(NAME)
                 .setLocation(R.string.location_the_netherlands)

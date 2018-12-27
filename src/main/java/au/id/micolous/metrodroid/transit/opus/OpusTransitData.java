@@ -60,7 +60,7 @@ public class OpusTransitData extends Calypso1545TransitData {
             )
     );
 
-    public static final CardInfo CARD_INFO = new CardInfo.Builder()
+    private static final CardInfo CARD_INFO = new CardInfo.Builder()
             .setImageId(R.drawable.opus_card)
             .setName(OpusTransitData.NAME)
             .setLocation(R.string.location_quebec)

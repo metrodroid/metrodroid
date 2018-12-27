@@ -51,7 +51,7 @@ public class VentraUltralightTransitData extends NextfareUltralightTransitData {
         }
     };
 
-    public static final CardInfo CARD_INFO = new CardInfo.Builder()
+    private static final CardInfo CARD_INFO = new CardInfo.Builder()
             .setName(VentraUltralightTransitData.NAME)
             .setLocation(R.string.location_chicago)
             .setCardType(CardType.MifareUltralight)

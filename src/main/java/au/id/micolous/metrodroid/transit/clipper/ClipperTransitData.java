@@ -84,7 +84,7 @@ public class ClipperTransitData extends TransitData {
         CLIPPER_EPOCH = epoch;
     }
 
-    public static final CardInfo CARD_INFO = new CardInfo.Builder()
+    private static final CardInfo CARD_INFO = new CardInfo.Builder()
             .setImageId(R.drawable.clipper_card)
             .setName("Clipper")
             .setLocation(R.string.location_san_francisco)

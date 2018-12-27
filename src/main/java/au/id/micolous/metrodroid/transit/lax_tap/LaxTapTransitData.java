@@ -72,7 +72,7 @@ public class LaxTapTransitData extends NextfareTransitData {
             0x00, 0x00, 0x00, 0x00
     };
 
-    public static final CardInfo CARD_INFO = new CardInfo.Builder()
+    private static final CardInfo CARD_INFO = new CardInfo.Builder()
             .setImageId(R.drawable.laxtap_card)
             // Using the short name (TAP) may be ambiguous
             .setName(LaxTapTransitData.LONG_NAME)

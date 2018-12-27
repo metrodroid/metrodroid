@@ -43,7 +43,7 @@ public class TUnionTransitData extends ChinaTransitData {
     private final String mSerial;
     private final int mNegativeBalance;
 
-    public static final CardInfo CARD_INFO = new CardInfo.Builder()
+    private static final CardInfo CARD_INFO = new CardInfo.Builder()
             .setName(Utils.localizeString(R.string.card_name_tunion))
             .setLocation(R.string.location_china_mainland)
             .setCardType(CardType.ISO7816)

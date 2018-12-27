@@ -56,7 +56,7 @@ public class IstanbulKartTransitData extends SerialOnlyTransitData {
     private final String mSerial;
     private final String mSerial2;
 
-    public static final CardInfo CARD_INFO = new CardInfo.Builder()
+    private static final CardInfo CARD_INFO = new CardInfo.Builder()
             .setName(NAME)
             .setCardType(CardType.MifareDesfire)
             .setLocation(R.string.location_istanbul)

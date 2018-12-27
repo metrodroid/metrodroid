@@ -54,7 +54,7 @@ public class MetroQTransitData extends TransitData {
     private static final int METRO_Q_ID = 0x5420;
     private static final TimeZone TZ = TimeZone.getTimeZone("America/Houston");
     private final long mSerial;
-    public static final CardInfo CARD_INFO = new CardInfo.Builder()
+    private static final CardInfo CARD_INFO = new CardInfo.Builder()
             .setName(NAME)
             .setLocation(R.string.location_houston)
             .setCardType(CardType.MifareClassic)
