@@ -55,7 +55,7 @@ import au.id.micolous.farebot.R;
  * Wiki: https://github.com/micolous/metrodroid/wiki/ERG-MFC
  */
 public class ErgTransitData extends TransitData {
-    public static final String NAME = "ERG";
+    private static final String NAME = "ERG";
     public static final byte[] SIGNATURE = {
             0x32, 0x32, 0x00, 0x00, 0x00, 0x01, 0x01
     };
@@ -247,7 +247,7 @@ public class ErgTransitData extends TransitData {
     }
 
     @Nullable
-    protected static ErgMetadataRecord getMetadataRecord(ClassicCard card) {
+    private static ErgMetadataRecord getMetadataRecord(ClassicCard card) {
         try {
             return getMetadataRecord(card.getSector(0));
         } catch (UnauthorizedException ex) {

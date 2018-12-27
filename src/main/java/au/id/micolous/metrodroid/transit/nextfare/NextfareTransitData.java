@@ -63,7 +63,7 @@ import au.id.micolous.metrodroid.util.Utils;
  */
 public class NextfareTransitData extends TransitData {
 
-    public static final String NAME = "Nextfare";
+    private static final String NAME = "Nextfare";
     public static final Creator<NextfareTransitData> CREATOR = new Creator<NextfareTransitData>() {
         public NextfareTransitData createFromParcel(Parcel parcel) {
             return new NextfareTransitData(parcel, "USD");
@@ -109,7 +109,7 @@ public class NextfareTransitData extends TransitData {
         this(card, "USD");
     }
 
-    public NextfareTransitData(ClassicCard card, @NonNull String currency) {
+    protected NextfareTransitData(ClassicCard card, @NonNull String currency) {
         mCurrency = currency;
 
         byte[] serialData = card.getSector(0).getBlock(0).getData();

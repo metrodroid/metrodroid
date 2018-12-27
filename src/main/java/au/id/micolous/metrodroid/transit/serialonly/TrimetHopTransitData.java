@@ -55,8 +55,8 @@ import au.id.micolous.metrodroid.util.Utils;
  * Documentation of format: https://github.com/micolous/metrodroid/wiki/TrimetHopFastPass
  */
 public class TrimetHopTransitData extends SerialOnlyTransitData {
-    public static final String NAME = "Hop Fastpass";
-    public static final int APP_ID = 0xe010f2;
+    private static final String NAME = "Hop Fastpass";
+    private static final int APP_ID = 0xe010f2;
 
     private final int mSerial;
     private final int mIssueDate;

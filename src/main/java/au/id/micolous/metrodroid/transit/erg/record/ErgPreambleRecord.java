@@ -31,10 +31,10 @@ import java.util.Locale;
  * https://github.com/micolous/metrodroid/wiki/ERG-MFC#preamble-record
  */
 public class ErgPreambleRecord extends ErgRecord {
-    static final byte[] OLD_CARD_ID = {0x00, 0x00, 0x00};
+    private static final byte[] OLD_CARD_ID = {0x00, 0x00, 0x00};
     private String mCardSerial;
 
-    protected ErgPreambleRecord() {
+    private ErgPreambleRecord() {
     }
 
     public static ErgPreambleRecord recordFromBytes(byte[] input) {

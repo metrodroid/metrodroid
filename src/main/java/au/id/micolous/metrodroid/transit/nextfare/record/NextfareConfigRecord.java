@@ -49,7 +49,7 @@ public class NextfareConfigRecord extends NextfareRecord implements Parcelable {
     private int mTicketType;
     private Calendar mExpiry;
 
-    protected NextfareConfigRecord() {
+    private NextfareConfigRecord() {
     }
 
     public NextfareConfigRecord(Parcel p) {

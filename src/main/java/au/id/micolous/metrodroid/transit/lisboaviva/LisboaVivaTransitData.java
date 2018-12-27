@@ -87,7 +87,7 @@ public class LisboaVivaTransitData extends Calypso1545TransitData {
             new En1545FixedHex(ENV_UNKNOWN_D, 95)
     );
 
-    public static String getSerial(CalypsoApplication card) {
+    private static String getSerial(CalypsoApplication card) {
         byte []tenv = card.getFile(CalypsoApplication.File.TICKETING_ENVIRONMENT)
                 .getRecord(1).getData();
         return String.format(Locale.ENGLISH,

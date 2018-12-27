@@ -23,7 +23,7 @@ import au.id.micolous.metrodroid.transit.nextfare.NextfareTrip;
 import au.id.micolous.metrodroid.transit.nextfare.record.NextfareTransactionRecord;
 
 public class MspGotoTransitData extends NextfareTransitData {
-    public static final String NAME = "Go-To card";
+    private static final String NAME = "Go-To card";
     public static final Creator<MspGotoTransitData> CREATOR = new Creator<MspGotoTransitData>() {
         public MspGotoTransitData createFromParcel(Parcel parcel) {
             return new MspGotoTransitData(parcel);

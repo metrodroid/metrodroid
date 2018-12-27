@@ -33,7 +33,7 @@ public class NextfareBalanceRecord extends NextfareRecord implements Comparable<
     private int mBalance;
     private boolean mHasTravelPassAvailable = false;
 
-    protected NextfareBalanceRecord(int version) {
+    private NextfareBalanceRecord(int version) {
         mVersion = version;
     }
 

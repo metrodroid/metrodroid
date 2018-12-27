@@ -85,7 +85,7 @@ public class RavKavTransitData extends Calypso1545TransitData {
         super(card, TICKETING_ENV_FIELDS, null, getSerial(card));
     }
 
-    public static String getSerial(CalypsoApplication card) {
+    private static String getSerial(CalypsoApplication card) {
         return Long.toString(Utils.byteArrayToLong(card.getTagId()));
     }
 

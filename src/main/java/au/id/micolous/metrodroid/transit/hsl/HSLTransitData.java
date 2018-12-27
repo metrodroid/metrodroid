@@ -62,7 +62,7 @@ import au.id.micolous.metrodroid.util.Utils;
  */
 public class HSLTransitData extends TransitData implements Parcelable {
 
-    static final TimeZone TZ = TimeZone.getTimeZone("Europe/Helsinki");
+    private static final TimeZone TZ = TimeZone.getTimeZone("Europe/Helsinki");
     private static final long EPOCH;
 
     static {

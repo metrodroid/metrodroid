@@ -121,7 +121,7 @@ public class EdyTrip extends Trip {
         return 0;
     }
 
-    static Calendar extractDate(byte[] data) {
+    private static Calendar extractDate(byte[] data) {
         int fulloffset = Utils.byteArrayToInt(data, 4, 4);
         if (fulloffset == 0)
             return null;

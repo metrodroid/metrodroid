@@ -48,7 +48,7 @@ import au.id.micolous.metrodroid.util.Utils;
 
 public class KMTTransitData extends TransitData {
     // defines
-    public static final String NAME = "Kartu Multi Trip";
+    private static final String NAME = "Kartu Multi Trip";
     private static final int SYSTEMCODE_KMT = 0x90b7;
     private static final int FELICA_SERVICE_KMT_ID = 0x300B;
     private static final int FELICA_SERVICE_KMT_BALANCE = 0x1017;
@@ -94,7 +94,7 @@ public class KMTTransitData extends TransitData {
         mLastTransAmount = parcel.readInt();
     }
 
-    public KMTTransitData(FelicaCard card) {
+    private KMTTransitData(FelicaCard card) {
         mSerialNumber = getSerial(card);
         FelicaService serviceBalance = card.getSystem(SYSTEMCODE_KMT).getService(FELICA_SERVICE_KMT_BALANCE);
         if (serviceBalance != null) {

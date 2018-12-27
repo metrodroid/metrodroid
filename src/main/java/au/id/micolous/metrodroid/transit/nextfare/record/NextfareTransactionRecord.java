@@ -55,8 +55,8 @@ public class NextfareTransactionRecord extends NextfareRecord implements Parcela
     private final int mChecksum;
     private final boolean mContinuation;
 
-    protected NextfareTransactionRecord(Calendar timestamp, int mode, int journey,
-                                        int station, int value, int checksum, boolean continuation) {
+    private NextfareTransactionRecord(Calendar timestamp, int mode, int journey,
+                                      int station, int value, int checksum, boolean continuation) {
         mTimestamp = timestamp;
         mMode = mode;
         mJourney = journey;
@@ -66,7 +66,7 @@ public class NextfareTransactionRecord extends NextfareRecord implements Parcela
         mContinuation = continuation;
     }
 
-    public NextfareTransactionRecord(Parcel parcel) {
+    private NextfareTransactionRecord(Parcel parcel) {
         mTimestamp = Utils.unparcelCalendar(parcel);
         mMode = parcel.readInt();
         mJourney = parcel.readInt();

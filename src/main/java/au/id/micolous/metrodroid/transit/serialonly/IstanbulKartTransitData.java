@@ -50,8 +50,8 @@ import au.id.micolous.metrodroid.util.Utils;
  * Documentation of format: https://github.com/micolous/metrodroid/wiki/IstanbulKart
  */
 public class IstanbulKartTransitData extends SerialOnlyTransitData {
-    public static final String NAME = "IstanbulKart";
-    public static final int APP_ID = 0x422201;
+    private static final String NAME = "IstanbulKart";
+    private static final int APP_ID = 0x422201;
 
     private final String mSerial;
     private final String mSerial2;

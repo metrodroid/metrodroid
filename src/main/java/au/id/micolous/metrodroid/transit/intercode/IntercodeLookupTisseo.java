@@ -19,7 +19,7 @@
 
 package au.id.micolous.metrodroid.transit.intercode;
 
-public class IntercodeLookupTisseo extends IntercodeLookupSTR {
+class IntercodeLookupTisseo extends IntercodeLookupSTR {
 
     private static final int AGENCY_TISSEO = 1;
 

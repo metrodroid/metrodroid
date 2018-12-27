@@ -82,7 +82,7 @@ public class EZLinkCompatTrip extends Trip {
         return TransitCurrency.SGD(-mTransaction.getAmount());
     }
 
-    CEPASTransaction.TransactionType getType() {
+    private CEPASTransaction.TransactionType getType() {
         return CEPASTransaction.getType(mTransaction.getType());
     }
 

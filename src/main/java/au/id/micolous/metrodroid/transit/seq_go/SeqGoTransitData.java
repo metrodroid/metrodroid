@@ -53,7 +53,7 @@ import java.util.TimeZone;
  */
 public class SeqGoTransitData extends NextfareTransitData {
 
-    public static final String NAME = "Go card";
+    private static final String NAME = "Go card";
     public static final Creator<SeqGoTransitData> CREATOR = new Creator<SeqGoTransitData>() {
         public SeqGoTransitData createFromParcel(Parcel parcel) {
             return new SeqGoTransitData(parcel);

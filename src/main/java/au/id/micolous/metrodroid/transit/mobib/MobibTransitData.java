@@ -185,7 +185,7 @@ public class MobibTransitData extends Calypso1545TransitData {
         return MobibLookup.getInstance();
     }
 
-    public static String getSerial(CalypsoApplication card) {
+    private static String getSerial(CalypsoApplication card) {
         byte[] holder = card.getFile(CalypsoApplication.File.HOLDER_EXTENDED).getRecord(1).getData();
         return String.format(Locale.ENGLISH,
                 "%06d / %06d%04d %02d / %01d",

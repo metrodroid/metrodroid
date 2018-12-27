@@ -52,10 +52,10 @@ public class NextfareTopupRecord extends NextfareRecord implements Parcelable {
     private int mChecksum;
     private boolean mAutomatic;
 
-    protected NextfareTopupRecord() {
+    private NextfareTopupRecord() {
     }
 
-    public NextfareTopupRecord(Parcel parcel) {
+    private NextfareTopupRecord(Parcel parcel) {
         mTimestamp = Utils.unparcelCalendar(parcel);
         mCredit = parcel.readInt();
         mStation = parcel.readInt();

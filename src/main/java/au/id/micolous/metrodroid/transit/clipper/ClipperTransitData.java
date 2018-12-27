@@ -68,7 +68,7 @@ public class ClipperTransitData extends TransitData {
         }
     };
     private static final int RECORD_LENGTH = 32;
-    static final TimeZone CLIPPER_TZ = TimeZone.getTimeZone("America/Los_Angeles");
+    private static final TimeZone CLIPPER_TZ = TimeZone.getTimeZone("America/Los_Angeles");
     private static final GregorianCalendar CLIPPER_EPOCH;
 
     static {

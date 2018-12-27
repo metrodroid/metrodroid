@@ -50,8 +50,8 @@ import java.util.TimeZone;
 
 public class LaxTapTransitData extends NextfareTransitData {
 
-    public static final String NAME = "TAP";
-    public static final String LONG_NAME = "Transit Access Pass";
+    private static final String NAME = "TAP";
+    private static final String LONG_NAME = "Transit Access Pass";
     public static final Creator<LaxTapTransitData> CREATOR = new Creator<LaxTapTransitData>() {
         public LaxTapTransitData createFromParcel(Parcel parcel) {
             return new LaxTapTransitData(parcel);
