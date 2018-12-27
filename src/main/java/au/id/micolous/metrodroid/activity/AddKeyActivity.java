@@ -108,6 +108,7 @@ public class AddKeyActivity extends MetrodroidActivity {
         intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
         mPendingIntent = PendingIntent.getActivity(this, 0, intent, 0);
 
+        //noinspection CallToSuspiciousStringMethod
         if (getIntent().getAction() != null &&
                 getIntent().getAction().equals(Intent.ACTION_VIEW) &&
                 getIntent().getData() != null) {

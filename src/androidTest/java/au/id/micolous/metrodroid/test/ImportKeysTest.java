@@ -68,6 +68,7 @@ public class ImportKeysTest extends BaseInstrumentedTest {
         return k;
     }
 
+    @SuppressWarnings("SameParameterValue")
     private ClassicStaticKeys loadClassicStaticCardKeys(String path) throws JSONException {
         Pair<JSONObject, KeyFormat> json = loadTestJSON(path, KeyFormat.JSON_MFC_STATIC);
         ClassicCardKeys k = ClassicCardKeys.fromJSON(json.first, json.second);

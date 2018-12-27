@@ -42,6 +42,7 @@ import static junit.framework.TestCase.assertTrue;
 /**
  * Tests for Clipper card
  */
+@SuppressWarnings({"StringConcatenationMissingWhitespace", "ConstantConditions"})
 public class ClipperTest extends BaseInstrumentedTest {
 
     // mocked data

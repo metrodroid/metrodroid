@@ -46,6 +46,7 @@ import static junit.framework.TestCase.*;
  * Tests for Orca card
  */
 
+@SuppressWarnings({"StringConcatenationMissingWhitespace", "ConstantConditions"})
 public class OrcaTest extends BaseInstrumentedTest {
 
     // mocked data

@@ -48,7 +48,6 @@ public class ClassicSector {
     private List<ClassicBlock> mBlocks;
     @Attribute(name = "key", required = false)
     private Base64String mKey;
-    @SuppressWarnings("FieldCanBeLocal")
     @Attribute(name = "keytype", required = false)
     private ClassicSectorKey.KeyType mKeyType;
 

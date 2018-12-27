@@ -95,7 +95,6 @@ public class FelicaCard extends Card {
     // https://github.com/tmurakam/felica2money/blob/master/src/card/Suica.cs
     public static FelicaCard dumpTag(byte[] tagId, Tag tag, TagReaderFeedbackInterface feedbackInterface) throws Exception {
         NfcF nfcF = NfcF.get(tag);
-        //noinspection StringConcatenation
         Log.d(TAG, "Default system code: " + Utils.getHexString(nfcF.getSystemCode()));
 
         boolean octopusMagic = false;
@@ -167,14 +166,12 @@ public class FelicaCard extends Card {
 
             CardInfo i = parseEarlyCardInfo(systemCodes);
             if (i != null) {
-                //noinspection StringConcatenation
                 Log.d(TAG, String.format(Locale.ENGLISH, "Early Card Info: %s", i.getName()));
                 feedbackInterface.updateStatusText(Utils.localizeString(R.string.card_reading_type, i.getName()));
                 feedbackInterface.showCardType(i);
             }
 
             for (FeliCaLib.SystemCode code : codes) {
-                //noinspection StringConcatenation
                 Log.d(TAG, "Got system code: " + Utils.getHexString(code.getBytes()));
 
                 int systemCode = code.getCode();
@@ -182,11 +179,9 @@ public class FelicaCard extends Card {
 
                 byte[] thisIdm = ft.pollingAndGetIDm(systemCode);
 
-                //noinspection StringConcatenation
                 Log.d(TAG, " - Got IDm: " + Utils.getHexString(thisIdm) + "  compare: "
                         + Utils.getHexString(idm));
 
-                //noinspection StringConcatenation
                 Log.d(TAG, " - Got PMm: " + Utils.getHexString(ft.getPMm()) + "  compare: "
                         + Utils.getHexString(pmm));
 

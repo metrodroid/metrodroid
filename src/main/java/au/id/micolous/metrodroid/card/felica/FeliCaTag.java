@@ -51,6 +51,7 @@ import java.util.List;
  * @since Android API Level 9
  */
 
+@SuppressWarnings("DuplicateThrows")
 public final class FeliCaTag {
     private static final String TAG = "FeliCaTag";
     private final Tag nfcTag;

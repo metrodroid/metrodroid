@@ -174,6 +174,7 @@ public abstract class BetterContentProvider extends ContentProvider {
                 // Nothing needed here
                 break;
             case CODE_SINGLE:
+                //noinspection StringConcatenation
                 builder.appendWhere(BaseColumns._ID + "=" + uri.getPathSegments().get(1));
                 break;
             default:

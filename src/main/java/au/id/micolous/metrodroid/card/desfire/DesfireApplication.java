@@ -33,7 +33,6 @@ import java.util.List;
 import au.id.micolous.metrodroid.card.desfire.files.DesfireFile;
 import au.id.micolous.metrodroid.ui.ListItem;
 
-@SuppressWarnings("FieldCanBeLocal")
 @Root(name = "application")
 public class DesfireApplication {
     @Attribute(name = "id")

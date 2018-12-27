@@ -86,6 +86,7 @@ public class EZLinkCompatTrip extends Trip {
         return CEPASTransaction.getType(mTransaction.getType());
     }
 
+    @SuppressWarnings("MagicCharacter")
     @Override
     public Station getStartStation() {
         CEPASTransaction.TransactionType type = getType();
@@ -103,6 +104,7 @@ public class EZLinkCompatTrip extends Trip {
         return Station.nameOnly(mTransaction.getUserData());
     }
 
+    @SuppressWarnings("MagicCharacter")
     @Override
     public Station getEndStation() {
         if (getType() == CEPASTransaction.TransactionType.CREATION)

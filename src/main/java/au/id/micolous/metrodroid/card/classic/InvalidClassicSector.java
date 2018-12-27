@@ -35,7 +35,7 @@ import au.id.micolous.metrodroid.util.Utils;
 
 @Root(name = "sector")
 public class InvalidClassicSector extends ClassicSector {
-    @SuppressWarnings("unused")
+    @SuppressWarnings({"unused", "FieldMayBeStatic"})
     @Attribute(name = "invalid")
     public final boolean mInvalid = true;
     @Attribute(name = "error")

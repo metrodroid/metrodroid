@@ -41,6 +41,7 @@ import au.id.micolous.metrodroid.ui.ListItem;
 import au.id.micolous.metrodroid.util.TripObfuscator;
 import au.id.micolous.metrodroid.util.Utils;
 
+@SuppressWarnings("FieldNotUsedInToString")
 public class En1545Parsed implements Parcelable {
     private final Map<String, Object> mMap;
 

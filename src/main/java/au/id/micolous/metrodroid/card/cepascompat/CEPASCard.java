@@ -32,6 +32,7 @@ import org.simpleframework.xml.Root;
 import java.util.List;
 
 // This is only to read old dumps
+@SuppressWarnings("MismatchedQueryAndUpdateOfCollection")
 @Root(name = "card")
 public class CEPASCard extends Card {
     @ElementList(name = "purses")

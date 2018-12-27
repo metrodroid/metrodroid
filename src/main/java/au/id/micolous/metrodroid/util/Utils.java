@@ -208,7 +208,7 @@ public class Utils {
     }
 
     @NonNull
-    @SuppressWarnings({"StringConcatenation", "MagicCharacter"})
+    @SuppressWarnings("MagicCharacter")
     public static SpannableString getHexDump(@NonNull byte[] b, int offset, int length) {
         StringBuilder result = new StringBuilder();
         int alen;
@@ -218,7 +218,7 @@ public class Utils {
             for (alen = 2; (1 << (4 * alen)) < length; alen += 2);
         for (int i = 0; i < length; i++) {
             if ((i & 0xf) == 0 && alen != 0)
-                //noinspection StringConcatenation,StringConcatenationInFormatCall
+                //noinspection StringConcatenation,StringConcatenationInFormatCall,StringConcatenationMissingWhitespace
                 result.append(String.format(Locale.ENGLISH, "%0" + alen + "x: ", i));
             result.append(Integer.toString((b[i+offset] & 0xff) + 0x100, 16).substring(1));
             if (((i & 0xf) == 0xf))
@@ -822,6 +822,7 @@ public class Utils {
         return luhnChecksum(cardNumber) == 0;
     }
 
+    @SuppressWarnings("SameParameterValue")
     private static int calculateCRCReversed(byte[]data, int init, int[] table) {
         int cur = init;
         for (byte b : data) {
@@ -830,6 +831,7 @@ public class Utils {
         return cur;
     }
 
+    @SuppressWarnings("SameParameterValue")
     private static int[] getCRCTableReversed(int poly) {
         int[] table = new int[0x100];
         for (int v = 0; v < 256; v++) {
@@ -898,6 +900,7 @@ public class Utils {
         return detectKeyFormat(data);
     }
 
+    @SuppressWarnings("MagicCharacter")
     @NonNull
     public static KeyFormat detectKeyFormat(@NonNull byte[] data) {
         if (data[0] != '{') {
@@ -1156,7 +1159,7 @@ public class Utils {
         int minDigit = 0;
         for (int g : groups)
             minDigit += g;
-        //noinspection StringConcatenation,StringConcatenationInFormatCall
+        //noinspection StringConcatenation,StringConcatenationInFormatCall,StringConcatenationMissingWhitespace
         String unformatted = String.format(Locale.ENGLISH, "%0" + minDigit + "d", value);
         int numDigit = unformatted.length();
         int last = numDigit - minDigit;
@@ -1231,6 +1234,7 @@ public class Utils {
      * @param input Input data to strip characters from
      * @return Data without characters that can't be encoded.
      */
+    @SuppressWarnings("MagicCharacter")
     public static String filterBadXMLChars(String input) {
         StringBuilder o = new StringBuilder();
         for (int i = 0; i < input.length(); i++) {

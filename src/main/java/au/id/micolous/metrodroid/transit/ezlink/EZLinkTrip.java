@@ -99,6 +99,7 @@ public class EZLinkTrip extends Trip {
         return TransitCurrency.SGD(-mTransaction.getAmount());
     }
 
+    @SuppressWarnings("MagicCharacter")
     @Override
     public Station getStartStation() {
         if (mTransaction.getType() == CEPASTransaction.TransactionType.BUS
@@ -115,6 +116,7 @@ public class EZLinkTrip extends Trip {
         return Station.nameOnly(mTransaction.getUserData());
     }
 
+    @SuppressWarnings("MagicCharacter")
     @Override
     public Station getEndStation() {
         if (mTransaction.getType() == CEPASTransaction.TransactionType.CREATION)

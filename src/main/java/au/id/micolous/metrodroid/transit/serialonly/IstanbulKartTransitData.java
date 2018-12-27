@@ -74,7 +74,6 @@ public class IstanbulKartTransitData extends SerialOnlyTransitData {
         }
     };
 
-    @SuppressWarnings("UnusedDeclaration")
     public IstanbulKartTransitData(Parcel parcel) {
         mSerial = parcel.readString();
         mSerial2 = parcel.readString();

@@ -232,6 +232,7 @@ public class SmartRiderTagRecord extends Transaction {
         }
     }
 
+    @SuppressWarnings("CallToSuspiciousStringMethod")
     @Override
     protected boolean isSameTrip(@NonNull Transaction other) {
         // SmartRider only ever records route names.

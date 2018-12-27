@@ -139,7 +139,6 @@ public class TroikaHybridTransitData extends TransitData {
             dest.writeInt(0);
     }
 
-    @SuppressWarnings("UnusedDeclaration")
     public TroikaHybridTransitData(Parcel p) {
         mTroika = new TroikaTransitData(p);
         if (p.readInt() != 0)
