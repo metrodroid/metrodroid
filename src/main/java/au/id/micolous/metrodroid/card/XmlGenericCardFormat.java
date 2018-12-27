@@ -24,7 +24,7 @@ public class XmlGenericCardFormat<T extends Card> extends CardsExporter<T> imple
             Utils.stringToByteArray("<?xml version=\"1.0\" encoding=\"UTF-8\"?><cards>\n");
     private static final byte[] CARDS_FOOTER =
             Utils.stringToByteArray("</cards>\n");
-    private static final byte[] CARDS_SEPARATOR = new byte[] { 10 }; //  \n
+    private static final byte[] CARDS_SEPARATOR = { 10 }; //  \n
 
     private final Serializer mSerializer;
     private final Class<T> mCardClass;
