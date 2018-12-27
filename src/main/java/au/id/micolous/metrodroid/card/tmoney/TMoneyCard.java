@@ -60,7 +60,7 @@ public class TMoneyCard extends ISO7816Application {
 
     private static final byte INS_GET_BALANCE = 0x4c;
     private static final byte BALANCE_RESP_LEN = 4;
-    public static final String TYPE = "tmoney";
+    private static final String TYPE = "tmoney";
 
     @Element(name = "balance")
     private Integer mBalance;
@@ -77,7 +77,7 @@ public class TMoneyCard extends ISO7816Application {
 
     private TMoneyCard() { /* For XML Serializer */ }
 
-    public TMoneyCard(ISO7816Application.ISO7816Info appData, int balance) {
+    private TMoneyCard(ISO7816Application.ISO7816Info appData, int balance) {
         super(appData);
         mBalance = balance;
     }

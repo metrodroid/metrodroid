@@ -56,7 +56,7 @@ import au.id.micolous.metrodroid.xml.HexString;
 
 public class ChinaCard extends ISO7816Application {
     private static final String TAG = "ChinaCard";
-    public final static String TYPE = "china";
+    private final static String TYPE = "china";
 
     private static final byte INS_GET_BALANCE = 0x5c;
     private static final byte BALANCE_RESP_LEN = 4;

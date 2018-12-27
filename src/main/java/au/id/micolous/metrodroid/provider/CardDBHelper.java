@@ -30,8 +30,8 @@ import org.jetbrains.annotations.NonNls;
 import au.id.micolous.farebot.BuildConfig;
 
 public class CardDBHelper extends SQLiteOpenHelper {
-    public static final String DATABASE_NAME = "cards.db";
-    public static final int DATABASE_VERSION = 3;
+    private static final String DATABASE_NAME = "cards.db";
+    private static final int DATABASE_VERSION = 3;
 
     public static final int CARD_COLLECTION_URI_INDICATOR = 1;
     public static final int SINGLE_CARD_URI_INDICATOR = 2;

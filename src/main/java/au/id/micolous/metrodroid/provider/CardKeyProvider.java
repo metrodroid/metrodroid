@@ -39,7 +39,7 @@ public class CardKeyProvider extends BetterContentProvider {
     public static final String AUTHORITY = BuildConfig.APPLICATION_ID + ".keyprovider";
     public static final Uri CONTENT_URI = Uri.parse("content://" + AUTHORITY + "/keys");
     public static final Uri CONTENT_BY_UID_URI = Uri.withAppendedPath(CONTENT_URI, "/by-uid");
-    protected static final int KEY_BY_UID = 1000;
+    private static final int KEY_BY_UID = 1000;
 
     public CardKeyProvider() {
         super(

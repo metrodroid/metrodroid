@@ -65,7 +65,7 @@ public class CardInfoActivity extends MetrodroidActivity {
     public static final String SPEAK_BALANCE_EXTRA = "au.id.micolous.farebot.speak_balance";
 
     private static final String KEY_SELECTED_TAB = "selected_tab";
-    public static final String TAG = "CardInfoActivity";
+    private static final String TAG = "CardInfoActivity";
 
     private Card mCard;
     private TransitData mTransitData;

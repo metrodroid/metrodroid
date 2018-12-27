@@ -221,7 +221,7 @@ public class DesfireCard extends Card {
      * @param appIds An array of DESFire application IDs that are present on the card.
      * @return A CardInfo about the card, or null if we have no idea.
      */
-    static CardInfo parseEarlyCardInfo(int[] appIds) {
+    private static CardInfo parseEarlyCardInfo(int[] appIds) {
         for (DesfireCardTransitFactory f : FACTORIES)
             if (f.earlyCheck(appIds))
                 return f.getCardInfo(appIds);
