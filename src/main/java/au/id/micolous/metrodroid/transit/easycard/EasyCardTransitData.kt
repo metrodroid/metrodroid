@@ -51,7 +51,7 @@ data class EasyCardTransitData internal constructor(
 
     override fun getSerialNumber(): String? = null
 
-    override fun getTrips() = trips + listOf(refill)
+    override fun getTrips(): List<Trip>? = trips + listOf(refill)
 
     companion object {
         private val TZ = TimeZone.getTimeZone("Asia/Taipei")
