@@ -26,6 +26,7 @@ import android.content.ContentValues;
 import android.content.UriMatcher;
 import android.database.sqlite.SQLiteQueryBuilder;
 import android.net.Uri;
+import android.support.annotation.NonNull;
 
 import org.jetbrains.annotations.NonNls;
 
@@ -51,7 +52,7 @@ public class CardKeyProvider extends BetterContentProvider {
     }
 
     @Override
-    public Uri insert(Uri uri, ContentValues values) {
+    public Uri insert(@NonNull Uri uri, ContentValues values) {
         long now = GregorianCalendar.getInstance().getTimeInMillis();
         values.put(KeysTableColumns.CREATED_AT, now);
         return super.insert(uri, values);

@@ -45,14 +45,16 @@ public class PreferencesActivity extends PreferenceActivity implements Preferenc
         addPreferencesFromResource(R.xml.prefs);
 
         ActionBar actionBar = getActionBar();
-        actionBar.setDisplayHomeAsUpEnabled(true);
+        if (actionBar != null)
+            actionBar.setDisplayHomeAsUpEnabled(true);
 
         mPreferenceLaunchFromBackground
                 = (CheckBoxPreference) getPreferenceManager().findPreference("pref_launch_from_background");
         mPreferenceLaunchFromBackground.setChecked(isLaunchFromBgEnabled());
         mPreferenceLaunchFromBackground.setOnPreferenceChangeListener(this);
         mPreferenceTheme = (ListPreference) getPreferenceManager().findPreference(MetrodroidApplication.PREF_THEME);
-        mPreferenceTheme.setOnPreferenceChangeListener(this);
+        if (mPreferenceTheme != null)
+            mPreferenceTheme.setOnPreferenceChangeListener(this);
 
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.JELLY_BEAN_MR1) {
             for (String prefKey : MetrodroidApplication.PREFS_ANDROID_17) {

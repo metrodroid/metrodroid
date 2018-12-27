@@ -33,6 +33,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 import android.database.sqlite.SQLiteQueryBuilder;
 import android.net.Uri;
 import android.provider.BaseColumns;
+import android.support.annotation.NonNull;
 import android.text.TextUtils;
 
 import org.jetbrains.annotations.NonNls;
@@ -72,7 +73,7 @@ public abstract class BetterContentProvider extends ContentProvider {
     }
 
     @Override
-    public Cursor query(Uri uri, String[] projection, String selection, String[] selectionArgs,
+    public Cursor query(@NonNull Uri uri, String[] projection, String selection, String[] selectionArgs,
                         String sortOrder) {
         SQLiteQueryBuilder builder = new SQLiteQueryBuilder();
         builder.setTables(mTableName);
@@ -86,7 +87,7 @@ public abstract class BetterContentProvider extends ContentProvider {
     }
 
     @Override
-    public String getType(Uri uri) {
+    public String getType(@NonNull Uri uri) {
         switch (mUriMatcher.match(uri)) {
             case CODE_COLLECTION:
                 return mDirType;
@@ -98,7 +99,7 @@ public abstract class BetterContentProvider extends ContentProvider {
     }
 
     @Override
-    public Uri insert(Uri uri, ContentValues values) {
+    public Uri insert(@NonNull Uri uri, ContentValues values) {
         if (mUriMatcher.match(uri) != CODE_COLLECTION) {
             throw new IllegalArgumentException("Incorrect URI: " + uri);
         }
@@ -113,7 +114,7 @@ public abstract class BetterContentProvider extends ContentProvider {
     }
 
     @Override
-    public int delete(Uri uri, String selection, String[] selectionArgs) {
+    public int delete(@NonNull Uri uri, String selection, String[] selectionArgs) {
         @NonNls SQLiteDatabase db = mHelper.getWritableDatabase();
         int count = 0;
         switch (mUriMatcher.match(uri)) {
@@ -136,7 +137,7 @@ public abstract class BetterContentProvider extends ContentProvider {
     }
 
     @Override
-    public int update(Uri uri, ContentValues values, @NonNls String selection, String[] selectionArgs) {
+    public int update(@NonNull Uri uri, ContentValues values, @NonNls String selection, String[] selectionArgs) {
         @NonNls SQLiteDatabase db = mHelper.getWritableDatabase();
         int count;
         switch (mUriMatcher.match(uri)) {

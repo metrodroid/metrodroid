@@ -124,6 +124,8 @@ public class TUnionTransitData extends ChinaTransitData {
 
     private static String parseSerial(ChinaCard card) {
         byte[] file15 = getFile(card, 0x15).getBinaryData();
+        if (file15 == null)
+            return null;
         return Utils.getHexString(file15, 10, 10).substring(1);
     }
 

@@ -26,6 +26,7 @@ import android.app.Fragment;
 import android.app.FragmentTransaction;
 import android.os.Bundle;
 import android.os.Parcelable;
+import android.support.annotation.NonNull;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.view.View;
@@ -66,13 +67,14 @@ public class TabPagerAdapter extends PagerAdapter implements ActionBar.TabListen
 
     @Override
     @SuppressWarnings("deprecation")
-    public void startUpdate(View view) {
+    public void startUpdate(@NonNull View view) {
     }
 
+    @NonNull
     @SuppressLint("CommitTransaction")
     @Override
     @SuppressWarnings("deprecation")
-    public Object instantiateItem(View view, int position) {
+    public Object instantiateItem(@NonNull View view, int position) {
         TabInfo info = mTabs.get(position);
 
         if (mCurTransaction == null) {
@@ -87,7 +89,7 @@ public class TabPagerAdapter extends PagerAdapter implements ActionBar.TabListen
     @SuppressLint("CommitTransaction")
     @Override
     @SuppressWarnings("deprecation")
-    public void destroyItem(View view, int i, Object object) {
+    public void destroyItem(@NonNull View view, int i, @NonNull Object object) {
         if (mCurTransaction == null) {
             mCurTransaction = mActivity.getFragmentManager().beginTransaction();
         }
@@ -96,7 +98,7 @@ public class TabPagerAdapter extends PagerAdapter implements ActionBar.TabListen
 
     @Override
     @SuppressWarnings("deprecation")
-    public void finishUpdate(View view) {
+    public void finishUpdate(@NonNull View view) {
         if (mCurTransaction != null) {
             mCurTransaction.commitAllowingStateLoss();
             mCurTransaction = null;
@@ -105,7 +107,7 @@ public class TabPagerAdapter extends PagerAdapter implements ActionBar.TabListen
     }
 
     @Override
-    public boolean isViewFromObject(View view, Object object) {
+    public boolean isViewFromObject(@NonNull View view, @NonNull Object object) {
         return ((Fragment) object).getView() == view;
     }
 

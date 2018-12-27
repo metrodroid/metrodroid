@@ -61,8 +61,10 @@ public class WuhanTongTransitData extends ChinaTransitData {
         mSerial = parseSerial(card);
         byte[] file5 = getFile(card, 0x5).getBinaryData();
 
-        mValidityStart = Utils.byteArrayToInt(file5, 20, 4);
-        mValidityEnd = Utils.byteArrayToInt(file5, 16, 4);
+        if (file5 != null) {
+            mValidityStart = Utils.byteArrayToInt(file5, 20, 4);
+            mValidityEnd = Utils.byteArrayToInt(file5, 16, 4);
+        }
     }
 
     @Override
@@ -117,6 +119,8 @@ public class WuhanTongTransitData extends ChinaTransitData {
     private static String parseSerial(ChinaCard card) {
         ISO7816File filea = getFile(card, 0xa);
 
+        if (filea == null)
+            return null;
         return Utils.getHexString(filea.getBinaryData(), 0, 5);
     }
 }

@@ -63,8 +63,7 @@ public class MainActivity extends MetrodroidActivity {
         super.onCreate(bundle);
         setContentView(R.layout.activity_main);
 
-        ActionBar actionBar = getActionBar();
-        actionBar.setHomeButtonEnabled(false);
+        setHomeButtonEnabled(false);
 
         mNfcAdapter = NfcAdapter.getDefaultAdapter(this);
 

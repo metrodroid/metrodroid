@@ -67,8 +67,10 @@ public class NewShenzhenTransitData extends ChinaTransitData {
         mSerial = parseSerial(card);
         byte []szttag = getTagInfo(card);
 
-        mValidityStart = Utils.byteArrayToInt(szttag, 20, 4);
-        mValidityEnd = Utils.byteArrayToInt(szttag, 24, 4);
+        if (szttag != null) {
+            mValidityStart = Utils.byteArrayToInt(szttag, 20, 4);
+            mValidityEnd = Utils.byteArrayToInt(szttag, 24, 4);
+        }
     }
 
     @Override

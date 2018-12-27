@@ -60,6 +60,13 @@ public abstract class MetrodroidActivity extends Activity {
         ab.setDisplayHomeAsUpEnabled(b);
     }
 
+    protected void setHomeButtonEnabled(boolean b) {
+        ActionBar ab = getActionBar();
+        if (ab == null)
+            return;
+        ab.setHomeButtonEnabled(b);
+    }
+
     @Override
     protected void onResume() {
         super.onResume();
