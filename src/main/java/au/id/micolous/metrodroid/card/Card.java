@@ -57,6 +57,7 @@ public abstract class Card {
     // This must be protected, not private, as otherwise the XML deserialiser fails to read the
     // card.
     @SuppressWarnings("WeakerAccess")
+    @Nullable
     @Attribute(name = "label", required = false)
     private String mLabel;
     @Attribute(name = "type")
@@ -81,6 +82,20 @@ public abstract class Card {
         mScannedAt = scannedAt;
         mLabel = null;
         mPartialRead = partialRead;
+    }
+
+    @Override
+    public boolean equals(@Nullable Object obj) {
+        if (!(obj instanceof Card)) {
+            return false;
+        }
+
+        Card other = (Card)obj;
+
+        if (mPartialRead != other.mPartialRead) return false;
+        if (!Utils.equals(mLabel, other.mLabel)) return false;
+        if (!Utils.equals(mTagId, other.mTagId)) return false;
+        return Utils.equals(mType, other.mType);
     }
 
     public static Card dumpTag(ImmutableByteArray tagId, Tag tag, TagReaderFeedbackInterface feedbackInterface) throws Exception {
@@ -203,6 +218,7 @@ public abstract class Card {
         return mScannedAt;
     }
 
+    @Nullable
     public String getLabel() {
         return mLabel;
     }
@@ -230,11 +246,17 @@ public abstract class Card {
     @Nullable
     public abstract TransitData parseTransitData();
 
+    /**
+     * Gets items to display when manufacturing information is requested for the card.
+     */
     @Nullable
     public List<ListItem> getManufacturingInfo() {
         return null;
     }
 
+    /**
+     * Gets items to display when raw data is requested for the card.
+     */
     @Nullable
     public List<ListItem> getRawData() {
         return null;
