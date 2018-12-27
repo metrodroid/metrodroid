@@ -44,7 +44,6 @@ import java.util.Arrays;
 
 /**
  * FeliCa、FeliCa Liteデバイスにアクセスするためのコマンドとデータ操作をライブラリィとして提供します
- * <p>
  * <pre>
  * ※ 「FeliCa」は、ソニー株式会社が開発した非接触ICカードの技術方式です。
  * ※ 「FeliCa」、「FeliCa Lite」、「FeliCa Plug」、「FeliCaポケット」、「FeliCaランチャー」は、ソニー株式会社の登録商標です。
@@ -125,7 +124,7 @@ public final class FeliCaLib {
      * @param data 実行するコマンドパケットをセットします
      * @return byte[] コマンドの実行結果バイト列で戻ります
      * @throws TagLostException if the tag went out of the field
-     * @throws FeliCaException コマンドの発行に失敗した場合にスローされます
+     * @throws IOException if any I/O errors occur
      */
     private static byte[] transceive(Tag tag, byte[] data) throws IOException, TagLostException {
         //NfcFはFeliCa
@@ -169,7 +168,7 @@ public final class FeliCaLib {
         /**
          * Returns the system code in Big Endian
          *
-         * @return
+         * @return System code as integer
          */
         public int getCode() {
             return (this.systemCode[0] & 0xff) + ((this.systemCode[1] & 0xff) << 8);

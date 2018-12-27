@@ -105,7 +105,7 @@ public class ClassicCard extends Card {
      * you should use {@link Utils#checkKeyHash(byte[], String, String...)}, and include a hashed
      * version of the key in Metrodroid.
      *
-     * See {@link SmartRiderTransitData#detectKeyType(ClassicCard)} for an example of how to do
+     * See {@link SmartRiderTransitData#detectKeyType(List<ClassicSector>)} for an example of how to do
      * this.
      */
     private static final ClassicSectorKey[] WELL_KNOWN_KEYS = {

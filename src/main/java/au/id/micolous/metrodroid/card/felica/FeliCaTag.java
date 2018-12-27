@@ -48,7 +48,6 @@ import java.util.List;
  * FeliCa仕様に準拠した FeliCaタグクラスを提供します
  *
  * @author Kazzz
- * @date 2011/01/23
  * @since Android API Level 9
  */
 
