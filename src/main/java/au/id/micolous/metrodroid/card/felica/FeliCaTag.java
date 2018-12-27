@@ -58,20 +58,9 @@ public final class FeliCaTag {
     private byte[] pmm;
 
     public FeliCaTag(Tag nfcTag) {
-        this(nfcTag, null, null);
-    }
-
-    /**
-     * コンストラクタ
-     *
-     * @param nfcTag NFCTagへの参照をセット
-     * @param idm    FeliCa IDmをセット
-     * @param pmm    FeliCa PMmをセット
-     */
-    private FeliCaTag(Tag nfcTag, byte[] idm, byte[] pmm) {
         this.nfcTag = nfcTag;
-        this.idm = idm;
-        this.pmm = pmm;
+        this.idm = null;
+        this.pmm = null;
     }
 
     /**
@@ -139,7 +128,7 @@ public final class FeliCaTag {
      * @return SystemCode[] 検出された SystemCodeの一覧を返します。
      * @throws TagLostException if the tag went out of the field
      */
-    public final List<FeliCaLib.SystemCode> getSystemCodeList() throws IOException, TagLostException {
+    public List<FeliCaLib.SystemCode> getSystemCodeList() throws IOException, TagLostException {
         //request systemCode 
         byte[] retBytes = FeliCaLib.execute(this.nfcTag, FeliCaLib.COMMAND_REQUEST_SYSTEMCODE, idm);
 
@@ -191,7 +180,7 @@ public final class FeliCaTag {
      * @return Response部分
      * @throws TagLostException if the tag went out of the field
      */
-    protected byte[] doSearchServiceCode(int index) throws IOException, TagLostException {
+    private byte[] doSearchServiceCode(int index) throws IOException, TagLostException {
         byte[] bytes = FeliCaLib.execute(this.nfcTag, FeliCaLib.COMMAND_SEARCH_SERVICECODE, idm
                 , (byte) (index & 0xff), (byte) (index >> 8));
         if (bytes == null || bytes.length <= 0 || bytes[1] != (byte) 0x0b) { // 正常応答かどうか

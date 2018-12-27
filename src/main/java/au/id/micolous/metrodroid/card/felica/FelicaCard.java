@@ -129,8 +129,6 @@ public class FelicaCard extends Card {
             if (codes.isEmpty()) {
                 // Lite has no system code list
                 byte[] liteSystem = ft.pollingAndGetIDm(FeliCaLib.SYSTEMCODE_FELICA_LITE);
-                //noinspection StringConcatenation
-                Log.d(TAG, "Lite = " + liteSystem);
                 if (liteSystem != null) {
                     Log.d(TAG, "Detected Felica Lite card");
                     codes.add(new FeliCaLib.SystemCode(FeliCaLib.SYSTEMCODE_FELICA_LITE));
