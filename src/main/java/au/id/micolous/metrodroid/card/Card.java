@@ -73,18 +73,14 @@ public abstract class Card {
     }
 
     protected Card(CardType type, byte[] tagId, Calendar scannedAt) {
-        this(type, tagId, scannedAt, null);
+        this(type, tagId, scannedAt, false);
     }
 
-    protected Card(CardType type, byte[] tagId, Calendar scannedAt, String label) {
-        this(type, tagId, scannedAt, label, false);
-    }
-
-    protected Card(CardType type, byte[] tagId, Calendar scannedAt, String label, boolean partialRead) {
+    protected Card(CardType type, byte[] tagId, Calendar scannedAt, boolean partialRead) {
         mType = type;
         mTagId = new HexString(tagId);
         mScannedAt = scannedAt;
-        mLabel = label;
+        mLabel = null;
         mPartialRead = partialRead;
     }
 

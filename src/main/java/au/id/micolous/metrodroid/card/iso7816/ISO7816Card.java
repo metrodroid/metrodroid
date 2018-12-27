@@ -73,7 +73,7 @@ public class ISO7816Card extends Card {
     protected ISO7816Card() { /* For XML Serializer */ }
 
     public ISO7816Card(List<ISO7816Application> apps, byte[] tagId, Calendar scannedAt, boolean partialRead) {
-        super(CardType.ISO7816, tagId, scannedAt, null, partialRead);
+        super(CardType.ISO7816, tagId, scannedAt, partialRead);
         mApplications = apps;
     }
 
