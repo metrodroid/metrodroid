@@ -43,7 +43,7 @@ import au.id.micolous.farebot.R;
 import au.id.micolous.metrodroid.ui.ListItem;
 import au.id.micolous.metrodroid.ui.ListItemRecursive;
 
-public abstract class TreeListFragment extends Fragment {
+public abstract class TreeListFragment extends Fragment implements TreeNode.TreeNodeClickListener {
     private AndroidTreeView tView;
 
     public static class ListItemHolder extends TreeNode.BaseNodeViewHolder<Pair<ListItem, Integer>> {
@@ -120,6 +120,7 @@ public abstract class TreeListFragment extends Fragment {
         tView = new AndroidTreeView(activity, root);
         tView.setDefaultAnimation(true);
         tView.setDefaultViewHolder(ListItemHolder.class);
+        tView.setDefaultNodeClickListener(this);
 
         if (savedInstanceState != null) {
             String state = savedInstanceState.getString("tState");
