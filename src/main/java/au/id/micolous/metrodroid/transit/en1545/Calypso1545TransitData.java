@@ -42,10 +42,6 @@ public abstract class Calypso1545TransitData extends En1545TransitData {
     private final String mSerial;
     private final List<TransitBalance> mBalances;
 
-    protected Calypso1545TransitData(CalypsoApplication card, En1545Container ticketEnvHolderFields, En1545Field contractListFields) {
-        this(card, ticketEnvHolderFields, contractListFields, getSerial(card));
-    }
-
     protected Calypso1545TransitData(CalypsoApplication card, En1545Container ticketEnvHolderFields, En1545Field contractListFields, String serial) {
         mSerial = serial;
         byte ticketEnv[] = {};
@@ -195,30 +191,6 @@ public abstract class Calypso1545TransitData extends En1545TransitData {
     }
 
     protected abstract En1545Transaction createTrip(byte[] data);
-
-    protected static String getSerial(CalypsoApplication card) {
-        ISO7816File iccFile = card.getFile(CalypsoApplication.File.ICC);
-        if (iccFile == null) {
-            return null;
-        }
-
-        ISO7816Record iccRecord = iccFile.getRecord(1);
-
-        if (iccRecord == null) {
-            return null;
-        }
-        byte[] data = iccRecord.getData();
-
-        if (Utils.byteArrayToLong(data, 16, 4) != 0) {
-            return Long.toString(Utils.byteArrayToLong(data, 16, 4));
-        }
-
-        if (Utils.byteArrayToLong(data, 0, 4) != 0) {
-            return Long.toString(Utils.byteArrayToLong(data, 0, 4));
-        }
-
-        return null;
-    }
 
     @Nullable
     @Override
