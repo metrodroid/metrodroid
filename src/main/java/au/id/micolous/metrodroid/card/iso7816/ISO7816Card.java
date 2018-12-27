@@ -24,6 +24,7 @@ import android.nfc.TagLostException;
 import android.nfc.tech.IsoDep;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.annotation.VisibleForTesting;
 import android.util.Log;
 
 import org.simpleframework.xml.ElementList;
@@ -35,6 +36,7 @@ import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Collections;
 import java.util.GregorianCalendar;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
 
@@ -89,7 +91,7 @@ public class ISO7816Card extends Card {
      * field.
      * @throws Exception On communication errors.
      */
-    @Nullable
+    @NonNull
     public static ISO7816Card dumpTag(CardTransceiver tech, ImmutableByteArray tagId, TagReaderFeedbackInterface feedbackInterface) throws Exception {
         boolean partialRead = false;
         ArrayList<ISO7816Application> apps = new ArrayList<>();
@@ -163,6 +165,7 @@ public class ISO7816Card extends Card {
         return null;
     }
 
+    @Nullable
     @Override
     public TransitData parseTransitData() {
         for (ISO7816Application app : mApplications) {
@@ -187,6 +190,7 @@ public class ISO7816Card extends Card {
         return manufacturingInfo;
     }
 
+    @NonNull
     @Override
     public List<ListItem> getRawData() {
         List<ListItem> rawData = new ArrayList<>();
@@ -217,5 +221,27 @@ public class ISO7816Card extends Card {
 
     public List<ISO7816Application> getApplications() {
         return Collections.unmodifiableList(mApplications);
+    }
+
+    @Override
+    public boolean equals(@Nullable Object obj) {
+        if (!(obj instanceof ISO7816Card)) {
+            return false;
+        }
+
+        if (!super.equals(obj)) return false;
+        return Utils.equals(mApplications, ((ISO7816Card)obj).mApplications);
+    }
+
+    public int size() {
+        return mApplications != null ? mApplications.size() : 0;
+    }
+
+    @VisibleForTesting
+    @NonNull
+    @Override
+    public String toString() {
+        return String.format(Locale.ENGLISH, "%s: applications(%d)=%s",
+                getClass().getSimpleName(), size(), Utils.toString(mApplications));
     }
 }

@@ -21,6 +21,7 @@ package au.id.micolous.metrodroid.card.iso7816;
 
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.annotation.VisibleForTesting;
 import android.util.Log;
 
 import org.simpleframework.xml.Attribute;
@@ -32,16 +33,19 @@ import java.io.EOFException;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Objects;
 
 import au.id.micolous.metrodroid.card.TagReaderFeedbackInterface;
 import au.id.micolous.metrodroid.transit.TransitData;
 import au.id.micolous.metrodroid.transit.TransitIdentity;
 import au.id.micolous.metrodroid.ui.ListItem;
+import au.id.micolous.metrodroid.util.Utils;
 import au.id.micolous.metrodroid.xml.Base64String;
 import au.id.micolous.metrodroid.xml.ImmutableByteArray;
 
@@ -52,15 +56,38 @@ import au.id.micolous.metrodroid.xml.ImmutableByteArray;
 public class ISO7816Application {
     private static final String TAG = ISO7816Application.class.getSimpleName();
 
+    @NonNull
     @Element(name = "tagid")
     private Base64String mTagId;
 
+    @SuppressWarnings("NullableProblems") // Handled by XML serialiser
+    @NonNull
+    @VisibleForTesting
     @ElementList(name = "records", required = false, empty = false)
-    private List<ISO7816File> mFiles;
-    @ElementMap(required = false, name = "sfi-files", entry = "sfi-file", attribute = true, key = "sfi")
-    private Map<Integer, ISO7816File> mSfiFiles;
+    public List<ISO7816File> mFiles;
 
-    protected ISO7816Application() { /* For XML Serializer */ }
+    @SuppressWarnings("NullableProblems") // Handled by XML serialiser
+    @NonNull
+    @VisibleForTesting
+    @ElementMap(required = false, name = "sfi-files", entry = "sfi-file", attribute = true, key = "sfi", empty = false)
+    public Map<Integer, ISO7816File> mSfiFiles;
+
+    @Attribute(name = "type")
+    @SuppressWarnings({"FieldCanBeLocal", "unused"})
+    private String mType;
+
+    @Nullable
+    @Element(name = "application-data", required = false)
+    private Base64String mApplicationData;
+
+    @Nullable
+    @Element(name = "application-name", required = false)
+    private Base64String mApplicationName;
+
+    protected ISO7816Application() {
+        /* For XML Serializer */
+        mTagId = Base64String.Companion.empty();
+    }
 
     protected ISO7816Application(ISO7816Info info) {
         mApplicationData = info.mApplicationData == null ? null : new Base64String(info.mApplicationData);
@@ -71,20 +98,12 @@ public class ISO7816Application {
         mType = info.mType;
     }
 
-    @Attribute(name = "type")
-    @SuppressWarnings({"FieldCanBeLocal", "unused"})
-    private String mType;
-
-    @Element(name = "application-data", required = false)
-    private Base64String mApplicationData;
-
-    @Element(name = "application-name", required = false)
-    private Base64String mApplicationName;
-
+    @NonNull
     public ImmutableByteArray getTagId() {
         return mTagId;
     }
 
+    @Nullable
     public List<ListItem> getRawData() {
         return null;
     }
@@ -136,8 +155,16 @@ public class ISO7816Application {
         @NonNull
         private final Map<Integer, ISO7816File> mSfiFiles;
 
-        public ISO7816Info(byte[] applicationData, ImmutableByteArray applicationName, ImmutableByteArray tagId, String type) {
-            mApplicationData = ImmutableByteArray.Companion.fromByteArray(applicationData);
+        public ISO7816Info(
+                @Nullable byte[] applicationData,
+                @Nullable ImmutableByteArray applicationName,
+                @NonNull ImmutableByteArray tagId,
+                @NonNull String type) {
+            if (applicationData != null) {
+                mApplicationData = ImmutableByteArray.Companion.fromByteArray(applicationData);
+            } else {
+                mApplicationData = null;
+            }
             mApplicationName = applicationName;
             mTagId = tagId;
             mFiles = new ArrayList<>();
@@ -253,6 +280,7 @@ public class ISO7816Application {
         }
     }
 
+    @Nullable
     public ISO7816File getFile(ISO7816Selector sel) {
         for (ISO7816File f : mFiles) {
             if (f.getSelector().equals(sel)) {
@@ -263,9 +291,24 @@ public class ISO7816Application {
         return null;
     }
 
+    /**
+     * If the selector given is a parent of one or more {@link ISO7816File}s in this application,
+     * return true.
+     *
+     * @param sel The selector to look up.
+     */
+    public boolean pathExists(@NonNull ISO7816Selector sel) {
+        for (ISO7816File f : mFiles) {
+            if (f.getSelector().startsWith(sel)) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    @Nullable
     public ISO7816File getSfiFile(int sfi) {
-        if (mSfiFiles == null)
-            return null;
         return mSfiFiles.get(sfi);
     }
 
@@ -273,6 +316,7 @@ public class ISO7816Application {
         return null;
     }
 
+    @Nullable
     public TransitData parseTransitData() {
         return null;
     }
@@ -286,5 +330,46 @@ public class ISO7816Application {
 
     public ImmutableByteArray getAppName() {
         return mApplicationName;
+    }
+
+    @Override
+    public boolean equals(@Nullable Object obj) {
+        if (!(obj instanceof ISO7816Application)) {
+            return false;
+        }
+
+        ISO7816Application other = (ISO7816Application) obj;
+        if (!Utils.equals(mTagId, other.mTagId)) {
+            return false;
+        }
+
+        if (!mType.equals(other.mType)) {
+            return false;
+        }
+
+        if (!Utils.equals(mApplicationName, other.mApplicationName)) {
+            return false;
+        }
+
+        if (!Utils.equals(mApplicationData, other.mApplicationData)) {
+            return false;
+        }
+
+        if (!mFiles.equals(other.mFiles)) {
+            return false;
+        }
+
+        return mSfiFiles.equals(other.mSfiFiles);
+    }
+
+    @NonNull
+    @Override
+    public String toString() {
+        return String.format(Locale.ENGLISH, "<%s: tagId=%s, type=%s, appName=%s, appData=%s, files(%d)=%s, sfiFiles(%d)=%s>",
+                getClass().getSimpleName(),
+                mTagId, mType,
+                mApplicationName, mApplicationData,
+                mFiles.size(), mFiles.toString(),
+                mSfiFiles.size(), mSfiFiles.toString());
     }
 }

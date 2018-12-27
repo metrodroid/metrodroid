@@ -19,20 +19,27 @@
  */
 package au.id.micolous.metrodroid.card.iso7816;
 
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
+
 import org.simpleframework.xml.Attribute;
 import org.simpleframework.xml.Root;
 import org.simpleframework.xml.Text;
 
+import java.util.Locale;
+
+import au.id.micolous.metrodroid.util.Utils;
 import au.id.micolous.metrodroid.xml.Base64String;
 import au.id.micolous.metrodroid.xml.ImmutableByteArray;
 
 /**
- * Represents a record in a file on a Calypso card.
+ * Represents a record in a file on a ISO7816 card.
  */
 @Root(name = "record")
 public class ISO7816Record {
     @Attribute(name = "index")
     private int mIndex;
+    @Nullable
     @Text(required = false)
     private Base64String mData;
 
@@ -49,5 +56,26 @@ public class ISO7816Record {
 
     public ImmutableByteArray getData() {
         return mData;
+    }
+
+    @Override
+    public boolean equals(@Nullable Object obj) {
+        if (!(obj instanceof ISO7816Record)) {
+            return false;
+        }
+
+        ISO7816Record other = (ISO7816Record)obj;
+        if (mIndex != other.mIndex) {
+            return false;
+        }
+
+        return Utils.equals(mData, other.mData);
+    }
+
+    @NonNull
+    @Override
+    public String toString() {
+        return String.format(Locale.ENGLISH, "<%d: %s>",
+                mIndex, Utils.toString(mData));
     }
 }
