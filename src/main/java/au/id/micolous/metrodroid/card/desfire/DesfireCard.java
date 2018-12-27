@@ -105,7 +105,7 @@ public class DesfireCard extends Card {
 
     /**
      * Dumps a DESFire tag in the field.
-     * @param tag Tag to dump.
+     * @param tech Tag to dump.
      * @return DesfireCard of the card contents. Returns null if an unsupported card is in the
      *         field.
      * @throws Exception On communication errors.
