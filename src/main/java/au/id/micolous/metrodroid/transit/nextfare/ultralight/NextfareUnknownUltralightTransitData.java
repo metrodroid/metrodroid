@@ -22,19 +22,14 @@ import android.os.Parcel;
 import android.os.Parcelable;
 import android.support.annotation.NonNull;
 
-import java.util.Collections;
-import java.util.List;
 import java.util.TimeZone;
 
 import au.id.micolous.metrodroid.card.UnauthorizedException;
 import au.id.micolous.metrodroid.card.ultralight.UltralightCard;
 import au.id.micolous.metrodroid.card.ultralight.UltralightCardTransitFactory;
-import au.id.micolous.metrodroid.transit.CardInfo;
 import au.id.micolous.metrodroid.transit.TransitCurrency;
 import au.id.micolous.metrodroid.transit.TransitData;
 import au.id.micolous.metrodroid.transit.TransitIdentity;
-import au.id.micolous.metrodroid.transit.nextfare.ultralight.NextfareUltralightTransaction;
-import au.id.micolous.metrodroid.transit.nextfare.ultralight.NextfareUltralightTransitData;
 import au.id.micolous.metrodroid.util.Utils;
 
 public class NextfareUnknownUltralightTransitData extends NextfareUltralightTransitData {

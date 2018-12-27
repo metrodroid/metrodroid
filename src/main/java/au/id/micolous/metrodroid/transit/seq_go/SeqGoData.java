@@ -48,7 +48,7 @@ public final class SeqGoData {
         TICKET_TYPE_MAP.put(TICKET_TYPE_REGULAR_2011, SeqGoTicketType.REGULAR);
         TICKET_TYPE_MAP.put(TICKET_TYPE_REGULAR_2016, SeqGoTicketType.REGULAR);
         TICKET_TYPE_MAP.put(TICKET_TYPE_CONCESSION_2016, SeqGoTicketType.CONCESSION);
-    };
+    }
 
     private SeqGoData() {
     }
