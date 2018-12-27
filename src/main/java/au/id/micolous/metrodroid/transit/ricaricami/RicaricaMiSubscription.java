@@ -49,7 +49,8 @@ public class RicaricaMiSubscription extends En1545Subscription {
 
     @Override
     public Calendar getValidTo() {
-        if (getTariff() == RicaricaMiLookup.TARIFF_URBAN_2X6 && mParsed.getIntOrZero(CONTRACT_START + "Date") != 0) {
+        if (getTariff() == RicaricaMiLookup.TARIFF_URBAN_2X6
+                && mParsed.getIntOrZero(En1545FixedInteger.dateName(CONTRACT_START)) != 0) {
             Calendar end = (Calendar) mParsed.getTimeStamp(CONTRACT_START, RicaricaMiLookup.TZ).clone();
             end.add(Calendar.DAY_OF_YEAR, 6);
             return end;

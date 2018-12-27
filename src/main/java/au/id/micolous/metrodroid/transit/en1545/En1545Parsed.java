@@ -162,23 +162,36 @@ public class En1545Parsed implements Parcelable {
     }
 
     private Pair<Calendar,Integer> getTimeStampFlags(@NonNull @NonNls String name, TimeZone tz) {
-        if (contains(name + "DateTime"))
-            return Pair.create(En1545FixedInteger.parseTimeSec(getIntOrZero(name + "DateTime"), tz), 3);
-        if (contains(name + "DateTimeLocal"))
-            return Pair.create(En1545FixedInteger.parseTimeSecLocal(getIntOrZero(name + "DateTimeLocal"), tz), 3);
-        if (contains(name + "Time") && contains(name + "Date"))
-            return Pair.create(En1545FixedInteger.parseTime(getIntOrZero(name + "Date"), getIntOrZero(name + "Time"), tz),
+        if (contains(En1545FixedInteger.dateTimeName(name)))
+            return Pair.create(En1545FixedInteger.parseTimeSec(
+                    getIntOrZero(En1545FixedInteger.dateTimeName(name)), tz), 3);
+        if (contains(En1545FixedInteger.dateTimeLocalName(name)))
+            return Pair.create(En1545FixedInteger.parseTimeSecLocal(
+                    getIntOrZero(En1545FixedInteger.dateTimeLocalName(name)), tz), 3);
+        if (contains(En1545FixedInteger.timeName(name))
+                && contains(En1545FixedInteger.dateName(name)))
+            return Pair.create(En1545FixedInteger.parseTime(
+                    getIntOrZero(En1545FixedInteger.dateName(name)),
+                    getIntOrZero(En1545FixedInteger.timeName(name)), tz),
                     3);
-        if (contains(name + "TimeLocal") && contains(name + "Date"))
-            return Pair.create(En1545FixedInteger.parseTimeLocal(getIntOrZero(name + "Date"), getIntOrZero(name + "TimeLocal"), tz),
+        if (contains(En1545FixedInteger.timeLocalName(name))
+                && contains(En1545FixedInteger.dateName(name)))
+            return Pair.create(En1545FixedInteger.parseTimeLocal(
+                    getIntOrZero(En1545FixedInteger.dateName(name)),
+                    getIntOrZero(En1545FixedInteger.timeLocalName(name)), tz),
                     3);
-        if (contains(name + "TimePacked16") && contains(name + "Date"))
-            return Pair.create(En1545FixedInteger.parseTimePacked16(getIntOrZero(name + "Date"), getIntOrZero(name + "TimePacked16"), tz),
+        if (contains(En1545FixedInteger.timePacked16Name(name))
+                && contains(En1545FixedInteger.dateName(name)))
+            return Pair.create(En1545FixedInteger.parseTimePacked16(
+                    getIntOrZero(En1545FixedInteger.dateName(name)),
+                    getIntOrZero(En1545FixedInteger.timePacked16Name(name)), tz),
                     3);
-        if (contains(name + "Date"))
-            return Pair.create(En1545FixedInteger.parseDate(getIntOrZero(name + "Date"), tz), 2);
-        if (contains(name + "TimeLocal"))
-            return Pair.create(En1545FixedInteger.parseTimeLocal(0, getIntOrZero(name + "TimeLocal"), tz),
+        if (contains(En1545FixedInteger.dateName(name)))
+            return Pair.create(En1545FixedInteger.parseDate(
+                    getIntOrZero(En1545FixedInteger.dateName(name)), tz), 2);
+        if (contains(En1545FixedInteger.timeLocalName(name)))
+            return Pair.create(En1545FixedInteger.parseTimeLocal(0,
+                    getIntOrZero(En1545FixedInteger.timeLocalName(name)), tz),
                     1);
         return null;
     }
@@ -192,17 +205,10 @@ public class En1545Parsed implements Parcelable {
     }
 
     boolean getTimeStampContainsTime(@NonNull @NonNls String name) {
-        if (contains(name + "DateTime"))
-            return true;
-        if (contains(name + "Time") && contains(name + "Date"))
-            return true;
-        if (contains(name + "TimeLocal") && contains(name + "Date"))
-            return true;
-        if (contains(name + "Date"))
+        Pair<Calendar,Integer> timeFlag = getTimeStampFlags(name, Utils.UTC);
+        if (timeFlag == null)
             return false;
-        if (contains(name + "TimeLocal"))
-            return true;
-        return false;
+        return (timeFlag.second & 1) == 1;
     }
 
     @Nullable

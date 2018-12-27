@@ -84,7 +84,7 @@ abstract public class En1545TransitData extends TransitData {
         if (mTicketEnvParsed.contains(ENV_NETWORK_ID))
             li.add(new ListItem(R.string.en1545_network_id,
                     Integer.toHexString(mTicketEnvParsed.getIntOrZero(ENV_NETWORK_ID))));
-        if (mTicketEnvParsed.getIntOrZero(ENV_APPLICATION_VALIDITY_END + "Date") != 0)
+        if (mTicketEnvParsed.getIntOrZero(En1545FixedInteger.dateName(ENV_APPLICATION_VALIDITY_END)) != 0)
             li.add(new ListItem(R.string.expiry_date,
                     mTicketEnvParsed.getTimeStampString(ENV_APPLICATION_VALIDITY_END, tz)));
         if (mTicketEnvParsed.getIntOrZero(HOLDER_BIRTH_DATE) != 0)
@@ -94,10 +94,10 @@ abstract public class En1545TransitData extends TransitData {
         if (mTicketEnvParsed.getIntOrZero(ENV_APPLICATION_ISSUER_ID) != 0)
             li.add(new ListItem(R.string.card_issuer,
                     getLookup().getAgencyName(mTicketEnvParsed.getIntOrZero(ENV_APPLICATION_ISSUER_ID), false)));
-        if (mTicketEnvParsed.getIntOrZero(ENV_APPLICATION_ISSUE + "Date") != 0)
+        if (mTicketEnvParsed.getIntOrZero(En1545FixedInteger.dateName(ENV_APPLICATION_ISSUE)) != 0)
             li.add(new ListItem(R.string.issue_date, mTicketEnvParsed.getTimeStampString(ENV_APPLICATION_ISSUE, tz)));
 
-        if (mTicketEnvParsed.getIntOrZero(HOLDER_PROFILE + "Date") != 0)
+        if (mTicketEnvParsed.getIntOrZero(En1545FixedInteger.dateName(HOLDER_PROFILE)) != 0)
             li.add(new ListItem(R.string.en1545_card_expiry_date_profile, mTicketEnvParsed.getTimeStampString(HOLDER_PROFILE, tz)));
 
         if (mTicketEnvParsed.getIntOrZero(HOLDER_POSTAL_CODE) != 0)
