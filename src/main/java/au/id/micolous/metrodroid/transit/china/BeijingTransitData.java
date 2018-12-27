@@ -57,7 +57,7 @@ public class BeijingTransitData extends ChinaTransitData {
         }
     };
 
-    public BeijingTransitData(ChinaCard card) {
+    private BeijingTransitData(ChinaCard card) {
         super(card);
         mSerial = parseSerial(card);
         byte []info = getFile(card, FILE_INFO).getBinaryData();

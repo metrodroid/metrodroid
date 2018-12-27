@@ -79,12 +79,11 @@ public class MykiTransitData extends SerialOnlyTransitData {
         }
     };
 
-    @SuppressWarnings("UnusedDeclaration")
-    public MykiTransitData(Parcel parcel) {
+    private MykiTransitData(Parcel parcel) {
         mSerial = parcel.readString();
     }
 
-    public MykiTransitData(DesfireCard desfireCard) {
+    private MykiTransitData(DesfireCard desfireCard) {
         byte[] metadata = desfireCard.getApplication(APP_ID_1).getFile(15).getData();
 
         try {

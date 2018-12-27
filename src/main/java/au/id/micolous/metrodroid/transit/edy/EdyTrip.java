@@ -66,7 +66,7 @@ public class EdyTrip extends Trip {
         mBalance = Utils.byteArrayToInt(data, 12, 4);
     }
 
-    public EdyTrip(Parcel parcel) {
+    private EdyTrip(Parcel parcel) {
         mProcessType = parcel.readInt();
         mSequenceNumber = parcel.readInt();
         long t = parcel.readLong();

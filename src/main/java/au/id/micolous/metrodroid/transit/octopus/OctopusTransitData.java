@@ -81,7 +81,7 @@ public class OctopusTransitData extends TransitData {
     private boolean mHasOctopus = false;
     private boolean mHasShenzhen = false;
 
-    public OctopusTransitData(FelicaCard card) {
+    private OctopusTransitData(FelicaCard card) {
         FelicaService service = null;
         try {
             service = card.getSystem(SYSTEMCODE_OCTOPUS).getService(SERVICE_OCTOPUS);
@@ -107,7 +107,7 @@ public class OctopusTransitData extends TransitData {
         }
     }
 
-    public OctopusTransitData(Parcel parcel) {
+    private OctopusTransitData(Parcel parcel) {
         mOctopusBalance = parcel.readInt();
         mShenzhenBalance = parcel.readInt();
         mHasOctopus = parcel.readInt() == 1;

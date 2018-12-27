@@ -115,7 +115,7 @@ public class HSLTransitData extends TransitData implements Parcelable {
         put(16L, "Tram");
     }});*/
 
-    public HSLTransitData(Parcel parcel) {
+    private HSLTransitData(Parcel parcel) {
         mSerialNumber = parcel.readString();
         mBalance = parcel.readInt();
         mArvoMystery1 = parcel.readLong();

@@ -166,7 +166,7 @@ public class LeapTransitData extends TransitData {
         return BLOCK_SIZE;
     }
 
-    public LeapTransitData(DesfireCard card) {
+    private LeapTransitData(DesfireCard card) {
         DesfireApplication app = card.getApplication(APP_ID);
         if (app.getFile(2) instanceof UnauthorizedDesfireFile) {
             mLocked = true;

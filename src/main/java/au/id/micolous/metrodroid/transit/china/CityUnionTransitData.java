@@ -57,7 +57,7 @@ public class CityUnionTransitData extends ChinaTransitData {
         }
     };
 
-    public CityUnionTransitData(ChinaCard card) {
+    private CityUnionTransitData(ChinaCard card) {
         super(card);
         mSerial = parseSerial(card);
         byte[] file15 = getFile(card, 0x15).getBinaryData();

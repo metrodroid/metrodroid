@@ -50,7 +50,7 @@ public class SeqGoRefill extends NextfareTrip {
         mAutomatic = topup.getAutomatic();
     }
 
-    public SeqGoRefill(Parcel parcel) {
+    private SeqGoRefill(Parcel parcel) {
         super(parcel);
         mAutomatic = parcel.readInt() == 1;
     }

@@ -41,13 +41,14 @@ public class SeqGoTrip extends NextfareTrip {
 
     /* Hard coded station IDs for Airtrain; used in tests */
     public static final int DOMESTIC_AIRPORT = 9;
+    @SuppressWarnings("WeakerAccess")
     public static final int INTERNATIONAL_AIRPORT = 10;
 
     public SeqGoTrip() {
         super("AUD", SeqGoData.SEQ_GO_STR);
     }
 
-    public SeqGoTrip(Parcel in) {
+    private SeqGoTrip(Parcel in) {
         super(in);
     }
 

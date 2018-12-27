@@ -53,7 +53,7 @@ public class KievTransitData extends TransitData {
             .setPreview()
             .build();
 
-    public KievTransitData(ClassicCard card) {
+    private KievTransitData(ClassicCard card) {
         mSerial = getSerial(card);
         mTrips = new ArrayList<>();
         for (int i = 0; i < 6; i++) {

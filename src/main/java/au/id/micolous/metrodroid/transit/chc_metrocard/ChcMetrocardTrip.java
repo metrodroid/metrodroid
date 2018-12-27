@@ -38,7 +38,7 @@ public class ChcMetrocardTrip extends ErgTrip {
         }
     };
 
-    public ChcMetrocardTrip(Parcel parcel) {
+    private ChcMetrocardTrip(Parcel parcel) {
         super(parcel);
     }
 

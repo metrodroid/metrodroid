@@ -108,8 +108,7 @@ public class OpalTransitData extends TransitData {
     private final int mTransactionNumber;
     private final int mLastDigit;
 
-    @SuppressWarnings("UnusedDeclaration")
-    public OpalTransitData(Parcel parcel) {
+    private OpalTransitData(Parcel parcel) {
         mSerialNumber = parcel.readInt();
         mBalance = parcel.readInt();
         mChecksum = parcel.readInt();

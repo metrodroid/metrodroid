@@ -78,7 +78,7 @@ public class OrcaTransitData extends TransitData {
     };
 
 
-    public OrcaTransitData(Parcel parcel) {
+    private OrcaTransitData(Parcel parcel) {
         mSerialNumber = parcel.readInt();
         mBalance = parcel.readInt();
 

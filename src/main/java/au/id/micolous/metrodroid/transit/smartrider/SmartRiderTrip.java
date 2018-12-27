@@ -12,7 +12,7 @@ class SmartRiderTrip extends TransactionTrip {
         super(el);
     }
 
-    protected SmartRiderTrip(Parcel in) {
+    private SmartRiderTrip(Parcel in) {
         super(in);
     }
 

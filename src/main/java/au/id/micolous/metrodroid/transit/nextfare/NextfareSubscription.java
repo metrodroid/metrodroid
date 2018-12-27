@@ -56,7 +56,7 @@ public class NextfareSubscription extends Subscription implements Parcelable {
         // TODO: Figure out subscription types
     }
 
-    protected NextfareSubscription(Parcel in) {
+    private NextfareSubscription(Parcel in) {
         mValidTo = GregorianCalendar.getInstance();
         mValidTo.setTimeInMillis(in.readLong());
     }

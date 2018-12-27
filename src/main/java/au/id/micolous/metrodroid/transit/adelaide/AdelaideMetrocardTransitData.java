@@ -76,7 +76,7 @@ public class AdelaideMetrocardTransitData extends En1545TransitData {
 
     private final long mSerial;
 
-    public AdelaideMetrocardTransitData(DesfireCard card) {
+    private AdelaideMetrocardTransitData(DesfireCard card) {
         mSerial = getSerial(card.getTagId());
         DesfireApplication app = card.getApplication(APP_ID);
 

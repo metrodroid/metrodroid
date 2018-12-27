@@ -42,7 +42,7 @@ public class HSLRefill extends Trip implements Parcelable {
         mRefillAmount = Utils.getBitsFromBuffer(data, 45, 20);
     }
 
-    public HSLRefill(Parcel parcel) {
+    private HSLRefill(Parcel parcel) {
         mRefillTime = Utils.unparcelCalendar(parcel);
         mRefillAmount = parcel.readInt();
     }

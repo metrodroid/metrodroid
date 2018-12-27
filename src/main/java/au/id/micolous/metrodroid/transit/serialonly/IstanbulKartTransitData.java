@@ -74,13 +74,12 @@ public class IstanbulKartTransitData extends SerialOnlyTransitData {
         }
     };
 
-    @SuppressWarnings("UnusedDeclaration")
-    public IstanbulKartTransitData(Parcel parcel) {
+    private IstanbulKartTransitData(Parcel parcel) {
         mSerial = parcel.readString();
         mSerial2 = parcel.readString();
     }
 
-    public IstanbulKartTransitData(DesfireCard card) {
+    private IstanbulKartTransitData(DesfireCard card) {
         byte[] metadata = card.getApplication(APP_ID).getFile(2).getData();
 
         try {

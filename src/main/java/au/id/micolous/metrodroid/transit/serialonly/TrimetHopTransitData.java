@@ -86,7 +86,7 @@ public class TrimetHopTransitData extends SerialOnlyTransitData {
         mIssueDate = parcel.readInt();
     }
 
-    public TrimetHopTransitData(DesfireCard card) {
+    private TrimetHopTransitData(DesfireCard card) {
         try {
             DesfireApplication app = card.getApplication(APP_ID);
 	        byte[] file1 = app.getFile(1).getData();

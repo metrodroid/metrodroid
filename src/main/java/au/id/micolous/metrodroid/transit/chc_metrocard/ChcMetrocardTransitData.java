@@ -74,11 +74,11 @@ public class ChcMetrocardTransitData extends ErgTransitData {
         }
     };
 
-    public ChcMetrocardTransitData(Parcel parcel) {
+    private ChcMetrocardTransitData(Parcel parcel) {
         super(parcel);
     }
 
-    public ChcMetrocardTransitData(ClassicCard card) {
+    private ChcMetrocardTransitData(ClassicCard card) {
         super(card, CURRENCY);
     }
 

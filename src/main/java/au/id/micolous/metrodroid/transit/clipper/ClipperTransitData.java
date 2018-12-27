@@ -101,7 +101,7 @@ public class ClipperTransitData extends TransitData {
     private final ClipperTrip[] mTrips;
     private final ClipperRefill[] mRefills;
 
-    public ClipperTransitData(Parcel parcel) {
+    private ClipperTransitData(Parcel parcel) {
         mSerialNumber = parcel.readLong();
         mBalance = parcel.readInt();
         mExpiry = parcel.readInt();

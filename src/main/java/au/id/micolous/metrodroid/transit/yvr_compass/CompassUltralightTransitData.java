@@ -119,7 +119,7 @@ public class CompassUltralightTransitData extends NextfareUltralightTransitData 
         super(p);
     }
 
-    public CompassUltralightTransitData(UltralightCard card) {
+    private CompassUltralightTransitData(UltralightCard card) {
         super(card);
     }
 

@@ -116,7 +116,7 @@ public class VentraUltralightTransitData extends NextfareUltralightTransitData {
         super(p);
     }
 
-    public VentraUltralightTransitData(UltralightCard card) {
+    private VentraUltralightTransitData(UltralightCard card) {
         super(card);
     }
 

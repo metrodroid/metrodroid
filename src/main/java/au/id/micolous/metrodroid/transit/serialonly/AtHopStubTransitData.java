@@ -53,11 +53,11 @@ public class AtHopStubTransitData extends SerialOnlyTransitData {
 
     private final int mSerial;
 
-    public AtHopStubTransitData(DesfireCard card) {
+    private AtHopStubTransitData(DesfireCard card) {
         mSerial = getSerial(card);
     }
 
-    protected AtHopStubTransitData(Parcel in) {
+    private AtHopStubTransitData(Parcel in) {
         mSerial = in.readInt();
     }
 

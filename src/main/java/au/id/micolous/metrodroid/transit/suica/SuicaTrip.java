@@ -136,7 +136,7 @@ public class SuicaTrip extends Trip {
         }
     }
 
-    public SuicaTrip(Parcel parcel) {
+    private SuicaTrip(Parcel parcel) {
         mBalance = parcel.readInt();
 
         mConsoleType = parcel.readInt();

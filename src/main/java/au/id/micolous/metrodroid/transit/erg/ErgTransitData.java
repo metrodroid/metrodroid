@@ -79,7 +79,7 @@ public class ErgTransitData extends TransitData {
     };
     private final String mCurrency;
 
-    public ErgTransitData(Parcel parcel) {
+    protected ErgTransitData(Parcel parcel) {
         mSerialNumber = parcel.readString();
         mEpochDate = new GregorianCalendar();
         mEpochDate.setTimeInMillis(parcel.readLong());
@@ -93,7 +93,7 @@ public class ErgTransitData extends TransitData {
     }
 
     // Decoder
-    public ErgTransitData(ClassicCard card, String currency) {
+    protected ErgTransitData(ClassicCard card, String currency) {
         List<ErgRecord> records = new ArrayList<>();
 
         mCurrency = currency;

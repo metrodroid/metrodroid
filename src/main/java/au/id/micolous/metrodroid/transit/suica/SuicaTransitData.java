@@ -91,12 +91,12 @@ public class SuicaTransitData extends TransitData {
 
     private final List<SuicaTrip> mTrips;
 
-    public SuicaTransitData(Parcel parcel) {
+    private SuicaTransitData(Parcel parcel) {
         mTrips = new ArrayList<>();
         parcel.readTypedList(mTrips, SuicaTrip.CREATOR);
     }
 
-    public SuicaTransitData(FelicaCard card) {
+    private SuicaTransitData(FelicaCard card) {
         FelicaService service = card.getSystem(SYSTEMCODE_SUICA).getService(SERVICE_SUICA_HISTORY);
         FelicaService tapService = card.getSystem(SYSTEMCODE_SUICA).getService(SERVICE_SUICA_INOUT);
 

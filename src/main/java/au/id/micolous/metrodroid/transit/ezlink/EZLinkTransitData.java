@@ -102,7 +102,7 @@ public class EZLinkTransitData extends TransitData {
     private final int mBalance;
     private final List<EZLinkTrip> mTrips;
 
-    public EZLinkTransitData(Parcel parcel) {
+    private EZLinkTransitData(Parcel parcel) {
         mSerialNumber = parcel.readString();
         mBalance = parcel.readInt();
 

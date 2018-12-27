@@ -109,8 +109,7 @@ public class TMoneyTransitData extends TransitData {
         return mTrips;
     }
 
-    @SuppressWarnings("UnusedDeclaration")
-    public TMoneyTransitData(Parcel p) {
+    private TMoneyTransitData(Parcel p) {
         mSerialNumber = p.readString();
         mBalance = p.readInt();
         mDate = p.readString();
