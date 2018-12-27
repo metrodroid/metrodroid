@@ -317,7 +317,7 @@ public class CalypsoApplication extends ISO7816Application {
          AID(0x04, ISO7816Selector.makeSelector(0x3F04)), // SFI empirical
          ICC(0x02, ISO7816Selector.makeSelector(0x0002)), // SFI empirical
          ID(0x03, ISO7816Selector.makeSelector(0x0003)), // SFI empirical
-         HOLDER_EXTENDED(0x3F1C),
+         HOLDER_EXTENDED(ISO7816Selector.makeSelector(0x3F1C)),
          DISPLAY(0x05, ISO7816Selector.makeSelector(0x2F10)), // SFI empirical
 
          TICKETING_HOLDER(0x2000, 0x2002),
@@ -371,10 +371,6 @@ public class CalypsoApplication extends ISO7816Application {
 
          private final ISO7816Selector mSelector;
          private final int mSfi;
-
-         File(int file) {
-             this(-1, ISO7816Selector.makeSelector(file));
-         }
 
          File(int folder, int file) {
              this(-1, ISO7816Selector.makeSelector(folder, file));
