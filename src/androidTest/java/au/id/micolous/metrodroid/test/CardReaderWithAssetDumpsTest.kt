@@ -29,7 +29,6 @@ abstract class CardReaderWithAssetDumpsTest<TD : TransitData, C : Card>(
     fun parseCard(c: C): TD {
         val d = c.parseTransitData()
         assertNotNull("Transit data not parsed", d)
-        assertTrue(transitDataClass.isInstance(d))
         return transitDataClass.cast(d)!!
     }
 
