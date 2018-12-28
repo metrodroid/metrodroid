@@ -23,7 +23,6 @@ import android.os.Parcel;
 import android.os.Parcelable;
 import android.util.Log;
 
-import au.id.micolous.metrodroid.transit.nextfare.NextfareUtil;
 import au.id.micolous.metrodroid.util.Utils;
 
 import java.util.Calendar;
@@ -74,7 +73,7 @@ public class NextfareTopupRecord extends NextfareRecord implements Parcelable {
 
         NextfareTopupRecord record = new NextfareTopupRecord();
 
-        record.mTimestamp = NextfareUtil.unpackDate(input, 2, timeZone);
+        record.mTimestamp = unpackDate(input, 2, timeZone);
         record.mCredit = Utils.byteArrayToIntReversed(input, 6, 2) & 0x7FFF;
         record.mStation = Utils.byteArrayToIntReversed(input, 12, 2);
         record.mChecksum = Utils.byteArrayToIntReversed(input, 14, 2);

@@ -23,7 +23,6 @@ import android.os.Parcelable;
 import android.support.annotation.NonNull;
 import android.util.Log;
 
-import au.id.micolous.metrodroid.transit.nextfare.NextfareUtil;
 import au.id.micolous.metrodroid.util.Utils;
 
 import java.util.Calendar;
@@ -73,9 +72,9 @@ public class NextfareTravelPassRecord extends NextfareRecord implements Parcelab
         }
 
         NextfareTravelPassRecord record = new NextfareTravelPassRecord(
-        Utils.byteArrayToInt(input, 13, 1),
-        NextfareUtil.unpackDate(input, 2, timeZone),
-        Utils.byteArrayToIntReversed(input, 14, 2));
+            Utils.byteArrayToInt(input, 13, 1),
+            unpackDate(input, 2, timeZone),
+            Utils.byteArrayToIntReversed(input, 14, 2));
 
         //noinspection StringConcatenation
         Log.d(TAG, "@" + Utils.isoDateTimeFormat(record.mExpiry) + ": version " + record.mVersion);

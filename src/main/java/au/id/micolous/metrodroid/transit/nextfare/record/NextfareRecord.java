@@ -21,6 +21,9 @@ package au.id.micolous.metrodroid.transit.nextfare.record;
 
 import android.util.Log;
 
+import java.util.Calendar;
+import java.util.GregorianCalendar;
+import java.util.Locale;
 import java.util.TimeZone;
 
 import au.id.micolous.metrodroid.util.Utils;
@@ -60,4 +63,54 @@ public class NextfareRecord {
         return record;
     }
 
+    /**
+     * Date format:
+     * <p>
+     * Top two bytes:
+     * 0001111 1100 00100 = 2015-12-04
+     * yyyyyyy mmmm ddddd
+     * <p>
+     * Bottom 11 bits = minutes since 00:00
+     * Time is represented in localtime
+     * <p>
+     * Assumes that data has not been byte-reversed.
+     *
+     * @param input Bytes of input representing the timestamp to parse
+     * @param offset Offset in byte to timestamp
+     * @return Date and time represented by that value
+     */
+    public static GregorianCalendar unpackDate(byte[] input, int offset, TimeZone timeZone) {
+        int timestamp = Utils.byteArrayToIntReversed(input, offset, 4);
+        int minute = Utils.getBitsFromInteger(timestamp, 16, 11);
+        int year = Utils.getBitsFromInteger(timestamp, 9, 7) + 2000;
+        int month = Utils.getBitsFromInteger(timestamp, 5, 4);
+        int day = Utils.getBitsFromInteger(timestamp, 0, 5);
+
+        //noinspection StringConcatenation,MagicCharacter
+        Log.i(TAG, "unpackDate: " + minute + " minutes, " + year + '-' + month + '-' + day);
+
+        if (minute > 1440)
+            throw new AssertionError(String.format(Locale.ENGLISH, "Minute > 1440 (%d)", minute));
+        if (minute < 0)
+            throw new AssertionError(String.format(Locale.ENGLISH, "Minute < 0 (%d)", minute));
+
+        if (day > 31) throw new AssertionError(String.format(Locale.ENGLISH, "Day > 31 (%d)", day));
+        if (month > 12)
+            throw new AssertionError(String.format(Locale.ENGLISH, "Month > 12 (%d)", month));
+
+        GregorianCalendar d = new GregorianCalendar(timeZone);
+        d.set(Calendar.YEAR, year);
+        d.set(Calendar.MONTH, month - 1);
+        d.set(Calendar.DAY_OF_MONTH, day);
+
+        // Needs to be set explicitly, as this defaults to localtime.
+        d.set(Calendar.HOUR_OF_DAY, 0);
+        d.set(Calendar.MINUTE, 0);
+        d.set(Calendar.SECOND, 0);
+        d.set(Calendar.MILLISECOND, 0);
+
+        d.add(Calendar.MINUTE, minute);
+
+        return d;
+    }
 }

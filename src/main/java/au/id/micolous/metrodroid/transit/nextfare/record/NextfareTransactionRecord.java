@@ -24,7 +24,6 @@ import android.os.Parcelable;
 import android.support.annotation.NonNull;
 import android.util.Log;
 
-import au.id.micolous.metrodroid.transit.nextfare.NextfareUtil;
 import au.id.micolous.metrodroid.util.Utils;
 
 import java.util.Calendar;
@@ -101,7 +100,7 @@ public class NextfareTransactionRecord extends NextfareRecord implements Parcela
 
         int mode = Utils.byteArrayToInt(input, 1, 1);
 
-        Calendar timestamp = NextfareUtil.unpackDate(input, 2, timeZone);
+        Calendar timestamp = unpackDate(input, 2, timeZone);
         int journey = Utils.byteArrayToIntReversed(input, 5, 2) >> 5;
 
         boolean continuation = (Utils.byteArrayToIntReversed(input, 5, 2) & 0x10) > 1;

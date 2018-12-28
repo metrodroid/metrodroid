@@ -22,7 +22,6 @@ import android.os.Parcel;
 import android.os.Parcelable;
 import android.util.Log;
 
-import au.id.micolous.metrodroid.transit.nextfare.NextfareUtil;
 import au.id.micolous.metrodroid.util.Utils;
 
 import java.util.Calendar;
@@ -63,7 +62,7 @@ public class NextfareConfigRecord extends NextfareRecord implements Parcelable {
         NextfareConfigRecord record = new NextfareConfigRecord();
 
         // Expiry date
-        record.mExpiry = NextfareUtil.unpackDate(input, 4, timeZone);
+        record.mExpiry = unpackDate(input, 4, timeZone);
 
         // Treat ticket type as little-endian
         record.mTicketType = Utils.byteArrayToIntReversed(input, 8, 2);
