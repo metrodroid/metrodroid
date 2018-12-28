@@ -136,7 +136,6 @@ public class PodorozhnikTransitData extends TransitData {
         dest.writeInt(mCountersValid ? 1 : 0);
     }
 
-    @SuppressWarnings("UnusedDeclaration")
     public PodorozhnikTransitData(Parcel p) {
         mBalance = p.readInt();
     	mLastTopup = p.readInt();

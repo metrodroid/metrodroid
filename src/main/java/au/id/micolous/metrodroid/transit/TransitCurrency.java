@@ -118,6 +118,7 @@ public class TransitCurrency extends TransitBalance implements Parcelable {
      * @param divisor Value to divide by to get that currency's value in non-fractional parts.
      *                {@see #mDivisor}
      */
+    @SuppressWarnings({"MagicCharacter", "CharacterComparison"})
     @VisibleForTesting
     public TransitCurrency(int currency, @NonNull String currencyCode, int divisor) {
         if (currencyCode.length() != 3) {

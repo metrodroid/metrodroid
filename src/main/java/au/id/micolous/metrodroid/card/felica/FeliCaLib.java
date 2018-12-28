@@ -57,6 +57,7 @@ import java.util.Arrays;
  * @since Android API Level 10
  */
 
+@SuppressWarnings("DuplicateThrows")
 public final class FeliCaLib {
     //polling
     public static final byte COMMAND_POLLING = 0x00;
@@ -224,6 +225,7 @@ public final class FeliCaLib {
          *
          * @param response 他のレスポンスをセット
          */
+        @SuppressWarnings("CopyConstructorMissesField")
         CommandResponse(CommandResponse response) {
             this(response != null ? response.getBytes() : null);
         }

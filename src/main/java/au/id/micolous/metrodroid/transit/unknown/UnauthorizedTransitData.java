@@ -25,6 +25,7 @@ import au.id.micolous.metrodroid.transit.TransitData;
 /**
  * Base class for all types of cards where we are unable to read any useful data (without a key).
  */
+@SuppressWarnings("NoopMethodInAbstractClass")
 public abstract class UnauthorizedTransitData extends TransitData {
 
     @Override

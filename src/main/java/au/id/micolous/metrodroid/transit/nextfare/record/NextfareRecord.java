@@ -41,7 +41,6 @@ public class NextfareRecord {
 
     public static NextfareRecord recordFromBytes(byte[] input, int sectorIndex, int blockIndex, TimeZone timeZone) {
         NextfareRecord record = null;
-        //noinspection StringConcatenation
         Log.d(TAG, "Record: " + Utils.getHexString(input));
 
         if (sectorIndex == 1 && blockIndex <= 1) {

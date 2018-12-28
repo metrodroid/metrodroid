@@ -64,8 +64,6 @@ public final class CardInfo {
         allFactories.addAll(UltralightCard.getAllFactories());
         allFactories.addAll(ChinaCard.getAllFactories());
         for (CardTransitFactory<?> factory : allFactories) {
-            // Not relevant, as getAllCards has no generic parameter or return
-            //noinspection unchecked
             ret.addAll(factory.getAllCards());
         }
         ret.add(TMoneyTransitData.CARD_INFO);

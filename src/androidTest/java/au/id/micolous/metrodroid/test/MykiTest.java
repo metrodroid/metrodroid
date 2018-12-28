@@ -37,6 +37,7 @@ import static junit.framework.TestCase.assertTrue;
 
 @RunWith(JUnit4.class)
 public class MykiTest  {
+    @SuppressWarnings("SameParameterValue")
     private DesfireCard constructMykiCardFromHexString(String s) {
         byte[] demoData = Utils.hexStringToByteArray(s);
 

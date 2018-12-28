@@ -79,7 +79,6 @@ public class MykiTransitData extends SerialOnlyTransitData {
         }
     };
 
-    @SuppressWarnings("UnusedDeclaration")
     public MykiTransitData(Parcel parcel) {
         mSerial = parcel.readString();
     }

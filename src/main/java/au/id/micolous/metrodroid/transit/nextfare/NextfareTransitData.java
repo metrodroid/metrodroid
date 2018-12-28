@@ -117,10 +117,8 @@ public class NextfareTransitData extends TransitData {
 
         byte[] magicData = card.getSector(0).getBlock(1).getData();
         mSystemCode = Arrays.copyOfRange(magicData, 9, 15);
-        //noinspection StringConcatenation
         Log.d(TAG, "SystemCode = " + Utils.getHexString(mSystemCode));
         mBlock2 = card.getSector(0).getBlock(2).getData();
-        //noinspection StringConcatenation
         Log.d(TAG, "Block2 = " + Utils.getHexString(mBlock2));
 
         List<NextfareRecord> records = new ArrayList<>();

@@ -55,6 +55,7 @@ public class CEPASTransaction implements Parcelable {
 
         byte[] userData = new byte[9];
         System.arraycopy(rawData, 8, userData, 0, 8);
+        //noinspection MagicCharacter
         userData[8] = '\0';
         mUserData = new String(userData, Utils.getASCII());
     }
@@ -74,7 +75,6 @@ public class CEPASTransaction implements Parcelable {
         return mAmount;
     }
 
-    @SuppressWarnings("deprecation")
     public Calendar getTimestamp() {
         return mDate;
     }

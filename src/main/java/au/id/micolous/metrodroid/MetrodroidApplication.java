@@ -126,6 +126,7 @@ public class MetrodroidApplication extends Application {
 
     private boolean mMifareClassicSupport = false;
 
+    @SuppressWarnings({"AssignmentToStaticFieldFromInstanceMethod", "ThisEscapedInObjectConstruction"})
     public MetrodroidApplication() {
         sInstance = this;
 
@@ -159,6 +160,7 @@ public class MetrodroidApplication extends Application {
         }
     }
 
+    @SuppressWarnings("StaticVariableUsedBeforeInitialization")
     public static MetrodroidApplication getInstance() {
         return sInstance;
     }
@@ -176,6 +178,7 @@ public class MetrodroidApplication extends Application {
 
 
 
+    @SuppressWarnings("SameParameterValue")
     protected static boolean getBooleanPref(String preference, boolean default_setting) {
         return getSharedPreferences().getBoolean(preference, default_setting);
     }
@@ -314,6 +317,7 @@ public class MetrodroidApplication extends Application {
         return v;
     }
 
+    @SuppressWarnings("SameParameterValue")
     protected static int getIntPreference(@NonNull String preference, int defaultValue) {
         return getSharedPreferences().getInt(preference, defaultValue);
     }

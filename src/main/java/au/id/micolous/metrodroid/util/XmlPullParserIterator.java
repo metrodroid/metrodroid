@@ -87,6 +87,7 @@ public class XmlPullParserIterator implements Iterator<String> {
     }
 
 
+    @SuppressWarnings("CallToSuspiciousStringMethod")
     private boolean prepareMore() throws IOException, XmlPullParserException {
         int eventType = mxpp.getEventType();
         while (eventType != XmlPullParser.END_DOCUMENT) {

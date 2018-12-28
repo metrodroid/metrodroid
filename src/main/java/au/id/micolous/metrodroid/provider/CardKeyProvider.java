@@ -65,6 +65,7 @@ public class CardKeyProvider extends BetterContentProvider {
         return matcher;
     }
 
+    @SuppressWarnings({"MagicCharacter", "CharacterComparison"})
     private String sanitize(String val) {
         StringBuilder ret = new StringBuilder();
         for (int i = 0; i < val.length(); i++) {

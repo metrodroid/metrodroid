@@ -22,7 +22,6 @@ import static junit.framework.TestCase.assertTrue;
 /**
  * Tests StationTableReader (MdST). This uses the SEQ Go stop database.
  */
-@SuppressWarnings("FieldCanBeLocal")
 public class StationTableReaderTest extends BaseInstrumentedTest {
     @Test
     public void testSeqGoDatabase() {
