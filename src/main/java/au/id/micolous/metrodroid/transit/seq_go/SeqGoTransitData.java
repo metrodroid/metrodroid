@@ -53,7 +53,7 @@ import java.util.TimeZone;
  */
 public class SeqGoTransitData extends NextfareTransitData {
 
-    public static final String NAME = "Go card";
+    private static final String NAME = "Go card";
     public static final Creator<SeqGoTransitData> CREATOR = new Creator<SeqGoTransitData>() {
         public SeqGoTransitData createFromParcel(Parcel parcel) {
             return new SeqGoTransitData(parcel);
@@ -64,7 +64,7 @@ public class SeqGoTransitData extends NextfareTransitData {
         }
     };
 
-    public static final CardInfo CARD_INFO = new CardInfo.Builder()
+    private static final CardInfo CARD_INFO = new CardInfo.Builder()
             .setImageId(R.drawable.seqgo_card, R.drawable.seqgo_card_alpha)
             .setName(SeqGoTransitData.NAME)
             .setLocation(R.string.location_brisbane_seq_australia)

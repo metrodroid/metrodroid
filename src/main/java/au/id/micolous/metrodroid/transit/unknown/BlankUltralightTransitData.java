@@ -52,7 +52,7 @@ public class BlankUltralightTransitData extends TransitData {
         }
     };
 
-    public BlankUltralightTransitData() {
+    private BlankUltralightTransitData() {
 
     }
 
@@ -184,6 +184,6 @@ public class BlankUltralightTransitData extends TransitData {
     public void writeToParcel(Parcel dest, int i) {
     }
 
-    public BlankUltralightTransitData(Parcel p) {
+    private BlankUltralightTransitData(Parcel p) {
     }
 }

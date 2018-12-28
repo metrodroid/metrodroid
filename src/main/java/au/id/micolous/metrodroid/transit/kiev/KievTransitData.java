@@ -44,7 +44,7 @@ public class KievTransitData extends TransitData {
     private final List<KievTrip> mTrips;
     // It doesn't really have a name and is just called
     // "Ticket for Kiev Metro".
-    public static final CardInfo CARD_INFO = new CardInfo.Builder()
+    private static final CardInfo CARD_INFO = new CardInfo.Builder()
             .setName(Utils.localizeString(R.string.card_name_kiev))
             .setLocation(R.string.location_kiev)
             .setCardType(CardType.MifareClassic)
@@ -53,7 +53,7 @@ public class KievTransitData extends TransitData {
             .setPreview()
             .build();
 
-    public KievTransitData(ClassicCard card) {
+    private KievTransitData(ClassicCard card) {
         mSerial = getSerial(card);
         mTrips = new ArrayList<>();
         for (int i = 0; i < 6; i++) {

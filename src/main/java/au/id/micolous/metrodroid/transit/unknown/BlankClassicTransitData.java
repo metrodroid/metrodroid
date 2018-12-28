@@ -114,6 +114,6 @@ public class BlankClassicTransitData extends TransitData {
     public void writeToParcel(Parcel dest, int i) {
     }
 
-    public BlankClassicTransitData(Parcel p) {
+    private BlankClassicTransitData(Parcel p) {
     }
 }

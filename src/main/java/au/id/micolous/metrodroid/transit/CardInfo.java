@@ -67,7 +67,7 @@ public final class CardInfo {
             ret.addAll(factory.getAllCards());
         }
         ret.add(TMoneyTransitData.CARD_INFO);
-        ret.addAll(Arrays.asList(EZLinkTransitData.ALL_CARD_INFOS));
+        ret.addAll(EZLinkTransitData.ALL_CARD_INFOS);
         Collator collator = Collator.getInstance();
         Collections.sort(ret, (a, b) -> collator.compare(a.getName(), b.getName()));
         return ret;

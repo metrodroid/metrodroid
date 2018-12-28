@@ -62,7 +62,7 @@ public class NewShenzhenTransitData extends ChinaTransitData {
         }
     };
 
-    public NewShenzhenTransitData(ChinaCard card) {
+    private NewShenzhenTransitData(ChinaCard card) {
         super(card);
         mSerial = parseSerial(card);
         byte []szttag = getTagInfo(card);

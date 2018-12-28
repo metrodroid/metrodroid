@@ -60,7 +60,7 @@ public class NextfareTrip extends Trip implements Comparable<NextfareTrip> {
     @NonNls
     private String mSTR;
 
-    public NextfareTrip(Parcel parcel) {
+    protected NextfareTrip(Parcel parcel) {
         mJourneyId = parcel.readInt();
         mStartTime = Utils.unparcelCalendar(parcel);
         mEndTime = Utils.unparcelCalendar(parcel);

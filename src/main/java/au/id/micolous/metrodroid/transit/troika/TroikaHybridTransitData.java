@@ -139,7 +139,7 @@ public class TroikaHybridTransitData extends TransitData {
             dest.writeInt(0);
     }
 
-    public TroikaHybridTransitData(Parcel p) {
+    private TroikaHybridTransitData(Parcel p) {
         mTroika = new TroikaTransitData(p);
         if (p.readInt() != 0)
             mPodorozhnik = new PodorozhnikTransitData(p);
@@ -197,7 +197,7 @@ public class TroikaHybridTransitData extends TransitData {
         }
     };
 
-    public TroikaHybridTransitData(ClassicCard card) {
+    private TroikaHybridTransitData(ClassicCard card) {
         mTroika = new TroikaTransitData(card);
         if (PodorozhnikTransitData.FACTORY.check(card))
             mPodorozhnik = new PodorozhnikTransitData(card);

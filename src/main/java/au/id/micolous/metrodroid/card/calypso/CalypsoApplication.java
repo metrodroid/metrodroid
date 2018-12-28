@@ -81,7 +81,7 @@ public class CalypsoApplication extends ISO7816Application {
             );
 
     private static final String TAG = CalypsoApplication.class.getName();
-    public static final String TYPE = "calypso";
+    private static final String TYPE = "calypso";
     private static final Map<String, String> NAME_MAP = new HashMap<>();
     private static final CalypsoCardTransitFactory[] FACTORIES = {
             RavKavTransitData.FACTORY,

@@ -56,7 +56,7 @@ import au.id.micolous.metrodroid.transit.ezlink.CEPASPurse;
 @Root(name = "card")
 public class CEPASApplication extends ISO7816Application {
     public static final String TYPE = "cepas";
-    public static final String TAG = "CepasApplication";
+    private static final String TAG = "CepasApplication";
 
     @ElementMap(name = "purses", entry = "purse", key = "idx", attribute = true)
     private Map<Integer, Base64String> mPurses;

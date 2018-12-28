@@ -90,7 +90,7 @@ public class NextfareUnknownUltralightTransitData extends NextfareUltralightTran
         super(p);
     }
 
-    public NextfareUnknownUltralightTransitData(UltralightCard card) {
+    private NextfareUnknownUltralightTransitData(UltralightCard card) {
         super(card);
     }
 

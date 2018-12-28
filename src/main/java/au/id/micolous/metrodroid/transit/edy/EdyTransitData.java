@@ -50,7 +50,7 @@ public class EdyTransitData extends TransitData {
     // defines
     public static final int SYSTEMCODE_EDY = 0xfe00;         // Edy (=共通領域)
 
-    public static final CardInfo CARD_INFO = new CardInfo.Builder()
+    private static final CardInfo CARD_INFO = new CardInfo.Builder()
             .setImageId(R.drawable.edy_card)
             .setName("Edy")
             .setLocation(R.string.location_tokyo)
@@ -79,12 +79,12 @@ public class EdyTransitData extends TransitData {
     private final byte[] mSerialNumber = new byte[8];
     private int mCurrentBalance;
 
-    public EdyTransitData(Parcel parcel) {
+    private EdyTransitData(Parcel parcel) {
         mTrips = new ArrayList<>();
         parcel.readTypedList(mTrips, EdyTrip.CREATOR);
     }
 
-    public EdyTransitData(FelicaCard card) {
+    private EdyTransitData(FelicaCard card) {
         // card ID is in block 0, bytes 2-9, big-endian ordering
         FelicaService serviceID = card.getSystem(SYSTEMCODE_EDY).getService(FELICA_SERVICE_EDY_ID);
         List<FelicaBlock> blocksID = serviceID.getBlocks();

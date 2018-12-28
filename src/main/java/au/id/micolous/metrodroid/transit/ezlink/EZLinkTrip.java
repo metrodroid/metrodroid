@@ -54,7 +54,7 @@ public class EZLinkTrip extends Trip {
         mCardName = cardName;
     }
 
-    EZLinkTrip(Parcel parcel) {
+    private EZLinkTrip(Parcel parcel) {
         mTransaction = parcel.readParcelable(CEPASTransaction.class.getClassLoader());
         mCardName = parcel.readString();
     }

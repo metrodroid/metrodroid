@@ -54,7 +54,7 @@ public class EZLinkCompatTrip extends Trip {
         mCardName = cardName;
     }
 
-    EZLinkCompatTrip(Parcel parcel) {
+    private EZLinkCompatTrip(Parcel parcel) {
         mTransaction = parcel.readParcelable(CEPASCompatTransaction.class.getClassLoader());
         mCardName = parcel.readString();
     }
@@ -82,7 +82,7 @@ public class EZLinkCompatTrip extends Trip {
         return TransitCurrency.SGD(-mTransaction.getAmount());
     }
 
-    CEPASTransaction.TransactionType getType() {
+    private CEPASTransaction.TransactionType getType() {
         return CEPASTransaction.getType(mTransaction.getType());
     }
 

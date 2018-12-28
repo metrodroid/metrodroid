@@ -37,7 +37,7 @@ public class ErgMetadataRecord extends ErgRecord {
     private byte[] mCardSerial;
     private GregorianCalendar mEpochDate;
 
-    protected ErgMetadataRecord() {
+    private ErgMetadataRecord() {
     }
 
     public static ErgMetadataRecord recordFromBytes(byte[] input) {

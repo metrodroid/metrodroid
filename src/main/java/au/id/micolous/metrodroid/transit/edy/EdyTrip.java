@@ -66,7 +66,7 @@ public class EdyTrip extends Trip {
         mBalance = Utils.byteArrayToInt(data, 12, 4);
     }
 
-    public EdyTrip(Parcel parcel) {
+    private EdyTrip(Parcel parcel) {
         mProcessType = parcel.readInt();
         mSequenceNumber = parcel.readInt();
         long t = parcel.readLong();
@@ -121,7 +121,7 @@ public class EdyTrip extends Trip {
         return 0;
     }
 
-    static Calendar extractDate(byte[] data) {
+    private static Calendar extractDate(byte[] data) {
         int fulloffset = Utils.byteArrayToInt(data, 4, 4);
         if (fulloffset == 0)
             return null;

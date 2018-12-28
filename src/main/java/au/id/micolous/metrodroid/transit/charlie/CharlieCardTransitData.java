@@ -61,7 +61,7 @@ public class CharlieCardTransitData extends TransitData {
     private final List<CharlieCardTrip> mTrips;
     private static final long CHARLIE_EPOCH;
     private static final TimeZone TZ = TimeZone.getTimeZone("America/Boston");
-    public static final CardInfo CARD_INFO = new CardInfo.Builder()
+    private static final CardInfo CARD_INFO = new CardInfo.Builder()
             .setName(NAME)
             .setLocation(R.string.location_boston)
             .setCardType(CardType.MifareClassic)

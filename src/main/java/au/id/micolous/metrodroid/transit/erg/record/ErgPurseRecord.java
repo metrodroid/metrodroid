@@ -40,7 +40,7 @@ public class ErgPurseRecord extends ErgRecord implements Parcelable {
     private boolean mIsCredit;
     private int mTransactionValue;
 
-    protected ErgPurseRecord() {
+    private ErgPurseRecord() {
     }
 
     public ErgPurseRecord(Parcel parcel) {

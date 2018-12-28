@@ -48,7 +48,7 @@ public class UnauthorizedUltralightTransitData extends UnauthorizedTransitData {
         }
     };
 
-    public UnauthorizedUltralightTransitData() {
+    private UnauthorizedUltralightTransitData() {
     }
 
     public final static UltralightCardTransitFactory FACTORY = new UltralightCardTransitFactory() {

@@ -73,7 +73,7 @@ public class HSLTrip extends Trip {
 
     }
 
-    HSLTrip(Parcel parcel) {
+    private HSLTrip(Parcel parcel) {
         // mArvo, mTimestamp, mExpireTimestamp, mFare, mPax, mNewBalance
         mArvo = parcel.readInt();
         mTimestamp = Utils.unparcelCalendar(parcel);

@@ -53,7 +53,7 @@ data class SunCardTransitData(private val mSerial: Int = 0) : SerialOnlyTransitD
 
     companion object {
         private const val NAME = "SunRail SunCard"
-        val CARD_INFO = CardInfo.Builder()
+        private val CARD_INFO = CardInfo.Builder()
                 .setName(NAME)
                 .setLocation(R.string.location_orlando)
                 .setCardType(CardType.MifareClassic)

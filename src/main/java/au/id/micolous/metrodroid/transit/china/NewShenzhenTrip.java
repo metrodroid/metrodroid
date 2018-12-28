@@ -44,7 +44,7 @@ public class NewShenzhenTrip extends ChinaTrip {
     private final static String SHENZHEN_STR = "shenzhen";
 
 
-    public NewShenzhenTrip(Parcel parcel) {
+    private NewShenzhenTrip(Parcel parcel) {
         super(parcel);
     }
 

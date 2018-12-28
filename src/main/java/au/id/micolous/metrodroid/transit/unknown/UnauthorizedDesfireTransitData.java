@@ -35,7 +35,7 @@ public class UnauthorizedDesfireTransitData extends UnauthorizedTransitData {
     };
     private final String mName;
 
-    public UnauthorizedDesfireTransitData(DesfireCard card) {
+    private UnauthorizedDesfireTransitData(DesfireCard card) {
         mName = getName(card);
     }
 

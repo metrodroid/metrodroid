@@ -53,7 +53,7 @@ public class TroikaTransitData implements Parcelable {
         }
     };
 
-    public static final CardInfo CARD_INFO = new CardInfo.Builder()
+    static final CardInfo CARD_INFO = new CardInfo.Builder()
             // seqgo_card_alpha has identical geometry
             .setImageId(R.drawable.troika_card, R.drawable.seqgo_card_alpha)
             .setName(Utils.localizeString(R.string.card_name_troika))

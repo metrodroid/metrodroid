@@ -43,7 +43,7 @@ public class ManlyFastFerryTrip extends ErgTrip {
         }
     };
 
-    public ManlyFastFerryTrip(Parcel parcel) {
+    private ManlyFastFerryTrip(Parcel parcel) {
         super(parcel);
     }
 

@@ -49,7 +49,7 @@ import au.id.micolous.metrodroid.util.Utils;
  */
 public class ClassicStaticKeys extends ClassicCardKeys {
     private static final String SECTOR_IDX = "sector";
-    public static final String JSON_TAG_ID_DESC = "Description";
+    private static final String JSON_TAG_ID_DESC = "Description";
 
     // Sparse Arrays are annoying to iterate through
     @SuppressLint("UseSparseArrays")

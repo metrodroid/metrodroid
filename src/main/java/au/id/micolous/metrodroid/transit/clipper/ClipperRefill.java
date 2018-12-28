@@ -54,7 +54,7 @@ public class ClipperRefill extends Trip implements Comparable<ClipperRefill> {
         mAgency = agency;
     }
 
-    public ClipperRefill(Parcel parcel) {
+    private ClipperRefill(Parcel parcel) {
         mTimestamp = Utils.unparcelCalendar(parcel);
         mAmount = parcel.readInt();
         mMachineID = parcel.readString();

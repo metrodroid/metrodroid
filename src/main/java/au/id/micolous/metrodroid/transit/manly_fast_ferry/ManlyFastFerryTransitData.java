@@ -54,7 +54,7 @@ public class ManlyFastFerryTransitData extends ErgTransitData {
     private static final TimeZone TIME_ZONE = TimeZone.getTimeZone("Australia/Sydney");
     static final String CURRENCY = "AUD";
 
-    public static final CardInfo CARD_INFO = new CardInfo.Builder()
+    private static final CardInfo CARD_INFO = new CardInfo.Builder()
             .setImageId(R.drawable.manly_fast_ferry_card)
             .setName(ManlyFastFerryTransitData.NAME)
             .setLocation(R.string.location_sydney_australia)

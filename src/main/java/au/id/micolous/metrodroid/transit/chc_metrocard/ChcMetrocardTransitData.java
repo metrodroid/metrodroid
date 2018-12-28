@@ -52,7 +52,7 @@ public class ChcMetrocardTransitData extends ErgTransitData {
     private static final TimeZone TIME_ZONE = TimeZone.getTimeZone("Pacific/Auckland");
     static final String CURRENCY = "NZD";
 
-    public static final CardInfo CARD_INFO = new CardInfo.Builder()
+    private static final CardInfo CARD_INFO = new CardInfo.Builder()
             .setImageId(R.drawable.chc_metrocard)
             .setName(ChcMetrocardTransitData.NAME)
             .setLocation(R.string.location_christchurch_nz)
@@ -74,11 +74,11 @@ public class ChcMetrocardTransitData extends ErgTransitData {
         }
     };
 
-    public ChcMetrocardTransitData(Parcel parcel) {
+    private ChcMetrocardTransitData(Parcel parcel) {
         super(parcel);
     }
 
-    public ChcMetrocardTransitData(ClassicCard card) {
+    private ChcMetrocardTransitData(ClassicCard card) {
         super(card, CURRENCY);
     }
 

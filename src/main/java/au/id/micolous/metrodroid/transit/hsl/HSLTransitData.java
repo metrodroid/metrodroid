@@ -62,7 +62,7 @@ import au.id.micolous.metrodroid.util.Utils;
  */
 public class HSLTransitData extends TransitData implements Parcelable {
 
-    static final TimeZone TZ = TimeZone.getTimeZone("Europe/Helsinki");
+    private static final TimeZone TZ = TimeZone.getTimeZone("Europe/Helsinki");
     private static final long EPOCH;
 
     static {
@@ -72,7 +72,7 @@ public class HSLTransitData extends TransitData implements Parcelable {
         EPOCH = epoch.getTimeInMillis();
     }
 
-    public static final CardInfo CARD_INFO = new CardInfo.Builder()
+    private static final CardInfo CARD_INFO = new CardInfo.Builder()
             .setImageId(R.drawable.hsl_card)
             .setName("HSL")
             .setLocation(R.string.location_helsinki_finland)
@@ -115,7 +115,7 @@ public class HSLTransitData extends TransitData implements Parcelable {
         put(16L, "Tram");
     }});*/
 
-    public HSLTransitData(Parcel parcel) {
+    private HSLTransitData(Parcel parcel) {
         mSerialNumber = parcel.readString();
         mBalance = parcel.readInt();
         mArvoMystery1 = parcel.readLong();

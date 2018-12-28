@@ -66,7 +66,7 @@ public class AdelaideMetrocardTransitData extends En1545TransitData {
     private final List<AdelaideSubscription> mSubs;
     private final AdelaideSubscription mPurse;
 
-    public static final CardInfo CARD_INFO = new CardInfo.Builder()
+    private static final CardInfo CARD_INFO = new CardInfo.Builder()
             .setName(NAME)
             .setLocation(R.string.location_adelaide)
             .setCardType(CardType.MifareDesfire)
@@ -76,7 +76,7 @@ public class AdelaideMetrocardTransitData extends En1545TransitData {
 
     private final long mSerial;
 
-    public AdelaideMetrocardTransitData(DesfireCard card) {
+    private AdelaideMetrocardTransitData(DesfireCard card) {
         mSerial = getSerial(card.getTagId());
         DesfireApplication app = card.getApplication(APP_ID);
 

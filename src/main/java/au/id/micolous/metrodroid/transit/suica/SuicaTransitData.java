@@ -60,21 +60,21 @@ public class SuicaTransitData extends TransitData {
         }
     };
 
-    public static final CardInfo ICOCA_CARD_INFO = new CardInfo.Builder()
+    private static final CardInfo ICOCA_CARD_INFO = new CardInfo.Builder()
             .setImageId(R.drawable.icoca_card)
             .setName(Utils.localizeString(R.string.card_name_icoca))
             .setLocation(R.string.location_kansai)
             .setCardType(CardType.FeliCa)
             .build();
 
-    public static final CardInfo SUICA_CARD_INFO = new CardInfo.Builder()
+    private static final CardInfo SUICA_CARD_INFO = new CardInfo.Builder()
             .setImageId(R.drawable.suica_card)
             .setName(Utils.localizeString(R.string.card_name_suica))
             .setLocation(R.string.location_tokyo)
             .setCardType(CardType.FeliCa)
             .build();
 
-    public static final CardInfo PASMO_CARD_INFO = new CardInfo.Builder()
+    private static final CardInfo PASMO_CARD_INFO = new CardInfo.Builder()
             .setImageId(R.drawable.pasmo_card)
             .setName(Utils.localizeString(R.string.card_name_pasmo))
             .setLocation(R.string.location_tokyo)
@@ -91,12 +91,12 @@ public class SuicaTransitData extends TransitData {
 
     private final List<SuicaTrip> mTrips;
 
-    public SuicaTransitData(Parcel parcel) {
+    private SuicaTransitData(Parcel parcel) {
         mTrips = new ArrayList<>();
         parcel.readTypedList(mTrips, SuicaTrip.CREATOR);
     }
 
-    public SuicaTransitData(FelicaCard card) {
+    private SuicaTransitData(FelicaCard card) {
         FelicaService service = card.getSystem(SYSTEMCODE_SUICA).getService(SERVICE_SUICA_HISTORY);
         FelicaService tapService = card.getSystem(SYSTEMCODE_SUICA).getService(SERVICE_SUICA_INOUT);
 

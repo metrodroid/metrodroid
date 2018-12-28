@@ -70,7 +70,7 @@ public class LeapTransitData extends TransitData {
         }
     };
 
-    public static final CardInfo CARD_INFO = new CardInfo.Builder()
+    private static final CardInfo CARD_INFO = new CardInfo.Builder()
             .setName(LeapTransitData.NAME)
             .setLocation(R.string.location_ireland)
             .setCardType(CardType.MifareDesfire)
@@ -166,7 +166,7 @@ public class LeapTransitData extends TransitData {
         return BLOCK_SIZE;
     }
 
-    public LeapTransitData(DesfireCard card) {
+    private LeapTransitData(DesfireCard card) {
         DesfireApplication app = card.getApplication(APP_ID);
         if (app.getFile(2) instanceof UnauthorizedDesfireFile) {
             mLocked = true;

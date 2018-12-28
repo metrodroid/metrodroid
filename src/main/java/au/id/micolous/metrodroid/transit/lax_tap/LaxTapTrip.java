@@ -46,7 +46,7 @@ public class LaxTapTrip extends NextfareTrip {
         super("USD", LaxTapData.LAX_TAP_STR);
     }
 
-    public LaxTapTrip(Parcel in) {
+    private LaxTapTrip(Parcel in) {
         super(in);
     }
 

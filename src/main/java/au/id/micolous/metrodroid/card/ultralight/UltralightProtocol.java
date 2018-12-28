@@ -42,7 +42,7 @@ import java.util.Locale;
  */
 
 class UltralightProtocol {
-    static final String TAG = "UltralightProtocol";
+    private static final String TAG = "UltralightProtocol";
 
     enum UltralightType {
         /** Unknown type */
@@ -73,9 +73,9 @@ class UltralightProtocol {
     }
 
     // Commands
-    static final byte GET_VERSION = (byte) 0x60;
-    static final byte AUTH_1 = (byte) 0x1a;
-    static final byte HALT = (byte) 0x50;
+    private static final byte GET_VERSION = (byte) 0x60;
+    private static final byte AUTH_1 = (byte) 0x1a;
+    private static final byte HALT = (byte) 0x50;
 
     // Status codes
     static final byte AUTH_ANSWER = (byte) 0xAF;
@@ -198,7 +198,7 @@ class UltralightProtocol {
      * @throws IOException on card communication failure, or if the card does not support the
      *                     command.
      */
-    byte[] getVersion() throws IOException {
+    private byte[] getVersion() throws IOException {
         return sendRequest(GET_VERSION);
     }
 
@@ -209,7 +209,7 @@ class UltralightProtocol {
      * @throws IOException on card communication failure, or if the card does not support the
      *                     command.
      */
-    byte[] auth1() throws IOException {
+    private byte[] auth1() throws IOException {
         return sendRequest(AUTH_1, (byte) 0x00);
     }
 
@@ -219,7 +219,7 @@ class UltralightProtocol {
      * This will silently swallow all communication failures, as Android returning an error is
      * to be expected.
      */
-    void halt() {
+    private void halt() {
         try {
             sendRequest(HALT, (byte) 0x00);
         } catch (IOException e) {
