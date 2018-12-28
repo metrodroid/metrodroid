@@ -30,6 +30,7 @@ import au.id.micolous.farebot.R;
 import au.id.micolous.metrodroid.card.CardType;
 import au.id.micolous.metrodroid.card.calypso.CalypsoApplication;
 import au.id.micolous.metrodroid.card.calypso.CalypsoCardTransitFactory;
+import au.id.micolous.metrodroid.card.iso7816.ISO7816File;
 import au.id.micolous.metrodroid.card.iso7816.ISO7816Record;
 import au.id.micolous.metrodroid.transit.CardInfo;
 import au.id.micolous.metrodroid.transit.TransitIdentity;
@@ -94,7 +95,7 @@ public class OpusTransitData extends Calypso1545TransitData {
     );
 
     private OpusTransitData(CalypsoApplication card) {
-        super(card, ticketEnvFields, contractListFields);
+        super(card, ticketEnvFields, contractListFields, getSerial(card));
     }
 
     @Override
@@ -161,5 +162,29 @@ public class OpusTransitData extends Calypso1545TransitData {
 
     private OpusTransitData(Parcel parcel) {
         super(parcel);
+    }
+
+    private static String getSerial(CalypsoApplication card) {
+        ISO7816File iccFile = card.getFile(CalypsoApplication.File.ICC);
+        if (iccFile == null) {
+            return null;
+        }
+
+        ISO7816Record iccRecord = iccFile.getRecord(1);
+
+        if (iccRecord == null) {
+            return null;
+        }
+        byte[] data = iccRecord.getData();
+
+        if (Utils.byteArrayToLong(data, 16, 4) != 0) {
+            return Long.toString(Utils.byteArrayToLong(data, 16, 4));
+        }
+
+        if (Utils.byteArrayToLong(data, 0, 4) != 0) {
+            return Long.toString(Utils.byteArrayToLong(data, 0, 4));
+        }
+
+        return null;
     }
 }
