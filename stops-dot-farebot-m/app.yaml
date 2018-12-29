@@ -1,5 +1,5 @@
-application: farebot-m
-module: stops
+# application: farebot-m
+service: stops
 runtime: python27
 threadsafe: true
 api_version: 1
@@ -18,11 +18,6 @@ handlers:
   static_dir: static
   secure: always
 
-- url: /app/.*
-  secure: always
-  login: required
-  script: stops.app
-
 skip_files:
 - ^(.*/)?#.*#$
 - ^(.*/)?.*~$
@@ -31,14 +26,4 @@ skip_files:
 - ^(.*/)?\..*$
 - ^(.*/)?.*\.md$
 - ^(.*/)?.*\.sh$
-
-libraries:
-- name: webapp2
-  version: latest
-
-- name: jinja2
-  version: latest
-
-includes:
-- secrets.yaml
 
