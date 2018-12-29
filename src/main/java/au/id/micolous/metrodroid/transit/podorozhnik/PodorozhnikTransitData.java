@@ -264,15 +264,10 @@ public class PodorozhnikTransitData extends TransitData {
     public static final ClassicCardTransitFactory FACTORY = new ClassicCardTransitFactory() {
         @Override
         public boolean earlyCheck(@NonNull List<ClassicSector> sectors) {
-            try {
-                ClassicSectorKey key = sectors.get(4).getKey();
+            ClassicSectorKey key = sectors.get(4).getKey();
 
-                Log.d(TAG, "Checking for Podorozhnik key...");
-                return Utils.checkKeyHash(key, KEY_SALT, KEY_DIGEST_A, KEY_DIGEST_B) >= 0;
-            } catch (IndexOutOfBoundsException ignored) {
-                // If that sector number is too high, then it's not for us.
-            }
-            return false;
+            Log.d(TAG, "Checking for Podorozhnik key...");
+            return Utils.checkKeyHash(key, KEY_SALT, KEY_DIGEST_A, KEY_DIGEST_B) >= 0;
         }
 
         @Override

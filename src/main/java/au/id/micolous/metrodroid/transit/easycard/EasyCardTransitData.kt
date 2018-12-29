@@ -85,15 +85,9 @@ data class EasyCardTransitData internal constructor(
         }
 
         val FACTORY = object : ClassicCardTransitFactory {
-            override fun earlyCheck(sectors: List<ClassicSector>): Boolean {
-                val data: ByteArray? = try {
-                    sectors[0][1].data
-                } catch (e: Exception) {
-                    null
-                }
-
-                return data != null && Arrays.equals(data, MAGIC)
-            }
+            override fun earlyCheck(sectors: List<ClassicSector>) = sectors[0][1].data?.let {
+                Arrays.equals(it, MAGIC)
+            } ?: false
 
             override fun earlySectors() = 1
 

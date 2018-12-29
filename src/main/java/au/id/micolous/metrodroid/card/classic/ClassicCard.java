@@ -33,6 +33,8 @@ import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.util.Log;
 
+import au.id.micolous.metrodroid.card.UnauthorizedException;
+import au.id.micolous.metrodroid.transit.CardInfo;
 import au.id.micolous.metrodroid.transit.CardTransitFactory;
 
 import org.jetbrains.annotations.NonNls;
@@ -474,26 +476,32 @@ public class ClassicCard extends Card {
         return Arrays.asList(FACTORIES);
     }
 
-    @Override
-    public TransitIdentity parseTransitIdentity() {
+    private ClassicCardTransitFactory findTransitFactory() {
         for (ClassicCardTransitFactory factory : FACTORIES) {
-            if (factory.check(this))
-                return factory.parseTransitIdentity(this);
+            try {
+                if (factory.check(this))
+                    return factory;
+            } catch (IndexOutOfBoundsException | UnauthorizedException e) {
+                /* Not the right factory. Just continue  */
+            }
         }
-
-        // The card could not be identified, but has some open sectors.
         return null;
     }
 
     @Override
-    public TransitData parseTransitData() {
-        for (ClassicCardTransitFactory factory : FACTORIES) {
-            if (factory.check(this))
-                return factory.parseTransitData(this);
-        }
+    public TransitIdentity parseTransitIdentity() {
+        ClassicCardTransitFactory factory = findTransitFactory();
+        if (factory == null)
+            return null;
+        return factory.parseTransitIdentity(this);
+    }
 
-        // The card could not be identified, but has some open sectors.
-        return null;
+    @Override
+    public TransitData parseTransitData() {
+        ClassicCardTransitFactory factory = findTransitFactory();
+        if (factory == null)
+            return null;
+        return factory.parseTransitData(this);
     }
 
     public List<ClassicSector> getSectors() {

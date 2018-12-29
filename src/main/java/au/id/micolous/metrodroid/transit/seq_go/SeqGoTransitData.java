@@ -26,7 +26,6 @@ import android.support.annotation.VisibleForTesting;
 
 import au.id.micolous.farebot.R;
 import au.id.micolous.metrodroid.card.CardType;
-import au.id.micolous.metrodroid.card.UnauthorizedException;
 import au.id.micolous.metrodroid.card.classic.ClassicCard;
 import au.id.micolous.metrodroid.card.classic.ClassicCardTransitFactory;
 import au.id.micolous.metrodroid.card.classic.ClassicSector;
@@ -109,23 +108,15 @@ public class SeqGoTransitData extends NextfareTransitData {
 
         @Override
         public boolean earlyCheck(@NonNull List<ClassicSector> sectors) {
-            try {
-                ClassicSector sector0 = sectors.get(0);
-                byte[] blockData = sector0.getBlock(1).getData();
-                if (!Arrays.equals(Arrays.copyOfRange(blockData, 1, 9), MANUFACTURER)) {
-                    return false;
-                }
-
-                byte[] systemCode = Arrays.copyOfRange(blockData, 9, 15);
-                //Log.d(TAG, "SystemCode = " + Utils.getHexString(systemCode));
-                return Arrays.equals(systemCode, SYSTEM_CODE1) || Arrays.equals(systemCode, SYSTEM_CODE2);
-            } catch (UnauthorizedException ex) {
-                // It is not possible to identify the card without a key
-                return false;
-            } catch (IndexOutOfBoundsException ignored) {
-                // If the sector/block number is too high, it's not for us
+            ClassicSector sector0 = sectors.get(0);
+            byte[] blockData = sector0.getBlock(1).getData();
+            if (!Arrays.equals(Arrays.copyOfRange(blockData, 1, 9), MANUFACTURER)) {
                 return false;
             }
+
+            byte[] systemCode = Arrays.copyOfRange(blockData, 9, 15);
+            //Log.d(TAG, "SystemCode = " + Utils.getHexString(systemCode));
+            return Arrays.equals(systemCode, SYSTEM_CODE1) || Arrays.equals(systemCode, SYSTEM_CODE2);
         }
 
         @Override

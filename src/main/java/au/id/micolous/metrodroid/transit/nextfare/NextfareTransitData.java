@@ -33,7 +33,6 @@ import java.util.List;
 import java.util.TimeZone;
 
 import au.id.micolous.farebot.R;
-import au.id.micolous.metrodroid.card.UnauthorizedException;
 import au.id.micolous.metrodroid.card.classic.ClassicBlock;
 import au.id.micolous.metrodroid.card.classic.ClassicCard;
 import au.id.micolous.metrodroid.card.classic.ClassicCardTransitFactory;
@@ -272,16 +271,8 @@ public class NextfareTransitData extends TransitData {
     protected static class NextFareTransitFactory implements ClassicCardTransitFactory {
         @Override
         public boolean earlyCheck(@NonNull List<ClassicSector> sectors) {
-            try {
-                byte[] blockData = sectors.get(0).getBlock(1).getData();
-                return Arrays.equals(Arrays.copyOfRange(blockData, 1, 9), MANUFACTURER);
-            } catch (UnauthorizedException ex) {
-                // It is not possible to identify the card without a key
-                return false;
-            } catch (IndexOutOfBoundsException ignored) {
-                // If the sector/block number is too high, it's not for us
-                return false;
-            }
+            byte[] blockData = sectors.get(0).getBlock(1).getData();
+            return Arrays.equals(Arrays.copyOfRange(blockData, 1, 9), MANUFACTURER);
         }
 
         @Override

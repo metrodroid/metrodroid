@@ -121,18 +121,12 @@ public class StrelkaTransitData extends SerialOnlyTransitData {
 
         @Override
         public boolean earlyCheck(@NonNull List<ClassicSector> sectors) {
-            try {
-                byte[] toc = sectors.get(0).getBlock(2).getData();
-                // Check toc entries for sectors 10,12,13,14 and 15
-                return Utils.byteArrayToInt(toc, 4, 2) == 0x18f0
-                        && Utils.byteArrayToInt(toc, 8, 2) == 5
-                        && Utils.byteArrayToInt(toc, 10, 2) == 0x18e0
-                        && Utils.byteArrayToInt(toc, 12, 2) == 0x18e8;
-            } catch (IndexOutOfBoundsException | UnauthorizedException ignored) {
-                // If that sector number is too high, then it's not for us.
-                // If we can't read we can't do anything
-            }
-            return false;
+            byte[] toc = sectors.get(0).getBlock(2).getData();
+            // Check toc entries for sectors 10,12,13,14 and 15
+            return Utils.byteArrayToInt(toc, 4, 2) == 0x18f0
+                    && Utils.byteArrayToInt(toc, 8, 2) == 5
+                    && Utils.byteArrayToInt(toc, 10, 2) == 0x18e0
+                    && Utils.byteArrayToInt(toc, 12, 2) == 0x18e8;
         }
 
         @Override

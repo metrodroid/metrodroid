@@ -21,7 +21,6 @@ package au.id.micolous.metrodroid.transit.serialonly
 
 import au.id.micolous.farebot.R
 import au.id.micolous.metrodroid.card.CardType
-import au.id.micolous.metrodroid.card.UnauthorizedException
 import au.id.micolous.metrodroid.card.classic.ClassicCard
 import au.id.micolous.metrodroid.card.classic.ClassicCardTransitFactory
 import au.id.micolous.metrodroid.card.classic.ClassicSector
@@ -76,17 +75,10 @@ data class SunCardTransitData(private val mSerial: Int = 0) : SerialOnlyTransitD
 
             override fun parseTransitData(classicCard: ClassicCard) = SunCardTransitData(classicCard)
 
-            override fun earlyCheck(sectors: List<ClassicSector>) = try {
+            override fun earlyCheck(sectors: List<ClassicSector>) =
                 // I hope it is magic as other than zeros, ff's and serial there is nothing
                 // on the card
                 Utils.byteArrayToInt(sectors[0][1].data, 7, 4) == 0x070515ff
-            } catch (ignored: IndexOutOfBoundsException) {
-                // If that sector number is too high, then it's not for us.
-                // If we can't read we can't do anything
-                false
-            } catch (ignored: UnauthorizedException) {
-                false
-            }
 
             override fun earlySectors() = 1
 

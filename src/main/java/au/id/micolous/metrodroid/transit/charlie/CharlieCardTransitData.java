@@ -36,7 +36,6 @@ import java.util.TimeZone;
 
 import au.id.micolous.farebot.R;
 import au.id.micolous.metrodroid.card.CardType;
-import au.id.micolous.metrodroid.card.UnauthorizedException;
 import au.id.micolous.metrodroid.card.classic.ClassicBlock;
 import au.id.micolous.metrodroid.card.classic.ClassicCard;
 import au.id.micolous.metrodroid.card.classic.ClassicCardTransitFactory;
@@ -204,25 +203,20 @@ public class CharlieCardTransitData extends TransitData {
     public static final ClassicCardTransitFactory FACTORY = new ClassicCardTransitFactory() {
         @Override
         public boolean earlyCheck(@NonNull List<ClassicSector> sectors) {
-            try {
-                ClassicSector sector0 = sectors.get(0);
-                byte[] b = sector0.getBlock(1).getData();
-                if (!Arrays.equals(Utils.byteArraySlice(b, 2, 14), new byte[] {
-                        0x04, 0x10, 0x04, 0x10, 0x04, 0x10,
-                        0x04, 0x10, 0x04, 0x10, 0x04, 0x10, 0x04, 0x10
-                }))
-                    return false;
-                ClassicSector sector1 = sectors.get(1);
-                if (sector1 instanceof UnauthorizedClassicSector)
-                    return true;
-                b = sector1.getBlock(0).getData();
-                return Arrays.equals(Utils.byteArraySlice(b, 0, 6), new byte[]{
-                        0x04, 0x10, 0x23, 0x45, 0x66, 0x77
-                });
-            } catch (IndexOutOfBoundsException | UnauthorizedException ignored) {
-                // If that sector number is too high, then it's not for us.
-            }
-            return false;
+            ClassicSector sector0 = sectors.get(0);
+            byte[] b = sector0.getBlock(1).getData();
+            if (!Arrays.equals(Utils.byteArraySlice(b, 2, 14), new byte[]{
+                    0x04, 0x10, 0x04, 0x10, 0x04, 0x10,
+                    0x04, 0x10, 0x04, 0x10, 0x04, 0x10, 0x04, 0x10
+            }))
+                return false;
+            ClassicSector sector1 = sectors.get(1);
+            if (sector1 instanceof UnauthorizedClassicSector)
+                return true;
+            b = sector1.getBlock(0).getData();
+            return Arrays.equals(Utils.byteArraySlice(b, 0, 6), new byte[]{
+                    0x04, 0x10, 0x23, 0x45, 0x66, 0x77
+            });
         }
 
         @Override

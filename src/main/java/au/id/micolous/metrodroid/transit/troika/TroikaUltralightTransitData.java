@@ -26,7 +26,6 @@ import android.support.annotation.Nullable;
 import java.util.Collections;
 import java.util.List;
 
-import au.id.micolous.metrodroid.card.UnauthorizedException;
 import au.id.micolous.metrodroid.card.ultralight.UltralightCard;
 import au.id.micolous.metrodroid.card.ultralight.UltralightCardTransitFactory;
 import au.id.micolous.metrodroid.transit.CardInfo;
@@ -55,12 +54,7 @@ public class TroikaUltralightTransitData extends TransitData {
     public final static UltralightCardTransitFactory FACTORY = new UltralightCardTransitFactory() {
         @Override
         public boolean check(@NonNull UltralightCard card) {
-            try {
-                return TroikaBlock.check(card.getPage(4).getData());
-            } catch (IndexOutOfBoundsException | UnauthorizedException ignored) {
-                // If that sector number is too high, then it's not for us.
-                return false;
-            }
+            return TroikaBlock.check(card.getPage(4).getData());
         }
 
         @Override

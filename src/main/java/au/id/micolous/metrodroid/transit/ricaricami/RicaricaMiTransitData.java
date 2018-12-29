@@ -28,7 +28,6 @@ import java.util.List;
 
 import au.id.micolous.farebot.R;
 import au.id.micolous.metrodroid.card.CardType;
-import au.id.micolous.metrodroid.card.UnauthorizedException;
 import au.id.micolous.metrodroid.card.classic.ClassicCard;
 import au.id.micolous.metrodroid.card.classic.ClassicCardTransitFactory;
 import au.id.micolous.metrodroid.card.classic.ClassicSector;
@@ -194,21 +193,13 @@ public class RicaricaMiTransitData extends En1545TransitData {
     public static final ClassicCardTransitFactory FACTORY = new ClassicCardTransitFactory() {
         @Override
         public boolean earlyCheck(@NonNull List<ClassicSector> sectors) {
-            try {
-                for (int i = 1; i < 3; i++) {
-                    byte[] block = sectors.get(0).getBlock(i).getData();
-                    for (int j = (i == 1 ? 1 : 0); j < 8; j++)
-                        if (Utils.byteArrayToInt(block, j * 2, 2) != RICARICA_MI_ID)
-                            return false;
-                }
-                return true;
-            } catch (UnauthorizedException ex) {
-                // Not ours
-                return false;
-            } catch (IndexOutOfBoundsException ignored) {
-                // If the sector/block number is too high, it's not for us
-                return false;
+            for (int i = 1; i < 3; i++) {
+                byte[] block = sectors.get(0).getBlock(i).getData();
+                for (int j = (i == 1 ? 1 : 0); j < 8; j++)
+                    if (Utils.byteArrayToInt(block, j * 2, 2) != RICARICA_MI_ID)
+                        return false;
             }
+            return true;
         }
 
         @Override

@@ -28,7 +28,6 @@ import java.util.List;
 
 import au.id.micolous.farebot.R;
 import au.id.micolous.metrodroid.card.CardType;
-import au.id.micolous.metrodroid.card.UnauthorizedException;
 import au.id.micolous.metrodroid.card.classic.ClassicBlock;
 import au.id.micolous.metrodroid.card.classic.ClassicCard;
 import au.id.micolous.metrodroid.card.classic.ClassicCardTransitFactory;
@@ -115,13 +114,8 @@ public class KievTransitData extends TransitData {
 
         @Override
         public boolean earlyCheck(@NonNull List<ClassicSector> sectors) {
-            try {
-                return Utils.checkKeyHash(sectors.get(1).getKey(), "kiev",
-                        "902a69a9d68afa1ddac7b61a512f7d4f") >= 0;
-            } catch (IndexOutOfBoundsException | UnauthorizedException ignored) {
-                // If that sector number is too high, then it's not for us.
-            }
-            return false;
+            return Utils.checkKeyHash(sectors.get(1).getKey(), "kiev",
+                    "902a69a9d68afa1ddac7b61a512f7d4f") >= 0;
         }
 
         @Override

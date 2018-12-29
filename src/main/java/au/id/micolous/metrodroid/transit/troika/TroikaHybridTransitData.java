@@ -24,7 +24,6 @@ import android.os.Parcelable;
 import android.support.annotation.NonNull;
 
 import au.id.micolous.farebot.R;
-import au.id.micolous.metrodroid.card.UnauthorizedException;
 import au.id.micolous.metrodroid.card.classic.ClassicCard;
 import au.id.micolous.metrodroid.card.classic.ClassicCardTransitFactory;
 import au.id.micolous.metrodroid.card.classic.ClassicSector;
@@ -170,13 +169,7 @@ public class TroikaHybridTransitData extends TransitData {
 
         @Override
         public boolean check(@NonNull ClassicCard card) {
-            try {
-                return TroikaBlock.check(card.getSector(8).getBlock(0).getData());
-            } catch (IndexOutOfBoundsException|UnauthorizedException ignored) {
-                // If that sector number is too high, then it's not for us.
-                // If we can't read we can't do anything
-            }
-            return false;
+            return TroikaBlock.check(card.getSector(8).getBlock(0).getData());
         }
 
         @Override

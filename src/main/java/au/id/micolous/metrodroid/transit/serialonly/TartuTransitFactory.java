@@ -69,23 +69,18 @@ public class TartuTransitFactory implements ClassicCardTransitFactory {
 
     @Override
     public boolean earlyCheck(@NonNull List<ClassicSector> sectors) {
-        try {
-            ClassicSector sector0 = sectors.get(0);
-            byte[] b = sector0.getBlock(1).getData();
-            if (Utils.byteArrayToInt(b, 2, 4) != 0x03e103e1)
-                return false;
-            ClassicSector sector1 = sectors.get(1);
-            b = sector1.getBlock(0).getData();
-            if (!Arrays.equals(Utils.byteArraySlice(b, 7, 9), Utils.stringToByteArray("pilet.ee:")))
-                return false;
-            b = sector1.getBlock(1).getData();
-            if (!Arrays.equals(Utils.byteArraySlice(b, 0, 6), Utils.stringToByteArray("ekaart")))
-                return false;
-            return true;
-        } catch (IndexOutOfBoundsException | UnauthorizedException ignored) {
-            // If that sector number is too high, then it's not for us.
-        }
-        return false;
+        ClassicSector sector0 = sectors.get(0);
+        byte[] b = sector0.getBlock(1).getData();
+        if (Utils.byteArrayToInt(b, 2, 4) != 0x03e103e1)
+            return false;
+        ClassicSector sector1 = sectors.get(1);
+        b = sector1.getBlock(0).getData();
+        if (!Arrays.equals(Utils.byteArraySlice(b, 7, 9), Utils.stringToByteArray("pilet.ee:")))
+            return false;
+        b = sector1.getBlock(1).getData();
+        if (!Arrays.equals(Utils.byteArraySlice(b, 0, 6), Utils.stringToByteArray("ekaart")))
+            return false;
+        return true;
     }
 
     @Override

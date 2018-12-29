@@ -29,6 +29,7 @@ import au.id.micolous.farebot.R;
 import au.id.micolous.metrodroid.card.Card;
 import au.id.micolous.metrodroid.card.CardType;
 import au.id.micolous.metrodroid.card.TagReaderFeedbackInterface;
+import au.id.micolous.metrodroid.card.UnauthorizedException;
 import au.id.micolous.metrodroid.card.UnsupportedTagException;
 import au.id.micolous.metrodroid.transit.CardTransitFactory;
 import au.id.micolous.metrodroid.transit.TransitData;
@@ -222,24 +223,32 @@ public class UltralightCard extends Card {
         return Arrays.asList(FACTORIES);
     }
 
-    @Override
-    public TransitIdentity parseTransitIdentity() {
-        for (UltralightCardTransitFactory f : FACTORIES)
-            if (f.check(this))
-                return f.parseTransitIdentity(this);
-
-        // The card could not be identified.
+    private UltralightCardTransitFactory findTransitFactory() {
+        for (UltralightCardTransitFactory factory : FACTORIES) {
+            try {
+                if (factory.check(this))
+                    return factory;
+            } catch (IndexOutOfBoundsException | UnauthorizedException e) {
+                /* Not the right factory. Just continue  */
+            }
+        }
         return null;
     }
 
     @Override
-    public TransitData parseTransitData() {
-        for (UltralightCardTransitFactory f : FACTORIES)
-            if (f.check(this))
-                return f.parseTransitData(this);
+    public TransitIdentity parseTransitIdentity() {
+        UltralightCardTransitFactory factory = findTransitFactory();
+        if (factory == null)
+            return null;
+        return factory.parseTransitIdentity(this);
+    }
 
-        // The card could not be identified.
-        return null;
+    @Override
+    public TransitData parseTransitData() {
+        UltralightCardTransitFactory factory = findTransitFactory();
+        if (factory == null)
+            return null;
+        return factory.parseTransitData(this);
     }
 
     public UltralightPage[] getPages() {

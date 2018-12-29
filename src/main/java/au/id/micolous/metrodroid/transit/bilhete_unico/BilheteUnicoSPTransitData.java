@@ -34,7 +34,6 @@ import java.util.Locale;
 
 import au.id.micolous.farebot.R;
 import au.id.micolous.metrodroid.card.CardType;
-import au.id.micolous.metrodroid.card.UnauthorizedException;
 import au.id.micolous.metrodroid.card.classic.ClassicBlock;
 import au.id.micolous.metrodroid.card.classic.ClassicCard;
 import au.id.micolous.metrodroid.card.classic.ClassicCardTransitFactory;
@@ -193,26 +192,20 @@ public class BilheteUnicoSPTransitData extends TransitData {
     public static final ClassicCardTransitFactory FACTORY = new ClassicCardTransitFactory () {
         @Override
         public boolean earlyCheck(@NonNull List<ClassicSector> sectors) {
-            try {
-                // Normally both sectors are identical but occasionally one of them might get corrupted,
-                // so tolerate one failure
-                if (!checkCRC16Sector(sectors.get(3))
-                        && !checkCRC16Sector(sectors.get(4)))
+            // Normally both sectors are identical but occasionally one of them might get corrupted,
+            // so tolerate one failure
+            if (!checkCRC16Sector(sectors.get(3))
+                    && !checkCRC16Sector(sectors.get(4)))
+                return false;
+            for (int sectoridx = 5; sectoridx <= 8; sectoridx++) {
+                int addr = sectoridx * 4 + 1;
+                ClassicSector sector = sectors.get(sectoridx);
+                if (!checkValueBlock(sector.getBlock(1), addr))
                     return false;
-                for (int sectoridx = 5; sectoridx <= 8; sectoridx++) {
-                    int addr = sectoridx * 4 + 1;
-                    ClassicSector sector = sectors.get(sectoridx);
-                    if (!checkValueBlock(sector.getBlock(1), addr))
-                        return false;
-                    if (!checkValueBlock(sector.getBlock(2), addr))
-                        return false;
-                }
-                return true;
-            } catch (IndexOutOfBoundsException | UnauthorizedException ignored) {
-                // If that sector number is too high, then it's not for us.
-                // If we can't read we can't do anything
+                if (!checkValueBlock(sector.getBlock(2), addr))
+                    return false;
             }
-            return false;
+            return true;
         }
 
         @Override

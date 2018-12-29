@@ -24,7 +24,6 @@ import android.support.annotation.NonNull;
 
 import java.util.TimeZone;
 
-import au.id.micolous.metrodroid.card.UnauthorizedException;
 import au.id.micolous.metrodroid.card.ultralight.UltralightCard;
 import au.id.micolous.metrodroid.card.ultralight.UltralightCardTransitFactory;
 import au.id.micolous.metrodroid.transit.TransitCurrency;
@@ -51,13 +50,8 @@ public class NextfareUnknownUltralightTransitData extends NextfareUltralightTran
     public final static UltralightCardTransitFactory FACTORY = new UltralightCardTransitFactory() {
         @Override
         public boolean check(@NonNull UltralightCard card) {
-            try {
-                int head = Utils.byteArrayToInt(card.getPage(4).getData(), 0, 3);
-                return head == 0x0a0400 || head == 0x0a0800;
-            } catch (IndexOutOfBoundsException | UnauthorizedException ignored) {
-                // If that sector number is too high, then it's not for us.
-                return false;
-            }
+            int head = Utils.byteArrayToInt(card.getPage(4).getData(), 0, 3);
+            return head == 0x0a0400 || head == 0x0a0800;
         }
 
         @Override

@@ -29,7 +29,6 @@ import java.util.TimeZone;
 
 import au.id.micolous.farebot.R;
 import au.id.micolous.metrodroid.card.CardType;
-import au.id.micolous.metrodroid.card.UnauthorizedException;
 import au.id.micolous.metrodroid.card.ultralight.UltralightCard;
 import au.id.micolous.metrodroid.card.ultralight.UltralightCardTransitFactory;
 import au.id.micolous.metrodroid.transit.CardInfo;
@@ -74,19 +73,14 @@ public class CompassUltralightTransitData extends NextfareUltralightTransitData 
 
         @Override
         public boolean check(@NonNull UltralightCard card) {
-            try {
-                int head = Utils.byteArrayToInt(card.getPage(4).getData(), 0, 3);
-                if (head != 0x0a0400 && head != 0x0a0800)
-                    return false;
-                byte[] page1 = card.getPage(5).getData();
-                if (page1[1] != 1 || ((page1[2] & 0x80) != 0x80) || page1[3] != 0)
-                    return false;
-                byte[] page2 = card.getPage(6).getData();
-                return Utils.byteArrayToInt(page2, 0, 3) == 0;
-            } catch (IndexOutOfBoundsException | UnauthorizedException ignored) {
-                // If that sector number is too high, then it's not for us.
+            int head = Utils.byteArrayToInt(card.getPage(4).getData(), 0, 3);
+            if (head != 0x0a0400 && head != 0x0a0800)
                 return false;
-            }
+            byte[] page1 = card.getPage(5).getData();
+            if (page1[1] != 1 || ((page1[2] & 0x80) != 0x80) || page1[3] != 0)
+                return false;
+            byte[] page2 = card.getPage(6).getData();
+            return Utils.byteArrayToInt(page2, 0, 3) == 0;
         }
 
         @Override

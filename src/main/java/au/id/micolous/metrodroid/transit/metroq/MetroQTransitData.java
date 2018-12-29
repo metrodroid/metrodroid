@@ -34,7 +34,6 @@ import java.util.TimeZone;
 
 import au.id.micolous.farebot.R;
 import au.id.micolous.metrodroid.card.CardType;
-import au.id.micolous.metrodroid.card.UnauthorizedException;
 import au.id.micolous.metrodroid.card.classic.ClassicBlock;
 import au.id.micolous.metrodroid.card.classic.ClassicCard;
 import au.id.micolous.metrodroid.card.classic.ClassicCardTransitFactory;
@@ -103,23 +102,15 @@ public class MetroQTransitData extends TransitData {
     public static final ClassicCardTransitFactory FACTORY = new ClassicCardTransitFactory() {
         @Override
         public boolean earlyCheck(@NonNull List<ClassicSector> sectors) {
-            try {
-                ClassicSector sector = sectors.get(0);
-                for (int i = 1; i < 3; i++) {
-                    byte[] block = sector.getBlock(i).getData();
-                    for (int j = (i == 1 ? 1 : 0); j < 8; j++)
-                        if (Utils.byteArrayToInt(block, j * 2, 2) != METRO_Q_ID
-                                && (i != 2 || j != 6))
-                            return false;
-                }
-                return true;
-            } catch (UnauthorizedException ex) {
-                // Not ours
-                return false;
-            } catch (IndexOutOfBoundsException ignored) {
-                // If the sector/block number is too high, it's not for us
-                return false;
+            ClassicSector sector = sectors.get(0);
+            for (int i = 1; i < 3; i++) {
+                byte[] block = sector.getBlock(i).getData();
+                for (int j = (i == 1 ? 1 : 0); j < 8; j++)
+                    if (Utils.byteArrayToInt(block, j * 2, 2) != METRO_Q_ID
+                            && (i != 2 || j != 6))
+                        return false;
             }
+            return true;
         }
 
         @Override

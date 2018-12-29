@@ -18,7 +18,6 @@
  */
 package au.id.micolous.metrodroid.transit.ovc
 
-import au.id.micolous.metrodroid.card.UnauthorizedException
 import au.id.micolous.metrodroid.card.ultralight.UltralightCard
 import au.id.micolous.metrodroid.card.ultralight.UltralightCardTransitFactory
 import au.id.micolous.metrodroid.transit.TransactionTrip
@@ -48,15 +47,9 @@ private fun parse(card: UltralightCard): OvcUltralightTransitData {
 class OvcUltralightTransitFactory : UltralightCardTransitFactory {
     // getAllCards not implemented -- Classic already adds it to supported cards
 
-    override fun check(card: UltralightCard) = try {
-        val head = card.getPage(4).data
-        // FIXME: check with more samples
-        head[0] == 0xc0.toByte() || head[0] == 0xc8.toByte()
-    } catch (ignored: IndexOutOfBoundsException) {
-        false
-    } catch (ignored: UnauthorizedException) {
-        false
-    }
+    // FIXME: check with more samples
+    override fun check(card: UltralightCard) =
+        card.getPage(4).data[0] in listOf(0xc0.toByte(), 0xc8.toByte())
 
     override fun parseTransitData(ultralightCard: UltralightCard) = parse(ultralightCard)
 

@@ -20,7 +20,6 @@ package au.id.micolous.metrodroid.transit.selecta
 
 import au.id.micolous.farebot.R
 import au.id.micolous.metrodroid.card.CardType
-import au.id.micolous.metrodroid.card.UnauthorizedException
 import au.id.micolous.metrodroid.card.classic.ClassicCard
 import au.id.micolous.metrodroid.card.classic.ClassicCardTransitFactory
 import au.id.micolous.metrodroid.card.classic.ClassicSector
@@ -39,16 +38,12 @@ import kotlinx.android.parcel.Parcelize
  */
 
 @Parcelize
-data class SelectaFranceTransitData(private val mBalance: Int = 0,
-                                    private val mSerial: Int = 0) : TransitData() {
+data class SelectaFranceTransitData(private val mBalance: Int,
+                                    private val mSerial: Int) : TransitData() {
 
     override fun getSerialNumber() = mSerial.toString()
 
     override fun getCardName(): String = NAME
-
-    constructor(card: ClassicCard) : this(
-            mSerial = getSerial(card),
-            mBalance = Utils.byteArrayToInt(card[1, 2].data, 0, 3))
 
     public override fun getBalance(): TransitBalance? = TransitCurrency.EUR(mBalance)
 
@@ -65,21 +60,14 @@ data class SelectaFranceTransitData(private val mBalance: Int = 0,
         private fun getSerial(card: ClassicCard): Int = Utils.byteArrayToInt(card[1, 0].data, 13, 3)
 
         val FACTORY: ClassicCardTransitFactory = object : ClassicCardTransitFactory {
-            override fun earlyCheck(sectors: List<ClassicSector>) = try {
-                val toc = sectors[0][1].data
-                // Check toc entries for sectors 10,12,13,14 and 15
-                Utils.byteArrayToInt(toc, 2, 2) == 0x0938
-            } catch (ignored: IndexOutOfBoundsException) {
-                // If that sector number is too high, then it's not for us.
-                // If we can't read we can't do anything
-                false
-            } catch (ignored: UnauthorizedException) {
-                false
-            }
+            override fun earlyCheck(sectors: List<ClassicSector>) =
+                Utils.byteArrayToInt(sectors[0][1].data, 2, 2) == 0x0938
 
             override fun parseTransitIdentity(card: ClassicCard): TransitIdentity = TransitIdentity(NAME, Integer.toString(getSerial(card)))
 
-            override fun parseTransitData(classicCard: ClassicCard): TransitData = SelectaFranceTransitData(classicCard)
+            override fun parseTransitData(card: ClassicCard): TransitData =
+                    SelectaFranceTransitData(mSerial = getSerial(card),
+                            mBalance = Utils.byteArrayToInt(card[1, 2].data, 0, 3))
 
             override fun earlySectors() = 1
 

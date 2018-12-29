@@ -26,7 +26,6 @@ import android.support.annotation.VisibleForTesting;
 
 import au.id.micolous.farebot.R;
 import au.id.micolous.metrodroid.card.CardType;
-import au.id.micolous.metrodroid.card.UnauthorizedException;
 import au.id.micolous.metrodroid.card.classic.ClassicCard;
 import au.id.micolous.metrodroid.card.classic.ClassicCardTransitFactory;
 import au.id.micolous.metrodroid.card.classic.ClassicSector;
@@ -100,22 +99,14 @@ public class LaxTapTransitData extends NextfareTransitData {
 
         @Override
         public boolean earlyCheck(@NonNull List<ClassicSector> sectors) {
-            try {
-                ClassicSector sector0 = sectors.get(0);
-                byte[] block1 = sector0.getBlock(1).getData();
-                if (!Arrays.equals(Arrays.copyOfRange(block1, 1, 15), BLOCK1)) {
-                    return false;
-                }
-
-                byte[] block2 = sector0.getBlock(2).getData();
-                return Arrays.equals(Arrays.copyOfRange(block2, 0, 4), BLOCK2);
-            } catch (UnauthorizedException ex) {
-                // It is not possible to identify the card without a key
-                return false;
-            } catch (IndexOutOfBoundsException ignored) {
-                // If the sector/block number is too high, it's not for us
+            ClassicSector sector0 = sectors.get(0);
+            byte[] block1 = sector0.getBlock(1).getData();
+            if (!Arrays.equals(Arrays.copyOfRange(block1, 1, 15), BLOCK1)) {
                 return false;
             }
+
+            byte[] block2 = sector0.getBlock(2).getData();
+            return Arrays.equals(Arrays.copyOfRange(block2, 0, 4), BLOCK2);
         }
 
         @Override

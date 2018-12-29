@@ -27,7 +27,6 @@ import java.util.Collections;
 import java.util.List;
 
 import au.id.micolous.farebot.R;
-import au.id.micolous.metrodroid.card.UnauthorizedException;
 import au.id.micolous.metrodroid.card.ultralight.UltralightCard;
 import au.id.micolous.metrodroid.card.ultralight.UltralightCardTransitFactory;
 import au.id.micolous.metrodroid.transit.CardInfo;
@@ -60,13 +59,7 @@ public class ClipperUltralightTransitData extends TransitData {
     public final static UltralightCardTransitFactory FACTORY = new UltralightCardTransitFactory() {
         @Override
         public boolean check(@NonNull UltralightCard card) {
-            try {
-                byte[] head = card.getPage(4).getData();
-                return head[0] == 0x13;
-            } catch (IndexOutOfBoundsException | UnauthorizedException ignored) {
-                // If that sector number is too high, then it's not for us.
-                return false;
-            }
+            return card.getPage(4).getData()[0] == 0x13;
         }
 
         @Override

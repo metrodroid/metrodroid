@@ -201,14 +201,9 @@ data class OVChipTransitData(
 
         val FACTORY: ClassicCardTransitFactory = object : ClassicCardTransitFactory {
             override fun earlyCheck(sectors: List<ClassicSector>): Boolean {
-                val sector = sectors[0]
-
-                if (sector is UnauthorizedClassicSector || sector is InvalidClassicSector)
-                    return false
-
                 // Starting at 0×010, 8400 0000 0603 a000 13ae e401 xxxx 0e80 80e8 seems to exist on all OVC's (with xxxx different).
                 // http://www.ov-chipkaart.de/back-up/3-8-11/www.ov-chipkaart.me/blog/index7e09.html?page_id=132
-                val blockData = sector.readBlocks(1, 1)
+                val blockData = sectors[0].readBlocks(1, 1)
                 return Arrays.equals(blockData.copyOfRange(0, 11), OVC_HEADER)
             }
 

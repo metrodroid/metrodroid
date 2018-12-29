@@ -25,7 +25,6 @@ import java.util.TimeZone
 
 import au.id.micolous.farebot.R
 import au.id.micolous.metrodroid.card.CardType
-import au.id.micolous.metrodroid.card.UnauthorizedException
 import au.id.micolous.metrodroid.card.classic.ClassicCard
 import au.id.micolous.metrodroid.card.classic.ClassicCardTransitFactory
 import au.id.micolous.metrodroid.card.classic.ClassicSector
@@ -214,17 +213,10 @@ data class ZolotayaKoronaTransitData internal constructor(
             }
 
             override fun earlyCheck(sectors: List<ClassicSector>): Boolean {
-                try {
-                    val toc = sectors[0][1].data
-                    // Check toc entries for sectors 10,12,13,14 and 15
-                    return Utils.byteArrayToInt(toc, 8, 2) == 0x18ee && Utils.byteArrayToInt(toc, 12, 2) == 0x18ee
-                } catch (ignored: IndexOutOfBoundsException) {
-                    // If that sector number is too high, then it's not for us.
-                    // If we can't read we can't do anything
-                } catch (ignored: UnauthorizedException) {
-                }
-
-                return false
+                val toc = sectors[0][1].data
+                // Check toc entries for sectors 10,12,13,14 and 15
+                return Utils.byteArrayToInt(toc, 8, 2) == 0x18ee
+                        && Utils.byteArrayToInt(toc, 12, 2) == 0x18ee
             }
 
             override fun earlySectors() = 1
