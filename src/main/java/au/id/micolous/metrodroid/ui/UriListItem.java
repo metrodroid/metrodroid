@@ -19,11 +19,13 @@
 package au.id.micolous.metrodroid.ui;
 
 import android.net.Uri;
+import android.support.annotation.NonNull;
 
 /**
  * ListItem which supports directing to a website.
  */
 public class UriListItem extends ListItem {
+    @NonNull
     private final Uri mUri;
 
     public UriListItem(String name, String value, Uri uri) {
@@ -31,11 +33,12 @@ public class UriListItem extends ListItem {
         this.mUri = uri;
     }
 
-    public UriListItem(int nameResource, int valueResource, Uri uri) {
+    public UriListItem(int nameResource, int valueResource, @NonNull Uri uri) {
         super(nameResource, valueResource);
         this.mUri = uri;
     }
 
+    @NonNull
     public Uri getUri() {
         return mUri;
     }

@@ -39,9 +39,11 @@ import kotlinx.android.parcel.Parcelize
 data class StrelkaTransitData (private val mSerial: String): SerialOnlyTransitData() {
     override fun getSerialNumber() = formatShortSerial(mSerial)
 
-    public override fun getExtraInfo() = listOf(ListItem(R.string.strelka_long_serial, mSerial))
+    public override val extraInfo
+        get() = listOf(ListItem(R.string.strelka_long_serial, mSerial))
 
-    override fun getReason() = SerialOnlyTransitData.Reason.MORE_RESEARCH_NEEDED
+    override val reason
+        get() = SerialOnlyTransitData.Reason.MORE_RESEARCH_NEEDED
 
     override fun getCardName() = Utils.localizeString(R.string.card_name_strelka)
 
