@@ -75,7 +75,7 @@ public class DesfireCard extends Card {
             ClipperTransitData.FACTORY,
             HSLTransitData.FACTORY,
             OpalTransitData.FACTORY,
-            MykiTransitData.FACTORY,
+            MykiTransitData.Companion.getFACTORY(),
             IstanbulKartTransitData.Companion.getFACTORY(),
             LeapTransitData.FACTORY,
             TrimetHopTransitData.Companion.getFACTORY(),
