@@ -107,7 +107,7 @@ data class RkfTransitData internal constructor(
             })
 
     companion object {
-        private val issuerMap = hashMapOf(
+        private val issuerMap = mapOf(
                 RkfLookup.SLACCESS to CardInfo.Builder()
                         .setName("SLaccess")
                         .setLocation(R.string.location_stockholm)
