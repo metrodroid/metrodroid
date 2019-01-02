@@ -133,7 +133,7 @@ public class TroikaHybridTransitData extends TransitData {
             dest.writeInt(0);
         if (mStrelka != null) {
             dest.writeInt(1);
-            mStrelka.writeToParcel(dest, i);
+            dest.writeParcelable(mStrelka, i);
         } else
             dest.writeInt(0);
     }
@@ -145,7 +145,7 @@ public class TroikaHybridTransitData extends TransitData {
         else
             mPodorozhnik = null;
         if (p.readInt() != 0)
-            mStrelka = new StrelkaTransitData(p);
+            mStrelka = p.readParcelable(StrelkaTransitData.class.getClassLoader());
         else
             mStrelka = null;
     }
@@ -154,7 +154,7 @@ public class TroikaHybridTransitData extends TransitData {
         @Override
         public TransitIdentity parseTransitIdentity(@NonNull ClassicCard card) {
             int nameRes = R.string.card_name_troika;
-            if (StrelkaTransitData.FACTORY.check(card))
+            if (StrelkaTransitData.Companion.getFACTORY().check(card))
                 nameRes = R.string.card_name_troika_strelka_hybrid;
             if (PodorozhnikTransitData.FACTORY.check(card))
                 nameRes = R.string.card_name_troika_podorozhnik_hybrid;
@@ -196,8 +196,8 @@ public class TroikaHybridTransitData extends TransitData {
             mPodorozhnik = new PodorozhnikTransitData(card);
         else
             mPodorozhnik = null;
-        if (StrelkaTransitData.FACTORY.check(card))
-            mStrelka = new StrelkaTransitData(card);
+        if (StrelkaTransitData.Companion.getFACTORY().check(card))
+            mStrelka = StrelkaTransitData.Companion.parse(card);
         else
             mStrelka = null;
     }
