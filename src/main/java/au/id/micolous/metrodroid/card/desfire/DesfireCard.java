@@ -80,7 +80,7 @@ public class DesfireCard extends Card {
             MykiTransitData.FACTORY,
             IstanbulKartTransitData.FACTORY,
             LeapTransitData.FACTORY,
-            TrimetHopTransitData.FACTORY,
+            TrimetHopTransitData.Companion.getFACTORY(),
             AdelaideMetrocardTransitData.FACTORY,
             AtHopStubTransitData.FACTORY,
             UnauthorizedDesfireTransitData.FACTORY
