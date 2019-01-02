@@ -25,7 +25,6 @@ import android.nfc.tech.IsoDep;
 import android.util.Log;
 
 import au.id.micolous.farebot.R;
-import au.id.micolous.metrodroid.MetrodroidApplication;
 import au.id.micolous.metrodroid.card.Card;
 import au.id.micolous.metrodroid.card.CardType;
 import au.id.micolous.metrodroid.card.TagReaderFeedbackInterface;
@@ -46,12 +45,11 @@ import au.id.micolous.metrodroid.transit.serialonly.MykiTransitData;
 import au.id.micolous.metrodroid.transit.opal.OpalTransitData;
 import au.id.micolous.metrodroid.transit.orca.OrcaTransitData;
 import au.id.micolous.metrodroid.transit.adelaide.AdelaideMetrocardTransitData;
-import au.id.micolous.metrodroid.transit.serialonly.AtHopStubTransitData;
+import au.id.micolous.metrodroid.transit.serialonly.AtHopTransitData;
 import au.id.micolous.metrodroid.transit.tfi_leap.LeapTransitData;
 import au.id.micolous.metrodroid.transit.tfi_leap.LeapUnlocker;
 import au.id.micolous.metrodroid.transit.serialonly.TrimetHopTransitData;
 import au.id.micolous.metrodroid.transit.unknown.UnauthorizedDesfireTransitData;
-import au.id.micolous.metrodroid.ui.HeaderListItem;
 import au.id.micolous.metrodroid.ui.ListItem;
 import au.id.micolous.metrodroid.ui.ListItemRecursive;
 import au.id.micolous.metrodroid.util.Utils;
@@ -82,7 +80,7 @@ public class DesfireCard extends Card {
             LeapTransitData.FACTORY,
             TrimetHopTransitData.Companion.getFACTORY(),
             AdelaideMetrocardTransitData.FACTORY,
-            AtHopStubTransitData.FACTORY,
+            AtHopTransitData.Companion.getFACTORY(),
             UnauthorizedDesfireTransitData.FACTORY
     };
 
