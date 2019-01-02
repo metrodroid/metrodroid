@@ -103,7 +103,7 @@ public class XmlGenericCardFormat<T extends Card> extends CardsExporter<T> imple
 
     }
 
-    private static String cutXmlDef(String data) {
+    public static String cutXmlDef(String data) {
         if (!data.startsWith("<?"))
             return data;
         return data.substring(data.indexOf("?>")+2);

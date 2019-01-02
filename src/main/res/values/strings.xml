@@ -447,6 +447,10 @@
         <item quantity="one">Single-ride</item>
         <item quantity="other">%d-ride</item>
     </plurals>
+    <plurals name="cards_deduped">
+        <item quantity="one">%d card deduped</item>
+        <item quantity="other">%d cards deduped</item>
+    </plurals>
     <plurals name="lisboaviva_valid_days">
         <item quantity="one">Valid for %d day</item>
         <item quantity="other">Valid for %d days</item>
@@ -1457,6 +1461,8 @@
     <!-- Translators: some card serial numbers are very long, this is shown as a list item for
     the full version of the card's serial number -->
     <string name="full_serial_number">Full serial number</string>
+    <string name="deduplicate_cards">Deduplicate</string>
+
     <!-- Translators: Zolotaya Korona (Russian: Золотая Корона, lit: Golden Crown) is a Russian
     payment system which operates ticketing systems in many cities in Russia. -->
     <string name="card_name_zolotaya_korona">Zolotaya Korona</string>

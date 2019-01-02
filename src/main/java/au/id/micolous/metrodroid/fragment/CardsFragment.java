@@ -71,6 +71,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import javax.xml.parsers.ParserConfigurationException;
 
@@ -298,6 +299,10 @@ public class CardsFragment extends ExpandableListFragment {
                     new ShareTask().execute();
                     return true;
 
+                case R.id.deduplicate_cards:
+                    new DedupTask(getActivity()).execute();
+                    return true;
+
                 case R.id.save_xml:
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
                         i = new Intent(Intent.ACTION_CREATE_DOCUMENT);
@@ -316,6 +321,49 @@ public class CardsFragment extends ExpandableListFragment {
             Utils.showError(getActivity(), ex);
         }
         return false;
+    }
+
+    private static class DedupTask extends AsyncTask<Void, Integer, Pair<String, Integer>> {
+        private final WeakReference<Context> mContext;
+
+        private DedupTask(Context context) {
+            mContext = new WeakReference<>(context);
+        }
+
+        @Override
+        protected Pair<String, Integer> doInBackground(Void... voids) {
+            try {
+                Set<Long> tf = ExportHelper.findDuplicates(MetrodroidApplication.getInstance());
+                if (tf == null || tf.isEmpty())
+                    return new Pair<>(null, 0);
+                return new Pair<>(null, ExportHelper.deleteSet(MetrodroidApplication.getInstance(),
+                        tf));
+            } catch (Exception ex) {
+                Log.e(TAG, ex.getMessage(), ex);
+                return new Pair<>(Utils.getErrorMessage(ex), null);
+            }
+        }
+
+        @Override
+        protected void onPostExecute(Pair<String, Integer> res) {
+            String err = res.first;
+            Integer tf = res.second;
+            Context context = mContext.get();
+
+            if (context == null)
+                return;
+
+            if (err != null) {
+                new AlertDialog.Builder(context)
+                        .setMessage(err)
+                        .show();
+                return;
+            }
+
+            Toast.makeText(context,
+                    Utils.localizePlural(R.plurals.cards_deduped, tf, tf),
+                    Toast.LENGTH_SHORT).show();
+        }
     }
 
     private static class ShareTask extends AsyncTask<Void, Integer, Pair<String, File>> {
