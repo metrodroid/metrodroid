@@ -30,6 +30,7 @@ import au.id.micolous.metrodroid.ui.ListItem;
 import au.id.micolous.metrodroid.ui.ListItemRecursive;
 import au.id.micolous.metrodroid.util.Utils;
 import au.id.micolous.metrodroid.xml.Base64String;
+import au.id.micolous.metrodroid.xml.ImmutableByteArray;
 
 @SuppressWarnings({"WeakerAccess", "CanBeFinal", "unused"})
 @Root(name = "auth-exchange")
@@ -57,11 +58,11 @@ public class DesfireAuthLog {
     public ListItem getRawData() {
         List<ListItem> vals = new ArrayList<>();
         if (mChallenge != null)
-            vals.add(ListItemRecursive.collapsedValue(R.string.desfire_challenge, Utils.getHexDump(mChallenge.getData())));
+            vals.add(ListItemRecursive.collapsedValue(R.string.desfire_challenge, mChallenge.toHexDump()));
         if (mResponse != null)
-            vals.add(ListItemRecursive.collapsedValue(R.string.desfire_response, Utils.getHexDump(mResponse.getData())));
+            vals.add(ListItemRecursive.collapsedValue(R.string.desfire_response, mResponse.toHexDump()));
         if (mConfirm != null)
-            vals.add(ListItemRecursive.collapsedValue(R.string.desfire_confirmation, Utils.getHexDump(mConfirm.getData())));
+            vals.add(ListItemRecursive.collapsedValue(R.string.desfire_confirmation, mConfirm.toHexDump()));
 
         return new ListItemRecursive(R.string.desfire_keyex, Utils.localizeString(R.string.desfire_key_number,
                 Utils.intToHex(mKeyId)),

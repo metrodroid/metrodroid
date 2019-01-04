@@ -37,6 +37,7 @@ import au.id.micolous.metrodroid.transit.TransitIdentity;
 import au.id.micolous.metrodroid.transit.nextfare.ultralight.NextfareUltralightTransaction;
 import au.id.micolous.metrodroid.transit.nextfare.ultralight.NextfareUltralightTransitData;
 import au.id.micolous.metrodroid.util.Utils;
+import au.id.micolous.metrodroid.xml.ImmutableByteArray;
 
 public class VentraUltralightTransitData extends NextfareUltralightTransitData {
 
@@ -73,10 +74,10 @@ public class VentraUltralightTransitData extends NextfareUltralightTransitData {
             int head = Utils.byteArrayToInt(card.getPage(4).getData(), 0, 3);
             if (head != 0x0a0400 && head != 0x0a0800)
                 return false;
-            byte[] page1 = card.getPage(5).getData();
-            if (page1[1] != 1 || ((page1[2] & 0x80) == 0x80) || page1[3] != 0)
+            ImmutableByteArray page1 = card.getPage(5).getData();
+            if (page1.get(1) != 1 || ((page1.get(2) & 0x80) == 0x80) || page1.get(3) != 0)
                 return false;
-            byte[] page2 = card.getPage(6).getData();
+            ImmutableByteArray page2 = card.getPage(6).getData();
             return Utils.byteArrayToInt(page2, 0, 3) == 0;
         }
 

@@ -39,6 +39,7 @@ import au.id.micolous.metrodroid.ui.ListItem;
 import au.id.micolous.metrodroid.ui.ListItemRecursive;
 import au.id.micolous.metrodroid.util.Utils;
 import au.id.micolous.metrodroid.xml.Base64String;
+import au.id.micolous.metrodroid.xml.ImmutableByteArray;
 
 @Root(name = "sector")
 public class ClassicSector {
@@ -119,8 +120,8 @@ public class ClassicSector {
                         Utils.localizeString(R.string.block_title_format,
                                 Integer.toString(block.getIndex())),
                         block.getType(),
-                        Collections.singletonList(new ListItem(null, Utils.getHexDump(block.getData())))
-                ));
+                        Collections.singletonList(new ListItem(null, block.getData().toHexDump())))
+                );
         }
         if (isEmpty()) {
             return new ListItemRecursive(
@@ -133,13 +134,11 @@ public class ClassicSector {
                 key, bli);
     }
 
-    public byte[] readBlocks(int startBlock, int blockCount) throws IndexOutOfBoundsException {
-        int readBlocks = 0;
-        byte[] data = new byte[blockCount * 16];
+    public ImmutableByteArray readBlocks(int startBlock, int blockCount) throws IndexOutOfBoundsException {
+        ImmutableByteArray data = ImmutableByteArray.Companion.empty();
         for (int index = startBlock; index < (startBlock + blockCount); index++) {
-            byte[] blockData = getBlock(index).getData();
-            System.arraycopy(blockData, 0, data, readBlocks * 16, blockData.length);
-            readBlocks++;
+            ImmutableByteArray blockData = getBlock(index).getData();
+            data = data.plus(blockData);
         }
         return data;
     }

@@ -23,9 +23,8 @@ package au.id.micolous.metrodroid.transit.ovc
 import android.os.Parcelable
 
 import au.id.micolous.metrodroid.util.Utils
+import au.id.micolous.metrodroid.xml.ImmutableByteArray
 import kotlinx.android.parcel.Parcelize
-
-import java.util.Arrays
 
 @Parcelize
 data class OVChipIndex internal constructor(
@@ -38,9 +37,9 @@ data class OVChipIndex internal constructor(
 ) : Parcelable {
 
     companion object {
-        fun parse(data: ByteArray): OVChipIndex {
-            val firstSlot = Arrays.copyOfRange(data, 0, data.size / 2)
-            val secondSlot = Arrays.copyOfRange(data, data.size / 2, data.size)
+        fun parse(data: ImmutableByteArray): OVChipIndex {
+            val firstSlot = data.copyOfRange(0, data.size / 2)
+            val secondSlot = data.copyOfRange(data.size / 2, data.size)
 
             val iIDa3 = Utils.getBitsFromBuffer(firstSlot, 10, 16)
             val iIDb3 = Utils.getBitsFromBuffer(secondSlot, 10, 16)

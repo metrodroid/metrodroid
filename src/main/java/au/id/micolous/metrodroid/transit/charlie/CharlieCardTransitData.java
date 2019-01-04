@@ -49,6 +49,7 @@ import au.id.micolous.metrodroid.transit.TransitData;
 import au.id.micolous.metrodroid.transit.TransitIdentity;
 import au.id.micolous.metrodroid.ui.ListItem;
 import au.id.micolous.metrodroid.util.Utils;
+import au.id.micolous.metrodroid.xml.ImmutableByteArray;
 
 public class CharlieCardTransitData extends TransitData {
 
@@ -98,7 +99,7 @@ public class CharlieCardTransitData extends TransitData {
         }
     }
 
-    public static int getPrice(byte[] data, int off) {
+    public static int getPrice(ImmutableByteArray data, int off) {
         int val = Utils.byteArrayToInt(data, off, 2);
         if ((val & 0x8000) != 0) {
             val = -(val & 0x7fff);
@@ -204,8 +205,8 @@ public class CharlieCardTransitData extends TransitData {
         @Override
         public boolean earlyCheck(@NonNull List<ClassicSector> sectors) {
             ClassicSector sector0 = sectors.get(0);
-            byte[] b = sector0.getBlock(1).getData();
-            if (!Arrays.equals(Utils.byteArraySlice(b, 2, 14), new byte[]{
+            ImmutableByteArray b = sector0.getBlock(1).getData();
+            if (!b.sliceOffLen(2, 14).contentEquals(new byte[]{
                     0x04, 0x10, 0x04, 0x10, 0x04, 0x10,
                     0x04, 0x10, 0x04, 0x10, 0x04, 0x10, 0x04, 0x10
             }))
@@ -214,7 +215,7 @@ public class CharlieCardTransitData extends TransitData {
             if (sector1 instanceof UnauthorizedClassicSector)
                 return true;
             b = sector1.getBlock(0).getData();
-            return Arrays.equals(Utils.byteArraySlice(b, 0, 6), new byte[]{
+            return b.sliceOffLen(0, 6).contentEquals(new byte[]{
                     0x04, 0x10, 0x23, 0x45, 0x66, 0x77
             });
         }

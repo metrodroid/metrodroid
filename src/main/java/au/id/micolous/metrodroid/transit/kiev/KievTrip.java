@@ -33,6 +33,7 @@ import au.id.micolous.metrodroid.transit.Station;
 import au.id.micolous.metrodroid.transit.TransitCurrency;
 import au.id.micolous.metrodroid.transit.Trip;
 import au.id.micolous.metrodroid.util.Utils;
+import au.id.micolous.metrodroid.xml.ImmutableByteArray;
 
 public class KievTrip extends Trip {
     private final Calendar mTimestamp;
@@ -43,7 +44,7 @@ public class KievTrip extends Trip {
     private final int mValidator;
     private final static TimeZone TZ = TimeZone.getTimeZone("Europe/Kiev");
 
-    KievTrip(byte []data) {
+    KievTrip(ImmutableByteArray data) {
         mTimestamp = parseTimestamp(data);
         // This is a shameless plug. We have no idea which field
         // means what. But metro transport is always 84/04/40/53
@@ -56,7 +57,7 @@ public class KievTrip extends Trip {
         mCounter2 = Utils.getBitsFromBuffer(data, 98, 16);
     }
 
-    private static Calendar parseTimestamp(byte[] data) {
+    private static Calendar parseTimestamp(ImmutableByteArray data) {
         Calendar c = new GregorianCalendar(TZ);
         c.set(Utils.getBitsFromBuffer(data, 17, 5) + 2000,
                 Utils.getBitsFromBuffer(data, 13, 4) - 1,

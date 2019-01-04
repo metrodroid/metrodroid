@@ -84,14 +84,14 @@ public class CardTest {
         Calendar d = new GregorianCalendar(2010, 1, 1, 0, 0, 0);
         d.setTimeZone(TimeZone.getTimeZone("GMT"));
 
-        Card c1 = new UltralightCard(Utils.hexStringToByteArray("00123456789abcde"),
+        Card c1 = new UltralightCard(ImmutableByteArray.Companion.fromHex("00123456789abcde"),
                 d,
                 "MF0ICU2",
-                new UltralightPage[] {
-                        new UltralightPage(0, Utils.hexStringToByteArray("00123456")),
-                        new UltralightPage(1, Utils.hexStringToByteArray("789abcde")),
-                        new UltralightPage(2, Utils.hexStringToByteArray("ff000000")),
-                        new UltralightPage(3, Utils.hexStringToByteArray("ffffffff")),
+                Arrays.asList(
+                        new UltralightPage(0, ImmutableByteArray.Companion.fromHex("00123456")),
+                        new UltralightPage(1, ImmutableByteArray.Companion.fromHex("789abcde")),
+                        new UltralightPage(2, ImmutableByteArray.Companion.fromHex("ff000000")),
+                        new UltralightPage(3, ImmutableByteArray.Companion.fromHex("ffffffff")),
                         new UnauthorizedUltralightPage(4), // User memory starts here
                         new UnauthorizedUltralightPage(5),
                         new UnauthorizedUltralightPage(6),
@@ -132,7 +132,7 @@ public class CardTest {
                         new UnauthorizedUltralightPage(41),
                         new UnauthorizedUltralightPage(42),
                         new UnauthorizedUltralightPage(43)
-                });
+                ));
 
         assertTrue(c1.parseTransitData() instanceof UnauthorizedUltralightTransitData);
     }
@@ -231,30 +231,30 @@ public class CardTest {
         d.setTimeZone(TimeZone.getTimeZone("GMT"));
 
         // Card with no files at all.
-        Card c1 = new DesfireCard(Utils.hexStringToByteArray("47504C7633"),
-                d, null, new DesfireApplication[] {});
+        Card c1 = new DesfireCard(ImmutableByteArray.Companion.fromHex("47504C7633"),
+                d, null, Collections.emptyList());
 
         assertTrue(c1.parseTransitData() instanceof UnauthorizedDesfireTransitData);
 
         // Card with only locked files.
-        Card c2 = new DesfireCard(Utils.hexStringToByteArray("6D6574726F"),
-                d, null, new DesfireApplication[] {
-                new DesfireApplication(0x6472, new DesfireFile[] {
+        Card c2 = new DesfireCard(ImmutableByteArray.Companion.fromHex("6D6574726F"),
+                d, null, Collections.singletonList(
+                new DesfireApplication(0x6472, Collections.singletonList(
                   new UnauthorizedDesfireFile(0x6f69, "Authentication error: 64", null)
-                })
-        });
+                )))
+        );
 
         assertTrue(c2.parseTransitData() instanceof UnauthorizedDesfireTransitData);
 
         // Card with unlocked file.
-        Card c3 = new DesfireCard(Utils.hexStringToByteArray("6D6574726F"),
-                d, null, new DesfireApplication[] {
-                new DesfireApplication(0x6472, new DesfireFile[] {
+        Card c3 = new DesfireCard(ImmutableByteArray.Companion.fromHex("6D6574726F"),
+                d, null, Collections.singletonList(
+                new DesfireApplication(0x6472, Collections.singletonList(
                         DesfireFile.create(0x6f69, null,
                                 new byte[] { (byte) 0x6d, (byte) 0x69, (byte) 0x63, (byte) 0x6f,
                                              (byte) 0x6c, (byte) 0x6f, (byte) 0x75, (byte) 0x73 })
-                })
-        });
+                ))
+        ));
 
         assertFalse(c3.parseTransitData() instanceof UnauthorizedDesfireTransitData);
     }

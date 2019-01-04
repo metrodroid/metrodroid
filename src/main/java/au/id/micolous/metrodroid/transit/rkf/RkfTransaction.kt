@@ -23,6 +23,7 @@ import au.id.micolous.metrodroid.transit.TransitCurrency
 import au.id.micolous.metrodroid.transit.Trip
 import au.id.micolous.metrodroid.transit.en1545.*
 import au.id.micolous.metrodroid.util.Utils
+import au.id.micolous.metrodroid.xml.ImmutableByteArray
 import kotlinx.android.parcel.Parcelize
 
 @Parcelize
@@ -107,14 +108,14 @@ class RkfTransaction(val parsed: En1545Parsed, val mTransactionCode: Int, val mL
                 En1545FixedInteger("D", 18)
         )
 
-        fun parseTransaction(b: ByteArray, lookup: RkfLookup, version: Int) = when (version) {
+        fun parseTransaction(b: ImmutableByteArray, lookup: RkfLookup, version: Int) = when (version) {
             1 -> parseTransactionV1(b, lookup)
             2 -> parseTransactionV2(b, lookup)
             // Rest not implemented
             else -> parseTransactionV2(b, lookup)
         }
 
-        private fun parseTransactionV1(b: ByteArray, lookup: RkfLookup): RkfTransaction? {
+        private fun parseTransactionV1(b: ImmutableByteArray, lookup: RkfLookup): RkfTransaction? {
             val parsed = En1545Parser.parseLeBits(b, FIELDS_V1)
             val rkfEventCode = Utils.getBitsFromBufferLeBits(b, 90, 6)
             when (rkfEventCode) {
@@ -131,7 +132,7 @@ class RkfTransaction(val parsed: En1545Parsed, val mTransactionCode: Int, val mL
             return RkfTransaction(parsed = parsed, mLookup = lookup, mTransactionCode = rkfEventCode)
         }
 
-        private fun parseTransactionV2(b: ByteArray, lookup: RkfLookup): RkfTransaction? {
+        private fun parseTransactionV2(b: ImmutableByteArray, lookup: RkfLookup): RkfTransaction? {
             val parsed = En1545Parser.parseLeBits(b, FIELDS_V2_HEADER)
             val rkfEventCode = Utils.getBitsFromBufferLeBits(b, 72, 6)
             if (rkfEventCode != 0xf)

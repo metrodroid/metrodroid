@@ -21,6 +21,7 @@ package au.id.micolous.metrodroid.test;
 import org.jetbrains.annotations.NonNls;
 import org.junit.Test;
 
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Collections;
 import java.util.List;
@@ -36,6 +37,7 @@ import au.id.micolous.metrodroid.transit.TransitIdentity;
 import au.id.micolous.metrodroid.transit.Trip;
 import au.id.micolous.metrodroid.transit.orca.OrcaTransitData;
 import au.id.micolous.metrodroid.util.Utils;
+import au.id.micolous.metrodroid.xml.ImmutableByteArray;
 
 import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.assertNull;
@@ -76,17 +78,18 @@ public class OrcaTest extends BaseInstrumentedTest {
     private DesfireCard constructOrcaCard() {
         // Construct a card to hold the data.
         DesfireFile f2 = RecordDesfireFile.create(2,
-                new RecordDesfireFileSettings((byte)0,(byte)0,new byte[]{}, 48, 5, 5),
-                Utils.hexStringToByteArray(testFile0x2));
-        DesfireFile f4 = DesfireFile.create(4, null, Utils.hexStringToByteArray(testFile0x4));
+                new RecordDesfireFileSettings((byte)0,(byte)0,ImmutableByteArray.Companion.empty(),
+                        48, 5, 5),
+                ImmutableByteArray.Companion.fromHex(testFile0x2));
+        DesfireFile f4 = DesfireFile.create(4, null, ImmutableByteArray.Companion.fromHex(testFile0x4));
         DesfireFile ff = DesfireFile.create(15,null,
-                Utils.hexStringToByteArray(testFile0xf));
-        DesfireApplication a = new DesfireApplication(OrcaTransitData.APP_ID, new DesfireFile[] { f2, f4 });
-        DesfireApplication a2 = new DesfireApplication(0xffffff, new DesfireFile[] { ff });
-        return new DesfireCard(new byte[] {0, 1, 2, 3},
+                ImmutableByteArray.Companion.fromHex(testFile0xf));
+        DesfireApplication a = new DesfireApplication(OrcaTransitData.APP_ID, Arrays.asList(f2, f4));
+        DesfireApplication a2 = new DesfireApplication(0xffffff, Collections.singletonList(ff));
+        return new DesfireCard(ImmutableByteArray.Companion.fromHex("00010203"),
                 Calendar.getInstance(),
                 null,
-                new DesfireApplication[] { a, a2 });
+                Arrays.asList(a, a2));
     }
 
     @Test

@@ -25,6 +25,7 @@ import android.support.annotation.NonNull;
 import android.util.Log;
 
 import au.id.micolous.metrodroid.util.Utils;
+import au.id.micolous.metrodroid.xml.ImmutableByteArray;
 
 import java.util.Calendar;
 import java.util.TimeZone;
@@ -75,7 +76,7 @@ public class NextfareTransactionRecord extends NextfareRecord implements Parcela
         mValue = parcel.readInt();
     }
 
-    public static NextfareTransactionRecord recordFromBytes(byte[] input, TimeZone timeZone) {
+    public static NextfareTransactionRecord recordFromBytes(ImmutableByteArray input, TimeZone timeZone) {
         //if (input[0] != 0x31) throw new AssertionError("not a tap record");
 
         // LAX:      input[0] == 0x05 for "Travel Pass" trips.
@@ -86,7 +87,7 @@ public class NextfareTransactionRecord extends NextfareRecord implements Parcela
         // Minneapolis: input[0] == 0x89 unknown transaction type, no date, only a small number
         // around 100
 
-        int transhead = (input[0] & 0xff);
+        int transhead = (input.get(0) & 0xff);
         if (transhead == 0x89 || transhead == 0x71 || transhead == 0x79) {
             return null;
         }

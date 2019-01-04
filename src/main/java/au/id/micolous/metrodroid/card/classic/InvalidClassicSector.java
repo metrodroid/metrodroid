@@ -31,6 +31,7 @@ import java.util.List;
 import au.id.micolous.farebot.R;
 import au.id.micolous.metrodroid.ui.ListItem;
 import au.id.micolous.metrodroid.util.Utils;
+import au.id.micolous.metrodroid.xml.ImmutableByteArray;
 
 @Root(name = "sector")
 public class InvalidClassicSector extends ClassicSector {
@@ -50,7 +51,7 @@ public class InvalidClassicSector extends ClassicSector {
     }
 
     @Override
-    public byte[] readBlocks(int startBlock, int blockCount) throws IndexOutOfBoundsException {
+    public ImmutableByteArray readBlocks(int startBlock, int blockCount) throws IndexOutOfBoundsException {
         throw new IndexOutOfBoundsException("InvalidClassicSector has no blocks");
     }
 

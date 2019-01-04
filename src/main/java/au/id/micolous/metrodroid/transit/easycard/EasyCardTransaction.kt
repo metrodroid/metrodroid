@@ -28,6 +28,7 @@ import au.id.micolous.metrodroid.card.classic.ClassicCard
 import au.id.micolous.metrodroid.transit.*
 import au.id.micolous.metrodroid.util.StationTableReader
 import au.id.micolous.metrodroid.util.Utils
+import au.id.micolous.metrodroid.xml.ImmutableByteArray
 import kotlinx.android.parcel.Parcelize
 import java.util.*
 
@@ -40,7 +41,7 @@ data class EasyCardTransaction internal constructor(
         private val machineId: Long
 ) : Transaction() {
     @VisibleForTesting
-    constructor(data: ByteArray) : this(
+    constructor(data: ImmutableByteArray) : this(
             Utils.byteArrayToLongReversed(data, 1, 4),
             Utils.byteArrayToIntReversed(data, 6, 2),
             data[11].toInt(),

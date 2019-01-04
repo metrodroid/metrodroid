@@ -36,6 +36,7 @@ import au.id.micolous.metrodroid.transit.TransitCurrency;
 import au.id.micolous.metrodroid.transit.TransitData;
 import au.id.micolous.metrodroid.ui.ListItem;
 import au.id.micolous.metrodroid.util.Utils;
+import au.id.micolous.metrodroid.xml.ImmutableByteArray;
 
 /* Based on reference at http://www.lenrek.net/experiments/compass-tickets/. */
 public abstract class NextfareUltralightTransitData extends TransitData {
@@ -91,14 +92,14 @@ public abstract class NextfareUltralightTransitData extends TransitData {
 
     protected NextfareUltralightTransitData(UltralightCard card) {
         mSerial = getSerial(card);
-        byte []page0 = card.getPage(4).getData();
-        byte []page1 = card.getPage(5).getData();
-        byte []page3 = card.getPage(7).getData();
-        mType = page0[1];
-        int lowerBaseDate = page0[3] & 0xff;
-        int upperBaseDate = page1[0] & 0xff;
+        ImmutableByteArray page0 = card.getPage(4).getData();
+        ImmutableByteArray page1 = card.getPage(5).getData();
+        ImmutableByteArray page3 = card.getPage(7).getData();
+        mType = page0.get(1);
+        int lowerBaseDate = page0.get(3) & 0xff;
+        int upperBaseDate = page1.get(0) & 0xff;
         mBaseDate = (upperBaseDate << 8) | lowerBaseDate;
-        mProductCode = page1[2] & 0x7f;
+        mProductCode = page1.get(2) & 0x7f;
         mMachineCode = Utils.byteArrayToIntReversed(page3, 0, 2);
         List <NextfareUltralightTransaction> transactions = new ArrayList<>();
         if (isTransactionValid(card, 8)) {
@@ -129,8 +130,8 @@ public abstract class NextfareUltralightTransitData extends TransitData {
                                                                      int startPage, int baseDate);
 
     protected static long getSerial(UltralightCard card) {
-        byte []manufData0 = card.getPage(0). getData();
-        byte []manufData1 = card.getPage(1). getData();
+        ImmutableByteArray manufData0 = card.getPage(0). getData();
+        ImmutableByteArray manufData1 = card.getPage(1). getData();
         long uid = (Utils.byteArrayToLong(manufData0, 1, 2) << 32)
                 | (Utils.byteArrayToLong(manufData1, 0, 4));
         long serial = uid + 1000000000000000L;

@@ -46,6 +46,7 @@ import au.id.micolous.metrodroid.transit.TransitData;
 import au.id.micolous.metrodroid.transit.TransitIdentity;
 import au.id.micolous.metrodroid.ui.ListItem;
 import au.id.micolous.metrodroid.util.Utils;
+import au.id.micolous.metrodroid.xml.ImmutableByteArray;
 
 public class MetroQTransitData extends TransitData {
 
@@ -82,7 +83,7 @@ public class MetroQTransitData extends TransitData {
         mDate1 = parseTimestamp(card.getSector(1).getBlock(0).getData(), 24);
     }
 
-    private Calendar parseTimestamp(byte[]data, int off) {
+    private Calendar parseTimestamp(ImmutableByteArray data, int off) {
         Calendar c = new GregorianCalendar(TZ);
         c.set(Utils.getBitsFromBuffer(data, off, 8) + 2000,
                 Utils.getBitsFromBuffer(data, off+8, 4) - 1,
@@ -104,7 +105,7 @@ public class MetroQTransitData extends TransitData {
         public boolean earlyCheck(@NonNull List<ClassicSector> sectors) {
             ClassicSector sector = sectors.get(0);
             for (int i = 1; i < 3; i++) {
-                byte[] block = sector.getBlock(i).getData();
+                ImmutableByteArray block = sector.getBlock(i).getData();
                 for (int j = (i == 1 ? 1 : 0); j < 8; j++)
                     if (Utils.byteArrayToInt(block, j * 2, 2) != METRO_Q_ID
                             && (i != 2 || j != 6))

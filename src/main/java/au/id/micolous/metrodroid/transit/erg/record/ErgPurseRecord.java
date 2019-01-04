@@ -23,6 +23,7 @@ import android.os.Parcel;
 import android.os.Parcelable;
 
 import au.id.micolous.metrodroid.util.Utils;
+import au.id.micolous.metrodroid.xml.ImmutableByteArray;
 
 import java.util.Locale;
 
@@ -63,14 +64,14 @@ public class ErgPurseRecord extends ErgRecord implements Parcelable {
         }
     };
 
-    public static ErgPurseRecord recordFromBytes(byte[] input) {
+    public static ErgPurseRecord recordFromBytes(ImmutableByteArray input) {
         //if (input[0] != 0x02) throw new AssertionError("PurseRecord input[0] != 0x02");
 
         ErgPurseRecord record = new ErgPurseRecord();
-        if (input[3] == 0x09 || /* manly */
-                input[3] == 0x0D /* chc */) {
+        if (input.get(3) == 0x09 || /* manly */
+                input.get(3) == 0x0D /* chc */) {
             record.mIsCredit = false;
-        } else if (input[3] == 0x08 /* chc, manly */) {
+        } else if (input.get(3) == 0x08 /* chc, manly */) {
             record.mIsCredit = true;
         } else {
             // chc: 0x02 seen here, but only on $0 trips. Suspect this is for 2-hour free transfers.

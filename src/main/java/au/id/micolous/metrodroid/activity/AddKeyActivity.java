@@ -60,6 +60,7 @@ import java.io.InputStream;
 
 import au.id.micolous.farebot.R;
 import au.id.micolous.metrodroid.MetrodroidApplication;
+import au.id.micolous.metrodroid.xml.ImmutableByteArray;
 
 /**
  * Activity for associating a key import with a card.
@@ -157,7 +158,8 @@ public class AddKeyActivity extends MetrodroidActivity {
                     return;
                 }
             } else if (mKeyFormat == KeyFormat.RAW_MFC) {
-                mKeyData = ClassicCardKeys.Companion.fromDump(keyData);
+                mKeyData = ClassicCardKeys.Companion.fromDump(
+                        ImmutableByteArray.Companion.fromByteArray(keyData));
             } else {
                 // Unknown format.
                 Utils.showErrorAndFinish(this, R.string.invalid_key_file);

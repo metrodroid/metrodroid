@@ -37,6 +37,7 @@ import au.id.micolous.metrodroid.transit.nextfare.NextfareTrip;
 import au.id.micolous.metrodroid.transit.nextfare.record.NextfareTopupRecord;
 import au.id.micolous.metrodroid.util.StationTableReader;
 import au.id.micolous.metrodroid.util.Utils;
+import au.id.micolous.metrodroid.xml.ImmutableByteArray;
 
 import java.util.Arrays;
 import java.util.Collections;
@@ -73,14 +74,14 @@ public class SeqGoTransitData extends NextfareTransitData {
             .build();
 
     @VisibleForTesting
-    public static final byte[] SYSTEM_CODE1 = {
-            0x5A, 0x5B, 0x20, 0x21, 0x22, 0x23
-    };
+    public static final ImmutableByteArray SYSTEM_CODE1 = ImmutableByteArray.Companion.fromHex(
+            "5A5B20212223"
+    );
 
     @VisibleForTesting
-    public static final byte[] SYSTEM_CODE2 = {
-            0x20, 0x21, 0x22, 0x23, 0x01, 0x01
-    };
+    public static final ImmutableByteArray SYSTEM_CODE2 = ImmutableByteArray.Companion.fromHex(
+            "202122230101"
+    );
 
     private static final TimeZone TIME_ZONE = TimeZone.getTimeZone("Australia/Brisbane");
 
@@ -109,14 +110,14 @@ public class SeqGoTransitData extends NextfareTransitData {
         @Override
         public boolean earlyCheck(@NonNull List<ClassicSector> sectors) {
             ClassicSector sector0 = sectors.get(0);
-            byte[] blockData = sector0.getBlock(1).getData();
-            if (!Arrays.equals(Arrays.copyOfRange(blockData, 1, 9), MANUFACTURER)) {
+            ImmutableByteArray blockData = sector0.getBlock(1).getData();
+            if (!blockData.copyOfRange(1, 9).contentEquals(MANUFACTURER)) {
                 return false;
             }
 
-            byte[] systemCode = Arrays.copyOfRange(blockData, 9, 15);
+            ImmutableByteArray systemCode = blockData.copyOfRange(9, 15);
             //Log.d(TAG, "SystemCode = " + Utils.getHexString(systemCode));
-            return Arrays.equals(systemCode, SYSTEM_CODE1) || Arrays.equals(systemCode, SYSTEM_CODE2);
+            return systemCode.contentEquals(SYSTEM_CODE1) || systemCode.contentEquals(SYSTEM_CODE2);
         }
 
         @Override

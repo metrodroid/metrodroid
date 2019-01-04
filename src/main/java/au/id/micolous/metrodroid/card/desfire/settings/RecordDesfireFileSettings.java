@@ -28,6 +28,7 @@ import org.simpleframework.xml.Root;
 
 import au.id.micolous.farebot.R;
 import au.id.micolous.metrodroid.util.Utils;
+import au.id.micolous.metrodroid.xml.ImmutableByteArray;
 
 @Root(name = "settings")
 public class RecordDesfireFileSettings extends DesfireFileSettings {
@@ -40,14 +41,14 @@ public class RecordDesfireFileSettings extends DesfireFileSettings {
 
     private RecordDesfireFileSettings() { /* For XML Serializer */ }
 
-    public RecordDesfireFileSettings(byte fileType, byte commSetting, byte[] accessRights, int recordSize, int maxRecords, int curRecords) {
+    public RecordDesfireFileSettings(byte fileType, byte commSetting, ImmutableByteArray accessRights, int recordSize, int maxRecords, int curRecords) {
         super(fileType, commSetting, accessRights);
         this.mRecordSize = recordSize;
         this.mMaxRecords = maxRecords;
         this.mCurRecords = curRecords;
     }
 
-    public RecordDesfireFileSettings(byte[] buf) {
+    public RecordDesfireFileSettings(ImmutableByteArray buf) {
         super(buf);
 
         mRecordSize = Utils.byteArrayToIntReversed(buf, 4, 3);

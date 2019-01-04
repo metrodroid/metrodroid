@@ -45,6 +45,7 @@ import au.id.micolous.metrodroid.transit.TransitIdentity;
 import au.id.micolous.metrodroid.transit.Trip;
 import au.id.micolous.metrodroid.ui.ListItem;
 import au.id.micolous.metrodroid.util.Utils;
+import au.id.micolous.metrodroid.xml.ImmutableByteArray;
 
 public class BilheteUnicoSPTransitData extends TransitData {
     private static final String NAME = "Bilhete Único";
@@ -91,7 +92,7 @@ public class BilheteUnicoSPTransitData extends TransitData {
         ClassicSector creditSector = card.getSector(8);
         mCredit = Utils.byteArrayToIntReversed(creditSector.getBlock(1).getData(), 0, 4);
 
-        byte[] creditBlock0 = creditSector.getBlock(0).getData();
+        ImmutableByteArray creditBlock0 = creditSector.getBlock(0).getData();
 
         int lastRefillDay = Utils.getBitsFromBuffer(creditBlock0, 2, 14);
         int lastRefillAmount = Utils.getBitsFromBuffer(creditBlock0, 29, 11);
@@ -101,12 +102,12 @@ public class BilheteUnicoSPTransitData extends TransitData {
         if (!checkCRC16Sector(lastTripSector))
             lastTripSector = card.getSector(4);
 
-        byte[] tripBlock0 = lastTripSector.getBlock(0).getData();
+        ImmutableByteArray tripBlock0 = lastTripSector.getBlock(0).getData();
         mTransactionCounter = Utils.getBitsFromBuffer(tripBlock0, 48, 14);
-        byte[] block1 = lastTripSector.getBlock(1).getData();
+        ImmutableByteArray block1 = lastTripSector.getBlock(1).getData();
         int day = Utils.getBitsFromBuffer(block1, 76, 14);
         int time =  Utils.getBitsFromBuffer(block1, 90, 11);
-        byte[] block2 = lastTripSector.getBlock(2).getData();
+        ImmutableByteArray block2 = lastTripSector.getBlock(2).getData();
         int firstTapDay = Utils.getBitsFromBuffer(block2, 2, 14);
         int firstTapTime = Utils.getBitsFromBuffer(block2, 16, 11);
         int firstTapLine = Utils.getBitsFromBuffer(block2, 27, 9);
@@ -174,10 +175,11 @@ public class BilheteUnicoSPTransitData extends TransitData {
 
     @SuppressWarnings("BooleanMethodIsAlwaysInverted")
     private static boolean checkValueBlock(ClassicBlock block, int addr) {
-        byte[] data = block.getData();
+        ImmutableByteArray data = block.getData();
         return Utils.byteArrayToInt(data, 0, 4) == ~Utils.byteArrayToInt(data, 4, 4)
                 && Utils.byteArrayToInt(data, 0, 4) == Utils.byteArrayToInt(data, 8, 4)
-	        && data[12] == addr && data[14] == addr && data[13] == data[15] && (data[13] & 0xff) == (~addr & 0xff);
+	        && data.get(12) == addr && data.get(14) == addr && data.get(13) == data.get(15)
+                && (data.get(13) & 0xff) == (~addr & 0xff);
     }
 
     @SuppressWarnings("BooleanMethodIsAlwaysInverted")
@@ -185,7 +187,7 @@ public class BilheteUnicoSPTransitData extends TransitData {
         List<ClassicBlock> blocks = s.getBlocks();
         int crc = 0;
         for (ClassicBlock b : blocks.subList(0, blocks.size()-1))
-            crc = Utils.calculateCRC16IBM(b.getData(), crc);
+            crc = Utils.calculateCRC16IBM(b.getData().getDataCopy(), crc);
         return crc == 0;
     }
 

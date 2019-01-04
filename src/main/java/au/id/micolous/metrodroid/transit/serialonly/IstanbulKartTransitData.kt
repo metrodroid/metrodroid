@@ -30,6 +30,7 @@ import au.id.micolous.metrodroid.transit.CardInfo
 import au.id.micolous.metrodroid.transit.TransitIdentity
 import au.id.micolous.metrodroid.ui.ListItem
 import au.id.micolous.metrodroid.util.Utils
+import au.id.micolous.metrodroid.xml.ImmutableByteArray
 import kotlinx.android.parcel.Parcelize
 import java.util.*
 
@@ -86,7 +87,7 @@ class IstanbulKartTransitData (private val mSerial: String,
          * @param file content of the serial file
          * @return String with the complete serial number, or null on error
          */
-        private fun parseSerial(file: ByteArray) =
+        private fun parseSerial(file: ImmutableByteArray) =
                 Utils.getHexString(file, 0, 8)
 
         val FACTORY: DesfireCardTransitFactory = object : DesfireCardTransitFactory {

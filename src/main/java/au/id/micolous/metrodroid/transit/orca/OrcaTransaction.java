@@ -36,6 +36,7 @@ import au.id.micolous.metrodroid.transit.Trip;
 import au.id.micolous.metrodroid.transit.TransitCurrency;
 import au.id.micolous.metrodroid.util.StationTableReader;
 import au.id.micolous.metrodroid.util.Utils;
+import au.id.micolous.metrodroid.xml.ImmutableByteArray;
 
 import java.util.Calendar;
 import java.util.Collections;
@@ -71,7 +72,7 @@ public class OrcaTransaction extends Transaction {
     private static final int TRANS_TYPE_PASS_USE = 0x60;
 
     public OrcaTransaction(DesfireRecord record, boolean isTopup) {
-        byte[] useData = record.getData();
+        ImmutableByteArray useData = record.getData();
 
         mIsTopup = isTopup;
         mAgency = Utils.getBitsFromBuffer(useData, 24, 4);

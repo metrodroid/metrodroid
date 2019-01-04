@@ -37,6 +37,7 @@ import au.id.micolous.metrodroid.transit.TransitBalanceStored;
 import au.id.micolous.metrodroid.transit.TransitCurrency;
 import au.id.micolous.metrodroid.transit.TransitData;
 import au.id.micolous.metrodroid.util.Utils;
+import au.id.micolous.metrodroid.xml.ImmutableByteArray;
 
 public abstract class ChinaTransitData extends TransitData {
     protected final int mBalance;
@@ -59,7 +60,7 @@ public abstract class ChinaTransitData extends TransitData {
         }
     }
 
-    protected abstract ChinaTrip parseTrip(byte[] data);
+    protected abstract ChinaTrip parseTrip(ImmutableByteArray data);
 
     protected static ISO7816File getFile(ChinaCard card, int id) {
         ISO7816File f = card.getFile(ISO7816Selector.makeSelector(0x1001, id));

@@ -26,23 +26,24 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import au.id.micolous.metrodroid.xml.ImmutableByteArray;
+
 @Root(name = "history")
 public class CEPASHistory {
     private List<CEPASTransaction> mTransactions;
     private boolean mIsValid;
     private String mErrorMessage;
 
-    public CEPASHistory(byte[] purseData) {
+    public CEPASHistory(ImmutableByteArray purseData) {
         if (purseData != null) {
             mIsValid = true;
             mErrorMessage = "";
             int recordSize = 16;
-            int purseCount = purseData.length / recordSize;
+            int purseCount = purseData.getSize() / recordSize;
             CEPASTransaction[] transactions = new CEPASTransaction[purseCount];
-            for (int i = 0; i < purseData.length; i += recordSize) {
-                byte[] tempData = new byte[recordSize];
-                System.arraycopy(purseData, i + 0, tempData, 0, tempData.length);
-                transactions[i / tempData.length] = new CEPASTransaction(tempData);
+            for (int i = 0; i < purseData.getSize(); i += recordSize) {
+                ImmutableByteArray tempData = purseData.sliceOffLen(i, recordSize);
+                transactions[i / tempData.getSize()] = new CEPASTransaction(tempData);
             }
             mTransactions = Arrays.asList(transactions);
         } else {

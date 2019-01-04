@@ -27,6 +27,7 @@ import org.simpleframework.xml.Element;
 import au.id.micolous.farebot.R;
 import au.id.micolous.metrodroid.util.Utils;
 import au.id.micolous.metrodroid.xml.HexString;
+import au.id.micolous.metrodroid.xml.ImmutableByteArray;
 
 public abstract class DesfireFileSettings {
     /* DesfireFile Types */
@@ -44,20 +45,20 @@ public abstract class DesfireFileSettings {
 
     DesfireFileSettings() { /* For XML Serializer */ }
 
-    DesfireFileSettings(byte[] settings) {
-        mFileType = settings[0];
-        mCommSetting = settings[1];
+    DesfireFileSettings(ImmutableByteArray settings) {
+        mFileType = settings.get(0);
+        mCommSetting = settings.get(1);
         this.mAccessRights = new HexString(Utils.getHexString(settings, 2, 2));
     }
 
-    DesfireFileSettings(byte fileType, byte commSetting, byte[] accessRights) {
+    DesfireFileSettings(byte fileType, byte commSetting, ImmutableByteArray accessRights) {
         this.mFileType = fileType;
         this.mCommSetting = commSetting;
         this.mAccessRights = new HexString(accessRights);
     }
 
-    public static DesfireFileSettings create(byte[] data) throws Exception {
-        byte fileType = data[0];
+    public static DesfireFileSettings create(ImmutableByteArray data) throws Exception {
+        byte fileType = data.get(0);
 
         if (fileType == STANDARD_DATA_FILE || fileType == BACKUP_DATA_FILE)
             return new StandardDesfireFileSettings(data);
@@ -67,6 +68,10 @@ public abstract class DesfireFileSettings {
             return new ValueDesfireFileSettings(data);
         else
             throw new Exception("Unknown file type: " + Integer.toHexString(fileType));
+    }
+
+    public static DesfireFileSettings create(byte[] data) throws Exception {
+        return create(ImmutableByteArray.Companion.fromByteArray(data));
     }
 
     public byte getFileType() {

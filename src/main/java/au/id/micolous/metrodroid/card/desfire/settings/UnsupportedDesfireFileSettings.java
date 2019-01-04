@@ -22,13 +22,14 @@ import org.simpleframework.xml.Root;
 
 import au.id.micolous.farebot.R;
 import au.id.micolous.metrodroid.util.Utils;
+import au.id.micolous.metrodroid.xml.ImmutableByteArray;
 
 @Root(name = "settings")
 public class UnsupportedDesfireFileSettings extends DesfireFileSettings {
     private UnsupportedDesfireFileSettings() { /* For XML Serializer */ }
 
     public UnsupportedDesfireFileSettings(byte fileType) {
-        super(fileType, Byte.MIN_VALUE, new byte[0]);
+        super(fileType, Byte.MIN_VALUE, ImmutableByteArray.Companion.empty());
     }
 
     @Override

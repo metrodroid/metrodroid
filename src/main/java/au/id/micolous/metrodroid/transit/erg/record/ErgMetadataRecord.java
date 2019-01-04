@@ -20,6 +20,7 @@
 package au.id.micolous.metrodroid.transit.erg.record;
 
 import au.id.micolous.metrodroid.util.Utils;
+import au.id.micolous.metrodroid.xml.ImmutableByteArray;
 
 import java.util.Arrays;
 import java.util.Calendar;
@@ -34,13 +35,13 @@ import java.util.Locale;
 public class ErgMetadataRecord extends ErgRecord {
     private static final GregorianCalendar ERG_BASE_EPOCH = new GregorianCalendar(2000, Calendar.JANUARY, 1);
     private int mAgency;
-    private byte[] mCardSerial;
+    private ImmutableByteArray mCardSerial;
     private GregorianCalendar mEpochDate;
 
     private ErgMetadataRecord() {
     }
 
-    public static ErgMetadataRecord recordFromBytes(byte[] input) {
+    public static ErgMetadataRecord recordFromBytes(ImmutableByteArray input) {
         //assert input[0] == 0x02;
         //assert input[1] == 0x03;
 
@@ -50,7 +51,7 @@ public class ErgMetadataRecord extends ErgRecord {
 
         int epochDays = Utils.byteArrayToInt(input, 5, 2);
 
-        record.mCardSerial = Arrays.copyOfRange(input, 7, 11);
+        record.mCardSerial = input.copyOfRange(7, 11);
 
         record.mEpochDate = new GregorianCalendar();
         record.mEpochDate.setTimeInMillis(ERG_BASE_EPOCH.getTimeInMillis());

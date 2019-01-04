@@ -10,10 +10,11 @@ import java.util.Collections;
 import java.util.List;
 
 import au.id.micolous.metrodroid.card.TagReaderFeedbackInterface;
+import au.id.micolous.metrodroid.xml.ImmutableByteArray;
 
 public interface ISO7816ApplicationFactory {
     @NonNull
-    Collection<byte[]> getApplicationNames();
+    Collection<ImmutableByteArray> getApplicationNames();
 
     /**
      * If True, after dumping the first successful application (that doesn't result in an error,

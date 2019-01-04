@@ -35,6 +35,7 @@ import au.id.micolous.metrodroid.transit.en1545.En1545FixedInteger;
 import au.id.micolous.metrodroid.transit.en1545.En1545Lookup;
 import au.id.micolous.metrodroid.transit.en1545.En1545Subscription;
 import au.id.micolous.metrodroid.ui.ListItem;
+import au.id.micolous.metrodroid.xml.ImmutableByteArray;
 
 public class IntercodeSubscription extends En1545Subscription {
     public static final Parcelable.Creator<IntercodeSubscription> CREATOR = new Parcelable.Creator<IntercodeSubscription>() {
@@ -193,7 +194,7 @@ public class IntercodeSubscription extends En1545Subscription {
     );
     private final int mNetworkId;
 
-    public IntercodeSubscription(byte[] data, int type, int networkId, Integer ctr) {
+    public IntercodeSubscription(ImmutableByteArray data, int type, int networkId, Integer ctr) {
         super(data, getFields(type), ctr);
 
         Integer nid = mParsed.getInt(CONTRACT_NETWORK_ID);

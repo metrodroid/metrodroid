@@ -35,6 +35,7 @@ import au.id.micolous.metrodroid.transit.en1545.En1545FixedInteger;
 import au.id.micolous.metrodroid.transit.en1545.En1545Subscription;
 import au.id.micolous.metrodroid.transit.intercode.IntercodeSubscription;
 import au.id.micolous.metrodroid.ui.ListItem;
+import au.id.micolous.metrodroid.xml.ImmutableByteArray;
 
 public class AdelaideSubscription extends En1545Subscription {
 
@@ -108,7 +109,7 @@ public class AdelaideSubscription extends En1545Subscription {
                 getContractTariff());
     }
 
-    AdelaideSubscription(byte[]data) {
+    AdelaideSubscription(ImmutableByteArray data) {
         super(data, SUB_FIELDS, null);
     }
 

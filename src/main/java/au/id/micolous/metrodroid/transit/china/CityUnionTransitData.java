@@ -34,6 +34,7 @@ import au.id.micolous.metrodroid.transit.TransitData;
 import au.id.micolous.metrodroid.transit.TransitIdentity;
 import au.id.micolous.metrodroid.ui.ListItem;
 import au.id.micolous.metrodroid.util.Utils;
+import au.id.micolous.metrodroid.xml.ImmutableByteArray;
 
 // Reference: https://github.com/sinpolib/nfcard/blob/master/src/com/sinpo/xnfc/nfc/reader/pboc/CityUnion.java
 public class CityUnionTransitData extends ChinaTransitData {
@@ -60,7 +61,7 @@ public class CityUnionTransitData extends ChinaTransitData {
     private CityUnionTransitData(ChinaCard card) {
         super(card);
         mSerial = parseSerial(card);
-        byte[] file15 = getFile(card, 0x15).getBinaryData();
+        ImmutableByteArray file15 = getFile(card, 0x15).getBinaryData();
 
         mValidityStart = Utils.byteArrayToInt(file15, 20, 4);
         mValidityEnd = Utils.byteArrayToInt(file15, 24, 4);
@@ -68,7 +69,7 @@ public class CityUnionTransitData extends ChinaTransitData {
     }
 
     @Override
-    protected ChinaTrip parseTrip(byte[] data) {
+    protected ChinaTrip parseTrip(ImmutableByteArray data) {
         return new ChinaTrip(data);
     }
 
@@ -97,8 +98,8 @@ public class CityUnionTransitData extends ChinaTransitData {
 
     public final static ChinaCardTransitFactory FACTORY = new ChinaCardTransitFactory() {
         @Override
-        public List<byte[]> getAppNames() {
-            return Collections.singletonList(Utils.hexStringToByteArray("A00000000386980701"));
+        public List<ImmutableByteArray> getAppNames() {
+            return Collections.singletonList(ImmutableByteArray.Companion.fromHex("A00000000386980701"));
         }
 
         @Override
@@ -119,7 +120,7 @@ public class CityUnionTransitData extends ChinaTransitData {
     };
 
     private static int parseSerial(ChinaCard card) {
-        byte[] file15 = getFile(card, 0x15).getBinaryData();
+        ImmutableByteArray file15 = getFile(card, 0x15).getBinaryData();
         if (Utils.byteArrayToInt(file15, 2, 2) == 0x2000)
             return Utils.byteArrayToInt(file15, 16,4);
         return Utils.byteArrayToIntReversed(file15, 16,4);

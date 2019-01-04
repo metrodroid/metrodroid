@@ -24,6 +24,7 @@ import au.id.micolous.metrodroid.transit.TransitCurrency
 import au.id.micolous.metrodroid.transit.Trip
 import au.id.micolous.metrodroid.transit.en1545.*
 import au.id.micolous.metrodroid.util.Utils
+import au.id.micolous.metrodroid.xml.ImmutableByteArray
 import java.util.*
 
 data class RkfTCSTTrip(private val mParsed: En1545Parsed,
@@ -279,7 +280,7 @@ data class RkfTCSTTrip(private val mParsed: En1545Parsed,
                 )
         )
 
-        fun parse(record: ByteArray, lookup: RkfLookup): RkfTCSTTrip? {
+        fun parse(record: ImmutableByteArray, lookup: RkfLookup): RkfTCSTTrip? {
             val aid = Utils.getBitsFromBufferLeBits(record, 14, 12)
             if (aid == 0)
                 return null

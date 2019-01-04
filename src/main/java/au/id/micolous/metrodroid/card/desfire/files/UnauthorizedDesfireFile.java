@@ -26,6 +26,7 @@ import au.id.micolous.metrodroid.card.desfire.settings.DesfireFileSettings;
 import au.id.micolous.metrodroid.ui.ListItem;
 import au.id.micolous.metrodroid.ui.ListItemRecursive;
 import au.id.micolous.metrodroid.util.Utils;
+import au.id.micolous.metrodroid.xml.ImmutableByteArray;
 
 /**
  * Represents a DESFire file which could not be read due to
@@ -43,7 +44,7 @@ public class UnauthorizedDesfireFile extends InvalidDesfireFile {
     }
 
     @Override
-    public byte[] getData() {
+    public ImmutableByteArray getData() {
         throw new IllegalStateException(String.format("Unauthorized access to file: %s", getErrorMessage()));
     }
 

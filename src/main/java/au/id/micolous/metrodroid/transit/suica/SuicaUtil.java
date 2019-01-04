@@ -31,6 +31,7 @@ import java.util.GregorianCalendar;
 import au.id.micolous.farebot.R;
 import au.id.micolous.metrodroid.MetrodroidApplication;
 import au.id.micolous.metrodroid.util.Utils;
+import au.id.micolous.metrodroid.xml.ImmutableByteArray;
 
 final class SuicaUtil {
 
@@ -38,8 +39,8 @@ final class SuicaUtil {
     }
 
     @Nullable
-    static Calendar extractDate(boolean isProductSale, byte[] data) {
-        if (Arrays.equals(Utils.byteArraySlice(data, 4, 2), new byte[] { 0, 0 })) {
+    static Calendar extractDate(boolean isProductSale, ImmutableByteArray data) {
+        if (data.byteArrayToInt(4, 2) == 0) {
             return null;
         }
         int yy = Utils.getBitsFromBuffer(data, 32, 7);

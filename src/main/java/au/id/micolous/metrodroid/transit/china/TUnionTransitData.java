@@ -37,6 +37,7 @@ import au.id.micolous.metrodroid.transit.TransitCurrency;
 import au.id.micolous.metrodroid.transit.TransitData;
 import au.id.micolous.metrodroid.transit.TransitIdentity;
 import au.id.micolous.metrodroid.util.Utils;
+import au.id.micolous.metrodroid.xml.ImmutableByteArray;
 
 // Reference: https://github.com/sinpolib/nfcard/blob/master/src/com/sinpo/xnfc/nfc/reader/pboc/TUnion.java
 public class TUnionTransitData extends ChinaTransitData {
@@ -63,7 +64,7 @@ public class TUnionTransitData extends ChinaTransitData {
     private TUnionTransitData(ChinaCard card) {
         super(card);
         mSerial = parseSerial(card);
-        byte[] file15 = getFile(card, 0x15).getBinaryData();
+        ImmutableByteArray file15 = getFile(card, 0x15).getBinaryData();
         if (file15 != null) {
             mValidityStart = Utils.byteArrayToInt(file15, 20, 4);
             mValidityEnd = Utils.byteArrayToInt(file15, 24, 4);
@@ -72,7 +73,7 @@ public class TUnionTransitData extends ChinaTransitData {
     }
 
     @Override
-    protected ChinaTrip parseTrip(byte[] data) {
+    protected ChinaTrip parseTrip(ImmutableByteArray data) {
         return new ChinaTrip(data);
     }
 
@@ -101,8 +102,8 @@ public class TUnionTransitData extends ChinaTransitData {
 
     public final static ChinaCardTransitFactory FACTORY = new ChinaCardTransitFactory() {
         @Override
-        public List<byte[]> getAppNames() {
-            return Collections.singletonList(Utils.hexStringToByteArray("A000000632010105"));
+        public List<ImmutableByteArray> getAppNames() {
+            return Collections.singletonList(ImmutableByteArray.Companion.fromHex("A000000632010105"));
         }
 
         @Override
@@ -123,7 +124,7 @@ public class TUnionTransitData extends ChinaTransitData {
     };
 
     private static String parseSerial(ChinaCard card) {
-        byte[] file15 = getFile(card, 0x15).getBinaryData();
+        ImmutableByteArray file15 = getFile(card, 0x15).getBinaryData();
         if (file15 == null)
             return null;
         return Utils.getHexString(file15, 10, 10).substring(1);

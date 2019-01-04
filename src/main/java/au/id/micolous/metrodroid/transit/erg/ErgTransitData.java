@@ -48,6 +48,7 @@ import java.util.List;
 import java.util.TimeZone;
 
 import au.id.micolous.farebot.R;
+import au.id.micolous.metrodroid.xml.ImmutableByteArray;
 
 /**
  * Transit data type for ERG/Videlli/Vix MIFARE Classic cards.
@@ -168,10 +169,10 @@ public class ErgTransitData extends TransitData {
          */
         @Override
         public boolean earlyCheck(@NonNull List<ClassicSector> sectors) {
-            byte[] file1 = sectors.get(0).getBlock(1).getData();
+            ImmutableByteArray file1 = sectors.get(0).getBlock(1).getData();
 
             // Check for signature
-            if (!Arrays.equals(Arrays.copyOfRange(file1, 0, SIGNATURE.length), SIGNATURE)) {
+            if (!file1.sliceOffLen(0, SIGNATURE.length).contentEquals(SIGNATURE)) {
                 return false;
             }
 
@@ -224,7 +225,7 @@ public class ErgTransitData extends TransitData {
 
     @Nullable
     private static ErgMetadataRecord getMetadataRecord(ClassicSector sector0) {
-        byte[] file2;
+        ImmutableByteArray file2;
         try {
             file2 = sector0.getBlock(2).getData();
         } catch (UnauthorizedException ex) {

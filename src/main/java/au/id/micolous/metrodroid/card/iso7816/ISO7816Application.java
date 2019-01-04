@@ -43,6 +43,7 @@ import au.id.micolous.metrodroid.transit.TransitData;
 import au.id.micolous.metrodroid.transit.TransitIdentity;
 import au.id.micolous.metrodroid.ui.ListItem;
 import au.id.micolous.metrodroid.xml.Base64String;
+import au.id.micolous.metrodroid.xml.ImmutableByteArray;
 
 /**
  * Generic card implementation for ISO7816. This doesn't have many smarts, but dispatches to other
@@ -80,8 +81,8 @@ public class ISO7816Application {
     @Element(name = "application-name", required = false)
     private Base64String mApplicationName;
 
-    public byte[] getTagId() {
-        return mTagId.getData();
+    public ImmutableByteArray getTagId() {
+        return mTagId;
     }
 
     public List<ListItem> getRawData() {
@@ -123,9 +124,9 @@ public class ISO7816Application {
 
     public static class ISO7816Info {
         @Nullable
-        private final byte []mApplicationData;
+        private final ImmutableByteArray mApplicationData;
         @Nullable
-        private final byte []mApplicationName;
+        private final ImmutableByteArray mApplicationName;
         @NonNull
         private final List<ISO7816File> mFiles;
         @NonNull
@@ -135,9 +136,8 @@ public class ISO7816Application {
         @NonNull
         private final Map<Integer, ISO7816File> mSfiFiles;
 
-        public ISO7816Info(@Nullable byte []applicationData, @Nullable byte []applicationName,
-                           @NonNull byte []tagId, @NonNull String type) {
-            mApplicationData = applicationData;
+        public ISO7816Info(byte[] applicationData, ImmutableByteArray applicationName, byte[] tagId, String type) {
+            mApplicationData = ImmutableByteArray.Companion.fromByteArray(applicationData);
             mApplicationName = applicationName;
             mTagId = tagId;
             mFiles = new ArrayList<>();
@@ -238,12 +238,12 @@ public class ISO7816Application {
         }
 
         @Nullable
-        public byte[] getAppName() {
+        public ImmutableByteArray getAppName() {
             return mApplicationName;
         }
 
         @Nullable
-        public byte[] getFci() {
+        public ImmutableByteArray getFci() {
             return mApplicationData;
         }
 
@@ -280,15 +280,11 @@ public class ISO7816Application {
     @Nullable
     public List<ListItem> getManufacturingInfo() { return null; }
 
-    public byte[] getAppData() {
-        if (mApplicationData == null)
-            return null;
-        return mApplicationData.getData();
+    public ImmutableByteArray getAppData() {
+        return mApplicationData;
     }
 
-    public byte[] getAppName() {
-        if (mApplicationName == null)
-            return null;
-        return mApplicationName.getData();
+    public ImmutableByteArray getAppName() {
+        return mApplicationName;
     }
 }

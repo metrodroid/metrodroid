@@ -27,6 +27,7 @@ import au.id.micolous.metrodroid.transit.Transaction;
 import au.id.micolous.metrodroid.transit.TransitCurrency;
 import au.id.micolous.metrodroid.transit.Trip;
 import au.id.micolous.metrodroid.util.Utils;
+import au.id.micolous.metrodroid.xml.ImmutableByteArray;
 
 import org.apache.commons.lang3.ArrayUtils;
 import org.jetbrains.annotations.NonNls;
@@ -51,12 +52,12 @@ public class SmartRiderTagRecord extends Transaction {
     private final int mCost;
     private SmartRiderTransitData.CardType mCardType;
 
-    public SmartRiderTagRecord(SmartRiderTransitData.CardType cardType, byte[] record) {
+    public SmartRiderTagRecord(SmartRiderTransitData.CardType cardType, ImmutableByteArray record) {
         mTimestamp = Utils.byteArrayToLongReversed(record, 3, 4);
 
-        mTagOn = (record[7] & 0x10) == 0x10;
+        mTagOn = (record.get(7) & 0x10) == 0x10;
 
-        byte[] route = Arrays.copyOfRange(record, 8, 4 + 8);
+        byte[] route = record.sliceOffLen(8, 4).getDataCopy();
         route = ArrayUtils.removeAllOccurences(route, (byte) 0x00);
         try {
             mRoute = new String(route, Utils.getASCII());

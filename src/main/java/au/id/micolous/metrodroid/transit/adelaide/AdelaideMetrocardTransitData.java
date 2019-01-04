@@ -47,6 +47,7 @@ import au.id.micolous.metrodroid.transit.intercode.IntercodeTransitData;
 import au.id.micolous.metrodroid.ui.ListItem;
 import au.id.micolous.metrodroid.util.TripObfuscator;
 import au.id.micolous.metrodroid.util.Utils;
+import au.id.micolous.metrodroid.xml.ImmutableByteArray;
 
 public class AdelaideMetrocardTransitData extends En1545TransitData {
     public static final Parcelable.Creator<AdelaideMetrocardTransitData> CREATOR = new Parcelable.Creator<AdelaideMetrocardTransitData>() {
@@ -95,7 +96,7 @@ public class AdelaideMetrocardTransitData extends En1545TransitData {
         // 8 is "HID ADELAIDE" or "NoteAB ADELAIDE"
         // 9-0xb: TICKETING_SPECIAL_EVENTS
         for (int fileId : new int[]{3,4,5,6, 9, 0xa, 0xb}) {
-            byte[] data = app.getFile(fileId).getData();
+            ImmutableByteArray data = app.getFile(fileId).getData();
             if (Utils.getBitsFromBuffer(data, 0, 14) == 0)
                 continue;
             transactionList.add(new AdelaideTransaction(data));
@@ -106,7 +107,7 @@ public class AdelaideMetrocardTransitData extends En1545TransitData {
         AdelaideSubscription purse = null;
         // 10-13: contracts
         for (int fileId : new int[]{0x10, 0x11, 0x12, 0x13}) {
-            byte[] data = app.getFile(fileId).getData();
+            ImmutableByteArray data = app.getFile(fileId).getData();
             if (Utils.getBitsFromBuffer(data, 0, 7) == 0)
                 continue;
             AdelaideSubscription sub = new AdelaideSubscription(data);
@@ -172,7 +173,7 @@ public class AdelaideMetrocardTransitData extends En1545TransitData {
         return "01-" + Utils.formatNumber(serial, " ", 3, 4, 4, 4);
     }
 
-    private static long getSerial(byte[] tagId) {
+    private static long getSerial(ImmutableByteArray tagId) {
         return Utils.byteArrayToLongReversed(tagId, 1, 6);
     }
 

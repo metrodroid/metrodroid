@@ -26,15 +26,16 @@ import java.io.IOException;
 
 import au.id.micolous.metrodroid.util.Utils;
 import au.id.micolous.metrodroid.xml.Base64String;
+import au.id.micolous.metrodroid.xml.ImmutableByteArray;
 
 class ISO7816SelectorByName extends ISO7816SelectorElement {
     @Element(name="name")
     @NonNls
-    private Base64String mName;
+    private final Base64String mName;
 
     public static final String KIND = "name";
 
-    ISO7816SelectorByName() { /* for XML serializer. */ }
+    ISO7816SelectorByName() { /* for XML serializer. */ this(ImmutableByteArray.Companion.empty()); }
 
     @Override
     byte[] select(ISO7816Protocol tag) throws IOException, ISO7816Exception {
@@ -47,7 +48,7 @@ class ISO7816SelectorByName extends ISO7816SelectorElement {
         return "#" + Utils.getHexString(mName.getData());
     }
 
-    ISO7816SelectorByName(byte[] name) {
+    public ISO7816SelectorByName(@Element(name="name") ImmutableByteArray name) {
         super(KIND);
         mName = new Base64String(name);
     }
@@ -56,6 +57,6 @@ class ISO7816SelectorByName extends ISO7816SelectorElement {
     public boolean equals(Object obj) {
         if (!(obj instanceof ISO7816SelectorByName))
             return false;
-        return ((ISO7816SelectorByName) obj).mName.toBase64().equals(mName.toBase64());
+        return ((ISO7816SelectorByName) obj).mName.equals(mName);
     }
 }

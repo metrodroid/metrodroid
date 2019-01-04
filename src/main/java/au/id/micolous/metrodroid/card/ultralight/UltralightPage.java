@@ -19,6 +19,7 @@
 package au.id.micolous.metrodroid.card.ultralight;
 
 import au.id.micolous.metrodroid.xml.Base64String;
+import au.id.micolous.metrodroid.xml.ImmutableByteArray;
 
 import org.simpleframework.xml.Attribute;
 import org.simpleframework.xml.Element;
@@ -37,7 +38,7 @@ public class UltralightPage {
     public UltralightPage() {
     }
 
-    public UltralightPage(int index, byte[] data) {
+    public UltralightPage(int index, ImmutableByteArray data) {
         mIndex = index;
         if (data == null) {
             mData = null;
@@ -47,15 +48,15 @@ public class UltralightPage {
     }
 
     public static UltralightPage create(int index, byte[] data) {
-        return new UltralightPage(index, data);
+        return new UltralightPage(index, ImmutableByteArray.Companion.fromByteArray(data));
     }
 
     public int getIndex() {
         return mIndex;
     }
 
-    public byte[] getData() {
-        return mData.getData();
+    public ImmutableByteArray getData() {
+        return mData;
     }
 
 

@@ -40,6 +40,7 @@ import java.util.TimeZone;
 import au.id.micolous.metrodroid.ui.ListItem;
 import au.id.micolous.metrodroid.util.TripObfuscator;
 import au.id.micolous.metrodroid.util.Utils;
+import au.id.micolous.metrodroid.xml.ImmutableByteArray;
 
 @SuppressWarnings("FieldNotUsedInToString")
 public class En1545Parsed implements Parcelable {
@@ -252,21 +253,21 @@ public class En1545Parsed implements Parcelable {
         return contains(name, "");
     }
 
-    public En1545Parsed append(byte[] data, int off, En1545Field field) {
+    public En1545Parsed append(ImmutableByteArray data, int off, En1545Field field) {
         field.parseField(data, off, "", this, Utils::getBitsFromBuffer);
         return this;
     }
 
-    public En1545Parsed appendLeBits(byte[] data, int off, En1545Field field) {
+    public En1545Parsed appendLeBits(ImmutableByteArray data, int off, En1545Field field) {
         field.parseField(data, off, "", this, Utils::getBitsFromBufferLeBits);
         return this;
     }
 
-    public En1545Parsed append(byte[] data, En1545Field field) {
+    public En1545Parsed append(ImmutableByteArray data, En1545Field field) {
         return append(data, 0, field);
     }
 
-    public En1545Parsed appendLeBits(byte[] data, En1545Field field) {
+    public En1545Parsed appendLeBits(ImmutableByteArray data, En1545Field field) {
         return appendLeBits(data, 0, field);
     }
 }

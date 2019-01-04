@@ -50,6 +50,7 @@ import au.id.micolous.metrodroid.transit.en1545.En1545Subscription;
 import au.id.micolous.metrodroid.transit.en1545.En1545Transaction;
 import au.id.micolous.metrodroid.ui.ListItem;
 import au.id.micolous.metrodroid.util.Utils;
+import au.id.micolous.metrodroid.xml.ImmutableByteArray;
 
 // Reference: https://github.com/L1L1/cardpeek/blob/master/dot_cardpeek_dir/scripts/calypso/c131.lua
 public class LisboaVivaTransitData extends Calypso1545TransitData {
@@ -88,7 +89,7 @@ public class LisboaVivaTransitData extends Calypso1545TransitData {
     );
 
     private static String getSerial(CalypsoApplication card) {
-        byte []tenv = card.getFile(CalypsoApplication.File.TICKETING_ENVIRONMENT)
+        ImmutableByteArray tenv = card.getFile(CalypsoApplication.File.TICKETING_ENVIRONMENT)
                 .getRecord(1).getData();
         return String.format(Locale.ENGLISH,
                 "%03d %09d",
@@ -108,14 +109,14 @@ public class LisboaVivaTransitData extends Calypso1545TransitData {
             mHolderName = parseLatin1(idRec.getData());
     }
 
-    private static String parseLatin1(byte[] data) {
+    private static String parseLatin1(ImmutableByteArray data) {
         Charset cs;
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
             cs = StandardCharsets.ISO_8859_1;
         } else {
             cs = Charset.forName("ISO-8859-1");
         }
-        return new String(data, cs);
+        return data.readEncoded(cs);
     }
 
     public final static CalypsoCardTransitFactory FACTORY = new CalypsoCardTransitFactory() {
@@ -131,7 +132,7 @@ public class LisboaVivaTransitData extends Calypso1545TransitData {
         }
 
         @Override
-        public boolean check(byte[] ticketEnv) {
+        public boolean check(ImmutableByteArray ticketEnv) {
             try {
                 return COUNTRY_PORTUGAL == Utils.getBitsFromBuffer(ticketEnv, 13, 12);
             } catch (Exception e) {
@@ -140,7 +141,7 @@ public class LisboaVivaTransitData extends Calypso1545TransitData {
         }
 
         @Override
-        public CardInfo getCardInfo(byte[] tenv) {
+        public CardInfo getCardInfo(ImmutableByteArray tenv) {
             return CARD_INFO;
         }
 
@@ -151,13 +152,13 @@ public class LisboaVivaTransitData extends Calypso1545TransitData {
     };
 
     @Override
-    protected En1545Subscription createSubscription(byte[] data, En1545Parsed contractList,
+    protected En1545Subscription createSubscription(ImmutableByteArray data, En1545Parsed contractList,
                                                     Integer listNum, int recordNum, Integer ctr) {
         return new LisboaVivaSubscription(data, ctr);
     }
 
     @Override
-    protected En1545Transaction createTrip(byte[] data) {
+    protected En1545Transaction createTrip(ImmutableByteArray data) {
         return new LisboaVivaTransaction(data);
     }
 

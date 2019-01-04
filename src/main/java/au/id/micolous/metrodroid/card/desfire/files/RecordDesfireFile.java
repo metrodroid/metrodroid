@@ -31,6 +31,7 @@ import au.id.micolous.metrodroid.card.desfire.settings.RecordDesfireFileSettings
 import au.id.micolous.metrodroid.ui.ListItem;
 import au.id.micolous.metrodroid.ui.ListItemRecursive;
 import au.id.micolous.metrodroid.util.Utils;
+import au.id.micolous.metrodroid.xml.ImmutableByteArray;
 
 @Root(name = "file")
 public class RecordDesfireFile extends DesfireFile {
@@ -38,7 +39,7 @@ public class RecordDesfireFile extends DesfireFile {
 
     private RecordDesfireFile() { /* For XML Serializer */ }
 
-    RecordDesfireFile(int fileId, DesfireFileSettings fileSettings, byte[] fileData) {
+    RecordDesfireFile(int fileId, DesfireFileSettings fileSettings, ImmutableByteArray fileData) {
         super(fileId, fileSettings, fileData);
 
         RecordDesfireFileSettings settings = (RecordDesfireFileSettings) fileSettings;
@@ -46,7 +47,7 @@ public class RecordDesfireFile extends DesfireFile {
         DesfireRecord[] records = new DesfireRecord[settings.getCurRecords()];
         for (int i = 0; i < settings.getCurRecords(); i++) {
             int offset = settings.getRecordSize() * i;
-            records[i] = new DesfireRecord(ArrayUtils.subarray(getData(), offset, offset + settings.getRecordSize()));
+            records[i] = new DesfireRecord(getData().sliceOffLen(offset, settings.getRecordSize()));
         }
         mRecords = Arrays.asList(records);
     }
@@ -67,16 +68,16 @@ public class RecordDesfireFile extends DesfireFile {
         String subtitle = getFileSettings().getSubtitle();
 
         List<ListItem> data;
-        byte[] fileData = getData();
-        int numRecs = (fileData.length + recSize - 1) / recSize;
+        ImmutableByteArray fileData = getData();
+        int numRecs = (fileData.getSize() + recSize - 1) / recSize;
         data = new ArrayList<>();
         for (int i = 0; i < numRecs; i++) {
             int start = i * recSize;
             int len = recSize;
-            if (start + len > fileData.length)
-                len = fileData.length - start;
+            if (start + len > fileData.getSize())
+                len = fileData.getSize() - start;
             data.add(ListItemRecursive.collapsedValue(Utils.localizeString(R.string.record_title_format, i), null,
-                    Utils.getHexDump(fileData, start, len)));
+                    fileData.sliceOffLen(start, len).toHexDump()));
         }
         return new ListItemRecursive(title, subtitle, data);
     }

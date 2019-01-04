@@ -47,6 +47,7 @@ import au.id.micolous.metrodroid.transit.TransitData;
 import au.id.micolous.metrodroid.transit.TransitIdentity;
 import au.id.micolous.metrodroid.transit.Trip;
 import au.id.micolous.metrodroid.util.Utils;
+import au.id.micolous.metrodroid.xml.ImmutableByteArray;
 
 /**
  * Implements a reader for HSL transit cards.
@@ -142,7 +143,7 @@ public class HSLTransitData extends TransitData implements Parcelable {
     }
 
     private HSLTransitData(DesfireCard desfireCard) {
-        byte[] data;
+        ImmutableByteArray data;
 
         try {
             data = desfireCard.getApplication(APP_ID).getFile(0x08).getData();
@@ -325,7 +326,7 @@ public class HSLTransitData extends TransitData implements Parcelable {
         @Override
         public TransitIdentity parseTransitIdentity(@NonNull DesfireCard card) {
             try {
-                byte[] data = card.getApplication(APP_ID).getFile(0x08).getData();
+                ImmutableByteArray data = card.getApplication(APP_ID).getFile(0x08).getData();
                 return new TransitIdentity("HSL", Utils.getHexString(data).substring(2, 20));
             } catch (Exception ex) {
                 throw new RuntimeException("Error parsing HSL serial", ex);

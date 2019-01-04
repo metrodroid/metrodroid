@@ -30,6 +30,7 @@ import au.id.micolous.metrodroid.transit.en1545.En1545FixedInteger;
 import au.id.micolous.metrodroid.transit.en1545.En1545Lookup;
 import au.id.micolous.metrodroid.transit.en1545.En1545Subscription;
 import au.id.micolous.metrodroid.util.Utils;
+import au.id.micolous.metrodroid.xml.ImmutableByteArray;
 
 class MobibSubscription extends En1545Subscription {
 
@@ -52,7 +53,7 @@ class MobibSubscription extends En1545Subscription {
 
     private final boolean mIsSubscription;
 
-    MobibSubscription(byte[] dataSub, Integer ctr) {
+    MobibSubscription(ImmutableByteArray dataSub, Integer ctr) {
         super(dataSub, FIELDS, ctr);
         if(ctr != 0x2f02){
             // Ticket

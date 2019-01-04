@@ -78,7 +78,7 @@ public class BlankUltralightTransitData extends TransitData {
                     // At least one page is "closed", this is not for us
                     return false;
                 }
-                byte[] data = p.getData();
+                byte[] data = p.getData().getDataCopy();
                 int idx = p.getIndex();
                 if (idx == 0x2) {
                     if (data[2] != 0 || data[3] != 0)

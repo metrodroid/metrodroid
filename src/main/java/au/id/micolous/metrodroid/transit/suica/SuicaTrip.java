@@ -33,6 +33,7 @@ import au.id.micolous.metrodroid.transit.Station;
 import au.id.micolous.metrodroid.transit.TransitCurrency;
 import au.id.micolous.metrodroid.transit.Trip;
 import au.id.micolous.metrodroid.util.Utils;
+import au.id.micolous.metrodroid.xml.ImmutableByteArray;
 
 public class SuicaTrip extends Trip {
     public static final Creator<SuicaTrip> CREATOR = new Creator<SuicaTrip>() {
@@ -62,7 +63,7 @@ public class SuicaTrip extends Trip {
     private boolean mHasEndTime;
 
     public SuicaTrip(FelicaBlock block, int previousBalance) {
-        byte[] data = block.getData();
+        ImmutableByteArray data = block.getData();
 
         // 00000080000000000000000000000000
         // 00 00 - console type
@@ -83,8 +84,8 @@ public class SuicaTrip extends Trip {
         // 15 00
 
 
-        mConsoleType = data[0];
-        mProcessType = data[1];
+        mConsoleType = data.get(0);
+        mProcessType = data.get(1);
 
         boolean isProductSale = (mConsoleType == (byte) 0xc7 || mConsoleType == (byte) 0xc8);
 
@@ -97,7 +98,7 @@ public class SuicaTrip extends Trip {
         // Balance is little-endian
         mBalance = Utils.byteArrayToIntReversed(data, 10, 2);
 
-        mRegionCode = data[15] & 0xFF;
+        mRegionCode = data.get(15) & 0xFF;
 
         if (previousBalance >= 0) {
             mFare = (previousBalance - mBalance);
@@ -125,10 +126,10 @@ public class SuicaTrip extends Trip {
             mStartStation = SuicaDBUtil.getBusStop(mRegionCode, busLineCode, busStopCode);
             mEndStation = null;
         } else {
-            int railEntranceLineCode = data[6] & 0xFF;
-            int railEntranceStationCode = data[7] & 0xFF;
-            int railExitLineCode = data[8] & 0xFF;
-            int railExitStationCode = data[9] & 0xFF;
+            int railEntranceLineCode = data.get(6) & 0xFF;
+            int railEntranceStationCode = data.get(7) & 0xFF;
+            int railExitLineCode = data.get(8) & 0xFF;
+            int railExitStationCode = data.get(9) & 0xFF;
             mStartStation = SuicaDBUtil.getRailStation(mRegionCode, railEntranceLineCode,
                     railEntranceStationCode);
             mEndStation = SuicaDBUtil.getRailStation(mRegionCode, railExitLineCode,

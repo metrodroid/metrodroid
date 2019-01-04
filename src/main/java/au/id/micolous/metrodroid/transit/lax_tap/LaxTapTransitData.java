@@ -36,6 +36,7 @@ import au.id.micolous.metrodroid.transit.nextfare.NextfareTransitData;
 import au.id.micolous.metrodroid.transit.nextfare.NextfareTrip;
 import au.id.micolous.metrodroid.transit.nextfare.record.NextfareTransactionRecord;
 import au.id.micolous.metrodroid.util.StationTableReader;
+import au.id.micolous.metrodroid.xml.ImmutableByteArray;
 
 import java.util.Arrays;
 import java.util.Collections;
@@ -60,16 +61,11 @@ public class LaxTapTransitData extends NextfareTransitData {
             return new LaxTapTransitData[size];
         }
     };
-    private static final byte[] BLOCK1 = {
-            0x16, 0x18, 0x1A, 0x1B,
-            0x1C, 0x1D, 0x1E, 0x1F,
-            0x01, 0x01, 0x01, 0x01,
-            0x01, 0x01
-    };
+    private static final ImmutableByteArray BLOCK1 = ImmutableByteArray.Companion.fromHex(
+            "16181A1B1C1D1E1F010101010101"
+    );
     @VisibleForTesting
-    public static final byte[] BLOCK2 = {
-            0x00, 0x00, 0x00, 0x00
-    };
+    public static final ImmutableByteArray BLOCK2 = new ImmutableByteArray(4);
 
     private static final CardInfo CARD_INFO = new CardInfo.Builder()
             .setImageId(R.drawable.laxtap_card)
@@ -88,7 +84,7 @@ public class LaxTapTransitData extends NextfareTransitData {
     }
 
     private LaxTapTransitData(ClassicCard card) {
-        super(card);
+        super(card, "USD");
     }
 
     public static final ClassicCardTransitFactory FACTORY = new NextFareTransitFactory() {
@@ -100,13 +96,13 @@ public class LaxTapTransitData extends NextfareTransitData {
         @Override
         public boolean earlyCheck(@NonNull List<ClassicSector> sectors) {
             ClassicSector sector0 = sectors.get(0);
-            byte[] block1 = sector0.getBlock(1).getData();
-            if (!Arrays.equals(Arrays.copyOfRange(block1, 1, 15), BLOCK1)) {
+            ImmutableByteArray block1 = sector0.getBlock(1).getData();
+            if (!block1.copyOfRange(1, 15).contentEquals(BLOCK1)) {
                 return false;
             }
 
-            byte[] block2 = sector0.getBlock(2).getData();
-            return Arrays.equals(Arrays.copyOfRange(block2, 0, 4), BLOCK2);
+            ImmutableByteArray block2 = sector0.getBlock(2).getData();
+            return block2.copyOfRange(0, 4).contentEquals(BLOCK2);
         }
 
         @Override

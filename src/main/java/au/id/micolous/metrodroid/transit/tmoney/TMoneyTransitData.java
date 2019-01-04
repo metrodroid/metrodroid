@@ -39,6 +39,7 @@ import au.id.micolous.metrodroid.transit.TransitData;
 import au.id.micolous.metrodroid.transit.TransitIdentity;
 import au.id.micolous.metrodroid.ui.ListItem;
 import au.id.micolous.metrodroid.util.Utils;
+import au.id.micolous.metrodroid.xml.ImmutableByteArray;
 
 public class TMoneyTransitData extends TransitData {
     public static final Parcelable.Creator<TMoneyTransitData> CREATOR = new Parcelable.Creator<TMoneyTransitData>() {
@@ -129,18 +130,18 @@ public class TMoneyTransitData extends TransitData {
         return new TransitIdentity(Utils.localizeString(R.string.card_name_tmoney), parseSerial(card));
     }
 
-    private static byte[] getSerialTag(TMoneyCard card) {
+    private static ImmutableByteArray getSerialTag(TMoneyCard card) {
         return ISO7816TLV.INSTANCE.findBERTLV(card.getAppData(), "b0", false);
     }
 
     private static String parseSerial(TMoneyCard card) {
-        return Utils.groupString(Utils.getHexString(getSerialTag(card), 4, 8), " ", 4, 4, 4);
+        return Utils.groupString(getSerialTag(card).getHexString(4, 8), " ", 4, 4, 4);
     }
 
     @NonNls
     private static String parseDate(TMoneyCard card) {
-        byte []tmoneytag = getSerialTag(card);
-        return Utils.getHexString(tmoneytag, 17, 2) + "/"
-                + Utils.getHexString(tmoneytag, 19, 1);
+        ImmutableByteArray tmoneytag = getSerialTag(card);
+        return tmoneytag.getHexString(17, 2) + "/"
+                + tmoneytag.getHexString(19, 1);
     }
 }

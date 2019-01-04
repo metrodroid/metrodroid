@@ -100,6 +100,7 @@ import au.id.micolous.farebot.R;
 import au.id.micolous.metrodroid.MetrodroidApplication;
 import au.id.micolous.metrodroid.key.ClassicCardKeys;
 import au.id.micolous.metrodroid.key.ClassicSectorKey;
+import au.id.micolous.metrodroid.xml.ImmutableByteArray;
 
 public class Utils {
     private static final String TAG = "Utils";
@@ -1026,6 +1027,80 @@ public class Utils {
         transformer.setURIResolver(null);
         transformer.transform(source, result);
         return stringWriter.getBuffer().toString();
+    }
+
+    public static long byteArrayToLong(@NonNull ImmutableByteArray data, int off, int len) {
+        return data.byteArrayToLong(off, len);
+    }
+
+    public static int getBitsFromBuffer(@NonNull ImmutableByteArray data, int off, int len) {
+        return data.getBitsFromBuffer(off, len);
+    }
+
+    public static int getBitsFromBufferLeBits(@NonNull ImmutableByteArray data, int off, int len) {
+        return data.getBitsFromBufferLeBits(off, len);
+    }
+
+    public static int byteArrayToInt(@NonNull ImmutableByteArray data) {
+        return data.byteArrayToInt();
+    }
+
+    @NonNull
+    public static String getHexString(@NonNull ImmutableByteArray data) {
+        return data.toHexString();
+    }
+
+    public static int byteArrayToInt(@NonNull ImmutableByteArray data, int off, int len) {
+        return data.byteArrayToInt(off, len);
+    }
+
+    public static int byteArrayToIntReversed(@NonNull ImmutableByteArray data, int off, int len) {
+        return data.byteArrayToIntReversed(off, len);
+    }
+
+    @NonNull
+    public static String getHexString(@NonNull ImmutableByteArray data, int off, int len) {
+        return data.getHexString(off, len);
+    }
+
+    public static long byteArrayToLongReversed(@NonNull ImmutableByteArray data, int off, int len) {
+        return data.byteArrayToLongReversed(off, len);
+    }
+
+    public static boolean isAllZero(@NonNull ImmutableByteArray data) {
+        return data.isAllZero();
+    }
+
+    public static long byteArrayToLong(@NonNull ImmutableByteArray data) {
+        return data.byteArrayToLong();
+    }
+
+    public static int getBitsFromBufferSigned(@NonNull ImmutableByteArray data, int off, int len) {
+        return data.getBitsFromBufferSigned(off, len);
+    }
+
+    @NonNull
+    public static ImmutableByteArray byteArraySlice(@NonNull ImmutableByteArray data, int off, int len) {
+        return data.sliceOffLen(off, len);
+    }
+
+    @NonNull
+    public static SpannableString getHexDump(@NonNull ImmutableByteArray b, String defaultResult) {
+        try {
+            return b.toHexDump();
+        } catch (Exception ex) {
+            return new SpannableString(defaultResult);
+        }
+    }
+
+    @NonNls
+    @NonNull
+    public static String getHexString(@NonNull ImmutableByteArray b, String defaultResult) {
+        try {
+            return b.toHexString();
+        } catch (Exception ex) {
+            return defaultResult;
+        }
     }
 
     public interface Matcher<T> {

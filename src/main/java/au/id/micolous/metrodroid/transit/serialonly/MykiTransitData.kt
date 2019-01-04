@@ -27,6 +27,8 @@ import au.id.micolous.metrodroid.card.desfire.DesfireCardTransitFactory
 import au.id.micolous.metrodroid.transit.CardInfo
 import au.id.micolous.metrodroid.transit.TransitIdentity
 import au.id.micolous.metrodroid.util.Utils
+import au.id.micolous.metrodroid.xml.ImmutableByteArray
+import au.id.micolous.metrodroid.xml.toImmutable
 import kotlinx.android.parcel.Parcelize
 import org.jetbrains.annotations.NonNls
 import java.util.*
@@ -60,7 +62,7 @@ class MykiTransitData (private val mSerial: String): SerialOnlyTransitData() {
         const val APP_ID_2 = 0xf010f2
 
         // 308425 as a uint32_le (the serial number prefix)
-        private val MYKI_HEADER = byteArrayOf(0xc9.toByte(), 0xb4.toByte(), 0x04, 0x00)
+        private val MYKI_HEADER = ImmutableByteArray.fromHex("c9b40400")
         private const val MYKI_PREFIX: Long = 308425
 
         private val CARD_INFO = CardInfo.Builder()
@@ -112,7 +114,7 @@ class MykiTransitData (private val mSerial: String): SerialOnlyTransitData() {
          * @param file content of the serial file
          * @return String with the complete serial number, or null on error
          */
-        private fun parseSerial(file: ByteArray): String? {
+        private fun parseSerial(file: ImmutableByteArray): String? {
             val serial1 = Utils.byteArrayToLongReversed(file, 0, 4)
             if (serial1 != MYKI_PREFIX) {
                 return null

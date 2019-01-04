@@ -45,6 +45,7 @@ import au.id.micolous.metrodroid.transit.TransitCurrency;
 import au.id.micolous.metrodroid.transit.TransitData;
 import au.id.micolous.metrodroid.transit.TransitIdentity;
 import au.id.micolous.metrodroid.util.Utils;
+import au.id.micolous.metrodroid.xml.ImmutableByteArray;
 
 public class EdyTransitData extends TransitData {
     // defines
@@ -76,12 +77,13 @@ public class EdyTransitData extends TransitData {
     };
     private final List<EdyTrip> mTrips;
     // private data
-    private final byte[] mSerialNumber = new byte[8];
+    private final ImmutableByteArray mSerialNumber;
     private int mCurrentBalance;
 
     private EdyTransitData(Parcel parcel) {
         mTrips = new ArrayList<>();
         parcel.readTypedList(mTrips, EdyTrip.CREATOR);
+        mSerialNumber = ImmutableByteArray.Companion.fromParcel(parcel);
     }
 
     private EdyTransitData(FelicaCard card) {
@@ -89,14 +91,14 @@ public class EdyTransitData extends TransitData {
         FelicaService serviceID = card.getSystem(SYSTEMCODE_EDY).getService(FELICA_SERVICE_EDY_ID);
         List<FelicaBlock> blocksID = serviceID.getBlocks();
         FelicaBlock blockID = blocksID.get(0);
-        byte[] dataID = blockID.getData();
-        System.arraycopy(dataID, 2, mSerialNumber, 0, 8);
+        ImmutableByteArray dataID = blockID.getData();
+        mSerialNumber = dataID.sliceOffLen(2, 8);
 
         // current balance info in block 0, bytes 0-3, little-endian ordering
         FelicaService serviceBalance = card.getSystem(SYSTEMCODE_EDY).getService(FELICA_SERVICE_EDY_BALANCE);
         List<FelicaBlock> blocksBalance = serviceBalance.getBlocks();
         FelicaBlock blockBalance = blocksBalance.get(0);
-        byte[] dataBalance = blockBalance.getData();
+        ImmutableByteArray dataBalance = blockBalance.getData();
         mCurrentBalance = Utils.byteArrayToIntReversed(dataBalance, 0, 3);
 
         // now read the transaction history
@@ -161,6 +163,7 @@ public class EdyTransitData extends TransitData {
 
     public void writeToParcel(Parcel parcel, int flags) {
         parcel.writeTypedList(mTrips);
+        mSerialNumber.parcelize(parcel, flags);
     }
 }
 

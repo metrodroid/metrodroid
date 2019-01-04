@@ -24,6 +24,7 @@ import au.id.micolous.metrodroid.transit.Transaction
 import au.id.micolous.metrodroid.transit.Trip
 import au.id.micolous.metrodroid.transit.en1545.*
 import au.id.micolous.metrodroid.util.Utils
+import au.id.micolous.metrodroid.xml.ImmutableByteArray
 import kotlinx.android.parcel.Parcelize
 
 @Parcelize
@@ -182,7 +183,7 @@ data class OVChipTransaction(private val parsed: En1545Parsed) : En1545Transacti
                 En1545FixedHex("D", 64)
         )
 
-        fun parseClassic(data: ByteArray): OVChipTransaction? {
+        fun parseClassic(data: ImmutableByteArray): OVChipTransaction? {
             if (Utils.getBitsFromBuffer(data, 0, 28) == 0)
                 return null
             val parsed = En1545Parser.parse(data, OVChipTransaction.TRIP_FIELDS)
@@ -193,7 +194,7 @@ data class OVChipTransaction(private val parsed: En1545Parsed) : En1545Transacti
             return OVChipTransaction(parsed)
         }
 
-        fun parseUltralight(data: ByteArray): OVChipTransaction? {
+        fun parseUltralight(data: ImmutableByteArray): OVChipTransaction? {
             if (Utils.isAllZero(data))
                 return null
             return OVChipTransaction(En1545Parser.parse(data, OVC_UL_TRIP_FIELDS))

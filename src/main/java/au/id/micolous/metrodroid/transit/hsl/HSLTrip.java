@@ -31,6 +31,7 @@ import au.id.micolous.metrodroid.card.desfire.files.DesfireRecord;
 import au.id.micolous.metrodroid.transit.TransitCurrency;
 import au.id.micolous.metrodroid.transit.Trip;
 import au.id.micolous.metrodroid.util.Utils;
+import au.id.micolous.metrodroid.xml.ImmutableByteArray;
 
 public class HSLTrip extends Trip {
     public static final Creator<HSLTrip> CREATOR = new Creator<HSLTrip>() {
@@ -52,7 +53,7 @@ public class HSLTrip extends Trip {
     int mPax;
 
     public HSLTrip(DesfireRecord record) {
-        byte[] useData = record.getData();
+        ImmutableByteArray useData = record.getData();
 
         mArvo = Utils.getBitsFromBuffer(useData, 0, 1);
 

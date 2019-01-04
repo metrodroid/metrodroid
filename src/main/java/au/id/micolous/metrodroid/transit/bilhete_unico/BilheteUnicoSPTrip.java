@@ -31,6 +31,7 @@ import au.id.micolous.metrodroid.transit.Station;
 import au.id.micolous.metrodroid.transit.TransitCurrency;
 import au.id.micolous.metrodroid.transit.Trip;
 import au.id.micolous.metrodroid.util.Utils;
+import au.id.micolous.metrodroid.xml.ImmutableByteArray;
 
 class BilheteUnicoSPTrip extends Trip {
     private static final TimeZone TZ = TimeZone.getTimeZone("America/Sao_Paulo");
@@ -52,12 +53,12 @@ class BilheteUnicoSPTrip extends Trip {
     }
 
     BilheteUnicoSPTrip(ClassicSector lastTripSector) {
-        byte[] block0 = lastTripSector.getBlock(0).getData();
+        ImmutableByteArray block0 = lastTripSector.getBlock(0).getData();
         mTransport = Utils.getBitsFromBuffer(block0, 0, 8);
         mLocation = Utils.getBitsFromBuffer(block0, 8, 20);
         mLine = Utils.getBitsFromBuffer(block0, 28, 20);
 
-        byte[] block1 = lastTripSector.getBlock(1).getData();
+        ImmutableByteArray block1 = lastTripSector.getBlock(1).getData();
 
         mFare = Utils.getBitsFromBuffer(block1, 36, 16);
         mDay = Utils.getBitsFromBuffer(block1, 76, 14);

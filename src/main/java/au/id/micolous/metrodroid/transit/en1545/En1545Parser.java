@@ -18,20 +18,22 @@
  */
 package au.id.micolous.metrodroid.transit.en1545;
 
+import au.id.micolous.metrodroid.xml.ImmutableByteArray;
+
 public class En1545Parser {
     private En1545Parser() {
     }
 
-    public static En1545Parsed parse(byte[] data, int off, En1545Field field) {
+    public static En1545Parsed parse(ImmutableByteArray data, int off, En1545Field field) {
         return new En1545Parsed().append(data, off, field);
     }
-    public static En1545Parsed parse(byte[] data, En1545Field field) {
+    public static En1545Parsed parse(ImmutableByteArray data, En1545Field field) {
         return parse(data, 0, field);
     }
-    public static En1545Parsed parseLeBits(byte[] data, int off, En1545Field field) {
+    public static En1545Parsed parseLeBits(ImmutableByteArray data, int off, En1545Field field) {
         return new En1545Parsed().appendLeBits(data, off, field);
     }
-    public static En1545Parsed parseLeBits(byte[] data, En1545Field field) {
+    public static En1545Parsed parseLeBits(ImmutableByteArray data, En1545Field field) {
         return parseLeBits(data, 0, field);
     }
 }

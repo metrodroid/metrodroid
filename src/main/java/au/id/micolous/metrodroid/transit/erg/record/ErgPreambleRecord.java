@@ -21,6 +21,7 @@ package au.id.micolous.metrodroid.transit.erg.record;
 
 import au.id.micolous.metrodroid.transit.erg.ErgTransitData;
 import au.id.micolous.metrodroid.util.Utils;
+import au.id.micolous.metrodroid.xml.ImmutableByteArray;
 
 import java.util.Arrays;
 import java.util.Locale;
@@ -37,19 +38,19 @@ public class ErgPreambleRecord extends ErgRecord {
     private ErgPreambleRecord() {
     }
 
-    public static ErgPreambleRecord recordFromBytes(byte[] input) {
+    public static ErgPreambleRecord recordFromBytes(ImmutableByteArray input) {
         ErgPreambleRecord record = new ErgPreambleRecord();
 
         // Check that the record is valid for a preamble
-        if (!Arrays.equals(Arrays.copyOfRange(input, 0, ErgTransitData.SIGNATURE.length), ErgTransitData.SIGNATURE)) {
+        if (!input.copyOfRange(0, ErgTransitData.SIGNATURE.length).contentEquals(ErgTransitData.SIGNATURE)) {
             throw new IllegalArgumentException("Preamble signature does not match");
         }
 
         // This is not set on 2012-era cards
-        if (Arrays.equals(Arrays.copyOfRange(input, 10, 13), OLD_CARD_ID)) {
+        if (input.copyOfRange(10, 13).contentEquals(OLD_CARD_ID)) {
             record.mCardSerial = null;
         } else {
-            record.mCardSerial = Utils.getHexString(Arrays.copyOfRange(input, 10, 14));
+            record.mCardSerial = Utils.getHexString(input, 10, 4);
         }
         return record;
     }

@@ -44,19 +44,16 @@ import au.id.micolous.metrodroid.transit.tmoney.TMoneyTransitData;
 import au.id.micolous.metrodroid.ui.ListItem;
 import au.id.micolous.metrodroid.ui.ListItemRecursive;
 import au.id.micolous.metrodroid.util.Utils;
+import au.id.micolous.metrodroid.xml.ImmutableByteArray;
 
 public class TMoneyCard extends ISO7816Application {
     private static final String TAG = "TMoneyCard";
 
-    private static final List<byte[]> APP_NAME = Collections.singletonList(new byte[] {
-            (byte) 0xd4, 0x10, 0x00,
-            0x00, 0x03, 0x00, 0x01
-    });
+    private static final List<ImmutableByteArray> APP_NAME = Collections.singletonList(
+            ImmutableByteArray.Companion.fromHex("d4100000030001")
+    );
 
-    private static final byte[] FILE_NAME = {
-            (byte) 0xd4, 0x10, 0x00,
-            0x00, 0x03, 0x00, 0x01
-    };
+    private static final ImmutableByteArray FILE_NAME = ImmutableByteArray.Companion.fromHex("d4100000030001");
 
     private static final byte INS_GET_BALANCE = 0x4c;
     private static final byte BALANCE_RESP_LEN = 4;
@@ -91,7 +88,7 @@ public class TMoneyCard extends ISO7816Application {
     public static final ISO7816ApplicationFactory FACTORY = new ISO7816ApplicationFactory() {
         @NonNull
         @Override
-        public List<byte[]> getApplicationNames() {
+        public List<ImmutableByteArray> getApplicationNames() {
             return APP_NAME;
         }
 

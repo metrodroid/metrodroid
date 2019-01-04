@@ -34,6 +34,7 @@ import au.id.micolous.metrodroid.ui.ListItem
 import kotlinx.android.parcel.Parcelize
 import au.id.micolous.metrodroid.transit.en1545.En1545FixedInteger
 import au.id.micolous.metrodroid.util.TripObfuscator
+import au.id.micolous.metrodroid.xml.ImmutableByteArray
 import java.util.*
 
 @Parcelize
@@ -204,8 +205,8 @@ data class RkfTransitData internal constructor(
 
         internal fun clearSeconds(timeInMillis: Long) = timeInMillis / 60000 * 60000
 
-        private fun getRecords(card: ClassicCard): List<ByteArray> {
-            val records = mutableListOf<ByteArray>()
+        private fun getRecords(card: ClassicCard): List<ImmutableByteArray> {
+            val records = mutableListOf<ImmutableByteArray>()
             var sector = 3
             var block = 0
 
@@ -239,7 +240,7 @@ data class RkfTransitData internal constructor(
                         break
                     }
                     oldBlockCount = blockCount
-                    var dat = ByteArray(0)
+                    var dat = ImmutableByteArray(0)
 
                     repeat(blockCount) {
                         dat += card[sector, block].data

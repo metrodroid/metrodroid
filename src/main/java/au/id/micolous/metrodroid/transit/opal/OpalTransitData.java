@@ -49,6 +49,7 @@ import java.util.TimeZone;
 
 import au.id.micolous.farebot.R;
 import au.id.micolous.metrodroid.MetrodroidApplication;
+import au.id.micolous.metrodroid.xml.ImmutableByteArray;
 
 /**
  * Transit data type for Opal (Sydney, AU).
@@ -123,9 +124,9 @@ public class OpalTransitData extends TransitData {
     }
 
     private OpalTransitData(DesfireCard desfireCard) {
-        byte[] data = desfireCard.getApplication(APP_ID).getFile(FILE_ID).getData();
+        ImmutableByteArray dataRaw = desfireCard.getApplication(APP_ID).getFile(FILE_ID).getData();
 
-        data = Utils.reverseBuffer(data, 0, 16);
+        ImmutableByteArray data = dataRaw.sliceOffLen(0, 16).reverseBuffer();
 
         try {
             mChecksum = Utils.getBitsFromBuffer(data, 0, 16);
@@ -168,8 +169,8 @@ public class OpalTransitData extends TransitData {
 
         @Override
         public TransitIdentity parseTransitIdentity(@NonNull DesfireCard desfireCard) {
-            byte[] data = desfireCard.getApplication(APP_ID).getFile(FILE_ID).getData();
-            data = Utils.reverseBuffer(data, 0, 5);
+            ImmutableByteArray dataRaw = desfireCard.getApplication(APP_ID).getFile(FILE_ID).getData();
+            ImmutableByteArray data = dataRaw.sliceOffLen(0, 5).reverseBuffer();
 
             int lastDigit = Utils.getBitsFromBuffer(data, 4, 4);
             int serialNumber = Utils.getBitsFromBuffer(data, 8, 32);

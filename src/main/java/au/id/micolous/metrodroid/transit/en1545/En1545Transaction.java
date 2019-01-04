@@ -34,6 +34,7 @@ import au.id.micolous.metrodroid.transit.Station;
 import au.id.micolous.metrodroid.transit.Transaction;
 import au.id.micolous.metrodroid.transit.TransitCurrency;
 import au.id.micolous.metrodroid.transit.Trip;
+import au.id.micolous.metrodroid.xml.ImmutableByteArray;
 
 public abstract class En1545Transaction extends Transaction {
     public static final String EVENT_ROUTE_NUMBER = "EventRouteNumber";
@@ -120,7 +121,7 @@ public abstract class En1545Transaction extends Transaction {
 
     private static final String TAG = En1545Transaction.class.getSimpleName();
 
-    public En1545Transaction(byte[] data, En1545Field fields) {
+    public En1545Transaction(ImmutableByteArray data, En1545Field fields) {
         this(En1545Parser.parse(data, fields));
     }
 

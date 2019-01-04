@@ -18,12 +18,13 @@ import au.id.micolous.metrodroid.MetrodroidApplication;
 import au.id.micolous.metrodroid.util.IteratorTransformer;
 import au.id.micolous.metrodroid.util.Utils;
 import au.id.micolous.metrodroid.util.XmlPullParserIterator;
+import au.id.micolous.metrodroid.xml.ImmutableByteArray;
 
 public class XmlGenericCardFormat<T extends Card> extends CardsExporter<T> implements CardImporter.Text<T> {
     private static final byte[] CARDS_HEADER =
-            Utils.stringToByteArray("<?xml version=\"1.0\" encoding=\"UTF-8\"?><cards>\n");
+            "<?xml version=\"1.0\" encoding=\"UTF-8\"?><cards>\n".getBytes(Utils.getASCII());
     private static final byte[] CARDS_FOOTER =
-            Utils.stringToByteArray("</cards>\n");
+            "</cards>\n".getBytes(Utils.getASCII());
     private static final byte[] CARDS_SEPARATOR = { 10 }; //  \n
 
     private final Serializer mSerializer;

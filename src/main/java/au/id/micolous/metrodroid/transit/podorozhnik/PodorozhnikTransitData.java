@@ -47,6 +47,7 @@ import au.id.micolous.metrodroid.transit.TransitIdentity;
 import au.id.micolous.metrodroid.transit.Trip;
 import au.id.micolous.metrodroid.ui.ListItem;
 import au.id.micolous.metrodroid.util.Utils;
+import au.id.micolous.metrodroid.xml.ImmutableByteArray;
 
 /**
  * Podorozhnik cards.
@@ -153,7 +154,7 @@ public class PodorozhnikTransitData extends TransitData {
         mCountersValid = p.readInt() != 0;
     }
 
-    private static String getSerial(byte []uid) {
+    private static String getSerial(ImmutableByteArray uid) {
         String sn;
         sn = "9643 3078 " + Utils.formatNumber(Utils.byteArrayToLongReversed(uid, 0, 7),
                 " ", 4, 4, 4, 4, 1);
@@ -168,11 +169,11 @@ public class PodorozhnikTransitData extends TransitData {
 	        return;
 
 	    // Block 0 and block 1 are copies. Let's use block 0
-	    byte[] block0 = sector4.getBlock(0).getData();
-        byte[] block2 = sector4.getBlock(2).getData();
+	    ImmutableByteArray block0 = sector4.getBlock(0).getData();
+        ImmutableByteArray block2 = sector4.getBlock(2).getData();
         mBalance = Utils.byteArrayToIntReversed(block0, 0, 4);
         mLastTopupTime = Utils.byteArrayToIntReversed(block2, 2, 3);
-        mLastTopupAgency = block2[5];
+        mLastTopupAgency = block2.get(5);
         mLastTopupMachine = Utils.byteArrayToIntReversed(block2, 6, 2);
         mLastTopup = Utils.byteArrayToIntReversed(block2, 8, 3);
     }
@@ -183,23 +184,23 @@ public class PodorozhnikTransitData extends TransitData {
 	    if (sector5 instanceof UnauthorizedClassicSector)
 	        return;
 
-	    byte[] block0 = sector5.getBlock(0).getData();
-	    byte[] block1 = sector5.getBlock(1).getData();
-        byte[] block2 = sector5.getBlock(2).getData();
+	    ImmutableByteArray block0 = sector5.getBlock(0).getData();
+	    ImmutableByteArray block1 = sector5.getBlock(1).getData();
+        ImmutableByteArray block2 = sector5.getBlock(2).getData();
 
         mLastTripTime = Utils.byteArrayToIntReversed(block0, 0, 3);
-        mLastTransport = block0[3] & 0xff;
+        mLastTransport = block0.get(3) & 0xff;
         mLastValidator = Utils.byteArrayToIntReversed(block0, 4, 2);
         mLastFare = Utils.byteArrayToIntReversed(block0, 6, 4);
         // Usually block1 and block2 are identical. However rarely only one of them
         // gets updated. Pick most recent one for counters but remember both trip
         // timestamps.
         if (Utils.byteArrayToIntReversed(block2, 2, 3) > Utils.byteArrayToIntReversed(block1, 2, 3)) {
-            mSubwayCounter = block2[0] & 0xff;
-            mGroundCounter = block2[1] & 0xff;
+            mSubwayCounter = block2.get(0) & 0xff;
+            mGroundCounter = block2.get(1) & 0xff;
         } else {
-            mSubwayCounter = block1[0] & 0xff;
-            mGroundCounter = block1[1] & 0xff;
+            mSubwayCounter = block1.get(0) & 0xff;
+            mGroundCounter = block1.get(1) & 0xff;
         }
         mCountersValid = true;
         if (mLastTripTime != Utils.byteArrayToIntReversed(block1, 2, 3)) {

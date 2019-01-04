@@ -36,6 +36,7 @@ import au.id.micolous.metrodroid.transit.en1545.En1545Lookup;
 import au.id.micolous.metrodroid.transit.en1545.En1545Subscription;
 import au.id.micolous.metrodroid.ui.ListItem;
 import au.id.micolous.metrodroid.util.Utils;
+import au.id.micolous.metrodroid.xml.ImmutableByteArray;
 
 public class LisboaVivaSubscription extends En1545Subscription {
     private static final String CONTRACT_PERIOD_UNITS = "ContractPeriodUnits";
@@ -53,7 +54,7 @@ public class LisboaVivaSubscription extends En1545Subscription {
             new En1545FixedHex(CONTRACT_UNKNOWN_C, 38)
     );
 
-    public LisboaVivaSubscription(byte[] data, Integer ctr) {
+    public LisboaVivaSubscription(ImmutableByteArray data, Integer ctr) {
         super(data, SUB_FIELDS, ctr);
     }
 

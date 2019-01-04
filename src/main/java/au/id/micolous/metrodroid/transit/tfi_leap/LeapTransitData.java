@@ -54,6 +54,7 @@ import au.id.micolous.metrodroid.ui.ListItem;
 import au.id.micolous.metrodroid.util.StationTableReader;
 import au.id.micolous.metrodroid.util.TripObfuscator;
 import au.id.micolous.metrodroid.util.Utils;
+import au.id.micolous.metrodroid.xml.ImmutableByteArray;
 
 public class LeapTransitData extends TransitData {
     private static final int APP_ID = 0xaf1122;
@@ -107,9 +108,9 @@ public class LeapTransitData extends TransitData {
         private final Integer mAccumulatorScheme;
         private final Calendar mAccumulatorStart;
 
-        AccumulatorBlock(byte []file, int offset) {
+        AccumulatorBlock(ImmutableByteArray file, int offset) {
             mAccumulatorStart = parseDate(file,offset);
-            mAccumulatorRegion = (int) file[offset + 4];
+            mAccumulatorRegion = (int) file.get(offset + 4);
             mAccumulatorScheme = Utils.byteArrayToInt(file, offset+5, 3);
             mAccumulatorAgencies = new int[4];
             for (int i = 0; i < 4; i++)
@@ -156,7 +157,7 @@ public class LeapTransitData extends TransitData {
         }
     }
 
-    private static int chooseBlock(byte []file, int txidoffset) {
+    private static int chooseBlock(ImmutableByteArray file, int txidoffset) {
         int txIdA = Utils.byteArrayToInt(file, txidoffset, 2);
         int txIdB = Utils.byteArrayToInt(file, BLOCK_SIZE+txidoffset, 2);
 
@@ -173,13 +174,13 @@ public class LeapTransitData extends TransitData {
             return;
         }
         mSerial = getSerial(card);
-        byte file2[] = app.getFile(2).getData();
+        ImmutableByteArray file2 = app.getFile(2).getData();
         mIssuerId = Utils.byteArrayToInt(file2, 0x22, 3);
 
-        byte file4[] = app.getFile(4).getData();
+        ImmutableByteArray file4 = app.getFile(4).getData();
         mIssueDate = parseDate(file4, 0x22);
 
-        byte file6[] = app.getFile(6).getData();
+        ImmutableByteArray file6 = app.getFile(6).getData();
 
         int balanceBlock = chooseBlock(file6, 6);
         // 1 byte unknown
@@ -215,7 +216,7 @@ public class LeapTransitData extends TransitData {
         mWeeklyAccumulators = new AccumulatorBlock(file6, capBlock+0x160);
         // offset: 0x180
 
-        byte file9[] = app.getFile(9).getData();
+        ImmutableByteArray file9 = app.getFile(9).getData();
         for (int i = 0; i < 7; i++)
             trips.add(LeapTrip.parseTrip(file9, 0x80 * i));
 
@@ -227,11 +228,11 @@ public class LeapTransitData extends TransitData {
         return mTrips;
     }
 
-    public static int parseBalance(byte[] file, int offset) {
+    public static int parseBalance(ImmutableByteArray file, int offset) {
         return Utils.getBitsFromBufferSigned(file, offset * 8, 24);
     }
 
-    public static Calendar parseDate(byte[] file, int offset) {
+    public static Calendar parseDate(ImmutableByteArray file, int offset) {
         GregorianCalendar g = new GregorianCalendar(TZ);
         g.setTimeInMillis(LEAP_EPOCH);
 

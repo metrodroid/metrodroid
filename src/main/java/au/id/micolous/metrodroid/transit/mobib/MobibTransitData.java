@@ -51,6 +51,7 @@ import au.id.micolous.metrodroid.transit.en1545.En1545Subscription;
 import au.id.micolous.metrodroid.transit.en1545.En1545Transaction;
 import au.id.micolous.metrodroid.ui.ListItem;
 import au.id.micolous.metrodroid.util.Utils;
+import au.id.micolous.metrodroid.xml.ImmutableByteArray;
 
 /*
  * Reference:
@@ -128,7 +129,7 @@ public class MobibTransitData extends Calypso1545TransitData {
     private MobibTransitData(CalypsoApplication card) {
         super(card, ticketEnvFields, contractListFields, getSerial(card));
         ISO7816File holderFile = card.getFile(CalypsoApplication.File.HOLDER_EXTENDED);
-        byte[] holder = Utils.concatByteArrays(holderFile.getRecord(1).getData(),
+        ImmutableByteArray holder = holderFile.getRecord(1).getData().plus(
                 holderFile.getRecord(2).getData());
         mExtHolderParsed = En1545Parser.parse(holder, extHolderFields);
         mPurchase = Utils.getBitsFromBuffer(card.getFile(CalypsoApplication.File.EP_LOAD_LOG)
@@ -186,7 +187,7 @@ public class MobibTransitData extends Calypso1545TransitData {
     }
 
     private static String getSerial(CalypsoApplication card) {
-        byte[] holder = card.getFile(CalypsoApplication.File.HOLDER_EXTENDED).getRecord(1).getData();
+        ImmutableByteArray holder = card.getFile(CalypsoApplication.File.HOLDER_EXTENDED).getRecord(1).getData();
         return String.format(Locale.ENGLISH,
                 "%06d / %06d%04d %02d / %01d",
                 Utils.convertBCDtoInteger(Utils.getBitsFromBuffer(holder, 18, 24)),
@@ -210,7 +211,7 @@ public class MobibTransitData extends Calypso1545TransitData {
         }
 
         @Override
-        public boolean check(byte[] ticketEnv) {
+        public boolean check(ImmutableByteArray ticketEnv) {
             try {
                 int networkID = Utils.getBitsFromBuffer(ticketEnv, 13, 24);
                 return MOBIB_NETWORK_ID == networkID;
@@ -220,7 +221,7 @@ public class MobibTransitData extends Calypso1545TransitData {
         }
 
         @Override
-        public CardInfo getCardInfo(byte[] tenv) {
+        public CardInfo getCardInfo(ImmutableByteArray tenv) {
             return CARD_INFO;
         }
 
@@ -232,13 +233,13 @@ public class MobibTransitData extends Calypso1545TransitData {
     };
 
     @Override
-    protected En1545Subscription createSubscription(byte[] data, En1545Parsed contractList,
+    protected En1545Subscription createSubscription(ImmutableByteArray data, En1545Parsed contractList,
                                                     Integer listNum, int recordNum, Integer counter) {
         return new MobibSubscription(data, counter);
     }
 
     @Override
-    protected En1545Transaction createTrip(byte[] data) {
+    protected En1545Transaction createTrip(ImmutableByteArray data) {
         return new MobibTransaction(data);
     }
 

@@ -30,6 +30,7 @@ import au.id.micolous.metrodroid.transit.TransitCurrency
 import au.id.micolous.metrodroid.transit.Trip
 import au.id.micolous.metrodroid.util.StationTableReader
 import au.id.micolous.metrodroid.util.Utils
+import au.id.micolous.metrodroid.xml.ImmutableByteArray
 import kotlinx.android.parcel.Parcelize
 
 @Parcelize
@@ -40,7 +41,7 @@ data class EasyCardTopUp(
         private val machineId: Long
 ) : Trip() {
     @VisibleForTesting
-    constructor(data: ByteArray) : this(
+    constructor(data: ImmutableByteArray) : this(
             Utils.byteArrayToLongReversed(data, 1, 4),
             Utils.byteArrayToIntReversed(data, 6, 2),
             data[11].toInt(),

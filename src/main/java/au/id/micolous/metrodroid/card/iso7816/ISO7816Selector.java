@@ -29,14 +29,17 @@ import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 
+import au.id.micolous.metrodroid.xml.ImmutableByteArray;
+
 @Root(name = "selector")
 public class ISO7816Selector {
     @ElementList(name = "path", entry = "element")
-    private List<ISO7816SelectorElement> mFullPath;
+    private final List<ISO7816SelectorElement> mFullPath;
 
-    ISO7816Selector() { /* for XML serializer. */ }
+    ISO7816Selector() { /* for XML serializer. */ mFullPath = new ArrayList<>(); }
 
-    public ISO7816Selector(List<ISO7816SelectorElement> path) {
+    public ISO7816Selector(@ElementList(name = "path", entry = "element")
+                                   List<ISO7816SelectorElement> path) {
         mFullPath = path;
     }
 
@@ -48,11 +51,11 @@ public class ISO7816Selector {
         return ret.toString();
     }
 
-    static public ISO7816Selector makeSelector(byte []name) {
+    static public ISO7816Selector makeSelector(ImmutableByteArray name) {
         return new ISO7816Selector(Collections.singletonList(new ISO7816SelectorByName(name)));
     }
 
-    static public ISO7816Selector makeSelector(byte[] folder, int file) {
+    static public ISO7816Selector makeSelector(ImmutableByteArray folder, int file) {
         return new ISO7816Selector(Arrays.asList(new ISO7816SelectorByName(folder), new ISO7816SelectorById(file)));
     }
 

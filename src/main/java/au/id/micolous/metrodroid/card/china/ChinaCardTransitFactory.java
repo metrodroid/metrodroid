@@ -6,13 +6,14 @@ import java.util.Arrays;
 import java.util.List;
 
 import au.id.micolous.metrodroid.transit.CardTransitFactory;
+import au.id.micolous.metrodroid.xml.ImmutableByteArray;
 
 public interface ChinaCardTransitFactory extends CardTransitFactory<ChinaCard> {
     @Override
     default boolean check(@NonNull ChinaCard card) {
-        final byte[] appName = card.getAppName();
-        for (byte[] b : getAppNames()) {
-            if (Arrays.equals(b, appName)) {
+        final ImmutableByteArray appName = card.getAppName();
+        for (ImmutableByteArray b : getAppNames()) {
+            if (b.contentEquals(appName)) {
                 return true;
             }
         }
@@ -20,5 +21,5 @@ public interface ChinaCardTransitFactory extends CardTransitFactory<ChinaCard> {
         return false;
     }
 
-    List<byte[]> getAppNames();
+    List<ImmutableByteArray> getAppNames();
 }

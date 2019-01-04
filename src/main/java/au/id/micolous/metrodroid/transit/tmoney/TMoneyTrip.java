@@ -29,6 +29,7 @@ import java.util.TimeZone;
 import au.id.micolous.metrodroid.transit.TransitCurrency;
 import au.id.micolous.metrodroid.transit.Trip;
 import au.id.micolous.metrodroid.util.Utils;
+import au.id.micolous.metrodroid.xml.ImmutableByteArray;
 
 public class TMoneyTrip extends Trip {
     public static final Creator<TMoneyTrip> CREATOR = new Creator<TMoneyTrip>() {
@@ -107,11 +108,11 @@ public class TMoneyTrip extends Trip {
         return parseHexDateTime (mTime);
     }
 
-    public static TMoneyTrip parseTrip(byte[] data) {
+    public static TMoneyTrip parseTrip(ImmutableByteArray data) {
         int type, cost;
         long time;
         // 1 byte type
-        type = data[0];
+        type = data.get(0);
         // 1 byte unknown
         // 4 bytes balance after transaction
         // 4 bytes counter

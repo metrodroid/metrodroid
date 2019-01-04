@@ -34,6 +34,7 @@ import au.id.micolous.metrodroid.transit.Station;
 import au.id.micolous.metrodroid.transit.TransitCurrency;
 import au.id.micolous.metrodroid.transit.Trip;
 import au.id.micolous.metrodroid.util.Utils;
+import au.id.micolous.metrodroid.xml.ImmutableByteArray;
 
 public class ClipperTrip extends Trip {
     public static final Creator<ClipperTrip> CREATOR = new Creator<ClipperTrip>() {
@@ -67,7 +68,7 @@ public class ClipperTrip extends Trip {
         mTransportCode = parcel.readInt();
     }
 
-    ClipperTrip(byte[] useData) {
+    ClipperTrip(ImmutableByteArray useData) {
         mAgency = Utils.byteArrayToInt(useData, 0x2, 2);
         mFare = Utils.byteArrayToInt(useData, 0x6, 2);
         mVehicleNum = Utils.byteArrayToInt(useData, 0xa, 2);

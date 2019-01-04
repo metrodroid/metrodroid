@@ -31,6 +31,7 @@ import au.id.micolous.metrodroid.transit.en1545.En1545FixedString;
 import au.id.micolous.metrodroid.transit.en1545.En1545Lookup;
 import au.id.micolous.metrodroid.transit.en1545.En1545Parsed;
 import au.id.micolous.metrodroid.transit.en1545.En1545Transaction;
+import au.id.micolous.metrodroid.xml.ImmutableByteArray;
 
 public class AdelaideTransaction extends En1545Transaction implements Parcelable {
     // Intercode but with local time instead of UTC
@@ -75,7 +76,7 @@ public class AdelaideTransaction extends En1545Transaction implements Parcelable
             )
     );
 
-    public AdelaideTransaction(byte[] data) {
+    public AdelaideTransaction(ImmutableByteArray data) {
         super(data, TRIP_FIELDS);
     }
 

@@ -22,6 +22,8 @@
 
 package au.id.micolous.metrodroid.card.desfire.files;
 
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import org.simpleframework.xml.Attribute;
 import org.simpleframework.xml.Element;
 import org.simpleframework.xml.Root;
@@ -36,6 +38,7 @@ import au.id.micolous.metrodroid.ui.ListItem;
 import au.id.micolous.metrodroid.ui.ListItemRecursive;
 import au.id.micolous.metrodroid.util.Utils;
 import au.id.micolous.metrodroid.xml.Base64String;
+import au.id.micolous.metrodroid.xml.ImmutableByteArray;
 
 @Root(name = "file")
 public class DesfireFile {
@@ -48,13 +51,13 @@ public class DesfireFile {
 
     DesfireFile() { /* For XML Serializer */ }
 
-    DesfireFile(int fileId, DesfireFileSettings fileSettings, byte[] fileData) {
+    DesfireFile(int fileId, DesfireFileSettings fileSettings, ImmutableByteArray fileData) {
         mId = fileId;
         mSettings = fileSettings;
         mData = new Base64String(fileData);
     }
 
-    public static DesfireFile create(int fileId, DesfireFileSettings fileSettings, byte[] fileData) {
+    public static DesfireFile create(int fileId, DesfireFileSettings fileSettings, ImmutableByteArray fileData) {
         if (fileSettings instanceof RecordDesfireFileSettings) {
             return new RecordDesfireFile(fileId, fileSettings, fileData);
         } else if (fileSettings instanceof ValueDesfireFileSettings) {
@@ -62,6 +65,10 @@ public class DesfireFile {
         } else {
             return new DesfireFile(fileId, fileSettings, fileData);
         }
+    }
+
+    public static DesfireFile create(int fileId, DesfireFileSettings fileSettings, byte[] fileDataRaw) {
+        return create(fileId, fileSettings, ImmutableByteArray.Companion.fromByteArray(fileDataRaw));
     }
 
     public DesfireFileSettings getFileSettings() {
@@ -72,14 +79,14 @@ public class DesfireFile {
         return mId;
     }
 
-    public byte[] getData() {
-        return mData.getData();
+    public ImmutableByteArray getData() {
+        return mData;
     }
 
     public ListItem getRawData() {
         return new ListItemRecursive(Utils.localizeString(R.string.file_title_format,
                 Utils.intToHex(getId())),
                 getFileSettings().getSubtitle(),
-                Collections.singletonList(new ListItem(null, Utils.getHexDump(getData()))));
+                Collections.singletonList(new ListItem(null, getData().toHexDump())));
     }
 }

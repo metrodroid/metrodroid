@@ -20,6 +20,7 @@ package au.id.micolous.metrodroid.card.desfire.files;
 
 import au.id.micolous.metrodroid.card.desfire.settings.DesfireFileSettings;
 import au.id.micolous.metrodroid.util.Utils;
+import au.id.micolous.metrodroid.xml.ImmutableByteArray;
 
 import org.apache.commons.lang3.ArrayUtils;
 import org.simpleframework.xml.Root;
@@ -34,12 +35,10 @@ public class ValueDesfireFile extends DesfireFile {
 
     private ValueDesfireFile() { /* For XML Serializer */ }
 
-    ValueDesfireFile(int fileId, DesfireFileSettings fileSettings, byte[] fileData) {
+    ValueDesfireFile(int fileId, DesfireFileSettings fileSettings, ImmutableByteArray fileData) {
         super(fileId, fileSettings, fileData);
 
-        byte[] myData = ArrayUtils.clone(fileData);
-        ArrayUtils.reverse(myData);
-        mValue = Utils.byteArrayToInt(myData);
+        mValue = fileData.byteArrayToIntReversed();
 
     }
 

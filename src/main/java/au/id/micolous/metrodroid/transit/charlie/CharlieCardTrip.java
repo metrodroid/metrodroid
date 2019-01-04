@@ -28,13 +28,14 @@ import au.id.micolous.metrodroid.transit.Station;
 import au.id.micolous.metrodroid.transit.TransitCurrency;
 import au.id.micolous.metrodroid.transit.Trip;
 import au.id.micolous.metrodroid.util.Utils;
+import au.id.micolous.metrodroid.xml.ImmutableByteArray;
 
 public class CharlieCardTrip extends Trip {
     private final int mFare;
     private final int mValidator;
     private final int mTimestamp;
 
-    public CharlieCardTrip(byte []data, int off) {
+    public CharlieCardTrip(ImmutableByteArray data, int off) {
         mFare = CharlieCardTransitData.getPrice(data, off + 5);
         mValidator = Utils.byteArrayToInt(data, off + 3, 2);
         mTimestamp = Utils.byteArrayToInt(data, off, 3);

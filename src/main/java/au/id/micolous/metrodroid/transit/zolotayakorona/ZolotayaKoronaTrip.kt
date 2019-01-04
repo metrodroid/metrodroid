@@ -22,6 +22,7 @@ package au.id.micolous.metrodroid.transit.zolotayakorona
 import au.id.micolous.metrodroid.transit.TransitCurrency
 import au.id.micolous.metrodroid.transit.Trip
 import au.id.micolous.metrodroid.util.Utils
+import au.id.micolous.metrodroid.xml.ImmutableByteArray
 import kotlinx.android.parcel.Parcelize
 
 private const val DEFAULT_FARE = 1300
@@ -60,7 +61,7 @@ internal data class ZolotayaKoronaTrip(private val mValidator: String,
     override fun getMode() = Trip.Mode.BUS
 
     companion object {
-        fun parse(block: ByteArray, cardType: Int, refill: ZolotayaKoronaRefill?, balance: Int?): ZolotayaKoronaTrip? {
+        fun parse(block: ImmutableByteArray, cardType: Int, refill: ZolotayaKoronaRefill?, balance: Int?): ZolotayaKoronaTrip? {
             if (Utils.isAllZero(block))
                 return null
             val time = Utils.byteArrayToIntReversed(block, 6, 4)

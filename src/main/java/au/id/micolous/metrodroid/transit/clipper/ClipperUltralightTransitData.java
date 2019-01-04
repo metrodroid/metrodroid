@@ -35,6 +35,7 @@ import au.id.micolous.metrodroid.transit.TransitData;
 import au.id.micolous.metrodroid.transit.TransitIdentity;
 import au.id.micolous.metrodroid.ui.ListItem;
 import au.id.micolous.metrodroid.util.Utils;
+import au.id.micolous.metrodroid.xml.ImmutableByteArray;
 
 public class ClipperUltralightTransitData extends TransitData {
 
@@ -59,7 +60,7 @@ public class ClipperUltralightTransitData extends TransitData {
     public final static UltralightCardTransitFactory FACTORY = new UltralightCardTransitFactory() {
         @Override
         public boolean check(@NonNull UltralightCard card) {
-            return card.getPage(4).getData()[0] == 0x13;
+            return card.getPage(4).getData().get(0) == 0x13;
         }
 
         @Override
@@ -103,15 +104,15 @@ public class ClipperUltralightTransitData extends TransitData {
 
     private ClipperUltralightTransitData(UltralightCard card) {
         mSerial = getSerial(card);
-        byte []page0 = card.getPage(4).getData();
-	    byte []page1 = card.getPage(5).getData();
+        ImmutableByteArray page0 = card.getPage(4).getData();
+        ImmutableByteArray page1 = card.getPage(5).getData();
 	    mBaseDate = Utils.byteArrayToInt(page1, 2, 2);
-	    mType = page0[1] & 0xff;
+	    mType = page0.get(1) & 0xff;
 	    int product = Utils.byteArrayToInt(page1, 0, 2);
 	    mTrips = new ArrayList<>();
         ClipperUltralightTrip trLast = null;
 	    for (int offset : new int[]{6,11}) {
-            byte[] trData = card.readPages(offset, 5);
+            ImmutableByteArray trData = card.readPages(offset, 5);
             if (Utils.isAllZero(trData))
                 continue;
             ClipperUltralightTrip tr = new ClipperUltralightTrip(trData, mBaseDate);
@@ -134,7 +135,7 @@ public class ClipperUltralightTransitData extends TransitData {
     }
 
     private static long getSerial(UltralightCard card) {
-	    byte []otp = card.getPage(3).getData();
+	    ImmutableByteArray otp = card.getPage(3).getData();
         return Utils.byteArrayToLong(otp, 0, 4);
     }
 

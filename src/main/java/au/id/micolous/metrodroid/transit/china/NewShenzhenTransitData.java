@@ -39,6 +39,7 @@ import au.id.micolous.metrodroid.transit.CardInfo;
 import au.id.micolous.metrodroid.transit.TransitData;
 import au.id.micolous.metrodroid.transit.TransitIdentity;
 import au.id.micolous.metrodroid.util.Utils;
+import au.id.micolous.metrodroid.xml.ImmutableByteArray;
 
 // Reference: https://github.com/sinpolib/nfcard/blob/master/src/com/sinpo/xnfc/nfc/reader/pboc/ShenzhenTong.java
 public class NewShenzhenTransitData extends ChinaTransitData {
@@ -65,7 +66,7 @@ public class NewShenzhenTransitData extends ChinaTransitData {
     private NewShenzhenTransitData(ChinaCard card) {
         super(card);
         mSerial = parseSerial(card);
-        byte []szttag = getTagInfo(card);
+        ImmutableByteArray szttag = getTagInfo(card);
 
         if (szttag != null) {
             mValidityStart = Utils.byteArrayToInt(szttag, 20, 4);
@@ -74,7 +75,7 @@ public class NewShenzhenTransitData extends ChinaTransitData {
     }
 
     @Override
-    protected ChinaTrip parseTrip(byte[] data) {
+    protected ChinaTrip parseTrip(ImmutableByteArray data) {
         return new NewShenzhenTrip(data);
     }
 
@@ -101,8 +102,8 @@ public class NewShenzhenTransitData extends ChinaTransitData {
 
     public final static ChinaCardTransitFactory FACTORY = new ChinaCardTransitFactory() {
         @Override
-        public List<byte[]> getAppNames() {
-            return Collections.singletonList(Utils.stringToByteArray("PAY.SZT"));
+        public List<ImmutableByteArray> getAppNames() {
+            return Collections.singletonList(ImmutableByteArray.Companion.fromASCII("PAY.SZT"));
         }
 
         @Override
@@ -131,18 +132,18 @@ public class NewShenzhenTransitData extends ChinaTransitData {
     }
 
     @Nullable
-    private static byte[] getTagInfo(ChinaCard card) {
+    private static ImmutableByteArray getTagInfo(ChinaCard card) {
         ISO7816File file15 = getFile(card, 0x15);
         if (file15 != null)
             return file15.getBinaryData();
-        byte []szttag = ISO7816TLV.INSTANCE.findBERTLV(card.getAppData(), "a5", true);
+        ImmutableByteArray szttag = ISO7816TLV.INSTANCE.findBERTLV(card.getAppData(), "a5", true);
         if (szttag == null)
             return null;
         return ISO7816TLV.INSTANCE.findBERTLV(szttag, "8c", false);
     }
 
     private static int parseSerial(ChinaCard card) {
-        byte[] ti = getTagInfo(card);
+        ImmutableByteArray ti = getTagInfo(card);
         if (ti == null)
             return 0;
         return Utils.byteArrayToIntReversed(ti, 16,4);

@@ -93,7 +93,8 @@ public class KievTransitData extends TransitData {
     };
 
     private static String getSerial(ClassicCard card) {
-        return Utils.getHexString(Utils.reverseBuffer(card.getSector(1).getBlock(0).getData(), 6, 8));
+        return card.getSector(1).getBlock(0).getData().sliceOffLen(6, 8)
+                .reverseBuffer().toHexString();
     }
 
     @Override

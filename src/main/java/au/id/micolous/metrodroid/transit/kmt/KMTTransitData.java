@@ -45,6 +45,7 @@ import au.id.micolous.metrodroid.transit.TransitIdentity;
 import au.id.micolous.metrodroid.ui.HeaderListItem;
 import au.id.micolous.metrodroid.ui.ListItem;
 import au.id.micolous.metrodroid.util.Utils;
+import au.id.micolous.metrodroid.xml.ImmutableByteArray;
 
 public class KMTTransitData extends TransitData {
     // defines
@@ -100,7 +101,7 @@ public class KMTTransitData extends TransitData {
         if (serviceBalance != null) {
             List<FelicaBlock> blocksBalance = serviceBalance.getBlocks();
             FelicaBlock blockBalance = blocksBalance.get(0);
-            byte[] dataBalance = blockBalance.getData();
+            ImmutableByteArray dataBalance = blockBalance.getData();
             mCurrentBalance = Utils.byteArrayToIntReversed(dataBalance, 0, 4);
             mTransactionCounter = Utils.byteArrayToInt(dataBalance, 13, 3);
             mLastTransAmount = Utils.byteArrayToIntReversed(dataBalance, 4, 4);
@@ -111,7 +112,7 @@ public class KMTTransitData extends TransitData {
         List<FelicaBlock> blocks = serviceHistory.getBlocks();
         for (int i = 0; i < blocks.size(); i++) {
             FelicaBlock block = blocks.get(i);
-            if (block.getData()[0] != 0 && Utils.byteArrayToInt(block.getData(), 8, 2) != 0) {
+            if (block.getData().get(0) != 0 && Utils.byteArrayToInt(block.getData(), 8, 2) != 0) {
                 KMTTrip trip = new KMTTrip(block);
                 trips.add(trip);
             }
@@ -124,9 +125,9 @@ public class KMTTransitData extends TransitData {
         if (serviceID == null)
             return "-";
         List<FelicaBlock> blocksID = serviceID.getBlocks();
-        byte[] dataID = blocksID.get(0).getData();
+        ImmutableByteArray dataID = blocksID.get(0).getData();
         try {
-            return new String(dataID, Utils.getASCII());
+            return dataID.readASCII();
         } catch (Exception e) {
             return Utils.getHexString(dataID);
         }
@@ -154,7 +155,7 @@ public class KMTTransitData extends TransitData {
             FelicaService serviceID = card.getSystem(SYSTEMCODE_KMT).getService(FELICA_SERVICE_KMT_ID);
             String serialNumber = "-";
             if (serviceID != null) {
-                serialNumber = new String(serviceID.getBlocks().get(0).getData(), Utils.getASCII());
+                serialNumber = serviceID.getBlocks().get(0).getData().readASCII();
             }
             return new TransitIdentity(NAME, serialNumber);
         }

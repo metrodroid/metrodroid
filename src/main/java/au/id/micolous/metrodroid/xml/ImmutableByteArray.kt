@@ -77,6 +77,7 @@ open class ImmutableByteArray private constructor(private val mData: ByteArray):
     fun contentEquals(other: ImmutableByteArray) = mData.contentEquals(other.mData)
     fun reverseBuffer() =
             ImmutableByteArray(ByteArray(mData.size) { x-> mData[mData.size - x - 1] })
+    fun contentEquals(other: ByteArray) = mData.contentEquals(other)
 
     fun parcelize(parcel: Parcel, flags: Int) {
         parcel.writeParcelable(this, flags)
@@ -90,6 +91,7 @@ open class ImmutableByteArray private constructor(private val mData: ByteArray):
         fun fromBase64(value: String) = ImmutableByteArray(mData = Base64.decode(value, Base64.DEFAULT))
         fun fromParcel(parcel: Parcel): ImmutableByteArray =
                 parcel.readParcelable(ImmutableByteArray::class.java.classLoader)!!
+        fun of(vararg b: Byte) = ImmutableByteArray(mData = b)
     }
 }
 

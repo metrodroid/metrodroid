@@ -24,6 +24,7 @@ import android.support.annotation.NonNull;
 import android.util.Log;
 
 import au.id.micolous.metrodroid.util.Utils;
+import au.id.micolous.metrodroid.xml.ImmutableByteArray;
 
 import java.util.Calendar;
 import java.util.TimeZone;
@@ -64,7 +65,7 @@ public class NextfareTravelPassRecord extends NextfareRecord implements Parcelab
         mVersion = parcel.readInt();
     }
 
-    public static NextfareTravelPassRecord recordFromBytes(byte[] input, TimeZone timeZone) {
+    public static NextfareTravelPassRecord recordFromBytes(ImmutableByteArray input, TimeZone timeZone) {
         //if ((input[0] != 0x01 && input[0] != 0x31) || input[1] != 0x01) throw new AssertionError("Not a topup record");
         if (Utils.byteArrayToInt(input, 2, 4) == 0) {
             // Timestamp is null, ignore.

@@ -23,6 +23,7 @@ import au.id.micolous.metrodroid.card.desfire.DesfireCard
 import au.id.micolous.metrodroid.card.desfire.files.DesfireFile
 import au.id.micolous.metrodroid.transit.serialonly.MykiTransitData
 import au.id.micolous.metrodroid.util.Utils
+import au.id.micolous.metrodroid.xml.ImmutableByteArray
 import junit.framework.TestCase.assertEquals
 import org.junit.Assert
 import org.junit.Test
@@ -33,15 +34,15 @@ import java.util.*
 @RunWith(JUnit4::class)
 class MykiTest {
     private fun constructMykiCardFromHexString(s: String): DesfireCard {
-        val demoData = Utils.hexStringToByteArray(s)
+        val demoData = ImmutableByteArray.fromHex(s)
 
         // Construct a card to hold the data.
         val f = DesfireFile.create(15, null, demoData)
-        val a = DesfireApplication(MykiTransitData.APP_ID_1, arrayOf(f))
-        val a2 = DesfireApplication(MykiTransitData.APP_ID_2, arrayOf())
-        return DesfireCard(byteArrayOf(0, 1, 2, 3),
+        val a = DesfireApplication(MykiTransitData.APP_ID_1, listOf(f))
+        val a2 = DesfireApplication(MykiTransitData.APP_ID_2, listOf())
+        return DesfireCard(ImmutableByteArray.of(0, 1, 2, 3),
                 Calendar.getInstance(), null,
-                arrayOf(a, a2))
+                listOf(a, a2))
     }
 
     @Test

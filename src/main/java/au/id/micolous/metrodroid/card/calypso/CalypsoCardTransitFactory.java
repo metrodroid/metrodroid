@@ -4,15 +4,16 @@ import android.support.annotation.NonNull;
 
 import au.id.micolous.metrodroid.transit.CardInfo;
 import au.id.micolous.metrodroid.transit.CardTransitFactory;
+import au.id.micolous.metrodroid.xml.ImmutableByteArray;
 
 public interface CalypsoCardTransitFactory extends CardTransitFactory<CalypsoApplication> {
     @Override
     default boolean check(@NonNull CalypsoApplication card) {
-        final byte[] tenv = card.getTicketEnv();
+        final ImmutableByteArray tenv = card.getTicketEnv();
         return check(tenv);
     }
 
-    boolean check(byte[] tenv);
+    boolean check(ImmutableByteArray tenv);
 
-    CardInfo getCardInfo(byte[] tenv);
+    CardInfo getCardInfo(ImmutableByteArray tenv);
 }

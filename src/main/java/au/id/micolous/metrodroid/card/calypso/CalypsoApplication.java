@@ -60,6 +60,7 @@ import au.id.micolous.metrodroid.transit.ravkav.RavKavTransitData;
 import au.id.micolous.metrodroid.ui.HeaderListItem;
 import au.id.micolous.metrodroid.ui.ListItem;
 import au.id.micolous.metrodroid.util.Utils;
+import au.id.micolous.metrodroid.xml.ImmutableByteArray;
 
 /**
  * Implements communication with Calypso cards.
@@ -74,10 +75,10 @@ import au.id.micolous.metrodroid.util.Utils;
  * - https://github.com/nfc-tools/libnfc/blob/master/examples/pn53x-tamashell-scripts/ReadNavigo.sh
  */
 public class CalypsoApplication extends ISO7816Application {
-    private static final List<byte[]> CALYPSO_FILENAMES =
+    private static final List<ImmutableByteArray> CALYPSO_FILENAMES =
             Arrays.asList(
-                    Utils.stringToByteArray("1TIC.ICA"),
-                    Utils.stringToByteArray("3MTR.ICA")
+                    ImmutableByteArray.Companion.fromASCII("1TIC.ICA"),
+                    ImmutableByteArray.Companion.fromASCII("3MTR.ICA")
             );
 
     private static final String TAG = CalypsoApplication.class.getName();
@@ -107,7 +108,7 @@ public class CalypsoApplication extends ISO7816Application {
 
         @NonNull
         @Override
-        public List<byte[]> getApplicationNames() {
+        public List<ImmutableByteArray> getApplicationNames() {
             return CALYPSO_FILENAMES;
         }
 
@@ -159,7 +160,7 @@ public class CalypsoApplication extends ISO7816Application {
     };
 
     private static void showCardType(ISO7816File tenvf, TagReaderFeedbackInterface feedbackInterface) {
-        byte[] tenv;
+        ImmutableByteArray tenv;
         try {
             tenv = tenvf.getRecord(1).getData();
         } catch (Exception e) {
@@ -185,7 +186,7 @@ public class CalypsoApplication extends ISO7816Application {
         return Arrays.asList(FACTORIES);
     }
 
-    byte[] getTicketEnv() {
+    ImmutableByteArray getTicketEnv() {
         try {
             ISO7816File tenvf = getFile(File.TICKETING_ENVIRONMENT);
             if (tenvf == null)
@@ -198,7 +199,7 @@ public class CalypsoApplication extends ISO7816Application {
 
     @Override
     public TransitData parseTransitData() {
-        byte[] tenv = getTicketEnv();
+        ImmutableByteArray tenv = getTicketEnv();
         if (tenv == null)
             return null;
         for (CalypsoCardTransitFactory f : FACTORIES) {
@@ -210,7 +211,7 @@ public class CalypsoApplication extends ISO7816Application {
 
     @Override
     public TransitIdentity parseTransitIdentity() {
-        byte[] tenv = getTicketEnv();
+        ImmutableByteArray tenv = getTicketEnv();
         if (tenv == null)
             return null;
         for (CalypsoCardTransitFactory f : FACTORIES) {
@@ -246,7 +247,7 @@ public class CalypsoApplication extends ISO7816Application {
 
         if (iccRecord != null) {
             // https://github.com/zoobab/mobib-extractor/blob/master/MOBIB-Extractor.py#L324
-            byte[] data = iccRecord.getData();
+            ImmutableByteArray data = iccRecord.getData();
             int countryCode = 0;
 
             // The country code is a ISO 3166-1 numeric in base16. ie: bytes(0x02,0x40) = 240
@@ -267,8 +268,8 @@ public class CalypsoApplication extends ISO7816Application {
                 countryName = Utils.localizeString(R.string.unknown_format, countryCode);
             }
 
-            CalypsoData.Manufacturer manufacturer = CalypsoData.Manufacturer.get(data[22]);
-            String manufacturerHex = Utils.intToHex((int) data[22] & 0xff);
+            CalypsoData.Manufacturer manufacturer = CalypsoData.Manufacturer.get(data.get(22));
+            String manufacturerHex = Utils.intToHex((int) data.get(22) & 0xff);
             String manufacturerName;
             if (manufacturer != null) {
                 manufacturerName = String.format(Locale.ENGLISH, "%s (%s)",

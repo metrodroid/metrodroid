@@ -27,7 +27,7 @@ import java.io.IOException;
 class ISO7816SelectorById extends ISO7816SelectorElement {
     @Element(name="id")
     @NonNls
-    private int mId;
+    private final int mId;
 
     public static final String KIND = "id";
 
@@ -42,9 +42,9 @@ class ISO7816SelectorById extends ISO7816SelectorElement {
         return ":" + Integer.toHexString(mId);
     }
 
-    ISO7816SelectorById() { /* for XML serializer. */ }
+    ISO7816SelectorById() { /* for XML serializer. */ mId = -1; }
 
-    ISO7816SelectorById(int id) {
+    ISO7816SelectorById(@Element(name="id") int id) {
         super(KIND);
         mId = id;
     }

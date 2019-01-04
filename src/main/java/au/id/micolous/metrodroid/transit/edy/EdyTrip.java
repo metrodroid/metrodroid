@@ -31,6 +31,7 @@ import au.id.micolous.metrodroid.card.felica.FelicaBlock;
 import au.id.micolous.metrodroid.transit.TransitCurrency;
 import au.id.micolous.metrodroid.transit.Trip;
 import au.id.micolous.metrodroid.util.Utils;
+import au.id.micolous.metrodroid.xml.ImmutableByteArray;
 
 public class EdyTrip extends Trip {
     public static final Creator<EdyTrip> CREATOR = new Creator<EdyTrip>() {
@@ -49,7 +50,7 @@ public class EdyTrip extends Trip {
     private final int mBalance;
 
     public EdyTrip(FelicaBlock block) {
-        byte[] data = block.getData();
+        ImmutableByteArray data = block.getData();
 
         // Data Offsets with values
         // ------------------------
@@ -59,7 +60,7 @@ public class EdyTrip extends Trip {
         // 0x08    transaction amount (big-endian)
         // 0x0c    balance (big-endian)
 
-        mProcessType = data[0];
+        mProcessType = data.get(0);
         mSequenceNumber = Utils.byteArrayToInt(data, 1, 3);
         mTimestamp = extractDate(data);
         mTransactionAmount = Utils.byteArrayToInt(data, 8, 4);
@@ -121,7 +122,7 @@ public class EdyTrip extends Trip {
         return 0;
     }
 
-    private static Calendar extractDate(byte[] data) {
+    private static Calendar extractDate(ImmutableByteArray data) {
         int fulloffset = Utils.byteArrayToInt(data, 4, 4);
         if (fulloffset == 0)
             return null;

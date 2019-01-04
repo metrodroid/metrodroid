@@ -28,6 +28,7 @@ import au.id.micolous.metrodroid.transit.en1545.En1545FixedInteger
 import au.id.micolous.metrodroid.transit.en1545.En1545Parsed
 import au.id.micolous.metrodroid.transit.en1545.En1545Parser
 import au.id.micolous.metrodroid.util.Utils
+import au.id.micolous.metrodroid.xml.ImmutableByteArray
 import kotlinx.android.parcel.Parcelize
 
 @Parcelize
@@ -82,7 +83,7 @@ data class RkfPurse(private val mStatic: En1545Parsed,
                 )
         )
 
-        fun parse(record: ByteArray, lookup: RkfLookup): RkfPurse {
+        fun parse(record: ImmutableByteArray, lookup: RkfLookup): RkfPurse {
             var version = Utils.getBitsFromBufferLeBits(record, 8, 6)
             val blockSize = if (version >= 6) 32 else 16
             val static = En1545Parser.parseLeBits(record.copyOfRange(0, blockSize - 1), TCPU_STATIC_FIELDS)

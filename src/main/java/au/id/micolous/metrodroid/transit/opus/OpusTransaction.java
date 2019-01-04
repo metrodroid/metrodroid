@@ -28,6 +28,7 @@ import au.id.micolous.metrodroid.transit.en1545.En1545Field;
 import au.id.micolous.metrodroid.transit.en1545.En1545FixedInteger;
 import au.id.micolous.metrodroid.transit.en1545.En1545Lookup;
 import au.id.micolous.metrodroid.transit.en1545.En1545Transaction;
+import au.id.micolous.metrodroid.xml.ImmutableByteArray;
 
 class OpusTransaction extends En1545Transaction {
     public static final Creator<OpusTransaction> CREATOR = new Creator<OpusTransaction>() {
@@ -66,7 +67,7 @@ class OpusTransaction extends En1545Transaction {
             )
     );
 
-    OpusTransaction(byte[] data) {
+    OpusTransaction(ImmutableByteArray data) {
         super(data, tripFields);
     }
 

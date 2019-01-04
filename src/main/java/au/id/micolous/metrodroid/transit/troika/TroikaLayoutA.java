@@ -1,10 +1,11 @@
 package au.id.micolous.metrodroid.transit.troika;
 
 import au.id.micolous.metrodroid.util.Utils;
+import au.id.micolous.metrodroid.xml.ImmutableByteArray;
 
 // This layout is found on newer single and double-rides
 public class TroikaLayoutA extends TroikaBlock {
-    public TroikaLayoutA(byte[] rawData) {
+    public TroikaLayoutA(ImmutableByteArray rawData) {
         super(rawData);
         // 3 bits unknown
         int validityStart = Utils.getBitsFromBuffer(mRawData, 67, 9);

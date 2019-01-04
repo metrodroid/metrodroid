@@ -28,6 +28,7 @@ import au.id.micolous.metrodroid.transit.Station;
 import au.id.micolous.metrodroid.transit.TransitCurrency;
 import au.id.micolous.metrodroid.transit.Trip;
 import au.id.micolous.metrodroid.util.Utils;
+import au.id.micolous.metrodroid.xml.ImmutableByteArray;
 
 public class ClipperUltralightTrip extends Trip {
     private final int mTime;
@@ -39,7 +40,7 @@ public class ClipperUltralightTrip extends Trip {
     private final int mType;
     private final int mAgency;
 
-    public ClipperUltralightTrip(byte[] transaction, int baseDate) {
+    public ClipperUltralightTrip(ImmutableByteArray transaction, int baseDate) {
         mSeqCounter = Utils.getBitsFromBuffer(transaction, 0, 7);
         mType = Utils.getBitsFromBuffer(transaction, 7, 17);
         mTime = baseDate * 1440 - Utils.getBitsFromBuffer(transaction, 24, 17);

@@ -32,6 +32,7 @@ import au.id.micolous.metrodroid.transit.TransitData
 import au.id.micolous.metrodroid.transit.TransitIdentity
 import au.id.micolous.metrodroid.ui.ListItem
 import au.id.micolous.metrodroid.util.Utils
+import au.id.micolous.metrodroid.xml.ImmutableByteArray
 import kotlinx.android.parcel.Parcelize
 import org.jetbrains.annotations.NonNls
 
@@ -54,10 +55,10 @@ class TartuTransitFactory : ClassicCardTransitFactory {
                 return false
             val sector1 = sectors[1]
             if (!Utils.byteArraySlice(sector1[0].data, 7, 9)
-                            .contentEquals(Utils.stringToByteArray("pilet.ee:")))
+                            .contentEquals(ImmutableByteArray.fromASCII("pilet.ee:")))
                 return false
             if (!Utils.byteArraySlice(sector1[1].data, 0, 6)
-                            .contentEquals(Utils.stringToByteArray("ekaart")))
+                            .contentEquals(ImmutableByteArray.fromASCII("ekaart")))
                 return false
             return true
         } catch (ignored: IndexOutOfBoundsException) {
@@ -103,7 +104,7 @@ class TartuTransitFactory : ClassicCardTransitFactory {
 
         @NonNls
         private fun parseSerial(card: ClassicCard) =
-                String(Utils.byteArraySlice(card[2, 0].data, 7, 9), Utils.getASCII()) +
-                        String(Utils.byteArraySlice(card[2, 1].data, 0, 10), Utils.getASCII())
+                card[2, 0].data.sliceOffLen(7, 9).readASCII() +
+                        card[2, 1].data.sliceOffLen(0, 10).readASCII()
     }
 }

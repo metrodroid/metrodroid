@@ -8,6 +8,7 @@ import au.id.micolous.metrodroid.transit.TransitBalance;
 import au.id.micolous.metrodroid.transit.TransitBalanceStored;
 import au.id.micolous.metrodroid.transit.TransitCurrency;
 import au.id.micolous.metrodroid.util.Utils;
+import au.id.micolous.metrodroid.xml.ImmutableByteArray;
 
 // This is e-purse layout
 class TroikaPurse extends TroikaBlock {
@@ -17,7 +18,7 @@ class TroikaPurse extends TroikaBlock {
      */
     private final int mBalance;
 
-    TroikaPurse(byte[] rawData) {
+    TroikaPurse(ImmutableByteArray rawData) {
         super(rawData);
         mExpiryDate = convertDateTime1992(Utils.getBitsFromBuffer(rawData, 61, 16),0);
         // 10 bits unknown

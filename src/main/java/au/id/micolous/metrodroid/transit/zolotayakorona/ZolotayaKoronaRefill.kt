@@ -22,6 +22,7 @@ package au.id.micolous.metrodroid.transit.zolotayakorona
 import au.id.micolous.metrodroid.transit.TransitCurrency
 import au.id.micolous.metrodroid.transit.Trip
 import au.id.micolous.metrodroid.util.Utils
+import au.id.micolous.metrodroid.xml.ImmutableByteArray
 import kotlinx.android.parcel.Parcelize
 
 @Parcelize
@@ -39,7 +40,7 @@ internal data class ZolotayaKoronaRefill(internal val mTime: Int,
     override fun getMode() = Trip.Mode.TICKET_MACHINE
 
     companion object {
-        fun parse(block: ByteArray, cardType: Int): ZolotayaKoronaRefill? {
+        fun parse(block: ImmutableByteArray, cardType: Int): ZolotayaKoronaRefill? {
             if (Utils.isAllZero(block))
                 return null
             val region = Utils.convertBCDtoInteger(cardType shr 16)

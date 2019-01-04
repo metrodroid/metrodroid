@@ -30,6 +30,7 @@ import au.id.micolous.metrodroid.transit.en1545.En1545FixedHex;
 import au.id.micolous.metrodroid.transit.en1545.En1545FixedInteger;
 import au.id.micolous.metrodroid.transit.en1545.En1545Lookup;
 import au.id.micolous.metrodroid.transit.en1545.En1545Transaction;
+import au.id.micolous.metrodroid.xml.ImmutableByteArray;
 
 public class RicaricaMiTransaction extends En1545Transaction {
     private static final String TRANSPORT_TYPE = "TransportType";
@@ -58,7 +59,7 @@ public class RicaricaMiTransaction extends En1545Transaction {
             new En1545FixedHex(EVENT_UNKNOWN_I, 64)
     );
 
-    public RicaricaMiTransaction(byte[] tripData) {
+    public RicaricaMiTransaction(ImmutableByteArray tripData) {
         super(tripData, TRIP_FIELDS);
     }
 

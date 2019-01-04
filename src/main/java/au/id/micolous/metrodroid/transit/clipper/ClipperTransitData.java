@@ -48,6 +48,7 @@ import au.id.micolous.metrodroid.transit.TransitIdentity;
 import au.id.micolous.metrodroid.transit.Trip;
 import au.id.micolous.metrodroid.util.StationTableReader;
 import au.id.micolous.metrodroid.util.Utils;
+import au.id.micolous.metrodroid.xml.ImmutableByteArray;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -116,7 +117,7 @@ public class ClipperTransitData extends TransitData {
     private ClipperTransitData(DesfireCard desfireCard) {
         int expiry;
 
-        byte[] data;
+        ImmutableByteArray data;
 
         try {
             data = desfireCard.getApplication(APP_ID).getFile(0x08).getData();
@@ -173,7 +174,7 @@ public class ClipperTransitData extends TransitData {
         @Override
         public TransitIdentity parseTransitIdentity(@NonNull DesfireCard card) {
             try {
-                byte[] data = card.getApplication(APP_ID).getFile(0x08).getData();
+                ImmutableByteArray data = card.getApplication(APP_ID).getFile(0x08).getData();
                 return new TransitIdentity("Clipper", String.valueOf(Utils.byteArrayToLong(data, 1, 4)));
             } catch (Exception ex) {
                 throw new RuntimeException("Error parsing Clipper serial", ex);
@@ -216,9 +217,9 @@ public class ClipperTransitData extends TransitData {
          *  be only a regular file.  As such, we'll need to extract the records
          *  manually.
          */
-        byte[] data = file.getData();
+        ImmutableByteArray data = file.getData();
         List<ClipperTrip> result = new ArrayList<>();
-        for (int pos = data.length - RECORD_LENGTH; pos >= 0; pos -= RECORD_LENGTH) {
+        for (int pos = data.getSize() - RECORD_LENGTH; pos >= 0; pos -= RECORD_LENGTH) {
             if (Utils.byteArrayToInt(data, pos + 0x2, 2) == 0)
                 continue;
 
@@ -254,11 +255,11 @@ public class ClipperTransitData extends TransitData {
          *  be only a regular file.  As such, we'll need to extract the records
          *  manually.
          */
-        byte[] data = file.getData();
-        int pos = data.length - RECORD_LENGTH;
+        ImmutableByteArray data = file.getData();
+        int pos = data.getSize() - RECORD_LENGTH;
         List<ClipperRefill> result = new ArrayList<>();
         while (pos >= 0) {
-            byte[] slice = Utils.byteArraySlice(data, pos, RECORD_LENGTH);
+            ImmutableByteArray slice = Utils.byteArraySlice(data, pos, RECORD_LENGTH);
             ClipperRefill refill = createRefill(slice);
             if (refill != null)
                 result.add(refill);
@@ -270,7 +271,7 @@ public class ClipperTransitData extends TransitData {
         return useLog;
     }
 
-    private ClipperRefill createRefill(byte[] useData) {
+    private ClipperRefill createRefill(ImmutableByteArray useData) {
         long timestamp;
         String machineid;
         int amount, agency;

@@ -30,6 +30,7 @@ import au.id.micolous.metrodroid.transit.en1545.En1545FixedInteger;
 import au.id.micolous.metrodroid.transit.en1545.En1545Lookup;
 import au.id.micolous.metrodroid.transit.en1545.En1545Transaction;
 import au.id.micolous.metrodroid.util.StationTableReader;
+import au.id.micolous.metrodroid.xml.ImmutableByteArray;
 
 class MobibTransaction extends En1545Transaction {
     private static final int TRAM = 0x16;
@@ -69,7 +70,7 @@ class MobibTransaction extends En1545Transaction {
             new En1545FixedInteger(EVENT_UNKNOWN_G, 21)
     );
 
-    MobibTransaction(byte[] data) {
+    MobibTransaction(ImmutableByteArray data) {
         super(data, FIELDS);
     }
 

@@ -38,6 +38,7 @@ import au.id.micolous.metrodroid.transit.TransitCurrency;
 import au.id.micolous.metrodroid.transit.TransitData;
 import au.id.micolous.metrodroid.transit.TransitIdentity;
 import au.id.micolous.metrodroid.util.Utils;
+import au.id.micolous.metrodroid.xml.ImmutableByteArray;
 
 /**
  * Reader for SmartRider (Western Australia) and MyWay (Australian Capital Territory / Canberra)
@@ -214,8 +215,8 @@ public class SmartRiderTransitData extends TransitData {
         // and parking fees (SmartRider only) are also not understood.  So just pick whatever is
         // the lowest balance, and we're probably right, unless the user has just topped up their
         // card.
-        byte[] recordA = card.getSector(2).getBlock(2).getData();
-        byte[] recordB = card.getSector(3).getBlock(2).getData();
+        ImmutableByteArray recordA = card.getSector(2).getBlock(2).getData();
+        ImmutableByteArray recordB = card.getSector(3).getBlock(2).getData();
 
         int balanceA = Utils.byteArrayToIntReversed(recordA, 7, 2);
         int balanceB = Utils.byteArrayToIntReversed(recordB, 7, 2);
@@ -225,7 +226,7 @@ public class SmartRiderTransitData extends TransitData {
     }
 
     private static String getSerialData(ClassicCard card) {
-        byte[] serialData = card.getSector(0).getBlock(1).getData();
+        ImmutableByteArray serialData = card.getSector(0).getBlock(1).getData();
         String serial = Utils.getHexString(serialData, 6, 5);
         if (serial.startsWith("0")) {
             serial = serial.substring(1);

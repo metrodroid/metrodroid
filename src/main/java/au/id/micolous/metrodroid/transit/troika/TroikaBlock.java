@@ -2,6 +2,7 @@ package au.id.micolous.metrodroid.transit.troika;
 
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
 import java.util.ArrayList;
@@ -17,9 +18,10 @@ import au.id.micolous.metrodroid.transit.TransitIdentity;
 import au.id.micolous.metrodroid.transit.Trip;
 import au.id.micolous.metrodroid.ui.ListItem;
 import au.id.micolous.metrodroid.util.Utils;
+import au.id.micolous.metrodroid.xml.ImmutableByteArray;
 
 public abstract class TroikaBlock implements Parcelable {
-    protected final byte[] mRawData;
+    protected final ImmutableByteArray mRawData;
     private final long mSerial;
     protected int mLayout;
     protected int mTicketType;
@@ -91,7 +93,7 @@ public abstract class TroikaBlock implements Parcelable {
         TROIKA_EPOCH_2016 = epoch.getTimeInMillis();
     }
 
-    public TroikaBlock(byte[] rawData) {
+    public TroikaBlock(ImmutableByteArray rawData) {
         mRawData = rawData;
         mSerial = getSerial(rawData);
         mLayout = getLayout(rawData);
@@ -137,23 +139,24 @@ public abstract class TroikaBlock implements Parcelable {
         return Utils.formatNumber(sn, " ", 4, 3, 3);
     }
 
+    @NonNull
     public String getSerialNumber() {
         return formatSerial(mSerial);
     }
 
-    public static long getSerial(byte[] rawData) {
+    public static long getSerial(ImmutableByteArray rawData) {
         return ((long) Utils.getBitsFromBuffer(rawData, 20, 32)) & 0xffffffffL;
     }
 
-    private static int getTicketType(byte[] rawData) {
+    private static int getTicketType(ImmutableByteArray rawData) {
         return Utils.getBitsFromBuffer(rawData, 4,16);
     }
 
-    private static int getLayout(byte[] rawData) {
+    private static int getLayout(ImmutableByteArray rawData) {
         return Utils.getBitsFromBuffer(rawData, 52,4);
     }
 
-    public static TransitIdentity parseTransitIdentity(byte[]rawData) {
+    public static TransitIdentity parseTransitIdentity(ImmutableByteArray rawData) {
         return new TransitIdentity(Utils.localizeString(R.string.card_name_troika),
                 formatSerial(getSerial(rawData)));
     }
@@ -213,16 +216,15 @@ public abstract class TroikaBlock implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int i) {
-        dest.writeByteArray(mRawData);
+        mRawData.parcelize(dest, i);
     }
 
     public static TroikaBlock restoreFromParcel(Parcel p) {
-        byte[] rawData = new byte[0];
-        p.readByteArray(rawData);
+        ImmutableByteArray rawData = ImmutableByteArray.Companion.fromParcel(p);
         return parseBlock(rawData);
     }
 
-    public static boolean check(byte[] rawData) {
+    public static boolean check(ImmutableByteArray rawData) {
         return Utils.getBitsFromBuffer(rawData, 0, 10) == 0x117
             ||  Utils.getBitsFromBuffer(rawData, 0, 10) == 0x108;
     }
@@ -231,7 +233,7 @@ public abstract class TroikaBlock implements Parcelable {
         return Utils.localizeString(R.string.card_name_troika);
     }
 
-    public static TroikaBlock parseBlock(byte[] rawData) {
+    public static TroikaBlock parseBlock(ImmutableByteArray rawData) {
         int layout = getLayout(rawData);
         switch (layout) {
             case 0x2:
