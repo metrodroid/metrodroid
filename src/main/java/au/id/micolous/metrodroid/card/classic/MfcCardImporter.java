@@ -12,6 +12,7 @@ import java.util.Locale;
 
 import au.id.micolous.metrodroid.card.CardImporter;
 import au.id.micolous.metrodroid.key.ClassicSectorKey;
+import au.id.micolous.metrodroid.xml.ImmutableByteArray;
 
 public class MfcCardImporter implements CardImporter<ClassicCard> {
     private static final int MAX_SECTORS = 40;
@@ -59,7 +60,9 @@ public class MfcCardImporter implements CardImporter<ClassicCard> {
             }
 
             assert key != null;
-            sectors.add(new ClassicSector(sectorNum, blocks.toArray(new ClassicBlock[0]), ClassicSectorKey.wellKnown(key)));
+            sectors.add(new ClassicSector(sectorNum, blocks.toArray(new ClassicBlock[0]),
+                    ClassicSectorKey.Companion.fromDump(ImmutableByteArray.Companion.fromByteArray(key),
+                            ClassicSectorKey.KeyType.A, "mfc-dump")));
             maxSector = sectorNum;
         }
 
@@ -78,6 +81,6 @@ public class MfcCardImporter implements CardImporter<ClassicCard> {
         }
 
         return new ClassicCard(uid,
-                GregorianCalendar.getInstance(), sectors.toArray(new ClassicSector[0]), false);
+                GregorianCalendar.getInstance(), sectors, false);
     }
 }

@@ -24,12 +24,14 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.ListFragment;
 import android.app.LoaderManager;
+import android.content.AsyncTaskLoader;
 import android.content.ContentUris;
 import android.content.Context;
 import android.content.CursorLoader;
 import android.content.Intent;
 import android.content.Loader;
 import android.database.Cursor;
+import android.database.MergeCursor;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -48,6 +50,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import org.apache.commons.io.IOUtils;
+import org.jetbrains.annotations.NonNls;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -60,8 +63,14 @@ import java.util.Objects;
 import au.id.micolous.farebot.R;
 import au.id.micolous.metrodroid.MetrodroidApplication;
 import au.id.micolous.metrodroid.activity.AddKeyActivity;
+import au.id.micolous.metrodroid.card.Card;
+import au.id.micolous.metrodroid.card.classic.ClassicAndroidReader;
+import au.id.micolous.metrodroid.card.classic.ClassicCard;
 import au.id.micolous.metrodroid.key.CardKeys;
+import au.id.micolous.metrodroid.key.CardKeysDB;
+import au.id.micolous.metrodroid.key.CardKeysEmbed;
 import au.id.micolous.metrodroid.key.ClassicCardKeys;
+import au.id.micolous.metrodroid.key.ClassicKeys;
 import au.id.micolous.metrodroid.key.ClassicStaticKeys;
 import au.id.micolous.metrodroid.key.InsertKeyTask;
 import au.id.micolous.metrodroid.provider.CardKeyProvider;
@@ -108,9 +117,10 @@ public class KeysFragment extends ListFragment implements AdapterView.OnItemLong
                     return true;
                 }
 
-                ClassicCardKeys keys = null;
+                CardKeys keys = null;
                 try {
-                    keys = CardKeys.forID(mActionKeyId);
+                    keys = CardKeysDB.INSTANCE.forID(MetrodroidApplication.getInstance(),
+                            mActionKeyId);
                 } catch (JSONException e) {
                     Log.d(TAG, "JSON error in deleting key?");
                 }
@@ -167,15 +177,26 @@ public class KeysFragment extends ListFragment implements AdapterView.OnItemLong
             mActionMode = null;
         }
     };
+    private static final class KeyLoader extends CursorLoader {
+        KeyLoader(Context context) {
+            super(context, CardKeyProvider.CONTENT_URI, null, null,
+                    null,KeysTableColumns.CREATED_AT + " DESC");
+        }
+
+        @Override
+        public Cursor loadInBackground() {
+            Cursor cursor = super.loadInBackground();
+            Cursor embedCursor = ClassicAndroidReader.KEY_RETRIEVER_EMBED.makeCursor(getContext());
+            if (embedCursor == null)
+                return cursor;
+            return new MergeCursor(new Cursor[] {cursor, embedCursor});
+        }
+    }
 
     private final LoaderManager.LoaderCallbacks<Cursor> mLoaderCallbacks = new LoaderManager.LoaderCallbacks<android.database.Cursor>() {
         @Override
         public Loader<Cursor> onCreateLoader(int i, Bundle bundle) {
-            return new CursorLoader(getActivity(), CardKeyProvider.CONTENT_URI,
-                    null,
-                    null,
-                    null,
-                    KeysTableColumns.CREATED_AT + " DESC");
+            return new KeyLoader(MetrodroidApplication.getInstance());
         }
 
         @Override
@@ -200,7 +221,7 @@ public class KeysFragment extends ListFragment implements AdapterView.OnItemLong
         super.onViewCreated(view, savedInstanceState);
         setEmptyText(getString(R.string.no_keys));
         getListView().setOnItemLongClickListener(this);
-        setListAdapter(new KeysAdapter());
+        setListAdapter(new KeysAdapter(getActivity()));
         getLoaderManager().initLoader(0, null, mLoaderCallbacks);
     }
 
@@ -297,10 +318,11 @@ public class KeysFragment extends ListFragment implements AdapterView.OnItemLong
                         new BetterAsyncTask<Void>(getActivity(), false, false) {
                             @Override
                             protected Void doInBackground() throws Exception {
-                                OutputStream os = MetrodroidApplication.getInstance().getContentResolver().openOutputStream(uri);
+                                Context ctxt = MetrodroidApplication.getInstance();
+                                OutputStream os = ctxt.getContentResolver().openOutputStream(uri);
                                 Objects.requireNonNull(os);
 
-                                ClassicCardKeys keys = CardKeys.forID(mActionKeyId);
+                                CardKeys keys = ClassicAndroidReader.KEY_RETRIEVER.forID(ctxt, mActionKeyId);
                                 Objects.requireNonNull(keys);
                                 String json = keys.toJSON().toString(2);
 
@@ -337,12 +359,15 @@ public class KeysFragment extends ListFragment implements AdapterView.OnItemLong
             Log.d(TAG, "inserting key");
 
             // Test that we can deserialise this
-            ClassicStaticKeys k = ClassicStaticKeys.fromJSON(json);
-            if (k.keys().isEmpty()) {
+            @NonNls String path = uri.getPath();
+            if (path == null)
+                path = "unspecified";
+            ClassicKeys k = ClassicStaticKeys.Companion.fromJSON(json, path);
+            if (k.getAllKeys().isEmpty()) {
                 return R.string.key_file_empty;
             }
 
-            new InsertKeyTask(activity, k, true).execute();
+            new InsertKeyTask(activity, k).execute();
             return 0;
         } catch (JSONException ex) {
             Log.d(TAG, "jsonException", ex);
@@ -350,14 +375,14 @@ public class KeysFragment extends ListFragment implements AdapterView.OnItemLong
         }
     }
 
-    private class KeysAdapter extends ResourceCursorAdapter {
-        KeysAdapter() {
-            super(getActivity(), android.R.layout.simple_list_item_2, null, false);
+    private static class KeysAdapter extends ResourceCursorAdapter {
+        KeysAdapter(Activity activity) {
+            super(activity, android.R.layout.simple_list_item_2, null, false);
         }
 
         @Override
         public void bindView(View view, Context context, Cursor cursor) {
-            String id = cursor.getString(cursor.getColumnIndex(KeysTableColumns.CARD_ID));
+            @NonNls String id = cursor.getString(cursor.getColumnIndex(KeysTableColumns.CARD_ID));
             String type = cursor.getString(cursor.getColumnIndex(KeysTableColumns.CARD_TYPE));
 
             TextView textView1 = view.findViewById(android.R.id.text1);
@@ -369,7 +394,8 @@ public class KeysFragment extends ListFragment implements AdapterView.OnItemLong
                     String desc = null;
                     String fileType = null;
                     try {
-                        ClassicStaticKeys k = ClassicStaticKeys.fromJSON(new JSONObject(keyData));
+                        ClassicStaticKeys k = ClassicStaticKeys.Companion.fromJSON(new JSONObject(keyData),
+                                "cursor/" + id);
                         desc = k.getDescription();
                         fileType = k.getFileType();
                     } catch (JSONException ignored) { }
@@ -392,7 +418,8 @@ public class KeysFragment extends ListFragment implements AdapterView.OnItemLong
                     String fileType = null;
 
                     try {
-                        ClassicCardKeys k = ClassicCardKeys.fromJSON(new JSONObject(keyData), KeyFormat.JSON_MFC);
+                        CardKeys k = ClassicCardKeys.Companion.fromJSON(new JSONObject(keyData),
+                                "cursor/" + id);
                         fileType = k.getFileType();
                     } catch (JSONException ignored) { }
 

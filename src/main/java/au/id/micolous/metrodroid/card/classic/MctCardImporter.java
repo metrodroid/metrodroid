@@ -16,6 +16,7 @@ import java.util.Set;
 import au.id.micolous.metrodroid.card.CardImporter;
 import au.id.micolous.metrodroid.key.ClassicSectorKey;
 import au.id.micolous.metrodroid.util.Utils;
+import au.id.micolous.metrodroid.xml.ImmutableByteArray;
 
 /**
  * Class to read files built by MIFARE Classic Tool.
@@ -83,20 +84,22 @@ public class MctCardImporter implements CardImporter.Text<ClassicCard> {
         Collections.sort(sectors, (a, b) -> Integer.compare(a.getIndex(), b.getIndex()));
 
         return new ClassicCard(uid,
-                GregorianCalendar.getInstance(), sectors.toArray(new ClassicSector[0]), false);
+                GregorianCalendar.getInstance(), sectors, false);
     }
 
 
     private void flushSector(List<ClassicSector> sectors, int curSector, List<ClassicBlock> curBlocks, String lastBlock) {
         if (curSector < 0 || curBlocks == null)
             return;
-        ClassicSectorKey key;
+        ClassicSectorKey key = null;
         if (! lastBlock.startsWith("-")) {
-            key = ClassicSectorKey.fromDump(Utils.hexStringToByteArray(lastBlock.substring(0, 12)));
-            key.setType(ClassicSectorKey.KeyType.A);
+            key = ClassicSectorKey.Companion.fromDump(
+                    ImmutableByteArray.Companion.fromHex(lastBlock.substring(0, 12)),
+                    ClassicSectorKey.KeyType.A, "mct-dump");
         } else {
-            key = ClassicSectorKey.fromDump(Utils.hexStringToByteArray(lastBlock.substring(20, 32)));
-            key.setType(ClassicSectorKey.KeyType.B);
+            key = ClassicSectorKey.Companion.fromDump(
+                    ImmutableByteArray.Companion.fromHex(lastBlock.substring(20, 32)),
+                    ClassicSectorKey.KeyType.B, "mct-dump");
         }
         sectors.add(new ClassicSector(curSector, curBlocks.toArray(new ClassicBlock[0]), key));
     }

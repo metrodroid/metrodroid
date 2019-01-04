@@ -27,6 +27,7 @@ import au.id.micolous.farebot.R;
 import au.id.micolous.metrodroid.card.classic.ClassicCard;
 import au.id.micolous.metrodroid.card.classic.ClassicCardTransitFactory;
 import au.id.micolous.metrodroid.card.classic.ClassicSector;
+import au.id.micolous.metrodroid.key.ClassicSectorKey;
 import au.id.micolous.metrodroid.transit.CardInfo;
 import au.id.micolous.metrodroid.transit.Subscription;
 import au.id.micolous.metrodroid.transit.TransitBalance;
@@ -187,6 +188,17 @@ public class TroikaHybridTransitData extends TransitData {
         @Override
         public List<CardInfo> getAllCards() {
             return Collections.singletonList(TroikaTransitData.CARD_INFO);
+        }
+
+        @Override
+        public boolean isDynamicKeys(@NonNull List<ClassicSector> sectors, int sectorIndex,
+                                     ClassicSectorKey.KeyType keyType) {
+            try {
+                return StrelkaTransitData.Companion.getFACTORY().earlyCheck(sectors)
+                        && StrelkaTransitData.Companion.getFACTORY().isDynamicKeys(sectors, sectorIndex, keyType);
+            } catch (Exception e) {
+                return false;
+            }
         }
     };
 
