@@ -1183,7 +1183,7 @@ public class Utils {
     public static int checkKeyHash(@Nullable ClassicSectorKey key, @NonNull String salt, String... expectedHashes) {
         if (key == null)
             return -1;
-        return checkKeyHash(key.getKey(), salt, expectedHashes);
+        return checkKeyHash(key.getKey().getDataCopy(), salt, expectedHashes);
     }
 
     public static void copyTextToClipboard(Context context, String label, String text) {

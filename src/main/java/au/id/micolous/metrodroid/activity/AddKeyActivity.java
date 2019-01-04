@@ -42,7 +42,9 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 
+import au.id.micolous.metrodroid.key.CardKeys;
 import au.id.micolous.metrodroid.key.ClassicCardKeys;
+import au.id.micolous.metrodroid.key.ClassicKeys;
 import au.id.micolous.metrodroid.key.ClassicSectorKey;
 import au.id.micolous.metrodroid.key.InsertKeyTask;
 import au.id.micolous.metrodroid.util.KeyFormat;
@@ -86,12 +88,12 @@ public class AddKeyActivity extends MetrodroidActivity {
         });
 
         findViewById(R.id.add).setOnClickListener(view -> {
-            if (mKeyData.getUID() == null) return;
+            if (mKeyData.getUid() == null) return;
             final ClassicSectorKey.KeyType keyType = ((RadioButton) findViewById(R.id.is_key_a)).isChecked() ?
                     ClassicSectorKey.KeyType.A : ClassicSectorKey.KeyType.B;
             mKeyData.setAllKeyTypes(keyType);
 
-            new InsertKeyTask(AddKeyActivity.this, mKeyData, true).execute();
+            new InsertKeyTask(AddKeyActivity.this, mKeyData).execute();
         });
 
         ((RadioGroup)findViewById(R.id.keys_radio)).setOnCheckedChangeListener((view, checkedId) -> {
@@ -113,6 +115,13 @@ public class AddKeyActivity extends MetrodroidActivity {
                 getIntent().getAction().equals(Intent.ACTION_VIEW) &&
                 getIntent().getData() != null) {
             byte[] keyData;
+            String keyPath;
+
+            try {
+                keyPath = getIntent().getData().getPath();
+            } catch (Exception e) {
+                keyPath = "unspecified";
+            }
 
             try {
                 InputStream stream = getContentResolver().openInputStream(getIntent().getData());
@@ -141,14 +150,14 @@ public class AddKeyActivity extends MetrodroidActivity {
                 }
 
                 try {
-                    mKeyData = ClassicCardKeys.fromJSON(o, mKeyFormat);
+                    mKeyData = ClassicCardKeys.Companion.fromJSON(o, keyPath);
                 } catch (JSONException e) {
                     // Invalid JSON, grumble.
                     Utils.showErrorAndFinish(this, e);
                     return;
                 }
             } else if (mKeyFormat == KeyFormat.RAW_MFC) {
-                mKeyData = ClassicCardKeys.fromDump(keyData);
+                mKeyData = ClassicCardKeys.Companion.fromDump(keyData);
             } else {
                 // Unknown format.
                 Utils.showErrorAndFinish(this, R.string.invalid_key_file);
@@ -180,7 +189,7 @@ public class AddKeyActivity extends MetrodroidActivity {
 
     private void drawUI() {
         if (MetrodroidApplication.hideCardNumbers()) {
-            if (mKeyData.getUID() != null) {
+            if (mKeyData.getUid() != null) {
                 ((TextView) findViewById(R.id.card_id)).setText(R.string.hidden_card_number);
             }
 
@@ -189,8 +198,8 @@ public class AddKeyActivity extends MetrodroidActivity {
                             mKeyData.getSourceDataLength(),
                             mKeyData.getSourceDataLength()));
         } else {
-            if (mKeyData.getUID() != null) {
-                ((TextView) findViewById(R.id.card_id)).setText(mKeyData.getUID());
+            if (mKeyData.getUid() != null) {
+                ((TextView) findViewById(R.id.card_id)).setText(mKeyData.getUid());
             }
 
             // FIXME: Display keys better.
@@ -219,7 +228,7 @@ public class AddKeyActivity extends MetrodroidActivity {
             }
         }
 
-        if (mKeyData.getUID() != null) {
+        if (mKeyData.getUid() != null) {
             findViewById(R.id.directions).setVisibility(View.GONE);
             findViewById(R.id.card_id).setVisibility(View.VISIBLE);
             findViewById(R.id.add).setEnabled(true);
@@ -237,7 +246,7 @@ public class AddKeyActivity extends MetrodroidActivity {
 
         if (ArrayUtils.contains(tag.getTechList(), MifareClassic.class.getName())
                 && tagId != null && !tagId.isEmpty()) {
-            mKeyData.setUID(tagId);
+            mKeyData.setUid(tagId);
             drawUI();
         } else {
             new AlertDialog.Builder(this)

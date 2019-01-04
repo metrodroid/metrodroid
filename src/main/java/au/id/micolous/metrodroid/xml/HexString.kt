@@ -16,38 +16,21 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package au.id.micolous.metrodroid.xml;
+package au.id.micolous.metrodroid.xml
 
-import au.id.micolous.metrodroid.util.Utils;
+class HexString (data: ImmutableByteArray): ImmutableByteArray(data) {
+    val data
+        get() = dataCopy
+    constructor(data: ByteArray) : this(fromByteArray(data))
+    constructor(hexString: String) : this(fromHex(hexString))
 
-public class HexString {
-    private final byte[] mData;
-
-    public HexString(byte[] data) {
-        mData = data;
-    }
-
-    public HexString(String hex) {
-        mData = Utils.hexStringToByteArray(hex);
-    }
-
-    public byte[] getData() {
-        return mData;
-    }
-
-    public String toHexString() {
-        return Utils.getHexString(mData);
-    }
-
-    public static final class Transform implements org.simpleframework.xml.transform.Transform<HexString> {
-        @Override
-        public HexString read(String value) {
-            return new HexString(value);
+    class Transform : org.simpleframework.xml.transform.Transform<HexString> {
+        override fun read(value: String): HexString {
+            return HexString(ImmutableByteArray.fromHex(value))
         }
 
-        @Override
-        public String write(HexString value) {
-            return value.toHexString();
+        override fun write(value: HexString): String {
+            return value.toHexString()
         }
     }
 }

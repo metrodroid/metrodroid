@@ -20,9 +20,12 @@
 
 package au.id.micolous.metrodroid.card.classic;
 
+import au.id.micolous.metrodroid.card.UnauthorizedException;
 import au.id.micolous.metrodroid.xml.Base64String;
+import au.id.micolous.metrodroid.xml.ImmutableByteArray;
 
 import org.jetbrains.annotations.NonNls;
+import org.jetbrains.annotations.NotNull;
 import org.simpleframework.xml.Attribute;
 import org.simpleframework.xml.Element;
 import org.simpleframework.xml.Root;
@@ -44,17 +47,30 @@ public class ClassicBlock {
     public ClassicBlock() {
     }
 
-    public ClassicBlock(int index, String type, byte[] data) {
+    public ClassicBlock(int index, String type, ImmutableByteArray data) {
         mIndex = index;
         mType = type;
         mData = new Base64String(data);
     }
 
-    public static ClassicBlock create(@NonNls String type, int index, byte[] data) {
+    public ClassicBlock(int blockNum, String type, byte[] blockData) {
+        this(blockNum, type, ImmutableByteArray.Companion.fromByteArray(blockData));
+    }
+
+    public static ClassicBlock create(@NonNls String type, int index, ImmutableByteArray data) {
         if (type.equals(TYPE_DATA) || type.equals(TYPE_VALUE)) {
             return new ClassicBlock(index, type, data);
         }
         return null;
+    }
+
+    public static ClassicBlock createUnauthorized(int index) {
+        return new ClassicBlock(index, "unauthozized",
+                ImmutableByteArray.Companion.fromByteArray(new byte[]{4}));
+    }
+
+    public boolean isUnauthorized() {
+        return mData.toHexString().equals("04");
     }
 
     public int getIndex() {
@@ -66,7 +82,15 @@ public class ClassicBlock {
     }
 
     public byte[] getData() {
+        if (isUnauthorized())
+            throw new UnauthorizedException();
         return mData.getData();
+    }
+
+    public ImmutableByteArray getImmutableData() {
+        if (isUnauthorized())
+            throw new UnauthorizedException();
+        return mData;
     }
 
     private static final String ZERO = "AAAAAAAAAAAAAAAAAAAAAA==";
@@ -74,6 +98,8 @@ public class ClassicBlock {
     private static final String ZERO_VB = "AAAAAP////8AAAAAAP8A/w==";
 
     public boolean isEmpty() {
+        if (isUnauthorized())
+            throw new UnauthorizedException();
         @NonNls String actual = mData.toBase64();
         return actual.equals(ZERO) || actual.equals(FF) || actual.equals(ZERO_VB);
     }

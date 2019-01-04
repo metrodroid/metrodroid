@@ -33,6 +33,7 @@ import au.id.micolous.metrodroid.card.UnauthorizedException;
 import au.id.micolous.metrodroid.card.classic.ClassicCard;
 import au.id.micolous.metrodroid.card.classic.ClassicCardTransitFactory;
 import au.id.micolous.metrodroid.card.classic.ClassicSector;
+import au.id.micolous.metrodroid.key.ClassicSectorKey;
 import au.id.micolous.metrodroid.transit.CardInfo;
 import au.id.micolous.metrodroid.transit.TransitData;
 import au.id.micolous.metrodroid.transit.TransitIdentity;
@@ -139,6 +140,12 @@ public class StrelkaTransitData extends SerialOnlyTransitData {
         public int earlySectors() {
             // 1 is actually enough but let's show Troika+Strelka as Troika
             return 2;
+        }
+
+        @Override
+        public boolean isDynamicKeys(@NonNull List<ClassicSector> sectors, int sectorIndex,
+                                     ClassicSectorKey.KeyType keyType) {
+            return sectorIndex == 13 || sectorIndex == 14;
         }
 
         @NonNull
