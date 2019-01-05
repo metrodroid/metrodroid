@@ -48,4 +48,6 @@
                   android:title="@string/save_xml" />
         </menu>
     </item>
+    <item android:id="@+id/deduplicate_cards"
+        android:title="@string/deduplicate_cards" />
 </menu>

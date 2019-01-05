@@ -26,18 +26,25 @@ import android.database.Cursor;
 import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.util.Log;
+
+import org.jetbrains.annotations.NonNls;
 
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.security.MessageDigest;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.Iterator;
+import java.util.Set;
 
 import au.id.micolous.metrodroid.card.Card;
 import au.id.micolous.metrodroid.card.CardImporter;
 import au.id.micolous.metrodroid.card.CardsExporter;
 import au.id.micolous.metrodroid.card.XmlCardFormat;
+import au.id.micolous.metrodroid.card.XmlGenericCardFormat;
 import au.id.micolous.metrodroid.provider.CardDBHelper;
 import au.id.micolous.metrodroid.provider.CardProvider;
 import au.id.micolous.metrodroid.provider.CardsTableColumns;
@@ -48,6 +55,44 @@ public final class ExportHelper {
 
     public static void copyXmlToClipboard(Context context, String xml) {
         Utils.copyTextToClipboard(context, "metrodroid card", xml);
+    }
+
+    @NonNls
+    private static String strongHash(Cursor cursor) {
+        @NonNls String serial = cursor.getString(cursor.getColumnIndex(CardsTableColumns.TAG_SERIAL)).trim();
+        @NonNls String data = XmlGenericCardFormat.cutXmlDef(
+                cursor.getString(cursor.getColumnIndex(CardsTableColumns.DATA)).trim());
+        MessageDigest md;
+        try {
+            md = MessageDigest.getInstance("SHA-512");
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+        md.update(("(" + serial.length()
+                + ", " + data.length() + ')').getBytes(Utils.getUTF8()));
+        md.update(serial.getBytes(Utils.getUTF8()));
+        md.update(data.getBytes(Utils.getUTF8()));
+
+        return Utils.getHexString(md.digest());
+    }
+
+    public static Set<Long> findDuplicates(Context context) {
+        Cursor cursor = CardDBHelper.createCursor(context);
+        Set<String> hashes = new HashSet<>();
+        Set<Long> res = new HashSet<>();
+
+        while (cursor.moveToNext()) {
+            @NonNls String hash = strongHash(cursor);
+
+            if (hashes.contains(hash)) {
+                res.add (cursor.getLong(cursor.getColumnIndex(CardsTableColumns._ID)));
+                continue;
+            }
+
+            hashes.add(hash);
+        }
+
+        return res;
     }
 
     public static void exportCards(@NonNull final OutputStream os,
@@ -137,5 +182,17 @@ public final class ExportHelper {
 
     public static Iterator<Card> readCards(Cursor cursor) {
         return new IteratorTransformer<>(readCardsXml(cursor), Card::fromXml);
+    }
+
+    public static int deleteSet(@NonNull final Context context, Iterable<Long> tf) {
+        @NonNls StringBuilder s = new StringBuilder("(");
+        for (Long id : tf) {
+            if (s.length() != 1)
+                s.append(", ");
+            s.append(id);
+        }
+        s.append(')');
+        return context.getContentResolver().delete(CardProvider.CONTENT_URI_CARD,
+                CardsTableColumns._ID + " in " + s, null);
     }
 }
