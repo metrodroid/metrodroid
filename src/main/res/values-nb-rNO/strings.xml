@@ -857,4 +857,10 @@
     <string name="convert_timezones_summary_off">Turtider vil vises i transportbråets lokale tidssone.</string>
     <string name="convert_timezones_summary_on">Turtider vil konverteres til din nåværende tidssone.</string>
     <string name="location_auckland">Auckland, Ny-Zealand</string>
+    <plurals name="cards_deduped">
+    <item quantity="one">%d kort duplisert</item>
+    <item quantity="other">%d kort duplisert</item>
+</plurals>
+    <string name="deduplicate_cards">Opphev duplisering av kort</string>
+    <string name="subscription_id">Abonnements-ID</string>
 </resources>
