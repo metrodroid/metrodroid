@@ -857,4 +857,9 @@
     <string name="adelaide_ticket_type_student">Studenten</string>
     <string name="location_auckland">Auckland, Nieuw-Zeeland</string>
     <string name="subscription_id">Abonnements-ID</string>
+    <plurals name="cards_deduped">
+    <item quantity="one">%d dubbele kaart verwijderd</item>
+    <item quantity="other">%d dubbele kaarten verwijderd</item>
+</plurals>
+    <string name="deduplicate_cards">Dubbele kaarten verwijderen</string>
 </resources>
