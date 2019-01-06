@@ -342,5 +342,4 @@
     <string name="mfc_not_supported">MIFARE Classic: не поддерживается</string>
     <string name="card_number">Номер карты</string>
     <string name="pref_show_raw_station_ids">Показывать необработанные коды станций</string>
-    <string name="pref_show_raw_station_ids_desc">Если включено, то показывать необработанный идентификатор в дополнение к имени станции</string>
 </resources>

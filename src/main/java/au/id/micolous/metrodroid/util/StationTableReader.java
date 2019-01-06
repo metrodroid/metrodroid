@@ -25,6 +25,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.annotation.VisibleForTesting;
 import android.util.Log;
+import android.util.SparseArray;
 
 import org.apache.commons.lang3.concurrent.ConcurrentException;
 import org.apache.commons.lang3.concurrent.LazyInitializer;
@@ -333,11 +334,11 @@ public class StationTableReader {
     private Station getStationById(int id, String humanReadableID) throws IOException {
         Stations.Station ps = getProtoStationById(id);
         if (ps == null) return null;
-        List<Stations.Line> lines = new ArrayList<>();
+        SparseArray<Stations.Line> lines = new SparseArray<>();
         for (int lineId : ps.getLineIdList()) {
             Stations.Line l = mStationDb.getLinesOrDefault(lineId, null);
             if (l != null) {
-                lines.add(l);
+                lines.append(lineId, l);
             }
         }
 

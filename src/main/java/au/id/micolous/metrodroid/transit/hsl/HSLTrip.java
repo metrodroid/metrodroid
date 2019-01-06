@@ -130,6 +130,12 @@ public class HSLTrip extends Trip {
         return null;
     }
 
+    @Nullable
+    @Override
+    public String getHumanReadableRouteID() {
+        return null;
+    }
+
     @Override
     public String getVehicleID() {
         if (mVehicleNumber != 0 && mVehicleNumber != -1)

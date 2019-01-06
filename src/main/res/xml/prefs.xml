@@ -129,7 +129,8 @@
 
             <CheckBoxPreference
                 android:title="@string/pref_show_raw_station_ids"
-                android:summary="@string/pref_show_raw_station_ids_desc"
+                android:summaryOn="@string/pref_show_raw_station_ids_desc_on"
+                android:summaryOff="@string/pref_show_raw_station_ids_desc_off"
                 android:key="pref_show_raw_ids"
                 android:defaultValue="false" />
         </PreferenceCategory>

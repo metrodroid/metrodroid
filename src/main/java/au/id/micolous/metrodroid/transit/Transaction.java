@@ -44,6 +44,20 @@ public abstract class Transaction implements Parcelable {
         return s != null ? s.getLineNames() : Collections.emptyList();
     }
 
+    /**
+     * This method may be overridden to provide candidate line names associated with the
+     * transaction. This is useful if there is a separate field on the card which encodes the route
+     * or line taken, and that knowledge of the station alone is not generally sufficient to
+     * determine the correct route.
+     *
+     * By default, this gets candidate route names from the Station.
+     */
+    @NonNull
+    public List<String> getHumanReadableLineIDs() {
+        Station s = getStation();
+        return s != null ? s.getHumanReadableLineIDs() : Collections.emptyList();
+    }
+
     public String getVehicleID() {
         return null;
     }

@@ -607,7 +607,6 @@
     <string name="charlie_2nd_card_number">Sekundært tall</string>
 
     <string name="device_manufacturer">Fabrikant: <xliff:g id="manufacturer" example="HTC">%1$s</xliff:g> (<xliff:g id="brand" example="Google">%2$s</xliff:g>)</string>
-    <string name="pref_show_raw_station_ids_desc">Hvis sant, vil en rådatastasjons-ID vises i tillegg til stasjonsnavn</string>
     <string name="station_database">Stasjonsdatabase</string>
 
     <string name="advanced_options">Avanserte valg</string>

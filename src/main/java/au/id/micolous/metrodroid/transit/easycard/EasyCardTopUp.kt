@@ -58,6 +58,8 @@ data class EasyCardTopUp(
 
     override fun getRouteName(): String? = null
 
+    override fun getHumanReadableRouteID(): String? = null
+
     override fun getMachineID() = "0x${machineId.toString(16)}"
 
     companion object {

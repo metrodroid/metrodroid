@@ -188,6 +188,14 @@ public class SuicaTrip extends Trip {
                 (getConsoleType() + " " + getProcessType());
     }
 
+    @Nullable
+    @Override
+    public String getHumanReadableRouteID() {
+        return (mStartStation != null) ?
+                super.getHumanReadableRouteID() :
+                (Utils.intToHex(mConsoleType) + " " + Utils.intToHex(mProcessType));
+    }
+
     @Override
     public String getRouteLanguage() {
         // Non-Japanese TTS speaking Japanese Romaji is pretty horrible.

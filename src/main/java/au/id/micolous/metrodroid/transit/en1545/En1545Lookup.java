@@ -21,14 +21,32 @@ package au.id.micolous.metrodroid.transit.en1545;
 
 import android.support.annotation.Nullable;
 
+import org.jetbrains.annotations.NonNls;
+
 import java.util.TimeZone;
 
 import au.id.micolous.metrodroid.transit.Station;
 import au.id.micolous.metrodroid.transit.TransitCurrency;
 import au.id.micolous.metrodroid.transit.Trip;
+import au.id.micolous.metrodroid.util.Utils;
 
 public interface En1545Lookup {
     String getRouteName(Integer routeNumber, Integer routeVariant, Integer agency, Integer transport);
+
+    @NonNls
+    @Nullable
+    default String getHumanReadableRouteId(@Nullable Integer routeNumber,
+                                           @Nullable Integer routeVariant,
+                                           @Nullable Integer agency,
+                                           @Nullable Integer transport) {
+        if (routeNumber == null)
+            return null;
+        @NonNls String routeReadable = Utils.intToHex(routeNumber);
+        if (routeVariant != null) {
+            routeReadable += "/" + Utils.intToHex(routeVariant);
+        }
+        return routeReadable;
+    }
 
     String getAgencyName(Integer agency, boolean isShort);
 

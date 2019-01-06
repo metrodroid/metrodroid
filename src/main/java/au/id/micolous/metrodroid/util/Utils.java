@@ -39,6 +39,7 @@ import android.net.Uri;
 import android.nfc.NfcAdapter;
 import android.os.Build;
 import android.os.Parcel;
+import android.os.Parcelable;
 import android.provider.Settings;
 import android.support.annotation.DrawableRes;
 import android.support.annotation.NonNull;
@@ -56,6 +57,8 @@ import android.text.style.LocaleSpan;
 import android.text.style.TtsSpan;
 import android.text.style.TypefaceSpan;
 import android.util.Log;
+import android.util.Pair;
+import android.util.SparseArray;
 import android.view.WindowManager;
 import android.widget.Toast;
 
@@ -1082,6 +1085,7 @@ public class Utils {
             dest.writeInt(0);
     }
 
+    @Nullable
     public static Calendar unparcelCalendar(@NonNull Parcel in) {
         if (in.readInt() == 0)
             return null;

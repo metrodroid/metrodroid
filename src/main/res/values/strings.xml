@@ -1332,8 +1332,9 @@
     <string name="mfc_not_supported">MIFARE Classic: not supported</string>
     <string name="balances_and_subscriptions">Tickets</string>
     <string name="card_number">Card number</string>
-    <string name="pref_show_raw_station_ids">Show raw station IDs</string>
-    <string name="pref_show_raw_station_ids_desc">If true, a raw station ID is shown in addition to station name</string>
+    <string name="pref_show_raw_station_ids">Show raw station &amp; route IDs</string>
+    <string name="pref_show_raw_station_ids_desc_on">Station and route IDs are shown in addition to their names</string>
+    <string name="pref_show_raw_station_ids_desc_off">Station and route IDs are hidden unless unknown</string>
     <string name="station_database">Station database</string>
 
     <!-- Translators: Used as a menu title in the preferences screen -->

@@ -256,33 +256,36 @@ public class CardTripsFragment extends ListFragment {
 
             SpannableStringBuilder routeText = new SpannableStringBuilder();
 
-            if (trip.getAgencyName(true) != null) {
-                routeText.append(trip.getAgencyName(true))
+            final String agencyName = trip.getAgencyName(true);
+            if (agencyName != null) {
+                routeText.append(agencyName)
                         .append(" ")
-                        .setSpan(new StyleSpan(Typeface.BOLD), 0, trip.getAgencyName(true).length(), 0);
+                        .setSpan(new StyleSpan(Typeface.BOLD), 0, agencyName.length(), 0);
                 if (localisePlaces && Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
                     routeText.setSpan(new LocaleSpan(Locale.getDefault()), 0, routeText.length(), 0);
                 }
             }
 
-            if (trip.getRouteName() != null) {
+            final String routeName = trip.getRouteDisplayName();
+            if (routeName != null) {
                 int oldLength = routeText.length();
-                routeText.append(trip.getRouteName());
+                routeText.append(routeName);
                 if (localisePlaces && Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                    if (trip.getRouteLanguage() != null) {
+                    final String routeLang = trip.getRouteLanguage();
+                    if (!MetrodroidApplication.showRawStationIds() && routeLang != null) {
                         // SUICA HACK:
                         // If there's something that looks like "#2" at the start, then mark
                         // that as the default language.
-                        Matcher m = LINE_NUMBER.matcher(trip.getRouteName());
+                        Matcher m = LINE_NUMBER.matcher(routeName);
                         if (!m.find() || m.group(1) == null) {
                             // No line number
                             //Log.d(TAG, "no line number");
-                            routeText.setSpan(new LocaleSpan(Locale.forLanguageTag(trip.getRouteLanguage())), oldLength, routeText.length(), 0);
+                            routeText.setSpan(new LocaleSpan(Locale.forLanguageTag(routeLang)), oldLength, routeText.length(), 0);
                         } else {
                             // There is a line number
                             //Log.d(TAG, String.format("num = %s, line = %s", m.group(1), m.group(2)));
                             routeText.setSpan(new LocaleSpan(Locale.getDefault()), oldLength, oldLength + m.end(1), 0);
-                            routeText.setSpan(new LocaleSpan(Locale.forLanguageTag(trip.getRouteLanguage())), oldLength + m.start(2), routeText.length(), 0);
+                            routeText.setSpan(new LocaleSpan(Locale.forLanguageTag(routeLang)), oldLength + m.start(2), routeText.length(), 0);
                         }
                     } else {
                         routeText.setSpan(new LocaleSpan(Locale.getDefault()), 0, routeText.length(), 0);

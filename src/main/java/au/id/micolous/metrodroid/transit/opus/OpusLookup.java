@@ -19,6 +19,7 @@
 
 package au.id.micolous.metrodroid.transit.opus;
 
+import android.support.annotation.Nullable;
 import android.util.SparseIntArray;
 
 import java.util.TimeZone;

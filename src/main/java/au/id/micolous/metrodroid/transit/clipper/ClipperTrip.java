@@ -104,6 +104,16 @@ public class ClipperTrip extends Trip {
         }
     }
 
+    @Nullable
+    @Override
+    public String getHumanReadableRouteID() {
+        if (mAgency == ClipperData.AGENCY_GG_FERRY) {
+            return Utils.intToHex(mRoute);
+        }
+
+        return null;
+    }
+
     @Override
     public String getVehicleID() {
         if (mVehicleNum != 0 && mVehicleNum != 0xffff)

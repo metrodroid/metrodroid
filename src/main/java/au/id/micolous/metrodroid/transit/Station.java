@@ -23,18 +23,22 @@ import android.os.Parcel;
 import android.os.Parcelable;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.util.Pair;
+import android.util.SparseArray;
 
 import org.jetbrains.annotations.NonNls;
 
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
 
 import au.id.micolous.farebot.R;
 import au.id.micolous.metrodroid.MetrodroidApplication;
 import au.id.micolous.metrodroid.proto.Stations;
+import au.id.micolous.metrodroid.util.SparseArrayIterator;
 import au.id.micolous.metrodroid.util.StationTableReader;
 import au.id.micolous.metrodroid.util.Utils;
 
@@ -51,6 +55,9 @@ public class Station implements Parcelable {
     private final String mCompanyName, mStationName, mShortStationName, mLatitude, mLongitude, mLanguage;
     @Nullable
     private final List<String> mLineNames;
+    @Nullable
+    @NonNls
+    private final List<String> mHumanReadableLineIds;
     private final boolean mIsUnknown;
     @NonNls
     private final String mHumanReadableId;
@@ -58,12 +65,13 @@ public class Station implements Parcelable {
 
     private Station(String humanReadableId, String stationName, boolean isUnknown) {
         this(humanReadableId, null, null, stationName,
-                null, null, null, null, isUnknown);
+                null, null, null, null, isUnknown, null);
     }
 
     private Station(String humanReadableId, String companyName, @Nullable List<String> lineName,
                     String stationName, String shortStationName, String latitude,
-                    String longitude, String language, boolean isUnknown) {
+                    String longitude, String language, boolean isUnknown,
+                    @Nullable List<String> humanReadableLineIds) {
         mHumanReadableId = humanReadableId;
         mCompanyName = companyName;
         mLineNames = lineName;
@@ -74,6 +82,7 @@ public class Station implements Parcelable {
         mLanguage = language;
         mAttributes = new ArrayList<>();
         mIsUnknown = isUnknown;
+        mHumanReadableLineIds = humanReadableLineIds;
     }
 
     private Station(Parcel parcel) {
@@ -89,6 +98,8 @@ public class Station implements Parcelable {
         mHumanReadableId = parcel.readString();
         mAttributes = new ArrayList<>();
         parcel.readList(mAttributes, Station.class.getClassLoader());
+        mHumanReadableLineIds = new ArrayList<>();
+        parcel.readList(mHumanReadableLineIds, String.class.getClassLoader());
     }
 
     public String getStationName() {
@@ -105,7 +116,7 @@ public class Station implements Parcelable {
         return ret;
     }
 
-    private boolean showRawId() {
+    private static boolean showRawId() {
         return MetrodroidApplication.showRawStationIds();
     }
 
@@ -137,6 +148,23 @@ public class Station implements Parcelable {
     public List<String> getLineNames() {
         if (mLineNames != null) {
             return mLineNames;
+        } else {
+            return Collections.emptyList();
+        }
+    }
+
+    /**
+     * Return a list of candidate line human readable IDs for a station. In the case that a station
+     * ID is used on more than one line, then there should be multiple lines returned.
+     *
+     * If there is no line information available, this returns an empty list.
+     *
+     * Elements here are in the same order as {@link #getLineNames()}.
+     */
+    @NonNull
+    public List<String> getHumanReadableLineIDs() {
+        if (mHumanReadableLineIds != null) {
+            return mHumanReadableLineIds;
         } else {
             return Collections.emptyList();
         }
@@ -180,6 +208,7 @@ public class Station implements Parcelable {
         parcel.writeInt(mIsUnknown ? 1 : 0);
         parcel.writeString(mHumanReadableId);
         parcel.writeList(mAttributes);
+        parcel.writeList(mHumanReadableLineIds);
     }
 
     public boolean isUnknown() {
@@ -204,26 +233,32 @@ public class Station implements Parcelable {
     }
 
     public static Station fromProto(String humanReadableID, Stations.Station ps,
-                                    Stations.Operator po, Collection<Stations.Line> pl,
+                                    Stations.Operator po, SparseArray<Stations.Line> pl,
                                     String ttsHintLanguage, StationTableReader str) {
         boolean hasLocation = ps.getLatitude() != 0 && ps.getLongitude() != 0;
 
-        List<String> stations = null;
+        List<String> lines = null;
+        List<String> lineIds = null;
+
         if (pl != null) {
-            stations = new ArrayList<>();
-            for (Stations.Line l : pl) {
-                stations.add(str.selectBestName(l.getName(), true));
+            lines = new ArrayList<>();
+            lineIds = new ArrayList<>();
+            SparseArrayIterator<Stations.Line> it = new SparseArrayIterator<>(pl);
+            while (it.hasNext()) {
+                final kotlin.Pair<Integer, Stations.Line> e = it.next();
+                lines.add(str.selectBestName(e.getSecond().getName(), true));
+                lineIds.add(Utils.intToHex(e.getFirst()));
             }
         }
 
         return new Station(
                 humanReadableID,
                 po == null ? null : str.selectBestName(po.getName(), true),
-                stations,
+                lines,
                 str.selectBestName(ps.getName(), false),
                 str.selectBestName(ps.getName(), true),
                 hasLocation ? Float.toString(ps.getLatitude()) : null,
                 hasLocation ? Float.toString(ps.getLongitude()) : null,
-                ttsHintLanguage, false);
+                ttsHintLanguage, false, lineIds);
     }
 }

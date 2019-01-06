@@ -19,6 +19,8 @@
 
 package au.id.micolous.metrodroid.transit.lisboaviva;
 
+import android.support.annotation.Nullable;
+
 import java.util.TimeZone;
 
 import au.id.micolous.metrodroid.transit.Station;
@@ -55,6 +57,21 @@ class LisboaVivaLookup extends En1545LookupSTR {
         routeNumber = mungeRouteNumber(agency, routeNumber);
         return StationTableReader.getLineName(LISBOA_VIVA_STR, (agency << 16) | routeNumber,
                 Integer.toString(routeNumber));
+    }
+
+    @Nullable
+    @Override
+    public String getHumanReadableRouteId(@Nullable Integer routeNumber,
+                                          @Nullable Integer routeVariant,
+                                          @Nullable Integer agency,
+                                          @Nullable Integer transport) {
+        if (routeNumber == null || agency == null) {
+            // Null route number = unknown route
+            // Null agency = return raw route number (so no need to duplicate)
+            return null;
+        }
+
+        return Integer.toString(mungeRouteNumber(agency, routeNumber));
     }
 
     @Override
