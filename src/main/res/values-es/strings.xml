@@ -1,2 +1,38 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources></resources>
+<resources><string name="app_name">Metrodroid</string>
+    <string name="license">Licencias</string>
+    <string name="title_activity_license">Licencias de código abierto</string>
+    <string name="directions">Coloca una tarjeta.</string>
+    <string name="reading_card">Leyendo tarjeta…</string>
+    <string name="dont_move">No muevas la tarjeta</string>
+    <string name="advanced_info">Información avanzada</string>
+    <string name="delete_card">Borrar tarjeta</string>
+    <string name="unknown_card">Tarjeta desconocida</string>
+    <string name="locked_mfc_card">Tarjeta MIFARE Classic bloqueada</string>
+    <string name="locked_mfu_card">Tarjeta MIFARE Ultralight bloqueada</string>
+    <string name="locked_mfd_card">Tarjeta MIFARE DESFire bloqueada</string>
+    <string name="hw_detail">Información de manufactura</string>
+    <string name="data">Datos brutos</string>
+    <string name="copy_xml">Copiar</string>
+    <string name="share_xml">Compartir</string>
+    <string name="save_xml">Guardar al archivo</string>
+    <string name="history">Historial</string>
+    <string name="no_trip_data">No se han encontrado viajes. ¿Has usado esta tarjeta\?</string>
+    <string name="import_xml">Importar</string>
+    <string name="import_clipboard">Pegar del portapapeles</string>
+    <string name="import_file">Importar desde archivo</string>
+    <string name="export">Exportar</string>
+    <string name="export_filename">Exportar nombre de archivo</string>
+    <string name="export_all">Exportar todos</string>
+    <string name="about">Sobre</string>
+    <string name="preferences">Preferencias</string>
+    <string name="loading">Cargando…</string>
+    <string name="scanned_at_format">Escaneado al %1$s on %2$s</string>
+    <string name="supported_cards">Tarjetas soportadas</string>
+    <string name="transaction_counter">"Contador de transacciones "</string>
+    <string name="fully_locked_desc">Tu tarjeta no puede ser leída sin una clave y actualmente este formato no cuenta con vulnerabilidades.
+\n
+\nTu tarjeta no es soportada por Metrodroid y es difícil que alguna vez lo sea, a no ser que encuentres la clave.
+\n
+\nPor favor presiona el editor de la tarjeta para permitir tener acceso a la tarjeta. Es seguro dejarla abierta, datos de solo lectura con tecnología moderna de tarjetas inteligentes. Algunas agencias incluso ofrecen documentación sobre el tipo de datos!</string>
+</resources>
