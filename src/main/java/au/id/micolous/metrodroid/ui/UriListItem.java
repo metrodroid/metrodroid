@@ -28,7 +28,7 @@ public class UriListItem extends ListItem {
     @NonNull
     private final Uri mUri;
 
-    public UriListItem(String name, String value, Uri uri) {
+    public UriListItem(String name, String value, @NonNull Uri uri) {
         super(name, value);
         this.mUri = uri;
     }
