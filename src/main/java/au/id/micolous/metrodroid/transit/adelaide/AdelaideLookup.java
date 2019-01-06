@@ -83,4 +83,12 @@ public class AdelaideLookup extends En1545LookupSTR {
         // TODO: Exclude monthly tickets when implemented
         return TARIFFS.indexOfKey(contractTariff) >= 0;
     }
+
+    @Override
+    public String getRouteName(Integer routeNumber, Integer routeVariant, Integer agency, Integer transport) {
+        if (routeNumber == 0)
+            return null;
+
+        return super.getRouteName(routeNumber, routeVariant, agency, transport);
+    }
 }
