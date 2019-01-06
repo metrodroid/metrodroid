@@ -76,7 +76,7 @@ public class OrcaTest extends BaseInstrumentedTest {
     private DesfireCard constructOrcaCard() {
         // Construct a card to hold the data.
         DesfireFile f2 = RecordDesfireFile.create(2,
-                new RecordDesfireFileSettings((byte)0,(byte)0,null, 48, 5, 5),
+                new RecordDesfireFileSettings((byte)0,(byte)0,new byte[]{}, 48, 5, 5),
                 Utils.hexStringToByteArray(testFile0x2));
         DesfireFile f4 = DesfireFile.create(4, null, Utils.hexStringToByteArray(testFile0x4));
         DesfireFile ff = DesfireFile.create(15,null,

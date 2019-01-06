@@ -25,6 +25,7 @@ import org.junit.runners.JUnit4;
 
 import au.id.micolous.metrodroid.key.ClassicSectorKey;
 import au.id.micolous.metrodroid.util.Utils;
+import au.id.micolous.metrodroid.xml.ImmutableByteArray;
 
 import static junit.framework.TestCase.assertEquals;
 
@@ -42,8 +43,12 @@ import static junit.framework.TestCase.assertEquals;
 public class KeyHashTest {
     private static final byte[] MAD_KEY = Utils.hexStringToByteArray("A0A1A2A3A4A5");
     private static final byte[] DEFAULT_KEY = Utils.hexStringToByteArray("FFFFFFFFFFFF");
-    private static final ClassicSectorKey MAD_SECTOR_KEY = ClassicSectorKey.wellKnown(MAD_KEY);
-    private static final ClassicSectorKey DEFAULT_SECTOR_KEY = ClassicSectorKey.wellKnown(DEFAULT_KEY);
+    private static final ClassicSectorKey MAD_SECTOR_KEY =
+            ClassicSectorKey.Companion.fromDump(ImmutableByteArray.Companion.fromByteArray(MAD_KEY),
+            ClassicSectorKey.KeyType.A, "test");
+    private static final ClassicSectorKey DEFAULT_SECTOR_KEY =
+            ClassicSectorKey.Companion.fromDump(ImmutableByteArray.Companion.fromByteArray(DEFAULT_KEY),
+                    ClassicSectorKey.KeyType.A, "test");
 
     private static final String SALT0 = "sodium chloride";
     private static final String MAD_HASH0 = "fc18681fd880307349238c72268aae3b";

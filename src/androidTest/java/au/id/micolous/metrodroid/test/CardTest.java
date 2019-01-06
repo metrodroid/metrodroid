@@ -22,7 +22,9 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
 
+import java.util.Arrays;
 import java.util.Calendar;
+import java.util.Collections;
 import java.util.GregorianCalendar;
 import java.util.TimeZone;
 
@@ -44,6 +46,7 @@ import au.id.micolous.metrodroid.transit.unknown.UnauthorizedClassicTransitData;
 import au.id.micolous.metrodroid.transit.unknown.UnauthorizedDesfireTransitData;
 import au.id.micolous.metrodroid.transit.unknown.UnauthorizedUltralightTransitData;
 import au.id.micolous.metrodroid.util.Utils;
+import au.id.micolous.metrodroid.xml.ImmutableByteArray;
 
 import static junit.framework.TestCase.assertEquals;
 import static junit.framework.TestCase.assertFalse;
@@ -60,9 +63,9 @@ public class CardTest {
         Calendar d = new GregorianCalendar(2010, 1, 1, 0, 0, 0);
         d.setTimeZone(TimeZone.getTimeZone("GMT"));
 
-        Card c1 = new ClassicCard(new byte[] {0x00, 0x12, 0x34, 0x56},
+        Card c1 = new ClassicCard(ImmutableByteArray.Companion.fromHex("00123456"),
                 d,
-                new ClassicSector[] {});
+                Collections.emptyList());
 
         String xml = c1.toXml();
 
@@ -140,7 +143,8 @@ public class CardTest {
                 (byte) 0x64, (byte) 0x72, (byte) 0x6f, (byte) 0x69, (byte) 0x64,
                 (byte) 0x43, (byte) 0x6c, (byte) 0x61, (byte) 0x73, (byte) 0x73,
                 (byte) 0x69};
-        ClassicSectorKey k = ClassicSectorKey.wellKnown(new byte[] { 0, 0, 0, 0, 0, 0 });
+        ClassicSectorKey k = ClassicSectorKey.Companion.fromDump(new ImmutableByteArray(6),
+                ClassicSectorKey.KeyType.A, "test");
         Calendar d = new GregorianCalendar(2010, 1, 1, 0, 0, 0);
         d.setTimeZone(TimeZone.getTimeZone("GMT"));
 
@@ -149,18 +153,18 @@ public class CardTest {
             l[x] = new UnauthorizedClassicSector(x);
         }
 
-        Card c1 = new ClassicCard(Utils.hexStringToByteArray("12345678"), d, l);
+        Card c1 = new ClassicCard(ImmutableByteArray.Companion.fromHex("12345678"), d, Arrays.asList(l));
 
         assertTrue(c1.parseTransitData() instanceof UnauthorizedClassicTransitData);
 
         // Build a card with partly readable data.
         ClassicBlock[] b = new ClassicBlock[4];
         for (int y=0; y < 4; y++) {
-            b[y] = ClassicBlock.create(ClassicBlock.TYPE_DATA, y, e);
+            b[y] = ClassicBlock.create(ClassicBlock.TYPE_DATA, y, ImmutableByteArray.Companion.fromByteArray(e));
         }
 
         l[2] = new ClassicSector(2, b, k);
-        Card c2 = new ClassicCard(Utils.hexStringToByteArray("12345678"), d, l);
+        Card c2 = new ClassicCard(ImmutableByteArray.Companion.fromHex("12345678"), d, Arrays.asList(l));
 
         assertFalse(c2.parseTransitData() instanceof UnauthorizedClassicTransitData);
 
@@ -170,21 +174,19 @@ public class CardTest {
             l[x] = new ClassicSector(x, b, k);
         }
 
-        Card c3 = new ClassicCard(Utils.hexStringToByteArray("12345678"), d, l);
+        Card c3 = new ClassicCard(ImmutableByteArray.Companion.fromHex("12345678"), d, Arrays.asList(l));
 
         assertFalse(c3.parseTransitData() instanceof UnauthorizedClassicTransitData);
     }
 
     @Test
     public void testBlankMifareClassic() {
-        byte[] all00Bytes = { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
-        byte[] allFFBytes = {
-                (byte)0xff, (byte)0xff, (byte)0xff, (byte)0xff, (byte)0xff, (byte)0xff, (byte)0xff,
-                (byte)0xff, (byte)0xff, (byte)0xff, (byte)0xff, (byte)0xff, (byte)0xff, (byte)0xff,
-                (byte)0xff, (byte)0xff };
-        byte[] otherBytes = { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16 };
+        ImmutableByteArray all00Bytes = new ImmutableByteArray(16);
+        ImmutableByteArray allFFBytes = new ImmutableByteArray(16, i -> (byte) 0xff);
+        ImmutableByteArray otherBytes = new ImmutableByteArray(16, i -> (byte)(i + 1));
 
-        ClassicSectorKey k = ClassicSectorKey.wellKnown(new byte[] { 0, 0, 0, 0, 0, 0 });
+        ClassicSectorKey k = ClassicSectorKey.Companion.fromDump(new ImmutableByteArray(6),
+                ClassicSectorKey.KeyType.A, "test");
         Calendar d = new GregorianCalendar(2010, 1, 1, 0, 0, 0);
         d.setTimeZone(TimeZone.getTimeZone("GMT"));
 
@@ -208,9 +210,9 @@ public class CardTest {
             otherSectors[x] = new ClassicSector(x, otherBlocks, k);
         }
 
-        Card all00Card = new ClassicCard(Utils.hexStringToByteArray("12345678"), d, all00Sectors);
-        Card allFFCard = new ClassicCard(Utils.hexStringToByteArray("87654321"), d, allFFSectors);
-        Card otherCard = new ClassicCard(Utils.hexStringToByteArray("21436587"), d, otherSectors);
+        Card all00Card = new ClassicCard(ImmutableByteArray.Companion.fromHex("12345678"), d, Arrays.asList(all00Sectors));
+        Card allFFCard = new ClassicCard(ImmutableByteArray.Companion.fromHex("87654321"), d, Arrays.asList(allFFSectors));
+        Card otherCard = new ClassicCard(ImmutableByteArray.Companion.fromHex("21436587"), d, Arrays.asList(otherSectors));
 
         assertTrue("A card with all 00 in its blocks is BlankClassicTransitData",
                 all00Card.parseTransitData() instanceof BlankClassicTransitData);
