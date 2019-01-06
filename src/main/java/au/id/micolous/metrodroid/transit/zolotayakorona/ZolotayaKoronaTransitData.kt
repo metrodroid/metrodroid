@@ -87,7 +87,7 @@ data class ZolotayaKoronaTransitData internal constructor(
     override fun getTrips() = listOfNotNull(mTrip) + listOfNotNull(mRefill)
 
     companion object {
-        private val REGIONS = hashMapOf(
+        private val REGIONS = mapOf(
                 // List of cities is taken from Zolotaya Korona website. Regions match
                 // license plate regions
                 //
@@ -136,7 +136,7 @@ data class ZolotayaKoronaTransitData internal constructor(
                 0x79 to Pair("Jewish Autonomous Oblast", "Asia/Vladivostok")
         )
 
-        private val CARDS = hashMapOf(
+        private val CARDS = mapOf(
                 0x760500 to CardInfo.Builder()
                         .setName(Utils.localizeString(R.string.card_name_yaroslavl_etk))
                         .setLocation(R.string.location_yaroslavl)

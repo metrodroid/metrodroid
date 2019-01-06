@@ -61,7 +61,7 @@ data class RkfPurse(private val mStatic: En1545Parsed,
                 En1545FixedInteger("AutoLoadValue", 24)
                 // v6 has more fields but whatever
         )
-        private val TCPU_DYNAMIC_FIELDS = hashMapOf(
+        private val TCPU_DYNAMIC_FIELDS = mapOf(
                 3 to En1545Container(
                         En1545FixedInteger(TRANSACTION_NUMBER, 16),
                         En1545FixedInteger.date(END),

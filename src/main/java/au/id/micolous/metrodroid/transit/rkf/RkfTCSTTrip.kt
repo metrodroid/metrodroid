@@ -160,7 +160,7 @@ data class RkfTCSTTrip(private val mParsed: En1545Parsed,
                 En1545FixedInteger(passengerTotal(num), 6)
         )
 
-        private val FIELDS = hashMapOf<Int, En1545Field>(
+        private val FIELDS = mapOf(
                 // From documentation
                 1 to En1545Container(
                         RkfTransitData.HEADER,
