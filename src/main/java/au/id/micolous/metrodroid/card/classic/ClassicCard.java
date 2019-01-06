@@ -425,7 +425,7 @@ public class ClassicCard extends Card {
             SmartRiderTransitData.FACTORY,
             TroikaHybridTransitData.FACTORY,
             PodorozhnikTransitData.FACTORY,
-            StrelkaTransitData.FACTORY,
+            StrelkaTransitData.Companion.getFACTORY(),
             CharlieCardTransitData.FACTORY,
             RicaricaMiTransitData.FACTORY,
             BilheteUnicoSPTransitData.FACTORY,

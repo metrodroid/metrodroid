@@ -22,6 +22,7 @@ package au.id.micolous.metrodroid.transit;
 
 import android.net.Uri;
 import android.os.Parcelable;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
 import java.util.Collections;
@@ -75,6 +76,7 @@ public abstract class TransitData implements Parcelable {
         return Collections.singletonList(b);
     }
 
+    @Nullable
     public abstract String getSerialNumber();
 
     /**
@@ -82,10 +84,12 @@ public abstract class TransitData implements Parcelable {
      *
      * @return Array of Trip[], or null if not supported.
      */
+    @Nullable
     public List<? extends Trip> getTrips() {
         return null;
     }
 
+    @Nullable
     public List<? extends Subscription> getSubscriptions() {
         return null;
     }
@@ -111,10 +115,12 @@ public abstract class TransitData implements Parcelable {
      * {@link TransitCurrency#maybeObfuscateBalance()}.</li>
      * </ul>
      */
+    @Nullable
     public List<ListItem> getInfo() {
         return null;
     }
 
+    @NonNull
     public abstract String getCardName();
 
     /**
@@ -138,6 +144,7 @@ public abstract class TransitData implements Parcelable {
      *
      * @return Uri pointing to an FAQ page, or null if no page is to be supplied.
      */
+    @Nullable
     public Uri getMoreInfoPage() {
         return null;
     }
@@ -147,10 +154,12 @@ public abstract class TransitData implements Parcelable {
      *
      * @return Uri pointing to online services page, or null if no page is to be supplied.
      */
+    @Nullable
     public Uri getOnlineServicesPage() {
         return null;
     }
 
+    @Nullable
     public String getWarning() {
         return null;
     }

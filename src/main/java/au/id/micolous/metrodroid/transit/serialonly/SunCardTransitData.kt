@@ -40,13 +40,15 @@ data class SunCardTransitData(private val mSerial: Int = 0) : SerialOnlyTransitD
 
     override fun getSerialNumber() = formatSerial(mSerial)
 
-    override fun getReason() = SerialOnlyTransitData.Reason.NOT_STORED
+    override val reason
+        get() = SerialOnlyTransitData.Reason.NOT_STORED
 
     override fun getCardName() = NAME
 
-    override fun getExtraInfo() = listOf(
-            ListItem(R.string.full_serial_number, formatLongSerial(mSerial)),
-            ListItem(R.string.full_serial_number, formatBarcodeSerial(mSerial)))
+    override val extraInfo
+        get () = listOf(
+                ListItem(R.string.full_serial_number, formatLongSerial(mSerial)),
+                ListItem(R.string.full_serial_number, formatBarcodeSerial(mSerial)))
 
     private constructor(card: ClassicCard) : this(getSerial(card))
 
