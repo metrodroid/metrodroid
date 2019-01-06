@@ -194,8 +194,8 @@ public class TroikaHybridTransitData extends TransitData {
         public boolean isDynamicKeys(@NonNull List<ClassicSector> sectors, int sectorIndex,
                                      ClassicSectorKey.KeyType keyType) {
             try {
-                return StrelkaTransitData.FACTORY.earlyCheck(sectors)
-                        && StrelkaTransitData.FACTORY.isDynamicKeys(sectors, sectorIndex, keyType);
+                return StrelkaTransitData.Companion.getFACTORY().earlyCheck(sectors)
+                        && StrelkaTransitData.Companion.getFACTORY().isDynamicKeys(sectors, sectorIndex, keyType);
             } catch (Exception e) {
                 return false;
             }
