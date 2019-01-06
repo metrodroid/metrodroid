@@ -862,4 +862,7 @@
 </plurals>
     <string name="deduplicate_cards">Opphev duplisering av kort</string>
     <string name="subscription_id">Abonnements-ID</string>
+    <string name="pref_show_raw_station_ids_desc_on">Stasjon og rute-ID-er vises i tillegg til navnene deres.</string>
+    <string name="pref_show_raw_station_ids_desc_off">Stasjon og rute-ID-er skjules med mindre de er ukjente</string>
+    <string name="block_title_format_unauthorized">Blokk: %s (uautorisert)</string>
 </resources>
