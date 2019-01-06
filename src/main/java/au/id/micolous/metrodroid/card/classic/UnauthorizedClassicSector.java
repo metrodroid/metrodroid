@@ -21,7 +21,6 @@
 package au.id.micolous.metrodroid.card.classic;
 
 import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 
 import org.simpleframework.xml.Attribute;
 import org.simpleframework.xml.Root;
@@ -62,7 +61,7 @@ public class UnauthorizedClassicSector extends ClassicSector {
 
     @NonNull
     @Override
-    public ListItem getRawData(@NonNull String sectorIndex, @Nullable String key) {
+    public ListItem getRawData(@NonNull String sectorIndex) {
         return new ListItem(Utils.localizeString(R.string.unauthorized_sector_title_format, sectorIndex));
     }
 }

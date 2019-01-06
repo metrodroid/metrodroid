@@ -76,6 +76,7 @@ public class ClassicSector {
         return mBlocks;
     }
 
+    @NonNull
     public ClassicBlock getBlock(int index) throws IndexOutOfBoundsException {
         return mBlocks.get(index);
     }
@@ -92,24 +93,34 @@ public class ClassicSector {
             return null;
         }
 
-        ClassicSectorKey k = ClassicSectorKey.fromDump(mKey.getData());
-        if (mKeyType != null) {
-            k.setType(mKeyType);
-        }
-
-        return k;
+        return ClassicSectorKey.Companion.fromDump(mKey,
+                mKeyType != null ? mKeyType : ClassicSectorKey.KeyType.UNKNOWN, "read-back");
     }
 
     @NonNull
-    public ListItem getRawData(@NonNull String sectorIndex, @Nullable String key) {
+    public ListItem getRawData(@NonNull String sectorIndex) {
+        String key = null;
+        if (mKey != null && mKeyType != null) {
+            key = Utils.localizeString(mKeyType.getFormatRes(),
+                    mKey.toHexString());
+        } else if (mKey != null) {
+            key = Utils.localizeString(R.string.classic_key_format,
+                    Utils.getHexString(mKey.getData()));
+        }
         List<ListItem> bli = new ArrayList<>();
         for (ClassicBlock block : getBlocks()) {
-            bli.add(new ListItemRecursive(
-                    Utils.localizeString(R.string.block_title_format,
-                            Integer.toString(block.getIndex())),
-                    block.getType(),
-                    Collections.singletonList(new ListItem(null, Utils.getHexDump(block.getData())))
-            ));
+            if (block.isUnauthorized())
+                bli.add(new ListItem(
+                        Utils.localizeString(R.string.block_title_format_unauthorized,
+                                Integer.toString(block.getIndex()))
+                ));
+            else
+                bli.add(new ListItemRecursive(
+                        Utils.localizeString(R.string.block_title_format,
+                                Integer.toString(block.getIndex())),
+                        block.getType(),
+                        Collections.singletonList(new ListItem(null, Utils.getHexDump(block.getData())))
+                ));
         }
         if (isEmpty()) {
             return new ListItemRecursive(

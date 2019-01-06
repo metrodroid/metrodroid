@@ -1485,4 +1485,5 @@
     <!-- Translators: MCT = MIFARE Classic Tool - an Android MIFARE Classic card reader / writer -->
     <string name="import_mct_file">Import from MCT file</string>
     <string name="subscription_id">Subscription ID</string>
+    <string name="block_title_format_unauthorized">Block: %s (unauthorized)</string>
 </resources>

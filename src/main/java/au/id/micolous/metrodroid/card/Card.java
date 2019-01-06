@@ -26,9 +26,7 @@ import android.nfc.tech.MifareClassic;
 import android.nfc.tech.MifareUltralight;
 import android.nfc.tech.NfcA;
 import android.nfc.tech.NfcF;
-import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.annotation.VisibleForTesting;
 import android.util.Log;
 
 import org.apache.commons.lang3.ArrayUtils;
@@ -42,7 +40,7 @@ import java.util.List;
 import java.util.Locale;
 
 import au.id.micolous.farebot.R;
-import au.id.micolous.metrodroid.card.classic.ClassicCard;
+import au.id.micolous.metrodroid.card.classic.ClassicAndroidReader;
 import au.id.micolous.metrodroid.card.desfire.DesfireCard;
 import au.id.micolous.metrodroid.card.felica.FelicaCard;
 import au.id.micolous.metrodroid.card.iso7816.ISO7816Card;
@@ -52,6 +50,7 @@ import au.id.micolous.metrodroid.transit.TransitIdentity;
 import au.id.micolous.metrodroid.ui.ListItem;
 import au.id.micolous.metrodroid.util.Utils;
 import au.id.micolous.metrodroid.xml.HexString;
+import au.id.micolous.metrodroid.xml.ImmutableByteArray;
 
 public abstract class Card {
     private static final String TAG = Card.class.getName();
@@ -72,16 +71,24 @@ public abstract class Card {
     protected Card() {
     }
 
-    protected Card(CardType type, byte[] tagId, Calendar scannedAt) {
+    protected Card(CardType type, ImmutableByteArray tagId, Calendar scannedAt) {
         this(type, tagId, scannedAt, false);
     }
 
-    protected Card(CardType type, byte[] tagId, Calendar scannedAt, boolean partialRead) {
+    protected Card(CardType type, ImmutableByteArray tagId, Calendar scannedAt, boolean partialRead) {
         mType = type;
         mTagId = new HexString(tagId);
         mScannedAt = scannedAt;
         mLabel = null;
         mPartialRead = partialRead;
+    }
+
+    protected Card(CardType type, byte[] tagId, Calendar scannedAt, boolean partialRead) {
+        this(type, ImmutableByteArray.Companion.fromByteArray(tagId), scannedAt, partialRead);
+    }
+
+    protected Card(CardType type, byte[] tagId, Calendar scannedAt) {
+        this(type, tagId, scannedAt, false);
     }
 
     public static Card dumpTag(byte[] tagId, Tag tag, TagReaderFeedbackInterface feedbackInterface) throws Exception {
@@ -115,7 +122,7 @@ public abstract class Card {
         }
 
         if (ArrayUtils.contains(techs, MifareClassic.class.getName())) {
-            return ClassicCard.dumpTag(tagId, tag, feedbackInterface);
+            return ClassicAndroidReader.dumpTag(tagId, tag, feedbackInterface);
         }
 
 

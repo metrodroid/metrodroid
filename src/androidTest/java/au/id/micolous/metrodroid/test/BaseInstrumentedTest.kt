@@ -68,6 +68,8 @@ abstract class BaseInstrumentedTest {
         return DataInputStream(context.assets.open(path, AssetManager.ACCESS_RANDOM))
     }
 
+    fun listAsset(path: String) : List <String>? = context.assets.list(path)?.toList()
+
     fun loadSmallAssetBytes(path: String): ByteArray {
         val s = loadAsset(path)
         val length = s.available()

@@ -330,6 +330,7 @@ public class MetrodroidApplication extends Application {
         return getStringPreference(PREF_THEME, "dark");
     }
 
+    @NonNull
     public static String getMfcFallbackReader() {
         return getStringPreference(PREF_MFC_FALLBACK, "null").toLowerCase(Locale.US);
     }

@@ -57,7 +57,7 @@ public final class CardInfo {
     public static List<CardInfo> getAllCardsAlphabetical() {
         List<CardInfo> ret = new ArrayList<>();
         List<CardTransitFactory<?>> allFactories = new ArrayList<>();
-        allFactories.addAll(ClassicCard.getAllFactories());
+        allFactories.addAll(ClassicCard.Companion.getAllFactories());
         allFactories.addAll(CalypsoApplication.getAllFactories());
         allFactories.addAll(DesfireCard.getAllFactories());
         allFactories.addAll(FelicaCard.getAllFactories());

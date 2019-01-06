@@ -28,6 +28,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
 
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.TimeZone;
 
@@ -43,6 +44,7 @@ import au.id.micolous.metrodroid.transit.nextfare.record.NextfareConfigRecord;
 import au.id.micolous.metrodroid.transit.nextfare.record.NextfareTransactionRecord;
 import au.id.micolous.metrodroid.transit.seq_go.SeqGoTransitData;
 import au.id.micolous.metrodroid.util.Utils;
+import au.id.micolous.metrodroid.xml.ImmutableByteArray;
 
 import static au.id.micolous.metrodroid.util.Utils.UTC;
 import static junit.framework.TestCase.assertEquals;
@@ -156,12 +158,14 @@ public class NextfareTest {
 
             blocks[3] = trailer;
             sectors[sector_num] = new ClassicSector(sector_num, blocks,
-                    ClassicSectorKey.wellKnown(MifareClassic.KEY_MIFARE_APPLICATION_DIRECTORY));
+                    ClassicSectorKey.Companion.fromDump(
+                            ImmutableByteArray.Companion.fromByteArray(MifareClassic.KEY_MIFARE_APPLICATION_DIRECTORY),
+                            ClassicSectorKey.KeyType.A, "test"));
         }
 
 
 
-        return new ClassicCard(uid, Calendar.getInstance(), sectors);
+        return new ClassicCard(uid, Calendar.getInstance(), Arrays.asList(sectors), false);
     }
 
     @Test
