@@ -93,6 +93,16 @@ public class NewShenzhenTrip extends ChinaTrip {
     }
 
     @Override
+    public String getHumanReadableRouteID() {
+        final int transport = getTransport();
+        switch (transport) {
+            case SZT_BUS:
+                return Utils.intToHex((int) mStation);
+        }
+        return null;
+    }
+
+    @Override
     public String getAgencyName(boolean isShort) {
         int transport = getTransport();
         switch (transport) {

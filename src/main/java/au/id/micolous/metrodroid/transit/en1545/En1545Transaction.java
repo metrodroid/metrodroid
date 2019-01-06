@@ -140,12 +140,17 @@ public abstract class En1545Transaction extends Transaction {
         return mParsed.getInt(EVENT_ROUTE_NUMBER);
     }
 
+    @Nullable
+    protected Integer getRouteVariant() {
+        return mParsed.getInt(EVENT_ROUTE_VARIANT);
+    }
+
     @NonNull
     @Override
     public List<String> getRouteNames() {
         String route = getLookup().getRouteName(
                 getRouteNumber(),
-                mParsed.getInt(EVENT_ROUTE_VARIANT),
+                getRouteVariant(),
                 getAgency(), getTransport());
         if (route != null) {
             return Collections.singletonList(route);
@@ -158,6 +163,27 @@ public abstract class En1545Transaction extends Transaction {
         }
 
         return st.getLineNames();
+    }
+
+    @NonNull
+    @Override
+    public List<String> getHumanReadableLineIDs() {
+        String route = getLookup().getHumanReadableRouteId(
+                getRouteNumber(),
+                getRouteVariant(),
+                getAgency(), getTransport());
+
+        if (route != null) {
+            return Collections.singletonList(route);
+        }
+
+        // Get the line name from the station.
+        Station st = getStation();
+        if (st == null) {
+            return Collections.emptyList();
+        }
+
+        return st.getHumanReadableLineIDs();
     }
 
     public int getPassengerCount() {

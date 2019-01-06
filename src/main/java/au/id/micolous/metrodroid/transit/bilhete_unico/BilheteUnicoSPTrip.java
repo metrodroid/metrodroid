@@ -139,6 +139,14 @@ class BilheteUnicoSPTrip extends Trip {
 
     @Nullable
     @Override
+    public String getHumanReadableRouteID() {
+        if (mTransport == BUS && mLine == 0x38222)
+            return Integer.toHexString(mLocation);
+        return Integer.toHexString(mLine);
+    }
+
+    @Nullable
+    @Override
     public Station getStartStation() {
         if (mTransport == BUS && mLine == 0x38222)
             return null;

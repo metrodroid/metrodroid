@@ -248,6 +248,34 @@ public abstract class Trip implements Parcelable {
         return getRouteName(startLines, endLines);
     }
 
+    /**
+     * Route IDs for the trip. This could be a bus line, a tram line, a rail line, etc.
+     * If this is not known, then return null.
+     *
+     * The default implementation attempts to get the route name based on the
+     * {@link #getStartStation()} and {@link #getEndStation()}, using the
+     * {@link Station#getHumanReadableLineIDs()} method.
+     *
+     * It does this by attempting to find a common set of Line Names between the Start and End
+     * stations.
+     *
+     * If there is no start or end station data available, or
+     * {@link Station#getHumanReadableLineIDs()} returns null, then this also returns null.
+     */
+    @Nullable
+    public String getHumanReadableRouteID() {
+        Station startStation = getStartStation();
+        Station endStation = getEndStation();
+
+        @NonNull List<String> startLines = startStation != null ?
+                startStation.getHumanReadableLineIDs() : Collections.emptyList();
+        @NonNull List<String> endLines = endStation != null ?
+                endStation.getHumanReadableLineIDs() : Collections.emptyList();
+
+        return getRouteName(startLines, endLines);
+    }
+
+
     @Nullable
     public static String getRouteName(@NonNull List<String> startLines,
                                       @NonNull List<String> endLines) {

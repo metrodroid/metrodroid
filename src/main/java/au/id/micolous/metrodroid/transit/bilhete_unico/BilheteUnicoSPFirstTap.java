@@ -94,4 +94,10 @@ class BilheteUnicoSPFirstTap extends Trip {
     public String getRouteName() {
         return Integer.toHexString(mLine);
     }
+
+    @Nullable
+    @Override
+    public String getHumanReadableRouteID() {
+        return Integer.toHexString(mLine);
+    }
 }

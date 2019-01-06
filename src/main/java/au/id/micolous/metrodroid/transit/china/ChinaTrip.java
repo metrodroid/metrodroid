@@ -97,8 +97,14 @@ public class ChinaTrip extends Trip {
     }
 
     // Should be overridden if anything is known about transports
+    @Nullable
     @Override
     public String getRouteName() {
+        return getHumanReadableRouteID();
+    }
+
+    @Override
+    public String getHumanReadableRouteID() {
         return Long.toHexString(mStation) + "/" + mType;
     }
 

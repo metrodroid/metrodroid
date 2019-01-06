@@ -71,24 +71,13 @@ public class EZLinkTrip extends Trip {
 
     @Override
     public String getRouteName() {
-        if (mTransaction.getType() == CEPASTransaction.TransactionType.BUS) {
-            if (mTransaction.getUserData().startsWith("SVC") || mTransaction.getUserData().startsWith("BUS"))
-                return Utils.localizeString(R.string.ez_bus_number,
-                        mTransaction.getUserData().substring(3, 7).replace(" ", ""));
-            return Utils.localizeString(R.string.unknown_format, mTransaction.getUserData());
-        } else if (mTransaction.getType() == CEPASTransaction.TransactionType.BUS_REFUND)
-            return Utils.localizeString(R.string.ez_bus_refund);
-        else if (mTransaction.getType() == CEPASTransaction.TransactionType.MRT)
-            return Utils.localizeString(R.string.ez_mrt);
-        else if (mTransaction.getType() == CEPASTransaction.TransactionType.TOP_UP)
-            return Utils.localizeString(R.string.ez_topup);
-        else if (mTransaction.getType() == CEPASTransaction.TransactionType.CREATION)
-            return Utils.localizeString(R.string.ez_first_use);
-        else if (mTransaction.getType() == CEPASTransaction.TransactionType.RETAIL)
-            return Utils.localizeString(R.string.ez_retail_purchase);
-        else if (mTransaction.getType() == CEPASTransaction.TransactionType.SERVICE)
-            return Utils.localizeString(R.string.ez_service_charge);
-        return Utils.localizeString(R.string.unknown_format, mTransaction.getType().toString());
+        return getRouteName(mTransaction.getType(), mTransaction.getUserData());
+    }
+
+    @Nullable
+    @Override
+    public String getHumanReadableRouteID() {
+        return mTransaction.getUserData();
     }
 
     @Nullable
@@ -175,23 +164,26 @@ public class EZLinkTrip extends Trip {
     }
 
     public static String getRouteName(CEPASTransaction.TransactionType type, String userData) {
-        if (type == CEPASTransaction.TransactionType.BUS) {
-            if (userData.startsWith("SVC") || userData.startsWith("BUS"))
-                return Utils.localizeString(R.string.ez_bus_number,
-                        userData.substring(3, 7).replace(" ", ""));
-            return Utils.localizeString(R.string.unknown_format, userData);
-        } else if (type == CEPASTransaction.TransactionType.BUS_REFUND)
-            return Utils.localizeString(R.string.ez_bus_refund);
-        else if (type == CEPASTransaction.TransactionType.MRT)
-            return Utils.localizeString(R.string.ez_mrt);
-        else if (type == CEPASTransaction.TransactionType.TOP_UP)
-            return Utils.localizeString(R.string.ez_topup);
-        else if (type == CEPASTransaction.TransactionType.CREATION)
-            return Utils.localizeString(R.string.ez_first_use);
-        else if (type == CEPASTransaction.TransactionType.RETAIL)
-            return Utils.localizeString(R.string.ez_retail_purchase);
-        else if (type == CEPASTransaction.TransactionType.SERVICE)
-            return Utils.localizeString(R.string.ez_service_charge);
+        switch (type) {
+            case BUS:
+                if (userData.startsWith("SVC") || userData.startsWith("BUS"))
+                    return Utils.localizeString(R.string.ez_bus_number,
+                            userData.substring(3, 7).replace(" ", ""));
+                return Utils.localizeString(R.string.unknown_format, userData);
+            // FIXME: These aren't actually routes...
+            case BUS_REFUND:
+                return Utils.localizeString(R.string.ez_bus_refund);
+            case MRT:
+                return Utils.localizeString(R.string.ez_mrt);
+            case TOP_UP:
+                return Utils.localizeString(R.string.ez_topup);
+            case CREATION:
+                return Utils.localizeString(R.string.ez_first_use);
+            case RETAIL:
+                return Utils.localizeString(R.string.ez_retail_purchase);
+            case SERVICE:
+                return Utils.localizeString(R.string.ez_service_charge);
+        }
         return Utils.localizeString(R.string.unknown_format, type.toString());
     }
 }

@@ -19,6 +19,7 @@
 package au.id.micolous.metrodroid.transit.lax_tap;
 
 import android.os.Parcel;
+import android.support.annotation.Nullable;
 
 import au.id.micolous.metrodroid.transit.Station;
 import au.id.micolous.metrodroid.transit.nextfare.NextfareTrip;
@@ -55,6 +56,18 @@ public class LaxTapTrip extends NextfareTrip {
         if (mModeInt == LaxTapData.AGENCY_METRO && mStartStation >= LaxTapData.METRO_BUS_START) {
             // Metro Bus uses the station_id for route numbers.
             return LaxTapData.METRO_BUS_ROUTES.get(mStartStation, Utils.localizeString(R.string.unknown_format, mStartStation));
+        }
+
+        // Normally not possible to guess what the route is.
+        return null;
+    }
+
+    @Nullable
+    @Override
+    public String getHumanReadableRouteID() {
+        if (mModeInt == LaxTapData.AGENCY_METRO && mStartStation >= LaxTapData.METRO_BUS_START) {
+            // Metro Bus uses the station_id for route numbers.
+            return Utils.intToHex(mStartStation);
         }
 
         // Normally not possible to guess what the route is.
