@@ -289,11 +289,27 @@ public abstract class Trip implements Parcelable {
         final String routeName = getRouteName();
         final String routeID = getHumanReadableRouteID();
 
-        if (MetrodroidApplication.showRawStationIds() && routeName != null && routeID != null && !routeName.contains(routeID))
-            return String.format(Locale.ENGLISH, "%s [%s]", routeName, routeID);
-
-        if (routeName == null)
-            return routeID;
+        if (MetrodroidApplication.showRawStationIds()) {
+            if (routeName != null) {
+                if (routeID != null) {
+                    if (routeName.contains(routeID)) {
+                        // Likely unknown route
+                        return routeName;
+                    } else {
+                        // Known route
+                        return String.format(Locale.ENGLISH, "%s [%s]", routeName, routeID);
+                    }
+                } else {
+                    // No ID
+                    return routeName;
+                }
+            } else {
+                // No Name
+                // Only do this if the raw display is on, because the route name may be hidden
+                // because it is zero.
+                return routeID;
+            }
+        }
 
         return routeName;
     }
