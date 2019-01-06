@@ -27,4 +27,6 @@ The vehicle types are per EN1545 specification:
 
   There may be a way to use the historical data to guess what the other route numbers are.  They appear to be assigned in chronological order.
 
+[2011-01-04 data (earliest in git)](https://github.com/gtfsdata/adelaidemetro-gtfs/blob/eb0b4261fc01c3f395602aaea1f5a09ff26d4be2/gtfs/routes.txt) appears to be a reasonable fit for the original routes. There was [a major update on 2011-01-16](https://github.com/gtfsdata/adelaidemetro-gtfs/blob/a95a206bf1eb3e2130df50f6ff1b8d1a8953d489/gtfs/routes.txt). The routes aren't a perfect fit -- suspect that the original set of routes were added from a route list not publicly released, or an earlier GTFS version.
+
 We don't use the GTFS builder tools in Metrodroid yet, as this doesn't support routes, and we still need to figure out historical bits. This probably will be used in future.
