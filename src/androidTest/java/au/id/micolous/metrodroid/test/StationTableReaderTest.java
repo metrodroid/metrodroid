@@ -1,23 +1,32 @@
 package au.id.micolous.metrodroid.test;
 
+import android.support.annotation.Nullable;
+
+import org.hamcrest.Matchers;
 import org.junit.Test;
 
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 import au.id.micolous.metrodroid.transit.Station;
+import au.id.micolous.metrodroid.transit.Transaction;
 import au.id.micolous.metrodroid.transit.TransactionTrip;
 import au.id.micolous.metrodroid.transit.Trip;
+import au.id.micolous.metrodroid.transit.adelaide.AdelaideTransaction;
 import au.id.micolous.metrodroid.transit.easycard.EasyCardTransaction;
+import au.id.micolous.metrodroid.transit.en1545.En1545Parsed;
 import au.id.micolous.metrodroid.transit.seq_go.SeqGoData;
 import au.id.micolous.metrodroid.transit.seq_go.SeqGoTrip;
 import au.id.micolous.metrodroid.transit.suica.SuicaDBUtil;
 import au.id.micolous.metrodroid.util.StationTableReader;
 
+import static au.id.micolous.metrodroid.transit.en1545.En1545Transaction.TRANSPORT_BUS;
 import static junit.framework.TestCase.assertEquals;
 import static junit.framework.TestCase.assertFalse;
 import static junit.framework.TestCase.assertNotNull;
 import static junit.framework.TestCase.assertTrue;
+import static org.hamcrest.MatcherAssert.assertThat;
 
 /**
  * Tests StationTableReader (MdST). This uses the SEQ Go stop database.
@@ -151,5 +160,63 @@ public class StationTableReaderTest extends BaseInstrumentedTest {
 
         trip = createEasyCardTrip(EASYCARD_BR02, EASYCARD_BL12_R10);
         assertEquals("Brown", trip.getRouteName());
+    }
+
+    private static class MockAdelaideTransaction extends AdelaideTransaction {
+        private final int mRouteNumber;
+        private final int mTransport;
+
+        MockAdelaideTransaction(int routeNumber, int transport) {
+            super(new En1545Parsed());
+            mRouteNumber = routeNumber;
+            mTransport = transport;
+        }
+
+        @Nullable
+        @Override
+        protected Integer getRouteNumber() {
+            return mRouteNumber;
+        }
+
+        @Override
+        protected int getTransport() {
+            return mTransport;
+        }
+
+        @Override
+        protected Integer getAgency() {
+            return 1;
+        }
+    }
+
+    @Test
+    public void testRouteNaming() {
+        setLocale("en-US");
+        showRawStationIds(false);
+        showLocalAndEnglish(false);
+
+        Transaction txn = new MockAdelaideTransaction(0x16f, TRANSPORT_BUS);
+        assertEquals(Collections.singletonList("0x16f"), txn.getHumanReadableLineIDs());
+        assertEquals(Collections.singletonList("M44"), txn.getRouteNames());
+
+        // Now check at a TransactionTrip level
+        List<TransactionTrip> trips = TransactionTrip.merge(txn);
+        assertEquals(1, trips.size());
+
+        Trip trip = trips.get(0);
+        assertEquals("M44", trip.getRouteDisplayName());
+        assertEquals("M44", trip.getRouteName());
+        assertEquals("0x16f", trip.getHumanReadableRouteID());
+
+        // Now test with the settings changed.
+        showRawStationIds(true);
+
+        // Display name should change
+        assertThat(trip.getRouteDisplayName(), Matchers.containsString("M44"));
+        assertThat(trip.getRouteDisplayName(), Matchers.containsString("0x16f"));
+
+        // Other names should not.
+        assertEquals("M44", trip.getRouteName());
+        assertEquals("0x16f", trip.getHumanReadableRouteID());
     }
 }

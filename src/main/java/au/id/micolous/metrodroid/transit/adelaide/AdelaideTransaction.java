@@ -21,6 +21,7 @@ package au.id.micolous.metrodroid.transit.adelaide;
 
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.support.annotation.VisibleForTesting;
 
 import au.id.micolous.metrodroid.transit.en1545.En1545Bitmap;
 import au.id.micolous.metrodroid.transit.en1545.En1545Container;
@@ -28,6 +29,7 @@ import au.id.micolous.metrodroid.transit.en1545.En1545Field;
 import au.id.micolous.metrodroid.transit.en1545.En1545FixedInteger;
 import au.id.micolous.metrodroid.transit.en1545.En1545FixedString;
 import au.id.micolous.metrodroid.transit.en1545.En1545Lookup;
+import au.id.micolous.metrodroid.transit.en1545.En1545Parsed;
 import au.id.micolous.metrodroid.transit.en1545.En1545Transaction;
 
 public class AdelaideTransaction extends En1545Transaction implements Parcelable {
@@ -79,6 +81,11 @@ public class AdelaideTransaction extends En1545Transaction implements Parcelable
 
     private AdelaideTransaction(Parcel in) {
         super(in);
+    }
+
+    @VisibleForTesting
+    protected AdelaideTransaction(En1545Parsed parsed) {
+        super(parsed);
     }
 
     public static final Creator<AdelaideTransaction> CREATOR = new Creator<AdelaideTransaction>() {

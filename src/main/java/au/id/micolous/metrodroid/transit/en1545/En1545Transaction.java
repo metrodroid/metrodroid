@@ -22,6 +22,7 @@ package au.id.micolous.metrodroid.transit.en1545;
 import android.os.Parcel;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.annotation.VisibleForTesting;
 
 import org.jetbrains.annotations.NonNls;
 
@@ -106,7 +107,8 @@ public abstract class En1545Transaction extends Transaction {
     public static final int EVENT_TYPE_TOPUP = 13;
     public static final int EVENT_TYPE_CANCELLED = 9;
 
-    private static final int TRANSPORT_BUS = 1;
+    @VisibleForTesting
+    public static final int TRANSPORT_BUS = 1;
     private static final int TRANSPORT_INTERCITY_BUS = 2;
     public static final int TRANSPORT_METRO = 3;
     public static final int TRANSPORT_TRAM = 4;
