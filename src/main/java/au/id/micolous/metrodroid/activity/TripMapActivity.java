@@ -87,8 +87,10 @@ public class TripMapActivity extends MetrodroidActivity {
         if (actionBar != null) {
             actionBar.setDisplayHomeAsUpEnabled(true);
             actionBar.setTitle(Trip.formatStationNames(trip));
-            actionBar.setSubtitle((trip.getRouteName() == null) ? trip.getAgencyName(false)
-                    : String.format("%s %s", trip.getAgencyName(false), trip.getRouteName()));
+            final String agencyName = trip.getAgencyName(false);
+            final String routeName = trip.getRouteDisplayName();
+            actionBar.setSubtitle(routeName == null ? agencyName
+                    : String.format("%s %s", agencyName, routeName));
         }
 
         //int startMarkerId = R.drawable.marker_start;

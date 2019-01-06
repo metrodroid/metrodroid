@@ -116,7 +116,7 @@ public class Station implements Parcelable {
         return ret;
     }
 
-    private boolean showRawId() {
+    private static boolean showRawId() {
         return MetrodroidApplication.showRawStationIds();
     }
 
