@@ -581,7 +581,7 @@
     <string name="tmoney_date">T-Money-datum</string>
 
     <string name="card_number">Kaartnummer</string>
-    <string name="pref_show_raw_station_ids">Stationsverkortingen tonen</string>
+    <string name="pref_show_raw_station_ids">Stationsverkortingen en route-ID\'s tonen</string>
     <string name="location_quebec">Quebec, Canada</string>
     <string name="podorozhnik_gate">poortje %s</string>
     <string name="podorozhnik_tvm">Kaartautomaat %d</string>
@@ -861,4 +861,7 @@
     <item quantity="other">%d dubbele kaarten verwijderd</item>
 </plurals>
     <string name="deduplicate_cards">Dubbele kaarten verwijderen</string>
+    <string name="pref_show_raw_station_ids_desc_on">Stationsverkortingen en route-ID\'s tonen naast de namen</string>
+    <string name="pref_show_raw_station_ids_desc_off">Stationsverkortingen en route-ID\'s zijn verborgen, tenzij onbekend</string>
+    <string name="block_title_format_unauthorized">Blokkade: %s (ongeautoriseerd)</string>
 </resources>
