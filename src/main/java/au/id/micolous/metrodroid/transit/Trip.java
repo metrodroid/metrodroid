@@ -25,6 +25,7 @@ import android.os.Parcelable;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.annotation.StringRes;
+import android.support.annotation.VisibleForTesting;
 import android.text.Spannable;
 import android.text.SpannableStringBuilder;
 import android.text.style.LocaleSpan;
@@ -234,8 +235,11 @@ public abstract class Trip implements Parcelable {
      *
      * If there is no start or end station data available, or {@link Station#getLineNames()} returns
      * null, then this also returns null.
+     *
+     * If getting for display purposes, use {@link #getRouteDisplayName()} instead.
      */
     @Nullable
+    @VisibleForTesting(otherwise = VisibleForTesting.PROTECTED)
     public String getRouteName() {
         Station startStation = getStartStation();
         Station endStation = getEndStation();
@@ -275,6 +279,21 @@ public abstract class Trip implements Parcelable {
         return getRouteName(startLines, endLines);
     }
 
+    /**
+     * Get the route name for display purposes.
+     *
+     * This handles the "showRawStationIds" setting.
+     */
+    @Nullable
+    public final String getRouteDisplayName() {
+        final String routeName = getRouteName();
+        final String routeID = getHumanReadableRouteID();
+
+        if (MetrodroidApplication.showRawStationIds() && routeName != null && !routeName.equals(routeID))
+            return String.format(Locale.ENGLISH, "%s [%s]", routeName, routeID);
+
+        return routeName;
+    }
 
     @Nullable
     public static String getRouteName(@NonNull List<String> startLines,

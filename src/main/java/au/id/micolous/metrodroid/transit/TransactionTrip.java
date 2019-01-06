@@ -102,9 +102,9 @@ public class TransactionTrip extends Trip implements Parcelable {
         // Try to get the route from the nested transactions.
         // This automatically falls back to using the MdST.
         @NonNull List<String> startLines =
-                mStart != null ? mStart.getRouteNames() : Collections.emptyList();
+                mStart != null ? mStart.getHumanReadableLineIDs() : Collections.emptyList();
         @NonNull List<String> endLines =
-                mEnd != null ? mEnd.getRouteNames() : Collections.emptyList();
+                mEnd != null ? mEnd.getHumanReadableLineIDs() : Collections.emptyList();
 
         return Trip.getRouteName(startLines, endLines);
     }
