@@ -379,7 +379,7 @@ public class FelicaCard extends Card {
     }
 
     public List<FelicaSystem> getSystems() {
-        return mSystems;
+        return Collections.unmodifiableList(mSystems);
     }
 
     public FelicaSystem getSystem(int systemCode) {

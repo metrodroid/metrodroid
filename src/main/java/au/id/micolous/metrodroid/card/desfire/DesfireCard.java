@@ -63,6 +63,7 @@ import java.security.AccessControlException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
+import java.util.Collections;
 import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.Locale;
@@ -255,7 +256,7 @@ public class DesfireCard extends Card {
     }
 
     public List<DesfireApplication> getApplications() {
-        return mApplications;
+        return Collections.unmodifiableList(mApplications);
     }
 
     public DesfireApplication getApplication(int appId) {

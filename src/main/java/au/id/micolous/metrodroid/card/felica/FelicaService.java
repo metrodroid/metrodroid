@@ -24,6 +24,7 @@ import org.simpleframework.xml.ElementList;
 import org.simpleframework.xml.Root;
 
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 @Root(name = "service")
@@ -45,6 +46,6 @@ public class FelicaService {
     }
 
     public List<FelicaBlock> getBlocks() {
-        return mBlocks;
+        return Collections.unmodifiableList(mBlocks);
     }
 }

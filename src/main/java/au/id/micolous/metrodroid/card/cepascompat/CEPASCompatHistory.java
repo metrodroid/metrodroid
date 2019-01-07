@@ -23,6 +23,7 @@ package au.id.micolous.metrodroid.card.cepascompat;
 import org.simpleframework.xml.ElementList;
 import org.simpleframework.xml.Root;
 
+import java.util.Collections;
 import java.util.List;
 
 // This file is only for reading old dumps
@@ -34,6 +35,6 @@ public class CEPASCompatHistory {
     private CEPASCompatHistory() { /* For XML Serializer */ }
 
     public List<CEPASCompatTransaction> getTransactions() {
-        return mTransactions;
+        return Collections.unmodifiableList(mTransactions);
     }
 }
