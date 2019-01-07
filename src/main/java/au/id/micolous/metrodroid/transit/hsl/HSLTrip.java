@@ -55,22 +55,22 @@ public class HSLTrip extends Trip {
     public HSLTrip(DesfireRecord record) {
         ImmutableByteArray useData = record.getData();
 
-        mArvo = Utils.getBitsFromBuffer(useData, 0, 1);
+        mArvo = useData.getBitsFromBuffer(0, 1);
 
         mTimestamp = HSLTransitData.cardDateToCalendar(
-                Utils.getBitsFromBuffer(useData, 1, 14),
-                Utils.getBitsFromBuffer(useData, 15, 11));
+                useData.getBitsFromBuffer(1, 14),
+                useData.getBitsFromBuffer(15, 11));
         mExpireTimestamp = HSLTransitData.cardDateToCalendar(
-                Utils.getBitsFromBuffer(useData, 26, 14),
-                Utils.getBitsFromBuffer(useData, 40, 11));
+                useData.getBitsFromBuffer(26, 14),
+                useData.getBitsFromBuffer(40, 11));
 
-        mFare = Utils.getBitsFromBuffer(useData, 51, 14);
+        mFare = useData.getBitsFromBuffer(51, 14);
 
-        mPax = Utils.getBitsFromBuffer(useData, 65, 5);
+        mPax = useData.getBitsFromBuffer(65, 5);
         mLine = null;
         mVehicleNumber = -1;
 
-        mNewBalance = Utils.getBitsFromBuffer(useData, 70, 20);
+        mNewBalance = useData.getBitsFromBuffer(70, 20);
 
     }
 

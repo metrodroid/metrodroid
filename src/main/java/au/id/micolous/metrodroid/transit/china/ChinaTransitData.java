@@ -48,7 +48,7 @@ public abstract class ChinaTransitData extends TransitData {
 
     protected ChinaTransitData(ChinaCard card) {
         // upper bit is some garbage
-        mBalance = Utils.getBitsFromBufferSigned(card.getBalance(0), 1, 31);
+        mBalance = card.getBalance(0).getBitsFromBufferSigned(1, 31);
 
         mTrips = new ArrayList<>();
         ISO7816File historyFile = getFile(card, 0x18);

@@ -145,15 +145,15 @@ public abstract class TroikaBlock implements Parcelable {
     }
 
     public static long getSerial(ImmutableByteArray rawData) {
-        return ((long) Utils.getBitsFromBuffer(rawData, 20, 32)) & 0xffffffffL;
+        return ((long) rawData.getBitsFromBuffer(20, 32)) & 0xffffffffL;
     }
 
     private static int getTicketType(ImmutableByteArray rawData) {
-        return Utils.getBitsFromBuffer(rawData, 4,16);
+        return rawData.getBitsFromBuffer(4,16);
     }
 
     private static int getLayout(ImmutableByteArray rawData) {
-        return Utils.getBitsFromBuffer(rawData, 52,4);
+        return rawData.getBitsFromBuffer(52,4);
     }
 
     public static TransitIdentity parseTransitIdentity(ImmutableByteArray rawData) {
@@ -225,8 +225,8 @@ public abstract class TroikaBlock implements Parcelable {
     }
 
     public static boolean check(ImmutableByteArray rawData) {
-        return Utils.getBitsFromBuffer(rawData, 0, 10) == 0x117
-            ||  Utils.getBitsFromBuffer(rawData, 0, 10) == 0x108;
+        return rawData.getBitsFromBuffer(0, 10) == 0x117
+            ||  rawData.getBitsFromBuffer(0, 10) == 0x108;
     }
 
     public String getCardName() {
@@ -243,7 +243,7 @@ public abstract class TroikaBlock implements Parcelable {
             case 0xd:
                 return new TroikaLayoutD(rawData);
             case 0xe:
-                int sublayout = Utils.getBitsFromBuffer(rawData, 56,5);
+                int sublayout = rawData.getBitsFromBuffer(56,5);
                 switch (sublayout) {
                     case 2:
                         return new TroikaLayoutE(rawData);

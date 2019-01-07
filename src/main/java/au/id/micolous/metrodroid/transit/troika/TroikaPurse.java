@@ -20,18 +20,18 @@ class TroikaPurse extends TroikaBlock {
 
     TroikaPurse(ImmutableByteArray rawData) {
         super(rawData);
-        mExpiryDate = convertDateTime1992(Utils.getBitsFromBuffer(rawData, 61, 16),0);
+        mExpiryDate = convertDateTime1992(rawData.getBitsFromBuffer(61, 16),0);
         // 10 bits unknown
         // 41 bits zero
-        mLastValidator = Utils.getBitsFromBuffer(rawData, 128, 16);
-        int lastValidationTime = Utils.getBitsFromBuffer(rawData, 144, 23);
+        mLastValidator = rawData.getBitsFromBuffer(128, 16);
+        int lastValidationTime = rawData.getBitsFromBuffer(144, 23);
         mLastValidationTime = convertDateTime2016(0, lastValidationTime);
         // 4 bits zero
-        mLastTransfer = Utils.getBitsFromBuffer(rawData, 171, 7);
-	    mLastTransportLeadingCode = Utils.getBitsFromBuffer(rawData, 178, 2);
-        mLastTransportLongCode = Utils.getBitsFromBuffer(rawData, 180, 8);
-        mBalance = Utils.getBitsFromBuffer(rawData, 188, 22);
-        int fareCode = Utils.getBitsFromBuffer(rawData, 210, 2);
+        mLastTransfer = rawData.getBitsFromBuffer(171, 7);
+	    mLastTransportLeadingCode = rawData.getBitsFromBuffer(178, 2);
+        mLastTransportLongCode = rawData.getBitsFromBuffer(180, 8);
+        mBalance = rawData.getBitsFromBuffer(188, 22);
+        int fareCode = rawData.getBitsFromBuffer(210, 2);
         switch (fareCode) {
             case 1:
                 mFareDesc = Utils.localizeString(R.string.troika_fare_single);

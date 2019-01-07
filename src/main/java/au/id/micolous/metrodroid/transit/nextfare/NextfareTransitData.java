@@ -112,13 +112,13 @@ public class NextfareTransitData extends TransitData {
         mCurrency = currency;
 
         ImmutableByteArray serialData = card.getSector(0).getBlock(0).getData();
-        mSerialNumber = Utils.byteArrayToLongReversed(serialData, 0, 4);
+        mSerialNumber = serialData.byteArrayToLongReversed(0, 4);
 
         ImmutableByteArray magicData = card.getSector(0).getBlock(1).getData();
         mSystemCode = magicData.copyOfRange(9, 15);
-        Log.d(TAG, "SystemCode = " + Utils.getHexString(mSystemCode));
+        Log.d(TAG, "SystemCode = " + mSystemCode);
         mBlock2 = card.getSector(0).getBlock(2).getData();
-        Log.d(TAG, "Block2 = " + Utils.getHexString(mBlock2));
+        Log.d(TAG, "Block2 = " + mBlock2);
 
         List<NextfareRecord> records = new ArrayList<>();
 
@@ -282,7 +282,7 @@ public class NextfareTransitData extends TransitData {
 
         protected TransitIdentity parseTransitIdentity(ClassicCard card, String name) {
             ImmutableByteArray serialData = card.getSector(0).getBlock(0).getData();
-            long serialNumber = Utils.byteArrayToLongReversed(serialData, 0, 4);
+            long serialNumber = serialData.byteArrayToLongReversed(0, 4);
             return new TransitIdentity(name, formatSerialNumber(serialNumber));
         }
 

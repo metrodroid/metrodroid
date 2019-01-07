@@ -63,8 +63,8 @@ public class BeijingTransitData extends ChinaTransitData {
         mSerial = parseSerial(card);
         ImmutableByteArray info = getFile(card, FILE_INFO).getBinaryData();
 
-        mValidityStart = Utils.byteArrayToInt(info, 0x18, 4);
-        mValidityEnd = Utils.byteArrayToInt(info, 0x1c, 4);
+        mValidityStart = info.byteArrayToInt(0x18, 4);
+        mValidityEnd = info.byteArrayToInt(0x1c, 4);
     }
 
     @Override
@@ -121,6 +121,6 @@ public class BeijingTransitData extends ChinaTransitData {
 
     private static String parseSerial(ChinaCard card) {
         ImmutableByteArray info = getFile(card, FILE_INFO).getBinaryData();
-        return Utils.getHexString(info, 0, 8);
+        return info.getHexString(0, 8);
     }
 }

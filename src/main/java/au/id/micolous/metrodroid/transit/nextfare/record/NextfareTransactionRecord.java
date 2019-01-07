@@ -93,26 +93,26 @@ public class NextfareTransactionRecord extends NextfareRecord implements Parcela
         }
 
         // Check if all the other data is null
-        if (Utils.byteArrayToLong(input, 1, 8) == 0L) {
+        if (input.byteArrayToLong(1, 8) == 0L) {
             Log.d(TAG, "Null transaction record, skipping");
             return null;
         }
 
 
-        int mode = Utils.byteArrayToInt(input, 1, 1);
+        int mode = input.byteArrayToInt(1, 1);
 
         Calendar timestamp = unpackDate(input, 2, timeZone);
-        int journey = Utils.byteArrayToIntReversed(input, 5, 2) >> 5;
+        int journey = input.byteArrayToIntReversed(5, 2) >> 5;
 
-        boolean continuation = (Utils.byteArrayToIntReversed(input, 5, 2) & 0x10) > 1;
+        boolean continuation = (input.byteArrayToIntReversed(5, 2) & 0x10) > 1;
 
-        int value = Utils.byteArrayToIntReversed(input, 7 ,2);
+        int value = input.byteArrayToIntReversed(7 ,2);
         if (value > 0x8000) {
             value = -(value & 0x7fff);
         }
 
-        int station = Utils.byteArrayToIntReversed(input, 12, 2);
-        int checksum = Utils.byteArrayToIntReversed(input, 14, 2);
+        int station = input.byteArrayToIntReversed(12, 2);
+        int checksum = input.byteArrayToIntReversed(14, 2);
 
         NextfareTransactionRecord record = new NextfareTransactionRecord(
                 timestamp, mode, journey, station, value, checksum, continuation);

@@ -21,28 +21,20 @@
 
 package au.id.micolous.metrodroid.transit.ovc
 
-import java.util.Arrays
-import java.util.Calendar
-
 import au.id.micolous.farebot.R
 import au.id.micolous.metrodroid.card.CardType
 import au.id.micolous.metrodroid.card.classic.ClassicCard
 import au.id.micolous.metrodroid.card.classic.ClassicCardTransitFactory
 import au.id.micolous.metrodroid.card.classic.ClassicSector
-import au.id.micolous.metrodroid.card.classic.InvalidClassicSector
-import au.id.micolous.metrodroid.card.classic.UnauthorizedClassicSector
-import au.id.micolous.metrodroid.transit.CardInfo
-import au.id.micolous.metrodroid.transit.TransactionTrip
-import au.id.micolous.metrodroid.transit.TransitBalanceStored
-import au.id.micolous.metrodroid.transit.TransitCurrency
-import au.id.micolous.metrodroid.transit.TransitIdentity
+import au.id.micolous.metrodroid.transit.*
 import au.id.micolous.metrodroid.transit.en1545.*
 import au.id.micolous.metrodroid.ui.HeaderListItem
 import au.id.micolous.metrodroid.ui.ListItem
 import au.id.micolous.metrodroid.util.Utils
 import au.id.micolous.metrodroid.xml.ImmutableByteArray
-import au.id.micolous.metrodroid.xml.toImmutable
 import kotlinx.android.parcel.Parcelize
+import java.util.Calendar
+import kotlin.Comparator
 
 @Parcelize
 data class OVChipTransitData(
@@ -64,7 +56,7 @@ data class OVChipTransitData(
                     Utils.localizeString(if (mType == 2) R.string.card_type_personal else R.string.card_type_anonymous),
                     OVChipTransitData.convertDate(mExpdate))
 
-    override fun getSerialNumber() = null
+    override fun getSerialNumber(): String? = null
 
     override fun getTrips() = mTrips
 
@@ -135,14 +127,14 @@ data class OVChipTransitData(
 
             return OVChipTransitData(parsed = mTicketEnvParsed, mIndex = index,
                     //byte 0-11:unknown const
-                    mExpdate = Utils.getBitsFromBuffer(card[0, 1].data, 88, 20),
+                    mExpdate = card[0, 1].data.getBitsFromBuffer(88, 20),
                     // last bytes: unknown const
-                    mBanbits = Utils.getBitsFromBuffer(credit, 0, 9),
-                    mCreditSlotId = Utils.getBitsFromBuffer(credit, 9, 12),
-                    mCreditId = Utils.getBitsFromBuffer(credit, 56, 12),
-                    mCredit = Utils.getBitsFromBufferSigned(credit, 77, 16) xor 0x7fff.inv(),
+                    mBanbits = credit.getBitsFromBuffer(0, 9),
+                    mCreditSlotId = credit.getBitsFromBuffer(9, 12),
+                    mCreditId = credit.getBitsFromBuffer(56, 12),
+                    mCredit = credit.getBitsFromBufferSigned(77, 16) xor 0x7fff.inv(),
                     // byte 0-2.5: unknown const
-                    mType = Utils.getBitsFromBuffer(card[0, 2].data, 20, 4),
+                    mType = card[0, 2].data.getBitsFromBuffer(20, 4),
                     mTrips = getTrips(card),
                     mSubscriptions = getSubscriptions(card, index))
         }
@@ -184,9 +176,9 @@ data class OVChipTransitData(
          * Dutch:   http://ov-chipkaart.pc-active.nl/Indexen
          * English: http://ov-chipkaart.pc-active.nl/Indexes
          */
-            val count = Utils.getBitsFromBuffer(data, 0, 4)
+            val count = data.getBitsFromBuffer(0, 4)
             return (0 until count).map {
-                val bits = Utils.getBitsFromBuffer(data, 4 + it * 21, 21)
+                val bits = data.getBitsFromBuffer(4 + it * 21, 21)
 
                 /* Based on info from ovc-tools by ocsr ( https://github.com/ocsrunl/ ) */
                 val type1 = Utils.getBitsFromInteger(bits, 13, 8)

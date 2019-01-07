@@ -35,6 +35,7 @@ import au.id.micolous.metrodroid.transit.TransitData;
 import au.id.micolous.metrodroid.transit.TransitIdentity;
 import au.id.micolous.metrodroid.util.StationTableReader;
 import au.id.micolous.metrodroid.util.Utils;
+import au.id.micolous.metrodroid.xml.ImmutableByteArray;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -132,7 +133,8 @@ public class EZLinkTransitData extends TransitData {
     public static Station getStation(String code) {
         if (code.length() != 3)
             return Station.unknown(code);
-        return StationTableReader.getStation(EZLINK_STR, Utils.byteArrayToInt(Utils.stringToByteArray(code)), code);
+        return StationTableReader.getStation(EZLINK_STR,
+                ImmutableByteArray.Companion.fromASCII(code).byteArrayToInt(), code);
     }
 
     public static boolean check(CEPASApplication cepasCard) {

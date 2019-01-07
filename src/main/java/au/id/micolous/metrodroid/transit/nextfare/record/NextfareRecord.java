@@ -42,7 +42,7 @@ public class NextfareRecord {
 
     public static NextfareRecord recordFromBytes(ImmutableByteArray input, int sectorIndex, int blockIndex, TimeZone timeZone) {
         NextfareRecord record = null;
-        Log.d(TAG, "Record: " + Utils.getHexString(input));
+        Log.d(TAG, "Record: " + input);
 
         if (sectorIndex == 1 && blockIndex <= 1) {
             Log.d(TAG, "Balance record");
@@ -80,7 +80,7 @@ public class NextfareRecord {
      * @return Date and time represented by that value
      */
     public static GregorianCalendar unpackDate(ImmutableByteArray input, int offset, TimeZone timeZone) {
-        int timestamp = Utils.byteArrayToIntReversed(input, offset, 4);
+        int timestamp = input.byteArrayToIntReversed(offset, 4);
         int minute = Utils.getBitsFromInteger(timestamp, 16, 11);
         int year = Utils.getBitsFromInteger(timestamp, 9, 7) + 2000;
         int month = Utils.getBitsFromInteger(timestamp, 5, 4);

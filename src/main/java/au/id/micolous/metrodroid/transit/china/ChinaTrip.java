@@ -118,9 +118,9 @@ public class ChinaTrip extends Trip {
         // 2 bytes counter
         // 3 bytes zero
         // 4 bytes cost
-        mCost = Utils.byteArrayToInt(data, 5,4);
+        mCost = data.byteArrayToInt(5,4);
         mType = data.get(9);
-        mStation = Utils.byteArrayToLong(data, 10, 6);
-        mTime = Utils.byteArrayToLong(data, 16, 7);
+        mStation = data.byteArrayToLong(10, 6);
+        mTime = data.byteArrayToLong(16, 7);
     }
 }

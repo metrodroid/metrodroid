@@ -23,7 +23,6 @@ package au.id.micolous.metrodroid.transit.ovc
 import au.id.micolous.metrodroid.transit.Transaction
 import au.id.micolous.metrodroid.transit.Trip
 import au.id.micolous.metrodroid.transit.en1545.*
-import au.id.micolous.metrodroid.util.Utils
 import au.id.micolous.metrodroid.xml.ImmutableByteArray
 import kotlinx.android.parcel.Parcelize
 
@@ -184,7 +183,7 @@ data class OVChipTransaction(private val parsed: En1545Parsed) : En1545Transacti
         )
 
         fun parseClassic(data: ImmutableByteArray): OVChipTransaction? {
-            if (Utils.getBitsFromBuffer(data, 0, 28) == 0)
+            if (data.getBitsFromBuffer(0, 28) == 0)
                 return null
             val parsed = En1545Parser.parse(data, OVChipTransaction.TRIP_FIELDS)
             // 27 is not critical, ignore if ever
@@ -195,7 +194,7 @@ data class OVChipTransaction(private val parsed: En1545Parsed) : En1545Transacti
         }
 
         fun parseUltralight(data: ImmutableByteArray): OVChipTransaction? {
-            if (Utils.isAllZero(data))
+            if (data.isAllZero())
                 return null
             return OVChipTransaction(En1545Parser.parse(data, OVC_UL_TRIP_FIELDS))
         }

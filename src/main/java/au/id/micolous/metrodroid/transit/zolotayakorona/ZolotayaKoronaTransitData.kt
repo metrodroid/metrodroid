@@ -178,10 +178,10 @@ data class ZolotayaKoronaTransitData internal constructor(
             return g
         }
 
-        private fun getSerial(card: ClassicCard) = Utils.getHexString(card[15, 2].data,
+        private fun getSerial(card: ClassicCard) = card[15, 2].data.getHexString(
                 4, 10).substring(0, 19)
 
-        private fun getCardType(card: ClassicCard) = Utils.byteArrayToInt(card[15, 1].data,
+        private fun getCardType(card: ClassicCard) = card[15, 1].data.byteArrayToInt(
                 10, 3)
 
         private fun formatSerial(serial: String) = Utils.groupString(serial, " ", 4, 5, 5)
@@ -197,14 +197,14 @@ data class ZolotayaKoronaTransitData internal constructor(
                 val cardType = getCardType(classicCard)
 
                 val balance = if (classicCard[6] is UnauthorizedClassicSector) null else
-                    Utils.byteArrayToIntReversed(classicCard[6, 0].data, 0, 4)
+                    classicCard[6, 0].data.byteArrayToIntReversed(0, 4)
 
                 val refill = ZolotayaKoronaRefill.parse(classicCard[4, 1].data, cardType)
                 val trip = ZolotayaKoronaTrip.parse(classicCard[4, 2].data, cardType, refill, balance)
 
                 return ZolotayaKoronaTransitData(
                         mSerial = getSerial(classicCard),
-                        mCardSerial = Utils.getHexString(classicCard[0, 0].data, 0, 4),
+                        mCardSerial = classicCard[0, 0].data.getHexString(0, 4),
                         mCardType = cardType,
                         mBalance = balance,
                         mTrip = trip,
@@ -215,8 +215,8 @@ data class ZolotayaKoronaTransitData internal constructor(
             override fun earlyCheck(sectors: List<ClassicSector>): Boolean {
                 val toc = sectors[0][1].data
                 // Check toc entries for sectors 10,12,13,14 and 15
-                return Utils.byteArrayToInt(toc, 8, 2) == 0x18ee
-                        && Utils.byteArrayToInt(toc, 12, 2) == 0x18ee
+                return toc.byteArrayToInt(8, 2) == 0x18ee
+                        && toc.byteArrayToInt(12, 2) == 0x18ee
             }
 
             override fun earlySectors() = 1

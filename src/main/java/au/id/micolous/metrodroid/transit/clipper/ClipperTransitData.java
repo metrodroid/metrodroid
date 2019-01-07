@@ -121,14 +121,14 @@ public class ClipperTransitData extends TransitData {
 
         try {
             data = desfireCard.getApplication(APP_ID).getFile(0x08).getData();
-            mSerialNumber = Utils.byteArrayToLong(data, 1, 4);
+            mSerialNumber = data.byteArrayToLong(1, 4);
         } catch (Exception ex) {
             throw new RuntimeException("Error parsing Clipper serial", ex);
         }
 
         try {
             data = desfireCard.getApplication(APP_ID).getFile(0x01).getData();
-            expiry = Utils.byteArrayToInt(data, 8, 2);
+            expiry = data.byteArrayToInt(8, 2);
         } catch (Exception ex) {
             expiry = 0;
         }
@@ -136,7 +136,7 @@ public class ClipperTransitData extends TransitData {
         mExpiry = expiry;
         try {
             data = desfireCard.getApplication(APP_ID).getFile(0x02).getData();
-            mBalance = (short) Utils.byteArrayToInt(data, 18, 2);
+            mBalance = (short) data.byteArrayToInt(18, 2);
         } catch (Exception ex) {
             throw new RuntimeException("Error parsing Clipper balance", ex);
         }
@@ -175,7 +175,7 @@ public class ClipperTransitData extends TransitData {
         public TransitIdentity parseTransitIdentity(@NonNull DesfireCard card) {
             try {
                 ImmutableByteArray data = card.getApplication(APP_ID).getFile(0x08).getData();
-                return new TransitIdentity("Clipper", String.valueOf(Utils.byteArrayToLong(data, 1, 4)));
+                return new TransitIdentity("Clipper", String.valueOf(data.byteArrayToLong(1, 4)));
             } catch (Exception ex) {
                 throw new RuntimeException("Error parsing Clipper serial", ex);
             }
@@ -220,10 +220,10 @@ public class ClipperTransitData extends TransitData {
         ImmutableByteArray data = file.getData();
         List<ClipperTrip> result = new ArrayList<>();
         for (int pos = data.getSize() - RECORD_LENGTH; pos >= 0; pos -= RECORD_LENGTH) {
-            if (Utils.byteArrayToInt(data, pos + 0x2, 2) == 0)
+            if (data.byteArrayToInt(pos + 0x2, 2) == 0)
                 continue;
 
-            final ClipperTrip trip = new ClipperTrip(Utils.byteArraySlice(data, pos, RECORD_LENGTH));
+            final ClipperTrip trip = new ClipperTrip(data.sliceOffLen(pos, RECORD_LENGTH));
 
             // Some transaction types are temporary -- remove previous trip with the same timestamp.
             ClipperTrip existingTrip = Utils.findInList(result,
@@ -259,7 +259,7 @@ public class ClipperTransitData extends TransitData {
         int pos = data.getSize() - RECORD_LENGTH;
         List<ClipperRefill> result = new ArrayList<>();
         while (pos >= 0) {
-            ImmutableByteArray slice = Utils.byteArraySlice(data, pos, RECORD_LENGTH);
+            ImmutableByteArray slice = data.sliceOffLen(pos, RECORD_LENGTH);
             ClipperRefill refill = createRefill(slice);
             if (refill != null)
                 result.add(refill);
@@ -276,10 +276,10 @@ public class ClipperTransitData extends TransitData {
         String machineid;
         int amount, agency;
 
-        agency = Utils.byteArrayToInt(useData, 0x2, 2);
-        timestamp = Utils.byteArrayToLong(useData, 0x4, 4);
-        machineid = Utils.getHexString(useData, 0x8, 4);
-        amount = Utils.byteArrayToInt(useData, 0xe, 2);
+        agency = useData.byteArrayToInt(0x2, 2);
+        timestamp = useData.byteArrayToLong(0x4, 4);
+        machineid = useData.getHexString(0x8, 4);
+        amount = useData.byteArrayToInt(0xe, 2);
 
         if (timestamp == 0)
             return null;

@@ -66,10 +66,10 @@ public class TUnionTransitData extends ChinaTransitData {
         mSerial = parseSerial(card);
         ImmutableByteArray file15 = getFile(card, 0x15).getBinaryData();
         if (file15 != null) {
-            mValidityStart = Utils.byteArrayToInt(file15, 20, 4);
-            mValidityEnd = Utils.byteArrayToInt(file15, 24, 4);
+            mValidityStart = file15.byteArrayToInt(20, 4);
+            mValidityEnd = file15.byteArrayToInt(24, 4);
         }
-        mNegativeBalance = Utils.getBitsFromBuffer(card.getBalance(1), 1, 31);
+        mNegativeBalance = card.getBalance(1).getBitsFromBuffer(1, 31);
     }
 
     @Override
@@ -127,7 +127,7 @@ public class TUnionTransitData extends ChinaTransitData {
         ImmutableByteArray file15 = getFile(card, 0x15).getBinaryData();
         if (file15 == null)
             return null;
-        return Utils.getHexString(file15, 10, 10).substring(1);
+        return file15.getHexString(10, 10).substring(1);
     }
 
     @Nullable

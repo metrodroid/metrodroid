@@ -111,10 +111,10 @@ public class LeapTransitData extends TransitData {
         AccumulatorBlock(ImmutableByteArray file, int offset) {
             mAccumulatorStart = parseDate(file,offset);
             mAccumulatorRegion = (int) file.get(offset + 4);
-            mAccumulatorScheme = Utils.byteArrayToInt(file, offset+5, 3);
+            mAccumulatorScheme = file.byteArrayToInt(offset+5, 3);
             mAccumulatorAgencies = new int[4];
             for (int i = 0; i < 4; i++)
-                mAccumulatorAgencies[i] = Utils.byteArrayToInt(file, offset+8+2*i, 2);
+                mAccumulatorAgencies[i] = file.byteArrayToInt(offset+8+2*i, 2);
             mAccumulators = new int[4];
             for (int i = 0; i < 4; i++)
                 mAccumulators[i] = parseBalance(file, offset + 0x10+3*i);
@@ -158,8 +158,8 @@ public class LeapTransitData extends TransitData {
     }
 
     private static int chooseBlock(ImmutableByteArray file, int txidoffset) {
-        int txIdA = Utils.byteArrayToInt(file, txidoffset, 2);
-        int txIdB = Utils.byteArrayToInt(file, BLOCK_SIZE+txidoffset, 2);
+        int txIdA = file.byteArrayToInt(txidoffset, 2);
+        int txIdB = file.byteArrayToInt(BLOCK_SIZE+txidoffset, 2);
 
         if (txIdA > txIdB) {
             return 0;
@@ -175,7 +175,7 @@ public class LeapTransitData extends TransitData {
         }
         mSerial = getSerial(card);
         ImmutableByteArray file2 = app.getFile(2).getData();
-        mIssuerId = Utils.byteArrayToInt(file2, 0x22, 3);
+        mIssuerId = file2.byteArrayToInt(0x22, 3);
 
         ImmutableByteArray file4 = app.getFile(4).getData();
         mIssueDate = parseDate(file4, 0x22);
@@ -229,14 +229,14 @@ public class LeapTransitData extends TransitData {
     }
 
     public static int parseBalance(ImmutableByteArray file, int offset) {
-        return Utils.getBitsFromBufferSigned(file, offset * 8, 24);
+        return file.getBitsFromBufferSigned(offset * 8, 24);
     }
 
     public static Calendar parseDate(ImmutableByteArray file, int offset) {
         GregorianCalendar g = new GregorianCalendar(TZ);
         g.setTimeInMillis(LEAP_EPOCH);
 
-        int sec = Utils.byteArrayToInt(file, offset, 4);
+        int sec = file.byteArrayToInt(offset, 4);
         g.add(GregorianCalendar.SECOND, sec);
         return g;
     }
@@ -244,7 +244,7 @@ public class LeapTransitData extends TransitData {
     @NonNls
     private static String getSerial(DesfireCard card) {
         DesfireApplication app = card.getApplication(APP_ID);
-        int serial = Utils.byteArrayToInt(app.getFile(2).getData(),0x25, 4);
+        int serial = app.getFile(2).getData().byteArrayToInt(0x25, 4);
         Calendar initDate = parseDate(app.getFile(6).getData(), 1);
         // luhn checksum of number without date is always 6
         int checkDigit = (Utils.calculateLuhn(Integer.toString(serial)) + 6) % 10;

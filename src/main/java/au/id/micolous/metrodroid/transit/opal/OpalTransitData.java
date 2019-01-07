@@ -129,18 +129,18 @@ public class OpalTransitData extends TransitData {
         ImmutableByteArray data = dataRaw.sliceOffLen(0, 16).reverseBuffer();
 
         try {
-            mChecksum = Utils.getBitsFromBuffer(data, 0, 16);
-            mWeeklyTrips = Utils.getBitsFromBuffer(data, 16, 4);
-            mAutoTopup = Utils.getBitsFromBuffer(data, 20, 1) == 0x01;
-            mAction = Utils.getBitsFromBuffer(data, 21, 4);
-            mMode = Utils.getBitsFromBuffer(data, 25, 3);
-            mMinute = Utils.getBitsFromBuffer(data, 28, 11);
-            mDay = Utils.getBitsFromBuffer(data, 39, 15);
-            mBalance = Utils.getBitsFromBufferSigned(data, 54, 21);
-            mTransactionNumber = Utils.getBitsFromBuffer(data, 75, 16);
+            mChecksum = data.getBitsFromBuffer(0, 16);
+            mWeeklyTrips = data.getBitsFromBuffer(16, 4);
+            mAutoTopup = data.getBitsFromBuffer(20, 1) == 0x01;
+            mAction = data.getBitsFromBuffer(21, 4);
+            mMode = data.getBitsFromBuffer(25, 3);
+            mMinute = data.getBitsFromBuffer(28, 11);
+            mDay = data.getBitsFromBuffer(39, 15);
+            mBalance = data.getBitsFromBufferSigned(54, 21);
+            mTransactionNumber = data.getBitsFromBuffer(75, 16);
             // Skip bit here
-            mLastDigit = Utils.getBitsFromBuffer(data, 92, 4);
-            mSerialNumber = Utils.getBitsFromBuffer(data, 96, 32);
+            mLastDigit = data.getBitsFromBuffer(92, 4);
+            mSerialNumber = data.getBitsFromBuffer(96, 32);
         } catch (Exception ex) {
             throw new RuntimeException("Error parsing Opal data", ex);
         }
@@ -172,8 +172,8 @@ public class OpalTransitData extends TransitData {
             ImmutableByteArray dataRaw = desfireCard.getApplication(APP_ID).getFile(FILE_ID).getData();
             ImmutableByteArray data = dataRaw.sliceOffLen(0, 5).reverseBuffer();
 
-            int lastDigit = Utils.getBitsFromBuffer(data, 4, 4);
-            int serialNumber = Utils.getBitsFromBuffer(data, 8, 32);
+            int lastDigit = data.getBitsFromBuffer(4, 4);
+            int serialNumber = data.getBitsFromBuffer(8, 32);
             return new TransitIdentity(NAME, formatSerialNumber(serialNumber, lastDigit));
         }
     };

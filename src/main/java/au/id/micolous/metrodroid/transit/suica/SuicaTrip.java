@@ -92,11 +92,11 @@ public class SuicaTrip extends Trip {
         if (isProductSale)
             mHasStartTime = true;
 
-        mDateRaw = Utils.byteArrayToInt(data, 4, 2);
+        mDateRaw = data.byteArrayToInt(4, 2);
         mStartTimestamp = SuicaUtil.extractDate(isProductSale, data);
         mEndTimestamp = mStartTimestamp == null ? null : (Calendar)mStartTimestamp.clone();
         // Balance is little-endian
-        mBalance = Utils.byteArrayToIntReversed(data, 10, 2);
+        mBalance = data.byteArrayToIntReversed(10, 2);
 
         mRegionCode = data.get(15) & 0xFF;
 
@@ -107,8 +107,8 @@ public class SuicaTrip extends Trip {
             mFare = 0;
         }
 
-        mStartStationId = Utils.byteArrayToInt(data, 6, 2);
-        mEndStationId = Utils.byteArrayToInt(data, 8, 2);
+        mStartStationId = data.byteArrayToInt(6, 2);
+        mEndStationId = data.byteArrayToInt(8, 2);
 
         // Unused block (new card)
         if (mStartTimestamp == null) {
@@ -121,8 +121,8 @@ public class SuicaTrip extends Trip {
             mStartStation = null;
             mEndStation = null;
         } else if (mConsoleType == (byte) CONSOLE_BUS) {
-            int busLineCode = Utils.byteArrayToInt(data, 6, 2);
-            int busStopCode = Utils.byteArrayToInt(data, 8, 2);
+            int busLineCode = data.byteArrayToInt(6, 2);
+            int busStopCode = data.byteArrayToInt(8, 2);
             mStartStation = SuicaDBUtil.getBusStop(mRegionCode, busLineCode, busStopCode);
             mEndStation = null;
         } else {

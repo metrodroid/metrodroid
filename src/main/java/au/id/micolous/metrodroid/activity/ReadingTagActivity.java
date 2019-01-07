@@ -208,7 +208,7 @@ public class ReadingTagActivity extends MetrodroidActivity implements TagReaderF
                     }
                 }
 
-                String tagIdString = Utils.getHexString(card.getTagId());
+                String tagIdString = card.getTagId().toHexString();
 
                 ContentValues values = new ContentValues();
                 values.put(CardsTableColumns.TYPE, card.getCardType().toInteger());

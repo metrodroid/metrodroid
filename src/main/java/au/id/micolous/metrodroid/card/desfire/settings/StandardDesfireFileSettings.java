@@ -38,7 +38,7 @@ public class StandardDesfireFileSettings extends DesfireFileSettings {
 
     StandardDesfireFileSettings(ImmutableByteArray buf) {
         super(buf);
-        mFileSize = Utils.byteArrayToIntReversed(buf, 4, 3);
+        mFileSize = buf.byteArrayToIntReversed(4, 3);
     }
 
     public StandardDesfireFileSettings(byte fileType, byte commSetting, ImmutableByteArray accessRights, int fileSize) {

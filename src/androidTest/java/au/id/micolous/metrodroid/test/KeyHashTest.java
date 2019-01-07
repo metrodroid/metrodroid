@@ -41,13 +41,13 @@ import static junit.framework.TestCase.assertEquals;
  */
 @RunWith(JUnit4.class)
 public class KeyHashTest {
-    private static final byte[] MAD_KEY = {(byte) 0xa0, (byte) 0xa1, (byte) 0xa2, (byte) 0xa3, (byte) 0xa4, (byte) 0xa5};
-    private static final byte[] DEFAULT_KEY = {(byte) 0xff, (byte) 0xff, (byte) 0xff, (byte) 0xff, (byte) 0xff, (byte) 0xff};
+    private static final ImmutableByteArray MAD_KEY = ImmutableByteArray.Companion.fromHex("A0A1A2A3A4A5");
+    private static final ImmutableByteArray DEFAULT_KEY = ImmutableByteArray.Companion.fromHex("FFFFFFFFFFFF");
     private static final ClassicSectorKey MAD_SECTOR_KEY =
-            ClassicSectorKey.Companion.fromDump(ImmutableByteArray.Companion.fromByteArray(MAD_KEY),
+            ClassicSectorKey.Companion.fromDump(MAD_KEY,
             ClassicSectorKey.KeyType.A, "test");
     private static final ClassicSectorKey DEFAULT_SECTOR_KEY =
-            ClassicSectorKey.Companion.fromDump(ImmutableByteArray.Companion.fromByteArray(DEFAULT_KEY),
+            ClassicSectorKey.Companion.fromDump(DEFAULT_KEY,
                     ClassicSectorKey.KeyType.A, "test");
 
     private static final String SALT0 = "sodium chloride";

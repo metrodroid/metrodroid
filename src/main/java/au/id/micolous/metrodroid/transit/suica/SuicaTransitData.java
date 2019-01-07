@@ -112,7 +112,7 @@ public class SuicaTransitData extends TransitData {
 
             int previousBalance = -1;
             if (i + 1 < blocks.size())
-                previousBalance = Utils.byteArrayToIntReversed(blocks.get(i + 1).getData(),
+                previousBalance = blocks.get(i + 1).getData().byteArrayToIntReversed(
                         10, 2);
             SuicaTrip trip = new SuicaTrip(block, previousBalance);
 
@@ -153,15 +153,15 @@ public class SuicaTransitData extends TransitData {
                     if ((tapBlock.get(0) & 0x80) != 0)
                         continue;
 
-                    int station = Utils.byteArrayToInt(tapBlock, 2, 2);
+                    int station = tapBlock.byteArrayToInt(2, 2);
                     if (station != trip.getEndStationId())
                         continue;
 
-                    int dateNum = Utils.byteArrayToInt(tapBlock, 6, 2);
+                    int dateNum = tapBlock.byteArrayToInt(6, 2);
                     if (dateNum != trip.getDateRaw())
                         continue;
 
-                    int fare = Utils.byteArrayToIntReversed(tapBlock, 10, 2);
+                    int fare = tapBlock.byteArrayToIntReversed(10, 2);
                     if (fare != trip.getFareRaw())
                         continue;
 
@@ -195,11 +195,11 @@ public class SuicaTransitData extends TransitData {
                     if ((tapBlock.get(0) & 0x80) == 0)
                         continue;
 
-                    int station = Utils.byteArrayToInt(tapBlock, 2, 2);
+                    int station = tapBlock.byteArrayToInt(2, 2);
                     if (station != trip.getStartStationId())
                         continue;
 
-                    int dateNum = Utils.byteArrayToInt(tapBlock, 6, 2);
+                    int dateNum = tapBlock.byteArrayToInt(6, 2);
                     if (dateNum != trip.getDateRaw())
                         continue;
 

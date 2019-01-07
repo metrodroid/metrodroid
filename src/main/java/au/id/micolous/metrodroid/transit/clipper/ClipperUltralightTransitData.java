@@ -106,14 +106,14 @@ public class ClipperUltralightTransitData extends TransitData {
         mSerial = getSerial(card);
         ImmutableByteArray page0 = card.getPage(4).getData();
         ImmutableByteArray page1 = card.getPage(5).getData();
-	    mBaseDate = Utils.byteArrayToInt(page1, 2, 2);
+	    mBaseDate = page1.byteArrayToInt(2, 2);
 	    mType = page0.get(1) & 0xff;
-	    int product = Utils.byteArrayToInt(page1, 0, 2);
+	    int product = page1.byteArrayToInt(0, 2);
 	    mTrips = new ArrayList<>();
         ClipperUltralightTrip trLast = null;
 	    for (int offset : new int[]{6,11}) {
             ImmutableByteArray trData = card.readPages(offset, 5);
-            if (Utils.isAllZero(trData))
+            if (trData.isAllZero())
                 continue;
             ClipperUltralightTrip tr = new ClipperUltralightTrip(trData, mBaseDate);
             if (trLast == null || tr.isSeqGreater(trLast))
@@ -136,7 +136,7 @@ public class ClipperUltralightTransitData extends TransitData {
 
     private static long getSerial(UltralightCard card) {
 	    ImmutableByteArray otp = card.getPage(3).getData();
-        return Utils.byteArrayToLong(otp, 0, 4);
+        return otp.byteArrayToLong(0, 4);
     }
 
     @Override

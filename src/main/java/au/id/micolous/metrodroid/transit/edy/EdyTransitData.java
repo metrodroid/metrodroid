@@ -99,7 +99,7 @@ public class EdyTransitData extends TransitData {
         List<FelicaBlock> blocksBalance = serviceBalance.getBlocks();
         FelicaBlock blockBalance = blocksBalance.get(0);
         ImmutableByteArray dataBalance = blockBalance.getData();
-        mCurrentBalance = Utils.byteArrayToIntReversed(dataBalance, 0, 3);
+        mCurrentBalance = dataBalance.byteArrayToIntReversed(0, 3);
 
         // now read the transaction history
         FelicaService serviceHistory = card.getSystem(SYSTEMCODE_EDY).getService(FELICA_SERVICE_EDY_HISTORY);
@@ -147,7 +147,7 @@ public class EdyTransitData extends TransitData {
 
     @Override
     public String getSerialNumber() {
-        return Utils.groupString(Utils.getHexString(mSerialNumber).toUpperCase(Locale.ENGLISH),
+        return Utils.groupString(mSerialNumber.toHexString().toUpperCase(Locale.ENGLISH),
                 " ", 4, 4, 4);
     }
 

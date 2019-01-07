@@ -37,8 +37,8 @@ public class CharlieCardTrip extends Trip {
 
     public CharlieCardTrip(ImmutableByteArray data, int off) {
         mFare = CharlieCardTransitData.getPrice(data, off + 5);
-        mValidator = Utils.byteArrayToInt(data, off + 3, 2);
-        mTimestamp = Utils.byteArrayToInt(data, off, 3);
+        mValidator = data.byteArrayToInt(off + 3, 2);
+        mTimestamp = data.byteArrayToInt(off, 3);
     }
 
     private CharlieCardTrip(Parcel in) {

@@ -113,7 +113,7 @@ public class OpusTransitData extends Calypso1545TransitData {
         @Override
         public boolean check(ImmutableByteArray ticketEnv) {
             try {
-                int networkID = Utils.getBitsFromBuffer(ticketEnv, 13, 24);
+                int networkID = ticketEnv.getBitsFromBuffer(13, 24);
                 return OPUS_NETWORK_ID == networkID;
             } catch (Exception e) {
                 return false;
@@ -178,12 +178,12 @@ public class OpusTransitData extends Calypso1545TransitData {
         }
         ImmutableByteArray data = iccRecord.getData();
 
-        if (Utils.byteArrayToLong(data, 16, 4) != 0) {
-            return Long.toString(Utils.byteArrayToLong(data, 16, 4));
+        if (data.byteArrayToLong(16, 4) != 0) {
+            return Long.toString(data.byteArrayToLong(16, 4));
         }
 
-        if (Utils.byteArrayToLong(data, 0, 4) != 0) {
-            return Long.toString(Utils.byteArrayToLong(data, 0, 4));
+        if (data.byteArrayToLong(0, 4) != 0) {
+            return Long.toString(data.byteArrayToLong(0, 4));
         }
 
         return null;

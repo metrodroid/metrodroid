@@ -93,8 +93,8 @@ public class LisboaVivaTransitData extends Calypso1545TransitData {
                 .getRecord(1).getData();
         return String.format(Locale.ENGLISH,
                 "%03d %09d",
-                Utils.getBitsFromBuffer(tenv, 30, 8),
-                Utils.getBitsFromBuffer(tenv, 38, 24));
+                tenv.getBitsFromBuffer(30, 8),
+                tenv.getBitsFromBuffer(38, 24));
     }
 
     private LisboaVivaTransitData(CalypsoApplication card) {
@@ -134,7 +134,7 @@ public class LisboaVivaTransitData extends Calypso1545TransitData {
         @Override
         public boolean check(ImmutableByteArray ticketEnv) {
             try {
-                return COUNTRY_PORTUGAL == Utils.getBitsFromBuffer(ticketEnv, 13, 12);
+                return COUNTRY_PORTUGAL == ticketEnv.getBitsFromBuffer(13, 12);
             } catch (Exception e) {
                 return false;
             }

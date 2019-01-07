@@ -87,7 +87,7 @@ public class RavKavTransitData extends Calypso1545TransitData {
     }
 
     private static String getSerial(CalypsoApplication card) {
-        return Long.toString(Utils.byteArrayToLong(card.getTagId()));
+        return Long.toString(card.getTagId().byteArrayToLong());
     }
 
     public final static CalypsoCardTransitFactory FACTORY = new CalypsoCardTransitFactory() {
@@ -105,7 +105,7 @@ public class RavKavTransitData extends Calypso1545TransitData {
         @Override
         public boolean check(ImmutableByteArray ticketEnv) {
             try {
-                int networkID = Utils.getBitsFromBuffer(ticketEnv, 3, 20);
+                int networkID = ticketEnv.getBitsFromBuffer(3, 20);
                 return RAVKAV_NETWORK_ID_A == networkID || RAVKAV_NETWORK_ID_B == networkID;
             } catch (Exception e) {
                 return false;

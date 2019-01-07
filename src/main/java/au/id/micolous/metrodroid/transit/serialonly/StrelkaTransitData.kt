@@ -25,6 +25,7 @@ import au.id.micolous.metrodroid.card.CardType
 import au.id.micolous.metrodroid.card.classic.ClassicCard
 import au.id.micolous.metrodroid.card.classic.ClassicCardTransitFactory
 import au.id.micolous.metrodroid.card.classic.ClassicSector
+import au.id.micolous.metrodroid.key.ClassicSectorKey
 import au.id.micolous.metrodroid.transit.CardInfo
 import au.id.micolous.metrodroid.transit.TransitIdentity
 import au.id.micolous.metrodroid.ui.ListItem
@@ -62,7 +63,7 @@ data class StrelkaTransitData (private val mSerial: String): SerialOnlyTransitDa
                 Utils.groupString(serial.substring(8), " ", 4, 4)
 
         private fun getSerial(card: ClassicCard) =
-                Utils.getHexString(card[12, 0].data, 2, 10).substring(0, 19)
+                card[12, 0].data.getHexString(2, 10).substring(0, 19)
 
         fun parse(card: ClassicCard) =
                 StrelkaTransitData(mSerial = getSerial(card))
@@ -78,10 +79,10 @@ data class StrelkaTransitData (private val mSerial: String): SerialOnlyTransitDa
             override fun earlyCheck(sectors: List<ClassicSector>): Boolean {
                 val toc = sectors[0][2].data
                 // Check toc entries for sectors 10,12,13,14 and 15
-                return (Utils.byteArrayToInt(toc, 4, 2) == 0x18f0
-                        && Utils.byteArrayToInt(toc, 8, 2) == 5
-                        && Utils.byteArrayToInt(toc, 10, 2) == 0x18e0
-                        && Utils.byteArrayToInt(toc, 12, 2) == 0x18e8)
+                return (toc.byteArrayToInt(4, 2) == 0x18f0
+                        && toc.byteArrayToInt(8, 2) == 5
+                        && toc.byteArrayToInt(10, 2) == 0x18e0
+                        && toc.byteArrayToInt(12, 2) == 0x18e8)
             }
 
             // 1 is actually enough but let's show Troika+Strelka as Troika

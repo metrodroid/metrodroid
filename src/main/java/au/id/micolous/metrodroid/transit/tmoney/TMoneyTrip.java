@@ -117,14 +117,14 @@ public class TMoneyTrip extends Trip {
         // 4 bytes balance after transaction
         // 4 bytes counter
         // 4 bytes cost
-        cost = Utils.byteArrayToInt(data, 10,4);
+        cost = data.byteArrayToInt(10,4);
         if (type == 2)
             cost = -cost;
         // 2 bytes unknown
         // 1 byte type??
         // 7 bytes unknown
         // 7 bytes time
-        time = Utils.byteArrayToLong(data, 26, 7);
+        time = data.byteArrayToLong(26, 7);
         // 7 bytes zero
         // 4 bytes unknown
         // 2 bytes zero

@@ -8,7 +8,7 @@ import au.id.micolous.metrodroid.xml.ImmutableByteArray;
 public class TroikaLayout2 extends TroikaBlock {
     public TroikaLayout2(ImmutableByteArray rawData) {
         super(rawData);
-        mExpiryDate = convertDateTime1992(Utils.getBitsFromBuffer(mRawData, 56, 16), 0);
+        mExpiryDate = convertDateTime1992(mRawData.getBitsFromBuffer(56, 16), 0);
     }
 
     @Override

@@ -63,9 +63,9 @@ public class CityUnionTransitData extends ChinaTransitData {
         mSerial = parseSerial(card);
         ImmutableByteArray file15 = getFile(card, 0x15).getBinaryData();
 
-        mValidityStart = Utils.byteArrayToInt(file15, 20, 4);
-        mValidityEnd = Utils.byteArrayToInt(file15, 24, 4);
-        mCity = Utils.byteArrayToInt(file15, 2, 2);
+        mValidityStart = file15.byteArrayToInt(20, 4);
+        mValidityEnd = file15.byteArrayToInt(24, 4);
+        mCity = file15.byteArrayToInt(2, 2);
     }
 
     @Override
@@ -121,9 +121,9 @@ public class CityUnionTransitData extends ChinaTransitData {
 
     private static int parseSerial(ChinaCard card) {
         ImmutableByteArray file15 = getFile(card, 0x15).getBinaryData();
-        if (Utils.byteArrayToInt(file15, 2, 2) == 0x2000)
-            return Utils.byteArrayToInt(file15, 16,4);
-        return Utils.byteArrayToIntReversed(file15, 16,4);
+        if (file15.byteArrayToInt(2, 2) == 0x2000)
+            return file15.byteArrayToInt(16,4);
+        return file15.byteArrayToIntReversed(16,4);
     }
 
     @Override

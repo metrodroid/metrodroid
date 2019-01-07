@@ -52,10 +52,10 @@ public class ErgBalanceRecord extends ErgRecord implements Comparable<ErgBalance
         }
 
         return new ErgBalanceRecord(
-                Utils.byteArrayToInt(input, 11, 4),
-                Utils.byteArrayToInt(input, 1, 2),
+                input.byteArrayToInt(11, 4),
+                input.byteArrayToInt(1, 2),
                 // Present on MFF, not CHC Metrocard
-                Utils.byteArrayToInt(input, 5, 2));
+                input.byteArrayToInt(5, 2));
     }
 
     /**

@@ -207,9 +207,8 @@ public class FelicaCard extends Card {
                 //    FeliCaLib.ServiceCode serviceCode = new FeliCaLib.ServiceCode(serviceCodeInt);
 
                 for (FeliCaLib.ServiceCode serviceCode : serviceCodes) {
-                    byte[] bytes = serviceCode.getBytes();
-                    ArrayUtils.reverse(bytes);
-                    int serviceCodeInt = Utils.byteArrayToInt(bytes);
+                    int serviceCodeInt =
+                            ImmutableByteArray.Companion.fromByteArray(serviceCode.getBytes()).byteArrayToIntReversed();
                     serviceCode = new FeliCaLib.ServiceCode(serviceCode.getBytes());
 
                     List<FelicaBlock> blocks = new ArrayList<>();
@@ -277,7 +276,7 @@ public class FelicaCard extends Card {
      * @return Manufacturer code.
      */
     public int getManufacturerCode() {
-        return Utils.byteArrayToInt(getIDm(), 0, 2);
+        return getIDm().byteArrayToInt(0, 2);
     }
 
     /**
@@ -287,7 +286,7 @@ public class FelicaCard extends Card {
      * @return Card identification number.
      */
     public long getCardIdentificationNumber() {
-        return Utils.byteArrayToLong(getIDm(), 2, 6);
+        return getIDm().byteArrayToLong(2, 6);
     }
 
     /**
@@ -306,7 +305,7 @@ public class FelicaCard extends Card {
      * @return ROM type
      */
     public int getROMType() {
-        return Utils.byteArrayToInt(getPMm(), 0, 1);
+        return getPMm().byteArrayToInt(0, 1);
     }
 
     /**
@@ -316,7 +315,7 @@ public class FelicaCard extends Card {
      * @return IC type
      */
     public int getICType() {
-        return Utils.byteArrayToInt(getPMm(), 1, 1);
+        return getPMm().byteArrayToInt(1, 1);
     }
 
     /**
@@ -376,7 +375,7 @@ public class FelicaCard extends Card {
      * @return Maximum response time
      */
     public long getMaximumResponseTime() {
-        return Utils.byteArrayToLong(getPMm(), 2, 6);
+        return getPMm().byteArrayToLong(2, 6);
     }
 
     public List<FelicaSystem> getSystems() {
@@ -493,7 +492,7 @@ public class FelicaCard extends Card {
                     bli.add(new ListItem(
                             new SpannableString(String.format(Locale.ENGLISH,
                             "%02d", block.getAddress())),
-                            Utils.getHexDump(block.getData(), "<ERR>")));
+                            block.getData().toHexDump()));
                 }
 
                 sli.add(new ListItemRecursive(

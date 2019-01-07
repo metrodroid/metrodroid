@@ -52,7 +52,7 @@ public class KMTTrip extends Trip {
     private static final String KMT_STR = "kmt";
 
     private static Calendar calcDate(ImmutableByteArray data) {
-        int fulloffset = Utils.byteArrayToInt(data, 0, 4);
+        int fulloffset = data.byteArrayToInt(0, 4);
         if (fulloffset == 0) {
             return null;
         }
@@ -69,10 +69,10 @@ public class KMTTrip extends Trip {
     public KMTTrip(FelicaBlock block) {
         ImmutableByteArray data = block.getData();
         mProcessType = data.get(12) & 0xff;
-        mSequenceNumber = Utils.byteArrayToInt(data, 13, 3);
+        mSequenceNumber = data.byteArrayToInt(13, 3);
         mTimestamp = calcDate(data);
-        mTransactionAmount = Utils.byteArrayToInt(data, 4, 4);
-        mEndGateCode = Utils.byteArrayToInt(data, 8, 2);
+        mTransactionAmount = data.byteArrayToInt(4, 4);
+        mEndGateCode = data.byteArrayToInt(8, 2);
     }
 
     @Nullable

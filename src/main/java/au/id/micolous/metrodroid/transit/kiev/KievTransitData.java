@@ -57,7 +57,7 @@ public class KievTransitData extends TransitData {
         mTrips = new ArrayList<>();
         for (int i = 0; i < 6; i++) {
             ClassicBlock block = card.getSector(3 + (i / 3)).getBlock(i % 3);
-            if (Utils.byteArrayToInt(block.getData(), 0, 4) == 0)
+            if (block.getData().byteArrayToInt(0, 4) == 0)
                 continue;
             mTrips.add(new KievTrip(block.getData()));
         }

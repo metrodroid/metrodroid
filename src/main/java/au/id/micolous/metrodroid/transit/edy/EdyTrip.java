@@ -61,10 +61,10 @@ public class EdyTrip extends Trip {
         // 0x0c    balance (big-endian)
 
         mProcessType = data.get(0);
-        mSequenceNumber = Utils.byteArrayToInt(data, 1, 3);
+        mSequenceNumber = data.byteArrayToInt(1, 3);
         mTimestamp = extractDate(data);
-        mTransactionAmount = Utils.byteArrayToInt(data, 8, 4);
-        mBalance = Utils.byteArrayToInt(data, 12, 4);
+        mTransactionAmount = data.byteArrayToInt(8, 4);
+        mBalance = data.byteArrayToInt(12, 4);
     }
 
     private EdyTrip(Parcel parcel) {
@@ -123,7 +123,7 @@ public class EdyTrip extends Trip {
     }
 
     private static Calendar extractDate(ImmutableByteArray data) {
-        int fulloffset = Utils.byteArrayToInt(data, 4, 4);
+        int fulloffset = data.byteArrayToInt(4, 4);
         if (fulloffset == 0)
             return null;
 

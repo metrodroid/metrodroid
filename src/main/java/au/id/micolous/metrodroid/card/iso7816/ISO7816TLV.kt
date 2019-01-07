@@ -22,7 +22,6 @@ package au.id.micolous.metrodroid.card.iso7816
 
 import au.id.micolous.metrodroid.ui.ListItem
 import au.id.micolous.metrodroid.ui.ListItemRecursive
-import au.id.micolous.metrodroid.util.Utils
 import au.id.micolous.metrodroid.xml.ImmutableByteArray
 
 object ISO7816TLV {
@@ -57,9 +56,9 @@ object ISO7816TLV {
         while (p < fulllen) {
             val idlen = getTLVIDLen(buf, p)
             val (lenlen, datalen) = decodeTLVLen(buf, p + idlen)
-            iterator(Utils.byteArraySlice(buf, p, idlen),
-                    Utils.byteArraySlice(buf, p, idlen + lenlen),
-                    Utils.byteArraySlice(buf, p + idlen + lenlen, datalen))
+            iterator(buf.sliceOffLen(p, idlen),
+                    buf.sliceOffLen(p, idlen + lenlen),
+                    buf.sliceOffLen(p + idlen + lenlen, datalen))
 
             p += idlen + lenlen + datalen
         }
@@ -73,7 +72,7 @@ object ISO7816TLV {
         while (p < buf.size) {
             val idlen = getTLVIDLen(buf, p)
             val (lenlen, datalen) = decodeTLVLen(buf, p + idlen)
-            iterator(Utils.byteArraySlice(buf, p, idlen), datalen)
+            iterator(buf.sliceOffLen(p, idlen), datalen)
 
             p += idlen + lenlen
         }
@@ -82,7 +81,7 @@ object ISO7816TLV {
     fun findBERTLV(buf: ImmutableByteArray, target: String, keepHeader: Boolean): ImmutableByteArray? {
         var result: ImmutableByteArray? = null
         berTlvIterate(buf) { id, header, data ->
-            if (Utils.getHexString(id) == target) {
+            if (id.toHexString() == target) {
                 result = if (keepHeader) header + data else data
             }
         }
@@ -94,7 +93,7 @@ object ISO7816TLV {
         berTlvIterate(buf) { id, header, data ->
             if (id[0].toInt() and 0xe0 == 0xa0)
                 try {
-                    result.add(ListItemRecursive(Utils.getHexString(id),
+                    result.add(ListItemRecursive(id.toHexString(),
                             null, infoBerTLV(header + data)))
                 } catch (e: Exception) {
                     result.add(ListItem(id.toHexDump(), data.toHexDump()))

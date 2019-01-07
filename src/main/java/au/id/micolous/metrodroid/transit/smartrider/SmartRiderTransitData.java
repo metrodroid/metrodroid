@@ -218,8 +218,8 @@ public class SmartRiderTransitData extends TransitData {
         ImmutableByteArray recordA = card.getSector(2).getBlock(2).getData();
         ImmutableByteArray recordB = card.getSector(3).getBlock(2).getData();
 
-        int balanceA = Utils.byteArrayToIntReversed(recordA, 7, 2);
-        int balanceB = Utils.byteArrayToIntReversed(recordB, 7, 2);
+        int balanceA = recordA.byteArrayToIntReversed(7, 2);
+        int balanceB = recordB.byteArrayToIntReversed(7, 2);
 
         Log.d(TAG, String.format("balanceA = %d, balanceB = %d", balanceA, balanceB));
         mBalance = balanceA < balanceB ? balanceA : balanceB;
@@ -227,7 +227,7 @@ public class SmartRiderTransitData extends TransitData {
 
     private static String getSerialData(ClassicCard card) {
         ImmutableByteArray serialData = card.getSector(0).getBlock(1).getData();
-        String serial = Utils.getHexString(serialData, 6, 5);
+        String serial = serialData.getHexString(6, 5);
         if (serial.startsWith("0")) {
             serial = serial.substring(1);
         }

@@ -27,7 +27,6 @@ import au.id.micolous.metrodroid.transit.en1545.En1545Container
 import au.id.micolous.metrodroid.transit.en1545.En1545FixedInteger
 import au.id.micolous.metrodroid.transit.en1545.En1545Parsed
 import au.id.micolous.metrodroid.transit.en1545.En1545Parser
-import au.id.micolous.metrodroid.util.Utils
 import au.id.micolous.metrodroid.xml.ImmutableByteArray
 import kotlinx.android.parcel.Parcelize
 
@@ -84,13 +83,13 @@ data class RkfPurse(private val mStatic: En1545Parsed,
         )
 
         fun parse(record: ImmutableByteArray, lookup: RkfLookup): RkfPurse {
-            var version = Utils.getBitsFromBufferLeBits(record, 8, 6)
+            var version = record.getBitsFromBufferLeBits(8, 6)
             val blockSize = if (version >= 6) 32 else 16
             val static = En1545Parser.parseLeBits(record.copyOfRange(0, blockSize - 1), TCPU_STATIC_FIELDS)
             val blockA = record.copyOfRange(blockSize, blockSize * 2 - 1)
             val blockB = record.copyOfRange(blockSize * 2, blockSize * 3 - 1)
-            val block = if (Utils.getBitsFromBufferLeBits(blockA, 0, 16)
-                    > Utils.getBitsFromBufferLeBits(blockB, 0, 16)) blockA else blockB
+            val block = if (blockA.getBitsFromBufferLeBits(0, 16)
+                    > blockB.getBitsFromBufferLeBits(0, 16)) blockA else blockB
             // Try something that might be close enough
             if (version < 3)
                 version = 3

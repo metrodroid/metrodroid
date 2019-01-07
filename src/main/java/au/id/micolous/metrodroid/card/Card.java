@@ -86,7 +86,7 @@ public abstract class Card {
     public static Card dumpTag(ImmutableByteArray tagId, Tag tag, TagReaderFeedbackInterface feedbackInterface) throws Exception {
         final String[] techs = tag.getTechList();
         Log.d(TAG, String.format(Locale.ENGLISH, "Reading tag %s. %d tech(s) supported:",
-                Utils.getHexString(tagId), techs.length));
+                tagId.toHexString(), techs.length));
         for (String tech : techs) {
             Log.d(TAG, tech);
         }

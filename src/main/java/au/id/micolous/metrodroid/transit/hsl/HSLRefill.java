@@ -38,9 +38,9 @@ public class HSLRefill extends Trip implements Parcelable {
 
     public HSLRefill(ImmutableByteArray data) {
         mRefillTime = HSLTransitData.cardDateToCalendar(
-                Utils.getBitsFromBuffer(data, 20, 14),
-                Utils.getBitsFromBuffer(data, 34, 11));
-        mRefillAmount = Utils.getBitsFromBuffer(data, 45, 20);
+                data.getBitsFromBuffer(20, 14),
+                data.getBitsFromBuffer(34, 11));
+        mRefillAmount = data.getBitsFromBuffer(45, 20);
     }
 
     private HSLRefill(Parcel parcel) {

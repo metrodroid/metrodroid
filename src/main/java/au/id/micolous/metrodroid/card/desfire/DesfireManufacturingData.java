@@ -101,9 +101,9 @@ public class DesfireManufacturingData {
         swProtocol = data[13];
 
         // FIXME: This has fewer digits than what's contained in EXTRA_ID, why?
-        uid = Utils.byteArrayToLong(mRaw, 14, 7);
+        uid = mRaw.byteArrayToLong(14, 7);
         // FIXME: This is returning a negative number. Probably is unsigned.
-        batchNo = Utils.byteArrayToLong(mRaw, 21, 5);
+        batchNo = mRaw.byteArrayToLong(21, 5);
 
         // FIXME: These numbers aren't making sense.
         weekProd = data[26];

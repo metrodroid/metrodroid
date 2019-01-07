@@ -51,9 +51,9 @@ public class RecordDesfireFileSettings extends DesfireFileSettings {
     public RecordDesfireFileSettings(ImmutableByteArray buf) {
         super(buf);
 
-        mRecordSize = Utils.byteArrayToIntReversed(buf, 4, 3);
-        mMaxRecords = Utils.byteArrayToIntReversed(buf, 7, 3);
-        mCurRecords = Utils.byteArrayToIntReversed(buf, 10, 3);
+        mRecordSize = buf.byteArrayToIntReversed(4, 3);
+        mMaxRecords = buf.byteArrayToIntReversed(7, 3);
+        mCurRecords = buf.byteArrayToIntReversed(10, 3);
     }
 
     public int getRecordSize() {

@@ -66,7 +66,7 @@ public class NextfareConfigRecord extends NextfareRecord implements Parcelable {
         record.mExpiry = unpackDate(input, 4, timeZone);
 
         // Treat ticket type as little-endian
-        record.mTicketType = Utils.byteArrayToIntReversed(input, 8, 2);
+        record.mTicketType = input.byteArrayToIntReversed(8, 2);
 
         //noinspection StringConcatenation
         Log.d(TAG, "Config ticket type = " + record.mTicketType);

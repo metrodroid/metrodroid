@@ -42,10 +42,10 @@ public class NextfareBalanceRecord extends NextfareRecord implements Comparable<
         //if (input[0] != 0x01) throw new AssertionError();
 
         NextfareBalanceRecord record = new NextfareBalanceRecord(
-                Utils.byteArrayToInt(input, 13, 1));
+                input.byteArrayToInt(13, 1));
 
         // Do some flipping for the balance
-        record.mBalance = Utils.byteArrayToIntReversed(input, 2, 2);
+        record.mBalance = input.byteArrayToIntReversed(2, 2);
 
         // Negative balance
         if ((record.mBalance & 0x8000) == 0x8000) {

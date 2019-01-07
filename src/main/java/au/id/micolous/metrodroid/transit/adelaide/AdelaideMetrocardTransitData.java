@@ -97,7 +97,7 @@ public class AdelaideMetrocardTransitData extends En1545TransitData {
         // 9-0xb: TICKETING_SPECIAL_EVENTS
         for (int fileId : new int[]{3,4,5,6, 9, 0xa, 0xb}) {
             ImmutableByteArray data = app.getFile(fileId).getData();
-            if (Utils.getBitsFromBuffer(data, 0, 14) == 0)
+            if (data.getBitsFromBuffer(0, 14) == 0)
                 continue;
             transactionList.add(new AdelaideTransaction(data));
         }
@@ -108,7 +108,7 @@ public class AdelaideMetrocardTransitData extends En1545TransitData {
         // 10-13: contracts
         for (int fileId : new int[]{0x10, 0x11, 0x12, 0x13}) {
             ImmutableByteArray data = app.getFile(fileId).getData();
-            if (Utils.getBitsFromBuffer(data, 0, 7) == 0)
+            if (data.getBitsFromBuffer(0, 7) == 0)
                 continue;
             AdelaideSubscription sub = new AdelaideSubscription(data);
             if (sub.isPurse())
@@ -174,7 +174,7 @@ public class AdelaideMetrocardTransitData extends En1545TransitData {
     }
 
     private static long getSerial(ImmutableByteArray tagId) {
-        return Utils.byteArrayToLongReversed(tagId, 1, 6);
+        return tagId.byteArrayToLongReversed(1, 6);
     }
 
     @Override

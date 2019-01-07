@@ -213,7 +213,7 @@ data class RkfTransitData internal constructor(
             while (sector < card.sectors.size) {
                 // FIXME: we should also check TCDI entry but TCDI doesn't match the spec apparently,
                 // so for now just use id byte
-                val type = Utils.getBitsFromBufferLeBits(card[sector, block].data, 0, 8)
+                val type = card[sector, block].data.getBitsFromBufferLeBits(0, 8)
                 if (type == 0) {
                     sector++
                     block = 0
@@ -226,7 +226,7 @@ data class RkfTransitData internal constructor(
                 while (sector < card.sectors.size && (first || block != 0)) {
                     first = false
                     val blockData = card[sector, block].data
-                    val newType = Utils.getBitsFromBufferLeBits(blockData, 0, 8)
+                    val newType = blockData.getBitsFromBufferLeBits(0, 8)
                     // Some Rejsekort skip slot in the middle of the sector
                     if (newType == 0 && block + oldBlockCount < card[sector].blocks.size - 1) {
                         block += oldBlockCount
@@ -234,7 +234,7 @@ data class RkfTransitData internal constructor(
                     }
                     if (newType != type)
                         break
-                    val version = Utils.getBitsFromBufferLeBits(blockData, 8, 6)
+                    val version = blockData.getBitsFromBufferLeBits(8, 6)
                     val blockCount = getBlockCount(type, version)
                     if (blockCount == -1) {
                         break
@@ -282,18 +282,18 @@ data class RkfTransitData internal constructor(
         private fun getSerial(card: ClassicCard): RkfSerial {
             val issuer = getIssuer(card[0])
 
-            val hwSerial = Utils.byteArrayToLongReversed(card[0, 0].data, 0, 4)
+            val hwSerial = card[0, 0].data.byteArrayToLongReversed(0, 4)
 
             for (record in getRecords(card))
                 if ((record[0].toInt() and 0xff) == 0xa2) {
-                    val low = Utils.getBitsFromBufferLeBits(record, 34, 20).toLong()
-                    val high = Utils.getBitsFromBufferLeBits(record, 54, 14).toLong()
+                    val low = record.getBitsFromBufferLeBits(34, 20).toLong()
+                    val high = record.getBitsFromBufferLeBits(54, 14).toLong()
                     return RkfSerial(mCompany = issuer, mHwSerial = hwSerial, mCustomerNumber = (high shl 20) or low)
                 }
             return RkfSerial(mCompany = issuer, mHwSerial = hwSerial, mCustomerNumber = 0)
         }
 
-        private fun getIssuer(sector0: ClassicSector) = Utils.getBitsFromBufferLeBits(sector0[1].data, 22, 12)
+        private fun getIssuer(sector0: ClassicSector) = sector0[1].data.getBitsFromBufferLeBits(22, 12)
 
         internal const val COMPANY = "Company"
         internal const val STATUS = "Status"

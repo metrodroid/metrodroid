@@ -95,7 +95,7 @@ public class ChinaCard extends ISO7816Application {
         List <ListItem> li = new ArrayList<>();
         for (Balance entry : mBalances) {
             li.add(ListItemRecursive.collapsedValue("Balance " + entry.mIdx,
-                    Utils.getHexDump(entry.mData.getData())));
+                    entry.mData.toHexDump()));
         }
         return li;
     }

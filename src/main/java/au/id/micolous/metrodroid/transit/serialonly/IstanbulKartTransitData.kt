@@ -68,7 +68,7 @@ class IstanbulKartTransitData (private val mSerial: String,
             try {
                 return IstanbulKartTransitData(
                         mSerial = parseSerial(metadata),
-                        mSerial2 = Utils.getHexString(card.tagId).toUpperCase(Locale.ENGLISH))
+                        mSerial2 = card.tagId.toHexString().toUpperCase(Locale.ENGLISH))
             } catch (ex: Exception) {
                 throw RuntimeException("Error parsing IstanbulKart data", ex)
             }
@@ -88,7 +88,7 @@ class IstanbulKartTransitData (private val mSerial: String,
          * @return String with the complete serial number, or null on error
          */
         private fun parseSerial(file: ImmutableByteArray) =
-                Utils.getHexString(file, 0, 8)
+                file.getHexString(0, 8)
 
         val FACTORY: DesfireCardTransitFactory = object : DesfireCardTransitFactory {
             override fun earlyCheck(appIds: IntArray) = (APP_ID in appIds)

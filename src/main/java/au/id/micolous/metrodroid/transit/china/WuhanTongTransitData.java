@@ -63,8 +63,8 @@ public class WuhanTongTransitData extends ChinaTransitData {
         ImmutableByteArray file5 = getFile(card, 0x5).getBinaryData();
 
         if (file5 != null) {
-            mValidityStart = Utils.byteArrayToInt(file5, 20, 4);
-            mValidityEnd = Utils.byteArrayToInt(file5, 16, 4);
+            mValidityStart = file5.byteArrayToInt(20, 4);
+            mValidityEnd = file5.byteArrayToInt(16, 4);
         }
     }
 
@@ -122,6 +122,6 @@ public class WuhanTongTransitData extends ChinaTransitData {
 
         if (filea == null)
             return null;
-        return Utils.getHexString(filea.getBinaryData(), 0, 5);
+        return filea.getBinaryData().getHexString(0, 5);
     }
 }

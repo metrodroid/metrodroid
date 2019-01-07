@@ -87,30 +87,30 @@ public class BilheteUnicoSPTransitData extends TransitData {
     private BilheteUnicoSPTransitData(ClassicCard card) {
         mSerial = getSerial(card);
         ClassicSector identitySector = card.getSector(2);
-        mDay2 = Utils.getBitsFromBuffer(identitySector.getBlock(0).getData(), 2, 14);
+        mDay2 = identitySector.getBlock(0).getData().getBitsFromBuffer(2, 14);
 
         ClassicSector creditSector = card.getSector(8);
-        mCredit = Utils.byteArrayToIntReversed(creditSector.getBlock(1).getData(), 0, 4);
+        mCredit = creditSector.getBlock(1).getData().byteArrayToIntReversed(0, 4);
 
         ImmutableByteArray creditBlock0 = creditSector.getBlock(0).getData();
 
-        int lastRefillDay = Utils.getBitsFromBuffer(creditBlock0, 2, 14);
-        int lastRefillAmount = Utils.getBitsFromBuffer(creditBlock0, 29, 11);
-        mRefillTransactionCounter = Utils.getBitsFromBuffer(creditBlock0, 44, 14);
+        int lastRefillDay = creditBlock0.getBitsFromBuffer(2, 14);
+        int lastRefillAmount = creditBlock0.getBitsFromBuffer(29, 11);
+        mRefillTransactionCounter = creditBlock0.getBitsFromBuffer(44, 14);
 
         ClassicSector lastTripSector = card.getSector(3);
         if (!checkCRC16Sector(lastTripSector))
             lastTripSector = card.getSector(4);
 
         ImmutableByteArray tripBlock0 = lastTripSector.getBlock(0).getData();
-        mTransactionCounter = Utils.getBitsFromBuffer(tripBlock0, 48, 14);
+        mTransactionCounter = tripBlock0.getBitsFromBuffer(48, 14);
         ImmutableByteArray block1 = lastTripSector.getBlock(1).getData();
-        int day = Utils.getBitsFromBuffer(block1, 76, 14);
-        int time =  Utils.getBitsFromBuffer(block1, 90, 11);
+        int day = block1.getBitsFromBuffer(76, 14);
+        int time =  block1.getBitsFromBuffer(90, 11);
         ImmutableByteArray block2 = lastTripSector.getBlock(2).getData();
-        int firstTapDay = Utils.getBitsFromBuffer(block2, 2, 14);
-        int firstTapTime = Utils.getBitsFromBuffer(block2, 16, 11);
-        int firstTapLine = Utils.getBitsFromBuffer(block2, 27, 9);
+        int firstTapDay = block2.getBitsFromBuffer(2, 14);
+        int firstTapTime = block2.getBitsFromBuffer(16, 11);
+        int firstTapLine = block2.getBitsFromBuffer(27, 9);
         mTrips = new ArrayList<>();
         if (day != 0)
             mTrips.add(new BilheteUnicoSPTrip(lastTripSector));
@@ -126,7 +126,7 @@ public class BilheteUnicoSPTransitData extends TransitData {
     }
 
     private static long getSerial(ClassicCard card) {
-        return Utils.byteArrayToLong(card.getSector(2).getBlock(0).getData(), 3, 5);
+        return card.getSector(2).getBlock(0).getData().byteArrayToLong(3, 5);
     }
 
     @Override
@@ -176,8 +176,8 @@ public class BilheteUnicoSPTransitData extends TransitData {
     @SuppressWarnings("BooleanMethodIsAlwaysInverted")
     private static boolean checkValueBlock(ClassicBlock block, int addr) {
         ImmutableByteArray data = block.getData();
-        return Utils.byteArrayToInt(data, 0, 4) == ~Utils.byteArrayToInt(data, 4, 4)
-                && Utils.byteArrayToInt(data, 0, 4) == Utils.byteArrayToInt(data, 8, 4)
+        return data.byteArrayToInt(0, 4) == ~data.byteArrayToInt(4, 4)
+                && data.byteArrayToInt(0, 4) == data.byteArrayToInt(8, 4)
 	        && data.get(12) == addr && data.get(14) == addr && data.get(13) == data.get(15)
                 && (data.get(13) & 0xff) == (~addr & 0xff);
     }

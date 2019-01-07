@@ -48,10 +48,10 @@ public class CEPASTransaction implements Parcelable {
     public CEPASTransaction(ImmutableByteArray rawData) {
         mType = rawData.get(0);
 
-        mAmount = Utils.getBitsFromBufferSigned(rawData, 8, 24);
+        mAmount = rawData.getBitsFromBufferSigned(8, 24);
 
         /* Date is expressed "in seconds", but the epoch is January 1 1995, SGT */
-        long timestamp = Utils.byteArrayToLong(rawData, 4, 4);
+        long timestamp = rawData.byteArrayToLong(4, 4);
         mDate = EZLinkTransitData.timestampToCalendar(timestamp);
         mUserData = rawData.sliceOffLen(8, 8).readASCII();
     }

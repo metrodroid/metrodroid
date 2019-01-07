@@ -254,12 +254,12 @@ public class En1545Parsed implements Parcelable {
     }
 
     public En1545Parsed append(ImmutableByteArray data, int off, En1545Field field) {
-        field.parseField(data, off, "", this, Utils::getBitsFromBuffer);
+        field.parseField(data, off, "", this, ImmutableByteArray::getBitsFromBuffer);
         return this;
     }
 
     public En1545Parsed appendLeBits(ImmutableByteArray data, int off, En1545Field field) {
-        field.parseField(data, off, "", this, Utils::getBitsFromBufferLeBits);
+        field.parseField(data, off, "", this, ImmutableByteArray::getBitsFromBufferLeBits);
         return this;
     }
 

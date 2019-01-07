@@ -71,14 +71,14 @@ public class VentraUltralightTransitData extends NextfareUltralightTransitData {
 
         @Override
         public boolean check(@NonNull UltralightCard card) {
-            int head = Utils.byteArrayToInt(card.getPage(4).getData(), 0, 3);
+            int head = card.getPage(4).getData().byteArrayToInt(0, 3);
             if (head != 0x0a0400 && head != 0x0a0800)
                 return false;
             ImmutableByteArray page1 = card.getPage(5).getData();
             if (page1.get(1) != 1 || ((page1.get(2) & 0x80) == 0x80) || page1.get(3) != 0)
                 return false;
             ImmutableByteArray page2 = card.getPage(6).getData();
-            return Utils.byteArrayToInt(page2, 0, 3) == 0;
+            return page2.byteArrayToInt(0, 3) == 0;
         }
 
         @Override

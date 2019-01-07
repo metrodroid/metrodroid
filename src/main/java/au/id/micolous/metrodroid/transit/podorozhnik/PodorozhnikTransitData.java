@@ -156,7 +156,7 @@ public class PodorozhnikTransitData extends TransitData {
 
     private static String getSerial(ImmutableByteArray uid) {
         String sn;
-        sn = "9643 3078 " + Utils.formatNumber(Utils.byteArrayToLongReversed(uid, 0, 7),
+        sn = "9643 3078 " + Utils.formatNumber(uid.byteArrayToLongReversed(0, 7),
                 " ", 4, 4, 4, 4, 1);
         sn += Utils.calculateLuhn (sn.replaceAll(" ", ""));// last digit is luhn
         return sn;
@@ -171,11 +171,11 @@ public class PodorozhnikTransitData extends TransitData {
 	    // Block 0 and block 1 are copies. Let's use block 0
 	    ImmutableByteArray block0 = sector4.getBlock(0).getData();
         ImmutableByteArray block2 = sector4.getBlock(2).getData();
-        mBalance = Utils.byteArrayToIntReversed(block0, 0, 4);
-        mLastTopupTime = Utils.byteArrayToIntReversed(block2, 2, 3);
+        mBalance = block0.byteArrayToIntReversed(0, 4);
+        mLastTopupTime = block2.byteArrayToIntReversed(2, 3);
         mLastTopupAgency = block2.get(5);
-        mLastTopupMachine = Utils.byteArrayToIntReversed(block2, 6, 2);
-        mLastTopup = Utils.byteArrayToIntReversed(block2, 8, 3);
+        mLastTopupMachine = block2.byteArrayToIntReversed(6, 2);
+        mLastTopup = block2.byteArrayToIntReversed(8, 3);
     }
 
     private void decodeSector5(ClassicCard card) {
@@ -188,14 +188,14 @@ public class PodorozhnikTransitData extends TransitData {
 	    ImmutableByteArray block1 = sector5.getBlock(1).getData();
         ImmutableByteArray block2 = sector5.getBlock(2).getData();
 
-        mLastTripTime = Utils.byteArrayToIntReversed(block0, 0, 3);
+        mLastTripTime = block0.byteArrayToIntReversed(0, 3);
         mLastTransport = block0.get(3) & 0xff;
-        mLastValidator = Utils.byteArrayToIntReversed(block0, 4, 2);
-        mLastFare = Utils.byteArrayToIntReversed(block0, 6, 4);
+        mLastValidator = block0.byteArrayToIntReversed(4, 2);
+        mLastFare = block0.byteArrayToIntReversed(6, 4);
         // Usually block1 and block2 are identical. However rarely only one of them
         // gets updated. Pick most recent one for counters but remember both trip
         // timestamps.
-        if (Utils.byteArrayToIntReversed(block2, 2, 3) > Utils.byteArrayToIntReversed(block1, 2, 3)) {
+        if (block2.byteArrayToIntReversed(2, 3) > block1.byteArrayToIntReversed(2, 3)) {
             mSubwayCounter = block2.get(0) & 0xff;
             mGroundCounter = block2.get(1) & 0xff;
         } else {
@@ -203,12 +203,12 @@ public class PodorozhnikTransitData extends TransitData {
             mGroundCounter = block1.get(1) & 0xff;
         }
         mCountersValid = true;
-        if (mLastTripTime != Utils.byteArrayToIntReversed(block1, 2, 3)) {
-            mExtraTripTimes.add(Utils.byteArrayToIntReversed(block1, 2, 3));
+        if (mLastTripTime != block1.byteArrayToIntReversed(2, 3)) {
+            mExtraTripTimes.add(block1.byteArrayToIntReversed(2, 3));
         }
-        if (mLastTripTime != Utils.byteArrayToIntReversed(block2, 2, 3)
-                && Utils.byteArrayToIntReversed(block2, 2, 3) != Utils.byteArrayToIntReversed(block1, 2, 3)) {
-            mExtraTripTimes.add(Utils.byteArrayToIntReversed(block2, 2, 3));
+        if (mLastTripTime != block2.byteArrayToIntReversed(2, 3)
+                && block2.byteArrayToIntReversed(2, 3) != block1.byteArrayToIntReversed(2, 3)) {
+            mExtraTripTimes.add(block2.byteArrayToIntReversed(2, 3));
         }
     }
 

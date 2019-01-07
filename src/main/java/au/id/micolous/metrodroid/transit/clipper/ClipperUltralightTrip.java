@@ -41,14 +41,14 @@ public class ClipperUltralightTrip extends Trip {
     private final int mAgency;
 
     public ClipperUltralightTrip(ImmutableByteArray transaction, int baseDate) {
-        mSeqCounter = Utils.getBitsFromBuffer(transaction, 0, 7);
-        mType = Utils.getBitsFromBuffer(transaction, 7, 17);
-        mTime = baseDate * 1440 - Utils.getBitsFromBuffer(transaction, 24, 17);
-        mStation = Utils.getBitsFromBuffer(transaction, 41, 17);
-        mAgency = Utils.getBitsFromBuffer(transaction, 68, 5);
-        mBalanceSeqCounter = Utils.getBitsFromBuffer(transaction, 80, 4);
-        mTripsRemaining = Utils.getBitsFromBuffer(transaction, 84, 6);
-        mTransferExpiry = Utils.getBitsFromBuffer(transaction, 100, 10);
+        mSeqCounter = transaction.getBitsFromBuffer(0, 7);
+        mType = transaction.getBitsFromBuffer(7, 17);
+        mTime = baseDate * 1440 - transaction.getBitsFromBuffer(24, 17);
+        mStation = transaction.getBitsFromBuffer(41, 17);
+        mAgency = transaction.getBitsFromBuffer(68, 5);
+        mBalanceSeqCounter = transaction.getBitsFromBuffer(80, 4);
+        mTripsRemaining = transaction.getBitsFromBuffer(84, 6);
+        mTransferExpiry = transaction.getBitsFromBuffer(100, 10);
         // Last 4 bytes are hash
     }
 

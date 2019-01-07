@@ -68,11 +68,11 @@ public class CEPASApplication extends ISO7816Application {
         List <ListItem> li = new ArrayList<>();
         for (Map.Entry<Integer, Base64String> entry : mPurses.entrySet()) {
             li.add(ListItemRecursive.collapsedValue("CEPAS purse " + entry.getKey(),
-                    Utils.getHexDump(entry.getValue().getData())));
+                    entry.getValue().toHexDump()));
         }
         for (Map.Entry<Integer, Base64String> entry : mHistories.entrySet()) {
             li.add(ListItemRecursive.collapsedValue("CEPAS history " + entry.getKey(),
-                    Utils.getHexDump(entry.getValue().getData())));
+                    entry.getValue().toHexDump()));
         }
         return li;
     }

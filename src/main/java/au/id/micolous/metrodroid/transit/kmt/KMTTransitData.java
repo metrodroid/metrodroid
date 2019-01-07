@@ -102,9 +102,9 @@ public class KMTTransitData extends TransitData {
             List<FelicaBlock> blocksBalance = serviceBalance.getBlocks();
             FelicaBlock blockBalance = blocksBalance.get(0);
             ImmutableByteArray dataBalance = blockBalance.getData();
-            mCurrentBalance = Utils.byteArrayToIntReversed(dataBalance, 0, 4);
-            mTransactionCounter = Utils.byteArrayToInt(dataBalance, 13, 3);
-            mLastTransAmount = Utils.byteArrayToIntReversed(dataBalance, 4, 4);
+            mCurrentBalance = dataBalance.byteArrayToIntReversed(0, 4);
+            mTransactionCounter = dataBalance.byteArrayToInt(13, 3);
+            mLastTransAmount = dataBalance.byteArrayToIntReversed(4, 4);
         }
 
         FelicaService serviceHistory = card.getSystem(SYSTEMCODE_KMT).getService(FELICA_SERVICE_KMT_HISTORY);
@@ -112,7 +112,7 @@ public class KMTTransitData extends TransitData {
         List<FelicaBlock> blocks = serviceHistory.getBlocks();
         for (int i = 0; i < blocks.size(); i++) {
             FelicaBlock block = blocks.get(i);
-            if (block.getData().get(0) != 0 && Utils.byteArrayToInt(block.getData(), 8, 2) != 0) {
+            if (block.getData().get(0) != 0 && block.getData().byteArrayToInt(8, 2) != 0) {
                 KMTTrip trip = new KMTTrip(block);
                 trips.add(trip);
             }
@@ -129,7 +129,7 @@ public class KMTTransitData extends TransitData {
         try {
             return dataID.readASCII();
         } catch (Exception e) {
-            return Utils.getHexString(dataID);
+            return dataID.toHexString();
         }
     }
 

@@ -100,7 +100,7 @@ public abstract class NextfareUltralightTransitData extends TransitData {
         int upperBaseDate = page1.get(0) & 0xff;
         mBaseDate = (upperBaseDate << 8) | lowerBaseDate;
         mProductCode = page1.get(2) & 0x7f;
-        mMachineCode = Utils.byteArrayToIntReversed(page3, 0, 2);
+        mMachineCode = page3.byteArrayToIntReversed(0, 2);
         List <NextfareUltralightTransaction> transactions = new ArrayList<>();
         if (isTransactionValid(card, 8)) {
             transactions.add(makeTransaction(card, 8, mBaseDate));
@@ -123,7 +123,7 @@ public abstract class NextfareUltralightTransitData extends TransitData {
     }
 
     private static boolean isTransactionValid(UltralightCard card, int startPage) {
-        return !Utils.isAllZero(card.readPages(startPage, 3));
+        return !card.readPages(startPage, 3).isAllZero();
     }
 
     protected abstract NextfareUltralightTransaction makeTransaction(UltralightCard card,
@@ -132,8 +132,8 @@ public abstract class NextfareUltralightTransitData extends TransitData {
     protected static long getSerial(UltralightCard card) {
         ImmutableByteArray manufData0 = card.getPage(0). getData();
         ImmutableByteArray manufData1 = card.getPage(1). getData();
-        long uid = (Utils.byteArrayToLong(manufData0, 1, 2) << 32)
-                | (Utils.byteArrayToLong(manufData1, 0, 4));
+        long uid = (manufData0.byteArrayToLong(1, 2) << 32)
+                | (manufData1.byteArrayToLong(0, 4));
         long serial = uid + 1000000000000000L;
         int luhn = Utils.calculateLuhn(Long.toString(serial));
         return serial * 10 + luhn;

@@ -53,7 +53,7 @@ public class SmartRiderTagRecord extends Transaction {
     private SmartRiderTransitData.CardType mCardType;
 
     public SmartRiderTagRecord(SmartRiderTransitData.CardType cardType, ImmutableByteArray record) {
-        mTimestamp = Utils.byteArrayToLongReversed(record, 3, 4);
+        mTimestamp = record.byteArrayToLongReversed(3, 4);
 
         mTagOn = (record.get(7) & 0x10) == 0x10;
 
@@ -65,7 +65,7 @@ public class SmartRiderTagRecord extends Transaction {
             mRoute = Utils.getHexString(route);
         }
 
-        mCost = Utils.byteArrayToIntReversed(record, 13, 2);
+        mCost = record.byteArrayToIntReversed(13, 2);
 
         mCardType = cardType;
 

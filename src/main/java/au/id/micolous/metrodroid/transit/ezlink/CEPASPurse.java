@@ -58,19 +58,19 @@ public class CEPASPurse {
 
         mCepasVersion = purseData.get(0);
         mPurseStatus = purseData.get(1);
-        mPurseBalance = Utils.getBitsFromBufferSigned(purseData, 16, 24);
-        mAutoLoadAmount = Utils.getBitsFromBufferSigned(purseData, 40, 24);
-        mCAN = Utils.byteArraySlice(purseData, 8, 8);
-        mCSN = Utils.byteArraySlice(purseData, 16, 8);
-        mPurseExpiryDate = EZLinkTransitData.daysToCalendar(Utils.byteArrayToInt(purseData, 24, 2));
-        mPurseCreationDate = EZLinkTransitData.daysToCalendar(Utils.byteArrayToInt(purseData, 26, 2));
-        mLastCreditTransactionTRP = Utils.byteArrayToInt(purseData, 28, 4);
-        mLastCreditTransactionHeader = Utils.byteArraySlice(purseData, 32, 8);
+        mPurseBalance = purseData.getBitsFromBufferSigned(16, 24);
+        mAutoLoadAmount = purseData.getBitsFromBufferSigned(40, 24);
+        mCAN = purseData.sliceOffLen(8, 8);
+        mCSN = purseData.sliceOffLen(16, 8);
+        mPurseExpiryDate = EZLinkTransitData.daysToCalendar(purseData.byteArrayToInt(24, 2));
+        mPurseCreationDate = EZLinkTransitData.daysToCalendar(purseData.byteArrayToInt(26, 2));
+        mLastCreditTransactionTRP = purseData.byteArrayToInt(28, 4);
+        mLastCreditTransactionHeader = purseData.sliceOffLen(32, 8);
         mLogfileRecordCount = purseData.get(40);
         mIssuerDataLength = 0x00ff & purseData.get(41);
-        mLastTransactionTRP = Utils.byteArrayToInt(purseData, 42, 4);
-        mLastTransactionRecord = new CEPASTransaction(Utils.byteArraySlice(purseData, 46, 16));
-        mIssuerSpecificData = Utils.byteArraySlice(purseData, 62, mIssuerDataLength);
+        mLastTransactionTRP = purseData.byteArrayToInt(42, 4);
+        mLastTransactionRecord = new CEPASTransaction(purseData.sliceOffLen(46, 16));
+        mIssuerSpecificData = purseData.sliceOffLen(62, mIssuerDataLength);
         mLastTransactionDebitOptionsByte = purseData.get(62 + mIssuerDataLength);
     }
 

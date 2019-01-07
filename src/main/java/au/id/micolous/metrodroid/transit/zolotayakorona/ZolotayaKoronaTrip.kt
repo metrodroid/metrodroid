@@ -21,7 +21,6 @@ package au.id.micolous.metrodroid.transit.zolotayakorona
 
 import au.id.micolous.metrodroid.transit.TransitCurrency
 import au.id.micolous.metrodroid.transit.Trip
-import au.id.micolous.metrodroid.util.Utils
 import au.id.micolous.metrodroid.xml.ImmutableByteArray
 import kotlinx.android.parcel.Parcelize
 
@@ -62,9 +61,9 @@ internal data class ZolotayaKoronaTrip(private val mValidator: String,
 
     companion object {
         fun parse(block: ImmutableByteArray, cardType: Int, refill: ZolotayaKoronaRefill?, balance: Int?): ZolotayaKoronaTrip? {
-            if (Utils.isAllZero(block))
+            if (block.isAllZero())
                 return null
-            val time = Utils.byteArrayToIntReversed(block, 6, 4)
+            val time = block.byteArrayToIntReversed(6, 4)
             var balanceAfter: Int? = null
             if (balance != null) {
                 balanceAfter = balance
@@ -72,10 +71,10 @@ internal data class ZolotayaKoronaTrip(private val mValidator: String,
                     balanceAfter -= refill.mAmount
             }
             return ZolotayaKoronaTrip(
-                    mValidator = Utils.getHexString(block, 2, 3),
+                    mValidator = block.getHexString(2, 3),
                     mTime = time,
-                    mTrackNumber = Utils.byteArrayToInt(block, 10, 1),
-                    mPreviousBalance = Utils.byteArrayToIntReversed(block, 11, 4),
+                    mTrackNumber = block.byteArrayToInt(10, 1),
+                    mPreviousBalance = block.byteArrayToIntReversed(11, 4),
                     mNextBalance = balanceAfter,
                     mCardType = cardType
             )

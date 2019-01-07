@@ -29,7 +29,6 @@ import au.id.micolous.metrodroid.transit.Station
 import au.id.micolous.metrodroid.transit.TransitCurrency
 import au.id.micolous.metrodroid.transit.Trip
 import au.id.micolous.metrodroid.util.StationTableReader
-import au.id.micolous.metrodroid.util.Utils
 import au.id.micolous.metrodroid.xml.ImmutableByteArray
 import kotlinx.android.parcel.Parcelize
 
@@ -42,10 +41,10 @@ data class EasyCardTopUp(
 ) : Trip() {
     @VisibleForTesting
     constructor(data: ImmutableByteArray) : this(
-            Utils.byteArrayToLongReversed(data, 1, 4),
-            Utils.byteArrayToIntReversed(data, 6, 2),
+            data.byteArrayToLongReversed(1, 4),
+            data.byteArrayToIntReversed(6, 2),
             data[11].toInt(),
-            Utils.byteArrayToLongReversed(data, 12, 4)
+            data.byteArrayToLongReversed(12, 4)
     )
 
     override fun getFare() = TransitCurrency.TWD(-amount)

@@ -21,8 +21,6 @@
 package au.id.micolous.metrodroid.transit.ovc
 
 import android.os.Parcelable
-
-import au.id.micolous.metrodroid.util.Utils
 import au.id.micolous.metrodroid.xml.ImmutableByteArray
 import kotlinx.android.parcel.Parcelize
 
@@ -41,14 +39,14 @@ data class OVChipIndex internal constructor(
             val firstSlot = data.copyOfRange(0, data.size / 2)
             val secondSlot = data.copyOfRange(data.size / 2, data.size)
 
-            val iIDa3 = Utils.getBitsFromBuffer(firstSlot, 10, 16)
-            val iIDb3 = Utils.getBitsFromBuffer(secondSlot, 10, 16)
+            val iIDa3 = firstSlot.getBitsFromBuffer(10, 16)
+            val iIDb3 = secondSlot.getBitsFromBuffer(10, 16)
 
             val buffer = if (iIDb3 > iIDa3) secondSlot else firstSlot
 
-            val indexes = Utils.getBitsFromBuffer(buffer, 31 * 8, 3)
+            val indexes = buffer.getBitsFromBuffer(31 * 8, 3)
 
-            val subscriptionIndex = (0..11).map { i -> Utils.getBitsFromBuffer(buffer, 108 + i * 4, 4) }
+            val subscriptionIndex = (0..11).map { i -> buffer.getBitsFromBuffer(108 + i * 4, 4) }
 
             return OVChipIndex(recentTransactionSlot = iIDb3 <= iIDa3,
                     recentSubscriptionSlot = indexes and 0x04 != 0x00,

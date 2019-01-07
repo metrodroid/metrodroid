@@ -60,9 +60,9 @@ public class ValueDesfireFileSettings extends DesfireFileSettings {
 
     public ValueDesfireFileSettings(ImmutableByteArray buf) {
         super(buf);
-        mLowerLimit = Utils.byteArrayToIntReversed(buf, 4, 4);
-        mUpperLimit = Utils.byteArrayToIntReversed(buf, 8, 4);
-        mLimitedCreditValue = Utils.byteArrayToIntReversed(buf, 12, 4);
+        mLowerLimit = buf.byteArrayToIntReversed(4, 4);
+        mUpperLimit = buf.byteArrayToIntReversed(8, 4);
+        mLimitedCreditValue = buf.byteArrayToIntReversed(12, 4);
         mLimitedCreditEnabled = buf.get(16) != 0x00;
     }
 

@@ -54,15 +54,15 @@ class BilheteUnicoSPTrip extends Trip {
 
     BilheteUnicoSPTrip(ClassicSector lastTripSector) {
         ImmutableByteArray block0 = lastTripSector.getBlock(0).getData();
-        mTransport = Utils.getBitsFromBuffer(block0, 0, 8);
-        mLocation = Utils.getBitsFromBuffer(block0, 8, 20);
-        mLine = Utils.getBitsFromBuffer(block0, 28, 20);
+        mTransport = block0.getBitsFromBuffer(0, 8);
+        mLocation = block0.getBitsFromBuffer(8, 20);
+        mLine = block0.getBitsFromBuffer(28, 20);
 
         ImmutableByteArray block1 = lastTripSector.getBlock(1).getData();
 
-        mFare = Utils.getBitsFromBuffer(block1, 36, 16);
-        mDay = Utils.getBitsFromBuffer(block1, 76, 14);
-        mTime =  Utils.getBitsFromBuffer(block1, 90, 11);
+        mFare = block1.getBitsFromBuffer(36, 16);
+        mDay = block1.getBitsFromBuffer(76, 14);
+        mTime =  block1.getBitsFromBuffer(90, 11);
     }
 
     private BilheteUnicoSPTrip(Parcel in) {

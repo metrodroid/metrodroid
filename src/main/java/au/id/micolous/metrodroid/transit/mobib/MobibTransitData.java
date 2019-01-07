@@ -132,13 +132,12 @@ public class MobibTransitData extends Calypso1545TransitData {
         ImmutableByteArray holder = holderFile.getRecord(1).getData().plus(
                 holderFile.getRecord(2).getData());
         mExtHolderParsed = En1545Parser.parse(holder, extHolderFields);
-        mPurchase = Utils.getBitsFromBuffer(card.getFile(CalypsoApplication.File.EP_LOAD_LOG)
-                        .getRecord(1).getData(),
+        mPurchase = card.getFile(CalypsoApplication.File.EP_LOAD_LOG)
+                .getRecord(1).getData().getBitsFromBuffer(
                 2, 14);
         int totalTrips = 0;
         for (ISO7816Record record : card.getFile(CalypsoApplication.File.TICKETING_LOG).getRecords()) {
-            int tripCtr = Utils.getBitsFromBuffer(record.getData(), 17 * 8 + 3,
-                    23);
+            int tripCtr = record.getData().getBitsFromBuffer(17 * 8 + 3, 23);
             if (totalTrips < tripCtr)
                 totalTrips = tripCtr;
         }
@@ -190,11 +189,11 @@ public class MobibTransitData extends Calypso1545TransitData {
         ImmutableByteArray holder = card.getFile(CalypsoApplication.File.HOLDER_EXTENDED).getRecord(1).getData();
         return String.format(Locale.ENGLISH,
                 "%06d / %06d%04d %02d / %01d",
-                Utils.convertBCDtoInteger(Utils.getBitsFromBuffer(holder, 18, 24)),
-                Utils.convertBCDtoInteger(Utils.getBitsFromBuffer(holder, 42, 24)),
-                Utils.convertBCDtoInteger(Utils.getBitsFromBuffer(holder, 66, 16)),
-                Utils.convertBCDtoInteger(Utils.getBitsFromBuffer(holder, 82, 8)),
-                Utils.convertBCDtoInteger(Utils.getBitsFromBuffer(holder, 90, 4)));
+                Utils.convertBCDtoInteger(holder.getBitsFromBuffer(18, 24)),
+                Utils.convertBCDtoInteger(holder.getBitsFromBuffer(42, 24)),
+                Utils.convertBCDtoInteger(holder.getBitsFromBuffer(66, 16)),
+                Utils.convertBCDtoInteger(holder.getBitsFromBuffer(82, 8)),
+                Utils.convertBCDtoInteger(holder.getBitsFromBuffer(90, 4)));
     }
 
     public final static CalypsoCardTransitFactory FACTORY = new CalypsoCardTransitFactory() {
@@ -213,7 +212,7 @@ public class MobibTransitData extends Calypso1545TransitData {
         @Override
         public boolean check(ImmutableByteArray ticketEnv) {
             try {
-                int networkID = Utils.getBitsFromBuffer(ticketEnv, 13, 24);
+                int networkID = ticketEnv.getBitsFromBuffer(13, 24);
                 return MOBIB_NETWORK_ID == networkID;
             } catch (Exception e) {
                 return false;

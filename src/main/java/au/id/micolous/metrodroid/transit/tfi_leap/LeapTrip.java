@@ -259,7 +259,7 @@ public class LeapTrip extends Trip implements Comparable<LeapTrip> {
 
         // 3 bytes serial
         Calendar c = LeapTransitData.parseDate(file, offset+3);
-        int agency = Utils.byteArrayToInt(file, offset+7, 2);
+        int agency = file.byteArrayToInt(offset+7, 2);
         // 2 bytes agency again
         // 2 bytes unknown
         // 1 byte counter
@@ -308,7 +308,7 @@ public class LeapTrip extends Trip implements Comparable<LeapTrip> {
         Calendar c = LeapTransitData.parseDate(file, offset+1);
         int amount = LeapTransitData.parseBalance(file, offset+5);
         // 3 bytes unknown
-        int agency = Utils.byteArrayToInt(file, offset+0xb, 2);
+        int agency = file.byteArrayToInt(offset+0xb, 2);
         // 2 bytes unknown
         // 1 byte counter
         LeapTripPoint event = new LeapTripPoint(c, amount, eventCode, null);
@@ -327,15 +327,15 @@ public class LeapTrip extends Trip implements Comparable<LeapTrip> {
 
         int eventCode2 = file.get(offset) & 0xff;
         Calendar eventTime = LeapTransitData.parseDate(file, offset+1);
-        int agency = Utils.byteArrayToInt(file, offset+5, 2);
+        int agency = file.byteArrayToInt(offset+5, 2);
         // 0xd bytes unknown
         int amount = LeapTransitData.parseBalance(file, offset+0x14);
         // 3 bytes balance after event
         // 0x22 bytes unknown
         int eventCode = file.get(offset+0x39)&0xff;
         // 8 bytes unknown
-        int from = Utils.byteArrayToInt(file, offset+0x42, 2);
-        int to = Utils.byteArrayToInt(file, offset+0x44, 2);
+        int from = file.byteArrayToInt(offset+0x42, 2);
+        int to = file.byteArrayToInt(offset+0x44, 2);
         // 0x10 bytes unknown
         Calendar startTime = LeapTransitData.parseDate(file, offset+0x56);
         // 0x27 bytes unknown

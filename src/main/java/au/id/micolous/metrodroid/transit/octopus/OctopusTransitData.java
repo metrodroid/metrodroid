@@ -91,7 +91,7 @@ public class OctopusTransitData extends TransitData {
 
         if (service != null) {
             ImmutableByteArray metadata = service.getBlocks().get(0).getData();
-            mOctopusBalance = Utils.byteArrayToInt(metadata, 0, 4) - 350;
+            mOctopusBalance = metadata.byteArrayToInt(0, 4) - 350;
             mHasOctopus = true;
         }
 
@@ -103,7 +103,7 @@ public class OctopusTransitData extends TransitData {
 
         if (service != null) {
             ImmutableByteArray metadata = service.getBlocks().get(0).getData();
-            mShenzhenBalance = Utils.byteArrayToInt(metadata, 0, 4) - 350;
+            mShenzhenBalance = metadata.byteArrayToInt(0, 4) - 350;
             mHasShenzhen = true;
         }
     }

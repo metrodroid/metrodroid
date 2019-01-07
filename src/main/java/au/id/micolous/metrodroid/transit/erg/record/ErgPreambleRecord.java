@@ -50,7 +50,7 @@ public class ErgPreambleRecord extends ErgRecord {
         if (input.copyOfRange(10, 13).contentEquals(OLD_CARD_ID)) {
             record.mCardSerial = null;
         } else {
-            record.mCardSerial = Utils.getHexString(input, 10, 4);
+            record.mCardSerial = input.getHexString(10, 4);
         }
         return record;
     }

@@ -82,18 +82,18 @@ public class ErgPurseRecord extends ErgRecord implements Parcelable {
         }
 
         // Multiple agency IDs seen on chc cards -- might represent different operating companies.
-        record.mAgency = Utils.byteArrayToInt(input, 1, 2);
+        record.mAgency = input.byteArrayToInt(1, 2);
 
-        record.mDay = Utils.getBitsFromBuffer(input, 32, 20);
+        record.mDay = input.getBitsFromBuffer(32, 20);
         if (record.mDay < 0) throw new AssertionError("Day < 0");
 
-        record.mMinute = Utils.getBitsFromBuffer(input, 52, 12);
+        record.mMinute = input.getBitsFromBuffer(52, 12);
         if (record.mMinute > 1440)
             throw new AssertionError(String.format(Locale.ENGLISH, "Minute > 1440 (%d)", record.mMinute));
         if (record.mMinute < 0)
             throw new AssertionError(String.format(Locale.ENGLISH, "Minute < 0 (%d)", record.mMinute));
 
-        record.mTransactionValue = Utils.byteArrayToInt(input, 8, 4);
+        record.mTransactionValue = input.byteArrayToInt(8, 4);
         //if (record.mTransactionValue < 0) throw new AssertionError("Value < 0");
         return record;
     }

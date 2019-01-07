@@ -252,7 +252,7 @@ public class CalypsoApplication extends ISO7816Application {
 
             // The country code is a ISO 3166-1 numeric in base16. ie: bytes(0x02,0x40) = 240
             try {
-                countryCode = Integer.parseInt(Utils.getHexString(data, 20, 2), 10);
+                countryCode = Integer.parseInt(data.getHexString(20, 2), 10);
             } catch (NumberFormatException ignored) {
             }
 

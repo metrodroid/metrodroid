@@ -201,7 +201,7 @@ public class ISO7816Card extends Card {
             else if (appName.isASCII())
                 appTitle = appName.readASCII();
             else
-                appTitle = Utils.getHexString(appName);
+                appTitle = appName.toHexString();
             List<ListItem> rawAppData = new ArrayList<>();
             ImmutableByteArray appData = app.getAppData();
             if (appData != null)

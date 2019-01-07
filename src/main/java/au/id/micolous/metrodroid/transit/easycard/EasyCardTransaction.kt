@@ -27,7 +27,6 @@ import android.support.annotation.VisibleForTesting
 import au.id.micolous.metrodroid.card.classic.ClassicCard
 import au.id.micolous.metrodroid.transit.*
 import au.id.micolous.metrodroid.util.StationTableReader
-import au.id.micolous.metrodroid.util.Utils
 import au.id.micolous.metrodroid.xml.ImmutableByteArray
 import kotlinx.android.parcel.Parcelize
 import java.util.*
@@ -42,11 +41,11 @@ data class EasyCardTransaction internal constructor(
 ) : Transaction() {
     @VisibleForTesting
     constructor(data: ImmutableByteArray) : this(
-            Utils.byteArrayToLongReversed(data, 1, 4),
-            Utils.byteArrayToIntReversed(data, 6, 2),
+            data.byteArrayToLongReversed(1, 4),
+            data.byteArrayToIntReversed(6, 2),
             data[11].toInt(),
             data[5] == 0x11.toByte(),
-            Utils.byteArrayToLongReversed(data, 12, 4)
+            data.byteArrayToLongReversed(12, 4)
     )
 
     override fun getFare() = TransitCurrency.TWD(fare)
@@ -98,7 +97,7 @@ data class EasyCardTransaction internal constructor(
                     card[3].blocks.subList(1, 3) +
                             card[4].blocks.subList(0, 3) +
                             card[5].blocks.subList(0, 3))
-                    .filter { !Utils.isAllZero(it.data) }
+                    .filter { !it.data.isAllZero() }
 
             val trips = blocks.map { block ->
                 EasyCardTransaction(block.data)

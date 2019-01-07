@@ -28,7 +28,6 @@ import au.id.micolous.metrodroid.transit.CardInfo
 import au.id.micolous.metrodroid.transit.TransitIdentity
 import au.id.micolous.metrodroid.util.Utils
 import au.id.micolous.metrodroid.xml.ImmutableByteArray
-import au.id.micolous.metrodroid.xml.toImmutable
 import kotlinx.android.parcel.Parcelize
 import org.jetbrains.annotations.NonNls
 import java.util.*
@@ -115,12 +114,12 @@ class MykiTransitData (private val mSerial: String): SerialOnlyTransitData() {
          * @return String with the complete serial number, or null on error
          */
         private fun parseSerial(file: ImmutableByteArray): String? {
-            val serial1 = Utils.byteArrayToLongReversed(file, 0, 4)
+            val serial1 = file.byteArrayToLongReversed(0, 4)
             if (serial1 != MYKI_PREFIX) {
                 return null
             }
 
-            val serial2 = Utils.byteArrayToLongReversed(file, 4, 4)
+            val serial2 = file.byteArrayToLongReversed(4, 4)
             if (serial2 > 99999999) {
                 return null
             }

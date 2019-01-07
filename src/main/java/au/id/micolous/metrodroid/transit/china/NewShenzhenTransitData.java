@@ -69,8 +69,8 @@ public class NewShenzhenTransitData extends ChinaTransitData {
         ImmutableByteArray szttag = getTagInfo(card);
 
         if (szttag != null) {
-            mValidityStart = Utils.byteArrayToInt(szttag, 20, 4);
-            mValidityEnd = Utils.byteArrayToInt(szttag, 24, 4);
+            mValidityStart = szttag.byteArrayToInt(20, 4);
+            mValidityEnd = szttag.byteArrayToInt(24, 4);
         }
     }
 
@@ -146,6 +146,6 @@ public class NewShenzhenTransitData extends ChinaTransitData {
         ImmutableByteArray ti = getTagInfo(card);
         if (ti == null)
             return 0;
-        return Utils.byteArrayToIntReversed(ti, 16,4);
+        return ti.byteArrayToIntReversed(16,4);
     }
 }

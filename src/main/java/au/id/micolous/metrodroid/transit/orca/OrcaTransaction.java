@@ -75,12 +75,12 @@ public class OrcaTransaction extends Transaction {
         ImmutableByteArray useData = record.getData();
 
         mIsTopup = isTopup;
-        mAgency = Utils.getBitsFromBuffer(useData, 24, 4);
-        mTimestamp = Utils.getBitsFromBuffer(useData, 28, 32);
-        mCoachNum = Utils.getBitsFromBuffer(useData, 76, 16);
-        mFare = Utils.getBitsFromBuffer(useData, 120, 15);
-        mTransType = Utils.getBitsFromBuffer(useData, 136, 8);
-        mNewBalance = Utils.getBitsFromBuffer(useData, 272, 16);
+        mAgency = useData.getBitsFromBuffer(24, 4);
+        mTimestamp = useData.getBitsFromBuffer(28, 32);
+        mCoachNum = useData.getBitsFromBuffer(76, 16);
+        mFare = useData.getBitsFromBuffer(120, 15);
+        mTransType = useData.getBitsFromBuffer(136, 8);
+        mNewBalance = useData.getBitsFromBuffer(272, 16);
     }
 
     OrcaTransaction(Parcel parcel) {

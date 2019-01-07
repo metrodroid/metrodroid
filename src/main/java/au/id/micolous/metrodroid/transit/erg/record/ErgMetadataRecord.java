@@ -47,9 +47,9 @@ public class ErgMetadataRecord extends ErgRecord {
 
         ErgMetadataRecord record = new ErgMetadataRecord();
 
-        record.mAgency = Utils.byteArrayToInt(input, 2, 2);
+        record.mAgency = input.byteArrayToInt(2, 2);
 
-        int epochDays = Utils.byteArrayToInt(input, 5, 2);
+        int epochDays = input.byteArrayToInt(5, 2);
 
         record.mCardSerial = input.copyOfRange(7, 11);
 
@@ -70,7 +70,7 @@ public class ErgMetadataRecord extends ErgRecord {
      * @return Card number in decimal.
      */
     public int getCardSerialDec() {
-        return Utils.byteArrayToInt(mCardSerial);
+        return mCardSerial.byteArrayToInt();
     }
 
     /**
@@ -79,7 +79,7 @@ public class ErgMetadataRecord extends ErgRecord {
      * @return Card number in hexadecimal.
      */
     public String getCardSerialHex() {
-        return Utils.getHexString(mCardSerial);
+        return mCardSerial.toHexString();
     }
 
     public GregorianCalendar getEpochDate() {
@@ -91,7 +91,7 @@ public class ErgMetadataRecord extends ErgRecord {
         return String.format(Locale.ENGLISH, "[%s: agency=%x, serial=%s, epoch=%s]",
                 getClass().getSimpleName(),
                 mAgency,
-                Utils.getHexString(mCardSerial),
+                mCardSerial.toHexString(),
                 Utils.isoDateFormat(mEpochDate));
     }
 }

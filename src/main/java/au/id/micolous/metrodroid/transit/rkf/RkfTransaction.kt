@@ -22,7 +22,6 @@ package au.id.micolous.metrodroid.transit.rkf
 import au.id.micolous.metrodroid.transit.TransitCurrency
 import au.id.micolous.metrodroid.transit.Trip
 import au.id.micolous.metrodroid.transit.en1545.*
-import au.id.micolous.metrodroid.util.Utils
 import au.id.micolous.metrodroid.xml.ImmutableByteArray
 import kotlinx.android.parcel.Parcelize
 
@@ -117,7 +116,7 @@ class RkfTransaction(val parsed: En1545Parsed, val mTransactionCode: Int, val mL
 
         private fun parseTransactionV1(b: ImmutableByteArray, lookup: RkfLookup): RkfTransaction? {
             val parsed = En1545Parser.parseLeBits(b, FIELDS_V1)
-            val rkfEventCode = Utils.getBitsFromBufferLeBits(b, 90, 6)
+            val rkfEventCode = b.getBitsFromBufferLeBits(90, 6)
             when (rkfEventCode) {
                 // "Card issued". Often new card is filled with those transaction and some bogus data,
                 // skip it. It uses type A
@@ -134,7 +133,7 @@ class RkfTransaction(val parsed: En1545Parsed, val mTransactionCode: Int, val mL
 
         private fun parseTransactionV2(b: ImmutableByteArray, lookup: RkfLookup): RkfTransaction? {
             val parsed = En1545Parser.parseLeBits(b, FIELDS_V2_HEADER)
-            val rkfEventCode = Utils.getBitsFromBufferLeBits(b, 72, 6)
+            val rkfEventCode = b.getBitsFromBufferLeBits(72, 6)
             if (rkfEventCode != 0xf)
                 parsed.appendLeBits(b, 38, FIELDS_V2_BLOCK1_COMMON)
             when (rkfEventCode) {

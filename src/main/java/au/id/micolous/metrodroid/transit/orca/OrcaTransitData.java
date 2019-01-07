@@ -92,14 +92,14 @@ public class OrcaTransitData extends TransitData {
 
         try {
             data = desfireCard.getApplication(0xffffff).getFile(0x0f).getData();
-            mSerialNumber = Utils.byteArrayToInt(data, 5, 3);
+            mSerialNumber = data.byteArrayToInt(5, 3);
         } catch (Exception ex) {
             throw new RuntimeException("Error parsing ORCA serial", ex);
         }
 
         try {
             data = desfireCard.getApplication(APP_ID).getFile(0x04).getData();
-            mBalance = Utils.byteArrayToInt(data, 41, 2);
+            mBalance = data.byteArrayToInt(41, 2);
         } catch (Exception ex) {
             throw new RuntimeException("Error parsing ORCA balance", ex);
         }
@@ -134,7 +134,7 @@ public class OrcaTransitData extends TransitData {
         public TransitIdentity parseTransitIdentity(@NonNull DesfireCard card) {
             try {
                 ImmutableByteArray data = card.getApplication(0xffffff).getFile(0x0f).getData();
-                return new TransitIdentity("ORCA", String.valueOf(Utils.byteArrayToInt(data, 4, 4)));
+                return new TransitIdentity("ORCA", String.valueOf(data.byteArrayToInt(4, 4)));
             } catch (Exception ex) {
                 throw new RuntimeException("Error parsing ORCA serial", ex);
             }

@@ -221,8 +221,8 @@ public class IntercodeTransitData extends Calypso1545TransitData {
     }
 
     private static int getNetId(CalypsoApplication card) {
-        return Utils.getBitsFromBuffer(card.getFile(CalypsoApplication.File.TICKETING_ENVIRONMENT).getRecord(1).getData(),
-                13, 24);
+        return card.getFile(CalypsoApplication.File.TICKETING_ENVIRONMENT).getRecord(1)
+                .getData().getBitsFromBuffer(13, 24);
     }
 
     private static String getSerial(int netId, CalypsoApplication card) {
@@ -239,14 +239,14 @@ public class IntercodeTransitData extends Calypso1545TransitData {
         ImmutableByteArray data = iccRecord.getData();
 
         if (netId == 0x250502)
-            return Utils.getHexString(data, 20, 6).substring(1,11);
+            return data.getHexString(20, 6).substring(1,11);
 
-        if (Utils.byteArrayToLong(data, 16, 4) != 0) {
-            return Long.toString(Utils.byteArrayToLong(data, 16, 4));
+        if (data.byteArrayToLong(16, 4) != 0) {
+            return Long.toString(data.byteArrayToLong(16, 4));
         }
 
-        if (Utils.byteArrayToLong(data, 0, 4) != 0) {
-            return Long.toString(Utils.byteArrayToLong(data, 0, 4));
+        if (data.byteArrayToLong(0, 4) != 0) {
+            return Long.toString(data.byteArrayToLong(0, 4));
         }
 
         return null;
@@ -273,7 +273,7 @@ public class IntercodeTransitData extends Calypso1545TransitData {
         @Override
         public boolean check(ImmutableByteArray ticketEnv) {
             try {
-                int netId = Utils.getBitsFromBuffer(ticketEnv, 13, 24);
+                int netId = ticketEnv.getBitsFromBuffer(13, 24);
                 return NETWORKS.get(netId) != null || COUNTRY_ID_FRANCE == (netId >> 12);
             } catch (Exception e) {
                 return false;
@@ -288,7 +288,7 @@ public class IntercodeTransitData extends Calypso1545TransitData {
 
         @Override
         public CardInfo getCardInfo(ImmutableByteArray ticketEnv) {
-            int netId = Utils.getBitsFromBuffer(ticketEnv, 13, 24);
+            int netId = ticketEnv.getBitsFromBuffer(13, 24);
             if (NETWORKS.get(netId) != null)
                 return NETWORKS.get(netId).first;
             return null;

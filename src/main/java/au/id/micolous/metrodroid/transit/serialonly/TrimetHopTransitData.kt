@@ -45,7 +45,7 @@ import java.util.*
  * Documentation of format: https://github.com/micolous/metrodroid/wiki/TrimetHopFastPass
  */
 @Parcelize
-data class TrimetHopTransitData(private val mSerial: Int,
+data class TrimetHopTransitData(private val mSerial: Int?,
                                 private val mIssueDate: Int) : SerialOnlyTransitData() {
 
     public override val extraInfo: List<ListItem>?
@@ -78,11 +78,11 @@ data class TrimetHopTransitData(private val mSerial: Int,
             val file1 = app!!.getFile(1)!!.data
             return TrimetHopTransitData(
                     mSerial = parseSerial(app),
-                    mIssueDate = Utils.byteArrayToInt(file1, 8, 4))
+                    mIssueDate = file1.byteArrayToInt(8, 4))
         }
 
         private fun parseSerial(app: DesfireApplication) =
-                Utils.byteArrayToInt(app.getFile(0)!!.data, 0xc, 4)
+                app.getFile(0)?.data?.byteArrayToInt(0xc, 4)
 
         val FACTORY: DesfireCardTransitFactory = object : DesfireCardTransitFactory {
             override fun earlyCheck(appIds: IntArray) = APP_ID in appIds
@@ -92,11 +92,14 @@ data class TrimetHopTransitData(private val mSerial: Int,
             override fun parseTransitData(desfireCard: DesfireCard) = parse(desfireCard)
 
             override fun parseTransitIdentity(card: DesfireCard) =
-                    TransitIdentity(NAME, formatSerial(parseSerial(card.getApplication(APP_ID)!!)))
+                    TransitIdentity(NAME, formatSerial(parseSerial(card.getApplication(APP_ID))))
         }
 
-        private fun formatSerial(ser: Int) =
-                String.format(Locale.ENGLISH, "01-001-%08d-RA", ser)
+        private fun formatSerial(ser: Int?) =
+                if (ser != null)
+                    String.format(Locale.ENGLISH, "01-001-%08d-RA", ser)
+                else
+                    null
 
         private fun parseTime(date: Int): Calendar {
             val c = GregorianCalendar(TZ)

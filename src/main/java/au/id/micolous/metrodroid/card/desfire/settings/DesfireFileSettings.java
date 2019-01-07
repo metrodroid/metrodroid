@@ -48,7 +48,7 @@ public abstract class DesfireFileSettings {
     DesfireFileSettings(ImmutableByteArray settings) {
         mFileType = settings.get(0);
         mCommSetting = settings.get(1);
-        this.mAccessRights = new HexString(Utils.getHexString(settings, 2, 2));
+        this.mAccessRights = new HexString(settings.sliceOffLen(2, 2));
     }
 
     DesfireFileSettings(byte fileType, byte commSetting, ImmutableByteArray accessRights) {

@@ -72,22 +72,22 @@ public class MetroQTransitData extends TransitData {
         ClassicBlock balanceBlock0 = balanceSector.getBlock(0);
         ClassicBlock balanceBlock1 = balanceSector.getBlock(1);
         ClassicBlock balanceBlock;
-        if (Utils.getBitsFromBuffer(balanceBlock0.getData(), 93, 8)
-                > Utils.getBitsFromBuffer(balanceBlock1.getData(), 93, 8))
+        if (balanceBlock0.getData().getBitsFromBuffer(93, 8)
+                > balanceBlock1.getData().getBitsFromBuffer(93, 8))
             balanceBlock = balanceBlock0;
         else
             balanceBlock = balanceBlock1;
-        mBalance = Utils.getBitsFromBuffer(balanceBlock.getData(), 77, 16);
-        mProduct = Utils.getBitsFromBuffer(balanceBlock.getData(), 8, 12);
+        mBalance = balanceBlock.getData().getBitsFromBuffer(77, 16);
+        mProduct = balanceBlock.getData().getBitsFromBuffer(8, 12);
         mExpiry = parseTimestamp(card.getSector(1).getBlock(0).getData(), 0);
         mDate1 = parseTimestamp(card.getSector(1).getBlock(0).getData(), 24);
     }
 
     private Calendar parseTimestamp(ImmutableByteArray data, int off) {
         Calendar c = new GregorianCalendar(TZ);
-        c.set(Utils.getBitsFromBuffer(data, off, 8) + 2000,
-                Utils.getBitsFromBuffer(data, off+8, 4) - 1,
-                Utils.getBitsFromBuffer(data, off+12, 5),
+        c.set(data.getBitsFromBuffer(off, 8) + 2000,
+                data.getBitsFromBuffer(off+8, 4) - 1,
+                data.getBitsFromBuffer(off+12, 5),
                 0, 0, 0);
         return c;
     }
@@ -107,7 +107,7 @@ public class MetroQTransitData extends TransitData {
             for (int i = 1; i < 3; i++) {
                 ImmutableByteArray block = sector.getBlock(i).getData();
                 for (int j = (i == 1 ? 1 : 0); j < 8; j++)
-                    if (Utils.byteArrayToInt(block, j * 2, 2) != METRO_Q_ID
+                    if (block.byteArrayToInt(j * 2, 2) != METRO_Q_ID
                             && (i != 2 || j != 6))
                         return false;
             }
@@ -158,7 +158,7 @@ public class MetroQTransitData extends TransitData {
     };
 
     private static long getSerial(ClassicCard card) {
-        return Utils.byteArrayToLong(card.getSector(1).getBlock(2).getData(), 0, 4);
+        return card.getSector(1).getBlock(2).getData().byteArrayToLong(0, 4);
     }
 
     @Override

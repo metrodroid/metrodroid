@@ -67,7 +67,7 @@ public class NextfareTopupRecord extends NextfareRecord implements Parcelable {
         //if ((input[0] != 0x01 && input[0] != 0x31) || input[1] != 0x01) throw new AssertionError("Not a topup record");
 
         // Check if all the other data is null
-        if (Utils.byteArrayToLong(input, 2, 6) == 0L) {
+        if (input.byteArrayToLong(2, 6) == 0L) {
             Log.d(TAG, "Null top-up record, skipping");
             return null;
         }
@@ -75,9 +75,9 @@ public class NextfareTopupRecord extends NextfareRecord implements Parcelable {
         NextfareTopupRecord record = new NextfareTopupRecord();
 
         record.mTimestamp = unpackDate(input, 2, timeZone);
-        record.mCredit = Utils.byteArrayToIntReversed(input, 6, 2) & 0x7FFF;
-        record.mStation = Utils.byteArrayToIntReversed(input, 12, 2);
-        record.mChecksum = Utils.byteArrayToIntReversed(input, 14, 2);
+        record.mCredit = input.byteArrayToIntReversed(6, 2) & 0x7FFF;
+        record.mStation = input.byteArrayToIntReversed(12, 2);
+        record.mChecksum = input.byteArrayToIntReversed(14, 2);
 
         record.mAutomatic = input.get(0) == 0x31;
 
