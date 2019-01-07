@@ -827,12 +827,8 @@ public class Utils {
     }
 
     @SuppressWarnings("SameParameterValue")
-    private static int calculateCRCReversed(byte[]data, int init, int[] table) {
-        int cur = init;
-        for (byte b : data) {
-            cur = (cur >> 8) ^ table[(cur ^ b) & 0xff];
-        }
-        return cur;
+    private static int calculateCRCReversed(ImmutableByteArray data, int init, int[] table) {
+        return data.fold(init, (cur1, b) -> (cur1 >> 8) ^ table[(cur1 ^ b) & 0xff]);
     }
 
     @SuppressWarnings("SameParameterValue")
@@ -853,7 +849,7 @@ public class Utils {
 
     private static final int[] CRC16_IBM_TABLE = getCRCTableReversed(0xa001);
 
-    public static int calculateCRC16IBM(byte[] data, int crc) {
+    public static int calculateCRC16IBM(ImmutableByteArray data, int crc) {
         return calculateCRCReversed(data, crc, CRC16_IBM_TABLE);
     }
 
@@ -1197,7 +1193,7 @@ public class Utils {
      *         found, or there was some other error with the input.
      */
     @VisibleForTesting
-    public static int checkKeyHash(@NonNull byte[] key, @NonNull String salt, String... expectedHashes) {
+    public static int checkKeyHash(@NonNull ImmutableByteArray key, @NonNull String salt, String... expectedHashes) {
         MessageDigest md5;
         @NonNls String digest;
 
@@ -1216,7 +1212,7 @@ public class Utils {
         }
 
         md5.update(salt.getBytes(getASCII()));
-        md5.update(key);
+        key.updateDigest(md5);
         md5.update(salt.getBytes(getASCII()));
 
         digest = getHexString(md5.digest());
@@ -1254,7 +1250,7 @@ public class Utils {
     /**
      * Checks a keyhash with a {@link ClassicSectorKey}.
      *
-     * See {@link #checkKeyHash(byte[], String, String...)} for further information.
+     * See {@link #checkKeyHash(ImmutableByteArray, String, String...)} for further information.
      *
      * @param key The key to check. If this is null, then this will always return a value less than
      *            0 (ie: error).
@@ -1262,7 +1258,7 @@ public class Utils {
     public static int checkKeyHash(@Nullable ClassicSectorKey key, @NonNull String salt, String... expectedHashes) {
         if (key == null)
             return -1;
-        return checkKeyHash(key.getKey().getDataCopy(), salt, expectedHashes);
+        return checkKeyHash(key.getKey(), salt, expectedHashes);
     }
 
     public static void copyTextToClipboard(Context context, String label, String text) {

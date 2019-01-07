@@ -187,7 +187,7 @@ public class BilheteUnicoSPTransitData extends TransitData {
         List<ClassicBlock> blocks = s.getBlocks();
         int crc = 0;
         for (ClassicBlock b : blocks.subList(0, blocks.size()-1))
-            crc = Utils.calculateCRC16IBM(b.getData().getDataCopy(), crc);
+            crc = Utils.calculateCRC16IBM(b.getData(), crc);
         return crc == 0;
     }
 
