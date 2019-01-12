@@ -56,12 +56,16 @@ open class VirtualISO7816Card(private val mCard : ISO7816Card) : CardTransceiver
         val ins = data[1]
         val p1 = data[2]
         val p2 = data[3]
+        var retLength = data.last().toInt()
+        if (retLength == 0) {
+            retLength = 256
+        }
+
         val params = if (data.size >= 6) {
             data.sliceArray(5 .. 4 + data[4])
         } else {
             ByteArray(0)
         }
-        val retLength = data[4 + params.size].toInt()
 
         return when (ins) {
             INSTRUCTION_ISO7816_SELECT -> handleSelect(p1, p2, params, retLength)
@@ -119,7 +123,7 @@ open class VirtualISO7816Card(private val mCard : ISO7816Card) : CardTransceiver
     fun truncateOkResponse(ret : ByteArray?, retLength: Int) : ByteArray {
         return when {
             ret == null -> OK
-            (retLength == 0 || retLength > ret.lastIndex) -> ret + OK
+            retLength > ret.lastIndex -> ret + OK
             else -> ret.sliceArray(0 until retLength) + OK
         }
     }
