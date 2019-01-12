@@ -38,8 +38,8 @@ class ISO7816SelectorByName extends ISO7816SelectorElement {
     ISO7816SelectorByName() { /* for XML serializer. */ this(ImmutableByteArray.Companion.empty()); }
 
     @Override
-    byte[] select(ISO7816Protocol tag) throws IOException, ISO7816Exception {
-        return tag.selectByName(mName.getData(), false);
+    ImmutableByteArray select(ISO7816Protocol tag) throws IOException, ISO7816Exception {
+        return tag.selectByName(mName, false);
     }
 
     @Override

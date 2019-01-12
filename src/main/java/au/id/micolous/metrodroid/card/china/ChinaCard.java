@@ -85,7 +85,7 @@ public class ChinaCard extends ISO7816Application {
         @SuppressWarnings("unused")
         Balance() { /* For XML serializer */ }
 
-        Balance(int idx, byte[]data) {
+        Balance(int idx, ImmutableByteArray data) {
             mIdx = idx;
             mData = new HexString(data);
         }
@@ -196,7 +196,7 @@ public class ChinaCard extends ISO7816Application {
                 feedbackInterface.updateProgressBar(0, 5);
                 for (int i = 0; i < 4; i++) {
                     try {
-                        byte[] balanceResponse;
+                        ImmutableByteArray balanceResponse;
                         balanceResponse = protocol.sendRequest(ISO7816Protocol.CLASS_80, INS_GET_BALANCE,
                                 (byte) i, (byte) 2, BALANCE_RESP_LEN);
                         bals.add(new Balance(i, balanceResponse));

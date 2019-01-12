@@ -102,7 +102,7 @@ public class ISO7816Card extends Card {
             feedbackInterface.updateStatusText(Utils.localizeString(R.string.iso7816_probing));
             feedbackInterface.updateProgressBar(0, 1);
 
-            byte[] appData;
+            ImmutableByteArray appData;
 
             /*
              * It's tempting to try to iterate over the apps on the card.
@@ -124,7 +124,7 @@ public class ISO7816Card extends Card {
             for (ISO7816ApplicationFactory factory : FACTORIES) {
                 final boolean stopAfterFirst = factory.stopAfterFirstApp();
                 for (ImmutableByteArray appId : factory.getApplicationNames()) {
-                    appData = iso7816Tag.selectByNameOrNull(appId.getDataCopy());
+                    appData = iso7816Tag.selectByNameOrNull(appId);
                     if (appData == null) {
                         continue;
                     }

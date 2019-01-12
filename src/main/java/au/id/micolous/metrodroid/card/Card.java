@@ -114,15 +114,16 @@ public abstract class Card {
             IsoDep tech = IsoDep.get(tag);
             tech.connect();
             ImmutableByteArray uid = ImmutableByteArray.Companion.fromByteArray(tag.getId());
+            AndroidCardTransceiver aTech = new AndroidCardTransceiver(tech);
 
-            DesfireCard d = DesfireCard.dumpTag(tech::transceive, uid, feedbackInterface);
+            DesfireCard d = DesfireCard.dumpTag(aTech, uid, feedbackInterface);
             if (d != null) {
                 if (tech.isConnected())
                     tech.close();
                 return d;
             }
 
-            ISO7816Card isoCard = ISO7816Card.dumpTag(tech::transceive, uid, feedbackInterface);
+            ISO7816Card isoCard = ISO7816Card.dumpTag(aTech, uid, feedbackInterface);
             if (isoCard != null) {
                 if (tech.isConnected())
                     tech.close();

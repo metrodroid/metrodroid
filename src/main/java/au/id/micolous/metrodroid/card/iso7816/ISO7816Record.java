@@ -45,7 +45,7 @@ public class ISO7816Record {
 
     ISO7816Record() { /* For XML Serializer */ }
 
-    public ISO7816Record(int index, byte[] data) {
+    public ISO7816Record(int index, ImmutableByteArray data) {
         mIndex = index;
         mData = new Base64String(data);
     }

@@ -156,15 +156,11 @@ public class ISO7816Application {
         private final Map<Integer, ISO7816File> mSfiFiles;
 
         public ISO7816Info(
-                @Nullable byte[] applicationData,
+                @Nullable ImmutableByteArray applicationData,
                 @Nullable ImmutableByteArray applicationName,
                 @NonNull ImmutableByteArray tagId,
                 @NonNull String type) {
-            if (applicationData != null) {
-                mApplicationData = ImmutableByteArray.Companion.fromByteArray(applicationData);
-            } else {
-                mApplicationData = null;
-            }
+            mApplicationData = applicationData;
             mApplicationName = applicationName;
             mTagId = tagId;
             mFiles = new ArrayList<>();
@@ -174,7 +170,7 @@ public class ISO7816Application {
 
         @Nullable
         public ISO7816File dumpFileSFI(ISO7816Protocol protocol, int sfi, int recordLen) {
-            byte[] data;
+            ImmutableByteArray data;
             try {
                 data = protocol.readBinary((byte) sfi);
             } catch (Exception e) {
@@ -186,7 +182,7 @@ public class ISO7816Application {
 
                 for (int r = 1; r <= 255; r++) {
                     try {
-                        byte[] record = protocol.readRecord((byte) sfi, (byte) r, (byte) recordLen);
+                        ImmutableByteArray record = protocol.readRecord((byte) sfi, (byte) r, (byte) recordLen);
 
                         if (record == null) {
                             break;
@@ -201,8 +197,11 @@ public class ISO7816Application {
             } catch (Exception e) {
                 records = null;
             }
-            if (data == null && records == null)
-                return null;
+            if (data == null) {
+                if (records == null)
+                    return null;
+                data = ImmutableByteArray.Companion.empty();
+            }
             ISO7816File f = new ISO7816File(null, records, data, null);
             mSfiFiles.put(sfi, f);
             return f;
@@ -219,7 +218,7 @@ public class ISO7816Application {
         @Nullable
         public ISO7816File dumpFile(ISO7816Protocol protocol, ISO7816Selector sel, int recordLen) throws IOException {
             // Start dumping...
-            byte[] fci;
+            ImmutableByteArray fci;
             try {
                 protocol.unselectFile();
             } catch (ISO7816Exception | FileNotFoundException e) {
@@ -232,12 +231,12 @@ public class ISO7816Application {
                 return null;
             }
 
-            byte[] data = protocol.readBinary();
+            ImmutableByteArray data = protocol.readBinary();
             LinkedList<ISO7816Record> records = new LinkedList<>();
 
             for (int r = 1; r <= 255; r++) {
                 try {
-                    byte[] record = protocol.readRecord((byte) r, (byte) recordLen);
+                    ImmutableByteArray record = protocol.readRecord((byte) r, (byte) recordLen);
 
                     if (record == null) {
                         break;
@@ -249,6 +248,9 @@ public class ISO7816Application {
                     break;
                 }
             }
+            if (data == null)
+                data = ImmutableByteArray.Companion.empty();
+
             ISO7816File file = new ISO7816File(sel, records, data, fci);
             mFiles.add(file);
             return file;

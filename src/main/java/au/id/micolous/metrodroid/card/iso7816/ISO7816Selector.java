@@ -75,8 +75,8 @@ public class ISO7816Selector {
     }
 
     @Nullable
-    public byte[] select(ISO7816Protocol tag) throws IOException, ISO7816Exception {
-        byte[] fci = null;
+    public ImmutableByteArray select(ISO7816Protocol tag) throws IOException, ISO7816Exception {
+        ImmutableByteArray fci = null;
         for (ISO7816SelectorElement sel : mFullPath) {
             fci = sel.select(tag);
         }

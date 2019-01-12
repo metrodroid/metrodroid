@@ -71,8 +71,8 @@ public class ISO7816File {
 
     ISO7816File(@Nullable ISO7816Selector selector,
                 @Nullable List<ISO7816Record> records,
-                @NonNull byte[] binaryData,
-                @Nullable byte[] fci) {
+                @NonNull ImmutableByteArray binaryData,
+                @Nullable ImmutableByteArray fci) {
         mRecords = records != null ? records : Collections.emptyList();
         mBinaryData = new Base64String(binaryData);
         if (fci == null) {

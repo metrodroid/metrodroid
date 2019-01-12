@@ -108,7 +108,7 @@ public class TMoneyCard extends ISO7816Application {
         @Nullable
         @Override
         public List<ISO7816Application> dumpTag(@NonNull ISO7816Protocol protocol, @NonNull ISO7816Info appData, @NonNull TagReaderFeedbackInterface feedbackInterface) {
-            byte[] balanceResponse;
+            ImmutableByteArray balanceResponse;
 
             try {
                 feedbackInterface.updateStatusText(Utils.localizeString(R.string.card_reading_type,

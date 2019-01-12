@@ -113,7 +113,7 @@ public class CEPASApplication extends ISO7816Application {
         }
 
         for (int purseId = 0; purseId < numPurses; purseId++) {
-            byte[] purse = cepasTag.getPurse(purseId);
+            ImmutableByteArray purse = cepasTag.getPurse(purseId);
             if (purse != null) {
                 cepasPurses.put(purseId, new Base64String(purse));
                 isValid = true;
@@ -126,7 +126,7 @@ public class CEPASApplication extends ISO7816Application {
             return null;
 
         for (int historyId = 0; historyId < numPurses; historyId++) {
-            byte[] history = null;
+            ImmutableByteArray history = null;
             if (cepasPurses.containsKey(historyId)) {
                 history = cepasTag.getHistory(historyId);
             }

@@ -26,6 +26,7 @@ import au.id.micolous.metrodroid.card.iso7816.ISO7816File
 import au.id.micolous.metrodroid.card.iso7816.ISO7816Protocol.*
 import au.id.micolous.metrodroid.card.iso7816.ISO7816Selector
 import au.id.micolous.metrodroid.util.Utils
+import au.id.micolous.metrodroid.xml.ImmutableByteArray
 
 /**
  * Implements a virtual card that speaks a subset of ISO7816-4.
@@ -47,7 +48,7 @@ open class VirtualISO7816Card(private val mCard : ISO7816Card) : CardTransceiver
         }
     }
 
-    override fun transceive(data: ByteArray): ByteArray {
+    override fun transceive(data: ImmutableByteArray): ImmutableByteArray {
         val cls = data[0]
         if (cls != CLASS_ISO7816) {
             return COMMAND_NOT_ALLOWED
@@ -64,7 +65,7 @@ open class VirtualISO7816Card(private val mCard : ISO7816Card) : CardTransceiver
         val params = if (data.size >= 6) {
             data.sliceArray(5 .. 4 + data[4])
         } else {
-            ByteArray(0)
+            ImmutableByteArray.empty()
         }
 
         return when (ins) {
@@ -120,15 +121,15 @@ open class VirtualISO7816Card(private val mCard : ISO7816Card) : CardTransceiver
         return true
     }
 
-    fun truncateOkResponse(ret : ByteArray?, retLength: Int) : ByteArray {
+    fun truncateOkResponse(ret : ImmutableByteArray?, retLength: Int) : ImmutableByteArray {
         return when {
             ret == null -> OK
-            retLength > ret.lastIndex -> ret + OK
+            retLength > ret.size -> ret + OK
             else -> ret.sliceArray(0 until retLength) + OK
         }
     }
 
-    fun handleSelect(p1 : Byte, p2 : Byte, params : ByteArray, retLength : Int) : ByteArray {
+    fun handleSelect(p1 : Byte, p2 : Byte, params : ImmutableByteArray, retLength : Int) : ImmutableByteArray {
         if (p1 == SELECT_BY_NAME) {
             // Expected an application identifier
             for (application in mCard.applications) {
@@ -137,7 +138,7 @@ open class VirtualISO7816Card(private val mCard : ISO7816Card) : CardTransceiver
                     continue
                 }
 
-                val truncatedName = appName.sliceArray(0 .. params.lastIndex)
+                val truncatedName = appName.sliceArray(0 until params.size)
 
                 if (params.contentEquals(truncatedName)) {
                     // we have an app!
@@ -165,14 +166,14 @@ open class VirtualISO7816Card(private val mCard : ISO7816Card) : CardTransceiver
             return if (!cd(Utils.byteArrayToInt(params))) {
                 FILE_NOT_FOUND
             } else {
-                truncateOkResponse(currentFile?.fci ?: ByteArray(0), retLength)
+                truncateOkResponse(currentFile?.fci ?: ImmutableByteArray.empty(), retLength)
             }
         }
 
         return COMMAND_NOT_ALLOWED
     }
 
-    fun handleReadBinary(p1 : Byte, p2 : Byte, params : ByteArray, retLength : Int) : ByteArray {
+    fun handleReadBinary(p1 : Byte, p2 : Byte, params : ImmutableByteArray, retLength : Int) : ImmutableByteArray {
         val app = currentApplication ?: return COMMAND_NOT_ALLOWED
         val p1i = byteToInt(p1)
         val p2i = byteToInt(p2)
@@ -181,7 +182,7 @@ open class VirtualISO7816Card(private val mCard : ISO7816Card) : CardTransceiver
             val ef = p1i and 0x1f
             val data = app.getSfiFile(ef)?.binaryData ?: return FILE_NOT_FOUND
 
-            return truncateOkResponse(data.sliceArray(p2i.. data.lastIndex), retLength)
+            return truncateOkResponse(data.sliceArray(p2i until data.size), retLength)
         } else {
             Log.d(TAG, "ReadBinary($p1i, $p2i)")
             if (p1i != 0 || p2i != 0) {
@@ -196,7 +197,7 @@ open class VirtualISO7816Card(private val mCard : ISO7816Card) : CardTransceiver
         }
     }
 
-    fun handleReadRecord(p1: Byte, p2: Byte, params: ByteArray, retLength: Int) : ByteArray {
+    fun handleReadRecord(p1: Byte, p2: Byte, params: ImmutableByteArray, retLength: Int) : ImmutableByteArray {
         val p1i = byteToInt(p1)
         val p2i = byteToInt(p2)
         val app = currentApplication ?: return COMMAND_NOT_ALLOWED
@@ -222,10 +223,10 @@ open class VirtualISO7816Card(private val mCard : ISO7816Card) : CardTransceiver
     }
 
     companion object {
-        val COMMAND_NOT_ALLOWED = byteArrayOf(ERROR_COMMAND_NOT_ALLOWED, CNA_NO_CURRENT_EF)
-        val FILE_NOT_FOUND = byteArrayOf(ERROR_WRONG_PARAMETERS, WP_FILE_NOT_FOUND)
-        val RECORD_NOT_FOUND = byteArrayOf(ERROR_WRONG_PARAMETERS, WP_RECORD_NOT_FOUND)
-        val OK = byteArrayOf(STATUS_OK, 0)
+        val COMMAND_NOT_ALLOWED = ImmutableByteArray.of(ERROR_COMMAND_NOT_ALLOWED, CNA_NO_CURRENT_EF)
+        val FILE_NOT_FOUND = ImmutableByteArray.of(ERROR_WRONG_PARAMETERS, WP_FILE_NOT_FOUND)
+        val RECORD_NOT_FOUND = ImmutableByteArray.of(ERROR_WRONG_PARAMETERS, WP_RECORD_NOT_FOUND)
+        val OK = ImmutableByteArray.of(STATUS_OK, 0)
         val TAG = VirtualISO7816Card::class.java.simpleName
 
         private fun byteToInt(i : Byte) : Int {

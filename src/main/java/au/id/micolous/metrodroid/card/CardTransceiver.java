@@ -4,6 +4,8 @@ import android.support.annotation.NonNull;
 
 import java.io.IOException;
 
+import au.id.micolous.metrodroid.xml.ImmutableByteArray;
+
 public interface CardTransceiver {
-    byte[] transceive(@NonNull byte[] data) throws IOException;
+    ImmutableByteArray transceive(@NonNull ImmutableByteArray data) throws IOException;
 }
