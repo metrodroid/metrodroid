@@ -18,13 +18,11 @@
  */
 package au.id.micolous.metrodroid.test
 
-import android.util.Log
 import au.id.micolous.metrodroid.card.Card
 import au.id.micolous.metrodroid.card.XmlCardFormat
 import au.id.micolous.metrodroid.card.iso7816.ISO7816Card
 import au.id.micolous.metrodroid.transit.TransitData
 import au.id.micolous.metrodroid.transit.mobib.MobibTransitData
-import au.id.micolous.metrodroid.util.Utils
 import junit.framework.TestCase.assertEquals
 import org.junit.Test
 
@@ -52,34 +50,6 @@ class ISO7816Test : CardReaderWithAssetDumpsTest<TransitData, Card>
 
         // Check that we got an expected number
         assertEquals(card.applications.size, rcard.applications.size)
-
-        // FIXME: check in the depths
-        // FIXME: Change to just using standard .equals when we understand what's broken
-        for (i in 0 .. card.applications.size) {
-            val app = card.applications[i]
-            Log.d(TAG, "Checking application ${Utils.getHexString(app.appName!!)}")
-
-            val rapp = rcard.applications[i]
-
-            assertEquals(Utils.getHexString(app.appData!!), Utils.getHexString(rapp.appData!!))
-            assertEquals(Utils.getHexString(app.appName!!), Utils.getHexString(rapp.appName!!))
-            assertEquals(Utils.getHexString(app.tagId), Utils.getHexString(rapp.tagId))
-            for (j in 0 .. app.mFiles.size) {
-                val file = app.mFiles[j]
-                Log.d(TAG, "Checking file ${file.selector.formatString()}")
-                val rfile = rapp.mFiles[j]
-
-                assertEquals(file.selector.formatString(), rfile.selector.formatString())
-                assertEquals(Utils.getHexString(file.binaryData),
-                        Utils.getHexString(rfile.binaryData))
-                assertEquals(Utils.getHexString(file.fci),
-                        Utils.getHexString(rfile.fci))
-                assertEquals(file.records, rfile.records)
-            }
-            assertEquals(app.mFiles, rapp.mFiles)
-            assertEquals(app.mSfiFiles, rapp.mSfiFiles)
-            assertEquals(app, rapp)
-        }
 
         assertEquals(card, rcard)
 
