@@ -20,11 +20,7 @@ class ClassicReaderTest : BaseInstrumentedTest() {
         for (dump in listAsset("$path/dumps").orEmpty()) {
             val raw = loadSmallAssetBytes("$path/dumps/$dump").toImmutable()
             val card = VirtualClassic(raw)
-            val read = ClassicReader.readCard(context, auth, card, object : TagReaderFeedbackInterface {
-                override fun updateStatusText(msg: String) = Unit
-                override fun updateProgressBar(progress: Int, max: Int) = Unit
-                override fun showCardType(cardInfo: CardInfo?) = Unit
-            })
+            val read = ClassicReader.readCard(context, auth, card, MockFeedbackInterface.get())
             val addMsg = "dump = $path/dumps/$dump"
             Log.d(TAG, "$addMsg: read, starting verification")
             verifyRead(read, raw, setOf(), addMsg)

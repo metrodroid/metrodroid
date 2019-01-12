@@ -1,5 +1,5 @@
 /*
- * MockFeedbackInterface.kt
+ * CardTransceiver.kt
  *
  * Copyright 2018 Michael Farrell <micolous+git@gmail.com>
  *
@@ -16,18 +16,13 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package au.id.micolous.metrodroid.test
+package au.id.micolous.metrodroid.card
 
-import au.id.micolous.metrodroid.card.TagReaderFeedbackInterface
-import au.id.micolous.metrodroid.transit.CardInfo
+import java.io.IOException
 
-class MockFeedbackInterface : TagReaderFeedbackInterface {
-    override fun updateStatusText(msg: String) = Unit
-    override fun updateProgressBar(progress: Int, max: Int) = Unit
-    override fun showCardType(cardInfo: CardInfo?) = Unit
+import au.id.micolous.metrodroid.xml.ImmutableByteArray
 
-    companion object {
-        private val SINGLETON = MockFeedbackInterface()
-        fun get() = SINGLETON
-    }
+interface CardTransceiver {
+    @Throws(IOException::class)
+    fun transceive(data: ImmutableByteArray): ImmutableByteArray
 }

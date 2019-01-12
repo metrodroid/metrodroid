@@ -19,8 +19,10 @@
 package au.id.micolous.metrodroid.test
 
 import au.id.micolous.metrodroid.card.Card
+import au.id.micolous.metrodroid.card.TagReaderFeedbackInterface
 import au.id.micolous.metrodroid.card.XmlCardFormat
 import au.id.micolous.metrodroid.card.iso7816.ISO7816Card
+import au.id.micolous.metrodroid.transit.CardInfo
 import au.id.micolous.metrodroid.transit.TransitData
 import au.id.micolous.metrodroid.transit.mobib.MobibTransitData
 import junit.framework.TestCase.assertEquals
@@ -45,8 +47,7 @@ class ISO7816Test : CardReaderWithAssetDumpsTest<TransitData, Card>
         val vcard = VirtualISO7816Card(card as ISO7816Card)
 
         // Try to dump the tag from the emulator
-        val feedback = MockFeedbackInterface()
-        val rcard = ISO7816Card.dumpTag(vcard, card.tagId, feedback)
+        val rcard = ISO7816Card.dumpTag(vcard, card.tagId, MockFeedbackInterface.get())
 
         // Check that we got an expected number
         assertEquals(card.applications.size, rcard.applications.size)
