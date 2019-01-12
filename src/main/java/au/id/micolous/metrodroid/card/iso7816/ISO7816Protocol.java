@@ -28,6 +28,7 @@ import java.io.EOFException;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 
+import au.id.micolous.metrodroid.card.CardTransceiver;
 import au.id.micolous.metrodroid.util.Utils;
 import au.id.micolous.metrodroid.xml.ImmutableByteArray;
 
@@ -59,9 +60,9 @@ public class ISO7816Protocol {
     private static final byte INSTRUCTION_ISO7816_READ_BINARY = (byte) 0xB0;
     private static final byte INSTRUCTION_ISO7816_READ_RECORD = (byte) 0xB2;
 
-    private final IsoDep mTagTech;
+    private final CardTransceiver mTagTech;
 
-    public ISO7816Protocol(IsoDep tagTech) {
+    public ISO7816Protocol(CardTransceiver tagTech) {
         mTagTech = tagTech;
     }
 

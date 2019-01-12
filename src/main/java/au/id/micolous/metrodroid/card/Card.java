@@ -96,13 +96,21 @@ public abstract class Card {
 
             // ISO 14443-4 card types
             // This also encompasses NfcA (ISO 14443-3A) and NfcB (ISO 14443-3B)
-            DesfireCard d = DesfireCard.dumpTag(tag, feedbackInterface);
+            IsoDep tech = IsoDep.get(tag);
+            tech.connect();
+            ImmutableByteArray uid = ImmutableByteArray.Companion.fromByteArray(tag.getId());
+
+            DesfireCard d = DesfireCard.dumpTag(tech::transceive, uid, feedbackInterface);
             if (d != null) {
+                if (tech.isConnected())
+                    tech.close();
                 return d;
             }
 
-            ISO7816Card isoCard = ISO7816Card.dumpTag(tag, feedbackInterface);
+            ISO7816Card isoCard = ISO7816Card.dumpTag(tech::transceive, uid, feedbackInterface);
             if (isoCard != null) {
+                if (tech.isConnected())
+                    tech.close();
                 return isoCard;
             }
 

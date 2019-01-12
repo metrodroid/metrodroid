@@ -130,13 +130,13 @@ public class ISO7816Application {
         @NonNull
         private final List<ISO7816File> mFiles;
         @NonNull
-        private final byte[] mTagId;
+        private final ImmutableByteArray mTagId;
         @NonNull
         private final String mType;
         @NonNull
         private final Map<Integer, ISO7816File> mSfiFiles;
 
-        public ISO7816Info(byte[] applicationData, ImmutableByteArray applicationName, byte[] tagId, String type) {
+        public ISO7816Info(byte[] applicationData, ImmutableByteArray applicationName, ImmutableByteArray tagId, String type) {
             mApplicationData = ImmutableByteArray.Companion.fromByteArray(applicationData);
             mApplicationName = applicationName;
             mTagId = tagId;
@@ -248,7 +248,7 @@ public class ISO7816Application {
         }
 
         @NonNull
-        public byte[] getTagId() {
+        public ImmutableByteArray getTagId() {
             return mTagId;
         }
     }

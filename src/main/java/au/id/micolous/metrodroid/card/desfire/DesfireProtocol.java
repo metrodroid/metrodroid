@@ -22,6 +22,7 @@ package au.id.micolous.metrodroid.card.desfire;
 
 import android.nfc.tech.IsoDep;
 
+import au.id.micolous.metrodroid.card.CardTransceiver;
 import au.id.micolous.metrodroid.card.desfire.settings.DesfireFileSettings;
 import au.id.micolous.metrodroid.util.Utils;
 import au.id.micolous.metrodroid.xml.ImmutableByteArray;
@@ -64,9 +65,9 @@ public class DesfireProtocol {
     static final byte AUTHENTICATION_ERROR = (byte) 0xAE;
     static public final byte ADDITIONAL_FRAME = (byte) 0xAF;
 
-    private final IsoDep mTagTech;
+    private final CardTransceiver mTagTech;
 
-    public DesfireProtocol(IsoDep tagTech) {
+    public DesfireProtocol(CardTransceiver tagTech) {
         mTagTech = tagTech;
     }
 

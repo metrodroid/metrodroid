@@ -38,6 +38,7 @@ import java.util.Locale;
 
 import au.id.micolous.farebot.R;
 import au.id.micolous.metrodroid.card.Card;
+import au.id.micolous.metrodroid.card.CardTransceiver;
 import au.id.micolous.metrodroid.card.CardType;
 import au.id.micolous.metrodroid.card.TagReaderFeedbackInterface;
 import au.id.micolous.metrodroid.card.calypso.CalypsoApplication;
@@ -81,17 +82,14 @@ public class ISO7816Card extends Card {
     /**
      * Dumps a ISO7816 tag in the field.
      *
-     * @param tag Tag to dump.
+     * @param tech Tag to dump.
      * @return ISO7816Card of the card contents. Returns null if an unsupported card is in the
      * field.
      * @throws Exception On communication errors.
      */
     @Nullable
-    public static ISO7816Card dumpTag(Tag tag, TagReaderFeedbackInterface feedbackInterface) throws Exception {
-        IsoDep tech = IsoDep.get(tag);
-        tech.connect();
+    public static ISO7816Card dumpTag(CardTransceiver tech, ImmutableByteArray tagId, TagReaderFeedbackInterface feedbackInterface) throws Exception {
         boolean partialRead = false;
-        ImmutableByteArray tagId = ImmutableByteArray.Companion.fromByteArray(tag.getId());
         ArrayList<ISO7816Application> apps = new ArrayList<>();
 
         try {
@@ -114,7 +112,7 @@ public class ISO7816Card extends Card {
             // So this needs to be before selecting any real application as selecting APP by AID
             // may deselect default app
             ISO7816Application cepas = CEPASApplication.dumpTag(iso7816Tag, new ISO7816Application.ISO7816Info(null, null,
-                                tag.getId(), CEPASApplication.TYPE),
+                                tagId, CEPASApplication.TYPE),
                         feedbackInterface);
             if (cepas != null)
                 apps.add(cepas);
@@ -129,7 +127,7 @@ public class ISO7816Card extends Card {
 
                     List<ISO7816Application> app = factory.dumpTag(
                             iso7816Tag, new ISO7816Application.ISO7816Info(
-                                    appData, appId, tag.getId(), factory.getType()),
+                                    appData, appId, tagId, factory.getType()),
                             feedbackInterface);
 
                     if (app == null) {
@@ -146,9 +144,6 @@ public class ISO7816Card extends Card {
         } catch (TagLostException ex) {
             Log.w(TAG, "tag lost", ex);
             partialRead = true;
-        } finally {
-            if (tech.isConnected())
-                tech.close();
         }
 
         return new ISO7816Card(apps, tagId, GregorianCalendar.getInstance(), partialRead);
