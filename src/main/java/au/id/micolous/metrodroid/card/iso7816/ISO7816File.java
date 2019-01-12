@@ -40,7 +40,7 @@ import au.id.micolous.metrodroid.xml.Base64String;
 import au.id.micolous.metrodroid.xml.ImmutableByteArray;
 
 /**
- * Represents a file on a Calypso card.
+ * Represents a file on an ISO7816-4 card.
  */
 @Root(name = "file")
 public class ISO7816File {
@@ -75,7 +75,11 @@ public class ISO7816File {
                 @Nullable byte[] fci) {
         mRecords = records != null ? records : Collections.emptyList();
         mBinaryData = new Base64String(binaryData);
-        mFci = new Base64String(fci);
+        if (fci == null) {
+            mFci = Base64String.Companion.empty();
+        } else {
+            mFci = new Base64String(fci);
+        }
 
         mSelector = selector;
         mReadableName = mSelector == null ? null : mSelector.formatString();
