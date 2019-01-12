@@ -74,7 +74,7 @@ public class ClassicSector {
     }
 
     public List<ClassicBlock> getBlocks() {
-        return mBlocks;
+        return Collections.unmodifiableList(mBlocks);
     }
 
     @NonNull

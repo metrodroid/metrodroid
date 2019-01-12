@@ -23,6 +23,7 @@ import org.simpleframework.xml.Root;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 import au.id.micolous.farebot.R;
@@ -53,7 +54,7 @@ public class RecordDesfireFile extends DesfireFile {
     }
 
     public List<DesfireRecord> getRecords() {
-        return mRecords;
+        return Collections.unmodifiableList(mRecords);
     }
 
     @Override

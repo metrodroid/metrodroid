@@ -32,7 +32,7 @@ public class ListItemRecursive extends ListItem {
     }
 
     public List<ListItem> getSubTree() {
-        return mSubTree;
+        return Collections.unmodifiableList(mSubTree);
     }
 
     public static ListItem collapsedValue(String name, Spanned value) {
