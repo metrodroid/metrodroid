@@ -35,4 +35,67 @@
 \nTu tarjeta no es soportada por Metrodroid y es difícil que alguna vez lo sea, a no ser que encuentres la clave.
 \n
 \nPor favor presiona el editor de la tarjeta para permitir tener acceso a la tarjeta. Es seguro dejarla abierta, datos de solo lectura con tecnología moderna de tarjetas inteligentes. Algunas agencias incluso ofrecen documentación sobre el tipo de datos!</string>
+    <string name="pass_or_transfer">Transferir</string>
+    <string name="fully_locked_desc_unlockable">Ningún sector se puede leer sin la clave. No tienes ninguna clave válida instalada.
+\n
+\nLa tarjeta trabajara una vez que las claves se hayan instalado. Estas son diferentes para cada tarjeta. Mas información sobre adquirir e instalara tarjetas se puede encontrar en la documentación.
+\n
+\nPor favor contacte al proveedor de la tarjeta para acceder a la información de la misma. Es seguro permitir que se abran, acceso de solo lectura en tarjetas de tecnologia inteligente. Algunas agencias incluso ofrecen documentación sobre la información que contienen las tarjetas.</string>
+    <string name="fully_locked_title">Tarjeta completamente bloqueada.</string>
+    <string name="nfc_off_error">NFC apagado</string>
+    <string name="turn_on_nfc">Por favor encienda el NFC para leer la tarjeta.</string>
+    <string name="wireless_settings">Ajustes inalambricos</string>
+    <string name="machine_id_format">Id Máquina %s</string>
+    <string name="machine_id">ID Máquina</string>
+    <string name="unknown_card_header">Formato de tarjeta no soportado</string>
+    <string name="unknown_card_description">Esta tarjeta no es soportada todavía por Metrodroid. Solo la información bruta sera mostrada.</string>
+    <string name="unknown_more_info">Más información</string>
+    <string name="unknown_more_info_desc">Toca para mas información sobre el soporte de Metrodroid para esta tarjeta.</string>
+    <string name="lawyercats">Metrodroid y sus autores no están asociados a ninguna agencia de transporte público.</string>
+    <string name="scanned_cards">Historial</string>
+    <string name="no_scanned_cards">No has escaneado ninguna tarjeta.</string>
+    <string name="block_title_format">Boque: %s</string>
+    <string name="page_title_format">Página: 0x%s</string>
+    <string name="application_title_format">Aplicación: %s</string>
+    <string name="file_title_format">Archivo: %s</string>
+    <string name="unauthorized_file_title_format">Archivo: %s (desautorizado)</string>
+    <string name="invalid_file_title_format">Archivo: %1$s (inválido: %2$s)</string>
+    <string name="unauthorized_page_title_format">Página: 0x%s (desautorizado)</string>
+    <string name="sector_title_format">Sector: 0x%s</string>
+    <string name="unauthorized_sector_title_format">Sector: 0x%s (desautorizado)</string>
+    <string name="sector_title_format_empty">Sector: 0x%s (vacío)</string>
+    <string name="invalid_sector_title_format">Sector: 0x1$s (inválido: %2$s)</string>
+    <string name="felica_system_title_format">Sistema: 0x%1$s (%2$s)</string>
+    <string name="felica_service_title_format">Servicio: 0x%1$s (%2$s)</string>
+    <string name="binary_title_format">Datos Binarios</string>
+    <string name="info">Información</string>
+    <string name="valid_to_format">Válido hasta %1$s</string>
+    <string name="valid_from_format">Válido desde %1$s</string>
+    <string name="subscription_cost">Coste</string>
+    <string name="valid_not_used">No se ha usado todavía</string>
+    <string name="unknown_format">Desconocido (%s)</string>
+    <string name="unknown">Desconocido</string>
+    <string name="keys_required">Claves de encriptación son requeridas para leer la tarjeta.</string>
+    <string name="load_keys">Cargar claves</string>
+    <string name="card_keys_not_supported">Metrodroid no tiene soporte de claves para este tipo de tarjeta.</string>
+    <string name="add_key">Añadir clave</string>
+    <string name="error">Error</string>
+    <string name="keys">Claves</string>
+    <string name="delete">Borrar</string>
+    <string name="delete_key_confirm_title">¿Seguro que quires borrar la clave\?</string>
+    <string name="rejected">Rechazado</string>
+    <string name="cant_delete_with_obfuscation">Borrar claves no esta disponible ahora</string>
+    <string name="cant_delete_with_obfuscation_message">Por motivos de seguridad, no puedes borrar claves mientras el numero de tarjeta está activado. Apágalo si quieres borrar claves.</string>
+    <string name="add_key_directions">Guardar un dump binario de las claves como un archivo .farebotkeys , mandalo en e-mail hacia ti, y entonces abrelo en este dispositivo.</string>
+    <string name="no_keys">No hay claves.</string>
+    <string name="nfc_unavailable">NFC No disponible</string>
+    <string name="general">General</string>
+    <string name="launch_from_background">Lanzar en segundo plano</string>
+    <string name="checksum">Checksum</string>
+    <string name="last_transaction">Última transacción</string>
+    <string name="date">Fecha</string>
+    <string name="time">Hora</string>
+    <string name="vehicle_type">Tipo de vehículo</string>
+    <string name="transaction_type">Tipo de transacción</string>
+    <string name="card_not_supported_on_device">Esta tarjeta no es soportada por tu dispositivo.</string>
 </resources>
