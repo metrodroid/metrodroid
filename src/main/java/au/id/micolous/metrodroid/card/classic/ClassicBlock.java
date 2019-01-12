@@ -53,10 +53,8 @@ public class ClassicBlock {
         mData = new Base64String(data);
     }
 
-    public ClassicBlock(int index, String type, byte[] data) {
-        mIndex = index;
-        mType = type;
-        mData = new Base64String(data);
+    public ClassicBlock(int blockNum, String type, byte[] blockData) {
+        this(blockNum, type, ImmutableByteArray.Companion.fromByteArray(blockData));
     }
 
     public static ClassicBlock create(@NonNls String type, int index, ImmutableByteArray data) {
@@ -67,7 +65,7 @@ public class ClassicBlock {
     }
 
     public static ClassicBlock createUnauthorized(int index) {
-        return new ClassicBlock(index, "unauthozized",
+        return new ClassicBlock(index, "unauthorized",
                 ImmutableByteArray.Companion.fromHex("04"));
     }
 

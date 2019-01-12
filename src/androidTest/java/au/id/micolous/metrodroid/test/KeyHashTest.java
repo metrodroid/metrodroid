@@ -30,7 +30,7 @@ import au.id.micolous.metrodroid.xml.ImmutableByteArray;
 import static junit.framework.TestCase.assertEquals;
 
 /**
- * This test validates {@link Utils#checkKeyHash(byte[], String, String...)} such that:
+ * This test validates {@link Utils#checkKeyHash(ImmutableByteArray, String, String...)} such that:
  *
  * 1. The KeyHash algorithm hasn't changed.
  *
