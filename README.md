@@ -53,6 +53,7 @@ Thanks to those who have [helped to make Metrodroid available in languages other
 * Kabyle: [belkacem77](https://github.com/belkacem77), [aqvayli](https://github.com/aqvayli)
 * Norwegian Bokmål: [comradekingu](https://github.com/comradekingu), Petter Reinholdtsen
 * Russian: [Vladimir Serbinenko](https://github.com/phcoder)
+* Spanish: [NokisDemox](https://github.com/NokisDemox)
 * Turkish: [omersiar](https://github.com/omersiar)
 
 ## Supported card protocols

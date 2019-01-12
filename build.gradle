@@ -131,6 +131,7 @@ android {
                 // Languages we support
                 'en', 'en-rAU', 'en-rCA', 'en-rGB', 'en-rIE', 'en-rIN',  'en-rNZ', 'en-rUS',
                 'de',
+                'es',
                 'fi',
                 'fr',
                 'ga',
