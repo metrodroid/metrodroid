@@ -57,7 +57,7 @@ public class KievTransitData extends TransitData {
         mTrips = new ArrayList<>();
         for (int i = 0; i < 6; i++) {
             ClassicBlock block = card.getSector(3 + (i / 3)).getBlock(i % 3);
-            if (Utils.byteArrayToInt(block.getData(), 0, 4) == 0)
+            if (block.getData().byteArrayToInt(0, 4) == 0)
                 continue;
             mTrips.add(new KievTrip(block.getData()));
         }
@@ -93,7 +93,8 @@ public class KievTransitData extends TransitData {
     };
 
     private static String getSerial(ClassicCard card) {
-        return Utils.getHexString(Utils.reverseBuffer(card.getSector(1).getBlock(0).getData(), 6, 8));
+        return card.getSector(1).getBlock(0).getData().sliceOffLen(6, 8)
+                .reverseBuffer().toHexString();
     }
 
     @Override

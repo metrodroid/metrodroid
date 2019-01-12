@@ -33,6 +33,7 @@ import au.id.micolous.metrodroid.transit.Station;
 import au.id.micolous.metrodroid.transit.TransitCurrency;
 import au.id.micolous.metrodroid.transit.Trip;
 import au.id.micolous.metrodroid.util.Utils;
+import au.id.micolous.metrodroid.xml.ImmutableByteArray;
 
 public class KievTrip extends Trip {
     private final Calendar mTimestamp;
@@ -43,27 +44,27 @@ public class KievTrip extends Trip {
     private final int mValidator;
     private final static TimeZone TZ = TimeZone.getTimeZone("Europe/Kiev");
 
-    KievTrip(byte []data) {
+    KievTrip(ImmutableByteArray data) {
         mTimestamp = parseTimestamp(data);
         // This is a shameless plug. We have no idea which field
         // means what. But metro transport is always 84/04/40/53
-        mTransactionType = Utils.getHexString(data, 0, 1)
-                + "/" + Utils.getHexString(data, 6, 1)
-                + "/" + Utils.getHexString(data, 8, 1)
-                + "/" + Integer.toHexString(Utils.getBitsFromBuffer(data, 88, 10));
-        mValidator = Utils.getBitsFromBuffer(data, 56, 8);
-        mCounter1 = Utils.getBitsFromBuffer(data, 72, 16);
-        mCounter2 = Utils.getBitsFromBuffer(data, 98, 16);
+        mTransactionType = data.getHexString(0, 1)
+                + "/" + data.getHexString(6, 1)
+                + "/" + data.getHexString(8, 1)
+                + "/" + Integer.toHexString(data.getBitsFromBuffer(88, 10));
+        mValidator = data.getBitsFromBuffer(56, 8);
+        mCounter1 = data.getBitsFromBuffer(72, 16);
+        mCounter2 = data.getBitsFromBuffer(98, 16);
     }
 
-    private static Calendar parseTimestamp(byte[] data) {
+    private static Calendar parseTimestamp(ImmutableByteArray data) {
         Calendar c = new GregorianCalendar(TZ);
-        c.set(Utils.getBitsFromBuffer(data, 17, 5) + 2000,
-                Utils.getBitsFromBuffer(data, 13, 4) - 1,
-                Utils.getBitsFromBuffer(data, 8, 5),
-                Utils.getBitsFromBuffer(data, 33, 5),
-                Utils.getBitsFromBuffer(data, 27, 6),
-                Utils.getBitsFromBuffer(data, 22, 5));
+        c.set(data.getBitsFromBuffer(17, 5) + 2000,
+                data.getBitsFromBuffer(13, 4) - 1,
+                data.getBitsFromBuffer(8, 5),
+                data.getBitsFromBuffer(33, 5),
+                data.getBitsFromBuffer(27, 6),
+                data.getBitsFromBuffer(22, 5));
         return c;
     }
 

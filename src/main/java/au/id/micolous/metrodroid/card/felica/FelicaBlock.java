@@ -20,6 +20,7 @@
 package au.id.micolous.metrodroid.card.felica;
 
 import au.id.micolous.metrodroid.xml.Base64String;
+import au.id.micolous.metrodroid.xml.ImmutableByteArray;
 
 import org.simpleframework.xml.Attribute;
 import org.simpleframework.xml.Root;
@@ -44,7 +45,7 @@ public class FelicaBlock {
         return mAddr;
     }
 
-    public byte[] getData() {
-        return mData.getData();
+    public ImmutableByteArray getData() {
+        return mData;
     }
 }

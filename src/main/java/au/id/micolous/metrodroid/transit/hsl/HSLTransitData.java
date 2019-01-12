@@ -47,6 +47,7 @@ import au.id.micolous.metrodroid.transit.TransitData;
 import au.id.micolous.metrodroid.transit.TransitIdentity;
 import au.id.micolous.metrodroid.transit.Trip;
 import au.id.micolous.metrodroid.util.Utils;
+import au.id.micolous.metrodroid.xml.ImmutableByteArray;
 
 /**
  * Implements a reader for HSL transit cards.
@@ -142,18 +143,18 @@ public class HSLTransitData extends TransitData implements Parcelable {
     }
 
     private HSLTransitData(DesfireCard desfireCard) {
-        byte[] data;
+        ImmutableByteArray data;
 
         try {
             data = desfireCard.getApplication(APP_ID).getFile(0x08).getData();
-            mSerialNumber = Utils.getHexString(data).substring(2, 20);  //Utils.byteArrayToInt(data, 1, 9);
+            mSerialNumber = data.toHexString().substring(2, 20);  //data.byteArrayToInt(1, 9);
         } catch (Exception ex) {
             throw new RuntimeException("Error parsing HSL serial", ex);
         }
 
         try {
             data = desfireCard.getApplication(APP_ID).getFile(0x02).getData();
-            mBalance = Utils.getBitsFromBuffer(data, 0, 20);
+            mBalance = data.getBitsFromBuffer(0, 20);
             mLastRefill = new HSLRefill(data);
         } catch (Exception ex) {
             throw new RuntimeException("Error parsing HSL refills", ex);
@@ -176,39 +177,39 @@ public class HSLTransitData extends TransitData implements Parcelable {
 
         try {
             data = desfireCard.getApplication(APP_ID).getFile(0x03).getData();
-            mArvoMystery1 = Utils.getBitsFromBuffer(data, 0, 9);
-            mArvoDiscoGroup = Utils.getBitsFromBuffer(data, 9, 5);
-            mArvoDuration = Utils.getBitsFromBuffer(data, 14, 13);
-            mArvoRegional = Utils.getBitsFromBuffer(data, 27, 5);
+            mArvoMystery1 = data.getBitsFromBuffer(0, 9);
+            mArvoDiscoGroup = data.getBitsFromBuffer(9, 5);
+            mArvoDuration = data.getBitsFromBuffer(14, 13);
+            mArvoRegional = data.getBitsFromBuffer(27, 5);
 
             mArvoExit = cardDateToTimestamp(
-                    Utils.getBitsFromBuffer(data, 32, 14),
-                    Utils.getBitsFromBuffer(data, 46, 11));
+                    data.getBitsFromBuffer(32, 14),
+                    data.getBitsFromBuffer(46, 11));
 
             //68 price, 82 zone?
-            mArvoPurchasePrice = Utils.getBitsFromBuffer(data, 68, 14);
-            //mArvoDiscoGroup = Utils.getBitsFromBuffer(data, 82, 6);
+            mArvoPurchasePrice = data.getBitsFromBuffer(68, 14);
+            //mArvoDiscoGroup = data.getBitsFromBuffer(82, 6);
             Calendar mArvoPurchase = cardDateToCalendar(
-                    Utils.getBitsFromBuffer(data, 88, 14),
-                    Utils.getBitsFromBuffer(data, 102, 11));
+                    data.getBitsFromBuffer(88, 14),
+                    data.getBitsFromBuffer(102, 11));
 
             Calendar mArvoExpire = cardDateToCalendar(
-                    Utils.getBitsFromBuffer(data, 113, 14),
-                    Utils.getBitsFromBuffer(data, 127, 11));
+                    data.getBitsFromBuffer(113, 14),
+                    data.getBitsFromBuffer(127, 11));
 
-            mArvoPax = Utils.getBitsFromBuffer(data, 138, 6);
+            mArvoPax = data.getBitsFromBuffer(138, 6);
 
             mArvoXfer = cardDateToTimestamp(
-                    Utils.getBitsFromBuffer(data, 144, 14),
-                    Utils.getBitsFromBuffer(data, 158, 11));
+                    data.getBitsFromBuffer(144, 14),
+                    data.getBitsFromBuffer(158, 11));
 
-            mArvoVehicleNumber = Utils.getBitsFromBuffer(data, 169, 14);
+            mArvoVehicleNumber = data.getBitsFromBuffer(169, 14);
 
-            mArvoUnknown = Utils.getBitsFromBuffer(data, 183, 2);
+            mArvoUnknown = data.getBitsFromBuffer(183, 2);
 
-            mArvoLineJORE = Utils.getBitsFromBuffer(data, 185, 14);
-            mArvoJOREExt = Utils.getBitsFromBuffer(data, 199, 4);
-            mArvoDirection = Utils.getBitsFromBuffer(data, 203, 1);
+            mArvoLineJORE = data.getBitsFromBuffer(185, 14);
+            mArvoJOREExt = data.getBitsFromBuffer(199, 4);
+            mArvoDirection = data.getBitsFromBuffer(203, 1);
 
             if (balanceIndex > -1) {
                 mTrips.get(balanceIndex).mLine = Long.toString(mArvoLineJORE);
@@ -240,14 +241,14 @@ public class HSLTransitData extends TransitData implements Parcelable {
         try {
             data = desfireCard.getApplication(APP_ID).getFile(0x01).getData();
 
-            if (Utils.getBitsFromBuffer(data, 19, 14) == 0 && Utils.getBitsFromBuffer(data, 67, 14) == 0) {
+            if (data.getBitsFromBuffer(19, 14) == 0 && data.getBitsFromBuffer(67, 14) == 0) {
                 boolean mKausiNoData = true;
             }
 
-            long mKausiStart = cardDateToTimestamp(Utils.getBitsFromBuffer(data, 19, 14), 0);
-            long mKausiEnd = cardDateToTimestamp(Utils.getBitsFromBuffer(data, 33, 14), 0);
-            long mKausiPrevStart = cardDateToTimestamp(Utils.getBitsFromBuffer(data, 67, 14), 0);
-            long mKausiPrevEnd = cardDateToTimestamp(Utils.getBitsFromBuffer(data, 81, 14), 0);
+            long mKausiStart = cardDateToTimestamp(data.getBitsFromBuffer(19, 14), 0);
+            long mKausiEnd = cardDateToTimestamp(data.getBitsFromBuffer(33, 14), 0);
+            long mKausiPrevStart = cardDateToTimestamp(data.getBitsFromBuffer(67, 14), 0);
+            long mKausiPrevEnd = cardDateToTimestamp(data.getBitsFromBuffer(81, 14), 0);
             if (mKausiPrevStart > mKausiStart) {
                 long temp = mKausiStart;
                 long temp2 = mKausiEnd;
@@ -257,22 +258,22 @@ public class HSLTransitData extends TransitData implements Parcelable {
                 mKausiPrevEnd = temp2;
             }
             Calendar mKausiPurchase = cardDateToCalendar(
-                    Utils.getBitsFromBuffer(data, 110, 14),
-                    Utils.getBitsFromBuffer(data, 124, 11));
-            int mKausiPurchasePrice = Utils.getBitsFromBuffer(data, 149, 15);
+                    data.getBitsFromBuffer(110, 14),
+                    data.getBitsFromBuffer(124, 11));
+            int mKausiPurchasePrice = data.getBitsFromBuffer(149, 15);
             long mKausiLastUse = cardDateToTimestamp(
-                    Utils.getBitsFromBuffer(data, 192, 14),
-                    Utils.getBitsFromBuffer(data, 206, 11));
-            mKausiVehicleNumber = Utils.getBitsFromBuffer(data, 217, 14);
+                    data.getBitsFromBuffer(192, 14),
+                    data.getBitsFromBuffer(206, 11));
+            mKausiVehicleNumber = data.getBitsFromBuffer(217, 14);
             //mTrips[0].mVehicleNumber = mArvoVehicleNumber;
 
-            mKausiUnknown = Utils.getBitsFromBuffer(data, 231, 2);
+            mKausiUnknown = data.getBitsFromBuffer(231, 2);
 
-            mKausiLineJORE = Utils.getBitsFromBuffer(data, 233, 14);
+            mKausiLineJORE = data.getBitsFromBuffer(233, 14);
             //mTrips[0].mLine = Long.toString(mArvoLineJORE).substring(1);
 
-            mKausiJOREExt = Utils.getBitsFromBuffer(data, 247, 4);
-            mKausiDirection = Utils.getBitsFromBuffer(data, 241, 1);
+            mKausiJOREExt = data.getBitsFromBuffer(247, 4);
+            mKausiDirection = data.getBitsFromBuffer(241, 1);
             if (seasonIndex > -1) {
                 mTrips.get(seasonIndex).mVehicleNumber = mKausiVehicleNumber;
                 mTrips.get(seasonIndex).mLine = Long.toString(mKausiLineJORE);
@@ -325,8 +326,8 @@ public class HSLTransitData extends TransitData implements Parcelable {
         @Override
         public TransitIdentity parseTransitIdentity(@NonNull DesfireCard card) {
             try {
-                byte[] data = card.getApplication(APP_ID).getFile(0x08).getData();
-                return new TransitIdentity("HSL", Utils.getHexString(data).substring(2, 20));
+                ImmutableByteArray data = card.getApplication(APP_ID).getFile(0x08).getData();
+                return new TransitIdentity("HSL", data.toHexString().substring(2, 20));
             } catch (Exception ex) {
                 throw new RuntimeException("Error parsing HSL serial", ex);
             }

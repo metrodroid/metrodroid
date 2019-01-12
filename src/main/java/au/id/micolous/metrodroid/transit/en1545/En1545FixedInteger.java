@@ -30,6 +30,7 @@ import java.util.GregorianCalendar;
 import java.util.TimeZone;
 
 import au.id.micolous.metrodroid.util.Utils;
+import au.id.micolous.metrodroid.xml.ImmutableByteArray;
 
 public class En1545FixedInteger implements En1545Field {
     private final int mLen;
@@ -77,7 +78,7 @@ public class En1545FixedInteger implements En1545Field {
     }
 
     @Override
-    public int parseField(byte[] b, int off, String path, En1545Parsed holder, En1545Bits bitParser) {
+    public int parseField(ImmutableByteArray b, int off, String path, En1545Parsed holder, En1545Bits bitParser) {
         try {
             holder.insertInt(mName, path, bitParser.getBitsFromBuffer(b, off, mLen));
         } catch (Exception e) {

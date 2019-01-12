@@ -21,7 +21,9 @@ package au.id.micolous.metrodroid.test;
 import org.jetbrains.annotations.NonNls;
 import org.junit.Test;
 
+import java.util.Arrays;
 import java.util.Calendar;
+import java.util.Collections;
 import java.util.List;
 
 import au.id.micolous.metrodroid.card.desfire.DesfireApplication;
@@ -33,6 +35,7 @@ import au.id.micolous.metrodroid.transit.TransitIdentity;
 import au.id.micolous.metrodroid.transit.Trip;
 import au.id.micolous.metrodroid.transit.clipper.ClipperTransitData;
 import au.id.micolous.metrodroid.util.Utils;
+import au.id.micolous.metrodroid.xml.ImmutableByteArray;
 
 import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.assertNull;
@@ -63,17 +66,17 @@ public class ClipperTest extends BaseInstrumentedTest {
         // Construct a card to hold the data.
         DesfireFile f2 = DesfireFile.create(2,
                null, // new RecordDesfireFileSettings((byte)0,(byte)0,null, 48, 5, 5),
-                Utils.hexStringToByteArray(testFile0x2));
-        DesfireFile f4 = DesfireFile.create(4, null, Utils.hexStringToByteArray(testFile0x4));
+                ImmutableByteArray.Companion.fromHex(testFile0x2));
+        DesfireFile f4 = DesfireFile.create(4, null, ImmutableByteArray.Companion.fromHex(testFile0x4));
         DesfireFile f8 = DesfireFile.create(8,null,
-                Utils.hexStringToByteArray(testFile0x8));
+                ImmutableByteArray.Companion.fromHex(testFile0x8));
         DesfireFile fe = DesfireFile.create(0xe,null,
-                Utils.hexStringToByteArray(testFile0xe));
-        DesfireApplication a = new DesfireApplication(ClipperTransitData.APP_ID, new DesfireFile[] { f2, f4, f8, fe });
-        return new DesfireCard(new byte[] {0, 1, 2, 3},
+                ImmutableByteArray.Companion.fromHex(testFile0xe));
+        DesfireApplication a = new DesfireApplication(ClipperTransitData.APP_ID, Arrays.asList(f2, f4, f8, fe));
+        return new DesfireCard(ImmutableByteArray.Companion.fromHex("00010203"),
                 Calendar.getInstance(),
                 null,
-                new DesfireApplication[] { a });
+                Collections.singletonList(a));
     }
 
     @Test

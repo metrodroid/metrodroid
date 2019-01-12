@@ -49,6 +49,7 @@ import au.id.micolous.metrodroid.transit.TransitData;
 import au.id.micolous.metrodroid.transit.TransitIdentity;
 import au.id.micolous.metrodroid.ui.ListItem;
 import au.id.micolous.metrodroid.util.Utils;
+import au.id.micolous.metrodroid.xml.ImmutableByteArray;
 
 public class CharlieCardTransitData extends TransitData {
 
@@ -78,28 +79,28 @@ public class CharlieCardTransitData extends TransitData {
 
     private CharlieCardTransitData(ClassicCard card) {
         mSerial = getSerial(card);
-        mSecondSerial = Utils.byteArrayToLong(card.getSector(8).getBlock(0).getData(), 0, 4);
+        mSecondSerial = card.getSector(8).getBlock(0).getData().byteArrayToLong(0, 4);
         ClassicSector sector2 = card.getSector(2);
         ClassicSector sector3 = card.getSector(3);
         ClassicSector balanceSector;
-        if (Utils.getBitsFromBuffer(sector2.getBlock(0).getData(), 81, 16)
-            > Utils.getBitsFromBuffer(sector3.getBlock(0).getData(), 81, 16))
+        if (sector2.getBlock(0).getData().getBitsFromBuffer(81, 16)
+            > sector3.getBlock(0).getData().getBitsFromBuffer(81, 16))
             balanceSector = sector2;
         else
             balanceSector = sector3;
         mBalance = getPrice(balanceSector.getBlock(1).getData(), 5);
-        mStartDate = Utils.byteArrayToInt(balanceSector.getBlock(0).getData(), 6, 3);
+        mStartDate = balanceSector.getBlock(0).getData().byteArrayToInt(6, 3);
         mTrips = new ArrayList<>();
         for (int i = 0; i < 12; i++) {
             ClassicBlock block = card.getSector(6 + (i / 6)).getBlock((i / 2) % 3);
-            if (Utils.byteArrayToInt(block.getData(), 7 * (i % 2), 4) == 0)
+            if (block.getData().byteArrayToInt(7 * (i % 2), 4) == 0)
                 continue;
             mTrips.add(new CharlieCardTrip(block.getData(), 7 * (i % 2)));
         }
     }
 
-    public static int getPrice(byte[] data, int off) {
-        int val = Utils.byteArrayToInt(data, off, 2);
+    public static int getPrice(ImmutableByteArray data, int off) {
+        int val = data.byteArrayToInt(off, 2);
         if ((val & 0x8000) != 0) {
             val = -(val & 0x7fff);
         }
@@ -182,7 +183,7 @@ public class CharlieCardTransitData extends TransitData {
     };
 
     private static long getSerial(ClassicCard card) {
-        return Utils.byteArrayToLong(card.getSector(0).getBlock(0).getData(), 0, 4);
+        return card.getSector(0).getBlock(0).getData().byteArrayToLong(0, 4);
     }
 
     @Override
@@ -204,8 +205,8 @@ public class CharlieCardTransitData extends TransitData {
         @Override
         public boolean earlyCheck(@NonNull List<ClassicSector> sectors) {
             ClassicSector sector0 = sectors.get(0);
-            byte[] b = sector0.getBlock(1).getData();
-            if (!Arrays.equals(Utils.byteArraySlice(b, 2, 14), new byte[]{
+            ImmutableByteArray b = sector0.getBlock(1).getData();
+            if (!b.sliceOffLen(2, 14).contentEquals(new byte[]{
                     0x04, 0x10, 0x04, 0x10, 0x04, 0x10,
                     0x04, 0x10, 0x04, 0x10, 0x04, 0x10, 0x04, 0x10
             }))
@@ -214,7 +215,7 @@ public class CharlieCardTransitData extends TransitData {
             if (sector1 instanceof UnauthorizedClassicSector)
                 return true;
             b = sector1.getBlock(0).getData();
-            return Arrays.equals(Utils.byteArraySlice(b, 0, 6), new byte[]{
+            return b.sliceOffLen(0, 6).contentEquals(new byte[]{
                     0x04, 0x10, 0x23, 0x45, 0x66, 0x77
             });
         }

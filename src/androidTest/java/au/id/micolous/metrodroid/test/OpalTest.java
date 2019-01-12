@@ -28,6 +28,7 @@ import org.junit.runners.JUnit4;
 
 import java.time.ZoneOffset;
 import java.util.Calendar;
+import java.util.Collections;
 import java.util.TimeZone;
 
 import au.id.micolous.metrodroid.card.desfire.DesfireApplication;
@@ -39,6 +40,7 @@ import au.id.micolous.metrodroid.transit.TransitIdentity;
 import au.id.micolous.metrodroid.transit.opal.OpalData;
 import au.id.micolous.metrodroid.transit.opal.OpalTransitData;
 import au.id.micolous.metrodroid.util.Utils;
+import au.id.micolous.metrodroid.xml.ImmutableByteArray;
 
 import static junit.framework.TestCase.assertEquals;
 import static junit.framework.TestCase.assertTrue;
@@ -62,15 +64,15 @@ public class OpalTest {
     }
 
     private DesfireCard constructOpalCardFromHexString(String s) {
-        byte[] demoData = Utils.hexStringToByteArray(s);
+        ImmutableByteArray demoData = ImmutableByteArray.Companion.fromHex(s);
 
         // Construct a card to hold the data.
         DesfireFile f = DesfireFile.create(OpalTransitData.FILE_ID, null, demoData);
-        DesfireApplication a = new DesfireApplication(OpalTransitData.APP_ID, new DesfireFile[] { f });
-        return new DesfireCard(new byte[] {0, 1, 2, 3},
+        DesfireApplication a = new DesfireApplication(OpalTransitData.APP_ID, Collections.singletonList(f));
+        return new DesfireCard(ImmutableByteArray.Companion.fromHex("00010203"),
                 Calendar.getInstance(),
                 null,
-                new DesfireApplication[] { a });
+                Collections.singletonList(a));
     }
 
     @Test

@@ -25,6 +25,7 @@ import au.id.micolous.farebot.R;
 import au.id.micolous.metrodroid.card.desfire.settings.DesfireFileSettings;
 import au.id.micolous.metrodroid.ui.ListItem;
 import au.id.micolous.metrodroid.util.Utils;
+import au.id.micolous.metrodroid.xml.ImmutableByteArray;
 
 @Root(name = "file")
 public class InvalidDesfireFile extends DesfireFile {
@@ -34,7 +35,7 @@ public class InvalidDesfireFile extends DesfireFile {
     protected InvalidDesfireFile() { /* For XML Serializer */ }
 
     public InvalidDesfireFile(int fileId, String errorMessage, DesfireFileSettings settings) {
-        super(fileId, settings, new byte[0]);
+        super(fileId, settings, ImmutableByteArray.Companion.empty());
         mErrorMessage = errorMessage;
     }
 
@@ -43,7 +44,7 @@ public class InvalidDesfireFile extends DesfireFile {
     }
 
     @Override
-    public byte[] getData() {
+    public ImmutableByteArray getData() {
         throw new IllegalStateException(String.format("Invalid file: %s", mErrorMessage));
     }
 

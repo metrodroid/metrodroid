@@ -30,6 +30,7 @@ import au.id.micolous.metrodroid.transit.CardInfo
 import au.id.micolous.metrodroid.transit.TransitIdentity
 import au.id.micolous.metrodroid.ui.ListItem
 import au.id.micolous.metrodroid.util.Utils
+import au.id.micolous.metrodroid.xml.ImmutableByteArray
 import kotlinx.android.parcel.Parcelize
 import java.util.*
 
@@ -67,7 +68,7 @@ class IstanbulKartTransitData (private val mSerial: String,
             try {
                 return IstanbulKartTransitData(
                         mSerial = parseSerial(metadata),
-                        mSerial2 = Utils.getHexString(card.tagId).toUpperCase(Locale.ENGLISH))
+                        mSerial2 = card.tagId.toHexString().toUpperCase(Locale.ENGLISH))
             } catch (ex: Exception) {
                 throw RuntimeException("Error parsing IstanbulKart data", ex)
             }
@@ -86,8 +87,8 @@ class IstanbulKartTransitData (private val mSerial: String,
          * @param file content of the serial file
          * @return String with the complete serial number, or null on error
          */
-        private fun parseSerial(file: ByteArray) =
-                Utils.getHexString(file, 0, 8)
+        private fun parseSerial(file: ImmutableByteArray) =
+                file.getHexString(0, 8)
 
         val FACTORY: DesfireCardTransitFactory = object : DesfireCardTransitFactory {
             override fun earlyCheck(appIds: IntArray) = (APP_ID in appIds)

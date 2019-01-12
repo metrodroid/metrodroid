@@ -75,14 +75,12 @@ public class BlankClassicTransitData extends TransitData {
                         continue;
                     if (bl.getIndex() == numBlocks - 1)
                         continue;
-                    for (byte b : bl.getData()) {
-                        if (b != 0)
+                        if (!bl.getData().isAllZero())
                             allZero = false;
-                        if (b != -1)
+                        if (!bl.getData().all(a -> a == -1))
                             allFF = false;
                         if (!allZero && !allFF)
                             return false;
-                    }
                 }
             }
             return true;

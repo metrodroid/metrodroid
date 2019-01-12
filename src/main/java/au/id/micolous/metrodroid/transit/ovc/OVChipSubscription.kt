@@ -23,6 +23,7 @@ package au.id.micolous.metrodroid.transit.ovc
 
 import au.id.micolous.metrodroid.transit.Subscription
 import au.id.micolous.metrodroid.transit.en1545.*
+import au.id.micolous.metrodroid.xml.ImmutableByteArray
 import kotlinx.android.parcel.Parcelize
 
 @Parcelize
@@ -84,7 +85,7 @@ data class OVChipSubscription internal constructor(private val parsed: En1545Par
                 )
         )
 
-        fun parse(data: ByteArray, type1: Int, used: Int): OVChipSubscription = OVChipSubscription(
+        fun parse(data: ImmutableByteArray, type1: Int, used: Int): OVChipSubscription = OVChipSubscription(
                 parsed = En1545Parser.parse(data, OVC_CONTRACT_FIELDS),
                 mType1 = type1,
                 mUsed = used)

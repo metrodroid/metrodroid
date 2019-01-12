@@ -29,6 +29,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 
 import au.id.micolous.metrodroid.util.Utils;
+import au.id.micolous.metrodroid.xml.ImmutableByteArray;
 
 /**
  * Implements communication with cards that talk over ISO7816-4 APDUs.
@@ -158,7 +159,6 @@ public class ISO7816Protocol {
 
     @NonNull
     public byte[] selectByName(@NonNull byte[] name, boolean nextOccurrence) throws IOException, ISO7816Exception {
-        byte[] reply;
         Log.d(TAG, "Select by name " + Utils.getHexString(name));
         // Select an application by file name
         return sendRequest(CLASS_ISO7816, INSTRUCTION_ISO7816_SELECT,

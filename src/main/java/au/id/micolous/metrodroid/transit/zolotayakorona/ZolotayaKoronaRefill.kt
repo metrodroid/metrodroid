@@ -22,6 +22,7 @@ package au.id.micolous.metrodroid.transit.zolotayakorona
 import au.id.micolous.metrodroid.transit.TransitCurrency
 import au.id.micolous.metrodroid.transit.Trip
 import au.id.micolous.metrodroid.util.Utils
+import au.id.micolous.metrodroid.xml.ImmutableByteArray
 import kotlinx.android.parcel.Parcelize
 
 @Parcelize
@@ -39,8 +40,8 @@ internal data class ZolotayaKoronaRefill(internal val mTime: Int,
     override fun getMode() = Trip.Mode.TICKET_MACHINE
 
     companion object {
-        fun parse(block: ByteArray, cardType: Int): ZolotayaKoronaRefill? {
-            if (Utils.isAllZero(block))
+        fun parse(block: ImmutableByteArray, cardType: Int): ZolotayaKoronaRefill? {
+            if (block.isAllZero())
                 return null
             val region = Utils.convertBCDtoInteger(cardType shr 16)
             // known values:
@@ -50,11 +51,11 @@ internal data class ZolotayaKoronaRefill(internal val mTime: Int,
             return ZolotayaKoronaRefill(
                     // Where are higher bits?
                     // We guess it but we don't know yet
-                    mMachineID = Utils.byteArrayToIntReversed(block, 1, 2)
+                    mMachineID = block.byteArrayToIntReversed(1, 2)
                             or (guessedHighBits shl 16),
-                    mTime = Utils.byteArrayToIntReversed(block, 3, 4),
-                    mAmount = Utils.byteArrayToIntReversed(block, 7, 4),
-                    mCounter = Utils.byteArrayToIntReversed(block, 11, 2),
+                    mTime = block.byteArrayToIntReversed(3, 4),
+                    mAmount = block.byteArrayToIntReversed(7, 4),
+                    mCounter = block.byteArrayToIntReversed(11, 2),
                     mCardType = cardType
             )
         }

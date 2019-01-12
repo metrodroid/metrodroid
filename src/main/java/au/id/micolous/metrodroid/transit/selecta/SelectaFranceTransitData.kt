@@ -23,12 +23,7 @@ import au.id.micolous.metrodroid.card.CardType
 import au.id.micolous.metrodroid.card.classic.ClassicCard
 import au.id.micolous.metrodroid.card.classic.ClassicCardTransitFactory
 import au.id.micolous.metrodroid.card.classic.ClassicSector
-import au.id.micolous.metrodroid.transit.CardInfo
-import au.id.micolous.metrodroid.transit.TransitBalance
-import au.id.micolous.metrodroid.transit.TransitCurrency
-import au.id.micolous.metrodroid.transit.TransitData
-import au.id.micolous.metrodroid.transit.TransitIdentity
-import au.id.micolous.metrodroid.util.Utils
+import au.id.micolous.metrodroid.transit.*
 import kotlinx.android.parcel.Parcelize
 
 /**
@@ -57,17 +52,17 @@ data class SelectaFranceTransitData(private val mBalance: Int,
                 .setPreview()
                 .build()
 
-        private fun getSerial(card: ClassicCard): Int = Utils.byteArrayToInt(card[1, 0].data, 13, 3)
+        private fun getSerial(card: ClassicCard): Int = card[1, 0].data.byteArrayToInt(13, 3)
 
         val FACTORY: ClassicCardTransitFactory = object : ClassicCardTransitFactory {
             override fun earlyCheck(sectors: List<ClassicSector>) =
-                Utils.byteArrayToInt(sectors[0][1].data, 2, 2) == 0x0938
+                    sectors[0][1].data.byteArrayToInt(2, 2) == 0x0938
 
             override fun parseTransitIdentity(card: ClassicCard): TransitIdentity = TransitIdentity(NAME, Integer.toString(getSerial(card)))
 
             override fun parseTransitData(card: ClassicCard): TransitData =
                     SelectaFranceTransitData(mSerial = getSerial(card),
-                            mBalance = Utils.byteArrayToInt(card[1, 2].data, 0, 3))
+                            mBalance = card[1, 2].data.byteArrayToInt(0, 3))
 
             override fun earlySectors() = 1
 

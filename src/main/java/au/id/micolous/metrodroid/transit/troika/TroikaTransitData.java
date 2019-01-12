@@ -21,6 +21,11 @@ package au.id.micolous.metrodroid.transit.troika;
 
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import au.id.micolous.farebot.R;
 import au.id.micolous.metrodroid.card.CardType;
@@ -29,14 +34,12 @@ import au.id.micolous.metrodroid.card.classic.ClassicSector;
 import au.id.micolous.metrodroid.card.classic.UnauthorizedClassicSector;
 import au.id.micolous.metrodroid.transit.CardInfo;
 import au.id.micolous.metrodroid.transit.Subscription;
+import au.id.micolous.metrodroid.transit.TransitBalance;
 import au.id.micolous.metrodroid.transit.TransitCurrency;
 import au.id.micolous.metrodroid.transit.Trip;
 import au.id.micolous.metrodroid.ui.ListItem;
-import au.id.micolous.metrodroid.transit.TransitBalance;
 import au.id.micolous.metrodroid.util.Utils;
-
-import java.util.ArrayList;
-import java.util.List;
+import au.id.micolous.metrodroid.xml.ImmutableByteArray;
 
 /**
  * Troika cards.
@@ -137,7 +140,7 @@ public class TroikaTransitData implements Parcelable {
             ClassicSector sector = card.getSector(idx);
             if (sector instanceof UnauthorizedClassicSector)
                 return null;
-            byte[] block = sector.readBlocks(0, 3);
+            ImmutableByteArray block = sector.readBlocks(0, 3);
             if (!TroikaBlock.check(block))
                 return null;
             return TroikaBlock.parseBlock(block);

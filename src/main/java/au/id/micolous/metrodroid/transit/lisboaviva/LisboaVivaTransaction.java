@@ -33,6 +33,7 @@ import au.id.micolous.metrodroid.transit.en1545.En1545FixedHex;
 import au.id.micolous.metrodroid.transit.en1545.En1545FixedInteger;
 import au.id.micolous.metrodroid.transit.en1545.En1545Lookup;
 import au.id.micolous.metrodroid.transit.en1545.En1545Transaction;
+import au.id.micolous.metrodroid.xml.ImmutableByteArray;
 
 class LisboaVivaTransaction extends En1545Transaction {
     public static final Creator<LisboaVivaTransaction> CREATOR = new Creator<LisboaVivaTransaction>() {
@@ -77,7 +78,7 @@ class LisboaVivaTransaction extends En1545Transaction {
         return transition == 4;
     }
 
-    LisboaVivaTransaction(byte[] data) {
+    LisboaVivaTransaction(ImmutableByteArray data) {
         super(data, tripFields);
     }
 

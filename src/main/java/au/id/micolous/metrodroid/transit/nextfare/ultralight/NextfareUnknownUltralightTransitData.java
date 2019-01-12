@@ -50,7 +50,7 @@ public class NextfareUnknownUltralightTransitData extends NextfareUltralightTran
     public final static UltralightCardTransitFactory FACTORY = new UltralightCardTransitFactory() {
         @Override
         public boolean check(@NonNull UltralightCard card) {
-            int head = Utils.byteArrayToInt(card.getPage(4).getData(), 0, 3);
+            int head = card.getPage(4).getData().byteArrayToInt(0, 3);
             return head == 0x0a0400 || head == 0x0a0800;
         }
 

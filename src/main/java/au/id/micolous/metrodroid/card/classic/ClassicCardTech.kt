@@ -16,8 +16,6 @@ interface ClassicCardTech {
 
 class ClassicCardTechAndroid (private val tech: MifareClassic,
                               override val tagId: ImmutableByteArray): ClassicCardTech {
-    constructor(tech: MifareClassic, tagId: ByteArray) : this(tech = tech, tagId = tagId.toImmutable())
-
     override fun sectorToBlock(sectorIndex: Int) = tech.sectorToBlock(sectorIndex)
 
     override fun getBlockCountInSector(sectorIndex: Int) = tech.getBlockCountInSector(sectorIndex)

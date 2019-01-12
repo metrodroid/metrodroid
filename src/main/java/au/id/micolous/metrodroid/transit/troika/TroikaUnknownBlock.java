@@ -6,9 +6,10 @@ import java.util.List;
 import au.id.micolous.farebot.R;
 import au.id.micolous.metrodroid.ui.HeaderListItem;
 import au.id.micolous.metrodroid.ui.ListItem;
+import au.id.micolous.metrodroid.xml.ImmutableByteArray;
 
 class TroikaUnknownBlock extends TroikaBlock {
-    TroikaUnknownBlock(byte[] rawData) {
+    TroikaUnknownBlock(ImmutableByteArray rawData) {
         super(rawData);
     }
 

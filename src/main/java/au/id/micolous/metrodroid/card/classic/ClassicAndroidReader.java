@@ -21,6 +21,7 @@ import au.id.micolous.metrodroid.key.CardKeysEmbed;
 import au.id.micolous.metrodroid.key.CardKeysMerged;
 import au.id.micolous.metrodroid.key.CardKeysRetriever;
 import au.id.micolous.metrodroid.util.Utils;
+import au.id.micolous.metrodroid.xml.ImmutableByteArray;
 
 public final class ClassicAndroidReader {
     private final static String TAG = "ClassicAndroidReader";
@@ -32,7 +33,7 @@ public final class ClassicAndroidReader {
             CardKeysDB.INSTANCE, KEY_RETRIEVER_EMBED
     ));
 
-    public static ClassicCard dumpTag(byte[] tagId, Tag tag, TagReaderFeedbackInterface feedbackInterface) throws Exception {
+    public static ClassicCard dumpTag(ImmutableByteArray tagId, Tag tag, TagReaderFeedbackInterface feedbackInterface) throws Exception {
         feedbackInterface.updateStatusText(Utils.localizeString(R.string.mfc_reading));
         feedbackInterface.showCardType(null);
 

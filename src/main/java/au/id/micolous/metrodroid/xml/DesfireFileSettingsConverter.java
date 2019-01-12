@@ -35,7 +35,7 @@ public class DesfireFileSettingsConverter implements Converter<DesfireFileSettin
         byte fileType = -1;
         int fileSize = -1;
         byte commSetting = -1;
-        byte[] accessRights = new byte[0];
+        ImmutableByteArray accessRights = ImmutableByteArray.Companion.empty();
         int recordSize = -1;
         int maxRecords = -1;
         int curRecords = -1;
@@ -64,7 +64,7 @@ public class DesfireFileSettingsConverter implements Converter<DesfireFileSettin
                         commSetting = Byte.parseByte(value);
                         break;
                     case "accessrights":
-                        accessRights = Utils.hexStringToByteArray(value);
+                        accessRights = ImmutableByteArray.Companion.fromHex(value);
                         break;
 
                     case "recordsize":

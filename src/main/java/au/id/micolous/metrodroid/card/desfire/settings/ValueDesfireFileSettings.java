@@ -27,6 +27,7 @@ import org.simpleframework.xml.Root;
 
 import au.id.micolous.farebot.R;
 import au.id.micolous.metrodroid.util.Utils;
+import au.id.micolous.metrodroid.xml.ImmutableByteArray;
 
 /**
  * Contains FileSettings for Value file types.
@@ -46,7 +47,7 @@ public class ValueDesfireFileSettings extends DesfireFileSettings {
 
     private ValueDesfireFileSettings() { /* For XML Serializer */ }
 
-    public ValueDesfireFileSettings(byte fileType, byte commSetting, byte[] accessRights,
+    public ValueDesfireFileSettings(byte fileType, byte commSetting, ImmutableByteArray accessRights,
                                     int lowerLimit, int upperLimit, int limitedCreditValue,
                                     boolean limitedCreditEnabled) {
         super(fileType, commSetting, accessRights);
@@ -57,12 +58,12 @@ public class ValueDesfireFileSettings extends DesfireFileSettings {
         this.mLimitedCreditEnabled = limitedCreditEnabled;
     }
 
-    public ValueDesfireFileSettings(byte[] buf) {
+    public ValueDesfireFileSettings(ImmutableByteArray buf) {
         super(buf);
-        mLowerLimit = Utils.byteArrayToIntReversed(buf, 4, 4);
-        mUpperLimit = Utils.byteArrayToIntReversed(buf, 8, 4);
-        mLimitedCreditValue = Utils.byteArrayToIntReversed(buf, 12, 4);
-        mLimitedCreditEnabled = buf[16] != 0x00;
+        mLowerLimit = buf.byteArrayToIntReversed(4, 4);
+        mUpperLimit = buf.byteArrayToIntReversed(8, 4);
+        mLimitedCreditValue = buf.byteArrayToIntReversed(12, 4);
+        mLimitedCreditEnabled = buf.get(16) != 0x00;
     }
 
     public int getLowerLimit() {

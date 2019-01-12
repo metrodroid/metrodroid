@@ -146,8 +146,8 @@ data class ClassicSectorKey internal constructor(
                     type = type, bundle = bundle)
         }
 
-        fun fromDump(b: ByteArray, offset: Int, type: KeyType, bundle: String) =
-                fromDump(b.toImmutable().sliceOffLen(offset, ClassicSectorKey.KEY_LEN),
+        fun fromDump(b: ImmutableByteArray, offset: Int, type: KeyType, bundle: String) =
+                fromDump(b.sliceOffLen(offset, ClassicSectorKey.KEY_LEN),
                         type, bundle)
 
         @Throws(JSONException::class)

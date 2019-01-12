@@ -28,6 +28,7 @@ import org.jetbrains.annotations.NonNls;
 import java.util.Calendar;
 
 import au.id.micolous.metrodroid.util.Utils;
+import au.id.micolous.metrodroid.xml.ImmutableByteArray;
 
 public class CEPASTransaction implements Parcelable {
     public static final Parcelable.Creator<CEPASTransaction> CREATOR = new Parcelable.Creator<CEPASTransaction>() {
@@ -44,20 +45,15 @@ public class CEPASTransaction implements Parcelable {
     private final Calendar mDate;
     private final String mUserData;
 
-    public CEPASTransaction(byte[] rawData) {
-        mType = rawData[0];
+    public CEPASTransaction(ImmutableByteArray rawData) {
+        mType = rawData.get(0);
 
-        mAmount = Utils.getBitsFromBufferSigned(rawData, 8, 24);
+        mAmount = rawData.getBitsFromBufferSigned(8, 24);
 
         /* Date is expressed "in seconds", but the epoch is January 1 1995, SGT */
-        long timestamp = Utils.byteArrayToLong(rawData, 4, 4);
+        long timestamp = rawData.byteArrayToLong(4, 4);
         mDate = EZLinkTransitData.timestampToCalendar(timestamp);
-
-        byte[] userData = new byte[9];
-        System.arraycopy(rawData, 8, userData, 0, 8);
-        //noinspection MagicCharacter
-        userData[8] = '\0';
-        mUserData = new String(userData, Utils.getASCII());
+        mUserData = rawData.sliceOffLen(8, 8).readASCII();
     }
 
     private CEPASTransaction(Parcel source) {

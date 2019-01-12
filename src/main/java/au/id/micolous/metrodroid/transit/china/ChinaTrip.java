@@ -27,6 +27,7 @@ import java.util.Calendar;
 import au.id.micolous.metrodroid.transit.TransitCurrency;
 import au.id.micolous.metrodroid.transit.Trip;
 import au.id.micolous.metrodroid.util.Utils;
+import au.id.micolous.metrodroid.xml.ImmutableByteArray;
 
 public class ChinaTrip extends Trip {
     private final long mTime;
@@ -113,13 +114,13 @@ public class ChinaTrip extends Trip {
         return getTimestamp();
     }
 
-    protected ChinaTrip(byte[] data) {
+    protected ChinaTrip(ImmutableByteArray data) {
         // 2 bytes counter
         // 3 bytes zero
         // 4 bytes cost
-        mCost = Utils.byteArrayToInt(data, 5,4);
-        mType = data[9];
-        mStation = Utils.byteArrayToLong(data, 10, 6);
-        mTime = Utils.byteArrayToLong(data, 16, 7);
+        mCost = data.byteArrayToInt(5,4);
+        mType = data.get(9);
+        mStation = data.byteArrayToLong(10, 6);
+        mTime = data.byteArrayToLong(16, 7);
     }
 }

@@ -53,6 +53,7 @@ import au.id.micolous.metrodroid.transit.unknown.UnauthorizedDesfireTransitData;
 import au.id.micolous.metrodroid.ui.ListItem;
 import au.id.micolous.metrodroid.ui.ListItemRecursive;
 import au.id.micolous.metrodroid.util.Utils;
+import au.id.micolous.metrodroid.xml.ImmutableByteArray;
 
 import org.simpleframework.xml.Element;
 import org.simpleframework.xml.ElementList;
@@ -91,10 +92,11 @@ public class DesfireCard extends Card {
 
     private DesfireCard() { /* For XML Serializer */ }
 
-    public DesfireCard(byte[] tagId, Calendar scannedAt, DesfireManufacturingData manfData, DesfireApplication[] apps) {
+    public DesfireCard(ImmutableByteArray tagId, Calendar scannedAt, DesfireManufacturingData manfData,
+                       List<DesfireApplication> apps) {
         super(CardType.MifareDesfire, tagId, scannedAt);
         mManfData = manfData;
-        mApplications = Arrays.asList(apps);
+        mApplications = apps;
     }
 
     /**
@@ -191,20 +193,15 @@ public class DesfireCard extends Card {
                     progress++;
                 }
 
-                DesfireFile[] filesArray = new DesfireFile[files.size()];
-                files.toArray(filesArray);
-
-                apps.add(new DesfireApplication(appId, filesArray, authLog));
+                apps.add(new DesfireApplication(appId, files, authLog));
             }
-
-            appsArray = new DesfireApplication[apps.size()];
-            apps.toArray(appsArray);
         } finally {
             if (tech.isConnected())
                 tech.close();
         }
 
-        return new DesfireCard(tag.getId(), GregorianCalendar.getInstance(), manufData, appsArray);
+        return new DesfireCard(ImmutableByteArray.Companion.fromByteArray(tag.getId()),
+                GregorianCalendar.getInstance(), manufData, apps);
     }
 
     /**

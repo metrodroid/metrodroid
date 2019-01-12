@@ -130,7 +130,7 @@ public class LeapUnlocker implements DesfireUnlocker {
             Log.e(TAG, "File 1 not found");
             return null;
         }
-        byte[] file1 = file1Desc.getData();
+        byte[] file1 = file1Desc.getData().getDataCopy();
         byte[] challenge = desfireTag.sendUnlock(0x0d);
 
         Leap.LeapMessage request1 = Leap.LeapMessage.newBuilder()
@@ -140,7 +140,7 @@ public class LeapUnlocker implements DesfireUnlocker {
                         .setQuery(ByteString.copyFrom(new byte[]{
                                 DesfireProtocol.GET_MANUFACTURING_DATA
                         }))
-                        .setResponse(ze.concat(ByteString.copyFrom(mManufData.getRaw())))
+                        .setResponse(ze.concat(ByteString.copyFrom(mManufData.getRaw().getDataCopy())))
                 )
                 .addCmds(Leap.LeapDesFireCommand.newBuilder()
                         .setQuery(ByteString.copyFrom(new byte[]{
@@ -185,7 +185,7 @@ public class LeapUnlocker implements DesfireUnlocker {
             return null;
         }
 
-        byte[] file1f = file1fDesc.getData();
+        byte[] file1f = file1fDesc.getData().getDataCopy();
 
         Leap.LeapMessage request2 = Leap.LeapMessage.newBuilder()
                 .setApplicationId(mApplicationId)

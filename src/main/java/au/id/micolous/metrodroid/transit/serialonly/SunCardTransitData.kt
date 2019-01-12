@@ -27,7 +27,6 @@ import au.id.micolous.metrodroid.card.classic.ClassicSector
 import au.id.micolous.metrodroid.transit.CardInfo
 import au.id.micolous.metrodroid.transit.TransitIdentity
 import au.id.micolous.metrodroid.ui.ListItem
-import au.id.micolous.metrodroid.util.Utils
 import kotlinx.android.parcel.Parcelize
 import java.util.*
 
@@ -69,7 +68,7 @@ data class SunCardTransitData(private val mSerial: Int = 0) : SerialOnlyTransitD
 
         private fun formatBarcodeSerial(serial: Int) = "799366314176000637426%010d".format(Locale.ENGLISH, serial)
 
-        private fun getSerial(card: ClassicCard) = Utils.byteArrayToInt(card[0, 1].data, 3, 4)
+        private fun getSerial(card: ClassicCard) = card[0, 1].data.byteArrayToInt(3, 4)
 
         val FACTORY: ClassicCardTransitFactory = object : ClassicCardTransitFactory {
             override fun parseTransitIdentity(card: ClassicCard) = TransitIdentity(NAME,
@@ -80,7 +79,7 @@ data class SunCardTransitData(private val mSerial: Int = 0) : SerialOnlyTransitD
             override fun earlyCheck(sectors: List<ClassicSector>) =
                 // I hope it is magic as other than zeros, ff's and serial there is nothing
                 // on the card
-                Utils.byteArrayToInt(sectors[0][1].data, 7, 4) == 0x070515ff
+                    sectors[0][1].data.byteArrayToInt(7, 4) == 0x070515ff
 
             override fun earlySectors() = 1
 

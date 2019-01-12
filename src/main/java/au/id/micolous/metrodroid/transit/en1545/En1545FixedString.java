@@ -21,6 +21,8 @@ package au.id.micolous.metrodroid.transit.en1545;
 
 import org.jetbrains.annotations.NonNls;
 
+import au.id.micolous.metrodroid.xml.ImmutableByteArray;
+
 public class En1545FixedString implements En1545Field {
     private final int mLen;
     private final String mName;
@@ -31,15 +33,15 @@ public class En1545FixedString implements En1545Field {
     }
 
     @Override
-    public int parseField(byte[] b, int off, String path, En1545Parsed holder, En1545Bits bitParser) {
+    public int parseField(ImmutableByteArray b, int off, String path, En1545Parsed holder, En1545Bits bitParser) {
         holder.insertString(mName, path, parseString(b, off, mLen, bitParser));
         return off + mLen;
     }
 
-    private static String parseString(byte[] bin, int start, int length, En1545Bits bitParser) {
+    private static String parseString(ImmutableByteArray bin, int start, int length, En1545Bits bitParser) {
         int i, j = 0, lastNonSpace = 0;
         @NonNls StringBuilder ret = new StringBuilder();
-        for (i = start; i + 4 < start + length && i + 4 < bin.length * 8; i += 5) {
+        for (i = start; i + 4 < start + length && i + 4 < bin.getSize() * 8; i += 5) {
             int bl;
             try {
                 bl = bitParser.getBitsFromBuffer(bin, i, 5);

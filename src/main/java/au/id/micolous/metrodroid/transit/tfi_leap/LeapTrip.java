@@ -17,6 +17,7 @@ import au.id.micolous.metrodroid.transit.TransitCurrency;
 import au.id.micolous.metrodroid.transit.Trip;
 import au.id.micolous.metrodroid.util.StationTableReader;
 import au.id.micolous.metrodroid.util.Utils;
+import au.id.micolous.metrodroid.xml.ImmutableByteArray;
 
 public class LeapTrip extends Trip implements Comparable<LeapTrip> {
     public static final Creator<LeapTrip> CREATOR = new Creator<LeapTrip>() {
@@ -251,14 +252,14 @@ public class LeapTrip extends Trip implements Comparable<LeapTrip> {
     }
 
     @Nullable
-    public static LeapTrip parseTopup(byte []file, int offset) {
+    public static LeapTrip parseTopup(ImmutableByteArray file, int offset) {
         if (isNull(file, offset, 9)) {
             return null;
         }
 
         // 3 bytes serial
         Calendar c = LeapTransitData.parseDate(file, offset+3);
-        int agency = Utils.byteArrayToInt(file, offset+7, 2);
+        int agency = file.byteArrayToInt(offset+7, 2);
         // 2 bytes agency again
         // 2 bytes unknown
         // 1 byte counter
@@ -275,7 +276,7 @@ public class LeapTrip extends Trip implements Comparable<LeapTrip> {
     private boolean isMergeable(LeapTrip leapTrip) {
         if (mAgency != leapTrip.mAgency)
             return false;
-        if (mMode != null && leapTrip.mMode != null && !mMode.equals(leapTrip.mMode))
+        if (mMode != null && leapTrip.mMode != null && mMode != leapTrip.mMode)
             return false;
         return mStart == null || leapTrip.mStart == null || mStart.isMergeable(leapTrip.mStart);
     }
@@ -293,29 +294,21 @@ public class LeapTrip extends Trip implements Comparable<LeapTrip> {
             mMode = trip.mMode;
     }
 
-    private static boolean isNull(byte[] data, int offset, int length) {
-        boolean allNull = true;
-        for (byte b : ArrayUtils.subarray(data, offset, offset + length)) {
-            if (b != 0) {
-                allNull = false;
-                break;
-            }
-        }
-
-        return allNull;
+    private static boolean isNull(ImmutableByteArray data, int offset, int length) {
+        return data.sliceOffLen(offset, length).isAllZero();
     }
 
     @Nullable
-    public static LeapTrip parsePurseTrip(byte[] file, int offset) {
+    public static LeapTrip parsePurseTrip(ImmutableByteArray file, int offset) {
         if (isNull(file, offset, 7)) {
             return null;
         }
 
-        int eventCode = file[offset]&0xff;
+        int eventCode = file.get(offset)&0xff;
         Calendar c = LeapTransitData.parseDate(file, offset+1);
         int amount = LeapTransitData.parseBalance(file, offset+5);
         // 3 bytes unknown
-        int agency = Utils.byteArrayToInt(file, offset+0xb, 2);
+        int agency = file.byteArrayToInt(offset+0xb, 2);
         // 2 bytes unknown
         // 1 byte counter
         LeapTripPoint event = new LeapTripPoint(c, amount, eventCode, null);
@@ -327,22 +320,22 @@ public class LeapTrip extends Trip implements Comparable<LeapTrip> {
     }
 
     @Nullable
-    public static LeapTrip parseTrip(byte[] file, int offset) {
+    public static LeapTrip parseTrip(ImmutableByteArray file, int offset) {
         if (isNull(file, offset, 7)) {
             return null;
         }
 
-        int eventCode2 = file[offset] & 0xff;
+        int eventCode2 = file.get(offset) & 0xff;
         Calendar eventTime = LeapTransitData.parseDate(file, offset+1);
-        int agency = Utils.byteArrayToInt(file, offset+5, 2);
+        int agency = file.byteArrayToInt(offset+5, 2);
         // 0xd bytes unknown
         int amount = LeapTransitData.parseBalance(file, offset+0x14);
         // 3 bytes balance after event
         // 0x22 bytes unknown
-        int eventCode = file[offset+0x39]&0xff;
+        int eventCode = file.get(offset+0x39)&0xff;
         // 8 bytes unknown
-        int from = Utils.byteArrayToInt(file, offset+0x42, 2);
-        int to = Utils.byteArrayToInt(file, offset+0x44, 2);
+        int from = file.byteArrayToInt(offset+0x42, 2);
+        int to = file.byteArrayToInt(offset+0x44, 2);
         // 0x10 bytes unknown
         Calendar startTime = LeapTransitData.parseDate(file, offset+0x56);
         // 0x27 bytes unknown

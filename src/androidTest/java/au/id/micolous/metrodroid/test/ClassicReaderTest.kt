@@ -65,7 +65,7 @@ class ClassicReaderTest : BaseInstrumentedTest() {
             for (block in 0 until blockCount - 1) {
                 TestCase.assertFalse ("$addMsg: Sector $idx, block $block should be ok but isn't",
                         read[idx, block].isUnauthorized)
-                val actual = read[idx, block].immutableData!!
+                val actual = read[idx, block].data!!
                 val expected = raw.copyOfRange(blockOffset * 16,
                         (blockOffset + 1) * 16)
                 TestCase.assertTrue (
@@ -90,7 +90,7 @@ class ClassicReaderTest : BaseInstrumentedTest() {
 
             val accBitsExpected = raw.copyOfRange(blockOffset * 16 + 6,
                     blockOffset * 16 + 10)
-            val accBitsActual = read[idx, blockCount - 1].immutableData.copyOfRange(6, 10)
+            val accBitsActual = read[idx, blockCount - 1].data.copyOfRange(6, 10)
             TestCase.assertTrue(
                     "$addMsg: access bits don't match: $accBitsActual expected: $accBitsExpected",
                     accBitsActual.contentEquals(accBitsExpected))

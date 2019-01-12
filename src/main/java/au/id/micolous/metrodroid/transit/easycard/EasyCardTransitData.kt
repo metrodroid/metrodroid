@@ -29,7 +29,7 @@ import au.id.micolous.metrodroid.card.classic.ClassicCard
 import au.id.micolous.metrodroid.card.classic.ClassicCardTransitFactory
 import au.id.micolous.metrodroid.card.classic.ClassicSector
 import au.id.micolous.metrodroid.transit.*
-import au.id.micolous.metrodroid.util.Utils
+import au.id.micolous.metrodroid.xml.ImmutableByteArray
 import kotlinx.android.parcel.Parcelize
 import java.util.*
 
@@ -66,16 +66,12 @@ data class EasyCardTransitData internal constructor(
                 .setPreview()
                 .build()
 
-        internal val MAGIC = byteArrayOf(
-                0x0e, 0x14, 0x00, 0x01,
-                0x07, 0x02, 0x08, 0x03,
-                0x09, 0x04, 0x08, 0x10,
-                0x00, 0x00, 0x00, 0x00)
+        internal val MAGIC = ImmutableByteArray.fromHex("0e140001070208030904081000000000")
 
         internal const val EASYCARD_STR = "easycard"
 
         private fun parseBalance(card: ClassicCard): Int {
-            return Utils.byteArrayToIntReversed(card[2, 0].data, 0, 4)
+            return card[2, 0].data.byteArrayToIntReversed(0, 4)
         }
 
         internal fun parseTimestamp(ts: Long?): Calendar? {
@@ -86,7 +82,7 @@ data class EasyCardTransitData internal constructor(
 
         val FACTORY = object : ClassicCardTransitFactory {
             override fun earlyCheck(sectors: List<ClassicSector>) = sectors[0][1].data?.let {
-                Arrays.equals(it, MAGIC)
+                it == MAGIC
             } ?: false
 
             override fun earlySectors() = 1

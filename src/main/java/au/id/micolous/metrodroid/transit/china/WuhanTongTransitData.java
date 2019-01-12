@@ -34,6 +34,7 @@ import au.id.micolous.metrodroid.transit.CardInfo;
 import au.id.micolous.metrodroid.transit.TransitData;
 import au.id.micolous.metrodroid.transit.TransitIdentity;
 import au.id.micolous.metrodroid.util.Utils;
+import au.id.micolous.metrodroid.xml.ImmutableByteArray;
 
 // Reference: https://github.com/sinpolib/nfcard/blob/master/src/com/sinpo/xnfc/nfc/reader/pboc/WuhanTong.java
 public class WuhanTongTransitData extends ChinaTransitData {
@@ -59,16 +60,16 @@ public class WuhanTongTransitData extends ChinaTransitData {
     private WuhanTongTransitData(ChinaCard card) {
         super(card);
         mSerial = parseSerial(card);
-        byte[] file5 = getFile(card, 0x5).getBinaryData();
+        ImmutableByteArray file5 = getFile(card, 0x5).getBinaryData();
 
         if (file5 != null) {
-            mValidityStart = Utils.byteArrayToInt(file5, 20, 4);
-            mValidityEnd = Utils.byteArrayToInt(file5, 16, 4);
+            mValidityStart = file5.byteArrayToInt(20, 4);
+            mValidityEnd = file5.byteArrayToInt(16, 4);
         }
     }
 
     @Override
-    protected ChinaTrip parseTrip(byte[] data) {
+    protected ChinaTrip parseTrip(ImmutableByteArray data) {
         return new ChinaTrip(data);
     }
 
@@ -95,8 +96,8 @@ public class WuhanTongTransitData extends ChinaTransitData {
 
     public final static ChinaCardTransitFactory FACTORY = new ChinaCardTransitFactory() {
         @Override
-        public List<byte[]> getAppNames() {
-            return Collections.singletonList(Utils.stringToByteArray("AP1.WHCTC"));
+        public List<ImmutableByteArray> getAppNames() {
+            return Collections.singletonList(ImmutableByteArray.Companion.fromASCII("AP1.WHCTC"));
         }
 
         @Override
@@ -121,6 +122,6 @@ public class WuhanTongTransitData extends ChinaTransitData {
 
         if (filea == null)
             return null;
-        return Utils.getHexString(filea.getBinaryData(), 0, 5);
+        return filea.getBinaryData().getHexString(0, 5);
     }
 }

@@ -31,6 +31,7 @@ import java.util.GregorianCalendar;
 import au.id.micolous.farebot.R;
 import au.id.micolous.metrodroid.MetrodroidApplication;
 import au.id.micolous.metrodroid.util.Utils;
+import au.id.micolous.metrodroid.xml.ImmutableByteArray;
 
 final class SuicaUtil {
 
@@ -38,13 +39,13 @@ final class SuicaUtil {
     }
 
     @Nullable
-    static Calendar extractDate(boolean isProductSale, byte[] data) {
-        if (Arrays.equals(Utils.byteArraySlice(data, 4, 2), new byte[] { 0, 0 })) {
+    static Calendar extractDate(boolean isProductSale, ImmutableByteArray data) {
+        if (data.byteArrayToInt(4, 2) == 0) {
             return null;
         }
-        int yy = Utils.getBitsFromBuffer(data, 32, 7);
-        int mm = Utils.getBitsFromBuffer(data, 32+7, 4);
-        int dd = Utils.getBitsFromBuffer(data, 32+11, 5);
+        int yy = data.getBitsFromBuffer(32, 7);
+        int mm = data.getBitsFromBuffer(32+7, 4);
+        int dd = data.getBitsFromBuffer(32+11, 5);
         Calendar c = new GregorianCalendar(SuicaTransitData.TIME_ZONE);
         c.set(Calendar.YEAR, 2000 + yy);
         c.set(Calendar.MONTH, mm - 1);
@@ -53,8 +54,8 @@ final class SuicaUtil {
         // Product sales have time, too.
         // 物販だったら時s間もセット
         if (isProductSale) {
-            int hh = Utils.getBitsFromBuffer(data, 48, 5);
-            int min = Utils.getBitsFromBuffer (data, 48+5, 6);
+            int hh = data.getBitsFromBuffer(48, 5);
+            int min = data.getBitsFromBuffer(48+5, 6);
             c.set(Calendar.HOUR_OF_DAY, hh);
             c.set(Calendar.MINUTE, min);
         } else {

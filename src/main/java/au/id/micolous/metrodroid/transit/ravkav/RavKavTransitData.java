@@ -43,6 +43,7 @@ import au.id.micolous.metrodroid.transit.en1545.En1545Subscription;
 import au.id.micolous.metrodroid.transit.en1545.En1545Transaction;
 import au.id.micolous.metrodroid.ui.ListItem;
 import au.id.micolous.metrodroid.util.Utils;
+import au.id.micolous.metrodroid.xml.ImmutableByteArray;
 
 // Reference: https://github.com/L1L1/cardpeek/blob/master/dot_cardpeek_dir/scripts/calypso/c376n3.lua
 // supplemented with personal experimentation
@@ -86,7 +87,7 @@ public class RavKavTransitData extends Calypso1545TransitData {
     }
 
     private static String getSerial(CalypsoApplication card) {
-        return Long.toString(Utils.byteArrayToLong(card.getTagId()));
+        return Long.toString(card.getTagId().byteArrayToLong());
     }
 
     public final static CalypsoCardTransitFactory FACTORY = new CalypsoCardTransitFactory() {
@@ -102,9 +103,9 @@ public class RavKavTransitData extends Calypso1545TransitData {
         }
 
         @Override
-        public boolean check(byte[] ticketEnv) {
+        public boolean check(ImmutableByteArray ticketEnv) {
             try {
-                int networkID = Utils.getBitsFromBuffer(ticketEnv, 3, 20);
+                int networkID = ticketEnv.getBitsFromBuffer(3, 20);
                 return RAVKAV_NETWORK_ID_A == networkID || RAVKAV_NETWORK_ID_B == networkID;
             } catch (Exception e) {
                 return false;
@@ -112,7 +113,7 @@ public class RavKavTransitData extends Calypso1545TransitData {
         }
 
         @Override
-        public CardInfo getCardInfo(byte[] tenv) {
+        public CardInfo getCardInfo(ImmutableByteArray tenv) {
             return CARD_INFO;
         }
 
@@ -123,13 +124,13 @@ public class RavKavTransitData extends Calypso1545TransitData {
     };
 
     @Override
-    protected En1545Subscription createSubscription(byte[] data, En1545Parsed contractList,
+    protected En1545Subscription createSubscription(ImmutableByteArray data, En1545Parsed contractList,
                                                     Integer listNum, int recordNum, Integer counter) {
         return new RavKavSubscription(data, counter);
     }
 
     @Override
-    protected En1545Transaction createTrip(byte[] data) {
+    protected En1545Transaction createTrip(ImmutableByteArray data) {
         RavKavTransaction t = new RavKavTransaction(data);
         if (t.shouldBeDropped())
             return null;

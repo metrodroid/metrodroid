@@ -24,6 +24,7 @@ import android.support.annotation.NonNull;
 import java.util.Locale;
 
 import au.id.micolous.metrodroid.util.Utils;
+import au.id.micolous.metrodroid.xml.ImmutableByteArray;
 
 /**
  * Represents a balance record.
@@ -41,20 +42,20 @@ public class ErgBalanceRecord extends ErgRecord implements Comparable<ErgBalance
         mAgency = agency;
     }
 
-    public static ErgBalanceRecord recordFromBytes(byte[] input) {
+    public static ErgBalanceRecord recordFromBytes(ImmutableByteArray input) {
         //if (input[0] != 0x01) throw new AssertionError();
 
-        if (input[7] != 0x00 || input[8] != 0x00) {
+        if (input.get(7) != 0x00 || input.get(8) != 0x00) {
             // There is another record type that gets mixed in here, which has these
             // bytes set to non-zero values. In that case, it is not the balance record.
             return null;
         }
 
         return new ErgBalanceRecord(
-                Utils.byteArrayToInt(input, 11, 4),
-                Utils.byteArrayToInt(input, 1, 2),
+                input.byteArrayToInt(11, 4),
+                input.byteArrayToInt(1, 2),
                 // Present on MFF, not CHC Metrocard
-                Utils.byteArrayToInt(input, 5, 2));
+                input.byteArrayToInt(5, 2));
     }
 
     /**

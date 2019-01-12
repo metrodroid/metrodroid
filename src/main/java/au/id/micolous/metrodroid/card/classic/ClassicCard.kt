@@ -62,21 +62,20 @@ class ClassicCard @JvmOverloads constructor(tagId: ImmutableByteArray,
     : Card(CardType.MifareClassic, tagId, scannedAt, partialRead) {
 
     /* For XML serializer. */
-    constructor() : this(tagId = byteArrayOf().toImmutable(),
+    constructor() : this(tagId = ImmutableByteArray.empty(),
             scannedAt = null,
             sectors = listOf(),
             partialRead = false)
 
     /* For XML serializer. */
     constructor(@ElementList(name = "sectors")
-                sectors: List<ClassicSector>) : this(tagId = byteArrayOf().toImmutable(),
+                sectors: List<ClassicSector>) : this(tagId = ImmutableByteArray.empty(),
             scannedAt = null,
             sectors = sectors,
             partialRead = false)
 
-    constructor(uid: ByteArray, scannedAt: Calendar, sectors: List<ClassicSector>, partialRead: Boolean) :
-            this(tagId = ImmutableByteArray.fromByteArray(uid), scannedAt = scannedAt,
-                    sectors = sectors, partialRead = partialRead)
+    constructor(uid: ByteArray, scannedAt: Calendar?, sectors: List<ClassicSector>, partialRead: Boolean)
+            : this(tagId=uid.toImmutable(), scannedAt = scannedAt, sectors = sectors, partialRead = partialRead)
 
     private fun findTransitFactory(): ClassicCardTransitFactory? {
         for (factory in allFactories) {

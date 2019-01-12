@@ -31,6 +31,7 @@ import au.id.micolous.metrodroid.card.desfire.files.DesfireRecord;
 import au.id.micolous.metrodroid.transit.TransitCurrency;
 import au.id.micolous.metrodroid.transit.Trip;
 import au.id.micolous.metrodroid.util.Utils;
+import au.id.micolous.metrodroid.xml.ImmutableByteArray;
 
 public class HSLTrip extends Trip {
     public static final Creator<HSLTrip> CREATOR = new Creator<HSLTrip>() {
@@ -52,24 +53,24 @@ public class HSLTrip extends Trip {
     int mPax;
 
     public HSLTrip(DesfireRecord record) {
-        byte[] useData = record.getData();
+        ImmutableByteArray useData = record.getData();
 
-        mArvo = Utils.getBitsFromBuffer(useData, 0, 1);
+        mArvo = useData.getBitsFromBuffer(0, 1);
 
         mTimestamp = HSLTransitData.cardDateToCalendar(
-                Utils.getBitsFromBuffer(useData, 1, 14),
-                Utils.getBitsFromBuffer(useData, 15, 11));
+                useData.getBitsFromBuffer(1, 14),
+                useData.getBitsFromBuffer(15, 11));
         mExpireTimestamp = HSLTransitData.cardDateToCalendar(
-                Utils.getBitsFromBuffer(useData, 26, 14),
-                Utils.getBitsFromBuffer(useData, 40, 11));
+                useData.getBitsFromBuffer(26, 14),
+                useData.getBitsFromBuffer(40, 11));
 
-        mFare = Utils.getBitsFromBuffer(useData, 51, 14);
+        mFare = useData.getBitsFromBuffer(51, 14);
 
-        mPax = Utils.getBitsFromBuffer(useData, 65, 5);
+        mPax = useData.getBitsFromBuffer(65, 5);
         mLine = null;
         mVehicleNumber = -1;
 
-        mNewBalance = Utils.getBitsFromBuffer(useData, 70, 20);
+        mNewBalance = useData.getBitsFromBuffer(70, 20);
 
     }
 

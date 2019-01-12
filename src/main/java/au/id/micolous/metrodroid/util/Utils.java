@@ -100,6 +100,7 @@ import au.id.micolous.farebot.R;
 import au.id.micolous.metrodroid.MetrodroidApplication;
 import au.id.micolous.metrodroid.key.ClassicCardKeys;
 import au.id.micolous.metrodroid.key.ClassicSectorKey;
+import au.id.micolous.metrodroid.xml.ImmutableByteArray;
 
 public class Utils {
     private static final String TAG = "Utils";
@@ -826,12 +827,8 @@ public class Utils {
     }
 
     @SuppressWarnings("SameParameterValue")
-    private static int calculateCRCReversed(byte[]data, int init, int[] table) {
-        int cur = init;
-        for (byte b : data) {
-            cur = (cur >> 8) ^ table[(cur ^ b) & 0xff];
-        }
-        return cur;
+    private static int calculateCRCReversed(ImmutableByteArray data, int init, int[] table) {
+        return data.fold(init, (cur1, b) -> (cur1 >> 8) ^ table[(cur1 ^ b) & 0xff]);
     }
 
     @SuppressWarnings("SameParameterValue")
@@ -852,7 +849,7 @@ public class Utils {
 
     private static final int[] CRC16_IBM_TABLE = getCRCTableReversed(0xa001);
 
-    public static int calculateCRC16IBM(byte[] data, int crc) {
+    public static int calculateCRC16IBM(ImmutableByteArray data, int crc) {
         return calculateCRCReversed(data, crc, CRC16_IBM_TABLE);
     }
 
@@ -1028,6 +1025,80 @@ public class Utils {
         return stringWriter.getBuffer().toString();
     }
 
+    public static long byteArrayToLong(@NonNull ImmutableByteArray data, int off, int len) {
+        return data.byteArrayToLong(off, len);
+    }
+
+    public static int getBitsFromBuffer(@NonNull ImmutableByteArray data, int off, int len) {
+        return data.getBitsFromBuffer(off, len);
+    }
+
+    public static int getBitsFromBufferLeBits(@NonNull ImmutableByteArray data, int off, int len) {
+        return data.getBitsFromBufferLeBits(off, len);
+    }
+
+    public static int byteArrayToInt(@NonNull ImmutableByteArray data) {
+        return data.byteArrayToInt();
+    }
+
+    @NonNull
+    public static String getHexString(@NonNull ImmutableByteArray data) {
+        return data.toHexString();
+    }
+
+    public static int byteArrayToInt(@NonNull ImmutableByteArray data, int off, int len) {
+        return data.byteArrayToInt(off, len);
+    }
+
+    public static int byteArrayToIntReversed(@NonNull ImmutableByteArray data, int off, int len) {
+        return data.byteArrayToIntReversed(off, len);
+    }
+
+    @NonNull
+    public static String getHexString(@NonNull ImmutableByteArray data, int off, int len) {
+        return data.getHexString(off, len);
+    }
+
+    public static long byteArrayToLongReversed(@NonNull ImmutableByteArray data, int off, int len) {
+        return data.byteArrayToLongReversed(off, len);
+    }
+
+    public static boolean isAllZero(@NonNull ImmutableByteArray data) {
+        return data.isAllZero();
+    }
+
+    public static long byteArrayToLong(@NonNull ImmutableByteArray data) {
+        return data.byteArrayToLong();
+    }
+
+    public static int getBitsFromBufferSigned(@NonNull ImmutableByteArray data, int off, int len) {
+        return data.getBitsFromBufferSigned(off, len);
+    }
+
+    @NonNull
+    public static ImmutableByteArray byteArraySlice(@NonNull ImmutableByteArray data, int off, int len) {
+        return data.sliceOffLen(off, len);
+    }
+
+    @NonNull
+    public static SpannableString getHexDump(@NonNull ImmutableByteArray b, String defaultResult) {
+        try {
+            return b.toHexDump();
+        } catch (Exception ex) {
+            return new SpannableString(defaultResult);
+        }
+    }
+
+    @NonNls
+    @NonNull
+    public static String getHexString(@NonNull ImmutableByteArray b, String defaultResult) {
+        try {
+            return b.toHexString();
+        } catch (Exception ex) {
+            return defaultResult;
+        }
+    }
+
     public interface Matcher<T> {
         boolean matches(T t);
     }
@@ -1122,7 +1193,7 @@ public class Utils {
      *         found, or there was some other error with the input.
      */
     @VisibleForTesting
-    public static int checkKeyHash(@NonNull byte[] key, @NonNull String salt, String... expectedHashes) {
+    public static int checkKeyHash(@NonNull ImmutableByteArray key, @NonNull String salt, String... expectedHashes) {
         MessageDigest md5;
         @NonNls String digest;
 
@@ -1141,7 +1212,7 @@ public class Utils {
         }
 
         md5.update(salt.getBytes(getASCII()));
-        md5.update(key);
+        key.updateDigest(md5);
         md5.update(salt.getBytes(getASCII()));
 
         digest = getHexString(md5.digest());
@@ -1179,7 +1250,7 @@ public class Utils {
     /**
      * Checks a keyhash with a {@link ClassicSectorKey}.
      *
-     * See {@link #checkKeyHash(byte[], String, String...)} for further information.
+     * See {@link #checkKeyHash(ImmutableByteArray, String, String...)} for further information.
      *
      * @param key The key to check. If this is null, then this will always return a value less than
      *            0 (ie: error).
@@ -1187,7 +1258,7 @@ public class Utils {
     public static int checkKeyHash(@Nullable ClassicSectorKey key, @NonNull String salt, String... expectedHashes) {
         if (key == null)
             return -1;
-        return checkKeyHash(key.getKey().getDataCopy(), salt, expectedHashes);
+        return checkKeyHash(key.getKey(), salt, expectedHashes);
     }
 
     public static void copyTextToClipboard(Context context, String label, String text) {

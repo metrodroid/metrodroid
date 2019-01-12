@@ -22,12 +22,11 @@ package au.id.micolous.metrodroid.card.iso7816
 
 import au.id.micolous.metrodroid.ui.ListItem
 import au.id.micolous.metrodroid.ui.ListItemRecursive
-import au.id.micolous.metrodroid.util.Utils
-import java.lang.Exception
+import au.id.micolous.metrodroid.xml.ImmutableByteArray
 
 object ISO7816TLV {
     // return: <leadBits, id, idlen>
-    private fun getTLVIDLen(buf: ByteArray, p: Int): Int {
+    private fun getTLVIDLen(buf: ImmutableByteArray, p: Int): Int {
         if (buf[p].toInt() and 0x1f != 0x1f)
             return 1
         var len = 1
@@ -36,19 +35,19 @@ object ISO7816TLV {
     }
 
     // return lenlen, lenvalue
-    private fun decodeTLVLen(buf: ByteArray, p: Int): IntArray {
+    private fun decodeTLVLen(buf: ImmutableByteArray, p: Int): IntArray {
         val headByte = buf[p].toInt() and 0xff
         if (headByte shr 7 == 0)
             return intArrayOf(1, headByte and 0x7f)
         val numfollowingbytes = headByte and 0x7f
         return intArrayOf(1 + numfollowingbytes,
-                Utils.byteArrayToInt(buf, p + 1, numfollowingbytes))
+                buf.byteArrayToInt(p + 1, numfollowingbytes))
     }
 
-    fun berTlvIterate(buf: ByteArray,
-                              iterator: (id: ByteArray,
-                                         header: ByteArray,
-                                         data: ByteArray) -> Unit) {
+    fun berTlvIterate(buf: ImmutableByteArray,
+                      iterator: (id: ImmutableByteArray,
+                                 header: ImmutableByteArray,
+                                 data: ImmutableByteArray) -> Unit) {
         // Skip ID
         var p = getTLVIDLen(buf, 0)
         val (startoffset, fulllen) = decodeTLVLen(buf, p)
@@ -57,57 +56,57 @@ object ISO7816TLV {
         while (p < fulllen) {
             val idlen = getTLVIDLen(buf, p)
             val (lenlen, datalen) = decodeTLVLen(buf, p + idlen)
-            iterator(Utils.byteArraySlice(buf, p, idlen),
-                    Utils.byteArraySlice(buf, p, idlen + lenlen),
-                    Utils.byteArraySlice(buf, p + idlen + lenlen, datalen))
+            iterator(buf.sliceOffLen(p, idlen),
+                    buf.sliceOffLen(p, idlen + lenlen),
+                    buf.sliceOffLen(p + idlen + lenlen, datalen))
 
             p += idlen + lenlen + datalen
         }
     }
 
-    fun pdolIterate(buf: ByteArray,
-                    iterator: (id: ByteArray,
+    fun pdolIterate(buf: ImmutableByteArray,
+                    iterator: (id: ImmutableByteArray,
                                len: Int) -> Unit) {
         var p = 0
 
         while (p < buf.size) {
             val idlen = getTLVIDLen(buf, p)
             val (lenlen, datalen) = decodeTLVLen(buf, p + idlen)
-            iterator(Utils.byteArraySlice(buf, p, idlen), datalen)
+            iterator(buf.sliceOffLen(p, idlen), datalen)
 
             p += idlen + lenlen
         }
     }
 
-    fun findBERTLV(buf: ByteArray, target: String, keepHeader: Boolean): ByteArray? {
-        var result: ByteArray? = null
+    fun findBERTLV(buf: ImmutableByteArray, target: String, keepHeader: Boolean): ImmutableByteArray? {
+        var result: ImmutableByteArray? = null
         berTlvIterate(buf) { id, header, data ->
-            if (Utils.getHexString(id) == target) {
+            if (id.toHexString() == target) {
                 result = if (keepHeader) header + data else data
             }
         }
         return result
     }
 
-    fun infoBerTLV(buf: ByteArray): List<ListItem> {
+    fun infoBerTLV(buf: ImmutableByteArray): List<ListItem> {
         val result = mutableListOf<ListItem>()
         berTlvIterate(buf) { id, header, data ->
             if (id[0].toInt() and 0xe0 == 0xa0)
                 try {
-                    result.add(ListItemRecursive(Utils.getHexString(id),
+                    result.add(ListItemRecursive(id.toHexString(),
                             null, infoBerTLV(header + data)))
                 } catch (e: Exception) {
-                    result.add(ListItem(Utils.getHexDump(id), Utils.getHexDump(data)))
+                    result.add(ListItem(id.toHexDump(), data.toHexDump()))
                 }
             else
-                result.add(ListItem(Utils.getHexDump(id), Utils.getHexDump(data)))
+                result.add(ListItem(id.toHexDump(), data.toHexDump()))
 
         }
         return result
     }
 
-    fun infoWithRaw(buf: ByteArray) = listOfNotNull(
-            ListItemRecursive.collapsedValue("RAW", Utils.getHexDump(buf)),
+    fun infoWithRaw(buf: ImmutableByteArray) = listOfNotNull(
+            ListItemRecursive.collapsedValue("RAW", buf.toHexDump()),
             try {
                 ListItemRecursive("TLV", null, infoBerTLV(buf))
             } catch (e: Exception) {

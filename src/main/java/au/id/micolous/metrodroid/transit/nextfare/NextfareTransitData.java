@@ -53,6 +53,7 @@ import au.id.micolous.metrodroid.transit.nextfare.record.NextfareTravelPassRecor
 import au.id.micolous.metrodroid.ui.HeaderListItem;
 import au.id.micolous.metrodroid.ui.ListItem;
 import au.id.micolous.metrodroid.util.Utils;
+import au.id.micolous.metrodroid.xml.ImmutableByteArray;
 
 /**
  * Generic transit data type for Cubic Nextfare.
@@ -74,16 +75,15 @@ public class NextfareTransitData extends TransitData {
     };
     public static final ClassicCardTransitFactory FALLBACK_FACTORY = new NextFareTransitFactory();
     @VisibleForTesting
-    public static final byte[] MANUFACTURER = {
-            0x16, 0x18, 0x1A, 0x1B,
-            0x1C, 0x1D, 0x1E, 0x1F
-    };
+    public static final ImmutableByteArray MANUFACTURER = ImmutableByteArray.Companion.fromHex(
+           "16181A1B1C1D1E1F"
+    );
     private static final String TAG = "NextfareTransitData";
     protected NextfareConfigRecord mConfig = null;
     protected boolean mHasUnknownStations = false;
     private final long mSerialNumber;
-    private final byte[] mSystemCode;
-    private final byte[] mBlock2;
+    private final ImmutableByteArray mSystemCode;
+    private final ImmutableByteArray mBlock2;
     private final int mBalance;
     private final List<NextfareTrip> mTrips;
     private final List<NextfareSubscription> mSubscriptions;
@@ -97,8 +97,8 @@ public class NextfareTransitData extends TransitData {
         parcel.readTypedList(mTrips, NextfareTrip.CREATOR);
         mSubscriptions = new ArrayList<>();
         parcel.readTypedList(mSubscriptions, NextfareSubscription.CREATOR);
-        mSystemCode = parcel.createByteArray();
-        mBlock2 = parcel.createByteArray();
+        mSystemCode = ImmutableByteArray.Companion.fromParcel(parcel);
+        mBlock2 = ImmutableByteArray.Companion.fromParcel(parcel);
         mCurrency = currency;
 
         mConfig = new NextfareConfigRecord(parcel);
@@ -111,14 +111,14 @@ public class NextfareTransitData extends TransitData {
     protected NextfareTransitData(ClassicCard card, @NonNull String currency) {
         mCurrency = currency;
 
-        byte[] serialData = card.getSector(0).getBlock(0).getData();
-        mSerialNumber = Utils.byteArrayToLongReversed(serialData, 0, 4);
+        ImmutableByteArray serialData = card.getSector(0).getBlock(0).getData();
+        mSerialNumber = serialData.byteArrayToLongReversed(0, 4);
 
-        byte[] magicData = card.getSector(0).getBlock(1).getData();
-        mSystemCode = Arrays.copyOfRange(magicData, 9, 15);
-        Log.d(TAG, "SystemCode = " + Utils.getHexString(mSystemCode));
+        ImmutableByteArray magicData = card.getSector(0).getBlock(1).getData();
+        mSystemCode = magicData.copyOfRange(9, 15);
+        Log.d(TAG, "SystemCode = " + mSystemCode);
         mBlock2 = card.getSector(0).getBlock(2).getData();
-        Log.d(TAG, "Block2 = " + Utils.getHexString(mBlock2));
+        Log.d(TAG, "Block2 = " + mBlock2);
 
         List<NextfareRecord> records = new ArrayList<>();
 
@@ -271,8 +271,8 @@ public class NextfareTransitData extends TransitData {
     protected static class NextFareTransitFactory implements ClassicCardTransitFactory {
         @Override
         public boolean earlyCheck(@NonNull List<ClassicSector> sectors) {
-            byte[] blockData = sectors.get(0).getBlock(1).getData();
-            return Arrays.equals(Arrays.copyOfRange(blockData, 1, 9), MANUFACTURER);
+            ImmutableByteArray blockData = sectors.get(0).getBlock(1).getData();
+            return blockData.copyOfRange(1, 9).contentEquals(MANUFACTURER);
         }
 
         @Override
@@ -281,8 +281,8 @@ public class NextfareTransitData extends TransitData {
         }
 
         protected TransitIdentity parseTransitIdentity(ClassicCard card, String name) {
-            byte[] serialData = card.getSector(0).getBlock(0).getData();
-            long serialNumber = Utils.byteArrayToLongReversed(serialData, 0, 4);
+            ImmutableByteArray serialData = card.getSector(0).getBlock(0).getData();
+            long serialNumber = serialData.byteArrayToLongReversed(0, 4);
             return new TransitIdentity(name, formatSerialNumber(serialNumber));
         }
 
@@ -310,8 +310,8 @@ public class NextfareTransitData extends TransitData {
         parcel.writeInt(mBalance);
         parcel.writeTypedList(mTrips);
         parcel.writeTypedList(mSubscriptions);
-        parcel.writeByteArray(mSystemCode);
-        parcel.writeByteArray(mBlock2);
+        mSystemCode.parcelize(parcel, i);
+        mBlock2.parcelize(parcel, i);
         mConfig.writeToParcel(parcel, i);
     }
 
@@ -439,13 +439,13 @@ public class NextfareTransitData extends TransitData {
         List<ListItem> items = new ArrayList<>();
 
         items.add(new HeaderListItem(R.string.nextfare));
-        items.add(new ListItem(R.string.nextfare_system_code, Utils.getHexDump(mSystemCode)));
+        items.add(new ListItem(R.string.nextfare_system_code, mSystemCode.toHexDump()));
 
         // The Los Angeles Tap and Minneapolis Go-To cards have the same system code, but different
         // data in Block 2.
         items.add(new ListItem(
                 new SpannableString(Utils.localizeString(R.string.block_title_format, 2)),
-                Utils.getHexDump(mBlock2)));
+                mBlock2.toHexDump()));
 
         return items;
     }

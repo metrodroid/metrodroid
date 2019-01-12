@@ -22,6 +22,7 @@ import android.util.Pair
 import au.id.micolous.metrodroid.key.*
 import au.id.micolous.metrodroid.util.KeyFormat
 import au.id.micolous.metrodroid.util.Utils
+import au.id.micolous.metrodroid.xml.toImmutable
 import junit.framework.TestCase. fail
 import junit.framework.TestCase
 import junit.framework.TestCase.assertEquals
@@ -49,7 +50,7 @@ class ImportKeysTest : BaseInstrumentedTest() {
     private fun loadClassicCardRawKeys(path: String): ClassicCardKeys {
         val d = loadTestFile(path)
         TestCase.assertEquals(KeyFormat.RAW_MFC, Utils.detectKeyFormat(d))
-        return ClassicCardKeys.fromDump(d, ClassicSectorKey.KeyType.A)
+        return ClassicCardKeys.fromDump(d.toImmutable(), ClassicSectorKey.KeyType.A)
     }
 
     @Throws(JSONException::class)

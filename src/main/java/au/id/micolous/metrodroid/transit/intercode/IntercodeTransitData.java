@@ -50,6 +50,7 @@ import au.id.micolous.metrodroid.transit.en1545.En1545Parsed;
 import au.id.micolous.metrodroid.transit.en1545.En1545Repeat;
 import au.id.micolous.metrodroid.ui.ListItem;
 import au.id.micolous.metrodroid.util.Utils;
+import au.id.micolous.metrodroid.xml.ImmutableByteArray;
 
 public class IntercodeTransitData extends Calypso1545TransitData {
     private static final int COUNTRY_ID_FRANCE = 0x250;
@@ -174,17 +175,17 @@ public class IntercodeTransitData extends Calypso1545TransitData {
         super(card, TICKET_ENV_HOLDER_FIELDS, contractListFields, getSerial(getNetId(card), card));
     }
 
-    protected IntercodeTransaction createTrip(byte[] data) {
+    protected IntercodeTransaction createTrip(ImmutableByteArray data) {
         return new IntercodeTransaction(data, getNetworkId());
     }
 
     @Nullable
     @Override
-    protected IntercodeTransaction createSpecialEvent(byte[] data) {
+    protected IntercodeTransaction createSpecialEvent(ImmutableByteArray data) {
         return new IntercodeTransaction(data, getNetworkId());
     }
 
-    protected IntercodeSubscription createSubscription(byte[] data, En1545Parsed contractList, Integer listNum,
+    protected IntercodeSubscription createSubscription(ImmutableByteArray data, En1545Parsed contractList, Integer listNum,
                                                        int recordNum, Integer counter) {
         if (contractList == null || listNum == null)
             return null;
@@ -220,8 +221,8 @@ public class IntercodeTransitData extends Calypso1545TransitData {
     }
 
     private static int getNetId(CalypsoApplication card) {
-        return Utils.getBitsFromBuffer(card.getFile(CalypsoApplication.File.TICKETING_ENVIRONMENT).getRecord(1).getData(),
-                13, 24);
+        return card.getFile(CalypsoApplication.File.TICKETING_ENVIRONMENT).getRecord(1)
+                .getData().getBitsFromBuffer(13, 24);
     }
 
     private static String getSerial(int netId, CalypsoApplication card) {
@@ -235,17 +236,17 @@ public class IntercodeTransitData extends Calypso1545TransitData {
         if (iccRecord == null) {
             return null;
         }
-        byte[] data = iccRecord.getData();
+        ImmutableByteArray data = iccRecord.getData();
 
         if (netId == 0x250502)
-            return Utils.getHexString(data, 20, 6).substring(1,11);
+            return data.getHexString(20, 6).substring(1,11);
 
-        if (Utils.byteArrayToLong(data, 16, 4) != 0) {
-            return Long.toString(Utils.byteArrayToLong(data, 16, 4));
+        if (data.byteArrayToLong(16, 4) != 0) {
+            return Long.toString(data.byteArrayToLong(16, 4));
         }
 
-        if (Utils.byteArrayToLong(data, 0, 4) != 0) {
-            return Long.toString(Utils.byteArrayToLong(data, 0, 4));
+        if (data.byteArrayToLong(0, 4) != 0) {
+            return Long.toString(data.byteArrayToLong(0, 4));
         }
 
         return null;
@@ -270,9 +271,9 @@ public class IntercodeTransitData extends Calypso1545TransitData {
         }
 
         @Override
-        public boolean check(byte[] ticketEnv) {
+        public boolean check(ImmutableByteArray ticketEnv) {
             try {
-                int netId = Utils.getBitsFromBuffer(ticketEnv, 13, 24);
+                int netId = ticketEnv.getBitsFromBuffer(13, 24);
                 return NETWORKS.get(netId) != null || COUNTRY_ID_FRANCE == (netId >> 12);
             } catch (Exception e) {
                 return false;
@@ -286,8 +287,8 @@ public class IntercodeTransitData extends Calypso1545TransitData {
         }
 
         @Override
-        public CardInfo getCardInfo(byte[] ticketEnv) {
-            int netId = Utils.getBitsFromBuffer(ticketEnv, 13, 24);
+        public CardInfo getCardInfo(ImmutableByteArray ticketEnv) {
+            int netId = ticketEnv.getBitsFromBuffer(13, 24);
             if (NETWORKS.get(netId) != null)
                 return NETWORKS.get(netId).first;
             return null;

@@ -37,6 +37,7 @@ import au.id.micolous.metrodroid.transit.TransitBalance;
 import au.id.micolous.metrodroid.transit.TransitCurrency;
 import au.id.micolous.metrodroid.ui.ListItem;
 import au.id.micolous.metrodroid.util.Utils;
+import au.id.micolous.metrodroid.xml.ImmutableByteArray;
 
 public abstract class En1545Subscription extends Subscription {
     private static final String TAG = En1545Subscription.class.getSimpleName();
@@ -100,7 +101,7 @@ public abstract class En1545Subscription extends Subscription {
             mCounter = null;
     }
 
-    public En1545Subscription(byte[] data, En1545Field fields, Integer counter) {
+    public En1545Subscription(ImmutableByteArray data, En1545Field fields, Integer counter) {
         mParsed = En1545Parser.parse(data, fields);
         mCounter = counter;
     }

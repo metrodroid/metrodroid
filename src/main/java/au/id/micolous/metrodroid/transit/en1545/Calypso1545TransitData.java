@@ -34,6 +34,7 @@ import au.id.micolous.metrodroid.transit.TransactionTrip;
 import au.id.micolous.metrodroid.transit.TransitBalance;
 import au.id.micolous.metrodroid.transit.Trip;
 import au.id.micolous.metrodroid.util.Utils;
+import au.id.micolous.metrodroid.xml.ImmutableByteArray;
 
 public abstract class Calypso1545TransitData extends En1545TransitData {
     private final int mNetworkId;
@@ -44,17 +45,17 @@ public abstract class Calypso1545TransitData extends En1545TransitData {
 
     protected Calypso1545TransitData(CalypsoApplication card, En1545Container ticketEnvHolderFields, En1545Field contractListFields, String serial) {
         mSerial = serial;
-        byte ticketEnv[] = {};
+        ImmutableByteArray ticketEnv = ImmutableByteArray.Companion.empty();
         for (ISO7816Record record : card.getFile(CalypsoApplication.File.TICKETING_ENVIRONMENT)
                 .getRecords()) {
-            ticketEnv = Utils.concatByteArrays(ticketEnv, record.getData());
+            ticketEnv = ticketEnv.plus(record.getData());
         }
         mTicketEnvParsed.append(ticketEnv, ticketEnvHolderFields);
         mNetworkId = mTicketEnvParsed.getIntOrZero(ENV_NETWORK_ID);
 
         List<En1545Transaction> transactions = new ArrayList<>();
         for (ISO7816Record record : card.getFile(CalypsoApplication.File.TICKETING_LOG).getRecords()) {
-            if (Utils.isAllZero(record.getData()))
+            if (record.getData().isAllZero())
                 continue;
             En1545Transaction transaction = createTrip(record.getData());
             if (transaction == null)
@@ -65,7 +66,7 @@ public abstract class Calypso1545TransitData extends En1545TransitData {
         ISO7816File specialEvents = card.getFile(CalypsoApplication.File.TICKETING_SPECIAL_EVENTS);
         if (specialEvents != null) {
             for (ISO7816Record record : specialEvents.getRecords()) {
-                if (Utils.isAllZero(record.getData()))
+                if (record.getData().isAllZero())
                     continue;
                 En1545Transaction transaction = createSpecialEvent(record.getData());
                 if (transaction == null)
@@ -99,7 +100,7 @@ public abstract class Calypso1545TransitData extends En1545TransitData {
         int idx = 0;
         for (ISO7816Record record : contracts) {
             idx++;
-            if (Utils.isAllZero(record.getData()))
+            if (record.getData().isAllZero())
                 continue;
             if (parsed.contains(record.getIndex()))
                 continue;
@@ -145,11 +146,11 @@ public abstract class Calypso1545TransitData extends En1545TransitData {
     private static Integer getCounter(CalypsoApplication card, int recordNum, boolean trySfi) {
         ISO7816File commonCtr = card.getFile(CalypsoApplication.File.TICKETING_COUNTERS_9, trySfi);
         if (commonCtr != null && commonCtr.getRecord(1) != null) {
-            return Utils.byteArrayToInt(commonCtr.getRecord(1).getData(), 3 * (recordNum - 1), 3);
+            return commonCtr.getRecord(1).getData().byteArrayToInt(3 * (recordNum - 1), 3);
         }
         ISO7816File ownCtr = card.getFile(COUNTERS[recordNum - 1], trySfi);
         if (ownCtr != null && ownCtr.getRecord(1) != null) {
-            return Utils.byteArrayToInt(ownCtr.getRecord(1).getData(), 0, 3);
+            return ownCtr.getRecord(1).getData().byteArrayToInt(0, 3);
         }
         return null;
     }
@@ -163,14 +164,14 @@ public abstract class Calypso1545TransitData extends En1545TransitData {
         return getCounter(card, recordNum, true);
     }
 
-    private void insertSub(CalypsoApplication card, byte[] data,
+    private void insertSub(CalypsoApplication card, ImmutableByteArray data,
                            En1545Parsed contractList, Integer listNum,
                            int recordNum) {
         insertSub(createSubscription(data, contractList, listNum, recordNum,
                 getCounter(card, recordNum)));
     }
 
-    protected abstract En1545Subscription createSubscription(byte[] data,
+    protected abstract En1545Subscription createSubscription(ImmutableByteArray data,
                                                              En1545Parsed contractList, Integer listNum,
                                                              int recordNum, Integer counter);
 
@@ -186,11 +187,11 @@ public abstract class Calypso1545TransitData extends En1545TransitData {
 
     @SuppressWarnings("WeakerAccess")
     @Nullable
-    protected En1545Transaction createSpecialEvent(byte[] data) {
+    protected En1545Transaction createSpecialEvent(ImmutableByteArray data) {
         return null;
     }
 
-    protected abstract En1545Transaction createTrip(byte[] data);
+    protected abstract En1545Transaction createTrip(ImmutableByteArray data);
 
     @Nullable
     @Override

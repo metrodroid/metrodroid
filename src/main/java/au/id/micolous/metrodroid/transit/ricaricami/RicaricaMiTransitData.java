@@ -44,6 +44,7 @@ import au.id.micolous.metrodroid.transit.en1545.En1545Subscription;
 import au.id.micolous.metrodroid.transit.en1545.En1545TransitData;
 import au.id.micolous.metrodroid.transit.en1545.En1545Transaction;
 import au.id.micolous.metrodroid.util.Utils;
+import au.id.micolous.metrodroid.xml.ImmutableByteArray;
 
 public class RicaricaMiTransitData extends En1545TransitData {
     private static final int RICARICA_MI_ID = 0x0221;
@@ -82,8 +83,8 @@ public class RicaricaMiTransitData extends En1545TransitData {
         List<En1545Transaction> trips = new ArrayList<>();
         for (int i = 0; i < 6; i++) {
             int base = 0xa * 3 + 2 + i * 2;
-            byte[] tripData = card.getSector(base / 3).getBlock(base % 3).getData();
-            tripData = Utils.concatByteArrays(tripData,
+            ImmutableByteArray tripData = card.getSector(base / 3).getBlock(base % 3).getData();
+            tripData = tripData.plus(
                     card.getSector((base + 1) / 3).getBlock((base + 1) % 3).getData());
             if (Utils.isAllZero(tripData)) {
                 continue;
@@ -98,7 +99,7 @@ public class RicaricaMiTransitData extends En1545TransitData {
                     && Utils.isAllZero(sec.getBlock(1).getData())
                     && Utils.isAllZero(sec.getBlock(2).getData()))
                 continue;
-            byte[][] subData = {
+            ImmutableByteArray[] subData = {
                     sec.getBlock(0).getData(),
                     sec.getBlock(1).getData()
             };
@@ -109,7 +110,7 @@ public class RicaricaMiTransitData extends En1545TransitData {
         // TODO: check following. It might have more to do with subscription type
         // than slot
         ClassicSector sec = card.getSector(9);
-        byte[][] subData = {
+        ImmutableByteArray[] subData = {
                 sec.getBlock(1).getData(),
                 sec.getBlock(2).getData()
         };
@@ -120,7 +121,7 @@ public class RicaricaMiTransitData extends En1545TransitData {
         }
     }
 
-    private static int selectSubData(byte[] subData0, byte[] subData1) {
+    private static int selectSubData(ImmutableByteArray subData0, ImmutableByteArray subData1) {
         int date0 = Utils.getBitsFromBuffer(subData0, 6, 14);
         int date1 = Utils.getBitsFromBuffer(subData1, 6, 14);
 
@@ -194,7 +195,7 @@ public class RicaricaMiTransitData extends En1545TransitData {
         @Override
         public boolean earlyCheck(@NonNull List<ClassicSector> sectors) {
             for (int i = 1; i < 3; i++) {
-                byte[] block = sectors.get(0).getBlock(i).getData();
+                ImmutableByteArray block = sectors.get(0).getBlock(i).getData();
                 for (int j = (i == 1 ? 1 : 0); j < 8; j++)
                     if (Utils.byteArrayToInt(block, j * 2, 2) != RICARICA_MI_ID)
                         return false;
@@ -225,7 +226,7 @@ public class RicaricaMiTransitData extends En1545TransitData {
     };
 
     private static String getSerial(ClassicCard card) {
-        byte[] block2 = card.getSector(2).getBlock(2).getData();
+        ImmutableByteArray block2 = card.getSector(2).getBlock(2).getData();
         /* This is really weird but the following bit is 1 in my dump so it's not 45,32 unless
         * last bit needs to be inverted. To know either way we need more dumps.  */
         // TODO: check this

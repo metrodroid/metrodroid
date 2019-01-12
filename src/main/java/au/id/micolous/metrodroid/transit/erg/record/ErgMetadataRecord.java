@@ -20,6 +20,7 @@
 package au.id.micolous.metrodroid.transit.erg.record;
 
 import au.id.micolous.metrodroid.util.Utils;
+import au.id.micolous.metrodroid.xml.ImmutableByteArray;
 
 import java.util.Arrays;
 import java.util.Calendar;
@@ -34,23 +35,23 @@ import java.util.Locale;
 public class ErgMetadataRecord extends ErgRecord {
     private static final GregorianCalendar ERG_BASE_EPOCH = new GregorianCalendar(2000, Calendar.JANUARY, 1);
     private int mAgency;
-    private byte[] mCardSerial;
+    private ImmutableByteArray mCardSerial;
     private GregorianCalendar mEpochDate;
 
     private ErgMetadataRecord() {
     }
 
-    public static ErgMetadataRecord recordFromBytes(byte[] input) {
+    public static ErgMetadataRecord recordFromBytes(ImmutableByteArray input) {
         //assert input[0] == 0x02;
         //assert input[1] == 0x03;
 
         ErgMetadataRecord record = new ErgMetadataRecord();
 
-        record.mAgency = Utils.byteArrayToInt(input, 2, 2);
+        record.mAgency = input.byteArrayToInt(2, 2);
 
-        int epochDays = Utils.byteArrayToInt(input, 5, 2);
+        int epochDays = input.byteArrayToInt(5, 2);
 
-        record.mCardSerial = Arrays.copyOfRange(input, 7, 11);
+        record.mCardSerial = input.copyOfRange(7, 11);
 
         record.mEpochDate = new GregorianCalendar();
         record.mEpochDate.setTimeInMillis(ERG_BASE_EPOCH.getTimeInMillis());
@@ -69,7 +70,7 @@ public class ErgMetadataRecord extends ErgRecord {
      * @return Card number in decimal.
      */
     public int getCardSerialDec() {
-        return Utils.byteArrayToInt(mCardSerial);
+        return mCardSerial.byteArrayToInt();
     }
 
     /**
@@ -78,7 +79,7 @@ public class ErgMetadataRecord extends ErgRecord {
      * @return Card number in hexadecimal.
      */
     public String getCardSerialHex() {
-        return Utils.getHexString(mCardSerial);
+        return mCardSerial.toHexString();
     }
 
     public GregorianCalendar getEpochDate() {
@@ -90,7 +91,7 @@ public class ErgMetadataRecord extends ErgRecord {
         return String.format(Locale.ENGLISH, "[%s: agency=%x, serial=%s, epoch=%s]",
                 getClass().getSimpleName(),
                 mAgency,
-                Utils.getHexString(mCardSerial),
+                mCardSerial.toHexString(),
                 Utils.isoDateFormat(mEpochDate));
     }
 }

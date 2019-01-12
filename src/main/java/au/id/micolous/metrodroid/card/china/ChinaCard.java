@@ -53,6 +53,7 @@ import au.id.micolous.metrodroid.ui.ListItem;
 import au.id.micolous.metrodroid.ui.ListItemRecursive;
 import au.id.micolous.metrodroid.util.Utils;
 import au.id.micolous.metrodroid.xml.HexString;
+import au.id.micolous.metrodroid.xml.ImmutableByteArray;
 
 public class ChinaCard extends ISO7816Application {
     private static final String TAG = "ChinaCard";
@@ -94,7 +95,7 @@ public class ChinaCard extends ISO7816Application {
         List <ListItem> li = new ArrayList<>();
         for (Balance entry : mBalances) {
             li.add(ListItemRecursive.collapsedValue("Balance " + entry.mIdx,
-                    Utils.getHexDump(entry.mData.getData())));
+                    entry.mData.toHexDump()));
         }
         return li;
     }
@@ -129,8 +130,8 @@ public class ChinaCard extends ISO7816Application {
     public static final ISO7816ApplicationFactory FACTORY = new ISO7816ApplicationFactory() {
         @NonNull
         @Override
-        public Collection<byte[]> getApplicationNames() {
-            List<byte[]> ret = new ArrayList<>();
+        public Collection<ImmutableByteArray> getApplicationNames() {
+            List<ImmutableByteArray> ret = new ArrayList<>();
             for (ChinaCardTransitFactory f : FACTORIES)
                 ret.addAll(f.getAppNames());
 
@@ -175,8 +176,8 @@ public class ChinaCard extends ISO7816Application {
 
                 factories:
                 for (ChinaCardTransitFactory f : FACTORIES) {
-                    for (byte[] transitAppName : f.getAppNames()) {
-                        if (Arrays.equals(appData.getAppName(), transitAppName)) {
+                    for (ImmutableByteArray transitAppName : f.getAppNames()) {
+                        if (appData.getAppName().contentEquals(transitAppName)) {
                             final List<CardInfo> cl = f.getAllCards();
 
                             if (!cl.isEmpty()) {
@@ -227,10 +228,10 @@ public class ChinaCard extends ISO7816Application {
         }
     };
 
-    public byte[] getBalance(int idx) {
+    public ImmutableByteArray getBalance(int idx) {
         for (Balance bal : mBalances) {
             if (bal.mIdx == idx)
-                return bal.mData.getData();
+                return bal.mData;
         }
         return null;
     }

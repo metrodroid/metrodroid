@@ -27,6 +27,7 @@ import au.id.micolous.metrodroid.transit.en1545.En1545FixedHex;
 import au.id.micolous.metrodroid.transit.en1545.En1545FixedInteger;
 import au.id.micolous.metrodroid.transit.en1545.En1545Lookup;
 import au.id.micolous.metrodroid.transit.en1545.En1545Subscription;
+import au.id.micolous.metrodroid.xml.ImmutableByteArray;
 
 class OpusSubscription extends En1545Subscription {
 
@@ -59,7 +60,7 @@ class OpusSubscription extends En1545Subscription {
             )
     );
 
-    OpusSubscription(byte[] dataSub, Integer ctr) {
+    OpusSubscription(ImmutableByteArray dataSub, Integer ctr) {
         super(dataSub, FIELDS, ctr);
     }
 

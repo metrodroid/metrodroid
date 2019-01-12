@@ -32,6 +32,7 @@ import au.id.micolous.metrodroid.transit.TransitCurrency;
 import au.id.micolous.metrodroid.transit.Trip;
 import au.id.micolous.metrodroid.util.StationTableReader;
 import au.id.micolous.metrodroid.util.Utils;
+import au.id.micolous.metrodroid.xml.ImmutableByteArray;
 
 public class KMTTrip extends Trip {
     public static final Creator<KMTTrip> CREATOR = new Creator<KMTTrip>() {
@@ -50,8 +51,8 @@ public class KMTTrip extends Trip {
     private final int mEndGateCode;
     private static final String KMT_STR = "kmt";
 
-    private static Calendar calcDate(byte[] data) {
-        int fulloffset = Utils.byteArrayToInt(data, 0, 4);
+    private static Calendar calcDate(ImmutableByteArray data) {
+        int fulloffset = data.byteArrayToInt(0, 4);
         if (fulloffset == 0) {
             return null;
         }
@@ -66,12 +67,12 @@ public class KMTTrip extends Trip {
     }
 
     public KMTTrip(FelicaBlock block) {
-        byte[] data = block.getData();
-        mProcessType = data[12] & 0xff;
-        mSequenceNumber = Utils.byteArrayToInt(data, 13, 3);
+        ImmutableByteArray data = block.getData();
+        mProcessType = data.get(12) & 0xff;
+        mSequenceNumber = data.byteArrayToInt(13, 3);
         mTimestamp = calcDate(data);
-        mTransactionAmount = Utils.byteArrayToInt(data, 4, 4);
-        mEndGateCode = Utils.byteArrayToInt(data, 8, 2);
+        mTransactionAmount = data.byteArrayToInt(4, 4);
+        mEndGateCode = data.byteArrayToInt(8, 2);
     }
 
     @Nullable

@@ -30,6 +30,7 @@ import au.id.micolous.metrodroid.transit.en1545.En1545FixedInteger;
 import au.id.micolous.metrodroid.transit.en1545.En1545Lookup;
 import au.id.micolous.metrodroid.transit.en1545.En1545Subscription;
 import au.id.micolous.metrodroid.util.Utils;
+import au.id.micolous.metrodroid.xml.ImmutableByteArray;
 
 public class RicaricaMiSubscription extends En1545Subscription {
     private static final String CONTRACT_VALIDATIONS_IN_DAY = "ContractValidationsInDay";
@@ -43,7 +44,7 @@ public class RicaricaMiSubscription extends En1545Subscription {
             new En1545FixedHex(CONTRACT_UNKNOWN_B, 52)
     );
 
-    public RicaricaMiSubscription(byte[] data, byte[] counter) {
+    public RicaricaMiSubscription(ImmutableByteArray data, ImmutableByteArray counter) {
         super(data, FIELDS, Utils.byteArrayToIntReversed(counter, 0, 4));
     }
 

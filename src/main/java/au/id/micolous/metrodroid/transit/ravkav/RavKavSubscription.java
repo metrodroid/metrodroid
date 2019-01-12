@@ -30,6 +30,7 @@ import au.id.micolous.metrodroid.transit.en1545.En1545Field;
 import au.id.micolous.metrodroid.transit.en1545.En1545FixedInteger;
 import au.id.micolous.metrodroid.transit.en1545.En1545Lookup;
 import au.id.micolous.metrodroid.transit.en1545.En1545Subscription;
+import au.id.micolous.metrodroid.xml.ImmutableByteArray;
 
 public class RavKavSubscription extends En1545Subscription {
     private static final En1545Field SUB_FIELDS = new En1545Container(
@@ -55,7 +56,7 @@ public class RavKavSubscription extends En1545Subscription {
             // TODO: parse locations?
     );
 
-    public RavKavSubscription(byte[] data, Integer ctr) {
+    public RavKavSubscription(ImmutableByteArray data, Integer ctr) {
         super(data, SUB_FIELDS, ctr);
     }
 

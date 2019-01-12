@@ -19,6 +19,8 @@
 
 package au.id.micolous.metrodroid.transit.en1545;
 
+import au.id.micolous.metrodroid.xml.ImmutableByteArray;
+
 public interface En1545Field {
-    int parseField(byte []b, int off, String path, En1545Parsed holder, En1545Bits bitParser);
+    int parseField(ImmutableByteArray b, int off, String path, En1545Parsed holder, En1545Bits bitParser);
 }

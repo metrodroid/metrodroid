@@ -33,6 +33,7 @@ import au.id.micolous.metrodroid.card.ultralight.UltralightPage;
 import au.id.micolous.metrodroid.transit.TransitData;
 import au.id.micolous.metrodroid.transit.yvr_compass.CompassUltralightTransitData;
 import au.id.micolous.metrodroid.util.Utils;
+import au.id.micolous.metrodroid.xml.ImmutableByteArray;
 
 import static junit.framework.TestCase.assertEquals;
 import static junit.framework.TestCase.assertNotNull;
@@ -183,21 +184,21 @@ public class CompassTest {
     private UltralightCard createUltralightFromString(String[] cardData) {
         Calendar d = new GregorianCalendar(2010, 1, 1, 0, 0, 0);
         d.setTimeZone(TimeZone.getTimeZone("GMT"));
-        byte[] serial = Utils.hexStringToByteArray(cardData[1].substring(0, 18));
+        ImmutableByteArray serial = ImmutableByteArray.Companion.fromHex(cardData[1].substring(0, 18));
 
         List<UltralightPage> pages = new ArrayList<>();
         for (int block=1; block < cardData.length; block++) {
             for (int p=0; p<4; p++) {
                 int index = ((block - 1) * 4) + p;
                 pages.add(new UltralightPage(index,
-                        Utils.hexStringToByteArray(cardData[block].substring(
+                        ImmutableByteArray.Companion.fromHex(cardData[block].substring(
                                 p * 8, (p + 1) * 8)))
                 );
             }
         }
 
         return new UltralightCard(
-                serial, d, "MF0ICU2", pages.toArray(new UltralightPage[0])
+                serial, d, "MF0ICU2", pages
         );
     }
 

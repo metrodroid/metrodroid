@@ -83,18 +83,10 @@ public abstract class Card {
         mPartialRead = partialRead;
     }
 
-    protected Card(CardType type, byte[] tagId, Calendar scannedAt, boolean partialRead) {
-        this(type, ImmutableByteArray.Companion.fromByteArray(tagId), scannedAt, partialRead);
-    }
-
-    protected Card(CardType type, byte[] tagId, Calendar scannedAt) {
-        this(type, tagId, scannedAt, false);
-    }
-
-    public static Card dumpTag(byte[] tagId, Tag tag, TagReaderFeedbackInterface feedbackInterface) throws Exception {
+    public static Card dumpTag(ImmutableByteArray tagId, Tag tag, TagReaderFeedbackInterface feedbackInterface) throws Exception {
         final String[] techs = tag.getTechList();
         Log.d(TAG, String.format(Locale.ENGLISH, "Reading tag %s. %d tech(s) supported:",
-                Utils.getHexString(tagId), techs.length));
+                tagId.toHexString(), techs.length));
         for (String tech : techs) {
             Log.d(TAG, tech);
         }
@@ -131,7 +123,8 @@ public abstract class Card {
         }
 
         if (ArrayUtils.contains(techs, NfcA.class.getName())) {
-            UltralightCard u = UltralightCard.dumpTagA(tagId, tag, feedbackInterface);
+            UltralightCard u = UltralightCard.dumpTagA(
+                    tagId, tag, feedbackInterface);
             if (u != null)
                 return u;
         }
@@ -194,8 +187,8 @@ public abstract class Card {
         return mType;
     }
 
-    public byte[] getTagId() {
-        return mTagId.getData();
+    public ImmutableByteArray getTagId() {
+        return mTagId;
     }
 
     public Calendar getScannedAt() {

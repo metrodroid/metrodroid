@@ -47,7 +47,7 @@ public class MctCardImporter implements CardImporter.Text<ClassicCard> {
                 if (curBlocks != null && curSector >= 0) {
                     lastBlock = line;
                     curBlocks.add(new ClassicBlock(blockNumber, ClassicBlock.TYPE_DATA,
-                            Utils.hexStringToByteArray(line.replaceAll("-", "0"))));
+                            ImmutableByteArray.Companion.fromHex(line.replaceAll("-", "0"))));
                     blockNumber++;
                 }
             }
@@ -56,15 +56,15 @@ public class MctCardImporter implements CardImporter.Text<ClassicCard> {
         }
 
         flushSector(sectors, curSector, curBlocks, lastBlock);
-        byte[] uid;
+        ImmutableByteArray uid;
         if (sectors.get(0) != null) {
-            byte[] block0 = sectors.get(0).getBlock(0).getData();
-            if (block0[0] == 4)
-                uid = Arrays.copyOfRange(block0, 0, 7);
+            ImmutableByteArray block0 = sectors.get(0).getBlock(0).getData();
+            if (block0.get(0) == 4)
+                uid = block0.copyOfRange(0, 7);
             else
-                uid = Arrays.copyOfRange(block0, 0, 4);
+                uid = block0.copyOfRange(0, 4);
         } else
-            uid = Utils.stringToByteArray("fake");
+            uid = ImmutableByteArray.Companion.fromASCII("fake");
 
         if (maxSector <= 15)
             maxSector = 15; // 1K

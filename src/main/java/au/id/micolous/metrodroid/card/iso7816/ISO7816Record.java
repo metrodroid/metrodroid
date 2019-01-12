@@ -24,6 +24,7 @@ import org.simpleframework.xml.Root;
 import org.simpleframework.xml.Text;
 
 import au.id.micolous.metrodroid.xml.Base64String;
+import au.id.micolous.metrodroid.xml.ImmutableByteArray;
 
 /**
  * Represents a record in a file on a Calypso card.
@@ -37,7 +38,7 @@ public class ISO7816Record {
 
     ISO7816Record() { /* For XML Serializer */ }
 
-    ISO7816Record(int index, byte[] data) {
+    public ISO7816Record(int index, byte[] data) {
         mIndex = index;
         mData = new Base64String(data);
     }
@@ -46,7 +47,7 @@ public class ISO7816Record {
         return mIndex;
     }
 
-    public byte[] getData() {
-        return mData.getData();
+    public ImmutableByteArray getData() {
+        return mData;
     }
 }

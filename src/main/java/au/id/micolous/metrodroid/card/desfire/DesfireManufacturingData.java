@@ -28,6 +28,7 @@ import au.id.micolous.metrodroid.ui.HeaderListItem;
 import au.id.micolous.metrodroid.ui.ListItem;
 import au.id.micolous.metrodroid.util.Utils;
 import au.id.micolous.metrodroid.xml.Base64String;
+import au.id.micolous.metrodroid.xml.ImmutableByteArray;
 
 import org.simpleframework.xml.Element;
 import org.simpleframework.xml.Root;
@@ -83,7 +84,6 @@ public class DesfireManufacturingData {
 
     public DesfireManufacturingData(byte[] data) {
         mRaw = new Base64String(data);
-        ByteArrayInputStream stream = new ByteArrayInputStream(data);
         hwVendorID = data[0];
         hwType = data[1];
         hwSubType = data[2];
@@ -101,17 +101,17 @@ public class DesfireManufacturingData {
         swProtocol = data[13];
 
         // FIXME: This has fewer digits than what's contained in EXTRA_ID, why?
-        uid = Utils.byteArrayToLong(data, 14, 7);
+        uid = mRaw.byteArrayToLong(14, 7);
         // FIXME: This is returning a negative number. Probably is unsigned.
-        batchNo = Utils.byteArrayToLong(data, 21, 5);
+        batchNo = mRaw.byteArrayToLong(21, 5);
 
         // FIXME: These numbers aren't making sense.
         weekProd = data[26];
         yearProd = data[27];
     }
 
-    public byte[] getRaw() {
-        return mRaw.getData();
+    public ImmutableByteArray getRaw() {
+        return mRaw;
     }
 
     public List<ListItem> getInfo() {

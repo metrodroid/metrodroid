@@ -2,12 +2,13 @@ package au.id.micolous.metrodroid.transit.troika;
 
 import au.id.micolous.metrodroid.transit.Subscription;
 import au.id.micolous.metrodroid.util.Utils;
+import au.id.micolous.metrodroid.xml.ImmutableByteArray;
 
 // This was seen only as placeholder for Troika card sector 7
 public class TroikaLayout2 extends TroikaBlock {
-    public TroikaLayout2(byte[] rawData) {
+    public TroikaLayout2(ImmutableByteArray rawData) {
         super(rawData);
-        mExpiryDate = convertDateTime1992(Utils.getBitsFromBuffer(mRawData, 56, 16), 0);
+        mExpiryDate = convertDateTime1992(mRawData.getBitsFromBuffer(56, 16), 0);
     }
 
     @Override

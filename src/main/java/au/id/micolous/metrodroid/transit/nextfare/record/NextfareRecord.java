@@ -27,6 +27,7 @@ import java.util.Locale;
 import java.util.TimeZone;
 
 import au.id.micolous.metrodroid.util.Utils;
+import au.id.micolous.metrodroid.xml.ImmutableByteArray;
 
 /**
  * Represents a record on a Nextfare card
@@ -39,9 +40,9 @@ public class NextfareRecord {
     protected NextfareRecord() {
     }
 
-    public static NextfareRecord recordFromBytes(byte[] input, int sectorIndex, int blockIndex, TimeZone timeZone) {
+    public static NextfareRecord recordFromBytes(ImmutableByteArray input, int sectorIndex, int blockIndex, TimeZone timeZone) {
         NextfareRecord record = null;
-        Log.d(TAG, "Record: " + Utils.getHexString(input));
+        Log.d(TAG, "Record: " + input);
 
         if (sectorIndex == 1 && blockIndex <= 1) {
             Log.d(TAG, "Balance record");
@@ -78,8 +79,8 @@ public class NextfareRecord {
      * @param offset Offset in byte to timestamp
      * @return Date and time represented by that value
      */
-    public static GregorianCalendar unpackDate(byte[] input, int offset, TimeZone timeZone) {
-        int timestamp = Utils.byteArrayToIntReversed(input, offset, 4);
+    public static GregorianCalendar unpackDate(ImmutableByteArray input, int offset, TimeZone timeZone) {
+        int timestamp = input.byteArrayToIntReversed(offset, 4);
         int minute = Utils.getBitsFromInteger(timestamp, 16, 11);
         int year = Utils.getBitsFromInteger(timestamp, 9, 7) + 2000;
         int month = Utils.getBitsFromInteger(timestamp, 5, 4);

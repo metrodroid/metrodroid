@@ -35,6 +35,7 @@ import au.id.micolous.metrodroid.ui.ListItem;
 import au.id.micolous.metrodroid.ui.ListItemRecursive;
 import au.id.micolous.metrodroid.util.Utils;
 import au.id.micolous.metrodroid.xml.Base64String;
+import au.id.micolous.metrodroid.xml.ImmutableByteArray;
 
 /**
  * Represents a file on a Calypso card.
@@ -74,21 +75,13 @@ public class ISO7816File {
     }
 
     @Nullable
-    public byte[] getBinaryData() {
-        if (mBinaryData != null) {
-            return mBinaryData.getData();
-        } else {
-            return null;
-        }
+    public ImmutableByteArray getBinaryData() {
+        return mBinaryData;
     }
 
     @Nullable
-    public byte[] getFci() {
-        if (mFci != null) {
-            return mFci.getData();
-        } else {
-            return null;
-        }
+    public ImmutableByteArray getFci() {
+        return mFci;
     }
 
     /**
@@ -112,18 +105,18 @@ public class ISO7816File {
 
     public ListItem showRawData(String selectorStr) {
         List<ListItem> recList = new ArrayList<>();
-        byte[] binaryData = getBinaryData();
-        byte[] fciData = getFci();
+        ImmutableByteArray binaryData = getBinaryData();
+        ImmutableByteArray fciData = getFci();
         if (binaryData != null)
             recList.add(ListItemRecursive.collapsedValue(Utils.localizeString(R.string.binary_title_format),
-                    Utils.getHexDump(binaryData)));
+                    binaryData.toHexDump()));
         if (fciData != null)
             recList.add(new ListItemRecursive(Utils.localizeString(R.string.file_fci), null,
                     ISO7816TLV.INSTANCE.infoWithRaw(fciData)));
         List<ISO7816Record> records = getRecords();
         for (ISO7816Record record : records)
             recList.add(ListItemRecursive.collapsedValue(Utils.localizeString(R.string.record_title_format, record.getIndex()),
-                    Utils.getHexDump(record.getData())));
+                    record.getData().toHexDump()));
         return new ListItemRecursive(Utils.localizeString(R.string.file_title_format, selectorStr),
                 Utils.localizePlural(R.plurals.record_count, records.size(), records.size()),
                 recList);

@@ -27,6 +27,7 @@ import org.simpleframework.xml.Root;
 
 import au.id.micolous.farebot.R;
 import au.id.micolous.metrodroid.util.Utils;
+import au.id.micolous.metrodroid.xml.ImmutableByteArray;
 
 @Root(name = "settings")
 public class StandardDesfireFileSettings extends DesfireFileSettings {
@@ -35,12 +36,12 @@ public class StandardDesfireFileSettings extends DesfireFileSettings {
 
     private StandardDesfireFileSettings() { /* For XML Serializer */ }
 
-    StandardDesfireFileSettings(byte[] buf) {
+    StandardDesfireFileSettings(ImmutableByteArray buf) {
         super(buf);
-        mFileSize = Utils.byteArrayToIntReversed(buf, 4, 3);
+        mFileSize = buf.byteArrayToIntReversed(4, 3);
     }
 
-    public StandardDesfireFileSettings(byte fileType, byte commSetting, byte[] accessRights, int fileSize) {
+    public StandardDesfireFileSettings(byte fileType, byte commSetting, ImmutableByteArray accessRights, int fileSize) {
         super(fileType, commSetting, accessRights);
         this.mFileSize = fileSize;
     }

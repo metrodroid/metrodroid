@@ -21,6 +21,7 @@ package au.id.micolous.metrodroid.card.ultralight;
 import org.simpleframework.xml.Attribute;
 
 import au.id.micolous.metrodroid.card.UnauthorizedException;
+import au.id.micolous.metrodroid.xml.ImmutableByteArray;
 
 /**
  * Unreadable / unauthorized ultralight pages
@@ -37,7 +38,7 @@ public class UnauthorizedUltralightPage extends UltralightPage {
     }
 
     @Override
-    public byte[] getData() {
+    public ImmutableByteArray getData() {
         throw new UnauthorizedException();
     }
 }

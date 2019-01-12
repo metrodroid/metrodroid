@@ -1,27 +1,28 @@
 package au.id.micolous.metrodroid.transit.troika;
 
 import au.id.micolous.metrodroid.util.Utils;
+import au.id.micolous.metrodroid.xml.ImmutableByteArray;
 
 // This layout is found on older multi-ride passes
 public class TroikaLayoutD extends TroikaBlock {
 
-    public TroikaLayoutD(byte[] rawData) {
+    public TroikaLayoutD(ImmutableByteArray rawData) {
         super(rawData);
-        int validityEnd = Utils.getBitsFromBuffer(mRawData, 64, 16);
+        int validityEnd = mRawData.getBitsFromBuffer(64, 16);
         //16 bits unknown
         //32 bits repetition
-        int validityStart = Utils.getBitsFromBuffer(mRawData, 128, 16);
-        mValidityLengthMinutes = Utils.getBitsFromBuffer(mRawData, 144, 8) * 60 * 24;
+        int validityStart = mRawData.getBitsFromBuffer(128, 16);
+        mValidityLengthMinutes = mRawData.getBitsFromBuffer(144, 8) * 60 * 24;
         //3 bits unknown
-        mLastTransfer = Utils.getBitsFromBuffer(mRawData, 155, 5) * 5;
-        mLastTransportLeadingCode = Utils.getBitsFromBuffer(mRawData, 160, 2);
-        mLastTransportLongCode = Utils.getBitsFromBuffer(mRawData, 251, 2);
+        mLastTransfer = mRawData.getBitsFromBuffer(155, 5) * 5;
+        mLastTransportLeadingCode = mRawData.getBitsFromBuffer(160, 2);
+        mLastTransportLongCode = mRawData.getBitsFromBuffer(251, 2);
         //4 bits unknown
-        mRemainingTrips =  Utils.getBitsFromBuffer(mRawData, 166, 10);
-        mLastValidator = Utils.getBitsFromBuffer(mRawData, 176, 16);
+        mRemainingTrips =  mRawData.getBitsFromBuffer(166, 10);
+        mLastValidator = mRawData.getBitsFromBuffer(176, 16);
         // 30 bits unknown
-        int validationDate = Utils.getBitsFromBuffer(mRawData, 224, 16);
-        int validationTime = Utils.getBitsFromBuffer(mRawData, 240, 11);
+        int validationDate = mRawData.getBitsFromBuffer(224, 16);
+        int validationTime = mRawData.getBitsFromBuffer(240, 11);
         // 2 bits transport type
         // 3 bits unknown
         mLastValidationTime = convertDateTime1992(validationDate, validationTime);

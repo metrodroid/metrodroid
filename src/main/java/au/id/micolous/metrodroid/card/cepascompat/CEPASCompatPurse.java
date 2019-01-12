@@ -25,6 +25,7 @@
 package au.id.micolous.metrodroid.card.cepascompat;
 
 import au.id.micolous.metrodroid.xml.HexString;
+import au.id.micolous.metrodroid.xml.ImmutableByteArray;
 
 import org.simpleframework.xml.Attribute;
 import org.simpleframework.xml.Root;
@@ -45,10 +46,7 @@ public class CEPASCompatPurse {
         return mPurseBalance;
     }
 
-    public byte[] getCAN() {
-        if (mCAN == null) {
-            return null;
-        }
-        return mCAN.getData();
+    public ImmutableByteArray getCAN() {
+        return mCAN;
     }
 }

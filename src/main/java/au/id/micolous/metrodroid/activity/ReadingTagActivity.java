@@ -53,6 +53,7 @@ import java.util.GregorianCalendar;
 import au.id.micolous.farebot.BuildConfig;
 import au.id.micolous.farebot.R;
 import au.id.micolous.metrodroid.MetrodroidApplication;
+import au.id.micolous.metrodroid.xml.ImmutableByteArray;
 
 public class ReadingTagActivity extends MetrodroidActivity implements TagReaderFeedbackInterface {
     private static final String TAG = ReadingTagActivity.class.getSimpleName();
@@ -188,7 +189,8 @@ public class ReadingTagActivity extends MetrodroidActivity implements TagReaderF
         protected Uri doInBackground(ReadingTagTaskEventArgs... params) {
             ReadingTagTaskEventArgs a = params[0];
             try {
-                Card card = Card.dumpTag(a.tagId, a.tag, ReadingTagActivity.this);
+                Card card = Card.dumpTag(ImmutableByteArray.Companion.fromByteArray(a.tagId),
+                        a.tag, ReadingTagActivity.this);
 
                 ReadingTagActivity.this.updateStatusText(Utils.localizeString(R.string.saving_card));
 
@@ -206,7 +208,7 @@ public class ReadingTagActivity extends MetrodroidActivity implements TagReaderF
                     }
                 }
 
-                String tagIdString = Utils.getHexString(card.getTagId());
+                String tagIdString = card.getTagId().toHexString();
 
                 ContentValues values = new ContentValues();
                 values.put(CardsTableColumns.TYPE, card.getCardType().toInteger());

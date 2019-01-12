@@ -34,6 +34,7 @@ import au.id.micolous.metrodroid.transit.Station;
 import au.id.micolous.metrodroid.transit.TransitCurrency;
 import au.id.micolous.metrodroid.transit.Trip;
 import au.id.micolous.metrodroid.util.Utils;
+import au.id.micolous.metrodroid.xml.ImmutableByteArray;
 
 public class ClipperTrip extends Trip {
     public static final Creator<ClipperTrip> CREATOR = new Creator<ClipperTrip>() {
@@ -67,16 +68,16 @@ public class ClipperTrip extends Trip {
         mTransportCode = parcel.readInt();
     }
 
-    ClipperTrip(byte[] useData) {
-        mAgency = Utils.byteArrayToInt(useData, 0x2, 2);
-        mFare = Utils.byteArrayToInt(useData, 0x6, 2);
-        mVehicleNum = Utils.byteArrayToInt(useData, 0xa, 2);
-        mTimestamp = Utils.byteArrayToLong(useData, 0xc, 4);
-        mExitTimestamp = Utils.byteArrayToLong(useData, 0x10, 4);
-        mFrom = Utils.byteArrayToInt(useData, 0x14, 2);
-        mTo = Utils.byteArrayToInt(useData, 0x16, 2);
-        mRoute = Utils.byteArrayToInt(useData, 0x1c, 2);
-        mTransportCode = Utils.byteArrayToInt(useData, 0x1e, 2);
+    ClipperTrip(ImmutableByteArray useData) {
+        mAgency = useData.byteArrayToInt(0x2, 2);
+        mFare = useData.byteArrayToInt(0x6, 2);
+        mVehicleNum = useData.byteArrayToInt(0xa, 2);
+        mTimestamp = useData.byteArrayToLong(0xc, 4);
+        mExitTimestamp = useData.byteArrayToLong(0x10, 4);
+        mFrom = useData.byteArrayToInt(0x14, 2);
+        mTo = useData.byteArrayToInt(0x16, 2);
+        mRoute = useData.byteArrayToInt(0x1c, 2);
+        mTransportCode = useData.byteArrayToInt(0x1e, 2);
     }
 
     @Override

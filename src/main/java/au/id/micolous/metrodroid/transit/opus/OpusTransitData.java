@@ -46,6 +46,7 @@ import au.id.micolous.metrodroid.transit.en1545.En1545Subscription;
 import au.id.micolous.metrodroid.transit.en1545.En1545Transaction;
 import au.id.micolous.metrodroid.transit.intercode.IntercodeTransitData;
 import au.id.micolous.metrodroid.util.Utils;
+import au.id.micolous.metrodroid.xml.ImmutableByteArray;
 
 public class OpusTransitData extends Calypso1545TransitData {
     // 124 = Canada
@@ -110,9 +111,9 @@ public class OpusTransitData extends Calypso1545TransitData {
         }
 
         @Override
-        public boolean check(byte[] ticketEnv) {
+        public boolean check(ImmutableByteArray ticketEnv) {
             try {
-                int networkID = Utils.getBitsFromBuffer(ticketEnv, 13, 24);
+                int networkID = ticketEnv.getBitsFromBuffer(13, 24);
                 return OPUS_NETWORK_ID == networkID;
             } catch (Exception e) {
                 return false;
@@ -131,7 +132,7 @@ public class OpusTransitData extends Calypso1545TransitData {
         }
 
         @Override
-        public CardInfo getCardInfo(byte[] tenv) {
+        public CardInfo getCardInfo(ImmutableByteArray tenv) {
             return CARD_INFO;
         }
     };
@@ -143,7 +144,7 @@ public class OpusTransitData extends Calypso1545TransitData {
     }
 
     @Override
-    protected En1545Subscription createSubscription(byte[] data, En1545Parsed contractList,
+    protected En1545Subscription createSubscription(ImmutableByteArray data, En1545Parsed contractList,
                                                     Integer contractNum, int recordNum, Integer counter) {
         if (counter == null)
             return null;
@@ -151,7 +152,7 @@ public class OpusTransitData extends Calypso1545TransitData {
     }
 
     @Override
-    protected En1545Transaction createTrip(byte[] data) {
+    protected En1545Transaction createTrip(ImmutableByteArray data) {
         return new OpusTransaction(data);
     }
 
@@ -175,14 +176,14 @@ public class OpusTransitData extends Calypso1545TransitData {
         if (iccRecord == null) {
             return null;
         }
-        byte[] data = iccRecord.getData();
+        ImmutableByteArray data = iccRecord.getData();
 
-        if (Utils.byteArrayToLong(data, 16, 4) != 0) {
-            return Long.toString(Utils.byteArrayToLong(data, 16, 4));
+        if (data.byteArrayToLong(16, 4) != 0) {
+            return Long.toString(data.byteArrayToLong(16, 4));
         }
 
-        if (Utils.byteArrayToLong(data, 0, 4) != 0) {
-            return Long.toString(Utils.byteArrayToLong(data, 0, 4));
+        if (data.byteArrayToLong(0, 4) != 0) {
+            return Long.toString(data.byteArrayToLong(0, 4));
         }
 
         return null;

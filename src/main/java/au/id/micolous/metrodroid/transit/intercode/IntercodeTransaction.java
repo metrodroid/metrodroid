@@ -30,6 +30,7 @@ import au.id.micolous.metrodroid.transit.en1545.En1545FixedInteger;
 import au.id.micolous.metrodroid.transit.en1545.En1545FixedString;
 import au.id.micolous.metrodroid.transit.en1545.En1545Lookup;
 import au.id.micolous.metrodroid.transit.en1545.En1545Transaction;
+import au.id.micolous.metrodroid.xml.ImmutableByteArray;
 
 class IntercodeTransaction extends En1545Transaction {
     private final int mNetworkId;
@@ -87,7 +88,7 @@ class IntercodeTransaction extends En1545Transaction {
             )
     );
 
-    IntercodeTransaction(byte[] data, int networkId) {
+    IntercodeTransaction(ImmutableByteArray data, int networkId) {
         super(data, tripFields);
 
         Integer nid = mParsed.getInt(EVENT_NETWORK_ID);

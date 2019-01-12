@@ -48,6 +48,7 @@ import au.id.micolous.metrodroid.transit.TransitCurrency;
 import au.id.micolous.metrodroid.transit.TransitData;
 import au.id.micolous.metrodroid.transit.TransitIdentity;
 import au.id.micolous.metrodroid.util.Utils;
+import au.id.micolous.metrodroid.xml.ImmutableByteArray;
 
 public class SuicaTransitData extends TransitData {
     public static final Creator<SuicaTransitData> CREATOR = new Creator<SuicaTransitData>() {
@@ -111,7 +112,7 @@ public class SuicaTransitData extends TransitData {
 
             int previousBalance = -1;
             if (i + 1 < blocks.size())
-                previousBalance = Utils.byteArrayToIntReversed(blocks.get(i + 1).getData(),
+                previousBalance = blocks.get(i + 1).getData().byteArrayToIntReversed(
                         10, 2);
             SuicaTrip trip = new SuicaTrip(block, previousBalance);
 
@@ -131,7 +132,7 @@ public class SuicaTransitData extends TransitData {
             if (tapBlocks != null && trip.getConsoleTypeInt() == 0x16) {
                 for (int matchingTap = 0; matchingTap < tapBlocks.size(); matchingTap++) {
                     if (matchedTaps.contains(matchingTap)) continue;
-                    byte[] tapBlock = tapBlocks.get(matchingTap).getData();
+                    ImmutableByteArray tapBlock = tapBlocks.get(matchingTap).getData();
 
                     /*
                     Log.d(TAG, String.format(Locale.ENGLISH,
@@ -149,29 +150,29 @@ public class SuicaTransitData extends TransitData {
                     // Skip tap-ons
                     // Don't check (tapBlock[4] >> 4) != 2, as this is only applicable on JR East.
                     // JR West and JR East use the same Area Code.
-                    if ((tapBlock[0] & 0x80) != 0)
+                    if ((tapBlock.get(0) & 0x80) != 0)
                         continue;
 
-                    int station = Utils.byteArrayToInt(tapBlock, 2, 2);
+                    int station = tapBlock.byteArrayToInt(2, 2);
                     if (station != trip.getEndStationId())
                         continue;
 
-                    int dateNum = Utils.byteArrayToInt(tapBlock, 6, 2);
+                    int dateNum = tapBlock.byteArrayToInt(6, 2);
                     if (dateNum != trip.getDateRaw())
                         continue;
 
-                    int fare = Utils.byteArrayToIntReversed(tapBlock, 10, 2);
+                    int fare = tapBlock.byteArrayToIntReversed(10, 2);
                     if (fare != trip.getFareRaw())
                         continue;
 
-                    trip.setEndTime(Utils.convertBCDtoInteger(tapBlock[8]),
-                            Utils.convertBCDtoInteger(tapBlock[9]));
+                    trip.setEndTime(Utils.convertBCDtoInteger(tapBlock.get(8)),
+                            Utils.convertBCDtoInteger(tapBlock.get(9)));
                     matchedTaps.add(matchingTap);
                     break;
                 }
                 for (int matchingTap = 0; matchingTap < tapBlocks.size(); matchingTap++) {
                     if (matchedTaps.contains(matchingTap)) continue;
-                    byte[] tapBlock = tapBlocks.get(matchingTap).getData();
+                    ImmutableByteArray tapBlock = tapBlocks.get(matchingTap).getData();
 
                     /*
                     int fare = Utils.byteArrayToIntReversed(tapBlock, 10, 2);
@@ -191,19 +192,19 @@ public class SuicaTransitData extends TransitData {
                     // Skip tap-offs
                     // Don't check (tapBlock[4] >> 4) != 1, as this is only applicable on JR East.
                     // JR West and JR East use the same Area Code.
-                    if ((tapBlock[0] & 0x80) == 0)
+                    if ((tapBlock.get(0) & 0x80) == 0)
                         continue;
 
-                    int station = Utils.byteArrayToInt(tapBlock, 2, 2);
+                    int station = tapBlock.byteArrayToInt(2, 2);
                     if (station != trip.getStartStationId())
                         continue;
 
-                    int dateNum = Utils.byteArrayToInt(tapBlock, 6, 2);
+                    int dateNum = tapBlock.byteArrayToInt(6, 2);
                     if (dateNum != trip.getDateRaw())
                         continue;
 
-                    trip.setStartTime(Utils.convertBCDtoInteger(tapBlock[8]),
-                            Utils.convertBCDtoInteger(tapBlock[9]));
+                    trip.setStartTime(Utils.convertBCDtoInteger(tapBlock.get(8)),
+                            Utils.convertBCDtoInteger(tapBlock.get(9)));
                     matchedTaps.add(matchingTap);
                     break;
                 }

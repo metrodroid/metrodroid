@@ -20,6 +20,7 @@ import au.id.micolous.metrodroid.transit.TransitIdentity;
 import au.id.micolous.metrodroid.transit.nextfare.NextfareTransitData;
 import au.id.micolous.metrodroid.transit.nextfare.NextfareTrip;
 import au.id.micolous.metrodroid.transit.nextfare.record.NextfareTransactionRecord;
+import au.id.micolous.metrodroid.xml.ImmutableByteArray;
 
 public class MspGotoTransitData extends NextfareTransitData {
     private static final String NAME = "Go-To card";
@@ -32,19 +33,13 @@ public class MspGotoTransitData extends NextfareTransitData {
             return new MspGotoTransitData[size];
         }
     };
-    private static final byte[] BLOCK1 = {
-            0x16, 0x18, 0x1A, 0x1B,
-            0x1C, 0x1D, 0x1E, 0x1F,
-            0x01, 0x01, 0x01, 0x01,
-            0x01, 0x01
-    };
+    private static final ImmutableByteArray BLOCK1 = ImmutableByteArray.Companion.fromHex(
+            "16181A1B1C1D1E1F010101010101"
+    );
     @VisibleForTesting
-    public static final byte[] BLOCK2 = {
-            0x3f, 0x33, 0x22, 0x11,
-            -0x40, -0x34, -0x23, -0x12,
-            0x3f, 0x33, 0x22, 0x11,
-            0x01, -2, 0x01, -2
-    };
+    public static final ImmutableByteArray BLOCK2 = ImmutableByteArray.Companion.fromHex(
+            "3f332211c0ccddee3f33221101fe01fe"
+    );
 
     private static final CardInfo CARD_INFO = new CardInfo.Builder()
             // Using the short name (Goto) may be ambiguous
@@ -63,7 +58,7 @@ public class MspGotoTransitData extends NextfareTransitData {
     }
 
     private MspGotoTransitData(ClassicCard card) {
-        super(card);
+        super(card, "USD");
     }
 
     public static final ClassicCardTransitFactory FACTORY = new NextFareTransitFactory() {
@@ -75,13 +70,13 @@ public class MspGotoTransitData extends NextfareTransitData {
         @Override
         public boolean earlyCheck(@NonNull List<ClassicSector> sectors) {
             ClassicSector sector0 = sectors.get(0);
-            byte[] block1 = sector0.getBlock(1).getData();
-            if (!Arrays.equals(Arrays.copyOfRange(block1, 1, 15), BLOCK1)) {
+            ImmutableByteArray block1 = sector0.getBlock(1).getData();
+            if (!block1.copyOfRange(1, 15).contentEquals(BLOCK1)) {
                 return false;
             }
 
-            byte[] block2 = sector0.getBlock(2).getData();
-            return Arrays.equals(block2, BLOCK2);
+            ImmutableByteArray block2 = sector0.getBlock(2).getData();
+            return block2.contentEquals(BLOCK2);
         }
 
         @Override

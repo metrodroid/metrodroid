@@ -48,6 +48,7 @@ import au.id.micolous.metrodroid.ui.ListItem;
 import au.id.micolous.metrodroid.ui.ListItemRecursive;
 import au.id.micolous.metrodroid.util.Utils;
 import au.id.micolous.metrodroid.xml.Base64String;
+import au.id.micolous.metrodroid.xml.ImmutableByteArray;
 
 import org.apache.commons.lang3.ArrayUtils;
 import org.simpleframework.xml.Element;
@@ -84,7 +85,7 @@ public class FelicaCard extends Card {
 
     private FelicaCard() { /* For XML Serializer */ }
 
-    public FelicaCard(byte[] tagId, Calendar scannedAt, boolean partialRead, byte[] idm, byte[] pmm, FelicaSystem[] systems) {
+    public FelicaCard(ImmutableByteArray tagId, Calendar scannedAt, boolean partialRead, byte[] idm, byte[] pmm, FelicaSystem[] systems) {
         super(CardType.FeliCa, tagId, scannedAt, partialRead);
         mIDm = new Base64String(idm);
         mPMm = new Base64String(pmm);
@@ -93,7 +94,7 @@ public class FelicaCard extends Card {
 
     // https://github.com/tmurakam/felicalib/blob/master/src/dump/dump.c
     // https://github.com/tmurakam/felica2money/blob/master/src/card/Suica.cs
-    public static FelicaCard dumpTag(byte[] tagId, Tag tag, TagReaderFeedbackInterface feedbackInterface) throws Exception {
+    public static FelicaCard dumpTag(ImmutableByteArray tagId, Tag tag, TagReaderFeedbackInterface feedbackInterface) throws Exception {
         NfcF nfcF = NfcF.get(tag);
         Log.d(TAG, "Default system code: " + Utils.getHexString(nfcF.getSystemCode()));
 
@@ -206,9 +207,8 @@ public class FelicaCard extends Card {
                 //    FeliCaLib.ServiceCode serviceCode = new FeliCaLib.ServiceCode(serviceCodeInt);
 
                 for (FeliCaLib.ServiceCode serviceCode : serviceCodes) {
-                    byte[] bytes = serviceCode.getBytes();
-                    ArrayUtils.reverse(bytes);
-                    int serviceCodeInt = Utils.byteArrayToInt(bytes);
+                    int serviceCodeInt =
+                            ImmutableByteArray.Companion.fromByteArray(serviceCode.getBytes()).byteArrayToIntReversed();
                     serviceCode = new FeliCaLib.ServiceCode(serviceCode.getBytes());
 
                     List<FelicaBlock> blocks = new ArrayList<>();
@@ -262,8 +262,8 @@ public class FelicaCard extends Card {
      *
      * See https://www.sony.net/Products/felica/business/tech-support/data/code_descriptions_1.31.pdf
      */
-    public byte[] getIDm() {
-        return mIDm.getData();
+    public ImmutableByteArray getIDm() {
+        return mIDm;
     }
 
     /**
@@ -276,7 +276,7 @@ public class FelicaCard extends Card {
      * @return Manufacturer code.
      */
     public int getManufacturerCode() {
-        return Utils.byteArrayToInt(getIDm(), 0, 2);
+        return getIDm().byteArrayToInt(0, 2);
     }
 
     /**
@@ -286,7 +286,7 @@ public class FelicaCard extends Card {
      * @return Card identification number.
      */
     public long getCardIdentificationNumber() {
-        return Utils.byteArrayToLong(getIDm(), 2, 6);
+        return getIDm().byteArrayToLong(2, 6);
     }
 
     /**
@@ -294,8 +294,8 @@ public class FelicaCard extends Card {
      *
      * See https://www.sony.net/Products/felica/business/tech-support/data/code_descriptions_1.31.pdf
      */
-    public byte[] getPMm() {
-        return mPMm.getData();
+    public ImmutableByteArray getPMm() {
+        return mPMm;
     }
 
     /**
@@ -305,7 +305,7 @@ public class FelicaCard extends Card {
      * @return ROM type
      */
     public int getROMType() {
-        return Utils.byteArrayToInt(getPMm(), 0, 1);
+        return getPMm().byteArrayToInt(0, 1);
     }
 
     /**
@@ -315,7 +315,7 @@ public class FelicaCard extends Card {
      * @return IC type
      */
     public int getICType() {
-        return Utils.byteArrayToInt(getPMm(), 1, 1);
+        return getPMm().byteArrayToInt(1, 1);
     }
 
     /**
@@ -332,7 +332,7 @@ public class FelicaCard extends Card {
         }
 
         // Position is offset by 2.
-        int configurationByte = getPMm()[position + 2] & 0xFF;
+        int configurationByte = getPMm().get(position + 2) & 0xFF;
         int e = Utils.getBitsFromInteger(configurationByte, 0, 2);
         int b = Utils.getBitsFromInteger(configurationByte, 2, 3) + 1;
         int a = Utils.getBitsFromInteger(configurationByte, 5, 3) + 1;
@@ -375,7 +375,7 @@ public class FelicaCard extends Card {
      * @return Maximum response time
      */
     public long getMaximumResponseTime() {
-        return Utils.byteArrayToLong(getPMm(), 2, 6);
+        return getPMm().byteArrayToLong(2, 6);
     }
 
     public List<FelicaSystem> getSystems() {
@@ -492,7 +492,7 @@ public class FelicaCard extends Card {
                     bli.add(new ListItem(
                             new SpannableString(String.format(Locale.ENGLISH,
                             "%02d", block.getAddress())),
-                            Utils.getHexDump(block.getData(), "<ERR>")));
+                            block.getData().toHexDump()));
                 }
 
                 sli.add(new ListItemRecursive(

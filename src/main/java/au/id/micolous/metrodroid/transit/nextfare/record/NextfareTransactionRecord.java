@@ -25,6 +25,7 @@ import android.support.annotation.NonNull;
 import android.util.Log;
 
 import au.id.micolous.metrodroid.util.Utils;
+import au.id.micolous.metrodroid.xml.ImmutableByteArray;
 
 import java.util.Calendar;
 import java.util.TimeZone;
@@ -75,7 +76,7 @@ public class NextfareTransactionRecord extends NextfareRecord implements Parcela
         mValue = parcel.readInt();
     }
 
-    public static NextfareTransactionRecord recordFromBytes(byte[] input, TimeZone timeZone) {
+    public static NextfareTransactionRecord recordFromBytes(ImmutableByteArray input, TimeZone timeZone) {
         //if (input[0] != 0x31) throw new AssertionError("not a tap record");
 
         // LAX:      input[0] == 0x05 for "Travel Pass" trips.
@@ -86,32 +87,32 @@ public class NextfareTransactionRecord extends NextfareRecord implements Parcela
         // Minneapolis: input[0] == 0x89 unknown transaction type, no date, only a small number
         // around 100
 
-        int transhead = (input[0] & 0xff);
+        int transhead = (input.get(0) & 0xff);
         if (transhead == 0x89 || transhead == 0x71 || transhead == 0x79) {
             return null;
         }
 
         // Check if all the other data is null
-        if (Utils.byteArrayToLong(input, 1, 8) == 0L) {
+        if (input.byteArrayToLong(1, 8) == 0L) {
             Log.d(TAG, "Null transaction record, skipping");
             return null;
         }
 
 
-        int mode = Utils.byteArrayToInt(input, 1, 1);
+        int mode = input.byteArrayToInt(1, 1);
 
         Calendar timestamp = unpackDate(input, 2, timeZone);
-        int journey = Utils.byteArrayToIntReversed(input, 5, 2) >> 5;
+        int journey = input.byteArrayToIntReversed(5, 2) >> 5;
 
-        boolean continuation = (Utils.byteArrayToIntReversed(input, 5, 2) & 0x10) > 1;
+        boolean continuation = (input.byteArrayToIntReversed(5, 2) & 0x10) > 1;
 
-        int value = Utils.byteArrayToIntReversed(input, 7 ,2);
+        int value = input.byteArrayToIntReversed(7 ,2);
         if (value > 0x8000) {
             value = -(value & 0x7fff);
         }
 
-        int station = Utils.byteArrayToIntReversed(input, 12, 2);
-        int checksum = Utils.byteArrayToIntReversed(input, 14, 2);
+        int station = input.byteArrayToIntReversed(12, 2);
+        int checksum = input.byteArrayToIntReversed(14, 2);
 
         NextfareTransactionRecord record = new NextfareTransactionRecord(
                 timestamp, mode, journey, station, value, checksum, continuation);

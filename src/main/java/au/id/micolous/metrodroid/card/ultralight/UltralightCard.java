@@ -45,6 +45,7 @@ import au.id.micolous.metrodroid.transit.unknown.UnauthorizedUltralightTransitDa
 import au.id.micolous.metrodroid.ui.ListItem;
 import au.id.micolous.metrodroid.ui.ListItemRecursive;
 import au.id.micolous.metrodroid.util.Utils;
+import au.id.micolous.metrodroid.xml.ImmutableByteArray;
 
 import org.jetbrains.annotations.NonNls;
 import org.simpleframework.xml.Attribute;
@@ -101,13 +102,13 @@ public class UltralightCard extends Card {
 
     private UltralightCard() { /* For XML Serializer */ }
 
-    public UltralightCard(byte[] tagId, Calendar scannedAt, String cardModel, UltralightPage[] pages) {
+    public UltralightCard(ImmutableByteArray tagId, Calendar scannedAt, String cardModel, List<UltralightPage> pages) {
         super(CardType.MifareUltralight, tagId, scannedAt);
         mCardModel = cardModel;
-        mPages = Arrays.asList(pages);
+        mPages = pages;
     }
 
-    public static UltralightCard dumpTag(byte[] tagId, Tag tag, TagReaderFeedbackInterface feedbackInterface) throws Exception {
+    public static UltralightCard dumpTag(ImmutableByteArray tagId, Tag tag, TagReaderFeedbackInterface feedbackInterface) throws Exception {
         MifareUltralight tech = null;
 
         try {
@@ -147,7 +148,7 @@ public class UltralightCard extends Card {
 
                 // Now lets stuff this into some pages.
                 if (!unauthorized) {
-                    pages.add(new UltralightPage(pageNumber, Arrays.copyOfRange(
+                    pages.add(UltralightPage.create(pageNumber, Arrays.copyOfRange(
                             pageBuffer,
                             (pageNumber % 4) * MifareUltralight.PAGE_SIZE,
                             ((pageNumber % 4) + 1) * MifareUltralight.PAGE_SIZE)));
@@ -159,7 +160,7 @@ public class UltralightCard extends Card {
 
             // Now we have pages to stuff in the card.
             return new UltralightCard(tagId, GregorianCalendar.getInstance(), t.toString(),
-                    pages.toArray(new UltralightPage[0]));
+                    pages);
 
         } finally {
             if (tech != null && tech.isConnected()) {
@@ -168,7 +169,7 @@ public class UltralightCard extends Card {
         }
     }
 
-    public static UltralightCard dumpTagA(byte[] tagId, Tag tag, TagReaderFeedbackInterface feedbackInterface) throws Exception {
+    public static UltralightCard dumpTagA(ImmutableByteArray tagId, Tag tag, TagReaderFeedbackInterface feedbackInterface) throws Exception {
         NfcA tech = null;
 
         try {
@@ -204,13 +205,13 @@ public class UltralightCard extends Card {
             int i;
             List<UltralightPage> pages = new ArrayList<>();
             for (i = 0; i < numPages; i++) {
-                pages.add(new UltralightPage(i, Arrays.copyOfRange(
+                pages.add(UltralightPage.create(i, Arrays.copyOfRange(
                         pageBuffer, i * 4, (i+1) * 4)));
             }
 
             // Now we have pages to stuff in the card.
             return new UltralightCard(tagId, GregorianCalendar.getInstance(), "",
-                    pages.toArray(new UltralightPage[0]));
+                    pages);
 
         } finally {
             if (tech != null && tech.isConnected()) {
@@ -259,13 +260,11 @@ public class UltralightCard extends Card {
         return mPages.get(index);
     }
 
-    public byte[] readPages(int startPage, int pageCount) throws IndexOutOfBoundsException {
-        int readBlocks = 0;
-        byte[] data = new byte[pageCount * 4];
+    public ImmutableByteArray readPages(int startPage, int pageCount) throws IndexOutOfBoundsException {
+        ImmutableByteArray data = ImmutableByteArray.Companion.empty();
         for (int index = startPage; index < (startPage + pageCount); index++) {
-            byte[] blockData = getPage(index).getData();
-            System.arraycopy(blockData, 0, data, readBlocks * 4, blockData.length);
-            readBlocks++;
+            ImmutableByteArray blockData = getPage(index).getData();
+            data = data.plus(blockData);
         }
         return data;
     }
@@ -296,7 +295,7 @@ public class UltralightCard extends Card {
             } else {
                 li.add(ListItemRecursive.collapsedValue(Utils.localizeString(
                         R.string.page_title_format, sectorIndexString),
-                        null, Utils.getHexDump(sector.getData())));
+                        null, sector.getData().toHexDump()));
             }
         }
         return li;

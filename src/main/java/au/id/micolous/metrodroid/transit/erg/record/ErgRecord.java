@@ -24,6 +24,8 @@ import android.util.Log;
 import java.util.Locale;
 import java.util.TimeZone;
 
+import au.id.micolous.metrodroid.xml.ImmutableByteArray;
+
 /**
  * Represents a record inside of an ERG MIFARE Classic based card.
  *
@@ -46,7 +48,7 @@ public class ErgRecord {
      * @param blockIndex The 0-indexed block number within a sector.
      * @return An ErgRecord containing a deserialisation of the data, or null if not known.
      */
-    public static ErgRecord recordFromBytes(byte[] input, int sectorIndex, int blockIndex, TimeZone timeZone) {
+    public static ErgRecord recordFromBytes(ImmutableByteArray input, int sectorIndex, int blockIndex, TimeZone timeZone) {
         ErgRecord record = null;
 
         if (sectorIndex == 0) {

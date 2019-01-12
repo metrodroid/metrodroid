@@ -23,6 +23,7 @@ import android.os.Parcelable;
 import android.util.Log;
 
 import au.id.micolous.metrodroid.util.Utils;
+import au.id.micolous.metrodroid.xml.ImmutableByteArray;
 
 import java.util.Calendar;
 import java.util.TimeZone;
@@ -56,7 +57,7 @@ public class NextfareConfigRecord extends NextfareRecord implements Parcelable {
         mTicketType = p.readInt();
     }
 
-    public static NextfareConfigRecord recordFromBytes(byte[] input, TimeZone timeZone) {
+    public static NextfareConfigRecord recordFromBytes(ImmutableByteArray input, TimeZone timeZone) {
         //if (input[0] != 0x01) throw new AssertionError();
 
         NextfareConfigRecord record = new NextfareConfigRecord();
@@ -65,7 +66,7 @@ public class NextfareConfigRecord extends NextfareRecord implements Parcelable {
         record.mExpiry = unpackDate(input, 4, timeZone);
 
         // Treat ticket type as little-endian
-        record.mTicketType = Utils.byteArrayToIntReversed(input, 8, 2);
+        record.mTicketType = input.byteArrayToIntReversed(8, 2);
 
         //noinspection StringConcatenation
         Log.d(TAG, "Config ticket type = " + record.mTicketType);

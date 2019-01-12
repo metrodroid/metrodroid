@@ -45,6 +45,7 @@ import java.util.Collections;
 import java.util.List;
 
 import au.id.micolous.farebot.R;
+import au.id.micolous.metrodroid.xml.ImmutableByteArray;
 
 /**
  * Reader for Octopus (Hong Kong)
@@ -89,8 +90,8 @@ public class OctopusTransitData extends TransitData {
         }
 
         if (service != null) {
-            byte[] metadata = service.getBlocks().get(0).getData();
-            mOctopusBalance = Utils.byteArrayToInt(metadata, 0, 4) - 350;
+            ImmutableByteArray metadata = service.getBlocks().get(0).getData();
+            mOctopusBalance = metadata.byteArrayToInt(0, 4) - 350;
             mHasOctopus = true;
         }
 
@@ -101,8 +102,8 @@ public class OctopusTransitData extends TransitData {
         }
 
         if (service != null) {
-            byte[] metadata = service.getBlocks().get(0).getData();
-            mShenzhenBalance = Utils.byteArrayToInt(metadata, 0, 4) - 350;
+            ImmutableByteArray metadata = service.getBlocks().get(0).getData();
+            mShenzhenBalance = metadata.byteArrayToInt(0, 4) - 350;
             mHasShenzhen = true;
         }
     }

@@ -52,6 +52,7 @@ import au.id.micolous.metrodroid.util.TripObfuscator;
 import au.id.micolous.metrodroid.util.Utils;
 import au.id.micolous.metrodroid.xml.Base64String;
 import au.id.micolous.metrodroid.transit.ezlink.CEPASPurse;
+import au.id.micolous.metrodroid.xml.ImmutableByteArray;
 
 @Root(name = "card")
 public class CEPASApplication extends ISO7816Application {
@@ -67,11 +68,11 @@ public class CEPASApplication extends ISO7816Application {
         List <ListItem> li = new ArrayList<>();
         for (Map.Entry<Integer, Base64String> entry : mPurses.entrySet()) {
             li.add(ListItemRecursive.collapsedValue("CEPAS purse " + entry.getKey(),
-                    Utils.getHexDump(entry.getValue().getData())));
+                    entry.getValue().toHexDump()));
         }
         for (Map.Entry<Integer, Base64String> entry : mHistories.entrySet()) {
             li.add(ListItemRecursive.collapsedValue("CEPAS history " + entry.getKey(),
-                    Utils.getHexDump(entry.getValue().getData())));
+                    entry.getValue().toHexDump()));
         }
         return li;
     }
@@ -165,7 +166,7 @@ public class CEPASApplication extends ISO7816Application {
         List<ListItem> items = new ArrayList<>();
 
         // FIXME: What about other purses?
-        byte[] purseRaw = getPurse(3);
+        ImmutableByteArray purseRaw = getPurse(3);
         CEPASPurse purse = null;
         if (purseRaw != null)
             purse = new CEPASPurse(purseRaw);
@@ -203,15 +204,15 @@ public class CEPASApplication extends ISO7816Application {
         return items;
     }
 
-    public byte[] getPurse(int purseId) {
+    public ImmutableByteArray getPurse(int purseId) {
         if (!mPurses.containsKey(purseId))
             return null;
-        return mPurses.get(purseId).getData();
+        return mPurses.get(purseId);
     }
 
-    public byte[] getHistory(int purseId) {
+    public ImmutableByteArray getHistory(int purseId) {
         if (!mHistories.containsKey(purseId))
             return null;
-        return mHistories.get(purseId).getData();
+        return mHistories.get(purseId);
     }
 }

@@ -34,6 +34,7 @@ import au.id.micolous.metrodroid.transit.CardInfo;
 import au.id.micolous.metrodroid.transit.TransitData;
 import au.id.micolous.metrodroid.transit.TransitIdentity;
 import au.id.micolous.metrodroid.util.Utils;
+import au.id.micolous.metrodroid.xml.ImmutableByteArray;
 
 // Reference: https://github.com/sinpolib/nfcard/blob/master/src/com/sinpo/xnfc/nfc/reader/pboc/BeijingMunicipal.java
 public class BeijingTransitData extends ChinaTransitData {
@@ -60,14 +61,14 @@ public class BeijingTransitData extends ChinaTransitData {
     private BeijingTransitData(ChinaCard card) {
         super(card);
         mSerial = parseSerial(card);
-        byte []info = getFile(card, FILE_INFO).getBinaryData();
+        ImmutableByteArray info = getFile(card, FILE_INFO).getBinaryData();
 
-        mValidityStart = Utils.byteArrayToInt(info, 0x18, 4);
-        mValidityEnd = Utils.byteArrayToInt(info, 0x1c, 4);
+        mValidityStart = info.byteArrayToInt(0x18, 4);
+        mValidityEnd = info.byteArrayToInt(0x1c, 4);
     }
 
     @Override
-    protected ChinaTrip parseTrip(byte[] data) {
+    protected ChinaTrip parseTrip(ImmutableByteArray data) {
         return new ChinaTrip(data);
     }
 
@@ -94,10 +95,10 @@ public class BeijingTransitData extends ChinaTransitData {
 
     public final static ChinaCardTransitFactory FACTORY = new ChinaCardTransitFactory() {
         @Override
-        public List<byte[]> getAppNames() {
+        public List<ImmutableByteArray> getAppNames() {
             return Arrays.asList(
-                    Utils.stringToByteArray("OC"),
-                    Utils.stringToByteArray("PBOC")
+                    ImmutableByteArray.Companion.fromASCII("OC"),
+                    ImmutableByteArray.Companion.fromASCII("PBOC")
             );
         }
 
@@ -119,7 +120,7 @@ public class BeijingTransitData extends ChinaTransitData {
     };
 
     private static String parseSerial(ChinaCard card) {
-        byte []info = getFile(card, FILE_INFO).getBinaryData();
-        return Utils.getHexString(info, 0, 8);
+        ImmutableByteArray info = getFile(card, FILE_INFO).getBinaryData();
+        return info.getHexString(0, 8);
     }
 }

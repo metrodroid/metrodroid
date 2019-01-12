@@ -22,6 +22,7 @@ package au.id.micolous.metrodroid.key
 
 import au.id.micolous.farebot.R
 import au.id.micolous.metrodroid.util.Utils
+import au.id.micolous.metrodroid.xml.ImmutableByteArray
 import org.json.JSONException
 import org.json.JSONObject
 
@@ -82,9 +83,9 @@ class ClassicCardKeys(override var uid: String?,
          *
          * See https://github.com/micolous/metrodroid/wiki/Importing-MIFARE-Classic-keys#raw-farebotkeys
          */
-        fun fromDump(keyData: ByteArray) = fromDump(keyData, ClassicSectorKey.KeyType.UNKNOWN)
+        fun fromDump(keyData: ImmutableByteArray) = fromDump(keyData, ClassicSectorKey.KeyType.UNKNOWN)
 
-        fun fromDump(keyData: ByteArray, keyType: ClassicSectorKey.KeyType): ClassicCardKeys {
+        fun fromDump(keyData: ImmutableByteArray, keyType: ClassicSectorKey.KeyType): ClassicCardKeys {
             val keys = mutableMapOf<Int, List<ClassicSectorKey>>()
 
             val numSectors = keyData.size / ClassicSectorKey.KEY_LEN

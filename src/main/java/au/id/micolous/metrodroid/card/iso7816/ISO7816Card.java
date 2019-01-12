@@ -49,6 +49,7 @@ import au.id.micolous.metrodroid.transit.TransitIdentity;
 import au.id.micolous.metrodroid.ui.ListItem;
 import au.id.micolous.metrodroid.ui.ListItemRecursive;
 import au.id.micolous.metrodroid.util.Utils;
+import au.id.micolous.metrodroid.xml.ImmutableByteArray;
 
 /**
  * Generic card implementation for ISO7816. This doesn't have many smarts, but dispatches to other
@@ -72,7 +73,7 @@ public class ISO7816Card extends Card {
     
     protected ISO7816Card() { /* For XML Serializer */ }
 
-    public ISO7816Card(List<ISO7816Application> apps, byte[] tagId, Calendar scannedAt, boolean partialRead) {
+    public ISO7816Card(List<ISO7816Application> apps, ImmutableByteArray tagId, Calendar scannedAt, boolean partialRead) {
         super(CardType.ISO7816, tagId, scannedAt, partialRead);
         mApplications = apps;
     }
@@ -90,7 +91,7 @@ public class ISO7816Card extends Card {
         IsoDep tech = IsoDep.get(tag);
         tech.connect();
         boolean partialRead = false;
-        byte []tagId = tag.getId();
+        ImmutableByteArray tagId = ImmutableByteArray.Companion.fromByteArray(tag.getId());
         ArrayList<ISO7816Application> apps = new ArrayList<>();
 
         try {
@@ -99,7 +100,7 @@ public class ISO7816Card extends Card {
             feedbackInterface.updateStatusText(Utils.localizeString(R.string.iso7816_probing));
             feedbackInterface.updateProgressBar(0, 1);
 
-            byte []appData;
+            byte[] appData;
 
             /*
              * It's tempting to try to iterate over the apps on the card.
@@ -120,8 +121,8 @@ public class ISO7816Card extends Card {
 
             for (ISO7816ApplicationFactory factory : FACTORIES) {
                 final boolean stopAfterFirst = factory.stopAfterFirstApp();
-                for (byte[] appId : factory.getApplicationNames()) {
-                    appData = iso7816Tag.selectByNameOrNull(appId);
+                for (ImmutableByteArray appId : factory.getApplicationNames()) {
+                    appData = iso7816Tag.selectByNameOrNull(appId.getDataCopy());
                     if (appData == null) {
                         continue;
                     }
@@ -194,18 +195,19 @@ public class ISO7816Card extends Card {
         List<ListItem> rawData = new ArrayList<>();
         for (ISO7816Application app : mApplications) {
             String appTitle;
-            byte[] appName = app.getAppName();
+            ImmutableByteArray appName = app.getAppName();
             if (appName == null)
                 appTitle = app.getClass().getSimpleName();
-            else if (Utils.isASCII(appName))
-                appTitle = new String(appName, Utils.getASCII());
+            else if (appName.isASCII())
+                appTitle = appName.readASCII();
             else
-                appTitle = Utils.getHexString(appName);
+                appTitle = appName.toHexString();
             List<ListItem> rawAppData = new ArrayList<>();
-            byte[] appData = app.getAppData();
+            ImmutableByteArray appData = app.getAppData();
             if (appData != null)
                 rawAppData.add(new ListItemRecursive(
-                        R.string.app_fci, null, ISO7816TLV.INSTANCE.infoWithRaw(appData)));
+                        R.string.app_fci, null, ISO7816TLV.INSTANCE.infoWithRaw(
+                        appData)));
             rawAppData.addAll(app.getRawFiles());
             List<ListItem> extra = app.getRawData();
             if (extra != null)

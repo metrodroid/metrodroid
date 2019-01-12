@@ -45,13 +45,13 @@ public class DesfireApplication {
 
     private DesfireApplication() { /* For XML Serializer */ }
 
-    public DesfireApplication(int id, DesfireFile[] files, List<DesfireAuthLog> authLog) {
+    public DesfireApplication(int id, List<DesfireFile> files, List<DesfireAuthLog> authLog) {
         mId = String.valueOf(id);
-        mFiles = Arrays.asList(files);
+        mFiles = files;
         mAuthLog = authLog;
     }
 
-    public DesfireApplication(int id, DesfireFile[] files) {
+    public DesfireApplication(int id, List<DesfireFile> files) {
 	this(id, files, null);
     }
 

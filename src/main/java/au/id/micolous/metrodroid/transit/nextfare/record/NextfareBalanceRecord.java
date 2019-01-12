@@ -22,6 +22,7 @@ import android.support.annotation.NonNull;
 import android.util.Log;
 
 import au.id.micolous.metrodroid.util.Utils;
+import au.id.micolous.metrodroid.xml.ImmutableByteArray;
 
 /**
  * Represents balance records on Nextfare
@@ -37,26 +38,26 @@ public class NextfareBalanceRecord extends NextfareRecord implements Comparable<
         mVersion = version;
     }
 
-    public static NextfareBalanceRecord recordFromBytes(byte[] input) {
+    public static NextfareBalanceRecord recordFromBytes(ImmutableByteArray input) {
         //if (input[0] != 0x01) throw new AssertionError();
 
         NextfareBalanceRecord record = new NextfareBalanceRecord(
-                Utils.byteArrayToInt(input, 13, 1));
+                input.byteArrayToInt(13, 1));
 
         // Do some flipping for the balance
-        record.mBalance = Utils.byteArrayToIntReversed(input, 2, 2);
+        record.mBalance = input.byteArrayToIntReversed(2, 2);
 
         // Negative balance
         if ((record.mBalance & 0x8000) == 0x8000) {
             // TODO: document which nextfares use a sign flag like this.
             record.mBalance &= 0x7fff;
             record.mBalance *= -1;
-        } else if ((input[1] & 0x80) == 0x80) {
+        } else if ((input.get(1) & 0x80) == 0x80) {
             // seq_go uses a sign flag in an adjacent byte
             record.mBalance *= -1;
         }
 
-        if (input[7] != 0x00) {
+        if (input.get(7) != 0x00) {
             record.mHasTravelPassAvailable = true;
         }
 

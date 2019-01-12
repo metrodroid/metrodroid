@@ -35,7 +35,7 @@ import org.jetbrains.annotations.NonNls
  * https://github.com/micolous/metrodroid/wiki/AT-HOP
  */
 @Parcelize
-data class AtHopTransitData (private val mSerial: Int): SerialOnlyTransitData() {
+data class AtHopTransitData (private val mSerial: Int?): SerialOnlyTransitData() {
 
     override val reason: SerialOnlyTransitData.Reason
         get() = SerialOnlyTransitData.Reason.LOCKED
@@ -55,12 +55,15 @@ data class AtHopTransitData (private val mSerial: Int): SerialOnlyTransitData() 
                 .build()
 
         private fun getSerial(card: DesfireCard) =
-                Utils.getBitsFromBuffer(card.getApplication(APP_ID_SERIAL)!!.getFile(8)!!.data,
+                card.getApplication(APP_ID_SERIAL)?.getFile(8)?.data?.getBitsFromBuffer(
                     61, 32)
 
         @NonNls
-        private fun formatSerial(serial: Int) =
-                "7824 6702 " + Utils.formatNumber(serial.toLong(), " ", 4, 4, 3)
+        private fun formatSerial(serial: Int?) =
+                if (serial != null)
+                    "7824 6702 " + Utils.formatNumber(serial.toLong(), " ", 4, 4, 3)
+                else
+                    null
 
         val FACTORY: DesfireCardTransitFactory = object : DesfireCardTransitFactory {
             override fun earlyCheck(appIds: IntArray) =

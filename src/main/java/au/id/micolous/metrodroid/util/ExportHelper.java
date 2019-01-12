@@ -161,7 +161,7 @@ public final class ExportHelper {
                                   @NonNull final Context context) {
         ContentValues cv = new ContentValues();
         cv.put(CardsTableColumns.TYPE, c.getCardType().toString());
-        cv.put(CardsTableColumns.TAG_SERIAL, Utils.getHexString(c.getTagId()));
+        cv.put(CardsTableColumns.TAG_SERIAL, c.getTagId().toHexString());
         cv.put(CardsTableColumns.DATA, c.toXml());
         cv.put(CardsTableColumns.SCANNED_AT, c.getScannedAt().getTimeInMillis());
         if (c.getLabel() != null) {

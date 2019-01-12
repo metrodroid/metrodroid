@@ -33,6 +33,7 @@ import au.id.micolous.metrodroid.transit.Transaction;
 import au.id.micolous.metrodroid.transit.TransitCurrency;
 import au.id.micolous.metrodroid.transit.Trip;
 import au.id.micolous.metrodroid.util.Utils;
+import au.id.micolous.metrodroid.xml.ImmutableByteArray;
 
 public abstract class NextfareUltralightTransaction extends Transaction {
     private final int mTime;
@@ -47,21 +48,21 @@ public abstract class NextfareUltralightTransaction extends Transaction {
     private final int mExpiry;
 
     public NextfareUltralightTransaction(UltralightCard card, int startPage, int baseDate) {
-        byte []page0 = card.getPage(startPage).getData();
-        byte []page1 = card.getPage(startPage+1).getData();
-        byte []page2 = card.getPage(startPage+2).getData();
-        byte []page3 = card.getPage(startPage+3).getData();
-        int timeField = Utils.byteArrayToIntReversed(page0, 0, 2);
+        ImmutableByteArray page0 = card.getPage(startPage).getData();
+        ImmutableByteArray page1 = card.getPage(startPage+1).getData();
+        ImmutableByteArray page2 = card.getPage(startPage+2).getData();
+        ImmutableByteArray page3 = card.getPage(startPage+3).getData();
+        int timeField = page0.byteArrayToIntReversed(0, 2);
         mRecordType = timeField & 0x1f;
         mTime = timeField >> 5;
-        mDate = page0[2] & 0xff;
-        mRoute = page2[3];
-        mLocation = Utils.byteArrayToIntReversed(page2, 1, 2);
-        mMachineCode = Utils.byteArrayToInt(page3, 0, 2);
+        mDate = page0.get(2) & 0xff;
+        mRoute = page2.get(3);
+        mLocation = page2.byteArrayToIntReversed(1, 2);
+        mMachineCode = page3.byteArrayToInt(0, 2);
         mBaseDate = baseDate;
-        int seqnofield = Utils.byteArrayToIntReversed(page1, 0, 3);
+        int seqnofield = page1.byteArrayToIntReversed(0, 3);
         mSeqNo = seqnofield & 0x7f;
-        mExpiry = page2[0];
+        mExpiry = page2.get(0);
         mBalance = (seqnofield >> 5) & 0x7ff;
     }
 

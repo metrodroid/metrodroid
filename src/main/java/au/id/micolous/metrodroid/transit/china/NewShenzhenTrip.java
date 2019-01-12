@@ -27,6 +27,7 @@ import au.id.micolous.farebot.R;
 import au.id.micolous.metrodroid.transit.Station;
 import au.id.micolous.metrodroid.util.StationTableReader;
 import au.id.micolous.metrodroid.util.Utils;
+import au.id.micolous.metrodroid.xml.ImmutableByteArray;
 
 public class NewShenzhenTrip extends ChinaTrip {
     public static final Creator<NewShenzhenTrip> CREATOR = new Creator<NewShenzhenTrip>() {
@@ -48,7 +49,7 @@ public class NewShenzhenTrip extends ChinaTrip {
         super(parcel);
     }
 
-    public NewShenzhenTrip(byte[]data) {
+    public NewShenzhenTrip(ImmutableByteArray data) {
         super(data);
     }
 

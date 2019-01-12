@@ -21,6 +21,8 @@ package au.id.micolous.metrodroid.transit.en1545;
 import java.util.Arrays;
 import java.util.List;
 
+import au.id.micolous.metrodroid.xml.ImmutableByteArray;
+
 /**
  * EN1545 Container
  *
@@ -34,7 +36,7 @@ public class En1545Container implements En1545Field {
     }
 
     @Override
-    public int parseField(byte[] b, int off, String path, En1545Parsed holder, En1545Bits bitParser) {
+    public int parseField(ImmutableByteArray b, int off, String path, En1545Parsed holder, En1545Bits bitParser) {
         for (En1545Field el : mFields) {
                 off = el.parseField(b, off, path, holder, bitParser);
         }
