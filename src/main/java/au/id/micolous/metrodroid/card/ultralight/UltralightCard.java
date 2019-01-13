@@ -22,6 +22,7 @@ import android.nfc.Tag;
 import android.nfc.tech.MifareUltralight;
 import android.nfc.tech.NfcA;
 import android.support.annotation.Keep;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.util.Log;
 
@@ -282,6 +283,7 @@ public class UltralightCard extends Card {
         return mCardModel;
     }
 
+    @NonNull
     @Override
     public List<ListItem> getRawData() {
         List<ListItem> li = new ArrayList<>();

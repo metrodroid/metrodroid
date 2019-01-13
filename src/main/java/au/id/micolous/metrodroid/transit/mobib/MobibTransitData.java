@@ -21,6 +21,7 @@ package au.id.micolous.metrodroid.transit.mobib;
 
 import android.os.Parcel;
 import android.support.annotation.NonNull;
+import android.support.annotation.VisibleForTesting;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -60,7 +61,8 @@ import au.id.micolous.metrodroid.xml.ImmutableByteArray;
 public class MobibTransitData extends Calypso1545TransitData {
     // 56 = Belgium
     private static final int MOBIB_NETWORK_ID = 0x56001;
-    private static final String NAME = "Mobib";
+    @VisibleForTesting()
+    public static final String NAME = "Mobib";
     private static final String EXT_HOLDER_NAME = "ExtHolderName";
     private final En1545Parsed mExtHolderParsed;
     private final int mPurchase;

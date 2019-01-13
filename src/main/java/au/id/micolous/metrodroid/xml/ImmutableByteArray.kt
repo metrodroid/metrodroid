@@ -23,6 +23,7 @@ import android.os.Parcelable
 import android.util.Base64
 import au.id.micolous.metrodroid.util.Utils
 import kotlinx.android.parcel.Parcelize
+import java.io.OutputStream
 import java.nio.charset.Charset
 import java.security.MessageDigest
 
@@ -30,14 +31,20 @@ fun ByteArray.toImmutable(): ImmutableByteArray = ImmutableByteArray.fromByteArr
 
 @Parcelize
 open class ImmutableByteArray private constructor(private val mData: ByteArray):
-        Parcelable, Comparable<ImmutableByteArray> {
+        Parcelable, Comparable<ImmutableByteArray>, Collection<Byte> {
+    override fun contains(element: Byte): Boolean = mData.contains(element)
+    override fun containsAll(elements: Collection<Byte>): Boolean =
+            elements.all { mData.contains(it) }
+    override fun isEmpty(): Boolean = mData.isEmpty()
+    override fun iterator(): Iterator<Byte> = mData.iterator()
+
     constructor(len: Int, function: (Int) -> Byte) : this(mData = ByteArray(len, function))
     constructor(imm: ImmutableByteArray): this(mData = imm.mData)
     constructor(len: Int) : this(mData = ByteArray(len))
 
     val dataCopy: ByteArray
         get() = mData.clone()
-    val size
+    override val size
         get() = mData.size
 
     override fun equals(other: Any?) = other is ImmutableByteArray && mData.contentEquals(other.mData)
@@ -55,7 +62,6 @@ open class ImmutableByteArray private constructor(private val mData: ByteArray):
     fun getBitsFromBufferLeBits(off: Int, len: Int) = Utils.getBitsFromBufferLeBits(mData, off, len)
     fun getBitsFromBufferSigned(off: Int, len: Int) = Utils.getBitsFromBufferSigned(mData, off, len)
     operator fun get(i: Int) = mData[i]
-    fun isNotEmpty() = mData.isNotEmpty()
     operator fun plus(second: ImmutableByteArray) = ImmutableByteArray(this.mData + second.mData)
     fun sliceArray(intRange: IntRange) = ImmutableByteArray(mData = mData.sliceArray(intRange))
     fun sliceOffLen(off: Int, datalen: Int) = sliceArray(off until (off + datalen))
@@ -65,6 +71,7 @@ open class ImmutableByteArray private constructor(private val mData: ByteArray):
     fun all(function: (Byte) -> Boolean): Boolean = mData.all(function)
     fun any(function: (Byte) -> Boolean): Boolean = mData.any(function)
     fun toBase64(): String = Base64.encodeToString(mData, Base64.NO_WRAP)
+    fun getHexString() = Utils.getHexString(mData)
     fun getHexString(off: Int, len: Int) = Utils.getHexString(mData, off, len)
     fun readASCII() = readEncoded(Utils.getASCII())
     fun readEncoded(cs: Charset) = String(mData, cs)
@@ -79,6 +86,15 @@ open class ImmutableByteArray private constructor(private val mData: ByteArray):
     fun reverseBuffer() =
             ImmutableByteArray(ByteArray(mData.size) { x-> mData[mData.size - x - 1] })
     fun contentEquals(other: ByteArray) = mData.contentEquals(other)
+
+
+    fun writeTo(os: OutputStream) {
+        os.write(mData)
+    }
+
+    fun writeTo(os: OutputStream, offset: Int, length: Int) {
+        os.write(mData, offset, length)
+    }
 
     fun parcelize(parcel: Parcel, flags: Int) {
         parcel.writeParcelable(this, flags)

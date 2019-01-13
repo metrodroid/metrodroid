@@ -78,12 +78,14 @@ import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.text.SimpleDateFormat;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Collections;
 import java.util.GregorianCalendar;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
+import java.util.Objects;
 import java.util.Set;
 import java.util.TimeZone;
 
@@ -1347,5 +1349,43 @@ public class Utils {
     public static String longToHex(long v) {
         //noinspection StringConcatenation
         return "0x" + Long.toHexString(v);
+    }
+
+    /**
+     * Compatibility for Android SDK <19.
+     *
+     * @see Objects#equals(Object, Object)
+     */
+    public static boolean equals(@Nullable Object a, @Nullable Object b) {
+        // Method to be removed when minSdk >= 19
+        if (Build.VERSION.SDK_INT >= 19) return Objects.equals(a, b);
+        if (a == null && b == null) return true;
+        if (a == null || b == null) return false;
+        return a.equals(b);
+    }
+
+    /**
+     * Compatibility for Android SDK <19.
+     *
+     * @see Objects#toString(Object)
+     */
+    @NonNull
+    public static String toString(@Nullable Object o) {
+        // Method to be removed when minSdk >= 19
+        if (Build.VERSION.SDK_INT >= 19) return Objects.toString(o);
+        return toString(o, "null");
+    }
+
+    /**
+     * Compatibility for Android SDK <19.
+     *
+     * @see Objects#toString(Object, String)
+     */
+    @NonNull
+    public static String toString(@Nullable Object o, @NonNull String defaultValue) {
+        // Method to be removed when minSdk >= 19
+        if (Build.VERSION.SDK_INT >= 19) return Objects.toString(o, defaultValue);
+        if (o == null) return defaultValue;
+        return o.toString();
     }
 }

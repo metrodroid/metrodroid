@@ -28,6 +28,7 @@ import org.simpleframework.xml.stream.OutputNode;
 
 import java.io.IOException;
 
+import au.id.micolous.metrodroid.xml.ImmutableByteArray;
 import au.id.micolous.metrodroid.xml.SkippableRegistryStrategy;
 
 public abstract class ISO7816SelectorElement {
@@ -42,7 +43,7 @@ public abstract class ISO7816SelectorElement {
         mKind = kind;
     }
 
-    abstract byte[] select(ISO7816Protocol tag) throws IOException, ISO7816Exception;
+    abstract ImmutableByteArray select(ISO7816Protocol tag) throws IOException, ISO7816Exception;
 
     public abstract String formatString();
 

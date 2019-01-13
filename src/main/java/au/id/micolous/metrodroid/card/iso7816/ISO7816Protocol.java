@@ -22,12 +22,14 @@ package au.id.micolous.metrodroid.card.iso7816;
 import android.nfc.tech.IsoDep;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.annotation.VisibleForTesting;
 import android.util.Log;
 
 import java.io.EOFException;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 
+import au.id.micolous.metrodroid.card.CardTransceiver;
 import au.id.micolous.metrodroid.util.Utils;
 import au.id.micolous.metrodroid.xml.ImmutableByteArray;
 
@@ -48,20 +50,39 @@ public class ISO7816Protocol {
     /**
      * If true, this turns on debug logs that show ISO7816 communication.
      */
-    private static final boolean ENABLE_TRACING = false;
+    private static final boolean ENABLE_TRACING = true;
 
-    private static final String TAG = ISO7816Protocol.class.getName();
-    private static final byte CLASS_ISO7816 = (byte) 0x00;
+    private static final String TAG = ISO7816Protocol.class.getSimpleName();
+    @VisibleForTesting
+    public static final byte CLASS_ISO7816 = (byte) 0x00;
     public static final byte CLASS_80 = (byte) 0x80;
     public static final byte CLASS_90 = (byte) 0x90;
 
-    private static final byte INSTRUCTION_ISO7816_SELECT = (byte) 0xA4;
-    private static final byte INSTRUCTION_ISO7816_READ_BINARY = (byte) 0xB0;
-    private static final byte INSTRUCTION_ISO7816_READ_RECORD = (byte) 0xB2;
+    @VisibleForTesting
+    public static final byte INSTRUCTION_ISO7816_SELECT = (byte) 0xA4;
+    @VisibleForTesting
+    public static final byte INSTRUCTION_ISO7816_READ_BINARY = (byte) 0xB0;
+    @VisibleForTesting
+    public static final byte INSTRUCTION_ISO7816_READ_RECORD = (byte) 0xB2;
+    @VisibleForTesting
+    public static final byte ERROR_COMMAND_NOT_ALLOWED = (byte) 0x69;
+    @VisibleForTesting
+    public static final byte ERROR_WRONG_PARAMETERS = (byte) 0x6A;
+    @VisibleForTesting
+    public static final byte CNA_NO_CURRENT_EF = (byte) 0x86;
+    @VisibleForTesting
+    public static final byte WP_FILE_NOT_FOUND = (byte) 0x82;
+    @VisibleForTesting
+    public static final byte WP_RECORD_NOT_FOUND = (byte) 0x83;
+    @VisibleForTesting
+    public static final byte SELECT_BY_NAME = (byte) 0x04;
+    @VisibleForTesting
+    public static final byte STATUS_OK = (byte) 0x90;
 
-    private final IsoDep mTagTech;
 
-    public ISO7816Protocol(IsoDep tagTech) {
+    private final CardTransceiver mTagTech;
+
+    public ISO7816Protocol(CardTransceiver tagTech) {
         mTagTech = tagTech;
     }
 
@@ -79,7 +100,7 @@ public class ISO7816Protocol {
      * @return A wrapped command.
      */
     @NonNull
-    private byte[] wrapMessage(byte cla, byte ins, byte p1, byte p2, byte length, byte... parameters) {
+    private ImmutableByteArray wrapMessage(byte cla, byte ins, byte p1, byte p2, byte length, byte... parameters) {
         byte[] output = new byte[5 + (parameters.length == 0 ? 0 : 1 + parameters.length)];
         output[0] = cla;
         output[1] = ins;
@@ -92,7 +113,7 @@ public class ISO7816Protocol {
         }
 
         output[output.length - 1] = length;
-        return output;
+        return ImmutableByteArray.Companion.fromByteArray(output);
     }
 
     /**
@@ -112,58 +133,58 @@ public class ISO7816Protocol {
      * @return A wrapped command.
      */
     @NonNull
-    public byte[] sendRequest(byte cla, byte ins, byte p1, byte p2, byte length, byte... parameters) throws IOException, ISO7816Exception {
-        byte[] sendBuffer = wrapMessage(cla, ins, p1, p2, length, parameters);
+    public ImmutableByteArray sendRequest(byte cla, byte ins, byte p1, byte p2, byte length, byte... parameters) throws IOException, ISO7816Exception {
+        ImmutableByteArray sendBuffer = wrapMessage(cla, ins, p1, p2, length, parameters);
         if (ENABLE_TRACING) {
             Log.d(TAG, ">>> " + Utils.getHexString(sendBuffer));
         }
-        byte[] recvBuffer = mTagTech.transceive(sendBuffer);
+        ImmutableByteArray recvBuffer = mTagTech.transceive(sendBuffer);
         if (ENABLE_TRACING) {
             Log.d(TAG, "<<< " + Utils.getHexString(recvBuffer));
         }
 
-        if (recvBuffer.length == 1) {
+        if (recvBuffer.getSize() == 1) {
             // Android HCE does this for some commands ?
             throw new ISO7816Exception("Got 1-byte result: " + Utils.getHexString(recvBuffer));
         }
 
-        byte sw1 = recvBuffer[recvBuffer.length - 2];
-        byte sw2 = recvBuffer[recvBuffer.length - 1];
+        byte sw1 = recvBuffer.get(recvBuffer.getSize() - 2);
+        byte sw2 = recvBuffer.get(recvBuffer.getSize() - 1);
 
-        if (sw1 != (byte) 0x90) {
+        if (sw1 != STATUS_OK) {
             switch (sw1) {
-                case (byte) 0x69: // Command not allowed
+                case ERROR_COMMAND_NOT_ALLOWED: // Command not allowed
                     switch (sw2) {
-                        case (byte) 0x86: // Command not allowed (no current EF)
+                        case CNA_NO_CURRENT_EF: // Command not allowed (no current EF)
                             // Emitted by Android HCE when doing a CEPAS probe
                             throw new IllegalStateException();
                     }
                     break;
 
-                case (byte) 0x6A: // Wrong Parameters P1 - P2
+                case ERROR_WRONG_PARAMETERS: // Wrong Parameters P1 - P2
                     switch (sw2) {
-                        case (byte) 0x82: // File not found
+                        case WP_FILE_NOT_FOUND: // File not found
                             throw new FileNotFoundException();
-                        case (byte) 0x83: // Record not found
+                        case WP_RECORD_NOT_FOUND: // Record not found
                             throw new EOFException();
                     }
                     break;
             }
 
             // we get error?
-            throw new ISO7816Exception("Got unknown result: " + Utils.getHexString(recvBuffer, recvBuffer.length - 2, 2));
+            throw new ISO7816Exception("Got unknown result: " + Utils.getHexString(recvBuffer, recvBuffer.getSize() - 2, 2));
         }
 
-        return Utils.byteArraySlice(recvBuffer, 0, recvBuffer.length - 2);
+        return recvBuffer.sliceOffLen(0, recvBuffer.getSize() - 2);
     }
 
     @NonNull
-    public byte[] selectByName(@NonNull byte[] name, boolean nextOccurrence) throws IOException, ISO7816Exception {
+    public ImmutableByteArray selectByName(@NonNull ImmutableByteArray name, boolean nextOccurrence) throws IOException, ISO7816Exception {
         Log.d(TAG, "Select by name " + Utils.getHexString(name));
         // Select an application by file name
         return sendRequest(CLASS_ISO7816, INSTRUCTION_ISO7816_SELECT,
-                    (byte) 0x04 /* byName */, nextOccurrence ? (byte) 0x02 : (byte) 0x00, (byte) 0,
-                    name);
+                SELECT_BY_NAME, nextOccurrence ? (byte) 0x02 : (byte) 0x00, (byte) 0,
+                    name.getDataCopy());
     }
 
     public void unselectFile() throws IOException, ISO7816Exception {
@@ -172,7 +193,7 @@ public class ISO7816Protocol {
                     (byte) 0, (byte) 0, (byte) 0);
     }
 
-    public byte[] selectById(int fileId) throws IOException, ISO7816Exception {
+    public ImmutableByteArray selectById(int fileId) throws IOException, ISO7816Exception {
         byte[] file = Utils.integerToByteArray(fileId, 2);
         Log.d(TAG, "Select file " + Utils.getHexString(file));
         return sendRequest(CLASS_ISO7816, INSTRUCTION_ISO7816_SELECT,
@@ -180,28 +201,13 @@ public class ISO7816Protocol {
                     file);
     }
 
-    public byte[] readRecord(byte recordNumber, byte length) throws IOException {
-        byte[] ret;
+    @Nullable
+    public ImmutableByteArray readRecord(byte recordNumber, byte length) throws IOException {
         //noinspection StringConcatenation
         Log.d(TAG, "Read record " + recordNumber);
         try {
-            ret = sendRequest(CLASS_ISO7816, INSTRUCTION_ISO7816_READ_RECORD,
+            return sendRequest(CLASS_ISO7816, INSTRUCTION_ISO7816_READ_RECORD,
                     recordNumber, (byte) 0x4 /* p1 is record number */, length);
-
-            return ret;
-        } catch (ISO7816Exception e) {
-            Log.e(TAG, "couldn't read record", e);
-            return null;
-        }
-    }
-
-    public byte[] readBinary() throws IOException {
-        byte[] ret;
-        Log.d(TAG, "Read binary");
-        try {
-            ret = sendRequest(CLASS_ISO7816, INSTRUCTION_ISO7816_READ_BINARY, (byte) 0, (byte) 0, (byte) 0);
-
-            return ret;
         } catch (ISO7816Exception e) {
             Log.e(TAG, "couldn't read record", e);
             return null;
@@ -209,7 +215,18 @@ public class ISO7816Protocol {
     }
 
     @Nullable
-    public byte[] selectByNameOrNull(@NonNull byte[] name) {
+    public ImmutableByteArray readBinary() throws IOException {
+        Log.d(TAG, "Read binary");
+        try {
+            return sendRequest(CLASS_ISO7816, INSTRUCTION_ISO7816_READ_BINARY, (byte) 0, (byte) 0, (byte) 0);
+        } catch (ISO7816Exception e) {
+            Log.e(TAG, "couldn't read record", e);
+            return null;
+        }
+    }
+
+    @Nullable
+    public ImmutableByteArray selectByNameOrNull(@NonNull ImmutableByteArray name) {
         try {
             return selectByName(name, false);
         } catch (ISO7816Exception | IOException e) {
@@ -217,26 +234,24 @@ public class ISO7816Protocol {
         }
     }
 
-    public byte[] readBinary(byte sfi) throws IOException {
-        byte[] ret;
+    @Nullable
+    public ImmutableByteArray readBinary(byte sfi) throws IOException {
         Log.d(TAG, "Read binary");
         try {
-            ret = sendRequest(CLASS_ISO7816, INSTRUCTION_ISO7816_READ_BINARY, (byte) (0x80 | sfi), (byte) 0, (byte) 0);
-            return ret;
+            return sendRequest(CLASS_ISO7816, INSTRUCTION_ISO7816_READ_BINARY, (byte) (0x80 | sfi), (byte) 0, (byte) 0);
         } catch (ISO7816Exception e) {
             Log.e(TAG, "couldn't read record", e);
             return null;
         }
     }
 
-    public byte[] readRecord(byte sfi, byte recordNumber, byte length) throws IOException {
-        byte[] ret;
+    @Nullable
+    public ImmutableByteArray readRecord(byte sfi, byte recordNumber, byte length) throws IOException {
         //noinspection StringConcatenation
         Log.d(TAG, "Read record " + recordNumber);
         try {
-            ret = sendRequest(CLASS_ISO7816, INSTRUCTION_ISO7816_READ_RECORD,
+            return sendRequest(CLASS_ISO7816, INSTRUCTION_ISO7816_READ_RECORD,
                     recordNumber, (byte) ((sfi << 3) | 4) /* p1 is record number */, length);
-            return ret;
         } catch (ISO7816Exception e) {
             Log.e(TAG, "couldn't read record", e);
             return null;

@@ -19,6 +19,10 @@
 
 package au.id.micolous.metrodroid.card.iso7816;
 
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
+import android.support.annotation.VisibleForTesting;
+
 import org.simpleframework.xml.ElementList;
 import org.simpleframework.xml.Root;
 
@@ -38,11 +42,20 @@ public class ISO7816Selector {
 
     ISO7816Selector() { /* for XML serializer. */ mFullPath = new ArrayList<>(); }
 
-    public ISO7816Selector(@ElementList(name = "path", entry = "element")
+    public ISO7816Selector(@ElementList(name = "path", entry = "element") @NonNull
                                    List<ISO7816SelectorElement> path) {
         mFullPath = path;
     }
 
+    @NonNull
+    public static ISO7816Selector makeSelector(int... path) {
+        List<ISO7816SelectorElement> sels = new ArrayList<>();
+        for (int el : path)
+            sels.add(new ISO7816SelectorById(el));
+        return new ISO7816Selector(sels);
+    }
+
+    @NonNull
     public String formatString() {
         StringBuilder ret = new StringBuilder();
         for (ISO7816SelectorElement it : mFullPath) {
@@ -51,16 +64,19 @@ public class ISO7816Selector {
         return ret.toString();
     }
 
+    @NonNull
     static public ISO7816Selector makeSelector(ImmutableByteArray name) {
         return new ISO7816Selector(Collections.singletonList(new ISO7816SelectorByName(name)));
     }
 
+    @NonNull
     static public ISO7816Selector makeSelector(ImmutableByteArray folder, int file) {
         return new ISO7816Selector(Arrays.asList(new ISO7816SelectorByName(folder), new ISO7816SelectorById(file)));
     }
 
-    public byte[] select(ISO7816Protocol tag) throws IOException, ISO7816Exception {
-        byte[] fci = null;
+    @Nullable
+    public ImmutableByteArray select(ISO7816Protocol tag) throws IOException, ISO7816Exception {
+        ImmutableByteArray fci = null;
         for (ISO7816SelectorElement sel : mFullPath) {
             fci = sel.select(tag);
         }
@@ -84,10 +100,62 @@ public class ISO7816Selector {
         }
     }
 
-    public static ISO7816Selector makeSelector(int... path) {
-        List<ISO7816SelectorElement> sels = new ArrayList<>();
-        for (int el : path)
+    /**
+     * If this selector starts with (or is the same as) {@param other}, return true.
+     *
+     * @param other The other selector to compare with.
+     * @return True if this starts with {@param other}.
+     */
+    public boolean startsWith(@NonNull ISO7816Selector other) {
+        Iterator<ISO7816SelectorElement> a = mFullPath.iterator();
+        Iterator<ISO7816SelectorElement> b = other.mFullPath.iterator();
+
+        while (true) {
+            if (!b.hasNext())
+                return true; // "other" is shorter or equal length to this
+            if (!a.hasNext())
+                return false; // "other" is longer
+            if (!a.next().equals(b.next()))
+                return false;
+        }
+    }
+
+    @NonNull
+    public ISO7816Selector appendPath(int... path) {
+        List<ISO7816SelectorElement> sels = new ArrayList<>(mFullPath);
+        for (int el : path) {
             sels.add(new ISO7816SelectorById(el));
+        }
         return new ISO7816Selector(sels);
+    }
+
+    /**
+     * Returns the number of {@link ISO7816SelectorElement}s in this {@link ISO7816Selector}.
+     */
+    public int size() {
+        return mFullPath.size();
+    }
+
+    /**
+     * Returns the parent selector, or <code>null</code> if at the root (or 1 level from the root).
+     *
+     * @return The parent of the path selector represented by this {@link ISO7816Selector}.
+     */
+    @Nullable
+    public ISO7816Selector parent() {
+        List<ISO7816SelectorElement> path = mFullPath;
+        if (path.size() <= 1) {
+            return null;
+        }
+
+        path = new ArrayList<>(path);
+        path.remove(path.size() - 1);
+        return new ISO7816Selector(path);
+    }
+
+    @NonNull
+    @Override
+    public String toString() {
+        return formatString();
     }
 }
