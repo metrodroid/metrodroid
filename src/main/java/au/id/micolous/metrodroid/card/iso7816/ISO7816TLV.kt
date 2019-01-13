@@ -50,8 +50,9 @@ object ISO7816TLV {
                                  data: ImmutableByteArray) -> Unit) {
         // Skip ID
         var p = getTLVIDLen(buf, 0)
-        val (startoffset, fulllen) = decodeTLVLen(buf, p)
+        val (startoffset, alldatalen) = decodeTLVLen(buf, p)
         p += startoffset
+        val fulllen = p + alldatalen
 
         while (p < fulllen) {
             val idlen = getTLVIDLen(buf, p)
@@ -112,4 +113,10 @@ object ISO7816TLV {
             } catch (e: Exception) {
                 null
             })
+
+    fun removeTlvHeader(buf: ImmutableByteArray): ImmutableByteArray {
+        val p = getTLVIDLen(buf, 0)
+        val (startoffset, datalen) = decodeTLVLen(buf, p)
+        return buf.sliceOffLen(p+startoffset, datalen)
+    }
 }
