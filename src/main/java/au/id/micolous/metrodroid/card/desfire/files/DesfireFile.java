@@ -44,20 +44,26 @@ import au.id.micolous.metrodroid.xml.ImmutableByteArray;
 public class DesfireFile {
     @Attribute(name = "id")
     private int mId;
+    @Nullable
     @Element(name = "settings", required = false)
     private DesfireFileSettings mSettings;
+    @Nullable
     @Element(name = "data", required = false)
     private Base64String mData;
 
     DesfireFile() { /* For XML Serializer */ }
 
-    DesfireFile(int fileId, DesfireFileSettings fileSettings, ImmutableByteArray fileData) {
+    DesfireFile(int fileId,
+                @Nullable DesfireFileSettings fileSettings,
+                @Nullable ImmutableByteArray fileData) {
         mId = fileId;
         mSettings = fileSettings;
-        mData = new Base64String(fileData);
+        mData = fileData != null ? new Base64String(fileData) : null;
     }
 
-    public static DesfireFile create(int fileId, DesfireFileSettings fileSettings, ImmutableByteArray fileData) {
+    public static DesfireFile create(int fileId,
+                                     @Nullable DesfireFileSettings fileSettings,
+                                     @Nullable ImmutableByteArray fileData) {
         if (fileSettings instanceof RecordDesfireFileSettings) {
             return new RecordDesfireFile(fileId, fileSettings, fileData);
         } else if (fileSettings instanceof ValueDesfireFileSettings) {
@@ -67,10 +73,16 @@ public class DesfireFile {
         }
     }
 
-    public static DesfireFile create(int fileId, DesfireFileSettings fileSettings, byte[] fileDataRaw) {
-        return create(fileId, fileSettings, ImmutableByteArray.Companion.fromByteArray(fileDataRaw));
+    public static DesfireFile create(int fileId,
+                                     @NotNull DesfireFileSettings fileSettings,
+                                     @Nullable byte[] fileDataRaw) {
+
+        return create(fileId,
+                fileSettings,
+                fileDataRaw != null ? ImmutableByteArray.Companion.fromByteArray(fileDataRaw) : null);
     }
 
+    @Nullable
     public DesfireFileSettings getFileSettings() {
         return mSettings;
     }
@@ -79,14 +91,22 @@ public class DesfireFile {
         return mId;
     }
 
+    @Nullable
     public ImmutableByteArray getData() {
         return mData;
     }
 
     public ListItem getRawData() {
-        return new ListItemRecursive(Utils.localizeString(R.string.file_title_format,
-                Utils.intToHex(getId())),
-                getFileSettings().getSubtitle(),
-                Collections.singletonList(new ListItem(null, getData().toHexDump())));
+        final ImmutableByteArray data = getData();
+        final DesfireFileSettings settings = getFileSettings();
+        return new ListItemRecursive(
+                Utils.localizeString(R.string.file_title_format,
+                    Utils.intToHex(getId())),
+                settings != null
+                    ? settings.getSubtitle()
+                    : null,
+                data != null
+                    ? Collections.singletonList(new ListItem(null, data.toHexDump()))
+                    : null);
     }
 }

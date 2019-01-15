@@ -60,6 +60,9 @@ public class RecordDesfireFile extends DesfireFile {
     @Override
     public ListItem getRawData() {
         RecordDesfireFileSettings fileSettings = (RecordDesfireFileSettings) getFileSettings();
+        if (fileSettings == null)
+            return super.getRawData();
+
         int recSize = fileSettings.getRecordSize();
         if (recSize == 0)
             return super.getRawData();
@@ -68,17 +71,20 @@ public class RecordDesfireFile extends DesfireFile {
                 Utils.intToHex(getId()));
         String subtitle = getFileSettings().getSubtitle();
 
-        List<ListItem> data;
+        List<ListItem> data = null;
         ImmutableByteArray fileData = getData();
-        int numRecs = (fileData.getSize() + recSize - 1) / recSize;
-        data = new ArrayList<>();
-        for (int i = 0; i < numRecs; i++) {
-            int start = i * recSize;
-            int len = recSize;
-            if (start + len > fileData.getSize())
-                len = fileData.getSize() - start;
-            data.add(ListItemRecursive.collapsedValue(Utils.localizeString(R.string.record_title_format, i), null,
-                    fileData.sliceOffLen(start, len).toHexDump()));
+
+        if (fileData != null) {
+            int numRecs = (fileData.getSize() + recSize - 1) / recSize;
+            data = new ArrayList<>();
+            for (int i = 0; i < numRecs; i++) {
+                int start = i * recSize;
+                int len = recSize;
+                if (start + len > fileData.getSize())
+                    len = fileData.getSize() - start;
+                data.add(ListItemRecursive.collapsedValue(Utils.localizeString(R.string.record_title_format, i), null,
+                        fileData.sliceOffLen(start, len).toHexDump()));
+            }
         }
         return new ListItemRecursive(title, subtitle, data);
     }
