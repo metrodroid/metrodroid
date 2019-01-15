@@ -1487,4 +1487,5 @@
     <string name="import_mct_file">Import from MCT file</string>
     <string name="subscription_id">Subscription ID</string>
     <string name="block_title_format_unauthorized">Block: %s (unauthorized)</string>
+    <string name="card_note_chc_metrocard">Only pre-2016 (MIFARE Classic) cards can be read. Newer cards are fully locked DESFire cards and not supportable.</string>
 </resources>

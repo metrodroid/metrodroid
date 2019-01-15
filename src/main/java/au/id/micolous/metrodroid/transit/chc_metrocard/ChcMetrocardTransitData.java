@@ -58,6 +58,7 @@ public class ChcMetrocardTransitData extends ErgTransitData {
             .setLocation(R.string.location_christchurch_nz)
             .setCardType(CardType.MifareClassic)
             .setKeysRequired()
+            .setExtraNote(R.string.card_note_chc_metrocard)
             .setPreview()
             .build();
 
