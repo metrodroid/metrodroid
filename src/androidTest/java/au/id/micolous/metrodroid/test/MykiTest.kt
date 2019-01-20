@@ -50,6 +50,11 @@ class MykiTest {
         // This is mocked-up, incomplete data.
         val c = constructMykiCardFromHexString("C9B404004E61BC000000000000000000")
 
+        // Check MIFARE AIDs
+        assertEquals(2, c.applications.size)
+        assertEquals(Pair(0x2110, 0), c.applications[0].mifareAID)
+        assertEquals(Pair(0x210f, 0), c.applications[1].mifareAID)
+
         // Test TransitIdentity
         val i = c.parseTransitIdentity()
         assertEquals(MykiTransitData.NAME, i!!.name)

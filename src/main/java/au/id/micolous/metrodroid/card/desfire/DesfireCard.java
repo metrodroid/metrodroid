@@ -57,6 +57,7 @@ import au.id.micolous.metrodroid.ui.ListItem;
 import au.id.micolous.metrodroid.ui.ListItemRecursive;
 import au.id.micolous.metrodroid.util.Utils;
 import au.id.micolous.metrodroid.xml.ImmutableByteArray;
+import kotlin.Pair;
 
 import org.simpleframework.xml.Element;
 import org.simpleframework.xml.ElementList;
@@ -271,10 +272,16 @@ public class DesfireCard extends Card {
         List<ListItem> li = new ArrayList<>();
         for (DesfireApplication app : mApplications) {
             List<ListItem> ali = app.getRawData();
+            final int appID = app.getId();
+            final Pair<Integer, Integer> mifareAID = app.getMifareAID();
+
             li.add(new ListItemRecursive(
                     Utils.localizeString(R.string.application_title_format,
-                            Utils.intToHex(app.getId())),
-                    null, ali));
+                            Utils.intToHex(appID)),
+                    mifareAID == null ? null :
+                    Utils.localizeString(R.string.mfc_aid_title_format,
+                            Utils.intToHex(mifareAID.getFirst()), mifareAID.getSecond()),
+                    ali));
         }
         return li;
     }
