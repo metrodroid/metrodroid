@@ -1,5 +1,13 @@
+// https://github.com/gradle/gradle/issues/2263
+GradleVersion minGradle = GradleVersion.version("4.10.1")
+GradleVersion yourGradle = GradleVersion.current()
+if (yourGradle < minGradle) {
+    throw new GradleException("${minGradle} or later is required to build this project, you have ${yourGradle}.")
+}
+
 allprojects {
     repositories {
+        mavenCentral()
         google()
         jcenter()
     }
@@ -22,7 +30,7 @@ buildscript {
     }
 
     dependencies {
-        classpath 'com.android.tools.build:gradle:3.2.1'
+        classpath 'com.android.tools.build:gradle:3.3.0'
         classpath 'com.google.protobuf:protobuf-gradle-plugin:0.8.6'
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
     }
@@ -75,8 +83,8 @@ dependencies {
 
     androidTestUtil "androidx.test:orchestrator:$android_test_version"
     androidTestImplementation "androidx.test:rules:$android_test_version"
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.1.0'
-    androidTestImplementation "androidx.test.ext:junit:1.0.0"
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.1.1'
+    androidTestImplementation "androidx.test.ext:junit:1.1.0"
     androidTestImplementation "org.hamcrest:hamcrest-core:$hamcrest_version"
     androidTestImplementation "org.hamcrest:hamcrest-library:$hamcrest_version"
 
@@ -228,7 +236,4 @@ android {
 androidExtensions {
     // Needed for kotlinx.android.parcel.Parcelize
     experimental = true
-}
-repositories {
-    mavenCentral()
 }
