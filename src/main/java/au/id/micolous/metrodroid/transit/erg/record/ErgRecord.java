@@ -35,7 +35,7 @@ public class ErgRecord {
     private static final String TAG = "ErgRecord";
 
     // Flipping this to true shows more data from the records in Logcat.
-    private static final boolean DEBUG = false;
+    private static final boolean DEBUG = true;
 
     protected ErgRecord() {
     }

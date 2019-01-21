@@ -98,6 +98,17 @@ public class ErgTrip extends Trip {
     }
 
     @Override
+    public boolean isTransfer() {
+        return mPurse.isTransfer();
+    }
+
+    @Nullable
+    @Override
+    public String getRouteName() {
+        return Utils.intToHex(mPurse.getRoute());
+    }
+
+    @Override
     public void writeToParcel(Parcel parcel, int i) {
         mPurse.writeToParcel(parcel, i);
         Utils.parcelCalendar(parcel, mEpoch);
