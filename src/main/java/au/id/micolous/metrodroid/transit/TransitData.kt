@@ -20,7 +20,6 @@
 
 package au.id.micolous.metrodroid.transit
 
-import android.net.Uri
 import android.os.Parcelable
 import au.id.micolous.metrodroid.ui.ListItem
 
@@ -113,7 +112,7 @@ abstract class TransitData : Parcelable {
      *
      * @return Uri pointing to an FAQ page, or null if no page is to be supplied.
      */
-    open val moreInfoPage: Uri?
+    open val moreInfoPage: String?
         get() = null
 
     /**
@@ -121,7 +120,7 @@ abstract class TransitData : Parcelable {
      *
      * @return Uri pointing to online services page, or null if no page is to be supplied.
      */
-    open val onlineServicesPage: Uri?
+    open val onlineServicesPage: String?
         get() = null
 
     open val warning: String?

@@ -142,8 +142,8 @@ public class LaxTapTransitData extends NextfareTransitData {
     */
 
     @Override
-    public Uri getOnlineServicesPage() {
-        return Uri.parse("https://www.taptogo.net/");
+    public String getOnlineServicesPage() {
+        return "https://www.taptogo.net/";
     }
 
     @Override

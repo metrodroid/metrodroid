@@ -274,14 +274,16 @@ public class CardInfoActivity extends MetrodroidActivity {
 
             case R.id.more_info:
                 if (mTransitData.getMoreInfoPage() != null) {
-                    startActivity(new Intent(Intent.ACTION_VIEW, mTransitData.getMoreInfoPage()));
+                    startActivity(new Intent(Intent.ACTION_VIEW,
+                            Uri.parse(mTransitData.getMoreInfoPage())));
                     return true;
                 }
                 break;
 
             case R.id.online_services:
                 if (mTransitData.getOnlineServicesPage() != null) {
-                    startActivity(new Intent(Intent.ACTION_VIEW, mTransitData.getOnlineServicesPage()));
+                    startActivity(new Intent(Intent.ACTION_VIEW,
+                            Uri.parse(mTransitData.getOnlineServicesPage())));
                     return true;
                 }
 
