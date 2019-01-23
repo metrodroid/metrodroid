@@ -38,6 +38,7 @@ import au.id.micolous.metrodroid.card.classic.ClassicBlock;
 import au.id.micolous.metrodroid.card.classic.ClassicCard;
 import au.id.micolous.metrodroid.card.classic.ClassicCardTransitFactory;
 import au.id.micolous.metrodroid.card.classic.ClassicSector;
+import au.id.micolous.metrodroid.multi.FormattedString;
 import au.id.micolous.metrodroid.transit.CardInfo;
 import au.id.micolous.metrodroid.transit.TransitCurrency;
 import au.id.micolous.metrodroid.transit.TransitData;
@@ -137,7 +138,7 @@ public class BilheteUnicoSPTransitData extends TransitData {
         li.add(new ListItem(R.string.refill_counter,
                 Integer.toString(mRefillTransactionCounter)));
         // It looks like issue date but on some dumps it's after the trips, so it can't be.
-        li.add(new ListItem(new SpannableString("Date 1"),
+        li.add(new ListItem(new FormattedString("Date 1"),
                 Utils.longDateFormat(BilheteUnicoSPTrip.parseTimestamp(mDay2, 0))));
         return li;
     }

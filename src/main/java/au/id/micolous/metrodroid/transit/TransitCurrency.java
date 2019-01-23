@@ -29,6 +29,7 @@ import android.text.SpannableString;
 import android.text.Spanned;
 import android.text.style.TtsSpan;
 
+import au.id.micolous.metrodroid.multi.FormattedString;
 import au.id.micolous.metrodroid.util.NumberUtils;
 import au.id.micolous.metrodroid.util.Preferences;
 import com.neovisionaries.i18n.CurrencyCode;
@@ -338,7 +339,7 @@ public class TransitCurrency extends TransitBalance implements Parcelable {
      *                  special way)
      * @return Formatted currency string
      */
-    public Spanned formatCurrencyString(boolean isBalance) {
+    public FormattedString formatCurrencyString(boolean isBalance) {
         Currency c = null;
 
         // numberFormatter is only used for TtsSpan, so needs to give a consistent result.
@@ -393,7 +394,7 @@ public class TransitCurrency extends TransitBalance implements Parcelable {
                     .build(), numberOffset, s.length(), 0);
         }
 
-        return s;
+        return new FormattedString(s);
     }
 
     public TransitCurrency maybeObfuscateBalance() {

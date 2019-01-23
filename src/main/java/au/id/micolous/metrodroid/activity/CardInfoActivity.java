@@ -83,7 +83,7 @@ public class CardInfoActivity extends MetrodroidActivity {
         public void onInit(int status) {
             if (status == TextToSpeech.SUCCESS && mTransitData.getBalances() != null) {
                 for (TransitBalance balanceVal : mTransitData.getBalances()) {
-                    Spanned balance = balanceVal.getBalance().formatCurrencyString(true);
+                    Spanned balance = balanceVal.getBalance().formatCurrencyString(true).getSpanned();
                     mTTS.speak(getString(R.string.balance_speech, balance), TextToSpeech.QUEUE_FLUSH, null);
                 }
             }

@@ -24,6 +24,7 @@ import android.support.annotation.VisibleForTesting;
 import android.text.SpannableString;
 import android.util.Log;
 
+import au.id.micolous.metrodroid.multi.FormattedString;
 import au.id.micolous.metrodroid.multi.Localizer;
 import au.id.micolous.metrodroid.util.NumberUtils;
 import org.jetbrains.annotations.NonNls;
@@ -446,7 +447,7 @@ public class NextfareTransitData extends TransitData {
         // The Los Angeles Tap and Minneapolis Go-To cards have the same system code, but different
         // data in Block 2.
         items.add(new ListItem(
-                new SpannableString(Localizer.INSTANCE.localizeString(R.string.block_title_format, 2)),
+                new FormattedString(Localizer.INSTANCE.localizeString(R.string.block_title_format, 2)),
                 mBlock2.toHexDump()));
 
         return items;

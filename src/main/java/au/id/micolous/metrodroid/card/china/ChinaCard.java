@@ -95,7 +95,7 @@ public class ChinaCard extends ISO7816Application {
     public List<ListItem> getRawData() {
         List <ListItem> li = new ArrayList<>();
         for (Balance entry : mBalances) {
-            li.add(ListItemRecursive.collapsedValue("Balance " + entry.mIdx,
+            li.add(ListItemRecursive.Companion.collapsedValue("Balance " + entry.mIdx,
                     entry.mData.toHexDump()));
         }
         return li;

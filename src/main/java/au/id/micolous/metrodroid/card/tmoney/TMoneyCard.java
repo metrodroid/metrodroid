@@ -24,6 +24,7 @@ import android.support.annotation.Nullable;
 import android.text.SpannableString;
 import android.util.Log;
 
+import au.id.micolous.metrodroid.multi.FormattedString;
 import au.id.micolous.metrodroid.multi.Localizer;
 import org.simpleframework.xml.Element;
 
@@ -82,8 +83,8 @@ public class TMoneyCard extends ISO7816Application {
     }
 
     public List<ListItem> getRawData() {
-        return Collections.singletonList(ListItemRecursive.collapsedValue("Tmoney balance",
-                new SpannableString(Integer.toHexString(mBalance))));
+        return Collections.singletonList(ListItemRecursive.Companion.collapsedValue("Tmoney balance",
+                new FormattedString(Integer.toHexString(mBalance))));
     }
 
 

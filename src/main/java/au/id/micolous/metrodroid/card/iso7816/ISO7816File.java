@@ -126,14 +126,14 @@ public class ISO7816File {
         ImmutableByteArray binaryData = getBinaryData();
         ImmutableByteArray fciData = getFci();
         if (binaryData != null)
-            recList.add(ListItemRecursive.collapsedValue(Localizer.INSTANCE.localizeString(R.string.binary_title_format),
+            recList.add(ListItemRecursive.Companion.collapsedValue(Localizer.INSTANCE.localizeString(R.string.binary_title_format),
                     binaryData.toHexDump()));
         if (fciData != null)
             recList.add(new ListItemRecursive(Localizer.INSTANCE.localizeString(R.string.file_fci), null,
                     ISO7816TLV.INSTANCE.infoWithRaw(fciData)));
         List<ISO7816Record> records = getRecords();
         for (ISO7816Record record : records)
-            recList.add(ListItemRecursive.collapsedValue(Localizer.INSTANCE.localizeString(R.string.record_title_format, record.getIndex()),
+            recList.add(ListItemRecursive.Companion.collapsedValue(Localizer.INSTANCE.localizeString(R.string.record_title_format, record.getIndex()),
                     record.getData().toHexDump()));
         return new ListItemRecursive(Localizer.INSTANCE.localizeString(R.string.file_title_format, selectorStr),
                 Localizer.INSTANCE.localizePlural(R.plurals.record_count, records.size(), records.size()),
