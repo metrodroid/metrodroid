@@ -43,11 +43,11 @@ internal data class ZolotayaKoronaTrip(private val mValidator: String,
     internal val estimatedBalance
         get() = mPreviousBalance - (estimatedFare ?: DEFAULT_FARE)
 
-    override fun getStartTimestamp() = ZolotayaKoronaTransitData.parseTime(mTime, mCardType)
+    override val startTimestamp get() = ZolotayaKoronaTransitData.parseTime(mTime, mCardType)
 
-    override fun getMachineID() = "J$mValidator"
+    override val machineID get() = "J$mValidator"
 
-    override fun getFare(): TransitCurrency? {
+    override val fare get(): TransitCurrency? {
         if (mNextBalance != null) {
             // Happens if one trip is followed by more than one refill
             if (mPreviousBalance - mNextBalance < -500)
@@ -57,7 +57,7 @@ internal data class ZolotayaKoronaTrip(private val mValidator: String,
         return TransitCurrency.RUB(estimatedFare ?: return null)
     }
 
-    override fun getMode() = Trip.Mode.BUS
+    override val mode get() = Trip.Mode.BUS
 
     companion object {
         fun parse(block: ImmutableByteArray, cardType: Int, refill: ZolotayaKoronaRefill?, balance: Int?): ZolotayaKoronaTrip? {

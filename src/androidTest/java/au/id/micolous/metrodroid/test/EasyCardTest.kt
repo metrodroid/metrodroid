@@ -47,7 +47,7 @@ class EasyCardTest : CardReaderWithAssetDumpsTest(MfcCardImporter()) {
 
         val busTrip = c.trips[0]
         assertEquals("2013-10-28 20:33",
-                Utils.isoDateTimeFormat(busTrip.startTimestamp))
+                Utils.isoDateTimeFormat(busTrip.startTimestamp!!))
         assertEquals(TransitCurrency.TWD(10), busTrip.fare)
         assertEquals(Trip.Mode.BUS, busTrip.mode)
         assertNull(busTrip.startStation)
@@ -55,9 +55,9 @@ class EasyCardTest : CardReaderWithAssetDumpsTest(MfcCardImporter()) {
 
         val trainTrip = c.trips[1]
         assertEquals("2013-10-28 20:41",
-                Utils.isoDateTimeFormat(trainTrip.startTimestamp))
+                Utils.isoDateTimeFormat(trainTrip.startTimestamp!!))
         assertEquals("2013-10-28 20:46",
-                Utils.isoDateTimeFormat(trainTrip.endTimestamp))
+                Utils.isoDateTimeFormat(trainTrip.endTimestamp!!))
         assertEquals(TransitCurrency.TWD(15), trainTrip.fare)
         assertEquals(Trip.Mode.METRO, trainTrip.mode)
         assertNotNull(trainTrip.startStation)
@@ -70,7 +70,7 @@ class EasyCardTest : CardReaderWithAssetDumpsTest(MfcCardImporter()) {
 
         val refill = c.trips[2]
         assertEquals("2013-07-27 08:58",
-                Utils.isoDateTimeFormat(refill.startTimestamp))
+                Utils.isoDateTimeFormat(refill.startTimestamp!!))
         assertEquals(TransitCurrency.TWD(-100), refill.fare)
         assertEquals(Trip.Mode.TICKET_MACHINE, refill.mode)
         assertNotNull(refill.startStation)

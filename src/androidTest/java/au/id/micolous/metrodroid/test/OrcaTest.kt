@@ -87,7 +87,7 @@ class OrcaTest : BaseInstrumentedTest() {
         assertNotNull(trips)
         assertEquals("Community Transit", trips[0].getAgencyName(false))
         assertEquals("CT", trips[0].getAgencyName(true))
-        assertEquals((1514843334L + 256) * 1000, trips[0].startTimestamp.timeInMillis)
+        assertEquals((1514843334L + 256) * 1000, trips[0].startTimestamp!!.timeInMillis)
         assertEquals(TransitCurrency.USD(534), trips[0].fare)
         assertNull(trips[0].routeName)
         assertTrue(trips[0].hasTime())
@@ -98,7 +98,7 @@ class OrcaTest : BaseInstrumentedTest() {
 
         assertEquals("Unknown (0xf)", trips[1].getAgencyName(false))
         assertEquals("Unknown (0xf)", trips[1].getAgencyName(true))
-        assertEquals(1514843334L * 1000, trips[1].startTimestamp.timeInMillis)
+        assertEquals(1514843334L * 1000, trips[1].startTimestamp!!.timeInMillis)
         assertEquals(TransitCurrency.USD(289), trips[1].fare)
         assertNull(trips[1].routeName)
         assertTrue(trips[1].hasTime())
@@ -109,7 +109,7 @@ class OrcaTest : BaseInstrumentedTest() {
 
         assertEquals("Sound Transit", trips[2].getAgencyName(false))
         assertEquals("ST", trips[2].getAgencyName(true))
-        assertEquals((1514843334L - 256) * 1000, trips[2].startTimestamp.timeInMillis)
+        assertEquals((1514843334L - 256) * 1000, trips[2].startTimestamp!!.timeInMillis)
         assertEquals(TransitCurrency.USD(179), trips[2].fare)
         assertEquals("Link Light Rail", trips[2].routeName)
         assertTrue(trips[2].hasTime())
@@ -123,7 +123,7 @@ class OrcaTest : BaseInstrumentedTest() {
 
         assertEquals("Sound Transit", trips[3].getAgencyName(false))
         assertEquals("ST", trips[3].getAgencyName(true))
-        assertEquals((1514843334L - 512) * 1000, trips[3].startTimestamp.timeInMillis)
+        assertEquals((1514843334L - 512) * 1000, trips[3].startTimestamp!!.timeInMillis)
         assertEquals(TransitCurrency.USD(178), trips[3].fare)
         assertEquals("Sounder Train", trips[3].routeName)
         assertTrue(trips[3].hasTime())
@@ -137,7 +137,7 @@ class OrcaTest : BaseInstrumentedTest() {
 
         assertEquals("Washington State Ferries", trips[4].getAgencyName(false))
         assertEquals("WSF", trips[4].getAgencyName(true))
-        assertEquals((1514843334L - 768) * 1000, trips[4].startTimestamp.timeInMillis)
+        assertEquals((1514843334L - 768) * 1000, trips[4].startTimestamp!!.timeInMillis)
         assertEquals(TransitCurrency.USD(177), trips[4].fare)
         assertNull(trips[4].routeName)
         assertTrue(trips[4].hasTime())

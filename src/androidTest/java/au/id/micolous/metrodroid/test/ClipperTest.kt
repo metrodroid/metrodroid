@@ -79,9 +79,9 @@ class ClipperTest : BaseInstrumentedTest() {
 
         val trips = d.trips
         assertNotNull(trips)
-        assertEquals("Whole Foods", trips!![1].getAgencyName(false))
+        assertEquals("Whole Foods", trips[1].getAgencyName(false))
         assertEquals("Whole Foods", trips[1].getAgencyName(true))
-        assertEquals(1520009600000L, trips[1].startTimestamp.timeInMillis)
+        assertEquals(1520009600000L, trips[1].startTimestamp!!.timeInMillis)
         assertEquals(TransitCurrency.USD(-5000), trips[1].fare)
         assertNull(trips[1].routeName)
         assertTrue(trips[1].hasTime())
@@ -92,7 +92,7 @@ class ClipperTest : BaseInstrumentedTest() {
 
         assertEquals("Bay Area Rapid Transit", trips[0].getAgencyName(false))
         assertEquals("BART", trips[0].getAgencyName(true))
-        assertEquals(1521320320000L, trips[0].startTimestamp.timeInMillis)
+        assertEquals(1521320320000L, trips[0].startTimestamp!!.timeInMillis)
         assertEquals(TransitCurrency.USD(630), trips[0].fare)
         assertNull(trips[0].routeName)
         assertTrue(trips[0].hasTime())
@@ -112,12 +112,12 @@ class ClipperTest : BaseInstrumentedTest() {
     companion object {
 
         // mocked data
-        private val refill = "000002cfde4400007812345600001388000000000000" + "00000000000000000000"
-        private val trip = "000000040000027600000000de580000de58100000080027000000000000" + "006f"
-        private val testFile0x2 = "0000000000000000000000000000000000007777"
-        private val testFile0x4 = refill
-        private val testFile0x8 = "0022229533"
-        private val testFile0xe = trip
+        private const val refill = "000002cfde4400007812345600001388000000000000" + "00000000000000000000"
+        private const val trip = "000000040000027600000000de580000de58100000080027000000000000" + "006f"
+        private const val testFile0x2 = "0000000000000000000000000000000000007777"
+        private const val testFile0x4 = refill
+        private const val testFile0x8 = "0022229533"
+        private const val testFile0xe = trip
     }
 
 }

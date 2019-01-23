@@ -93,7 +93,7 @@ public class TransactionTrip extends Trip implements Parcelable {
         @NonNull List<String> endLines =
                 mEnd != null ? mEnd.getRouteNames() : Collections.emptyList();
 
-        return Trip.getRouteName(startLines, endLines);
+        return Trip.Companion.getRouteName(startLines, endLines);
     }
 
     @Nullable
@@ -106,7 +106,7 @@ public class TransactionTrip extends Trip implements Parcelable {
         @NonNull List<String> endLines =
                 mEnd != null ? mEnd.getHumanReadableLineIDs() : Collections.emptyList();
 
-        return Trip.getRouteName(startLines, endLines);
+        return Trip.Companion.getRouteName(startLines, endLines);
     }
 
     @Override
