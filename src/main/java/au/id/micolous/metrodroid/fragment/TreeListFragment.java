@@ -26,6 +26,7 @@ import android.content.Context;
 import android.content.res.TypedArray;
 import android.os.Build;
 import android.os.Bundle;
+import android.text.Spanned;
 import android.text.TextUtils;
 import android.util.Pair;
 import android.util.TypedValue;
@@ -34,6 +35,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
+import android.widget.RelativeLayout;
+import android.widget.TextView;
+import au.id.micolous.metrodroid.ui.HeaderListItem;
 import com.unnamed.b.atv.model.TreeNode;
 import com.unnamed.b.atv.view.AndroidTreeView;
 
@@ -53,11 +57,65 @@ public abstract class TreeListFragment extends Fragment implements TreeNode.Tree
             super(context);
         }
 
+        private static void adjustListView(View view, ListItem li) {
+            Spanned mText1 = li.getText1() != null ? li.getText1().getSpanned() : null;
+            Spanned mText2 = li.getText2() != null ? li.getText2().getSpanned() : null;
+            boolean text1Empty = mText1 == null || mText1.toString().isEmpty();
+            boolean text2Empty = mText2 == null || mText2.toString().isEmpty();
+            TextView text1 = view.findViewById(android.R.id.text1);
+            TextView text2 = view.findViewById(android.R.id.text2);
+            if (text1Empty && text2Empty) {
+                text1.setVisibility(View.GONE);
+                text2.setVisibility(View.GONE);
+                return;
+            }
+            if (text1Empty) {
+                text1.setVisibility(View.GONE);
+                RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) text2.getLayoutParams();
+                params.addRule(RelativeLayout.CENTER_VERTICAL|RelativeLayout.CENTER_IN_PARENT,
+                        text2.getId());
+                text2.setText(mText2);
+                text2.setTextIsSelectable(true);
+                text2.setVisibility(View.VISIBLE);
+            } else if (text2Empty) {
+                text1.setText(mText1);
+                text1.setVisibility(View.VISIBLE);
+                text2.setVisibility(View.GONE);
+                RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) text1.getLayoutParams();
+                params.addRule(RelativeLayout.CENTER_VERTICAL|RelativeLayout.CENTER_IN_PARENT,
+                        text1.getId());
+            } else {
+                text1.setText(mText1);
+                text1.setVisibility(View.VISIBLE);
+                text2.setText(mText2);
+                text2.setVisibility(View.VISIBLE);
+                text2.setTextIsSelectable(true);
+            }
+        }
+
+        private static View getListView(ListItem li, LayoutInflater inflater, ViewGroup root, boolean attachToRoot) {
+            View view = inflater.inflate(android.R.layout.simple_list_item_2, root, attachToRoot);
+            adjustListView(view, li);
+            return view;
+        }
+
+        private static View getHeaderListView(ListItem li, LayoutInflater inflater, ViewGroup root, boolean attachToRoot) {
+            View view = inflater.inflate(R.layout.list_header, root, attachToRoot);
+
+            ((TextView) view.findViewById(android.R.id.text1)).setText(li.getText1().getSpanned());
+            return view;
+        }
+
+
         @Override
         public View createNodeView(TreeNode node, Pair<ListItem, Integer> itemPair) {
             ListItem item = itemPair.first;
             int level = itemPair.second;
-            View view = item.getView(LayoutInflater.from(context), null, false);
+            View view;
+            if (item instanceof HeaderListItem)
+                view = getHeaderListView(item, LayoutInflater.from(context), null, false);
+            else
+                view = getListView(item, LayoutInflater.from(context), null, false);
             float pxPerLevel = (int) TypedValue.applyDimension(
                     TypedValue.COMPLEX_UNIT_DIP,
                     10.0f,
