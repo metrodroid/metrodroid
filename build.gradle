@@ -1,3 +1,5 @@
+import au.id.micolous.metrodroid.LocalizeGenerator
+
 allprojects {
     repositories {
         google()
@@ -37,6 +39,15 @@ apply plugin: 'com.google.protobuf'
 apply plugin: 'checkstyle'
 apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlinx-serialization'
+
+def generatedLocalizeDir = new File(buildDir, "generated/source/localize")
+def stringsXmlFile = new File(projectDir, "src/main/res/values/strings.xml")
+
+task generateLocalize << {
+    LocalizeGenerator.INSTANCE.generateLocalize(generatedLocalizeDir, stringsXmlFile)
+}
+
+preBuild.dependsOn generateLocalize
 
 /*
 check.dependsOn 'checkstyle'
@@ -131,6 +142,8 @@ kotlin {
                 api "org.jetbrains.kotlinx:kotlinx-serialization-runtime:0.9.1"
                 api "org.jetbrains.kotlinx:kotlinx-io:$kotlinio_version"
             }
+
+            kotlin.srcDirs += new File(generatedLocalizeDir, 'commonMain/kotlin')
         }
 
         commonTest {
@@ -150,6 +163,7 @@ kotlin {
                 implementation "org.jetbrains.kotlinx:kotlinx-serialization-runtime:0.9.1"
             }
 
+            kotlin.srcDirs += new File(generatedLocalizeDir, 'androidMain/kotlin')
             kotlin.srcDirs += 'src/jvmCommonMain/kotlin'
         }
 
