@@ -24,6 +24,7 @@ import android.support.annotation.VisibleForTesting;
 import android.text.SpannableString;
 import android.util.Log;
 
+import au.id.micolous.metrodroid.util.NumberUtils;
 import org.jetbrains.annotations.NonNls;
 
 import java.util.ArrayList;
@@ -299,8 +300,8 @@ public class NextfareTransitData extends TransitData {
 
     @NonNls
     protected static String formatSerialNumber(long serialNumber) {
-        String s = "0160 " + Utils.formatNumber(serialNumber, " ", 4, 4, 3);
-        s += Utils.calculateLuhn(s.replaceAll(" ", ""));
+        String s = "0160 " + NumberUtils.INSTANCE.formatNumber(serialNumber, " ", 4, 4, 3);
+        s += NumberUtils.INSTANCE.calculateLuhn(s.replaceAll(" ", ""));
         return s;
     }
 

@@ -17,6 +17,7 @@ import au.id.micolous.metrodroid.transit.TransitBalance;
 import au.id.micolous.metrodroid.transit.TransitIdentity;
 import au.id.micolous.metrodroid.transit.Trip;
 import au.id.micolous.metrodroid.ui.ListItem;
+import au.id.micolous.metrodroid.util.NumberUtils;
 import au.id.micolous.metrodroid.util.Utils;
 import au.id.micolous.metrodroid.xml.ImmutableByteArray;
 
@@ -136,7 +137,7 @@ public abstract class TroikaBlock implements Parcelable {
     }
 
     public static String formatSerial(long sn) {
-        return Utils.formatNumber(sn, " ", 4, 3, 3);
+        return NumberUtils.INSTANCE.formatNumber(sn, " ", 4, 3, 3);
     }
 
     @NonNull

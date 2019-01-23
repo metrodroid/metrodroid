@@ -25,6 +25,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.util.Pair;
 
+import au.id.micolous.metrodroid.util.NumberUtils;
 import org.jetbrains.annotations.NonNls;
 
 import java.util.ArrayList;
@@ -101,7 +102,7 @@ public class En1545Parsed implements Parcelable {
             Object l = kv.getValue();
             String fullName = kv.getKey();
             if (l instanceof Integer)
-                li.add(new ListItem(fullName, Utils.intToHex((Integer) l)));
+                li.add(new ListItem(fullName, NumberUtils.INSTANCE.intToHex((Integer) l)));
             if (l instanceof String)
                 li.add(new ListItem(fullName, (String) l));
         }
@@ -120,7 +121,7 @@ public class En1545Parsed implements Parcelable {
             ret.append(kv.getKey()).append(" = ");
             Object l = kv.getValue();
             if (l instanceof Integer)
-                ret.append(Utils.intToHex((Integer) l));
+                ret.append(NumberUtils.INSTANCE.intToHex((Integer) l));
             if (l instanceof String)
                 ret.append("\"").append((String) l).append("\"");
             ret.append(separator);

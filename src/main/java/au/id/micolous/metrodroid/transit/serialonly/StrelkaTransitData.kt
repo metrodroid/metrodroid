@@ -29,6 +29,7 @@ import au.id.micolous.metrodroid.key.ClassicSectorKey
 import au.id.micolous.metrodroid.transit.CardInfo
 import au.id.micolous.metrodroid.transit.TransitIdentity
 import au.id.micolous.metrodroid.ui.ListItem
+import au.id.micolous.metrodroid.util.NumberUtils
 import au.id.micolous.metrodroid.util.Utils
 import kotlinx.android.parcel.Parcelize
 
@@ -60,7 +61,7 @@ data class StrelkaTransitData (private val mSerial: String): SerialOnlyTransitDa
                 .build()
 
         private fun formatShortSerial(serial: String) =
-                Utils.groupString(serial.substring(8), " ", 4, 4)
+                NumberUtils.groupString(serial.substring(8), " ", 4, 4)
 
         private fun getSerial(card: ClassicCard) =
                 card[12, 0].data.getHexString(2, 10).substring(0, 19)

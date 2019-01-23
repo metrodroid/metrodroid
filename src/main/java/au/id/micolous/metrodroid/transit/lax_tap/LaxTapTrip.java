@@ -23,6 +23,7 @@ import android.support.annotation.Nullable;
 
 import au.id.micolous.metrodroid.transit.Station;
 import au.id.micolous.metrodroid.transit.nextfare.NextfareTrip;
+import au.id.micolous.metrodroid.util.NumberUtils;
 import au.id.micolous.metrodroid.util.Utils;
 
 import au.id.micolous.farebot.R;
@@ -67,7 +68,7 @@ public class LaxTapTrip extends NextfareTrip {
     public String getHumanReadableRouteID() {
         if (mModeInt == LaxTapData.AGENCY_METRO && mStartStation >= LaxTapData.METRO_BUS_START) {
             // Metro Bus uses the station_id for route numbers.
-            return Utils.intToHex(mStartStation);
+            return NumberUtils.INSTANCE.intToHex(mStartStation);
         }
 
         // Normally not possible to guess what the route is.

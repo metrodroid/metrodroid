@@ -30,6 +30,7 @@ import au.id.micolous.metrodroid.transit.*
 import au.id.micolous.metrodroid.transit.en1545.*
 import au.id.micolous.metrodroid.ui.HeaderListItem
 import au.id.micolous.metrodroid.ui.ListItem
+import au.id.micolous.metrodroid.util.NumberUtils
 import au.id.micolous.metrodroid.util.Utils
 import au.id.micolous.metrodroid.xml.ImmutableByteArray
 import kotlinx.android.parcel.Parcelize
@@ -181,11 +182,11 @@ data class OVChipTransitData(
                 val bits = data.getBitsFromBuffer(4 + it * 21, 21)
 
                 /* Based on info from ovc-tools by ocsr ( https://github.com/ocsrunl/ ) */
-                val type1 = Utils.getBitsFromInteger(bits, 13, 8)
-                //val type2 = Utils.getBitsFromInteger(bits, 7, 6)
-                val used = Utils.getBitsFromInteger(bits, 6, 1)
-                //val rest = Utils.getBitsFromInteger(bits, 4, 2)
-                val subscriptionIndexId = Utils.getBitsFromInteger(bits, 0, 4)
+                val type1 = NumberUtils.getBitsFromInteger(bits, 13, 8)
+                //val type2 = NumberUtils.getBitsFromInteger(bits, 7, 6)
+                val used = NumberUtils.getBitsFromInteger(bits, 6, 1)
+                //val rest = NumberUtils.getBitsFromInteger(bits, 4, 2)
+                val subscriptionIndexId = NumberUtils.getBitsFromInteger(bits, 0, 4)
                 val subscriptionAddress = index.subscriptionIndex[subscriptionIndexId - 1]
                 val subData = card[32 + subscriptionAddress / 5].readBlocks(subscriptionAddress % 5 * 3, 3)
 

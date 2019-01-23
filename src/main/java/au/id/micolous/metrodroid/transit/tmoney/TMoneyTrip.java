@@ -28,6 +28,7 @@ import java.util.TimeZone;
 
 import au.id.micolous.metrodroid.transit.TransitCurrency;
 import au.id.micolous.metrodroid.transit.Trip;
+import au.id.micolous.metrodroid.util.NumberUtils;
 import au.id.micolous.metrodroid.util.Utils;
 import au.id.micolous.metrodroid.xml.ImmutableByteArray;
 
@@ -93,12 +94,12 @@ public class TMoneyTrip extends Trip {
         if (val == INVALID_DATETIME)
             return null;
         GregorianCalendar g = new GregorianCalendar(TZ);
-        g.set(Utils.convertBCDtoInteger((int) (val >> 40)),
-                Utils.convertBCDtoInteger((int) ((val >> 32) & 0xffL))-1,
-                Utils.convertBCDtoInteger((int) ((val >> 24) & 0xffL)),
-                Utils.convertBCDtoInteger((int) ((val >> 16) & 0xffL)),
-                Utils.convertBCDtoInteger((int) ((val >> 8) & 0xffL)),
-                Utils.convertBCDtoInteger((int) ((val) & 0xffL)));
+        g.set(NumberUtils.INSTANCE.convertBCDtoInteger((int) (val >> 40)),
+                NumberUtils.INSTANCE.convertBCDtoInteger((int) ((val >> 32) & 0xffL))-1,
+                NumberUtils.INSTANCE.convertBCDtoInteger((int) ((val >> 24) & 0xffL)),
+                NumberUtils.INSTANCE.convertBCDtoInteger((int) ((val >> 16) & 0xffL)),
+                NumberUtils.INSTANCE.convertBCDtoInteger((int) ((val >> 8) & 0xffL)),
+                NumberUtils.INSTANCE.convertBCDtoInteger((int) ((val) & 0xffL)));
         return  g;
     }
 

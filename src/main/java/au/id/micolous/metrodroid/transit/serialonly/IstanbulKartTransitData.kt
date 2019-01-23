@@ -29,7 +29,7 @@ import au.id.micolous.metrodroid.card.desfire.DesfireCardTransitFactory
 import au.id.micolous.metrodroid.transit.CardInfo
 import au.id.micolous.metrodroid.transit.TransitIdentity
 import au.id.micolous.metrodroid.ui.ListItem
-import au.id.micolous.metrodroid.util.Utils
+import au.id.micolous.metrodroid.util.NumberUtils
 import au.id.micolous.metrodroid.xml.ImmutableByteArray
 import kotlinx.android.parcel.Parcelize
 import java.util.*
@@ -105,6 +105,6 @@ class IstanbulKartTransitData (private val mSerial: String,
         }
 
         private fun formatSerial(serial: String?) =
-                serial?.let { Utils.groupString(it, " ", 4, 4, 4) }
+                serial?.let { NumberUtils.groupString(it, " ", 4, 4, 4) }
     }
 }

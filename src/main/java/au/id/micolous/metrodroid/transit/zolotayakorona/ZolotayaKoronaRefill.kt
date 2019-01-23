@@ -21,7 +21,7 @@ package au.id.micolous.metrodroid.transit.zolotayakorona
 
 import au.id.micolous.metrodroid.transit.TransitCurrency
 import au.id.micolous.metrodroid.transit.Trip
-import au.id.micolous.metrodroid.util.Utils
+import au.id.micolous.metrodroid.util.NumberUtils
 import au.id.micolous.metrodroid.xml.ImmutableByteArray
 import kotlinx.android.parcel.Parcelize
 
@@ -43,7 +43,7 @@ internal data class ZolotayaKoronaRefill(internal val mTime: Int,
         fun parse(block: ImmutableByteArray, cardType: Int): ZolotayaKoronaRefill? {
             if (block.isAllZero())
                 return null
-            val region = Utils.convertBCDtoInteger(cardType shr 16)
+            val region = NumberUtils.convertBCDtoInteger(cardType shr 16)
             // known values:
             // 23 -> 1
             // 76 -> 2

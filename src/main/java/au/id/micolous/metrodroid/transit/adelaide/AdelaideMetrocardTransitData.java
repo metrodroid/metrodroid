@@ -23,6 +23,7 @@ import android.os.Parcel;
 import android.os.Parcelable;
 import android.support.annotation.NonNull;
 
+import au.id.micolous.metrodroid.util.NumberUtils;
 import org.apache.commons.lang3.ArrayUtils;
 import org.jetbrains.annotations.NonNls;
 
@@ -170,7 +171,7 @@ public class AdelaideMetrocardTransitData extends En1545TransitData {
 
     @NonNls
     private static String formatSerial(long serial) {
-        return "01-" + Utils.formatNumber(serial, " ", 3, 4, 4, 4);
+        return "01-" + NumberUtils.INSTANCE.formatNumber(serial, " ", 3, 4, 4, 4);
     }
 
     private static long getSerial(ImmutableByteArray tagId) {

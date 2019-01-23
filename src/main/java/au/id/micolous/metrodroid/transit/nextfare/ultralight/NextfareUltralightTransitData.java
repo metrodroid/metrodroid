@@ -36,6 +36,7 @@ import au.id.micolous.metrodroid.transit.TransitBalanceStored;
 import au.id.micolous.metrodroid.transit.TransitCurrency;
 import au.id.micolous.metrodroid.transit.TransitData;
 import au.id.micolous.metrodroid.ui.ListItem;
+import au.id.micolous.metrodroid.util.NumberUtils;
 import au.id.micolous.metrodroid.util.Utils;
 import au.id.micolous.metrodroid.xml.ImmutableByteArray;
 
@@ -136,12 +137,12 @@ public abstract class NextfareUltralightTransitData extends TransitData {
         long uid = (manufData0.byteArrayToLong(1, 2) << 32)
                 | (manufData1.byteArrayToLong(0, 4));
         long serial = uid + 1000000000000000L;
-        int luhn = Utils.calculateLuhn(Long.toString(serial));
+        int luhn = NumberUtils.INSTANCE.calculateLuhn(Long.toString(serial));
         return serial * 10 + luhn;
     }
 
     protected static String formatSerial(long serial) {
-        return Utils.formatNumber(serial, " ", 4, 4, 4, 4, 4);
+        return NumberUtils.INSTANCE.formatNumber(serial, " ", 4, 4, 4, 4, 4);
     }
 
     @Override

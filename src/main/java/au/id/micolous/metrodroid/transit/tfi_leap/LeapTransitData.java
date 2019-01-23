@@ -25,6 +25,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.text.SpannableString;
 
+import au.id.micolous.metrodroid.util.NumberUtils;
 import org.apache.commons.lang3.ArrayUtils;
 import org.jetbrains.annotations.NonNls;
 
@@ -247,8 +248,8 @@ public class LeapTransitData extends TransitData {
         int serial = app.getFile(2).getData().byteArrayToInt(0x25, 4);
         Calendar initDate = parseDate(app.getFile(6).getData(), 1);
         // luhn checksum of number without date is always 6
-        int checkDigit = (Utils.calculateLuhn(Integer.toString(serial)) + 6) % 10;
-        return Utils.formatNumber(serial, " ", 5 , 4) + checkDigit + " "
+        int checkDigit = (NumberUtils.INSTANCE.calculateLuhn(Integer.toString(serial)) + 6) % 10;
+        return NumberUtils.INSTANCE.formatNumber(serial, " ", 5 , 4) + checkDigit + " "
                 + String.format(Locale.ENGLISH, "%02d%02d",
                 initDate.get(Calendar.MONTH) + 1,
                 initDate.get(Calendar.YEAR) % 100);

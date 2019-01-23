@@ -19,6 +19,7 @@
 
 package au.id.micolous.metrodroid.transit.en1545;
 
+import au.id.micolous.metrodroid.util.NumberUtils;
 import org.jetbrains.annotations.NonNls;
 
 import au.id.micolous.metrodroid.transit.Station;
@@ -64,7 +65,7 @@ public abstract class En1545LookupSTR implements En1545Lookup {
         return StationTableReader.getStation(
                 mStr,
                 station | (agency << 16) | (transport << 24),
-                Utils.intToHex(station));
+                NumberUtils.INSTANCE.intToHex(station));
 
     }
 

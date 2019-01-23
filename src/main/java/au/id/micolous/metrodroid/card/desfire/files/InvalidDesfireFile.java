@@ -18,6 +18,7 @@
  */
 package au.id.micolous.metrodroid.card.desfire.files;
 
+import au.id.micolous.metrodroid.util.NumberUtils;
 import org.simpleframework.xml.Element;
 import org.simpleframework.xml.Root;
 
@@ -51,7 +52,7 @@ public class InvalidDesfireFile extends DesfireFile {
     @Override
     public ListItem getRawData() {
         return new ListItem(Utils.localizeString(R.string.invalid_file_title_format,
-                Utils.intToHex(getId()),
+                NumberUtils.INSTANCE.intToHex(getId()),
                 getErrorMessage()));
     }
 }

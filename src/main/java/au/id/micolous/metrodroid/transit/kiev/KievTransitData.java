@@ -35,6 +35,7 @@ import au.id.micolous.metrodroid.card.classic.ClassicSector;
 import au.id.micolous.metrodroid.transit.CardInfo;
 import au.id.micolous.metrodroid.transit.TransitData;
 import au.id.micolous.metrodroid.transit.TransitIdentity;
+import au.id.micolous.metrodroid.util.NumberUtils;
 import au.id.micolous.metrodroid.util.Utils;
 
 public class KievTransitData extends TransitData {
@@ -103,7 +104,7 @@ public class KievTransitData extends TransitData {
     }
 
     private static String formatSerial(String serial) {
-        return Utils.groupString(serial, " ", 4, 4, 4);
+        return NumberUtils.INSTANCE.groupString(serial, " ", 4, 4, 4);
     }
 
     @Override

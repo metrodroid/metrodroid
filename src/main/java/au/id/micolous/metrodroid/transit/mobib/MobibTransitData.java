@@ -51,6 +51,7 @@ import au.id.micolous.metrodroid.transit.en1545.En1545Repeat;
 import au.id.micolous.metrodroid.transit.en1545.En1545Subscription;
 import au.id.micolous.metrodroid.transit.en1545.En1545Transaction;
 import au.id.micolous.metrodroid.ui.ListItem;
+import au.id.micolous.metrodroid.util.NumberUtils;
 import au.id.micolous.metrodroid.util.Utils;
 import au.id.micolous.metrodroid.xml.ImmutableByteArray;
 
@@ -191,11 +192,11 @@ public class MobibTransitData extends Calypso1545TransitData {
         ImmutableByteArray holder = card.getFile(CalypsoApplication.File.HOLDER_EXTENDED).getRecord(1).getData();
         return String.format(Locale.ENGLISH,
                 "%06d / %06d%04d %02d / %01d",
-                Utils.convertBCDtoInteger(holder.getBitsFromBuffer(18, 24)),
-                Utils.convertBCDtoInteger(holder.getBitsFromBuffer(42, 24)),
-                Utils.convertBCDtoInteger(holder.getBitsFromBuffer(66, 16)),
-                Utils.convertBCDtoInteger(holder.getBitsFromBuffer(82, 8)),
-                Utils.convertBCDtoInteger(holder.getBitsFromBuffer(90, 4)));
+                NumberUtils.INSTANCE.convertBCDtoInteger(holder.getBitsFromBuffer(18, 24)),
+                NumberUtils.INSTANCE.convertBCDtoInteger(holder.getBitsFromBuffer(42, 24)),
+                NumberUtils.INSTANCE.convertBCDtoInteger(holder.getBitsFromBuffer(66, 16)),
+                NumberUtils.INSTANCE.convertBCDtoInteger(holder.getBitsFromBuffer(82, 8)),
+                NumberUtils.INSTANCE.convertBCDtoInteger(holder.getBitsFromBuffer(90, 4)));
     }
 
     public final static CalypsoCardTransitFactory FACTORY = new CalypsoCardTransitFactory() {

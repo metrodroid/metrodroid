@@ -55,6 +55,7 @@ import au.id.micolous.metrodroid.transit.serialonly.TrimetHopTransitData;
 import au.id.micolous.metrodroid.transit.unknown.UnauthorizedDesfireTransitData;
 import au.id.micolous.metrodroid.ui.ListItem;
 import au.id.micolous.metrodroid.ui.ListItemRecursive;
+import au.id.micolous.metrodroid.util.NumberUtils;
 import au.id.micolous.metrodroid.util.Utils;
 import au.id.micolous.metrodroid.xml.ImmutableByteArray;
 import kotlin.Pair;
@@ -277,10 +278,10 @@ public class DesfireCard extends Card {
 
             li.add(new ListItemRecursive(
                     Utils.localizeString(R.string.application_title_format,
-                            Utils.intToHex(appID)),
+                            NumberUtils.INSTANCE.intToHex(appID)),
                     mifareAID == null ? null :
                     Utils.localizeString(R.string.mfc_aid_title_format,
-                            Utils.intToHex(mifareAID.getFirst()), mifareAID.getSecond()),
+                            NumberUtils.INSTANCE.intToHex(mifareAID.getFirst()), mifareAID.getSecond()),
                     ali));
         }
         return li;

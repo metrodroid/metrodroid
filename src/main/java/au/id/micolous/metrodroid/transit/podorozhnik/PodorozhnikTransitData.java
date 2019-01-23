@@ -46,6 +46,7 @@ import au.id.micolous.metrodroid.transit.TransitData;
 import au.id.micolous.metrodroid.transit.TransitIdentity;
 import au.id.micolous.metrodroid.transit.Trip;
 import au.id.micolous.metrodroid.ui.ListItem;
+import au.id.micolous.metrodroid.util.NumberUtils;
 import au.id.micolous.metrodroid.util.Utils;
 import au.id.micolous.metrodroid.xml.ImmutableByteArray;
 
@@ -156,9 +157,9 @@ public class PodorozhnikTransitData extends TransitData {
 
     private static String getSerial(ImmutableByteArray uid) {
         String sn;
-        sn = "9643 3078 " + Utils.formatNumber(uid.byteArrayToLongReversed(0, 7),
+        sn = "9643 3078 " + NumberUtils.INSTANCE.formatNumber(uid.byteArrayToLongReversed(0, 7),
                 " ", 4, 4, 4, 4, 1);
-        sn += Utils.calculateLuhn (sn.replaceAll(" ", ""));// last digit is luhn
+        sn += NumberUtils.INSTANCE.calculateLuhn (sn.replaceAll(" ", ""));// last digit is luhn
         return sn;
     }
 

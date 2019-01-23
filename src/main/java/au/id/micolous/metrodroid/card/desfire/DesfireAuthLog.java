@@ -19,6 +19,7 @@
 
 package au.id.micolous.metrodroid.card.desfire;
 
+import au.id.micolous.metrodroid.util.NumberUtils;
 import org.simpleframework.xml.Element;
 import org.simpleframework.xml.Root;
 
@@ -65,7 +66,7 @@ public class DesfireAuthLog {
             vals.add(ListItemRecursive.collapsedValue(R.string.desfire_confirmation, mConfirm.toHexDump()));
 
         return new ListItemRecursive(R.string.desfire_keyex, Utils.localizeString(R.string.desfire_key_number,
-                Utils.intToHex(mKeyId)),
+                NumberUtils.INSTANCE.intToHex(mKeyId)),
                 vals);
     }
 }

@@ -36,6 +36,7 @@ import au.id.micolous.metrodroid.transit.TransitBalance;
 import au.id.micolous.metrodroid.transit.TransitBalanceStored;
 import au.id.micolous.metrodroid.transit.TransitCurrency;
 import au.id.micolous.metrodroid.transit.TransitData;
+import au.id.micolous.metrodroid.util.NumberUtils;
 import au.id.micolous.metrodroid.util.Utils;
 import au.id.micolous.metrodroid.xml.ImmutableByteArray;
 
@@ -73,21 +74,21 @@ public abstract class ChinaTransitData extends TransitData {
         if (val == 0)
             return null;
         GregorianCalendar g = new GregorianCalendar(TZ);
-        g.set(Utils.convertBCDtoInteger(val >> 16),
-                Utils.convertBCDtoInteger((val >> 8) & 0xff)-1,
-                Utils.convertBCDtoInteger(val & 0xff),
+        g.set(NumberUtils.INSTANCE.convertBCDtoInteger(val >> 16),
+                NumberUtils.INSTANCE.convertBCDtoInteger((val >> 8) & 0xff)-1,
+                NumberUtils.INSTANCE.convertBCDtoInteger(val & 0xff),
                 0, 0, 0);
         return  g;
     }
 
     public static Calendar parseHexDateTime(long val) {
         GregorianCalendar g = new GregorianCalendar(TZ);
-        g.set(Utils.convertBCDtoInteger((int) (val >> 40)),
-                Utils.convertBCDtoInteger((int) ((val >> 32) & 0xffL))-1,
-                Utils.convertBCDtoInteger((int) ((val >> 24) & 0xffL)),
-                Utils.convertBCDtoInteger((int) ((val >> 16) & 0xffL)),
-                Utils.convertBCDtoInteger((int) ((val >> 8) & 0xffL)),
-                Utils.convertBCDtoInteger((int) ((val) & 0xffL)));
+        g.set(NumberUtils.INSTANCE.convertBCDtoInteger((int) (val >> 40)),
+                NumberUtils.INSTANCE.convertBCDtoInteger((int) ((val >> 32) & 0xffL))-1,
+                NumberUtils.INSTANCE.convertBCDtoInteger((int) ((val >> 24) & 0xffL)),
+                NumberUtils.INSTANCE.convertBCDtoInteger((int) ((val >> 16) & 0xffL)),
+                NumberUtils.INSTANCE.convertBCDtoInteger((int) ((val >> 8) & 0xffL)),
+                NumberUtils.INSTANCE.convertBCDtoInteger((int) ((val) & 0xffL)));
         return  g;
     }
 

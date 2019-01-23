@@ -30,6 +30,7 @@ import java.util.GregorianCalendar;
 
 import au.id.micolous.farebot.R;
 import au.id.micolous.metrodroid.MetrodroidApplication;
+import au.id.micolous.metrodroid.util.NumberUtils;
 import au.id.micolous.metrodroid.util.Utils;
 import au.id.micolous.metrodroid.xml.ImmutableByteArray;
 
@@ -122,7 +123,7 @@ final class SuicaUtil {
             case 0xc8:
                 return app.getString(R.string.felica_terminal_vending);   // sales
             default:
-                return Utils.localizeString(R.string.unknown_format, Utils.intToHex(cType));
+                return Utils.localizeString(R.string.unknown_format, NumberUtils.INSTANCE.intToHex(cType));
         }
     }
 
@@ -187,7 +188,7 @@ final class SuicaUtil {
             case 0x85:
                 return app.getString(R.string.felica_process_admission_thirdparty);
             default:
-                return Utils.localizeString(R.string.unknown_format, Utils.intToHex(proc));
+                return Utils.localizeString(R.string.unknown_format, NumberUtils.INSTANCE.intToHex(proc));
         }
     }
 }

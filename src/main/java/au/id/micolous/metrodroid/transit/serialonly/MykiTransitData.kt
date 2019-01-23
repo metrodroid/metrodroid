@@ -26,7 +26,7 @@ import au.id.micolous.metrodroid.card.desfire.DesfireCard
 import au.id.micolous.metrodroid.card.desfire.DesfireCardTransitFactory
 import au.id.micolous.metrodroid.transit.CardInfo
 import au.id.micolous.metrodroid.transit.TransitIdentity
-import au.id.micolous.metrodroid.util.Utils
+import au.id.micolous.metrodroid.util.NumberUtils
 import au.id.micolous.metrodroid.xml.ImmutableByteArray
 import kotlinx.android.parcel.Parcelize
 import org.jetbrains.annotations.NonNls
@@ -127,7 +127,7 @@ class MykiTransitData (private val mSerial: String): SerialOnlyTransitData() {
             }
 
             @NonNls val formattedSerial = String.format(Locale.ENGLISH, "%06d%08d", serial1, serial2)
-            return formattedSerial + Utils.calculateLuhn(formattedSerial)
+            return formattedSerial + NumberUtils.calculateLuhn(formattedSerial)
         }
     }
 }

@@ -23,6 +23,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.util.Log;
 
+import au.id.micolous.metrodroid.util.NumberUtils;
 import org.jetbrains.annotations.NonNls;
 
 import java.util.Calendar;
@@ -172,9 +173,9 @@ public class En1545FixedInteger implements En1545Field {
 
     public static Calendar parseBCDDate(int date, TimeZone tz) {
         GregorianCalendar g = new GregorianCalendar(tz);
-        g.set(Utils.convertBCDtoInteger(date >> 16),
-                Utils.convertBCDtoInteger(((date >> 8) & 0xff)) - 1,
-                Utils.convertBCDtoInteger(date & 0xff),
+        g.set(NumberUtils.INSTANCE.convertBCDtoInteger(date >> 16),
+                NumberUtils.INSTANCE.convertBCDtoInteger(((date >> 8) & 0xff)) - 1,
+                NumberUtils.INSTANCE.convertBCDtoInteger(date & 0xff),
                 0, 0, 0);
         return g;
     }
