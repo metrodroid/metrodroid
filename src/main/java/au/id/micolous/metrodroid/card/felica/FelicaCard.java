@@ -35,6 +35,7 @@ import au.id.micolous.metrodroid.MetrodroidApplication;
 import au.id.micolous.metrodroid.card.Card;
 import au.id.micolous.metrodroid.card.CardType;
 import au.id.micolous.metrodroid.card.TagReaderFeedbackInterface;
+import au.id.micolous.metrodroid.multi.FormattedString;
 import au.id.micolous.metrodroid.multi.Localizer;
 import au.id.micolous.metrodroid.transit.CardInfo;
 import au.id.micolous.metrodroid.transit.CardTransitFactory;
@@ -495,7 +496,7 @@ public class FelicaCard extends Card {
                 List<ListItem> bli = new ArrayList<>();
                 for (FelicaBlock block : service.getBlocks()) {
                     bli.add(new ListItem(
-                            new SpannableString(String.format(Locale.ENGLISH,
+                            new FormattedString(String.format(Locale.ENGLISH,
                             "%02d", block.getAddress())),
                             block.getData().toHexDump()));
                 }

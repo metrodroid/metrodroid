@@ -24,6 +24,7 @@ package au.id.micolous.metrodroid.card.cepas;
 import android.text.SpannableString;
 import android.util.Log;
 
+import au.id.micolous.metrodroid.multi.FormattedString;
 import au.id.micolous.metrodroid.multi.Localizer;
 import org.simpleframework.xml.ElementMap;
 import org.simpleframework.xml.Root;
@@ -68,11 +69,11 @@ public class CEPASApplication extends ISO7816Application {
     public List<ListItem> getRawData() {
         List <ListItem> li = new ArrayList<>();
         for (Map.Entry<Integer, Base64String> entry : mPurses.entrySet()) {
-            li.add(ListItemRecursive.collapsedValue("CEPAS purse " + entry.getKey(),
+            li.add(ListItemRecursive.Companion.collapsedValue("CEPAS purse " + entry.getKey(),
                     entry.getValue().toHexDump()));
         }
         for (Map.Entry<Integer, Base64String> entry : mHistories.entrySet()) {
-            li.add(ListItemRecursive.collapsedValue("CEPAS history " + entry.getKey(),
+            li.add(ListItemRecursive.Companion.collapsedValue("CEPAS history " + entry.getKey(),
                     entry.getValue().toHexDump()));
         }
         return li;
@@ -187,8 +188,8 @@ public class CEPASApplication extends ISO7816Application {
             items.add(new ListItem(R.string.expiry_date,
                     Utils.longDateFormat(TripObfuscator.maybeObfuscateTS(purse.getPurseExpiryDate()))));
             items.add(new ListItem(R.string.cepas_autoload_amount, Integer.toString(purse.getAutoLoadAmount())));
-            items.add(new ListItem(new SpannableString("CAN"), Utils.getHexDump(purse.getCAN(), "<Error>")));
-            items.add(new ListItem(new SpannableString("CSN"), Utils.getHexDump(purse.getCSN(), "<Error>")));
+            items.add(new ListItem(new FormattedString("CAN"), Utils.getHexDump(purse.getCAN(), "<Error>")));
+            items.add(new ListItem(new FormattedString("CSN"), Utils.getHexDump(purse.getCSN(), "<Error>")));
 
             items.add(new HeaderListItem(R.string.cepas_last_txn_info));
             items.add(new ListItem("TRP", Integer.toString(purse.getLastTransactionTRP())));

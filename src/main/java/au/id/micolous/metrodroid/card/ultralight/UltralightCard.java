@@ -292,11 +292,11 @@ public class UltralightCard extends Card {
             String sectorIndexString = Integer.toHexString(sector.getIndex());
 
             if (sector instanceof UnauthorizedUltralightPage) {
-                li.add(ListItemRecursive.collapsedValue(Localizer.INSTANCE.localizeString(
+                li.add(ListItemRecursive.Companion.collapsedValue(Localizer.INSTANCE.localizeString(
                         R.string.unauthorized_page_title_format, sectorIndexString),
                         null, null));
             } else {
-                li.add(ListItemRecursive.collapsedValue(Localizer.INSTANCE.localizeString(
+                li.add(ListItemRecursive.Companion.collapsedValue(Localizer.INSTANCE.localizeString(
                         R.string.page_title_format, sectorIndexString),
                         null, sector.getData().toHexDump()));
             }

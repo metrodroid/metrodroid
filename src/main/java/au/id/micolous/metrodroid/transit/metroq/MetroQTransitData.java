@@ -38,6 +38,7 @@ import au.id.micolous.metrodroid.card.classic.ClassicBlock;
 import au.id.micolous.metrodroid.card.classic.ClassicCard;
 import au.id.micolous.metrodroid.card.classic.ClassicCardTransitFactory;
 import au.id.micolous.metrodroid.card.classic.ClassicSector;
+import au.id.micolous.metrodroid.multi.FormattedString;
 import au.id.micolous.metrodroid.multi.Localizer;
 import au.id.micolous.metrodroid.transit.CardInfo;
 import au.id.micolous.metrodroid.transit.TransitBalance;
@@ -197,7 +198,7 @@ public class MetroQTransitData extends TransitData {
     @Override
     public List<ListItem> getInfo() {
         List<ListItem> li = new ArrayList<>();
-        li.add(new ListItem(new SpannableString("Date 1"),
+        li.add(new ListItem(new FormattedString("Date 1"),
                 Utils.dateFormat(mDate1)));
         return li;
     }

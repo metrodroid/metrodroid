@@ -62,10 +62,10 @@ public class ListItemAdapter extends ArrayAdapter<ListItem> {
         ListItem item = getItem(position);
 
         if (item instanceof HeaderListItem) {
-            ((TextView) convertView.findViewById(android.R.id.text1)).setText(item.getText1());
+            ((TextView) convertView.findViewById(android.R.id.text1)).setText(item.getText1().getSpanned());
         } else {
-            ((TextView) convertView.findViewById(android.R.id.text1)).setText(item.getText1());
-            ((TextView) convertView.findViewById(android.R.id.text2)).setText(item.getText2());
+            ((TextView) convertView.findViewById(android.R.id.text1)).setText(item.getText1().getSpanned());
+            ((TextView) convertView.findViewById(android.R.id.text2)).setText(item.getText2().getSpanned());
         }
 
         return convertView;

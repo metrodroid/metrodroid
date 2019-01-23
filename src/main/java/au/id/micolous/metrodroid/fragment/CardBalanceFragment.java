@@ -37,6 +37,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import au.id.micolous.metrodroid.activity.CardInfoActivity;
+import au.id.micolous.metrodroid.multi.FormattedString;
 import au.id.micolous.metrodroid.multi.Localizer;
 import au.id.micolous.metrodroid.transit.Subscription;
 import au.id.micolous.metrodroid.transit.TransitBalance;
@@ -122,27 +123,28 @@ public class CardBalanceFragment extends ListFragment {
 
             TextView validView = view.findViewById(R.id.valid);
             if (subscription.getValidFrom() != null && subscription.getValidTo() != null) {
-                Spanned validFrom = Utils.dateFormat(TripObfuscator.maybeObfuscateTS(subscription.getValidFrom()));
-                Spanned validTo;
+                FormattedString validFrom = Utils.dateFormat(TripObfuscator.maybeObfuscateTS(subscription.getValidFrom()));
+                FormattedString validTo;
                 if (subscription.validToHasTime()) {
                     validTo = Utils.dateTimeFormat(TripObfuscator.maybeObfuscateTS(subscription.getValidTo()));
                 } else {
                     validTo = Utils.dateFormat(TripObfuscator.maybeObfuscateTS(subscription.getValidTo()));
                 }
-                validView.setText(getString(R.string.valid_format, validFrom, validTo));
+                validView.setText(getString(R.string.valid_format, validFrom.getSpanned(),
+                        validTo.getSpanned()));
                 validView.setVisibility(View.VISIBLE);
             } else if (subscription.getValidTo() != null) {
-                Spanned validTo;
+                FormattedString validTo;
                 if (subscription.validToHasTime()) {
                     validTo = Utils.dateTimeFormat(TripObfuscator.maybeObfuscateTS(subscription.getValidTo()));
                 } else {
                     validTo = Utils.dateFormat(TripObfuscator.maybeObfuscateTS(subscription.getValidTo()));
                 }
-                validView.setText(getString(R.string.valid_to_format, validTo));
+                validView.setText(getString(R.string.valid_to_format, validTo.getSpanned()));
                 validView.setVisibility(View.VISIBLE);
             } else if (subscription.getValidFrom() != null) {
-                Spanned validTo = Utils.dateFormat(TripObfuscator.maybeObfuscateTS(subscription.getValidFrom()));
-                validView.setText(getString(R.string.valid_from_format, validTo));
+                FormattedString validTo = Utils.dateFormat(TripObfuscator.maybeObfuscateTS(subscription.getValidFrom()));
+                validView.setText(getString(R.string.valid_from_format, validTo.getSpanned()));
                 validView.setVisibility(View.VISIBLE);
             } else {
                 validView.setVisibility(View.GONE);
@@ -242,12 +244,12 @@ public class CardBalanceFragment extends ListFragment {
 
             TextView validView = view.findViewById(R.id.valid);
             if (balance.getValidFrom() != null && balance.getValidTo() != null) {
-                Spanned validFrom = Utils.dateFormat(TripObfuscator.maybeObfuscateTS(balance.getValidFrom()));
-                Spanned validTo = Utils.dateFormat(TripObfuscator.maybeObfuscateTS(balance.getValidTo()));
+                Spanned validFrom = Utils.dateFormat(TripObfuscator.maybeObfuscateTS(balance.getValidFrom())).getSpanned();
+                Spanned validTo = Utils.dateFormat(TripObfuscator.maybeObfuscateTS(balance.getValidTo())).getSpanned();
                 validView.setText(getString(R.string.valid_format, validFrom, validTo));
                 validView.setVisibility(View.VISIBLE);
             } else if (balance.getValidTo() != null) {
-                Spanned validTo = Utils.dateFormat(TripObfuscator.maybeObfuscateTS(balance.getValidTo()));
+                Spanned validTo = Utils.dateFormat(TripObfuscator.maybeObfuscateTS(balance.getValidTo())).getSpanned();
                 validView.setText(getString(R.string.valid_to_format, validTo));
                 validView.setVisibility(View.VISIBLE);
             } else {
@@ -264,7 +266,7 @@ public class CardBalanceFragment extends ListFragment {
             } else
                 nameView.setVisibility(View.GONE);
             if (balanceCur != null) {
-                balanceView.setText(balanceCur.maybeObfuscateBalance().formatCurrencyString(true));
+                balanceView.setText(balanceCur.maybeObfuscateBalance().formatCurrencyString(true).getSpanned());
                 balanceView.setVisibility(View.VISIBLE);
             } else
                 balanceView.setVisibility(View.GONE);

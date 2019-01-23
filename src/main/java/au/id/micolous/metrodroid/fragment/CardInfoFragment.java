@@ -52,7 +52,7 @@ public class CardInfoFragment extends TreeListFragment {
         if (value instanceof Pair)
             value = ((Pair<?, ?>) value).first;
         if (value instanceof UriListItem) {
-            Uri uri = ((UriListItem) value).getUri();
+            Uri uri = Uri.parse(((UriListItem) value).getUri());
             startActivity(new Intent(Intent.ACTION_VIEW, uri));
         }
     }

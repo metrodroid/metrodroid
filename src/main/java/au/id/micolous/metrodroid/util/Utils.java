@@ -62,6 +62,7 @@ import android.util.SparseArray;
 import android.view.WindowManager;
 import android.widget.Toast;
 
+import au.id.micolous.metrodroid.multi.FormattedString;
 import au.id.micolous.metrodroid.multi.Localizer;
 import org.apache.commons.io.IOUtils;
 import org.jetbrains.annotations.NonNls;
@@ -210,13 +211,13 @@ public class Utils {
     }
 
     @NonNull
-    public static SpannableString getHexDump(@NonNull byte[] b) {
+    public static FormattedString getHexDump(@NonNull byte[] b) {
         return getHexDump(b, 0, b.length);
     }
 
     @NonNull
     @SuppressWarnings("MagicCharacter")
-    public static SpannableString getHexDump(@NonNull byte[] b, int offset, int length) {
+    public static FormattedString getHexDump(@NonNull byte[] b, int offset, int length) {
         StringBuilder result = new StringBuilder();
         int alen;
         if (length <= 16)
@@ -236,15 +237,15 @@ public class Utils {
         SpannableString s = new SpannableString(result);
         s.setSpan(new TypefaceSpan("monospace"), 0, result.length(),
                 Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
-        return s;
+        return new FormattedString(s);
     }
 
     @NonNull
-    public static SpannableString getHexDump(@NonNull byte[] b, String defaultResult) {
+    public static FormattedString getHexDump(@NonNull byte[] b, String defaultResult) {
         try {
             return getHexDump(b);
         } catch (Exception ex) {
-            return new SpannableString(defaultResult);
+            return new FormattedString(defaultResult);
         }
     }
 
@@ -591,8 +592,8 @@ public class Utils {
     //       android.text.format.DateFormat#get{Long,Medium,}{Date,Time}Format passing us back a
     //       java.util.DateFormat, rather than a CharSequence with the actual format to use.
     // TODO: Investigate using Joda Time or something else that sucks less than Java at handling dates.
-    public static Spanned longDateFormat(Calendar date) {
-        if (date == null) return new SpannableString("");
+    public static FormattedString longDateFormat(Calendar date) {
+        if (date == null) return new FormattedString("");
         String s = formatCalendar(DateFormat.getLongDateFormat(MetrodroidApplication.getInstance()), date);
 
         //Log.d(TAG, "Local TZ = " + DateFormat.getLongDateFormat(MetrodroidApplication.getInstance()).getTimeZone().getID());
@@ -611,11 +612,11 @@ public class Utils {
             b.setSpan(new LocaleSpan(Locale.getDefault()), 0, b.length(), 0);
         }
 
-        return b;
+        return new FormattedString(b);
     }
 
-    public static Spanned dateFormat(Calendar date) {
-        if (date == null) return new SpannableString("");
+    public static FormattedString dateFormat(Calendar date) {
+        if (date == null) return new FormattedString("");
         String s = formatCalendar(DateFormat.getDateFormat(MetrodroidApplication.getInstance()), date);
 
         SpannableString b = new SpannableString(s);
@@ -629,11 +630,11 @@ public class Utils {
             b.setSpan(new LocaleSpan(Locale.getDefault()), 0, b.length(), 0);
         }
 
-        return b;
+        return new FormattedString(b);
     }
 
-    public static Spanned timeFormat(Calendar date) {
-        if (date == null) return new SpannableString("");
+    public static FormattedString timeFormat(Calendar date) {
+        if (date == null) return new FormattedString("");
         String s = formatCalendar(DateFormat.getTimeFormat(MetrodroidApplication.getInstance()), date);
 
         //Log.d(TAG, "Local TZ = " + DateFormat.getLongDateFormat(MetrodroidApplication.getInstance()).getTimeZone().getID());
@@ -647,11 +648,11 @@ public class Utils {
                     date.get(Calendar.HOUR_OF_DAY), date.get(Calendar.MINUTE)), 0, b.length(), 0);
             b.setSpan(new LocaleSpan(Locale.getDefault()), 0, b.length(), 0);
         }
-        return b;
+        return new FormattedString(b);
     }
 
-    public static Spanned dateTimeFormat(Calendar date) {
-        if (date == null) return new SpannableString("");
+    public static FormattedString dateTimeFormat(Calendar date) {
+        if (date == null) return new FormattedString("");
         String d = formatCalendar(DateFormat.getDateFormat(MetrodroidApplication.getInstance()), date);
         String t = formatCalendar(DateFormat.getTimeFormat(MetrodroidApplication.getInstance()), date);
 
@@ -673,7 +674,7 @@ public class Utils {
             b.setSpan(new LocaleSpan(Locale.getDefault()), 0, b.length(), 0);
         }
 
-        return b;
+        return new FormattedString(b);
     }
 
     /**
@@ -934,11 +935,11 @@ public class Utils {
     }
 
     @NonNull
-    public static SpannableString getHexDump(@NonNull ImmutableByteArray b, String defaultResult) {
+    public static FormattedString getHexDump(@NonNull ImmutableByteArray b, String defaultResult) {
         try {
             return b.toHexDump();
         } catch (Exception ex) {
-            return new SpannableString(defaultResult);
+            return new FormattedString(defaultResult);
         }
     }
 

@@ -84,7 +84,7 @@ public class RecordDesfireFile extends DesfireFile {
                 int len = recSize;
                 if (start + len > fileData.getSize())
                     len = fileData.getSize() - start;
-                data.add(ListItemRecursive.collapsedValue(Localizer.INSTANCE.localizeString(R.string.record_title_format, i), null,
+                data.add(ListItemRecursive.Companion.collapsedValue(Localizer.INSTANCE.localizeString(R.string.record_title_format, i), null,
                         fileData.sliceOffLen(start, len).toHexDump()));
             }
         }

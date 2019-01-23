@@ -8,6 +8,7 @@ import android.text.Spanned;
 import java.util.Calendar;
 
 import au.id.micolous.farebot.R;
+import au.id.micolous.metrodroid.multi.FormattedString;
 import au.id.micolous.metrodroid.multi.Localizer;
 import au.id.micolous.metrodroid.transit.Station;
 import au.id.micolous.metrodroid.transit.TransitCurrency;
@@ -157,8 +158,8 @@ class TroikaTrip extends Trip {
         };
 
         @Override
-        public Spanned formatCurrencyString(boolean isBalance) {
-            return new SpannableString(mDesc);
+        public FormattedString formatCurrencyString(boolean isBalance) {
+            return new FormattedString(mDesc);
         }
     }
 

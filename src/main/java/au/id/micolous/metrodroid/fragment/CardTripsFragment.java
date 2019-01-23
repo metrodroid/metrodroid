@@ -61,6 +61,7 @@ import au.id.micolous.farebot.R;
 import au.id.micolous.metrodroid.MetrodroidApplication;
 import au.id.micolous.metrodroid.activity.CardInfoActivity;
 import au.id.micolous.metrodroid.activity.TripMapActivity;
+import au.id.micolous.metrodroid.multi.FormattedString;
 import au.id.micolous.metrodroid.multi.Localizer;
 import au.id.micolous.metrodroid.transit.TransitCurrency;
 import au.id.micolous.metrodroid.transit.TransitData;
@@ -168,18 +169,18 @@ public class CardTripsFragment extends ListFragment {
             View listHeader = convertView.findViewById(R.id.list_header);
             if (isFirstInSection(position)) {
                 listHeader.setVisibility(View.VISIBLE);
-                Spanned headerDate = Utils.longDateFormat(date);
+                FormattedString headerDate = Utils.longDateFormat(date);
                 TextView headerText = listHeader.findViewById(android.R.id.text1);
 
                 if (localisePlaces && Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                    SpannableString ss = new SpannableString(headerDate);
+                    SpannableString ss = new SpannableString(headerDate.getSpanned());
                     ss.setSpan(new LocaleSpan(Locale.getDefault()), 0, ss.length(), 0);
                     headerText.setText(ss);
                 } else {
-                    headerText.setText(headerDate);
+                    headerText.setText(headerDate.getSpanned());
                 }
 
-                ((TextView) listHeader.findViewById(android.R.id.text1)).setText(Utils.longDateFormat(date));
+                ((TextView) listHeader.findViewById(android.R.id.text1)).setText(Utils.longDateFormat(date).getSpanned());
             } else {
                 listHeader.setVisibility(View.GONE);
             }
@@ -248,7 +249,7 @@ public class CardTripsFragment extends ListFragment {
                 if (end != null && start != null)
                     timeTextView.setText(Localizer.INSTANCE.localizeString(R.string.time_from_to, Utils.timeFormat(start), Utils.timeFormat(end)));
                 else if (start != null)
-                    timeTextView.setText(Utils.timeFormat(start));
+                    timeTextView.setText(Utils.timeFormat(start).getSpanned());
                 else
                     timeTextView.setText(Localizer.INSTANCE.localizeString(R.string.time_from_unknown_to, Utils.timeFormat(end)));
                 timeTextView.setVisibility(View.VISIBLE);
@@ -308,7 +309,7 @@ public class CardTripsFragment extends ListFragment {
             fareTextView.setVisibility(View.VISIBLE);
             TransitCurrency fare = trip.getFare();
             if (fare != null) {
-                fareTextView.setText(fare.formatCurrencyString(false));
+                fareTextView.setText(fare.formatCurrencyString(false).getSpanned());
             } else if (trip.isRejected()) {
                 // If no other fare has been displayed, then display the "rejected" text.
                 fareTextView.setText(R.string.rejected);

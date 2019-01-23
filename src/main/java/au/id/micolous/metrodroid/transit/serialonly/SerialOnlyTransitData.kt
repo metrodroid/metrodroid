@@ -47,7 +47,7 @@ abstract class SerialOnlyTransitData : TransitData() {
         )
         moreInfoPage?.let {
             li += UriListItem(R.string.unknown_more_info, R.string.unknown_more_info_desc,
-                    Uri.parse(it))
+                    it)
         }
         return li
     }

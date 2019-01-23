@@ -88,8 +88,8 @@ public class AdvancedCardInfoActivity extends MetrodroidActivity {
         Calendar scannedAt = mCard.getScannedAt();
         if (mCard.getScannedAt().getTimeInMillis() > 0) {
             scannedAt = TripObfuscator.maybeObfuscateTS(scannedAt);
-            Spanned date = Utils.dateFormat(scannedAt);
-            Spanned time = Utils.timeFormat(scannedAt);
+            Spanned date = Utils.dateFormat(scannedAt).getSpanned();
+            Spanned time = Utils.timeFormat(scannedAt).getSpanned();
             actionBar.setSubtitle(Localizer.INSTANCE.localizeString(R.string.scanned_at_format, time, date));
         }
 
