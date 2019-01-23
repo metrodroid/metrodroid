@@ -21,6 +21,7 @@ package au.id.micolous.metrodroid.transit.seq_go;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import au.id.micolous.metrodroid.multi.Localizer;
 import au.id.micolous.metrodroid.transit.nextfare.NextfareTrip;
 import au.id.micolous.metrodroid.transit.nextfare.record.NextfareTopupRecord;
 import au.id.micolous.metrodroid.util.Utils;
@@ -63,7 +64,7 @@ public class SeqGoRefill extends NextfareTrip {
 
     @Override
     public String getAgencyName(boolean isShort) {
-        return Utils.localizeString(mAutomatic
+        return Localizer.INSTANCE.localizeString(mAutomatic
                 ? R.string.seqgo_refill_automatic
                 : R.string.seqgo_refill_manual);
     }

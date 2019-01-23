@@ -37,6 +37,7 @@ import au.id.micolous.metrodroid.card.desfire.files.UnauthorizedDesfireFile;
 import au.id.micolous.metrodroid.card.desfire.settings.DesfireFileSettings;
 import au.id.micolous.metrodroid.card.desfire.settings.StandardDesfireFileSettings;
 import au.id.micolous.metrodroid.card.desfire.settings.ValueDesfireFileSettings;
+import au.id.micolous.metrodroid.multi.Localizer;
 import au.id.micolous.metrodroid.transit.CardInfo;
 import au.id.micolous.metrodroid.transit.CardTransitFactory;
 import au.id.micolous.metrodroid.transit.TransitData;
@@ -130,7 +131,7 @@ public class DesfireCard extends Card {
                 return null;
             }
 
-            feedbackInterface.updateStatusText(Utils.localizeString(R.string.mfd_reading));
+            feedbackInterface.updateStatusText(Localizer.INSTANCE.localizeString(R.string.mfd_reading));
             feedbackInterface.updateProgressBar(0, 1);
 
             int[] appIds = desfireTag.getAppList();
@@ -140,7 +141,7 @@ public class DesfireCard extends Card {
             CardInfo i = parseEarlyCardInfo(appIds);
             if (i != null) {
                 Log.d(TAG, String.format(Locale.ENGLISH, "Early Card Info: %s", i.getName()));
-                feedbackInterface.updateStatusText(Utils.localizeString(R.string.card_reading_type, i.getName()));
+                feedbackInterface.updateStatusText(Localizer.INSTANCE.localizeString(R.string.card_reading_type, i.getName()));
                 feedbackInterface.showCardType(i);
             }
 
@@ -168,7 +169,7 @@ public class DesfireCard extends Card {
                     if (unlocker != null) {
                         if (i != null) {
                             feedbackInterface.updateStatusText(
-                                    Utils.localizeString(R.string.mfd_unlocking, i.getName()));
+                                    Localizer.INSTANCE.localizeString(R.string.mfd_unlocking, i.getName()));
                         }
                         unlocker.unlock(desfireTag, files, fileId, authLog);
                         feedbackInterface.updateProgressBar(++progress, maxProgress);
@@ -277,10 +278,10 @@ public class DesfireCard extends Card {
             final Pair<Integer, Integer> mifareAID = app.getMifareAID();
 
             li.add(new ListItemRecursive(
-                    Utils.localizeString(R.string.application_title_format,
+                    Localizer.INSTANCE.localizeString(R.string.application_title_format,
                             NumberUtils.INSTANCE.intToHex(appID)),
                     mifareAID == null ? null :
-                    Utils.localizeString(R.string.mfc_aid_title_format,
+                    Localizer.INSTANCE.localizeString(R.string.mfc_aid_title_format,
                             NumberUtils.INSTANCE.intToHex(mifareAID.getFirst()), mifareAID.getSecond()),
                     ali));
         }

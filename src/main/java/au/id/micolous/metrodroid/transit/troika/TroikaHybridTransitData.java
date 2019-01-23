@@ -28,6 +28,7 @@ import au.id.micolous.metrodroid.card.classic.ClassicCard;
 import au.id.micolous.metrodroid.card.classic.ClassicCardTransitFactory;
 import au.id.micolous.metrodroid.card.classic.ClassicSector;
 import au.id.micolous.metrodroid.key.ClassicSectorKey;
+import au.id.micolous.metrodroid.multi.Localizer;
 import au.id.micolous.metrodroid.transit.CardInfo;
 import au.id.micolous.metrodroid.transit.Subscription;
 import au.id.micolous.metrodroid.transit.TransitBalance;
@@ -121,7 +122,7 @@ public class TroikaHybridTransitData extends TransitData {
             nameRes = R.string.card_name_troika_strelka_hybrid;
         if (mPodorozhnik != null)
             nameRes = R.string.card_name_troika_podorozhnik_hybrid;
-        return Utils.localizeString(nameRes);
+        return Localizer.INSTANCE.localizeString(nameRes);
     }
 
     @Override
@@ -159,7 +160,7 @@ public class TroikaHybridTransitData extends TransitData {
                 nameRes = R.string.card_name_troika_strelka_hybrid;
             if (PodorozhnikTransitData.FACTORY.check(card))
                 nameRes = R.string.card_name_troika_podorozhnik_hybrid;
-            return new TransitIdentity(Utils.localizeString(nameRes),
+            return new TransitIdentity(Localizer.INSTANCE.localizeString(nameRes),
                     TroikaBlock.formatSerial(TroikaBlock.getSerial(card.getSector(8).getBlock(0).getData())));
         }
 

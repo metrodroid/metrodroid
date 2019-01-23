@@ -22,6 +22,7 @@
 
 package au.id.micolous.metrodroid.card.desfire.files;
 
+import au.id.micolous.metrodroid.multi.Localizer;
 import au.id.micolous.metrodroid.util.NumberUtils;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -101,7 +102,7 @@ public class DesfireFile {
         final ImmutableByteArray data = getData();
         final DesfireFileSettings settings = getFileSettings();
         return new ListItemRecursive(
-                Utils.localizeString(R.string.file_title_format,
+                Localizer.INSTANCE.localizeString(R.string.file_title_format,
                     NumberUtils.INSTANCE.intToHex(getId())),
                 settings != null
                     ? settings.getSubtitle()

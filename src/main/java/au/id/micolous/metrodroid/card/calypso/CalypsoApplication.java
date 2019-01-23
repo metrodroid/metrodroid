@@ -23,6 +23,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.util.Log;
 
+import au.id.micolous.metrodroid.multi.Localizer;
 import au.id.micolous.metrodroid.util.NumberUtils;
 import au.id.micolous.metrodroid.util.Preferences;
 import com.neovisionaries.i18n.CountryCode;
@@ -130,7 +131,7 @@ public class CalypsoApplication extends ISO7816Application {
         public List<ISO7816Application> dumpTag(@NonNull ISO7816Protocol protocol, @NonNull ISO7816Info appData, @NonNull TagReaderFeedbackInterface feedbackInterface) {
             // At this point, the connection is already open, we just need to dump the right things...
 
-            feedbackInterface.updateStatusText(Utils.localizeString(R.string.calypso_reading));
+            feedbackInterface.updateStatusText(Localizer.INSTANCE.localizeString(R.string.calypso_reading));
             feedbackInterface.updateProgressBar(0, File.getAll().length);
             int counter = 0;
             boolean partialRead = false;
@@ -178,7 +179,7 @@ public class CalypsoApplication extends ISO7816Application {
         }
 
         if (ci != null) {
-            feedbackInterface.updateStatusText(Utils.localizeString(R.string.card_reading_type,
+            feedbackInterface.updateStatusText(Localizer.INSTANCE.localizeString(R.string.card_reading_type,
                     ci.getName()));
             feedbackInterface.showCardType(ci);
         }
@@ -267,7 +268,7 @@ public class CalypsoApplication extends ISO7816Application {
             if (cc != null) {
                 countryName = cc.toLocale().getDisplayCountry();
             } else {
-                countryName = Utils.localizeString(R.string.unknown_format, countryCode);
+                countryName = Localizer.INSTANCE.localizeString(R.string.unknown_format, countryCode);
             }
 
             CalypsoData.Manufacturer manufacturer = CalypsoData.Manufacturer.get(data.get(22));
@@ -275,10 +276,10 @@ public class CalypsoApplication extends ISO7816Application {
             String manufacturerName;
             if (manufacturer != null) {
                 manufacturerName = String.format(Locale.ENGLISH, "%s (%s)",
-                        Utils.localizeString(manufacturer.getCompanyName()),
+                        Localizer.INSTANCE.localizeString(manufacturer.getCompanyName()),
                         manufacturerHex);
             } else {
-                manufacturerName = Utils.localizeString(R.string.unknown_format,
+                manufacturerName = Localizer.INSTANCE.localizeString(R.string.unknown_format,
                         manufacturerHex);
             }
 

@@ -30,6 +30,7 @@ import au.id.micolous.metrodroid.card.CardType;
 import au.id.micolous.metrodroid.card.china.ChinaCard;
 import au.id.micolous.metrodroid.card.china.ChinaCardTransitFactory;
 import au.id.micolous.metrodroid.card.iso7816.ISO7816File;
+import au.id.micolous.metrodroid.multi.Localizer;
 import au.id.micolous.metrodroid.transit.CardInfo;
 import au.id.micolous.metrodroid.transit.TransitData;
 import au.id.micolous.metrodroid.transit.TransitIdentity;
@@ -41,7 +42,7 @@ public class WuhanTongTransitData extends ChinaTransitData {
     private final String mSerial;
 
     private static final CardInfo CARD_INFO = new CardInfo.Builder()
-            .setName(Utils.localizeString(R.string.card_name_wuhantong))
+            .setName(Localizer.INSTANCE.localizeString(R.string.card_name_wuhantong))
             .setLocation(R.string.location_wuhan)
             .setCardType(CardType.ISO7816)
             .setPreview()
@@ -80,7 +81,7 @@ public class WuhanTongTransitData extends ChinaTransitData {
 
     @Override
     public String getCardName() {
-        return Utils.localizeString(R.string.card_name_wuhantong);
+        return Localizer.INSTANCE.localizeString(R.string.card_name_wuhantong);
     }
 
     @Override
@@ -102,7 +103,7 @@ public class WuhanTongTransitData extends ChinaTransitData {
 
         @Override
         public TransitIdentity parseTransitIdentity(@NonNull ChinaCard card) {
-            return new TransitIdentity(Utils.localizeString(R.string.card_name_wuhantong), parseSerial(card));
+            return new TransitIdentity(Localizer.INSTANCE.localizeString(R.string.card_name_wuhantong), parseSerial(card));
         }
 
         @Override

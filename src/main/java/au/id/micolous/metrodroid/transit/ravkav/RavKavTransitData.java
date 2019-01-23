@@ -31,6 +31,7 @@ import au.id.micolous.farebot.R;
 import au.id.micolous.metrodroid.card.CardType;
 import au.id.micolous.metrodroid.card.calypso.CalypsoApplication;
 import au.id.micolous.metrodroid.card.calypso.CalypsoCardTransitFactory;
+import au.id.micolous.metrodroid.multi.Localizer;
 import au.id.micolous.metrodroid.transit.CardInfo;
 import au.id.micolous.metrodroid.transit.TransitIdentity;
 import au.id.micolous.metrodroid.transit.en1545.Calypso1545TransitData;
@@ -54,7 +55,7 @@ public class RavKavTransitData extends Calypso1545TransitData {
 
     private static final CardInfo CARD_INFO = new CardInfo.Builder()
             .setImageId(R.drawable.ravkav_card)
-            .setName(Utils.localizeString(R.string.card_name_ravkav))
+            .setName(Localizer.INSTANCE.localizeString(R.string.card_name_ravkav))
             .setLocation(R.string.location_israel)
             .setCardType(CardType.ISO7816)
             .setPreview()
@@ -99,7 +100,7 @@ public class RavKavTransitData extends Calypso1545TransitData {
 
         @Override
         public TransitIdentity parseTransitIdentity(@NonNull CalypsoApplication card) {
-            return new TransitIdentity(Utils.localizeString(R.string.card_name_ravkav), getSerial(card));
+            return new TransitIdentity(Localizer.INSTANCE.localizeString(R.string.card_name_ravkav), getSerial(card));
         }
 
         @Override
@@ -139,7 +140,7 @@ public class RavKavTransitData extends Calypso1545TransitData {
 
     @Override
     public String getCardName() {
-        return Utils.localizeString(R.string.card_name_ravkav);
+        return Localizer.INSTANCE.localizeString(R.string.card_name_ravkav);
     }
 
     @Override

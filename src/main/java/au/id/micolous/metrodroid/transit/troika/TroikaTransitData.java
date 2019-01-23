@@ -32,6 +32,7 @@ import au.id.micolous.metrodroid.card.CardType;
 import au.id.micolous.metrodroid.card.classic.ClassicCard;
 import au.id.micolous.metrodroid.card.classic.ClassicSector;
 import au.id.micolous.metrodroid.card.classic.UnauthorizedClassicSector;
+import au.id.micolous.metrodroid.multi.Localizer;
 import au.id.micolous.metrodroid.transit.CardInfo;
 import au.id.micolous.metrodroid.transit.Subscription;
 import au.id.micolous.metrodroid.transit.TransitBalance;
@@ -59,7 +60,7 @@ public class TroikaTransitData implements Parcelable {
     static final CardInfo CARD_INFO = new CardInfo.Builder()
             // seqgo_card_alpha has identical geometry
             .setImageId(R.drawable.troika_card, R.drawable.seqgo_card_alpha)
-            .setName(Utils.localizeString(R.string.card_name_troika))
+            .setName(Localizer.INSTANCE.localizeString(R.string.card_name_troika))
             .setLocation(R.string.location_moscow)
             .setCardType(CardType.MifareClassic)
             .setExtraNote(R.string.card_note_russia)
@@ -98,7 +99,7 @@ public class TroikaTransitData implements Parcelable {
 
     public String getWarning() {
         if (mBlock8.getBalance() == null)
-            return Utils.localizeString(R.string.troika_unformatted);
+            return Localizer.INSTANCE.localizeString(R.string.troika_unformatted);
         return null;
     }
 

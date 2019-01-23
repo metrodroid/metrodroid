@@ -24,6 +24,7 @@ package au.id.micolous.metrodroid.card.classic;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
+import au.id.micolous.metrodroid.multi.Localizer;
 import org.simpleframework.xml.Attribute;
 import org.simpleframework.xml.ElementList;
 import org.simpleframework.xml.Root;
@@ -102,22 +103,22 @@ public class ClassicSector {
     public ListItem getRawData(@NonNull String sectorIndex) {
         String key = null;
         if (mKey != null && mKeyType != null) {
-            key = Utils.localizeString(mKeyType.getFormatRes(),
+            key = Localizer.INSTANCE.localizeString(mKeyType.getFormatRes(),
                     mKey.toHexString());
         } else if (mKey != null) {
-            key = Utils.localizeString(R.string.classic_key_format,
+            key = Localizer.INSTANCE.localizeString(R.string.classic_key_format,
                     Utils.getHexString(mKey.getData()));
         }
         List<ListItem> bli = new ArrayList<>();
         for (ClassicBlock block : getBlocks()) {
             if (block.isUnauthorized())
                 bli.add(new ListItem(
-                        Utils.localizeString(R.string.block_title_format_unauthorized,
+                        Localizer.INSTANCE.localizeString(R.string.block_title_format_unauthorized,
                                 Integer.toString(block.getIndex()))
                 ));
             else
                 bli.add(new ListItemRecursive(
-                        Utils.localizeString(R.string.block_title_format,
+                        Localizer.INSTANCE.localizeString(R.string.block_title_format,
                                 Integer.toString(block.getIndex())),
                         block.getType(),
                         Collections.singletonList(new ListItem(null, block.getData().toHexDump())))
@@ -125,12 +126,12 @@ public class ClassicSector {
         }
         if (isEmpty()) {
             return new ListItemRecursive(
-                    Utils.localizeString(R.string.sector_title_format_empty, sectorIndex),
+                    Localizer.INSTANCE.localizeString(R.string.sector_title_format_empty, sectorIndex),
                     key, bli);
         }
 
         return new ListItemRecursive(
-                Utils.localizeString(R.string.sector_title_format, sectorIndex),
+                Localizer.INSTANCE.localizeString(R.string.sector_title_format, sectorIndex),
                 key, bli);
     }
 

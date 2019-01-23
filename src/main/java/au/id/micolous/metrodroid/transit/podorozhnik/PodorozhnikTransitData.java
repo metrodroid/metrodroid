@@ -38,6 +38,7 @@ import au.id.micolous.metrodroid.card.classic.ClassicCardTransitFactory;
 import au.id.micolous.metrodroid.card.classic.ClassicSector;
 import au.id.micolous.metrodroid.card.classic.UnauthorizedClassicSector;
 import au.id.micolous.metrodroid.key.ClassicSectorKey;
+import au.id.micolous.metrodroid.multi.Localizer;
 import au.id.micolous.metrodroid.transit.CardInfo;
 import au.id.micolous.metrodroid.transit.TransitBalance;
 import au.id.micolous.metrodroid.transit.TransitBalanceStored;
@@ -75,7 +76,7 @@ public class PodorozhnikTransitData extends TransitData {
     private static final CardInfo CARD_INFO = new CardInfo.Builder()
             // seqgo_card_alpha has identical geometry
             .setImageId(R.drawable.podorozhnik_card, R.drawable.seqgo_card_alpha)
-            .setName(Utils.localizeString(R.string.card_name_podorozhnik))
+            .setName(Localizer.INSTANCE.localizeString(R.string.card_name_podorozhnik))
             .setLocation(R.string.location_saint_petersburg)
             .setCardType(CardType.MifareClassic)
             .setExtraNote(R.string.card_note_russia)
@@ -118,7 +119,7 @@ public class PodorozhnikTransitData extends TransitData {
 
     @Override
     public String getCardName() {
-        return Utils.localizeString(R.string.card_name_podorozhnik);
+        return Localizer.INSTANCE.localizeString(R.string.card_name_podorozhnik);
     }
 
     @Override
@@ -260,7 +261,7 @@ public class PodorozhnikTransitData extends TransitData {
     @Override
     public TransitBalance getBalance() {
         return new TransitBalanceStored(TransitCurrency.RUB(mBalance),
-                Utils.localizeString(R.string.card_name_podorozhnik), null);
+                Localizer.INSTANCE.localizeString(R.string.card_name_podorozhnik), null);
     }
 
     public static final ClassicCardTransitFactory FACTORY = new ClassicCardTransitFactory() {
@@ -274,7 +275,7 @@ public class PodorozhnikTransitData extends TransitData {
 
         @Override
         public TransitIdentity parseTransitIdentity(@NonNull ClassicCard card) {
-            return new TransitIdentity(Utils.localizeString(R.string.card_name_podorozhnik),
+            return new TransitIdentity(Localizer.INSTANCE.localizeString(R.string.card_name_podorozhnik),
                     getSerial(card.getTagId()));
         }
 

@@ -62,6 +62,7 @@ import android.util.SparseArray;
 import android.view.WindowManager;
 import android.widget.Toast;
 
+import au.id.micolous.metrodroid.multi.Localizer;
 import org.apache.commons.io.IOUtils;
 import org.jetbrains.annotations.NonNls;
 import org.json.JSONException;
@@ -171,7 +172,7 @@ public class Utils {
 
     public static void showErrorAndFinish(final Activity activity, @StringRes int errorResource) {
         try {
-            Log.e(activity.getClass().getName(), Utils.localizeString(errorResource));
+            Log.e(activity.getClass().getName(), Localizer.INSTANCE.localizeString(errorResource));
             new AlertDialog.Builder(activity)
                     .setMessage(errorResource)
                     .setCancelable(false)
@@ -408,19 +409,19 @@ public class Utils {
         String ret = "";
 
         // Version:
-        ret += localizeString(R.string.app_version, getVersionString()) + "\n";
+        ret += Localizer.INSTANCE.localizeString(R.string.app_version, getVersionString()) + "\n";
         // Model
-        ret += localizeString(R.string.device_model, Build.MODEL, Build.DEVICE) + "\n";
+        ret += Localizer.INSTANCE.localizeString(R.string.device_model, Build.MODEL, Build.DEVICE) + "\n";
         // Manufacturer / brand:
-        ret += localizeString(R.string.device_manufacturer, Build.MANUFACTURER, Build.BRAND) + "\n";
+        ret += Localizer.INSTANCE.localizeString(R.string.device_manufacturer, Build.MANUFACTURER, Build.BRAND) + "\n";
         // OS:
-        ret += localizeString(R.string.android_os, Build.VERSION.RELEASE, Build.ID) + "\n";
+        ret += Localizer.INSTANCE.localizeString(R.string.android_os, Build.VERSION.RELEASE, Build.ID) + "\n";
         ret += "\n";
         // NFC:
-        ret += localizeString(nfcAvailable ?
+        ret += Localizer.INSTANCE.localizeString(nfcAvailable ?
                 (nfcEnabled ? R.string.nfc_enabled : R.string.nfc_disabled)
                 : R.string.nfc_not_available) + "\n";
-        ret += localizeString(app.getMifareClassicSupport() ? R.string.mfc_supported
+        ret += Localizer.INSTANCE.localizeString(app.getMifareClassicSupport() ? R.string.mfc_supported
                 : R.string.mfc_not_supported) + "\n";
         ret += "\n";
 
@@ -550,48 +551,20 @@ public class Utils {
         int hours, days;
         String ret = "";
         if (mins < 0)
-            return localizePlural(R.plurals.minutes, mins, mins);
+            return Localizer.INSTANCE.localizePlural(R.plurals.minutes, mins, mins);
         if (mins == 0)
-            return localizePlural(R.plurals.minutes, 0, 0);
+            return Localizer.INSTANCE.localizePlural(R.plurals.minutes, 0, 0);
         if (mins % 60 != 0)
-            ret = localizePlural(R.plurals.minutes, (mins % 60), (mins % 60));
+            ret = Localizer.INSTANCE.localizePlural(R.plurals.minutes, (mins % 60), (mins % 60));
         if (mins < 60)
             return ret;
         hours = mins / 60;
         if (hours % 24 != 0)
-            ret = localizePlural(R.plurals.hours, (hours % 24), (hours % 24)) + " ";
+            ret = Localizer.INSTANCE.localizePlural(R.plurals.hours, (hours % 24), (hours % 24)) + " ";
         if (hours < 24)
             return ret;
         days = hours / 24;
-        return localizePlural(R.plurals.days, days, days);
-    }
-
-    /**
-     * Given a string resource (R.string), localize the string according to the language preferences
-     * on the device.
-     *
-     * @param stringResource R.string to localize.
-     * @param formatArgs     Formatting arguments to pass
-     * @return Localized string
-     */
-    @NonNull
-    public static String localizeString(@StringRes int stringResource, Object... formatArgs) {
-        Resources res = MetrodroidApplication.getInstance().getResources();
-        return res.getString(stringResource, formatArgs);
-    }
-
-    /**
-     * Given a plural resource (R.plurals), localize the string according to the language preferences
-     * on the device.
-     *
-     * @param pluralResource R.plurals to localize.
-     * @param quantity       Quantity to use for pluaralisation rules
-     * @param formatArgs     Formatting arguments to pass
-     * @return Localized string
-     */
-    public static String localizePlural(@PluralsRes int pluralResource, int quantity, Object... formatArgs) {
-        Resources res = MetrodroidApplication.getInstance().getResources();
-        return res.getQuantityString(pluralResource, quantity, formatArgs);
+        return Localizer.INSTANCE.localizePlural(R.plurals.days, days, days);
     }
 
     private static String formatCalendar(java.text.DateFormat df, Calendar c) {

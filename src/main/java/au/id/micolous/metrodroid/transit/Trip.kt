@@ -35,6 +35,7 @@ import java.util.HashSet
 import java.util.Locale
 
 import au.id.micolous.farebot.R
+import au.id.micolous.metrodroid.multi.Localizer
 import au.id.micolous.metrodroid.ui.HiddenSpan
 import au.id.micolous.metrodroid.util.Preferences
 import au.id.micolous.metrodroid.util.Utils
@@ -367,10 +368,10 @@ abstract class Trip : Parcelable {
             // Both the start and end station are known.
             val startPlaceholder = "%1\$s"
             val endPlaceholder = "%2\$s"
-            var s = Utils.localizeString(R.string.trip_description, startPlaceholder, endPlaceholder)
+            var s = Localizer.localizeString(R.string.trip_description, startPlaceholder, endPlaceholder)
 
             if (startStationName == null) {
-                s = Utils.localizeString(R.string.trip_description_unknown_start, endPlaceholder)
+                s = Localizer.localizeString(R.string.trip_description_unknown_start, endPlaceholder)
             }
 
             // Build the spans

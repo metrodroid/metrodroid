@@ -26,6 +26,7 @@ import au.id.micolous.metrodroid.card.classic.ClassicCard
 import au.id.micolous.metrodroid.card.classic.ClassicCardTransitFactory
 import au.id.micolous.metrodroid.card.classic.ClassicSector
 import au.id.micolous.metrodroid.key.ClassicSectorKey
+import au.id.micolous.metrodroid.multi.Localizer
 import au.id.micolous.metrodroid.transit.CardInfo
 import au.id.micolous.metrodroid.transit.TransitIdentity
 import au.id.micolous.metrodroid.ui.ListItem
@@ -47,11 +48,11 @@ data class StrelkaTransitData (private val mSerial: String): SerialOnlyTransitDa
     override val reason
         get() = SerialOnlyTransitData.Reason.MORE_RESEARCH_NEEDED
 
-    override val cardName get() = Utils.localizeString(R.string.card_name_strelka)
+    override val cardName get() = Localizer.localizeString(R.string.card_name_strelka)
 
     companion object {
         private val CARD_INFO = CardInfo.Builder()
-                .setName(Utils.localizeString(R.string.card_name_strelka))
+                .setName(Localizer.localizeString(R.string.card_name_strelka))
                 .setLocation(R.string.location_moscow)
                 .setCardType(CardType.MifareClassic)
                 .setExtraNote(R.string.card_note_card_number_only)
@@ -71,7 +72,7 @@ data class StrelkaTransitData (private val mSerial: String): SerialOnlyTransitDa
 
         val FACTORY: ClassicCardTransitFactory = object : ClassicCardTransitFactory {
             override fun parseTransitIdentity(card: ClassicCard) =
-                    TransitIdentity(Utils.localizeString(R.string.card_name_strelka),
+                    TransitIdentity(Localizer.localizeString(R.string.card_name_strelka),
                         formatShortSerial(getSerial(card)))
 
             override fun parseTransitData(classicCard: ClassicCard) =

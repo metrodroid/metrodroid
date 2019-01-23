@@ -22,6 +22,7 @@ import android.os.Parcel;
 import android.os.Parcelable;
 import android.support.annotation.NonNull;
 
+import au.id.micolous.metrodroid.multi.Localizer;
 import org.jetbrains.annotations.NonNls;
 
 import java.util.Arrays;
@@ -166,7 +167,7 @@ public class BlankUltralightTransitData extends TransitData {
 
         @Override
         public TransitIdentity parseTransitIdentity(@NonNull UltralightCard card) {
-            return new TransitIdentity(Utils.localizeString(R.string.blank_mfu_card), null);
+            return new TransitIdentity(Localizer.INSTANCE.localizeString(R.string.blank_mfu_card), null);
         }
     };
 
@@ -177,7 +178,7 @@ public class BlankUltralightTransitData extends TransitData {
 
     @Override
     public String getCardName() {
-        return Utils.localizeString(R.string.blank_mfu_card);
+        return Localizer.INSTANCE.localizeString(R.string.blank_mfu_card);
     }
 
 

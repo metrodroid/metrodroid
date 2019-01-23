@@ -22,6 +22,7 @@ package au.id.micolous.metrodroid.card.classic;
 
 import android.support.annotation.NonNull;
 
+import au.id.micolous.metrodroid.multi.Localizer;
 import org.simpleframework.xml.Attribute;
 import org.simpleframework.xml.Root;
 
@@ -63,6 +64,6 @@ public class UnauthorizedClassicSector extends ClassicSector {
     @NonNull
     @Override
     public ListItem getRawData(@NonNull String sectorIndex) {
-        return new ListItem(Utils.localizeString(R.string.unauthorized_sector_title_format, sectorIndex));
+        return new ListItem(Localizer.INSTANCE.localizeString(R.string.unauthorized_sector_title_format, sectorIndex));
     }
 }

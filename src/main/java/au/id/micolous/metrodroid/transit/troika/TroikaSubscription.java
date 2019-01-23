@@ -6,6 +6,7 @@ import java.util.Calendar;
 import java.util.GregorianCalendar;
 
 import au.id.micolous.farebot.R;
+import au.id.micolous.metrodroid.multi.Localizer;
 import au.id.micolous.metrodroid.transit.Subscription;
 import au.id.micolous.metrodroid.util.Utils;
 
@@ -123,7 +124,7 @@ class TroikaSubscription extends Subscription {
 
     @Override
     public String getAgencyName(boolean isShort) {
-        return Utils.localizeString(R.string.card_name_troika);
+        return Localizer.INSTANCE.localizeString(R.string.card_name_troika);
     }
 
     @Override

@@ -23,6 +23,7 @@ package au.id.micolous.metrodroid.transit.intercode;
 import android.util.SparseArray;
 
 import au.id.micolous.farebot.R;
+import au.id.micolous.metrodroid.multi.Localizer;
 import au.id.micolous.metrodroid.transit.Station;
 import au.id.micolous.metrodroid.util.StationTableReader;
 import au.id.micolous.metrodroid.util.Utils;
@@ -114,6 +115,6 @@ class IntercodeLookupNavigo extends IntercodeLookupSTR {
                 // TODO: i18n
                 return "Forfait";
         }
-        return Utils.localizeString(R.string.unknown_format, contractTariff);
+        return Localizer.INSTANCE.localizeString(R.string.unknown_format, contractTariff);
     }
 }

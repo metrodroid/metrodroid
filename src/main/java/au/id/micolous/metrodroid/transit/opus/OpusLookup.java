@@ -25,6 +25,7 @@ import android.util.SparseIntArray;
 import java.util.TimeZone;
 
 import au.id.micolous.farebot.R;
+import au.id.micolous.metrodroid.multi.Localizer;
 import au.id.micolous.metrodroid.transit.Station;
 import au.id.micolous.metrodroid.transit.TransitCurrency;
 import au.id.micolous.metrodroid.transit.en1545.En1545Lookup;
@@ -66,8 +67,8 @@ public class OpusLookup extends En1545LookupSTR {
             return null;
         int resId = SUBSCRIPTIONS.get(contractTariff, 0);
         if (resId != 0)
-            return Utils.localizeString(resId);
-        return Utils.localizeString(R.string.unknown_format, contractTariff);
+            return Localizer.INSTANCE.localizeString(resId);
+        return Localizer.INSTANCE.localizeString(R.string.unknown_format, contractTariff);
     }
 
     @Override

@@ -27,6 +27,7 @@ import android.support.annotation.Nullable;
 import android.support.annotation.VisibleForTesting;
 import android.util.Log;
 
+import au.id.micolous.metrodroid.multi.Localizer;
 import org.simpleframework.xml.ElementList;
 import org.simpleframework.xml.Root;
 
@@ -99,7 +100,7 @@ public class ISO7816Card extends Card {
         try {
             ISO7816Protocol iso7816Tag = new ISO7816Protocol(tech);
 
-            feedbackInterface.updateStatusText(Utils.localizeString(R.string.iso7816_probing));
+            feedbackInterface.updateStatusText(Localizer.INSTANCE.localizeString(R.string.iso7816_probing));
             feedbackInterface.updateProgressBar(0, 1);
 
             ImmutableByteArray appData;
@@ -213,7 +214,7 @@ public class ISO7816Card extends Card {
             List<ListItem> extra = app.getRawData();
             if (extra != null)
                 rawAppData.addAll(extra);
-            rawData.add(new ListItemRecursive(Utils.localizeString(R.string.application_title_format,
+            rawData.add(new ListItemRecursive(Localizer.INSTANCE.localizeString(R.string.application_title_format,
                     appTitle), null, rawAppData));
         }
         return rawData;

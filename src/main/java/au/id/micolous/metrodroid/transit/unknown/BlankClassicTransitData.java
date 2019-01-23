@@ -30,6 +30,7 @@ import au.id.micolous.metrodroid.card.classic.ClassicCardTransitFactory;
 import au.id.micolous.metrodroid.card.classic.ClassicSector;
 import au.id.micolous.metrodroid.card.classic.InvalidClassicSector;
 import au.id.micolous.metrodroid.card.classic.UnauthorizedClassicSector;
+import au.id.micolous.metrodroid.multi.Localizer;
 import au.id.micolous.metrodroid.transit.CardInfo;
 import au.id.micolous.metrodroid.transit.TransitData;
 import au.id.micolous.metrodroid.transit.TransitIdentity;
@@ -88,7 +89,7 @@ public class BlankClassicTransitData extends TransitData {
 
         @Override
         public TransitIdentity parseTransitIdentity(@NonNull ClassicCard card) {
-            return new TransitIdentity(Utils.localizeString(R.string.blank_mfc_card), null);
+            return new TransitIdentity(Localizer.INSTANCE.localizeString(R.string.blank_mfc_card), null);
         }
 
         @Override
@@ -104,7 +105,7 @@ public class BlankClassicTransitData extends TransitData {
 
     @Override
     public String getCardName() {
-        return Utils.localizeString(R.string.blank_mfc_card);
+        return Localizer.INSTANCE.localizeString(R.string.blank_mfc_card);
     }
 
 

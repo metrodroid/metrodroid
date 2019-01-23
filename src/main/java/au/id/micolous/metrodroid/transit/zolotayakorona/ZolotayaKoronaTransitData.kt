@@ -29,6 +29,7 @@ import au.id.micolous.metrodroid.card.classic.ClassicCard
 import au.id.micolous.metrodroid.card.classic.ClassicCardTransitFactory
 import au.id.micolous.metrodroid.card.classic.ClassicSector
 import au.id.micolous.metrodroid.card.classic.UnauthorizedClassicSector
+import au.id.micolous.metrodroid.multi.Localizer
 import au.id.micolous.metrodroid.transit.CardInfo
 import au.id.micolous.metrodroid.transit.TransitCurrency
 import au.id.micolous.metrodroid.transit.TransitData
@@ -73,7 +74,7 @@ data class ZolotayaKoronaTransitData internal constructor(
         val regionRsrcIdx = cardInfo?.locationId
         val regionName = (
                 if (regionRsrcIdx != null)
-                    Utils.localizeString(regionRsrcIdx)
+                    Localizer.localizeString(regionRsrcIdx)
                 else
                     (REGIONS[regionNum]?.first ?: Integer.toHexString(regionNum))
                 )
@@ -139,14 +140,14 @@ data class ZolotayaKoronaTransitData internal constructor(
 
         private val CARDS = mapOf(
                 0x760500 to CardInfo.Builder()
-                        .setName(Utils.localizeString(R.string.card_name_yaroslavl_etk))
+                        .setName(Localizer.localizeString(R.string.card_name_yaroslavl_etk))
                         .setLocation(R.string.location_yaroslavl)
                         .setCardType(CardType.MifareClassic)
                         .setKeysRequired()
                         .setPreview()
                         .build(),
                 0x230100 to CardInfo.Builder()
-                        .setName(Utils.localizeString(R.string.card_name_krasnodar_etk))
+                        .setName(Localizer.localizeString(R.string.card_name_krasnodar_etk))
                         .setLocation(R.string.location_krasnodar)
                         .setCardType(CardType.MifareClassic)
                         .setKeysRequired()
@@ -155,11 +156,11 @@ data class ZolotayaKoronaTransitData internal constructor(
         )
 
         private fun nameCard(type: Int) = CARDS[type]?.name
-                ?: (Utils.localizeString(R.string.card_name_zolotaya_korona)
+                ?: (Localizer.localizeString(R.string.card_name_zolotaya_korona)
                         + " " + type.toString(16))
 
         private val FALLBACK_CARD_INFO = CardInfo.Builder()
-                .setName(Utils.localizeString(R.string.card_name_zolotaya_korona))
+                .setName(Localizer.localizeString(R.string.card_name_zolotaya_korona))
                 .setLocation(R.string.location_russia)
                 .setCardType(CardType.MifareClassic)
                 .setKeysRequired()

@@ -26,6 +26,7 @@ package au.id.micolous.metrodroid.transit.ezlink;
 import android.os.Parcel;
 import android.support.annotation.Nullable;
 
+import au.id.micolous.metrodroid.multi.Localizer;
 import org.jetbrains.annotations.NonNls;
 
 import java.util.Calendar;
@@ -167,23 +168,23 @@ public class EZLinkTrip extends Trip {
         switch (type) {
             case BUS:
                 if (userData.startsWith("SVC") || userData.startsWith("BUS"))
-                    return Utils.localizeString(R.string.ez_bus_number,
+                    return Localizer.INSTANCE.localizeString(R.string.ez_bus_number,
                             userData.substring(3, 7).replace(" ", ""));
-                return Utils.localizeString(R.string.unknown_format, userData);
+                return Localizer.INSTANCE.localizeString(R.string.unknown_format, userData);
             // FIXME: These aren't actually routes...
             case BUS_REFUND:
-                return Utils.localizeString(R.string.ez_bus_refund);
+                return Localizer.INSTANCE.localizeString(R.string.ez_bus_refund);
             case MRT:
-                return Utils.localizeString(R.string.ez_mrt);
+                return Localizer.INSTANCE.localizeString(R.string.ez_mrt);
             case TOP_UP:
-                return Utils.localizeString(R.string.ez_topup);
+                return Localizer.INSTANCE.localizeString(R.string.ez_topup);
             case CREATION:
-                return Utils.localizeString(R.string.ez_first_use);
+                return Localizer.INSTANCE.localizeString(R.string.ez_first_use);
             case RETAIL:
-                return Utils.localizeString(R.string.ez_retail_purchase);
+                return Localizer.INSTANCE.localizeString(R.string.ez_retail_purchase);
             case SERVICE:
-                return Utils.localizeString(R.string.ez_service_charge);
+                return Localizer.INSTANCE.localizeString(R.string.ez_service_charge);
         }
-        return Utils.localizeString(R.string.unknown_format, type.toString());
+        return Localizer.INSTANCE.localizeString(R.string.unknown_format, type.toString());
     }
 }

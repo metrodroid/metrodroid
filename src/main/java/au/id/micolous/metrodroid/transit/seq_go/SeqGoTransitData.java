@@ -29,6 +29,7 @@ import au.id.micolous.metrodroid.card.CardType;
 import au.id.micolous.metrodroid.card.classic.ClassicCard;
 import au.id.micolous.metrodroid.card.classic.ClassicCardTransitFactory;
 import au.id.micolous.metrodroid.card.classic.ClassicSector;
+import au.id.micolous.metrodroid.multi.Localizer;
 import au.id.micolous.metrodroid.transit.CardInfo;
 import au.id.micolous.metrodroid.transit.TransitData;
 import au.id.micolous.metrodroid.transit.TransitIdentity;
@@ -176,7 +177,7 @@ public class SeqGoTransitData extends NextfareTransitData {
 
     @Override
     public String getTicketClass() {
-        return Utils.localizeString(mTicketType.getDescription());
+        return Localizer.INSTANCE.localizeString(mTicketType.getDescription());
     }
 
     @Override

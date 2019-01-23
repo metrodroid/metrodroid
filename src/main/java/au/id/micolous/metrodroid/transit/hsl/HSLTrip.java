@@ -22,6 +22,7 @@ package au.id.micolous.metrodroid.transit.hsl;
 import android.os.Parcel;
 import android.support.annotation.Nullable;
 
+import au.id.micolous.metrodroid.multi.Localizer;
 import org.jetbrains.annotations.NonNls;
 
 import java.util.Calendar;
@@ -109,12 +110,12 @@ public class HSLTrip extends Trip {
     @Override
     public String getAgencyName(boolean isShort) {
         if (mArvo == 1) {
-            String mins = Utils.localizeString(R.string.hsl_mins_format,
+            String mins = Localizer.INSTANCE.localizeString(R.string.hsl_mins_format,
                     Integer.toString((int)((this.mExpireTimestamp.getTimeInMillis() - this.mTimestamp.getTimeInMillis()) / 60000L)));
-            String type = Utils.localizeString(R.string.hsl_balance_ticket);
+            String type = Localizer.INSTANCE.localizeString(R.string.hsl_balance_ticket);
             return String.format("%s, %s", type, mins);
         } else {
-            return Utils.localizeString(R.string.hsl_pass_ticket);
+            return Localizer.INSTANCE.localizeString(R.string.hsl_pass_ticket);
         }
     }
 

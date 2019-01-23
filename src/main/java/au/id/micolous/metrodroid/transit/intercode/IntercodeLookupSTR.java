@@ -22,6 +22,7 @@ package au.id.micolous.metrodroid.transit.intercode;
 import java.util.TimeZone;
 
 import au.id.micolous.farebot.R;
+import au.id.micolous.metrodroid.multi.Localizer;
 import au.id.micolous.metrodroid.transit.TransitCurrency;
 import au.id.micolous.metrodroid.transit.en1545.En1545LookupSTR;
 import au.id.micolous.metrodroid.util.Utils;
@@ -47,6 +48,6 @@ class IntercodeLookupSTR extends En1545LookupSTR {
     public String getSubscriptionName(Integer agency, Integer contractTariff) {
         if (contractTariff == null)
             return null;
-        return Utils.localizeString(R.string.unknown_format, contractTariff);
+        return Localizer.INSTANCE.localizeString(R.string.unknown_format, contractTariff);
     }
 }

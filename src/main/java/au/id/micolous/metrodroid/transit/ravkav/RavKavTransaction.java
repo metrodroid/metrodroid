@@ -22,6 +22,7 @@ package au.id.micolous.metrodroid.transit.ravkav;
 import android.os.Parcel;
 
 import au.id.micolous.farebot.R;
+import au.id.micolous.metrodroid.multi.Localizer;
 import au.id.micolous.metrodroid.transit.en1545.En1545Bitmap;
 import au.id.micolous.metrodroid.transit.en1545.En1545Container;
 import au.id.micolous.metrodroid.transit.en1545.En1545Field;
@@ -78,7 +79,7 @@ class RavKavTransaction extends En1545Transaction {
     @Override
     public String getAgencyName(boolean isShort) {
         if (getEventType() == EVENT_TYPE_TOPUP && Integer.valueOf(0x19).equals(getAgency()))
-            return Utils.localizeString(R.string.ravkav_agency_topup_app);
+            return Localizer.INSTANCE.localizeString(R.string.ravkav_agency_topup_app);
         return super.getAgencyName(isShort);
     }
 

@@ -61,6 +61,7 @@ import au.id.micolous.farebot.R;
 import au.id.micolous.metrodroid.MetrodroidApplication;
 import au.id.micolous.metrodroid.activity.CardInfoActivity;
 import au.id.micolous.metrodroid.activity.TripMapActivity;
+import au.id.micolous.metrodroid.multi.Localizer;
 import au.id.micolous.metrodroid.transit.TransitCurrency;
 import au.id.micolous.metrodroid.transit.TransitData;
 import au.id.micolous.metrodroid.transit.Trip;
@@ -233,7 +234,7 @@ public class CardTripsFragment extends ListFragment {
                 a.recycle();
             if (iconArray != null)
                 iconArray.recycle();
-            String s = Utils.localizeString(modeContentDescriptionRes);
+            String s = Localizer.INSTANCE.localizeString(modeContentDescriptionRes);
             if (localisePlaces && Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
                 SpannableString ss = new SpannableString(s);
                 ss.setSpan(new LocaleSpan(Locale.getDefault()), 0, ss.length(), 0);
@@ -245,11 +246,11 @@ public class CardTripsFragment extends ListFragment {
             Calendar end = trip.getEndTimestamp();
             if (trip.hasTime() && (start != null || end != null)) {
                 if (end != null && start != null)
-                    timeTextView.setText(Utils.localizeString(R.string.time_from_to, Utils.timeFormat(start), Utils.timeFormat(end)));
+                    timeTextView.setText(Localizer.INSTANCE.localizeString(R.string.time_from_to, Utils.timeFormat(start), Utils.timeFormat(end)));
                 else if (start != null)
                     timeTextView.setText(Utils.timeFormat(start));
                 else
-                    timeTextView.setText(Utils.localizeString(R.string.time_from_unknown_to, Utils.timeFormat(end)));
+                    timeTextView.setText(Localizer.INSTANCE.localizeString(R.string.time_from_unknown_to, Utils.timeFormat(end)));
                 timeTextView.setVisibility(View.VISIBLE);
             } else {
                 timeTextView.setVisibility(View.INVISIBLE);
@@ -329,7 +330,7 @@ public class CardTripsFragment extends ListFragment {
 
             if (pax >= 1) {
                 paxTextView.setText(String.format(Locale.getDefault(), "%d", pax));
-                paxIcon.setContentDescription(Utils.localizePlural(R.plurals.passengers, pax));
+                paxIcon.setContentDescription(Localizer.INSTANCE.localizePlural(R.plurals.passengers, pax));
 
                 paxIcon.setImageDrawable(AppCompatResources.getDrawable(getContext(),
                         pax == 1 ? R.drawable.material_ic_person_24dp : R.drawable.material_ic_group_24dp));
@@ -342,10 +343,10 @@ public class CardTripsFragment extends ListFragment {
 
             // Machine ID
             if (trip.getVehicleID() != null) {
-                machineIdTextView.setText(Utils.localizeString(R.string.vehicle_number, trip.getVehicleID()));
+                machineIdTextView.setText(Localizer.INSTANCE.localizeString(R.string.vehicle_number, trip.getVehicleID()));
                 machineIdTextView.setVisibility(View.VISIBLE);
             } else if (trip.getMachineID() != null) {
-                machineIdTextView.setText(Utils.localizeString(R.string.machine_id_format, trip.getMachineID()));
+                machineIdTextView.setText(Localizer.INSTANCE.localizeString(R.string.machine_id_format, trip.getMachineID()));
                 machineIdTextView.setVisibility(View.VISIBLE);
             } else {
                 machineIdTextView.setVisibility(View.GONE);

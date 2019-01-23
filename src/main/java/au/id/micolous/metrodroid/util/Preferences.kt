@@ -26,6 +26,7 @@ import au.id.micolous.metrodroid.MetrodroidApplication
 import android.content.SharedPreferences
 import android.preference.PreferenceManager
 import au.id.micolous.farebot.R
+import au.id.micolous.metrodroid.multi.Localizer
 import java.util.*
 
 actual object Preferences {
@@ -118,13 +119,13 @@ actual object Preferences {
 
     val mapTileUrl: String
         get () {
-            val def = Utils.localizeString(R.string.default_map_tile_url)
+            val def = Localizer.localizeString(R.string.default_map_tile_url)
             return getStringPreference(PREF_MAP_TILE_URL, def)
         }
 
     val mapTileSubdomains: String
         get() {
-            val def = Utils.localizeString(R.string.default_map_tile_subdomains)
+            val def = Localizer.localizeString(R.string.default_map_tile_subdomains)
             return getStringPreference(PREF_MAP_TILE_SUBDOMAINS, def)
         }
 

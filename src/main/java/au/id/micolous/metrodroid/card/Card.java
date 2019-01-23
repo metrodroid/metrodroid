@@ -29,6 +29,7 @@ import android.nfc.tech.NfcF;
 import android.support.annotation.Nullable;
 import android.util.Log;
 
+import au.id.micolous.metrodroid.multi.Localizer;
 import org.apache.commons.lang3.ArrayUtils;
 import org.simpleframework.xml.Attribute;
 import org.simpleframework.xml.Serializer;
@@ -107,7 +108,7 @@ public abstract class Card {
         }
 
         if (ArrayUtils.contains(techs, IsoDep.class.getName())) {
-            feedbackInterface.updateStatusText(Utils.localizeString(R.string.iso14a_detect));
+            feedbackInterface.updateStatusText(Localizer.INSTANCE.localizeString(R.string.iso14a_detect));
 
             // ISO 14443-4 card types
             // This also encompasses NfcA (ISO 14443-3A) and NfcB (ISO 14443-3B)

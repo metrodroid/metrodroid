@@ -22,6 +22,7 @@ package au.id.micolous.metrodroid.transit.opal;
 import java.util.Map;
 
 import au.id.micolous.farebot.R;
+import au.id.micolous.metrodroid.multi.Localizer;
 import au.id.micolous.metrodroid.util.ImmutableMapBuilder;
 import au.id.micolous.metrodroid.util.NumberUtils;
 import au.id.micolous.metrodroid.util.Utils;
@@ -77,16 +78,16 @@ public final class OpalData {
 
     static String getLocalisedMode(int mode) {
         if (MODES.containsKey(mode)) {
-            return Utils.localizeString(MODES.get(mode));
+            return Localizer.INSTANCE.localizeString(MODES.get(mode));
         }
-        return Utils.localizeString(R.string.unknown_format, NumberUtils.INSTANCE.longToHex(mode));
+        return Localizer.INSTANCE.localizeString(R.string.unknown_format, NumberUtils.INSTANCE.longToHex(mode));
     }
 
     static String getLocalisedAction(int action) {
         if (ACTIONS.containsKey(action)) {
-            return Utils.localizeString(ACTIONS.get(action));
+            return Localizer.INSTANCE.localizeString(ACTIONS.get(action));
         }
 
-        return Utils.localizeString(R.string.unknown_format, NumberUtils.INSTANCE.longToHex(action));
+        return Localizer.INSTANCE.localizeString(R.string.unknown_format, NumberUtils.INSTANCE.longToHex(action));
     }
 }

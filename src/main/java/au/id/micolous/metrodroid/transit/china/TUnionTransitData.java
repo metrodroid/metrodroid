@@ -30,6 +30,7 @@ import au.id.micolous.farebot.R;
 import au.id.micolous.metrodroid.card.CardType;
 import au.id.micolous.metrodroid.card.china.ChinaCard;
 import au.id.micolous.metrodroid.card.china.ChinaCardTransitFactory;
+import au.id.micolous.metrodroid.multi.Localizer;
 import au.id.micolous.metrodroid.transit.CardInfo;
 import au.id.micolous.metrodroid.transit.TransitBalance;
 import au.id.micolous.metrodroid.transit.TransitBalanceStored;
@@ -45,7 +46,7 @@ public class TUnionTransitData extends ChinaTransitData {
     private final int mNegativeBalance;
 
     private static final CardInfo CARD_INFO = new CardInfo.Builder()
-            .setName(Utils.localizeString(R.string.card_name_tunion))
+            .setName(Localizer.INSTANCE.localizeString(R.string.card_name_tunion))
             .setLocation(R.string.location_china_mainland)
             .setCardType(CardType.ISO7816)
             .setPreview()
@@ -84,7 +85,7 @@ public class TUnionTransitData extends ChinaTransitData {
 
     @Override
     public String getCardName() {
-        return Utils.localizeString(R.string.card_name_tunion);
+        return Localizer.INSTANCE.localizeString(R.string.card_name_tunion);
     }
 
     @Override
@@ -108,7 +109,7 @@ public class TUnionTransitData extends ChinaTransitData {
 
         @Override
         public TransitIdentity parseTransitIdentity(@NonNull ChinaCard card) {
-            return new TransitIdentity(Utils.localizeString(R.string.card_name_tunion), parseSerial(card));
+            return new TransitIdentity(Localizer.INSTANCE.localizeString(R.string.card_name_tunion), parseSerial(card));
         }
 
         @Override

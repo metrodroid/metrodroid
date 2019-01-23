@@ -22,6 +22,7 @@ package au.id.micolous.metrodroid.key
 import android.content.Context
 import android.database.Cursor
 import au.id.micolous.farebot.R
+import au.id.micolous.metrodroid.multi.Localizer
 import au.id.micolous.metrodroid.provider.KeysTableColumns
 import au.id.micolous.metrodroid.util.Utils
 import org.json.JSONException
@@ -60,7 +61,7 @@ class ClassicStaticKeys private constructor(override val description: String?,
     override val uid = CardKeys.CLASSIC_STATIC_TAG_ID
 
     override val fileType: String
-        get() = Utils.localizePlural(R.plurals.keytype_mfc_static, keyCount, keyCount)
+        get() = Localizer.localizePlural(R.plurals.keytype_mfc_static, keyCount, keyCount)
 
     companion object {
         private const val JSON_TAG_ID_DESC = "Description"

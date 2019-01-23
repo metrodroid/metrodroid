@@ -19,6 +19,7 @@
 package au.id.micolous.metrodroid.transit.suica;
 
 import au.id.micolous.farebot.R;
+import au.id.micolous.metrodroid.multi.Localizer;
 import au.id.micolous.metrodroid.transit.Station;
 import au.id.micolous.metrodroid.util.NumberUtils;
 import au.id.micolous.metrodroid.util.StationTableReader;
@@ -49,7 +50,7 @@ public final class SuicaDBUtil {
         if (stationId == 0) return null;
 
         return StationTableReader.getStation(SUICA_BUS_STR, stationId,
-                Utils.localizeString(R.string.suica_bus_area_line_stop,
+                Localizer.INSTANCE.localizeString(R.string.suica_bus_area_line_stop,
                         NumberUtils.INSTANCE.intToHex(regionCode),
                         NumberUtils.INSTANCE.intToHex(lineCode),
                         NumberUtils.INSTANCE.intToHex(stationCode)));
@@ -73,7 +74,7 @@ public final class SuicaDBUtil {
         if (stationId == 0) return null;
 
         return StationTableReader.getStation(SUICA_RAIL_STR, stationId,
-                Utils.localizeString(R.string.suica_area_line_station,
+                Localizer.INSTANCE.localizeString(R.string.suica_area_line_station,
                         NumberUtils.INSTANCE.intToHex(regionCode),
                         NumberUtils.INSTANCE.intToHex(lineCode),
                         NumberUtils.INSTANCE.intToHex(stationCode)));

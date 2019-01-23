@@ -35,6 +35,7 @@ import au.id.micolous.metrodroid.MetrodroidApplication;
 import au.id.micolous.metrodroid.card.Card;
 import au.id.micolous.metrodroid.card.CardType;
 import au.id.micolous.metrodroid.card.TagReaderFeedbackInterface;
+import au.id.micolous.metrodroid.multi.Localizer;
 import au.id.micolous.metrodroid.transit.CardInfo;
 import au.id.micolous.metrodroid.transit.CardTransitFactory;
 import au.id.micolous.metrodroid.transit.TransitData;
@@ -169,7 +170,7 @@ public class FelicaCard extends Card {
             CardInfo i = parseEarlyCardInfo(systemCodes);
             if (i != null) {
                 Log.d(TAG, String.format(Locale.ENGLISH, "Early Card Info: %s", i.getName()));
-                feedbackInterface.updateStatusText(Utils.localizeString(R.string.card_reading_type, i.getName()));
+                feedbackInterface.updateStatusText(Localizer.INSTANCE.localizeString(R.string.card_reading_type, i.getName()));
                 feedbackInterface.showCardType(i);
             }
 
@@ -455,31 +456,31 @@ public class FelicaCard extends Card {
 
         double d = getVariableResponseTime(1);
         items.add(new ListItem(R.string.felica_response_time_variable,
-                Utils.localizePlural(R.plurals.milliseconds_short, (int)d, df.format(d))));
+                Localizer.INSTANCE.localizePlural(R.plurals.milliseconds_short, (int)d, df.format(d))));
 
         d = getFixedResponseTime();
         items.add(new ListItem(R.string.felica_response_time_fixed,
-                Utils.localizePlural(R.plurals.milliseconds_short, (int)d, df.format(d))));
+                Localizer.INSTANCE.localizePlural(R.plurals.milliseconds_short, (int)d, df.format(d))));
 
         d = getMutualAuthentication1Time(1);
         items.add(new ListItem(R.string.felica_response_time_auth1,
-                Utils.localizePlural(R.plurals.milliseconds_short, (int)d, df.format(d))));
+                Localizer.INSTANCE.localizePlural(R.plurals.milliseconds_short, (int)d, df.format(d))));
 
         d = getMutualAuthentication2Time();
         items.add(new ListItem(R.string.felica_response_time_auth2,
-                Utils.localizePlural(R.plurals.milliseconds_short, (int)d, df.format(d))));
+                Localizer.INSTANCE.localizePlural(R.plurals.milliseconds_short, (int)d, df.format(d))));
 
         d = getDataReadTime(1);
         items.add(new ListItem(R.string.felica_response_time_read,
-                Utils.localizePlural(R.plurals.milliseconds_short, (int)d, df.format(d))));
+                Localizer.INSTANCE.localizePlural(R.plurals.milliseconds_short, (int)d, df.format(d))));
 
         d = getDataWriteTime(1);
         items.add(new ListItem(R.string.felica_response_time_write,
-                Utils.localizePlural(R.plurals.milliseconds_short, (int)d, df.format(d))));
+                Localizer.INSTANCE.localizePlural(R.plurals.milliseconds_short, (int)d, df.format(d))));
 
         d = getOtherCommandsTime();
         items.add(new ListItem(R.string.felica_response_time_other,
-                Utils.localizePlural(R.plurals.milliseconds_short, (int)d, df.format(d))));
+                Localizer.INSTANCE.localizePlural(R.plurals.milliseconds_short, (int)d, df.format(d))));
         return items;
     }
 
@@ -500,18 +501,18 @@ public class FelicaCard extends Card {
                 }
 
                 sli.add(new ListItemRecursive(
-                        Utils.localizeString(R.string.felica_service_title_format,
+                        Localizer.INSTANCE.localizeString(R.string.felica_service_title_format,
                         Integer.toHexString(service.getServiceCode()),
                                 FelicaUtils.getFriendlyServiceName(system.getCode(),
                                         service.getServiceCode())),
-                        Utils.localizePlural(R.plurals.block_count,
+                        Localizer.INSTANCE.localizePlural(R.plurals.block_count,
                                 service.getBlocks().size(), service.getBlocks().size()), bli));
             }
 
             li.add(new ListItemRecursive(
-                    Utils.localizeString(R.string.felica_system_title_format,
+                    Localizer.INSTANCE.localizeString(R.string.felica_system_title_format,
                     Integer.toHexString(system.getCode()), FelicaUtils.getFriendlySystemName(system.getCode())),
-                    Utils.localizePlural(R.plurals.felica_service_count,
+                    Localizer.INSTANCE.localizePlural(R.plurals.felica_service_count,
                             system.getServices().size(), system.getServices().size()), sli));
 
         }

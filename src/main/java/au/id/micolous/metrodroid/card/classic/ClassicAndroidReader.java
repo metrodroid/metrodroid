@@ -8,6 +8,7 @@ import android.os.IBinder;
 import android.os.Parcel;
 import android.util.Log;
 
+import au.id.micolous.metrodroid.multi.Localizer;
 import org.jetbrains.annotations.NonNls;
 
 import java.util.Arrays;
@@ -34,7 +35,7 @@ public final class ClassicAndroidReader {
     ));
 
     public static ClassicCard dumpTag(ImmutableByteArray tagId, Tag tag, TagReaderFeedbackInterface feedbackInterface) throws Exception {
-        feedbackInterface.updateStatusText(Utils.localizeString(R.string.mfc_reading));
+        feedbackInterface.updateStatusText(Localizer.INSTANCE.localizeString(R.string.mfc_reading));
         feedbackInterface.showCardType(null);
 
         MifareClassic tech = null;

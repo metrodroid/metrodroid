@@ -8,6 +8,7 @@ import android.text.Spanned;
 import java.util.Calendar;
 
 import au.id.micolous.farebot.R;
+import au.id.micolous.metrodroid.multi.Localizer;
 import au.id.micolous.metrodroid.transit.Station;
 import au.id.micolous.metrodroid.transit.TransitCurrency;
 import au.id.micolous.metrodroid.transit.Trip;
@@ -96,18 +97,18 @@ class TroikaTrip extends Trip {
             return mRawTransport;
         switch (mTransportType) {
             case UNKNOWN:
-                return Utils.localizeString(R.string.unknown);
+                return Localizer.INSTANCE.localizeString(R.string.unknown);
             case NONE:
             default:
                 return mRawTransport;
             case SUBWAY:
-                return Utils.localizeString(R.string.moscow_subway);
+                return Localizer.INSTANCE.localizeString(R.string.moscow_subway);
             case MONORAIL:
-                return Utils.localizeString(R.string.moscow_monorail);
+                return Localizer.INSTANCE.localizeString(R.string.moscow_monorail);
             case GROUND:
-                return Utils.localizeString(R.string.moscow_ground_transport);
+                return Localizer.INSTANCE.localizeString(R.string.moscow_ground_transport);
             case MCC:
-                return Utils.localizeString(R.string.moscow_mcc);
+                return Localizer.INSTANCE.localizeString(R.string.moscow_mcc);
         }
     }
 

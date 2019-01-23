@@ -26,6 +26,7 @@ import android.support.annotation.Nullable;
 import android.util.Pair;
 import android.util.SparseArray;
 
+import au.id.micolous.metrodroid.multi.Localizer;
 import au.id.micolous.metrodroid.util.*;
 import org.jetbrains.annotations.NonNls;
 
@@ -104,7 +105,7 @@ public class Station implements Parcelable {
     public String getStationName() {
         String ret;
         if (mStationName == null)
-            ret = Utils.localizeString(R.string.unknown_format, mHumanReadableId);
+            ret = Localizer.INSTANCE.localizeString(R.string.unknown_format, mHumanReadableId);
         else
             ret = mStationName;
         if (showRawId() && mStationName != null && !mStationName.equals(mHumanReadableId))
@@ -123,7 +124,7 @@ public class Station implements Parcelable {
     public String getShortStationName() {
         String ret;
         if (mStationName == null && mShortStationName == null)
-            ret = Utils.localizeString(R.string.unknown_format, mHumanReadableId);
+            ret = Localizer.INSTANCE.localizeString(R.string.unknown_format, mHumanReadableId);
         else
             ret = (mShortStationName != null) ? mShortStationName : mStationName;
         if (showRawId() && mStationName != null && !mStationName.equals(mHumanReadableId))

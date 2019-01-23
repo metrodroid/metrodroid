@@ -25,6 +25,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.text.SpannableString;
 
+import au.id.micolous.metrodroid.multi.Localizer;
 import au.id.micolous.metrodroid.util.*;
 import org.apache.commons.lang3.ArrayUtils;
 import org.jetbrains.annotations.NonNls;
@@ -144,7 +145,7 @@ public class LeapTransitData extends TransitData {
 		            continue;
 
         		items.add(new ListItem(
-        		        new SpannableString(Utils.localizeString(R.string.leap_accumulator_agency,
+        		        new SpannableString(Localizer.INSTANCE.localizeString(R.string.leap_accumulator_agency,
                                 StationTableReader.getOperatorName(LEAP_STR, mAccumulatorAgencies[i],
                                         false))),
                         TransitCurrency.EUR(mAccumulators[i]).maybeObfuscateBalance().formatCurrencyString(true)
@@ -275,7 +276,7 @@ public class LeapTransitData extends TransitData {
                 return new TransitIdentity(NAME, getSerial(card));
             } catch (Exception e) {
                 return new TransitIdentity(
-                        Utils.localizeString(R.string.locked_leap), null);
+                        Localizer.INSTANCE.localizeString(R.string.locked_leap), null);
             }
         }
     };

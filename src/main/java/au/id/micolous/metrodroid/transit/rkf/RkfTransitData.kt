@@ -28,6 +28,7 @@ import au.id.micolous.metrodroid.util.Utils
 import au.id.micolous.metrodroid.card.classic.ClassicSector
 import au.id.micolous.farebot.R
 import au.id.micolous.metrodroid.card.CardType
+import au.id.micolous.metrodroid.multi.Localizer
 import au.id.micolous.metrodroid.transit.*
 import au.id.micolous.metrodroid.transit.en1545.*
 import au.id.micolous.metrodroid.ui.ListItem
@@ -102,7 +103,7 @@ data class RkfTransitData internal constructor(
                     Utils.longDateFormat(TripObfuscator.maybeObfuscateTS(expiryDate))),
             ListItem(R.string.card_issuer, issuer),
             if (cardStatus == R.string.unknown_format) {
-                ListItem(R.string.rkf_card_status, Utils.localizeString(R.string.unknown_format,
+                ListItem(R.string.rkf_card_status, Localizer.localizeString(R.string.unknown_format,
                         NumberUtils.intToHex(mTcci.getIntOrZero(STATUS))))
             } else {
                 ListItem(R.string.rkf_card_status, cardStatus)

@@ -6,6 +6,7 @@ import android.support.annotation.Nullable;
 import java.util.Calendar;
 
 import au.id.micolous.farebot.R;
+import au.id.micolous.metrodroid.multi.Localizer;
 import au.id.micolous.metrodroid.transit.Station;
 import au.id.micolous.metrodroid.transit.TransitCurrency;
 import au.id.micolous.metrodroid.transit.Trip;
@@ -74,14 +75,14 @@ class PodorozhnikTrip extends Trip {
         // Some validators are misconfigured and show up as Metro, station 0, gate 0.
         // Assume bus.
         if (mLastTransport == TRANSPORT_METRO && mLastValidator == 0)
-            return Utils.localizeString(R.string.led_bus);
+            return Localizer.INSTANCE.localizeString(R.string.led_bus);
         if (mLastTransport == TRANSPORT_METRO)
-            return Utils.localizeString(R.string.led_metro);
+            return Localizer.INSTANCE.localizeString(R.string.led_metro);
         if (mLastTransport == TRANSPORT_BUS || mLastTransport == TRANSPORT_BUS_MOBILE)
-            return Utils.localizeString(R.string.led_bus);
+            return Localizer.INSTANCE.localizeString(R.string.led_bus);
         if (mLastTransport == TRANSPORT_SHARED_TAXI)
-            return Utils.localizeString(R.string.led_shared_taxi);
-        return Utils.localizeString(R.string.unknown_format, mLastTransport);
+            return Localizer.INSTANCE.localizeString(R.string.led_shared_taxi);
+        return Localizer.INSTANCE.localizeString(R.string.unknown_format, mLastTransport);
         // TODO: Handle trams
     }
 
@@ -93,7 +94,7 @@ class PodorozhnikTrip extends Trip {
         if (mLastTransport == TRANSPORT_METRO) {
             int gate = stationId & 0x3f;
             stationId = stationId & ~0x3f;
-            return StationTableReader.getStation(PODOROZHNIK_STR, stationId, Integer.toString(mLastValidator >> 6)).addAttribute(Utils.localizeString(R.string.podorozhnik_gate, gate));
+            return StationTableReader.getStation(PODOROZHNIK_STR, stationId, Integer.toString(mLastValidator >> 6)).addAttribute(Localizer.INSTANCE.localizeString(R.string.podorozhnik_gate, gate));
         }
         // TODO: handle other transports better.
         //noinspection StringConcatenation

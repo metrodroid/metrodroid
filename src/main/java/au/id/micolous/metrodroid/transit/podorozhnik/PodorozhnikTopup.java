@@ -6,6 +6,7 @@ import android.support.annotation.Nullable;
 import java.util.Calendar;
 
 import au.id.micolous.farebot.R;
+import au.id.micolous.metrodroid.multi.Localizer;
 import au.id.micolous.metrodroid.transit.Station;
 import au.id.micolous.metrodroid.transit.TransitCurrency;
 import au.id.micolous.metrodroid.transit.Trip;
@@ -55,9 +56,9 @@ class PodorozhnikTopup extends Trip {
     public String getAgencyName(boolean isShort) {
         switch (mAgency) {
             case 1:
-                return Utils.localizeString(R.string.podorozhnik_topup);
+                return Localizer.INSTANCE.localizeString(R.string.podorozhnik_topup);
             default:
-                return Utils.localizeString(R.string.unknown_format, mAgency);
+                return Localizer.INSTANCE.localizeString(R.string.unknown_format, mAgency);
         }
     }
 

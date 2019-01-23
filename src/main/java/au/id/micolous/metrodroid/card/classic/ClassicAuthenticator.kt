@@ -9,6 +9,7 @@ import au.id.micolous.metrodroid.key.CardKeysRetriever
 import au.id.micolous.metrodroid.key.ClassicKeys
 import au.id.micolous.metrodroid.key.ClassicSectorKey
 import au.id.micolous.metrodroid.key.ClassicStaticKeys
+import au.id.micolous.metrodroid.multi.Localizer
 import au.id.micolous.metrodroid.util.Preferences
 import au.id.micolous.metrodroid.util.Utils
 import au.id.micolous.metrodroid.xml.ImmutableByteArray
@@ -67,9 +68,9 @@ class ClassicAuthenticator private constructor(private val mKeys: ClassicKeys,
         feedbackInterface.updateProgressBar(sectorIndex * 5, maxProgress)
 
         if (!isFallback) {
-            feedbackInterface.updateStatusText(Utils.localizeString(R.string.mfc_have_key, sectorIndex))
+            feedbackInterface.updateStatusText(Localizer.localizeString(R.string.mfc_have_key, sectorIndex))
         } else {
-            feedbackInterface.updateStatusText(Utils.localizeString(R.string.mfc_default_key, sectorIndex))
+            feedbackInterface.updateStatusText(Localizer.localizeString(R.string.mfc_default_key, sectorIndex))
         }
 
         val tries = if (failFast) 1 else mRetryLimit
@@ -92,7 +93,7 @@ class ClassicAuthenticator private constructor(private val mKeys: ClassicKeys,
             Log.d(TAG, "Attempting authentication with other keys on sector $sectorIndex, try number $tryNum...")
 
             // Attempt authentication with alternate keys
-            feedbackInterface.updateStatusText(Utils.localizeString(R.string.mfc_other_key, sectorIndex))
+            feedbackInterface.updateStatusText(Localizer.localizeString(R.string.mfc_other_key, sectorIndex))
 
             // Be a little more forgiving on the key list.  Lets try all the keys!
             //

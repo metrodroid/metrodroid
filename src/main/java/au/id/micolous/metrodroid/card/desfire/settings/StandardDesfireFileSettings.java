@@ -19,6 +19,7 @@
 package au.id.micolous.metrodroid.card.desfire.settings;
 
 import au.id.micolous.farebot.R;
+import au.id.micolous.metrodroid.multi.Localizer;
 import au.id.micolous.metrodroid.util.Utils;
 
 import org.apache.commons.lang3.ArrayUtils;
@@ -52,9 +53,9 @@ public class StandardDesfireFileSettings extends DesfireFileSettings {
 
     @Override
     public String getSubtitle() {
-        return Utils.localizePlural(R.plurals.desfire_standard_format,
+        return Localizer.INSTANCE.localizePlural(R.plurals.desfire_standard_format,
                 getFileSize(),
-                Utils.localizeString(getFileTypeString()),
+                Localizer.INSTANCE.localizeString(getFileTypeString()),
                 getFileSize());
     }
 }

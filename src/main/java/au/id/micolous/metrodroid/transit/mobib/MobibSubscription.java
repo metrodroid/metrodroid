@@ -23,6 +23,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
 import au.id.micolous.farebot.R;
+import au.id.micolous.metrodroid.multi.Localizer;
 import au.id.micolous.metrodroid.transit.en1545.En1545Container;
 import au.id.micolous.metrodroid.transit.en1545.En1545Field;
 import au.id.micolous.metrodroid.transit.en1545.En1545FixedHex;
@@ -73,8 +74,8 @@ class MobibSubscription extends En1545Subscription {
     @Override
     public String getSubscriptionName() {
         if (mIsSubscription)
-            return Utils.localizeString(R.string.daily_subscription);
-        return Utils.localizeString(R.string.single_trips);
+            return Localizer.INSTANCE.localizeString(R.string.daily_subscription);
+        return Localizer.INSTANCE.localizeString(R.string.single_trips);
     }
 
     @Override

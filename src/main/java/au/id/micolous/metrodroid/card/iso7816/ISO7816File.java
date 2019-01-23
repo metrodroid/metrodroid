@@ -22,6 +22,7 @@ package au.id.micolous.metrodroid.card.iso7816;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
+import au.id.micolous.metrodroid.multi.Localizer;
 import org.simpleframework.xml.Attribute;
 import org.simpleframework.xml.Element;
 import org.simpleframework.xml.ElementList;
@@ -125,17 +126,17 @@ public class ISO7816File {
         ImmutableByteArray binaryData = getBinaryData();
         ImmutableByteArray fciData = getFci();
         if (binaryData != null)
-            recList.add(ListItemRecursive.collapsedValue(Utils.localizeString(R.string.binary_title_format),
+            recList.add(ListItemRecursive.collapsedValue(Localizer.INSTANCE.localizeString(R.string.binary_title_format),
                     binaryData.toHexDump()));
         if (fciData != null)
-            recList.add(new ListItemRecursive(Utils.localizeString(R.string.file_fci), null,
+            recList.add(new ListItemRecursive(Localizer.INSTANCE.localizeString(R.string.file_fci), null,
                     ISO7816TLV.INSTANCE.infoWithRaw(fciData)));
         List<ISO7816Record> records = getRecords();
         for (ISO7816Record record : records)
-            recList.add(ListItemRecursive.collapsedValue(Utils.localizeString(R.string.record_title_format, record.getIndex()),
+            recList.add(ListItemRecursive.collapsedValue(Localizer.INSTANCE.localizeString(R.string.record_title_format, record.getIndex()),
                     record.getData().toHexDump()));
-        return new ListItemRecursive(Utils.localizeString(R.string.file_title_format, selectorStr),
-                Utils.localizePlural(R.plurals.record_count, records.size(), records.size()),
+        return new ListItemRecursive(Localizer.INSTANCE.localizeString(R.string.file_title_format, selectorStr),
+                Localizer.INSTANCE.localizePlural(R.plurals.record_count, records.size(), records.size()),
                 recList);
     }
 

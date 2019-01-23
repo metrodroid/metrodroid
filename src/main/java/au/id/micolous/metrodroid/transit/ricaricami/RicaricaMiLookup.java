@@ -22,6 +22,7 @@ package au.id.micolous.metrodroid.transit.ricaricami;
 import java.util.TimeZone;
 
 import au.id.micolous.farebot.R;
+import au.id.micolous.metrodroid.multi.Localizer;
 import au.id.micolous.metrodroid.transit.TransitCurrency;
 import au.id.micolous.metrodroid.transit.en1545.En1545Lookup;
 import au.id.micolous.metrodroid.transit.en1545.En1545LookupSTR;
@@ -63,7 +64,7 @@ public class RicaricaMiLookup extends En1545LookupSTR {
             return "Urban ticket";
         if (contractTariff == TARIFF_URBAN_2X6)
             return "Urban weekly 2x6 ticket";
-        return Utils.localizeString(R.string.unknown_format, contractTariff);
+        return Localizer.INSTANCE.localizeString(R.string.unknown_format, contractTariff);
     }
 
     @Override
