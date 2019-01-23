@@ -1,16 +1,14 @@
 package au.id.micolous.metrodroid.test
 
 import au.id.micolous.farebot.R
-import au.id.micolous.metrodroid.card.classic.ClassicCard
 import au.id.micolous.metrodroid.card.classic.MfcCardImporter
 import au.id.micolous.metrodroid.transit.TransitCurrency
 import au.id.micolous.metrodroid.transit.rkf.RkfTransitData
-import junit.framework.TestCase.assertEquals
-import org.junit.Test
 import java.util.*
+import kotlin.test.Test
+import kotlin.test.assertEquals
 
-class RkfTest : CardReaderWithAssetDumpsTest<RkfTransitData, ClassicCard>(
-        RkfTransitData::class.java, MfcCardImporter()) {
+class RkfTest : CardReaderWithAssetDumpsTest(MfcCardImporter()) {
 
     /*
      * This test is based on dumps from https://github.com/mchro/RejsekortReader
@@ -30,7 +28,7 @@ class RkfTest : CardReaderWithAssetDumpsTest<RkfTransitData, ClassicCard>(
         showRawStationIds(false)
         showLocalAndEnglish(false)
 
-        val c = loadAndParseCard("anonymt_dump-20120814.mfd")
+        val c = loadAndParseCard<RkfTransitData>("anonymt_dump-20120814.mfd")
         assertEquals("308430 000 027 859 5", c.serialNumber)
         assertEquals(TransitCurrency.DKK(100 * 100), c.balances[0].balance)
         assertEquals(TimeZone.getTimeZone("Europe/Copenhagen"), c.trips[0].startTimestamp.timeZone)

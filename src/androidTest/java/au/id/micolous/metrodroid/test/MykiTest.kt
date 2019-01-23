@@ -22,16 +22,10 @@ import au.id.micolous.metrodroid.card.desfire.DesfireApplication
 import au.id.micolous.metrodroid.card.desfire.DesfireCard
 import au.id.micolous.metrodroid.card.desfire.files.DesfireFile
 import au.id.micolous.metrodroid.transit.serialonly.MykiTransitData
-import au.id.micolous.metrodroid.util.Utils
 import au.id.micolous.metrodroid.xml.ImmutableByteArray
-import junit.framework.TestCase.assertEquals
-import org.junit.Assert
-import org.junit.Test
-import org.junit.runner.RunWith
-import org.junit.runners.JUnit4
 import java.util.*
+import kotlin.test.*
 
-@RunWith(JUnit4::class)
 class MykiTest {
     private fun constructMykiCardFromHexString(s: String): DesfireCard {
         val demoData = ImmutableByteArray.fromHex(s)
@@ -58,13 +52,11 @@ class MykiTest {
         // Test TransitIdentity
         val i = c.parseTransitIdentity()
         assertEquals(MykiTransitData.NAME, i!!.name)
-        Assert.assertEquals("308425123456780", i.serialNumber)
+        assertEquals("308425123456780", i.serialNumber)
 
         // Test TransitData
         val d = c.parseTransitData()
-        Assert.assertTrue("TransitData must be instance of MykiTransitData", d is MykiTransitData)
-
-        val o = d as MykiTransitData
-        Assert.assertEquals("308425123456780", o.serialNumber)
+        assertTrue(d is MykiTransitData, "TransitData must be instance of MykiTransitData")
+        assertEquals("308425123456780", d.serialNumber)
     }
 }

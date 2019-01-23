@@ -3,8 +3,8 @@ package au.id.micolous.metrodroid.test
 import au.id.micolous.metrodroid.card.Card
 import au.id.micolous.metrodroid.card.CardImporter
 import au.id.micolous.metrodroid.transit.TransitData
-import junit.framework.TestCase.assertNotNull
-import junit.framework.TestCase.assertTrue
+import kotlin.test.assertNotNull
+import kotlin.test.assertTrue
 
 /**
  * Base class for building tests that need Assets data:
@@ -14,22 +14,21 @@ import junit.framework.TestCase.assertTrue
  * - Java: BilheteUnicoTest
  * - Kotlin: EasyCardTest
  *
- * @param TD A [TransitData] subclass for the transit provider that is expected.
  * @param C A [Card] subclass for the type of media to accept.
- * @param transitDataClass A reference to the [TransitData] implementation, to survive type erasure.
  * @param importer A reference to a [CardImporter] which produces [C].
  */
-abstract class CardReaderWithAssetDumpsTest<TD : TransitData, C : Card>(
-        private val transitDataClass: Class<TD>,
-        private val importer: CardImporter<C>
+abstract class CardReaderWithAssetDumpsTest(
+        val importer: CardImporter<out Card>
 ) : BaseInstrumentedTest() {
     /**
      * Parses a card and checks that it was the correct reader.
      */
-    fun parseCard(c: C): TD {
+    inline fun <reified TD: TransitData>parseCard(c: Card): TD {
         val d = c.parseTransitData()
-        assertNotNull("Transit data not parsed", d)
-        return transitDataClass.cast(d)!!
+        assertNotNull(d, "Transit data not parsed. Card $c")
+        assertTrue(d is TD,
+                "Transit data is not of right type")
+        return d
     }
 
     /**
@@ -45,13 +44,14 @@ abstract class CardReaderWithAssetDumpsTest<TD : TransitData, C : Card>(
      * @param path Path to the dump, relative to <code>/assets/</code>
      * @return Parsed [C] from the file.
      */
-    fun loadCard(path: String): C {
+    inline fun <reified C: Card>loadCard(path: String): C {
         val card = importer.readCard(loadAsset(path))
         assertNotNull(card)
-        return card!!
+        assertTrue(card is C)
+        return card
     }
 
-    fun loadAndParseCard(path: String): TD {
+    inline fun <reified TD: TransitData>loadAndParseCard(path: String): TD {
         return parseCard(loadCard(path))
     }
 }

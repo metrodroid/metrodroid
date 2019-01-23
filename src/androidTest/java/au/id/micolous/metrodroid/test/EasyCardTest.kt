@@ -24,15 +24,16 @@ import au.id.micolous.metrodroid.transit.TransitCurrency
 import au.id.micolous.metrodroid.transit.Trip
 import au.id.micolous.metrodroid.transit.easycard.EasyCardTransitData
 import au.id.micolous.metrodroid.util.Utils
-import junit.framework.TestCase.*
-import org.junit.Test
+import kotlin.test.Test
+import kotlin.test.assertEquals
+import kotlin.test.assertNotNull
+import kotlin.test.assertNull
 
 /**
  * This test uses a EasyCard dump based on the one shown at:
  * http://www.fuzzysecurity.com/tutorials/rfid/4.html
  */
-class EasyCardTest : CardReaderWithAssetDumpsTest<EasyCardTransitData, ClassicCard>(
-        EasyCardTransitData::class.java, MfcCardImporter()) {
+class EasyCardTest : CardReaderWithAssetDumpsTest(MfcCardImporter()) {
 
     @Test
     fun testdeadbeefEnglish() {
@@ -40,7 +41,7 @@ class EasyCardTest : CardReaderWithAssetDumpsTest<EasyCardTransitData, ClassicCa
         showRawStationIds(false)
         showLocalAndEnglish(false)
 
-        val c = loadAndParseCard("easycard/deadbeef.mfc")
+        val c = loadAndParseCard<EasyCardTransitData>("easycard/deadbeef.mfc")
         assertEquals(TransitCurrency.TWD(245), c.balances!![0].balance)
         assertEquals(3, c.trips.size)
 
@@ -84,7 +85,7 @@ class EasyCardTest : CardReaderWithAssetDumpsTest<EasyCardTransitData, ClassicCa
         showRawStationIds(false)
         showLocalAndEnglish(false)
 
-        val c = loadAndParseCard("easycard/deadbeef.mfc")
+        val c = loadAndParseCard<EasyCardTransitData>("easycard/deadbeef.mfc")
         val refill = c.trips.last()
         // Yongan Market
         assertEquals("永安市場", refill.startStation!!.stationName)

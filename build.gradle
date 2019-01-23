@@ -2,12 +2,14 @@ allprojects {
     repositories {
         google()
         jcenter()
+        maven { url "https://kotlin.bintray.com/kotlinx" }
     }
 }
 
 buildscript {
     ext {
         kotlin_version = '1.3.11'
+        kotlinio_version = '0.1.3'
         lint_version = '26.2.1'
         support_version = '28.0.0'
         android_test_version = '1.1.0'
@@ -25,14 +27,16 @@ buildscript {
         classpath 'com.android.tools.build:gradle:3.2.1'
         classpath 'com.google.protobuf:protobuf-gradle-plugin:0.8.6'
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+        classpath "org.jetbrains.kotlin:kotlin-serialization:$kotlin_version"
     }
 }
 
 apply plugin: 'com.android.application'
-apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-multiplatform'
 apply plugin: 'com.google.protobuf'
 apply plugin: 'checkstyle'
 apply plugin: 'kotlin-android-extensions'
+apply plugin: 'kotlinx-serialization'
 
 /*
 check.dependsOn 'checkstyle'
@@ -113,6 +117,52 @@ task copyThirdPartyNotices(type: Copy) {
     into 'build/assets/third_party'
     eachFile { it.path = name }
     include 'NOTICE.**.txt'
+}
+
+kotlin {
+    targets {
+        fromPreset(presets.android, 'android')
+    }
+
+    sourceSets {
+        commonMain {
+            dependencies {
+                api 'org.jetbrains.kotlin:kotlin-stdlib-common'
+                api "org.jetbrains.kotlinx:kotlinx-serialization-runtime:0.9.1"
+                api "org.jetbrains.kotlinx:kotlinx-io:$kotlinio_version"
+            }
+        }
+
+        commonTest {
+            dependencies {
+                api 'org.jetbrains.kotlin:kotlin-test-common'
+                api 'org.jetbrains.kotlin:kotlin-test-annotations-common'
+                api 'org.jetbrains.kotlin:kotlin-stdlib-common'
+                api "org.jetbrains.kotlinx:kotlinx-io:$kotlinio_version"
+            }
+        }
+
+        androidMain {
+            dependencies {
+                implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+                implementation "org.jetbrains.kotlinx:kotlinx-io-jvm:$kotlinio_version"
+                implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:1.1.0"
+                implementation "org.jetbrains.kotlinx:kotlinx-serialization-runtime:0.9.1"
+            }
+
+            kotlin.srcDirs += 'src/jvmCommonMain/kotlin'
+        }
+
+        androidTest {
+            dependencies {
+                implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+                implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:1.1.0"
+                implementation "org.jetbrains.kotlinx:kotlinx-serialization-runtime:0.9.1"
+                implementation "org.jetbrains.kotlinx:kotlinx-io-jvm:$kotlinio_version"
+                implementation 'org.jetbrains.kotlin:kotlin-test-junit'
+            }
+        }
+    }
 }
 
 android {
@@ -200,6 +250,7 @@ android {
 
     sourceSets {
         androidTest.assets.srcDirs += [
+                'src/commonTest/assets',
                 'third_party/vpereira_bilhete/',
                 'third_party/RejsekortReader/dumps/'
         ]
@@ -214,6 +265,8 @@ android {
     packagingOptions {
         exclude 'META-INF/LICENSE.txt'
         exclude 'META-INF/NOTICE.txt'
+        exclude 'META-INF/kotlinx-io.kotlin_module'
+        exclude 'META-INF/atomicfu.kotlin_module'
     }
 
     lintOptions {
@@ -231,4 +284,9 @@ androidExtensions {
 }
 repositories {
     mavenCentral()
+}
+
+// workaround for https://youtrack.jetbrains.com/issue/KT-27170
+configurations {
+    compileClasspath
 }
