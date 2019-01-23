@@ -36,13 +36,13 @@ data class RkfTripLeg(private val mStartTimestamp: Calendar,
                       private val mShortAgencyName: String?,
                       private val mTransfer: Boolean,
                       private val mAgencyName: String?) : Trip() {
-    override fun getStartTimestamp() = mStartTimestamp
-    override fun getEndTimestamp() = mEndTimestamp
-    override fun getStartStation() = mStartStation
-    override fun getEndStation() = mEndStation
-    override fun getFare() = mFare
-    override fun getPassengerCount() = mPassengerCount
-    override fun getMode() = mMode
+    override val startTimestamp get() = mStartTimestamp
+    override val endTimestamp get() = mEndTimestamp
+    override val startStation get() = mStartStation
+    override val endStation get() = mEndStation
+    override val fare get() = mFare
+    override val passengerCount get() = mPassengerCount
+    override val mode get() = mMode
     override fun getAgencyName(isShort: Boolean) = if (isShort) mShortAgencyName else mAgencyName
-    override fun isTransfer() = mTransfer
+    override val isTransfer get() = mTransfer
 }

@@ -31,13 +31,13 @@ internal data class ZolotayaKoronaRefill(internal val mTime: Int,
                                          internal val mCounter: Int,
                                          private val mCardType: Int,
                                          private val mMachineID: Int) : Trip() {
-    override fun getStartTimestamp() = ZolotayaKoronaTransitData.parseTime(mTime, mCardType)
+    override val startTimestamp get() = ZolotayaKoronaTransitData.parseTime(mTime, mCardType)
 
-    override fun getMachineID() = "J$mMachineID"
+    override val machineID get() = "J$mMachineID"
 
-    override fun getFare() = TransitCurrency.RUB(-mAmount)
+    override val fare get() = TransitCurrency.RUB(-mAmount)
 
-    override fun getMode() = Trip.Mode.TICKET_MACHINE
+    override val mode get() = Trip.Mode.TICKET_MACHINE
 
     companion object {
         fun parse(block: ImmutableByteArray, cardType: Int): ZolotayaKoronaRefill? {
