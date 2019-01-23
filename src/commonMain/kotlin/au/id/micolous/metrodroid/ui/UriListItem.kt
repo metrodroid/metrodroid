@@ -1,7 +1,8 @@
 /*
- * UriListItem.java
+ * UriListItem.kt
  *
  * Copyright (C) 2016 Michael Farrell <micolous+git@gmail.com>
+ * Copyright 2019 Google
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -16,30 +17,21 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package au.id.micolous.metrodroid.ui;
+package au.id.micolous.metrodroid.ui
 
-import android.net.Uri;
-import android.support.annotation.NonNull;
+import au.id.micolous.metrodroid.multi.StringResource
 
 /**
  * ListItem which supports directing to a website.
  */
-public class UriListItem extends ListItem {
-    @NonNull
-    private final Uri mUri;
+class UriListItem : ListItem {
+    val uri: String
 
-    public UriListItem(String name, String value, @NonNull Uri uri) {
-        super(name, value);
-        this.mUri = uri;
+    constructor(name: String, value: String, uri: String) : super(name, value) {
+        this.uri = uri
     }
 
-    public UriListItem(int nameResource, int valueResource, @NonNull Uri uri) {
-        super(nameResource, valueResource);
-        this.mUri = uri;
-    }
-
-    @NonNull
-    public Uri getUri() {
-        return mUri;
+    constructor(nameResource: StringResource, valueResource: StringResource, uri: String) : super(nameResource, valueResource) {
+        this.uri = uri
     }
 }
