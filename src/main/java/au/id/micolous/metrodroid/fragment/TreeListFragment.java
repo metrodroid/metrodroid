@@ -106,13 +106,20 @@ public abstract class TreeListFragment extends Fragment implements TreeNode.Tree
             return view;
         }
 
+        private static View getRecursiveListView(ListItem li, LayoutInflater inflater, ViewGroup root, boolean attachToRoot) {
+            View view = inflater.inflate(R.layout.list_recursive, root, attachToRoot);
+            adjustListView(view, li);
+            return view;
+        }
 
         @Override
         public View createNodeView(TreeNode node, Pair<ListItem, Integer> itemPair) {
             ListItem item = itemPair.first;
             int level = itemPair.second;
             View view;
-            if (item instanceof HeaderListItem)
+            if (item instanceof ListItemRecursive)
+                view = getRecursiveListView(item, LayoutInflater.from(context), null, false);
+            else if (item instanceof HeaderListItem)
                 view = getHeaderListView(item, LayoutInflater.from(context), null, false);
             else
                 view = getListView(item, LayoutInflater.from(context), null, false);
