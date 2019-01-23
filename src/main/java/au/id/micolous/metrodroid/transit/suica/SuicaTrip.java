@@ -24,6 +24,7 @@ package au.id.micolous.metrodroid.transit.suica;
 import android.os.Parcel;
 import android.support.annotation.Nullable;
 
+import au.id.micolous.metrodroid.util.NumberUtils;
 import org.apache.commons.lang3.ArrayUtils;
 
 import java.util.Calendar;
@@ -194,7 +195,7 @@ public class SuicaTrip extends Trip {
     public String getHumanReadableRouteID() {
         return (mStartStation != null) ?
                 super.getHumanReadableRouteID() :
-                (Utils.intToHex(mConsoleType) + " " + Utils.intToHex(mProcessType));
+                (NumberUtils.INSTANCE.intToHex(mConsoleType) + " " + NumberUtils.INSTANCE.intToHex(mProcessType));
     }
 
     @Override

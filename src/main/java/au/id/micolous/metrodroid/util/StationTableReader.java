@@ -105,7 +105,7 @@ public class StationTableReader {
 
     @Nullable
     public static Station getStationNoFallback(@Nullable String reader, int id) {
-        return getStationNoFallback(reader, id, Utils.intToHex(id));
+        return getStationNoFallback(reader, id, NumberUtils.INSTANCE.intToHex(id));
     }
 
     @NonNull
@@ -118,11 +118,11 @@ public class StationTableReader {
 
     @NonNull
     public static Station getStation(@Nullable String reader, int id) {
-        return getStation(reader, id, Utils.intToHex(id));
+        return getStation(reader, id, NumberUtils.INSTANCE.intToHex(id));
     }
 
     private static String fallbackName(int id) {
-        return Utils.localizeString(R.string.unknown_format, Utils.intToHex(id));
+        return Utils.localizeString(R.string.unknown_format, NumberUtils.INSTANCE.intToHex(id));
     }
 
     private static String fallbackName(String humanReadableId) {
@@ -278,7 +278,7 @@ public class StationTableReader {
     }
 
     public static String getLineName(@Nullable String reader, int id) {
-        return getLineName(reader, id, Utils.intToHex(id));
+        return getLineName(reader, id, NumberUtils.INSTANCE.intToHex(id));
     }
 
     public static String getLineName(@Nullable String reader, int id, String humanReadableId) {

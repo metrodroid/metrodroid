@@ -23,6 +23,7 @@ import android.os.Parcel;
 import android.os.Parcelable;
 import android.support.annotation.Nullable;
 
+import au.id.micolous.metrodroid.util.NumberUtils;
 import org.jetbrains.annotations.NonNls;
 
 import java.util.ArrayList;
@@ -135,7 +136,7 @@ public class TMoneyTransitData extends TransitData {
     }
 
     private static String parseSerial(TMoneyCard card) {
-        return Utils.groupString(getSerialTag(card).getHexString(4, 8), " ", 4, 4, 4);
+        return NumberUtils.INSTANCE.groupString(getSerialTag(card).getHexString(4, 8), " ", 4, 4, 4);
     }
 
     @NonNls

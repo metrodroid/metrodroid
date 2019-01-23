@@ -26,6 +26,7 @@ import java.util.GregorianCalendar;
 import java.util.Locale;
 import java.util.TimeZone;
 
+import au.id.micolous.metrodroid.util.NumberUtils;
 import au.id.micolous.metrodroid.util.Utils;
 import au.id.micolous.metrodroid.xml.ImmutableByteArray;
 
@@ -81,10 +82,10 @@ public class NextfareRecord {
      */
     public static GregorianCalendar unpackDate(ImmutableByteArray input, int offset, TimeZone timeZone) {
         int timestamp = input.byteArrayToIntReversed(offset, 4);
-        int minute = Utils.getBitsFromInteger(timestamp, 16, 11);
-        int year = Utils.getBitsFromInteger(timestamp, 9, 7) + 2000;
-        int month = Utils.getBitsFromInteger(timestamp, 5, 4);
-        int day = Utils.getBitsFromInteger(timestamp, 0, 5);
+        int minute = NumberUtils.INSTANCE.getBitsFromInteger(timestamp, 16, 11);
+        int year = NumberUtils.INSTANCE.getBitsFromInteger(timestamp, 9, 7) + 2000;
+        int month = NumberUtils.INSTANCE.getBitsFromInteger(timestamp, 5, 4);
+        int day = NumberUtils.INSTANCE.getBitsFromInteger(timestamp, 0, 5);
 
         //noinspection StringConcatenation,MagicCharacter
         Log.i(TAG, "unpackDate: " + minute + " minutes, " + year + '-' + month + '-' + day);

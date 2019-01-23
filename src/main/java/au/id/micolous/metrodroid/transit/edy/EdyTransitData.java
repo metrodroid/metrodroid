@@ -26,6 +26,7 @@ import android.os.Parcel;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
+import au.id.micolous.metrodroid.util.NumberUtils;
 import org.apache.commons.lang3.ArrayUtils;
 
 import java.util.ArrayList;
@@ -147,7 +148,7 @@ public class EdyTransitData extends TransitData {
 
     @Override
     public String getSerialNumber() {
-        return Utils.groupString(mSerialNumber.toHexString().toUpperCase(Locale.ENGLISH),
+        return NumberUtils.INSTANCE.groupString(mSerialNumber.toHexString().toUpperCase(Locale.ENGLISH),
                 " ", 4, 4, 4);
     }
 

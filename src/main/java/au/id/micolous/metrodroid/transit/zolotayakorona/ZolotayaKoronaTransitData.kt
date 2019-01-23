@@ -34,6 +34,7 @@ import au.id.micolous.metrodroid.transit.TransitCurrency
 import au.id.micolous.metrodroid.transit.TransitData
 import au.id.micolous.metrodroid.transit.TransitIdentity
 import au.id.micolous.metrodroid.ui.ListItem
+import au.id.micolous.metrodroid.util.NumberUtils
 import au.id.micolous.metrodroid.util.Utils
 import kotlinx.android.parcel.Parcelize
 
@@ -184,7 +185,7 @@ data class ZolotayaKoronaTransitData internal constructor(
         private fun getCardType(card: ClassicCard) = card[15, 1].data.byteArrayToInt(
                 10, 3)
 
-        private fun formatSerial(serial: String) = Utils.groupString(serial, " ", 4, 5, 5)
+        private fun formatSerial(serial: String) = NumberUtils.groupString(serial, " ", 4, 5, 5)
 
         val FACTORY: ClassicCardTransitFactory = object : ClassicCardTransitFactory {
             override fun getAllCards() = listOf(FALLBACK_CARD_INFO) + CARDS.values

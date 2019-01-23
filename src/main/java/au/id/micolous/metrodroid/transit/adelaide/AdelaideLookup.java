@@ -27,6 +27,7 @@ import java.util.TimeZone;
 import au.id.micolous.farebot.R;
 import au.id.micolous.metrodroid.transit.TransitCurrency;
 import au.id.micolous.metrodroid.transit.en1545.En1545LookupSTR;
+import au.id.micolous.metrodroid.util.NumberUtils;
 import au.id.micolous.metrodroid.util.Utils;
 
 public class AdelaideLookup extends En1545LookupSTR {
@@ -69,7 +70,7 @@ public class AdelaideLookup extends En1545LookupSTR {
             return null;
         @StringRes int tariff = TARIFFS.get(contractTariff, 0);
         if (tariff == 0) {
-            return Utils.intToHex(contractTariff);
+            return NumberUtils.INSTANCE.intToHex(contractTariff);
         } else {
             return Utils.localizeString(tariff);
         }

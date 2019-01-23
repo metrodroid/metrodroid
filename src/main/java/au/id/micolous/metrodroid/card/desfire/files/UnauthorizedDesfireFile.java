@@ -18,6 +18,7 @@
  */
 package au.id.micolous.metrodroid.card.desfire.files;
 
+import au.id.micolous.metrodroid.util.NumberUtils;
 import org.simpleframework.xml.Attribute;
 import org.simpleframework.xml.Root;
 
@@ -51,7 +52,7 @@ public class UnauthorizedDesfireFile extends InvalidDesfireFile {
     @Override
     public ListItem getRawData() {
         String title = Utils.localizeString(R.string.unauthorized_file_title_format,
-                    Utils.intToHex(getId()));
+                    NumberUtils.INSTANCE.intToHex(getId()));
         final DesfireFileSettings settings = getFileSettings();
         String subtitle = settings != null ? settings.getSubtitle() : null;
 

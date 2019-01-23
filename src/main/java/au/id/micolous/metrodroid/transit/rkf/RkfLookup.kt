@@ -24,7 +24,7 @@ import au.id.micolous.metrodroid.transit.Station
 import au.id.micolous.metrodroid.transit.TransitCurrency
 import au.id.micolous.metrodroid.transit.en1545.En1545LookupSTR
 import au.id.micolous.metrodroid.util.StationTableReader
-import au.id.micolous.metrodroid.util.Utils
+import au.id.micolous.metrodroid.util.NumberUtils
 import kotlinx.android.parcel.Parcelize
 import java.util.*
 
@@ -42,7 +42,7 @@ data class RkfLookup(val mCurrencyCode: Int, val mCompany: Int) : En1545LookupST
         }
 
         return TransitCurrency(price,
-                Utils.convertBCDtoInteger(mCurrencyCode and 0xfff),
+                NumberUtils.convertBCDtoInteger(mCurrencyCode and 0xfff),
                 intendedDivisor)
     }
 

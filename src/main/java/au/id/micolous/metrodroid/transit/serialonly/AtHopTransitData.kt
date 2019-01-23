@@ -24,7 +24,7 @@ import au.id.micolous.metrodroid.card.desfire.DesfireCard
 import au.id.micolous.metrodroid.card.desfire.DesfireCardTransitFactory
 import au.id.micolous.metrodroid.transit.CardInfo
 import au.id.micolous.metrodroid.transit.TransitIdentity
-import au.id.micolous.metrodroid.util.Utils
+import au.id.micolous.metrodroid.util.NumberUtils
 import kotlinx.android.parcel.Parcelize
 import org.jetbrains.annotations.NonNls
 
@@ -61,7 +61,7 @@ data class AtHopTransitData (private val mSerial: Int?): SerialOnlyTransitData()
         @NonNls
         private fun formatSerial(serial: Int?) =
                 if (serial != null)
-                    "7824 6702 " + Utils.formatNumber(serial.toLong(), " ", 4, 4, 3)
+                    "7824 6702 " + NumberUtils.formatNumber(serial.toLong(), " ", 4, 4, 3)
                 else
                     null
 

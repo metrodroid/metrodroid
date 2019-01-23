@@ -33,6 +33,7 @@ import java.util.Calendar;
 import au.id.micolous.metrodroid.transit.Station;
 import au.id.micolous.metrodroid.transit.TransitCurrency;
 import au.id.micolous.metrodroid.transit.Trip;
+import au.id.micolous.metrodroid.util.NumberUtils;
 import au.id.micolous.metrodroid.util.Utils;
 import au.id.micolous.metrodroid.xml.ImmutableByteArray;
 
@@ -109,7 +110,7 @@ public class ClipperTrip extends Trip {
     @Override
     public String getHumanReadableRouteID() {
         if (mAgency == ClipperData.AGENCY_GG_FERRY) {
-            return Utils.intToHex(mRoute);
+            return NumberUtils.INSTANCE.intToHex(mRoute);
         }
 
         return null;

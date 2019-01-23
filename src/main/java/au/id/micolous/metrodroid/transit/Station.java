@@ -26,6 +26,7 @@ import android.support.annotation.Nullable;
 import android.util.Pair;
 import android.util.SparseArray;
 
+import au.id.micolous.metrodroid.util.NumberUtils;
 import org.jetbrains.annotations.NonNls;
 
 import java.util.ArrayList;
@@ -220,7 +221,7 @@ public class Station implements Parcelable {
     }
 
     public static Station unknown(Integer id) {
-        return unknown(Utils.intToHex(id));
+        return unknown(NumberUtils.INSTANCE.intToHex(id));
     }
 
     public static Station nameOnly(String name) {
@@ -247,7 +248,7 @@ public class Station implements Parcelable {
             while (it.hasNext()) {
                 final kotlin.Pair<Integer, Stations.Line> e = it.next();
                 lines.add(str.selectBestName(e.getSecond().getName(), true));
-                lineIds.add(Utils.intToHex(e.getFirst()));
+                lineIds.add(NumberUtils.INSTANCE.intToHex(e.getFirst()));
             }
         }
 

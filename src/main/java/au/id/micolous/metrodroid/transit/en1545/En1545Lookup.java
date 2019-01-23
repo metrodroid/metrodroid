@@ -21,6 +21,7 @@ package au.id.micolous.metrodroid.transit.en1545;
 
 import android.support.annotation.Nullable;
 
+import au.id.micolous.metrodroid.util.NumberUtils;
 import org.jetbrains.annotations.NonNls;
 
 import java.util.TimeZone;
@@ -41,9 +42,9 @@ public interface En1545Lookup {
                                            @Nullable Integer transport) {
         if (routeNumber == null)
             return null;
-        @NonNls String routeReadable = Utils.intToHex(routeNumber);
+        @NonNls String routeReadable = NumberUtils.INSTANCE.intToHex(routeNumber);
         if (routeVariant != null) {
-            routeReadable += "/" + Utils.intToHex(routeVariant);
+            routeReadable += "/" + NumberUtils.INSTANCE.intToHex(routeVariant);
         }
         return routeReadable;
     }

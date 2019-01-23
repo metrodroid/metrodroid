@@ -27,6 +27,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.util.ArraySet;
 
+import au.id.micolous.metrodroid.util.NumberUtils;
 import org.apache.commons.lang3.ArrayUtils;
 
 import java.util.ArrayList;
@@ -143,8 +144,8 @@ public class SuicaTransitData extends TransitData {
                             fare, trip.getFareRaw(),
                             (tapBlock[0] & 0x80), (tapBlock[4] >> 4)
                             ));
-                    Log.d(TAG, String.format("time is %02d:%02d", Utils.convertBCDtoInteger(tapBlock[8]),
-                            Utils.convertBCDtoInteger(tapBlock[9])));
+                    Log.d(TAG, String.format("time is %02d:%02d", NumberUtils.INSTANCE.convertBCDtoInteger(tapBlock[8]),
+                            NumberUtils.INSTANCE.convertBCDtoInteger(tapBlock[9])));
                     */
 
                     // Skip tap-ons
@@ -165,8 +166,8 @@ public class SuicaTransitData extends TransitData {
                     if (fare != trip.getFareRaw())
                         continue;
 
-                    trip.setEndTime(Utils.convertBCDtoInteger(tapBlock.get(8)),
-                            Utils.convertBCDtoInteger(tapBlock.get(9)));
+                    trip.setEndTime(NumberUtils.INSTANCE.convertBCDtoInteger(tapBlock.get(8)),
+                            NumberUtils.INSTANCE.convertBCDtoInteger(tapBlock.get(9)));
                     matchedTaps.add(matchingTap);
                     break;
                 }
@@ -185,8 +186,8 @@ public class SuicaTransitData extends TransitData {
                             (tapBlock[0] & 0x80), (tapBlock[4] >> 4)
                     ));
 
-                    Log.d(TAG, String.format("time is %02d:%02d", Utils.convertBCDtoInteger(tapBlock[8]),
-                            Utils.convertBCDtoInteger(tapBlock[9])));
+                    Log.d(TAG, String.format("time is %02d:%02d", NumberUtils.INSTANCE.convertBCDtoInteger(tapBlock[8]),
+                            NumberUtils.INSTANCE.convertBCDtoInteger(tapBlock[9])));
                     */
 
                     // Skip tap-offs
@@ -203,8 +204,8 @@ public class SuicaTransitData extends TransitData {
                     if (dateNum != trip.getDateRaw())
                         continue;
 
-                    trip.setStartTime(Utils.convertBCDtoInteger(tapBlock.get(8)),
-                            Utils.convertBCDtoInteger(tapBlock.get(9)));
+                    trip.setStartTime(NumberUtils.INSTANCE.convertBCDtoInteger(tapBlock.get(8)),
+                            NumberUtils.INSTANCE.convertBCDtoInteger(tapBlock.get(9)));
                     matchedTaps.add(matchingTap);
                     break;
                 }

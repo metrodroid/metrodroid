@@ -24,6 +24,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.util.Log;
 
+import au.id.micolous.metrodroid.util.NumberUtils;
 import org.apache.commons.lang3.ArrayUtils;
 import org.jetbrains.annotations.NonNls;
 
@@ -191,7 +192,7 @@ public abstract class En1545Subscription extends Subscription {
         }
 
         //noinspection StringConcatenation
-        Log.d(TAG, "Unknown subscription state: "  + Utils.intToHex(status));
+        Log.d(TAG, "Unknown subscription state: "  + NumberUtils.INSTANCE.intToHex(status));
         return SubscriptionState.UNKNOWN;
     }
 

@@ -37,6 +37,7 @@ import au.id.micolous.metrodroid.transit.erg.record.ErgPurseRecord;
 import au.id.micolous.metrodroid.transit.erg.record.ErgRecord;
 import au.id.micolous.metrodroid.ui.HeaderListItem;
 import au.id.micolous.metrodroid.ui.ListItem;
+import au.id.micolous.metrodroid.util.NumberUtils;
 import au.id.micolous.metrodroid.util.TripObfuscator;
 import au.id.micolous.metrodroid.util.Utils;
 
@@ -277,7 +278,7 @@ public class ErgTransitData extends TransitData {
         items.add(new ListItem(R.string.card_epoch,
                 Utils.longDateFormat(TripObfuscator.maybeObfuscateTS(mEpochDate))));
         items.add(new ListItem(R.string.erg_agency_id,
-			       Utils.longToHex(mAgencyID)));
+                NumberUtils.INSTANCE.longToHex(mAgencyID)));
         return items;
     }
 

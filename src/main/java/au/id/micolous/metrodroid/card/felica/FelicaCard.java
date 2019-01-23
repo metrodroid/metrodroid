@@ -47,6 +47,7 @@ import au.id.micolous.metrodroid.transit.suica.SuicaTransitData;
 import au.id.micolous.metrodroid.ui.HeaderListItem;
 import au.id.micolous.metrodroid.ui.ListItem;
 import au.id.micolous.metrodroid.ui.ListItemRecursive;
+import au.id.micolous.metrodroid.util.NumberUtils;
 import au.id.micolous.metrodroid.util.Utils;
 import au.id.micolous.metrodroid.xml.Base64String;
 import au.id.micolous.metrodroid.xml.ImmutableByteArray;
@@ -334,9 +335,9 @@ public class FelicaCard extends Card {
 
         // Position is offset by 2.
         int configurationByte = getPMm().get(position + 2) & 0xFF;
-        int e = Utils.getBitsFromInteger(configurationByte, 0, 2);
-        int b = Utils.getBitsFromInteger(configurationByte, 2, 3) + 1;
-        int a = Utils.getBitsFromInteger(configurationByte, 5, 3) + 1;
+        int e = NumberUtils.INSTANCE.getBitsFromInteger(configurationByte, 0, 2);
+        int b = NumberUtils.INSTANCE.getBitsFromInteger(configurationByte, 2, 3) + 1;
+        int a = NumberUtils.INSTANCE.getBitsFromInteger(configurationByte, 5, 3) + 1;
 
         return T * (b * n + a) * (1 << (2 * e)); // seconds
     }
@@ -435,7 +436,7 @@ public class FelicaCard extends Card {
         List<ListItem> items = new ArrayList<>();
 
         items.add(new HeaderListItem(R.string.felica_idm));
-        items.add(new ListItem(R.string.felica_manufacturer_code, Utils.intToHex(getManufacturerCode())));
+        items.add(new ListItem(R.string.felica_manufacturer_code, NumberUtils.INSTANCE.intToHex(getManufacturerCode())));
 
         if (!MetrodroidApplication.hideCardNumbers()) {
             items.add(new ListItem(R.string.felica_card_identification_number, Long.toString(getCardIdentificationNumber())));

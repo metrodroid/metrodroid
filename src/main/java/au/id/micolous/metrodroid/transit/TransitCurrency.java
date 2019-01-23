@@ -29,6 +29,7 @@ import android.text.SpannableString;
 import android.text.Spanned;
 import android.text.style.TtsSpan;
 
+import au.id.micolous.metrodroid.util.NumberUtils;
 import com.neovisionaries.i18n.CurrencyCode;
 
 import org.jetbrains.annotations.NonNls;
@@ -199,7 +200,7 @@ public class TransitCurrency extends TransitBalance implements Parcelable {
         if (currency == null) {
             return DEFAULT_DIVISOR;
         } else {
-            return (int) Utils.pow(10, currency.getDefaultFractionDigits());
+            return (int) NumberUtils.INSTANCE.pow(10, currency.getDefaultFractionDigits());
         }
     }
 
@@ -366,7 +367,7 @@ public class TransitCurrency extends TransitBalance implements Parcelable {
             currencyFormatter = NumberFormat.getNumberInstance();
 
             // Infer number of decimal places we should add based on the divisor
-            numberFormatter.setMinimumFractionDigits(Utils.log10floor(mDivisor));
+            numberFormatter.setMinimumFractionDigits(NumberUtils.INSTANCE.log10floor(mDivisor));
         }
 
         SpannableString s;

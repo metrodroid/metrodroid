@@ -25,6 +25,7 @@ import java.util.Calendar;
 
 import au.id.micolous.farebot.R;
 import au.id.micolous.metrodroid.transit.Station;
+import au.id.micolous.metrodroid.util.NumberUtils;
 import au.id.micolous.metrodroid.util.StationTableReader;
 import au.id.micolous.metrodroid.util.Utils;
 import au.id.micolous.metrodroid.xml.ImmutableByteArray;
@@ -98,7 +99,7 @@ public class NewShenzhenTrip extends ChinaTrip {
         final int transport = getTransport();
         switch (transport) {
             case SZT_BUS:
-                return Utils.intToHex((int) mStation);
+                return NumberUtils.INSTANCE.intToHex((int) mStation);
         }
         return null;
     }

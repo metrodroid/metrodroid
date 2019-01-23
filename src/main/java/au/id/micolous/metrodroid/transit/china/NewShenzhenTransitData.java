@@ -24,6 +24,7 @@ import android.os.Parcelable;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
+import au.id.micolous.metrodroid.util.NumberUtils;
 import org.jetbrains.annotations.NonNls;
 
 import java.util.Collections;
@@ -125,7 +126,7 @@ public class NewShenzhenTransitData extends ChinaTransitData {
 
     @NonNls
     private static String formatSerial(int sn) {
-        int digsum = Utils.getDigitSum(sn);
+        int digsum = NumberUtils.INSTANCE.getDigitSum(sn);
         // Sum of digits must be divisible by 10
         int lastDigit = (10 - (digsum % 10)) % 10;
         return Integer.toString(sn) + "(" + Integer.toString(lastDigit) + ")";

@@ -33,6 +33,7 @@ import au.id.micolous.metrodroid.transit.en1545.*
 import au.id.micolous.metrodroid.ui.ListItem
 import kotlinx.android.parcel.Parcelize
 import au.id.micolous.metrodroid.transit.en1545.En1545FixedInteger
+import au.id.micolous.metrodroid.util.NumberUtils
 import au.id.micolous.metrodroid.util.TripObfuscator
 import au.id.micolous.metrodroid.xml.ImmutableByteArray
 import java.util.*
@@ -42,11 +43,11 @@ internal data class RkfSerial(val mCompany: Int, val mCustomerNumber: Long, val 
     val formatted: String
         get() = when (mCompany) {
             RkfLookup.REJSEKORT -> {
-                val main = "30843" + Utils.formatNumber(mCustomerNumber, " ", 1, 3, 3, 3)
-                main + " " + Utils.calculateLuhn(main.replace(" ", ""))
+                val main = "30843" + NumberUtils.formatNumber(mCustomerNumber, " ", 1, 3, 3, 3)
+                main + " " + NumberUtils.calculateLuhn(main.replace(" ", ""))
             }
             RkfLookup.SLACCESS -> {
-                Utils.formatNumber(mHwSerial, " ", 5, 5)
+                NumberUtils.formatNumber(mHwSerial, " ", 5, 5)
             }
             else -> mHwSerial.toString()
         }
@@ -102,7 +103,7 @@ data class RkfTransitData internal constructor(
             ListItem(R.string.card_issuer, issuer),
             if (cardStatus == R.string.unknown_format) {
                 ListItem(R.string.rkf_card_status, Utils.localizeString(R.string.unknown_format,
-                        Utils.intToHex(mTcci.getIntOrZero(STATUS))))
+                        NumberUtils.intToHex(mTcci.getIntOrZero(STATUS))))
             } else {
                 ListItem(R.string.rkf_card_status, cardStatus)
             })
