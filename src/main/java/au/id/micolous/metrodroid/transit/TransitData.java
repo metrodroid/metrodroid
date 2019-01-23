@@ -102,7 +102,7 @@ public abstract class TransitData implements Parcelable {
      * Note: in order to support obfuscation / hiding behaviour, if you implement this method, you
      * also need to use some other functionality:
      * <ul>
-     * <li>Check for {@link MetrodroidApplication#hideCardNumbers()} whenever you show a card
+     * <li>Check for {@link Preferences.INSTANCE.getHideCardNumbers()} whenever you show a card
      * number, or other mark (such as a name) that could be used to identify this card or its
      * holder.</li>
      *

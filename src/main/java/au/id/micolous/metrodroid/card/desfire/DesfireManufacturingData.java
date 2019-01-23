@@ -26,6 +26,7 @@ import au.id.micolous.farebot.R;
 import au.id.micolous.metrodroid.MetrodroidApplication;
 import au.id.micolous.metrodroid.ui.HeaderListItem;
 import au.id.micolous.metrodroid.ui.ListItem;
+import au.id.micolous.metrodroid.util.Preferences;
 import au.id.micolous.metrodroid.util.Utils;
 import au.id.micolous.metrodroid.xml.Base64String;
 import au.id.micolous.metrodroid.xml.ImmutableByteArray;
@@ -134,7 +135,7 @@ public class DesfireManufacturingData {
         items.add(new ListItem("Storage Size", Integer.toString(swStorageSize)));
         items.add(new ListItem("Protocol", Integer.toString(swProtocol)));
 
-        if (!MetrodroidApplication.hideCardNumbers()) {
+        if (!Preferences.INSTANCE.getHideCardNumbers()) {
             items.add(new HeaderListItem("General Information"));
             items.add(new ListItem("Serial Number", Long.toHexString(uid)));
             items.add(new ListItem("Batch Number", Long.toHexString(batchNo)));

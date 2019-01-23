@@ -55,6 +55,7 @@ import au.id.micolous.metrodroid.transit.unknown.BlankClassicTransitData;
 import au.id.micolous.metrodroid.transit.unknown.BlankUltralightTransitData;
 import au.id.micolous.metrodroid.transit.unknown.UnauthorizedTransitData;
 import au.id.micolous.metrodroid.ui.TabPagerAdapter;
+import au.id.micolous.metrodroid.util.Preferences;
 import au.id.micolous.metrodroid.util.Utils;
 
 /**
@@ -151,7 +152,7 @@ public class CardInfoActivity extends MetrodroidActivity {
                 }
 
                 try {
-                    mShowCopyCardNumber = !MetrodroidApplication.hideCardNumbers();
+                    mShowCopyCardNumber = !Preferences.INSTANCE.getHideCardNumbers();
                     if (mShowCopyCardNumber) {
                         mCardSerial = (mTransitData.getSerialNumber() != null) ? mTransitData.getSerialNumber()
                                 : Utils.getHexString(mCard.getTagId(), "");

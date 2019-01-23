@@ -8,6 +8,7 @@ import android.text.style.TtsSpan
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.platform.app.InstrumentationRegistry
 import au.id.micolous.metrodroid.MetrodroidApplication
+import au.id.micolous.metrodroid.util.Preferences
 import junit.framework.TestCase.assertEquals
 import kotlinx.coroutines.runBlocking
 import org.hamcrest.Matcher
@@ -52,18 +53,18 @@ actual abstract class BaseInstrumentedTestPlatform {
      * @param value Desired state of the preference.
      */
     private fun setBooleanPref(preference: String, value: Boolean) {
-        val prefs = MetrodroidApplication.getSharedPreferences()
+        val prefs = Preferences.getSharedPreferences()
         prefs.edit()
                 .putBoolean(preference, value)
                 .apply()
     }
 
     actual fun showRawStationIds(state: Boolean) {
-        setBooleanPref(MetrodroidApplication.PREF_SHOW_RAW_IDS, state)
+        setBooleanPref(Preferences.PREF_SHOW_RAW_IDS, state)
     }
 
     actual fun showLocalAndEnglish(state: Boolean) {
-        setBooleanPref(MetrodroidApplication.PREF_SHOW_LOCAL_AND_ENGLISH, state)
+        setBooleanPref(Preferences.PREF_SHOW_LOCAL_AND_ENGLISH, state)
     }
 
     actual fun loadAssetSafe(path: String) : InputStream? {

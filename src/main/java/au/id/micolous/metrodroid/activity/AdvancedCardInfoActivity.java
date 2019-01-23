@@ -36,6 +36,7 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import au.id.micolous.metrodroid.util.Preferences;
 import org.apache.commons.io.IOUtils;
 import org.simpleframework.xml.Serializer;
 
@@ -77,7 +78,7 @@ public class AdvancedCardInfoActivity extends MetrodroidActivity {
         ActionBar actionBar = getActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
 
-        if (MetrodroidApplication.hideCardNumbers()) {
+        if (Preferences.INSTANCE.getHideCardNumbers()) {
             actionBar.setTitle(mCard.getCardType().toString());
         } else {
             actionBar.setTitle(mCard.getCardType().toString() + " " + Utils.getHexString(mCard.getTagId(), "<error>"));

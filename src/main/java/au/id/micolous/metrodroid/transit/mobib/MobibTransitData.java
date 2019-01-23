@@ -52,6 +52,7 @@ import au.id.micolous.metrodroid.transit.en1545.En1545Subscription;
 import au.id.micolous.metrodroid.transit.en1545.En1545Transaction;
 import au.id.micolous.metrodroid.ui.ListItem;
 import au.id.micolous.metrodroid.util.NumberUtils;
+import au.id.micolous.metrodroid.util.Preferences;
 import au.id.micolous.metrodroid.util.Utils;
 import au.id.micolous.metrodroid.xml.ImmutableByteArray;
 
@@ -160,8 +161,8 @@ public class MobibTransitData extends Calypso1545TransitData {
         } else {
             li.add(new ListItem(R.string.card_type, R.string.card_type_personal));
         }
-        if (gender != 0 && !MetrodroidApplication.hideCardNumbers()
-                && !MetrodroidApplication.obfuscateTripDates()) {
+        if (gender != 0 && !Preferences.INSTANCE.getHideCardNumbers()
+                && !Preferences.INSTANCE.getObfuscateTripDates()) {
             li.add(new ListItem(R.string.card_holders_name,
                     mExtHolderParsed.getString(EXT_HOLDER_NAME)));
             switch (gender) {

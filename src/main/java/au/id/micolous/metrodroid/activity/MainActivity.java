@@ -37,6 +37,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 
+import au.id.micolous.metrodroid.util.Preferences;
 import au.id.micolous.metrodroid.util.Utils;
 
 import au.id.micolous.farebot.R;
@@ -98,11 +99,11 @@ public class MainActivity extends MetrodroidActivity {
 
     private void updateObfuscationNotice(boolean hasNfc) {
         int obfuscationFlagsOn =
-                (MetrodroidApplication.hideCardNumbers() ? 1 : 0) +
-                        (MetrodroidApplication.obfuscateBalance() ? 1 : 0) +
-                        (MetrodroidApplication.obfuscateTripDates() ? 1 : 0) +
-                        (MetrodroidApplication.obfuscateTripFares() ? 1 : 0) +
-                        (MetrodroidApplication.obfuscateTripTimes() ? 1 : 0);
+                (Preferences.INSTANCE.getHideCardNumbers() ? 1 : 0) +
+                        (Preferences.INSTANCE.getObfuscateBalance() ? 1 : 0) +
+                        (Preferences.INSTANCE.getObfuscateTripDates() ? 1 : 0) +
+                        (Preferences.INSTANCE.getObfuscateTripFares() ? 1 : 0) +
+                        (Preferences.INSTANCE.getObfuscateTripTimes() ? 1 : 0);
 
         TextView directions = findViewById(R.id.directions);
 

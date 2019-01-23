@@ -64,6 +64,7 @@ import au.id.micolous.metrodroid.activity.TripMapActivity;
 import au.id.micolous.metrodroid.transit.TransitCurrency;
 import au.id.micolous.metrodroid.transit.TransitData;
 import au.id.micolous.metrodroid.transit.Trip;
+import au.id.micolous.metrodroid.util.Preferences;
 import au.id.micolous.metrodroid.util.TripObfuscator;
 import au.id.micolous.metrodroid.util.Utils;
 
@@ -90,13 +91,13 @@ public class CardTripsFragment extends ListFragment {
         Collections.sort(trips, new Trip.Comparator());
 
         if (!trips.isEmpty()) {
-            if (MetrodroidApplication.obfuscateTripDates() ||
-                    MetrodroidApplication.obfuscateTripTimes() ||
-                    MetrodroidApplication.obfuscateTripFares()) {
+            if (Preferences.INSTANCE.getObfuscateTripDates() ||
+                    Preferences.INSTANCE.getObfuscateTripTimes() ||
+                    Preferences.INSTANCE.getObfuscateTripFares()) {
                 trips = TripObfuscator.obfuscateTrips(trips,
-                        MetrodroidApplication.obfuscateTripDates(),
-                        MetrodroidApplication.obfuscateTripTimes(),
-                        MetrodroidApplication.obfuscateTripFares());
+                        Preferences.INSTANCE.getObfuscateTripDates(),
+                        Preferences.INSTANCE.getObfuscateTripTimes(),
+                        Preferences.INSTANCE.getObfuscateTripFares());
                 Collections.sort(trips, new Trip.Comparator());
             }
             setListAdapter(new UseLogListAdapter(getActivity(), trips.toArray(new Trip[0]), mTransitData));
@@ -149,7 +150,7 @@ public class CardTripsFragment extends ListFragment {
         public View getView(int position, View convertView, @NonNull ViewGroup parent) {
             Activity activity = (Activity) getContext();
             LayoutInflater inflater = activity.getLayoutInflater();
-            boolean localisePlaces = MetrodroidApplication.localisePlaces();
+            boolean localisePlaces = Preferences.INSTANCE.getLocalisePlaces();
 
             if (convertView == null) {
                 convertView = inflater.inflate(R.layout.trip_item, parent, false);
@@ -272,7 +273,7 @@ public class CardTripsFragment extends ListFragment {
                 routeText.append(routeName);
                 if (localisePlaces && Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
                     final String routeLang = trip.getRouteLanguage();
-                    if (!MetrodroidApplication.showRawStationIds() && routeLang != null) {
+                    if (!Preferences.INSTANCE.getShowRawStationIds() && routeLang != null) {
                         // SUICA HACK:
                         // If there's something that looks like "#2" at the start, then mark
                         // that as the default language.

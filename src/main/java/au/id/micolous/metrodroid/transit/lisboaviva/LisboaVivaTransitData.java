@@ -49,6 +49,7 @@ import au.id.micolous.metrodroid.transit.en1545.En1545Parsed;
 import au.id.micolous.metrodroid.transit.en1545.En1545Subscription;
 import au.id.micolous.metrodroid.transit.en1545.En1545Transaction;
 import au.id.micolous.metrodroid.ui.ListItem;
+import au.id.micolous.metrodroid.util.Preferences;
 import au.id.micolous.metrodroid.util.Utils;
 import au.id.micolous.metrodroid.xml.ImmutableByteArray;
 
@@ -186,7 +187,7 @@ public class LisboaVivaTransitData extends Calypso1545TransitData {
     @Override
     public List<ListItem> getInfo() {
         List<ListItem> li = new ArrayList<>(super.getInfo());
-        if (!mHolderName.isEmpty() && !MetrodroidApplication.hideCardNumbers())
+        if (!mHolderName.isEmpty() && !Preferences.INSTANCE.getHideCardNumbers())
             li.add(new ListItem(R.string.card_holders_name, mHolderName));
         return li;
     }

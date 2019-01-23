@@ -595,7 +595,7 @@ public class Utils {
     }
 
     private static String formatCalendar(java.text.DateFormat df, Calendar c) {
-        if (!MetrodroidApplication.convertTimezones()) {
+        if (!Preferences.INSTANCE.getConvertTimezone()) {
             df.setTimeZone(c.getTimeZone());
         } else {
             df.setTimeZone(TimeZone.getDefault());
@@ -605,7 +605,7 @@ public class Utils {
     }
 
     private static Calendar maybeConvertTimezone(Calendar input) {
-        if (MetrodroidApplication.convertTimezones()) {
+        if (Preferences.INSTANCE.getConvertTimezone()) {
             Calendar o = new GregorianCalendar(TimeZone.getDefault());
             o.setTimeInMillis(input.getTimeInMillis());
             return o;

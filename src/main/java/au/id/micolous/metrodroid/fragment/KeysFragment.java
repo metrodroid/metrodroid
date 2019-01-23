@@ -49,6 +49,7 @@ import android.widget.ResourceCursorAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import au.id.micolous.metrodroid.util.Preferences;
 import org.apache.commons.io.IOUtils;
 import org.jetbrains.annotations.NonNls;
 import org.json.JSONException;
@@ -108,7 +109,7 @@ public class KeysFragment extends ListFragment implements AdapterView.OnItemLong
         @Override
         public boolean onActionItemClicked(ActionMode mode, MenuItem item) {
             if (item.getItemId() == R.id.delete_key) {
-                if (MetrodroidApplication.hideCardNumbers()) {
+                if (Preferences.INSTANCE.getHideCardNumbers()) {
                     new AlertDialog.Builder(getActivity())
                             .setTitle(R.string.cant_delete_with_obfuscation)
                             .setMessage(R.string.cant_delete_with_obfuscation_message)
@@ -423,7 +424,7 @@ public class KeysFragment extends ListFragment implements AdapterView.OnItemLong
                         fileType = k.getFileType();
                     } catch (JSONException ignored) { }
 
-                    if (MetrodroidApplication.hideCardNumbers()) {
+                    if (Preferences.INSTANCE.getHideCardNumbers()) {
                         textView1.setText(R.string.hidden_card_number);
                     } else {
                         textView1.setText(id);

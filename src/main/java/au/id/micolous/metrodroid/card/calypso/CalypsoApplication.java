@@ -24,6 +24,7 @@ import android.support.annotation.Nullable;
 import android.util.Log;
 
 import au.id.micolous.metrodroid.util.NumberUtils;
+import au.id.micolous.metrodroid.util.Preferences;
 import com.neovisionaries.i18n.CountryCode;
 
 import org.jetbrains.annotations.NonNls;
@@ -286,7 +287,7 @@ public class CalypsoApplication extends ISO7816Application {
             manufactureDate.add(Calendar.DATE, Utils.byteArrayToInt(data, 25, 2));
 
             items.add(new HeaderListItem("Calypso"));
-            if (!MetrodroidApplication.hideCardNumbers()) {
+            if (!Preferences.INSTANCE.getHideCardNumbers()) {
                 items.add(new ListItem(R.string.calypso_serial_number, Utils.getHexString(data, 12, 8)));
             }
             items.add(new ListItem(R.string.calypso_manufacture_country, countryName));

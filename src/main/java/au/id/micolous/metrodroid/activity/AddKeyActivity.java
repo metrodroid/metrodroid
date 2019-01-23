@@ -48,6 +48,7 @@ import au.id.micolous.metrodroid.key.ClassicKeys;
 import au.id.micolous.metrodroid.key.ClassicSectorKey;
 import au.id.micolous.metrodroid.key.InsertKeyTask;
 import au.id.micolous.metrodroid.util.KeyFormat;
+import au.id.micolous.metrodroid.util.Preferences;
 import au.id.micolous.metrodroid.util.Utils;
 
 import org.apache.commons.io.IOUtils;
@@ -190,7 +191,7 @@ public class AddKeyActivity extends MetrodroidActivity {
     }
 
     private void drawUI() {
-        if (MetrodroidApplication.hideCardNumbers()) {
+        if (Preferences.INSTANCE.getHideCardNumbers()) {
             if (mKeyData.getUid() != null) {
                 ((TextView) findViewById(R.id.card_id)).setText(R.string.hidden_card_number);
             }

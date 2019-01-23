@@ -54,6 +54,7 @@ import android.widget.ExpandableListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import au.id.micolous.metrodroid.util.Preferences;
 import org.apache.commons.io.FileUtils;
 import org.jetbrains.annotations.NonNls;
 
@@ -623,7 +624,7 @@ public class CardsFragment extends ExpandableListFragment {
                     // This is used for imported cards from mfcdump_to_farebotxml.py
                     // Used for development and testing. We should always show this.
                     textView2.setText(label);
-                } else if (MetrodroidApplication.hideCardNumbers()) {
+                } else if (Preferences.INSTANCE.getHideCardNumbers()) {
                     textView2.setVisibility(View.GONE);
                     // User doesn't want to show any card numbers.
                 } else {
@@ -637,7 +638,7 @@ public class CardsFragment extends ExpandableListFragment {
                 }
             } else {
                 textView1.setText(R.string.unknown_card);
-                if (MetrodroidApplication.hideCardNumbers()) {
+                if (Preferences.INSTANCE.getHideCardNumbers()) {
                     textView2.setText(String.format("%s", CardType.values()[type].toString()));
                 } else {
                     textView2.setText(String.format("%s - %s", CardType.values()[type].toString(), serial));
