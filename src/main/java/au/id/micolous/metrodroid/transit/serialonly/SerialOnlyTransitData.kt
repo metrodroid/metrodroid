@@ -22,6 +22,7 @@
 
 package au.id.micolous.metrodroid.transit.serialonly
 
+import android.net.Uri
 import au.id.micolous.farebot.R
 import au.id.micolous.metrodroid.transit.TransitData
 import au.id.micolous.metrodroid.ui.ListItem
@@ -45,7 +46,8 @@ abstract class SerialOnlyTransitData : TransitData() {
                 }
         )
         moreInfoPage?.let {
-            li += UriListItem(R.string.unknown_more_info, R.string.unknown_more_info_desc, it)
+            li += UriListItem(R.string.unknown_more_info, R.string.unknown_more_info_desc,
+                    Uri.parse(it))
         }
         return li
     }

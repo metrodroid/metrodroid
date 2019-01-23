@@ -52,8 +52,8 @@ class MykiTransitData (private val mSerial: String): SerialOnlyTransitData() {
 
     override val serialNumber get() = mSerial
 
-    override val moreInfoPage get(): Uri? =
-            Uri.parse("https://micolous.github.io/metrodroid/myki")
+    override val moreInfoPage get(): String? =
+            "https://micolous.github.io/metrodroid/myki"
 
     companion object {
         const val NAME = "Myki"

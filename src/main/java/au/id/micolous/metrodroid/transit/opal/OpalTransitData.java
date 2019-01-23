@@ -274,7 +274,7 @@ public class OpalTransitData extends TransitData {
     }
 
     @Override
-    public Uri getOnlineServicesPage() {
-        return Uri.parse("https://m.opal.com.au/");
+    public String getOnlineServicesPage() {
+        return "https://m.opal.com.au/";
     }
 }

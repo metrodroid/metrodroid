@@ -154,13 +154,13 @@ public class SeqGoTransitData extends NextfareTransitData {
     }
 
     @Override
-    public Uri getMoreInfoPage() {
-        return Uri.parse("https://micolous.github.io/metrodroid/seqgo");
+    public String getMoreInfoPage() {
+        return "https://micolous.github.io/metrodroid/seqgo";
     }
 
     @Override
-    public Uri getOnlineServicesPage() {
-        return Uri.parse("https://gocard.translink.com.au/");
+    public String getOnlineServicesPage() {
+        return "https://gocard.translink.com.au/";
     }
 
     /**
