@@ -17,29 +17,26 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package au.id.micolous.metrodroid.test;
+package au.id.micolous.metrodroid.test
 
-import org.junit.Test;
-
-import au.id.micolous.metrodroid.transit.Station;
-import au.id.micolous.metrodroid.transit.ezlink.EZLinkTransitData;
-
-import static junit.framework.TestCase.assertEquals;
+import au.id.micolous.metrodroid.transit.ezlink.EZLinkTransitData
+import kotlin.test.Test
+import kotlin.test.assertEquals
 
 /**
  * Tests StationTableReader (MdST). This uses the ezlink stop database.
  */
 
-public class MRTReaderTest extends BaseInstrumentedTest {
+class MRTReaderTest : BaseInstrumentedTest() {
     @Test
-    public void testGetStation() {
-        setLocale("en-US");
-        showRawStationIds(false);
-        showLocalAndEnglish(false);
+    fun testGetStation() {
+        setLocale("en-US")
+        showRawStationIds(false)
+        showLocalAndEnglish(false)
 
-        Station s = EZLinkTransitData.getStation("CGA");
-        assertEquals("Changi Airport", s.getStationName());
-        assertEquals(1.3575, Float.valueOf(s.getLatitude()), 0.001);
-        assertEquals(103.9885, Float.valueOf(s.getLongitude()), 0.001);
+        val s = EZLinkTransitData.getStation("CGA")
+        assertEquals("Changi Airport", s.getStationName())
+        assertNear(1.3575, s.latitude!!.toDouble(), 0.001)
+        assertNear(103.9885, s.longitude!!.toDouble(), 0.001)
     }
 }

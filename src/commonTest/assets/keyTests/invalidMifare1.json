@@ -3,7 +3,7 @@
   "TagId": "12345678",
   "keys": [
     {
-      "type": "KeyA"
+      "type": "KeyA":
       "key": "010203040506"
     }
   ]

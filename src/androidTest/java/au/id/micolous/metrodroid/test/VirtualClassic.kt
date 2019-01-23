@@ -1,8 +1,8 @@
 package au.id.micolous.metrodroid.test
 
-import android.util.Log
 import au.id.micolous.metrodroid.card.classic.ClassicCardTech
 import au.id.micolous.metrodroid.key.ClassicSectorKey
+import android.util.Log
 import au.id.micolous.metrodroid.xml.ImmutableByteArray
 import au.id.micolous.metrodroid.xml.toImmutable
 

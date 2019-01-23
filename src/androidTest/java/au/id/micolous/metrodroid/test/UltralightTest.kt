@@ -18,17 +18,14 @@
  */
 package au.id.micolous.metrodroid.test
 
-import au.id.micolous.metrodroid.card.XmlGenericCardFormat
 import au.id.micolous.metrodroid.card.ultralight.UltralightCard
-import au.id.micolous.metrodroid.transit.unknown.BlankUltralightTransitData
-import org.junit.Test
+import au.id.micolous.metrodroid.card.XmlCardFormat
+import kotlin.test.Test
 
-class UltralightTest: CardReaderWithAssetDumpsTest<BlankUltralightTransitData, UltralightCard>(
-        BlankUltralightTransitData::class.java, XmlGenericCardFormat(UltralightCard::class.java)) {
-
+class UltralightTest: CardReaderWithAssetDumpsTest(XmlCardFormat()) {
     @Test
     fun testOldFile() {
-        val card = loadCard("mfu/blank_old.xml")
+        val card = loadCard<UltralightCard>("mfu/blank_old.xml")
         // FIXME: Make sure this emits BlankUltralightTransitData in tests
     }
 }

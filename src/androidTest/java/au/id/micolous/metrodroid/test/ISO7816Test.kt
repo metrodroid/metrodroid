@@ -18,27 +18,23 @@
  */
 package au.id.micolous.metrodroid.test
 
-import au.id.micolous.metrodroid.card.Card
-import au.id.micolous.metrodroid.card.TagReaderFeedbackInterface
-import au.id.micolous.metrodroid.card.XmlCardFormat
 import au.id.micolous.metrodroid.card.iso7816.ISO7816Card
-import au.id.micolous.metrodroid.transit.CardInfo
-import au.id.micolous.metrodroid.transit.TransitData
+import android.util.Log
+import au.id.micolous.metrodroid.card.XmlCardFormat
 import au.id.micolous.metrodroid.transit.mobib.MobibTransitData
-import junit.framework.TestCase.assertEquals
-import org.junit.Test
+import kotlin.test.Test
+import kotlin.test.assertEquals
 
-class ISO7816Test : CardReaderWithAssetDumpsTest<TransitData, Card>
-    (TransitData::class.java, XmlCardFormat()) {
+class ISO7816Test : CardReaderWithAssetDumpsTest(XmlCardFormat()) {
 
     companion object {
-        val TAG = ISO7816Test::class.java.simpleName
+        private const val TAG = "ISO7816Test"
     }
 
     @Test
-    fun testIso7816Card() {
+    fun testIso7816Card() = runAsync {
         // Load up a Mobib card that is basically empty
-        val card = loadCard("iso7816/mobib_blank.xml")
+        val card = loadCard<ISO7816Card>("iso7816/mobib_blank.xml")
 
         // Environment check
         assertEquals(MobibTransitData.NAME, card.parseTransitIdentity()?.name)

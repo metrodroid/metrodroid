@@ -18,14 +18,23 @@
  */
 package au.id.micolous.metrodroid.test
 
-import android.util.Log
 import au.id.micolous.metrodroid.card.CardTransceiver
 import au.id.micolous.metrodroid.card.iso7816.ISO7816Application
 import au.id.micolous.metrodroid.card.iso7816.ISO7816Card
 import au.id.micolous.metrodroid.card.iso7816.ISO7816File
-import au.id.micolous.metrodroid.card.iso7816.ISO7816Protocol.*
+import au.id.micolous.metrodroid.card.iso7816.ISO7816Protocol.CLASS_ISO7816
+import au.id.micolous.metrodroid.card.iso7816.ISO7816Protocol.CNA_NO_CURRENT_EF
+import au.id.micolous.metrodroid.card.iso7816.ISO7816Protocol.ERROR_COMMAND_NOT_ALLOWED
+import au.id.micolous.metrodroid.card.iso7816.ISO7816Protocol.ERROR_WRONG_PARAMETERS
+import au.id.micolous.metrodroid.card.iso7816.ISO7816Protocol.INSTRUCTION_ISO7816_READ_BINARY
+import au.id.micolous.metrodroid.card.iso7816.ISO7816Protocol.INSTRUCTION_ISO7816_READ_RECORD
+import au.id.micolous.metrodroid.card.iso7816.ISO7816Protocol.INSTRUCTION_ISO7816_SELECT
+import au.id.micolous.metrodroid.card.iso7816.ISO7816Protocol.SELECT_BY_NAME
+import au.id.micolous.metrodroid.card.iso7816.ISO7816Protocol.STATUS_OK
+import au.id.micolous.metrodroid.card.iso7816.ISO7816Protocol.WP_FILE_NOT_FOUND
+import au.id.micolous.metrodroid.card.iso7816.ISO7816Protocol.WP_RECORD_NOT_FOUND
 import au.id.micolous.metrodroid.card.iso7816.ISO7816Selector
-import au.id.micolous.metrodroid.util.Utils
+import android.util.Log
 import au.id.micolous.metrodroid.xml.ImmutableByteArray
 
 /**
@@ -33,7 +42,7 @@ import au.id.micolous.metrodroid.xml.ImmutableByteArray
  *
  * This is intended as a test fixture.
  */
-open class VirtualISO7816Card(private val mCard : ISO7816Card) : CardTransceiver {
+class VirtualISO7816Card(private val mCard : ISO7816Card) : CardTransceiver {
     private var currentApplication : ISO7816Application? = null
     private var currentPath : ISO7816Selector? = null
     private var currentFile : ISO7816File? = null
@@ -85,8 +94,7 @@ open class VirtualISO7816Card(private val mCard : ISO7816Card) : CardTransceiver
             // currentFile may be null
             currentFile = app.getFile(path)
             currentRecord = 0
-            val cf = currentFile?.selector?.formatString() ?: "null"
-            Log.d(TAG, "... success! currentFile = $cf")
+            Log.d(TAG, "... success! currentPath = $currentPath")
             true
         } else {
             Log.d(TAG, "... not found!")
@@ -145,6 +153,7 @@ open class VirtualISO7816Card(private val mCard : ISO7816Card) : CardTransceiver
                     currentApplication = application
                     currentFile = null
                     currentRecord = 0
+                    currentPath = null
                     return truncateOkResponse(application.appData, retLength)
                 }
             }
@@ -163,7 +172,7 @@ open class VirtualISO7816Card(private val mCard : ISO7816Card) : CardTransceiver
                 return OK
             }
 
-            return if (!cd(Utils.byteArrayToInt(params))) {
+            return if (!cd(params.byteArrayToInt())) {
                 FILE_NOT_FOUND
             } else {
                 truncateOkResponse(currentFile?.fci ?: ImmutableByteArray.empty(), retLength)
@@ -192,7 +201,9 @@ open class VirtualISO7816Card(private val mCard : ISO7816Card) : CardTransceiver
             }
 
             val f = currentFile ?: return FILE_NOT_FOUND // file doesn't exist
-            Log.d(TAG, "... current file = ${f.selector?.formatString() ?: "null"}")
+            Log.d(TAG, "... current file = $currentPath")
+            if (f.binaryData == null)
+                return COMMAND_NOT_ALLOWED
             return truncateOkResponse(f.binaryData, retLength)
         }
     }
@@ -209,13 +220,13 @@ open class VirtualISO7816Card(private val mCard : ISO7816Card) : CardTransceiver
             currentRecord = if (p1i != 0) p1i else currentRecord
 
             val file = if (ef == 0) {
-                app.getFile(currentPath)
+                app.getFile(currentPath ?: return FILE_NOT_FOUND)
             } else {
                 app.getSfiFile(ef)
             } ?: return FILE_NOT_FOUND
 
-            val data = file.getRecord(currentRecord)?.data ?: return RECORD_NOT_FOUND
-            return truncateOkResponse(data, retLength)
+            val data = file.getRecord(currentRecord) ?: return RECORD_NOT_FOUND
+            return truncateOkResponse(data.data, retLength)
         } else {
             // Record identifier in P1 (not supported)
             return COMMAND_NOT_ALLOWED
@@ -227,7 +238,7 @@ open class VirtualISO7816Card(private val mCard : ISO7816Card) : CardTransceiver
         val FILE_NOT_FOUND = ImmutableByteArray.of(ERROR_WRONG_PARAMETERS, WP_FILE_NOT_FOUND)
         val RECORD_NOT_FOUND = ImmutableByteArray.of(ERROR_WRONG_PARAMETERS, WP_RECORD_NOT_FOUND)
         val OK = ImmutableByteArray.of(STATUS_OK, 0)
-        val TAG = VirtualISO7816Card::class.java.simpleName
+        const val TAG = "VirtualISO7816Card"
 
         private fun byteToInt(i : Byte) : Int {
             return i.toInt() and 0xff

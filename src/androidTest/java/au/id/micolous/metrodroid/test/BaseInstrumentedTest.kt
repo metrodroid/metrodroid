@@ -8,19 +8,21 @@ import android.text.style.TtsSpan
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.platform.app.InstrumentationRegistry
 import au.id.micolous.metrodroid.MetrodroidApplication
-import au.id.micolous.metrodroid.util.ImmutableMapBuilder
 import junit.framework.TestCase.assertEquals
-import org.apache.commons.lang3.ArrayUtils
+import kotlinx.coroutines.runBlocking
 import org.hamcrest.Matcher
 import org.hamcrest.MatcherAssert.assertThat
 import org.junit.runner.RunWith
 import java.io.DataInputStream
-import java.io.IOException
 import java.io.InputStream
 import java.util.*
 
+actual fun <T> runAsync(block: suspend () -> T) {
+    runBlocking { block() }
+}
+
 @RunWith(AndroidJUnit4::class)
-abstract class BaseInstrumentedTest {
+actual abstract class BaseInstrumentedTestPlatform {
     val context : Context
             get() = InstrumentationRegistry.getInstrumentation().context
 
@@ -31,7 +33,7 @@ abstract class BaseInstrumentedTest {
      *
      * @param languageTag ITEF BCP-47 language tag string
      */
-    fun setLocale(languageTag: String) {
+    actual fun setLocale(languageTag: String) {
         val l = compatLocaleForLanguageTag(languageTag)
         Locale.setDefault(l)
         val r = context.resources
@@ -56,33 +58,23 @@ abstract class BaseInstrumentedTest {
                 .apply()
     }
 
-    fun showRawStationIds(state: Boolean) {
+    actual fun showRawStationIds(state: Boolean) {
         setBooleanPref(MetrodroidApplication.PREF_SHOW_RAW_IDS, state)
     }
 
-    fun showLocalAndEnglish(state: Boolean) {
+    actual fun showLocalAndEnglish(state: Boolean) {
         setBooleanPref(MetrodroidApplication.PREF_SHOW_LOCAL_AND_ENGLISH, state)
     }
 
-    fun loadAsset(path: String) : InputStream {
-        return DataInputStream(context.assets.open(path, AssetManager.ACCESS_RANDOM))
-    }
-
-    fun listAsset(path: String) : List <String>? = context.assets.list(path)?.toList()
-
-    fun loadSmallAssetBytes(path: String): ByteArray {
-        val s = loadAsset(path)
-        val length = s.available()
-        if (length > 10240 || length <= 0) {
-            throw IOException("Expected 0 - 10240 bytes")
+    actual fun loadAssetSafe(path: String) : InputStream? {
+        try {
+            return DataInputStream(context.assets.open(path, AssetManager.ACCESS_RANDOM))
+        } catch (e: Exception) {
+            return null
         }
-
-        val out = ByteArray(length)
-        val realLen = s.read(out)
-
-        // Return truncated buffer
-        return ArrayUtils.subarray(out, 0, realLen)
     }
+
+    actual fun listAsset(path: String) : List <String>? = context.assets.list(path)?.toList()
 
     fun assertSpannedEquals(expected: String, actual: Spanned) {
         // nbsp -> sp
@@ -111,26 +103,25 @@ abstract class BaseInstrumentedTest {
     }
 
     companion object {
-        private val LOCALES = ImmutableMapBuilder<String, Locale>()
-                .put("en", Locale.ENGLISH)
-                .put("en-AU", Locale("en", "AU"))
-                .put("en-CA", Locale.CANADA)
-                .put("en-GB", Locale.UK)
-                .put("en-US", Locale.US)
-                .put("fr", Locale.FRENCH)
-                .put("fr-CA", Locale.CANADA_FRENCH)
-                .put("fr-FR", Locale.FRANCE)
-                .put("ja", Locale.JAPANESE)
-                .put("ja-JP", Locale.JAPAN)
-                .put("zh-CN", Locale.SIMPLIFIED_CHINESE)
-                .put("zh-TW", Locale.TRADITIONAL_CHINESE)
-                .build()
+        private val LOCALES = mapOf(
+                "en" to Locale.ENGLISH,
+                "en-AU" to Locale("en", "AU"),
+                "en-CA" to Locale.CANADA,
+                "en-GB" to Locale.UK,
+                "en-US" to Locale.US,
+                "fr" to Locale.FRENCH,
+                "fr-CA" to Locale.CANADA_FRENCH,
+                "fr-FR" to Locale.FRANCE,
+                "ja" to Locale.JAPANESE,
+                "ja-JP" to Locale.JAPAN,
+                "zh-CN" to Locale.SIMPLIFIED_CHINESE,
+                "zh-TW" to Locale.TRADITIONAL_CHINESE)
 
         private fun compatLocaleForLanguageTag(languageTag: String): Locale {
             return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
                 Locale.forLanguageTag(languageTag)
             } else {
-                LOCALES.get(languageTag)
+                LOCALES[languageTag]
                         ?: throw IllegalArgumentException("For API < 21, add entry to LOCALES for: $languageTag")
             }
         }
