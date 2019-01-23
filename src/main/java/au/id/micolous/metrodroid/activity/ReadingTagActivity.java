@@ -44,6 +44,7 @@ import android.widget.TextView;
 import au.id.micolous.metrodroid.card.Card;
 import au.id.micolous.metrodroid.card.TagReaderFeedbackInterface;
 import au.id.micolous.metrodroid.card.UnsupportedTagException;
+import au.id.micolous.metrodroid.multi.Localizer;
 import au.id.micolous.metrodroid.provider.CardProvider;
 import au.id.micolous.metrodroid.provider.CardsTableColumns;
 import au.id.micolous.metrodroid.transit.CardInfo;
@@ -194,7 +195,7 @@ public class ReadingTagActivity extends MetrodroidActivity implements TagReaderF
                 Card card = Card.dumpTag(ImmutableByteArray.Companion.fromByteArray(a.tagId),
                         a.tag, ReadingTagActivity.this);
 
-                ReadingTagActivity.this.updateStatusText(Utils.localizeString(R.string.saving_card));
+                ReadingTagActivity.this.updateStatusText(Localizer.INSTANCE.localizeString(R.string.saving_card));
 
                 String cardXml = card.toXml();
 

@@ -49,6 +49,7 @@ import android.widget.ResourceCursorAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import au.id.micolous.metrodroid.multi.Localizer;
 import au.id.micolous.metrodroid.util.Preferences;
 import org.apache.commons.io.IOUtils;
 import org.jetbrains.annotations.NonNls;
@@ -128,10 +129,10 @@ public class KeysFragment extends ListFragment implements AdapterView.OnItemLong
 
                 String deleteMessage;
                 if (keys != null) {
-                    deleteMessage = Utils.localizeString(R.string.delete_key_confirm_message,
+                    deleteMessage = Localizer.INSTANCE.localizeString(R.string.delete_key_confirm_message,
                             keys.getDescription(), keys.getFileType());
                 } else {
-                    deleteMessage = Utils.localizeString(R.string.delete_key_confirm_message,
+                    deleteMessage = Localizer.INSTANCE.localizeString(R.string.delete_key_confirm_message,
                             "??", "??");
                 }
 
@@ -165,7 +166,7 @@ public class KeysFragment extends ListFragment implements AdapterView.OnItemLong
                     i.setType("application/json");
                     i.putExtra(Intent.EXTRA_TITLE, STD_EXPORT_FILENAME);
 
-                    startActivityForResult(Intent.createChooser(i, Utils.localizeString(R.string.export_filename)), REQUEST_SAVE_FILE);
+                    startActivityForResult(Intent.createChooser(i, Localizer.INSTANCE.localizeString(R.string.export_filename)), REQUEST_SAVE_FILE);
                 }
             }
 
@@ -259,7 +260,7 @@ public class KeysFragment extends ListFragment implements AdapterView.OnItemLong
             }
 
             if (item.getItemId() == R.id.add_key)
-                startActivityForResult(Intent.createChooser(i, Utils.localizeString(R.string.select_file)),
+                startActivityForResult(Intent.createChooser(i, Localizer.INSTANCE.localizeString(R.string.select_file)),
                         REQUEST_SELECT_FILE);
             return true;
         } else if (item.getItemId() == R.id.key_more_info) {

@@ -47,6 +47,7 @@ import au.id.micolous.metrodroid.key.ClassicCardKeys;
 import au.id.micolous.metrodroid.key.ClassicKeys;
 import au.id.micolous.metrodroid.key.ClassicSectorKey;
 import au.id.micolous.metrodroid.key.InsertKeyTask;
+import au.id.micolous.metrodroid.multi.Localizer;
 import au.id.micolous.metrodroid.util.KeyFormat;
 import au.id.micolous.metrodroid.util.Preferences;
 import au.id.micolous.metrodroid.util.Utils;
@@ -197,7 +198,7 @@ public class AddKeyActivity extends MetrodroidActivity {
             }
 
             ((TextView) findViewById(R.id.key_data)).setText(
-                    Utils.localizePlural(R.plurals.hidden_key_data,
+                    Localizer.INSTANCE.localizePlural(R.plurals.hidden_key_data,
                             mKeyData.getSourceDataLength(),
                             mKeyData.getSourceDataLength()));
         } else {

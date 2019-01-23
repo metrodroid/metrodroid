@@ -23,6 +23,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.util.Log;
 
+import au.id.micolous.metrodroid.multi.Localizer;
 import org.jetbrains.annotations.NonNls;
 import org.simpleframework.xml.Attribute;
 import org.simpleframework.xml.Element;
@@ -183,7 +184,7 @@ public class ChinaCard extends ISO7816Application {
                             if (!cl.isEmpty()) {
                                 final CardInfo ci = cl.get(0);
 
-                                feedbackInterface.updateStatusText(Utils.localizeString(R.string.card_reading_type,
+                                feedbackInterface.updateStatusText(Localizer.INSTANCE.localizeString(R.string.card_reading_type,
                                         ci.getName()));
                                 feedbackInterface.showCardType(ci);
                             }

@@ -25,6 +25,7 @@ import android.support.annotation.Nullable;
 import java.util.Calendar;
 
 import au.id.micolous.farebot.R;
+import au.id.micolous.metrodroid.multi.Localizer;
 import au.id.micolous.metrodroid.transit.Subscription;
 import au.id.micolous.metrodroid.util.Utils;
 
@@ -73,29 +74,29 @@ class ClipperUltralightSubscription extends Subscription {
     public String getSubscriptionName() {
         switch (mProduct & 0xf) {
             case 0x3:
-                return Utils.localizeString(R.string.clipper_single,
-                        Utils.localizeString(R.string.clipper_ticket_type_adult));
+                return Localizer.INSTANCE.localizeString(R.string.clipper_single,
+                        Localizer.INSTANCE.localizeString(R.string.clipper_ticket_type_adult));
             case 0x4:
-                return Utils.localizeString(R.string.clipper_return,
-                        Utils.localizeString(R.string.clipper_ticket_type_adult));
+                return Localizer.INSTANCE.localizeString(R.string.clipper_return,
+                        Localizer.INSTANCE.localizeString(R.string.clipper_ticket_type_adult));
             case 0x5:
-                return Utils.localizeString(R.string.clipper_single,
-                        Utils.localizeString(R.string.clipper_ticket_type_senior));
+                return Localizer.INSTANCE.localizeString(R.string.clipper_single,
+                        Localizer.INSTANCE.localizeString(R.string.clipper_ticket_type_senior));
             case 0x6:
-                return Utils.localizeString(R.string.clipper_return,
-                        Utils.localizeString(R.string.clipper_ticket_type_senior));
+                return Localizer.INSTANCE.localizeString(R.string.clipper_return,
+                        Localizer.INSTANCE.localizeString(R.string.clipper_ticket_type_senior));
             case 0x7:
-                return Utils.localizeString(R.string.clipper_single,
-                        Utils.localizeString(R.string.clipper_ticket_type_rtc));
+                return Localizer.INSTANCE.localizeString(R.string.clipper_single,
+                        Localizer.INSTANCE.localizeString(R.string.clipper_ticket_type_rtc));
             case 0x8:
-                return Utils.localizeString(R.string.clipper_return,
-                        Utils.localizeString(R.string.clipper_ticket_type_rtc));
+                return Localizer.INSTANCE.localizeString(R.string.clipper_return,
+                        Localizer.INSTANCE.localizeString(R.string.clipper_ticket_type_rtc));
             case 0x9:
-                return Utils.localizeString(R.string.clipper_single,
-                        Utils.localizeString(R.string.clipper_ticket_type_youth));
+                return Localizer.INSTANCE.localizeString(R.string.clipper_single,
+                        Localizer.INSTANCE.localizeString(R.string.clipper_ticket_type_youth));
             case 0xa:
-                return Utils.localizeString(R.string.clipper_return,
-                        Utils.localizeString(R.string.clipper_ticket_type_youth));
+                return Localizer.INSTANCE.localizeString(R.string.clipper_return,
+                        Localizer.INSTANCE.localizeString(R.string.clipper_ticket_type_youth));
             default:
                 return Integer.toHexString(mProduct);
         }

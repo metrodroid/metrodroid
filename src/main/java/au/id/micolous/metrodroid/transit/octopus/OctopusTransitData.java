@@ -29,6 +29,7 @@ import au.id.micolous.metrodroid.card.CardType;
 import au.id.micolous.metrodroid.card.felica.FelicaCard;
 import au.id.micolous.metrodroid.card.felica.FelicaCardTransitFactory;
 import au.id.micolous.metrodroid.card.felica.FelicaService;
+import au.id.micolous.metrodroid.multi.Localizer;
 import au.id.micolous.metrodroid.transit.TransitBalance;
 import au.id.micolous.metrodroid.transit.TransitBalanceStored;
 import au.id.micolous.metrodroid.transit.CardInfo;
@@ -68,7 +69,7 @@ public class OctopusTransitData extends TransitData {
 
     private static final CardInfo CARD_INFO = new CardInfo.Builder()
             .setImageId(R.drawable.octopus_card, R.drawable.octopus_card_alpha)
-            .setName(Utils.localizeString(R.string.card_name_octopus))
+            .setName(Localizer.INSTANCE.localizeString(R.string.card_name_octopus))
             .setLocation(R.string.location_hong_kong)
             .setCardType(CardType.FeliCa)
             .build();
@@ -151,14 +152,14 @@ public class OctopusTransitData extends TransitData {
             if (card.getSystem(SYSTEMCODE_SZT) != null) {
                 if (card.getSystem(SYSTEMCODE_OCTOPUS) != null) {
                     // Dual-mode card.
-                    return new TransitIdentity(Utils.localizeString(R.string.card_name_octopus_szt_dual), null);
+                    return new TransitIdentity(Localizer.INSTANCE.localizeString(R.string.card_name_octopus_szt_dual), null);
                 } else {
                     // SZT-only card.
-                    return new TransitIdentity(Utils.localizeString(R.string.card_name_szt), null);
+                    return new TransitIdentity(Localizer.INSTANCE.localizeString(R.string.card_name_szt), null);
                 }
             } else {
                 // Octopus-only card.
-                return new TransitIdentity(Utils.localizeString(R.string.card_name_octopus), null);
+                return new TransitIdentity(Localizer.INSTANCE.localizeString(R.string.card_name_octopus), null);
             }
         }
     };
@@ -196,12 +197,12 @@ public class OctopusTransitData extends TransitData {
     public String getCardName() {
         if (mHasShenzhen) {
             if (mHasOctopus) {
-                return Utils.localizeString(R.string.card_name_octopus_szt_dual);
+                return Localizer.INSTANCE.localizeString(R.string.card_name_octopus_szt_dual);
             } else {
-                return Utils.localizeString(R.string.card_name_szt);
+                return Localizer.INSTANCE.localizeString(R.string.card_name_szt);
             }
         } else {
-            return Utils.localizeString(R.string.card_name_octopus);
+            return Localizer.INSTANCE.localizeString(R.string.card_name_octopus);
         }
     }
 }

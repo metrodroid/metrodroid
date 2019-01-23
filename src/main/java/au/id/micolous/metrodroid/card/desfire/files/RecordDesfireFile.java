@@ -18,6 +18,7 @@
  */
 package au.id.micolous.metrodroid.card.desfire.files;
 
+import au.id.micolous.metrodroid.multi.Localizer;
 import au.id.micolous.metrodroid.util.NumberUtils;
 import org.apache.commons.lang3.ArrayUtils;
 import org.simpleframework.xml.Root;
@@ -68,7 +69,7 @@ public class RecordDesfireFile extends DesfireFile {
         if (recSize == 0)
             return super.getRawData();
 
-        String title = Utils.localizeString(R.string.file_title_format,
+        String title = Localizer.INSTANCE.localizeString(R.string.file_title_format,
                 NumberUtils.INSTANCE.intToHex(getId()));
         String subtitle = getFileSettings().getSubtitle();
 
@@ -83,7 +84,7 @@ public class RecordDesfireFile extends DesfireFile {
                 int len = recSize;
                 if (start + len > fileData.getSize())
                     len = fileData.getSize() - start;
-                data.add(ListItemRecursive.collapsedValue(Utils.localizeString(R.string.record_title_format, i), null,
+                data.add(ListItemRecursive.collapsedValue(Localizer.INSTANCE.localizeString(R.string.record_title_format, i), null,
                         fileData.sliceOffLen(start, len).toHexDump()));
             }
         }

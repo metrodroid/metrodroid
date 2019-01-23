@@ -24,6 +24,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.util.Log;
 
+import au.id.micolous.metrodroid.multi.Localizer;
 import au.id.micolous.metrodroid.util.NumberUtils;
 import org.apache.commons.lang3.ArrayUtils;
 import org.jetbrains.annotations.NonNls;
@@ -283,9 +284,9 @@ public abstract class En1545Subscription extends Subscription {
             li.add(new ListItem(R.string.passenger_class, Integer.toString(clas)));
         Integer receipt = mParsed.getInt(CONTRACT_RECEIPT_DELIVERED);
         if (receipt != null && receipt != 0)
-            li.add(new ListItem(Utils.localizeString(R.string.with_receipt)));
+            li.add(new ListItem(Localizer.INSTANCE.localizeString(R.string.with_receipt)));
         if (receipt != null && receipt == 0)
-            li.add(new ListItem(Utils.localizeString(R.string.without_receipt)));
+            li.add(new ListItem(Localizer.INSTANCE.localizeString(R.string.without_receipt)));
         return li;
     }
 }

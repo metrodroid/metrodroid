@@ -13,6 +13,7 @@ import au.id.micolous.metrodroid.card.desfire.DesfireCard;
 import au.id.micolous.metrodroid.card.desfire.DesfireCardTransitFactory;
 import au.id.micolous.metrodroid.card.desfire.files.DesfireFile;
 import au.id.micolous.metrodroid.card.desfire.files.UnauthorizedDesfireFile;
+import au.id.micolous.metrodroid.multi.Localizer;
 import au.id.micolous.metrodroid.transit.TransitData;
 import au.id.micolous.metrodroid.transit.TransitIdentity;
 import au.id.micolous.metrodroid.util.Utils;
@@ -98,7 +99,7 @@ public class UnauthorizedDesfireTransitData extends UnauthorizedTransitData {
             if (card.getApplication(type.first) != null)
                 return type.second;
         }
-        return Utils.localizeString(R.string.locked_mfd_card);
+        return Localizer.INSTANCE.localizeString(R.string.locked_mfd_card);
     }
 
     @Override

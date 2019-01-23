@@ -36,6 +36,7 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import au.id.micolous.metrodroid.multi.Localizer;
 import au.id.micolous.metrodroid.util.Preferences;
 import org.apache.commons.io.IOUtils;
 import org.simpleframework.xml.Serializer;
@@ -89,7 +90,7 @@ public class AdvancedCardInfoActivity extends MetrodroidActivity {
             scannedAt = TripObfuscator.maybeObfuscateTS(scannedAt);
             Spanned date = Utils.dateFormat(scannedAt);
             Spanned time = Utils.timeFormat(scannedAt);
-            actionBar.setSubtitle(Utils.localizeString(R.string.scanned_at_format, time, date));
+            actionBar.setSubtitle(Localizer.INSTANCE.localizeString(R.string.scanned_at_format, time, date));
         }
 
         if (getIntent().hasExtra(EXTRA_ERROR)) {
@@ -161,7 +162,7 @@ public class AdvancedCardInfoActivity extends MetrodroidActivity {
                         i.addCategory(Intent.CATEGORY_OPENABLE);
                         i.setType("text/xml");
                         i.putExtra(Intent.EXTRA_TITLE, filename);
-                        startActivityForResult(Intent.createChooser(i, Utils.localizeString(R.string.export_filename)), REQUEST_SAVE_FILE);
+                        startActivityForResult(Intent.createChooser(i, Localizer.INSTANCE.localizeString(R.string.export_filename)), REQUEST_SAVE_FILE);
                     }
 
                     // Intentionally not available on pre-Kitkat (for compatibility reasons).

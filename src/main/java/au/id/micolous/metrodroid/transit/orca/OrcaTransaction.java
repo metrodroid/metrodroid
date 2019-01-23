@@ -30,6 +30,7 @@ import android.support.annotation.Nullable;
 
 import au.id.micolous.farebot.R;
 import au.id.micolous.metrodroid.card.desfire.files.DesfireRecord;
+import au.id.micolous.metrodroid.multi.Localizer;
 import au.id.micolous.metrodroid.transit.Station;
 import au.id.micolous.metrodroid.transit.Transaction;
 import au.id.micolous.metrodroid.transit.Trip;
@@ -121,7 +122,7 @@ public class OrcaTransaction extends Transaction {
     @Override
     public List<String> getRouteNames() {
         if (mIsTopup) {
-            return Collections.singletonList(Utils.localizeString(R.string.orca_topup));
+            return Collections.singletonList(Localizer.INSTANCE.localizeString(R.string.orca_topup));
         } else if (isLink()) {
             return Collections.singletonList("Link Light Rail");
         } else if (isSounder()) {

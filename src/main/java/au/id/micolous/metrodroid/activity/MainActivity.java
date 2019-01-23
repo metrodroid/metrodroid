@@ -37,6 +37,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 
+import au.id.micolous.metrodroid.multi.Localizer;
 import au.id.micolous.metrodroid.util.Preferences;
 import au.id.micolous.metrodroid.util.Utils;
 
@@ -108,7 +109,7 @@ public class MainActivity extends MetrodroidActivity {
         TextView directions = findViewById(R.id.directions);
 
         if (obfuscationFlagsOn > 0) {
-            directions.setText(Utils.localizePlural(R.plurals.obfuscation_mode_notice,
+            directions.setText(Localizer.INSTANCE.localizePlural(R.plurals.obfuscation_mode_notice,
                     obfuscationFlagsOn, obfuscationFlagsOn));
         } else if (!hasNfc) {
             directions.setText(R.string.nfc_unavailable);

@@ -41,6 +41,7 @@ import java.util.ArrayList;
 import au.id.micolous.farebot.R;
 import au.id.micolous.metrodroid.MetrodroidApplication;
 import au.id.micolous.metrodroid.card.CardType;
+import au.id.micolous.metrodroid.multi.Localizer;
 import au.id.micolous.metrodroid.transit.CardInfo;
 import au.id.micolous.metrodroid.util.Utils;
 
@@ -132,17 +133,17 @@ public class SupportedCardsActivity extends MetrodroidActivity {
 
             // Keys being required is secondary to the card not being supported.
             if (info.getKeysRequired()) {
-                notes += Utils.localizeString(R.string.keys_required) + " ";
+                notes += Localizer.INSTANCE.localizeString(R.string.keys_required) + " ";
                 convertView.findViewById(R.id.card_locked).setVisibility(View.VISIBLE);
             } else
                 convertView.findViewById(R.id.card_locked).setVisibility(View.GONE);
 
             if (info.getPreview()) {
-                notes += Utils.localizeString(R.string.card_preview_reader) + " ";
+                notes += Localizer.INSTANCE.localizeString(R.string.card_preview_reader) + " ";
             }
 
             if (info.getResourceExtraNote() != 0) {
-                notes += Utils.localizeString(info.getResourceExtraNote()) + " ";
+                notes += Localizer.INSTANCE.localizeString(info.getResourceExtraNote()) + " ";
             }
 
             TextView note = convertView.findViewById(R.id.card_note);

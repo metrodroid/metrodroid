@@ -22,6 +22,7 @@ package au.id.micolous.metrodroid.transit.kiev;
 import android.os.Parcel;
 import android.support.annotation.Nullable;
 
+import au.id.micolous.metrodroid.multi.Localizer;
 import org.jetbrains.annotations.NonNls;
 
 import java.util.Calendar;
@@ -117,7 +118,7 @@ public class KievTrip extends Trip {
     @Override
     public String getAgencyName(boolean isShort) {
         if (mTransactionType.equals("84/04/40/53"))
-            return Utils.localizeString(R.string.mode_metro);
+            return Localizer.INSTANCE.localizeString(R.string.mode_metro);
         return mTransactionType;
     }
 

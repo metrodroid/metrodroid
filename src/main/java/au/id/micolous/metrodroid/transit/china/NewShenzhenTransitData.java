@@ -24,6 +24,7 @@ import android.os.Parcelable;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
+import au.id.micolous.metrodroid.multi.Localizer;
 import au.id.micolous.metrodroid.util.NumberUtils;
 import org.jetbrains.annotations.NonNls;
 
@@ -48,7 +49,7 @@ public class NewShenzhenTransitData extends ChinaTransitData {
 
     public static final CardInfo CARD_INFO = new CardInfo.Builder()
             .setImageId(R.drawable.szt_card)
-            .setName(Utils.localizeString(R.string.card_name_szt))
+            .setName(Localizer.INSTANCE.localizeString(R.string.card_name_szt))
             .setLocation(R.string.location_shenzhen)
             .setCardType(CardType.FeliCa)
             .setPreview()
@@ -87,7 +88,7 @@ public class NewShenzhenTransitData extends ChinaTransitData {
 
     @Override
     public String getCardName() {
-        return Utils.localizeString(R.string.card_name_szt);
+        return Localizer.INSTANCE.localizeString(R.string.card_name_szt);
     }
 
     @Override
@@ -109,7 +110,7 @@ public class NewShenzhenTransitData extends ChinaTransitData {
 
         @Override
         public TransitIdentity parseTransitIdentity(@NonNull ChinaCard card) {
-            return new TransitIdentity(Utils.localizeString(R.string.card_name_szt), formatSerial(parseSerial(card)));
+            return new TransitIdentity(Localizer.INSTANCE.localizeString(R.string.card_name_szt), formatSerial(parseSerial(card)));
         }
 
         @Override

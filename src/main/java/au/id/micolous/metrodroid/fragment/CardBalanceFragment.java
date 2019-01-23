@@ -37,6 +37,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import au.id.micolous.metrodroid.activity.CardInfoActivity;
+import au.id.micolous.metrodroid.multi.Localizer;
 import au.id.micolous.metrodroid.transit.Subscription;
 import au.id.micolous.metrodroid.transit.TransitBalance;
 import au.id.micolous.metrodroid.transit.TransitData;
@@ -153,11 +154,11 @@ public class CardBalanceFragment extends ListFragment {
             Integer totalTrips = subscription.getTotalTripCount();
 
             if (remainingTrips != null && totalTrips != null) {
-                tripsView.setText(Utils.localizePlural(R.plurals.trips_remaining_total,
+                tripsView.setText(Localizer.INSTANCE.localizePlural(R.plurals.trips_remaining_total,
                         remainingTrips, remainingTrips, totalTrips));
                 tripsView.setVisibility(View.VISIBLE);
             } else if (remainingTrips != null) {
-                tripsView.setText(Utils.localizePlural(R.plurals.trips_remaining,
+                tripsView.setText(Localizer.INSTANCE.localizePlural(R.plurals.trips_remaining,
                         remainingTrips, remainingTrips));
                 tripsView.setVisibility(View.VISIBLE);
             } else {
@@ -166,7 +167,7 @@ public class CardBalanceFragment extends ListFragment {
 
             Integer remainingDays = subscription.getRemainingDayCount();
             if (remainingDays != null) {
-                daysView.setText(Utils.localizePlural(R.plurals.remaining_day_count,
+                daysView.setText(Localizer.INSTANCE.localizePlural(R.plurals.remaining_day_count,
                         remainingDays, remainingDays));
                 daysView.setVisibility(View.VISIBLE);
             } else {
@@ -205,7 +206,7 @@ public class CardBalanceFragment extends ListFragment {
 
             if (pax >= 1) {
                 paxTextView.setText(String.format(Locale.getDefault(), "%d", pax));
-                paxIcon.setContentDescription(Utils.localizePlural(R.plurals.passengers, pax));
+                paxIcon.setContentDescription(Localizer.INSTANCE.localizePlural(R.plurals.passengers, pax));
 
                 paxIcon.setImageDrawable(AppCompatResources.getDrawable(getContext(),
                         pax == 1 ? R.drawable.material_ic_person_24dp : R.drawable.material_ic_group_24dp));

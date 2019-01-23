@@ -21,6 +21,7 @@
 package au.id.micolous.metrodroid.key
 
 import au.id.micolous.farebot.R
+import au.id.micolous.metrodroid.multi.Localizer
 import au.id.micolous.metrodroid.util.Utils
 import au.id.micolous.metrodroid.xml.ImmutableByteArray
 import org.json.JSONException
@@ -75,7 +76,7 @@ class ClassicCardKeys(override var uid: String?,
      * Returns a localised description of the key file type and its contents.
      */
     override val fileType: String
-        get() = Utils.localizePlural(R.plurals.keytype_mfc, keyCount, keyCount)
+        get() = Localizer.localizePlural(R.plurals.keytype_mfc, keyCount, keyCount)
 
     companion object {
         /**

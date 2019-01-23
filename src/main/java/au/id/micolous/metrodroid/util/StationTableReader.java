@@ -27,6 +27,7 @@ import android.support.annotation.VisibleForTesting;
 import android.util.Log;
 import android.util.SparseArray;
 
+import au.id.micolous.metrodroid.multi.Localizer;
 import org.apache.commons.lang3.concurrent.ConcurrentException;
 import org.apache.commons.lang3.concurrent.LazyInitializer;
 import org.jetbrains.annotations.NonNls;
@@ -122,11 +123,11 @@ public class StationTableReader {
     }
 
     private static String fallbackName(int id) {
-        return Utils.localizeString(R.string.unknown_format, NumberUtils.INSTANCE.intToHex(id));
+        return Localizer.INSTANCE.localizeString(R.string.unknown_format, NumberUtils.INSTANCE.intToHex(id));
     }
 
     private static String fallbackName(String humanReadableId) {
-        return Utils.localizeString(R.string.unknown_format, humanReadableId);
+        return Localizer.INSTANCE.localizeString(R.string.unknown_format, humanReadableId);
     }
 
     public static Trip.Mode getOperatorDefaultMode(@Nullable String reader, int id) {

@@ -32,6 +32,7 @@ import au.id.micolous.metrodroid.card.CardType;
 import au.id.micolous.metrodroid.card.TagReaderFeedbackInterface;
 import au.id.micolous.metrodroid.card.UnauthorizedException;
 import au.id.micolous.metrodroid.card.UnsupportedTagException;
+import au.id.micolous.metrodroid.multi.Localizer;
 import au.id.micolous.metrodroid.transit.CardTransitFactory;
 import au.id.micolous.metrodroid.transit.TransitData;
 import au.id.micolous.metrodroid.transit.TransitIdentity;
@@ -116,7 +117,7 @@ public class UltralightCard extends Card {
             tech = MifareUltralight.get(tag);
             tech.connect();
             feedbackInterface.updateProgressBar(0, 1);
-            feedbackInterface.updateStatusText(Utils.localizeString(R.string.mfu_detect));
+            feedbackInterface.updateStatusText(Localizer.INSTANCE.localizeString(R.string.mfu_detect));
 
             UltralightProtocol p = new UltralightProtocol(tech);
             UltralightProtocol.UltralightType t = p.getCardType();
@@ -125,7 +126,7 @@ public class UltralightCard extends Card {
                 throw new UnsupportedTagException(new String[]{"Ultralight"}, "Unknown Ultralight type");
             }
 
-            feedbackInterface.updateStatusText(Utils.localizeString(R.string.mfu_reading));
+            feedbackInterface.updateStatusText(Localizer.INSTANCE.localizeString(R.string.mfu_reading));
             feedbackInterface.showCardType(null);
 
             // Now iterate through the pages and grab all the datas
@@ -180,7 +181,7 @@ public class UltralightCard extends Card {
                 return null;
             feedbackInterface.updateProgressBar(0, 1);
 
-            feedbackInterface.updateStatusText(Utils.localizeString(R.string.mfu_reading));
+            feedbackInterface.updateStatusText(Localizer.INSTANCE.localizeString(R.string.mfu_reading));
             feedbackInterface.showCardType(null);
 
             // Now iterate through the pages and grab all the datas
@@ -291,11 +292,11 @@ public class UltralightCard extends Card {
             String sectorIndexString = Integer.toHexString(sector.getIndex());
 
             if (sector instanceof UnauthorizedUltralightPage) {
-                li.add(ListItemRecursive.collapsedValue(Utils.localizeString(
+                li.add(ListItemRecursive.collapsedValue(Localizer.INSTANCE.localizeString(
                         R.string.unauthorized_page_title_format, sectorIndexString),
                         null, null));
             } else {
-                li.add(ListItemRecursive.collapsedValue(Utils.localizeString(
+                li.add(ListItemRecursive.collapsedValue(Localizer.INSTANCE.localizeString(
                         R.string.page_title_format, sectorIndexString),
                         null, sector.getData().toHexDump()));
             }

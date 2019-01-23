@@ -29,6 +29,7 @@ import au.id.micolous.metrodroid.card.ultralight.UltralightCard;
 import au.id.micolous.metrodroid.card.ultralight.UltralightCardTransitFactory;
 import au.id.micolous.metrodroid.card.ultralight.UltralightPage;
 import au.id.micolous.metrodroid.card.ultralight.UnauthorizedUltralightPage;
+import au.id.micolous.metrodroid.multi.Localizer;
 import au.id.micolous.metrodroid.transit.CardInfo;
 import au.id.micolous.metrodroid.transit.TransitData;
 import au.id.micolous.metrodroid.transit.TransitIdentity;
@@ -82,12 +83,12 @@ public class UnauthorizedUltralightTransitData extends UnauthorizedTransitData {
 
         @Override
         public TransitIdentity parseTransitIdentity(@NonNull UltralightCard card) {
-            return new TransitIdentity(Utils.localizeString(R.string.locked_mfu_card), null);
+            return new TransitIdentity(Localizer.INSTANCE.localizeString(R.string.locked_mfu_card), null);
         }
     };
 
     @Override
     public String getCardName() {
-        return Utils.localizeString(R.string.locked_mfu_card);
+        return Localizer.INSTANCE.localizeString(R.string.locked_mfu_card);
     }
 }

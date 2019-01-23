@@ -28,6 +28,7 @@
  */
 package au.id.micolous.metrodroid.transit.clipper;
 
+import au.id.micolous.metrodroid.multi.Localizer;
 import au.id.micolous.metrodroid.util.NumberUtils;
 import org.jetbrains.annotations.NonNls;
 
@@ -75,8 +76,8 @@ final class ClipperData {
 
         if (agency == ClipperData.AGENCY_GGT || agency == ClipperData.AGENCY_CALTRAIN) {
             if (stationId == 0xffff)
-                return Station.nameOnly(Utils.localizeString(R.string.clipper_end_of_line));
-            return Station.nameOnly(Utils.localizeString(R.string.clipper_zone_number, Integer.toString(stationId)));
+                return Station.nameOnly(Localizer.INSTANCE.localizeString(R.string.clipper_end_of_line));
+            return Station.nameOnly(Localizer.INSTANCE.localizeString(R.string.clipper_zone_number, Integer.toString(stationId)));
         }
 
         // Placeholders

@@ -54,6 +54,7 @@ import android.widget.ExpandableListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import au.id.micolous.metrodroid.multi.Localizer;
 import au.id.micolous.metrodroid.util.Preferences;
 import org.apache.commons.io.FileUtils;
 import org.jetbrains.annotations.NonNls;
@@ -262,7 +263,7 @@ public class CardsFragment extends ExpandableListFragment {
                             "application/octet-stream",
                     };
                     i.putExtra(Intent.EXTRA_MIME_TYPES, mctMimetypes);
-                    startActivityForResult(Intent.createChooser(i, Utils.localizeString(R.string.select_file)), REQUEST_SELECT_FILE_MCT);
+                    startActivityForResult(Intent.createChooser(i, Localizer.INSTANCE.localizeString(R.string.select_file)), REQUEST_SELECT_FILE_MCT);
                     return true;
 
                 case R.id.import_file:
@@ -282,7 +283,7 @@ public class CardsFragment extends ExpandableListFragment {
                                 "application/octet-stream",
                         };
                         i.putExtra(Intent.EXTRA_MIME_TYPES, mimetypes);
-                        startActivityForResult(Intent.createChooser(i, Utils.localizeString(R.string.select_file)), REQUEST_SELECT_FILE);
+                        startActivityForResult(Intent.createChooser(i, Localizer.INSTANCE.localizeString(R.string.select_file)), REQUEST_SELECT_FILE);
                     } else {
                         // Failsafe, used in the emulator for local files
                         new ReadTask(this).execute(Uri.fromFile(new File(SD_IMPORT_PATH)));
@@ -310,7 +311,7 @@ public class CardsFragment extends ExpandableListFragment {
                         i.addCategory(Intent.CATEGORY_OPENABLE);
                         i.setType("text/xml");
                         i.putExtra(Intent.EXTRA_TITLE, STD_EXPORT_FILENAME);
-                        startActivityForResult(Intent.createChooser(i, Utils.localizeString(R.string.export_filename)), REQUEST_SAVE_FILE);
+                        startActivityForResult(Intent.createChooser(i, Localizer.INSTANCE.localizeString(R.string.export_filename)), REQUEST_SAVE_FILE);
                     } else {
                         File file = new File(SD_EXPORT_PATH);
                         ExportHelper.exportCardsXml(FileUtils.openOutputStream(file), getActivity());
@@ -362,7 +363,7 @@ public class CardsFragment extends ExpandableListFragment {
             }
 
             Toast.makeText(context,
-                    Utils.localizePlural(R.plurals.cards_deduped, tf, tf),
+                    Localizer.INSTANCE.localizePlural(R.plurals.cards_deduped, tf, tf),
                     Toast.LENGTH_SHORT).show();
         }
     }
@@ -530,7 +531,7 @@ public class CardsFragment extends ExpandableListFragment {
     }
 
     private static void onCardsImported(Context ctx, int uriCount, @Nullable Uri firstUri) {
-        Toast.makeText(ctx, Utils.localizePlural(
+        Toast.makeText(ctx, Localizer.INSTANCE.localizePlural(
                 R.plurals.cards_imported, uriCount, uriCount), Toast.LENGTH_SHORT).show();
         if (uriCount == 1 && firstUri != null) {
             ctx.startActivity(new Intent(Intent.ACTION_VIEW, firstUri));
@@ -658,7 +659,7 @@ public class CardsFragment extends ExpandableListFragment {
             scannedAt = TripObfuscator.maybeObfuscateTS(scannedAt);
 
             TextView textView1 = convertView.findViewById(android.R.id.text1);
-            textView1.setText(Utils.localizeString(R.string.scanned_at_format, Utils.timeFormat(scannedAt),
+            textView1.setText(Localizer.INSTANCE.localizeString(R.string.scanned_at_format, Utils.timeFormat(scannedAt),
                     Utils.dateFormat(scannedAt)));
 
             return convertView;

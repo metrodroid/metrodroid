@@ -29,6 +29,7 @@ import java.util.ArrayList
 import java.util.Calendar
 
 import au.id.micolous.farebot.R
+import au.id.micolous.metrodroid.multi.Localizer
 import au.id.micolous.metrodroid.ui.ListItem
 import au.id.micolous.metrodroid.util.TripObfuscator
 import au.id.micolous.metrodroid.util.Utils
@@ -282,7 +283,7 @@ abstract class Subscription : Parcelable {
 
             val counter = remainingTripsInDayCount
             if (counter != null && lastUseTS != null) {
-                items.add(ListItem(R.string.remaining_trip_count, Utils.localizePlural(
+                items.add(ListItem(R.string.remaining_trip_count, Localizer.localizePlural(
                         R.plurals.remaining_trip_on_day, counter,
                         remainingTripsInDayCount, Utils.longDateFormat(lastUseTS))))
             }
@@ -296,7 +297,7 @@ abstract class Subscription : Parcelable {
                     zones_list.append(Integer.toString(z))
                 }
 
-                items.add(ListItem(Utils.localizePlural(R.plurals.travel_zones,
+                items.add(ListItem(Localizer.localizePlural(R.plurals.travel_zones,
                         zones.size), zones_list.toString()))
             }
 

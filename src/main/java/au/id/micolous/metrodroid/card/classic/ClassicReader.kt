@@ -7,6 +7,7 @@ import au.id.micolous.farebot.R
 import au.id.micolous.metrodroid.card.TagReaderFeedbackInterface
 import au.id.micolous.metrodroid.key.CardKeysRetriever
 import au.id.micolous.metrodroid.key.ClassicSectorKey
+import au.id.micolous.metrodroid.multi.Localizer
 import au.id.micolous.metrodroid.util.Utils
 import java.io.IOException
 import java.util.*
@@ -53,7 +54,7 @@ object ClassicReader {
                     }
 
                     feedbackInterface.showCardType(ci)
-                    feedbackInterface.updateStatusText(Utils.localizeString(R.string.card_reading_type, ci.name))
+                    feedbackInterface.updateStatusText(Localizer.localizeString(R.string.card_reading_type, ci.name))
                     return factory
                 }
         return null
@@ -85,7 +86,7 @@ object ClassicReader {
                     continue
                 }
 
-                feedbackInterface.updateStatusText(Utils.localizeString(R.string.mfc_reading_blocks, sectorIndex))
+                feedbackInterface.updateStatusText(Localizer.localizeString(R.string.mfc_reading_blocks, sectorIndex))
                 var sector = ClassicReader.readSectorWithKey(tech, sectorIndex, correctKey)
 
                 // If we used keyA and it wasn't enough try finding B

@@ -27,6 +27,7 @@ import java.util.GregorianCalendar;
 
 import au.id.micolous.farebot.R;
 import au.id.micolous.metrodroid.card.felica.FelicaBlock;
+import au.id.micolous.metrodroid.multi.Localizer;
 import au.id.micolous.metrodroid.transit.Station;
 import au.id.micolous.metrodroid.transit.TransitCurrency;
 import au.id.micolous.metrodroid.transit.Trip;
@@ -140,7 +141,7 @@ public class KMTTrip extends Trip {
 
     @Override
     public String getAgencyName(boolean isShort) {
-        return Utils.localizeString(R.string.kmt_agency);
+        return Localizer.INSTANCE.localizeString(R.string.kmt_agency);
     }
 
     public int describeContents() {

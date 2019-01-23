@@ -24,6 +24,7 @@ import android.support.annotation.Nullable;
 import android.text.SpannableString;
 import android.util.Log;
 
+import au.id.micolous.metrodroid.multi.Localizer;
 import org.simpleframework.xml.Element;
 
 import java.util.Collection;
@@ -112,7 +113,7 @@ public class TMoneyCard extends ISO7816Application {
             ImmutableByteArray balanceResponse;
 
             try {
-                feedbackInterface.updateStatusText(Utils.localizeString(R.string.card_reading_type,
+                feedbackInterface.updateStatusText(Localizer.INSTANCE.localizeString(R.string.card_reading_type,
                         TMoneyTransitData.CARD_INFO.getName()));
                 feedbackInterface.updateProgressBar(0, 6);
                 feedbackInterface.showCardType(TMoneyTransitData.CARD_INFO);

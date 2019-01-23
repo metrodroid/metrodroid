@@ -38,6 +38,7 @@ import au.id.micolous.metrodroid.card.classic.ClassicBlock;
 import au.id.micolous.metrodroid.card.classic.ClassicCard;
 import au.id.micolous.metrodroid.card.classic.ClassicCardTransitFactory;
 import au.id.micolous.metrodroid.card.classic.ClassicSector;
+import au.id.micolous.metrodroid.multi.Localizer;
 import au.id.micolous.metrodroid.transit.CardInfo;
 import au.id.micolous.metrodroid.transit.TransitBalance;
 import au.id.micolous.metrodroid.transit.TransitBalanceStored;
@@ -181,10 +182,10 @@ public class MetroQTransitData extends TransitData {
         String name;
         switch (mProduct) {
             case 501:
-                name = Utils.localizeString(R.string.metroq_fare_card);
+                name = Localizer.INSTANCE.localizeString(R.string.metroq_fare_card);
                 break;
             case 401:
-                name = Utils.localizeString(R.string.metroq_day_pass);
+                name = Localizer.INSTANCE.localizeString(R.string.metroq_day_pass);
                 break;
             default:
                 name = Integer.toString(mProduct);

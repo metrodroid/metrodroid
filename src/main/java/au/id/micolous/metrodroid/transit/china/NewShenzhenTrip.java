@@ -24,6 +24,7 @@ import android.os.Parcel;
 import java.util.Calendar;
 
 import au.id.micolous.farebot.R;
+import au.id.micolous.metrodroid.multi.Localizer;
 import au.id.micolous.metrodroid.transit.Station;
 import au.id.micolous.metrodroid.util.NumberUtils;
 import au.id.micolous.metrodroid.util.StationTableReader;
@@ -61,7 +62,7 @@ public class NewShenzhenTrip extends ChinaTrip {
             case SZT_METRO:
                 return StationTableReader.getStation(SHENZHEN_STR, (int) (mStation & ~0xff),
                         Long.toHexString(mStation >> 8)).addAttribute(
-                        Utils.localizeString(R.string.szt_station_gate,
+                        Localizer.INSTANCE.localizeString(R.string.szt_station_gate,
                                 Integer.toHexString((int)(mStation & 0xff))));
             default:
                 return null;
@@ -109,11 +110,11 @@ public class NewShenzhenTrip extends ChinaTrip {
         int transport = getTransport();
         switch (transport) {
             case SZT_METRO:
-                return Utils.localizeString(R.string.szt_metro);
+                return Localizer.INSTANCE.localizeString(R.string.szt_metro);
             case SZT_BUS:
-                return Utils.localizeString(R.string.szt_bus);
+                return Localizer.INSTANCE.localizeString(R.string.szt_bus);
             default:
-                return Utils.localizeString(R.string.unknown_format, transport);
+                return Localizer.INSTANCE.localizeString(R.string.unknown_format, transport);
         }
     }
 

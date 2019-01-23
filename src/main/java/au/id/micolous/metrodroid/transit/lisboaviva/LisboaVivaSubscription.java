@@ -26,6 +26,7 @@ import java.util.Calendar;
 import java.util.List;
 
 import au.id.micolous.farebot.R;
+import au.id.micolous.metrodroid.multi.Localizer;
 import au.id.micolous.metrodroid.transit.TransitBalance;
 import au.id.micolous.metrodroid.transit.TransitCurrency;
 import au.id.micolous.metrodroid.transit.en1545.En1545Container;
@@ -106,13 +107,13 @@ public class LisboaVivaSubscription extends En1545Subscription {
         int units = mParsed.getIntOrZero(CONTRACT_PERIOD_UNITS);
         switch (units) {
             case 0x109:
-                return Utils.localizePlural(R.plurals.lisboaviva_valid_days,
+                return Localizer.INSTANCE.localizePlural(R.plurals.lisboaviva_valid_days,
                         period, period);
             case 0x10a:
-                return Utils.localizePlural(R.plurals.lisboaviva_valid_months,
+                return Localizer.INSTANCE.localizePlural(R.plurals.lisboaviva_valid_months,
                         period, period);
         }
-        return Utils.localizeString(R.string.lisboaviva_unknown_period, period, units);
+        return Localizer.INSTANCE.localizeString(R.string.lisboaviva_unknown_period, period, units);
     }
 
     @Override

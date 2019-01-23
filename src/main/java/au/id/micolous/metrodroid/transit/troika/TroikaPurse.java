@@ -3,6 +3,7 @@ package au.id.micolous.metrodroid.transit.troika;
 import android.support.annotation.Nullable;
 
 import au.id.micolous.farebot.R;
+import au.id.micolous.metrodroid.multi.Localizer;
 import au.id.micolous.metrodroid.transit.Subscription;
 import au.id.micolous.metrodroid.transit.TransitBalance;
 import au.id.micolous.metrodroid.transit.TransitBalanceStored;
@@ -34,10 +35,10 @@ class TroikaPurse extends TroikaBlock {
         int fareCode = rawData.getBitsFromBuffer(210, 2);
         switch (fareCode) {
             case 1:
-                mFareDesc = Utils.localizeString(R.string.troika_fare_single);
+                mFareDesc = Localizer.INSTANCE.localizeString(R.string.troika_fare_single);
                 break;
             case 2:
-                mFareDesc = Utils.localizeString(R.string.troika_fare_90mins);
+                mFareDesc = Localizer.INSTANCE.localizeString(R.string.troika_fare_90mins);
                 break;
 
         }
@@ -51,7 +52,7 @@ class TroikaPurse extends TroikaBlock {
     public TransitBalance getBalance() {
         return new TransitBalanceStored(
                 TransitCurrency.RUB(mBalance),
-                Utils.localizeString(R.string.card_name_troika),
+                Localizer.INSTANCE.localizeString(R.string.card_name_troika),
                 mExpiryDate);
     }
 

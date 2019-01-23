@@ -27,6 +27,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.util.ArraySet;
 
+import au.id.micolous.metrodroid.multi.Localizer;
 import au.id.micolous.metrodroid.util.NumberUtils;
 import org.apache.commons.lang3.ArrayUtils;
 
@@ -64,21 +65,21 @@ public class SuicaTransitData extends TransitData {
 
     private static final CardInfo ICOCA_CARD_INFO = new CardInfo.Builder()
             .setImageId(R.drawable.icoca_card)
-            .setName(Utils.localizeString(R.string.card_name_icoca))
+            .setName(Localizer.INSTANCE.localizeString(R.string.card_name_icoca))
             .setLocation(R.string.location_kansai)
             .setCardType(CardType.FeliCa)
             .build();
 
     private static final CardInfo SUICA_CARD_INFO = new CardInfo.Builder()
             .setImageId(R.drawable.suica_card)
-            .setName(Utils.localizeString(R.string.card_name_suica))
+            .setName(Localizer.INSTANCE.localizeString(R.string.card_name_suica))
             .setLocation(R.string.location_tokyo)
             .setCardType(CardType.FeliCa)
             .build();
 
     private static final CardInfo PASMO_CARD_INFO = new CardInfo.Builder()
             .setImageId(R.drawable.pasmo_card)
-            .setName(Utils.localizeString(R.string.card_name_pasmo))
+            .setName(Localizer.INSTANCE.localizeString(R.string.card_name_pasmo))
             .setLocation(R.string.location_tokyo)
             .setCardType(CardType.FeliCa)
             .build();
@@ -245,7 +246,7 @@ public class SuicaTransitData extends TransitData {
         }
 
         public TransitIdentity parseTransitIdentity(@NonNull FelicaCard card) {
-            return new TransitIdentity(Utils.localizeString(R.string.card_name_suica), null); // FIXME: Could be ICOCA, etc.
+            return new TransitIdentity(Localizer.INSTANCE.localizeString(R.string.card_name_suica), null); // FIXME: Could be ICOCA, etc.
         }
     };
 
@@ -279,7 +280,7 @@ public class SuicaTransitData extends TransitData {
 
     @Override
     public String getCardName() {
-        return Utils.localizeString(R.string.card_name_suica); // FIXME: Could be ICOCA, etc.
+        return Localizer.INSTANCE.localizeString(R.string.card_name_suica); // FIXME: Could be ICOCA, etc.
     }
 
     public void writeToParcel(Parcel parcel, int flags) {

@@ -18,6 +18,7 @@
  */
 package au.id.micolous.metrodroid.card.desfire.settings;
 
+import au.id.micolous.metrodroid.multi.Localizer;
 import org.simpleframework.xml.Root;
 
 import au.id.micolous.farebot.R;
@@ -34,6 +35,6 @@ public class UnsupportedDesfireFileSettings extends DesfireFileSettings {
 
     @Override
     public String getSubtitle() {
-        return Utils.localizeString(R.string.desfire_unknown_file);
+        return Localizer.INSTANCE.localizeString(R.string.desfire_unknown_file);
     }
 }

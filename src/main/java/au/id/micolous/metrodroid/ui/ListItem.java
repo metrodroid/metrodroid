@@ -29,6 +29,7 @@ import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import au.id.micolous.metrodroid.multi.Localizer;
 import au.id.micolous.metrodroid.util.Utils;
 
 public class ListItem {
@@ -40,15 +41,15 @@ public class ListItem {
     }
 
     public ListItem(@StringRes int nameResource, @StringRes int valueResource) {
-        this(nameResource, Utils.localizeString(valueResource));
+        this(nameResource, Localizer.INSTANCE.localizeString(valueResource));
     }
 
     public ListItem(@StringRes int nameResource, String value) {
-        this(Utils.localizeString(nameResource), value);
+        this(Localizer.INSTANCE.localizeString(nameResource), value);
     }
 
     public ListItem(@StringRes int nameResource, Spanned value) {
-        this(new SpannableString(Utils.localizeString(nameResource)), value);
+        this(new SpannableString(Localizer.INSTANCE.localizeString(nameResource)), value);
     }
 
     public ListItem(String name) {

@@ -24,6 +24,7 @@ package au.id.micolous.metrodroid.card.cepas;
 import android.text.SpannableString;
 import android.util.Log;
 
+import au.id.micolous.metrodroid.multi.Localizer;
 import org.simpleframework.xml.ElementMap;
 import org.simpleframework.xml.Root;
 
@@ -88,7 +89,7 @@ public class CEPASApplication extends ISO7816Application {
     private CEPASApplication() { /* For XML Serializer */ }
 
     private static void setProgress(TagReaderFeedbackInterface feedbackInterface, int val) {
-        feedbackInterface.updateStatusText(Utils.localizeString(R.string.card_reading_type,
+        feedbackInterface.updateStatusText(Localizer.INSTANCE.localizeString(R.string.card_reading_type,
                 EZLinkTransitData.EZ_LINK_CARD_INFO.getName()));
         feedbackInterface.updateProgressBar(val, 64);
         feedbackInterface.showCardType(EZLinkTransitData.EZ_LINK_CARD_INFO);

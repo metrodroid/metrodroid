@@ -21,6 +21,7 @@ package au.id.micolous.metrodroid.transit.opal;
 import android.os.Parcel;
 import android.support.annotation.NonNull;
 
+import au.id.micolous.metrodroid.multi.Localizer;
 import au.id.micolous.metrodroid.transit.Subscription;
 import au.id.micolous.metrodroid.util.Utils;
 
@@ -71,12 +72,12 @@ class OpalSubscription extends Subscription {
 
     @Override
     public String getAgencyName(boolean isShort) {
-        return Utils.localizeString(R.string.opal_agency_tfnsw);
+        return Localizer.INSTANCE.localizeString(R.string.opal_agency_tfnsw);
     }
 
     @Override
     public String getSubscriptionName() {
-        return Utils.localizeString(R.string.opal_automatic_top_up);
+        return Localizer.INSTANCE.localizeString(R.string.opal_automatic_top_up);
     }
 
     @NonNull

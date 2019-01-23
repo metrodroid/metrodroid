@@ -12,6 +12,7 @@ import java.util.List;
 import java.util.TimeZone;
 
 import au.id.micolous.farebot.R;
+import au.id.micolous.metrodroid.multi.Localizer;
 import au.id.micolous.metrodroid.transit.Subscription;
 import au.id.micolous.metrodroid.transit.TransitBalance;
 import au.id.micolous.metrodroid.transit.TransitIdentity;
@@ -158,7 +159,7 @@ public abstract class TroikaBlock implements Parcelable {
     }
 
     public static TransitIdentity parseTransitIdentity(ImmutableByteArray rawData) {
-        return new TransitIdentity(Utils.localizeString(R.string.card_name_troika),
+        return new TransitIdentity(Localizer.INSTANCE.localizeString(R.string.card_name_troika),
                 formatSerial(getSerial(rawData)));
     }
 
@@ -182,11 +183,11 @@ public abstract class TroikaBlock implements Parcelable {
             case 0x5dd3:
                 return troikaRides(60);
         }
-        return Utils.localizeString(R.string.troika_unknown_ticket, Integer.toHexString(ticketType));
+        return Localizer.INSTANCE.localizeString(R.string.troika_unknown_ticket, Integer.toHexString(ticketType));
     }
 
     private static String troikaRides(int rides) {
-        return Utils.localizePlural(R.plurals.troika_rides, rides, rides);
+        return Localizer.INSTANCE.localizePlural(R.plurals.troika_rides, rides, rides);
     }
 
     public Subscription getSubscription() {
@@ -231,7 +232,7 @@ public abstract class TroikaBlock implements Parcelable {
     }
 
     public String getCardName() {
-        return Utils.localizeString(R.string.card_name_troika);
+        return Localizer.INSTANCE.localizeString(R.string.card_name_troika);
     }
 
     public static TroikaBlock parseBlock(ImmutableByteArray rawData) {
