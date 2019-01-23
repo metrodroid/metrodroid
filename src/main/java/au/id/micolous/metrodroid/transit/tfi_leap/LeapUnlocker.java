@@ -23,6 +23,7 @@ import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 import android.util.Log;
 
+import au.id.micolous.metrodroid.util.Preferences;
 import com.google.protobuf.ByteString;
 
 import java.io.IOException;
@@ -81,7 +82,7 @@ public class LeapUnlocker implements DesfireUnlocker {
     }
 
     public static LeapUnlocker createUnlocker(int applicationId, DesfireManufacturingData manufData) {
-        final boolean retrieveKeys = MetrodroidApplication.retrieveLeapKeys();
+        final boolean retrieveKeys = Preferences.INSTANCE.getRetrieveLeapKeys();
         if (!retrieveKeys) {
             Log.d(TAG, "Retrieving Leap keys not enabled");
             return null;

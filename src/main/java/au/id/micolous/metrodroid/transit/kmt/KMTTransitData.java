@@ -23,6 +23,7 @@ import android.os.Parcel;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
+import au.id.micolous.metrodroid.util.Preferences;
 import org.apache.commons.lang3.ArrayUtils;
 
 import java.util.ArrayList;
@@ -194,7 +195,7 @@ public class KMTTransitData extends TransitData {
     public List<ListItem> getInfo() {
         List<ListItem> items = new ArrayList<>();
         items.add(new HeaderListItem(R.string.kmt_other_data));
-        if (!MetrodroidApplication.hideCardNumbers()) {
+        if (!Preferences.INSTANCE.getHideCardNumbers()) {
             items.add(new ListItem(R.string.transaction_counter, Integer.toString(mTransactionCounter)));
         }
         items.add(new ListItem(R.string.kmt_last_trx_amount,

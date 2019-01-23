@@ -23,6 +23,7 @@ import android.os.Parcel;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
+import au.id.micolous.metrodroid.util.Preferences;
 import org.apache.commons.lang3.ArrayUtils;
 
 import au.id.micolous.metrodroid.card.Card;
@@ -232,12 +233,12 @@ public class OpalTransitData extends TransitData {
 
         items.add(new HeaderListItem(R.string.general));
         items.add(new ListItem(R.string.opal_weekly_trips, Integer.toString(getWeeklyTrips())));
-        if (!MetrodroidApplication.hideCardNumbers()) {
+        if (!Preferences.INSTANCE.getHideCardNumbers()) {
             items.add(new ListItem(R.string.checksum, Integer.toString(mChecksum)));
         }
 
         items.add(new HeaderListItem(R.string.last_transaction));
-        if (!MetrodroidApplication.hideCardNumbers()) {
+        if (!Preferences.INSTANCE.getHideCardNumbers()) {
             items.add(new ListItem(R.string.transaction_counter, Integer.toString(getLastTransactionNumber())));
         }
         Calendar cLastTransactionTime = TripObfuscator.maybeObfuscateTS(getLastTransactionTime());

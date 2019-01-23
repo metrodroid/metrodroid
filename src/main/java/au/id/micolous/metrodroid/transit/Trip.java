@@ -42,6 +42,7 @@ import java.util.Set;
 import au.id.micolous.farebot.R;
 import au.id.micolous.metrodroid.MetrodroidApplication;
 import au.id.micolous.metrodroid.ui.HiddenSpan;
+import au.id.micolous.metrodroid.util.Preferences;
 import au.id.micolous.metrodroid.util.Utils;
 
 public abstract class Trip implements Parcelable {
@@ -55,7 +56,7 @@ public abstract class Trip implements Parcelable {
     public final Spannable formatStationNames() {
         String startStationName = null, endStationName = null;
         String startLanguage = null, endLanguage = null;
-        boolean localisePlaces = MetrodroidApplication.localisePlaces();
+        boolean localisePlaces = Preferences.INSTANCE.getLocalisePlaces();
 
         final Station startStation = getStartStation();
         final Station endStation = getEndStation();
@@ -291,7 +292,7 @@ public abstract class Trip implements Parcelable {
         final String routeName = getRouteName();
         final String routeID = getHumanReadableRouteID();
 
-        if (MetrodroidApplication.showRawStationIds()) {
+        if (Preferences.INSTANCE.getShowRawStationIds()) {
             if (routeName != null) {
                 if (routeID != null) {
                     if (routeName.contains(routeID)) {

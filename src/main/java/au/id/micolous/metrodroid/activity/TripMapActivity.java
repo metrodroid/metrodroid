@@ -40,6 +40,7 @@ import android.webkit.WebViewFragment;
 import au.id.micolous.metrodroid.MetrodroidApplication;
 import au.id.micolous.metrodroid.transit.Trip;
 import au.id.micolous.metrodroid.util.Marker;
+import au.id.micolous.metrodroid.util.Preferences;
 import au.id.micolous.metrodroid.util.Utils;
 
 import java.util.ArrayList;
@@ -66,8 +67,8 @@ public class TripMapActivity extends MetrodroidActivity {
 
         setContentView(R.layout.activity_trip_map);
 
-        String tileURL = MetrodroidApplication.getMapTileUrl();
-        String subdomains = MetrodroidApplication.getMapTileSubdomains();
+        String tileURL = Preferences.INSTANCE.getMapTileUrl();
+        String subdomains = Preferences.INSTANCE.getMapTileSubdomains();
 
         //noinspection StringConcatenation
         Log.d(TAG, "TilesURL: " + tileURL);

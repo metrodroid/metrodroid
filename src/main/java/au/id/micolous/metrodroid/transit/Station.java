@@ -26,7 +26,7 @@ import android.support.annotation.Nullable;
 import android.util.Pair;
 import android.util.SparseArray;
 
-import au.id.micolous.metrodroid.util.NumberUtils;
+import au.id.micolous.metrodroid.util.*;
 import org.jetbrains.annotations.NonNls;
 
 import java.util.ArrayList;
@@ -39,9 +39,6 @@ import java.util.Locale;
 import au.id.micolous.farebot.R;
 import au.id.micolous.metrodroid.MetrodroidApplication;
 import au.id.micolous.metrodroid.proto.Stations;
-import au.id.micolous.metrodroid.util.SparseArrayIterator;
-import au.id.micolous.metrodroid.util.StationTableReader;
-import au.id.micolous.metrodroid.util.Utils;
 
 public class Station implements Parcelable {
     public static final Creator<Station> CREATOR = new Creator<Station>() {
@@ -119,7 +116,7 @@ public class Station implements Parcelable {
     }
 
     private static boolean showRawId() {
-        return MetrodroidApplication.showRawStationIds();
+        return Preferences.INSTANCE.getShowRawStationIds();
     }
 
     @NonNull

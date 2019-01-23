@@ -30,6 +30,7 @@ import android.text.Spanned;
 import android.text.style.TtsSpan;
 
 import au.id.micolous.metrodroid.util.NumberUtils;
+import au.id.micolous.metrodroid.util.Preferences;
 import com.neovisionaries.i18n.CurrencyCode;
 
 import org.jetbrains.annotations.NonNls;
@@ -401,7 +402,7 @@ public class TransitCurrency extends TransitBalance implements Parcelable {
     }
 
     public TransitCurrency maybeObfuscateBalance() {
-        if (!MetrodroidApplication.obfuscateBalance()) {
+        if (!Preferences.INSTANCE.getObfuscateBalance()) {
             return this;
         }
 
@@ -409,7 +410,7 @@ public class TransitCurrency extends TransitBalance implements Parcelable {
     }
 
     public TransitCurrency maybeObfuscateFare() {
-        if (!MetrodroidApplication.obfuscateTripFares()) {
+        if (!Preferences.INSTANCE.getObfuscateTripFares()) {
             return this;
         }
 

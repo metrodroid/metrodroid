@@ -48,6 +48,7 @@ import au.id.micolous.metrodroid.ui.HeaderListItem;
 import au.id.micolous.metrodroid.ui.ListItem;
 import au.id.micolous.metrodroid.ui.ListItemRecursive;
 import au.id.micolous.metrodroid.util.NumberUtils;
+import au.id.micolous.metrodroid.util.Preferences;
 import au.id.micolous.metrodroid.util.Utils;
 import au.id.micolous.metrodroid.xml.Base64String;
 import au.id.micolous.metrodroid.xml.ImmutableByteArray;
@@ -438,7 +439,7 @@ public class FelicaCard extends Card {
         items.add(new HeaderListItem(R.string.felica_idm));
         items.add(new ListItem(R.string.felica_manufacturer_code, NumberUtils.INSTANCE.intToHex(getManufacturerCode())));
 
-        if (!MetrodroidApplication.hideCardNumbers()) {
+        if (!Preferences.INSTANCE.getHideCardNumbers()) {
             items.add(new ListItem(R.string.felica_card_identification_number, Long.toString(getCardIdentificationNumber())));
         }
 

@@ -9,6 +9,7 @@ import au.id.micolous.metrodroid.key.CardKeysRetriever
 import au.id.micolous.metrodroid.key.ClassicKeys
 import au.id.micolous.metrodroid.key.ClassicSectorKey
 import au.id.micolous.metrodroid.key.ClassicStaticKeys
+import au.id.micolous.metrodroid.util.Preferences
 import au.id.micolous.metrodroid.util.Utils
 import au.id.micolous.metrodroid.xml.ImmutableByteArray
 import java.io.IOException
@@ -17,7 +18,7 @@ class ClassicAuthenticator private constructor(private val mKeys: ClassicKeys,
                                                private val isFallback: Boolean,
                                                private val isDynamic: Boolean,
                                                private val maxProgress: Int,
-                                               private val mRetryLimit: Int = MetrodroidApplication.getMfcAuthRetry(),
+                                               private val mRetryLimit: Int = Preferences.mfcAuthRetry,
                                                private val mPreferredBundles: MutableList<String> = mutableListOf()
                                                ) {
     private fun tryKey(tech: ClassicCardTech,

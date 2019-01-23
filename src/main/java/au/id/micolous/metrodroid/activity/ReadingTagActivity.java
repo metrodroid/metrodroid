@@ -47,6 +47,7 @@ import au.id.micolous.metrodroid.card.UnsupportedTagException;
 import au.id.micolous.metrodroid.provider.CardProvider;
 import au.id.micolous.metrodroid.provider.CardsTableColumns;
 import au.id.micolous.metrodroid.transit.CardInfo;
+import au.id.micolous.metrodroid.util.Preferences;
 import au.id.micolous.metrodroid.util.Utils;
 
 import java.util.GregorianCalendar;
@@ -149,8 +150,8 @@ public class ReadingTagActivity extends MetrodroidActivity implements TagReaderF
             final byte[] tagId = intent.getByteArrayExtra(NfcAdapter.EXTRA_ID);
 
             SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
-            String lastReadId = prefs.getString(MetrodroidApplication.PREF_LAST_READ_ID, "");
-            long lastReadAt = prefs.getLong(MetrodroidApplication.PREF_LAST_READ_AT, 0);
+            String lastReadId = prefs.getString(Preferences.PREF_LAST_READ_ID, "");
+            long lastReadAt = prefs.getLong(Preferences.PREF_LAST_READ_AT, 0);
 
             // Prevent reading the same card again right away.
             // This was especially a problem with FeliCa cards.
@@ -221,8 +222,8 @@ public class ReadingTagActivity extends MetrodroidActivity implements TagReaderF
                 Uri uri = getContentResolver().insert(CardProvider.CONTENT_URI_CARD, values);
 
                 SharedPreferences.Editor prefs = PreferenceManager.getDefaultSharedPreferences(ReadingTagActivity.this).edit();
-                prefs.putString(MetrodroidApplication.PREF_LAST_READ_ID, tagIdString);
-                prefs.putLong(MetrodroidApplication.PREF_LAST_READ_AT, GregorianCalendar.getInstance().getTimeInMillis());
+                prefs.putString(Preferences.PREF_LAST_READ_ID, tagIdString);
+                prefs.putLong(Preferences.PREF_LAST_READ_AT, GregorianCalendar.getInstance().getTimeInMillis());
                 prefs.apply();
 
                 mPartialRead = card.isPartialRead();

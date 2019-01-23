@@ -25,7 +25,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.text.SpannableString;
 
-import au.id.micolous.metrodroid.util.NumberUtils;
+import au.id.micolous.metrodroid.util.*;
 import org.apache.commons.lang3.ArrayUtils;
 import org.jetbrains.annotations.NonNls;
 
@@ -52,9 +52,6 @@ import au.id.micolous.metrodroid.transit.TransitData;
 import au.id.micolous.metrodroid.transit.TransitIdentity;
 import au.id.micolous.metrodroid.ui.HeaderListItem;
 import au.id.micolous.metrodroid.ui.ListItem;
-import au.id.micolous.metrodroid.util.StationTableReader;
-import au.id.micolous.metrodroid.util.TripObfuscator;
-import au.id.micolous.metrodroid.util.Utils;
 import au.id.micolous.metrodroid.xml.ImmutableByteArray;
 
 public class LeapTransitData extends TransitData {
@@ -303,7 +300,7 @@ public class LeapTransitData extends TransitData {
                 Utils.dateTimeFormat(TripObfuscator.maybeObfuscateTS(mInitDate))));
         items.add(new ListItem(R.string.issue_date,
                 Utils.dateTimeFormat(TripObfuscator.maybeObfuscateTS(mIssueDate))));
-        if (MetrodroidApplication.hideCardNumbers()) {
+        if (Preferences.INSTANCE.getHideCardNumbers()) {
             items.add(new ListItem(R.string.card_issuer, Integer.toString(mIssuerId)));
         }
         items.add(new HeaderListItem(R.string.leap_daily_accumulators));

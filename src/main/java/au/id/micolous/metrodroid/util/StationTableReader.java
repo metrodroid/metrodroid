@@ -254,7 +254,7 @@ public class StationTableReader {
     }
 
     private boolean showBoth() {
-        return MetrodroidApplication.showBothLocalAndEnglish();
+        return Preferences.INSTANCE.getShowBothLocalAndEnglish();
     }
 
     /**

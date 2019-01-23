@@ -109,8 +109,8 @@ public final class TripObfuscator {
     }
 
     public static Calendar maybeObfuscateTS(Calendar input) {
-        return maybeObfuscateTS(input, MetrodroidApplication.obfuscateTripDates(),
-                MetrodroidApplication.obfuscateTripTimes());
+        return maybeObfuscateTS(input, Preferences.INSTANCE.getObfuscateTripDates(),
+                Preferences.INSTANCE.getObfuscateTripTimes());
     }
 
     public static List<Trip> obfuscateTrips(List<Trip> trips, boolean obfuscateDates, boolean obfuscateTimes, boolean obfuscateFares) {

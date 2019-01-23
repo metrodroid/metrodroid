@@ -2,6 +2,7 @@ package au.id.micolous.metrodroid.card.classic
 
 import au.id.micolous.metrodroid.MetrodroidApplication
 import au.id.micolous.metrodroid.transit.smartrider.SmartRiderTransitData
+import au.id.micolous.metrodroid.util.Preferences
 import org.jetbrains.annotations.NonNls
 
 private val SMARTRIDER = listOf("myway", "smartrider")
@@ -9,7 +10,7 @@ private val SMARTRIDER = listOf("myway", "smartrider")
 internal class FallbackFactory : ClassicCardTransitFactory {
     val fallback
         @NonNls
-        get () = MetrodroidApplication.getMfcFallbackReader()
+        get () = Preferences.mfcFallbackReader
 
     override fun check(classicCard: ClassicCard) =
             fallback in SMARTRIDER

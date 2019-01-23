@@ -33,6 +33,7 @@ import android.view.MenuItem;
 
 import au.id.micolous.farebot.R;
 import au.id.micolous.metrodroid.MetrodroidApplication;
+import au.id.micolous.metrodroid.util.Preferences;
 
 public class PreferencesActivity extends PreferenceActivity implements Preference.OnPreferenceChangeListener {
 
@@ -52,12 +53,12 @@ public class PreferencesActivity extends PreferenceActivity implements Preferenc
                 = (CheckBoxPreference) getPreferenceManager().findPreference("pref_launch_from_background");
         mPreferenceLaunchFromBackground.setChecked(isLaunchFromBgEnabled());
         mPreferenceLaunchFromBackground.setOnPreferenceChangeListener(this);
-        mPreferenceTheme = (ListPreference) getPreferenceManager().findPreference(MetrodroidApplication.PREF_THEME);
+        mPreferenceTheme = (ListPreference) getPreferenceManager().findPreference(Preferences.PREF_THEME);
         if (mPreferenceTheme != null)
             mPreferenceTheme.setOnPreferenceChangeListener(this);
 
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.JELLY_BEAN_MR1) {
-            for (String prefKey : MetrodroidApplication.PREFS_ANDROID_17) {
+            for (String prefKey : Preferences.INSTANCE.getPREFS_ANDROID_17()) {
                 Preference pref = getPreferenceManager().findPreference(prefKey);
                 if (pref == null) continue;
                 pref.setEnabled(false);
@@ -66,7 +67,7 @@ public class PreferencesActivity extends PreferenceActivity implements Preferenc
         }
 
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
-            for (String prefKey : MetrodroidApplication.PREFS_ANDROID_21) {
+            for (String prefKey : Preferences.INSTANCE.getPREFS_ANDROID_21()) {
                 Preference pref = getPreferenceManager().findPreference(prefKey);
                 if (pref == null) continue;
                 pref.setEnabled(false);
