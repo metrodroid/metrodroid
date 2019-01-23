@@ -46,17 +46,17 @@ class ChcMetrocardTransitData private constructor(card: ClassicCard) :
     override fun newTrip(purse: ErgPurseRecord, epoch: Int) =
             ChcMetrocardTransaction(purse, epoch)
 
-    override fun getCardName() = NAME
+    override val cardName get() = NAME
 
     override fun formatSerialNumber(metadataRecord: ErgMetadataRecord) =
             internalFormatSerialNumber(metadataRecord)
 
     override fun getTimezone(): TimeZone = TIME_ZONE
 
-    override fun getBalance(): TransitBalance? {
-        val b = super.getBalance() ?: return null
+    override val balance get(): TransitBalance? {
+        val b = super.balance ?: return null
 
-        var expiry = lastUseTimestamp
+        var expiry = getLastUseTimestamp()
         if (expiry != null) {
             // Cards not used for 3 years will expire
             expiry = expiry.clone() as Calendar

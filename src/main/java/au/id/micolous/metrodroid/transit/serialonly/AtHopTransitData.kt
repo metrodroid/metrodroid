@@ -40,9 +40,9 @@ data class AtHopTransitData (private val mSerial: Int?): SerialOnlyTransitData()
     override val reason: SerialOnlyTransitData.Reason
         get() = SerialOnlyTransitData.Reason.LOCKED
 
-    override fun getSerialNumber() = formatSerial(mSerial)
+    override val serialNumber get() = formatSerial(mSerial)
 
-    override fun getCardName() = NAME
+    override val cardName get() = NAME
 
     companion object {
         private const val APP_ID_SERIAL = 0xffffff

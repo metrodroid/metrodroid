@@ -47,25 +47,21 @@ data class OVChipTransitData(
         private val mCreditId: Int,
         private val mCredit: Int,
         private val mBanbits: Int,
-        private val mTrips: List<TransactionTrip>,
-        private val mSubscriptions: List<OVChipSubscription>
+        override val trips: List<TransactionTrip>,
+        override val subscriptions: List<OVChipSubscription>
 ) : En1545TransitData(parsed) {
-    override fun getCardName() = NAME
+    override val cardName get() = NAME
 
-    public override fun getBalance() =
+    public override val balance get() =
             TransitBalanceStored(TransitCurrency.EUR(mCredit),
                     Utils.localizeString(if (mType == 2) R.string.card_type_personal else R.string.card_type_anonymous),
                     OVChipTransitData.convertDate(mExpdate))
 
-    override fun getSerialNumber(): String? = null
-
-    override fun getTrips() = mTrips
-
-    override fun getSubscriptions() = mSubscriptions
+    override val serialNumber get(): String? = null
 
     override fun getLookup() = OvcLookup.instance
 
-    override fun getInfo() = super.getInfo().orEmpty() + listOf(
+    override val info get() = super.info.orEmpty() + listOf(
             ListItem("Banned", if (mBanbits and 0xC0 == 0xC0) "Yes" else "No"),
 
             HeaderListItem(R.string.credit_information),
@@ -136,8 +132,8 @@ data class OVChipTransitData(
                     mCredit = credit.getBitsFromBufferSigned(77, 16) xor 0x7fff.inv(),
                     // byte 0-2.5: unknown const
                     mType = card[0, 2].data.getBitsFromBuffer(20, 4),
-                    mTrips = getTrips(card),
-                    mSubscriptions = getSubscriptions(card, index))
+                    trips = getTrips(card),
+                    subscriptions = getSubscriptions(card, index))
         }
 
         private fun getTrips(card: ClassicCard): List<TransactionTrip> {

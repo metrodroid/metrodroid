@@ -55,9 +55,9 @@ data class TrimetHopTransitData(private val mSerial: Int?,
     override val reason: SerialOnlyTransitData.Reason
         get() = SerialOnlyTransitData.Reason.NOT_STORED
 
-    override fun getCardName() = NAME
+    override val cardName get() = NAME
 
-    override fun getSerialNumber() = formatSerial(mSerial)
+    override val serialNumber get() = formatSerial(mSerial)
 
     companion object {
         private const val NAME = "Hop Fastpass"

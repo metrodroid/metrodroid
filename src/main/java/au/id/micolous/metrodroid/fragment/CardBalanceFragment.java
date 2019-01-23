@@ -68,7 +68,7 @@ public class CardBalanceFragment extends ListFragment {
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         ArrayList<Object> combined = new ArrayList<>();
-        List<TransitBalance> balances = mTransitData.getBalances();
+        List<? extends TransitBalance> balances = mTransitData.getBalances();
         if (balances != null)
             combined.addAll(balances);
         List<? extends Subscription> subscriptions = mTransitData.getSubscriptions();

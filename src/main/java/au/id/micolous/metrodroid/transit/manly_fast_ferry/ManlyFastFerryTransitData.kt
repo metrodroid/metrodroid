@@ -44,7 +44,7 @@ class ManlyFastFerryTransitData private constructor(card: ClassicCard) :
     override fun newTrip(purse: ErgPurseRecord, epoch: Int) =
             ManlyFastFerryTransaction(purse, epoch)
 
-    override fun getCardName() = NAME
+    override val cardName get() = NAME
     override fun getTimezone(): TimeZone = TIME_ZONE
 
     companion object {

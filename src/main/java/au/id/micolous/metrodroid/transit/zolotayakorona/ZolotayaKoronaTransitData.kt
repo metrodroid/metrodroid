@@ -61,13 +61,13 @@ data class ZolotayaKoronaTransitData internal constructor(
             return 0
         }
 
-    override fun getBalance() = if (mBalance == null) TransitCurrency.RUB(estimatedBalance) else TransitCurrency.RUB(mBalance)
+    override val balance get() = if (mBalance == null) TransitCurrency.RUB(estimatedBalance) else TransitCurrency.RUB(mBalance)
 
-    override fun getSerialNumber() = formatSerial(mSerial)
+    override val serialNumber get() = formatSerial(mSerial)
 
-    override fun getCardName() = nameCard(mCardType)
+    override val cardName get() = nameCard(mCardType)
 
-    override fun getInfo(): List<ListItem>? {
+    override val info get(): List<ListItem>? {
         val regionNum = mCardType shr 16
         val cardInfo = CARDS[mCardType]
         val regionRsrcIdx = cardInfo?.locationId
@@ -85,7 +85,7 @@ data class ZolotayaKoronaTransitData internal constructor(
                 ListItem(R.string.refill_counter, mRefill?.mCounter?.toString() ?: "0"))
     }
 
-    override fun getTrips() = listOfNotNull(mTrip) + listOfNotNull(mRefill)
+    override val trips get() = listOfNotNull(mTrip) + listOfNotNull(mRefill)
 
     companion object {
         private val REGIONS = mapOf(

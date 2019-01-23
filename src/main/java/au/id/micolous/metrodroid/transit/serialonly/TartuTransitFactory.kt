@@ -87,9 +87,9 @@ class TartuTransitFactory : ClassicCardTransitFactory {
         override val reason: SerialOnlyTransitData.Reason
             get() = SerialOnlyTransitData.Reason.NOT_STORED
 
-        override fun getSerialNumber() = mSerial.substring(8)
+        override val serialNumber get() = mSerial.substring(8)
 
-        override fun getCardName() = NAME
+        override val cardName get() = NAME
     }
 
     companion object {

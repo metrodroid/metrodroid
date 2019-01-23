@@ -112,7 +112,7 @@ public abstract class TreeListFragment extends Fragment implements TreeNode.Tree
 
         TreeNode root = TreeNode.root();
 
-        List<ListItem> items = getItems();
+        List<? extends ListItem> items = getItems();
 
         for (ListItem item : items)
             root.addChild(getTreeNode(item, 0));
@@ -145,7 +145,7 @@ public abstract class TreeListFragment extends Fragment implements TreeNode.Tree
         return root;
     }
 
-    protected abstract List<ListItem> getItems();
+    protected abstract List<? extends ListItem> getItems();
 
     @Override
     public void onSaveInstanceState(Bundle outState) {

@@ -44,12 +44,12 @@ data class WaikatoTransitData internal constructor(
     @IgnoredOnParcel
     private val oldRecord = records.sortedBy { it.txnNumber }.first()
 
-    override fun getCardName() = NAME
-    override fun getBalance() = TransitCurrency.NZD(newRecord.balance)
-    override fun getSerialNumber() = newRecord.serialNumber
+    override val cardName get() = NAME
+    override val balance get() = TransitCurrency.NZD(newRecord.balance)
+    override val serialNumber get() = newRecord.serialNumber
 
     // TODO: Figure out trips properly
-    override fun getTrips() : List<Trip> = listOf(trip)
+    override val trips get() : List<Trip> = listOf(trip)
 
     @IgnoredOnParcel
     private val lastTransactionValue =
@@ -58,9 +58,9 @@ data class WaikatoTransitData internal constructor(
     @IgnoredOnParcel
     private val trip = object : Trip() {
         override fun writeToParcel(dest: Parcel?, flags: Int) {}
-        override fun getStartTimestamp(): Calendar? = null
-        override fun getFare() = lastTransactionValue
-        override fun getMode() = Mode.BUS
+        override val startTimestamp get(): Calendar? = null
+        override val fare get() = lastTransactionValue
+        override val mode get() = Mode.BUS
         override fun describeContents() = 0
     }
 

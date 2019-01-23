@@ -62,17 +62,17 @@ data class RkfTransitData internal constructor(
         private val mLookup: RkfLookup,
         private val mTccps: List<En1545Parsed>,
         private val mSerial: RkfSerial) : TransitData() {
-    override fun getCardName(): String = issuerMap[aid]?.name ?: "RKF"
+    override val cardName get(): String = issuerMap[aid]?.name ?: "RKF"
 
     private val aid
         get() = mTcci.getIntOrZero(En1545TransitData.ENV_APPLICATION_ISSUER_ID)
 
-    override fun getSerialNumber() = mSerial.formatted
+    override val serialNumber get() = mSerial.formatted
 
-    override fun getTrips() = mTrips
+    override val trips get() = mTrips
 
     // Filter out ghost purse on Rejsekort unless it was ever used (is it ever?)
-    override fun getBalances() = mBalances.withIndex().filter { (idx, bal) ->
+    override val balances get() = mBalances.withIndex().filter { (idx, bal) ->
         aid != RkfLookup.REJSEKORT
                 || idx != 1 || bal.transactionNumber != 0
     }
@@ -97,7 +97,7 @@ data class RkfTransitData internal constructor(
             else -> R.string.unknown_format
         }
 
-    override fun getInfo() = listOf(
+    override val info get() = listOf(
             ListItem(R.string.expiry_date,
                     Utils.longDateFormat(TripObfuscator.maybeObfuscateTS(expiryDate))),
             ListItem(R.string.card_issuer, issuer),
