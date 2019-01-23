@@ -31,7 +31,7 @@ data class OVChipSubscription internal constructor(private val parsed: En1545Par
                                                    private val mType1: Int,
                                                    private val mUsed: Int) : En1545Subscription(parsed, null) {
 
-    override fun getSubscriptionState(): Subscription.SubscriptionState =
+    override val subscriptionState get(): Subscription.SubscriptionState =
             if (mType1 != 0) {
                 if (mUsed != 0) Subscription.SubscriptionState.USED else Subscription.SubscriptionState.STARTED
             } else Subscription.SubscriptionState.INACTIVE
