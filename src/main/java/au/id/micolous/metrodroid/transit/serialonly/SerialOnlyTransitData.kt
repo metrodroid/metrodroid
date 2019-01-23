@@ -32,7 +32,7 @@ abstract class SerialOnlyTransitData : TransitData() {
         get() = null
 
     protected abstract val reason: Reason
-    final override fun getInfo(): List<ListItem>? {
+    final override val info get(): List<ListItem>? {
         val li = mutableListOf(
                 ListItem(R.string.card_format, cardName),
                 ListItem(R.string.card_serial_number, serialNumber))

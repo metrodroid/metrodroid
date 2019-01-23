@@ -36,11 +36,11 @@ import kotlinx.android.parcel.Parcelize
 data class SelectaFranceTransitData(private val mBalance: Int,
                                     private val mSerial: Int) : TransitData() {
 
-    override fun getSerialNumber() = mSerial.toString()
+    override val serialNumber get() = mSerial.toString()
 
-    override fun getCardName(): String = NAME
+    override val cardName get(): String = NAME
 
-    public override fun getBalance(): TransitBalance? = TransitCurrency.EUR(mBalance)
+    public override val balance get(): TransitBalance? = TransitCurrency.EUR(mBalance)
 
     companion object {
         private const val NAME = "Selecta France"

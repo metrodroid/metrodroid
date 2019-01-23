@@ -43,7 +43,7 @@ public class CardInfoFragment extends TreeListFragment {
     }
 
     @Override
-    protected List<ListItem> getItems() {
+    protected List<? extends ListItem> getItems() {
         return mTransitData.getInfo();
     }
 

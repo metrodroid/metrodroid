@@ -48,11 +48,11 @@ class MykiTransitData (private val mSerial: String): SerialOnlyTransitData() {
     override val reason: SerialOnlyTransitData.Reason
         get() = SerialOnlyTransitData.Reason.LOCKED
 
-    override fun getCardName() = NAME
+    override val cardName get() = NAME
 
-    override fun getSerialNumber() = mSerial
+    override val serialNumber get() = mSerial
 
-    override fun getMoreInfoPage(): Uri? =
+    override val moreInfoPage get(): Uri? =
             Uri.parse("https://micolous.github.io/metrodroid/myki")
 
     companion object {

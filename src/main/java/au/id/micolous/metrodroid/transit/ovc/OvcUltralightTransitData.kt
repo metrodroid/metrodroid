@@ -29,11 +29,11 @@ private const val NAME = "OVC Ultralight"
 
 @Parcelize
 data class OvcUltralightTransitData(private val mTrips: List<OVChipTransaction>) : TransitData() {
-    override fun getSerialNumber() = null
+    override val serialNumber get() = null
 
-    override fun getCardName() = NAME
+    override val cardName get() = NAME
 
-    override fun getTrips(): List<TransactionTrip> = TransactionTrip.merge(mTrips)
+    override val trips get(): List<TransactionTrip> = TransactionTrip.merge(mTrips)
 }
 
 private fun parse(card: UltralightCard): OvcUltralightTransitData {

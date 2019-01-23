@@ -54,9 +54,9 @@ class IstanbulKartTransitData (private val mSerial: String,
     override val reason: SerialOnlyTransitData.Reason
         get() = SerialOnlyTransitData.Reason.LOCKED
 
-    override fun getCardName() = NAME
+    override val cardName get() = NAME
 
-    override fun getSerialNumber() = formatSerial(mSerial)
+    override val serialNumber get() = formatSerial(mSerial)
 
     companion object {
         private const val NAME = "IstanbulKart"

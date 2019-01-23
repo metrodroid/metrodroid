@@ -37,12 +37,12 @@ import java.util.*
 @Parcelize
 data class SunCardTransitData(private val mSerial: Int = 0) : SerialOnlyTransitData() {
 
-    override fun getSerialNumber() = formatSerial(mSerial)
+    override val serialNumber get() = formatSerial(mSerial)
 
     override val reason
         get() = SerialOnlyTransitData.Reason.NOT_STORED
 
-    override fun getCardName() = NAME
+    override val cardName get() = NAME
 
     override val extraInfo
         get () = listOf(

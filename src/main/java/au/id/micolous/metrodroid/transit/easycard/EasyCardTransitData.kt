@@ -35,8 +35,8 @@ import java.util.*
 
 @Parcelize
 data class EasyCardTransitData internal constructor(
-        private val balance: Int,
-        private val trips: List<Trip>,
+        private val balanceRaw: Int,
+        private val tripsRaw: List<Trip>,
         private val refill: EasyCardTopUp
 ) : TransitData() {
     constructor(card: ClassicCard) : this(
@@ -45,13 +45,13 @@ data class EasyCardTransitData internal constructor(
             EasyCardTopUp.parse(card)
     )
 
-    override fun getBalance() = TransitCurrency.TWD(balance)
+    override val balance get() = TransitCurrency.TWD(balanceRaw)
 
-    override fun getCardName() = NAME
+    override val cardName get() = NAME
 
-    override fun getSerialNumber(): String? = null
+    override val serialNumber get(): String? = null
 
-    override fun getTrips() = trips + listOf(refill)
+    override val trips get() = tripsRaw + listOf(refill)
 
     companion object {
         private val TZ = TimeZone.getTimeZone("Asia/Taipei")
