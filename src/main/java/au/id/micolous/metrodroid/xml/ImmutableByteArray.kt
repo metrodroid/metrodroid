@@ -25,7 +25,6 @@ import au.id.micolous.metrodroid.multi.FormattedString
 import kotlinx.android.parcel.Parcelize
 import kotlinx.io.OutputStream
 import kotlinx.io.charsets.Charset
-import java.security.MessageDigest
 
 fun ByteArray.toImmutable(): ImmutableByteArray = ImmutableByteArray.fromByteArray(this)
 
@@ -143,10 +142,6 @@ open class ImmutableByteArray private constructor(private val mData: ByteArray) 
 
     fun parcelize(parcel: Parcel, flags: Int) {
         parcel.writeParcelable(this, flags)
-    }
-
-    fun updateDigest(md: MessageDigest) {
-        md.update(mData)
     }
 
     companion object {
