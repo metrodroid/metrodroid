@@ -43,6 +43,7 @@ import au.id.micolous.metrodroid.MetrodroidApplication;
 import au.id.micolous.metrodroid.card.CardType;
 import au.id.micolous.metrodroid.multi.Localizer;
 import au.id.micolous.metrodroid.transit.CardInfo;
+import au.id.micolous.metrodroid.transit.CardInfoTools;
 import au.id.micolous.metrodroid.util.Utils;
 
 /**
@@ -74,7 +75,7 @@ public class SupportedCardsActivity extends MetrodroidActivity {
 
         CardsAdapter(Context context) {
             super(context, 0, new ArrayList<>());
-            addAll(CardInfo.getAllCardsAlphabetical());
+            addAll(CardInfoTools.getAllCardsAlphabetical());
             mLayoutInflater = (LayoutInflater) context.getSystemService(
                     Context.LAYOUT_INFLATER_SERVICE);
         }
@@ -95,7 +96,7 @@ public class SupportedCardsActivity extends MetrodroidActivity {
 
             ((TextView) convertView.findViewById(R.id.card_name)).setText(info.getName());
             TextView locationTextView = convertView.findViewById(R.id.card_location);
-            if (info.getLocationId() != 0) {
+            if (info.getLocationId() != null) {
                 locationTextView.setText(getString(info.getLocationId()));
                 locationTextView.setVisibility(View.VISIBLE);
             } else
@@ -103,8 +104,8 @@ public class SupportedCardsActivity extends MetrodroidActivity {
 
             ImageView image = convertView.findViewById(R.id.card_image);
             Drawable d = null;
-            if (info.hasBitmap())
-                d = info.getDrawable(getContext());
+            if (info.getHasBitmap())
+                d = CardInfoTools.getDrawable(getContext(), info);
             if (d == null)
                 d = AppCompatResources.getDrawable(getContext(), R.drawable.logo);
             image.setImageDrawable(d);
@@ -142,7 +143,7 @@ public class SupportedCardsActivity extends MetrodroidActivity {
                 notes += Localizer.INSTANCE.localizeString(R.string.card_preview_reader) + " ";
             }
 
-            if (info.getResourceExtraNote() != 0) {
+            if (info.getResourceExtraNote() != null) {
                 notes += Localizer.INSTANCE.localizeString(info.getResourceExtraNote()) + " ";
             }
 

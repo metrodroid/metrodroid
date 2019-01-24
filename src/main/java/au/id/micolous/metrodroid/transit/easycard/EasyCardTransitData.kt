@@ -91,7 +91,7 @@ data class EasyCardTransitData internal constructor(
 
             override fun parseTransitData(card: ClassicCard) = EasyCardTransitData(card)
 
-            override fun getAllCards() = listOf(CARD_INFO)
+            override val allCards get() = listOf(CARD_INFO)
         }
     }
 }

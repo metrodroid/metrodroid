@@ -203,7 +203,7 @@ data class OVChipTransitData(
 
             override fun earlySectors() = 1
 
-            override fun getAllCards() = listOf(CARD_INFO)
+            override val allCards get() = listOf(CARD_INFO)
 
             override fun check(classicCard: ClassicCard) = classicCard.sectors.size == 40 && earlyCheck(classicCard.sectors)
         }

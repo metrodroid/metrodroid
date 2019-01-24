@@ -77,7 +77,7 @@ class TartuTransitFactory : ClassicCardTransitFactory {
     override fun parseTransitData(classicCard: ClassicCard): TransitData =
             TartuTransitData(mSerial = parseSerial(classicCard))
 
-    override fun getAllCards() = listOf(CARD_INFO)
+    override val allCards get() = listOf(CARD_INFO)
 
     @Parcelize
     private data class TartuTransitData (private val mSerial: String): SerialOnlyTransitData() {
