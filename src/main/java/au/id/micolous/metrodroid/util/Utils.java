@@ -1066,7 +1066,7 @@ public class Utils {
         }
 
         md5.update(salt.getBytes(getASCII()));
-        key.updateDigest(md5);
+        md5.update(key.getDataCopy());
         md5.update(salt.getBytes(getASCII()));
 
         digest = getHexString(md5.digest());
