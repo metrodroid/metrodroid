@@ -107,17 +107,7 @@ public class LisboaVivaTransitData extends Calypso1545TransitData {
         if (idRec == null)
             mHolderName = "";
         else
-            mHolderName = parseLatin1(idRec.getData());
-    }
-
-    private static String parseLatin1(ImmutableByteArray data) {
-        Charset cs;
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-            cs = StandardCharsets.ISO_8859_1;
-        } else {
-            cs = Charset.forName("ISO-8859-1");
-        }
-        return data.readEncoded(cs);
+            mHolderName = idRec.getData().readLatin1();
     }
 
     public final static CalypsoCardTransitFactory FACTORY = new CalypsoCardTransitFactory() {
