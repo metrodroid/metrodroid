@@ -100,8 +100,8 @@ public class NextfareTransitData extends TransitData {
         parcel.readTypedList(mTrips, NextfareTrip.CREATOR);
         mSubscriptions = new ArrayList<>();
         parcel.readTypedList(mSubscriptions, NextfareSubscription.CREATOR);
-        mSystemCode = ImmutableByteArray.Companion.fromParcel(parcel);
-        mBlock2 = ImmutableByteArray.Companion.fromParcel(parcel);
+        mSystemCode = ImmutableByteArray.Companion.fromHex(parcel.readString());
+        mBlock2 = ImmutableByteArray.Companion.fromHex(parcel.readString());
         mCurrency = currency;
 
         mConfig = new NextfareConfigRecord(parcel);
@@ -313,8 +313,8 @@ public class NextfareTransitData extends TransitData {
         parcel.writeInt(mBalance);
         parcel.writeTypedList(mTrips);
         parcel.writeTypedList(mSubscriptions);
-        mSystemCode.parcelize(parcel, i);
-        mBlock2.parcelize(parcel, i);
+        parcel.writeString(mSystemCode.toHexString());
+        parcel.writeString(mBlock2.toHexString());
         mConfig.writeToParcel(parcel, i);
     }
 

@@ -84,7 +84,7 @@ public class EdyTransitData extends TransitData {
     private EdyTransitData(Parcel parcel) {
         mTrips = new ArrayList<>();
         parcel.readTypedList(mTrips, EdyTrip.CREATOR);
-        mSerialNumber = ImmutableByteArray.Companion.fromParcel(parcel);
+        mSerialNumber = ImmutableByteArray.Companion.fromHex(parcel.readString());
     }
 
     private EdyTransitData(FelicaCard card) {
@@ -164,7 +164,7 @@ public class EdyTransitData extends TransitData {
 
     public void writeToParcel(Parcel parcel, int flags) {
         parcel.writeTypedList(mTrips);
-        mSerialNumber.parcelize(parcel, flags);
+        parcel.writeString(mSerialNumber.toHexString());
     }
 }
 

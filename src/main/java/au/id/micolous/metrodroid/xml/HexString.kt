@@ -18,11 +18,28 @@
  */
 package au.id.micolous.metrodroid.xml
 
+import android.os.Parcel
+import android.os.Parcelable
+
 class HexString (data: ImmutableByteArray): ImmutableByteArray(data) {
     val data
         get() = dataCopy
     constructor(data: ByteArray) : this(fromByteArray(data))
     constructor(hexString: String) : this(fromHex(hexString))
+    constructor(parcel: Parcel) : this(fromHex(parcel.readString()))
+
+    companion object {
+        @JvmStatic
+        val CREATOR = object : Parcelable.Creator<HexString> {
+            override fun createFromParcel(parcel: Parcel): HexString {
+                return HexString(parcel)
+            }
+
+            override fun newArray(size: Int): Array<HexString?> {
+                return arrayOfNulls(size)
+            }
+        }
+    }
 
     class Transform : org.simpleframework.xml.transform.Transform<HexString> {
         override fun read(value: String): HexString {
@@ -32,5 +49,13 @@ class HexString (data: ImmutableByteArray): ImmutableByteArray(data) {
         override fun write(value: HexString): String {
             return value.toHexString()
         }
+    }
+
+    override fun writeToParcel(parcel: Parcel, flags: Int) {
+        parcel.writeString(toHexString())
+    }
+
+    override fun describeContents(): Int {
+        return 0
     }
 }
