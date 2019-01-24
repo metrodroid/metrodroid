@@ -19,9 +19,8 @@
  */
 package au.id.micolous.metrodroid.xml
 
-import android.os.Parcel
-import android.os.Parcelable
 import au.id.micolous.metrodroid.multi.FormattedString
+import au.id.micolous.metrodroid.multi.Parcelable
 import kotlinx.android.parcel.Parcelize
 import kotlinx.io.OutputStream
 import kotlinx.io.charsets.Charset
@@ -140,10 +139,6 @@ open class ImmutableByteArray private constructor(private val mData: ByteArray) 
         os.write(mData, offset, length)
     }
 
-    fun parcelize(parcel: Parcel, flags: Int) {
-        parcel.writeParcelable(this, flags)
-    }
-
     companion object {
         operator fun Byte.plus(second: ImmutableByteArray) = ImmutableByteArray(
                 mData = byteArrayOf(this) + second.mData)
@@ -152,8 +147,6 @@ open class ImmutableByteArray private constructor(private val mData: ByteArray) 
         fun fromByteArray(data: ByteArray) = ImmutableByteArray(mData = data.copyOf())
         fun empty() = ImmutableByteArray(mData = byteArrayOf())
         fun empty(length: Int = 0) = ImmutableByteArray(mData = ByteArray(length))
-        fun fromParcel(parcel: Parcel): ImmutableByteArray =
-                parcel.readParcelable(ImmutableByteArray::class.java.classLoader)!!
 
         fun of(vararg b: Byte) = ImmutableByteArray(mData = b)
         fun ofB(vararg b: Number) = ImmutableByteArray(b.size) { i -> b[i].toByte() }

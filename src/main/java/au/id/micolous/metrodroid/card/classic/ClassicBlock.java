@@ -24,6 +24,7 @@ import au.id.micolous.metrodroid.card.UnauthorizedException;
 import au.id.micolous.metrodroid.xml.Base64String;
 import au.id.micolous.metrodroid.xml.ImmutableByteArray;
 
+import kotlin.jvm.functions.Function1;
 import org.jetbrains.annotations.NonNls;
 import org.jetbrains.annotations.NotNull;
 import org.simpleframework.xml.Attribute;
@@ -87,14 +88,14 @@ public class ClassicBlock {
         return mData;
     }
 
-    private static final String ZERO = "AAAAAAAAAAAAAAAAAAAAAA==";
-    private static final String FF = "/////////////////////w==";
-    private static final String ZERO_VB = "AAAAAP////8AAAAAAP8A/w==";
+    private static final ImmutableByteArray ZERO = new ImmutableByteArray(16, integer -> (byte)0);
+    private static final ImmutableByteArray FF = new ImmutableByteArray(16, integer -> (byte)0xff);
+    private static final ImmutableByteArray ZERO_VB = ImmutableByteArray.Companion.fromHex("00000000ffffffff0000000000ff00ff");
 
     public boolean isEmpty() {
         if (isUnauthorized())
             throw new UnauthorizedException();
-        @NonNls String actual = mData.toBase64();
+         ImmutableByteArray actual = mData;
         return actual.equals(ZERO) || actual.equals(FF) || actual.equals(ZERO_VB);
     }
 }
