@@ -259,6 +259,9 @@ open class ImmutableByteArray private constructor(private val mData: ByteArray) 
 
         fun fromASCII(s: String) = ImmutableByteArray(mData = s.map { it.toByte() }.toByteArray())
 
+
+        fun fromBase64(input: String) = ImmutableByteArray(mData = decodeBase64(input) ?: throw Exception("Invalid base64: $input"))
+
         fun getHexString(b: ByteArray): String = getHexString(b, 0, b.size)
 
         fun getHexString(b: ByteArray, offset: Int, length: Int): String {
