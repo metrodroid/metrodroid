@@ -21,7 +21,6 @@ package au.id.micolous.metrodroid.xml
 
 import android.os.Parcel
 import android.os.Parcelable
-import android.util.Base64
 import au.id.micolous.metrodroid.multi.FormattedString
 import kotlinx.android.parcel.Parcelize
 import kotlinx.io.OutputStream
@@ -33,7 +32,7 @@ fun ByteArray.toImmutable(): ImmutableByteArray = ImmutableByteArray.fromByteArr
 
 @Parcelize
 @Serializable
-class ImmutableByteArray private constructor(private val mData: ByteArray) :
+open class ImmutableByteArray private constructor(private val mData: ByteArray) :
         Parcelable, Comparable<ImmutableByteArray>, Collection<Byte> {
     constructor(len: Int, function: (Int) -> Byte) : this(mData = ByteArray(len, function))
     constructor(imm: ImmutableByteArray): this(mData = imm.mData)
@@ -130,8 +129,7 @@ class ImmutableByteArray private constructor(private val mData: ByteArray) :
             elements.all { mData.contains(it) }
     override fun iterator(): Iterator<Byte> = mData.iterator()
 
-    fun toBase64(): String = Base64.encodeToString(mData, Base64.NO_WRAP)
-    fun readEncoded(cs: Charset) = String(mData, cs)
+    fun readEncoded(cs: Charset) = String(mData, 0, size, cs)
 
     fun writeTo(os: OutputStream) {
         os.write(mData)
@@ -157,7 +155,6 @@ class ImmutableByteArray private constructor(private val mData: ByteArray) :
         fun fromHex(hex: String) = ImmutableByteArray(mData = hexStringToByteArray(hex))
         fun fromByteArray(data: ByteArray) = ImmutableByteArray(mData = data.copyOf())
         fun empty() = ImmutableByteArray(mData = byteArrayOf())
-        fun fromBase64(value: String) = ImmutableByteArray(mData = Base64.decode(value, Base64.DEFAULT))
         fun fromParcel(parcel: Parcel): ImmutableByteArray =
                 parcel.readParcelable(ImmutableByteArray::class.java.classLoader)!!
 

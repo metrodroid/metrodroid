@@ -18,6 +18,8 @@
  */
 package au.id.micolous.metrodroid.xml
 
+import android.util.Base64
+
 class Base64String (data: ImmutableByteArray): ImmutableByteArray(data) {
     val data
       get() = dataCopy
@@ -29,11 +31,11 @@ class Base64String (data: ImmutableByteArray): ImmutableByteArray(data) {
 
     class Transform : org.simpleframework.xml.transform.Transform<Base64String> {
         override fun read(value: String): Base64String {
-            return Base64String(data = ImmutableByteArray.fromBase64(value))
+            return Base64String(data = fromByteArray(Base64.decode(value, Base64.DEFAULT)))
         }
 
         override fun write(value: Base64String): String {
-            return value.toBase64()
+            return Base64.encodeToString(value.dataCopy, Base64.NO_WRAP)
         }
     }
 }
