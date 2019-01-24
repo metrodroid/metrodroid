@@ -181,7 +181,7 @@ public class SmartRiderTransitData extends TransitData {
         }
 
         @Override
-        public int earlySectors() {
+        public int getEarlySectors() {
             return 8;
         }
     };

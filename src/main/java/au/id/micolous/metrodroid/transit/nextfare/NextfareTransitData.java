@@ -295,7 +295,7 @@ public class NextfareTransitData extends TransitData {
         }
 
         @Override
-        public int earlySectors() {
+        public int getEarlySectors() {
             return 1;
         }
     }

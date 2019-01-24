@@ -222,7 +222,7 @@ public class BilheteUnicoSPTransitData extends TransitData {
         }
 
         @Override
-        public int earlySectors() {
+        public int getEarlySectors() {
             return 9;
         }
 

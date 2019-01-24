@@ -231,7 +231,7 @@ public class CharlieCardTransitData extends TransitData {
         }
 
         @Override
-        public int earlySectors() {
+        public int getEarlySectors() {
             return 2;
         }
 

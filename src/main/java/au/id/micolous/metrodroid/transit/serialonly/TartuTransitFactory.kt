@@ -69,7 +69,7 @@ class TartuTransitFactory : ClassicCardTransitFactory {
         return false
     }
 
-    override fun earlySectors() = 2
+    override val earlySectors get() = 2
 
     override fun parseTransitIdentity(classicCard: ClassicCard) =
             TransitIdentity(NAME, parseSerial(classicCard).substring(8))

@@ -138,7 +138,7 @@ data class RkfTransitData internal constructor(
                             // Jo-jo
                             "f40bb9394d94c7040c1dd19997b4f5e8") >= 0
 
-            override fun earlySectors() = 1
+            override val earlySectors get() = 1
 
             override val allCards get() = issuerMap.values.toList()
 
