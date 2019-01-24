@@ -1,5 +1,5 @@
 /*
- * TransitIdentity.java
+ * TransitIdentity.kt
  *
  * Copyright (C) 2011 Eric Butler <eric@codebutler.com>
  *
@@ -17,22 +17,6 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package au.id.micolous.metrodroid.transit;
+package au.id.micolous.metrodroid.transit
 
-public class TransitIdentity {
-    private final String mName;
-    private final String mSerialNumber;
-
-    public TransitIdentity(String name, String serialNumber) {
-        mName = name;
-        mSerialNumber = serialNumber;
-    }
-
-    public String getName() {
-        return mName;
-    }
-
-    public String getSerialNumber() {
-        return mSerialNumber;
-    }
-}
+class TransitIdentity(val name: String, val serialNumber: String?)
