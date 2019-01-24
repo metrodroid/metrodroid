@@ -221,7 +221,7 @@ data class ZolotayaKoronaTransitData internal constructor(
                         && toc.byteArrayToInt(12, 2) == 0x18ee
             }
 
-            override fun earlySectors() = 1
+            override val earlySectors get() = 1
         }
     }
 }

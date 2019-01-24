@@ -85,7 +85,7 @@ data class EasyCardTransitData internal constructor(
                 it == MAGIC
             } ?: false
 
-            override fun earlySectors() = 1
+            override val earlySectors get() = 1
 
             override fun parseTransitIdentity(card: ClassicCard) = TransitIdentity(NAME, null)
 

@@ -175,7 +175,7 @@ public class TroikaHybridTransitData extends TransitData {
         }
 
         @Override
-        public int earlySectors() {
+        public int getEarlySectors() {
             return 2;
         }
 

@@ -88,7 +88,7 @@ data class StrelkaTransitData (private val mSerial: String): SerialOnlyTransitDa
             }
 
             // 1 is actually enough but let's show Troika+Strelka as Troika
-            override fun earlySectors() = 2
+            override val earlySectors get() = 2
 
             override val allCards get() = listOf(CARD_INFO)
         }

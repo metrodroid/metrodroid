@@ -214,7 +214,7 @@ public class RicaricaMiTransitData extends En1545TransitData {
         }
 
         @Override
-        public int earlySectors() {
+        public int getEarlySectors() {
             return 1;
         }
 

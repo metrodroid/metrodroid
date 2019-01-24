@@ -64,7 +64,7 @@ data class SelectaFranceTransitData(private val mBalance: Int,
                     SelectaFranceTransitData(mSerial = getSerial(card),
                             mBalance = card[1, 2].data.byteArrayToInt(0, 3))
 
-            override fun earlySectors() = 1
+            override val earlySectors get() = 1
 
             override val allCards get() = listOf(CARD_INFO)
         }

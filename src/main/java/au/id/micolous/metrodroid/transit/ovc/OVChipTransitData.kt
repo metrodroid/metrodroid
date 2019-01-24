@@ -201,7 +201,7 @@ data class OVChipTransitData(
 
             override fun parseTransitData(classicCard: ClassicCard) = parse(classicCard)
 
-            override fun earlySectors() = 1
+            override val earlySectors get() = 1
 
             override val allCards get() = listOf(CARD_INFO)
 
