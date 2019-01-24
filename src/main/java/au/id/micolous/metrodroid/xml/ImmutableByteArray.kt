@@ -21,7 +21,6 @@ package au.id.micolous.metrodroid.xml
 
 import android.os.Parcel
 import android.os.Parcelable
-import android.util.Base64
 import au.id.micolous.metrodroid.multi.FormattedString
 import kotlinx.android.parcel.Parcelize
 import kotlinx.io.OutputStream
@@ -158,7 +157,6 @@ open class ImmutableByteArray private constructor(private val mData: ByteArray) 
         fun fromByteArray(data: ByteArray) = ImmutableByteArray(mData = data.copyOf())
         fun empty() = ImmutableByteArray(mData = byteArrayOf())
         fun empty(length: Int = 0) = ImmutableByteArray(mData = ByteArray(length))
-        fun fromBase64(value: String) = ImmutableByteArray(mData = Base64.decode(value, Base64.DEFAULT))
         fun fromParcel(parcel: Parcel): ImmutableByteArray =
                 parcel.readParcelable(ImmutableByteArray::class.java.classLoader)!!
 
