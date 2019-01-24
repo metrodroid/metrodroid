@@ -157,7 +157,7 @@ public class DesfireCard extends Card {
 
                 DesfireUnlocker unlocker = null;
                 if(LeapTransitData.earlyCheck(appId))
-                    unlocker = LeapUnlocker.createUnlocker(appId, manufData);
+                    unlocker = LeapUnlocker.Companion.createUnlocker(appId, manufData);
                 int[] fileIds = desfireTag.getFileList();
                 if (unlocker != null) {
                     fileIds = unlocker.getOrder(desfireTag, fileIds);
