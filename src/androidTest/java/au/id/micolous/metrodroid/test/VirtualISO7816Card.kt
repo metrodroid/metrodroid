@@ -35,7 +35,7 @@ import au.id.micolous.metrodroid.card.iso7816.ISO7816Protocol.WP_FILE_NOT_FOUND
 import au.id.micolous.metrodroid.card.iso7816.ISO7816Protocol.WP_RECORD_NOT_FOUND
 import au.id.micolous.metrodroid.card.iso7816.ISO7816Selector
 import android.util.Log
-import au.id.micolous.metrodroid.xml.ImmutableByteArray
+import au.id.micolous.metrodroid.util.ImmutableByteArray
 
 /**
  * Implements a virtual card that speaks a subset of ISO7816-4.

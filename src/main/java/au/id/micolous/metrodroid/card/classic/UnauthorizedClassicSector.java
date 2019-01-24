@@ -32,7 +32,7 @@ import au.id.micolous.farebot.R;
 import au.id.micolous.metrodroid.card.UnauthorizedException;
 import au.id.micolous.metrodroid.ui.ListItem;
 import au.id.micolous.metrodroid.util.Utils;
-import au.id.micolous.metrodroid.xml.ImmutableByteArray;
+import au.id.micolous.metrodroid.util.ImmutableByteArray;
 
 @Root(name = "sector")
 public class UnauthorizedClassicSector extends ClassicSector {

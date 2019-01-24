@@ -21,7 +21,7 @@
 package au.id.micolous.metrodroid.transit.ovc
 
 import android.os.Parcelable
-import au.id.micolous.metrodroid.xml.ImmutableByteArray
+import au.id.micolous.metrodroid.util.ImmutableByteArray
 import kotlinx.android.parcel.Parcelize
 
 @Parcelize

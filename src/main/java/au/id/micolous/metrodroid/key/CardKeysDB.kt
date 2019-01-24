@@ -5,7 +5,7 @@ import android.database.Cursor
 import android.net.Uri
 import au.id.micolous.metrodroid.provider.CardKeyProvider
 import au.id.micolous.metrodroid.provider.KeysTableColumns
-import au.id.micolous.metrodroid.xml.ImmutableByteArray
+import au.id.micolous.metrodroid.util.ImmutableByteArray
 import org.json.JSONException
 import org.json.JSONObject
 

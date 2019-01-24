@@ -6,7 +6,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import au.id.micolous.metrodroid.transit.CardTransitFactory;
-import au.id.micolous.metrodroid.xml.ImmutableByteArray;
+import au.id.micolous.metrodroid.util.ImmutableByteArray;
 
 public interface ChinaCardTransitFactory extends CardTransitFactory<ChinaCard> {
     @Override

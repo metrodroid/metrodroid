@@ -22,7 +22,7 @@ import au.id.micolous.metrodroid.key.CardKeysEmbed;
 import au.id.micolous.metrodroid.key.CardKeysMerged;
 import au.id.micolous.metrodroid.key.CardKeysRetriever;
 import au.id.micolous.metrodroid.util.Utils;
-import au.id.micolous.metrodroid.xml.ImmutableByteArray;
+import au.id.micolous.metrodroid.util.ImmutableByteArray;
 
 public final class ClassicAndroidReader {
     private final static String TAG = "ClassicAndroidReader";

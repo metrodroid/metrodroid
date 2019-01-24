@@ -4,8 +4,8 @@ import android.nfc.tech.MifareClassic
 import android.support.annotation.VisibleForTesting
 import au.id.micolous.metrodroid.transit.smartrider.SmartRiderTransitData
 import au.id.micolous.metrodroid.util.Utils
-import au.id.micolous.metrodroid.xml.ImmutableByteArray
-import au.id.micolous.metrodroid.xml.toImmutable
+import au.id.micolous.metrodroid.util.ImmutableByteArray
+import au.id.micolous.metrodroid.util.toImmutable
 import org.json.JSONArray
 import org.json.JSONException
 import org.json.JSONObject

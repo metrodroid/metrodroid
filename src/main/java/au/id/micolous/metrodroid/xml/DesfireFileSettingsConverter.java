@@ -23,6 +23,7 @@ import au.id.micolous.metrodroid.card.desfire.settings.RecordDesfireFileSettings
 import au.id.micolous.metrodroid.card.desfire.settings.StandardDesfireFileSettings;
 import au.id.micolous.metrodroid.card.desfire.settings.UnsupportedDesfireFileSettings;
 import au.id.micolous.metrodroid.card.desfire.settings.ValueDesfireFileSettings;
+import au.id.micolous.metrodroid.util.ImmutableByteArray;
 import au.id.micolous.metrodroid.util.Utils;
 
 import org.simpleframework.xml.convert.Converter;

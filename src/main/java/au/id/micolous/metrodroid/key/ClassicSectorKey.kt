@@ -25,8 +25,8 @@ package au.id.micolous.metrodroid.key
 
 import android.support.annotation.StringRes
 import au.id.micolous.farebot.R
-import au.id.micolous.metrodroid.xml.ImmutableByteArray
-import au.id.micolous.metrodroid.xml.toImmutable
+import au.id.micolous.metrodroid.util.ImmutableByteArray
+import au.id.micolous.metrodroid.util.toImmutable
 import org.jetbrains.annotations.NonNls
 import org.json.JSONException
 import org.json.JSONObject

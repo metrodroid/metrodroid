@@ -29,7 +29,7 @@ import java.io.IOException;
 import au.id.micolous.metrodroid.card.iso7816.ISO7816Exception;
 import au.id.micolous.metrodroid.card.iso7816.ISO7816Protocol;
 import au.id.micolous.metrodroid.util.Utils;
-import au.id.micolous.metrodroid.xml.ImmutableByteArray;
+import au.id.micolous.metrodroid.util.ImmutableByteArray;
 
 public class CEPASProtocol {
     private static final String TAG = "CEPASProtocol";

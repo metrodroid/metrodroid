@@ -23,7 +23,7 @@ package au.id.micolous.metrodroid.transit.ovc
 import au.id.micolous.metrodroid.transit.Transaction
 import au.id.micolous.metrodroid.transit.Trip
 import au.id.micolous.metrodroid.transit.en1545.*
-import au.id.micolous.metrodroid.xml.ImmutableByteArray
+import au.id.micolous.metrodroid.util.ImmutableByteArray
 import kotlinx.android.parcel.Parcelize
 
 @Parcelize

@@ -16,7 +16,7 @@ import java.util.Set;
 import au.id.micolous.metrodroid.card.CardImporter;
 import au.id.micolous.metrodroid.key.ClassicSectorKey;
 import au.id.micolous.metrodroid.util.Utils;
-import au.id.micolous.metrodroid.xml.ImmutableByteArray;
+import au.id.micolous.metrodroid.util.ImmutableByteArray;
 
 /**
  * Class to read files built by MIFARE Classic Tool.

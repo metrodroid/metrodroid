@@ -17,13 +17,14 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package au.id.micolous.metrodroid.xml
+package au.id.micolous.metrodroid.util
 
 import au.id.micolous.metrodroid.multi.FormattedString
 import au.id.micolous.metrodroid.multi.Parcelable
-import kotlinx.android.parcel.Parcelize
+import au.id.micolous.metrodroid.multi.Parcelize
 import kotlinx.io.OutputStream
 import kotlinx.io.charsets.Charset
+import kotlinx.io.core.String
 import kotlinx.serialization.*
 
 fun ByteArray.toImmutable(): ImmutableByteArray = ImmutableByteArray.fromByteArray(this)
@@ -48,6 +49,7 @@ open class ImmutableByteArray private constructor(private val mData: ByteArray) 
     override fun hashCode() = mData.contentHashCode()
 
     fun toHexString() = getHexString(0, size)
+    fun getHexString() = getHexString(0, size)
 
     override fun toString() = "<${toHexString()}>"
 

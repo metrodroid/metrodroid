@@ -3,8 +3,8 @@ package au.id.micolous.metrodroid.test
 import au.id.micolous.metrodroid.card.classic.ClassicCardTech
 import au.id.micolous.metrodroid.key.ClassicSectorKey
 import android.util.Log
-import au.id.micolous.metrodroid.xml.ImmutableByteArray
-import au.id.micolous.metrodroid.xml.toImmutable
+import au.id.micolous.metrodroid.util.ImmutableByteArray
+import au.id.micolous.metrodroid.util.toImmutable
 
 class VirtualClassic(private val raw: ImmutableByteArray) : ClassicCardTech {
     // Currently authenticated sector, -1 if none

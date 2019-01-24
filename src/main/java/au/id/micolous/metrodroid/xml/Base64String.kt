@@ -21,6 +21,7 @@ package au.id.micolous.metrodroid.xml
 import android.os.Parcel
 import android.os.Parcelable
 import android.util.Base64
+import au.id.micolous.metrodroid.util.ImmutableByteArray
 
 class Base64String (data: ImmutableByteArray): ImmutableByteArray(data) {
     val data

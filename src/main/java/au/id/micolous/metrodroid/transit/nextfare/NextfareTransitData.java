@@ -56,7 +56,7 @@ import au.id.micolous.metrodroid.transit.nextfare.record.NextfareTravelPassRecor
 import au.id.micolous.metrodroid.ui.HeaderListItem;
 import au.id.micolous.metrodroid.ui.ListItem;
 import au.id.micolous.metrodroid.util.Utils;
-import au.id.micolous.metrodroid.xml.ImmutableByteArray;
+import au.id.micolous.metrodroid.util.ImmutableByteArray;
 
 /**
  * Generic transit data type for Cubic Nextfare.

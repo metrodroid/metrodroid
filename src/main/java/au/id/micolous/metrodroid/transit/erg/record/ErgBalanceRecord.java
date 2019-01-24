@@ -24,7 +24,7 @@ import android.support.annotation.NonNull;
 import java.util.Locale;
 
 import au.id.micolous.metrodroid.util.Utils;
-import au.id.micolous.metrodroid.xml.ImmutableByteArray;
+import au.id.micolous.metrodroid.util.ImmutableByteArray;
 
 /**
  * Represents a balance record.

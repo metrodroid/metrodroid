@@ -23,7 +23,7 @@ import android.os.Parcel;
 import android.os.Parcelable;
 
 import au.id.micolous.metrodroid.util.Utils;
-import au.id.micolous.metrodroid.xml.ImmutableByteArray;
+import au.id.micolous.metrodroid.util.ImmutableByteArray;
 
 import java.util.Locale;
 

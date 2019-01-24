@@ -24,7 +24,7 @@ import android.util.Log;
 import java.util.Locale;
 import java.util.TimeZone;
 
-import au.id.micolous.metrodroid.xml.ImmutableByteArray;
+import au.id.micolous.metrodroid.util.ImmutableByteArray;
 
 /**
  * Represents a record inside of an ERG MIFARE Classic based card.

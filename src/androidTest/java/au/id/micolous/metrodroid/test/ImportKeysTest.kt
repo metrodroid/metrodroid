@@ -21,7 +21,7 @@ package au.id.micolous.metrodroid.test
 import au.id.micolous.metrodroid.key.*
 import au.id.micolous.metrodroid.util.KeyFormat
 import au.id.micolous.metrodroid.util.Utils
-import au.id.micolous.metrodroid.xml.toImmutable
+import au.id.micolous.metrodroid.util.toImmutable
 import kotlinx.io.charsets.Charsets
 import kotlinx.io.core.String
 import org.json.JSONException

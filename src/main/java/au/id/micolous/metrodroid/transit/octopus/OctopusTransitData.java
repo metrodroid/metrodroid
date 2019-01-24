@@ -46,7 +46,7 @@ import java.util.Collections;
 import java.util.List;
 
 import au.id.micolous.farebot.R;
-import au.id.micolous.metrodroid.xml.ImmutableByteArray;
+import au.id.micolous.metrodroid.util.ImmutableByteArray;
 
 /**
  * Reader for Octopus (Hong Kong)
