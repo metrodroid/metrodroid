@@ -266,6 +266,8 @@ open class ImmutableByteArray private constructor(private val mData: ByteArray) 
             return fromHex(input.decodeString())
         }
 
+        fun fromBase64(input: String) = ImmutableByteArray(mData = decodeBase64(input) ?: throw Exception("Invalid base64: $input"))
+
         fun getHexString(b: ByteArray): String = getHexString(b, 0, b.size)
 
         fun getHexString(b: ByteArray, offset: Int, length: Int): String {
@@ -275,6 +277,5 @@ open class ImmutableByteArray private constructor(private val mData: ByteArray) 
             }
             return result.toString()
         }
-
     }
 }
