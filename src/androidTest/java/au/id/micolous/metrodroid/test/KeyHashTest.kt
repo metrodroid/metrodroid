@@ -21,7 +21,7 @@ package au.id.micolous.metrodroid.test
 
 import au.id.micolous.metrodroid.key.ClassicSectorKey
 import au.id.micolous.metrodroid.util.Utils
-import au.id.micolous.metrodroid.xml.ImmutableByteArray
+import au.id.micolous.metrodroid.util.ImmutableByteArray
 import kotlin.test.Test
 import kotlin.test.assertEquals
 

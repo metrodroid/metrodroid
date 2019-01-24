@@ -22,7 +22,7 @@ package au.id.micolous.metrodroid.card.iso7816
 
 import au.id.micolous.metrodroid.ui.ListItem
 import au.id.micolous.metrodroid.ui.ListItemRecursive
-import au.id.micolous.metrodroid.xml.ImmutableByteArray
+import au.id.micolous.metrodroid.util.ImmutableByteArray
 
 object ISO7816TLV {
     // return: <leadBits, id, idlen>

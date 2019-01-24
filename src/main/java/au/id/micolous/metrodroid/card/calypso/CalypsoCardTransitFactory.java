@@ -4,7 +4,7 @@ import android.support.annotation.NonNull;
 
 import au.id.micolous.metrodroid.transit.CardInfo;
 import au.id.micolous.metrodroid.transit.CardTransitFactory;
-import au.id.micolous.metrodroid.xml.ImmutableByteArray;
+import au.id.micolous.metrodroid.util.ImmutableByteArray;
 
 public interface CalypsoCardTransitFactory extends CardTransitFactory<CalypsoApplication> {
     @Override

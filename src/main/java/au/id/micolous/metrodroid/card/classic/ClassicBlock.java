@@ -22,7 +22,7 @@ package au.id.micolous.metrodroid.card.classic;
 
 import au.id.micolous.metrodroid.card.UnauthorizedException;
 import au.id.micolous.metrodroid.xml.Base64String;
-import au.id.micolous.metrodroid.xml.ImmutableByteArray;
+import au.id.micolous.metrodroid.util.ImmutableByteArray;
 
 import kotlin.jvm.functions.Function1;
 import org.jetbrains.annotations.NonNls;

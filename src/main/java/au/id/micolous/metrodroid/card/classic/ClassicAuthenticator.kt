@@ -12,7 +12,7 @@ import au.id.micolous.metrodroid.key.ClassicStaticKeys
 import au.id.micolous.metrodroid.multi.Localizer
 import au.id.micolous.metrodroid.util.Preferences
 import au.id.micolous.metrodroid.util.Utils
-import au.id.micolous.metrodroid.xml.ImmutableByteArray
+import au.id.micolous.metrodroid.util.ImmutableByteArray
 import java.io.IOException
 
 class ClassicAuthenticator private constructor(private val mKeys: ClassicKeys,

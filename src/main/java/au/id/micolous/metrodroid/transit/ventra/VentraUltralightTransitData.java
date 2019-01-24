@@ -37,7 +37,7 @@ import au.id.micolous.metrodroid.transit.TransitIdentity;
 import au.id.micolous.metrodroid.transit.nextfare.ultralight.NextfareUltralightTransaction;
 import au.id.micolous.metrodroid.transit.nextfare.ultralight.NextfareUltralightTransitData;
 import au.id.micolous.metrodroid.util.Utils;
-import au.id.micolous.metrodroid.xml.ImmutableByteArray;
+import au.id.micolous.metrodroid.util.ImmutableByteArray;
 
 public class VentraUltralightTransitData extends NextfareUltralightTransitData {
 

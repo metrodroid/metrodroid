@@ -31,7 +31,7 @@ import java.util.GregorianCalendar;
 import java.util.TimeZone;
 
 import au.id.micolous.metrodroid.util.Utils;
-import au.id.micolous.metrodroid.xml.ImmutableByteArray;
+import au.id.micolous.metrodroid.util.ImmutableByteArray;
 
 public class En1545FixedInteger implements En1545Field {
     private final int mLen;

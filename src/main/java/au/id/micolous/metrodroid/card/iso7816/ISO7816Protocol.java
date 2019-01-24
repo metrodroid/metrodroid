@@ -31,7 +31,7 @@ import java.io.IOException;
 
 import au.id.micolous.metrodroid.card.CardTransceiver;
 import au.id.micolous.metrodroid.util.Utils;
-import au.id.micolous.metrodroid.xml.ImmutableByteArray;
+import au.id.micolous.metrodroid.util.ImmutableByteArray;
 
 /**
  * Implements communication with cards that talk over ISO7816-4 APDUs.

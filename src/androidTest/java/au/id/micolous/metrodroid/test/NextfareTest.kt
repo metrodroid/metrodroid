@@ -36,7 +36,7 @@ import au.id.micolous.metrodroid.transit.nextfare.record.NextfareConfigRecord
 import au.id.micolous.metrodroid.transit.nextfare.record.NextfareTransactionRecord
 import au.id.micolous.metrodroid.transit.seq_go.SeqGoTransitData
 import au.id.micolous.metrodroid.util.Utils
-import au.id.micolous.metrodroid.xml.ImmutableByteArray
+import au.id.micolous.metrodroid.util.ImmutableByteArray
 
 import au.id.micolous.metrodroid.util.Utils.UTC
 import kotlin.test.Test

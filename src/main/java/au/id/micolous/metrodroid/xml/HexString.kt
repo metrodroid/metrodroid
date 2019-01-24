@@ -20,6 +20,7 @@ package au.id.micolous.metrodroid.xml
 
 import android.os.Parcel
 import android.os.Parcelable
+import au.id.micolous.metrodroid.util.ImmutableByteArray
 
 class HexString (data: ImmutableByteArray): ImmutableByteArray(data) {
     val data

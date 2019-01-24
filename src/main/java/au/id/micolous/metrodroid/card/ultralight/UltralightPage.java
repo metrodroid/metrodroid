@@ -19,7 +19,7 @@
 package au.id.micolous.metrodroid.card.ultralight;
 
 import au.id.micolous.metrodroid.xml.Base64String;
-import au.id.micolous.metrodroid.xml.ImmutableByteArray;
+import au.id.micolous.metrodroid.util.ImmutableByteArray;
 
 import org.simpleframework.xml.Attribute;
 import org.simpleframework.xml.Element;

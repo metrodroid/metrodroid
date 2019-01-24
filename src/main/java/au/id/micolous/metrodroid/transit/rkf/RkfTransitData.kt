@@ -36,7 +36,7 @@ import kotlinx.android.parcel.Parcelize
 import au.id.micolous.metrodroid.transit.en1545.En1545FixedInteger
 import au.id.micolous.metrodroid.util.NumberUtils
 import au.id.micolous.metrodroid.util.TripObfuscator
-import au.id.micolous.metrodroid.xml.ImmutableByteArray
+import au.id.micolous.metrodroid.util.ImmutableByteArray
 import java.util.*
 
 @Parcelize

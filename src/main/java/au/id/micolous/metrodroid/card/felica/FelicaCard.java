@@ -53,7 +53,7 @@ import au.id.micolous.metrodroid.util.NumberUtils;
 import au.id.micolous.metrodroid.util.Preferences;
 import au.id.micolous.metrodroid.util.Utils;
 import au.id.micolous.metrodroid.xml.Base64String;
-import au.id.micolous.metrodroid.xml.ImmutableByteArray;
+import au.id.micolous.metrodroid.util.ImmutableByteArray;
 
 import org.apache.commons.lang3.ArrayUtils;
 import org.simpleframework.xml.Element;

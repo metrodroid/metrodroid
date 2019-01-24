@@ -48,7 +48,7 @@ import au.id.micolous.metrodroid.transit.intercode.IntercodeTransitData;
 import au.id.micolous.metrodroid.ui.ListItem;
 import au.id.micolous.metrodroid.util.TripObfuscator;
 import au.id.micolous.metrodroid.util.Utils;
-import au.id.micolous.metrodroid.xml.ImmutableByteArray;
+import au.id.micolous.metrodroid.util.ImmutableByteArray;
 
 public class AdelaideMetrocardTransitData extends En1545TransitData {
     public static final Parcelable.Creator<AdelaideMetrocardTransitData> CREATOR = new Parcelable.Creator<AdelaideMetrocardTransitData>() {

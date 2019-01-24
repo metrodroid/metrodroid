@@ -41,7 +41,7 @@ import java.util.TimeZone;
 import au.id.micolous.metrodroid.ui.ListItem;
 import au.id.micolous.metrodroid.util.TripObfuscator;
 import au.id.micolous.metrodroid.util.Utils;
-import au.id.micolous.metrodroid.xml.ImmutableByteArray;
+import au.id.micolous.metrodroid.util.ImmutableByteArray;
 
 @SuppressWarnings("FieldNotUsedInToString")
 public class En1545Parsed implements Parcelable {
