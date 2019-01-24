@@ -94,7 +94,7 @@ class IstanbulKartTransitData (private val mSerial: String,
         val FACTORY: DesfireCardTransitFactory = object : DesfireCardTransitFactory {
             override fun earlyCheck(appIds: IntArray) = (APP_ID in appIds)
 
-            override fun getAllCards() = listOf(CARD_INFO)
+            override val allCards get() = listOf(CARD_INFO)
 
             override fun parseTransitData(desfireCard: DesfireCard) = parse(desfireCard)
 

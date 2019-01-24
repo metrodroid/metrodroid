@@ -66,7 +66,7 @@ data class SelectaFranceTransitData(private val mBalance: Int,
 
             override fun earlySectors() = 1
 
-            override fun getAllCards() = listOf(CARD_INFO)
+            override val allCards get() = listOf(CARD_INFO)
         }
     }
 }

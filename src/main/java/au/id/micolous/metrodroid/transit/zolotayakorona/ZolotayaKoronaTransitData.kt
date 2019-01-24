@@ -189,7 +189,7 @@ data class ZolotayaKoronaTransitData internal constructor(
         private fun formatSerial(serial: String) = NumberUtils.groupString(serial, " ", 4, 5, 5)
 
         val FACTORY: ClassicCardTransitFactory = object : ClassicCardTransitFactory {
-            override fun getAllCards() = listOf(FALLBACK_CARD_INFO) + CARDS.values
+            override val allCards get() = listOf(FALLBACK_CARD_INFO) + CARDS.values
 
             override fun parseTransitIdentity(card: ClassicCard) = TransitIdentity(
                     nameCard(getCardType(card)),

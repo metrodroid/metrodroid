@@ -140,7 +140,7 @@ data class RkfTransitData internal constructor(
 
             override fun earlySectors() = 1
 
-            override fun getAllCards() = issuerMap.values.toList()
+            override val allCards get() = issuerMap.values.toList()
 
             override fun parseTransitIdentity(card: ClassicCard): TransitIdentity {
                 val serial = getSerial(card)

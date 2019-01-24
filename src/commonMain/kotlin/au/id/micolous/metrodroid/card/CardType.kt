@@ -1,5 +1,5 @@
 /*
- * CardType.java
+ * CardType.kt
  *
  * Copyright 2011-2014 Eric Butler <eric@codebutler.com>
  * Copyright 2015, 2018 Michael Farrell <micolous+git@gmail.com>
@@ -17,9 +17,9 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package au.id.micolous.metrodroid.card;
+package au.id.micolous.metrodroid.card
 
-public enum CardType {
+enum class CardType constructor(private val mValue: Int) {
     MifareClassic(0),
     MifareUltralight(1),
     MifareDesfire(2),
@@ -28,39 +28,23 @@ public enum CardType {
     ISO7816(5),
     Unknown(65535);
 
-    private final int mValue;
+    fun toInteger(): Int = mValue
 
-    CardType(int value) {
-        mValue = value;
+    override fun toString() = when (mValue) {
+        0 -> "MIFARE Classic"
+        1 -> "MIFARE Ultralight"
+        2 -> "MIFARE DESFire"
+        3 -> "CEPAS"
+        4 -> "FeliCa"
+        5 -> "ISO7816"
+        6 -> "Calypso"
+        65535 -> "Unknown"
+        else -> "Unknown"
     }
 
-    public static CardType parseValue(String value) {
-        return CardType.class.getEnumConstants()[Integer.parseInt(value)];
-    }
-
-    public int toInteger() {
-        return mValue;
-    }
-
-    public String toString() {
-        switch (mValue) {
-            case 0:
-                return "MIFARE Classic";
-            case 1:
-                return "MIFARE Ultralight";
-            case 2:
-                return "MIFARE DESFire";
-            case 3:
-                return "CEPAS";
-            case 4:
-                return "FeliCa";
-            case 5:
-                return "ISO7816";
-            case 6:
-                return "Calypso";
-            case 65535:
-            default:
-                return "Unknown";
+    companion object {
+        fun parseValue(value: String): CardType {
+            return values()[Integer.parseInt(value)]
         }
     }
 }
