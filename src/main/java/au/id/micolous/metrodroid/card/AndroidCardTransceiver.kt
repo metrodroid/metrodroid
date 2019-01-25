@@ -18,19 +18,24 @@
  */
 package au.id.micolous.metrodroid.card
 
-import android.nfc.tech.IsoDep
-
-import java.io.IOException
+import android.nfc.TagLostException
 
 import au.id.micolous.metrodroid.util.ImmutableByteArray
+import au.id.micolous.metrodroid.util.Utils
+import au.id.micolous.metrodroid.util.toImmutable
+import java.io.IOException
 
 /**
- * Wrapper for [IsoDep] to implement the [CardTransceiver] interface.
+ * Wrapper for Android to implement the [CardTransceiver] interface.
  */
-class AndroidCardTransceiver(private val mTech: IsoDep) : CardTransceiver {
-
-    @Throws(IOException::class)
-    override fun transceive(data: ImmutableByteArray): ImmutableByteArray {
-        return ImmutableByteArray.fromByteArray(mTech.transceive(data.dataCopy))
+class AndroidCardTransceiver(private val transceive: (ByteArray) -> ByteArray) : CardTransceiver {
+    override suspend fun transceive(data: ImmutableByteArray): ImmutableByteArray {
+        try {
+            return transceive(data.dataCopy).toImmutable()
+        } catch (e: TagLostException) {
+            throw CardLostException(Utils.getErrorMessage(e))
+        } catch (e: IOException) {
+            throw CardTransceiveException(e, Utils.getErrorMessage(e))
+        }
     }
 }

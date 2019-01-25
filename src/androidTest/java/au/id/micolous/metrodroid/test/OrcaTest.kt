@@ -18,26 +18,14 @@
  */
 package au.id.micolous.metrodroid.test
 
-import java.util.Calendar
-
 import au.id.micolous.metrodroid.card.desfire.DesfireApplication
 import au.id.micolous.metrodroid.card.desfire.DesfireCard
 import au.id.micolous.metrodroid.card.desfire.files.DesfireFile
-import au.id.micolous.metrodroid.card.desfire.files.RecordDesfireFile
-import au.id.micolous.metrodroid.card.desfire.settings.RecordDesfireFileSettings
 import au.id.micolous.metrodroid.transit.TransitCurrency
-import au.id.micolous.metrodroid.transit.TransitData
-import au.id.micolous.metrodroid.transit.TransitIdentity
 import au.id.micolous.metrodroid.transit.Trip
 import au.id.micolous.metrodroid.transit.orca.OrcaTransitData
-import au.id.micolous.metrodroid.util.Utils
 import au.id.micolous.metrodroid.util.ImmutableByteArray
-
-import kotlin.test.Test
-import kotlin.test.assertEquals
-import kotlin.test.assertNull
-import kotlin.test.assertTrue
-import kotlin.test.assertNotNull
+import kotlin.test.*
 
 /**
  * Tests for Orca card
@@ -47,18 +35,16 @@ class OrcaTest : BaseInstrumentedTest() {
 
     private fun constructOrcaCard(): DesfireCard {
         // Construct a card to hold the data.
-        val f2 = RecordDesfireFile.create(2,
-                RecordDesfireFileSettings(0.toByte(), 0.toByte(), ImmutableByteArray.empty(),
-                        48, 5, 5),
+        val f2 = DesfireFile.create(ImmutableByteArray.fromHex("040032e4300000050000050000"),
                 ImmutableByteArray.fromHex(testFile0x2))
-        val f4 = DesfireFile.create(4, null, ImmutableByteArray.fromHex(testFile0x4))
-        val ff = DesfireFile.create(15, null,
+        val f4 = DesfireFile.create(ImmutableByteArray.fromHex("00000000000000"),
+                ImmutableByteArray.fromHex(testFile0x4))
+        val ff = DesfireFile.create(ImmutableByteArray.fromHex("00000000000000"),
                 ImmutableByteArray.fromHex(testFile0xf))
-        val a = DesfireApplication(OrcaTransitData.APP_ID, listOf(f2, f4))
-        val a2 = DesfireApplication(0xffffff, listOf(ff))
-        return DesfireCard(ImmutableByteArray.fromHex("00010203"),
-                Calendar.getInstance(), null,
-                listOf(a, a2))
+        val a = DesfireApplication(mapOf(2 to f2.raw, 4 to f4.raw), emptyList())
+        val a2 = DesfireApplication(mapOf(0xf to ff.raw), emptyList())
+        return DesfireCard(ImmutableByteArray.empty(),
+                mapOf(OrcaTransitData.APP_ID to a, 0xffffff to a2))
     }
 
     @Test
@@ -75,22 +61,21 @@ class OrcaTest : BaseInstrumentedTest() {
         assertEquals("12030625", i.serialNumber)
 
         val d = c.parseTransitData()
-        assertTrue(message = "TransitData must be instance of OrcaTransitData",
-                actual = d is OrcaTransitData)
+        assertTrue(d is OrcaTransitData, "TransitData must be instance of OrcaTransitData")
 
-        assertEquals("12030625", d.serialNumber)
-        assertEquals("ORCA", d.cardName)
-        assertEquals(TransitCurrency.USD(23432), d.balance)
-        assertNull(d.subscriptions)
+        val o = d as OrcaTransitData?
+        assertEquals("12030625", o!!.serialNumber)
+        assertEquals("ORCA", o.cardName)
+        assertEquals(TransitCurrency.USD(23432), o.balance)
+        assertNull(o.subscriptions)
 
-        val trips = d.trips?.sortedWith(Trip.Comparator())
+        val trips = o.trips?.sortedWith(Trip.Comparator())
         assertNotNull(trips)
         assertEquals("Community Transit", trips[0].getAgencyName(false))
         assertEquals("CT", trips[0].getAgencyName(true))
-        assertEquals((1514843334L + 256) * 1000, trips[0].startTimestamp!!.timeInMillis)
+        assertEquals((1514843334L + 256) * 1000, (trips[0].startTimestamp!!).timeInMillis)
         assertEquals(TransitCurrency.USD(534), trips[0].fare)
         assertNull(trips[0].routeName)
-        assertTrue(trips[0].hasTime())
         assertEquals(Trip.Mode.BUS, trips[0].mode)
         assertNull(trips[0].startStation)
         assertNull(trips[0].endStation)
@@ -98,10 +83,9 @@ class OrcaTest : BaseInstrumentedTest() {
 
         assertEquals("Unknown (0xf)", trips[1].getAgencyName(false))
         assertEquals("Unknown (0xf)", trips[1].getAgencyName(true))
-        assertEquals(1514843334L * 1000, trips[1].startTimestamp!!.timeInMillis)
+        assertEquals(1514843334L * 1000, (trips[1].startTimestamp!!).timeInMillis)
         assertEquals(TransitCurrency.USD(289), trips[1].fare)
         assertNull(trips[1].routeName)
-        assertTrue(trips[1].hasTime())
         assertEquals(Trip.Mode.BUS, trips[1].mode)
         assertNull(trips[1].startStation)
         assertNull(trips[1].endStation)
@@ -109,10 +93,9 @@ class OrcaTest : BaseInstrumentedTest() {
 
         assertEquals("Sound Transit", trips[2].getAgencyName(false))
         assertEquals("ST", trips[2].getAgencyName(true))
-        assertEquals((1514843334L - 256) * 1000, trips[2].startTimestamp!!.timeInMillis)
+        assertEquals((1514843334L - 256) * 1000, (trips[2].startTimestamp!!).timeInMillis)
         assertEquals(TransitCurrency.USD(179), trips[2].fare)
         assertEquals("Link Light Rail", trips[2].routeName)
-        assertTrue(trips[2].hasTime())
         assertEquals(Trip.Mode.METRO, trips[2].mode)
         assertNotNull(trips[2].startStation)
         assertEquals("Stadium", trips[2].startStation!!.stationName)
@@ -123,10 +106,9 @@ class OrcaTest : BaseInstrumentedTest() {
 
         assertEquals("Sound Transit", trips[3].getAgencyName(false))
         assertEquals("ST", trips[3].getAgencyName(true))
-        assertEquals((1514843334L - 512) * 1000, trips[3].startTimestamp!!.timeInMillis)
+        assertEquals((1514843334L - 512) * 1000, (trips[3].startTimestamp!!).timeInMillis)
         assertEquals(TransitCurrency.USD(178), trips[3].fare)
         assertEquals("Sounder Train", trips[3].routeName)
-        assertTrue(trips[3].hasTime())
         assertEquals(Trip.Mode.TRAIN, trips[3].mode)
         assertNotNull(trips[3].startStation)
         assertEquals("King Street", trips[3].startStation!!.stationName)
@@ -137,10 +119,9 @@ class OrcaTest : BaseInstrumentedTest() {
 
         assertEquals("Washington State Ferries", trips[4].getAgencyName(false))
         assertEquals("WSF", trips[4].getAgencyName(true))
-        assertEquals((1514843334L - 768) * 1000, trips[4].startTimestamp!!.timeInMillis)
+        assertEquals((1514843334L - 768) * 1000, (trips[4].startTimestamp!!).timeInMillis)
         assertEquals(TransitCurrency.USD(177), trips[4].fare)
         assertNull(trips[4].routeName)
-        assertTrue(trips[4].hasTime())
         assertEquals(Trip.Mode.FERRY, trips[4].mode)
         assertNotNull(trips[4].startStation)
         assertEquals("Seattle Terminal", trips[4].startStation!!.stationName)

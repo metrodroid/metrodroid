@@ -20,7 +20,7 @@
 
 package au.id.micolous.metrodroid.transit
 
-import android.os.Parcelable
+import au.id.micolous.metrodroid.multi.Parcelable
 import au.id.micolous.metrodroid.ui.ListItem
 import java.util.*
 

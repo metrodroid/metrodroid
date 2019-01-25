@@ -230,8 +230,9 @@ public class SuicaTransitData extends TransitData {
     }
 
     public final static FelicaCardTransitFactory FACTORY = new FelicaCardTransitFactory() {
-        public boolean earlyCheck(int[] systemCodes) {
-            return ArrayUtils.contains(systemCodes, SYSTEMCODE_SUICA);
+        @Override
+        public boolean earlyCheck(List<Integer> systemCodes) {
+            return systemCodes.contains(SYSTEMCODE_SUICA);
         }
 
         @NonNull

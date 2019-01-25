@@ -18,8 +18,6 @@
  */
 package au.id.micolous.metrodroid.test
 
-import java.util.Calendar
-
 import au.id.micolous.metrodroid.card.desfire.DesfireApplication
 import au.id.micolous.metrodroid.card.desfire.DesfireCard
 import au.id.micolous.metrodroid.card.desfire.files.DesfireFile
@@ -27,12 +25,9 @@ import au.id.micolous.metrodroid.transit.TransitCurrency
 import au.id.micolous.metrodroid.transit.Trip
 import au.id.micolous.metrodroid.transit.clipper.ClipperTransitData
 import au.id.micolous.metrodroid.util.ImmutableByteArray
+import kotlin.test.*
 
-import kotlin.test.Test
-import kotlin.test.assertEquals
-import kotlin.test.assertNull
-import kotlin.test.assertTrue
-import kotlin.test.assertNotNull
+
 /**
  * Tests for Clipper card
  */
@@ -40,17 +35,19 @@ class ClipperTest : BaseInstrumentedTest() {
 
     private fun constructClipperCard(): DesfireCard {
         // Construct a card to hold the data.
-        val f2 = DesfireFile.create(2, null, // new RecordDesfireFileSettings((byte)0,(byte)0,null, 48, 5, 5),
+        val f2 = DesfireFile.create(ImmutableByteArray.fromHex("00000000000000"), // new RecordDesfireFileSettings((byte)0,(byte)0,null, 48, 5, 5),
                 ImmutableByteArray.fromHex(testFile0x2))
-        val f4 = DesfireFile.create(4, null, ImmutableByteArray.fromHex(testFile0x4))
-        val f8 = DesfireFile.create(8, null,
+        val f4 = DesfireFile.create(ImmutableByteArray.fromHex("00000000000000"),
+                ImmutableByteArray.fromHex(testFile0x4))
+        val f8 = DesfireFile.create(ImmutableByteArray.fromHex("00000000000000"),
                 ImmutableByteArray.fromHex(testFile0x8))
-        val fe = DesfireFile.create(0xe, null,
+        val fe = DesfireFile.create(ImmutableByteArray.fromHex("00000000000000"),
                 ImmutableByteArray.fromHex(testFile0xe))
-        val a = DesfireApplication(ClipperTransitData.APP_ID, listOf(f2, f4, f8, fe))
-        return DesfireCard(ImmutableByteArray.fromHex("00010203"),
-                Calendar.getInstance(), null,
-                listOf(a))
+        val a = DesfireApplication(mapOf(2 to f2.raw, 4 to f4.raw, 8 to f8.raw, 0xe to fe.raw),
+                authLog = emptyList())
+        return DesfireCard(
+                ImmutableByteArray.empty(),
+                mapOf(ClipperTransitData.APP_ID to a))
     }
 
     @Test
@@ -69,22 +66,21 @@ class ClipperTest : BaseInstrumentedTest() {
         assertEquals("572691763", i.serialNumber)
 
         val d = c.parseTransitData()
-        assertTrue(message = "TransitData must be instance of ClipperTransitData",
-                actual = d is ClipperTransitData)
+        assertTrue(d is ClipperTransitData, "TransitData must be instance of ClipperTransitData")
 
-        assertEquals("572691763", d.serialNumber)
-        assertEquals("Clipper", d.cardName)
-        assertEquals(TransitCurrency.USD(30583), d.balance!!.balance)
-        assertNull(d.subscriptions)
+        val o = d as ClipperTransitData?
+        assertEquals("572691763", o!!.serialNumber)
+        assertEquals("Clipper", o.cardName)
+        assertEquals(TransitCurrency.USD(30583), o.balance!!.balance)
+        assertNull(o.subscriptions)
 
-        val trips = d.trips
+        val trips = o.trips
         assertNotNull(trips)
         assertEquals("Whole Foods", trips[1].getAgencyName(false))
         assertEquals("Whole Foods", trips[1].getAgencyName(true))
-        assertEquals(1520009600000L, trips[1].startTimestamp!!.timeInMillis)
+        assertEquals(1520009600000L, (trips[1].startTimestamp!!).timeInMillis)
         assertEquals(TransitCurrency.USD(-5000), trips[1].fare)
         assertNull(trips[1].routeName)
-        assertTrue(trips[1].hasTime())
         assertEquals(Trip.Mode.TICKET_MACHINE, trips[1].mode)
         assertNull(trips[1].startStation)
         assertNull(trips[1].endStation)
@@ -92,10 +88,9 @@ class ClipperTest : BaseInstrumentedTest() {
 
         assertEquals("Bay Area Rapid Transit", trips[0].getAgencyName(false))
         assertEquals("BART", trips[0].getAgencyName(true))
-        assertEquals(1521320320000L, trips[0].startTimestamp!!.timeInMillis)
+        assertEquals(1521320320000L, (trips[0].startTimestamp!!).timeInMillis)
         assertEquals(TransitCurrency.USD(630), trips[0].fare)
         assertNull(trips[0].routeName)
-        assertTrue(trips[0].hasTime())
         assertEquals(Trip.Mode.METRO, trips[0].mode)
         assertNotNull(trips[0].startStation)
         assertEquals("Powell St.", trips[0].startStation!!.stationName)
@@ -112,8 +107,8 @@ class ClipperTest : BaseInstrumentedTest() {
     companion object {
 
         // mocked data
-        private const val refill = "000002cfde4400007812345600001388000000000000" + "00000000000000000000"
-        private const val trip = "000000040000027600000000de580000de58100000080027000000000000" + "006f"
+        private const val refill = "000002cfde440000781234560000138800000000000000000000000000000000"
+        private const val trip = "000000040000027600000000de580000de58100000080027000000000000006f"
         private const val testFile0x2 = "0000000000000000000000000000000000007777"
         private const val testFile0x4 = refill
         private const val testFile0x8 = "0022229533"

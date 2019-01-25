@@ -49,6 +49,7 @@ import au.id.micolous.metrodroid.fragment.CardInfoFragment;
 import au.id.micolous.metrodroid.fragment.CardTripsFragment;
 import au.id.micolous.metrodroid.fragment.UnauthorizedCardFragment;
 import au.id.micolous.metrodroid.provider.CardsTableColumns;
+import au.id.micolous.metrodroid.serializers.CardSerializer;
 import au.id.micolous.metrodroid.transit.TransitBalance;
 import au.id.micolous.metrodroid.transit.TransitData;
 import au.id.micolous.metrodroid.transit.unknown.BlankClassicTransitData;
@@ -118,7 +119,7 @@ public class CardInfoActivity extends MetrodroidActivity {
 
                     String data = cursor.getString(cursor.getColumnIndex(CardsTableColumns.DATA));
 
-                    mCard = Card.fromXml(data);
+                    mCard = CardSerializer.INSTANCE.fromPersist(data);
                     mTransitData = mCard.parseTransitData();
 
                     SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(CardInfoActivity.this);
@@ -163,7 +164,8 @@ public class CardInfoActivity extends MetrodroidActivity {
                     actionBar.setSubtitle(mCardSerial);
 
                     Bundle args = new Bundle();
-                    args.putString(AdvancedCardInfoActivity.EXTRA_CARD, mCard.toXml());
+                    args.putString(AdvancedCardInfoActivity.EXTRA_CARD,
+                            CardSerializer.INSTANCE.toPersist(mCard));
                     args.putParcelable(EXTRA_TRANSIT_DATA, mTransitData);
 
                     if (mTransitData instanceof UnauthorizedTransitData) {
@@ -294,7 +296,8 @@ public class CardInfoActivity extends MetrodroidActivity {
 
     private void showAdvancedInfo(Exception ex) {
         Intent intent = new Intent(this, AdvancedCardInfoActivity.class);
-        intent.putExtra(AdvancedCardInfoActivity.EXTRA_CARD, mCard.toXml());
+        intent.putExtra(AdvancedCardInfoActivity.EXTRA_CARD,
+                CardSerializer.INSTANCE.toPersist(mCard));
         if (ex != null) {
             intent.putExtra(AdvancedCardInfoActivity.EXTRA_ERROR, ex);
         }

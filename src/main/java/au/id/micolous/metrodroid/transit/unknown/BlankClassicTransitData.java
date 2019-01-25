@@ -63,18 +63,22 @@ public class BlankClassicTransitData extends TransitData {
         public boolean check(@NonNull ClassicCard card) {
             List<ClassicSector> sectors = card.getSectors();
             boolean allZero = true, allFF = true;
+            int secidx = -1;
             // check to see if all sectors are blocked
             for (ClassicSector s : sectors) {
+                secidx++;
                 if ((s instanceof UnauthorizedClassicSector) || (s instanceof InvalidClassicSector))
                     return false;
 
                 int numBlocks = s.getBlocks().size();
+                int blkidx = -1;
 
                 for (ClassicBlock bl : s.getBlocks()) {
+                    blkidx++;
                     // Manufacturer data
-                    if (s.getIndex() == 0 && bl.getIndex() == 0)
+                    if (secidx == 0 && blkidx == 0)
                         continue;
-                    if (bl.getIndex() == numBlocks - 1)
+                    if (blkidx == numBlocks - 1)
                         continue;
                         if (!bl.getData().isAllZero())
                             allZero = false;

@@ -19,7 +19,7 @@
 package au.id.micolous.metrodroid.test
 
 import au.id.micolous.metrodroid.card.cepascompat.CEPASCard
-import au.id.micolous.metrodroid.card.XmlCardFormat
+import au.id.micolous.metrodroid.serializers.XmlCardFormat
 import au.id.micolous.metrodroid.transit.TransitCurrency
 import au.id.micolous.metrodroid.transit.ezlinkcompat.EZLinkCompatTransitData
 import kotlin.test.Test

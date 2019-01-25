@@ -32,7 +32,6 @@ import java.util.List;
 
 import au.id.micolous.farebot.R;
 import au.id.micolous.metrodroid.card.CardType;
-import au.id.micolous.metrodroid.card.iso7816.ISO7816Record;
 import au.id.micolous.metrodroid.card.iso7816.ISO7816TLV;
 import au.id.micolous.metrodroid.card.tmoney.TMoneyCard;
 import au.id.micolous.metrodroid.transit.CardInfo;
@@ -40,7 +39,6 @@ import au.id.micolous.metrodroid.transit.TransitCurrency;
 import au.id.micolous.metrodroid.transit.TransitData;
 import au.id.micolous.metrodroid.transit.TransitIdentity;
 import au.id.micolous.metrodroid.ui.ListItem;
-import au.id.micolous.metrodroid.util.Utils;
 import au.id.micolous.metrodroid.util.ImmutableByteArray;
 
 public class TMoneyTransitData extends TransitData {
@@ -70,11 +68,11 @@ public class TMoneyTransitData extends TransitData {
     public TMoneyTransitData(TMoneyCard tMoneyCard) {
         super();
         mSerialNumber = parseSerial(tMoneyCard);
-        mBalance = tMoneyCard.getBalance();
+        mBalance = tMoneyCard.getBalance().byteArrayToInt();
         mDate = parseDate(tMoneyCard);
         mTrips = new ArrayList<>();
-        for (ISO7816Record record : tMoneyCard.getTransactionRecords()) {
-            TMoneyTrip t = TMoneyTrip.parseTrip(record.getData());
+        for (ImmutableByteArray record : tMoneyCard.getTransactionRecords()) {
+            TMoneyTrip t = TMoneyTrip.parseTrip(record);
             if (t == null)
                 continue;
             mTrips.add(t);
@@ -133,7 +131,7 @@ public class TMoneyTransitData extends TransitData {
     }
 
     private static ImmutableByteArray getSerialTag(TMoneyCard card) {
-        return ISO7816TLV.INSTANCE.findBERTLV(card.getAppData(), "b0", false);
+        return ISO7816TLV.INSTANCE.findBERTLV(card.getAppFci(), "b0", false);
     }
 
     private static String parseSerial(TMoneyCard card) {

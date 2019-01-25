@@ -28,7 +28,6 @@ import au.id.micolous.farebot.R;
 import au.id.micolous.metrodroid.card.ultralight.UltralightCard;
 import au.id.micolous.metrodroid.card.ultralight.UltralightCardTransitFactory;
 import au.id.micolous.metrodroid.card.ultralight.UltralightPage;
-import au.id.micolous.metrodroid.card.ultralight.UnauthorizedUltralightPage;
 import au.id.micolous.metrodroid.multi.Localizer;
 import au.id.micolous.metrodroid.transit.CardInfo;
 import au.id.micolous.metrodroid.transit.TransitData;
@@ -64,13 +63,11 @@ public class UnauthorizedUltralightTransitData extends UnauthorizedTransitData {
         @Override
         public boolean check(@NonNull UltralightCard card) {
             // check to see if all sectors are blocked
-            for (UltralightPage p : card.getPages()) {
-                if (p.getIndex() >= 4) {
-                    // User memory is page 4 and above
-                    if (!(p instanceof UnauthorizedUltralightPage)) {
-                        // At least one page is "open", this is not for us
-                        return false;
-                    }
+            for (UltralightPage p : card.getPages().subList(4,card.getPages().size())) {
+                // User memory is page 4 and above
+                if (!(p.isUnauthorized())) {
+                    // At least one page is "open", this is not for us
+                    return false;
                 }
             }
             return true;

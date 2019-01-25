@@ -29,7 +29,6 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
 import au.id.micolous.farebot.R;
-import au.id.micolous.metrodroid.card.desfire.files.DesfireRecord;
 import au.id.micolous.metrodroid.multi.Localizer;
 import au.id.micolous.metrodroid.transit.Station;
 import au.id.micolous.metrodroid.transit.Transaction;
@@ -72,9 +71,7 @@ public class OrcaTransaction extends Transaction {
     private static final int TRANS_TYPE_TAP_OUT = 0x07;
     private static final int TRANS_TYPE_PASS_USE = 0x60;
 
-    public OrcaTransaction(DesfireRecord record, boolean isTopup) {
-        ImmutableByteArray useData = record.getData();
-
+    public OrcaTransaction(ImmutableByteArray useData, boolean isTopup) {
         mIsTopup = isTopup;
         mAgency = useData.getBitsFromBuffer(24, 4);
         mTimestamp = useData.getBitsFromBuffer(28, 32);

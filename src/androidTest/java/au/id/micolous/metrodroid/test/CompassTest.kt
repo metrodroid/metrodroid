@@ -42,15 +42,13 @@ class CompassTest {
         val pages = ArrayList<UltralightPage>()
         for (block in 1 until cardData.size) {
             for (p in 0..3) {
-                pages.add(UltralightPage(p,
-                        ImmutableByteArray.fromHex(cardData[block].substring(
+                pages.add(UltralightPage(ImmutableByteArray.fromHex(cardData[block].substring(
                                 p * 8, (p + 1) * 8)))
                 )
             }
         }
 
-        return UltralightCard(
-                serial, d, "MF0ICU2", pages)
+        return UltralightCard("MF0ICU2", pages)
     }
 
     @Test

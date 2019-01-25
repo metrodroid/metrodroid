@@ -25,8 +25,6 @@ import au.id.micolous.metrodroid.util.Preferences
 import com.google.protobuf.ByteString
 
 import java.io.IOException
-import java.io.InputStream
-import java.io.OutputStream
 import java.net.HttpURLConnection
 import java.net.URL
 import java.util.UUID
@@ -36,10 +34,13 @@ import au.id.micolous.metrodroid.card.desfire.DesfireAuthLog
 import au.id.micolous.metrodroid.card.desfire.DesfireUnlocker
 import au.id.micolous.metrodroid.card.desfire.DesfireManufacturingData
 import au.id.micolous.metrodroid.card.desfire.DesfireProtocol
-import au.id.micolous.metrodroid.card.desfire.files.DesfireFile
+import au.id.micolous.metrodroid.card.desfire.files.RawDesfireFile
 import au.id.micolous.metrodroid.proto.Leap
+import au.id.micolous.metrodroid.util.ImmutableByteArray
+import au.id.micolous.metrodroid.util.toImmutable
 
-class LeapUnlocker private constructor(private val mApplicationId: Int, private val mManufData: DesfireManufacturingData) : DesfireUnlocker {
+class LeapUnlocker private constructor(private val mApplicationId: Int,
+                                       private val mManufData: ImmutableByteArray) : DesfireUnlocker {
     private var mUnlocked1f: Boolean = false
     private var mUnlockedRest: Boolean = false
     private var mSessionId: String? = null
@@ -66,7 +67,8 @@ class LeapUnlocker private constructor(private val mApplicationId: Int, private 
     }
 
     @Throws(Exception::class)
-    private fun unlock1f(desfireTag: DesfireProtocol, files: List<DesfireFile>): DesfireAuthLog? {
+    private suspend fun unlock1f(desfireTag: DesfireProtocol,
+                                 files: Map<Int, RawDesfireFile>): DesfireAuthLog? {
         if (mUnlocked1f)
             return null
 
@@ -78,7 +80,7 @@ class LeapUnlocker private constructor(private val mApplicationId: Int, private 
             Log.e(TAG, "File 1 not found")
             return null
         }
-        val file1 = file1Desc.data!!.dataCopy
+        val file1 = file1Desc.data?.dataCopy
         val challenge = desfireTag.sendUnlock(0x0d)
 
         val request1 = Leap.LeapMessage.newBuilder()
@@ -86,7 +88,7 @@ class LeapUnlocker private constructor(private val mApplicationId: Int, private 
                 .setSessionId(UUID.randomUUID().toString())
                 .addCmds(Leap.LeapDesFireCommand.newBuilder()
                         .setQuery(ByteString.copyFrom(byteArrayOf(DesfireProtocol.GET_MANUFACTURING_DATA)))
-                        .setResponse(ze.concat(ByteString.copyFrom(mManufData.raw.dataCopy)))
+                        .setResponse(ze.concat(ByteString.copyFrom(mManufData.dataCopy)))
                 )
                 .addCmds(Leap.LeapDesFireCommand.newBuilder()
                         .setQuery(ByteString.copyFrom(byteArrayOf(DesfireProtocol.READ_DATA, 1, 0, 0, 0, 0x20, 0, 0)))
@@ -94,7 +96,7 @@ class LeapUnlocker private constructor(private val mApplicationId: Int, private 
                 )
                 .addCmds(Leap.LeapDesFireCommand.newBuilder()
                         .setQuery(ByteString.copyFrom(byteArrayOf(DesfireProtocol.UNLOCK, 0x0d)))
-                        .setResponse(af.concat(ByteString.copyFrom(challenge)))
+                        .setResponse(af.concat(ByteString.copyFrom(challenge.dataCopy)))
                 )
                 .addKeyvalues(
                         Leap.LeapKeyValue.newBuilder()
@@ -107,16 +109,17 @@ class LeapUnlocker private constructor(private val mApplicationId: Int, private 
             return null
         }
         val response = reply1.getCmds(0).query.substring(1).toByteArray()
-        mConfirmation = desfireTag.sendAdditionalFrame(response)
+        mConfirmation = desfireTag.sendAdditionalFrame(response.toImmutable()).dataCopy
 
         mSessionId = reply1.sessionId
         mReply1 = reply1
         mUnlocked1f = true
-        return DesfireAuthLog(0x0d, challenge, response, mConfirmation!!)
+        return DesfireAuthLog(0x0d, challenge,
+                response.toImmutable(), mConfirmation!!.toImmutable())
     }
 
     @Throws(Exception::class)
-    private fun unlockRest(desfireTag: DesfireProtocol, files: List<DesfireFile>): DesfireAuthLog? {
+    private suspend fun unlockRest(desfireTag: DesfireProtocol, files: Map<Int, RawDesfireFile>): DesfireAuthLog? {
         if (mUnlockedRest)
             return null
 
@@ -128,7 +131,7 @@ class LeapUnlocker private constructor(private val mApplicationId: Int, private 
             return null
         }
 
-        val file1f = file1fDesc.data!!.dataCopy
+        val file1f = file1fDesc.data?.dataCopy
 
         val request2 = Leap.LeapMessage.newBuilder()
                 .setApplicationId(mApplicationId)
@@ -156,7 +159,7 @@ class LeapUnlocker private constructor(private val mApplicationId: Int, private 
                 .setStage("UPDATE_AUTHENTICATE_2")
                 .addCmds(Leap.LeapDesFireCommand.newBuilder()
                         .setQuery(reply2.getCmds(0).query)
-                        .setResponse(af.concat(ByteString.copyFrom(challenge)))
+                        .setResponse(af.concat(ByteString.copyFrom(challenge.dataCopy)))
                         .setExpectedResponse(af)
                 )
                 .addKeyvalues(
@@ -170,12 +173,14 @@ class LeapUnlocker private constructor(private val mApplicationId: Int, private 
             return null
         }
         val response = reply3.getCmds(0).query.substring(1).toByteArray()
-        val confirm = desfireTag.sendAdditionalFrame(response)
+        val confirm = desfireTag.sendAdditionalFrame(response.toImmutable())
         mUnlockedRest = true
-        return DesfireAuthLog(0x03, challenge, response, confirm)
+        return DesfireAuthLog(0x03, challenge, response.toImmutable(), confirm)
     }
 
-    override fun unlock(desfireTag: DesfireProtocol, files: List<DesfireFile>, fileId: Int, authLog: MutableList<DesfireAuthLog>) {
+    override suspend fun unlock(desfireTag: DesfireProtocol,
+                                files: Map<Int, RawDesfireFile>, fileId: Int,
+                                authLog: MutableList<DesfireAuthLog>) {
         var cur: DesfireAuthLog? = null
         when (fileId) {
             1 -> return
@@ -199,8 +204,8 @@ class LeapUnlocker private constructor(private val mApplicationId: Int, private 
     }
 
     companion object {
-        private val LEAP_API_URL = "https://tnfc.leapcard.ie//ReadCard/V0"
-        private val TAG = "LeapUnlocker"
+        private const val LEAP_API_URL = "https://tnfc.leapcard.ie//ReadCard/V0"
+        private const val TAG = "LeapUnlocker"
 
         @Throws(IOException::class)
         private fun communicate(`in`: Leap.LeapMessage): Leap.LeapMessage {
@@ -224,7 +229,7 @@ class LeapUnlocker private constructor(private val mApplicationId: Int, private 
             return reply
         }
 
-        fun createUnlocker(applicationId: Int, manufData: DesfireManufacturingData): LeapUnlocker? {
+        fun createUnlocker(applicationId: Int, manufData: ImmutableByteArray): LeapUnlocker? {
             val retrieveKeys = Preferences.retrieveLeapKeys
             if (!retrieveKeys) {
                 Log.d(TAG, "Retrieving Leap keys not enabled")
@@ -234,12 +239,6 @@ class LeapUnlocker private constructor(private val mApplicationId: Int, private 
             return LeapUnlocker(applicationId, manufData)
         }
 
-        private fun getFile(files: List<DesfireFile>, fileId: Int): DesfireFile? {
-            for (file in files) {
-                if (file.getId() === fileId)
-                    return file
-            }
-            return null
-        }
+        private fun getFile(files: Map<Int, RawDesfireFile>, fileId: Int): RawDesfireFile? = files[fileId]
     }
 }

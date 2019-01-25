@@ -62,8 +62,8 @@ public class UnauthorizedDesfireTransitData extends UnauthorizedTransitData {
          * @return true if all sectors on the card are locked.
          */
         public boolean check(@NonNull DesfireCard card) {
-            for (DesfireApplication app : card.getApplications()) {
-                for (DesfireFile f : app.getFiles()) {
+            for (DesfireApplication app : card.getApplications().values()) {
+                for (DesfireFile f : app.getInterpretedFiles().values()) {
                     if (!(f instanceof UnauthorizedDesfireFile)) {
                         // At least one file is "open", this is not for us.
                         return false;

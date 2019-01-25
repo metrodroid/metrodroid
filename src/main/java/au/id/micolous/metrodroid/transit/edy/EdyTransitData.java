@@ -119,8 +119,8 @@ public class EdyTransitData extends TransitData {
 
     public final static FelicaCardTransitFactory FACTORY = new FelicaCardTransitFactory() {
         @Override
-        public boolean earlyCheck(int[] systemCodes) {
-            return ArrayUtils.contains(systemCodes, SYSTEMCODE_EDY);
+        public boolean earlyCheck(List<Integer> systemCodes) {
+            return systemCodes.contains(SYSTEMCODE_EDY);
         }
 
         @NonNull
