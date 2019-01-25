@@ -29,11 +29,9 @@ import java.util.Set;
 
 import au.id.micolous.metrodroid.card.calypso.CalypsoApplication;
 import au.id.micolous.metrodroid.card.iso7816.ISO7816File;
-import au.id.micolous.metrodroid.card.iso7816.ISO7816Record;
 import au.id.micolous.metrodroid.transit.TransactionTrip;
 import au.id.micolous.metrodroid.transit.TransitBalance;
 import au.id.micolous.metrodroid.transit.Trip;
-import au.id.micolous.metrodroid.util.Utils;
 import au.id.micolous.metrodroid.util.ImmutableByteArray;
 
 public abstract class Calypso1545TransitData extends En1545TransitData {
@@ -46,18 +44,18 @@ public abstract class Calypso1545TransitData extends En1545TransitData {
     protected Calypso1545TransitData(CalypsoApplication card, En1545Container ticketEnvHolderFields, En1545Field contractListFields, String serial) {
         mSerial = serial;
         ImmutableByteArray ticketEnv = ImmutableByteArray.Companion.empty();
-        for (ISO7816Record record : card.getFile(CalypsoApplication.File.TICKETING_ENVIRONMENT)
-                .getRecords()) {
-            ticketEnv = ticketEnv.plus(record.getData());
+        for (ImmutableByteArray record : card.getFile(CalypsoApplication.File.TICKETING_ENVIRONMENT)
+                .getRecordList()) {
+            ticketEnv = ticketEnv.plus(record);
         }
         mTicketEnvParsed.append(ticketEnv, ticketEnvHolderFields);
         mNetworkId = mTicketEnvParsed.getIntOrZero(ENV_NETWORK_ID);
 
         List<En1545Transaction> transactions = new ArrayList<>();
-        for (ISO7816Record record : card.getFile(CalypsoApplication.File.TICKETING_LOG).getRecords()) {
-            if (record.getData().isAllZero())
+        for (ImmutableByteArray record : card.getFile(CalypsoApplication.File.TICKETING_LOG).getRecordList()) {
+            if (record.isAllZero())
                 continue;
-            En1545Transaction transaction = createTrip(record.getData());
+            En1545Transaction transaction = createTrip(record);
             if (transaction == null)
                 continue;
             transactions.add(transaction);
@@ -65,10 +63,10 @@ public abstract class Calypso1545TransitData extends En1545TransitData {
 
         ISO7816File specialEvents = card.getFile(CalypsoApplication.File.TICKETING_SPECIAL_EVENTS);
         if (specialEvents != null) {
-            for (ISO7816Record record : specialEvents.getRecords()) {
-                if (record.getData().isAllZero())
+            for (ImmutableByteArray record : specialEvents.getRecordList()) {
+                if (record.isAllZero())
                     continue;
-                En1545Transaction transaction = createSpecialEvent(record.getData());
+                En1545Transaction transaction = createSpecialEvent(record);
                 if (transaction == null)
                     continue;
                 transactions.add(transaction);
@@ -81,10 +79,10 @@ public abstract class Calypso1545TransitData extends En1545TransitData {
 
         Set<Integer> parsed = new HashSet<>();
 
-        List<ISO7816Record> contracts = getContracts(card);
+        List<ImmutableByteArray> contracts = getContracts(card);
 
         if (contractListFields != null) {
-            En1545Parsed contractList = En1545Parser.parse(card.getFile(CalypsoApplication.File.TICKETING_CONTRACT_LIST).getRecord(1).getData(), contractListFields);
+            En1545Parsed contractList = En1545Parser.parse(card.getFile(CalypsoApplication.File.TICKETING_CONTRACT_LIST).getRecord(1), contractListFields);
             for (int i = 0; i < 16; i++) {
                 Integer ptr = contractList.getInt(CONTRACTS_POINTER, i);
                 if (ptr == null || ptr == 0)
@@ -92,19 +90,19 @@ public abstract class Calypso1545TransitData extends En1545TransitData {
                 parsed.add(ptr);
                 if (ptr > contracts.size())
                     continue;
-                ISO7816Record record = contracts.get(ptr - 1);
-                insertSub(card, record.getData(), contractList, i, ptr);
+                ImmutableByteArray record = contracts.get(ptr - 1);
+                insertSub(card, record, contractList, i, ptr);
             }
         }
 
         int idx = 0;
-        for (ISO7816Record record : contracts) {
+        for (ImmutableByteArray record : contracts) {
             idx++;
-            if (record.getData().isAllZero())
+            if (record.isAllZero())
                 continue;
-            if (parsed.contains(record.getIndex()))
+            if (parsed.contains(idx))
                 continue;
-            insertSub(card, record.getData(), null,
+            insertSub(card, record, null,
                     null, idx);
         }
     }
@@ -113,15 +111,15 @@ public abstract class Calypso1545TransitData extends En1545TransitData {
         return mNetworkId;
     }
 
-    protected List<ISO7816Record> getContracts(CalypsoApplication card) {
-        List<ISO7816Record> ret = new ArrayList<>();
+    protected List<ImmutableByteArray> getContracts(CalypsoApplication card) {
+        List<ImmutableByteArray> ret = new ArrayList<>();
         for (CalypsoApplication.File f : new CalypsoApplication.File[]{
                 CalypsoApplication.File.TICKETING_CONTRACTS_1,
                 CalypsoApplication.File.TICKETING_CONTRACTS_2
         }) {
             ISO7816File contracts = card.getFile(f);
             if (contracts != null)
-                ret.addAll(contracts.getRecords());
+                ret.addAll(contracts.getRecordList());
         }
         return ret;
     }
@@ -146,11 +144,11 @@ public abstract class Calypso1545TransitData extends En1545TransitData {
     private static Integer getCounter(CalypsoApplication card, int recordNum, boolean trySfi) {
         ISO7816File commonCtr = card.getFile(CalypsoApplication.File.TICKETING_COUNTERS_9, trySfi);
         if (commonCtr != null && commonCtr.getRecord(1) != null) {
-            return commonCtr.getRecord(1).getData().byteArrayToInt(3 * (recordNum - 1), 3);
+            return commonCtr.getRecord(1).byteArrayToInt(3 * (recordNum - 1), 3);
         }
         ISO7816File ownCtr = card.getFile(COUNTERS[recordNum - 1], trySfi);
         if (ownCtr != null && ownCtr.getRecord(1) != null) {
-            return ownCtr.getRecord(1).getData().byteArrayToInt(0, 3);
+            return ownCtr.getRecord(1).byteArrayToInt(0, 3);
         }
         return null;
     }

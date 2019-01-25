@@ -7,7 +7,6 @@ import android.text.Spanned
 import android.text.style.TtsSpan
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.platform.app.InstrumentationRegistry
-import au.id.micolous.metrodroid.MetrodroidApplication
 import au.id.micolous.metrodroid.util.Preferences
 import junit.framework.TestCase.assertEquals
 import kotlinx.coroutines.runBlocking

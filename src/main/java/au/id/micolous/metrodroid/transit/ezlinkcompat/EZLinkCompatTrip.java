@@ -61,7 +61,8 @@ public class EZLinkCompatTrip extends Trip {
 
     @Override
     public Calendar getStartTimestamp() {
-        return mTransaction.getTimestamp();
+        return EZLinkTransitData.timestampToCalendar(
+                mTransaction.getUnixDate() - 788947200 + 16 * 3600);
     }
 
     @Override

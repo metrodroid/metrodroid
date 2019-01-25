@@ -36,7 +36,6 @@ import au.id.micolous.metrodroid.card.CardType;
 import au.id.micolous.metrodroid.card.calypso.CalypsoApplication;
 import au.id.micolous.metrodroid.card.calypso.CalypsoCardTransitFactory;
 import au.id.micolous.metrodroid.card.iso7816.ISO7816File;
-import au.id.micolous.metrodroid.card.iso7816.ISO7816Record;
 import au.id.micolous.metrodroid.transit.CardInfo;
 import au.id.micolous.metrodroid.transit.TransitIdentity;
 import au.id.micolous.metrodroid.transit.en1545.Calypso1545TransitData;
@@ -222,7 +221,7 @@ public class IntercodeTransitData extends Calypso1545TransitData {
 
     private static int getNetId(CalypsoApplication card) {
         return card.getFile(CalypsoApplication.File.TICKETING_ENVIRONMENT).getRecord(1)
-                .getData().getBitsFromBuffer(13, 24);
+                .getBitsFromBuffer(13, 24);
     }
 
     private static String getSerial(int netId, CalypsoApplication card) {
@@ -231,12 +230,12 @@ public class IntercodeTransitData extends Calypso1545TransitData {
             return null;
         }
 
-        ISO7816Record iccRecord = iccFile.getRecord(1);
+        ImmutableByteArray iccRecord = iccFile.getRecord(1);
 
         if (iccRecord == null) {
             return null;
         }
-        ImmutableByteArray data = iccRecord.getData();
+        ImmutableByteArray data = iccRecord;
 
         if (netId == 0x250502)
             return data.getHexString(20, 6).substring(1,11);

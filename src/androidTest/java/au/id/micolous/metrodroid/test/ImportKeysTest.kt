@@ -19,13 +19,10 @@
 package au.id.micolous.metrodroid.test
 
 import au.id.micolous.metrodroid.key.*
-import au.id.micolous.metrodroid.util.KeyFormat
-import au.id.micolous.metrodroid.util.Utils
+import au.id.micolous.metrodroid.key.KeyFormat
 import au.id.micolous.metrodroid.util.toImmutable
 import kotlinx.io.charsets.Charsets
 import kotlinx.io.core.String
-import org.json.JSONException
-import org.json.JSONObject
 import kotlin.test.*
 
 class ImportKeysTest : BaseInstrumentedTest() {
@@ -33,19 +30,18 @@ class ImportKeysTest : BaseInstrumentedTest() {
         return loadSmallAssetBytes("keyTests/$path")
     }
 
-    @Throws(JSONException::class)
-    private fun loadTestJSON(path: String, expectedFormat: KeyFormat?): Pair<JSONObject, KeyFormat> {
+    private fun loadTestJSON(path: String, expectedFormat: KeyFormat?): Pair<String, KeyFormat> {
         val d = loadTestFile(path)
-        val f = Utils.detectKeyFormat(d)
+        val f = KeyFormat.detectKeyFormat(d)
         if (expectedFormat != null) {
             assertEquals(expectedFormat, f)
         }
-        return Pair(JSONObject(String(d, Utils.getASCII())), f)
+        return Pair(String(d, 0, d.size, Charsets.UTF_8), f)
     }
 
     private fun loadClassicCardRawKeys(path: String): ClassicCardKeys {
         val d = loadTestFile(path)
-        assertEquals(KeyFormat.RAW_MFC, Utils.detectKeyFormat(d))
+        assertEquals(KeyFormat.RAW_MFC, KeyFormat.detectKeyFormat(d))
         return ClassicCardKeys.fromDump(d.toImmutable(), ClassicSectorKey.KeyType.A)
     }
 
@@ -104,27 +100,27 @@ class ImportKeysTest : BaseInstrumentedTest() {
 
     @Test
     fun testSectorKeySerialiser() {
-        val k0 = ClassicSectorKey.fromJSON(JSONObject("{\"type\": \"KeyA\", \"key\": \"010203040506\"}"), "test")
-        val k1 = ClassicSectorKey.fromJSON(JSONObject("{\"type\": \"KeyB\", \"key\": \"102030405060\"}"), "test")
+        val k0 = ClassicKeysImpl.classicFromJSON("{\"type\": \"KeyA\", \"key\": \"010203040506\"}", "test")
+        val k1 = ClassicKeysImpl.classicFromJSON("{\"type\": \"KeyB\", \"key\": \"102030405060\"}", "test")
 
         assertEquals("010203040506", k0.key.toHexString())
         assertEquals("102030405060", k1.key.toHexString())
         assertEquals(ClassicSectorKey.KeyType.A, k0.type)
         assertEquals(ClassicSectorKey.KeyType.B, k1.type)
 
-        val j0 = k0.toJSON().toString()
-        val j1 = k1.toJSON().toString()
+        val j0 = k0.toJSON(3).toString()
+        val j1 = k1.toJSON(5).toString()
 
         assertTrue(j0.contains("KeyA"), "KeyA must be in j0")
         assertTrue(j0.contains("010203040506"), "010203040506 must be in j0")
         assertTrue(j1.contains("KeyB"), "KeyB must be in j1")
         assertTrue(j1.contains("102030405060"), "102030405060 must be in j1")
 
-        val k0s = ClassicSectorKey.fromJSON(JSONObject(j0), "test")
-        val k1s = ClassicSectorKey.fromJSON(JSONObject(j1), "test")
+        val k0s = ClassicKeysImpl.classicFromJSON(j0, "test")
+        val k1s = ClassicKeysImpl.classicFromJSON(j1, "test")
 
-        val j0s = k0s.toJSON().toString()
-        val j1s = k1s.toJSON().toString()
+        val j0s = k0s.toJSON(3).toString()
+        val j1s = k1s.toJSON(5).toString()
 
         assertEquals(j0, j0s)
         assertEquals(j1, j1s)
@@ -167,16 +163,11 @@ class ImportKeysTest : BaseInstrumentedTest() {
 
         // Test serialisation of ClassicStaticKeys
         val j = mifareStatic1.toJSON().toString()
-        assertTrue(message = "KeyA must be in j",
-                actual = j.contains("KeyA"))
-        assertTrue(message = "010203040506 must be in j",
-                actual = j.contains("010203040506"))
-        assertTrue(message = "KeyB must be in j",
-                actual = j.contains("KeyB"))
-        assertTrue(message = "112233445566 must be in j",
-                actual = j.contains("112233445566"))
-        assertTrue(message = "sector 10 must be in j",
-                actual = j.contains("\"sector\":10"))
+        assertTrue(j.contains("KeyA"), "KeyA must be in j")
+        assertTrue(j.contains("010203040506"), "010203040506 must be in j")
+        assertTrue(j.contains("KeyB"), "KeyB must be in j")
+        assertTrue(j.contains("112233445566"), "112233445566 must be in j")
+        assertTrue(j.contains("\"sector\": 10"), "sector 10 must be in j")
     }
 
     @Test

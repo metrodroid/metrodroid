@@ -33,7 +33,6 @@ import au.id.micolous.farebot.R;
 import au.id.micolous.metrodroid.card.ultralight.UltralightCard;
 import au.id.micolous.metrodroid.card.ultralight.UltralightCardTransitFactory;
 import au.id.micolous.metrodroid.card.ultralight.UltralightPage;
-import au.id.micolous.metrodroid.card.ultralight.UnauthorizedUltralightPage;
 import au.id.micolous.metrodroid.transit.CardInfo;
 import au.id.micolous.metrodroid.transit.TransitData;
 import au.id.micolous.metrodroid.transit.TransitIdentity;
@@ -65,23 +64,24 @@ public class BlankUltralightTransitData extends TransitData {
          */
         @Override
         public boolean check(@NonNull UltralightCard card) {
-            UltralightPage[] pages = card.getPages();
+            List<UltralightPage> pages = card.getPages();
             @NonNls final String model = card.getCardModel();
 
             // check to see if all sectors are blocked
+            int idx = -1;
             for (UltralightPage p : pages) {
+                idx++;
                 // Page 2 is serial, internal and lock bytes
                 // Page 3 is OTP counters
                 // User memory is page 4 and above
-                if (p.getIndex() <= 2) {
+                if (idx <= 2) {
                     continue;
                 }
-                if (p instanceof UnauthorizedUltralightPage) {
+                if (p.isUnauthorized()) {
                     // At least one page is "closed", this is not for us
                     return false;
                 }
                 ImmutableByteArray data = p.getData();
-                int idx = p.getIndex();
                 if (idx == 0x2) {
                     if (data.get(2) != 0 || data.get(3) != 0)
                         return false;
@@ -116,14 +116,14 @@ public class BlankUltralightTransitData extends TransitData {
                     }
 
                     // Ignore configuration pages
-                    if (idx == pages.length - 5) {
+                    if (idx == pages.size() - 5) {
                         // LOCK BYTE / RFUI
                         // Only care about first three bytes
                         if (data.sliceOffLen(0, 3).contentEquals(new byte[]{0, 0, 0}))
                             continue;
                     }
 
-                    if (idx == pages.length - 4) {
+                    if (idx == pages.size() - 4) {
                         // MIRROR / RFUI / MIRROR_PAGE / AUTH0
                         // STRG_MOD_EN = 1
                         // AUTHO = 0xff
@@ -131,21 +131,21 @@ public class BlankUltralightTransitData extends TransitData {
                             continue;
                     }
 
-                    if (idx == pages.length - 3) {
+                    if (idx == pages.size() - 3) {
                         // ACCESS / RFUI
                         // Only care about first byte
                         if (data.get(0) == 0)
                             continue;
                     }
 
-                    if (idx <= pages.length - 2) {
+                    if (idx <= pages.size() - 2) {
                         // PWD (always masked)
                         // PACK / RFUI
                         continue;
                     }
                 } else {
                     // page 0x10 and 0x11 on 384-bit card are config
-                    if (pages.length == 0x14) {
+                    if (pages.size() == 0x14) {
                         if (idx == 0x10 && data.contentEquals(new byte[]{0, 0, 0, -1}))
                             continue;
                         if (idx == 0x11 && data.contentEquals(new byte[]{0, 5, 0, 0}))

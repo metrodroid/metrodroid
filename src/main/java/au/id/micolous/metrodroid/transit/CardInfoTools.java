@@ -34,11 +34,20 @@ import java.util.List;
 import java.util.Locale;
 
 import au.id.micolous.metrodroid.card.calypso.CalypsoApplication;
+import au.id.micolous.metrodroid.card.calypso.CalypsoRegistry;
 import au.id.micolous.metrodroid.card.china.ChinaCard;
+import au.id.micolous.metrodroid.card.china.ChinaCardTransitFactory;
+import au.id.micolous.metrodroid.card.china.ChinaRegistry;
 import au.id.micolous.metrodroid.card.classic.ClassicCard;
+import au.id.micolous.metrodroid.card.classic.ClassicCardFactoryRegistry;
 import au.id.micolous.metrodroid.card.desfire.DesfireCard;
+import au.id.micolous.metrodroid.card.desfire.DesfireCardTransitRegistry;
 import au.id.micolous.metrodroid.card.felica.FelicaCard;
+import au.id.micolous.metrodroid.card.felica.FelicaCardTransitFactory;
+import au.id.micolous.metrodroid.card.felica.FelicaRegistry;
 import au.id.micolous.metrodroid.card.ultralight.UltralightCard;
+import au.id.micolous.metrodroid.card.ultralight.UltralightCardTransitFactory;
+import au.id.micolous.metrodroid.card.ultralight.UltralightTransitRegistry;
 import au.id.micolous.metrodroid.transit.ezlink.EZLinkTransitData;
 import au.id.micolous.metrodroid.transit.tmoney.TMoneyTransitData;
 import au.id.micolous.metrodroid.util.Utils;
@@ -53,12 +62,12 @@ public class CardInfoTools {
     public static List<CardInfo> getAllCardsAlphabetical() {
         List<CardInfo> ret = new ArrayList<>();
         List<CardTransitFactory<?>> allFactories = new ArrayList<>();
-        allFactories.addAll(ClassicCard.Companion.getAllFactories());
-        allFactories.addAll(CalypsoApplication.getAllFactories());
-        allFactories.addAll(DesfireCard.getAllFactories());
-        allFactories.addAll(FelicaCard.getAllFactories());
-        allFactories.addAll(UltralightCard.getAllFactories());
-        allFactories.addAll(ChinaCard.getAllFactories());
+        allFactories.addAll(ClassicCardFactoryRegistry.INSTANCE.getAllFactories());
+        allFactories.addAll(CalypsoRegistry.INSTANCE.getAllFactories());
+        allFactories.addAll(DesfireCardTransitRegistry.INSTANCE.getAllFactories());
+        allFactories.addAll(FelicaRegistry.INSTANCE.getAllFactories());
+        allFactories.addAll(UltralightTransitRegistry.INSTANCE.getAllFactories());
+        allFactories.addAll(ChinaRegistry.INSTANCE.getAllFactories());
         for (CardTransitFactory<?> factory : allFactories) {
             ret.addAll(factory.getAllCards());
         }

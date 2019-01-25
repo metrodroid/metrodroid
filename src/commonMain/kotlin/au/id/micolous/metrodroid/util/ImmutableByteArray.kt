@@ -31,7 +31,7 @@ fun ByteArray.toImmutable(): ImmutableByteArray = ImmutableByteArray.fromByteArr
 
 @Parcelize
 @Serializable
-open class ImmutableByteArray private constructor(private val mData: ByteArray) :
+class ImmutableByteArray private constructor(private val mData: ByteArray) :
         Parcelable, Comparable<ImmutableByteArray>, Collection<Byte> {
     constructor(len: Int, function: (Int) -> Byte) : this(mData = ByteArray(len, function))
     constructor(imm: ImmutableByteArray): this(mData = imm.mData)

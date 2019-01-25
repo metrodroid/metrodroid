@@ -1,5 +1,5 @@
 /*
- * CardType.kt
+ * CardType.java
  *
  * Copyright 2011-2014 Eric Butler <eric@codebutler.com>
  * Copyright 2015, 2018 Michael Farrell <micolous+git@gmail.com>
@@ -26,9 +26,10 @@ enum class CardType constructor(private val mValue: Int) {
     CEPAS(3),
     FeliCa(4),
     ISO7816(5),
+    MultiProtocol(7),
     Unknown(65535);
 
-    fun toInteger(): Int = mValue
+    fun toInteger() = mValue
 
     override fun toString() = when (mValue) {
         0 -> "MIFARE Classic"
@@ -38,13 +39,14 @@ enum class CardType constructor(private val mValue: Int) {
         4 -> "FeliCa"
         5 -> "ISO7816"
         6 -> "Calypso"
+        7 -> "Multi-protocol"
         65535 -> "Unknown"
         else -> "Unknown"
     }
 
     companion object {
         fun parseValue(value: String): CardType {
-            return values()[Integer.parseInt(value)]
+            return values().find { it.mValue == value.toInt() }!!
         }
     }
 }

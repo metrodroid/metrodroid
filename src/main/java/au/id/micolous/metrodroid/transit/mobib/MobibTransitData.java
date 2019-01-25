@@ -35,7 +35,6 @@ import au.id.micolous.metrodroid.card.CardType;
 import au.id.micolous.metrodroid.card.calypso.CalypsoApplication;
 import au.id.micolous.metrodroid.card.calypso.CalypsoCardTransitFactory;
 import au.id.micolous.metrodroid.card.iso7816.ISO7816File;
-import au.id.micolous.metrodroid.card.iso7816.ISO7816Record;
 import au.id.micolous.metrodroid.transit.CardInfo;
 import au.id.micolous.metrodroid.transit.TransitIdentity;
 import au.id.micolous.metrodroid.transit.en1545.Calypso1545TransitData;
@@ -133,15 +132,15 @@ public class MobibTransitData extends Calypso1545TransitData {
     private MobibTransitData(CalypsoApplication card) {
         super(card, ticketEnvFields, contractListFields, getSerial(card));
         ISO7816File holderFile = card.getFile(CalypsoApplication.File.HOLDER_EXTENDED);
-        ImmutableByteArray holder = holderFile.getRecord(1).getData().plus(
-                holderFile.getRecord(2).getData());
+        ImmutableByteArray holder = holderFile.getRecord(1).plus(
+                holderFile.getRecord(2));
         mExtHolderParsed = En1545Parser.parse(holder, extHolderFields);
         mPurchase = card.getFile(CalypsoApplication.File.EP_LOAD_LOG)
-                .getRecord(1).getData().getBitsFromBuffer(
+                .getRecord(1).getBitsFromBuffer(
                 2, 14);
         int totalTrips = 0;
-        for (ISO7816Record record : card.getFile(CalypsoApplication.File.TICKETING_LOG).getRecords()) {
-            int tripCtr = record.getData().getBitsFromBuffer(17 * 8 + 3, 23);
+        for (ImmutableByteArray record : card.getFile(CalypsoApplication.File.TICKETING_LOG).getRecordList()) {
+            int tripCtr = record.getBitsFromBuffer(17 * 8 + 3, 23);
             if (totalTrips < tripCtr)
                 totalTrips = tripCtr;
         }
@@ -190,7 +189,7 @@ public class MobibTransitData extends Calypso1545TransitData {
     }
 
     private static String getSerial(CalypsoApplication card) {
-        ImmutableByteArray holder = card.getFile(CalypsoApplication.File.HOLDER_EXTENDED).getRecord(1).getData();
+        ImmutableByteArray holder = card.getFile(CalypsoApplication.File.HOLDER_EXTENDED).getRecord(1);
         return String.format(Locale.ENGLISH,
                 "%06d / %06d%04d %02d / %01d",
                 NumberUtils.INSTANCE.convertBCDtoInteger(holder.getBitsFromBuffer(18, 24)),

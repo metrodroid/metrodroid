@@ -136,8 +136,8 @@ public class KMTTransitData extends TransitData {
 
     public final static FelicaCardTransitFactory FACTORY = new FelicaCardTransitFactory() {
         @Override
-        public boolean earlyCheck(int[] systemCodes) {
-            return ArrayUtils.contains(systemCodes, SYSTEMCODE_KMT);
+        public boolean earlyCheck(List<Integer> systemCodes) {
+            return systemCodes.contains(SYSTEMCODE_KMT);
         }
 
         @NonNull

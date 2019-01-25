@@ -30,6 +30,7 @@ import java.util.Collections;
 import java.util.List;
 
 import au.id.micolous.metrodroid.card.cepascompat.CEPASCard;
+import au.id.micolous.metrodroid.card.cepascompat.CEPASCompatPurse;
 import au.id.micolous.metrodroid.card.cepascompat.CEPASCompatTransaction;
 import au.id.micolous.metrodroid.transit.TransitCurrency;
 import au.id.micolous.metrodroid.transit.TransitData;
@@ -62,13 +63,14 @@ public class EZLinkCompatTransitData extends TransitData {
     }
 
     public EZLinkCompatTransitData(CEPASCard cepasCard) {
-        mSerialNumber = Utils.getHexString(cepasCard.getPurse(3).getCAN(), "<Error>");
+        mSerialNumber = Utils.getHexString(cepasCard.getPurse(3).getCan(), "<Error>");
         mBalance = cepasCard.getPurse(3).getPurseBalance();
         mTrips = parseTrips(cepasCard);
     }
 
     public static TransitIdentity parseTransitIdentity(CEPASCard card) {
-        String canNo = Utils.getHexString(card.getPurse(3).getCAN(), "<Error>");
+        String canNo = Utils.getHexString(
+                card.getPurse(3).getCan(), "<Error>");
         return new TransitIdentity(EZLinkTransitData.getCardIssuer(canNo), canNo);
     }
 

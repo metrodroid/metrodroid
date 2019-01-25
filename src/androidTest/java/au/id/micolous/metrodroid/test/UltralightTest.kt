@@ -19,7 +19,7 @@
 package au.id.micolous.metrodroid.test
 
 import au.id.micolous.metrodroid.card.ultralight.UltralightCard
-import au.id.micolous.metrodroid.card.XmlCardFormat
+import au.id.micolous.metrodroid.serializers.XmlCardFormat
 import kotlin.test.Test
 
 class UltralightTest: CardReaderWithAssetDumpsTest(XmlCardFormat()) {

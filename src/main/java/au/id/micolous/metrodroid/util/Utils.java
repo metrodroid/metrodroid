@@ -62,6 +62,8 @@ import android.util.SparseArray;
 import android.view.WindowManager;
 import android.widget.Toast;
 
+import au.id.micolous.metrodroid.card.classic.ClassicAndroidReader;
+import au.id.micolous.metrodroid.key.KeyFormat;
 import au.id.micolous.metrodroid.multi.FormattedString;
 import au.id.micolous.metrodroid.multi.Localizer;
 import org.apache.commons.io.IOUtils;
@@ -422,7 +424,7 @@ public class Utils {
         ret += Localizer.INSTANCE.localizeString(nfcAvailable ?
                 (nfcEnabled ? R.string.nfc_enabled : R.string.nfc_disabled)
                 : R.string.nfc_not_available) + "\n";
-        ret += Localizer.INSTANCE.localizeString(app.getMifareClassicSupport() ? R.string.mfc_supported
+        ret += Localizer.INSTANCE.localizeString(ClassicAndroidReader.getMifareClassicSupport() ? R.string.mfc_supported
                 : R.string.mfc_not_supported) + "\n";
         ret += "\n";
 
@@ -790,69 +792,7 @@ public class Utils {
             return KeyFormat.UNKNOWN;
         }
 
-        return detectKeyFormat(data);
-    }
-
-    @SuppressWarnings("MagicCharacter")
-    @NonNull
-    public static KeyFormat detectKeyFormat(@NonNull byte[] data) {
-        if (data[0] != '{') {
-            // This isn't a JSON file.
-            Log.d(TAG, "couldn't find starting {");
-            return isRawMifareClassicKeyFileLength(data.length) ? KeyFormat.RAW_MFC : KeyFormat.UNKNOWN;
-        }
-
-        // Scan for the } at the end of the file.
-        for (int i=data.length-1; i>0; i--) {
-            @NonNls String s;
-            try {
-                s = new String(new byte[]{data[i]}, getUTF8());
-            } catch (Exception ex) {
-                //noinspection StringConcatenation
-                Log.d(TAG, "unsupported encoding at byte " + i, ex);
-                // Unlikely to be JSON
-                return isRawMifareClassicKeyFileLength(data.length) ? KeyFormat.RAW_MFC : KeyFormat.UNKNOWN;
-            }
-
-            if ("\n\r\t ".contains(s)) {
-                continue;
-            }
-
-            if (s.equals("}")) {
-                break;
-            } else {
-                // This isn't a JSON file.
-                Log.d(TAG, "couldn't find ending }");
-                return isRawMifareClassicKeyFileLength(data.length) ? KeyFormat.RAW_MFC : KeyFormat.UNKNOWN;
-            }
-        }
-
-        // Now see if it actually parses.
-        try {
-            JSONObject o = new JSONObject(new String(data, getUTF8()));
-            String type = o.optString(ClassicCardKeys.JSON_KEY_TYPE_KEY);
-            switch (type) {
-                case ClassicCardKeys.TYPE_MFC:
-                    if (!o.has(ClassicCardKeys.JSON_TAG_ID_KEY)
-                            || o.isNull(ClassicCardKeys.JSON_TAG_ID_KEY)
-                            || o.getString(ClassicCardKeys.JSON_TAG_ID_KEY).isEmpty()) {
-                        return KeyFormat.JSON_MFC_NO_UID;
-                    } else {
-                        return KeyFormat.JSON_MFC;
-                    }
-
-                case ClassicCardKeys.TYPE_MFC_STATIC:
-                    return KeyFormat.JSON_MFC_STATIC;
-            }
-
-            // Unhandled JSON format
-            return KeyFormat.JSON;
-        } catch (JSONException e) {
-            Log.d(TAG, "couldn't parse JSON object in detectKeyFormat", e);
-        }
-
-        // Couldn't parse as JSON -- fallback
-        return isRawMifareClassicKeyFileLength(data.length) ? KeyFormat.RAW_MFC : KeyFormat.UNKNOWN;
+        return KeyFormat.Companion.detectKeyFormat(data);
     }
 
     public static int getBitsFromBufferSigned(byte[] data, int startBit, int bitLength) {

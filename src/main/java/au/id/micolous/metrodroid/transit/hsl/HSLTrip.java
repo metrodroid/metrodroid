@@ -28,7 +28,6 @@ import org.jetbrains.annotations.NonNls;
 import java.util.Calendar;
 
 import au.id.micolous.farebot.R;
-import au.id.micolous.metrodroid.card.desfire.files.DesfireRecord;
 import au.id.micolous.metrodroid.transit.TransitCurrency;
 import au.id.micolous.metrodroid.transit.Trip;
 import au.id.micolous.metrodroid.util.Utils;
@@ -53,9 +52,7 @@ public class HSLTrip extends Trip {
     Calendar mExpireTimestamp;
     int mPax;
 
-    public HSLTrip(DesfireRecord record) {
-        ImmutableByteArray useData = record.getData();
-
+    public HSLTrip(ImmutableByteArray useData) {
         mArvo = useData.getBitsFromBuffer(0, 1);
 
         mTimestamp = HSLTransitData.cardDateToCalendar(

@@ -101,17 +101,17 @@ public class ErgTransitData extends TransitData {
         mCurrency = currency;
 
         // Iterate through blocks on the card and deserialize all the binary data.
+        int secidx = -1;
         for (ClassicSector sector : card.getSectors()) {
-            for (ClassicBlock block : sector.getBlocks()) {
-                if (sector.getIndex() == 0 && block.getIndex() == 0) {
+            secidx++;
+            int blkidx = -1;
+            for (ClassicBlock block : sector.getBlocks().subList(0, 3)) {
+                blkidx++;
+                if (blkidx == 0 && secidx == 0) {
                     continue;
                 }
 
-                if (block.getIndex() == 3) {
-                    continue;
-                }
-
-                ErgRecord record = ErgRecord.recordFromBytes(block.getData(), sector.getIndex(), block.getIndex(), getTimezone());
+                ErgRecord record = ErgRecord.recordFromBytes(block.getData(), secidx, blkidx, getTimezone());
 
                 if (record != null) {
                     records.add(record);

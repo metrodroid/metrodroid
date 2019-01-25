@@ -19,7 +19,7 @@
 package au.id.micolous.metrodroid.test
 
 import au.id.micolous.metrodroid.card.classic.ClassicCard
-import au.id.micolous.metrodroid.card.classic.MfcCardImporter
+import au.id.micolous.metrodroid.serializers.classic.MfcCardImporter
 import au.id.micolous.metrodroid.transit.TransitCurrency
 import au.id.micolous.metrodroid.transit.Trip
 import au.id.micolous.metrodroid.transit.easycard.EasyCardTransitData
@@ -41,7 +41,7 @@ class EasyCardTest : CardReaderWithAssetDumpsTest(MfcCardImporter()) {
         showRawStationIds(false)
         showLocalAndEnglish(false)
 
-        val c = loadAndParseCard<EasyCardTransitData>("easycard/deadbeef.mfc")
+        val c = loadAndParseCard<ClassicCard, EasyCardTransitData>("easycard/deadbeef.mfc")
         assertEquals(TransitCurrency.TWD(245), c.balances!![0].balance)
         assertEquals(3, c.trips.size)
 
@@ -85,7 +85,7 @@ class EasyCardTest : CardReaderWithAssetDumpsTest(MfcCardImporter()) {
         showRawStationIds(false)
         showLocalAndEnglish(false)
 
-        val c = loadAndParseCard<EasyCardTransitData>("easycard/deadbeef.mfc")
+        val c = loadAndParseCard<ClassicCard, EasyCardTransitData>("easycard/deadbeef.mfc")
         val refill = c.trips.last()
         // Yongan Market
         assertEquals("永安市場", refill.startStation!!.stationName)

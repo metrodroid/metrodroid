@@ -16,11 +16,11 @@ import kotlin.test.assertTrue
 
 class ClassicReaderTest : BaseInstrumentedTest() {
     fun doTest(path: String) {
-        val auth = CardKeysEmbed(baseDir = "$path/keys")
+        val auth = CardKeysEmbed(baseDir = "$path/keys", context = context)
         for (dump in listAsset("$path/dumps").orEmpty()) {
             val raw = loadSmallAssetBytes("$path/dumps/$dump").toImmutable()
             val card = VirtualClassic(raw)
-            val read = ClassicReader.readCard(context, auth, card, MockFeedbackInterface.get())
+            val read = ClassicReader.readCard(auth, card, MockFeedbackInterface.get())
             val addMsg = "dump = $path/dumps/$dump"
             Log.d(TAG, "$addMsg: read, starting verification")
             verifyRead(read, raw, setOf(), addMsg)

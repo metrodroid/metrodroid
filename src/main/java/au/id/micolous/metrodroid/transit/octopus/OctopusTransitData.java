@@ -118,18 +118,19 @@ public class OctopusTransitData extends TransitData {
 
     public final static FelicaCardTransitFactory FACTORY = new FelicaCardTransitFactory() {
         @Override
-        public boolean earlyCheck(int[] systemCodes) {
-            return ArrayUtils.contains(systemCodes, SYSTEMCODE_OCTOPUS) || ArrayUtils.contains(systemCodes, SYSTEMCODE_SZT);
+        public boolean earlyCheck(List<Integer> systemCodes) {
+            return systemCodes.contains(SYSTEMCODE_OCTOPUS)
+                    || systemCodes.contains(SYSTEMCODE_SZT);
         }
 
         @Override
-        public CardInfo getCardInfo(int[] systemCodes) {
+        public CardInfo getCardInfo(List<Integer> systemCodes) {
             // OctopusTransitData is special, because it handles two types of cards.  So we can just
             // directly say which cardInfo matches.
-            if (ArrayUtils.contains(systemCodes, SYSTEMCODE_OCTOPUS))
+            if (systemCodes.contains(SYSTEMCODE_OCTOPUS))
                 return CARD_INFO; // also dual-mode cards.
 
-            if (ArrayUtils.contains(systemCodes, SYSTEMCODE_SZT))
+            if (systemCodes.contains(SYSTEMCODE_SZT))
                 return NewShenzhenTransitData.CARD_INFO;
 
             return null;

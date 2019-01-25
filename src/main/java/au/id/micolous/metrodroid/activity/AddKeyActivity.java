@@ -42,16 +42,16 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 
-import au.id.micolous.metrodroid.key.CardKeys;
 import au.id.micolous.metrodroid.key.ClassicCardKeys;
-import au.id.micolous.metrodroid.key.ClassicKeys;
 import au.id.micolous.metrodroid.key.ClassicSectorKey;
 import au.id.micolous.metrodroid.key.InsertKeyTask;
 import au.id.micolous.metrodroid.multi.Localizer;
-import au.id.micolous.metrodroid.util.KeyFormat;
+import au.id.micolous.metrodroid.key.KeyFormat;
 import au.id.micolous.metrodroid.util.Preferences;
 import au.id.micolous.metrodroid.util.Utils;
 
+import kotlinx.serialization.json.JsonObject;
+import kotlinx.serialization.json.JsonTreeParser;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang3.ArrayUtils;
 import org.json.JSONException;
@@ -61,7 +61,6 @@ import java.io.IOException;
 import java.io.InputStream;
 
 import au.id.micolous.farebot.R;
-import au.id.micolous.metrodroid.MetrodroidApplication;
 import au.id.micolous.metrodroid.util.ImmutableByteArray;
 
 /**
@@ -135,7 +134,7 @@ public class AddKeyActivity extends MetrodroidActivity {
             }
 
             // We have some key data, now process this...
-            KeyFormat mKeyFormat = Utils.detectKeyFormat(keyData);
+            KeyFormat mKeyFormat = KeyFormat.Companion.detectKeyFormat(keyData);
             if (mKeyFormat == KeyFormat.JSON_MFC_STATIC) {
                 // Assigning a static key to a single card isn't valid!
                 Utils.showErrorAndFinish(this, R.string.no_static_key_assignment);
@@ -143,18 +142,18 @@ public class AddKeyActivity extends MetrodroidActivity {
             }
 
             if (mKeyFormat.isJSON()) {
-                JSONObject o;
+                JsonObject o;
                 try {
-                    o = new JSONObject(new String(keyData, Utils.getUTF8()));
-                } catch (JSONException e) {
-                    // Shouldn't get this here, but ok...
+                    o = JsonTreeParser.Companion.parse(new String(keyData, Utils.getUTF8()));
+                } catch (Exception e) {
+                    // Invalid JSON, grumble.
                     Utils.showErrorAndFinish(this, e);
                     return;
                 }
 
                 try {
                     mKeyData = ClassicCardKeys.Companion.fromJSON(o, keyPath);
-                } catch (JSONException e) {
+                } catch (Exception e) {
                     // Invalid JSON, grumble.
                     Utils.showErrorAndFinish(this, e);
                     return;
@@ -210,7 +209,7 @@ public class AddKeyActivity extends MetrodroidActivity {
             String j = "";
             try {
                 j = mKeyData.toJSON().toString();
-            } catch (JSONException e) {
+            } catch (Exception e) {
                 Log.d(TAG, "caught JSON exception while trying to display key data", e);
             }
 
@@ -246,11 +245,11 @@ public class AddKeyActivity extends MetrodroidActivity {
     @Override
     protected void onNewIntent(Intent intent) {
         Tag tag = intent.getParcelableExtra(NfcAdapter.EXTRA_TAG);
-        String tagId = Utils.getHexString(tag.getId(), "");
+        byte[] tagId = tag.getId();
 
         if (ArrayUtils.contains(tag.getTechList(), MifareClassic.class.getName())
-                && tagId != null && !tagId.isEmpty()) {
-            mKeyData.setUid(tagId);
+                && tagId != null && tagId.length != 0) {
+            mKeyData.setUid(ImmutableByteArray.Companion.getHexString(tagId));
             drawUI();
         } else {
             new AlertDialog.Builder(this)

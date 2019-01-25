@@ -1,5 +1,6 @@
 package au.id.micolous.metrodroid.card.classic;
 
+import android.content.Context;
 import android.nfc.Tag;
 import android.nfc.tech.MifareClassic;
 import android.nfc.tech.NfcA;
@@ -8,31 +9,79 @@ import android.os.IBinder;
 import android.os.Parcel;
 import android.util.Log;
 
+import au.id.micolous.metrodroid.key.*;
 import au.id.micolous.metrodroid.multi.Localizer;
 import org.jetbrains.annotations.NonNls;
 
 import java.util.Arrays;
-import java.util.Collections;
+import java.util.HashSet;
+import java.util.Set;
 
 import au.id.micolous.farebot.R;
 import au.id.micolous.metrodroid.MetrodroidApplication;
 import au.id.micolous.metrodroid.card.TagReaderFeedbackInterface;
-import au.id.micolous.metrodroid.key.CardKeysDB;
-import au.id.micolous.metrodroid.key.CardKeysEmbed;
-import au.id.micolous.metrodroid.key.CardKeysMerged;
-import au.id.micolous.metrodroid.key.CardKeysRetriever;
-import au.id.micolous.metrodroid.util.Utils;
 import au.id.micolous.metrodroid.util.ImmutableByteArray;
+
+import static au.id.micolous.metrodroid.key.CardKeysEmbedKt.CardKeysEmbed;
 
 public final class ClassicAndroidReader {
     private final static String TAG = "ClassicAndroidReader";
 
     private ClassicAndroidReader() {}
 
-    public static final CardKeysRetriever KEY_RETRIEVER_EMBED = new CardKeysEmbed("keys");
-    public static final CardKeysRetriever KEY_RETRIEVER = new CardKeysMerged(Arrays.asList(
-            CardKeysDB.INSTANCE, KEY_RETRIEVER_EMBED
-    ));
+    public static CardKeysFromFiles getKeyRetrieverEmbed(Context context) {
+        return CardKeysEmbed(context, "keys");
+    }
+    private static final Set<String> devicesMifareWorks = new HashSet<>();
+    private static final Set<String> devicesMifareNotWorks = new HashSet<>();
+
+    static {
+        devicesMifareWorks.add("Pixel 2");
+        devicesMifareWorks.add("Find7");
+    }
+
+    private static Boolean mMifareClassicSupport = null;
+
+    private static void detectMfcSupport() {
+        if (devicesMifareNotWorks.contains(android.os.Build.MODEL)) {
+            mMifareClassicSupport = false;
+            return;
+        }
+
+        if (devicesMifareWorks.contains(android.os.Build.MODEL)) {
+            mMifareClassicSupport = true;
+            return;
+        }
+
+        // TODO: Some devices report MIFARE Classic support, when they actually don't have it.
+        //
+        // Detecting based on libraries and device nodes doesn't work great either. There's edge
+        // cases, and it's still vulnerable to vendors doing silly things.
+
+        // Fallback: Look for com.nxp.mifare feature.
+        mMifareClassicSupport = MetrodroidApplication.getInstance().getPackageManager().hasSystemFeature("com.nxp.mifare");
+        //noinspection StringConcatenation
+        Log.d(TAG, "Falling back to com.nxp.mifare feature detection "
+                + (mMifareClassicSupport ? "(found)" : "(missing)"));
+    }
+
+    public static boolean getMifareClassicSupport() {
+        try {
+            if (mMifareClassicSupport == null)
+                detectMfcSupport();
+        } catch (Exception e) {
+            Log.w(TAG, "Detecting nfc support failed", e);
+        }
+
+        return mMifareClassicSupport;
+    }
+
+    public static CardKeysMerged getKeyRetriever(Context context) {
+        return new CardKeysMerged(Arrays.asList(
+                getKeyRetrieverEmbed(context),
+                new CardKeysDB(context)
+        ));
+    }
 
     public static ClassicCard dumpTag(ImmutableByteArray tagId, Tag tag, TagReaderFeedbackInterface feedbackInterface) throws Exception {
         feedbackInterface.updateStatusText(Localizer.INSTANCE.localizeString(R.string.mfc_reading));
@@ -51,8 +100,10 @@ public final class ClassicAndroidReader {
 
             ClassicCardTechAndroid techWrapper = new ClassicCardTechAndroid(tech, tagId);
 
-            return ClassicReader.INSTANCE.readCard(MetrodroidApplication.getInstance(),
-                    KEY_RETRIEVER, techWrapper, feedbackInterface);
+            CardKeysMerged keyRetriever = getKeyRetriever(MetrodroidApplication.getInstance());
+
+            return ClassicReader.INSTANCE.readCard(
+                    keyRetriever, techWrapper, feedbackInterface);
         } finally {
             if (tech != null && tech.isConnected()) {
                 tech.close();

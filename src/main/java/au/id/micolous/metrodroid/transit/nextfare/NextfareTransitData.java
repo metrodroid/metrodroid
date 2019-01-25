@@ -125,17 +125,17 @@ public class NextfareTransitData extends TransitData {
 
         List<NextfareRecord> records = new ArrayList<>();
 
-        for (ClassicSector sector : card.getSectors()) {
-            for (ClassicBlock block : sector.getBlocks()) {
-                if (sector.getIndex() == 0 || block.getIndex() == 3) {
-                    // Ignore sector 0 (preamble) and block 3 (mifare keys/ACL)
-                    continue;
-                }
-
+        // Ignore sector 0 (preamble) and block 3 (mifare keys/ACL)
+        int secidx = 0;
+        for (ClassicSector sector : card.getSectors().subList(1, card.getSectors().size())) {
+            secidx++;
+            int blkidx = -1;
+            for (ClassicBlock block : sector.getBlocks().subList(0, 3)) {
+                blkidx++;
                 //noinspection StringConcatenation
-                Log.d(TAG, "Sector " + sector.getIndex() + " / Block " + block.getIndex());
+                Log.d(TAG, "Sector " + secidx + " / Block " + blkidx);
                 NextfareRecord record = NextfareRecord.recordFromBytes(
-                        block.getData(), sector.getIndex(), block.getIndex(), getTimezone());
+                        block.getData(), secidx, blkidx, getTimezone());
 
                 if (record != null) {
                     records.add(record);
