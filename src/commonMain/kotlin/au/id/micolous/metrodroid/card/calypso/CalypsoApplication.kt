@@ -20,18 +20,20 @@ package au.id.micolous.metrodroid.card.calypso
 
 import au.id.micolous.metrodroid.card.CardLostException
 import au.id.micolous.metrodroid.card.CardTransceiveException
-import au.id.micolous.metrodroid.card.iso7816.*
 import au.id.micolous.metrodroid.card.TagReaderFeedbackInterface
-import au.id.micolous.metrodroid.multi.*
+import au.id.micolous.metrodroid.card.iso7816.*
+import au.id.micolous.metrodroid.multi.Localizer
+import au.id.micolous.metrodroid.multi.Log
+import au.id.micolous.metrodroid.multi.R
 import au.id.micolous.metrodroid.time.Epoch
 import au.id.micolous.metrodroid.time.MetroTimeZone
 import au.id.micolous.metrodroid.time.TimestampFormatter
 import au.id.micolous.metrodroid.transit.CardInfo
-import au.id.micolous.metrodroid.transit.CardTransitFactory
 import au.id.micolous.metrodroid.transit.TransitData
 import au.id.micolous.metrodroid.transit.TransitIdentity
 import au.id.micolous.metrodroid.ui.HeaderListItem
 import au.id.micolous.metrodroid.ui.ListItem
+import au.id.micolous.metrodroid.util.ImmutableByteArray
 import au.id.micolous.metrodroid.util.NumberUtils
 import au.id.micolous.metrodroid.util.Preferences
 import au.id.micolous.metrodroid.util.ImmutableByteArray
@@ -140,7 +142,7 @@ data class CalypsoApplication (
 
     override fun nameSfiFile(sfi: Int) = SFI_MAP[sfi]?.name
 
-    enum class File private constructor(val sfi: Int, val selector: ISO7816Selector) {
+    enum class File(val sfi: Int, val selector: ISO7816Selector) {
         // Put this first to be able to show card image as soon as possible
         TICKETING_ENVIRONMENT(0x07, 0x2000, 0x2001), // SFI from spec
 
@@ -199,11 +201,11 @@ data class CalypsoApplication (
         ETICKET_EVENT_LOGS(0x8000, 0x8010),
         ETICKET_PRESELECTION(0x8000, 0x8030);
 
-        private constructor(folder: Int, file: Int) : this(-1, ISO7816Selector.makeSelector(folder, file)) {}
+        constructor(folder: Int, file: Int) : this(-1, ISO7816Selector.makeSelector(folder, file))
 
-        private constructor(sfi: Int, folder: Int, file: Int) : this(sfi, ISO7816Selector.makeSelector(folder, file)) {}
+        constructor(sfi: Int, folder: Int, file: Int) : this(sfi, ISO7816Selector.makeSelector(folder, file))
 
-        private constructor(selector: ISO7816Selector) : this(-1, selector) {}
+        constructor(selector: ISO7816Selector) : this(-1, selector)
     }
 
     companion object {

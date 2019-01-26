@@ -320,19 +320,16 @@ class XMLInput internal constructor(private val parent: NodeWrapper,
     override fun decodeEnum(enumDescription: EnumDescriptor): Int = enumDescription.getElementIndex(takeStr())
 
     @Suppress("UNCHECKED_CAST")
-    override fun <T> decodeSerializableValue(loader: DeserializationStrategy<T>): T {
-        when (loader.descriptor.name) {
+    override fun <T> decodeSerializableValue(deserializer: DeserializationStrategy<T>): T {
+        when (deserializer.descriptor.name) {
             TimestampFull.serializer().descriptor.name ->
                 return TimestampFull(timeInMillis = decodeLong(), tz = MetroTimeZone.LOCAL) as T
             ImmutableByteArray.serializer().descriptor.name -> {
-                val result: ImmutableByteArray
-                if (elementAnnotations.orEmpty().filterIsInstance<XMLDesfireManufacturingData>().isNotEmpty())
-                    result = super.decodeSerializableValue(DesfireManufacturingDataXmlAdapter.serializer()).makeRaw()
-                else if (elementAnnotations.orEmpty().filterIsInstance<XMLHex>().isNotEmpty())
-                    result = ImmutableByteArray.fromHex(decodeString())
-                else
-                    result = ImmutableByteArray.fromBase64(decodeString())
-                return result as T
+                return when {
+                    elementAnnotations.orEmpty().filterIsInstance<XMLDesfireManufacturingData>().isNotEmpty() -> super.decodeSerializableValue(DesfireManufacturingDataXmlAdapter.serializer()).makeRaw()
+                    elementAnnotations.orEmpty().filterIsInstance<XMLHex>().isNotEmpty() -> ImmutableByteArray.fromHex(decodeString())
+                    else -> ImmutableByteArray.fromBase64(decodeString())
+                } as T
             }
             ClassicSectorRaw.serializer().descriptor.name -> {
                 val a = super.decodeSerializableValue(ClassicSectorRawXmlAdapter.serializer())
@@ -352,7 +349,7 @@ class XMLInput internal constructor(private val parent: NodeWrapper,
                 return a.convert() as T
             }
         }
-        return super.decodeSerializableValue(loader)
+        return super.decodeSerializableValue(deserializer)
     }
 }
 
@@ -542,14 +539,14 @@ class ISO7816ApplicationXmlAdapter(
 
     fun convert(): ISO7816Application {
         when (type) {
-            "calypso" -> return CalypsoApplication(generic = makeCapsule())
-            "cepas" -> return CEPASApplication(generic = makeCapsule(),
+            "calypso" -> CalypsoApplication(generic = makeCapsule())
+            "cepas" -> CEPASApplication(generic = makeCapsule(),
                     histories = histories, purses = purses)
-            "tmoney" -> return TMoneyCard(generic = makeCapsule(),
+            "tmoney" -> TMoneyCard(generic = makeCapsule(),
                     balance = ImmutableByteArray.ofB(
                             (balance shr 24),
                             (balance shr 16), (balance shr 8), balance))
-            "china", "shenzhentong" -> return ChinaCard(generic = makeCapsule(),
+            "china", "shenzhentong" -> ChinaCard(generic = makeCapsule(),
                     balances = balances.mapValues { ImmutableByteArray.fromHex(it.value.trim()) })
             else -> throw Exception("Unknown type $type")
         }

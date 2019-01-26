@@ -21,9 +21,7 @@ package au.id.micolous.metrodroid.multi
 
 import android.text.Spannable
 import android.text.SpannableString
-import android.text.Spanned
 import android.text.style.TypefaceSpan
-import au.id.micolous.metrodroid.ui.ListItem
 
 actual class FormattedString (val spanned: android.text.Spanned) {
     actual val unformatted: String

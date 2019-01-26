@@ -109,7 +109,7 @@ object FeliCaLib {
         val code: Int
             get() = (this.bytes[0].toInt() and 0xff) + (this.bytes[1].toInt() and 0xff shl 8)
 
-        constructor(systemCode: Int) : this(ImmutableByteArray.ofB((systemCode shr 8), (systemCode and 0xff))) {}// Pass in a system code in "big endian" form
+        constructor(systemCode: Int) : this(ImmutableByteArray.ofB((systemCode shr 8), (systemCode and 0xff))) // Pass in a system code in "big endian" form
     }
 
     /**
@@ -151,7 +151,7 @@ object FeliCaLib {
         val bytes: ImmutableByteArray?
         private val length: Int      //全体のデータ長 (FeliCaには無い)
         private val responseCode: Byte//コマンドレスポンスコード)
-        val iDm: ImmutableByteArray?          //FeliCa IDm
+        private val iDm: ImmutableByteArray?          //FeliCa IDm
         val data: ImmutableByteArray?      //コマンドデータ
 
         /**
@@ -199,13 +199,13 @@ object FeliCaLib {
          *
          * @return int statusFlag2が戻ります
          */
-        val statusFlag2: Int
+        private val statusFlag2: Int
         /**
          * blockCountを取得します
          *
          * @return int blockCountが戻ります
          */
-        val blockCount: Int
+        private val blockCount: Int
         /**
          * blockDataを取得します
          *

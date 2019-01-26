@@ -20,7 +20,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package au.id.micolous.metrodroid.card.classic;
+package au.id.micolous.metrodroid.card.classic
 
 import au.id.micolous.metrodroid.key.ClassicSectorKey;
 import au.id.micolous.metrodroid.multi.JvmDefault

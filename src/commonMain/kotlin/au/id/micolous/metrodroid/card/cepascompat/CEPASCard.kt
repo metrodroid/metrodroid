@@ -19,7 +19,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package au.id.micolous.metrodroid.card.cepascompat;
+package au.id.micolous.metrodroid.card.cepascompat
 
 import au.id.micolous.metrodroid.card.CardProtocol
 import au.id.micolous.metrodroid.transit.ezlinkcompat.EZLinkCompatTransitData

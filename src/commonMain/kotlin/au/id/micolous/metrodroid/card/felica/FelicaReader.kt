@@ -137,19 +137,20 @@ object FelicaReader {
                 Log.d(TAG, " - Got PMm: ${ft.pMm}  compare: $pmm")
 
                 val services = mutableMapOf<Int, FelicaService>()
-                val serviceCodes: List<FeliCaLib.ServiceCode>
-
-                if (octopusMagic && code.code == OctopusTransitData.SYSTEMCODE_OCTOPUS) {
-                    Log.d(TAG, "Stuffing in Octopus magic service code")
-                    serviceCodes = listOf(FeliCaLib.ServiceCode(OctopusTransitData.SERVICE_OCTOPUS))
-                } else if (sztMagic && code.code == OctopusTransitData.SYSTEMCODE_SZT) {
-                    Log.d(TAG, "Stuffing in SZT magic service code")
-                    serviceCodes = listOf(FeliCaLib.ServiceCode(OctopusTransitData.SERVICE_SZT))
-                } else if (liteMagic && code.code == FelicaConsts.SYSTEMCODE_FELICA_LITE) {
-                    Log.d(TAG, "Stuffing in Felica Lite magic service code")
-                    serviceCodes = listOf(FeliCaLib.ServiceCode(FelicaConsts.SERVICE_FELICA_LITE_READONLY))
-                } else {
-                    serviceCodes = ft.getServiceCodeList()
+                val serviceCodes: List<FeliCaLib.ServiceCode> = when {
+                    octopusMagic && code.code == OctopusTransitData.SYSTEMCODE_OCTOPUS -> {
+                        Log.d(TAG, "Stuffing in Octopus magic service code")
+                        listOf(FeliCaLib.ServiceCode(OctopusTransitData.SERVICE_OCTOPUS))
+                    }
+                    sztMagic && code.code == OctopusTransitData.SYSTEMCODE_SZT -> {
+                        Log.d(TAG, "Stuffing in SZT magic service code")
+                        listOf(FeliCaLib.ServiceCode(OctopusTransitData.SERVICE_SZT))
+                    }
+                    liteMagic && code.code == FelicaConsts.SYSTEMCODE_FELICA_LITE -> {
+                        Log.d(TAG, "Stuffing in Felica Lite magic service code")
+                        listOf(FeliCaLib.ServiceCode(FelicaConsts.SERVICE_FELICA_LITE_READONLY))
+                    }
+                    else -> ft.getServiceCodeList()
                 }
 
                 // Brute Forcer (DEBUG ONLY)

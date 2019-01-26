@@ -22,7 +22,6 @@ package au.id.micolous.metrodroid.card.desfire
 
 import au.id.micolous.metrodroid.card.CardTransceiver
 import au.id.micolous.metrodroid.card.UnauthorizedException
-import au.id.micolous.metrodroid.card.desfire.settings.DesfireFileSettings
 import au.id.micolous.metrodroid.util.ImmutableByteArray
 import au.id.micolous.metrodroid.util.ImmutableByteArray.Companion.plus
 import au.id.micolous.metrodroid.util.toImmutable

@@ -88,8 +88,7 @@ data class RkfTransitData internal constructor(
         get() = mTcci.getTimeStamp(En1545TransitData.ENV_APPLICATION_VALIDITY_END, mLookup.timeZone)
 
     @VisibleForTesting
-    val cardStatus
-        @StringRes
+    val cardStatus: StringResource
         get() = when (mTcci.getIntOrZero(STATUS)) {
             0x01 -> R.string.rkf_status_ok
             0x21 -> R.string.rkf_status_action_pending

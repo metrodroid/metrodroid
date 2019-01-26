@@ -51,8 +51,7 @@ class FeliCaTag(private val nfcTag: CardTransceiver) {
      *
      * @return IDm IDmが戻ります
      */
-    var iDm: ImmutableByteArray? = null
-        private set
+    private var iDm: ImmutableByteArray? = null
     /**
      * FeliCa PMmを取得します
      *
@@ -159,7 +158,7 @@ class FeliCaTag(private val nfcTag: CardTransceiver) {
      */
     private suspend fun doSearchServiceCode(index: Int): ImmutableByteArray {
         val bytes = FeliCaLib.execute(this.nfcTag, FelicaConsts.COMMAND_SEARCH_SERVICECODE, iDm!!, (index and 0xff).toByte(), (index shr 8).toByte())
-        if (bytes.size <= 0 || bytes[1] != 0x0b.toByte()) { // 正常応答かどうか
+        if (bytes.isEmpty() || bytes[1] != 0x0b.toByte()) { // 正常応答かどうか
             Log.w(TAG, "Response code is not 0x0b")
             // throw new FeliCaException("ResponseCode is not 0x0b");
             return ImmutableByteArray.empty()

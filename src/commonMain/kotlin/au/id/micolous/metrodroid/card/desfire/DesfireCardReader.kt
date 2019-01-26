@@ -109,12 +109,10 @@ object DesfireCardReader {
                         settingsRaw = desfireTag.getFileSettings(fileId)
                         val data: ImmutableByteArray
                         val settings = DesfireFileSettings.create(settingsRaw)
-                        if (settings is StandardDesfireFileSettings) {
-                            data = desfireTag.readFile(fileId)
-                        } else if (settings is ValueDesfireFileSettings) {
-                            data = desfireTag.getValue(fileId)
-                        } else {
-                            data = desfireTag.readRecord(fileId)
+                        data = when (settings) {
+                            is StandardDesfireFileSettings -> desfireTag.readFile(fileId)
+                            is ValueDesfireFileSettings -> desfireTag.getValue(fileId)
+                            else -> desfireTag.readRecord(fileId)
                         }
                         files[fileId] = RawDesfireFile(settingsRaw, data, null, false)
                     } catch (ex: UnauthorizedException) {

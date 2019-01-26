@@ -17,7 +17,7 @@ object CardSerializer {
         }
     }
 
-    fun fromJson(xml: String): Card {
+    private fun fromJson(xml: String): Card {
         try {
             return jsonKotlinFormat.readCard(xml)
         } catch (ex: Exception) {

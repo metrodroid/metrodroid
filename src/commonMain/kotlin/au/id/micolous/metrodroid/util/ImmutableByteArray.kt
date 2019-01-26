@@ -258,12 +258,12 @@ class ImmutableByteArray private constructor(private val mData: ByteArray) :
 
         fun fromASCII(s: String) = ImmutableByteArray(mData = s.map { it.toByte() }.toByteArray())
 
-        override fun serialize(output: Encoder, obj: ImmutableByteArray) {
-            output.encodeString(obj.toHexString())
+        override fun serialize(encoder: Encoder, obj: ImmutableByteArray) {
+            encoder.encodeString(obj.toHexString())
         }
 
-        override fun deserialize(input: Decoder): ImmutableByteArray {
-            return fromHex(input.decodeString())
+        override fun deserialize(decoder: Decoder): ImmutableByteArray {
+            return fromHex(decoder.decodeString())
         }
 
         fun fromBase64(input: String) = ImmutableByteArray(mData = decodeBase64(input) ?: throw Exception("Invalid base64: $input"))

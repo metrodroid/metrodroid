@@ -93,7 +93,7 @@ data class ChinaCard(
                                 val cl = f.allCards
 
                                 if (!cl.isEmpty()) {
-                                    val ci = cl.get(0)
+                                    val ci = cl[0]
 
                                     feedbackInterface.updateStatusText(Localizer.localizeString(R.string.card_reading_type,
                                             ci.name))

@@ -22,8 +22,8 @@
 
 package au.id.micolous.metrodroid.key
 
+import kotlinx.serialization.json.Json
 import kotlinx.serialization.json.JsonObject
-import kotlinx.serialization.json.JsonTreeParser
 
 interface CardKeys {
 
@@ -61,6 +61,6 @@ interface CardKeys {
                 keyJSON[CardKeys.JSON_KEY_TYPE_KEY].primitive.content, defaultBundle)
 
         fun fromJSON(keyJSON: String, defaultBundle: String) = fromJSON(
-                JsonTreeParser.parse(keyJSON), defaultBundle)
+                Json.plain.parseJson(keyJSON).jsonObject, defaultBundle)
     }
 }

@@ -57,13 +57,13 @@ class MfcCardImporter : CardImporter {
         }
 
         // End of file, now see how many blocks we get
-        if (maxSector <= 15) {
-            maxSector = 15 // 1K
-        } else if (maxSector <= 31) {
-            maxSector = 31 // 2K
-        } else if (maxSector <= 39) {
-            maxSector = 39 // 4K
+        when {
+            maxSector <= 15 -> maxSector = 15 // 1K
+            maxSector <= 31 -> maxSector = 31 // 2K
+            maxSector <= 39 -> maxSector = 39 // 4K
         }
+
+            // Fill missing sectors as "unauthorised".
 
         // Fill missing sectors as "unauthorised".
         while (sectors.size <= maxSector) {

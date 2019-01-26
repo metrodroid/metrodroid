@@ -23,7 +23,6 @@ import au.id.micolous.metrodroid.card.classic.ClassicCard
 import au.id.micolous.metrodroid.card.classic.ClassicSector
 import au.id.micolous.metrodroid.card.classic.ClassicSectorRaw
 import au.id.micolous.metrodroid.card.classic.UnauthorizedClassicSector
-import au.id.micolous.metrodroid.multi.Log
 import au.id.micolous.metrodroid.serializers.CardImporter
 import au.id.micolous.metrodroid.time.TimestampFull
 import au.id.micolous.metrodroid.util.ImmutableByteArray
@@ -79,12 +78,11 @@ class MctCardImporter : CardImporter {
         } else
             uid = ImmutableByteArray.fromASCII("fake")
 
-        if (maxSector <= 15)
-            maxSector = 15 // 1K
-        else if (maxSector <= 31)
-            maxSector = 31 // 2K
-        else if (maxSector <= 39)
-            maxSector = 39 // 4K
+        when {
+            maxSector <= 15 -> maxSector = 15 // 1K
+            maxSector <= 31 -> maxSector = 31 // 2K
+            maxSector <= 39 -> maxSector = 39 // 4K
+        } // 4K
 
         while (sectors.size <= maxSector)
             sectors.add(UnauthorizedClassicSector())

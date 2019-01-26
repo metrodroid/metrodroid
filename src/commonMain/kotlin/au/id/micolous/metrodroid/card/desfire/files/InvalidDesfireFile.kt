@@ -18,14 +18,12 @@
  */
 package au.id.micolous.metrodroid.card.desfire.files
 
-import au.id.micolous.metrodroid.util.NumberUtils
-
-import au.id.micolous.metrodroid.multi.R
 import au.id.micolous.metrodroid.card.desfire.settings.DesfireFileSettings
 import au.id.micolous.metrodroid.multi.Localizer
+import au.id.micolous.metrodroid.multi.R
 import au.id.micolous.metrodroid.ui.ListItem
 import au.id.micolous.metrodroid.util.ImmutableByteArray
-import kotlinx.serialization.Serializable
+import au.id.micolous.metrodroid.util.NumberUtils
 import kotlinx.serialization.Transient
 
 class InvalidDesfireFile (override val fileSettings: DesfireFileSettings,

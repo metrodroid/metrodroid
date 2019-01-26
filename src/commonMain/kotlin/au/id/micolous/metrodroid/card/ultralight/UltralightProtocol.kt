@@ -73,12 +73,11 @@ internal class UltralightProtocol(private val mTagTech: UltralightTransceiver) {
     // To continue, we need to halt the auth attempt.
     // Reconnect
     fun getCardType(): UltralightType {
-        var b: ByteArray?
-        try {
-            b = getVersion()
+        val b = try {
+            getVersion()
         } catch (e: CardTransceiveException) {
             Log.d(TAG, "getVersion returned error, not EV1", e)
-            b = null
+            null
         }
 
         if (b != null) {
@@ -88,13 +87,13 @@ internal class UltralightProtocol(private val mTagTech: UltralightTransceiver) {
             }
 
             if (b[2].toInt() == 0x04) {
-                when (b[6].toInt()) {
-                    0x0F -> return UltralightType.NTAG213
-                    0x11 -> return UltralightType.NTAG215
-                    0x13 -> return UltralightType.NTAG216
+                return when (b[6].toInt()) {
+                    0x0F -> UltralightType.NTAG213
+                    0x11 -> UltralightType.NTAG215
+                    0x13 -> UltralightType.NTAG216
                     else -> {
                         Log.d(TAG, "getVersion returned unknown storage size (${b[6]}): %s" + ImmutableByteArray.getHexString(b))
-                        return UltralightType.UNKNOWN
+                        UltralightType.UNKNOWN
                     }
                 }
             }
@@ -103,21 +102,20 @@ internal class UltralightProtocol(private val mTagTech: UltralightTransceiver) {
                 Log.d(TAG, "getVersion got a tag response with non-EV1 product code (${b[2]}): " + ImmutableByteArray.getHexString(b))
                 return UltralightType.UNKNOWN
             }
-            when (b[6].toInt()) {
-                0x0b -> return UltralightType.EV1_MF0UL11
-                0x0e -> return UltralightType.EV1_MF0UL21
+            return when (b[6].toInt()) {
+                0x0b -> UltralightType.EV1_MF0UL11
+                0x0e -> UltralightType.EV1_MF0UL21
                 else -> {
                     Log.d(TAG, "getVersion returned unknown storage size (${b[6]}): " + ImmutableByteArray.getHexString(b))
-                    return UltralightType.UNKNOWN
+                    UltralightType.UNKNOWN
                 }
             }
         } else {
             mTagTech.reconnect()
         }
         try {
-            b = auth1()
-
-            if (b == null) throw CardTransceiveException("auth1 returned null")
+            val b2 = auth1() ?: throw CardTransceiveException("auth1 returned null")
+            Log.d(TAG, "auth1 said = $b2")
         } catch (e: CardTransceiveException) {
             Log.d(TAG, "auth1 returned error, not Ultralight C.", e)
             mTagTech.reconnect()
@@ -125,7 +123,6 @@ internal class UltralightProtocol(private val mTagTech: UltralightTransceiver) {
             return UltralightType.MF0ICU1
         }
 
-        Log.d(TAG, "auth1 said = " + ImmutableByteArray.getHexString(b))
         halt()
         mTagTech.reconnect()
 
@@ -140,7 +137,7 @@ internal class UltralightProtocol(private val mTagTech: UltralightTransceiver) {
      */
     private fun getVersion(): ByteArray = sendRequest(GET_VERSION)
 
-    internal enum class UltralightType private constructor(
+    internal enum class UltralightType(
             /** Number of pages of memory that the card supports.  */
             val pageCount: Int) {
         /** Unknown type  */

@@ -27,10 +27,10 @@ import au.id.micolous.metrodroid.util.ImmutableByteArray
  * See GetFileSettings for schemadata.
  */
 class ValueDesfireFileSettings (buf: ImmutableByteArray) : DesfireFileSettingsImpl(buf) {
-    val lowerLimit = buf.byteArrayToIntReversed(4, 4)
-    val upperLimit = buf.byteArrayToIntReversed(8, 4)
-    var limitedCreditValue = buf.byteArrayToIntReversed(12, 4)
-    var limitedCreditEnabled = buf[16].toInt() != 0x00
+    private val lowerLimit = buf.byteArrayToIntReversed(4, 4)
+    private val upperLimit = buf.byteArrayToIntReversed(8, 4)
+    private var limitedCreditValue = buf.byteArrayToIntReversed(12, 4)
+    private var limitedCreditEnabled = buf[16].toInt() != 0x00
 
     override val subtitle: String
         get() = Localizer.localizeString(R.string.desfire_value_format,

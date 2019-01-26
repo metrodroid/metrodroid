@@ -89,7 +89,7 @@ object ISO7816TLV {
         return result
     }
 
-    fun infoBerTLV(buf: ImmutableByteArray): List<ListItem> {
+    private fun infoBerTLV(buf: ImmutableByteArray): List<ListItem> {
         val result = mutableListOf<ListItem>()
         berTlvIterate(buf) { id, header, data ->
             if (id[0].toInt() and 0xe0 == 0xa0)

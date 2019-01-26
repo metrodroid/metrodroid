@@ -114,7 +114,7 @@ abstract class ClassicKeysImpl(
         }
 
         private const val KEY_BUNDLE = "bundle"
-        internal const val KEY_LEN = 6
+        private const val KEY_LEN = 6
 
         private fun classicFromJSON(json: JsonObject, defaultBundle: String): ClassicSectorKey {
             val t = json.getPrimitiveOrNull(ClassicSectorKey.KEY_TYPE)?.contentOrNull
@@ -138,6 +138,6 @@ abstract class ClassicKeysImpl(
         }
 
         fun classicFromJSON(json: String, defaultBundle: String): ClassicSectorKey =
-                classicFromJSON(JsonTreeParser.parse(json), defaultBundle)
+                classicFromJSON(Json.plain.parseJson(json).jsonObject, defaultBundle)
     }
 }

@@ -25,7 +25,7 @@ import au.id.micolous.metrodroid.util.ImmutableByteArray
 
 class RecordDesfireFileSettings (settings: ImmutableByteArray): DesfireFileSettingsImpl(settings) {
     val recordSize = settings.byteArrayToIntReversed(4, 3)
-    val maxRecords = settings.byteArrayToIntReversed(7, 3)
+    private val maxRecords = settings.byteArrayToIntReversed(7, 3)
     val curRecords = settings.byteArrayToIntReversed(10, 3)
 
     override val subtitle: String

@@ -11,7 +11,6 @@ import android.util.Log
 import au.id.micolous.farebot.BuildConfig
 import au.id.micolous.farebot.R
 import au.id.micolous.metrodroid.card.CardReader
-import au.id.micolous.metrodroid.card.CardType
 import au.id.micolous.metrodroid.card.UnsupportedTagException
 import au.id.micolous.metrodroid.multi.Localizer
 import au.id.micolous.metrodroid.provider.CardProvider
@@ -19,7 +18,6 @@ import au.id.micolous.metrodroid.provider.CardsTableColumns
 import au.id.micolous.metrodroid.serializers.CardSerializer
 import au.id.micolous.metrodroid.util.Preferences
 import au.id.micolous.metrodroid.util.Utils
-import au.id.micolous.metrodroid.util.ImmutableByteArray
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
@@ -95,17 +93,17 @@ internal class ReadingTagTask private constructor(
             return
         }
 
-        if (exception is TagLostException) {
-            // Tag was lost. Just drop out silently.
-        } else if (exception is UnsupportedTagException) {
-            AlertDialog.Builder(readingTagActivity)
+        when (exception) {
+            is TagLostException -> {
+                // Tag was lost. Just drop out silently.
+            }
+            is UnsupportedTagException -> AlertDialog.Builder(readingTagActivity)
                     .setTitle(R.string.unsupported_tag)
                     .setMessage(exception.message)
                     .setCancelable(false)
                     .setPositiveButton(android.R.string.ok) { _, _ -> readingTagActivity.finish() }
                     .show()
-        } else {
-            Utils.showErrorAndFinish(readingTagActivity, exception)
+            else -> Utils.showErrorAndFinish(readingTagActivity, exception)
         }
     }
 

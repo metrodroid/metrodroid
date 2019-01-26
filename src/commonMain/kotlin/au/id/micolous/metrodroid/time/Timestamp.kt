@@ -35,11 +35,11 @@ import kotlinx.serialization.*
 data class MetroTimeZone(val olson: String): Parcelable {
     @Serializer(forClass = MetroTimeZone::class)
     companion object : KSerializer<MetroTimeZone> {
-        override fun serialize(output: Encoder, obj: MetroTimeZone) {
-            output.encodeString(obj.olson)
+        override fun serialize(encoder: Encoder, obj: MetroTimeZone) {
+            encoder.encodeString(obj.olson)
         }
 
-        override fun deserialize(input: Decoder) = MetroTimeZone(input.decodeString())
+        override fun deserialize(decoder: Decoder) = MetroTimeZone(decoder.decodeString())
 
         // Time zone not specified
         val UNKNOWN = MetroTimeZone(olson = "UNKNOWN")
@@ -348,7 +348,7 @@ data class Daystamp internal constructor(val daysSinceEpoch: Int): Timestamp(), 
      * @param calendar Date to format
      * @return String representing the date in ISO8601 format.
      */
-    fun isoDateFormat(): String {
+    private fun isoDateFormat(): String {
         // ISO_DATE_FORMAT = SimpleDateFormat ("yyyy-MM-dd", Locale.US)
         val ymd = getYMD(daysSinceEpoch = daysSinceEpoch)
         return NumberUtils.zeroPad(ymd.year, 4) + "-" +
