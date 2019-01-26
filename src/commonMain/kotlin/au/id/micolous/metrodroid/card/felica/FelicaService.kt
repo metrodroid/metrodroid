@@ -35,9 +35,9 @@ data class FelicaService(
     @Transient
     val rawData: List<ListItem>
         get() =
-            blocks.mapIndexed { blockAddr, block ->
+            blocks.mapIndexed { blockAddr, (data) ->
                 ListItem(
                         FormattedString(NumberUtils.zeroPad(blockAddr, 2)),
-                        block.data.toHexDump())
+                        data.toHexDump())
             }
 }

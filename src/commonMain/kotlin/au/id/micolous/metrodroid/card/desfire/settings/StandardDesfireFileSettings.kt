@@ -23,7 +23,7 @@ import au.id.micolous.metrodroid.multi.Localizer
 import au.id.micolous.metrodroid.util.ImmutableByteArray
 
 class StandardDesfireFileSettings (buf: ImmutableByteArray): DesfireFileSettingsImpl(buf) {
-    val fileSize = buf.byteArrayToIntReversed(4, 3)
+    private val fileSize = buf.byteArrayToIntReversed(4, 3)
 
     override val subtitle: String
         get() = Localizer.localizePlural(R.plurals.desfire_standard_format,

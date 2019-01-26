@@ -99,12 +99,12 @@ data class ISO7816Selector (private val path: List<ISO7816SelectorElement>) {
         override val descriptor: SerialDescriptor =
                 StringDescriptor.withName("ISO7816Selector")
 
-        override fun serialize(output: Encoder, obj: ISO7816Selector) {
-            output.encodeString(obj.formatString())
+        override fun serialize(encoder: Encoder, obj: ISO7816Selector) {
+            encoder.encodeString(obj.formatString())
         }
 
-        override fun deserialize(input: Decoder): ISO7816Selector {
-            return fromString(input.decodeString())
+        override fun deserialize(decoder: Decoder): ISO7816Selector {
+            return fromString(decoder.decodeString())
         }
 
         private fun fromString(input: String): ISO7816Selector {

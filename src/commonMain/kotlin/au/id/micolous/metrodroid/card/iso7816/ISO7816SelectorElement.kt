@@ -22,7 +22,7 @@ package au.id.micolous.metrodroid.card.iso7816
 import au.id.micolous.metrodroid.util.ImmutableByteArray
 
 abstract class ISO7816SelectorElement(val kind: String) {
-    internal suspend abstract fun select(tag: ISO7816Protocol): ImmutableByteArray
+    internal abstract suspend fun select(tag: ISO7816Protocol): ImmutableByteArray
 
     abstract fun formatString(): String
 }

@@ -53,7 +53,7 @@ data class UltralightCard constructor(
         override val isPartialRead: Boolean = false) : CardProtocol() {
     @Transient
     override val rawData: List<ListItem>
-        get() = pages.mapIndexed() { idx, sector ->
+        get() = pages.mapIndexed { idx, sector ->
             val sectorIndexString = idx.toString()
 
             if (sector.isUnauthorized) {

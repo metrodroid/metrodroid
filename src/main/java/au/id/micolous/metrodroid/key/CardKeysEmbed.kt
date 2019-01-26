@@ -24,15 +24,13 @@ package au.id.micolous.metrodroid.key
 
 import android.content.Context
 import android.content.res.AssetManager
-import kotlinx.io.InputStream
-import org.apache.commons.io.IOUtils
 import java.lang.Exception
 
 class CardKeysFileReaderEmbed(private val context: Context,
                               private val baseDir: String) : CardKeysFileReader {
     override fun readFile(fileName: String): String? = try {
         context.assets.open("$baseDir/$fileName",
-                AssetManager.ACCESS_RANDOM).reader(Charsets.UTF_8)?.readText()
+                AssetManager.ACCESS_RANDOM)?.reader(Charsets.UTF_8)?.readText()
     } catch (e: Exception) {
         null
     }

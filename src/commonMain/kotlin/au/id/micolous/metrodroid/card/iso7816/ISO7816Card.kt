@@ -19,14 +19,22 @@
  */
 package au.id.micolous.metrodroid.card.iso7816
 
-import au.id.micolous.metrodroid.card.*
+/**
+ * Generic card implementation for ISO7816. This doesn't have many smarts, but dispatches to other
+ * readers.
+ */
+
+import au.id.micolous.metrodroid.card.CardLostException
+import au.id.micolous.metrodroid.card.CardProtocol
+import au.id.micolous.metrodroid.card.CardTransceiver
+import au.id.micolous.metrodroid.card.TagReaderFeedbackInterface
 import au.id.micolous.metrodroid.card.calypso.CalypsoApplication
-import au.id.micolous.metrodroid.multi.Localizer
-import au.id.micolous.metrodroid.multi.Log
-import au.id.micolous.metrodroid.multi.R
 import au.id.micolous.metrodroid.card.cepas.CEPASApplication
 import au.id.micolous.metrodroid.card.china.ChinaCard
 import au.id.micolous.metrodroid.card.tmoney.TMoneyCard
+import au.id.micolous.metrodroid.multi.Localizer
+import au.id.micolous.metrodroid.multi.Log
+import au.id.micolous.metrodroid.multi.R
 import au.id.micolous.metrodroid.serializers.MultiTypeSerializer
 import au.id.micolous.metrodroid.transit.TransitData
 import au.id.micolous.metrodroid.transit.TransitIdentity

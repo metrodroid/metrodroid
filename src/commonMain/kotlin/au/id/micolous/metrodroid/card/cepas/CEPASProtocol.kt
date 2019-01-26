@@ -30,13 +30,8 @@ class CEPASProtocol(private val mTagTech: ISO7816Protocol) {
 
     suspend fun getPurse(purseId: Int): ImmutableByteArray? {
         try {
-            val purseBuff = mTagTech.sendRequest(ISO7816Protocol.CLASS_90,
-                    0x32.toByte(), purseId.toByte(), 0.toByte(), 0.toByte())
-            return if (purseBuff.isNotEmpty()) {
-                purseBuff
-            } else {
-                null
-            }
+            return mTagTech.sendRequest(ISO7816Protocol.CLASS_90,
+                    0x32.toByte(), purseId.toByte(), 0.toByte(), 0.toByte()).ifEmpty { null }
         } catch (ex: ISO7816Exception) {
             Log.w(TAG, "Error reading purse $purseId", ex)
             return null
@@ -52,7 +47,6 @@ class CEPASProtocol(private val mTagTech: ISO7816Protocol) {
                     0x32.toByte(), purseId.toByte(), 0.toByte(),
                     0.toByte(), ImmutableByteArray.of(0.toByte()))
         } catch (ex: ISO7816Exception) {
-
             Log.w(TAG, "Error reading purse history $purseId", ex)
             return null
         }

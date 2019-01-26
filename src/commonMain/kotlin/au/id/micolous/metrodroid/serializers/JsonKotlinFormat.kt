@@ -25,15 +25,15 @@ import kotlinx.serialization.*
 import kotlinx.serialization.CompositeDecoder.Companion.READ_ALL
 import kotlinx.serialization.CompositeDecoder.Companion.READ_DONE
 import kotlinx.serialization.internal.SerialClassDescImpl
-import kotlinx.serialization.json.JSON
+import kotlinx.serialization.json.Json
 
 class JsonKotlinFormat : CardExporter {
     override fun writeCard(s: OutputStream, card: Card) {
         s.write(writeCard(card).toUtf8Bytes())
     }
-    fun writeCard(card: Card) = JSON(indented = true, encodeDefaults = false).stringify(Card.serializer(), card)
+    fun writeCard(card: Card) = Json(indented = true, encodeDefaults = false).stringify(Card.serializer(), card)
     fun readCard(input: String): Card =
-            JSON.parse(Card.serializer(), input)
+            Json.parse(Card.serializer(), input)
 }
 
 // Standard polymorphic serializer works fine but let's avoid putting
@@ -51,9 +51,9 @@ abstract class MultiTypeSerializer<T : Any> : KSerializer<T> {
     }
 
     @Suppress("UNCHECKED_CAST")
-    override fun serialize(output: Encoder, obj: T) {
+    override fun serialize(encoder: Encoder, obj: T) {
         @Suppress("NAME_SHADOWING")
-        val output = output.beginStructure(descriptor)
+        val output = encoder.beginStructure(descriptor)
         val (str, serializer) = obj2serializer(obj)
         output.encodeStringElement(descriptor, 0, str)
         output.encodeSerializableElement(descriptor, 1, serializer as KSerializer<T>,
@@ -65,9 +65,9 @@ abstract class MultiTypeSerializer<T : Any> : KSerializer<T> {
     abstract fun str2serializer(name: String): KSerializer<out T>
 
     @Suppress("UNCHECKED_CAST")
-    override fun deserialize(input: Decoder): T {
+    override fun deserialize(decoder: Decoder): T {
         @Suppress("NAME_SHADOWING")
-        val input = input.beginStructure(descriptor)
+        val input = decoder.beginStructure(descriptor)
         var klassName: String? = null
         var value: T? = null
         mainLoop@ while (true) {

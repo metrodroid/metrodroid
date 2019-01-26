@@ -2,8 +2,8 @@ package au.id.micolous.metrodroid.key
 
 import au.id.micolous.metrodroid.multi.Log
 import au.id.micolous.metrodroid.util.ImmutableByteArray
+import kotlinx.serialization.json.Json
 import kotlinx.serialization.json.JsonObject
-import kotlinx.serialization.json.JsonTreeParser
 
 interface CardKeysFileReader {
     fun readFile(fileName: String): String?
@@ -46,7 +46,7 @@ class CardKeysFromFiles(private val fileReader: CardKeysFileReader) : CardKeysRe
     private fun fromEmbed(dir: String, name: String): CardKeys? {
         return try {
             val inputStream = fileReader.readFile("$dir/$name.json") ?: return null
-            val k = JsonTreeParser.parse(inputStream)
+            val k = Json.plain.parseJson(inputStream).jsonObject
             CardKeys.fromJSON(k, "$dir/$name")
         } catch (e: Exception) {
             null
@@ -63,7 +63,7 @@ class CardKeysFromFiles(private val fileReader: CardKeysFileReader) : CardKeysRe
                     ctr--
                     if (ctr == targetId) {
                         val inputStream = fileReader.readFile("$dir/$file")
-                        val k = JsonTreeParser.parse(inputStream ?: return null)
+                        val k = Json.plain.parseJson(inputStream ?: return null).jsonObject
                         return CardKeys.fromJSON(k, "$dir/$file")
                     }
                 }
@@ -83,7 +83,7 @@ class CardKeysFromFiles(private val fileReader: CardKeysFileReader) : CardKeysRe
                     try {
                         ctr--
                         val b = fileReader.readFile("$dir/$it") ?: continue
-                        val k = JsonTreeParser.parse(b)
+                        val k = Json.plain.parseJson(b).jsonObject
                         val type = k.getPrimitiveOrNull(CardKeys.JSON_KEY_TYPE_KEY)?.contentOrNull
                         val tagId = when (type) {
                             CardKeys.TYPE_MFC_STATIC -> CardKeys.CLASSIC_STATIC_TAG_ID

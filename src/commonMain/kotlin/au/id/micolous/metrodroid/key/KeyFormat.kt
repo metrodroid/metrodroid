@@ -21,7 +21,7 @@ package au.id.micolous.metrodroid.key
 
 import au.id.micolous.metrodroid.multi.Log
 import kotlinx.io.charsets.Charsets
-import kotlinx.serialization.json.JsonTreeParser
+import kotlinx.serialization.json.Json
 
 /**
  * Used by [Utils.detectKeyFormat] to return the format of a key contained within a
@@ -63,7 +63,7 @@ enum class KeyFormat {
         fun detectKeyFormat(data: ByteArray): KeyFormat {
             if (data[0] != '{'.toByte()) {
                 // This isn't a JSON file.
-                Log.d(TAG, "couldn't find starting {");
+                Log.d(TAG, "couldn't find starting {")
                 return rawFormat(data.size)
             }
 
@@ -85,12 +85,13 @@ enum class KeyFormat {
 
                 // This isn't a JSON file.
                 Log.d(TAG, "couldn't find ending }")
-                return if (isRawMifareClassicKeyFileLength(data.size)) KeyFormat.RAW_MFC else KeyFormat.UNKNOWN;
+                return if (isRawMifareClassicKeyFileLength(data.size)) KeyFormat.RAW_MFC else KeyFormat.UNKNOWN
             }
 
             // Now see if it actually parses.
             try {
-                val o = JsonTreeParser.parse(kotlinx.io.core.String(bytes = data, charset = Charsets.UTF_8))
+                val o = Json.plain.parseJson(kotlinx.io.core.String(bytes = data,
+                        charset = Charsets.UTF_8)).jsonObject
                 val type = o.getPrimitiveOrNull(CardKeys.JSON_KEY_TYPE_KEY)?.contentOrNull
                 when(type) {
                     CardKeys.TYPE_MFC ->

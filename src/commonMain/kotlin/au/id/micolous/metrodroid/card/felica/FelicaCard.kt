@@ -238,7 +238,7 @@ data class FelicaCard(
 
     companion object {
         /** used for calculating response times, value is in milliseconds  */
-        private val T = 256.0 * 16.0 / 13560.0
+        private const val T = 256.0 * 16.0 / 13560.0
 
         // DecimalFormatter is not available in JS. We don't
         // care too much about milliseconds formatting, so just

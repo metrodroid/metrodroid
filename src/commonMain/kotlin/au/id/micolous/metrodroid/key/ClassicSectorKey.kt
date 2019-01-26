@@ -102,7 +102,7 @@ data class ClassicSectorKey internal constructor(
 
         fun fromDump(b: ImmutableByteArray, type: KeyType, bundle: String): ClassicSectorKey {
             if (b.size != KEY_LEN) {
-                throw IllegalArgumentException("Key data must be ${KEY_LEN} bytes, got ${b.size}")
+                throw IllegalArgumentException("Key data must be $KEY_LEN bytes, got ${b.size}")
             }
 
             return ClassicSectorKey(key = b,
