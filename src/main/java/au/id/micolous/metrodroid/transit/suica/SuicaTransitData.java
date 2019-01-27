@@ -287,4 +287,9 @@ public class SuicaTransitData extends TransitData {
     public void writeToParcel(Parcel parcel, int flags) {
         parcel.writeTypedList(mTrips);
     }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
 }

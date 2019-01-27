@@ -166,5 +166,10 @@ public class EdyTransitData extends TransitData {
         parcel.writeTypedList(mTrips);
         parcel.writeString(mSerialNumber.toHexString());
     }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
 }
 

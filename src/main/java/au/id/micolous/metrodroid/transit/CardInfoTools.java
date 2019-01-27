@@ -71,8 +71,8 @@ public class CardInfoTools {
         for (CardTransitFactory<?> factory : allFactories) {
             ret.addAll(factory.getAllCards());
         }
-        ret.add(TMoneyTransitData.CARD_INFO);
-        ret.addAll(EZLinkTransitData.ALL_CARD_INFOS);
+        ret.add(TMoneyTransitData.Companion.getCARD_INFO());
+        ret.addAll(EZLinkTransitData.Companion.getALL_CARD_INFOS());
         Collator collator = Collator.getInstance();
         Collections.sort(ret, (a, b) -> collator.compare(a.getName(), b.getName()));
         return ret;

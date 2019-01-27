@@ -488,4 +488,9 @@ public class HSLTransitData extends TransitData implements Parcelable {
             parcel.writeInt(0);
         }
     }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
 }

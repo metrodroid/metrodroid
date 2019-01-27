@@ -229,6 +229,11 @@ public class ErgTransitData extends TransitData {
     }
 
     @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
     @Nullable
     public TransitBalance getBalance() {
         return new TransitCurrency(mBalance, mCurrency);

@@ -82,6 +82,11 @@ public class KievTransitData extends TransitData {
         dest.writeList(mTrips);
     }
 
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
     public static final Creator<KievTransitData> CREATOR = new Creator<KievTransitData>() {
         @Override
         public KievTransitData createFromParcel(Parcel in) {

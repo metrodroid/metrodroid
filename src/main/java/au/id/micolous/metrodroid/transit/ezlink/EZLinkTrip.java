@@ -101,7 +101,7 @@ public class EZLinkTrip extends Trip {
         if (mTransaction.getUserData().charAt(3) == '-'
                 || mTransaction.getUserData().charAt(3) == ' ') {
             String startStationAbbr = mTransaction.getUserData().substring(0, 3);
-            return EZLinkTransitData.getStation(startStationAbbr);
+            return EZLinkTransitData.Companion.getStation(startStationAbbr);
         }
         return Station.nameOnly(mTransaction.getUserData());
     }
@@ -114,7 +114,7 @@ public class EZLinkTrip extends Trip {
         if (mTransaction.getUserData().charAt(3) == '-'
                 || mTransaction.getUserData().charAt(3) == ' ') {
             String endStationAbbr = mTransaction.getUserData().substring(4, 7);
-            return EZLinkTransitData.getStation(endStationAbbr);
+            return EZLinkTransitData.Companion.getStation(endStationAbbr);
         }
         return null;
     }

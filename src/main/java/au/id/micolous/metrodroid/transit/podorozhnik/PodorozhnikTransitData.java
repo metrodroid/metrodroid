@@ -139,6 +139,11 @@ public class PodorozhnikTransitData extends TransitData {
         dest.writeInt(mCountersValid ? 1 : 0);
     }
 
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
     public PodorozhnikTransitData(Parcel p) {
         mBalance = p.readInt();
     	mLastTopup = p.readInt();

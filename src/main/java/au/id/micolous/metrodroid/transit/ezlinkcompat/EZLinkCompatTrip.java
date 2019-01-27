@@ -61,7 +61,7 @@ public class EZLinkCompatTrip extends Trip {
 
     @Override
     public Calendar getStartTimestamp() {
-        return EZLinkTransitData.timestampToCalendar(
+        return EZLinkTransitData.Companion.timestampToCalendar(
                 mTransaction.getUnixDate() - 788947200 + 16 * 3600);
     }
 
@@ -100,7 +100,7 @@ public class EZLinkCompatTrip extends Trip {
         if (mTransaction.getUserData().charAt(3) == '-'
                 || mTransaction.getUserData().charAt(3) == ' ') {
             String startStationAbbr = mTransaction.getUserData().substring(0, 3);
-            return EZLinkTransitData.getStation(startStationAbbr);
+            return EZLinkTransitData.Companion.getStation(startStationAbbr);
         }
         return Station.nameOnly(mTransaction.getUserData());
     }
@@ -113,7 +113,7 @@ public class EZLinkCompatTrip extends Trip {
         if (mTransaction.getUserData().charAt(3) == '-'
                 || mTransaction.getUserData().charAt(3) == ' ') {
             String endStationAbbr = mTransaction.getUserData().substring(4, 7);
-            return EZLinkTransitData.getStation(endStationAbbr);
+            return EZLinkTransitData.Companion.getStation(endStationAbbr);
         }
         return null;
     }

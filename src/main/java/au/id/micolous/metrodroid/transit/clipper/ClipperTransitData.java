@@ -299,6 +299,11 @@ public class ClipperTransitData extends TransitData {
         parcel.writeTypedArray(mRefills, flags);
     }
 
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
     static Calendar clipperTimestampToCalendar(long timestamp) {
         if (timestamp == 0)
             return null;

@@ -93,6 +93,11 @@ public class ClipperUltralightTransitData extends TransitData {
 	    mSub.writeToParcel(dest, flags);
     }
 
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
     @SuppressWarnings("unchecked")
     private ClipperUltralightTransitData(Parcel p) {
         mSerial = p.readLong();

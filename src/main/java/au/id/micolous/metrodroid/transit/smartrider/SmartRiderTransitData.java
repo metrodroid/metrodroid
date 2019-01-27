@@ -262,4 +262,9 @@ public class SmartRiderTransitData extends TransitData {
         dest.writeInt(mBalance);
         dest.writeList(mTrips);
     }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
 }

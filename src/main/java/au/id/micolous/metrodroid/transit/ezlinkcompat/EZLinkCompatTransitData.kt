@@ -92,7 +92,7 @@ actual class EZLinkCompatTransitData : TransitData {
 
     actual companion object {
         @JvmStatic
-        val CREATOR: Parcelable.Creator<EZLinkCompatTransitData> = object : Parcelable.Creator<EZLinkCompatTransitData>() {
+        val CREATOR: Parcelable.Creator<EZLinkCompatTransitData> = object : Parcelable.Creator<EZLinkCompatTransitData> {
             override fun createFromParcel(parcel: Parcel): EZLinkCompatTransitData {
                 return EZLinkCompatTransitData(parcel)
             }

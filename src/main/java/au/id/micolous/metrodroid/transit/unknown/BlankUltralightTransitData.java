@@ -186,6 +186,11 @@ public class BlankUltralightTransitData extends TransitData {
     public void writeToParcel(Parcel dest, int i) {
     }
 
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
     private BlankUltralightTransitData(Parcel p) {
     }
 }

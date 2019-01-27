@@ -127,9 +127,9 @@ actual class OctopusTransitData : TransitData {
         parcel.writeInt(if (mHasShenzhen) 1 else 0)
     }
 
-    companion object {
+    actual companion object {
         @JvmStatic
-        val CREATOR: Parcelable.Creator<OctopusTransitData> = object : Parcelable.Creator<OctopusTransitData>() {
+        val CREATOR: Parcelable.Creator<OctopusTransitData> = object : Parcelable.Creator<OctopusTransitData> {
             override fun createFromParcel(`in`: Parcel): OctopusTransitData {
                 return OctopusTransitData(`in`)
             }

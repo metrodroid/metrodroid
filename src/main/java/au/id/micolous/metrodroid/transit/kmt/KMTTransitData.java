@@ -192,6 +192,11 @@ public class KMTTransitData extends TransitData {
     }
 
     @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
     public List<ListItem> getInfo() {
         List<ListItem> items = new ArrayList<>();
         items.add(new HeaderListItem(R.string.kmt_other_data));

@@ -147,6 +147,11 @@ public class MetroQTransitData extends TransitData {
         dest.writeInt(mProduct);
     }
 
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
     public static final Creator<MetroQTransitData> CREATOR = new Creator<MetroQTransitData>() {
         @Override
         public MetroQTransitData createFromParcel(Parcel in) {

@@ -200,6 +200,11 @@ public class AdelaideMetrocardTransitData extends En1545TransitData {
     }
 
     @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
     public List<TransactionTrip> getTrips() {
         return mTrips;
     }

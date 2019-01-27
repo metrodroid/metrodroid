@@ -105,6 +105,11 @@ public class TroikaUltralightTransitData extends TransitData {
         mBlock.writeToParcel(dest, i);
     }
 
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
     private TroikaUltralightTransitData(Parcel p) {
         mBlock = TroikaBlock.restoreFromParcel(p);
     }
