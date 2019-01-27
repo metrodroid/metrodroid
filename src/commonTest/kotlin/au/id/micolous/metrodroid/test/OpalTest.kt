@@ -18,16 +18,14 @@
  */
 package au.id.micolous.metrodroid.test
 
-import android.os.Build
 import au.id.micolous.metrodroid.card.desfire.DesfireApplication
 import au.id.micolous.metrodroid.card.desfire.DesfireCard
 import au.id.micolous.metrodroid.card.desfire.files.DesfireFile
+import au.id.micolous.metrodroid.time.TimestampFull
 import au.id.micolous.metrodroid.transit.TransitCurrency
 import au.id.micolous.metrodroid.transit.opal.OpalData
 import au.id.micolous.metrodroid.transit.opal.OpalTransitData
 import au.id.micolous.metrodroid.util.ImmutableByteArray
-import au.id.micolous.metrodroid.util.Utils
-import java.time.ZoneOffset
 import kotlin.test.*
 
 /**
@@ -69,11 +67,11 @@ class OpalTest {
         assertEquals(TransitCurrency.AUD(336), o.balance)
         assertEquals(0, o.subscriptions!!.size)
         // 2015-10-05 09:06 UTC+11
-        assertEquals("2015-10-04 22:06", Utils.isoDateTimeFormat(d.lastTransactionTime))
-        assertEquals(OpalData.MODE_BUS, d.lastTransactionMode)
-        assertEquals(OpalData.ACTION_JOURNEY_COMPLETED_DISTANCE, d.lastTransaction)
-        assertEquals(39, d.lastTransactionNumber)
-        assertEquals(1, d.weeklyTrips)
+        assertEquals("2015-10-04 22:06", o.lastTransactionTime.isoDateTimeFormat())
+        assertEquals(OpalData.MODE_BUS, o.lastTransactionMode)
+        assertEquals(OpalData.ACTION_JOURNEY_COMPLETED_DISTANCE, o.lastTransaction)
+        assertEquals(39, o.lastTransactionNumber)
+        assertEquals(1, o.weeklyTrips)
     }
 
     @Test
@@ -82,29 +80,19 @@ class OpalTest {
 
         // 2018-03-31 09:00 UTC+11
         // 2018-03-30 22:00 UTC
-        val c1 = constructOpalCardFromHexString("85D25E07230520A70044DA380419FFFF")
+        var c = constructOpalCardFromHexString("85D25E07230520A70044DA380419FFFF")
 
-        val o1 = c1.parseTransitData()
-        assertTrue(message = "TransitData must be instance of OpalTransitData",
-                actual = o1 is OpalTransitData)
-        assertEquals("2018-03-30 22:00", Utils.isoDateTimeFormat(o1.lastTransactionTime))
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            assertEquals("2018-03-30T22:00Z", o1.lastTransactionTime.toInstant().atOffset(ZoneOffset.UTC).toString())
-        }
+        var o: OpalTransitData = c.parseTransitData() as OpalTransitData
+        assertEquals("2018-03-30 22:00", o.lastTransactionTime.isoDateTimeFormat())
 
         // DST transition is at 2018-04-01 03:00
 
         // 2018-04-01 09:00 UTC+10
         // 2018-03-31 23:00 UTC
-        val c2 = constructOpalCardFromHexString("85D25E07430520A70048DA380419FFFF")
+        c = constructOpalCardFromHexString("85D25E07430520A70048DA380419FFFF")
 
-        val o2 = c2.parseTransitData()
-        assertTrue(message = "TransitData must be instance of OpalTransitData",
-                actual = o2 is OpalTransitData)
-        assertEquals("2018-03-31 23:00", Utils.isoDateTimeFormat(o2.lastTransactionTime))
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            assertEquals("2018-03-31T23:00Z", o2.lastTransactionTime.toInstant().atOffset(ZoneOffset.UTC).toString())
-        }
+        o = c.parseTransitData() as OpalTransitData
+        assertEquals("2018-03-31 23:00", o.lastTransactionTime.isoDateTimeFormat())
     }
 
 }
