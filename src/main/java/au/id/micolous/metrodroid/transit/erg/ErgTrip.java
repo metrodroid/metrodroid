@@ -26,6 +26,8 @@ import android.support.annotation.Nullable;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 
+import au.id.micolous.metrodroid.time.TimestampFormatterKt;
+import au.id.micolous.metrodroid.time.TimestampFull;
 import au.id.micolous.metrodroid.transit.TransitCurrency;
 import au.id.micolous.metrodroid.transit.Trip;
 import au.id.micolous.metrodroid.transit.erg.record.ErgPurseRecord;
@@ -67,13 +69,13 @@ public class ErgTrip extends Trip {
 
     // Implemented functionality.
     @Override
-    public Calendar getStartTimestamp() {
+    public TimestampFull getStartTimestamp() {
         GregorianCalendar ts = new GregorianCalendar();
         ts.setTimeInMillis(mEpoch.getTimeInMillis());
         ts.add(Calendar.DATE, mPurse.getDay());
         ts.add(Calendar.MINUTE, mPurse.getMinute());
 
-        return ts;
+        return TimestampFormatterKt.calendar2ts(ts);
     }
 
     @Nullable

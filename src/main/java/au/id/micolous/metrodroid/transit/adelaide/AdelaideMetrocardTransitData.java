@@ -23,6 +23,10 @@ import android.os.Parcel;
 import android.os.Parcelable;
 import android.support.annotation.NonNull;
 
+import au.id.micolous.metrodroid.time.Daystamp;
+import au.id.micolous.metrodroid.time.Timestamp;
+import au.id.micolous.metrodroid.time.TimestampFormatter;
+import au.id.micolous.metrodroid.time.TimestampFull;
 import au.id.micolous.metrodroid.util.NumberUtils;
 import org.apache.commons.lang3.ArrayUtils;
 import org.jetbrains.annotations.NonNls;
@@ -227,11 +231,14 @@ public class AdelaideMetrocardTransitData extends En1545TransitData {
                         Integer.toString(mPurse.getMachineId())));
             }
 
-            Calendar purchaseTS = mPurse.getPurchaseTimestamp();
+            Timestamp purchaseTS = mPurse.getPurchaseTimestamp();
             if (purchaseTS != null) {
-                purchaseTS = TripObfuscator.maybeObfuscateTS(purchaseTS);
+                if (purchaseTS instanceof TimestampFull)
+                    purchaseTS = TripObfuscator.INSTANCE.maybeObfuscateTS((TimestampFull) purchaseTS);
+                else
+                    purchaseTS = TripObfuscator.INSTANCE.maybeObfuscateTS((Daystamp) purchaseTS);
 
-                items.add(new ListItem(R.string.issue_date, Utils.dateFormat(purchaseTS)));
+                items.add(new ListItem(R.string.issue_date, TimestampFormatter.INSTANCE.dateFormat(purchaseTS)));
             }
 
             Integer purseId = mPurse.getId();

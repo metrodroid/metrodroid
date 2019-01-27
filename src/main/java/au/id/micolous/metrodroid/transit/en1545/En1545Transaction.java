@@ -186,7 +186,7 @@ public abstract class En1545Transaction extends Transaction {
             return Collections.emptyList();
         }
 
-        return st.getHumanReadableLineIDs();
+        return st.getHumanReadableLineIds();
     }
 
     public int getPassengerCount() {

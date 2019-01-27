@@ -27,6 +27,8 @@ import java.util.GregorianCalendar;
 import java.util.TimeZone;
 
 import au.id.micolous.metrodroid.card.classic.ClassicSector;
+import au.id.micolous.metrodroid.time.TimestampFormatterKt;
+import au.id.micolous.metrodroid.time.TimestampFull;
 import au.id.micolous.metrodroid.transit.Station;
 import au.id.micolous.metrodroid.transit.TransitCurrency;
 import au.id.micolous.metrodroid.transit.Trip;
@@ -110,8 +112,8 @@ class BilheteUnicoSPTrip extends Trip {
     }
 
     @Override
-    public Calendar getStartTimestamp() {
-        return parseTimestamp(mDay, mTime);
+    public TimestampFull getStartTimestamp() {
+        return TimestampFormatterKt.calendar2ts(parseTimestamp(mDay, mTime));
     }
 
     @Nullable
@@ -151,7 +153,7 @@ class BilheteUnicoSPTrip extends Trip {
     public Station getStartStation() {
         if (mTransport == BUS && mLine == 0x38222)
             return null;
-        return Station.unknown(mLocation);
+        return Station.Companion.unknown(mLocation);
     }
 
     @Override

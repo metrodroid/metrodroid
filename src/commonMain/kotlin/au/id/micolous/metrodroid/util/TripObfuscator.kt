@@ -20,13 +20,14 @@ package au.id.micolous.metrodroid.util
 
 import au.id.micolous.metrodroid.multi.Log
 import au.id.micolous.metrodroid.time.*
+import au.id.micolous.metrodroid.transit.Trip
 import kotlin.random.Random
 
 /**
  * Obfuscates trip dates
  */
 
-object TimestampObfuscator {
+object TripObfuscator {
     private const val TAG = "TripObfuscator"
 
     /**
@@ -100,4 +101,18 @@ object TimestampObfuscator {
 
     fun maybeObfuscateTS(input: Daystamp): Daystamp =
             maybeObfuscateTSDay(input, Preferences.obfuscateTripDates)
+
+    private fun obfuscateTrip(trip: Trip, obfuscateDates: Boolean, obfuscateTimes: Boolean, obfuscateFares: Boolean): Trip {
+        val start = trip.startTimestamp
+        val timeDelta: Long = when (start) {
+            null -> 0
+            is TimestampFull -> maybeObfuscateTSFull(start, obfuscateDates, obfuscateTimes).timeInMillis - start.timeInMillis
+            is Daystamp -> 86400L * 1000L * (maybeObfuscateTSDay(start, obfuscateDates).daysSinceEpoch - start.daysSinceEpoch).toLong()
+        }
+
+        return ObfuscatedTrip(trip, timeDelta, obfuscateFares)
+    }
+
+    fun obfuscateTrips(trips: List<Trip>, obfuscateDates: Boolean, obfuscateTimes: Boolean, obfuscateFares: Boolean): List<Trip> =
+            trips.map { obfuscateTrip(it, obfuscateDates, obfuscateTimes, obfuscateFares) }
 }

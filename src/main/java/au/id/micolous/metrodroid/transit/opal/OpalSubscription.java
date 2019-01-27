@@ -22,6 +22,8 @@ import android.os.Parcel;
 import android.support.annotation.NonNull;
 
 import au.id.micolous.metrodroid.multi.Localizer;
+import au.id.micolous.metrodroid.time.Daystamp;
+import au.id.micolous.metrodroid.time.TimestampFormatterKt;
 import au.id.micolous.metrodroid.transit.Subscription;
 import au.id.micolous.metrodroid.util.Utils;
 
@@ -59,15 +61,15 @@ class OpalSubscription extends Subscription {
     }
 
     @Override
-    public Calendar getValidFrom() {
+    public Daystamp getValidFrom() {
         // Start of Opal trial
-        return new GregorianCalendar(2012, 12, 7);
+        return TimestampFormatterKt.calendar2ts(new GregorianCalendar(2012, 12, 7)).toDaystamp();
     }
 
     @Override
-    public Calendar getValidTo() {
+    public Daystamp getValidTo() {
         // Maximum possible date representable on the card
-        return new GregorianCalendar(2159, 6, 6);
+        return TimestampFormatterKt.calendar2ts(new GregorianCalendar(2159, 6, 6)).toDaystamp();
     }
 
     @Override
@@ -88,5 +90,10 @@ class OpalSubscription extends Subscription {
 
     @Override
     public void writeToParcel(Parcel parcel, int i) {
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
     }
 }

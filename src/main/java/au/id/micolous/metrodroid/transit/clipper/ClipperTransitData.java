@@ -31,6 +31,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.annotation.VisibleForTesting;
 
+import au.id.micolous.metrodroid.time.TimestampFormatterKt;
 import org.apache.commons.lang3.ArrayUtils;
 
 import au.id.micolous.farebot.R;
@@ -191,7 +192,8 @@ public class ClipperTransitData extends TransitData {
     @Override
     public TransitBalance getBalance() {
         return new TransitBalanceStored(TransitCurrency.USD(mBalance),
-                null, clipperTimestampToCalendar(mExpiry * 86400L));
+                null,
+                TimestampFormatterKt.calendar2ts(clipperTimestampToCalendar(mExpiry * 86400L)));
     }
 
     @Override

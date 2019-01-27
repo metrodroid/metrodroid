@@ -22,6 +22,8 @@ import android.os.Parcel;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
+import au.id.micolous.metrodroid.time.TimestampFormatterKt;
+import au.id.micolous.metrodroid.time.TimestampFull;
 import org.jetbrains.annotations.NonNls;
 
 import au.id.micolous.metrodroid.transit.Station;
@@ -94,13 +96,13 @@ public class NextfareTrip extends Trip implements Comparable<NextfareTrip> {
     }
 
     @Override
-    public Calendar getStartTimestamp() {
-        return mStartTime;
+    public TimestampFull getStartTimestamp() {
+        return TimestampFormatterKt.calendar2ts(mStartTime);
     }
 
     @Override
-    public Calendar getEndTimestamp() {
-        return mEndTime;
+    public TimestampFull getEndTimestamp() {
+        return TimestampFormatterKt.calendar2ts(mEndTime);
     }
 
     @Override

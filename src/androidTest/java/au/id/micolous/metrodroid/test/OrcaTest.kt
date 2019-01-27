@@ -21,6 +21,7 @@ package au.id.micolous.metrodroid.test
 import au.id.micolous.metrodroid.card.desfire.DesfireApplication
 import au.id.micolous.metrodroid.card.desfire.DesfireCard
 import au.id.micolous.metrodroid.card.desfire.files.DesfireFile
+import au.id.micolous.metrodroid.time.TimestampFull
 import au.id.micolous.metrodroid.transit.TransitCurrency
 import au.id.micolous.metrodroid.transit.Trip
 import au.id.micolous.metrodroid.transit.orca.OrcaTransitData
@@ -73,7 +74,7 @@ class OrcaTest : BaseInstrumentedTest() {
         assertNotNull(trips)
         assertEquals("Community Transit", trips[0].getAgencyName(false))
         assertEquals("CT", trips[0].getAgencyName(true))
-        assertEquals((1514843334L + 256) * 1000, (trips[0].startTimestamp!!).timeInMillis)
+        assertEquals((1514843334L + 256) * 1000, (trips[0].startTimestamp as TimestampFull).timeInMillis)
         assertEquals(TransitCurrency.USD(534), trips[0].fare)
         assertNull(trips[0].routeName)
         assertEquals(Trip.Mode.BUS, trips[0].mode)
@@ -83,7 +84,7 @@ class OrcaTest : BaseInstrumentedTest() {
 
         assertEquals("Unknown (0xf)", trips[1].getAgencyName(false))
         assertEquals("Unknown (0xf)", trips[1].getAgencyName(true))
-        assertEquals(1514843334L * 1000, (trips[1].startTimestamp!!).timeInMillis)
+        assertEquals(1514843334L * 1000, (trips[1].startTimestamp as TimestampFull).timeInMillis)
         assertEquals(TransitCurrency.USD(289), trips[1].fare)
         assertNull(trips[1].routeName)
         assertEquals(Trip.Mode.BUS, trips[1].mode)
@@ -93,41 +94,41 @@ class OrcaTest : BaseInstrumentedTest() {
 
         assertEquals("Sound Transit", trips[2].getAgencyName(false))
         assertEquals("ST", trips[2].getAgencyName(true))
-        assertEquals((1514843334L - 256) * 1000, (trips[2].startTimestamp!!).timeInMillis)
+        assertEquals((1514843334L - 256) * 1000, (trips[2].startTimestamp as TimestampFull).timeInMillis)
         assertEquals(TransitCurrency.USD(179), trips[2].fare)
         assertEquals("Link Light Rail", trips[2].routeName)
         assertEquals(Trip.Mode.METRO, trips[2].mode)
         assertNotNull(trips[2].startStation)
-        assertEquals("Stadium", trips[2].startStation!!.stationName)
-        assertEquals("Stadium", trips[2].startStation!!.shortStationName)
-        assertNear(47.5918121, java.lang.Float.parseFloat(trips[2].startStation!!.latitude).toDouble(), 0.00001)
-        assertNear(-122.327354, java.lang.Float.parseFloat(trips[2].startStation!!.longitude).toDouble(), 0.00001)
+        assertEquals("Stadium", trips[2].startStation!!.getStationName(false))
+        assertEquals("Stadium", trips[2].startStation!!.getStationName(true))
+        assertNear(47.5918121, trips[2].startStation!!.latitude!!.toDouble(), 0.00001)
+        assertNear(-122.327354, trips[2].startStation!!.longitude!!.toDouble(), 0.00001)
         assertNull(trips[2].endStation)
 
         assertEquals("Sound Transit", trips[3].getAgencyName(false))
         assertEquals("ST", trips[3].getAgencyName(true))
-        assertEquals((1514843334L - 512) * 1000, (trips[3].startTimestamp!!).timeInMillis)
+        assertEquals((1514843334L - 512) * 1000, (trips[3].startTimestamp as TimestampFull).timeInMillis)
         assertEquals(TransitCurrency.USD(178), trips[3].fare)
         assertEquals("Sounder Train", trips[3].routeName)
         assertEquals(Trip.Mode.TRAIN, trips[3].mode)
         assertNotNull(trips[3].startStation)
-        assertEquals("King Street", trips[3].startStation!!.stationName)
-        assertEquals("King St", trips[3].startStation!!.shortStationName)
-        assertNear(47.598445, java.lang.Float.parseFloat(trips[3].startStation!!.latitude).toDouble(), 0.00001)
-        assertNear(-122.330161, java.lang.Float.parseFloat(trips[3].startStation!!.longitude).toDouble(), 0.00001)
+        assertEquals("King Street", trips[3].startStation!!.getStationName(false))
+        assertEquals("King St", trips[3].startStation!!.getStationName(true))
+        assertNear(47.598445, trips[3].startStation!!.latitude!!.toDouble(), 0.00001)
+        assertNear(-122.330161, trips[3].startStation!!.longitude!!.toDouble(), 0.00001)
         assertNull(trips[3].endStation)
 
         assertEquals("Washington State Ferries", trips[4].getAgencyName(false))
         assertEquals("WSF", trips[4].getAgencyName(true))
-        assertEquals((1514843334L - 768) * 1000, (trips[4].startTimestamp!!).timeInMillis)
+        assertEquals((1514843334L - 768) * 1000, (trips[4].startTimestamp as TimestampFull).timeInMillis)
         assertEquals(TransitCurrency.USD(177), trips[4].fare)
         assertNull(trips[4].routeName)
         assertEquals(Trip.Mode.FERRY, trips[4].mode)
         assertNotNull(trips[4].startStation)
-        assertEquals("Seattle Terminal", trips[4].startStation!!.stationName)
-        assertEquals("Seattle", trips[4].startStation!!.shortStationName)
-        assertNear(47.602722, java.lang.Float.parseFloat(trips[4].startStation!!.latitude).toDouble(), 0.00001)
-        assertNear(-122.338512, java.lang.Float.parseFloat(trips[4].startStation!!.longitude).toDouble(), 0.00001)
+        assertEquals("Seattle Terminal", trips[4].startStation!!.getStationName(false))
+        assertEquals("Seattle", trips[4].startStation!!.getStationName(true))
+        assertNear(47.602722, trips[4].startStation!!.latitude!!.toDouble(), 0.00001)
+        assertNear(-122.338512, trips[4].startStation!!.longitude!!.toDouble(), 0.00001)
         assertNull(trips[4].endStation)
     }
 

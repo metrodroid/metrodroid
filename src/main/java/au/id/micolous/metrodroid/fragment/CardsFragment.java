@@ -60,6 +60,9 @@ import au.id.micolous.metrodroid.serializers.CardImporter;
 import au.id.micolous.metrodroid.serializers.CardSerializer;
 import au.id.micolous.metrodroid.serializers.XmlOrJsonCardFormat;
 import au.id.micolous.metrodroid.serializers.classic.MctCardImporter;
+import au.id.micolous.metrodroid.time.MetroTimeZone;
+import au.id.micolous.metrodroid.time.TimestampFormatter;
+import au.id.micolous.metrodroid.time.TimestampFull;
 import au.id.micolous.metrodroid.util.Preferences;
 import org.apache.commons.io.FileUtils;
 import org.jetbrains.annotations.NonNls;
@@ -661,13 +664,13 @@ public class CardsFragment extends ExpandableListFragment {
                 convertView = mLayoutInflater.inflate(R.layout.card_scan_item,
                         viewGroup, false);
             Scan scan = mScans.get(mCards.get(parent)).get(child);
-            Calendar scannedAt = GregorianCalendar.getInstance();
-            scannedAt.setTimeInMillis(scan.mScannedAt);
-            scannedAt = TripObfuscator.maybeObfuscateTS(scannedAt);
+            TimestampFull scannedAt = new TimestampFull(scan.mScannedAt, MetroTimeZone.Companion.getLOCAL());
+            scannedAt = TripObfuscator.INSTANCE.maybeObfuscateTS(scannedAt);
 
             TextView textView1 = convertView.findViewById(android.R.id.text1);
-            textView1.setText(Localizer.INSTANCE.localizeString(R.string.scanned_at_format, Utils.timeFormat(scannedAt),
-                    Utils.dateFormat(scannedAt)));
+            textView1.setText(Localizer.INSTANCE.localizeString(R.string.scanned_at_format,
+                    TimestampFormatter.INSTANCE.timeFormat(scannedAt),
+                    TimestampFormatter.INSTANCE.dateFormat(scannedAt)));
 
             return convertView;
         }

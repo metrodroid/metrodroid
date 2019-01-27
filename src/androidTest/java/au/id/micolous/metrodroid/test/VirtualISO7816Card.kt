@@ -34,7 +34,8 @@ import au.id.micolous.metrodroid.card.iso7816.ISO7816Protocol.Companion.STATUS_O
 import au.id.micolous.metrodroid.card.iso7816.ISO7816Protocol.Companion.WP_FILE_NOT_FOUND
 import au.id.micolous.metrodroid.card.iso7816.ISO7816Protocol.Companion.WP_RECORD_NOT_FOUND
 import au.id.micolous.metrodroid.card.iso7816.ISO7816Selector
-import android.util.Log
+import au.id.micolous.metrodroid.multi.Log
+import au.id.micolous.metrodroid.time.TimestampFull
 import au.id.micolous.metrodroid.util.ImmutableByteArray
 
 /**
@@ -42,7 +43,7 @@ import au.id.micolous.metrodroid.util.ImmutableByteArray
  *
  * This is intended as a test fixture.
  */
-class VirtualISO7816Card(private val mCard : ISO7816Card) : CardTransceiver {
+open class VirtualISO7816Card(private val mCard : ISO7816Card) : CardTransceiver {
     private var currentApplication : ISO7816Application? = null
     private var currentPath : ISO7816Selector? = null
     private var currentFile : ISO7816File? = null

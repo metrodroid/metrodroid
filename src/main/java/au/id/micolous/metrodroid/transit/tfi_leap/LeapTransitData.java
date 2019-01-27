@@ -27,6 +27,8 @@ import android.text.SpannableString;
 
 import au.id.micolous.metrodroid.multi.FormattedString;
 import au.id.micolous.metrodroid.multi.Localizer;
+import au.id.micolous.metrodroid.time.TimestampFormatter;
+import au.id.micolous.metrodroid.time.TimestampFormatterKt;
 import au.id.micolous.metrodroid.util.*;
 import org.apache.commons.lang3.ArrayUtils;
 import org.jetbrains.annotations.NonNls;
@@ -137,7 +139,8 @@ public class LeapTransitData extends TransitData {
 
             items.add(new ListItem(
                     R.string.leap_period_start,
-                    Utils.dateTimeFormat(TripObfuscator.maybeObfuscateTS(mAccumulatorStart))));
+                    TimestampFormatter.INSTANCE.dateTimeFormat(TripObfuscator.INSTANCE.maybeObfuscateTS(
+                            TimestampFormatterKt.calendar2ts(mAccumulatorStart)))));
             items.add(new ListItem(R.string.leap_accumulator_region, Integer.toString(mAccumulatorRegion)));
             items.add(new ListItem(R.string.leap_accumulator_total, TransitCurrency.EUR(mAccumulatorScheme).maybeObfuscateBalance().formatCurrencyString(true)));
 
@@ -288,7 +291,7 @@ public class LeapTransitData extends TransitData {
         if (mLocked)
             return null;
         return new TransitBalanceStored(TransitCurrency.EUR(mBalance),
-                null, mExpiryDate);
+                null, TimestampFormatterKt.calendar2ts(mExpiryDate));
     }
 
     @Override
@@ -299,9 +302,11 @@ public class LeapTransitData extends TransitData {
             return items;
         }
         items.add(new ListItem(R.string.initialisation_date,
-                Utils.dateTimeFormat(TripObfuscator.maybeObfuscateTS(mInitDate))));
+                TimestampFormatter.INSTANCE.dateTimeFormat(TripObfuscator.INSTANCE.maybeObfuscateTS(
+                        TimestampFormatterKt.calendar2ts(mInitDate)))));
         items.add(new ListItem(R.string.issue_date,
-                Utils.dateTimeFormat(TripObfuscator.maybeObfuscateTS(mIssueDate))));
+                TimestampFormatter.INSTANCE.dateTimeFormat(TripObfuscator.INSTANCE.maybeObfuscateTS(
+                        TimestampFormatterKt.calendar2ts(mIssueDate)))));
         if (Preferences.INSTANCE.getHideCardNumbers()) {
             items.add(new ListItem(R.string.card_issuer, Integer.toString(mIssuerId)));
         }

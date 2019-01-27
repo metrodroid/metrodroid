@@ -26,6 +26,7 @@ import android.util.Log;
 
 import au.id.micolous.metrodroid.multi.FormattedString;
 import au.id.micolous.metrodroid.multi.Localizer;
+import au.id.micolous.metrodroid.time.TimestampFormatterKt;
 import au.id.micolous.metrodroid.util.NumberUtils;
 import org.jetbrains.annotations.NonNls;
 
@@ -406,9 +407,10 @@ public class NextfareTransitData extends TransitData {
     @Override
     public TransitBalance getBalance() {
         if (mConfig != null) {
-            return new TransitBalanceStored(new TransitCurrency(mBalance, mCurrency), getTicketClass(), mConfig.getExpiry());
+            return new TransitBalanceStored(new TransitCurrency(mBalance, mCurrency), getTicketClass(),
+                    TimestampFormatterKt.calendar2ts(mConfig.getExpiry()));
         } else
-            return new TransitBalanceStored(new TransitCurrency(mBalance, mCurrency));
+            return new TransitCurrency(mBalance, mCurrency);
     }
 
     public String getTicketClass() {

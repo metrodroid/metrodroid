@@ -27,6 +27,8 @@ import au.id.micolous.metrodroid.card.classic.ClassicBlock;
 import au.id.micolous.metrodroid.card.classic.ClassicCard;
 import au.id.micolous.metrodroid.card.classic.ClassicCardTransitFactory;
 import au.id.micolous.metrodroid.card.classic.ClassicSector;
+import au.id.micolous.metrodroid.time.TimestampFormatter;
+import au.id.micolous.metrodroid.time.TimestampFormatterKt;
 import au.id.micolous.metrodroid.transit.TransitCurrency;
 import au.id.micolous.metrodroid.transit.TransitData;
 import au.id.micolous.metrodroid.transit.TransitIdentity;
@@ -281,7 +283,8 @@ public class ErgTransitData extends TransitData {
         List<ListItem> items = new ArrayList<>();
         items.add(new HeaderListItem(R.string.general));
         items.add(new ListItem(R.string.card_epoch,
-                Utils.longDateFormat(TripObfuscator.maybeObfuscateTS(mEpochDate))));
+                TimestampFormatter.INSTANCE.longDateFormat(TripObfuscator.INSTANCE.maybeObfuscateTS(
+                        TimestampFormatterKt.calendar2ts(mEpochDate)))));
         items.add(new ListItem(R.string.erg_agency_id,
                 NumberUtils.INSTANCE.longToHex(mAgencyID)));
         return items;

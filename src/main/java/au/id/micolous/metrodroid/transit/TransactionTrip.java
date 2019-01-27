@@ -23,6 +23,8 @@ import android.os.Parcel;
 import android.os.Parcelable;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import au.id.micolous.metrodroid.time.TimestampFormatterKt;
+import au.id.micolous.metrodroid.time.TimestampFull;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -148,17 +150,17 @@ public class TransactionTrip extends Trip implements Parcelable {
     }
 
     @Override
-    public Calendar getStartTimestamp() {
+    public TimestampFull getStartTimestamp() {
         if (mStart == null)
             return null;
-        return mStart.getTimestamp();
+        return TimestampFormatterKt.calendar2ts(mStart.getTimestamp());
     }
 
     @Override
-    public Calendar getEndTimestamp() {
+    public TimestampFull getEndTimestamp() {
         if (mEnd == null)
             return null;
-        return mEnd.getTimestamp();
+        return TimestampFormatterKt.calendar2ts(mEnd.getTimestamp());
     }
 
     @Override

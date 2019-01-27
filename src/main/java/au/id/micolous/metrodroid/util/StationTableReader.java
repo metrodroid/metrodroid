@@ -113,7 +113,7 @@ public class StationTableReader {
     public static Station getStation(@Nullable String reader, int id, String humanReadableId) {
         Station s = getStationNoFallback(reader, id, humanReadableId);
         if (s == null)
-            return Station.unknown(humanReadableId);
+            return Station.Companion.unknown(humanReadableId);
         return s;
     }
 
@@ -343,10 +343,40 @@ public class StationTableReader {
             }
         }
 
-        return Station.fromProto(humanReadableID, ps,
+        return fromProto(humanReadableID, ps,
                 mStationDb.getOperatorsOrDefault(ps.getOperatorId(), null),
                 lines,
                 mStationDb.getTtsHintLanguage(), this);
+    }
+
+    private static Station fromProto(String humanReadableID, Stations.Station ps,
+                                    Stations.Operator po, SparseArray<Stations.Line> pl,
+                                    String ttsHintLanguage, StationTableReader str) {
+        boolean hasLocation = ps.getLatitude() != 0 && ps.getLongitude() != 0;
+
+        List<String> lines = null;
+        List<String> lineIds = null;
+
+        if (pl != null) {
+            lines = new ArrayList<>();
+            lineIds = new ArrayList<>();
+            SparseArrayIterator<Stations.Line> it = new SparseArrayIterator<>(pl);
+            while (it.hasNext()) {
+                final kotlin.Pair<Integer, Stations.Line> e = it.next();
+                lines.add(str.selectBestName(e.getSecond().getName(), true));
+                lineIds.add(NumberUtils.INSTANCE.intToHex(e.getFirst()));
+            }
+        }
+
+        return new Station(
+                humanReadableID,
+                po == null ? null : str.selectBestName(po.getName(), true),
+                lines,
+                str.selectBestName(ps.getName(), false),
+                str.selectBestName(ps.getName(), true),
+                hasLocation ? ps.getLatitude() : null,
+                hasLocation ? ps.getLongitude() : null,
+                ttsHintLanguage, false, lineIds, new ArrayList<>());
     }
 
     /**

@@ -29,6 +29,7 @@ import java.util.TimeZone;
 
 import au.id.micolous.farebot.R;
 import au.id.micolous.metrodroid.card.ultralight.UltralightCard;
+import au.id.micolous.metrodroid.time.TimestampFormatterKt;
 import au.id.micolous.metrodroid.transit.TransactionTrip;
 import au.id.micolous.metrodroid.transit.TransitBalance;
 import au.id.micolous.metrodroid.transit.TransitBalanceStored;
@@ -57,7 +58,8 @@ public abstract class NextfareUltralightTransitData extends TransitData {
     public TransitBalance getBalance() {
         return new TransitBalanceStored(
                 makeCurrency(mBalance),
-                parseDateTime(getTimeZone(), mBaseDate, mExpiry, 0));
+                TimestampFormatterKt.calendar2ts(parseDateTime(getTimeZone(), mBaseDate, mExpiry, 0))
+                        .toDaystamp());
     }
 
     protected abstract TimeZone getTimeZone();

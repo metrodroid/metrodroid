@@ -5,6 +5,8 @@ import android.os.Parcelable;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
+import au.id.micolous.metrodroid.time.TimestampFormatterKt;
+import au.id.micolous.metrodroid.time.TimestampFull;
 import org.apache.commons.lang3.ArrayUtils;
 
 import java.util.ArrayList;
@@ -152,16 +154,16 @@ public class LeapTrip extends Trip implements Comparable<LeapTrip> {
     }
 
     @Override
-    public Calendar getStartTimestamp() {
+    public TimestampFull getStartTimestamp() {
         if (mStart != null && mStart.mTimestamp != null)
-            return mStart.mTimestamp;
+            return TimestampFormatterKt.calendar2ts(mStart.mTimestamp);
         return null;
     }
 
     @Override
-    public Calendar getEndTimestamp() {
+    public TimestampFull getEndTimestamp() {
         if (mEnd != null && mEnd.mTimestamp != null)
-            return mEnd.mTimestamp;
+            return TimestampFormatterKt.calendar2ts(mEnd.mTimestamp);
         return null;
     }
 

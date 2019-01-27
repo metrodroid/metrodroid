@@ -43,7 +43,7 @@ public class Marker {
     @SuppressWarnings("unused")
     @JavascriptInterface
     public String getLat() {
-        return this.mStation.getLatitude();
+        return this.mStation.getLatitude().toString();
     }
 
     /**
@@ -54,7 +54,7 @@ public class Marker {
     @SuppressWarnings("unused")
     @JavascriptInterface
     public String getLong() {
-        return this.mStation.getLongitude();
+        return this.mStation.getLongitude().toString();
     }
 
     /**

@@ -30,6 +30,8 @@ import au.id.micolous.metrodroid.card.classic.ClassicCardTransitFactory
 import au.id.micolous.metrodroid.card.classic.ClassicSector
 import au.id.micolous.metrodroid.card.classic.UnauthorizedClassicSector
 import au.id.micolous.metrodroid.multi.Localizer
+import au.id.micolous.metrodroid.time.TimestampFull
+import au.id.micolous.metrodroid.time.calendar2ts
 import au.id.micolous.metrodroid.transit.CardInfo
 import au.id.micolous.metrodroid.transit.TransitCurrency
 import au.id.micolous.metrodroid.transit.TransitData
@@ -167,7 +169,7 @@ data class ZolotayaKoronaTransitData internal constructor(
                 .setPreview()
                 .build()
 
-        fun parseTime(time: Int, cardType: Int): Calendar? {
+        fun parseTime(time: Int, cardType: Int): TimestampFull? {
             if (time == 0)
                 return null
             val tz = TimeZone.getTimeZone(REGIONS[cardType shr 16]?.second ?: "Europe/Moscow")
@@ -177,7 +179,7 @@ data class ZolotayaKoronaTransitData internal constructor(
             // Not entirely correct around DST change but Russia doesn't
             // do it anymore
             g.add(Calendar.MILLISECOND, -tz.getOffset(pseudoUnixTime))
-            return g
+            return calendar2ts(g)
         }
 
         private fun getSerial(card: ClassicCard) = card[15, 2].data.getHexString(

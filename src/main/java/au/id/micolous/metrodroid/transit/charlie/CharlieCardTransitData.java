@@ -23,6 +23,9 @@ import android.os.Parcel;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
+import au.id.micolous.metrodroid.time.TimestampFormatter;
+import au.id.micolous.metrodroid.time.TimestampFormatterKt;
+import au.id.micolous.metrodroid.time.TimestampFull;
 import org.jetbrains.annotations.NonNls;
 
 import java.util.ArrayList;
@@ -140,7 +143,7 @@ public class CharlieCardTransitData extends TransitData {
         Calendar lastTrip = null;
         for (CharlieCardTrip t : mTrips) {
             if (lastTrip == null || t.getStartTimestamp().getTimeInMillis() > lastTrip.getTimeInMillis()) {
-                lastTrip = t.getStartTimestamp();
+                lastTrip = TimestampFormatter.INSTANCE.makeCalendar(t.getStartTimestamp());
             }
         }
 
@@ -153,7 +156,9 @@ public class CharlieCardTransitData extends TransitData {
                 expiry = lastTrip;
             }
         }
-        return new TransitBalanceStored(TransitCurrency.USD(mBalance), null, start, expiry);
+        return new TransitBalanceStored(TransitCurrency.USD(mBalance), null,
+                TimestampFormatterKt.calendar2ts(start),
+                TimestampFormatterKt.calendar2ts(expiry));
     }
 
     @Override

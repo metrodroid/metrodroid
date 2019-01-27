@@ -153,7 +153,7 @@ public class OrcaTransaction extends Transaction {
         if (s != null)
             return s;
         if (isLink() || isSounder() || mAgency == OrcaTransitData.AGENCY_WSF) {
-            return Station.unknown(mCoachNum);
+            return Station.Companion.unknown(mCoachNum);
         } else {
             return null;
         }

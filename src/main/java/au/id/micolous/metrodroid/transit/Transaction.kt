@@ -52,7 +52,7 @@ abstract class Transaction : Parcelable {
     open val humanReadableLineIDs: List<String>
         get() {
             val s = station
-            return s?.humanReadableLineIDs ?: emptyList()
+            return s?.humanReadableLineIds ?: emptyList()
         }
 
     open val vehicleID: String?

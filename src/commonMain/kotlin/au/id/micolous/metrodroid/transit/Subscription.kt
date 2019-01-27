@@ -22,17 +22,12 @@
 
 package au.id.micolous.metrodroid.transit
 
-import android.os.Parcelable
-import android.support.annotation.StringRes
-
-import java.util.ArrayList
-import java.util.Calendar
-
-import au.id.micolous.farebot.R
 import au.id.micolous.metrodroid.multi.Localizer
+import au.id.micolous.metrodroid.multi.Parcelable
+import au.id.micolous.metrodroid.multi.R
+import au.id.micolous.metrodroid.multi.StringResource
+import au.id.micolous.metrodroid.time.Timestamp
 import au.id.micolous.metrodroid.ui.ListItem
-import au.id.micolous.metrodroid.util.TripObfuscator
-import au.id.micolous.metrodroid.util.Utils
 
 /**
  * Represents subscriptions on a card.  Subscriptions can be used to represent a number of different
@@ -47,7 +42,7 @@ import au.id.micolous.metrodroid.util.Utils
  * Automatic top-up: a card may be linked to a credit card or other payment instrument, which will
  * be used to "top-up" or "refill" a card in the event a trip takes the balance below $0.
  */
-actual abstract class Subscription : Parcelable {
+abstract class Subscription : Parcelable {
 
     /**
      * An identifier for the subscription number.
@@ -65,7 +60,7 @@ actual abstract class Subscription : Parcelable {
      *
      * @return Calendar representing subscription start date, or null.
      */
-    open val validFrom: Calendar?
+    open val validFrom: Timestamp?
         get() = null
 
     /**
@@ -81,7 +76,7 @@ actual abstract class Subscription : Parcelable {
      * date.
      * @see .getSubscriptionState
      */
-    open val validTo: Calendar?
+    open val validTo: Timestamp?
         get() = null
 
     /**
@@ -124,7 +119,7 @@ actual abstract class Subscription : Parcelable {
      *
      * Returns null by default.
      */
-    open val purchaseTimestamp: Calendar?
+    open val purchaseTimestamp: Timestamp?
         get() = null
 
     /**
@@ -132,7 +127,7 @@ actual abstract class Subscription : Parcelable {
      *
      * Returns null by default.
      */
-    open val lastUseTimestamp: Calendar?
+    open val lastUseTimestamp: Timestamp?
         get() = null
 
     /**
@@ -200,7 +195,7 @@ actual abstract class Subscription : Parcelable {
      *
      * Returns null if there is no such functionality, or the restrictions are unknown (default).
      */
-    open val transferEndTimestamp: Calendar?
+    open val transferEndTimestamp: Timestamp?
         get() = null
 
     /**
@@ -212,7 +207,7 @@ actual abstract class Subscription : Parcelable {
      * Note: in order to support obfuscation / hiding behaviour, if you implement this method, you
      * also need to use some other functionality:
      *
-     *  * Check for [] whenever you show a card
+     *  * Check for [MetrodroidApplication.hideCardNumbers] whenever you show a card
      * number, or other mark (such as a name) that could be used to identify this card or its
      * holder.
      *
@@ -228,34 +223,24 @@ actual abstract class Subscription : Parcelable {
     // TODO: i18n
     open val info: List<ListItem>?
         get() {
-            val items = ArrayList<ListItem>()
+            val items = mutableListOf<ListItem>()
             if (saleAgencyName != null) {
                 items.add(ListItem(R.string.seller_agency, saleAgencyName))
             }
 
-            if (machineId != null) {
+            machineId?.let  {
                 items.add(ListItem(R.string.machine_id,
-                        Integer.toString(machineId!!)))
+                        it.toString()))
             }
 
-            var purchaseTS = purchaseTimestamp
+            val purchaseTS = purchaseTimestamp
             if (purchaseTS != null) {
-                purchaseTS = TripObfuscator.maybeObfuscateTS(purchaseTS)
-
-                items.add(ListItem(R.string.purchase_date, if (purchaseTimestampHasTime())
-                    Utils.dateTimeFormat(purchaseTS)
-                else
-                    Utils.longDateFormat(purchaseTS)))
+                items.add(ListItem(R.string.purchase_date, purchaseTS.format()))
             }
 
-            var lastUseTS = lastUseTimestamp
+            val lastUseTS = lastUseTimestamp
             if (lastUseTS != null) {
-                lastUseTS = TripObfuscator.maybeObfuscateTS(lastUseTS)
-
-                items.add(ListItem(R.string.last_used_on, if (lastUseTimestampHasTime())
-                    Utils.dateTimeFormat(lastUseTS)
-                else
-                    Utils.longDateFormat(lastUseTS)))
+                items.add(ListItem(R.string.last_used_on, lastUseTS.format()))
             }
 
             val cost = cost()
@@ -266,61 +251,45 @@ actual abstract class Subscription : Parcelable {
 
             val id = id
             if (id != null) {
-                items.add(ListItem(R.string.subscription_id, Integer.toString(id)))
+                items.add(ListItem(R.string.subscription_id, id.toString()))
             }
 
             if (paymentMethod != PaymentMethod.UNKNOWN) {
                 items.add(ListItem(R.string.payment_method, paymentMethod.description))
             }
 
-            var transferEndTimestamp = transferEndTimestamp
+            val transferEndTimestamp = transferEndTimestamp
             if (transferEndTimestamp != null && lastUseTS != null) {
-                transferEndTimestamp = TripObfuscator.maybeObfuscateTS(transferEndTimestamp)
-
                 items.add(ListItem(R.string.free_transfers_until,
-                        Utils.dateTimeFormat(transferEndTimestamp)))
+                        transferEndTimestamp.format()))
             }
 
-            val counter = remainingTripsInDayCount
-            if (counter != null && lastUseTS != null) {
-                items.add(ListItem(R.string.remaining_trip_count, Localizer.localizePlural(
-                        R.plurals.remaining_trip_on_day, counter,
-                        remainingTripsInDayCount, Utils.longDateFormat(lastUseTS))))
+            if (lastUseTS != null) {
+                remainingTripsInDayCount?.let { trips ->
+                    items.add(ListItem(R.string.remaining_trip_count, Localizer.localizePlural(
+                            R.plurals.remaining_trip_on_day, trips, trips, lastUseTS.format())))
+                }
             }
 
             val zones = zones
-            if (zones != null && zones.size > 0) {
+            if (zones != null && zones.isNotEmpty()) {
                 val zones_list = StringBuilder()
                 for (z in zones) {
-                    if (zones_list.length != 0)
+                    if (zones_list.isNotEmpty())
                         zones_list.append(", ")
-                    zones_list.append(Integer.toString(z))
+                    zones_list.append(z.toString())
                 }
 
                 items.add(ListItem(Localizer.localizePlural(R.plurals.travel_zones,
                         zones.size), zones_list.toString()))
             }
 
-            return if (!items.isEmpty()) items else null
+            return items.ifEmpty { null }
         }
 
-    override fun describeContents(): Int {
-        return 0
-    }
+    open fun getAgencyName(isShort: Boolean): String? =  null
 
-    /**
-     * Show a time of day next to [.getValidTo].
-     */
-    open fun validToHasTime(): Boolean {
-        return false
-    }
-
-    open fun getAgencyName(isShort: Boolean): String? {
-        return null
-    }
-
-    enum class SubscriptionState private constructor(@param:StringRes @field:StringRes @get:StringRes
-                                                     val description: Int) {
+    enum class SubscriptionState(val description: StringResource) {
         /** No state is known, display no UI for the state.  */
         UNKNOWN(R.string.unknown),
 
@@ -369,24 +338,6 @@ actual abstract class Subscription : Parcelable {
     }
 
     /**
-     * If [.getPurchaseTimestamp] contains a valid time element, return true here.
-     *
-     * Otherwise, return false to hide the time component (default).
-     */
-    open fun purchaseTimestampHasTime(): Boolean {
-        return false
-    }
-
-    /**
-     * If [.getLastUseTimestamp] contains a valid time element, return true here.
-     *
-     * Otherwise, return false to hide the time component (default).
-     */
-    open fun lastUseTimestampHasTime(): Boolean {
-        return false
-    }
-
-    /**
      * The cost of the subscription, or null if unknown (default).
      */
     open fun cost(): TransitCurrency? {
@@ -396,8 +347,7 @@ actual abstract class Subscription : Parcelable {
     /**
      * Describes payment methods for a [Subscription].
      */
-    enum class PaymentMethod private constructor(@param:StringRes @field:StringRes @get:StringRes
-                                                 val description: Int) {
+    enum class PaymentMethod(val description: StringResource) {
         UNKNOWN(R.string.unknown),
         CASH(R.string.payment_method_cash),
         CREDIT_CARD(R.string.payment_method_credit_card),

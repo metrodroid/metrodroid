@@ -24,6 +24,8 @@ import android.support.annotation.Nullable;
 
 import java.util.Calendar;
 
+import au.id.micolous.metrodroid.time.TimestampFormatterKt;
+import au.id.micolous.metrodroid.time.TimestampFull;
 import au.id.micolous.metrodroid.transit.TransitCurrency;
 import au.id.micolous.metrodroid.transit.Trip;
 
@@ -69,8 +71,8 @@ class BilheteUnicoSPFirstTap extends Trip {
     };
 
     @Override
-    public Calendar getStartTimestamp() {
-        return BilheteUnicoSPTrip.parseTimestamp(mDay, mTime);
+    public TimestampFull getStartTimestamp() {
+        return TimestampFormatterKt.calendar2ts(BilheteUnicoSPTrip.parseTimestamp(mDay, mTime));
     }
 
     @Nullable

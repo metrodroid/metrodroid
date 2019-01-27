@@ -19,6 +19,7 @@
 
 package au.id.micolous.metrodroid.transit.rkf
 
+import au.id.micolous.metrodroid.time.Timestamp
 import au.id.micolous.metrodroid.transit.Station
 import au.id.micolous.metrodroid.transit.TransitCurrency
 import au.id.micolous.metrodroid.transit.Trip
@@ -26,8 +27,8 @@ import kotlinx.android.parcel.Parcelize
 import java.util.*
 
 @Parcelize
-data class RkfTripLeg(private val mStartTimestamp: Calendar,
-                      private val mEndTimestamp: Calendar?,
+data class RkfTripLeg(private val mStartTimestamp: Timestamp,
+                      private val mEndTimestamp: Timestamp?,
                       private val mStartStation: Station?,
                       private val mEndStation: Station?,
                       private val mFare: TransitCurrency?,

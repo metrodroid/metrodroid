@@ -35,7 +35,7 @@ class MRTReaderTest : BaseInstrumentedTest() {
         showLocalAndEnglish(false)
 
         val s = EZLinkTransitData.getStation("CGA")
-        assertEquals("Changi Airport", s.getStationName())
+        assertEquals("Changi Airport", s.getStationName(false))
         assertNear(1.3575, s.latitude!!.toDouble(), 0.001)
         assertNear(103.9885, s.longitude!!.toDouble(), 0.001)
     }

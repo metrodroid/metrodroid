@@ -24,6 +24,8 @@ import android.support.annotation.Nullable;
 
 import java.util.Calendar;
 
+import au.id.micolous.metrodroid.time.TimestampFormatterKt;
+import au.id.micolous.metrodroid.time.TimestampFull;
 import au.id.micolous.metrodroid.transit.Station;
 import au.id.micolous.metrodroid.transit.TransitCurrency;
 import au.id.micolous.metrodroid.transit.Trip;
@@ -74,12 +76,12 @@ public class CharlieCardTrip extends Trip {
     @Nullable
     @Override
     public Station getStartStation() {
-        return Station.unknown(mValidator >> 3);
+        return Station.Companion.unknown(mValidator >> 3);
     }
 
     @Override
-    public Calendar getStartTimestamp() {
-        return CharlieCardTransitData.parseTimestamp(mTimestamp);
+    public TimestampFull getStartTimestamp() {
+        return TimestampFormatterKt.calendar2ts(CharlieCardTransitData.parseTimestamp(mTimestamp));
     }
 
     @Nullable

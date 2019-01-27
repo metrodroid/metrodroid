@@ -48,7 +48,7 @@ public abstract class En1545LookupUnknown implements En1545Lookup {
     public Station getStation(int station, Integer agency, Integer transport) {
         if (station == 0)
             return null;
-        return Station.unknown(station);
+        return Station.Companion.unknown(station);
     }
 
     @Override

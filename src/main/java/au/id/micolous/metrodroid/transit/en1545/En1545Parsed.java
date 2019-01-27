@@ -25,6 +25,9 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.util.Pair;
 
+import au.id.micolous.metrodroid.time.TimestampFormatter;
+import au.id.micolous.metrodroid.time.TimestampFormatterKt;
+import au.id.micolous.metrodroid.time.TimestampFull;
 import au.id.micolous.metrodroid.util.NumberUtils;
 import org.jetbrains.annotations.NonNls;
 
@@ -219,15 +222,15 @@ public class En1545Parsed implements Parcelable {
         Pair<Calendar,Integer> timeFlag = getTimeStampFlags(name, tz);
         if (timeFlag == null)
             return null;
-        Calendar cal = timeFlag.first;
-        cal = TripObfuscator.maybeObfuscateTS(cal);
+        TimestampFull cal = TimestampFormatterKt.calendar2ts(timeFlag.first);
+        cal = TripObfuscator.INSTANCE.maybeObfuscateTS(cal);
         switch (timeFlag.second) {
             case 3:
-                return Utils.dateTimeFormat(cal).toString();
+                return TimestampFormatter.INSTANCE.dateTimeFormat(cal).toString();
             case 2:
-                return Utils.dateFormat(cal).toString();
+                return TimestampFormatter.INSTANCE.dateFormat(cal).toString();
             case 1:
-                return Utils.timeFormat(cal).toString();
+                return TimestampFormatter.INSTANCE.timeFormat(cal).toString();
         }
         return null;
     }
