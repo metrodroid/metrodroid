@@ -72,7 +72,7 @@ public abstract class Calypso1545TransitData extends En1545TransitData {
                 transactions.add(transaction);
             }
         }
-        mTrips = new ArrayList<>(TransactionTrip.merge(transactions));
+        mTrips = new ArrayList<>(TransactionTrip.Companion.merge(transactions));
 
         mSubscriptions = new ArrayList<>();
         mBalances = new ArrayList<>();

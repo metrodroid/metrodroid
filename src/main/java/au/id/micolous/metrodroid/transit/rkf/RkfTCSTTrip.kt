@@ -80,7 +80,8 @@ data class RkfTCSTTrip(private val mParsed: En1545Parsed,
                 val previous: RkfTransaction? = if (index == 0) null else mTransactions[index - 1]
                 // Case 3: transfer without checkin transaction. Happens if checkin went out of the log.
                 if (previous == null) {
-                    legs.add(RkfTripLeg(mStartTimestamp = startTimestamp, mEndTimestamp = transaction.timestamp,
+                    legs.add(RkfTripLeg(mStartTimestamp = startTimestamp,
+                            mEndTimestamp = transaction.timestamp,
                             mStartStation = startStation, mEndStation = transaction.station,
                             mFare = fare, mPassengerCount = passengerCount, mMode = mode,
                             mTransfer = false,
@@ -89,7 +90,8 @@ data class RkfTCSTTrip(private val mParsed: En1545Parsed,
                 }
                 // Case 4: pair of checkin and transfer
                 if (index == 1 && isCheckin(previous)) {
-                    legs.add(RkfTripLeg(mStartTimestamp = startTimestamp, mEndTimestamp = transaction.timestamp,
+                    legs.add(RkfTripLeg(mStartTimestamp = startTimestamp,
+                            mEndTimestamp = transaction.timestamp,
                             mStartStation = startStation, mEndStation = transaction.station,
                             mFare = fare, mPassengerCount = passengerCount, mMode = previous.mode,
                             mTransfer = false,
@@ -97,7 +99,8 @@ data class RkfTCSTTrip(private val mParsed: En1545Parsed,
                     continue
                 }
                 // Case 5: pair of transfer and transfer
-                legs.add(RkfTripLeg(mStartTimestamp = previous.timestamp, mEndTimestamp = transaction.timestamp,
+                legs.add(RkfTripLeg(mStartTimestamp = previous.timestamp,
+                        mEndTimestamp = transaction.timestamp,
                         mStartStation = previous.station, mEndStation = transaction.station,
                         mFare = null, mPassengerCount = passengerCount, mMode = previous.mode,
                         mTransfer = true,

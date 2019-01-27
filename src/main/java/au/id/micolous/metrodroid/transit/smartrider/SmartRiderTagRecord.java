@@ -22,6 +22,8 @@ import android.os.Parcel;
 import android.support.annotation.NonNull;
 import android.util.Log;
 
+import au.id.micolous.metrodroid.time.TimestampFormatterKt;
+import au.id.micolous.metrodroid.time.TimestampFull;
 import au.id.micolous.metrodroid.transit.Station;
 import au.id.micolous.metrodroid.transit.Transaction;
 import au.id.micolous.metrodroid.transit.TransitCurrency;
@@ -158,8 +160,8 @@ public class SmartRiderTagRecord extends Transaction {
     }
 
     @Override
-    public Calendar getTimestamp() {
-        return addSmartRiderEpoch(mTimestamp);
+    public TimestampFull getTimestamp() {
+        return TimestampFormatterKt.calendar2ts(addSmartRiderEpoch(mTimestamp));
     }
 
     @Override
@@ -189,7 +191,7 @@ public class SmartRiderTagRecord extends Transaction {
 
 
     @Override
-    protected boolean shouldBeMerged(Transaction other) {
+    public boolean shouldBeMerged(Transaction other) {
         // Are the two trips within 90 minutes of each other (sanity check)
         return other instanceof SmartRiderTagRecord
                 && ((SmartRiderTagRecord) other).mTimestamp - mTimestamp <= 5400

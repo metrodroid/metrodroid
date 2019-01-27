@@ -25,6 +25,7 @@ package au.id.micolous.metrodroid.transit.easycard
 
 import android.support.annotation.VisibleForTesting
 import au.id.micolous.metrodroid.card.classic.ClassicCard
+import au.id.micolous.metrodroid.time.calendar2ts
 import au.id.micolous.metrodroid.transit.*
 import au.id.micolous.metrodroid.util.StationTableReader
 import au.id.micolous.metrodroid.util.ImmutableByteArray
@@ -50,7 +51,7 @@ data class EasyCardTransaction internal constructor(
 
     override val fare get() = TransitCurrency.TWD(fareRaw)
 
-    override val timestamp get() = EasyCardTransitData.parseTimestamp(timestampRaw)
+    override val timestamp get() = calendar2ts(EasyCardTransitData.parseTimestamp(timestampRaw))
 
     override val station get(): Station? = when (location) {
         BUS -> null
@@ -83,7 +84,7 @@ data class EasyCardTransaction internal constructor(
 
     override val isTapOn get() = !isEndTap
 
-    override val routeNames get(): List<String> = when (mode) {
+    override val routeNames get(): List<String>? = when (mode) {
         Trip.Mode.METRO -> super.routeNames
         else -> Collections.emptyList()
     }
