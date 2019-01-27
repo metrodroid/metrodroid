@@ -24,6 +24,10 @@ import au.id.micolous.metrodroid.multi.Parcelable
 import au.id.micolous.metrodroid.ui.ListItem
 import kotlin.jvm.JvmSuppressWildcards
 
+expect class TransitBalance
+expect abstract class Trip
+expect abstract class Subscription
+
 @JvmSuppressWildcards(false)
 abstract class TransitData : Parcelable {
 
@@ -135,9 +139,5 @@ abstract class TransitData : Parcelable {
      */
     open fun hasUnknownStations(): Boolean {
         return false
-    }
-
-    override fun describeContents(): Int {
-        return 0
     }
 }

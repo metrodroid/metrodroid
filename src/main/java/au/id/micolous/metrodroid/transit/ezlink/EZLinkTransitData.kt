@@ -68,7 +68,7 @@ actual class EZLinkTransitData : TransitData {
         parcel.readTypedList(mTrips, EZLinkTrip.CREATOR)
     }
 
-    constructor(cepasCard: CEPASApplication) {
+    actual constructor(cepasCard: CEPASApplication) {
         val purse = CEPASPurse(cepasCard.getPurse(3))
         serialNumber = Utils.getHexString(purse.can, "<Error>")
         mBalance = purse.purseBalance

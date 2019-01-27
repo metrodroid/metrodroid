@@ -47,7 +47,7 @@ import au.id.micolous.metrodroid.util.Utils
  * Automatic top-up: a card may be linked to a credit card or other payment instrument, which will
  * be used to "top-up" or "refill" a card in the event a trip takes the balance below $0.
  */
-abstract class Subscription : Parcelable {
+actual abstract class Subscription : Parcelable {
 
     /**
      * An identifier for the subscription number.
