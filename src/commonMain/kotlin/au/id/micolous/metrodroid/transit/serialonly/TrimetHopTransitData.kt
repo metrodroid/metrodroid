@@ -22,17 +22,19 @@
 
 package au.id.micolous.metrodroid.transit.serialonly
 
-import au.id.micolous.farebot.R
 import au.id.micolous.metrodroid.card.CardType
 import au.id.micolous.metrodroid.card.desfire.DesfireApplication
 import au.id.micolous.metrodroid.card.desfire.DesfireCard
 import au.id.micolous.metrodroid.card.desfire.DesfireCardTransitFactory
+import au.id.micolous.metrodroid.multi.Parcelize
+import au.id.micolous.metrodroid.multi.R
+import au.id.micolous.metrodroid.time.Epoch
+import au.id.micolous.metrodroid.time.MetroTimeZone
+import au.id.micolous.metrodroid.time.TimestampFormatter
 import au.id.micolous.metrodroid.transit.CardInfo
 import au.id.micolous.metrodroid.transit.TransitIdentity
 import au.id.micolous.metrodroid.ui.ListItem
-import au.id.micolous.metrodroid.util.Utils
-import kotlinx.android.parcel.Parcelize
-import java.util.*
+import au.id.micolous.metrodroid.util.NumberUtils
 
 /**
  * Transit data type for TriMet Hop Fastpass.
@@ -49,8 +51,8 @@ data class TrimetHopTransitData(private val mSerial: Int?,
                                 private val mIssueDate: Int?) : SerialOnlyTransitData() {
 
     public override val extraInfo: List<ListItem>?
-        get() = listOf(ListItem(R.string.issue_date,
-                Utils.dateTimeFormat(parseTime(mIssueDate))))
+        get() = mIssueDate?.let { listOf(ListItem(R.string.issue_date,
+                TimestampFormatter.dateTimeFormat(parseTime(mIssueDate)))) }
 
     override val reason: SerialOnlyTransitData.Reason
         get() = SerialOnlyTransitData.Reason.NOT_STORED
@@ -63,15 +65,14 @@ data class TrimetHopTransitData(private val mSerial: Int?,
         private const val NAME = "Hop Fastpass"
         private const val APP_ID = 0xe010f2
 
-        private val TZ = TimeZone.getTimeZone("America/Los_Angeles")
+        private val TZ = MetroTimeZone.LOS_ANGELES
 
-        private val CARD_INFO = CardInfo.Builder()
-                .setName(NAME)
-                .setCardType(CardType.MifareDesfire)
-                .setImageId(R.drawable.trimethop_card)
-                .setLocation(R.string.location_portland)
-                .setExtraNote(R.string.card_note_card_number_only)
-                .build()
+        private val CARD_INFO = CardInfo(
+                name = NAME,
+                cardType = CardType.MifareDesfire,
+                imageId = R.drawable.trimethop_card,
+                locationId = R.string.location_portland,
+                resourceExtraNote = R.string.card_note_card_number_only)
 
         private fun parse(card: DesfireCard): TrimetHopTransitData? {
             val app = card.getApplication(APP_ID) ?: return null
@@ -93,7 +94,7 @@ data class TrimetHopTransitData(private val mSerial: Int?,
 
             override val allCards get() = listOf(CARD_INFO)
 
-            override fun parseTransitData(desfireCard: DesfireCard) = parse(desfireCard)
+            override fun parseTransitData(card: DesfireCard) = parse(card)
 
             override fun parseTransitIdentity(card: DesfireCard) =
                     TransitIdentity(NAME, formatSerial(parseSerial(card.getApplication(APP_ID))))
@@ -101,20 +102,10 @@ data class TrimetHopTransitData(private val mSerial: Int?,
 
         private fun formatSerial(ser: Int?) =
                 if (ser != null)
-                    String.format(Locale.ENGLISH, "01-001-%08d-RA", ser)
+                    "01-001-${NumberUtils.zeroPad(ser, 8)}-RA"
                 else
                     null
 
-        private fun parseTime(date: Int?): Calendar? {
-            return if (date != null && date != 0) {
-                // Unix Time
-                val c = GregorianCalendar(TZ)
-                // Unix Time
-                c.timeInMillis = date * 1000L
-                c
-            } else {
-                null
-            }
-        }
+        private fun parseTime(date: Int) = Epoch.utc(1970, TZ).seconds(date.toLong())
     }
 }

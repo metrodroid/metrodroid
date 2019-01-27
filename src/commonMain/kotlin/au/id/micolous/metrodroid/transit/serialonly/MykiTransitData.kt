@@ -19,18 +19,15 @@
 
 package au.id.micolous.metrodroid.transit.serialonly
 
-import android.net.Uri
-import au.id.micolous.farebot.R
 import au.id.micolous.metrodroid.card.CardType
 import au.id.micolous.metrodroid.card.desfire.DesfireCard
 import au.id.micolous.metrodroid.card.desfire.DesfireCardTransitFactory
+import au.id.micolous.metrodroid.multi.Parcelize
+import au.id.micolous.metrodroid.multi.R
 import au.id.micolous.metrodroid.transit.CardInfo
 import au.id.micolous.metrodroid.transit.TransitIdentity
 import au.id.micolous.metrodroid.util.NumberUtils
 import au.id.micolous.metrodroid.util.ImmutableByteArray
-import kotlinx.android.parcel.Parcelize
-import org.jetbrains.annotations.NonNls
-import java.util.*
 
 /**
  * Transit data type for Myki (Melbourne, AU).
@@ -52,8 +49,7 @@ class MykiTransitData (private val mSerial: String): SerialOnlyTransitData() {
 
     override val serialNumber get() = mSerial
 
-    override val moreInfoPage get(): String? =
-            "https://micolous.github.io/metrodroid/myki"
+    override val moreInfoPage get() = "https://micolous.github.io/metrodroid/myki"
 
     companion object {
         const val NAME = "Myki"
@@ -64,17 +60,15 @@ class MykiTransitData (private val mSerial: String): SerialOnlyTransitData() {
         private val MYKI_HEADER = ImmutableByteArray.fromHex("c9b40400")
         private const val MYKI_PREFIX: Long = 308425
 
-        private val CARD_INFO = CardInfo.Builder()
-                .setImageId(R.drawable.myki_card)
-                .setName(MykiTransitData.NAME)
-                .setCardType(CardType.MifareDesfire)
-                .setLocation(R.string.location_victoria_australia)
-                .setExtraNote(R.string.card_note_card_number_only)
-                .build()
-
+        private val CARD_INFO = CardInfo(
+                imageId = R.drawable.myki_card,
+                name = MykiTransitData.NAME,
+                cardType = CardType.MifareDesfire,
+                locationId = R.string.location_victoria_australia,
+                resourceExtraNote = R.string.card_note_card_number_only)
 
         private fun parse(desfireCard: DesfireCard): MykiTransitData {
-            val metadata = desfireCard.getApplication(APP_ID_1)!!.getFile(15)!!.data
+            val metadata = desfireCard.getApplication(APP_ID_1)?.getFile(15)?.data
 
             val serial = parseSerial(metadata) ?: throw RuntimeException("Invalid Myki data (parseSerial = null)")
 
@@ -90,21 +84,19 @@ class MykiTransitData (private val mSerial: String): SerialOnlyTransitData() {
 
                 val file = app1.getFile(15) ?: return false
 
-                val data = file.data ?: return false
-
                 // Check that we have the correct serial prefix (308425)
-                return data.copyOfRange(0, 4).contentEquals(MYKI_HEADER)
+                return file.data.copyOfRange(0, 4).contentEquals(MYKI_HEADER)
             }
 
-            override fun parseTransitData(desfireCard: DesfireCard) = parse(desfireCard)
+            override fun parseTransitData(card: DesfireCard) = parse(card)
 
             override fun earlyCheck(appIds: IntArray) = (APP_ID_1 in appIds) && (APP_ID_2 in appIds)
 
             override val allCards get() = listOf(CARD_INFO)
 
-            override fun parseTransitIdentity(desfireCard: DesfireCard) =
+            override fun parseTransitIdentity(card: DesfireCard) =
                     TransitIdentity(NAME, parseSerial(
-                            desfireCard.getApplication(APP_ID_1)!!.getFile(15)!!.data
+                            card.getApplication(APP_ID_1)?.getFile(15)?.data
                     ))
         }
 
@@ -126,7 +118,7 @@ class MykiTransitData (private val mSerial: String): SerialOnlyTransitData() {
                 return null
             }
 
-            @NonNls val formattedSerial = String.format(Locale.ENGLISH, "%06d%08d", serial1, serial2)
+            val formattedSerial = NumberUtils.zeroPad(serial1, 6) +  NumberUtils.zeroPad(serial2, 8)
             return formattedSerial + NumberUtils.calculateLuhn(formattedSerial)
         }
     }

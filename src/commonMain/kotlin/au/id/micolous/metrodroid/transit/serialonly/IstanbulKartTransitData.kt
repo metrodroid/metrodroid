@@ -22,17 +22,16 @@
 
 package au.id.micolous.metrodroid.transit.serialonly
 
-import au.id.micolous.farebot.R
 import au.id.micolous.metrodroid.card.CardType
 import au.id.micolous.metrodroid.card.desfire.DesfireCard
 import au.id.micolous.metrodroid.card.desfire.DesfireCardTransitFactory
+import au.id.micolous.metrodroid.multi.Parcelize
+import au.id.micolous.metrodroid.multi.R
 import au.id.micolous.metrodroid.transit.CardInfo
 import au.id.micolous.metrodroid.transit.TransitIdentity
 import au.id.micolous.metrodroid.ui.ListItem
 import au.id.micolous.metrodroid.util.NumberUtils
 import au.id.micolous.metrodroid.util.ImmutableByteArray
-import kotlinx.android.parcel.Parcelize
-import java.util.*
 
 /**
  * Transit data type for IstanbulKart.
@@ -69,19 +68,19 @@ class IstanbulKartTransitData (private val mSerial: String,
                 val serial = parseSerial(metadata) ?: return null
                 return IstanbulKartTransitData(
                         mSerial = serial,
-                        mSerial2 = card.tagId.toHexString().toUpperCase(Locale.ENGLISH))
+                        mSerial2 = card.tagId.toHexString().toUpperCase())
             } catch (ex: Exception) {
                 throw RuntimeException("Error parsing IstanbulKart data", ex)
             }
         }
 
-        private val CARD_INFO = CardInfo.Builder()
-                .setName(NAME)
-                .setCardType(CardType.MifareDesfire)
-                .setLocation(R.string.location_istanbul)
-                .setExtraNote(R.string.card_note_card_number_only)
-                .setImageId(R.drawable.istanbulkart_card, R.drawable.iso7810_id1_alpha)
-                .build()
+        private val CARD_INFO = CardInfo(
+                name = NAME,
+                cardType = CardType.MifareDesfire,
+                locationId = R.string.location_istanbul,
+                resourceExtraNote = R.string.card_note_card_number_only,
+                imageId = R.drawable.istanbulkart_card,
+                imageAlphaId = R.drawable.iso7810_id1_alpha)
 
         /**
          * Parses a serial number in 0x42201 file 0x2
@@ -96,15 +95,16 @@ class IstanbulKartTransitData (private val mSerial: String,
 
             override val allCards get() = listOf(CARD_INFO)
 
-            override fun parseTransitData(desfireCard: DesfireCard) = parse(desfireCard)
+            override fun parseTransitData(card: DesfireCard) = parse(card)
 
-            override fun parseTransitIdentity(card: DesfireCard) =
-                    TransitIdentity(NAME,
-                            formatSerial(parseSerial(card.getApplication(APP_ID)!!
-                                    .getFile(2)!!.data)))
+            override fun parseTransitIdentity(card: DesfireCard): TransitIdentity {
+                val serial = parseSerial(card.getApplication(APP_ID)?.getFile(2)?.data)
+                return TransitIdentity(NAME,
+                        if (serial != null) formatSerial(serial) else null)
+            }
         }
 
-        private fun formatSerial(serial: String?) =
-                serial?.let { NumberUtils.groupString(it, " ", 4, 4, 4) }
+        private fun formatSerial(serial: String) =
+                NumberUtils.groupString(serial, " ", 4, 4, 4)
     }
 }

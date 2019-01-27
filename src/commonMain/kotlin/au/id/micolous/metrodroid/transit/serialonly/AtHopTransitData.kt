@@ -18,15 +18,14 @@
  */
 package au.id.micolous.metrodroid.transit.serialonly
 
-import au.id.micolous.farebot.R
 import au.id.micolous.metrodroid.card.CardType
 import au.id.micolous.metrodroid.card.desfire.DesfireCard
 import au.id.micolous.metrodroid.card.desfire.DesfireCardTransitFactory
+import au.id.micolous.metrodroid.multi.Parcelize
+import au.id.micolous.metrodroid.multi.R
 import au.id.micolous.metrodroid.transit.CardInfo
 import au.id.micolous.metrodroid.transit.TransitIdentity
 import au.id.micolous.metrodroid.util.NumberUtils
-import kotlinx.android.parcel.Parcelize
-import org.jetbrains.annotations.NonNls
 
 /**
  * Stub implementation for AT HOP (Auckland, NZ).
@@ -47,18 +46,16 @@ data class AtHopTransitData (private val mSerial: Int?): SerialOnlyTransitData()
     companion object {
         private const val APP_ID_SERIAL = 0xffffff
         private const val NAME = "AT HOP"
-        private val CARD_INFO = CardInfo.Builder()
-                .setName(NAME)
-                .setLocation(R.string.location_auckland)
-                .setCardType(CardType.MifareDesfire)
-                .setExtraNote(R.string.card_note_card_number_only)
-                .build()
+        private val CARD_INFO = CardInfo(
+                name = NAME,
+                locationId = R.string.location_auckland,
+                cardType = CardType.MifareDesfire,
+                resourceExtraNote = R.string.card_note_card_number_only)
 
         private fun getSerial(card: DesfireCard) =
                 card.getApplication(APP_ID_SERIAL)?.getFile(8)?.data?.getBitsFromBuffer(
                     61, 32)
 
-        @NonNls
         private fun formatSerial(serial: Int?) =
                 if (serial != null)
                     "7824 6702 " + NumberUtils.formatNumber(serial.toLong(), " ", 4, 4, 3)
@@ -72,8 +69,8 @@ data class AtHopTransitData (private val mSerial: Int?): SerialOnlyTransitData()
             override fun parseTransitData(card: DesfireCard) =
                     AtHopTransitData(mSerial = getSerial(card))
 
-            override fun parseTransitIdentity(desfireCard: DesfireCard) =
-                    TransitIdentity(NAME, formatSerial(getSerial(desfireCard)))
+            override fun parseTransitIdentity(card: DesfireCard) =
+                    TransitIdentity(NAME, formatSerial(getSerial(card)))
 
             override val allCards get() = listOf(CARD_INFO)
         }
