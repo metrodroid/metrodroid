@@ -38,6 +38,7 @@ import au.id.micolous.metrodroid.transit.TransitData;
 import au.id.micolous.metrodroid.transit.TransitIdentity;
 import au.id.micolous.metrodroid.util.Utils;
 import au.id.micolous.metrodroid.util.ImmutableByteArray;
+import org.jetbrains.annotations.NotNull;
 
 /**
  * Handle MIFARE Ultralight with no non-default data
@@ -58,6 +59,12 @@ public class BlankUltralightTransitData extends TransitData {
     }
 
     public final static UltralightCardTransitFactory FACTORY = new UltralightCardTransitFactory() {
+        @NotNull
+        @Override
+        public List<CardInfo> getAllCards() {
+            return Collections.emptyList();
+        }
+
         /**
          * @param card Card to read.
          * @return true if all sectors on the card are blank.

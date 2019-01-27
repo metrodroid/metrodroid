@@ -153,7 +153,7 @@ actual class OctopusTransitData : TransitData {
 
         private val TAG = "OctopusTransitData"
 
-        val FACTORY: FelicaCardTransitFactory = object : FelicaCardTransitFactory {
+        val FACTORY: FelicaCardTransitFactory = object : FelicaCardTransitFactory() {
 
             // Shenzhen Tong is added to supported list by new Shenzhen Tong code.
             override val allCards: List<CardInfo>

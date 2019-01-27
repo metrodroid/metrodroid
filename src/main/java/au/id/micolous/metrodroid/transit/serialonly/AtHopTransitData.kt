@@ -65,7 +65,7 @@ data class AtHopTransitData (private val mSerial: Int?): SerialOnlyTransitData()
                 else
                     null
 
-        val FACTORY: DesfireCardTransitFactory = object : DesfireCardTransitFactory {
+        val FACTORY: DesfireCardTransitFactory = object : DesfireCardTransitFactory() {
             override fun earlyCheck(appIds: IntArray) =
                     (0x4055 in appIds) && (APP_ID_SERIAL in appIds)
 

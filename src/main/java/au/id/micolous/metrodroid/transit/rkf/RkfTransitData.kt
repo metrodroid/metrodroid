@@ -130,7 +130,7 @@ data class RkfTransitData internal constructor(
                         .build()
         )
 
-        val FACTORY = object : ClassicCardTransitFactory {
+        val FACTORY = object : ClassicCardTransitFactory() {
             override fun earlyCardInfo(sectors: List<ClassicSector>) = issuerMap[getIssuer(sectors[0])]
 
             override fun earlyCheck(sectors: List<ClassicSector>) =

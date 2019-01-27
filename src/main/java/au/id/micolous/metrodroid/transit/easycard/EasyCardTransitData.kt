@@ -82,7 +82,7 @@ data class EasyCardTransitData internal constructor(
             return g
         }
 
-        val FACTORY = object : ClassicCardTransitFactory {
+        val FACTORY = object : ClassicCardTransitFactory() {
             override fun earlyCheck(sectors: List<ClassicSector>) = sectors[0][1].data?.let {
                 it == MAGIC
             } ?: false

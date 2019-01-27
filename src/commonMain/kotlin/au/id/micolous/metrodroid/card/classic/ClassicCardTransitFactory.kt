@@ -23,21 +23,19 @@
 package au.id.micolous.metrodroid.card.classic
 
 import au.id.micolous.metrodroid.key.ClassicSectorKey;
-import au.id.micolous.metrodroid.multi.JvmDefault
 import au.id.micolous.metrodroid.transit.CardInfo;
 import au.id.micolous.metrodroid.transit.CardTransitFactory;
 import kotlin.jvm.JvmSuppressWildcards
 
 @JvmSuppressWildcards(true)
-interface ClassicCardTransitFactory: CardTransitFactory<ClassicCard> {
+abstract class ClassicCardTransitFactory: CardTransitFactory<ClassicCard> {
     /**
      * The number of sectors from the MIFARE Classic card that must be read, before
      * {@link #earlyCheck(List)} or {@link #earlyCardInfo(List)} may be called.
      *
      * @return -1 if earlyCheck is not supported (default), 1 if sector 0 must be read, and so on.
      */
-    @JvmDefault
-    val earlySectors get(): Int = -1
+    open val earlySectors get(): Int = -1
 
     /**
      * Check if a card is supported by this reader. This check must operate when only
@@ -47,8 +45,7 @@ interface ClassicCardTransitFactory: CardTransitFactory<ClassicCard> {
      * @param sectors Sectors that have been retrieved from the card so far.
      * @return True if the card is supported by this reader.
      */
-    @JvmDefault
-    fun earlyCheck(sectors: List<ClassicSector>): Boolean = false
+    open fun earlyCheck(sectors: List<ClassicSector>): Boolean = false
 
     /**
      * A {@link CardInfo} for the card that has been read by the reader.
@@ -64,8 +61,7 @@ interface ClassicCardTransitFactory: CardTransitFactory<ClassicCard> {
      * @return A {@link CardInfo} for the card, or null if the info is not available.
      */
 
-    @JvmDefault
-    fun earlyCardInfo(sectors : List<ClassicSector>) : CardInfo? = allCards.firstOrNull()
+    open fun earlyCardInfo(sectors : List<ClassicSector>) : CardInfo? = allCards.firstOrNull()
 
     /**
      * Checks if a {@link ClassicCard} is supported by this reader.
@@ -77,7 +73,6 @@ interface ClassicCardTransitFactory: CardTransitFactory<ClassicCard> {
      * @param card A card to check.
      * @return true if this reader can decode this card.
      */
-    @JvmDefault
     override fun check(card: ClassicCard): Boolean = earlyCheck(card.sectors)
 
     /**
@@ -94,7 +89,6 @@ interface ClassicCardTransitFactory: CardTransitFactory<ClassicCard> {
      * @param keyType
      * @return A {@link CardInfo} for the card, or null if the info is not available.
      */
-    @JvmDefault
-    fun isDynamicKeys(sectors: List<ClassicSector>, sectorIndex: Int,
+    open fun isDynamicKeys(sectors: List<ClassicSector>, sectorIndex: Int,
                       keyType: ClassicSectorKey.KeyType): Boolean = false
 }

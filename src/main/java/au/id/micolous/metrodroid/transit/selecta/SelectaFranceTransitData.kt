@@ -54,7 +54,7 @@ data class SelectaFranceTransitData(private val mBalance: Int,
 
         private fun getSerial(card: ClassicCard): Int = card[1, 0].data.byteArrayToInt(13, 3)
 
-        val FACTORY: ClassicCardTransitFactory = object : ClassicCardTransitFactory {
+        val FACTORY: ClassicCardTransitFactory = object : ClassicCardTransitFactory() {
             override fun earlyCheck(sectors: List<ClassicSector>) =
                     sectors[0][1].data.byteArrayToInt(2, 2) == 0x0938
 

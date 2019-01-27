@@ -22,4 +22,3 @@ package au.id.micolous.metrodroid.multi
 actual interface Parcelable: android.os.Parcelable
 actual typealias Parcelize = kotlinx.android.parcel.Parcelize
 actual typealias VisibleForTesting = android.support.annotation.VisibleForTesting
-actual typealias JvmDefault = kotlin.jvm.JvmDefault

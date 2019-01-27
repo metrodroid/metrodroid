@@ -19,16 +19,13 @@
 
 package au.id.micolous.metrodroid.card.felica
 
-import au.id.micolous.metrodroid.multi.JvmDefault
 import au.id.micolous.metrodroid.transit.CardInfo
 import au.id.micolous.metrodroid.transit.CardTransitFactory
 
-interface FelicaCardTransitFactory : CardTransitFactory<FelicaCard> {
-    @JvmDefault
+abstract class FelicaCardTransitFactory : CardTransitFactory<FelicaCard> {
     override fun check(card: FelicaCard) = earlyCheck(card.systems.keys.toList())
 
-    fun earlyCheck(systemCodes: List<Int>): Boolean
+    abstract fun earlyCheck(systemCodes: List<Int>): Boolean
 
-    @JvmDefault
-    fun getCardInfo(systemCodes: List<Int>): CardInfo? = allCards[0]
+    open fun getCardInfo(systemCodes: List<Int>): CardInfo? = allCards[0]
 }
