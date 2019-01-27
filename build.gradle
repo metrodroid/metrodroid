@@ -133,21 +133,7 @@ task copyThirdPartyNotices(type: Copy) {
 
 kotlin {
     targets {
-        fromPreset(presets.js, 'chromeos') {
-            compilations.all {
-                tasks[compileKotlinTaskName].kotlinOptions {
-                    moduleKind = "umd"
-                    sourceMap = true
-                }
-                tasks[compileKotlinTaskName].dependsOn += generateLocalize
-            }
-        }
         fromPreset(presets.android, 'android')
-        fromPreset(presets.jvm, 'jvmCli') {
-            compilations.all {
-                tasks[compileKotlinTaskName].dependsOn += generateLocalize
-            }
-        }
     }
 
     sourceSets {
