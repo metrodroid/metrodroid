@@ -33,6 +33,8 @@ expect object ClassicCardFactoryRegistry {
     val allFactories: List<ClassicCardTransitFactory>
 }
 
+internal expect class FallbackFactory : ClassicCardTransitFactory
+
 @Serializable
 class ClassicCard constructor(
         @XMLListIdx("index")
