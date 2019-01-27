@@ -49,7 +49,7 @@ actual object TimestampFormatter {
             when (ts) {
                 is TimestampFull -> makeCalendar(ts)
                 is Daystamp -> {
-                    val adjusted = TripObfuscator.maybeObfuscateTS(ts.adjust())
+                    val adjusted = TimestampObfuscator.maybeObfuscateTS(ts.adjust())
                     val g = GregorianCalendar(UTC)
                     g.timeInMillis = 0
                     g.add(Calendar.DAY_OF_YEAR, adjusted.daysSinceEpoch)

@@ -537,7 +537,7 @@ class ISO7816ApplicationXmlAdapter(
             }
     )
 
-    fun convert(): ISO7816Application {
+    fun convert(): ISO7816Application =
         when (type) {
             "calypso" -> CalypsoApplication(generic = makeCapsule())
             "cepas" -> CEPASApplication(generic = makeCapsule(),
@@ -550,7 +550,6 @@ class ISO7816ApplicationXmlAdapter(
                     balances = balances.mapValues { ImmutableByteArray.fromHex(it.value.trim()) })
             else -> throw Exception("Unknown type $type")
         }
-    }
 }
 
 fun readCardXML(reader: InputStream): Card {
