@@ -40,7 +40,7 @@ import au.id.micolous.metrodroid.ui.HiddenSpan
 import au.id.micolous.metrodroid.util.Preferences
 import au.id.micolous.metrodroid.util.Utils
 
-abstract class Trip : Parcelable {
+actual abstract class Trip : Parcelable {
 
     /**
      * Starting time of the trip.

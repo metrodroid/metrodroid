@@ -9,8 +9,8 @@ import au.id.micolous.metrodroid.transit.troika.TroikaUltralightTransitData
 import au.id.micolous.metrodroid.transit.unknown.BlankUltralightTransitData
 import au.id.micolous.metrodroid.transit.unknown.UnauthorizedUltralightTransitData
 
-object UltralightTransitRegistry {
-     val allFactories = listOf(
+actual object UltralightTransitRegistry {
+     actual val allFactories = listOf(
             TroikaUltralightTransitData.FACTORY,
             CompassUltralightTransitData.FACTORY,
             VentraUltralightTransitData.FACTORY,
