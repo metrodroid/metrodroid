@@ -16,30 +16,14 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package au.id.micolous.metrodroid.transit.unknown;
+package au.id.micolous.metrodroid.transit.unknown
 
-import android.os.Parcel;
-
-import au.id.micolous.metrodroid.transit.TransitData;
+import au.id.micolous.metrodroid.transit.TransitData
 
 /**
  * Base class for all types of cards where we are unable to read any useful data (without a key).
  */
-@SuppressWarnings("NoopMethodInAbstractClass")
-public abstract class UnauthorizedTransitData extends TransitData {
-
-    @Override
-    public String getSerialNumber() {
-        return null;
-    }
-
-    @Override
-    public void writeToParcel(Parcel parcel, int i) {
-
-    }
-
-    @Override
-    public int describeContents() {
-        return 0;
-    }
+abstract class UnauthorizedTransitData : TransitData() {
+    override val serialNumber: String?
+        get() = null
 }
