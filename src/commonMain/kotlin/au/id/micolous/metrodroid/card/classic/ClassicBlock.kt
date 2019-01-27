@@ -25,8 +25,7 @@ import au.id.micolous.metrodroid.util.ImmutableByteArray
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
-@Serializable
-class ClassicBlock(@SerialName("data") private val mData: ImmutableByteArray) {
+class ClassicBlock(private val mData: ImmutableByteArray) {
     val isUnauthorized: Boolean
         get() = mData == ImmutableByteArray.of(0x04)
 

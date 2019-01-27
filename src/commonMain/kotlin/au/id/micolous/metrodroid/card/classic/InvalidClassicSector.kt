@@ -25,7 +25,6 @@ import au.id.micolous.metrodroid.multi.R
 import au.id.micolous.metrodroid.ui.ListItem
 import kotlinx.serialization.Serializable
 
-@Serializable
 class InvalidClassicSector constructor(override val raw: ClassicSectorRaw) : ClassicSector() {
     constructor(error: String?) : this(ClassicSectorRaw(blocks = emptyList(),
             keyA = null, keyB = null, error = error ?: "No message", isUnauthorized = false))

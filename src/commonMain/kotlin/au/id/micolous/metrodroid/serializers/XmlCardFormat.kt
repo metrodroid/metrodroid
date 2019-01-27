@@ -324,7 +324,7 @@ class XMLInput internal constructor(private val parent: NodeWrapper,
         when (deserializer.descriptor.name) {
             TimestampFull.serializer().descriptor.name ->
                 return TimestampFull(timeInMillis = decodeLong(), tz = MetroTimeZone.LOCAL) as T
-            ImmutableByteArray.serializer().descriptor.name -> {
+            ImmutableByteArray.Companion.descriptor.name -> {
                 return when {
                     elementAnnotations.orEmpty().filterIsInstance<XMLDesfireManufacturingData>().isNotEmpty() -> super.decodeSerializableValue(DesfireManufacturingDataXmlAdapter.serializer()).makeRaw()
                     elementAnnotations.orEmpty().filterIsInstance<XMLHex>().isNotEmpty() -> ImmutableByteArray.fromHex(decodeString())

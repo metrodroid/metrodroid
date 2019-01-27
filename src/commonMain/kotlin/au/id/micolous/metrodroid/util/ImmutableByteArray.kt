@@ -30,17 +30,21 @@ import kotlinx.serialization.*
 fun ByteArray.toImmutable(): ImmutableByteArray = ImmutableByteArray.fromByteArray(this)
 
 @Parcelize
-@Serializable
-class ImmutableByteArray private constructor(private val mData: ByteArray) :
+@Serializable(with = ImmutableByteArray.Companion::class)
+class ImmutableByteArray private constructor(
+        private val mData: ByteArray) :
         Parcelable, Comparable<ImmutableByteArray>, Collection<Byte> {
     constructor(len: Int, function: (Int) -> Byte) : this(mData = ByteArray(len, function))
     constructor(imm: ImmutableByteArray): this(mData = imm.mData)
     constructor(len: Int) : this(mData = ByteArray(len))
 
+    @Transient
     val dataCopy: ByteArray
         get() = mData.copyOf()
+    @Transient
     override val size
         get() = mData.size
+    @Transient
     val lastIndex
         get() = mData.lastIndex
 
