@@ -19,10 +19,10 @@
 
 package au.id.micolous.metrodroid.transit.zolotayakorona
 
+import au.id.micolous.metrodroid.multi.Parcelize
 import au.id.micolous.metrodroid.transit.TransitCurrency
 import au.id.micolous.metrodroid.transit.Trip
 import au.id.micolous.metrodroid.util.ImmutableByteArray
-import kotlinx.android.parcel.Parcelize
 
 private const val DEFAULT_FARE = 1300
 
