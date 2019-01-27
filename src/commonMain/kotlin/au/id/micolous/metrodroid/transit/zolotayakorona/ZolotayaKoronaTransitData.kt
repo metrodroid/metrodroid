@@ -19,27 +19,23 @@
 
 package au.id.micolous.metrodroid.transit.zolotayakorona
 
-import java.util.Calendar
-import java.util.GregorianCalendar
-import java.util.TimeZone
-
-import au.id.micolous.farebot.R
 import au.id.micolous.metrodroid.card.CardType
 import au.id.micolous.metrodroid.card.classic.ClassicCard
 import au.id.micolous.metrodroid.card.classic.ClassicCardTransitFactory
 import au.id.micolous.metrodroid.card.classic.ClassicSector
 import au.id.micolous.metrodroid.card.classic.UnauthorizedClassicSector
 import au.id.micolous.metrodroid.multi.Localizer
-import au.id.micolous.metrodroid.time.TimestampFull
-import au.id.micolous.metrodroid.time.calendar2ts
+import au.id.micolous.metrodroid.multi.Parcelize
+import au.id.micolous.metrodroid.multi.R
+import au.id.micolous.metrodroid.time.Epoch
+import au.id.micolous.metrodroid.time.MetroTimeZone
+import au.id.micolous.metrodroid.time.Timestamp
 import au.id.micolous.metrodroid.transit.CardInfo
 import au.id.micolous.metrodroid.transit.TransitCurrency
 import au.id.micolous.metrodroid.transit.TransitData
 import au.id.micolous.metrodroid.transit.TransitIdentity
 import au.id.micolous.metrodroid.ui.ListItem
 import au.id.micolous.metrodroid.util.NumberUtils
-import au.id.micolous.metrodroid.util.Utils
-import kotlinx.android.parcel.Parcelize
 
 @Parcelize
 data class ZolotayaKoronaTransitData internal constructor(
@@ -78,7 +74,7 @@ data class ZolotayaKoronaTransitData internal constructor(
                 if (regionRsrcIdx != null)
                     Localizer.localizeString(regionRsrcIdx)
                 else
-                    (REGIONS[regionNum]?.first ?: Integer.toHexString(regionNum))
+                    (REGIONS[regionNum]?.first ?: regionNum.toString(16))
                 )
         return listOf(
                 ListItem(R.string.zolotaya_korona_region, regionName),
@@ -98,88 +94,81 @@ data class ZolotayaKoronaTransitData internal constructor(
                 // Probably doesn't make sense to i18n as
                 // the name is only used as fallback if the card is not known
                 // Gorno-Altaysk
-                0x04 to Pair("Altai Republic", "Asia/Krasnoyarsk"),
+                0x04 to Pair("Altai Republic", MetroTimeZone.KRASNOYARSK),
                 // Syktyvkar and Ukhta
-                0x11 to Pair("Komi Republic", "Europe/Kirov"),
+                0x11 to Pair("Komi Republic", MetroTimeZone.KIROV),
                 // Biysk
-                0x22 to Pair("Altai Krai", "Asia/Krasnoyarsk"),
+                0x22 to Pair("Altai Krai", MetroTimeZone.KRASNOYARSK),
                 // Krasnodar and Sochi
-                0x23 to Pair("Krasnodar Krai", "Europe/Moscow"),
+                0x23 to Pair("Krasnodar Krai", MetroTimeZone.MOSCOW),
                 // Vladivostok
-                0x25 to Pair("Primorsky Krai", "Asia/Vladivostok"),
+                0x25 to Pair("Primorsky Krai", MetroTimeZone.VLADIVOSTOK),
                 // Khabarovsk
-                0x27 to Pair("Khabarovsk Krai", "Asia/Vladivostok"),
+                0x27 to Pair("Khabarovsk Krai", MetroTimeZone.VLADIVOSTOK),
                 // Blagoveshchensk
-                0x28 to Pair("Amur Oblast", "Asia/Yakutsk"),
+                0x28 to Pair("Amur Oblast", MetroTimeZone.YAKUTSK),
                 // Arkhangelsk
-                0x29 to Pair("Arkhangelsk Oblast", "Europe/Moscow"),
+                0x29 to Pair("Arkhangelsk Oblast", MetroTimeZone.MOSCOW),
                 // Petropavlovsk-Kamchatsky
-                0x41 to Pair("Kamchatka Krai", "Asia/Kamchatka"),
+                0x41 to Pair("Kamchatka Krai", MetroTimeZone.KAMCHATKA),
                 // Kemerovo and Novokuznetsk
-                0x42 to Pair("Kemerovo Oblast", "Asia/Novokuznetsk"),
+                0x42 to Pair("Kemerovo Oblast", MetroTimeZone.NOVOKUZNETSK),
                 // Kurgan
-                0x45 to Pair("Kurgan Oblast", "Asia/Yekaterinburg"),
+                0x45 to Pair("Kurgan Oblast", MetroTimeZone.YEKATERINBURG),
                 // Veliky Novgorod
-                0x53 to Pair("Novgorod Oblast", "Europe/Moscow"),
+                0x53 to Pair("Novgorod Oblast", MetroTimeZone.MOSCOW),
                 // Novosibirsk
-                0x54 to Pair("Novosibirsk Oblast", "Asia/Novosibirsk"),
+                0x54 to Pair("Novosibirsk Oblast", MetroTimeZone.NOVOSIBIRSK),
                 // Omsk
-                0x55 to Pair("Omsk Oblast", "Asia/Omsk"),
+                0x55 to Pair("Omsk Oblast", MetroTimeZone.OMSK),
                 // Orenburg
-                0x56 to Pair("Orenburg Oblast", "Asia/Yekaterinburg"),
+                0x56 to Pair("Orenburg Oblast", MetroTimeZone.YEKATERINBURG),
                 // Pskov
-                0x60 to Pair("Pskov Oblast", "Europe/Moscow"),
+                0x60 to Pair("Pskov Oblast", MetroTimeZone.MOSCOW),
                 // Samara
-                0x63 to Pair("Samara Oblast", "Europe/Samara"),
+                0x63 to Pair("Samara Oblast", MetroTimeZone.SAMARA),
                 // Kholmsk
-                0x65 to Pair("Sakhalin Oblast", "Asia/Sakhalin"),
-                0x74 to Pair("Chelyabinsk Oblast", "Asia/Yekaterinburg"),
+                0x65 to Pair("Sakhalin Oblast", MetroTimeZone.SAKHALIN),
+                0x74 to Pair("Chelyabinsk Oblast", MetroTimeZone.YEKATERINBURG),
                 // Yaroslavl
-                0x76 to Pair("Yaroslavl Oblast", "Europe/Moscow"),
+                0x76 to Pair("Yaroslavl Oblast", MetroTimeZone.MOSCOW),
                 // Birobidzhan
-                0x79 to Pair("Jewish Autonomous Oblast", "Asia/Vladivostok")
+                0x79 to Pair("Jewish Autonomous Oblast", MetroTimeZone.VLADIVOSTOK)
         )
 
         private val CARDS = mapOf(
-                0x760500 to CardInfo.Builder()
-                        .setName(Localizer.localizeString(R.string.card_name_yaroslavl_etk))
-                        .setLocation(R.string.location_yaroslavl)
-                        .setCardType(CardType.MifareClassic)
-                        .setKeysRequired()
-                        .setPreview()
-                        .build(),
-                0x230100 to CardInfo.Builder()
-                        .setName(Localizer.localizeString(R.string.card_name_krasnodar_etk))
-                        .setLocation(R.string.location_krasnodar)
-                        .setCardType(CardType.MifareClassic)
-                        .setKeysRequired()
-                        .setPreview()
-                        .build()
+                0x760500 to CardInfo(
+                        name = Localizer.localizeString(R.string.card_name_yaroslavl_etk),
+                        locationId = R.string.location_yaroslavl,
+                        cardType = CardType.MifareClassic,
+                        keysRequired = true,
+                        preview = true),
+                0x230100 to CardInfo(
+                        name = Localizer.localizeString(R.string.card_name_krasnodar_etk),
+                        locationId = R.string.location_krasnodar,
+                        cardType = CardType.MifareClassic,
+                        keysRequired = true,
+                        preview = true)
         )
 
         private fun nameCard(type: Int) = CARDS[type]?.name
                 ?: (Localizer.localizeString(R.string.card_name_zolotaya_korona)
                         + " " + type.toString(16))
 
-        private val FALLBACK_CARD_INFO = CardInfo.Builder()
-                .setName(Localizer.localizeString(R.string.card_name_zolotaya_korona))
-                .setLocation(R.string.location_russia)
-                .setCardType(CardType.MifareClassic)
-                .setKeysRequired()
-                .setPreview()
-                .build()
+        private val FALLBACK_CARD_INFO = CardInfo(
+                name = Localizer.localizeString(R.string.card_name_zolotaya_korona),
+                locationId = R.string.location_russia,
+                cardType = CardType.MifareClassic,
+                keysRequired = true,
+                preview = true)
 
-        fun parseTime(time: Int, cardType: Int): TimestampFull? {
+        fun parseTime(time: Int, cardType: Int): Timestamp? {
             if (time == 0)
                 return null
-            val tz = TimeZone.getTimeZone(REGIONS[cardType shr 16]?.second ?: "Europe/Moscow")
-            val g = GregorianCalendar(tz)
-            val pseudoUnixTime = time * 1000L
-            g.timeInMillis = pseudoUnixTime
-            // Not entirely correct around DST change but Russia doesn't
-            // do it anymore
-            g.add(Calendar.MILLISECOND, -tz.getOffset(pseudoUnixTime))
-            return calendar2ts(g)
+            val tz = REGIONS[cardType shr 16]?.second ?: MetroTimeZone.MOSCOW
+            val epoch = Epoch.local(1970, tz)
+            // This is pseudo unix time with local day alwayscoerced to 86400 seconds
+            return epoch.daySecond(time / 86400, time % 86400)
         }
 
         private fun getSerial(card: ClassicCard) = card[15, 2].data.getHexString(
@@ -197,18 +186,18 @@ data class ZolotayaKoronaTransitData internal constructor(
                     nameCard(getCardType(card)),
                     formatSerial(getSerial(card)))
 
-            override fun parseTransitData(classicCard: ClassicCard): TransitData {
-                val cardType = getCardType(classicCard)
+            override fun parseTransitData(card: ClassicCard): TransitData {
+                val cardType = getCardType(card)
 
-                val balance = if (classicCard[6] is UnauthorizedClassicSector) null else
-                    classicCard[6, 0].data.byteArrayToIntReversed(0, 4)
+                val balance = if (card[6] is UnauthorizedClassicSector) null else
+                    card[6, 0].data.byteArrayToIntReversed(0, 4)
 
-                val refill = ZolotayaKoronaRefill.parse(classicCard[4, 1].data, cardType)
-                val trip = ZolotayaKoronaTrip.parse(classicCard[4, 2].data, cardType, refill, balance)
+                val refill = ZolotayaKoronaRefill.parse(card[4, 1].data, cardType)
+                val trip = ZolotayaKoronaTrip.parse(card[4, 2].data, cardType, refill, balance)
 
                 return ZolotayaKoronaTransitData(
-                        mSerial = getSerial(classicCard),
-                        mCardSerial = classicCard[0, 0].data.getHexString(0, 4),
+                        mSerial = getSerial(card),
+                        mCardSerial = card[0, 0].data.getHexString(0, 4),
                         mCardType = cardType,
                         mBalance = balance,
                         mTrip = trip,
