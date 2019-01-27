@@ -334,6 +334,11 @@ public class LeapTransitData extends TransitData {
         parcel.writeTypedList(mTrips);
     }
 
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
     private LeapTransitData(Parcel parcel) {
         mSerial = parcel.readString();
         mBalance = parcel.readInt();

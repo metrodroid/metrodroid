@@ -106,6 +106,11 @@ public abstract class ChinaTransitData extends TransitData {
         parcel.writeList(mTrips);
     }
 
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
     protected ChinaTransitData(Parcel parcel) {
         mBalance = parcel.readInt();
         mValidityStart = parcel.readInt();

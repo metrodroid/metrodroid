@@ -112,9 +112,13 @@ public class BlankClassicTransitData extends TransitData {
         return Localizer.INSTANCE.localizeString(R.string.blank_mfc_card);
     }
 
-
     @Override
     public void writeToParcel(Parcel dest, int i) {
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
     }
 
     private BlankClassicTransitData(Parcel p) {

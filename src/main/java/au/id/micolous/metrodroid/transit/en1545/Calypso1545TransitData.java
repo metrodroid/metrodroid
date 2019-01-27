@@ -213,6 +213,11 @@ public abstract class Calypso1545TransitData extends En1545TransitData {
         dest.writeList(mBalances);
     }
 
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
     @SuppressWarnings("unchecked")
     protected Calypso1545TransitData(Parcel parcel) {
         super(parcel);

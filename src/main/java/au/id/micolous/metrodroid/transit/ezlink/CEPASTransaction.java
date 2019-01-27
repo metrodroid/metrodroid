@@ -52,7 +52,7 @@ public class CEPASTransaction implements Parcelable {
 
         /* Date is expressed "in seconds", but the epoch is January 1 1995, SGT */
         long timestamp = rawData.byteArrayToLong(4, 4);
-        mDate = EZLinkTransitData.timestampToCalendar(timestamp);
+        mDate = EZLinkTransitData.Companion.timestampToCalendar(timestamp);
         mUserData = rawData.sliceOffLen(8, 8).readASCII();
     }
 

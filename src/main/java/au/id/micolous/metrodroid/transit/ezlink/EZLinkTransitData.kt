@@ -111,7 +111,7 @@ actual class EZLinkTransitData : TransitData {
         }
         private val EZLINK_STR = "ezlink"
 
-        val EZ_LINK_CARD_INFO = CardInfo.Builder()
+        actual val EZ_LINK_CARD_INFO = CardInfo.Builder()
                 .setImageId(R.drawable.ezlink_card)
                 .setName("EZ-Link")
                 .setLocation(R.string.location_singapore)

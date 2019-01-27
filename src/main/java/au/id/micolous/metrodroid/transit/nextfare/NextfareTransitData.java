@@ -318,6 +318,11 @@ public class NextfareTransitData extends TransitData {
         mConfig.writeToParcel(parcel, i);
     }
 
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
     /**
      * Called when it needs to be determined if two TapRecords are part of the same journey.
      * <p>

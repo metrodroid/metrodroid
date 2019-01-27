@@ -37,4 +37,9 @@ public abstract class UnauthorizedTransitData extends TransitData {
     public void writeToParcel(Parcel parcel, int i) {
 
     }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
 }

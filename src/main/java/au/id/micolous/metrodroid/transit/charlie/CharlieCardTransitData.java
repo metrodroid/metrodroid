@@ -170,6 +170,11 @@ public class CharlieCardTransitData extends TransitData {
         dest.writeList(mTrips);
     }
 
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
     public static final Creator<CharlieCardTransitData> CREATOR = new Creator<CharlieCardTransitData>() {
         @Override
         public CharlieCardTransitData createFromParcel(Parcel in) {

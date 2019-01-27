@@ -183,4 +183,8 @@ public class OrcaTransitData extends TransitData {
         parcel.writeList(mTrips);
     }
 
+    @Override
+    public int describeContents() {
+        return 0;
+    }
 }

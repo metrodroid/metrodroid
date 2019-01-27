@@ -79,6 +79,11 @@ public abstract class NextfareUltralightTransitData extends TransitData {
         dest.writeList(mTrips);
     }
 
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
     protected NextfareUltralightTransitData(Parcel p) {
         mSerial = p.readLong();
         mType = p.readByte();

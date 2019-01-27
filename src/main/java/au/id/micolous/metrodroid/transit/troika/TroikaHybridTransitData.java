@@ -140,6 +140,11 @@ public class TroikaHybridTransitData extends TransitData {
             dest.writeInt(0);
     }
 
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
     private TroikaHybridTransitData(Parcel p) {
         mTroika = new TroikaTransitData(p);
         if (p.readInt() != 0)
