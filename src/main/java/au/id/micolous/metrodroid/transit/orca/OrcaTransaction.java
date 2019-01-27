@@ -30,6 +30,8 @@ import android.support.annotation.Nullable;
 
 import au.id.micolous.farebot.R;
 import au.id.micolous.metrodroid.multi.Localizer;
+import au.id.micolous.metrodroid.time.Timestamp;
+import au.id.micolous.metrodroid.time.TimestampFormatterKt;
 import au.id.micolous.metrodroid.transit.Station;
 import au.id.micolous.metrodroid.transit.Transaction;
 import au.id.micolous.metrodroid.transit.Trip;
@@ -92,12 +94,12 @@ public class OrcaTransaction extends Transaction {
     }
 
     @Override
-    public Calendar getTimestamp() {
+    public Timestamp getTimestamp() {
         if (mTimestamp == 0)
             return null;
         Calendar g = new GregorianCalendar(TZ);
         g.setTimeInMillis(mTimestamp * 1000);
-        return g;
+        return TimestampFormatterKt.calendar2ts(g);
     }
 
     @Override
@@ -106,12 +108,12 @@ public class OrcaTransaction extends Transaction {
     }
 
     @Override
-    protected boolean isTapOff() {
+    public boolean isTapOff() {
         return !mIsTopup && mTransType == TRANS_TYPE_TAP_OUT;
     }
 
     @Override
-    protected boolean isCancel() {
+    public boolean isCancel() {
         return !mIsTopup && mTransType == TRANS_TYPE_CANCEL_TRIP;
     }
 

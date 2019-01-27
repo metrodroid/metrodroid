@@ -49,7 +49,7 @@ data class OVChipTransitData(
         private val mCreditId: Int,
         private val mCredit: Int,
         private val mBanbits: Int,
-        override val trips: List<TransactionTrip>,
+        override val trips: List<TransactionTripAbstract>,
         override val subscriptions: List<OVChipSubscription>
 ) : En1545TransitData(parsed) {
     override val cardName get() = NAME
@@ -138,7 +138,7 @@ data class OVChipTransitData(
                     subscriptions = getSubscriptions(card, index))
         }
 
-        private fun getTrips(card: ClassicCard): List<TransactionTrip> {
+        private fun getTrips(card: ClassicCard): List<TransactionTripAbstract> {
             val transactions = (0..27).mapNotNull { transactionId ->
                 OVChipTransaction.parseClassic(card[35 + transactionId / 7]
                         .readBlocks(transactionId % 7 * 2, 2))

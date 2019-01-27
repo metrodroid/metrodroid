@@ -83,7 +83,7 @@ data class RkfTCSTTrip(private val mParsed: En1545Parsed,
                 // Case 3: transfer without checkin transaction. Happens if checkin went out of the log.
                 if (previous == null) {
                     legs.add(RkfTripLeg(mStartTimestamp = startTimestamp,
-                            mEndTimestamp = calendar2ts(transaction.timestamp),
+                            mEndTimestamp = transaction.timestamp,
                             mStartStation = startStation, mEndStation = transaction.station,
                             mFare = fare, mPassengerCount = passengerCount, mMode = mode,
                             mTransfer = false,
@@ -93,7 +93,7 @@ data class RkfTCSTTrip(private val mParsed: En1545Parsed,
                 // Case 4: pair of checkin and transfer
                 if (index == 1 && isCheckin(previous)) {
                     legs.add(RkfTripLeg(mStartTimestamp = startTimestamp,
-                            mEndTimestamp = calendar2ts(transaction.timestamp),
+                            mEndTimestamp = transaction.timestamp,
                             mStartStation = startStation, mEndStation = transaction.station,
                             mFare = fare, mPassengerCount = passengerCount, mMode = previous.mode,
                             mTransfer = false,
@@ -101,8 +101,8 @@ data class RkfTCSTTrip(private val mParsed: En1545Parsed,
                     continue
                 }
                 // Case 5: pair of transfer and transfer
-                legs.add(RkfTripLeg(mStartTimestamp = calendar2ts(previous.timestamp)!!,
-                        mEndTimestamp = calendar2ts(transaction.timestamp),
+                legs.add(RkfTripLeg(mStartTimestamp = previous.timestamp,
+                        mEndTimestamp = transaction.timestamp,
                         mStartStation = previous.station, mEndStation = transaction.station,
                         mFare = null, mPassengerCount = passengerCount, mMode = previous.mode,
                         mTransfer = true,
@@ -112,7 +112,7 @@ data class RkfTCSTTrip(private val mParsed: En1545Parsed,
             val previous = if (previousIdx >= 0) mTransactions[previousIdx] else null
             // Case 6: pair of transfer and checkout or checkout missing
             if (previous != null && !isCheckin(previous)) {
-                legs.add(RkfTripLeg(mStartTimestamp = calendar2ts(previous.timestamp)!!, mEndTimestamp = if (checkoutCompleted) endTimestamp else null,
+                legs.add(RkfTripLeg(mStartTimestamp = previous.timestamp, mEndTimestamp = if (checkoutCompleted) endTimestamp else null,
                         mStartStation = previous.station, mEndStation = endStation,
                         mFare = null, mPassengerCount = passengerCount, mMode = previous.mode,
                         mTransfer = true,

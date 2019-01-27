@@ -19,13 +19,11 @@
 
 package au.id.micolous.metrodroid.transit
 
-import android.os.Parcelable
-
-import java.util.Calendar
-import java.util.Collections
+import au.id.micolous.metrodroid.multi.Parcelable
+import au.id.micolous.metrodroid.time.Timestamp
 
 abstract class Transaction : Parcelable {
-    protected abstract val isTapOff: Boolean
+    abstract val isTapOff: Boolean
 
     /**
      * This method may be overridden to provide candidate line names associated with the
@@ -35,11 +33,8 @@ abstract class Transaction : Parcelable {
      *
      * By default, this gets candidate route names from the Station.
      */
-    open val routeNames: List<String>
-        get() {
-            val s = station
-            return s?.lineNames ?: emptyList()
-        }
+    open val routeNames: List<String>?
+        get() = station?.lineNames ?: emptyList()
 
     /**
      * This method may be overridden to provide candidate line names associated with the
@@ -50,10 +45,7 @@ abstract class Transaction : Parcelable {
      * By default, this gets candidate route names from the Station.
      */
     open val humanReadableLineIDs: List<String>
-        get() {
-            val s = station
-            return s?.humanReadableLineIds ?: emptyList()
-        }
+        get() = station?.humanReadableLineIds ?: emptyList()
 
     open val vehicleID: String?
         get() = null
@@ -66,28 +58,26 @@ abstract class Transaction : Parcelable {
 
     abstract val station: Station?
 
-    abstract val timestamp: Calendar?
+    abstract val timestamp: Timestamp?
 
-    abstract val fare: TransitCurrency
+    abstract val fare: TransitCurrency?
 
     abstract val mode: Trip.Mode
 
-    protected open val isCancel: Boolean
+    open val isCancel: Boolean
         get() = false
 
     protected abstract val isTapOn: Boolean
 
-    protected open val isTransfer: Boolean
+    open val isTransfer: Boolean
         get() = false
 
-    protected open val isRejected: Boolean
+    open val isRejected: Boolean
         get() = false
 
-    open fun getAgencyName(isShort: Boolean): String? {
-        return null
-    }
+    open fun getAgencyName(isShort: Boolean) : String? = null
 
-    protected open fun shouldBeMerged(other: Transaction): Boolean {
+    open fun shouldBeMerged(other: Transaction): Boolean {
         return isTapOn && (other.isTapOff || other.isCancel) && isSameTrip(other)
     }
 
