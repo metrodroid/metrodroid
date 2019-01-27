@@ -104,6 +104,11 @@ public class ChcMetrocardTransitData extends ErgTransitData {
         public List<CardInfo> getAllCards() {
             return Collections.singletonList(CARD_INFO);
         }
+
+        @Override
+        protected String getSerialNumber(ErgMetadataRecord metadata) {
+            return internalFormatSerialNumber(metadata);
+        }
     };
 
     @Override
@@ -118,11 +123,15 @@ public class ChcMetrocardTransitData extends ErgTransitData {
 
     @Override
     protected String formatSerialNumber(ErgMetadataRecord metadataRecord) {
-        return Integer.toString(metadataRecord.getCardSerialDec());
+        return internalFormatSerialNumber(metadataRecord);
     }
 
     @Override
     protected TimeZone getTimezone() {
         return TIME_ZONE;
+    }
+
+    private static String internalFormatSerialNumber(ErgMetadataRecord metadataRecord) {
+        return Integer.toString(metadataRecord.getCardSerialDec());
     }
 }

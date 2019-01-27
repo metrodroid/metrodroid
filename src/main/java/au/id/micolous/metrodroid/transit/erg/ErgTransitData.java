@@ -196,7 +196,7 @@ public class ErgTransitData extends TransitData {
                 return null;
             }
 
-            return new TransitIdentity(name, metadata.getCardSerialHex());
+            return new TransitIdentity(name, getSerialNumber(metadata));
         }
 
         @Override
@@ -218,6 +218,10 @@ public class ErgTransitData extends TransitData {
          */
         protected int getErgAgencyID() {
             return -1;
+        }
+
+        protected String getSerialNumber(ErgMetadataRecord metadata) {
+            return metadata.getCardSerialHex();
         }
     }
 
