@@ -304,12 +304,6 @@ repositories {
     mavenCentral()
 }
 
-tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile).all {
-    kotlinOptions {
-        jvmTarget = '1.8'
-        freeCompilerArgs = ["-Xjvm-default=enable"]
-    }
-}
 // workaround for https://youtrack.jetbrains.com/issue/KT-27170
 configurations {
     compileClasspath

@@ -91,7 +91,7 @@ class IstanbulKartTransitData (private val mSerial: String,
         private fun parseSerial(file: ImmutableByteArray?) =
                 file?.getHexString(0, 8)
 
-        val FACTORY: DesfireCardTransitFactory = object : DesfireCardTransitFactory {
+        val FACTORY: DesfireCardTransitFactory = object : DesfireCardTransitFactory() {
             override fun earlyCheck(appIds: IntArray) = (APP_ID in appIds)
 
             override val allCards get() = listOf(CARD_INFO)

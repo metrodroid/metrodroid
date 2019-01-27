@@ -70,7 +70,7 @@ data class StrelkaTransitData (private val mSerial: String): SerialOnlyTransitDa
         fun parse(card: ClassicCard) =
                 StrelkaTransitData(mSerial = getSerial(card))
 
-        val FACTORY: ClassicCardTransitFactory = object : ClassicCardTransitFactory {
+        val FACTORY: ClassicCardTransitFactory = object : ClassicCardTransitFactory() {
             override fun parseTransitIdentity(card: ClassicCard) =
                     TransitIdentity(Localizer.localizeString(R.string.card_name_strelka),
                         formatShortSerial(getSerial(card)))

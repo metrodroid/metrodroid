@@ -271,7 +271,7 @@ public class NextfareTransitData extends TransitData {
         mTrips = trips;
     }
 
-    protected static class NextFareTransitFactory implements ClassicCardTransitFactory {
+    protected static class NextFareTransitFactory extends ClassicCardTransitFactory {
         @Override
         public boolean earlyCheck(@NonNull List<ClassicSector> sectors) {
             ImmutableByteArray blockData = sectors.get(0).getBlock(1).getData();

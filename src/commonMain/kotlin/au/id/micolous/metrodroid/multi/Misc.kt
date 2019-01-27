@@ -22,4 +22,3 @@ package au.id.micolous.metrodroid.multi
 expect annotation class VisibleForTesting()
 expect annotation class Parcelize()
 expect interface Parcelable
-expect annotation class JvmDefault()
