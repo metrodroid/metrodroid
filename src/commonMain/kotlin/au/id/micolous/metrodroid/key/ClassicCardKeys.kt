@@ -85,7 +85,7 @@ class ClassicCardKeys(override var uid: String?,
          */
         fun fromDump(keyData: ImmutableByteArray) = fromDump(keyData, ClassicSectorKey.KeyType.UNKNOWN)
 
-        private fun fromDump(keyData: ImmutableByteArray, keyType: ClassicSectorKey.KeyType): ClassicCardKeys {
+        fun fromDump(keyData: ImmutableByteArray, keyType: ClassicSectorKey.KeyType): ClassicCardKeys {
             val keys = mutableMapOf<Int, List<ClassicSectorKey>>()
 
             val numSectors = keyData.size / ClassicSectorKey.KEY_LEN

@@ -29,6 +29,7 @@ import au.id.micolous.metrodroid.card.classic.ClassicSector
 import au.id.micolous.farebot.R
 import au.id.micolous.metrodroid.card.CardType
 import au.id.micolous.metrodroid.multi.Localizer
+import au.id.micolous.metrodroid.multi.StringResource
 import au.id.micolous.metrodroid.transit.*
 import au.id.micolous.metrodroid.transit.en1545.*
 import au.id.micolous.metrodroid.ui.ListItem
