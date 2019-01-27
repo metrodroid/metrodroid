@@ -20,8 +20,6 @@ package au.id.micolous.metrodroid.transit.octopus
 
 import au.id.micolous.metrodroid.time.MetroTimeZone
 import au.id.micolous.metrodroid.time.TimestampFull
-import au.id.micolous.metrodroid.util.Utils
-import java.util.*
 
 class OctopusData {
     companion object {
