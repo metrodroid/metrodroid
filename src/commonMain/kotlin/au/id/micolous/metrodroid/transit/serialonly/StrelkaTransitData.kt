@@ -20,19 +20,18 @@
 
 package au.id.micolous.metrodroid.transit.serialonly
 
-import au.id.micolous.farebot.R
 import au.id.micolous.metrodroid.card.CardType
 import au.id.micolous.metrodroid.card.classic.ClassicCard
 import au.id.micolous.metrodroid.card.classic.ClassicCardTransitFactory
 import au.id.micolous.metrodroid.card.classic.ClassicSector
 import au.id.micolous.metrodroid.key.ClassicSectorKey
 import au.id.micolous.metrodroid.multi.Localizer
+import au.id.micolous.metrodroid.multi.Parcelize
+import au.id.micolous.metrodroid.multi.R
 import au.id.micolous.metrodroid.transit.CardInfo
 import au.id.micolous.metrodroid.transit.TransitIdentity
 import au.id.micolous.metrodroid.ui.ListItem
 import au.id.micolous.metrodroid.util.NumberUtils
-import au.id.micolous.metrodroid.util.Utils
-import kotlinx.android.parcel.Parcelize
 
 /**
  * Strelka cards.
@@ -51,15 +50,15 @@ data class StrelkaTransitData (private val mSerial: String): SerialOnlyTransitDa
     override val cardName get() = Localizer.localizeString(R.string.card_name_strelka)
 
     companion object {
-        private val CARD_INFO = CardInfo.Builder()
-                .setName(Localizer.localizeString(R.string.card_name_strelka))
-                .setLocation(R.string.location_moscow)
-                .setCardType(CardType.MifareClassic)
-                .setExtraNote(R.string.card_note_card_number_only)
-                .setImageId(R.drawable.strelka_card, R.drawable.iso7810_id1_alpha)
-                .setKeysRequired()
-                .setPreview()
-                .build()
+        private val CARD_INFO = CardInfo(
+                name = Localizer.localizeString(R.string.card_name_strelka),
+                locationId = R.string.location_moscow,
+                cardType = CardType.MifareClassic,
+                resourceExtraNote = R.string.card_note_card_number_only,
+                imageId = R.drawable.strelka_card,
+                imageAlphaId = R.drawable.iso7810_id1_alpha,
+                keysRequired = true,
+                preview = true)
 
         private fun formatShortSerial(serial: String) =
                 NumberUtils.groupString(serial.substring(8), " ", 4, 4)
@@ -75,8 +74,8 @@ data class StrelkaTransitData (private val mSerial: String): SerialOnlyTransitDa
                     TransitIdentity(Localizer.localizeString(R.string.card_name_strelka),
                         formatShortSerial(getSerial(card)))
 
-            override fun parseTransitData(classicCard: ClassicCard) =
-                    parse(classicCard)
+            override fun parseTransitData(card: ClassicCard) =
+                    parse(card)
 
             override fun earlyCheck(sectors: List<ClassicSector>): Boolean {
                 val toc = sectors[0][2].data
@@ -86,6 +85,10 @@ data class StrelkaTransitData (private val mSerial: String): SerialOnlyTransitDa
                         && toc.byteArrayToInt(10, 2) == 0x18e0
                         && toc.byteArrayToInt(12, 2) == 0x18e8)
             }
+
+            override fun isDynamicKeys(sectors: List<ClassicSector>, sectorIndex: Int,
+                                       keyType: ClassicSectorKey.KeyType): Boolean =
+                    sectorIndex in listOf(13, 14)
 
             // 1 is actually enough but let's show Troika+Strelka as Troika
             override val earlySectors get() = 2

@@ -19,16 +19,16 @@
 
 package au.id.micolous.metrodroid.transit.serialonly
 
-import au.id.micolous.farebot.R
 import au.id.micolous.metrodroid.card.CardType
 import au.id.micolous.metrodroid.card.classic.ClassicCard
 import au.id.micolous.metrodroid.card.classic.ClassicCardTransitFactory
 import au.id.micolous.metrodroid.card.classic.ClassicSector
+import au.id.micolous.metrodroid.multi.Parcelize
+import au.id.micolous.metrodroid.multi.R
 import au.id.micolous.metrodroid.transit.CardInfo
 import au.id.micolous.metrodroid.transit.TransitIdentity
 import au.id.micolous.metrodroid.ui.ListItem
-import kotlinx.android.parcel.Parcelize
-import java.util.*
+import au.id.micolous.metrodroid.util.NumberUtils
 
 /**
  * SunCard cards.
@@ -53,20 +53,19 @@ data class SunCardTransitData(private val mSerial: Int = 0) : SerialOnlyTransitD
 
     companion object {
         private const val NAME = "SunRail SunCard"
-        private val CARD_INFO = CardInfo.Builder()
-                .setName(NAME)
-                .setLocation(R.string.location_orlando)
-                .setCardType(CardType.MifareClassic)
-                .setExtraNote(R.string.card_note_card_number_only)
-                .setKeysRequired()
-                .setPreview()
-                .build()
+        private val CARD_INFO = CardInfo(
+                name = NAME,
+                locationId = R.string.location_orlando,
+                cardType = CardType.MifareClassic,
+                resourceExtraNote = R.string.card_note_card_number_only,
+                keysRequired = true,
+                preview = true)
 
         private fun formatSerial(serial: Int) = serial.toString()
 
-        private fun formatLongSerial(serial: Int) = "637426%010d".format(Locale.ENGLISH, serial)
+        private fun formatLongSerial(serial: Int) = "637426" + NumberUtils.zeroPad(serial, 10)
 
-        private fun formatBarcodeSerial(serial: Int) = "799366314176000637426%010d".format(Locale.ENGLISH, serial)
+        private fun formatBarcodeSerial(serial: Int) = "799366314176000637426" + NumberUtils.zeroPad(serial, 10)
 
         private fun getSerial(card: ClassicCard) = card[0, 1].data.byteArrayToInt(3, 4)
 
@@ -74,7 +73,7 @@ data class SunCardTransitData(private val mSerial: Int = 0) : SerialOnlyTransitD
             override fun parseTransitIdentity(card: ClassicCard) = TransitIdentity(NAME,
                     formatSerial(getSerial(card)))
 
-            override fun parseTransitData(classicCard: ClassicCard) = SunCardTransitData(classicCard)
+            override fun parseTransitData(card: ClassicCard) = SunCardTransitData(card)
 
             override fun earlyCheck(sectors: List<ClassicSector>) =
                 // I hope it is magic as other than zeros, ff's and serial there is nothing

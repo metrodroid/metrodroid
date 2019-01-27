@@ -21,20 +21,17 @@
 
 package au.id.micolous.metrodroid.transit.serialonly
 
-import au.id.micolous.farebot.R
 import au.id.micolous.metrodroid.card.CardType
-import au.id.micolous.metrodroid.card.UnauthorizedException
 import au.id.micolous.metrodroid.card.classic.ClassicCard
 import au.id.micolous.metrodroid.card.classic.ClassicCardTransitFactory
 import au.id.micolous.metrodroid.card.classic.ClassicSector
+import au.id.micolous.metrodroid.multi.Parcelize
+import au.id.micolous.metrodroid.multi.R
 import au.id.micolous.metrodroid.transit.CardInfo
 import au.id.micolous.metrodroid.transit.TransitData
 import au.id.micolous.metrodroid.transit.TransitIdentity
 import au.id.micolous.metrodroid.ui.ListItem
-import au.id.micolous.metrodroid.util.Utils
 import au.id.micolous.metrodroid.util.ImmutableByteArray
-import kotlinx.android.parcel.Parcelize
-import org.jetbrains.annotations.NonNls
 
 /**
  * Transit data type for Tartu bus card.
@@ -49,33 +46,26 @@ import org.jetbrains.annotations.NonNls
 class TartuTransitFactory : ClassicCardTransitFactory() {
 
     override fun earlyCheck(sectors: List<ClassicSector>): Boolean {
-        try {
-            val sector0 = sectors[0]
-            if (Utils.byteArrayToInt(sector0[1].data, 2, 4) != 0x03e103e1)
-                return false
-            val sector1 = sectors[1]
-            if (!Utils.byteArraySlice(sector1[0].data, 7, 9)
-                            .contentEquals(ImmutableByteArray.fromASCII("pilet.ee:")))
-                return false
-            if (!Utils.byteArraySlice(sector1[1].data, 0, 6)
-                            .contentEquals(ImmutableByteArray.fromASCII("ekaart")))
-                return false
-            return true
-        } catch (ignored: IndexOutOfBoundsException) {
-            // If that sector number is too high, then it's not for us.
-        } catch (ignored: UnauthorizedException) {
-        }
-
-        return false
+        val sector0 = sectors[0]
+        if (sector0[1].data.byteArrayToInt(2, 4) != 0x03e103e1)
+            return false
+        val sector1 = sectors[1]
+        if (!sector1[0].data.sliceOffLen(7, 9)
+                        .contentEquals(ImmutableByteArray.fromASCII("pilet.ee:")))
+            return false
+        if (!sector1[1].data.sliceOffLen(0, 6)
+                        .contentEquals(ImmutableByteArray.fromASCII("ekaart")))
+            return false
+        return true
     }
 
     override val earlySectors get() = 2
 
-    override fun parseTransitIdentity(classicCard: ClassicCard) =
-            TransitIdentity(NAME, parseSerial(classicCard).substring(8))
+    override fun parseTransitIdentity(card: ClassicCard) =
+            TransitIdentity(NAME, parseSerial(card).substring(8))
 
-    override fun parseTransitData(classicCard: ClassicCard): TransitData =
-            TartuTransitData(mSerial = parseSerial(classicCard))
+    override fun parseTransitData(card: ClassicCard): TransitData =
+            TartuTransitData(mSerial = parseSerial(card))
 
     override val allCards get() = listOf(CARD_INFO)
 
@@ -95,14 +85,12 @@ class TartuTransitFactory : ClassicCardTransitFactory() {
     companion object {
         private const val NAME = "Tartu Bus"
 
-        private val CARD_INFO = CardInfo.Builder()
-                .setName(NAME)
-                .setCardType(CardType.MifareClassic)
-                .setLocation(R.string.location_tartu)
-                .setExtraNote(R.string.card_note_card_number_only)
-                .build()
+        private val CARD_INFO = CardInfo(
+                name = NAME,
+                cardType = CardType.MifareClassic,
+                locationId = R.string.location_tartu,
+                resourceExtraNote = R.string.card_note_card_number_only)
 
-        @NonNls
         private fun parseSerial(card: ClassicCard) =
                 card[2, 0].data.sliceOffLen(7, 9).readASCII() +
                         card[2, 1].data.sliceOffLen(0, 10).readASCII()
