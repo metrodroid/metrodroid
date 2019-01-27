@@ -31,6 +31,7 @@ import au.id.micolous.metrodroid.card.CardType;
 import au.id.micolous.metrodroid.card.china.ChinaCard;
 import au.id.micolous.metrodroid.card.china.ChinaCardTransitFactory;
 import au.id.micolous.metrodroid.multi.Localizer;
+import au.id.micolous.metrodroid.time.TimestampFormatterKt;
 import au.id.micolous.metrodroid.transit.CardInfo;
 import au.id.micolous.metrodroid.transit.TransitBalance;
 import au.id.micolous.metrodroid.transit.TransitBalanceStored;
@@ -136,8 +137,11 @@ public class TUnionTransitData extends ChinaTransitData {
     public TransitBalance getBalance() {
         if (mBalance > 0)
             return new TransitBalanceStored(TransitCurrency.CNY(mBalance),
-                    null, parseHexDate(mValidityStart), parseHexDate(mValidityEnd));
+                    null,
+                    TimestampFormatterKt.calendar2ts(parseHexDate(mValidityStart)),
+                    TimestampFormatterKt.calendar2ts(parseHexDate(mValidityEnd)));
         return new TransitBalanceStored(TransitCurrency.CNY(mBalance-mNegativeBalance),
-                null, parseHexDate(mValidityStart), parseHexDate(mValidityEnd));
+                null, TimestampFormatterKt.calendar2ts(parseHexDate(mValidityStart)),
+                TimestampFormatterKt.calendar2ts(parseHexDate(mValidityEnd)));
     }
 }

@@ -7,6 +7,9 @@ import java.util.GregorianCalendar;
 
 import au.id.micolous.farebot.R;
 import au.id.micolous.metrodroid.multi.Localizer;
+import au.id.micolous.metrodroid.time.Timestamp;
+import au.id.micolous.metrodroid.time.TimestampFormatterKt;
+import au.id.micolous.metrodroid.time.TimestampFull;
 import au.id.micolous.metrodroid.transit.Subscription;
 import au.id.micolous.metrodroid.util.Utils;
 
@@ -95,6 +98,11 @@ class TroikaSubscription extends Subscription {
         }
     }
 
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
     public static final Creator<TroikaSubscription> CREATOR = new Creator<TroikaSubscription>() {
         @Override
         public TroikaSubscription createFromParcel(Parcel in) {
@@ -108,18 +116,16 @@ class TroikaSubscription extends Subscription {
     };
 
     @Override
-    public Calendar getValidFrom() {
-        return mValidityStart;
+    public TimestampFull getValidFrom() {
+        return TimestampFormatterKt.calendar2ts(mValidityStart);
     }
 
     @Override
-    public Calendar getValidTo() {
-        return mValidityEnd == null ? mExpiryDate : mValidityEnd;
-    }
-
-    @Override
-    public boolean validToHasTime() {
-        return mValidityLengthMinutes != null && mValidityLengthMinutes >= 60 * 24;
+    public Timestamp getValidTo() {
+        TimestampFull t = TimestampFormatterKt.calendar2ts(mValidityEnd == null ? mExpiryDate : mValidityEnd);
+        if (mValidityLengthMinutes == null || mValidityLengthMinutes <= 60 * 24)
+            return t.toDaystamp();
+        return t;
     }
 
     @Override

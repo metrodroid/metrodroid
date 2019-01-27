@@ -7,6 +7,8 @@ import java.util.Calendar;
 
 import au.id.micolous.farebot.R;
 import au.id.micolous.metrodroid.multi.Localizer;
+import au.id.micolous.metrodroid.time.TimestampFormatterKt;
+import au.id.micolous.metrodroid.time.TimestampFull;
 import au.id.micolous.metrodroid.transit.Station;
 import au.id.micolous.metrodroid.transit.TransitCurrency;
 import au.id.micolous.metrodroid.transit.Trip;
@@ -37,8 +39,8 @@ class PodorozhnikTopup extends Trip {
     }
 
     @Override
-    public Calendar getStartTimestamp() {
-        return PodorozhnikTransitData.convertDate(mTimestamp);
+    public TimestampFull getStartTimestamp() {
+        return TimestampFormatterKt.calendar2ts(PodorozhnikTransitData.convertDate(mTimestamp));
     }
 
     @Nullable
@@ -98,6 +100,6 @@ class PodorozhnikTopup extends Trip {
         }
         // TODO: handle other transports better.
         //noinspection StringConcatenation
-        return Station.unknown(Integer.toHexString(mAgency) + "/" + Integer.toHexString(mTopupMachine));
+        return Station.Companion.unknown(Integer.toHexString(mAgency) + "/" + Integer.toHexString(mTopupMachine));
     }
 }

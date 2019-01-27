@@ -55,7 +55,8 @@ public abstract class NextfareUltralightTransitData extends TransitData {
     public TransitBalance getBalance() {
         return new TransitBalanceStored(
                 makeCurrency(mBalance),
-                parseDateTime(getTimeZone(), mBaseDate, mExpiry, 0));
+                TimestampFormatterKt.calendar2ts(parseDateTime(getTimeZone(), mBaseDate, mExpiry, 0))
+                        .toDaystamp());
     }
 
     protected abstract TimeZone getTimeZone();

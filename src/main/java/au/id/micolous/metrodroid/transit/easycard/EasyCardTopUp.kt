@@ -25,6 +25,7 @@ package au.id.micolous.metrodroid.transit.easycard
 
 import android.support.annotation.VisibleForTesting
 import au.id.micolous.metrodroid.card.classic.ClassicCard
+import au.id.micolous.metrodroid.time.calendar2ts
 import au.id.micolous.metrodroid.transit.Station
 import au.id.micolous.metrodroid.transit.TransitCurrency
 import au.id.micolous.metrodroid.transit.Trip
@@ -49,7 +50,7 @@ data class EasyCardTopUp(
 
     override val fare get() = TransitCurrency.TWD(-amount)
 
-    override val startTimestamp get() = EasyCardTransitData.parseTimestamp(timestamp)
+    override val startTimestamp get() = calendar2ts(EasyCardTransitData.parseTimestamp(timestamp))
 
     override val startStation get(): Station? =
             StationTableReader.getStation(EasyCardTransitData.EASYCARD_STR, location)

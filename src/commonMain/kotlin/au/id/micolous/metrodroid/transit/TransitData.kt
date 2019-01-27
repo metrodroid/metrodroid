@@ -24,10 +24,6 @@ import au.id.micolous.metrodroid.multi.Parcelable
 import au.id.micolous.metrodroid.ui.ListItem
 import java.util.*
 
-expect class TransitBalance
-expect abstract class Trip
-expect abstract class Subscription
-
 @JvmSuppressWildcards(false)
 abstract class TransitData : Parcelable {
 

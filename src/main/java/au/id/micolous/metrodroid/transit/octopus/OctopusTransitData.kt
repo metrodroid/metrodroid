@@ -64,10 +64,10 @@ actual class OctopusTransitData : TransitData {
         get() {
             val bals = ArrayList<TransitBalance>()
             if (mHasOctopus) {
-                bals.add(TransitBalanceStored(TransitCurrency.HKD(mOctopusBalance)))
+                bals.add(TransitCurrency.HKD(mOctopusBalance))
             }
             if (mHasShenzhen) {
-                bals.add(TransitBalanceStored(TransitCurrency.CNY(mShenzhenBalance)))
+                bals.add(TransitCurrency.CNY(mShenzhenBalance))
             }
             return bals
         }

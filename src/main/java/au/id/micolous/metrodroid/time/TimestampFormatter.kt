@@ -31,11 +31,13 @@ import android.text.SpannableStringBuilder
 import au.id.micolous.metrodroid.MetrodroidApplication
 import android.text.SpannableString
 import android.text.Spanned
-import android.text.format.DateFormat;
-import au.id.micolous.metrodroid.util.TimestampObfuscator
+import android.text.format.DateFormat
+
+fun calendar2ts(c: Calendar?) = if (c != null) TimestampFull(timeInMillis = c.timeInMillis,
+        tz = MetroTimeZone(c.timeZone.id)) else null
 
 actual object TimestampFormatter {
-    private fun makeCalendar(ts: TimestampFull): Calendar = makeRawCalendar(ts.adjust())
+    fun makeCalendar(ts: TimestampFull): Calendar = makeRawCalendar(ts.adjust())
 
     private fun makeRawCalendar(ts: TimestampFull): Calendar {
         val g = GregorianCalendar(makeTimezone(ts.tz))
@@ -49,7 +51,7 @@ actual object TimestampFormatter {
             when (ts) {
                 is TimestampFull -> makeCalendar(ts)
                 is Daystamp -> {
-                    val adjusted = TimestampObfuscator.maybeObfuscateTS(ts.adjust())
+                    val adjusted = TripObfuscator.maybeObfuscateTS(ts.adjust())
                     val g = GregorianCalendar(UTC)
                     g.timeInMillis = 0
                     g.add(Calendar.DAY_OF_YEAR, adjusted.daysSinceEpoch)

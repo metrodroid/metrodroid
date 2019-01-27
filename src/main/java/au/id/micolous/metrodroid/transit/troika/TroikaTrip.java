@@ -1,6 +1,7 @@
 package au.id.micolous.metrodroid.transit.troika;
 
 import android.os.Parcel;
+import android.os.Parcelable;
 import android.support.annotation.Nullable;
 import android.text.SpannableString;
 import android.text.Spanned;
@@ -10,6 +11,8 @@ import java.util.Calendar;
 import au.id.micolous.farebot.R;
 import au.id.micolous.metrodroid.multi.FormattedString;
 import au.id.micolous.metrodroid.multi.Localizer;
+import au.id.micolous.metrodroid.time.TimestampFormatterKt;
+import au.id.micolous.metrodroid.time.TimestampFull;
 import au.id.micolous.metrodroid.transit.Station;
 import au.id.micolous.metrodroid.transit.TransitCurrency;
 import au.id.micolous.metrodroid.transit.Trip;
@@ -114,8 +117,8 @@ class TroikaTrip extends Trip {
     }
 
     @Override
-    public Calendar getStartTimestamp() {
-        return mStartTime;
+    public TimestampFull getStartTimestamp() {
+        return TimestampFormatterKt.calendar2ts(mStartTime);
     }
 
     // Troika doesn't store monetary price of trip. Only a fare code. So show this fare
@@ -129,13 +132,12 @@ class TroikaTrip extends Trip {
         }
 
         protected TroikaFare(Parcel in) {
-            super(in);
+            super(0, "RUB");
             mDesc = in.readString();
         }
 
         @Override
         public void writeToParcel(Parcel dest, int flags) {
-            super.writeToParcel(dest, flags);
             dest.writeString(mDesc);
         }
 
@@ -145,7 +147,7 @@ class TroikaTrip extends Trip {
         }
 
         @SuppressWarnings("InnerClassFieldHidesOuterClassField")
-        public static final Creator<TroikaFare> CREATOR = new Creator<TroikaFare>() {
+        public static final Parcelable.Creator<TroikaFare> CREATOR = new Parcelable.Creator<TroikaFare>() {
             @Override
             public TroikaFare createFromParcel(Parcel in) {
                 return new TroikaFare(in);

@@ -83,7 +83,7 @@ public class AdvancedCardInfoActivity extends MetrodroidActivity {
 
         TimestampFull scannedAt = mCard.getScannedAt();
         if (mCard.getScannedAt().getTimeInMillis() > 0) {
-            scannedAt = TimestampObfuscator.INSTANCE.maybeObfuscateTS(scannedAt);
+            scannedAt = TripObfuscator.INSTANCE.maybeObfuscateTS(scannedAt);
             Spanned date = TimestampFormatter.INSTANCE.dateFormat(scannedAt).getSpanned();
             Spanned time = TimestampFormatter.INSTANCE.timeFormat(scannedAt).getSpanned();
             actionBar.setSubtitle(Localizer.INSTANCE.localizeString(R.string.scanned_at_format, time, date));

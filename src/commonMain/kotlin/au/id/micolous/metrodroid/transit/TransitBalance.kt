@@ -17,29 +17,20 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package au.id.micolous.metrodroid.transit;
+package au.id.micolous.metrodroid.transit
 
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
+import au.id.micolous.metrodroid.multi.Parcelable
+import au.id.micolous.metrodroid.time.Timestamp
 
-import java.util.Calendar;
+interface TransitBalance : Parcelable {
+    val balance: TransitCurrency
 
-public abstract class TransitBalance {
-    @NonNull
-    public abstract TransitCurrency getBalance();
+    val validFrom: Timestamp?
+        get() = null
 
-    @Nullable
-    public Calendar getValidFrom() {
-        return null;
-    }
+    val validTo: Timestamp?
+        get() = null
 
-    @Nullable
-    public Calendar getValidTo() {
-        return null;
-    }
-
-    @Nullable
-    public String getName() {
-        return null;
-    }
+    val name: String?
+        get() = null
 }

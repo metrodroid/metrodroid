@@ -27,7 +27,7 @@ import au.id.micolous.metrodroid.multi.Parcelize
 import au.id.micolous.metrodroid.multi.FormattedString
 import au.id.micolous.metrodroid.util.NumberUtils
 import au.id.micolous.metrodroid.util.Preferences
-import au.id.micolous.metrodroid.util.TimestampObfuscator
+import au.id.micolous.metrodroid.util.TripObfuscator
 import kotlinx.serialization.*
 
 @Parcelize
@@ -385,7 +385,7 @@ data class TimestampFull internal constructor(val timeInMillis: Long,
 
     override fun compareTo(other: TimestampFull): Int = timeInMillis.compareTo(other = other.timeInMillis)
     fun adjust() : TimestampFull =
-            TimestampObfuscator.maybeObfuscateTS(if (Preferences.convertTimezone)
+            TripObfuscator.maybeObfuscateTS(if (Preferences.convertTimezone)
                 TimestampFull(timeInMillis, MetroTimeZone.LOCAL) else this)
 
     operator fun plus(duration: Duration) = duration.addFull(this)

@@ -4,6 +4,7 @@ import android.support.annotation.Nullable;
 
 import au.id.micolous.farebot.R;
 import au.id.micolous.metrodroid.multi.Localizer;
+import au.id.micolous.metrodroid.time.TimestampFormatterKt;
 import au.id.micolous.metrodroid.transit.Subscription;
 import au.id.micolous.metrodroid.transit.TransitBalance;
 import au.id.micolous.metrodroid.transit.TransitBalanceStored;
@@ -53,7 +54,7 @@ class TroikaPurse extends TroikaBlock {
         return new TransitBalanceStored(
                 TransitCurrency.RUB(mBalance),
                 Localizer.INSTANCE.localizeString(R.string.card_name_troika),
-                mExpiryDate);
+                TimestampFormatterKt.calendar2ts(mExpiryDate));
     }
 
     @Override

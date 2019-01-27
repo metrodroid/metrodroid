@@ -36,7 +36,7 @@ open class ErgTransaction(protected val purse: ErgPurseRecord,
 
 
     // Implemented functionality.
-    override val timestamp get(): Calendar {
+    override val timestamp get(): TimestampFull {
         return convertTimestamp(epoch, timezone, purse.day, purse.minute)
     }
 

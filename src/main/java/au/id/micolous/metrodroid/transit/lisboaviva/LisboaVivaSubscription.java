@@ -27,6 +27,9 @@ import java.util.List;
 
 import au.id.micolous.farebot.R;
 import au.id.micolous.metrodroid.multi.Localizer;
+import au.id.micolous.metrodroid.time.Duration;
+import au.id.micolous.metrodroid.time.TimestampFormatterKt;
+import au.id.micolous.metrodroid.time.TimestampFull;
 import au.id.micolous.metrodroid.transit.TransitBalance;
 import au.id.micolous.metrodroid.transit.TransitCurrency;
 import au.id.micolous.metrodroid.transit.en1545.En1545Container;
@@ -117,20 +120,17 @@ public class LisboaVivaSubscription extends En1545Subscription {
     }
 
     @Override
-    public Calendar getValidTo() {
-        Calendar vf = getValidFrom();
+    public TimestampFull getValidTo() {
+        TimestampFull vf = getValidFrom();
         if (vf == null)
             return null;
-        Calendar res = (Calendar) vf.clone();
         int period = mParsed.getIntOrZero(CONTRACT_PERIOD);
         int units = mParsed.getIntOrZero(CONTRACT_PERIOD_UNITS);
         switch (units) {
             case 0x109:
-                res.add(Calendar.DAY_OF_YEAR, period - 1);
-                return res;
+                return vf.plus(Duration.Companion.daysLocal(period - 1));
             case 0x10a:
-                res.add(Calendar.MONTH, period - 1);
-                return res;
+                return vf.plus(Duration.Companion.monthsLocal(period - 1));
         }
         return super.getValidTo();
     }

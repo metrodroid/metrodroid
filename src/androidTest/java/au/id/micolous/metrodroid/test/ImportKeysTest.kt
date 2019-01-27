@@ -167,7 +167,7 @@ class ImportKeysTest : BaseInstrumentedTest() {
         assertTrue(j.contains("010203040506"), "010203040506 must be in j")
         assertTrue(j.contains("KeyB"), "KeyB must be in j")
         assertTrue(j.contains("112233445566"), "112233445566 must be in j")
-        assertTrue(j.contains("\"sector\": 10"), "sector 10 must be in j")
+        assertTrue(j.contains("\"sector\":10"), "sector 10 must be in j")
     }
 
     @Test

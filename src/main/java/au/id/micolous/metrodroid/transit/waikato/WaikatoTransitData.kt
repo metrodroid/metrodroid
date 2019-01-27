@@ -24,6 +24,7 @@ import au.id.micolous.metrodroid.card.CardType
 import au.id.micolous.metrodroid.card.classic.ClassicCard
 import au.id.micolous.metrodroid.card.classic.ClassicCardTransitFactory
 import au.id.micolous.metrodroid.card.classic.ClassicSector
+import au.id.micolous.metrodroid.time.Timestamp
 import au.id.micolous.metrodroid.transit.*
 import au.id.micolous.metrodroid.util.ImmutableByteArray
 import kotlinx.android.parcel.IgnoredOnParcel
@@ -58,7 +59,7 @@ data class WaikatoTransitData internal constructor(
     @IgnoredOnParcel
     private val trip = object : Trip() {
         override fun writeToParcel(dest: Parcel?, flags: Int) {}
-        override val startTimestamp get(): Calendar? = null
+        override val startTimestamp get(): Timestamp? = null
         override val fare get() = lastTransactionValue
         override val mode get() = Mode.BUS
         override fun describeContents() = 0
@@ -80,7 +81,7 @@ data class WaikatoTransitData internal constructor(
 
         val MAGIC = ImmutableByteArray.fromASCII("Panda")
 
-        val FACTORY: ClassicCardTransitFactory = object : ClassicCardTransitFactory {
+        val FACTORY: ClassicCardTransitFactory = object : ClassicCardTransitFactory() {
             override val earlySectors get() = 1
 
             override fun earlyCheck(sectors: List<ClassicSector>) =

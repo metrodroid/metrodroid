@@ -34,13 +34,13 @@ class ISO7816Test : CardReaderWithAssetDumpsTest(XmlCardFormat()) {
     @Test
     fun testIso7816Card() = runAsync {
         // Load up a Mobib card that is basically empty
-        val card = loadCard<ISO7816Card>("iso7816/mobib_blank.xml")
+        val card = loadCard<ISO7816Card>("iso7816/mobib_blank.xml").iso7816!!
 
         // Environment check
         assertEquals(MobibTransitData.NAME, card.parseTransitIdentity()?.name)
 
         // Load the card into the emulator
-        val vcard = VirtualISO7816Card(card as ISO7816Card)
+        val vcard = VirtualISO7816Card(card)
 
         // Try to dump the tag from the emulator
         val rcard = ISO7816Card.dumpTag(vcard, MockFeedbackInterface.get())

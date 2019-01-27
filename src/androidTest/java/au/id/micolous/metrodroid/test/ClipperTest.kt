@@ -21,6 +21,7 @@ package au.id.micolous.metrodroid.test
 import au.id.micolous.metrodroid.card.desfire.DesfireApplication
 import au.id.micolous.metrodroid.card.desfire.DesfireCard
 import au.id.micolous.metrodroid.card.desfire.files.DesfireFile
+import au.id.micolous.metrodroid.time.TimestampFull
 import au.id.micolous.metrodroid.transit.TransitCurrency
 import au.id.micolous.metrodroid.transit.Trip
 import au.id.micolous.metrodroid.transit.clipper.ClipperTransitData
@@ -78,7 +79,7 @@ class ClipperTest : BaseInstrumentedTest() {
         assertNotNull(trips)
         assertEquals("Whole Foods", trips[1].getAgencyName(false))
         assertEquals("Whole Foods", trips[1].getAgencyName(true))
-        assertEquals(1520009600000L, (trips[1].startTimestamp!!).timeInMillis)
+        assertEquals(1520009600000L, (trips[1].startTimestamp as TimestampFull).timeInMillis)
         assertEquals(TransitCurrency.USD(-5000), trips[1].fare)
         assertNull(trips[1].routeName)
         assertEquals(Trip.Mode.TICKET_MACHINE, trips[1].mode)
@@ -88,20 +89,20 @@ class ClipperTest : BaseInstrumentedTest() {
 
         assertEquals("Bay Area Rapid Transit", trips[0].getAgencyName(false))
         assertEquals("BART", trips[0].getAgencyName(true))
-        assertEquals(1521320320000L, (trips[0].startTimestamp!!).timeInMillis)
+        assertEquals(1521320320000L, (trips[0].startTimestamp as TimestampFull).timeInMillis)
         assertEquals(TransitCurrency.USD(630), trips[0].fare)
         assertNull(trips[0].routeName)
         assertEquals(Trip.Mode.METRO, trips[0].mode)
         assertNotNull(trips[0].startStation)
-        assertEquals("Powell St.", trips[0].startStation!!.stationName)
-        assertEquals("Powell St.", trips[0].startStation!!.shortStationName)
-        assertNear(37.78447, java.lang.Float.parseFloat(trips[0].startStation!!.latitude).toDouble(), 0.00001)
-        assertNear(-122.40797, java.lang.Float.parseFloat(trips[0].startStation!!.longitude).toDouble(), 0.00001)
+        assertEquals("Powell St.", trips[0].startStation!!.getStationName(false))
+        assertEquals("Powell St.", trips[0].startStation!!.getStationName(true))
+        assertNear(37.78447, trips[0].startStation!!.latitude!!.toDouble(), 0.00001)
+        assertNear(-122.40797, trips[0].startStation!!.longitude!!.toDouble(), 0.00001)
         assertNotNull(trips[0].endStation)
-        assertEquals("Dublin/Pleasanton", trips[0].endStation!!.stationName)
-        assertEquals("Dublin/Pleasanton", trips[0].endStation!!.shortStationName)
-        assertNear(37.70169, java.lang.Float.parseFloat(trips[0].endStation!!.latitude).toDouble(), 0.00001)
-        assertNear(-121.89918, java.lang.Float.parseFloat(trips[0].endStation!!.longitude).toDouble(), 0.00001)
+        assertEquals("Dublin/Pleasanton", trips[0].endStation!!.getStationName(false))
+        assertEquals("Dublin/Pleasanton", trips[0].endStation!!.getStationName(true))
+        assertNear(37.70169, trips[0].endStation!!.latitude!!.toDouble(), 0.00001)
+        assertNear(-121.89918, trips[0].endStation!!.longitude!!.toDouble(), 0.00001)
     }
 
     companion object {

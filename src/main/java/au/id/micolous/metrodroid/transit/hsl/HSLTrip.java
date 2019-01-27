@@ -23,6 +23,8 @@ import android.os.Parcel;
 import android.support.annotation.Nullable;
 
 import au.id.micolous.metrodroid.multi.Localizer;
+import au.id.micolous.metrodroid.time.TimestampFormatterKt;
+import au.id.micolous.metrodroid.time.TimestampFull;
 import org.jetbrains.annotations.NonNls;
 
 import java.util.Calendar;
@@ -100,8 +102,8 @@ public class HSLTrip extends Trip {
     }
 
     @Override
-    public Calendar getStartTimestamp() {
-        return mTimestamp;
+    public TimestampFull getStartTimestamp() {
+        return TimestampFormatterKt.calendar2ts(mTimestamp);
     }
 
     @Override

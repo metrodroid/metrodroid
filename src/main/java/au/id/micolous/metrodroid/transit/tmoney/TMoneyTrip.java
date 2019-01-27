@@ -26,6 +26,8 @@ import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.TimeZone;
 
+import au.id.micolous.metrodroid.time.TimestampFormatterKt;
+import au.id.micolous.metrodroid.time.TimestampFull;
 import au.id.micolous.metrodroid.transit.TransitCurrency;
 import au.id.micolous.metrodroid.transit.Trip;
 import au.id.micolous.metrodroid.util.NumberUtils;
@@ -105,8 +107,8 @@ public class TMoneyTrip extends Trip {
 
 
     @Override
-    public Calendar getStartTimestamp() {
-        return parseHexDateTime (mTime);
+    public TimestampFull getStartTimestamp() {
+        return TimestampFormatterKt.calendar2ts(parseHexDateTime (mTime));
     }
 
     public static TMoneyTrip parseTrip(ImmutableByteArray data) {

@@ -27,6 +27,8 @@ import java.util.Calendar;
 
 import au.id.micolous.farebot.R;
 import au.id.micolous.metrodroid.MetrodroidApplication;
+import au.id.micolous.metrodroid.time.TimestampFormatterKt;
+import au.id.micolous.metrodroid.time.TimestampFull;
 import au.id.micolous.metrodroid.transit.TransitCurrency;
 import au.id.micolous.metrodroid.transit.Trip;
 import au.id.micolous.metrodroid.util.Utils;
@@ -71,8 +73,8 @@ public class HSLRefill extends Trip implements Parcelable {
     }
 
     @Override
-    public Calendar getStartTimestamp() {
-        return mRefillTime;
+    public TimestampFull getStartTimestamp() {
+        return TimestampFormatterKt.calendar2ts(mRefillTime);
     }
 
     @Override

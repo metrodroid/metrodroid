@@ -7,6 +7,8 @@ import java.util.Calendar;
 
 import au.id.micolous.farebot.R;
 import au.id.micolous.metrodroid.multi.Localizer;
+import au.id.micolous.metrodroid.time.TimestampFormatterKt;
+import au.id.micolous.metrodroid.time.TimestampFull;
 import au.id.micolous.metrodroid.transit.Station;
 import au.id.micolous.metrodroid.transit.TransitCurrency;
 import au.id.micolous.metrodroid.transit.Trip;
@@ -44,8 +46,8 @@ class PodorozhnikTrip extends Trip {
     }
 
     @Override
-    public Calendar getStartTimestamp() {
-        return PodorozhnikTransitData.convertDate(mTimestamp);
+    public TimestampFull getStartTimestamp() {
+        return TimestampFormatterKt.calendar2ts(PodorozhnikTransitData.convertDate(mTimestamp));
     }
 
     @Nullable

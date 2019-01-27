@@ -110,7 +110,7 @@ public abstract class NextfareUltralightTransaction extends Transaction {
         if (mLocation == 0) {
             return null;
         }
-        return Station.unknown(mLocation);
+        return Station.Companion.unknown(mLocation);
     }
 
     public TimestampFull getTimestamp() {

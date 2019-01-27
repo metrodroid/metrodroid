@@ -27,6 +27,7 @@ import au.id.micolous.metrodroid.card.classic.ClassicCard
 import au.id.micolous.metrodroid.card.classic.ClassicCardTransitFactory
 import au.id.micolous.metrodroid.card.classic.ClassicSector
 import au.id.micolous.metrodroid.multi.Localizer
+import au.id.micolous.metrodroid.time.calendar2ts
 import au.id.micolous.metrodroid.transit.*
 import au.id.micolous.metrodroid.transit.en1545.*
 import au.id.micolous.metrodroid.ui.HeaderListItem
@@ -56,7 +57,7 @@ data class OVChipTransitData(
     public override val balance get() =
             TransitBalanceStored(TransitCurrency.EUR(mCredit),
                     Localizer.localizeString(if (mType == 2) R.string.card_type_personal else R.string.card_type_anonymous),
-                    OVChipTransitData.convertDate(mExpdate))
+                    calendar2ts(OVChipTransitData.convertDate(mExpdate)))
 
     override val serialNumber get(): String? = null
 

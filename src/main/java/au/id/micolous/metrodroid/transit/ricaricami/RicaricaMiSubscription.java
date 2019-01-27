@@ -23,6 +23,8 @@ import android.os.Parcel;
 
 import java.util.Calendar;
 
+import au.id.micolous.metrodroid.time.TimestampFormatterKt;
+import au.id.micolous.metrodroid.time.TimestampFull;
 import au.id.micolous.metrodroid.transit.en1545.En1545Container;
 import au.id.micolous.metrodroid.transit.en1545.En1545Field;
 import au.id.micolous.metrodroid.transit.en1545.En1545FixedHex;
@@ -49,12 +51,12 @@ public class RicaricaMiSubscription extends En1545Subscription {
     }
 
     @Override
-    public Calendar getValidTo() {
+    public TimestampFull getValidTo() {
         if (getTariff() == RicaricaMiLookup.TARIFF_URBAN_2X6
                 && mParsed.getIntOrZero(En1545FixedInteger.dateName(CONTRACT_START)) != 0) {
             Calendar end = (Calendar) mParsed.getTimeStamp(CONTRACT_START, RicaricaMiLookup.TZ).clone();
             end.add(Calendar.DAY_OF_YEAR, 6);
-            return end;
+            return TimestampFormatterKt.calendar2ts(end);
         }
         return super.getValidTo();
     }

@@ -25,6 +25,8 @@ import java.util.Calendar;
 
 import au.id.micolous.farebot.R;
 import au.id.micolous.metrodroid.multi.Localizer;
+import au.id.micolous.metrodroid.time.TimestampFormatterKt;
+import au.id.micolous.metrodroid.time.TimestampFull;
 import au.id.micolous.metrodroid.transit.Station;
 import au.id.micolous.metrodroid.util.NumberUtils;
 import au.id.micolous.metrodroid.util.StationTableReader;
@@ -119,18 +121,18 @@ public class NewShenzhenTrip extends ChinaTrip {
     }
 
     @Override
-    public Calendar getStartTimestamp() {
+    public TimestampFull getStartTimestamp() {
         int transport = getTransport();
         if (transport == SZT_METRO)
             return null;
-        return getTimestamp();
+        return TimestampFormatterKt.calendar2ts(getTimestamp());
     }
 
     @Override
-    public Calendar getEndTimestamp() {
+    public TimestampFull getEndTimestamp() {
         int transport = getTransport();
         if (transport != SZT_METRO)
             return null;
-        return getTimestamp();
+        return TimestampFormatterKt.calendar2ts(getTimestamp());
     }
 }

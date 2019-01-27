@@ -24,17 +24,15 @@ import android.support.annotation.Nullable;
 
 import java.util.Calendar;
 
+import au.id.micolous.metrodroid.time.Timestamp;
+import au.id.micolous.metrodroid.time.TimestampFormatterKt;
+import au.id.micolous.metrodroid.time.TimestampFull;
 import au.id.micolous.metrodroid.transit.TransitCurrency;
 import au.id.micolous.metrodroid.transit.Trip;
 
 class BilheteUnicoSPRefill extends Trip {
     private final int mDay;
     private final int mAmount;
-
-    @Override
-    public boolean hasTime() {
-        return false;
-    }
 
     BilheteUnicoSPRefill(int day, int amount) {
         mDay = day;
@@ -70,8 +68,8 @@ class BilheteUnicoSPRefill extends Trip {
     };
 
     @Override
-    public Calendar getStartTimestamp() {
-        return BilheteUnicoSPTrip.parseTimestamp(mDay, 0);
+    public Timestamp getStartTimestamp() {
+        return TimestampFormatterKt.calendar2ts(BilheteUnicoSPTrip.parseTimestamp(mDay, 0)).toDaystamp();
     }
 
     @Nullable

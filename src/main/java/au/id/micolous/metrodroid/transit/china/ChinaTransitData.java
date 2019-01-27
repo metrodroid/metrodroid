@@ -31,6 +31,7 @@ import java.util.TimeZone;
 import au.id.micolous.metrodroid.card.iso7816.ISO7816File;
 import au.id.micolous.metrodroid.card.iso7816.ISO7816Selector;
 import au.id.micolous.metrodroid.card.china.ChinaCard;
+import au.id.micolous.metrodroid.time.TimestampFormatterKt;
 import au.id.micolous.metrodroid.transit.TransitBalance;
 import au.id.micolous.metrodroid.transit.TransitBalanceStored;
 import au.id.micolous.metrodroid.transit.TransitCurrency;
@@ -95,7 +96,8 @@ public abstract class ChinaTransitData extends TransitData {
     @Override
     public TransitBalance getBalance() {
         return new TransitBalanceStored(TransitCurrency.CNY(mBalance),
-                null, parseHexDate(mValidityStart), parseHexDate(mValidityEnd));
+                null, TimestampFormatterKt.calendar2ts(parseHexDate(mValidityStart)),
+                TimestampFormatterKt.calendar2ts(parseHexDate(mValidityEnd)));
     }
 
     @Override

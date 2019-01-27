@@ -23,6 +23,9 @@ import android.os.Parcel;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
+import au.id.micolous.metrodroid.time.TimestampFormatter;
+import au.id.micolous.metrodroid.time.TimestampFormatterKt;
+import au.id.micolous.metrodroid.time.TimestampFull;
 import au.id.micolous.metrodroid.util.Preferences;
 import org.apache.commons.lang3.ArrayUtils;
 
@@ -241,9 +244,10 @@ public class OpalTransitData extends TransitData {
         if (!Preferences.INSTANCE.getHideCardNumbers()) {
             items.add(new ListItem(R.string.transaction_counter, Integer.toString(getLastTransactionNumber())));
         }
-        Calendar cLastTransactionTime = TripObfuscator.maybeObfuscateTS(getLastTransactionTime());
-        items.add(new ListItem(R.string.date, Utils.longDateFormat(cLastTransactionTime)));
-        items.add(new ListItem(R.string.time, Utils.timeFormat(cLastTransactionTime)));
+        TimestampFull cLastTransactionTime = TripObfuscator.INSTANCE.maybeObfuscateTS(
+                TimestampFormatterKt.calendar2ts(getLastTransactionTime()));
+        items.add(new ListItem(R.string.date, TimestampFormatter.INSTANCE.longDateFormat(cLastTransactionTime)));
+        items.add(new ListItem(R.string.time, TimestampFormatter.INSTANCE.timeFormat(cLastTransactionTime)));
         items.add(new ListItem(R.string.vehicle_type, OpalData.getLocalisedMode(getLastTransactionMode())));
         items.add(new ListItem(R.string.transaction_type, OpalData.getLocalisedAction(getLastTransaction())));
 

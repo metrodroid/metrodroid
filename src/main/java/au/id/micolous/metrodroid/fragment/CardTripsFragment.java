@@ -50,25 +50,25 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Collections;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import au.id.micolous.farebot.R;
-import au.id.micolous.metrodroid.MetrodroidApplication;
 import au.id.micolous.metrodroid.activity.CardInfoActivity;
 import au.id.micolous.metrodroid.activity.TripMapActivity;
-import au.id.micolous.metrodroid.multi.FormattedString;
 import au.id.micolous.metrodroid.multi.Localizer;
+import au.id.micolous.metrodroid.time.Timestamp;
+import au.id.micolous.metrodroid.time.TimestampFormatter;
+import au.id.micolous.metrodroid.time.TimestampFull;
 import au.id.micolous.metrodroid.transit.TransitCurrency;
 import au.id.micolous.metrodroid.transit.TransitData;
 import au.id.micolous.metrodroid.transit.Trip;
+import au.id.micolous.metrodroid.transit.TripFormatter;
 import au.id.micolous.metrodroid.util.Preferences;
 import au.id.micolous.metrodroid.util.TripObfuscator;
-import au.id.micolous.metrodroid.util.Utils;
 
 
 public class CardTripsFragment extends ListFragment {
@@ -89,20 +89,20 @@ public class CardTripsFragment extends ListFragment {
             trips.addAll(mTransitData.getTrips());
         }
 
-        // Explicitly sort these events
-        Collections.sort(trips, new Trip.Comparator());
-
         if (!trips.isEmpty()) {
+            Trip[] arrayTrips;
             if (Preferences.INSTANCE.getObfuscateTripDates() ||
                     Preferences.INSTANCE.getObfuscateTripTimes() ||
                     Preferences.INSTANCE.getObfuscateTripFares()) {
-                trips = TripObfuscator.obfuscateTrips(trips,
+                arrayTrips = TripObfuscator.INSTANCE.obfuscateTrips(trips,
                         Preferences.INSTANCE.getObfuscateTripDates(),
                         Preferences.INSTANCE.getObfuscateTripTimes(),
-                        Preferences.INSTANCE.getObfuscateTripFares());
-                Collections.sort(trips, new Trip.Comparator());
-            }
-            setListAdapter(new UseLogListAdapter(getActivity(), trips.toArray(new Trip[0]), mTransitData));
+                        Preferences.INSTANCE.getObfuscateTripFares()).toArray(new Trip[0]);
+            } else
+                arrayTrips = trips.toArray(new Trip[0]);
+            // Explicitly sort these events
+            Arrays.sort(arrayTrips, new Trip.Comparator());
+            setListAdapter(new UseLogListAdapter(getActivity(), arrayTrips, mTransitData));
         } else {
             view.findViewById(android.R.id.list).setVisibility(View.GONE);
             view.findViewById(R.id.error_text).setVisibility(View.VISIBLE);
@@ -160,8 +160,8 @@ public class CardTripsFragment extends ListFragment {
 
             Trip trip = getItem(position);
 
-            Calendar start = trip.getStartTimestamp();
-            Calendar date = start;
+            Timestamp start = trip.getStartTimestamp();
+            Timestamp date = start;
 
             if (date == null)
                 date = trip.getEndTimestamp();
@@ -169,18 +169,19 @@ public class CardTripsFragment extends ListFragment {
             View listHeader = convertView.findViewById(R.id.list_header);
             if (isFirstInSection(position)) {
                 listHeader.setVisibility(View.VISIBLE);
-                FormattedString headerDate = Utils.longDateFormat(date);
+                Spanned headerDate = date != null ?TimestampFormatter.INSTANCE.longDateFormat(date).getSpanned() : null;
                 TextView headerText = listHeader.findViewById(android.R.id.text1);
 
                 if (localisePlaces && Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                    SpannableString ss = new SpannableString(headerDate.getSpanned());
+                    SpannableString ss = new SpannableString(headerDate);
                     ss.setSpan(new LocaleSpan(Locale.getDefault()), 0, ss.length(), 0);
                     headerText.setText(ss);
                 } else {
-                    headerText.setText(headerDate.getSpanned());
+                    headerText.setText(headerDate);
                 }
 
-                ((TextView) listHeader.findViewById(android.R.id.text1)).setText(Utils.longDateFormat(date).getSpanned());
+                ((TextView) listHeader.findViewById(android.R.id.text1)).setText(
+                        date != null ? TimestampFormatter.INSTANCE.longDateFormat(date).getSpanned() : null);
             } else {
                 listHeader.setVisibility(View.GONE);
             }
@@ -206,7 +207,7 @@ public class CardTripsFragment extends ListFragment {
             int iconArrayRes = -1;
             if (a != null)
                 iconArrayRes = a.getResourceId(0, -1);
-            int iconIdx = trip.getMode().getImageResourceIdx();
+            int iconIdx = trip.getMode().getIdx();
             int iconResId = -1;
             Drawable icon = null;
             TypedArray iconArray = null;
@@ -244,14 +245,19 @@ public class CardTripsFragment extends ListFragment {
                 iconImageView.setContentDescription(s);
             }
 
-            Calendar end = trip.getEndTimestamp();
-            if (trip.hasTime() && (start != null || end != null)) {
-                if (end != null && start != null)
-                    timeTextView.setText(Localizer.INSTANCE.localizeString(R.string.time_from_to, Utils.timeFormat(start), Utils.timeFormat(end)));
-                else if (start != null)
-                    timeTextView.setText(Utils.timeFormat(start).getSpanned());
+            Timestamp end = trip.getEndTimestamp();
+            TimestampFull startTime = (start instanceof TimestampFull) ? (TimestampFull) start : null;
+            TimestampFull endTime = (end instanceof TimestampFull) ? (TimestampFull) end : null;
+            if (startTime != null || endTime != null) {
+                if (endTime != null && startTime != null)
+                    timeTextView.setText(Localizer.INSTANCE.localizeString(R.string.time_from_to,
+                            TimestampFormatter.INSTANCE.timeFormat(startTime).getSpanned(),
+                            TimestampFormatter.INSTANCE.timeFormat(endTime).getSpanned()));
+                else if (startTime != null)
+                    timeTextView.setText(TimestampFormatter.INSTANCE.timeFormat(startTime).getSpanned());
                 else
-                    timeTextView.setText(Localizer.INSTANCE.localizeString(R.string.time_from_unknown_to, Utils.timeFormat(end)));
+                    timeTextView.setText(Localizer.INSTANCE.localizeString(R.string.time_from_unknown_to,
+                            TimestampFormatter.INSTANCE.timeFormat(endTime).getSpanned()));
                 timeTextView.setVisibility(View.VISIBLE);
             } else {
                 timeTextView.setVisibility(View.INVISIBLE);
@@ -269,7 +275,7 @@ public class CardTripsFragment extends ListFragment {
                 }
             }
 
-            final String routeName = trip.getRouteDisplayName();
+            final String routeName = Trip.Companion.getRouteDisplayName(trip);
             if (routeName != null) {
                 int oldLength = routeText.length();
                 routeText.append(routeName);
@@ -318,7 +324,7 @@ public class CardTripsFragment extends ListFragment {
                 fareTextView.setVisibility(View.GONE);
             }
 
-            Spannable stationText = Trip.Companion.formatStationNames(trip);
+            Spannable stationText = TripFormatter.formatStationNames(trip);
             if (stationText != null) {
                 stationTextView.setText(stationText);
                 stationTextView.setVisibility(View.VISIBLE);
@@ -371,33 +377,29 @@ public class CardTripsFragment extends ListFragment {
         private boolean isFirstInSection(int position) {
             if (position == 0) return true;
 
-            Calendar date1 = getItem(position).getStartTimestamp();
+            Timestamp date1 = getItem(position).getStartTimestamp();
             if (date1 == null)
                 date1 = getItem(position).getEndTimestamp();
-            Calendar date2 = getItem(position - 1).getStartTimestamp();
+            Timestamp date2 = getItem(position - 1).getStartTimestamp();
             if (date2 == null)
                 date2 = getItem(position - 1).getEndTimestamp();
 
             if (date1 == null && date2 != null) return true;
             if (date1 == null || date2 == null) return false;
 
-            return ((date1.get(Calendar.YEAR) != date2.get(Calendar.YEAR)) ||
-                    (date1.get(Calendar.MONTH) != date2.get(Calendar.MONTH)) ||
-                    (date1.get(Calendar.DAY_OF_MONTH) != date2.get(Calendar.DAY_OF_MONTH)));
+            return !date1.isSameDay(date2);
         }
 
         public boolean isLastInSection(int position) {
             if (position == getCount() - 1) return true;
 
-            Calendar date1 = getItem(position).getStartTimestamp();
-            Calendar date2 = getItem(position + 1).getStartTimestamp();
+            Timestamp date1 = getItem(position).getStartTimestamp();
+            Timestamp date2 = getItem(position + 1).getStartTimestamp();
 
             if (date1 == null && date2 != null) return true;
             if (date1 == null || date2 == null) return false;
 
-            return ((date1.get(Calendar.YEAR) != date2.get(Calendar.YEAR)) ||
-                    (date1.get(Calendar.MONTH) != date2.get(Calendar.MONTH)) ||
-                    (date1.get(Calendar.DAY_OF_MONTH) != date2.get(Calendar.DAY_OF_MONTH)));
+            return !date1.isSameDay(date2);
         }
     }
 }

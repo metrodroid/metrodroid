@@ -19,13 +19,9 @@
 package au.id.micolous.metrodroid.test
 
 import au.id.micolous.metrodroid.card.classic.*
-import java.util.Calendar
-import java.util.TimeZone
+import au.id.micolous.metrodroid.time.MetroTimeZone
+import au.id.micolous.metrodroid.time.TimestampFull
 
-import au.id.micolous.metrodroid.card.classic.ClassicBlock
-import au.id.micolous.metrodroid.card.classic.ClassicCard
-import au.id.micolous.metrodroid.card.classic.ClassicSector
-import au.id.micolous.metrodroid.key.ClassicSectorKey
 import au.id.micolous.metrodroid.transit.lax_tap.LaxTapTransitData
 import au.id.micolous.metrodroid.transit.msp_goto.MspGotoTransitData
 import au.id.micolous.metrodroid.transit.nextfare.NextfareTransitData
@@ -33,8 +29,8 @@ import au.id.micolous.metrodroid.transit.nextfare.record.NextfareBalanceRecord
 import au.id.micolous.metrodroid.transit.nextfare.record.NextfareConfigRecord
 import au.id.micolous.metrodroid.transit.nextfare.record.NextfareTransactionRecord
 import au.id.micolous.metrodroid.transit.seq_go.SeqGoTransitData
-import au.id.micolous.metrodroid.util.Utils
 import au.id.micolous.metrodroid.util.ImmutableByteArray
+import au.id.micolous.metrodroid.util.Utils
 import au.id.micolous.metrodroid.util.Utils.UTC
 import kotlin.test.Test
 import kotlin.test.assertEquals
@@ -51,24 +47,21 @@ class NextfareTest {
         val r20240925 = ImmutableByteArray.fromHex("0103000039310000010200000000924a")
         val r20180815 = ImmutableByteArray.fromHex("010300010f25000004000000fb75c2f7")
 
-        var r: NextfareConfigRecord
+        val r1 = NextfareConfigRecord.recordFromBytes(r20250602, UTC)
+        assertEquals("2025-06-02 00:00", Utils.isoDateTimeFormat(r1.expiry))
 
-        r = NextfareConfigRecord.recordFromBytes(r20250602, UTC)
-        assertEquals("2025-06-02 00:00", Utils.isoDateTimeFormat(r.expiry))
+        val r2 = NextfareConfigRecord.recordFromBytes(r20240925, UTC)
+        assertEquals("2024-09-25 00:00", Utils.isoDateTimeFormat(r2.expiry))
 
-        r = NextfareConfigRecord.recordFromBytes(r20240925, UTC)
-        assertEquals("2024-09-25 00:00", Utils.isoDateTimeFormat(r.expiry))
-
-        r = NextfareConfigRecord.recordFromBytes(r20180815, UTC)
-        assertEquals("2018-08-15 00:00", Utils.isoDateTimeFormat(r.expiry))
+        val r3 = NextfareConfigRecord.recordFromBytes(r20180815, UTC)
+        assertEquals("2018-08-15 00:00", Utils.isoDateTimeFormat(r3.expiry))
     }
 
     @Test
     fun testTransactionRecord() {
         val rnull = ImmutableByteArray.fromHex("01000000000000000000000000007f28")
 
-        val r: NextfareTransactionRecord?
-        r = NextfareTransactionRecord.recordFromBytes(rnull, UTC)
+        val r = NextfareTransactionRecord.recordFromBytes(rnull, UTC)
         assertNull(r)
     }
 
@@ -120,7 +113,8 @@ class NextfareTest {
 
         for (sector_num in 1..15) {
             sectors += ClassicSector.create(ClassicSectorRaw(
-                    (0..2).map { ImmutableByteArray(16) } + listOf(trailer),
+                    (0..2).map { ImmutableByteArray(16) }
+                            + listOf(trailer),
                     ImmutableByteArray.fromHex("ffffffffffff"),
                     null, false, null))
         }
