@@ -18,13 +18,13 @@
  */
 package au.id.micolous.metrodroid.transit.selecta
 
-import au.id.micolous.farebot.R
 import au.id.micolous.metrodroid.card.CardType
 import au.id.micolous.metrodroid.card.classic.ClassicCard
 import au.id.micolous.metrodroid.card.classic.ClassicCardTransitFactory
 import au.id.micolous.metrodroid.card.classic.ClassicSector
+import au.id.micolous.metrodroid.multi.Parcelize
+import au.id.micolous.metrodroid.multi.R
 import au.id.micolous.metrodroid.transit.*
-import kotlinx.android.parcel.Parcelize
 
 /**
  * Selecta payment cards
@@ -45,20 +45,19 @@ data class SelectaFranceTransitData(private val mBalance: Int,
     companion object {
         private const val NAME = "Selecta France"
 
-        private val CARD_INFO = CardInfo.Builder()
-                .setName(NAME)
-                .setLocation(R.string.location_france)
-                .setCardType(CardType.MifareClassic)
-                .setPreview()
-                .build()
+        private val CARD_INFO = CardInfo(
+                name = NAME,
+                locationId = R.string.location_france,
+                cardType = CardType.MifareClassic,
+                preview = true)
 
         private fun getSerial(card: ClassicCard): Int = card[1, 0].data.byteArrayToInt(13, 3)
 
-        val FACTORY: ClassicCardTransitFactory = object : ClassicCardTransitFactory() {
+        val FACTORY: ClassicCardTransitFactory = object : ClassicCardTransitFactory () {
             override fun earlyCheck(sectors: List<ClassicSector>) =
                     sectors[0][1].data.byteArrayToInt(2, 2) == 0x0938
 
-            override fun parseTransitIdentity(card: ClassicCard): TransitIdentity = TransitIdentity(NAME, Integer.toString(getSerial(card)))
+            override fun parseTransitIdentity(card: ClassicCard): TransitIdentity = TransitIdentity(NAME, getSerial(card).toString())
 
             override fun parseTransitData(card: ClassicCard): TransitData =
                     SelectaFranceTransitData(mSerial = getSerial(card),
