@@ -9,8 +9,8 @@ import au.id.micolous.metrodroid.transit.serialonly.*
 import au.id.micolous.metrodroid.transit.tfi_leap.LeapTransitData
 import au.id.micolous.metrodroid.transit.unknown.UnauthorizedDesfireTransitData
 
-actual object DesfireCardTransitRegistry {
-    actual val allFactories: List<DesfireCardTransitFactory> = listOf(
+object DesfireCardTransitRegistry {
+    val allFactories: List<DesfireCardTransitFactory> = listOf(
             OrcaTransitData.FACTORY,
             ClipperTransitData.FACTORY,
             HSLTransitData.FACTORY,

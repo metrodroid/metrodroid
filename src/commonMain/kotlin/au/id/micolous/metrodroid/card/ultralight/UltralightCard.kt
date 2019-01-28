@@ -33,10 +33,6 @@ import kotlinx.serialization.Optional
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.Transient
 
-expect object UltralightTransitRegistry {
-    val allFactories: List<UltralightCardTransitFactory>
-}
-
 /**
  * Utility class for reading MIFARE Ultralight / Ultralight C
  */

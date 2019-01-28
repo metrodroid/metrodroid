@@ -42,10 +42,6 @@ import kotlinx.serialization.Serializable
 import kotlinx.serialization.Transient
 import kotlin.math.roundToInt
 
-expect object FelicaRegistry {
-    val allFactories: List<FelicaCardTransitFactory>
-}
-
 @Serializable
 data class FelicaCard(
         @XMLId("idm")
