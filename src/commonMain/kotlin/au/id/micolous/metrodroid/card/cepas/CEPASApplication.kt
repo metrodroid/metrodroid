@@ -71,6 +71,10 @@ data class CEPASApplication(
                     ListItem(R.string.cepas_purse_status, purse.purseStatus.toString()),
                     ListItem(R.string.cepas_purse_balance, purse.purseBalance.toString()),
 
+                    ListItem(R.string.cepas_purse_creation_date,
+                            TimestampFormatter.longDateFormat(purse.purseCreationDate)),
+                    ListItem(R.string.expiry_date,
+                            TimestampFormatter.longDateFormat(purse.purseExpiryDate)),
                     ListItem(R.string.cepas_autoload_amount, purse.autoLoadAmount.toString()),
                     ListItem(FormattedString("CAN"), purse.can.toHexDump()),
                     ListItem(FormattedString("CSN"), purse.csn.toHexDump()),
