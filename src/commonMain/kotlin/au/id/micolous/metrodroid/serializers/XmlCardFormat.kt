@@ -558,29 +558,30 @@ fun readCardXML(reader: InputStream): Card {
         throw Exception("Invalid root ${root.nodeName}")
     val cardType = root.attributes["type"] ?: throw Exception("type attribute not found")
     val xi = XMLInput(root, strict = cardType.toInt() != CardType.CEPAS.toInteger(),
-            ignore = setOf("type", "id", "scanned_at"),
+            ignore = setOf("type", "id", "scanned_at", "label"),
             skippable = setOf("ultralightType"))
     val tagId = ImmutableByteArray.fromHex(root.attributes["id"]!!)
     val scannedAt = TimestampFull(timeInMillis = root.attributes["scanned_at"]!!.toLong(),
             tz = MetroTimeZone.LOCAL)
+    val label = root.attributes["label"]
     when (cardType.toInt()) {
         CardType.MifareClassic.toInteger() -> return Card(
-                tagId = tagId, scannedAt = scannedAt,
+                tagId = tagId, scannedAt = scannedAt, label = label,
                 mifareClassic = xi.decode(ClassicCard.serializer()))
         CardType.MifareUltralight.toInteger() -> return Card(
-                tagId = tagId, scannedAt = scannedAt,
+                tagId = tagId, scannedAt = scannedAt, label = label,
                 mifareUltralight = xi.decode(UltralightCard.serializer()))
         CardType.MifareDesfire.toInteger() -> return Card(
-                tagId = tagId, scannedAt = scannedAt,
+                tagId = tagId, scannedAt = scannedAt, label = label,
                 mifareDesfire = xi.decode(DesfireCard.serializer()))
         CardType.CEPAS.toInteger() -> return Card(
-                tagId = tagId, scannedAt = scannedAt,
+                tagId = tagId, scannedAt = scannedAt, label = label,
                 cepasCompat = xi.decode(CEPASCard.serializer()))
         CardType.FeliCa.toInteger() -> return Card(
-                tagId = tagId, scannedAt = scannedAt,
+                tagId = tagId, scannedAt = scannedAt, label = label,
                 felica = xi.decode(FelicaCard.serializer()))
         CardType.ISO7816.toInteger() -> return Card(
-                tagId = tagId, scannedAt = scannedAt,
+                tagId = tagId, scannedAt = scannedAt, label = label,
                 iso7816 = xi.decode(ISO7816Card.serializer()))
         else -> throw Exception("Unknown card type $cardType")
     }
