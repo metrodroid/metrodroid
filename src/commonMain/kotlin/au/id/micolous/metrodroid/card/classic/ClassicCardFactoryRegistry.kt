@@ -24,8 +24,8 @@ import au.id.micolous.metrodroid.transit.unknown.BlankClassicTransitData
 import au.id.micolous.metrodroid.transit.unknown.UnauthorizedClassicTransitData
 import au.id.micolous.metrodroid.transit.zolotayakorona.ZolotayaKoronaTransitData
 
-actual object ClassicCardFactoryRegistry {
-    actual val allFactories = listOf(
+object ClassicCardFactoryRegistry {
+    val allFactories = listOf(
             OVChipTransitData.FACTORY,
             // Search through ERG on MIFARE Classic compatibles.
             ManlyFastFerryTransitData.FACTORY,

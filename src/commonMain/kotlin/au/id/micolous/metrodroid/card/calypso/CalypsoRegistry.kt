@@ -24,8 +24,8 @@ import au.id.micolous.metrodroid.transit.mobib.MobibTransitData
 import au.id.micolous.metrodroid.transit.opus.OpusTransitData
 import au.id.micolous.metrodroid.transit.ravkav.RavKavTransitData
 
-actual object CalypsoRegistry {
-    actual val allFactories: List<CalypsoCardTransitFactory> = listOf(
+object CalypsoRegistry {
+    val allFactories: List<CalypsoCardTransitFactory> = listOf(
             RavKavTransitData.FACTORY,
             OpusTransitData.FACTORY,
             MobibTransitData.FACTORY,

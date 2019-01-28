@@ -41,10 +41,6 @@ import kotlinx.serialization.Serializable
 import kotlinx.serialization.Transient
 import kotlin.jvm.JvmOverloads
 
-expect object CalypsoRegistry {
-    val allFactories: List<CalypsoCardTransitFactory>
-}
-
 /**
  * Implements communication with Calypso cards.
  *
