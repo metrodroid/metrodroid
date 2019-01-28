@@ -69,7 +69,7 @@ public class LicenseActivity extends MetrodroidActivity {
         // TODO: Get a list of files programatically
         addNotice(SeqGoTransitData.Companion.getNotice());
         addNotice(LaxTapTransitData.Companion.getNotice());
-        addNotice(ClipperTransitData.getNotice());
+        addNotice(ClipperTransitData.Companion.getNotice());
         addNotice(EZLinkTransitData.Companion.getNotice());
         addNotice(LeapTransitData.getNotice());
 
