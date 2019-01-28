@@ -19,6 +19,7 @@
 package au.id.micolous.metrodroid.transit.nextfare.ultralight;
 
 import android.os.Parcel;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
 import java.util.ArrayList;
@@ -167,6 +168,7 @@ public abstract class NextfareUltralightTransitData extends TransitData {
         return mTrips;
     }
 
+    @NonNull
     public static Calendar parseDateTime(TimeZone tz, int baseDate, int date, int time) {
         GregorianCalendar g = new GregorianCalendar(tz);
         g.set((baseDate >> 9) + 2000,
