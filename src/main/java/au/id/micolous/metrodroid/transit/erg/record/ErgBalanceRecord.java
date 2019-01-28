@@ -58,6 +58,8 @@ public class ErgBalanceRecord extends ErgRecord implements Comparable<ErgBalance
                 input.byteArrayToInt(5, 2));
     }
 
+    public static final ErgRecord.Factory FACTORY = ErgBalanceRecord::recordFromBytes;
+
     /**
      * The balance of the card, in cents.
      *

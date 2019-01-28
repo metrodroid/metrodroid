@@ -21,6 +21,7 @@ package au.id.micolous.metrodroid.transit.erg;
 import android.os.Parcel;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.util.Log;
 
 import au.id.micolous.metrodroid.card.UnauthorizedException;
 import au.id.micolous.metrodroid.card.classic.ClassicBlock;
@@ -34,7 +35,9 @@ import au.id.micolous.metrodroid.transit.TransitData;
 import au.id.micolous.metrodroid.transit.TransitIdentity;
 import au.id.micolous.metrodroid.transit.Trip;
 import au.id.micolous.metrodroid.transit.erg.record.ErgBalanceRecord;
+import au.id.micolous.metrodroid.transit.erg.record.ErgIndexRecord;
 import au.id.micolous.metrodroid.transit.erg.record.ErgMetadataRecord;
+import au.id.micolous.metrodroid.transit.erg.record.ErgPreambleRecord;
 import au.id.micolous.metrodroid.transit.erg.record.ErgPurseRecord;
 import au.id.micolous.metrodroid.transit.erg.record.ErgRecord;
 import au.id.micolous.metrodroid.ui.HeaderListItem;
@@ -46,6 +49,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.GregorianCalendar;
 import java.util.List;
+import java.util.Locale;
 import java.util.TimeZone;
 
 import au.id.micolous.farebot.R;
@@ -57,10 +61,15 @@ import au.id.micolous.metrodroid.xml.ImmutableByteArray;
  * Wiki: https://github.com/micolous/metrodroid/wiki/ERG-MFC
  */
 public class ErgTransitData extends TransitData {
+    // Flipping this to true shows more data from the records in Logcat.
+    private static final boolean DEBUG = true;
+    private static final String TAG = ErgTransitData.class.getSimpleName();
+
     private static final String NAME = "ERG";
     public static final byte[] SIGNATURE = {
             0x32, 0x32, 0x00, 0x00, 0x00, 0x01, 0x01
     };
+
     private String mSerialNumber;
     private GregorianCalendar mEpochDate;
     private int mAgencyID;
@@ -100,18 +109,62 @@ public class ErgTransitData extends TransitData {
 
         mCurrency = currency;
 
+        // Read the index data
+        final ErgIndexRecord index1 = ErgIndexRecord.Companion.recordFromSector(card.getSector(1));
+        final ErgIndexRecord index2 = ErgIndexRecord.Companion.recordFromSector(card.getSector(2));
+        if (DEBUG) {
+            Log.d(TAG, "Index 1: " + index1.toString());
+            Log.d(TAG, "Index 2: " + index2.toString());
+        }
+
+        final ErgIndexRecord activeIndex = index1.getVersion() > index2.getVersion() ? index1 : index2;
+
+        ErgMetadataRecord metadataRecord = null;
+        ErgPreambleRecord preambleRecord = null;
+
         // Iterate through blocks on the card and deserialize all the binary data.
+        sectorLoop:
         for (ClassicSector sector : card.getSectors()) {
+            final int sectorNum = sector.getIndex();
+            blockLoop:
             for (ClassicBlock block : sector.getBlocks()) {
-                if (sector.getIndex() == 0 && block.getIndex() == 0) {
-                    continue;
-                }
+                final int blockNum = block.getIndex();
+                final ImmutableByteArray data = block.getData();
 
                 if (block.getIndex() == 3) {
                     continue;
                 }
 
-                ErgRecord record = ErgRecord.recordFromBytes(block.getData(), sector.getIndex(), block.getIndex(), getTimezone());
+                switch (sectorNum) {
+                    case 0:
+                        switch (blockNum) {
+                            case 0:
+                                continue blockLoop;
+                            case 1:
+                                preambleRecord = ErgPreambleRecord.recordFromBytes(data);
+                                continue blockLoop;
+                            case 2:
+                                metadataRecord = ErgMetadataRecord.recordFromBytes(data);
+                                continue blockLoop;
+                        }
+
+                    case 1:
+                    case 2:
+                        // Skip indexes, we already read this.
+                        continue sectorLoop;
+                }
+
+                // Fallback to using indexes
+                ErgRecord record = activeIndex.readRecord(sectorNum, blockNum, data);
+
+                if (record != null) {
+                    Log.d(TAG, String.format(Locale.ENGLISH, "Sector %d, Block %d: %s",
+                            sectorNum, blockNum,
+                            DEBUG ? record.toString() : record.getClass().getSimpleName()));
+                    if (DEBUG) {
+                        Log.d(TAG, data.getHexString());
+                    }
+                }
 
                 if (record != null) {
                     records.add(record);
@@ -119,33 +172,18 @@ public class ErgTransitData extends TransitData {
             }
         }
 
-        // Now do a first pass for metadata and balance information.
-        List<ErgBalanceRecord> balances = new ArrayList<>();
-
-        for (ErgRecord record : records) {
-            if (record instanceof ErgMetadataRecord) {
-                ErgMetadataRecord m = (ErgMetadataRecord)record;
-                mSerialNumber = formatSerialNumber(m);
-                mEpochDate = m.getEpochDate();
-                mAgencyID = m.getAgency();
-            } else if (record instanceof ErgBalanceRecord) {
-                balances.add((ErgBalanceRecord) record);
-            }
+        if (metadataRecord != null) {
+            mSerialNumber = formatSerialNumber(metadataRecord);
+            mEpochDate = metadataRecord.getEpochDate();
+            mAgencyID = metadataRecord.getAgency();
         }
 
-        if (balances.size() >= 1) {
-            Collections.sort(balances);
-            mBalance = balances.get(0).getBalance();
-        }
-
-        // Now generate a transaction list.  This has a 1:1 mapping with trips (there is no
-        // "tap off").
-        //
-        // These need the Epoch to be known first.
         List<ErgTransaction> txns = new ArrayList<>();
 
         for (ErgRecord record : records) {
-            if (record instanceof ErgPurseRecord) {
+            if (record instanceof ErgBalanceRecord) {
+                mBalance = ((ErgBalanceRecord) record).getBalance();
+            } else if (record instanceof ErgPurseRecord) {
                 ErgPurseRecord purseRecord = (ErgPurseRecord) record;
                 txns.add(newTrip(purseRecord, mEpochDate));
             }

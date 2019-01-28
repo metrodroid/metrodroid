@@ -103,6 +103,8 @@ public class ErgPurseRecord extends ErgRecord implements Parcelable {
         return record;
     }
 
+    public static final ErgRecord.Factory FACTORY = ErgPurseRecord::recordFromBytes;
+
     @Override
     public int describeContents() {
         return 0;
