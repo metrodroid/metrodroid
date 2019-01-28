@@ -156,7 +156,7 @@ public class CardInfoActivity extends MetrodroidActivity {
                     mShowCopyCardNumber = !Preferences.INSTANCE.getHideCardNumbers();
                     if (mShowCopyCardNumber) {
                         mCardSerial = (mTransitData.getSerialNumber() != null) ? mTransitData.getSerialNumber()
-                                : Utils.getHexString(mCard.getTagId(), "");
+                                : mCard.getTagId().toHexString();
                     } else {
                         mCardSerial = "";
                     }
