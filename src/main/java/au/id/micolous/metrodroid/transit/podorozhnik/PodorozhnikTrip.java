@@ -96,11 +96,11 @@ class PodorozhnikTrip extends Trip {
         if (mLastTransport == TRANSPORT_METRO) {
             int gate = stationId & 0x3f;
             stationId = stationId & ~0x3f;
-            return StationTableReader.getStation(PODOROZHNIK_STR, stationId, Integer.toString(mLastValidator >> 6)).addAttribute(Localizer.INSTANCE.localizeString(R.string.podorozhnik_gate, gate));
+            return StationTableReader.Companion.getStation(PODOROZHNIK_STR, stationId, Integer.toString(mLastValidator >> 6)).addAttribute(Localizer.INSTANCE.localizeString(R.string.podorozhnik_gate, gate));
         }
         // TODO: handle other transports better.
         //noinspection StringConcatenation
-        return StationTableReader.getStation(PODOROZHNIK_STR, stationId,
+        return StationTableReader.Companion.getStation(PODOROZHNIK_STR, stationId,
                 Integer.toString(mLastTransport)+ "/" + Integer.toString(mLastValidator));
     }
 

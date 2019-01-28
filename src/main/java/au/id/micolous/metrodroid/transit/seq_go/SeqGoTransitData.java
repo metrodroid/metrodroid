@@ -187,6 +187,6 @@ public class SeqGoTransitData extends NextfareTransitData {
 
     @Nullable
     public static String getNotice() {
-        return StationTableReader.getNotice(SeqGoData.SEQ_GO_STR);
+        return StationTableReader.Companion.getNotice(SeqGoData.SEQ_GO_STR);
     }
 }

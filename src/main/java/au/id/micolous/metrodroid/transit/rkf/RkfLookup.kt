@@ -73,7 +73,7 @@ data class RkfLookup(val mCurrencyCode: Int, val mCompany: Int) : En1545LookupST
             return null
         val routeId = routeNumber or ((agency ?: 0) shl 16)
         val routeReadable = getHumanReadableRouteId(routeNumber, routeVariant, agency, transport)
-        return StationTableReader.getLineName(STR, routeId, routeReadable)
+        return StationTableReader.getLineName(STR, routeId, routeReadable ?: routeId.toString())
     }
 
     override fun getStation(station: Int, agency: Int?, transport: Int?): Station? {

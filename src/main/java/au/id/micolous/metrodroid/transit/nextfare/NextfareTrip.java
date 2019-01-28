@@ -125,7 +125,7 @@ public class NextfareTrip extends Trip implements Comparable<NextfareTrip> {
     }
 
     protected Station getStation(int stationId) {
-        return StationTableReader.getStation(mSTR, stationId);
+        return StationTableReader.Companion.getStation(mSTR, stationId);
     }
 
 
@@ -136,7 +136,7 @@ public class NextfareTrip extends Trip implements Comparable<NextfareTrip> {
     }
 
     protected Mode lookupMode() {
-        return StationTableReader.getOperatorDefaultMode(mSTR, mModeInt);
+        return StationTableReader.Companion.getOperatorDefaultMode(mSTR, mModeInt);
     }
 
     @Override
@@ -173,7 +173,7 @@ public class NextfareTrip extends Trip implements Comparable<NextfareTrip> {
     public String getAgencyName(boolean isShort) {
         if (isTopup && mModeInt == 0)
             return null;
-        return StationTableReader.getOperatorName(mSTR, mModeInt, isShort);
+        return StationTableReader.Companion.getOperatorName(mSTR, mModeInt, isShort);
     }
 
     @Override

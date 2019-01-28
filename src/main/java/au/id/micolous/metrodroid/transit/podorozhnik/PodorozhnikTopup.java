@@ -95,7 +95,7 @@ class PodorozhnikTopup extends Trip {
         if (mAgency == PodorozhnikTrip.TRANSPORT_METRO) {
             int station = mTopupMachine / 10;
             int stationId = (PodorozhnikTrip.TRANSPORT_METRO << 16) | (station << 6);
-            return StationTableReader.getStation(PodorozhnikTrip.PODOROZHNIK_STR,
+            return StationTableReader.Companion.getStation(PodorozhnikTrip.PODOROZHNIK_STR,
                     stationId, Integer.toString(station));
         }
         // TODO: handle other transports better.

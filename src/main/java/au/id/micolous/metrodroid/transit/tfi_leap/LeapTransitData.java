@@ -150,7 +150,7 @@ public class LeapTransitData extends TransitData {
 
         		items.add(new ListItem(
         		        new FormattedString(Localizer.INSTANCE.localizeString(R.string.leap_accumulator_agency,
-                                StationTableReader.getOperatorName(LEAP_STR, mAccumulatorAgencies[i],
+                                StationTableReader.Companion.getOperatorName(LEAP_STR, mAccumulatorAgencies[i],
                                         false))),
                         TransitCurrency.EUR(mAccumulators[i]).maybeObfuscateBalance().formatCurrencyString(true)
                 ));
@@ -360,6 +360,6 @@ public class LeapTransitData extends TransitData {
 
     @Nullable
     public static String getNotice() {
-        return StationTableReader.getNotice(LEAP_STR);
+        return StationTableReader.Companion.getNotice(LEAP_STR);
     }
 }

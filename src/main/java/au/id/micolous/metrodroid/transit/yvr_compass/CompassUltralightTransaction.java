@@ -53,7 +53,7 @@ public class CompassUltralightTransaction extends NextfareUltralightTransaction 
     public Station getStation() {
         if (mLocation == 0)
             return null;
-        return StationTableReader.getStation(COMPASS_STR, mLocation);
+        return StationTableReader.Companion.getStation(COMPASS_STR, mLocation);
     }
 
     @Override

@@ -153,6 +153,6 @@ public class LaxTapTransitData extends NextfareTransitData {
 
     @Nullable
     public static String getNotice() {
-        return StationTableReader.getNotice(LaxTapData.LAX_TAP_STR);
+        return StationTableReader.Companion.getNotice(LaxTapData.LAX_TAP_STR);
     }
 }

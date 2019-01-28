@@ -50,7 +50,7 @@ public class MobibLookup extends En1545LookupSTR {
             return null;
         if (agency == null)
             agency = 0;
-        return StationTableReader.getStation(MOBIB_STR, station | (agency << 22));
+        return StationTableReader.Companion.getStation(MOBIB_STR, station | (agency << 22));
     }
 
     @Override

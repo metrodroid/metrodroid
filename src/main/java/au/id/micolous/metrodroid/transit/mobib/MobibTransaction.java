@@ -81,7 +81,7 @@ class MobibTransaction extends En1545Transaction {
         if (agency == TRAM)
             return null;
         if (agency == BUS)
-            return StationTableReader.getStation(MobibLookup.MOBIB_STR,
+            return StationTableReader.Companion.getStation(MobibLookup.MOBIB_STR,
                     mParsed.getIntOrZero(EVENT_ROUTE_NUMBER) << 13
                     | mParsed.getIntOrZero(EVENT_LOCATION_ID_BUS) | (agency << 22));
         return super.getStation();

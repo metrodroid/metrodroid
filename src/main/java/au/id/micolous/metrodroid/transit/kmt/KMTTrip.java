@@ -66,7 +66,7 @@ public class KMTTrip extends Trip {
     }
 
     private static Station getStation(int code) {
-        return StationTableReader.getStation(KMT_STR, code);
+        return StationTableReader.Companion.getStation(KMT_STR, code);
     }
 
     public KMTTrip(FelicaBlock block) {
