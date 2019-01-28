@@ -24,8 +24,8 @@ import au.id.micolous.metrodroid.transit.china.NewShenzhenTransitData
 import au.id.micolous.metrodroid.transit.china.TUnionTransitData
 import au.id.micolous.metrodroid.transit.china.WuhanTongTransitData
 
-actual object ChinaRegistry {
-    actual val allFactories: List<ChinaCardTransitFactory> = listOf<ChinaCardTransitFactory>(
+object ChinaRegistry {
+    val allFactories: List<ChinaCardTransitFactory> = listOf(
             NewShenzhenTransitData.FACTORY,
             BeijingTransitData.FACTORY,
             WuhanTongTransitData.FACTORY,

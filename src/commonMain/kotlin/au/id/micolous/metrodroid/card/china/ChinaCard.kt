@@ -33,10 +33,6 @@ import kotlinx.serialization.KSerializer
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.Transient
 
-expect object ChinaRegistry {
-    val allFactories: List<ChinaCardTransitFactory>
-}
-
 @Serializable
 data class ChinaCard(
         override val generic: ISO7816ApplicationCapsule,
