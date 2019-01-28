@@ -22,7 +22,6 @@ package au.id.micolous.metrodroid.transit
 import au.id.micolous.metrodroid.card.CardType
 import au.id.micolous.metrodroid.multi.DrawableResource
 import au.id.micolous.metrodroid.multi.StringResource
-import kotlin.jvm.JvmOverloads
 
 /**
  * List of all the cards we know about.
@@ -44,66 +43,4 @@ class CardInfo(val name: String,
                val imageAlphaId: DrawableResource? = null) {
 
     val hasBitmap get() = imageAlphaId != null || imageId != null
-
-    // For backwards compatibility. Remove once all the code is in kotlin.
-    class Builder {
-        private var mImageId: DrawableResource? = null
-        private var mImageAlphaId: DrawableResource? = null
-        private var mName: String? = null
-        private var mLocationId: StringResource? = null
-        private var mCardType: CardType? = null
-        private var mKeysRequired: Boolean = false
-        private var mPreview: Boolean = false
-        private var mResourceExtraNote: StringResource? = null
-
-        fun build(): CardInfo {
-            return CardInfo(imageId = mImageId,
-                    name = mName!!,
-                    locationId = mLocationId,
-                    cardType = mCardType!!,
-                    keysRequired = mKeysRequired,
-                    preview = mPreview,
-                    resourceExtraNote = mResourceExtraNote,
-                    imageAlphaId = mImageAlphaId)
-        }
-
-        @JvmOverloads
-        fun setImageId(id: DrawableResource, alpha: DrawableResource? = null): Builder {
-            mImageId = id
-            mImageAlphaId = alpha
-            return this
-        }
-
-        fun setName(name: String): Builder {
-            mName = name
-            return this
-        }
-
-        fun setLocation(id: StringResource): Builder {
-            mLocationId = id
-            return this
-        }
-
-        fun setCardType(type: CardType): Builder {
-            mCardType = type
-            return this
-        }
-
-        fun setKeysRequired(): Builder {
-            mKeysRequired = true
-            return this
-        }
-
-        fun setPreview(): Builder {
-            mPreview = true
-            return this
-        }
-
-        fun setExtraNote(id: StringResource): Builder {
-            mResourceExtraNote = id
-            return this
-        }
-
-    }
-
 }
