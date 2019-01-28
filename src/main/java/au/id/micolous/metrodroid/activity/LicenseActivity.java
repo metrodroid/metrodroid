@@ -71,7 +71,7 @@ public class LicenseActivity extends MetrodroidActivity {
         addNotice(LaxTapTransitData.Companion.getNotice());
         addNotice(ClipperTransitData.Companion.getNotice());
         addNotice(EZLinkTransitData.Companion.getNotice());
-        addNotice(LeapTransitData.getNotice());
+        addNotice(LeapTransitData.Companion.getNotice());
 
         lblLicenseText.endBatchEdit();
         lblLicenseText = null;
