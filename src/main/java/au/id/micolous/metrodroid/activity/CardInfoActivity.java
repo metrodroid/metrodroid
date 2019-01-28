@@ -118,7 +118,7 @@ public class CardInfoActivity extends MetrodroidActivity {
 
                     String data = cursor.getString(cursor.getColumnIndex(CardsTableColumns.DATA));
 
-                    mCard = CardSerializer.INSTANCE.fromPersist(data);
+                    mCard = CardSerializer.INSTANCE.fromDb(data);
                     mTransitData = mCard.parseTransitData();
 
                     SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(CardInfoActivity.this);
