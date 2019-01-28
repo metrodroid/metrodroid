@@ -132,9 +132,8 @@ abstract class TransitData : Parcelable {
      *
      * @return false if all stations are known (default), true if there are unknown stations
      */
-    open fun hasUnknownStations(): Boolean {
-        return false
-    }
+    open val hasUnknownStations: Boolean
+        get() = false
 
     /**
      * Finds the timestamp of the latest trip taken on the card.

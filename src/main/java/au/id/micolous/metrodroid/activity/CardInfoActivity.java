@@ -196,7 +196,7 @@ public class CardInfoActivity extends MetrodroidActivity {
                     }
 
                     String w = mTransitData.getWarning();
-                    boolean hasUnknownStation = mTransitData.hasUnknownStations();
+                    boolean hasUnknownStation = mTransitData.getHasUnknownStations();
                     if (w != null || hasUnknownStation) {
                         findViewById(R.id.need_stations).setVisibility(View.VISIBLE);
                         String txt = "";
