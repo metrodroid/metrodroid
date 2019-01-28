@@ -35,7 +35,7 @@ public class LeapTrip extends Trip implements Comparable<LeapTrip> {
     };
 
     private static Mode guessMode(int anum) {
-        return StationTableReader.getOperatorDefaultMode(LeapTransitData.LEAP_STR, anum);
+        return StationTableReader.Companion.getOperatorDefaultMode(LeapTransitData.LEAP_STR, anum);
     }
 
     @Override
@@ -171,14 +171,14 @@ public class LeapTrip extends Trip implements Comparable<LeapTrip> {
     public Station getStartStation() {
         if (mStart == null || mStart.mStation == null)
             return null;
-        return StationTableReader.getStation(LeapTransitData.LEAP_STR, (mAgency << 16) | mStart.mStation);
+        return StationTableReader.Companion.getStation(LeapTransitData.LEAP_STR, (mAgency << 16) | mStart.mStation);
     }
 
     @Override
     public Station getEndStation() {
         if (mEnd == null || mEnd.mStation == null)
             return null;
-        return StationTableReader.getStation(LeapTransitData.LEAP_STR, (mAgency << 16) | mEnd.mStation);
+        return StationTableReader.Companion.getStation(LeapTransitData.LEAP_STR, (mAgency << 16) | mEnd.mStation);
     }
 
     @Nullable
@@ -243,7 +243,7 @@ public class LeapTrip extends Trip implements Comparable<LeapTrip> {
 
     @Override
     public String getAgencyName(boolean isShort) {
-        return StationTableReader.getOperatorName(LeapTransitData.LEAP_STR, mAgency, isShort);
+        return StationTableReader.Companion.getOperatorName(LeapTransitData.LEAP_STR, mAgency, isShort);
     }
 
     private LeapTrip(int agency, Mode mode, LeapTripPoint start, LeapTripPoint end) {

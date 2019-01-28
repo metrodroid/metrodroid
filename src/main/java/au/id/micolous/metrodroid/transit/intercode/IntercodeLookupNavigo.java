@@ -100,7 +100,7 @@ class IntercodeLookupNavigo extends IntercodeLookupSTR {
              humanReadableId = sector_id + "/" + station_id;
         }
 
-        Station st = StationTableReader.getStationNoFallback(NAVIGO_STR, mdstStationId, humanReadableId);
+        Station st = StationTableReader.Companion.getStationNoFallback(NAVIGO_STR, mdstStationId, humanReadableId);
         if (st != null)
             return st;
         return Station.Companion.unknown(fallBackName);

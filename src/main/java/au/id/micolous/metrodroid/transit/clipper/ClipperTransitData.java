@@ -317,6 +317,6 @@ public class ClipperTransitData extends TransitData {
 
     @Nullable
     public static String getNotice() {
-        return StationTableReader.getNotice(ClipperData.CLIPPER_STR);
+        return StationTableReader.Companion.getNotice(ClipperData.CLIPPER_STR);
     }
 }

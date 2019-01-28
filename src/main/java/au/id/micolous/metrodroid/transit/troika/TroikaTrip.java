@@ -40,7 +40,7 @@ class TroikaTrip extends Trip {
     public Station getStartStation() {
         if (mValidator == null)
             return null;
-        return StationTableReader.getStation(TROIKA_STR, mValidator);
+        return StationTableReader.Companion.getStation(TROIKA_STR, mValidator);
     }
 
     private TroikaTrip(Parcel in) {

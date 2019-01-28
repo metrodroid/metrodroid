@@ -44,7 +44,7 @@ public class OpusLookup extends En1545LookupSTR {
             return null;
         if (agency == null)
             agency = 0;
-        return StationTableReader.getLineName(OPUS_STR, routeNumber | (agency << 16));
+        return StationTableReader.Companion.getLineName(OPUS_STR, routeNumber | (agency << 16));
     }
 
     // Opus doesn't store stations

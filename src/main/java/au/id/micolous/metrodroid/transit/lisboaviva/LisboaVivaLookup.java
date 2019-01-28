@@ -55,7 +55,7 @@ class LisboaVivaLookup extends En1545LookupSTR {
         if (agency == 1)
             return Integer.toString(routeNumber);
         routeNumber = mungeRouteNumber(agency, routeNumber);
-        return StationTableReader.getLineName(LISBOA_VIVA_STR, (agency << 16) | routeNumber,
+        return StationTableReader.Companion.getLineName(LISBOA_VIVA_STR, (agency << 16) | routeNumber,
                 Integer.toString(routeNumber));
     }
 
@@ -81,7 +81,7 @@ class LisboaVivaLookup extends En1545LookupSTR {
         routeNumber = mungeRouteNumber(agency, routeNumber);
         if (agency == 2)
             station = station >> 2;
-        return StationTableReader.getStation(LISBOA_VIVA_STR, station | (routeNumber << 8) | (agency << 24), Integer.toString(station));
+        return StationTableReader.Companion.getStation(LISBOA_VIVA_STR, station | (routeNumber << 8) | (agency << 24), Integer.toString(station));
     }
 
     private int mungeRouteNumber(int agency, int routeNumber) {

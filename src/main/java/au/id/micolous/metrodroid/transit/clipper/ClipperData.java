@@ -59,17 +59,17 @@ final class ClipperData {
     }
 
     public static Trip.Mode getMode(int agency) {
-        return StationTableReader.getOperatorDefaultMode(CLIPPER_STR, agency);
+        return StationTableReader.Companion.getOperatorDefaultMode(CLIPPER_STR, agency);
     }
 
     public static String getAgencyName(int agency, boolean isShort) {
-        return StationTableReader.getOperatorName(CLIPPER_STR, agency, isShort);
+        return StationTableReader.Companion.getOperatorName(CLIPPER_STR, agency, isShort);
     }
 
 
     public static Station getStation(int agency, int stationId, boolean isEnd) {
         @NonNls String humanReadableId = NumberUtils.INSTANCE.intToHex(agency) + "/" + NumberUtils.INSTANCE.intToHex(stationId);
-        Station s = StationTableReader.getStationNoFallback(CLIPPER_STR,(agency << 16) | stationId,
+        Station s = StationTableReader.Companion.getStationNoFallback(CLIPPER_STR,(agency << 16) | stationId,
                 humanReadableId);
         if (s != null)
             return s;

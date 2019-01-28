@@ -62,7 +62,7 @@ public class NewShenzhenTrip extends ChinaTrip {
         int transport = getTransport();
         switch (transport) {
             case SZT_METRO:
-                return StationTableReader.getStation(SHENZHEN_STR, (int) (mStation & ~0xff),
+                return StationTableReader.Companion.getStation(SHENZHEN_STR, (int) (mStation & ~0xff),
                         Long.toHexString(mStation >> 8)).addAttribute(
                         Localizer.INSTANCE.localizeString(R.string.szt_station_gate,
                                 Integer.toHexString((int)(mStation & 0xff))));
@@ -91,7 +91,7 @@ public class NewShenzhenTrip extends ChinaTrip {
         int transport = getTransport();
         switch (transport) {
             case SZT_BUS:
-                return StationTableReader.getLineName(SHENZHEN_STR, (int) mStation);
+                return StationTableReader.Companion.getLineName(SHENZHEN_STR, (int) mStation);
             default:
                 return null;
         }

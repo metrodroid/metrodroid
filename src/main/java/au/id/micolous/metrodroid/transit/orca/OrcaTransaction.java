@@ -104,7 +104,7 @@ public class OrcaTransaction extends Transaction {
 
     @Override
     public String getAgencyName(boolean isShort) {
-        return StationTableReader.getOperatorName(ORCA_STR, mAgency, isShort);
+        return StationTableReader.Companion.getOperatorName(ORCA_STR, mAgency, isShort);
     }
 
     @Override
@@ -144,7 +144,7 @@ public class OrcaTransaction extends Transaction {
     }
 
     private static Station getStation(int agency, int stationId) {
-        return StationTableReader.getStationNoFallback(ORCA_STR, ((agency << 16)|stationId));
+        return StationTableReader.Companion.getStationNoFallback(ORCA_STR, ((agency << 16)|stationId));
     }
 
     @Override

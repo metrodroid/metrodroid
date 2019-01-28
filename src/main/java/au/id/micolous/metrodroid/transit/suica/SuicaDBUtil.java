@@ -49,7 +49,7 @@ public final class SuicaDBUtil {
         int stationId = (lineCode << 8) + stationCode;
         if (stationId == 0) return null;
 
-        return StationTableReader.getStation(SUICA_BUS_STR, stationId,
+        return StationTableReader.Companion.getStation(SUICA_BUS_STR, stationId,
                 Localizer.INSTANCE.localizeString(R.string.suica_bus_area_line_stop,
                         NumberUtils.INSTANCE.intToHex(regionCode),
                         NumberUtils.INSTANCE.intToHex(lineCode),
@@ -73,7 +73,7 @@ public final class SuicaDBUtil {
         int stationId = (areaCode << 16) + (lineCode << 8) + stationCode;
         if (stationId == 0) return null;
 
-        return StationTableReader.getStation(SUICA_RAIL_STR, stationId,
+        return StationTableReader.Companion.getStation(SUICA_RAIL_STR, stationId,
                 Localizer.INSTANCE.localizeString(R.string.suica_area_line_station,
                         NumberUtils.INSTANCE.intToHex(regionCode),
                         NumberUtils.INSTANCE.intToHex(lineCode),

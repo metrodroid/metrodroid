@@ -44,14 +44,14 @@ public abstract class En1545LookupSTR implements En1545Lookup {
             transport = 0;
         int routeId = (routeNumber) | (agency << 16) | (transport << 24);
         @NonNls String routeReadable = getHumanReadableRouteId(routeNumber, routeVariant, agency, transport);
-        return StationTableReader.getLineName(mStr, routeId, routeReadable);
+        return StationTableReader.Companion.getLineName(mStr, routeId, routeReadable);
     }
 
     @Override
     public String getAgencyName(Integer agency, boolean isShort) {
         if (agency == null || agency == 0)
             return null;
-        return StationTableReader.getOperatorName(mStr, agency, isShort);
+        return StationTableReader.Companion.getOperatorName(mStr, agency, isShort);
     }
 
     @Override
@@ -62,7 +62,7 @@ public abstract class En1545LookupSTR implements En1545Lookup {
             agency = 0;
         if (transport == null)
             transport = 0;
-        return StationTableReader.getStation(
+        return StationTableReader.Companion.getStation(
                 mStr,
                 station | (agency << 16) | (transport << 24),
                 NumberUtils.INSTANCE.intToHex(station));
@@ -75,15 +75,15 @@ public abstract class En1545LookupSTR implements En1545Lookup {
 
         if (route != null) {
             if (agency == null)
-                mode = StationTableReader.getLineMode(mStr, route);
+                mode = StationTableReader.Companion.getLineMode(mStr, route);
             else
-                mode = StationTableReader.getLineMode(mStr, route | (agency << 16));
+                mode = StationTableReader.Companion.getLineMode(mStr, route | (agency << 16));
         }
         if (mode != null)
             return mode;
         if (agency == null)
             return Trip.Mode.OTHER;
-        mode = StationTableReader.getOperatorDefaultMode(mStr, agency);
+        mode = StationTableReader.Companion.getOperatorDefaultMode(mStr, agency);
         if (mode != null)
             return mode;
         return Trip.Mode.OTHER;
