@@ -23,22 +23,22 @@
  */
 package au.id.micolous.metrodroid.transit.easycard
 
-import au.id.micolous.farebot.R
 import au.id.micolous.metrodroid.card.CardType
 import au.id.micolous.metrodroid.card.classic.ClassicCard
 import au.id.micolous.metrodroid.card.classic.ClassicCardTransitFactory
 import au.id.micolous.metrodroid.card.classic.ClassicSector
-import au.id.micolous.metrodroid.time.TimestampFull
-import au.id.micolous.metrodroid.time.calendar2ts
+import au.id.micolous.metrodroid.multi.Parcelize
+import au.id.micolous.metrodroid.multi.R
+import au.id.micolous.metrodroid.time.Epoch
+import au.id.micolous.metrodroid.time.MetroTimeZone
+import au.id.micolous.metrodroid.time.Timestamp
 import au.id.micolous.metrodroid.transit.*
 import au.id.micolous.metrodroid.util.ImmutableByteArray
-import kotlinx.android.parcel.Parcelize
-import java.util.*
 
 @Parcelize
 data class EasyCardTransitData internal constructor(
-        private val balanceRaw: Int,
-        private val tripsRaw: List<Trip>,
+        private val rawBalance: Int,
+        private val properTrips: List<Trip>,
         private val refill: EasyCardTopUp
 ) : TransitData() {
     constructor(card: ClassicCard) : this(
@@ -47,26 +47,26 @@ data class EasyCardTransitData internal constructor(
             EasyCardTopUp.parse(card)
     )
 
-    override val balance get() = TransitCurrency.TWD(balanceRaw)
+    override val balance get() = TransitCurrency.TWD(rawBalance)
 
     override val cardName get() = NAME
 
     override val serialNumber get(): String? = null
 
-    override val trips get() = tripsRaw + listOf(refill)
+    override val trips get() = properTrips + listOf(refill)
 
     companion object {
-        private val TZ = TimeZone.getTimeZone("Asia/Taipei")
+        private val EPOCH = Epoch.utc(tz = MetroTimeZone.TAIPEI, year = 1970)
 
         internal const val NAME = "EasyCard"
-        private val CARD_INFO = CardInfo.Builder()
-                .setImageId(R.drawable.tpe_easy_card, R.drawable.iso7810_id1_alpha)
-                .setName(NAME)
-                .setLocation(R.string.location_taipei)
-                .setCardType(CardType.MifareClassic)
-                .setKeysRequired()
-                .setPreview()
-                .build()
+        private val CARD_INFO = CardInfo(
+                imageId = R.drawable.tpe_easy_card,
+                imageAlphaId = R.drawable.iso7810_id1_alpha,
+                name = NAME,
+                locationId = R.string.location_taipei,
+                cardType = CardType.MifareClassic,
+                keysRequired = true,
+                preview = true)
 
         internal val MAGIC = ImmutableByteArray.fromHex("0e140001070208030904081000000000")
 
@@ -76,16 +76,13 @@ data class EasyCardTransitData internal constructor(
             return card[2, 0].data.byteArrayToIntReversed(0, 4)
         }
 
-        internal fun parseTimestamp(ts: Long?): Calendar? {
-            val g = GregorianCalendar(TZ)
-            g.timeInMillis = (ts ?: return null) * 1000
-            return g
+        internal fun parseTimestamp(ts: Long?): Timestamp? {
+            ts ?: return null
+            return EPOCH.seconds(ts)
         }
 
-        val FACTORY = object : ClassicCardTransitFactory() {
-            override fun earlyCheck(sectors: List<ClassicSector>) = sectors[0][1].data?.let {
-                it == MAGIC
-            } ?: false
+        val FACTORY = object : ClassicCardTransitFactory () {
+            override fun earlyCheck(sectors: List<ClassicSector>) = sectors[0][1].data == MAGIC
 
             override val earlySectors get() = 1
 

@@ -23,24 +23,20 @@
  */
 package au.id.micolous.metrodroid.transit.easycard
 
-import android.support.annotation.VisibleForTesting
 import au.id.micolous.metrodroid.card.classic.ClassicCard
-import au.id.micolous.metrodroid.time.calendar2ts
+import au.id.micolous.metrodroid.multi.Parcelize
 import au.id.micolous.metrodroid.transit.*
 import au.id.micolous.metrodroid.util.StationTableReader
 import au.id.micolous.metrodroid.util.ImmutableByteArray
-import kotlinx.android.parcel.Parcelize
-import java.util.*
 
 @Parcelize
 data class EasyCardTransaction internal constructor(
         internal val timestampRaw: Long,
-        private val fareRaw: Int,
+        private val rawFare: Int,
         private val location: Int,
         private val isEndTap: Boolean,
         private val machineId: Long
 ) : Transaction() {
-    @VisibleForTesting
     constructor(data: ImmutableByteArray) : this(
             data.byteArrayToLongReversed(1, 4),
             data.byteArrayToIntReversed(6, 2),
@@ -49,9 +45,9 @@ data class EasyCardTransaction internal constructor(
             data.byteArrayToLongReversed(12, 4)
     )
 
-    override val fare get() = TransitCurrency.TWD(fareRaw)
+    override val fare get() = TransitCurrency.TWD(rawFare)
 
-    override val timestamp get() = calendar2ts(EasyCardTransitData.parseTimestamp(timestampRaw))
+    override val timestamp get() = EasyCardTransitData.parseTimestamp(timestampRaw)
 
     override val station get(): Station? = when (location) {
         BUS -> null
@@ -67,17 +63,17 @@ data class EasyCardTransaction internal constructor(
 
     override val machineID get() = "0x${machineId.toString(16)}"
 
-    override fun isSameTrip(trip: Transaction): Boolean {
-        if (trip !is EasyCardTransaction) {
+    override fun isSameTrip(other: Transaction): Boolean {
+        if (other !is EasyCardTransaction) {
             return false
         }
 
         if (location == POS || location == BUS
-                || trip.location == POS || trip.location == BUS) {
+                || other.location == POS || other.location == BUS) {
             return false
         }
 
-        return (!isEndTap && trip.isEndTap)
+        return (!isEndTap && other.isEndTap)
     }
 
     override val isTapOff get() = isEndTap
@@ -86,7 +82,7 @@ data class EasyCardTransaction internal constructor(
 
     override val routeNames get(): List<String>? = when (mode) {
         Trip.Mode.METRO -> super.routeNames
-        else -> Collections.emptyList()
+        else -> emptyList()
     }
 
     companion object {
