@@ -23,13 +23,13 @@ import au.id.micolous.metrodroid.transit.CardInfo
 import au.id.micolous.metrodroid.transit.CardTransitFactory
 import au.id.micolous.metrodroid.util.ImmutableByteArray
 
-abstract class CalypsoCardTransitFactory : CardTransitFactory<CalypsoApplication> {
+interface CalypsoCardTransitFactory : CardTransitFactory<CalypsoApplication> {
     override fun check(card: CalypsoApplication): Boolean {
         val tenv = card.ticketEnv ?: return false
         return check(tenv)
     }
 
-    abstract fun check(tenv: ImmutableByteArray): Boolean
+    fun check(tenv: ImmutableByteArray): Boolean
 
-    abstract fun getCardInfo(tenv: ImmutableByteArray): CardInfo?
+    fun getCardInfo(tenv: ImmutableByteArray): CardInfo?
 }

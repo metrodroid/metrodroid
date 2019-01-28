@@ -37,7 +37,7 @@ class UnauthorizedClassicTransitData private constructor() : UnauthorizedTransit
         get() = Localizer.localizeString(R.string.locked_mfc_card)
 
     companion object {
-        val FACTORY: ClassicCardTransitFactory = object : ClassicCardTransitFactory() {
+        val FACTORY: ClassicCardTransitFactory = object : ClassicCardTransitFactory {
             /**
              * This should be the last executed MIFARE Classic check, after all the other checks are done.
              *

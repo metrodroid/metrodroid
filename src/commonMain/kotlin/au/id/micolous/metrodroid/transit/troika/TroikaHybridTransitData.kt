@@ -121,7 +121,7 @@ class TroikaHybridTransitData (private val mTroika: TroikaTransitData,
     )
 
     companion object {
-        val FACTORY: ClassicCardTransitFactory = object : ClassicCardTransitFactory () {
+        val FACTORY: ClassicCardTransitFactory = object : ClassicCardTransitFactory {
             override val earlySectors: Int
                 get() = 2
 

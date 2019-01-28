@@ -75,7 +75,7 @@ class MykiTransitData (private val mSerial: String): SerialOnlyTransitData() {
             return MykiTransitData(mSerial = serial)
         }
 
-        val FACTORY: DesfireCardTransitFactory = object : DesfireCardTransitFactory() {
+        val FACTORY: DesfireCardTransitFactory = object : DesfireCardTransitFactory {
             override fun check(card: DesfireCard): Boolean {
                 val app1 = card.getApplication(APP_ID_1)
                 if (app1 == null || card.getApplication(APP_ID_2) == null) {

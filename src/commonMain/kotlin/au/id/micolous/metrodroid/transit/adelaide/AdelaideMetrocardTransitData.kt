@@ -137,7 +137,7 @@ class AdelaideMetrocardTransitData (
                 resourceExtraNote = R.string.card_note_adelaide,
                 preview = true)
 
-        val FACTORY: DesfireCardTransitFactory = object : DesfireCardTransitFactory () {
+        val FACTORY: DesfireCardTransitFactory = object : DesfireCardTransitFactory {
             override val allCards: List<CardInfo>
                 get() = listOf(CARD_INFO)
 

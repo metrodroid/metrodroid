@@ -211,7 +211,7 @@ class SuicaTransitData (override val trips: List<SuicaTrip>): TransitData() {
 
         internal const val TAG = "SuicaTransitData"
 
-        val FACTORY: FelicaCardTransitFactory = object : FelicaCardTransitFactory () {
+        val FACTORY: FelicaCardTransitFactory = object : FelicaCardTransitFactory {
 
             override val allCards: List<CardInfo>
                 get() = listOf(SUICA_CARD_INFO, ICOCA_CARD_INFO, PASMO_CARD_INFO)

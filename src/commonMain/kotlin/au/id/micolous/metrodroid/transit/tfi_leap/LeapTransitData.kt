@@ -230,7 +230,7 @@ class LeapTransitData private constructor(private val mIssueDate: Timestamp,
                     NumberUtils.zeroPad((initDate.getYear()) % 100, 2))
         }
 
-        val FACTORY: DesfireCardTransitFactory = object : DesfireCardTransitFactory() {
+        val FACTORY: DesfireCardTransitFactory = object : DesfireCardTransitFactory {
 
             override val allCards: List<CardInfo>
                 get() = listOf(CARD_INFO)

@@ -160,7 +160,7 @@ class MobibTransitData (private val extHolderParsed: En1545Parsed,
                     purchase = purchase, extHolderParsed = extHolderParsed)
         }
 
-        val FACTORY: CalypsoCardTransitFactory = object : CalypsoCardTransitFactory () {
+        val FACTORY: CalypsoCardTransitFactory = object : CalypsoCardTransitFactory {
             override val allCards: List<CardInfo>
                 get() = listOf(CARD_INFO)
 

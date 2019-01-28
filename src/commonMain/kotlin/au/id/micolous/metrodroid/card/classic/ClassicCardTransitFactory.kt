@@ -22,20 +22,18 @@
 
 package au.id.micolous.metrodroid.card.classic
 
-import au.id.micolous.metrodroid.key.ClassicSectorKey;
-import au.id.micolous.metrodroid.transit.CardInfo;
-import au.id.micolous.metrodroid.transit.CardTransitFactory;
-import kotlin.jvm.JvmSuppressWildcards
+import au.id.micolous.metrodroid.key.ClassicSectorKey
+import au.id.micolous.metrodroid.transit.CardInfo
+import au.id.micolous.metrodroid.transit.CardTransitFactory
 
-@JvmSuppressWildcards(true)
-abstract class ClassicCardTransitFactory: CardTransitFactory<ClassicCard> {
+interface ClassicCardTransitFactory: CardTransitFactory<ClassicCard> {
     /**
      * The number of sectors from the MIFARE Classic card that must be read, before
      * {@link #earlyCheck(List)} or {@link #earlyCardInfo(List)} may be called.
      *
      * @return -1 if earlyCheck is not supported (default), 1 if sector 0 must be read, and so on.
      */
-    open val earlySectors get(): Int = -1
+    val earlySectors get(): Int = -1
 
     /**
      * Check if a card is supported by this reader. This check must operate when only
@@ -45,7 +43,7 @@ abstract class ClassicCardTransitFactory: CardTransitFactory<ClassicCard> {
      * @param sectors Sectors that have been retrieved from the card so far.
      * @return True if the card is supported by this reader.
      */
-    open fun earlyCheck(sectors: List<ClassicSector>): Boolean = false
+    fun earlyCheck(sectors: List<ClassicSector>): Boolean = false
 
     /**
      * A {@link CardInfo} for the card that has been read by the reader.
@@ -61,7 +59,7 @@ abstract class ClassicCardTransitFactory: CardTransitFactory<ClassicCard> {
      * @return A {@link CardInfo} for the card, or null if the info is not available.
      */
 
-    open fun earlyCardInfo(sectors : List<ClassicSector>) : CardInfo? = allCards.firstOrNull()
+    fun earlyCardInfo(sectors : List<ClassicSector>) : CardInfo? = allCards.firstOrNull()
 
     /**
      * Checks if a {@link ClassicCard} is supported by this reader.
@@ -89,6 +87,6 @@ abstract class ClassicCardTransitFactory: CardTransitFactory<ClassicCard> {
      * @param keyType
      * @return A {@link CardInfo} for the card, or null if the info is not available.
      */
-    open fun isDynamicKeys(sectors: List<ClassicSector>, sectorIndex: Int,
+    fun isDynamicKeys(sectors: List<ClassicSector>, sectorIndex: Int,
                       keyType: ClassicSectorKey.KeyType): Boolean = false
 }

@@ -91,7 +91,7 @@ class EdyTransitData (override val trips: List<EdyTrip>,
                     mSerialNumber = mSerialNumber)
         }
 
-        val FACTORY: FelicaCardTransitFactory = object : FelicaCardTransitFactory () {
+        val FACTORY: FelicaCardTransitFactory = object : FelicaCardTransitFactory {
             override val allCards: List<CardInfo>
                 get() = listOf(CARD_INFO)
 

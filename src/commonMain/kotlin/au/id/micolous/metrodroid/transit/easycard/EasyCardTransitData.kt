@@ -81,7 +81,7 @@ data class EasyCardTransitData internal constructor(
             return EPOCH.seconds(ts)
         }
 
-        val FACTORY = object : ClassicCardTransitFactory () {
+        val FACTORY = object : ClassicCardTransitFactory {
             override fun earlyCheck(sectors: List<ClassicSector>) = sectors[0][1].data == MAGIC
 
             override val earlySectors get() = 1

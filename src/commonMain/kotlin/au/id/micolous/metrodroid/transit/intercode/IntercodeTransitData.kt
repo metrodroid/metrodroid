@@ -211,7 +211,7 @@ class IntercodeTransitData (val capsule: Calypso1545TransitDataCapsule) : Calyps
             return null
         }
 
-        val FACTORY: CalypsoCardTransitFactory = object : CalypsoCardTransitFactory () {
+        val FACTORY: CalypsoCardTransitFactory = object : CalypsoCardTransitFactory {
             override val allCards: List<CardInfo>
                 get() = NETWORKS.values.map { it.first }
 

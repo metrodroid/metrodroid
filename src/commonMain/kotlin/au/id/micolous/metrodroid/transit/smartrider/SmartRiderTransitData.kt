@@ -139,7 +139,7 @@ class SmartRiderTransitData (override val serialNumber: String?,
             return CardType.UNKNOWN
         }
 
-        val FACTORY: ClassicCardTransitFactory = object : ClassicCardTransitFactory () {
+        val FACTORY: ClassicCardTransitFactory = object : ClassicCardTransitFactory {
 
             override val allCards: List<CardInfo>
                 get() = listOf(SMARTRIDER_CARD_INFO, MYWAY_CARD_INFO)

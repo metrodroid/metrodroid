@@ -153,7 +153,7 @@ data class RicaricaMiTransitData(private val mTrips: List<TransactionTripAbstrac
                     contractList2 = constractList2)
         }
 
-        val FACTORY: ClassicCardTransitFactory = object : ClassicCardTransitFactory () {
+        val FACTORY: ClassicCardTransitFactory = object : ClassicCardTransitFactory {
             override fun earlyCheck(sectors: List<ClassicSector>): Boolean {
                 for (i in 1..2) {
                     val block = sectors[0].getBlock(i).data

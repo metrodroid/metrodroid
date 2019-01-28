@@ -133,7 +133,7 @@ class BilheteUnicoSPTransitData (private val mCredit: Int,
             return crc == 0
         }
 
-        val FACTORY: ClassicCardTransitFactory = object : ClassicCardTransitFactory() {
+        val FACTORY: ClassicCardTransitFactory = object : ClassicCardTransitFactory {
 
             override val earlySectors: Int
                 get() = 9

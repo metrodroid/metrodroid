@@ -88,7 +88,7 @@ class LisboaVivaTransitData (private val capsule: Calypso1545TransitDataCapsule,
                     NumberUtils.zeroPad(tenv.getBitsFromBuffer(38, 24), 9)
         }
 
-        val FACTORY: CalypsoCardTransitFactory = object : CalypsoCardTransitFactory () {
+        val FACTORY: CalypsoCardTransitFactory = object : CalypsoCardTransitFactory {
             override val allCards: List<CardInfo>
                 get() = listOf(CARD_INFO)
 

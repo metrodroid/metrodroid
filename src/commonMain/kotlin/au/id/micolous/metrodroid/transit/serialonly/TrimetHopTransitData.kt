@@ -89,7 +89,7 @@ data class TrimetHopTransitData(private val mSerial: Int?,
         private fun parseSerial(app: DesfireApplication?) =
                 app?.getFile(0)?.data?.byteArrayToInt(0xc, 4)
 
-        val FACTORY: DesfireCardTransitFactory = object : DesfireCardTransitFactory() {
+        val FACTORY: DesfireCardTransitFactory = object : DesfireCardTransitFactory {
             override fun earlyCheck(appIds: IntArray) = APP_ID in appIds
 
             override val allCards get() = listOf(CARD_INFO)

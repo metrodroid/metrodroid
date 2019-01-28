@@ -194,7 +194,7 @@ class PodorozhnikTransitData private constructor(private val sector4: Podorozhni
 
         fun convertDate(mins: Int): Timestamp = PODOROZHNIK_EPOCH.mins(mins)
 
-        val FACTORY: ClassicCardTransitFactory = object : ClassicCardTransitFactory () {
+        val FACTORY: ClassicCardTransitFactory = object : ClassicCardTransitFactory {
             override val earlySectors: Int
                 get() = 5
 

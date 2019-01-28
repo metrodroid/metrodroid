@@ -142,7 +142,7 @@ class ClipperTransitData (private val mSerialNumber: Long?,
 
         const val APP_ID = 0x9011f2
 
-        val FACTORY: DesfireCardTransitFactory = object : DesfireCardTransitFactory () {
+        val FACTORY: DesfireCardTransitFactory = object : DesfireCardTransitFactory {
 
             override val allCards: List<CardInfo>
                 get() = listOf(CARD_INFO)

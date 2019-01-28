@@ -127,7 +127,7 @@ class ErgTransitDataUnknown(override val metadata: ErgMetadataRecord,
     }
 }
 
-abstract class ErgTransitFactory : ClassicCardTransitFactory () {
+abstract class ErgTransitFactory : ClassicCardTransitFactory {
 
     override val earlySectors: Int
         get() = 1

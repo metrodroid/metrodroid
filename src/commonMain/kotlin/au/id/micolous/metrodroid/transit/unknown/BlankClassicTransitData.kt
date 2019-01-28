@@ -42,7 +42,7 @@ class BlankClassicTransitData : TransitData() {
         get() = Localizer.localizeString(R.string.blank_mfc_card)
 
     companion object {
-        val FACTORY: ClassicCardTransitFactory = object : ClassicCardTransitFactory() {
+        val FACTORY: ClassicCardTransitFactory = object : ClassicCardTransitFactory {
             /**
              * @param card Card to read.
              * @return true if all sectors on the card are blank.

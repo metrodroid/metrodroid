@@ -88,7 +88,7 @@ class RavKavTransitData (val capsule: Calypso1545TransitDataCapsule): Calypso154
             return c7?.byteArrayToLong(4, 4).toString()
         }
 
-        val FACTORY: CalypsoCardTransitFactory = object : CalypsoCardTransitFactory () {
+        val FACTORY: CalypsoCardTransitFactory = object : CalypsoCardTransitFactory {
             override val allCards: List<CardInfo>
                 get() = listOf(CARD_INFO)
 

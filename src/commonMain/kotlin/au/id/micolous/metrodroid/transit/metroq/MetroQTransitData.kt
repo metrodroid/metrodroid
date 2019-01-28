@@ -96,7 +96,7 @@ class MetroQTransitData (private val mSerial: Long,
             )
         }
 
-        val FACTORY: ClassicCardTransitFactory = object : ClassicCardTransitFactory () {
+        val FACTORY: ClassicCardTransitFactory = object : ClassicCardTransitFactory {
 
             override val earlySectors: Int
                 get() = 1
