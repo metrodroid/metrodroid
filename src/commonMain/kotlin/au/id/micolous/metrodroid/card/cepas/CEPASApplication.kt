@@ -93,7 +93,7 @@ data class CEPASApplication(
     }
 
     override fun parseTransitData(): TransitData? {
-        return if (EZLinkTransitData.check(this)) EZLinkTransitData(this) else null
+        return if (EZLinkTransitData.check(this)) EZLinkTransitData.parse(this) else null
     }
 
     fun getPurse(purseId: Int): ImmutableByteArray? = purses[purseId]
