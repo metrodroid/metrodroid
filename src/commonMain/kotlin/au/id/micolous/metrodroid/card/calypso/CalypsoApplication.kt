@@ -36,6 +36,7 @@ import au.id.micolous.metrodroid.ui.ListItem
 import au.id.micolous.metrodroid.util.ImmutableByteArray
 import au.id.micolous.metrodroid.util.NumberUtils
 import au.id.micolous.metrodroid.util.Preferences
+import au.id.micolous.metrodroid.util.countryCodeToName
 import kotlinx.serialization.KSerializer
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.Transient
@@ -86,6 +87,8 @@ data class CalypsoApplication (
                         0
                     }
 
+            val countryName = countryCodeToName(countryCode)
+
             val manufacturer = CalypsoData.getCompanyName(data[22])
             val manufacturerHex = NumberUtils.intToHex(data[22].toInt() and 0xff)
             val manufacturerName =
@@ -101,6 +104,7 @@ data class CalypsoApplication (
             if (!Preferences.hideCardNumbers) {
                 items.add(ListItem(R.string.calypso_serial_number, data.getHexString(12, 8)))
             }
+            items.add(ListItem(R.string.calypso_manufacture_country, countryName))
             items.add(ListItem(R.string.calypso_manufacturer, manufacturerName))
             items.add(ListItem(R.string.calypso_manufacture_date, TimestampFormatter.longDateFormat(manufactureDate)))
             return items
