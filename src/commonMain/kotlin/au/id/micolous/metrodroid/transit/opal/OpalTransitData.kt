@@ -155,7 +155,7 @@ class OpalTransitData (
 
         private fun formatSerialNumber(serialNumber: Int, lastDigit: Int) = "308522${NumberUtils.zeroPad(serialNumber, 9)}$lastDigit"
 
-        val FACTORY: DesfireCardTransitFactory = object : DesfireCardTransitFactory() {
+        val FACTORY: DesfireCardTransitFactory = object : DesfireCardTransitFactory {
 
             override val allCards: List<CardInfo>
                 get() = listOf(CARD_INFO)

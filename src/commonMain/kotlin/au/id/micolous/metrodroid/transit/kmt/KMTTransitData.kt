@@ -100,7 +100,7 @@ class KMTTransitData (override val trips: List<KMTTrip>,
                 dataID.toHexString()
         }
 
-        val FACTORY: FelicaCardTransitFactory = object : FelicaCardTransitFactory () {
+        val FACTORY: FelicaCardTransitFactory = object : FelicaCardTransitFactory {
 
             override val allCards: List<CardInfo>
                 get() = listOf(CARD_INFO)

@@ -25,12 +25,11 @@ import au.id.micolous.metrodroid.transit.CardInfo
 import au.id.micolous.metrodroid.transit.CardTransitFactory
 import au.id.micolous.metrodroid.util.ImmutableByteArray
 
-abstract class DesfireCardTransitFactory : CardTransitFactory<DesfireCard> {
-    abstract fun earlyCheck(appIds: IntArray): Boolean
+interface DesfireCardTransitFactory : CardTransitFactory<DesfireCard> {
+    fun earlyCheck(appIds: IntArray): Boolean
 
-    open fun getCardInfo(appIds: IntArray): CardInfo? = allCards.firstOrNull()
+    fun getCardInfo(appIds: IntArray): CardInfo? = allCards.firstOrNull()
 
     override fun check(card: DesfireCard): Boolean = earlyCheck(card.applications.keys.toIntArray())
-
-    open fun createUnlocker(appIds: Int, manufData: ImmutableByteArray): DesfireUnlocker? = null
+    fun createUnlocker(appIds: Int, manufData: ImmutableByteArray): DesfireUnlocker? = null
 }

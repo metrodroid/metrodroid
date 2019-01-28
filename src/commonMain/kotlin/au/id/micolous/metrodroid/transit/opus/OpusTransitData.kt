@@ -82,7 +82,7 @@ class OpusTransitData (val capsule: Calypso1545TransitDataCapsule): Calypso1545T
                 )
         )
 
-        val FACTORY: CalypsoCardTransitFactory = object : CalypsoCardTransitFactory () {
+        val FACTORY: CalypsoCardTransitFactory = object : CalypsoCardTransitFactory {
             override val allCards: List<CardInfo>
                 get() = listOf(CARD_INFO)
 

@@ -75,7 +75,7 @@ class OrcaTransitData (private val mSerialNumber: Int?,
             return OrcaTransitData(trips = trips, mBalance = mBalance, mSerialNumber = mSerialNumber)
         }
 
-        val FACTORY: DesfireCardTransitFactory = object : DesfireCardTransitFactory () {
+        val FACTORY: DesfireCardTransitFactory = object : DesfireCardTransitFactory {
             override val allCards: List<CardInfo>
                 get() = listOf(CARD_INFO)
 

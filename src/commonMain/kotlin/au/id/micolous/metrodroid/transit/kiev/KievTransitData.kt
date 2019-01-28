@@ -67,7 +67,7 @@ class KievTransitData (private val mSerial: String,
         private fun formatSerial(serial: String): String =
                 NumberUtils.groupString(serial, " ", 4, 4, 4)
 
-        val FACTORY: ClassicCardTransitFactory = object : ClassicCardTransitFactory() {
+        val FACTORY: ClassicCardTransitFactory = object : ClassicCardTransitFactory {
 
             override val earlySectors: Int
                 get() = 2

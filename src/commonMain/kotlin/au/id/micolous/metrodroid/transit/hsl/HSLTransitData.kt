@@ -292,7 +292,7 @@ class HSLTransitData(override val serialNumber: String?,
 
         private const val APP_ID = 0x1120ef
 
-        val FACTORY: DesfireCardTransitFactory = object : DesfireCardTransitFactory() {
+        val FACTORY: DesfireCardTransitFactory = object : DesfireCardTransitFactory {
 
             override val allCards: List<CardInfo>
                 get() = listOf(CARD_INFO)

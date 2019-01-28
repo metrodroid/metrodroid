@@ -121,7 +121,7 @@ abstract class NextfareTransitData : TransitData() {
                     FormattedString(Localizer.localizeString(R.string.block_title_format, 2)),
                     capsule.mBlock2.toHexDump()))
 
-    protected open class NextFareTransitFactory : ClassicCardTransitFactory () {
+    protected open class NextFareTransitFactory : ClassicCardTransitFactory {
 
         override val earlySectors: Int
             get() = 1

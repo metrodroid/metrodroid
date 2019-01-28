@@ -123,7 +123,7 @@ class CharlieCardTransitData (private val mSerial: Long,
 
         private fun formatSerial(serial: Long) = "5-$serial"
 
-        val FACTORY: ClassicCardTransitFactory = object : ClassicCardTransitFactory() {
+        val FACTORY: ClassicCardTransitFactory = object : ClassicCardTransitFactory {
 
             override val earlySectors: Int
                 get() = 2
