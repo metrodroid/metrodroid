@@ -40,7 +40,6 @@ import au.id.micolous.metrodroid.util.countryCodeToName
 import kotlinx.serialization.KSerializer
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.Transient
-import kotlin.jvm.JvmOverloads
 
 /**
  * Implements communication with Calypso cards.
@@ -128,7 +127,6 @@ data class CalypsoApplication (
         return null
     }
 
-    @JvmOverloads
     fun getFile(f: File, trySfi: Boolean = true): ISO7816File? {
         val ff = getFile(f.selector)
         if (ff != null)
