@@ -64,7 +64,8 @@ class SeqGoTransitData (override val capsule: NextfareTransitDataCapsule,
      *
      * @return true if there are unknown station IDs on the card.
      */
-    override fun hasUnknownStations (): Boolean = capsule.hasUnknownStations
+    override val hasUnknownStations: Boolean
+        get() = capsule.hasUnknownStations
 
     override val ticketClass: String?
         get() = Localizer.localizeString(mTicketType.description)

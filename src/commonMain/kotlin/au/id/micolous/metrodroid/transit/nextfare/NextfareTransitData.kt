@@ -109,7 +109,8 @@ abstract class NextfareTransitData : TransitData() {
      *
      * @return always false - do not show unknown stations UI
      */
-    override fun hasUnknownStations(): Boolean = false
+    override val hasUnknownStations: Boolean
+        get() = false
 
     // The Los Angeles Tap and Minneapolis Go-To cards have the same system code, but different
     // data in Block 2.
