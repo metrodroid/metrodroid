@@ -4,7 +4,7 @@ import au.id.micolous.metrodroid.transit.bilhete_unico.BilheteUnicoSPTransitData
 import au.id.micolous.metrodroid.transit.charlie.CharlieCardTransitData
 import au.id.micolous.metrodroid.transit.chc_metrocard.ChcMetrocardTransitData
 import au.id.micolous.metrodroid.transit.easycard.EasyCardTransitData
-import au.id.micolous.metrodroid.transit.erg.ErgTransitData
+import au.id.micolous.metrodroid.transit.erg.ErgTransitFactoryUnknown
 import au.id.micolous.metrodroid.transit.kiev.KievTransitData
 import au.id.micolous.metrodroid.transit.lax_tap.LaxTapTransitData
 import au.id.micolous.metrodroid.transit.manly_fast_ferry.ManlyFastFerryTransitData
@@ -31,7 +31,7 @@ actual object ClassicCardFactoryRegistry {
             ManlyFastFerryTransitData.FACTORY,
             ChcMetrocardTransitData.FACTORY,
             // Fallback
-            ErgTransitData.FALLBACK_FACTORY,
+            ErgTransitFactoryUnknown,
             // Nextfare
             SeqGoTransitData.FACTORY,
             LaxTapTransitData.FACTORY, MspGotoTransitData.FACTORY,
