@@ -30,8 +30,6 @@ import au.id.micolous.metrodroid.transit.nextfare.record.NextfareConfigRecord
 import au.id.micolous.metrodroid.transit.nextfare.record.NextfareTransactionRecord
 import au.id.micolous.metrodroid.transit.seq_go.SeqGoTransitData
 import au.id.micolous.metrodroid.util.ImmutableByteArray
-import au.id.micolous.metrodroid.util.Utils
-import au.id.micolous.metrodroid.util.Utils.UTC
 import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertNull
@@ -47,21 +45,21 @@ class NextfareTest {
         val r20240925 = ImmutableByteArray.fromHex("0103000039310000010200000000924a")
         val r20180815 = ImmutableByteArray.fromHex("010300010f25000004000000fb75c2f7")
 
-        val r1 = NextfareConfigRecord.recordFromBytes(r20250602, UTC)
-        assertEquals("2025-06-02 00:00", Utils.isoDateTimeFormat(r1.expiry))
+        val r1 = NextfareConfigRecord.recordFromBytes(r20250602, MetroTimeZone.UTC)
+        assertEquals("2025-06-02 00:00", (r1.expiry as TimestampFull).isoDateTimeFormat())
 
-        val r2 = NextfareConfigRecord.recordFromBytes(r20240925, UTC)
-        assertEquals("2024-09-25 00:00", Utils.isoDateTimeFormat(r2.expiry))
+        val r2 = NextfareConfigRecord.recordFromBytes(r20240925, MetroTimeZone.UTC)
+        assertEquals("2024-09-25 00:00", (r2.expiry as TimestampFull).isoDateTimeFormat())
 
-        val r3 = NextfareConfigRecord.recordFromBytes(r20180815, UTC)
-        assertEquals("2018-08-15 00:00", Utils.isoDateTimeFormat(r3.expiry))
+        val r3 = NextfareConfigRecord.recordFromBytes(r20180815, MetroTimeZone.UTC)
+        assertEquals("2018-08-15 00:00", (r3.expiry as TimestampFull).isoDateTimeFormat())
     }
 
     @Test
     fun testTransactionRecord() {
         val rnull = ImmutableByteArray.fromHex("01000000000000000000000000007f28")
 
-        val r = NextfareTransactionRecord.recordFromBytes(rnull, UTC)
+        val r = NextfareTransactionRecord.recordFromBytes(rnull, MetroTimeZone.UTC)
         assertNull(r)
     }
 

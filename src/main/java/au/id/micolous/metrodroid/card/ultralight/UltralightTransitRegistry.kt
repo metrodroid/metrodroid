@@ -2,7 +2,7 @@ package au.id.micolous.metrodroid.card.ultralight
 
 import au.id.micolous.metrodroid.transit.clipper.ClipperUltralightTransitData
 import au.id.micolous.metrodroid.transit.ovc.OvcUltralightTransitFactory
-import au.id.micolous.metrodroid.transit.nextfare.ultralight.NextfareUnknownUltralightTransitData
+import au.id.micolous.metrodroid.transit.nextfareul.NextfareUnknownUltralightTransitData
 import au.id.micolous.metrodroid.transit.ventra.VentraUltralightTransitData
 import au.id.micolous.metrodroid.transit.yvr_compass.CompassUltralightTransitData
 import au.id.micolous.metrodroid.transit.troika.TroikaUltralightTransitData

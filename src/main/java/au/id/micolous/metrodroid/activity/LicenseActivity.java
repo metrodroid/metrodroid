@@ -67,8 +67,8 @@ public class LicenseActivity extends MetrodroidActivity {
         readLicenseTextFromAsset("third_party/NOTICE.protobuf.txt");
 
         // TODO: Get a list of files programatically
-        addNotice(SeqGoTransitData.getNotice());
-        addNotice(LaxTapTransitData.getNotice());
+        addNotice(SeqGoTransitData.Companion.getNotice());
+        addNotice(LaxTapTransitData.Companion.getNotice());
         addNotice(ClipperTransitData.getNotice());
         addNotice(EZLinkTransitData.Companion.getNotice());
         addNotice(LeapTransitData.getNotice());
