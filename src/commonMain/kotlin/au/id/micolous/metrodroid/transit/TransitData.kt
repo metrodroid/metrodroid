@@ -30,18 +30,18 @@ abstract class TransitData : Parcelable {
      * Balance of the card's "purse".
      *
      * Cards with a single "purse" balance should implement this method, and
-     * [TransitData.getBalances] will convert single-purse cards.  Most transit cards have
+     * [TransitData.balances] will convert single-purse cards.  Most transit cards have
      * only one purse so should use this.
      *
      * Cards with multiple "purse" balances (generally: hybrid transit cards that can act as
-     * multiple transit cards) must implement [TransitData.getBalances] instead.
+     * multiple transit cards) must implement [TransitData.balances] instead.
      *
      * If the balance is not known, this does not need to be implemented.
      *
-     * UI code must call [TransitData.getBalances] to get the balances of purses in the
+     * UI code must call [TransitData.balances] to get the balances of purses in the
      * card, even in the case there is only one purse.
      *
-     * @see TransitData.getBalances
+     * @see TransitData.balances
      * @return The balance of the card, or null if it is not known.
      */
     protected open val balance: TransitBalance?
@@ -52,9 +52,9 @@ abstract class TransitData : Parcelable {
      *
      * Cards with multiple "purse" balances (generally: hybrid transit cards that can act as
      * multiple transit cards) must implement this method, and must not implement
-     * [TransitData.getBalance].
+     * [TransitData.balance].
      *
-     * Cards with a single "purse" balance should implement [TransitData.getBalance]
+     * Cards with a single "purse" balance should implement [TransitData.balance]
      * instead.
      *
      * @return The balance of the card, or null if it is not known.
@@ -70,7 +70,7 @@ abstract class TransitData : Parcelable {
     /**
      * Lists all trips on the card.  May return null if the trip information cannot be read.
      *
-     * @return Array of Trip[], or null if not supported.
+     * @return List of Trip[], or null if not supported.
      */
     open val trips: List<Trip>?
         get() = null
@@ -87,11 +87,11 @@ abstract class TransitData : Parcelable {
      * Note: in order to support obfuscation / hiding behaviour, if you implement this method, you
      * also need to use some other functionality:
      *
-     *  * Check for [] whenever you show a card
+     *  * Check for [au.id.micolous.metrodroid.util.Preferences.hideCardNumbers] whenever you show a card
      * number, or other mark (such as a name) that could be used to identify this card or its
      * holder.
      *
-     *  * Pass [java.util.Calendar]/[java.util.Date] objects (timestamps) through
+     *  * Pass [au.id.micolous.metrodroid.time.Timestamp] objects (timestamps) through
      * [au.id.micolous.metrodroid.util.TripObfuscator.maybeObfuscateTS].  This also
      * works on epoch timestamps (expressed as seconds since UTC).
      *
