@@ -24,7 +24,6 @@ import au.id.micolous.metrodroid.multi.Parcelize
 import au.id.micolous.metrodroid.util.Preferences
 import au.id.micolous.metrodroid.multi.FormattedString
 import au.id.micolous.metrodroid.util.getCurrencyDescriptorByCode
-import kotlin.jvm.JvmStatic
 import kotlin.random.Random
 
 internal expect fun formatCurrency(value: Int, divisor: Int, currencyCode: String, isBalance: Boolean): FormattedString
@@ -194,45 +193,27 @@ open class TransitCurrency (
         private const val DEFAULT_DIVISOR = 100
         private const val TAG = "TransitCurrency"
 
-        @JvmStatic
         fun AUD(cents: Int) = TransitCurrency(cents, "AUD")
-        @JvmStatic
         fun BRL(centavos: Int) = TransitCurrency(centavos, "BRL")
-        @JvmStatic
         fun CAD(cents: Int) = TransitCurrency(cents, "CAD")
-        @JvmStatic
         fun CNY(fen: Int) = TransitCurrency(fen, "CNY")
-        @JvmStatic
         fun DKK(ore: Int) = TransitCurrency(ore, "DKK")
-        @JvmStatic
         fun EUR(cents: Int) = TransitCurrency(cents, "EUR")
-        @JvmStatic
         fun HKD(cents: Int) = TransitCurrency(cents, "HKD")
-        @JvmStatic
         fun IDR(cents: Int) = TransitCurrency(cents, "IDR", 1)
-        @JvmStatic
         fun ILS(agorot: Int) = TransitCurrency(agorot, "ILS")
-        @JvmStatic
         fun JPY(yen: Int) = TransitCurrency(yen, "JPY", 1)
-        @JvmStatic
         fun KRW(won: Int) = TransitCurrency(won, "KRW", 1)
-        @JvmStatic
         fun NZD(cents: Int) = TransitCurrency(cents, "NZD")
-        @JvmStatic
         fun RUB(kopeyka: Int) = TransitCurrency(kopeyka, "RUB")
-        @JvmStatic
         fun SGD(cents: Int) = TransitCurrency(cents, "SGD")
-        @JvmStatic
         fun TWD(cents: Int) = TransitCurrency(cents, "TWD", 1)
-        @JvmStatic
         fun USD(cents: Int) = TransitCurrency(cents, "USD")
 
         /**
          * Constructor for use with unknown currencies.
          */
-        @JvmStatic
         fun XXX(cents: Int) = TransitCurrency(cents, UNKNOWN_CURRENCY_CODE)
-        @JvmStatic
         fun XXX(cents: Int, divisor: Int) = TransitCurrency(cents, UNKNOWN_CURRENCY_CODE, divisor)
     }
 }
