@@ -27,6 +27,7 @@ import au.id.micolous.metrodroid.card.felica.FelicaCard
 import au.id.micolous.metrodroid.card.felica.FelicaCardTransitFactory
 import au.id.micolous.metrodroid.card.felica.FelicaService
 import au.id.micolous.metrodroid.transit.*
+import au.id.micolous.metrodroid.transit.china.NewShenzhenTransitData
 import au.id.micolous.metrodroid.multi.Localizer
 import au.id.micolous.metrodroid.multi.Parcelize
 import au.id.micolous.metrodroid.multi.R
