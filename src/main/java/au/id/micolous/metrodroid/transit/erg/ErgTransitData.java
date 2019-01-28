@@ -1,7 +1,7 @@
 /*
  * ErgTransitData.java
  *
- * Copyright 2015-2018 Michael Farrell <micolous+git@gmail.com>
+ * Copyright 2015-2019 Michael Farrell <micolous+git@gmail.com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -27,6 +27,8 @@ import au.id.micolous.metrodroid.card.classic.ClassicBlock;
 import au.id.micolous.metrodroid.card.classic.ClassicCard;
 import au.id.micolous.metrodroid.card.classic.ClassicCardTransitFactory;
 import au.id.micolous.metrodroid.card.classic.ClassicSector;
+import au.id.micolous.metrodroid.transit.Transaction;
+import au.id.micolous.metrodroid.transit.TransactionTrip;
 import au.id.micolous.metrodroid.transit.TransitCurrency;
 import au.id.micolous.metrodroid.transit.TransitData;
 import au.id.micolous.metrodroid.transit.TransitIdentity;
@@ -41,7 +43,6 @@ import au.id.micolous.metrodroid.util.TripObfuscator;
 import au.id.micolous.metrodroid.util.Utils;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.GregorianCalendar;
 import java.util.List;
@@ -64,7 +65,7 @@ public class ErgTransitData extends TransitData {
     private GregorianCalendar mEpochDate;
     private int mAgencyID;
     private int mBalance;
-    private final List<ErgTrip> mTrips;
+    private final List<? extends Trip> mTrips;
 
     // Parcel
     public static final Creator<ErgTransitData> CREATOR = new Creator<ErgTransitData>() {
@@ -141,17 +142,19 @@ public class ErgTransitData extends TransitData {
         // "tap off").
         //
         // These need the Epoch to be known first.
-        List<ErgTrip> trips = new ArrayList<>();
+        List<ErgTransaction> txns = new ArrayList<>();
 
         for (ErgRecord record : records) {
             if (record instanceof ErgPurseRecord) {
                 ErgPurseRecord purseRecord = (ErgPurseRecord) record;
-                trips.add(newTrip(purseRecord, mEpochDate));
+                txns.add(newTrip(purseRecord, mEpochDate));
             }
         }
 
-        Collections.sort(trips, new Trip.Comparator());
-        mTrips = trips;
+        Collections.sort(txns, new Transaction.Comparator());
+
+        // Merge trips as appropriate
+        mTrips = TransactionTrip.merge(txns);
     }
 
     protected static class ErgTransitFactory implements ClassicCardTransitFactory {
@@ -270,7 +273,7 @@ public class ErgTransitData extends TransitData {
     }
 
     @Override
-    public List<ErgTrip> getTrips() {
+    public List<? extends Trip> getTrips() {
         return mTrips;
     }
 
@@ -293,10 +296,10 @@ public class ErgTransitData extends TransitData {
     /**
      * Allows you to override the constructor for new trips, to hook in your own station ID code.
      *
-     * @return Subclass of ErgTrip.
+     * @return Subclass of ErgTransaction.
      */
-    protected ErgTrip newTrip(ErgPurseRecord purse, GregorianCalendar epoch) {
-        return new ErgTrip(purse, epoch, mCurrency);
+    protected ErgTransaction newTrip(ErgPurseRecord purse, GregorianCalendar epoch) {
+        return new ErgTransaction(purse, epoch, mCurrency);
     }
 
     /**

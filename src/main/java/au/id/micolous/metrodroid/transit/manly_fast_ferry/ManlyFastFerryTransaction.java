@@ -1,5 +1,5 @@
 /*
- * ManlyFastFerryTrip.java
+ * ManlyFastFerryTransaction.java
  *
  * Copyright 2015-2018 Michael Farrell <micolous+git@gmail.com>
  *
@@ -22,7 +22,8 @@ package au.id.micolous.metrodroid.transit.manly_fast_ferry;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-import au.id.micolous.metrodroid.transit.erg.ErgTrip;
+import au.id.micolous.metrodroid.transit.Trip;
+import au.id.micolous.metrodroid.transit.erg.ErgTransaction;
 import au.id.micolous.metrodroid.transit.erg.record.ErgPurseRecord;
 
 import java.util.GregorianCalendar;
@@ -31,30 +32,30 @@ import java.util.GregorianCalendar;
  * Trips on the card are "purse debits", and it is not possible to tell it apart from non-ticket
  * usage (like cafe purchases).
  */
-public class ManlyFastFerryTrip extends ErgTrip {
-    public static final Parcelable.Creator<ManlyFastFerryTrip> CREATOR = new Parcelable.Creator<ManlyFastFerryTrip>() {
+public class ManlyFastFerryTransaction extends ErgTransaction {
+    public static final Parcelable.Creator<ManlyFastFerryTransaction> CREATOR = new Parcelable.Creator<ManlyFastFerryTransaction>() {
 
-        public ManlyFastFerryTrip createFromParcel(Parcel in) {
-            return new ManlyFastFerryTrip(in);
+        public ManlyFastFerryTransaction createFromParcel(Parcel in) {
+            return new ManlyFastFerryTransaction(in);
         }
 
-        public ManlyFastFerryTrip[] newArray(int size) {
-            return new ManlyFastFerryTrip[size];
+        public ManlyFastFerryTransaction[] newArray(int size) {
+            return new ManlyFastFerryTransaction[size];
         }
     };
 
-    private ManlyFastFerryTrip(Parcel parcel) {
+    private ManlyFastFerryTransaction(Parcel parcel) {
         super(parcel);
     }
 
-    public ManlyFastFerryTrip(ErgPurseRecord purse, GregorianCalendar epoch) {
+    public ManlyFastFerryTransaction(ErgPurseRecord purse, GregorianCalendar epoch) {
         super(purse, epoch, ManlyFastFerryTransitData.CURRENCY);
     }
 
     @Override
-    public Mode getMode() {
+    public Trip.Mode getMode() {
         // All transactions look the same... but this is a ferry, so we'll call it a ferry one.
         // Even when you buy things at the cafe.
-        return Mode.FERRY;
+        return Trip.Mode.FERRY;
     }
 }

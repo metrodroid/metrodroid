@@ -1,7 +1,7 @@
 /*
- * ManlyFastFerryPurseRecord.java
+ * ErgPurseRecord.java
  *
- * Copyright 2015-2018 Michael Farrell <micolous+git@gmail.com>
+ * Copyright 2015-2019 Michael Farrell <micolous+git@gmail.com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -39,7 +39,7 @@ public class ErgPurseRecord extends ErgRecord implements Parcelable {
     private int mMinute;
     private boolean mIsCredit;
     private int mTransactionValue;
-    private boolean mIsTransfer;
+    private boolean mIsTrip;
 
     private ErgPurseRecord() {
     }
@@ -50,7 +50,7 @@ public class ErgPurseRecord extends ErgRecord implements Parcelable {
         mMinute = parcel.readInt();
         mIsCredit = parcel.readInt() == 1;
         mTransactionValue = parcel.readInt();
-        mIsTransfer = parcel.readInt() == 1;
+        mIsTrip = parcel.readInt() == 1;
     }
 
     public static final Creator<ErgPurseRecord> CREATOR = new Creator<ErgPurseRecord>() {
@@ -72,17 +72,16 @@ public class ErgPurseRecord extends ErgRecord implements Parcelable {
         if (input.get(3) == 0x09 || /* manly */
                 input.get(3) == 0x0D /* chc */) {
             record.mIsCredit = false;
-            record.mIsTransfer = false;
+            record.mIsTrip = false;
         } else if (input.get(3) == 0x08 /* chc, manly */) {
             record.mIsCredit = true;
-            record.mIsTransfer = false;
+            record.mIsTrip = false;
         } else if (input.get(3) == 0x02 /* chc */) {
+            // For every non-paid trip, CHC puts in a 0x02
+            // For every paid trip, CHC puts a 0x0d (purse debit) and 0x02
             record.mIsCredit = false;
-            record.mIsTransfer = true;
+            record.mIsTrip = true;
         } else {
-            // chc: 0x02 seen here, but only on $0 trips. Suspect this is for 2-hour free transfers.
-            // Not really important for MD, nor does it fit neatly into the data model.
-
             // May also be null or empty record...
             return null;
         }
@@ -116,7 +115,7 @@ public class ErgPurseRecord extends ErgRecord implements Parcelable {
         parcel.writeInt(mMinute);
         parcel.writeInt(mIsCredit ? 1 : 0);
         parcel.writeInt(mTransactionValue);
-        parcel.writeInt(mIsTransfer ? 1 : 0);
+        parcel.writeInt(mIsTrip ? 1 : 0);
     }
 
     public int getDay() {
@@ -131,12 +130,12 @@ public class ErgPurseRecord extends ErgRecord implements Parcelable {
         return mTransactionValue;
     }
 
-    public boolean getIsCredit() {
+    public boolean isCredit() {
         return mIsCredit;
     }
 
-    public boolean isTransfer() {
-        return mIsTransfer;
+    public boolean isTrip() {
+        return mIsTrip;
     }
 
     public int getRoute() {
@@ -151,7 +150,7 @@ public class ErgPurseRecord extends ErgRecord implements Parcelable {
                 mDay,
                 mMinute,
                 mIsCredit ? "true" : "false",
-                mIsTransfer ? "true" : "false",
+                mIsTrip ? "true" : "false",
                 mTransactionValue);
     }
 }

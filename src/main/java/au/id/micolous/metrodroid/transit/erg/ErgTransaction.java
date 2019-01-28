@@ -1,7 +1,7 @@
 /*
- * ErgTrip.java
+ * ErgTransaction.java
  *
- * Copyright 2015-2018 Michael Farrell <micolous+git@gmail.com>
+ * Copyright 2015-2019 Michael Farrell <micolous+git@gmail.com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -24,42 +24,43 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
 import java.util.Calendar;
+import java.util.Collections;
 import java.util.GregorianCalendar;
+import java.util.List;
 
+import au.id.micolous.metrodroid.transit.Transaction;
 import au.id.micolous.metrodroid.transit.TransitCurrency;
-import au.id.micolous.metrodroid.transit.Trip;
 import au.id.micolous.metrodroid.transit.erg.record.ErgPurseRecord;
 import au.id.micolous.metrodroid.util.Utils;
 
 /**
- * Represents a trip on an ERG MIFARE Classic card.
+ * Represents a transaction on an ERG MIFARE Classic card.
  */
+public class ErgTransaction extends Transaction {
+    public static final Parcelable.Creator<ErgTransaction> CREATOR = new Parcelable.Creator<ErgTransaction>() {
 
-public class ErgTrip extends Trip {
-    public static final Parcelable.Creator<ErgTrip> CREATOR = new Parcelable.Creator<ErgTrip>() {
-
-        public ErgTrip createFromParcel(Parcel in) {
-            return new ErgTrip(in);
+        public ErgTransaction createFromParcel(Parcel in) {
+            return new ErgTransaction(in);
         }
 
-        public ErgTrip[] newArray(int size) {
-            return new ErgTrip[size];
+        public ErgTransaction[] newArray(int size) {
+            return new ErgTransaction[size];
         }
     };
 
     private final Calendar mEpoch;
-    private final ErgPurseRecord mPurse;
+    protected final ErgPurseRecord mPurse;
 
     @NonNull
     private final String mCurrency;
 
-    public ErgTrip(ErgPurseRecord purse, GregorianCalendar epoch, @NonNull String currency) {
+    public ErgTransaction(ErgPurseRecord purse, GregorianCalendar epoch, @NonNull String currency) {
         mPurse = purse;
         mEpoch = epoch;
         mCurrency = currency;
     }
 
-    protected ErgTrip(Parcel parcel) {
+    protected ErgTransaction(Parcel parcel) {
         mPurse = new ErgPurseRecord(parcel);
         mEpoch = Utils.unparcelCalendar(parcel);
         mCurrency = parcel.readString();
@@ -67,7 +68,7 @@ public class ErgTrip extends Trip {
 
     // Implemented functionality.
     @Override
-    public Calendar getStartTimestamp() {
+    public Calendar getTimestamp() {
         GregorianCalendar ts = new GregorianCalendar();
         ts.setTimeInMillis(mEpoch.getTimeInMillis());
         ts.add(Calendar.DATE, mPurse.getDay());
@@ -76,11 +77,16 @@ public class ErgTrip extends Trip {
         return ts;
     }
 
+    @Override
+    protected boolean isTapOff() {
+        return false;
+    }
+
     @Nullable
     @Override
     public TransitCurrency getFare() {
         int o = mPurse.getTransactionValue();
-        if (mPurse.getIsCredit()) {
+        if (mPurse.isCredit()) {
             o *= -1;
         }
 
@@ -88,8 +94,13 @@ public class ErgTrip extends Trip {
     }
 
     @Override
-    public Mode getMode() {
-        return Mode.OTHER;
+    protected boolean isSameTrip(@NonNull Transaction other) {
+        return false;
+    }
+
+    @Override
+    protected boolean isTapOn() {
+        return true;
     }
 
     @Override
@@ -99,13 +110,14 @@ public class ErgTrip extends Trip {
 
     @Override
     public boolean isTransfer() {
-        return mPurse.isTransfer();
+        // TODO
+        return false;
     }
 
-    @Nullable
+    @NonNull
     @Override
-    public String getRouteName() {
-        return Utils.intToHex(mPurse.getRoute());
+    public List<String> getRouteNames() {
+        return Collections.singletonList(Utils.intToHex(mPurse.getRoute()));
     }
 
     @Override

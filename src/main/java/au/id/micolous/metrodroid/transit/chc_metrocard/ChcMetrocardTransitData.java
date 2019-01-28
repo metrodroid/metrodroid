@@ -34,7 +34,7 @@ import au.id.micolous.metrodroid.transit.CardInfo;
 import au.id.micolous.metrodroid.transit.TransitData;
 import au.id.micolous.metrodroid.transit.TransitIdentity;
 import au.id.micolous.metrodroid.transit.erg.ErgTransitData;
-import au.id.micolous.metrodroid.transit.erg.ErgTrip;
+import au.id.micolous.metrodroid.transit.erg.ErgTransaction;
 import au.id.micolous.metrodroid.transit.erg.record.ErgMetadataRecord;
 import au.id.micolous.metrodroid.transit.erg.record.ErgPurseRecord;
 
@@ -112,8 +112,8 @@ public class ChcMetrocardTransitData extends ErgTransitData {
     };
 
     @Override
-    protected ErgTrip newTrip(ErgPurseRecord purse, GregorianCalendar epoch) {
-        return new ChcMetrocardTrip(purse, epoch);
+    protected ErgTransaction newTrip(ErgPurseRecord purse, GregorianCalendar epoch) {
+        return new ChcMetrocardTransaction(purse, epoch);
     }
 
     @Override
