@@ -72,14 +72,9 @@ import java.io.FileOutputStream;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.lang.ref.WeakReference;
-import java.nio.charset.Charset;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Calendar;
 import java.util.Collection;
-import java.util.GregorianCalendar;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -107,7 +102,7 @@ public class CardsFragment extends ExpandableListFragment {
     private static final String STD_EXPORT_FILENAME = "Metrodroid-Export.zip";
     private static final String SD_EXPORT_PATH = Environment.getExternalStorageDirectory() + "/" + STD_EXPORT_FILENAME;
     @NonNls
-    private static final String STD_IMPORT_FILENAME = "Metrodroid-Import.xml";
+    private static final String STD_IMPORT_FILENAME = "Metrodroid-Import.zip";
     private static final String SD_IMPORT_PATH = Environment.getExternalStorageDirectory() + "/" + STD_IMPORT_FILENAME;
 
     private static class Scan {
@@ -324,7 +319,7 @@ public class CardsFragment extends ExpandableListFragment {
                     } else {
                         File file = new File(SD_EXPORT_PATH);
                         ExportHelper.exportCardsZip(FileUtils.openOutputStream(file), getActivity());
-                        Toast.makeText(getActivity(), R.string.saved_xml, Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getActivity(), R.string.saved_metrodroid_zip, Toast.LENGTH_SHORT).show();
                     }
                     return true;
             }

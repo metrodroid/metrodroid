@@ -126,7 +126,7 @@
     <string name="card_format">カードの種類</string>
     <string name="select_file">ファイルを選択</string>
     <string name="copied_to_clipboard">クリップボードにコピーしました</string>
-    <string name="saved_xml">USB ストレージに Metrodroid Export.xml を書き込みました。</string>
+    <string name="saved_metrodroid_zip">USB ストレージに Metrodroid-Export.zip を書き込みました。</string>
     <plurals name="cards_imported">
         <item quantity="other">
             <xliff:g id="count" example="1">%d</xliff:g>カードをインポートしました!</item>

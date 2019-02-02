@@ -90,8 +90,8 @@
     <string name="card_format">Kart tipi</string>
     <string name="select_file">Dosya seç</string>
     <string name="copied_to_clipboard">Hafızaya kopyalandı</string>
-    <string name="saved_xml">Metrodroid-Export.xml USB Depolama birimine yazıldı.</string>
-    <string name="saved_xml_custom">XML dosyası USB Belleğe yazıldı.</string>
+    <string name="saved_metrodroid_zip">Metrodroid-Export.zip USB Depolama birimine yazıldı.</string>
+    <string name="saved_xml_custom">ZIP dosyası USB Belleğe yazıldı.</string>
     <string name="map_tiles_url">Harita kaynağı URL</string>
     <string name="cepas_logfile_record_count">Günlük Dosyası Kayıt Sayısı</string>
     <string name="location_taipei">Taipei</string>
