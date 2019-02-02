@@ -45,6 +45,7 @@ import java.util.zip.ZipOutputStream;
 import au.id.micolous.metrodroid.provider.CardDBHelper;
 import au.id.micolous.metrodroid.provider.CardProvider;
 import au.id.micolous.metrodroid.provider.CardsTableColumns;
+import kotlinx.io.charsets.EncodingKt;
 
 public final class ExportHelper {
     private ExportHelper() {
@@ -112,6 +113,15 @@ public final class ExportHelper {
         Cursor cursor = CardDBHelper.createCursor(context);
         ZipOutputStream zo = new ZipOutputStream(os);
         Set<String> used = new HashSet<>();
+        ZipEntry ze = new ZipEntry("README.txt");
+        final TimestampFull now = TimestampFull.Companion.now();
+        ze.setTime(now.getTimeInMillis());
+        zo.putNextEntry(ze);
+        String readme = String.format(Locale.ENGLISH, "Exported by Metrodroid at %s\n%s",
+                now.isoDateTimeFormat(), Utils.getDeviceInfoString());
+        zo.write(ImmutableByteArray.Companion.fromUTF8(readme).getDataCopy());
+        zo.closeEntry();
+
         while (cursor.moveToNext()) {
             String content = cursor.getString(cursor.getColumnIndex(CardsTableColumns.DATA)).trim();
             long scannedAt = cursor.getLong(cursor.getColumnIndex(CardsTableColumns.SCANNED_AT));
@@ -124,7 +134,7 @@ public final class ExportHelper {
                         content.charAt(0) == '<' ? "xml" : "json", gen++);
             while (used.contains(name));
             used.add(name);
-            ZipEntry ze = new ZipEntry(name);
+            ze = new ZipEntry(name);
             ze.setTime(scannedAt);
             zo.putNextEntry(ze);
             zo.write(content.getBytes(Charsets.UTF_8));

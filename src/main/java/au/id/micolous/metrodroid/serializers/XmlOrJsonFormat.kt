@@ -44,7 +44,11 @@ class XmlOrJsonCardFormat : CardImporter {
         override fun next(): Pair<ZipEntry, InputStream> {
             if (ze == null)
                 ze = zi.nextEntry
-            return Pair(ze!!, zi)
+
+            // Stash the ZipEntry and clear it so that we try to get another next time
+            val o = ze
+            ze = null
+            return Pair(o!!, zi)
         }
 
         private var ze: ZipEntry? = null

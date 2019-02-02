@@ -2,11 +2,13 @@ package au.id.micolous.metrodroid.test
 
 import android.content.Context
 import android.content.res.AssetManager
+import android.content.res.Resources
 import android.os.Build
 import android.text.Spanned
 import android.text.style.TtsSpan
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.platform.app.InstrumentationRegistry
+import au.id.micolous.metrodroid.MetrodroidApplication
 import au.id.micolous.metrodroid.util.Preferences
 import junit.framework.TestCase.assertEquals
 import kotlinx.coroutines.runBlocking
@@ -36,7 +38,15 @@ actual abstract class BaseInstrumentedTestPlatform {
     actual fun setLocale(languageTag: String) {
         val l = compatLocaleForLanguageTag(languageTag)
         Locale.setDefault(l)
-        val r = context.resources
+        setResourcesLocale(l, context.resources)
+    }
+
+    fun setAndroidLanguage(languageTag: String?) {
+        val l = languageTag?.let { compatLocaleForLanguageTag(it) }
+        setResourcesLocale(l, MetrodroidApplication.getInstance().resources)
+    }
+
+    private fun setResourcesLocale(l: Locale?, r: Resources) {
         val c = r.configuration
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
             c.setLocale(l)
@@ -114,6 +124,8 @@ actual abstract class BaseInstrumentedTestPlatform {
                 "fr-FR" to Locale.FRANCE,
                 "ja" to Locale.JAPANESE,
                 "ja-JP" to Locale.JAPAN,
+                "ru" to Locale("ru"),
+                "ru-RU" to Locale("ru", "RU"),
                 "zh-CN" to Locale.SIMPLIFIED_CHINESE,
                 "zh-TW" to Locale.TRADITIONAL_CHINESE)
 
