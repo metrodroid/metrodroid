@@ -56,14 +56,14 @@ class OpalTest {
         val i = c.parseTransitIdentity()
         assertNotNull(i)
         assertEquals(OpalTransitData.NAME, i.name)
-        assertEquals("3085220012345670", i.serialNumber)
+        assertEquals("3085 2200 1234 5670", i.serialNumber)
 
         // Test TransitData
         val d = c.parseTransitData()
         assertTrue(d is OpalTransitData, "TransitData must be instance of OpalTransitData")
 
         val o = d as OpalTransitData?
-        assertEquals("3085220012345670", o!!.serialNumber)
+        assertEquals("3085 2200 1234 5670", o!!.serialNumber)
         assertEquals(TransitCurrency.AUD(336), o.balance)
         assertEquals(0, o.subscriptions!!.size)
         // 2015-10-05 09:06 UTC+11
