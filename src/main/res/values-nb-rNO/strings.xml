@@ -489,8 +489,8 @@
 </plurals>
 
     <string name="trip_description_unknown_start">til %s</string>
-    <string name="time_from_to">%s → %s</string>
-    <string name="time_from_unknown_to">\??:?? → %s</string>
+    <string name="time_from_to"><xliff:g id="start_time" example="12:35">%1$s</xliff:g> → <xliff:g id="end_time" example="12:51">%2$s</xliff:g></string>
+    <string name="time_from_unknown_to">\?\?:\?\? → <xliff:g id="end_time" example="12:51">%s</xliff:g></string>
 
 
     <string name="location_israel">Israel</string>
@@ -533,16 +533,16 @@
 
     <string name="no_data_in_clipboard">Ingen data i utklippstavle.</string>
     <string name="app_version">Versjon: %s</string>
-    <string name="device_model">Modell: %s (%s)</string>
+    <string name="device_model">Modell: <xliff:g id="model_name" example="Pixel 2">%1$s</xliff:g> (<xliff:g id="model_codename" example="walleye">%2$s</xliff:g>)</string>
     <string name="android_os">Android OS: <xliff:g id="version" example="9.0">%1$s</xliff:g> (<xliff:g id="build_id" example="PPR2.180905.006">%2$s</xliff:g>)</string>
-    <string name="nfc_enabled">NFC: Avskrudd</string>
+    <string name="nfc_enabled">NFC: Påskrudd</string>
     <string name="nfc_disabled">NFC: Avskrudd</string>
     <string name="nfc_not_available">NFC: Ikke støttet</string>
     <string name="mfc_supported">MIFARE CLASSIC: Støttet</string>
     <string name="mfc_not_supported">MIFARE Classic: Ikke støttet</string>
     <string name="balances_and_subscriptions">Billetter</string>
     <string name="card_number">Kortnummer</string>
-    <string name="pref_show_raw_station_ids">Vis råe stasjons-ID-er</string>
+    <string name="pref_show_raw_station_ids">Vis råe stasjons-ID-er og rute-ID-er</string>
     <string name="nfc">Nærfeltskommunikasjon</string>
     <string name="location_istanbul">Istanbul, Tyrkia</string>
     <string name="classic_key_format_a">Nøkkkel (A): %s</string>
@@ -865,4 +865,6 @@
     <string name="pref_show_raw_station_ids_desc_on">Stasjon og rute-ID-er vises i tillegg til navnene deres.</string>
     <string name="pref_show_raw_station_ids_desc_off">Stasjon og rute-ID-er skjules med mindre de er ukjente</string>
     <string name="block_title_format_unauthorized">Blokk: %s (uautorisert)</string>
+    <string name="card_note_chc_metrocard">Kun kort fra før 2016 (MIFARE Classic-) kort kan leses. Nyere. helt låste DESFire-kort, kan ikke støttes.</string>
+    <string name="mfc_aid_title_format">MIFARE Classic AID: %1$s #%2$d</string>
 </resources>

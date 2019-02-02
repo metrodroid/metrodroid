@@ -113,7 +113,9 @@ class MykiTransitData (private val mSerial: String): SerialOnlyTransitData() {
          * @param file content of the serial file
          * @return String with the complete serial number, or null on error
          */
-        private fun parseSerial(file: ImmutableByteArray): String? {
+        private fun parseSerial(file: ImmutableByteArray?): String? {
+            if (file == null) return null
+
             val serial1 = file.byteArrayToLongReversed(0, 4)
             if (serial1 != MYKI_PREFIX) {
                 return null

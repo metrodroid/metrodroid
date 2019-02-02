@@ -87,7 +87,7 @@ public abstract class Calypso1545TransitData extends En1545TransitData {
             En1545Parsed contractList = En1545Parser.parse(card.getFile(CalypsoApplication.File.TICKETING_CONTRACT_LIST).getRecord(1).getData(), contractListFields);
             for (int i = 0; i < 16; i++) {
                 Integer ptr = contractList.getInt(CONTRACTS_POINTER, i);
-                if (ptr == null)
+                if (ptr == null || ptr == 0)
                     continue;
                 parsed.add(ptr);
                 if (ptr > contracts.size() || ptr <= 0)

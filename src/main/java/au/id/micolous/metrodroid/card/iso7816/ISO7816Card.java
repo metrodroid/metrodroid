@@ -22,7 +22,9 @@ package au.id.micolous.metrodroid.card.iso7816;
 import android.nfc.Tag;
 import android.nfc.TagLostException;
 import android.nfc.tech.IsoDep;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.annotation.VisibleForTesting;
 import android.util.Log;
 
 import org.simpleframework.xml.ElementList;
@@ -32,12 +34,15 @@ import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
+import java.util.Collections;
 import java.util.GregorianCalendar;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
 
 import au.id.micolous.farebot.R;
 import au.id.micolous.metrodroid.card.Card;
+import au.id.micolous.metrodroid.card.CardTransceiver;
 import au.id.micolous.metrodroid.card.CardType;
 import au.id.micolous.metrodroid.card.TagReaderFeedbackInterface;
 import au.id.micolous.metrodroid.card.calypso.CalypsoApplication;
@@ -73,7 +78,7 @@ public class ISO7816Card extends Card {
     
     protected ISO7816Card() { /* For XML Serializer */ }
 
-    public ISO7816Card(List<ISO7816Application> apps, ImmutableByteArray tagId, Calendar scannedAt, boolean partialRead) {
+    public ISO7816Card(@NonNull List<ISO7816Application> apps, ImmutableByteArray tagId, Calendar scannedAt, boolean partialRead) {
         super(CardType.ISO7816, tagId, scannedAt, partialRead);
         mApplications = apps;
     }
@@ -81,17 +86,14 @@ public class ISO7816Card extends Card {
     /**
      * Dumps a ISO7816 tag in the field.
      *
-     * @param tag Tag to dump.
+     * @param tech Tag to dump.
      * @return ISO7816Card of the card contents. Returns null if an unsupported card is in the
      * field.
      * @throws Exception On communication errors.
      */
-    @Nullable
-    public static ISO7816Card dumpTag(Tag tag, TagReaderFeedbackInterface feedbackInterface) throws Exception {
-        IsoDep tech = IsoDep.get(tag);
-        tech.connect();
+    @NonNull
+    public static ISO7816Card dumpTag(CardTransceiver tech, ImmutableByteArray tagId, TagReaderFeedbackInterface feedbackInterface) throws Exception {
         boolean partialRead = false;
-        ImmutableByteArray tagId = ImmutableByteArray.Companion.fromByteArray(tag.getId());
         ArrayList<ISO7816Application> apps = new ArrayList<>();
 
         try {
@@ -100,7 +102,7 @@ public class ISO7816Card extends Card {
             feedbackInterface.updateStatusText(Utils.localizeString(R.string.iso7816_probing));
             feedbackInterface.updateProgressBar(0, 1);
 
-            byte[] appData;
+            ImmutableByteArray appData;
 
             /*
              * It's tempting to try to iterate over the apps on the card.
@@ -114,7 +116,7 @@ public class ISO7816Card extends Card {
             // So this needs to be before selecting any real application as selecting APP by AID
             // may deselect default app
             ISO7816Application cepas = CEPASApplication.dumpTag(iso7816Tag, new ISO7816Application.ISO7816Info(null, null,
-                                tag.getId(), CEPASApplication.TYPE),
+                                tagId, CEPASApplication.TYPE),
                         feedbackInterface);
             if (cepas != null)
                 apps.add(cepas);
@@ -122,14 +124,14 @@ public class ISO7816Card extends Card {
             for (ISO7816ApplicationFactory factory : FACTORIES) {
                 final boolean stopAfterFirst = factory.stopAfterFirstApp();
                 for (ImmutableByteArray appId : factory.getApplicationNames()) {
-                    appData = iso7816Tag.selectByNameOrNull(appId.getDataCopy());
+                    appData = iso7816Tag.selectByNameOrNull(appId);
                     if (appData == null) {
                         continue;
                     }
 
                     List<ISO7816Application> app = factory.dumpTag(
                             iso7816Tag, new ISO7816Application.ISO7816Info(
-                                    appData, appId, tag.getId(), factory.getType()),
+                                    appData, appId, tagId, factory.getType()),
                             feedbackInterface);
 
                     if (app == null) {
@@ -146,9 +148,6 @@ public class ISO7816Card extends Card {
         } catch (TagLostException ex) {
             Log.w(TAG, "tag lost", ex);
             partialRead = true;
-        } finally {
-            if (tech.isConnected())
-                tech.close();
         }
 
         return new ISO7816Card(apps, tagId, GregorianCalendar.getInstance(), partialRead);
@@ -166,6 +165,7 @@ public class ISO7816Card extends Card {
         return null;
     }
 
+    @Nullable
     @Override
     public TransitData parseTransitData() {
         for (ISO7816Application app : mApplications) {
@@ -190,6 +190,7 @@ public class ISO7816Card extends Card {
         return manufacturingInfo;
     }
 
+    @NonNull
     @Override
     public List<ListItem> getRawData() {
         List<ListItem> rawData = new ArrayList<>();
@@ -216,5 +217,31 @@ public class ISO7816Card extends Card {
                     appTitle), null, rawAppData));
         }
         return rawData;
+    }
+
+    public List<ISO7816Application> getApplications() {
+        return Collections.unmodifiableList(mApplications);
+    }
+
+    @Override
+    public boolean equals(@Nullable Object obj) {
+        if (!(obj instanceof ISO7816Card)) {
+            return false;
+        }
+
+        if (!super.equals(obj)) return false;
+        return Utils.equals(mApplications, ((ISO7816Card)obj).mApplications);
+    }
+
+    public int size() {
+        return mApplications != null ? mApplications.size() : 0;
+    }
+
+    @VisibleForTesting
+    @NonNull
+    @Override
+    public String toString() {
+        return String.format(Locale.ENGLISH, "%s: applications(%d)=%s",
+                getClass().getSimpleName(), size(), Utils.toString(mApplications));
     }
 }

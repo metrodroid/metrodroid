@@ -100,6 +100,13 @@
     <string name="block_title_format">Block: %s</string>
     <string name="page_title_format">Page: 0x%s</string>
     <string name="application_title_format">Application: %s</string>
+    <!-- Translators:
+    AID = Application ID (terminology used by the card vendor)
+    "%1$s" will be replaced with a hex-encoded string representing that ID.
+    The standard allows vendors to use up to 16 IDs encoded this way. "%2$d" will be replaced with
+    an application number.
+    -->
+    <string name="mfc_aid_title_format">MIFARE Classic AID: %1$s #%2$d</string>
     <string name="file_title_format">File: %s</string>
     <string name="unauthorized_file_title_format">File: %s (unauthorized)</string>
     <string name="invalid_file_title_format">File: %1$s (invalid: %2$s)</string>
@@ -1487,4 +1494,5 @@
     <string name="import_mct_file">Import from MCT file</string>
     <string name="subscription_id">Subscription ID</string>
     <string name="block_title_format_unauthorized">Block: %s (unauthorized)</string>
+    <string name="card_note_chc_metrocard">Only pre-2016 (MIFARE Classic) cards can be read. Newer fully locked DESFire cards are unsupportable.</string>
 </resources>

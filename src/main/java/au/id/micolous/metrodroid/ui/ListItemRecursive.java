@@ -6,20 +6,25 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import org.jetbrains.annotations.Nullable;
+
 import java.util.Collections;
 import java.util.List;
 
 import au.id.micolous.farebot.R;
 
 public class ListItemRecursive extends ListItem {
+    @Nullable
     private final List<ListItem> mSubTree;
 
-    public ListItemRecursive(String text1, String text2, List<ListItem> subTree) {
+    public ListItemRecursive(String text1, String text2,
+                             @Nullable List<ListItem> subTree) {
         super(text1, text2);
         mSubTree = subTree;
     }
 
-    public ListItemRecursive(@StringRes int text1Res, String text2, List<ListItem> subTree) {
+    public ListItemRecursive(@StringRes int text1Res, String text2,
+                             @Nullable List<ListItem> subTree) {
         super(text1Res, text2);
         mSubTree = subTree;
     }
@@ -31,7 +36,10 @@ public class ListItemRecursive extends ListItem {
         return view;
     }
 
+    @Nullable
     public List<ListItem> getSubTree() {
+        if (mSubTree == null)
+            return null;
         return Collections.unmodifiableList(mSubTree);
     }
 

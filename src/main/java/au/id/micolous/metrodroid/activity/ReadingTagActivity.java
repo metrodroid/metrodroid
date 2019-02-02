@@ -33,6 +33,7 @@ import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.support.annotation.NonNull;
 import android.util.Log;
 import android.view.accessibility.AccessibilityEvent;
 import android.view.accessibility.AccessibilityManager;
@@ -61,7 +62,7 @@ public class ReadingTagActivity extends MetrodroidActivity implements TagReaderF
     private int mMaximum = 0;
 
     @Override
-    public void updateStatusText(final String msg) {
+    public void updateStatusText(@NonNull final String msg) {
         //Log.d(TAG, "Status: " + msg);
         runOnUiThread(() -> {
             TextView t = findViewById(R.id.status_text);

@@ -43,6 +43,8 @@ import au.id.micolous.metrodroid.util.Utils;
 import au.id.micolous.metrodroid.xml.ImmutableByteArray;
 
 import static junit.framework.TestCase.assertEquals;
+import static junit.framework.TestCase.assertNotNull;
+import static junit.framework.TestCase.assertNull;
 import static junit.framework.TestCase.assertTrue;
 
 /**
@@ -79,9 +81,12 @@ public class OpalTest {
     public void testDemoCard() {
         // This is mocked-up data, probably has a wrong checksum.
         DesfireCard c = constructOpalCardFromHexString("87d61200e004002a0014cc44a4133930");
+        assertEquals(1, c.getApplications().size());
+        assertNull("Opal shouldn't have a valid AID", c.getApplication(OpalTransitData.APP_ID).getMifareAID());
 
         // Test TransitIdentity
         TransitIdentity i = c.parseTransitIdentity();
+        assertNotNull(i);
         assertEquals(OpalTransitData.NAME, i.getName());
         assertEquals("3085220012345670", i.getSerialNumber());
 

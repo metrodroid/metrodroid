@@ -22,6 +22,7 @@ package au.id.micolous.metrodroid.card.desfire;
 
 import android.nfc.tech.IsoDep;
 
+import au.id.micolous.metrodroid.card.CardTransceiver;
 import au.id.micolous.metrodroid.card.desfire.settings.DesfireFileSettings;
 import au.id.micolous.metrodroid.util.Utils;
 import au.id.micolous.metrodroid.xml.ImmutableByteArray;
@@ -64,9 +65,9 @@ public class DesfireProtocol {
     static final byte AUTHENTICATION_ERROR = (byte) 0xAE;
     static public final byte ADDITIONAL_FRAME = (byte) 0xAF;
 
-    private final IsoDep mTagTech;
+    private final CardTransceiver mTagTech;
 
-    public DesfireProtocol(IsoDep tagTech) {
+    public DesfireProtocol(CardTransceiver tagTech) {
         mTagTech = tagTech;
     }
 
@@ -154,19 +155,19 @@ public class DesfireProtocol {
     private byte[] sendRequest(byte command, boolean getAdditionalFrame, byte... parameters) throws IllegalArgumentException, IllegalStateException, AccessControlException, IOException {
         ByteArrayOutputStream output = new ByteArrayOutputStream();
 
-        byte[] sendBuffer = wrapMessage(command, parameters);
+        ImmutableByteArray sendBuffer = wrapMessage(command, parameters);
         //Log.d(TAG, "Send: " + Utils.getHexString(sendBuffer));
-        byte[] recvBuffer = mTagTech.transceive(sendBuffer);
+        ImmutableByteArray recvBuffer = mTagTech.transceive(sendBuffer);
         //Log.d(TAG, "Recv: " + Utils.getHexString(recvBuffer));
 
         while (true) {
-            if (recvBuffer[recvBuffer.length - 2] != (byte) 0x91) {
-                throw new IllegalArgumentException("Invalid response: " + Utils.getHexString(recvBuffer));
+            if (recvBuffer.get(recvBuffer.getSize() - 2) != (byte) 0x91) {
+                throw new IllegalArgumentException("Invalid response: " + recvBuffer.getHexString());
             }
 
-            output.write(recvBuffer, 0, recvBuffer.length - 2);
+            recvBuffer.writeTo(output, 0, recvBuffer.getSize() - 2);
 
-            byte status = recvBuffer[recvBuffer.length - 1];
+            byte status = recvBuffer.get(recvBuffer.getSize() - 1);
             if (status == OPERATION_OK) {
                 break;
             } else if (status == ADDITIONAL_FRAME) {
@@ -193,7 +194,7 @@ public class DesfireProtocol {
      * @param parameters Additional parameters to a command.
      * @return A wrapped command.
      */
-    private byte[] wrapMessage(byte command, byte... parameters) {
+    private ImmutableByteArray wrapMessage(byte command, byte... parameters) {
         byte[] output = new byte[5 + (parameters.length == 0 ? 0 : 1 + parameters.length)];
         output[0] = (byte) 0x90;
         output[1] = command;
@@ -206,7 +207,7 @@ public class DesfireProtocol {
         }
 
         output[output.length - 1] = 0;
-        return output;
+        return ImmutableByteArray.Companion.fromByteArray(output);
     }
 
     public byte[] sendAdditionalFrame(byte[] bytes) throws IOException {

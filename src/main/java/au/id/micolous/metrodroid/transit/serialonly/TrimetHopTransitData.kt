@@ -46,7 +46,7 @@ import java.util.*
  */
 @Parcelize
 data class TrimetHopTransitData(private val mSerial: Int?,
-                                private val mIssueDate: Int) : SerialOnlyTransitData() {
+                                private val mIssueDate: Int?) : SerialOnlyTransitData() {
 
     public override val extraInfo: List<ListItem>?
         get() = listOf(ListItem(R.string.issue_date,
@@ -73,12 +73,16 @@ data class TrimetHopTransitData(private val mSerial: Int?,
                 .setExtraNote(R.string.card_note_card_number_only)
                 .build()
 
-        private fun parse(card: DesfireCard): TrimetHopTransitData {
-            val app = card.getApplication(APP_ID)
-            val file1 = app!!.getFile(1)!!.data
+        private fun parse(card: DesfireCard): TrimetHopTransitData? {
+            val app = card.getApplication(APP_ID) ?: return null
+            val file1 = app.getFile(1)?.data
+            val serial = parseSerial(app)
+            val issueDate = file1?.byteArrayToInt(8, 4)
+            if (serial == null && issueDate == null) return null
+
             return TrimetHopTransitData(
-                    mSerial = parseSerial(app),
-                    mIssueDate = file1.byteArrayToInt(8, 4))
+                    mSerial = serial,
+                    mIssueDate = issueDate)
         }
 
         private fun parseSerial(app: DesfireApplication) =
@@ -101,11 +105,16 @@ data class TrimetHopTransitData(private val mSerial: Int?,
                 else
                     null
 
-        private fun parseTime(date: Int): Calendar {
-            val c = GregorianCalendar(TZ)
-            // Unix Time
-            c.timeInMillis = date * 1000L
-            return c
+        private fun parseTime(date: Int?): Calendar? {
+            return if (date != null && date != 0) {
+                // Unix Time
+                val c = GregorianCalendar(TZ)
+                // Unix Time
+                c.timeInMillis = date * 1000L
+                c
+            } else {
+                null
+            }
         }
     }
 }

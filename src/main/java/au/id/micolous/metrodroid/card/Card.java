@@ -57,6 +57,7 @@ public abstract class Card {
     // This must be protected, not private, as otherwise the XML deserialiser fails to read the
     // card.
     @SuppressWarnings("WeakerAccess")
+    @Nullable
     @Attribute(name = "label", required = false)
     private String mLabel;
     @Attribute(name = "type")
@@ -83,6 +84,20 @@ public abstract class Card {
         mPartialRead = partialRead;
     }
 
+    @Override
+    public boolean equals(@Nullable Object obj) {
+        if (!(obj instanceof Card)) {
+            return false;
+        }
+
+        Card other = (Card)obj;
+
+        if (mPartialRead != other.mPartialRead) return false;
+        if (!Utils.equals(mLabel, other.mLabel)) return false;
+        if (!Utils.equals(mTagId, other.mTagId)) return false;
+        return Utils.equals(mType, other.mType);
+    }
+
     public static Card dumpTag(ImmutableByteArray tagId, Tag tag, TagReaderFeedbackInterface feedbackInterface) throws Exception {
         final String[] techs = tag.getTechList();
         Log.d(TAG, String.format(Locale.ENGLISH, "Reading tag %s. %d tech(s) supported:",
@@ -96,13 +111,22 @@ public abstract class Card {
 
             // ISO 14443-4 card types
             // This also encompasses NfcA (ISO 14443-3A) and NfcB (ISO 14443-3B)
-            DesfireCard d = DesfireCard.dumpTag(tag, feedbackInterface);
+            IsoDep tech = IsoDep.get(tag);
+            tech.connect();
+            ImmutableByteArray uid = ImmutableByteArray.Companion.fromByteArray(tag.getId());
+            AndroidCardTransceiver aTech = new AndroidCardTransceiver(tech);
+
+            DesfireCard d = DesfireCard.dumpTag(aTech, uid, feedbackInterface);
             if (d != null) {
+                if (tech.isConnected())
+                    tech.close();
                 return d;
             }
 
-            ISO7816Card isoCard = ISO7816Card.dumpTag(tag, feedbackInterface);
+            ISO7816Card isoCard = ISO7816Card.dumpTag(aTech, uid, feedbackInterface);
             if (isoCard != null) {
+                if (tech.isConnected())
+                    tech.close();
                 return isoCard;
             }
 
@@ -195,6 +219,7 @@ public abstract class Card {
         return mScannedAt;
     }
 
+    @Nullable
     public String getLabel() {
         return mLabel;
     }
@@ -212,19 +237,28 @@ public abstract class Card {
      * and the card's serial number (according to the operator).
      * @return
      */
+    @Nullable
     public abstract TransitIdentity parseTransitIdentity();
 
     /**
      * This is where a card is actually parsed into TransitData compatible data.
      * @return
      */
+    @Nullable
     public abstract TransitData parseTransitData();
 
+    /**
+     * Gets items to display when manufacturing information is requested for the card.
+     */
     @Nullable
     public List<ListItem> getManufacturingInfo() {
         return null;
     }
 
+    /**
+     * Gets items to display when raw data is requested for the card.
+     */
+    @Nullable
     public List<ListItem> getRawData() {
         return null;
     }

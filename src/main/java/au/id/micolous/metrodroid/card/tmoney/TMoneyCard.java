@@ -35,6 +35,7 @@ import au.id.micolous.farebot.R;
 import au.id.micolous.metrodroid.card.TagReaderFeedbackInterface;
 import au.id.micolous.metrodroid.card.iso7816.ISO7816Application;
 import au.id.micolous.metrodroid.card.iso7816.ISO7816ApplicationFactory;
+import au.id.micolous.metrodroid.card.iso7816.ISO7816File;
 import au.id.micolous.metrodroid.card.iso7816.ISO7816Protocol;
 import au.id.micolous.metrodroid.card.iso7816.ISO7816Record;
 import au.id.micolous.metrodroid.card.iso7816.ISO7816Selector;
@@ -108,7 +109,7 @@ public class TMoneyCard extends ISO7816Application {
         @Nullable
         @Override
         public List<ISO7816Application> dumpTag(@NonNull ISO7816Protocol protocol, @NonNull ISO7816Info appData, @NonNull TagReaderFeedbackInterface feedbackInterface) {
-            byte[] balanceResponse;
+            ImmutableByteArray balanceResponse;
 
             try {
                 feedbackInterface.updateStatusText(Utils.localizeString(R.string.card_reading_type,
@@ -153,7 +154,11 @@ public class TMoneyCard extends ISO7816Application {
         return mBalance;
     }
 
+    @NonNull
     public List<ISO7816Record> getTransactionRecords() {
-        return getFile(ISO7816Selector.makeSelector(TMoneyCard.FILE_NAME, 4)).getRecords();
+        final ISO7816File f = getFile(ISO7816Selector.makeSelector(TMoneyCard.FILE_NAME, 4));
+        if (f == null)
+            return Collections.emptyList();
+        return f.getRecords();
     }
 }

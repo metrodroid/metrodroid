@@ -1,9 +1,9 @@
-<?xml version='1.0' encoding='UTF-8'?>
+<?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
     <string name="directions">カードをタップしてください。</string>
     <string name="reading_card">カードを読み込み中…</string>
-    <string name="dont_move">カードを移動しないでください</string>
-    <string name="advanced_info">高度情報</string>
+    <string name="dont_move">カードを移動しない</string>
+    <string name="advanced_info">高度な情報</string>
     <string name="delete_card">カードを削除する</string>
     <string name="unknown_card">未知のカード</string>
     <string name="hw_detail">製造情報</string>
@@ -83,7 +83,7 @@
     <string name="location_tokyo">東京</string>
     <string name="location_kansai">関西</string>
     <string name="app_name">Metrodroid</string>
-    <string name="copyright">Copyright 2015 – 2018 Michael Farrell</string>
+    <string name="copyright">Copyright © 2015 – 2018 Michael Farrell</string>
     <string name="license">ライセンス</string>
     <string name="title_activity_license">オープンソース ライセンス</string>
     <string name="fully_locked_desc">このカードは鍵なしに自由に読み取りできる部分はありません。有効な鍵がインストールされていません。

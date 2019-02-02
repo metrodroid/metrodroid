@@ -5,7 +5,6 @@ import android.support.annotation.NonNull;
 import android.util.Pair;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 import au.id.micolous.farebot.R;
@@ -14,7 +13,6 @@ import au.id.micolous.metrodroid.card.desfire.DesfireCard;
 import au.id.micolous.metrodroid.card.desfire.DesfireCardTransitFactory;
 import au.id.micolous.metrodroid.card.desfire.files.DesfireFile;
 import au.id.micolous.metrodroid.card.desfire.files.UnauthorizedDesfireFile;
-import au.id.micolous.metrodroid.transit.CardInfo;
 import au.id.micolous.metrodroid.transit.TransitData;
 import au.id.micolous.metrodroid.transit.TransitIdentity;
 import au.id.micolous.metrodroid.util.Utils;
@@ -89,6 +87,7 @@ public class UnauthorizedDesfireTransitData extends UnauthorizedTransitData {
 
     private static final List<Pair<Integer, String>> TYPES = new ArrayList<>();
     static {
+        TYPES.add(Pair.create(0x5010f2, "Metrocard (Christchurch)"));
         TYPES.add(Pair.create(0x31594f, "Oyster"));
         TYPES.add(Pair.create(0x425301, "Thailand BEM"));
         TYPES.add(Pair.create(0x5011f2, "Lítačka"));

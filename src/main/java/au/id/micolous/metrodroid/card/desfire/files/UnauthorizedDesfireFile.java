@@ -52,7 +52,8 @@ public class UnauthorizedDesfireFile extends InvalidDesfireFile {
     public ListItem getRawData() {
         String title = Utils.localizeString(R.string.unauthorized_file_title_format,
                     Utils.intToHex(getId()));
-        String subtitle = getFileSettings().getSubtitle();
+        final DesfireFileSettings settings = getFileSettings();
+        String subtitle = settings != null ? settings.getSubtitle() : null;
 
         return new ListItemRecursive(title, subtitle, null);
     }

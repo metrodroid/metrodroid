@@ -29,6 +29,7 @@ import java.io.IOException;
 import au.id.micolous.metrodroid.card.iso7816.ISO7816Exception;
 import au.id.micolous.metrodroid.card.iso7816.ISO7816Protocol;
 import au.id.micolous.metrodroid.util.Utils;
+import au.id.micolous.metrodroid.xml.ImmutableByteArray;
 
 public class CEPASProtocol {
     private static final String TAG = "CEPASProtocol";
@@ -38,10 +39,10 @@ public class CEPASProtocol {
         mTagTech = tagTech;
     }
 
-    public byte[] getPurse(int purseId) throws IOException {
+    public ImmutableByteArray getPurse(int purseId) throws IOException {
         try {
-            byte[] purseBuff = mTagTech.sendRequest(ISO7816Protocol.CLASS_90, (byte) 0x32, (byte) (purseId), (byte) 0, (byte) 0);
-            if (purseBuff.length != 0) {
+            ImmutableByteArray purseBuff = mTagTech.sendRequest(ISO7816Protocol.CLASS_90, (byte) 0x32, (byte) (purseId), (byte) 0, (byte) 0);
+            if (purseBuff.getSize() != 0) {
                 return purseBuff;
             } else {
                 return null;
@@ -53,22 +54,22 @@ public class CEPASProtocol {
         }
     }
 
-    public byte[] getHistory(int purseId) throws IOException {
+    public ImmutableByteArray getHistory(int purseId) throws IOException {
         try {
-            byte[] historyBuff = mTagTech.sendRequest(
+            ImmutableByteArray historyBuff = mTagTech.sendRequest(
                     ISO7816Protocol.CLASS_90,
                     (byte) 0x32, (byte) (purseId), (byte) 0,
                     (byte) 0, (byte) 0);
 
-            if (historyBuff != null) {
-                    byte[] historyBuff2 = null;
+            if (historyBuff.getSize() != 0) {
+                    ImmutableByteArray historyBuff2 = null;
                     try {
                         historyBuff2 = mTagTech.sendRequest(
                                 ISO7816Protocol.CLASS_90,
                                 (byte) 0x32, (byte) (purseId), (byte) 0,
                                 (byte) 0,
-                                (byte) (historyBuff.length / 16));
-                        historyBuff = Utils.concatByteArrays(historyBuff, historyBuff2);
+                                (byte) (historyBuff.getSize() / 16));
+                        historyBuff = historyBuff.plus(historyBuff2);
                     } catch (ISO7816Exception ex) {
                         //noinspection StringConcatenation
                         Log.w(TAG, "Error reading 2nd purse history " + purseId, ex);

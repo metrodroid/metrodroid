@@ -23,6 +23,10 @@ class Base64String (data: ImmutableByteArray): ImmutableByteArray(data) {
       get() = dataCopy
     constructor(data: ByteArray) : this(fromByteArray(data))
 
+    companion object {
+        fun empty() = Base64String(ImmutableByteArray.empty())
+    }
+
     class Transform : org.simpleframework.xml.transform.Transform<Base64String> {
         override fun read(value: String): Base64String {
             return Base64String(data = ImmutableByteArray.fromBase64(value))

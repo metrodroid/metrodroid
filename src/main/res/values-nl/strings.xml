@@ -864,4 +864,6 @@
     <string name="pref_show_raw_station_ids_desc_on">Stationsverkortingen en route-ID\'s tonen naast de namen</string>
     <string name="pref_show_raw_station_ids_desc_off">Stationsverkortingen en route-ID\'s zijn verborgen, tenzij onbekend</string>
     <string name="block_title_format_unauthorized">Blokkade: %s (ongeautoriseerd)</string>
+    <string name="card_note_chc_metrocard">Alleen kaarten van vóór 2016 (MIFARE Classic) kunnen worden uitgelezen. Nieuwere, volledig versleutelde DESFire-kaarten kunnen niet worden ondersteund.</string>
+    <string name="mfc_aid_title_format">MIFARE Classic AID: %1$s #%2$d</string>
 </resources>

@@ -62,12 +62,13 @@ class IstanbulKartTransitData (private val mSerial: String,
         private const val NAME = "IstanbulKart"
         private const val APP_ID = 0x422201
 
-        private fun parse(card: DesfireCard): IstanbulKartTransitData {
-            val metadata = card.getApplication(APP_ID)!!.getFile(2)!!.data
+        private fun parse(card: DesfireCard): IstanbulKartTransitData? {
+            val metadata = card.getApplication(APP_ID)?.getFile(2)?.data
 
             try {
+                val serial = parseSerial(metadata) ?: return null
                 return IstanbulKartTransitData(
-                        mSerial = parseSerial(metadata),
+                        mSerial = serial,
                         mSerial2 = card.tagId.toHexString().toUpperCase(Locale.ENGLISH))
             } catch (ex: Exception) {
                 throw RuntimeException("Error parsing IstanbulKart data", ex)
@@ -87,8 +88,8 @@ class IstanbulKartTransitData (private val mSerial: String,
          * @param file content of the serial file
          * @return String with the complete serial number, or null on error
          */
-        private fun parseSerial(file: ImmutableByteArray) =
-                file.getHexString(0, 8)
+        private fun parseSerial(file: ImmutableByteArray?) =
+                file?.getHexString(0, 8)
 
         val FACTORY: DesfireCardTransitFactory = object : DesfireCardTransitFactory {
             override fun earlyCheck(appIds: IntArray) = (APP_ID in appIds)
@@ -103,7 +104,7 @@ class IstanbulKartTransitData (private val mSerial: String,
                                     .getFile(2)!!.data)))
         }
 
-        private fun formatSerial(serial: String) =
-                Utils.groupString(serial, " ", 4, 4, 4)
+        private fun formatSerial(serial: String?) =
+                serial?.let { Utils.groupString(it, " ", 4, 4, 4) }
     }
 }

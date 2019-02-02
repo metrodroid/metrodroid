@@ -70,6 +70,9 @@ public class ErgRecord {
             Log.d(TAG, String.format(Locale.ENGLISH, "Sector %d, Block %d: %s",
                     sectorIndex, blockIndex,
                     DEBUG ? record.toString() : record.getClass().getSimpleName()));
+            if (DEBUG) {
+                Log.d(TAG, input.getHexString());
+            }
         }
 
         return record;
