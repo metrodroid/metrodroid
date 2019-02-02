@@ -97,7 +97,7 @@
     <string name="card_format">Type de carte</string>
     <string name="select_file">Sélectionner un fichier</string>
     <string name="copied_to_clipboard">Copié dans le presse-papier</string>
-    <string name="saved_xml">Metrodroid-Export.xml écrit dans le stockage USB.</string>
+    <string name="saved_metrodroid_zip">Metrodroid-Export.zip écrit dans le stockage USB.</string>
     <string name="saved_xml_custom">XML écrit dans le stockage USB.</string>
     <string name="map_tiles_url">URL de la tuile de la carte</string>
     <string name="map_tiles_url_summary">Utiliser un serveur de tuile personnalisé pour les cartes incorporées, utilisant le syntaxe Leaflet TileLayer.</string>

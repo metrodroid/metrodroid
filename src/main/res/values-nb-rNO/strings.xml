@@ -75,7 +75,7 @@
     <string name="card_format">Korttype</string>
     <string name="select_file">Velg fil</string>
     <string name="copied_to_clipboard">Kopiert til utklippstavle</string>
-    <string name="saved_xml">Skrev Metrodroid-Export.xml til USB-lagring.</string>
+    <string name="saved_metrodroid_zip">Skrev Metrodroid-Export.zip til USB-lagring.</string>
     <string name="saved_xml_custom">Skrev XML til USB-lagring.</string>
     <string name="online_services">Nettbaserte tjenester</string>
     <string name="default_map_tile_subdomains">123456</string>

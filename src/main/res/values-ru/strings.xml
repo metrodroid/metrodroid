@@ -195,7 +195,7 @@
     <string name="title_activity_about">О программе</string>
     <string name="select_file">Выбрать файл</string>
     <string name="copied_to_clipboard">Скопировано в буффер обмена</string>
-    <string name="saved_xml">Файл Metrodroid-Export.xml записан на носителе USB.</string>
+    <string name="saved_metrodroid_zip">Файл Metrodroid-Export.xml записан на носителе USB.</string>
     <string name="saved_xml_custom">Файл XML записан на USB носитель.</string>
     <string name="about_card_format">Об этом формате карт</string>
     <string name="online_services">Онлайн сервисы</string>
