@@ -153,7 +153,9 @@ class OpalTransitData (
         val TIME_ZONE = MetroTimeZone.SYDNEY
         private val OPAL_EPOCH = Epoch.local(1980, TIME_ZONE)
 
-        private fun formatSerialNumber(serialNumber: Int, lastDigit: Int) = "308522${NumberUtils.zeroPad(serialNumber, 9)}$lastDigit"
+        private fun formatSerialNumber(serialNumber: Int, lastDigit: Int) =
+                NumberUtils.formatNumber(3085_2200_0000_0000L + (serialNumber * 10L) + lastDigit,
+                        " ", 4, 4, 4, 4)
 
         val FACTORY: DesfireCardTransitFactory = object : DesfireCardTransitFactory {
 
