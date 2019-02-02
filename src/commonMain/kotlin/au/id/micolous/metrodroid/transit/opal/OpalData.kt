@@ -30,7 +30,8 @@ import au.id.micolous.metrodroid.util.NumberUtils
 // for tests
 object OpalData {
     // Opal travel modes
-    private const val MODE_RAIL = 0x00
+    @VisibleForTesting
+    const val MODE_RAIL = 0x00
     private const val MODE_FERRY_LR = 0x01 // Ferry and Light Rail
     @VisibleForTesting
     const val MODE_BUS = 0x02
