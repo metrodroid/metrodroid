@@ -1,0 +1,119 @@
+<card partial_read="false" scanned_at="1" id="04512492b23a80" type="2">
+   <!--
+   This is a slightly modified dump of some transit litter.
+
+   It contains some small modifications to test the robustness of the XML parser against dumps from
+   from older versions of Farebot, introduced in the SimpleXML migration (committed on 2014-09-01
+   in 0ab9a7e):
+
+   - "commsetting" tag is used on file 1, instead of "commsettings"
+   - "data" tag is deleted on file 0
+
+   Every version of Metrodroid has the "new form
+   -->
+   <applications>
+      <application id="3229011">
+         <auth-log/>
+         <files>
+            <file id="0" unauthorized="true">
+               <settings>
+                  <accessrights>ff3f</accessrights>
+                  <commsettings>-1</commsettings>
+                  <filetype>0</filetype>
+                  <filesize>16</filesize>
+               </settings>
+               <error>Authentication error</error>
+            </file>
+            <file id="1" unauthorized="true">
+               <settings>
+                  <accessrights>ff2f</accessrights>
+                  <commsetting>-1</commsetting>
+                  <filetype>0</filetype>
+                  <filesize>16</filesize>
+               </settings>
+               <error>Authentication error</error>
+            </file>
+            <file id="2" unauthorized="true">
+               <data></data>
+               <settings>
+                  <accessrights>3123</accessrights>
+                  <commsettings>-1</commsettings>
+                  <filetype>0</filetype>
+                  <filesize>128</filesize>
+               </settings>
+               <error>Authentication error</error>
+            </file>
+            <file id="3" unauthorized="true">
+               <data></data>
+               <settings>
+                  <accessrights>5125</accessrights>
+                  <commsettings>-1</commsettings>
+                  <filetype>0</filetype>
+                  <filesize>32</filesize>
+               </settings>
+               <error>Authentication error</error>
+            </file>
+            <file id="4" unauthorized="true">
+               <data></data>
+               <settings>
+                  <accessrights>4124</accessrights>
+                  <commsettings>-1</commsettings>
+                  <filetype>0</filetype>
+                  <filesize>48</filesize>
+               </settings>
+               <error>Authentication error</error>
+            </file>
+            <file id="5" unauthorized="true">
+               <data></data>
+               <settings>
+                  <accessrights>3123</accessrights>
+                  <commsettings>-1</commsettings>
+                  <filetype>0</filetype>
+                  <filesize>240</filesize>
+               </settings>
+               <error>Authentication error</error>
+            </file>
+            <file id="6" unauthorized="true">
+               <data></data>
+               <settings>
+                  <accessrights>3123</accessrights>
+                  <commsettings>-1</commsettings>
+                  <filetype>0</filetype>
+                  <filesize>480</filesize>
+               </settings>
+               <error>Authentication error</error>
+            </file>
+            <file id="7">
+               <data>YOB3AKICQOn//8qgiCNkMQ==</data>
+               <settings>
+                  <accessrights>31e3</accessrights>
+                  <commsettings>-1</commsettings>
+                  <filetype>0</filetype>
+                  <filesize>16</filesize>
+               </settings>
+            </file>
+         </files>
+      </application>
+   </applications>
+   <manufacturing-data>
+      <batch-no>800282674960</batch-no>
+      <hw-major-version>1</hw-major-version>
+      <hw-minor-version>0</hw-minor-version>
+      <hw-protocol>5</hw-protocol>
+      <hw-storage-size>24</hw-storage-size>
+      <hw-sub-type>1</hw-sub-type>
+      <hw-type>1</hw-type>
+      <hw-vendor-id>4</hw-vendor-id>
+      <raw>BAEBAQAYBQQBAQEEGAUEUSSSsjqAulSQhxAhFA==</raw>
+      <sw-major-version>1</sw-major-version>
+      <sw-minor-version>4</sw-minor-version>
+      <sw-protocol>5</sw-protocol>
+      <sw-storage-size>24</sw-storage-size>
+      <sw-sub-type>1</sw-sub-type>
+      <sw-type>1</sw-type>
+      <sw-vendor-id>4</sw-vendor-id>
+      <uid>1215117428669056</uid>
+      <week-prod>33</week-prod>
+      <year-prod>20</year-prod>
+   </manufacturing-data>
+</card>

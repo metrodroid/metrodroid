@@ -415,12 +415,15 @@ class DesfireManufacturingDataXmlAdapter(
     }
 }
 
+@XMLIgnore("commsetting")
 @Serializable
 class DesfireFileSettingsXmlAdapter(
         @XMLHex
         private val accessrights: ImmutableByteArray,
         private val filetype: Byte,
-        private val commsettings: Byte,
+        // Old Farebot (before 2014-09-01) called this "commsetting" -- but never used this field.
+        @Optional
+        private val commsettings: Byte = 0,
         @Optional
         private val filesize: Int = 0,
         @Optional
@@ -462,7 +465,9 @@ class DesfireFileSettingsXmlAdapter(
 class DesfireFileXmlAdapter(
         @Optional
         val settings: DesfireFileSettingsXmlAdapter? = null,
-        val data: ImmutableByteArray?,
+        // Old Farebot (before 2014-09-01) was missing this tag when it couldn't read a file
+        @Optional
+        val data: ImmutableByteArray? = null,
         @Optional
         val error: String? = null,
         @Optional
