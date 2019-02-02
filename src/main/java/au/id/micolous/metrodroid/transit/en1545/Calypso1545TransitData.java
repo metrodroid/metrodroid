@@ -90,7 +90,7 @@ public abstract class Calypso1545TransitData extends En1545TransitData {
                 if (ptr == null)
                     continue;
                 parsed.add(ptr);
-                if (ptr > contracts.size())
+                if (ptr > contracts.size() || ptr <= 0)
                     continue;
                 ISO7816Record record = contracts.get(ptr - 1);
                 insertSub(card, record.getData(), contractList, i, ptr);
