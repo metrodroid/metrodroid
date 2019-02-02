@@ -263,6 +263,8 @@ class ImmutableByteArray private constructor(
 
         fun fromASCII(s: String) = ImmutableByteArray(mData = s.map { it.toByte() }.toByteArray())
 
+        fun fromUTF8(s: String) = ImmutableByteArray(mData = s.toUtf8Bytes())
+
         override fun serialize(encoder: Encoder, obj: ImmutableByteArray) {
             encoder.encodeString(obj.toHexString())
         }
