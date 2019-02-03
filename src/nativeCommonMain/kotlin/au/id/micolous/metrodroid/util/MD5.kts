@@ -52,11 +52,8 @@
  *
  */
 
-/**
- * Contains internal state of the MD5 class
- */
-
 package au.id.micolous.metrodroid.util
+
 
 @UseExperimental(ExperimentalUnsignedTypes::class)
 class MD5State() {
@@ -87,11 +84,11 @@ class MD5State() {
  * Implementation of RSA's MD5 hash generator
  *
  * @version    $Revision: 1.5 $
- * @author    Santeri Paavolainen <sjpaavol></sjpaavol>@cc.helsinki.fi>
+ * @author    Santeri Paavolainen (sjpaavol@cc.helsinki.fi)
  */
 
 @UseExperimental(ExperimentalUnsignedTypes::class)
-class MD5Ctx {
+actual class MD5Ctx() {
     /**
      * MD5 state
      */
@@ -209,7 +206,7 @@ class MD5Ctx {
      * @param length    Use at maximum `length' bytes (absolute
      * maximum is buffer.length)
      */
-    fun Update(stat: MD5State, buffer: ImmutableByteArray, offset: Int, length: Int) {
+    private fun Update(stat: MD5State, buffer: ImmutableByteArray, offset: Int, length: Int) {
         var length = length
         var i: Int
 
@@ -248,15 +245,15 @@ class MD5Ctx {
     }
 
     /*
-   * Update()s for other datatypes than byte[] also. Update(byte[], int)
-   * is only the main driver.
-   */
+     * Update()s for other datatypes than byte[] also. Update(byte[], int)
+     * is only the main driver.
+     */
 
     /**
      * Plain update, updates this object
      */
 
-    fun update(buffer: ImmutableByteArray, offset: Int = 0, length: Int = buffer.size) {
+    actual fun update(buffer: ImmutableByteArray, offset: Int = 0, length: Int = buffer.size) {
         Update(this.state, buffer, offset, length)
     }
 
@@ -271,7 +268,7 @@ class MD5Ctx {
      *
      * @return    Array of 16 bytes, the hash of all updated bytes
      */
-    fun digest(): ImmutableByteArray {
+    actual fun digest(): ImmutableByteArray {
         val fin = MD5State(state)
         val bits = Encode(fin.count.toUIntArray(), 8)
         val index = fin.count[0].ushr(3) and 0x3f
