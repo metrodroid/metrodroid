@@ -1,5 +1,5 @@
 /*
- * ChinaCard.java
+ * CalypsoRegistry.kt
  *
  * Copyright 2018 Google
  *
