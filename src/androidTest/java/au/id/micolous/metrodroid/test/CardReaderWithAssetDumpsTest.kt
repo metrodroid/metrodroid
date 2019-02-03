@@ -7,12 +7,7 @@ import kotlin.test.assertNotNull
 import kotlin.test.assertTrue
 
 /**
- * Base class for building tests that need Assets data:
- *
- * Examples of use:
- *
- * - Java: BilheteUnicoTest
- * - Kotlin: EasyCardTest
+ * Base class for building tests that need Assets data.
  *
  * @param C A [Card] subclass for the type of media to accept.
  * @param importer A reference to a [CardImporter] which produces [C].
