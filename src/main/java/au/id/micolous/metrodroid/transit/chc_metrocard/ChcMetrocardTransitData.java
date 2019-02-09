@@ -1,7 +1,7 @@
 /*
  * ChcMetrocardTransitData.java
  *
- * Copyright 2018 Michael Farrell <micolous+git@gmail.com>
+ * Copyright 2018-2019 Michael Farrell <micolous+git@gmail.com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -20,7 +20,9 @@ package au.id.micolous.metrodroid.transit.chc_metrocard;
 
 import android.os.Parcel;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 
+import java.util.Calendar;
 import java.util.Collections;
 import java.util.GregorianCalendar;
 import java.util.List;
@@ -31,6 +33,9 @@ import au.id.micolous.metrodroid.card.CardType;
 import au.id.micolous.metrodroid.card.classic.ClassicCard;
 import au.id.micolous.metrodroid.card.classic.ClassicCardTransitFactory;
 import au.id.micolous.metrodroid.transit.CardInfo;
+import au.id.micolous.metrodroid.transit.TransitBalance;
+import au.id.micolous.metrodroid.transit.TransitBalanceStored;
+import au.id.micolous.metrodroid.transit.TransitCurrency;
 import au.id.micolous.metrodroid.transit.TransitData;
 import au.id.micolous.metrodroid.transit.TransitIdentity;
 import au.id.micolous.metrodroid.transit.erg.ErgTransitData;
@@ -51,6 +56,7 @@ public class ChcMetrocardTransitData extends ErgTransitData {
     private static final int AGENCY_ID = 0x0136;
     private static final TimeZone TIME_ZONE = TimeZone.getTimeZone("Pacific/Auckland");
     static final String CURRENCY = "NZD";
+    static final String CHC_METROCARD_STR = "chc_metrocard";
 
     private static final CardInfo CARD_INFO = new CardInfo.Builder()
             .setImageId(R.drawable.chc_metrocard)
@@ -59,7 +65,6 @@ public class ChcMetrocardTransitData extends ErgTransitData {
             .setCardType(CardType.MifareClassic)
             .setKeysRequired()
             .setExtraNote(R.string.card_note_chc_metrocard)
-            .setPreview()
             .build();
 
     // Parcel
@@ -133,5 +138,21 @@ public class ChcMetrocardTransitData extends ErgTransitData {
 
     private static String internalFormatSerialNumber(ErgMetadataRecord metadataRecord) {
         return Integer.toString(metadataRecord.getCardSerialDec());
+    }
+
+    @Nullable
+    @Override
+    public TransitBalance getBalance() {
+        TransitBalance b = super.getBalance();
+        if (b == null) return null;
+
+        Calendar expiry = getLastUseTimestamp();
+        if (expiry != null) {
+            // Cards not used for 3 years will expire
+            expiry = (Calendar) expiry.clone();
+            expiry.add(Calendar.YEAR, 3);
+        }
+
+        return new TransitBalanceStored(b.getBalance(), expiry);
     }
 }

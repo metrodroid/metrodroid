@@ -30,6 +30,7 @@ import au.id.micolous.metrodroid.card.classic.ClassicCardTransitFactory;
 import au.id.micolous.metrodroid.card.classic.ClassicSector;
 import au.id.micolous.metrodroid.transit.Transaction;
 import au.id.micolous.metrodroid.transit.TransactionTrip;
+import au.id.micolous.metrodroid.transit.TransitBalance;
 import au.id.micolous.metrodroid.transit.TransitCurrency;
 import au.id.micolous.metrodroid.transit.TransitData;
 import au.id.micolous.metrodroid.transit.TransitIdentity;
@@ -300,7 +301,7 @@ public class ErgTransitData extends TransitData {
 
     @Override
     @Nullable
-    public TransitCurrency getBalance() {
+    public TransitBalance getBalance() {
         return new TransitCurrency(mBalance, mCurrency);
     }
 

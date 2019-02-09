@@ -1,7 +1,7 @@
 /*
  * ChcMetrocardTransaction.java
  *
- * Copyright 2018 Michael Farrell <micolous+git@gmail.com>
+ * Copyright 2018-2019 Michael Farrell <micolous+git@gmail.com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -21,6 +21,7 @@ package au.id.micolous.metrodroid.transit.chc_metrocard;
 import android.os.Parcel;
 import android.os.Parcelable;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 
 import java.util.GregorianCalendar;
 
@@ -28,6 +29,7 @@ import au.id.micolous.metrodroid.transit.Transaction;
 import au.id.micolous.metrodroid.transit.Trip;
 import au.id.micolous.metrodroid.transit.erg.ErgTransaction;
 import au.id.micolous.metrodroid.transit.erg.record.ErgPurseRecord;
+import au.id.micolous.metrodroid.util.StationTableReader;
 
 public class ChcMetrocardTransaction extends ErgTransaction {
     public static final Parcelable.Creator<ChcMetrocardTransaction> CREATOR = new Parcelable.Creator<ChcMetrocardTransaction>() {
@@ -49,11 +51,23 @@ public class ChcMetrocardTransaction extends ErgTransaction {
         super(purse, epoch, ChcMetrocardTransitData.CURRENCY);
     }
 
+    @Nullable
+    @Override
+    public String getAgencyName(boolean isShort) {
+        return StationTableReader.getOperatorName(ChcMetrocardTransitData.CHC_METROCARD_STR, mPurse.getAgency(), isShort);
+    }
+
     @Override
     public Trip.Mode getMode() {
-        // There is a historic tram that circles the city, but not a commuter service, and does not
-        // accept Metrocard.
-        return Trip.Mode.BUS;
+        final Trip.Mode m = StationTableReader.getOperatorDefaultMode(ChcMetrocardTransitData.CHC_METROCARD_STR, mPurse.getAgency());
+
+        if (m == Trip.Mode.OTHER) {
+            // There is a historic tram that circles the city, but not a commuter service, and does
+            // not accept Metrocard.
+            return Trip.Mode.BUS;
+        } else {
+            return m;
+        }
     }
 
     @Override
@@ -74,7 +88,7 @@ public class ChcMetrocardTransaction extends ErgTransaction {
             return false;
         }
 
-        if (mPurse.getRoute() != otherTxn.mPurse.getRoute()) {
+        if (mPurse.getAgency() != otherTxn.mPurse.getAgency()) {
             // Don't merge different agency
             return false;
         }
