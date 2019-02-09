@@ -19,9 +19,10 @@
 package au.id.micolous.metrodroid.transit.erg;
 
 import android.os.Parcel;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.util.Log;
+
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import au.id.micolous.metrodroid.card.UnauthorizedException;
 import au.id.micolous.metrodroid.card.classic.ClassicBlock;
@@ -210,7 +211,7 @@ public class ErgTransitData extends TransitData {
          * @return True if this is an ERG card, false otherwise.
          */
         @Override
-        public boolean earlyCheck(@NonNull List<ClassicSector> sectors) {
+        public boolean earlyCheck(@NotNull List<ClassicSector> sectors) {
             ImmutableByteArray file1 = sectors.get(0).getBlock(1).getData();
 
             // Check for signature
@@ -228,7 +229,7 @@ public class ErgTransitData extends TransitData {
         }
 
         @Override
-        public TransitIdentity parseTransitIdentity(@NonNull ClassicCard card) {
+        public TransitIdentity parseTransitIdentity(@NotNull ClassicCard card) {
             return parseTransitIdentity(card, NAME);
         }
 
@@ -242,7 +243,7 @@ public class ErgTransitData extends TransitData {
         }
 
         @Override
-        public TransitData parseTransitData(@NonNull ClassicCard classicCard) {
+        public TransitData parseTransitData(@NotNull ClassicCard classicCard) {
             return new ErgTransitData(classicCard);
         }
 
@@ -327,6 +328,7 @@ public class ErgTransitData extends TransitData {
         return items;
     }
 
+    @NotNull
     @Override
     public String getCardName() {
         return NAME;
@@ -337,7 +339,7 @@ public class ErgTransitData extends TransitData {
      *
      * @return Subclass of ErgTransaction.
      */
-    protected ErgTransaction newTrip(ErgPurseRecord purse, GregorianCalendar epoch) {
+    protected ErgTransaction newTrip(@NotNull ErgPurseRecord purse, @Nullable GregorianCalendar epoch) {
         return new ErgTransaction(purse, epoch, mCurrency);
     }
 
