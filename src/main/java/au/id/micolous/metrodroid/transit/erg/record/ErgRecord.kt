@@ -1,5 +1,5 @@
 /*
- * ErgRecord.java
+ * ErgRecord.kt
  *
  * Copyright 2015-2019 Michael Farrell <micolous+git@gmail.com>
  *
@@ -17,31 +17,23 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package au.id.micolous.metrodroid.transit.erg.record;
+package au.id.micolous.metrodroid.transit.erg.record
 
-import android.support.annotation.Nullable;
-
-import java.util.Locale;
-
-import au.id.micolous.metrodroid.xml.ImmutableByteArray;
+import au.id.micolous.metrodroid.xml.ImmutableByteArray
+import java.util.*
 
 /**
  * Represents a record inside of an ERG MIFARE Classic based card.
  *
  * https://github.com/micolous/metrodroid/wiki/ERG-MFC
  */
-public class ErgRecord {
-    ErgRecord() {}
-
+open class ErgRecord internal constructor() {
     @FunctionalInterface
-    public interface Factory {
-        @Nullable
-        ErgRecord recordFromBytes(ImmutableByteArray block);
+    abstract class Factory {
+        abstract fun recordFromBytes(block: ImmutableByteArray): ErgRecord?
     }
 
-    @Override
-    public String toString() {
-        return String.format(Locale.ENGLISH, "[%s]",
-                getClass().getSimpleName());
+    override fun toString(): String {
+        return String.format(Locale.ENGLISH, "[%s]", javaClass.simpleName)
     }
 }

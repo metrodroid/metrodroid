@@ -23,10 +23,10 @@ import au.id.micolous.metrodroid.transit.Trip
 import au.id.micolous.metrodroid.transit.erg.ErgTransaction
 import au.id.micolous.metrodroid.transit.erg.record.ErgPurseRecord
 import au.id.micolous.metrodroid.util.StationTableReader
-import java.util.*
 
-class ChcMetrocardTransaction(purse: ErgPurseRecord, epoch: GregorianCalendar)
-    : ErgTransaction(purse, epoch, ChcMetrocardTransitData.CURRENCY) {
+class ChcMetrocardTransaction(purse: ErgPurseRecord, epoch: Int)
+    : ErgTransaction(purse, epoch,
+        ChcMetrocardTransitData.CURRENCY, ChcMetrocardTransitData.TIME_ZONE) {
 
     override fun getAgencyName(isShort: Boolean): String? {
         return StationTableReader.getOperatorName(
@@ -56,7 +56,7 @@ class ChcMetrocardTransaction(purse: ErgPurseRecord, epoch: GregorianCalendar)
             // Don't merge in top-ups.
             purse.isCredit && purse.transactionValue != 0 -> false
 
-            // Don't merge different agency
+            // Don't merge different agencyID
             purse.agency != other.purse.agency -> false
 
             // Merge whe one is a trip and the other is not a trip

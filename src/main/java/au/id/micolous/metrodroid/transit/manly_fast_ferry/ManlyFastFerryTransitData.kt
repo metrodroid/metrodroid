@@ -24,6 +24,7 @@ import au.id.micolous.metrodroid.card.classic.ClassicCard
 import au.id.micolous.metrodroid.card.classic.ClassicCardTransitFactory
 import au.id.micolous.metrodroid.transit.CardInfo
 import au.id.micolous.metrodroid.transit.erg.ErgTransitData
+import au.id.micolous.metrodroid.transit.erg.ErgTransitFactory
 import au.id.micolous.metrodroid.transit.erg.record.ErgPurseRecord
 import java.util.*
 
@@ -40,7 +41,7 @@ import java.util.*
 class ManlyFastFerryTransitData private constructor(card: ClassicCard) :
         ErgTransitData(card, CURRENCY) {
 
-    override fun newTrip(purse: ErgPurseRecord, epoch: GregorianCalendar?) =
+    override fun newTrip(purse: ErgPurseRecord, epoch: Int) =
             ManlyFastFerryTransaction(purse, epoch)
 
     override fun getCardName() = NAME
@@ -49,7 +50,7 @@ class ManlyFastFerryTransitData private constructor(card: ClassicCard) :
     companion object {
         private const val NAME = "Manly Fast Ferry"
         private const val AGENCY_ID = 0x0227
-        private val TIME_ZONE = TimeZone.getTimeZone("Australia/Sydney")
+        internal val TIME_ZONE = TimeZone.getTimeZone("Australia/Sydney")
         internal const val CURRENCY = "AUD"
 
         private val CARD_INFO = CardInfo.Builder()
@@ -60,8 +61,9 @@ class ManlyFastFerryTransitData private constructor(card: ClassicCard) :
                 .setKeysRequired()
                 .build()
 
-        val FACTORY: ClassicCardTransitFactory = object : ErgTransitData.ErgTransitFactory() {
-            override fun getErgAgencyID() = AGENCY_ID
+        val FACTORY: ClassicCardTransitFactory = object : ErgTransitFactory() {
+            override val ergAgencyID: Int
+                get() = AGENCY_ID
 
             override fun parseTransitData(classicCard: ClassicCard) =
                     ManlyFastFerryTransitData(classicCard)

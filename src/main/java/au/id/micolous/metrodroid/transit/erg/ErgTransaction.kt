@@ -21,6 +21,7 @@ package au.id.micolous.metrodroid.transit.erg
 import au.id.micolous.metrodroid.transit.Transaction
 import au.id.micolous.metrodroid.transit.TransitCurrency
 import au.id.micolous.metrodroid.transit.erg.record.ErgPurseRecord
+import au.id.micolous.metrodroid.util.Utils
 import kotlinx.android.parcel.Parcelize
 import java.util.*
 
@@ -29,17 +30,14 @@ import java.util.*
  */
 @Parcelize
 open class ErgTransaction(protected val purse: ErgPurseRecord,
-                          protected val epoch: GregorianCalendar?,
-                          protected val currency: String) : Transaction() {
+                          protected val epoch: Int,
+                          protected val currency: String,
+                          protected val timezone: TimeZone) : Transaction() {
+
 
     // Implemented functionality.
     override fun getTimestamp(): Calendar {
-        val ts = GregorianCalendar()
-        ts.timeInMillis = epoch?.timeInMillis ?: 0
-        ts.add(Calendar.DATE, purse.day)
-        ts.add(Calendar.MINUTE, purse.minute)
-
-        return ts
+        return convertTimestamp(epoch, timezone, purse.day, purse.minute)
     }
 
     override fun isTapOff(): Boolean {
@@ -68,4 +66,21 @@ open class ErgTransaction(protected val purse: ErgPurseRecord,
         return false
     }
 
+    companion object {
+        private val EPOCH = GregorianCalendar(2000, Calendar.JANUARY, 1).timeInMillis
+
+        private fun getEpoch(tz: TimeZone = Utils.UTC) : GregorianCalendar {
+            val g = GregorianCalendar(tz)
+            g.timeInMillis = EPOCH
+            return g
+        }
+
+
+        fun convertTimestamp(epoch: Int, tz: TimeZone, day: Int = 0, minute: Int = 0): GregorianCalendar {
+            val g = getEpoch(tz)
+            g.add(Calendar.DATE, epoch + day)
+            g.add(Calendar.MINUTE, minute)
+            return g
+        }
+    }
 }

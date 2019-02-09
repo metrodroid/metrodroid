@@ -26,6 +26,7 @@ import au.id.micolous.metrodroid.transit.CardInfo
 import au.id.micolous.metrodroid.transit.TransitBalance
 import au.id.micolous.metrodroid.transit.TransitBalanceStored
 import au.id.micolous.metrodroid.transit.erg.ErgTransitData
+import au.id.micolous.metrodroid.transit.erg.ErgTransitFactory
 import au.id.micolous.metrodroid.transit.erg.record.ErgMetadataRecord
 import au.id.micolous.metrodroid.transit.erg.record.ErgPurseRecord
 import java.util.*
@@ -42,8 +43,8 @@ import java.util.*
 class ChcMetrocardTransitData private constructor(card: ClassicCard) :
         ErgTransitData(card, CURRENCY) {
 
-    override fun newTrip(purse: ErgPurseRecord, epoch: GregorianCalendar?) =
-            ChcMetrocardTransaction(purse, epoch!!)
+    override fun newTrip(purse: ErgPurseRecord, epoch: Int) =
+            ChcMetrocardTransaction(purse, epoch)
 
     override fun getCardName() = NAME
 
@@ -68,7 +69,7 @@ class ChcMetrocardTransitData private constructor(card: ClassicCard) :
     companion object {
         private const val NAME = "Metrocard"
         private const val AGENCY_ID = 0x0136
-        private val TIME_ZONE = TimeZone.getTimeZone("Pacific/Auckland")
+        internal val TIME_ZONE = TimeZone.getTimeZone("Pacific/Auckland")
         internal const val CURRENCY = "NZD"
         internal const val CHC_METROCARD_STR = "chc_metrocard"
 
@@ -81,14 +82,15 @@ class ChcMetrocardTransitData private constructor(card: ClassicCard) :
                 .setExtraNote(R.string.card_note_chc_metrocard)
                 .build()
 
-        val FACTORY: ClassicCardTransitFactory = object : ErgTransitData.ErgTransitFactory() {
+        val FACTORY: ClassicCardTransitFactory = object : ErgTransitFactory() {
             override fun parseTransitData(classicCard: ClassicCard) =
                     ChcMetrocardTransitData(classicCard)
 
             override fun parseTransitIdentity(card: ClassicCard) =
                     parseTransitIdentity(card, NAME)
 
-            override fun getErgAgencyID() = AGENCY_ID
+            override val ergAgencyID: Int
+                get() = AGENCY_ID
 
             override fun getAllCards() = listOf(CARD_INFO)
 
