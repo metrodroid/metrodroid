@@ -34,7 +34,7 @@ import java.util.Locale;
  * https://github.com/micolous/metrodroid/wiki/ERG-MFC#purse-records
  */
 public class ErgPurseRecord extends ErgRecord implements Parcelable {
-    private int mRoute;
+    private int mAgency;
     private int mDay;
     private int mMinute;
     private boolean mIsCredit;
@@ -45,7 +45,7 @@ public class ErgPurseRecord extends ErgRecord implements Parcelable {
     }
 
     public ErgPurseRecord(Parcel parcel) {
-        mRoute = parcel.readInt();
+        mAgency = parcel.readInt();
         mDay = parcel.readInt();
         mMinute = parcel.readInt();
         mIsCredit = parcel.readInt() == 1;
@@ -87,7 +87,7 @@ public class ErgPurseRecord extends ErgRecord implements Parcelable {
         }
 
         // Multiple agency IDs seen on chc cards -- might represent different operating companies.
-        record.mRoute = input.byteArrayToInt(1, 2);
+        record.mAgency = input.byteArrayToInt(1, 2);
 
         record.mDay = input.getBitsFromBuffer(32, 20);
         if (record.mDay < 0) throw new AssertionError("Day < 0");
@@ -112,7 +112,7 @@ public class ErgPurseRecord extends ErgRecord implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel parcel, int i) {
-        parcel.writeInt(mRoute);
+        parcel.writeInt(mAgency);
         parcel.writeInt(mDay);
         parcel.writeInt(mMinute);
         parcel.writeInt(mIsCredit ? 1 : 0);
@@ -140,15 +140,15 @@ public class ErgPurseRecord extends ErgRecord implements Parcelable {
         return mIsTrip;
     }
 
-    public int getRoute() {
-        return mRoute;
+    public int getAgency() {
+        return mAgency;
     }
 
     @Override
     public String toString() {
-        return String.format(Locale.ENGLISH, "[%s: route=%x, day=%d, minute=%d, isCredit=%s, isTransfer=%s, txnValue=%d]",
+        return String.format(Locale.ENGLISH, "[%s: agency=%x, day=%d, minute=%d, isCredit=%s, isTransfer=%s, txnValue=%d]",
                 getClass().getSimpleName(),
-                mRoute,
+                mAgency,
                 mDay,
                 mMinute,
                 mIsCredit ? "true" : "false",

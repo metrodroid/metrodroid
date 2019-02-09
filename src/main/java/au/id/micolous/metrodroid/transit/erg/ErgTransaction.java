@@ -114,12 +114,6 @@ public class ErgTransaction extends Transaction {
         return false;
     }
 
-    @NonNull
-    @Override
-    public List<String> getRouteNames() {
-        return Collections.singletonList(Utils.intToHex(mPurse.getRoute()));
-    }
-
     @Override
     public void writeToParcel(Parcel parcel, int i) {
         mPurse.writeToParcel(parcel, i);
