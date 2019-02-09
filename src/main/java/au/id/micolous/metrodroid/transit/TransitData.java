@@ -25,6 +25,7 @@ import android.os.Parcelable;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
+import java.util.Calendar;
 import java.util.Collections;
 import java.util.List;
 
@@ -162,5 +163,33 @@ public abstract class TransitData implements Parcelable {
     @Nullable
     public String getWarning() {
         return null;
+    }
+
+    /**
+     * Finds the timestamp of the latest trip taken on the card.
+     * @return Latest timestamp of a trip, or null if there are no trips or no trips with
+     * timestamps.
+     */
+    @Nullable
+    public Calendar getLastUseTimestamp() {
+        final List<? extends Trip> trips = getTrips();
+        if (trips == null) {
+            return null;
+        }
+
+        // Find the last trip taken on the card.
+        Calendar lastTrip = null;
+        for (Trip t : trips) {
+            if (t == null) continue;
+
+            Calendar ts = t.getEndTimestamp();
+            if (ts == null) ts = t.getStartTimestamp();
+            if (ts == null) continue;
+
+            if (lastTrip == null || ts.getTimeInMillis() > lastTrip.getTimeInMillis()) {
+                lastTrip = ts;
+            }
+        }
+        return lastTrip;
     }
 }
