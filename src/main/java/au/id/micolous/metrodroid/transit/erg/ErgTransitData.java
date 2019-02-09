@@ -360,6 +360,7 @@ public class ErgTransitData extends TransitData {
      *
      * @return TimeZone for the card.
      */
+    @NotNull
     protected TimeZone getTimezone() {
         // If we don't know the timezone, assume it is Android local timezone.
         return TimeZone.getDefault();
