@@ -107,10 +107,11 @@ public class ManlyFastFerryTransitData extends ErgTransitData {
     };
 
     @Override
-    protected ErgTransaction newTrip(ErgPurseRecord purse, GregorianCalendar epoch) {
+    protected ErgTransaction newTrip(@NonNull ErgPurseRecord purse, GregorianCalendar epoch) {
         return new ManlyFastFerryTransaction(purse, epoch);
     }
 
+    @NonNull
     @Override
     public String getCardName() {
         return NAME;

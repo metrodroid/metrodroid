@@ -117,10 +117,11 @@ public class ChcMetrocardTransitData extends ErgTransitData {
     };
 
     @Override
-    protected ErgTransaction newTrip(ErgPurseRecord purse, GregorianCalendar epoch) {
+    protected ErgTransaction newTrip(@NonNull ErgPurseRecord purse, GregorianCalendar epoch) {
         return new ChcMetrocardTransaction(purse, epoch);
     }
 
+    @NonNull
     @Override
     public String getCardName() {
         return NAME;
