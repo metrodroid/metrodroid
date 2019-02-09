@@ -1,0 +1,4 @@
+id,name,local_name,mode
+4,Red Bus,,BUS
+6,Metro,,TICKET_MACHINE
+9,Go Bus,,BUS

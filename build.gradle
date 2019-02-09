@@ -141,6 +141,7 @@ android {
                 'id', 'in',
                 'ja',
                 'kab',
+                'mi',
                 'nb-rNO',
                 'nl',
                 'ru',
