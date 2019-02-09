@@ -25,7 +25,7 @@ import au.id.micolous.metrodroid.transit.Trip
 import au.id.micolous.metrodroid.transit.erg.ErgTransaction
 import au.id.micolous.metrodroid.transit.erg.record.ErgPurseRecord
 
-class ManlyFastFerryTransaction(purse: ErgPurseRecord, epoch: GregorianCalendar) :
+class ManlyFastFerryTransaction(purse: ErgPurseRecord, epoch: GregorianCalendar?) :
         ErgTransaction(purse, epoch, ManlyFastFerryTransitData.CURRENCY) {
 
     // All transactions look the same... but this is a ferry, so we'll call it a ferry one.
