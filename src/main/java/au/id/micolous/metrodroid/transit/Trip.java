@@ -50,24 +50,26 @@ public abstract class Trip implements Parcelable {
     /**
      * Formats a trip description into a localised label, with appropriate language annotations.
      *
-     * @param trip The trip to describe.
      * @return null if both the start and end stations are unknown.
      */
-    public static Spannable formatStationNames(Trip trip) {
+    public final Spannable formatStationNames() {
         String startStationName = null, endStationName = null;
         String startLanguage = null, endLanguage = null;
         boolean localisePlaces = MetrodroidApplication.localisePlaces();
 
-        if (trip.getStartStation() != null) {
-            startStationName = trip.getStartStation().getShortStationName();
-            startLanguage = trip.getStartStation().getLanguage();
+        final Station startStation = getStartStation();
+        final Station endStation = getEndStation();
+
+        if (startStation != null) {
+            startStationName = startStation.getShortStationName();
+            startLanguage = startStation.getLanguage();
         }
 
-        if (trip.getEndStation() != null &&
-                (trip.getStartStation() == null ||
-                        !trip.getEndStation().getStationName().equals(trip.getStartStation().getStationName()))) {
-            endStationName = trip.getEndStation().getShortStationName();
-            endLanguage = trip.getEndStation().getLanguage();
+        if (endStation != null &&
+                (startStation == null ||
+                        !endStation.getStationName().equals(startStation.getStationName()))) {
+            endStationName = endStation.getShortStationName();
+            endLanguage = endStation.getLanguage();
         }
 
         // No information is available.
@@ -156,9 +158,8 @@ public abstract class Trip implements Parcelable {
             localeSpanUsed = false;
             // Annotate the start station name with the appropriate Locale data.
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                Station startStation = trip.getStartStation();
-                if (localisePlaces && startStation != null && startStation.getLanguage() != null) {
-                    b.setSpan(new LocaleSpan(Locale.forLanguageTag(startStation.getLanguage())), x, x + startStationName.length(), 0);
+                if (localisePlaces && startLanguage != null) {
+                    b.setSpan(new LocaleSpan(Locale.forLanguageTag(startLanguage)), x, x + startStationName.length(), 0);
 
                     // Set the start of the string to the default language, so that the localised
                     // TTS for the station name doesn't take over everything.
@@ -181,14 +182,13 @@ public abstract class Trip implements Parcelable {
 
         // Annotate the end station name with the appropriate Locale data.
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            Station endStation = trip.getEndStation();
             if (localisePlaces) {
-                if (endStation != null && endStation.getLanguage() != null) {
-                    b.setSpan(new LocaleSpan(Locale.forLanguageTag(endStation.getLanguage())), y, y + endStationName.length(), 0);
+                if (endLanguage != null) {
+                    b.setSpan(new LocaleSpan(Locale.forLanguageTag(endLanguage)), y, y + endStationName.length(), 0);
 
                     if (localeSpanUsed) {
                         // Set the locale of the string between the start and end station names.
-                        b.setSpan(new LocaleSpan(Locale.getDefault()), x + startStationName.length(), y, 0);
+                        b.setSpan(new LocaleSpan(Locale.getDefault()), x + (startStationName != null ? startStationName.length() : 0), y, 0);
                     } else {
                         // Set the locale of the string from the start of the string to the end station
                         // name.
@@ -200,7 +200,7 @@ public abstract class Trip implements Parcelable {
                 } else {
                     // No custom language information for end station
                     // Set default locale from the end of the start station to the end of the string.
-                    b.setSpan(new LocaleSpan(Locale.getDefault()), x + startStationName.length(), b.length(), 0);
+                    b.setSpan(new LocaleSpan(Locale.getDefault()), x + (startStationName != null ? startStationName.length() : 0), b.length(), 0);
                 }
             }
         }
@@ -211,6 +211,7 @@ public abstract class Trip implements Parcelable {
     /**
      * Starting time of the trip.
      */
+    @Nullable
     public abstract Calendar getStartTimestamp();
 
     /**
@@ -218,6 +219,7 @@ public abstract class Trip implements Parcelable {
      *
      * This returns null if not overridden in a subclass.
      */
+    @Nullable
     public Calendar getEndTimestamp() {
         return null;
     }

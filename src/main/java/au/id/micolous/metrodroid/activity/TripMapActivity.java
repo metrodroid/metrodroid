@@ -86,7 +86,7 @@ public class TripMapActivity extends MetrodroidActivity {
         ActionBar actionBar = getActionBar();
         if (actionBar != null) {
             actionBar.setDisplayHomeAsUpEnabled(true);
-            actionBar.setTitle(Trip.formatStationNames(trip));
+            actionBar.setTitle(trip.formatStationNames());
             final String agencyName = trip.getAgencyName(false);
             final String routeName = trip.getRouteDisplayName();
             actionBar.setSubtitle(routeName == null ? agencyName
