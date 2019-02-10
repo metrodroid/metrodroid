@@ -1,5 +1,5 @@
-<?xml version='1.0' encoding='UTF-8'?>
-<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2"><string name="app_name">Metrodroid</string>
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2"><string name="app_name">MetroDroid</string>
 
     <string name="license">Lisanslar</string>
     <string name="title_activity_license">Açık Kaynak Lisanslar</string>
@@ -34,14 +34,14 @@
     <string name="pass_or_transfer">Aktarma</string>
     <string name="fully_locked_title">Tamamı kilitli kart.</string>
     <string name="nfc_off_error">NFC kapalı</string>
-    <string name="turn_on_nfc">Kart bilgilerini okumak için lütfen NFC\'yi açın.</string>
+    <string name="turn_on_nfc">Lütfen kart bilgisini okumak için NFC\'yi etkinleştirin.</string>
     <string name="wireless_settings">Kablosuz Ayarlar</string>
 
-    <string name="unknown_card_header">Bilinmeyen kart formatı</string>
+    <string name="unknown_card_header">Desteklenmeyen kart biçimi</string>
     <string name="unknown_card_description">Bu kart Metrodroid tarafından henüz desteklenmemektedir. Sadece ham data görüntülenebilir.</string>
 
     <string name="unknown_more_info">Daha fazla bilgi</string>
-    <string name="unknown_more_info_desc">Metrodroid\'in desteklediği kart tipleri görmek için buraya dokunun.</string>
+    <string name="unknown_more_info_desc">Bu kartın Metrodroid desteği hakkında daha fazla bilgi için dokunun.</string>
 
     <string name="lawyercats">Metrodroid ve yaratıcılarının herhangi bir toplu taşıma kurumuyla ilişiği yoktur.</string>
 
@@ -50,10 +50,10 @@
     <string name="no_scanned_cards">Henüz herhangi bir kart okutmadınız.</string>
     <string name="block_title_format">Blok: %s</string>
     <string name="page_title_format">Sayfa: 0x%s</string>
-    <string name="application_title_format">Uygulama: 0x%s</string>
-    <string name="file_title_format">Dosya: 0x%s</string>
-    <string name="unauthorized_file_title_format">Dosya: 0x%s (yetkisiz)</string>
-    <string name="invalid_file_title_format">Dosya: 0x%1$s (geçersiz: %2$s)</string>
+    <string name="application_title_format">Uygulama: %s</string>
+    <string name="file_title_format">Dosya: %s</string>
+    <string name="unauthorized_file_title_format">Dosya: %s (yetkisiz)</string>
+    <string name="invalid_file_title_format">Dosya: %1$s (geçersiz: %2$s)</string>
     <string name="unauthorized_page_title_format">Sayfa: 0x%s (yetkisiz)</string>
     <string name="sector_title_format">Sektör: 0x%s</string>
     <string name="unauthorized_sector_title_format">Sektör: 0x%s (yetkisiz)</string>
@@ -84,13 +84,15 @@
     <string name="card_not_supported_on_device">Bu kart cihazınız tarafından desteklenmemektedir.</string>
     <string name="need_stations">Bazı durak isimleri bilinmemektedir.</string>
     <string name="need_stations_submit">Raporla</string>
-    <string name="card_preview_reader">Kart okuyucunun Beta sürümü.</string>
+    <string name="card_preview_reader">Kart okuyucusunun beta sürümü.</string>
     <string name="visit_website">Websitesini Ziyaret Et</string>
-    <string name="title_activity_about">Metrodroid Hakkında</string>
+    <string name="title_activity_about">Hakkında</string>
     <string name="card_format">Kart tipi</string>
     <string name="select_file">Dosya seç</string>
     <string name="copied_to_clipboard">Hafızaya kopyalandı</string>
-    <string name="saved_xml">Metrodroid-Export.xml USB Belleğe yazıldı.</string>
-    <string name="saved_xml_custom">XML USB Belleğe yazıldı.</string>
+    <string name="saved_xml">Metrodroid-Export.xml USB Depolama birimine yazıldı.</string>
+    <string name="saved_xml_custom">XML dosyası USB Belleğe yazıldı.</string>
     <string name="map_tiles_url">Harita kaynağı URL</string>
-    </resources>
+    <string name="cepas_logfile_record_count">Günlük Dosyası Kayıt Sayısı</string>
+    <string name="location_taipei">Taipei</string>
+</resources>
