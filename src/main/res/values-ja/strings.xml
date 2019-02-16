@@ -23,12 +23,12 @@
     <string name="accessibility">アクセシビリティ</string>
     <string name="speak_balance">残高を大きく読み上げ</string>
     <string name="speak_balance_summary">カードをスキャンするとき、残高を自動的に読み上げます。これは、他の音声合成のソフトウェアが利用できない場合でも機能します。</string>
-    <string name="balance_speech">残高 <xliff:g id="balance" example="$13.37">%s</xliff:g></string>
+    <string name="balance_speech">残高 <xliff:g id="balance" example="$13.37">%s</xliff:g>
+    </string>
     <string name="loading">ロード中…</string>
     <string name="scanned_at_format">%2$sに%1$sにスキャンされました</string>
     <string name="supported_cards">利用できるカード</string>
     <string name="pass_or_transfer">パス／乗り換え</string>
-
     <string name="felica_terminal_fare_adjustment">精算機</string>
     <string name="felica_terminal_portable">携帯型端末</string>
     <string name="felica_terminal_vehicle">等車載端末</string>
@@ -47,7 +47,6 @@
     <string name="felica_terminal_simple_deposit">簡易入金機</string>
     <string name="felica_terminal_pos">物販端末</string>
     <string name="felica_terminal_vending">自販機</string>
-
     <string name="felica_process_fare_exit_gate">出口改札</string>
     <string name="felica_process_charge">チャージ</string>
     <string name="felica_process_purchase_magnetic">券購(磁気券購入)</string>
@@ -79,7 +78,6 @@
     <string name="unknown_card_description">読み込んだカードは Metrodroid で対応していません。データだけが表示されます。</string>
     <string name="scanned_cards">履歴</string>
     <string name="no_scanned_cards">カードがまだスキャンされていません。</string>
-
     <string name="location_tokyo">東京</string>
     <string name="location_kansai">関西</string>
     <string name="app_name">Metrodroid</string>
@@ -132,9 +130,9 @@
     <string name="copied_to_clipboard">クリップボードにコピーしました</string>
     <string name="saved_xml">USB ストレージに Metrodroid Export.xml を書き込みました。</string>
     <plurals name="cards_imported">
-	    <item quantity="other"><xliff:g id="count" example="1">%d</xliff:g>カードをインポートしました!</item>
+        <item quantity="other">
+            <xliff:g id="count" example="1">%d</xliff:g>カードをインポートしました!</item>
     </plurals>
-
     <string name="location_seattle">米国 ワシントン州 シアトル</string>
     <string name="location_san_francisco">米国 カリフォルニア州 サンフランシスコ</string>
     <string name="location_singapore">シンガポール</string>
@@ -144,14 +142,12 @@
     <string name="location_sydney_australia">オーストラリア シドニー</string>
     <string name="location_brisbane_seq_australia">オーストラリア クイーンズランド州 ブリスベン &amp; SE</string>
     <string name="location_victoria_australia">オーストラリア ビクトリア州</string>
-
     <string name="felica_process_booth_exit">駅長ブース出口</string>
     <string name="hsl_balance_refill">残高チャージ</string>
     <string name="hsl_balance_ticket">バリュー チケット</string>
     <string name="hsl_pass_ticket">シーズン チケット</string>
     <string name="hsl_person_format">%s 人</string>
     <string name="hsl_mins_format">%s 分</string>
-
     <string name="opal_automatic_top_up">自動チャージ</string>
     <string name="opal_weekly_trips">毎週の旅行</string>
     <string name="opal_vehicle_bus">バス</string>
@@ -169,91 +165,69 @@
     <string name="opal_action_journey_completed_auto_off">旅を完了しました (取り出しに失敗)</string>
     <string name="opal_action_journey_completed_auto_on">旅を完了しました (挿入に失敗)</string>
     <string name="opal_action_tap_on_reversal">反対に挿入</string>
-
     <string name="seqgo_refill_manual">手動チャージ</string>
     <string name="seqgo_refill_automatic">自動チャージ</string>
     <string name="card_note_seqgo">Go Access, Explore または SEEQ カードはサポートしません。</string>
-
     <string name="card_note_card_number_only">カード番号のみ読み取ることができます。</string>
-<string name="unknown_card_header">不明なカード フォーマット</string>
+    <string name="unknown_card_header">不明なカード フォーマット</string>
     <string name="unknown_more_info">詳細情報</string>
     <string name="unknown_more_info_desc">このカードの Metrodroid のサポートの詳細については、タップしてください。</string>
-
-
     <string name="lawyercats">Metrodroid と作者は、公共交通機関と何の関連もありません。</string>
     <plurals name="block_count">
         <item quantity="other">%d ブロック</item>
     </plurals>
-
     <string name="page_title_format">ページ: 0x%s</string>
     <string name="map_tiles_url">地図タイル URL</string>
     <string name="map_tiles_url_summary">Leaflet TileLayer 構文を使用して、埋め込み地図のカスタム タイル サーバーを使用します。</string>
     <string name="map_tiles_subdomains">地図タイルのサブドメイン</string>
     <string name="map_tiles_subdomains_summary">地図 URL に {s} を使用する場合は、カンマで区切られたサブドメインのリストか、サブドメインの 1 文字のリスト。</string>
-
     <string name="default_map_tile_url">https://tile{s}.stackcdn.com/osm_tiles_2x/{z}/{x}/{y}.png</string>
     <string name="default_map_tile_subdomains">123456</string>
-
     <string name="about_card_format">このカードフォーマットについて</string>
     <string name="online_services">オンライン サービス</string>
     <string name="mifare_classic">MIFARE クラシック</string>
     <string name="auth_retries">認証の再試行</string>
     <string name="auth_retries_summary">セクターごとに認証を試行する回数</string>
-
-<string name="valid_to_format">%1$s まで有効</string>
+    <string name="valid_to_format">%1$s まで有効</string>
     <string name="unknown">不明</string>
     <string name="seqgo_ticket_type_regular">正規</string>
     <string name="seqgo_ticket_type_concession">割引</string>
     <string name="seqgo_ticket_type_child">子供</string>
     <string name="seqgo_ticket_type_senior">シニア</string>
-
     <string name="nextfare">Cubic Nextfare</string>
     <string name="nextfare_system_code">システム コード</string>
     <string name="nextfare_ticket_class">チケット クラス コード</string>
-
-<string name="export_filename">エクスポート ファイル名</string>
+    <string name="export_filename">エクスポート ファイル名</string>
     <string name="saved_xml_custom">USB ストレージに XML を書き込みました。</string>
     <string name="location_hong_kong">香港</string>
-
     <string name="location_los_angeles">米国 カリフォルニア州 ロサンゼルス</string>
-
-<string name="location_shenzhen">中国、広東省、深圳</string>
+    <string name="location_shenzhen">中国、広東省、深圳</string>
     <string name="mfc_fallback_desc">一部の機関は、カードに識別のマジックがありません。それらを読み取るためには機関を明示的に選択する必要があります。</string>
     <string name="mfc_fallback">フォールバック リーダー</string>
-
     <string name="location_act_australia">オーストラリア首都特別地域, オーストラリア</string>
-
     <string name="card_note_bilhete_unico">設定でフォールバック リーダーとして選択する必要があります。</string>
-
-<string name="location_wa_australia">西オーストラリア州, オーストラリア</string>
-
+    <string name="location_wa_australia">西オーストラリア州, オーストラリア</string>
     <string name="obfuscation_title">難読化</string>
     <string name="obfuscation_card_numbers">カード番号を非表示</string>
     <string name="obfuscation_card_numbers_desc">どこにもカード番号を表示しません</string>
-
     <string name="obfuscation_balance">残高の難読化</string>
     <string name="obfuscation_balance_desc">ランダムな金額に残高を変更します</string>
-
     <string name="obfuscation_dates">日付の難読化</string>
     <string name="obfuscation_dates_desc">旅行日、購入日、有効期限、スキャンした日付を異なる、ランダムな日として表示します</string>
-
     <string name="obfuscation_times">時間の難読化</string>
     <string name="obfuscation_times_desc">旅行、購入、およびスキャンしたタイムスタンプをあいまいにし、精度を下げます</string>
-
     <string name="obfuscation_fares">運賃の難読化</string>
     <string name="obfuscation_fares_desc">ランダムな金額で表示されるように運賃を変更します</string>
-
     <plurals name="obfuscation_mode_notice">
-	<item quantity="other"><xliff:g id="count" example="1">%d</xliff:g> 難読化フラグオン</item>
-</plurals>
-
+        <item quantity="other">
+            <xliff:g id="count" example="1">%d</xliff:g> 難読化フラグオン</item>
+    </plurals>
     <string name="map_tiles_help">リーフレット TileLayer ドキュメントを表示</string>
     <string name="map_tiles_help_summary">マップタイル URL を使用するためのヘルプ。リーフレットのオンラインドキュメントを参照してください (英語でのみ利用可能)。</string>
     <string name="hidden_card_number">非表示カード番号</string>
     <plurals name="hidden_key_data">
-	<item quantity="other">非表示キーデータ (<xliff:g id="count" example="1">%d</xliff:g> バイト)</item>
-</plurals>
-
+        <item quantity="other">非表示キーデータ (<xliff:g id="count" example="1">%d</xliff:g> バイト)</item>
+    </plurals>
     <string name="locked_mfc_card">ロックされた MIFARE クラシック カード</string>
     <string name="locked_mfu_card">ロックされた MIFARE Ultralight カード</string>
     <string name="locked_mfd_card">ロックされた MIFARE DESFire カード</string>
@@ -263,22 +237,18 @@
     <string name="invalid_file_title_format">ファイル: 0x%1$s (無効: %2$s)</string>
     <string name="unauthorized_page_title_format">ページ: 0x%s (未承認)</string>
     <string name="unsupported_tag">サポートされていない NFC カードメディア</string>
-
     <string name="saving_card">カードを保存しています…</string>
-
     <string name="mfc_reading">MIFARE クラシックカードを読み込んでいます…</string>
     <string name="mfc_have_key">セクター %d のユーザーが指定したキーを試行しています…</string>
     <string name="mfc_other_key">セクター %d のユーザーが指定した代替キーを試行しています…</string>
     <string name="mfc_default_key">セクター %d の既知のキーを試行しています…</string>
     <string name="mfc_reading_blocks">セクター %d を読み込んでいます…</string>
-
     <string name="iso14a_detect">ISO 14443 カードタイプを検出しています…</string>
     <string name="mfd_reading">MIFARE DESFire カードを読み込んでいます…</string>
-    <string name="card_reading_type"><xliff:g id="card_name" example="Opal">%s</xliff:g> を読み込んでいます…</string>
-
+    <string name="card_reading_type">
+        <xliff:g id="card_name" example="Opal">%s</xliff:g> を読み込んでいます…</string>
     <string name="mfu_detect">MIFARE Ultralight カードタイプを検出しています…</string>
     <string name="mfu_reading">MIFARE Ultralight カードを読み込んでいます…</string>
-
     <string name="desfire_standard_file">標準ファイル</string>
     <string name="desfire_backup_file">バックアップファイル</string>
     <string name="desfire_value_file">値ファイル</string>
@@ -286,26 +256,19 @@
     <string name="desfire_cyclic_record">繰り返しレコード</string>
     <string name="desfire_unknown_file">不明なファイルタイプ</string>
     <plurals name="desfire_standard_format">
-	<item quantity="other">タイプ: %1$s, 長さ: %2$s バイト</item>
-</plurals>
-
+        <item quantity="other">タイプ: %1$s, 長さ: %2$s バイト</item>
+    </plurals>
     <plurals name="desfire_record_format">
-	<item quantity="other">タイプ: %1$s, レコード: %2$s (%3$s 最大), レコードサイズ: %4$s</item>
-</plurals>
-
+        <item quantity="other">タイプ: %1$s, レコード: %2$s (%3$s 最大), レコードサイズ: %4$s</item>
+    </plurals>
     <string name="desfire_value_format">タイプ: %1$s, 範囲: %2$s - %3$s, クレジット限度: %4$s (%5$s)</string>
     <string name="enabled">有効</string>
     <string name="disabled">無効</string>
-
-
     <string name="location_christchurch_nz">ニュージーランド, クライストチャーチ</string>
-
     <string name="opal_action_tap_on_rejected">タップを拒否</string>
     <string name="card_note_opal">無料旅券、片道チケットはサポートされていません。</string>
-
     <string name="erg_agency_id">交通機関 ID</string>
-
-<string name="hardware_information">ハードウェア情報</string>
+    <string name="hardware_information">ハードウェア情報</string>
     <string name="cepas_version">CEPAS バージョン</string>
     <string name="cepas_purse_id">財布 ID</string>
     <string name="cepas_purse_status">財布の状態</string>
@@ -321,9 +284,7 @@
     <string name="cepas_issuer_data_length">発行者データ長</string>
     <string name="cepas_issuer_data">発行者固有データ</string>
     <string name="cepas_purse_info">財布情報</string>
-
     <string name="trip_description">%1$s(から) [→] %2$s(へ)</string>
-
     <string name="mode_bus">バス</string>
     <string name="mode_train">鉄道</string>
     <string name="mode_tram">路面電車</string>
@@ -334,13 +295,9 @@
     <string name="mode_pos">POS</string>
     <string name="mode_banned">禁止</string>
     <string name="mode_unknown">不明</string>
-
-
     <string name="ovc_autocharge_limit">自動チャージ限度</string>
     <string name="ovc_autocharge_amount">自動チャージのチャージ</string>
     <string name="ovc_autocharge">自動チャージ</string>
-
-
     <string name="general_information">全般情報</string>
     <string name="personal_information">個人情報</string>
     <string name="date_of_birth">生年月日</string>
@@ -349,4 +306,5 @@
     <string name="clipboard_error">クリップボードにアクセスできません</string>
     <string name="localise_places">母国語で駅名と路線名を発音します</string>
     <string name="localise_places_desc">お使いの言語ではなく、自分の母国語で駅名と路線名を発音するようにテキスト読み上げおよびその他のユーザー補助ソフトウェアのためのヒントを追加します。これは、外国地名の発音を改善しますが、理解しづらいかもしれません。これは Android 5.0 以降、(Google トークなど) LocaleSpan API をサポートするテキスト読み上げソフトウェア、そして適切な音声がインストールされている必要があります。</string>
+    <string name="transaction_counter">トランザクション カウンター</string>
 </resources>
