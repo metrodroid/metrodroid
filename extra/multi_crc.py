@@ -48,7 +48,7 @@ def multi_crc(input_file, start_offset=0, length=None):
   
   if len(d) < 128:
     print('Calculating checksum on input data:')
-    print(b16encode(d))
+    print(b16encode(d).decode('ascii'))
     print()
   
   for x in crc16s:
