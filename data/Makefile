@@ -9,6 +9,7 @@ MDROOT=..
 # lax_tap).
 HERMETIC_TARGETS := \
     adelaide \
+    chc_metrocard \
 	compass \
 	gironde \
 	kmt \

@@ -2,6 +2,7 @@
  * TransactionTrip.java
  *
  * Copyright 2018 Google
+ * Copyright 2018-2019 Michael Farrell <micolous+git@gmail.com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -27,7 +28,7 @@ import java.util.Calendar;
 import java.util.Collections;
 import java.util.List;
 
-public abstract class Transaction implements Parcelable {
+public abstract class Transaction implements Parcelable, Comparable<Transaction> {
     protected abstract boolean isTapOff();
 
     /**
@@ -73,13 +74,18 @@ public abstract class Transaction implements Parcelable {
         return null;
     }
 
-    public abstract Station getStation();
+    @Nullable
+    public Station getStation() {
+        return null;
+    }
 
     public abstract Calendar getTimestamp();
 
     public abstract TransitCurrency getFare();
 
-    public abstract Trip.Mode getMode();
+    public Trip.Mode getMode() {
+        return Trip.Mode.OTHER;
+    }
 
     protected boolean shouldBeMerged(Transaction other) {
         return isTapOn() && (other.isTapOff() || other.isCancel()) && isSameTrip(other);
@@ -99,5 +105,24 @@ public abstract class Transaction implements Parcelable {
 
     protected boolean isRejected() {
         return false;
+    }
+
+    public int compareTo(@NonNull Transaction other) {
+        final Calendar t1 = getTimestamp();
+        final Calendar t2 = other.getTimestamp();
+        if (t1 != null && t2 != null) {
+            return t1.compareTo(t2);
+        } else if (t2 != null) {
+            return 1;
+        } else {
+            return 0;
+        }
+    }
+
+    public static class Comparator implements java.util.Comparator<Transaction> {
+        @Override
+        public int compare(@NonNull Transaction txn1, @NonNull Transaction txn2) {
+            return txn1.compareTo(txn2);
+        }
     }
 }

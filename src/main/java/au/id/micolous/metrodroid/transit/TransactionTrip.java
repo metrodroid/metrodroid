@@ -147,6 +147,7 @@ public class TransactionTrip extends Trip implements Parcelable {
         return mEnd.getStation();
     }
 
+    @Nullable
     @Override
     public Calendar getStartTimestamp() {
         if (mStart == null)
@@ -154,11 +155,30 @@ public class TransactionTrip extends Trip implements Parcelable {
         return mStart.getTimestamp();
     }
 
+    @Nullable
     @Override
     public Calendar getEndTimestamp() {
-        if (mEnd == null)
+        final Transaction e = mEnd;
+        if (e == null)
             return null;
-        return mEnd.getTimestamp();
+
+        final Calendar ec = e.getTimestamp();
+        if (ec == null)
+            return null;
+
+        // Is end timestamp different from the start time?
+        final Transaction s = mStart;
+        if (s == null)
+            return ec; // Start time not available
+
+        final Calendar sc = s.getTimestamp();
+        if (sc == null)
+            return ec; // Start time not available
+
+        if (ec.compareTo(sc) != 0)
+            return ec; // Start time is different to end time
+
+        return null; // Start time is the same as end time.
     }
 
     @Override

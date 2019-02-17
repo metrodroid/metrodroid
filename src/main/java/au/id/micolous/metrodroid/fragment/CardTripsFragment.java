@@ -315,7 +315,7 @@ public class CardTripsFragment extends ListFragment {
                 fareTextView.setVisibility(View.GONE);
             }
 
-            Spannable stationText = Trip.formatStationNames(trip);
+            Spannable stationText = trip.formatStationNames();
             if (stationText != null) {
                 stationTextView.setText(stationText);
                 stationTextView.setVisibility(View.VISIBLE);

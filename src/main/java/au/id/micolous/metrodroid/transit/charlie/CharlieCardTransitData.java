@@ -136,14 +136,7 @@ public class CharlieCardTransitData extends TransitData {
         expiry.add(Calendar.YEAR, 11);
         expiry.add(Calendar.DAY_OF_YEAR, -1);
 
-        // Find the last trip taken on the card.
-        Calendar lastTrip = null;
-        for (CharlieCardTrip t : mTrips) {
-            if (lastTrip == null || t.getStartTimestamp().getTimeInMillis() > lastTrip.getTimeInMillis()) {
-                lastTrip = t.getStartTimestamp();
-            }
-        }
-
+        Calendar lastTrip = getLastUseTimestamp();
         if (lastTrip != null) {
             // Cards not used for 2 years will also expire
             lastTrip = (Calendar) lastTrip.clone();

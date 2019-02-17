@@ -102,6 +102,7 @@ public class Station implements Parcelable {
         parcel.readList(mHumanReadableLineIds, String.class.getClassLoader());
     }
 
+    @NonNull
     public String getStationName() {
         String ret;
         if (mStationName == null)
@@ -120,6 +121,7 @@ public class Station implements Parcelable {
         return MetrodroidApplication.showRawStationIds();
     }
 
+    @NonNull
     public String getShortStationName() {
         String ret;
         if (mStationName == null && mShortStationName == null)
