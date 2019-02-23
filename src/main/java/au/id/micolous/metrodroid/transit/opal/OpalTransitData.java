@@ -72,7 +72,7 @@ public class OpalTransitData extends TransitData {
             .build();
 
     public static final TimeZone TIME_ZONE = TimeZone.getTimeZone("Australia/Sydney");
-    private static final GregorianCalendar OPAL_EPOCH;
+    private static final GregorianCalendar OPAL_EPOCH = Utils.epoch(1980, TIME_ZONE);
 
     public static final Creator<OpalTransitData> CREATOR = new Creator<OpalTransitData>() {
         public OpalTransitData createFromParcel(Parcel parcel) {
@@ -83,19 +83,6 @@ public class OpalTransitData extends TransitData {
             return new OpalTransitData[size];
         }
     };
-
-    static {
-        GregorianCalendar epoch = new GregorianCalendar(TIME_ZONE);
-        epoch.set(Calendar.YEAR, 1980);
-        epoch.set(Calendar.MONTH, Calendar.JANUARY);
-        epoch.set(Calendar.DAY_OF_MONTH, 1);
-        epoch.set(Calendar.HOUR_OF_DAY, 0);
-        epoch.set(Calendar.MINUTE, 0);
-        epoch.set(Calendar.SECOND, 0);
-        epoch.set(Calendar.MILLISECOND, 0);
-
-        OPAL_EPOCH = epoch;
-    }
 
     private final int mSerialNumber;
     private final int mBalance; // cents

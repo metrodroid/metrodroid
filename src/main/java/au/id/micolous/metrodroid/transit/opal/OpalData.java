@@ -19,9 +19,6 @@
 
 package au.id.micolous.metrodroid.transit.opal;
 
-import android.annotation.SuppressLint;
-
-import java.util.HashMap;
 import java.util.Map;
 
 import au.id.micolous.farebot.R;
