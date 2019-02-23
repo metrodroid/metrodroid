@@ -55,7 +55,6 @@ public class BilheteUnicoSPTransitData extends TransitData {
             .setLocation(R.string.location_sao_paulo)
             .setCardType(CardType.MifareClassic)
             .setKeysRequired()
-            .setExtraNote(R.string.card_note_bilhete_unico)
             .build();
 
     public static final Creator<BilheteUnicoSPTransitData> CREATOR = new Creator<BilheteUnicoSPTransitData>() {
