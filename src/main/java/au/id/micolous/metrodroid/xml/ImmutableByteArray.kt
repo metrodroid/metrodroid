@@ -109,6 +109,7 @@ open class ImmutableByteArray private constructor(private val mData: ByteArray):
         fun fromByteArray(data: ByteArray) = ImmutableByteArray(mData = data.clone())
         fun fromASCII(s: String) = ImmutableByteArray(mData = s.toByteArray(Utils.getASCII()))
         fun empty() = ImmutableByteArray(mData = byteArrayOf())
+        fun empty(length: Int = 0) = ImmutableByteArray(mData = ByteArray(length))
         fun fromBase64(value: String) = ImmutableByteArray(mData = Base64.decode(value, Base64.DEFAULT))
         fun fromParcel(parcel: Parcel): ImmutableByteArray =
                 parcel.readParcelable(ImmutableByteArray::class.java.classLoader)!!
