@@ -259,6 +259,11 @@ public class TransitCurrency extends TransitBalance implements Parcelable {
     }
 
     @NonNull
+    public static TransitCurrency NZD(int cents) {
+        return new TransitCurrency(cents, "NZD");
+    }
+
+    @NonNull
     public static TransitCurrency RUB(int kopeyka) {
         return new TransitCurrency(kopeyka, "RUB");
     }
