@@ -86,7 +86,10 @@ open class ImmutableByteArray private constructor(private val mData: ByteArray):
     fun reverseBuffer() =
             ImmutableByteArray(ByteArray(mData.size) { x-> mData[mData.size - x - 1] })
     fun contentEquals(other: ByteArray) = mData.contentEquals(other)
-
+    fun startsWith(other: ByteArray) =
+            mData.size >= other.size &&
+            mData.sliceArray(0 until other.size).contentEquals(other)
+    fun startsWith(other: ImmutableByteArray) = startsWith(other.mData)
 
     fun writeTo(os: OutputStream) {
         os.write(mData)
