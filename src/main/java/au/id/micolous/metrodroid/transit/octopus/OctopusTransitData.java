@@ -1,7 +1,7 @@
 /*
  * OctopusTransitData.java
  *
- * Copyright 2016 Michael Farrell <micolous+git@gmail.com>
+ * Copyright 2016-2019 Michael Farrell <micolous+git@gmail.com>
  *
  * Portions based on FelicaCard.java from nfcard project
  * Copyright 2013 Sinpo Wei <sinpowei@gmail.com>
@@ -23,20 +23,7 @@ package au.id.micolous.metrodroid.transit.octopus;
 
 import android.os.Parcel;
 import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-
-import au.id.micolous.metrodroid.card.CardType;
-import au.id.micolous.metrodroid.card.felica.FelicaCard;
-import au.id.micolous.metrodroid.card.felica.FelicaCardTransitFactory;
-import au.id.micolous.metrodroid.card.felica.FelicaService;
-import au.id.micolous.metrodroid.transit.TransitBalance;
-import au.id.micolous.metrodroid.transit.TransitBalanceStored;
-import au.id.micolous.metrodroid.transit.CardInfo;
-import au.id.micolous.metrodroid.transit.TransitCurrency;
-import au.id.micolous.metrodroid.transit.TransitData;
-import au.id.micolous.metrodroid.transit.TransitIdentity;
-import au.id.micolous.metrodroid.transit.china.NewShenzhenTransitData;
-import au.id.micolous.metrodroid.util.Utils;
+import android.support.annotation.VisibleForTesting;
 
 import org.apache.commons.lang3.ArrayUtils;
 
@@ -45,6 +32,18 @@ import java.util.Collections;
 import java.util.List;
 
 import au.id.micolous.farebot.R;
+import au.id.micolous.metrodroid.card.CardType;
+import au.id.micolous.metrodroid.card.felica.FelicaCard;
+import au.id.micolous.metrodroid.card.felica.FelicaCardTransitFactory;
+import au.id.micolous.metrodroid.card.felica.FelicaService;
+import au.id.micolous.metrodroid.transit.CardInfo;
+import au.id.micolous.metrodroid.transit.TransitBalance;
+import au.id.micolous.metrodroid.transit.TransitBalanceStored;
+import au.id.micolous.metrodroid.transit.TransitCurrency;
+import au.id.micolous.metrodroid.transit.TransitData;
+import au.id.micolous.metrodroid.transit.TransitIdentity;
+import au.id.micolous.metrodroid.transit.china.NewShenzhenTransitData;
+import au.id.micolous.metrodroid.util.Utils;
 import au.id.micolous.metrodroid.xml.ImmutableByteArray;
 
 /**
@@ -66,7 +65,8 @@ public class OctopusTransitData extends TransitData {
     public static final int SYSTEMCODE_SZT = 0x8005;
     public static final int SYSTEMCODE_OCTOPUS = 0x8008;
 
-    private static final CardInfo CARD_INFO = new CardInfo.Builder()
+    @VisibleForTesting
+    public static final CardInfo CARD_INFO = new CardInfo.Builder()
             .setImageId(R.drawable.octopus_card, R.drawable.octopus_card_alpha)
             .setName(Utils.localizeString(R.string.card_name_octopus))
             .setLocation(R.string.location_hong_kong)
@@ -91,7 +91,8 @@ public class OctopusTransitData extends TransitData {
 
         if (service != null) {
             ImmutableByteArray metadata = service.getBlocks().get(0).getData();
-            mOctopusBalance = metadata.byteArrayToInt(0, 4) - 350;
+            mOctopusBalance = (metadata.byteArrayToInt(0, 4)
+                    - OctopusData.Companion.getOctopusOffset(card.getScannedAt())) * 10;
             mHasOctopus = true;
         }
 
@@ -103,7 +104,8 @@ public class OctopusTransitData extends TransitData {
 
         if (service != null) {
             ImmutableByteArray metadata = service.getBlocks().get(0).getData();
-            mShenzhenBalance = metadata.byteArrayToInt(0, 4) - 350;
+            mShenzhenBalance = (metadata.byteArrayToInt(0, 4)
+                    - OctopusData.Companion.getShenzhenOffset(card.getScannedAt())) * 10;
             mHasShenzhen = true;
         }
     }
@@ -164,7 +166,7 @@ public class OctopusTransitData extends TransitData {
     };
 
     @Override
-    @Nullable
+    @NonNull
     public ArrayList<TransitBalance> getBalances() {
         ArrayList<TransitBalance> bals = new ArrayList<>();
         if (mHasOctopus) {
@@ -192,6 +194,7 @@ public class OctopusTransitData extends TransitData {
         parcel.writeInt(mHasShenzhen ? 1 : 0);
     }
 
+    @NonNull
     @Override
     public String getCardName() {
         if (mHasShenzhen) {
