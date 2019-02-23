@@ -1388,4 +1388,34 @@ public class Utils {
         if (o == null) return defaultValue;
         return o.toString();
     }
+
+    /**
+     * Returns a GregorianCalendar with a given timezone, on the first moment of the year.
+     * @see #epoch(int, int, int, TimeZone)
+     */
+    @NonNull
+    public static GregorianCalendar epoch(int year, @Nullable TimeZone tz) {
+        return epoch(year, 1, 1, tz);
+    }
+
+    /**
+     * Returns a GregorianCalendar with a given timezone, on the first moment of the given day.
+     *
+     * @param year The year
+     * @param month The month of the year, where January is month 1. This differs from Java's normal
+     *              implementation, where January is month 0.
+     * @param day The day of the month, where the first day of the month is 1. This is the same as
+     *            Java's normal implementation.
+     * @param tz Optional TimeZone to be associated with the GregorianCalendar. If null, uses UTC.
+     */
+    @NonNull
+    public static GregorianCalendar epoch(int year, int month, int day, @Nullable TimeZone tz) {
+        if (tz == null) {
+            tz = Utils.UTC;
+        }
+        final GregorianCalendar g = new GregorianCalendar(tz);
+        g.setTimeInMillis(0);
+        g.set(year, month - 1, day);
+        return g;
+    }
 }
