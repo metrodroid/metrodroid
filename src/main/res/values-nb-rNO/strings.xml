@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2"><string name="app_name">Metrodroid</string>
-
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+    <string name="app_name">Metrodroid</string>
     <string name="copyright">Kopirett 2015 - 2018 Michael Farrell</string>
-
     <string name="license">Lisenser</string>
     <string name="title_activity_license">Friprog-lisenser</string>
     <string name="directions">Trykk på et kort.</string>
@@ -27,17 +26,16 @@
     <string name="about">Om</string>
     <string name="preferences">Innstillinger</string>
     <string name="accessibility">Tilgjengelighet</string>
-    <string name="balance_speech">Balanse <xliff:g id="balance" example="$13.37">%s</xliff:g></string>
+    <string name="balance_speech">Balanse <xliff:g id="balance" example="$13.37">%s</xliff:g>
+    </string>
     <string name="loading">Laster…</string>
     <string name="supported_cards">Støttede kort</string>
     <string name="fully_locked_title">Helt låst kort.</string>
     <string name="nfc_off_error">NFC avskrudd</string>
     <string name="turn_on_nfc">Skru på NFC for å lese kortinformasjon.</string>
     <string name="wireless_settings">Trådløsinnstillinger</string>
-
     <string name="unknown_card_header">Ustøttet kortformat</string>
     <string name="unknown_card_description">Dette kortet er ikke støttet av Metrodroid enda. Bare råkortdata kan vises.</string>
-
     <string name="unknown_more_info">Mer informasjon</string>
     <string name="scanned_cards">Historikk</string>
     <string name="no_scanned_cards">Du har ikke skannet noen kort.</string>
@@ -79,17 +77,16 @@
     <string name="saved_xml_custom">Skrev XML til USB-lagring.</string>
     <string name="online_services">Nettbaserte tjenester</string>
     <string name="default_map_tile_subdomains">123456</string>
-
     <plurals name="cards_imported">
-	<item quantity="one"><xliff:g id="count" example="1">%d</xliff:g> kort importert!</item>
-	<item quantity="other"><xliff:g id="count" example="3">%d</xliff:g> kort importert!</item>
-</plurals>
-
+        <item quantity="one">
+            <xliff:g id="count" example="1">%d</xliff:g> kort importert!</item>
+        <item quantity="other">
+            <xliff:g id="count" example="3">%d</xliff:g> kort importert!</item>
+    </plurals>
     <plurals name="block_count">
-	<item quantity="one">%d blokk</item>
-	<item quantity="other">%d blokker</item>
-</plurals>
-
+        <item quantity="one">%d blokk</item>
+        <item quantity="other">%d blokker</item>
+    </plurals>
     <string name="hsl_person_format">%s person</string>
     <string name="hsl_mins_format">%s min</string>
     <string name="opal_vehicle_bus">Buss</string>
@@ -98,10 +95,7 @@
     <string name="speak_balance">Les opp saldo</string>
     <string name="scanned_at_format">Skanet den %1$s på %2$s</string>
     <string name="unknown_more_info_desc">Trykk her for mer informasjon om Metrodroids støtte for dette kortet.</string>
-
     <string name="lawyercats">Metrodroid og dets utviklere er ikke tilknyttet noe offentlig transportselskap.</string>
-
-
     <string name="launch_from_background">Start opp i bakgrunnen</string>
     <string name="card_epoch">Kortepoke</string>
     <string name="need_stations_submit">Rapport</string>
@@ -112,31 +106,26 @@
     <string name="about_card_format">Om dette kortformatet</string>
     <string name="mifare_classic">MIFARE Classic</string>
     <string name="auth_retries_summary">Antall ganger autentisering skal forsøkes for hver sektor</string>
-
     <string name="mfc_fallback_desc">Noen byrå har ingen identifiserende magi på kortene sine. For å lese dem, må du eksplisitt velge et byrå.</string>
     <string name="mfc_fallback">Tilbakefallsleser</string>
-
     <string name="obfuscation_title">Tilsløring</string>
     <string name="obfuscation_card_numbers">Skjul kortnummer</string>
     <string name="obfuscation_card_numbers_desc">Ikke vis kortnummer noensteds hen</string>
-
     <string name="obfuscation_balance">Tilslør saldo</string>
     <string name="obfuscation_balance_desc">Endre vist saldo med tilfeldig beløp</string>
-
     <string name="obfuscation_fares">Tilslør reisepriser</string>
     <string name="obfuscation_fares_desc">Tilsør viste reisepriser med tilfeldig beløp</string>
-
     <string name="hidden_card_number">Skjult kortnummer</string>
     <plurals name="hidden_key_data">
-	<item quantity="one">Skjult nøkkeldata (<xliff:g id="count" example="1">%d</xliff:g> byte)</item>
-	<item quantity="other">Skjult nøkkeldata (<xliff:g id="count" example="1">%d</xliff:g> byte)</item>
-</plurals>
-
+        <item quantity="one">Skjult nøkkeldata (<xliff:g id="count" example="1">%d</xliff:g> byte)</item>
+        <item quantity="other">Skjult nøkkeldata (<xliff:g id="count" example="1">%d</xliff:g> byte)</item>
+    </plurals>
     <plurals name="obfuscation_mode_notice">
-	<item quantity="one"><xliff:g id="count" example="1">%d</xliff:g> tilsløringsflagg på</item>
-	<item quantity="other"><xliff:g id="count" example="3">%d</xliff:g> tilsløringsflagg på</item>
-</plurals>
-
+        <item quantity="one">
+            <xliff:g id="count" example="1">%d</xliff:g> tilsløringsflagg på</item>
+        <item quantity="other">
+            <xliff:g id="count" example="3">%d</xliff:g> tilsløringsflagg på</item>
+    </plurals>
     <string name="location_singapore">Singapore</string>
     <string name="location_tokyo">Tokyo, Japan</string>
     <string name="location_kansai">Kansairegionen, Japan</string>
@@ -152,7 +141,6 @@
     <string name="hsl_balance_refill">Saldopåfylling</string>
     <string name="hsl_balance_ticket">Verdibillett</string>
     <string name="hsl_pass_ticket">Sesongbillett</string>
-
     <string name="opal_automatic_top_up">Automatisk oppfylling</string>
     <string name="opal_weekly_trips">Ukentlige turer</string>
     <string name="opal_action_new_journey">Ny tur</string>
@@ -162,7 +150,6 @@
     <string name="opal_action_manly_transfer_same_mode">Overgang (fra annen ferge til Manly Ferry)</string>
     <string name="opal_action_manly_transfer_diff_mode">Overgang (fra annet modus til Manly Ferry)</string>
     <string name="nextfare_system_code">Systemkode</string>
-
     <string name="pass_or_transfer">Send/Overfør</string>
     <string name="speak_balance_summary">Når du skanner et kort, vil saldoen automatisk bli lest høyt. Dette fungerer selv når ikke en skjermleser kjører.</string>
     <string name="fully_locked_desc">"Ingen del av dette kortet kan leses ut på vanlig måte uten en nøkkel. Du har ingen gyldig nøkkel installert for det.
@@ -185,7 +172,6 @@
     <string name="felica_process_merchandise_admission_cash">Handelsvare/inngang (delvis kontakt)</string>
     <string name="felica_process_payment_thirdparty">Betaling (tredjepart)</string>
     <string name="felica_process_admission_thirdparty">Inngangsbetaling (tredjepart)</string>
-
     <string name="opal_vehicle_ferry_lr">Ferge eller nærbane</string>
     <string name="opal_action_journey_completed_distance">Tur fullført (strekningstakst)</string>
     <string name="opal_action_journey_completed_flat_rate">Tur fullført (fast takst)</string>
@@ -193,14 +179,10 @@
     <string name="seqgo_ticket_type_concession">Honnør</string>
     <string name="seqgo_ticket_type_child">Barn</string>
     <string name="seqgo_ticket_type_senior">Senior</string>
-
     <string name="seqgo_refill_manual">Manuelt påfyll</string>
     <string name="seqgo_refill_automatic">Automatisk påfyll</string>
-
     <string name="card_note_seqgo">Støtter ikke Go Access, Explore eller SEEQ -kort.</string>
-
     <string name="card_note_card_number_only">Kun kortnummeret kan leses.</string>
-
     <string name="nextfare">Cubic Nextfare</string>
     <string name="nextfare_ticket_class">Billettypekode %d</string>
     <string name="locked_mfc_card">Låst MIFARE Classic-kort</string>
@@ -216,10 +198,8 @@
     <string name="auth_retries">Gjentatte forsøk på autentisering</string>
     <string name="obfuscation_dates">Tilslør datoer</string>
     <string name="obfuscation_dates_desc">Vis tur, abonnement, utløp- og skanningsdatoer som forskjellige, tilfeldige dager</string>
-
     <string name="obfuscation_times">Tilslør tider</string>
     <string name="obfuscation_times_desc">Tilfeldiggjør og senk punktligheten for turer, abonnementer og skanninger</string>
-
     <string name="default_map_tile_url">https://tile{s}.stackcdn.com/osm_tiles_2x/{z}/{x}/{y}.png</string>
     <string name="desfire_standard_file">Forvalgt fil</string>
     <string name="desfire_backup_file">Sikkerhetskopifil</string>
@@ -228,19 +208,15 @@
     <string name="desfire_cyclic_record">Syklisk tidslinjeopptak</string>
     <string name="desfire_unknown_file">Ukjent filtype</string>
     <plurals name="desfire_standard_format">
-	<item quantity="one">Type: %1$s, Lengde: %2$s byte</item>
-	<item quantity="other">Type: %1$s, Lengde: %2$s byte</item>
-</plurals>
-
+        <item quantity="one">Type: %1$s, Lengde: %2$s byte</item>
+        <item quantity="other">Type: %1$s, Lengde: %2$s byte</item>
+    </plurals>
     <plurals name="desfire_record_format">
-	<item quantity="one">Type: %1$s, Opptak: %2$s (%3$s maksimalt), Opptaksstørrelse: %4$s</item>
-	<item quantity="other">Type: %1$s, Opptak: %2$s (%3$s maksimalt), Opptaksstørrelse: %4$s</item>
-</plurals>
-
+        <item quantity="one">Type: %1$s, Opptak: %2$s (%3$s maksimalt), Opptaksstørrelse: %4$s</item>
+        <item quantity="other">Type: %1$s, Opptak: %2$s (%3$s maksimalt), Opptaksstørrelse: %4$s</item>
+    </plurals>
     <string name="enabled">Påskrudd</string>
     <string name="disabled">Avskrudd</string>
-
-
     <string name="location_seattle">Seattle, WA, USA</string>
     <string name="location_san_francisco">San Francisco, CA, USA</string>
     <string name="location_sao_paulo">São Paulo, Brasil</string>
@@ -248,33 +224,22 @@
     <string name="location_los_angeles">Los Angeles, CA, USA</string>
     <string name="location_act_australia">Australian Capital Territory, Australia</string>
     <string name="location_wa_australia">Vest-Australia, Australia</string>
-
     <string name="machine_id_format">Maskin-ID %s</string>
-
     <string name="felica_service_title_format">Tjeneste: 0x%1$s (%2$s)</string>
     <string name="localise_places">Legg til språkhint i stedsnavn</string>
-
     <string name="localise_places_desc">Legger til språkhint (LocaleSpan) til i stedsnavn, som stasjon, stopp, linje og rutenavn. Dette endrer uttalen brukt av skjermlesere og annen tilgjengelighetsprogramvare.</string>
-
     <string name="localise_places_longdesc_button">Om språkhint…</string>
-
     <string name="localise_places_longdesc_title">Om språkhint</string>
-
     <string name="unsupported_tag">Ustøttet NFC-kortmedia</string>
-
     <string name="saving_card">Lagrer kort…</string>
-
     <string name="mfc_reading">Leser MIFARE Classic-kort…</string>
     <string name="mfc_reading_blocks">Leser sektor %d…</string>
-
     <string name="mfd_reading">Leser MIFARE DESFire-kort…</string>
     <string name="mfu_reading">Leser MIFARE Ultralight-kort…</string>
-
     <plurals name="felica_service_count">
-	<item quantity="one">%d tjeneste</item>
-	<item quantity="other">%d tjenester</item>
-</plurals>
-
+        <item quantity="one">%d tjeneste</item>
+        <item quantity="other">%d tjenester</item>
+    </plurals>
     <string name="cepas_version">CEPAS-versjon</string>
     <string name="mode_bus">Buss</string>
     <string name="mode_train">Tog</string>
@@ -285,10 +250,7 @@
     <string name="mode_vending_machine">Salgsmaskin</string>
     <string name="mode_banned">Bannlyst</string>
     <string name="mode_unknown">Ukjent</string>
-
-
     <string name="felica_terminal_vending">Salgsmaskin</string>
-
     <string name="felica_process_charge">Lad</string>
     <string name="felica_process_issue_new">Nytt problem</string>
     <string name="felica_process_bus_pitapa">Buss (PiTaPa)</string>
@@ -301,15 +263,13 @@
     <string name="clipboard_error">Fikk ikke tilgang til utklippstavle</string>
     <string name="convert_timezones">Konverter tidssoner</string>
     <string name="convert_timezones_summary">Som forvalg viser Metrodroid reisetider i reisebyråets tidssone. Hvis dette valget er påskrudd, vil reisetider konverteres til din enhets nåværende tidssone.</string>
-<string name="felica_system_title_format">System: 0x%1$s (%2$s)</string>
+    <string name="felica_system_title_format">System: 0x%1$s (%2$s)</string>
     <string name="mfc_have_key">Prøver bruker-oppgitt nøkkel for sektoren %d…</string>
     <string name="mfc_default_key">Prøver velkjente nøkler for sektoren %d…</string>
     <string name="iso14a_detect">Oppdager ISO 14443-korttype…</string>
     <string name="card_reading_type">Leser <xliff:g id="card_name" example="Opal">%s</xliff:g>…</string>
-
     <string name="mfu_detect">Oppdager MIFARE Ultralight-korttype…</string>
     <string name="desfire_value_format">Type: %1$s, Rekkevidde: %2$s - %3$s, Begrenset kreditt: %4$s (%5$s)</string>
-
     <string name="hardware_information">Maskinvareinformasjon</string>
     <string name="cepas_purse_id">Portemoné-ID</string>
     <string name="cepas_purse_status">Portemoné-status</string>
@@ -322,12 +282,10 @@
     <string name="cepas_debit_options">Debetvalg</string>
     <string name="cepas_other_purse_info">Annen portemoné-informasjon</string>
     <string name="cepas_purse_info">Portemoné-informasjon</string>
-
     <string name="felica_idm">Produksjons-ID (IDm)</string>
     <string name="felica_pmm">Produksjonsparameter (PMm)</string>
-
-    <string name="trip_description">(Fra)<xliff:g id="start_station" example="Tokyo">%1$s</xliff:g> [→] (til )<xliff:g id="end_station" example="Osaka">%2$s</xliff:g></string>
-
+    <string name="trip_description">(Fra)<xliff:g id="start_station" example="Tokyo">%1$s</xliff:g> [→] (til )<xliff:g id="end_station" example="Osaka">%2$s</xliff:g>
+    </string>
     <string name="felica_terminal_tvm_tokyo_monorail">Tokyo Monorail-billettsystem</string>
     <string name="felica_terminal_tvm_etc">Billettmaskin, osv.</string>
     <string name="felica_terminal_turnstile">Rotasjonsport</string>
@@ -338,16 +296,11 @@
     <string name="opal_action_journey_completed_auto_on">Tur fullført (grunnet manglende innstempling)</string>
     <string name="opal_action_tap_on_rejected">Innstempling avslått</string>
     <string name="card_note_opal">Gratisreisepass og enkeltturbilletter støttes ikke.</string>
-
     <string name="card_note_bilhete_unico">Må velges som tilbakefallsleser i innstillingene.</string>
-
     <string name="erg_agency_id">Agentur-ID</string>
-
     <string name="ovc_autocharge_limit">Autoladingsgrense</string>
     <string name="ovc_autocharge_amount">Autoladingsbeløp</string>
     <string name="ovc_autocharge">Autolading</string>
-
-
     <string name="credit_information">Kredittinformasjon</string>
     <string name="localise_places_longdesc">Tekst-til-tale -stemmer fungerer vanligvis bare bra for ett språk.
 \n
@@ -358,14 +311,12 @@
 \nDette endrer ikke normalt skjermtastaturvisningen av stedsnavn, men noen steder bruker annen skrift.
 \n
 \nDette krever Android 5.0 eller senere, tilgjengelighetsprogramvare som støtter LocaleSpan API-et (som Google TalkBack), og at du har de nødvendige stemmene installert.</string>
-
     <string name="mfc_other_key">Prøver andre brukerangitte nøkler for sektoren %d…</string>
     <string name="cepas_logfile_record_count">Antall loggførte tidslinjeopptak</string>
     <string name="cepas_issuer_data_length">Utstederdatalengde</string>
     <string name="cepas_issuer_data">Utstederspesifikk data</string>
     <string name="location_brisbane_seq_australia">Brisbane &amp; SE QLD, Australia</string>
     <string name="location_christchurch_nz">Christchurch, New Zealand</string>
-
     <string name="mode_pos">Salgspunkt</string>
     <string name="felica_terminal_fare_adjustment">Turkostnadsjusteringsmaskin</string>
     <string name="felica_terminal_deposit_quick_charge">Hurtigpåfyllingsmaskin</string>
@@ -383,21 +334,17 @@
     <string name="felica_process_deposit_bus">Matebuss</string>
     <string name="felica_process_purchase_special_ticket">Billett (Spesiell buss/bil)</string>
     <string name="opal_action_tap_on_reversal">Innstemplingsomvendelse</string>
-
     <string name="record_title_format">Tidslinjeopptak: %s</string>
     <plurals name="record_count">
-	<item quantity="one">%d tidslinjeopptak</item>
-	<item quantity="other">%d tidslinjeopptak</item>
-</plurals>
-
+        <item quantity="one">%d tidslinjeopptak</item>
+        <item quantity="other">%d tidslinjeopptak</item>
+    </plurals>
     <string name="iso7816_probing">Sender spørring til ISO7816-kort…</string>
     <string name="calypso_reading">Leser Calypso-kort…</string>
-
     <string name="calypso_serial_number">Serienummer</string>
     <string name="calypso_manufacture_country">Produksjonsland</string>
     <string name="calypso_manufacture_date">Produksjonsdato</string>
     <string name="calypso_manufacturer">Produsent</string>
-
     <string name="calypso_manufacturer_ask">ASK</string>
     <string name="calypso_manufacturer_intec">Intec</string>
     <string name="calypso_manufacturer_calypso">Calypso</string>
@@ -423,7 +370,6 @@
     <string name="calypso_manufacturer_sps">S-P-S</string>
     <string name="calypso_manufacturer_irsa">IRSA</string>
     <string name="calypso_manufacturer_innovatron">Innovatron</string>
-
     <string name="card_partial_read_title">Kort delvis lest!</string>
     <string name="card_partial_read_desc">Kortet kom utenfor rekkevidden under lesing.
 \n
@@ -431,12 +377,12 @@
 \n
 \n Tykke beholdere og metall kan ha innvirkning på NFC. Det bør også indikere om kortet eller din enhets NFC-antenne er skadet.</string>
     <string name="show_partial_data">Vis ukomplett data</string>
-
     <plurals name="milliseconds_short">
-	<item quantity="one"><xliff:g id="milliseconds" example="1.0">%s</xliff:g> ms</item>
-	<item quantity="other"><xliff:g id="milliseconds" example="20.6">%s</xliff:g> ms</item>
-</plurals>
-
+        <item quantity="one">
+            <xliff:g id="milliseconds" example="1.0">%s</xliff:g> ms</item>
+        <item quantity="other">
+            <xliff:g id="milliseconds" example="20.6">%s</xliff:g> ms</item>
+    </plurals>
     <string name="felica_manufacturer_code">Fabrikatkode</string>
     <string name="felica_card_identification_number">Kortidentifikasjonsnummer</string>
     <string name="felica_rom_type">ROM-type</string>
@@ -449,65 +395,54 @@
     <string name="felica_response_time_read">Read-kommando (én blokk)</string>
     <string name="felica_response_time_write">Write-kommando (én blokk)</string>
     <string name="felica_response_time_other">Issuance-kommandoer</string>
-
-
-
-
     <string name="location_moscow">Moskva, Russland</string>
     <string name="location_saint_petersburg">St. Petersburg, Russland</string>
-
     <string name="card_note_russia">Bank-utstedte kort støttes ikke.</string>
     <string name="card_name_troika">Troika</string>
     <string name="card_name_podorozhnik">Podorozhnik</string>
-<string name="sector_title_format_empty">Sektor: 0x%s (tom)</string>
+    <string name="sector_title_format_empty">Sektor: 0x%s (tom)</string>
     <string name="binary_title_format">Binærdata</string>
     <string name="requires_android_21">Krever Android 5.0 eller senere.</string>
-
     <string name="pref_theme">Drakt</string>
     <string name="pref_theme_desc">Velg utseende og oppførsel</string>
-
     <string name="pref_show_local_and_english_title">Vis både lokale og engelske stasjonsnavn</string>
     <plurals name="minutes">
-	<item quantity="one">%d minutt</item>
-	<item quantity="other">%d minutter</item>
-</plurals>
+        <item quantity="one">%d minutt</item>
+        <item quantity="other">%d minutter</item>
+    </plurals>
     <plurals name="hours">
-	<item quantity="one">%d time</item>
-	<item quantity="other">%d timer</item>
-</plurals>
+        <item quantity="one">%d time</item>
+        <item quantity="other">%d timer</item>
+    </plurals>
     <plurals name="days">
-	<item quantity="one">%d dag</item>
-	<item quantity="other">%d dager</item>
-</plurals>
+        <item quantity="one">%d dag</item>
+        <item quantity="other">%d dager</item>
+    </plurals>
     <plurals name="trips_remaining">
-	<item quantity="one">%d tur gjenstår</item>
-	<item quantity="other">%d turer gjenstår</item>
-</plurals>
+        <item quantity="one">%d tur gjenstår</item>
+        <item quantity="other">%d turer gjenstår</item>
+    </plurals>
     <plurals name="troika_rides">
-	<item quantity="one">Enkelttur</item>
-	<item quantity="other">%-tur</item>
-</plurals>
-
+        <item quantity="one">Enkelttur</item>
+        <item quantity="other">%-tur</item>
+    </plurals>
     <string name="trip_description_unknown_start">til %s</string>
-    <string name="time_from_to"><xliff:g id="start_time" example="12:35">%1$s</xliff:g> → <xliff:g id="end_time" example="12:51">%2$s</xliff:g></string>
-    <string name="time_from_unknown_to">\?\?:\?\? → <xliff:g id="end_time" example="12:51">%s</xliff:g></string>
-
-
+    <string name="time_from_to">
+        <xliff:g id="start_time" example="12:35">%1$s</xliff:g> → <xliff:g id="end_time" example="12:51">%2$s</xliff:g>
+    </string>
+    <string name="time_from_unknown_to">\?\?:\?\? → <xliff:g id="end_time" example="12:51">%s</xliff:g>
+    </string>
     <string name="location_israel">Israel</string>
     <string name="clipper_end_of_line">(Siste stoppested)</string>
     <string name="clipper_zone_number">Sone #%s</string>
-
     <string name="ez_bus_number">Buss #%s</string>
     <string name="ez_bus_refund">Buss-tilbakebetaling</string>
     <string name="ez_topup">Påfylling</string>
     <string name="ez_first_use">Første bruk</string>
     <string name="kmt_extra_note">Kun for nye FeliCa-kort.</string>
-
     <string name="orca_topup_machine">Maskin #%s</string>
     <string name="orca_topup">Fyll på</string>
-
     <string name="suica_bus_area_line_stop">Bussområde %1$s Linje %2$s Stopp %3$s</string>
-
     <string name="compass_product_type">Produkttype</string>
     <string name="compass_machine_code">Maskinkode</string>
     <string name="ticket_type">Billettkode</string>
@@ -515,22 +450,18 @@
     <string name="compass_ticket_type_regular">Vanlig</string>
     <string name="expiry_date">Utløpsdato</string>
     <string name="compass_note">Kun enkelttursbilletter</string>
-
     <string name="troika_fare_90mins">90 minutter</string>
     <string name="validity_length">Gyldig i %s</string>
     <string name="podorozhnik_topup">Podorozhnik påfylling</string>
     <string name="led_bus">St. Petersburgs buss</string>
     <string name="led_metro">St. Petersburgs metro</string>
     <string name="led_shared_taxi">St. Petersburg delt drosje</string>
-
     <string name="blank_mfu_card">Blankt MIFARE Ultralight-kort</string>
     <string name="fully_blank_desc">Dette kortet er helt blankt så langt det går an å se. Det er formatert, men uten data skrevet på det. Det har et serienummer, slik at det kan identifiseres, og det er lenket til en database, men selve kortet inneholder ingen annen data.</string>
     <string name="fully_blank_title">Blankt kort</string>
-
     <string name="location_seoul">Seoul, Sør-Korea</string>
     <string name="card_name_tmoney">T-Money</string>
     <string name="tmoney_date">T-money-dato</string>
-
     <string name="no_data_in_clipboard">Ingen data i utklippstavle.</string>
     <string name="app_version">Versjon: %s</string>
     <string name="device_model">Modell: <xliff:g id="model_name" example="Pixel 2">%1$s</xliff:g> (<xliff:g id="model_codename" example="walleye">%2$s</xliff:g>)</string>
@@ -550,41 +481,31 @@
     <string name="classic_key_format">Nøkkel: %s</string>
     <string name="transaction_counter">Handelsskranke</string>
     <string name="pref_show_local_and_english_desc">Hvis påskrudd, vil både lokale og engelske navn vises uansett regionaldata. Hvis avskrudd vil den mest passende varianten velges.</string>
-
     <string name="card_name_ravkav">Rav-Kav</string>
     <string name="ravkav_agency_topup_app">RavKav-påfyllingsapp</string>
-
     <string name="location_vancouver">Vancouver, BC, Canada</string>
     <string name="location_quebec">Québec-provinsen, Canada</string>
     <string name="location_boston">Boston, MA, USA</string>
-
     <string name="location_jakarta">Jakarta, Indonesia</string>
-
     <string name="ez_mrt">MRT</string>
     <string name="ez_retail_purchase">Detaljhandelkjøp</string>
     <string name="ez_service_charge">Betalingskostnad</string>
-
     <string name="card_name_suica">Suica</string>
     <string name="card_name_icoca">ICOCA</string>
     <string name="card_name_pasmo">PASMO</string>
-
     <string name="felica_terminal_view_altte">VIEW ALTTE</string>
     <string name="kmt_agency">Kereta Commuter (pendler) Indonesia</string>
     <string name="kmt_other_data">Annen data</string>
     <string name="kmt_last_trx_amount">Siste overføringsmengde</string>
-
     <string name="hsl_line_vehicle">Rute %$s, kjøretøy %2$s</string>
-
     <string name="orca_coach_number">Vogn #%s</string>
     <string name="suica_area_line_station">Område %1$s rute %2$s stasjon %3$s</string>
-
     <string name="card_name_szt">Shenzhen Tong</string>
     <string name="card_name_octopus">Octopus</string>
     <string name="card_name_octopus_szt_dual">Hu Tong Xing</string>
     <string name="szt_metro">Shenzhen metro</string>
     <string name="szt_bus">Shenzhen-buss</string>
     <string name="szt_station_gate">gate %s</string>
-
     <string name="card_name_troika_podorozhnik_hybrid">Troika+Podorozhnik</string>
     <string name="troika_fare_single">Enkelttur</string>
     <string name="troika_layout">Troika-oppsett</string>
@@ -597,45 +518,34 @@
     <string name="card_name_strelka">Strelka</string>
     <string name="strelka_long_serial">Langt tall for Strelka</string>
     <string name="card_name_troika_strelka_hybrid">Troika+Strelka</string>
-
     <string name="subway_trips">Undergrunnsbaneturer</string>
     <string name="ground_trips">Jernbaneturer</string>
     <string name="podorozhnik_gate">gate %s</string>
     <string name="podorozhnik_tvm">TVM %d</string>
-
     <string name="blank_mfc_card">Blankt MIFARE Classic-kort</string>
     <string name="charlie_2nd_card_number">Sekundært tall</string>
-
     <string name="device_manufacturer">Fabrikant: <xliff:g id="manufacturer" example="HTC">%1$s</xliff:g> (<xliff:g id="brand" example="Google">%2$s</xliff:g>)</string>
     <string name="station_database">Stasjonsdatabase</string>
-
     <string name="advanced_options">Avanserte valg</string>
-
     <string name="developer_options">Utviklervalg</string>
     <string name="developer_options_desc">Bruk av stasjonsdatabaser, tilsløringsmodus…</string>
-
     <string name="istanbulkart_2nd_card_number">Sekundær seriell</string>
     <string name="nfc_options_desc">Tilbakefallsleser for MIFARE Classic, fysiske kortgrensesnittsinnstillinger…</string>
-
     <string name="file_fci">Filkontrollinformasjon for fil</string>
     <string name="app_fci">Filkontrollinformasjon for program</string>
     <string name="trip_counter">Tur-telleverk</string>
     <string name="refill_counter">Påfyllingsskranke</string>
-<string name="mfd_unlocking">Låser opp <xliff:g id="card_name" example="Leap">%s</xliff:g> kort…</string>
-
+    <string name="mfd_unlocking">Låser opp <xliff:g id="card_name" example="Leap">%s</xliff:g> kort…</string>
     <string name="desfire_challenge">Utfordring</string>
     <string name="desfire_response">Svar</string>
     <string name="desfire_confirmation">Bekreftelse</string>
     <string name="desfire_keyex">Nøkkelutveksling</string>
     <string name="desfire_key_number">Nøkkel %s</string>
-
     <string name="location_ireland">Irland</string>
-<string name="location_minneapolis">Minneapolis, MN, USA</string>
+    <string name="location_minneapolis">Minneapolis, MN, USA</string>
     <string name="mifare_desfire">MIFARE DESFire</string>
-
     <string name="leap_retrieve_keys">Hent nøkler for Leap-kort</string>
     <string name="leap_retrieve_keys_longdesc">Dette vil dele dine kortdetaljer med Transport for Irland, for å kunne besvare Leap-kortets identitetsbekreftelsesutfordring. TFI vil kunne vite at du brukte Metrodroid på dette kortet. Kortet er ikke lesbart uten denne nøkkelen.</string>
-
     <string name="locked_leap">Låst Leap</string>
     <string name="leap_period_start">Periodestart</string>
     <string name="leap_accumulator_region">Region</string>
@@ -643,12 +553,9 @@
     <string name="leap_accumulator_agency">%s-totalforbruk</string>
     <string name="leap_daily_accumulators">Daglig kostnadstak</string>
     <string name="leap_weekly_accumulators">Ukentlig kostnadstak</string>
-
     <string name="initialisation_date">Igangsettingsdato</string>
     <string name="issue_date">Utstedelsesdato</string>
-
     <string name="leap_locked_warning">Dette kortet ble ikke låst opp. Skru på innhenting av Leap-nøkler i NFC-innstillingene.</string>
-
     <string name="invalid_json_key_type">Ugyldig JSON: Nøkkeltype mangler</string>
     <string name="delete_key_confirm_title">Vil du virkelig slette nøkkelen?</string>
     <string name="delete_key_confirm_message">Nøkkelfilen <xliff:g id="description" example="a1b2c3d4">%1$s</xliff:g> (som inneholder <xliff:g id="key_type" example="1 MIFARE Classic key">%2$s</xliff:g>) vil gå tapt for alltid.</string>
@@ -656,46 +563,34 @@
     <string name="cant_delete_with_obfuscation_message">Av sikkerhetshensyn, kan du ikke slette nøkler mens nummertilsløring er påskrudd. Skru det av hvis du ønsker å slette nøkler.</string>
     <string name="file_exported">Fil eksportert.</string>
     <string name="key_data">Nøkkeldata</string>
-
     <plurals name="passengers">
-	<item quantity="one">passasjer</item>
-	<item quantity="other">passasjerer</item>
-</plurals>
-
+        <item quantity="one">passasjer</item>
+        <item quantity="other">passasjerer</item>
+    </plurals>
     <string name="classic_key">MIFARE Classic-nøkkel</string>
     <string name="classic_key_a">Nøkkel A</string>
     <string name="classic_key_b">Nøkkel B</string>
-
-
     <string name="about_key_formats">Om nøkkelformater…</string>
     <string name="invalid_json">Ugyldig JSON</string>
     <string name="invalid_key_file">Ugyldig nøkkelfil</string>
     <string name="key_file_empty">Nøkkelfilen er tom!</string>
-
     <string name="static_imported">Importert: %s</string>
-
     <string name="untitled_key_group">Nøkkelgruppe uten tittel</string>
-
     <plurals name="keytype_mfc">
-	<item quantity="one">%d MIFARE Classic-nøkkel</item>
-	<item quantity="other">%d MIFARE Classic-nøkler</item>
-</plurals>
+        <item quantity="one">%d MIFARE Classic-nøkkel</item>
+        <item quantity="other">%d MIFARE Classic-nøkler</item>
+    </plurals>
     <plurals name="keytype_mfc_static">
-	<item quantity="one">%d statisk MIFARE Classic-nøkkel</item>
-	<item quantity="other">%d statiske MIFARE Classic-nøkler</item>
-</plurals>
-
+        <item quantity="one">%d statisk MIFARE Classic-nøkkel</item>
+        <item quantity="other">%d statiske MIFARE Classic-nøkler</item>
+    </plurals>
     <string name="no_static_key_assignment">Statiske nøkler kan ille tilknyttes ett kort.</string>
-
     <string name="vehicle_number">Kjøretøy %s</string>
     <string name="card_id">Kort-ID</string>
-<string name="card_note_leap">Krever innhenting av nøkler fra TFI, som må skrus på i NFC-innstillingene i Metrodroid.</string>
-
+    <string name="card_note_leap">Krever innhenting av nøkler fra TFI, som må skrus på i NFC-innstillingene i Metrodroid.</string>
     <string name="machine_id">Maskin-ID</string>
-
     <string name="valid_from_format">Gyldig fra %1$s</string>
     <string name="valid_not_used">Ikke brukt enda</string>
-
     <string name="location_brussels">Brussel, Belgia</string>
     <string name="location_gironde">Gironde, Frankrike</string>
     <string name="location_grenoble">Grenoble, Frankrike</string>
@@ -707,40 +602,34 @@
     <string name="gender">Kjønn</string>
     <string name="gender_female">Kvinne</string>
     <string name="gender_male">Mann</string>
-
     <string name="seller_agency">Salgsbyrå</string>
     <string name="remaining_trip_count">Turer gjenstår</string>
     <plurals name="remaining_trips_total">
-	<item quantity="one">Ingen turer gjenstår</item>
-	<item quantity="other">%1$d tur gjenstår</item>
-</plurals>
-
+        <item quantity="one">Ingen turer gjenstår</item>
+        <item quantity="other">%1$d tur gjenstår</item>
+    </plurals>
     <plurals name="remaining_trip_on_day">
-	<item quantity="one">%1$d tur gjenstår på %2$s</item>
-	<item quantity="other">%1$d turer gjenstår på %2$s</item>
-</plurals>
+        <item quantity="one">%1$d tur gjenstår på %2$s</item>
+        <item quantity="other">%1$d turer gjenstår på %2$s</item>
+    </plurals>
     <string name="remaining_day_count">Dager gjenstår</string>
     <plurals name="travel_zones">
-	<item quantity="one">Reisesone</item>
-	<item quantity="other">Reisesoner</item>
-</plurals>
-
+        <item quantity="one">Reisesone</item>
+        <item quantity="other">Reisesoner</item>
+    </plurals>
     <string name="en1545_network_id">Nettverks-ID</string>
     <string name="card_issuer">Utsteder</string>
-
     <string name="purchase_date">Kjøpsdato</string>
     <string name="single_trips">Enkeltturer</string>
     <string name="monthly_subscription">Månedlig abonnement</string>
     <string name="weekly_subscription">Ukentlig abonnement</string>
     <string name="en1545_card_expiry_date_profile">Profilutløpsdato</string>
     <string name="daily_subscription">Daglig abonnement</string>
-
     <string name="subscription_inactive">Inaktivt</string>
     <string name="subscription_unused">Ubrukt</string>
     <string name="subscription_started">Startet</string>
     <string name="subscription_used">Brukt</string>
     <string name="subscription_expired">Utløpt</string>
-
     <string name="last_used_on">Sist brukt</string>
     <string name="payment_method">Betalingsmetode</string>
     <string name="payment_method_cash">Kontant</string>
@@ -749,26 +638,20 @@
     <string name="payment_method_transit_card">Reisekort</string>
     <string name="payment_method_cheque">Sjekk</string>
     <string name="payment_method_free">Gratis</string>
-
     <string name="card_holders_name">Kortholders navn</string>
-
     <string name="card_type">Korttype</string>
-
     <string name="card_type_anonymous">Anonym</string>
     <string name="card_type_personal">Personlig</string>
-
     <string name="postal_code">Postkode</string>
-
     <string name="tap_for_more_info">Trykk for mer info…</string>
-<plurals name="lisboaviva_valid_days">
-	<item quantity="one">Gyldig i én dag</item>
-	<item quantity="other">Gyldig i %d dager</item>
-</plurals>
+    <plurals name="lisboaviva_valid_days">
+        <item quantity="one">Gyldig i én dag</item>
+        <item quantity="other">Gyldig i %d dager</item>
+    </plurals>
     <plurals name="lisboaviva_valid_months">
-	<item quantity="one">Gyldig i én måned</item>
-	<item quantity="other">Gyldig i %d måneder</item>
-</plurals>
-
+        <item quantity="one">Gyldig i én måned</item>
+        <item quantity="other">Gyldig i %d måneder</item>
+    </plurals>
     <string name="location_chicago">Chicago, IL, USA</string>
     <string name="location_portland">Portland, OR, USA</string>
     <string name="location_sophia_antipolis">Sophia Antipolis, Frankrike</string>
@@ -776,63 +659,56 @@
     <string name="subscription_cost">Kostnad</string>
     <string name="location_montpellier">Montpellier, Frankrike</string>
     <string name="maps">Kart</string>
-<plurals name="trips_remaining_total">
-	<item quantity="one">Én av %d turer gjenstår</item>
-	<item quantity="other">%d av %d turer gjenstår</item>
-</plurals>
+    <plurals name="trips_remaining_total">
+        <item quantity="one">Én av %d turer gjenstår</item>
+        <item quantity="other">%d av %d turer gjenstår</item>
+    </plurals>
     <string name="location_toulouse">Toulouse, Frankrike</string>
     <string name="location_houston">Houston, TX, USA</string>
     <string name="metroq_fare_card">Klippekort</string>
     <string name="metroq_day_pass">Dagspass</string>
-
     <string name="free_transfers_until">Gratis overganger til</string>
     <string name="clipper_ticket_type_adult">Voksen</string>
     <string name="clipper_ticket_type_senior">Honnør</string>
     <string name="clipper_ticket_type_youth">Barn</string>
-
     <string name="clipper_single">Enkelttur (<xliff:g id="ticket_class" example="Adult">%1$s</xliff:g>)</string>
     <string name="clipper_return">Retur (<xliff:g id="ticket_class" example="Adult">%1$s</xliff:g>)</string>
     <string name="card_note_clipper">Støtter både plastikk- (oppladbart) og papir- (enkeltturskort utstedt av Golden Gate-fergen og Muni) Clipper-kort.</string>
-
     <string name="passenger_class">Klasse</string>
     <string name="without_receipt">Uten kvittering</string>
     <string name="with_receipt">Med kvittering</string>
-
     <string name="location_beijing">Beijing, Kina</string>
     <string name="location_china_mainland">Fastlandskina</string>
     <string name="location_kiev">Kiev, Ukraina</string>
     <string name="location_wuhan">Wuhan, Kina</string>
-    
     <string name="card_name_beijing">Beijing Municipal-kort</string>
     <string name="card_name_wuhantong">Wuhan Tong</string>
     <string name="card_name_cityunion">City Union</string>
     <string name="card_name_tunion">T-Union</string>
     <string name="card_note_kiev">Kun kort fra før 2016. Kun turlogg kan leses</string>
     <string name="card_name_kiev">Kiev Metro</string>
-<string name="city_union_city">City</string>
-
+    <string name="city_union_city">City</string>
     <string name="transfer">Overgang</string>
-<string name="rejected">Avslått</string>
+    <string name="rejected">Avslått</string>
     <string name="location_adelaide">Adelaide, Australia</string>
     <string name="copy_card_number">Kopier kortnummer</string>
-<string name="location_tartu">Tartu, Estland</string>
+    <string name="location_tartu">Tartu, Estland</string>
     <string name="card_note_adelaide">Kun serielt, turer og abonnementer kan leses</string>
     <string name="purse_serial_number">Veske-serienummer</string>
-
     <string name="card_serial_number">Serienummer</string>
     <string name="serial_only_card_header">Kun serielt kort</string>
     <string name="serial_only_card_description_not_stored">Dette kortet inneholder ingen annen data enn dets serienummer, dets saldo og historikk lagres kun i en sentral database.</string>
     <string name="serial_only_card_description_locked">Dette kortet er låst, og kun serienummeret kan leses. Dets saldo og historikk kan være lagret på det, men er ikke tilgjengelig.</string>
     <string name="serial_only_card_description_more_research">Støtte dette kortet er i utvikling, og foreløpig kan kun serienummeret leses.</string>
     <string name="full_serial_number">Fullt serienummer</string>
-<string name="location_taipei">Taipei</string>
+    <string name="location_taipei">Taipei</string>
     <string name="location_france">Frankrike</string>
     <string name="location_orlando">Orlando, FL, USA</string>
     <string name="location_denmark">Danmark</string>
     <string name="location_stockholm">Stockholm, Sverige</string>
     <string name="rkf_status_ok">OK, påskrudd</string>
     <string name="rkf_status_not_ok">Avskrudd for godt</string>
-<string name="fully_locked_desc_unlockable">Ingen del av dette kortet kan leses fritt uten en nøkkel. Du ha ingen gyldige nøkler installert til sådan bruk.
+    <string name="fully_locked_desc_unlockable">Ingen del av dette kortet kan leses fritt uten en nøkkel. Du ha ingen gyldige nøkler installert til sådan bruk.
 \n
 \nKortet fungerer når nøkler er installert for det. Disse er vanligvis forskjellige for hvert kort. Mer info om henting og installasjon av nøkler er å finne i dokumentasjonen.
 \n
@@ -857,9 +733,9 @@
     <string name="convert_timezones_summary_on">Turtider vil konverteres til din nåværende tidssone.</string>
     <string name="location_auckland">Auckland, Ny-Zealand</string>
     <plurals name="cards_deduped">
-    <item quantity="one">%d kort duplisert</item>
-    <item quantity="other">%d kort duplisert</item>
-</plurals>
+        <item quantity="one">ett kort duplisert</item>
+        <item quantity="other">%d kort duplisert</item>
+    </plurals>
     <string name="deduplicate_cards">Opphev duplisering av kort</string>
     <string name="subscription_id">Abonnements-ID</string>
     <string name="pref_show_raw_station_ids_desc_on">Stasjon og rute-ID-er vises i tillegg til navnene deres.</string>

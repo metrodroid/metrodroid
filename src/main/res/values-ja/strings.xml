@@ -73,7 +73,7 @@
     <string name="felica_process_payment_thirdparty">精算 (他社精算)</string>
     <string name="felica_process_admission_thirdparty">精算 (他社入場精算)</string>
     <string name="nfc_off_error">NFCオフ</string>
-    <string name="turn_on_nfc">カードのデータを読み込むためにNFCを有効してください。</string>
+    <string name="turn_on_nfc">カード情報を読み取るため NFC を有効にしてください。</string>
     <string name="wireless_settings">無線設定</string>
     <string name="unknown_card_description">読み込んだカードは Metrodroid で対応していません。データだけが表示されます。</string>
     <string name="scanned_cards">履歴</string>
@@ -84,14 +84,12 @@
     <string name="copyright">Copyright © 2015 – 2018 Michael Farrell</string>
     <string name="license">ライセンス</string>
     <string name="title_activity_license">オープンソース ライセンス</string>
-    <string name="fully_locked_desc">このカードは鍵なしに自由に読み取りできる部分はありません。有効な鍵がインストールされていません。
+    <string name="fully_locked_desc">このカードには鍵がなくても自由に読み取りできる部分はありません。現在この形式には実用的な脆弱性はありません。
 \n
+\n お使いのカードは Metrodroid によってサポートされていません。鍵を解析しない限り、サポートされることはなさそうです。 
 \n
-\n Metrodroid によってサポートされている場合、鍵をインストールすると、カードを動作させることができます。これらは一般的にカードごとに異なります。鍵の取得およびインストールの詳細についてはドキュメントを参照してください。 
-\n
-\n お使いのカードが Metrodroid によってサポートされていない場合、鍵が解析されない限り、サポートされる可能性はありません。 
-\n
-\n 発行されたカードで、オープンデータアクセスを可能にするために、ロビー活動をしてください。現代のスマートカード技術を使用してデータを開いたり、読み取り専用のアクセスを許可しても安全です。いくつかの機関は、オープンデータフォーマットについて提供しています!</string>
+\n オープンなデータアクセスを可能にするように、カード発行会社に普及活動を行ってください。現代のスマートカード技術を使用すれば、データを開いたり、読み取り専用のアクセスを許可しても安全です。一部の機関は、データフォーマットについてオープンドキュメントを提供しています!
+\n</string>
     <string name="fully_locked_title">完全にロックされたカードです。</string>
     <string name="block_title_format">ブロック: %s</string>
     <string name="sector_title_format">セクター: 0x%s</string>
@@ -169,9 +167,9 @@
     <string name="seqgo_refill_automatic">自動チャージ</string>
     <string name="card_note_seqgo">Go Access, Explore または SEEQ カードはサポートしません。</string>
     <string name="card_note_card_number_only">カード番号のみ読み取ることができます。</string>
-    <string name="unknown_card_header">不明なカード フォーマット</string>
+    <string name="unknown_card_header">サポートされていないカード形式</string>
     <string name="unknown_more_info">詳細情報</string>
-    <string name="unknown_more_info_desc">このカードの Metrodroid のサポートの詳細については、タップしてください。</string>
+    <string name="unknown_more_info_desc">このカードの Metrodroid サポートの詳細については、タップしてください。</string>
     <string name="lawyercats">Metrodroid と作者は、公共交通機関と何の関連もありません。</string>
     <plurals name="block_count">
         <item quantity="other">%d ブロック</item>
@@ -231,10 +229,10 @@
     <string name="locked_mfc_card">ロックされた MIFARE クラシック カード</string>
     <string name="locked_mfu_card">ロックされた MIFARE Ultralight カード</string>
     <string name="locked_mfd_card">ロックされた MIFARE DESFire カード</string>
-    <string name="application_title_format">アプリケーション: 0x%s</string>
-    <string name="file_title_format">ファイル: 0x%s</string>
-    <string name="unauthorized_file_title_format">ファイル: 0x%s (未承認)</string>
-    <string name="invalid_file_title_format">ファイル: 0x%1$s (無効: %2$s)</string>
+    <string name="application_title_format">アプリケーション: %s</string>
+    <string name="file_title_format">ファイル: %s</string>
+    <string name="unauthorized_file_title_format">ファイル: %s (未承認)</string>
+    <string name="invalid_file_title_format">ファイル: %1$s (無効: %2$s)</string>
     <string name="unauthorized_page_title_format">ページ: 0x%s (未承認)</string>
     <string name="unsupported_tag">サポートされていない NFC カードメディア</string>
     <string name="saving_card">カードを保存しています…</string>
@@ -307,4 +305,17 @@
     <string name="localise_places">母国語で駅名と路線名を発音します</string>
     <string name="localise_places_desc">お使いの言語ではなく、自分の母国語で駅名と路線名を発音するようにテキスト読み上げおよびその他のユーザー補助ソフトウェアのためのヒントを追加します。これは、外国地名の発音を改善しますが、理解しづらいかもしれません。これは Android 5.0 以降、(Google トークなど) LocaleSpan API をサポートするテキスト読み上げソフトウェア、そして適切な音声がインストールされている必要があります。</string>
     <string name="transaction_counter">トランザクション カウンター</string>
+    <string name="fully_locked_desc_unlockable">このカードには鍵がなくても自由に読み取りできる部分はありません。有効な鍵がインストールされていません。
+\n 
+\n鍵をインストールするとカードは動作します。これは一般的にカードごとに異なります。鍵の取得とインストールについての詳細情報はドキュメントを参照してください。
+\n 
+\nオープンなデータアクセスを可能にするように、カード発行会社に普及活動を行ってください。現代のスマートカード技術を使用すれば、データを開いたり、読み取り専用のアクセスを許可しても安全です。一部の機関は、データフォーマットについてオープンドキュメントを提供しています!</string>
+    <string name="machine_id_format">マシン ID %s</string>
+    <string name="machine_id">マシン ID</string>
+    <string name="mfc_aid_title_format">MIFARE クラシック AID: %1$s #%2$d</string>
+    <string name="sector_title_format_empty">セクター: 0x%s (空)</string>
+    <string name="felica_system_title_format">システム: 0x%1$s (%2$s)</string>
+    <string name="felica_service_title_format">サービス: 0x%1$s (%2$s)</string>
+    <string name="record_title_format">レコード: %s</string>
+    <string name="binary_title_format">バイナリデータ</string>
 </resources>
