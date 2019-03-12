@@ -1,7 +1,7 @@
 /*
  * TransitCurrencyTest.java
  *
- * Copyright 2017-2018 Michael Farrell <micolous+git@gmail.com>
+ * Copyright 2017-2019 Michael Farrell <micolous+git@gmail.com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -21,16 +21,55 @@ package au.id.micolous.metrodroid.test;
 import android.text.Spanned;
 
 import org.hamcrest.Matchers;
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.ExpectedException;
 
 import au.id.micolous.metrodroid.transit.TransitCurrency;
 
 import static junit.framework.TestCase.assertEquals;
+import static junit.framework.TestCase.assertFalse;
+import static junit.framework.TestCase.assertTrue;
 
 /**
- * Tests the currency formatter.
+ * Tests the currency handling.
  */
 public class TransitCurrencyTest extends BaseInstrumentedTest {
+    @Test
+    public void testCurrencySame() {
+        final TransitCurrency c1 = TransitCurrency.AUD(1234);
+        final TransitCurrency c2 = TransitCurrency.AUD(138);
+        final TransitCurrency expected = TransitCurrency.AUD(1372);
+
+        // These all should be the same currency, and that works...
+        assertTrue(c1.sameCurrency(c2));
+        assertTrue(c1.sameCurrency(expected));
+        assertTrue(c2.sameCurrency(c1));
+        assertTrue(c2.sameCurrency(expected));
+        assertTrue(expected.sameCurrency(c1));
+        assertTrue(expected.sameCurrency(c2));
+
+        // Do some arithmetic
+        assertEquals(expected, c1.add(c2));
+        assertEquals(expected, c2.add(c1));
+    }
+
+    @Rule
+    public final ExpectedException exception = ExpectedException.none();
+
+    @Test
+    public void testCurrencyMixed() {
+        final TransitCurrency c1 = TransitCurrency.AUD(1234);
+        final TransitCurrency c2 = TransitCurrency.BRL(1234);
+
+        // These don't trigger exception.
+        assertFalse(c1.sameCurrency(c2));
+        assertFalse(c2.sameCurrency(c1));
+
+        // This does!
+        exception.expect(IllegalArgumentException.class);
+        c1.add(c2);
+    }
 
     /**
      * In Australian English, AUD should come out as a bare "$", and USD should come out with some

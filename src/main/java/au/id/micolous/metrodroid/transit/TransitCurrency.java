@@ -2,6 +2,7 @@
  * TransitCurrency.java
  *
  * Copyright 2018 Google
+ * Copyright 2018-2019 Michael Farrell <micolous+git@gmail.com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -417,6 +418,19 @@ public class TransitCurrency extends TransitBalance implements Parcelable {
 
     public TransitCurrency negate() {
         return new TransitCurrency(-mCurrency, mCurrencyCode, mDivisor);
+    }
+
+    public TransitCurrency add(@NonNull TransitCurrency other) {
+        if (!sameCurrency(other)) {
+            throw new IllegalArgumentException("divisor and currency codes must be the same");
+        }
+
+        final int total = mCurrency + other.mCurrency;
+        return new TransitCurrency(total, mCurrencyCode, mDivisor);
+    }
+
+    public boolean sameCurrency(@NonNull TransitCurrency other) {
+        return mDivisor == other.mDivisor & mCurrencyCode.equals(other.mCurrencyCode);
     }
 
     @Override
