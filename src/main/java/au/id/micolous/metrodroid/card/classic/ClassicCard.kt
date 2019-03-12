@@ -46,6 +46,7 @@ import au.id.micolous.metrodroid.transit.smartrider.SmartRiderTransitData
 import au.id.micolous.metrodroid.transit.troika.TroikaHybridTransitData
 import au.id.micolous.metrodroid.transit.unknown.BlankClassicTransitData
 import au.id.micolous.metrodroid.transit.unknown.UnauthorizedClassicTransitData
+import au.id.micolous.metrodroid.transit.waikato.WaikatoTransitData
 import au.id.micolous.metrodroid.transit.zolotayakorona.ZolotayaKoronaTransitData
 import au.id.micolous.metrodroid.xml.ImmutableByteArray
 import au.id.micolous.metrodroid.xml.toImmutable
@@ -137,6 +138,7 @@ class ClassicCard @JvmOverloads constructor(tagId: ImmutableByteArray,
                 SunCardTransitData.FACTORY,
                 ZolotayaKoronaTransitData.FACTORY,
                 RkfTransitData.FACTORY,
+                WaikatoTransitData.FACTORY,
 
                 // This check must be THIRD TO LAST.
                 //
