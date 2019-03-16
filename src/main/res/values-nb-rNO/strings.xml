@@ -743,4 +743,5 @@
     <string name="block_title_format_unauthorized">Blokk: %s (uautorisert)</string>
     <string name="card_note_chc_metrocard">Kun kort fra før 2016 (MIFARE Classic-) kort kan leses. Nyere. helt låste DESFire-kort, kan ikke støttes.</string>
     <string name="mfc_aid_title_format">MIFARE Classic AID: %1$s #%2$d</string>
+    <string name="location_waikato">Waikato, Ny-Zealand</string>
 </resources>
