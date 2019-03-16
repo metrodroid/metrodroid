@@ -1,4 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="payment_method_cheque">Cheque</string>
+    <string name="app_name">Metrodroid</string>
+    <string name="copyright">Copyright © 2015 – 2018 Michael Farrell</string>
+    <string name="license">Licenses</string>
+    <string name="title_activity_license">Open Source Licenses</string>
+    <string name="directions">Tap on a card.</string>
+    <string name="reading_card">Reading card…</string>
+    <string name="dont_move">Do not move cards</string>
+    <string name="advanced_info">Advanced information</string>
+    <string name="delete_card">Delete a card</string>
+    <string name="unknown_card">Unknown card</string>
+    <string name="locked_mfc_card">Locked MIFARE Classic card</string>
+    <string name="locked_mfu_card">Locked MIFARE Ultralight card</string>
+    <string name="locked_mfd_card">Locked MIFARE DESFire card</string>
+    <string name="hw_detail">Manufacturing information</string>
+    <string name="data">Raw data</string>
+    <string name="copy_xml">Copy</string>
+    <string name="share_xml">Share</string>
+    <string name="save_xml">Save to file</string>
+    <string name="history">History</string>
+    <string name="no_trip_data">No trips found. Has this card been used\?</string>
+    <string name="import_xml">Import</string>
+    <string name="import_clipboard">Paste from clipboard</string>
+    <string name="import_file">Import from file</string>
+    <string name="export">Export</string>
+    <string name="export_filename">Export filename</string>
+    <string name="export_all">Export all</string>
+    <string name="about">About</string>
+    <string name="location_taipei">Taipei</string>
 </resources>
