@@ -2,6 +2,7 @@
  * TransactionTrip.java
  *
  * Copyright 2018 Google
+ * Copyright 2019 Michael Farrell <micolous+git@gmail.com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -31,7 +32,9 @@ import java.util.Collections;
 import java.util.List;
 
 public class TransactionTrip extends Trip implements Parcelable {
+    @Nullable
     protected Transaction mStart;
+    @Nullable
     protected Transaction mEnd;
 
     protected TransactionTrip(@NonNull Transaction transaction) {
@@ -194,10 +197,25 @@ public class TransactionTrip extends Trip implements Parcelable {
             return null;
         }
 
-        if (mEnd != null)
-            return mEnd.getFare();
+        if (mEnd != null) {
+            final TransitCurrency endFare = mEnd.getFare();
+            if (endFare != null) {
+                if (mStart != null) {
+                    final TransitCurrency startFare = mStart.getFare();
+                    if (startFare != null) {
+                        return startFare.add(endFare);
+                    }
+                }
 
-        return mStart.getFare();
+                return endFare;
+            }
+        }
+
+        if (mStart != null) {
+            return mStart.getFare();
+        }
+
+        return null;
     }
 
     @Override
@@ -208,6 +226,13 @@ public class TransactionTrip extends Trip implements Parcelable {
     @Override
     public boolean isRejected() {
         return getAny().isRejected();
+    }
+
+    public boolean hasUnknownStation() {
+        Station s = getStartStation();
+        if (s != null && s.isUnknown()) return true;
+        s = getEndStation();
+        return (s != null && s.isUnknown());
     }
 
     public interface TransactionTripFactory {
@@ -225,7 +250,8 @@ public class TransactionTrip extends Trip implements Parcelable {
                 continue;
             }
             TransactionTrip previous = trips.get(trips.size() - 1);
-            if (previous.mEnd == null && previous.mStart.shouldBeMerged(el))
+            if (previous.mEnd == null &&
+                    previous.mStart != null && previous.mStart.shouldBeMerged(el))
                 previous.mEnd = el;
             else
                 trips.add(factory.createTrip(el));
