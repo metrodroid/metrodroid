@@ -20,6 +20,7 @@ package au.id.micolous.metrodroid.transit.nextfare.record;
 
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.support.annotation.NonNull;
 import android.util.Log;
 
 import au.id.micolous.metrodroid.util.Utils;
@@ -57,6 +58,7 @@ public class NextfareConfigRecord extends NextfareRecord implements Parcelable {
         mTicketType = p.readInt();
     }
 
+    @NonNull
     public static NextfareConfigRecord recordFromBytes(ImmutableByteArray input, TimeZone timeZone) {
         //if (input[0] != 0x01) throw new AssertionError();
 

@@ -40,29 +40,6 @@ public class NextfareRecord {
     protected NextfareRecord() {
     }
 
-    public static NextfareRecord recordFromBytes(ImmutableByteArray input, int sectorIndex, int blockIndex, TimeZone timeZone) {
-        NextfareRecord record = null;
-        Log.d(TAG, "Record: " + input);
-
-        if (sectorIndex == 1 && blockIndex <= 1) {
-            Log.d(TAG, "Balance record");
-            record = NextfareBalanceRecord.recordFromBytes(input);
-        } else if (sectorIndex == 1 && blockIndex == 2) {
-            Log.d(TAG, "Configuration record");
-            record = NextfareConfigRecord.recordFromBytes(input, timeZone);
-        } else if (sectorIndex == 2) {
-            Log.d(TAG, "Top-up record");
-            record = NextfareTopupRecord.recordFromBytes(input, timeZone);
-        } else if (sectorIndex == 3) {
-            Log.d(TAG, "Travel pass record");
-            record = NextfareTravelPassRecord.recordFromBytes(input, timeZone);
-        } else if (sectorIndex >= 5 && sectorIndex <= 8) {
-            Log.d(TAG, "Transaction record");
-            record = NextfareTransactionRecord.recordFromBytes(input, timeZone);
-        }
-        return record;
-    }
-
     /**
      * Date format:
      * <p>

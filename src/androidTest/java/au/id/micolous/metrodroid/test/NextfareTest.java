@@ -36,6 +36,7 @@ import au.id.micolous.metrodroid.card.classic.ClassicBlock;
 import au.id.micolous.metrodroid.card.classic.ClassicCard;
 import au.id.micolous.metrodroid.card.classic.ClassicSector;
 import au.id.micolous.metrodroid.key.ClassicSectorKey;
+import au.id.micolous.metrodroid.transit.TransitCurrency;
 import au.id.micolous.metrodroid.transit.lax_tap.LaxTapTransitData;
 import au.id.micolous.metrodroid.transit.msp_goto.MspGotoTransitData;
 import au.id.micolous.metrodroid.transit.nextfare.NextfareTransitData;
@@ -92,7 +93,8 @@ public class NextfareTest {
         ImmutableByteArray rnull = ImmutableByteArray.Companion.fromHex("01000000000000000000000000007f28");
 
         NextfareTransactionRecord r;
-        r = NextfareTransactionRecord.recordFromBytes(rnull, UTC);
+        r = NextfareTransactionRecord.recordFromBytes(
+                rnull, UTC, false, TransitCurrency::XXX);
         assertNull(r);
     }
 

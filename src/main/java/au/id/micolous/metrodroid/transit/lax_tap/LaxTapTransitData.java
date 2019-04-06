@@ -30,6 +30,8 @@ import au.id.micolous.metrodroid.card.classic.ClassicCard;
 import au.id.micolous.metrodroid.card.classic.ClassicCardTransitFactory;
 import au.id.micolous.metrodroid.card.classic.ClassicSector;
 import au.id.micolous.metrodroid.transit.CardInfo;
+import au.id.micolous.metrodroid.transit.TransactionTrip;
+import au.id.micolous.metrodroid.transit.TransitCurrency;
 import au.id.micolous.metrodroid.transit.TransitData;
 import au.id.micolous.metrodroid.transit.TransitIdentity;
 import au.id.micolous.metrodroid.transit.nextfare.NextfareTransitData;
@@ -80,11 +82,11 @@ public class LaxTapTransitData extends NextfareTransitData {
     private static final TimeZone TIME_ZONE = TimeZone.getTimeZone("America/Los_Angeles");
 
     private LaxTapTransitData(Parcel parcel) {
-        super(parcel, "USD");
+        super(parcel, TransitCurrency::USD);
     }
 
     private LaxTapTransitData(ClassicCard card) {
-        super(card, "USD");
+        super(card, TransitCurrency::USD);
     }
 
     public static final ClassicCardTransitFactory FACTORY = new NextFareTransitFactory() {
@@ -118,12 +120,12 @@ public class LaxTapTransitData extends NextfareTransitData {
     };
 
     @Override
-    protected NextfareTrip newTrip() {
-        return new LaxTapTrip();
+    protected TransactionTrip.TransactionTripFactory getTripFactory() {
+        return LaxTapTrip::new;
     }
 
     @Override
-    protected boolean shouldMergeJourneys(NextfareTransactionRecord tap1, NextfareTransactionRecord tap2) {
+    protected boolean hasTapOff() {
         // LAX TAP does not record tap-offs. Sometimes this merges trips that are bus -> rail
         // otherwise, but we don't need to do the complex logic in order to figure it out correctly.
         return false;

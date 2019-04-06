@@ -22,8 +22,11 @@ package au.id.micolous.metrodroid.transit.nextfare.record;
 import android.os.Parcel;
 import android.os.Parcelable;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.util.Log;
 
+import au.id.micolous.metrodroid.transit.Transaction;
+import au.id.micolous.metrodroid.transit.TransitCurrency;
 import au.id.micolous.metrodroid.util.Utils;
 import au.id.micolous.metrodroid.xml.ImmutableByteArray;
 
@@ -34,7 +37,9 @@ import java.util.TimeZone;
  * Tap record type
  * https://github.com/micolous/metrodroid/wiki/Cubic-Nextfare-MFC
  */
-public class NextfareTransactionRecord extends NextfareRecord implements Parcelable, Comparable<NextfareTransactionRecord> {
+public class NextfareTransactionRecord
+        extends Transaction
+        implements Parcelable {
     public static final Creator<NextfareTransactionRecord> CREATOR = new Creator<NextfareTransactionRecord>() {
         @Override
         public NextfareTransactionRecord createFromParcel(Parcel in) {
@@ -51,32 +56,39 @@ public class NextfareTransactionRecord extends NextfareRecord implements Parcela
     private final int mMode;
     private final int mJourney;
     private final int mStation;
-    private final int mValue;
+    private final TransitCurrency mFare;
     private final int mChecksum;
     private final boolean mContinuation;
+    private final boolean mAgencyTapsOff;
 
-    private NextfareTransactionRecord(Calendar timestamp, int mode, int journey,
-                                      int station, int value, int checksum, boolean continuation) {
+    protected NextfareTransactionRecord(
+            Calendar timestamp, int mode, int journey, int station, TransitCurrency fare,
+            int checksum, boolean continuation, boolean agencyTapsOff) {
         mTimestamp = timestamp;
         mMode = mode;
         mJourney = journey;
         mStation = station;
-        mValue = value;
+        mFare = fare;
         mChecksum = checksum;
         mContinuation = continuation;
+        mAgencyTapsOff = agencyTapsOff;
     }
 
-    private NextfareTransactionRecord(Parcel parcel) {
+    protected NextfareTransactionRecord(Parcel parcel) {
         mTimestamp = Utils.unparcelCalendar(parcel);
         mMode = parcel.readInt();
         mJourney = parcel.readInt();
         mStation = parcel.readInt();
         mChecksum = parcel.readInt();
         mContinuation = parcel.readInt() == 1;
-        mValue = parcel.readInt();
+        mFare = parcel.readParcelable(getClass().getClassLoader());
+        mAgencyTapsOff = parcel.readInt() == 1;
     }
 
-    public static NextfareTransactionRecord recordFromBytes(ImmutableByteArray input, TimeZone timeZone) {
+    @Nullable
+    public static NextfareTransactionRecord recordFromBytes(
+            ImmutableByteArray input, TimeZone timeZone, boolean agencyTapsOff,
+            @NonNull TransitCurrency.Builder currency) {
         //if (input[0] != 0x31) throw new AssertionError("not a tap record");
 
         // LAX:      input[0] == 0x05 for "Travel Pass" trips.
@@ -101,7 +113,7 @@ public class NextfareTransactionRecord extends NextfareRecord implements Parcela
 
         int mode = input.byteArrayToInt(1, 1);
 
-        Calendar timestamp = unpackDate(input, 2, timeZone);
+        Calendar timestamp = NextfareRecord.unpackDate(input, 2, timeZone);
         int journey = input.byteArrayToIntReversed(5, 2) >> 5;
 
         boolean continuation = (input.byteArrayToIntReversed(5, 2) & 0x10) > 1;
@@ -111,15 +123,18 @@ public class NextfareTransactionRecord extends NextfareRecord implements Parcela
             value = -(value & 0x7fff);
         }
 
+        TransitCurrency fare = currency.build(-value);
         int station = input.byteArrayToIntReversed(12, 2);
         int checksum = input.byteArrayToIntReversed(14, 2);
 
         NextfareTransactionRecord record = new NextfareTransactionRecord(
-                timestamp, mode, journey, station, value, checksum, continuation);
+                timestamp, mode, journey, station, fare, checksum, continuation,
+                agencyTapsOff);
 
-        Log.d(TAG, String.format("@%s: mode %d, station %d, value %d, journey %d, %s",
-                Utils.isoDateTimeFormat(record.mTimestamp), record.mMode, record.mStation, record.mValue,
-                record.mJourney, (record.mContinuation ? "continuation" : "new trip")));
+        Log.d(TAG, String.format("@%s: mode %d, station %d, value %s, journey %d, %s",
+                Utils.isoDateTimeFormat(record.mTimestamp), record.mMode, record.mStation,
+                record.mFare, record.mJourney,
+                (record.mContinuation ? "continuation" : "new trip")));
 
         return record;
     }
@@ -137,11 +152,48 @@ public class NextfareTransactionRecord extends NextfareRecord implements Parcela
         parcel.writeInt(mStation);
         parcel.writeInt(mChecksum);
         parcel.writeInt(mContinuation ? 1 : 0);
-        parcel.writeInt(mValue);
+        parcel.writeParcelable(mFare, i);
+        parcel.writeInt(mAgencyTapsOff ? 1 : 0);
     }
 
-    public int getMode() {
+    public int getModeID() {
         return mMode;
+    }
+
+    @Override
+    protected boolean shouldBeMerged(@NonNull Transaction other) {
+        if (!(other instanceof NextfareTransactionRecord)) {
+            return false;
+        }
+
+        return shouldBeMerged((NextfareTransactionRecord)other);
+    }
+
+    protected boolean shouldBeMerged(@NonNull NextfareTransactionRecord other) {
+        // FIXME: We can't differentiate tap on/off properly
+        return isSameTrip(other);
+    }
+
+    @Override
+    protected boolean isSameTrip(@NonNull Transaction other) {
+        if (!(other instanceof NextfareTransactionRecord)) {
+            return false;
+        }
+
+        return isSameTrip((NextfareTransactionRecord)other);
+    }
+
+    protected boolean isSameTrip(@NonNull NextfareTransactionRecord other) {
+        return (agencyTapsOff() &&
+                (getModeID() == other.getModeID()) &&
+                (getJourney() == other.getJourney()));
+    }
+
+    @Override
+    protected boolean isTapOn() {
+        // This version of the method is false -- we don't actually check for a tap-off bit yet on
+        // nextfare.  But the only user is #isSameTrip(), which we've overridden.
+        return true;
     }
 
     public Calendar getTimestamp() {
@@ -152,7 +204,14 @@ public class NextfareTransactionRecord extends NextfareRecord implements Parcela
         return mJourney;
     }
 
-    public int getStation() {
+    @Override
+    protected boolean isTapOff() {
+        // This version of the method is false -- we don't actually check for a tap-off bit yet on
+        // nextfare.  But the only user is #isSameTrip(), which we've overridden.
+        return false;
+    }
+
+    public int getStationID() {
         return mStation;
     }
 
@@ -164,17 +223,30 @@ public class NextfareTransactionRecord extends NextfareRecord implements Parcela
         return mContinuation;
     }
 
-    public int getValue() {
-        return mValue;
+    @Override
+    public TransitCurrency getFare() {
+        return mFare;
+    }
+
+    public boolean agencyTapsOff() {
+        return mAgencyTapsOff;
     }
 
     @Override
+    public int compareTo(@NonNull Transaction rhs) {
+        if (rhs instanceof NextfareTransactionRecord) {
+            return compareTo((NextfareTransactionRecord)rhs);
+        }
+
+        return super.compareTo(rhs);
+    }
+
     public int compareTo(@NonNull NextfareTransactionRecord rhs) {
         // Group by journey, then by timestamp.
         // First trip in a journey goes first, and should (generally) be in pairs.
 
         if (rhs.mJourney == this.mJourney) {
-            return Long.compare(this.mTimestamp.getTimeInMillis(), rhs.mTimestamp.getTimeInMillis());
+            return super.compareTo(rhs);
         } else {
             return Integer.compare(this.mJourney, rhs.mJourney);
         }

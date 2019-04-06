@@ -30,8 +30,8 @@ import au.id.micolous.farebot.R;
 /**
  * Represents a top-up event on the Go card.
  */
-public class SeqGoRefill extends NextfareTrip {
-
+public class SeqGoRefill { // extends NextfareTrip {
+/*
     public static final Parcelable.Creator<SeqGoRefill> CREATOR = new Parcelable.Creator<SeqGoRefill>() {
 
         public SeqGoRefill createFromParcel(Parcel in) {
@@ -67,4 +67,5 @@ public class SeqGoRefill extends NextfareTrip {
                 ? R.string.seqgo_refill_automatic
                 : R.string.seqgo_refill_manual);
     }
+    */
 }

@@ -1,7 +1,7 @@
 /*
  * LaxTapTrip.java
  *
- * Copyright 2015-2018 Michael Farrell <micolous+git@gmail.com>
+ * Copyright 2015-2019 Michael Farrell <micolous+git@gmail.com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -19,13 +19,14 @@
 package au.id.micolous.metrodroid.transit.lax_tap;
 
 import android.os.Parcel;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
+import au.id.micolous.farebot.R;
 import au.id.micolous.metrodroid.transit.Station;
+import au.id.micolous.metrodroid.transit.Transaction;
 import au.id.micolous.metrodroid.transit.nextfare.NextfareTrip;
 import au.id.micolous.metrodroid.util.Utils;
-
-import au.id.micolous.farebot.R;
 
 /**
  * Represents trip events on LAX TAP card.
@@ -43,19 +44,29 @@ public class LaxTapTrip extends NextfareTrip {
         }
     };
 
-    public LaxTapTrip() {
-        super("USD", LaxTapData.LAX_TAP_STR);
+    protected LaxTapTrip(@NonNull Transaction transaction) {
+        super(transaction);
     }
 
-    private LaxTapTrip(Parcel in) {
+    protected LaxTapTrip(Parcel in) {
         super(in);
+    }
+
+    @Nullable
+    @Override
+    protected String getMdstName() {
+        return LaxTapData.LAX_TAP_STR;
     }
 
     @Override
     public String getRouteName() {
-        if (mModeInt == LaxTapData.AGENCY_METRO && mStartStation >= LaxTapData.METRO_BUS_START) {
+        int startStation = getStartStationID();
+        int modeInt = getAnyRecord().getModeID();
+
+        if (modeInt == LaxTapData.AGENCY_METRO && startStation >= LaxTapData.METRO_BUS_START) {
             // Metro Bus uses the station_id for route numbers.
-            return LaxTapData.METRO_BUS_ROUTES.get(mStartStation, Utils.localizeString(R.string.unknown_format, mStartStation));
+            return LaxTapData.METRO_BUS_ROUTES.get(startStation,
+                    Utils.localizeString(R.string.unknown_format, startStation));
         }
 
         // Normally not possible to guess what the route is.
@@ -65,9 +76,12 @@ public class LaxTapTrip extends NextfareTrip {
     @Nullable
     @Override
     public String getHumanReadableRouteID() {
-        if (mModeInt == LaxTapData.AGENCY_METRO && mStartStation >= LaxTapData.METRO_BUS_START) {
+        int startStation = getStartStationID();
+        int modeInt = getAnyRecord().getModeID();
+
+        if (modeInt == LaxTapData.AGENCY_METRO && startStation >= LaxTapData.METRO_BUS_START) {
             // Metro Bus uses the station_id for route numbers.
-            return Utils.intToHex(mStartStation);
+            return Utils.intToHex(startStation);
         }
 
         // Normally not possible to guess what the route is.
@@ -76,12 +90,14 @@ public class LaxTapTrip extends NextfareTrip {
 
     @Override
     protected Station getStation(int stationId) {
-        if (mModeInt == LaxTapData.AGENCY_SANTA_MONICA) {
+        int modeInt = getAnyRecord().getModeID();
+
+        if (modeInt == LaxTapData.AGENCY_SANTA_MONICA) {
             // Santa Monica Bus doesn't use this.
             return null;
         }
 
-        if (mModeInt == LaxTapData.AGENCY_METRO && stationId >= LaxTapData.METRO_BUS_START) {
+        if (modeInt == LaxTapData.AGENCY_METRO && stationId >= LaxTapData.METRO_BUS_START) {
             // Metro uses this for route names.
             return null;
         }
@@ -90,17 +106,20 @@ public class LaxTapTrip extends NextfareTrip {
     }
 
     @Override
-    protected Mode lookupMode() {
-        if (mModeInt == LaxTapData.AGENCY_METRO) {
-            if (mStartStation >= LaxTapData.METRO_BUS_START) {
+    public Mode getMode() {
+        int startStation = getStartStationID();
+        int modeInt = getAnyRecord().getModeID();
+
+        if (modeInt == LaxTapData.AGENCY_METRO) {
+            if (startStation >= LaxTapData.METRO_BUS_START) {
                 return Mode.BUS;
-            } else if (mStartStation < LaxTapData.METRO_LR_START && mStartStation != 61) {
+            } else if (startStation < LaxTapData.METRO_LR_START && startStation != 61) {
                 return Mode.METRO;
             } else {
                 return Mode.TRAM;
             }
         }
-        return super.lookupMode();
+        return super.getMode();
     }
 
     @Override

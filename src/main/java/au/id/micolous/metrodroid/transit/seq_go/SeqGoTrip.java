@@ -20,13 +20,27 @@ package au.id.micolous.metrodroid.transit.seq_go;
 
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
+import android.support.annotation.VisibleForTesting;
 
+import java.util.Objects;
+
+import au.id.micolous.metrodroid.transit.Transaction;
 import au.id.micolous.metrodroid.transit.nextfare.NextfareTrip;
+import au.id.micolous.metrodroid.transit.nextfare.record.NextfareTransactionRecord;
 
 /**
  * Represents trip events on Go Card.
  */
 public class SeqGoTrip extends NextfareTrip {
+    protected SeqGoTrip(@NonNull Transaction transaction) {
+        super(transaction);
+    }
+
+    protected SeqGoTrip(Parcel in) {
+        super(in);
+    }
 
     public static final Parcelable.Creator<SeqGoTrip> CREATOR = new Parcelable.Creator<SeqGoTrip>() {
 
@@ -39,29 +53,31 @@ public class SeqGoTrip extends NextfareTrip {
         }
     };
 
-    /* Hard coded station IDs for Airtrain; used in tests */
+    // Hard coded station IDs for Airtrain; used in tests
+    @VisibleForTesting
     public static final int DOMESTIC_AIRPORT = 9;
-    @SuppressWarnings("WeakerAccess")
-    public static final int INTERNATIONAL_AIRPORT = 10;
+    private static final int INTERNATIONAL_AIRPORT = 10;
 
-    public SeqGoTrip() {
-        super("AUD", SeqGoData.SEQ_GO_STR);
-    }
-
-    private SeqGoTrip(Parcel in) {
-        super(in);
+    @Nullable
+    @Override
+    protected String getMdstName() {
+        return SeqGoData.SEQ_GO_STR;
     }
 
     @Override
     public String getAgencyName(boolean isShort) {
-        switch (mModeInt) {
+        final int modeInt = getAnyRecord().getModeID();
+        final int startStationID = getStartStationID();
+        final int endStationID = getEndStationID();
+
+        switch (modeInt) {
             case SeqGoData.VEHICLE_FERRY:
                 return "Transdev Brisbane Ferries";
             case SeqGoData.VEHICLE_RAIL:
-                if (mStartStation == DOMESTIC_AIRPORT ||
-                        mEndStation == DOMESTIC_AIRPORT ||
-                        mStartStation == INTERNATIONAL_AIRPORT ||
-                        mEndStation == INTERNATIONAL_AIRPORT) {
+                if (startStationID == DOMESTIC_AIRPORT ||
+                        endStationID == DOMESTIC_AIRPORT ||
+                        startStationID == INTERNATIONAL_AIRPORT ||
+                        endStationID == INTERNATIONAL_AIRPORT) {
                     return "Airtrain";
                 } else {
                     return "Queensland Rail";

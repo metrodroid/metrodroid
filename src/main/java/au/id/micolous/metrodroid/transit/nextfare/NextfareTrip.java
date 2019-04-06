@@ -25,9 +25,12 @@ import android.support.annotation.Nullable;
 import org.jetbrains.annotations.NonNls;
 
 import au.id.micolous.metrodroid.transit.Station;
+import au.id.micolous.metrodroid.transit.Transaction;
+import au.id.micolous.metrodroid.transit.TransactionTrip;
 import au.id.micolous.metrodroid.transit.TransitCurrency;
 import au.id.micolous.metrodroid.transit.Trip;
 import au.id.micolous.metrodroid.transit.nextfare.record.NextfareTopupRecord;
+import au.id.micolous.metrodroid.transit.nextfare.record.NextfareTransactionRecord;
 import au.id.micolous.metrodroid.util.StationTableReader;
 import au.id.micolous.metrodroid.util.Utils;
 
@@ -36,7 +39,119 @@ import java.util.Calendar;
 /**
  * Represents trips on Nextfare
  */
-public class NextfareTrip extends Trip implements Comparable<NextfareTrip> {
+public class NextfareTrip extends TransactionTrip
+        // implements Comparable<NextfareTrip>
+{
+    protected NextfareTrip(@NonNull Transaction transaction) {
+        super(transaction);
+
+        if (!(transaction instanceof NextfareTransactionRecord)) {
+            throw new RuntimeException("oops");
+        }
+    }
+
+    protected NextfareTrip(Parcel in) {
+        super(in);
+    }
+
+    @Nullable
+    protected NextfareTransactionRecord getStartRecord() {
+        if (mStart instanceof NextfareTransactionRecord) {
+            return (NextfareTransactionRecord)mStart;
+        }
+
+        return null;
+    }
+
+    @Nullable
+    protected NextfareTransactionRecord getEndRecord() {
+        if (mEnd instanceof NextfareTransactionRecord) {
+            return (NextfareTransactionRecord)mEnd;
+        }
+
+        return null;
+    }
+
+    @NonNull
+    protected NextfareTransactionRecord getAnyRecord() {
+        NextfareTransactionRecord r = getStartRecord();
+        if (r != null) {
+            return r;
+        }
+
+        // For nextfare, this is always true, because the default behaviour makes it a start
+        // record!
+        r = getEndRecord();
+        assert r != null;
+        return r;
+    }
+
+    @Nullable
+    protected String getMdstName() {
+        return null;
+    }
+
+    @Override
+    public Mode getMode() {
+        return StationTableReader.getOperatorDefaultMode(
+                getMdstName(), getAnyRecord().getModeID());
+    }
+
+    @Nullable
+    @Override
+    public Station getStartStation() {
+        final NextfareTransactionRecord r = getStartRecord();
+        if (r == null) return null;
+        return getStation(r.getStationID());
+    }
+
+    @Nullable
+    @Override
+    public Station getEndStation() {
+        final NextfareTransactionRecord r = getEndRecord();
+        if (r == null) return null;
+        return getStation(r.getStationID());
+    }
+
+    protected Station getStation(int stationId) {
+        return StationTableReader.getStation(getMdstName(), stationId);
+    }
+
+    @Override
+    public String getAgencyName(boolean isShort) {
+        final int modeInt = getAnyRecord().getModeID();
+
+        if (/* isTopup && */ modeInt == 0)
+            return null;
+        return StationTableReader.getOperatorName(getMdstName(), modeInt, isShort);
+    }
+
+    @Override
+    public boolean isTransfer() {
+        final NextfareTransactionRecord start = getStartRecord();
+        if (start != null && start.isContinuation()) {
+            return true;
+        }
+
+        final NextfareTransactionRecord end = getEndRecord();
+        return end != null && end.isContinuation();
+    }
+
+    // Helpers
+
+    private static int getStationIDForRecord(@Nullable NextfareTransactionRecord rec) {
+        return rec == null ? 0 : rec.getStationID();
+    }
+
+    protected int getStartStationID() {
+        return getStationIDForRecord(getStartRecord());
+    }
+
+    protected int getEndStationID() {
+        return getStationIDForRecord(getEndRecord());
+    }
+
+    /*
     public static final Creator<NextfareTrip> CREATOR = new Creator<NextfareTrip>() {
 
         public NextfareTrip createFromParcel(Parcel in) {
@@ -178,4 +293,5 @@ public class NextfareTrip extends Trip implements Comparable<NextfareTrip> {
     public boolean isTransfer() {
         return mContinuation;
     }
+    */
 }

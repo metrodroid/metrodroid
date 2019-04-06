@@ -21,6 +21,7 @@ package au.id.micolous.metrodroid.transit.nextfare.record;
 
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.support.annotation.Nullable;
 import android.util.Log;
 
 import au.id.micolous.metrodroid.util.Utils;
@@ -63,6 +64,7 @@ public class NextfareTopupRecord extends NextfareRecord implements Parcelable {
         mAutomatic = parcel.readInt() == 1;
     }
 
+    @Nullable
     public static NextfareTopupRecord recordFromBytes(ImmutableByteArray input, TimeZone timeZone) {
         //if ((input[0] != 0x01 && input[0] != 0x31) || input[1] != 0x01) throw new AssertionError("Not a topup record");
 

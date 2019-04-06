@@ -1,7 +1,7 @@
 /*
  * NextfareTransitData.java
  *
- * Copyright 2015-2018 Michael Farrell <micolous+git@gmail.com>
+ * Copyright 2015-2019 Michael Farrell <micolous+git@gmail.com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -38,6 +38,7 @@ import au.id.micolous.metrodroid.card.classic.ClassicCard;
 import au.id.micolous.metrodroid.card.classic.ClassicCardTransitFactory;
 import au.id.micolous.metrodroid.card.classic.ClassicSector;
 import au.id.micolous.metrodroid.transit.CardInfo;
+import au.id.micolous.metrodroid.transit.TransactionTrip;
 import au.id.micolous.metrodroid.transit.TransitBalance;
 import au.id.micolous.metrodroid.transit.TransitBalanceStored;
 import au.id.micolous.metrodroid.transit.TransitCurrency;
@@ -66,7 +67,7 @@ public class NextfareTransitData extends TransitData {
     private static final String NAME = "Nextfare";
     public static final Creator<NextfareTransitData> CREATOR = new Creator<NextfareTransitData>() {
         public NextfareTransitData createFromParcel(Parcel parcel) {
-            return new NextfareTransitData(parcel, "USD");
+            return new NextfareTransitData(parcel, TransitCurrency::XXX);
         }
 
         public NextfareTransitData[] newArray(int size) {
@@ -85,12 +86,12 @@ public class NextfareTransitData extends TransitData {
     private final ImmutableByteArray mSystemCode;
     private final ImmutableByteArray mBlock2;
     private final int mBalance;
-    private final List<NextfareTrip> mTrips;
+    private final List<TransactionTrip> mTrips;
     private final List<NextfareSubscription> mSubscriptions;
     @NonNull
-    private final String mCurrency;
+    private final TransitCurrency.Builder mCurrency;
 
-    protected NextfareTransitData(Parcel parcel, @NonNull String currency) {
+    protected NextfareTransitData(Parcel parcel, @NonNull TransitCurrency.Builder currency) {
         mSerialNumber = parcel.readLong();
         mBalance = parcel.readInt();
         mTrips = new ArrayList<>();
@@ -105,10 +106,10 @@ public class NextfareTransitData extends TransitData {
     }
 
     public NextfareTransitData(ClassicCard card) {
-        this(card, "USD");
+        this(card, TransitCurrency::XXX);
     }
 
-    protected NextfareTransitData(ClassicCard card, @NonNull String currency) {
+    protected NextfareTransitData(ClassicCard card, @NonNull TransitCurrency.Builder currency) {
         mCurrency = currency;
 
         ImmutableByteArray serialData = card.getSector(0).getBlock(0).getData();
@@ -120,49 +121,65 @@ public class NextfareTransitData extends TransitData {
         mBlock2 = card.getSector(0).getBlock(2).getData();
         Log.d(TAG, "Block2 = " + mBlock2);
 
-        List<NextfareRecord> records = new ArrayList<>();
+        List<NextfareBalanceRecord> balances = new ArrayList<>();
+        List<TransactionTrip> trips = new ArrayList<>();
+        List<NextfareSubscription> subscriptions = new ArrayList<>();
+        List<NextfareTransactionRecord> taps = new ArrayList<>();
+        List<NextfareTravelPassRecord> passes = new ArrayList<>();
+        final TimeZone tz = getTimezone();
 
         for (ClassicSector sector : card.getSectors()) {
+            final int sectorIndex = sector.getIndex();
+
+            if (sectorIndex > 8) {
+                break;
+            }
+
             for (ClassicBlock block : sector.getBlocks()) {
-                if (sector.getIndex() == 0 || block.getIndex() == 3) {
+                final int blockIndex = block.getIndex();
+                final ImmutableByteArray data = block.getData();
+                if (sectorIndex == 0 || blockIndex == 3) {
                     // Ignore sector 0 (preamble) and block 3 (mifare keys/ACL)
                     continue;
                 }
 
                 //noinspection StringConcatenation
-                Log.d(TAG, "Sector " + sector.getIndex() + " / Block " + block.getIndex());
-                NextfareRecord record = NextfareRecord.recordFromBytes(
-                        block.getData(), sector.getIndex(), block.getIndex(), getTimezone());
+                Log.d(TAG, "Sector " + sectorIndex + " / Block " + blockIndex);
 
-                if (record != null) {
-                    records.add(record);
+                if (sectorIndex == 1 && blockIndex <= 1) {
+                    Log.d(TAG, "Balance record");
+                    // doesn't return null
+                    balances.add(NextfareBalanceRecord.recordFromBytes(data));
+                } else if (sectorIndex == 1 && blockIndex == 2) {
+                    Log.d(TAG, "Configuration record");
+                    // doesn't return null
+                    mConfig = NextfareConfigRecord.recordFromBytes(data, tz);
+                } else if (sectorIndex == 2) {
+                    Log.d(TAG, "Top-up record");
+                    final NextfareTopupRecord r = NextfareTopupRecord.recordFromBytes(data, tz);
+                    if (r != null) {
+                        // FIXME
+                        // trips.add(newRefill(r));
+                    }
+                } else if (sectorIndex == 3) {
+                    Log.d(TAG, "Travel pass record");
+                    final NextfareTravelPassRecord r = NextfareTravelPassRecord.recordFromBytes(
+                            data, tz);
+                    if (r != null) {
+                        passes.add(r);
+                    }
+                } else if (sectorIndex >= 5 /* && sectorIndex <= 8 */) {
+                    Log.d(TAG, "Transaction record");
+                    final NextfareTransactionRecord r = NextfareTransactionRecord.recordFromBytes(
+                            data, tz, hasTapOff(), mCurrency);
+                    if (r != null) {
+                        taps.add(r);
+                    }
                 }
             }
         }
 
         // Now do a first pass for metadata and balance information.
-        List<NextfareBalanceRecord> balances = new ArrayList<>();
-        List<NextfareTrip> trips = new ArrayList<>();
-        List<NextfareSubscription> subscriptions = new ArrayList<>();
-        List<NextfareTransactionRecord> taps = new ArrayList<>();
-        List<NextfareTravelPassRecord> passes = new ArrayList<>();
-
-        for (NextfareRecord record : records) {
-            if (record instanceof NextfareBalanceRecord) {
-                balances.add((NextfareBalanceRecord) record);
-            } else if (record instanceof NextfareTopupRecord) {
-                NextfareTopupRecord topupRecord = (NextfareTopupRecord) record;
-
-                trips.add(newRefill(topupRecord));
-            } else if (record instanceof NextfareTransactionRecord) {
-                taps.add((NextfareTransactionRecord) record);
-            } else if (record instanceof NextfareTravelPassRecord) {
-                passes.add((NextfareTravelPassRecord) record);
-            } else if (record instanceof NextfareConfigRecord) {
-                mConfig = (NextfareConfigRecord) record;
-            }
-        }
-
         if (balances.size() >= 1) {
             Collections.sort(balances);
             NextfareBalanceRecord balance = balances.get(0);
@@ -177,7 +194,8 @@ public class NextfareTransitData extends TransitData {
 
             mBalance = balance.getBalance();
             if (balance.hasTravelPassAvailable()) {
-                subscriptions.add(newSubscription(balance));
+                // FIXME
+                // subscriptions.add(newSubscription(balance));
             }
         } else
             mBalance = 0;
@@ -188,51 +206,13 @@ public class NextfareTransitData extends TransitData {
             // Lets figure out the trips.
             int i = 0;
 
-            while (taps.size() > i) {
-                NextfareTransactionRecord tapOn = taps.get(i);
+            trips.addAll(TransactionTrip.merge(taps, getTripFactory()));
 
-                //Log.d(TAG, "TapOn @" + Utils.isoDateTimeFormat(tapOn.getTimestamp()));
-                // Start by creating an empty trip
-                NextfareTrip trip = newTrip();
-
-                // Put in the metadatas
-                trip.mJourneyId = tapOn.getJourney();
-                trip.mStartTime = tapOn.getTimestamp();
-                trip.mStartStation = tapOn.getStation();
-                trip.mModeInt = tapOn.getMode();
-                trip.mContinuation = tapOn.isContinuation();
-                trip.mCost = -tapOn.getValue();
-
-                if (!mHasUnknownStations && trip.mStartStation != 0 && trip.getStartStation() != null && trip.getStartStation().isUnknown()) {
+            for (TransactionTrip t : trips) {
+                if (t.hasUnknownStation()) {
                     mHasUnknownStations = true;
+                    break;
                 }
-
-                // Peek at the next record and see if it is part of
-                // this journey
-                if (taps.size() > i + 1 && shouldMergeJourneys(tapOn, taps.get(i + 1))) {
-                    // There is a tap off.  Lets put that data in
-                    NextfareTransactionRecord tapOff = taps.get(i + 1);
-                    //Log.d(TAG, "TapOff @" + Utils.isoDateTimeFormat(tapOff.getTimestamp()));
-
-                    trip.mEndTime = tapOff.getTimestamp();
-                    trip.mEndStation = tapOff.getStation();
-                    trip.mCost -= tapOff.getValue();
-
-                    if (!mHasUnknownStations && trip.mEndStation != 0 && trip.getEndStation() != null && trip.getEndStation().isUnknown()) {
-                        mHasUnknownStations = true;
-                    }
-
-                    // Increment to skip the next record
-                    i++;
-                } else {
-                    // There is no tap off. Journey is probably in progress, or the agency doesn't
-                    // do tap offs.
-                }
-
-                trips.add(trip);
-
-                // Increment to go to the next record
-                i++;
             }
 
             // Now sort the trips array
@@ -316,28 +296,17 @@ public class NextfareTransitData extends TransitData {
     }
 
     /**
-     * Called when it needs to be determined if two TapRecords are part of the same journey.
-     * <p>
-     * Normally this should never need to be overwritten, except in the case that the Journey ID and
-     * travel mode is not enough to break up the two journeys.
-     * <p>
-     * If the agency NEVER records tap-off events, this should always return false.
-     *
-     * @param tap1 The first tap to compare.
-     * @param tap2 The second tap to compare.
-     * @return true if the journeys should be merged.
+     * If an agency never records tap-off events, return false. Defaults to true.
      */
-    protected boolean shouldMergeJourneys(NextfareTransactionRecord tap1, NextfareTransactionRecord tap2) {
-        return tap1.getJourney() == tap2.getJourney() && tap1.getMode() == tap2.getMode();
+    protected boolean hasTapOff() {
+        return true;
     }
 
     /**
      * Allows you to override the constructor for new trips, to hook in your own station ID code.
-     *
-     * @return Subclass of NextfareTrip.
      */
-    protected NextfareTrip newTrip() {
-        return new NextfareTrip(mCurrency, null);
+    protected TransactionTrip.TransactionTripFactory getTripFactory() {
+        return NextfareTrip::new;
     }
 
     /**
@@ -347,7 +316,9 @@ public class NextfareTransitData extends TransitData {
      * @return Subclass of NextfareTrip
      */
     protected NextfareTrip newRefill(NextfareTopupRecord record) {
-        return new NextfareTrip(record, mCurrency, null);
+        // FIXME
+        //return new NextfareTrip(record, mCurrency, null);
+        return null;
     }
 
     /**
@@ -385,22 +356,25 @@ public class NextfareTransitData extends TransitData {
         return TimeZone.getDefault();
     }
 
+    @NonNull
     @Override
     public String getSerialNumber() {
         return formatSerialNumber(mSerialNumber);
     }
 
+    @NonNull
     @Override
-    public List<NextfareTrip> getTrips() {
+    public List<? extends Trip> getTrips() {
         return mTrips;
     }
 
     @Override
     public TransitBalance getBalance() {
         if (mConfig != null) {
-            return new TransitBalanceStored(new TransitCurrency(mBalance, mCurrency), getTicketClass(), mConfig.getExpiry());
+            return new TransitBalanceStored(mCurrency.build(mBalance),
+                    getTicketClass(), mConfig.getExpiry());
         } else
-            return new TransitBalanceStored(new TransitCurrency(mBalance, mCurrency));
+            return new TransitBalanceStored(mCurrency.build(mBalance));
     }
 
     public String getTicketClass() {

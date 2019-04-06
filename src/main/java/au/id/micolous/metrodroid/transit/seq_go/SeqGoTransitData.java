@@ -30,6 +30,8 @@ import au.id.micolous.metrodroid.card.classic.ClassicCard;
 import au.id.micolous.metrodroid.card.classic.ClassicCardTransitFactory;
 import au.id.micolous.metrodroid.card.classic.ClassicSector;
 import au.id.micolous.metrodroid.transit.CardInfo;
+import au.id.micolous.metrodroid.transit.TransactionTrip;
+import au.id.micolous.metrodroid.transit.TransitCurrency;
 import au.id.micolous.metrodroid.transit.TransitData;
 import au.id.micolous.metrodroid.transit.TransitIdentity;
 import au.id.micolous.metrodroid.transit.nextfare.NextfareTransitData;
@@ -89,12 +91,12 @@ public class SeqGoTransitData extends NextfareTransitData {
     private final SeqGoTicketType mTicketType;
 
     private SeqGoTransitData(Parcel parcel) {
-        super(parcel, "AUD");
+        super(parcel, TransitCurrency::AUD);
         mTicketType = (SeqGoTicketType) parcel.readSerializable();
     }
 
     private SeqGoTransitData(ClassicCard card) {
-        super(card, "AUD");
+        super(card, TransitCurrency::AUD);
         if (mConfig != null) {
             mTicketType = SeqGoData.TICKET_TYPE_MAP.get(mConfig.getTicketType(), SeqGoTicketType.UNKNOWN);
         } else
@@ -139,14 +141,16 @@ public class SeqGoTransitData extends NextfareTransitData {
     }
 
     @Override
-    protected NextfareTrip newTrip() {
-        return new SeqGoTrip();
+    protected TransactionTrip.TransactionTripFactory getTripFactory() {
+        return SeqGoTrip::new;
     }
 
+    /*
     @Override
     protected NextfareTrip newRefill(NextfareTopupRecord record) {
         return new SeqGoRefill(record);
     }
+    */
 
     @Override
     public String getCardName() {

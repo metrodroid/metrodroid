@@ -15,6 +15,7 @@ import au.id.micolous.metrodroid.card.classic.ClassicCard;
 import au.id.micolous.metrodroid.card.classic.ClassicCardTransitFactory;
 import au.id.micolous.metrodroid.card.classic.ClassicSector;
 import au.id.micolous.metrodroid.transit.CardInfo;
+import au.id.micolous.metrodroid.transit.TransitCurrency;
 import au.id.micolous.metrodroid.transit.TransitData;
 import au.id.micolous.metrodroid.transit.TransitIdentity;
 import au.id.micolous.metrodroid.transit.nextfare.NextfareTransitData;
@@ -54,11 +55,11 @@ public class MspGotoTransitData extends NextfareTransitData {
     private static final TimeZone TIME_ZONE = TimeZone.getTimeZone("America/Chicago");
 
     private MspGotoTransitData(Parcel parcel) {
-        super(parcel, "USD");
+        super(parcel, TransitCurrency::USD);
     }
 
     private MspGotoTransitData(ClassicCard card) {
-        super(card, "USD");
+        super(card, TransitCurrency::USD);
     }
 
     public static final ClassicCardTransitFactory FACTORY = new NextFareTransitFactory() {
@@ -91,14 +92,18 @@ public class MspGotoTransitData extends NextfareTransitData {
         }
     };
 
+
+
+    /*
     @Override
     protected NextfareTrip newTrip() {
         return new NextfareTrip("USD", null);
     }
+    */
 
     @Override
-    protected boolean shouldMergeJourneys(NextfareTransactionRecord tap1, NextfareTransactionRecord tap2) {
-        // LAX TAP does not record tap-offs. Sometimes this merges trips that are bus -> rail
+    protected boolean hasTapOff() {
+        // Goto does not record tap-offs. Sometimes this merges trips that are bus -> rail
         // otherwise, but we don't need to do the complex logic in order to figure it out correctly.
         return false;
     }

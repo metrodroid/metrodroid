@@ -38,6 +38,7 @@ public class NextfareBalanceRecord extends NextfareRecord implements Comparable<
         mVersion = version;
     }
 
+    @NonNull
     public static NextfareBalanceRecord recordFromBytes(ImmutableByteArray input) {
         //if (input[0] != 0x01) throw new AssertionError();
 
