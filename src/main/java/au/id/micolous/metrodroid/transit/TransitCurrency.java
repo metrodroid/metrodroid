@@ -474,4 +474,11 @@ public class TransitCurrency extends TransitBalance implements Parcelable {
                 mCurrency,
                 mDivisor);
     }
+
+    @FunctionalInterface
+    public interface Builder {
+        TransitCurrency build(int cents);
+    }
+
+
 }
