@@ -87,7 +87,7 @@ public abstract class Transaction implements Parcelable, Comparable<Transaction>
         return Trip.Mode.OTHER;
     }
 
-    protected boolean shouldBeMerged(Transaction other) {
+    protected boolean shouldBeMerged(@NonNull Transaction other) {
         return isTapOn() && (other.isTapOff() || other.isCancel()) && isSameTrip(other);
     }
 
