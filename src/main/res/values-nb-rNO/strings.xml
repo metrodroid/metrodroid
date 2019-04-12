@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
     <string name="app_name">Metrodroid</string>
-    <string name="copyright">Kopirett 2015 - 2018 Michael Farrell</string>
+    <string name="copyright">Kopirett 2015 - 2019 Michael Farrell</string>
     <string name="license">Lisenser</string>
     <string name="title_activity_license">Friprog-lisenser</string>
     <string name="directions">Trykk på et kort.</string>

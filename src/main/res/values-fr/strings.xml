@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
     <string name="app_name">Metrodroid</string>
-    <string name="copyright">Copyright © 2015 – 2018 Michael Farrell</string>
+    <string name="copyright">Copyright 2015 – 2019 Michael Farrell</string>
     <string name="license">Licences</string>
     <string name="title_activity_license">Licences Open Source</string>
     <string name="directions">Tapotez une carte.</string>

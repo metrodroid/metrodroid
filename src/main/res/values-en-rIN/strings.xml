@@ -2,7 +2,7 @@
 <resources>
     <string name="payment_method_cheque">Cheque</string>
     <string name="app_name">Metrodroid</string>
-    <string name="copyright">Copyright © 2015 – 2018 Michael Farrell</string>
+    <string name="copyright">Copyright © 2015 – 2019 Michael Farrell</string>
     <string name="license">Licenses</string>
     <string name="title_activity_license">Open Source Licenses</string>
     <string name="directions">Tap on a card.</string>
