@@ -89,7 +89,7 @@ public class RavKavTransitData extends Calypso1545TransitData {
     }
 
     private static String getSerial(CalypsoApplication card) {
-        ImmutableByteArray appFci = card.getAppFci();
+        ImmutableByteArray appFci = card.getAppData();
         if (appFci == null)
             return null;
         ImmutableByteArray a5 = ISO7816TLV.INSTANCE.findBERTLV(appFci, "a5", true);
