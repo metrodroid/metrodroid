@@ -44,7 +44,7 @@ enum class CardType constructor(private val mValue: Int) {
 
     companion object {
         fun parseValue(value: String): CardType {
-            return values()[Integer.parseInt(value)]
+            return values()[value.toInt()]
         }
     }
 }
