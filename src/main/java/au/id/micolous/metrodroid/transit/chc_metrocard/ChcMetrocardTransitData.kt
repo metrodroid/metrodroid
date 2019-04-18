@@ -92,7 +92,7 @@ class ChcMetrocardTransitData private constructor(card: ClassicCard) :
             override val ergAgencyID: Int
                 get() = AGENCY_ID
 
-            override fun getAllCards() = listOf(CARD_INFO)
+            override val allCards get() = listOf(CARD_INFO)
 
             override fun getSerialNumber(metadata: ErgMetadataRecord) =
                     internalFormatSerialNumber(metadata)

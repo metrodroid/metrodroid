@@ -78,7 +78,7 @@ internal open class ErgTransitFactory : ClassicCardTransitFactory {
     override fun parseTransitData(classicCard: ClassicCard) =
             ErgTransitData(classicCard)
 
-    override fun earlySectors() = 1
+    override val earlySectors get() = 1
 
     protected open fun getSerialNumber(metadata: ErgMetadataRecord): String {
         return metadata.cardSerialHex

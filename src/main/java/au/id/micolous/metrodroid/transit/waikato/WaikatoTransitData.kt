@@ -25,7 +25,7 @@ import au.id.micolous.metrodroid.card.classic.ClassicCard
 import au.id.micolous.metrodroid.card.classic.ClassicCardTransitFactory
 import au.id.micolous.metrodroid.card.classic.ClassicSector
 import au.id.micolous.metrodroid.transit.*
-import au.id.micolous.metrodroid.xml.ImmutableByteArray
+import au.id.micolous.metrodroid.util.ImmutableByteArray
 import kotlinx.android.parcel.IgnoredOnParcel
 import kotlinx.android.parcel.Parcelize
 import java.util.*
@@ -81,9 +81,9 @@ data class WaikatoTransitData internal constructor(
         val MAGIC = ImmutableByteArray.fromASCII("Panda")
 
         val FACTORY: ClassicCardTransitFactory = object : ClassicCardTransitFactory {
-            override fun earlySectors() = 1
+            override val earlySectors get() = 1
 
-            override fun earlyCheck(sectors: MutableList<ClassicSector>) =
+            override fun earlyCheck(sectors: List<ClassicSector>) =
                     sectors[0].blocks[1].data.startsWith(MAGIC)
 
             override fun parseTransitIdentity(card: ClassicCard) =
@@ -95,7 +95,7 @@ data class WaikatoTransitData internal constructor(
                             WaikatoRecord.parseRecord(card, 5)
                     ))
 
-            override fun getAllCards() = listOf(CARD_INFO)
+            override val allCards get() = listOf(CARD_INFO)
         }
     }
 }

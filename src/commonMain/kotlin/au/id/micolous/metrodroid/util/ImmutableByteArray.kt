@@ -46,7 +46,6 @@ open class ImmutableByteArray private constructor(private val mData: ByteArray) 
 
     override fun hashCode() = mData.contentHashCode()
 
-    fun toBase64(): String = Base64.encodeToString(mData, Base64.NO_WRAP)
     fun toHexString() = getHexString(0, size)
     fun getHexString() = getHexString(0, size)
 
