@@ -29,5 +29,5 @@ class ManlyFastFerryTransaction(purse: ErgPurseRecord, epoch: Int) :
 
     // All transactions look the same... but this is a ferry, so we'll call it a ferry one.
     // Even when you buy things at the cafe.
-    override fun getMode() = Trip.Mode.FERRY
+    override val mode get() = Trip.Mode.FERRY
 }

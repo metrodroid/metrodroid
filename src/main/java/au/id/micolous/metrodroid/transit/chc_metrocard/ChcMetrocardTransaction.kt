@@ -33,7 +33,7 @@ class ChcMetrocardTransaction(purse: ErgPurseRecord, epoch: Int)
                 ChcMetrocardTransitData.CHC_METROCARD_STR, purse.agency, isShort)
     }
 
-    override fun getMode(): Trip.Mode {
+    override val mode get(): Trip.Mode {
         val m = StationTableReader.getOperatorDefaultMode(
                 ChcMetrocardTransitData.CHC_METROCARD_STR, purse.agency)
 

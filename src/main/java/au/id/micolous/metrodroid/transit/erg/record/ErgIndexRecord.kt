@@ -23,7 +23,7 @@ import android.util.SparseArray
 import android.util.SparseIntArray
 
 import au.id.micolous.metrodroid.card.classic.ClassicSector
-import au.id.micolous.metrodroid.xml.ImmutableByteArray
+import au.id.micolous.metrodroid.util.ImmutableByteArray
 import kotlinx.android.parcel.Parcelize
 
 @Parcelize

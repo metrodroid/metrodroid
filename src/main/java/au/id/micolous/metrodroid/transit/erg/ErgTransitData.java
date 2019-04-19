@@ -55,7 +55,7 @@ import java.util.Locale;
 import java.util.TimeZone;
 
 import au.id.micolous.farebot.R;
-import au.id.micolous.metrodroid.xml.ImmutableByteArray;
+import au.id.micolous.metrodroid.util.ImmutableByteArray;
 
 /**
  * Transit data type for ERG/Videlli/Vix MIFARE Classic cards.

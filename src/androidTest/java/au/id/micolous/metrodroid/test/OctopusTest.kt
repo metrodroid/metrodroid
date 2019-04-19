@@ -25,7 +25,7 @@ import au.id.micolous.metrodroid.card.felica.FelicaSystem
 import au.id.micolous.metrodroid.transit.TransitCurrency
 import au.id.micolous.metrodroid.transit.octopus.OctopusTransitData
 import au.id.micolous.metrodroid.util.Utils
-import au.id.micolous.metrodroid.xml.ImmutableByteArray
+import au.id.micolous.metrodroid.util.ImmutableByteArray
 import org.junit.Assert
 import org.junit.Test
 import org.junit.runner.RunWith

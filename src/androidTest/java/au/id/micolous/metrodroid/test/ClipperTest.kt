@@ -26,7 +26,7 @@ import au.id.micolous.metrodroid.card.desfire.files.DesfireFile
 import au.id.micolous.metrodroid.transit.TransitCurrency
 import au.id.micolous.metrodroid.transit.Trip
 import au.id.micolous.metrodroid.transit.clipper.ClipperTransitData
-import au.id.micolous.metrodroid.xml.ImmutableByteArray
+import au.id.micolous.metrodroid.util.ImmutableByteArray
 
 import kotlin.test.Test
 import kotlin.test.assertEquals

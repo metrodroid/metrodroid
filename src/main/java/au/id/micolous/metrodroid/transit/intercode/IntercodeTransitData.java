@@ -50,7 +50,7 @@ import au.id.micolous.metrodroid.transit.en1545.En1545Parsed;
 import au.id.micolous.metrodroid.transit.en1545.En1545Repeat;
 import au.id.micolous.metrodroid.ui.ListItem;
 import au.id.micolous.metrodroid.util.Utils;
-import au.id.micolous.metrodroid.xml.ImmutableByteArray;
+import au.id.micolous.metrodroid.util.ImmutableByteArray;
 
 public class IntercodeTransitData extends Calypso1545TransitData {
     private static final int COUNTRY_ID_FRANCE = 0x250;

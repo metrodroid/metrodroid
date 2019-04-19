@@ -25,7 +25,7 @@ import android.nfc.tech.IsoDep;
 import au.id.micolous.metrodroid.card.CardTransceiver;
 import au.id.micolous.metrodroid.card.desfire.settings.DesfireFileSettings;
 import au.id.micolous.metrodroid.util.Utils;
-import au.id.micolous.metrodroid.xml.ImmutableByteArray;
+import au.id.micolous.metrodroid.util.ImmutableByteArray;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;

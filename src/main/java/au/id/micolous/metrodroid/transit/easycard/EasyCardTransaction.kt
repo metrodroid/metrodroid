@@ -27,14 +27,14 @@ import android.support.annotation.VisibleForTesting
 import au.id.micolous.metrodroid.card.classic.ClassicCard
 import au.id.micolous.metrodroid.transit.*
 import au.id.micolous.metrodroid.util.StationTableReader
-import au.id.micolous.metrodroid.xml.ImmutableByteArray
+import au.id.micolous.metrodroid.util.ImmutableByteArray
 import kotlinx.android.parcel.Parcelize
 import java.util.*
 
 @Parcelize
 data class EasyCardTransaction internal constructor(
-        internal val timestamp: Long,
-        private val fare: Int,
+        internal val timestampRaw: Long,
+        private val fareRaw: Int,
         private val location: Int,
         private val isEndTap: Boolean,
         private val machineId: Long
@@ -48,23 +48,23 @@ data class EasyCardTransaction internal constructor(
             data.byteArrayToLongReversed(12, 4)
     )
 
-    override fun getFare() = TransitCurrency.TWD(fare)
+    override val fare get() = TransitCurrency.TWD(fareRaw)
 
-    override fun getTimestamp() = EasyCardTransitData.parseTimestamp(timestamp)
+    override val timestamp get() = EasyCardTransitData.parseTimestamp(timestampRaw)
 
-    override fun getStation(): Station? = when (location) {
+    override val station get(): Station? = when (location) {
         BUS -> null
         POS -> null
         else -> StationTableReader.getStation(EasyCardTransitData.EASYCARD_STR, location)
     }
 
-    override fun getMode() = when (location) {
+    override val mode get() = when (location) {
         BUS -> Trip.Mode.BUS
         POS -> Trip.Mode.POS
         else -> Trip.Mode.METRO
     }
 
-    override fun getMachineID() = "0x${machineId.toString(16)}"
+    override val machineID get() = "0x${machineId.toString(16)}"
 
     override fun isSameTrip(trip: Transaction): Boolean {
         if (trip !is EasyCardTransaction) {
@@ -79,12 +79,12 @@ data class EasyCardTransaction internal constructor(
         return (!isEndTap && trip.isEndTap)
     }
 
-    override fun isTapOff() = isEndTap
+    override val isTapOff get() = isEndTap
 
-    override fun isTapOn() = !isEndTap
+    override val isTapOn get() = !isEndTap
 
-    override fun getRouteNames(): List<String> = when (mode) {
-        Trip.Mode.METRO -> super.getRouteNames()
+    override val routeNames get(): List<String> = when (mode) {
+        Trip.Mode.METRO -> super.routeNames
         else -> Collections.emptyList()
     }
 

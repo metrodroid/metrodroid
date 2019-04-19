@@ -20,7 +20,7 @@
 
 package au.id.micolous.metrodroid.transit.erg.record
 
-import au.id.micolous.metrodroid.xml.ImmutableByteArray
+import au.id.micolous.metrodroid.util.ImmutableByteArray
 
 /**
  * Represents a balance record.

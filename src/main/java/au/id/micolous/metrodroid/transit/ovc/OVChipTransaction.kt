@@ -23,7 +23,7 @@ package au.id.micolous.metrodroid.transit.ovc
 import au.id.micolous.metrodroid.transit.Transaction
 import au.id.micolous.metrodroid.transit.Trip
 import au.id.micolous.metrodroid.transit.en1545.*
-import au.id.micolous.metrodroid.xml.ImmutableByteArray
+import au.id.micolous.metrodroid.util.ImmutableByteArray
 import kotlinx.android.parcel.Parcelize
 
 @Parcelize
@@ -45,9 +45,9 @@ data class OVChipTransaction(private val parsed: En1545Parsed) : En1545Transacti
 
     override fun getLookup() = OvcLookup.instance
 
-    override fun isTapOn() = transfer == PROCESS_CHECKIN
+    override val isTapOn get() = transfer == PROCESS_CHECKIN
 
-    public override fun isTapOff() = transfer == PROCESS_CHECKOUT
+    public override val isTapOff get() = transfer == PROCESS_CHECKOUT
 
     override fun isSameTrip(other: Transaction): Boolean {
         if (other !is OVChipTransaction)
@@ -79,7 +79,7 @@ data class OVChipTransaction(private val parsed: En1545Parsed) : En1545Transacti
         return true
     }
 
-    override fun getMode(): Trip.Mode {
+    override val mode get(): Trip.Mode {
         val startStationId = stationId ?: 0
 
         // FIXME: Clean this up

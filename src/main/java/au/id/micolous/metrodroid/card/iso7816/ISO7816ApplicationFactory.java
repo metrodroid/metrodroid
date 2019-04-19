@@ -10,7 +10,7 @@ import java.util.Collections;
 import java.util.List;
 
 import au.id.micolous.metrodroid.card.TagReaderFeedbackInterface;
-import au.id.micolous.metrodroid.xml.ImmutableByteArray;
+import au.id.micolous.metrodroid.util.ImmutableByteArray;
 
 public interface ISO7816ApplicationFactory {
     @NonNull

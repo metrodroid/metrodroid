@@ -23,7 +23,7 @@
 package au.id.micolous.metrodroid.card.desfire.files;
 
 import au.id.micolous.metrodroid.xml.Base64String;
-import au.id.micolous.metrodroid.xml.ImmutableByteArray;
+import au.id.micolous.metrodroid.util.ImmutableByteArray;
 
 public class DesfireRecord {
     private Base64String mData;

@@ -81,9 +81,9 @@ data class SunCardTransitData(private val mSerial: Int = 0) : SerialOnlyTransitD
                 // on the card
                     sectors[0][1].data.byteArrayToInt(7, 4) == 0x070515ff
 
-            override fun earlySectors() = 1
+            override val earlySectors get() = 1
 
-            override fun getAllCards() = listOf(CARD_INFO)
+            override val allCards get() = listOf(CARD_INFO)
         }
     }
 }

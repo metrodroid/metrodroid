@@ -22,7 +22,7 @@ import android.support.annotation.NonNull;
 import android.util.Log;
 
 import au.id.micolous.metrodroid.util.Utils;
-import au.id.micolous.metrodroid.xml.ImmutableByteArray;
+import au.id.micolous.metrodroid.util.ImmutableByteArray;
 
 /**
  * Represents balance records on Nextfare

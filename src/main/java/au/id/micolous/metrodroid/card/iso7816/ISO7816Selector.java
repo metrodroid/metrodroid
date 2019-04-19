@@ -33,7 +33,7 @@ import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 
-import au.id.micolous.metrodroid.xml.ImmutableByteArray;
+import au.id.micolous.metrodroid.util.ImmutableByteArray;
 
 @Root(name = "selector")
 public class ISO7816Selector {

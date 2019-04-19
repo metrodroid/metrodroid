@@ -48,8 +48,8 @@ import au.id.micolous.metrodroid.transit.unknown.BlankClassicTransitData
 import au.id.micolous.metrodroid.transit.unknown.UnauthorizedClassicTransitData
 import au.id.micolous.metrodroid.transit.waikato.WaikatoTransitData
 import au.id.micolous.metrodroid.transit.zolotayakorona.ZolotayaKoronaTransitData
-import au.id.micolous.metrodroid.xml.ImmutableByteArray
-import au.id.micolous.metrodroid.xml.toImmutable
+import au.id.micolous.metrodroid.util.ImmutableByteArray
+import au.id.micolous.metrodroid.util.toImmutable
 import org.simpleframework.xml.ElementList
 import org.simpleframework.xml.Root
 import java.util.*

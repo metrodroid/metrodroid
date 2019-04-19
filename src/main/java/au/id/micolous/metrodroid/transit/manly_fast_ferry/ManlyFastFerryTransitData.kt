@@ -70,7 +70,7 @@ class ManlyFastFerryTransitData private constructor(card: ClassicCard) :
 
             override fun parseTransitIdentity(card: ClassicCard) = parseTransitIdentity(card, NAME)
 
-            override fun getAllCards() = listOf(CARD_INFO)
+            override val allCards get() = listOf(CARD_INFO)
         }
     }
 }

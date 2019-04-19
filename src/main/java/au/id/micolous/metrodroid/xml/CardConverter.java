@@ -43,7 +43,7 @@ public class CardConverter implements Converter<Card> {
 
     @Override
     public Card read(InputNode node) throws Exception {
-        @NonNls CardType type = CardType.parseValue(node.getAttribute("type").getValue());
+        @NonNls CardType type = CardType.Companion.parseValue(node.getAttribute("type").getValue());
         switch (type) {
             case MifareDesfire:
                 return mSerializer.read(DesfireCard.class, node);

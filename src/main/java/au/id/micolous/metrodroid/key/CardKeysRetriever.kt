@@ -2,7 +2,7 @@ package au.id.micolous.metrodroid.key
 
 import android.content.Context
 import android.database.Cursor
-import au.id.micolous.metrodroid.xml.ImmutableByteArray
+import au.id.micolous.metrodroid.util.ImmutableByteArray
 import org.json.JSONException
 
 interface CardKeysRetriever {

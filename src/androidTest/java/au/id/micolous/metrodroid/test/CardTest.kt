@@ -37,7 +37,7 @@ import au.id.micolous.metrodroid.transit.unknown.UnauthorizedClassicTransitData
 import au.id.micolous.metrodroid.transit.unknown.UnauthorizedDesfireTransitData
 import au.id.micolous.metrodroid.transit.unknown.UnauthorizedUltralightTransitData
 import au.id.micolous.metrodroid.util.Utils
-import au.id.micolous.metrodroid.xml.ImmutableByteArray
+import au.id.micolous.metrodroid.util.ImmutableByteArray
 import java.util.*
 import kotlin.test.Test
 import kotlin.test.assertEquals

@@ -32,7 +32,7 @@ import au.id.micolous.metrodroid.transit.TransitIdentity
 import au.id.micolous.metrodroid.transit.opal.OpalData
 import au.id.micolous.metrodroid.transit.opal.OpalTransitData
 import au.id.micolous.metrodroid.util.Utils
-import au.id.micolous.metrodroid.xml.ImmutableByteArray
+import au.id.micolous.metrodroid.util.ImmutableByteArray
 
 import kotlin.test.BeforeTest
 import kotlin.test.AfterTest

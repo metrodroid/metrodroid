@@ -30,7 +30,7 @@ import au.id.micolous.metrodroid.transit.CardInfo
 import au.id.micolous.metrodroid.transit.TransitIdentity
 import au.id.micolous.metrodroid.ui.ListItem
 import au.id.micolous.metrodroid.util.NumberUtils
-import au.id.micolous.metrodroid.xml.ImmutableByteArray
+import au.id.micolous.metrodroid.util.ImmutableByteArray
 import kotlinx.android.parcel.Parcelize
 import java.util.*
 
@@ -94,7 +94,7 @@ class IstanbulKartTransitData (private val mSerial: String,
         val FACTORY: DesfireCardTransitFactory = object : DesfireCardTransitFactory {
             override fun earlyCheck(appIds: IntArray) = (APP_ID in appIds)
 
-            override fun getAllCards() = listOf(CARD_INFO)
+            override val allCards get() = listOf(CARD_INFO)
 
             override fun parseTransitData(desfireCard: DesfireCard) = parse(desfireCard)
 

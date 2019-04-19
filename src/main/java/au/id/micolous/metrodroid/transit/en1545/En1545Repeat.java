@@ -20,7 +20,7 @@ package au.id.micolous.metrodroid.transit.en1545;
 
 import org.jetbrains.annotations.NonNls;
 
-import au.id.micolous.metrodroid.xml.ImmutableByteArray;
+import au.id.micolous.metrodroid.util.ImmutableByteArray;
 
 /**
  * EN1545 Repeated Fields

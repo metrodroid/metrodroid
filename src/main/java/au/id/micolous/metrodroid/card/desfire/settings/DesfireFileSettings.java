@@ -27,7 +27,7 @@ import org.simpleframework.xml.Element;
 import au.id.micolous.farebot.R;
 import au.id.micolous.metrodroid.util.Utils;
 import au.id.micolous.metrodroid.xml.HexString;
-import au.id.micolous.metrodroid.xml.ImmutableByteArray;
+import au.id.micolous.metrodroid.util.ImmutableByteArray;
 
 public abstract class DesfireFileSettings {
     /* DesfireFile Types */

@@ -48,6 +48,7 @@ import au.id.micolous.metrodroid.multi.Localizer;
 import au.id.micolous.metrodroid.provider.CardProvider;
 import au.id.micolous.metrodroid.provider.CardsTableColumns;
 import au.id.micolous.metrodroid.transit.CardInfo;
+import au.id.micolous.metrodroid.transit.CardInfoTools;
 import au.id.micolous.metrodroid.util.Preferences;
 import au.id.micolous.metrodroid.util.Utils;
 
@@ -56,7 +57,7 @@ import java.util.GregorianCalendar;
 import au.id.micolous.farebot.BuildConfig;
 import au.id.micolous.farebot.R;
 import au.id.micolous.metrodroid.MetrodroidApplication;
-import au.id.micolous.metrodroid.xml.ImmutableByteArray;
+import au.id.micolous.metrodroid.util.ImmutableByteArray;
 
 public class ReadingTagActivity extends MetrodroidActivity implements TagReaderFeedbackInterface {
     private static final String TAG = ReadingTagActivity.class.getSimpleName();
@@ -109,8 +110,8 @@ public class ReadingTagActivity extends MetrodroidActivity implements TagReaderF
             ImageView i = findViewById(R.id.card_image);
 
             if (cardInfo != null) {
-                if (cardInfo.hasBitmap()) {
-                    i.setImageDrawable(cardInfo.getDrawable(this));
+                if (cardInfo.getHasBitmap()) {
+                    i.setImageDrawable(CardInfoTools.getDrawable(this, cardInfo));
                 }
                 i.setContentDescription(cardInfo.getName());
             } else {

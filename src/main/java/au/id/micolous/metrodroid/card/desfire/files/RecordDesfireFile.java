@@ -34,7 +34,7 @@ import au.id.micolous.metrodroid.card.desfire.settings.RecordDesfireFileSettings
 import au.id.micolous.metrodroid.ui.ListItem;
 import au.id.micolous.metrodroid.ui.ListItemRecursive;
 import au.id.micolous.metrodroid.util.Utils;
-import au.id.micolous.metrodroid.xml.ImmutableByteArray;
+import au.id.micolous.metrodroid.util.ImmutableByteArray;
 
 @Root(name = "file")
 public class RecordDesfireFile extends DesfireFile {

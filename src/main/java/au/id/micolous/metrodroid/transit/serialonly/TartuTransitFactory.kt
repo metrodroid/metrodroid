@@ -32,7 +32,7 @@ import au.id.micolous.metrodroid.transit.TransitData
 import au.id.micolous.metrodroid.transit.TransitIdentity
 import au.id.micolous.metrodroid.ui.ListItem
 import au.id.micolous.metrodroid.util.Utils
-import au.id.micolous.metrodroid.xml.ImmutableByteArray
+import au.id.micolous.metrodroid.util.ImmutableByteArray
 import kotlinx.android.parcel.Parcelize
 import org.jetbrains.annotations.NonNls
 
@@ -69,7 +69,7 @@ class TartuTransitFactory : ClassicCardTransitFactory {
         return false
     }
 
-    override fun earlySectors() = 2
+    override val earlySectors get() = 2
 
     override fun parseTransitIdentity(classicCard: ClassicCard) =
             TransitIdentity(NAME, parseSerial(classicCard).substring(8))
@@ -77,7 +77,7 @@ class TartuTransitFactory : ClassicCardTransitFactory {
     override fun parseTransitData(classicCard: ClassicCard): TransitData =
             TartuTransitData(mSerial = parseSerial(classicCard))
 
-    override fun getAllCards() = listOf(CARD_INFO)
+    override val allCards get() = listOf(CARD_INFO)
 
     @Parcelize
     private data class TartuTransitData (private val mSerial: String): SerialOnlyTransitData() {

@@ -18,7 +18,7 @@ import au.id.micolous.metrodroid.MetrodroidApplication;
 import au.id.micolous.metrodroid.util.IteratorTransformer;
 import au.id.micolous.metrodroid.util.Utils;
 import au.id.micolous.metrodroid.util.XmlPullParserIterator;
-import au.id.micolous.metrodroid.xml.ImmutableByteArray;
+import au.id.micolous.metrodroid.util.ImmutableByteArray;
 
 public class XmlGenericCardFormat<T extends Card> extends CardsExporter<T> implements CardImporter.Text<T> {
     private static final byte[] CARDS_HEADER =

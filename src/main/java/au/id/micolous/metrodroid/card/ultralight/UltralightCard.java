@@ -47,7 +47,7 @@ import au.id.micolous.metrodroid.transit.unknown.UnauthorizedUltralightTransitDa
 import au.id.micolous.metrodroid.ui.ListItem;
 import au.id.micolous.metrodroid.ui.ListItemRecursive;
 import au.id.micolous.metrodroid.util.Utils;
-import au.id.micolous.metrodroid.xml.ImmutableByteArray;
+import au.id.micolous.metrodroid.util.ImmutableByteArray;
 
 import org.jetbrains.annotations.NonNls;
 import org.simpleframework.xml.Attribute;

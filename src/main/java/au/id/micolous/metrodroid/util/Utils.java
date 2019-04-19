@@ -104,7 +104,7 @@ import au.id.micolous.farebot.R;
 import au.id.micolous.metrodroid.MetrodroidApplication;
 import au.id.micolous.metrodroid.key.ClassicCardKeys;
 import au.id.micolous.metrodroid.key.ClassicSectorKey;
-import au.id.micolous.metrodroid.xml.ImmutableByteArray;
+import au.id.micolous.metrodroid.util.ImmutableByteArray;
 
 public class Utils {
     private static final String TAG = "Utils";
@@ -1066,7 +1066,7 @@ public class Utils {
         }
 
         md5.update(salt.getBytes(getASCII()));
-        key.updateDigest(md5);
+        md5.update(key.getDataCopy());
         md5.update(salt.getBytes(getASCII()));
 
         digest = getHexString(md5.digest());

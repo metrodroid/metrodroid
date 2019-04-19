@@ -33,7 +33,7 @@ import au.id.micolous.metrodroid.ui.HeaderListItem
 import au.id.micolous.metrodroid.ui.ListItem
 import au.id.micolous.metrodroid.util.NumberUtils
 import au.id.micolous.metrodroid.util.Utils
-import au.id.micolous.metrodroid.xml.ImmutableByteArray
+import au.id.micolous.metrodroid.util.ImmutableByteArray
 import kotlinx.android.parcel.Parcelize
 import java.util.Calendar
 import kotlin.Comparator
@@ -201,9 +201,9 @@ data class OVChipTransitData(
 
             override fun parseTransitData(classicCard: ClassicCard) = parse(classicCard)
 
-            override fun earlySectors() = 1
+            override val earlySectors get() = 1
 
-            override fun getAllCards() = listOf(CARD_INFO)
+            override val allCards get() = listOf(CARD_INFO)
 
             override fun check(classicCard: ClassicCard) = classicCard.sectors.size == 40 && earlyCheck(classicCard.sectors)
         }

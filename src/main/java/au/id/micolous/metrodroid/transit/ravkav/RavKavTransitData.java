@@ -31,6 +31,7 @@ import au.id.micolous.farebot.R;
 import au.id.micolous.metrodroid.card.CardType;
 import au.id.micolous.metrodroid.card.calypso.CalypsoApplication;
 import au.id.micolous.metrodroid.card.calypso.CalypsoCardTransitFactory;
+import au.id.micolous.metrodroid.card.iso7816.ISO7816TLV;
 import au.id.micolous.metrodroid.multi.Localizer;
 import au.id.micolous.metrodroid.transit.CardInfo;
 import au.id.micolous.metrodroid.transit.TransitIdentity;
@@ -44,7 +45,7 @@ import au.id.micolous.metrodroid.transit.en1545.En1545Subscription;
 import au.id.micolous.metrodroid.transit.en1545.En1545Transaction;
 import au.id.micolous.metrodroid.ui.ListItem;
 import au.id.micolous.metrodroid.util.Utils;
-import au.id.micolous.metrodroid.xml.ImmutableByteArray;
+import au.id.micolous.metrodroid.util.ImmutableByteArray;
 
 // Reference: https://github.com/L1L1/cardpeek/blob/master/dot_cardpeek_dir/scripts/calypso/c376n3.lua
 // supplemented with personal experimentation
@@ -88,7 +89,19 @@ public class RavKavTransitData extends Calypso1545TransitData {
     }
 
     private static String getSerial(CalypsoApplication card) {
-        return Long.toString(card.getTagId().byteArrayToLong());
+        ImmutableByteArray appFci = card.getAppData();
+        if (appFci == null)
+            return null;
+        ImmutableByteArray a5 = ISO7816TLV.INSTANCE.findBERTLV(appFci, "a5", true);
+                if (a5 == null)
+        return null;
+        ImmutableByteArray bf0c = ISO7816TLV.INSTANCE.findBERTLV(a5, "bf0c", true);
+        if (bf0c == null)
+            return null;
+        ImmutableByteArray c7 = ISO7816TLV.INSTANCE.findBERTLV(bf0c, "c7", true);
+        if (c7 == null)
+            return null;
+        return Long.toString(c7.byteArrayToLong(4, 4));
     }
 
     public final static CalypsoCardTransitFactory FACTORY = new CalypsoCardTransitFactory() {

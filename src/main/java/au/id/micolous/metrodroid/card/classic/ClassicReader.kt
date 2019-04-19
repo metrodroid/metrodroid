@@ -43,7 +43,7 @@ object ClassicReader {
 
     private fun earlyCheck(sectors: List<ClassicSector>, feedbackInterface: TagReaderFeedbackInterface): ClassicCardTransitFactory? {
         val secnum = sectors.size
-        ClassicCard.allFactories.filter { factory -> factory.earlySectors() == secnum }
+        ClassicCard.allFactories.filter { factory -> factory.earlySectors == secnum }
                 .forEach lambda@{ factory ->
                     val ci = try {
                         if (!factory.earlyCheck(sectors))

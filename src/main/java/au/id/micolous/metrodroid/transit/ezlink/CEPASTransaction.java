@@ -28,7 +28,7 @@ import org.jetbrains.annotations.NonNls;
 import java.util.Calendar;
 
 import au.id.micolous.metrodroid.util.Utils;
-import au.id.micolous.metrodroid.xml.ImmutableByteArray;
+import au.id.micolous.metrodroid.util.ImmutableByteArray;
 
 public class CEPASTransaction implements Parcelable {
     public static final Parcelable.Creator<CEPASTransaction> CREATOR = new Parcelable.Creator<CEPASTransaction>() {
