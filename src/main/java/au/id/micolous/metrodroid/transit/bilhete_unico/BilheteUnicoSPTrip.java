@@ -31,7 +31,7 @@ import au.id.micolous.metrodroid.transit.Station;
 import au.id.micolous.metrodroid.transit.TransitCurrency;
 import au.id.micolous.metrodroid.transit.Trip;
 import au.id.micolous.metrodroid.util.Utils;
-import au.id.micolous.metrodroid.xml.ImmutableByteArray;
+import au.id.micolous.metrodroid.util.ImmutableByteArray;
 
 class BilheteUnicoSPTrip extends Trip {
     private static final TimeZone TZ = TimeZone.getTimeZone("America/Sao_Paulo");

@@ -46,7 +46,7 @@ import au.id.micolous.metrodroid.transit.en1545.En1545Subscription;
 import au.id.micolous.metrodroid.transit.en1545.En1545Transaction;
 import au.id.micolous.metrodroid.transit.intercode.IntercodeTransitData;
 import au.id.micolous.metrodroid.util.Utils;
-import au.id.micolous.metrodroid.xml.ImmutableByteArray;
+import au.id.micolous.metrodroid.util.ImmutableByteArray;
 
 public class OpusTransitData extends Calypso1545TransitData {
     // 124 = Canada

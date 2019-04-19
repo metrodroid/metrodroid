@@ -2,7 +2,7 @@ package au.id.micolous.metrodroid.transit.troika;
 
 import au.id.micolous.metrodroid.transit.Subscription;
 import au.id.micolous.metrodroid.util.Utils;
-import au.id.micolous.metrodroid.xml.ImmutableByteArray;
+import au.id.micolous.metrodroid.util.ImmutableByteArray;
 
 // This was seen only as placeholder for Troika card sector 7
 public class TroikaLayout2 extends TroikaBlock {

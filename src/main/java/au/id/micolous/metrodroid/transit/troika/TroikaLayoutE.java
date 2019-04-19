@@ -1,7 +1,7 @@
 package au.id.micolous.metrodroid.transit.troika;
 
 import au.id.micolous.metrodroid.util.Utils;
-import au.id.micolous.metrodroid.xml.ImmutableByteArray;
+import au.id.micolous.metrodroid.util.ImmutableByteArray;
 
 // This layout is found on some newer multi-ride passes
 class TroikaLayoutE extends TroikaBlock {

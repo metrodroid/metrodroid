@@ -29,7 +29,7 @@ import au.id.micolous.metrodroid.card.classic.ClassicCard
 import au.id.micolous.metrodroid.card.classic.ClassicCardTransitFactory
 import au.id.micolous.metrodroid.card.classic.ClassicSector
 import au.id.micolous.metrodroid.transit.*
-import au.id.micolous.metrodroid.xml.ImmutableByteArray
+import au.id.micolous.metrodroid.util.ImmutableByteArray
 import kotlinx.android.parcel.Parcelize
 import java.util.*
 
@@ -85,13 +85,13 @@ data class EasyCardTransitData internal constructor(
                 it == MAGIC
             } ?: false
 
-            override fun earlySectors() = 1
+            override val earlySectors get() = 1
 
             override fun parseTransitIdentity(card: ClassicCard) = TransitIdentity(NAME, null)
 
             override fun parseTransitData(card: ClassicCard) = EasyCardTransitData(card)
 
-            override fun getAllCards() = listOf(CARD_INFO)
+            override val allCards get() = listOf(CARD_INFO)
         }
     }
 }

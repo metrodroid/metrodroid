@@ -7,8 +7,8 @@ import au.id.micolous.metrodroid.card.classic.InvalidClassicSector
 import au.id.micolous.metrodroid.card.classic.UnauthorizedClassicSector
 import au.id.micolous.metrodroid.key.CardKeysEmbed
 import au.id.micolous.metrodroid.key.ClassicSectorKey
-import au.id.micolous.metrodroid.xml.ImmutableByteArray
-import au.id.micolous.metrodroid.xml.toImmutable
+import au.id.micolous.metrodroid.util.ImmutableByteArray
+import au.id.micolous.metrodroid.util.toImmutable
 import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertFalse

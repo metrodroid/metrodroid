@@ -2,8 +2,8 @@ package au.id.micolous.metrodroid.card.classic
 
 import android.nfc.tech.MifareClassic
 import au.id.micolous.metrodroid.key.ClassicSectorKey
-import au.id.micolous.metrodroid.xml.ImmutableByteArray
-import au.id.micolous.metrodroid.xml.toImmutable
+import au.id.micolous.metrodroid.util.ImmutableByteArray
+import au.id.micolous.metrodroid.util.toImmutable
 
 interface ClassicCardTech {
     fun authenticate(sectorIndex: Int, key: ClassicSectorKey): Boolean

@@ -25,7 +25,7 @@
 package au.id.micolous.metrodroid.transit.ezlink;
 
 import au.id.micolous.metrodroid.util.Utils;
-import au.id.micolous.metrodroid.xml.ImmutableByteArray;
+import au.id.micolous.metrodroid.util.ImmutableByteArray;
 
 import java.util.Calendar;
 

@@ -29,7 +29,7 @@ import android.database.MatrixCursor
 import android.util.Log
 import au.id.micolous.metrodroid.provider.KeysTableColumns
 import au.id.micolous.metrodroid.util.Utils
-import au.id.micolous.metrodroid.xml.ImmutableByteArray
+import au.id.micolous.metrodroid.util.ImmutableByteArray
 import org.apache.commons.io.IOUtils
 import org.json.JSONObject
 

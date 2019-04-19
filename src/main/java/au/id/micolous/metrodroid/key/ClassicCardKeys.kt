@@ -23,7 +23,7 @@ package au.id.micolous.metrodroid.key
 import au.id.micolous.farebot.R
 import au.id.micolous.metrodroid.multi.Localizer
 import au.id.micolous.metrodroid.util.Utils
-import au.id.micolous.metrodroid.xml.ImmutableByteArray
+import au.id.micolous.metrodroid.util.ImmutableByteArray
 import org.json.JSONException
 import org.json.JSONObject
 

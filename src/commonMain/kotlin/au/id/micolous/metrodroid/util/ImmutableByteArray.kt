@@ -17,16 +17,14 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package au.id.micolous.metrodroid.xml
+package au.id.micolous.metrodroid.util
 
-import android.os.Parcel
-import android.os.Parcelable
-import android.util.Base64
 import au.id.micolous.metrodroid.multi.FormattedString
-import kotlinx.android.parcel.Parcelize
+import au.id.micolous.metrodroid.multi.Parcelable
+import au.id.micolous.metrodroid.multi.Parcelize
 import kotlinx.io.OutputStream
 import kotlinx.io.charsets.Charset
-import java.security.MessageDigest
+import kotlinx.io.core.String
 
 fun ByteArray.toImmutable(): ImmutableByteArray = ImmutableByteArray.fromByteArray(this)
 
@@ -48,7 +46,6 @@ open class ImmutableByteArray private constructor(private val mData: ByteArray) 
 
     override fun hashCode() = mData.contentHashCode()
 
-    fun toBase64(): String = Base64.encodeToString(mData, Base64.NO_WRAP)
     fun toHexString() = getHexString(0, size)
     fun getHexString() = getHexString(0, size)
 
@@ -142,14 +139,6 @@ open class ImmutableByteArray private constructor(private val mData: ByteArray) 
         os.write(mData, offset, length)
     }
 
-    fun parcelize(parcel: Parcel, flags: Int) {
-        parcel.writeParcelable(this, flags)
-    }
-
-    fun updateDigest(md: MessageDigest) {
-        md.update(mData)
-    }
-
     companion object {
         operator fun Byte.plus(second: ImmutableByteArray) = ImmutableByteArray(
                 mData = byteArrayOf(this) + second.mData)
@@ -158,9 +147,6 @@ open class ImmutableByteArray private constructor(private val mData: ByteArray) 
         fun fromByteArray(data: ByteArray) = ImmutableByteArray(mData = data.copyOf())
         fun empty() = ImmutableByteArray(mData = byteArrayOf())
         fun empty(length: Int = 0) = ImmutableByteArray(mData = ByteArray(length))
-        fun fromBase64(value: String) = ImmutableByteArray(mData = Base64.decode(value, Base64.DEFAULT))
-        fun fromParcel(parcel: Parcel): ImmutableByteArray =
-                parcel.readParcelable(ImmutableByteArray::class.java.classLoader)!!
 
         fun of(vararg b: Byte) = ImmutableByteArray(mData = b)
         fun ofB(vararg b: Number) = ImmutableByteArray(b.size) { i -> b[i].toByte() }
@@ -271,6 +257,9 @@ open class ImmutableByteArray private constructor(private val mData: ByteArray) 
         }
 
         fun fromASCII(s: String) = ImmutableByteArray(mData = s.map { it.toByte() }.toByteArray())
+
+
+        fun fromBase64(input: String) = ImmutableByteArray(mData = decodeBase64(input) ?: throw Exception("Invalid base64: $input"))
 
         fun getHexString(b: ByteArray): String = getHexString(b, 0, b.size)
 

@@ -27,7 +27,7 @@ import au.id.micolous.metrodroid.card.desfire.DesfireCardTransitFactory
 import au.id.micolous.metrodroid.transit.CardInfo
 import au.id.micolous.metrodroid.transit.TransitIdentity
 import au.id.micolous.metrodroid.util.NumberUtils
-import au.id.micolous.metrodroid.xml.ImmutableByteArray
+import au.id.micolous.metrodroid.util.ImmutableByteArray
 import kotlinx.android.parcel.Parcelize
 import org.jetbrains.annotations.NonNls
 import java.util.*
@@ -100,7 +100,7 @@ class MykiTransitData (private val mSerial: String): SerialOnlyTransitData() {
 
             override fun earlyCheck(appIds: IntArray) = (APP_ID_1 in appIds) && (APP_ID_2 in appIds)
 
-            override fun getAllCards() = listOf(CARD_INFO)
+            override val allCards get() = listOf(CARD_INFO)
 
             override fun parseTransitIdentity(desfireCard: DesfireCard) =
                     TransitIdentity(NAME, parseSerial(

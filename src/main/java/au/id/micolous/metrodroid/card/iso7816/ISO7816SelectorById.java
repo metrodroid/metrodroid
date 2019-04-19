@@ -24,7 +24,7 @@ import org.simpleframework.xml.Element;
 
 import java.io.IOException;
 
-import au.id.micolous.metrodroid.xml.ImmutableByteArray;
+import au.id.micolous.metrodroid.util.ImmutableByteArray;
 
 class ISO7816SelectorById extends ISO7816SelectorElement {
     @Element(name="id")

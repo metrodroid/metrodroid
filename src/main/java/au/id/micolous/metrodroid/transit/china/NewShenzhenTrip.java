@@ -29,7 +29,7 @@ import au.id.micolous.metrodroid.transit.Station;
 import au.id.micolous.metrodroid.util.NumberUtils;
 import au.id.micolous.metrodroid.util.StationTableReader;
 import au.id.micolous.metrodroid.util.Utils;
-import au.id.micolous.metrodroid.xml.ImmutableByteArray;
+import au.id.micolous.metrodroid.util.ImmutableByteArray;
 
 public class NewShenzhenTrip extends ChinaTrip {
     public static final Creator<NewShenzhenTrip> CREATOR = new Creator<NewShenzhenTrip>() {

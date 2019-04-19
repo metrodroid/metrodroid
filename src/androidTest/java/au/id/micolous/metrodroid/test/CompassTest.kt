@@ -21,7 +21,7 @@ package au.id.micolous.metrodroid.test
 import au.id.micolous.metrodroid.card.ultralight.UltralightCard
 import au.id.micolous.metrodroid.card.ultralight.UltralightPage
 import au.id.micolous.metrodroid.transit.yvr_compass.CompassUltralightTransitData
-import au.id.micolous.metrodroid.xml.ImmutableByteArray
+import au.id.micolous.metrodroid.util.ImmutableByteArray
 import java.util.*
 import kotlin.test.Test
 import kotlin.test.assertEquals

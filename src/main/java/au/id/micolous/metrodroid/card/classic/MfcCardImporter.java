@@ -12,7 +12,7 @@ import java.util.Locale;
 
 import au.id.micolous.metrodroid.card.CardImporter;
 import au.id.micolous.metrodroid.key.ClassicSectorKey;
-import au.id.micolous.metrodroid.xml.ImmutableByteArray;
+import au.id.micolous.metrodroid.util.ImmutableByteArray;
 
 public class MfcCardImporter implements CardImporter<ClassicCard> {
     private static final int MAX_SECTORS = 40;

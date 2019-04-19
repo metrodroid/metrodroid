@@ -56,7 +56,7 @@ import au.id.micolous.metrodroid.transit.nextfare.record.NextfareTravelPassRecor
 import au.id.micolous.metrodroid.ui.HeaderListItem;
 import au.id.micolous.metrodroid.ui.ListItem;
 import au.id.micolous.metrodroid.util.Utils;
-import au.id.micolous.metrodroid.xml.ImmutableByteArray;
+import au.id.micolous.metrodroid.util.ImmutableByteArray;
 
 /**
  * Generic transit data type for Cubic Nextfare.
@@ -100,8 +100,8 @@ public class NextfareTransitData extends TransitData {
         parcel.readTypedList(mTrips, NextfareTrip.CREATOR);
         mSubscriptions = new ArrayList<>();
         parcel.readTypedList(mSubscriptions, NextfareSubscription.CREATOR);
-        mSystemCode = ImmutableByteArray.Companion.fromParcel(parcel);
-        mBlock2 = ImmutableByteArray.Companion.fromParcel(parcel);
+        mSystemCode = ImmutableByteArray.Companion.fromHex(parcel.readString());
+        mBlock2 = ImmutableByteArray.Companion.fromHex(parcel.readString());
         mCurrency = currency;
 
         mConfig = new NextfareConfigRecord(parcel);
@@ -295,7 +295,7 @@ public class NextfareTransitData extends TransitData {
         }
 
         @Override
-        public int earlySectors() {
+        public int getEarlySectors() {
             return 1;
         }
     }
@@ -313,8 +313,8 @@ public class NextfareTransitData extends TransitData {
         parcel.writeInt(mBalance);
         parcel.writeTypedList(mTrips);
         parcel.writeTypedList(mSubscriptions);
-        mSystemCode.parcelize(parcel, i);
-        mBlock2.parcelize(parcel, i);
+        parcel.writeString(mSystemCode.toHexString());
+        parcel.writeString(mBlock2.toHexString());
         mConfig.writeToParcel(parcel, i);
     }
 

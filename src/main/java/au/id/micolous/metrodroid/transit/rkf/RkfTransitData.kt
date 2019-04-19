@@ -36,7 +36,7 @@ import kotlinx.android.parcel.Parcelize
 import au.id.micolous.metrodroid.transit.en1545.En1545FixedInteger
 import au.id.micolous.metrodroid.util.NumberUtils
 import au.id.micolous.metrodroid.util.TripObfuscator
-import au.id.micolous.metrodroid.xml.ImmutableByteArray
+import au.id.micolous.metrodroid.util.ImmutableByteArray
 import java.util.*
 
 @Parcelize
@@ -138,9 +138,9 @@ data class RkfTransitData internal constructor(
                             // Jo-jo
                             "f40bb9394d94c7040c1dd19997b4f5e8") >= 0
 
-            override fun earlySectors() = 1
+            override val earlySectors get() = 1
 
-            override fun getAllCards() = issuerMap.values.toList()
+            override val allCards get() = issuerMap.values.toList()
 
             override fun parseTransitIdentity(card: ClassicCard): TransitIdentity {
                 val serial = getSerial(card)

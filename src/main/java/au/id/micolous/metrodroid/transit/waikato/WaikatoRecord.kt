@@ -20,7 +20,7 @@ package au.id.micolous.metrodroid.transit.waikato
 
 import android.os.Parcelable
 import au.id.micolous.metrodroid.card.classic.ClassicCard
-import au.id.micolous.metrodroid.xml.ImmutableByteArray
+import au.id.micolous.metrodroid.util.ImmutableByteArray
 import kotlinx.android.parcel.Parcelize
 
 /**

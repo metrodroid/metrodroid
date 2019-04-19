@@ -22,7 +22,7 @@ import android.nfc.tech.IsoDep
 
 import java.io.IOException
 
-import au.id.micolous.metrodroid.xml.ImmutableByteArray
+import au.id.micolous.metrodroid.util.ImmutableByteArray
 
 /**
  * Wrapper for [IsoDep] to implement the [CardTransceiver] interface.

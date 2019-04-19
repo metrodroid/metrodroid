@@ -46,7 +46,7 @@ import au.id.micolous.metrodroid.transit.TransitCurrency;
 import au.id.micolous.metrodroid.transit.TransitData;
 import au.id.micolous.metrodroid.transit.TransitIdentity;
 import au.id.micolous.metrodroid.util.Utils;
-import au.id.micolous.metrodroid.xml.ImmutableByteArray;
+import au.id.micolous.metrodroid.util.ImmutableByteArray;
 
 public class EdyTransitData extends TransitData {
     // defines
@@ -84,7 +84,7 @@ public class EdyTransitData extends TransitData {
     private EdyTransitData(Parcel parcel) {
         mTrips = new ArrayList<>();
         parcel.readTypedList(mTrips, EdyTrip.CREATOR);
-        mSerialNumber = ImmutableByteArray.Companion.fromParcel(parcel);
+        mSerialNumber = ImmutableByteArray.Companion.fromHex(parcel.readString());
     }
 
     private EdyTransitData(FelicaCard card) {
@@ -164,7 +164,7 @@ public class EdyTransitData extends TransitData {
 
     public void writeToParcel(Parcel parcel, int flags) {
         parcel.writeTypedList(mTrips);
-        mSerialNumber.parcelize(parcel, flags);
+        parcel.writeString(mSerialNumber.toHexString());
     }
 }
 

@@ -47,7 +47,7 @@ import au.id.micolous.metrodroid.transit.tmoney.TMoneyTransitData;
 import au.id.micolous.metrodroid.ui.ListItem;
 import au.id.micolous.metrodroid.ui.ListItemRecursive;
 import au.id.micolous.metrodroid.util.Utils;
-import au.id.micolous.metrodroid.xml.ImmutableByteArray;
+import au.id.micolous.metrodroid.util.ImmutableByteArray;
 
 public class TMoneyCard extends ISO7816Application {
     private static final String TAG = "TMoneyCard";

@@ -20,7 +20,7 @@ import au.id.micolous.metrodroid.transit.Trip;
 import au.id.micolous.metrodroid.ui.ListItem;
 import au.id.micolous.metrodroid.util.NumberUtils;
 import au.id.micolous.metrodroid.util.Utils;
-import au.id.micolous.metrodroid.xml.ImmutableByteArray;
+import au.id.micolous.metrodroid.util.ImmutableByteArray;
 
 public abstract class TroikaBlock implements Parcelable {
     protected final ImmutableByteArray mRawData;
@@ -218,11 +218,11 @@ public abstract class TroikaBlock implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int i) {
-        mRawData.parcelize(dest, i);
+        dest.writeString(mRawData.toHexString());
     }
 
     public static TroikaBlock restoreFromParcel(Parcel p) {
-        ImmutableByteArray rawData = ImmutableByteArray.Companion.fromParcel(p);
+        ImmutableByteArray rawData = ImmutableByteArray.Companion.fromHex(p.readString());
         return parseBlock(rawData);
     }
 

@@ -22,7 +22,7 @@ import au.id.micolous.metrodroid.card.desfire.DesfireApplication
 import au.id.micolous.metrodroid.card.desfire.DesfireCard
 import au.id.micolous.metrodroid.card.desfire.files.DesfireFile
 import au.id.micolous.metrodroid.transit.serialonly.MykiTransitData
-import au.id.micolous.metrodroid.xml.ImmutableByteArray
+import au.id.micolous.metrodroid.util.ImmutableByteArray
 import java.util.*
 import kotlin.test.*
 

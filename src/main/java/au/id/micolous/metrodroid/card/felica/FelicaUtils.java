@@ -26,7 +26,7 @@ public final class FelicaUtils {
                 return "Suica";
             case EdyTransitData.SYSTEMCODE_EDY:
                 return "Common / Edy";
-            case FeliCaLib.SYSTEMCODE_FELICA_LITE:
+            case FelicaProtocol.SYSTEMCODE_FELICA_LITE:
                 return "FeliCa Lite";
             case OctopusTransitData.SYSTEMCODE_OCTOPUS:
                 return "Octopus";
@@ -48,11 +48,11 @@ public final class FelicaUtils {
                 }
                 break;
 
-            case FeliCaLib.SYSTEMCODE_FELICA_LITE:
+            case FelicaProtocol.SYSTEMCODE_FELICA_LITE:
                 switch (serviceCode) {
-                    case FeliCaLib.SERVICE_FELICA_LITE_READONLY:
+                    case FelicaProtocol.SERVICE_FELICA_LITE_READONLY:
                         return "FeliCa Lite Read-only";
-                    case FeliCaLib.SERVICE_FELICA_LITE_READWRITE:
+                    case FelicaProtocol.SERVICE_FELICA_LITE_READWRITE:
                         return "Felica Lite Read-write";
                 }
                 break;

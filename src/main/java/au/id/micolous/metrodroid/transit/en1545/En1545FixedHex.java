@@ -23,7 +23,7 @@ import android.util.Log;
 
 import java.util.Locale;
 
-import au.id.micolous.metrodroid.xml.ImmutableByteArray;
+import au.id.micolous.metrodroid.util.ImmutableByteArray;
 
 public class En1545FixedHex implements En1545Field {
     private final int mLen;

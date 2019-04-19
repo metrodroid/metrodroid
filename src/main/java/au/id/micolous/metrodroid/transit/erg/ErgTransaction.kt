@@ -36,15 +36,15 @@ open class ErgTransaction(protected val purse: ErgPurseRecord,
 
 
     // Implemented functionality.
-    override fun getTimestamp(): Calendar {
+    override val timestamp get(): Calendar {
         return convertTimestamp(epoch, timezone, purse.day, purse.minute)
     }
 
-    override fun isTapOff(): Boolean {
+    override val isTapOff get(): Boolean {
         return false
     }
 
-    override fun getFare(): TransitCurrency? {
+    override val fare get(): TransitCurrency {
         var o = purse.transactionValue
         if (purse.isCredit) {
             o *= -1
@@ -57,11 +57,11 @@ open class ErgTransaction(protected val purse: ErgPurseRecord,
         return false
     }
 
-    override fun isTapOn(): Boolean {
+    override val isTapOn get(): Boolean {
         return true
     }
 
-    public override fun isTransfer(): Boolean {
+    public override val isTransfer get(): Boolean {
         // TODO
         return false
     }

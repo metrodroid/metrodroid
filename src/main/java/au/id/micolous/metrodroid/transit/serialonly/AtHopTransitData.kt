@@ -75,7 +75,7 @@ data class AtHopTransitData (private val mSerial: Int?): SerialOnlyTransitData()
             override fun parseTransitIdentity(desfireCard: DesfireCard) =
                     TransitIdentity(NAME, formatSerial(getSerial(desfireCard)))
 
-            override fun getAllCards() = listOf(CARD_INFO)
+            override val allCards get() = listOf(CARD_INFO)
         }
     }
 }

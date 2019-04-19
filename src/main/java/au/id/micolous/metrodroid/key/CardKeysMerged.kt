@@ -3,7 +3,7 @@ package au.id.micolous.metrodroid.key
 import android.content.Context
 import android.database.Cursor
 import android.database.MergeCursor
-import au.id.micolous.metrodroid.xml.ImmutableByteArray
+import au.id.micolous.metrodroid.util.ImmutableByteArray
 
 class CardKeysMerged (private val retrievers: List<CardKeysRetriever>): CardKeysRetriever {
     override fun forID(context: Context, id: Int): CardKeys? {

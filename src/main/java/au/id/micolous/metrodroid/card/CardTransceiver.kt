@@ -20,7 +20,7 @@ package au.id.micolous.metrodroid.card
 
 import java.io.IOException
 
-import au.id.micolous.metrodroid.xml.ImmutableByteArray
+import au.id.micolous.metrodroid.util.ImmutableByteArray
 
 interface CardTransceiver {
     @Throws(IOException::class)

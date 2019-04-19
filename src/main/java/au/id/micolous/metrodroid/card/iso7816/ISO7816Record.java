@@ -30,7 +30,7 @@ import java.util.Locale;
 
 import au.id.micolous.metrodroid.util.Utils;
 import au.id.micolous.metrodroid.xml.Base64String;
-import au.id.micolous.metrodroid.xml.ImmutableByteArray;
+import au.id.micolous.metrodroid.util.ImmutableByteArray;
 
 /**
  * Represents a record in a file on a ISO7816 card.

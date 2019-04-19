@@ -22,8 +22,9 @@ package au.id.micolous.metrodroid.transit.rkf
 import au.id.micolous.metrodroid.transit.TransitCurrency
 import au.id.micolous.metrodroid.transit.Trip
 import au.id.micolous.metrodroid.transit.en1545.*
-import au.id.micolous.metrodroid.xml.ImmutableByteArray
+import au.id.micolous.metrodroid.util.ImmutableByteArray
 import kotlinx.android.parcel.Parcelize
+import java.util.*
 
 @Parcelize
 class RkfTransaction(val parsed: En1545Parsed, val mTransactionCode: Int, val mLookup: RkfLookup) : En1545Transaction(parsed) {
@@ -35,18 +36,21 @@ class RkfTransaction(val parsed: En1545Parsed, val mTransactionCode: Int, val mL
     override fun getEventType() = if (mTransactionCode == 0xf)
         mParsed.getIntOrZero(TRANSACTION_TYPE) else mTransactionCode
 
-    public override fun isTapOn() = eventType == 0x1b
+    public override val isTapOn get() = eventType == 0x1b
 
-    public override fun isTapOff() = eventType == 0x1c
+    public override val isTapOff get() = eventType == 0x1c
 
     fun isOther() = !isTapOn && !isTapOff
 
-    override fun getMode(): Trip.Mode = when (eventType) {
+    override val mode get(): Trip.Mode = when (eventType) {
         8 -> Trip.Mode.TICKET_MACHINE
-        else -> super.getMode()
+        else -> super.mode
     }
 
-    override fun getFare(): TransitCurrency? = if (eventType == 8) super.getFare()?.negate() else super.getFare()
+    override val timestamp: Calendar
+        get() = super.timestamp!!
+
+    override val fare get(): TransitCurrency? = if (eventType == 8) super.fare?.negate() else super.fare
 
     companion object {
         private const val TRANSACTION_TYPE = "TransactionType"

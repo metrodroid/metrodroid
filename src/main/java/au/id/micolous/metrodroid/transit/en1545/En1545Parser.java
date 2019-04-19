@@ -18,7 +18,7 @@
  */
 package au.id.micolous.metrodroid.transit.en1545;
 
-import au.id.micolous.metrodroid.xml.ImmutableByteArray;
+import au.id.micolous.metrodroid.util.ImmutableByteArray;
 
 public class En1545Parser {
     private En1545Parser() {

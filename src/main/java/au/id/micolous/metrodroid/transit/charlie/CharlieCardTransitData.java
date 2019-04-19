@@ -49,7 +49,7 @@ import au.id.micolous.metrodroid.transit.TransitData;
 import au.id.micolous.metrodroid.transit.TransitIdentity;
 import au.id.micolous.metrodroid.ui.ListItem;
 import au.id.micolous.metrodroid.util.Utils;
-import au.id.micolous.metrodroid.xml.ImmutableByteArray;
+import au.id.micolous.metrodroid.util.ImmutableByteArray;
 
 public class CharlieCardTransitData extends TransitData {
 
@@ -224,7 +224,7 @@ public class CharlieCardTransitData extends TransitData {
         }
 
         @Override
-        public int earlySectors() {
+        public int getEarlySectors() {
             return 2;
         }
 

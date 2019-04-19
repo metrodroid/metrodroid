@@ -49,7 +49,7 @@ import au.id.micolous.metrodroid.transit.Trip;
 import au.id.micolous.metrodroid.ui.ListItem;
 import au.id.micolous.metrodroid.util.NumberUtils;
 import au.id.micolous.metrodroid.util.Utils;
-import au.id.micolous.metrodroid.xml.ImmutableByteArray;
+import au.id.micolous.metrodroid.util.ImmutableByteArray;
 
 /**
  * Podorozhnik cards.
@@ -156,9 +156,9 @@ public class PodorozhnikTransitData extends TransitData {
         mCountersValid = p.readInt() != 0;
     }
 
-    private static String getSerial(ImmutableByteArray uid) {
+    private static String getSerial(ImmutableByteArray sector0) {
         String sn;
-        sn = "9643 3078 " + NumberUtils.INSTANCE.formatNumber(uid.byteArrayToLongReversed(0, 7),
+        sn = "9643 3078 " + NumberUtils.INSTANCE.formatNumber(sector0.byteArrayToLongReversed(0, 7),
                 " ", 4, 4, 4, 4, 1);
         sn += NumberUtils.INSTANCE.calculateLuhn (sn.replaceAll(" ", ""));// last digit is luhn
         return sn;
@@ -215,7 +215,7 @@ public class PodorozhnikTransitData extends TransitData {
     }
 
     public PodorozhnikTransitData(ClassicCard card) {
-        mSerial = getSerial(card.getTagId());
+        mSerial = getSerial(card.getSector(0).getBlock(0).getData());
         mExtraTripTimes = new ArrayList<>();
         decodeSector4(card);
         decodeSector5(card);
@@ -276,7 +276,7 @@ public class PodorozhnikTransitData extends TransitData {
         @Override
         public TransitIdentity parseTransitIdentity(@NonNull ClassicCard card) {
             return new TransitIdentity(Localizer.INSTANCE.localizeString(R.string.card_name_podorozhnik),
-                    getSerial(card.getTagId()));
+                    getSerial(card.getSector(0).getBlock(0).getData()));
         }
 
         @Override
@@ -285,7 +285,7 @@ public class PodorozhnikTransitData extends TransitData {
         }
 
         @Override
-        public int earlySectors() {
+        public int getEarlySectors() {
             return 5;
         }
 
