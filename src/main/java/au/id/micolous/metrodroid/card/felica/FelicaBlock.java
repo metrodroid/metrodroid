@@ -36,7 +36,7 @@ public class FelicaBlock {
     FelicaBlock() {
     }
 
-    public FelicaBlock(byte addr, byte[] data) {
+    public FelicaBlock(byte addr, ImmutableByteArray data) {
         mAddr = addr;
         mData = new Base64String(data);
     }

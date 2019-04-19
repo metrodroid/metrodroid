@@ -37,14 +37,14 @@ class OctopusTest {
     private fun octopusCardFromHex(s: String, scannedAt: GregorianCalendar): FelicaCard {
         val data = ImmutableByteArray.fromHex(s)
 
-        val blockBalance = FelicaBlock(0, data.dataCopy)
+        val blockBalance = FelicaBlock(0, data)
         val serviceBalance = FelicaService(OctopusTransitData.SERVICE_OCTOPUS, arrayOf(blockBalance))
 
         // Don't know what the purpose of this is, but it appears empty.
         //
         // NOTE: The old card we tested doesn't respond to FeliCa discovery commands properly, so no
         // idea if that card had this service on it...
-        val blockUnknown = FelicaBlock(0, ByteArray(16))
+        val blockUnknown = FelicaBlock(0, ImmutableByteArray.empty(16))
         val serviceUnknown = FelicaService(0x100b, arrayOf(blockUnknown))
 
         val system = FelicaSystem(OctopusTransitData.SYSTEMCODE_OCTOPUS,
@@ -53,7 +53,7 @@ class OctopusTest {
         return FelicaCard(ImmutableByteArray.empty(8),
                 scannedAt,
                 false,
-                ByteArray(8), ByteArray(8),
+                ImmutableByteArray.empty(8), ImmutableByteArray.empty(8),
                 arrayOf(system))
     }
 

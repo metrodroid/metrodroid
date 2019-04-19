@@ -135,7 +135,9 @@ public abstract class Card {
         }
 
         if (ArrayUtils.contains(techs, NfcF.class.getName())) {
-            return FelicaCard.dumpTag(tagId, tag, feedbackInterface);
+            FelicaCard f = FelicaCard.dumpTag(tagId, tag, feedbackInterface);
+            if (f != null)
+                return f;
         }
 
         if (ArrayUtils.contains(techs, MifareClassic.class.getName())) {
