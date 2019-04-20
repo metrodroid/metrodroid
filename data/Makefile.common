@@ -18,7 +18,7 @@ mdst: $(MDST)/stations_pb2.py $(mdst_sources)
 
 # Copies a MdST file in place.
 %.copy: %.mdst mdst
-	cp $< $(MDROOT)/mdst/
+	cp $< $(MDROOT)/src/main/assets/
 
 # Deletes the generated Python proto definitions.
 mdst_clean:

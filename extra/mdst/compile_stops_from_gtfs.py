@@ -59,20 +59,11 @@ def compile_stops_from_gtfs(input_gtfs_f, output_f, all_matching_f=None, version
   first_gtfs = all_gtfs[0]
 
   if version is None:
-    try:
-      feed_info = first_gtfs.open('feed_info.txt')
-    except KeyError:
-      # feed_info.txt is not in the file. Find the newest file in the archive
-      feed_start_date = None
-      for f in first_gtfs.infolist():
-        ts = datetime(*f.date_time)
-        if feed_start_date is None or feed_start_date < ts:
-          feed_start_date = ts
-    else:
-      row = next(feed_info)
-      feed_start_date = row['feed_start_date']
-      assert len(feed_start_date) == 8
-      feed_start_date = datetime.strptime(feed_start_date, '%Y%m%d')
+    feed_start_date = None
+    for f in first_gtfs.infolist():
+      ts = datetime(*f.date_time)
+      if feed_start_date is None or feed_start_date < ts:
+        feed_start_date = ts
 
     version = (feed_start_date - VERSION_EPOCH).days
     print('Data version: %s (%s)' % (version, feed_start_date.date().isoformat()))
