@@ -28,7 +28,21 @@ import android.nfc.TagLostException;
 import android.nfc.tech.NfcF;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.annotation.StringRes;
 import android.util.Log;
+
+import org.apache.commons.lang3.ArrayUtils;
+import org.simpleframework.xml.Element;
+import org.simpleframework.xml.ElementList;
+import org.simpleframework.xml.Root;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Calendar;
+import java.util.Collections;
+import java.util.GregorianCalendar;
+import java.util.List;
+import java.util.Locale;
 
 import au.id.micolous.farebot.R;
 import au.id.micolous.metrodroid.card.Card;
@@ -44,37 +58,20 @@ import au.id.micolous.metrodroid.transit.edy.EdyTransitData;
 import au.id.micolous.metrodroid.transit.kmt.KMTTransitData;
 import au.id.micolous.metrodroid.transit.octopus.OctopusTransitData;
 import au.id.micolous.metrodroid.transit.suica.SuicaTransitData;
-import au.id.micolous.metrodroid.ui.HeaderListItem;
 import au.id.micolous.metrodroid.ui.ListItem;
 import au.id.micolous.metrodroid.ui.ListItemRecursive;
+import au.id.micolous.metrodroid.util.ImmutableByteArray;
 import au.id.micolous.metrodroid.util.NumberUtils;
-import au.id.micolous.metrodroid.util.Preferences;
 import au.id.micolous.metrodroid.util.Utils;
 import au.id.micolous.metrodroid.xml.Base64String;
-import au.id.micolous.metrodroid.util.ImmutableByteArray;
-
-import org.apache.commons.lang3.ArrayUtils;
-import org.simpleframework.xml.Element;
-import org.simpleframework.xml.ElementList;
-import org.simpleframework.xml.Root;
-
-import java.text.DecimalFormat;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Calendar;
-import java.util.Collections;
-import java.util.GregorianCalendar;
-import java.util.List;
-import java.util.Locale;
 
 @Root(name = "card")
 public class FelicaCard extends Card {
-    private static final String TAG = "FelicaCard";
-    /** used for calculating response times, value is in milliseconds */
-    private static final double T = 256.0 * 16.0 / 13560.0;
+    private static final String TAG = FelicaCard.class.getSimpleName();
+
     private static final FelicaCardTransitFactory[] FACTORIES = {
             SuicaTransitData.FACTORY,
-            EdyTransitData.FACTORY,
+            EdyTransitData.FACTORY, // Edy must be after Suica
             KMTTransitData.FACTORY,
             OctopusTransitData.FACTORY
     };
@@ -100,9 +97,6 @@ public class FelicaCard extends Card {
     // https://github.com/tmurakam/felica2money/blob/master/src/card/Suica.cs
     @Nullable
     public static FelicaCard dumpTag(ImmutableByteArray tagId, Tag tag, TagReaderFeedbackInterface feedbackInterface) throws Exception {
-        // NfcF nfcF = NfcF.get(tag);
-        // Log.d(TAG, "Default system code: " + Utils.getHexString(nfcF.getSystemCode()));
-
         boolean octopusMagic = false;
         boolean sztMagic = false;
         boolean liteMagic = false;
@@ -114,6 +108,7 @@ public class FelicaCard extends Card {
             return null;
         }
         nfcF.connect();
+        Log.d(TAG, "Default system code: " + Utils.getHexString(nfcF.getSystemCode()));
 
         FelicaProtocol fp = new FelicaProtocol(nfcF);
 
@@ -144,7 +139,7 @@ public class FelicaCard extends Card {
                         FelicaProtocol.SYSTEMCODE_FELICA_LITE);
                 if (liteSystem != null) {
                     Log.d(TAG, "Detected Felica Lite card");
-                    systemCodes = new int[] { FelicaProtocol.SYSTEMCODE_FELICA_LITE };
+                    systemCodes = new int[]{FelicaProtocol.SYSTEMCODE_FELICA_LITE};
                     liteMagic = true;
                 } else {
                     // Don't do these on lite as it may respond to any code
@@ -202,13 +197,13 @@ public class FelicaCard extends Card {
 
                 if (octopusMagic && systemCode == OctopusTransitData.SYSTEMCODE_OCTOPUS) {
                     Log.d(TAG, "Stuffing in Octopus magic service code");
-                    serviceCodes = new int[] { OctopusTransitData.SERVICE_OCTOPUS };
+                    serviceCodes = new int[]{OctopusTransitData.SERVICE_OCTOPUS};
                 } else if (sztMagic && systemCode == OctopusTransitData.SYSTEMCODE_SZT) {
                     Log.d(TAG, "Stuffing in SZT magic service code");
-                    serviceCodes = new int[] { OctopusTransitData.SERVICE_SZT };
+                    serviceCodes = new int[]{OctopusTransitData.SERVICE_SZT};
                 } else if (liteMagic && systemCode == FelicaProtocol.SYSTEMCODE_FELICA_LITE) {
                     Log.d(TAG, "Stuffing in Felica Lite magic service code");
-                    serviceCodes = new int[] { FelicaProtocol.SERVICE_FELICA_LITE_READONLY };
+                    serviceCodes = new int[]{FelicaProtocol.SERVICE_FELICA_LITE_READONLY};
                 } else {
                     serviceCodes = fp.getServiceCodeList();
                 }
@@ -268,7 +263,7 @@ public class FelicaCard extends Card {
 
     /**
      * Gets the Manufacturing ID (IDm) of the card.
-     *
+     * <p>
      * See https://www.sony.net/Products/felica/business/tech-support/data/code_descriptions_1.31.pdf
      */
     public ImmutableByteArray getIDm() {
@@ -276,115 +271,12 @@ public class FelicaCard extends Card {
     }
 
     /**
-     * Gets the Manufacturer Code of the card (part of IDm).  This is a 16 bit value.
-     *
-     * If the lower byte is set to 0xFE, then the Card Identification Number has special assignment
-     * rules.  Otherwise, it is set by the card manufacturer.
-     *
-     * See https://www.sony.net/Products/felica/business/tech-support/data/code_descriptions_1.31.pdf
-     * @return Manufacturer code.
-     */
-    public int getManufacturerCode() {
-        return getIDm().byteArrayToInt(0, 2);
-    }
-
-    /**
-     * Gets the Card Identification Number of the card (part of IDm).
-     *
-     * See https://www.sony.net/Products/felica/business/tech-support/data/code_descriptions_1.31.pdf
-     * @return Card identification number.
-     */
-    public long getCardIdentificationNumber() {
-        return getIDm().byteArrayToLong(2, 6);
-    }
-
-    /**
      * Gets the Manufacturing Parameter (PMm) of the card.
-     *
+     * <p>
      * See https://www.sony.net/Products/felica/business/tech-support/data/code_descriptions_1.31.pdf
      */
     public ImmutableByteArray getPMm() {
         return mPMm;
-    }
-
-    /**
-     * Gets the ROM type of the card (part of PMm).
-     *
-     * See https://www.sony.net/Products/felica/business/tech-support/data/code_descriptions_1.31.pdf
-     * @return ROM type
-     */
-    public int getROMType() {
-        return getPMm().byteArrayToInt(0, 1);
-    }
-
-    /**
-     * Gets the IC type of the card (part of PMm).
-     *
-     * See https://www.sony.net/Products/felica/business/tech-support/data/code_descriptions_1.31.pdf
-     * @return IC type
-     */
-    public int getICType() {
-        return getPMm().byteArrayToInt(1, 1);
-    }
-
-    /**
-     * Calculates maximal response time, according to FeliCa manual.
-     * @param position Byte position to read (0 - 5)
-     * @param n N value in calculation formula
-     * @return Response time, in milliseconds.
-     */
-    private double calculateMaximumResponseTime(int position, int n) {
-        // Following FeliCa documentation, first configuration byte for maximum response time
-        // parameter is "D10", and the last is "D15". position(0) = D10, position 5 = D15.
-        if (position < 0 || position > 5) {
-            return Double.NaN;
-        }
-
-        // Position is offset by 2.
-        int configurationByte = getPMm().get(position + 2) & 0xFF;
-        int e = NumberUtils.INSTANCE.getBitsFromInteger(configurationByte, 0, 2);
-        int b = NumberUtils.INSTANCE.getBitsFromInteger(configurationByte, 2, 3) + 1;
-        int a = NumberUtils.INSTANCE.getBitsFromInteger(configurationByte, 5, 3) + 1;
-
-        return T * (b * n + a) * (1 << (2 * e)); // seconds
-    }
-
-    public double getVariableResponseTime(int nodes) {
-        return calculateMaximumResponseTime(0, nodes);
-    }
-
-    public double getFixedResponseTime() {
-        return calculateMaximumResponseTime(1, 0);
-    }
-
-    public double getMutualAuthentication2Time() {
-        return getMutualAuthentication1Time(0);
-    }
-
-    public double getMutualAuthentication1Time(int nodes) {
-        return calculateMaximumResponseTime(2, nodes);
-    }
-
-    public double getDataReadTime(int blocks) {
-        return calculateMaximumResponseTime(3, blocks);
-    }
-
-    public double getDataWriteTime(int blocks) {
-        return calculateMaximumResponseTime(4, blocks);
-    }
-
-    public double getOtherCommandsTime() {
-        return calculateMaximumResponseTime(5, 0);
-    }
-
-    /**
-     * Gets the maximum response time of the card (part of PMm).
-     *
-     * See https://www.sony.net/Products/felica/business/tech-support/data/code_descriptions_1.31.pdf
-     * @return Maximum response time
-     */
-    public long getMaximumResponseTime() {
-        return getPMm().byteArrayToLong(2, 6);
     }
 
     public List<FelicaSystem> getSystems() {
@@ -404,11 +296,12 @@ public class FelicaCard extends Card {
      * Felica has well-known system IDs.  If those system IDs are sufficient to detect
      * a particular type of card (or at least have a really good guess at it), then we should send
      * back a CardInfo.
-     *
+     * <p>
      * If we have no idea, then send back "null".
-     *
+     * <p>
      * Each of these checks should be really cheap to run, because this blocks further card
      * reads.
+     *
      * @param systemCodes The system codes that exist on the card.
      * @return A CardInfo about the card, or null if we have no idea.
      */
@@ -440,53 +333,7 @@ public class FelicaCard extends Card {
 
     @Override
     public List<ListItem> getManufacturingInfo() {
-        List<ListItem> items = new ArrayList<>();
-
-        items.add(new HeaderListItem(R.string.felica_idm));
-        items.add(new ListItem(R.string.felica_manufacturer_code, NumberUtils.INSTANCE.intToHex(getManufacturerCode())));
-
-        if (!Preferences.INSTANCE.getHideCardNumbers()) {
-            items.add(new ListItem(R.string.felica_card_identification_number, Long.toString(getCardIdentificationNumber())));
-        }
-
-        items.add(new HeaderListItem(R.string.felica_pmm));
-        items.add(new ListItem(R.string.felica_rom_type, Integer.toString(getROMType())));
-        items.add(new ListItem(R.string.felica_ic_type, Integer.toString(getICType())));
-
-        items.add(new HeaderListItem(R.string.felica_maximum_response_time));
-
-        DecimalFormat df = new DecimalFormat();
-        df.setMaximumFractionDigits(1);
-        df.setMinimumFractionDigits(1);
-
-        double d = getVariableResponseTime(1);
-        items.add(new ListItem(R.string.felica_response_time_variable,
-                Localizer.INSTANCE.localizePlural(R.plurals.milliseconds_short, (int)d, df.format(d))));
-
-        d = getFixedResponseTime();
-        items.add(new ListItem(R.string.felica_response_time_fixed,
-                Localizer.INSTANCE.localizePlural(R.plurals.milliseconds_short, (int)d, df.format(d))));
-
-        d = getMutualAuthentication1Time(1);
-        items.add(new ListItem(R.string.felica_response_time_auth1,
-                Localizer.INSTANCE.localizePlural(R.plurals.milliseconds_short, (int)d, df.format(d))));
-
-        d = getMutualAuthentication2Time();
-        items.add(new ListItem(R.string.felica_response_time_auth2,
-                Localizer.INSTANCE.localizePlural(R.plurals.milliseconds_short, (int)d, df.format(d))));
-
-        d = getDataReadTime(1);
-        items.add(new ListItem(R.string.felica_response_time_read,
-                Localizer.INSTANCE.localizePlural(R.plurals.milliseconds_short, (int)d, df.format(d))));
-
-        d = getDataWriteTime(1);
-        items.add(new ListItem(R.string.felica_response_time_write,
-                Localizer.INSTANCE.localizePlural(R.plurals.milliseconds_short, (int)d, df.format(d))));
-
-        d = getOtherCommandsTime();
-        items.add(new ListItem(R.string.felica_response_time_other,
-                Localizer.INSTANCE.localizePlural(R.plurals.milliseconds_short, (int)d, df.format(d))));
-        return items;
+        return FelicaUtils.INSTANCE.getManufacturingInfo(getIDm(), getPMm());
     }
 
     @NonNull
@@ -495,31 +342,39 @@ public class FelicaCard extends Card {
         List<ListItem> li = new ArrayList<>();
         for (FelicaSystem system : getSystems()) {
             List<ListItem> sli = new ArrayList<>();
+            final int sysCode = system.getCode();
+            @StringRes final int sysCodeRes = FelicaUtils.INSTANCE.getFriendlySystemName(sysCode);
 
             for (FelicaService service : system.getServices()) {
                 List<ListItem> bli = new ArrayList<>();
+                final int servCode = service.getServiceCode();
+                @StringRes final int servCodeRes = FelicaUtils.INSTANCE.getFriendlyServiceName(
+                        sysCode, servCode);
+
                 for (FelicaBlock block : service.getBlocks()) {
                     bli.add(new ListItem(
-                            new FormattedString(String.format(Locale.ENGLISH,
-                            "%02d", block.getAddress())),
+                            new FormattedString(Localizer.INSTANCE.localizeString(
+                                    R.string.block_title_format,
+                                    NumberUtils.INSTANCE.intToHex(block.getAddress()))),
                             block.getData().toHexDump()));
                 }
 
                 sli.add(new ListItemRecursive(
                         Localizer.INSTANCE.localizeString(R.string.felica_service_title_format,
-                        Integer.toHexString(service.getServiceCode()),
-                                FelicaUtils.getFriendlyServiceName(system.getCode(),
-                                        service.getServiceCode())),
+                                Integer.toHexString(servCode),
+                                Localizer.INSTANCE.localizeString(servCodeRes)),
                         Localizer.INSTANCE.localizePlural(R.plurals.block_count,
-                                service.getBlocks().size(), service.getBlocks().size()), bli));
+                                service.getBlocks().size(), service.getBlocks().size()),
+                        bli));
             }
 
             li.add(new ListItemRecursive(
                     Localizer.INSTANCE.localizeString(R.string.felica_system_title_format,
-                    Integer.toHexString(system.getCode()), FelicaUtils.getFriendlySystemName(system.getCode())),
+                            Integer.toHexString(sysCode),
+                            Localizer.INSTANCE.localizeString(sysCodeRes)),
                     Localizer.INSTANCE.localizePlural(R.plurals.felica_service_count,
-                            system.getServices().size(), system.getServices().size()), sli));
-
+                            system.getServices().size(), system.getServices().size()),
+                    sli));
         }
         return li;
     }

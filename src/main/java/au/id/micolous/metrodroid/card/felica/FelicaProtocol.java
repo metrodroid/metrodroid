@@ -54,63 +54,74 @@ import au.id.micolous.metrodroid.util.Utils;
  * This is adapted from nfc-felica-lib, and is still a work in progress to refactor it to be more
  * like ISO7816Protocol, and translate all the documentation into English.
  *
- * FeliCa、FeliCa Liteデバイスにアクセスするためのコマンドとデータ操作をライブラリィとして提供します
- * <pre>
- * ※ 「FeliCa」は、ソニー株式会社が開発した非接触ICカードの技術方式です。
- * ※ 「FeliCa」、「FeliCa Lite」、「FeliCa Plug」、「FeliCaポケット」、「FeliCaランチャー」は、ソニー株式会社の登録商標です。
- * ※ 「Suica」は東日本旅客鉄道株式会社の登録商標です。
- * ※ 「PASMO」は、株式会社パスモの登録商標です。
+ * Note: This doesn't implement any of the write commands.
  *
- * 本ライブラリィはFeliCa、ソニー株式会社とはなんの関係もありません。
- * </pre>
- *
- * @author Kazzz
- * @since Android API Level 10
+ * FeliCa Card User's Manual, Excerpted Edition:
+ *   https://www.sony.net/Products/felica/business/tech-support/data/card_usersmanual_2.02.pdf
  */
 
 @SuppressWarnings("DuplicateThrows")
-final class FelicaProtocol {
-    //polling
-    public static final byte COMMAND_POLLING = 0x00;
-    public static final byte RESPONSE_POLLING = 0x01;
-    //request service
-    public static final byte COMMAND_REQUEST_SERVICE = 0x02;
-    public static final byte RESPONSE_REQUEST_SERVICE = 0x03;
-    //request RESPONSE
-    public static final byte COMMAND_REQUEST_RESPONSE = 0x04;
-    public static final byte RESPONSE_REQUEST_RESPONSE = 0x05;
-    //read without encryption
-    public static final byte COMMAND_READ_WO_ENCRYPTION = 0x06;
-    public static final byte RESPONSE_READ_WO_ENCRYPTION = 0x07;
-    //write without encryption
-    public static final byte COMMAND_WRITE_WO_ENCRYPTION = 0x08;
-    public static final byte RESPONSE_WRITE_WO_ENCRYPTION = 0x09;
-    //search service code
-    public static final byte COMMAND_SEARCH_SERVICECODE = 0x0a;
-    public static final byte RESPONSE_SEARCH_SERVICECODE = 0x0b;
-    //request system code
-    public static final byte COMMAND_REQUEST_SYSTEMCODE = 0x0c;
-    public static final byte RESPONSE_REQUEST_SYSTEMCODE = 0x0d;
-    //authentication 1
-    public static final byte COMMAND_AUTHENTICATION1 = 0x10;
-    public static final byte RESPONSE_AUTHENTICATION1 = 0x11;
-    //authentication 2
-    public static final byte COMMAND_AUTHENTICATION2 = 0x12;
-    public static final byte RESPONSE_AUTHENTICATION2 = 0x13;
-    //read
-    public static final byte COMMAND_READ = 0x14;
-    public static final byte RESPONSE_READ = 0x15;
-    //write
-    public static final byte COMMAND_WRITE = 0x16;
-    public static final byte RESPONSE_WRITE = 0x17;
-    // システムコード
-    public static final int SYSTEMCODE_ANY = 0xffff;         // ANY
-    public static final int SYSTEMCODE_FELICA_LITE = 0x88b4; // FeliCa Lite
-    public static final int SYSTEMCODE_COMMON = 0xfe00;      // 共通領域
-    public static final int SYSTEMCODE_CYBERNE = 0x0003;     // サイバネ領域
+public final class FelicaProtocol {
+    // CARD COMMANDS
+    // Polling (s4.4.2)
+    private static final byte COMMAND_POLLING = 0x00;
+    private static final byte RESPONSE_POLLING = 0x01;
 
-    public static final int SERVICE_FELICA_LITE_READONLY = 0x0b00;  // FeliCa Lite RO権限
-    public static final int SERVICE_FELICA_LITE_READWRITE = 0x0900; // FeliCa Lite RW権限
+    // Request Service (s4.4.3)
+    private static final byte COMMAND_REQUEST_SERVICE = 0x02;
+    private static final byte RESPONSE_REQUEST_SERVICE = 0x03;
+
+    // Request Response (s4.4.4)
+    private static final byte COMMAND_REQUEST_RESPONSE = 0x04;
+    private static final byte RESPONSE_REQUEST_RESPONSE = 0x05;
+
+    // Read without encryption (s4.4.5)
+    private static final byte COMMAND_READ_WO_ENCRYPTION = 0x06;
+    private static final byte RESPONSE_READ_WO_ENCRYPTION = 0x07;
+
+    // Write without encryption (s4.4.6)
+    private static final byte COMMAND_WRITE_WO_ENCRYPTION = 0x08;
+    private static final byte RESPONSE_WRITE_WO_ENCRYPTION = 0x09;
+
+    // Search service code (s4.4.7, not documented publicly)
+    private static final byte COMMAND_SEARCH_SERVICECODE = 0x0a;
+    private static final byte RESPONSE_SEARCH_SERVICECODE = 0x0b;
+
+    // Request system code (s4.4.8)
+    private static final byte COMMAND_REQUEST_SYSTEMCODE = 0x0c;
+    private static final byte RESPONSE_REQUEST_SYSTEMCODE = 0x0d;
+
+    // Authentication 1 (s4.4.9, not documented publicly)
+    private static final byte COMMAND_AUTHENTICATION1 = 0x10;
+    private static final byte RESPONSE_AUTHENTICATION1 = 0x11;
+
+    // Authentication 2 (s4.4.10, not documented publicly)
+    private static final byte COMMAND_AUTHENTICATION2 = 0x12;
+    private static final byte RESPONSE_AUTHENTICATION2 = 0x13;
+
+    // Authenticated Read (s4.4.11, not documented publicly)
+    private static final byte COMMAND_READ = 0x14;
+    private static final byte RESPONSE_READ = 0x15;
+
+    // Authenticated Write (s4.4.12, not documented publicly)
+    private static final byte COMMAND_WRITE = 0x16;
+    private static final byte RESPONSE_WRITE = 0x17;
+
+    // SYSTEM CODES
+    // Wildcard, matches any system code.
+    public static final int SYSTEMCODE_ANY = 0xffff;
+    // FeliCa Lite
+    public static final int SYSTEMCODE_FELICA_LITE = 0x88b4;
+    // NDEF (NFC Data Exchange Format)
+    public static final int SYSTEMCODE_NDEF = 0x4000;
+    // Common Area (FeliCa Networks, Inc), used by IC (Suica) and Edy
+    public static final int SYSTEMCODE_COMMON = 0xfe00;
+
+    // SERVICE CODES
+    // FeliCa Lite, read-only mode
+    public static final int SERVICE_FELICA_LITE_READONLY = 0x0b00;
+    // FeliCa Lite, read-write mode
+    public static final int SERVICE_FELICA_LITE_READWRITE = 0x0900;
 
     /**
      * If true, this turns on debug logs that show FeliCa communication.
@@ -118,10 +129,15 @@ final class FelicaProtocol {
     private static final boolean ENABLE_TRACING = true;
     private static final String TAG = FelicaProtocol.class.getSimpleName();
 
+    /** Connection to the FeliCa card */
     @NotNull
     private final NfcF mTagTech;
+
+    /** IDm (Manufacturing ID) for the card */
     @Nullable
     private ImmutableByteArray idm;
+
+    /** PMm (Manufacturing Parameters) for the card */
     @Nullable
     private ImmutableByteArray pmm;
 
@@ -189,10 +205,24 @@ final class FelicaProtocol {
             throw new IOException("response had unexpected command code");
         }
 
+        // Automatically strip off the length prefix before returning it.
         return ImmutableByteArray.Companion.fromByteArray(recvBuffer).sliceOffLen(
                 1, recvBuffer.length - 1);
     }
 
+    /**
+     * Polls for a card with the given system code.
+     *
+     * Automatically sets the IDm and PMm of the card based on the response.
+     *
+     * This does not pass the IDm as a parameter, and may select <em>any</em> nearby tag.  If no
+     * IDm or PMm is given in the response, this will <em>unset</em> these values.
+     *
+     * @param systemCode System code to search for, or SYSTEMCODE_ANY to scan for any card.
+     * @return The response from the card, including the IDm and PMm
+     * @throws IOException On communication errors
+     * @throws TagLostException If the tag moves out of the field, or there is no response
+     */
     public ImmutableByteArray polling(int systemCode) throws IOException, TagLostException {
         ImmutableByteArray res = sendRequest(COMMAND_POLLING, null,
                 (byte) (systemCode >> 8),   // System code (upper byte)
@@ -219,6 +249,14 @@ final class FelicaProtocol {
         return res;
     }
 
+    /**
+     * Polls for the given system code, and returns the IDm of the responding card.
+     *
+     * @param systemCode System code to search for, or SYSTEMCODE_ANY to scan for any card.
+     * @return The responding card's IDm.
+     * @throws IOException On communication errors
+     * @throws TagLostException If the tag moves out of the field, or there is no response
+     */
     @Nullable
     public ImmutableByteArray pollingAndGetIDm(int systemCode)
             throws IOException, TagLostException {
@@ -226,11 +264,17 @@ final class FelicaProtocol {
         return idm;
     }
 
+    /**
+     * Gets the IDm (Manufacture Identifier).  This is the serial number of a FeliCa card.
+     */
     @Nullable
     public ImmutableByteArray getIdm() {
         return idm;
     }
 
+    /**
+     * Gets the PMm (Manufacturing Parameters).
+     */
     @Nullable
     public ImmutableByteArray getPmm() {
         return pmm;
@@ -278,7 +322,6 @@ final class FelicaProtocol {
         }
 
         return res.sliceOffLen(9, res.size()-9);
-
     }
 
     /**

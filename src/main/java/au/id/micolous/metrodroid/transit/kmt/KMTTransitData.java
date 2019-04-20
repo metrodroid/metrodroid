@@ -23,6 +23,7 @@ import android.os.Parcel;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
+import au.id.micolous.metrodroid.multi.Localizer;
 import au.id.micolous.metrodroid.util.Preferences;
 import org.apache.commons.lang3.ArrayUtils;
 
@@ -33,7 +34,6 @@ import java.util.List;
 import java.util.TimeZone;
 
 import au.id.micolous.farebot.R;
-import au.id.micolous.metrodroid.MetrodroidApplication;
 import au.id.micolous.metrodroid.card.CardType;
 import au.id.micolous.metrodroid.card.felica.FelicaBlock;
 import au.id.micolous.metrodroid.card.felica.FelicaCard;
@@ -45,22 +45,20 @@ import au.id.micolous.metrodroid.transit.TransitData;
 import au.id.micolous.metrodroid.transit.TransitIdentity;
 import au.id.micolous.metrodroid.ui.HeaderListItem;
 import au.id.micolous.metrodroid.ui.ListItem;
-import au.id.micolous.metrodroid.util.Utils;
 import au.id.micolous.metrodroid.util.ImmutableByteArray;
 
 public class KMTTransitData extends TransitData {
     // defines
-    private static final String NAME = "Kartu Multi Trip";
-    private static final int SYSTEMCODE_KMT = 0x90b7;
-    private static final int FELICA_SERVICE_KMT_ID = 0x300B;
-    private static final int FELICA_SERVICE_KMT_BALANCE = 0x1017;
-    private static final int FELICA_SERVICE_KMT_HISTORY = 0x200F;
+    public static final int SYSTEMCODE_KMT = 0x90b7;
+    public static final int SERVICE_KMT_ID = 0x300B;
+    public static final int SERVICE_KMT_BALANCE = 0x1017;
+    public static final int SERVICE_KMT_HISTORY = 0x200F;
     static final TimeZone TIME_ZONE = TimeZone.getTimeZone("Asia/Jakarta");
     public static final long KMT_EPOCH;
 
     private static final CardInfo CARD_INFO = new CardInfo.Builder()
             .setImageId(R.drawable.kmt_card)
-            .setName(KMTTransitData.NAME)
+            .setName(Localizer.INSTANCE.localizeString(R.string.card_name_kmt))
             .setLocation(R.string.location_jakarta)
             .setCardType(CardType.FeliCa)
             .setExtraNote(R.string.kmt_extra_note)
@@ -98,7 +96,7 @@ public class KMTTransitData extends TransitData {
 
     private KMTTransitData(FelicaCard card) {
         mSerialNumber = getSerial(card);
-        FelicaService serviceBalance = card.getSystem(SYSTEMCODE_KMT).getService(FELICA_SERVICE_KMT_BALANCE);
+        FelicaService serviceBalance = card.getSystem(SYSTEMCODE_KMT).getService(SERVICE_KMT_BALANCE);
         if (serviceBalance != null) {
             List<FelicaBlock> blocksBalance = serviceBalance.getBlocks();
             FelicaBlock blockBalance = blocksBalance.get(0);
@@ -108,7 +106,7 @@ public class KMTTransitData extends TransitData {
             mLastTransAmount = dataBalance.byteArrayToIntReversed(4, 4);
         }
 
-        FelicaService serviceHistory = card.getSystem(SYSTEMCODE_KMT).getService(FELICA_SERVICE_KMT_HISTORY);
+        FelicaService serviceHistory = card.getSystem(SYSTEMCODE_KMT).getService(SERVICE_KMT_HISTORY);
         List<KMTTrip> trips = new ArrayList<>();
         List<FelicaBlock> blocks = serviceHistory.getBlocks();
         for (int i = 0; i < blocks.size(); i++) {
@@ -122,7 +120,7 @@ public class KMTTransitData extends TransitData {
     }
 
     private static String getSerial(FelicaCard card) {
-        FelicaService serviceID = card.getSystem(SYSTEMCODE_KMT).getService(FELICA_SERVICE_KMT_ID);
+        FelicaService serviceID = card.getSystem(SYSTEMCODE_KMT).getService(SERVICE_KMT_ID);
         if (serviceID == null)
             return "-";
         List<FelicaBlock> blocksID = serviceID.getBlocks();
@@ -153,12 +151,12 @@ public class KMTTransitData extends TransitData {
 
         @Override
         public TransitIdentity parseTransitIdentity(@NonNull FelicaCard card) {
-            FelicaService serviceID = card.getSystem(SYSTEMCODE_KMT).getService(FELICA_SERVICE_KMT_ID);
+            FelicaService serviceID = card.getSystem(SYSTEMCODE_KMT).getService(SERVICE_KMT_ID);
             String serialNumber = "-";
             if (serviceID != null) {
                 serialNumber = serviceID.getBlocks().get(0).getData().readASCII();
             }
-            return new TransitIdentity(NAME, serialNumber);
+            return new TransitIdentity(Localizer.INSTANCE.localizeString(R.string.card_name_kmt), serialNumber);
         }
     };
 
@@ -180,7 +178,7 @@ public class KMTTransitData extends TransitData {
 
     @Override
     public String getCardName() {
-        return NAME;
+        return Localizer.INSTANCE.localizeString(R.string.card_name_kmt);
     }
 
     public void writeToParcel(Parcel parcel, int flags) {
