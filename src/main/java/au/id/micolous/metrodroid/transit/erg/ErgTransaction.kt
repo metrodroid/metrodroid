@@ -18,8 +18,7 @@
  */
 package au.id.micolous.metrodroid.transit.erg
 
-import au.id.micolous.metrodroid.time.TimestampFull
-import au.id.micolous.metrodroid.time.calendar2ts
+import au.id.micolous.metrodroid.time.*
 import au.id.micolous.metrodroid.transit.Transaction
 import au.id.micolous.metrodroid.transit.TransitCurrency
 import au.id.micolous.metrodroid.transit.erg.record.ErgPurseRecord
@@ -34,12 +33,12 @@ import java.util.*
 open class ErgTransaction(protected val purse: ErgPurseRecord,
                           protected val epoch: Int,
                           protected val currency: String,
-                          protected val timezone: TimeZone) : Transaction() {
+                          protected val timezone: MetroTimeZone) : Transaction() {
 
 
     // Implemented functionality.
     override val timestamp get(): TimestampFull {
-        return calendar2ts(convertTimestamp(epoch, timezone, purse.day, purse.minute))!!
+        return convertTimestamp(epoch, timezone, purse.day, purse.minute)
     }
 
     override val isTapOff get(): Boolean {
@@ -69,20 +68,9 @@ open class ErgTransaction(protected val purse: ErgPurseRecord,
     }
 
     companion object {
-        private val EPOCH = GregorianCalendar(2000, Calendar.JANUARY, 1).timeInMillis
-
-        private fun getEpoch(tz: TimeZone = Utils.UTC) : GregorianCalendar {
-            val g = GregorianCalendar(tz)
-            g.timeInMillis = EPOCH
-            return g
-        }
-
-
-        fun convertTimestamp(epoch: Int, tz: TimeZone, day: Int = 0, minute: Int = 0): GregorianCalendar {
-            val g = getEpoch(tz)
-            g.add(Calendar.DATE, epoch + day)
-            g.add(Calendar.MINUTE, minute)
-            return g
+        fun convertTimestamp(epoch: Int, tz: MetroTimeZone, day: Int = 0, minute: Int = 0): TimestampFull {
+            val g = Epoch.utc(2000, tz)
+            return g.dayMinute(epoch + day, minute)
         }
     }
 }

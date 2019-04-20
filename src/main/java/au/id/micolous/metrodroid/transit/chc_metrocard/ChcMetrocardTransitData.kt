@@ -23,6 +23,7 @@ import au.id.micolous.metrodroid.card.CardType
 import au.id.micolous.metrodroid.card.classic.ClassicCard
 import au.id.micolous.metrodroid.card.classic.ClassicCardTransitFactory
 import au.id.micolous.metrodroid.time.Duration
+import au.id.micolous.metrodroid.time.MetroTimeZone
 import au.id.micolous.metrodroid.transit.CardInfo
 import au.id.micolous.metrodroid.transit.TransitBalance
 import au.id.micolous.metrodroid.transit.TransitBalanceStored
@@ -52,7 +53,7 @@ class ChcMetrocardTransitData private constructor(card: ClassicCard) :
     override fun formatSerialNumber(metadataRecord: ErgMetadataRecord) =
             internalFormatSerialNumber(metadataRecord)
 
-    override fun getTimezone(): TimeZone = TIME_ZONE
+    override val timezone get() = TIME_ZONE
 
     override val balance get(): TransitBalance? {
         val b = super.balance ?: return null
@@ -65,18 +66,17 @@ class ChcMetrocardTransitData private constructor(card: ClassicCard) :
     companion object {
         private const val NAME = "Metrocard"
         private const val AGENCY_ID = 0x0136
-        internal val TIME_ZONE = TimeZone.getTimeZone("Pacific/Auckland")
+        internal val TIME_ZONE = MetroTimeZone.AUCKLAND
         internal const val CURRENCY = "NZD"
         internal const val CHC_METROCARD_STR = "chc_metrocard"
 
-        private val CARD_INFO = CardInfo.Builder()
-                .setImageId(R.drawable.chc_metrocard)
-                .setName(ChcMetrocardTransitData.NAME)
-                .setLocation(R.string.location_christchurch_nz)
-                .setCardType(CardType.MifareClassic)
-                .setKeysRequired()
-                .setExtraNote(R.string.card_note_chc_metrocard)
-                .build()
+        private val CARD_INFO = CardInfo(
+                imageId = R.drawable.chc_metrocard,
+                name = ChcMetrocardTransitData.NAME,
+                locationId = R.string.location_christchurch_nz,
+                cardType = CardType.MifareClassic,
+                keysRequired = true,
+                resourceExtraNote = R.string.card_note_chc_metrocard)
 
         val FACTORY: ClassicCardTransitFactory = object : ErgTransitFactory() {
             override fun parseTransitData(classicCard: ClassicCard) =

@@ -65,7 +65,6 @@ open class ErgTransitData : TransitData, Parcelable {
 
     // Structures
     override var serialNumber: String? = null
-        private set
     private var mEpochDate: Int = 0
     private var mAgencyID: Int = 0
     private var mBalance: Int = 0
@@ -84,8 +83,8 @@ open class ErgTransitData : TransitData, Parcelable {
             items.add(HeaderListItem(R.string.general))
             items.add(ListItem(R.string.card_epoch,
                     TimestampFormatter.longDateFormat(TripObfuscator.maybeObfuscateTS(
-                            calendar2ts(ErgTransaction.convertTimestamp(mEpochDate,
-                                    timezone, 0, 0))!!))))
+                            ErgTransaction.convertTimestamp(mEpochDate,
+                                    timezone, 0, 0)))))
             items.add(ListItem(R.string.erg_agency_id,
                     NumberUtils.longToHex(mAgencyID.toLong())))
             return items
@@ -101,14 +100,14 @@ open class ErgTransitData : TransitData, Parcelable {
      * @return TimeZone for the card.
      */
     protected open// If we don't know the timezone, assume it is Android local timezone.
-    val timezone: TimeZone
-        get() = TimeZone.getDefault()
+    val timezone: MetroTimeZone
+        get() = MetroTimeZone.UTC
 
     protected constructor(parcel: Parcel) {
         serialNumber = parcel.readString()
         mEpochDate = parcel.readInt()
 
-        mTrips = parcel.readArrayList(javaClass.classLoader)
+        mTrips = parcel.readArrayList(javaClass.classLoader) as List<Trip>
         mCurrency = parcel.readString()
     }
 
