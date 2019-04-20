@@ -32,22 +32,6 @@ import kotlinx.android.parcel.Parcelize
 class ErgMetadataRecord private constructor(val cardSerial: ImmutableByteArray,
                                             val epochDate: Int,
                                             val agencyID: Int) : ErgRecord(), Parcelable {
-    /**
-     * Some ERG cards (like Christchurch Metrocard) store the card number as a 32-bit, big-endian
-     * integer, expressed in decimal.
-     * @return Card number in decimal.
-     */
-    val cardSerialDec: Int
-        get() = cardSerial.byteArrayToInt()
-
-    /**
-     * Some ERG cards (like Manly Fast Ferry) store the card number as a 32-bit, big endian integer,
-     * expressed in hexadecimal.
-     * @return Card number in hexadecimal.
-     */
-    val cardSerialHex: String
-        get() = cardSerial.toHexString()
-
     override fun toString() = "[ErgMetadataRecord: agencyID=$agencyID, serial=$cardSerial, epoch=$epochDate]"
 
     companion object {

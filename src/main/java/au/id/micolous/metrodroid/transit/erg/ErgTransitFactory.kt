@@ -21,6 +21,7 @@ package au.id.micolous.metrodroid.transit.erg
 import au.id.micolous.metrodroid.card.classic.ClassicCard
 import au.id.micolous.metrodroid.card.classic.ClassicCardTransitFactory
 import au.id.micolous.metrodroid.card.classic.ClassicSector
+import au.id.micolous.metrodroid.time.MetroTimeZone
 import au.id.micolous.metrodroid.transit.TransitIdentity
 import au.id.micolous.metrodroid.transit.erg.record.ErgMetadataRecord
 
@@ -75,12 +76,13 @@ internal open class ErgTransitFactory : ClassicCardTransitFactory {
         return TransitIdentity(name, getSerialNumber(metadata))
     }
 
-    override fun parseTransitData(classicCard: ClassicCard) =
-            ErgTransitData(classicCard)
+    override fun parseTransitData(card: ClassicCard) =
+            ErgTransitData.parse(card, "XXX") { purse, epoch ->
+                ErgTransaction(purse, epoch, "XXX", MetroTimeZone.UTC) }
 
     override val earlySectors get() = 1
 
     protected open fun getSerialNumber(metadata: ErgMetadataRecord): String {
-        return metadata.cardSerialHex
+        return metadata.cardSerial.toHexString()
     }
 }

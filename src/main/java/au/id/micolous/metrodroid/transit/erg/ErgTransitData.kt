@@ -18,15 +18,16 @@
  */
 package au.id.micolous.metrodroid.transit.erg
 
-import android.os.Parcel
-import android.os.Parcelable
-import android.util.Log
+import au.id.micolous.farebot.R
 
 import au.id.micolous.metrodroid.card.UnauthorizedException
 import au.id.micolous.metrodroid.card.classic.ClassicBlock
 import au.id.micolous.metrodroid.card.classic.ClassicCard
 import au.id.micolous.metrodroid.card.classic.ClassicCardTransitFactory
 import au.id.micolous.metrodroid.card.classic.ClassicSector
+import au.id.micolous.metrodroid.multi.Log
+import au.id.micolous.metrodroid.multi.Parcelable
+import au.id.micolous.metrodroid.multi.Parcelize
 import au.id.micolous.metrodroid.transit.Transaction
 import au.id.micolous.metrodroid.transit.TransactionTrip
 import au.id.micolous.metrodroid.transit.TransitBalance
@@ -45,15 +46,6 @@ import au.id.micolous.metrodroid.ui.HeaderListItem
 import au.id.micolous.metrodroid.ui.ListItem
 import au.id.micolous.metrodroid.util.NumberUtils
 import au.id.micolous.metrodroid.util.TripObfuscator
-import au.id.micolous.metrodroid.util.Utils
-
-import java.util.ArrayList
-import java.util.Collections
-import java.util.GregorianCalendar
-import java.util.Locale
-import java.util.TimeZone
-
-import au.id.micolous.farebot.R
 import au.id.micolous.metrodroid.util.ImmutableByteArray
 
 /**
@@ -61,21 +53,27 @@ import au.id.micolous.metrodroid.util.ImmutableByteArray
  *
  * Wiki: https://github.com/micolous/metrodroid/wiki/ERG-MFC
  */
-open class ErgTransitData : TransitData, Parcelable {
-
-    // Structures
-    override var serialNumber: String? = null
-    private var mEpochDate: Int = 0
-    private var mAgencyID: Int = 0
-    private var mBalance: Int = 0
-    private val mTrips: List<Trip>?
-    private val mCurrency: String?
+@Parcelize
+open class ErgTransitData internal constructor(
+        // Structures
+        protected val cardSerial: ImmutableByteArray?,
+        private val mEpochDate: Int,
+        private val mAgencyID: Int,
+        private val mBalance: Int,
+        override val trips: List<Trip>?,
+        private val mCurrency: String
+) : TransitData(), Parcelable {
+    /**
+     * Some cards format the serial number in decimal rather than hex. By default, this uses hex.
+     *
+     * This can be overridden in subclasses to format the serial number correctly.
+     * @return Formatted serial number, as string.
+     */
+    override val serialNumber: String?
+        get() = cardSerial?.toHexString()
 
     public override val balance: TransitBalance?
-        get() = TransitCurrency(mBalance, mCurrency!!)
-
-    override val trips: List<Trip>?
-        get() = mTrips
+        get() = TransitCurrency(mBalance, mCurrency)
 
     override val info: List<ListItem>?
         get() {
@@ -103,136 +101,106 @@ open class ErgTransitData : TransitData, Parcelable {
     val timezone: MetroTimeZone
         get() = MetroTimeZone.UTC
 
-    protected constructor(parcel: Parcel) {
-        serialNumber = parcel.readString()
-        mEpochDate = parcel.readInt()
-
-        mTrips = parcel.readArrayList(javaClass.classLoader) as List<Trip>
-        mCurrency = parcel.readString()
-    }
-
-    constructor(card: ClassicCard) : this(card, "XXX") {}
-
-    // Decoder
-    protected constructor(card: ClassicCard, currency: String) {
-        val records = ArrayList<ErgRecord>()
-
-        mCurrency = currency
-
-        // Read the index data
-        val index1 = ErgIndexRecord.recordFromSector(card.getSector(1))
-        val index2 = ErgIndexRecord.recordFromSector(card.getSector(2))
-        if (DEBUG) {
-            Log.d(TAG, "Index 1: $index1")
-            Log.d(TAG, "Index 2: $index2")
-        }
-
-        val activeIndex = if (index1.version > index2.version) index1 else index2
-
-        var metadataRecord: ErgMetadataRecord? = null
-        var preambleRecord: ErgPreambleRecord? = null
-
-        // Iterate through blocks on the card and deserialize all the binary data.
-        sectorLoop@ for ((sectorNum, sector) in card.sectors.withIndex()) {
-            blockLoop@ for ((blockNum, block) in sector.blocks.withIndex()) {
-                val data = block.data
-
-                if (blockNum == 3) {
-                    continue
-                }
-
-                when (sectorNum) {
-                    0 -> {
-                        when (blockNum) {
-                            0 -> continue@blockLoop
-                            1 -> {
-                                preambleRecord = ErgPreambleRecord.recordFromBytes(data)
-                                continue@blockLoop
-                            }
-                            2 -> {
-                                metadataRecord = ErgMetadataRecord.recordFromBytes(data)
-                                continue@blockLoop
-                            }
-                        }
-                        // Skip indexes, we already read this.
-                        continue@sectorLoop
-                    }
-
-                    1, 2 -> continue@sectorLoop
-                }
-
-                // Fallback to using indexes
-                val record = activeIndex.readRecord(sectorNum, blockNum, data)
-
-                if (record != null) {
-                    Log.d(TAG, String.format(Locale.ENGLISH, "Sector %d, Block %d: %s",
-                            sectorNum, blockNum,
-                            if (DEBUG) record.toString() else record.javaClass.simpleName))
-                    if (DEBUG) {
-                        Log.d(TAG, data.getHexString())
-                    }
-                }
-
-                if (record != null) {
-                    records.add(record)
-                }
-            }
-        }
-
-        if (metadataRecord != null) {
-            serialNumber = formatSerialNumber(metadataRecord)
-            mEpochDate = metadataRecord.epochDate
-            mAgencyID = metadataRecord.agencyID
-        }
-
-        val txns = ArrayList<ErgTransaction>()
-
-        for (record in records) {
-            if (record is ErgBalanceRecord) {
-                mBalance = record.balance
-            } else if (record is ErgPurseRecord) {
-                txns.add(newTrip(record, mEpochDate))
-            }
-        }
-
-        Collections.sort(txns, Transaction.Comparator())
-
-        // Merge trips as appropriate
-        mTrips = TransactionTrip.merge(txns)
-    }
-
-    override fun writeToParcel(parcel: Parcel, flags: Int) {
-        parcel.writeString(serialNumber)
-        parcel.writeInt(mEpochDate)
-        parcel.writeList(mTrips)
-        parcel.writeString(mCurrency)
-    }
-
-    override fun describeContents(): Int {
-        return 0
-    }
-
-    /**
-     * Allows you to override the constructor for new trips, to hook in your own station ID code.
-     *
-     * @return Subclass of ErgTransaction.
-     */
-    protected open fun newTrip(purse: ErgPurseRecord, epoch: Int): ErgTransaction {
-        return ErgTransaction(purse, epoch, mCurrency!!, timezone)
-    }
-
-    /**
-     * Some cards format the serial number in decimal rather than hex. By default, this uses hex.
-     *
-     * This can be overridden in subclasses to format the serial number correctly.
-     * @param metadataRecord Metadata record for this card.
-     * @return Formatted serial number, as string.
-     */
-    protected open fun formatSerialNumber(metadataRecord: ErgMetadataRecord): String {
-        return metadataRecord.cardSerialHex
-    }
+    protected constructor(other: ErgTransitData) : this(cardSerial = other.cardSerial,
+            mEpochDate = other.mEpochDate,
+            mAgencyID = other.mAgencyID,
+            mBalance = other.mBalance,
+            trips = other.trips,
+            mCurrency = other.mCurrency)
 
     companion object {
+        // Decoder
+        fun parse(card: ClassicCard, currency: String,
+                  /**
+                   * Allows you to override the constructor for new trips, to hook in your own station ID code.
+                   *
+                   * @return Subclass of ErgTransaction.
+                   */
+                  newTrip: (purse: ErgPurseRecord, epoch: Int) -> ErgTransaction): ErgTransitData {
+            val records = ArrayList<ErgRecord>()
+
+            // Read the index data
+            val index1 = ErgIndexRecord.recordFromSector(card.getSector(1))
+            val index2 = ErgIndexRecord.recordFromSector(card.getSector(2))
+            if (DEBUG) {
+                Log.d(TAG, "Index 1: $index1")
+                Log.d(TAG, "Index 2: $index2")
+            }
+
+            val activeIndex = if (index1.version > index2.version) index1 else index2
+
+            var metadataRecord: ErgMetadataRecord? = null
+            var preambleRecord: ErgPreambleRecord? = null
+
+            // Iterate through blocks on the card and deserialize all the binary data.
+            sectorLoop@ for ((sectorNum, sector) in card.sectors.withIndex()) {
+                blockLoop@ for ((blockNum, block) in sector.blocks.withIndex()) {
+                    val data = block.data
+
+                    if (blockNum == 3) {
+                        continue
+                    }
+
+                    when (sectorNum) {
+                        0 -> {
+                            when (blockNum) {
+                                0 -> continue@blockLoop
+                                1 -> {
+                                    preambleRecord = ErgPreambleRecord.recordFromBytes(data)
+                                    continue@blockLoop
+                                }
+                                2 -> {
+                                    metadataRecord = ErgMetadataRecord.recordFromBytes(data)
+                                    continue@blockLoop
+                                }
+                            }
+                            // Skip indexes, we already read this.
+                            continue@sectorLoop
+                        }
+
+                        1, 2 -> continue@sectorLoop
+                    }
+
+                    // Fallback to using indexes
+                    val record = activeIndex.readRecord(sectorNum, blockNum, data)
+
+                    if (record != null) {
+                        Log.d(TAG, "Sector $sectorNum, Block $blockNum: $record")
+                        if (DEBUG) {
+                            Log.d(TAG, data.getHexString())
+                        }
+                    }
+
+                    if (record != null) {
+                        records.add(record)
+                    }
+                }
+            }
+
+            val epochDate = metadataRecord?.epochDate ?: 0
+
+            val txns = ArrayList<ErgTransaction>()
+            var balance = 0
+
+            for (record in records) {
+                if (record is ErgBalanceRecord) {
+                    balance = record.balance
+                } else if (record is ErgPurseRecord) {
+                    txns.add(newTrip(record, epochDate))
+                }
+            }
+
+            return ErgTransitData(
+                // Merge trips as appropriate
+                    cardSerial = metadataRecord?.cardSerial,
+                trips = TransactionTrip.merge(txns.sortedWith(Transaction.Comparator())),
+                    mBalance = balance,
+                    mCurrency = currency,
+                    mEpochDate = epochDate,
+                    mAgencyID = metadataRecord?.agencyID ?: 0
+            )
+        }
+
         // Flipping this to true shows more data from the records in Logcat.
         private val DEBUG = true
         private val TAG = ErgTransitData::class.java.simpleName
@@ -259,18 +227,6 @@ open class ErgTransitData : TransitData, Parcelable {
             } catch (ex: UnauthorizedException) {
                 // Can't be for us...
                 return null
-            }
-
-        }
-
-        @JvmField
-        val CREATOR = object : Parcelable.Creator<ErgTransitData> {
-            override fun createFromParcel(parcel: Parcel): ErgTransitData {
-                return ErgTransitData(parcel)
-            }
-
-            override fun newArray(size: Int): Array<ErgTransitData?> {
-                return arrayOfNulls(size)
             }
         }
     }

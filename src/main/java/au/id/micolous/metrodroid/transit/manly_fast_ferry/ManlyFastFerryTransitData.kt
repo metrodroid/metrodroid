@@ -39,11 +39,9 @@ import au.id.micolous.metrodroid.transit.erg.record.ErgPurseRecord
  * Documentation of format: https://github.com/micolous/metrodroid/wiki/Manly-Fast-Ferry
  */
 class ManlyFastFerryTransitData private constructor(card: ClassicCard) :
-        ErgTransitData(card, CURRENCY) {
-
-    override fun newTrip(purse: ErgPurseRecord, epoch: Int) =
+        ErgTransitData(parse(card, CURRENCY) { purse: ErgPurseRecord, epoch: Int ->
             ManlyFastFerryTransaction(purse, epoch)
-
+        }) {
     override val cardName get() = NAME
     override val timezone get() = TIME_ZONE
 

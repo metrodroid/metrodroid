@@ -31,6 +31,7 @@ import au.id.micolous.metrodroid.transit.erg.ErgTransitData
 import au.id.micolous.metrodroid.transit.erg.ErgTransitFactory
 import au.id.micolous.metrodroid.transit.erg.record.ErgMetadataRecord
 import au.id.micolous.metrodroid.transit.erg.record.ErgPurseRecord
+import au.id.micolous.metrodroid.util.ImmutableByteArray
 import java.util.*
 
 /**
@@ -43,15 +44,13 @@ import java.util.*
  * Documentation: https://github.com/micolous/metrodroid/wiki/Metrocard-%28Christchurch%29
  */
 class ChcMetrocardTransitData private constructor(card: ClassicCard) :
-        ErgTransitData(card, CURRENCY) {
-
-    override fun newTrip(purse: ErgPurseRecord, epoch: Int) =
+        ErgTransitData(parse(card, CURRENCY) { purse, epoch ->
             ChcMetrocardTransaction(purse, epoch)
-
+        }) {
     override val cardName get() = NAME
 
-    override fun formatSerialNumber(metadataRecord: ErgMetadataRecord) =
-            internalFormatSerialNumber(metadataRecord)
+    override val serialNumber: String?
+        get() = cardSerial?.let { internalFormatSerialNumber(it) }
 
     override val timezone get() = TIME_ZONE
 
@@ -91,10 +90,10 @@ class ChcMetrocardTransitData private constructor(card: ClassicCard) :
             override val allCards get() = listOf(CARD_INFO)
 
             override fun getSerialNumber(metadata: ErgMetadataRecord) =
-                    internalFormatSerialNumber(metadata)
+                    internalFormatSerialNumber(metadata.cardSerial)
         }
 
-        private fun internalFormatSerialNumber(metadataRecord: ErgMetadataRecord) =
-                metadataRecord.cardSerialDec.toString()
+        private fun internalFormatSerialNumber(serial: ImmutableByteArray) =
+                serial.byteArrayToInt().toString()
     }
 }
