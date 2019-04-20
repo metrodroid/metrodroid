@@ -31,7 +31,9 @@ import java.util.Collections;
 import java.util.List;
 
 public class TransactionTrip extends Trip implements Parcelable {
+    @Nullable
     protected Transaction mStart;
+    @Nullable
     protected Transaction mEnd;
 
     protected TransactionTrip(@NonNull Transaction transaction) {
@@ -194,10 +196,25 @@ public class TransactionTrip extends Trip implements Parcelable {
             return null;
         }
 
-        if (mEnd != null)
-            return mEnd.getFare();
+        if (mEnd != null) {
+            final TransitCurrency endFare = mEnd.getFare();
+            if (endFare != null) {
+                if (mStart != null) {
+                    final TransitCurrency startFare = mStart.getFare();
+                    if (startFare != null) {
+                        return startFare.add(endFare);
+                    }
+                }
 
-        return mStart.getFare();
+                return endFare;
+            }
+        }
+
+        if (mStart != null) {
+            return mStart.getFare();
+        }
+
+        return null;
     }
 
     @Override

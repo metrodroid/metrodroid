@@ -1,7 +1,7 @@
 /*
  * ISO7816Protocol.java
  *
- * Copyright 2018 Michael Farrell <micolous+git@gmail.com>
+ * Copyright 2018-2019 Michael Farrell <micolous+git@gmail.com>
  * Copyright 2018 Google
  *
  * This program is free software: you can redistribute it and/or modify
@@ -19,7 +19,6 @@
  */
 package au.id.micolous.metrodroid.card.iso7816;
 
-import android.nfc.tech.IsoDep;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.annotation.VisibleForTesting;
@@ -65,15 +64,25 @@ public class ISO7816Protocol {
     @VisibleForTesting
     public static final byte INSTRUCTION_ISO7816_READ_RECORD = (byte) 0xB2;
     @VisibleForTesting
+    public static final byte INSTRUCTION_ISO7816_GET_DATA_CA = (byte) 0xCA;
+    @VisibleForTesting
+    public static final byte INSTRUCTION_ISO7816_GET_DATA_CB = (byte) 0xCB;
+
+
+    @VisibleForTesting
     public static final byte ERROR_COMMAND_NOT_ALLOWED = (byte) 0x69;
     @VisibleForTesting
     public static final byte ERROR_WRONG_PARAMETERS = (byte) 0x6A;
+    @VisibleForTesting
+    public static final byte ERROR_WRONG_LENGTH = (byte) 0x6c;
     @VisibleForTesting
     public static final byte CNA_NO_CURRENT_EF = (byte) 0x86;
     @VisibleForTesting
     public static final byte WP_FILE_NOT_FOUND = (byte) 0x82;
     @VisibleForTesting
     public static final byte WP_RECORD_NOT_FOUND = (byte) 0x83;
+    @VisibleForTesting
+    public static final byte WP_INCORRECT_PARAMS_P1_P2 = (byte) 0x86;
     @VisibleForTesting
     public static final byte SELECT_BY_NAME = (byte) 0x04;
     @VisibleForTesting
@@ -167,8 +176,13 @@ public class ISO7816Protocol {
                             throw new FileNotFoundException();
                         case WP_RECORD_NOT_FOUND: // Record not found
                             throw new EOFException();
+                        case WP_INCORRECT_PARAMS_P1_P2: // Incorrect parameters
+                            throw new IllegalStateException();
                     }
                     break;
+
+                case ERROR_WRONG_LENGTH:
+                    throw new WrongLengthException(sw2);
             }
 
             // we get error?
@@ -176,6 +190,18 @@ public class ISO7816Protocol {
         }
 
         return recvBuffer.sliceOffLen(0, recvBuffer.getSize() - 2);
+    }
+
+    @Nullable
+    public ImmutableByteArray select(boolean nextOccurrence) {
+        Log.d(TAG, "Select next");
+        try {
+            // Select an application by file name
+            return sendRequest(CLASS_ISO7816, INSTRUCTION_ISO7816_SELECT,
+                    SELECT_BY_NAME, nextOccurrence ? (byte) 0x02 : (byte) 0x00, (byte) 0);
+        } catch (IOException | ISO7816Exception e) {
+            return null;
+        }
     }
 
     @NonNull
@@ -191,6 +217,14 @@ public class ISO7816Protocol {
         Log.d(TAG, "Unselect file");
         sendRequest(CLASS_ISO7816, INSTRUCTION_ISO7816_SELECT,
                     (byte) 0, (byte) 0, (byte) 0);
+    }
+
+    public ImmutableByteArray selectEfById(int fileId) throws IOException, ISO7816Exception {
+        byte[] file = Utils.integerToByteArray(fileId, 2);
+        Log.d(TAG, "Select EF " + Utils.getHexString(file));
+        return sendRequest(CLASS_ISO7816, INSTRUCTION_ISO7816_SELECT,
+                (byte) 0x02, (byte) 0, (byte) 0,
+                file);
     }
 
     public ImmutableByteArray selectById(int fileId) throws IOException, ISO7816Exception {
@@ -209,6 +243,35 @@ public class ISO7816Protocol {
             return sendRequest(CLASS_ISO7816, INSTRUCTION_ISO7816_READ_RECORD,
                     recordNumber, (byte) 0x4 /* p1 is record number */, length);
         } catch (ISO7816Exception e) {
+            if (length == 0 && e instanceof WrongLengthException) {
+                final byte correctLength = ((WrongLengthException) e).getCorrectLength();
+                if (correctLength != 0) {
+                    Log.i(TAG, "Incorrect length, retrying with " + correctLength);
+                    return readRecord(recordNumber, correctLength);
+                }
+            }
+
+            Log.e(TAG, "couldn't read record", e);
+            return null;
+        }
+    }
+
+    @Nullable
+    public ImmutableByteArray readRecord(byte sfi, byte recordNumber, byte length) throws IOException {
+        //noinspection StringConcatenation
+        Log.d(TAG, "Read record " + recordNumber);
+        try {
+            return sendRequest(CLASS_ISO7816, INSTRUCTION_ISO7816_READ_RECORD,
+                    recordNumber, (byte) ((sfi << 3) | 4) /* p1 is record number */, length);
+        } catch (ISO7816Exception e) {
+            if (length == 0 && e instanceof WrongLengthException) {
+                final byte correctLength = ((WrongLengthException) e).getCorrectLength();
+                if (correctLength != 0) {
+                    Log.i(TAG, "Incorrect length, retrying with " + correctLength);
+                    return readRecord(sfi, recordNumber, correctLength);
+                }
+            }
+
             Log.e(TAG, "couldn't read record", e);
             return null;
         }
@@ -245,16 +308,4 @@ public class ISO7816Protocol {
         }
     }
 
-    @Nullable
-    public ImmutableByteArray readRecord(byte sfi, byte recordNumber, byte length) throws IOException {
-        //noinspection StringConcatenation
-        Log.d(TAG, "Read record " + recordNumber);
-        try {
-            return sendRequest(CLASS_ISO7816, INSTRUCTION_ISO7816_READ_RECORD,
-                    recordNumber, (byte) ((sfi << 3) | 4) /* p1 is record number */, length);
-        } catch (ISO7816Exception e) {
-            Log.e(TAG, "couldn't read record", e);
-            return null;
-        }
-    }
 }

@@ -19,9 +19,7 @@
  */
 package au.id.micolous.metrodroid.card.iso7816;
 
-import android.nfc.Tag;
 import android.nfc.TagLostException;
-import android.nfc.tech.IsoDep;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.annotation.VisibleForTesting;
@@ -31,13 +29,11 @@ import au.id.micolous.metrodroid.multi.Localizer;
 import org.simpleframework.xml.ElementList;
 import org.simpleframework.xml.Root;
 
-import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Collections;
 import java.util.GregorianCalendar;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
 
@@ -49,7 +45,7 @@ import au.id.micolous.metrodroid.card.TagReaderFeedbackInterface;
 import au.id.micolous.metrodroid.card.calypso.CalypsoApplication;
 import au.id.micolous.metrodroid.card.cepas.CEPASApplication;
 import au.id.micolous.metrodroid.card.china.ChinaCard;
-import au.id.micolous.metrodroid.card.tmoney.TMoneyCard;
+import au.id.micolous.metrodroid.card.ksx6924.KSX6924Application;
 import au.id.micolous.metrodroid.transit.TransitData;
 import au.id.micolous.metrodroid.transit.TransitIdentity;
 import au.id.micolous.metrodroid.ui.ListItem;
@@ -66,7 +62,7 @@ public class ISO7816Card extends Card {
     private static final String TAG = ISO7816Card.class.getSimpleName();
     private static final ISO7816ApplicationFactory[] FACTORIES = {
             CalypsoApplication.FACTORY,
-            TMoneyCard.FACTORY,
+            KSX6924Application.FACTORY,
             ChinaCard.FACTORY
     };
 
@@ -110,7 +106,6 @@ public class ISO7816Card extends Card {
              * Unfortunately many cards don't reply to iterating requests
              *
              */
-
             // CEPAS specification makes selection by AID optional. I couldn't find an AID that
             // works on my cards. But CEPAS needs to have CEPAS app implicitly selected,
             // so try selecting its main file

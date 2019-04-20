@@ -422,6 +422,19 @@ public class TransitCurrency extends TransitBalance implements Parcelable {
         return new TransitCurrency(-mCurrency, mCurrencyCode, mDivisor);
     }
 
+    public TransitCurrency add(@NonNull TransitCurrency other) {
+        if (!sameCurrency(other)) {
+            throw new IllegalArgumentException("divisor and currency codes must be the same");
+        }
+
+        final int total = mCurrency + other.mCurrency;
+        return new TransitCurrency(total, mCurrencyCode, mDivisor);
+    }
+
+    public boolean sameCurrency(@NonNull TransitCurrency other) {
+        return mDivisor == other.mDivisor & mCurrencyCode.equals(other.mCurrencyCode);
+    }
+
     @Override
     public int describeContents() {
         return 0;

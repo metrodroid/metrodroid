@@ -5,4 +5,5 @@
 <resources>
     <string name="location_vancouver">Vancouver, BC</string>
     <string name="payment_method_cheque">Cheque</string>
+    <string name="mobile_carrier">Cellular carrier</string>
 </resources>

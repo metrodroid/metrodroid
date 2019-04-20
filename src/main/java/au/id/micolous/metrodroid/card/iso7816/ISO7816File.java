@@ -86,6 +86,7 @@ public class ISO7816File {
         mReadableName = mSelector == null ? null : mSelector.formatString();
     }
 
+    @NonNull
     public List<ISO7816Record> getRecords() {
         Collections.sort(mRecords, (a, b) -> Integer.compare(a.getIndex(), b.getIndex()));
         return Collections.unmodifiableList(mRecords);
@@ -125,10 +126,10 @@ public class ISO7816File {
         List<ListItem> recList = new ArrayList<>();
         ImmutableByteArray binaryData = getBinaryData();
         ImmutableByteArray fciData = getFci();
-        if (binaryData != null)
+        if (binaryData != null && !binaryData.isEmpty())
             recList.add(ListItemRecursive.Companion.collapsedValue(Localizer.INSTANCE.localizeString(R.string.binary_title_format),
                     binaryData.toHexDump()));
-        if (fciData != null)
+        if (fciData != null && !fciData.isEmpty())
             recList.add(new ListItemRecursive(Localizer.INSTANCE.localizeString(R.string.file_fci), null,
                     ISO7816TLV.INSTANCE.infoWithRaw(fciData)));
         List<ISO7816Record> records = getRecords();

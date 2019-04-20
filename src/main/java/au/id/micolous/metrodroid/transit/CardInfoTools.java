@@ -38,9 +38,9 @@ import au.id.micolous.metrodroid.card.china.ChinaCard;
 import au.id.micolous.metrodroid.card.classic.ClassicCard;
 import au.id.micolous.metrodroid.card.desfire.DesfireCard;
 import au.id.micolous.metrodroid.card.felica.FelicaCard;
+import au.id.micolous.metrodroid.card.ksx6924.KSX6924Application;
 import au.id.micolous.metrodroid.card.ultralight.UltralightCard;
 import au.id.micolous.metrodroid.transit.ezlink.EZLinkTransitData;
-import au.id.micolous.metrodroid.transit.tmoney.TMoneyTransitData;
 import au.id.micolous.metrodroid.util.Utils;
 
 /**
@@ -59,10 +59,10 @@ public class CardInfoTools {
         allFactories.addAll(FelicaCard.getAllFactories());
         allFactories.addAll(UltralightCard.getAllFactories());
         allFactories.addAll(ChinaCard.getAllFactories());
+        allFactories.addAll(KSX6924Application.getAllFactories());
         for (CardTransitFactory<?> factory : allFactories) {
             ret.addAll(factory.getAllCards());
         }
-        ret.add(TMoneyTransitData.CARD_INFO);
         ret.addAll(EZLinkTransitData.ALL_CARD_INFOS);
         Collator collator = Collator.getInstance();
         Collections.sort(ret, (a, b) -> collator.compare(a.getName(), b.getName()));

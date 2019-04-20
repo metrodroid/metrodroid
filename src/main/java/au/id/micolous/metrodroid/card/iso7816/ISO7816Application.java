@@ -198,7 +198,7 @@ public class ISO7816Application {
                 records = null;
             }
             if (data == null) {
-                if (records == null)
+                if (records == null || records.isEmpty())
                     return null;
                 data = ImmutableByteArray.Companion.empty();
             }
@@ -207,11 +207,19 @@ public class ISO7816Application {
             return f;
         }
 
-        public void dumpAllSfis(ISO7816Protocol protocol, TagReaderFeedbackInterface feedbackInterface, int start, int total) throws IOException {
+        public void dumpAllSfis(ISO7816Protocol protocol, @NonNull TagReaderFeedbackInterface feedbackInterface, int start, int total) throws IOException {
             int counter = start;
             for (byte sfi = 1; sfi <= 31; sfi++) {
                 feedbackInterface.updateProgressBar(counter++, total);
                 dumpFileSFI(protocol, sfi, 0);
+            }
+        }
+
+        public void dumpAllSfis(ISO7816Protocol protocol) throws IOException {
+            //int counter = start;
+            for (byte sfi = 1; sfi <= 31; sfi++) {
+                //feedbackInterface.updateProgressBar(counter++, total);
+                ISO7816File f = dumpFileSFI(protocol, sfi, 0);
             }
         }
 

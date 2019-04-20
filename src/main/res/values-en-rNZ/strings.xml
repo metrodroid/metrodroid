@@ -6,4 +6,5 @@
     <string name="location_auckland">Auckland</string>
     <string name="location_christchurch_nz">Christchurch</string>
     <string name="payment_method_cheque">Cheque</string>
+    <string name="mobile_carrier">Mobile carrier</string>
 </resources>

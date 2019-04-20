@@ -9,4 +9,5 @@
     <string name="location_act_australia">Australian Capital Territory</string>
     <string name="location_wa_australia">Western Australia</string>
     <string name="payment_method_cheque">Cheque</string>
+    <string name="mobile_carrier">Mobile carrier</string>
 </resources>

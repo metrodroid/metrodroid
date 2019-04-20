@@ -22,6 +22,7 @@
 package au.id.micolous.metrodroid.util
 
 object NumberUtils {
+    fun byteToHex(v: Byte) = "0x" + v.toString(16)
     fun intToHex(v: Int) = "0x" + v.toString(16)
     fun longToHex(v: Long): String = "0x" + v.toString(16)
     fun convertBCDtoInteger(data: Int): Int {
