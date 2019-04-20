@@ -129,75 +129,39 @@ open class ErgTransitData internal constructor(
 
             val activeIndex = if (index1.version > index2.version) index1 else index2
 
-            var metadataRecord: ErgMetadataRecord? = null
-            var preambleRecord: ErgPreambleRecord? = null
+            val preambleRecord: ErgPreambleRecord = ErgPreambleRecord.recordFromBytes(card[0, 1].data)
+            val metadataRecord: ErgMetadataRecord = ErgMetadataRecord.recordFromBytes(card[0, 2].data)
 
             // Iterate through blocks on the card and deserialize all the binary data.
-            sectorLoop@ for ((sectorNum, sector) in card.sectors.withIndex()) {
-                blockLoop@ for ((blockNum, block) in sector.blocks.withIndex()) {
+            for ((sectorNum, sector) in card.sectors.withIndex().drop(3)) {
+                for ((blockNum, block) in sector.blocks.dropLast(1).withIndex()) {
                     val data = block.data
 
-                    if (blockNum == 3) {
-                        continue
-                    }
-
-                    when (sectorNum) {
-                        0 -> {
-                            when (blockNum) {
-                                0 -> continue@blockLoop
-                                1 -> {
-                                    preambleRecord = ErgPreambleRecord.recordFromBytes(data)
-                                    continue@blockLoop
-                                }
-                                2 -> {
-                                    metadataRecord = ErgMetadataRecord.recordFromBytes(data)
-                                    continue@blockLoop
-                                }
-                            }
-                            // Skip indexes, we already read this.
-                            continue@sectorLoop
-                        }
-
-                        1, 2 -> continue@sectorLoop
-                    }
-
                     // Fallback to using indexes
-                    val record = activeIndex.readRecord(sectorNum, blockNum, data)
+                    val record = activeIndex.readRecord(sectorNum, blockNum, data) ?: continue
 
-                    if (record != null) {
-                        Log.d(TAG, "Sector $sectorNum, Block $blockNum: $record")
-                        if (DEBUG) {
-                            Log.d(TAG, data.getHexString())
-                        }
+                    Log.d(TAG, "Sector $sectorNum, Block $blockNum: $record")
+                    if (DEBUG) {
+                        Log.d(TAG, data.getHexString())
                     }
 
-                    if (record != null) {
-                        records.add(record)
-                    }
+                    records.add(record)
                 }
             }
 
-            val epochDate = metadataRecord?.epochDate ?: 0
+            val epochDate = metadataRecord.epochDate
 
-            val txns = ArrayList<ErgTransaction>()
-            var balance = 0
-
-            for (record in records) {
-                if (record is ErgBalanceRecord) {
-                    balance = record.balance
-                } else if (record is ErgPurseRecord) {
-                    txns.add(newTrip(record, epochDate))
-                }
-            }
+            val txns = records.filterIsInstance<ErgPurseRecord>().map { newTrip(it, epochDate) }
+            val balance = records.filterIsInstance<ErgBalanceRecord>().map { it.balance }.lastOrNull()
 
             return ErgTransitData(
-                // Merge trips as appropriate
-                    cardSerial = metadataRecord?.cardSerial,
-                trips = TransactionTrip.merge(txns.sortedWith(Transaction.Comparator())),
-                    mBalance = balance,
+                    // Merge trips as appropriate
+                    cardSerial = metadataRecord.cardSerial,
+                    trips = TransactionTrip.merge(txns.sortedWith(Transaction.Comparator())),
+                    mBalance = balance ?: 0,
                     mCurrency = currency,
                     mEpochDate = epochDate,
-                    mAgencyID = metadataRecord?.agencyID ?: 0
+                    mAgencyID = metadataRecord.agencyID
             )
         }
 
