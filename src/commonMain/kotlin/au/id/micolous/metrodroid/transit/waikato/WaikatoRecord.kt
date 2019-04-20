@@ -18,10 +18,10 @@
  */
 package au.id.micolous.metrodroid.transit.waikato
 
-import android.os.Parcelable
 import au.id.micolous.metrodroid.card.classic.ClassicCard
+import au.id.micolous.metrodroid.multi.Parcelable
+import au.id.micolous.metrodroid.multi.Parcelize
 import au.id.micolous.metrodroid.util.ImmutableByteArray
-import kotlinx.android.parcel.Parcelize
 
 /**
  * Reader for Waikato BUSIT cards.
