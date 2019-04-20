@@ -108,17 +108,10 @@ data class RkfTCSTTrip(private val mParsed: En1545Parsed,
             val previous = if (previousIdx >= 0) mTransactions[previousIdx] else null
             // Case 6: pair of transfer and checkout or checkout missing
             if (previous != null && !isCheckin(previous)) {
-<<<<<<< HEAD:src/main/java/au/id/micolous/metrodroid/transit/rkf/RkfTCSTTrip.kt
-                legs.add(RkfTripLeg(mStartTimestamp = previous.timestamp!!, mEndTimestamp = if (checkoutCompleted) endTimestamp else null,
-                        mStartStation = previous.station, mEndStation = endStation,
-                        mFare = null, mPassengerCount = passengerCount, mMode = previous.mode,
-                        mTransfer = true,
-=======
                 legs.add(RkfTripLeg(startTimestamp = previous.timestamp!!, endTimestamp = if (checkoutCompleted) endTimestamp else null,
                         startStation = previous.station, endStation = endStation,
                         fare = null, passengerCount = passengerCount, mode = previous.mode,
                         isTransfer = true,
->>>>>>> f5e5cfc1b... Uplift En1545-based transit to kotlin-common:src/commonMain/kotlin/au/id/micolous/metrodroid/transit/rkf/RkfTCSTTrip.kt
                         mShortAgencyName = previous.getAgencyName(true), mAgencyName = previous.getAgencyName(false)))
             } else {
                 // No usable data in TCEL. Happens e.g. on SLAccess which has no TCEL or if there were no transfers
