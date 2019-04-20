@@ -21,8 +21,9 @@
 package au.id.micolous.metrodroid.transit
 
 import au.id.micolous.metrodroid.multi.Parcelable
+import au.id.micolous.metrodroid.time.Daystamp
 import au.id.micolous.metrodroid.ui.ListItem
-import java.util.*
+import kotlin.jvm.JvmSuppressWildcards
 
 @JvmSuppressWildcards(false)
 abstract class TransitData : Parcelable {
@@ -137,17 +138,14 @@ abstract class TransitData : Parcelable {
         return false
     }
 
-    override fun describeContents(): Int {
-        return 0
-    }
-
     /**
      * Finds the timestamp of the latest trip taken on the card.
      * @return Latest timestamp of a trip, or null if there are no trips or no trips with
      * timestamps.
      */
-    fun getLastUseTimestamp(): Calendar? {
+    fun getLastUseDaystamp(): Daystamp? {
         // Find the last trip taken on the card.
-        return trips?.mapNotNull { t -> t.endTimestamp ?: t.startTimestamp }?.maxBy { it.timeInMillis }
+        return trips?.mapNotNull { t -> t.endTimestamp ?: t.startTimestamp }?.map { it.toDaystamp() }
+                ?.maxBy { it.daysSinceEpoch }
     }
 }

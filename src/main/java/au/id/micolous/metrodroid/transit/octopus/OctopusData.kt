@@ -18,28 +18,30 @@
  */
 package au.id.micolous.metrodroid.transit.octopus
 
+import au.id.micolous.metrodroid.time.MetroTimeZone
+import au.id.micolous.metrodroid.time.TimestampFull
 import au.id.micolous.metrodroid.util.Utils
 import java.util.*
 
 class OctopusData {
     companion object {
-        val OCTOPUS_TZ = TimeZone.getTimeZone("Asia/Hong_Kong")!!
+        val OCTOPUS_TZ = MetroTimeZone.BEIJING
 
-        val OCTOPUS_OFFSETS = listOf(
-                Utils.epoch(1997, OCTOPUS_TZ) to 350,
+        private val OCTOPUS_OFFSETS = listOf(
+                TimestampFull(year = 1997, month = 0, day = 1, hour = 0, min = 0, tz = OCTOPUS_TZ) to 350,
 
                 // Negative balance amount changes, which changes the offset:
                 // https://www.octopus.com.hk/en/consumer/customer-service/faq/get-your-octopus/about-octopus.html#3532
                 // https://www.octopus.com.hk/en/consumer/customer-service/faq/get-your-octopus/about-octopus.html#3517
-                Utils.epoch(2017, 10, 1, OCTOPUS_TZ) to 500
+                TimestampFull(year = 2017, month = 10, day = 1, hour = 0, min = 0, tz = OCTOPUS_TZ) to 500
         )
 
-        val SHENZHEN_OFFSET = 350
+        private const val SHENZHEN_OFFSET = 350
 
         // Shenzhen Tong issues different cards now, so do not know if the new balance applies to
         // that card as well.
 
-        private fun getOffset(scanTime: Calendar, offsets: List<Pair<GregorianCalendar, Int>>) : Int {
+        private fun getOffset(scanTime: TimestampFull, offsets: List<Pair<TimestampFull, Int>>) : Int {
             var offset = offsets.first().second
 
             for (it in offsets) {
@@ -53,8 +55,8 @@ class OctopusData {
             return offset
         }
 
-        fun getOctopusOffset(scanTime: Calendar) = getOffset(scanTime, OCTOPUS_OFFSETS)
+        fun getOctopusOffset(scanTime: TimestampFull) = getOffset(scanTime, OCTOPUS_OFFSETS)
 
-        fun getShenzhenOffset(@Suppress("UNUSED_PARAMETER") scanTime: Calendar) = SHENZHEN_OFFSET
+        fun getShenzhenOffset(@Suppress("UNUSED_PARAMETER") scanTime: TimestampFull) = SHENZHEN_OFFSET
     }
 }

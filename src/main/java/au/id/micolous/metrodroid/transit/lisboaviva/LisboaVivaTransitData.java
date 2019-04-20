@@ -105,7 +105,7 @@ public class LisboaVivaTransitData extends Calypso1545TransitData {
         if (idRec == null)
             mHolderName = "";
         else
-            mHolderName = idRec.getData().readLatin1();
+            mHolderName = idRec.readLatin1();
     }
 
     public final static CalypsoCardTransitFactory FACTORY = new CalypsoCardTransitFactory() {

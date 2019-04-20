@@ -18,6 +18,8 @@
  */
 package au.id.micolous.metrodroid.transit.erg
 
+import au.id.micolous.metrodroid.time.TimestampFull
+import au.id.micolous.metrodroid.time.calendar2ts
 import au.id.micolous.metrodroid.transit.Transaction
 import au.id.micolous.metrodroid.transit.TransitCurrency
 import au.id.micolous.metrodroid.transit.erg.record.ErgPurseRecord
@@ -37,7 +39,7 @@ open class ErgTransaction(protected val purse: ErgPurseRecord,
 
     // Implemented functionality.
     override val timestamp get(): TimestampFull {
-        return convertTimestamp(epoch, timezone, purse.day, purse.minute)
+        return calendar2ts(convertTimestamp(epoch, timezone, purse.day, purse.minute))!!
     }
 
     override val isTapOff get(): Boolean {

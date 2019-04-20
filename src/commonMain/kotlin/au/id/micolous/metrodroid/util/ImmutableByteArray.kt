@@ -23,22 +23,26 @@ import au.id.micolous.metrodroid.multi.FormattedString
 import au.id.micolous.metrodroid.multi.Parcelable
 import au.id.micolous.metrodroid.multi.Parcelize
 import kotlinx.io.OutputStream
-import kotlinx.io.charsets.Charset
-import kotlinx.io.core.String
+import kotlinx.serialization.*
 
 fun ByteArray.toImmutable(): ImmutableByteArray = ImmutableByteArray.fromByteArray(this)
 
 @Parcelize
-open class ImmutableByteArray private constructor(private val mData: ByteArray) :
+@Serializable(with = ImmutableByteArray.Companion::class)
+class ImmutableByteArray private constructor(
+        private val mData: ByteArray) :
         Parcelable, Comparable<ImmutableByteArray>, Collection<Byte> {
     constructor(len: Int, function: (Int) -> Byte) : this(mData = ByteArray(len, function))
     constructor(imm: ImmutableByteArray): this(mData = imm.mData)
     constructor(len: Int) : this(mData = ByteArray(len))
 
+    @Transient
     val dataCopy: ByteArray
         get() = mData.copyOf()
+    @Transient
     override val size
         get() = mData.size
+    @Transient
     val lastIndex
         get() = mData.lastIndex
 
@@ -139,7 +143,8 @@ open class ImmutableByteArray private constructor(private val mData: ByteArray) 
         os.write(mData, offset, length)
     }
 
-    companion object {
+    @Serializer(forClass = ImmutableByteArray::class)
+    companion object : KSerializer<ImmutableByteArray> {
         operator fun Byte.plus(second: ImmutableByteArray) = ImmutableByteArray(
                 mData = byteArrayOf(this) + second.mData)
 
@@ -258,6 +263,13 @@ open class ImmutableByteArray private constructor(private val mData: ByteArray) 
 
         fun fromASCII(s: String) = ImmutableByteArray(mData = s.map { it.toByte() }.toByteArray())
 
+        override fun serialize(encoder: Encoder, obj: ImmutableByteArray) {
+            encoder.encodeString(obj.toHexString())
+        }
+
+        override fun deserialize(decoder: Decoder): ImmutableByteArray {
+            return fromHex(decoder.decodeString())
+        }
 
         fun fromBase64(input: String) = ImmutableByteArray(mData = decodeBase64(input) ?: throw Exception("Invalid base64: $input"))
 

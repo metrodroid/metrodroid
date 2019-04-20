@@ -20,9 +20,11 @@
 package au.id.micolous.metrodroid.transit
 
 import au.id.micolous.metrodroid.multi.Parcelable
+import au.id.micolous.metrodroid.time.Daystamp
 import au.id.micolous.metrodroid.time.Timestamp
+import au.id.micolous.metrodroid.time.TimestampFull
 
-abstract class Transaction : Parcelable {
+abstract class Transaction : Parcelable, Comparable<Transaction> {
     abstract val isTapOff: Boolean
 
     /**
@@ -94,12 +96,20 @@ abstract class Transaction : Parcelable {
             return -1
         if (t2 == null)
             return +1
-        return t1.compareTo(t2)
+        if (t1 is TimestampFull && t2 is TimestampFull)
+            return t1.compareTo(t2)
+        if (t1.toDaystamp().daysSinceEpoch != t2.toDaystamp().daysSinceEpoch)
+            return t1.toDaystamp().compareTo(t2.toDaystamp())
+        if (t1 is Daystamp && t2 is Daystamp)
+            return 0
+        if (t1 is Daystamp)
+            return -1
+        return +1
     }
 
-    class Comparator : java.util.Comparator<Transaction> {
-        override fun compare(txn1: Transaction, txn2: Transaction): Int {
-            return txn1.compareTo(txn2)
+    class Comparator : kotlin.Comparator<Transaction> {
+        override fun compare(a: Transaction, b: Transaction): Int {
+            return a.compareTo(b)
         }
     }
 }

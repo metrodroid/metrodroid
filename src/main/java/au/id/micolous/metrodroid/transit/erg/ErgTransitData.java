@@ -126,15 +126,17 @@ public class ErgTransitData extends TransitData {
         ErgPreambleRecord preambleRecord = null;
 
         // Iterate through blocks on the card and deserialize all the binary data.
+        int sectorNum = -1;
         sectorLoop:
         for (ClassicSector sector : card.getSectors()) {
-            final int sectorNum = sector.getIndex();
+            sectorNum++;
+            int blockNum = -1;
             blockLoop:
             for (ClassicBlock block : sector.getBlocks()) {
-                final int blockNum = block.getIndex();
+                blockNum++;
                 final ImmutableByteArray data = block.getData();
 
-                if (block.getIndex() == 3) {
+                if (blockNum == 3) {
                     continue;
                 }
 
@@ -195,7 +197,7 @@ public class ErgTransitData extends TransitData {
         Collections.sort(txns, new Transaction.Comparator());
 
         // Merge trips as appropriate
-        mTrips = TransactionTrip.merge(txns);
+        mTrips = TransactionTrip.Companion.merge(txns);
     }
 
     public static final ClassicCardTransitFactory FALLBACK_FACTORY = new ErgTransitFactory();
@@ -258,7 +260,8 @@ public class ErgTransitData extends TransitData {
         items.add(new HeaderListItem(R.string.general));
         items.add(new ListItem(R.string.card_epoch,
                 TimestampFormatter.INSTANCE.longDateFormat(TripObfuscator.INSTANCE.maybeObfuscateTS(
-                        TimestampFormatterKt.calendar2ts(mEpochDate)))));
+                        TimestampFormatterKt.calendar2ts(ErgTransaction.Companion.convertTimestamp(mEpochDate,
+                                getTimezone(), 0, 0))))));
         items.add(new ListItem(R.string.erg_agency_id,
                 NumberUtils.INSTANCE.longToHex(mAgencyID)));
         return items;

@@ -52,6 +52,9 @@ abstract class CardProtocol {
     open val rawData: List<ListItem>?
         get() = null
 
+    @Transient
+    lateinit var scannedAt: TimestampFull
+
     /**
      * This is where a card is actually parsed into TransitData compatible data.
      * @return
@@ -65,7 +68,9 @@ abstract class CardProtocol {
      */
     abstract fun parseTransitIdentity(): TransitIdentity?
 
-    open fun postCreate(card: Card) {}
+    open fun postCreate(card: Card) {
+        scannedAt = card.scannedAt
+    }
 }
 
 @Serializable
