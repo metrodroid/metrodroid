@@ -58,6 +58,9 @@ import au.id.micolous.metrodroid.util.Utils;
  *
  * FeliCa Card User's Manual, Excerpted Edition:
  *   https://www.sony.net/Products/felica/business/tech-support/data/card_usersmanual_2.02.pdf
+ * nfcpy
+ *   https://github.com/nfcpy/nfcpy/blob/master/src/nfc/tag/tt3.py
+ *   https://github.com/nfcpy/nfcpy/blob/master/src/nfc/tag/tt3_sony.py
  */
 
 @SuppressWarnings("DuplicateThrows")
@@ -311,8 +314,27 @@ public final class FelicaProtocol {
     }
 
 
+    /**
+     * Get the n'th service code on the card.
+     *
+     * This allows mapping of the physical service code number (1, 2, 3...) to the logical service
+     * code number (0x48, 0x4a, 0x88...).
+     *
+     * Note: this command is not publicly documented. nfcpy has the best (public) notes on this.
+     *
+     * @param index The index of service or area number to get. This is converted to little-endian
+     *              before being transmitted to the card.
+     * @return If 2 bytes, a service code number.
+     *         If 4 bytes, an area code followed by a maximum service number for the area.
+     *         Returns 2 bytes of 0xffff when the card reaches EOF.
+     *         All return values are little endian.
+     */
     @NotNull
     private ImmutableByteArray searchServiceCode(int index) throws IOException, TagLostException {
+        if (index < 0 || index > 0xffff) {
+            throw new IllegalArgumentException("index must be in range 0-0xffff");
+        }
+
         ImmutableByteArray res = sendRequest(COMMAND_SEARCH_SERVICECODE, idm,
                 (byte) (index & 0xff), // little endian
                 (byte) (index << 8));
@@ -327,32 +349,41 @@ public final class FelicaProtocol {
     /**
      * Gets a list of service codes supported by the card.
      *
+     * This is done by repeatedly calling SEARCH_SERVICECODE until no more values are returned.
+     *
      * The service codes in "corrected" byte order -- SEARCH_SERVICECODE returns service codes in
      * little endian, and the read/write commands take in service codes in little endian.
+     *
+     * One must select a system code first with polling().
      */
     public int[] getServiceCodeList() throws IOException, TagLostException {
-        int index = 1; // 0番目は root areaなので1オリジンで開始する
         ArrayList<Integer> serviceCodeList = new ArrayList<>();
-        while (true) {
-            ImmutableByteArray bytes = searchServiceCode(index); // 1件1件 通信して聞き出します。
-            if (bytes.size() != 2 && bytes.size() != 4)
-                break; // 2 or 4 バイトじゃない場合は、とりあえず終了しておきます。正しい判定ではないかもしれません。
+        for (int index = 1; index <= 0xffff; index++) {
+            // index 0 = root area
+            ImmutableByteArray bytes = searchServiceCode(index);
 
-            if (bytes.size() == 2) { // 2バイトは ServiceCode として扱っています。
+            if (bytes.size() != 2 && bytes.size() != 4) {
+                // Unexpected data length, stop now!
+                break;
+            }
+
+            if (bytes.size() == 2) {
+                // 2 bytes indicates a service code.
+                //
                 // Note: we handle the service code internally as if it were little endian, as
                 // "read without encryption" takes the service code parameter in little endian
                 int code = bytes.byteArrayToIntReversed();
-                if (code == 0xffff) break; // FFFF が終了コードのようです
+
+                if (code == 0xffff) {
+                    // No more data available.
+                    break;
+                }
 
                 serviceCodeList.add(code);
             }
 
-            index++;
-
-            if (index > 0xffff) {
-                // Invalid service code index
-                break;
-            }
+            // 4 byte responses are area codes. For Metrodroid, we ignore this part of the
+            // structure and haven't ever used it -- so we just keep on processing...
         }
         return ArrayUtils.toPrimitive(serviceCodeList.toArray(new Integer[0]));
     }
@@ -362,11 +393,13 @@ public final class FelicaProtocol {
      *
      * @param serviceCode The service code to read. This is converted to little endian before being
      *                    transmitted to the card.
-     * @param addr        Block offset to read from the cord.
+     * @param blockNumber Block to read from the cord.
      * @throws TagLostException if the tag went out of the field
      */
     public ImmutableByteArray readWithoutEncryption(
-            int serviceCode, byte addr) throws IOException, TagLostException {
+            int serviceCode, byte blockNumber) throws IOException, TagLostException {
+
+
         // read without encryption
         ImmutableByteArray resp = sendRequest(COMMAND_READ_WO_ENCRYPTION, idm,
                 (byte) 0x01,                 // Number of service codes
@@ -374,7 +407,7 @@ public final class FelicaProtocol {
                 (byte) (serviceCode >> 8),   // Service code (upper byte)
                 (byte) 0x01,                 // Number of blocks to read
                 (byte) 0x80,                 // Block (upper byte, always 0x80)
-                addr);                       // Block (lower byte)
+                blockNumber);                       // Block (lower byte)
 
         if (resp == null) return null;
 

@@ -217,7 +217,13 @@ public class FelicaCard extends Card {
                 for (int serviceCode : serviceCodes) {
                     List<FelicaBlock> blocks = new ArrayList<>();
 
-                    fp.polling(systemCode);
+                    if ((serviceCode & 0x01) == 0) {
+                        // authentication required for service code, skip!
+                        Log.d(TAG, String.format(Locale.ENGLISH,
+                                "- Service code %04x requires authentication, skipping!",
+                                serviceCode));
+                        continue;
+                    }
 
                     try {
                         byte addr = 0;
@@ -233,12 +239,15 @@ public class FelicaCard extends Card {
                         partialRead = true;
                     }
 
+                    Log.d(TAG, String.format(Locale.ENGLISH,
+                            "- Service code %04x has %d blocks",
+                            serviceCode, blocks.size()));
+
                     if (!blocks.isEmpty()) { // Most service codes appear to be empty...
                         FelicaBlock[] blocksArray = blocks.toArray(new FelicaBlock[0]);
                         services.add(new FelicaService(serviceCode, blocksArray));
-                        //noinspection StringConcatenation
-                        Log.d(TAG, "- Service code " + serviceCode + " had " + blocks.size() + " blocks");
                     }
+
                     if (partialRead)
                         break;
                 }
