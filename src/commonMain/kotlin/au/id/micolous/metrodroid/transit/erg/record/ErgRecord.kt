@@ -19,21 +19,9 @@
 
 package au.id.micolous.metrodroid.transit.erg.record
 
-import au.id.micolous.metrodroid.util.ImmutableByteArray
-import java.util.*
-
 /**
  * Represents a record inside of an ERG MIFARE Classic based card.
  *
  * https://github.com/micolous/metrodroid/wiki/ERG-MFC
  */
-open class ErgRecord internal constructor() {
-    @FunctionalInterface
-    abstract class Factory {
-        abstract fun recordFromBytes(block: ImmutableByteArray): ErgRecord?
-    }
-
-    override fun toString(): String {
-        return String.format(Locale.ENGLISH, "[%s]", javaClass.simpleName)
-    }
-}
+open class ErgRecord internal constructor()

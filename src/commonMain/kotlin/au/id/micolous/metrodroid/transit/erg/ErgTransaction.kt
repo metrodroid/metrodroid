@@ -18,13 +18,11 @@
  */
 package au.id.micolous.metrodroid.transit.erg
 
+import au.id.micolous.metrodroid.multi.Parcelize
 import au.id.micolous.metrodroid.time.*
 import au.id.micolous.metrodroid.transit.Transaction
 import au.id.micolous.metrodroid.transit.TransitCurrency
 import au.id.micolous.metrodroid.transit.erg.record.ErgPurseRecord
-import au.id.micolous.metrodroid.util.Utils
-import kotlinx.android.parcel.Parcelize
-import java.util.*
 
 /**
  * Represents a transaction on an ERG MIFARE Classic card.

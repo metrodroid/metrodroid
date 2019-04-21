@@ -18,10 +18,10 @@
  */
 package au.id.micolous.metrodroid.transit.chc_metrocard
 
-import au.id.micolous.farebot.R
 import au.id.micolous.metrodroid.card.CardType
 import au.id.micolous.metrodroid.card.classic.ClassicCard
 import au.id.micolous.metrodroid.card.classic.ClassicCardTransitFactory
+import au.id.micolous.metrodroid.multi.R
 import au.id.micolous.metrodroid.time.Duration
 import au.id.micolous.metrodroid.time.MetroTimeZone
 import au.id.micolous.metrodroid.transit.CardInfo
@@ -30,9 +30,7 @@ import au.id.micolous.metrodroid.transit.TransitBalanceStored
 import au.id.micolous.metrodroid.transit.erg.ErgTransitData
 import au.id.micolous.metrodroid.transit.erg.ErgTransitFactory
 import au.id.micolous.metrodroid.transit.erg.record.ErgMetadataRecord
-import au.id.micolous.metrodroid.transit.erg.record.ErgPurseRecord
 import au.id.micolous.metrodroid.util.ImmutableByteArray
-import java.util.*
 
 /**
  * Transit data type for pre-2016 Metrocard (Christchurch, NZ).
@@ -43,10 +41,7 @@ import java.util.*
  *
  * Documentation: https://github.com/micolous/metrodroid/wiki/Metrocard-%28Christchurch%29
  */
-class ChcMetrocardTransitData private constructor(card: ClassicCard) :
-        ErgTransitData(parse(card, CURRENCY) { purse, epoch ->
-            ChcMetrocardTransaction(purse, epoch)
-        }) {
+class ChcMetrocardTransitData private constructor(val erg: ErgTransitData) : ErgTransitData(erg) {
     override val cardName get() = NAME
 
     override val serialNumber: String?
@@ -78,8 +73,10 @@ class ChcMetrocardTransitData private constructor(card: ClassicCard) :
                 resourceExtraNote = R.string.card_note_chc_metrocard)
 
         val FACTORY: ClassicCardTransitFactory = object : ErgTransitFactory() {
-            override fun parseTransitData(classicCard: ClassicCard) =
-                    ChcMetrocardTransitData(classicCard)
+            override fun parseTransitData(card: ClassicCard) =
+                    ChcMetrocardTransitData(parse(card, CURRENCY) { purse, epoch ->
+                        ChcMetrocardTransaction(purse, epoch)
+                    })
 
             override fun parseTransitIdentity(card: ClassicCard) =
                     parseTransitIdentity(card, NAME)

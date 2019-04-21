@@ -27,7 +27,7 @@ import au.id.micolous.metrodroid.util.ImmutableByteArray
  *
  * https://github.com/micolous/metrodroid/wiki/ERG-MFC#preamble-record
  */
-class ErgPreambleRecord private constructor(val cardSerial: String? = null) : ErgRecord() {
+class ErgPreambleRecord private constructor(val cardSerial: String?) : ErgRecord() {
     /**
      * Returns the card serial number. Returns null on old cards.
      */

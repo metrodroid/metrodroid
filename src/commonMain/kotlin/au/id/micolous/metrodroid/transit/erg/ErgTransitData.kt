@@ -18,8 +18,6 @@
  */
 package au.id.micolous.metrodroid.transit.erg
 
-import au.id.micolous.farebot.R
-
 import au.id.micolous.metrodroid.card.UnauthorizedException
 import au.id.micolous.metrodroid.card.classic.ClassicBlock
 import au.id.micolous.metrodroid.card.classic.ClassicCard
@@ -28,6 +26,7 @@ import au.id.micolous.metrodroid.card.classic.ClassicSector
 import au.id.micolous.metrodroid.multi.Log
 import au.id.micolous.metrodroid.multi.Parcelable
 import au.id.micolous.metrodroid.multi.Parcelize
+import au.id.micolous.metrodroid.multi.R
 import au.id.micolous.metrodroid.transit.Transaction
 import au.id.micolous.metrodroid.transit.TransactionTrip
 import au.id.micolous.metrodroid.transit.TransitBalance
@@ -36,12 +35,7 @@ import au.id.micolous.metrodroid.time.*
 import au.id.micolous.metrodroid.transit.TransitCurrency
 import au.id.micolous.metrodroid.transit.TransitData
 import au.id.micolous.metrodroid.transit.Trip
-import au.id.micolous.metrodroid.transit.erg.record.ErgBalanceRecord
-import au.id.micolous.metrodroid.transit.erg.record.ErgIndexRecord
-import au.id.micolous.metrodroid.transit.erg.record.ErgMetadataRecord
-import au.id.micolous.metrodroid.transit.erg.record.ErgPreambleRecord
-import au.id.micolous.metrodroid.transit.erg.record.ErgPurseRecord
-import au.id.micolous.metrodroid.transit.erg.record.ErgRecord
+import au.id.micolous.metrodroid.transit.erg.record.*
 import au.id.micolous.metrodroid.ui.HeaderListItem
 import au.id.micolous.metrodroid.ui.ListItem
 import au.id.micolous.metrodroid.util.NumberUtils
@@ -167,7 +161,7 @@ open class ErgTransitData internal constructor(
 
         // Flipping this to true shows more data from the records in Logcat.
         private val DEBUG = true
-        private val TAG = ErgTransitData::class.java.simpleName
+        private const val TAG = "ErgTransitData"
 
         internal val NAME = "ERG"
         val SIGNATURE = byteArrayOf(0x32, 0x32, 0x00, 0x00, 0x00, 0x01, 0x01)

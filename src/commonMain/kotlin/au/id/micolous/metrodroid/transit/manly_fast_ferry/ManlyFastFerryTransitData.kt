@@ -18,10 +18,10 @@
  */
 package au.id.micolous.metrodroid.transit.manly_fast_ferry
 
-import au.id.micolous.farebot.R
 import au.id.micolous.metrodroid.card.CardType
 import au.id.micolous.metrodroid.card.classic.ClassicCard
 import au.id.micolous.metrodroid.card.classic.ClassicCardTransitFactory
+import au.id.micolous.metrodroid.multi.R
 import au.id.micolous.metrodroid.time.MetroTimeZone
 import au.id.micolous.metrodroid.transit.CardInfo
 import au.id.micolous.metrodroid.transit.erg.ErgTransitData
@@ -38,10 +38,7 @@ import au.id.micolous.metrodroid.transit.erg.record.ErgPurseRecord
  *
  * Documentation of format: https://github.com/micolous/metrodroid/wiki/Manly-Fast-Ferry
  */
-class ManlyFastFerryTransitData private constructor(card: ClassicCard) :
-        ErgTransitData(parse(card, CURRENCY) { purse: ErgPurseRecord, epoch: Int ->
-            ManlyFastFerryTransaction(purse, epoch)
-        }) {
+class ManlyFastFerryTransitData private constructor(val erg: ErgTransitData) : ErgTransitData(erg) {
     override val cardName get() = NAME
     override val timezone get() = TIME_ZONE
 
@@ -63,7 +60,9 @@ class ManlyFastFerryTransitData private constructor(card: ClassicCard) :
                 get() = AGENCY_ID
 
             override fun parseTransitData(card: ClassicCard) =
-                    ManlyFastFerryTransitData(card)
+                    ManlyFastFerryTransitData(parse(card, CURRENCY) { purse: ErgPurseRecord, epoch: Int ->
+                        ManlyFastFerryTransaction(purse, epoch)
+                    })
 
             override fun parseTransitIdentity(card: ClassicCard) = parseTransitIdentity(card, NAME)
 

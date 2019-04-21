@@ -19,9 +19,9 @@
 
 package au.id.micolous.metrodroid.transit.erg.record
 
-import android.os.Parcelable
+import au.id.micolous.metrodroid.multi.Parcelable
+import au.id.micolous.metrodroid.multi.Parcelize
 import au.id.micolous.metrodroid.util.ImmutableByteArray
-import kotlinx.android.parcel.Parcelize
 
 /**
  * Represents a metadata record.

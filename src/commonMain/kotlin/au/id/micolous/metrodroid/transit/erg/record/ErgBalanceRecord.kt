@@ -28,14 +28,14 @@ import au.id.micolous.metrodroid.util.ImmutableByteArray
  * https://github.com/micolous/metrodroid/wiki/ERG-MFC#balance-records
  */
 class ErgBalanceRecord private constructor(
-    /**
-     * The balance of the card, in cents.
-     *
-     * @return int number of cents.
-     */
-    val balance: Int,
-    val version: Int,
-    private val mAgency: Int) : ErgRecord(), Comparable<ErgBalanceRecord> {
+        /**
+         * The balance of the card, in cents.
+         *
+         * @return int number of cents.
+         */
+        val balance: Int,
+        val version: Int,
+        private val mAgency: Int) : ErgRecord(), Comparable<ErgBalanceRecord> {
 
     override fun compareTo(other: ErgBalanceRecord): Int {
         // So sorting works, we reverse the order so highest number is first.
@@ -45,20 +45,18 @@ class ErgBalanceRecord private constructor(
     override fun toString() = "[ErgBalanceRecord: agencyID=$mAgency, balance=$balance, version=$version]"
 
     companion object {
-        val FACTORY: ErgRecord.Factory = object : ErgRecord.Factory() {
-            override fun recordFromBytes(block: ImmutableByteArray): ErgRecord? {
-                //if (input[0] != 0x01) throw new AssertionError();
+        fun recordFromBytes(block: ImmutableByteArray): ErgRecord? {
+            //if (input[0] != 0x01) throw new AssertionError();
 
-                return if (block[7].toInt() != 0x00 || block[8].toInt() != 0x00) {
-                    // There is another record type that gets mixed in here, which has these
-                    // bytes set to non-zero values. In that case, it is not the balance record.
-                    null
-                } else ErgBalanceRecord(
-                        block.byteArrayToInt(11, 4),
-                        block.byteArrayToInt(1, 2),
-                        // Present on MFF, not CHC Metrocard
-                        block.byteArrayToInt(5, 2))
-            }
+            return if (block[7].toInt() != 0x00 || block[8].toInt() != 0x00) {
+                // There is another record type that gets mixed in here, which has these
+                // bytes set to non-zero values. In that case, it is not the balance record.
+                null
+            } else ErgBalanceRecord(
+                    block.byteArrayToInt(11, 4),
+                    block.byteArrayToInt(1, 2),
+                    // Present on MFF, not CHC Metrocard
+                    block.byteArrayToInt(5, 2))
         }
     }
 }

@@ -18,48 +18,42 @@
  */
 package au.id.micolous.metrodroid.transit.erg.record
 
-import android.os.Parcelable
-import android.util.SparseArray
-import android.util.SparseIntArray
-
 import au.id.micolous.metrodroid.card.classic.ClassicSector
+import au.id.micolous.metrodroid.multi.Parcelable
+import au.id.micolous.metrodroid.multi.Parcelize
 import au.id.micolous.metrodroid.util.ImmutableByteArray
-import kotlinx.android.parcel.Parcelize
 
 @Parcelize
 class ErgIndexRecord private constructor(
         val version : Int,
         val version2 : Int,
-        private val allocations : SparseIntArray
+        private val allocations : Map<Int, Int>
 ) : Parcelable {
     fun readRecord(sectorNum: Int, blockNum: Int, data: ImmutableByteArray): ErgRecord? {
         val block = sectorNum * 3 + blockNum
-        val type = allocations.get(block, 0)
-        val f = FACTORIES.get(type) ?: return null
-        return f.recordFromBytes(data)
+        val type = allocations[block] ?: 0
+        val f = FACTORIES[type] ?: return null
+        return f(data)
     }
 
     override fun toString(): String {
-        return "[${javaClass.simpleName}: version=$version/$version2, allocations=$allocations]"
+        return "[ErgIndexRecord: version=$version/$version2, allocations=$allocations]"
     }
 
     companion object {
-        private val FACTORIES = SparseArray<ErgRecord.Factory>()
-
-        init {
-            FACTORIES.put(0x03, ErgBalanceRecord.FACTORY)
+        private val FACTORIES = mapOf(
+            0x03 to ErgBalanceRecord.Companion::recordFromBytes,
             // TODO: implement alternate record 1 (0x04) and 2 (0x05)
-            FACTORIES.put(0x14, ErgPurseRecord.FACTORY)
-            FACTORIES.put(0x15, ErgPurseRecord.FACTORY)
-            FACTORIES.put(0x16, ErgPurseRecord.FACTORY)
-            FACTORIES.put(0x17, ErgPurseRecord.FACTORY)
-            FACTORIES.put(0x18, ErgPurseRecord.FACTORY)
-            FACTORIES.put(0x19, ErgPurseRecord.FACTORY)
-            FACTORIES.put(0x1a, ErgPurseRecord.FACTORY)
-            FACTORIES.put(0x1b, ErgPurseRecord.FACTORY)
-            FACTORIES.put(0x1c, ErgPurseRecord.FACTORY)
-            FACTORIES.put(0x1d, ErgPurseRecord.FACTORY)
-        }
+            0x14 to ErgPurseRecord.Companion::recordFromBytes,
+            0x15 to ErgPurseRecord.Companion::recordFromBytes,
+            0x16 to ErgPurseRecord.Companion::recordFromBytes,
+            0x17 to ErgPurseRecord.Companion::recordFromBytes,
+            0x18 to ErgPurseRecord.Companion::recordFromBytes,
+            0x19 to ErgPurseRecord.Companion::recordFromBytes,
+            0x1a to ErgPurseRecord.Companion::recordFromBytes,
+            0x1b to ErgPurseRecord.Companion::recordFromBytes,
+            0x1c to ErgPurseRecord.Companion::recordFromBytes,
+            0x1d to ErgPurseRecord.Companion::recordFromBytes)
 
         fun recordFromSector(sector: ClassicSector): ErgIndexRecord {
             return recordFromBytes(
@@ -70,7 +64,7 @@ class ErgIndexRecord private constructor(
 
         fun recordFromBytes(block0: ImmutableByteArray, block1: ImmutableByteArray, block2: ImmutableByteArray): ErgIndexRecord {
             val version = block0.byteArrayToInt(1, 2)
-            val allocations = SparseIntArray()
+            val allocations = mutableMapOf<Int, Int>()
 
             var o = 6
             for (x in 3..15) {
