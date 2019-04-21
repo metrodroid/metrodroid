@@ -141,7 +141,7 @@ actual class OctopusTransitData : TransitData {
         actual val SYSTEMCODE_SZT = 0x8005
         actual val SYSTEMCODE_OCTOPUS = 0x8008
 
-        private val CARD_INFO = CardInfo.Builder()
+        val CARD_INFO = CardInfo.Builder()
                 .setImageId(R.drawable.octopus_card, R.drawable.octopus_card_alpha)
                 .setName(Localizer.localizeString(R.string.card_name_octopus))
                 .setLocation(R.string.location_hong_kong)
