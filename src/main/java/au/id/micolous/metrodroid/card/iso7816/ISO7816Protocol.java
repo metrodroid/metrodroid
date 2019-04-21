@@ -19,7 +19,6 @@
  */
 package au.id.micolous.metrodroid.card.iso7816;
 
-import android.nfc.tech.IsoDep;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.annotation.VisibleForTesting;
@@ -30,6 +29,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 
 import au.id.micolous.metrodroid.card.CardTransceiver;
+import au.id.micolous.metrodroid.card.Protocol;
 import au.id.micolous.metrodroid.util.Utils;
 import au.id.micolous.metrodroid.util.ImmutableByteArray;
 
@@ -46,7 +46,7 @@ import au.id.micolous.metrodroid.util.ImmutableByteArray;
  * - EMV 4.3 Book 1 (s9, s11)
  * - https://en.wikipedia.org/wiki/Smart_card_application_protocol_data_unit
  */
-public class ISO7816Protocol {
+public class ISO7816Protocol extends Protocol {
     /**
      * If true, this turns on debug logs that show ISO7816 communication.
      */
@@ -80,10 +80,8 @@ public class ISO7816Protocol {
     public static final byte STATUS_OK = (byte) 0x90;
 
 
-    private final CardTransceiver mTagTech;
-
-    public ISO7816Protocol(CardTransceiver tagTech) {
-        mTagTech = tagTech;
+    public ISO7816Protocol(CardTransceiver tag) {
+        super(tag, CardTransceiver.Protocol.ISO_14443A);
     }
 
     /**
@@ -134,13 +132,14 @@ public class ISO7816Protocol {
      */
     @NonNull
     public ImmutableByteArray sendRequest(byte cla, byte ins, byte p1, byte p2, byte length, byte... parameters) throws IOException, ISO7816Exception {
+
         ImmutableByteArray sendBuffer = wrapMessage(cla, ins, p1, p2, length, parameters);
         if (ENABLE_TRACING) {
-            Log.d(TAG, ">>> " + Utils.getHexString(sendBuffer));
+            Log.d(TAG, ">>> " + sendBuffer.toHexString());
         }
-        ImmutableByteArray recvBuffer = mTagTech.transceive(sendBuffer);
+        ImmutableByteArray recvBuffer = getTag().transceive(sendBuffer);
         if (ENABLE_TRACING) {
-            Log.d(TAG, "<<< " + Utils.getHexString(recvBuffer));
+            Log.d(TAG, "<<< " + recvBuffer.toHexString());
         }
 
         if (recvBuffer.getSize() == 1) {

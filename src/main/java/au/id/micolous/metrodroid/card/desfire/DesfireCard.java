@@ -115,13 +115,19 @@ public class DesfireCard extends Card {
      */
     @Nullable
     public static DesfireCard dumpTag(CardTransceiver tech, ImmutableByteArray uid, TagReaderFeedbackInterface feedbackInterface) throws Exception {
-            List<DesfireApplication> apps = new ArrayList<>();
+        List<DesfireApplication> apps = new ArrayList<>();
 
-            DesfireManufacturingData manufData;
+        DesfireManufacturingData manufData;
         DesfireApplication[] appsArray;
 
         try {
             DesfireProtocol desfireTag = new DesfireProtocol(tech);
+            try {
+                desfireTag.connect();
+            } catch (CardTransceiver.UnsupportedProtocolException e) {
+                Log.e(TAG, "Card does not have iso14a abilities!", e);
+                return null;
+            }
 
             try {
                 manufData = desfireTag.getManufacturingData();

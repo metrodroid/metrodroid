@@ -12,6 +12,7 @@ import au.id.micolous.metrodroid.ui.ListItem
 import au.id.micolous.metrodroid.util.ImmutableByteArray
 import au.id.micolous.metrodroid.util.NumberUtils
 import au.id.micolous.metrodroid.util.Preferences
+import java.lang.IllegalArgumentException
 import java.text.DecimalFormat
 import java.util.ArrayList
 
@@ -122,6 +123,15 @@ object FelicaUtils {
      */
     fun getManufacturerCode(idm: ImmutableByteArray): Int {
         return idm.byteArrayToInt(0, 2)
+    }
+
+    /**
+     * Gets the System Number, which is the upper 4 bits of the Manufacturer Code of the card.
+     *
+     * This is a 4 bit value.
+     */
+    fun getSystemNumber(idm: ImmutableByteArray): Int {
+        return idm.getBitsFromBuffer(0, 4)
     }
 
     /**

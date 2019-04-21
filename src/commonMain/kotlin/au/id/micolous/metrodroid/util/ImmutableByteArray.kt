@@ -27,6 +27,7 @@ import kotlinx.io.charsets.Charset
 import kotlinx.io.core.String
 
 fun ByteArray.toImmutable(): ImmutableByteArray = ImmutableByteArray.fromByteArray(this)
+fun Array<out Number>.toImmutable(): ImmutableByteArray = ImmutableByteArray.ofB(*this)
 
 @Parcelize
 open class ImmutableByteArray private constructor(private val mData: ByteArray) :
@@ -67,7 +68,7 @@ open class ImmutableByteArray private constructor(private val mData: ByteArray) 
     operator fun plus(second: ByteArray) = ImmutableByteArray(this.mData + second)
     operator fun plus(second: Byte) = ImmutableByteArray(this.mData + second)
     fun sliceArray(intRange: IntRange) = ImmutableByteArray(mData = mData.sliceArray(intRange))
-    fun sliceOffLen(off: Int, datalen: Int = size - off) = sliceArray(off until (off + datalen))
+    fun sliceOffLen(off: Int, datalen: Int) = sliceArray(off until (off + datalen))
     fun toHexDump() = getHexDump(mData, 0, mData.size)
     fun byteArrayToInt() = byteArrayToInt(0, mData.size)
     fun <T> fold(l: T, function: (T, Byte) -> T): T = mData.fold(l, function)
@@ -137,6 +138,11 @@ open class ImmutableByteArray private constructor(private val mData: ByteArray) 
 
     fun writeTo(os: OutputStream, offset: Int, length: Int) {
         os.write(mData, offset, length)
+    }
+
+    fun chunked(size: Int): List<ImmutableByteArray>
+            = chunked(size).map {
+        it.toByteArray().toImmutable()
     }
 
     companion object {

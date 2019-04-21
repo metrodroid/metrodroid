@@ -23,13 +23,12 @@
 
 package au.id.micolous.metrodroid.card.felica;
 
-import android.nfc.Tag;
 import android.nfc.TagLostException;
-import android.nfc.tech.NfcF;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.annotation.StringRes;
 import android.util.Log;
+import android.util.SparseIntArray;
 
 import org.apache.commons.lang3.ArrayUtils;
 import org.simpleframework.xml.Element;
@@ -43,9 +42,11 @@ import java.util.Collections;
 import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 
 import au.id.micolous.farebot.R;
 import au.id.micolous.metrodroid.card.Card;
+import au.id.micolous.metrodroid.card.CardTransceiver;
 import au.id.micolous.metrodroid.card.CardType;
 import au.id.micolous.metrodroid.card.TagReaderFeedbackInterface;
 import au.id.micolous.metrodroid.multi.FormattedString;
@@ -76,7 +77,17 @@ public class FelicaCard extends Card {
             OctopusTransitData.FACTORY
     };
 
-    @Element(name = "idm")
+    // Octopus (so probably also 1st generation SZT cards) have a special knocking sequence to
+    // allow unprotected reads, and does not respond to the normal system code listing. These a bit
+    // like FeliCa Lite -- they have one system and one service.
+    private static final int[] DEEP_SYSTEM_CODES = {
+            OctopusTransitData.SYSTEMCODE_OCTOPUS,
+            OctopusTransitData.SYSTEMCODE_SZT
+    };
+
+    // TODO: This is the same as tagId -- replace this!
+    @Deprecated
+    @Element(name = "idm", required = false)
     private Base64String mIDm;
     @Element(name = "pmm")
     private Base64String mPMm;
@@ -86,9 +97,9 @@ public class FelicaCard extends Card {
     private FelicaCard() { /* For XML Serializer */ }
 
     public FelicaCard(ImmutableByteArray tagId, Calendar scannedAt, boolean partialRead,
-                      ImmutableByteArray idm, ImmutableByteArray pmm, FelicaSystem[] systems) {
+                      ImmutableByteArray pmm, FelicaSystem[] systems) {
         super(CardType.FeliCa, tagId, scannedAt, partialRead);
-        mIDm = new Base64String(idm);
+        mIDm = new Base64String(tagId);
         mPMm = new Base64String(pmm);
         mSystems = Arrays.asList(systems);
     }
@@ -96,78 +107,44 @@ public class FelicaCard extends Card {
     // https://github.com/tmurakam/felicalib/blob/master/src/dump/dump.c
     // https://github.com/tmurakam/felica2money/blob/master/src/card/Suica.cs
     @Nullable
-    public static FelicaCard dumpTag(ImmutableByteArray tagId, Tag tag, TagReaderFeedbackInterface feedbackInterface) throws Exception {
-        boolean octopusMagic = false;
-        boolean sztMagic = false;
+    public static FelicaCard dumpTag(CardTransceiver tag, ImmutableByteArray tagId,
+                                     TagReaderFeedbackInterface feedbackInterface) throws Exception {
+        boolean magic = false;
         boolean liteMagic = false;
         boolean partialRead = false;
 
-        NfcF nfcF = NfcF.get(tag);
-        if (nfcF == null) {
-            Log.e(TAG, "Card does not have NFC-F abilities!");
+        FelicaProtocol fp = new FelicaProtocol(tag, tagId);
+        try {
+            fp.connect();
+        } catch (CardTransceiver.UnsupportedProtocolException e) {
+            Log.e(TAG, "Card does not have NFC-F abilities!", e);
             return null;
         }
-        nfcF.connect();
-        Log.d(TAG, "Default system code: " + Utils.getHexString(nfcF.getSystemCode()));
 
-        FelicaProtocol fp = new FelicaProtocol(nfcF);
-
-        ImmutableByteArray idm = null;
-
-        try {
-            idm = fp.pollingAndGetIDm(FelicaProtocol.SYSTEMCODE_ANY);
-        } catch (TagLostException e) {
-            Log.w(TAG, "Failed to get system code! can't return partial response.");
-        }
-
-        if (idm == null) {
-            throw new Exception("Failed to read IDm");
-        }
+        Log.d(TAG, String.format(Locale.ENGLISH, "Default system code: %04x",
+                fp.getDefaultSystemCode()));
 
         ImmutableByteArray pmm = fp.getPmm();
-
         List<FelicaSystem> systems = new ArrayList<>();
 
         try {
-            // FIXME: Enumerate "areas" inside of systems ???
             int[] systemCodes = fp.getSystemCodeList();
 
             // Check if we failed to get a System Code
-            if (systemCodes.length == 0) {
+            if (systemCodes.length == 0) {  // use >= 0 for testing
                 // Lite has no system code list
-                ImmutableByteArray liteSystem = fp.pollingAndGetIDm(
-                        FelicaProtocol.SYSTEMCODE_FELICA_LITE);
-                if (liteSystem != null) {
+                if (fp.pollFelicaLite()) {
                     Log.d(TAG, "Detected Felica Lite card");
-                    systemCodes = new int[]{FelicaProtocol.SYSTEMCODE_FELICA_LITE};
+                    systemCodes = new int[] { FelicaProtocol.SYSTEMCODE_FELICA_LITE };
                     liteMagic = true;
                 } else {
                     // Don't do these on lite as it may respond to any code
-                    ArrayList<Integer> extraCodes = new ArrayList<>();
 
-                    // Lets try to ping for an Octopus anyway
-                    ImmutableByteArray octopusSystem = fp.pollingAndGetIDm(
-                            OctopusTransitData.SYSTEMCODE_OCTOPUS);
-                    if (octopusSystem != null) {
-                        Log.d(TAG, "Detected Octopus card");
-                        // Octopus has a special knocking sequence to allow unprotected reads, and
-                        // does not respond to the normal system code listing.
-                        extraCodes.add(OctopusTransitData.SYSTEMCODE_OCTOPUS);
-                        octopusMagic = true;
-                    }
-
-                    ImmutableByteArray sztSystem = fp.pollingAndGetIDm(
-                            OctopusTransitData.SYSTEMCODE_SZT);
-                    if (sztSystem != null) {
-                        Log.d(TAG, "Detected Shenzhen Tong card");
-                        // Because Octopus and SZT are similar systems, use the same knocking sequence in
-                        // case they have the same bugs with system code listing.
-                        extraCodes.add(OctopusTransitData.SYSTEMCODE_SZT);
-                        sztMagic = true;
-                    }
-
-                    if (extraCodes.size() > 0) {
-                        systemCodes = ArrayUtils.toPrimitive(extraCodes.toArray(new Integer[0]));
+                    Log.d(TAG, "Polling for DEEP_SYSTEM_CODES...");
+                    systemCodes = fp.pollForSystemCodes(DEEP_SYSTEM_CODES);
+                    if (systemCodes.length > 0) {
+                        Log.d(TAG, "Got a DEEP_SYSTEM_CODE!");
+                        magic = true;
                     }
                 }
             }
@@ -179,11 +156,17 @@ public class FelicaCard extends Card {
                 feedbackInterface.showCardType(i);
             }
 
-            for (int systemCode : systemCodes) {
-                Log.d(TAG, "Got system code: " + NumberUtils.INSTANCE.intToHex(systemCode));
 
-                //ft.polling(systemCode);
+            for (int systemNumber=0; systemNumber < systemCodes.length; systemNumber++) {
+                final int systemCode = systemCodes[systemNumber];
+                Log.d(TAG, String.format(Locale.ENGLISH, "System code #%d: %04x", systemNumber, systemCode));
+                if (systemCode == 0) {
+                    continue;
+                }
 
+                //ft.pollForSystemCode(systemCode);
+
+                /*
                 ImmutableByteArray thisIdm = fp.pollingAndGetIDm(systemCode);
 
                 Log.d(TAG, " - Got IDm: " + Utils.getHexString(thisIdm) + "  compare: "
@@ -191,21 +174,27 @@ public class FelicaCard extends Card {
 
                 Log.d(TAG, " - Got PMm: " + Utils.getHexString(fp.getPmm()) + "  compare: "
                         + Utils.getHexString(pmm));
+                */
 
                 List<FelicaService> services = new ArrayList<>();
-                final int[] serviceCodes;
+                int[] serviceCodes = null;
 
-                if (octopusMagic && systemCode == OctopusTransitData.SYSTEMCODE_OCTOPUS) {
-                    Log.d(TAG, "Stuffing in Octopus magic service code");
+                if (magic && systemCode == OctopusTransitData.SYSTEMCODE_OCTOPUS) {
+                    Log.d(TAG, "Stuffing in Octopus service code");
                     serviceCodes = new int[]{OctopusTransitData.SERVICE_OCTOPUS};
-                } else if (sztMagic && systemCode == OctopusTransitData.SYSTEMCODE_SZT) {
-                    Log.d(TAG, "Stuffing in SZT magic service code");
+                } else if (magic && systemCode == OctopusTransitData.SYSTEMCODE_SZT) {
+                    Log.d(TAG, "Stuffing in SZT service code");
                     serviceCodes = new int[]{OctopusTransitData.SERVICE_SZT};
                 } else if (liteMagic && systemCode == FelicaProtocol.SYSTEMCODE_FELICA_LITE) {
-                    Log.d(TAG, "Stuffing in Felica Lite magic service code");
+                    Log.d(TAG, "Stuffing in Felica Lite service code");
                     serviceCodes = new int[]{FelicaProtocol.SERVICE_FELICA_LITE_READONLY};
+                }
+
+                if (serviceCodes == null) {
+                    serviceCodes = fp.getServiceCodeList(systemNumber);
                 } else {
-                    serviceCodes = fp.getServiceCodeList();
+                    // Using magic!
+                    fp.pollForSystemCode(systemCode);
                 }
 
                 // Brute Forcer (DEBUG ONLY)
@@ -226,14 +215,15 @@ public class FelicaCard extends Card {
                     }
 
                     try {
+                        // TODO: request more than 1 block
                         byte addr = 0;
-                        ImmutableByteArray result = fp.readWithoutEncryption(serviceCode, addr);
+                        ImmutableByteArray result = fp.readWithoutEncryption(systemNumber, serviceCode, addr);
                         while (result != null) {
                             blocks.add(new FelicaBlock(addr, result));
                             addr++;
                             if (addr >= 0x20 && liteMagic)
                                 break;
-                            result = fp.readWithoutEncryption(serviceCode, addr);
+                            result = fp.readWithoutEncryption(systemNumber, serviceCode, addr);
                         }
                     } catch (TagLostException tl) {
                         partialRead = true;
@@ -263,20 +253,11 @@ public class FelicaCard extends Card {
             partialRead = true;
         }
         FelicaSystem[] systemsArray = systems.toArray(new FelicaSystem[0]);
-        return new FelicaCard(tagId, GregorianCalendar.getInstance(), partialRead, idm, pmm, systemsArray);
+        return new FelicaCard(tagId, GregorianCalendar.getInstance(), partialRead, pmm, systemsArray);
     }
 
     public static List<CardTransitFactory<FelicaCard>> getAllFactories() {
         return Arrays.asList(FACTORIES);
-    }
-
-    /**
-     * Gets the Manufacturing ID (IDm) of the card.
-     * <p>
-     * See https://www.sony.net/Products/felica/business/tech-support/data/code_descriptions_1.31.pdf
-     */
-    public ImmutableByteArray getIDm() {
-        return mIDm;
     }
 
     /**
@@ -342,7 +323,7 @@ public class FelicaCard extends Card {
 
     @Override
     public List<ListItem> getManufacturingInfo() {
-        return FelicaUtils.INSTANCE.getManufacturingInfo(getIDm(), getPMm());
+        return FelicaUtils.INSTANCE.getManufacturingInfo(getTagId(), getPMm());
     }
 
     @NonNull

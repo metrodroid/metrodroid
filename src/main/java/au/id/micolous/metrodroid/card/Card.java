@@ -112,22 +112,18 @@ public abstract class Card {
 
             // ISO 14443-4 card types
             // This also encompasses NfcA (ISO 14443-3A) and NfcB (ISO 14443-3B)
-            IsoDep tech = IsoDep.get(tag);
-            tech.connect();
-            ImmutableByteArray uid = ImmutableByteArray.Companion.fromByteArray(tag.getId());
-            AndroidCardTransceiver aTech = new AndroidCardTransceiver(tech);
+            AndroidCardTransceiver aTech = new AndroidCardTransceiver(tag);
+            ImmutableByteArray uid = aTech.getUid();
 
             DesfireCard d = DesfireCard.dumpTag(aTech, uid, feedbackInterface);
             if (d != null) {
-                if (tech.isConnected())
-                    tech.close();
+                aTech.disconnect();
                 return d;
             }
 
             ISO7816Card isoCard = ISO7816Card.dumpTag(aTech, uid, feedbackInterface);
             if (isoCard != null) {
-                if (tech.isConnected())
-                    tech.close();
+                aTech.disconnect();
                 return isoCard;
             }
 
@@ -135,9 +131,13 @@ public abstract class Card {
         }
 
         if (ArrayUtils.contains(techs, NfcF.class.getName())) {
-            FelicaCard f = FelicaCard.dumpTag(tagId, tag, feedbackInterface);
-            if (f != null)
+            AndroidCardTransceiver aTech = new AndroidCardTransceiver(tag);
+
+            FelicaCard f = FelicaCard.dumpTag(aTech, tagId, feedbackInterface);
+            if (f != null) {
+                aTech.disconnect();
                 return f;
+            }
         }
 
         if (ArrayUtils.contains(techs, MifareClassic.class.getName())) {

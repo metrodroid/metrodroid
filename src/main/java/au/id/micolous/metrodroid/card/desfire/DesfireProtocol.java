@@ -23,9 +23,11 @@ package au.id.micolous.metrodroid.card.desfire;
 import android.nfc.tech.IsoDep;
 
 import au.id.micolous.metrodroid.card.CardTransceiver;
+import au.id.micolous.metrodroid.card.Protocol;
 import au.id.micolous.metrodroid.card.desfire.settings.DesfireFileSettings;
 import au.id.micolous.metrodroid.util.Utils;
 import au.id.micolous.metrodroid.util.ImmutableByteArray;
+import kotlinx.io.ByteBuffer;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -44,8 +46,8 @@ import java.security.AccessControlException;
  * https://github.com/jekkos/android-hce-desfire/blob/master/hceappletdesfire/src/main/java/net/jpeelaer/hce/desfire/DesFireInstruction.java
  * https://ridrix.wordpress.com/2009/09/19/mifare-desfire-communication-example/
  */
-public class DesfireProtocol {
-    static final String TAG = "DesfireProtocol";
+public class DesfireProtocol extends Protocol {
+    static final String TAG = DesfireProtocol.class.getSimpleName();
 
     // Commands
     static public final byte UNLOCK = (byte) 0x0A;
@@ -65,10 +67,8 @@ public class DesfireProtocol {
     static final byte AUTHENTICATION_ERROR = (byte) 0xAE;
     static public final byte ADDITIONAL_FRAME = (byte) 0xAF;
 
-    private final CardTransceiver mTagTech;
-
     public DesfireProtocol(CardTransceiver tagTech) {
-        mTagTech = tagTech;
+        super(tagTech, CardTransceiver.Protocol.ISO_14443A);
     }
 
     public DesfireManufacturingData getManufacturingData() throws Exception {
@@ -157,7 +157,7 @@ public class DesfireProtocol {
 
         ImmutableByteArray sendBuffer = wrapMessage(command, parameters);
         //Log.d(TAG, "Send: " + Utils.getHexString(sendBuffer));
-        ImmutableByteArray recvBuffer = mTagTech.transceive(sendBuffer);
+        ImmutableByteArray recvBuffer = getTag().transceive(sendBuffer);
         //Log.d(TAG, "Recv: " + Utils.getHexString(recvBuffer));
 
         while (true) {
@@ -173,7 +173,7 @@ public class DesfireProtocol {
             } else if (status == ADDITIONAL_FRAME) {
                 if (!getAdditionalFrame)
                     break;
-                recvBuffer = mTagTech.transceive(wrapMessage(GET_ADDITIONAL_FRAME));
+                recvBuffer = getTag().transceive(wrapMessage(GET_ADDITIONAL_FRAME));
                 //Log.d(TAG, "Recv: (additional) " + Utils.getHexString(recvBuffer));
             } else if (status == PERMISSION_DENIED) {
                 throw new AccessControlException("Permission denied");

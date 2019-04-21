@@ -53,7 +53,7 @@ class OctopusTest {
         return FelicaCard(ImmutableByteArray.empty(8),
                 scannedAt,
                 false,
-                ImmutableByteArray.empty(8), ImmutableByteArray.empty(8),
+                ImmutableByteArray.empty(8),
                 arrayOf(system))
     }
 
