@@ -29,6 +29,7 @@ import au.id.micolous.metrodroid.multi.Localizer
 import au.id.micolous.metrodroid.util.Preferences
 import au.id.micolous.metrodroid.multi.R
 import au.id.micolous.metrodroid.serializers.XMLId
+import au.id.micolous.metrodroid.serializers.XMLIgnore
 import au.id.micolous.metrodroid.serializers.XMLListIdx
 import au.id.micolous.metrodroid.transit.TransitData
 import au.id.micolous.metrodroid.transit.TransitIdentity
@@ -48,14 +49,20 @@ expect object FelicaRegistry {
 
 @Serializable
 data class FelicaCard(
-        @XMLId("idm")
-        val iDm: ImmutableByteArray,
         @XMLId("pmm")
         val pMm: ImmutableByteArray,
         @XMLListIdx("code")
         val systems: Map<Int, FelicaSystem>,
         @Optional
         override val isPartialRead: Boolean = false) : CardProtocol() {
+
+    private var tagId: ImmutableByteArray? = null
+
+    override fun postCreate(card: Card) {
+        super.postCreate(card)
+        tagId = card.tagId
+    }
+
     /**
      * Gets the Manufacturer Code of the card (part of IDm).  This is a 16 bit value.
      *
@@ -67,7 +74,7 @@ data class FelicaCard(
      */
     @Transient
     private val manufacturerCode: Int
-        get() = iDm.byteArrayToInt(0, 2)
+        get() = tagId?.byteArrayToInt(0, 2) ?: 0
 
     /**
      * Gets the Card Identification Number of the card (part of IDm).
@@ -77,7 +84,7 @@ data class FelicaCard(
      */
     @Transient
     private val cardIdentificationNumber: Long
-        get() = iDm.byteArrayToLong(2, 6)
+        get() = tagId?.byteArrayToLong(2, 6) ?: 0
 
     /**
      * Gets the ROM type of the card (part of PMm).

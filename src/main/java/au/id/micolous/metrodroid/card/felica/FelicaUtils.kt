@@ -1,6 +1,28 @@
+/*
+ * FelicaUtils.kt
+ *
+ * Copyright 2018-2019 Michael Farrell <micolous+git@gmail.com>
+ * Copyright 2018-2019 Google
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General private License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General private License for more details.
+ *
+ * You should have received a copy of the GNU General private License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
 package au.id.micolous.metrodroid.card.felica
 
+import au.id.micolous.farebot.R
+import au.id.micolous.metrodroid.multi.StringResource
 import au.id.micolous.metrodroid.transit.edy.EdyTransitData
+import au.id.micolous.metrodroid.transit.kmt.KMTTransitData
 import au.id.micolous.metrodroid.transit.octopus.OctopusTransitData
 import au.id.micolous.metrodroid.transit.suica.SuicaTransitData
 
@@ -8,47 +30,79 @@ import au.id.micolous.metrodroid.transit.suica.SuicaTransitData
  * Utilities for working with FeliCa cards.
  */
 actual object FelicaUtils {
-
     /**
-     * Translates the System name to something human readable.
-     *
+     * Translates the System Name to a human-readable name.
      *
      * Systems in FeliCa are like Applications in MIFARE.  They represent
      * a particular system operator's data.
      *
      * @param systemCode FeliCa system code to translate.
-     * @return English string describing the operator of that System.
+     * @return StringRes for what corresponds to that system ocde.
      */
-    actual fun getFriendlySystemName(systemCode: Int) = when (systemCode) {
-            SuicaTransitData.SYSTEMCODE_SUICA -> "Suica"
-            EdyTransitData.SYSTEMCODE_EDY -> "Common / Edy"
-            FelicaConsts.SYSTEMCODE_FELICA_LITE -> "FeliCa Lite"
-            OctopusTransitData.SYSTEMCODE_OCTOPUS -> "Octopus"
-            OctopusTransitData.SYSTEMCODE_SZT -> "SZT"
-            else -> "Unknown"
+    actual fun getFriendlySystemName(systemCode: Int): StringResource {
+        return when (systemCode) {
+            SuicaTransitData.SYSTEMCODE_SUICA -> R.string.card_name_suica
+            FelicaConsts.SYSTEMCODE_COMMON -> R.string.felica_system_common
+            FelicaConsts.SYSTEMCODE_FELICA_LITE -> R.string.card_media_felica_lite
+            OctopusTransitData.SYSTEMCODE_OCTOPUS -> R.string.card_name_octopus
+            OctopusTransitData.SYSTEMCODE_SZT -> R.string.card_name_szt
+            KMTTransitData.SYSTEMCODE_KMT -> R.string.card_name_kmt
+            FelicaConsts.SYSTEMCODE_NDEF -> R.string.card_format_ndef
+            else -> R.string.unknown
         }
+    }
 
-    actual fun getFriendlyServiceName(systemCode: Int, serviceCode: Int): String {
-        when (systemCode) {
+    /**
+     * Translates the Service Name to a human-readable name.
+     *
+     * Services in FeliCa are like Files in MIFARE.
+     *
+     * Both the system and service codes must be specified, as service codes have different
+     * meanings depending on the System.
+     *
+     * @param systemCode FeliCa system code to translate
+     * @param serviceCode FeliCa service code to translate
+     * @return Human-readable description of the service code.
+     */
+    actual fun getFriendlyServiceName(systemCode: Int, serviceCode: Int): StringResource {
+        return when (systemCode) {
             SuicaTransitData.SYSTEMCODE_SUICA -> when (serviceCode) {
-                SuicaTransitData.SERVICE_SUICA_HISTORY -> return "Suica History"
-                SuicaTransitData.SERVICE_SUICA_INOUT -> return "Suica In/Out"
+                SuicaTransitData.SERVICE_SUICA_HISTORY -> R.string.suica_file_history
+                SuicaTransitData.SERVICE_SUICA_INOUT -> R.string.suica_file_in_out
+                else -> R.string.unknown
+            }
+
+            FelicaConsts.SYSTEMCODE_COMMON -> when (serviceCode) {
+                EdyTransitData.SERVICE_EDY_ID -> R.string.edy_file_id
+                EdyTransitData.SERVICE_EDY_BALANCE -> R.string.edy_file_purse_balance
+                EdyTransitData.SERVICE_EDY_HISTORY -> R.string.edy_file_history
+                else -> R.string.unknown
             }
 
             FelicaConsts.SYSTEMCODE_FELICA_LITE -> when (serviceCode) {
-                FelicaConsts.SERVICE_FELICA_LITE_READONLY -> return "FeliCa Lite Read-only"
-                FelicaConsts.SERVICE_FELICA_LITE_READWRITE -> return "Felica Lite Read-write"
+                FelicaConsts.SERVICE_FELICA_LITE_READONLY -> R.string.felica_lite_read_only
+                FelicaConsts.SERVICE_FELICA_LITE_READWRITE -> R.string.felica_lite_read_write
+                else -> R.string.unknown
             }
 
             OctopusTransitData.SYSTEMCODE_OCTOPUS -> when (serviceCode) {
-                OctopusTransitData.SERVICE_OCTOPUS -> return "Octopus Metadata"
+                OctopusTransitData.SERVICE_OCTOPUS -> R.string.card_name_octopus
+                else -> R.string.unknown
             }
 
             OctopusTransitData.SYSTEMCODE_SZT -> when (serviceCode) {
-                OctopusTransitData.SERVICE_SZT -> return "SZT Metadata"
+                OctopusTransitData.SERVICE_SZT -> R.string.card_name_szt
+                else -> R.string.unknown
             }
-        }
 
-        return "Unknown"
+            KMTTransitData.SYSTEMCODE_KMT -> when (serviceCode) {
+                KMTTransitData.SERVICE_KMT_ID -> R.string.kmt_file_id
+                KMTTransitData.SERVICE_KMT_BALANCE -> R.string.kmt_file_purse_balance
+                KMTTransitData.SERVICE_KMT_HISTORY -> R.string.kmt_file_history
+                else -> R.string.unknown
+            }
+
+            else -> R.string.unknown
+        }
     }
 }

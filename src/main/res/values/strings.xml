@@ -831,6 +831,16 @@
     <string name="ez_retail_purchase">Retail Purchase</string>
     <string name="ez_service_charge">Service Charge</string>
 
+    <!-- Translators: Describes the name of a file. This file contains the transaction history on
+    the card. Edy is a pre-paid debit card in Japan. -->
+    <string name="edy_file_history">Edy History</string>
+    <!-- Translators: Describes the name of a file. This file contains information that identifies
+    the card. Edy is a pre-paid debit card in Japan. -->
+    <string name="edy_file_id">Edy Identity</string>
+    <!-- Translators: Describes the name of a file. This file contains information about the balance
+    of the purse stored on this card. Edy is a pre-paid debit card in Japan. -->
+    <string name="edy_file_purse_balance">Edy Purse Balance</string>
+
     <!-- Felica / Suica: These strings must only be used for Felica. -->
 
     <!-- Translators: it's a ticketing card name in Japan. Japanese: スイカ
@@ -942,6 +952,13 @@
     <string name="felica_process_payment_thirdparty">Payment (3rd Party)</string>
     <string name="felica_process_admission_thirdparty">Admission Payment (3rd Party)</string>
 
+    <!-- Translators: Describes the name of a file. This file contains the transaction history on
+    the card. Suica is a transit card in Japan. -->
+    <string name="suica_file_history">Suica History</string>
+    <!-- Translators: Describes the name of a file. This file contains the last use of the card to
+    enter (in) or exit (out) a train station. Suica is a transit card in Japan. -->
+    <string name="suica_file_in_out">Suica In/Out</string>
+
     <!--
         Translators: https://en.wikipedia.org/wiki/Kereta_Commuter_Indonesia
 
@@ -966,6 +983,17 @@
     <string name="kmt_extra_note">Only for new FeliCa cards.</string>
     <string name="kmt_other_data">Other data</string>
     <string name="kmt_last_trx_amount">Last transaction amount</string>
+    <!-- Translators: Describes the name of a file. This file contains the transaction history on
+    the card. KMT is a transit card in Indonesia. -->
+    <string name="kmt_file_history">KMT History</string>
+    <!-- Translators: Describes the name of a file. This file contains information that identifies
+    this card. KMT is a transit card in Indonesia. -->
+    <string name="kmt_file_id">KMT Identity</string>
+    <!-- Translators: Describes the name of a file. This file contains information about the balance
+    of the purse stored on this card. KMT is a transit card in Indonesia. -->
+    <string name="kmt_file_purse_balance">KMT Purse Balance</string>
+    <!-- Translators: Name of a transit card in Indonesia. -->
+    <string name="card_name_kmt">Kartu Multi Trip</string>
 
     <!-- HSL -->
     <string name="hsl_balance_refill">Balance refill</string>
@@ -1382,6 +1410,13 @@
     <string name="trip_counter">Trips counter</string>
     <string name="refill_counter">Refill counter</string>
     <string name="mifare_desfire">MIFARE DESFire</string>
+    <!-- Translators: type of card media, variant of FeliCa (フェリカ / Felicity Card) -->
+    <string name="card_media_felica_lite">FeliCa Lite</string>
+    <string name="felica_lite_read_only">Read-only data</string>
+    <string name="felica_lite_read_write">Re-writable data</string>
+    <!-- Translators: NDEF = NFC Data Exchange Format -->
+    <string name="card_format_ndef">NDEF</string>
+    <string name="felica_system_common">Common Area (FeliCa Networks)</string>
 
     <!-- TFI Leap -->
     <string name="leap_retrieve_keys">Retrieve keys for Leap cards</string>

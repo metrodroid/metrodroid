@@ -38,33 +38,26 @@ object CardReader {
 
             // ISO 14443-4 card types
             // This also encompasses NfcA (ISO 14443-3A) and NfcB (ISO 14443-3B)
-            val tech = IsoDep.get(tag)
-            tech.connect()
-            val transceiver = AndroidCardTransceiver(tech::transceive)
+            AndroidCardTransceiver(tag).use {
+                it.connect(CardTransceiver.Protocol.ISO_14443A)
 
-            val d = DesfireCardReader.dumpTag(transceiver, feedbackInterface)
-            if (d != null) {
-                if (tech.isConnected)
-                    tech.close()
-                return Card(tagId = tagId, scannedAt = TimestampFull.now(),
-                        mifareDesfire = d)
+                val d = DesfireCardReader.dumpTag(it, feedbackInterface)
+                if (d != null) {
+                    return Card(tagId = tagId, scannedAt = TimestampFull.now(), mifareDesfire = d)
+                }
+
+                val isoCard = ISO7816Card.dumpTag(it, feedbackInterface)
+                return Card(tagId = tagId, scannedAt = TimestampFull.now(), iso7816 = isoCard)
             }
-
-            val isoCard = ISO7816Card.dumpTag(transceiver, feedbackInterface)
-            if (tech.isConnected)
-                tech.close()
-            return Card(tagId = tagId, scannedAt = TimestampFull.now(),
-                    iso7816 = isoCard)
         }
 
         if (NfcF::class.java.name in techs) {
-            val tech = NfcF.get(tag)
-            tech.connect()
-            Log.d(TAG, "Default system code: " + ImmutableByteArray.getHexString(tech.systemCode))
-            val c = FelicaReader.dumpTag(AndroidCardTransceiver(tech::transceive), feedbackInterface)
-            if (tech.isConnected)
-                tech.close()
+            val transceiver = AndroidCardTransceiver(tag)
+
+            val c = FelicaReader.dumpTag(transceiver, tagId, feedbackInterface)
+            transceiver.close()
             return Card(tagId = tagId, scannedAt = TimestampFull.now(), felica = c)
+
         }
 
         if (MifareClassic::class.java.name in techs) {
@@ -106,19 +99,10 @@ object CardReader {
     private suspend fun dumpTagA(tag: Tag, feedbackInterface: TagReaderFeedbackInterface): UltralightCard? {
         var card: UltralightCard? = null
 
-        val tech = NfcA.get(tag) ?: return null
-
-        try {
-            tech.connect()
-            if (tech.sak == 0.toShort()
-                    && tech.atqa?.contentEquals(byteArrayOf(0x44, 0x00)) == true)
-                card = UltralightCardReaderA.dumpTagA(
-                        AndroidCardTransceiver(tech::transceive),
-                        feedbackInterface)
-        } finally {
-            if (tech.isConnected) {
-                tech.close()
-            }
+        AndroidCardTransceiver(tag).use {
+            it.connect(CardTransceiver.Protocol.NFC_A)
+            if (it.sak == 0.toShort() && it.atqa?.contentEquals(byteArrayOf(0x44, 0x00)) == true)
+                card = UltralightCardReaderA.dumpTagA(it, feedbackInterface)
         }
         return card
     }

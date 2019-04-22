@@ -21,6 +21,9 @@
 
 package au.id.micolous.metrodroid.util
 
+val Int.hexString: String get() = NumberUtils.intToHex(this)
+val Long.hexString: String get() = NumberUtils.longToHex(this)
+
 object NumberUtils {
     fun intToHex(v: Int) = "0x" + v.toString(16)
     fun longToHex(v: Long): String = "0x" + v.toString(16)
