@@ -26,6 +26,7 @@ import kotlinx.io.OutputStream
 import kotlinx.serialization.*
 
 fun ByteArray.toImmutable(): ImmutableByteArray = ImmutableByteArray.fromByteArray(this)
+fun Array<out Number>.toImmutable(): ImmutableByteArray = ImmutableByteArray.ofB(*this)
 
 @Parcelize
 @Serializable(with = ImmutableByteArray.Companion::class)
@@ -141,6 +142,11 @@ class ImmutableByteArray private constructor(
 
     fun writeTo(os: OutputStream, offset: Int, length: Int) {
         os.write(mData, offset, length)
+    }
+
+    fun chunked(size: Int): List<ImmutableByteArray>
+            = chunked(size).map {
+        it.toByteArray().toImmutable()
     }
 
     @Serializer(forClass = ImmutableByteArray::class)
