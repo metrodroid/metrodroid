@@ -27,13 +27,11 @@ import au.id.micolous.metrodroid.time.MetroTimeZone
 import au.id.micolous.metrodroid.time.TimestampFull
 import au.id.micolous.metrodroid.transit.TransitCurrency
 import au.id.micolous.metrodroid.transit.octopus.OctopusTransitData
-import au.id.micolous.metrodroid.util.Utils
 import au.id.micolous.metrodroid.util.ImmutableByteArray
 import org.junit.Assert
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.junit.runners.JUnit4
-import java.util.*
 
 @RunWith(JUnit4::class)
 class OctopusTest {
@@ -53,7 +51,7 @@ class OctopusTest {
         val system = FelicaSystem(
                 mapOf(OctopusTransitData.SERVICE_OCTOPUS to serviceBalance, 0x100b to serviceUnknown))
 
-        val f = FelicaCard(iDm = ImmutableByteArray.empty(8),
+        val f = FelicaCard(
                 pMm = ImmutableByteArray.empty(8),
                 systems = mapOf(OctopusTransitData.SYSTEMCODE_OCTOPUS to system))
         Card(felica = f, scannedAt = scannedAt, tagId = ImmutableByteArray.empty(8))
