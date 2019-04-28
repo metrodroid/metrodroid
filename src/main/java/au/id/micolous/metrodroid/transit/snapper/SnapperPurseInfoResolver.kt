@@ -21,8 +21,8 @@
 
 package au.id.micolous.metrodroid.transit.snapper
 
-import au.id.micolous.farebot.R
 import au.id.micolous.metrodroid.card.ksx6924.KSX6924PurseInfoResolver
+import au.id.micolous.metrodroid.multi.R
 
 object SnapperPurseInfoResolver : KSX6924PurseInfoResolver() {
     // TODO: Handle Snapper codes better.

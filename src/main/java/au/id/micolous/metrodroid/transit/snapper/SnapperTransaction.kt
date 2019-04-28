@@ -21,60 +21,65 @@
  */
 package au.id.micolous.metrodroid.transit.snapper
 
-import android.util.Log
 import au.id.micolous.metrodroid.card.ksx6924.KSX6924Utils.parseHexDateTime
+import au.id.micolous.metrodroid.multi.Log
 import au.id.micolous.metrodroid.time.MetroTimeZone
-import au.id.micolous.metrodroid.time.TimestampFull
 import au.id.micolous.metrodroid.transit.Station
 import au.id.micolous.metrodroid.transit.Transaction
 import au.id.micolous.metrodroid.transit.TransitCurrency
 import au.id.micolous.metrodroid.transit.Trip
 import au.id.micolous.metrodroid.util.ImmutableByteArray
+import kotlinx.android.parcel.IgnoredOnParcel
 import kotlinx.android.parcel.Parcelize
+import kotlinx.serialization.Transient
 
 @Parcelize
 class SnapperTransaction(
         val journeyId: Int,
         val seq: Int,
-        val tapOn: Boolean,
+        override val isTapOn: Boolean,
         val type: Int,
         val cost: Int,
         val time: Long,
         val operator: String) : Transaction() {
 
-    override val isTapOn: Boolean
-        get() = tapOn
 
-    override val isTapOff: Boolean
-        get() = !tapOn
+    @IgnoredOnParcel
+    @Transient
+    override val isTapOff = !isTapOn
 
     // TODO: Implement this properly
-    override val station: Station?
-        get() = Station.nameOnly("$journeyId / $seq")
+    @IgnoredOnParcel
+    @Transient
+    override val station = Station.nameOnly("$journeyId / $seq")
 
-    override val mode: Trip.Mode
-        get() = when (type) {
-            2 -> Trip.Mode.BUS
-            else -> Trip.Mode.TROLLEYBUS
-        }
+    @IgnoredOnParcel
+    @Transient
+    override val mode = when (type) {
+        2 -> Trip.Mode.BUS
+        else -> Trip.Mode.TROLLEYBUS
+    }
 
     override fun isSameTrip(other: Transaction): Boolean {
         val o = other as SnapperTransaction
         return journeyId == o.journeyId && seq == o.seq
     }
 
-    override val timestamp: TimestampFull?
-        get() = parseHexDateTime(time, TZ)
+    @IgnoredOnParcel
+    @Transient
+    override val timestamp = parseHexDateTime(time, TZ)
 
-    override val fare: TransitCurrency
-        get() = TransitCurrency.NZD(cost)
+    @IgnoredOnParcel
+    @Transient
+    override val fare = TransitCurrency.NZD(cost)
 
-    override val isTransfer: Boolean
-        get() = seq != 0
+    @IgnoredOnParcel
+    @Transient
+    override val isTransfer = seq != 0
 
     companion object {
         private val TZ = MetroTimeZone.AUCKLAND
-        private val TAG = SnapperTransaction::class.java.simpleName
+        private const val TAG = "SnapperTransaction"
 
         fun parseTransaction(trip : ImmutableByteArray, balance : ImmutableByteArray) : SnapperTransaction {
             val journeyId = trip[5].toInt()
