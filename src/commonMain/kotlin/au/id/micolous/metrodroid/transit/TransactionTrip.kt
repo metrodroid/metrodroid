@@ -92,14 +92,17 @@ abstract class TransactionTripAbstract: Trip() {
     override val mode: Trip.Mode
         get() = any?.mode ?: Trip.Mode.OTHER
 
-    // No fare applies to the trip, as the tap-on was reversed.
     override val fare: TransitCurrency?
         get() {
+            // No fare applies to the trip, as the tap-on was reversed.
             if (end?.isCancel == true) {
                 return null
             }
 
-            return end?.fare ?: start?.fare
+            return start?.fare?.let {
+                // These is a start fare, add the end fare to it, if present
+                return it + end?.fare
+            } ?: end?.fare // Otherwise use the end fare.
         }
 
     override val isTransfer: Boolean
