@@ -162,6 +162,7 @@ kotlin {
             dependencies {
                 implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
                 implementation "org.jetbrains.kotlinx:kotlinx-io-jvm:$kotlinio_version"
+                implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:1.1.0"
                 implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:1.1.0"
                 implementation "org.jetbrains.kotlinx:kotlinx-serialization-runtime:$kotlinserial_version"
             }
@@ -173,6 +174,7 @@ kotlin {
         androidTest {
             dependencies {
                 implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+                implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:1.1.0"
                 implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:1.1.0"
                 implementation "org.jetbrains.kotlinx:kotlinx-serialization-runtime:$kotlinserial_version"
                 implementation "org.jetbrains.kotlinx:kotlinx-io-jvm:$kotlinio_version"
