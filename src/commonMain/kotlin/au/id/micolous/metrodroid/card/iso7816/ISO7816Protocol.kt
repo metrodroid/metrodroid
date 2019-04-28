@@ -1,8 +1,8 @@
 /*
  * ISO7816Protocol.java
  *
- * Copyright 2018 Michael Farrell <micolous+git@gmail.com>
- * Copyright 2018 Google
+ * Copyright 2018-2019 Michael Farrell <micolous+git@gmail.com>
+ * Copyright 2018-2019 Google
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -99,9 +99,9 @@ class ISO7816Protocol(private val mTagTech: CardTransceiver) {
      * @param p2         Reference byte completing the INS.
      * @param length     Length of the expected return value, or 0 for no limit.
      * @param parameters Additional data to be send in a command.
-     * @throws FileNotFoundException If a requested file can not be found
-     * @throws EOFException If a requested record can not be found
-     * @throws IllegalStateException If an invalid command is issued
+     * @throws ISOFileNotFoundException If a requested file can not be found
+     * @throws ISOEOFException If a requested record can not be found
+     * @throws ISONoCurrentEF If the command is not allowed, because there is no selected EF
      * @throws CardTransceiveException If there is a communication error
      * @throws ISO7816Exception If there is an unhandled error code
      * @return A wrapped command.
@@ -114,8 +114,8 @@ class ISO7816Protocol(private val mTagTech: CardTransceiver) {
         var sw2 = recvBuffer[recvBuffer.size - 1]
         Log.d(TAG, "First attempt: $sw1, $sw2")
 
-        if (sw1 == 0x6c.toByte() && sw2 != length) {
-            Log.d(TAG, "Second attempt")
+        if (sw1 == ERROR_WRONG_LENGTH && sw2 != length) {
+            Log.d(TAG, "Wrong length, trying with corrected length")
             recvBuffer = sendRequestReal(cla, ins, p1, p2, sw2, parameters)
         }
 
@@ -248,6 +248,8 @@ class ISO7816Protocol(private val mTagTech: CardTransceiver) {
         const val ERROR_COMMAND_NOT_ALLOWED = 0x69.toByte()
         @VisibleForTesting
         const val ERROR_WRONG_PARAMETERS = 0x6A.toByte()
+        @VisibleForTesting
+        const val ERROR_WRONG_LENGTH = 0x6C.toByte()
         @VisibleForTesting
         const val CNA_NO_CURRENT_EF = 0x86.toByte()
         @VisibleForTesting
