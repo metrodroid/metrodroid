@@ -1,15 +1,15 @@
 package au.id.micolous.metrodroid.transit.tmoney
 
-import au.id.micolous.metrodroid.card.tmoney.TMoneyCard
+import au.id.micolous.metrodroid.card.ksx6924.KSX6924Application
+import au.id.micolous.metrodroid.card.ksx6924.KSX6924CardTransitFactory
 import au.id.micolous.metrodroid.transit.CardInfo
 import au.id.micolous.metrodroid.transit.TransitData
-import au.id.micolous.metrodroid.transit.TransitIdentity
 
 expect class TMoneyTransitData : TransitData {
-    constructor(tMoneyCard: TMoneyCard)
+    constructor(card: KSX6924Application)
 
     companion object {
-        fun parseTransitIdentity(card: TMoneyCard): TransitIdentity
         val CARD_INFO: CardInfo
+        val FACTORY: KSX6924CardTransitFactory
     }
 }

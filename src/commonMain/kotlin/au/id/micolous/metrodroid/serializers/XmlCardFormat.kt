@@ -19,7 +19,8 @@
 
 package au.id.micolous.metrodroid.serializers
 
-import au.id.micolous.metrodroid.card.*
+import au.id.micolous.metrodroid.card.Card
+import au.id.micolous.metrodroid.card.CardType
 import au.id.micolous.metrodroid.card.calypso.CalypsoApplication
 import au.id.micolous.metrodroid.card.cepas.CEPASApplication
 import au.id.micolous.metrodroid.card.cepascompat.CEPASCard
@@ -31,7 +32,7 @@ import au.id.micolous.metrodroid.card.desfire.files.RawDesfireFile
 import au.id.micolous.metrodroid.card.desfire.settings.DesfireFileSettings
 import au.id.micolous.metrodroid.card.felica.FelicaCard
 import au.id.micolous.metrodroid.card.iso7816.*
-import au.id.micolous.metrodroid.card.tmoney.TMoneyCard
+import au.id.micolous.metrodroid.card.ksx6924.KSX6924Application
 import au.id.micolous.metrodroid.card.ultralight.UltralightCard
 import au.id.micolous.metrodroid.multi.Log
 import au.id.micolous.metrodroid.time.MetroTimeZone
@@ -514,6 +515,9 @@ class ISO7816ApplicationXmlAdapter(
         @Optional
         val balance: Int = 0,
         @Optional
+        @XMLId("extra-records")
+        val extraRecords: List<ImmutableByteArray> = emptyList(),
+        @Optional
         @XMLListIdx("idx")
         @XMLHex
         val balances: Map<Int, String> = emptyMap(),
@@ -542,10 +546,14 @@ class ISO7816ApplicationXmlAdapter(
             "calypso" -> CalypsoApplication(generic = makeCapsule())
             "cepas" -> CEPASApplication(generic = makeCapsule(),
                     histories = histories, purses = purses)
-            "tmoney" -> TMoneyCard(generic = makeCapsule(),
+            "ksx6924", "tmoney" -> KSX6924Application(generic = makeCapsule(),
                     balance = ImmutableByteArray.ofB(
                             (balance shr 24),
-                            (balance shr 16), (balance shr 8), balance))
+                            (balance shr 16),
+                            (balance shr 8),
+                            balance),
+                    extraRecords = extraRecords
+                    )
             "china", "shenzhentong" -> ChinaCard(generic = makeCapsule(),
                     balances = balances.mapValues { ImmutableByteArray.fromHex(it.value.trim()) })
             else -> throw Exception("Unknown type $type")

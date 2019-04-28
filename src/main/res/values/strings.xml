@@ -99,6 +99,7 @@
     <string name="no_scanned_cards">You have not scanned any cards.</string>
     <string name="block_title_format">Block: %s</string>
     <string name="page_title_format">Page: 0x%s</string>
+    <string name="page_title_format_empty">Page: 0x%s (empty)</string>
     <string name="application_title_format">Application: %s</string>
     <!-- Translators:
     AID = Application ID (terminology used by the card vendor)
@@ -698,6 +699,7 @@
     <string name="location_toulouse">Toulouse, France</string>
     <string name="location_vancouver">Vancouver, BC, Canada</string>
     <string name="location_victoria_australia">Victoria, Australia</string>
+    <string name="location_wellington_nz">Wellington, New Zealand</string>
     <string name="location_wa_australia">Western Australia, Australia</string>
     <string name="location_waikato">Waikato, New Zealand</string>
     <string name="location_wuhan">Wuhan, China</string>
@@ -1349,10 +1351,129 @@
     </string>
     <string name="fully_blank_title">Blank card</string>
 
+    <!-- T-Money -->
     <!-- Translators: T-money is Korean payment/transit system. Korean: 티머니
     May be transliterated -->
     <string name="card_name_tmoney">T-Money</string>
     <string name="tmoney_date">T-money date</string>
+
+    <string name="maximum_balance">Maximum balance</string>
+    <!-- Translators: used to describe a particular branch of a company or retailer which operates
+    at multiple locations -->
+    <string name="branch_code">Branch code</string>
+    <!-- Translators: the maximum charge that may be applied in a single transaction -->
+    <string name="one_time_transaction_limit">One-time transaction limit</string>
+    <!-- Translators: revision number for encryption keys used by a card -->
+    <string name="encryption_key_version">Encryption key version</string>
+    <!-- Translators: a machine-readable value used for authenticating the card -->
+    <string name="authentication_id">Authentication ID</string>
+    <!-- Translators: describes a field or value that is reserved for future usage -->
+    <string name="rfu">Reserved for future use</string>
+
+    <string name="cardtype_header">Card payment terms</string>
+    <!-- Translators: Indicates that this card's transactions are paid before travel. -->
+    <string name="cardtype_prepaid">Pre-paid</string>
+    <!-- Translators: Indicates that this card's transactions are paid after travel
+    (eg: as part of a monthly bill). -->
+    <string name="cardtype_postpay">Post-paid</string>
+    <!-- Translators: Indicates that this card's transactions are paid after travel,
+    and using a mobile phone as a virtual transit card. -->
+    <string name="cardtype_mobile_postpay">Mobile post-paid</string>
+
+    <string name="crypto_algo_header">Encryption algorithm</string>
+    <!-- Translators: SEED is a Korean encryption algorithm. https://en.wikipedia.org/wiki/SEED -->
+    <string name="crypto_algo_seed">SEED</string>
+    <!-- Translators: 3DES = https://en.wikipedia.org/wiki/Triple_DES -->
+    <string name="crypto_algo_3des">3DES</string>
+
+    <!-- Translators: https://en.wikipedia.org/wiki/Korea_Financial_Telecommunications_%26_Clearings_Institute
+    (Korean: 금융결제원) -->
+    <string name="tmoney_issuer_kftci">Korea Financial Telecommunications and Clearings Institute</string>
+    <!-- Translators: https://en.wikipedia.org/wiki/Mybi (Korean: 마이비) -->
+    <string name="tmoney_issuer_mybi">Mybi</string>
+    <!-- Translators: https://en.wikipedia.org/wiki/Mondex (Korean: 몬덱스코리아)-->
+    <string name="tmoney_issuer_mondex">Mondex Korea</string>
+    <!-- Translators: https://en.wikipedia.org/wiki/Korea_Expressway_Corporation
+    (Korean: 한국도로공사) -->
+    <string name="tmoney_issuer_kec">Korea Expressway Corporation</string>
+    <!-- Translators: Company who operates the T-Money system (Korean: 한국스마트카드) -->
+    <string name="tmoney_issuer_kscc">Korea Smart Card Corporation</string>
+    <!-- Translators: https://en.wikipedia.org/wiki/Korail (Korean: 코레일네트웍스) -->
+    <string name="tmoney_issuer_korail">KORAIL Networks</string>
+    <!-- Translators: http://www.ebcard.co.kr/eb/co/companyOverviewEn.do (Korean: 이비카드) -->
+    <string name="tmoney_issuer_eb">EB Card Corporation</string>
+    <!-- Translators: https://en.wikipedia.org/wiki/Seoul_Buses (Korean: 서울특별시버스운송사업조합) -->
+    <string name="tmoney_issuer_seoul_bus">Seoul Bus Transport Association</string>
+    <!-- Translators: (Korean: 카드넷) -->
+    <string name="tmoney_issuer_cardnet">Cardnet</string>
+
+    <!-- Fare types -->
+    <!-- Translators: Regular fare type (Korean: 일반) -->
+    <string name="tmoney_usercode_regular">Regular</string>
+    <!-- Translators: Child fare type (Korean: 어린이) -->
+    <string name="tmoney_usercode_child">Child</string>
+    <!-- Translators: Youth fare type (Korean: 청소년) -->
+    <string name="tmoney_usercode_youth">Youth</string>
+    <!-- Translators: Test ticket type (Korean: 테스트) -->
+    <string name="tmoney_usercode_test">Test</string>
+    <!-- Translators: Inactive ticket type (Korean: 비활성) -->
+    <string name="tmoney_usercode_inactive">Inactive</string>
+
+    <!-- Translators: For tickets that offer a discounted rate (eg: for people with disabilities
+    and/or their travelling companion) in addition to a ticket type (eg: adult, child) or class
+    (1st class, 2nd class).  -->
+    <string name="discount_type">Discount type</string>
+    <!-- Translators: T-Money cards may have discounted fares applied for certain people.
+    This indicates the card has no discount applied. -->
+    <string name="tmoney_disrate_none">No discount</string>
+    <!-- Translators: T-Money card for person with disabilities (Korean: 장애, 기본) -->
+    <string name="tmoney_disrate_disabled_basic">Disabled, basic</string>
+    <!-- Translators: T-Money card for travelling companion of person with disabilities
+    (Korean: 장애, 동반 무임 -->
+    <string name="tmoney_disrate_disabled_companion">Disabled, companion</string>
+
+    <!-- Translators: Used when something is explicitly unset, or has no data -->
+    <string name="none">None</string>
+    <!-- Translators: cards might be issued by a mobile/cellular telecommunications provider -->
+    <string name="mobile_carrier">Mobile carrier</string>
+    <!-- Translators: Korean mobile carrier: https://en.wikipedia.org/wiki/SK_Telecom -->
+    <string name="tmoney_tcode_sk">SK Telecom</string>
+    <!-- Translators: Korean telecom carrier: https://en.wikipedia.org/wiki/KT_Corporation -->
+    <string name="tmoney_tcode_kt">Korea Telecom</string>
+    <!-- Translators: Korean mobile carrier: https://en.wikipedia.org/wiki/LG_Uplus -->
+    <string name="tmoney_tcode_lg">LG Uplus</string>
+
+    <!-- Translators: Can be used to describe a bank or credit card name -->
+    <string name="financial_institution_name">Financial institution name</string>
+    <!-- Translators: https://en.wikipedia.org/wiki/KB_Financial_Group_Inc -->
+    <string name="tmoney_ccode_kb">KB Kookmin Bank</string>
+    <!-- Translators: https://en.wikipedia.org/wiki/Nonghyup_Bank -->
+    <string name="tmoney_ccode_nonghyup">Nonghyup Bank</string>
+    <!-- Translators: https://en.wikipedia.org/wiki/Lotte_Card -->
+    <string name="tmoney_ccode_lotte">Lotte Card</string>
+    <!-- Translators: https://en.wikipedia.org/wiki/BC_Card -->
+    <string name="tmoney_ccode_bc">BC Card</string>
+    <!-- Translators: https://en.wikipedia.org/wiki/Samsung_Card -->
+    <string name="tmoney_ccode_samsung">Samsung Card</string>
+    <!-- Translators: https://en.wikipedia.org/wiki/Shinhan_Bank -->
+    <string name="tmoney_ccode_shinhan">Shinhan Bank</string>
+    <!-- Translators: https://en.wikipedia.org/wiki/Citibank_Korea -->
+    <string name="tmoney_ccode_citi">Citibank Korea</string>
+    <!-- Translators: https://en.wikipedia.org/wiki/Korea_Exchange_Bank -->
+    <string name="tmoney_ccode_exchange">Korea Exchange Bank</string>
+    <!-- Translators: https://en.wikipedia.org/wiki/Hana_Financial_Group -->
+    <string name="tmoney_ccode_hana_sk">Hana SK Card</string>
+    <!-- Translators: https://en.wikipedia.org/wiki/Hyundai_Capital -->
+    <string name="tmoney_ccode_hyundai">Hyundai Capital Services</string>
+
+    <!-- Snapper (Wellington, NZ) -->
+    <!-- Translators: Snapper is the ticketing system in Wellington, New Zealand.
+    May be transliterated. -->
+    <string name="card_name_snapper">Snapper</string>
+
+    <!-- Translators: Snapper Services Limited (Ltd.) is the company that operates the Snapper
+    card system in Wellington, New Zealand. -->
+    <string name="snapper_issuer_snapper">Snapper Services Ltd.</string>
 
     <string name="charlie_2nd_card_number">Second number</string>
 
