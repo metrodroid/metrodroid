@@ -28,7 +28,13 @@ import au.id.micolous.metrodroid.util.Utils
 import java.io.IOException
 
 class AndroidUltralightTransceiver(val tech: MifareUltralight) : UltralightTransceiver {
-    override fun readPages(pageNumber: Int): ByteArray = tech.readPages(pageNumber)
+    override fun readPages(pageNumber: Int): ByteArray {
+        try {
+            return tech.readPages(pageNumber)
+        } catch (e: IOException) {
+            throw CardTransceiveException(e, Utils.getErrorMessage(e))
+        }
+    }
 
     override fun transceive(data: ByteArray): ByteArray {
         try {
