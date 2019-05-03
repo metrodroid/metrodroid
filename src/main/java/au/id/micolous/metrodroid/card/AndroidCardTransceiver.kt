@@ -25,17 +25,21 @@ import au.id.micolous.metrodroid.util.Utils
 import au.id.micolous.metrodroid.util.toImmutable
 import java.io.IOException
 
+fun <T>wrapAndroidExceptions(f: () -> T): T {
+    try {
+        return f()
+    } catch (e: TagLostException) {
+        throw CardLostException(Utils.getErrorMessage(e))
+    } catch (e: IOException) {
+        throw CardTransceiveException(e, Utils.getErrorMessage(e))
+    }
+}
+
 /**
  * Wrapper for Android to implement the [CardTransceiver] interface.
  */
 class AndroidCardTransceiver(private val transceive: (ByteArray) -> ByteArray) : CardTransceiver {
-    override suspend fun transceive(data: ImmutableByteArray): ImmutableByteArray {
-        try {
-            return transceive(data.dataCopy).toImmutable()
-        } catch (e: TagLostException) {
-            throw CardLostException(Utils.getErrorMessage(e))
-        } catch (e: IOException) {
-            throw CardTransceiveException(e, Utils.getErrorMessage(e))
-        }
+    override suspend fun transceive(data: ImmutableByteArray): ImmutableByteArray = wrapAndroidExceptions {
+        transceive(data.dataCopy).toImmutable()
     }
 }

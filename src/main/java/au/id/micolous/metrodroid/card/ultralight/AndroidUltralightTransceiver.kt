@@ -23,25 +23,15 @@
 package au.id.micolous.metrodroid.card.ultralight
 
 import android.nfc.tech.MifareUltralight
-import au.id.micolous.metrodroid.card.CardTransceiveException
-import au.id.micolous.metrodroid.util.Utils
-import java.io.IOException
+import au.id.micolous.metrodroid.card.wrapAndroidExceptions
 
 class AndroidUltralightTransceiver(val tech: MifareUltralight) : UltralightTransceiver {
-    override fun readPages(pageNumber: Int): ByteArray {
-        try {
-            return tech.readPages(pageNumber)
-        } catch (e: IOException) {
-            throw CardTransceiveException(e, Utils.getErrorMessage(e))
-        }
+    override fun readPages(pageNumber: Int): ByteArray = wrapAndroidExceptions {
+        tech.readPages(pageNumber)
     }
 
-    override fun transceive(data: ByteArray): ByteArray {
-        try {
-            return tech.transceive(data)
-        } catch (e: IOException) {
-            throw CardTransceiveException(e, Utils.getErrorMessage(e))
-        }
+    override fun transceive(data: ByteArray): ByteArray = wrapAndroidExceptions {
+        tech.transceive(data)
     }
 
     override fun reconnect() {
