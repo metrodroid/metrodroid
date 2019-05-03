@@ -100,7 +100,7 @@ class EZLinkTransitData (override val serialNumber: String?,
         }
 
         fun check(cepasCard: CEPASApplication): Boolean {
-            return cepasCard.getHistory(3) != null && cepasCard.getPurse(3) != null
+            return cepasCard.getPurse(3) != null
         }
 
         fun parseTransitIdentity(card: CEPASApplication): TransitIdentity {
