@@ -11,6 +11,7 @@ import au.id.micolous.metrodroid.transit.manly_fast_ferry.ManlyFastFerryTransitD
 import au.id.micolous.metrodroid.transit.metroq.MetroQTransitData
 import au.id.micolous.metrodroid.transit.msp_goto.MspGotoTransitData
 import au.id.micolous.metrodroid.transit.nextfare.NextfareTransitData
+import au.id.micolous.metrodroid.transit.otago.OtagoGoCardTransitFactory
 import au.id.micolous.metrodroid.transit.ovc.OVChipTransitData
 import au.id.micolous.metrodroid.transit.podorozhnik.PodorozhnikTransitData
 import au.id.micolous.metrodroid.transit.ricaricami.RicaricaMiTransitData
@@ -22,7 +23,7 @@ import au.id.micolous.metrodroid.transit.smartrider.SmartRiderTransitData
 import au.id.micolous.metrodroid.transit.troika.TroikaHybridTransitData
 import au.id.micolous.metrodroid.transit.unknown.BlankClassicTransitData
 import au.id.micolous.metrodroid.transit.unknown.UnauthorizedClassicTransitData
-import au.id.micolous.metrodroid.transit.waikato.WaikatoTransitData
+import au.id.micolous.metrodroid.transit.waikato.WaikatoCardTransitFactory
 import au.id.micolous.metrodroid.transit.zolotayakorona.ZolotayaKoronaTransitData
 
 object ClassicCardFactoryRegistry {
@@ -55,7 +56,8 @@ object ClassicCardFactoryRegistry {
             SunCardTransitData.FACTORY,
             ZolotayaKoronaTransitData.FACTORY,
             RkfTransitData.FACTORY,
-            WaikatoTransitData.FACTORY,
+            OtagoGoCardTransitFactory(),
+            WaikatoCardTransitFactory(),
 
             // This check must be THIRD TO LAST.
             //
