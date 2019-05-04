@@ -11,11 +11,7 @@ import kotlinx.serialization.toUtf8Bytes
  * By default, this adopts a binary-based ([InputStream]) model. If a character (string) model
  * is desired (such as a format which consists only of plain text), then implement [Text]
  * instead.
- *
- * @param <T> An optional subclass of Card to declare specific format emissions. For example, a
- * format that only supports MIFARE Classic should declare
- * [au.id.micolous.metrodroid.card.classic.ClassicCard] here.
-</T> */
+ */
 interface CardImporter {
 
     /**
