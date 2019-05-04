@@ -3,9 +3,6 @@
  *
  * Copyright 2019 Google
  *
- * Octopus reading code based on FelicaCard.java from nfcard project
- * Copyright 2013 Sinpo Wei <sinpowei@gmail.com>
- *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General private License as published by
  * the Free Software Foundation, either version 3 of the License, or
@@ -25,6 +22,7 @@ package au.id.micolous.metrodroid.card.ultralight
 import android.nfc.tech.MifareUltralight
 import au.id.micolous.metrodroid.card.wrapAndroidExceptions
 
+// TODO: Merge this with AndroidCardTransceiver
 class AndroidUltralightTransceiver(val tech: MifareUltralight) : UltralightTransceiver {
     override fun readPages(pageNumber: Int): ByteArray = wrapAndroidExceptions {
         tech.readPages(pageNumber)
