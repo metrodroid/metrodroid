@@ -42,37 +42,22 @@ internal class UltralightProtocol(private val mTagTech: UltralightTransceiver) {
     /**
      * Gets the MIFARE Ultralight card type.
      *
-     * Android has MIFAREUltralight.getType(), but this is lacking:
+     * Android has `MIFAREUltralight.getType()`, but this is lacking:
      *
      * 1. It cannot detect Ultralight EV1 cards correctly, which have different memory sizes.
      *
      * 2. It cannot detect the size of fully locked cards correctly.
      *
      * This is a much more versatile test, based on sniffing what NXP TagInfo does, and Proxmark3's
-     * GetHF14AMfU_Type function. Android can't do bad checksums (eg: PM3 Fudan/clone check) and
+     * `GetHF14AMfU_Type` function. Android can't do bad checksums (eg: PM3 Fudan/clone check) and
      * Metrodroid never writes to cards (eg: PM3 Magic check), so we don't do all of the checks.
      *
      * @return MIFARE Ultralight card type.
      * @throws IOException On card communication error (eg: reconnects)
      */
-    // Try EV1's GET_VERSION command
-    // This isn't supported by non-UL EV1s, and will cause those cards to disconnect.
-    // Datasheet suggests we should do some maths here to allow for future card types,
-    // however for all cards, we get an inexact data length. A locked page read does a
-    // NAK, but an authorised read will wrap around to page 0x00.
-    // TODO: PM3 notes that there are a number of NTAG which respond to this command, and look similar to EV1.
-    // EV1 version detection.
-    // Datasheet suggests we should do some maths here to allow for future card types,
-    // however for the EV1_MF0UL11 we get an inexact data length. PM3 does the check this
-    // way as well, and locked page reads all look the same.
-    // Reconnect the tag
-    // Try to get a nonce for 3DES authentication with Ultralight C.
-    // Non-C cards will disconnect here.
-    // TODO: PM3 says NTAG 203 (with different memory size) also looks like this.
-    // Reconnect the tag
-    // To continue, we need to halt the auth attempt.
-    // Reconnect
     fun getCardType(): UltralightType {
+        // Try EV1's GET_VERSION command
+        // This isn't supported by non-UL EV1s, and will cause those cards to disconnect.
         val b = try {
             getVersion()
         } catch (e: CardTransceiveException) {
@@ -87,6 +72,9 @@ internal class UltralightProtocol(private val mTagTech: UltralightTransceiver) {
             }
 
             if (b[2].toInt() == 0x04) {
+                // Datasheet suggests we should do some maths here to allow for future card types,
+                // however for all cards, we get an inexact data length. A locked page read does a
+                // NAK, but an authorised read will wrap around to page 0x00.
                 return when (b[6].toInt()) {
                     0x0F -> UltralightType.NTAG213
                     0x11 -> UltralightType.NTAG215
@@ -99,9 +87,16 @@ internal class UltralightProtocol(private val mTagTech: UltralightTransceiver) {
             }
 
             if (b[2].toInt() != 0x03) {
+                // TODO: PM3 notes that there are a number of NTAG which respond to this command, and look similar to EV1.
                 Log.d(TAG, "getVersion got a tag response with non-EV1 product code (${b[2]}): " + ImmutableByteArray.getHexString(b))
                 return UltralightType.UNKNOWN
             }
+
+            // EV1 version detection.
+            //
+            // Datasheet suggests we should do some maths here to allow for future card types,
+            // however for the EV1_MF0UL11 we get an inexact data length. PM3 does the check this
+            // way as well, and locked page reads all look the same.
             return when (b[6].toInt()) {
                 0x0b -> UltralightType.EV1_MF0UL11
                 0x0e -> UltralightType.EV1_MF0UL21
@@ -111,18 +106,25 @@ internal class UltralightProtocol(private val mTagTech: UltralightTransceiver) {
                 }
             }
         } else {
+            // Reconnect the tag
             mTagTech.reconnect()
         }
+
+        // Try to get a nonce for 3DES authentication with Ultralight C.
         try {
             val b2 = auth1() ?: throw CardTransceiveException("auth1 returned null")
             Log.d(TAG, "auth1 said = $b2")
         } catch (e: CardTransceiveException) {
+            // Non-C cards will disconnect here.
             Log.d(TAG, "auth1 returned error, not Ultralight C.", e)
-            mTagTech.reconnect()
 
+            // TODO: PM3 says NTAG 203 (with different memory size) also looks like this.
+
+            mTagTech.reconnect()
             return UltralightType.MF0ICU1
         }
 
+        // To continue, we need to halt the auth attempt.
         halt()
         mTagTech.reconnect()
 
@@ -187,7 +189,6 @@ internal class UltralightProtocol(private val mTagTech: UltralightTransceiver) {
     private fun sendRequest(vararg data: Byte): ByteArray {
         Log.d(TAG,  "sent card: " + ImmutableByteArray.getHexString(data))
 
-        //TransceiveResult result = nonThrowingTransceive(data, true);
         return mTagTech.transceive(data)
     }
 
@@ -202,59 +203,4 @@ internal class UltralightProtocol(private val mTagTech: UltralightTransceiver) {
         // Status codes
         const val AUTH_ANSWER = 0xAF.toByte()
     }
-
-    // This is a bunch of code to poke at BasicTagTechnology, and get some better error codes.
-    //
-    // This isn't used _now_, but may be useful in the future in order to get at different error
-    // states from the NFC driver.
-
-    /*
-    public class TransceiveResult {
-        int result;
-        byte[] responseData;
-    }
-
-    private TransceiveResult nonThrowingTransceive(byte[] data, boolean raw)
-            throws NoSuchMethodException, InvocationTargetException, IllegalAccessException, NoSuchFieldException {
-        // Adapted from:
-        // https://android.googlesource.com/platform/frameworks/base/+/master/core/java/android/nfc/tech/BasicTagTechnology.java#142
-
-        // Android calls TransceiveResult.getResponseOrThrow() whenever we try to talk to the card
-        // Instead, we want to be able to call this transceive operation without being blocked, and
-        // get at the raw data we were passed back.
-
-        Tag t = mTagTech.getTag();
-        Method getTagService = t.getClass().getDeclaredMethod("getTagService");
-        getTagService.setAccessible(true);
-        Object tagService = getTagService.invoke(t);
-        Method getServiceHandle = t.getClass().getDeclaredMethod("getServiceHandle");
-        getServiceHandle.setAccessible(true);
-        int serviceHandle = (Integer) getServiceHandle.invoke(t);
-
-        Method transceive = tagService.getClass().getDeclaredMethod("transceive", int.class, byte[].class, boolean.class);
-        transceive.setAccessible(true);
-        Object transceiveResult = transceive.invoke(tagService, serviceHandle, data, raw);
-
-        if (transceiveResult == null) {
-            return null;
-        } else {
-            // Patch the values into our own thing
-            TransceiveResult r = new TransceiveResult();
-            Field mResult = transceiveResult.getClass().getDeclaredField("mResult");
-            mResult.setAccessible(true);
-            r.result = mResult.getInt(transceiveResult);
-
-            Field mResponseData = transceiveResult.getClass().getDeclaredField("mResponseData");
-            mResponseData.setAccessible(true);
-            r.responseData = (byte[]) mResponseData.get(transceiveResult);
-
-            if (r.responseData == null) {
-                r.responseData = new byte[0];
-            }
-
-            return r;
-        }
-    }
-    */
-
 }
