@@ -23,13 +23,14 @@ import au.id.micolous.metrodroid.multi.Log
 import au.id.micolous.metrodroid.time.MetroTimeZone
 import au.id.micolous.metrodroid.time.TimestampFull
 import au.id.micolous.metrodroid.util.ImmutableByteArray
+import au.id.micolous.metrodroid.util.hexString
 
 /**
  * Tap record type
  * https://github.com/micolous/metrodroid/wiki/Cubic-Nextfare-MFC
  */
 class NextfareTransactionRecord private constructor(
-        val timestamp: TimestampFull, val mode: Int, val journey: Int,
+        val type: Type, val timestamp: TimestampFull, val mode: Int, val journey: Int,
         val station: Int, val value: Int, val checksum: Int,
         val isContinuation: Boolean) : NextfareRecord(), Comparable<NextfareTransactionRecord> {
 
@@ -48,19 +49,43 @@ class NextfareTransactionRecord private constructor(
     companion object {
         private const val TAG = "NextfareTxnRecord"
 
+        enum class Type {
+            UNKNOWN,
+            IGNORE,
+            TRAVEL_PASS_TRIP,
+            TRAVEL_PASS_SALE,
+            STORED_VALUE_TRIP,
+            STORED_VALUE_SALE;
+
+            val isSale get() = (this == TRAVEL_PASS_SALE || this == STORED_VALUE_SALE)
+        }
+
+        private val TRIP_TYPES = mapOf(
+                // SEQ, LAX: 0x05 for "Travel Pass" trips.
+                0x05 to Type.TRAVEL_PASS_TRIP,
+                // SEQ, LAX: 0x31 for "Stored Value" trips / transfers
+                0x31 to Type.STORED_VALUE_TRIP,
+                // SEQ, LAX: 0x41 for "Travel Pass" sale.
+                0x41 to Type.TRAVEL_PASS_SALE,
+                // LAX:      0x71 for "Stored Value" sale -- effectively recorded twice
+                // (ignored)
+                0x71 to Type.IGNORE,
+                // SEQ, LAX: input[0] == 0x79 for "Stored Value" sale
+                // (ignored)
+                0x79 to Type.IGNORE,
+                // Minneapolis: input[0] == 0x89 unknown transaction type, no date, only a small
+                // number around 100
+                0x89 to Type.IGNORE
+        )
+
         fun recordFromBytes(input: ImmutableByteArray, timeZone: MetroTimeZone): NextfareTransactionRecord? {
             //if (input[0] != 0x31) throw new AssertionError("not a tap record");
 
-            // LAX:      input[0] == 0x05 for "Travel Pass" trips.
-            // SEQ, LAX: input[0] == 0x31 for "Stored Value" trips / transfers
-            // LAX:      input[0] == 0x41 for "Travel Pass" sale.
-            // LAX:      input[0] == 0x71 for "Stored Value" sale -- effectively recorded twice
-            // SEQ, LAX: input[0] == 0x79 for "Stored Value" sale
-            // Minneapolis: input[0] == 0x89 unknown transaction type, no date, only a small number
-            // around 100
-
             val transhead = input[0].toInt() and 0xff
-            if (transhead == 0x89 || transhead == 0x71 || transhead == 0x79) {
+            val transType = TRIP_TYPES[transhead] ?: Type.UNKNOWN
+
+            if (transType == Type.IGNORE) {
+                Log.d(TAG, "Ignoring type ${transhead.hexString}")
                 return null
             }
 
@@ -69,7 +94,6 @@ class NextfareTransactionRecord private constructor(
                 Log.d(TAG, "Null transaction record, skipping")
                 return null
             }
-
 
             val mode = input.byteArrayToInt(1, 1)
 
@@ -87,10 +111,11 @@ class NextfareTransactionRecord private constructor(
             val checksum = input.byteArrayToIntReversed(14, 2)
 
             val record = NextfareTransactionRecord(
-                    timestamp, mode, journey, station, value, checksum, continuation)
+                    transType, timestamp, mode, journey, station, value, checksum, continuation)
 
-            Log.d(TAG,
-                    "@${record.timestamp}: mode ${record.mode}, station ${record.station}, value ${record.value}, journey ${record.journey}, cont=${record.isContinuation}")
+            Log.d(TAG,"@${record.timestamp}: ${record.type}, mode ${record.mode}, " +
+                            "station ${record.station}, value ${record.value}, " +
+                            "journey ${record.journey}, cont=${record.isContinuation}")
 
             return record
         }

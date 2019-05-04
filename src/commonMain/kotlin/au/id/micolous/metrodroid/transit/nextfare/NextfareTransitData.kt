@@ -26,6 +26,7 @@ import au.id.micolous.metrodroid.time.MetroTimeZone
 import au.id.micolous.metrodroid.transit.*
 import au.id.micolous.metrodroid.transit.TransitCurrency.Companion.XXX
 import au.id.micolous.metrodroid.transit.nextfare.record.*
+import au.id.micolous.metrodroid.transit.nextfare.record.NextfareTransactionRecord.Companion.Type.*
 import au.id.micolous.metrodroid.ui.HeaderListItem
 import au.id.micolous.metrodroid.ui.ListItem
 import au.id.micolous.metrodroid.util.ImmutableByteArray
@@ -164,7 +165,10 @@ abstract class NextfareTransitData : TransitData() {
          * @return true if the journeys should be merged.
          */
         private fun tapsMergeable(tap1: NextfareTransactionRecord, tap2: NextfareTransactionRecord): Boolean {
-            return tap1.journey == tap2.journey && tap1.mode == tap2.mode
+            return when {
+                tap1.type.isSale || tap2.type.isSale -> false
+                else -> tap1.journey == tap2.journey && tap1.mode == tap2.mode
+            }
         }
 
         /**
