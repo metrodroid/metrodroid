@@ -22,12 +22,9 @@
   You should have received a copy of the GNU General Public License
   along with this program.  If not, see <http://www.gnu.org/licenses/>.
 --><resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
-
     <string name="app_name">Metrodroid</string>
-
     <!-- Additional names now noted in the license screen -->
     <string name="copyright">Copyright © 2015 – 2019 Michael Farrell</string>
-
     <!-- General application strings -->
     <string name="license">Licenses</string>
     <string name="title_activity_license">Open Source Licenses</string>
@@ -55,7 +52,8 @@
     <string name="export_all">Export All</string>
     <string name="about">About</string>
     <string name="preferences">Preferences</string>
-    <string name="balance_speech">Balance <xliff:g id="balance" example="$13.37">%s</xliff:g></string>
+    <string name="balance_speech">Balance <xliff:g id="balance" example="$13.37">%s</xliff:g>
+    </string>
     <string name="loading">Loading…</string>
     <string name="scanned_at_format">Scanned at %1$s on %2$s</string>
     <string name="supported_cards">Supported Cards</string>
@@ -84,17 +82,12 @@
     <string name="machine_id_format">Machine ID %s</string>
     <!-- Translators: "Machine ID" is arbitrary. It could be a decimal number, or hexadecimal… -->
     <string name="machine_id">Machine ID</string>
-
     <string name="unknown_card_header">Unsupported card format</string>
     <string name="unknown_card_description">This card is not yet supported by Metrodroid. Only raw data can be displayed.</string>
-
     <string name="unknown_more_info">More info</string>
     <!-- TRANSLATORS: This is used on a list item, which will direct users to Metrodroid's website when touched. -->
     <string name="unknown_more_info_desc">Tap for more info on Metrodroid support for this card.</string>
-
     <string name="lawyercats">Metrodroid and its authors are not associated with any public transit agency.</string>
-
-
     <string name="scanned_cards">History</string>
     <string name="no_scanned_cards">You have not scanned any cards.</string>
     <string name="block_title_format">Block: %s</string>
@@ -179,7 +172,6 @@
     <string name="title_activity_about">About</string>
     <!-- Translators: This is used to label a card's product name. For example, "Opal". -->
     <string name="card_format">Card format</string>
-
     <string name="select_file">Select file</string>
     <string name="copied_to_clipboard">Copied to clipboard</string>
     <string name="saved_metrodroid_zip">Wrote Metrodroid-Export.zip to USB Storage.</string>
@@ -201,43 +193,33 @@
     <string name="mifare_classic">MIFARE Classic</string>
     <string name="auth_retries">Authentication retries</string>
     <string name="auth_retries_summary">Number of times to attempt authentication for each sector</string>
-
     <string name="mfc_fallback_desc">Some agencies have no identifying magic on their card. To read them, you must select an agency explicitly.</string>
     <string name="mfc_fallback">Fallback reader</string>
     <!-- Shown as a preference description when a feature needs Android 4.2 or later. -->
     <string name="requires_android_17">Requires Android 4.2 or later.</string>
     <!-- Shown as a preference description when a feature needs Android 5.0 or later. -->
     <string name="requires_android_21">Requires Android 5.0 or later.</string>
-
     <!-- Obfuscation options -->
     <string name="obfuscation_title">Obfuscation</string>
     <string name="obfuscation_card_numbers">Hide card numbers</string>
     <string name="obfuscation_card_numbers_desc">Don\'t show card numbers anywhere</string>
-
     <string name="obfuscation_balance">Obfuscate balance</string>
     <string name="obfuscation_balance_desc">Change the balance shown by a random amount</string>
-
     <string name="obfuscation_dates">Obfuscate dates</string>
     <string name="obfuscation_dates_desc">Show trip, subscription, expiry and scan dates as different, random days</string>
-
     <string name="obfuscation_times">Obfuscate times</string>
     <!-- TRANSLATORS: The meaning of "fuzz" in this context is "to randomise" -->
     <string name="obfuscation_times_desc">Fuzz and reduce resolution of timestamps on trips, subscriptions, and scans</string>
-
     <string name="obfuscation_fares">Obfuscate fares</string>
     <string name="obfuscation_fares_desc">Change fares shown by a random amount</string>
-
     <!-- Accessibility options -->
     <string name="accessibility">Accessibility</string>
-
     <string name="speak_balance">Speak balance aloud</string>
     <string name="speak_balance_summary">When you scan a card, the balance will be automatically read aloud. This works even when a screen reader is not running.</string>
-
     <!--
     TRANSLATORS: "Place names" are proper nouns, eg: "Beijing", "Los Angeles", "Sydney", "Tokyo".
     -->
     <string name="localise_places">Add language hints to place names</string>
-
     <!--
     TRANSLATORS: "LocaleSpan" is the name of an Android API, and should not be translated.
 
@@ -249,49 +231,39 @@
     This option is automatically disabled on Android versions that don't support it.
     -->
     <string name="localise_places_desc">Adds language hints (LocaleSpan) to place names, such as station, stop, line and route names. This alters the pronunciation used by screen readers and other accessibility software.</string>
-
     <!--
     TRANSLATORS: This directs users to a dialog with "localise_places_longdesc" showing more
     information about the option.
     -->
     <string name="localise_places_longdesc_button">About language hints…</string>
-
     <!--
     TRANSLATORS: This is shown as the title of the dialog for localise_places_longdesc.
     -->
     <string name="localise_places_longdesc_title">About language hints</string>
-
     <!--
     TRANSLATORS: Shown in a pop-up dialog, when "localise_places_longdesc_button" is pressed.
     "LocaleSpan" is the name of an Android API, and should not be translated. "Google TalkBack" is
     the name of Android's standard screen-reader software.
     -->
     <string name="localise_places_longdesc">Text-to-speech voices normally only work well for one language.\n\nLocaleSpan hints are used to mark text as being in a different language. When applied to a station, stop, line or route name, a screen reader that supports these hints will pronounce the name using synthesized voices from the place\'s native language, rather than the language you have configured Android to use.\n\nEnabling this option generally improves the pronunciation of foreign place names that are not internationally renowned, but you might find it more difficult to understand.\n\nThis does not normally change the on-screen display of place names, but some devices may use a different font.\n\nThis requires accessibility software that supports the LocaleSpan API (such as Google TalkBack), and that you have appropriate voices installed.</string>
-
     <!-- Translators: This is shown when an unsupported type of card is scanned, and that we were unable to read it at all, let alone parse its content. -->
     <string name="unsupported_tag">Unsupported NFC card media</string>
-
     <string name="saving_card">Saving card…</string>
-
     <string name="mfc_reading">Reading MIFARE Classic card…</string>
     <string name="mfc_have_key">Trying user-supplied key for sector %d…</string>
     <string name="mfc_other_key">Trying alternate user-supplied keys for sector %d…</string>
     <string name="mfc_default_key">Trying well-known keys for sector %d…</string>
     <string name="mfc_reading_blocks">Reading sector %d…</string>
-
     <string name="iso14a_detect">Detecting ISO 14443 card type…</string>
     <string name="mfd_reading">Reading MIFARE DESFire card…</string>
     <!-- Translators: This is substituted with the name of a card, like "Reading Opal…" or "Reading Suica…" -->
     <string name="card_reading_type">Reading <xliff:g id="card_name" example="Opal">%s</xliff:g>…</string>
-
     <string name="mfu_detect">Detecting MIFARE Ultralight card type…</string>
     <string name="mfu_reading">Reading MIFARE Ultralight card…</string>
     <!-- Translators: This is substituted with the name of a card, like "Unlocking Leap card…" -->
     <string name="mfd_unlocking">Unlocking <xliff:g id="card_name" example="Leap">%s</xliff:g> card…</string>
-
     <string name="iso7816_probing">Probing ISO7816 card…</string>
     <string name="calypso_reading">Reading Calypso card…</string>
-
     <string name="card_partial_read_title">Card partially read!</string>
     <string name="card_partial_read_desc">
         The card went out of range while reading.\n\n
@@ -299,14 +271,14 @@
         Thick cases and metal can interfere with NFC operation. Failure could also indicate that the card or your device\'s NFC antenna is damaged.
     </string>
     <string name="show_partial_data">Show incomplete data</string>
-
     <!-- Translators: this is a short suffix for milliseconds, "%s" will display the number to
     one decimal place (in localized form). -->
     <plurals name="milliseconds_short">
-        <item quantity="one"><xliff:g id="milliseconds" example="1.0">%s</xliff:g> ms</item>
-        <item quantity="other"><xliff:g id="milliseconds" example="20.6">%s</xliff:g> ms</item>
+        <item quantity="one">
+            <xliff:g id="milliseconds" example="1.0">%s</xliff:g> ms</item>
+        <item quantity="other">
+            <xliff:g id="milliseconds" example="20.6">%s</xliff:g> ms</item>
     </plurals>
-
     <!--
     Translators: shown in place of a real card number in some lists when obfuscation is enabled.
     -->
@@ -317,7 +289,6 @@
     </plurals>
     <!-- Translators: "key" is an encryption key, which is displayed below this label. -->
     <string name="key_data">Key data</string>
-
     <!--
     Translators: There is an obfuscation mode, with many flags (options) available. The value
     "count" passed is the number of flags (options) that are turned on.
@@ -325,36 +296,32 @@
     This is shown on the main window, instead of the "directions" string.
     -->
     <plurals name="obfuscation_mode_notice">
-        <item quantity="one"><xliff:g id="count" example="1">%d</xliff:g> obfuscation flag on</item>
-        <item quantity="other"><xliff:g id="count" example="3">%d</xliff:g> obfuscation flags on</item>
+        <item quantity="one">
+            <xliff:g id="count" example="1">%d</xliff:g> obfuscation flag on</item>
+        <item quantity="other">
+            <xliff:g id="count" example="3">%d</xliff:g> obfuscation flags on</item>
     </plurals>
-
     <string-array name="mfc_fallbacks">
         <item>None (disabled)</item>
         <item>SmartRider (WA, Australia), MyWay (ACT, Australia)</item>
     </string-array>
-
     <string-array name="mfc_fallback_values" translatable="false">
         <item>null</item>
         <item>smartrider</item>
     </string-array>
-
     <string name="pref_theme">Theme</string>
     <string name="pref_theme_desc">Choose look and feel</string>
-
     <string-array name="themes">
         <item>Dark</item>
         <item>Light</item>
         <item>FareBot</item>
     </string-array>
-
     <!-- Translators: do not translate -->
     <string-array name="theme_values" translatable="false">
         <item>dark</item>
         <item>light</item>
         <item>farebot</item>
     </string-array>
-
     <!--
     This tile server gives "retina" tiles which are much nicer on modern
     smartphones.
@@ -371,27 +338,24 @@
     -->
     <string name="default_map_tile_url">https://tile{s}.stackcdn.com/osm_tiles_2x/{z}/{x}/{y}.png</string>
     <string name="default_map_tile_subdomains">123456</string>
-
     <string name="pref_show_local_and_english_title">Show both local and English station names</string>
     <string name="pref_show_local_and_english_desc">If enabled, both local and English names will be shown regardless of locale. If disabled, the most appropriate variant is chosen.</string>
-
     <plurals name="cards_imported">
-        <item quantity="one"><xliff:g id="count" example="1">%d</xliff:g> card imported!</item>
-        <item quantity="other"><xliff:g id="count" example="3">%d</xliff:g> cards imported!</item>
+        <item quantity="one">
+            <xliff:g id="count" example="1">%d</xliff:g> card imported!</item>
+        <item quantity="other">
+            <xliff:g id="count" example="3">%d</xliff:g> cards imported!</item>
     </plurals>
-
     <!-- Translators: "block" is referring to a block of storage. -->
     <plurals name="block_count">
         <item quantity="one">%d block</item>
         <item quantity="other">%d blocks</item>
     </plurals>
-
     <!-- Translators: "record" is referring to structured unit of storage. -->
     <plurals name="record_count">
         <item quantity="one">%d record</item>
         <item quantity="other">%d records</item>
     </plurals>
-
     <!-- Translators: Felica divides cards up into a hierarchy with each card containing 1 or many
     system codes. Each system code contains 1 or many service codes. Each service code contains 1
     or many blocks of data. -->
@@ -399,13 +363,11 @@
         <item quantity="one">%d service</item>
         <item quantity="other">%d services</item>
     </plurals>
-
     <!-- Translators: used as an accessibility label for a passengers icon -->
     <plurals name="passengers">
         <item quantity="one">passenger</item>
         <item quantity="other">passengers</item>
     </plurals>
-
     <!-- DESFire -->
     <string name="desfire_standard_file">Standard file</string>
     <string name="desfire_backup_file">Backup file</string>
@@ -418,19 +380,16 @@
     <string name="desfire_confirmation">Confirmation</string>
     <string name="desfire_keyex">Key exchange</string>
     <string name="desfire_key_number">Key %s</string>
-
     <!-- Type: Standard file, Length: 16 bytes -->
     <plurals name="desfire_standard_format">
         <item quantity="one">Type: %1$s, Length: %2$s byte</item>
         <item quantity="other">Type: %1$s, Length: %2$s bytes</item>
     </plurals>
-
     <!-- Type: Linear record, Records: 4 (6 maximum), Record size: 40 -->
     <plurals name="desfire_record_format">
         <item quantity="one">Type: %1$s, Record: %2$s (%3$s maximum), Record Size: %4$s</item>
         <item quantity="other">Type: %1$s, Records: %2$s (%3$s maximum), Record Size: %4$s</item>
     </plurals>
-
     <plurals name="minutes">
         <item quantity="one">%d minute</item>
         <item quantity="other">%d minutes</item>
@@ -467,14 +426,11 @@
         <item quantity="one">Valid for %d month</item>
         <item quantity="other">Valid for %d months</item>
     </plurals>
-
     <!-- Type: Value file, Range: 0 - 2300, Limited credit: 400 (Enabled) -->
     <string name="desfire_value_format">Type: %1$s, Range: %2$s - %3$s, Limited credit: %4$s (%5$s)</string>
-
     <string name="hardware_information">Hardware Info</string>
     <string name="enabled">Enabled</string>
     <string name="disabled">Disabled</string>
-
     <!-- CEPAS hardware information -->
     <string name="cepas_version">CEPAS Version</string>
     <string name="cepas_purse_id">Purse ID</string>
@@ -491,14 +447,12 @@
     <string name="cepas_issuer_data_length">Issuer Data Length</string>
     <string name="cepas_issuer_data">Issuer-specific Data</string>
     <string name="cepas_purse_info">Purse Info</string>
-
     <!--
     Felica hardware information
 
     Explanation of terminology:
     https://www.sony.net/Products/felica/business/tech-support/data/code_descriptions_1.31.pdf
     -->
-
     <!-- Translators: IDm is a type of hardware serial number for FeliCa. -->
     <string name="felica_idm">Manufacture ID (IDm)</string>
     <!-- Translators: This is an integer code -->
@@ -526,14 +480,12 @@
     <string name="felica_response_time_write">Write command (1 block)</string>
     <!-- Translators: "Issuance" is the name of group of FeliCa commands -->
     <string name="felica_response_time_other">Issuance commands</string>
-
     <!-- Calypso hardware information -->
     <string name="calypso_serial_number">Serial number</string>
     <string name="calypso_manufacture_country">Country of manufacture</string>
     <string name="calypso_manufacture_date">Date of manufacture</string>
     <!-- Translators: The manufacturer is a company name. -->
     <string name="calypso_manufacturer">Manufacturer</string>
-
     <!-- Translators: This is a company name -->
     <string name="calypso_manufacturer_ask">ASK</string>
     <!-- Translators: This is a company name -->
@@ -584,7 +536,6 @@
     <string name="calypso_manufacturer_irsa">IRSA</string>
     <!-- Translators: This is a company name -->
     <string name="calypso_manufacturer_innovatron">Innovatron</string>
-
     <!--
     Translators: This is shown below a trip entry to describe the start and end stations of a trip.
 
@@ -607,21 +558,23 @@
       Written: "Tokyo → Osaka"
       Spoken: "From Tokyo  to Osaka"
     -->
-    <string name="trip_description">(From )<xliff:g id="start_station" example="Tokyo">%1$s</xliff:g> [→] (to )<xliff:g id="end_station" example="Osaka">%2$s</xliff:g></string>
+    <string name="trip_description">(From )<xliff:g id="start_station" example="Tokyo">%1$s</xliff:g> [→] (to )<xliff:g id="end_station" example="Osaka">%2$s</xliff:g>
+    </string>
     <!-- Translators: it's used when departure point isn't known, eg: "to Central Station" -->
     <string name="trip_description_unknown_start">to %s</string>
     <!--
     Translators: it's used to show time in trip listing e.g. 12:35 - 12:51.
     The time will be formatted according to user preferences.
     -->
-    <string name="time_from_to"><xliff:g id="start_time" example="12:35">%1$s</xliff:g> → <xliff:g id="end_time" example="12:51">%2$s</xliff:g></string>
+    <string name="time_from_to">
+        <xliff:g id="start_time" example="12:35">%1$s</xliff:g> → <xliff:g id="end_time" example="12:51">%2$s</xliff:g>
+    </string>
     <!--
     Translators: it's used when departure time isn't known.
     If "?" is the first character, it must be prefixed with "\".
     -->
-    <string name="time_from_unknown_to">\??:?? → <xliff:g id="end_time" example="12:51">%s</xliff:g></string>
-
-
+    <string name="time_from_unknown_to">\??:?? → <xliff:g id="end_time" example="12:51">%s</xliff:g>
+    </string>
     <!-- Locations -->
     <string name="location_act_australia">Australian Capital Territory, Australia</string>
     <string name="location_adelaide">Adelaide, Australia</string>
@@ -705,13 +658,11 @@
     <string name="location_wuhan">Wuhan, China</string>
     <!-- Translators: "Yaroslavl" (Ярославль) here refers to the city, rather than the oblast (federal subject) -->
     <string name="location_yaroslavl">Yaroslavl, Russia</string>
-
     <!--
     These strings are used for content descriptions (accessibility), for modes of transport.
     Using them for custom pages on individual operators is discouraged (eg: Opal), as strings and
     translations should match the terminology of the operator (eg: light rail vs. tram).
     -->
-
     <!-- Used as descriptive text for the bus icon. -->
     <string name="mode_bus">Bus</string>
     <!-- Used as descriptive text for the train icon. -->
@@ -734,7 +685,6 @@
     <string name="mode_trolleybus">Trolleybus</string>
     <!-- Used as descriptive text for the unknown transit mode icon. -->
     <string name="mode_unknown">Unknown</string>
-
     <string name="clipper_end_of_line">(End of line)</string>
     <string name="clipper_zone_number">Zone #%s</string>
     <!--
@@ -797,7 +747,6 @@
     Chinese: https://docs.clippercard.com/brochures/zh/clipper_youthapp_mailin_01-11-16_Chin.pdf
     -->
     <string name="clipper_ticket_type_youth">Youth</string>
-
     <!--
     Translators: the "ticket class" is one of: clipper_ticket_type_adult, clipper_ticket_type_senior,
     clipper_ticket_type_rtc, clipper_ticket_type_youth.
@@ -824,7 +773,6 @@
     operators have introduced single-use paper Clipper cards: Golden Gate Ferry, and Muni.
     -->
     <string name="card_note_clipper">Supports both plastic (reloadable) and paper (single-use cards issued by Golden Gate Ferry and Muni) Clipper cards.</string>
-
     <string name="ez_bus_number">Bus #%s</string>
     <string name="ez_bus_refund">Bus Refund</string>
     <string name="ez_mrt">MRT</string>
@@ -832,7 +780,6 @@
     <string name="ez_first_use">First use</string>
     <string name="ez_retail_purchase">Retail Purchase</string>
     <string name="ez_service_charge">Service Charge</string>
-
     <!-- Translators: Describes the name of a file. This file contains the transaction history on
     the card. Edy is a pre-paid debit card in Japan. -->
     <string name="edy_file_history">Edy History</string>
@@ -842,9 +789,7 @@
     <!-- Translators: Describes the name of a file. This file contains information about the balance
     of the purse stored on this card. Edy is a pre-paid debit card in Japan. -->
     <string name="edy_file_purse_balance">Edy Purse Balance</string>
-
     <!-- Felica / Suica: These strings must only be used for Felica. -->
-
     <!-- Translators: it's a ticketing card name in Japan. Japanese: スイカ
     May be transliterated -->
     <string name="card_name_suica">Suica</string>
@@ -854,7 +799,6 @@
     <!-- Translators: it's a ticketing card name in Japan. Japanese: パスモ
     May be transliterated -->
     <string name="card_name_pasmo">PASMO</string>
-
     <!--
         Translators:
         Japanese: 精算機
@@ -922,7 +866,6 @@
     <string name="felica_terminal_simple_deposit">Simple Deposit Machine</string>
     <string name="felica_terminal_pos">Point of Sale Terminal</string>
     <string name="felica_terminal_vending">Vending Machine</string>
-
     <string name="felica_process_fare_exit_gate">Exit Turnstile</string>
     <string name="felica_process_charge">Charge</string>
     <string name="felica_process_purchase_magnetic">Magnetic Ticket</string>
@@ -954,14 +897,12 @@
     <string name="felica_process_merchandise_admission_cash">Merchandise/Admission (partially with cash)</string>
     <string name="felica_process_payment_thirdparty">Payment (3rd Party)</string>
     <string name="felica_process_admission_thirdparty">Admission Payment (3rd Party)</string>
-
     <!-- Translators: Describes the name of a file. This file contains the transaction history on
     the card. Suica is a transit card in Japan. -->
     <string name="suica_file_history">Suica History</string>
     <!-- Translators: Describes the name of a file. This file contains the last use of the card to
     enter (in) or exit (out) a train station. Suica is a transit card in Japan. -->
     <string name="suica_file_in_out">Suica In/Out</string>
-
     <!--
         Translators: https://en.wikipedia.org/wiki/Kereta_Commuter_Indonesia
 
@@ -997,7 +938,6 @@
     <string name="kmt_file_purse_balance">KMT Purse Balance</string>
     <!-- Translators: Name of a transit card in Indonesia. -->
     <string name="card_name_kmt">Kartu Multi Trip</string>
-
     <!-- HSL -->
     <string name="hsl_balance_refill">Balance refill</string>
     <string name="hsl_balance_ticket">Value ticket</string>
@@ -1006,10 +946,8 @@
     <!-- Translators: This is the short form of "minutes" -->
     <string name="hsl_mins_format">%s mins</string>
     <string name="hsl_line_vehicle">Line %1$s, Vehicle %2$s</string>
-
     <string name="metroq_fare_card">Fare card</string>
     <string name="metroq_day_pass">Day pass</string>
-
     <!--
         Opal (Sydney, AU).
         These are deliberately separated strings in order to match the terminology of the agency.
@@ -1038,17 +976,14 @@
     -->
     <string name="opal_agency_tfnsw">Transport for NSW</string>
     <string name="card_note_opal">Free travel passes and single trip tickets are not supported.</string>
-
     <string name="orca_coach_number">Coach #%s</string>
     <string name="orca_topup_machine">Machine #%s</string>
     <string name="orca_topup">Top-up</string>
-
     <!--
 	Adelaide Metro Card
     -->
     <string name="card_note_adelaide">Only serial, trips and subscriptions can be read</string>
     <string name="purse_serial_number">Purse serial number</string>
-
     <!--
         Go Card (South East Queensland/Brisbane, AU)
         These are deliberately separated strings in order to match the terminology of the agency.
@@ -1057,25 +992,20 @@
     <string name="seqgo_ticket_type_concession">Concession</string>
     <string name="seqgo_ticket_type_child">Child</string>
     <string name="seqgo_ticket_type_senior">Senior</string>
-
     <string name="seqgo_refill_manual">Manual top-up</string>
     <string name="seqgo_refill_automatic">Automatic top-up</string>
-
     <string name="card_note_seqgo">Does not support Go Access, Explore or SEEQ cards.</string>
-
     <!-- Translators: Each of the string substitutions is a hex number. Used when "show raw station
     IDs" is enabled in the preferences. -->
     <string name="suica_bus_area_line_stop">Bus Area %1$s Line %2$s Stop %3$s</string>
     <!-- Translators: Each of the string substitutions is a hex number. Used when "show raw station
     IDs" is enabled in the preferences. -->
     <string name="suica_area_line_station">Area %1$s Line %2$s Station %3$s</string>
-
     <!--
         Myki (Victoria, AU)
         These are deliberately separated strings in order to match the terminology of the agency.
     -->
     <string name="card_note_card_number_only">Only the card number can be read.</string>
-
     <!--
         Cubic Nextfare
         These are deliberately separated, but are used for generic fields across many systems.
@@ -1085,7 +1015,6 @@
     <!-- Translators: This is a code used on the card which identifies which city's transit network it is associated with -->
     <string name="nextfare_system_code">System code</string>
     <string name="nextfare_ticket_class">Ticket class code %d</string>
-
     <!--
         Octopus / Shenzhen Tong
     -->
@@ -1095,7 +1024,6 @@
     <string name="szt_metro">Shenzhen Metro</string>
     <string name="szt_bus">Shenzhen Bus</string>
     <string name="szt_station_gate">gate %s</string>
-
     <string name="card_name_beijing">Beijing Municipal Card</string>
     <string name="card_name_wuhantong">Wuhan Tong</string>
     <!--
@@ -1111,23 +1039,18 @@
     -->
     <string name="card_name_tunion">T-Union</string>
     <string name="city_union_city">City</string>
-
     <!--
         Bilhete Único
     -->
     <string name="card_note_bilhete_unico">Must be selected as fallback reader in the preferences.</string>
-
     <!--
         ERG
     -->
     <string name="erg_agency_id">Agency ID</string>
-
     <!-- OVC -->
     <string name="ovc_autocharge_limit">Autocharge Limit</string>
     <string name="ovc_autocharge_amount">Autocharge Charge</string>
     <string name="ovc_autocharge">Autocharge</string>
-
-
     <string name="general_information">General Info</string>
     <string name="personal_information">Personal Info</string>
     <string name="date_of_birth">Date of birth</string>
@@ -1137,7 +1060,6 @@
     <string name="convert_timezones">Convert time zones</string>
     <string name="convert_timezones_summary_off">Trip times will be shown in the transit agency\'s local time zone.</string>
     <string name="convert_timezones_summary_on">Trip times will be converted to your current time zone.</string>
-
     <string name="compass_product_type">Product type</string>
     <string name="compass_machine_code">Machine code</string>
     <string name="ticket_type">Ticket type</string>
@@ -1145,14 +1067,12 @@
     <string name="compass_ticket_type_regular">Regular</string>
     <string name="compass_note">Single ride tickets only</string>
     <string name="expiry_date">Expiry date</string>
-
     <!--
     Translators: Some cards record the cardholder's gender, this is used to label the field.
     -->
     <string name="gender">Gender</string>
     <string name="gender_female">Female</string>
     <string name="gender_male">Male</string>
-
     <!-- Adelaide Metro -->
     <!--
     Discounted ticket
@@ -1172,9 +1092,7 @@
     https://www.adelaidemetro.com.au/Tickets-fares/Concession-Cards#student
     -->
     <string name="adelaide_ticket_type_student">Student</string>
-
     <!-- En1545 and related cards -->
-
     <!--
     Translators: This refers to the travel class of the ticket (ie: "1st Class", "2nd Class").
     https://en.wikipedia.org/wiki/Travel_class
@@ -1182,7 +1100,6 @@
     <string name="passenger_class">Class</string>
     <string name="without_receipt">Without receipt</string>
     <string name="with_receipt">With receipt</string>
-
     <!-- Translators: The name of the transit agency who sold a subscription -->
     <string name="seller_agency">Seller agency</string>
     <!-- Translators: Attribute to describe the number of remaining trips on the card or subscription. -->
@@ -1192,7 +1109,6 @@
         <item quantity="one">%1$d trip remains</item>
         <item quantity="other">%1$d trips remaining</item>
     </plurals>
-
     <plurals name="remaining_trip_on_day">
         <item quantity="one">%1$d trip remains on %2$s</item>
         <item quantity="other">%1$d trips remaining on %2$s</item>
@@ -1206,10 +1122,8 @@
         <item quantity="one">Travel zone</item>
         <item quantity="other">Travel zones</item>
     </plurals>
-
     <string name="en1545_network_id">Network ID</string>
     <string name="card_issuer">Issuer</string>
-
     <string name="purchase_date">Date purchased</string>
     <!-- Translators: Used to describe a subscription (travel pass) made of single trips. -->
     <string name="single_trips">Single trips</string>
@@ -1220,7 +1134,6 @@
     <string name="en1545_card_expiry_date_profile">Profile expiry date</string>
     <!-- Translators: Used to describe a subscription (travel pass) lasting for a day. -->
     <string name="daily_subscription">Daily subscription</string>
-
     <!-- Translators:
     The subscription is present on the card, but currently disabled.
     -->
@@ -1247,7 +1160,6 @@
     subscription.
     -->
     <string name="subscription_expired">Expired</string>
-
     <!-- Translators "Last used" is a date, time or date+time attribute -->
     <string name="last_used_on">Last used</string>
     <string name="payment_method">Payment method</string>
@@ -1258,35 +1170,28 @@
     <string name="payment_method_cheque">Cheque</string>
     <!-- Translators: Free as in "gratis" (costing no money) -->
     <string name="payment_method_free">Free</string>
-
     <!-- Translators: This refers to a person's name. -->
     <string name="card_holders_name">Cardholder\'s name</string>
-
     <!--
     Translators: This is used to describe whether a card is personalised (registered to an
     individual) or anonymous (not registered).
      -->
     <string name="card_type">Card type</string>
-
     <!-- Translators: Used to describe a card that is not registered to any individual. -->
     <string name="card_type_anonymous">Anonymous</string>
     <!-- Translators: Used to describe a card that has been registered in an individual's name. -->
     <string name="card_type_personal">Personal</string>
-
     <!--
     Translators: This should never be translated as "ZIP code".
     This string should not be used for ticketing systems in USA.
     -->
     <string name="postal_code">Postal code</string>
-
     <!-- Translators: this is a ticketing system in Israel. (Hebrew: רב-קו‎)
  May be transliterated. -->
     <string name="card_name_ravkav">Rav-Kav</string>
     <!-- Translators: appears as an agency if user used official top-up app. -->
     <string name="ravkav_agency_topup_app">RavKav Top-up app</string>
-
     <!-- Troika / Тройка, Podorozhnik / Подорожник (Russia) -->
-
     <!-- Translators: There are multiple types of tickets used in Moscow and Saint Petersburg. We
     only support the cards which have a refillable "purse" (balance in rubles) and single-rides.
     We don't support bank-issued cards that bill the user's bank account at the end of each month
@@ -1321,7 +1226,6 @@
     <string name="card_name_strelka">Strelka</string>
     <string name="strelka_long_serial">Strelka long number</string>
     <string name="card_name_troika_strelka_hybrid">Troika+Strelka</string>
-
     <!-- Translators: This is a list item header, and under it is a number.
     (ie: "Subway trips / 4" => There were 4 trips on the subway taken with this card) -->
     <string name="subway_trips">Subway trips</string>
@@ -1334,7 +1238,6 @@
     <string name="podorozhnik_topup">Podorozhnik top-up</string>
     <string name="podorozhnik_gate">gate %s</string>
     <string name="podorozhnik_tvm">TVM %d</string>
-
     <string name="led_bus">Saint Petersburg Bus</string>
     <!-- Translators: The Saint Petersburg Metro (Russian: Петербу́ргский метрополитен) is the
     underground railway system in Saint Petersburg and Leningrad Oblast, Russia. -->
@@ -1342,7 +1245,6 @@
     <!-- Translators: The Saint Petersburg Shared Taxi (маршрутки) are a system of
     private mini-buses going along predefined lines. -->
     <string name="led_shared_taxi">Saint Petersburg Shared Taxi</string>
-
     <string name="blank_mfu_card">Blank MIFARE Ultralight card</string>
     <string name="blank_mfc_card">Blank MIFARE Classic card</string>
     <string name="fully_blank_desc">
@@ -1351,13 +1253,11 @@
         uniquely identified and linked to a database but card itself contains no other data.
     </string>
     <string name="fully_blank_title">Blank card</string>
-
     <!-- T-Money -->
     <!-- Translators: T-money is Korean payment/transit system. Korean: 티머니
     May be transliterated -->
     <string name="card_name_tmoney">T-Money</string>
     <string name="tmoney_date">T-money date</string>
-
     <string name="maximum_balance">Maximum balance</string>
     <!-- Translators: used to describe a particular branch of a company or retailer which operates
     at multiple locations -->
@@ -1370,7 +1270,6 @@
     <string name="authentication_id">Authentication ID</string>
     <!-- Translators: describes a field or value that is reserved for future usage -->
     <string name="rfu">Reserved for future use</string>
-
     <string name="cardtype_header">Card payment terms</string>
     <!-- Translators: Indicates that this card's transactions are paid before travel. -->
     <string name="cardtype_prepaid">Pre-paid</string>
@@ -1380,13 +1279,11 @@
     <!-- Translators: Indicates that this card's transactions are paid after travel,
     and using a mobile phone as a virtual transit card. -->
     <string name="cardtype_mobile_postpay">Mobile post-paid</string>
-
     <string name="crypto_algo_header">Encryption algorithm</string>
     <!-- Translators: SEED is a Korean encryption algorithm. https://en.wikipedia.org/wiki/SEED -->
     <string name="crypto_algo_seed">SEED</string>
     <!-- Translators: 3DES = https://en.wikipedia.org/wiki/Triple_DES -->
     <string name="crypto_algo_3des">3DES</string>
-
     <!-- Translators: https://en.wikipedia.org/wiki/Korea_Financial_Telecommunications_%26_Clearings_Institute
     (Korean: 금융결제원) -->
     <string name="tmoney_issuer_kftci">Korea Financial Telecommunications and Clearings Institute</string>
@@ -1407,7 +1304,6 @@
     <string name="tmoney_issuer_seoul_bus">Seoul Bus Transport Association</string>
     <!-- Translators: (Korean: 카드넷) -->
     <string name="tmoney_issuer_cardnet">Cardnet</string>
-
     <!-- Fare types -->
     <!-- Translators: Regular fare type (Korean: 일반) -->
     <string name="tmoney_usercode_regular">Regular</string>
@@ -1419,7 +1315,6 @@
     <string name="tmoney_usercode_test">Test</string>
     <!-- Translators: Inactive ticket type (Korean: 비활성) -->
     <string name="tmoney_usercode_inactive">Inactive</string>
-
     <!-- Translators: For tickets that offer a discounted rate (eg: for people with disabilities
     and/or their travelling companion) in addition to a ticket type (eg: adult, child) or class
     (1st class, 2nd class).  -->
@@ -1432,7 +1327,6 @@
     <!-- Translators: T-Money card for travelling companion of person with disabilities
     (Korean: 장애, 동반 무임 -->
     <string name="tmoney_disrate_disabled_companion">Disabled, companion</string>
-
     <!-- Translators: Used when something is explicitly unset, or has no data -->
     <string name="none">None</string>
     <!-- Translators: cards might be issued by a mobile/cellular telecommunications provider -->
@@ -1440,10 +1334,9 @@
     <!-- Translators: Korean mobile carrier: https://en.wikipedia.org/wiki/SK_Telecom -->
     <string name="tmoney_tcode_sk">SK Telecom</string>
     <!-- Translators: Korean telecom carrier: https://en.wikipedia.org/wiki/KT_Corporation -->
-    <string name="tmoney_tcode_kt">Korea Telecom</string>
+    <string name="tmoney_tcode_kt">KT Corporation</string>
     <!-- Translators: Korean mobile carrier: https://en.wikipedia.org/wiki/LG_Uplus -->
     <string name="tmoney_tcode_lg">LG Uplus</string>
-
     <!-- Translators: Can be used to describe a bank or credit card name -->
     <string name="financial_institution_name">Financial institution name</string>
     <!-- Translators: https://en.wikipedia.org/wiki/KB_Financial_Group_Inc -->
@@ -1466,18 +1359,14 @@
     <string name="tmoney_ccode_hana_sk">Hana SK Card</string>
     <!-- Translators: https://en.wikipedia.org/wiki/Hyundai_Capital -->
     <string name="tmoney_ccode_hyundai">Hyundai Capital Services</string>
-
     <!-- Snapper (Wellington, NZ) -->
     <!-- Translators: Snapper is the ticketing system in Wellington, New Zealand.
     May be transliterated. -->
     <string name="card_name_snapper">Snapper</string>
-
     <!-- Translators: Snapper Services Limited (Ltd.) is the company that operates the Snapper
     card system in Wellington, New Zealand. -->
     <string name="snapper_issuer_snapper">Snapper Services Ltd.</string>
-
     <string name="charlie_2nd_card_number">Second number</string>
-
     <string name="no_data_in_clipboard">No data in clipboard.</string>
     <string name="app_version">Version: %s</string>
     <string name="device_model">Model: <xliff:g id="model_name" example="Pixel 2">%1$s</xliff:g> (<xliff:g id="model_codename" example="walleye">%2$s</xliff:g>)</string>
@@ -1494,21 +1383,17 @@
     <string name="pref_show_raw_station_ids_desc_on">Station and route IDs are shown in addition to their names</string>
     <string name="pref_show_raw_station_ids_desc_off">Station and route IDs are hidden unless unknown</string>
     <string name="station_database">Station database</string>
-
     <!-- Translators: Used as a menu title in the preferences screen -->
     <string name="advanced_options">Advanced options</string>
-
     <!-- Translators: Used as a submenu title in the preferences screen -->
     <string name="developer_options">Developer options</string>
     <!-- Translators: Used as a description for the Developer options submenu -->
     <string name="developer_options_desc">Use of station databases, obfuscation modes…</string>
-
     <!-- Translators: Used as a submenu title in the preferences screen -->
     <string name="nfc">Near Field Communication</string>
     <string name="istanbulkart_2nd_card_number">Secondary serial</string>
     <!-- Translators: Used as a description for the Near Field Communication options submenu -->
     <string name="nfc_options_desc">Fallback reader for MIFARE Classic, physical card interface settings…</string>
-
     <!-- Translators: FCI = File Control Information. Used in the context of ISO 7816 cards. -->
     <string name="file_fci">File FCI</string>
     <!-- Translators: FCI = File Control Information. Used in the context of ISO 7816 cards. -->
@@ -1524,8 +1409,6 @@
     "Key" can be translated, but do not transliterate "A" or "B".
     -->
     <string name="classic_key_b">Key B</string>
-
-
     <string name="classic_key_format_a">Key (A): %s</string>
     <string name="classic_key_format_b">Key (B): %s</string>
     <string name="classic_key_format">Key: %s</string>
@@ -1539,11 +1422,9 @@
     <!-- Translators: NDEF = NFC Data Exchange Format -->
     <string name="card_format_ndef">NDEF</string>
     <string name="felica_system_common">Common Area (FeliCa Networks)</string>
-
     <!-- TFI Leap -->
     <string name="leap_retrieve_keys">Retrieve keys for Leap cards</string>
     <string name="leap_retrieve_keys_longdesc">This will share your card details with Transport for Ireland, in order to respond to the Leap card\'s authentication challenge. TFI will be able to know that you used Metrodroid on this card. The card is not readable without this key.</string>
-
     <string name="locked_leap">Locked Leap</string>
     <string name="leap_period_start">Period start</string>
     <string name="leap_accumulator_region">Region</string>
@@ -1555,10 +1436,8 @@
     <string name="leap_accumulator_agency">%s total spend</string>
     <string name="leap_daily_accumulators">Daily fare caps</string>
     <string name="leap_weekly_accumulators">Weekly fare caps</string>
-
     <string name="initialisation_date">Initialisation date</string>
     <string name="issue_date">Date of issue</string>
-
     <!--
     Translators:
     keys = encryption keys
@@ -1574,7 +1453,6 @@
     - TFI = Transport for Ireland (brand of Údarás Náisiúnta Iompair / National Transport Authority)
     -->
     <string name="card_note_leap">Requires retrieving keys from TFI, which must be enabled in the NFC Preferences screen.</string>
-
     <string name="lisboaviva_unknown_period">Unknown validity %x/%x</string>
     <!--
     Translators: This button will open a web page with technical descriptions of the file formats,
@@ -1586,12 +1464,9 @@
     <string name="invalid_key_file">Invalid key file</string>
     <!-- Translators: "key file" is a file containing encryption keys. -->
     <string name="key_file_empty">Key file is empty!</string>
-
     <string name="static_imported">Imported: %s</string>
-
     <!-- Translators: Shown as a label for a group of keys that does not have any label or description. -->
     <string name="untitled_key_group">Untitled key group</string>
-
     <plurals name="keytype_mfc">
         <item quantity="one">%d MIFARE Classic key</item>
         <item quantity="other">%d MIFARE Classic keys</item>
@@ -1600,9 +1475,7 @@
         <item quantity="one">%d static MIFARE Classic key</item>
         <item quantity="other">%d static MIFARE Classic keys</item>
     </plurals>
-
     <string name="no_static_key_assignment">Static keys cannot be assigned to a single card.</string>
-
     <!--
     Translators: This is used to describe a vehicle number/ID. It doesn't have to be a number.
 
@@ -1629,7 +1502,6 @@
     <string name="full_serial_number">Full serial number</string>
     <!-- Translators: Menu item to remove scans of the same card with identical data. -->
     <string name="deduplicate_cards">Deduplicate cards</string>
-
     <!-- Translators: Zolotaya Korona (Russian: Золотая Корона, lit: Golden Crown) is a Russian
     payment system which operates ticketing systems in many cities in Russia. -->
     <string name="card_name_zolotaya_korona">Zolotaya Korona</string>
