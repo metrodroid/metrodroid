@@ -32,6 +32,7 @@ import au.id.micolous.metrodroid.transit.Trip
 import au.id.micolous.metrodroid.transit.ezlink.CEPASTransaction
 import au.id.micolous.metrodroid.transit.ezlink.EZLinkTransitData
 import au.id.micolous.metrodroid.transit.ezlink.EZLinkTrip
+import au.id.micolous.metrodroid.transit.ezlink.EZUserData
 
 @Parcelize
 class EZLinkCompatTrip (private val mTransaction: CEPASCompatTransaction,
@@ -42,7 +43,7 @@ class EZLinkCompatTrip (private val mTransaction: CEPASCompatTransaction,
                 mTransaction.unixDate - 788947200 + 16 * 3600)
 
     override val routeName: String?
-        get() = EZLinkTrip.getRouteName(type, mTransaction.userData)
+        get() = EZUserData.parse(mTransaction.userData, type).routeName
 
     override val fare: TransitCurrency?
         get() = if (type === CEPASTransaction.TransactionType.CREATION) null else TransitCurrency.SGD(-mTransaction.amount)
@@ -51,33 +52,13 @@ class EZLinkCompatTrip (private val mTransaction: CEPASCompatTransaction,
         get() = CEPASTransaction.getType(mTransaction.type)
 
     override val startStation: Station?
-        get() {
-            val type = type
-            if (type === CEPASTransaction.TransactionType.BUS && (mTransaction.userData.startsWith("SVC")
-                            || mTransaction.userData.startsWith("BUS")))
-                return null
-            if (type === CEPASTransaction.TransactionType.CREATION)
-                return Station.nameOnly(mTransaction.userData)
-            if (mTransaction.userData[3] == '-' || mTransaction.userData[3] == ' ') {
-                val startStationAbbr = mTransaction.userData.substring(0, 3)
-                return EZLinkTransitData.getStation(startStationAbbr)
-            }
-            return Station.nameOnly(mTransaction.userData)
-        }
+        get() = EZUserData.parse(mTransaction.userData, type).startStation
 
     override val endStation: Station?
-        get() {
-            if (type === CEPASTransaction.TransactionType.CREATION)
-                return null
-            if (mTransaction.userData[3] == '-' || mTransaction.userData[3] == ' ') {
-                val endStationAbbr = mTransaction.userData.substring(4, 7)
-                return EZLinkTransitData.getStation(endStationAbbr)
-            }
-            return null
-        }
+        get() = EZUserData.parse(mTransaction.userData, type).endStation
 
     override val mode: Trip.Mode
-        get() = EZLinkTrip.getMode(CEPASTransaction.getType(mTransaction.type))
+        get() = EZLinkTrip.getMode(type)
 
     override fun getAgencyName(isShort: Boolean): String? =
             EZLinkTrip.getAgencyName(type, mCardName, isShort)
