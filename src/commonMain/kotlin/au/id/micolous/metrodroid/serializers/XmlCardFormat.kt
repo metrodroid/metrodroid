@@ -572,7 +572,7 @@ fun readCardXML(reader: InputStream): Card {
     val cardType = root.attributes["type"] ?: throw Exception("type attribute not found")
     val xi = XMLInput(root, strict = cardType.toInt() != CardType.CEPAS.toInteger(),
             ignore = setOf("type", "id", "scanned_at", "label"),
-            skippable = setOf("ultralightType"))
+            skippable = setOf("ultralightType", "idm"))
     val tagId = ImmutableByteArray.fromHex(root.attributes["id"]!!)
     val scannedAt = TimestampFull(timeInMillis = root.attributes["scanned_at"]!!.toLong(),
             tz = MetroTimeZone.LOCAL)
