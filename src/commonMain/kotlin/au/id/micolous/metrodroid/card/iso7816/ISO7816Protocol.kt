@@ -24,6 +24,7 @@ import au.id.micolous.metrodroid.card.CardTransceiver
 import au.id.micolous.metrodroid.multi.Log
 import au.id.micolous.metrodroid.multi.VisibleForTesting
 import au.id.micolous.metrodroid.util.ImmutableByteArray
+import au.id.micolous.metrodroid.util.hexString
 
 /**
  * Implements communication with cards that talk over ISO7816-4 APDUs.
@@ -112,7 +113,7 @@ class ISO7816Protocol(private val mTagTech: CardTransceiver) {
 
         var sw1 = recvBuffer[recvBuffer.size - 2]
         var sw2 = recvBuffer[recvBuffer.size - 1]
-        Log.d(TAG, "First attempt: $sw1, $sw2")
+        Log.d(TAG, "First attempt: ${sw1.hexString}, ${sw2.hexString}")
 
         if (sw1 == ERROR_WRONG_LENGTH && sw2 != length) {
             Log.d(TAG, "Wrong length, trying with corrected length")
