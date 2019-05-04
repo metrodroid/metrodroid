@@ -21,7 +21,7 @@ package au.id.micolous.metrodroid.card.china
 import au.id.micolous.metrodroid.transit.CardTransitFactory
 import au.id.micolous.metrodroid.util.ImmutableByteArray
 
-abstract class ChinaCardTransitFactory : CardTransitFactory<ChinaCard> {
-    abstract val appNames: List<ImmutableByteArray>
+interface ChinaCardTransitFactory : CardTransitFactory<ChinaCard> {
+    val appNames: List<ImmutableByteArray>
     override fun check(card: ChinaCard): Boolean = card.appName in appNames
 }

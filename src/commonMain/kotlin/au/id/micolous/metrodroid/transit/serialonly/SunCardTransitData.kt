@@ -69,7 +69,7 @@ data class SunCardTransitData(private val mSerial: Int = 0) : SerialOnlyTransitD
 
         private fun getSerial(card: ClassicCard) = card[0, 1].data.byteArrayToInt(3, 4)
 
-        val FACTORY: ClassicCardTransitFactory = object : ClassicCardTransitFactory() {
+        val FACTORY: ClassicCardTransitFactory = object : ClassicCardTransitFactory {
             override fun parseTransitIdentity(card: ClassicCard) = TransitIdentity(NAME,
                     formatSerial(getSerial(card)))
 

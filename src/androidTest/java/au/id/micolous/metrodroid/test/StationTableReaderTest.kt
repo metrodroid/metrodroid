@@ -11,8 +11,8 @@ import au.id.micolous.metrodroid.transit.seq_go.SeqGoTrip
 import au.id.micolous.metrodroid.transit.suica.SuicaDBUtil
 import au.id.micolous.metrodroid.util.StationTableReader
 
-import au.id.micolous.metrodroid.transit.en1545.En1545Transaction.TRANSPORT_BUS
-import au.id.micolous.metrodroid.transit.en1545.En1545Transaction.TRANSPORT_METRO
+import au.id.micolous.metrodroid.transit.en1545.En1545Transaction.Companion.TRANSPORT_BUS
+import au.id.micolous.metrodroid.transit.en1545.En1545Transaction.Companion.TRANSPORT_METRO
 import kotlin.test.*
 
 /**
@@ -141,14 +141,13 @@ class StationTableReaderTest : BaseInstrumentedTest() {
     }
 
     @Parcelize
-    private class MockAdelaideTransaction internal constructor(private val mRouteNumber: Int,
-                                                               private val mTransport: Int) : AdelaideTransaction(En1545Parsed()) {
+    private class MockAdelaideTransaction internal constructor(private val mRouteNumber: Int, override val transport: Int) : AdelaideTransaction(En1545Parsed()) {
 
-        override fun getRouteNumber(): Int? = mRouteNumber
+        override val routeNumber: Int?
+            get() = mRouteNumber
 
-        override fun getAgency(): Int? = 1
-
-        override fun getTransport(): Int = mTransport
+        override val agency: Int?
+            get() = 1
     }
 
     @Test

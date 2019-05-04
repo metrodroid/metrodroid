@@ -43,7 +43,7 @@ import au.id.micolous.metrodroid.util.ImmutableByteArray
  *
  * Documentation of format: https://github.com/micolous/metrodroid/wiki/TartuBus
  */
-class TartuTransitFactory : ClassicCardTransitFactory() {
+class TartuTransitFactory : ClassicCardTransitFactory {
 
     override fun earlyCheck(sectors: List<ClassicSector>): Boolean {
         val sector0 = sectors[0]

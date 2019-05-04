@@ -242,3 +242,6 @@ class LeapUnlocker private constructor(private val mApplicationId: Int,
         private fun getFile(files: Map<Int, RawDesfireFile>, fileId: Int): RawDesfireFile? = files[fileId]
     }
 }
+
+internal actual fun createUnlockerDispatch(appId: Int, manufData: ImmutableByteArray): DesfireUnlocker? =
+        LeapUnlocker.createUnlocker(appId, manufData)

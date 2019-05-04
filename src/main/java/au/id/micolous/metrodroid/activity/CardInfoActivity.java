@@ -40,7 +40,6 @@ import android.view.View;
 import android.widget.TextView;
 
 import au.id.micolous.farebot.R;
-import au.id.micolous.metrodroid.MetrodroidApplication;
 import au.id.micolous.metrodroid.card.Card;
 import au.id.micolous.metrodroid.card.UnsupportedCardException;
 import au.id.micolous.metrodroid.fragment.BlankCardFragment;
@@ -119,7 +118,7 @@ public class CardInfoActivity extends MetrodroidActivity {
 
                     String data = cursor.getString(cursor.getColumnIndex(CardsTableColumns.DATA));
 
-                    mCard = CardSerializer.INSTANCE.fromPersist(data);
+                    mCard = CardSerializer.INSTANCE.fromDb(data);
                     mTransitData = mCard.parseTransitData();
 
                     SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(CardInfoActivity.this);
@@ -156,7 +155,7 @@ public class CardInfoActivity extends MetrodroidActivity {
                     mShowCopyCardNumber = !Preferences.INSTANCE.getHideCardNumbers();
                     if (mShowCopyCardNumber) {
                         mCardSerial = (mTransitData.getSerialNumber() != null) ? mTransitData.getSerialNumber()
-                                : Utils.getHexString(mCard.getTagId(), "");
+                                : mCard.getTagId().toHexString();
                     } else {
                         mCardSerial = "";
                     }
@@ -197,7 +196,7 @@ public class CardInfoActivity extends MetrodroidActivity {
                     }
 
                     String w = mTransitData.getWarning();
-                    boolean hasUnknownStation = mTransitData.hasUnknownStations();
+                    boolean hasUnknownStation = mTransitData.getHasUnknownStations();
                     if (w != null || hasUnknownStation) {
                         findViewById(R.id.need_stations).setVisibility(View.VISIBLE);
                         String txt = "";

@@ -1,5 +1,5 @@
 /*
- * KSX6924Application.java
+ * KSX6924Application.kt
  *
  * Copyright 2018 Google
  * Copyright 2019 Michael Farrell <micolous+git@gmail.com>
@@ -37,9 +37,6 @@ import kotlinx.serialization.KSerializer
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.Transient
 
-expect object KSX6924Registry {
-    val allFactories: List<KSX6924CardTransitFactory>
-}
 
 /**
  * Implements the T-Money ISO 7816 application.  This is used by T-Money in South Korea, and

@@ -20,13 +20,14 @@
 package au.id.micolous.metrodroid.test
 
 import au.id.micolous.metrodroid.key.ClassicSectorKey
-import au.id.micolous.metrodroid.util.Utils
+import au.id.micolous.metrodroid.util.HashUtils
 import au.id.micolous.metrodroid.util.ImmutableByteArray
+import au.id.micolous.metrodroid.util.MD5Ctx
 import kotlin.test.Test
 import kotlin.test.assertEquals
 
 /**
- * This test validates [Utils.checkKeyHash] such that:
+ * This test validates [HashUtils.checkKeyHash] such that:
  *
  * 1. The KeyHash algorithm hasn't changed.
  *
@@ -39,26 +40,26 @@ class KeyHashTest {
     @Test
     fun testIncorrectKeyHash() {
         // Test with just 1 possible answer
-        assertEquals(-1, Utils.checkKeyHash(MAD_KEY, SALT0, MAD_HASH1))
+        assertEquals(-1, HashUtils.checkKeyHash(MAD_KEY, SALT0, MAD_HASH1))
 
         // Then test with multiple
-        assertEquals(-1, Utils.checkKeyHash(MAD_KEY, SALT0,
+        assertEquals(-1, HashUtils.checkKeyHash(MAD_KEY, SALT0,
                 MAD_HASH1, MAD_HASH2,
                 DEFAULT_HASH0, DEFAULT_HASH1, DEFAULT_HASH2))
-        assertEquals(-1, Utils.checkKeyHash(MAD_KEY, SALT1,
+        assertEquals(-1, HashUtils.checkKeyHash(MAD_KEY, SALT1,
                 MAD_HASH0, MAD_HASH2,
                 DEFAULT_HASH0, DEFAULT_HASH1, DEFAULT_HASH2))
-        assertEquals(-1, Utils.checkKeyHash(MAD_KEY, SALT2,
+        assertEquals(-1, HashUtils.checkKeyHash(MAD_KEY, SALT2,
                 MAD_HASH0, MAD_HASH1,
                 DEFAULT_HASH0, DEFAULT_HASH1, DEFAULT_HASH2))
 
-        assertEquals(-1, Utils.checkKeyHash(DEFAULT_KEY, SALT0,
+        assertEquals(-1, HashUtils.checkKeyHash(DEFAULT_KEY, SALT0,
                 MAD_HASH0, MAD_HASH1, MAD_HASH2,
                 DEFAULT_HASH1, DEFAULT_HASH2))
-        assertEquals(-1, Utils.checkKeyHash(DEFAULT_KEY, SALT1,
+        assertEquals(-1, HashUtils.checkKeyHash(DEFAULT_KEY, SALT1,
                 MAD_HASH0, MAD_HASH1, MAD_HASH2,
                 DEFAULT_HASH0, DEFAULT_HASH2))
-        assertEquals(-1, Utils.checkKeyHash(DEFAULT_KEY, SALT2,
+        assertEquals(-1, HashUtils.checkKeyHash(DEFAULT_KEY, SALT2,
                 MAD_HASH0, MAD_HASH1, MAD_HASH2,
                 DEFAULT_HASH0, DEFAULT_HASH1))
     }
@@ -67,70 +68,82 @@ class KeyHashTest {
     fun test1CorrectKeyHash() {
         // Checking when there is one right answer.
         // This is to validate that the algorithm is giving diverse-enough results.
-        assertEquals(0, Utils.checkKeyHash(MAD_KEY, SALT0, MAD_HASH0))
-        assertEquals(0, Utils.checkKeyHash(MAD_KEY, SALT1, MAD_HASH1))
-        assertEquals(0, Utils.checkKeyHash(MAD_KEY, SALT2, MAD_HASH2))
+        assertEquals(0, HashUtils.checkKeyHash(MAD_KEY, SALT0, MAD_HASH0))
+        assertEquals(0, HashUtils.checkKeyHash(MAD_KEY, SALT1, MAD_HASH1))
+        assertEquals(0, HashUtils.checkKeyHash(MAD_KEY, SALT2, MAD_HASH2))
 
-        assertEquals(0, Utils.checkKeyHash(DEFAULT_KEY, SALT0, DEFAULT_HASH0))
-        assertEquals(0, Utils.checkKeyHash(DEFAULT_KEY, SALT1, DEFAULT_HASH1))
-        assertEquals(0, Utils.checkKeyHash(DEFAULT_KEY, SALT2, DEFAULT_HASH2))
+        assertEquals(0, HashUtils.checkKeyHash(DEFAULT_KEY, SALT0, DEFAULT_HASH0))
+        assertEquals(0, HashUtils.checkKeyHash(DEFAULT_KEY, SALT1, DEFAULT_HASH1))
+        assertEquals(0, HashUtils.checkKeyHash(DEFAULT_KEY, SALT2, DEFAULT_HASH2))
     }
 
     @Test
     fun testOffsetCorrectKeyHash() {
-        assertEquals(1, Utils.checkKeyHash(MAD_KEY, SALT1,
+        assertEquals(1, HashUtils.checkKeyHash(MAD_KEY, SALT1,
                 MAD_HASH0, MAD_HASH1))
-        assertEquals(1, Utils.checkKeyHash(MAD_KEY, SALT1,
+        assertEquals(1, HashUtils.checkKeyHash(MAD_KEY, SALT1,
                 MAD_HASH0, MAD_HASH1, MAD_HASH2))
 
-        assertEquals(2, Utils.checkKeyHash(MAD_KEY, SALT2,
+        assertEquals(2, HashUtils.checkKeyHash(MAD_KEY, SALT2,
                 MAD_HASH0, MAD_HASH1, MAD_HASH2))
     }
 
     @Test
     fun testRepeatedCorrectKeyHash() {
-        assertEquals(0, Utils.checkKeyHash(DEFAULT_KEY, SALT0,
+        assertEquals(0, HashUtils.checkKeyHash(DEFAULT_KEY, SALT0,
                 DEFAULT_HASH0, DEFAULT_HASH0, DEFAULT_HASH1))
-        assertEquals(0, Utils.checkKeyHash(DEFAULT_KEY, SALT0,
+        assertEquals(0, HashUtils.checkKeyHash(DEFAULT_KEY, SALT0,
                 DEFAULT_HASH0, DEFAULT_HASH1, DEFAULT_HASH0))
 
-        assertEquals(2, Utils.checkKeyHash(DEFAULT_KEY, SALT1,
+        assertEquals(2, HashUtils.checkKeyHash(DEFAULT_KEY, SALT1,
                 DEFAULT_HASH0, DEFAULT_HASH0, DEFAULT_HASH1))
-        assertEquals(2, Utils.checkKeyHash(DEFAULT_KEY, SALT1,
+        assertEquals(2, HashUtils.checkKeyHash(DEFAULT_KEY, SALT1,
                 DEFAULT_HASH0, DEFAULT_HASH0, DEFAULT_HASH1, DEFAULT_HASH1))
 
     }
 
     @Test
     fun testWrappedKeyHash() {
-        assertEquals(0, Utils.checkKeyHash(MAD_SECTOR_KEY, SALT0, MAD_HASH0))
-        assertEquals(0, Utils.checkKeyHash(MAD_SECTOR_KEY, SALT1, MAD_HASH1))
-        assertEquals(0, Utils.checkKeyHash(MAD_SECTOR_KEY, SALT2, MAD_HASH2))
+        assertEquals(0, HashUtils.checkKeyHash(MAD_SECTOR_KEY, SALT0, MAD_HASH0))
+        assertEquals(0, HashUtils.checkKeyHash(MAD_SECTOR_KEY, SALT1, MAD_HASH1))
+        assertEquals(0, HashUtils.checkKeyHash(MAD_SECTOR_KEY, SALT2, MAD_HASH2))
 
-        assertEquals(0, Utils.checkKeyHash(DEFAULT_SECTOR_KEY, SALT0, DEFAULT_HASH0))
-        assertEquals(0, Utils.checkKeyHash(DEFAULT_SECTOR_KEY, SALT1, DEFAULT_HASH1))
-        assertEquals(0, Utils.checkKeyHash(DEFAULT_SECTOR_KEY, SALT2, DEFAULT_HASH2))
+        assertEquals(0, HashUtils.checkKeyHash(DEFAULT_SECTOR_KEY, SALT0, DEFAULT_HASH0))
+        assertEquals(0, HashUtils.checkKeyHash(DEFAULT_SECTOR_KEY, SALT1, DEFAULT_HASH1))
+        assertEquals(0, HashUtils.checkKeyHash(DEFAULT_SECTOR_KEY, SALT2, DEFAULT_HASH2))
 
-        assertEquals(-1, Utils.checkKeyHash(MAD_SECTOR_KEY, SALT0,
+        assertEquals(-1, HashUtils.checkKeyHash(MAD_SECTOR_KEY, SALT0,
                 MAD_HASH1, MAD_HASH2,
                 DEFAULT_HASH0, DEFAULT_HASH1, DEFAULT_HASH2))
-        assertEquals(-1, Utils.checkKeyHash(MAD_SECTOR_KEY, SALT1,
+        assertEquals(-1, HashUtils.checkKeyHash(MAD_SECTOR_KEY, SALT1,
                 MAD_HASH0, MAD_HASH2,
                 DEFAULT_HASH0, DEFAULT_HASH1, DEFAULT_HASH2))
-        assertEquals(-1, Utils.checkKeyHash(MAD_SECTOR_KEY, SALT2,
+        assertEquals(-1, HashUtils.checkKeyHash(MAD_SECTOR_KEY, SALT2,
                 MAD_HASH0, MAD_HASH1,
                 DEFAULT_HASH0, DEFAULT_HASH1, DEFAULT_HASH2))
 
-        assertEquals(-1, Utils.checkKeyHash(DEFAULT_SECTOR_KEY, SALT0,
+        assertEquals(-1, HashUtils.checkKeyHash(DEFAULT_SECTOR_KEY, SALT0,
                 MAD_HASH0, MAD_HASH1, MAD_HASH2,
                 DEFAULT_HASH1, DEFAULT_HASH2))
-        assertEquals(-1, Utils.checkKeyHash(DEFAULT_SECTOR_KEY, SALT1,
+        assertEquals(-1, HashUtils.checkKeyHash(DEFAULT_SECTOR_KEY, SALT1,
                 MAD_HASH0, MAD_HASH1, MAD_HASH2,
                 DEFAULT_HASH0, DEFAULT_HASH2))
-        assertEquals(-1, Utils.checkKeyHash(DEFAULT_SECTOR_KEY, SALT2,
+        assertEquals(-1, HashUtils.checkKeyHash(DEFAULT_SECTOR_KEY, SALT2,
                 MAD_HASH0, MAD_HASH1, MAD_HASH2,
                 DEFAULT_HASH0, DEFAULT_HASH1))
 
+    }
+
+    private fun checkVector(input: String, output: String) {
+        val md5 = MD5Ctx()
+        md5.update(ImmutableByteArray.fromHex(input))
+        assertEquals(output, md5.digest().toHexString(), "Hash of <$input> failed")
+    }
+
+    @Test
+    fun testMd5vectors() {
+        checkVector("", "d41d8cd98f00b204e9800998ecf8427e")
+        checkVector("6162636465666768696a6b6c6d6e6f707172737475767778797a", "c3fcd3d76192e4007dfb496cca67e13b")
     }
 
     companion object {

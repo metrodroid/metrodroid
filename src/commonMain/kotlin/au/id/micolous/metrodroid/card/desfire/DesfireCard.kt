@@ -37,10 +37,6 @@ import kotlinx.serialization.Optional
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.Transient
 
-expect object DesfireCardTransitRegistry {
-    val allFactories: List<DesfireCardTransitFactory>
-}
-
 @Serializable
 data class DesfireCard constructor(
         @XMLId("manufacturing-data")

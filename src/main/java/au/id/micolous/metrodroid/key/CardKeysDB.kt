@@ -7,7 +7,6 @@ import au.id.micolous.metrodroid.provider.CardKeyProvider
 import au.id.micolous.metrodroid.provider.KeysTableColumns
 import au.id.micolous.metrodroid.util.ImmutableByteArray
 import kotlinx.serialization.json.Json
-import kotlinx.serialization.json.JsonTreeParser
 
 class CardKeysDB (private val context: Context): CardKeysRetriever {
     override fun forClassicStatic(): ClassicStaticKeys? {

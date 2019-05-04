@@ -182,7 +182,7 @@
 
     <string name="select_file">Select file</string>
     <string name="copied_to_clipboard">Copied to clipboard</string>
-    <string name="saved_xml">Wrote Metrodroid-Export.xml to USB Storage.</string>
+    <string name="saved_metrodroid_zip">Wrote Metrodroid-Export.zip to USB Storage.</string>
     <string name="saved_xml_custom">Wrote XML to USB Storage.</string>
     <string name="file_exported">File exported.</string>
     <string name="map_tiles_url">Map tiles URL</string>

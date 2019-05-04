@@ -19,6 +19,7 @@
 
 package au.id.micolous.metrodroid.card.ultralight
 
+// TODO: Merge with CardTransceiver
 interface UltralightTransceiver {
     fun reconnect()
     fun transceive(data: ByteArray): ByteArray

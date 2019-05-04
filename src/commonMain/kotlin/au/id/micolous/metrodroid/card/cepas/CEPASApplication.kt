@@ -71,6 +71,10 @@ data class CEPASApplication(
                     ListItem(R.string.cepas_purse_status, purse.purseStatus.toString()),
                     ListItem(R.string.cepas_purse_balance, purse.purseBalance.toString()),
 
+                    ListItem(R.string.cepas_purse_creation_date,
+                            TimestampFormatter.longDateFormat(purse.purseCreationDate)),
+                    ListItem(R.string.expiry_date,
+                            TimestampFormatter.longDateFormat(purse.purseExpiryDate)),
                     ListItem(R.string.cepas_autoload_amount, purse.autoLoadAmount.toString()),
                     ListItem(FormattedString("CAN"), purse.can.toHexDump()),
                     ListItem(FormattedString("CSN"), purse.csn.toHexDump()),
@@ -93,7 +97,7 @@ data class CEPASApplication(
     }
 
     override fun parseTransitData(): TransitData? {
-        return if (EZLinkTransitData.check(this)) EZLinkTransitData(this) else null
+        return if (EZLinkTransitData.check(this)) EZLinkTransitData.parse(this) else null
     }
 
     fun getPurse(purseId: Int): ImmutableByteArray? = purses[purseId]

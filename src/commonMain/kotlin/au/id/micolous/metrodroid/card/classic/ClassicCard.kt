@@ -29,12 +29,6 @@ import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.Transient
 
-expect object ClassicCardFactoryRegistry {
-    val allFactories: List<ClassicCardTransitFactory>
-}
-
-internal expect class FallbackFactory : ClassicCardTransitFactory
-
 @Serializable
 class ClassicCard constructor(
         @XMLListIdx("index")

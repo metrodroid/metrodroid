@@ -77,11 +77,6 @@ dependencies {
     implementation 'org.apache.commons:commons-lang3:3.5'
     implementation 'com.google.protobuf:protobuf-lite:3.0.0'
     implementation 'com.neovisionaries:nv-i18n:1.23'
-    implementation('org.simpleframework:simple-xml:2.7.1') {
-        exclude module: 'stax'
-        exclude module: 'stax-api'
-        exclude module: 'xpp3'
-    }
     implementation project(':leaflet')
     implementation project(':material-design-icons')
 
@@ -274,7 +269,7 @@ android {
                 'third_party/vpereira_bilhete/',
                 'third_party/RejsekortReader/dumps/'
         ]
-        main.assets.srcDirs += ['build/assets']
+        main.assets.srcDirs += ['build/assets', 'mdst']
     }
 
     compileOptions {

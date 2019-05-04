@@ -43,12 +43,12 @@ public class TransitCurrencyTest extends BaseInstrumentedTest {
         // Only check to make sure AUD comes out correctly in en_AU.
         setLocale("en-AU");
 
-        final Spanned aud = TransitCurrency.AUD(1234).formatCurrencyString(true).getSpanned();
+        final Spanned aud = TransitCurrency.Companion.AUD(1234).formatCurrencyString(true).getSpanned();
         assertSpannedEquals("$12.34", aud);
         assertTtsMarkers("AUD", "12.34", aud);
 
         // May be "USD12.34", "U$12.34" or "US$12.34".
-        final Spanned usd = TransitCurrency.USD(1234).formatCurrencyString(true).getSpanned();
+        final Spanned usd = TransitCurrency.Companion.USD(1234).formatCurrencyString(true).getSpanned();
         assertSpannedThat(usd, Matchers.startsWith("U"));
         assertSpannedThat(usd, Matchers.endsWith("12.34"));
         assertTtsMarkers("USD", "12.34", usd);
@@ -64,12 +64,12 @@ public class TransitCurrencyTest extends BaseInstrumentedTest {
         setLocale("en-GB");
 
         // May be "$12.34", "U$12.34" or "US$12.34".
-        final Spanned usd = TransitCurrency.USD(1234).formatCurrencyString(true).getSpanned();
+        final Spanned usd = TransitCurrency.Companion.USD(1234).formatCurrencyString(true).getSpanned();
         assertSpannedThat(usd, Matchers.endsWith("$12.34"));
         assertTtsMarkers("USD", "12.34", usd);
 
         // May be "A$12.34" or "AU$12.34".
-        final Spanned aud = TransitCurrency.AUD(1234).formatCurrencyString(true).getSpanned();
+        final Spanned aud = TransitCurrency.Companion.AUD(1234).formatCurrencyString(true).getSpanned();
         assertSpannedThat(aud, Matchers.startsWith("A"));
         assertSpannedThat(aud, Matchers.endsWith("$12.34"));
         assertTtsMarkers("AUD", "12.34", aud);
@@ -79,7 +79,7 @@ public class TransitCurrencyTest extends BaseInstrumentedTest {
         assertTtsMarkers("GBP", "12.34", gbp);
 
         // May be "¥1,234" or "JP¥1,234".
-        final Spanned jpy = TransitCurrency.JPY(1234).formatCurrencyString(true).getSpanned();
+        final Spanned jpy = TransitCurrency.Companion.JPY(1234).formatCurrencyString(true).getSpanned();
         assertSpannedThat(jpy, Matchers.endsWith("¥1,234"));
         assertTtsMarkers("JPY", "1234", jpy);
     }
@@ -92,12 +92,12 @@ public class TransitCurrencyTest extends BaseInstrumentedTest {
     public void testEnglishUS() {
         setLocale("en-US");
 
-        final Spanned usd = TransitCurrency.USD(1234).formatCurrencyString(true).getSpanned();
+        final Spanned usd = TransitCurrency.Companion.USD(1234).formatCurrencyString(true).getSpanned();
         assertSpannedEquals("$12.34", usd);
         assertTtsMarkers("USD", "12.34", usd);
 
         // May be "A$12.34" or "AU$12.34".
-        final Spanned aud = TransitCurrency.AUD(1234).formatCurrencyString(true).getSpanned();
+        final Spanned aud = TransitCurrency.Companion.AUD(1234).formatCurrencyString(true).getSpanned();
         assertSpannedThat(aud, Matchers.startsWith("A"));
         assertSpannedThat(aud, Matchers.endsWith("$12.34"));
         assertTtsMarkers("AUD", "12.34", aud);
@@ -107,7 +107,7 @@ public class TransitCurrencyTest extends BaseInstrumentedTest {
         assertTtsMarkers("GBP", "12.34", gbp);
 
         // May be "¥1,234" or "JP¥1,234".
-        final Spanned jpy = TransitCurrency.JPY(1234).formatCurrencyString(true).getSpanned();
+        final Spanned jpy = TransitCurrency.Companion.JPY(1234).formatCurrencyString(true).getSpanned();
         assertSpannedThat(jpy, Matchers.endsWith("¥1,234"));
         assertTtsMarkers("JPY", "1234", jpy);
     }
@@ -123,12 +123,12 @@ public class TransitCurrencyTest extends BaseInstrumentedTest {
         setLocale("ja-JP");
 
         // May be "$12.34", "U$12.34" or "US$12.34".
-        final Spanned usd = TransitCurrency.USD(1234).formatCurrencyString(true).getSpanned();
+        final Spanned usd = TransitCurrency.Companion.USD(1234).formatCurrencyString(true).getSpanned();
         assertSpannedThat(usd, Matchers.endsWith("$12.34"));
         assertTtsMarkers("USD", "12.34", usd);
 
         // May be "A$12.34" or "AU$12.34".
-        final Spanned aud = TransitCurrency.AUD(1234).formatCurrencyString(true).getSpanned();
+        final Spanned aud = TransitCurrency.Companion.AUD(1234).formatCurrencyString(true).getSpanned();
         assertSpannedThat(aud, Matchers.startsWith("A"));
         assertSpannedThat(aud, Matchers.endsWith("$12.34"));
         assertTtsMarkers("AUD", "12.34", aud);
@@ -139,7 +139,7 @@ public class TransitCurrencyTest extends BaseInstrumentedTest {
 
 
         // Note: this is the full-width yen character
-        final Spanned jpy = TransitCurrency.JPY(1234).formatCurrencyString(true).getSpanned();
+        final Spanned jpy = TransitCurrency.Companion.JPY(1234).formatCurrencyString(true).getSpanned();
         assertSpannedEquals("￥1,234", jpy);
         assertTtsMarkers("JPY", "1234", jpy);
     }
@@ -152,11 +152,11 @@ public class TransitCurrencyTest extends BaseInstrumentedTest {
     public void testFrench() {
         setLocale("fr-FR");
 
-        final Spanned usd = TransitCurrency.USD(1234).formatCurrencyString(true).getSpanned();
+        final Spanned usd = TransitCurrency.Companion.USD(1234).formatCurrencyString(true).getSpanned();
         assertSpannedEquals("12,34 $US", usd);
         assertTtsMarkers("USD", "12.34", usd);
 
-        final Spanned aud = TransitCurrency.AUD(1234).formatCurrencyString(true).getSpanned();
+        final Spanned aud = TransitCurrency.Companion.AUD(1234).formatCurrencyString(true).getSpanned();
         assertSpannedEquals("12,34 $AU", aud);
         assertTtsMarkers("AUD", "12.34", aud);
 
@@ -166,7 +166,7 @@ public class TransitCurrencyTest extends BaseInstrumentedTest {
         assertTtsMarkers("GBP", "12.34", gbp);
 
         // This may not have a proper symbol
-        final Spanned jpy = TransitCurrency.JPY(1234).formatCurrencyString(true).getSpanned();
+        final Spanned jpy = TransitCurrency.Companion.JPY(1234).formatCurrencyString(true).getSpanned();
         assertSpannedThat(jpy, Matchers.startsWith("1 234"));
 
         final Spanned eur = new TransitCurrency(1234, "EUR").formatCurrencyString(true).getSpanned();

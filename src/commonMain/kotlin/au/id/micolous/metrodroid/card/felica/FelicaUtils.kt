@@ -19,9 +19,91 @@
  */
 package au.id.micolous.metrodroid.card.felica
 
+import au.id.micolous.metrodroid.multi.R
 import au.id.micolous.metrodroid.multi.StringResource
+import au.id.micolous.metrodroid.transit.edy.EdyTransitData
+import au.id.micolous.metrodroid.transit.kmt.KMTTransitData
+import au.id.micolous.metrodroid.transit.octopus.OctopusTransitData
+import au.id.micolous.metrodroid.transit.suica.SuicaTransitData
 
-expect object FelicaUtils {
-    fun getFriendlySystemName(systemCode: Int): StringResource
-    fun getFriendlyServiceName(systemCode: Int, serviceCode: Int): StringResource
+/**
+ * Utilities for working with FeliCa cards.
+ */
+object FelicaUtils {
+
+    /**
+     * Translates the System Name to a human-readable name.
+     *
+     * Systems in FeliCa are like Applications in MIFARE.  They represent
+     * a particular system operator's data.
+     *
+     * @param systemCode FeliCa system code to translate.
+     * @return StringRes for what corresponds to that system ocde.
+     */
+    fun getFriendlySystemName(systemCode: Int): StringResource {
+        return when (systemCode) {
+            SuicaTransitData.SYSTEMCODE_SUICA -> R.string.card_name_suica
+            FelicaConsts.SYSTEMCODE_COMMON -> R.string.felica_system_common
+            FelicaConsts.SYSTEMCODE_FELICA_LITE -> R.string.card_media_felica_lite
+            OctopusTransitData.SYSTEMCODE_OCTOPUS -> R.string.card_name_octopus
+            OctopusTransitData.SYSTEMCODE_SZT -> R.string.card_name_szt
+            KMTTransitData.SYSTEMCODE_KMT -> R.string.card_name_kmt
+            FelicaConsts.SYSTEMCODE_NDEF -> R.string.card_format_ndef
+            else -> R.string.unknown
+        }
+    }
+
+    /**
+     * Translates the Service Name to a human-readable name.
+     *
+     * Services in FeliCa are like Files in MIFARE.
+     *
+     * Both the system and service codes must be specified, as service codes have different
+     * meanings depending on the System.
+     *
+     * @param systemCode FeliCa system code to translate
+     * @param serviceCode FeliCa service code to translate
+     * @return Human-readable description of the service code.
+     */
+    fun getFriendlyServiceName(systemCode: Int, serviceCode: Int): StringResource {
+        return when (systemCode) {
+            SuicaTransitData.SYSTEMCODE_SUICA -> when (serviceCode) {
+                SuicaTransitData.SERVICE_SUICA_HISTORY -> R.string.suica_file_history
+                SuicaTransitData.SERVICE_SUICA_INOUT -> R.string.suica_file_in_out
+                else -> R.string.unknown
+            }
+
+            FelicaConsts.SYSTEMCODE_COMMON -> when (serviceCode) {
+                EdyTransitData.SERVICE_EDY_ID -> R.string.edy_file_id
+                EdyTransitData.SERVICE_EDY_BALANCE -> R.string.edy_file_purse_balance
+                EdyTransitData.SERVICE_EDY_HISTORY -> R.string.edy_file_history
+                else -> R.string.unknown
+            }
+
+            FelicaConsts.SYSTEMCODE_FELICA_LITE -> when (serviceCode) {
+                FelicaConsts.SERVICE_FELICA_LITE_READONLY -> R.string.felica_lite_read_only
+                FelicaConsts.SERVICE_FELICA_LITE_READWRITE -> R.string.felica_lite_read_write
+                else -> R.string.unknown
+            }
+
+            OctopusTransitData.SYSTEMCODE_OCTOPUS -> when (serviceCode) {
+                OctopusTransitData.SERVICE_OCTOPUS -> R.string.card_name_octopus
+                else -> R.string.unknown
+            }
+
+            OctopusTransitData.SYSTEMCODE_SZT -> when (serviceCode) {
+                OctopusTransitData.SERVICE_SZT -> R.string.card_name_szt
+                else -> R.string.unknown
+            }
+
+            KMTTransitData.SYSTEMCODE_KMT -> when (serviceCode) {
+                KMTTransitData.SERVICE_KMT_ID -> R.string.kmt_file_id
+                KMTTransitData.SERVICE_KMT_BALANCE -> R.string.kmt_file_purse_balance
+                KMTTransitData.SERVICE_KMT_HISTORY -> R.string.kmt_file_history
+                else -> R.string.unknown
+            }
+
+            else -> R.string.unknown
+        }
+    }
 }

@@ -25,11 +25,20 @@ import android.nfc.tech.NfcA
 import android.nfc.tech.NfcF
 import au.id.micolous.metrodroid.card.CardTransceiver.Protocol
 import au.id.micolous.metrodroid.card.CardTransceiver.Protocol.*
-import au.id.micolous.metrodroid.multi.Log
 import au.id.micolous.metrodroid.util.ImmutableByteArray
 import au.id.micolous.metrodroid.util.Utils
 import au.id.micolous.metrodroid.util.toImmutable
 import java.io.IOException
+
+fun <T>wrapAndroidExceptions(f: () -> T): T {
+    try {
+        return f()
+    } catch (e: TagLostException) {
+        throw CardLostException(Utils.getErrorMessage(e))
+    } catch (e: IOException) {
+        throw CardTransceiveException(e, Utils.getErrorMessage(e))
+    }
+}
 
 /**
  * Wrapper for Android's [Tag] class, to implement the [CardTransceiver] interface.
@@ -72,7 +81,7 @@ class AndroidCardTransceiver(private val tag: Tag) : CardTransceiver {
 
                 nfcF.connect()
                 this.nfcF = nfcF
-                this.defaultSystemCode = Utils.byteArrayToInt(nfcF.systemCode)
+                this.defaultSystemCode = nfcF.systemCode.toImmutable().byteArrayToInt()
                 this.pmm = nfcF.manufacturer.toImmutable()
             }
 
@@ -125,24 +134,17 @@ class AndroidCardTransceiver(private val tag: Tag) : CardTransceiver {
 
     override suspend fun transceive(data: ImmutableByteArray): ImmutableByteArray {
         val request = data.dataCopy
-        val response: ByteArray
         val isoDep = this.isoDep
         val nfcA = this.nfcA
         val nfcF = this.nfcF
 
-        try {
-            response = when {
+        return wrapAndroidExceptions {
+            when {
                 isoDep != null -> isoDep.transceive(request)
                 nfcA != null -> nfcA.transceive(request)
                 nfcF != null -> nfcF.transceive(request)
                 else -> throw CardTransceiveException("Card not connected")
             }
-        } catch (e: TagLostException) {
-            throw CardLostException(Utils.getErrorMessage(e))
-        } catch (e: IOException) {
-            throw CardTransceiveException(e, Utils.getErrorMessage(e))
-        }
-
-        return response.toImmutable()
+        }.toImmutable()
     }
 }

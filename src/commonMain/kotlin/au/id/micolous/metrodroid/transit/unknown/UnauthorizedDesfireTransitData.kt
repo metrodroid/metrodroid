@@ -14,7 +14,7 @@ import au.id.micolous.metrodroid.transit.TransitIdentity
 @Parcelize
 class UnauthorizedDesfireTransitData (override val cardName: String): UnauthorizedTransitData() {
     companion object {
-        val FACTORY: DesfireCardTransitFactory = object : DesfireCardTransitFactory() {
+        val FACTORY: DesfireCardTransitFactory = object : DesfireCardTransitFactory {
             override fun earlyCheck(appIds: IntArray) = false
 
             /**
