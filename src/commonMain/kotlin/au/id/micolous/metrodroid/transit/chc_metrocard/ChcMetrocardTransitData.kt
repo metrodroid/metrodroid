@@ -21,13 +21,17 @@ package au.id.micolous.metrodroid.transit.chc_metrocard
 import au.id.micolous.metrodroid.card.CardType
 import au.id.micolous.metrodroid.card.classic.ClassicCard
 import au.id.micolous.metrodroid.card.classic.ClassicCardTransitFactory
+import au.id.micolous.metrodroid.multi.Parcelize
 import au.id.micolous.metrodroid.multi.R
 import au.id.micolous.metrodroid.time.Duration
 import au.id.micolous.metrodroid.time.MetroTimeZone
 import au.id.micolous.metrodroid.transit.CardInfo
 import au.id.micolous.metrodroid.transit.TransitBalance
 import au.id.micolous.metrodroid.transit.TransitBalanceStored
+import au.id.micolous.metrodroid.transit.TransitCurrency.Companion.NZD
+import au.id.micolous.metrodroid.transit.TransitCurrencyRef
 import au.id.micolous.metrodroid.transit.erg.ErgTransitData
+import au.id.micolous.metrodroid.transit.erg.ErgTransitDataCapsule
 import au.id.micolous.metrodroid.transit.erg.ErgTransitFactory
 import au.id.micolous.metrodroid.transit.erg.record.ErgMetadataRecord
 import au.id.micolous.metrodroid.util.ImmutableByteArray
@@ -41,13 +45,15 @@ import au.id.micolous.metrodroid.util.ImmutableByteArray
  *
  * Documentation: https://github.com/micolous/metrodroid/wiki/Metrocard-%28Christchurch%29
  */
-class ChcMetrocardTransitData private constructor(val erg: ErgTransitData) : ErgTransitData(erg) {
+@Parcelize
+class ChcMetrocardTransitData(override val capsule: ErgTransitDataCapsule) : ErgTransitData() {
+    override val currency: TransitCurrencyRef = CURRENCY
     override val cardName get() = NAME
+    override val timezone get() = TIME_ZONE
 
     override val serialNumber: String?
-        get() = cardSerial?.let { internalFormatSerialNumber(it) }
+        get() = capsule.cardSerial?.let { internalFormatSerialNumber(it) }
 
-    override val timezone get() = TIME_ZONE
 
     override val balance get(): TransitBalance? {
         val b = super.balance ?: return null
@@ -61,12 +67,12 @@ class ChcMetrocardTransitData private constructor(val erg: ErgTransitData) : Erg
         private const val NAME = "Metrocard"
         private const val AGENCY_ID = 0x0136
         internal val TIME_ZONE = MetroTimeZone.AUCKLAND
-        internal const val CURRENCY = "NZD"
+        internal val CURRENCY = ::NZD
         internal const val CHC_METROCARD_STR = "chc_metrocard"
 
         private val CARD_INFO = CardInfo(
                 imageId = R.drawable.chc_metrocard,
-                name = ChcMetrocardTransitData.NAME,
+                name = NAME,
                 locationId = R.string.location_christchurch_nz,
                 cardType = CardType.MifareClassic,
                 keysRequired = true,
@@ -74,9 +80,7 @@ class ChcMetrocardTransitData private constructor(val erg: ErgTransitData) : Erg
 
         val FACTORY: ClassicCardTransitFactory = object : ErgTransitFactory() {
             override fun parseTransitData(card: ClassicCard) =
-                    ChcMetrocardTransitData(parse(card, CURRENCY) { purse, epoch ->
-                        ChcMetrocardTransaction(purse, epoch)
-                    })
+                    ChcMetrocardTransitData(parse(card, ::ChcMetrocardTransaction))
 
             override fun parseTransitIdentity(card: ClassicCard) =
                     parseTransitIdentity(card, NAME)

@@ -19,29 +19,37 @@
 package au.id.micolous.metrodroid.transit.erg
 
 import au.id.micolous.metrodroid.multi.Parcelize
-import au.id.micolous.metrodroid.time.*
+import au.id.micolous.metrodroid.time.Epoch
+import au.id.micolous.metrodroid.time.MetroTimeZone
+import au.id.micolous.metrodroid.time.TimestampFull
 import au.id.micolous.metrodroid.transit.Transaction
 import au.id.micolous.metrodroid.transit.TransitCurrency
+import au.id.micolous.metrodroid.transit.TransitCurrency.Companion.XXX
+import au.id.micolous.metrodroid.transit.TransitCurrencyRef
 import au.id.micolous.metrodroid.transit.erg.record.ErgPurseRecord
+
+@Parcelize
+class ErgUnknownTransaction(
+        override val purse: ErgPurseRecord,
+        override val epoch: Int) : ErgTransaction() {
+    override val currency: TransitCurrencyRef get() = ::XXX
+    override val timezone get() = MetroTimeZone.UNKNOWN
+}
 
 /**
  * Represents a transaction on an ERG MIFARE Classic card.
  */
-@Parcelize
-open class ErgTransaction(protected val purse: ErgPurseRecord,
-                          protected val epoch: Int,
-                          protected val currency: String,
-                          protected val timezone: MetroTimeZone) : Transaction() {
-
+abstract class ErgTransaction : Transaction() {
+    abstract val purse: ErgPurseRecord
+    abstract val epoch: Int
+    protected abstract val currency: TransitCurrencyRef
+    protected abstract val timezone: MetroTimeZone
 
     // Implemented functionality.
-    override val timestamp get(): TimestampFull {
-        return convertTimestamp(epoch, timezone, purse.day, purse.minute)
-    }
+    override val timestamp get(): TimestampFull =
+        convertTimestamp(epoch, timezone, purse.day, purse.minute)
 
-    override val isTapOff get(): Boolean {
-        return false
-    }
+    override val isTapOff get(): Boolean = false
 
     override val fare get(): TransitCurrency {
         var o = purse.transactionValue
@@ -49,7 +57,7 @@ open class ErgTransaction(protected val purse: ErgPurseRecord,
             o *= -1
         }
 
-        return TransitCurrency(o, currency)
+        return currency(o)
     }
 
     override fun isSameTrip(other: Transaction): Boolean {
@@ -63,6 +71,28 @@ open class ErgTransaction(protected val purse: ErgPurseRecord,
     public override val isTransfer get(): Boolean {
         // TODO
         return false
+    }
+
+    override fun compareTo(other: Transaction): Int {
+        // This prepares ordering for a later merge
+        val ret = super.compareTo(other)
+
+        return when {
+            // Transactions are sorted by time alone -- but Erg transactions will have the same
+            // timestamp for many things
+            ret != 0 || other !is ErgTransaction -> ret
+
+            // Put "top-ups" first
+            purse.isCredit && purse.transactionValue != 0 -> -1
+            other.purse.isCredit && other.purse.transactionValue != 0 -> 1
+
+            // Then put "trips" first
+            purse.isTrip -> -1
+            other.purse.isTrip -> 1
+
+            // Otherwise sort by value
+            else -> purse.transactionValue.compareTo(other.purse.transactionValue)
+        }
     }
 
     companion object {

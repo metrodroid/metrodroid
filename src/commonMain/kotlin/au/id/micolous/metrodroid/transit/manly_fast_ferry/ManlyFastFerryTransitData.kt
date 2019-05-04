@@ -21,12 +21,14 @@ package au.id.micolous.metrodroid.transit.manly_fast_ferry
 import au.id.micolous.metrodroid.card.CardType
 import au.id.micolous.metrodroid.card.classic.ClassicCard
 import au.id.micolous.metrodroid.card.classic.ClassicCardTransitFactory
+import au.id.micolous.metrodroid.multi.Parcelize
 import au.id.micolous.metrodroid.multi.R
 import au.id.micolous.metrodroid.time.MetroTimeZone
 import au.id.micolous.metrodroid.transit.CardInfo
+import au.id.micolous.metrodroid.transit.TransitCurrency.Companion.AUD
 import au.id.micolous.metrodroid.transit.erg.ErgTransitData
+import au.id.micolous.metrodroid.transit.erg.ErgTransitDataCapsule
 import au.id.micolous.metrodroid.transit.erg.ErgTransitFactory
-import au.id.micolous.metrodroid.transit.erg.record.ErgPurseRecord
 
 /**
  * Transit data type for Manly Fast Ferry Smartcard (Sydney, AU).
@@ -38,7 +40,9 @@ import au.id.micolous.metrodroid.transit.erg.record.ErgPurseRecord
  *
  * Documentation of format: https://github.com/micolous/metrodroid/wiki/Manly-Fast-Ferry
  */
-class ManlyFastFerryTransitData private constructor(val erg: ErgTransitData) : ErgTransitData(erg) {
+@Parcelize
+class ManlyFastFerryTransitData(override val capsule: ErgTransitDataCapsule) : ErgTransitData() {
+    override val currency get() = CURRENCY
     override val cardName get() = NAME
     override val timezone get() = TIME_ZONE
 
@@ -46,11 +50,11 @@ class ManlyFastFerryTransitData private constructor(val erg: ErgTransitData) : E
         private const val NAME = "Manly Fast Ferry"
         private const val AGENCY_ID = 0x0227
         internal val TIME_ZONE = MetroTimeZone.SYDNEY
-        internal const val CURRENCY = "AUD"
+        internal val CURRENCY = ::AUD
 
         private val CARD_INFO = CardInfo(
                 imageId = R.drawable.manly_fast_ferry_card,
-                name = ManlyFastFerryTransitData.NAME,
+                name = NAME,
                 locationId = R.string.location_sydney_australia,
                 cardType = CardType.MifareClassic,
                 keysRequired = true)
@@ -60,9 +64,7 @@ class ManlyFastFerryTransitData private constructor(val erg: ErgTransitData) : E
                 get() = AGENCY_ID
 
             override fun parseTransitData(card: ClassicCard) =
-                    ManlyFastFerryTransitData(parse(card, CURRENCY) { purse: ErgPurseRecord, epoch: Int ->
-                        ManlyFastFerryTransaction(purse, epoch)
-                    })
+                    ManlyFastFerryTransitData(parse(card, ::ManlyFastFerryTransaction))
 
             override fun parseTransitIdentity(card: ClassicCard) = parseTransitIdentity(card, NAME)
 

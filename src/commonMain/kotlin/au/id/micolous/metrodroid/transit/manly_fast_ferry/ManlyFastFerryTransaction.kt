@@ -19,13 +19,17 @@
 
 package au.id.micolous.metrodroid.transit.manly_fast_ferry
 
+import au.id.micolous.metrodroid.multi.Parcelize
 import au.id.micolous.metrodroid.transit.Trip
 import au.id.micolous.metrodroid.transit.erg.ErgTransaction
 import au.id.micolous.metrodroid.transit.erg.record.ErgPurseRecord
 
-class ManlyFastFerryTransaction(purse: ErgPurseRecord, epoch: Int) :
-        ErgTransaction(purse, epoch,
-                ManlyFastFerryTransitData.CURRENCY, ManlyFastFerryTransitData.TIME_ZONE) {
+@Parcelize
+class ManlyFastFerryTransaction(
+        override val purse: ErgPurseRecord,
+        override val epoch: Int) : ErgTransaction() {
+    override val currency get() = ManlyFastFerryTransitData.CURRENCY
+    override val timezone get() = ManlyFastFerryTransitData.TIME_ZONE
 
     // All transactions look the same... but this is a ferry, so we'll call it a ferry one.
     // Even when you buy things at the cafe.
