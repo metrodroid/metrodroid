@@ -2,7 +2,7 @@
  * FelicaReader.kt
  *
  * Copyright 2011 Eric Butler <eric@codebutler.com>
- * Copyright 2016-2018 Michael Farrell <micolous+git@gmail.com>
+ * Copyright 2016-2019 Michael Farrell <micolous+git@gmail.com>
  * Copyright 2019 Google
  *
  * Octopus reading code based on FelicaCard.java from nfcard project
@@ -33,9 +33,21 @@ import au.id.micolous.metrodroid.multi.R
 import au.id.micolous.metrodroid.transit.CardInfo
 import au.id.micolous.metrodroid.transit.octopus.OctopusTransitData
 import au.id.micolous.metrodroid.util.ImmutableByteArray
+import au.id.micolous.metrodroid.util.hexString
+
 
 object FelicaReader {
     private const val TAG = "FelicaReader"
+
+    /**
+     * Octopus (so probably also 1st generation SZT cards) have a special knocking sequence to
+     * allow unprotected reads, and does not respond to the normal system code listing.
+     *
+     * These a bit like FeliCa Lite -- they have one system and one service.
+     */
+    private val DEEP_SYSTEM_CODES = intArrayOf(
+            OctopusTransitData.SYSTEMCODE_OCTOPUS,
+            OctopusTransitData.SYSTEMCODE_SZT)
 
     /**
      * Felica has well-known system IDs.  If those system IDs are sufficient to detect
@@ -59,146 +71,149 @@ object FelicaReader {
 
     // https://github.com/tmurakam/felicalib/blob/master/src/dump/dump.c
     // https://github.com/tmurakam/felica2money/blob/master/src/card/Suica.cs
-    suspend fun dumpTag(tag: CardTransceiver, feedbackInterface: TagReaderFeedbackInterface): FelicaCard {
-        var octopusMagic = false
-        var sztMagic = false
+    suspend fun dumpTag(tag: CardTransceiver, tagId: ImmutableByteArray,
+                        feedbackInterface: TagReaderFeedbackInterface):
+            FelicaCard {
+        var magic = false
         var liteMagic = false
         var partialRead = false
 
-        val ft = FeliCaTag(tag)
+        val fp = FelicaProtocol(tag, tagId)
+        fp.connect()
 
-        var idm: ImmutableByteArray? = null
-
-        try {
-            idm = ft.pollingAndGetIDm(FelicaConsts.SYSTEMCODE_ANY)
-        } catch (e: CardLostException) {
-            Log.w(TAG, "Failed to get system code! can't return partial response.")
-        }
-
-        if (idm == null) {
-            throw Exception("Failed to read IDm")
-        }
-
-        val pmm = ft.pMm
+        Log.d(TAG, "Default system code: ${fp.defaultSystemCode.hexString}")
+        val pmm = fp.pmm
 
         val systems = mutableMapOf<Int, FelicaSystem>()
+        var actionsDone = 0
+        var totalActions = 1
+        feedbackInterface.updateProgressBar(actionsDone, totalActions)
 
         try {
-            // FIXME: Enumerate "areas" inside of systems ???
-            val codes = ft.getSystemCodeList().toMutableList()
+            var codes = fp.getSystemCodeList().toMutableList()
 
             // Check if we failed to get a System Code
             if (codes.isEmpty()) {
                 // Lite has no system code list
-                val liteSystem = ft.pollingAndGetIDm(FelicaConsts.SYSTEMCODE_FELICA_LITE)
-                if (liteSystem != null) {
+                if (fp.pollFelicaLite()) {
                     Log.d(TAG, "Detected Felica Lite card")
-                    codes.add(FeliCaLib.SystemCode(FelicaConsts.SYSTEMCODE_FELICA_LITE))
+                    codes.add(FelicaConsts.SYSTEMCODE_FELICA_LITE)
                     liteMagic = true
-                }
+                } else {
+                    // Don't do these on lite as it may respond to any code
+                    Log.d(TAG, "Polling for DEEP_SYSTEM_CODES...")
+                    codes = fp.pollForSystemCodes(DEEP_SYSTEM_CODES).toMutableList()
 
-                // Lets try to ping for an Octopus anyway
-                // Don't do it on lite as it may respond to any code
-                val octopusSystem = if (liteMagic) null else ft.pollingAndGetIDm(OctopusTransitData.SYSTEMCODE_OCTOPUS)
-                if (octopusSystem != null) {
-                    Log.d(TAG, "Detected Octopus card")
-                    // Octopus has a special knocking sequence to allow unprotected reads, and does not
-                    // respond to the normal system code listing.
-                    codes.add(FeliCaLib.SystemCode(OctopusTransitData.SYSTEMCODE_OCTOPUS))
-                    octopusMagic = true
-                }
-
-                val sztSystem = if (liteMagic) null else ft.pollingAndGetIDm(OctopusTransitData.SYSTEMCODE_SZT)
-                if (sztSystem != null) {
-                    Log.d(TAG, "Detected Shenzhen Tong card")
-                    // Because Octopus and SZT are similar systems, use the same knocking sequence in
-                    // case they have the same bugs with system code listing.
-                    codes.add(FeliCaLib.SystemCode(OctopusTransitData.SYSTEMCODE_SZT))
-                    sztMagic = true
+                    if (codes.isNotEmpty()) {
+                        Log.d(TAG, "Got a DEEP_SYSTEM_CODE!")
+                        magic = true
+                    } else {
+                        Log.w(TAG, "Card does not respond to getSystemCodeList, and no " +
+                                "DEEP_SYSTEM_CODE found! Reading will fail.")
+                    }
                 }
             }
 
-            val i = parseEarlyCardInfo(codes.map { it.code })
+            actionsDone += 1
+            totalActions += codes.size
+            feedbackInterface.updateProgressBar(actionsDone, totalActions)
+
+            val i = parseEarlyCardInfo(codes.map { it })
             if (i != null) {
-                Log.d(TAG, "Early Card Info: %${i.name}")
+                Log.d(TAG, "Early Card Info: ${i.name}")
                 feedbackInterface.updateStatusText(Localizer.localizeString(R.string.card_reading_type, i.name))
                 feedbackInterface.showCardType(i)
             }
 
-            for (code in codes) {
-                Log.d(TAG, "Got system code: ${code.bytes}")
+            for ((systemNumber, systemCode) in codes.withIndex()) {
+                Log.d(TAG, "System code #$systemNumber: ${systemCode.hexString}")
 
-                val systemCode = code.code
-                //ft.polling(systemCode);
-
-                val thisIdm = ft.pollingAndGetIDm(systemCode)
-
-                Log.d(TAG, " - Got IDm: $thisIdm  compare: $idm")
-                Log.d(TAG, " - Got PMm: ${ft.pMm}  compare: $pmm")
+                // We can get System Code 0 from DEEP_SYSTEM_CODES -- drop this.
+                if (systemCode == 0) continue
 
                 val services = mutableMapOf<Int, FelicaService>()
-                val serviceCodes: List<FeliCaLib.ServiceCode> = when {
-                    octopusMagic && code.code == OctopusTransitData.SYSTEMCODE_OCTOPUS -> {
+
+                var serviceCodes = when {
+                    magic && systemCode == OctopusTransitData.SYSTEMCODE_OCTOPUS -> {
                         Log.d(TAG, "Stuffing in Octopus magic service code")
-                        listOf(FeliCaLib.ServiceCode(OctopusTransitData.SERVICE_OCTOPUS))
+                        intArrayOf(OctopusTransitData.SERVICE_OCTOPUS)
                     }
-                    sztMagic && code.code == OctopusTransitData.SYSTEMCODE_SZT -> {
+                    magic && systemCode == OctopusTransitData.SYSTEMCODE_SZT -> {
                         Log.d(TAG, "Stuffing in SZT magic service code")
-                        listOf(FeliCaLib.ServiceCode(OctopusTransitData.SERVICE_SZT))
+                        intArrayOf(OctopusTransitData.SERVICE_SZT)
                     }
-                    liteMagic && code.code == FelicaConsts.SYSTEMCODE_FELICA_LITE -> {
+                    liteMagic && systemCode == FelicaConsts.SYSTEMCODE_FELICA_LITE -> {
                         Log.d(TAG, "Stuffing in Felica Lite magic service code")
-                        listOf(FeliCaLib.ServiceCode(FelicaConsts.SERVICE_FELICA_LITE_READONLY))
+                        intArrayOf(FelicaConsts.SERVICE_FELICA_LITE_READONLY)
                     }
-                    else -> ft.getServiceCodeList()
+                    else -> null
                 }
 
-                // Brute Forcer (DEBUG ONLY)
-                //if (octopusMagic)
-                //for (int serviceCodeInt=0; serviceCodeInt<0xffff; serviceCodeInt++) {
-                //    Log.d(TAG, "Trying to read from service code " + serviceCodeInt);
-                //    FeliCaLib.ServiceCode serviceCode = new FeliCaLib.ServiceCode(serviceCodeInt);
+                if (serviceCodes == null) {
+                    Log.d(TAG, "- Requesting service codes for ${systemCode.hexString}...")
+                    serviceCodes = fp.getServiceCodeList(systemNumber)
+                } else {
+                    // Using magic!
+                    Log.d(TAG, "- Polling for system code ${systemCode.hexString}...")
+                    fp.pollForSystemCode(systemCode)
+                }
+
+                val excludedCodes = serviceCodes.filter { it and 0x01 == 0 }
+                if (excludedCodes.isNotEmpty()) {
+                    Log.d(TAG, "- Excluding ${excludedCodes.size} codes in system " +
+                            "${systemCode.hexString} which require authentication: " +
+                            excludedCodes.joinToString(limit = 50, transform = Int::hexString))
+                    serviceCodes = serviceCodes.filter { it and 0x01 == 1 }.toIntArray()
+                }
+
+                actionsDone += 1
+                totalActions += serviceCodes.size
+                feedbackInterface.updateProgressBar(actionsDone, totalActions)
 
                 for (serviceCode in serviceCodes) {
-                    val serviceCodeInt = serviceCode.bytes.byteArrayToIntReversed()
-
+                    Log.d(TAG, "- Fetching service code ${serviceCode.hexString}")
                     val blocks = mutableListOf<FelicaBlock>()
 
-                    ft.polling(systemCode)
-
                     try {
-                        var addr: Byte = 0
-                        var result: FeliCaLib.ReadResponse? = ft.readWithoutEncryption(serviceCode, addr)
-                        while (result != null && result.statusFlag1 == 0) {
-                            blocks += FelicaBlock(result.blockData!!)
+                        // TODO: Request more than 1 block
+                        var addr = 0
+                        var result = fp.readWithoutEncryption(systemNumber, serviceCode, addr)
+                        while (result != null) {
+                            blocks += FelicaBlock(result)
                             addr++
                             if (addr >= 0x20 && liteMagic)
                                 break
-                            result = ft.readWithoutEncryption(serviceCode, addr)
+                            result = fp.readWithoutEncryption(systemNumber, serviceCode, addr)
                         }
                     } catch (tl: CardLostException) {
                         partialRead = true
                     }
 
-                    if (!blocks.isEmpty()) { // Most service codes appear to be empty...
-                        services[serviceCodeInt] = FelicaService(blocks)
+                    actionsDone += 1
+                    feedbackInterface.updateProgressBar(actionsDone, totalActions)
 
-                        Log.d(TAG, "- Service code " + serviceCodeInt + " had " + blocks.size + " blocks")
+                    Log.d(TAG, "- Service code ${serviceCode.hexString} has ${blocks.size} blocks")
+
+                    if (blocks.isNotEmpty()) { // Most service codes appear to be empty...
+                        services[serviceCode] = FelicaService(blocks)
                     }
                     if (partialRead)
                         break
                 }
 
-                systems[code.code] = FelicaSystem(services)
+                systems[systemCode] = FelicaSystem(services)
                 if (partialRead)
                     break
             }
-
         } catch (e: CardLostException) {
             Log.w(TAG, "Tag was lost! Returning a partial read.")
             partialRead = true
         }
 
-        return FelicaCard(idm, pmm!!, systems, isPartialRead = partialRead)
+        if (systems.isEmpty()) {
+            Log.w(TAG, "Could not detect any systems on the card!")
+        }
+
+        return FelicaCard(pmm!!, systems, isPartialRead = partialRead)
     }
 }

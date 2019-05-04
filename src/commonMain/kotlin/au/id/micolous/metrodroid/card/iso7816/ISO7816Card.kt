@@ -31,7 +31,7 @@ import au.id.micolous.metrodroid.card.TagReaderFeedbackInterface
 import au.id.micolous.metrodroid.card.calypso.CalypsoApplication
 import au.id.micolous.metrodroid.card.cepas.CEPASApplication
 import au.id.micolous.metrodroid.card.china.ChinaCard
-import au.id.micolous.metrodroid.card.tmoney.TMoneyCard
+import au.id.micolous.metrodroid.card.ksx6924.KSX6924Application
 import au.id.micolous.metrodroid.multi.Localizer
 import au.id.micolous.metrodroid.multi.Log
 import au.id.micolous.metrodroid.multi.R
@@ -129,7 +129,10 @@ data class ISO7816Card (
 
     companion object {
         private const val TAG = "ISO7816Card"
-        val factories = listOf(CalypsoApplication.FACTORY, TMoneyCard.FACTORY, ChinaCard.FACTORY)
+        val factories = listOf(
+                CalypsoApplication.FACTORY,
+                KSX6924Application.FACTORY,
+                ChinaCard.FACTORY)
 
         /**
          * Dumps a ISO7816 tag in the field.

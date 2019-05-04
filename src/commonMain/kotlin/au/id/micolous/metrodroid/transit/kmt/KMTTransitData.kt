@@ -56,15 +56,15 @@ class KMTTransitData (override val trips: List<KMTTrip>,
     companion object {
         // defines
         private const val NAME = "Kartu Multi Trip"
-        private const val SYSTEMCODE_KMT = 0x90b7
-        private const val FELICA_SERVICE_KMT_ID = 0x300B
-        private const val FELICA_SERVICE_KMT_BALANCE = 0x1017
-        private const val FELICA_SERVICE_KMT_HISTORY = 0x200F
+        const val SYSTEMCODE_KMT = 0x90b7
+        const val SERVICE_KMT_ID = 0x300B
+        const val SERVICE_KMT_BALANCE = 0x1017
+        const val SERVICE_KMT_HISTORY = 0x200F
         val KMT_EPOCH = Epoch.utc(2000, MetroTimeZone.JAKARTA, -6 * 60)
 
         private fun parse(card: FelicaCard): KMTTransitData {
             val serialNumber = getSerial(card)
-            val serviceBalance = card.getSystem(SYSTEMCODE_KMT)?.getService(FELICA_SERVICE_KMT_BALANCE)
+            val serviceBalance = card.getSystem(SYSTEMCODE_KMT)?.getService(SERVICE_KMT_BALANCE)
             val blocksBalance = serviceBalance?.blocks
             val blockBalance = blocksBalance?.get(0)
             val dataBalance = blockBalance?.data
@@ -73,7 +73,7 @@ class KMTTransitData (override val trips: List<KMTTrip>,
             val mLastTransAmount = dataBalance?.byteArrayToIntReversed(4, 4) ?: 0
 
             val trips = card.getSystem(SYSTEMCODE_KMT)
-                    ?.getService(FELICA_SERVICE_KMT_HISTORY)?.blocks
+                    ?.getService(SERVICE_KMT_HISTORY)?.blocks
                     ?.mapNotNull { block ->
                         if (block.data[0].toInt() != 0 && block.data.byteArrayToInt(8, 2) != 0) {
                             KMTTrip.parse(block)
@@ -92,7 +92,7 @@ class KMTTransitData (override val trips: List<KMTTrip>,
                 resourceExtraNote = R.string.kmt_extra_note)
 
         private fun getSerial(card: FelicaCard): String? {
-            val dataID = card.getSystem(SYSTEMCODE_KMT)?.getService(FELICA_SERVICE_KMT_ID)
+            val dataID = card.getSystem(SYSTEMCODE_KMT)?.getService(SERVICE_KMT_ID)
                     ?.blocks?.get(0)?.data ?: return null
             return if (dataID.isASCII())
                 dataID.readASCII()
@@ -110,7 +110,7 @@ class KMTTransitData (override val trips: List<KMTTrip>,
             override fun parseTransitData(card: FelicaCard) = parse(card)
 
             override fun parseTransitIdentity(card: FelicaCard) = TransitIdentity(NAME,
-                    card.getSystem(SYSTEMCODE_KMT)?.getService(FELICA_SERVICE_KMT_ID)?.
+                    card.getSystem(SYSTEMCODE_KMT)?.getService(SERVICE_KMT_ID)?.
                             getBlock(0)?.data?.readASCII() ?: "-")
         }
     }

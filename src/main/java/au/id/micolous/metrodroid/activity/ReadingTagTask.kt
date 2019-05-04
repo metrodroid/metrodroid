@@ -40,7 +40,7 @@ internal class ReadingTagTask private constructor(
             if (card.isPartialRead) {
                 Log.w(TAG, "Partial card read.")
             } else {
-                Log.i(TAG, "Dumped card successfully!")
+                Log.i(TAG, "Finished dumping card.")
             }
             for (line in cardXml.split("\n".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()) {
 
@@ -108,7 +108,7 @@ internal class ReadingTagTask private constructor(
     }
 
     companion object {
-        private val TAG = ReadingTagActivity::class.java.simpleName
+        private val TAG = ReadingTagTask::class.java.simpleName
 
         fun doRead(readingTagActivity: ReadingTagActivity, tag: Tag) {
             ReadingTagTask(readingTagActivity, tag).start()

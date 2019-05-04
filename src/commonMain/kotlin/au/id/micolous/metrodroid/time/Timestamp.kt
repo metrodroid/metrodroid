@@ -22,9 +22,9 @@
 
 package au.id.micolous.metrodroid.time
 
+import au.id.micolous.metrodroid.multi.FormattedString
 import au.id.micolous.metrodroid.multi.Parcelable
 import au.id.micolous.metrodroid.multi.Parcelize
-import au.id.micolous.metrodroid.multi.FormattedString
 import au.id.micolous.metrodroid.util.NumberUtils
 import au.id.micolous.metrodroid.util.Preferences
 import au.id.micolous.metrodroid.util.TripObfuscator
@@ -162,6 +162,12 @@ fun yearToDays(year: Int): Int {
 private val monthToDays = listOf(0, 31, 59, 90, 120, 151, 181,
         212, 243, 273, 304, 334)
 
+/**
+ * Represents a year, month and day in the Gregorian calendar.
+ *
+ * @property month Month, where January = 0.
+ * @property day Day of the month, where the first day of the month = 1.
+ */
 data class YMD(val year: Int, val month: Int, val day: Int) {
     val daysSinceEpoch: Int get() {
         val ym = 12 * year + month
@@ -358,6 +364,12 @@ data class Daystamp internal constructor(val daysSinceEpoch: Int): Timestamp(), 
 
     override fun toString(): String = isoDateFormat()
 
+    /**
+     * Represents a year, month and day in the Gregorian calendar.
+     *
+     * @param month Month, where January = 0.
+     * @param day Day of the month, where the first day of the month = 1.
+     */
     constructor(year: Int, month: Int, day: Int) : this(YMD(year, month, day))
 
     constructor(ymd: YMD) : this(

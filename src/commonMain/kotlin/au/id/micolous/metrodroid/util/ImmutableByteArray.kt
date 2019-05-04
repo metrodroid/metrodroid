@@ -26,6 +26,7 @@ import kotlinx.io.OutputStream
 import kotlinx.serialization.*
 
 fun ByteArray.toImmutable(): ImmutableByteArray = ImmutableByteArray.fromByteArray(this)
+fun Array<out Number>.toImmutable(): ImmutableByteArray = ImmutableByteArray.ofB(*this)
 
 @Parcelize
 @Serializable(with = ImmutableByteArray.Companion::class)
@@ -58,12 +59,21 @@ class ImmutableByteArray private constructor(
     override fun compareTo(other: ImmutableByteArray) = toHexString().compareTo(other.toHexString())
     fun byteArrayToInt(offset: Int, len: Int): Int = byteArrayToLong(offset, len).toInt()
     fun isAllZero(): Boolean = mData.all { it == 0.toByte() }
+    fun isAllFF(): Boolean = mData.all { it == 0xff.toByte() }
     fun getBitsFromBuffer(offset: Int, len: Int): Int = getBitsFromBuffer(mData, offset, len)
     fun getBitsFromBufferLeBits(off: Int, len: Int) = getBitsFromBufferLeBits(mData, off, len)
     fun getBitsFromBufferSigned(off: Int, len: Int): Int {
         val unsigned = getBitsFromBuffer(off, len)
         return unsignedToTwoComplement(unsigned, len - 1)
     }
+    fun convertBCDtoInteger() : Int = fold(0) {
+        x, y -> (x * 100) + NumberUtils.convertBCDtoInteger(y)
+    }
+    fun convertBCDtoInteger(offset: Int, len: Int) : Int = sliceOffLen(offset, len).convertBCDtoInteger()
+    fun convertBCDtoLong() : Long = fold(0L) {
+        x, y -> (x * 100L) + NumberUtils.convertBCDtoInteger(y).toLong()
+    }
+    fun convertBCDtoLong(offset: Int, len: Int) : Long = sliceOffLen(offset, len).convertBCDtoLong()
 
     operator fun get(i: Int) = mData[i]
     fun isNotEmpty() = mData.isNotEmpty()
@@ -141,6 +151,11 @@ class ImmutableByteArray private constructor(
 
     fun writeTo(os: OutputStream, offset: Int, length: Int) {
         os.write(mData, offset, length)
+    }
+
+    fun chunked(size: Int): List<ImmutableByteArray>
+            = chunked(size).map {
+        it.toByteArray().toImmutable()
     }
 
     @Serializer(forClass = ImmutableByteArray::class)

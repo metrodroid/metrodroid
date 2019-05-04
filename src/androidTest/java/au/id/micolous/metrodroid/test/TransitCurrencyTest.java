@@ -25,8 +25,6 @@ import org.junit.Test;
 
 import au.id.micolous.metrodroid.transit.TransitCurrency;
 
-import static junit.framework.TestCase.assertEquals;
-
 /**
  * Tests the currency formatter.
  */
@@ -174,40 +172,5 @@ public class TransitCurrencyTest extends BaseInstrumentedTest {
         final Spanned eur = new TransitCurrency(1234, "EUR").formatCurrencyString(true).getSpanned();
         assertSpannedEquals("12,34 €", eur);
         assertTtsMarkers("EUR", "12.34", eur);
-    }
-
-    @Test
-    public void testNumericLookup() {
-        setLocale("en-US");
-
-        TransitCurrency c = new TransitCurrency(1234, 36, 100);
-        assertEquals(TransitCurrency.Companion.AUD(1234), c);
-
-        // Test with an invalid code
-        c = new TransitCurrency(1234, 9999);
-        assertEquals(TransitCurrency.Companion.XXX(1234), c);
-
-    }
-
-    @Test
-    public void testDivisor() {
-        setLocale("en-US");
-
-        // Test with no divisor -- this should infer the divisor
-        TransitCurrency c = new TransitCurrency(1234, 36);
-        assertEquals(TransitCurrency.Companion.AUD(1234), c);
-
-        // Test with no divisor -- a string currencyCode should NOT infer the divisor
-        c = new TransitCurrency(1234, "JPY");
-        assertSpannedThat(c.formatCurrencyString(true).getSpanned(), Matchers.endsWith("¥12.34"));
-        assertSpannedThat(c.formatCurrencyString(false).getSpanned(), Matchers.endsWith("¥12.34"));
-
-        // Test with different divisors for equality
-        c = new TransitCurrency(12340, "AUD", 1000);
-        assertEquals(TransitCurrency.Companion.AUD(1234), c);
-
-        // Test overriding the divisor in a currency code.
-        c = new TransitCurrency(12340, 36, 1000);
-        assertEquals(TransitCurrency.Companion.AUD(1234), c);
     }
 }

@@ -29,6 +29,7 @@ import au.id.micolous.metrodroid.util.NumberUtils
 import au.id.micolous.metrodroid.card.CardType
 import au.id.micolous.metrodroid.card.felica.FelicaCard
 import au.id.micolous.metrodroid.card.felica.FelicaCardTransitFactory
+import au.id.micolous.metrodroid.card.felica.FelicaConsts
 import au.id.micolous.metrodroid.multi.Parcelize
 import au.id.micolous.metrodroid.multi.R
 import au.id.micolous.metrodroid.util.ImmutableByteArray
@@ -54,7 +55,10 @@ class EdyTransitData (override val trips: List<EdyTrip>,
 
     companion object {
         // defines
-        const val SYSTEMCODE_EDY = 0xfe00         // Edy (=共通領域)
+        const val SYSTEMCODE_EDY = FelicaConsts.SYSTEMCODE_COMMON
+        const val SERVICE_EDY_ID = 0x110B
+        const val SERVICE_EDY_BALANCE = 0x1317
+        const val SERVICE_EDY_HISTORY = 0x170F
 
         private val CARD_INFO = CardInfo(
                 imageId = R.drawable.edy_card,
@@ -62,9 +66,6 @@ class EdyTransitData (override val trips: List<EdyTrip>,
                 locationId = R.string.location_tokyo,
                 cardType = CardType.FeliCa)
 
-        private const val FELICA_SERVICE_EDY_ID = 0x110B
-        private const val FELICA_SERVICE_EDY_BALANCE = 0x1317
-        private const val FELICA_SERVICE_EDY_HISTORY = 0x170F
         const val FELICA_MODE_EDY_DEBIT = 0x20
         const val FELICA_MODE_EDY_CHARGE = 0x02
         const val FELICA_MODE_EDY_GIFT = 0x04
@@ -73,15 +74,15 @@ class EdyTransitData (override val trips: List<EdyTrip>,
         private fun parse(card: FelicaCard): EdyTransitData? {
             val system = card.getSystem(SYSTEMCODE_EDY) ?: return null
             // card ID is in block 0, bytes 2-9, big-endian ordering
-            val mSerialNumber = system.getService(FELICA_SERVICE_EDY_ID)?.blocks?.get(0)
+            val mSerialNumber = system.getService(SERVICE_EDY_ID)?.blocks?.get(0)
                     ?.data?.sliceOffLen(2, 8)
 
             // current balance info in block 0, bytes 0-3, little-endian ordering
-            val mCurrentBalance = system.getService(FELICA_SERVICE_EDY_BALANCE)
+            val mCurrentBalance = system.getService(SERVICE_EDY_BALANCE)
                     ?.blocks?.get(0)?.data?.byteArrayToIntReversed(0, 3)
 
             // now read the transaction history
-            val serviceHistory = system.getService(FELICA_SERVICE_EDY_HISTORY)
+            val serviceHistory = system.getService(SERVICE_EDY_HISTORY)
 
             // Read blocks in order
             val trips = serviceHistory?.blocks?.map { EdyTrip.parse(it) }.orEmpty()

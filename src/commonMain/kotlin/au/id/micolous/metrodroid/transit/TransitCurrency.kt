@@ -19,10 +19,11 @@
 
 package au.id.micolous.metrodroid.transit
 
+import au.id.micolous.metrodroid.multi.FormattedString
 import au.id.micolous.metrodroid.multi.Parcelable
 import au.id.micolous.metrodroid.multi.Parcelize
+import au.id.micolous.metrodroid.multi.VisibleForTesting
 import au.id.micolous.metrodroid.util.Preferences
-import au.id.micolous.metrodroid.multi.FormattedString
 import au.id.micolous.metrodroid.util.getCurrencyDescriptorByCode
 import kotlin.random.Random
 
@@ -42,7 +43,8 @@ open class TransitCurrency (
          *
          * If the currency has no fractional part (eg: IDR, JPY, KRW), then the divisor should be 1,
          */
-        private val mDivisor: Int
+        @VisibleForTesting
+        val mDivisor: Int
 ): TransitBalance, Parcelable {
 
     override val balance: TransitCurrency
@@ -105,7 +107,10 @@ open class TransitCurrency (
             currencyDesc?.currencyCode ?: UNKNOWN_CURRENCY_CODE,
             divisor)
 
-
+    /**
+     * Tests equality between two [TransitCurrency], using a common denominator if [mDivisor]s
+     * differ.
+     */
     override fun equals(other: Any?): Boolean {
         if (other !is TransitCurrency)
             return false
@@ -120,6 +125,20 @@ open class TransitCurrency (
 
         // Divisors don't match -- coerce to a common denominator
         return mCurrency * other.mDivisor == other.mCurrency * mDivisor
+    }
+
+    /**
+     * Tests equality between two [TransitCurrency], ensuring identical [mDivisor]s.
+     */
+    @VisibleForTesting
+    fun exactlyEquals(other: Any?): Boolean {
+        if (other !is TransitCurrency) {
+            return false
+        }
+
+        return (mCurrency == other.mCurrency &&
+                mCurrencyCode == other.mCurrencyCode &&
+                mDivisor == other.mDivisor)
     }
 
     private fun obfuscate(fareOffset: Int, fareMultiplier: Double): TransitCurrency {
@@ -168,6 +187,43 @@ open class TransitCurrency (
     }
 
     fun negate() = TransitCurrency(-mCurrency, mCurrencyCode, mDivisor)
+
+    /**
+     * Adds another [TransitCurrency] to this [TransitCurrency].
+     *
+     * @param other The other [TransitCurrency] to add to this [TransitCurrency].
+     * If `null`, this method returns `this`.
+     * @throws IllegalArgumentException If the currency code of `this` and [other] are not equal.
+     */
+    operator fun plus(other: TransitCurrency?) : TransitCurrency {
+        return when {
+            other == null -> this
+
+            mCurrencyCode != other.mCurrencyCode ->
+                throw IllegalArgumentException("Currency codes must be the same")
+
+            mDivisor != other.mDivisor -> when {
+                // Divisors don't match! Find a common divisor.
+                mDivisor > other.mDivisor && (mDivisor % other.mDivisor == 0) ->
+                    // Use mDivisor (> other and divisible)
+                    TransitCurrency(mCurrency + (other.mCurrency * (mDivisor / other.mDivisor)),
+                            mCurrencyCode, mDivisor)
+
+                other.mDivisor > mDivisor && (other.mDivisor % mDivisor == 0) ->
+                    // Use other divisor (> this and divisible)
+                    TransitCurrency(other.mCurrency + (mCurrency * (other.mDivisor / mDivisor)),
+                            mCurrencyCode, other.mDivisor)
+
+                else ->
+                    // Be lazy
+                    TransitCurrency((mCurrency * other.mDivisor) + (other.mCurrency * mDivisor),
+                            mCurrencyCode, mDivisor * other.mDivisor)
+            }
+
+            else ->
+                TransitCurrency(mCurrency + other.mCurrency, mCurrencyCode, mDivisor)
+        }
+    }
 
     /**
      * String representation of a TransitCurrency.

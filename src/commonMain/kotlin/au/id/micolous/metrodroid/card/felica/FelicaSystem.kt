@@ -35,8 +35,9 @@ data class FelicaSystem(@XMLListIdx("code")
                 ListItemRecursive(
                         Localizer.localizeString(R.string.felica_service_title_format,
                                 serviceCode.toString(16),
-                                FelicaUtils.getFriendlyServiceName(systemCode,
-                                        serviceCode)),
+                                Localizer.localizeString(
+                                        FelicaUtils.getFriendlyServiceName(systemCode,
+                                                serviceCode))),
                         Localizer.localizePlural(R.plurals.block_count,
                                 service.blocks.size, service.blocks.size), service.rawData)
             }

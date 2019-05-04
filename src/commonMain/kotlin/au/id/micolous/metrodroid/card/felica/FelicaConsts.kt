@@ -1,8 +1,8 @@
 /*
- * FeliCaConsts.kt
+ * FelicaConsts.kt
  *
  * Copyright 2011 Kazzz
- * Copyright 2016-2018 Michael Farrell <micolous+git@gmail.com>
+ * Copyright 2016-2019 Michael Farrell <micolous+git@gmail.com>
  * Copyright 2018-2019 Google Inc
  *
  * This program is free software: you can redistribute it and/or modify
@@ -36,45 +36,68 @@
 package au.id.micolous.metrodroid.card.felica
 
 object FelicaConsts {
-    //polling
+    // CARD COMMANDS
+    // Polling (s4.4.2)
     const val COMMAND_POLLING: Byte = 0x00
     const val RESPONSE_POLLING: Byte = 0x01
-    //request service
+
+    // Request Service (s4.4.3)
     const val COMMAND_REQUEST_SERVICE: Byte = 0x02
     const val RESPONSE_REQUEST_SERVICE: Byte = 0x03
-    //request RESPONSE
+
+    // Request Response (s4.4.4)
     const val COMMAND_REQUEST_RESPONSE: Byte = 0x04
     const val RESPONSE_REQUEST_RESPONSE: Byte = 0x05
-    //read without encryption
+
+    // Read without encryption (s4.4.5)
     const val COMMAND_READ_WO_ENCRYPTION: Byte = 0x06
     const val RESPONSE_READ_WO_ENCRYPTION: Byte = 0x07
-    //write without encryption
+
+    // Write without encryption (s4.4.6)
     const val COMMAND_WRITE_WO_ENCRYPTION: Byte = 0x08
     const val RESPONSE_WRITE_WO_ENCRYPTION: Byte = 0x09
-    //search service code
+
+    // Search service code (s4.4.7, not documented publicly)
     const val COMMAND_SEARCH_SERVICECODE: Byte = 0x0a
     const val RESPONSE_SEARCH_SERVICECODE: Byte = 0x0b
-    //request system code
+
+    // Request system code (s4.4.8)
     const val COMMAND_REQUEST_SYSTEMCODE: Byte = 0x0c
     const val RESPONSE_REQUEST_SYSTEMCODE: Byte = 0x0d
-    //authentication 1
+
+    // Authentication 1 (s4.4.9, not documented publicly)
     const val COMMAND_AUTHENTICATION1: Byte = 0x10
     const val RESPONSE_AUTHENTICATION1: Byte = 0x11
-    //authentication 2
+
+    // Authentication 2 (s4.4.10, not documented publicly)
     const val COMMAND_AUTHENTICATION2: Byte = 0x12
     const val RESPONSE_AUTHENTICATION2: Byte = 0x13
-    //read
+
+    // Authenticated Read (s4.4.11, not documented publicly)
     const val COMMAND_READ: Byte = 0x14
     const val RESPONSE_READ: Byte = 0x15
-    //write
+
+    // Authenticated Write (s4.4.12, not documented publicly)
     const val COMMAND_WRITE: Byte = 0x16
     const val RESPONSE_WRITE: Byte = 0x17
-    // システムコード
-    const val SYSTEMCODE_ANY = 0xffff         // ANY
-    const val SYSTEMCODE_FELICA_LITE = 0x88b4 // FeliCa Lite
-    const val SYSTEMCODE_COMMON = 0xfe00      // 共通領域
-    const val SYSTEMCODE_CYBERNE = 0x0003     // サイバネ領域
 
-    const val SERVICE_FELICA_LITE_READONLY = 0x0b00  // FeliCa Lite RO権限
-    const val SERVICE_FELICA_LITE_READWRITE = 0x0900 // FeliCa Lite RW権限
+    // Reset Mode (s4.4.16)
+    const val COMMAND_RESET_MODE: Byte = 0x3e
+    const val RESPONSE_RESET_MODE: Byte = 0x3f
+
+    // SYSTEM CODES
+    // Wildcard, matches any system code.
+    const val SYSTEMCODE_ANY = 0xffff
+    // FeliCa Lite
+    const val SYSTEMCODE_FELICA_LITE = 0x88b4
+    // NDEF (NFC Data Exchange Format)
+    const val SYSTEMCODE_NDEF = 0x4000
+    // Common Area (FeliCa Networks, Inc), used by IC (Suica) and Edy
+    const val SYSTEMCODE_COMMON = 0xfe00
+
+    // SERVICE CODES
+    // FeliCa Lite, read-only mode
+    const val SERVICE_FELICA_LITE_READONLY = 0x0b00
+    // FeliCa Lite, read-write mode
+    const val SERVICE_FELICA_LITE_READWRITE = 0x0900
 }
