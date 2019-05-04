@@ -5,9 +5,6 @@
  * Copyright 2016-2018 Michael Farrell <micolous+git@gmail.com>
  * Copyright 2019 Google
  *
- * Octopus reading code based on FelicaCard.java from nfcard project
- * Copyright 2013 Sinpo Wei <sinpowei@gmail.com>
- *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General private License as published by
  * the Free Software Foundation, either version 3 of the License, or
@@ -24,20 +21,20 @@
 
 package au.id.micolous.metrodroid.card.felica
 
-import au.id.micolous.metrodroid.card.*
+import au.id.micolous.metrodroid.card.Card
+import au.id.micolous.metrodroid.card.CardProtocol
 import au.id.micolous.metrodroid.multi.Localizer
-import au.id.micolous.metrodroid.util.Preferences
 import au.id.micolous.metrodroid.multi.R
 import au.id.micolous.metrodroid.serializers.XMLId
-import au.id.micolous.metrodroid.serializers.XMLIgnore
 import au.id.micolous.metrodroid.serializers.XMLListIdx
 import au.id.micolous.metrodroid.transit.TransitData
 import au.id.micolous.metrodroid.transit.TransitIdentity
 import au.id.micolous.metrodroid.ui.HeaderListItem
 import au.id.micolous.metrodroid.ui.ListItem
 import au.id.micolous.metrodroid.ui.ListItemRecursive
-import au.id.micolous.metrodroid.util.NumberUtils
 import au.id.micolous.metrodroid.util.ImmutableByteArray
+import au.id.micolous.metrodroid.util.NumberUtils
+import au.id.micolous.metrodroid.util.Preferences
 import kotlinx.serialization.Optional
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.Transient
