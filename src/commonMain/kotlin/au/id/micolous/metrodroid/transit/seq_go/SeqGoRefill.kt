@@ -21,7 +21,6 @@ package au.id.micolous.metrodroid.transit.seq_go
 import au.id.micolous.metrodroid.multi.Localizer
 import au.id.micolous.metrodroid.multi.Parcelize
 import au.id.micolous.metrodroid.multi.R
-import au.id.micolous.metrodroid.transit.TransitCurrency.Companion.AUD
 import au.id.micolous.metrodroid.transit.nextfare.NextfareTrip
 import au.id.micolous.metrodroid.transit.nextfare.NextfareTripCapsule
 
@@ -32,7 +31,7 @@ import au.id.micolous.metrodroid.transit.nextfare.NextfareTripCapsule
 class SeqGoRefill (override val capsule: NextfareTripCapsule,
                    private val mAutomatic: Boolean): NextfareTrip() {
     override val currency
-        get() = ::AUD
+        get() = SeqGoTransitData.CURRENCY
     override val str: String?
         get() = SeqGoData.SEQ_GO_STR
 

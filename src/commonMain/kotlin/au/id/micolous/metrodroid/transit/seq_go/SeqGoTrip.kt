@@ -1,7 +1,7 @@
 /*
- * SeqGoTrip.java
+ * SeqGoTrip.kt
  *
- * Copyright 2015-2018 Michael Farrell <micolous+git@gmail.com>
+ * Copyright 2015-2019 Michael Farrell <micolous+git@gmail.com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -19,11 +19,10 @@
 package au.id.micolous.metrodroid.transit.seq_go
 
 import au.id.micolous.metrodroid.multi.Parcelize
-import au.id.micolous.metrodroid.multi.VisibleForTesting
-import au.id.micolous.metrodroid.transit.TransitCurrency.Companion.AUD
-
 import au.id.micolous.metrodroid.transit.nextfare.NextfareTrip
 import au.id.micolous.metrodroid.transit.nextfare.NextfareTripCapsule
+import au.id.micolous.metrodroid.transit.seq_go.SeqGoData.DOMESTIC_AIRPORT
+import au.id.micolous.metrodroid.transit.seq_go.SeqGoData.INTERNATIONAL_AIRPORT
 
 /**
  * Represents trip events on Go Card.
@@ -34,7 +33,7 @@ class SeqGoTrip (override val capsule: NextfareTripCapsule): NextfareTrip() {
         get() = "en-AU"
 
     override val currency
-        get() = ::AUD
+        get() = SeqGoTransitData.CURRENCY
 
     override val str: String?
         get() = SeqGoData.SEQ_GO_STR
@@ -53,12 +52,4 @@ class SeqGoTrip (override val capsule: NextfareTripCapsule): NextfareTrip() {
                 }
                 else -> "TransLink"
         }
-
-    companion object {
-        /* Hard coded station IDs for Airtrain; used in tests */
-        @VisibleForTesting
-        const val DOMESTIC_AIRPORT = 9
-        @VisibleForTesting
-        const val INTERNATIONAL_AIRPORT = 10
-    }
 }

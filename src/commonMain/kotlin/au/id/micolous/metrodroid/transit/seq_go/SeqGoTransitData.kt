@@ -39,7 +39,6 @@ import au.id.micolous.metrodroid.util.StationTableReader
 /**
  * Transit data type for Go card (Brisbane / South-East Queensland, AU), used by Translink.
  *
- *
  * Documentation of format: https://github.com/micolous/metrodroid/wiki/Go-%28SEQ%29
  *
  * @author Michael Farrell
@@ -48,7 +47,7 @@ import au.id.micolous.metrodroid.util.StationTableReader
 class SeqGoTransitData (override val capsule: NextfareTransitDataCapsule,
                         private val mTicketType: SeqGoData.TicketType): NextfareTransitData() {
     override val currency
-        get() = ::AUD
+        get() = CURRENCY
 
     override val cardName: String
         get() = NAME
@@ -76,6 +75,7 @@ class SeqGoTransitData (override val capsule: NextfareTransitDataCapsule,
 
     companion object {
         private const val NAME = "Go card"
+        val CURRENCY = ::AUD
 
         private val CARD_INFO = CardInfo(
                 imageId = R.drawable.seqgo_card,

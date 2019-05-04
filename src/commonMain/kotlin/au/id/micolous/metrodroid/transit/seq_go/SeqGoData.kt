@@ -21,6 +21,7 @@ package au.id.micolous.metrodroid.transit.seq_go
 
 import au.id.micolous.metrodroid.multi.R
 import au.id.micolous.metrodroid.multi.StringResource
+import au.id.micolous.metrodroid.multi.VisibleForTesting
 
 /**
  * Constants used in Go card
@@ -30,6 +31,10 @@ object SeqGoData {
 
     internal const val VEHICLE_RAIL = 5
     internal const val VEHICLE_FERRY = 18
+
+    /* Hard coded station IDs for Airtrain; used in tests */
+    internal const val DOMESTIC_AIRPORT = 9
+    internal const val INTERNATIONAL_AIRPORT = 10
 
     // https://github.com/micolous/metrodroid/wiki/Go-(SEQ)#ticket-types
     // TODO: Discover child and seniors card type.
