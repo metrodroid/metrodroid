@@ -19,6 +19,8 @@
 
 package au.id.micolous.metrodroid.transit.rkf
 
+import au.id.micolous.metrodroid.time.Timestamp
+import au.id.micolous.metrodroid.time.TimestampFull
 import au.id.micolous.metrodroid.transit.TransitCurrency
 import au.id.micolous.metrodroid.transit.Trip
 import au.id.micolous.metrodroid.transit.en1545.*
@@ -47,8 +49,8 @@ class RkfTransaction(val parsed: En1545Parsed, val mTransactionCode: Int, val mL
         else -> super.mode
     }
 
-    override val timestamp: Calendar
-        get() = super.timestamp!!
+    override val timestamp: TimestampFull
+        get() = super.timestamp as TimestampFull
 
     override val fare get(): TransitCurrency? = if (eventType == 8) super.fare?.negate() else super.fare
 

@@ -37,8 +37,8 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import au.id.micolous.metrodroid.activity.CardInfoActivity;
-import au.id.micolous.metrodroid.multi.FormattedString;
 import au.id.micolous.metrodroid.multi.Localizer;
+import au.id.micolous.metrodroid.time.TimestampFormatter;
 import au.id.micolous.metrodroid.transit.Subscription;
 import au.id.micolous.metrodroid.transit.TransitBalance;
 import au.id.micolous.metrodroid.transit.TransitData;
@@ -50,8 +50,6 @@ import java.util.Locale;
 import au.id.micolous.farebot.R;
 import au.id.micolous.metrodroid.transit.TransitCurrency;
 import au.id.micolous.metrodroid.ui.ListItem;
-import au.id.micolous.metrodroid.util.TripObfuscator;
-import au.id.micolous.metrodroid.util.Utils;
 
 public class CardBalanceFragment extends ListFragment {
     private TransitData mTransitData;
@@ -123,28 +121,17 @@ public class CardBalanceFragment extends ListFragment {
 
             TextView validView = view.findViewById(R.id.valid);
             if (subscription.getValidFrom() != null && subscription.getValidTo() != null) {
-                FormattedString validFrom = Utils.dateFormat(TripObfuscator.maybeObfuscateTS(subscription.getValidFrom()));
-                FormattedString validTo;
-                if (subscription.validToHasTime()) {
-                    validTo = Utils.dateTimeFormat(TripObfuscator.maybeObfuscateTS(subscription.getValidTo()));
-                } else {
-                    validTo = Utils.dateFormat(TripObfuscator.maybeObfuscateTS(subscription.getValidTo()));
-                }
-                validView.setText(getString(R.string.valid_format, validFrom.getSpanned(),
-                        validTo.getSpanned()));
+                Spanned validFrom = TimestampFormatter.INSTANCE.dateFormat(subscription.getValidFrom()).getSpanned();
+                Spanned validTo = subscription.getValidTo().format().getSpanned();
+                validView.setText(getString(R.string.valid_format, validFrom, validTo));
                 validView.setVisibility(View.VISIBLE);
             } else if (subscription.getValidTo() != null) {
-                FormattedString validTo;
-                if (subscription.validToHasTime()) {
-                    validTo = Utils.dateTimeFormat(TripObfuscator.maybeObfuscateTS(subscription.getValidTo()));
-                } else {
-                    validTo = Utils.dateFormat(TripObfuscator.maybeObfuscateTS(subscription.getValidTo()));
-                }
-                validView.setText(getString(R.string.valid_to_format, validTo.getSpanned()));
+                Spanned validTo = subscription.getValidTo().format().getSpanned();
+                validView.setText(getString(R.string.valid_to_format, validTo));
                 validView.setVisibility(View.VISIBLE);
             } else if (subscription.getValidFrom() != null) {
-                FormattedString validTo = Utils.dateFormat(TripObfuscator.maybeObfuscateTS(subscription.getValidFrom()));
-                validView.setText(getString(R.string.valid_from_format, validTo.getSpanned()));
+                Spanned validFrom = subscription.getValidFrom().format().getSpanned();
+                validView.setText(getString(R.string.valid_from_format, validFrom));
                 validView.setVisibility(View.VISIBLE);
             } else {
                 validView.setVisibility(View.GONE);
@@ -244,12 +231,12 @@ public class CardBalanceFragment extends ListFragment {
 
             TextView validView = view.findViewById(R.id.valid);
             if (balance.getValidFrom() != null && balance.getValidTo() != null) {
-                Spanned validFrom = Utils.dateFormat(TripObfuscator.maybeObfuscateTS(balance.getValidFrom())).getSpanned();
-                Spanned validTo = Utils.dateFormat(TripObfuscator.maybeObfuscateTS(balance.getValidTo())).getSpanned();
+                Spanned validFrom = balance.getValidFrom().format().getSpanned();
+                Spanned validTo = balance.getValidTo().format().getSpanned();
                 validView.setText(getString(R.string.valid_format, validFrom, validTo));
                 validView.setVisibility(View.VISIBLE);
             } else if (balance.getValidTo() != null) {
-                Spanned validTo = Utils.dateFormat(TripObfuscator.maybeObfuscateTS(balance.getValidTo())).getSpanned();
+                Spanned validTo = balance.getValidTo().format().getSpanned();
                 validView.setText(getString(R.string.valid_to_format, validTo));
                 validView.setVisibility(View.VISIBLE);
             } else {

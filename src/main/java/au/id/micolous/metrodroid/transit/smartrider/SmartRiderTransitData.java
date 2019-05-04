@@ -32,11 +32,7 @@ import au.id.micolous.metrodroid.card.classic.ClassicCard;
 import au.id.micolous.metrodroid.card.classic.ClassicCardTransitFactory;
 import au.id.micolous.metrodroid.card.classic.ClassicSector;
 import au.id.micolous.metrodroid.key.ClassicSectorKey;
-import au.id.micolous.metrodroid.transit.CardInfo;
-import au.id.micolous.metrodroid.transit.TransactionTrip;
-import au.id.micolous.metrodroid.transit.TransitCurrency;
-import au.id.micolous.metrodroid.transit.TransitData;
-import au.id.micolous.metrodroid.transit.TransitIdentity;
+import au.id.micolous.metrodroid.transit.*;
 import au.id.micolous.metrodroid.util.Utils;
 import au.id.micolous.metrodroid.util.ImmutableByteArray;
 
@@ -81,7 +77,7 @@ public class SmartRiderTransitData extends TransitData {
 
     private final String mSerialNumber;
     private final int mBalance;
-    private final List<TransactionTrip> mTrips;
+    private final List<TransactionTripAbstract> mTrips;
     private final CardType mCardType;
 
     // Unfortunately, there's no way to reliably identify these cards except for the "standard" keys
@@ -207,7 +203,7 @@ public class SmartRiderTransitData extends TransitData {
 
         // Build the Tag events into trips.
         if (tagRecords.size() >= 1)
-            mTrips.addAll(TransactionTrip.merge(tagRecords, SmartRiderTrip::new));
+            mTrips.addAll(TransactionTripAbstract.Companion.merge(tagRecords, SmartRiderTrip::new));
 
         // TODO: Figure out balance priorities properly.
 
@@ -246,7 +242,7 @@ public class SmartRiderTransitData extends TransitData {
     }
 
     @Override
-    public List<TransactionTrip> getTrips() {
+    public List<TransactionTripAbstract> getTrips() {
         return mTrips;
     }
 
@@ -261,5 +257,10 @@ public class SmartRiderTransitData extends TransitData {
         dest.writeString(mSerialNumber);
         dest.writeInt(mBalance);
         dest.writeList(mTrips);
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
     }
 }

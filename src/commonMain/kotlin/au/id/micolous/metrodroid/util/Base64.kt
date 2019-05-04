@@ -36,7 +36,7 @@ package au.id.micolous.metrodroid.util
  *
  */
 
-private const val base64_table = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";
+private const val base64_table = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/"
 private val dtable = base64_table.mapIndexed { k, v -> v to k }.toMap() + mapOf('=' to 0)
 
 /**
@@ -70,7 +70,7 @@ fun decodeBase64(src: String): ByteArray?
         block[blkptr] = dtable[c] ?: continue
         blkptr++
         if (blkptr == 4) {
-            out[pos++] = ((block[0] shl 2) or (block[1] shr 4)).toByte();
+            out[pos++] = ((block[0] shl 2) or (block[1] shr 4)).toByte()
             out[pos++] = ((block[1] shl 4) or (block[2] shr 2)).toByte()
             out[pos++] = ((block[2] shl 6) or block[3]).toByte()
             blkptr = 0

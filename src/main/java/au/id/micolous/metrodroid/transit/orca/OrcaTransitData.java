@@ -35,12 +35,7 @@ import au.id.micolous.metrodroid.card.desfire.DesfireCard;
 import au.id.micolous.metrodroid.card.desfire.DesfireCardTransitFactory;
 import au.id.micolous.metrodroid.card.desfire.files.DesfireFile;
 import au.id.micolous.metrodroid.card.desfire.files.RecordDesfireFile;
-import au.id.micolous.metrodroid.transit.CardInfo;
-import au.id.micolous.metrodroid.transit.TransactionTrip;
-import au.id.micolous.metrodroid.transit.TransitCurrency;
-import au.id.micolous.metrodroid.transit.TransitData;
-import au.id.micolous.metrodroid.transit.TransitIdentity;
-import au.id.micolous.metrodroid.transit.Trip;
+import au.id.micolous.metrodroid.transit.*;
 import au.id.micolous.metrodroid.util.Utils;
 import au.id.micolous.metrodroid.util.ImmutableByteArray;
 
@@ -162,7 +157,7 @@ public class OrcaTransitData extends TransitData {
         return mTrips;
     }
 
-    private List <TransactionTrip> parseTrips(DesfireCard card, int fileId, boolean isTopup) {
+    private List <TransactionTripAbstract> parseTrips(DesfireCard card, int fileId, boolean isTopup) {
         DesfireFile file = card.getApplication(APP_ID).getFile(fileId);
         if (!(file instanceof RecordDesfireFile))
             return new ArrayList<>();
@@ -173,7 +168,7 @@ public class OrcaTransitData extends TransitData {
         for (int i = 0; i < useLog.length; i++) {
             useLog[i] = new OrcaTransaction(recordFile.getRecords().get(i), isTopup);
         }
-        return TransactionTrip.merge(useLog);
+        return TransactionTrip.Companion.merge(useLog);
     }
 
     public void writeToParcel(Parcel parcel, int flags) {
@@ -183,4 +178,8 @@ public class OrcaTransitData extends TransitData {
         parcel.writeList(mTrips);
     }
 
+    @Override
+    public int describeContents() {
+        return 0;
+    }
 }

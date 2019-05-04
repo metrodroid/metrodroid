@@ -30,11 +30,8 @@ import java.util.TimeZone;
 
 import au.id.micolous.farebot.R;
 import au.id.micolous.metrodroid.card.ultralight.UltralightCard;
-import au.id.micolous.metrodroid.transit.TransactionTrip;
-import au.id.micolous.metrodroid.transit.TransitBalance;
-import au.id.micolous.metrodroid.transit.TransitBalanceStored;
-import au.id.micolous.metrodroid.transit.TransitCurrency;
-import au.id.micolous.metrodroid.transit.TransitData;
+import au.id.micolous.metrodroid.time.TimestampFormatterKt;
+import au.id.micolous.metrodroid.transit.*;
 import au.id.micolous.metrodroid.ui.ListItem;
 import au.id.micolous.metrodroid.util.NumberUtils;
 import au.id.micolous.metrodroid.util.Utils;
@@ -47,7 +44,7 @@ public abstract class NextfareUltralightTransitData extends TransitData {
     private final byte mType;
     private final int mBaseDate;
     private final int mMachineCode;
-    private final List<TransactionTrip> mTrips;
+    private final List<TransactionTripAbstract> mTrips;
     private final int mExpiry;
     private final int mBalance;
 
@@ -58,7 +55,8 @@ public abstract class NextfareUltralightTransitData extends TransitData {
     public TransitBalance getBalance() {
         return new TransitBalanceStored(
                 makeCurrency(mBalance),
-                parseDateTime(getTimeZone(), mBaseDate, mExpiry, 0));
+                TimestampFormatterKt.calendar2ts(parseDateTime(getTimeZone(), mBaseDate, mExpiry, 0))
+                        .toDaystamp());
     }
 
     protected abstract TimeZone getTimeZone();
@@ -78,6 +76,11 @@ public abstract class NextfareUltralightTransitData extends TransitData {
         dest.writeInt(mBalance);
         dest.writeInt(mExpiry);
         dest.writeList(mTrips);
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
     }
 
     protected NextfareUltralightTransitData(Parcel p) {
@@ -121,7 +124,7 @@ public abstract class NextfareUltralightTransitData extends TransitData {
             mExpiry = 0;
             mBalance = 0;
         }
-        mTrips = TransactionTrip.merge(transactions);
+        mTrips = TransactionTrip.Companion.merge(transactions);
     }
 
     private static boolean isTransactionValid(UltralightCard card, int startPage) {
@@ -165,7 +168,7 @@ public abstract class NextfareUltralightTransitData extends TransitData {
     protected abstract String getProductName(int productCode);
 
     @Override
-    public List<TransactionTrip> getTrips() {
+    public List<TransactionTripAbstract> getTrips() {
         return mTrips;
     }
 

@@ -23,6 +23,8 @@ import android.os.Parcel;
 import android.support.annotation.Nullable;
 
 import au.id.micolous.metrodroid.multi.Localizer;
+import au.id.micolous.metrodroid.time.TimestampFormatterKt;
+import au.id.micolous.metrodroid.time.TimestampFull;
 import org.jetbrains.annotations.NonNls;
 
 import java.util.Calendar;
@@ -72,7 +74,7 @@ public class KievTrip extends Trip {
     @Nullable
     @Override
     public Station getStartStation() {
-        return Station.unknown(mValidator);
+        return Station.Companion.unknown(mValidator);
     }
 
     private KievTrip(Parcel in) {
@@ -110,8 +112,8 @@ public class KievTrip extends Trip {
     };
 
     @Override
-    public Calendar getStartTimestamp() {
-        return mTimestamp;
+    public TimestampFull getStartTimestamp() {
+        return TimestampFormatterKt.calendar2ts(mTimestamp);
     }
 
     @Nullable

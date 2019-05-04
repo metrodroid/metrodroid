@@ -37,7 +37,6 @@ import au.id.micolous.metrodroid.card.CardType;
 import au.id.micolous.metrodroid.card.calypso.CalypsoApplication;
 import au.id.micolous.metrodroid.card.calypso.CalypsoCardTransitFactory;
 import au.id.micolous.metrodroid.card.iso7816.ISO7816File;
-import au.id.micolous.metrodroid.card.iso7816.ISO7816Record;
 import au.id.micolous.metrodroid.transit.CardInfo;
 import au.id.micolous.metrodroid.transit.TransitIdentity;
 import au.id.micolous.metrodroid.transit.en1545.Calypso1545TransitData;
@@ -50,7 +49,6 @@ import au.id.micolous.metrodroid.transit.en1545.En1545Subscription;
 import au.id.micolous.metrodroid.transit.en1545.En1545Transaction;
 import au.id.micolous.metrodroid.ui.ListItem;
 import au.id.micolous.metrodroid.util.Preferences;
-import au.id.micolous.metrodroid.util.Utils;
 import au.id.micolous.metrodroid.util.ImmutableByteArray;
 
 // Reference: https://github.com/L1L1/cardpeek/blob/master/dot_cardpeek_dir/scripts/calypso/c131.lua
@@ -91,7 +89,7 @@ public class LisboaVivaTransitData extends Calypso1545TransitData {
 
     private static String getSerial(CalypsoApplication card) {
         ImmutableByteArray tenv = card.getFile(CalypsoApplication.File.TICKETING_ENVIRONMENT)
-                .getRecord(1).getData();
+                .getRecord(1);
         return String.format(Locale.ENGLISH,
                 "%03d %09d",
                 tenv.getBitsFromBuffer(30, 8),
@@ -101,13 +99,13 @@ public class LisboaVivaTransitData extends Calypso1545TransitData {
     private LisboaVivaTransitData(CalypsoApplication card) {
         super(card, TICKETING_ENV_FIELDS, null, getSerial(card));
         ISO7816File idFile = card.getFile(CalypsoApplication.File.ID);
-        ISO7816Record idRec = null;
+        ImmutableByteArray idRec = null;
         if (idFile != null)
             idRec = idFile.getRecord(1);
         if (idRec == null)
             mHolderName = "";
         else
-            mHolderName = idRec.getData().readLatin1();
+            mHolderName = idRec.readLatin1();
     }
 
     public final static CalypsoCardTransitFactory FACTORY = new CalypsoCardTransitFactory() {

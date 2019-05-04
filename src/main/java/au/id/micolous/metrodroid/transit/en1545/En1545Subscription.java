@@ -25,6 +25,9 @@ import android.support.annotation.Nullable;
 import android.util.Log;
 
 import au.id.micolous.metrodroid.multi.Localizer;
+import au.id.micolous.metrodroid.time.Timestamp;
+import au.id.micolous.metrodroid.time.TimestampFormatterKt;
+import au.id.micolous.metrodroid.time.TimestampFull;
 import au.id.micolous.metrodroid.util.NumberUtils;
 import org.apache.commons.lang3.ArrayUtils;
 import org.jetbrains.annotations.NonNls;
@@ -132,13 +135,11 @@ public abstract class En1545Subscription extends Subscription {
 
     @Nullable
     @Override
-    public Calendar getPurchaseTimestamp() {
-        return mParsed.getTimeStamp(CONTRACT_SALE, getLookup().getTimeZone());
-    }
-
-    @Override
-    public boolean purchaseTimestampHasTime() {
-        return mParsed.getTimeStampContainsTime(CONTRACT_SALE);
+    public Timestamp getPurchaseTimestamp() {
+        Timestamp t = TimestampFormatterKt.calendar2ts(mParsed.getTimeStamp(CONTRACT_SALE, getLookup().getTimeZone()));
+        if (mParsed.getTimeStampContainsTime(CONTRACT_SALE))
+            return t;
+        return t.toDaystamp();
     }
 
     @Nullable
@@ -170,13 +171,12 @@ public abstract class En1545Subscription extends Subscription {
 
     @Nullable
     @Override
-    public Calendar getLastUseTimestamp() {
-        return mParsed.getTimeStamp(CONTRACT_LAST_USE, getLookup().getTimeZone());
-    }
-
-    @Override
-    public boolean lastUseTimestampHasTime() {
-        return mParsed.getTimeStampContainsTime(CONTRACT_LAST_USE);
+    public Timestamp getLastUseTimestamp() {
+        Timestamp t = TimestampFormatterKt.calendar2ts(
+                mParsed.getTimeStamp(CONTRACT_LAST_USE, getLookup().getTimeZone()));
+        if (mParsed.getTimeStampContainsTime(CONTRACT_LAST_USE))
+            return t;
+        return t.toDaystamp();
     }
 
     @Override
@@ -219,13 +219,13 @@ public abstract class En1545Subscription extends Subscription {
     }
 
     @Override
-    public Calendar getValidFrom() {
-        return mParsed.getTimeStamp(CONTRACT_START, getLookup().getTimeZone());
+    public TimestampFull getValidFrom() {
+        return TimestampFormatterKt.calendar2ts(mParsed.getTimeStamp(CONTRACT_START, getLookup().getTimeZone()));
     }
 
     @Override
-    public Calendar getValidTo() {
-        return mParsed.getTimeStamp(CONTRACT_END, getLookup().getTimeZone());
+    public TimestampFull getValidTo() {
+        return TimestampFormatterKt.calendar2ts(mParsed.getTimeStamp(CONTRACT_END, getLookup().getTimeZone()));
     }
 
     @Override
@@ -262,6 +262,11 @@ public abstract class En1545Subscription extends Subscription {
         dest.writeInt(mCounter != null ? 1 : 0);
         if (mCounter != null)
             dest.writeInt(mCounter);
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
     }
 
     @Override

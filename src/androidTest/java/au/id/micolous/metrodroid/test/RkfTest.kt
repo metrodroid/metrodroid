@@ -1,10 +1,11 @@
 package au.id.micolous.metrodroid.test
 
-import au.id.micolous.farebot.R
-import au.id.micolous.metrodroid.card.classic.MfcCardImporter
+import au.id.micolous.metrodroid.card.classic.ClassicCard
+import au.id.micolous.metrodroid.multi.R
+import au.id.micolous.metrodroid.serializers.classic.MfcCardImporter
+import au.id.micolous.metrodroid.time.TimestampFull
 import au.id.micolous.metrodroid.transit.TransitCurrency
 import au.id.micolous.metrodroid.transit.rkf.RkfTransitData
-import java.util.*
 import kotlin.test.Test
 import kotlin.test.assertEquals
 
@@ -28,10 +29,10 @@ class RkfTest : CardReaderWithAssetDumpsTest(MfcCardImporter()) {
         showRawStationIds(false)
         showLocalAndEnglish(false)
 
-        val c = loadAndParseCard<RkfTransitData>("anonymt_dump-20120814.mfd")
+        val c = loadAndParseCard<ClassicCard, RkfTransitData>("anonymt_dump-20120814.mfd")
         assertEquals("308430 000 027 859 5", c.serialNumber)
         assertEquals(TransitCurrency.DKK(100 * 100), c.balances[0].balance)
-        assertEquals(TimeZone.getTimeZone("Europe/Copenhagen"), c.trips[0].startTimestamp!!.timeZone)
+        assertEquals("Europe/Copenhagen", (c.trips[0].startTimestamp as TimestampFull).tz.olson)
         assertEquals("Rejsekort", c.issuer)
         //assertEquals("2014-12-31", Utils.isoDateFormat(c.expiryDate!!))
         assertEquals(R.string.rkf_status_action_pending, c.cardStatus)

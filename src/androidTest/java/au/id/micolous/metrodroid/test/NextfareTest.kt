@@ -18,16 +18,10 @@
  */
 package au.id.micolous.metrodroid.test
 
-import android.nfc.tech.MifareClassic
+import au.id.micolous.metrodroid.card.classic.*
+import au.id.micolous.metrodroid.time.MetroTimeZone
+import au.id.micolous.metrodroid.time.TimestampFull
 
-import java.util.Arrays
-import java.util.Calendar
-import java.util.TimeZone
-
-import au.id.micolous.metrodroid.card.classic.ClassicBlock
-import au.id.micolous.metrodroid.card.classic.ClassicCard
-import au.id.micolous.metrodroid.card.classic.ClassicSector
-import au.id.micolous.metrodroid.key.ClassicSectorKey
 import au.id.micolous.metrodroid.transit.lax_tap.LaxTapTransitData
 import au.id.micolous.metrodroid.transit.msp_goto.MspGotoTransitData
 import au.id.micolous.metrodroid.transit.nextfare.NextfareTransitData
@@ -35,13 +29,10 @@ import au.id.micolous.metrodroid.transit.nextfare.record.NextfareBalanceRecord
 import au.id.micolous.metrodroid.transit.nextfare.record.NextfareConfigRecord
 import au.id.micolous.metrodroid.transit.nextfare.record.NextfareTransactionRecord
 import au.id.micolous.metrodroid.transit.seq_go.SeqGoTransitData
-import au.id.micolous.metrodroid.util.Utils
 import au.id.micolous.metrodroid.util.ImmutableByteArray
-
+import au.id.micolous.metrodroid.util.Utils
 import au.id.micolous.metrodroid.util.Utils.UTC
 import kotlin.test.Test
-import kotlin.test.BeforeTest
-import kotlin.test.AfterTest
 import kotlin.test.assertEquals
 import kotlin.test.assertNull
 import kotlin.test.assertTrue
@@ -50,43 +41,27 @@ import kotlin.test.assertTrue
  * Tests relating to Cubic Nextfare reader.
  */
 class NextfareTest {
-    private var originalTz: TimeZone? = null
-
-    @BeforeTest
-    fun setUp() {
-        originalTz = TimeZone.getDefault()
-        TimeZone.setDefault(UTC)
-    }
-
-    @AfterTest
-    fun tearDown() {
-        TimeZone.setDefault(originalTz)
-    }
-
     @Test
     fun testExpiryDate() {
         val r20250602 = ImmutableByteArray.fromHex("01030000c2320000010200000000bf0c")
         val r20240925 = ImmutableByteArray.fromHex("0103000039310000010200000000924a")
         val r20180815 = ImmutableByteArray.fromHex("010300010f25000004000000fb75c2f7")
 
-        var r: NextfareConfigRecord
+        val r1 = NextfareConfigRecord.recordFromBytes(r20250602, UTC)
+        assertEquals("2025-06-02 00:00", Utils.isoDateTimeFormat(r1.expiry))
 
-        r = NextfareConfigRecord.recordFromBytes(r20250602, UTC)
-        assertEquals("2025-06-02 00:00", Utils.isoDateTimeFormat(r.expiry))
+        val r2 = NextfareConfigRecord.recordFromBytes(r20240925, UTC)
+        assertEquals("2024-09-25 00:00", Utils.isoDateTimeFormat(r2.expiry))
 
-        r = NextfareConfigRecord.recordFromBytes(r20240925, UTC)
-        assertEquals("2024-09-25 00:00", Utils.isoDateTimeFormat(r.expiry))
-
-        r = NextfareConfigRecord.recordFromBytes(r20180815, UTC)
-        assertEquals("2018-08-15 00:00", Utils.isoDateTimeFormat(r.expiry))
+        val r3 = NextfareConfigRecord.recordFromBytes(r20180815, UTC)
+        assertEquals("2018-08-15 00:00", Utils.isoDateTimeFormat(r3.expiry))
     }
 
     @Test
     fun testTransactionRecord() {
         val rnull = ImmutableByteArray.fromHex("01000000000000000000000000007f28")
 
-        val r: NextfareTransactionRecord?
-        r = NextfareTransactionRecord.recordFromBytes(rnull, UTC)
+        val r = NextfareTransactionRecord.recordFromBytes(rnull, UTC)
         assertNull(r)
     }
 
@@ -121,45 +96,30 @@ class NextfareTest {
         assertEquals(6, system_code.size)
         assertEquals(4, uid.size)
 
-        val trailer = ClassicBlock(3, ClassicBlock.TYPE_TRAILER,
-                ImmutableByteArray.fromHex("ffffffffffff78778800a1a2a3a4a5a6"))
+        val trailer = ImmutableByteArray.fromHex("ffffffffffff78778800a1a2a3a4a5a6")
 
-        val sectors = arrayOfNulls<ClassicSector>(16)
+        val sectors = mutableListOf<ClassicSector>()
 
-        for (sector_num in sectors.indices) {
-            val blocks = arrayOfNulls<ClassicBlock>(4)
-            if (sector_num == 0) {
-                val b0 = uid.plus(ImmutableByteArray(16 - uid.size))
-                blocks[0] = ClassicBlock(0, ClassicBlock.TYPE_MANUFACTURER, b0)
+        val b2sane = block2 ?: ImmutableByteArray.empty()
 
-                val b1 = ImmutableByteArray(1).plus(NextfareTransitData.MANUFACTURER)
-                        .plus(system_code).plus(ImmutableByteArray(1))
-                blocks[1] = ClassicBlock(1, ClassicBlock.TYPE_DATA, b1)
+        sectors += ClassicSector.create(ClassicSectorRaw(
+                listOf(
+                        uid + ImmutableByteArray(16 - uid.size),
+                        ImmutableByteArray(1) + NextfareTransitData.MANUFACTURER +
+                                system_code + ImmutableByteArray(1),
+                        b2sane + ImmutableByteArray(16 - b2sane.size), trailer),
+                ImmutableByteArray.fromHex("ffffffffffff"),
+                null, false, null))
 
-                val b2: ImmutableByteArray
-                if (block2 != null) {
-                    b2 = block2.plus(ImmutableByteArray(16 - block2.size))
-                } else
-                    b2 = ImmutableByteArray(16)
-                blocks[2] = ClassicBlock(2, ClassicBlock.TYPE_DATA, b2)
-            } else {
-                // TODO: Implement adding other data
-                for (block_num in 0..2) {
-                    val b = ByteArray(16)
-                    blocks[block_num] = ClassicBlock(block_num, ClassicBlock.TYPE_DATA, b)
-                }
-            }
-
-            blocks[3] = trailer
-            sectors[sector_num] = ClassicSector(sector_num, blocks,
-                    ClassicSectorKey.fromDump(
-                            ImmutableByteArray.fromByteArray(MifareClassic.KEY_MIFARE_APPLICATION_DIRECTORY),
-                            ClassicSectorKey.KeyType.A, "test"))
+        for (sector_num in 1..15) {
+            sectors += ClassicSector.create(ClassicSectorRaw(
+                    (0..2).map { ImmutableByteArray(16) }
+                            + listOf(trailer),
+                    ImmutableByteArray.fromHex("ffffffffffff"),
+                    null, false, null))
         }
 
-
-
-        return ClassicCard(uid, Calendar.getInstance(), Arrays.asList<ClassicSector>(*sectors), false)
+        return ClassicCard(sectors)
     }
 
     @Test
@@ -169,7 +129,7 @@ class NextfareTest {
         val c1 = buildNextfareCard(ImmutableByteArray.fromHex("15cd5b07"),
                 SeqGoTransitData.SYSTEM_CODE1, null)
         val d1 = c1.parseTransitData()
-        assertTrue(message = "Card is seqgo", actual = d1 is SeqGoTransitData)
+        assertTrue(d1 is SeqGoTransitData, "Card is seqgo")
         assertEquals("0160 0012 3456 7893", d1.serialNumber)
 
         // 0160 0098 7654 3213
@@ -177,7 +137,7 @@ class NextfareTest {
         val c2 = buildNextfareCard(ImmutableByteArray.fromHex("b168de3a"),
                 SeqGoTransitData.SYSTEM_CODE2, null)
         val d2 = c2.parseTransitData()
-        assertTrue(message = "Card is seqgo", actual = d2 is SeqGoTransitData)
+        assertTrue(d2 is SeqGoTransitData, "Card is seqgo")
         assertEquals("0160 0098 7654 3213", d2.serialNumber)
     }
 
@@ -187,8 +147,8 @@ class NextfareTest {
         // This is a fake card number (323.GO.METRO)
         val c = buildNextfareCard(ImmutableByteArray.fromHex("c40dcdc0"),
                 ImmutableByteArray.fromHex("010101010101"), LaxTapTransitData.BLOCK2)
-        val d = c.parseTransitData()
-        assertTrue(message = "card is laxtap", actual = d is LaxTapTransitData)
+        val d = c.parseTransitData() as NextfareTransitData?
+        assertTrue(d is LaxTapTransitData, "card is laxtap")
         assertEquals("0160 0323 4663 8769", d.serialNumber)
     }
 
@@ -199,8 +159,7 @@ class NextfareTest {
         val c = buildNextfareCard(ImmutableByteArray.fromHex("897df842"),
                 ImmutableByteArray.fromHex("010101010101"), MspGotoTransitData.BLOCK2)
         val d = c.parseTransitData() as NextfareTransitData?
-        assertTrue(message = "card is mspgoto",
-                actual = d is MspGotoTransitData)
+        assertTrue(d is MspGotoTransitData, "card is mspgoto")
         assertEquals("0160 0112 3581 3212", d.serialNumber)
     }
 }

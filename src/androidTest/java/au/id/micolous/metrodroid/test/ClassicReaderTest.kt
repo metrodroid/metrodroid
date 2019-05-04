@@ -1,26 +1,62 @@
+/*
+ * ClassicReaderTest.kt
+ *
+ * Copyright 2018-2019 Google
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
 package au.id.micolous.metrodroid.test
 
-import android.util.Log
 import au.id.micolous.metrodroid.card.classic.ClassicCard
 import au.id.micolous.metrodroid.card.classic.ClassicReader
 import au.id.micolous.metrodroid.card.classic.InvalidClassicSector
 import au.id.micolous.metrodroid.card.classic.UnauthorizedClassicSector
-import au.id.micolous.metrodroid.key.CardKeysEmbed
+import au.id.micolous.metrodroid.key.CardKeysFileReader
+import au.id.micolous.metrodroid.key.CardKeysFromFiles
 import au.id.micolous.metrodroid.key.ClassicSectorKey
+import au.id.micolous.metrodroid.multi.Log
+import au.id.micolous.metrodroid.time.TimestampFull
 import au.id.micolous.metrodroid.util.ImmutableByteArray
 import au.id.micolous.metrodroid.util.toImmutable
+import kotlinx.io.charsets.Charsets
+import kotlinx.io.core.String
 import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertFalse
 import kotlin.test.assertTrue
 
 class ClassicReaderTest : BaseInstrumentedTest() {
+    private fun keyReader(path: String): CardKeysFileReader = object : CardKeysFileReader {
+        override fun listFiles(dir: String): List<String>? = listAsset("$path/keys/$dir")
+
+        override fun readFile(fileName: String): String? {
+            val b = loadSmallAssetBytesSafe("$path/keys/$fileName") ?: return null
+            return String(b, 0, b.size, Charsets.UTF_8)
+        }
+    }
+
+     /*   context, baseDir = "$path/keys"
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }*/
+
     fun doTest(path: String) {
-        val auth = CardKeysEmbed(baseDir = "$path/keys")
+        val auth = CardKeysFromFiles(keyReader(path))
         for (dump in listAsset("$path/dumps").orEmpty()) {
             val raw = loadSmallAssetBytes("$path/dumps/$dump").toImmutable()
             val card = VirtualClassic(raw)
-            val read = ClassicReader.readCard(context, auth, card, MockFeedbackInterface.get())
+            val read = ClassicReader.readCard(auth, card, MockFeedbackInterface.get())
             val addMsg = "dump = $path/dumps/$dump"
             Log.d(TAG, "$addMsg: read, starting verification")
             verifyRead(read, raw, setOf(), addMsg)
@@ -97,7 +133,6 @@ class ClassicReaderTest : BaseInstrumentedTest() {
     // Synthetic dumps are not prepared yet, so dummy-out the tests for now
     @Test
     fun testDummy() {
-
     }
 
     companion object {

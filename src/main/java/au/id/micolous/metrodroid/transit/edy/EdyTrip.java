@@ -28,6 +28,8 @@ import java.util.Calendar;
 import java.util.GregorianCalendar;
 
 import au.id.micolous.metrodroid.card.felica.FelicaBlock;
+import au.id.micolous.metrodroid.time.TimestampFormatterKt;
+import au.id.micolous.metrodroid.time.TimestampFull;
 import au.id.micolous.metrodroid.transit.TransitCurrency;
 import au.id.micolous.metrodroid.transit.Trip;
 import au.id.micolous.metrodroid.util.Utils;
@@ -103,8 +105,8 @@ public class EdyTrip extends Trip {
     }
 
     @Override
-    public Calendar getStartTimestamp() {
-        return mTimestamp;
+    public TimestampFull getStartTimestamp() {
+        return TimestampFormatterKt.calendar2ts(mTimestamp);
     }
 
     @Nullable

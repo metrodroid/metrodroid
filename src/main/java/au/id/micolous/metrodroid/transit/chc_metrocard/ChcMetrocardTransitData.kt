@@ -22,6 +22,7 @@ import au.id.micolous.farebot.R
 import au.id.micolous.metrodroid.card.CardType
 import au.id.micolous.metrodroid.card.classic.ClassicCard
 import au.id.micolous.metrodroid.card.classic.ClassicCardTransitFactory
+import au.id.micolous.metrodroid.time.Duration
 import au.id.micolous.metrodroid.transit.CardInfo
 import au.id.micolous.metrodroid.transit.TransitBalance
 import au.id.micolous.metrodroid.transit.TransitBalanceStored
@@ -56,14 +57,9 @@ class ChcMetrocardTransitData private constructor(card: ClassicCard) :
     override val balance get(): TransitBalance? {
         val b = super.balance ?: return null
 
-        var expiry = getLastUseTimestamp()
-        if (expiry != null) {
-            // Cards not used for 3 years will expire
-            expiry = expiry.clone() as Calendar
-            expiry.add(Calendar.YEAR, 3)
-        }
-
-        return TransitBalanceStored(b.balance, expiry)
+        val expiry = getLastUseDaystamp() ?: return b
+        // Cards not used for 3 years will expire
+        return TransitBalanceStored(b.balance, expiry + Duration.yearsLocal(3))
     }
 
     companion object {

@@ -33,7 +33,7 @@ data class OvcUltralightTransitData(private val mTrips: List<OVChipTransaction>)
 
     override val cardName get() = NAME
 
-    override val trips get(): List<TransactionTrip> = TransactionTrip.merge(mTrips)
+    override val trips get() = TransactionTrip.merge(mTrips)
 }
 
 private fun parse(card: UltralightCard): OvcUltralightTransitData {

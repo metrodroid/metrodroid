@@ -19,11 +19,11 @@
 package au.id.micolous.metrodroid.test
 
 import au.id.micolous.metrodroid.card.classic.ClassicCard
-import au.id.micolous.metrodroid.card.classic.MfcCardImporter
+import au.id.micolous.metrodroid.serializers.classic.MfcCardImporter
+import au.id.micolous.metrodroid.time.TimestampFull
 import au.id.micolous.metrodroid.transit.TransitCurrency
 import au.id.micolous.metrodroid.transit.Trip
 import au.id.micolous.metrodroid.transit.easycard.EasyCardTransitData
-import au.id.micolous.metrodroid.util.Utils
 import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertNotNull
@@ -41,13 +41,13 @@ class EasyCardTest : CardReaderWithAssetDumpsTest(MfcCardImporter()) {
         showRawStationIds(false)
         showLocalAndEnglish(false)
 
-        val c = loadAndParseCard<EasyCardTransitData>("easycard/deadbeef.mfc")
+        val c = loadAndParseCard<ClassicCard, EasyCardTransitData>("easycard/deadbeef.mfc")
         assertEquals(TransitCurrency.TWD(245), c.balances!![0].balance)
         assertEquals(3, c.trips.size)
 
         val busTrip = c.trips[0]
         assertEquals("2013-10-28 20:33",
-                Utils.isoDateTimeFormat(busTrip.startTimestamp!!))
+                (busTrip.startTimestamp as TimestampFull).isoDateTimeFormat())
         assertEquals(TransitCurrency.TWD(10), busTrip.fare)
         assertEquals(Trip.Mode.BUS, busTrip.mode)
         assertNull(busTrip.startStation)
@@ -55,26 +55,26 @@ class EasyCardTest : CardReaderWithAssetDumpsTest(MfcCardImporter()) {
 
         val trainTrip = c.trips[1]
         assertEquals("2013-10-28 20:41",
-                Utils.isoDateTimeFormat(trainTrip.startTimestamp!!))
+                (trainTrip.startTimestamp as TimestampFull).isoDateTimeFormat())
         assertEquals("2013-10-28 20:46",
-                Utils.isoDateTimeFormat(trainTrip.endTimestamp!!))
+                (trainTrip.endTimestamp as TimestampFull).isoDateTimeFormat())
         assertEquals(TransitCurrency.TWD(15), trainTrip.fare)
         assertEquals(Trip.Mode.METRO, trainTrip.mode)
         assertNotNull(trainTrip.startStation)
-        assertEquals("Taipei Main Station", trainTrip.startStation!!.stationName)
+        assertEquals("Taipei Main Station", trainTrip.startStation!!.getStationName(false))
         assertNotNull(trainTrip.endStation)
-        assertEquals("NTU Hospital", trainTrip.endStation!!.stationName)
+        assertEquals("NTU Hospital", trainTrip.endStation!!.getStationName(false))
         assertNotNull(trainTrip.routeName)
         assertEquals("Red", trainTrip.routeName)
         assertEquals("0xccbbaa", trainTrip.machineID)
 
         val refill = c.trips[2]
         assertEquals("2013-07-27 08:58",
-                Utils.isoDateTimeFormat(refill.startTimestamp!!))
+                (refill.startTimestamp as TimestampFull).isoDateTimeFormat())
         assertEquals(TransitCurrency.TWD(-100), refill.fare)
         assertEquals(Trip.Mode.TICKET_MACHINE, refill.mode)
         assertNotNull(refill.startStation)
-        assertEquals("Yongan Market", refill.startStation!!.stationName)
+        assertEquals("Yongan Market", refill.startStation!!.getStationName(false))
         assertNull(refill.routeName)
         assertEquals("0x31c046", refill.machineID)
     }
@@ -85,10 +85,10 @@ class EasyCardTest : CardReaderWithAssetDumpsTest(MfcCardImporter()) {
         showRawStationIds(false)
         showLocalAndEnglish(false)
 
-        val c = loadAndParseCard<EasyCardTransitData>("easycard/deadbeef.mfc")
+        val c = loadAndParseCard<ClassicCard, EasyCardTransitData>("easycard/deadbeef.mfc")
         val refill = c.trips.last()
         // Yongan Market
-        assertEquals("永安市場", refill.startStation!!.stationName)
+        assertEquals("永安市場", refill.startStation!!.getStationName(false))
         assertNull(refill.routeName)
     }
 }

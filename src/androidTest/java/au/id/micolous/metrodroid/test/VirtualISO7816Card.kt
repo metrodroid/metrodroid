@@ -1,7 +1,7 @@
 /*
  * VirtualISO7816Card.kt
  *
- * Copyright 2018 Michael Farrell <micolous+git@gmail.com>
+ * Copyright 2018-2019 Michael Farrell <micolous+git@gmail.com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,23 +18,26 @@
  */
 package au.id.micolous.metrodroid.test
 
+import au.id.micolous.metrodroid.card.Card
+import au.id.micolous.metrodroid.card.CardProtocolUnsupportedException
+import au.id.micolous.metrodroid.card.CardTransceiveException
 import au.id.micolous.metrodroid.card.CardTransceiver
 import au.id.micolous.metrodroid.card.iso7816.ISO7816Application
 import au.id.micolous.metrodroid.card.iso7816.ISO7816Card
 import au.id.micolous.metrodroid.card.iso7816.ISO7816File
-import au.id.micolous.metrodroid.card.iso7816.ISO7816Protocol.CLASS_ISO7816
-import au.id.micolous.metrodroid.card.iso7816.ISO7816Protocol.CNA_NO_CURRENT_EF
-import au.id.micolous.metrodroid.card.iso7816.ISO7816Protocol.ERROR_COMMAND_NOT_ALLOWED
-import au.id.micolous.metrodroid.card.iso7816.ISO7816Protocol.ERROR_WRONG_PARAMETERS
-import au.id.micolous.metrodroid.card.iso7816.ISO7816Protocol.INSTRUCTION_ISO7816_READ_BINARY
-import au.id.micolous.metrodroid.card.iso7816.ISO7816Protocol.INSTRUCTION_ISO7816_READ_RECORD
-import au.id.micolous.metrodroid.card.iso7816.ISO7816Protocol.INSTRUCTION_ISO7816_SELECT
-import au.id.micolous.metrodroid.card.iso7816.ISO7816Protocol.SELECT_BY_NAME
-import au.id.micolous.metrodroid.card.iso7816.ISO7816Protocol.STATUS_OK
-import au.id.micolous.metrodroid.card.iso7816.ISO7816Protocol.WP_FILE_NOT_FOUND
-import au.id.micolous.metrodroid.card.iso7816.ISO7816Protocol.WP_RECORD_NOT_FOUND
+import au.id.micolous.metrodroid.card.iso7816.ISO7816Protocol.Companion.CLASS_ISO7816
+import au.id.micolous.metrodroid.card.iso7816.ISO7816Protocol.Companion.CNA_NO_CURRENT_EF
+import au.id.micolous.metrodroid.card.iso7816.ISO7816Protocol.Companion.ERROR_COMMAND_NOT_ALLOWED
+import au.id.micolous.metrodroid.card.iso7816.ISO7816Protocol.Companion.ERROR_WRONG_PARAMETERS
+import au.id.micolous.metrodroid.card.iso7816.ISO7816Protocol.Companion.INSTRUCTION_ISO7816_READ_BINARY
+import au.id.micolous.metrodroid.card.iso7816.ISO7816Protocol.Companion.INSTRUCTION_ISO7816_READ_RECORD
+import au.id.micolous.metrodroid.card.iso7816.ISO7816Protocol.Companion.INSTRUCTION_ISO7816_SELECT
+import au.id.micolous.metrodroid.card.iso7816.ISO7816Protocol.Companion.SELECT_BY_NAME
+import au.id.micolous.metrodroid.card.iso7816.ISO7816Protocol.Companion.STATUS_OK
+import au.id.micolous.metrodroid.card.iso7816.ISO7816Protocol.Companion.WP_FILE_NOT_FOUND
+import au.id.micolous.metrodroid.card.iso7816.ISO7816Protocol.Companion.WP_RECORD_NOT_FOUND
 import au.id.micolous.metrodroid.card.iso7816.ISO7816Selector
-import android.util.Log
+import au.id.micolous.metrodroid.multi.Log
 import au.id.micolous.metrodroid.util.ImmutableByteArray
 
 /**
@@ -42,7 +45,26 @@ import au.id.micolous.metrodroid.util.ImmutableByteArray
  *
  * This is intended as a test fixture.
  */
-class VirtualISO7816Card(private val mCard : ISO7816Card) : CardTransceiver {
+open class VirtualISO7816Card(private val mCard : Card) : CardTransceiver {
+    override fun connect(protocol: CardTransceiver.Protocol) {
+        if (protocol != CardTransceiver.Protocol.ISO_14443A) {
+            throw CardProtocolUnsupportedException("Only iso14a card is supported")
+        }
+
+        connected = true
+    }
+
+    override fun close() {
+        connected = false
+        super.close()
+    }
+
+    override val uid: ImmutableByteArray?
+        get() = mCard.tagId
+
+    private val isoCard : ISO7816Card = mCard.iso7816 ?:
+            throw IllegalArgumentException("Virtual card must have iso7816 part")
+    private var connected = false
     private var currentApplication : ISO7816Application? = null
     private var currentPath : ISO7816Selector? = null
     private var currentFile : ISO7816File? = null
@@ -50,14 +72,18 @@ class VirtualISO7816Card(private val mCard : ISO7816Card) : CardTransceiver {
 
     init {
         // Auto-select CEPAS applications that have no name
-        for (app in mCard.applications) {
+        for (app in isoCard.applications) {
             if (app.appName == null) {
                 currentApplication = app
             }
         }
     }
 
-    override fun transceive(data: ImmutableByteArray): ImmutableByteArray {
+    override suspend fun transceive(data: ImmutableByteArray): ImmutableByteArray {
+        if (!connected) {
+            throw CardTransceiveException("Card not connected")
+        }
+
         val cls = data[0]
         if (cls != CLASS_ISO7816) {
             return COMMAND_NOT_ALLOWED
@@ -140,7 +166,7 @@ class VirtualISO7816Card(private val mCard : ISO7816Card) : CardTransceiver {
     fun handleSelect(p1 : Byte, p2 : Byte, params : ImmutableByteArray, retLength : Int) : ImmutableByteArray {
         if (p1 == SELECT_BY_NAME) {
             // Expected an application identifier
-            for (application in mCard.applications) {
+            for (application in isoCard.applications) {
                 val appName = application.appName ?: continue
                 if (appName.size < params.size) {
                     continue
@@ -154,7 +180,7 @@ class VirtualISO7816Card(private val mCard : ISO7816Card) : CardTransceiver {
                     currentFile = null
                     currentRecord = 0
                     currentPath = null
-                    return truncateOkResponse(application.appData, retLength)
+                    return truncateOkResponse(application.appFci, retLength)
                 }
             }
 
@@ -226,7 +252,7 @@ class VirtualISO7816Card(private val mCard : ISO7816Card) : CardTransceiver {
             } ?: return FILE_NOT_FOUND
 
             val data = file.getRecord(currentRecord) ?: return RECORD_NOT_FOUND
-            return truncateOkResponse(data.data, retLength)
+            return truncateOkResponse(data, retLength)
         } else {
             // Record identifier in P1 (not supported)
             return COMMAND_NOT_ALLOWED

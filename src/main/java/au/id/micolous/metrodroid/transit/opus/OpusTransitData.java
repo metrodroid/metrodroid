@@ -31,7 +31,6 @@ import au.id.micolous.metrodroid.card.CardType;
 import au.id.micolous.metrodroid.card.calypso.CalypsoApplication;
 import au.id.micolous.metrodroid.card.calypso.CalypsoCardTransitFactory;
 import au.id.micolous.metrodroid.card.iso7816.ISO7816File;
-import au.id.micolous.metrodroid.card.iso7816.ISO7816Record;
 import au.id.micolous.metrodroid.transit.CardInfo;
 import au.id.micolous.metrodroid.transit.TransitIdentity;
 import au.id.micolous.metrodroid.transit.en1545.Calypso1545TransitData;
@@ -45,7 +44,6 @@ import au.id.micolous.metrodroid.transit.en1545.En1545Repeat;
 import au.id.micolous.metrodroid.transit.en1545.En1545Subscription;
 import au.id.micolous.metrodroid.transit.en1545.En1545Transaction;
 import au.id.micolous.metrodroid.transit.intercode.IntercodeTransitData;
-import au.id.micolous.metrodroid.util.Utils;
 import au.id.micolous.metrodroid.util.ImmutableByteArray;
 
 public class OpusTransitData extends Calypso1545TransitData {
@@ -138,9 +136,9 @@ public class OpusTransitData extends Calypso1545TransitData {
     };
 
     @Override
-    protected List<ISO7816Record> getContracts(CalypsoApplication card) {
+    protected List<ImmutableByteArray> getContracts(CalypsoApplication card) {
         // Contracts 2 is a copy of contract list on opus
-        return card.getFile(CalypsoApplication.File.TICKETING_CONTRACTS_1).getRecords();
+        return card.getFile(CalypsoApplication.File.TICKETING_CONTRACTS_1).getRecordList();
     }
 
     @Override
@@ -171,12 +169,12 @@ public class OpusTransitData extends Calypso1545TransitData {
             return null;
         }
 
-        ISO7816Record iccRecord = iccFile.getRecord(1);
+        ImmutableByteArray iccRecord = iccFile.getRecord(1);
 
         if (iccRecord == null) {
             return null;
         }
-        ImmutableByteArray data = iccRecord.getData();
+        ImmutableByteArray data = iccRecord;
 
         if (data.byteArrayToLong(16, 4) != 0) {
             return Long.toString(data.byteArrayToLong(16, 4));

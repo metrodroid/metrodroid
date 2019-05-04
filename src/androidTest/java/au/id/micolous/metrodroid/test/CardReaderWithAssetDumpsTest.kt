@@ -1,7 +1,8 @@
 package au.id.micolous.metrodroid.test
 
 import au.id.micolous.metrodroid.card.Card
-import au.id.micolous.metrodroid.card.CardImporter
+import au.id.micolous.metrodroid.card.CardProtocol
+import au.id.micolous.metrodroid.serializers.CardImporter
 import au.id.micolous.metrodroid.transit.TransitData
 import kotlin.test.assertNotNull
 import kotlin.test.assertTrue
@@ -13,7 +14,7 @@ import kotlin.test.assertTrue
  * @param importer A reference to a [CardImporter] which produces [C].
  */
 abstract class CardReaderWithAssetDumpsTest(
-        val importer: CardImporter<out Card>
+        val importer: CardImporter
 ) : BaseInstrumentedTest() {
     /**
      * Parses a card and checks that it was the correct reader.
@@ -39,14 +40,16 @@ abstract class CardReaderWithAssetDumpsTest(
      * @param path Path to the dump, relative to <code>/assets/</code>
      * @return Parsed [C] from the file.
      */
-    inline fun <reified C: Card>loadCard(path: String): C {
+    inline fun <reified C: CardProtocol>loadCard(path: String): Card {
         val card = importer.readCard(loadAsset(path))
         assertNotNull(card)
-        assertTrue(card is C)
+        val protocol = card.allProtocols[0]
+        assertTrue(protocol is C)
         return card
     }
 
-    inline fun <reified TD: TransitData>loadAndParseCard(path: String): TD {
-        return parseCard(loadCard(path))
+    inline fun <reified C: CardProtocol,
+            reified TD: TransitData>loadAndParseCard(path: String): TD {
+        return parseCard(loadCard<C>(path))
     }
 }

@@ -22,12 +22,12 @@
 
 package au.id.micolous.metrodroid.time
 
+import au.id.micolous.metrodroid.multi.FormattedString
 import au.id.micolous.metrodroid.multi.Parcelable
 import au.id.micolous.metrodroid.multi.Parcelize
-import au.id.micolous.metrodroid.multi.FormattedString
 import au.id.micolous.metrodroid.util.NumberUtils
 import au.id.micolous.metrodroid.util.Preferences
-import au.id.micolous.metrodroid.util.TimestampObfuscator
+import au.id.micolous.metrodroid.util.TripObfuscator
 import kotlinx.serialization.*
 
 @Parcelize
@@ -35,11 +35,11 @@ import kotlinx.serialization.*
 data class MetroTimeZone(val olson: String): Parcelable {
     @Serializer(forClass = MetroTimeZone::class)
     companion object : KSerializer<MetroTimeZone> {
-        override fun serialize(output: Encoder, obj: MetroTimeZone) {
-            output.encodeString(obj.olson)
+        override fun serialize(encoder: Encoder, obj: MetroTimeZone) {
+            encoder.encodeString(obj.olson)
         }
 
-        override fun deserialize(input: Decoder) = MetroTimeZone(input.decodeString())
+        override fun deserialize(decoder: Decoder) = MetroTimeZone(decoder.decodeString())
 
         // Time zone not specified
         val UNKNOWN = MetroTimeZone(olson = "UNKNOWN")
@@ -162,6 +162,12 @@ fun yearToDays(year: Int): Int {
 private val monthToDays = listOf(0, 31, 59, 90, 120, 151, 181,
         212, 243, 273, 304, 334)
 
+/**
+ * Represents a year, month and day in the Gregorian calendar.
+ *
+ * @property month Month, where January = 0.
+ * @property day Day of the month, where the first day of the month = 1.
+ */
 data class YMD(val year: Int, val month: Int, val day: Int) {
     val daysSinceEpoch: Int get() {
         val ym = 12 * year + month
@@ -348,7 +354,7 @@ data class Daystamp internal constructor(val daysSinceEpoch: Int): Timestamp(), 
      * @param calendar Date to format
      * @return String representing the date in ISO8601 format.
      */
-    fun isoDateFormat(): String {
+    private fun isoDateFormat(): String {
         // ISO_DATE_FORMAT = SimpleDateFormat ("yyyy-MM-dd", Locale.US)
         val ymd = getYMD(daysSinceEpoch = daysSinceEpoch)
         return NumberUtils.zeroPad(ymd.year, 4) + "-" +
@@ -358,6 +364,12 @@ data class Daystamp internal constructor(val daysSinceEpoch: Int): Timestamp(), 
 
     override fun toString(): String = isoDateFormat()
 
+    /**
+     * Represents a year, month and day in the Gregorian calendar.
+     *
+     * @param month Month, where January = 0.
+     * @param day Day of the month, where the first day of the month = 1.
+     */
     constructor(year: Int, month: Int, day: Int) : this(YMD(year, month, day))
 
     constructor(ymd: YMD) : this(
@@ -385,7 +397,7 @@ data class TimestampFull internal constructor(val timeInMillis: Long,
 
     override fun compareTo(other: TimestampFull): Int = timeInMillis.compareTo(other = other.timeInMillis)
     fun adjust() : TimestampFull =
-            TimestampObfuscator.maybeObfuscateTS(if (Preferences.convertTimezone)
+            TripObfuscator.maybeObfuscateTS(if (Preferences.convertTimezone)
                 TimestampFull(timeInMillis, MetroTimeZone.LOCAL) else this)
 
     operator fun plus(duration: Duration) = duration.addFull(this)

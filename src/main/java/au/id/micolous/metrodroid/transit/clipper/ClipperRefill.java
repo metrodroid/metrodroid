@@ -27,6 +27,8 @@ import android.util.Log;
 
 import java.util.Calendar;
 
+import au.id.micolous.metrodroid.time.TimestampFormatterKt;
+import au.id.micolous.metrodroid.time.TimestampFull;
 import au.id.micolous.metrodroid.transit.TransitCurrency;
 import au.id.micolous.metrodroid.transit.Trip;
 import au.id.micolous.metrodroid.util.Utils;
@@ -67,9 +69,9 @@ public class ClipperRefill extends Trip implements Comparable<ClipperRefill> {
     }
 
     @Override
-    public Calendar getStartTimestamp() {
+    public TimestampFull getStartTimestamp() {
         Log.d("rts", Long.toString(mTimestamp.getTimeInMillis()));
-        return mTimestamp;
+        return TimestampFormatterKt.calendar2ts(mTimestamp);
     }
 
     @Override

@@ -76,14 +76,14 @@ final class ClipperData {
 
         if (agency == ClipperData.AGENCY_GGT || agency == ClipperData.AGENCY_CALTRAIN) {
             if (stationId == 0xffff)
-                return Station.nameOnly(Localizer.INSTANCE.localizeString(R.string.clipper_end_of_line));
-            return Station.nameOnly(Localizer.INSTANCE.localizeString(R.string.clipper_zone_number, Integer.toString(stationId)));
+                return Station.Companion.nameOnly(Localizer.INSTANCE.localizeString(R.string.clipper_end_of_line));
+            return Station.Companion.nameOnly(Localizer.INSTANCE.localizeString(R.string.clipper_zone_number, Integer.toString(stationId)));
         }
 
         // Placeholders
         if (stationId == (isEnd ? 0xffff : 0))
             return null;
 
-        return Station.unknown(humanReadableId);
+        return Station.Companion.unknown(humanReadableId);
     }
 }

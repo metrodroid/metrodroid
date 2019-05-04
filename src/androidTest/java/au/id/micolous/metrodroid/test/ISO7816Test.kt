@@ -18,37 +18,34 @@
  */
 package au.id.micolous.metrodroid.test
 
+import au.id.micolous.metrodroid.card.CardTransceiver
 import au.id.micolous.metrodroid.card.iso7816.ISO7816Card
-import android.util.Log
-import au.id.micolous.metrodroid.card.XmlCardFormat
+import au.id.micolous.metrodroid.serializers.XmlCardFormat
 import au.id.micolous.metrodroid.transit.mobib.MobibTransitData
 import kotlin.test.Test
 import kotlin.test.assertEquals
 
 class ISO7816Test : CardReaderWithAssetDumpsTest(XmlCardFormat()) {
-
-    companion object {
-        private const val TAG = "ISO7816Test"
-    }
-
     @Test
     fun testIso7816Card() = runAsync {
         // Load up a Mobib card that is basically empty
         val card = loadCard<ISO7816Card>("iso7816/mobib_blank.xml")
+        val cardIso7816 = card.iso7816!!
 
         // Environment check
         assertEquals(MobibTransitData.NAME, card.parseTransitIdentity()?.name)
 
         // Load the card into the emulator
-        val vcard = VirtualISO7816Card(card as ISO7816Card)
+        val vcard = VirtualISO7816Card(card)
+        vcard.connect(CardTransceiver.Protocol.ISO_14443A)
 
         // Try to dump the tag from the emulator
-        val rcard = ISO7816Card.dumpTag(vcard, card.tagId, MockFeedbackInterface.get())
+        val rcard = ISO7816Card.dumpTag(vcard, MockFeedbackInterface.get())
+        vcard.close()
 
-        // Check that we got an expected number
-        assertEquals(card.applications.size, rcard.applications.size)
-
-        assertEquals(card, rcard)
+        // Check that we got an expected number of applications
+        assertEquals(cardIso7816.applications.size, rcard.applications.size)
+        assertEquals(cardIso7816, rcard)
 
         val identity = rcard.parseTransitIdentity()
         assertEquals(MobibTransitData.NAME, identity?.name)

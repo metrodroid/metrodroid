@@ -81,7 +81,7 @@ public class RicaricaMiTransaction extends En1545Transaction {
     }
 
     @Override
-    protected boolean isTapOff() {
+    public boolean isTapOff() {
         return getTransactionType() == TRANSACTION_TAP_OFF;
     }
 

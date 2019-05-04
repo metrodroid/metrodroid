@@ -1,7 +1,7 @@
 package au.id.micolous.metrodroid.test
 
 import au.id.micolous.metrodroid.card.classic.ClassicCard
-import au.id.micolous.metrodroid.card.classic.MctCardImporter
+import au.id.micolous.metrodroid.serializers.classic.MctCardImporter
 import au.id.micolous.metrodroid.transit.unknown.BlankClassicTransitData
 import kotlin.test.Test
 

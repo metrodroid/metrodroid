@@ -27,6 +27,8 @@ import android.os.Parcel;
 import android.support.annotation.Nullable;
 
 import au.id.micolous.metrodroid.multi.Localizer;
+import au.id.micolous.metrodroid.time.TimestampFormatterKt;
+import au.id.micolous.metrodroid.time.TimestampFull;
 import org.jetbrains.annotations.NonNls;
 
 import java.util.Calendar;
@@ -61,8 +63,8 @@ public class EZLinkTrip extends Trip {
     }
 
     @Override
-    public Calendar getStartTimestamp() {
-        return mTransaction.getTimestamp();
+    public TimestampFull getStartTimestamp() {
+        return TimestampFormatterKt.calendar2ts(mTransaction.getTimestamp());
     }
 
     @Override
@@ -97,13 +99,13 @@ public class EZLinkTrip extends Trip {
                 || mTransaction.getUserData().startsWith("BUS")))
             return null;
         if (mTransaction.getType() == CEPASTransaction.TransactionType.CREATION)
-            return Station.nameOnly(mTransaction.getUserData());
+            return Station.Companion.nameOnly(mTransaction.getUserData());
         if (mTransaction.getUserData().charAt(3) == '-'
                 || mTransaction.getUserData().charAt(3) == ' ') {
             String startStationAbbr = mTransaction.getUserData().substring(0, 3);
-            return EZLinkTransitData.getStation(startStationAbbr);
+            return EZLinkTransitData.Companion.getStation(startStationAbbr);
         }
-        return Station.nameOnly(mTransaction.getUserData());
+        return Station.Companion.nameOnly(mTransaction.getUserData());
     }
 
     @SuppressWarnings("MagicCharacter")
@@ -114,7 +116,7 @@ public class EZLinkTrip extends Trip {
         if (mTransaction.getUserData().charAt(3) == '-'
                 || mTransaction.getUserData().charAt(3) == ' ') {
             String endStationAbbr = mTransaction.getUserData().substring(4, 7);
-            return EZLinkTransitData.getStation(endStationAbbr);
+            return EZLinkTransitData.Companion.getStation(endStationAbbr);
         }
         return null;
     }

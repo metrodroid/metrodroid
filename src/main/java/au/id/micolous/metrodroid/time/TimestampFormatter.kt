@@ -24,7 +24,6 @@ package au.id.micolous.metrodroid.time
 import android.os.Build
 import au.id.micolous.metrodroid.multi.FormattedString
 import au.id.micolous.metrodroid.util.TripObfuscator
-import java.text.SimpleDateFormat
 import java.util.*
 import android.text.style.LocaleSpan
 import android.text.style.TtsSpan
@@ -32,12 +31,13 @@ import android.text.SpannableStringBuilder
 import au.id.micolous.metrodroid.MetrodroidApplication
 import android.text.SpannableString
 import android.text.Spanned
-import android.text.format.DateFormat;
-import au.id.micolous.metrodroid.util.Preferences
-import au.id.micolous.metrodroid.util.TimestampObfuscator
+import android.text.format.DateFormat
+
+fun calendar2ts(c: Calendar?) = if (c != null) TimestampFull(timeInMillis = c.timeInMillis,
+        tz = MetroTimeZone(c.timeZone.id)) else null
 
 actual object TimestampFormatter {
-    private fun makeCalendar(ts: TimestampFull): Calendar = makeRawCalendar(ts.adjust())
+    fun makeCalendar(ts: TimestampFull): Calendar = makeRawCalendar(ts.adjust())
 
     private fun makeRawCalendar(ts: TimestampFull): Calendar {
         val g = GregorianCalendar(makeTimezone(ts.tz))
@@ -47,25 +47,24 @@ actual object TimestampFormatter {
 
     actual fun longDateFormat(ts: Timestamp) = FormattedString(longDateFormat(makeDateCalendar(ts)))
 
-    private fun makeDateCalendar(ts: Timestamp): Calendar {
-        when (ts) {
-            is TimestampFull -> return makeCalendar(ts)
-            is Daystamp -> {
-                val adjusted = TimestampObfuscator.maybeObfuscateTS(ts.adjust())
-                val g = GregorianCalendar(UTC)
-                g.timeInMillis = 0
-                g.add(Calendar.DAY_OF_YEAR, adjusted.daysSinceEpoch)
-                return g
+    private fun makeDateCalendar(ts: Timestamp): Calendar =
+            when (ts) {
+                is TimestampFull -> makeCalendar(ts)
+                is Daystamp -> {
+                    val adjusted = TripObfuscator.maybeObfuscateTS(ts.adjust())
+                    val g = GregorianCalendar(UTC)
+                    g.timeInMillis = 0
+                    g.add(Calendar.DAY_OF_YEAR, adjusted.daysSinceEpoch)
+                    g
+                }
             }
-        }
-    }
 
     actual fun dateTimeFormat(ts: TimestampFull) = FormattedString(dateTimeFormat(makeCalendar(ts)))
     fun dateFormat(ts: Timestamp) = FormattedString(dateFormat(makeDateCalendar(ts)))
     actual fun timeFormat(ts: TimestampFull) = FormattedString(timeFormat(makeDateCalendar(ts)))
 
     /** Reference to UTC timezone.  */
-    val UTC = TimeZone.getTimeZone("Etc/UTC")
+    private val UTC : TimeZone = TimeZone.getTimeZone("Etc/UTC")
 
     private fun formatCalendar(df: java.text.DateFormat, c: Calendar): String {
         df.timeZone = c.timeZone

@@ -23,6 +23,7 @@ import android.os.Parcel;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
+import au.id.micolous.metrodroid.time.*;
 import org.jetbrains.annotations.NonNls;
 
 import java.util.ArrayList;
@@ -132,21 +133,21 @@ public class CharlieCardTransitData extends TransitData {
         // Cards were first issued in 2006, and would expire after 5 years, and had no printed
         // expiry date.
         // However, currently (2018), all of these have expired anyway.
-        Calendar expiry = (Calendar) start.clone();
-        expiry.add(Calendar.YEAR, 11);
-        expiry.add(Calendar.DAY_OF_YEAR, -1);
+        Daystamp expiry = TimestampFormatterKt.calendar2ts(start).plus(Duration.Companion.yearsLocal(11))
+                .plus(Duration.Companion.daysLocal(-1)).toDaystamp();
 
-        Calendar lastTrip = getLastUseTimestamp();
+        Daystamp lastTrip = getLastUseDaystamp();
         if (lastTrip != null) {
             // Cards not used for 2 years will also expire
-            lastTrip = (Calendar) lastTrip.clone();
-            lastTrip.add(Calendar.YEAR, 2);
+            lastTrip = lastTrip.plus(Duration.Companion.yearsLocal(2)).toDaystamp();
 
-            if (lastTrip.getTimeInMillis() < expiry.getTimeInMillis()) {
+            if (lastTrip.compareTo(expiry) < 0) {
                 expiry = lastTrip;
             }
         }
-        return new TransitBalanceStored(TransitCurrency.USD(mBalance), null, start, expiry);
+        return new TransitBalanceStored(TransitCurrency.USD(mBalance), null,
+                TimestampFormatterKt.calendar2ts(start),
+                expiry);
     }
 
     @Override
@@ -161,6 +162,11 @@ public class CharlieCardTransitData extends TransitData {
         dest.writeInt(mBalance);
         dest.writeInt(mStartDate);
         dest.writeList(mTrips);
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
     }
 
     public static final Creator<CharlieCardTransitData> CREATOR = new Creator<CharlieCardTransitData>() {

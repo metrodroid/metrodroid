@@ -18,7 +18,8 @@
  */
 package au.id.micolous.metrodroid.test
 
-import au.id.micolous.metrodroid.card.classic.MfcCardImporter
+import au.id.micolous.metrodroid.card.classic.ClassicCard
+import au.id.micolous.metrodroid.serializers.classic.MfcCardImporter
 import au.id.micolous.metrodroid.transit.TransitCurrency
 import au.id.micolous.metrodroid.transit.bilhete_unico.BilheteUnicoSPTransitData
 import kotlin.test.Test
@@ -32,7 +33,7 @@ class BilheteUnicoTest : CardReaderWithAssetDumpsTest(MfcCardImporter()) {
 
     private fun balanceTest(path: String, expectedBalance: TransitCurrency) {
         // We don't have much info on these cards. Most of these tests are the same.
-        val actualBalance = loadAndParseCard<BilheteUnicoSPTransitData>(path).balance
+        val actualBalance = loadAndParseCard<ClassicCard, BilheteUnicoSPTransitData>(path).balance
         assertNotNull(actualBalance)
         assertEquals(expectedBalance, actualBalance)
     }

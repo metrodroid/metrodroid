@@ -19,26 +19,21 @@
 package au.id.micolous.metrodroid.test
 
 import au.id.micolous.metrodroid.card.Card
-import au.id.micolous.metrodroid.card.classic.ClassicBlock
-import au.id.micolous.metrodroid.card.classic.ClassicCard
-import au.id.micolous.metrodroid.card.classic.ClassicSector
-import au.id.micolous.metrodroid.card.classic.UnauthorizedClassicSector
+import au.id.micolous.metrodroid.time.MetroTimeZone
+import au.id.micolous.metrodroid.card.classic.*
 import au.id.micolous.metrodroid.card.desfire.DesfireApplication
 import au.id.micolous.metrodroid.card.desfire.DesfireCard
-import au.id.micolous.metrodroid.card.desfire.files.DesfireFile
-import au.id.micolous.metrodroid.card.desfire.files.UnauthorizedDesfireFile
-import au.id.micolous.metrodroid.card.desfire.settings.DesfireFileSettings
+import au.id.micolous.metrodroid.card.desfire.files.RawDesfireFile
 import au.id.micolous.metrodroid.card.ultralight.UltralightCard
 import au.id.micolous.metrodroid.card.ultralight.UltralightPage
-import au.id.micolous.metrodroid.card.ultralight.UnauthorizedUltralightPage
-import au.id.micolous.metrodroid.key.ClassicSectorKey
+import au.id.micolous.metrodroid.multi.Log
+import au.id.micolous.metrodroid.serializers.JsonKotlinFormat
+import au.id.micolous.metrodroid.time.TimestampFull
 import au.id.micolous.metrodroid.transit.unknown.BlankClassicTransitData
 import au.id.micolous.metrodroid.transit.unknown.UnauthorizedClassicTransitData
 import au.id.micolous.metrodroid.transit.unknown.UnauthorizedDesfireTransitData
 import au.id.micolous.metrodroid.transit.unknown.UnauthorizedUltralightTransitData
-import au.id.micolous.metrodroid.util.Utils
 import au.id.micolous.metrodroid.util.ImmutableByteArray
-import java.util.*
 import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertFalse
@@ -50,119 +45,110 @@ import kotlin.test.assertTrue
  */
 class CardTest {
     @Test
-    fun testXmlSerialiser() {
-        val d = GregorianCalendar(2010, 1, 1, 0, 0, 0)
-        d.timeZone = TimeZone.getTimeZone("GMT")
+    fun testJsonSerialiser() {
+        val d = TimestampFull(MetroTimeZone.UTC, 2010, 1, 1, 0, 0, 0)
 
-        val c1 = ClassicCard(ImmutableByteArray.fromHex("00123456"),
+        val c1 = Card(ImmutableByteArray.fromHex("00123456"),
                 d,
-                emptyList())
+                mifareClassic = ClassicCard(emptyList<ClassicSectorRaw>()))
 
-        val xml = c1.toXml()
+        val json = JsonKotlinFormat().writeCard(c1)
 
-        assertTrue(xml.contains("scanned_at=\"1264982400000\""))
-        assertTrue(xml.contains("id=\"00123456\""))
+        assertTrue(json.contains("\"timeInMillis\": 1264982400000"))
+        assertTrue(json.contains("\"tagId\": \"00123456\""))
+        Log.d("CardTest", "JSON serialized to $json")
 
-        val c2 = Card.fromXml(xml)
+        val c2 = JsonKotlinFormat().readCard(json)
 
         assertEquals(d.timeInMillis, c1.scannedAt.timeInMillis)
         assertEquals(c1.scannedAt.timeInMillis, c2.scannedAt.timeInMillis)
-
     }
 
     @Test
     fun testUnauthorizedUltralight() {
-        val d = GregorianCalendar(2010, 1, 1, 0, 0, 0)
-        d.timeZone = TimeZone.getTimeZone("GMT")
+        val d = TimestampFull(MetroTimeZone.UTC, 2010, 1, 1, 0, 0, 0)
 
-        val c1 = UltralightCard(ImmutableByteArray.fromHex("00123456789abcde"),
-                d,
+        val u1 = UltralightCard(
                 "MF0ICU2",
-                Arrays.asList(
-                        UltralightPage(0, ImmutableByteArray.fromHex("00123456")),
-                        UltralightPage(1, ImmutableByteArray.fromHex("789abcde")),
-                        UltralightPage(2, ImmutableByteArray.fromHex("ff000000")),
-                        UltralightPage(3, ImmutableByteArray.fromHex("ffffffff")),
-                        UnauthorizedUltralightPage(4), // User memory starts here
-                        UnauthorizedUltralightPage(5),
-                        UnauthorizedUltralightPage(6),
-                        UnauthorizedUltralightPage(7),
-                        UnauthorizedUltralightPage(8),
-                        UnauthorizedUltralightPage(9),
-                        UnauthorizedUltralightPage(10),
-                        UnauthorizedUltralightPage(11),
-                        UnauthorizedUltralightPage(12),
-                        UnauthorizedUltralightPage(13),
-                        UnauthorizedUltralightPage(14),
-                        UnauthorizedUltralightPage(15),
-                        UnauthorizedUltralightPage(16),
-                        UnauthorizedUltralightPage(17),
-                        UnauthorizedUltralightPage(18),
-                        UnauthorizedUltralightPage(19),
-                        UnauthorizedUltralightPage(20),
-                        UnauthorizedUltralightPage(21),
-                        UnauthorizedUltralightPage(22),
-                        UnauthorizedUltralightPage(23),
-                        UnauthorizedUltralightPage(24),
-                        UnauthorizedUltralightPage(25),
-                        UnauthorizedUltralightPage(26),
-                        UnauthorizedUltralightPage(27),
-                        UnauthorizedUltralightPage(28),
-                        UnauthorizedUltralightPage(29),
-                        UnauthorizedUltralightPage(30),
-                        UnauthorizedUltralightPage(31),
-                        UnauthorizedUltralightPage(32),
-                        UnauthorizedUltralightPage(33),
-                        UnauthorizedUltralightPage(34),
-                        UnauthorizedUltralightPage(35),
-                        UnauthorizedUltralightPage(36),
-                        UnauthorizedUltralightPage(37),
-                        UnauthorizedUltralightPage(38),
-                        UnauthorizedUltralightPage(39),
-                        UnauthorizedUltralightPage(40),
-                        UnauthorizedUltralightPage(41),
-                        UnauthorizedUltralightPage(42),
-                        UnauthorizedUltralightPage(43)
+                listOf(
+                        UltralightPage(ImmutableByteArray.fromHex("00123456")),
+                        UltralightPage(ImmutableByteArray.fromHex("789abcde")),
+                        UltralightPage(ImmutableByteArray.fromHex("ff000000")),
+                        UltralightPage(ImmutableByteArray.fromHex("ffffffff")),
+                        UltralightPage.unauthorized(), // User memory starts here
+                        UltralightPage.unauthorized(), // page(5),
+                        UltralightPage.unauthorized(), // page(6),
+                        UltralightPage.unauthorized(), // page(7),
+                        UltralightPage.unauthorized(), // page(8),
+                        UltralightPage.unauthorized(), // page(9),
+                        UltralightPage.unauthorized(), // page(10),
+                        UltralightPage.unauthorized(), // page(11),
+                        UltralightPage.unauthorized(), // page(12),
+                        UltralightPage.unauthorized(), // page(13),
+                        UltralightPage.unauthorized(), // page(14),
+                        UltralightPage.unauthorized(), // page(15),
+                        UltralightPage.unauthorized(), // page(16),
+                        UltralightPage.unauthorized(), // page(17),
+                        UltralightPage.unauthorized(), // page(18),
+                        UltralightPage.unauthorized(), // page(19),
+                        UltralightPage.unauthorized(), // page(20),
+                        UltralightPage.unauthorized(), // page(21),
+                        UltralightPage.unauthorized(), // page(22),
+                        UltralightPage.unauthorized(), // page(23),
+                        UltralightPage.unauthorized(), // page(24),
+                        UltralightPage.unauthorized(), // page(25),
+                        UltralightPage.unauthorized(), // page(26),
+                        UltralightPage.unauthorized(), // page(27),
+                        UltralightPage.unauthorized(), // page(28),
+                        UltralightPage.unauthorized(), // page(29),
+                        UltralightPage.unauthorized(), // page(30),
+                        UltralightPage.unauthorized(), // page(31),
+                        UltralightPage.unauthorized(), // page(32),
+                        UltralightPage.unauthorized(), // page(33),
+                        UltralightPage.unauthorized(), // page(34),
+                        UltralightPage.unauthorized(), // page(35),
+                        UltralightPage.unauthorized(), // page(36),
+                        UltralightPage.unauthorized(), // page(37),
+                        UltralightPage.unauthorized(), // page(38),
+                        UltralightPage.unauthorized(), // page(39),
+                        UltralightPage.unauthorized(), // page(40),
+                        UltralightPage.unauthorized(), // page(41),
+                        UltralightPage.unauthorized(), // page(42),
+                        UltralightPage.unauthorized() // page(43)
                 ))
+        val c1 = Card(
+                ImmutableByteArray.fromHex("00123456789abcde"),
+                d, mifareUltralight = u1)
 
         assertTrue(c1.parseTransitData() is UnauthorizedUltralightTransitData)
     }
 
     @Test
     fun testUnauthorizedClassic() {
-        val e = byteArrayOf(0x6d.toByte(), 0x65.toByte(), 0x74.toByte(), 0x72.toByte(), 0x6f.toByte(), 0x64.toByte(), 0x72.toByte(), 0x6f.toByte(), 0x69.toByte(), 0x64.toByte(), 0x43.toByte(), 0x6c.toByte(), 0x61.toByte(), 0x73.toByte(), 0x73.toByte(), 0x69.toByte())
-        val k = ClassicSectorKey.fromDump(ImmutableByteArray(6),
-                ClassicSectorKey.KeyType.A, "test")
-        val d = GregorianCalendar(2010, 1, 1, 0, 0, 0)
-        d.timeZone = TimeZone.getTimeZone("GMT")
+        val e = ImmutableByteArray.ofB(0x6d, 0x65, 0x74, 0x72, 0x6f, 0x64, 0x72, 0x6f, 0x69, 0x64, 0x43, 0x6c, 0x61, 0x73, 0x73, 0x69)
+        val k = ImmutableByteArray(6)
+        val d = TimestampFull(MetroTimeZone.UTC, 2010, 1, 1, 0, 0, 0)
 
-        var l = arrayOfNulls<ClassicSector>(16)
-        for (x in 0..15) {
-            l[x] = UnauthorizedClassicSector(x)
-        }
+        val l = (0..15).map { UnauthorizedClassicSector() }.toMutableList<ClassicSector>()
 
-        val c1 = ClassicCard(ImmutableByteArray.fromHex("12345678"), d, Arrays.asList<ClassicSector>(*l))
+        val c1 = ClassicCard(l)
 
         assertTrue(c1.parseTransitData() is UnauthorizedClassicTransitData)
 
         // Build a card with partly readable data.
-        val b = arrayOfNulls<ClassicBlock>(4)
-        for (y in 0..3) {
-            b[y] = ClassicBlock.create(ClassicBlock.TYPE_DATA, y, ImmutableByteArray.fromByteArray(e))
-        }
+        val b = (0..3).map { e }
 
-        l[2] = ClassicSector(2, b, k)
-        val c2 = ClassicCard(ImmutableByteArray.fromHex("12345678"), d, Arrays.asList<ClassicSector>(*l))
+        l[2] = ClassicSector.create(ClassicSectorRaw(blocks = b, keyA = k, keyB = null))
+        val c2 = ClassicCard(l)
 
         assertFalse(c2.parseTransitData() is UnauthorizedClassicTransitData)
 
         // Build a card with all readable data.
-        l = arrayOfNulls(16)
         for (x in 0..15) {
-            l[x] = ClassicSector(x, b, k)
+            l[x] = ClassicSector.create(ClassicSectorRaw(b, keyA = k, keyB = null))
         }
 
-        val c3 = ClassicCard(ImmutableByteArray.fromHex("12345678"), d, Arrays.asList<ClassicSector>(*l))
+        val c3 = ClassicCard(l)
 
         assertFalse(c3.parseTransitData() is UnauthorizedClassicTransitData)
     }
@@ -170,75 +156,62 @@ class CardTest {
     @Test
     fun testBlankMifareClassic() {
         val all00Bytes = ImmutableByteArray(16)
-        val allFFBytes = ImmutableByteArray(16) { i -> 0xff.toByte() }
+        val allFFBytes = ImmutableByteArray(16) { 0xff.toByte() }
         val otherBytes = ImmutableByteArray(16) { i -> (i + 1).toByte() }
 
-        val k = ClassicSectorKey.fromDump(ImmutableByteArray(6),
-                ClassicSectorKey.KeyType.A, "test")
-        val d = GregorianCalendar(2010, 1, 1, 0, 0, 0)
-        d.timeZone = TimeZone.getTimeZone("GMT")
+        val k = ImmutableByteArray(6)
+        val d = TimestampFull(MetroTimeZone.UTC, 2010, 1, 1, 0, 0, 0)
 
-        val all00Blocks = arrayOfNulls<ClassicBlock>(4)
-        val allFFBlocks = arrayOfNulls<ClassicBlock>(4)
-        val otherBlocks = arrayOfNulls<ClassicBlock>(4)
+        val all00Blocks = List(4) { all00Bytes }
+        val allFFBlocks = List(4) { allFFBytes }
+        val otherBlocks = List(4) { otherBytes }
 
-        for (x in 0..3) {
-            all00Blocks[x] = ClassicBlock.create(ClassicBlock.TYPE_DATA, x, all00Bytes)
-            allFFBlocks[x] = ClassicBlock.create(ClassicBlock.TYPE_DATA, x, allFFBytes)
-            otherBlocks[x] = ClassicBlock.create(ClassicBlock.TYPE_DATA, x, otherBytes)
-        }
+        val all00Sectors = (0..15).map { ClassicSectorValid(ClassicSectorRaw(blocks = all00Blocks, keyA = k, keyB = null)) }
+        val allFFSectors = (0..15).map { ClassicSectorValid(ClassicSectorRaw(blocks = allFFBlocks, keyA = k, keyB = null)) }
+        val otherSectors = (0..15).map { ClassicSectorValid(ClassicSectorRaw(blocks = otherBlocks, keyA = k, keyB = null)) }
 
-        val all00Sectors = arrayOfNulls<ClassicSector>(16)
-        val allFFSectors = arrayOfNulls<ClassicSector>(16)
-        val otherSectors = arrayOfNulls<ClassicSector>(16)
+        val all00Card = ClassicCard(all00Sectors)
+        val allFFCard = ClassicCard(allFFSectors)
+        val otherCard = ClassicCard(otherSectors)
 
-        for (x in 0..15) {
-            all00Sectors[x] = ClassicSector(x, all00Blocks, k)
-            allFFSectors[x] = ClassicSector(x, allFFBlocks, k)
-            otherSectors[x] = ClassicSector(x, otherBlocks, k)
-        }
-
-        val all00Card = ClassicCard(ImmutableByteArray.fromHex("12345678"), d, Arrays.asList<ClassicSector>(*all00Sectors))
-        val allFFCard = ClassicCard(ImmutableByteArray.fromHex("87654321"), d, Arrays.asList<ClassicSector>(*allFFSectors))
-        val otherCard = ClassicCard(ImmutableByteArray.fromHex("21436587"), d, Arrays.asList<ClassicSector>(*otherSectors))
-
-        assertTrue(
-                message = "A card with all 00 in its blocks is BlankClassicTransitData",
-                actual = all00Card.parseTransitData() is BlankClassicTransitData)
-        assertTrue(
-                message = "A card with all FF in its blocks is BlankClassicTransitData",
-                actual = allFFCard.parseTransitData() is BlankClassicTransitData)
+        assertTrue(all00Card.parseTransitData() is BlankClassicTransitData,
+                "A card with all 00 in its blocks is BlankClassicTransitData")
+        assertTrue(allFFCard.parseTransitData() is BlankClassicTransitData,
+                "A card with all FF in its blocks is BlankClassicTransitData")
 
         // If the tests crash here, this is a bug in the other reader module. We shouldn't be able
         // to crash reader modules with garbage data.
-        assertFalse(
-                message = "A card with other data in its blocks is not BlankClassicTransitData",
-                actual = otherCard.parseTransitData() is BlankClassicTransitData)
+        assertFalse(otherCard.parseTransitData() is BlankClassicTransitData,
+                "A card with other data in its blocks is not BlankClassicTransitData")
     }
 
     @Test
     fun testUnauthorizedDesfire() {
-        val d = GregorianCalendar(2010, 1, 1, 0, 0, 0)
-        d.timeZone = TimeZone.getTimeZone("GMT")
+        val d = TimestampFull(MetroTimeZone.UTC, 2010, 1, 1, 0, 0, 0)
 
         // Card with no files at all.
-        val c1 = DesfireCard(ImmutableByteArray.fromHex("47504C7633"),
-                d, null, emptyList())
+        val c1 = DesfireCard(ImmutableByteArray.empty(), emptyMap())
 
         assertTrue(c1.parseTransitData() is UnauthorizedDesfireTransitData)
 
         // Card with only locked files.
-        val c2 = DesfireCard(ImmutableByteArray.fromHex("6D6574726F"),
-                d, null, listOf(DesfireApplication(0x6472, listOf<DesfireFile>(UnauthorizedDesfireFile(0x6f69, "Authentication error: 64", null))))
+        val c2 = DesfireCard(ImmutableByteArray.empty(),
+                mapOf(0x6472 to DesfireApplication(
+                        files = mapOf(0x6f69 to RawDesfireFile(
+                                settings = ImmutableByteArray.fromHex("00000000000000"),
+                                data = null,
+                                error = "Authentication error: 64",
+                                isUnauthorized = true)), authLog = emptyList()))
         )
 
         assertTrue(c2.parseTransitData() is UnauthorizedDesfireTransitData)
 
         // Card with unlocked file.
-        val c3 = DesfireCard(ImmutableByteArray.fromHex("6D6574726F"),
-                d, null, listOf(DesfireApplication(0x6472, listOf(DesfireFile.create(0x6f69,
-                DesfireFileSettings.create(ImmutableByteArray(16)),
-                byteArrayOf(0x6d.toByte(), 0x69.toByte(), 0x63.toByte(), 0x6f.toByte(), 0x6c.toByte(), 0x6f.toByte(), 0x75.toByte(), 0x73.toByte()))))))
+        val c3 = DesfireCard(ImmutableByteArray.empty(),
+                mapOf(0x6472 to DesfireApplication(
+                        files = mapOf(0x6f69 to RawDesfireFile(settings = ImmutableByteArray.fromHex("00000000000000"),
+                                data = ImmutableByteArray.fromHex("6d69636f6c6f7573"))),
+                        authLog = emptyList())))
 
         assertFalse(c3.parseTransitData() is UnauthorizedDesfireTransitData)
     }

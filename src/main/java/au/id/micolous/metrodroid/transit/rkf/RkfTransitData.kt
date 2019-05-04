@@ -29,6 +29,9 @@ import au.id.micolous.metrodroid.card.classic.ClassicSector
 import au.id.micolous.farebot.R
 import au.id.micolous.metrodroid.card.CardType
 import au.id.micolous.metrodroid.multi.Localizer
+import au.id.micolous.metrodroid.multi.StringResource
+import au.id.micolous.metrodroid.time.TimestampFormatter
+import au.id.micolous.metrodroid.time.calendar2ts
 import au.id.micolous.metrodroid.transit.*
 import au.id.micolous.metrodroid.transit.en1545.*
 import au.id.micolous.metrodroid.ui.ListItem
@@ -88,8 +91,7 @@ data class RkfTransitData internal constructor(
         get() = mTcci.getTimeStamp(En1545TransitData.ENV_APPLICATION_VALIDITY_END, mLookup.timeZone)
 
     @VisibleForTesting
-    val cardStatus
-        @StringRes
+    val cardStatus: StringResource
         get() = when (mTcci.getIntOrZero(STATUS)) {
             0x01 -> R.string.rkf_status_ok
             0x21 -> R.string.rkf_status_action_pending
@@ -100,7 +102,8 @@ data class RkfTransitData internal constructor(
 
     override val info get() = listOf(
             ListItem(R.string.expiry_date,
-                    Utils.longDateFormat(TripObfuscator.maybeObfuscateTS(expiryDate))),
+                    TimestampFormatter.longDateFormat(TripObfuscator.maybeObfuscateTS(
+                            calendar2ts(expiryDate)!!))),
             ListItem(R.string.card_issuer, issuer),
             if (cardStatus == R.string.unknown_format) {
                 ListItem(R.string.rkf_card_status, Localizer.localizeString(R.string.unknown_format,
@@ -127,7 +130,7 @@ data class RkfTransitData internal constructor(
                         .build()
         )
 
-        val FACTORY = object : ClassicCardTransitFactory {
+        val FACTORY = object : ClassicCardTransitFactory() {
             override fun earlyCardInfo(sectors: List<ClassicSector>) = issuerMap[getIssuer(sectors[0])]
 
             override fun earlyCheck(sectors: List<ClassicSector>) =

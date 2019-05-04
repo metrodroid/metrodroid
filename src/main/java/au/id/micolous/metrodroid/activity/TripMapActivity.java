@@ -24,10 +24,8 @@
 package au.id.micolous.metrodroid.activity;
 
 import android.app.ActionBar;
-import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.support.annotation.RequiresApi;
 import android.util.Log;
 import android.view.MenuItem;
@@ -37,11 +35,10 @@ import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewFragment;
 
-import au.id.micolous.metrodroid.MetrodroidApplication;
 import au.id.micolous.metrodroid.transit.Trip;
+import au.id.micolous.metrodroid.transit.TripFormatter;
 import au.id.micolous.metrodroid.util.Marker;
 import au.id.micolous.metrodroid.util.Preferences;
-import au.id.micolous.metrodroid.util.Utils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -87,9 +84,9 @@ public class TripMapActivity extends MetrodroidActivity {
         ActionBar actionBar = getActionBar();
         if (actionBar != null) {
             actionBar.setDisplayHomeAsUpEnabled(true);
-            actionBar.setTitle(Trip.Companion.formatStationNames(trip));
+            actionBar.setTitle(TripFormatter.formatStationNames(trip));
             final String agencyName = trip.getAgencyName(false);
-            final String routeName = trip.getRouteDisplayName();
+            final String routeName = Trip.Companion.getRouteDisplayName(trip);
             actionBar.setSubtitle(routeName == null ? agencyName
                     : String.format("%s %s", agencyName, routeName));
         }

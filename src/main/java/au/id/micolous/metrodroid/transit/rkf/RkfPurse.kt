@@ -21,6 +21,7 @@ package au.id.micolous.metrodroid.transit.rkf
 
 import android.os.Parcelable
 import android.util.Log
+import au.id.micolous.metrodroid.time.calendar2ts
 import au.id.micolous.metrodroid.transit.TransitBalance
 import au.id.micolous.metrodroid.transit.TransitBalanceStored
 import au.id.micolous.metrodroid.transit.en1545.En1545Container
@@ -39,8 +40,9 @@ data class RkfPurse(private val mStatic: En1545Parsed,
             val balance = mLookup.parseCurrency(mDynamic.getIntOrZero(VALUE))
             val name = mLookup.getAgencyName(mStatic.getIntOrZero(RkfTransitData.COMPANY), true)
 
-            return TransitBalanceStored(balance, name, mStatic.getTimeStamp(START, mLookup.timeZone),
-                    mDynamic.getTimeStamp(END, mLookup.timeZone))
+            return TransitBalanceStored(balance, name,
+                    calendar2ts(mStatic.getTimeStamp(START, mLookup.timeZone)),
+                    calendar2ts(mDynamic.getTimeStamp(END, mLookup.timeZone)))
         }
 
     val transactionNumber: Int

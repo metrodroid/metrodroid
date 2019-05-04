@@ -29,9 +29,9 @@ import java.util.List;
 import java.util.TimeZone;
 
 import au.id.micolous.metrodroid.card.iso7816.ISO7816File;
-import au.id.micolous.metrodroid.card.iso7816.ISO7816Record;
 import au.id.micolous.metrodroid.card.iso7816.ISO7816Selector;
 import au.id.micolous.metrodroid.card.china.ChinaCard;
+import au.id.micolous.metrodroid.time.TimestampFormatterKt;
 import au.id.micolous.metrodroid.transit.TransitBalance;
 import au.id.micolous.metrodroid.transit.TransitBalanceStored;
 import au.id.micolous.metrodroid.transit.TransitCurrency;
@@ -53,8 +53,8 @@ public abstract class ChinaTransitData extends TransitData {
 
         mTrips = new ArrayList<>();
         ISO7816File historyFile = getFile(card, 0x18);
-        for (ISO7816Record record : historyFile.getRecords()) {
-            ChinaTrip t = parseTrip(record.getData());
+        for (ImmutableByteArray record : historyFile.getRecordList()) {
+            ChinaTrip t = parseTrip(record);
             if (t == null || !t.isValid())
                 continue;
             mTrips.add(t);
@@ -64,10 +64,10 @@ public abstract class ChinaTransitData extends TransitData {
     protected abstract ChinaTrip parseTrip(ImmutableByteArray data);
 
     protected static ISO7816File getFile(ChinaCard card, int id) {
-        ISO7816File f = card.getFile(ISO7816Selector.makeSelector(0x1001, id));
+        ISO7816File f = card.getFile(ISO7816Selector.Companion.makeSelector(0x1001, id));
         if (f != null)
             return f;
-        return card.getFile(ISO7816Selector.makeSelector(id));
+        return card.getFile(ISO7816Selector.Companion.makeSelector(id));
     }
 
     protected static Calendar parseHexDate(int val) {
@@ -96,7 +96,8 @@ public abstract class ChinaTransitData extends TransitData {
     @Override
     public TransitBalance getBalance() {
         return new TransitBalanceStored(TransitCurrency.CNY(mBalance),
-                null, parseHexDate(mValidityStart), parseHexDate(mValidityEnd));
+                null, TimestampFormatterKt.calendar2ts(parseHexDate(mValidityStart)),
+                TimestampFormatterKt.calendar2ts(parseHexDate(mValidityEnd)));
     }
 
     @Override
@@ -105,6 +106,11 @@ public abstract class ChinaTransitData extends TransitData {
         parcel.writeInt(mValidityStart);
         parcel.writeInt(mValidityEnd);
         parcel.writeList(mTrips);
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
     }
 
     protected ChinaTransitData(Parcel parcel) {

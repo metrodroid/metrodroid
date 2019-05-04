@@ -27,6 +27,7 @@ import au.id.micolous.metrodroid.card.classic.ClassicCard
 import au.id.micolous.metrodroid.card.classic.ClassicCardTransitFactory
 import au.id.micolous.metrodroid.card.classic.ClassicSector
 import au.id.micolous.metrodroid.multi.Localizer
+import au.id.micolous.metrodroid.time.calendar2ts
 import au.id.micolous.metrodroid.transit.*
 import au.id.micolous.metrodroid.transit.en1545.*
 import au.id.micolous.metrodroid.ui.HeaderListItem
@@ -48,7 +49,7 @@ data class OVChipTransitData(
         private val mCreditId: Int,
         private val mCredit: Int,
         private val mBanbits: Int,
-        override val trips: List<TransactionTrip>,
+        override val trips: List<TransactionTripAbstract>,
         override val subscriptions: List<OVChipSubscription>
 ) : En1545TransitData(parsed) {
     override val cardName get() = NAME
@@ -56,7 +57,7 @@ data class OVChipTransitData(
     public override val balance get() =
             TransitBalanceStored(TransitCurrency.EUR(mCredit),
                     Localizer.localizeString(if (mType == 2) R.string.card_type_personal else R.string.card_type_anonymous),
-                    OVChipTransitData.convertDate(mExpdate))
+                    calendar2ts(OVChipTransitData.convertDate(mExpdate)))
 
     override val serialNumber get(): String? = null
 
@@ -137,7 +138,7 @@ data class OVChipTransitData(
                     subscriptions = getSubscriptions(card, index))
         }
 
-        private fun getTrips(card: ClassicCard): List<TransactionTrip> {
+        private fun getTrips(card: ClassicCard): List<TransactionTripAbstract> {
             val transactions = (0..27).mapNotNull { transactionId ->
                 OVChipTransaction.parseClassic(card[35 + transactionId / 7]
                         .readBlocks(transactionId % 7 * 2, 2))
@@ -191,7 +192,7 @@ data class OVChipTransitData(
             }.sortedWith(Comparator { s1, s2 -> (s1.id ?: 0).compareTo(s2.id ?: 0) })
         }
 
-        val FACTORY: ClassicCardTransitFactory = object : ClassicCardTransitFactory {
+        val FACTORY: ClassicCardTransitFactory = object : ClassicCardTransitFactory() {
             override fun earlyCheck(sectors: List<ClassicSector>) =
                 // Starting at 0×010, 8400 0000 0603 a000 13ae e401 xxxx 0e80 80e8 seems to exist on all OVC's (with xxxx different).
                 // http://www.ov-chipkaart.de/back-up/3-8-11/www.ov-chipkaart.me/blog/index7e09.html?page_id=132

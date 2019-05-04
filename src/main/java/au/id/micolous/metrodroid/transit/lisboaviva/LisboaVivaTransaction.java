@@ -73,7 +73,7 @@ class LisboaVivaTransaction extends En1545Transaction {
         return transition == 1;
     }
 
-    protected boolean isTapOff() {
+    public boolean isTapOff() {
         int transition = mParsed.getIntOrZero(TRANSITION);
         return transition == 4;
     }

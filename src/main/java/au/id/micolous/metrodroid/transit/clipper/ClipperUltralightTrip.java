@@ -24,6 +24,8 @@ import android.support.annotation.Nullable;
 
 import java.util.Calendar;
 
+import au.id.micolous.metrodroid.time.TimestampFormatterKt;
+import au.id.micolous.metrodroid.time.TimestampFull;
 import au.id.micolous.metrodroid.transit.Station;
 import au.id.micolous.metrodroid.transit.TransitCurrency;
 import au.id.micolous.metrodroid.transit.Trip;
@@ -103,8 +105,8 @@ public class ClipperUltralightTrip extends Trip {
     };
 
     @Override
-    public Calendar getStartTimestamp() {
-        return ClipperTransitData.clipperTimestampToCalendar(mTime * 60L);
+    public TimestampFull getStartTimestamp() {
+        return TimestampFormatterKt.calendar2ts(ClipperTransitData.clipperTimestampToCalendar(mTime * 60L));
     }
 
     public int getTripsRemaining() {

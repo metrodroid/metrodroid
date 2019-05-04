@@ -54,22 +54,32 @@ import android.widget.ExpandableListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import au.id.micolous.metrodroid.card.*;
 import au.id.micolous.metrodroid.multi.Localizer;
+import au.id.micolous.metrodroid.serializers.CardImporter;
+import au.id.micolous.metrodroid.serializers.CardSerializer;
+import au.id.micolous.metrodroid.serializers.XmlOrJsonCardFormat;
+import au.id.micolous.metrodroid.serializers.classic.MctCardImporter;
+import au.id.micolous.metrodroid.time.MetroTimeZone;
+import au.id.micolous.metrodroid.time.TimestampFormatter;
+import au.id.micolous.metrodroid.time.TimestampFull;
 import au.id.micolous.metrodroid.util.Preferences;
 import org.apache.commons.io.FileUtils;
 import org.jetbrains.annotations.NonNls;
 
-import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.lang.ref.WeakReference;
+import java.nio.charset.Charset;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Collection;
 import java.util.GregorianCalendar;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -80,11 +90,6 @@ import javax.xml.parsers.ParserConfigurationException;
 import au.id.micolous.farebot.R;
 import au.id.micolous.metrodroid.MetrodroidApplication;
 import au.id.micolous.metrodroid.activity.CardInfoActivity;
-import au.id.micolous.metrodroid.card.Card;
-import au.id.micolous.metrodroid.card.CardImporter;
-import au.id.micolous.metrodroid.card.CardType;
-import au.id.micolous.metrodroid.card.XmlCardFormat;
-import au.id.micolous.metrodroid.card.classic.MctCardImporter;
 import au.id.micolous.metrodroid.provider.CardDBHelper;
 import au.id.micolous.metrodroid.provider.CardProvider;
 import au.id.micolous.metrodroid.provider.CardsTableColumns;
@@ -99,7 +104,7 @@ public class CardsFragment extends ExpandableListFragment {
     private static final int REQUEST_SAVE_FILE = 2;
     private static final int REQUEST_SELECT_FILE_MCT = 3;
     @NonNls
-    private static final String STD_EXPORT_FILENAME = "Metrodroid-Export.xml";
+    private static final String STD_EXPORT_FILENAME = "Metrodroid-Export.zip";
     private static final String SD_EXPORT_PATH = Environment.getExternalStorageDirectory() + "/" + STD_EXPORT_FILENAME;
     @NonNls
     private static final String STD_IMPORT_FILENAME = "Metrodroid-Import.xml";
@@ -113,6 +118,8 @@ public class CardsFragment extends ExpandableListFragment {
         private final String mData;
         private TransitIdentity mTransitIdentity;
         private final int mId;
+        private boolean mBalanceLoaded;
+        private String mBalance;
 
         Scan(Cursor cursor) {
             mId = cursor.getInt(cursor.getColumnIndex(CardsTableColumns._ID));
@@ -240,7 +247,7 @@ public class CardsFragment extends ExpandableListFragment {
                         ClipData.Item ci = d.getItemAt(0);
                         xml = ci.coerceToText(getActivity()).toString();
 
-                        Collection<Uri> uris = ExportHelper.importCards(xml, new XmlCardFormat(), getActivity());
+                        Collection<Uri> uris = ExportHelper.importCards(xml, new XmlOrJsonCardFormat(), getActivity());
 
                         updateListView();
                         Iterator<Uri> it = uris.iterator();
@@ -276,8 +283,11 @@ public class CardsFragment extends ExpandableListFragment {
                         i.setType("*/*");
                         String[] mimetypes = {
                                 "application/xml",
+                                "application/json",
                                 "text/xml",
+                                "text/json",
                                 "text/plain",
+                                "application/zip",
                                 // Fallback for cases where we didn't get a good mime type from the
                                 // OS, this allows most "other" files to be selected.
                                 "application/octet-stream",
@@ -291,9 +301,8 @@ public class CardsFragment extends ExpandableListFragment {
                     return true;
 
                 case R.id.copy_xml: {
-                    ByteArrayOutputStream bos = new ByteArrayOutputStream();
-                    ExportHelper.exportCardsXml(bos, getActivity());
-                    ExportHelper.copyXmlToClipboard(getActivity(), bos.toString("UTF-8"));
+                    String s = ExportHelper.exportCardsXml(getActivity());
+                    ExportHelper.copyXmlToClipboard(getActivity(), s);
                     return true;
                 }
 
@@ -309,12 +318,12 @@ public class CardsFragment extends ExpandableListFragment {
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
                         i = new Intent(Intent.ACTION_CREATE_DOCUMENT);
                         i.addCategory(Intent.CATEGORY_OPENABLE);
-                        i.setType("text/xml");
+                        i.setType("application/zip");
                         i.putExtra(Intent.EXTRA_TITLE, STD_EXPORT_FILENAME);
                         startActivityForResult(Intent.createChooser(i, Localizer.INSTANCE.localizeString(R.string.export_filename)), REQUEST_SAVE_FILE);
                     } else {
                         File file = new File(SD_EXPORT_PATH);
-                        ExportHelper.exportCardsXml(FileUtils.openOutputStream(file), getActivity());
+                        ExportHelper.exportCardsZip(FileUtils.openOutputStream(file), getActivity());
                         Toast.makeText(getActivity(), R.string.saved_xml, Toast.LENGTH_SHORT).show();
                     }
                     return true;
@@ -378,7 +387,7 @@ public class CardsFragment extends ExpandableListFragment {
                 File tf = File.createTempFile("cards", ".xml",
                         folder);
                 OutputStream os = new FileOutputStream(tf);
-                ExportHelper.exportCardsXml(os, MetrodroidApplication.getInstance());
+                ExportHelper.exportCardsZip(os, MetrodroidApplication.getInstance());
                 os.close();
                 return new Pair<>(null, tf);
             } catch (Exception ex) {
@@ -418,7 +427,7 @@ public class CardsFragment extends ExpandableListFragment {
                 OutputStream os = MetrodroidApplication.getInstance().getContentResolver().openOutputStream(uris[0]);
                 if (os == null)
                     return "openOutputStream failed";
-                ExportHelper.exportCardsXml(os, MetrodroidApplication.getInstance());
+                ExportHelper.exportCardsZip(os, MetrodroidApplication.getInstance());
                 os.close();
                 return null;
             } catch (Exception ex) {
@@ -441,10 +450,10 @@ public class CardsFragment extends ExpandableListFragment {
 
     private abstract static class CommonReadTask extends AsyncTask<Uri, Integer, Pair<String, Collection<Uri>>> {
         private final WeakReference<CardsFragment> mCardsFragment;
-        private final CardImporter<? extends Card> mCardImporter;
+        private final CardImporter mCardImporter;
 
         private CommonReadTask(CardsFragment cardsFragment,
-                               @NonNull CardImporter<? extends Card> cardImporter) {
+                               @NonNull CardImporter cardImporter) {
             mCardsFragment = new WeakReference<>(cardsFragment);
             mCardImporter = cardImporter;
         }
@@ -492,7 +501,7 @@ public class CardsFragment extends ExpandableListFragment {
 
     private static class ReadTask extends CommonReadTask {
         private ReadTask(CardsFragment cardsFragment) throws ParserConfigurationException {
-            super(cardsFragment, new XmlCardFormat());
+            super(cardsFragment, new XmlOrJsonCardFormat());
         }
     }
 
@@ -607,7 +616,7 @@ public class CardsFragment extends ExpandableListFragment {
 
             if (scan.mTransitIdentity == null) {
                 try {
-                    scan.mTransitIdentity = Card.fromXml(scan.mData).parseTransitIdentity();
+                    scan.mTransitIdentity = CardSerializer.INSTANCE.fromDb(scan.mData).parseTransitIdentity();
                 } catch (Exception ex) {
                     String error = String.format("Error: %s", Utils.getErrorMessage(ex));
                     scan.mTransitIdentity = new TransitIdentity(error, null);
@@ -626,6 +635,7 @@ public class CardsFragment extends ExpandableListFragment {
                     // Used for development and testing. We should always show this.
                     textView2.setText(label);
                 } else if (Preferences.INSTANCE.getHideCardNumbers()) {
+                    textView2.setText("");
                     textView2.setVisibility(View.GONE);
                     // User doesn't want to show any card numbers.
                 } else {
@@ -654,13 +664,13 @@ public class CardsFragment extends ExpandableListFragment {
                 convertView = mLayoutInflater.inflate(R.layout.card_scan_item,
                         viewGroup, false);
             Scan scan = mScans.get(mCards.get(parent)).get(child);
-            Calendar scannedAt = GregorianCalendar.getInstance();
-            scannedAt.setTimeInMillis(scan.mScannedAt);
-            scannedAt = TripObfuscator.maybeObfuscateTS(scannedAt);
+            TimestampFull scannedAt = new TimestampFull(scan.mScannedAt, MetroTimeZone.Companion.getLOCAL());
+            scannedAt = TripObfuscator.INSTANCE.maybeObfuscateTS(scannedAt);
 
             TextView textView1 = convertView.findViewById(android.R.id.text1);
-            textView1.setText(Localizer.INSTANCE.localizeString(R.string.scanned_at_format, Utils.timeFormat(scannedAt),
-                    Utils.dateFormat(scannedAt)));
+            textView1.setText(Localizer.INSTANCE.localizeString(R.string.scanned_at_format,
+                    TimestampFormatter.INSTANCE.timeFormat(scannedAt),
+                    TimestampFormatter.INSTANCE.dateFormat(scannedAt)));
 
             return convertView;
         }

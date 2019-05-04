@@ -28,6 +28,8 @@ import au.id.micolous.metrodroid.card.CardType
 import au.id.micolous.metrodroid.card.classic.ClassicCard
 import au.id.micolous.metrodroid.card.classic.ClassicCardTransitFactory
 import au.id.micolous.metrodroid.card.classic.ClassicSector
+import au.id.micolous.metrodroid.time.TimestampFull
+import au.id.micolous.metrodroid.time.calendar2ts
 import au.id.micolous.metrodroid.transit.*
 import au.id.micolous.metrodroid.util.ImmutableByteArray
 import kotlinx.android.parcel.Parcelize
@@ -80,7 +82,7 @@ data class EasyCardTransitData internal constructor(
             return g
         }
 
-        val FACTORY = object : ClassicCardTransitFactory {
+        val FACTORY = object : ClassicCardTransitFactory() {
             override fun earlyCheck(sectors: List<ClassicSector>) = sectors[0][1].data?.let {
                 it == MAGIC
             } ?: false

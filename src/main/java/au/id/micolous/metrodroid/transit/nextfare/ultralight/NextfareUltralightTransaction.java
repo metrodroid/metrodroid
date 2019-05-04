@@ -28,6 +28,8 @@ import java.util.List;
 import java.util.TimeZone;
 
 import au.id.micolous.metrodroid.card.ultralight.UltralightCard;
+import au.id.micolous.metrodroid.time.TimestampFormatterKt;
+import au.id.micolous.metrodroid.time.TimestampFull;
 import au.id.micolous.metrodroid.transit.Station;
 import au.id.micolous.metrodroid.transit.Transaction;
 import au.id.micolous.metrodroid.transit.TransitCurrency;
@@ -108,11 +110,12 @@ public abstract class NextfareUltralightTransaction extends Transaction {
         if (mLocation == 0) {
             return null;
         }
-        return Station.unknown(mLocation);
+        return Station.Companion.unknown(mLocation);
     }
 
-    public Calendar getTimestamp() {
-        return NextfareUltralightTransitData.parseDateTime(getTimezone(), mBaseDate, mDate, mTime);
+    public TimestampFull getTimestamp() {
+        return TimestampFormatterKt.calendar2ts(
+                NextfareUltralightTransitData.parseDateTime(getTimezone(), mBaseDate, mDate, mTime));
     }
 
     protected abstract TimeZone getTimezone();
@@ -138,12 +141,12 @@ public abstract class NextfareUltralightTransaction extends Transaction {
     abstract protected boolean isBus();
 
     @Override
-    protected boolean isTapOff() {
+    public boolean isTapOff() {
         return mRecordType == 6 && !isBus();
     }
 
     @Override
-    protected boolean isTapOn() {
+    public boolean isTapOn() {
         return mRecordType == 2
                 || mRecordType == 4
                 || (mRecordType == 6 && isBus())

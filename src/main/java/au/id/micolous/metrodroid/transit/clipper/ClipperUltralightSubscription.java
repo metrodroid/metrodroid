@@ -26,6 +26,9 @@ import java.util.Calendar;
 
 import au.id.micolous.farebot.R;
 import au.id.micolous.metrodroid.multi.Localizer;
+import au.id.micolous.metrodroid.time.Timestamp;
+import au.id.micolous.metrodroid.time.TimestampFormatterKt;
+import au.id.micolous.metrodroid.time.TimestampFull;
 import au.id.micolous.metrodroid.transit.Subscription;
 import au.id.micolous.metrodroid.util.Utils;
 
@@ -55,6 +58,11 @@ class ClipperUltralightSubscription extends Subscription {
         dest.writeInt(mTripsRemaining);
         dest.writeInt(mTransferExpiry);
         dest.writeInt(mBaseDate);
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
     }
 
     public static final Creator<ClipperUltralightSubscription> CREATOR = new Creator<ClipperUltralightSubscription>() {
@@ -131,19 +139,19 @@ class ClipperUltralightSubscription extends Subscription {
 
     @Nullable
     @Override
-    public Calendar getTransferEndTimestamp() {
-        return ClipperTransitData.clipperTimestampToCalendar(mTransferExpiry * 60L);
+    public TimestampFull getTransferEndTimestamp() {
+        return TimestampFormatterKt.calendar2ts(ClipperTransitData.clipperTimestampToCalendar(mTransferExpiry * 60L));
     }
 
     @Nullable
     @Override
-    public Calendar getValidTo() {
-        return ClipperTransitData.clipperTimestampToCalendar(mBaseDate * 86400L);
+    public Timestamp getValidTo() {
+        return TimestampFormatterKt.calendar2ts(ClipperTransitData.clipperTimestampToCalendar(mBaseDate * 86400L)).toDaystamp();
     }
 
     @Nullable
     @Override
-    public Calendar getPurchaseTimestamp() {
-        return ClipperTransitData.clipperTimestampToCalendar((mBaseDate - 89) * 86400L);
+    public Timestamp getPurchaseTimestamp() {
+        return TimestampFormatterKt.calendar2ts(ClipperTransitData.clipperTimestampToCalendar((mBaseDate - 89) * 86400L)).toDaystamp();
     }
 }

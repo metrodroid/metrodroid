@@ -24,6 +24,8 @@ package au.id.micolous.metrodroid.transit.suica;
 import android.os.Parcel;
 import android.support.annotation.Nullable;
 
+import au.id.micolous.metrodroid.time.Timestamp;
+import au.id.micolous.metrodroid.time.TimestampFormatterKt;
 import au.id.micolous.metrodroid.util.NumberUtils;
 import org.apache.commons.lang3.ArrayUtils;
 
@@ -166,21 +168,19 @@ public class SuicaTrip extends Trip {
     }
 
     @Override
-    public Calendar getStartTimestamp() {
-        if (mHasEndTime && !mHasStartTime)
-            return null;
-        return mStartTimestamp;
+    public Timestamp getStartTimestamp() {
+        if (mHasStartTime)
+            return TimestampFormatterKt.calendar2ts(mStartTimestamp);
+        else
+            return TimestampFormatterKt.calendar2ts(mStartTimestamp).toDaystamp();
     }
 
     @Override
-    public Calendar getEndTimestamp() {
-        if (!mHasEndTime && mHasStartTime)
-            return null;
-        return mEndTimestamp;
-    }
-
-    public boolean hasTime() {
-        return mHasStartTime || mHasEndTime;
+    public Timestamp getEndTimestamp() {
+        if (mHasEndTime)
+            return TimestampFormatterKt.calendar2ts(mEndTimestamp);
+        else
+            return TimestampFormatterKt.calendar2ts(mEndTimestamp).toDaystamp();
     }
 
     @Override

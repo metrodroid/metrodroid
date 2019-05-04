@@ -19,7 +19,9 @@
 package au.id.micolous.metrodroid.test
 
 import au.id.micolous.metrodroid.card.cepascompat.CEPASCard
-import au.id.micolous.metrodroid.card.XmlCardFormat
+import au.id.micolous.metrodroid.multi.Log
+import au.id.micolous.metrodroid.serializers.JsonKotlinFormat
+import au.id.micolous.metrodroid.serializers.XmlCardFormat
 import au.id.micolous.metrodroid.transit.TransitCurrency
 import au.id.micolous.metrodroid.transit.ezlinkcompat.EZLinkCompatTransitData
 import kotlin.test.Test
@@ -32,6 +34,7 @@ class EZLinkCompatTest : CardReaderWithAssetDumpsTest(XmlCardFormat()) {
     @Test
     fun testCardInfo() {
         val c = loadCard<CEPASCard>("cepas/legacy.xml")
+        Log.d("EZLinkCompatTest", "reserial = " + JsonKotlinFormat().writeCard(c))
         val p = parseCard<EZLinkCompatTransitData>(c)
         assertEquals(TransitCurrency.SGD(897), p.balance)
     }

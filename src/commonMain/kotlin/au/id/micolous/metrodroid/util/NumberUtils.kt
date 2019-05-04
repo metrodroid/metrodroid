@@ -21,7 +21,12 @@
 
 package au.id.micolous.metrodroid.util
 
+val Byte.hexString: String get() = NumberUtils.byteToHex(this)
+val Int.hexString: String get() = NumberUtils.intToHex(this)
+val Long.hexString: String get() = NumberUtils.longToHex(this)
+
 object NumberUtils {
+    fun byteToHex(v: Byte) = "0x" + v.toInt().toString(16)
     fun intToHex(v: Int) = "0x" + v.toString(16)
     fun longToHex(v: Long): String = "0x" + v.toString(16)
     fun convertBCDtoInteger(data: Int): Int {
@@ -72,17 +77,17 @@ object NumberUtils {
         val minDigit = groups.sum()
         val unformatted = zeroPad(value, minDigit)
         val numDigit = unformatted.length
-        var last = numDigit - minDigit;
+        var last = numDigit - minDigit
         val ret = StringBuilder()
         ret.append(unformatted, 0, last)
         for (g in groups) {
             ret.append(unformatted, last, last + g).append(separator)
             last += g
         }
-        return ret.substring(0, ret.length - 1);
+        return ret.substring(0, ret.length - 1)
     }
 
-    fun digitsOf(integer: Int): IntArray {
+    private fun digitsOf(integer: Int): IntArray {
         return digitsOf(integer.toString())
     }
 
@@ -90,22 +95,17 @@ object NumberUtils {
         return digitsOf(integer.toString())
     }
 
-    fun digitsOf(integer: String): IntArray = integer.map { String(charArrayOf(it)).toInt() }.toIntArray()
+    private fun digitsOf(integer: String): IntArray = integer.map { String(charArrayOf(it)).toInt() }.toIntArray()
 
-    fun luhnChecksum(cardNumber: String): Int {
-        val digits = digitsOf(cardNumber)
-        var checksum = 0
-        val q = cardNumber.length - 1
-
-        for (i in 0 until cardNumber.length) {
-            if (i % 2 == 1) {
+    private fun luhnChecksum(cardNumber: String): Int {
+        val checksum = digitsOf(cardNumber).reversed().withIndex().sumBy { (i, dig) ->
+            if (i % 2 == 1)
                 // we treat it as a 1-indexed array
                 // so the first digit is odd
-                checksum += digitsOf(digits[q - i] * 2).sum()
-            } else {
-                checksum += digits[q - i]
+                digitsOf(dig * 2).sum()
+             else
+                dig
             }
-        }
 
         //Log.d(TAG, String.format("luhnChecksum(%s) = %d", cardNumber, checksum));
         return checksum % 10

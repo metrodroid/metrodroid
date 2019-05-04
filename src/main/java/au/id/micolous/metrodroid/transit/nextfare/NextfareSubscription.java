@@ -21,6 +21,8 @@ package au.id.micolous.metrodroid.transit.nextfare;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import au.id.micolous.metrodroid.time.TimestampFormatterKt;
+import au.id.micolous.metrodroid.time.TimestampFull;
 import au.id.micolous.metrodroid.transit.Subscription;
 import au.id.micolous.metrodroid.transit.nextfare.record.NextfareBalanceRecord;
 import au.id.micolous.metrodroid.transit.nextfare.record.NextfareTravelPassRecord;
@@ -62,8 +64,13 @@ public class NextfareSubscription extends Subscription implements Parcelable {
     }
 
     @Override
-    public Calendar getValidTo() {
-        return mValidTo;
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public TimestampFull getValidTo() {
+        return TimestampFormatterKt.calendar2ts(mValidTo);
     }
 
     @Override

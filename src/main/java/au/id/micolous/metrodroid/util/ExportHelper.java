@@ -26,25 +26,22 @@ import android.database.Cursor;
 import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.util.Log;
 
+import au.id.micolous.metrodroid.card.*;
+import au.id.micolous.metrodroid.serializers.*;
+import au.id.micolous.metrodroid.time.MetroTimeZone;
+import au.id.micolous.metrodroid.time.TimestampFormatter;
+import au.id.micolous.metrodroid.time.TimestampFull;
+import kotlin.text.Charsets;
 import org.jetbrains.annotations.NonNls;
 
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.security.MessageDigest;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.Set;
+import java.util.*;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipOutputStream;
 
-import au.id.micolous.metrodroid.card.Card;
-import au.id.micolous.metrodroid.card.CardImporter;
-import au.id.micolous.metrodroid.card.CardsExporter;
-import au.id.micolous.metrodroid.card.XmlCardFormat;
-import au.id.micolous.metrodroid.card.XmlGenericCardFormat;
 import au.id.micolous.metrodroid.provider.CardDBHelper;
 import au.id.micolous.metrodroid.provider.CardProvider;
 import au.id.micolous.metrodroid.provider.CardsTableColumns;
@@ -60,7 +57,7 @@ public final class ExportHelper {
     @NonNls
     private static String strongHash(Cursor cursor) {
         @NonNls String serial = cursor.getString(cursor.getColumnIndex(CardsTableColumns.TAG_SERIAL)).trim();
-        @NonNls String data = XmlGenericCardFormat.cutXmlDef(
+        @NonNls String data = XmlUtils.INSTANCE.cutXmlDef(
                 cursor.getString(cursor.getColumnIndex(CardsTableColumns.DATA)).trim());
         MessageDigest md;
         try {
@@ -73,7 +70,7 @@ public final class ExportHelper {
         md.update(serial.getBytes(Utils.getUTF8()));
         md.update(data.getBytes(Utils.getUTF8()));
 
-        return Utils.getHexString(md.digest());
+        return ImmutableByteArray.Companion.getHexString(md.digest());
     }
 
     public static Set<Long> findDuplicates(Context context) {
@@ -85,7 +82,7 @@ public final class ExportHelper {
             @NonNls String hash = strongHash(cursor);
 
             if (hashes.contains(hash)) {
-                res.add (cursor.getLong(cursor.getColumnIndex(CardsTableColumns._ID)));
+                res.add(cursor.getLong(cursor.getColumnIndex(CardsTableColumns._ID)));
                 continue;
             }
 
@@ -95,24 +92,56 @@ public final class ExportHelper {
         return res;
     }
 
-    public static void exportCards(@NonNull final OutputStream os,
-                                   @NonNull final CardsExporter<Card> exporter,
-                                   @NonNull final Context context) throws Exception {
-        final Cursor cursor = CardDBHelper.createCursor(context);
-        exporter.writeCards(os, readCards(cursor));
+    private static String makeFilename(String tagId,
+                                       TimestampFull scannedAt,
+                                       String format, int gen) {
+        String dt = scannedAt.isoDateTimeFilenameFormat();
+        if (gen != 0)
+            return String.format(Locale.ENGLISH, "Metrodroid-%s-%s-%d.%s",
+                    tagId, dt, gen, format);
+        return String.format(Locale.ENGLISH, "Metrodroid-%s-%s.%s",
+                tagId, dt, format);
     }
 
-    public static void exportCardsXml(OutputStream os, Context context) throws Exception {
-        XmlCardFormat f = new XmlCardFormat();
+    public static String makeFilename(Card card) {
+        return makeFilename(card.getTagId().toHexString(),
+                card.getScannedAt(), "json", 0);
+    }
+
+    public static void exportCardsZip(OutputStream os, Context context) throws Exception {
         Cursor cursor = CardDBHelper.createCursor(context);
-        f.writeCardsFromString(os, readCardsXml(cursor));
+        ZipOutputStream zo = new ZipOutputStream(os);
+        Set<String> used = new HashSet<>();
+        while (cursor.moveToNext()) {
+            String content = cursor.getString(cursor.getColumnIndex(CardsTableColumns.DATA)).trim();
+            long scannedAt = cursor.getLong(cursor.getColumnIndex(CardsTableColumns.SCANNED_AT));
+            String tagId = cursor.getString(cursor.getColumnIndex(CardsTableColumns.TAG_SERIAL));
+            String name;
+            int gen = 0;
+            do
+                name = makeFilename(tagId, new TimestampFull(scannedAt,
+                        MetroTimeZone.Companion.getLOCAL()),
+                        content.charAt(0) == '<' ? "xml" : "json", gen++);
+            while (used.contains(name));
+            used.add(name);
+            ZipEntry ze = new ZipEntry(name);
+            ze.setTime(scannedAt);
+            zo.putNextEntry(ze);
+            zo.write(content.getBytes(Charsets.UTF_8));
+            zo.closeEntry();
+        }
+        zo.close();
+    }
+
+    public static String exportCardsXml(Context context) throws Exception {
+        return XmlUtils.INSTANCE.concatCardsFromString(
+                readCardsXml(CardDBHelper.createCursor(context)));
     }
 
     @NonNull
     public static Collection<Uri> importCards(@NonNull final InputStream is,
-                                              @NonNull final CardImporter<? extends Card> importer,
+                                              @NonNull final CardImporter importer,
                                               @NonNull final Context context) throws Exception {
-
         Iterator<? extends Card> it = importer.readCards(is);
         if (it == null) {
             return Collections.emptyList();
@@ -123,7 +152,7 @@ public final class ExportHelper {
 
     @NonNull
     public static Collection<Uri> importCards(@NonNull final String s,
-                                              @NonNull final CardImporter<? extends Card> importer,
+                                              @NonNull final CardImporter importer,
                                               @NonNull final Context context) throws Exception {
         Iterator<? extends Card> it = importer.readCards(s);
         if (it == null) {
@@ -131,18 +160,6 @@ public final class ExportHelper {
         }
 
         return importCards(it, context);
-    }
-
-    @Nullable
-    public static Uri importCard(@NonNull final InputStream is,
-                                 @NonNull final CardImporter<? extends Card> importer,
-                                 @NonNull final Context context) throws Exception {
-        Card c = importer.readCard(is);
-        if (c == null) {
-            return null;
-        }
-
-        return importCard(c, context);
     }
 
     private static Collection<Uri> importCards(@NonNull final Iterator<? extends Card> it,
@@ -160,9 +177,9 @@ public final class ExportHelper {
     private static Uri importCard(@NonNull final Card c,
                                   @NonNull final Context context) {
         ContentValues cv = new ContentValues();
-        cv.put(CardsTableColumns.TYPE, c.getCardType().toString());
+        cv.put(CardsTableColumns.TYPE, c.getCardType().toInteger());
         cv.put(CardsTableColumns.TAG_SERIAL, c.getTagId().toHexString());
-        cv.put(CardsTableColumns.DATA, c.toXml());
+        cv.put(CardsTableColumns.DATA, CardSerializer.INSTANCE.toPersist(c));
         cv.put(CardsTableColumns.SCANNED_AT, c.getScannedAt().getTimeInMillis());
         if (c.getLabel() != null) {
             cv.put(CardsTableColumns.LABEL, c.getLabel());
@@ -178,10 +195,6 @@ public final class ExportHelper {
     public static Iterator<String> readCardsXml(Cursor cursor) {
         return new IteratorTransformer<>(new CursorIterator(cursor),
                 ExportHelper::readCardDataFromCursor);
-    }
-
-    public static Iterator<Card> readCards(Cursor cursor) {
-        return new IteratorTransformer<>(readCardsXml(cursor), Card::fromXml);
     }
 
     public static int deleteSet(@NonNull final Context context, Iterable<Long> tf) {

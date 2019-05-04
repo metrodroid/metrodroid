@@ -52,6 +52,12 @@ public class TroikaUltralightTransitData extends TransitData {
     };
 
     public final static UltralightCardTransitFactory FACTORY = new UltralightCardTransitFactory() {
+        @NonNull
+        @Override
+        public List<CardInfo> getAllCards() {
+            return Collections.emptyList();
+        }
+
         @Override
         public boolean check(@NonNull UltralightCard card) {
             return TroikaBlock.check(card.getPage(4).getData());
@@ -103,6 +109,11 @@ public class TroikaUltralightTransitData extends TransitData {
     @Override
     public void writeToParcel(Parcel dest, int i) {
         mBlock.writeToParcel(dest, i);
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
     }
 
     private TroikaUltralightTransitData(Parcel p) {

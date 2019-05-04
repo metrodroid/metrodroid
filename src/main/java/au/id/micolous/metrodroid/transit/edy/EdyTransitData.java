@@ -26,8 +26,8 @@ import android.os.Parcel;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
+import au.id.micolous.metrodroid.card.felica.FelicaConsts;
 import au.id.micolous.metrodroid.util.NumberUtils;
-import org.apache.commons.lang3.ArrayUtils;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -45,12 +45,11 @@ import au.id.micolous.metrodroid.transit.CardInfo;
 import au.id.micolous.metrodroid.transit.TransitCurrency;
 import au.id.micolous.metrodroid.transit.TransitData;
 import au.id.micolous.metrodroid.transit.TransitIdentity;
-import au.id.micolous.metrodroid.util.Utils;
 import au.id.micolous.metrodroid.util.ImmutableByteArray;
 
 public class EdyTransitData extends TransitData {
     // defines
-    public static final int SYSTEMCODE_EDY = 0xfe00;         // Edy (=共通領域)
+    private static final int SYSTEMCODE_EDY = FelicaConsts.SYSTEMCODE_COMMON;
 
     private static final CardInfo CARD_INFO = new CardInfo.Builder()
             .setImageId(R.drawable.edy_card)
@@ -59,9 +58,9 @@ public class EdyTransitData extends TransitData {
             .setCardType(CardType.FeliCa)
             .build();
 
-    public static final int FELICA_SERVICE_EDY_ID = 0x110B;
-    public static final int FELICA_SERVICE_EDY_BALANCE = 0x1317;
-    public static final int FELICA_SERVICE_EDY_HISTORY = 0x170F;
+    public static final int SERVICE_EDY_ID = 0x110B;
+    public static final int SERVICE_EDY_BALANCE = 0x1317;
+    public static final int SERVICE_EDY_HISTORY = 0x170F;
     public static final int FELICA_MODE_EDY_DEBIT = 0x20;
     public static final int FELICA_MODE_EDY_CHARGE = 0x02;
     public static final int FELICA_MODE_EDY_GIFT = 0x04;
@@ -89,21 +88,21 @@ public class EdyTransitData extends TransitData {
 
     private EdyTransitData(FelicaCard card) {
         // card ID is in block 0, bytes 2-9, big-endian ordering
-        FelicaService serviceID = card.getSystem(SYSTEMCODE_EDY).getService(FELICA_SERVICE_EDY_ID);
+        FelicaService serviceID = card.getSystem(SYSTEMCODE_EDY).getService(SERVICE_EDY_ID);
         List<FelicaBlock> blocksID = serviceID.getBlocks();
         FelicaBlock blockID = blocksID.get(0);
         ImmutableByteArray dataID = blockID.getData();
         mSerialNumber = dataID.sliceOffLen(2, 8);
 
         // current balance info in block 0, bytes 0-3, little-endian ordering
-        FelicaService serviceBalance = card.getSystem(SYSTEMCODE_EDY).getService(FELICA_SERVICE_EDY_BALANCE);
+        FelicaService serviceBalance = card.getSystem(SYSTEMCODE_EDY).getService(SERVICE_EDY_BALANCE);
         List<FelicaBlock> blocksBalance = serviceBalance.getBlocks();
         FelicaBlock blockBalance = blocksBalance.get(0);
         ImmutableByteArray dataBalance = blockBalance.getData();
         mCurrentBalance = dataBalance.byteArrayToIntReversed(0, 3);
 
         // now read the transaction history
-        FelicaService serviceHistory = card.getSystem(SYSTEMCODE_EDY).getService(FELICA_SERVICE_EDY_HISTORY);
+        FelicaService serviceHistory = card.getSystem(SYSTEMCODE_EDY).getService(SERVICE_EDY_HISTORY);
         List<EdyTrip> trips = new ArrayList<>();
 
         // Read blocks in order
@@ -119,8 +118,8 @@ public class EdyTransitData extends TransitData {
 
     public final static FelicaCardTransitFactory FACTORY = new FelicaCardTransitFactory() {
         @Override
-        public boolean earlyCheck(int[] systemCodes) {
-            return ArrayUtils.contains(systemCodes, SYSTEMCODE_EDY);
+        public boolean earlyCheck(List<Integer> systemCodes) {
+            return systemCodes.contains(SYSTEMCODE_EDY);
         }
 
         @NonNull
@@ -165,6 +164,11 @@ public class EdyTransitData extends TransitData {
     public void writeToParcel(Parcel parcel, int flags) {
         parcel.writeTypedList(mTrips);
         parcel.writeString(mSerialNumber.toHexString());
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
     }
 }
 

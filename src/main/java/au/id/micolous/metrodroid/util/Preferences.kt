@@ -42,8 +42,8 @@ actual object Preferences {
     private const val PREF_OBFUSCATE_TRIP_FARES = "pref_obfuscate_trip_fares"
     private const val PREF_OBFUSCATE_BALANCE = "pref_obfuscate_balance"
 
-    const val PREF_LOCALISE_PLACES = "pref_localise_places"
-    const val PREF_LOCALISE_PLACES_HELP = "pref_localise_places_help"
+    private const val PREF_LOCALISE_PLACES = "pref_localise_places"
+    private const val PREF_LOCALISE_PLACES_HELP = "pref_localise_places_help"
     private const val PREF_CONVERT_TIMEZONES = "pref_convert_timezones"
     const val PREF_THEME = "pref_theme"
     @VisibleForTesting

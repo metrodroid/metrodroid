@@ -40,6 +40,7 @@ import au.id.micolous.metrodroid.card.classic.ClassicCardTransitFactory;
 import au.id.micolous.metrodroid.card.classic.ClassicSector;
 import au.id.micolous.metrodroid.multi.FormattedString;
 import au.id.micolous.metrodroid.multi.Localizer;
+import au.id.micolous.metrodroid.time.TimestampFormatterKt;
 import au.id.micolous.metrodroid.transit.CardInfo;
 import au.id.micolous.metrodroid.transit.TransitBalance;
 import au.id.micolous.metrodroid.transit.TransitBalanceStored;
@@ -147,6 +148,11 @@ public class MetroQTransitData extends TransitData {
         dest.writeInt(mProduct);
     }
 
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
     public static final Creator<MetroQTransitData> CREATOR = new Creator<MetroQTransitData>() {
         @Override
         public MetroQTransitData createFromParcel(Parcel in) {
@@ -192,7 +198,8 @@ public class MetroQTransitData extends TransitData {
                 name = Integer.toString(mProduct);
                 break;
         }
-        return new TransitBalanceStored(TransitCurrency.USD(mBalance), name, mExpiry);
+        return new TransitBalanceStored(TransitCurrency.USD(mBalance), name,
+                TimestampFormatterKt.calendar2ts(mExpiry));
     }
 
     @Override

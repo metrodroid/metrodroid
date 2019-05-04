@@ -23,6 +23,11 @@ import android.os.Parcel;
 import android.os.Parcelable;
 import android.support.annotation.NonNull;
 
+import au.id.micolous.metrodroid.time.Daystamp;
+import au.id.micolous.metrodroid.time.Timestamp;
+import au.id.micolous.metrodroid.time.TimestampFormatter;
+import au.id.micolous.metrodroid.time.TimestampFull;
+import au.id.micolous.metrodroid.transit.*;
 import au.id.micolous.metrodroid.util.NumberUtils;
 import org.apache.commons.lang3.ArrayUtils;
 import org.jetbrains.annotations.NonNls;
@@ -37,11 +42,6 @@ import au.id.micolous.metrodroid.card.CardType;
 import au.id.micolous.metrodroid.card.desfire.DesfireApplication;
 import au.id.micolous.metrodroid.card.desfire.DesfireCard;
 import au.id.micolous.metrodroid.card.desfire.DesfireCardTransitFactory;
-import au.id.micolous.metrodroid.transit.CardInfo;
-import au.id.micolous.metrodroid.transit.Transaction;
-import au.id.micolous.metrodroid.transit.TransactionTrip;
-import au.id.micolous.metrodroid.transit.TransitData;
-import au.id.micolous.metrodroid.transit.TransitIdentity;
 import au.id.micolous.metrodroid.transit.en1545.En1545Lookup;
 import au.id.micolous.metrodroid.transit.en1545.En1545TransitData;
 import au.id.micolous.metrodroid.transit.intercode.IntercodeTransitData;
@@ -64,7 +64,7 @@ public class AdelaideMetrocardTransitData extends En1545TransitData {
     private static final int APP_ID = 0xb006f2;
     // Matches capitalisation used by agency (and on the card).
     private static final String NAME = "metroCARD";
-    private final List<TransactionTrip> mTrips;
+    private final List<TransactionTripAbstract> mTrips;
     private final List<AdelaideSubscription> mSubs;
     private final AdelaideSubscription mPurse;
 
@@ -125,7 +125,7 @@ public class AdelaideMetrocardTransitData extends En1545TransitData {
         // 1d: empty
         // 1e: const
 
-        mTrips = TransactionTrip.merge(transactionList);
+        mTrips = TransactionTrip.Companion.merge(transactionList);
     }
 
     @SuppressWarnings("unchecked")
@@ -200,7 +200,12 @@ public class AdelaideMetrocardTransitData extends En1545TransitData {
     }
 
     @Override
-    public List<TransactionTrip> getTrips() {
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public List<TransactionTripAbstract> getTrips() {
         return mTrips;
     }
 
@@ -222,11 +227,14 @@ public class AdelaideMetrocardTransitData extends En1545TransitData {
                         Integer.toString(mPurse.getMachineId())));
             }
 
-            Calendar purchaseTS = mPurse.getPurchaseTimestamp();
+            Timestamp purchaseTS = mPurse.getPurchaseTimestamp();
             if (purchaseTS != null) {
-                purchaseTS = TripObfuscator.maybeObfuscateTS(purchaseTS);
+                if (purchaseTS instanceof TimestampFull)
+                    purchaseTS = TripObfuscator.INSTANCE.maybeObfuscateTS((TimestampFull) purchaseTS);
+                else
+                    purchaseTS = TripObfuscator.INSTANCE.maybeObfuscateTS((Daystamp) purchaseTS);
 
-                items.add(new ListItem(R.string.issue_date, Utils.dateFormat(purchaseTS)));
+                items.add(new ListItem(R.string.issue_date, TimestampFormatter.INSTANCE.dateFormat(purchaseTS)));
             }
 
             Integer purseId = mPurse.getId();

@@ -36,6 +36,7 @@ import au.id.micolous.metrodroid.transit.TransitIdentity;
 import au.id.micolous.metrodroid.ui.ListItem;
 import au.id.micolous.metrodroid.util.Utils;
 import au.id.micolous.metrodroid.util.ImmutableByteArray;
+import org.jetbrains.annotations.NotNull;
 
 public class ClipperUltralightTransitData extends TransitData {
 
@@ -58,6 +59,12 @@ public class ClipperUltralightTransitData extends TransitData {
     private final ClipperUltralightSubscription mSub;
 
     public final static UltralightCardTransitFactory FACTORY = new UltralightCardTransitFactory() {
+        @NotNull
+        @Override
+        public List<CardInfo> getAllCards() {
+            return Collections.emptyList();
+        }
+
         @Override
         public boolean check(@NonNull UltralightCard card) {
             return card.getPage(4).getData().get(0) == 0x13;
@@ -91,6 +98,11 @@ public class ClipperUltralightTransitData extends TransitData {
 	    dest.writeList(mTrips);
 	    dest.writeInt(mType);
 	    mSub.writeToParcel(dest, flags);
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
     }
 
     @SuppressWarnings("unchecked")

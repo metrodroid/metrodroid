@@ -19,64 +19,40 @@
 package au.id.micolous.metrodroid.test
 
 import android.os.Build
-import java.time.ZoneOffset
-import java.util.Calendar
-import java.util.TimeZone
-
 import au.id.micolous.metrodroid.card.desfire.DesfireApplication
 import au.id.micolous.metrodroid.card.desfire.DesfireCard
 import au.id.micolous.metrodroid.card.desfire.files.DesfireFile
 import au.id.micolous.metrodroid.transit.TransitCurrency
-import au.id.micolous.metrodroid.transit.TransitData
-import au.id.micolous.metrodroid.transit.TransitIdentity
 import au.id.micolous.metrodroid.transit.opal.OpalData
 import au.id.micolous.metrodroid.transit.opal.OpalTransitData
-import au.id.micolous.metrodroid.util.Utils
 import au.id.micolous.metrodroid.util.ImmutableByteArray
-
-import kotlin.test.BeforeTest
-import kotlin.test.AfterTest
-import kotlin.test.Test
-import kotlin.test.assertEquals
-import kotlin.test.assertNull
-import kotlin.test.assertTrue
-import kotlin.test.assertNotNull
+import au.id.micolous.metrodroid.util.Utils
+import java.time.ZoneOffset
+import kotlin.test.*
 
 /**
  * Tests for Opal card
  */
 class OpalTest {
-    private var originalTz: TimeZone? = null
-
-    @BeforeTest
-    fun setUp() {
-        originalTz = TimeZone.getDefault()
-        TimeZone.setDefault(OpalTransitData.TIME_ZONE)
-    }
-
-    @AfterTest
-    fun tearDown() {
-        TimeZone.setDefault(originalTz)
-    }
-
     private fun constructOpalCardFromHexString(s: String): DesfireCard {
         val demoData = ImmutableByteArray.fromHex(s)
 
         // Construct a card to hold the data.
-        val f = DesfireFile.create(OpalTransitData.FILE_ID, null, demoData)
-        val a = DesfireApplication(OpalTransitData.APP_ID, listOf(f))
-        return DesfireCard(ImmutableByteArray.fromHex("00010203"),
-                Calendar.getInstance(), null,
-                listOf(a))
+        val f = DesfireFile.create(ImmutableByteArray.fromHex("00000000000000"), demoData)
+        val a = DesfireApplication(mapOf(OpalTransitData.FILE_ID to f.raw), emptyList())
+        val c = DesfireCard(
+                ImmutableByteArray.empty(),
+                mapOf(OpalTransitData.APP_ID to a))
+        assertEquals(1, c.applications.size)
+        assertNull(message = "Opal shouldn't have a valid AID",
+                actual = DesfireApplication.getMifareAID(OpalTransitData.APP_ID))
+        return c
     }
 
     @Test
     fun testDemoCard() {
         // This is mocked-up data, probably has a wrong checksum.
         val c = constructOpalCardFromHexString("87d61200e004002a0014cc44a4133930")
-        assertEquals(1, c.applications.size)
-        assertNull(message = "Opal shouldn't have a valid AID",
-                actual = c.getApplication(OpalTransitData.APP_ID)!!.mifareAID)
 
         // Test TransitIdentity
         val i = c.parseTransitIdentity()
@@ -86,12 +62,12 @@ class OpalTest {
 
         // Test TransitData
         val d = c.parseTransitData()
-        assertTrue(message = "TransitData must be instance of OpalTransitData",
-                actual = d is OpalTransitData)
+        assertTrue(d is OpalTransitData, "TransitData must be instance of OpalTransitData")
 
-        assertEquals("3085220012345670", d.serialNumber)
-        assertEquals(TransitCurrency.AUD(336), d.balance)
-        assertEquals(0, d.subscriptions!!.size)
+        val o = d as OpalTransitData?
+        assertEquals("3085220012345670", o!!.serialNumber)
+        assertEquals(TransitCurrency.AUD(336), o.balance)
+        assertEquals(0, o.subscriptions!!.size)
         // 2015-10-05 09:06 UTC+11
         assertEquals("2015-10-04 22:06", Utils.isoDateTimeFormat(d.lastTransactionTime))
         assertEquals(OpalData.MODE_BUS, d.lastTransactionMode)

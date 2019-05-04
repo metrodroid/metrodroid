@@ -138,7 +138,7 @@ public class NewShenzhenTransitData extends ChinaTransitData {
         ISO7816File file15 = getFile(card, 0x15);
         if (file15 != null)
             return file15.getBinaryData();
-        ImmutableByteArray szttag = ISO7816TLV.INSTANCE.findBERTLV(card.getAppData(), "a5", true);
+        ImmutableByteArray szttag = ISO7816TLV.INSTANCE.findBERTLV(card.getAppFci(), "a5", true);
         if (szttag == null)
             return null;
         return ISO7816TLV.INSTANCE.findBERTLV(szttag, "8c", false);

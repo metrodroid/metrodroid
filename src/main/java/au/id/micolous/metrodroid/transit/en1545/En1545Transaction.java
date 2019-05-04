@@ -24,6 +24,8 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.annotation.VisibleForTesting;
 
+import au.id.micolous.metrodroid.time.Timestamp;
+import au.id.micolous.metrodroid.time.TimestampFormatterKt;
 import org.jetbrains.annotations.NonNls;
 
 import java.util.Calendar;
@@ -186,7 +188,7 @@ public abstract class En1545Transaction extends Transaction {
             return Collections.emptyList();
         }
 
-        return st.getHumanReadableLineIDs();
+        return st.getHumanReadableLineIds();
     }
 
     public int getPassengerCount() {
@@ -230,8 +232,8 @@ public abstract class En1545Transaction extends Transaction {
         return getStation(getStationId());
     }
 
-    public Calendar getTimestamp() {
-        return mParsed.getTimeStamp(EVENT, getLookup().getTimeZone());
+    public Timestamp getTimestamp() {
+        return TimestampFormatterKt.calendar2ts(mParsed.getTimeStamp(EVENT, getLookup().getTimeZone()));
     }
 
     private static Trip.Mode eventCodeToMode(int ec) {
@@ -291,13 +293,13 @@ public abstract class En1545Transaction extends Transaction {
     }
 
     @Override
-    protected boolean isTapOff() {
+    public boolean isTapOff() {
         int eventCode = getEventType();
         return eventCode == EVENT_TYPE_EXIT || eventCode == EVENT_TYPE_EXIT_TRANSFER;
     }
 
     @Override
-    protected boolean isTransfer() {
+    public boolean isTransfer() {
         int eventCode = getEventType();
         return eventCode == EVENT_TYPE_BOARD_TRANSFER || eventCode == EVENT_TYPE_EXIT_TRANSFER;
     }
@@ -322,8 +324,7 @@ public abstract class En1545Transaction extends Transaction {
         return getClass().getSimpleName() + mParsed.toString();
     }
 
-
-    protected boolean isRejected() {
+    public boolean isRejected() {
         // 0x2: The tap-on was rejected (insufficient funds, Adelaide Metrocard).
         // 0xb: The tap-on was rejected (outside of validity zone, RicaricaMi).
         // Successful events don't set EVENT_RESULT or set it to 0.

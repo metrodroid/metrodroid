@@ -158,6 +158,11 @@ public class BilheteUnicoSPTransitData extends TransitData {
     }
 
     @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
     @Nullable
     public TransitCurrency getBalance() {
         return TransitCurrency.BRL(mCredit);

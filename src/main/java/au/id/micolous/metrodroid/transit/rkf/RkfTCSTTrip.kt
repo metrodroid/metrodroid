@@ -19,6 +19,8 @@
 
 package au.id.micolous.metrodroid.transit.rkf
 
+import au.id.micolous.metrodroid.time.TimestampFull
+import au.id.micolous.metrodroid.time.calendar2ts
 import au.id.micolous.metrodroid.transit.Station
 import au.id.micolous.metrodroid.transit.TransitCurrency
 import au.id.micolous.metrodroid.transit.Trip
@@ -37,10 +39,10 @@ data class RkfTCSTTrip(private val mParsed: En1545Parsed,
     private val passengerCount: Int
         get() = (1..3).sumBy { mParsed.getIntOrZero(passengerTotal(it)) }
 
-    val startTimestamp: Calendar
+    val startTimestamp: TimestampFull
         get() = parseDateTime(mParsed.getIntOrZero(START_TIME), mLookup.timeZone)
 
-    val endTimestamp: Calendar
+    val endTimestamp: TimestampFull
         get() = parseDateTime(mParsed.getIntOrZero(START_TIME) + mParsed.getIntOrZero(DESTINATION_TIME), mLookup.timeZone)
 
     val fare: TransitCurrency
@@ -80,7 +82,8 @@ data class RkfTCSTTrip(private val mParsed: En1545Parsed,
                 val previous: RkfTransaction? = if (index == 0) null else mTransactions[index - 1]
                 // Case 3: transfer without checkin transaction. Happens if checkin went out of the log.
                 if (previous == null) {
-                    legs.add(RkfTripLeg(mStartTimestamp = startTimestamp, mEndTimestamp = transaction.timestamp,
+                    legs.add(RkfTripLeg(mStartTimestamp = startTimestamp,
+                            mEndTimestamp = transaction.timestamp,
                             mStartStation = startStation, mEndStation = transaction.station,
                             mFare = fare, mPassengerCount = passengerCount, mMode = mode,
                             mTransfer = false,
@@ -89,7 +92,8 @@ data class RkfTCSTTrip(private val mParsed: En1545Parsed,
                 }
                 // Case 4: pair of checkin and transfer
                 if (index == 1 && isCheckin(previous)) {
-                    legs.add(RkfTripLeg(mStartTimestamp = startTimestamp, mEndTimestamp = transaction.timestamp,
+                    legs.add(RkfTripLeg(mStartTimestamp = startTimestamp,
+                            mEndTimestamp = transaction.timestamp,
                             mStartStation = startStation, mEndStation = transaction.station,
                             mFare = fare, mPassengerCount = passengerCount, mMode = previous.mode,
                             mTransfer = false,
@@ -97,7 +101,8 @@ data class RkfTCSTTrip(private val mParsed: En1545Parsed,
                     continue
                 }
                 // Case 5: pair of transfer and transfer
-                legs.add(RkfTripLeg(mStartTimestamp = previous.timestamp, mEndTimestamp = transaction.timestamp,
+                legs.add(RkfTripLeg(mStartTimestamp = previous.timestamp!!,
+                        mEndTimestamp = transaction.timestamp,
                         mStartStation = previous.station, mEndStation = transaction.station,
                         mFare = null, mPassengerCount = passengerCount, mMode = previous.mode,
                         mTransfer = true,
@@ -107,7 +112,7 @@ data class RkfTCSTTrip(private val mParsed: En1545Parsed,
             val previous = if (previousIdx >= 0) mTransactions[previousIdx] else null
             // Case 6: pair of transfer and checkout or checkout missing
             if (previous != null && !isCheckin(previous)) {
-                legs.add(RkfTripLeg(mStartTimestamp = previous.timestamp, mEndTimestamp = if (checkoutCompleted) endTimestamp else null,
+                legs.add(RkfTripLeg(mStartTimestamp = previous.timestamp!!, mEndTimestamp = if (checkoutCompleted) endTimestamp else null,
                         mStartStation = previous.station, mEndStation = endStation,
                         mFare = null, mPassengerCount = passengerCount, mMode = previous.mode,
                         mTransfer = true,
@@ -137,11 +142,11 @@ data class RkfTCSTTrip(private val mParsed: En1545Parsed,
             g.timeInMillis
         }()
 
-        private fun parseDateTime(value: Int, timeZone: TimeZone): Calendar {
+        private fun parseDateTime(value: Int, timeZone: TimeZone): TimestampFull {
             val g = GregorianCalendar(timeZone)
             g.timeInMillis = EPOCH2000
             g.add(Calendar.MINUTE, value)
-            return g
+            return calendar2ts(g)!!
         }
 
         private const val PRICE = "Price"

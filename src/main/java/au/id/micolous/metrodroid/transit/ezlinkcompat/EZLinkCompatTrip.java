@@ -29,6 +29,8 @@ import android.support.annotation.Nullable;
 import java.util.Calendar;
 
 import au.id.micolous.metrodroid.card.cepascompat.CEPASCompatTransaction;
+import au.id.micolous.metrodroid.time.TimestampFormatterKt;
+import au.id.micolous.metrodroid.time.TimestampFull;
 import au.id.micolous.metrodroid.transit.Station;
 import au.id.micolous.metrodroid.transit.TransitCurrency;
 import au.id.micolous.metrodroid.transit.Trip;
@@ -60,8 +62,9 @@ public class EZLinkCompatTrip extends Trip {
     }
 
     @Override
-    public Calendar getStartTimestamp() {
-        return mTransaction.getTimestamp();
+    public TimestampFull getStartTimestamp() {
+        return TimestampFormatterKt.calendar2ts(EZLinkTransitData.Companion.timestampToCalendar(
+                mTransaction.getUnixDate() - 788947200 + 16 * 3600));
     }
 
     @Override
@@ -95,13 +98,13 @@ public class EZLinkCompatTrip extends Trip {
                 || mTransaction.getUserData().startsWith("BUS")))
             return null;
         if (type == CEPASTransaction.TransactionType.CREATION)
-            return Station.nameOnly(mTransaction.getUserData());
+            return Station.Companion.nameOnly(mTransaction.getUserData());
         if (mTransaction.getUserData().charAt(3) == '-'
                 || mTransaction.getUserData().charAt(3) == ' ') {
             String startStationAbbr = mTransaction.getUserData().substring(0, 3);
-            return EZLinkTransitData.getStation(startStationAbbr);
+            return EZLinkTransitData.Companion.getStation(startStationAbbr);
         }
-        return Station.nameOnly(mTransaction.getUserData());
+        return Station.Companion.nameOnly(mTransaction.getUserData());
     }
 
     @SuppressWarnings("MagicCharacter")
@@ -112,7 +115,7 @@ public class EZLinkCompatTrip extends Trip {
         if (mTransaction.getUserData().charAt(3) == '-'
                 || mTransaction.getUserData().charAt(3) == ' ') {
             String endStationAbbr = mTransaction.getUserData().substring(4, 7);
-            return EZLinkTransitData.getStation(endStationAbbr);
+            return EZLinkTransitData.Companion.getStation(endStationAbbr);
         }
         return null;
     }

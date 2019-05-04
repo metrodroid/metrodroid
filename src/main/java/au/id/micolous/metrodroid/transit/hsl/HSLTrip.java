@@ -23,12 +23,13 @@ import android.os.Parcel;
 import android.support.annotation.Nullable;
 
 import au.id.micolous.metrodroid.multi.Localizer;
+import au.id.micolous.metrodroid.time.TimestampFormatterKt;
+import au.id.micolous.metrodroid.time.TimestampFull;
 import org.jetbrains.annotations.NonNls;
 
 import java.util.Calendar;
 
 import au.id.micolous.farebot.R;
-import au.id.micolous.metrodroid.card.desfire.files.DesfireRecord;
 import au.id.micolous.metrodroid.transit.TransitCurrency;
 import au.id.micolous.metrodroid.transit.Trip;
 import au.id.micolous.metrodroid.util.Utils;
@@ -53,9 +54,7 @@ public class HSLTrip extends Trip {
     Calendar mExpireTimestamp;
     int mPax;
 
-    public HSLTrip(DesfireRecord record) {
-        ImmutableByteArray useData = record.getData();
-
+    public HSLTrip(ImmutableByteArray useData) {
         mArvo = useData.getBitsFromBuffer(0, 1);
 
         mTimestamp = HSLTransitData.cardDateToCalendar(
@@ -103,8 +102,8 @@ public class HSLTrip extends Trip {
     }
 
     @Override
-    public Calendar getStartTimestamp() {
-        return mTimestamp;
+    public TimestampFull getStartTimestamp() {
+        return TimestampFormatterKt.calendar2ts(mTimestamp);
     }
 
     @Override

@@ -28,14 +28,13 @@ import android.support.annotation.Nullable;
 import android.support.v4.util.ArraySet;
 
 import au.id.micolous.metrodroid.multi.Localizer;
+import au.id.micolous.metrodroid.time.Timestamp;
+import au.id.micolous.metrodroid.time.TimestampFormatter;
+import au.id.micolous.metrodroid.time.TimestampFormatterKt;
 import au.id.micolous.metrodroid.util.NumberUtils;
 import org.apache.commons.lang3.ArrayUtils;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Calendar;
-import java.util.List;
-import java.util.TimeZone;
+import java.util.*;
 
 import au.id.micolous.farebot.R;
 import au.id.micolous.metrodroid.card.CardType;
@@ -230,8 +229,9 @@ public class SuicaTransitData extends TransitData {
     }
 
     public final static FelicaCardTransitFactory FACTORY = new FelicaCardTransitFactory() {
-        public boolean earlyCheck(int[] systemCodes) {
-            return ArrayUtils.contains(systemCodes, SYSTEMCODE_SUICA);
+        @Override
+        public boolean earlyCheck(List<Integer> systemCodes) {
+            return systemCodes.contains(SYSTEMCODE_SUICA);
         }
 
         @NonNull
@@ -254,15 +254,18 @@ public class SuicaTransitData extends TransitData {
     @Override
     public TransitBalance getBalance() {
         if (!mTrips.isEmpty()) {
-            Calendar expiry = mTrips.get(0).getEndTimestamp();
-            if (expiry == null)
-                expiry = mTrips.get(0).getStartTimestamp();
-            if (expiry != null) {
-                expiry = (Calendar) expiry.clone();
+            Timestamp lastTs = mTrips.get(0).getEndTimestamp();
+            if (lastTs == null)
+                lastTs = mTrips.get(0).getStartTimestamp();
+            Calendar expiry = null;
+            if (lastTs != null) {
+                expiry = GregorianCalendar.getInstance(TIME_ZONE);
+                expiry.setTimeInMillis(3600L * 1000L * 9);
+                expiry.add(Calendar.DAY_OF_YEAR, lastTs.toDaystamp().getDaysSinceEpoch());
                 expiry.add(Calendar.YEAR, 10);
             }
             return new TransitBalanceStored(TransitCurrency.JPY(mTrips.get(0).getBalance()),
-                    null, expiry);
+                    null, TimestampFormatterKt.calendar2ts(expiry).toDaystamp());
         }
         return null;
     }
@@ -285,5 +288,10 @@ public class SuicaTransitData extends TransitData {
 
     public void writeToParcel(Parcel parcel, int flags) {
         parcel.writeTypedList(mTrips);
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
     }
 }

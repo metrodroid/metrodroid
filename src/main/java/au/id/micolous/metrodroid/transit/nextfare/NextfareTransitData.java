@@ -26,6 +26,7 @@ import android.util.Log;
 
 import au.id.micolous.metrodroid.multi.FormattedString;
 import au.id.micolous.metrodroid.multi.Localizer;
+import au.id.micolous.metrodroid.time.TimestampFormatterKt;
 import au.id.micolous.metrodroid.util.NumberUtils;
 import org.jetbrains.annotations.NonNls;
 
@@ -125,17 +126,17 @@ public class NextfareTransitData extends TransitData {
 
         List<NextfareRecord> records = new ArrayList<>();
 
-        for (ClassicSector sector : card.getSectors()) {
-            for (ClassicBlock block : sector.getBlocks()) {
-                if (sector.getIndex() == 0 || block.getIndex() == 3) {
-                    // Ignore sector 0 (preamble) and block 3 (mifare keys/ACL)
-                    continue;
-                }
-
+        // Ignore sector 0 (preamble) and block 3 (mifare keys/ACL)
+        int secidx = 0;
+        for (ClassicSector sector : card.getSectors().subList(1, card.getSectors().size())) {
+            secidx++;
+            int blkidx = -1;
+            for (ClassicBlock block : sector.getBlocks().subList(0, 3)) {
+                blkidx++;
                 //noinspection StringConcatenation
-                Log.d(TAG, "Sector " + sector.getIndex() + " / Block " + block.getIndex());
+                Log.d(TAG, "Sector " + secidx + " / Block " + blkidx);
                 NextfareRecord record = NextfareRecord.recordFromBytes(
-                        block.getData(), sector.getIndex(), block.getIndex(), getTimezone());
+                        block.getData(), secidx, blkidx, getTimezone());
 
                 if (record != null) {
                     records.add(record);
@@ -271,7 +272,7 @@ public class NextfareTransitData extends TransitData {
         mTrips = trips;
     }
 
-    protected static class NextFareTransitFactory implements ClassicCardTransitFactory {
+    protected static class NextFareTransitFactory extends ClassicCardTransitFactory {
         @Override
         public boolean earlyCheck(@NonNull List<ClassicSector> sectors) {
             ImmutableByteArray blockData = sectors.get(0).getBlock(1).getData();
@@ -316,6 +317,11 @@ public class NextfareTransitData extends TransitData {
         parcel.writeString(mSystemCode.toHexString());
         parcel.writeString(mBlock2.toHexString());
         mConfig.writeToParcel(parcel, i);
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
     }
 
     /**
@@ -401,9 +407,10 @@ public class NextfareTransitData extends TransitData {
     @Override
     public TransitBalance getBalance() {
         if (mConfig != null) {
-            return new TransitBalanceStored(new TransitCurrency(mBalance, mCurrency), getTicketClass(), mConfig.getExpiry());
+            return new TransitBalanceStored(new TransitCurrency(mBalance, mCurrency), getTicketClass(),
+                    TimestampFormatterKt.calendar2ts(mConfig.getExpiry()));
         } else
-            return new TransitBalanceStored(new TransitCurrency(mBalance, mCurrency));
+            return new TransitCurrency(mBalance, mCurrency);
     }
 
     public String getTicketClass() {

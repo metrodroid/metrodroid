@@ -41,6 +41,7 @@ import java.util.ArrayList;
 import au.id.micolous.farebot.R;
 import au.id.micolous.metrodroid.MetrodroidApplication;
 import au.id.micolous.metrodroid.card.CardType;
+import au.id.micolous.metrodroid.card.classic.ClassicAndroidReader;
 import au.id.micolous.metrodroid.multi.Localizer;
 import au.id.micolous.metrodroid.transit.CardInfo;
 import au.id.micolous.metrodroid.transit.CardInfoTools;
@@ -118,7 +119,7 @@ public class SupportedCardsActivity extends MetrodroidActivity {
             boolean nfcAvailable = nfcAdapter != null;
 
             if (nfcAvailable) {
-                if (info.getCardType() == CardType.MifareClassic && !app.getMifareClassicSupport()) {
+                if (info.getCardType() == CardType.MifareClassic && !ClassicAndroidReader.getMifareClassicSupport()) {
                     // MIFARE Classic is not supported by this device.
                     convertView.findViewById(R.id.card_not_supported).setVisibility(View.VISIBLE);
                     convertView.findViewById(R.id.card_not_supported_icon).setVisibility(View.VISIBLE);

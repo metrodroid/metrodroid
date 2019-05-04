@@ -18,11 +18,13 @@
  */
 package au.id.micolous.metrodroid.test
 
+import au.id.micolous.metrodroid.time.MetroTimeZone
+import au.id.micolous.metrodroid.time.TimestampFull
+
 import au.id.micolous.metrodroid.card.ultralight.UltralightCard
 import au.id.micolous.metrodroid.card.ultralight.UltralightPage
 import au.id.micolous.metrodroid.transit.yvr_compass.CompassUltralightTransitData
 import au.id.micolous.metrodroid.util.ImmutableByteArray
-import java.util.*
 import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertNotNull
@@ -36,21 +38,20 @@ import kotlin.test.assertTrue
 class CompassTest {
 
     private fun createUltralightFromString(cardData: Array<String>): UltralightCard {
-        val d = GregorianCalendar(2010, 1, 1, 0, 0, 0)
+        val d = TimestampFull(MetroTimeZone.UTC, 2010, 1, 1, 0, 0, 0)
         val serial = ImmutableByteArray.fromHex(cardData[1].substring(0, 18))
 
         val pages = ArrayList<UltralightPage>()
         for (block in 1 until cardData.size) {
             for (p in 0..3) {
-                pages.add(UltralightPage(p,
+                pages.add(UltralightPage(
                         ImmutableByteArray.fromHex(cardData[block].substring(
-                                p * 8, (p + 1) * 8)))
+                                p * 8, (p + 1) * 8)), false)
                 )
             }
         }
 
-        return UltralightCard(
-                serial, d, "MF0ICU2", pages)
+        return UltralightCard("MF0ICU2", pages)
     }
 
     @Test
