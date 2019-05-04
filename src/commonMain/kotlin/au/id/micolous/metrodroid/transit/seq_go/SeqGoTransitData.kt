@@ -1,7 +1,7 @@
 /*
- * SeqGoTransitData.java
+ * SeqGoTransitData.kt
  *
- * Copyright 2015-2016 Michael Farrell <micolous+git@gmail.com>
+ * Copyright 2015-2019 Michael Farrell <micolous+git@gmail.com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -27,13 +27,14 @@ import au.id.micolous.metrodroid.multi.Parcelize
 import au.id.micolous.metrodroid.multi.R
 import au.id.micolous.metrodroid.time.MetroTimeZone
 import au.id.micolous.metrodroid.transit.CardInfo
+import au.id.micolous.metrodroid.transit.TransitCurrency.Companion.AUD
 import au.id.micolous.metrodroid.transit.TransitData
 import au.id.micolous.metrodroid.transit.TransitIdentity
 import au.id.micolous.metrodroid.transit.nextfare.NextfareTransitData
 import au.id.micolous.metrodroid.transit.nextfare.NextfareTransitDataCapsule
 import au.id.micolous.metrodroid.transit.nextfare.NextfareTripCapsule
-import au.id.micolous.metrodroid.util.StationTableReader
 import au.id.micolous.metrodroid.util.ImmutableByteArray
+import au.id.micolous.metrodroid.util.StationTableReader
 
 /**
  * Transit data type for Go card (Brisbane / South-East Queensland, AU), used by Translink.
@@ -45,9 +46,9 @@ import au.id.micolous.metrodroid.util.ImmutableByteArray
  */
 @Parcelize
 class SeqGoTransitData (override val capsule: NextfareTransitDataCapsule,
-                        private val mTicketType: SeqGoTicketType): NextfareTransitData() {
-    override val currency: String
-        get() = "AUD"
+                        private val mTicketType: SeqGoData.TicketType): NextfareTransitData() {
+    override val currency
+        get() = ::AUD
 
     override val cardName: String
         get() = NAME
@@ -79,7 +80,7 @@ class SeqGoTransitData (override val capsule: NextfareTransitDataCapsule,
         private val CARD_INFO = CardInfo(
                 imageId = R.drawable.seqgo_card,
                 imageAlphaId = R.drawable.seqgo_card_alpha,
-                name = SeqGoTransitData.NAME,
+                name = NAME,
                 locationId = R.string.location_brisbane_seq_australia,
                 cardType = CardType.MifareClassic,
                 keysRequired = true,
@@ -120,16 +121,13 @@ class SeqGoTransitData (override val capsule: NextfareTransitDataCapsule,
 
             override fun parseTransitData(card: ClassicCard): TransitData {
                 val capsule = parse(card, TIME_ZONE,
-                        { it -> SeqGoTrip(it) },
-                        { it -> SeqGoRefill(NextfareTripCapsule(it), it.isAutomatic) })
+                        ::SeqGoTrip,
+                        { SeqGoRefill(NextfareTripCapsule(it), it.isAutomatic) })
 
                 val ticketNum = capsule.mConfig?.ticketType
-                val ticketType = if (ticketNum != null)
-                    SeqGoData.TICKET_TYPE_MAP[ticketNum]
-                else
-                    null
+                val ticketType = SeqGoData.TICKET_TYPES[ticketNum] ?: SeqGoData.TicketType.UNKNOWN
 
-                return SeqGoTransitData(capsule, ticketType ?: SeqGoTicketType.UNKNOWN)
+                return SeqGoTransitData(capsule, ticketType)
             }
         }
 

@@ -1,7 +1,7 @@
 /*
- * SeqGoTicketType.java
+ * TransitCurrencyRef.java
  *
- * Copyright 2016 Michael Farrell <micolous+git@gmail.com>
+ * Copyright 2019 Michael Farrell <micolous+git@gmail.com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -16,19 +16,9 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package au.id.micolous.metrodroid.transit.seq_go
-
-import au.id.micolous.metrodroid.multi.R
-import au.id.micolous.metrodroid.multi.StringResource
+package au.id.micolous.metrodroid.transit
 
 /**
- * Different types of tickets used by SEQ Go.
+ * Used for referencing a [TransitCurrency] builder, such as [TransitCurrency.AUD].
  */
-
-enum class SeqGoTicketType constructor(val description: StringResource) {
-    UNKNOWN(R.string.unknown),
-    REGULAR(R.string.seqgo_ticket_type_regular),
-    CHILD(R.string.seqgo_ticket_type_child),
-    CONCESSION(R.string.seqgo_ticket_type_concession),
-    SENIOR(R.string.seqgo_ticket_type_senior)
-}
+typealias TransitCurrencyRef = (Int) -> TransitCurrency

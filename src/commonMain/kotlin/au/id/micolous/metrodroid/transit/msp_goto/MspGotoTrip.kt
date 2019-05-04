@@ -20,13 +20,14 @@
 package au.id.micolous.metrodroid.transit.msp_goto
 
 import au.id.micolous.metrodroid.multi.Parcelize
+import au.id.micolous.metrodroid.transit.TransitCurrency.Companion.USD
 import au.id.micolous.metrodroid.transit.nextfare.NextfareTrip
 import au.id.micolous.metrodroid.transit.nextfare.NextfareTripCapsule
 
 @Parcelize
 class MspGotoTrip (override val capsule: NextfareTripCapsule): NextfareTrip() {
-    override val currency: String
-        get() = "USD"
+    override val currency
+        get() = ::USD
     override val str: String?
         get() = null
 }

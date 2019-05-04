@@ -19,6 +19,8 @@
 package au.id.micolous.metrodroid.transit.seq_go
 
 import au.id.micolous.metrodroid.multi.Parcelize
+import au.id.micolous.metrodroid.multi.VisibleForTesting
+import au.id.micolous.metrodroid.transit.TransitCurrency.Companion.AUD
 
 import au.id.micolous.metrodroid.transit.nextfare.NextfareTrip
 import au.id.micolous.metrodroid.transit.nextfare.NextfareTripCapsule
@@ -31,8 +33,8 @@ class SeqGoTrip (override val capsule: NextfareTripCapsule): NextfareTrip() {
     override val routeLanguage: String?
         get() = "en-AU"
 
-    override val currency: String
-        get() = "AUD"
+    override val currency
+        get() = ::AUD
 
     override val str: String?
         get() = SeqGoData.SEQ_GO_STR
@@ -54,7 +56,9 @@ class SeqGoTrip (override val capsule: NextfareTripCapsule): NextfareTrip() {
 
     companion object {
         /* Hard coded station IDs for Airtrain; used in tests */
+        @VisibleForTesting
         const val DOMESTIC_AIRPORT = 9
+        @VisibleForTesting
         const val INTERNATIONAL_AIRPORT = 10
     }
 }

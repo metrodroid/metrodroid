@@ -26,13 +26,14 @@ import au.id.micolous.metrodroid.multi.Parcelize
 import au.id.micolous.metrodroid.multi.R
 import au.id.micolous.metrodroid.time.MetroTimeZone
 import au.id.micolous.metrodroid.transit.CardInfo
+import au.id.micolous.metrodroid.transit.TransitCurrency.Companion.USD
 import au.id.micolous.metrodroid.transit.TransitData
 import au.id.micolous.metrodroid.transit.TransitIdentity
 import au.id.micolous.metrodroid.transit.nextfare.NextfareTransitData
 import au.id.micolous.metrodroid.transit.nextfare.NextfareTransitDataCapsule
 import au.id.micolous.metrodroid.transit.nextfare.NextfareTripCapsule
-import au.id.micolous.metrodroid.util.StationTableReader
 import au.id.micolous.metrodroid.util.ImmutableByteArray
+import au.id.micolous.metrodroid.util.StationTableReader
 
 /**
  * Los Angeles Transit Access Pass (LAX TAP) card.
@@ -50,8 +51,8 @@ class LaxTapTransitData (override val capsule: NextfareTransitDataCapsule): Next
     override val timezone: MetroTimeZone
         get() = TIME_ZONE
 
-    override val currency: String
-        get() = "USD"
+    override val currency
+        get() = ::USD
 
     companion object {
 
@@ -65,7 +66,7 @@ class LaxTapTransitData (override val capsule: NextfareTransitDataCapsule): Next
         private val CARD_INFO = CardInfo(
                 imageId = R.drawable.laxtap_card,
                 // Using the short name (TAP) may be ambiguous
-                name = LaxTapTransitData.LONG_NAME,
+                name = LONG_NAME,
                 locationId = R.string.location_los_angeles,
                 cardType = CardType.MifareClassic,
                 keysRequired = true,
@@ -95,8 +96,8 @@ class LaxTapTransitData (override val capsule: NextfareTransitDataCapsule): Next
 
             override fun parseTransitData(card: ClassicCard): TransitData {
                 val capsule =  parse(card = card, timeZone = TIME_ZONE,
-                        newTrip = {capsule -> LaxTapTrip(capsule) },
-                        newRefill = { it -> LaxTapTrip(NextfareTripCapsule(it))},
+                        newTrip = ::LaxTapTrip,
+                        newRefill = { LaxTapTrip(NextfareTripCapsule(it))},
                         shouldMergeJourneys = false)
                 return LaxTapTransitData(capsule)
             }

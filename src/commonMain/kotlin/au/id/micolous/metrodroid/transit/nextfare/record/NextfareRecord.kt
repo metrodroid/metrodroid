@@ -1,7 +1,7 @@
 /*
- * NextfareRecord.java
+ * NextfareRecord.kt
  *
- * Copyright 2015-2018 Michael Farrell <micolous+git@gmail.com>
+ * Copyright 2015-2019 Michael Farrell <micolous+git@gmail.com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -22,8 +22,8 @@ package au.id.micolous.metrodroid.transit.nextfare.record
 import au.id.micolous.metrodroid.multi.Log
 import au.id.micolous.metrodroid.time.MetroTimeZone
 import au.id.micolous.metrodroid.time.TimestampFull
-import au.id.micolous.metrodroid.util.NumberUtils
 import au.id.micolous.metrodroid.util.ImmutableByteArray
+import au.id.micolous.metrodroid.util.NumberUtils
 
 /**
  * Represents a record on a Nextfare card
@@ -87,8 +87,8 @@ open class NextfareRecord protected constructor() {
             val month = NumberUtils.getBitsFromInteger(timestamp, 5, 4)
             val day = NumberUtils.getBitsFromInteger(timestamp, 0, 5)
 
-            //noinspection StringConcatenation,MagicCharacter
-            Log.d(TAG, "unpackDate: " + minute + " minutes, " + year + '-'.toString() + month + '-'.toString() + day)
+            //noinspection MagicCharacter
+            Log.d(TAG, "unpackDate: $minute minutes, $year-$month-$day")
 
             if (minute > 1440)
                 throw AssertionError("Minute > 1440 ($minute)")

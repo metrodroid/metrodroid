@@ -1,7 +1,7 @@
 /*
- * SeqGoRefill.java
+ * SeqGoRefill.kt
  *
- * Copyright 2015-2016 Michael Farrell <micolous+git@gmail.com>
+ * Copyright 2015-2019 Michael Farrell <micolous+git@gmail.com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -19,10 +19,10 @@
 package au.id.micolous.metrodroid.transit.seq_go
 
 import au.id.micolous.metrodroid.multi.Localizer
-import au.id.micolous.metrodroid.transit.nextfare.NextfareTrip
-
 import au.id.micolous.metrodroid.multi.Parcelize
 import au.id.micolous.metrodroid.multi.R
+import au.id.micolous.metrodroid.transit.TransitCurrency.Companion.AUD
+import au.id.micolous.metrodroid.transit.nextfare.NextfareTrip
 import au.id.micolous.metrodroid.transit.nextfare.NextfareTripCapsule
 
 /**
@@ -31,8 +31,8 @@ import au.id.micolous.metrodroid.transit.nextfare.NextfareTripCapsule
 @Parcelize
 class SeqGoRefill (override val capsule: NextfareTripCapsule,
                    private val mAutomatic: Boolean): NextfareTrip() {
-    override val currency: String
-        get() = "AUD"
+    override val currency
+        get() = ::AUD
     override val str: String?
         get() = SeqGoData.SEQ_GO_STR
 

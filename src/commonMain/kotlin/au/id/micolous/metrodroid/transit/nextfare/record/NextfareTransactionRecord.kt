@@ -28,9 +28,10 @@ import au.id.micolous.metrodroid.util.ImmutableByteArray
  * Tap record type
  * https://github.com/micolous/metrodroid/wiki/Cubic-Nextfare-MFC
  */
-class NextfareTransactionRecord private constructor(val timestamp: TimestampFull, val mode: Int, val journey: Int,
-                                                    val station: Int, val value: Int, val checksum: Int,
-                                                    val isContinuation: Boolean) : NextfareRecord(), Comparable<NextfareTransactionRecord> {
+class NextfareTransactionRecord private constructor(
+        val timestamp: TimestampFull, val mode: Int, val journey: Int,
+        val station: Int, val value: Int, val checksum: Int,
+        val isContinuation: Boolean) : NextfareRecord(), Comparable<NextfareTransactionRecord> {
 
     override fun compareTo(other: NextfareTransactionRecord): Int {
         // Group by journey, then by timestamp.
