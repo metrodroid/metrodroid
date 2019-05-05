@@ -24,12 +24,12 @@ class StationTableReaderTest : BaseInstrumentedTest() {
         setLocale("en-US")
         showRawStationIds(false)
 
-        var s = StationTableReader.getStation(SeqGoData.SEQ_GO_STR, SeqGoTrip.DOMESTIC_AIRPORT)
+        var s = StationTableReader.getStation(SeqGoData.SEQ_GO_STR, SeqGoData.DOMESTIC_AIRPORT)
         assertEquals("Domestic Airport", s.getStationName(false))
 
         // Try when Raw Station IDs are enabled.
         showRawStationIds(true)
-        s = StationTableReader.getStation(SeqGoData.SEQ_GO_STR, SeqGoTrip.DOMESTIC_AIRPORT)
+        s = StationTableReader.getStation(SeqGoData.SEQ_GO_STR, SeqGoData.DOMESTIC_AIRPORT)
         assertEquals("Domestic Airport [0x9]", s.getStationName(false))
 
         // Reset back to default
