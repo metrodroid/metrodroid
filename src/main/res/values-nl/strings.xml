@@ -815,4 +815,6 @@
     <string name="felica_lite_read_write">Herschrijfbaar</string>
     <string name="card_format_ndef">NDEF</string>
     <string name="felica_system_common">Gebruikelijke zone (FeliCa Networks)</string>
+    <string name="seqgo_ticket_type_adult">Volwassene</string>
+    <string name="seqgo_ticket_type_adult_explore">Volwassene Explore/seeQ</string>
 </resources>
