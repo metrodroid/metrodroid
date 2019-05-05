@@ -748,4 +748,15 @@
     <string name="card_note_chc_metrocard">Alleen kaarten van vóór 2016 (MIFARE Classic) kunnen worden uitgelezen. Nieuwere, volledig versleutelde DESFire-kaarten kunnen niet worden ondersteund.</string>
     <string name="mfc_aid_title_format">MIFARE Classic AID: %1$s #%2$d</string>
     <string name="location_waikato">Waikato, Nieuw-Zeeland</string>
+    <string name="page_title_format_empty">Pagina: 0x%s (leeg)</string>
+    <string name="location_wellington_nz">Wellington, Nieuw-Zeeland</string>
+    <string name="edy_file_history">Edy-reisgeschiedenis</string>
+    <string name="edy_file_id">Edy-identiteit</string>
+    <string name="edy_file_purse_balance">Edy-saldo</string>
+    <string name="suica_file_history">Suica-reisgeschiedenis</string>
+    <string name="suica_file_in_out">Suica-in/uit</string>
+    <string name="kmt_file_history">KMT-reisgeschiedenis</string>
+    <string name="kmt_file_id">KMT-identiteit</string>
+    <string name="kmt_file_purse_balance">KMT-saldo</string>
+    <string name="card_name_kmt">Kartu Multi Trip</string>
 </resources>
