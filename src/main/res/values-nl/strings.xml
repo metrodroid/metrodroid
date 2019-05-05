@@ -759,4 +759,6 @@
     <string name="kmt_file_id">KMT-identiteit</string>
     <string name="kmt_file_purse_balance">KMT-saldo</string>
     <string name="card_name_kmt">Kartu Multi Trip</string>
+    <string name="maximum_balance">Maximum saldo</string>
+    <string name="branch_code">Filiaalcode</string>
 </resources>
