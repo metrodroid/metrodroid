@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<card scanned_at="1500000000000" id="0101010101010101" type="4">
+    <!--
+    This FeliCa card has only an id set. The idm parameter was removed in Metrodroid 2.9.38.
+    -->
+    <pmm>BTFDRUaCt/8=</pmm>
+    <systems>
+        <system code="3">
+            <services>
+                <service code="1">
+                    <blocks>
+                        <block address="0">AAAAAAAAAAAAAAAAAAAAAA==</block>
+                    </blocks>
+                </service>
+            </services>
+        </system>
+    </systems>
+</card>
