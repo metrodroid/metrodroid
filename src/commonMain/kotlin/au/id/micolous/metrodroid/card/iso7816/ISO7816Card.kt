@@ -31,6 +31,7 @@ import au.id.micolous.metrodroid.card.TagReaderFeedbackInterface
 import au.id.micolous.metrodroid.card.calypso.CalypsoApplication
 import au.id.micolous.metrodroid.card.cepas.CEPASApplication
 import au.id.micolous.metrodroid.card.china.ChinaCard
+import au.id.micolous.metrodroid.card.emv.EmvFactory
 import au.id.micolous.metrodroid.card.ksx6924.KSX6924Application
 import au.id.micolous.metrodroid.multi.Localizer
 import au.id.micolous.metrodroid.multi.Log
@@ -132,7 +133,8 @@ data class ISO7816Card (
         val factories = listOf(
                 CalypsoApplication.FACTORY,
                 KSX6924Application.FACTORY,
-                ChinaCard.FACTORY)
+                ChinaCard.FACTORY,
+		EmvFactory())
 
         /**
          * Dumps a ISO7816 tag in the field.
