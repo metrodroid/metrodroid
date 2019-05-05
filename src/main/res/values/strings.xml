@@ -677,10 +677,12 @@
     <string name="location_montpellier">Montpellier, France</string>
     <string name="location_moscow">Moscow, Russia</string>
     <string name="location_orlando">Orlando, FL, USA</string>
+    <string name="location_otago">Otago, New Zealand</string>
     <string name="location_paris">Paris, France</string>
     <string name="location_portland">Portland, OR, USA</string>
     <!-- Translators: This refers to the province of Québec (not Québec City) -->
     <string name="location_quebec">Québec, Canada</string>
+    <string name="location_rotorua">Rotorua, New Zealand</string>
     <string name="location_russia">Russia</string>
     <string name="location_saint_petersburg">Saint Petersburg, Russia</string>
     <string name="location_san_francisco">San Francisco, CA, USA</string>
