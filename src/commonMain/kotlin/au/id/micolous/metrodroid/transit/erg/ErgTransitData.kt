@@ -1,5 +1,5 @@
 /*
- * ErgTransitData.java
+ * ErgTransitData.kt
  *
  * Copyright 2015-2019 Michael Farrell <micolous+git@gmail.com>
  *
@@ -19,7 +19,6 @@
 package au.id.micolous.metrodroid.transit.erg
 
 import au.id.micolous.metrodroid.card.UnauthorizedException
-import au.id.micolous.metrodroid.card.classic.ClassicBlock
 import au.id.micolous.metrodroid.card.classic.ClassicCard
 import au.id.micolous.metrodroid.card.classic.ClassicCardTransitFactory
 import au.id.micolous.metrodroid.card.classic.ClassicSector
@@ -27,36 +26,42 @@ import au.id.micolous.metrodroid.multi.Log
 import au.id.micolous.metrodroid.multi.Parcelable
 import au.id.micolous.metrodroid.multi.Parcelize
 import au.id.micolous.metrodroid.multi.R
-import au.id.micolous.metrodroid.transit.Transaction
-import au.id.micolous.metrodroid.transit.TransactionTrip
-import au.id.micolous.metrodroid.transit.TransitBalance
+import au.id.micolous.metrodroid.time.MetroTimeZone
 import au.id.micolous.metrodroid.time.TimestampFormatter
-import au.id.micolous.metrodroid.time.*
-import au.id.micolous.metrodroid.transit.TransitCurrency
-import au.id.micolous.metrodroid.transit.TransitData
-import au.id.micolous.metrodroid.transit.Trip
+import au.id.micolous.metrodroid.transit.*
+import au.id.micolous.metrodroid.transit.TransitCurrency.Companion.XXX
 import au.id.micolous.metrodroid.transit.erg.record.*
 import au.id.micolous.metrodroid.ui.HeaderListItem
 import au.id.micolous.metrodroid.ui.ListItem
+import au.id.micolous.metrodroid.util.ImmutableByteArray
 import au.id.micolous.metrodroid.util.NumberUtils
 import au.id.micolous.metrodroid.util.TripObfuscator
-import au.id.micolous.metrodroid.util.ImmutableByteArray
+
+@Parcelize
+class ErgTransitDataCapsule(
+        // Structures
+        internal val cardSerial: ImmutableByteArray?,
+        internal val epochDate: Int,
+        internal val agencyID: Int,
+        internal val balance: Int,
+        internal val trips: List<Trip>?
+): Parcelable
+
+@Parcelize
+class ErgUnknownTransitData(
+        override val capsule: ErgTransitDataCapsule): ErgTransitData() {
+    override val currency: TransitCurrencyRef = ::XXX
+}
 
 /**
  * Transit data type for ERG/Videlli/Vix MIFARE Classic cards.
  *
  * Wiki: https://github.com/micolous/metrodroid/wiki/ERG-MFC
  */
-@Parcelize
-open class ErgTransitData internal constructor(
-        // Structures
-        protected val cardSerial: ImmutableByteArray?,
-        private val mEpochDate: Int,
-        private val mAgencyID: Int,
-        private val mBalance: Int,
-        override val trips: List<Trip>?,
-        private val mCurrency: String
-) : TransitData(), Parcelable {
+abstract class ErgTransitData : TransitData() {
+    protected abstract val capsule: ErgTransitDataCapsule
+    protected abstract val currency: TransitCurrencyRef
+
     /**
      * Some cards format the serial number in decimal rather than hex. By default, this uses hex.
      *
@@ -64,10 +69,11 @@ open class ErgTransitData internal constructor(
      * @return Formatted serial number, as string.
      */
     override val serialNumber: String?
-        get() = cardSerial?.toHexString()
+        get() = capsule.cardSerial?.toHexString()
 
     public override val balance: TransitBalance?
-        get() = TransitCurrency(mBalance, mCurrency)
+        get() = currency(capsule.balance)
+
 
     override val info: List<ListItem>?
         get() {
@@ -75,10 +81,10 @@ open class ErgTransitData internal constructor(
             items.add(HeaderListItem(R.string.general))
             items.add(ListItem(R.string.card_epoch,
                     TimestampFormatter.longDateFormat(TripObfuscator.maybeObfuscateTS(
-                            ErgTransaction.convertTimestamp(mEpochDate,
+                            ErgTransaction.convertTimestamp(capsule.epochDate,
                                     timezone, 0, 0)))))
             items.add(ListItem(R.string.erg_agency_id,
-                    NumberUtils.longToHex(mAgencyID.toLong())))
+                    NumberUtils.longToHex(capsule.agencyID.toLong())))
             return items
         }
 
@@ -91,26 +97,19 @@ open class ErgTransitData internal constructor(
      *
      * @return TimeZone for the card.
      */
-    protected open// If we don't know the timezone, assume it is Android local timezone.
-    val timezone: MetroTimeZone
-        get() = MetroTimeZone.UTC
-
-    protected constructor(other: ErgTransitData) : this(cardSerial = other.cardSerial,
-            mEpochDate = other.mEpochDate,
-            mAgencyID = other.mAgencyID,
-            mBalance = other.mBalance,
-            trips = other.trips,
-            mCurrency = other.mCurrency)
+    protected open val timezone: MetroTimeZone
+        get() = MetroTimeZone.UNKNOWN
 
     companion object {
         // Decoder
-        fun parse(card: ClassicCard, currency: String,
+        fun parse(card: ClassicCard,
                   /**
                    * Allows you to override the constructor for new trips, to hook in your own station ID code.
                    *
                    * @return Subclass of ErgTransaction.
                    */
-                  newTrip: (purse: ErgPurseRecord, epoch: Int) -> ErgTransaction): ErgTransitData {
+                  newTrip: (ErgPurseRecord, Int) -> ErgTransaction = ::ErgUnknownTransaction)
+                : ErgTransitDataCapsule {
             val records = ArrayList<ErgRecord>()
 
             // Read the index data
@@ -148,14 +147,13 @@ open class ErgTransitData internal constructor(
             val txns = records.filterIsInstance<ErgPurseRecord>().map { newTrip(it, epochDate) }
             val balance = records.filterIsInstance<ErgBalanceRecord>().map { it.balance }.lastOrNull()
 
-            return ErgTransitData(
+            return ErgTransitDataCapsule(
                     // Merge trips as appropriate
                     cardSerial = metadataRecord.cardSerial,
                     trips = TransactionTrip.merge(txns.sortedWith(Transaction.Comparator())),
-                    mBalance = balance ?: 0,
-                    mCurrency = currency,
-                    mEpochDate = epochDate,
-                    mAgencyID = metadataRecord.agencyID
+                    balance = balance ?: 0,
+                    epochDate = epochDate,
+                    agencyID = metadataRecord.agencyID
             )
         }
 

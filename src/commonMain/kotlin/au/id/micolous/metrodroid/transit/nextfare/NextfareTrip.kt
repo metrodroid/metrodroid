@@ -1,7 +1,7 @@
 /*
- * NextfareTrip.java
+ * NextfareTrip.kt
  *
- * Copyright 2015-2016 Michael Farrell <micolous+git@gmail.com>
+ * Copyright 2015-2019 Michael Farrell <micolous+git@gmail.com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -21,9 +21,10 @@ package au.id.micolous.metrodroid.transit.nextfare
 import au.id.micolous.metrodroid.multi.Parcelable
 import au.id.micolous.metrodroid.multi.Parcelize
 import au.id.micolous.metrodroid.time.TimestampFull
-
 import au.id.micolous.metrodroid.transit.Station
 import au.id.micolous.metrodroid.transit.TransitCurrency
+import au.id.micolous.metrodroid.transit.TransitCurrency.Companion.XXX
+import au.id.micolous.metrodroid.transit.TransitCurrencyRef
 import au.id.micolous.metrodroid.transit.Trip
 import au.id.micolous.metrodroid.transit.nextfare.record.NextfareTopupRecord
 import au.id.micolous.metrodroid.util.StationTableReader
@@ -48,7 +49,7 @@ class NextfareTripCapsule(internal var mJourneyId: Int = 0,
  */
 abstract class NextfareTrip : Trip(), Comparable<NextfareTrip> {
     abstract val capsule: NextfareTripCapsule
-    abstract val currency: String
+    abstract val currency: TransitCurrencyRef
     abstract val str: String?
 
     override val isTransfer get() = capsule.isTransfer
@@ -70,7 +71,7 @@ abstract class NextfareTrip : Trip(), Comparable<NextfareTrip> {
         }
 
     override val fare: TransitCurrency?
-        get() = TransitCurrency(capsule.mCost, currency)
+        get() = currency(capsule.mCost)
 
     override val mode: Trip.Mode
         get() = if (capsule.isTopup) Trip.Mode.TICKET_MACHINE else lookupMode()
@@ -96,8 +97,8 @@ abstract class NextfareTrip : Trip(), Comparable<NextfareTrip> {
 
 @Parcelize
 class NextfareUnknownTrip (override val capsule: NextfareTripCapsule): NextfareTrip() {
-    override val currency: String
-        get() = "XXX"
+    override val currency: TransitCurrencyRef
+        get() = ::XXX
     override val str: String?
         get() = null
 }

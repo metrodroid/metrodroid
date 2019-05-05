@@ -19,6 +19,10 @@
 
 package au.id.micolous.metrodroid.transit.seq_go
 
+import au.id.micolous.metrodroid.multi.R
+import au.id.micolous.metrodroid.multi.StringResource
+import au.id.micolous.metrodroid.multi.VisibleForTesting
+
 /**
  * Constants used in Go card
  */
@@ -28,16 +32,31 @@ object SeqGoData {
     internal const val VEHICLE_RAIL = 5
     internal const val VEHICLE_FERRY = 18
 
-    // TICKET TYPES
+    /* Hard coded station IDs for Airtrain; used in tests */
+    internal const val DOMESTIC_AIRPORT = 9
+    internal const val INTERNATIONAL_AIRPORT = 10
+
     // https://github.com/micolous/metrodroid/wiki/Go-(SEQ)#ticket-types
     // TODO: Discover child and seniors card type.
-    private const val TICKET_TYPE_REGULAR_2016 = 0x0c01
-    private const val TICKET_TYPE_REGULAR_2011 = 0x0801
+    internal val TICKET_TYPES = mapOf(
+            // Adult Go seeQ (2019), comes up as "Adult Explore" on TVMs
+            0xf to TicketType.ADULT_EXPLORE,
 
-    private const val TICKET_TYPE_CONCESSION_2016 = 0x08a5
+            // Adult (2011)
+            0x0801 to TicketType.ADULT,
+            // Adult (2016)
+            0x0c01 to TicketType.ADULT,
 
-    internal val TICKET_TYPE_MAP = mapOf(
-            TICKET_TYPE_REGULAR_2011 to SeqGoTicketType.REGULAR,
-            TICKET_TYPE_REGULAR_2016 to SeqGoTicketType.REGULAR,
-            TICKET_TYPE_CONCESSION_2016 to SeqGoTicketType.CONCESSION)
+            // Concession (2016)
+            0x08a5 to TicketType.CONCESSION)
+
+
+    enum class TicketType constructor(val description: StringResource) {
+        UNKNOWN(R.string.unknown),
+        ADULT(R.string.seqgo_ticket_type_adult),
+        ADULT_EXPLORE(R.string.seqgo_ticket_type_adult_explore),
+        CHILD(R.string.seqgo_ticket_type_child),
+        CONCESSION(R.string.seqgo_ticket_type_concession),
+        SENIOR(R.string.seqgo_ticket_type_senior)
+    }
 }

@@ -18,13 +18,15 @@
  */
 package au.id.micolous.metrodroid.test
 
-import au.id.micolous.metrodroid.card.classic.*
+import au.id.micolous.metrodroid.card.classic.ClassicCard
+import au.id.micolous.metrodroid.card.classic.ClassicSector
+import au.id.micolous.metrodroid.card.classic.ClassicSectorRaw
 import au.id.micolous.metrodroid.time.MetroTimeZone
 import au.id.micolous.metrodroid.time.TimestampFull
-
 import au.id.micolous.metrodroid.transit.lax_tap.LaxTapTransitData
 import au.id.micolous.metrodroid.transit.msp_goto.MspGotoTransitData
 import au.id.micolous.metrodroid.transit.nextfare.NextfareTransitData
+import au.id.micolous.metrodroid.transit.nextfare.NextfareUnknownTransitData
 import au.id.micolous.metrodroid.transit.nextfare.record.NextfareBalanceRecord
 import au.id.micolous.metrodroid.transit.nextfare.record.NextfareConfigRecord
 import au.id.micolous.metrodroid.transit.nextfare.record.NextfareTransactionRecord
@@ -129,6 +131,7 @@ class NextfareTest {
         val d1 = c1.parseTransitData()
         assertTrue(d1 is SeqGoTransitData, "Card is seqgo")
         assertEquals("0160 0012 3456 7893", d1.serialNumber)
+        assertEquals("AUD", d1.balance?.balance?.mCurrencyCode)
 
         // 0160 0098 7654 3213
         // This is a fake card number.
@@ -137,6 +140,7 @@ class NextfareTest {
         val d2 = c2.parseTransitData()
         assertTrue(d2 is SeqGoTransitData, "Card is seqgo")
         assertEquals("0160 0098 7654 3213", d2.serialNumber)
+        assertEquals("AUD", d2.balance?.balance?.mCurrencyCode)
     }
 
     @Test
@@ -148,6 +152,7 @@ class NextfareTest {
         val d = c.parseTransitData() as NextfareTransitData?
         assertTrue(d is LaxTapTransitData, "card is laxtap")
         assertEquals("0160 0323 4663 8769", d.serialNumber)
+        assertEquals("USD", d.balance?.balance?.mCurrencyCode)
     }
 
     @Test
@@ -159,5 +164,27 @@ class NextfareTest {
         val d = c.parseTransitData() as NextfareTransitData?
         assertTrue(d is MspGotoTransitData, "card is mspgoto")
         assertEquals("0160 0112 3581 3212", d.serialNumber)
+        assertEquals("USD", d.balance?.balance?.mCurrencyCode)
+    }
+
+    @Test
+    fun testUnknownCard() {
+        // 0160 0112 3581 3212
+        // This is a fake card number
+        val c1 = buildNextfareCard(ImmutableByteArray.fromHex("897df842"),
+                ImmutableByteArray.fromHex("010101010101"),
+                ImmutableByteArray.fromHex("ff00ff00ff00ff00ff00ff00ff00ff00"))
+        val d1 = c1.parseTransitData() as NextfareTransitData?
+        assertTrue(d1 is NextfareUnknownTransitData, "card is unknown nextfare")
+        assertEquals("0160 0112 3581 3212", d1.serialNumber)
+        assertEquals("XXX", d1.balance?.balance?.mCurrencyCode)
+
+        val c2 = buildNextfareCard(ImmutableByteArray.fromHex("897df842"),
+                ImmutableByteArray.fromHex("ff00ff00ff00"),
+                null)
+        val d2 = c2.parseTransitData() as NextfareTransitData?
+        assertTrue(d2 is NextfareUnknownTransitData, "card is unknown nextfare")
+        assertEquals("0160 0112 3581 3212", d2.serialNumber)
+        assertEquals("XXX", d2.balance?.balance?.mCurrencyCode)
     }
 }

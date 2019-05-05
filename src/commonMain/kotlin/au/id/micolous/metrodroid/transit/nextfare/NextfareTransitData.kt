@@ -1,7 +1,7 @@
 /*
- * NextfareTransitData.java
+ * NextfareTransitData.kt
  *
- * Copyright 2015-2018 Michael Farrell <micolous+git@gmail.com>
+ * Copyright 2015-2019 Michael Farrell <micolous+git@gmail.com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,28 +18,19 @@
  */
 package au.id.micolous.metrodroid.transit.nextfare
 
-import au.id.micolous.metrodroid.time.MetroTimeZone
-import au.id.micolous.metrodroid.util.NumberUtils
 import au.id.micolous.metrodroid.card.classic.ClassicCard
 import au.id.micolous.metrodroid.card.classic.ClassicCardTransitFactory
 import au.id.micolous.metrodroid.card.classic.ClassicSector
 import au.id.micolous.metrodroid.multi.*
-import au.id.micolous.metrodroid.transit.CardInfo
-import au.id.micolous.metrodroid.transit.TransitBalance
-import au.id.micolous.metrodroid.transit.TransitBalanceStored
-import au.id.micolous.metrodroid.transit.TransitCurrency
-import au.id.micolous.metrodroid.transit.TransitData
-import au.id.micolous.metrodroid.transit.TransitIdentity
-import au.id.micolous.metrodroid.transit.Trip
-import au.id.micolous.metrodroid.transit.nextfare.record.NextfareBalanceRecord
-import au.id.micolous.metrodroid.transit.nextfare.record.NextfareConfigRecord
-import au.id.micolous.metrodroid.transit.nextfare.record.NextfareRecord
-import au.id.micolous.metrodroid.transit.nextfare.record.NextfareTopupRecord
-import au.id.micolous.metrodroid.transit.nextfare.record.NextfareTransactionRecord
-import au.id.micolous.metrodroid.transit.nextfare.record.NextfareTravelPassRecord
+import au.id.micolous.metrodroid.time.MetroTimeZone
+import au.id.micolous.metrodroid.transit.*
+import au.id.micolous.metrodroid.transit.TransitCurrency.Companion.XXX
+import au.id.micolous.metrodroid.transit.nextfare.record.*
+import au.id.micolous.metrodroid.transit.nextfare.record.NextfareTransactionRecord.Companion.Type.*
 import au.id.micolous.metrodroid.ui.HeaderListItem
 import au.id.micolous.metrodroid.ui.ListItem
 import au.id.micolous.metrodroid.util.ImmutableByteArray
+import au.id.micolous.metrodroid.util.NumberUtils
 
 @Parcelize
 class NextfareTransitDataCapsule(
@@ -53,10 +44,12 @@ class NextfareTransitDataCapsule(
         internal val subscriptions: List<NextfareSubscription>): Parcelable
 
 @Parcelize
-class NextfareUnknownTransitData (override val capsule: NextfareTransitDataCapsule): NextfareTransitData() {
-    override val currency: String
-        get() = "XXX"
+class NextfareUnknownTransitData (
+        override val capsule: NextfareTransitDataCapsule): NextfareTransitData() {
+    override val currency: TransitCurrencyRef
+        get() = ::XXX
 }
+
 /**
  * Generic transit data type for Cubic Nextfare.
  * https://github.com/micolous/metrodroid/wiki/Cubic-Nextfare-MFC
@@ -65,7 +58,7 @@ class NextfareUnknownTransitData (override val capsule: NextfareTransitDataCapsu
  */
 abstract class NextfareTransitData : TransitData() {
     abstract val capsule: NextfareTransitDataCapsule
-    abstract val currency: String
+    abstract val currency: TransitCurrencyRef
 
     /**
      * Allows you to override the timezone used for all dates and times. Default timezone is the
@@ -84,10 +77,10 @@ abstract class NextfareTransitData : TransitData() {
 
     public override val balance: TransitBalance?
         get() = if (capsule.mConfig != null) {
-            TransitBalanceStored(TransitCurrency(capsule.mBalance, currency), ticketClass,
+            TransitBalanceStored(currency(capsule.mBalance), ticketClass,
                     capsule.mConfig!!.expiry)
         } else
-            TransitCurrency(capsule.mBalance, currency)
+            currency(capsule.mBalance)
 
     open val ticketClass: String?
         get() = if (capsule.mConfig != null) {
@@ -148,8 +141,8 @@ abstract class NextfareTransitData : TransitData() {
         override fun parseTransitData(card: ClassicCard): TransitData? {
             val capsule = parse(card = card,
                     timeZone = MetroTimeZone.UNKNOWN,
-                    newTrip = { record -> NextfareUnknownTrip(record) },
-                    newRefill = { record: NextfareTopupRecord -> NextfareUnknownTrip(NextfareTripCapsule(record))}
+                    newTrip = ::NextfareUnknownTrip,
+                    newRefill = { NextfareUnknownTrip(NextfareTripCapsule(it))}
             )
             return NextfareUnknownTransitData(capsule)
         }
@@ -172,7 +165,10 @@ abstract class NextfareTransitData : TransitData() {
          * @return true if the journeys should be merged.
          */
         private fun tapsMergeable(tap1: NextfareTransactionRecord, tap2: NextfareTransactionRecord): Boolean {
-            return tap1.journey == tap2.journey && tap1.mode == tap2.mode
+            return when {
+                tap1.type.isSale || tap2.type.isSale -> false
+                else -> tap1.journey == tap2.journey && tap1.mode == tap2.mode
+            }
         }
 
         /**
@@ -262,6 +258,7 @@ abstract class NextfareTransitData : TransitData() {
 
                     //Log.d(TAG, "TapOn @" + Utils.isoDateTimeFormat(tapOn.getTimestamp()));
                     // Start by creating an empty trip
+
                     val trip = NextfareTripCapsule(
 
                             // Put in the metadatas
@@ -348,5 +345,4 @@ abstract class NextfareTransitData : TransitData() {
             return s
         }
     }
-
 }

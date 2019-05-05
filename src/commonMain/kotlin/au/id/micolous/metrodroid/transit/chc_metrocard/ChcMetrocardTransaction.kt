@@ -18,15 +18,19 @@
  */
 package au.id.micolous.metrodroid.transit.chc_metrocard
 
+import au.id.micolous.metrodroid.multi.Parcelize
 import au.id.micolous.metrodroid.transit.Transaction
 import au.id.micolous.metrodroid.transit.Trip
 import au.id.micolous.metrodroid.transit.erg.ErgTransaction
 import au.id.micolous.metrodroid.transit.erg.record.ErgPurseRecord
 import au.id.micolous.metrodroid.util.StationTableReader
 
-class ChcMetrocardTransaction(purse: ErgPurseRecord, epoch: Int)
-    : ErgTransaction(purse, epoch,
-        ChcMetrocardTransitData.CURRENCY, ChcMetrocardTransitData.TIME_ZONE) {
+@Parcelize
+class ChcMetrocardTransaction(
+        override val purse: ErgPurseRecord,
+        override val epoch: Int) : ErgTransaction() {
+    override val currency = ChcMetrocardTransitData.CURRENCY
+    override val timezone = ChcMetrocardTransitData.TIME_ZONE
 
     override fun getAgencyName(isShort: Boolean): String? {
         return StationTableReader.getOperatorName(
@@ -61,28 +65,6 @@ class ChcMetrocardTransaction(purse: ErgPurseRecord, epoch: Int)
 
             // Merge whe one is a trip and the other is not a trip
             else -> purse.isTrip != other.purse.isTrip
-        }
-    }
-
-    override fun compareTo(other: Transaction): Int {
-        // This prepares ordering for a later merge
-        val ret = super.compareTo(other)
-
-        return when {
-            // Transactions are sorted by time alone -- but Erg transactions will have the same
-            // timestamp for many things
-            ret != 0 || other !is ChcMetrocardTransaction -> ret
-
-            // Put "top-ups" first
-            purse.isCredit && purse.transactionValue != 0 -> -1
-            other.purse.isCredit && other.purse.transactionValue != 0 -> 1
-
-            // Then put "trips" first
-            purse.isTrip -> -1
-            other.purse.isTrip -> 1
-
-            // Otherwise sort by value
-            else -> purse.transactionValue.compareTo(other.purse.transactionValue)
         }
     }
 }

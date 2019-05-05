@@ -33,6 +33,8 @@ import kotlinx.serialization.*
 @Parcelize
 @Serializable
 data class MetroTimeZone(val olson: String): Parcelable {
+    override fun toString(): String = olson
+
     @Serializer(forClass = MetroTimeZone::class)
     companion object : KSerializer<MetroTimeZone> {
         override fun serialize(encoder: Encoder, obj: MetroTimeZone) {

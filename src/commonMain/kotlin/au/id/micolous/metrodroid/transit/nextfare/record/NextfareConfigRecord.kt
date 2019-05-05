@@ -1,7 +1,7 @@
 /*
- * NextfareConfigRecord.java
+ * NextfareConfigRecord.kt
  *
- * Copyright 2016-2018 Michael Farrell <micolous+git@gmail.com>
+ * Copyright 2016-2019 Michael Farrell <micolous+git@gmail.com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -25,6 +25,7 @@ import au.id.micolous.metrodroid.multi.Parcelize
 import au.id.micolous.metrodroid.time.MetroTimeZone
 import au.id.micolous.metrodroid.time.Timestamp
 import au.id.micolous.metrodroid.util.ImmutableByteArray
+import au.id.micolous.metrodroid.util.hexString
 
 /**
  * Represents a configuration record on Nextfare MFC.
@@ -49,7 +50,7 @@ class NextfareConfigRecord (val ticketType: Int,
                     ticketType = input.byteArrayToIntReversed(8, 2)
             )
 
-            Log.d(TAG, "Config ticket type = ${record.ticketType}")
+            Log.d(TAG, "Ticket type = ${record.ticketType.hexString}, expires ${record.expiry}")
             return record
         }
     }

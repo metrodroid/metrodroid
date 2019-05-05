@@ -27,6 +27,7 @@ import au.id.micolous.metrodroid.multi.Parcelize
 import au.id.micolous.metrodroid.multi.R
 import au.id.micolous.metrodroid.time.MetroTimeZone
 import au.id.micolous.metrodroid.transit.CardInfo
+import au.id.micolous.metrodroid.transit.TransitCurrency.Companion.USD
 import au.id.micolous.metrodroid.transit.TransitData
 import au.id.micolous.metrodroid.transit.TransitIdentity
 import au.id.micolous.metrodroid.transit.nextfare.NextfareTransitData
@@ -43,8 +44,8 @@ class MspGotoTransitData (override val capsule: NextfareTransitDataCapsule): Nex
     override val timezone: MetroTimeZone
         get() = TIME_ZONE
 
-    override val currency: String
-        get() = "USD"
+    override val currency
+        get() = ::USD
 
     companion object {
         private const val NAME = "Go-To card"
@@ -92,7 +93,7 @@ class MspGotoTransitData (override val capsule: NextfareTransitDataCapsule): Nex
                         card = card,
                         timeZone = TIME_ZONE,
                         newTrip = { capsule -> MspGotoTrip(capsule) },
-                        newRefill = { it -> MspGotoTrip(NextfareTripCapsule(it)) },
+                        newRefill = { MspGotoTrip(NextfareTripCapsule(it)) },
                         shouldMergeJourneys = false)
                 return MspGotoTransitData(capsule)
             }

@@ -31,13 +31,17 @@ import au.id.micolous.metrodroid.transit.nextfare.record.NextfareTravelPassRecor
  */
 
 @Parcelize
-class NextfareSubscription (override val validTo: Timestamp?): Subscription(), Parcelable {
+class NextfareSubscription (
+        override val validTo: Timestamp? = null,
+        override val subscriptionState: SubscriptionState): Subscription(), Parcelable {
     override val subscriptionName: String?
         get() = null
 
-    constructor(record: NextfareTravelPassRecord) : this (record.timestamp)
+    constructor(record: NextfareTravelPassRecord) : this(
+            record.timestamp, SubscriptionState.STARTED)
 
     // Used when there is a subscription on the card that is not yet active.
     // TODO: Figure out subscription types
-    constructor(record: NextfareBalanceRecord) : this(null)
+    constructor(record: NextfareBalanceRecord) : this(
+            subscriptionState = SubscriptionState.UNUSED)
 }

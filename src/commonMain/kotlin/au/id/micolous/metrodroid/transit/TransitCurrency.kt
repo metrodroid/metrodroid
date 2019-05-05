@@ -35,7 +35,8 @@ open class TransitCurrency (
         /**
          * 3 character currency code (eg: AUD) per ISO 4217.
          */
-        private val mCurrencyCode: String,
+        @VisibleForTesting
+        val mCurrencyCode: String,
         /**
          * Value to divide by to get that currency's value in non-fractional parts.
          *
@@ -55,31 +56,26 @@ open class TransitCurrency (
                               val name: String?)
 
     /**
-     * Builds a new TransitCurrency, used to represent a monetary value on a transit card.
+     * Builds a new [TransitCurrency], used to represent a monetary value on a transit card.
      *
-     * For the [.TransitCurrency] constructor, the default {@param divisor}
-     * parameter is [.DEFAULT_DIVISOR] (100).
+     * The `divisor` parameter will default to:
      *
-     * For *all other* constructors without a {@param divisor} parameter, this is looked up
-     * dynamically using [Currency.getDefaultFractionDigits]. If the currency is unknown,
-     * then [.DEFAULT_DIVISOR] (100) is used instead.
+     * * For `currencyCode: String`: [DEFAULT_DIVISOR] (100).
      *
-     * The [.TransitCurrency] and [.TransitCurrency]
-     * constructors do not perform additional lookups at constructor call time.
+     * * For `currencyCode: Int`: Looked up dynamically with [getCurrencyDescriptorByCode].
      *
-     * Constructors taking a numeric ISO 4217 {@param currencyCode} will accept unknown currency
-     * codes, replacing them with [.UNKNOWN_CURRENCY_CODE] (XXX).
+     * Constructors taking a numeric ISO 4217 `currencyCode: Int` will accept unknown currency
+     * codes, replacing them with [UNKNOWN_CURRENCY_CODE] (XXX).
      *
      * Constructors taking a [TransitCurrencyDesc] parameter are intended for
      * internal (to [TransitCurrency]) use. Do not use them outside of this class.
      *
      * Style note: If the [TransitData] only ever supports a single currency, prefer to use
-     * one of the static methods of [TransitCurrency] (eg: [.AUD]) to build values,
+     * one of the static methods of [TransitCurrency] (eg: [AUD]) to build values,
      * rather than calling this constructor with a constant {@param currencyCode} string.
      *
      * @param currency The amount of currency
      * @param currencyCode An ISO 4217 textual currency code, eg: "AUD".
-     * @throws IllegalArgumentException On invalid {@param currencyCode} passed as a string.
      */
     constructor(currency: Int, currencyCode: String) : this(currency, currencyCode, DEFAULT_DIVISOR)
 

@@ -33,11 +33,9 @@ import au.id.micolous.metrodroid.ui.ListItem
  * Represents subscriptions on a card.  Subscriptions can be used to represent a number of different
  * things "loaded" on to the card.
  *
- *
  * Travel Pass or Season Pass: a card may, for example, allow travel passes that allow unlimited
  * travel (on certain modes of transport, or with certain operating companies) for a period of time
  * (eg: 7 days, 30 days, 1 year...)
- *
  *
  * Automatic top-up: a card may be linked to a credit card or other payment instrument, which will
  * be used to "top-up" or "refill" a card in the event a trip takes the balance below $0.
@@ -55,7 +53,6 @@ abstract class Subscription : Parcelable {
     /**
      * When the subscription starts.
      *
-     *
      * If null is returned, then the subscription has no start date.
      *
      * @return Calendar representing subscription start date, or null.
@@ -66,7 +63,6 @@ abstract class Subscription : Parcelable {
     /**
      * When the subscription ends.
      *
-     *
      * If null is returned, then the subscription has never been used, or there is no date limit.
      *
      * For example, a 7 day travel pass may be loaded on the card as "available", but the travel
@@ -74,7 +70,7 @@ abstract class Subscription : Parcelable {
      *
      * @return Calendar representing the subscription date, or null if the subscription has no end
      * date.
-     * @see .getSubscriptionState
+     * @see [subscriptionState]
      */
     open val validTo: Timestamp?
         get() = null
@@ -156,7 +152,7 @@ abstract class Subscription : Parcelable {
     /**
      * The total number of remaining days that this subscription can be used on.
      *
-     * This is distinct to [.getValidTo] -- this is for subscriptions where it can be used
+     * This is distinct to [validTo] -- this is for subscriptions where it can be used
      * on distinct but non-sequential days.
      *
      * Returns null if this is unknown, or there is no restriction.
@@ -167,7 +163,7 @@ abstract class Subscription : Parcelable {
     /**
      * Where a subscription limits the number of trips in a day that may be taken, this value
      * indicates the number of trips remaining on the day of last use,
-     * [.getLastUseTimestamp].
+     * [lastUseTimestamp].
      *
      * For example, if a subscription states that it may be used for 2 trips per day, then this will
      * go 2, 1, 0... as it is used up.
@@ -203,21 +199,19 @@ abstract class Subscription : Parcelable {
      * standard bounds of the interface.  By default, this attempts to collect less common
      * attributes, and put them in here.
      *
-     *
      * Note: in order to support obfuscation / hiding behaviour, if you implement this method, you
      * also need to use some other functionality:
      *
-     *  * Check for [MetrodroidApplication.hideCardNumbers] whenever you show a card
-     * number, or other mark (such as a name) that could be used to identify this card or its
-     * holder.
+     * * Check for [MetrodroidApplication.hideCardNumbers] whenever you show a card number, or
+     *   other mark (such as a name) that could be used to identify this card or its
+     *   holder.
      *
-     *  * Pass [java.util.Calendar]/[java.util.Date] objects (timestamps) through
-     * [au.id.micolous.metrodroid.util.TripObfuscator.maybeObfuscateTS].  This also
-     * works on epoch timestamps (expressed as seconds since UTC).
+     * * Pass [Timestamp] objects through
+     *   [au.id.micolous.metrodroid.util.TripObfuscator.maybeObfuscateTS].  This also works on
+     *   epoch timestamps (expressed as seconds since UTC).
      *
-     *  * Pass all currency amounts through
-     * [TransitCurrency.formatCurrencyString] and
-     * [TransitCurrency.maybeObfuscateBalance].
+     * * Pass all currency amounts through [TransitCurrency.formatCurrencyString] and
+     *   [TransitCurrency.maybeObfuscateBalance].
      *
      */
     // TODO: i18n

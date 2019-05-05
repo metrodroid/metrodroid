@@ -1055,9 +1055,19 @@
         Go Card (South East Queensland/Brisbane, AU)
         These are deliberately separated strings in order to match the terminology of the agency.
     -->
-    <string name="seqgo_ticket_type_regular">Regular</string>
+    <!-- Translators: regular / full fare type for Go Card (Brisbane, AU) -->
+    <string name="seqgo_ticket_type_adult">Adult</string>
+    <!-- Translators: tourist full fare type for Go Card (Brisbane, AU). Both of these cards have
+    the same IDs:
+    - go seeQ: https://translink.com.au/tickets-and-fares/ticket-types/visitors-and-tourists/go-seeq
+    - go explore: https://translink.com.au/tickets-and-fares/ticket-types/visitors-and-tourists/go-explore
+     -->
+    <string name="seqgo_ticket_type_adult_explore">Adult Explore/seeQ</string>
+    <!-- Translators: adult discounted fare type for Go Card (Brisbane, AU) -->
     <string name="seqgo_ticket_type_concession">Concession</string>
+    <!-- Translators: childrens' discounted fare type for Go Card (Brisbane, AU) -->
     <string name="seqgo_ticket_type_child">Child</string>
+    <!-- Translators: seniors' discounted fare type for Go Card (Brisbane, AU) -->
     <string name="seqgo_ticket_type_senior">Senior</string>
 
     <string name="seqgo_refill_manual">Manual top-up</string>

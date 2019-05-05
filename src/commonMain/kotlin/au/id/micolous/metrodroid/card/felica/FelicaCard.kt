@@ -26,6 +26,7 @@ import au.id.micolous.metrodroid.card.CardProtocol
 import au.id.micolous.metrodroid.multi.Localizer
 import au.id.micolous.metrodroid.multi.R
 import au.id.micolous.metrodroid.serializers.XMLId
+import au.id.micolous.metrodroid.serializers.XMLIgnore
 import au.id.micolous.metrodroid.serializers.XMLListIdx
 import au.id.micolous.metrodroid.transit.TransitData
 import au.id.micolous.metrodroid.transit.TransitIdentity
@@ -40,6 +41,7 @@ import kotlinx.serialization.Serializable
 import kotlinx.serialization.Transient
 import kotlin.math.roundToInt
 
+@XMLIgnore("idm")
 @Serializable
 data class FelicaCard(
         @XMLId("pmm")
@@ -49,6 +51,7 @@ data class FelicaCard(
         @Optional
         override val isPartialRead: Boolean = false) : CardProtocol() {
 
+    @Transient
     private var tagId: ImmutableByteArray? = null
 
     override fun postCreate(card: Card) {

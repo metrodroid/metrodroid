@@ -11,11 +11,7 @@ import kotlinx.serialization.toUtf8Bytes
  * By default, this adopts a binary-based ([InputStream]) model. If a character (string) model
  * is desired (such as a format which consists only of plain text), then implement [Text]
  * instead.
- *
- * @param <T> An optional subclass of Card to declare specific format emissions. For example, a
- * format that only supports MIFARE Classic should declare
- * [au.id.micolous.metrodroid.card.classic.ClassicCard] here.
-</T> */
+ */
 interface CardImporter {
 
     /**
@@ -23,7 +19,7 @@ interface CardImporter {
      *
      * Implementations should read the file incrementally (lazy), to save memory.
      *
-     * By default, this tries to read one card (using [.readCard], and returns a
+     * By default, this tries to read one card (using [readCard]), and returns a
      * singleton iterator.
      *
      * @param stream Stream to read the card content from.
@@ -40,8 +36,7 @@ interface CardImporter {
     /**
      * Reads cards from the given String.
      *
-     * This method should only be used for data which is already in memory. If loading data from
-     * some other source, use [.readCards] instead.
+     * This method should only be used for data which is already in memory.
      * @param s String to read from.
      */
     fun readCards(s: String): Iterator<Card>? {
