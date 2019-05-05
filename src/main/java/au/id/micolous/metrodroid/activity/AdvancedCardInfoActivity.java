@@ -142,7 +142,7 @@ public class AdvancedCardInfoActivity extends MetrodroidActivity {
                 case R.id.share_xml:
                     xml = CardSerializer.INSTANCE.toJson(mCard);
                     i = new Intent(Intent.ACTION_SEND);
-                    i.setType("text/xml");
+                    i.setType("application/json");
                     i.putExtra(Intent.EXTRA_TEXT, xml);
                     startActivity(i);
                     return true;
@@ -154,7 +154,7 @@ public class AdvancedCardInfoActivity extends MetrodroidActivity {
 
                         i = new Intent(Intent.ACTION_CREATE_DOCUMENT);
                         i.addCategory(Intent.CATEGORY_OPENABLE);
-                        i.setType("text/xml");
+                        i.setType("application/json");
                         i.putExtra(Intent.EXTRA_TITLE, filename);
                         startActivityForResult(Intent.createChooser(i, Localizer.INSTANCE.localizeString(R.string.export_filename)), REQUEST_SAVE_FILE);
                     }
