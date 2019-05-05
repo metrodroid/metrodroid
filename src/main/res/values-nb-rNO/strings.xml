@@ -809,4 +809,8 @@
     <string name="felica_lite_read_write">Omskrivbar data</string>
     <string name="card_format_ndef">NDEG</string>
     <string name="felica_system_common">Fellesområde (FeliCa-nettverkene)</string>
+    <string name="location_otago">Otago, Ny-Zealand</string>
+    <string name="location_rotorua">Rotorua, Ny-Zealand</string>
+    <string name="seqgo_ticket_type_adult">Voksen</string>
+    <string name="seqgo_ticket_type_adult_explore">Voksen Utforsk/seeQ</string>
 </resources>
