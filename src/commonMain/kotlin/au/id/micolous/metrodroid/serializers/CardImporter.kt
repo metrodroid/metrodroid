@@ -19,7 +19,7 @@ interface CardImporter {
      *
      * Implementations should read the file incrementally (lazy), to save memory.
      *
-     * By default, this tries to read one card (using [.readCard], and returns a
+     * By default, this tries to read one card (using [readCard]), and returns a
      * singleton iterator.
      *
      * @param stream Stream to read the card content from.
@@ -36,8 +36,7 @@ interface CardImporter {
     /**
      * Reads cards from the given String.
      *
-     * This method should only be used for data which is already in memory. If loading data from
-     * some other source, use [.readCards] instead.
+     * This method should only be used for data which is already in memory.
      * @param s String to read from.
      */
     fun readCards(s: String): Iterator<Card>? {
