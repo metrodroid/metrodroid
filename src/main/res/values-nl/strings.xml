@@ -449,7 +449,7 @@
     <string name="time_from_to">
         <xliff:g id="start_time" example="12:35">%1$s</xliff:g> → <xliff:g id="end_time" example="12:51">%2$s</xliff:g>
     </string>
-    <string name="time_from_unknown_to">\??:?? → <xliff:g id="end_time" example="12:51">%s</xliff:g>
+    <string name="time_from_unknown_to">\?\?:\?\? → <xliff:g id="end_time" example="12:51">%s</xliff:g>
     </string>
     <string name="pref_show_local_and_english_title">Stationsnamen tonen in lokale taal en het Engels</string>
     <string name="pref_show_local_and_english_desc">Als dit wordt ingeschakeld, dan worden zowel de lokale als de Engelse naam getoond, ongeacht de ingestelde taal. Als dit wordt uitgeschakeld, dan wordt de bijpassende variant getoond.</string>
@@ -762,4 +762,57 @@
     <string name="maximum_balance">Maximum saldo</string>
     <string name="branch_code">Filiaalcode</string>
     <string name="one_time_transaction_limit">Eenmalig transactielimiet</string>
+    <string name="location_otago">Otago, Nieuw-Zeeland</string>
+    <string name="location_rotorua">Rotorua, Nieuw-Zeeland</string>
+    <string name="encryption_key_version">Versleutelingsversie</string>
+    <string name="authentication_id">Authenticatie-id</string>
+    <string name="rfu">Veld is nog niet in gebruik</string>
+    <string name="cardtype_header">Betaalvoorwaarden</string>
+    <string name="cardtype_prepaid">Prepaid</string>
+    <string name="cardtype_postpay">Achteraf</string>
+    <string name="cardtype_mobile_postpay">Mobiele betaling</string>
+    <string name="crypto_algo_header">Versleutelingsalgoritme</string>
+    <string name="crypto_algo_seed">SEED</string>
+    <string name="crypto_algo_3des">3DES</string>
+    <string name="tmoney_issuer_kftci">Korea Financial Telecommunications and Clearings Institute</string>
+    <string name="tmoney_issuer_mybi">Mybi</string>
+    <string name="tmoney_issuer_mondex">Mondex Korea</string>
+    <string name="tmoney_issuer_kec">Korea Expressway Corporation</string>
+    <string name="tmoney_issuer_kscc">Korea Smart Card Corporation</string>
+    <string name="tmoney_issuer_korail">KORAIL Networks</string>
+    <string name="tmoney_issuer_eb">EB Card Corporation</string>
+    <string name="tmoney_issuer_seoul_bus">Seoul Bus Transport Association</string>
+    <string name="tmoney_issuer_cardnet">Cardnet</string>
+    <string name="tmoney_usercode_regular">Normaal</string>
+    <string name="tmoney_usercode_child">Kind</string>
+    <string name="tmoney_usercode_youth">Tiener</string>
+    <string name="tmoney_usercode_test">Test</string>
+    <string name="tmoney_usercode_inactive">Inactief</string>
+    <string name="discount_type">Soort voordeel</string>
+    <string name="tmoney_disrate_none">Geen voordeel</string>
+    <string name="tmoney_disrate_disabled_basic">Gehandicapt (basis)</string>
+    <string name="tmoney_disrate_disabled_companion">Gehandicapt (begeleider)</string>
+    <string name="none">Geen</string>
+    <string name="mobile_carrier">Mobiele provider</string>
+    <string name="tmoney_tcode_sk">SK Telecom</string>
+    <string name="tmoney_tcode_kt">Korea Telecom</string>
+    <string name="tmoney_tcode_lg">LG Uplus</string>
+    <string name="financial_institution_name">Naam van financiële instelling</string>
+    <string name="tmoney_ccode_kb">KB Kookmin Bank</string>
+    <string name="tmoney_ccode_nonghyup">Nonghyup Bank</string>
+    <string name="tmoney_ccode_lotte">Lotte-kaart</string>
+    <string name="tmoney_ccode_bc">BC-kaart</string>
+    <string name="tmoney_ccode_samsung">Samsung-kaart</string>
+    <string name="tmoney_ccode_shinhan">Shinhan Bank</string>
+    <string name="tmoney_ccode_citi">Citibank Korea</string>
+    <string name="tmoney_ccode_exchange">Korea Exchange Bank</string>
+    <string name="tmoney_ccode_hana_sk">Hana SK-kaart</string>
+    <string name="tmoney_ccode_hyundai">Hyundai Capital Services</string>
+    <string name="card_name_snapper">Snapper</string>
+    <string name="snapper_issuer_snapper">Snapper Services Ltd.</string>
+    <string name="card_media_felica_lite">FeliCa Lite</string>
+    <string name="felica_lite_read_only">Alleen-lezen</string>
+    <string name="felica_lite_read_write">Herschrijfbaar</string>
+    <string name="card_format_ndef">NDEF</string>
+    <string name="felica_system_common">Gebruikelijke zone (FeliCa Networks)</string>
 </resources>
