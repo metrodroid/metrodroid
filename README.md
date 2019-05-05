@@ -75,6 +75,7 @@ Card / Agency | Location | Notes
 [AT HOP][athop] | :new_zealand: Auckland, New Zealand | :new: `123`
 [Beijing Municipal Card][beijing] | :cn: Beijing, China | :new:
 [Bilhete Único][bu] | :brazil: São Paulo, Brazil | :closed_lock_with_key: `MFC`
+[BUS-IT][busit] | :new_zealand: Greater Hamilton (Waikato), New Zealand | :new: :closed_lock_with_key: `MFC`
 [CharlieCard][charlie] | :us: Boston, MA, USA | :new: :closed_lock_with_key: `MFC`
 City Union | :cn: Mainland China | :new:
 [Clipper][clipper] | :us: San Francisco, CA, USA
@@ -86,6 +87,7 @@ City Union | :cn: Mainland China | :new:
 [ERG][erg] | :earth_asia: _many locations_ | :new: :closed_lock_with_key: `MFC`
 [EZ-Link][ezlink] | :singapore: Singapore |
 [Go card][seqgo] | :australia: Brisbane and South East Queensland, Australia | :new: :closed_lock_with_key: `MFC`
+[GoCard][otago] | :new_zealand: Greater Dunedin (Otago), New Zealand | :new: `MFC`
 [Go-to card][mspgoto] | :us: Minneapolis-St. Paul, MN, USA | :new: :closed_lock_with_key: `MFC`
 [Hop Fastpass][hfp] | :us: Portland, OR, USA | :new: `123`
 [HSL][hsl], [Matkakortti][matka] | :finland: Finland |
@@ -116,7 +118,9 @@ Krasnodar | :ru: Krasnodar, Russia | :new: :closed_lock_with_key: `MFC`
 Selecta | :fr: France | :new:
 [Shenzhen Tong][shenzhen] | :cn: Shenzhen, Guangdong Province, China | :new:
 [SLAccess][slaccess] | :sweden: Stockholm, Sweden | :new: :closed_lock_with_key: `MFC`
+[Smartride][smartride] | :new_zealand: Rotorua, New Zealand | :new: `MFC`
 [SmartRider][smartrider] | :australia: Western Australia, Australia | :new: :closed_lock_with_key: `MFC`
+[Snapper][snapper] | :new_zealand: Wellington, New Zealand | :new:
 [Strelka][strelka] | :ru: Moscow, Russia | :closed_lock_with_key: `123` `MFC`
 [Suica][suica], [ICOCA][icoca], [PASMO][pasmo] | :jp: Japan
 [SunCard][suncard] | :us: Orlando, FL, USA | :new: :closed_lock_with_key: `123` `MFC`
@@ -137,6 +141,7 @@ Note | Meaning
 :new: | New in Metrodroid.
 :closed_lock_with_key: | Encryption keys required to read this card.
 :unlock: | Encryption keys are downloaded from the operator.
+:singapore: | CEPAS cards (Singapore) are not compatible with all devices (ISO 14443-B).
 `MFC` | MIFARE Classic card; requires NXP NFC chipset in your phone.
 `123` | Only the card number can be read.
 `FALLBACK` | Fallback reader -- must be explicitly enabled in the application's settings.
@@ -216,6 +221,7 @@ This software and it's authors are not associated with any public transit agency
 [athop]: https://at.govt.nz/bus-train-ferry/at-hop-card/
 [beijing]: https://en.wikipedia.org/wiki/Yikatong
 [bu]: http://bilheteunico.sptrans.com.br/
+[busit]: https://www.busit.co.nz/
 [charlie]: https://www.mbta.com/fares/charliecard
 [chc]: http://www.metroinfo.co.nz/
 [clipper]: https://www.clippercard.com/
@@ -247,6 +253,7 @@ This software and it's authors are not associated with any public transit agency
 [opal]: http://www.opal.com.au/
 [opus]: http://www.stm.info/en/info/fares/opus-cards-and-other-fare-media/opus-card
 [orca]: http://www.orcacard.com/
+[otago]: https://www.orc.govt.nz/public-transport/dunedin-buses/fares-and-gocard
 [oura]: https://www.oura.com/
 [ovc]: http://www.ov-chipkaart.nl/
 [pasmo]: https://en.wikipedia.org/wiki/PASMO
@@ -257,7 +264,9 @@ This software and it's authors are not associated with any public transit agency
 [seqgo]: http://translink.com.au/tickets-and-fares/go-card
 [shenzhen]: http://www.shenzhentong.com/
 [slaccess]: https://sl.se/en/eng-info/fares/sl-access/
+[smartride]: https://www.baybus.co.nz/faqs/smartride-card/
 [smartrider]: http://www.transperth.wa.gov.au/SmartRider/
+[snapper]: https://www.snapper.co.nz/
 [strelka]: https://strelkacard.ru/
 [suica]: https://en.wikipedia.org/wiki/Suica
 [suncard]: https://sunrail.com/tickets-suncards/suncards/
