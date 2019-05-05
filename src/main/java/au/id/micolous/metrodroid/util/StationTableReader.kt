@@ -24,8 +24,6 @@ import android.util.Log
 import android.util.SparseArray
 
 import au.id.micolous.metrodroid.multi.Localizer
-import org.apache.commons.lang3.concurrent.ConcurrentException
-import org.apache.commons.lang3.concurrent.LazyInitializer
 import org.jetbrains.annotations.NonNls
 
 import java.io.DataInputStream
@@ -58,7 +56,21 @@ actual class StationTableReader
 private constructor(dbName: String) {
 
     private val mStationDb: Stations.StationDb
-    private val mStationIndex: LazyInitializer<Stations.StationIndex>
+    private val mStationIndex: Stations.StationIndex? by lazy {
+        try {
+            // Reset back to the start of the station list.
+            mTable.reset()
+
+            // Skip over the station list
+            mTable.skipBytes(mStationsLength)
+
+            // Read out the index
+            Stations.StationIndex.parseDelimitedFrom(mTable)
+        } catch (e: IOException) {
+            Log.e(TAG, "error reading index", e)
+            null
+        }
+    }
     private val mTable: DataInputStream
     private val mStationsLength: Int
 
@@ -103,26 +115,6 @@ private constructor(dbName: String) {
         // Mark where the start of the station list is.
         // AssetInputStream allows unlimited seeking, no need to specify a readlimit.
         mTable.mark(0)
-
-        // Defer reading the index until actually needed.
-        mStationIndex = object : LazyInitializer<Stations.StationIndex>() {
-            override fun initialize(): Stations.StationIndex? {
-                try {
-                    // Reset back to the start of the station list.
-                    mTable.reset()
-
-                    // Skip over the station list
-                    mTable.skipBytes(mStationsLength)
-
-                    // Read out the index
-                    return Stations.StationIndex.parseDelimitedFrom(mTable)
-                } catch (e: IOException) {
-                    Log.e(TAG, "error reading index", e)
-                    return null
-                }
-
-            }
-        }
     }
 
     private fun useEnglishName(): Boolean {
@@ -190,10 +182,7 @@ private constructor(dbName: String) {
     private fun getProtoStationById(id: Int): Stations.Station? {
         val offset: Int
         try {
-            offset = mStationIndex.get().getStationMapOrThrow(id)
-        } catch (e: ConcurrentException) {
-            Log.d(TAG, String.format(Locale.ENGLISH, "Unknown station %d", id) /*, e */)
-            return null
+            offset = mStationIndex?.getStationMapOrThrow(id) ?: return null
         } catch (e: IllegalArgumentException) {
             Log.d(TAG, String.format(Locale.ENGLISH, "Unknown station %d", id))
             return null
