@@ -130,10 +130,10 @@ abstract class ClassicKeysImpl : ClassicKeys {
                 else -> ClassicSectorKey.KeyType.UNKNOWN
             }
 
-            val keyData = ImmutableByteArray.fromHex(json[ClassicSectorKey.KEY_VALUE].content)
-
             when (json.getPrimitiveOrNull(TRANSFORM_KEY)?.contentOrNull ?: "none") {
                 "none" -> {
+                    val keyData = ImmutableByteArray.fromHex(json[ClassicSectorKey.KEY_VALUE].content)
+
                     // Check that the key is the correct length
                     if (keyData.size != KEY_LEN) {
                         throw Exception("Expected $KEY_LEN bytes in key, got ${keyData.size}")
