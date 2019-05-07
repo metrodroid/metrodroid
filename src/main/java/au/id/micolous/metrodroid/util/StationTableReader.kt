@@ -298,9 +298,9 @@ private constructor(dbName: String) {
             return if (pl.transport == Stations.TransportType.UNKNOWN) null else Trip.Mode.valueOf(pl.transport.toString())
         }
 
-        actual fun getOperatorName(reader: String?, id: Int, isShort: Boolean): String? {
-            val str = StationTableReader.getSTR(reader) ?: return fallbackName(id)
-            val po = str.mStationDb.getOperatorsOrDefault(id, null) ?: return fallbackName(id)
+        actual fun getOperatorName(reader: String?, id: Int, isShort: Boolean, humanReadableId: String): String? {
+            val str = StationTableReader.getSTR(reader) ?: return fallbackName(humanReadableId)
+            val po = str.mStationDb.getOperatorsOrDefault(id, null) ?: return fallbackName(humanReadableId)
             return str.selectBestName(po.name, isShort)
         }
 
