@@ -114,6 +114,12 @@
     * Use "smart" quotation marks (eg: ’).
     * The full changelog is only in English.
     -->
+    <string name="market_changelog_38">* Adds support for Otago Gocard, Rotorua SmartRide, Waikato BUSIT and Wellington Snapper cards.\n* Adds many new route and station IDs.\n* Improved FeliCa reader.\n* Fixes issues with EZ-Link and Octopus cards.\n* Many under-the-hood changes.\n\nMore details: https://github.com/micolous/metrodroid/wiki/Changelog</string>
+
+    <!--
+    Translators:
+    This is for an old version of Metrodroid. There is no need to translate this.
+    -->
     <string name="market_changelog_37">* Adds support for Adelaide Metrocard, many Chinese (PRC) cards, Clipper single tickets, Kiev Metro, Orlando SunCard, Rejsekort, SLAccess, Selecta, Tartu Bus and multiple Zolotaya Korona based cards.\n* Fixes OV-Chipkaart reader.\n* Reads serial number for AT-HOP.\n* Many under-the-hood changes.\n\nMore details: https://github.com/micolous/metrodroid/wiki/Changelog</string>
 
     <!--
