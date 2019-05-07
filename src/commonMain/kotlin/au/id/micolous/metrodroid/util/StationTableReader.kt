@@ -15,7 +15,8 @@ expect class StationTableReader {
         fun getLineName(reader: String?, id: Int, humanReadableId: String = NumberUtils.intToHex(id)): String?
         fun getLineMode(reader: String?, id: Int): Trip.Mode?
 
-        fun getOperatorName(reader: String?, id: Int, isShort: Boolean): String?
+        fun getOperatorName(reader: String?, id: Int, isShort: Boolean,
+                            humanReadableId: String = NumberUtils.intToHex(id)): String?
         fun getNotice(reader: String?): String?
     }
 }
