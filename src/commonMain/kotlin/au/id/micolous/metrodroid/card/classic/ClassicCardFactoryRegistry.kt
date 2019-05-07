@@ -20,6 +20,7 @@ import au.id.micolous.metrodroid.transit.selecta.SelectaFranceTransitData
 import au.id.micolous.metrodroid.transit.seq_go.SeqGoTransitData
 import au.id.micolous.metrodroid.transit.serialonly.*
 import au.id.micolous.metrodroid.transit.smartrider.SmartRiderTransitData
+import au.id.micolous.metrodroid.transit.touchngo.TouchnGoTransitFactory
 import au.id.micolous.metrodroid.transit.troika.TroikaHybridTransitData
 import au.id.micolous.metrodroid.transit.unknown.BlankClassicTransitData
 import au.id.micolous.metrodroid.transit.unknown.UnauthorizedClassicTransitData
@@ -58,6 +59,7 @@ object ClassicCardFactoryRegistry {
             RkfTransitData.FACTORY,
             OtagoGoCardTransitFactory(),
             WaikatoCardTransitFactory(),
+            TouchnGoTransitFactory(),
 
             // This check must be THIRD TO LAST.
             //
