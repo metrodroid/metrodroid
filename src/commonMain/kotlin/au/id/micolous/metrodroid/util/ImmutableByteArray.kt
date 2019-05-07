@@ -24,6 +24,7 @@ import au.id.micolous.metrodroid.multi.Parcelable
 import au.id.micolous.metrodroid.multi.Parcelize
 import kotlinx.io.OutputStream
 import kotlinx.serialization.*
+import kotlin.experimental.xor
 
 fun ByteArray.toImmutable(): ImmutableByteArray = ImmutableByteArray.fromByteArray(this)
 fun Array<out Number>.toImmutable(): ImmutableByteArray = ImmutableByteArray.ofB(*this)
@@ -156,6 +157,10 @@ class ImmutableByteArray private constructor(
     fun chunked(size: Int): List<ImmutableByteArray>
             = chunked(size).map {
         it.toByteArray().toImmutable()
+    }
+
+    infix fun xor(other: ImmutableByteArray) = ImmutableByteArray(size) {
+        mData[it] xor other[it]
     }
 
     @Serializer(forClass = ImmutableByteArray::class)
