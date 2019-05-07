@@ -32,7 +32,8 @@ import codecs, csv
 
 def compile_stops_from_csv(csv_f, output_f, version=None, tts_hint_language=None, operators_f=None, local_languages=None,
                            lines_f=None):
-  csv_f = codecs.getreader('utf-8-sig')(csv_f)
+  if csv_f is not None:
+    csv_f = codecs.getreader('utf-8-sig')(csv_f)
 
   operators = {}
   lines = {}
@@ -64,8 +65,9 @@ def compile_stops_from_csv(csv_f, output_f, version=None, tts_hint_language=None
     tts_hint_language=tts_hint_language,
   )
 
-  mdst.read_stops_from_csv(db, csv_f)
-  csv_f.close()
+  if csv_f is not None:
+    mdst.read_stops_from_csv(db, csv_f)
+    csv_f.close()
 
   index_end_off = db.finalise()
 
@@ -81,7 +83,7 @@ def main():
   )
 
   parser.add_argument('input_csv',
-    nargs=1,
+    nargs='?',
     type=FileType('rb'),
     help='Path to CSV file to extract data from.')
   
@@ -110,7 +112,11 @@ def main():
 
   options = parser.parse_args()
 
-  compile_stops_from_csv(options.input_csv[0], options.output, options.version, options.tts_hint_language, options.operators, options.local_languages, options.lines)
+  csv_f = None
+  if options.input_csv is not None:
+    csv_f = options.input_csv[0]
+
+  compile_stops_from_csv(csv_f, options.output, options.version, options.tts_hint_language, options.operators, options.local_languages, options.lines)
 
 if __name__ == '__main__':
   main()
