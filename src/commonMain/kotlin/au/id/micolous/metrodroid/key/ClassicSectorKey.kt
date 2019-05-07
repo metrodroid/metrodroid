@@ -29,11 +29,19 @@ import kotlinx.serialization.Serializable
 import kotlinx.serialization.json.JsonObject
 import kotlinx.serialization.json.json
 
+interface ClassicSectorAlgoKey {
+    fun resolve(tagId: ImmutableByteArray, sector: Int): ClassicSectorKey
+    fun toJSON(sector: Int): JsonObject
+    val bundle: String
+}
+
 @Serializable
 data class ClassicSectorKey internal constructor(
         var type: KeyType,
-        val bundle: String,
-        val key: ImmutableByteArray) : Comparable<ClassicSectorKey> {
+        override val bundle: String,
+        val key: ImmutableByteArray) : Comparable<ClassicSectorKey>, ClassicSectorAlgoKey {
+    override fun resolve(tagId: ImmutableByteArray, sector: Int): ClassicSectorKey = this
+
     enum class KeyType {
         UNKNOWN,
         A,
@@ -80,7 +88,7 @@ data class ClassicSectorKey internal constructor(
     fun updateType(keyType: KeyType) = ClassicSectorKey(key = key,
             type = keyType, bundle = bundle)
 
-    fun toJSON(sectorIdx: Int): JsonObject = json {
+    override fun toJSON(sectorIdx: Int): JsonObject = json {
             when (type) {
                 ClassicSectorKey.KeyType.A -> KEY_TYPE to TYPE_KEYA
                 ClassicSectorKey.KeyType.B -> KEY_TYPE to TYPE_KEYB

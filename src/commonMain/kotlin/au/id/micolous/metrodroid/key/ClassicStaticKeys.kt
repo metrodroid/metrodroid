@@ -22,7 +22,9 @@ package au.id.micolous.metrodroid.key
 import au.id.micolous.metrodroid.multi.Localizer
 import au.id.micolous.metrodroid.multi.Log
 import au.id.micolous.metrodroid.multi.R
+import au.id.micolous.metrodroid.util.ImmutableByteArray
 import kotlinx.serialization.json.JsonObject
+import kotlinx.serialization.json.content
 import kotlinx.serialization.json.json
 
 /**
@@ -35,9 +37,9 @@ import kotlinx.serialization.json.json
  * a file format description.
  */
 class ClassicStaticKeys private constructor(override val description: String?,
-                                            keys: Map<Int, List<ClassicSectorKey>>,
+                                            override val keys: Map<Int, List<ClassicSectorAlgoKey>>,
                                             override val sourceDataLength: Int)
-    : ClassicKeysImpl(mKeys = keys) {
+    : ClassicKeysImpl() {
 
     internal operator fun plus(other: ClassicStaticKeys): ClassicStaticKeys {
         return ClassicStaticKeys(description = description,
@@ -66,10 +68,10 @@ class ClassicStaticKeys private constructor(override val description: String?,
         fun fallback() = ClassicStaticKeys(description = "fallback",
                 keys = mapOf(), sourceDataLength = 0)
 
-        fun flattenKeys(lst: List<ClassicStaticKeys>): Map<Int, List<ClassicSectorKey>> {
-            val keys = mutableMapOf<Int, MutableList<ClassicSectorKey>>()
+        fun flattenKeys(lst: List<ClassicStaticKeys>): Map<Int, List<ClassicSectorAlgoKey>> {
+            val keys = mutableMapOf<Int, MutableList<ClassicSectorAlgoKey>>()
             for (who in lst)
-                for ((key, value) in who.mKeys) {
+                for ((key, value) in who.keys) {
                     if (!keys.containsKey(key))
                         keys[key] = mutableListOf()
                     keys[key]?.addAll(value)

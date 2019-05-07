@@ -33,12 +33,12 @@ import kotlinx.serialization.json.json
  * the data formats implemented here.
  */
 class ClassicCardKeys(override var uid: String?,
-                      keys: Map<Int, List<ClassicSectorKey>>,
-                      override val sourceDataLength: Int) : ClassicKeysImpl(mKeys = keys) {
+                      override val keys: Map<Int, List<ClassicSectorKey>>,
+                      override val sourceDataLength: Int) : ClassicKeysImpl() {
 
     val keyType: ClassicSectorKey.KeyType?
         get() {
-            val distinct = allKeys.map { it.type }.distinct()
+            val distinct = keys.values.flatten().map { it.type }.distinct()
             return when (distinct.size) {
                 0 -> null
                 1 -> distinct[0]
@@ -66,7 +66,7 @@ class ClassicCardKeys(override var uid: String?,
     }
 
     fun setAllKeyTypes(kt: ClassicSectorKey.KeyType) {
-        mKeys.values.flatten().forEach { it.type = kt }
+        keys.values.flatten().forEach { it.type = kt }
     }
 
     override val type = CardKeys.TYPE_MFC
@@ -106,7 +106,7 @@ class ClassicCardKeys(override var uid: String?,
          */
         fun fromJSON(json: JsonObject, defaultBundle: String) =
             ClassicCardKeys(uid = json.getPrimitiveOrNull(CardKeys.JSON_TAG_ID_KEY)?.contentOrNull,
-                    keys = keysFromJSON(json, true, defaultBundle),
+                    keys = keysFromJSON(json, true, defaultBundle).mapValues { (sector, keys) -> keys.filterIsInstance<ClassicSectorKey>() },
                     sourceDataLength = json.toString().length)
     }
 }
