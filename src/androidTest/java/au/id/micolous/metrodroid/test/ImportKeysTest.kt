@@ -20,6 +20,7 @@ package au.id.micolous.metrodroid.test
 
 import au.id.micolous.metrodroid.key.*
 import au.id.micolous.metrodroid.key.KeyFormat
+import au.id.micolous.metrodroid.util.ImmutableByteArray
 import au.id.micolous.metrodroid.util.toImmutable
 import kotlinx.io.charsets.Charsets
 import kotlinx.io.core.String
@@ -67,23 +68,23 @@ class ImportKeysTest : BaseInstrumentedTest() {
     fun testClassicKeys() {
         val mifare1 = loadClassicCardKeys("mifare1.json", "12345678", KeyFormat.JSON_MFC) as ClassicKeysImpl
 
-        assertEquals(1, mifare1.getProperCandidates(0)!!.size)
-        assertEquals(1, mifare1.getProperCandidates(1)!!.size)
-        assertEquals(2, mifare1.allProperKeys.size)
+        assertEquals(1, mifare1.getProperCandidates(0, tagId)!!.size)
+        assertEquals(1, mifare1.getProperCandidates(1, tagId)!!.size)
+        assertEquals(2, mifare1.getAllProperKeys(tagId).size)
         assertEquals(2, mifare1.keyCount)
 
         for (i in 2..15) {
-            assertEquals(0, mifare1.getProperCandidates(i)?.size?:0)
+            assertEquals(0, mifare1.getProperCandidates(i, tagId)?.size?:0)
         }
 
-        val k0 = mifare1.getProperCandidates(0)!![0]
-        val k1 = mifare1.getProperCandidates(1)!![0]
+        val k0 = mifare1.getProperCandidates(0, tagId)!![0]
+        val k1 = mifare1.getProperCandidates(1, tagId)!![0]
 
         assertNotNull(k0)
         assertNotNull(k1)
 
-        assertEquals("010203040506", mifare1.allProperKeys[0].key.toHexString())
-        assertEquals("102030405060", mifare1.allProperKeys[1].key.toHexString())
+        assertEquals("010203040506", mifare1.getAllProperKeys(tagId)[0].key.toHexString())
+        assertEquals("102030405060", mifare1.getAllProperKeys(tagId)[1].key.toHexString())
 
         assertEquals("010203040506", k0.key.toHexString())
         assertEquals("102030405060", k1.key.toHexString())
@@ -100,8 +101,8 @@ class ImportKeysTest : BaseInstrumentedTest() {
 
     @Test
     fun testSectorKeySerialiser() {
-        val k0 = ClassicKeysImpl.classicFromJSON("{\"type\": \"KeyA\", \"key\": \"010203040506\"}", "test")
-        val k1 = ClassicKeysImpl.classicFromJSON("{\"type\": \"KeyB\", \"key\": \"102030405060\"}", "test")
+        val k0 = ClassicKeysImpl.classicFromJSON("{\"type\": \"KeyA\", \"key\": \"010203040506\"}", "test") as ClassicSectorKey
+        val k1 = ClassicKeysImpl.classicFromJSON("{\"type\": \"KeyB\", \"key\": \"102030405060\"}", "test") as ClassicSectorKey
 
         assertEquals("010203040506", k0.key.toHexString())
         assertEquals("102030405060", k1.key.toHexString())
@@ -116,8 +117,8 @@ class ImportKeysTest : BaseInstrumentedTest() {
         assertTrue(j1.contains("KeyB"), "KeyB must be in j1")
         assertTrue(j1.contains("102030405060"), "102030405060 must be in j1")
 
-        val k0s = ClassicKeysImpl.classicFromJSON(j0, "test")
-        val k1s = ClassicKeysImpl.classicFromJSON(j1, "test")
+        val k0s = ClassicKeysImpl.classicFromJSON(j0, "test") as ClassicSectorKey
+        val k1s = ClassicKeysImpl.classicFromJSON(j1, "test") as ClassicSectorKey
 
         val j0s = k0s.toJSON(3).toString()
         val j1s = k1s.toJSON(5).toString()
@@ -136,18 +137,18 @@ class ImportKeysTest : BaseInstrumentedTest() {
         val mifareStatic1 = loadClassicStaticCardKeys("mifareStatic1.json")
 
         assertEquals("Example transit agency", mifareStatic1.description)
-        assertEquals(2, mifareStatic1.getProperCandidates(0)!!.size)
-        assertEquals(1, mifareStatic1.getProperCandidates(10)!!.size)
-        assertEquals(3, mifareStatic1.allProperKeys.size)
+        assertEquals(2, mifareStatic1.getProperCandidates(0, tagId)!!.size)
+        assertEquals(1, mifareStatic1.getProperCandidates(10, tagId)!!.size)
+        assertEquals(3, mifareStatic1.getAllProperKeys(tagId).size)
 
         // Shouldn't have hits on other key IDs.
         for (i in 1..9) {
-            assertEquals(0, mifareStatic1.getProperCandidates(i)?.size?:0)
+            assertEquals(0, mifareStatic1.getProperCandidates(i, tagId)?.size?:0)
         }
 
-        val k0a = mifareStatic1.getProperCandidates(0)!![0]
-        val k0b = mifareStatic1.getProperCandidates(0)!![1]
-        val k10 = mifareStatic1.getProperCandidates(10)!![0]
+        val k0a = mifareStatic1.getProperCandidates(0, tagId)!![0]
+        val k0b = mifareStatic1.getProperCandidates(0, tagId)!![1]
+        val k10 = mifareStatic1.getProperCandidates(10, tagId)!![0]
 
         assertNotNull(k0a)
         assertNotNull(k0b)
@@ -185,15 +186,15 @@ class ImportKeysTest : BaseInstrumentedTest() {
     @Test
     fun testRawKeys() {
         val k = loadClassicCardRawKeys("testkeys.farebotkeys")
-        assertEquals(4, k.allProperKeys.size)
+        assertEquals(4, k.getAllProperKeys(tagId).size)
         for (i in 0..3) {
-            assertEquals(1, k.getProperCandidates(i)!!.size)
+            assertEquals(1, k.getProperCandidates(i, tagId)!!.size)
         }
 
-        val k0 = k.getProperCandidates(0)!![0]
-        val k1 = k.getProperCandidates(1)!![0]
-        val k2 = k.getProperCandidates(2)!![0]
-        val k3 = k.getProperCandidates(3)!![0]
+        val k0 = k.getProperCandidates(0, tagId)!![0]
+        val k1 = k.getProperCandidates(1, tagId)!![0]
+        val k2 = k.getProperCandidates(2, tagId)!![0]
+        val k3 = k.getProperCandidates(3, tagId)!![0]
 
         // Null key
         assertEquals("000000000000", k0.key.toHexString())
@@ -208,10 +209,10 @@ class ImportKeysTest : BaseInstrumentedTest() {
     @Test
     fun testKeyWithBraces() {
         val k = loadClassicCardRawKeys("keyWithBraces.farebotkeys")
-        assertEquals(1, k.allProperKeys.size)
-        assertEquals(1, k.getProperCandidates(0)!!.size)
+        assertEquals(1, k.getAllProperKeys(tagId).size)
+        assertEquals(1, k.getProperCandidates(0, tagId)!!.size)
 
-        val k0 = k.getProperCandidates(0)!![0]
+        val k0 = k.getProperCandidates(0, tagId)!![0]
 
         // { NULL } SPACE @ SPACE
         assertEquals("7b007d204020", k0.key.toHexString())
@@ -230,5 +231,9 @@ class ImportKeysTest : BaseInstrumentedTest() {
     @Test
     fun testNullUID() {
         loadClassicCardKeys("mifareNullUID.json", null, KeyFormat.JSON_MFC_NO_UID)
+    }
+
+    companion object {
+        val tagId = ImmutableByteArray.fromHex("12345678")
     }
 }

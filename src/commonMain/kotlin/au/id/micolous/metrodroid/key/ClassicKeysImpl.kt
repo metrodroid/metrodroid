@@ -1,5 +1,6 @@
 package au.id.micolous.metrodroid.key
 
+import au.id.micolous.metrodroid.multi.VisibleForTesting
 import au.id.micolous.metrodroid.util.ImmutableByteArray
 import kotlinx.serialization.json.*
 
@@ -11,6 +12,9 @@ abstract class ClassicKeysImpl : ClassicKeys {
 
     private fun getKeySet(tagId: ImmutableByteArray): Set<String>
             = dedupKeys(keys.map { (secno, keys) -> keys.map { it.resolve(tagId, secno) } } + listOf(WELL_KNOWN_KEYS))
+
+    private fun getProperKeySet(tagId: ImmutableByteArray): Set<String>
+            = dedupKeys(keys.map { (secno, keys) -> keys.map { it.resolve(tagId, secno) } })
 
     private fun dedupKeys(input: Collection<List<ClassicSectorKey>>) = input.flatten()
             .map { it.key.toHexString() }.toSet()
@@ -44,6 +48,12 @@ abstract class ClassicKeysImpl : ClassicKeys {
             ClassicSectorKey.fromDump(
                     ImmutableByteArray.fromHex(it), ClassicSectorKey.KeyType.UNKNOWN, "all-keys")
         }
+
+    @VisibleForTesting
+    fun getAllProperKeys(tagId: ImmutableByteArray): List<ClassicSectorKey> = getProperKeySet(tagId).toList().map {
+        ClassicSectorKey.fromDump(
+                ImmutableByteArray.fromHex(it), ClassicSectorKey.KeyType.UNKNOWN, "all-keys")
+    }
 
     /**
      * Gets the keys for a particular sector on the card.
