@@ -8,7 +8,7 @@
 <img src="https://play.google.com/intl/en_us/badges/images/generic/en-play-badge.png" height="80"/></a>
 <a href="https://github.com/micolous/metrodroid/releases">Direct APK download</a>
 
-Version: 2.9.38
+Version: 2.9.39
 
 View your remaining balance, recent trips, and other information from contactless public transit
 cards using your NFC-enabled Android device!
