@@ -34,7 +34,7 @@ Metrodroid requires some permissions to function correctly:
 Metrodroid does not share card data with third parties without consent.
 
 Metrodroid does not communicate with your card's issuing agency without your consent. Metrodroid's
-card readers operate entirely offline.
+card parsers operate entirely offline.
 
 Google Play may also collect other analytics, and forward crash logs to the developers. These crash
 logs can contain raw card data.
