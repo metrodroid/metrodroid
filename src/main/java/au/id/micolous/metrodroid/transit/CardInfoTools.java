@@ -33,23 +33,14 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
 
-import au.id.micolous.metrodroid.card.calypso.CalypsoApplication;
 import au.id.micolous.metrodroid.card.calypso.CalypsoRegistry;
-import au.id.micolous.metrodroid.card.china.ChinaCard;
-import au.id.micolous.metrodroid.card.china.ChinaCardTransitFactory;
 import au.id.micolous.metrodroid.card.china.ChinaRegistry;
-import au.id.micolous.metrodroid.card.classic.ClassicCard;
 import au.id.micolous.metrodroid.card.classic.ClassicCardFactoryRegistry;
-import au.id.micolous.metrodroid.card.desfire.DesfireCard;
 import au.id.micolous.metrodroid.card.desfire.DesfireCardTransitRegistry;
-import au.id.micolous.metrodroid.card.felica.FelicaCard;
-import au.id.micolous.metrodroid.card.felica.FelicaCardTransitFactory;
 import au.id.micolous.metrodroid.card.felica.FelicaRegistry;
-import au.id.micolous.metrodroid.card.ultralight.UltralightCard;
-import au.id.micolous.metrodroid.card.ultralight.UltralightCardTransitFactory;
+import au.id.micolous.metrodroid.card.ksx6924.KSX6924Registry;
 import au.id.micolous.metrodroid.card.ultralight.UltralightTransitRegistry;
 import au.id.micolous.metrodroid.transit.ezlink.EZLinkTransitData;
-import au.id.micolous.metrodroid.transit.tmoney.TMoneyTransitData;
 import au.id.micolous.metrodroid.util.Utils;
 
 /**
@@ -68,10 +59,10 @@ public class CardInfoTools {
         allFactories.addAll(FelicaRegistry.INSTANCE.getAllFactories());
         allFactories.addAll(UltralightTransitRegistry.INSTANCE.getAllFactories());
         allFactories.addAll(ChinaRegistry.INSTANCE.getAllFactories());
+        allFactories.addAll(KSX6924Registry.INSTANCE.getAllFactories());
         for (CardTransitFactory<?> factory : allFactories) {
             ret.addAll(factory.getAllCards());
         }
-        ret.add(TMoneyTransitData.Companion.getCARD_INFO());
         ret.addAll(EZLinkTransitData.Companion.getALL_CARD_INFOS());
         Collator collator = Collator.getInstance();
         Collections.sort(ret, (a, b) -> collator.compare(a.getName(), b.getName()));
