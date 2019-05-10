@@ -81,14 +81,13 @@ abstract class ClassicKeysImpl : ClassicKeys {
          * None of the keys here are unique to a particular transit card, or to a vendor of transit
          * ticketing systems.
          *
-         * Even if a transit operator uses (some) fixed keys, please do not add them here.
+         * Even if a transit operator uses (some) fixed keys, please do not add them here!
          *
          * If you are unable to identify a card by some data on it (such as a "magic string"), then
-         * you should use [HashUtils.checkKeyHash], and include a hashed
-         * version of the key in Metrodroid.
+         * you should use [HashUtils.checkKeyHash], and include a hashed version of the key in
+         * Metrodroid.
          *
-         * See [&lt;][SmartRiderTransitData.detectKeyType] for an example of how to do
-         * this.
+         * See [SmartRiderTransitData.detectKeyType] for an example of how to do this.
          */
         private val WELL_KNOWN_KEYS = listOf(
                 wellKnown("ffffffffffff", "well-known-ff"),
@@ -130,7 +129,7 @@ abstract class ClassicKeysImpl : ClassicKeys {
                 else -> ClassicSectorKey.KeyType.UNKNOWN
             }
 
-            when (json.getPrimitiveOrNull(TRANSFORM_KEY)?.contentOrNull ?: "none") {
+            return when (json.getPrimitiveOrNull(TRANSFORM_KEY)?.contentOrNull ?: "none") {
                 "none" -> {
                     val keyData = ImmutableByteArray.fromHex(json[ClassicSectorKey.KEY_VALUE].content)
 
@@ -140,10 +139,10 @@ abstract class ClassicKeysImpl : ClassicKeys {
                     }
 
                     // Checks completed, pass the data back.
-                    return ClassicSectorKey(type = kt, key = keyData,
+                    ClassicSectorKey(type = kt, key = keyData,
                             bundle = json.getPrimitiveOrNull(KEY_BUNDLE)?.contentOrNull ?: defaultBundle)
                 }
-                else -> return null
+                else -> null
             }
         }
 
