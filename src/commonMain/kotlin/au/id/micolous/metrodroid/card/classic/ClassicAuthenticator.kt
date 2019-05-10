@@ -95,7 +95,7 @@ class ClassicAuthenticator internal constructor(private val mKeys: ClassicKeys,
         repeat(tries) { tryNum ->
             // If we have a known key for the sector on the card, try this first.
             Log.d(TAG, "Attempting authentication on sector $sectorIndex, try number $tryNum...")
-            tryCandidates(tech, sectorIndex, mKeys.getCandidates(sectorIndex,
+            tryCandidates(tech, sectorIndex, mKeys.getCandidates(sectorIndex, tech.tagId,
                     mPreferredBundles), keyType)?.let { return it }
         }
 
@@ -115,7 +115,7 @@ class ClassicAuthenticator internal constructor(private val mKeys: ClassicKeys,
             //
             // This takes longer, of course, but means that users aren't scratching
             // their heads when we don't get the right key straight away.
-            tryCandidates(tech, sectorIndex, mKeys.allKeys, keyType)?.let {
+            tryCandidates(tech, sectorIndex, mKeys.getAllKeys(tech.tagId), keyType)?.let {
                 Log.d(TAG, "Authenticated successfully to sector $sectorIndex with other key. "
                         + "Fix the key file to speed up authentication")
                 return it

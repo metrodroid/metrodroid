@@ -369,7 +369,7 @@ public class KeysFragment extends ListFragment implements AdapterView.OnItemLong
             if (path == null)
                 path = "unspecified";
             ClassicKeys k = ClassicStaticKeys.Companion.fromJSON(json, path);
-            if (k.getAllKeys().isEmpty()) {
+            if (k.isEmpty()) {
                 return R.string.key_file_empty;
             }
 
