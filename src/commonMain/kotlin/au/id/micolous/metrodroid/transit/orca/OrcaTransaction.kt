@@ -82,7 +82,14 @@ class OrcaTransaction (private val mTimestamp: Long,
         get() {
             if (mIsTopup)
                 return null
-            val s = getStation(mAgency, mCoachNum)
+            if (isSeattleStreetcar) {
+                return StationTableReader.getStation(ORCA_STR_STREETCAR, mCoachNum)
+            } else if (isRapidRide || isSwift) {
+                return StationTableReader.getStation(ORCA_STR_BRT, mCoachNum)
+            }
+            val id = (mAgency shl 16) or (mCoachNum and 0xffff)
+            val s = StationTableReader.getStationNoFallback(ORCA_STR, id,
+                    NumberUtils.intToHex(id))
             if (s != null)
                 return s
             if (isLink || isSounder || mAgency == OrcaTransitData.AGENCY_WSF) {
@@ -95,7 +102,7 @@ class OrcaTransaction (private val mTimestamp: Long,
     override val vehicleID: String?
         get() = when {
                 mIsTopup -> mCoachNum.toString()
-                isLink || isSounder || mAgency == OrcaTransitData.AGENCY_WSF -> null
+                isLink || isSounder || mAgency == OrcaTransitData.AGENCY_WSF || isSeattleStreetcar || isSwift || isRapidRide -> null
                 else -> mCoachNum.toString()
             }
 
@@ -150,6 +157,8 @@ class OrcaTransaction (private val mTimestamp: Long,
 
     companion object {
         private const val ORCA_STR = "orca"
+        private const val ORCA_STR_BRT = "orca_brt"
+        private const val ORCA_STR_STREETCAR = "orca_streetcar"
 
         private const val TRANS_TYPE_PURSE_USE = 0x0c
         private const val TRANS_TYPE_CANCEL_TRIP = 0x01
@@ -165,11 +174,5 @@ class OrcaTransaction (private val mTimestamp: Long,
         private const val FTP_TYPE_BRT = 0xFA //May also apply to future hardwired bus readers
         private const val FTP_TYPE_LINK = 0xFB
         private const val FTP_TYPE_WATER_TAXI = 0xFE
-
-        private fun getStation(agency: Int, stationId: Int): Station? {
-            val id = (agency shl 16) or stationId
-            return StationTableReader.getStationNoFallback(ORCA_STR, id,
-                    NumberUtils.intToHex(id))
-        }
     }
 }
