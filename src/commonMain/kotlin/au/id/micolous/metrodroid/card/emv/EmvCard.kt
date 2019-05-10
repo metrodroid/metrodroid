@@ -74,6 +74,25 @@ class EmvCardMain internal constructor(
     override val rawData get() = super.rawData.orEmpty() +
             ListItem("GPO-response", "${gpoResponse?.toHexString()}") +
             (dataResponse.map { (k, v) -> ListItem("Data $k", v.toHexString()) })
+
+
+    fun getAllTlv(): List<ImmutableByteArray> {
+        val res = mutableListOf<ImmutableByteArray>()
+        val fci = appFci
+        if (fci != null) {
+            val a5 = ISO7816TLV.findBERTLV(fci, "a5", true)
+            res += listOfNotNull(gpoResponse)
+            if (a5 != null)
+                res += listOfNotNull(a5, ISO7816TLV.findBERTLV(a5, "bf0c", true))
+        }
+
+        // SFI's
+        res += (1..10).flatMap { file ->
+            getSfiFile(file)?.recordList
+                    ?: emptyList()
+        }
+        return res.filter { it.isNotEmpty() }
+    }
 }
 
 class EmvFactory : ISO7816ApplicationFactory {
