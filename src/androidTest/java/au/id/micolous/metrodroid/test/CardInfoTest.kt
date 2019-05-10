@@ -1,13 +1,13 @@
 package au.id.micolous.metrodroid.test
 
-import au.id.micolous.metrodroid.transit.CardInfoTools
+import au.id.micolous.metrodroid.transit.CardInfoRegistry
 import kotlin.test.Test
 import kotlin.test.assertNotNull
 
 class CardInfoTest : BaseInstrumentedTest() {
     @Test
     fun testCardInfo() {
-        CardInfoTools.getAllCardsAlphabetical().forEach {
+        CardInfoRegistry.allCardsAlphabetical.forEach {
             assertNotNull(it)
             assertNotNull(it.name)
             assertNotNull(it.cardType)

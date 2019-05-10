@@ -28,13 +28,10 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
-import android.content.res.Resources;
-import android.graphics.*;
 import android.net.Uri;
 import android.nfc.NfcAdapter;
 import android.os.Build;
 import android.provider.Settings;
-import android.support.annotation.DrawableRes;
 import android.support.annotation.NonNull;
 import android.support.annotation.StringRes;
 import android.text.TextUtils;
@@ -207,50 +204,6 @@ public class Utils {
         }
 
         return KeyFormat.Companion.detectKeyFormat(data);
-    }
-
-    /**
-     * Creates a drawable with alpha channel from two component resources. This is useful for JPEG
-     * images, to give them an alpha channel.
-     *
-     * Adapted from http://www.piwai.info/transparent-jpegs-done-right, with pre-Honeycomb support
-     * removed, and resource annotations.
-     * @param res Resources from the current context.
-     * @param sourceRes Source image to get R/G/B channels from.
-     * @param maskRes Source image to get Alpha channel from. This is a greyscale + alpha image,
-     *                with a black mask and transparent pixels where they should be added.
-     * @return Composited image with RGBA channels combined.
-     */
-    public static Bitmap getMaskedBitmap(Resources res, @DrawableRes int sourceRes, @DrawableRes int maskRes) {
-        // We want a mutable, ARGB8888 bitmap to work with.
-        BitmapFactory.Options options = new BitmapFactory.Options();
-        options.inMutable = true;
-        options.inPreferredConfig = Bitmap.Config.ARGB_8888;
-
-        // Load the source image.
-        Bitmap bitmap = BitmapFactory.decodeResource(res, sourceRes, options);
-        bitmap.setHasAlpha(true);
-
-        // Put it into a canvas (mutable).
-        Canvas canvas = new Canvas(bitmap);
-
-        // Load the mask.
-        Bitmap mask = BitmapFactory.decodeResource(res, maskRes);
-        if (mask.getWidth() != canvas.getWidth() ||
-                mask.getHeight() != canvas.getHeight()) {
-            throw new RuntimeException("Source image and mask must be same size.");
-        }
-
-        // Paint the mask onto the canvas, revealing transparency.
-        Paint paint = new Paint();
-        paint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.DST_IN));
-        canvas.drawBitmap(mask, 0, 0, paint);
-
-        // Ditch the mask.
-        mask.recycle();
-
-        // Return the completed bitmap.
-        return bitmap;
     }
 
     public static void copyTextToClipboard(Context context, String label, String text) {

@@ -44,8 +44,8 @@ import au.id.micolous.metrodroid.card.CardType;
 import au.id.micolous.metrodroid.card.classic.ClassicAndroidReader;
 import au.id.micolous.metrodroid.multi.Localizer;
 import au.id.micolous.metrodroid.transit.CardInfo;
-import au.id.micolous.metrodroid.transit.CardInfoTools;
-import au.id.micolous.metrodroid.util.Utils;
+import au.id.micolous.metrodroid.transit.CardInfoRegistry;
+import au.id.micolous.metrodroid.util.DrawableUtils;
 
 /**
  * @author Eric Butler, Michael Farrell
@@ -76,7 +76,7 @@ public class SupportedCardsActivity extends MetrodroidActivity {
 
         CardsAdapter(Context context) {
             super(context, 0, new ArrayList<>());
-            addAll(CardInfoTools.getAllCardsAlphabetical());
+            addAll(CardInfoRegistry.INSTANCE.getAllCardsAlphabetical());
             mLayoutInflater = (LayoutInflater) context.getSystemService(
                     Context.LAYOUT_INFLATER_SERVICE);
         }
@@ -106,7 +106,7 @@ public class SupportedCardsActivity extends MetrodroidActivity {
             ImageView image = convertView.findViewById(R.id.card_image);
             Drawable d = null;
             if (info.getHasBitmap())
-                d = CardInfoTools.getDrawable(getContext(), info);
+                d = DrawableUtils.getCardInfoDrawable(getContext(), info);
             if (d == null)
                 d = AppCompatResources.getDrawable(getContext(), R.drawable.logo);
             image.setImageDrawable(d);
