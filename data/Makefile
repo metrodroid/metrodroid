@@ -21,6 +21,7 @@ HERMETIC_TARGETS := \
 	ravkav \
 	szt \
 	tisseo \
+	touchngo \
 	troika
 
 # All targets that need to fetch some data from the internet, so may not always
