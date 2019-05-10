@@ -47,6 +47,7 @@ class OrcaTransitData (private val mSerialNumber: Int?,
         get() = mSerialNumber?.toString()
 
     companion object {
+        internal const val AGENCY_CT = 0x02
         internal const val AGENCY_KCM = 0x04
         internal const val AGENCY_ST = 0x07
         internal const val AGENCY_WSF = 0x08

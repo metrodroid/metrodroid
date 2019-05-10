@@ -41,6 +41,7 @@ import au.id.micolous.metrodroid.util.ImmutableByteArray
 @Parcelize
 class OrcaTransaction (private val mTimestamp: Long,
                        private val mCoachNum: Int,
+                       private val mFtpType: Int,
                        private val mFare: Int,
                        private val mNewBalance: Int,
                        private val mAgency: Int,
@@ -63,12 +64,19 @@ class OrcaTransaction (private val mTimestamp: Long,
             isLink -> listOf("Link Light Rail")
             isSounder -> listOf("Sounder Train")
             mAgency == OrcaTransitData.AGENCY_ST -> listOf("Express Bus")
-            mAgency == OrcaTransitData.AGENCY_KCM -> listOf("Bus")
+            mAgency == OrcaTransitData.AGENCY_KCM -> {
+                when (mFtpType) {
+                    FTP_TYPE_BUS -> listOf("Bus")
+                    FTP_TYPE_WATER_TAXI -> listOf("Water Taxi")
+                    FTP_TYPE_BRT -> listOf("BRT")
+                    else -> emptyList()
+                }
+            }
             else -> emptyList()
         }
 
     override val fare: TransitCurrency?
-        get() = TransitCurrency.USD(if (mIsTopup) -mFare else mFare)
+        get() = TransitCurrency.USD(if (mIsTopup || mTransType == TRANS_TYPE_TAP_OUT) -mFare else mFare)
 
     override val station: Station?
         get() {
@@ -92,11 +100,11 @@ class OrcaTransaction (private val mTimestamp: Long,
             }
 
     override val mode: Trip.Mode
-        get() = when {
-            mIsTopup -> Trip.Mode.TICKET_MACHINE
-            isLink -> Trip.Mode.METRO
-            isSounder -> Trip.Mode.TRAIN
-            mAgency == OrcaTransitData.AGENCY_WSF -> Trip.Mode.FERRY
+        get() = if (mIsTopup) Trip.Mode.TICKET_MACHINE else when (mFtpType) {
+            FTP_TYPE_LINK -> Trip.Mode.METRO
+            FTP_TYPE_SOUNDER -> Trip.Mode.TRAIN
+            FTP_TYPE_FERRY, FTP_TYPE_WATER_TAXI -> Trip.Mode.FERRY
+            FTP_TYPE_STREETCAR -> Trip.Mode.TRAM
             else -> Trip.Mode.BUS
         }
 
@@ -104,21 +112,35 @@ class OrcaTransaction (private val mTimestamp: Long,
         get() = !mIsTopup && mTransType == TRANS_TYPE_TAP_IN
 
     private val isLink: Boolean
-        get() = mAgency == OrcaTransitData.AGENCY_ST && mCoachNum > 10000
+        get() = mAgency == OrcaTransitData.AGENCY_ST && mFtpType == FTP_TYPE_LINK
 
     private val isSounder: Boolean
-        get() = mAgency == OrcaTransitData.AGENCY_ST && mCoachNum < 20
+        get() = mAgency == OrcaTransitData.AGENCY_ST && mFtpType == FTP_TYPE_SOUNDER
+
+    private val isSeattleStreetcar: Boolean
+        get() = mFtpType == FTP_TYPE_STREETCAR //TODO: Find agency ID
+
+    private val isRapidRide: Boolean
+        get() = mAgency == OrcaTransitData.AGENCY_KCM && mFtpType == FTP_TYPE_BRT
+
+    private val isSwift: Boolean
+        get() = mAgency == OrcaTransitData.AGENCY_CT && mFtpType == FTP_TYPE_BRT
 
     constructor(useData: ImmutableByteArray, isTopup: Boolean): this(
         mIsTopup = isTopup,
         mAgency = useData.getBitsFromBuffer(24, 4),
         mTimestamp = useData.getBitsFromBuffer(28, 32).toLong(),
-        mCoachNum = useData.getBitsFromBuffer(76, 16),
+        mCoachNum = useData.getBitsFromBuffer(68, 24),
+        mFtpType = useData.getBitsFromBuffer(60, 8),
         mFare = useData.getBitsFromBuffer(120, 15),
         mTransType = useData.getBitsFromBuffer(136, 8),
         mNewBalance = useData.getBitsFromBuffer(272, 16))
 
     override fun getAgencyName(isShort: Boolean): String? {
+        if (mAgency == OrcaTransitData.AGENCY_KCM && mFtpType == FTP_TYPE_WATER_TAXI) {
+            // The King County Water Taxi is now a separate agency but uses KCM's agency ID
+            return "KCWT"
+        }
         return StationTableReader.getOperatorName(ORCA_STR, mAgency, isShort)
     }
 
@@ -134,6 +156,15 @@ class OrcaTransaction (private val mTimestamp: Long,
         private const val TRANS_TYPE_TAP_IN = 0x03
         private const val TRANS_TYPE_TAP_OUT = 0x07
         private const val TRANS_TYPE_PASS_USE = 0x60
+
+        private const val FTP_TYPE_FERRY = 0x08
+        private const val FTP_TYPE_SOUNDER = 0x09
+        private const val FTP_TYPE_CUSTOMER_SERVICE = 0x0B
+        private const val FTP_TYPE_BUS = 0x80
+        private const val FTP_TYPE_STREETCAR = 0xF9
+        private const val FTP_TYPE_BRT = 0xFA //May also apply to future hardwired bus readers
+        private const val FTP_TYPE_LINK = 0xFB
+        private const val FTP_TYPE_WATER_TAXI = 0xFE
 
         private fun getStation(agency: Int, stationId: Int): Station? {
             val id = (agency shl 16) or stationId
