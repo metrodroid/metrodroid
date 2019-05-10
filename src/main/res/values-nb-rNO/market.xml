@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources><string name="market_title">Metrodroid (før Farebot M)</string>
-
+<resources>
+    <string name="market_title">Metrodroid (før Farebot M)</string>
     <string name="market_short_desc">Metrodroid leser informasjon fra noen NFC-smartkort for kollektivtransport.</string>
-
     <string name="market_long_desc">Metrodroid, leser informasjon fra noen NFC-smartkort til bruk for offentlig transport. 
 \n 
 \nDette er en avgrening av Eric Butler sitt Farebot-prosjekt, med støtte for ytterligere kort og feilrettinger. 
@@ -73,7 +72,6 @@
 \nFor mer informasjon om hvilke tilganger som behøves, les personvernspraksisen. 
 \n 
 \nDenne programvaren er lisensiert GNU GPLv3+, kildekoden er å finne på https://github.com/micolous/metrodroid/</string>
-
     <string name="market_changelog_32">* Legger til obfuskerings-tilstand.
 \n* Kræsjfiks for ukjente CEPAS-kort.
 \n* Kræsjfiks for delvis leste MIFARE Classic-kort under visning av råkortdetaljer.
@@ -83,13 +81,11 @@
 \n
 \n
 \nFlere detaljer: https://github.com/micolous/metrodroid/wiki/Changelog</string>
-
     <string name="market_changelog_31">* Støtte for SmartRider (VA, Australia).
 \n* Oversetteler til hollandsk, takket være @Vistaus, Fransk av @Albirew, Hebraisk av @streets250
 \n* MyWay: Automatisk oppdaging av kort ved fellesnøkkel for nylig skannede kort.
 \n
 \nFlere detaljer: https://github.com/micolous/metrodroid/wiki/Changelog</string>
-
     <string name="market_changelog_30">* Flere feilrettinger for Cubic Nextfare-kort.
 \n* Fudan FM11RF08-kort blir ikke lenger feilregistrert som Bilhente Único.
 \n* Eksperimentell støtte for MyWay (ACT, Australia).
@@ -97,12 +93,10 @@
 \n* Fiks av tilagngsfeil på Android 6 og senere.
 \n
 \nFlere detaljer: https://github.com/micolous/metrodroid/wiki/Changelog</string>
-
     <string name="market_changelog_29">* Forbedret pålitelighet for identitetsbekreftelse med MIFARE Classic-kort.
 \n* Støtte for Octopus (Hongkong), Shenzhen Tong og Transit Access Pass (Los Angeles, CA, US).
 \n* Eksport til USB-lagring lar deg nå velge plassering på Android 4.4 (KitKat) og senere.
 \n* Go-kort: Reiser hentes nå inn fra kortet, så det bør virke med alle stasjoner. 7 ekstra stasjoner lagt til. Oppdager nå voksen- og honnør-kort.</string>
-
     <string name="market_changelog_28">* Krever nå Android 4.1 for å fikse et kartproblem.
 \n* Støtte for visning av rådata fra FeilCa.
 \n* Støtte for MIFARE Ultralight, inkludert rådata.
@@ -110,7 +104,6 @@
 \n* Go-kort: 11 ekstra stopp lagt til, takket være datadonasjoner. Kostnadsutregning lagt til, med noen begrensninger.
 \n
 \nFlere detaljer: https://github.com/micolous/metrodroid/wiki/Changelog</string>
-
     <string name="market_changelog_27">Navnebytte fra Farebot M til Metrodroid.
 \n
 \n* Forbedret støtte for lesing av kortnummeret fra Myki (VIC, AU).
@@ -121,7 +114,6 @@
 \n* Turer og påfylling er nå kombinert i \"Historikk\" for alle kort.
 \n
 \nFlere detaljer: https://github.com/micolous/metrodroid/wiki/Changelog</string>
-
     <string name="market_changelog_26">Godt nyttår!
 \n
 \n* Grunnleggende støtte for Go-kort (Brisbane og Sørøst-Queensland, AU). Krever krypteringsnøkler, (som er unike for hvert kort,) og enhet med MIFARE Classic-støtte. Begrenset stoppstøtte.
@@ -131,31 +123,26 @@
 \n* Små feilrettinger.
 \n
 \nFlere detaljer: https://github.com/micolous/metrodroid/wiki/Changelog</string>
-
-<string name="market_changelog_33">* Eksperimentell støtte for Metrocard (Christenchurch, Ny-Zealand).
+    <string name="market_changelog_33">* Eksperimentell støtte for Metrocard (Christenchurch, Ny-Zealand).
 \n* Fikser flere utfordringer med MIFARE Classic- og Ultralight-kort. 
 \n* Viser mer informasjon under lesing av kort.
 \n* Opal: Håndterer ukjent status 0xc.
 \n
 \nFlere detaljer: https://github.com/micolous/metrodroid/wiki/Changelog</string>
-
     <string name="market_changelog_34">* Legger til tidssonestøtte for de fleste kort.
 \n* Clipper: Fiks for uriktige reisetider.
 \n* Opal: Fiks for uriktige reisetider på jamdøgn.
 \n* Nye ikoner, tilgjengelighetsforbedringer, redusert programinstallasjonsstørrelse.
 \n
 \nFlere detaljer: https://github.com/micolous/metrodroid/wiki/Changelog</string>
-
     <string name="market_changelog_35">* Ny støtte for Kartu Multi Trip, Opus, Podorozhnik, Rav-Kav, T-Money, Troika cards og enkeltturs Compass (Vancouver) -kort.
 \n* Fiks av kræsjfeil for noen Clipper-kort.
 \n* Mange endringer under panseret.
 \n
 \nFlere detaljer: https://github.com/micolous/metrodroid/wiki/Changelog</string>
-
     <string name="market_changelog_generic">Feilrettinger, nye funksjoner og data.
 \n
 \nFlere detaljer (på engelsk): https://github.com/micolous/metrodroid/wiki/Changelog</string>
-
     <string name="market_changelog_36">* Støtte for CharlieCard, Go-to (Minneapolis), Hop Fastpass, Intercode (Frankrike), IstanbulKart-, Mobib-, Leap-, RicaciraMi- og Strelka -kort.
 \n* HSL-leseren virker.
 \n* Nye stoppesteder for Clipper og Kartu Multi Trip.
@@ -168,6 +155,13 @@
 \n* Fiks av OV-Chipkaart-leser.
 \n* Lesing av serienummer for AT-HOP.
 \n* Mange endringer man ikke ser noe til.
+\n
+\nFlere detaljer: https://github.com/micolous/metrodroid/wiki/Changelog</string>
+    <string name="market_changelog_38">* Støtte for Otago Gocard, Rotorua SmartRide, Waikato BUSIT og Wellington Snapper -kort.
+\n* Mange nye rute- og stasjons-ID-er.
+\n* Forbedret FeliCa-leser.
+\n* Fikset problemer med EZ-Link- og Octopus-kort.
+\n* Mange usynlige endringer.
 \n
 \nFlere detaljer: https://github.com/micolous/metrodroid/wiki/Changelog</string>
 </resources>
