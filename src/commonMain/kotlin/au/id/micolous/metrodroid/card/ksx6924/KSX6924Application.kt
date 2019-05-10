@@ -34,6 +34,7 @@ import au.id.micolous.metrodroid.ui.ListItemRecursive
 import au.id.micolous.metrodroid.util.ImmutableByteArray
 import au.id.micolous.metrodroid.util.hexString
 import kotlinx.serialization.KSerializer
+import kotlinx.serialization.Optional
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.Transient
 
@@ -47,7 +48,8 @@ data class KSX6924Application (
         override val generic: ISO7816ApplicationCapsule,
         val balance: ImmutableByteArray,
         // Returned by CLA=90 INS=78
-        val extraRecords: List<ImmutableByteArray>): ISO7816Application() {
+        @Optional
+        val extraRecords: List<ImmutableByteArray> = emptyList()): ISO7816Application() {
 
     @Transient
     override val type: String
