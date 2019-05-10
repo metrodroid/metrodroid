@@ -1,7 +1,19 @@
 reader_id,stop_name,comment
-110,Stesen Putra,
-114,Pasar Seni,
+101,Gombak,KJ1 - unconfirmed
+102,Taman Melati,KJ2 - unconfirmed
+103,Wangsa Maju,KJ3 - unconfirmed
+104,Sri Rampai,KJ4 - unconfirmed
+105,Setiawangsa,KJ5 - unconfirmed
+106,Jelatek,KJ6 - unconfirmed
+107,Dato' Keramat,KJ7 - unconfirmed
+108,Damai,KJ8 - unconfirmed
+109,Ampang Park,KJ9 - unconfirmed
+110,KLCC,KJ10
+111,Kampung Baru,KJ11 - unconfirmed
+112,Dang Wangi,KJ12 - unconfirmed
+113,Masjid Jamek,KJ13 - unconfirmed
+114,Pasar Seni,KJ14
 115,KL Sentral,LRT KJ15
 501,KL Sentral,Monorel MR1
 512,Titiwangsa,Monorel MR11
-
+718,Bukit Bintang,SBK18

@@ -20,12 +20,9 @@
 package au.id.micolous.metrodroid.transit.touchngo
 
 import au.id.micolous.metrodroid.card.CardType
-
 import au.id.micolous.metrodroid.card.classic.ClassicCard
 import au.id.micolous.metrodroid.card.classic.ClassicCardTransitFactory
 import au.id.micolous.metrodroid.card.classic.ClassicSector
-import au.id.micolous.metrodroid.card.classic.ClassicSectorValid
-import au.id.micolous.metrodroid.multi.FormattedString
 import au.id.micolous.metrodroid.multi.Parcelable
 import au.id.micolous.metrodroid.multi.Parcelize
 import au.id.micolous.metrodroid.multi.R
@@ -34,13 +31,12 @@ import au.id.micolous.metrodroid.time.MetroTimeZone
 import au.id.micolous.metrodroid.time.Timestamp
 import au.id.micolous.metrodroid.time.TimestampFull
 import au.id.micolous.metrodroid.transit.*
-import au.id.micolous.metrodroid.ui.HeaderListItem
 import au.id.micolous.metrodroid.ui.ListItem
 import au.id.micolous.metrodroid.util.ImmutableByteArray
 import au.id.micolous.metrodroid.util.NumberUtils
 import au.id.micolous.metrodroid.util.StationTableReader
 
-private const val NAME = "Touch'n'go"
+private const val NAME = "Touch 'n go"
 private val CARD_INFO = CardInfo(
         name = NAME,
         locationId = R.string.location_malaysia,
@@ -89,7 +85,7 @@ abstract private class TouchnGoTripCommon : Trip(), Parcelable {
                 TNG_STR,
                 agencyRaw.byteArrayToInt(),
                 isShort,
-                humanReadableId = if (agencyRaw.isASCII()) agencyRaw.readASCII() else agencyRaw.toHexString())
+                if (agencyRaw.isASCII()) agencyRaw.readASCII() else agencyRaw.toHexString())
     }
 }
 
@@ -139,7 +135,8 @@ private data class TouchnGoStationId(
         private val station: Int,
         private val machine: Int
 ) : Parcelable {
-    fun resolve(): Station = StationTableReader.getStation(TNG_STR, station).addAttribute(
+    fun resolve(): Station = StationTableReader.getStation(TNG_STR, station,
+            station.toString()).addAttribute(
             "machine $machine"
     )
     companion object {
