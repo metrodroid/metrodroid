@@ -6,6 +6,7 @@ import au.id.micolous.metrodroid.transit.chc_metrocard.ChcMetrocardTransitData
 import au.id.micolous.metrodroid.transit.easycard.EasyCardTransitData
 import au.id.micolous.metrodroid.transit.erg.ErgTransitData
 import au.id.micolous.metrodroid.transit.kiev.KievTransitData
+import au.id.micolous.metrodroid.transit.komuterlink.KomuterLinkTransitFactory
 import au.id.micolous.metrodroid.transit.lax_tap.LaxTapTransitData
 import au.id.micolous.metrodroid.transit.manly_fast_ferry.ManlyFastFerryTransitData
 import au.id.micolous.metrodroid.transit.metroq.MetroQTransitData
@@ -60,6 +61,7 @@ object ClassicCardFactoryRegistry {
             OtagoGoCardTransitFactory(),
             WaikatoCardTransitFactory(),
             TouchnGoTransitFactory(),
+            KomuterLinkTransitFactory(),
 
             // This check must be THIRD TO LAST.
             //
