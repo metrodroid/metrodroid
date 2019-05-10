@@ -4,7 +4,7 @@ MDROOT = ../..
 all: touchngo.mdst touchngo.csv
 
 touchngo.mdst: mdst operators.csv stations.csv
-	python3 $(MDST)/csv2pb.py -p operators.csv -o $@ -V 2 stations.csv
+	python3 $(MDST)/csv2pb.py -p operators.csv -o $@ -V 2 stations.csv -L ms,ms-MY -l ms
 
 copy: touchngo.copy
 
