@@ -1,7 +1,8 @@
 /*
- * KeyFormat.java
+ * KeyFormat.kt
  *
  * Copyright 2018 Michael Farrell <micolous+git@gmail.com>
+ * Copyright 2019 Google
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
