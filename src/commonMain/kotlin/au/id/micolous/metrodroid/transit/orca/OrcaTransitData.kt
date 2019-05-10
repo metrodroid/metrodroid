@@ -67,7 +67,7 @@ class OrcaTransitData (private val mSerialNumber: Int?,
         }
 
         private fun parse(desfireCard: DesfireCard): OrcaTransitData {
-            val mSerialNumber = desfireCard.getApplication(0xffffff)?.getFile(0x0f)?.data?.byteArrayToInt(5, 3)
+            val mSerialNumber = desfireCard.getApplication(0xffffff)?.getFile(0x0f)?.data?.byteArrayToInt(4, 4)
 
             val mBalance = desfireCard.getApplication(APP_ID)?.getFile(0x04)?.data?.byteArrayToInt(41, 2)
 
