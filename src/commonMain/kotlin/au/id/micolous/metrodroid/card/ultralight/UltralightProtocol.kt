@@ -18,6 +18,7 @@
  */
 package au.id.micolous.metrodroid.card.ultralight
 
+import au.id.micolous.metrodroid.card.CardLostException
 import au.id.micolous.metrodroid.card.CardTransceiveException
 import au.id.micolous.metrodroid.multi.Log
 import au.id.micolous.metrodroid.util.ImmutableByteArray
@@ -61,6 +62,9 @@ internal class UltralightProtocol(private val mTagTech: UltralightTransceiver) {
         val b = try {
             getVersion()
         } catch (e: CardTransceiveException) {
+            Log.d(TAG, "getVersion returned error, not EV1", e)
+            null
+        } catch (e: CardLostException) {
             Log.d(TAG, "getVersion returned error, not EV1", e)
             null
         }
@@ -115,6 +119,14 @@ internal class UltralightProtocol(private val mTagTech: UltralightTransceiver) {
             val b2 = auth1() ?: throw CardTransceiveException("auth1 returned null")
             Log.d(TAG, "auth1 said = $b2")
         } catch (e: CardTransceiveException) {
+            // Non-C cards will disconnect here.
+            Log.d(TAG, "auth1 returned error, not Ultralight C.", e)
+
+            // TODO: PM3 says NTAG 203 (with different memory size) also looks like this.
+
+            mTagTech.reconnect()
+            return UltralightType.MF0ICU1
+        } catch (e: CardLostException) {
             // Non-C cards will disconnect here.
             Log.d(TAG, "auth1 returned error, not Ultralight C.", e)
 
