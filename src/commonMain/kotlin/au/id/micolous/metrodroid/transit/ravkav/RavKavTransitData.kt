@@ -84,7 +84,7 @@ class RavKavTransitData (val capsule: Calypso1545TransitDataCapsule): Calypso154
             val a5 = ISO7816TLV.findBERTLV(card.appFci ?: return null, "a5", true)
                     ?: return null
             val bf0c = ISO7816TLV.findBERTLV(a5, "bf0c", true) ?: return null
-            val c7 = ISO7816TLV.findBERTLV(bf0c, "c7", true)
+            val c7 = ISO7816TLV.findBERTLV(bf0c, "c7", false)
             return c7?.byteArrayToLong(4, 4).toString()
         }
 
