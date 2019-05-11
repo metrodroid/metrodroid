@@ -817,4 +817,5 @@
     <string name="felica_system_common">Gebruikelijke zone (FeliCa Networks)</string>
     <string name="seqgo_ticket_type_adult">Volwassene</string>
     <string name="seqgo_ticket_type_adult_explore">Volwassene Explore/seeQ</string>
+    <string name="location_malaysia">Maleisië</string>
 </resources>
