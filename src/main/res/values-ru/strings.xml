@@ -153,18 +153,18 @@
 
     <string name="no_scanned_cards">Вы не прочитали ни одной карты.</string>
     <string name="block_title_format">Блок: %s</string>
-    <string name="page_title_format">Страница: 0x%s</string>
-    <string name="application_title_format">Приложение: 0x%s</string>
+    <string name="page_title_format">Страница: %s</string>
+    <string name="application_title_format">Приложение: %s</string>
     <string name="file_title_format">Файл: %s</string>
     <string name="unauthorized_file_title_format">Файл: %s (доступ запрещен)</string>
     <string name="invalid_file_title_format">Файл: %1$s (невалиден: %2$s)</string>
-    <string name="unauthorized_page_title_format">Страница: 0х%s (доступ запрещен)</string>
-    <string name="sector_title_format">Сектор: 0x%s</string>
-    <string name="unauthorized_sector_title_format">Сектор: 0x%s (доступ запрещен)</string>
-    <string name="sector_title_format_empty">Сектор: 0x%s (пустой)</string>
-    <string name="invalid_sector_title_format">Сектор: 0x%1$s (невалиден: %2$s)</string>
-    <string name="felica_system_title_format">Система: 0x%1$s (%2$s)</string>
-    <string name="felica_service_title_format">Сервис: 0x%1$s (%2$s)</string>
+    <string name="unauthorized_page_title_format">Страница: %s (доступ запрещен)</string>
+    <string name="sector_title_format">Сектор: %s</string>
+    <string name="unauthorized_sector_title_format">Сектор: %s (доступ запрещен)</string>
+    <string name="sector_title_format_empty">Сектор: %s (пустой)</string>
+    <string name="invalid_sector_title_format">Сектор: %1$s (невалиден: %2$s)</string>
+    <string name="felica_system_title_format">Система: %1$s (%2$s)</string>
+    <string name="felica_service_title_format">Сервис: %1$s (%2$s)</string>
     <string name="record_title_format">Запись: %s</string>
     <string name="binary_title_format">Двоичные данные</string>
     <string name="info">Информация</string>

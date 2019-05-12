@@ -36,6 +36,7 @@ import au.id.micolous.metrodroid.ui.ListItemRecursive
 import au.id.micolous.metrodroid.util.ImmutableByteArray
 import au.id.micolous.metrodroid.util.NumberUtils
 import au.id.micolous.metrodroid.util.Preferences
+import au.id.micolous.metrodroid.util.hexString
 import kotlinx.serialization.Optional
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.Transient
@@ -178,7 +179,7 @@ data class FelicaCard(
         get() = systems.map { (systemCode, system) ->
             ListItemRecursive(
                     Localizer.localizeString(R.string.felica_system_title_format,
-                            systemCode.toString(16),
+                            systemCode.hexString,
                             Localizer.localizeString(
                                     FelicaUtils.getFriendlySystemName(systemCode))),
                     Localizer.localizePlural(R.plurals.felica_service_count,

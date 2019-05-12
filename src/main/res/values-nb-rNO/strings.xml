@@ -40,10 +40,10 @@
     <string name="scanned_cards">Historikk</string>
     <string name="no_scanned_cards">Du har ikke skannet noen kort.</string>
     <string name="block_title_format">Blokk: %s</string>
-    <string name="page_title_format">Side: 0x%s</string>
-    <string name="sector_title_format">Sektor: 0x%s</string>
-    <string name="unauthorized_sector_title_format">Sektor: 0x%s (ikke autorisert)</string>
-    <string name="invalid_sector_title_format">Sektor: 0x%1$s (ugyldig: %2$s)</string>
+    <string name="page_title_format">Side: %s</string>
+    <string name="sector_title_format">Sektor: %s</string>
+    <string name="unauthorized_sector_title_format">Sektor: %s (ikke autorisert)</string>
+    <string name="invalid_sector_title_format">Sektor: %1$s (ugyldig: %2$s)</string>
     <string name="info">Info</string>
     <string name="valid_format">Gydlig %1$s til %2$s</string>
     <string name="valid_to_format">Gyldig til %1$s</string>
@@ -192,7 +192,7 @@
     <string name="file_title_format">Fil: %s</string>
     <string name="unauthorized_file_title_format">Fil: %s (uautorisert)</string>
     <string name="invalid_file_title_format">Fil: %1$s (ugyldig: %2$s)</string>
-    <string name="unauthorized_page_title_format">Side: 0x%s (uautorisert)</string>
+    <string name="unauthorized_page_title_format">Side: %s (uautorisert)</string>
     <string name="map_tiles_subdomains_summary">Hvis {s} brukes i kartnettadresse, en kommainndelt liste over underdomene, eller enkelttegnsliste over underdomener.</string>
     <string name="map_tiles_help_summary">For hjelp med bruk av kartflisnettadresser, se Leaflets nettbaserte dokumentasjon (, kun tilgjengelig på Engelsk).</string>
     <string name="auth_retries">Gjentatte forsøk på autentisering</string>
@@ -225,7 +225,7 @@
     <string name="location_act_australia">Australian Capital Territory, Australia</string>
     <string name="location_wa_australia">Vest-Australia, Australia</string>
     <string name="machine_id_format">Maskin-ID %s</string>
-    <string name="felica_service_title_format">Tjeneste: 0x%1$s (%2$s)</string>
+    <string name="felica_service_title_format">Tjeneste: %1$s (%2$s)</string>
     <string name="localise_places">Legg til språkhint i stedsnavn</string>
     <string name="localise_places_desc">Legger til språkhint (LocaleSpan) til i stedsnavn, som stasjon, stopp, linje og rutenavn. Dette endrer uttalen brukt av skjermlesere og annen tilgjengelighetsprogramvare.</string>
     <string name="localise_places_longdesc_button">Om språkhint…</string>
@@ -263,7 +263,7 @@
     <string name="clipboard_error">Fikk ikke tilgang til utklippstavle</string>
     <string name="convert_timezones">Konverter tidssoner</string>
     <string name="convert_timezones_summary">Som forvalg viser Metrodroid reisetider i reisebyråets tidssone. Hvis dette valget er påskrudd, vil reisetider konverteres til din enhets nåværende tidssone.</string>
-    <string name="felica_system_title_format">System: 0x%1$s (%2$s)</string>
+    <string name="felica_system_title_format">System: %1$s (%2$s)</string>
     <string name="mfc_have_key">Prøver bruker-oppgitt nøkkel for sektoren %d…</string>
     <string name="mfc_default_key">Prøver velkjente nøkler for sektoren %d…</string>
     <string name="iso14a_detect">Oppdager ISO 14443-korttype…</string>
@@ -400,7 +400,7 @@
     <string name="card_note_russia">Bank-utstedte kort støttes ikke.</string>
     <string name="card_name_troika">Troika</string>
     <string name="card_name_podorozhnik">Podorozhnik</string>
-    <string name="sector_title_format_empty">Sektor: 0x%s (tom)</string>
+    <string name="sector_title_format_empty">Sektor: %s (tom)</string>
     <string name="binary_title_format">Binærdata</string>
     <string name="requires_android_21">Krever Android 5.0 eller senere.</string>
     <string name="pref_theme">Drakt</string>
@@ -744,7 +744,7 @@
     <string name="card_note_chc_metrocard">Kun kort fra før 2016 (MIFARE Classic-) kort kan leses. Nyere. helt låste DESFire-kort, kan ikke støttes.</string>
     <string name="mfc_aid_title_format">MIFARE Classic AID: %1$s #%2$d</string>
     <string name="location_waikato">Waikato, Ny-Zealand</string>
-    <string name="page_title_format_empty">Side: 0x%s (tom)</string>
+    <string name="page_title_format_empty">Side: %s (tom)</string>
     <string name="location_wellington_nz">Wellington, Ny-Zealand</string>
     <string name="edy_file_history">Edy-historikk</string>
     <string name="edy_file_id">Edy-identitet</string>

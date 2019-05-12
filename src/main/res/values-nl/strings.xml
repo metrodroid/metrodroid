@@ -51,10 +51,10 @@
     <string name="scanned_cards">Geschiedenis</string>
     <string name="no_scanned_cards">Je hebt geen gescande kaarten.</string>
     <string name="block_title_format">Blok: %s</string>
-    <string name="page_title_format">Pagina: 0x%s</string>
-    <string name="sector_title_format">Sector: 0x%s</string>
-    <string name="unauthorized_sector_title_format">Sector: 0x%s (niet-geauthoriseerd)</string>
-    <string name="invalid_sector_title_format">Sector: 0x%1$s (onjuist: %2$s)</string>
+    <string name="page_title_format">Pagina: %s</string>
+    <string name="sector_title_format">Sector: %s</string>
+    <string name="unauthorized_sector_title_format">Sector: %s (niet-geauthoriseerd)</string>
+    <string name="invalid_sector_title_format">Sector: %1$s (onjuist: %2$s)</string>
     <string name="info">Informatie</string>
     <string name="valid_format">Geldig van %1$s tot %2$s</string>
     <string name="valid_to_format">Geldig tot %1$s</string>
@@ -231,7 +231,7 @@
         <item quantity="other">Verborgen sleutelgegevens (<xliff:g id="count" example="3"> %d</xliff:g> bytes)</item>
     </plurals>
     <string name="opal_action_tap_on_rejected">Omgekeerd afgewezen</string>
-    <string name="unauthorized_page_title_format">Pagina: 0x%s (niet-geautoriseerd)</string>
+    <string name="unauthorized_page_title_format">Pagina: %s (niet-geautoriseerd)</string>
     <string name="card_note_opal">Vrij reizen en enkele reis-kaarten worden niet ondersteund.</string>
     <string name="locked_mfc_card">Vergrendelde MIFARE Classic-kaart</string>
     <string name="locked_mfu_card">Vergrendelde MIFARE Ultralight-kaart</string>
@@ -312,8 +312,8 @@
     <string name="localise_places_desc">Laat tekst-naar-spraak-software en toegankelijkheid weten dat stations- en routenamen moeten worden uitgesproken in de landstaal i.p.v. je eigen taal. Dit verbetert de uitspraak van buitenlandse plaatsnamen, maar het kan voor jou moeilijker te verstaan zijn.</string>
     <string name="localise_places_longdesc_button">Over uitspraak…</string>
     <string name="localise_places_longdesc_title">Over uitspraak</string>
-    <string name="felica_system_title_format">Systeem: 0x%1$s (%2$s)</string>
-    <string name="felica_service_title_format">Dienst: 0x%1$s (%2$s)</string>
+    <string name="felica_system_title_format">Systeem: %1$s (%2$s)</string>
+    <string name="felica_service_title_format">Dienst: %1$s (%2$s)</string>
     <plurals name="felica_service_count">
         <item quantity="one">%d dienst</item>
         <item quantity="other">%d diensten</item>
@@ -490,7 +490,7 @@
     <string name="moscow_mcc">Moscow Central Circle (MCC)</string>
     <string name="troika_unknown_ticket">Onbekend troika-kaarttype %s</string>
     <string name="balances_and_subscriptions">Kaartjes</string>
-    <string name="sector_title_format_empty">Sector: 0x%s (leeg)</string>
+    <string name="sector_title_format_empty">Sector: %s (leeg)</string>
     <string name="location_vancouver">Vancouver, BC, Canada</string>
     <string name="location_jakarta">Jakarta, Indonesië</string>
     <string name="kmt_extra_note">Alleen voor nieuwe FeliCa-kaarten.</string>
@@ -748,7 +748,7 @@
     <string name="card_note_chc_metrocard">Alleen kaarten van vóór 2016 (MIFARE Classic) kunnen worden uitgelezen. Nieuwere, volledig versleutelde DESFire-kaarten kunnen niet worden ondersteund.</string>
     <string name="mfc_aid_title_format">MIFARE Classic AID: %1$s #%2$d</string>
     <string name="location_waikato">Waikato, Nieuw-Zeeland</string>
-    <string name="page_title_format_empty">Pagina: 0x%s (leeg)</string>
+    <string name="page_title_format_empty">Pagina: %s (leeg)</string>
     <string name="location_wellington_nz">Wellington, Nieuw-Zeeland</string>
     <string name="edy_file_history">Edy-reisgeschiedenis</string>
     <string name="edy_file_id">Edy-identiteit</string>

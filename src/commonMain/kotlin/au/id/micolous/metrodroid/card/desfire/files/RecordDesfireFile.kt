@@ -1,7 +1,8 @@
 /*
- * RecordDesfireFile.java
+ * RecordDesfireFile.kt
  *
  * Copyright (C) 2014 Eric Butler <eric@codebutler.com>
+ * Copyright 2019 Google
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,15 +19,14 @@
  */
 package au.id.micolous.metrodroid.card.desfire.files
 
-import au.id.micolous.metrodroid.util.NumberUtils
-
-import au.id.micolous.metrodroid.multi.R
 import au.id.micolous.metrodroid.card.desfire.settings.RecordDesfireFileSettings
 import au.id.micolous.metrodroid.multi.FormattedString
 import au.id.micolous.metrodroid.multi.Localizer
+import au.id.micolous.metrodroid.multi.R
 import au.id.micolous.metrodroid.ui.ListItem
 import au.id.micolous.metrodroid.ui.ListItemRecursive
 import au.id.micolous.metrodroid.util.ImmutableByteArray
+import au.id.micolous.metrodroid.util.hexString
 
 class RecordDesfireFile (override val fileSettings: RecordDesfireFileSettings,
                          override val raw: RawDesfireFile): DesfireFile() {
@@ -57,6 +57,6 @@ class RecordDesfireFile (override val fileSettings: RecordDesfireFileSettings,
                     value?.toHexDump() ?: FormattedString("invalid"))
         }
         return ListItemRecursive(Localizer.localizeString(R.string.file_title_format,
-                NumberUtils.intToHex(id)), fileSettings.subtitle, sub)
+                id.hexString), fileSettings.subtitle, sub)
     }
 }

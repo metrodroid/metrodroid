@@ -58,7 +58,7 @@ data class ISO7816File internal constructor(
     fun showRawData(selectorStr: String): ListItem {
         val recList = mutableListOf<ListItem>()
         if (binaryData != null)
-            recList.add(ListItemRecursive.collapsedValue(Localizer.localizeString(au.id.micolous.metrodroid.multi.R.string.binary_title_format),
+            recList.add(ListItemRecursive.collapsedValue(Localizer.localizeString(R.string.binary_title_format),
                     binaryData.toHexDump()))
         if (fci != null)
             recList.add(ListItemRecursive(Localizer.localizeString(R.string.file_fci), null,

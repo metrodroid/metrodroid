@@ -1,7 +1,8 @@
 /*
- * InvalidDesfireFile.java
+ * InvalidDesfireFile.kt
  *
  * Copyright (C) 2014 Eric Butler <eric@codebutler.com>
+ * Copyright 2019 Google
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -23,7 +24,7 @@ import au.id.micolous.metrodroid.multi.Localizer
 import au.id.micolous.metrodroid.multi.R
 import au.id.micolous.metrodroid.ui.ListItem
 import au.id.micolous.metrodroid.util.ImmutableByteArray
-import au.id.micolous.metrodroid.util.NumberUtils
+import au.id.micolous.metrodroid.util.hexString
 import kotlinx.serialization.Transient
 
 class InvalidDesfireFile (override val fileSettings: DesfireFileSettings,
@@ -37,7 +38,7 @@ class InvalidDesfireFile (override val fileSettings: DesfireFileSettings,
 
     override fun getRawData(id: Int): ListItem {
         return ListItem(Localizer.localizeString(R.string.invalid_file_title_format,
-                NumberUtils.intToHex(id),
+                id.hexString,
                 errorMessage))
     }
 }

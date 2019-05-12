@@ -92,9 +92,9 @@
 \n</string>
     <string name="fully_locked_title">完全にロックされたカードです。</string>
     <string name="block_title_format">ブロック: %s</string>
-    <string name="sector_title_format">セクター: 0x%s</string>
-    <string name="unauthorized_sector_title_format">セクター: 0x%s (未承認)</string>
-    <string name="invalid_sector_title_format">セクター: 0x%1$s (無効: %2$s)</string>
+    <string name="sector_title_format">セクター: %s</string>
+    <string name="unauthorized_sector_title_format">セクター: %s (未承認)</string>
+    <string name="invalid_sector_title_format">セクター: %1$s (無効: %2$s)</string>
     <string name="info">情報</string>
     <string name="valid_format">有効な %1$s %2$s へ</string>
     <string name="unknown_format">不明 (%s)</string>
@@ -174,7 +174,7 @@
     <plurals name="block_count">
         <item quantity="other">%d ブロック</item>
     </plurals>
-    <string name="page_title_format">ページ: 0x%s</string>
+    <string name="page_title_format">ページ: %s</string>
     <string name="map_tiles_url">地図タイル URL</string>
     <string name="map_tiles_url_summary">Leaflet TileLayer 構文を使用して、埋め込み地図のカスタム タイル サーバーを使用します。</string>
     <string name="map_tiles_subdomains">地図タイルのサブドメイン</string>
@@ -233,7 +233,7 @@
     <string name="file_title_format">ファイル: %s</string>
     <string name="unauthorized_file_title_format">ファイル: %s (未承認)</string>
     <string name="invalid_file_title_format">ファイル: %1$s (無効: %2$s)</string>
-    <string name="unauthorized_page_title_format">ページ: 0x%s (未承認)</string>
+    <string name="unauthorized_page_title_format">ページ: %s (未承認)</string>
     <string name="unsupported_tag">サポートされていない NFC カードメディア</string>
     <string name="saving_card">カードを保存しています…</string>
     <string name="mfc_reading">MIFARE クラシックカードを読み込んでいます…</string>
@@ -313,9 +313,9 @@
     <string name="machine_id_format">マシン ID %s</string>
     <string name="machine_id">マシン ID</string>
     <string name="mfc_aid_title_format">MIFARE クラシック AID: %1$s #%2$d</string>
-    <string name="sector_title_format_empty">セクター: 0x%s (空)</string>
-    <string name="felica_system_title_format">システム: 0x%1$s (%2$s)</string>
-    <string name="felica_service_title_format">サービス: 0x%1$s (%2$s)</string>
+    <string name="sector_title_format_empty">セクター: %s (空)</string>
+    <string name="felica_system_title_format">システム: %1$s (%2$s)</string>
+    <string name="felica_service_title_format">サービス: %1$s (%2$s)</string>
     <string name="record_title_format">レコード: %s</string>
     <string name="binary_title_format">バイナリデータ</string>
 </resources>

@@ -1,7 +1,8 @@
 /*
- * UnsupportedDesfireFile.java
+ * UnsupportedDesfireFile.kt
  *
  * Copyright (C) 2014 Eric Butler <eric@codebutler.com>
+ * Copyright 2019 Google
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -24,7 +25,7 @@ import au.id.micolous.metrodroid.multi.R
 import au.id.micolous.metrodroid.ui.ListItem
 import au.id.micolous.metrodroid.ui.ListItemRecursive
 import au.id.micolous.metrodroid.util.ImmutableByteArray
-import au.id.micolous.metrodroid.util.NumberUtils
+import au.id.micolous.metrodroid.util.hexString
 import kotlinx.serialization.Transient
 
 /**
@@ -42,7 +43,7 @@ class UnauthorizedDesfireFile(override val fileSettings: DesfireFileSettings,
 
     override fun getRawData(id: Int): ListItem {
         val title = Localizer.localizeString(R.string.unauthorized_file_title_format,
-                NumberUtils.intToHex(id))
+                id.hexString)
         val subtitle = fileSettings.subtitle
 
         return ListItemRecursive(title, subtitle, null)

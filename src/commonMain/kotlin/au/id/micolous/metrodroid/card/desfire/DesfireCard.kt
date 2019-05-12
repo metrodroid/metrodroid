@@ -2,7 +2,7 @@
  * DesfireCard.kt
  *
  * Copyright 2011-2015 Eric Butler <eric@codebutler.com>
- * Copyright 2015-2018 Michael Farrell <micolous+git@gmail.com>
+ * Copyright 2015-2019 Michael Farrell <micolous+git@gmail.com>
  * Copyright 2019 Google
  *
  * This program is free software: you can redistribute it and/or modify
@@ -21,9 +21,9 @@
 
 package au.id.micolous.metrodroid.card.desfire
 
-import au.id.micolous.metrodroid.card.*
-import au.id.micolous.metrodroid.multi.R
+import au.id.micolous.metrodroid.card.CardProtocol
 import au.id.micolous.metrodroid.multi.Localizer
+import au.id.micolous.metrodroid.multi.R
 import au.id.micolous.metrodroid.serializers.XMLDesfireManufacturingData
 import au.id.micolous.metrodroid.serializers.XMLId
 import au.id.micolous.metrodroid.serializers.XMLListIdx
@@ -31,8 +31,8 @@ import au.id.micolous.metrodroid.transit.TransitData
 import au.id.micolous.metrodroid.transit.TransitIdentity
 import au.id.micolous.metrodroid.ui.ListItem
 import au.id.micolous.metrodroid.ui.ListItemRecursive
-import au.id.micolous.metrodroid.util.NumberUtils
 import au.id.micolous.metrodroid.util.ImmutableByteArray
+import au.id.micolous.metrodroid.util.hexString
 import kotlinx.serialization.Optional
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.Transient
@@ -66,11 +66,11 @@ data class DesfireCard constructor(
         val mifareAID = DesfireApplication.getMifareAID(id)
         if (mifareAID != null) {
             return Localizer.localizeString(R.string.mfc_aid_title_format,
-                    NumberUtils.intToHex(mifareAID.first), mifareAID.second)
+                    mifareAID.first.hexString, mifareAID.second)
         }
 
         return Localizer.localizeString(R.string.application_title_format,
-                NumberUtils.intToHex(id))
+                id.hexString)
     }
 
     override fun parseTransitIdentity(): TransitIdentity? {

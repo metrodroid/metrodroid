@@ -23,6 +23,7 @@ import au.id.micolous.metrodroid.multi.R
 import au.id.micolous.metrodroid.serializers.XMLListIdx
 import au.id.micolous.metrodroid.ui.ListItem
 import au.id.micolous.metrodroid.ui.ListItemRecursive
+import au.id.micolous.metrodroid.util.hexString
 import kotlinx.serialization.Serializable
 
 @Serializable
@@ -34,7 +35,7 @@ data class FelicaSystem(@XMLListIdx("code")
             services.map { (serviceCode, service) ->
                 ListItemRecursive(
                         Localizer.localizeString(R.string.felica_service_title_format,
-                                serviceCode.toString(16),
+                                serviceCode.hexString,
                                 Localizer.localizeString(
                                         FelicaUtils.getFriendlyServiceName(systemCode,
                                                 serviceCode))),

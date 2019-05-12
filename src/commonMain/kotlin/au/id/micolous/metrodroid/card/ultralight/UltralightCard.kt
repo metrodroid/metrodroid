@@ -1,7 +1,7 @@
 /*
  * UltralightCard.kt
  *
- * Copyright 2016-2018 Michael Farrell <micolous+git@gmail.com>
+ * Copyright 2016-2019 Michael Farrell <micolous+git@gmail.com>
  * Copyright 2019 Google
  *
  * This program is free software: you can redistribute it and/or modify
@@ -29,6 +29,7 @@ import au.id.micolous.metrodroid.transit.TransitIdentity
 import au.id.micolous.metrodroid.ui.ListItem
 import au.id.micolous.metrodroid.ui.ListItemRecursive
 import au.id.micolous.metrodroid.util.ImmutableByteArray
+import au.id.micolous.metrodroid.util.hexString
 import kotlinx.serialization.Optional
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.Transient
@@ -54,15 +55,15 @@ data class UltralightCard constructor(
     @Transient
     override val rawData: List<ListItem>
         get() = pages.mapIndexed { idx, sector ->
-            val sectorIndexString = idx.toString()
+            val pageIndexString = idx.hexString
 
             if (sector.isUnauthorized) {
                 ListItemRecursive.collapsedValue(Localizer.localizeString(
-                        R.string.unauthorized_page_title_format, sectorIndexString),
+                        R.string.unauthorized_page_title_format, pageIndexString),
                         null, null)
             } else {
                 ListItemRecursive.collapsedValue(Localizer.localizeString(
-                        R.string.page_title_format, sectorIndexString), null, sector.data.toHexDump())
+                        R.string.page_title_format, pageIndexString), null, sector.data.toHexDump())
             }
         }
 

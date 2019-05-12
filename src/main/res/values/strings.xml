@@ -97,9 +97,12 @@
 
     <string name="scanned_cards">History</string>
     <string name="no_scanned_cards">You have not scanned any cards.</string>
+    <!-- Translators: "Block" refers to a block of memory. %s is replaced with a decimal or
+    hexadecimal number. -->
     <string name="block_title_format">Block: %s</string>
-    <string name="page_title_format">Page: 0x%s</string>
-    <string name="page_title_format_empty">Page: 0x%s (empty)</string>
+    <!-- Translators: "Block" refers to a block of memory. %s is replaced with a decimal or
+    hexadecimal number. Displayed when we didn't have a correct key to unlock the memory block. -->
+    <string name="block_title_format_unauthorized">Block: %s (unauthorized)</string>
     <string name="application_title_format">Application: %s</string>
     <!-- Translators:
     AID = Application ID (terminology used by the card vendor)
@@ -108,20 +111,44 @@
     an application number.
     -->
     <string name="mfc_aid_title_format">MIFARE Classic AID: %1$s #%2$d</string>
+
+    <!-- Translators: %s replaced with a decimal or hexadecimal number -->
     <string name="file_title_format">File: %s</string>
+    <!-- Translators: %s replaced with a decimal or hexadecimal number. Displayed when we didn't
+    have a correct key to unlock the memory page. -->
     <string name="unauthorized_file_title_format">File: %s (unauthorized)</string>
+    <!-- Translators: %1$s is replaced with a decimal or hexadecimal number. %2$s is replaced
+    with error text. -->
     <string name="invalid_file_title_format">File: %1$s (invalid: %2$s)</string>
-    <string name="unauthorized_page_title_format">Page: 0x%s (unauthorized)</string>
-    <string name="sector_title_format">Sector: 0x%s</string>
-    <string name="unauthorized_sector_title_format">Sector: 0x%s (unauthorized)</string>
-    <string name="sector_title_format_empty">Sector: 0x%s (empty)</string>
-    <string name="invalid_sector_title_format">Sector: 0x%1$s (invalid: %2$s)</string>
+
+    <!-- Translators: "Page" refers to a page of memory. %s replaced with a decimal or hexadecimal
+    number. -->
+    <string name="page_title_format">Page: %s</string>
+    <!-- Translators: "Page" refers to a page of memory. %s replaced with a decimal or hexadecimal
+    number. Displayed when the memory page was empty / had only null data. -->
+    <string name="page_title_format_empty">Page: %s (empty)</string>
+    <!-- Translators: "Page" refers to a page of memory. %s replaced with a decimal or hexadecimal
+    number. Displayed when we didn't have a correct key to unlock the memory page. -->
+    <string name="unauthorized_page_title_format">Page: %s (unauthorized)</string>
+
+    <!-- Translators: %s replaced with a decimal or hexadecimal number -->
+    <string name="sector_title_format">Sector: %s</string>
+    <!-- Translators: %s replaced with a decimal or hexadecimal number. Displayed when we didn't
+    have a correct key to unlock the sector. -->
+    <string name="unauthorized_sector_title_format">Sector: %s (unauthorized)</string>
+    <!-- Translators: %s replaced with a decimal or hexadecimal number. Displayed when the sector
+    was empty / had only null data. -->
+    <string name="sector_title_format_empty">Sector: %s (empty)</string>
+    <!-- Translators: %1$s is replaced with a decimal or hexadecimal number. %2$s is replaced
+    with error text. -->
+    <string name="invalid_sector_title_format">Sector: %1$s (invalid: %2$s)</string>
+
     <!-- Translators: the first parameter is a hexadecimal number, the second parameter is a string
     describing a "well known" system code. eg: "System: 0x3 (Suica)" -->
-    <string name="felica_system_title_format">System: 0x%1$s (%2$s)</string>
+    <string name="felica_system_title_format">System: %1$s (%2$s)</string>
     <!-- Translators: the first parameter is a hexadecimal number, the second parameter is a string
     describing a "well known" service code. eg: "Service: 0x90f (Suica History)" -->
-    <string name="felica_service_title_format">Service: 0x%1$s (%2$s)</string>
+    <string name="felica_service_title_format">Service: %1$s (%2$s)</string>
     <!-- Translators: the first parameter is a hexadecimal number. -->
     <string name="record_title_format">Record: %s</string>
     <string name="binary_title_format">Binary data</string>
@@ -1664,6 +1691,5 @@
     <!-- Translators: MCT = MIFARE Classic Tool - an Android MIFARE Classic card reader / writer -->
     <string name="import_mct_file">Import from MCT file</string>
     <string name="subscription_id">Subscription ID</string>
-    <string name="block_title_format_unauthorized">Block: %s (unauthorized)</string>
     <string name="card_note_chc_metrocard">Only pre-2016 (MIFARE Classic) cards can be read. Newer fully locked DESFire cards are unsupportable.</string>
 </resources>

@@ -1,8 +1,8 @@
 /*
- * UnauthorizedClassicSector.java
+ * UnauthorizedClassicSector.kt
  *
  * Copyright 2012-2015 Eric Butler <eric@codebutler.com>
- * Copyright 2016-2018 Michael Farrell <micolous+git@gmail.com>
+ * Copyright 2016-2019 Michael Farrell <micolous+git@gmail.com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -24,6 +24,7 @@ import au.id.micolous.metrodroid.card.UnauthorizedException
 import au.id.micolous.metrodroid.multi.Localizer
 import au.id.micolous.metrodroid.multi.R
 import au.id.micolous.metrodroid.ui.ListItem
+import au.id.micolous.metrodroid.util.hexString
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.Transient
 
@@ -37,5 +38,5 @@ class UnauthorizedClassicSector (override val raw: ClassicSectorRaw): ClassicSec
         get() = throw UnauthorizedException()
 
     override fun getRawData(idx: Int) =
-            ListItem(Localizer.localizeString(R.string.unauthorized_sector_title_format, idx.toString()))
+            ListItem(Localizer.localizeString(R.string.unauthorized_sector_title_format, idx.hexString))
 }

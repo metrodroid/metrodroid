@@ -23,6 +23,7 @@ package au.id.micolous.metrodroid.card.classic
 import au.id.micolous.metrodroid.multi.Localizer
 import au.id.micolous.metrodroid.multi.R
 import au.id.micolous.metrodroid.ui.ListItem
+import au.id.micolous.metrodroid.util.hexString
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.Transient
 
@@ -36,7 +37,7 @@ class InvalidClassicSector constructor(override val raw: ClassicSectorRaw) : Cla
         get() = throw IndexOutOfBoundsException("InvalidClassicSector has no blocks")
 
     override fun getRawData(idx: Int): ListItem {
-        return ListItem(Localizer.localizeString(R.string.invalid_sector_title_format, idx.toString(),
+        return ListItem(Localizer.localizeString(R.string.invalid_sector_title_format, idx.hexString,
                 raw.error))
     }
 }
