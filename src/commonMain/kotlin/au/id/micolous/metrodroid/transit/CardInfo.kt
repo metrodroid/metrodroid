@@ -42,5 +42,5 @@ class CardInfo(val name: String,
                val imageId: DrawableResource? = null,
                val imageAlphaId: DrawableResource? = null) {
 
-    val hasBitmap get() = imageAlphaId != null || imageId != null
+    val hasBitmap get() = imageId != null
 }
