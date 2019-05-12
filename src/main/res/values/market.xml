@@ -107,6 +107,8 @@
     -->
     <string name="market_changelog_generic">Fixes bugs, adds new features and data.\n\nMore details (in English): https://github.com/micolous/metrodroid/wiki/Changelog</string>
 
+    <!-- Changelog 40 is same as 39. -->
+
     <!--
     Translators:
     * 500 character limit
