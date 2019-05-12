@@ -36,7 +36,7 @@ import au.id.micolous.metrodroid.util.ImmutableByteArray
 import au.id.micolous.metrodroid.util.NumberUtils
 import au.id.micolous.metrodroid.util.StationTableReader
 
-private const val NAME = "Touch 'n go"
+private const val NAME = "Touch 'n Go"
 private val CARD_INFO = CardInfo(
         name = NAME,
         locationId = R.string.location_malaysia,
