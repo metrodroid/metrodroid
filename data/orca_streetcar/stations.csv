@@ -1,0 +1,27 @@
+reader_id,stop_name,short_name,stop_lat,stop_lon,comment
+9056,"14th Ave S & Washington","14th & Washington",47.6005639165279,-122.314181327819
+9065,"Broadway & E Denny NB","Broadway & Denny NB",47.6181568313295,-122.320747375488
+9066,"Broadway & E Denny SB","Broadway & Denny SB",47.6180158077495,-122.320980727672
+9061,"Broadway & Marion NB","Broadway & Marion NB",47.6098502555259,-122.320717871189
+9062,"Broadway & Marion SB","Broadway & Marion SB",47.6098086650832,-122.320913672447
+9064,"Broadway & Pine NB","Broadway & Pine NB",47.6150723056943,-122.320758104324
+9063,"Broadway & Pine SB","Broadway & Pine SB",47.6161933149567,-122.320924401283,Renamed from Pike
+9059,"Broadway & Terrace NB","Broadway & Terrace NB",47.6054649941559,-122.320712506771
+9060,"Broadway & Terrace SB","Broadway & Terrace SB",47.6049785239516,-122.320937812328
+9057,"E Yesler Wy & Broadway EB","Yesler & Broadway EB",47.6016327884738,-122.32006072998
+9058,"E Yesler Wy & Broadway WB","Yesler & Broadway WB",47.6017431107308,-122.320216298103
+9007,"Fairview & Aloha","Fairview & Aloha",47.627573814398,-122.332401573657,"Renamed from Fairview & Campus"
+9006,"Lake Union Park","Lake Union Park",47.6259030928503,-122.336444975041
+9001,"McGraw Square","McGraw Square",47.6129802934938,-122.337363660335
+9051,"Occidental S & S Jackson","Occidental & Jackson",47.5991973,-122.3332461
+9055,"S Jackson & 12th Ave S","Jackson & 12th Ave",47.599210161578,-122.315737009048,"Renamed from 13th"
+9052,"S Jackson & 5th Ave S EB","Jackson & 5th Ave EB",47.5992065442833,-122.326776981353
+9053,"S Jackson & 5th Ave S WB","Jackson & 5th Ave WB",47.5992065442833,-122.326776981353
+9054,"S Jackson & 7th Ave S","Jackson & 7th Ave",47.5992002140171,-122.323275357484
+9005,"Terry & Republican NB","Terry & Republican NB",47.6234169199518,-122.337044477462,"Renamed from Terry & Mercer NB"
+9004,"Terry & Thomas NB","Terry & Thomas NB",47.6213677268386,-122.337264418601
+9002,"Westlake & 7th NB","Westlake & 7th NB",47.6154700859254,-122.337763309478
+9003,"Westlake & Denny NB","Westlake & Denny NB",47.6180953595593,-122.33830243349
+9008,"Westlake & Mercer SB","Westlake & Mercer SB",47.624065919813,-122.33858205378
+9010,"Westlake & 9th SB","Westlake & 9th SB",47.6179615678097,-122.33851969242
+9009,"Westlake & Thomas SB","Westlake & Thomas SB",47.6214526971832,-122.338578701019

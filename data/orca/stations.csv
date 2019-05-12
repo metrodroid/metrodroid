@@ -8,6 +8,8 @@ operator_id,reader_id,stop_name,short_name,stop_lat,stop_lon
 7,458759,Sumner Station,Sumner,47.2016541,-122.244566
 7,458760,Puyallup Station,Puyallup,47.1926177,-122.295550
 7,458761,Tacoma Dome Station,Tacoma Dome,47.2400587,-122.427522
+7,466433,Mukilteo Station,Mukilteo,47.9491683,-122.3010919
+7,466434,Lakewood Station,Lakewood,47.1529884,-122.5015344
 7,469103,University of Washington,UW Station,47.6496,-122.3037
 7,469104,Capitol Hill,,47.6192,-122.3202
 7,469105,Angle Lake,,47.4227143,-122.2978669
@@ -24,6 +26,8 @@ operator_id,reader_id,stop_name,short_name,stop_lat,stop_lon
 7,471955,Rainier Beach,,47.5222626,-122.279579
 7,471956,Tukwila International Blvd,Tukwila,47.4642754,-122.288391
 7,471957,Seatac Airport,Sea-Tac,47.4445305,-122.297012
+7,473061,South Tacoma Station,South Tacoma,47.2038608,-122.4877278
 8,534389,Seattle Terminal,Seattle,47.602722,-122.338512
 8,534391,Bainbridge Island Terminal,Bainbridge,47.62362,-122.51082
 8,534392,Fauntleroy Terminal,Seattle,47.5231,-122.39602
+8,534403,Anacortes Terminal,Anacortes,48.5065077,-122.680434

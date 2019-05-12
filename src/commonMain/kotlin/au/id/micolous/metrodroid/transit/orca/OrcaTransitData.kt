@@ -47,6 +47,7 @@ class OrcaTransitData (private val mSerialNumber: Int?,
         get() = mSerialNumber?.toString()
 
     companion object {
+        internal const val AGENCY_CT = 0x02
         internal const val AGENCY_KCM = 0x04
         internal const val AGENCY_ST = 0x07
         internal const val AGENCY_WSF = 0x08
@@ -66,7 +67,7 @@ class OrcaTransitData (private val mSerialNumber: Int?,
         }
 
         private fun parse(desfireCard: DesfireCard): OrcaTransitData {
-            val mSerialNumber = desfireCard.getApplication(0xffffff)?.getFile(0x0f)?.data?.byteArrayToInt(5, 3)
+            val mSerialNumber = desfireCard.getApplication(0xffffff)?.getFile(0x0f)?.data?.byteArrayToInt(4, 4)
 
             val mBalance = desfireCard.getApplication(APP_ID)?.getFile(0x04)?.data?.byteArrayToInt(41, 2)
 
