@@ -194,6 +194,8 @@ internal class UltralightProtocol(private val mTagTech: UltralightTransceiver) {
             // When the card halts, the tag may report an error up through the stack. This is fine.
             // Unfortunately we can't tell if the card was removed or we need to reset it.
             Log.d(TAG, "Discarding exception in halt, this probably expected...", e)
+        } catch (e: CardLostException) {
+            Log.d(TAG, "Discarding disconnect in halt, this probably expected...", e)
         }
 
     }
