@@ -17,6 +17,8 @@ HERMETIC_TARGETS := \
 	lisboa_viva \
 	navigo \
 	orca \
+	orca_brt \
+	orca_streetcar \
 	oura \
 	ravkav \
 	szt \
@@ -43,7 +45,15 @@ all: hermetic web
 
 hermetic: $(foreach d,$(HERMETIC_TARGETS),$(d).build)
 
+hermetic_copy: $(foreach d,$(HERMETIC_TARGETS),$(d).copy)
+
+hermetic_clean: $(foreach d,$(HERMETIC_TARGETS),$(d).clean)
+
 web: $(foreach d,$(WEB_TARGETS),$(d).build)
+
+web_copy: $(foreach d,$(HERMETIC_TARGETS),$(d).copy)
+
+web_clean: $(foreach d,$(HERMETIC_TARGETS),$(d).clean)
 
 %.copy: %
 	make -C $< copy

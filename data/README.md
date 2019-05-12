@@ -3,10 +3,25 @@
 This directory contains data that is used to build stop databases (MdST).
 
 The normal process with these files is to check in built versions of these files
-to `src/main/assets/`.
+to `mdst/`.
 
-However, all MdST files need to be reproducable (to a degree). The preferred
-build mechanism is GNU Makefiles.
+All MdST files need to be reproducible (to a degree). The preferred build mechanism is GNU
+Makefiles.
+
+## Targets
+
+* `all`: builds `hermetic` and `web`
+* `clean`: deletes all generated data
+* `copy`: builds and copies all data for `hermetic` and `web`
+* `*.build` (valid for a single data source): builds the given provider's data
+* `*.copy` (valid for a single data source): copies the given provider's data to `mdst/`
+* `*.clean` (valid for a single data source): deletes all generated data
+* `hermetic`: builds all targets where the data is already in git
+  * `hermetic_copy`: copies all `hermetic` targets to `mdst/`
+  * `hermetic_clean`: deletes all generated data for `hermetic` targets
+* `web`: builds all targets that need to fetch some data from the internet
+  * `web_copy`: copies all `web` targets to `mdst/`
+  * `web_clean`: deletes all generated data for `web` targets
 
 ## Simple examples
 
