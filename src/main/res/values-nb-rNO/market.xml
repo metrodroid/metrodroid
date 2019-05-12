@@ -164,4 +164,11 @@
 \n* Mange usynlige endringer.
 \n
 \nFlere detaljer: https://github.com/micolous/metrodroid/wiki/Changelog</string>
+    <string name="market_changelog_39">* Støtte for Malaysia Tap ’n Go, Otago Gocard, Rotorua SmartRide, Waikato BUSIT og Wellington Snapper -kort.
+\n* Mange nye rute og stasjons -ID-er.
+\n* Forbedret FeliCa-leser.
+\n* Fikser problemer med EZ-Link og Octopus -kort.
+\n* Mange usynlige endringer.
+\n
+\nFlere detaljer: https://github.com/micolous/metrodroid/wiki/Changelog</string>
 </resources>
