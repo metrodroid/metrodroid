@@ -32,6 +32,7 @@ import au.id.micolous.metrodroid.card.calypso.CalypsoApplication
 import au.id.micolous.metrodroid.card.cepas.CEPASApplication
 import au.id.micolous.metrodroid.card.china.ChinaCard
 import au.id.micolous.metrodroid.card.emv.EmvFactory
+import au.id.micolous.metrodroid.card.ksx6924.KROCAPConfigDFApplication
 import au.id.micolous.metrodroid.card.ksx6924.KSX6924Application
 import au.id.micolous.metrodroid.multi.Localizer
 import au.id.micolous.metrodroid.multi.Log
@@ -132,6 +133,7 @@ data class ISO7816Card (
         private const val TAG = "ISO7816Card"
         val factories = listOf(
                 CalypsoApplication.FACTORY,
+                KROCAPConfigDFApplication.FACTORY,
                 KSX6924Application.FACTORY,
                 ChinaCard.FACTORY,
 		EmvFactory())

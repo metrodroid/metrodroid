@@ -143,7 +143,7 @@ data class KSX6924Application (
                 get() = APP_NAME
 
             /**
-             * Dumps a KSX9623 (T-Money) card in the field.
+             * Dumps a KS X 6924 (T-Money) card in the field.
              * @param capsule ISO7816 app info of the tag.
              * @param protocol Tag to dump.
              * @return TMoneyCard of the card contents. Returns null if an unsupported card is in the
