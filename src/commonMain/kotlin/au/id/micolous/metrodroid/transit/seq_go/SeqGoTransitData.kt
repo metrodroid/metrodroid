@@ -45,7 +45,7 @@ import au.id.micolous.metrodroid.util.StationTableReader
  */
 @Parcelize
 class SeqGoTransitData (override val capsule: NextfareTransitDataCapsule,
-                        private val mTicketType: SeqGoData.TicketType): NextfareTransitData() {
+                        private val mTicketNum: Int?): NextfareTransitData() {
     override val currency
         get() = CURRENCY
 
@@ -68,7 +68,12 @@ class SeqGoTransitData (override val capsule: NextfareTransitDataCapsule,
         get() = capsule.hasUnknownStations
 
     override val ticketClass: String?
-        get() = Localizer.localizeString(mTicketType.description)
+        get() {
+            if (mTicketNum == null)
+                return Localizer.localizeString(SeqGoData.TicketType.UNKNOWN.description)
+            val ticketType = SeqGoData.TICKET_TYPES[mTicketNum] ?: return mTicketNum.toString()
+            return Localizer.localizeString(ticketType.description)
+        }
 
     override val timezone: MetroTimeZone
         get() = TIME_ZONE
@@ -124,10 +129,7 @@ class SeqGoTransitData (override val capsule: NextfareTransitDataCapsule,
                         ::SeqGoTrip,
                         { SeqGoRefill(NextfareTripCapsule(it), it.isAutomatic) })
 
-                val ticketNum = capsule.mConfig?.ticketType
-                val ticketType = SeqGoData.TICKET_TYPES[ticketNum] ?: SeqGoData.TicketType.UNKNOWN
-
-                return SeqGoTransitData(capsule, ticketType)
+                return SeqGoTransitData(capsule, capsule.mConfig?.ticketType)
             }
         }
 
