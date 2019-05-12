@@ -172,6 +172,52 @@ class ImportKeysTest : BaseInstrumentedTest() {
     }
 
     @Test
+    fun testClassicTransformKeys() {
+        val keys = loadClassicStaticCardKeys("mifareTransform.json")
+
+        assertEquals("Example transit agency", keys.description)
+        assertEquals(2, keys.getProperCandidates(0, tagId)!!.size)
+        assertEquals(1, keys.getProperCandidates(10, tagId)!!.size)
+        assertEquals(3, keys.getAllProperKeys(tagId).size)
+
+        // Shouldn't have hits on other key IDs.
+        for (i in 1..9) {
+            assertEquals(0, keys.getProperCandidates(i, tagId)?.size?:0)
+        }
+
+        val k0a = keys.getProperCandidates(0, tagId)!![0]
+        val k0b = keys.getProperCandidates(0, tagId)!![1]
+        val k10 = keys.getProperCandidates(10, tagId)!![0]
+        val k10alt = keys.getProperCandidates(10, tagId.reverseBuffer())!![0]
+
+        assertNotNull(k0a)
+        assertNotNull(k0b)
+        assertNotNull(k10)
+        assertNotNull(k10alt)
+
+        assertEquals("010203040506", k0a.key.toHexString())
+        assertEquals("102030405060", k0b.key.toHexString())
+        assertEquals("0b1665285566", k10.key.toHexString())
+        assertEquals("617407425566", k10alt.key.toHexString())
+
+        assertEquals(ClassicSectorKey.KeyType.A, k0a.type)
+        assertEquals(ClassicSectorKey.KeyType.A, k0b.type)
+        assertEquals(ClassicSectorKey.KeyType.B, k10.type)
+        assertEquals(ClassicSectorKey.KeyType.B, k10alt.type)
+
+        // Test serialisation of ClassicStaticKeys
+        val j = keys.toJSON().toString()
+        assertTrue(j.contains("KeyA"), "KeyA must be in j")
+        assertTrue(j.contains("010203040506"), "010203040506 must be in j")
+        assertTrue(j.contains("KeyB"), "KeyB must be in j")
+        assertTrue(j.contains("112233445566"), "112233445566 must be in j")
+        assertTrue(j.contains("\"sector\":10"), "sector 10 must be in j")
+        assertTrue(j.contains("\"transform\":\"touchngo\""), "touchngo must be in j")
+        assertFalse(j.contains("0b1665285566"), "kdf result must not appear in json")
+        assertFalse(j.contains("617407425566"), "kdf result must not appear in json")
+    }
+
+    @Test
     fun testInvalidJSON() {
         try {
             val card = loadClassicCardKeys("invalidMifare1.json", "12345678", KeyFormat.UNKNOWN)
