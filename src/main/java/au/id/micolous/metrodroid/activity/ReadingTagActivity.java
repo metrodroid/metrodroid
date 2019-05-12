@@ -37,7 +37,7 @@ import android.widget.TextView;
 
 import au.id.micolous.metrodroid.card.TagReaderFeedbackInterface;
 import au.id.micolous.metrodroid.transit.CardInfo;
-import au.id.micolous.metrodroid.transit.CardInfoTools;
+import au.id.micolous.metrodroid.util.DrawableUtils;
 import au.id.micolous.metrodroid.util.ImmutableByteArray;
 import au.id.micolous.metrodroid.util.Preferences;
 import au.id.micolous.metrodroid.util.Utils;
@@ -97,7 +97,7 @@ public class ReadingTagActivity extends MetrodroidActivity implements TagReaderF
 
             if (cardInfo != null) {
                 if (cardInfo.getHasBitmap()) {
-                    i.setImageDrawable(CardInfoTools.getDrawable(this, cardInfo));
+                    i.setImageDrawable(DrawableUtils.getCardInfoDrawable(this, cardInfo));
                 }
                 i.setContentDescription(cardInfo.getName());
             } else {
