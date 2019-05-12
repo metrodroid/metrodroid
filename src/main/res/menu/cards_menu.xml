@@ -34,6 +34,8 @@
                   android:title="@string/import_file" />
             <item android:id="@+id/import_mct_file"
                 android:title="@string/import_mct_file" />
+            <item android:id="@+id/import_mfc_file"
+                  android:title="@string/import_mfc_file" />
         </menu>
     </item>
     <item

@@ -2,6 +2,7 @@ package au.id.micolous.metrodroid.serializers
 
 import au.id.micolous.metrodroid.card.Card
 import au.id.micolous.metrodroid.multi.Log
+import au.id.micolous.metrodroid.serializers.classic.MfcCardImporter
 import kotlinx.io.InputStream
 import kotlinx.io.charsets.Charsets
 import java.io.PushbackInputStream
@@ -19,6 +20,7 @@ actual class XmlCardFormat : CardImporter {
 
 class XmlOrJsonCardFormat : CardImporter {
     private val jsonKotlinFormat = JsonKotlinFormat()
+    private val mfcFormat = MfcCardImporter()
     private fun peek(pb: PushbackInputStream): Char {
         var c: Int
         while (true) {
@@ -72,6 +74,8 @@ class XmlOrJsonCardFormat : CardImporter {
                 jsonKotlinFormat.readCard(IOUtils.toString(zi, Charsets.UTF_8))
             else if (ze.name.endsWith(".xml"))
                 readCardXML(zi)
+            else if (ze.name.endsWith(".mfc"))
+                mfcFormat.readCard(zi)
             else
                 null
         }

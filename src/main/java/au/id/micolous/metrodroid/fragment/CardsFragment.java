@@ -60,6 +60,7 @@ import au.id.micolous.metrodroid.serializers.CardImporter;
 import au.id.micolous.metrodroid.serializers.CardSerializer;
 import au.id.micolous.metrodroid.serializers.XmlOrJsonCardFormat;
 import au.id.micolous.metrodroid.serializers.classic.MctCardImporter;
+import au.id.micolous.metrodroid.serializers.classic.MfcCardImporter;
 import au.id.micolous.metrodroid.time.MetroTimeZone;
 import au.id.micolous.metrodroid.time.TimestampFormatter;
 import au.id.micolous.metrodroid.time.TimestampFull;
@@ -98,6 +99,7 @@ public class CardsFragment extends ExpandableListFragment {
     private static final int REQUEST_SELECT_FILE = 1;
     private static final int REQUEST_SAVE_FILE = 2;
     private static final int REQUEST_SELECT_FILE_MCT = 3;
+    private static final int REQUEST_SELECT_FILE_MFC = 4;
     @NonNls
     private static final String STD_EXPORT_FILENAME = "Metrodroid-Export.zip";
     private static final String SD_EXPORT_PATH = Environment.getExternalStorageDirectory() + "/" + STD_EXPORT_FILENAME;
@@ -200,6 +202,9 @@ public class CardsFragment extends ExpandableListFragment {
             MenuItem item = menu.findItem(R.id.import_mct_file);
             if (item != null)
                 item.setVisible(false);
+            item = menu.findItem(R.id.import_mfc_file);
+            if (item != null)
+                item.setVisible(false);
         }
     }
 
@@ -266,6 +271,23 @@ public class CardsFragment extends ExpandableListFragment {
                     };
                     i.putExtra(Intent.EXTRA_MIME_TYPES, mctMimetypes);
                     startActivityForResult(Intent.createChooser(i, Localizer.INSTANCE.localizeString(R.string.select_file)), REQUEST_SELECT_FILE_MCT);
+                    return true;
+
+                case R.id.import_mfc_file:
+                    if (Build.VERSION.SDK_INT < Build.VERSION_CODES.KITKAT) {
+                        return true;
+                    }
+                    uri = Uri.fromFile(Environment.getExternalStorageDirectory());
+                    i = new Intent(Intent.ACTION_GET_CONTENT);
+                    i.putExtra(Intent.EXTRA_STREAM, uri);
+                    i.setType("*/*");
+                    String[] mfcMimetypes = {
+                            // Fallback for cases where we didn't get a good mime type from the
+                            // OS, this allows most "other" files to be selected.
+                            "application/octet-stream",
+                    };
+                    i.putExtra(Intent.EXTRA_MIME_TYPES, mfcMimetypes);
+                    startActivityForResult(Intent.createChooser(i, Localizer.INSTANCE.localizeString(R.string.select_file)), REQUEST_SELECT_FILE_MFC);
                     return true;
 
                 case R.id.import_file:
@@ -506,6 +528,12 @@ public class CardsFragment extends ExpandableListFragment {
         }
     }
 
+    private static class MFCReadTask extends CommonReadTask {
+        private MFCReadTask(CardsFragment cardsFragment) {
+            super(cardsFragment, new MfcCardImporter());
+        }
+    }
+
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         Uri uri;
@@ -520,6 +548,11 @@ public class CardsFragment extends ExpandableListFragment {
                     case REQUEST_SELECT_FILE_MCT:
                         uri = data.getData();
                         new MCTReadTask(this).execute(uri);
+                        break;
+
+                    case REQUEST_SELECT_FILE_MFC:
+                        uri = data.getData();
+                        new MFCReadTask(this).execute(uri);
                         break;
 
                     case REQUEST_SAVE_FILE:
