@@ -161,6 +161,9 @@ abstract class ClassicKeysImpl : ClassicKeys {
                     ClassicSectorKey(type = kt, key = keyData,
                             bundle = json.getPrimitiveOrNull(KEY_BUNDLE)?.contentOrNull ?: defaultBundle)
                 }
+                "touchngo" -> {
+                    TouchnGoKey(type = kt, key = ImmutableByteArray.fromHex(json[ClassicSectorKey.KEY_VALUE].content))
+                }		
                 else -> null
             }
         }

@@ -20,17 +20,58 @@
 
 package au.id.micolous.metrodroid.key
 
+import au.id.micolous.metrodroid.key.ClassicKeysImpl.Companion.TRANSFORM_KEY
+import au.id.micolous.metrodroid.key.ClassicSectorKey.Companion.KEY_TYPE
+import au.id.micolous.metrodroid.key.ClassicSectorKey.Companion.KEY_VALUE
+import au.id.micolous.metrodroid.key.ClassicSectorKey.Companion.SECTOR_IDX
+import au.id.micolous.metrodroid.key.ClassicSectorKey.Companion.TYPE_KEYA
+import au.id.micolous.metrodroid.key.ClassicSectorKey.Companion.TYPE_KEYB
 import au.id.micolous.metrodroid.multi.R
 import au.id.micolous.metrodroid.multi.StringResource
 import au.id.micolous.metrodroid.util.ImmutableByteArray
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.json.JsonObject
 import kotlinx.serialization.json.json
+import kotlin.experimental.xor
 
 interface ClassicSectorAlgoKey {
     fun resolve(tagId: ImmutableByteArray, sector: Int): ClassicSectorKey
     fun toJSON(sector: Int): JsonObject
     val bundle: String
+}
+
+data class TouchnGoKey (val key: ImmutableByteArray,
+                        val type: ClassicSectorKey.KeyType): ClassicSectorAlgoKey {
+    override fun toJSON(sector: Int): JsonObject = json {
+        when (type) {
+            ClassicSectorKey.KeyType.A -> KEY_TYPE to TYPE_KEYA
+            ClassicSectorKey.KeyType.B -> KEY_TYPE to TYPE_KEYB
+            else -> {
+            }
+        }
+        KEY_VALUE to key.toHexString()
+        SECTOR_IDX to sector
+        TRANSFORM_KEY to "touchngo"
+    }
+
+    override fun resolve(tagId: ImmutableByteArray, sector: Int): ClassicSectorKey {
+        val pattern = ImmutableByteArray.of(
+                tagId[1] xor tagId[2] xor tagId[3],
+                tagId[1],
+                tagId[2],
+                (tagId[0] + tagId[1] + tagId[2] + tagId[3]).toByte() xor tagId[3],
+                0,
+                0
+        )
+        return ClassicSectorKey(
+                type = type,
+                key = key xor pattern,
+                bundle = bundle
+        )
+    }
+
+    override val bundle: String
+        get() = "touchngo"
 }
 
 @Serializable
