@@ -71,6 +71,11 @@ s.id = getID("GTM")
 s.name.english = "Manual top-up"
 db.push_station(s)
 
+s = stations_pb2.Station()
+s.id = getID("PSC")
+s.name.english = "Passenger Service Centre Top-up"
+db.push_station(s)
+
 dropped_stations = set(names.keys()) | set(coordinates.keys())
 total_stations = len(dropped_stations)
 
