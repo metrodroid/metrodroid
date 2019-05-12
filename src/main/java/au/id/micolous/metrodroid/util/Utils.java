@@ -51,7 +51,6 @@ import java.nio.charset.StandardCharsets;
 
 import au.id.micolous.farebot.R;
 import au.id.micolous.metrodroid.MetrodroidApplication;
-import org.jetbrains.annotations.NonNls;
 
 public class Utils {
     private static final String TAG = "Utils";
@@ -105,22 +104,6 @@ public class Utils {
         } catch (WindowManager.BadTokenException unused) {
             /* Ignore... happens if the activity was destroyed */
         }
-    }
-
-    @NonNls
-    @NonNull
-    public static String getHexString(@NonNull byte[] b) {
-        return getHexString(b, 0, b.length);
-    }
-
-    @NonNls
-    @NonNull
-    public static String getHexString(@NonNull byte[] b, int offset, int length) {
-        StringBuilder result = new StringBuilder();
-        for (int i = offset; i < offset + length; i++) {
-            result.append(Integer.toString((b[i] & 0xff) + 0x100, 16).substring(1));
-        }
-        return result.toString();
     }
 
     public static Charset getUTF8() {
