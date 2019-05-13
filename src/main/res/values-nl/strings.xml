@@ -818,4 +818,5 @@
     <string name="seqgo_ticket_type_adult">Volwassene</string>
     <string name="seqgo_ticket_type_adult_explore">Volwassene Explore/seeQ</string>
     <string name="location_malaysia">Maleisië</string>
+    <string name="import_mfc_file">Importeren uit MFC-bestand</string>
 </resources>
