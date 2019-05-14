@@ -20,3 +20,4 @@
 package au.id.micolous.metrodroid.card
 
 class UnauthorizedException (override val message: String = "Unauthorized"): IllegalStateException()
+class NotFoundException (override val message: String = "Not found"): IllegalStateException()

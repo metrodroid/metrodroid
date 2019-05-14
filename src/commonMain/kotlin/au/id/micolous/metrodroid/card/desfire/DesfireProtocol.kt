@@ -21,6 +21,7 @@
 package au.id.micolous.metrodroid.card.desfire
 
 import au.id.micolous.metrodroid.card.CardTransceiver
+import au.id.micolous.metrodroid.card.NotFoundException
 import au.id.micolous.metrodroid.card.UnauthorizedException
 import au.id.micolous.metrodroid.util.ImmutableByteArray
 import au.id.micolous.metrodroid.util.ImmutableByteArray.Companion.plus
@@ -132,6 +133,7 @@ class DesfireProtocol(private val mTagTech: CardTransceiver) {
                 }
                 PERMISSION_DENIED -> throw UnauthorizedException("Permission denied")
                 AUTHENTICATION_ERROR -> throw UnauthorizedException("Authentication error")
+                AID_NOT_FOUND -> throw NotFoundException("AID not found")
                 else -> throw IllegalStateException("Unknown status code: $status")
             }
         }
@@ -178,6 +180,7 @@ class DesfireProtocol(private val mTagTech: CardTransceiver) {
         // Status codes
         internal const val OPERATION_OK = 0x00.toByte()
         internal const val PERMISSION_DENIED = 0x9D.toByte()
+        internal const val AID_NOT_FOUND = 0xA0.toByte()
         internal const val AUTHENTICATION_ERROR = 0xAE.toByte()
         const val ADDITIONAL_FRAME = 0xAF.toByte()
     }
