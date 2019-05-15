@@ -60,7 +60,7 @@ class En1545Parsed(private val map: MutableMap<String, En1545Value> = mutableMap
         return name.substring(name.lastIndexOf('/') + 1)
     }
 
-    private fun makeString(separator: String, skipSet: Set<String>): String {
+    fun makeString(separator: String, skipSet: Set<String>): String {
         val ret = StringBuilder()
         for ((key, value) in map) {
             if (skipSet.contains(getBaseName(key)))
@@ -115,8 +115,17 @@ class En1545Parsed(private val map: MutableMap<String, En1545Value> = mutableMap
             return En1545FixedInteger.parseTimePacked16(
                     getIntOrZero(En1545FixedInteger.dateName(name)),
                     getIntOrZero(En1545FixedInteger.timePacked16Name(name)), tz)
-        return if (contains(En1545FixedInteger.dateName(name))) En1545FixedInteger.parseDate(
-                getIntOrZero(En1545FixedInteger.dateName(name)), tz) else null
+        if (contains(En1545FixedInteger.timePacked11LocalName(name)) && contains(En1545FixedInteger.datePackedName(name)))
+            return En1545FixedInteger.parseTimePacked11Local(
+                    getIntOrZero(En1545FixedInteger.datePackedName(name)),
+                    getIntOrZero(En1545FixedInteger.timePacked11LocalName(name)), tz)
+        if (contains(En1545FixedInteger.dateName(name)))
+            return En1545FixedInteger.parseDate(
+                getIntOrZero(En1545FixedInteger.dateName(name)), tz)
+        if (contains(En1545FixedInteger.datePackedName(name)))
+            return En1545FixedInteger.parseDatePacked(
+                    getIntOrZero(En1545FixedInteger.datePackedName(name)))
+        return null
         // TODO: any need to support time-only cases?
     }
 
