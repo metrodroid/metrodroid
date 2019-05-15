@@ -194,6 +194,8 @@ abstract class Subscription : Parcelable {
     open val transferEndTimestamp: Timestamp?
         get() = null
 
+    open fun getRawFields(level: TransitData.RawLevel): List<ListItem>? = null
+
     /**
      * Allows [Subscription] implementors to show extra information that doesn't fit within the
      * standard bounds of the interface.  By default, this attempts to collect less common

@@ -263,6 +263,7 @@ abstract class Trip : Parcelable {
             return getRouteName(startLines, endLines)
         }
 
+    open fun getRawFields(level: TransitData.RawLevel): String? = null
 
     companion object {
         fun getRouteName(startLines: List<String>,

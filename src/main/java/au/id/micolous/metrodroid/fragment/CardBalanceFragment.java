@@ -49,7 +49,9 @@ import java.util.Locale;
 
 import au.id.micolous.farebot.R;
 import au.id.micolous.metrodroid.transit.TransitCurrency;
+import au.id.micolous.metrodroid.ui.HeaderListItem;
 import au.id.micolous.metrodroid.ui.ListItem;
+import au.id.micolous.metrodroid.util.Preferences;
 
 public class CardBalanceFragment extends ListFragment {
     private TransitData mTransitData;
@@ -75,6 +77,31 @@ public class CardBalanceFragment extends ListFragment {
         if (subscriptions != null)
             combined.addAll(subscriptions);
         setListAdapter(new BalancesAdapter(getActivity(), combined));
+    }
+
+    static boolean subHasExtraInfo (Subscription sub) {
+        if (sub.getInfo() != null)
+            return true;
+        TransitData.RawLevel rawLevel = Preferences.INSTANCE.getRawLevel();
+        if (rawLevel == TransitData.RawLevel.NONE)
+            return false;
+        return sub.getRawFields(rawLevel) != null;
+    }
+
+    static List<ListItem> subMergeInfos (Subscription sub) {
+        List<ListItem> inf = sub.getInfo();
+        TransitData.RawLevel rawLevel = Preferences.INSTANCE.getRawLevel();
+        if (rawLevel == TransitData.RawLevel.NONE)
+            return inf;
+        List<ListItem> rawInf = sub.getRawFields(rawLevel);
+        if (rawInf == null)
+            return inf;
+        List<ListItem> merged = new ArrayList<>();
+        if (inf != null)
+            merged.addAll(inf);
+        merged.add(new HeaderListItem(Localizer.INSTANCE.localizeString(R.string.raw_header)));
+        merged.addAll(rawInf);
+        return merged;
     }
 
     private class BalancesAdapter extends ArrayAdapter<Object> {
@@ -206,11 +233,10 @@ public class CardBalanceFragment extends ListFragment {
                 paxLayout.setVisibility(View.GONE);
             }
 
-            boolean hasExtraInfo = subscription.getInfo() != null;
             ListView properties = view.findViewById(R.id.properties);
             TextView moreInfoPrompt = view.findViewById(R.id.more_info_prompt);
 
-            if (hasExtraInfo) {
+            if (subHasExtraInfo(subscription)) {
                 moreInfoPrompt.setVisibility(View.VISIBLE);
                 properties.setVisibility(View.GONE);
             } else {
@@ -275,7 +301,7 @@ public class CardBalanceFragment extends ListFragment {
             }
 
             if (item instanceof Subscription) {
-                return ((Subscription) item).getInfo() != null;
+                return subHasExtraInfo((Subscription) item);
             }
 
             return false;
@@ -296,7 +322,7 @@ public class CardBalanceFragment extends ListFragment {
         }
 
         if (item instanceof Subscription) {
-            List<ListItem> infos = ((Subscription)item).getInfo();
+            List<ListItem> infos = subMergeInfos((Subscription)item);
             if (infos == null) {
                 return;
             }
