@@ -87,6 +87,8 @@ abstract class Transaction : Parcelable, Comparable<Transaction> {
 
     protected abstract fun isSameTrip(other: Transaction): Boolean
 
+    open fun getRawFields(level: TransitData.RawLevel): String? = null
+
     override fun compareTo(other: Transaction): Int {
         val t1 = timestamp
         val t2 = other.timestamp

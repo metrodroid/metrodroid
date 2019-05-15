@@ -145,4 +145,16 @@ abstract class TransitData : Parcelable {
         return trips?.mapNotNull { t -> t.endTimestamp ?: t.startTimestamp }?.map { it.toDaystamp() }
                 ?.maxBy { it.daysSinceEpoch }
     }
+
+    enum class RawLevel {
+        NONE,
+        UNKNOWN_ONLY,
+        ALL;
+
+        companion object {
+            fun fromString(v: String): RawLevel? = values().find { it.toString() == v }
+        }
+    }
+
+    open fun getRawFields(level: RawLevel): List<ListItem>? = null
 }

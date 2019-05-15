@@ -302,6 +302,12 @@ public class CardTripsFragment extends ListFragment {
                 }
             }
 
+            if (Preferences.INSTANCE.getRawLevel() != TransitData.RawLevel.NONE) {
+                String raw = trip.getRawFields(Preferences.INSTANCE.getRawLevel());
+                if (raw != null)
+                    routeText.append(" <").append(raw).append(">");
+            }
+
             if (routeText.length() > 0) {
                 routeTextView.setText(routeText);
                 routeTextView.setVisibility(View.VISIBLE);

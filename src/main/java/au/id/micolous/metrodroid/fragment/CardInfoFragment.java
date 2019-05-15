@@ -24,8 +24,13 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.util.Pair;
 
+import au.id.micolous.farebot.R;
+import au.id.micolous.metrodroid.multi.Localizer;
+import au.id.micolous.metrodroid.ui.HeaderListItem;
+import au.id.micolous.metrodroid.util.Preferences;
 import com.unnamed.b.atv.model.TreeNode;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import au.id.micolous.metrodroid.activity.CardInfoActivity;
@@ -44,7 +49,19 @@ public class CardInfoFragment extends TreeListFragment {
 
     @Override
     protected List<? extends ListItem> getItems() {
-        return mTransitData.getInfo();
+        List<ListItem> inf = mTransitData.getInfo();
+        TransitData.RawLevel rawLevel = Preferences.INSTANCE.getRawLevel();
+        if (rawLevel == TransitData.RawLevel.NONE)
+            return inf;
+        List<ListItem> rawInf = mTransitData.getRawFields(rawLevel);
+        if (rawInf == null)
+            return inf;
+        List<ListItem> merged = new ArrayList<>();
+        if (inf != null)
+            merged.addAll(inf);
+        merged.add(new HeaderListItem(Localizer.INSTANCE.localizeString(R.string.raw_header)));
+        merged.addAll(rawInf);
+        return merged;
     }
 
     @Override

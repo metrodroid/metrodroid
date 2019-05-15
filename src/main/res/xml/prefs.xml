@@ -133,6 +133,15 @@
                 android:summaryOff="@string/pref_show_raw_station_ids_desc_off"
                 android:key="pref_show_raw_ids"
                 android:defaultValue="false" />
+
+            <ListPreference
+                    android:key="pref_raw_level"
+                    android:title="@string/raw_level"
+                    android:summary="@string/raw_level_desc"
+                    android:defaultValue="0"
+                    android:entries="@array/raw_levels"
+                    android:entryValues="@array/raw_levels_values"
+            />
         </PreferenceCategory>
 
         <PreferenceCategory android:title="@string/obfuscation_title">

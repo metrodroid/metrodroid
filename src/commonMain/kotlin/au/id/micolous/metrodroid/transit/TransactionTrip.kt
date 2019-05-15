@@ -111,6 +111,17 @@ abstract class TransactionTripAbstract: Trip() {
     override val isRejected: Boolean
         get() = any?.isRejected ?: false
 
+    override fun getRawFields(level: TransitData.RawLevel): String? {
+        val from = start?.getRawFields(level)
+        val to = end?.getRawFields(level)
+        return when {
+            from != null && to != null -> "$from → $to"
+            to != null -> "→ $to"
+            from != null -> from
+            else -> null
+        }
+    }
+
     override fun getAgencyName(isShort: Boolean): String? = any?.getAgencyName(isShort)
 
     companion object {
