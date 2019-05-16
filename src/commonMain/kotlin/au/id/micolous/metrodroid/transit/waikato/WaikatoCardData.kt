@@ -70,21 +70,22 @@ private fun parseDate(input: ImmutableByteArray, off: Int): Daystamp {
 
 @Parcelize
 private data class WaikatoCardTrip(override val startTimestamp: TimestampFull,
-                                     private val mCost: Int, private val mA: Int, private val mB: Int) : Trip() {
-    override val fare get() = TransitCurrency.NZD(mCost)
-    override val mode get() = Mode.BUS
+                                   private val mCost: Int, private val mA: Int, private val mB: Int,
+                                   override val mode: Mode) : Trip() {
+    override val fare get() = if (mCost == 0 && mode == Mode.TICKET_MACHINE) null else TransitCurrency.NZD(mCost)
+
     override val routeName: String?
         get() = "${mA.toString(16)}/${mB.toString(16)}"
 
     companion object {
-        fun parse(sector: ImmutableByteArray): WaikatoCardTrip? {
+        fun parse(sector: ImmutableByteArray, mode: Mode): WaikatoCardTrip? {
             if (sector.isAllZero() || sector.isAllFF())
                 return null
             val timestamp = parseTimestamp(sector, 1)
             val cost = sector.byteArrayToIntReversed(5, 2)
             val a = sector[0].toInt() and 0xff
             val b = sector[4].toInt() and 0xff
-            return WaikatoCardTrip(startTimestamp = timestamp, mCost = cost, mA = a, mB = b)
+            return WaikatoCardTrip(startTimestamp = timestamp, mCost = cost, mA = a, mB = b, mode = mode)
         }
     }
 }
@@ -108,12 +109,12 @@ class WaikatoCardTransitFactory : ClassicCardTransitFactory {
 
     override fun parseTransitData(card: ClassicCard): TransitData {
         val balSec = if (card[0][1].data[5].toInt() and 0x10 == 0) 1 else 5
-        val tripData = card[balSec + 2, 0].data.sliceOffLen(0, 14)
-        val trips = (0..1).map { tripData.sliceOffLen(it * 7, 7) }.mapNotNull { WaikatoCardTrip.parse(it) }
+        val lastTrip = WaikatoCardTrip.parse(card[balSec + 2, 0].data.sliceOffLen(0, 7), Trip.Mode.BUS)
+        val lastRefill = WaikatoCardTrip.parse(card[balSec + 2, 0].data.sliceOffLen(7, 7), Trip.Mode.TICKET_MACHINE)
         return WaikatoCardTransitData(
                 mSerial = getSerial(card),
                 mBalance = card[balSec + 1, 1].data.byteArrayToIntReversed(9, 2),
-                trips = trips,
+                trips = listOfNotNull(lastRefill, lastTrip),
                 cardName = getName(card),
                 mLastTransactionDate = parseDate(card[balSec + 1, 1].data, 7)
         )
