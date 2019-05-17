@@ -30,7 +30,7 @@ import au.id.micolous.metrodroid.util.BetterAsyncTask
 import org.json.JSONException
 
 class InsertKeyTask(activity: Activity, private val mKeys: CardKeys)
-    : BetterAsyncTask<Void>(activity, true, false) {
+    : BetterAsyncTask<Void?>(activity, true, false) {
 
     @Throws(JSONException::class)
     override fun doInBackground(): Void? {
