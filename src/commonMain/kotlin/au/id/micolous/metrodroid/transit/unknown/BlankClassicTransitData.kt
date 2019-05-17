@@ -25,7 +25,6 @@ import au.id.micolous.metrodroid.card.classic.UnauthorizedClassicSector
 import au.id.micolous.metrodroid.multi.Localizer
 import au.id.micolous.metrodroid.multi.Parcelize
 import au.id.micolous.metrodroid.multi.R
-import au.id.micolous.metrodroid.transit.TransitData
 import au.id.micolous.metrodroid.transit.TransitIdentity
 
 /**
@@ -33,11 +32,7 @@ import au.id.micolous.metrodroid.transit.TransitIdentity
  */
 @Suppress("PLUGIN_WARNING")
 @Parcelize
-class BlankClassicTransitData : TransitData() {
-
-    override val serialNumber: String?
-        get() = null
-
+class BlankClassicTransitData : BlankTransitData() {
     override val cardName: String
         get() = Localizer.localizeString(R.string.blank_mfc_card)
 

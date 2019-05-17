@@ -23,7 +23,6 @@ import au.id.micolous.metrodroid.card.ultralight.UltralightCardTransitFactory
 import au.id.micolous.metrodroid.multi.Localizer
 import au.id.micolous.metrodroid.multi.Parcelize
 import au.id.micolous.metrodroid.multi.R
-import au.id.micolous.metrodroid.transit.TransitData
 import au.id.micolous.metrodroid.transit.TransitIdentity
 
 /**
@@ -31,10 +30,7 @@ import au.id.micolous.metrodroid.transit.TransitIdentity
  */
 @Suppress("PLUGIN_WARNING")
 @Parcelize
-class BlankUltralightTransitData : TransitData() {
-    override val serialNumber: String?
-        get() = null
-
+class BlankUltralightTransitData : BlankTransitData() {
     override val cardName: String
         get() = Localizer.localizeString(R.string.blank_mfu_card)
 

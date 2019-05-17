@@ -30,14 +30,17 @@ import android.text.Spanned;
 import android.text.TextUtils;
 import android.util.Pair;
 import android.util.TypedValue;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import au.id.micolous.metrodroid.ui.HeaderListItem;
+import au.id.micolous.metrodroid.ui.TextListItem;
 import com.unnamed.b.atv.model.TreeNode;
 import com.unnamed.b.atv.view.AndroidTreeView;
 
@@ -99,11 +102,56 @@ public abstract class TreeListFragment extends Fragment implements TreeNode.Tree
             return view;
         }
 
-        private static View getHeaderListView(ListItem li, LayoutInflater inflater, ViewGroup root, boolean attachToRoot) {
+        private static void decorateTextView (TextView text, Context ctxt,
+                                              int attr, int def) {
+            int textAppearenceRes;
+            TypedArray ta = ctxt.obtainStyledAttributes(new int[] {attr});
+            textAppearenceRes = ta.getResourceId(0, def);
+            ta.recycle();
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M)
+                text.setTextAppearance(textAppearenceRes);
+            else
+                text.setTextAppearance(ctxt,  textAppearenceRes);
+        }
+
+        private static View getTextListView(ListItem li, LayoutInflater inflater, ViewGroup root, boolean attachToRoot) {
+            View view = inflater.inflate(android.R.layout.simple_list_item_2, root, attachToRoot);
+            adjustListView(view, li);
+            TextView text1 = view.findViewById(android.R.id.text1);
+            decorateTextView(text1, inflater.getContext(), android.R.attr.textAppearanceMedium,
+                    android.R.style.TextAppearance_Medium);
+            return view;
+        }
+
+        private static View getHeaderListL1View(HeaderListItem li, LayoutInflater inflater, ViewGroup root, boolean attachToRoot) {
+            Context ctxt = inflater.getContext();
+            RelativeLayout rl = new RelativeLayout(ctxt);
+            TextView text = new TextView(ctxt);
+            decorateTextView(text, ctxt, android.R.attr.textAppearanceLarge,
+                    android.R.style.TextAppearance_Large);
+            text.setText(li.getText1().getSpanned());
+            text.setGravity(Gravity.CENTER_HORIZONTAL);
+            LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(
+                    LinearLayout.LayoutParams.MATCH_PARENT,
+                    LinearLayout.LayoutParams.WRAP_CONTENT);
+            lp.gravity = Gravity.CENTER_HORIZONTAL;
+            text.setLayoutParams(lp);
+            rl.addView (text);
+            return rl;
+        }
+
+        private static View getHeaderListL2View(HeaderListItem li, LayoutInflater inflater, ViewGroup root, boolean attachToRoot) {
             View view = inflater.inflate(R.layout.list_header, root, attachToRoot);
 
             ((TextView) view.findViewById(android.R.id.text1)).setText(li.getText1().getSpanned());
             return view;
+        }
+
+        private static View getHeaderListView(HeaderListItem li, LayoutInflater inflater, ViewGroup root, boolean attachToRoot) {
+            int level = li.getHeadingLevel();
+            if (level == 1)
+                return getHeaderListL1View(li, inflater, root, attachToRoot);
+            return getHeaderListL2View(li, inflater, root, attachToRoot);
         }
 
         private static View getRecursiveListView(ListItem li, LayoutInflater inflater, ViewGroup root, boolean attachToRoot) {
@@ -120,7 +168,9 @@ public abstract class TreeListFragment extends Fragment implements TreeNode.Tree
             if (item instanceof ListItemRecursive)
                 view = getRecursiveListView(item, LayoutInflater.from(context), null, false);
             else if (item instanceof HeaderListItem)
-                view = getHeaderListView(item, LayoutInflater.from(context), null, false);
+                view = getHeaderListView((HeaderListItem) item, LayoutInflater.from(context), null, false);
+            else if (item instanceof TextListItem)
+                view = getTextListView(item, LayoutInflater.from(context), null, false);
             else
                 view = getListView(item, LayoutInflater.from(context), null, false);
             float pxPerLevel = (int) TypedValue.applyDimension(
