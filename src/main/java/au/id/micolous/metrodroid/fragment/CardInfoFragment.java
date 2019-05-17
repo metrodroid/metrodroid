@@ -49,19 +49,7 @@ public class CardInfoFragment extends TreeListFragment {
 
     @Override
     protected List<? extends ListItem> getItems() {
-        List<ListItem> inf = mTransitData.getInfo();
-        TransitData.RawLevel rawLevel = Preferences.INSTANCE.getRawLevel();
-        if (rawLevel == TransitData.RawLevel.NONE)
-            return inf;
-        List<ListItem> rawInf = mTransitData.getRawFields(rawLevel);
-        if (rawInf == null)
-            return inf;
-        List<ListItem> merged = new ArrayList<>();
-        if (inf != null)
-            merged.addAll(inf);
-        merged.add(new HeaderListItem(Localizer.INSTANCE.localizeString(R.string.raw_header)));
-        merged.addAll(rawInf);
-        return merged;
+        return TransitData.Companion.mergeInfo(mTransitData);
     }
 
     @Override

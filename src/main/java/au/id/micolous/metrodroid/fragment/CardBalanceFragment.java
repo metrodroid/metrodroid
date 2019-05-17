@@ -80,28 +80,11 @@ public class CardBalanceFragment extends ListFragment {
     }
 
     static boolean subHasExtraInfo (Subscription sub) {
-        if (sub.getInfo() != null)
-            return true;
-        TransitData.RawLevel rawLevel = Preferences.INSTANCE.getRawLevel();
-        if (rawLevel == TransitData.RawLevel.NONE)
-            return false;
-        return sub.getRawFields(rawLevel) != null;
+        return Subscription.Companion.hasInfo(sub);
     }
 
     static List<ListItem> subMergeInfos (Subscription sub) {
-        List<ListItem> inf = sub.getInfo();
-        TransitData.RawLevel rawLevel = Preferences.INSTANCE.getRawLevel();
-        if (rawLevel == TransitData.RawLevel.NONE)
-            return inf;
-        List<ListItem> rawInf = sub.getRawFields(rawLevel);
-        if (rawInf == null)
-            return inf;
-        List<ListItem> merged = new ArrayList<>();
-        if (inf != null)
-            merged.addAll(inf);
-        merged.add(new HeaderListItem(Localizer.INSTANCE.localizeString(R.string.raw_header)));
-        merged.addAll(rawInf);
-        return merged;
+        return Subscription.Companion.mergeInfo(sub);
     }
 
     private class BalancesAdapter extends ArrayAdapter<Object> {
