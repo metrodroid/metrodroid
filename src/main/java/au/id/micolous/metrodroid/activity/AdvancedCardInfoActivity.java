@@ -136,7 +136,7 @@ public class AdvancedCardInfoActivity extends MetrodroidActivity {
             switch (item.getItemId()) {
                 case R.id.copy_xml:
                     xml = CardSerializer.INSTANCE.toJson(mCard);
-                    ExportHelper.copyXmlToClipboard(this, xml);
+                    ExportHelper.INSTANCE.copyXmlToClipboard(this, xml);
                     return true;
 
                 case R.id.share_xml:
@@ -150,7 +150,7 @@ public class AdvancedCardInfoActivity extends MetrodroidActivity {
                 case R.id.save_xml:
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
                         // Metrodroid-1234abcd-20001231-235900.xml
-                        String filename = ExportHelper.makeFilename(mCard);
+                        String filename = ExportHelper.INSTANCE.makeFilename(mCard);
 
                         i = new Intent(Intent.ACTION_CREATE_DOCUMENT);
                         i.addCategory(Intent.CATEGORY_OPENABLE);

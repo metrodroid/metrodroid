@@ -247,7 +247,7 @@ public class CardsFragment extends ExpandableListFragment {
                         ClipData.Item ci = d.getItemAt(0);
                         xml = ci.coerceToText(getActivity()).toString();
 
-                        Collection<Uri> uris = ExportHelper.importCards(xml, new XmlOrJsonCardFormat(), getActivity());
+                        Collection<Uri> uris = ExportHelper.INSTANCE.importCards(xml, new XmlOrJsonCardFormat(), getActivity());
 
                         updateListView();
                         Iterator<Uri> it = uris.iterator();
@@ -318,8 +318,8 @@ public class CardsFragment extends ExpandableListFragment {
                     return true;
 
                 case R.id.copy_xml: {
-                    String s = ExportHelper.exportCardsXml(getActivity());
-                    ExportHelper.copyXmlToClipboard(getActivity(), s);
+                    String s = ExportHelper.INSTANCE.exportCardsXml(getActivity());
+                    ExportHelper.INSTANCE.copyXmlToClipboard(getActivity(), s);
                     return true;
                 }
 
@@ -340,7 +340,7 @@ public class CardsFragment extends ExpandableListFragment {
                         startActivityForResult(Intent.createChooser(i, Localizer.INSTANCE.localizeString(R.string.export_filename)), REQUEST_SAVE_FILE);
                     } else {
                         File file = new File(SD_EXPORT_PATH);
-                        ExportHelper.exportCardsZip(FileUtils.openOutputStream(file), getActivity());
+                        ExportHelper.INSTANCE.exportCardsZip(FileUtils.openOutputStream(file), getActivity());
                         Toast.makeText(getActivity(), R.string.saved_metrodroid_zip, Toast.LENGTH_SHORT).show();
                     }
                     return true;
@@ -361,10 +361,10 @@ public class CardsFragment extends ExpandableListFragment {
         @Override
         protected Pair<String, Integer> doInBackground(Void... voids) {
             try {
-                Set<Long> tf = ExportHelper.findDuplicates(MetrodroidApplication.getInstance());
+                Set<Long> tf = ExportHelper.INSTANCE.findDuplicates(MetrodroidApplication.getInstance());
                 if (tf == null || tf.isEmpty())
                     return new Pair<>(null, 0);
-                return new Pair<>(null, ExportHelper.deleteSet(MetrodroidApplication.getInstance(),
+                return new Pair<>(null, ExportHelper.INSTANCE.deleteSet(MetrodroidApplication.getInstance(),
                         tf));
             } catch (Exception ex) {
                 Log.e(TAG, ex.getMessage(), ex);
@@ -404,7 +404,7 @@ public class CardsFragment extends ExpandableListFragment {
                 File tf = File.createTempFile("cards", ".xml",
                         folder);
                 OutputStream os = new FileOutputStream(tf);
-                ExportHelper.exportCardsZip(os, MetrodroidApplication.getInstance());
+                ExportHelper.INSTANCE.exportCardsZip(os, MetrodroidApplication.getInstance());
                 os.close();
                 return new Pair<>(null, tf);
             } catch (Exception ex) {
@@ -444,7 +444,7 @@ public class CardsFragment extends ExpandableListFragment {
                 OutputStream os = MetrodroidApplication.getInstance().getContentResolver().openOutputStream(uris[0]);
                 if (os == null)
                     return "openOutputStream failed";
-                ExportHelper.exportCardsZip(os, MetrodroidApplication.getInstance());
+                ExportHelper.INSTANCE.exportCardsZip(os, MetrodroidApplication.getInstance());
                 os.close();
                 return null;
             } catch (Exception ex) {
@@ -484,7 +484,7 @@ public class CardsFragment extends ExpandableListFragment {
                 InputStream stream = cr.openInputStream(uris[0]);
                 assert stream != null; // Will be handled by exception handler below...
 
-                Collection<Uri> iuri = ExportHelper.importCards(
+                Collection<Uri> iuri = ExportHelper.INSTANCE.importCards(
                         stream, mCardImporter, MetrodroidApplication.getInstance());
 
                 return new Pair<>(null, iuri);
