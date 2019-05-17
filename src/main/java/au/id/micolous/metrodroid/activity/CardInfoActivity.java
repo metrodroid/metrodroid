@@ -50,6 +50,7 @@ import au.id.micolous.metrodroid.provider.CardsTableColumns;
 import au.id.micolous.metrodroid.serializers.CardSerializer;
 import au.id.micolous.metrodroid.transit.TransitBalance;
 import au.id.micolous.metrodroid.transit.TransitData;
+import au.id.micolous.metrodroid.transit.unknown.UnauthorizedClassicTransitData;
 import au.id.micolous.metrodroid.transit.unknown.UnauthorizedTransitData;
 import au.id.micolous.metrodroid.ui.TabPagerAdapter;
 import au.id.micolous.metrodroid.util.Preferences;
@@ -164,7 +165,7 @@ public class CardInfoActivity extends MetrodroidActivity {
                             CardSerializer.INSTANCE.toPersist(mCard));
                     args.putParcelable(EXTRA_TRANSIT_DATA, mTransitData);
 
-                    if (mTransitData instanceof UnauthorizedTransitData) {
+                    if (mTransitData instanceof UnauthorizedClassicTransitData) {
                         mTabsAdapter.addTab(actionBar.newTab(), UnauthorizedCardFragment.class, args);
                         return;
                     }

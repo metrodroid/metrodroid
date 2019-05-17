@@ -36,6 +36,9 @@ class UnauthorizedClassicTransitData private constructor() : UnauthorizedTransit
     override val cardName: String
         get() = Localizer.localizeString(R.string.locked_mfc_card)
 
+    override val isUnlockable: Boolean
+        get() = true
+
     companion object {
         val FACTORY: ClassicCardTransitFactory = object : ClassicCardTransitFactory {
             /**
