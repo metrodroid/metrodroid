@@ -1,5 +1,5 @@
 /*
- * UnsupportedCardDataException.java
+ * UnsupportedCardDataException.kt
  *
  * Copyright 2012 Eric Butler <eric@codebutler.com>
  *
@@ -17,11 +17,8 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package au.id.micolous.metrodroid.card;
+package au.id.micolous.metrodroid.card
 
-public class UnsupportedCardException extends Exception {
-    @Override
-    public String getMessage() {
-        return "Unsupported card data.";
-    }
+class UnsupportedCardException : Exception() {
+    override val message get() = "Unsupported card data."
 }
