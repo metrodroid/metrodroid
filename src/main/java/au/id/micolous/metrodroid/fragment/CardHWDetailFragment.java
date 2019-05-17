@@ -20,26 +20,35 @@
 
 package au.id.micolous.metrodroid.fragment;
 
-import android.app.ListFragment;
 import android.os.Bundle;
 
 import au.id.micolous.metrodroid.serializers.CardSerializer;
 
+import java.util.Collections;
 import java.util.List;
 
 import au.id.micolous.metrodroid.activity.AdvancedCardInfoActivity;
 import au.id.micolous.metrodroid.card.Card;
 import au.id.micolous.metrodroid.ui.ListItem;
+import com.unnamed.b.atv.model.TreeNode;
 
-public class CardHWDetailFragment extends ListFragment {
+public class CardHWDetailFragment extends TreeListFragment {
+    List<ListItem> mItems;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         Card card = CardSerializer.INSTANCE.fromPersist(getArguments().getString(AdvancedCardInfoActivity.EXTRA_CARD));
 
-        List<ListItem> items = card.getManufacturingInfo();
+        mItems = card.getManufacturingInfo();
+    }
 
-        setListAdapter(new ListItemAdapter(getActivity(), items));
+    protected List<? extends ListItem> getItems() {
+        return Collections.unmodifiableList(mItems);
+    }
+
+    @Override
+    public void onClick(TreeNode node, Object value) {
     }
 }
