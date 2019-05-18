@@ -67,7 +67,7 @@ object ExportHelper {
     }
 
     fun findDuplicates(context: Context): Set<Long> {
-        val cursor = CardDBHelper.createCursor(context)
+        val cursor = CardDBHelper.createCursor(context) ?: return setOf()
         val hashes = HashSet<String>()
         val res = HashSet<Long>()
 
@@ -97,7 +97,7 @@ object ExportHelper {
 
     @Throws(Exception::class)
     fun exportCardsZip(os: OutputStream, context: Context) {
-        val cursor = CardDBHelper.createCursor(context)
+        val cursor = CardDBHelper.createCursor(context) ?: return
         val zo = ZipOutputStream(os)
         val used = HashSet<String>()
         val now = TimestampFull.now()
@@ -131,8 +131,8 @@ object ExportHelper {
     }
 
     @Throws(Exception::class)
-    fun exportCardsXml(context: Context): String = XmlUtils.concatCardsFromString(
-                readCardsXml(CardDBHelper.createCursor(context)))
+    fun exportCardsXml(context: Context): String = XmlUtils.concatCardsFromString(CardDBHelper.createCursor(context)?.let { cursor ->
+                readCardsXml(cursor) } ?: listOf<String>().iterator())
 
     @Throws(Exception::class)
     fun importCards(`is`: InputStream,
