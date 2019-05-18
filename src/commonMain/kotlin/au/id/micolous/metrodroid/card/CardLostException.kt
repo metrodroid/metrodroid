@@ -19,4 +19,5 @@
 
 package au.id.micolous.metrodroid.card
 
-class CardLostException (message: String): Exception("Tag was lost before we finished reading: $message")
+class CardLostException (message: String, cause: Throwable? = null) :
+        Exception("Tag was lost before we finished reading: $message", cause)

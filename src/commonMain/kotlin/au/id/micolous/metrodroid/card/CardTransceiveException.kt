@@ -19,6 +19,5 @@
 
 package au.id.micolous.metrodroid.card
 
-class CardTransceiveException(val e: Exception, val errorMessage: String) : Exception(e) {
-    constructor(errorMessage: String) : this(Exception(errorMessage), errorMessage)
-}
+class CardTransceiveException(message: String, cause: Throwable? = null) :
+        Exception(message, cause)

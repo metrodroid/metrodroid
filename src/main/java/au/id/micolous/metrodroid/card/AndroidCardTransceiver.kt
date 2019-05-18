@@ -34,9 +34,9 @@ fun <T>wrapAndroidExceptions(f: () -> T): T {
     try {
         return f()
     } catch (e: TagLostException) {
-        throw CardLostException(Utils.getErrorMessage(e))
+        throw CardLostException(Utils.getErrorMessage(e), e)
     } catch (e: IOException) {
-        throw CardTransceiveException(e, Utils.getErrorMessage(e))
+        throw CardTransceiveException(Utils.getErrorMessage(e), e)
     }
 }
 

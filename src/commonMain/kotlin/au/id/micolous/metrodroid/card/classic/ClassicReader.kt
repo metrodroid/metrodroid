@@ -130,7 +130,7 @@ object ClassicReader {
                 sectors.add(InvalidClassicSector(ex.message))
                 return ClassicCard(sectorsRaw = sectors.map { it.raw }, isPartialRead = true)
             } catch (ex: CardTransceiveException) {
-                sectors.add(InvalidClassicSector(ex.errorMessage))
+                sectors.add(InvalidClassicSector(ex.message))
             }
         }
 
