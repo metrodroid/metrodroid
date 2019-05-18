@@ -20,41 +20,35 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package au.id.micolous.metrodroid.provider;
+package au.id.micolous.metrodroid.provider
 
-import android.content.Context;
-import android.database.sqlite.SQLiteDatabase;
-import android.database.sqlite.SQLiteOpenHelper;
+import android.content.Context
+import android.database.sqlite.SQLiteDatabase
+import android.database.sqlite.SQLiteOpenHelper
 
-import org.jetbrains.annotations.NonNls;
+import org.jetbrains.annotations.NonNls
 
-import au.id.micolous.farebot.BuildConfig;
+import au.id.micolous.farebot.BuildConfig
 
-public class KeysDBHelper extends SQLiteOpenHelper {
-    @NonNls
-    public static final String KEY_DIR_TYPE = "vnd.android.cursor.dir/" + BuildConfig.APPLICATION_ID + ".key";
-    @NonNls
-    public static final String KEY_ITEM_TYPE = "vnd.android.cursor.item/" + BuildConfig.APPLICATION_ID + ".key";
-    @NonNls
-    private static final String DATABASE_NAME = "keys.db";
-    private static final int DATABASE_VERSION = 3;
-
-    public KeysDBHelper(Context context) {
-        super(context, DATABASE_NAME, null, DATABASE_VERSION);
-    }
-
-    @Override
-    public void onCreate(SQLiteDatabase db) {
+class KeysDBHelper(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME, null, DATABASE_VERSION) {
+    override fun onCreate(db: SQLiteDatabase) {
         db.execSQL("CREATE TABLE " + KeysTableColumns.TABLE_NAME + " ("
                 + KeysTableColumns._ID + " INTEGER PRIMARY KEY, "
                 + KeysTableColumns.CARD_ID + " TEXT NOT NULL, "
                 + KeysTableColumns.CARD_TYPE + " TEXT NOT NULL, "
                 + KeysTableColumns.KEY_DATA + " BLOB NOT NULL, "
-                + KeysTableColumns.CREATED_AT + " LONG NOT NULL)");
+                + KeysTableColumns.CREATED_AT + " LONG NOT NULL)")
     }
 
-    @Override
-    public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        // Not Implemented...
+    override fun onUpgrade(db: SQLiteDatabase, oldVersion: Int, newVersion: Int) {} // Not Implemented...
+
+    companion object {
+        @NonNls
+        val KEY_DIR_TYPE = "vnd.android.cursor.dir/" + BuildConfig.APPLICATION_ID + ".key"
+        @NonNls
+        val KEY_ITEM_TYPE = "vnd.android.cursor.item/" + BuildConfig.APPLICATION_ID + ".key"
+        @NonNls
+        private const val DATABASE_NAME = "keys.db"
+        private const val DATABASE_VERSION = 3
     }
 }

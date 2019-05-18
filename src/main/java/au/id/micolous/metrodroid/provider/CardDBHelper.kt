@@ -92,7 +92,7 @@ class CardDBHelper(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME, 
         val PROJECTION = arrayOf(
                 CardsTableColumns._ID,
                 CardsTableColumns.TYPE,
-                CardsTableColumns.TAG_SERIAL, 
+                CardsTableColumns.TAG_SERIAL,
                 CardsTableColumns.DATA,
                 CardsTableColumns.SCANNED_AT,
                 CardsTableColumns.LABEL)
