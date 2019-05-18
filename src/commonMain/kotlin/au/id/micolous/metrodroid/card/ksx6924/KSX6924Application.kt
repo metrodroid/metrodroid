@@ -123,7 +123,10 @@ data class KSX6924Application (
     companion object {
         private val TAG = "KSX6924Application"
 
-        val APP_NAME = listOf(ImmutableByteArray.fromHex("d4100000030001"))
+        val APP_NAME = listOf(
+                ImmutableByteArray.fromHex("d4100000030001"),
+                ImmutableByteArray.fromHex("d4100000140001")
+                )
         val FILE_NAME = ImmutableByteArray.fromHex("d4100000030001")
 
         private const val INS_GET_BALANCE: Byte = 0x4c
@@ -164,11 +167,17 @@ data class KSX6924Application (
                     feedbackInterface.updateProgressBar(1, 37)
 
                     // TODO: Understand this data
-                    for (i in 0..0xf) {
-                        Log.d(TAG, "sending proprietary record get = $i")
-                        val ba = protocol.sendRequest(
-                                ISO7816Protocol.CLASS_90, INS_GET_RECORD, i.toByte(), 0.toByte(), 0x10.toByte())
-                        extraRecords.add(ba)
+                    try {
+                        // Works on T-Money, Snapper
+                        // Fails on Cashbee
+                        for (i in 0..0xf) {
+                            Log.d(TAG, "sending proprietary record get = $i")
+                            val ba = protocol.sendRequest(
+                                    ISO7816Protocol.CLASS_90, INS_GET_RECORD, i.toByte(), 0.toByte(), 0x10.toByte())
+                            extraRecords.add(ba)
+                        }
+                    } catch (e: Exception) {
+                        Log.w(TAG, "Caught exception on proprietary record get: $e")
                     }
 
 
