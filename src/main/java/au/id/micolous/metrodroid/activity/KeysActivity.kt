@@ -20,16 +20,12 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package au.id.micolous.metrodroid.activity;
+package au.id.micolous.metrodroid.activity
 
-import android.app.Fragment;
+import android.app.Fragment
 
-import au.id.micolous.metrodroid.fragment.KeysFragment;
+import au.id.micolous.metrodroid.fragment.KeysFragment
 
-public class KeysActivity extends FragmentWrapperActivity {
-
-    @Override
-    protected Fragment createFragment() {
-        return new KeysFragment();
-    }
+class KeysActivity : FragmentWrapperActivity() {
+    override fun createFragment(): Fragment = KeysFragment()
 }
