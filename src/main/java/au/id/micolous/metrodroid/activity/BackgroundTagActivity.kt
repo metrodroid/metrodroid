@@ -16,24 +16,23 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package au.id.micolous.metrodroid.activity;
+package au.id.micolous.metrodroid.activity
 
-import android.content.Intent;
-import android.os.Bundle;
+import android.content.Intent
+import android.os.Bundle
 
 /**
  * @author Eric Butler
  */
-public class BackgroundTagActivity extends MetrodroidActivity {
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+class BackgroundTagActivity : MetrodroidActivity() {
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
 
-        Intent intent = new Intent(this, ReadingTagActivity.class);
-        intent.setAction(getIntent().getAction());
-        intent.putExtras(getIntent().getExtras());
-        startActivity(intent);
+        val intent = Intent(this, ReadingTagActivity::class.java)
+        intent.action = getIntent().action
+        intent.putExtras(getIntent().extras!!)
+        startActivity(intent)
 
-        finish();
+        finish()
     }
 }
