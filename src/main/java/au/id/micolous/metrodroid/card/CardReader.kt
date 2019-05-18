@@ -13,7 +13,6 @@ import au.id.micolous.metrodroid.card.ultralight.UltralightCardReaderA
 import au.id.micolous.metrodroid.multi.Localizer
 import au.id.micolous.metrodroid.util.ImmutableByteArray
 
-import java.util.Locale
 import au.id.micolous.metrodroid.card.ultralight.AndroidUltralightTransceiver
 import android.nfc.tech.MifareUltralight
 import au.id.micolous.metrodroid.card.nfcv.NFCVCard
@@ -29,8 +28,7 @@ object CardReader {
     suspend fun dumpTag(tag: Tag, feedbackInterface: TagReaderFeedbackInterface): Card {
         val techs = tag.techList
         val tagId = tag.id.toImmutable()
-        Log.d(TAG, String.format(Locale.ENGLISH, "Reading tag %s. %d tech(s) supported:",
-                tagId.toHexString(), techs.size))
+        Log.d(TAG, "Reading tag ${tagId.toHexString()}. ${techs.size} tech(s) supported:")
         for (tech in techs) {
             Log.d(TAG, tech)
         }
