@@ -713,6 +713,7 @@
     <string name="location_rotorua">Rotorua, New Zealand</string>
     <string name="location_russia">Russia</string>
     <string name="location_saint_petersburg">Saint Petersburg, Russia</string>
+    <string name="location_samara">Samara, Russia</string>
     <string name="location_san_francisco">San Francisco, CA, USA</string>
     <string name="location_sao_paulo">São Paulo, Brazil</string>
     <string name="location_seattle">Seattle, WA, USA</string>
@@ -1678,6 +1679,10 @@
     <string name="card_name_yaroslavl_etk">Yaroslavl ETK</string>
     <!-- Translators: ETK = Electronic ticket, Krasnodar (Краснодар) is a city in Russia -->
     <string name="card_name_krasnodar_etk">Krasnodar ETK</string>
+    <!-- Translators: ETK = Electronic ticket, Samara (Самара) is a city in Russia -->
+    <string name="card_name_samara_etk">Samara ETK</string>
+    <string name="card_name_samara_school">Samara school student card</string>
+    <string name="card_name_samara_student">Samara student card</string>
     <!-- Rkf specific strings -->
     <string name="rkf_card_status">Card status</string>
     <!-- Translators: describes the status of a card or transaction -->
