@@ -70,7 +70,7 @@ actual abstract class BaseInstrumentedTestPlatform {
      */
     fun setAndroidLanguage(languageTag: String?) {
         val l = languageTag?.let { compatLocaleForLanguageTag(it) }
-        setResourcesLocale(l, MetrodroidApplication.getInstance().resources)
+        setResourcesLocale(l, MetrodroidApplication.instance.resources)
     }
 
     private fun setResourcesLocale(l: Locale?, r: Resources) {

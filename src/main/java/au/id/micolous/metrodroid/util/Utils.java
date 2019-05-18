@@ -129,7 +129,7 @@ public class Utils {
     }
 
     public static String getDeviceInfoString() {
-        MetrodroidApplication app = MetrodroidApplication.getInstance();
+        MetrodroidApplication app = MetrodroidApplication.Companion.getInstance();
         NfcAdapter nfcAdapter = NfcAdapter.getDefaultAdapter(app);
         boolean nfcAvailable = nfcAdapter != null;
         boolean nfcEnabled = false;
@@ -166,7 +166,7 @@ public class Utils {
 
     private static PackageInfo getPackageInfo() {
         try {
-            MetrodroidApplication app = MetrodroidApplication.getInstance();
+            MetrodroidApplication app = MetrodroidApplication.Companion.getInstance();
             return app.getPackageManager().getPackageInfo(app.getPackageName(), 0);
         } catch (PackageManager.NameNotFoundException e) {
             throw new RuntimeException(e);

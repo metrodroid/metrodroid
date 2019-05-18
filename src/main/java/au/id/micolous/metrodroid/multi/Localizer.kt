@@ -35,7 +35,7 @@ actual object Localizer {
      * @return Localized string
      */
     actual fun localizeString(res: StringResource, vararg v: Any?): String {
-        val appRes = MetrodroidApplication.getInstance().resources
+        val appRes = MetrodroidApplication.instance.resources
         return appRes.getString(res, *v)
     }
     /**
@@ -48,7 +48,7 @@ actual object Localizer {
      * @return Localized string
      */
     actual fun localizePlural(res: PluralsResource, count: Int, vararg v: Any?): String {
-            val appRes = MetrodroidApplication.getInstance().resources
+            val appRes = MetrodroidApplication.instance.resources
             return appRes.getQuantityString(res, count, *v)
     }
 }

@@ -81,7 +81,7 @@ public final class ClassicAndroidReader {
         // cases, and it's still vulnerable to vendors doing silly things.
 
         // Fallback: Look for com.nxp.mifare feature.
-        mMifareClassicSupport = MetrodroidApplication.getInstance().getPackageManager().hasSystemFeature("com.nxp.mifare");
+        mMifareClassicSupport = MetrodroidApplication.Companion.getInstance().getPackageManager().hasSystemFeature("com.nxp.mifare");
         //noinspection StringConcatenation
         Log.d(TAG, "Falling back to com.nxp.mifare feature detection "
                 + (mMifareClassicSupport ? "(found)" : "(missing)"));
@@ -122,7 +122,7 @@ public final class ClassicAndroidReader {
 
             ClassicCardTechAndroid techWrapper = new ClassicCardTechAndroid(tech, tagId);
 
-            CardKeysMerged keyRetriever = getKeyRetriever(MetrodroidApplication.getInstance());
+            CardKeysMerged keyRetriever = getKeyRetriever(MetrodroidApplication.Companion.getInstance());
 
             return ClassicReader.INSTANCE.readCard(
                     keyRetriever, techWrapper, feedbackInterface);

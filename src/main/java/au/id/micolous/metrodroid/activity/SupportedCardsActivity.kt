@@ -104,7 +104,7 @@ class SupportedCardsActivity : MetrodroidActivity() {
 
             var notes = ""
 
-            val app = MetrodroidApplication.getInstance()
+            val app = MetrodroidApplication.instance
             val nfcAdapter = NfcAdapter.getDefaultAdapter(app)
             val nfcAvailable = nfcAdapter != null
 

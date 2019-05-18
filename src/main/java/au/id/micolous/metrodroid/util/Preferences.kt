@@ -63,7 +63,7 @@ actual object Preferences {
 
     @VisibleForTesting
     fun getSharedPreferences(): SharedPreferences {
-        return PreferenceManager.getDefaultSharedPreferences(MetrodroidApplication.getInstance())
+        return PreferenceManager.getDefaultSharedPreferences(MetrodroidApplication.instance)
     }
 
     private fun getBooleanPref(preference: String, default_setting: Boolean): Boolean {

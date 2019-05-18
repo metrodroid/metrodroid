@@ -322,8 +322,8 @@ class CardsFragment : ExpandableListFragment() {
 
         override fun doInBackground(vararg voids: Void): Pair<String, Int> {
             try {
-                val tf = ExportHelper.findDuplicates(MetrodroidApplication.getInstance())
-                return if (tf == null || tf.isEmpty()) Pair<String, Int>(null, 0) else Pair<String, Int>(null, ExportHelper.deleteSet(MetrodroidApplication.getInstance(),
+                val tf = ExportHelper.findDuplicates(MetrodroidApplication.instance)
+                return if (tf == null || tf.isEmpty()) Pair<String, Int>(null, 0) else Pair<String, Int>(null, ExportHelper.deleteSet(MetrodroidApplication.instance,
                         tf))
             } catch (ex: Exception) {
                 Log.e(TAG, ex.message, ex)
@@ -354,12 +354,12 @@ class CardsFragment : ExpandableListFragment() {
 
         override fun doInBackground(vararg voids: Void): Pair<String, File> {
             try {
-                val folder = File(MetrodroidApplication.getInstance().cacheDir, "share")
+                val folder = File(MetrodroidApplication.instance.cacheDir, "share")
                 folder.mkdirs()
                 val tf = File.createTempFile("cards", ".xml",
                         folder)
                 val os = FileOutputStream(tf)
-                ExportHelper.exportCardsZip(os, MetrodroidApplication.getInstance())
+                ExportHelper.exportCardsZip(os, MetrodroidApplication.instance)
                 os.close()
                 return Pair<String, File>(null, tf)
             } catch (ex: Exception) {
@@ -374,7 +374,7 @@ class CardsFragment : ExpandableListFragment() {
             val tf = res.second
 
             if (err != null) {
-                AlertDialog.Builder(MetrodroidApplication.getInstance())
+                AlertDialog.Builder(MetrodroidApplication.instance)
                         .setMessage(err)
                         .show()
                 return
@@ -382,12 +382,12 @@ class CardsFragment : ExpandableListFragment() {
 
             val i = Intent(Intent.ACTION_SEND)
             val apkURI = FileProvider.getUriForFile(
-                    MetrodroidApplication.getInstance(),
-                    MetrodroidApplication.getInstance().packageName + ".provider", tf)
+                    MetrodroidApplication.instance,
+                    MetrodroidApplication.instance.packageName + ".provider", tf)
             i.type = "text/xml"
             i.putExtra(Intent.EXTRA_STREAM, apkURI)
             i.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
-            MetrodroidApplication.getInstance().startActivity(i)
+            MetrodroidApplication.instance.startActivity(i)
         }
     }
 
@@ -395,9 +395,9 @@ class CardsFragment : ExpandableListFragment() {
 
         override fun doInBackground(vararg uris: Uri): String? {
             try {
-                val os = MetrodroidApplication.getInstance().contentResolver.openOutputStream(uris[0])
+                val os = MetrodroidApplication.instance.contentResolver.openOutputStream(uris[0])
                         ?: return "openOutputStream failed"
-                ExportHelper.exportCardsZip(os, MetrodroidApplication.getInstance())
+                ExportHelper.exportCardsZip(os, MetrodroidApplication.instance)
                 os.close()
                 return null
             } catch (ex: Exception) {
@@ -409,10 +409,10 @@ class CardsFragment : ExpandableListFragment() {
 
         override fun onPostExecute(err: String?) {
             if (err == null) {
-                Toast.makeText(MetrodroidApplication.getInstance(), R.string.saved_xml_custom, Toast.LENGTH_SHORT).show()
+                Toast.makeText(MetrodroidApplication.instance, R.string.saved_xml_custom, Toast.LENGTH_SHORT).show()
                 return
             }
-            AlertDialog.Builder(MetrodroidApplication.getInstance())
+            AlertDialog.Builder(MetrodroidApplication.instance)
                     .setMessage(err)
                     .show()
         }
@@ -428,14 +428,14 @@ class CardsFragment : ExpandableListFragment() {
 
         override fun doInBackground(vararg uris: Uri): Pair<String, Collection<Uri>> {
             try {
-                val cr = MetrodroidApplication.getInstance().contentResolver
+                val cr = MetrodroidApplication.instance.contentResolver
 
                 Log.d(TAG, "REQUEST_SELECT_FILE content_type = " + cr.getType(uris[0])!!)
                 val stream = cr.openInputStream(uris[0])!!
 // Will be handled by exception handler below...
 
                 val iuri = ExportHelper.importCards(
-                        stream, mCardImporter, MetrodroidApplication.getInstance())
+                        stream, mCardImporter, MetrodroidApplication.instance)
 
                 return Pair<String, Collection<Uri>>(null, iuri)
             } catch (ex: Exception) {

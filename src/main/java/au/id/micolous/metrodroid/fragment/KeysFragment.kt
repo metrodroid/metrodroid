@@ -104,7 +104,7 @@ class KeysFragment : ListFragment(), AdapterView.OnItemLongClickListener {
 
                 var keys: CardKeys? = null
                 try {
-                    keys = CardKeysDB(MetrodroidApplication.getInstance()).forID(mActionKeyId)
+                    keys = CardKeysDB(MetrodroidApplication.instance).forID(mActionKeyId)
                 } catch (e: Exception) {
                     Log.d(TAG, "error in deleting key?")
                 }
@@ -281,7 +281,7 @@ class KeysFragment : ListFragment(), AdapterView.OnItemLongClickListener {
                         object : BetterAsyncTask<Void?>(activity, false, false) {
                             @Throws(Exception::class)
                             override fun doInBackground(): Void? {
-                                val ctxt = MetrodroidApplication.getInstance()
+                                val ctxt = MetrodroidApplication.instance
                                 val os = ctxt.contentResolver.openOutputStream(uri!!)!!
 
                                 val keys = ClassicAndroidReader.getKeyRetriever(ctxt).forID(mActionKeyId)!!
@@ -294,7 +294,7 @@ class KeysFragment : ListFragment(), AdapterView.OnItemLongClickListener {
                             }
 
                             override fun onResult(unused: Void?) {
-                                Toast.makeText(MetrodroidApplication.getInstance(), R.string.file_exported, Toast.LENGTH_SHORT).show()
+                                Toast.makeText(MetrodroidApplication.instance, R.string.file_exported, Toast.LENGTH_SHORT).show()
                                 mActionMode!!.finish()
                             }
                         }.execute()
