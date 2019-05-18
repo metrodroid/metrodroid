@@ -18,22 +18,19 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package au.id.micolous.metrodroid.provider;
+package au.id.micolous.metrodroid.provider
 
-import android.provider.BaseColumns;
+import android.provider.BaseColumns
 
-import org.jetbrains.annotations.NonNls;
+import org.jetbrains.annotations.NonNls
 
-public class CardsTableColumns implements BaseColumns {
-
-    public static final String TABLE_NAME = "cards";
-    public static final String TYPE = "type";
-    public static final String TAG_SERIAL = "serial";
-    public static final String DATA = "data";
+object CardsTableColumns {
+    const val TABLE_NAME = "cards"
+    const val TYPE = "type"
+    const val TAG_SERIAL = "serial"
+    const val DATA = "data"
     @NonNls
-    public static final String SCANNED_AT = "scanned_at";
-    public static final String LABEL = "label";
-
-    private CardsTableColumns() {
-    }
+    const val SCANNED_AT = "scanned_at"
+    const val LABEL = "label"
+    const val _ID = BaseColumns._ID
 }
