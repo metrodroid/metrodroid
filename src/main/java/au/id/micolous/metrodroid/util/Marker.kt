@@ -16,46 +16,42 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package au.id.micolous.metrodroid.util;
+package au.id.micolous.metrodroid.util
 
-import android.text.TextUtils;
-import android.webkit.JavascriptInterface;
+import android.text.TextUtils
+import android.webkit.JavascriptInterface
 
-import au.id.micolous.metrodroid.transit.Station;
+import au.id.micolous.metrodroid.transit.Station
 
 /**
  * Markers for Leaflet to consume.
  */
-public class Marker {
-    private final Station mStation;
-    private final String mIcon;
-
-    public Marker(Station station, String icon) {
-        this.mStation = station;
-        this.mIcon = icon;
-    }
+class Marker(private val mStation: Station,
+             @get:JavascriptInterface
+             /**
+              * Icon name to use for this marker.
+              *
+              * @return Icon name
+              */
+             val icon: String) {
 
     /**
      * Gets the WGS84 Latitude (Y) of the point represented by this marker, in decimal degrees.
      *
      * @return String representing the latitude of the point.
      */
-    @SuppressWarnings("unused")
-    @JavascriptInterface
-    public String getLat() {
-        return this.mStation.getLatitude().toString();
-    }
+    val lat: String
+        @JavascriptInterface
+        get() = this.mStation.latitude.toString()
 
     /**
      * Gets the WGS84 Longitude (X) of the point represented by this marker, in decimal degrees.
      *
      * @return String representing the longitude of the point.
      */
-    @SuppressWarnings("unused")
-    @JavascriptInterface
-    public String getLong() {
-        return this.mStation.getLongitude().toString();
-    }
+    val long: String
+        @JavascriptInterface
+        get() = this.mStation.longitude.toString()
 
     /**
      * Gets the HTML used to represent the contents of the pop-up info bubble, containing the
@@ -63,35 +59,12 @@ public class Marker {
      *
      * @return HTML
      */
-    @SuppressWarnings("unused")
-    @JavascriptInterface
-    public String getHTML() {
-        String station = this.mStation.getStationName();
-        String company = this.mStation.getCompanyName();
+    val html: String
+        @JavascriptInterface
+        get() {
+            val station = TextUtils.htmlEncode(this.mStation.stationName ?: "")
+            val company = TextUtils.htmlEncode(this.mStation.companyName ?: "")
 
-        if (station == null) {
-            station = "";
+            return "<b>$station</b><br>$company"
         }
-
-        if (company == null) {
-            company = "";
-        }
-
-        station = TextUtils.htmlEncode(station);
-        company = TextUtils.htmlEncode(company);
-
-        return "<b>" + station + "</b><br>" + company;
-    }
-
-    /**
-     * Icon name to use for this marker.
-     *
-     * @return Icon name
-     */
-    @SuppressWarnings("unused")
-    @JavascriptInterface
-    public String getIcon() {
-        return mIcon;
-    }
-
 }
