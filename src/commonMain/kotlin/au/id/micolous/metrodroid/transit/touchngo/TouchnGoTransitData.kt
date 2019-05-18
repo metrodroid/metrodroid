@@ -99,7 +99,7 @@ private data class TouchnGoRefill(
 
     companion object {
         fun parse (sec: ClassicSector): TouchnGoRefill? {
-            if (sec[0].isEmpty && sec[1].isEmpty && sec[2].isEmpty)
+            if (sec[0].isEmpty)
                 return null
 
             return TouchnGoRefill(
