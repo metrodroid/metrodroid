@@ -55,7 +55,7 @@ public class CardDBHelper extends SQLiteOpenHelper {
     }
 
     public static Cursor createCursor(Context context) {
-        return context.getContentResolver().query(CardProvider.CONTENT_URI_CARD,
+        return context.getContentResolver().query(CardProvider.Companion.getCONTENT_URI_CARD(),
                 PROJECTION,
                 null,
                 null,
