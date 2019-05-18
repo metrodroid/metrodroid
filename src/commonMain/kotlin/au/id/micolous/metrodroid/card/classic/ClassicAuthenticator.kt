@@ -45,7 +45,7 @@ class ClassicAuthenticator internal constructor(private val mKeys: ClassicKeys,
                        sectorKey: ClassicSectorKey): Boolean {
         if (!tech.authenticate(sectorIndex, sectorKey))
             return false
-        Log.d(TAG, "Authenticatied on sector $sectorIndex, bundle ${sectorKey.bundle}")
+        Log.d(TAG, "Authenticated on sector $sectorIndex, bundle ${sectorKey.bundle}, key ${sectorKey.key.toHexString()}, type ${sectorKey.type}")
         if (!mPreferredBundles.contains(sectorKey.bundle))
             mPreferredBundles.add(sectorKey.bundle)
         return true
